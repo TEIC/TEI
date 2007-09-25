@@ -1,0 +1,188 @@
+<moduleSpec xmlns="http://www.tei-c.org/ns/1.0" ident="certainty">
+  <elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="certainty" module="certainty">
+  
+  <gloss/><gloss xml:lang="zh-tw" notBefore="2007-05-02"/>
+  <desc>indicates the degree of certainty or uncertainty associated
+  with some aspect of the text markup. </desc><desc xml:lang="zh-tw" notBefore="2007-05-02">指出在標記文本某些部分確定或不確定的程度。</desc>
+  
+  
+  
+  
+  <attList>
+    <attDef ident="target" usage="req">
+      
+      <desc>points at the elements whose markup is
+      uncertain.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">指出不確定標記的元素。</desc>
+      
+      
+      <valDesc>a series of one or more identifiers (URIs), separated by white space</valDesc><valDesc xml:lang="zh-tw" notBefore="2007-05-02">一個或多個URI，中間用空白鍵隔開。</valDesc>
+      
+      
+    </attDef>
+    <attDef ident="locus" usage="req">
+	
+	<desc>indicates the precise location of the uncertainty in the
+	markup: applicability of the element, precise position of the
+	start- or end-tag, value of a specific attribute,
+	etc.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">指出不確定標記的確切位置：元素的應用性、開始標籤或結束標籤的確切位置、特定屬性的屬性值等。</desc>
+	
+	
+	<valList type="semi">
+	  <valItem ident="gi">
+	    
+	    <gloss>uncertain whether the element used actually applies
+	      to the passage.</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">不確定所使用的元素是否適用在該段落。</gloss>
+	  </valItem>
+	  <valItem ident="startloc">
+	    
+	    <gloss>start-tag may not be correctly located.</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">開始標籤也許被錯置。</gloss>
+	  </valItem>
+	  <valItem ident="endloc">
+	    
+	    <gloss>end-tag may not be correctly located.</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">結束標籤也許被錯置。</gloss>
+	  </valItem>
+	  <valItem ident="location">
+	    
+	    <gloss>both the start-tag and the end-tag may not be
+	      correctly located.</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">開始標籤與結束標籤也許都被錯置。</gloss>
+	  </valItem>
+	  <valItem ident="attrName">
+	    
+	    <gloss>the value given for the attribute name is
+	    uncertain.</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">不確定該屬性名稱所使用的屬性值。</gloss>
+	  </valItem>
+	  <valItem ident="transcribedContent">
+	    
+	    <gloss>the content of the element may not be a correct
+	    transcription of the source text.</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">轉錄在元素裡的內容也許和來源文本不相符合。</gloss>
+	  </valItem>
+	  <valItem ident="suppliedContent">
+	    
+	    <gloss>the content of the element may not have been
+	    correctly supplied by the reader, e.g. as in the cases of
+	    corr and abbrev elements.</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">讀者所提供的元素內容也許有誤，例如在元素更正和元素縮寫出現的情況。</gloss>
+	  </valItem>
+	</valList>
+	
+    </attDef>
+    <attDef ident="assertedValue" usage="rec">
+	
+	<desc>provides an alternative value for the aspect of the markup in
+question—an alternative generic identifier, transcription,
+or attribute value, or the identifier of an <gi>anchor</gi> element (to
+indicate an alternative starting or ending location).  If an
+<att>assertedValue</att> is given, the confidence level specified by
+<att>degree</att> applies to the alternative markup specified by
+<att>assertedValue</att>; if none is given, it applies to the markup
+	  in the text.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">提供給指定標記部分一個替代屬性值—一個替代的類目識別符碼、轉錄、或屬性值，或是元素<gi>anchor</gi>(用來指出一個替代的開始或結束位置)的識別符碼。若使用屬性<att>assertedValue</att>，則屬性<att>degree</att>中指出的確定程度適用於屬性<att>assertedValue</att>所指明的替代標記；若無使用，則確定程度適用於文本中的標記。</desc>
+      
+      <valDesc>generic identifier, attribute value, location (e.g.
+indicated by a reference to an <gi>anchor</gi> element or to an
+<gi>ptr</gi> element), or other appropriate alternative
+        value.</valDesc><valDesc xml:lang="zh-tw" notBefore="2007-05-02">類目識別符碼、屬性值、位置(例如：使用一個參照指向元素<gi>anchor</gi>或元素<gi>ptr</gi>。)、或其他適合的替代值。</valDesc>
+      
+      
+    </attDef>
+
+
+    <attDef ident="given" usage="rec">
+      
+      <desc>indicates conditions assumed in the assignment of a degree
+      of confidence.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">指出在評估確定程度時所設想的情況。</desc>
+      
+      
+      <valDesc>a pointer to a characterization of the conditions which
+      are assumed in the assignment of a degree of
+        confidence.</valDesc><valDesc xml:lang="zh-tw" notBefore="2007-05-02">一個指示符號，連結到評估確定程度時所設想情況的描述。</valDesc>
+      
+    </attDef>
+    <attDef ident="degree" usage="opt">
+	
+	<desc>indicates the degree of confidence assigned to the aspect
+	  of the markup named by the <att>locus</att> attribute.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">指出屬性<att>locus</att>所指定的標記部分的確定程度。</desc>
+      
+    </attDef>
+  </attList>
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="respons" module="certainty">
+
+<gloss>responsibility</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">責任</gloss>
+<desc>identifies the individual(s) responsible for some aspect of the
+  markup of particular element(s).</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">指出在標記一或多個特定元素某部分的負責人。</desc>
+  
+  
+  <attList>
+    <attDef ident="target" usage="req">
+	
+	<desc>gives the identifier(s) of the element(s) for which some
+aspect of the responsibility is being
+assigned.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">指出標記責任所在元素的識別符碼。</desc>
+      
+      <valDesc>one or more valid
+identifiers, separated by white space.</valDesc><valDesc xml:lang="zh-tw" notBefore="2007-05-02">ㄧ個或多個有效識別符碼，中間用空白鍵隔開。</valDesc>
+      
+    </attDef>
+    <attDef ident="locus" usage="req">
+	
+	<desc>indicates the specific aspect of the markup for which
+responsibility is being assigned.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">指出標記責任所屬的特定部分。</desc>
+      
+      <valList type="semi">
+        <valItem ident="gi">
+          
+          <gloss>responsibility for the claim that the element is of the
+            type indicated by the markup</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">負責聲明元素屬於標記所指示的類型</gloss>
+        </valItem>
+        <valItem ident="location">
+          
+          <gloss>responsibility for the claim that the element
+            begins and ends where indicated</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">負責聲明元素依照所指示的位置開始與結束</gloss>
+        </valItem>
+        <valItem ident="startloc">
+          
+          <gloss>responsibility for the claim that the element
+            begins where indicated</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">負責聲明元素依照所指示的位置開始</gloss>
+        </valItem>
+        <valItem ident="endloc">
+          
+          <gloss>responsibility for the claim that the element
+            ends where indicated</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">負責聲明元素依照所指示的位置結束</gloss>
+        </valItem>
+        <valItem ident="attrName">
+          
+          <gloss>responsibility for the claim that the
+            name attribute has the value given in the markup</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">負責聲明名稱屬性擁有標記中提供的屬性值</gloss>
+        </valItem>
+        <valItem ident="transcribedContent">
+          
+          <gloss>responsibility for the transcription of
+the element content</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">負責元素內容的轉錄</gloss>
+        </valItem>
+        <valItem ident="suppliedContent">
+          
+          <gloss>responsibility for the contents supplied by
+the encoder (corrections, expansions of abbreviations, etc.)</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">負責標記者所提供的內容(更正、縮寫還原等。)</gloss>
+        </valItem>
+      </valList>
+      
+    </attDef>
+    <attDef ident="resp" usage="req">
+	
+	<desc>identifies the individual or agency responsible for the indicated
+aspect of the electronic text.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">指出負責電子文本指定部分的個人或機構。</desc>      
+      
+      <valDesc>a pointer to one of the identifiers declared in the
+      document header, associated with a person asserted as
+      responsible for some aspect of the text's creation,
+        transcription, editing, or encoding</valDesc><valDesc xml:lang="zh-tw" notBefore="2007-05-02">一個符號指示到文件標頭中宣告的識別符碼之一，所相關連的個人負責文本建立、轉錄、編輯、或編碼的某部分。</valDesc>
+      
+    </attDef>
+  </attList>
+  
+  
+  
+</elementSpec>
+</moduleSpec>

@@ -1,0 +1,159 @@
+<moduleSpec xmlns="http://www.tei-c.org/ns/1.0" ident="analysis">
+  <elementSpec ident="s" module="analysis">
+
+<gloss>s-unit</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">句子單元</gloss>
+<desc>contains a sentence-like division of a text.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">包含文字中一個句子組成的區段。</desc>
+  
+  
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="cl" module="analysis">
+
+<gloss>clause</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">子句</gloss>
+<desc>represents a grammatical clause.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">表示一個文法上的子句。</desc>
+  
+  
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="phr" module="analysis">
+
+<gloss>phrase</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">片語</gloss>
+<desc>represents a grammatical phrase.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">表示一個文法上的片語。</desc>
+  
+  
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="w" module="analysis">
+
+<gloss>word</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">單字</gloss>
+<desc>represents a grammatical (not necessarily orthographic) word.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">表示文法上(但未必是拼字法上)定義的單字。</desc>
+  
+  
+  <attList>
+    <attDef ident="lemma" usage="opt">
+      
+      <desc>identifies the word's lemma (dictionary entry form).</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">指出在字典中該字的詞目形式。</desc>
+      
+      <valDesc>a string of characters representing the spelling of the
+        word's dictionary entry form.</valDesc><valDesc xml:lang="zh-tw" notBefore="2007-05-02">以連續的字串來表示該字在字典中作為詞目的拼法。</valDesc>
+    </attDef>
+  </attList>
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="m" module="analysis">
+
+<gloss>morpheme</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">語素</gloss>
+<desc>represents a grammatical morpheme.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">表示文法上的語素。</desc>
+  
+  
+  <attList>
+    <attDef ident="baseForm" usage="opt">
+      
+      <desc>identifies the morpheme's base form.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">指出該語素的基本形式。</desc>
+      
+      <valDesc>a string of characters representing the spelling of the
+        morpheme's base form.</valDesc><valDesc xml:lang="zh-tw" notBefore="2007-05-02">以連續的字串來表示該語素基本形式的拼法。</valDesc>
+    </attDef>
+  </attList>
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="c" module="analysis">
+
+<gloss>character</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">文字符號</gloss>
+<desc>represents a character.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">表示一個文字符號。</desc>
+  
+  
+  
+  
+  
+</elementSpec>
+  <classSpec ident="att.global.analytic" module="analysis">
+<desc>provides additional global attributes for associating specific analyses or
+  interpretations with appropriate portions of a text.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">提供附加的全域屬性，將特定的分析或詮釋和合宜的文字結合。</desc>
+  <attList>
+    <attDef ident="ana" usage="opt">
+	
+	<desc>indicates one or more elements containing interpretations of the
+	  element on which the <att>ana</att> attribute appears.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">指出一個或多個元素，其中包含帶有屬性<att>ana</att>的元素的解釋。</desc>
+      
+      <valDesc>one or more valid identifiers of one or more interpretive elements
+        (usually <gi>fs</gi> or <gi>interp</gi>), separated by white space.</valDesc><valDesc xml:lang="zh-tw" notBefore="2007-05-02">有效指出一個或多個解釋性元素(通常為<gi>fs</gi>或<gi>interp</gi>)，中間用空白鍵隔開。</valDesc>
+      
+    </attDef>
+  </attList>
+  
+</classSpec>
+  <elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="span" module="analysis">
+  
+  <gloss>span</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">文字段</gloss>
+  <desc>associates an interpretative annotation directly with a span
+  of text.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">將解釋性註釋直接和一段文字段連結。</desc>
+  
+  
+  <attList>
+
+    <attDef ident="from" usage="req">
+      
+      <desc>specifies the beginning of the passage being annotated; if
+      not accompanied by a <att>to</att> attribute, then specifies the
+        entire passage.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">指出被註解段落的起點；若沒有使用屬性<att>to</att>，則指出全部段落。</desc>
+      
+      <valDesc>The identifier of the element which occurs at the
+      beginning of the passage.</valDesc><valDesc xml:lang="zh-tw" notBefore="2007-05-02">指出出現在段落起點的元素。</valDesc>
+    </attDef>
+    <attDef ident="to" usage="opt">
+      
+      <desc>specifies the end of the passage being annotated.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">指出被註解段落的終點。</desc>
+      
+      <valDesc>The identifier of the element which occurs at the end
+        of the passage.</valDesc><valDesc xml:lang="zh-tw" notBefore="2007-05-02">指出出現在段落終點的元素。</valDesc>
+    </attDef>
+  </attList>
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="spanGrp" module="analysis">
+
+<gloss>span group</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">文字段群組</gloss>
+<desc>collects together span tags.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">匯集文字段標籤。</desc>
+  
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="interp" module="analysis">
+
+<gloss>interpretation</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">解釋</gloss>
+<desc>summarizes a specific interpretative annotation which can be
+linked to a span of text.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">標明和某一文字段相連結的特定解釋性註釋。</desc>
+  
+  
+  
+
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="interpGrp" module="analysis">
+
+    <gloss>interpretation group</gloss><gloss xml:lang="zh-tw" notBefore="2007-05-02">解釋群組</gloss>
+<desc>collects together a set of related interpretations which share
+responsibility or type.</desc><desc xml:lang="zh-tw" notBefore="2007-05-02">匯集一系列具有共同任務或類型的相關解釋。</desc>
+  
+  
+  
+  
+  
+</elementSpec>
+</moduleSpec>
