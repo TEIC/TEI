@@ -2,7 +2,7 @@
 //#########################
 // Programm calls
 // paths solved
-// Defines how to call trang
+// Defines how to call trang 
 define( 'roma_trang', '/usr/bin/trang' );
 
 // Defines how to call fop
