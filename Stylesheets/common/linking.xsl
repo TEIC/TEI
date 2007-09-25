@@ -207,12 +207,10 @@
               <xsl:value-of select="$toc"/>
             </xsl:with-param>
             <xsl:with-param name="class">
-              <xsl:call-template name="class_toc">
-		<xsl:with-param name="depth">
-		  <xsl:value-of select="$depth"/>
-		</xsl:with-param>
-	      </xsl:call-template>
-            </xsl:with-param>
+              <xsl:value-of select="$class_toc"/>
+	      <xsl:text> </xsl:text>
+              <xsl:value-of select="concat($class_toc,'_',$depth)"/>
+	    </xsl:with-param>
             <xsl:with-param name="body">
               <xsl:choose>
                 <xsl:when test="$autoHead='true'">
