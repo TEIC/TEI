@@ -41,7 +41,6 @@
   <xsl:key name="ELEMENT-ALPHA" match="tei:elementSpec"
 	   use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),1,1)"/>
 
-  <xsl:key name="CHILDMOD" match="Element" use="@module"/>
 
   <xsl:template name="includeCSS">
     <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
@@ -346,15 +345,16 @@ function togglerelax (el) {
           <h3>Versions of the Guidelines</h3>
           <ul>
             <li>
-              <a href="index-toc.html">Table of Contents (HTML,
-                individual files)</a>
+              <a href="index-toc.html">Table of Contents</a>
             </li>
+<!--
             <li>
               <a href="guidelines.html">One single HTML file</a>
             </li>
             <li>
               <a href="guidelines.pdf">One single PDF file </a>
             </li>
+-->
 <!--
             <li>
               <a
@@ -517,12 +517,6 @@ function togglerelax (el) {
 
   <xsl:template name="navInterSep"> </xsl:template>
 
-  <xsl:template match="tei:specGrp"/>
-
-  <xsl:template match="tei:specGrpRef"> </xsl:template>
-
-  <xsl:template match="a:documentation" mode="verbatim"/>
-
   <xsl:template name="pageHeader">
     <xsl:param name="mode"/>
     <xsl:call-template name="makeHTMLHeading">
@@ -563,104 +557,6 @@ function togglerelax (el) {
     </div>
   </xsl:template>
 
-
-
-  <!-- JC: Putting element and desc into table -->
-  <xsl:template match="tei:elementSpec" mode="weavebody">
-    <xsl:variable name="name">
-      <xsl:choose>
-        <xsl:when test="tei:altIdent">
-          <xsl:value-of select="tei:altIdent"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="@ident"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <h2>
-      <xsl:text>&lt;</xsl:text>
-      <xsl:value-of select="$name"/>
-      <xsl:if test="tei:content/rng:empty">
-	<xsl:text>/</xsl:text>
-      </xsl:if>
-      <xsl:text>&gt;</xsl:text> 
-    </h2>
-    <table class="wovenodd" border="1">
-      <tr>
-        <td class="wovenodd-col2" colspan="2">
-          <span class="label">
-	    <xsl:text>&lt;</xsl:text>
-	    <xsl:value-of select="$name"/>
-	    <xsl:if test="tei:content/rng:empty">
-              <xsl:text>/</xsl:text>
-            </xsl:if>
-	    <xsl:text>&gt; </xsl:text>
-	  </span>
-          <xsl:call-template name="makeDescription"/>
-          <xsl:if test="tei:listRef">
-            <xsl:for-each select="tei:listRef/tei:ptr">
-              <xsl:text> </xsl:text>
-              <xsl:apply-templates mode="weave" select="."/>
-            </xsl:for-each>
-          </xsl:if>
-        </td>
-      </tr>
-      <xsl:if test="@module">
-        <xsl:call-template name="moduleInfo"/>
-      </xsl:if>
-      <tr>
-        <td class="wovenodd-col1">
-          <span class="label">
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Attributes</xsl:with-param>
-            </xsl:call-template>
-          </span>
-        </td>
-        <td class="wovenodd-col2">
-          <xsl:choose>
-            <xsl:when test="not(tei:attList)">
-              <xsl:call-template name="showAttClasses"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:for-each select="tei:attList">
-                <xsl:call-template name="displayAttList">
-                  <xsl:with-param name="mode">all</xsl:with-param>
-                </xsl:call-template>
-              </xsl:for-each>
-            </xsl:otherwise>
-          </xsl:choose>
-        </td>
-      </tr>
-      <xsl:apply-templates mode="weave"/>
-      <tr>
-        <td class="wovenodd-col1">
-          <span class="label">Contained by</span>
-        </td>
-        <td class="wovenodd-col2">
-          <xsl:call-template name="generateParents"/>
-        </td>
-      </tr>
-
-      <tr>
-        <td class="wovenodd-col1">
-          <span class="label">May contain</span>
-        </td>
-        <td class="wovenodd-col2">
-          <xsl:call-template name="generateChildren"/>
-        </td>
-      </tr>
-
-
-    </table>
-
-  </xsl:template>
-
-
-  <xsl:template match="tei:hi[@rend='math']">
-    <span class="math">
-      <xsl:apply-templates/>
-    </span>
-  </xsl:template>
 
 
   <!-- JC Adding headings -->
@@ -736,6 +632,22 @@ function togglerelax (el) {
   <xsl:template name="mainTOC">
     <xsl:param name="force"/>
 
+    <div class="toc_back">
+      <h3>Back Matter</h3>
+      <xsl:for-each
+	  select="ancestor-or-self::tei:TEI/tei:text/tei:back">
+	<xsl:if
+	    test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	  <ul class="toc{$force} toc_back">
+	    <xsl:apply-templates mode="maketoc"
+				 select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	      <xsl:with-param name="forcedepth" select="$force"/>
+              </xsl:apply-templates>
+	  </ul>
+	</xsl:if>
+      </xsl:for-each>
+    </div>
+
     <div class="toc_front">
       <h3>Front Matter</h3>
       <xsl:for-each
@@ -768,21 +680,6 @@ function togglerelax (el) {
       </xsl:for-each>
     </div>
 
-    <div class="toc_back">
-      <h3>Back Matter</h3>
-      <xsl:for-each
-	  select="ancestor-or-self::tei:TEI/tei:text/tei:back">
-	<xsl:if
-	    test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-	  <ul class="toc{$force} toc_back">
-	    <xsl:apply-templates mode="maketoc"
-				 select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-	      <xsl:with-param name="forcedepth" select="$force"/>
-              </xsl:apply-templates>
-	  </ul>
-	</xsl:if>
-      </xsl:for-each>
-    </div>
   </xsl:template>
 
 
@@ -1007,112 +904,5 @@ function togglerelax (el) {
   </div>
 </xsl:template>
 
-  <xsl:template match="tei:gi">
-    <xsl:choose>
-      <xsl:when test="parent::tei:ref">
-	<span class="gi">
-	  <xsl:apply-templates/>
-	</span>
-      </xsl:when>
-      <xsl:when test="key('ELEMENTS',.)">
-	<xsl:for-each select="key('ELEMENTS',.)">
-	  <a href="ref-{@ident}.html">
-	    <span class="gi">
-	      <xsl:value-of select="@ident"/>
-	      <xsl:if test="tei:content/rng:empty">
-		<xsl:text>/</xsl:text>
-	      </xsl:if>	 
-	    </span>
-	  </a>
-	</xsl:for-each>
-      </xsl:when>
-      <xsl:otherwise>
-	<span class="gi">
-	  <xsl:apply-templates/>
-	</span>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-<xsl:template name="generateChildren">
-  <xsl:variable name="name" select="@ident"/>
-  <xsl:variable name="Children">
-    <Children xmlns="">
-      <xsl:for-each select="tei:content">
-	<xsl:call-template name="followRef"/>
-      </xsl:for-each>
-    </Children>
-  </xsl:variable>
-  <xsl:for-each select="exsl:node-set($Children)/Children">
-  <xsl:choose>
-    <xsl:when test="count(Element)=0">
-      <xsl:text>Empty element</xsl:text>
-    </xsl:when>
-    <xsl:otherwise>
-      <div class="specChildren">
-	<xsl:for-each select="Element">
-	  <xsl:sort select="@module"/>
-	  <xsl:sort select="@name"/>
-	  <xsl:if
-	      test="generate-id(.)=generate-id(key('CHILDMOD',@module)[1])">
-	    <div class="specChild">
-	      <span class="specChildModule">
-		<xsl:value-of select="@module"/>:
-	      </span>
-	      <span class="specChildElements">
-		<xsl:for-each select="key('CHILDMOD',@module)">
-		  <xsl:sort select="@name"/>
-		  <xsl:variable name="me">
-		    <xsl:value-of select="@name"/>
-		  </xsl:variable>
-		  <xsl:if test="not(preceding-sibling::Element/@name=$me)">
-		      <a href="ref-{@name}.html">
-			<xsl:value-of select="@name"/>
-		      </a>
-		      <xsl:text> </xsl:text>
-		  </xsl:if>
-		</xsl:for-each>
-	      </span>
-	    </div>
-	  </xsl:if>
-	</xsl:for-each>
-      </div>
-    </xsl:otherwise>
-  </xsl:choose>
-  </xsl:for-each>
-</xsl:template>
-
-<xsl:template name="followRef">
-  <xsl:for-each select=".//rng:ref">
-    <xsl:for-each select="key('IDENTS',@name)">
-      <xsl:choose>
-	<xsl:when test="self::tei:elementSpec">
-	  <Element  xmlns="" name="{@ident}" module="{@module}"/>
-	</xsl:when>
-	<xsl:when test="self::tei:macroSpec">
-	  <xsl:for-each select="tei:content">
-	    <xsl:call-template name="followRef"/>
-	  </xsl:for-each>
-	</xsl:when>
-	<xsl:when test="self::tei:classSpec">
-	  <xsl:call-template name="followMembers"/>
-	</xsl:when>
-      </xsl:choose>
-    </xsl:for-each>
-  </xsl:for-each>
-</xsl:template>
-
-<xsl:template name="followMembers">
-  <xsl:for-each select="key('CLASSMEMBERS',@ident)">
-    <xsl:choose>
-      <xsl:when test="self::tei:elementSpec">
-	<Element xmlns="" name="{@ident}" module="{@module}"/>
-      </xsl:when>
-      <xsl:when test="self::tei:classSpec">
-	<xsl:call-template name="followMembers"/>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:for-each>
-</xsl:template>
 
 </xsl:stylesheet>
