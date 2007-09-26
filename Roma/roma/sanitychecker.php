@@ -1,6 +1,6 @@
 <?php
 
-define("JERUSALEM_HTDOCS", "/home/tei/jerusalem_htdocs/");
+define("JERUSALEM_HTDOCS", "/home/tei/roma_htdocs/");
 
 class SanityChecker {
 
