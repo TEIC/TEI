@@ -6,85 +6,36 @@ $Date$
 
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="FSDDECL" usage="rwa" ident="fsdDecl">
-  <equiv/>
-  <gloss>FSD (feature-system declaration) declaration</gloss>
-  <gloss version="2007-01-21" xml:lang="it">dichiarazione su FSD (dichiarazione del sistema di tratti)</gloss>
-  <gloss version="2007-05-04" xml:lang="es">declaración FSD (Declaración del Sistema de Rasgos)</gloss>
-  <gloss version="2006-10-28" xml:lang="ja">FSD (素性システム宣言</gloss>
-  <gloss xml:lang="zh-tw">功能系統宣告</gloss>
-  <gloss xml:lang="fr">Déclaration de système de profils</gloss>
-  <desc>identifies the feature system declaration which contains
-definitions for a particular type of feature structure.</desc>
-  <desc version="2007-01-21" xml:lang="it">identifica la dichiarazione del sistema di tratti che contiene le definifioni di un particolare tipo di struttura di tratti.</desc>
-  <desc version="2007-05-04" xml:lang="es">indica la declaración del sistema de rasgos que contiene definiciones para un tipo particular de estructura de rasgos.</desc>
-  <desc version="2006-10-28" xml:lang="ja">宣言) 素性構造の定義を含む宣言を示す．</desc>
-  <desc xml:lang="zh-tw">明確指出規範某特定功能結構類型的功能系統宣告。</desc>
-  <desc xml:lang="fr">L’élément Déclaration de système de profils <gi>fsdDecl</gi> identifie la déclaration du système de profils contenant des définitions pour un type spécifique de structure de profils.</desc>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             module="iso-fs"  usage="rwa" ident="fsdDecl">
+  <gloss>feature system declaration</gloss>
+  <desc>provides a feature system declaration comprising one or more
+  feature structure declarations or feature structure declaration links.</desc>
   <classes>
     <memberOf key="model.encodingPart"/>
+    <memberOf key="model.resourceLike"/>
   </classes>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <rng:oneOrMore>
+      <rng:choice>
+	<rng:ref name="fsDecl"/>
+	<rng:ref name="fsdLink"/>
+      </rng:choice>
+    </rng:oneOrMore>
   </content>
-  <attList>
-    <attDef ident="type" usage="req">
-      <equiv/>
-      <desc>identifies the type of feature structure documented by the FSD;
-this will be the value of the <att>type</att> attribute on at least one
-feature structure.</desc>
-      <desc version="2007-01-21" xml:lang="it">identifica il tipo di dichiarazione del sistema di tratti attraverso il FSD, sarà il valore dell'attributo <att>type</att> di almeno una struttura di tratti.</desc>
-      <desc version="2007-05-04" xml:lang="es">identifica el tipo de estructura de rasgos documentada por el FSD; éste será el valor del atributo <att>type</att> al menos en una estructura de rasgos.</desc>
-      <desc version="2006-10-28" xml:lang="ja">当該FSDのタイプを示す．</desc>
-      <desc xml:lang="fr">identifie le type de structure de profils décrit dans la déclaration de systèmes de profils ; ce sera la valeur de l’attribut <att>type</att> d’au moins une structure de profils.</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
-      <valDesc>any string of characters.</valDesc>
-      <exemplum>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
-      </exemplum>
-      <remarks>
-        <p>If better validation is required,
-the global <att>xml:id</att> attribute may be used to specify the type
-instead of this attribute; in such a case, the name must be a valid identifier.</p>
-      </remarks>
-      <remarks xml:lang="fr">
-        <p>Si une validation plus fine est requise, l'attribut global <att>xml:id</att> peut être utilisé pour spécifier le type à la place de cet attribut ; dans ce cas, le nom doit être un identifiant valide.</p>
-      </remarks>
-    </attDef>
-<!--    <attDef ident="fsd" usage="req">
-	<equiv/>
-	<desc>specifies the external entity containing the feature system
-declaration; an entity declaration in the document's DTD subset must
-associate the entity name with a file on the
-system.</desc>
-      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="ENTITY"/></datatype>
-      <valDesc>a valid external entity name</valDesc>
-      <exemplum>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
-      </exemplum>
-    </attDef>-->
-    <attDef ident="url" usage="req">
-      <gloss>uniform resource locator</gloss>
-      <desc>supplies a link to the entity containing the feature system
-declaration. </desc>
-      <desc version="2007-01-21" xml:lang="it">indica un collegamento ad un'entità che contiene la dichiarazione del sistema di tratti.</desc>
-      <desc version="2007-05-04" xml:lang="es">proporciona un enlace a la entidad que contiene una declaración de sistema de rasgos.</desc>
-      <desc version="2006-10-28" xml:lang="ja">素性システム宣言を含むエンティティへのリンクを示す．</desc>
-      <desc xml:lang="fr">fournit un lien vers l’entité contenant la déclaration de structure de profils. </desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-    </attDef>
-  </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <encodingDesc>
-        <fsdDecl type="GPSG" url="Gazdar.fsd"/>
-        <fsdDecl type="entry" url="Lexicon.fsd"/>
-        <fsdDecl type="subentry" url="Lexicon.fsd"/>
-      </encodingDesc>
+        <fsdDecl>
+	  <fsDecl type="GPSG">
+	    <!-- ... -->
+	  </fsDecl>
+	  <fsDecl type="lex" xml:id="LX123">
+	    <!-- ... -->
+	  </fsDecl>
+	  <fsdLink type="entry" target="#LX123"/>
+	  <fsdLink type="subentry" target="http://www.example.com/fsdLib.xml#LX123"/>
+	</fsdDecl>
     </egXML>
   </exemplum>
   <listRef>

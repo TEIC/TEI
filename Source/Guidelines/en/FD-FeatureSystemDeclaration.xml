@@ -27,6 +27,7 @@ certain feature-value pairs.</item>
 intended interpretation of underspecified feature structures.  This
 involves defining default values (whether literal or computed) for
 missing features.</item></list></p>
+
 <p>The scheme described in this chapter may be used to document any
 feature structure system, but is primarily intended for use with the
 feature structure representation defined by the ISO 24610-1:2006
@@ -35,46 +36,47 @@ these Guidelines, <ptr target="#FS"/>. This chapter relies upon, but
 does not reproduce, formal definitions and descriptions presented more
 thoroughly in the ISO standard, which should be consulted in case of
 ambiguity or uncertainty. </p>
-<p>The FSD
-serves an important function in documenting precisely what the encoder
-intended by the system of feature structure markup used in an XML-encoded
-text.  The FSD is also an important
-resource which standardizes the rules of inference used by software to
-validate the feature structure
-markup in a text, and to infer the full interpretation of
-underspecified feature structures.</p>
-<p>The reader should be aware, however, that there are a number of
-terminological mismatches between the present standard and
-conventional practice in both formal logic and practical linguistic
-applications of typed feature structures.  In particular, what shall
-be called an <soCalled>interpretation</soCalled> of a feature
-structure here is not an interpretation in the model-theoretic sense,
-but is instead a minimally informative (or equivalently, most general)
-extension <!--(see <ptr target="#subsumpSec"/>)--> of that feature structure
-that is consistent with a set of constraints declared by an FSD.  In
-linguistic application, such a system of constraints is the principal
-means by which the grammar of some natural language is expressed.
-There is, however, a great deal of disagreement as to what, if any,
+
+<p>The FSD serves an important function in documenting precisely what
+the encoder intended by the system of feature structure markup used in
+an XML-encoded text.  The FSD is also an important resource which
+standardizes the rules of inference used by software to validate the
+feature structure markup in a text, and to infer the full
+interpretation of underspecified feature structures.</p>
+
+<p>The reader should be aware the terminology used in this document
+does not always closely follow conventional practice in formal logic,
+and may also diverge from practice in some linguistic applications of
+typed feature structures.  In particular, the term
+<soCalled>interpretation</soCalled> when applied to a feature
+structure is not an interpretation in the model-theoretic sense, but
+is instead a minimally informative (or equivalently, most general)
+extension <!--(see <ptr target="#subsumpSec"/>)--> of that feature
+structure that is consistent with a set of constraints declared by an
+FSD.  In linguistic application, such a system of constraints is the
+principal means by which the grammar of some natural language is
+expressed.  There is a great deal of disagreement as to what, if any,
 model-theoretic interpretation feature structures have in such
-applications.  This status of this formal kind of interpretation is
-not germane to the present standard.  The term,
-<soCalled>valid</soCalled>, normally appeals to a notion of formal
-semantics as well, but is merely used here to describe what is in fact
-a purely syntactic state of well-formedness in the sense defined by
-the logic of typed feature structures itself, as distinct from and in
-addition to the <soCalled>well-formedness</soCalled> that pertains at
-the level of this encoding standard <!--(see <ptr target="#wfSec"/>)-->.
-</p>
+applications, but the status of this formal kind of interpretation is
+not germane to the present document.  Similarly, the term
+<soCalled>valid</soCalled> is used here as elsewhere in these
+Guidelines to identify the syntactic state of well-formedness in the
+sense defined by the logic of typed feature structures itself, as
+distinct from and in addition to the
+<soCalled>well-formedness</soCalled> that pertains at the level of
+this encoding standard. No appeal to any notion from formal semantics
+should be inferred. </p>
 
 <p>We begin by describing how an encoded text is associated with one
-or more FSDs.  The second, third, and
-fourth sections describe the overall structure of an FSD and give
-details of how to encode its parts.  The final section offers a full
-example.<note place="foot">A fuller discussion of the reasoning behind FSDs
-and another complete example are provided by <title level="a">A rationale for the TEI
-recommendations for feature-structure markup,</title> by D. Terence
-Langendoen and Gary F. Simons , in <title>Computers and the
-Humanities</title>, 29, (1995). </note></p>
+or more feature system declarations.  The second, third, and fourth
+sections describe the overall structure of a feature system
+declaration and give details of how to encode its components.  The final
+section offers a full example.<note place="foot">A fuller discussion
+of the reasoning behind FSDs and another complete example are provided
+by <title level="a">A rationale for the TEI recommendations for
+feature-structure markup,</title> by D. Terence Langendoen and Gary
+F. Simons , in <title>Computers and the Humanities</title>, 29,
+(1995). </note></p>
 <div type="div2" xml:id="FDLK">
 <head>Linking a TEI Text to Feature System Declarations</head>
 <p>In order for application software to use feature system
@@ -82,72 +84,133 @@ declarations to aid in the automatic interpretation of encoded texts,
 or even for human readers to find the appropriate declarations which
 document the feature system used in markup, there must be a formal
 link from the encoded texts to the declarations. However, the
-schema  declares the syntax for the Feature System itself
+schema  which declares the syntax of the Feature System itself
 should  be kept distinct from the feature structure schema, which is an
 application of that system.</p> 
-<?tei winita what do about FSD schema ?>
-<!--<p>In the present version of these
-Guidelines, this is accomplished by regarding the Feature System
-document (FSD) as an external unparsed entity, which is referenced
-only by name within the document that uses it.<note place="foot">In
-SGML (but not in XML) a feature known as SUBDOC is available which
-allows a document using one DTD (the FSD) to be nested within another
-(the feature structure itself); this feature is not available in XML,
-and is therefore not recommended where usage of XML is
-intended.</note></p>
--->
-<p>The association between an FSD and a document using the feature
-structures it declares is made by means of a link from a special
-purpose element in the TEI Header, <!--  Firstly, an
-external unparsed entity must be declared for each FSD that is
-associated with the encoded text.  That entity declaration gives a
-name for the external entity and associates it with some file or other
-resource on the host system.  It must also contain the keyword NDATA,
-to indicate that the external entity contains unparsed XML or SGML
-data conforming to some other notation, and a previously-declared name
-for that notation. <note>In an SGML document, the SUBDOC keyword may
-be used in place of NDATA and the Notation name to tell the processor
-that the named file is a self-contained SGML document.</note> See the
-example below for details of syntax.</p> <p>Secondly, the name of the
-relevant FSD entity will be referenced within the TEI header of a
-document containing feature structure annotation, --> as mentioned in
-section <ptr target="#HDFSD"/>.  Within the <gi>encodingDesc</gi>
-element of such a document's <gi>teiHeader</gi>, a special
-<gi>fsdDecl</gi> element may be used for each distinct feature
-structure type, as follows:
-<specList><specDesc key="fsdDecl"/></specList>
-Note that one <gi>fsdDecl</gi> element must be specified for each
-distinct type of feature structure used in the markup.  The
-<att>url</att> attribute provides a link to  the  entity
-containing the actual declaration for that type of feature structure.</p>
-<p>There may be multiple <gi>fsdDecl</gi> elements for a given FSD;
-one for each type of feature structure it defines.  For instance, in
-the following example, the file <ident rend="noindex" type="file">Lexicon.fsd</ident> contains an FSD that contains
-definitions of feature structures for lexical entries (<tag>fs
-type="entry"</tag>) and lexical subentries (<tag>fs
-type="subentry"</tag>). The file <ident rend="noindex" type="file">Gazdar.fsd</ident> contains another FSD which contains
-definition of a feature structure called <ident>GPSG</ident>:
+
+<p>A document containing typed feature structures may simply include a
+feature system declaration documenting those feature structures.  A
+more usual scenario, however, is that the same feature system
+declaration (or parts of it) will be shared by many documents.  In
+either case, an <gi>fsDecl</gi> element for each distinct type of
+feature structure used must be provided and associated with the type,
+which is the value used within each feature structure for its
+<att>type</att> attribute.</p>
+
+<p>When the module defined in this chapter is included in an XML
+schema, the following elements become available:
+
+<specList>
+<specDesc key="fsdDecl"/>
+<specDesc key="fsdLink"/>
+<specDesc key="fsDecl"/>
+</specList>
+
+The <gi>fsdDecl</gi> element may be supplied either within the header
+of a standard TEI document, or as a standalone document in its own
+right. It contains one or more <gi>fsdLink</gi> or <gi>fsDecl</gi>
+elements. </p>
+
+<p>Each <gi>fsDecl</gi> has a unique identifier, given as the value of
+its <att>xml:id</att> attribute.  Each <gi>fsdLink</gi> element
+associates a specific feature structure type with a URI which resolves
+to a <gi>fsDecl</gi> element, by using its xml:id value. </p>
+
+<p>For example, suppose that a document <ident>doc.xml</ident>
+contains feature structures of two types: <val>gpsg</val> and
+<val>lex</val>. We might simply embed an <gi>fsDecl</gi> element for
+each within the header attached to the document as follows:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
    <TEI>
    <teiHeader>
-      <fileDesc> <!-- ... --> </fileDesc>
+      <fileDesc> <!-- doc1 --> </fileDesc>
       <encodingDesc>
            <!-- ... -->
-           <fsdDecl type="GPSG" url="Gazdar.fsd"/>
-           <fsdDecl type="entry" url="Lexicon.fsd"/>
-           <fsdDecl type="subentry" url="Lexicon.fsd"/>
+           <fsdDecl>
+           <fsDecl type="gpsg">
+	     <!-- information about this type -->
+	   </fsDecl>
+           <fsDecl type="lex">
+	     <!-- information about this type -->
+	   </fsDecl>
+	   </fsdDecl>
            <!-- ... -->
       </encodingDesc>
    </teiHeader>
-   <!-- The text goes here -->
+<text><body>
+   <fs type="lex">
+      <!-- an instance of the typed feature structure "lex" -->
+   </fs></body></text>
    </TEI></egXML>
-As this example shows, a <gi>fsdDecl</gi> is given within the
-<gi>encodingDesc</gi> for each distinct value used as the
-<att>type</att> of the <gi>fs</gi> elements in the document itself. In
-this case, for example, the feature system declaration used by feature
-structures of types <val>entry</val> and <val>subentry</val> is to
-be found in the entity at the URL <ident>Lexicon.fsd</ident>.
 </p>
+<p>In this case there is an implicit link between the <gi>fs</gi>
+element and the corresponding <gi>fsDecl</gi> element because they
+share the same value for their <att>type</att> attribute and appear
+within the same document. This is a short cut for the more general
+case which requires a more explicit link provided by means of the
+<gi>fsdLink</gi> element, as demonstrated below.</p>
+
+<p>Now suppose that we wish to create a second document which includes
+feature structures of the same type. Rather than duplicate the
+corresponding declarations, we will need to provide a means of
+pointing to them from this second document.  The easiest<note
+place="foot">Ways of pointing to components of a TEI document without
+using an XML identifier are discussed in <ptr target="#SAUR"/></note>
+way of accomplishing this is to add an XML identifier to each
+<gi>fsDecl</gi> element in <ident>doc1.xml</ident>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+           <!-- ... -->
+           <fsdDecl>
+           <fsDecl type="gpsg" xml:id="GPSG">
+	     <!-- information about this type -->
+	   </fsDecl>
+           <fsDecl type="lex" xml:id="LEX">
+	     <!-- information about this type -->
+	   </fsDecl>
+	   </fsdDecl>
+</egXML>
+(Although in this case the XML identifier is simply an uppercase
+version of the type name, there is no necessary connection between the
+two names. The only requirement is that the XML identifier conform to
+the standards required for identifiers, and that it be unique within
+the document containing it.)</p>
+<p>In the <gi>fsdDecl</gi> for the second document, we can now include
+pointers to the <gi>fsDecl</gi> elements in the first:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+   <TEI>
+   <teiHeader>
+      <fileDesc> <!-- doc2  --> </fileDesc>
+      <encodingDesc>
+           <!-- ... -->
+           <fsdDecl>
+           <fsdLink type="gpsg" target="doc1.xml#GPSG"/>
+           <fsdLink type="lexx"  target="doc1.xml#GPSG"/>
+	   </fsdDecl>
+           <!-- ... -->
+      </encodingDesc>
+   </teiHeader>
+<text><body>
+   <fs type="lexx">
+      <!-- an instance of the typed feature structure "lex" -->
+   </fs></body></text>
+   </TEI></egXML>
+Note that in <ident>doc2</ident> there is no requirement for the local
+name for a given type of feature structures to be the same as that
+used by <ident>doc1</ident>. We assume in this encoding that the type
+called <ident>lexx</ident> in <ident>doc2</ident> is declared as
+having identical constraints and other properties to those declared
+for the type called <ident>lex</ident> in <ident>doc1</ident>.</p>
+
+<p>A <gi>fsdDecl</gi> may be given, as above, within the
+encoding description of the <gi>teiHeader</gi> element of a TEI
+document containing typed feature structures. Alternatively, it may
+appear independently of any feature structures, as a document in its
+own right, possibly with its own <gi>teiHeader</gi>. These options are
+both possible because the element is a member of both the <ident
+type="class">model.encodingPart</ident> class and the <ident
+type="class">model.resourceLike</ident> class.</p>
+
 <p>The current recommendations provide no way of enforcing uniqueness
 of the <att>type</att> values among <gi>fsdDecl</gi> elements, nor of
 requiring that every <att>type</att> value specified on a <gi>fs</gi>
@@ -156,12 +219,8 @@ requiring such constraints (which might have some obvious utility in
 assisting the consistency and accuracy of tagging) are recommended to
 develop tools to enforce them, using such mechanisms as Schematron
 assertions. </p>
-<p><!--The module for feature system declarations is contained in the file
-<ident type="file">declarefs.dtd</ident> or <ident type="file">declarefs.rng</ident>. The former has the public
-identifier <ident type="fpi">-//TEI P5//DTD Auxiliary Document Type:
-Feature System Declaration//EN</ident>. -->This module makes available
-the following elements:
 
+<!--
 <moduleSpec xml:id="DFDDTD" ident="declarefs"><altIdent type="FPI">Feature System Declaration</altIdent><desc>Feature system declarations</desc></moduleSpec>
 
 This module has no particular dependencies on any other TEI module;
@@ -181,32 +240,22 @@ feature structure declarations.
 <specGrpRef target="#DFDFSD2"/>
 <specGrpRef target="#DFDX"/>
 <specGrpRef target="#DFD2"/>
-
+-->
 </div>
 <div type="div2" xml:id="FDOV"><head>The Overall Structure of a Feature System Declaration</head>
-<p>A feature system declaration is encoded by means of a
-<gi>teifsd</gi> element.  Apart from its global attributes, this has
-two parts: an obligatory header (which provides bibliographic
-information for the file) and a set of feature structure declarations
-(each of which defines one type of feature structure).  Each feature
-structure declaration in turn has three parts: an optional description
+<p>A feature system declaration contains one or more feature
+structure declarations, each of which has up to three parts: an optional description
 (which gives a prose comment on what that type of feature structure
 encodes), an obligatory set of feature declarations (which specify
 range constraints and default values for the features in that type of
 structure), and optional feature structure constraints (which specify
-co-occurrence restrictions on feature values).  The header is encoded
-as a <gi>teiHeader</gi>, just as for any TEI document; see chapter
-<ptr target="#HD"/>.  The other components listed above are unique to
-feature system declarations.  Thus, the following new elements are
-involved:
+co-occurrence restrictions on feature values). 
 <specList>
-<specDesc key="teifsd"/>
-<specDesc key="fsDecl"/>
 <specDesc key="fsDescr"/>
 <specDesc key="fDecl"/>
 <specDesc key="fsConstraints"/></specList></p>
 <p>Feature declarations and feature structure constraints are
-described in the next two sections of this chapter.  Note that the
+described in the next two sections.  Note that the
 specification of similar <gi>fsDecl</gi> elements can be simplified by
 devising an inheritance hierarchy for the feature structure types.
 Each <gi>fsDecl</gi> element  may name one or more
@@ -221,12 +270,9 @@ must include all three features.  This is because <tag>fsDecl
 type="Derived"</tag> inherits the two feature declarations from
 <tag>fsDecl type="Basic"</tag> when it specifies a base type
 of <val>Basic</val>.</p>
-<p>The following sample shows the overall structure of a complete FSD:
+<p>The following sample shows the overall structure of a complete
+feature structure declaration:
  <egXML xmlns="http://www.tei-c.org/ns/Examples">
-  <teifsd>
-     <teiHeader>
-        <!-- The header is as for any TEI document -->
-     </teiHeader>
      <fsDecl type="SomeName">
         <fsDescr>Describes what this type of fs represents</fsDescr>
         <fDecl name="featureOne">
@@ -239,10 +285,7 @@ of <val>Basic</val>.</p>
            <!-- The feature structure constraints go here -->
         </fsConstraints>
      </fsDecl>
-     <fsDecl type="AnotherType">
-           <!-- Declare another type of feature structure -->
-     </fsDecl>
-  </teifsd></egXML></p>
+</egXML></p>
 
 <p>The attribute <att>baseTypes</att> gives the name of one or more types
 from which this type inherits feature specifications and constraints;
@@ -270,12 +313,8 @@ begin with digits.  Multiple base types are separated with spaces,
 e.g. <tag>fsDecl type="Sub" baseTypes="Super1 Super2"</tag>.
 </p>
 <specGrp xml:id="DFDFSD2" n="Feature System Declaration">
-&teifsd;
-&fsDecl;&fsDescr;
+&fsDecl;&fsDescr; &fsdLink;
 </specGrp>
-
-
-
 
 </div>
 <div type="div2" xml:id="FDFD"><head>Feature Declarations</head>
