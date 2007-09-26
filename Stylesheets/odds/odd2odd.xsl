@@ -395,12 +395,14 @@
   <xsl:template name="addClassAttsToCopy">
     <xsl:if test="not(@ns) or @ns='http://www.tei-c.org/ns/1.0'">
       <xsl:call-template name="classAttributes">
+	<xsl:with-param name="whence">1</xsl:with-param>
 	<xsl:with-param name="elementName" select="@ident"/>
 	<xsl:with-param name="className" select="'att.global'"/>
       </xsl:call-template>
     </xsl:if>
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:call-template name="classAttributes">
+	<xsl:with-param name="whence">2</xsl:with-param>
 	<xsl:with-param name="elementName" select="@ident"/>
 	<xsl:with-param name="className" select="@key"/>
       </xsl:call-template>
@@ -843,6 +845,7 @@ so that is only put back in if there is some content
   <xsl:template name="classAttributes">
     <xsl:param name="elementName"/>
     <xsl:param name="className"/>
+    <xsl:param name="whence"/>
     <!-- 
     On entry, we are sitting on an <elementSpec> or <classSpec> 
     and seeing if we can pick up some attributes for 
@@ -955,7 +958,7 @@ so that is only put back in if there is some content
         <!-- a) new class in ODD -->
         <xsl:when test="@mode='add'">
           <xsl:for-each select="tei:attList/tei:attDef">
-            <tei:attRef name="{$className}.attribute.{translate(@ident,':','')}"
+            <tei:attRef n="1" name="{$className}.attribute.{translate(@ident,':','')}"
             />
           </xsl:for-each>
         </xsl:when>
@@ -995,7 +998,7 @@ so that is only put back in if there is some content
         <xsl:when test="@mode='change'">
           <!-- always references attributes in add mode -->
           <xsl:for-each select="tei:attList/tei:attDef[@mode='add']">
-            <tei:attRef name="{$className}.attribute.{translate(@ident,':','')}"
+            <tei:attRef n="2" name="{$className}.attribute.{translate(@ident,':','')}"
             />
           </xsl:for-each>
           <!-- go back to original and proceed from there -->
@@ -1072,6 +1075,7 @@ so that is only put back in if there is some content
       -->
       <xsl:for-each select="tei:classes/tei:memberOf">
         <xsl:call-template name="classAttributes">
+	  <xsl:with-param name="whence">3</xsl:with-param>
           <xsl:with-param name="elementName" select="$elementName"/>
           <xsl:with-param name="className" select="@key"/>
         </xsl:call-template>
@@ -1232,7 +1236,7 @@ every attribute and see whether the attribute has changed-->
       </xsl:call-template>
     </xsl:when>
     <xsl:otherwise>
-      <tei:attRef name="{$class}.attribute.{translate($att,':','')}"/>
+      <tei:attRef n="3" name="{$class}.attribute.{translate($att,':','')}"/>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
@@ -1300,31 +1304,35 @@ every attribute and see whether the attribute has changed-->
       <xsl:when test="$elementName=''"/>
       <xsl:otherwise>
 	<xsl:call-template name="classAttributes">
+	  <xsl:with-param name="whence">4</xsl:with-param>
 	  <xsl:with-param name="elementName" select="$elementName"/>
 	  <xsl:with-param name="className" select="'att.global'"/>
 	</xsl:call-template>
-	<xsl:call-template name="inheritedClassAttributes">
-          <xsl:with-param name="elementName" select="$elementName"/>
-	</xsl:call-template>
-        <xsl:for-each select="$ORIGINAL">
-	  <xsl:call-template name="inheritedClassAttributes">
-	    <xsl:with-param name="elementName" select="$elementName"/>
-	  </xsl:call-template>
-        </xsl:for-each>
+	<xsl:variable name="classMembership">
+	  <x>
+	  <xsl:for-each select="tei:classes/tei:memberOf">
+	    <xsl:copy-of select="."/>
+	  </xsl:for-each>
+	  <xsl:for-each select="$ORIGINAL">
+	    <xsl:for-each select="tei:classes/tei:memberOf">
+	      <xsl:copy-of select="."/>
+	    </xsl:for-each>
+	  </xsl:for-each>
+	  </x>
+	</xsl:variable>
+	<xsl:for-each select="exsl:node-set($classMembership)/x/tei:memberOf">
+	  <xsl:if test="not(preceding-sibling::tei:memberOf[@key=current()/@key])">
+	    <xsl:call-template name="classAttributes">
+	      <xsl:with-param name="whence">5</xsl:with-param>
+	      <xsl:with-param name="elementName" select="$elementName"/>
+	      <xsl:with-param name="className" select="@key"/>
+	    </xsl:call-template>
+	  </xsl:if>
+	</xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="inheritedClassAttributes">
-    <xsl:param name="elementName"/>
-    <xsl:variable name="orig" select="."/>
-    <xsl:for-each select="tei:classes/tei:memberOf">
-      <xsl:call-template name="classAttributes">
-        <xsl:with-param name="elementName" select="$elementName"/>
-        <xsl:with-param name="className" select="@key"/>
-      </xsl:call-template>
-    </xsl:for-each>
-  </xsl:template>
 
   <xsl:template name="mergeAttribute">
     <xsl:param name="New"/>
@@ -1534,6 +1542,7 @@ every attribute and see whether the attribute has changed-->
         <tei:attList>
           <xsl:comment>1.</xsl:comment>
           <xsl:call-template name="classAttributesSimple">
+	    <xsl:with-param name="whence">6</xsl:with-param>
             <xsl:with-param name="elementName" select="$elementName"/>
             <xsl:with-param name="className" select="'att.global'"/>
           </xsl:call-template>
@@ -1541,6 +1550,7 @@ every attribute and see whether the attribute has changed-->
           <xsl:for-each select="tei:classes/tei:memberOf">
             <xsl:comment>3: <xsl:value-of select="@key"/></xsl:comment>
             <xsl:call-template name="classAttributesSimple">
+	      <xsl:with-param name="whence">7</xsl:with-param>
               <xsl:with-param name="elementName" select="$elementName"/>
               <xsl:with-param name="className" select="@key"/>
             </xsl:call-template>
@@ -1592,6 +1602,7 @@ every attribute and see whether the attribute has changed-->
         <xsl:for-each select="tei:classes/tei:memberOf">
           <xsl:variable name="cName" select="@key"/>
           <xsl:call-template name="classAttributesSimple">
+	    <xsl:with-param name="whence">8</xsl:with-param>
             <xsl:with-param name="elementName" select="$elementName"/>
             <xsl:with-param name="className" select="$cName"/>
           </xsl:call-template>
