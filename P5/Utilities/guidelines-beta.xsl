@@ -909,9 +909,11 @@ function togglerelax (el) {
 <xsl:template name="formatHeadingNumber">
   <xsl:param name="text"/>
   <span class="headingNumber">
-    <xsl:if test="string-length(normalize-space($text))=1">
-      <xsl:text>&#160;</xsl:text>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="number(normalize-space($text))&lt;10">
+	<xsl:text>&#8194;</xsl:text>
+      </xsl:when>
+    </xsl:choose>
     <xsl:copy-of select="$text"/>
   </span>
 </xsl:template>
