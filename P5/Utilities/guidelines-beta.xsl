@@ -469,6 +469,7 @@ function togglerelax (el) {
                   </a>
 		  </h1>
                 </div>
+		<hr/>
 		<div>
 		  <xsl:call-template name="mainTOC"/>
 		</div>
@@ -615,6 +616,7 @@ function togglerelax (el) {
 	  <xsl:attribute name="class">
 	    <xsl:text>toc</xsl:text>
 	  </xsl:attribute>
+	  <a class="normaltoc">&#160;</a>
 	</xsl:otherwise>
 	</xsl:choose>
 	<xsl:call-template name="header">
@@ -904,5 +906,14 @@ function togglerelax (el) {
   </div>
 </xsl:template>
 
+<xsl:template name="formatHeadingNumber">
+  <xsl:param name="text"/>
+  <span class="headingNumber">
+    <xsl:if test="string-length(normalize-space($text))=1">
+      <xsl:text>&#160;</xsl:text>
+    </xsl:if>
+    <xsl:copy-of select="$text"/>
+  </span>
+</xsl:template>
 
 </xsl:stylesheet>
