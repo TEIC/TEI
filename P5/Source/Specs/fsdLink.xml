@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date: 2007-08-31 11:42:52 +0100 (Fri, 31 Aug 2007) $
+
+$Id: fsdDecl.xml 3029 2007-08-31 10:42:52Z rahtz $
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             module="iso-fs"  ident="fsdLink">
+  <gloss>feature structure declaration link</gloss>
+<desc>associates the name of a typed feature structure with a feature
+structure declaration for it.</desc>
+<content>
+<rng:empty/>
+</content>
+  <attList>
+    <attDef ident="type" usage="req">
+      <equiv/>
+      <desc>identifies the type of feature structure to be documented;
+      this will be the value of the <att>type</att> attribute on at least one
+feature structure.</desc>
+      <desc version="2007-01-21" xml:lang="it">identifica il tipo di dichiarazione del sistema di tratti attraverso il FSD, sarà il valore dell'attributo <att>type</att> di almeno una struttura di tratti.</desc>
+      <desc version="2007-05-04" xml:lang="es">identifica el tipo de estructura de rasgos documentada por el FSD; éste será el valor del atributo <att>type</att> al menos en una estructura de rasgos.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該FSDのタイプを示す．</desc>
+      <desc xml:lang="fr">identifie le type de structure de profils décrit dans la déclaration de systèmes de profils ; ce sera la valeur de l’attribut <att>type</att> d’au moins une structure de profils.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valDesc>any string of characters.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+          </attDef>
+    <attDef ident="target" usage="req">
+      <desc>supplies a pointer to a feature structure declaration
+      (<gi>fsDecl</gi>) element within the current document or elsewhere. </desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	  <fsdLink type="subentry" target="http://www.example.com/fsdLib.xml#L1234"/>
+    </egXML></exemplum>
+<listRef>
+  <ptr target="#FD"/>
+</listRef>
+</elementSpec>

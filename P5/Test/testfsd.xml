@@ -1,0 +1,106 @@
+<TEI>
+<teiHeader>
+<fileDesc>
+<titleStmt>
+   <title>A sample FSD based on an extract from Gazdar
+      et al.'s GPSG feature system for English</title>
+   <respStmt>
+      <resp>encoded by</resp>
+      <name>Gary F. Simons</name>
+   </respStmt>
+</titleStmt>
+<publicationStmt>
+<p>This sample was first encoded by Gary F. Simons (Summer
+Institute of Linguistics, Dallas, TX) on January 28, 1991.
+Revised April 8, 1993 to match the specification of FSDs
+in version P2 of the TEI Guidelines. Revised again December 2004 to
+be consistent with  the feature structure representation standard
+jointly developed with ISO TC37/SC4.
+</p></publicationStmt>
+<sourceDesc>
+<p>This sample FSD does not describe a complete feature
+system.  It is based on extracts from the feature system
+for English presented in the appendix (pages 245–247) of
+Generalized Phrase Structure Grammar, by Gazdar, Klein,
+Pullum, and Sag (Harvard University Press, 1985).</p>
+</sourceDesc>
+</fileDesc>
+</teiHeader>
+<fsdDecl>
+<fsDecl type="GPSG">
+   <fsDescr>Encodes a feature structure for the GPSG analysis
+     of English (after Gazdar, Klein, Pullum, and Sag)</fsDescr>
+   <fDecl name="INV">
+      <fDescr>inverted sentence</fDescr>
+      <vRange>
+         <vAlt>
+           <binary value="true"/>
+           <binary value="false"/>
+         </vAlt>
+      </vRange>
+      <vDefault><binary value="false"/></vDefault>
+   </fDecl>
+   <fDecl name="CONJ">
+      <fDescr>surface form of the conjunction</fDescr>
+      <vRange><vAlt><symbol value="and"/><symbol value="both"/>
+         <symbol value="but"/><symbol value="either"/>
+         <symbol value="neither"/><symbol value="nor"/>
+         <symbol value="or"/><symbol value="NIL"/>
+      </vAlt></vRange>
+      <vDefault><binary value="false"/></vDefault>
+      </fDecl>
+   <fDecl name="COMP">
+      <fDescr>surface form of the complementizer</fDescr>
+      <vRange><vAlt><symbol value="for"/>
+           <symbol value="that"/><symbol value="whether"/>
+           <symbol value="if"/><symbol value="NIL"/>
+       </vAlt></vRange>
+      <vDefault>
+         <if><fs><f name="VFORM"><symbol value="INF"/></f>
+                 <f name="SUBJ"><binary value="true"/></f></fs>
+        <then/><symbol value="for"/></if>
+      </vDefault>
+   </fDecl>
+   <fDecl name="AGR">
+      <fDescr>agreement for person and number</fDescr>
+      <vRange><fs type="Agreement"/></vRange>
+   </fDecl>
+   <fDecl name="PFORM">
+      <fDescr>word form of a preposition</fDescr>
+         <vRange><vNot><string/></vNot></vRange>
+   </fDecl>
+   <fsConstraints>
+      <cond><fs><f name="INV"><binary value="true"/></f></fs>
+      <then/><fs>
+          <f name="AUX"><binary value="true"/></f>
+          <f name="VFORM"><symbol value="FIN"/></f>
+          </fs>
+     </cond>
+     <bicond><fs><f name="BAR"><symbol value="0"/></f></fs>
+      <iff/><fs>
+         <f name="N"><binary value="true"/></f>
+         <f name="V"><binary value="true"/></f>
+         <f name="SUBCAT"><binary value="true"/></f>
+          </fs>
+      </bicond>
+      <cond><fs><f name="BAR"><symbol value="1"/></f></fs>
+        <then/>   
+           <fs><f name="SUBCAT"><binary value="false"/></f></fs>
+      </cond>
+   </fsConstraints>
+</fsDecl><fsDecl type="Agreement">
+   <fsDescr>This type of feature structure encodes the features
+      for subject-verb agreement in English</fsDescr>
+   <fDecl name="PERS">
+      <fDescr>person (first, second, or third)</fDescr>
+      <vRange><vAlt>
+        <symbol value="1"/><symbol value="2"/><symbol value="3"/>
+       </vAlt></vRange>
+   </fDecl>
+   <fDecl name="NUM">
+      <fDescr>number (singular or plural)</fDescr>
+      <vRange><vAlt><symbol value="sg"/><symbol value="pl"/>
+      </vAlt></vRange>
+   </fDecl>
+</fsDecl>
+</fsdDecl></TEI>
