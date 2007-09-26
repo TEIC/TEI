@@ -153,6 +153,8 @@
     <xsl:variable name="depth">
       <xsl:apply-templates mode="depth" select="."/>
     </xsl:variable>
+    <xsl:call-template name="formatHeadingNumber">
+      <xsl:with-param name="text">
     <xsl:choose>
       <xsl:when test="local-name(.) = 'TEI'"/>
       <xsl:when test="local-name(.) = 'TEI.2'"/>
@@ -192,6 +194,8 @@
         </xsl:if>
       </xsl:when>
     </xsl:choose>
+      </xsl:with-param>
+    </xsl:call-template>
     <xsl:if test="$minimal='false'">
       <xsl:choose>
         <xsl:when test="local-name(.) = 'TEI' or local-name(.)='TEI.2'">
@@ -246,6 +250,18 @@
       </xsl:choose>
     </xsl:if>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>[common] processing the number portion of a heading</xd:short>
+    <xd:param name="text"></xd:param>
+    <xd:detail>By default, the text is printed as is. You may
+    wish to colour it, align it, etc</xd:detail>
+  </xd:doc>
+  <xsl:template name="formatHeadingNumber">
+      <xsl:param name="text"/>
+      <xsl:copy-of select="$text"/>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>[common] Making a heading for something, and making sure it has
       contents</xd:short>
