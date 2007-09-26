@@ -768,7 +768,7 @@ function togglerelax (el) {
       </xsl:for-each>
     </div>
 
-    <div class="toc_front">
+    <div class="toc_back">
       <h3>Back Matter</h3>
       <xsl:for-each
 	  select="ancestor-or-self::tei:TEI/tei:text/tei:back">
