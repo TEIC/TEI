@@ -1061,51 +1061,59 @@ from which they inherit the following attribute:
 
 <p>Further characteristics of each addition and deletion, such as the
 hand used, its effect (complete or incomplete, for example), or its
-position in  a sequence of such operations may conveniently be recorded as attributes of these
-elements, all of which are members of
-the <ident type="class">att.transcriptional</ident> class:
+position in a sequence of such operations may conveniently be recorded
+as attributes of these elements, all of which are members of the
+<ident type="class">att.transcriptional</ident> class:
 <specList>
 <specDesc key="att.transcriptional" atts="seq status hand"/>
 </specList>
 </p>
 
 
-<p>As described in section <ptr target="#COED"/>, the <gi>add</gi> element
-is used to record any manuscript
-addition observed in the text, whether it is considered to be authorial or scribal. In the autograph manuscript
-of Max Beerbohm's <title>The Golden Drugget</title>,<note place="foot">In
-  Pierpont Morgan MA 3391 (Klinkenborg 123).</note>
-the author's addition of <mentioned>do ever</mentioned> may be recorded as follows, with the
-<att>hand</att> attribute indicating that the addition was Beerbohm's
-by referencing a <gi>hand</gi> element defined elsewhere in the document:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Some things are best at first sight. Others — and
-here is one of them — <add hand="#mb">do ever</add>
-improve by recognition ....
-<hand xml:id="mb" scribe="Max Beerbohm holograph"/>
+<p>As described in section <ptr target="#COED"/>, the <gi>add</gi>
+element is used to record any manuscript addition observed in the
+text, whether it is considered to be authorial or scribal. In the
+autograph manuscript of Max Beerbohm's <title>The Golden
+Drugget</title>,<note place="foot">In Pierpont Morgan MA 3391
+(Klinkenborg 123).</note> the author's addition of <mentioned>do
+ever</mentioned> may be recorded as follows, with the <att>hand</att>
+attribute indicating that the addition was Beerbohm's by referencing a
+<gi>handNote</gi> element defined elsewhere in the document (see
+further <ptr target="#PHDH"/>): 
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Some things are best at first
+sight. Others — and here is one of them — <add hand="#mb">do
+ever</add> improve by recognition ....
+<handNote xml:id="mb">Max Beerbohm holograph</handNote>
 </egXML>
-Similarly, the <gi>del</gi> element is
-used to record manuscript deletions. In the autograph manuscript of D.
-H. Lawrence's <title>Eloi, Eloi, lama sabachthani</title><note place="foot">In Pierpont
-Morgan MA 1892, (Klinkenborg 129).</note>, the author's deletion of
-<mentioned>my</mentioned> may be recorded as follows. In this case,  the
-<att>hand</att> attribute indicating that the deletion was Lawrence's
-is complemented by a  <att>rend</att> attribute indicating that the deletion was by
-strike-through:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this <del rend="strikethrough" hand="#dhl">my</del> body,
-which is so dear to me
+</p>
+
+<p>Similarly, when the <gi>del</gi> element is used to
+record manuscript deletions. In the autograph manuscript of D.
+H. Lawrence's <title>Eloi, Eloi, lama sabachthani</title><note
+place="foot">In Pierpont Morgan MA 1892, (Klinkenborg 129).</note>,
+the author's deletion of <mentioned>my</mentioned> may be recorded as
+follows. In this case, the <att>hand</att> attribute indicating that
+the deletion was Lawrence's is complemented by a <att>rend</att>
+attribute indicating that the deletion was by strike-through: <egXML
+xmlns="http://www.tei-c.org/ns/Examples">For I hate this <del
+rend="strikethrough" hand="#dhl">my</del> body, which is so dear to me
 ...
-<hand xml:id="dhl" scribe="holograph"/>
-</egXML>
-If deletions are classified systematically, the <att>type</att>
-attribute may be useful to indicate the classification; when they
-are classified by the manner in which they were effected, or by their
-appearance, however,
-this will lead to a certain arbitrariness in deciding
-whether to use the <att>type</att> or the <att>rend</att> attribute
-to hold the information. In general, it is recommended that the
-<att>rend</att> attribute be used for description of the appearance
-or method of deletion, and that the <att>type</att> attribute be
-reserved for higher level or more abstract classifications.</p>
+<handNote xml:id="dhl">D H Lawrence holograph</handNote>
+
+</egXML></p>
+
+
+<p>If deletions are classified systematically, the <att>type</att>
+attribute may be useful to indicate the classification; when they are
+classified by the manner in which they were effected, or by their
+appearance, however, this will lead to a certain arbitrariness in
+deciding whether to use the <att>type</att> or the <att>rend</att>
+attribute to hold the information. In general, it is recommended that
+the <att>rend</att> attribute be used for description of the
+appearance or method of deletion, and that the <att>type</att>
+attribute be reserved for higher level or more abstract
+classifications.</p>
 
 <p>The <att>place</att> attribute is also available to indicate the
 location of an addition. For example, in the following line from the typescript of Eliot's
@@ -1171,7 +1179,7 @@ insertion of a gathering containing four neo-Eddic poems into
 <title>Landsbókasafn</title><note place="foot">In Reykjavík, Lbs 1562 4to</note> by Helgi
 Ólafsson is recorded as follows.  
 <!-- added clarificatory sentence -->
-A <gi>hand</gi> element is first declared, within the header of the
+A <gi>handNote</gi> element is first declared, within the header of the
 document, to associate the identifier <val>heol</val> with Helgi. Each
 of the added poems is encoded as a distinct <gi>div</gi> element. In
 the body of the text, an <gi>addSpan</gi> element is placed to mark
@@ -1180,7 +1188,7 @@ used to mark its end.  The <att>hand</att> attribute on the
 <gi>addSpan</gi> element ascribes responsibility for the addition to
 the manuscript to Helgi, and the <att>spanTo</att> attribute points to
 the end of the added text:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><hand xml:id="heol"
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><handNote xml:id="heol"
 scribe="HelgiÓlafsson"/>
 <!-- ... -->
 <body>
@@ -1274,144 +1282,29 @@ over-ridden by means of the <att>seq</att> attribute, which is of
 particular usefulness when a sequence of deletions and additions
 occurs.
 </p>
-<p>For example, 
 
-<!--
-Three different methods may be used to express substitution of one
-stretch of text by another:
-y<list type="bullets">
-<item>the <gi>sic</gi> and <gi>corr</gi> elements, either individually
-to encode a single substitution or nested to encode a sequence of
-substitutions;</item>
-<item>the <gi>del</gi> and <gi>add</gi> elements, used in sequence to
-show that text was first deleted then other text inserted;</item>
-<item>the <gi>del</gi> and <gi>add</gi> elements, used within an
-<gi>app</gi> structure (as defined in chapter <ptr target="#TC"/>) to
-indicate that the deleted and added text within the individual reading
-elements making up the <gi>app</gi> structure are variants of one
-another.</item></list>
-The use of all three of these is illustrated in the following encodings
-of the second line of <title>Eloi, Eloi, lama sabachthani</title> from
-the Lawrence manuscript mentioned above.  Lawrence first wrote <q>How it
-galls me, what a galling shadow</q>.  Subsequently, he deleted
-<mentioned>galls</mentioned> and wrote <mentioned>dogs</mentioned> above the deletion.</p>
-<p>This substitution could be registered using the first method outlined
-above, as a correction using the <gi>sic</gi> and <gi>corr</gi>
-elements within a <gi>choice</gi> element.
-Note the use of the <att>resp</att> attribute on the <gi>corr</gi>
-element to assign the correction to Lawrence.  (For further information
-on the <att>hand</att> and <att>resp</att> attributes, see section
-<ptr target="#PHHR"/>.) 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">How it <choice><sic>galls</sic><corr resp="#DHL">dogs</corr></choice>
-me, what a galling shadow</egXML>
-This substitution could be registered using the second method outlined
-above, using the <gi>del</gi> and <gi>add</gi> elements in sequence to
-reflect the fact that text was first deleted then other text inserted:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">How it <del type="overstrike" hand="#dhl">galls</del>
-<add place="supralinear" hand="#dhl">dogs</add>
-me, what a galling shadow</egXML>
-This substitution could be registered using the third method outlined
-above, using the <gi>del</gi> and <gi>add</gi> elements within an
-<gi>app</gi> structure to indicate that the deleted and added texts are
-variants of one another.  Note that within the <gi>app</gi> structure
-the <att>hand</att> attribute is moved from the inner <gi>del</gi> and
-<gi>add</gi> elements to the outer <gi>rdg</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">How it
-  <app>
-    <rdg hand="#dhl"> <del type="overstrike"> galls</del> </rdg>
-    <rdg hand="#dhl"> <add place="supralinear"> dogs</add> </rdg>
-  </app>
-me, what a galling shadow</egXML>
-Each of these three methods has its particular advantages and
-disadvantages.  The first method (use of <gi>sic</gi> and <gi>corr</gi>)
-is compact and indicates clearly that one text is a substitute for
-another.  However, it provides no clear means of stating how the
-substitution is effected:  whether by deletion through strike-through, or
-underdotting, or erasure, followed by interlinear insertion, or marginal
-insertion.  (The global <att>rend</att> attribute might conceivably be
-used, but this may not be thought an obvious place to put such
-information.)  In a transcription where this information is not felt to
-be important, however, this method will suffice to indicate simple cases
-of direct substitution of one text for another.</p>
-<p>The second method (use of a <gi>del</gi> and <gi>add</gi> sequence)
-is also compact and provides means for exact declaration of how the
-deletion and insertion are effected.  However, it does not indicate
-explicitly that one text is a substitute for another.  It is left for
-the reader or the application to infer from the <gi>del</gi> and
-<gi>add</gi> sequence that the insertion is to be taken as a
-substitution for the deletion.  In many transcriptions, the inference
-may be safely drawn for simple cases of direct substitution of one text
-for another.  In other transcriptions, for example of complex authorial
-manuscripts, this inference may prove fragile; those who desire
-to express clearly that an adjacent addition and deletion are not
-independent but constitute a single act of substitution will therefore
-wish to avoid this method.  Others, of course, may prefer it for
-precisely the same reason, namely that it avoids prejudging the issue of
-whether adjacent deletions and additions are independent or joined.</p>
-<p>The third method (use of the <gi>del</gi> and <gi>add</gi> elements
-within an <gi>app</gi> structure) provides means both for exact
-declaration of how the deletion and insertion are effected and for
-explicit indication that one text is a substitute for another.  Further,
-the exact sequence of readings may also be declared by use of the
-<att>varSeq</att> attribute on the <gi>rdg</gi> element, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">How it
-  <app>
-    <rdg varSeq="1" hand="#dhl"> <del>galls</del> </rdg>
-    <rdg varSeq="2" hand="#dhl"> <add>dogs</add> </rdg>
-  </app>
-me, what a galling shadow</egXML>
-Here, the combination of the <att>hand</att> and <att>varSeq</att>
-attributes suffices to inform the reader of the authorial substitution
-of <mentioned>dogs</mentioned> for <mentioned>galls</mentioned>.</p>
-<p>Similarly, the <att>varSeq</att> attribute might be used in a
-transcription of the manuscripts of James Joyce's <title>Ulysses</title>
-to indicate the sequence of Joyce's corrections which is implicit in
-Hans Walter Gabler's reconstruction of the <q>overlay</q> levels of
-Joyce's transcriptions.  This third method is the most powerful and
-unambiguous of the three methods and enables the widest range of
-processing possibilities, at the expense of introducing a heavier
-burden of markup into the text. Production of such documents should
-therefore not be undertaken without markup-aware editors.  
-Applications of some
-sophistication may be needed to make full use of all the information
-that may be held within an <gi>app</gi> structure.  In the absence of
-such applications, scholars may feel that the present cost of the more
-informative coding using <gi>app</gi> structures outweighs the future
-benefits.  In making such decisions, it should however be kept in mind
-that the capabilities of software at the time a project begins will often
-be wholly irrelevant when the project is completed some years later.</p>
-<p>The Lawrence example above shows the three methods used for encoding
-a single substitution of one reading for another.  The same three
--->
-if this method is  used to encode a longer sequence of substitutions.
-Returning to the example from William James, in a passage first written out by James as <q>One
-must have lived longer with this system, to appreciate its
-advantages</q> the word <mentioned>this</mentioned> is first replaced by
-<mentioned>such a</mentioned> and this is then replaced by <mentioned>a</mentioned>.
-<note place="foot">The manuscript contains several other substitutions,
-ignored here for the sake of clarity.</note> 
-<!-- This may be encoded using
-the first method, with the sequence of substitutions shown by the
-nesting of <gi>corr</gi> elements:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">One must have lived longer with
-<choice>
-<sic>this</sic>
-<corr sic="such a">a</corr></corr> system,
-to appreciate its advantages.</egXML></p>
--->
-This may be encoded as follows, representing the two changes
- as a sequence of additions and deletions:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">One must have lived longer with
-<subst><del seq="1">this</del> <del seq="2"><add seq="1">such a</add></del>
-<add seq="2">a</add></subst> system, to appreciate its advantages.</egXML>
-Note the nesting of an <gi>add</gi> element within a <gi>del</gi> to
-record text first added, then deleted in the source. The numbers
-assigned by the <att>seq</att> attribute may be used to identify the
-order in which the various additions and deletions are believed by the
-encoder to have been carried out, and thus provide a simple method of
-supporting the kind of  <soCalled>genetic</soCalled> textual
-criticism typified by (for example) Hans Walter Gabler's work on the reconstruction of the <q>overlay</q> levels of
-implicit in the  manuscripts of James Joyce's <title>Ulysses</title>. 
+<p>For example, returning to the example from William James, in a
+passage first written out by James as <q>One must have lived longer
+with this system, to appreciate its advantages</q> the word
+<mentioned>this</mentioned> is first replaced by <mentioned>such
+a</mentioned> and this is then replaced by <mentioned>a</mentioned>.
+<note place="foot">The manuscript contains several other
+substitutions, ignored here for the sake of clarity.</note> This may
+be encoded as follows, representing the two changes as a sequence of
+additions and deletions: <egXML
+xmlns="http://www.tei-c.org/ns/Examples">One must have lived longer
+with <subst><del seq="1">this</del> <del seq="2"><add seq="1">such
+a</add></del> <add seq="2">a</add></subst> system, to appreciate its
+advantages.</egXML> Note the nesting of an <gi>add</gi> element within
+a <gi>del</gi> to record text first added, then deleted in the
+source. The numbers assigned by the <att>seq</att> attribute may be
+used to identify the order in which the various additions and
+deletions are believed by the encoder to have been carried out, and
+thus provide a simple method of supporting the kind of
+<soCalled>genetic</soCalled> textual criticism typified by (for
+example) Hans Walter Gabler's work on the reconstruction of the
+<q>overlay</q> levels of implicit in the manuscripts of James Joyce's
+<title>Ulysses</title>.
 </p>
 <p>As a more complex example, consider the following passage in one of
 the manuscripts of Wilfred Owen's <title>Dulce et decorum
@@ -1456,16 +1349,7 @@ example above might thus be represented as follows:
     <rdg varSeq="3"><add>a</add></rdg>
   </app>
 system, to appreciate its advantages.</egXML>
-<!--The three encodings of this slightly more complex example illustrate the
-general truth that the more information involving substitutions there is
-to be encoded, the clearer become the advantages of the use of the
-<gi>app</gi> method over the other two methods.  As a rule, it is
-recommended that the <gi>app</gi> method be used for encoding
-substitutions of any complexity.  It is also desirable that the one
-method be used throughout any one transcription.  Accordingly, the
-<gi>app</gi> method is recommended for text critical transcription of
-primary textual materials requiring encoding of instances of other than
-straightforward substitution.--></p></div>
+</p></div>
 
 <div type="div3" xml:id="PHCD"><head>Cancellation of Deletions and Other Markings</head>
 <p>An author or scribe may mark a word or phrase in some way, and then
@@ -1563,52 +1447,77 @@ see section <ptr target="#PHCOMB"/>.</p>
 <div type="div2" xml:id="PHPH"><head>Hands and Responsibility</head>
 <p>This section discusses in more detail the representation of aspects
 of responsibility perceived or to be recorded for the writing of a
-primary source. These include points at
-which one scribe takes over from another, or at which ink, pen, or other
-characteristics of the writing change. A discussion of the usage of the <att>hand</att>,
+primary source. These include points at which one scribe takes over
+from another, or at which ink, pen, or other characteristics of the
+writing change. A discussion of the usage of the <att>hand</att>,
 <att>resp</att>, and <att>cert</att> attributes is also included.
 </p>
 <div type="div3" xml:id="PHDH"><head>Document Hands</head>
-<p>For many text-critical purposes it is important to signal the person
-responsible (the <term>hand</term>) for the writing of a whole document, a
-stretch of text within a document, or a particular feature within the
-document.  A hand, as the name supplies, need not necessarily be identified with a
-particular  known (or unknown)  scribe or author; it may simply
-indicate a particular combination of writing features recognized 
-within one or more documents. The examples given above of
-the use of the <att>hand</att> attribute with coding of additions and
-deletions illustrate this. </p>
-<p><!--In other cases, it may be necessary to identify a document hand
-without there being any association of that hand with any specific
-tagged document feature.  -->The <gi>handList</gi> and <gi>hand</gi>
-elements are used in the TEI header (in the <gi>profileDesc</gi>
-element) to define each unique hand or scribe distinguished by the
-encoder in the document.  One such element must appear within the
-header for each hand distinguished in the text, and each such element
-should bear a distinct identifier as the value of its global
-<att>xml:id</att> attribute.  Each location where a change of hands
-occurs may then be marked in the text by the empty <gi>handShift</gi>
-element, which specifies the hand concerned by giving the same
-identifier.
+
+<p>For many text-critical purposes it is important to signal the
+person responsible (the <term>hand</term>) for the writing of a whole
+document, a stretch of text within a document, or a particular feature
+within the document.  A hand, as the name suggests, need not
+necessarily be identified with a particular known (or unknown) scribe
+or author; it may simply indicate a particular combination of writing
+features recognized within one or more documents. The examples given
+above of the use of the <att>hand</att> attribute with coding of
+additions and deletions illustrate this. </p>
+
+<p>The <gi>handNote</gi> element is used to provide information about
+each hand distinguished within the encoded document. 
 <specList>
-<specDesc key="hand" atts="style ink writing" /><specDesc key="handList"/>
+<specDesc key="handNote"/>
+</specList>
+</p>
+
+<p>A <gi>handNote</gi> element, with an identifier given by its
+<att>xml:id</att> attribute, may appear in either of two places in the
+TEI Header, depending on which modules are included in a schema. When
+the <ident type="class">transcr</ident> module defined by the present
+chapter is used, the element <gi>handNotes</gi> is available, within
+the <gi>profileDesc</gi> element of the Header, to hold one or more
+<gi>handNote</gi> elements. When the <ident
+type="class">msdescription</ident> module defined in chapter <ptr
+target="#MS"/> is included, a special purpose <gi>handDesc</gi>
+element also becomes available as part of a structured manuscript
+description (see further <ptr target="#msph2"/>). The encoder may
+choose to place <gi>handNote</gi> elements identifying individual
+hands in either location without affecting their accessibility since
+the element is always addressed by means of its <att>xml:id</att>
+attribute. </p>
+
+<p>As shown above, the <att>hand</att> attribute is available on
+several elements to indicate the hand in which the content of the
+element (usually a deletion or addition) is carried out. The
+<gi>handShift</gi> element may also be used within the body of a
+transcription to indicate where a change of hand is detected for
+whatever reason. 
+<specList>
 <specDesc key="handShift"/></specList>
-</p><p>The  <att>new</att> attribute on the
-<gi>handShift</gi> element is used to indicate the hand applicable to
-the material following the <gi>handShift</gi>.  This will
-ordinarily, but not necessarily, be the order in which the material was
-originally written.  The <att>writing</att> attribute will be most often
-used to encode descriptive shifts which the transcriber perceives within
-a manuscript but which are not judged to indicate a change of hand.   The particular values encoded will depend
-upon the needs of the transcriber. </p>
+</p>
+<p>Both <gi>handShift</gi> and <gi>handNote</gi>  are members of the
+<ident type="class">att.handFeatures</ident> class, and thus share
+the following attributes:
+<specList>
+<specDesc key="att.handFeatures" atts="scribe script medium scope"/>
+</specList>
+</p>
+
 <p>A single hand may employ different writing styles and inks within a
-document, or may change character.  For example, the writing style might
-shift from <q>anglicana</q> to <q>secretary</q>, or the ink from blue to
-brown, or the character of the hand may change.  Any such changes should
-be indicated by assigning a new value to the appropriate attribute
-within the <gi>handShift</gi> element.  It is for the encoder to
-decide whether a change in these properties of the writing style is so
-marked as to require treatment as a distinct hand.</p> 
+document, or may change character.  For example, the writing style
+might shift from <q>anglicana</q> to <q>secretary</q>, or the ink from
+blue to brown, or the character of the hand may change.  Simple
+changes of this kind may be indicated by assigning a new value to the
+appropriate attribute within the <gi>handShift</gi> element.  It is
+for the encoder to decide whether a change in these properties of the
+writing style is so marked as to require treatment as a distinct
+hand.</p>
+<p>Where such a change is to be identified, the <att>new</att>
+attribute is used to indicate the hand applicable to the material
+following the <gi>handShift</gi>.  This will ordinarily, but not
+necessarily, be the order in which the material was originally
+written.</p>
 
 <p> As might be expected, one hand may employ different renditions
 within the one writing style, for example medieval scribes often
@@ -1617,20 +1526,27 @@ line.  These should be indicated by use of the <att>rend</att>
 attribute on an element, in the same manner as underlining,
 emboldening, font shifts, etc. are represented in transcription of a printed text,
 rather than by introducing a new <gi>handShift</gi> element.</p>
+
+<p>In this example<note place="foot">From folio 52 recto of the Holkham
+manuscript of Chaucer's <title>Canterbury Tales</title>.</note> there is
+a change of ink within the one hand.  This is simply indicated by a new value
+for the <att>medium</att> attribute on the <gi>handShift</gi> element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>When wolde the cat dwelle in his ynne</l>
+<handShift medium="greenish-ink"/>
+<l>And if the cattes skynne be slyk <handShift medium="black-ink"/> and gaye</l></egXML></p>
+
 <p>In this example<note place="foot">From the Wiltshire Record Office,
 Dean of Sarum Churchwardens' presentments, 1731, Hurst; the
 transcription was provided by Donald A. Spaeth.</note> the encoder has
 identified two distinct hands within the document. These are given
 identifiers <val>h1</val> and <val>h2</val> by the following
-declarations, included in the TEI Header for this document.<!-- msDesc
-? -->
+declarations, included in the TEI Header for this document:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-   <profileDesc>
-    <handList>
-      <hand xml:id="h1" style="copperplate" ink="brown" writing="regular" first="true" resp="#das"/>
-      <hand xml:id="h2" style="print" ink="brown" writing="unschooled" resp="#das"/>
-    </handList>
-  </profileDesc>
+    <handNotes>
+      <handNote xml:id="h1" script="copperplate"
+		medium="brown-ink">Carefully written with regular descenders</handNote>
+      <handNote xml:id="h2" script="print" medium="pencil">Unschooled scrawl</handNote>
+    </handNotes>
  </egXML>
 </p>
 <p>Then the change of hand is indicated in the text:
@@ -1641,15 +1557,11 @@ Church of England and as under a good Consciencious
 and sober Curate there would and ought to be
 <handShift new="#h2" resp="#das"/>
 and for that purpose the parishioners pray</egXML></p>
-<p>In this example<note place="foot">From folio 52 recto of the Holkham
-manuscript of Chaucer's <title>Canterbury Tales</title>.</note> there is
-a change of ink within the one hand.  This is indicated by a new value
-for the <att>ink</att> attribute on the <gi>handShift</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>When wolde the cat dwelle in his ynne</l>
-<handShift new="#h2" ink="black"/>
-<l>And if the cattes skynne be slyk and gaye</l></egXML></p>
 </div>
-<div type="div3" xml:id="PHHR"><head>Hand, Responsibility, and Certainty Attributes</head>
+
+<div type="div3" xml:id="PHHR">
+<head>Hand, Responsibility, and Certainty Attributes</head>
+
 <p>The <att>hand</att> and <att>resp</att> attributes have similar, but
 not identical, meanings.  Observe their distinctive uses in the
 following encoding of the William James passage mentioned above in
@@ -2152,8 +2064,10 @@ description of textual witnesses:  the materials of the carrier, the
 medium of the inscribing implement, 
 the organisation of the carrier materials themselves (as
 quiring, collation, etc.), authorial instructions or scribal markup,
-etc.  Some of these issues may be covered in future editions of these
-guidelines.</p></div>
+etc. except insofaras these are involved in the broader question of
+manuscript description, as addressed by the <ident
+type="class">msdescription</ident> module described in chapter <ptr
+target="#MS"/>. </p></div>
 <div><head>Formal declarations for transcriptional elements</head>
 
 <p>This chapter declares the <ident type="module">transcr</ident>
@@ -2171,8 +2085,7 @@ The selection and combination of modules to form a TEI schema is described in
 &delSpan;
 &ex;
 &fw;
-&hand;
-&handList;
+&handNotes;
 &handShift;
 &am;
 &restore;
@@ -2181,21 +2094,6 @@ The selection and combination of modules to form a TEI schema is described in
 &supplied;
 </specGrp>
 
-<!--
-</specGrp>
-</specGrp>
-</specGrp>
-</specGrp>
-</specGrp>
-</specGrp>
-</specGrp>
-<specGrp xml:id="DPHCD" n="Cancelled Deletions">
-<specGrp xml:id="DPHDA" n="Damage and Illegiblity">
-<specGrp xml:id="DPHHD" n="Hand Shifts">
-<specGrp xml:id="DPHOM" n="Supplied Text">
-<specGrp xml:id="DPHSP" n="Spaces in the source">
-<specGrp xml:id="DTCAD" n="Added and Deleted Spans">
--->
 
 
 
