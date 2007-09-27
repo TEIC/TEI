@@ -24,12 +24,12 @@
 <xsl:key name="ANAMES"
 	 match="tei:analytic/tei:author[tei:surname]|tei:analytic/tei:editor[tei:surname]" 
 	 use ="ancestor::tei:biblStruct/@xml:id"/>
-<xsl:template match="/">
-  <xsl:apply-templates select="//tei:biblStruct" mode="xref"/>
-</xsl:template>
 
-<xsl:template match="tei:biblStruct" mode="xref">
-<xsl:text>
+<xsl:template match="/">
+  <xsl:for-each select=".//tei:biblStruct">
+    <xsl:sort select=".//tei:*[1]"/>
+    <xsl:sort select=".//tei:date[1]"/>
+    <xsl:text>
 </xsl:text>
  <xsl:choose>
    <xsl:when test="not(tei:monogr or tei:analytic)">
@@ -86,6 +86,7 @@
    <xsl:value-of select="tei:monogr/tei:imprint/tei:date"/>
    <xsl:text>)</xsl:text>
  </xsl:if>
+</xsl:for-each>
 </xsl:template>
 
 </xsl:stylesheet>
