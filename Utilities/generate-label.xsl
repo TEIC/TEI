@@ -64,6 +64,10 @@
 	 select="key('MNAMES',@xml:id)[1]/tei:surname"/>
      <xsl:text> et al.</xsl:text>
    </xsl:when>
+   <xsl:when test=".//tei:author">
+     <xsl:value-of
+	 select=".//tei:author[1]"/>
+   </xsl:when>
    <xsl:otherwise>
      <xsl:value-of
 	 select=".//tei:title[1]"/>
