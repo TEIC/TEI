@@ -19,10 +19,10 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:key name="MNAMES"
-	 match="tei:monogr/tei:author|tei:monogr/tei:editor" 
+	 match="tei:monogr/tei:author[tei:surname]|tei:monogr/tei:editor[tei:surname]" 
 	 use ="ancestor::tei:biblStruct/@xml:id"/>
 <xsl:key name="ANAMES"
-	 match="tei:analytic/tei:author|tei:analytic/tei:editor" 
+	 match="tei:analytic/tei:author[tei:surname]|tei:analytic/tei:editor[tei:surname]" 
 	 use ="ancestor::tei:biblStruct/@xml:id"/>
 <xsl:template match="/">
   <xsl:apply-templates select="//tei:biblStruct" mode="xref"/>
@@ -33,7 +33,7 @@
 </xsl:text>
  <xsl:choose>
    <xsl:when test="not(tei:monogr or tei:analytic)">
-     <xsl:message>no monogr or analytic for <xsl:value-of select="@id"/>
+     <xsl:message terminate="yes">no monogr or analytic for <xsl:value-of select="@id"/>
      </xsl:message>
    </xsl:when>
    <xsl:when test="count(key('ANAMES',@xml:id))=1">
@@ -65,12 +65,12 @@
      <xsl:text> et al.</xsl:text>
    </xsl:when>
    <xsl:when test=".//tei:author">
-     <xsl:value-of
-	 select=".//tei:author[1]"/>
+     <xsl:value-of select=".//tei:author[1]"/>
    </xsl:when>
    <xsl:otherwise>
-     <xsl:value-of
-	 select=".//tei:title[1]"/>
+     <emph>
+     <xsl:value-of select=".//tei:title[1]"/>
+     </emph>
    </xsl:otherwise>
  </xsl:choose>
  <xsl:choose>
@@ -81,9 +81,11 @@
    <xsl:text> (eds.)</xsl:text>
  </xsl:when>
  </xsl:choose>
-<xsl:text>, (</xsl:text>
-<xsl:value-of select="tei:monogr/tei:imprint/tei:date"/>
-<xsl:text>)</xsl:text>
+ <xsl:if test="tei:monogr/tei:imprint/tei:date">
+   <xsl:text> (</xsl:text>
+   <xsl:value-of select="tei:monogr/tei:imprint/tei:date"/>
+   <xsl:text>)</xsl:text>
+ </xsl:if>
 </xsl:template>
 
 </xsl:stylesheet>
