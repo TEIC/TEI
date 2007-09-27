@@ -78,10 +78,10 @@ attribute <att>facs</att>. This attribute may be used to associate any
 element in a transcribed text with an image of it, by means of the
 usual URI pointing mechanism. <!-- i.e. URI reference? --> </p>
 
-<p>If a digital text contains one image per page or column (or
-similar unit), and no more complex mapping between text and image is
-envisaged, then the <att>facs</att>
-attribute may be used to point directly to a graphic resource:
+<p>If a digital text contains one image per page or column (or similar
+unit), and no more complex mapping between text and image is
+envisaged, then the <att>facs</att> attribute may be used to point
+directly to a graphic resource:
 
 <egXML  xmlns="http://www.tei-c.org/ns/Examples">
 <TEI>
@@ -655,7 +655,7 @@ abbreviations, using the <gi>expan</gi> element: <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><expan>euery</expan>
 <expan>persone</expan> ... </egXML> And, of course, the
 <gi>choice</gi> element can be used to show that one encoding is an
-alternmatoive for the other:
+alternaative for the other:
 <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><choice><abbr>eu<g
 ref="#er"/>y</abbr><expan>euery</expan></choice></egXML>
@@ -1479,13 +1479,20 @@ chapter is used, the element <gi>handNotes</gi> is available, within
 the <gi>profileDesc</gi> element of the Header, to hold one or more
 <gi>handNote</gi> elements. When the <ident
 type="class">msdescription</ident> module defined in chapter <ptr
-target="#MS"/> is included, a special purpose <gi>handDesc</gi>
-element also becomes available as part of a structured manuscript
-description (see further <ptr target="#msph2"/>). The encoder may
-choose to place <gi>handNote</gi> elements identifying individual
-hands in either location without affecting their accessibility since
-the element is always addressed by means of its <att>xml:id</att>
-attribute. </p>
+target="#MS"/> is included, the <gi>handDesc</gi> element described in
+<ptr target="#msph2"/> also becomes available as part of a structured
+manuscript description. The encoder may choose to place
+<gi>handNote</gi> elements identifying individual hands in either
+location without affecting their accessibility since the element is
+always addressed by means of its <att>xml:id</att> attribute. The
+<gi>handDesc</gi> element may be more appropriate when a full
+cataloguing of each manuscript is required; the <gi>handNotes</gi>
+element if only a brief characterization of each hand is needed.  It
+is also possible to use the two elements together if, for example, the
+<gi>handDesc</gi> element contains a single summary describing all the
+hands discursively, while the <gi>handNotes</gi> element gives
+specific details of each. The choice will depend on individual
+encoders' priorities.</p>
 
 <p>As shown above, the <att>hand</att> attribute is available on
 several elements to indicate the hand in which the content of the
@@ -1696,11 +1703,11 @@ affairs.</p></div></div>
 
 <div><head>Damage and Conjecture</head>
 <p>The carrier medium of a primary source may often sustain physical
-damage which makes parts of it hard or impossible to read. We have
-already In this section we discuss  elements which may be used to
-represent such situations and give recommendations about how these
-should be used in conjunction with the other related elements
-introduced previously in this chapter. </p>
+damage which makes parts of it hard or impossible to read. In this
+section we discuss elements which may be used to represent such
+situations and give recommendations about how these should be used in
+conjunction with the other related elements introduced previously in
+this chapter. </p>
 
 
 <div type="div3" xml:id="PHDA"><head>Damage, Illegibility, and Supplied Text</head>
@@ -1887,13 +1894,14 @@ made within that added text:
    <add xml:id="ADD2">(interlinear!)</add>
 material</add>
 as written.</egXML></item>
-<item>if one <gi>del</gi> element (with identifier <ident>DEL1</ident>)
-contains another (with identifier <ident>DEL2</ident>), then
-the deletion <ident>DEL2</ident> was first
-made, and later a second deletion (<ident>DEL1</ident>)
-removed the entire passage:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><del n="DEL1">This sentence contains
-some <del n="DEL2">redundant</del> unnecessary
+<item>if one <gi>del</gi> element contains another, and the
+<att>seq</att> attribute does not indicate otherwise, it should be
+assumed that the inner 
+deletion was made before the enclosing one. In the following example,
+the words <mentioned>redundant</mentioned> was deleted before a second
+second deletion removed the entire passage:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><del>This sentence contains
+some <del>redundant</del> unnecessary
 verbiage.</del></egXML></item>
 <item>if a <gi>del</gi> element contains an <gi>add</gi> element, the normal
 interpretation will be that an addition was made within a passage
