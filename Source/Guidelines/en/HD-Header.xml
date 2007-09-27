@@ -1000,8 +1000,10 @@ header.  Though not formally required, its use is highly recommended.
 <specList>
 <specDesc key="encodingDesc"/>
 </specList>
-The content of the encoding description may be a prose description, or
-it may contain elements from the following list, in the order given:
+The encoding description may contain paragraphs of text, marked up
+using the <gi>p</gi> element, or it may contain more specialised
+elements taken from the <ident type="model">model.encodingPart</ident>
+class. By default, this class makes available the following elements:
 <specList>
 <specDesc key="projectDesc"/>
 <specDesc key="samplingDecl"/>
@@ -1009,13 +1011,14 @@ it may contain elements from the following list, in the order given:
 <specDesc key="tagsDecl"/>
 <specDesc key="refsDecl"/>
 <specDesc key="classDecl"/>
-<specDesc key="fsdDecl"/>
-<specDesc key="metDecl"/>
-<specDesc key="variantEncoding"/>
 <specDesc key="appInfo"/>
 </specList>
-Each of these elements is further described and formally defined
-in the appropriate section below. 
+
+Each of these elements is further described 
+in the appropriate section below. Other modules have the ability to
+extend this class; examples are noted in section <ptr target="#HDENCOTH"/>
+</p>
+
 
 <specGrp xml:id="D225" n="The encoding description">
 &model.encodingPart;
@@ -1026,20 +1029,18 @@ in the appropriate section below.
 <specGrpRef target="#DHD57"/>
 <specGrpRef target="#D2254"/>
 <specGrpRef target="#D2255"/>
-<specGrpRef target="#D2256"/>
-<specGrpRef target="#D2258"/>
-<specGrpRef target="#DHDVAR"/>
 <specGrpRef target="#DHDAPP"/>
-</specGrp></p>
+</specGrp>
+
 <div type="div3" xml:id="HD51"><head>The Project Description</head>
-<p>The <gi>projectDesc</gi> element is the first of the ten optional
-subdivisions of the <gi>encodingDesc</gi> element.  It may be used to
-describe, in prose, the purpose for which the electronic file was
-encoded, together with any other relevant information concerning the
-process by which it was assembled or collected.  This is of particular
-importance for corpora or miscellaneous collections, but may be of use
-for any text, for example to explain why one kind of encoding practice
-has been followed rather than another.
+
+<p>The <gi>projectDesc</gi> element may be used to describe, in prose,
+the purpose for which a digital resource was created, together with
+any other relevant information concerning the process by which it was
+assembled or collected.  This is of particular importance for corpora
+or miscellaneous collections, but may be of use for any text, for
+example to explain why one kind of encoding practice has been followed
+rather than another.
 <specList>
 <specDesc key="projectDesc"/>
 </specList></p>
@@ -1054,11 +1055,11 @@ has been followed rather than another.
 <specGrp xml:id="D2251" n="The project
 			   description">&projectDesc;</specGrp>
 </div>
+
 <div type="div3" xml:id="HD52"><head>The Sampling Declaration</head>
-<p>The <gi>samplingDecl</gi> element is the second of the ten optional
-subdivisions of the <gi>encodingDesc</gi> element.  It contains a prose
-description of the rationale and methods used in sampling texts, for
-example to create a representative corpus.
+<p>The <gi>samplingDecl</gi> element may be used to describe, in
+prose, the rationale and methods used in selecting texts, or parts of
+text, for inclusion in the resource.
 <specList>
 <specDesc key="samplingDecl"/>
 </specList>
@@ -1068,7 +1069,8 @@ It should include information about such matters as
 <item>the method or methods by which they were selected</item>
 <item>the underlying population being sampled</item>
 <item>the object of the sampling procedure used</item></list>
-but is not restricted to these.<!-- should attributes be used for sample size, etc? -LB -->
+but is not restricted to these.
+        <!-- should attributes be used for sample size, etc? -LB -->
 	<!-- if it would help automatic processing yes.  but i   -->
 	<!-- doubt it.  so no.  -msm                             -->
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><samplingDecl>
@@ -1095,8 +1097,7 @@ supply a cross reference to it, as further described in section <ptr target="#CC
 
 <div type="div3" xml:id="HD53">
 <head>The Editorial Practices Declaration</head>
-<p>The <gi>editorialDecl</gi> element is the third of the ten optional
-subdivisions of the <gi>encodingDesc</gi> element.  It is used to
+<p>The <gi>editorialDecl</gi> element is used to
 provide details of the editorial practices applied during the encoding
 of a text.
 <specList>
@@ -1213,7 +1214,7 @@ Has any analytic or <soCalled>interpretive</soCalled> information
 been provided — that is, information which is felt to be non-obvious,
 or potentially contentious? If so, how was it generated?
 How was it encoded? If feature-structure analysis has been used, are
-<gi>fsdDecl</gi> elements (section <ptr target="#HDFSD"/>)
+<gi>fsdDecl</gi> elements (section <ptr target="#FD"/>)
 present?</p></item>
 </list></p>
 
@@ -1261,9 +1262,9 @@ subdivision of the text) to which it applies may
 be used to supply a cross reference to it, as further described in
 section <ptr target="#CCAS"/>.
 	</p></div>
+
 <div type="div3" xml:id="HD57"><head>The Tagging Declaration</head>
-<p>The <gi>tagsDecl</gi> element is the fourth of the ten optional
-subdivisions of the <gi>encodingDesc</gi> element.  It is used to record
+<p>The <gi>tagsDecl</gi> element is used to record
 the following information about the tagging used within a particular
 text:
 <list type="simple">
@@ -1273,9 +1274,8 @@ text belong.</item>
 a recipient can validate the integrity of a text during interchange.</item>
 <item>any comment relating to the usage of particular elements not
 specified elsewhere in the header.</item>
-<item>a definition for the default rendition applying to all instances
-of an element, unless otherwise stated by the global <att>rend</att>
-attribute.</item></list></p>
+<item>a default rendition applicable to to all instances
+of an element.</item></list></p>
 <p>This information is conveyed by the following elements:
 <specList>
 <specDesc key="rendition" atts="scheme"/>
@@ -1356,20 +1356,24 @@ attribute indicates which of these applies to a given
 <label>xslfo</label><item>Extensible  Stylesheet Language Formatting Objects</item>
 <label>other</label><item>A user-defined formal description language</item>
 </list>
-</p> <p>A <gi>tagsDecl</gi> need not specify
-any <gi>rendition</gi> element.  It must however 
-contain at least one <gi>namespace</gi> element, which should contain exactly one occurrence of a <gi>tagUsage</gi>
-element for each distinct element marked within the
-outermost <gi>text</gi> element associated with the
-<gi>teiHeader</gi> in which it appears.<note place="foot">In the case of a TEI corpus (<ptr target="#CC"/>), a
-<gi>tagsDecl</gi> in a corpus header will describe tag usage across
-the whole corpus, while one in an individual text header will describe
-tag usage for the individual text concerned.</note> The <gi>tagUsage</gi> element is
-used to supply a count of the number of occurrences of this
-	  element within the text, which is given as the value of its
-	  <att>occurs</att> attribute.  It may also be used to hold
-	  any additional usage information, which is supplied as
-	  running prose within the element itself.</p> <p>For example:
+</p> 
+
+<p>A <gi>tagsDecl</gi> need not specify any <gi>rendition</gi>
+element.  It must however contain at least one <gi>namespace</gi>
+element, which should contain exactly one occurrence of a
+<gi>tagUsage</gi> element for each distinct element marked within the
+outermost <gi>text</gi> element associated with the <gi>teiHeader</gi>
+in which it appears.<note place="foot">In the case of a TEI corpus
+(<ptr target="#CC"/>), a <gi>tagsDecl</gi> in a corpus header will
+describe tag usage across the whole corpus, while one in an individual
+text header will describe tag usage for the individual text
+concerned.</note> The <gi>tagUsage</gi> element is used to supply a
+count of the number of occurrences of this element within the text,
+which is given as the value of its <att>occurs</att> attribute.  It
+may also be used to hold any additional usage information, which is
+supplied as running prose within the element itself.</p>
+
+<p>For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><tagUsage gi="hi" occurs="28">
     Used only to mark English words italicised in the copy text.
 </tagUsage></egXML>
@@ -1398,9 +1402,9 @@ document, as identified by some conforming processor.
 &tagUsage;
 &namespace;
 &rendition;</specGrp></p></div>
+
 <div type="div3" xml:id="HD54"><head>The Reference System Declaration</head>
-<p>The <gi>refsDecl</gi> element is the fifth of the ten optional
-subdivisions of the <gi>encodingDesc</gi> element. It is used to
+<p>The <gi>refsDecl</gi> element is  used to
 document the way in which any standard referencing scheme built into
 the encoding works. It may contain either  a series of prose paragraphs or the following specialized elements:
 <specList>
@@ -1543,9 +1547,10 @@ Instead, the <att>decls</att> attribute of each text (or subdivision of
 the text) to which the declaration applies may be used to supply a cross
 reference to it, as further described in section <ptr target="#CCAS"/>.</p>
 </div></div>
+
 <div type="div3" xml:id="HD55"><head>The Classification Declaration</head>
-<p>The <gi>classDecl</gi> element is the sixth of the ten optional
-subdivisions of the <gi>encodingDesc</gi> element.  It is used to group
+
+<p>The <gi>classDecl</gi> element is used to group
 together definitions or sources for any descriptive classification
 schemes used by other parts of the header.  Each such scheme is
 represented by a <gi>taxonomy</gi> element, which may contain either a
@@ -1614,190 +1619,34 @@ defined above.
 &taxonomy;
 &category;
 &catDesc;
-</specGrp></div>
+</specGrp>
 
-<div type="div3" xml:id="HDFSD"><head>The Feature System Declaration</head><p>The <gi>fsdDecl</gi> element is the seventh of the ten optional
-subdivisions of the <gi>encodingDesc</gi> element.  It is available
-only when the <ident type="class">iso-fs</ident> module is included in
-a schema. Its purpose is to document
- the <term>feature system declaration</term>  (as defined in
-chapter <ptr target="#FD"/>) underlying any  analytic <term>feature
-structures</term> (as defined in chapter <ptr target="#FS"/>) present in
-the text documented by this header. </p>
+
 </div>
 
-<!--
-<p>It has the following description and attributes:
-<specList>
-<specDesc key="fsdDecl"/>
-</specList>
-Note that one <gi>fsdDecl</gi> element must be specified for each
-distinct type of feature structure used in the markup.  The
-<att>url</att> element supplies a link to the  entity
-containing a feature system declaration in which that type of feature
-structure is defined (see further chapter <ptr target="#FD"/>). --><!--
-The external entity does not use the same DTD as the rest of the
-document; it is recommended therefore to declare it as an unparsed
-external entity using a foreign notation. The following document type subset for
-the document shows how this may be achieved in either XML or SGML.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei2.dtd" [-->
- <!-- Declare the fsd notation itself -->
-<!-- <!NOTATION fsd 
-          PUBLIC "-//TEI//Feature System Declaration (1994)//EN"-->
- <!-- Declare the external entity containing the FSD -->
-<!--  <!ENTITY myFeatures  SYSTEM 'myfeat.fsd' NDATA FSD >
-]>
-<TEI-->
-<!-- ... -->
-<!-- /TEI>]]></egXML>This declaration associate the name <ident rend="noindex" type="ge">myFeatures</ident>
-with an external unparsed entity located by the <code>SYSTEM</code> identifier
-<ident rend="noindex" type="file">myfeat.fsd</ident>, which uses the FSD
-notation, itself declared above and associated with an appropriate
-<code>PUBLIC</code> identifier.  <note place="foot">In an SGML context, the
-external entity might alternatively be declared using the 
-<code type="kw">SUBDOC</code> keyword to indicate that this
-entity contains SGML data which can be parsed using some other DTD than
-the current one. Since <code>SUBDOC</code> entities are not provided in XML, this
-is not recommended for general usage.</note> 
-This entity name may
-then be specified within an <gi>fsdDecl</gi> element in the header to
-inform a processor of the location of the feature system declaration
-corresponding to a given type of feature structure used within the text,
-as follows:-->
-<!--The feature system declaration will typically be held in an external
-entity, in much the same way as a file containing a graphic is
-referenced by the <gi>graphic</gi> element. For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
-   <fileDesc>  </fileDesc>
-   <encodingDesc>
-      <fsdDecl type="myA1" url="http://example.com/FSD/myFeatures/"/>
-      <fsdDecl type="myA2" url="http://example.com/FSD/myFeatures/"/>
-   </encodingDesc>
-</teiHeader></egXML>
-This header would be attached to a text in which feature structures of
-types <val>myA1</val> and <val>myA2</val> are
-used. Definitions for the feature system in which these feature
-structures are defined may be located at the URL stated above.</p>
-<p>Further details and examples of the use of feature structure analyses
-and feature system declarations are provided in chapters <ptr target="#FS"/> and <ptr target="#FD"/> respectively.</p>
-
-<specGrp xml:id="D2256" n="The FSD declaration">&fsdDecl;
-</specGrp></div>-->
-<div type="div3" xml:id="HDMN"><head>The Metrical Declaration Element</head>
-<p>The <gi>metDecl</gi> element is the eighth of the ten optional
-subdivisions of the <gi>encodingDesc</gi> element.  It is used to
-document any metrical notation scheme used in the text, as further
-discussed in section <ptr target="#VEME"/>. It consists either of
-a prose description or a series of <gi>metSym</gi> elements.
-<specList>
-<specDesc key="metDecl" atts="pattern"/>
-<specDesc key="metSym" atts="value terminal"/>
-</specList></p>
-<p>As with other components of the header, metrical notation may be
-specified either formally or informally. In a formal specification,
-every symbol used in the metrical notation must be documented by a
-corresponding <gi>metSym</gi> element; in an informal one, only a brief
-prose description of the way in which the notation is used need be
-given. In either case, the optional <att>pattern</att> attribute may be
-used to supply a regular expression which a processor can use to
-validate expressions in the intended notation. The following
-constraints apply:
-<list type="simple">
-		<item>if <att>pattern</att> is supplied, any notation used
-		  which does not conform to it should be regarded as
-		  invalid</item>
-		<item>if any <gi>metSym</gi> is defined, then any notation
-		  using undefined symbols should be regarded as
-		  invalid</item>
-		<item>if both pattern and symbol are defined, then every
-		  symbol appearing explicitly within pattern must be
-		  defined</item>
-		<item>symbols which are not matched by <att>pattern</att> may
-		  be defined within a <gi>metDecl</gi>
-		  element</item>
-</list></p><p>As a simple example, consider the case of the notation in which
-metrical prominence, metrical feet, and line boundaries are all to be encoded.
-Legal specifications in this notation may be written for any sequence of
-metrically prominent or non-prominent features, optionally separated by
-foot or metrical line boundaries at arbitrary points.  Assuming that the
-symbol <mentioned>1</mentioned> is used for metrical prominence,
-<mentioned>0</mentioned> for non-prominence, <mentioned>|</mentioned> for foot boundary
-and <mentioned>/</mentioned> for line boundary, then the following declaration
-achieves this object:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><metDecl pattern="((1|0)+\|?/?)*">
-   <metSym value="1">metrical promimence</metSym>
-   <metSym value="0">metrical non-prominence</metSym>
-   <metSym value="|">foot boundary</metSym>
-   <metSym value="/">metrical line boundary</metSym>
-</metDecl></egXML></p>
-<p>The same notation might also be specified less formally, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><metDecl>
-  <p>Metrically prominent syllables are marked '1' and other
-    syllables '0'. Foot divisions are marked by a vertical bar,
-    and line divisions with a solidus.</p>
-  <p>This notation may be applied to any metrical unit, of any
-    size (including, for example, individual feet as well as
-    groups of lines).</p>
-</metDecl></egXML>
-Note that in this case, because the <att>pattern</att> attribute has not
-been supplied, no processor can validate <att>met</att> attribute values
-within the text which use this metrical notation.</p><p>For more complex cases, it will often be more convenient to define
-a notation incrementally. The <att>terminal</att> attribute should
-be used to indicate for a given symbol whether or not it may be
-re-defined in terms of other symbols used within the same notation.
-For example, here is a notation for encoding classical metres, in
-which symbols are provided for the most common types of foot.<!--
-feet? -sb 2001-11-03 --> These symbols are themselves documented
-within the same notation, in terms of more primitive long and short
-syllables:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><metDecl pattern="[DTIS3A]+">
-   <metSym n="dactyl" value="D" terminal="false">-oo</metSym>
-   <metSym n="trochee" value="T" terminal="false">-o</metSym>
-   <metSym n="iamb" value="I" terminal="false">o-</metSym>
-   <metSym n="spondee" value="S" terminal="false">--</metSym>
-   <metSym n="tribrach" value="3" terminal="false">ooo</metSym>
-   <metSym n="anapaest" value="A" terminal="false">oo-</metSym>
-   <metSym value="o">short syllable</metSym>
-   <metSym value="-">long syllable</metSym>
-</metDecl></egXML>
-Note here the use of the global <att>n</att> attribute to supply an
-additional name for the symbols being documented.</p>
-<p>For further discussion of this metrical notation and its use in the
-encoding of verse, see section <ptr target="#VEME"/>.</p>
-
-<specGrp xml:id="D2258" n="Metrical Notation Declaration">
-&metDecl;
-&metSym;
-</specGrp></div>
-<div type="div3" xml:id="HDVAR"><head>The Variant-encoding Method Element</head>
-<p>The <gi>variantEncoding</gi> element is the ninth of the ten optional
-subdivisions of the <gi>encodingDesc</gi> element.  It is used to
-document the method used to encode textual variants in the text, as
-discussed in section <ptr target="#TCAPLK"/>.
-<specList>
-<specDesc key="variantEncoding" atts="method location"/>
-</specList></p>
-
-<specGrp xml:id="DHDVAR" n="VariantEncodingDeclaration">&variantEncoding;
-</specGrp></div>
 
 <div type="div3" xml:id="HDAPP">
 <head>The Application Information Element</head>
-<p>The <gi>appInfo</gi> element is the last of the ten optional
-subdivision of the <gi>encodingDesc</gi> element.</p>
-
-<p>This element may be used for such purposes as: to allow an
+<p>The <gi>appInfo</gi> element is used to  provide
+application-specific information relating to the processing of the
+encoded  resource. It may be used for such purposes as:
+<list>
+<item> to allow an
   application to discover that it has previously
-  opened/edited a file, and what version of itself was used
-  to do that; to show (through a date) which
+  opened or edited a file, and what version of itself was used
+  to do that;</item>
+<item> to show (through a date) which
   application last edited the file to allow for diagnosis of
   any problems that might have been caused by that
-  application;  to allow users to discover information
-  about an application used to edit the file; and, finally, to allow
+  application;</item>
+<item> to allow users to discover information
+  about an application used to edit the file</item>
+<item>to allow
   the application to declare an interest in elements of
   the file which it has edited, so that other applications
   or human editors may be more wary of making changes to
-  those sections of the file. </p>
+  those sections of the file.</item>
+</list> </p>
 
 <p>Each <gi>application</gi> child of <gi>appInfo</gi> identifies the
 current state of one software application with regard to the current
@@ -1815,7 +1664,38 @@ each time it touches the file.</p>
 &application;
 &model.applicationLike;
 </specGrp></div>
+
+<div xml:id="HDENCOTH"><head>Module-Specific Declarations</head>
+<p>The elements discussed so far are available to any
+schema. When the schema in use includes some of the more specialised
+TEI modules, these make available other more module-specific
+components of the encoding declaration. These are discussed fully in
+the documentation for the module in question, but are also noted
+briefly here for convenience. 
+</p>
+
+<p>The <gi>fsdDecl</gi> element is available only when the <ident
+type="module">iso-fs</ident> module is included in a schema. Its
+purpose is to document the <term>feature system declaration</term> (as
+defined in chapter <ptr target="#FD"/>) underlying any analytic
+<term>feature structures</term> (as defined in chapter <ptr
+target="#FS"/>) present in the text documented by this header. </p>
+
+<p>The <gi>metDecl</gi> element is available only when the <ident
+type="module">verse</ident> module is included in a schema. Its
+purpose is to document any metrical notation scheme used in the text,
+as further discussed in section <ptr target="#VEME"/>. It consists
+either of a prose description or a series of <gi>metSym</gi>
+elements.</p>
+
+<p>The <gi>variantEncoding</gi> element is available only when the
+<ident type="module">textcrit</ident> module is included in a
+schema. Its purpose is to document the method used to encode textual
+variants in the text, as discussed in section <ptr
+target="#TCAPLK"/>.</p>
 </div>
+</div>
+
 <div type="div2" xml:id="HD4"><head>The Profile Description</head>
 <p>The <gi>profileDesc</gi> element is the third major subdivision of
 the TEI Header. It is an optional element, the purpose of which is to
