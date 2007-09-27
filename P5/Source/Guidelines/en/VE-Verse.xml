@@ -502,7 +502,8 @@ implementation-dependent; so are the semantics and processing of the
 <p>A formal definition of the significance of each component of the
 pattern given as the value of the <att>met</att> attribute may be
 provided in the <gi>metDecl</gi> element within the
-<gi>encodingDecl</gi> element in the TEI header (see section <ptr target="#HDMN"/>).  The encoder is free to invent any notation
+<gi>encodingDecl</gi> element in the TEI header (see section <ptr
+target="#HDMN"/>).  The encoder is free to invent any notation
 appropriate to his or her analytic needs, provided that it is
 adequately documented in this element.  The notation may define
 metrical components using invented or traditional names (such as
@@ -794,6 +795,91 @@ rhyme, as follows:
 <p>For further discussion of the <gi>link</gi> and <gi>linkGrp</gi>
 element, see section <ptr target="#SACS"/>.
  </p></div>
+
+<div xml:id="HDMN"><head>Metrical Notation Declaration</head>
+<p>When the module defined in this chapter is included in a schema,
+a specialised element is optionally available in the
+<gi>encodingDesc</gi> element of the TEI Header to document the
+metrical notation used in marking up a text. 
+<specList>
+<specDesc key="metDecl" atts="pattern"/>
+<specDesc key="metSym" atts="value terminal"/>
+</specList></p>
+<p>As with other components of the header, metrical notation may be
+specified either formally or informally. In a formal specification,
+every symbol used in the metrical notation must be documented by a
+corresponding <gi>metSym</gi> element; in an informal one, only a brief
+prose description of the way in which the notation is used need be
+given. In either case, the optional <att>pattern</att> attribute may be
+used to supply a regular expression which a processor can use to
+validate expressions in the intended notation. The following
+constraints apply:
+<list type="simple">
+		<item>if <att>pattern</att> is supplied, any notation used
+		  which does not conform to it should be regarded as
+		  invalid</item>
+		<item>if any <gi>metSym</gi> is defined, then any notation
+		  using undefined symbols should be regarded as
+		  invalid</item>
+		<item>if both pattern and symbol are defined, then every
+		  symbol appearing explicitly within pattern must be
+		  defined</item>
+		<item>symbols which are not matched by <att>pattern</att> may
+		  be defined within a <gi>metDecl</gi>
+		  element</item>
+</list></p><p>As a simple example, consider the case of the notation in which
+metrical prominence, metrical feet, and line boundaries are all to be encoded.
+Legal specifications in this notation may be written for any sequence of
+metrically prominent or non-prominent features, optionally separated by
+foot or metrical line boundaries at arbitrary points.  Assuming that the
+symbol <mentioned>1</mentioned> is used for metrical prominence,
+<mentioned>0</mentioned> for non-prominence, <mentioned>|</mentioned> for foot boundary
+and <mentioned>/</mentioned> for line boundary, then the following declaration
+achieves this object:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><metDecl pattern="((1|0)+\|?/?)*">
+   <metSym value="1">metrical promimence</metSym>
+   <metSym value="0">metrical non-prominence</metSym>
+   <metSym value="|">foot boundary</metSym>
+   <metSym value="/">metrical line boundary</metSym>
+</metDecl></egXML></p>
+<p>The same notation might also be specified less formally, as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><metDecl>
+  <p>Metrically prominent syllables are marked '1' and other
+    syllables '0'. Foot divisions are marked by a vertical bar,
+    and line divisions with a solidus.</p>
+  <p>This notation may be applied to any metrical unit, of any
+    size (including, for example, individual feet as well as
+    groups of lines).</p>
+</metDecl></egXML>
+Note that in this case, because the <att>pattern</att> attribute has not
+been supplied, no processor can validate <att>met</att> attribute values
+within the text which use this metrical notation.</p><p>For more complex cases, it will often be more convenient to define
+a notation incrementally. The <att>terminal</att> attribute should
+be used to indicate for a given symbol whether or not it may be
+re-defined in terms of other symbols used within the same notation.
+For example, here is a notation for encoding classical metres, in
+which symbols are provided for the most common types of foot.<!--
+feet? -sb 2001-11-03 --> These symbols are themselves documented
+within the same notation, in terms of more primitive long and short
+syllables:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><metDecl pattern="[DTIS3A]+">
+   <metSym n="dactyl" value="D" terminal="false">-oo</metSym>
+   <metSym n="trochee" value="T" terminal="false">-o</metSym>
+   <metSym n="iamb" value="I" terminal="false">o-</metSym>
+   <metSym n="spondee" value="S" terminal="false">--</metSym>
+   <metSym n="tribrach" value="3" terminal="false">ooo</metSym>
+   <metSym n="anapaest" value="A" terminal="false">oo-</metSym>
+   <metSym value="o">short syllable</metSym>
+   <metSym value="-">long syllable</metSym>
+</metDecl></egXML>
+Note here the use of the global <att>n</att> attribute to supply an
+additional name for the symbols being documented.</p>
+
+<specGrp xml:id="D2258" n="Metrical Notation Declaration">
+&metDecl;
+&metSym;
+</specGrp></div>
+
 <div type="div2" xml:id="VEETC"><head>Encoding Procedures for Other Verse Features</head>
 <p>A number of procedures that may be of particular concern to encoders
 of verse texts are dealt with elsewhere in these guidelines.  Some
