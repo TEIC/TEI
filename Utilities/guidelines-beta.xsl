@@ -249,6 +249,7 @@ function togglerelax (el) {
     <span class="permalink">
       <a class="permalink" href="#{$ident}">
 	<xsl:attribute name="title">
+	  <xsl:text>bookmark </xsl:text>
 	  <xsl:value-of select="tei:head[1]"/>
 	</xsl:attribute>
 	<span class="invisible">
