@@ -47,7 +47,7 @@ XSL LaTeX stylesheet to make slides
 <xsl:text>\pgfdeclareimage[height=1cm]{logo}{</xsl:text>
 <xsl:choose>
   <xsl:when test="$realFigures='true'">
-    <xsl:value-of select="$latexLogo"/>}
+    <xsl:value-of select="$latexLogo"/>
   </xsl:when>
   <xsl:otherwise>
     <xsl:text>FIG0</xsl:text>
