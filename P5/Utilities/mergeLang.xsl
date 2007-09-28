@@ -45,6 +45,7 @@
 	   match="tei:classSpec/tei:attList/tei:attDef/tei:valList/tei:valItem"/>
 
 
+  <xsl:param name="verbose"/>
   <xsl:param name="newFile"/>
   <xsl:param name="newLang"/>
   <xsl:param name="overwrite">false</xsl:param>
@@ -56,11 +57,13 @@
   <xsl:variable name="New" select="document($newFile)"/>
 
   <xsl:template match="/">
+<xsl:if test="$verbose='true'">
 <xsl:message>
 Language: <xsl:value-of select="$newLang"/>
 File: <xsl:value-of select="$newFile"/>
 Overwrite: <xsl:value-of select="$overwrite"/>
 </xsl:message>
+</xsl:if>
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -88,11 +91,10 @@ Overwrite: <xsl:value-of select="$overwrite"/>
     </xsl:when>
   </xsl:choose>
   <xsl:if test="not(preceding-sibling::tei:gloss)">
-
     <xsl:variable name="this">
       <xsl:value-of select="normalize-space(.)"/>
     </xsl:variable>
-
+    
     <xsl:variable name="What">
       <xsl:choose>
 	<xsl:when test="parent::tei:attDef">
@@ -110,37 +112,39 @@ Overwrite: <xsl:value-of select="$overwrite"/>
     </xsl:variable>
     <xsl:for-each select="$New">
       <xsl:for-each select="key('IDENTS',$What)/tei:gloss">
-	<xsl:variable name="that">
-	  <xsl:choose>
-	    <xsl:when test="starts-with(.,'(')">
-	      <xsl:value-of select="substring-before(substring-after(normalize-space(.),'('),')')"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:value-of select="normalize-space(.)"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:variable>
-<!--<xsl:message>look for <xsl:value-of select="$What"/> giving <xsl:value-of select="$that"/></xsl:message>-->
-	<xsl:if test="not($that=$this) and not($that='')">
-  <xsl:variable name="date">
-    <xsl:choose>
-      <xsl:when test="@notBefore">
-	<xsl:value-of select="@notBefore"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:value-of
-	    select="substring-before(edate:date-time(),'T')"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-	  <gloss xmlns="http://www.tei-c.org/ns/1.0"
-		 version="{$date}"
-		 >
-	    <xsl:attribute name="xml:lang">
-	      <xsl:value-of select="$newLang"/>
-	    </xsl:attribute>
-	    <xsl:apply-templates/>
-	  </gloss>
+	<xsl:if test="@xml:lang=$newLang">
+	  <xsl:variable name="that">
+	    <xsl:choose>
+	      <xsl:when test="starts-with(.,'(')">
+		<xsl:value-of select="substring-before(substring-after(normalize-space(.),'('),')')"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="normalize-space(.)"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:variable>
+	  <!--<xsl:message>look for <xsl:value-of select="$What"/> giving <xsl:value-of select="$that"/></xsl:message>-->
+	  <xsl:if test="not($that=$this) and not($that='')">
+	    <xsl:variable name="date">
+	      <xsl:choose>
+		<xsl:when test="@notBefore">
+		  <xsl:value-of select="@notBefore"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of
+		      select="substring-before(edate:date-time(),'T')"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:variable>
+	    <gloss xmlns="http://www.tei-c.org/ns/1.0"
+		   version="{$date}"
+		   >
+	      <xsl:attribute name="xml:lang">
+		<xsl:value-of select="$newLang"/>
+	      </xsl:attribute>
+	      <xsl:apply-templates/>
+	    </gloss>
+	  </xsl:if>
 	</xsl:if>
       </xsl:for-each>
     </xsl:for-each>
@@ -163,7 +167,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
     <xsl:variable name="this">
       <xsl:value-of select="normalize-space(.)"/>
     </xsl:variable>
-
+    
     <xsl:variable name="What">
       <xsl:choose>
 	<xsl:when test="parent::tei:attDef">
@@ -175,9 +179,10 @@ Overwrite: <xsl:value-of select="$overwrite"/>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-
+    
     <xsl:for-each select="$New">
       <xsl:for-each select="key('IDENTS',$What)/tei:desc">
+	<xsl:if test="@xml:lang=$newLang">
 	<xsl:variable name="that">
 	  <xsl:value-of select="normalize-space(.)"/>
 	</xsl:variable>
@@ -200,6 +205,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
 	    </xsl:attribute>
 	    <xsl:apply-templates/>
 	  </desc>
+	</xsl:if>
 	</xsl:if>
       </xsl:for-each>
     </xsl:for-each>
@@ -225,6 +231,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
     <xsl:variable name="What" select="concat(local-name(..),../@ident)"/>
     <xsl:for-each select="$New">
       <xsl:for-each select="key('IDENTS',$What)/tei:remarks">
+	<xsl:if test="@xml:lang=$newLang">
 	<xsl:variable name="that">
 	  <xsl:value-of select="normalize-space(.)"/>
 	</xsl:variable>
@@ -236,9 +243,10 @@ Overwrite: <xsl:value-of select="$overwrite"/>
 	    <xsl:apply-templates/>
 	  </remarks>
 	</xsl:if>
+	</xsl:if>
       </xsl:for-each>
     </xsl:for-each>
- </xsl:if>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="tei:exemplum">
@@ -254,25 +262,27 @@ Overwrite: <xsl:value-of select="$overwrite"/>
     </xsl:when>
   </xsl:choose>
   <xsl:if test="not(preceding-sibling::tei:exemplum)">
-  <xsl:variable name="this">
-    <xsl:value-of select="normalize-space(.)"/>
-  </xsl:variable>
-  <xsl:variable name="What" select="concat(local-name(..),../@ident)"/>
-  <xsl:for-each select="$New">
-    <xsl:for-each select="key('IDENTS',$What)/tei:exemplum">
-      <xsl:variable name="that">
-	<xsl:value-of select="normalize-space(.)"/>
-      </xsl:variable>
-      <xsl:if test="not($that=$this) and not($that='')">
-	<exemplum xmlns="http://www.tei-c.org/ns/1.0">
-	  <xsl:attribute name="xml:lang">
-	    <xsl:value-of select="$newLang"/>
-	  </xsl:attribute>
-	  <xsl:apply-templates/>
-	</exemplum>
-      </xsl:if>
+    <xsl:variable name="this">
+      <xsl:value-of select="normalize-space(.)"/>
+    </xsl:variable>
+    <xsl:variable name="What" select="concat(local-name(..),../@ident)"/>
+    <xsl:for-each select="$New">
+      <xsl:for-each select="key('IDENTS',$What)/tei:exemplum">
+	<xsl:if test="@xml:lang=$newLang">
+	<xsl:variable name="that">
+	  <xsl:value-of select="normalize-space(.)"/>
+	</xsl:variable>
+	<xsl:if test="not($that=$this) and not($that='')">
+	  <exemplum xmlns="http://www.tei-c.org/ns/1.0">
+	    <xsl:attribute name="xml:lang">
+	      <xsl:value-of select="$newLang"/>
+	    </xsl:attribute>
+	    <xsl:apply-templates/>
+	  </exemplum>
+	</xsl:if>
+	</xsl:if>
+      </xsl:for-each>
     </xsl:for-each>
-  </xsl:for-each>
   </xsl:if>
 </xsl:template>
 
