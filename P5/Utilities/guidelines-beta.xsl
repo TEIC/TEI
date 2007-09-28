@@ -242,10 +242,24 @@ function togglerelax (el) {
     <xsl:variable name="ident">
       <xsl:apply-templates mode="ident" select="."/>
     </xsl:variable>
+    <xsl:variable name="d">
+      <xsl:apply-templates mode="depth" select="."/>
+    </xsl:variable>
+    <xsl:if test="$d &gt; 0">
     <span class="permalink">
-      <a class="permalink" href="#{$ident}"
-        title="Link to this section"> &#x00B6;</a>
+      <a class="permalink" href="#{$ident}">
+	<xsl:attribute name="title">
+	  <xsl:value-of select="tei:head[1]"/>
+	</xsl:attribute>
+	<span class="invisible">
+	  <xsl:text>TEI: </xsl:text>
+	  <xsl:value-of select="tei:head[1]"/>
+	</span>
+	<xsl:text>+</xsl:text>
+	<!--&#x00B6;-->
+      </a>
     </span>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="startDivHook">
