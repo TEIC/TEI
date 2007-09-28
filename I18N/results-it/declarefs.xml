@@ -1,153 +1,143 @@
+<?xml version="1.0"?>
 <moduleSpec xmlns="http://www.tei-c.org/ns/1.0" ident="declarefs">
   <elementSpec ident="teifsd" module="declarefs">
-
-<gloss>feature system declaration</gloss>
+    <gloss>feature system declaration</gloss>
     <gloss xml:lang="it" notBefore="2007-01-21">dichiarazione del sistema di tratti</gloss>
-<desc>contains a feature system declaration.</desc>
+    <desc>contains a feature system declaration.</desc>
     <desc xml:lang="it" notBefore="2007-01-21">contiene una dichiarazione del sistema di tratti</desc>
-</elementSpec>
-
+  </elementSpec>
   <elementSpec ident="fsDecl" module="declarefs">
-<gloss>feature structure declaration</gloss>
+    <gloss>feature structure declaration</gloss>
     <gloss xml:lang="it" notBefore="2007-01-21">dichiarazione della struttura di tratti</gloss>
-<desc>declares one type of feature structure.</desc>
+    <desc>declares one type of feature structure.</desc>
     <desc xml:lang="it" notBefore="2007-01-21">dichiara un tipo di struttura di tratti</desc>
-  <attList>
-    <attDef ident="type" usage="req">
-	<desc>gives a name for the type of feature structure being declared.</desc>
-      <desc xml:lang="it" notBefore="2007-01-21">fornisce il nome per il tipo di struttura di tratti che si sta dichiarando.</desc>
-      <valDesc>any convenient string of characters.</valDesc>
-      <valDesc xml:lang="it" notBefore="2007-01-21">una qualsiasi stringa di caratteri.</valDesc>
-    </attDef>
-    <attDef ident="baseTypes" usage="opt">
-	<desc>gives the name of one or more typed feature structures from which this type inherits feature specifications and constraints;
+    <attList>
+      <attDef ident="type" usage="req">
+        <desc>gives a name for the type of feature structure being declared.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">fornisce il nome per il tipo di struttura di tratti che si sta dichiarando.</desc>
+        <valDesc>any convenient string of characters.</valDesc>
+        <valDesc xml:lang="it" notBefore="2007-01-21">una qualsiasi stringa di caratteri.</valDesc>
+      </attDef>
+      <attDef ident="baseTypes" usage="opt">
+        <desc>gives the name of one or more typed feature structures from which this type inherits feature specifications and constraints;
 	  if this type includes a feature specification with the same name as that of any of those specified by this attribute, or if more than one specification of the same name is inherited, then the set of possible values is defined by
 	unification. Similarly, the set of constraints applicable is derived by combining those specified explicitly within this element with those implied by the <att>baseTypes</att>
 	attribute. When no <att>baseType</att> is specified, no feature specification or constraint is inherited.</desc>
-      <desc xml:lang="it" notBefore="2007-01-21">fornisce il nome ad una o più tipi di strutture di tratti dai quali il tipo eredita le specifiche e i vincoli dei tratti;
-        se questo tipo include una specifica di tratti con lo stesso nome specificato da questo attributo, o se più di una specifica dello stesso nome è ereditata, allora l'insieme dei possibili valori è definito
+        <desc xml:lang="it" notBefore="2007-01-21">fornisce il nome ad una o pi&#xF9; tipi di strutture di tratti dai quali il tipo eredita le specifiche e i vincoli dei tratti;
+        se questo tipo include una specifica di tratti con lo stesso nome specificato da questo attributo, o se pi&#xF9; di una specifica dello stesso nome &#xE8; ereditata, allora l'insieme dei possibili valori &#xE8; definito
         attraverso l'unificazione. In modo analogo, l'insieme dei vincoli applicabile deriva dalla combinazione di quelli specificati in modo esplicito all'interno dell'elemento con quelli sottintesi dall'attributo <att>baseTypes</att>
-        Se nessun <att>baseTypes</att> è specificato, nessuna specificazione o vincolo di tratti è ereditata.</desc>
-      <valDesc>any convenient string for use as a name.</valDesc>
-      <valDesc xml:lang="it" notBefore="2007-01-21">una qualsiasi string di caratteri da utilizzare come nome.</valDesc>
-    </attDef>
-  </attList>
-</elementSpec>
-
+        Se nessun <att>baseTypes</att> &#xE8; specificato, nessuna specificazione o vincolo di tratti &#xE8; ereditata.</desc>
+        <valDesc>any convenient string for use as a name.</valDesc>
+        <valDesc xml:lang="it" notBefore="2007-01-21">una qualsiasi string di caratteri da utilizzare come nome.</valDesc>
+      </attDef>
+    </attList>
+  </elementSpec>
   <elementSpec ident="fsDescr" module="declarefs">
-<gloss>feature system description (in FSD)</gloss>
+    <gloss>feature system description (in FSD)</gloss>
     <gloss xml:lang="it" notBefore="2007-01-21">descrizione del sistema di tratti (in FSD)</gloss>
-<desc>describes in prose what is represented by the type of feature structure declared in the enclosing fsDecl.</desc>
+    <desc>describes in prose what is represented by the type of feature structure declared in the enclosing fsDecl.</desc>
     <desc xml:lang="it" notBefore="2007-01-21">descrive in prosa quello che viene rappresentato dal tipo di struttura dei tratti dichiarati nella fsDecl acclusa.</desc>
-</elementSpec>
-
+  </elementSpec>
   <elementSpec ident="fDecl" module="declarefs">
-<gloss>feature declaration</gloss>
+    <gloss>feature declaration</gloss>
     <gloss xml:lang="it" notBefore="2007-01-21">dichiarazione di tratti</gloss>
-<desc>declares a single feature, specifying its name, organization, range of allowed values, and optionally its default value.</desc>
+    <desc>declares a single feature, specifying its name, organization, range of allowed values, and optionally its default value.</desc>
     <desc xml:lang="it" notBefore="2007-01-21">dichiara un singolo tratto, specificandone il nome, l'organizzazione, la gamma di valori permessi, e opzionale il suo valore predefinito.</desc>
-  <attList>
-    <attDef ident="name" usage="req">
-	<desc>indicates the name of the feature being declared; matches the <att>name</att> attribute of <gi>f</gi> elements in the text.</desc>
-      <desc xml:lang="it" notBefore="2007-01-21">indica il nome del tratto che si sta dichiarando; corrisponde all'attributo <att>name</att> dell'elemento <gi>f</gi> nel testo.</desc>
-      <valDesc>any string of characters</valDesc>
-      <valDesc xml:lang="it" notBefore="2007-01-21">una qualsiasi stringa di caratteri</valDesc>
-    </attDef>
-    <attDef usage="opt" ident="optional">
-	<desc>indicates whether or not the value of this feature may be present.</desc>
-      <desc xml:lang="it" notBefore="2007-01-21">indica se il valore del tratto possa o meno essere presente</desc>
-    </attDef>
-    <attDef ident="org" usage="opt">
-	<desc>specifies the organizing discipline of the feature value.</desc>
-      <desc xml:lang="it" notBefore="2007-01-21">specifica il principio organizzatore del valore del tratto.</desc>
-      <valList type="closed">
-        <valItem ident="unit">
-          <gloss>unitary atomic value</gloss>
-          <gloss xml:lang="it" notBefore="2007-01-21">valore isolato unitario</gloss>
-        </valItem>
-        <valItem ident="set">
-          <gloss>set value (unordered, no duplicates)</gloss>
-          <gloss xml:lang="it" notBefore="2007-01-21">valore definito (non ordinato, senza duplicati)</gloss>
-        </valItem>
-        <valItem ident="bag">
-          <gloss>bag value (unordered, may have duplicates)</gloss>
-          <gloss xml:lang="it" notBefore="2007-01-21">valore borsa (non ordinato, può avere duplicati)</gloss>
-        </valItem>
-        <valItem ident="list">
-          <gloss>list value (ordered, may have duplicates)</gloss>
-          <gloss xml:lang="it" notBefore="2007-01-21">valore di lista (ordinato, può avere duplicati)</gloss>
-        </valItem>
-      </valList>
-    </attDef>
-  </attList>
-</elementSpec>
-
+    <attList>
+      <attDef ident="name" usage="req">
+        <desc>indicates the name of the feature being declared; matches the <att>name</att> attribute of <gi>f</gi> elements in the text.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">indica il nome del tratto che si sta dichiarando; corrisponde all'attributo <att>name</att> dell'elemento <gi>f</gi> nel testo.</desc>
+        <valDesc>any string of characters</valDesc>
+        <valDesc xml:lang="it" notBefore="2007-01-21">una qualsiasi stringa di caratteri</valDesc>
+      </attDef>
+      <attDef usage="opt" ident="optional">
+        <desc>indicates whether or not the value of this feature may be present.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">indica se il valore del tratto possa o meno essere presente</desc>
+      </attDef>
+      <attDef ident="org" usage="opt">
+        <desc>specifies the organizing discipline of the feature value.</desc>
+        <desc xml:lang="it" notBefore="2007-01-21">specifica il principio organizzatore del valore del tratto.</desc>
+        <valList type="closed">
+          <valItem ident="unit">
+            <gloss>unitary atomic value</gloss>
+            <gloss xml:lang="it" notBefore="2007-01-21">valore isolato unitario</gloss>
+          </valItem>
+          <valItem ident="set">
+            <gloss>set value (unordered, no duplicates)</gloss>
+            <gloss xml:lang="it" notBefore="2007-01-21">valore definito (non ordinato, senza duplicati)</gloss>
+          </valItem>
+          <valItem ident="bag">
+            <gloss>bag value (unordered, may have duplicates)</gloss>
+            <gloss xml:lang="it" notBefore="2007-01-21">valore borsa (non ordinato, pu&#xF2; avere duplicati)</gloss>
+          </valItem>
+          <valItem ident="list">
+            <gloss>list value (ordered, may have duplicates)</gloss>
+            <gloss xml:lang="it" notBefore="2007-01-21">valore di lista (ordinato, pu&#xF2; avere duplicati)</gloss>
+          </valItem>
+        </valList>
+      </attDef>
+    </attList>
+  </elementSpec>
   <elementSpec ident="fDescr" module="declarefs">
-<gloss>feature description (in FSD)</gloss>
+    <gloss>feature description (in FSD)</gloss>
     <gloss xml:lang="it" notBefore="2007-01-21">descrifine di tratto (in FSD)</gloss>
-<desc>describes in prose what is represented by the feature being declared and its values.</desc>
-    <desc xml:lang="it" notBefore="2007-01-21">descrive in prosa ciò che è rappresentato dal tratto che si sta dichiarando e dai sui valori.</desc>
-</elementSpec>
-
+    <desc>describes in prose what is represented by the feature being declared and its values.</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">descrive in prosa ci&#xF2; che &#xE8; rappresentato dal tratto che si sta dichiarando e dai sui valori.</desc>
+  </elementSpec>
   <elementSpec ident="vRange" module="declarefs">
-<gloss>value range</gloss>
+    <gloss>value range</gloss>
     <gloss xml:lang="it" notBefore="2007-01-21">gamma di valori</gloss>
-<desc>defines the range of allowed values for a feature, in the form of an fs, vAlt, or primitive value; for the value of an f to be valid, it must be
+    <desc>defines the range of allowed values for a feature, in the form of an fs, vAlt, or primitive value; for the value of an f to be valid, it must be
   subsumed by the specified range; if the f contains multiple values (as sanctioned by the org attribute), then each value must be subsumed by the vRange.</desc>
-    <desc xml:lang="it" notBefore="2007-01-21">definisce la gamma di valori ammessi per un tratto, sotto forma di un fs, di un vAlt, o di valore primitivo; affinché il valore di un f sia valido deve essere
+    <desc xml:lang="it" notBefore="2007-01-21">definisce la gamma di valori ammessi per un tratto, sotto forma di un fs, di un vAlt, o di valore primitivo; affinch&#xE9; il valore di un f sia valido deve essere
     sussunto dalla gamma specificata; se f contiene valori multipli (come sancito dall'attributo org) allora ogni valore deve essere sussunto da vRange.</desc>
-</elementSpec>
-
+  </elementSpec>
   <elementSpec ident="vDefault" module="declarefs">
-<gloss>value default</gloss>
+    <gloss>value default</gloss>
     <gloss xml:lang="it" notBefore="2007-01-21">valore predefinito</gloss>
-<desc>declares the default value to be supplied when a feature structure does not contain an instance of f for this name; if unconditional, it is specified as one (or, depending on the value of
+    <desc>declares the default value to be supplied when a feature structure does not contain an instance of f for this name; if unconditional, it is specified as one (or, depending on the value of
 the org attribute of the enclosing fDecl) more fs elements or primitive values; if conditional, it is specified as one or more if elements; if no default is specified, or no condition matches, the value none is assumed.</desc>
-    <desc xml:lang="it" notBefore="2007-01-21">dichiara il valore predefinito da fornire quando una struttura di tratti non contiene una occorrenza di f per questo nome; se non condizionato, è specificato come uno o (a seconda del valore
-      dell'attributo org del fDecl accluso) più elementi fs di valori primitivi; se condizionato, è specificato come uno o più elementi if; se non è specificto alcun valore predefinito, o nessuna condizione corrisponde, viene assunto il valore nessuno.</desc>
-</elementSpec>
-
+    <desc xml:lang="it" notBefore="2007-01-21">dichiara il valore predefinito da fornire quando una struttura di tratti non contiene una occorrenza di f per questo nome; se non condizionato, &#xE8; specificato come uno o (a seconda del valore
+      dell'attributo org del fDecl accluso) pi&#xF9; elementi fs di valori primitivi; se condizionato, &#xE8; specificato come uno o pi&#xF9; elementi if; se non &#xE8; specificto alcun valore predefinito, o nessuna condizione corrisponde, viene assunto il valore nessuno.</desc>
+  </elementSpec>
   <elementSpec ident="if" module="declarefs">
-
-<gloss/><gloss xml:lang="it" notBefore="2007-01-21"/>
-<desc>defines a conditional default value for a feature; the condition is specified as a feature structure, and is met if it subsumes the feature structure in the text for which a default value is sought.</desc>
-    <desc xml:lang="it" notBefore="2007-01-21">definisce un valore predefinito condizionato di un tratto; la condizione è specificata come una struttura di tratti e se riscontrata sussume la struttura dei tratti nel testo per il quale si cerca un valore predefinito.</desc>
-</elementSpec>
-
+    <gloss/>
+    <gloss xml:lang="it" notBefore="2007-01-21"/>
+    <desc>defines a conditional default value for a feature; the condition is specified as a feature structure, and is met if it subsumes the feature structure in the text for which a default value is sought.</desc>
+    <desc xml:lang="it" notBefore="2007-01-21">definisce un valore predefinito condizionato di un tratto; la condizione &#xE8; specificata come una struttura di tratti e se riscontrata sussume la struttura dei tratti nel testo per il quale si cerca un valore predefinito.</desc>
+  </elementSpec>
   <elementSpec ident="then" module="declarefs">
-<gloss/><gloss xml:lang="it" notBefore="2007-01-21"/>
-<desc>separates the condition from the default in an if, or the antecedent and the consequent in a cond element.</desc>
+    <gloss/>
+    <gloss xml:lang="it" notBefore="2007-01-21"/>
+    <desc>separates the condition from the default in an if, or the antecedent and the consequent in a cond element.</desc>
     <desc xml:lang="it" notBefore="2007-01-21">separa la condizione dal valore predefinito in un if, o l'antecedente e il successivo in un elemento cond.</desc>
-</elementSpec>
-
+  </elementSpec>
   <elementSpec ident="fsConstraints" module="declarefs">
-<gloss>feature-structure constraints</gloss>
+    <gloss>feature-structure constraints</gloss>
     <gloss xml:lang="it" notBefore="2007-01-21">vincoli della struttura di tratti</gloss>
-<desc>specifies constraints on the content of well formed feature structures.</desc>
+    <desc>specifies constraints on the content of well formed feature structures.</desc>
     <desc xml:lang="it" notBefore="2007-01-21">specifica i vincoli sul contenuto delle strutture di tratti ben formate.</desc>
-  
-</elementSpec>
+  </elementSpec>
   <elementSpec ident="cond" module="declarefs">
-<gloss>conditional feature-structure constraint</gloss>
+    <gloss>conditional feature-structure constraint</gloss>
     <gloss xml:lang="it" notBefore="2007-01-21">vincolo della struttura di tratti condizionato</gloss>
-<desc>defines a conditional feature-structure constraint; the consequent and the antecedent are specified as feature structures or feature-structure groups; the constraint is satisfied if both the
+    <desc>defines a conditional feature-structure constraint; the consequent and the antecedent are specified as feature structures or feature-structure groups; the constraint is satisfied if both the
 antecedent and the consequent subsume a given feature structure, or if the antecedent does not.</desc>
-    <desc xml:lang="it" notBefore="2007-01-21">definisce un vincolo della struttura di tratti condizionato; il successivo e l'antecedente sono specificati come strutture di tratti o gruppi di strutture di tratti; il vincolo è soddisfatto se entrambi
+    <desc xml:lang="it" notBefore="2007-01-21">definisce un vincolo della struttura di tratti condizionato; il successivo e l'antecedente sono specificati come strutture di tratti o gruppi di strutture di tratti; il vincolo &#xE8; soddisfatto se entrambi
     l'antecedente e il successivo sussumono una data struttura di tratti, o se l'antecedente non lo fa..</desc>
-</elementSpec>
-
+  </elementSpec>
   <elementSpec ident="bicond" module="declarefs">
-<gloss>bi-conditional feature-structure constraint</gloss>
+    <gloss>bi-conditional feature-structure constraint</gloss>
     <gloss xml:lang="it" notBefore="2007-01-21">vincolo di struttura di tratti bi-condizionato</gloss>
-<desc>defines a biconditional feature-structure constraint; both consequent and antecedent are specified as feature structures or groups of feature structures; the constraint is satisfied if both
+    <desc>defines a biconditional feature-structure constraint; both consequent and antecedent are specified as feature structures or groups of feature structures; the constraint is satisfied if both
   subsume a given feature structure, or if both do not.</desc>
-    <desc xml:lang="it" notBefore="2007-01-21">definisce un vincolo della struttura di tratti bi-condizionato; sia il successivo che l'antecedente sono specificati come strutture di tratti o gruppi di strutture di tratti; il vincolo è soddisfatto se entrambi
+    <desc xml:lang="it" notBefore="2007-01-21">definisce un vincolo della struttura di tratti bi-condizionato; sia il successivo che l'antecedente sono specificati come strutture di tratti o gruppi di strutture di tratti; il vincolo &#xE8; soddisfatto se entrambi
     una data struttura di tratti, o se entrambi non mlo fanno.</desc>
-</elementSpec>
-
+  </elementSpec>
   <elementSpec ident="iff" module="declarefs">
-<gloss/><gloss xml:lang="it" notBefore="2007-01-21"/>
-<desc>separates the condition from the consequence in a bicond element.</desc>
+    <gloss/>
+    <gloss xml:lang="it" notBefore="2007-01-21"/>
+    <desc>separates the condition from the consequence in a bicond element.</desc>
     <desc xml:lang="it" notBefore="2007-01-21">separa la condizione dal successivo in un elemento bicond.</desc>
-</elementSpec>
+  </elementSpec>
 </moduleSpec>
