@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Character and glyph documentation
+  -->
+  <!-- Definitions from module gaiji -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <!-- 2. elements -->
+  <define name="char">
+    <element name="char">
+      <a:documentation>(文字) 文字に関する情報を示す．</a:documentation>
+      <ref name="char.content"/>
+      <ref name="char.attributes"/>
+    </element>
+  </define>
+  <define name="char.content">
+    <ref name="charName"/>
+    <ref name="macro.glossSeq"/>
+    <zeroOrMore>
+      <ref name="charProp"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="mapping"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="model.graphicLike"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="model.noteLike"/>
+    </optional>
+  </define>
+  <define name="char.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="charDesc">
+    <element name="charDesc">
+      <a:documentation>(文字解説) 文字やグリフに関する解説を示す．</a:documentation>
+      <ref name="charDesc.content"/>
+      <ref name="charDesc.attributes"/>
+    </element>
+  </define>
+  <define name="charDesc.content">
+    <optional>
+      <ref name="desc"/>
+    </optional>
+    <oneOrMore>
+      <choice>
+        <ref name="char"/>
+        <ref name="glyph"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <define name="charDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="charName">
+    <element name="charName">
+      <a:documentation>(文字名) 当該文字の名前をユニコードに従って示す．</a:documentation>
+      <ref name="charName.content"/>
+      <ref name="charName.attributes"/>
+    </element>
+  </define>
+  <define name="charName.content">
+    <text/>
+  </define>
+  <define name="charName.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="charProp">
+    <element name="charProp">
+      <a:documentation>(文字特性) 当該文字やグリフの特性を示す．</a:documentation>
+      <ref name="charProp.content"/>
+      <ref name="charProp.attributes"/>
+    </element>
+  </define>
+  <define name="charProp.content">
+    <choice>
+      <ref name="unicodeName"/>
+      <ref name="localName"/>
+    </choice>
+    <ref name="value"/>
+  </define>
+  <define name="charProp.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="g">
+    <element name="g">
+      <a:documentation>(文字またはグリフ) 文字やグリフの非公式な名前を示す．</a:documentation>
+      <ref name="g.content"/>
+      <ref name="g.attributes"/>
+    </element>
+  </define>
+  <define name="g.content">
+    <text/>
+  </define>
+  <define name="g.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <optional>
+      <attribute name="ref">
+        <a:documentation>当該文字やグリフの解説を参照する．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="glyph">
+    <element name="glyph">
+      <a:documentation>(グリフ) グリフの解説を示す．</a:documentation>
+      <ref name="glyph.content"/>
+      <ref name="glyph.attributes"/>
+    </element>
+  </define>
+  <define name="glyph.content">
+    <ref name="glyphName"/>
+    <ref name="macro.glossSeq"/>
+    <zeroOrMore>
+      <ref name="charProp"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="mapping"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="model.graphicLike"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="model.noteLike"/>
+    </optional>
+  </define>
+  <define name="glyph.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="glyphName">
+    <element name="glyphName">
+      <a:documentation>(グリフ名) 当該グリフの名前を示す．</a:documentation>
+      <ref name="glyphName.content"/>
+      <ref name="glyphName.attributes"/>
+    </element>
+  </define>
+  <define name="glyphName.content">
+    <text/>
+  </define>
+  <define name="glyphName.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="localName">
+    <element name="localName">
+      <a:documentation>(特性名) 特性の名前を示す．</a:documentation>
+      <ref name="localName.content"/>
+      <ref name="localName.attributes"/>
+    </element>
+  </define>
+  <define name="localName.content">
+    <text/>
+  </define>
+  <define name="localName.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="mapping">
+    <element name="mapping">
+      <a:documentation>(文字間対応) 当該文字やグリフと関連する1つ以上の文字を示す．</a:documentation>
+      <ref name="mapping.content"/>
+      <ref name="mapping.attributes"/>
+    </element>
+  </define>
+  <define name="mapping.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="mapping.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="unicodeName">
+    <element name="unicodeName">
+      <a:documentation>(ユニコード的特性名) ユニコードで規定された特性名を示す．</a:documentation>
+      <ref name="unicodeName.content"/>
+      <ref name="unicodeName.attributes"/>
+    </element>
+  </define>
+  <define name="unicodeName.content">
+    <text/>
+  </define>
+  <define name="unicodeName.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="version">
+        <a:documentation>当該ユニコードの版を示す．</a:documentation>
+        <ref name="data.numeric"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="value">
+    <element name="value">
+      <a:documentation>(値) 特性，属性などの値を示す．</a:documentation>
+      <ref name="value.content"/>
+      <ref name="value.attributes"/>
+    </element>
+  </define>
+  <define name="value.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="value.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

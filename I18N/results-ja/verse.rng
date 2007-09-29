@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Verse structures
+  -->
+  <!-- Definitions from module verse -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <define name="model.divPart.verse">
+    <notAllowed/>
+  </define>
+  <define name="att.metrical.attributes">
+    <ref name="att.metrical.attribute.met"/>
+    <ref name="att.metrical.attribute.real"/>
+    <ref name="att.metrical.attribute.rhyme"/>
+    <empty/>
+  </define>
+  <define name="att.metrical.attribute.met">
+    <optional>
+      <attribute name="met">
+        <a:documentation>ユーザー定義の韻律表記法を示す．</a:documentation>
+        <data type="string"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.metrical.attribute.real">
+    <optional>
+      <attribute name="real">
+        <a:documentation>ユーザー定義による，韻律構造の実際の出現形を表記する方法を示す．</a:documentation>
+        <data type="string"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.metrical.attribute.rhyme">
+    <optional>
+      <attribute name="rhyme">
+        <a:documentation>特定の韻構造を示す．</a:documentation>
+        <data type="string"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.enjamb.attributes">
+    <ref name="att.enjamb.attribute.enjamb"/>
+    <empty/>
+  </define>
+  <define name="att.enjamb.attribute.enjamb">
+    <optional>
+      <attribute name="enjamb">
+        <a:documentation>句跨りが起こる行末を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- 2. elements -->
+  <define name="caesura">
+    <element name="caesura">
+      <a:documentation>韻律が分断される休止を示す．</a:documentation>
+      <ref name="caesura.content"/>
+      <ref name="caesura.attributes"/>
+    </element>
+  </define>
+  <define name="caesura.content">
+    <empty/>
+  </define>
+  <define name="caesura.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="rhyme">
+    <element name="rhyme">
+      <a:documentation>韻を踏む場所を示す．</a:documentation>
+      <ref name="rhyme.content"/>
+      <ref name="rhyme.attributes"/>
+    </element>
+  </define>
+  <define name="rhyme.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="rhyme.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <optional>
+      <attribute name="label">
+        <a:documentation>当該場所のラベルを示す．</a:documentation>
+        <data type="string"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

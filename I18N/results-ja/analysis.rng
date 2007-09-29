@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Simple analytic mechanisms
+  -->
+  <!-- Definitions from module analysis -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <define name="att.global.analytic.attributes">
+    <ref name="att.global.analytic.attribute.ana"/>
+    <empty/>
+  </define>
+  <define name="att.global.analytic.attribute.ana">
+    <optional>
+      <attribute name="ana">
+        <a:documentation>当該要素の解釈を含む要素を示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- 2. elements -->
+  <define name="c">
+    <element name="c">
+      <a:documentation>文字を示す．</a:documentation>
+      <ref name="c.content"/>
+      <ref name="c.attributes"/>
+    </element>
+  </define>
+  <define name="c.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="c.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.segLike.attributes"/>
+    <empty/>
+  </define>
+  <define name="cl">
+    <element name="cl">
+      <a:documentation>言語学上の節を示す．</a:documentation>
+      <ref name="cl.content"/>
+      <ref name="cl.attributes"/>
+    </element>
+  </define>
+  <define name="cl.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="cl.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.segLike.attributes"/>
+    <empty/>
+  </define>
+  <define name="interp">
+    <element name="interp">
+      <a:documentation>(解釈) あるテキストの解釈を示す．</a:documentation>
+      <ref name="interp.content"/>
+      <ref name="interp.attributes"/>
+    </element>
+  </define>
+  <define name="interp.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="interp.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.interpLike.attributes"/>
+    <empty/>
+  </define>
+  <define name="interpGrp">
+    <element name="interpGrp">
+      <a:documentation>(解釈集) 解釈をまとめる．</a:documentation>
+      <ref name="interpGrp.content"/>
+      <ref name="interpGrp.attributes"/>
+    </element>
+  </define>
+  <define name="interpGrp.content">
+    <oneOrMore>
+      <ref name="interp"/>
+    </oneOrMore>
+  </define>
+  <define name="interpGrp.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.interpLike.attributes"/>
+    <empty/>
+  </define>
+  <define name="m">
+    <element name="m">
+      <a:documentation>言語学上の形態素を示す．</a:documentation>
+      <ref name="m.content"/>
+      <ref name="m.attributes"/>
+    </element>
+  </define>
+  <define name="m.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.blockLike"/>
+        <ref name="c"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="m.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.segLike.attributes"/>
+    <optional>
+      <attribute name="baseForm">
+        <a:documentation>形態素の基形を示す．
+identifies the morpheme's base form.</a:documentation>
+        <ref name="data.word"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="phr">
+    <element name="phr">
+      <a:documentation>言語学上の句を示す．</a:documentation>
+      <ref name="phr.content"/>
+      <ref name="phr.attributes"/>
+    </element>
+  </define>
+  <define name="phr.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="phr.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.segLike.attributes"/>
+    <empty/>
+  </define>
+  <define name="s">
+    <element name="s">
+      <a:documentation>文単位を示す．</a:documentation>
+      <ref name="s.content"/>
+      <ref name="s.attributes"/>
+    </element>
+  </define>
+  <define name="s.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="s.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.segLike.attributes"/>
+    <empty/>
+  </define>
+  <define name="span">
+    <element name="span">
+      <a:documentation>解釈を示す．</a:documentation>
+      <ref name="span.content"/>
+      <ref name="span.attributes"/>
+    </element>
+  </define>
+  <define name="span.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="span.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.interpLike.attributes"/>
+    <attribute name="from">
+      <a:documentation>解釈対象の始点を示す．もし属性toが無い場合は，対象全体を示す．</a:documentation>
+      <ref name="data.pointer"/>
+    </attribute>
+    <optional>
+      <attribute name="to">
+        <a:documentation>解釈対象の終点を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="spanGrp">
+    <element name="spanGrp">
+      <a:documentation>(解釈集) 解釈をまとめる．</a:documentation>
+      <ref name="spanGrp.content"/>
+      <ref name="spanGrp.attributes"/>
+    </element>
+  </define>
+  <define name="spanGrp.content">
+    <zeroOrMore>
+      <ref name="span"/>
+    </zeroOrMore>
+  </define>
+  <define name="spanGrp.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.interpLike.attributes"/>
+    <empty/>
+  </define>
+  <define name="w">
+    <element name="w">
+      <a:documentation>言語学上の語を示す．</a:documentation>
+      <ref name="w.content"/>
+      <ref name="w.attributes"/>
+    </element>
+  </define>
+  <define name="w.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.blockLike"/>
+        <ref name="w"/>
+        <ref name="m"/>
+        <ref name="c"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="w.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.segLike.attributes"/>
+    <optional>
+      <attribute name="lemma">
+        <a:documentation>当該語の辞書の見出し形を示す．</a:documentation>
+        <ref name="data.word"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

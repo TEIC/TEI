@@ -1,0 +1,1484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Manuscript Description
+  -->
+  <!-- Definitions from module msdescription -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <!-- 2. elements -->
+  <define name="accMat">
+    <element name="accMat">
+      <a:documentation>(随伴材) 当該手書き文書に付いている部材についての詳細を示す．例え
+ば，当該手書き文書が作成された以前に書かれた文書やその断片であったり
+するものについて．</a:documentation>
+      <ref name="accMat.content"/>
+      <ref name="accMat.attributes"/>
+    </element>
+  </define>
+  <define name="accMat.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="accMat.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="acquisition">
+    <element name="acquisition">
+      <a:documentation>当該手書き文書が入手された経緯についての情報を示す．</a:documentation>
+      <ref name="acquisition.content"/>
+      <ref name="acquisition.attributes"/>
+    </element>
+  </define>
+  <define name="acquisition.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="acquisition.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <empty/>
+  </define>
+  <define name="additional">
+    <element name="additional">
+      <a:documentation>当該手書き文書に関する，付随情報をまとめる．</a:documentation>
+      <ref name="additional.content"/>
+      <ref name="additional.attributes"/>
+    </element>
+  </define>
+  <define name="additional.content">
+    <optional>
+      <ref name="adminInfo"/>
+    </optional>
+    <optional>
+      <ref name="surrogates"/>
+    </optional>
+    <optional>
+      <ref name="listBibl"/>
+    </optional>
+  </define>
+  <define name="additional.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="additions">
+    <element name="additions">
+      <a:documentation>当該手書き文書中にみられる，重要な付加物を示す．例えば，欄外の書
+き込みや注釈など．</a:documentation>
+      <ref name="additions.content"/>
+      <ref name="additions.attributes"/>
+    </element>
+  </define>
+  <define name="additions.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="additions.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="adminInfo">
+    <element name="adminInfo">
+      <a:documentation>(管理情報) 当該手書き文書の管理・利用形態についての情報を示す．</a:documentation>
+      <ref name="adminInfo.content"/>
+      <ref name="adminInfo.attributes"/>
+    </element>
+  </define>
+  <define name="adminInfo.content">
+    <optional>
+      <ref name="recordHist"/>
+    </optional>
+    <optional>
+      <ref name="availability"/>
+    </optional>
+    <optional>
+      <ref name="custodialHist"/>
+    </optional>
+    <optional>
+      <ref name="model.noteLike"/>
+    </optional>
+  </define>
+  <define name="adminInfo.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="altIdentifier">
+    <element name="altIdentifier">
+      <a:documentation>(代替ID) 当該手書き文書を示す，代わりとなるIDまたは昔のIDを示す．
+例えば，昔のカタログ番号など．</a:documentation>
+      <ref name="altIdentifier.content"/>
+      <ref name="altIdentifier.attributes"/>
+    </element>
+  </define>
+  <define name="altIdentifier.content">
+    <optional>
+      <ref name="country"/>
+    </optional>
+    <optional>
+      <ref name="region"/>
+    </optional>
+    <optional>
+      <ref name="settlement"/>
+    </optional>
+    <optional>
+      <ref name="institution"/>
+    </optional>
+    <optional>
+      <ref name="repository"/>
+    </optional>
+    <optional>
+      <ref name="collection"/>
+    </optional>
+    <ref name="idno"/>
+    <optional>
+      <ref name="note"/>
+    </optional>
+  </define>
+  <define name="altIdentifier.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="binding">
+    <element name="binding">
+      <a:documentation>1つの冊子に関する情報を示す．例えば，カバーの種類，表紙など．
+手書きものも含む．</a:documentation>
+      <ref name="binding.content"/>
+      <ref name="binding.attributes"/>
+    </element>
+  </define>
+  <define name="binding.content">
+    <oneOrMore>
+      <choice>
+        <ref name="model.pLike"/>
+        <ref name="decoNote"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <define name="binding.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <optional>
+      <attribute name="contemporary">
+        <a:documentation>当該冊子は，内容の大部分と同時代のものかどうか．</a:documentation>
+        <ref name="data.xTruthValue"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="bindingDesc">
+    <element name="bindingDesc">
+      <a:documentation>当該冊子の，以前の形態と現在の形態とを，一連の段落(p)または一連
+の要素bindingで示す．</a:documentation>
+      <ref name="bindingDesc.content"/>
+      <ref name="bindingDesc.attributes"/>
+    </element>
+  </define>
+  <define name="bindingDesc.content">
+    <choice>
+      <oneOrMore>
+        <choice>
+          <ref name="model.pLike"/>
+          <ref name="decoNote"/>
+        </choice>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="binding"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="bindingDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="catchwords">
+    <element name="catchwords">
+      <a:documentation>古典籍において，折丁の順番を正しく保つための仕組みを示す．一般に
+は，ページの下に注が書かれている．</a:documentation>
+      <ref name="catchwords.content"/>
+      <ref name="catchwords.attributes"/>
+    </element>
+  </define>
+  <define name="catchwords.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="catchwords.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="collation">
+    <element name="collation">
+      <a:documentation>当該一葉や折判の丁合の仕方方法を示す．</a:documentation>
+      <ref name="collation.content"/>
+      <ref name="collation.attributes"/>
+    </element>
+  </define>
+  <define name="collation.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="collation.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="collection">
+    <element name="collection">
+      <a:documentation>手書き文書のコレクション名を示す．必ずしも一ヶ所に保管されている
+必要はない．</a:documentation>
+      <ref name="collection.content"/>
+      <ref name="collection.attributes"/>
+    </element>
+  </define>
+  <define name="collection.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="collection.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <empty/>
+  </define>
+  <define name="colophon">
+    <element name="colophon">
+      <a:documentation>当該手書き文書のコロフォン(奥付情報)を示す．例えば，制作の日時，
+場所，主体，制作理由など．</a:documentation>
+      <ref name="colophon.content"/>
+      <ref name="colophon.attributes"/>
+    </element>
+  </define>
+  <define name="colophon.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="colophon.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="condition">
+    <element name="condition">
+      <a:documentation>当該手書き文書の，物理的な状態を示す．</a:documentation>
+      <ref name="condition.content"/>
+      <ref name="condition.attributes"/>
+    </element>
+  </define>
+  <define name="condition.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="condition.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="custEvent">
+    <element name="custEvent">
+      <a:documentation>当該手書き文書の，管理履歴における出来事を示す．</a:documentation>
+      <ref name="custEvent.content"/>
+      <ref name="custEvent.attributes"/>
+    </element>
+  </define>
+  <define name="custEvent.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="custEvent.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="custodialHist">
+    <element name="custodialHist">
+      <a:documentation>当該手書き文書の管理履歴を示す．散文形式または一連の日付つき履歴
+で示す．</a:documentation>
+      <ref name="custodialHist.content"/>
+      <ref name="custodialHist.attributes"/>
+    </element>
+  </define>
+  <define name="custodialHist.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="custEvent"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="custodialHist.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="decoDesc">
+    <element name="decoDesc">
+      <a:documentation>当該手書き文書の装飾について示す．一連の散文段落，または一連の要
+素decoNoteで示す．</a:documentation>
+      <ref name="decoDesc.content"/>
+      <ref name="decoDesc.attributes"/>
+    </element>
+  </define>
+  <define name="decoDesc.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="decoNote"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="decoDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="decoNote">
+    <element name="decoNote">
+      <a:documentation>当該手書き文書の装飾要素を示す．</a:documentation>
+      <ref name="decoNote.content"/>
+      <ref name="decoNote.attributes"/>
+    </element>
+  </define>
+  <define name="decoNote.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="decoNote.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="depth">
+    <element name="depth">
+      <a:documentation>冊子の背と平行した深さを示す．</a:documentation>
+      <ref name="depth.content"/>
+      <ref name="depth.attributes"/>
+    </element>
+  </define>
+  <define name="depth.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="depth.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.measured.attributes"/>
+    <empty/>
+  </define>
+  <define name="dimensions">
+    <element name="dimensions">
+      <a:documentation>次数を示す．</a:documentation>
+      <ref name="dimensions.content"/>
+      <ref name="dimensions.attributes"/>
+    </element>
+  </define>
+  <define name="dimensions.content">
+    <oneOrMore>
+      <optional>
+        <ref name="height"/>
+      </optional>
+      <optional>
+        <ref name="width"/>
+      </optional>
+      <optional>
+        <ref name="depth"/>
+      </optional>
+    </oneOrMore>
+  </define>
+  <define name="dimensions.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.measured.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該計測対象の種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="explicit">
+    <element name="explicit">
+      <a:documentation>当該手書き文書中の覚え書きを示す．例えば，末尾語，朱書き，社章など．</a:documentation>
+      <ref name="explicit.content"/>
+      <ref name="explicit.attributes"/>
+    </element>
+  </define>
+  <define name="explicit.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="explicit.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <optional>
+      <attribute name="defective">
+        <a:documentation>当該覚え書きに問題があるかどうかを示す．</a:documentation>
+        <ref name="data.xTruthValue"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="filiation">
+    <element name="filiation">
+      <a:documentation>当該手書き文書に関連する文書の世代間情報を示す．例えば，同じテキ
+ストを持つ別の手書き文書との関係や，その写しなどとの関係．</a:documentation>
+      <ref name="filiation.content"/>
+      <ref name="filiation.attributes"/>
+    </element>
+  </define>
+  <define name="filiation.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="filiation.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="finalRubric">
+    <element name="finalRubric">
+      <a:documentation>テキストの区分の最後を示す文字列を示す．ここには，朱書きで，著者
+や題目が書かれており，大きさや字形などの見た目も異なっている．</a:documentation>
+      <ref name="finalRubric.content"/>
+      <ref name="finalRubric.attributes"/>
+    </element>
+  </define>
+  <define name="finalRubric.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="finalRubric.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="foliation">
+    <element name="foliation">
+      <a:documentation>冊子におけるページを示すシステムを示す．</a:documentation>
+      <ref name="foliation.content"/>
+      <ref name="foliation.attributes"/>
+    </element>
+  </define>
+  <define name="foliation.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="foliation.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="handDesc">
+    <element name="handDesc">
+      <a:documentation>当該手書き文書中で使用されている，全ての書記システムを示す．</a:documentation>
+      <ref name="handDesc.content"/>
+      <ref name="handDesc.attributes"/>
+    </element>
+  </define>
+  <define name="handDesc.content">
+    <oneOrMore>
+      <choice>
+        <ref name="handNote"/>
+        <ref name="model.pLike"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <define name="handDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="hands">
+        <a:documentation>当該手書き文書中にある，筆致の種類の数を示す．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="handNote">
+    <element name="handNote">
+      <a:documentation>(筆致に関する注釈) 当該手書き文書中で判別できる筆致やスタイルにつ
+いて示す．</a:documentation>
+      <ref name="handNote.content"/>
+      <ref name="handNote.attributes"/>
+    </element>
+  </define>
+  <define name="handNote.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="handNote.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="scribe">
+        <a:documentation>独立した筆致と思われる書き手を示すIDや名前を示す．</a:documentation>
+        <ref name="data.name"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="script">
+        <a:documentation>当該筆致で使用されている書記スタイルや筆体の特徴を示す．例えば，
+書記スタイル，銅板スタイル，公文書スタイル，イタリアスタイルなど．</a:documentation>
+        <ref name="data.names"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="medium">
+        <a:documentation>インクの種類や色合い(例えば，茶色など)と筆記具の種類(例えば，鉛筆
+など)．</a:documentation>
+        <ref name="data.words"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="scope">
+        <a:documentation>当該筆致が，当該手書き文書中でどれくらい出現しているかを示す．</a:documentation>
+        <choice>
+          <value>sole</value>
+          <a:documentation>(当該筆致で全てが書かれている．)</a:documentation>
+          <value>major</value>
+          <a:documentation>(当該筆致で，殆どが書かれている．)</a:documentation>
+          <value>minor</value>
+          <a:documentation>(当該筆致で，所々が書かれている．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="height">
+    <element name="height">
+      <a:documentation>背に沿って計測される大きさ．</a:documentation>
+      <ref name="height.content"/>
+      <ref name="height.attributes"/>
+    </element>
+  </define>
+  <define name="height.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="height.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.measured.attributes"/>
+    <empty/>
+  </define>
+  <define name="heraldry">
+    <element name="heraldry">
+      <a:documentation>紋章の様式を示す．例えば，紋章用語や，家紋など．</a:documentation>
+      <ref name="heraldry.content"/>
+      <ref name="heraldry.attributes"/>
+    </element>
+  </define>
+  <define name="heraldry.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="heraldry.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="history">
+    <element name="history">
+      <a:documentation> 当該手書き文書の歴史を示す．</a:documentation>
+      <ref name="history.content"/>
+      <ref name="history.attributes"/>
+    </element>
+  </define>
+  <define name="history.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="origin"/>
+        </optional>
+        <zeroOrMore>
+          <ref name="provenance"/>
+        </zeroOrMore>
+        <optional>
+          <ref name="acquisition"/>
+        </optional>
+      </group>
+    </choice>
+  </define>
+  <define name="history.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="incipit">
+    <element name="incipit">
+      <a:documentation>当該手書き文書にある巻頭語句を示す．</a:documentation>
+      <ref name="incipit.content"/>
+      <ref name="incipit.attributes"/>
+    </element>
+  </define>
+  <define name="incipit.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="incipit.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <optional>
+      <attribute name="defective">
+        <a:documentation>当該巻頭語句に問題があるかどうかを示す．</a:documentation>
+        <ref name="data.xTruthValue"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="institution">
+    <element name="institution">
+      <a:documentation>当該手書き文書が所蔵されている大学や図書館の名前を示す．</a:documentation>
+      <ref name="institution.content"/>
+      <ref name="institution.attributes"/>
+    </element>
+  </define>
+  <define name="institution.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="institution.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <empty/>
+  </define>
+  <define name="layout">
+    <element name="layout">
+      <a:documentation>ページ上に適すとがどのように配置されているかを示す．例えば，罫線，
+穴などのページを調整する技術など．</a:documentation>
+      <ref name="layout.content"/>
+      <ref name="layout.attributes"/>
+    </element>
+  </define>
+  <define name="layout.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="layout.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="columns">
+        <a:documentation>ページ当たりの段数．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="ruledLines">
+        <a:documentation>段落当たりの罫線数．</a:documentation>
+        <choice>
+          <ref name="data.count"/>
+          <list>
+            <ref name="data.count"/>
+            <ref name="data.count"/>
+          </list>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="writtenLines">
+        <a:documentation>段落当たりの行数．</a:documentation>
+        <choice>
+          <ref name="data.count"/>
+          <list>
+            <ref name="data.count"/>
+            <ref name="data.count"/>
+          </list>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="layoutDesc">
+    <element name="layoutDesc">
+      <a:documentation>当該手書き文書のレイアウト情報をまとまる．</a:documentation>
+      <ref name="layoutDesc.content"/>
+      <ref name="layoutDesc.attributes"/>
+    </element>
+  </define>
+  <define name="layoutDesc.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="layout"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="layoutDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="locus">
+    <element name="locus">
+      <a:documentation>当該手書き文書の場所を示す．一般には，一連の折参照となる．</a:documentation>
+      <ref name="locus.content"/>
+      <ref name="locus.attributes"/>
+    </element>
+  </define>
+  <define name="locus.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="locus.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="scheme">
+        <a:documentation>当該の場所を示す折の形式を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="from">
+        <a:documentation>正規の形式で当該場所の始点を示す．</a:documentation>
+        <ref name="data.word"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="to">
+        <a:documentation>正規の形式で当該場所の終点を示す．</a:documentation>
+        <ref name="data.word"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="targets">
+        <a:documentation>当該場所に相当する1つ以上の画像データまたは転記データへのリンクを
+示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="material">
+    <element name="material">
+      <a:documentation>当該手書き文書の素材を示す．</a:documentation>
+      <ref name="material.content"/>
+      <ref name="material.attributes"/>
+    </element>
+  </define>
+  <define name="material.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="material.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="msContents">
+    <element name="msContents">
+      <a:documentation>当該手書き文書の，知的内容を示す．一連の段落または一連の要素
+miitemから成る．</a:documentation>
+      <ref name="msContents.content"/>
+      <ref name="msContents.attributes"/>
+    </element>
+  </define>
+  <define name="msContents.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="summary"/>
+        </optional>
+        <optional>
+          <ref name="textLang"/>
+        </optional>
+        <oneOrMore>
+          <choice>
+            <ref name="msItem"/>
+            <ref name="msItemStruct"/>
+          </choice>
+        </oneOrMore>
+      </group>
+    </choice>
+  </define>
+  <define name="msContents.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="class">
+        <a:documentation>当該内容の種類を示す．</a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="defective">
+        <a:documentation>当該内容に問題があるかどうかを示す．</a:documentation>
+        <ref name="data.xTruthValue"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="msDescription">
+    <element name="msDescription">
+      <a:documentation>単一の手書き文書を示す．</a:documentation>
+      <ref name="msDescription.content"/>
+      <ref name="msDescription.attributes"/>
+    </element>
+  </define>
+  <define name="msDescription.content">
+    <ref name="msIdentifier"/>
+    <zeroOrMore>
+      <ref name="head"/>
+    </zeroOrMore>
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="msContents"/>
+        </optional>
+        <optional>
+          <ref name="physDesc"/>
+        </optional>
+        <optional>
+          <ref name="history"/>
+        </optional>
+        <optional>
+          <ref name="additional"/>
+        </optional>
+        <zeroOrMore>
+          <ref name="msPart"/>
+        </zeroOrMore>
+      </group>
+    </choice>
+  </define>
+  <define name="msDescription.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="msIdentifier">
+    <element name="msIdentifier">
+      <a:documentation>当該手書き文書を特定する情報を示す．</a:documentation>
+      <ref name="msIdentifier.content"/>
+      <ref name="msIdentifier.attributes"/>
+    </element>
+  </define>
+  <define name="msIdentifier.content">
+    <choice>
+      <group>
+        <optional>
+          <ref name="country"/>
+        </optional>
+        <optional>
+          <ref name="region"/>
+        </optional>
+        <ref name="settlement"/>
+        <optional>
+          <ref name="institution"/>
+        </optional>
+        <ref name="repository"/>
+        <optional>
+          <ref name="collection"/>
+        </optional>
+        <optional>
+          <ref name="idno"/>
+        </optional>
+      </group>
+      <ref name="msName"/>
+    </choice>
+    <zeroOrMore>
+      <choice>
+        <ref name="altIdentifier"/>
+        <ref name="msName"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="msIdentifier.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="msItem">
+    <element name="msItem">
+      <a:documentation>当該手書き文書の知的内容における，いち単位を示す．</a:documentation>
+      <ref name="msItem.content"/>
+      <ref name="msItem.attributes"/>
+    </element>
+  </define>
+  <define name="msItem.content">
+    <optional>
+      <ref name="locus"/>
+    </optional>
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="model.msItemPart"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="msItem.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="class">
+        <a:documentation>当該単位の種類を示す．</a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="defective" a:defaultValue="false">
+        <a:documentation>当該単位に問題があるかどうかを示す．</a:documentation>
+        <ref name="data.xTruthValue"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="msItemStruct">
+    <element name="msItemStruct">
+      <a:documentation>手書き文書の知的内容を構成する各単位の構造について示す．</a:documentation>
+      <ref name="msItemStruct.content"/>
+      <ref name="msItemStruct.attributes"/>
+    </element>
+  </define>
+  <define name="msItemStruct.content">
+    <optional>
+      <ref name="locus"/>
+    </optional>
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <zeroOrMore>
+          <ref name="author"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="respStmt"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="title"/>
+        </zeroOrMore>
+        <optional>
+          <ref name="rubric"/>
+        </optional>
+        <optional>
+          <ref name="incipit"/>
+        </optional>
+        <zeroOrMore>
+          <ref name="msItemStruct"/>
+        </zeroOrMore>
+        <optional>
+          <ref name="explicit"/>
+        </optional>
+        <optional>
+          <ref name="finalRubric"/>
+        </optional>
+        <zeroOrMore>
+          <ref name="colophon"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="decoNote"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="listBibl"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="bibl"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="filiation"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="model.noteLike"/>
+        </zeroOrMore>
+        <optional>
+          <ref name="textLang"/>
+        </optional>
+      </group>
+    </choice>
+  </define>
+  <define name="msItemStruct.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="class">
+        <a:documentation>当該単位のテキストの種類を示す．</a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="defective" a:defaultValue="false">
+        <a:documentation>indicates whether the item being described 
+is defective, i.e. incomplete through loss or damage.</a:documentation>
+        <ref name="data.xTruthValue"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="msName">
+    <element name="msName">
+      <a:documentation>(代替名) 当該手書き文書を示す，構造的ではない別名を示す．例えば，
+愛称など．</a:documentation>
+      <ref name="msName.content"/>
+      <ref name="msName.attributes"/>
+    </element>
+  </define>
+  <define name="msName.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="msName.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="msPart">
+    <element name="msPart">
+      <a:documentation>元々は独立して別にあった手書き文書に関する情報を示す．</a:documentation>
+      <ref name="msPart.content"/>
+      <ref name="msPart.attributes"/>
+    </element>
+  </define>
+  <define name="msPart.content">
+    <ref name="altIdentifier"/>
+    <zeroOrMore>
+      <ref name="head"/>
+    </zeroOrMore>
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="msContents"/>
+        </optional>
+        <optional>
+          <ref name="physDesc"/>
+        </optional>
+        <optional>
+          <ref name="history"/>
+        </optional>
+        <optional>
+          <ref name="additional"/>
+        </optional>
+        <zeroOrMore>
+          <ref name="msPart"/>
+        </zeroOrMore>
+      </group>
+    </choice>
+  </define>
+  <define name="msPart.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="musicNotation">
+    <element name="musicNotation">
+      <a:documentation>楽曲記法の種類を示す．</a:documentation>
+      <ref name="musicNotation.content"/>
+      <ref name="musicNotation.attributes"/>
+    </element>
+  </define>
+  <define name="musicNotation.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="musicNotation.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="objectDesc">
+    <element name="objectDesc">
+      <a:documentation>当該手書き文書を構成する物理的な要素について示す．</a:documentation>
+      <ref name="objectDesc.content"/>
+      <ref name="objectDesc.attributes"/>
+    </element>
+  </define>
+  <define name="objectDesc.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="supportDesc"/>
+        </optional>
+        <optional>
+          <ref name="layoutDesc"/>
+        </optional>
+      </group>
+    </choice>
+  </define>
+  <define name="objectDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="form">
+        <a:documentation>当該媒体の物理的な情報を，当該プロジェクトで使われる名前で示す．
+例えば，冊子，巻子，断片，一切れ，断片など．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="origDate">
+    <element name="origDate">
+      <a:documentation>当該手書き文書の日時を示す．</a:documentation>
+      <ref name="origDate.content"/>
+      <ref name="origDate.attributes"/>
+    </element>
+  </define>
+  <define name="origDate.content">
+    <text/>
+  </define>
+  <define name="origDate.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <empty/>
+  </define>
+  <define name="origPlace">
+    <element name="origPlace">
+      <a:documentation>当該手書き文書が生まれた場所を示す．</a:documentation>
+      <ref name="origPlace.content"/>
+      <ref name="origPlace.attributes"/>
+    </element>
+  </define>
+  <define name="origPlace.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="origPlace.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <empty/>
+  </define>
+  <define name="origin">
+    <element name="origin">
+      <a:documentation>当該手書き文書の出自に関する他の情報を示す．</a:documentation>
+      <ref name="origin.content"/>
+      <ref name="origin.attributes"/>
+    </element>
+  </define>
+  <define name="origin.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="origin.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <empty/>
+  </define>
+  <define name="physDesc">
+    <element name="physDesc">
+      <a:documentation>当該手書き文書の外形情報を示す．</a:documentation>
+      <ref name="physDesc.content"/>
+      <ref name="physDesc.attributes"/>
+    </element>
+  </define>
+  <define name="physDesc.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <ref name="model.physDescPart_sequenceOptional"/>
+    </choice>
+  </define>
+  <define name="physDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="provenance">
+    <element name="provenance">
+      <a:documentation>当該手書き文書が書かれてから収蔵されるまでの歴史に関する情報を示す．</a:documentation>
+      <ref name="provenance.content"/>
+      <ref name="provenance.attributes"/>
+    </element>
+  </define>
+  <define name="provenance.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="provenance.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <empty/>
+  </define>
+  <define name="recordHist">
+    <element name="recordHist">
+      <a:documentation>元になる手書き文書に関する改訂などの情報を示す．</a:documentation>
+      <ref name="recordHist.content"/>
+      <ref name="recordHist.attributes"/>
+    </element>
+  </define>
+  <define name="recordHist.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <ref name="source"/>
+        <zeroOrMore>
+          <ref name="change"/>
+        </zeroOrMore>
+      </group>
+    </choice>
+  </define>
+  <define name="recordHist.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="repository">
+    <element name="repository">
+      <a:documentation>当該手書き文書が収蔵されている館の名前を示す．</a:documentation>
+      <ref name="repository.content"/>
+      <ref name="repository.attributes"/>
+    </element>
+  </define>
+  <define name="repository.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="repository.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <empty/>
+  </define>
+  <define name="rubric">
+    <element name="rubric">
+      <a:documentation>当該手書き文書にある，朱書きを示す．これは，テキスト部分の始まり
+を示したり，著者や題名を示したりしている．字の大きさや形状は，他のも
+のとは異なっている場合が多い．</a:documentation>
+      <ref name="rubric.content"/>
+      <ref name="rubric.attributes"/>
+    </element>
+  </define>
+  <define name="rubric.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="rubric.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="seal">
+    <element name="seal">
+      <a:documentation>当該手書き文書にある印章を示す．</a:documentation>
+      <ref name="seal.content"/>
+      <ref name="seal.attributes"/>
+    </element>
+  </define>
+  <define name="seal.content">
+    <oneOrMore>
+      <choice>
+        <ref name="model.pLike"/>
+        <ref name="decoNote"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <define name="seal.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <optional>
+      <attribute name="contemporary">
+        <a:documentation>当該印章が，現在も使われうるものかどうかを示す．</a:documentation>
+        <ref name="data.xTruthValue"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="sealDesc">
+    <element name="sealDesc">
+      <a:documentation>当該印章について，一連の段落または一連の要素sealや要素decoNoteで
+示す．</a:documentation>
+      <ref name="sealDesc.content"/>
+      <ref name="sealDesc.attributes"/>
+    </element>
+  </define>
+  <define name="sealDesc.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <oneOrMore>
+        <choice>
+          <ref name="decoNote"/>
+          <ref name="seal"/>
+        </choice>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="sealDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="secFol">
+    <element name="secFol">
+      <a:documentation>冊子における特定の場所にある語句を示す．典型的なのは，2番目の葉の
+始めにあるもの．</a:documentation>
+      <ref name="secFol.content"/>
+      <ref name="secFol.attributes"/>
+    </element>
+  </define>
+  <define name="secFol.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="secFol.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="signatures">
+    <element name="signatures">
+      <a:documentation>冊子における背丁折記号を示す．</a:documentation>
+      <ref name="signatures.content"/>
+      <ref name="signatures.attributes"/>
+    </element>
+  </define>
+  <define name="signatures.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="signatures.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="source">
+    <element name="source">
+      <a:documentation>当該手書き文書にある情報の元資料を示す．</a:documentation>
+      <ref name="source.content"/>
+      <ref name="source.attributes"/>
+    </element>
+  </define>
+  <define name="source.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="source.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="summary">
+    <element name="summary">
+      <a:documentation>当該知的内容の概要を示す．カタログ作成者がまとめたもの．</a:documentation>
+      <ref name="summary.content"/>
+      <ref name="summary.attributes"/>
+    </element>
+  </define>
+  <define name="summary.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="summary.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="support">
+    <element name="support">
+      <a:documentation>当該手書き文書を構成する材料について示す．</a:documentation>
+      <ref name="support.content"/>
+      <ref name="support.attributes"/>
+    </element>
+  </define>
+  <define name="support.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="support.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="supportDesc">
+    <element name="supportDesc">
+      <a:documentation>当該手書き文書を構成する材料についての情報をまとめる．</a:documentation>
+      <ref name="supportDesc.content"/>
+      <ref name="supportDesc.attributes"/>
+    </element>
+  </define>
+  <define name="supportDesc.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="support"/>
+        </optional>
+        <optional>
+          <ref name="extent"/>
+        </optional>
+        <optional>
+          <ref name="foliation"/>
+        </optional>
+        <optional>
+          <ref name="collation"/>
+        </optional>
+        <optional>
+          <ref name="condition"/>
+        </optional>
+      </group>
+    </choice>
+  </define>
+  <define name="supportDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="material">
+        <a:documentation>当該資料の中心となる材料を，プロジェクト内で識別可能な名前で示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="surrogates">
+    <element name="surrogates">
+      <a:documentation>当該手書き文書の(デジタル・アナログ)画像データに関する情報を示す．
+自館にある必要はない．</a:documentation>
+      <ref name="surrogates.content"/>
+      <ref name="surrogates.attributes"/>
+    </element>
+  </define>
+  <define name="surrogates.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="surrogates.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="textLang">
+    <element name="textLang">
+      <a:documentation>当該手書き文字で使用されている言語や書記システムを示す．これは要
+素langUsageと対応する．</a:documentation>
+      <ref name="textLang.content"/>
+      <ref name="textLang.attributes"/>
+    </element>
+  </define>
+  <define name="textLang.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="textLang.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="mainLang">
+        <a:documentation>当該手書き文書で使用されている主な言語をコードで示す．</a:documentation>
+        <ref name="data.language"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="otherLangs">
+        <a:documentation>当該手書き文書で使用されている1つ以上の言語をコードで示す．</a:documentation>
+        <list>
+          <zeroOrMore>
+            <ref name="data.language"/>
+          </zeroOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="watermark">
+    <element name="watermark">
+      <a:documentation>透かし模様などを表す語句を示す．</a:documentation>
+      <ref name="watermark.content"/>
+      <ref name="watermark.attributes"/>
+    </element>
+  </define>
+  <define name="watermark.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="watermark.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="width">
+    <element name="width">
+      <a:documentation>背に対して直角に計測される大きさ．</a:documentation>
+      <ref name="width.content"/>
+      <ref name="width.attributes"/>
+    </element>
+  </define>
+  <define name="width.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="width.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.measured.attributes"/>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

@@ -1,0 +1,1427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5The TEI Header
+  -->
+  <!-- Definitions from module header -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <define name="model.headerPart">
+    <choice>
+      <ref name="encodingDesc"/>
+      <ref name="profileDesc"/>
+    </choice>
+  </define>
+  <define name="model.sourceDescPart">
+    <choice>
+      <ref name="scriptStmt"/>
+      <ref name="recordingStmt"/>
+    </choice>
+  </define>
+  <define name="model.encodingPart">
+    <choice>
+      <ref name="projectDesc"/>
+      <ref name="samplingDecl"/>
+      <ref name="editorialDecl"/>
+      <ref name="tagsDecl"/>
+      <ref name="refsDecl"/>
+      <ref name="classDecl"/>
+      <ref name="fsdDecl"/>
+      <ref name="metDecl"/>
+      <ref name="variantEncoding"/>
+      <ref name="charDesc"/>
+    </choice>
+  </define>
+  <define name="model.editorialDeclPart">
+    <choice>
+      <ref name="correction"/>
+      <ref name="normalization"/>
+      <ref name="quotation"/>
+      <ref name="hyphenation"/>
+      <ref name="segmentation"/>
+      <ref name="stdVals"/>
+      <ref name="interpretation"/>
+    </choice>
+  </define>
+  <define name="model.profileDescPart">
+    <choice>
+      <ref name="langUsage"/>
+      <ref name="textClass"/>
+      <ref name="handShift"/>
+      <ref name="handList"/>
+      <ref name="textDesc"/>
+      <ref name="particDesc"/>
+      <ref name="settingDesc"/>
+    </choice>
+  </define>
+  <!-- 2. elements -->
+  <define name="authority">
+    <element name="authority">
+      <a:documentation>(公開責任者) 電子データの作成に責任のある人物または組織の名前．出
+版者や頒布者ではない．</a:documentation>
+      <ref name="authority.content"/>
+      <ref name="authority.attributes"/>
+    </element>
+  </define>
+  <define name="authority.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="authority.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="availability">
+    <element name="availability">
+      <a:documentation>テキストの利用可能性に関する情報を示す．例えば，その使用や頒布，
+著作権の状況など．</a:documentation>
+      <ref name="availability.content"/>
+      <ref name="availability.attributes"/>
+    </element>
+  </define>
+  <define name="availability.content">
+    <oneOrMore>
+      <ref name="model.pLike"/>
+    </oneOrMore>
+  </define>
+  <define name="availability.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="status" a:defaultValue="unknown">
+        <a:documentation>テキストの利用可能性を特定するコードを示す．</a:documentation>
+        <choice>
+          <value>free</value>
+          <a:documentation>(当該テキストは，自由に使用できる．)</a:documentation>
+          <value>unknown</value>
+          <a:documentation>(当該テキストの利用可能性は，不明．)</a:documentation>
+          <value>restricted</value>
+          <a:documentation>(当該テキストは，自由に使用できない．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="broadcast">
+    <element name="broadcast">
+      <a:documentation>(放送) テキストが発話された放送を示す．</a:documentation>
+      <ref name="broadcast.content"/>
+      <ref name="broadcast.attributes"/>
+    </element>
+  </define>
+  <define name="broadcast.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <ref name="model.biblLike"/>
+      <ref name="recording"/>
+    </choice>
+  </define>
+  <define name="broadcast.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+  <define name="cRefPattern">
+    <element name="cRefPattern">
+      <a:documentation>(参照表現をURIに変換する規則) 参照先を示す表現をURIへと置換するパ
+タンを示す．</a:documentation>
+      <ref name="cRefPattern.content"/>
+      <ref name="cRefPattern.attributes"/>
+    </element>
+  </define>
+  <define name="cRefPattern.content">
+    <zeroOrMore>
+      <ref name="model.pLike"/>
+    </zeroOrMore>
+  </define>
+  <define name="cRefPattern.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="matchPattern">
+      <a:documentation>置換対象となる参照表現を，正規表現で示す．</a:documentation>
+      <ref name="data.pattern"/>
+    </attribute>
+    <attribute name="replacementPattern">
+      <a:documentation>マッチした参照表現を置換するURIを示す．</a:documentation>
+    </attribute>
+    <empty/>
+  </define>
+  <define name="catDesc">
+    <element name="catDesc">
+      <a:documentation>(分類解説) 用語集やテキストの分類で使用される分類法を解説する．自
+由記述，または要素textDescに従って記述する．</a:documentation>
+      <ref name="catDesc.content"/>
+      <ref name="catDesc.attributes"/>
+    </element>
+  </define>
+  <define name="catDesc.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.phrase"/>
+        <ref name="model.catDescPart"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="catDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="catRef">
+    <element name="catRef">
+      <a:documentation>(分類参照) 用語集やテキストの分類で使用される，1つ以上の分類法を
+示す．</a:documentation>
+      <ref name="catRef.content"/>
+      <ref name="catRef.attributes"/>
+    </element>
+  </define>
+  <define name="catRef.content">
+    <empty/>
+  </define>
+  <define name="catRef.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="target">
+      <a:documentation>当該分類法を参照する．</a:documentation>
+      <ref name="data.pointers"/>
+    </attribute>
+    <optional>
+      <attribute name="scheme">
+        <a:documentation>当該分類法が規定されているスキームを示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="category">
+    <element name="category">
+      <a:documentation>(分類) 分類の解説．入れ子にすることができる．自由に規定してよい．</a:documentation>
+      <ref name="category.content"/>
+      <ref name="category.attributes"/>
+    </element>
+  </define>
+  <define name="category.content">
+    <ref name="catDesc"/>
+    <zeroOrMore>
+      <ref name="category"/>
+    </zeroOrMore>
+  </define>
+  <define name="category.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="change">
+    <element name="change">
+      <a:documentation>複数の研究者間で共有されるある版の電子テキストにおける，修正や変
+更をしめす．</a:documentation>
+      <ref name="change.content"/>
+      <ref name="change.attributes"/>
+    </element>
+  </define>
+  <define name="change.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="change.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.ascribed.attributes"/>
+    <optional>
+      <attribute name="date">
+        <a:documentation>変更された日時を，例えばyyyy-mm-ddの形式で示す．</a:documentation>
+        <ref name="data.temporal"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="classCode">
+    <element name="classCode">
+      <a:documentation>(分類コード) 当該テキストの分類をコードで示す．</a:documentation>
+      <ref name="classCode.content"/>
+      <ref name="classCode.attributes"/>
+    </element>
+  </define>
+  <define name="classCode.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="classCode.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="scheme">
+      <a:documentation>当該分類・用語集のスキームを示す．</a:documentation>
+      <ref name="data.pointer"/>
+    </attribute>
+    <empty/>
+  </define>
+  <define name="classDecl">
+    <element name="classDecl">
+      <a:documentation>(分類宣言) 使用される分類コードを含む，1つ以上のコード集を示す．</a:documentation>
+      <ref name="classDecl.content"/>
+      <ref name="classDecl.attributes"/>
+    </element>
+  </define>
+  <define name="classDecl.content">
+    <oneOrMore>
+      <ref name="taxonomy"/>
+    </oneOrMore>
+  </define>
+  <define name="classDecl.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="correction">
+    <element name="correction">
+      <a:documentation>(修正方針) 当該修正が施される状況や方法について示す．</a:documentation>
+      <ref name="correction.content"/>
+      <ref name="correction.attributes"/>
+    </element>
+  </define>
+  <define name="correction.content">
+    <oneOrMore>
+      <ref name="model.pLike"/>
+    </oneOrMore>
+  </define>
+  <define name="correction.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <optional>
+      <attribute name="status" a:defaultValue="unknown">
+        <a:documentation>当該テキストに施される修正の程度を示す．</a:documentation>
+        <choice>
+          <value>high</value>
+          <a:documentation>(当該テキストは，十分に検査・査読されている．)</a:documentation>
+          <value>medium</value>
+          <a:documentation>(当該テキストは，少なくとも一度は検査・査読されている．)</a:documentation>
+          <value>low</value>
+          <a:documentation>(当該テキストは，検査・査読されていない．)</a:documentation>
+          <value>unknown</value>
+          <a:documentation>(当該テキストの修正状態は，不明である．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="method" a:defaultValue="silent">
+        <a:documentation>当該テキストに施された修正の方法を示す．</a:documentation>
+        <choice>
+          <value>silent</value>
+          <a:documentation>(修正の後は残されていない．)</a:documentation>
+          <value>tags</value>
+          <a:documentation>(修正箇所は，タグで示されている．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="creation">
+    <element name="creation">
+      <a:documentation>新規に作成されたテキストに関する情報を示す．</a:documentation>
+      <ref name="creation.content"/>
+      <ref name="creation.attributes"/>
+    </element>
+  </define>
+  <define name="creation.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="creation.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="distributor">
+    <element name="distributor">
+      <a:documentation>テキストの頒布に責任を持つ人物または団体の名前を示す．</a:documentation>
+      <ref name="distributor.content"/>
+      <ref name="distributor.attributes"/>
+    </element>
+  </define>
+  <define name="distributor.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="distributor.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="edition">
+    <element name="edition">
+      <a:documentation>(版) テキストの版を示す．</a:documentation>
+      <ref name="edition.content"/>
+      <ref name="edition.attributes"/>
+    </element>
+  </define>
+  <define name="edition.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="edition.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="editionStmt">
+    <element name="editionStmt">
+      <a:documentation>(版の状況) 版に関する情報をまとめて示す．</a:documentation>
+      <ref name="editionStmt.content"/>
+      <ref name="editionStmt.attributes"/>
+    </element>
+  </define>
+  <define name="editionStmt.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <ref name="edition"/>
+        <zeroOrMore>
+          <ref name="respStmt"/>
+        </zeroOrMore>
+      </group>
+    </choice>
+  </define>
+  <define name="editionStmt.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="editorialDecl">
+    <element name="editorialDecl">
+      <a:documentation>(版に関する指針) 当該版の指針や変種方針などの詳細を示す．</a:documentation>
+      <ref name="editorialDecl.content"/>
+      <ref name="editorialDecl.attributes"/>
+    </element>
+  </define>
+  <define name="editorialDecl.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="model.editorialDeclPart"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="editorialDecl.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+  <define name="encodingDesc">
+    <element name="encodingDesc">
+      <a:documentation>(符号化の解説) 電子テキストとその元資料との関係を示す．</a:documentation>
+      <ref name="encodingDesc.content"/>
+      <ref name="encodingDesc.attributes"/>
+    </element>
+  </define>
+  <define name="encodingDesc.content">
+    <oneOrMore>
+      <choice>
+        <ref name="model.encodingPart"/>
+        <ref name="model.pLike"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <define name="encodingDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="equipment">
+    <element name="equipment">
+      <a:documentation>(機器) 発話テキストを録音・録画した際の機器に関する詳細を示す．</a:documentation>
+      <ref name="equipment.content"/>
+      <ref name="equipment.attributes"/>
+    </element>
+  </define>
+  <define name="equipment.content">
+    <oneOrMore>
+      <ref name="model.pLike"/>
+    </oneOrMore>
+  </define>
+  <define name="equipment.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+  <define name="extent">
+    <element name="extent">
+      <a:documentation>電子文書をメディアに記録する際に参照する，およそのデータサイズ
+を示す．</a:documentation>
+      <ref name="extent.content"/>
+      <ref name="extent.attributes"/>
+    </element>
+  </define>
+  <define name="extent.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="extent.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="fileDesc">
+    <element name="fileDesc">
+      <a:documentation>(ファイル記述) コンピュータのファイルに関する書誌情報的な内容をま
+とめる．</a:documentation>
+      <ref name="fileDesc.content"/>
+      <ref name="fileDesc.attributes"/>
+    </element>
+  </define>
+  <define name="fileDesc.content">
+    <ref name="macro.fileDescPart"/>
+    <oneOrMore>
+      <ref name="sourceDesc"/>
+    </oneOrMore>
+  </define>
+  <define name="fileDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="fsdDecl">
+    <element name="fsdDecl">
+      <a:documentation>(FSD (素性システム宣言)宣言) 素性構造の定義を含む宣言を示す．</a:documentation>
+      <ref name="fsdDecl.content"/>
+      <ref name="fsdDecl.attributes"/>
+    </element>
+  </define>
+  <define name="fsdDecl.content">
+    <empty/>
+  </define>
+  <define name="fsdDecl.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="type">
+      <a:documentation>当該FSDのタイプを示す．</a:documentation>
+      <ref name="data.enumerated"/>
+    </attribute>
+    <attribute name="url">
+      <a:documentation>素性システム宣言を含むエンティティへのリンクを示す．</a:documentation>
+      <ref name="data.pointer"/>
+    </attribute>
+    <empty/>
+  </define>
+  <define name="funder">
+    <element name="funder">
+      <a:documentation>(投資主) 当該プロジェクトやテキストへの資金上責任を持つ個人名や団
+体名を示す．</a:documentation>
+      <ref name="funder.content"/>
+      <ref name="funder.attributes"/>
+    </element>
+  </define>
+  <define name="funder.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="funder.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="hyphenation">
+    <element name="hyphenation">
+      <a:documentation>(ハイフネーション) 元資料にあるハイフネーションを，符号化の際にど
+のように扱ったのかを示す．</a:documentation>
+      <ref name="hyphenation.content"/>
+      <ref name="hyphenation.attributes"/>
+    </element>
+  </define>
+  <define name="hyphenation.content">
+    <oneOrMore>
+      <ref name="model.pLike"/>
+    </oneOrMore>
+  </define>
+  <define name="hyphenation.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <optional>
+      <attribute name="eol" a:defaultValue="some">
+        <a:documentation>行末のハイフンをそのまま残したかどうかを示す．</a:documentation>
+        <choice>
+          <value>all</value>
+          <a:documentation>(行末にあるハイフン全てを保全した．)</a:documentation>
+          <value>some</value>
+          <a:documentation>(行末にあるハイフンは，場合によっては保全した．)</a:documentation>
+          <value>hard</value>
+          <a:documentation>(行末にあるハイフンは，殆ど除外した．いくらかは行末にある．)</a:documentation>
+          <value>none</value>
+          <a:documentation>(行末にあるハイフンは，全て除外した．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="idno">
+    <element name="idno">
+      <a:documentation>(ID) 書誌情報項目を特定するIDを示す．</a:documentation>
+      <ref name="idno.content"/>
+      <ref name="idno.attributes"/>
+    </element>
+  </define>
+  <define name="idno.content">
+    <text/>
+  </define>
+  <define name="idno.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該IDの分類を示す．例えば，ISBNなど．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="interpretation">
+    <element name="interpretation">
+      <a:documentation>転記の他にテキストとして加えられた解釈・分析の範囲を示す．</a:documentation>
+      <ref name="interpretation.content"/>
+      <ref name="interpretation.attributes"/>
+    </element>
+  </define>
+  <define name="interpretation.content">
+    <oneOrMore>
+      <ref name="model.pLike"/>
+    </oneOrMore>
+  </define>
+  <define name="interpretation.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+  <define name="keywords">
+    <element name="keywords">
+      <a:documentation>(キーワード)テキストの話題や正確を示すためのキーワードや句を示す．</a:documentation>
+      <ref name="keywords.content"/>
+      <ref name="keywords.attributes"/>
+    </element>
+  </define>
+  <define name="keywords.content">
+    <choice>
+      <oneOrMore>
+        <ref name="term"/>
+      </oneOrMore>
+      <ref name="list"/>
+    </choice>
+  </define>
+  <define name="keywords.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="scheme">
+      <a:documentation>当該キーワードを統制する語彙を示す．</a:documentation>
+      <ref name="data.pointer"/>
+    </attribute>
+    <empty/>
+  </define>
+  <define name="langUsage">
+    <element name="langUsage">
+      <a:documentation>(使用言語) テキスト中の言語について示す．例えば，特殊言語，方言など．</a:documentation>
+      <ref name="langUsage.content"/>
+      <ref name="langUsage.attributes"/>
+    </element>
+  </define>
+  <define name="langUsage.content">
+    <oneOrMore>
+      <ref name="language"/>
+    </oneOrMore>
+  </define>
+  <define name="langUsage.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+  <define name="language">
+    <element name="language">
+      <a:documentation>テキスト中で使用されている言語を1つ示す．</a:documentation>
+      <ref name="language.content"/>
+      <ref name="language.attributes"/>
+    </element>
+  </define>
+  <define name="language.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="language.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="ident">
+      <a:documentation>RFC3066にある言語コードを示す．これにより要素内で使用されている言
+語が特定される．これは，グローバル属性xml:langでも参照される．</a:documentation>
+      <ref name="data.language"/>
+    </attribute>
+    <optional>
+      <attribute name="usage">
+        <a:documentation>当該言語が，当該テキストにおいて，何パーセント使用されているかを
+示す．</a:documentation>
+        <data type="nonNegativeInteger">
+          <param name="maxInclusive">100</param>
+        </data>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="metDecl">
+    <element name="metDecl">
+      <a:documentation>韻律パタンの表記法を示す．</a:documentation>
+      <ref name="metDecl.content"/>
+      <ref name="metDecl.attributes"/>
+    </element>
+  </define>
+  <define name="metDecl.content">
+    <choice>
+      <ref name="macro.componentSeq"/>
+      <oneOrMore>
+        <ref name="metSym"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="metDecl.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <optional>
+      <attribute name="type" a:defaultValue="met real">
+        <a:documentation>当該表記法が，抽象的韻律形式，実際に出現する韻律形，押韻規則，こ
+れらの組み合わせなのかを示す．</a:documentation>
+        <list>
+          <oneOrMore>
+            <choice>
+              <value>met</value>
+              <value>real</value>
+              <value>rhyme</value>
+            </choice>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="pattern">
+        <a:documentation>当該表記法に叶う値を正規表現で示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="metSym">
+    <element name="metSym">
+      <a:documentation>韻律の表記法で使用される特定の文字・文字列を示す．</a:documentation>
+      <ref name="metSym.content"/>
+      <ref name="metSym.attributes"/>
+    </element>
+  </define>
+  <define name="metSym.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="metSym.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="value">
+      <a:documentation>当該文字・文字列を示す．</a:documentation>
+      <ref name="data.words"/>
+    </attribute>
+    <optional>
+      <attribute name="terminal" a:defaultValue="true">
+        <a:documentation>当該文字・文字列は，別の表記体系で定義されているのか(この場合は
+false)，または散文的に列挙されているものか(この場合はtrue)を示す．</a:documentation>
+        <choice>
+          <value>true</value>
+          <a:documentation>(当該要素が，散文的に意味定義を行っていることを示す．)</a:documentation>
+          <value>false</value>
+          <a:documentation>(当該要素に含まれる意味定義は，要素metDecl中にあることを示す．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="namespace">
+    <element name="namespace">
+      <a:documentation>当該要素が属する名前空間を示す．</a:documentation>
+      <ref name="namespace.content"/>
+      <ref name="namespace.attributes"/>
+    </element>
+  </define>
+  <define name="namespace.content">
+    <oneOrMore>
+      <ref name="tagUsage"/>
+    </oneOrMore>
+  </define>
+  <define name="namespace.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="name">
+      <a:documentation>当該名前空間の省略のない正式名称．</a:documentation>
+      <ref name="data.namespace"/>
+    </attribute>
+    <empty/>
+  </define>
+  <define name="normalization">
+    <element name="normalization">
+      <a:documentation>電子形式化された元資料が，正規化・標準化された程度を示す．</a:documentation>
+      <ref name="normalization.content"/>
+      <ref name="normalization.attributes"/>
+    </element>
+  </define>
+  <define name="normalization.content">
+    <oneOrMore>
+      <ref name="model.pLike"/>
+    </oneOrMore>
+  </define>
+  <define name="normalization.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <optional>
+      <attribute name="source">
+        <a:documentation>正規化を施した責任者を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="method" a:defaultValue="silent">
+        <a:documentation>当該テキストに施された正規化の手法を示す．</a:documentation>
+        <choice>
+          <value>silent</value>
+          <a:documentation>(正規化は，跡を残さずに施されたか．)</a:documentation>
+          <value>tags</value>
+          <a:documentation>(正規化の跡は，タグとして残されているか．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="notesStmt">
+    <element name="notesStmt">
+      <a:documentation>(注釈) 書誌情報に付加されているテキストに対する注釈をまとめる．</a:documentation>
+      <ref name="notesStmt.content"/>
+      <ref name="notesStmt.attributes"/>
+    </element>
+  </define>
+  <define name="notesStmt.content">
+    <oneOrMore>
+      <ref name="model.noteLike"/>
+    </oneOrMore>
+  </define>
+  <define name="notesStmt.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="principal">
+    <element name="principal">
+      <a:documentation>(主研究者) 当該電子テキストの作成に，中心となった研究者の名前を示す．</a:documentation>
+      <ref name="principal.content"/>
+      <ref name="principal.attributes"/>
+    </element>
+  </define>
+  <define name="principal.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="principal.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="profileDesc">
+    <element name="profileDesc">
+      <a:documentation>(テキストプロファイル) 当該テキストの，書誌情報には現れない情報を
+示す．例えば，使用言語，制作状況，参加者など．</a:documentation>
+      <ref name="profileDesc.content"/>
+      <ref name="profileDesc.attributes"/>
+    </element>
+  </define>
+  <define name="profileDesc.content">
+    <optional>
+      <ref name="creation"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="model.profileDescPart"/>
+    </zeroOrMore>
+  </define>
+  <define name="profileDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="projectDesc">
+    <element name="projectDesc">
+      <a:documentation>(プロジェクトの解説) 電子テキストが作られた目的を示す．同時に，そ
+の過程も示す．</a:documentation>
+      <ref name="projectDesc.content"/>
+      <ref name="projectDesc.attributes"/>
+    </element>
+  </define>
+  <define name="projectDesc.content">
+    <oneOrMore>
+      <ref name="model.pLike"/>
+    </oneOrMore>
+  </define>
+  <define name="projectDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+  <define name="publicationStmt">
+    <element name="publicationStmt">
+      <a:documentation>(出版状況) 電子版などの出版・頒布に関する情報をまとめる．</a:documentation>
+      <ref name="publicationStmt.content"/>
+      <ref name="publicationStmt.attributes"/>
+    </element>
+  </define>
+  <define name="publicationStmt.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <oneOrMore>
+        <choice>
+          <ref name="publisher"/>
+          <ref name="distributor"/>
+          <ref name="authority"/>
+          <ref name="pubPlace"/>
+          <ref name="address"/>
+          <ref name="idno"/>
+          <ref name="availability"/>
+          <ref name="date"/>
+        </choice>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="publicationStmt.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="quotation">
+    <element name="quotation">
+      <a:documentation>元資料にあった引用符をどのように編集したのかについてを示す．</a:documentation>
+      <ref name="quotation.content"/>
+      <ref name="quotation.attributes"/>
+    </element>
+  </define>
+  <define name="quotation.content">
+    <oneOrMore>
+      <ref name="model.pLike"/>
+    </oneOrMore>
+  </define>
+  <define name="quotation.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <optional>
+      <attribute name="marks" a:defaultValue="all">
+        <a:documentation>引用符をそのまま残したかどうかを示す．</a:documentation>
+        <choice>
+          <value>none</value>
+          <a:documentation>(引用符は残っていない)</a:documentation>
+          <value>some</value>
+          <a:documentation>(引用符は，幾つか残っている．)</a:documentation>
+          <value>all</value>
+          <a:documentation>(引用符は，全て残っている．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="form" a:defaultValue="unknown">
+        <a:documentation>当該テキスト中に，引用符はどのように示されているのかを示す．</a:documentation>
+        <choice>
+          <value>data</value>
+          <a:documentation>(引用符はデータとして示されている．)</a:documentation>
+          <value>rend</value>
+          <a:documentation>(引用符の形を示す．)</a:documentation>
+          <value>std</value>
+          <a:documentation>(引用符の使い方は，標準化されている．)</a:documentation>
+          <value>nonstd</value>
+          <a:documentation>(引用符は，統一性なく使用されている．)</a:documentation>
+          <value>unknown</value>
+          <a:documentation>(引用符がどのように使用されているのかは不明である．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="recording">
+    <element name="recording">
+      <a:documentation>(録音・録画) 放送や発話テキストの元資料が録音・録画された時の様子を示す．</a:documentation>
+      <ref name="recording.content"/>
+      <ref name="recording.attributes"/>
+    </element>
+  </define>
+  <define name="recording.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="model.recordingPart"/>
+      </zeroOrMore>
+    </choice>
+  </define>
+  <define name="recording.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <optional>
+      <attribute name="type" a:defaultValue="audio">
+        <a:documentation>録音・録画の種類</a:documentation>
+        <choice>
+          <value>audio</value>
+          <a:documentation>(録音) </a:documentation>
+          <value>video</value>
+          <a:documentation>(録画) </a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="dur">
+        <a:documentation>録音・録画の時間．</a:documentation>
+        <ref name="data.duration"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="recordingStmt">
+    <element name="recordingStmt">
+      <a:documentation>(録音・録画の状況) 発話テキストの書き起こしに使用された録音・録画
+について示す．</a:documentation>
+      <ref name="recordingStmt.content"/>
+      <ref name="recordingStmt.attributes"/>
+    </element>
+  </define>
+  <define name="recordingStmt.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="recording"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="recordingStmt.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="refsDecl">
+    <element name="refsDecl">
+      <a:documentation>(参照宣言) 参照形式を示す．</a:documentation>
+      <ref name="refsDecl.content"/>
+      <ref name="refsDecl.attributes"/>
+    </element>
+  </define>
+  <define name="refsDecl.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="cRefPattern"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="state"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="refsDecl.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <optional>
+      <attribute name="doctype" a:defaultValue="TEI">
+        <a:documentation>当該参照宣言が使用される文書型を示す．</a:documentation>
+        <ref name="data.name"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="rendition">
+    <element name="rendition">
+      <a:documentation>(描画) 要素をどのように表示するかについて示す．</a:documentation>
+      <ref name="rendition.content"/>
+      <ref name="rendition.attributes"/>
+    </element>
+  </define>
+  <define name="rendition.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="rendition.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="revisionDesc">
+    <element name="revisionDesc">
+      <a:documentation>(改訂情報) データファイルの改訂歴を示す．</a:documentation>
+      <ref name="revisionDesc.content"/>
+      <ref name="revisionDesc.attributes"/>
+    </element>
+  </define>
+  <define name="revisionDesc.content">
+    <choice>
+      <ref name="list"/>
+      <oneOrMore>
+        <ref name="change"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="revisionDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="samplingDecl">
+    <element name="samplingDecl">
+      <a:documentation>(標本) コーパス等を作成する際に抽出された標本テキストを作成した方
+法や方針を，散文で示す．</a:documentation>
+      <ref name="samplingDecl.content"/>
+      <ref name="samplingDecl.attributes"/>
+    </element>
+  </define>
+  <define name="samplingDecl.content">
+    <oneOrMore>
+      <ref name="model.pLike"/>
+    </oneOrMore>
+  </define>
+  <define name="samplingDecl.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+  <define name="scriptStmt">
+    <element name="scriptStmt">
+      <a:documentation>(スクリプト) 発話テキストで使用されるスクリプトに関する引用情報を示す．</a:documentation>
+      <ref name="scriptStmt.content"/>
+      <ref name="scriptStmt.attributes"/>
+    </element>
+  </define>
+  <define name="scriptStmt.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <ref name="model.biblLike"/>
+    </choice>
+  </define>
+  <define name="scriptStmt.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+  <define name="segmentation">
+    <element name="segmentation">
+      <a:documentation>当該テキストが分割された基準を示す．例えば，文単位，音単位，書記
+単位など．</a:documentation>
+      <ref name="segmentation.content"/>
+      <ref name="segmentation.attributes"/>
+    </element>
+  </define>
+  <define name="segmentation.content">
+    <oneOrMore>
+      <ref name="model.pLike"/>
+    </oneOrMore>
+  </define>
+  <define name="segmentation.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+  <define name="seriesStmt">
+    <element name="seriesStmt">
+      <a:documentation>(シリーズ) 当該シリーズの情報をまとめる．</a:documentation>
+      <ref name="seriesStmt.content"/>
+      <ref name="seriesStmt.attributes"/>
+    </element>
+  </define>
+  <define name="seriesStmt.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <oneOrMore>
+          <ref name="title"/>
+        </oneOrMore>
+        <zeroOrMore>
+          <choice>
+            <ref name="idno"/>
+            <ref name="respStmt"/>
+          </choice>
+        </zeroOrMore>
+      </group>
+    </choice>
+  </define>
+  <define name="seriesStmt.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="sourceDesc">
+    <element name="sourceDesc">
+      <a:documentation>電子テキストの元資料について示す．</a:documentation>
+      <ref name="sourceDesc.content"/>
+      <ref name="sourceDesc.attributes"/>
+    </element>
+  </define>
+  <define name="sourceDesc.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <ref name="listBibl"/>
+      <oneOrMore>
+        <choice>
+          <ref name="model.biblLike"/>
+          <ref name="model.sourceDescPart"/>
+        </choice>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="sourceDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+  <define name="sponsor">
+    <element name="sponsor">
+      <a:documentation>資金援助を行った団体名を示す．</a:documentation>
+      <ref name="sponsor.content"/>
+      <ref name="sponsor.attributes"/>
+    </element>
+  </define>
+  <define name="sponsor.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="sponsor.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="state">
+    <element name="state">
+      <a:documentation>要素milestoneが示す参照のいち要素を示す．</a:documentation>
+      <ref name="state.content"/>
+      <ref name="state.attributes"/>
+    </element>
+  </define>
+  <define name="state.content">
+    <empty/>
+  </define>
+  <define name="state.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="ed">
+        <a:documentation>当該milestone要素が示す，版を示す．</a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <attribute name="unit">
+      <a:documentation>当該milestone要素が示す，状態の種類を示す．</a:documentation>
+      <ref name="data.enumerated"/>
+    </attribute>
+    <optional>
+      <attribute name="length">
+        <a:documentation>参照要素の固定長を示す．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="delim">
+        <a:documentation>参照のデリミタを示す．
+          component.</a:documentation>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="stdVals">
+    <element name="stdVals">
+      <a:documentation>(標準値) 標準化された値が付与される際の形式を示す．</a:documentation>
+      <ref name="stdVals.content"/>
+      <ref name="stdVals.attributes"/>
+    </element>
+  </define>
+  <define name="stdVals.content">
+    <oneOrMore>
+      <ref name="model.pLike"/>
+    </oneOrMore>
+  </define>
+  <define name="stdVals.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+  <define name="tagUsage">
+    <element name="tagUsage">
+      <a:documentation>(タグの使用法) 特定タグの使用方法を示す．</a:documentation>
+      <ref name="tagUsage.content"/>
+      <ref name="tagUsage.attributes"/>
+    </element>
+  </define>
+  <define name="tagUsage.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="tagUsage.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="gi">
+      <a:documentation>タグの名前(共通識別子)．</a:documentation>
+      <ref name="data.name"/>
+    </attribute>
+    <optional>
+      <attribute name="occurs">
+        <a:documentation>テキスト中における当該タグの出現番号．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="withId">
+        <a:documentation>属性xml:idを持つテキスト中における当該タグの出現番号．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="render">
+        <a:documentation>当該要素がどのように表現されるかを規定する要素のIDを示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="tagsDecl">
+    <element name="tagsDecl">
+      <a:documentation>(タグ付け宣言) SGML/XML文書を構成するタグ付けに関する情報を示す．</a:documentation>
+      <ref name="tagsDecl.content"/>
+      <ref name="tagsDecl.attributes"/>
+    </element>
+  </define>
+  <define name="tagsDecl.content">
+    <zeroOrMore>
+      <ref name="rendition"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="namespace"/>
+    </zeroOrMore>
+  </define>
+  <define name="tagsDecl.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="taxonomy">
+    <element name="taxonomy">
+      <a:documentation>(分類法) テキスト種を決める分類法を示す．分類法の書誌情報を参照し
+たり，明示的にその構造を示したりする．</a:documentation>
+      <ref name="taxonomy.content"/>
+      <ref name="taxonomy.attributes"/>
+    </element>
+  </define>
+  <define name="taxonomy.content">
+    <choice>
+      <oneOrMore>
+        <ref name="category"/>
+      </oneOrMore>
+      <group>
+        <ref name="model.biblLike"/>
+        <zeroOrMore>
+          <ref name="category"/>
+        </zeroOrMore>
+      </group>
+    </choice>
+  </define>
+  <define name="taxonomy.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="teiHeader">
+    <element name="teiHeader">
+      <a:documentation>(TEIヘダー) TEI準拠テキストに付与される，電子版のタイトルページを
+構成する，記述的・宣言的情報を含む．</a:documentation>
+      <ref name="teiHeader.content"/>
+      <ref name="teiHeader.attributes"/>
+    </element>
+  </define>
+  <define name="teiHeader.content">
+    <ref name="fileDesc"/>
+    <zeroOrMore>
+      <ref name="model.headerPart"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="revisionDesc"/>
+    </optional>
+  </define>
+  <define name="teiHeader.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type" a:defaultValue="text">
+        <a:documentation>当該ヘダーが付与される文書の種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="textClass">
+    <element name="textClass">
+      <a:documentation>(テキストの分類) 当該テキストの性質やトピックに関する情報をまとめる．</a:documentation>
+      <ref name="textClass.content"/>
+      <ref name="textClass.attributes"/>
+    </element>
+  </define>
+  <define name="textClass.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="classCode"/>
+        <ref name="catRef"/>
+        <ref name="keywords"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="textClass.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+  <define name="titleStmt">
+    <element name="titleStmt">
+      <a:documentation>(タイトル情報) 当該知的内容のタイトルに関する情報をまとめる．</a:documentation>
+      <ref name="titleStmt.content"/>
+      <ref name="titleStmt.attributes"/>
+    </element>
+  </define>
+  <define name="titleStmt.content">
+    <oneOrMore>
+      <ref name="title"/>
+    </oneOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="author"/>
+        <ref name="editor"/>
+        <ref name="sponsor"/>
+        <ref name="funder"/>
+        <ref name="principal"/>
+        <ref name="respStmt"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="titleStmt.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="variantEncoding">
+    <element name="variantEncoding">
+      <a:documentation>版で使用されている手法を示す．</a:documentation>
+      <ref name="variantEncoding.content"/>
+      <ref name="variantEncoding.attributes"/>
+    </element>
+  </define>
+  <define name="variantEncoding.content">
+    <empty/>
+  </define>
+  <define name="variantEncoding.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="method">
+      <a:documentation>当該版で使用されている手法を示す．</a:documentation>
+      <choice>
+        <value>location-referenced</value>
+        <a:documentation>(当該批評版は，行番号または何かしらの参照方法を使用している．)</a:documentation>
+        <value>double-end-point</value>
+        <a:documentation>(当該批評版は，テキストにある各主題の始点と終点の場所が正確に示
+されている．)</a:documentation>
+        <value>parallel-segmentation</value>
+        <a:documentation>(別の解釈・読みがテキスト中にある．)</a:documentation>
+      </choice>
+    </attribute>
+    <attribute name="location">
+      <a:documentation>批評テキストが，文中にあるかないかを示す．</a:documentation>
+      <choice>
+        <value>internal</value>
+        <a:documentation>(批評テキストは，当該文中にある．)</a:documentation>
+        <value>external</value>
+        <a:documentation>(批評テキストは，当該文中にない．)</a:documentation>
+      </choice>
+    </attribute>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. マクロ -->

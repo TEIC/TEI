@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Feature system declarations
+  -->
+  <!-- Definitions from module declarefs -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <!-- 2. elements -->
+  <define name="bicond">
+    <element name="bicond">
+      <a:documentation>(双条件制約) 前提部と帰結部が同値関係である制約を定義する．すなわ
+ち，2つが共に真であるか，またはともに偽である場合に，当該条件節は
+真になる．</a:documentation>
+      <ref name="bicond.content"/>
+      <ref name="bicond.attributes"/>
+    </element>
+  </define>
+  <define name="bicond.content">
+    <choice>
+      <ref name="fs"/>
+      <ref name="f"/>
+    </choice>
+    <ref name="iff"/>
+    <choice>
+      <ref name="fs"/>
+      <ref name="f"/>
+    </choice>
+  </define>
+  <define name="bicond.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="cond">
+    <element name="cond">
+      <a:documentation>(条件制約) 前提部と帰結部が含意関係にある制約を定義する．前提部と
+帰結部が共に真であったとき，または前提部が偽であったときに，当該
+条件節は真となる．</a:documentation>
+      <ref name="cond.content"/>
+      <ref name="cond.attributes"/>
+    </element>
+  </define>
+  <define name="cond.content">
+    <choice>
+      <ref name="fs"/>
+      <ref name="f"/>
+    </choice>
+    <ref name="then"/>
+    <choice>
+      <ref name="fs"/>
+      <ref name="f"/>
+    </choice>
+  </define>
+  <define name="cond.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="fDecl">
+    <element name="fDecl">
+      <a:documentation>(素性宣言) 要素fに対応する素性を宣言する．例えば，名前，データ構
+造，定義域，既定値など．</a:documentation>
+      <ref name="fDecl.content"/>
+      <ref name="fDecl.attributes"/>
+    </element>
+  </define>
+  <define name="fDecl.content">
+    <optional>
+      <ref name="fDescr"/>
+    </optional>
+    <ref name="vRange"/>
+    <optional>
+      <ref name="vDefault"/>
+    </optional>
+  </define>
+  <define name="fDecl.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="name">
+      <a:documentation>当該素性の名前を示す．</a:documentation>
+      <ref name="data.name"/>
+    </attribute>
+    <optional>
+      <attribute name="org" a:defaultValue="unit">
+        <a:documentation>当該素性値をデータ構造を示す．</a:documentation>
+        <choice>
+          <value>unit</value>
+          <a:documentation>(単独)</a:documentation>
+          <value>set</value>
+          <a:documentation>(集合，すなわち順序・重複が無い．)</a:documentation>
+          <value>bag</value>
+          <a:documentation>(バック，すなわち順序が無く，重複有り．)</a:documentation>
+          <value>list</value>
+          <a:documentation>(リスト，すなわち順序が有り，重複も有る．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="fDescr">
+    <element name="fDescr">
+      <a:documentation>(素性解説)当該素性の解説を示す．</a:documentation>
+      <ref name="fDescr.content"/>
+      <ref name="fDescr.attributes"/>
+    </element>
+  </define>
+  <define name="fDescr.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="fDescr.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="fsConstraints">
+    <element name="fsConstraints">
+      <a:documentation>(素性構造制約) 素性を使った構造による制約を示す．</a:documentation>
+      <ref name="fsConstraints.content"/>
+      <ref name="fsConstraints.attributes"/>
+    </element>
+  </define>
+  <define name="fsConstraints.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="cond"/>
+        <ref name="bicond"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="fsConstraints.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="fsDecl">
+    <element name="fsDecl">
+      <a:documentation>(素性構造宣言) 素性システムを宣言する．</a:documentation>
+      <ref name="fsDecl.content"/>
+      <ref name="fsDecl.attributes"/>
+    </element>
+  </define>
+  <define name="fsDecl.content">
+    <optional>
+      <ref name="fsDescr"/>
+    </optional>
+    <oneOrMore>
+      <ref name="fDecl"/>
+    </oneOrMore>
+    <optional>
+      <ref name="fsConstraints"/>
+    </optional>
+  </define>
+  <define name="fsDecl.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="type">
+      <a:documentation>当該素性構造の種類を示す．</a:documentation>
+      <ref name="data.enumerated"/>
+    </attribute>
+    <optional>
+      <attribute name="baseType">
+        <a:documentation>当該素性構造が継承する素性を持つ素性構造を示す．</a:documentation>
+        <ref name="data.name"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="fsDescr">
+    <element name="fsDescr">
+      <a:documentation>(素性構造解説) 当該素性構造の解説を示す．</a:documentation>
+      <ref name="fsDescr.content"/>
+      <ref name="fsDescr.attributes"/>
+    </element>
+  </define>
+  <define name="fsDescr.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="fsDescr.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="if">
+    <element name="if">
+      <a:documentation>素性の値を決める条件節を示す．</a:documentation>
+      <ref name="if.content"/>
+      <ref name="if.attributes"/>
+    </element>
+  </define>
+  <define name="if.content">
+    <choice>
+      <ref name="fs"/>
+      <ref name="f"/>
+    </choice>
+    <ref name="then"/>
+    <ref name="model.featureVal"/>
+  </define>
+  <define name="if.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="iff">
+    <element name="iff">
+      <a:documentation>双条件における前提部と帰結部の区切を示す．</a:documentation>
+      <ref name="iff.content"/>
+      <ref name="iff.attributes"/>
+    </element>
+  </define>
+  <define name="iff.content">
+    <empty/>
+  </define>
+  <define name="iff.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="teifsd">
+    <element name="teifsd">
+      <a:documentation>(素性システム宣言) 素性システム宣言を示す．</a:documentation>
+      <ref name="teifsd.content"/>
+      <ref name="teifsd.attributes"/>
+    </element>
+  </define>
+  <define name="teifsd.content">
+    <ref name="teiHeader"/>
+    <oneOrMore>
+      <ref name="fsDecl"/>
+    </oneOrMore>
+  </define>
+  <define name="teifsd.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="then">
+    <element name="then">
+      <a:documentation>条件節における前提部と帰結部の区切を示す．</a:documentation>
+      <ref name="then.content"/>
+      <ref name="then.attributes"/>
+    </element>
+  </define>
+  <define name="then.content">
+    <empty/>
+  </define>
+  <define name="then.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="vDefault">
+    <element name="vDefault">
+      <a:documentation>(既定値) 既定値を示す．</a:documentation>
+      <ref name="vDefault.content"/>
+      <ref name="vDefault.attributes"/>
+    </element>
+  </define>
+  <define name="vDefault.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.featureVal"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="if"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="vDefault.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="vRange">
+    <element name="vRange">
+      <a:documentation>(定義域) 当該素性の値がとる範囲を示す．</a:documentation>
+      <ref name="vRange.content"/>
+      <ref name="vRange.attributes"/>
+    </element>
+  </define>
+  <define name="vRange.content">
+    <ref name="model.featureVal"/>
+  </define>
+  <define name="vRange.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

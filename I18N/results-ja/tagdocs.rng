@@ -1,0 +1,941 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:ns1="http://www.tei-c.org/ns/Examples" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Documentation of TEI modules
+  -->
+  <!-- Definitions from module tagdocs -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <define name="att.identified.attributes">
+    <ref name="att.identified.attribute.ident"/>
+    <ref name="att.identified.attribute.depend"/>
+    <ref name="att.identified.attribute.predeclare"/>
+    <ref name="att.identified.attribute.module"/>
+    <ref name="att.identified.attribute.mode"/>
+    <empty/>
+  </define>
+  <define name="att.identified.attribute.ident">
+    <attribute name="ident">
+      <a:documentation>当該要素を参照するIDを示す．</a:documentation>
+      <ref name="data.name"/>
+    </attribute>
+  </define>
+  <define name="att.identified.attribute.depend">
+    <optional>
+      <attribute name="depend">
+        <a:documentation>依存するモジュール名を示す．</a:documentation>
+        <data type="NCName"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.identified.attribute.predeclare">
+    <optional>
+      <attribute name="predeclare" a:defaultValue="false">
+        <a:documentation>当該クラスはグローバル属性かどうか，中核モジュール中で定義される
+必要があるかどうかを示す．</a:documentation>
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.identified.attribute.module">
+    <optional>
+      <attribute name="module">
+        <a:documentation>当該クラスが定義されているモジュールを示す．</a:documentation>
+        <data type="NCName"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.identified.attribute.mode">
+    <optional>
+      <attribute name="mode" a:defaultValue="add">
+        <a:documentation>当該宣言が親要素に与える影響を示す．</a:documentation>
+        <choice>
+          <value>add</value>
+          <a:documentation>(当該宣言は現行定義に追加される．)</a:documentation>
+          <value>delete</value>
+          <a:documentation>(当該宣言と当該以下の子要素は，現行定義から外される．)</a:documentation>
+          <value>change</value>
+          <a:documentation>(当該宣言は，現行定義中の同名宣言を修正する．)</a:documentation>
+          <value>replace</value>
+          <a:documentation>(当該宣言は，現行定義中の同名宣言に置き換わる．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <!-- 2. elements -->
+  <define name="att">
+    <element name="att">
+      <a:documentation>(属性) 属性の名前を示す．</a:documentation>
+      <ref name="att.content"/>
+      <ref name="att.attributes"/>
+    </element>
+  </define>
+  <define name="att.content">
+    <text/>
+  </define>
+  <define name="att.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="scheme" a:defaultValue="TEI">
+        <a:documentation>当該名前が規定されているスキーマ中のIDを示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="attDef">
+    <element name="attDef">
+      <a:documentation>(属性定義) 属性の定義を示す．</a:documentation>
+      <ref name="attDef.content"/>
+      <ref name="attDef.attributes"/>
+    </element>
+  </define>
+  <define name="attDef.content">
+    <ref name="macro.glossSeq"/>
+    <optional>
+      <ref name="datatype"/>
+    </optional>
+    <optional>
+      <ref name="defaultVal"/>
+    </optional>
+    <optional>
+      <choice>
+        <ref name="valList"/>
+        <ref name="valDesc"/>
+      </choice>
+    </optional>
+    <zeroOrMore>
+      <ref name="exemplum"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="remarks"/>
+    </zeroOrMore>
+  </define>
+  <define name="attDef.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.identified.attributes"/>
+    <optional>
+      <attribute name="usage" a:defaultValue="opt">
+        <a:documentation>属性または要素の選択性を示す．</a:documentation>
+        <choice>
+          <value>req</value>
+          <a:documentation>(必須) </a:documentation>
+          <value>mwa</value>
+          <a:documentation>(使えるならば必須) </a:documentation>
+          <value>rec</value>
+          <a:documentation>(推奨)</a:documentation>
+          <value>rwa</value>
+          <a:documentation>(使えるならば推奨)</a:documentation>
+          <value>opt</value>
+          <a:documentation>(選択的)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="ns" a:defaultValue="http://www.tei-c.org/ns/1.0">
+        <a:documentation>(名前空間) 当該属性が属する名前空間を示す．</a:documentation>
+        <ref name="data.namespace"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="attList">
+    <element name="attList">
+      <a:documentation>当該要素に当てはまる全ての属性を示す．</a:documentation>
+      <ref name="attList.content"/>
+      <ref name="attList.attributes"/>
+    </element>
+  </define>
+  <define name="attList.content">
+    <oneOrMore>
+      <choice>
+        <ref name="attRef"/>
+        <ref name="attDef"/>
+        <ref name="attList"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <define name="attList.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="org" a:defaultValue="group">
+        <a:documentation>リスト中の属性全てが使用できるか，またはその1つだけが使用できるの
+かを示す．</a:documentation>
+        <choice>
+          <value>group</value>
+          <a:documentation>(全て) </a:documentation>
+          <value>choice</value>
+          <a:documentation>(ひとつ) </a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="attRef">
+    <element name="attRef">
+      <a:documentation>(属性ポインタ) 属性の定義場所を示す．</a:documentation>
+      <ref name="attRef.content"/>
+      <ref name="attRef.attributes"/>
+    </element>
+  </define>
+  <define name="attRef.content">
+    <empty/>
+  </define>
+  <define name="attRef.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="name">
+      <a:documentation>属性定義のパタン名を示す．</a:documentation>
+      <ref name="data.word"/>
+    </attribute>
+    <empty/>
+  </define>
+  <define name="classSpec">
+    <element name="classSpec">
+      <a:documentation>TEI要素クラスへの参照情報を示す．</a:documentation>
+      <ref name="classSpec.content"/>
+      <ref name="classSpec.attributes"/>
+    </element>
+  </define>
+  <define name="classSpec.content">
+    <ref name="macro.glossSeq"/>
+    <optional>
+      <ref name="classes"/>
+    </optional>
+    <optional>
+      <ref name="attList"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="exemplum"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="remarks"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="listRef"/>
+    </zeroOrMore>
+  </define>
+  <define name="classSpec.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.identified.attributes"/>
+    <attribute name="type">
+      <a:documentation>当該クラスがモデルクラスか属性クラスかを示す．</a:documentation>
+      <choice>
+        <value>model</value>
+        <a:documentation>(内容モデルクラス)</a:documentation>
+        <value>atts</value>
+        <a:documentation>(属性クラス)</a:documentation>
+      </choice>
+    </attribute>
+    <optional>
+      <attribute name="generate" a:defaultValue="alternation">
+        <a:documentation>モデルクラスが複数項目から構成されているかどうかを示す．</a:documentation>
+        <ref name="data.names"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="classes">
+    <element name="classes">
+      <a:documentation>当該要素やクラスが所属するクラスを示す．</a:documentation>
+      <ref name="classes.content"/>
+      <ref name="classes.attributes"/>
+    </element>
+  </define>
+  <define name="classes.content">
+    <zeroOrMore>
+      <ref name="memberOf"/>
+    </zeroOrMore>
+  </define>
+  <define name="classes.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="code">
+    <element name="code">
+      <a:documentation>プログラミング言語のような形式言語のコードを示す．</a:documentation>
+      <ref name="code.content"/>
+      <ref name="code.attributes"/>
+    </element>
+  </define>
+  <define name="code.content">
+    <text/>
+  </define>
+  <define name="code.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="lang">
+        <a:documentation>当該コードの形式言語名を示す．</a:documentation>
+        <ref name="data.word"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="content">
+    <element name="content">
+      <a:documentation>(スキーマ宣言) 当該スキーマの宣言を示す．</a:documentation>
+      <ref name="content.content"/>
+      <ref name="content.attributes"/>
+    </element>
+  </define>
+  <define name="content.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="macro.schemapattern"/>
+        <ref name="valList"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="content.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="datatype">
+    <element name="datatype">
+      <a:documentation>属性値の型を，当該スキーマ中のデータ型を参照して示す．</a:documentation>
+      <ref name="datatype.content"/>
+      <ref name="datatype.attributes"/>
+    </element>
+  </define>
+  <define name="datatype.content">
+    <zeroOrMore>
+      <ref name="macro.schemapattern"/>
+    </zeroOrMore>
+  </define>
+  <define name="datatype.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="defaultVal">
+    <element name="defaultVal">
+      <a:documentation>属性の既定値を示す．</a:documentation>
+      <ref name="defaultVal.content"/>
+      <ref name="defaultVal.attributes"/>
+    </element>
+  </define>
+  <define name="defaultVal.content">
+    <text/>
+  </define>
+  <define name="defaultVal.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="eg">
+    <element name="eg">
+      <a:documentation>各種例を示す．</a:documentation>
+      <ref name="eg.content"/>
+      <ref name="eg.attributes"/>
+    </element>
+  </define>
+  <define name="eg.content">
+    <text/>
+  </define>
+  <define name="eg.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="egXML">
+    <element name="ns1:egXML">
+      <a:documentation>要素や属性の使い方を示す記述例をDTDなしで示す．</a:documentation>
+      <ref name="egXML.content"/>
+      <ref name="egXML.attributes"/>
+    </element>
+  </define>
+  <define name="egXML.content">
+    <text/>
+  </define>
+  <define name="egXML.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="elementSpec">
+    <element name="elementSpec">
+      <a:documentation>要素の構造，内容，属性，目的などを示す．</a:documentation>
+      <ref name="elementSpec.content"/>
+      <ref name="elementSpec.attributes"/>
+    </element>
+  </define>
+  <define name="elementSpec.content">
+    <ref name="macro.glossSeq"/>
+    <optional>
+      <ref name="classes"/>
+    </optional>
+    <optional>
+      <ref name="content"/>
+    </optional>
+    <optional>
+      <ref name="attList"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="exemplum"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="remarks"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="listRef"/>
+    </zeroOrMore>
+  </define>
+  <define name="elementSpec.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.identified.attributes"/>
+    <optional>
+      <attribute name="ns" a:defaultValue="http://www.tei-c.org/ns/1.0">
+        <a:documentation>(名前空間) 当該要素が属する名前空間を示す．</a:documentation>
+        <ref name="data.namespace"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="usage" a:defaultValue="opt">
+        <a:documentation>要素や属性の必須度を示す．</a:documentation>
+        <choice>
+          <value>req</value>
+          <a:documentation>(必須) </a:documentation>
+          <value>mwa</value>
+          <a:documentation>(利用できる場合は必須)</a:documentation>
+          <value>rec</value>
+          <a:documentation>(推奨) </a:documentation>
+          <value>rwa</value>
+          <a:documentation>(利用できる場合は推奨)</a:documentation>
+          <value>opt</value>
+          <a:documentation>(選択的) </a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="exemplum">
+    <element name="exemplum">
+      <a:documentation>段落を伴った散文形式の説明を含めて，当該要素の使用例を示す．</a:documentation>
+      <ref name="exemplum.content"/>
+      <ref name="exemplum.attributes"/>
+    </element>
+  </define>
+  <define name="exemplum.content">
+    <zeroOrMore>
+      <ref name="model.pLike"/>
+    </zeroOrMore>
+    <choice>
+      <ref name="egXML"/>
+      <ref name="eg"/>
+    </choice>
+    <zeroOrMore>
+      <ref name="model.pLike"/>
+    </zeroOrMore>
+  </define>
+  <define name="exemplum.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="gi">
+    <element name="gi">
+      <a:documentation>(共通識別子) 要素の名前(共通識別子)を含む．</a:documentation>
+      <ref name="gi.content"/>
+      <ref name="gi.attributes"/>
+    </element>
+  </define>
+  <define name="gi.content">
+    <text/>
+  </define>
+  <define name="gi.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="scheme" a:defaultValue="TEI">
+        <a:documentation>当該共通識別子が定義されているスキーム名を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="ident">
+    <element name="ident">
+      <a:documentation>形式言語で書かれてあるオブジェクトのIDまたは名前を示す．</a:documentation>
+      <ref name="ident.content"/>
+      <ref name="ident.attributes"/>
+    </element>
+  </define>
+  <define name="ident.content">
+    <text/>
+  </define>
+  <define name="ident.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="listRef">
+    <element name="listRef">
+      <a:documentation>(参照リスト) 当該要素が扱われている場所への参照のリストを示す．
+当該文書中でも外部文書でも良い．</a:documentation>
+      <ref name="listRef.content"/>
+      <ref name="listRef.attributes"/>
+    </element>
+  </define>
+  <define name="listRef.content">
+    <oneOrMore>
+      <ref name="ptr"/>
+    </oneOrMore>
+  </define>
+  <define name="listRef.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="macroSpec">
+    <element name="macroSpec">
+      <a:documentation>要素定義や属性定義の解説を示す．</a:documentation>
+      <ref name="macroSpec.content"/>
+      <ref name="macroSpec.attributes"/>
+    </element>
+  </define>
+  <define name="macroSpec.content">
+    <ref name="macro.glossSeq"/>
+    <oneOrMore>
+      <choice>
+        <ref name="stringVal"/>
+        <ref name="content"/>
+      </choice>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="exemplum"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="remarks"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="listRef"/>
+    </zeroOrMore>
+  </define>
+  <define name="macroSpec.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.identified.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>ODD処理系がSGML準拠のモジュールを生成する際，エンティティの種類を
+示す．</a:documentation>
+        <choice>
+          <value>pe</value>
+          <a:documentation>(パラメータエンティティ) </a:documentation>
+          <value>epe</value>
+          <a:documentation>(要素パラメータエンティティ) </a:documentation>
+          <value>ge</value>
+          <a:documentation>(一般エンティティ) </a:documentation>
+          <value>dt</value>
+          <a:documentation>(データ型エンティティ) </a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="memberOf">
+    <element name="memberOf">
+      <a:documentation>親要素や親クラスを示す．</a:documentation>
+      <ref name="memberOf.content"/>
+      <ref name="memberOf.attributes"/>
+    </element>
+  </define>
+  <define name="memberOf.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="memberOf.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="key">
+        <a:documentation>(名前) 当該要素やクラスの親要素や親クラスを指定する．</a:documentation>
+        <ref name="data.name"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="moduleRef">
+    <element name="moduleRef">
+      <a:documentation>スキーマに含まれるモジュールを示す．</a:documentation>
+      <ref name="moduleRef.content"/>
+      <ref name="moduleRef.attributes"/>
+    </element>
+  </define>
+  <define name="moduleRef.content">
+    <optional>
+      <ref name="content"/>
+    </optional>
+  </define>
+  <define name="moduleRef.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <choice>
+        <attribute name="key">
+          <a:documentation>TEIにおけるモジュール名を示す．</a:documentation>
+          <data type="NCName"/>
+        </attribute>
+        <attribute name="url">
+          <a:documentation>外部にあるTEIでないモジュールを示す．</a:documentation>
+          <data type="anyURI"/>
+        </attribute>
+      </choice>
+    </optional>
+    <empty/>
+  </define>
+  <define name="moduleSpec">
+    <element name="moduleSpec">
+      <a:documentation>いちモジュールの構造，内容，目的などを示す．このモジュールは，外
+部から名前で参照可能な宣言集になる．</a:documentation>
+      <ref name="moduleSpec.content"/>
+      <ref name="moduleSpec.attributes"/>
+    </element>
+  </define>
+  <define name="moduleSpec.content">
+    <ref name="macro.glossSeq"/>
+    <zeroOrMore>
+      <ref name="exemplum"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="remarks"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="listRef"/>
+    </zeroOrMore>
+  </define>
+  <define name="moduleSpec.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.identified.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該モジュールの種類を示す．</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="suggests">
+        <a:documentation>当該モジュールと共に使用される，1つ以上のTEIモジュール名を示す．</a:documentation>
+        <ref name="data.names"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="depends">
+        <a:documentation>当該モジュールと共に使用可能である，1つ以上のTEIモジュール名を示す．</a:documentation>
+        <ref name="data.names"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="remarks">
+    <element name="remarks">
+      <a:documentation>要素，属性，クラス，エンティティについての注釈を示す．</a:documentation>
+      <ref name="remarks.content"/>
+      <ref name="remarks.attributes"/>
+    </element>
+  </define>
+  <define name="remarks.content">
+    <ref name="macro.componentSeq"/>
+  </define>
+  <define name="remarks.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="schemaSpec">
+    <element name="schemaSpec">
+      <a:documentation>TEI準拠のスキーマを示す．</a:documentation>
+      <ref name="schemaSpec.content"/>
+      <ref name="schemaSpec.attributes"/>
+    </element>
+  </define>
+  <define name="schemaSpec.content">
+    <ref name="macro.glossSeq"/>
+    <zeroOrMore>
+      <choice>
+        <ref name="moduleRef"/>
+        <ref name="specGrpRef"/>
+        <ref name="model.oddDecl"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="schemaSpec.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.identified.attributes"/>
+    <optional>
+      <attribute name="start" a:defaultValue="TEI">
+        <a:documentation>当該スキーマが適応される開始点を示す．例えば，当該スキーマが当て
+はまる文書の根要素が示される．</a:documentation>
+        <ref name="data.names"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="ns" a:defaultValue="http://www.tei-c.org/ns/1.0">
+        <a:documentation>当該スキーマ中で使用されるデフォルトの名前空間を示す．</a:documentation>
+        <ref name="data.namespace"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="prefix">
+        <a:documentation>TEI要素全てのパタンに対応する接辞を示す．これにより，同名要素を含
+む外部スキーマを，TEIと同時に使用することができる．</a:documentation>
+        <ref name="data.name"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="targetLang">
+        <a:documentation>複数言語で要素名や属性名が使用可能な場合，当該スキーマのオブジェ
+クトを生成する言語を示す．</a:documentation>
+        <ref name="data.language"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="docLang">
+        <a:documentation>要素，属性，クラス，マクロが複数の言語で使用可能な場合，解説を生
+成する言語を指定する．</a:documentation>
+        <list>
+          <ref name="data.language"/>
+        </list>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="specDesc">
+    <element name="specDesc">
+      <a:documentation>(要素またはクラスの解説) 規定された要素またはクラスの解説を示す．</a:documentation>
+      <ref name="specDesc.content"/>
+      <ref name="specDesc.attributes"/>
+    </element>
+  </define>
+  <define name="specDesc.content">
+    <empty/>
+  </define>
+  <define name="specDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="key">
+        <a:documentation>(識別子) 解説される要素やクラスのIDを示す．</a:documentation>
+        <ref name="data.name"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="atts">
+        <a:documentation>(属性) 付加されるべき属性名を示す．</a:documentation>
+        <list>
+          <zeroOrMore>
+            <ref name="data.name"/>
+          </zeroOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="specGrp">
+    <element name="specGrp">
+      <a:documentation>(規定集) 当該モジュールにある規定をまとめる．</a:documentation>
+      <ref name="specGrp.content"/>
+      <ref name="specGrp.attributes"/>
+    </element>
+  </define>
+  <define name="specGrp.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.oddDecl"/>
+        <ref name="model.oddRef"/>
+        <ref name="model.divPart"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="specGrp.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="specGrpRef">
+    <element name="specGrpRef">
+      <a:documentation>(規定集への参照) 要素specGrpを参照する．</a:documentation>
+      <ref name="specGrpRef.content"/>
+      <ref name="specGrpRef.attributes"/>
+    </element>
+  </define>
+  <define name="specGrpRef.content">
+    <empty/>
+  </define>
+  <define name="specGrpRef.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="target">
+      <a:documentation>参照する要素specGrpの場所を示す．</a:documentation>
+      <ref name="data.pointer"/>
+    </attribute>
+    <empty/>
+  </define>
+  <define name="specList">
+    <element name="specList">
+      <a:documentation>解説文中に規定集を挿入することを示す．</a:documentation>
+      <ref name="specList.content"/>
+      <ref name="specList.attributes"/>
+    </element>
+  </define>
+  <define name="specList.content">
+    <oneOrMore>
+      <ref name="specDesc"/>
+    </oneOrMore>
+  </define>
+  <define name="specList.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="stringVal">
+    <element name="stringVal">
+      <a:documentation>要素patternSpecで示されたエンティティの展開を示す．</a:documentation>
+      <ref name="stringVal.content"/>
+      <ref name="stringVal.attributes"/>
+    </element>
+  </define>
+  <define name="stringVal.content">
+    <text/>
+  </define>
+  <define name="stringVal.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="tag">
+    <element name="tag">
+      <a:documentation>記述されるタグをそのまま示す．但し，タグ開始区切子，タグ終了区切子は書かない．</a:documentation>
+      <ref name="tag.content"/>
+      <ref name="tag.attributes"/>
+    </element>
+  </define>
+  <define name="tag.content">
+    <text/>
+  </define>
+  <define name="tag.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="scheme" a:defaultValue="TEI">
+        <a:documentation>当該タグ名が規定されているスキームを示す．例えば，TEIなど．</a:documentation>
+        <choice>
+          <value>TEI</value>
+          <a:documentation>(当該タグはTEI準拠である．)</a:documentation>
+          <value>DBK</value>
+          <a:documentation>(当該タグはDocBook準拠である．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="val">
+    <element name="val">
+      <a:documentation>(値) 属性値を示す．</a:documentation>
+      <ref name="val.content"/>
+      <ref name="val.attributes"/>
+    </element>
+  </define>
+  <define name="val.content">
+    <text/>
+  </define>
+  <define name="val.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="valDesc">
+    <element name="valDesc">
+      <a:documentation>(値宣言) 属性値についてその意味や構文などを示す．要素datatypeの内
+容を補完する．</a:documentation>
+      <ref name="valDesc.content"/>
+      <ref name="valDesc.attributes"/>
+    </element>
+  </define>
+  <define name="valDesc.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="valDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="mode" a:defaultValue="add">
+        <a:documentation>当該宣言が親モジュールに与える影響を示す．</a:documentation>
+        <choice>
+          <value>add</value>
+          <a:documentation>(当該宣言は，現行定義に付加される．)</a:documentation>
+          <value>delete</value>
+          <a:documentation>(当該宣言は，現行定義から外される．)</a:documentation>
+          <value>change</value>
+          <a:documentation>(当該宣言は，現行の同名定義を変更する．)</a:documentation>
+          <value>replace</value>
+          <a:documentation>(当該宣言は，現行の同名定義に置き換わる．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="valItem">
+    <element name="valItem">
+      <a:documentation>(値定義) 属性値を示す．</a:documentation>
+      <ref name="valItem.content"/>
+      <ref name="valItem.attributes"/>
+    </element>
+  </define>
+  <define name="valItem.content">
+    <ref name="macro.glossSeq"/>
+  </define>
+  <define name="valItem.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.identified.attributes"/>
+    <empty/>
+  </define>
+  <define name="valList">
+    <element name="valList">
+      <a:documentation>(値リスト) 1つ以上の要素valItemを示す．</a:documentation>
+      <ref name="valList.content"/>
+      <ref name="valList.attributes"/>
+    </element>
+  </define>
+  <define name="valList.content">
+    <oneOrMore>
+      <ref name="valItem"/>
+    </oneOrMore>
+  </define>
+  <define name="valList.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="mode" a:defaultValue="add">
+        <a:documentation>当該宣言が親要素に与える影響を示す．</a:documentation>
+        <choice>
+          <value>add</value>
+          <a:documentation>(当該宣言は，現行定義に付加される．)</a:documentation>
+          <value>delete</value>
+          <a:documentation>(当該宣言は，現行定義から外される．)</a:documentation>
+          <value>change</value>
+          <a:documentation>(当該宣言は，現行の同名定義を変更する．)</a:documentation>
+          <value>replace</value>
+          <a:documentation>(当該宣言は，現行の同名定義に置き換わる．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="type" a:defaultValue="open">
+        <a:documentation>当該属性リストの拡張性を示す．</a:documentation>
+        <choice>
+          <value>closed</value>
+          <a:documentation>(当該リスト中の値しか認めない．)</a:documentation>
+          <value>semi</value>
+          <a:documentation>(当該リスト中の値しか保証しない．但し，他の値でも構わない．)</a:documentation>
+          <value>open</value>
+          <a:documentation>(当該リスト中の値以外も認める．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <!-- 3. macros -->
+  <define name="macro.schemapattern">
+    <text/>
+  </define>
+</grammar>

@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Linking, segmentation and alignment
+  -->
+  <!-- Definitions from module linking -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <define name="att.global.linking.attributes">
+    <ref name="att.global.linking.attribute.corresp"/>
+    <ref name="att.global.linking.attribute.synch"/>
+    <ref name="att.global.linking.attribute.sameAs"/>
+    <ref name="att.global.linking.attribute.copyOf"/>
+    <ref name="att.global.linking.attribute.next"/>
+    <ref name="att.global.linking.attribute.prev"/>
+    <ref name="att.global.linking.attribute.exclude"/>
+    <ref name="att.global.linking.attribute.select"/>
+    <empty/>
+  </define>
+  <define name="att.global.linking.attribute.corresp">
+    <optional>
+      <attribute name="corresp">
+        <a:documentation>当該要素と対応する要素を示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.global.linking.attribute.synch">
+    <optional>
+      <attribute name="synch">
+        <a:documentation>当該要素と連動する要素を示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.global.linking.attribute.sameAs">
+    <optional>
+      <attribute name="sameAs">
+        <a:documentation>当該要素と同一の要素を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.global.linking.attribute.copyOf">
+    <optional>
+      <attribute name="copyOf">
+        <a:documentation>当該要素のコピー要素を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.global.linking.attribute.next">
+    <optional>
+      <attribute name="next">
+        <a:documentation>当該要素の妹要素を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.global.linking.attribute.prev">
+    <optional>
+      <attribute name="prev">
+        <a:documentation>当該要素の姉要素を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.global.linking.attribute.exclude">
+    <optional>
+      <attribute name="exclude">
+        <a:documentation>当該要素の代替要素を示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.global.linking.attribute.select">
+    <optional>
+      <attribute name="select">
+        <a:documentation>当該要素の子要素として選択される要素を示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.pointing.attributes">
+    <ref name="att.pointing.attribute.type"/>
+    <ref name="att.pointing.attribute.evaluate"/>
+    <empty/>
+  </define>
+  <define name="att.pointing.attribute.type">
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該ポインタの種類を示す．</a:documentation>
+        <ref name="data.word"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.pointing.attribute.evaluate">
+    <optional>
+      <attribute name="evaluate">
+        <a:documentation>当該ポインタの参照先がポインタである場合，その意味を示す．</a:documentation>
+        <choice>
+          <value>all</value>
+          <a:documentation>(非ポインタにたどり着くまで，参照先を探す．)</a:documentation>
+          <value>one</value>
+          <a:documentation>(当該ポインタが参照するポインタの参照先を探す．)</a:documentation>
+          <value>none</value>
+          <a:documentation>(当該ポインタが参照するポインタを探す．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.pointing.group.attributes">
+    <ref name="att.pointing.attributes"/>
+    <ref name="att.pointing.group.attribute.domains"/>
+    <ref name="att.pointing.group.attribute.targFunc"/>
+    <empty/>
+  </define>
+  <define name="att.pointing.group.attribute.domains">
+    <optional>
+      <attribute name="domains">
+        <a:documentation>当該要素で参照される要素の識別子を示す．</a:documentation>
+        <list>
+          <ref name="data.name"/>
+          <oneOrMore>
+            <ref name="data.name"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.pointing.group.attribute.targFunc">
+    <optional>
+      <attribute name="targFunc">
+        <a:documentation>属性targetsの属性値の働きを示す．</a:documentation>
+        <list>
+          <ref name="data.word"/>
+          <oneOrMore>
+            <ref name="data.word"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+  </define>
+  <!-- 2. elements -->
+  <define name="ab">
+    <element name="ab">
+      <a:documentation>(無名ブロック) 任意の部分単位を含む．</a:documentation>
+      <ref name="ab.content"/>
+      <ref name="ab.attributes"/>
+    </element>
+  </define>
+  <define name="ab.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="ab.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <optional>
+      <attribute name="part" a:defaultValue="N">
+        <a:documentation>当該ブロックの完全性を示す．</a:documentation>
+        <choice>
+          <value>Y</value>
+          <a:documentation>(当該ブロックは完全ででない．)</a:documentation>
+          <value>N</value>
+          <a:documentation>(当該ブロックは完全である，または完全性が問題にならない．)</a:documentation>
+          <value>I</value>
+          <a:documentation>(当該ブロックの，前部分が完全ではない．)</a:documentation>
+          <value>M</value>
+          <a:documentation>(当該ブロックの，中部分が完全ではない．)</a:documentation>
+          <value>F</value>
+          <a:documentation>(当該ブロックの，後部分が完全ではない．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="alt">
+    <element name="alt">
+      <a:documentation>(代替) 要素などが選択的である場合のいち選択肢を示す．</a:documentation>
+      <ref name="alt.content"/>
+      <ref name="alt.attributes"/>
+    </element>
+  </define>
+  <define name="alt.content">
+    <empty/>
+  </define>
+  <define name="alt.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.pointing.attributes"/>
+    <attribute name="targets">
+      <a:documentation>当該選択肢の識別子を示す．</a:documentation>
+      <ref name="data.pointers"/>
+    </attribute>
+    <optional>
+      <attribute name="mode">
+        <a:documentation>示された選択肢の選択度を示す．</a:documentation>
+        <choice>
+          <value>excl</value>
+          <a:documentation>(たかだかひとつしか選択できない．)</a:documentation>
+          <value>incl</value>
+          <a:documentation>(複数を選択できる．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="weights">
+        <a:documentation>当該選択肢の選択度がexclの場合，各選択肢の何らかの重み付けを示す．</a:documentation>
+        <list>
+          <oneOrMore>
+            <ref name="data.probability"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="altGrp">
+    <element name="altGrp">
+      <a:documentation>(選択肢集) 要素altまたはptrをまとめる．</a:documentation>
+      <ref name="altGrp.content"/>
+      <ref name="altGrp.attributes"/>
+    </element>
+  </define>
+  <define name="altGrp.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="alt"/>
+        <ref name="ptr"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="altGrp.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.pointing.group.attributes"/>
+    <optional>
+      <attribute name="mode" a:defaultValue="excl">
+        <a:documentation>当該選択肢の選択度を示す．</a:documentation>
+        <choice>
+          <value>excl</value>
+          <a:documentation>(たかだかひとつしか選択できない．)</a:documentation>
+          <value>incl</value>
+          <a:documentation>(複数を選択できる．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="anchor">
+    <element name="anchor">
+      <a:documentation>(アンカー) テキスト中で，参照先となる地点を示す．</a:documentation>
+      <ref name="anchor.content"/>
+      <ref name="anchor.attributes"/>
+    </element>
+  </define>
+  <define name="anchor.content">
+    <empty/>
+  </define>
+  <define name="anchor.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="join">
+    <element name="join">
+      <a:documentation>ばらばらではあるがひとつのまとまりを作るテキスト部分を示す．</a:documentation>
+      <ref name="join.content"/>
+      <ref name="join.attributes"/>
+    </element>
+  </define>
+  <define name="join.content">
+    <ref name="macro.glossSeq"/>
+  </define>
+  <define name="join.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.pointing.attributes"/>
+    <attribute name="targets">
+      <a:documentation>まとめられる各要素の識別子を示す．</a:documentation>
+      <ref name="data.pointers"/>
+    </attribute>
+    <optional>
+      <attribute name="result">
+        <a:documentation>まとめられた要素に与えられる名前を示す．</a:documentation>
+        <ref name="data.name"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="scope" a:defaultValue="root">
+        <a:documentation>参照された要素自体を含むか，またはその子要素のみが対象となるかを
+示す．</a:documentation>
+        <choice>
+          <value>root</value>
+          <a:documentation>(参照された要素自体を含む．)</a:documentation>
+          <value>branches</value>
+          <a:documentation>(参照された要素の子要素を含む．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="joinGrp">
+    <element name="joinGrp">
+      <a:documentation>(join集) 要素joinをまとめる．</a:documentation>
+      <ref name="joinGrp.content"/>
+      <ref name="joinGrp.attributes"/>
+    </element>
+  </define>
+  <define name="joinGrp.content">
+    <optional>
+      <ref name="macro.glossSeq"/>
+    </optional>
+    <oneOrMore>
+      <choice>
+        <ref name="join"/>
+        <ref name="ptr"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <define name="joinGrp.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.pointing.group.attributes"/>
+    <optional>
+      <attribute name="result">
+        <a:documentation>当該要素でまとめられた結果の名前を示す．</a:documentation>
+        <ref name="data.name"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="link">
+    <element name="link">
+      <a:documentation>汎用的に，関連やハイパーテキストのリンクを示す．</a:documentation>
+      <ref name="link.content"/>
+      <ref name="link.attributes"/>
+    </element>
+  </define>
+  <define name="link.content">
+    <empty/>
+  </define>
+  <define name="link.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.pointing.attributes"/>
+    <attribute name="targets">
+      <a:documentation>参照先の識別子を示す．</a:documentation>
+      <ref name="data.pointers"/>
+    </attribute>
+    <empty/>
+  </define>
+  <define name="linkGrp">
+    <element name="linkGrp">
+      <a:documentation>要素linkやptrをまとめる．</a:documentation>
+      <ref name="linkGrp.content"/>
+      <ref name="linkGrp.attributes"/>
+    </element>
+  </define>
+  <define name="linkGrp.content">
+    <oneOrMore>
+      <choice>
+        <ref name="link"/>
+        <ref name="ptr"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <define name="linkGrp.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.pointing.group.attributes"/>
+    <empty/>
+  </define>
+  <define name="seg">
+    <element name="seg">
+      <a:documentation>(部分単位) 任意の句レベルの単位を示す．</a:documentation>
+      <ref name="seg.content"/>
+      <ref name="seg.attributes"/>
+    </element>
+  </define>
+  <define name="seg.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="seg.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.segLike.attributes"/>
+    <optional>
+      <attribute name="subtype">
+        <a:documentation>当該部分単位の種類を示す．</a:documentation>
+        <ref name="data.word"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="timeline">
+    <element name="timeline">
+      <a:documentation>(時間軸) 参照される時間軸を示す．例えば，発話されたテキストから参
+照される．</a:documentation>
+      <ref name="timeline.content"/>
+      <ref name="timeline.attributes"/>
+    </element>
+  </define>
+  <define name="timeline.content">
+    <oneOrMore>
+      <ref name="when"/>
+    </oneOrMore>
+  </define>
+  <define name="timeline.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="origin">
+      <a:documentation>当該時間軸の始点を示す．</a:documentation>
+      <ref name="data.pointer"/>
+    </attribute>
+    <optional>
+      <attribute name="unit">
+        <a:documentation>当該時間軸で使用される時間の単位を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="interval">
+        <a:documentation>時間幅を数値で示す．</a:documentation>
+        <choice>
+          <data type="float">
+            <param name="minExclusive">0</param>
+          </data>
+          <value>regular</value>
+          <value>irregular</value>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="when">
+    <element name="when">
+      <a:documentation>(時点) 要素timeline中にある時点を示す．</a:documentation>
+      <ref name="when.content"/>
+      <ref name="when.attributes"/>
+    </element>
+  </define>
+  <define name="when.content">
+    <empty/>
+  </define>
+  <define name="when.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="absolute">
+        <a:documentation>当該時点の絶対時間を示す．</a:documentation>
+        <ref name="data.temporal"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="unit">
+        <a:documentation>当該時点で使用される時間幅の単位を示す．指定がない場合は，要素
+timelineの値を継承する．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="interval">
+        <a:documentation>時間幅を数値で示す．</a:documentation>
+        <choice>
+          <data type="float">
+            <param name="minExclusive">0</param>
+          </data>
+          <value>unknown</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="since">
+        <a:documentation>当該時点を決める参照地点を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

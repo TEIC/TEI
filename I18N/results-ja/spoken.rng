@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Transcribed Speech
+  -->
+  <!-- Definitions from module spoken -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <define name="mix.spoken" combine="choice">
+    <ref name="model.divPart.spoken"/>
+  </define>
+  <!-- 0. predeclared macros -->
+  <define name="mix.spoken" combine="choice">
+    <ref name="model.divPart.spoken"/>
+  </define>
+  <!-- 1. classes -->
+  <define name="model.divPart.spoken">
+    <choice>
+      <ref name="u"/>
+      <ref name="pause"/>
+      <ref name="vocal"/>
+      <ref name="kinesic"/>
+      <ref name="event"/>
+      <ref name="writing"/>
+      <ref name="shift"/>
+    </choice>
+  </define>
+  <!-- 2. elements -->
+  <define name="event">
+    <element name="event">
+      <a:documentation>(事態) 発話状況を示す．言語活動に限らない．例えば，周囲の雑音やコ
+ミュニケーションに影響する事態など．</a:documentation>
+      <ref name="event.content"/>
+      <ref name="event.attributes"/>
+    </element>
+  </define>
+  <define name="event.content">
+    <ref name="macro.glossSeq"/>
+  </define>
+  <define name="event.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.timed.attributes"/>
+    <ref name="att.ascribed.attributes"/>
+    <optional>
+      <attribute name="iterated" a:defaultValue="false">
+        <a:documentation>当該事態が繰り返されるものかどうかを示す．</a:documentation>
+        <choice>
+          <value>true</value>
+          <a:documentation>(繰り返される．)</a:documentation>
+          <value>false</value>
+          <a:documentation>(繰り返されない．)</a:documentation>
+          <value>unknown</value>
+          <a:documentation>(不明または記録されていない．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="kinesic">
+    <element name="kinesic">
+      <a:documentation>(動作) 必ずしも言語化されていないコミュニケーション状況で，例えば
+身振り，眉をしかめるなど．</a:documentation>
+      <ref name="kinesic.content"/>
+      <ref name="kinesic.attributes"/>
+    </element>
+  </define>
+  <define name="kinesic.content">
+    <ref name="macro.glossSeq"/>
+  </define>
+  <define name="kinesic.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.timed.attributes"/>
+    <ref name="att.ascribed.attributes"/>
+    <optional>
+      <attribute name="iterated" a:defaultValue="false">
+        <a:documentation>当該動作が繰り返されるものかどうかを示す．</a:documentation>
+        <choice>
+          <value>true</value>
+          <a:documentation>(繰り返される．)</a:documentation>
+          <value>false</value>
+          <a:documentation>(繰り返されない．)</a:documentation>
+          <value>unknown</value>
+          <a:documentation>(不明または記録されていない．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="pause">
+    <element name="pause">
+      <a:documentation>発話間の間を示す．</a:documentation>
+      <ref name="pause.content"/>
+      <ref name="pause.attributes"/>
+    </element>
+  </define>
+  <define name="pause.content">
+    <empty/>
+  </define>
+  <define name="pause.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.timed.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <ref name="att.ascribed.attributes"/>
+    <empty/>
+  </define>
+  <define name="shift">
+    <element name="shift">
+      <a:documentation>(交替) 同時的な言語的要素が交替した所を示す．</a:documentation>
+      <ref name="shift.content"/>
+      <ref name="shift.attributes"/>
+    </element>
+  </define>
+  <define name="shift.content">
+    <empty/>
+  </define>
+  <define name="shift.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="feature">
+        <a:documentation>同時的な言語的要素を示す．</a:documentation>
+        <choice>
+          <value>tempo</value>
+          <a:documentation>(発話の速さ．)</a:documentation>
+          <value>loud</value>
+          <a:documentation>(大きさ．)</a:documentation>
+          <value>pitch</value>
+          <a:documentation>(高さ．)</a:documentation>
+          <value>tension</value>
+          <a:documentation>(強度，ストレス)</a:documentation>
+          <value>rhythm</value>
+          <a:documentation>(リズム．)</a:documentation>
+          <value>voice</value>
+          <a:documentation>(声質．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="new" a:defaultValue="normal">
+        <a:documentation>同時的な言語的要素の，交代後の新しい状態を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="u">
+    <element name="u">
+      <a:documentation>(発話) 沈黙の後または話者交代後の発話を示す．</a:documentation>
+      <ref name="u.content"/>
+      <ref name="u.attributes"/>
+    </element>
+  </define>
+  <define name="u.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.phrase"/>
+        <ref name="model.divPart.spoken"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="u.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.timed.attributes"/>
+    <ref name="att.declaring.attributes"/>
+    <ref name="att.ascribed.attributes"/>
+    <optional>
+      <attribute name="trans" a:defaultValue="smooth">
+        <a:documentation>当該交替の具合を示す．</a:documentation>
+        <choice>
+          <value>smooth</value>
+          <a:documentation>(交替は，変な間や急くことなくスムーズに行われた．)</a:documentation>
+          <value>latching</value>
+          <a:documentation>(交替は，いつもより短い間に続いて行われた．)</a:documentation>
+          <value>overlap</value>
+          <a:documentation>(前の発話が終わる前に，交替が始まった．)</a:documentation>
+          <value>pause</value>
+          <a:documentation>(はっきりとした間の後に，交替が始まった．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="vocal">
+    <element name="vocal">
+      <a:documentation>言語化された要素を示す．例えば，有声の間，相づちなど．</a:documentation>
+      <ref name="vocal.content"/>
+      <ref name="vocal.attributes"/>
+    </element>
+  </define>
+  <define name="vocal.content">
+    <ref name="macro.glossSeq"/>
+  </define>
+  <define name="vocal.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.timed.attributes"/>
+    <ref name="att.ascribed.attributes"/>
+    <optional>
+      <attribute name="iterated" a:defaultValue="false">
+        <a:documentation>indicates whether or not the phenomenon is repeated.</a:documentation>
+        <choice>
+          <value>true</value>
+          <a:documentation>(当該要素は，繰り返される．)</a:documentation>
+          <value>false</value>
+          <a:documentation>(当該要素は，繰り返されない．)</a:documentation>
+          <value>unknown</value>
+          <a:documentation>(不明または記録されていない．)
+   ) </a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="writing">
+    <element name="writing">
+      <a:documentation>(書き起こし) 発話されたテキストに関する書き起こしを示す．</a:documentation>
+      <ref name="writing.content"/>
+      <ref name="writing.attributes"/>
+    </element>
+  </define>
+  <define name="writing.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="writing.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.ascribed.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該書き起こしの種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="script">
+        <a:documentation>当該書き起こしで使われている文字を示す．</a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="gradual">
+        <a:documentation>当該書き起こしは，一度に見られるものか，少しずつ見られるものかを
+示す．</a:documentation>
+        <choice>
+          <value>true</value>
+          <a:documentation>(徐々に見られる．)</a:documentation>
+          <value>false</value>
+          <a:documentation>(一度に見られる．)</a:documentation>
+          <value>unknown</value>
+          <a:documentation>(不明または記録されていない．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

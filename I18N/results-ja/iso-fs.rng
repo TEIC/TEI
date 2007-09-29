@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Feature structures
+  -->
+  <!-- Definitions from module iso-fs -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <!-- 2. elements -->
+  <define name="binary">
+    <element name="binary">
+      <a:documentation>(二値) 素性の値が二値であることを示す．</a:documentation>
+      <ref name="binary.content"/>
+      <ref name="binary.attributes"/>
+    </element>
+  </define>
+  <define name="binary.content">
+    <empty/>
+  </define>
+  <define name="binary.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="value">
+      <a:documentation>実際の値を示す．</a:documentation>
+      <ref name="data.truthValue"/>
+    </attribute>
+    <empty/>
+  </define>
+  <define name="default">
+    <element name="default">
+      <a:documentation>素性の既定値を示す．</a:documentation>
+      <ref name="default.content"/>
+      <ref name="default.attributes"/>
+    </element>
+  </define>
+  <define name="default.content">
+    <empty/>
+  </define>
+  <define name="default.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="f">
+    <element name="f">
+      <a:documentation>(素性) 定義される素性を示す．</a:documentation>
+      <ref name="f.content"/>
+      <ref name="f.attributes"/>
+    </element>
+  </define>
+  <define name="f.content">
+    <zeroOrMore>
+      <ref name="model.featureVal"/>
+    </zeroOrMore>
+  </define>
+  <define name="f.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="name">
+      <a:documentation>
+provides a name for the feature.</a:documentation>
+      <ref name="data.name"/>
+    </attribute>
+    <optional>
+      <attribute name="fVal">
+        <a:documentation>references any element which can be used to represent the
+  value of a feature.</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="fLib">
+    <element name="fLib">
+      <a:documentation>(素性集) 素性をまとめる．</a:documentation>
+      <ref name="fLib.content"/>
+      <ref name="fLib.attributes"/>
+    </element>
+  </define>
+  <define name="fLib.content">
+    <oneOrMore>
+      <ref name="f"/>
+    </oneOrMore>
+  </define>
+  <define name="fLib.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="fs">
+    <element name="fs">
+      <a:documentation>(素性構造) 素性構造を示す．</a:documentation>
+      <ref name="fs.content"/>
+      <ref name="fs.attributes"/>
+    </element>
+  </define>
+  <define name="fs.content">
+    <zeroOrMore>
+      <ref name="f"/>
+    </zeroOrMore>
+  </define>
+  <define name="fs.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該素性構造の種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="feats">
+        <a:documentation>当該素性構造を構成する素性値定義を示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="fvLib">
+    <element name="fvLib">
+      <a:documentation>(素性値集) 素性値をまとめる．</a:documentation>
+      <ref name="fvLib.content"/>
+      <ref name="fvLib.attributes"/>
+    </element>
+  </define>
+  <define name="fvLib.content">
+    <zeroOrMore>
+      <ref name="model.featureVal"/>
+    </zeroOrMore>
+  </define>
+  <define name="fvLib.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="numeric">
+    <element name="numeric">
+      <a:documentation>(数値) 素性の値が数値であることを示す．</a:documentation>
+      <ref name="numeric.content"/>
+      <ref name="numeric.attributes"/>
+    </element>
+  </define>
+  <define name="numeric.content">
+    <empty/>
+  </define>
+  <define name="numeric.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="value">
+      <a:documentation>属性maxが規定されている場合は，値の下限値を示す．そうでない場合は，
+上限値を示す．</a:documentation>
+      <ref name="data.numeric"/>
+    </attribute>
+    <optional>
+      <attribute name="max">
+        <a:documentation>上限値を示す．</a:documentation>
+        <ref name="data.numeric"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="trunc">
+        <a:documentation>当該値を整数値へ丸めるかどうかを示す．</a:documentation>
+        <ref name="data.truthValue"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="string">
+    <element name="string">
+      <a:documentation>(文字列) 素性の値が文字列であることを示す．</a:documentation>
+      <ref name="string.content"/>
+      <ref name="string.attributes"/>
+    </element>
+  </define>
+  <define name="string.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="string.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="symbol">
+    <element name="symbol">
+      <a:documentation>(記号) 素性の値が記号であることを示す．</a:documentation>
+      <ref name="symbol.content"/>
+      <ref name="symbol.attributes"/>
+    </element>
+  </define>
+  <define name="symbol.content">
+    <empty/>
+  </define>
+  <define name="symbol.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="value">
+      <a:documentation>当該素性の値を示す．</a:documentation>
+      <ref name="data.word"/>
+    </attribute>
+    <empty/>
+  </define>
+  <define name="vAlt">
+    <element name="vAlt">
+      <a:documentation>(択一値) 素性値が択一的であることを示す．</a:documentation>
+      <ref name="vAlt.content"/>
+      <ref name="vAlt.attributes"/>
+    </element>
+  </define>
+  <define name="vAlt.content">
+    <ref name="model.featureVal"/>
+    <oneOrMore>
+      <ref name="model.featureVal"/>
+    </oneOrMore>
+  </define>
+  <define name="vAlt.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="vColl">
+    <element name="vColl">
+      <a:documentation>(素性集) 複数の素性を含む．例えば，集合，バック，リストなど．</a:documentation>
+      <ref name="vColl.content"/>
+      <ref name="vColl.attributes"/>
+    </element>
+  </define>
+  <define name="vColl.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="fs"/>
+        <ref name="model.singleVal"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="vColl.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="org">
+        <a:documentation>素性のデータ構造を示す．</a:documentation>
+        <choice>
+          <value>set</value>
+          <a:documentation>(集合，すなわち順序は無く，重複もない．)
+   ) </a:documentation>
+          <value>bag</value>
+          <a:documentation>(バック，すなわち順序は無く，重複が有る．)</a:documentation>
+          <value>list</value>
+          <a:documentation>(リスト，すなわち順序が有り，重複が有る．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="vLabel">
+    <element name="vLabel">
+      <a:documentation>(値ラベル) 素性構造中で複数箇所に現れる素性値定義の値の部分を示す．</a:documentation>
+      <ref name="vLabel.content"/>
+      <ref name="vLabel.attributes"/>
+    </element>
+  </define>
+  <define name="vLabel.content">
+    <optional>
+      <ref name="model.featureVal"/>
+    </optional>
+  </define>
+  <define name="vLabel.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="name">
+      <a:documentation>参照する名前を示す．</a:documentation>
+      <ref name="data.word"/>
+    </attribute>
+    <empty/>
+  </define>
+  <define name="vMerge">
+    <element name="vMerge">
+      <a:documentation>(データ集のマージ) 複数の値をマージすることを示す．</a:documentation>
+      <ref name="vMerge.content"/>
+      <ref name="vMerge.attributes"/>
+    </element>
+  </define>
+  <define name="vMerge.content">
+    <oneOrMore>
+      <ref name="model.featureVal"/>
+    </oneOrMore>
+  </define>
+  <define name="vMerge.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="org">
+        <a:documentation>マージ後のデータ構造を示す．例えば，集合，バック，リストなど．</a:documentation>
+        <choice>
+          <value>set</value>
+          <a:documentation>(集合，すなわち順序が無く，重複も無い．)</a:documentation>
+          <value>bag</value>
+          <a:documentation>(バック，すなわち順序が無く，重複は有る．)</a:documentation>
+          <value>list</value>
+          <a:documentation>(リスト，すなわち順序があり，重複もある．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="vNot">
+    <element name="vNot">
+      <a:documentation>(値の否定) 付与されている値を否定した値を示す．</a:documentation>
+      <ref name="vNot.content"/>
+      <ref name="vNot.attributes"/>
+    </element>
+  </define>
+  <define name="vNot.content">
+    <ref name="model.featureVal"/>
+  </define>
+  <define name="vNot.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

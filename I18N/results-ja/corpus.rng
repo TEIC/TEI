@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Header extensions for corpus texts
+  -->
+  <!-- Definitions from module corpus -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <!-- 2. elements -->
+  <define name="activity">
+    <element name="activity">
+      <a:documentation>(行動) 言語交流の参加者が行った活動を示す．</a:documentation>
+      <ref name="activity.content"/>
+      <ref name="activity.attributes"/>
+    </element>
+  </define>
+  <define name="activity.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="activity.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="channel">
+    <element name="channel">
+      <a:documentation>(主要媒体) テキストが収録された媒体を示す．例えば，書かれてあるテ
+キストであれば，印刷本，手書き本，eメールなどで，発話されたテキス
+トであれば，ラジオ，電話，直接会話など．</a:documentation>
+      <ref name="channel.content"/>
+      <ref name="channel.attributes"/>
+    </element>
+  </define>
+  <define name="channel.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="channel.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="mode" a:defaultValue="x">
+        <a:documentation>当該主要媒体の種類を示す．</a:documentation>
+        <choice>
+          <value>s</value>
+          <a:documentation>発話されたもの</a:documentation>
+          <value>w</value>
+          <a:documentation>書かれたもの</a:documentation>
+          <value>sw</value>
+          <a:documentation>発話されたものを書いたもの</a:documentation>
+          <value>ws</value>
+          <a:documentation>書かれたものを発話したもの</a:documentation>
+          <value>m</value>
+          <a:documentation>混在</a:documentation>
+          <value>x</value>
+          <a:documentation>不明または問題にならない</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="constitution">
+    <element name="constitution">
+      <a:documentation>当該テキストの完全性について示す．</a:documentation>
+      <ref name="constitution.content"/>
+      <ref name="constitution.attributes"/>
+    </element>
+  </define>
+  <define name="constitution.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="constitution.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type" a:defaultValue="single">
+        <a:documentation>当該テキストの完全性を示す．</a:documentation>
+        <choice>
+          <value>single</value>
+          <a:documentation>完全な1つのテキスト</a:documentation>
+          <value>composite</value>
+          <a:documentation>幾つかの完全な部分テキストから構成されているテキスト</a:documentation>
+          <value>frags</value>
+          <a:documentation>幾つかの部分テキストから構成されているテキスト</a:documentation>
+          <value>unknown</value>
+          <a:documentation>不明</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="derivation">
+    <element name="derivation">
+      <a:documentation>当該テキストの真性度を示す．</a:documentation>
+      <ref name="derivation.content"/>
+      <ref name="derivation.attributes"/>
+    </element>
+  </define>
+  <define name="derivation.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="derivation.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該テキストの起源の分類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="domain">
+    <element name="domain">
+      <a:documentation>(社会的状況) 当該テキストが現れた社会的状況を示す．例えば，私的，
+公的，教育上，宗教上など．</a:documentation>
+      <ref name="domain.content"/>
+      <ref name="domain.attributes"/>
+    </element>
+  </define>
+  <define name="domain.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="domain.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該社会的状況の分類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="factuality">
+    <element name="factuality">
+      <a:documentation>当該テキストの現実度を示す．例えば，フィクション，ノンフィクショ
+ンなど．</a:documentation>
+      <ref name="factuality.content"/>
+      <ref name="factuality.attributes"/>
+    </element>
+  </define>
+  <define name="factuality.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="factuality.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該現実度の分類を示す．</a:documentation>
+        <choice>
+          <value>fiction</value>
+          <a:documentation>当該テキストは，想像の産物である．</a:documentation>
+          <value>fact</value>
+          <a:documentation>当該テキストは，事実的なものである．</a:documentation>
+          <value>mixed</value>
+          <a:documentation>当該テキストは，フィクション，ノンフィクションが混在している．</a:documentation>
+          <value>inapplicable</value>
+          <a:documentation>フィクション，ノンフィクションの区別は問題にならない．</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="firstLang">
+    <element name="firstLang">
+      <a:documentation>(第一言語) 参加者の第一言語を示す．</a:documentation>
+      <ref name="firstLang.content"/>
+      <ref name="firstLang.attributes"/>
+    </element>
+  </define>
+  <define name="firstLang.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="firstLang.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="interaction">
+    <element name="interaction">
+      <a:documentation>当該テキストが生まれたときの，言語交流における参加度を示す．例え
+ば，応答，合いの手，コメント，など．</a:documentation>
+      <ref name="interaction.content"/>
+      <ref name="interaction.attributes"/>
+    </element>
+  </define>
+  <define name="interaction.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="interaction.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>言語交流の分類を示す．</a:documentation>
+        <choice>
+          <value>none</value>
+          <a:documentation>言語交流ではない．例えば，独白など．</a:documentation>
+          <value>partial</value>
+          <a:documentation>ある程度の言語交流．例えば，反応する人がいる状況での独白など．</a:documentation>
+          <value>complete</value>
+          <a:documentation>言語交流．例えば，直接対話など．</a:documentation>
+          <value>inapplicable</value>
+          <a:documentation>言語交流は問題にならない．</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="active">
+        <a:documentation>言語交流に直接参加している人数．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="passive">
+        <a:documentation>言語交流に間接的に参加している人数．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="locale">
+    <element name="locale">
+      <a:documentation>(場所) 言語交流が行われている場所を示す．例えば，部屋，レストラン，
+公園のベンチなど．</a:documentation>
+      <ref name="locale.content"/>
+      <ref name="locale.attributes"/>
+    </element>
+  </define>
+  <define name="locale.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="locale.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="particDesc">
+    <element name="particDesc">
+      <a:documentation>(参加者情報)言語交流の参加者に関する情報をまとめる．</a:documentation>
+      <ref name="particDesc.content"/>
+      <ref name="particDesc.attributes"/>
+    </element>
+  </define>
+  <define name="particDesc.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <oneOrMore>
+          <choice>
+            <ref name="listPerson"/>
+            <ref name="personGrp"/>
+          </choice>
+        </oneOrMore>
+        <optional>
+          <ref name="particLinks"/>
+        </optional>
+      </group>
+    </choice>
+  </define>
+  <define name="particDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+  <define name="preparedness">
+    <element name="preparedness">
+      <a:documentation>当該テキストの即興度を示す．</a:documentation>
+      <ref name="preparedness.content"/>
+      <ref name="preparedness.attributes"/>
+    </element>
+  </define>
+  <define name="preparedness.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="preparedness.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該即興度の種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="purpose">
+    <element name="purpose">
+      <a:documentation>当該テキストの目的や言語交流上の性質を示す．</a:documentation>
+      <ref name="purpose.content"/>
+      <ref name="purpose.attributes"/>
+    </element>
+  </define>
+  <define name="purpose.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="purpose.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>目的や性質の種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="degree">
+        <a:documentation>属性typeで示された種類の程度を示す．</a:documentation>
+        <choice>
+          <value>high</value>
+          <a:documentation>高い．</a:documentation>
+          <value>medium</value>
+          <a:documentation>ほどほど．</a:documentation>
+          <value>low</value>
+          <a:documentation>低い．</a:documentation>
+          <value>unknown</value>
+          <a:documentation>不明</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="setting">
+    <element name="setting">
+      <a:documentation>(状況) 言語交流が行われた状況を示す．</a:documentation>
+      <ref name="setting.content"/>
+      <ref name="setting.attributes"/>
+    </element>
+  </define>
+  <define name="setting.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <choice>
+          <ref name="model.nameLike.agent"/>
+          <ref name="model.dateLike"/>
+          <ref name="model.timeLike"/>
+          <ref name="model.settingPart"/>
+        </choice>
+      </zeroOrMore>
+    </choice>
+  </define>
+  <define name="setting.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.ascribed.attributes"/>
+    <empty/>
+  </define>
+  <define name="settingDesc">
+    <element name="settingDesc">
+      <a:documentation>(状況記述) 言語交流が行われた状況の情報をまとめる．</a:documentation>
+      <ref name="settingDesc.content"/>
+      <ref name="settingDesc.attributes"/>
+    </element>
+  </define>
+  <define name="settingDesc.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="setting"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="settingDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+  <define name="textDesc">
+    <element name="textDesc">
+      <a:documentation>言語交流にあるテキストに関する情報をまとめる．</a:documentation>
+      <ref name="textDesc.content"/>
+      <ref name="textDesc.attributes"/>
+    </element>
+  </define>
+  <define name="textDesc.content">
+    <ref name="model.textDescPart_sequence"/>
+    <oneOrMore>
+      <ref name="purpose"/>
+    </oneOrMore>
+  </define>
+  <define name="textDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

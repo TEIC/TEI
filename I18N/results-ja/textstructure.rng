@@ -1,0 +1,1175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Default
+    text structure
+  -->
+  <!-- Definitions from module textstructure -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <!-- 2. elements -->
+  <define name="TEI">
+    <element name="TEI">
+      <a:documentation>(TEI文書) TEI準拠の文書を示す．</a:documentation>
+      <ref name="TEI.content"/>
+      <ref name="TEI.attributes"/>
+    </element>
+  </define>
+  <define name="TEI.content">
+    <ref name="teiHeader"/>
+    <ref name="text"/>
+  </define>
+  <define name="TEI.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="version" a:defaultValue="5.0">
+        <a:documentation>TEIスキームの版を示す．</a:documentation>
+        <data type="decimal"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="argument">
+    <element name="argument">
+      <a:documentation>下位部分にあるテキストのトピックをリストまたは散文で示す．</a:documentation>
+      <ref name="argument.content"/>
+      <ref name="argument.attributes"/>
+    </element>
+  </define>
+  <define name="argument.content">
+    <zeroOrMore>
+      <ref name="model.global"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="head"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </optional>
+    <oneOrMore>
+      <ref name="macro.component"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </oneOrMore>
+  </define>
+  <define name="argument.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="back">
+    <element name="back">
+      <a:documentation>(後付) 本文の後に続く付録などを示す．</a:documentation>
+      <ref name="back.content"/>
+      <ref name="back.attributes"/>
+    </element>
+  </define>
+  <define name="back.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.frontPart"/>
+        <ref name="model.global"/>
+        <ref name="model.divWrapper"/>
+      </choice>
+    </zeroOrMore>
+    <optional>
+      <choice>
+        <group>
+          <ref name="div"/>
+          <zeroOrMore>
+            <choice>
+              <ref name="div"/>
+              <ref name="model.frontPart"/>
+              <ref name="model.global"/>
+            </choice>
+          </zeroOrMore>
+        </group>
+        <group>
+          <ref name="div1"/>
+          <zeroOrMore>
+            <choice>
+              <ref name="div1"/>
+              <ref name="model.frontPart"/>
+              <ref name="model.global"/>
+            </choice>
+          </zeroOrMore>
+        </group>
+      </choice>
+    </optional>
+    <zeroOrMore>
+      <ref name="model.divWrapper.bottom"/>
+    </zeroOrMore>
+  </define>
+  <define name="back.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declaring.attributes"/>
+    <empty/>
+  </define>
+  <define name="body">
+    <element name="body">
+      <a:documentation>(本文) 前付，後付を除いた作品の本文部分を示す．</a:documentation>
+      <ref name="body.content"/>
+      <ref name="body.attributes"/>
+    </element>
+  </define>
+  <define name="body.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <choice>
+      <group>
+        <oneOrMore>
+          <ref name="macro.component"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </oneOrMore>
+        <group>
+          <zeroOrMore>
+            <ref name="divGen"/>
+            <zeroOrMore>
+              <ref name="model.global"/>
+            </zeroOrMore>
+          </zeroOrMore>
+          <optional>
+            <choice>
+              <group>
+                <ref name="div"/>
+                <zeroOrMore>
+                  <choice>
+                    <ref name="div"/>
+                    <ref name="divGen"/>
+                    <ref name="model.global"/>
+                  </choice>
+                </zeroOrMore>
+              </group>
+              <group>
+                <ref name="div0"/>
+                <zeroOrMore>
+                  <choice>
+                    <ref name="div0"/>
+                    <ref name="divGen"/>
+                    <ref name="model.global"/>
+                  </choice>
+                </zeroOrMore>
+              </group>
+              <group>
+                <ref name="div1"/>
+                <zeroOrMore>
+                  <choice>
+                    <ref name="div1"/>
+                    <ref name="divGen"/>
+                    <ref name="model.global"/>
+                  </choice>
+                </zeroOrMore>
+              </group>
+            </choice>
+          </optional>
+        </group>
+      </group>
+      <group>
+        <zeroOrMore>
+          <ref name="divGen"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </zeroOrMore>
+        <choice>
+          <group>
+            <ref name="div"/>
+            <zeroOrMore>
+              <choice>
+                <ref name="div"/>
+                <ref name="divGen"/>
+                <ref name="model.global"/>
+              </choice>
+            </zeroOrMore>
+          </group>
+          <group>
+            <ref name="div0"/>
+            <zeroOrMore>
+              <choice>
+                <ref name="div0"/>
+                <ref name="divGen"/>
+                <ref name="model.global"/>
+              </choice>
+            </zeroOrMore>
+          </group>
+          <group>
+            <ref name="div1"/>
+            <zeroOrMore>
+              <choice>
+                <ref name="div1"/>
+                <ref name="divGen"/>
+                <ref name="model.global"/>
+              </choice>
+            </zeroOrMore>
+          </group>
+        </choice>
+      </group>
+    </choice>
+    <zeroOrMore>
+      <ref name="model.divWrapper.bottom"/>
+    </zeroOrMore>
+  </define>
+  <define name="body.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declaring.attributes"/>
+    <empty/>
+  </define>
+  <define name="byline">
+    <element name="byline">
+      <a:documentation>タイトルページや作品の冒頭や最後にある，作品の責任者を示す．</a:documentation>
+      <ref name="byline.content"/>
+      <ref name="byline.attributes"/>
+    </element>
+  </define>
+  <define name="byline.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.phrase"/>
+        <ref name="docAuthor"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="byline.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="closer">
+    <element name="closer">
+      <a:documentation>要素dateline, byline salutationや，関連する情報をまとめる．</a:documentation>
+      <ref name="closer.content"/>
+      <ref name="closer.attributes"/>
+    </element>
+  </define>
+  <define name="closer.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="signed"/>
+        <ref name="dateline"/>
+        <ref name="salute"/>
+        <ref name="model.phrase"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="closer.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="dateline">
+    <element name="dateline">
+      <a:documentation>場所，日付，時間などを簡易に示す．例えば，手紙や新聞記事などに付
+加されているもの．</a:documentation>
+      <ref name="dateline.content"/>
+      <ref name="dateline.attributes"/>
+    </element>
+  </define>
+  <define name="dateline.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="dateline.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="div">
+    <element name="div">
+      <a:documentation>(テキスト区分) 前付，本文，後付中にあるテキストの部分を示す．</a:documentation>
+      <ref name="div.content"/>
+      <ref name="div.attributes"/>
+    </element>
+  </define>
+  <define name="div.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <choice>
+      <oneOrMore>
+        <choice>
+          <ref name="div"/>
+          <ref name="divGen"/>
+        </choice>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </oneOrMore>
+      <group>
+        <oneOrMore>
+          <ref name="macro.component"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </oneOrMore>
+        <zeroOrMore>
+          <choice>
+            <ref name="div"/>
+            <ref name="divGen"/>
+          </choice>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </zeroOrMore>
+      </group>
+    </choice>
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.divWrapper.bottom"/>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </zeroOrMore>
+  </define>
+  <define name="div.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.divLike.attributes"/>
+    <ref name="att.declaring.attributes"/>
+    <empty/>
+  </define>
+  <define name="div0">
+    <element name="div0">
+      <a:documentation>(レベル0テキスト区分) 最大の部分を示す．</a:documentation>
+      <ref name="div0.content"/>
+      <ref name="div0.attributes"/>
+    </element>
+  </define>
+  <define name="div0.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <choice>
+      <oneOrMore>
+        <choice>
+          <ref name="div1"/>
+          <ref name="divGen"/>
+        </choice>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </oneOrMore>
+      <group>
+        <oneOrMore>
+          <ref name="macro.component"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </oneOrMore>
+        <zeroOrMore>
+          <choice>
+            <ref name="div1"/>
+            <ref name="divGen"/>
+          </choice>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </zeroOrMore>
+      </group>
+    </choice>
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.divWrapper.bottom"/>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </zeroOrMore>
+  </define>
+  <define name="div0.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.divLike.attributes"/>
+    <ref name="att.declaring.attributes"/>
+    <empty/>
+  </define>
+  <define name="div1">
+    <element name="div1">
+      <a:documentation>(レベル1テキスト区分) レベル0より小さい部分を示す．レベル0が無け
+れば最大の部分になる．</a:documentation>
+      <ref name="div1.content"/>
+      <ref name="div1.attributes"/>
+    </element>
+  </define>
+  <define name="div1.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <choice>
+      <oneOrMore>
+        <choice>
+          <ref name="div2"/>
+          <ref name="divGen"/>
+        </choice>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </oneOrMore>
+      <group>
+        <oneOrMore>
+          <ref name="macro.component"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </oneOrMore>
+        <zeroOrMore>
+          <choice>
+            <ref name="div2"/>
+            <ref name="divGen"/>
+          </choice>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </zeroOrMore>
+      </group>
+    </choice>
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.divWrapper.bottom"/>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </zeroOrMore>
+  </define>
+  <define name="div1.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.divLike.attributes"/>
+    <ref name="att.declaring.attributes"/>
+    <empty/>
+  </define>
+  <define name="div2">
+    <element name="div2">
+      <a:documentation>(レベル2テキスト区分) レベル1より小さい部分を示す．</a:documentation>
+      <ref name="div2.content"/>
+      <ref name="div2.attributes"/>
+    </element>
+  </define>
+  <define name="div2.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <choice>
+      <oneOrMore>
+        <choice>
+          <ref name="div3"/>
+          <ref name="divGen"/>
+        </choice>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </oneOrMore>
+      <group>
+        <oneOrMore>
+          <ref name="macro.component"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </oneOrMore>
+        <zeroOrMore>
+          <choice>
+            <ref name="div3"/>
+            <ref name="divGen"/>
+          </choice>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </zeroOrMore>
+      </group>
+    </choice>
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.divWrapper.bottom"/>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </zeroOrMore>
+  </define>
+  <define name="div2.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.divLike.attributes"/>
+    <ref name="att.declaring.attributes"/>
+    <empty/>
+  </define>
+  <define name="div3">
+    <element name="div3">
+      <a:documentation>(レベル3テキスト区分) レベル2より小さい部分を示す．</a:documentation>
+      <ref name="div3.content"/>
+      <ref name="div3.attributes"/>
+    </element>
+  </define>
+  <define name="div3.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <choice>
+      <oneOrMore>
+        <choice>
+          <ref name="div4"/>
+          <ref name="divGen"/>
+        </choice>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </oneOrMore>
+      <group>
+        <oneOrMore>
+          <ref name="macro.component"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </oneOrMore>
+        <zeroOrMore>
+          <choice>
+            <ref name="div4"/>
+            <ref name="divGen"/>
+          </choice>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </zeroOrMore>
+      </group>
+    </choice>
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.divWrapper.bottom"/>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </zeroOrMore>
+  </define>
+  <define name="div3.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.divLike.attributes"/>
+    <ref name="att.declaring.attributes"/>
+    <empty/>
+  </define>
+  <define name="div4">
+    <element name="div4">
+      <a:documentation>(レベル4テキスト区分) レベル3より小さい部分を示す．</a:documentation>
+      <ref name="div4.content"/>
+      <ref name="div4.attributes"/>
+    </element>
+  </define>
+  <define name="div4.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <choice>
+      <oneOrMore>
+        <choice>
+          <ref name="div5"/>
+          <ref name="divGen"/>
+        </choice>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </oneOrMore>
+      <group>
+        <oneOrMore>
+          <ref name="macro.component"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </oneOrMore>
+        <zeroOrMore>
+          <choice>
+            <ref name="div5"/>
+            <ref name="divGen"/>
+          </choice>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </zeroOrMore>
+      </group>
+    </choice>
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.divWrapper.bottom"/>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </zeroOrMore>
+  </define>
+  <define name="div4.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.divLike.attributes"/>
+    <ref name="att.declaring.attributes"/>
+    <empty/>
+  </define>
+  <define name="div5">
+    <element name="div5">
+      <a:documentation>(レベル5テキスト区分) レベル4より小さい部分を示す．</a:documentation>
+      <ref name="div5.content"/>
+      <ref name="div5.attributes"/>
+    </element>
+  </define>
+  <define name="div5.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <choice>
+      <oneOrMore>
+        <choice>
+          <ref name="div6"/>
+          <ref name="divGen"/>
+        </choice>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </oneOrMore>
+      <group>
+        <oneOrMore>
+          <ref name="macro.component"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </oneOrMore>
+        <zeroOrMore>
+          <choice>
+            <ref name="div6"/>
+            <ref name="divGen"/>
+          </choice>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </zeroOrMore>
+      </group>
+    </choice>
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.divWrapper.bottom"/>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </zeroOrMore>
+  </define>
+  <define name="div5.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.divLike.attributes"/>
+    <ref name="att.declaring.attributes"/>
+    <empty/>
+  </define>
+  <define name="div6">
+    <element name="div6">
+      <a:documentation>(レベル6テキスト区分) レベル5より小さい部分を示す．</a:documentation>
+      <ref name="div6.content"/>
+      <ref name="div6.attributes"/>
+    </element>
+  </define>
+  <define name="div6.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <choice>
+      <oneOrMore>
+        <choice>
+          <ref name="div7"/>
+          <ref name="divGen"/>
+        </choice>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </oneOrMore>
+      <group>
+        <oneOrMore>
+          <ref name="macro.component"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </oneOrMore>
+        <zeroOrMore>
+          <choice>
+            <ref name="div7"/>
+            <ref name="divGen"/>
+          </choice>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </zeroOrMore>
+      </group>
+    </choice>
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.divWrapper.bottom"/>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </zeroOrMore>
+  </define>
+  <define name="div6.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.divLike.attributes"/>
+    <ref name="att.declaring.attributes"/>
+    <empty/>
+  </define>
+  <define name="div7">
+    <element name="div7">
+      <a:documentation>(レベル7テキスト区分) レベル6より小さい部分を示す．</a:documentation>
+      <ref name="div7.content"/>
+      <ref name="div7.attributes"/>
+    </element>
+  </define>
+  <define name="div7.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <oneOrMore>
+      <ref name="macro.component"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </oneOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.divWrapper.bottom"/>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </zeroOrMore>
+  </define>
+  <define name="div7.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.divLike.attributes"/>
+    <ref name="att.declaring.attributes"/>
+    <empty/>
+  </define>
+  <define name="docAuthor">
+    <element name="docAuthor">
+      <a:documentation>(著者) 当該文書の著者名を示す．</a:documentation>
+      <ref name="docAuthor.content"/>
+      <ref name="docAuthor.attributes"/>
+    </element>
+  </define>
+  <define name="docAuthor.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="docAuthor.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="docDate">
+    <element name="docDate">
+      <a:documentation>(日付) 当該文書の日付を示す．</a:documentation>
+      <ref name="docDate.content"/>
+      <ref name="docDate.attributes"/>
+    </element>
+  </define>
+  <define name="docDate.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="docDate.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="value">
+        <a:documentation>当該日付を標準形式，例えば，YYYY-MM-DDで示す．</a:documentation>
+        <ref name="data.temporal"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="docEdition">
+    <element name="docEdition">
+      <a:documentation>(版) タイトルページにある当該文書の版を示す．</a:documentation>
+      <ref name="docEdition.content"/>
+      <ref name="docEdition.attributes"/>
+    </element>
+  </define>
+  <define name="docEdition.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="docEdition.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="docImprint">
+    <element name="docImprint">
+      <a:documentation>(出版情報) 出版関連情報を示す．例えば，出版者，出版地，出版日など．</a:documentation>
+      <ref name="docImprint.content"/>
+      <ref name="docImprint.attributes"/>
+    </element>
+  </define>
+  <define name="docImprint.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.phrase"/>
+        <ref name="pubPlace"/>
+        <ref name="docDate"/>
+        <ref name="publisher"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="docImprint.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="docTitle">
+    <element name="docTitle">
+      <a:documentation>(タイトル) 当該文書のタイトルを示す．</a:documentation>
+      <ref name="docTitle.content"/>
+      <ref name="docTitle.attributes"/>
+    </element>
+  </define>
+  <define name="docTitle.content">
+    <zeroOrMore>
+      <ref name="model.global"/>
+    </zeroOrMore>
+    <oneOrMore>
+      <ref name="titlePart"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </oneOrMore>
+  </define>
+  <define name="docTitle.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="epigraph">
+    <element name="epigraph">
+      <a:documentation>(題辞) 章や節，タイトルページなどにある引用を示す．</a:documentation>
+      <ref name="epigraph.content"/>
+      <ref name="epigraph.attributes"/>
+    </element>
+  </define>
+  <define name="epigraph.content">
+    <ref name="macro.componentSeq"/>
+  </define>
+  <define name="epigraph.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="front">
+    <element name="front">
+      <a:documentation>(前付) 本文より先にある，タイトルページや序文，謝辞などを示す．</a:documentation>
+      <ref name="front.content"/>
+      <ref name="front.attributes"/>
+    </element>
+  </define>
+  <define name="front.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.frontPart"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <optional>
+      <choice>
+        <group>
+          <ref name="model.pLike.front"/>
+          <zeroOrMore>
+            <choice>
+              <ref name="model.pLike.front"/>
+              <ref name="titlePage"/>
+              <ref name="model.global"/>
+            </choice>
+          </zeroOrMore>
+        </group>
+        <group>
+          <ref name="div"/>
+          <zeroOrMore>
+            <choice>
+              <ref name="div"/>
+              <ref name="model.frontPart"/>
+              <ref name="model.global"/>
+            </choice>
+          </zeroOrMore>
+        </group>
+        <group>
+          <ref name="div1"/>
+          <zeroOrMore>
+            <choice>
+              <ref name="div1"/>
+              <ref name="model.frontPart"/>
+              <ref name="model.global"/>
+            </choice>
+          </zeroOrMore>
+        </group>
+      </choice>
+    </optional>
+  </define>
+  <define name="front.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declaring.attributes"/>
+    <empty/>
+  </define>
+  <define name="group">
+    <element name="group">
+      <a:documentation>一連のテキストデータをまとめる．</a:documentation>
+      <ref name="group.content"/>
+      <ref name="group.attributes"/>
+    </element>
+  </define>
+  <define name="group.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <group>
+      <choice>
+        <ref name="text"/>
+        <ref name="group"/>
+      </choice>
+      <zeroOrMore>
+        <choice>
+          <ref name="text"/>
+          <ref name="group"/>
+          <ref name="model.global"/>
+        </choice>
+      </zeroOrMore>
+    </group>
+    <zeroOrMore>
+      <ref name="model.divWrapper.bottom"/>
+    </zeroOrMore>
+  </define>
+  <define name="group.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declaring.attributes"/>
+    <empty/>
+  </define>
+  <define name="imprimatur">
+    <element name="imprimatur">
+      <a:documentation>公式の出版情報を示す．奥付にあたるもの．</a:documentation>
+      <ref name="imprimatur.content"/>
+      <ref name="imprimatur.attributes"/>
+    </element>
+  </define>
+  <define name="imprimatur.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="imprimatur.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="opener">
+    <element name="opener">
+      <a:documentation>要素dateline, byline, salute, epigraphやこれらに相当するものをま
+とめる．</a:documentation>
+      <ref name="opener.content"/>
+      <ref name="opener.attributes"/>
+    </element>
+  </define>
+  <define name="opener.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.phrase"/>
+        <ref name="argument"/>
+        <ref name="byline"/>
+        <ref name="dateline"/>
+        <ref name="epigraph"/>
+        <ref name="salute"/>
+        <ref name="signed"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="opener.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="salute">
+    <element name="salute">
+      <a:documentation>(挨拶文句) 手紙や序文などに見られる挨拶を示す．</a:documentation>
+      <ref name="salute.content"/>
+      <ref name="salute.attributes"/>
+    </element>
+  </define>
+  <define name="salute.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="salute.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="signed">
+    <element name="signed">
+      <a:documentation>(署名) 謝辞などの最後に現れる挨拶を示す．</a:documentation>
+      <ref name="signed.content"/>
+      <ref name="signed.attributes"/>
+    </element>
+  </define>
+  <define name="signed.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="signed.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="text">
+    <element name="text">
+      <a:documentation>各種テキストを示す．複合体でも良い．</a:documentation>
+      <ref name="text.content"/>
+      <ref name="text.attributes"/>
+    </element>
+  </define>
+  <define name="text.content">
+    <zeroOrMore>
+      <ref name="model.global"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="front"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </optional>
+    <choice>
+      <ref name="body"/>
+      <ref name="group"/>
+    </choice>
+    <zeroOrMore>
+      <ref name="model.global"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="back"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </optional>
+  </define>
+  <define name="text.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declaring.attributes"/>
+    <empty/>
+  </define>
+  <define name="titlePage">
+    <element name="titlePage">
+      <a:documentation>(タイトルページ) テキストのタイトルページを示す．</a:documentation>
+      <ref name="titlePage.content"/>
+      <ref name="titlePage.attributes"/>
+    </element>
+  </define>
+  <define name="titlePage.content">
+    <zeroOrMore>
+      <ref name="model.global"/>
+    </zeroOrMore>
+    <ref name="model.titlepagePart"/>
+    <zeroOrMore>
+      <choice>
+        <ref name="model.titlepagePart"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="titlePage.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該タイトルページの分類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="titlePart">
+    <element name="titlePart">
+      <a:documentation>(タイトル部分) タイトルページ中にあるタイトルの各部分を含む．</a:documentation>
+      <ref name="titlePart.content"/>
+      <ref name="titlePart.attributes"/>
+    </element>
+  </define>
+  <define name="titlePart.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="titlePart.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type" a:defaultValue="main">
+        <a:documentation>当該タイトル部分の役割を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="trailer">
+    <element name="trailer">
+      <a:documentation>(後書き) テキスト区分の終わりにある後書き部分を示す．</a:documentation>
+      <ref name="trailer.content"/>
+      <ref name="trailer.attributes"/>
+    </element>
+  </define>
+  <define name="trailer.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="trailer.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Tables, formulae, and figures
+  -->
+  <!-- Definitions from module figures -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <!-- 2. elements -->
+  <define name="cell">
+    <element name="cell">
+      <a:documentation>表中のセルを示す．</a:documentation>
+      <ref name="cell.content"/>
+      <ref name="cell.attributes"/>
+    </element>
+  </define>
+  <define name="cell.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="cell.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.tableDecoration.attributes"/>
+    <empty/>
+  </define>
+  <define name="figDesc">
+    <element name="figDesc">
+      <a:documentation>(図表の解説) 図表の解説を示す．</a:documentation>
+      <ref name="figDesc.content"/>
+      <ref name="figDesc.attributes"/>
+    </element>
+  </define>
+  <define name="figDesc.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="figDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="figure">
+    <element name="figure">
+      <a:documentation>図，絵，表などを含む場所を示す．</a:documentation>
+      <ref name="figure.content"/>
+      <ref name="figure.attributes"/>
+    </element>
+  </define>
+  <define name="figure.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.pLike"/>
+        <ref name="model.global"/>
+        <ref name="figure"/>
+        <ref name="figDesc"/>
+        <ref name="model.graphicLike"/>
+        <ref name="head"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="figure.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="formula">
+    <element name="formula">
+      <a:documentation>数式を示す．</a:documentation>
+      <ref name="formula.content"/>
+      <ref name="formula.attributes"/>
+    </element>
+  </define>
+  <define name="formula.content">
+    <text/>
+  </define>
+  <define name="formula.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="notation">
+        <a:documentation>数式を表す表記法を示す．</a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="row">
+    <element name="row">
+      <a:documentation>表中の行を示す．</a:documentation>
+      <ref name="row.content"/>
+      <ref name="row.attributes"/>
+    </element>
+  </define>
+  <define name="row.content">
+    <oneOrMore>
+      <choice>
+        <ref name="cell"/>
+        <ref name="table"/>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </oneOrMore>
+  </define>
+  <define name="row.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.tableDecoration.attributes"/>
+    <empty/>
+  </define>
+  <define name="table">
+    <element name="table">
+      <a:documentation>行と列から成る表形式を示す．</a:documentation>
+      <ref name="table.content"/>
+      <ref name="table.attributes"/>
+    </element>
+  </define>
+  <define name="table.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="head"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <oneOrMore>
+      <ref name="row"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </oneOrMore>
+  </define>
+  <define name="table.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="rows">
+        <a:documentation>行数を示す．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="cols">
+        <a:documentation>列数を示す．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

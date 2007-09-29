@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Performance texts
+  -->
+  <!-- Definitions from module drama -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <define name="mix.drama" combine="choice">
+    <ref name="model.divPart.stage"/>
+  </define>
+  <!-- 0. predeclared macros -->
+  <define name="mix.drama" combine="choice">
+    <ref name="model.divPart.stage"/>
+  </define>
+  <!-- 1. classes -->
+  <define name="model.divPart.stage">
+    <choice>
+      <ref name="model.stageLike"/>
+      <ref name="castList"/>
+    </choice>
+  </define>
+  <!-- 2. elements -->
+  <define name="actor">
+    <element name="actor">
+      <a:documentation>(役者) 登場人物リスト中にある役者名を示す．</a:documentation>
+      <ref name="actor.content"/>
+      <ref name="actor.attributes"/>
+    </element>
+  </define>
+  <define name="actor.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="actor.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="camera">
+    <element name="camera">
+      <a:documentation>撮影のアングルや視点などを示す．</a:documentation>
+      <ref name="camera.content"/>
+      <ref name="camera.attributes"/>
+    </element>
+  </define>
+  <define name="camera.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="camera.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="caption">
+    <element name="caption">
+      <a:documentation>絵コンテなどにある見出しなどを示す．</a:documentation>
+      <ref name="caption.content"/>
+      <ref name="caption.attributes"/>
+    </element>
+  </define>
+  <define name="caption.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="caption.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="castGroup">
+    <element name="castGroup">
+      <a:documentation>(出演者リスト)出演者をまとめる．</a:documentation>
+      <ref name="castGroup.content"/>
+      <ref name="castGroup.attributes"/>
+    </element>
+  </define>
+  <define name="castGroup.content">
+    <zeroOrMore>
+      <ref name="model.global"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="head"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </optional>
+    <oneOrMore>
+      <choice>
+        <ref name="castItem"/>
+        <ref name="castGroup"/>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </oneOrMore>
+    <optional>
+      <ref name="trailer"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </optional>
+  </define>
+  <define name="castGroup.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="castItem">
+    <element name="castItem">
+      <a:documentation>(出演者) 出演者リスト中の各出演者を示す．</a:documentation>
+      <ref name="castItem.content"/>
+      <ref name="castItem.attributes"/>
+    </element>
+  </define>
+  <define name="castItem.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.castItemPart"/>
+        <ref name="model.phrase"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="castItem.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type" a:defaultValue="role">
+        <a:documentation>当該出演者の役割を示す．</a:documentation>
+        <choice>
+          <value>role</value>
+          <a:documentation>当該出演者には，役割(科白)がある．</a:documentation>
+          <value>list</value>
+          <a:documentation>当該出演者には，科白がない．</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="castList">
+    <element name="castList">
+      <a:documentation>(登場人物リスト) 登場人物をまとめる．</a:documentation>
+      <ref name="castList.content"/>
+      <ref name="castList.attributes"/>
+    </element>
+  </define>
+  <define name="castList.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <zeroOrMore>
+      <ref name="macro.component"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </zeroOrMore>
+    <oneOrMore>
+      <choice>
+        <ref name="castItem"/>
+        <ref name="castGroup"/>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="macro.component"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </zeroOrMore>
+  </define>
+  <define name="castList.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="epilogue">
+    <element name="epilogue">
+      <a:documentation>納め口上を示す．</a:documentation>
+      <ref name="epilogue.content"/>
+      <ref name="epilogue.attributes"/>
+    </element>
+  </define>
+  <define name="epilogue.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <oneOrMore>
+      <ref name="macro.component"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="model.divWrapper.bottom"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </zeroOrMore>
+  </define>
+  <define name="epilogue.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="move">
+    <element name="move">
+      <a:documentation>(動作) 舞台上の役者が採る動きを示す．</a:documentation>
+      <ref name="move.content"/>
+      <ref name="move.attributes"/>
+    </element>
+  </define>
+  <define name="move.content">
+    <empty/>
+  </define>
+  <define name="move.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.ascribed.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該動作の分類を示す．例えば，入り，出，など．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="where">
+        <a:documentation>当該動作の方向を示す．</a:documentation>
+        <ref name="data.names"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="perf">
+        <a:documentation>当該動作の演技を示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="performance">
+    <element name="performance">
+      <a:documentation>前口上，納め口上の演技を示す．</a:documentation>
+      <ref name="performance.content"/>
+      <ref name="performance.attributes"/>
+    </element>
+  </define>
+  <define name="performance.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <oneOrMore>
+      <ref name="macro.component"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="model.divWrapper.bottom"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </zeroOrMore>
+  </define>
+  <define name="performance.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="prologue">
+    <element name="prologue">
+      <a:documentation>前口上を示す．</a:documentation>
+      <ref name="prologue.content"/>
+      <ref name="prologue.attributes"/>
+    </element>
+  </define>
+  <define name="prologue.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="model.divWrapper"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+    <oneOrMore>
+      <ref name="macro.component"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </oneOrMore>
+    <zeroOrMore>
+      <ref name="model.divWrapper.bottom"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </zeroOrMore>
+  </define>
+  <define name="prologue.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="role">
+    <element name="role">
+      <a:documentation>役名を示す．</a:documentation>
+      <ref name="role.content"/>
+      <ref name="role.attributes"/>
+    </element>
+  </define>
+  <define name="role.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="role.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="roleDesc">
+    <element name="roleDesc">
+      <a:documentation>役の性格を示す．</a:documentation>
+      <ref name="roleDesc.content"/>
+      <ref name="roleDesc.attributes"/>
+    </element>
+  </define>
+  <define name="roleDesc.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="roleDesc.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="set">
+    <element name="set">
+      <a:documentation>当該芝居が行われる舞台設定，時間，場所，外観を示す．</a:documentation>
+      <ref name="set.content"/>
+      <ref name="set.attributes"/>
+    </element>
+  </define>
+  <define name="set.content">
+    <zeroOrMore>
+      <ref name="model.global"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="head"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="macro.component"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </zeroOrMore>
+  </define>
+  <define name="set.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="sound">
+    <element name="sound">
+      <a:documentation>音響効果を示す．</a:documentation>
+      <ref name="sound.content"/>
+      <ref name="sound.attributes"/>
+    </element>
+  </define>
+  <define name="sound.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="sound.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該音響効果の分類を示す．例えば，音楽，特殊効果音など．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="discrete" a:defaultValue="unknown">
+        <a:documentation>当該音響効果が，元の音との重なり具合を示す．</a:documentation>
+        <choice>
+          <value>true</value>
+          <a:documentation>両方の音が同時に聞こえる．</a:documentation>
+          <value>false</value>
+          <a:documentation>当該音響効果しか聞こえない．</a:documentation>
+          <value>unknown</value>
+          <a:documentation>不明または問題にならない．</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="tech">
+    <element name="tech">
+      <a:documentation>役者以外に向けた，特別な舞台指示を示す．</a:documentation>
+      <ref name="tech.content"/>
+      <ref name="tech.attributes"/>
+    </element>
+  </define>
+  <define name="tech.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="tech.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該舞台指示の分類を示す．</a:documentation>
+        <choice>
+          <value>light</value>
+          <a:documentation>照明係への指示</a:documentation>
+          <value>sound</value>
+          <a:documentation>音響効果係への指示</a:documentation>
+          <value>prop</value>
+          <a:documentation>道具係への指示</a:documentation>
+          <value>block</value>
+          <a:documentation>演出係への指示</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="perf">
+        <a:documentation>当該指示の対象となる演技を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="view">
+    <element name="view">
+      <a:documentation>観客の視点からの見た目を示す．</a:documentation>
+      <ref name="view.content"/>
+      <ref name="view.attributes"/>
+    </element>
+  </define>
+  <define name="view.content">
+    <ref name="macro.specialPara"/>
+  </define>
+  <define name="view.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

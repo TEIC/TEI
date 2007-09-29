@@ -1,0 +1,1026 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Printed dictionaries
+  -->
+  <!-- Definitions from module dictionaries -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <define name="mix.dictionaries" combine="choice">
+    <ref name="model.entryLike"/>
+  </define>
+  <!-- 0. predeclared macros -->
+  <define name="mix.dictionaries" combine="choice">
+    <ref name="model.entryLike"/>
+  </define>
+  <!-- 1. classes -->
+  <define name="model.entryLike">
+    <choice>
+      <ref name="superEntry"/>
+      <ref name="entry"/>
+      <ref name="entryFree"/>
+    </choice>
+  </define>
+  <define name="att.entryLike.attributes">
+    <ref name="att.entryLike.attribute.type"/>
+    <ref name="att.entryLike.attribute.sortKey"/>
+    <empty/>
+  </define>
+  <define name="att.entryLike.attribute.type">
+    <optional>
+      <attribute name="type" a:defaultValue="main">
+        <a:documentation>辞書項目の種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.entryLike.attribute.sortKey">
+    <optional>
+      <attribute name="sortKey">
+        <a:documentation>当該項目を文字順で並び替える際の文字列を示す．</a:documentation>
+        <ref name="data.word"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="model.morphLike">
+    <choice>
+      <ref name="gram"/>
+      <ref name="gen"/>
+      <ref name="number"/>
+      <ref name="case"/>
+      <ref name="per"/>
+      <ref name="tns"/>
+      <ref name="mood"/>
+      <ref name="iType"/>
+    </choice>
+  </define>
+  <define name="model.formPart">
+    <choice>
+      <ref name="form"/>
+      <ref name="orth"/>
+      <ref name="pron"/>
+      <ref name="hyph"/>
+      <ref name="syll"/>
+      <ref name="model.morphLike"/>
+      <ref name="usg"/>
+      <ref name="lbl"/>
+    </choice>
+  </define>
+  <define name="model.gramPart">
+    <choice>
+      <ref name="model.morphLike"/>
+      <ref name="gramGrp"/>
+      <ref name="pos"/>
+      <ref name="subc"/>
+      <ref name="colloc"/>
+      <ref name="usg"/>
+      <ref name="lbl"/>
+    </choice>
+  </define>
+  <define name="model.ptrLike.form">
+    <choice>
+      <ref name="oRef"/>
+      <ref name="oVar"/>
+      <ref name="pRef"/>
+      <ref name="pVar"/>
+    </choice>
+  </define>
+  <define name="att.ptrLike.form.attributes">
+    <ref name="att.ptrLike.form.attribute.target"/>
+    <empty/>
+  </define>
+  <define name="att.ptrLike.form.attribute.target">
+    <optional>
+      <attribute name="target">
+        <a:documentation>参照される正規形式または発音について示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.lexicographic.attributes">
+    <ref name="att.lexicographic.attribute.expand"/>
+    <ref name="att.lexicographic.attribute.norm"/>
+    <ref name="att.lexicographic.attribute.split"/>
+    <ref name="att.lexicographic.attribute.value"/>
+    <ref name="att.lexicographic.attribute.orig"/>
+    <ref name="att.lexicographic.attribute.location"/>
+    <ref name="att.lexicographic.attribute.mergedin"/>
+    <ref name="att.lexicographic.attribute.opt"/>
+    <empty/>
+  </define>
+  <define name="att.lexicographic.attribute.expand">
+    <optional>
+      <attribute name="expand">
+        <a:documentation>辞書中では簡易表記されているものの完全記述を示す．</a:documentation>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.lexicographic.attribute.norm">
+    <optional>
+      <attribute name="norm">
+        <a:documentation>当該テキストの正規形を示す．</a:documentation>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.lexicographic.attribute.split">
+    <optional>
+      <attribute name="split">
+        <a:documentation>構成部分をリストで示す．</a:documentation>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.lexicographic.attribute.value">
+    <optional>
+      <attribute name="value">
+        <a:documentation>当該テキストが印刷された場合に欠如する情報を示す．</a:documentation>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.lexicographic.attribute.orig">
+    <optional>
+      <attribute name="orig">
+        <a:documentation>元の文字列を示す．当該要素が元資料に無い場合には空になる．</a:documentation>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.lexicographic.attribute.location">
+    <optional>
+      <attribute name="location">
+        <a:documentation>当該要素の元の場所を特定する要素anchorへの参照を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.lexicographic.attribute.mergedin">
+    <optional>
+      <attribute name="mergedin">
+        <a:documentation>元データが統合されて出現している場所にある要素への参照を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.lexicographic.attribute.opt">
+    <optional>
+      <attribute name="opt" a:defaultValue="false">
+        <a:documentation>当該要素が選択的かどうかを示す．</a:documentation>
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="model.entryParts">
+    <choice>
+      <ref name="superEntry"/>
+      <ref name="hom"/>
+      <ref name="sense"/>
+      <ref name="form"/>
+      <ref name="orth"/>
+      <ref name="pron"/>
+      <ref name="hyph"/>
+      <ref name="syll"/>
+      <ref name="stress"/>
+      <ref name="gen"/>
+      <ref name="number"/>
+      <ref name="case"/>
+      <ref name="per"/>
+      <ref name="tns"/>
+      <ref name="mood"/>
+      <ref name="iType"/>
+      <ref name="gramGrp"/>
+      <ref name="pos"/>
+      <ref name="subc"/>
+      <ref name="colloc"/>
+      <ref name="def"/>
+      <ref name="tr"/>
+      <ref name="trans"/>
+      <ref name="etym"/>
+      <ref name="dicteg"/>
+      <ref name="usg"/>
+      <ref name="lbl"/>
+      <ref name="xr"/>
+      <ref name="re"/>
+    </choice>
+  </define>
+  <!-- 2. elements -->
+  <define name="case">
+    <element name="case">
+      <a:documentation>格情報を示す．</a:documentation>
+      <ref name="case.content"/>
+      <ref name="case.attributes"/>
+    </element>
+  </define>
+  <define name="case.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="case.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="colloc">
+    <element name="colloc">
+      <a:documentation>(連語) 見出し語の連語関係を示す．</a:documentation>
+      <ref name="colloc.content"/>
+      <ref name="colloc.attributes"/>
+    </element>
+  </define>
+  <define name="colloc.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="colloc.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該連語の分類を示す．</a:documentation>
+        <ref name="data.word"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="def">
+    <element name="def">
+      <a:documentation>(定義) 辞書項目における定義を示す．</a:documentation>
+      <ref name="def.content"/>
+      <ref name="def.attributes"/>
+    </element>
+  </define>
+  <define name="def.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="def.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="dictScrap">
+    <element name="dictScrap">
+      <a:documentation>他の句レベルの辞書項目と結合する，辞書項目の一部を示す．</a:documentation>
+      <ref name="dictScrap.content"/>
+      <ref name="dictScrap.attributes"/>
+    </element>
+  </define>
+  <define name="dictScrap.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.entryParts"/>
+        <ref name="model.phrase"/>
+        <ref name="model.inter"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="dictScrap.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="dicteg">
+    <element name="dicteg">
+      <a:documentation>(例) 例を示す．例には，その作者や貢献者の情報が含まれるかもしれな
+い．</a:documentation>
+      <ref name="dicteg.content"/>
+      <ref name="dicteg.attributes"/>
+    </element>
+  </define>
+  <define name="dicteg.content">
+    <oneOrMore>
+      <choice>
+        <ref name="q"/>
+        <ref name="quote"/>
+        <ref name="cit"/>
+        <ref name="model.entryParts"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <define name="dicteg.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="entry">
+    <element name="entry">
+      <a:documentation>辞書の項目を示す．</a:documentation>
+      <ref name="entry.content"/>
+      <ref name="entry.attributes"/>
+    </element>
+  </define>
+  <define name="entry.content">
+    <oneOrMore>
+      <choice>
+        <ref name="hom"/>
+        <ref name="sense"/>
+        <ref name="model.entryParts.top"/>
+        <ref name="model.global"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <define name="entry.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.entryLike.attributes"/>
+    <empty/>
+  </define>
+  <define name="entryFree">
+    <element name="entryFree">
+      <a:documentation>要素entryに課せられる制約を受けない必要のない辞書項目を示す．</a:documentation>
+      <ref name="entryFree.content"/>
+      <ref name="entryFree.attributes"/>
+    </element>
+  </define>
+  <define name="entryFree.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.entryParts"/>
+        <ref name="model.phrase"/>
+        <ref name="model.inter"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="entryFree.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.entryLike.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="etym">
+    <element name="etym">
+      <a:documentation>(語源) 当該辞書項目の語源情報を示す．</a:documentation>
+      <ref name="etym.content"/>
+      <ref name="etym.attributes"/>
+    </element>
+  </define>
+  <define name="etym.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.phrase"/>
+        <ref name="model.inter"/>
+        <ref name="usg"/>
+        <ref name="lbl"/>
+        <ref name="def"/>
+        <ref name="trans"/>
+        <ref name="tr"/>
+        <ref name="model.morphLike"/>
+        <ref name="dicteg"/>
+        <ref name="xr"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="etym.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="form">
+    <element name="form">
+      <a:documentation>(形態) 見出し語の記述または発話された形態の情報を示す．</a:documentation>
+      <ref name="form.content"/>
+      <ref name="form.attributes"/>
+    </element>
+  </define>
+  <define name="form.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.phrase"/>
+        <ref name="model.inter"/>
+        <ref name="model.formPart"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="form.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該形態の分類を示す．例えば，単純形，複合形など．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="gen">
+    <element name="gen">
+      <a:documentation>(性) 当該辞書項目の形態上の性を示す．</a:documentation>
+      <ref name="gen.content"/>
+      <ref name="gen.attributes"/>
+    </element>
+  </define>
+  <define name="gen.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="gen.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="gram">
+    <element name="gram">
+      <a:documentation>(文法情報) 当該項目に関連する文法情報を示す．</a:documentation>
+      <ref name="gram.content"/>
+      <ref name="gram.attributes"/>
+    </element>
+  </define>
+  <define name="gram.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="gram.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該文法情報の分類を示す．用語を示す場合，ISO WD 12 620に従うこと
+が望ましい．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="gramGrp">
+    <element name="gramGrp">
+      <a:documentation>(文法情報集) 当該語の形態統語情報をまとめる．例えば性,数，格など．</a:documentation>
+      <ref name="gramGrp.content"/>
+      <ref name="gramGrp.attributes"/>
+    </element>
+  </define>
+  <define name="gramGrp.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.phrase"/>
+        <ref name="model.inter"/>
+        <ref name="model.gramPart"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="gramGrp.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="hom">
+    <element name="hom">
+      <a:documentation>(同形異音) 当該項目の同型異音に関する情報を示す．</a:documentation>
+      <ref name="hom.content"/>
+      <ref name="hom.attributes"/>
+    </element>
+  </define>
+  <define name="hom.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="sense"/>
+        <ref name="model.entryParts.top"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="hom.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="hyph">
+    <element name="hyph">
+      <a:documentation>(ハイフネーション) 見出し語のハイフン形を示す．</a:documentation>
+      <ref name="hyph.content"/>
+      <ref name="hyph.attributes"/>
+    </element>
+  </define>
+  <define name="hyph.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="hyph.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="iType">
+    <element name="iType">
+      <a:documentation>(屈折種) 当該項目の屈折の種類を示す．</a:documentation>
+      <ref name="iType.content"/>
+      <ref name="iType.attributes"/>
+    </element>
+  </define>
+  <define name="iType.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="iType.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>種類を示す記号の種類を示す．例えば，通常省略形と多種の記号を区別
+する必要がある場合など．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="lang">
+    <element name="lang">
+      <a:documentation>(言語名) 言語の名前を示す．</a:documentation>
+      <ref name="lang.content"/>
+      <ref name="lang.attributes"/>
+    </element>
+  </define>
+  <define name="lang.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="lang.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="lbl">
+    <element name="lbl">
+      <a:documentation>(ラベル) 辞書における語形や例，翻訳などの種類を示す．例えば，省略
+形，対義語，文学的，類似，同義語など．</a:documentation>
+      <ref name="lbl.content"/>
+      <ref name="lbl.attributes"/>
+    </element>
+  </define>
+  <define name="lbl.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="lbl.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該ラベルの分類を示す．</a:documentation>
+        <ref name="data.word"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="mood">
+    <element name="mood">
+      <a:documentation>文法上の法に関する情報を示す．例えば，直説法，仮定法，命令法など．</a:documentation>
+      <ref name="mood.content"/>
+      <ref name="mood.attributes"/>
+    </element>
+  </define>
+  <define name="mood.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="mood.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="number">
+    <element name="number">
+      <a:documentation>文法上の数に関する情報を示す．</a:documentation>
+      <ref name="number.content"/>
+      <ref name="number.attributes"/>
+    </element>
+  </define>
+  <define name="number.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="number.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="oRef">
+    <element name="oRef">
+      <a:documentation>例文中から見出し語を参照する．</a:documentation>
+      <ref name="oRef.content"/>
+      <ref name="oRef.attributes"/>
+    </element>
+  </define>
+  <define name="oRef.content">
+    <empty/>
+  </define>
+  <define name="oRef.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.ptrLike.form.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該見出し語参照の種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="oVar">
+    <element name="oVar">
+      <a:documentation>(見出し語の別形) 例文中から，見出し語の別な形を参照する．</a:documentation>
+      <ref name="oVar.content"/>
+      <ref name="oVar.attributes"/>
+    </element>
+  </define>
+  <define name="oVar.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="oRef"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="oVar.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.ptrLike.form.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該参照の種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="orth">
+    <element name="orth">
+      <a:documentation>(正書形) 見出し語の正書形を示す．</a:documentation>
+      <ref name="orth.content"/>
+      <ref name="orth.attributes"/>
+    </element>
+  </define>
+  <define name="orth.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="orth.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該綴りの種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="extent" a:defaultValue="full">
+        <a:documentation>当該正書法があてはまっている程度を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="pRef">
+    <element name="pRef">
+      <a:documentation>(発音への参照) 例文中から見出し語にある発音を参照する．</a:documentation>
+      <ref name="pRef.content"/>
+      <ref name="pRef.attributes"/>
+    </element>
+  </define>
+  <define name="pRef.content">
+    <empty/>
+  </define>
+  <define name="pRef.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.ptrLike.form.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="pVar">
+    <element name="pVar">
+      <a:documentation>(別発音への参照)例文中から見出し語にある別な発音を参照する．</a:documentation>
+      <ref name="pVar.content"/>
+      <ref name="pVar.attributes"/>
+    </element>
+  </define>
+  <define name="pVar.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="pRef"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="pVar.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.ptrLike.form.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="per">
+    <element name="per">
+      <a:documentation>(人称) 見出し語の文法上の人称を示す．例えば，1人称，2人称，3人称など．</a:documentation>
+      <ref name="per.content"/>
+      <ref name="per.attributes"/>
+    </element>
+  </define>
+  <define name="per.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="per.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="pos">
+    <element name="pos">
+      <a:documentation>(品詞) 見出し語の品詞を示す．例えば，名詞，動詞，形容詞など．</a:documentation>
+      <ref name="pos.content"/>
+      <ref name="pos.attributes"/>
+    </element>
+  </define>
+  <define name="pos.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="pos.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="pron">
+    <element name="pron">
+      <a:documentation>(発音) 当該語の発音を示す．</a:documentation>
+      <ref name="pron.content"/>
+      <ref name="pron.attributes"/>
+    </element>
+  </define>
+  <define name="pron.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="pron.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <optional>
+      <attribute name="extent" a:defaultValue="full">
+        <a:documentation>当該発音が，語全体のものか一部かを示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="notation">
+        <a:documentation>当該発音の表記法が複数ある場合，その表記法を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="re">
+    <element name="re">
+      <a:documentation>(関連項目) 見出し語と関連する項目を示す．例えば，見出し語が複合語
+や派生語の場合．</a:documentation>
+      <ref name="re.content"/>
+      <ref name="re.attributes"/>
+    </element>
+  </define>
+  <define name="re.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="sense"/>
+        <ref name="model.entryParts.top"/>
+        <ref name="model.phrase"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="re.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該関連項目の分類を示す．</a:documentation>
+        <ref name="data.word"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="sense">
+    <element name="sense">
+      <a:documentation>(意味情報集) 辞書項目の意味に関する情報をまとめる．</a:documentation>
+      <ref name="sense.content"/>
+      <ref name="sense.attributes"/>
+    </element>
+  </define>
+  <define name="sense.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="sense"/>
+        <ref name="model.entryParts.top"/>
+        <ref name="model.phrase"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="sense.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <optional>
+      <attribute name="level">
+        <a:documentation>当該意味情報を構成する，要素構造の深さを示す．</a:documentation>
+        <ref name="data.numeric"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="stress">
+    <element name="stress">
+      <a:documentation>見出し語のアクセント型を示す．</a:documentation>
+      <ref name="stress.content"/>
+      <ref name="stress.attributes"/>
+    </element>
+  </define>
+  <define name="stress.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="stress.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="subc">
+    <element name="subc">
+      <a:documentation>(下位範疇) 下位範疇情報を示す．例えば，自動詞・他動詞，可算・非可
+算など．</a:documentation>
+      <ref name="subc.content"/>
+      <ref name="subc.attributes"/>
+    </element>
+  </define>
+  <define name="subc.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="subc.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="superEntry">
+    <element name="superEntry">
+      <a:documentation>同形異音集合をなす要素をまとめる．</a:documentation>
+      <ref name="superEntry.content"/>
+      <ref name="superEntry.attributes"/>
+    </element>
+  </define>
+  <define name="superEntry.content">
+    <choice>
+      <group>
+        <optional>
+          <ref name="form"/>
+        </optional>
+        <oneOrMore>
+          <ref name="entry"/>
+        </oneOrMore>
+      </group>
+      <ref name="dictScrap"/>
+    </choice>
+  </define>
+  <define name="superEntry.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.entryLike.attributes"/>
+    <empty/>
+  </define>
+  <define name="syll">
+    <element name="syll">
+      <a:documentation>(音節化) 見出し語の音節を示す．</a:documentation>
+      <ref name="syll.content"/>
+      <ref name="syll.attributes"/>
+    </element>
+  </define>
+  <define name="syll.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="syll.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="tns">
+    <element name="tns">
+      <a:documentation>(時制) 辞書項目の文法上の時制を示す．</a:documentation>
+      <ref name="tns.content"/>
+      <ref name="tns.attributes"/>
+    </element>
+  </define>
+  <define name="tns.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="tns.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="tr">
+    <element name="tr">
+      <a:documentation>(翻訳語) 見出し語または例の翻訳を示す．</a:documentation>
+      <ref name="tr.content"/>
+      <ref name="tr.attributes"/>
+    </element>
+  </define>
+  <define name="tr.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="tr.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="trans">
+    <element name="trans">
+      <a:documentation>(翻訳情報) 翻訳または翻訳に関する情報を示す．</a:documentation>
+      <ref name="trans.content"/>
+      <ref name="trans.attributes"/>
+    </element>
+  </define>
+  <define name="trans.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.phrase"/>
+        <ref name="model.inter"/>
+        <ref name="model.entryParts"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="trans.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <empty/>
+  </define>
+  <define name="usg">
+    <element name="usg">
+      <a:documentation>(用例) 辞書項目の用例に関する情報を示す．</a:documentation>
+      <ref name="usg.content"/>
+      <ref name="usg.attributes"/>
+    </element>
+  </define>
+  <define name="usg.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="usg.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該用例情報の分類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="xr">
+    <element name="xr">
+      <a:documentation>(相互参照) 相互参照情報をまとめる．</a:documentation>
+      <ref name="xr.content"/>
+      <ref name="xr.attributes"/>
+    </element>
+  </define>
+  <define name="xr.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.phrase"/>
+        <ref name="model.inter"/>
+        <ref name="usg"/>
+        <ref name="lbl"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="xr.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.lexicographic.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該相互参照の分類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

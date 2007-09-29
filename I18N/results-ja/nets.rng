@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Graphs, networks and trees
+  -->
+  <!-- Definitions from module nets -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <!-- 2. elements -->
+  <define name="arc">
+    <element name="arc">
+      <a:documentation>グラフを構成するノード間の辺を示す．</a:documentation>
+      <ref name="arc.content"/>
+      <ref name="arc.attributes"/>
+    </element>
+  </define>
+  <define name="arc.content">
+    <empty/>
+  </define>
+  <define name="arc.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="label">
+        <a:documentation>当該辺のラベルを示す．</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="label2">
+        <a:documentation>当該辺の2番目のラベルを示す．</a:documentation>
+      </attribute>
+    </optional>
+    <attribute name="from">
+      <a:documentation>当該辺が有向である場合，起点となるノードを示す．</a:documentation>
+      <ref name="data.pointer"/>
+    </attribute>
+    <attribute name="to">
+      <a:documentation>当該辺が有効である場合，終点となるノードを示す．</a:documentation>
+      <ref name="data.pointer"/>
+    </attribute>
+    <empty/>
+  </define>
+  <define name="eLeaf">
+    <element name="eLeaf">
+      <a:documentation>(葉) 木構造における葉を示す．要素eTree中で使用される．</a:documentation>
+      <ref name="eLeaf.content"/>
+      <ref name="eLeaf.attributes"/>
+    </element>
+  </define>
+  <define name="eLeaf.content">
+    <empty/>
+  </define>
+  <define name="eLeaf.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="label">
+        <a:documentation>当該葉のラベルを示す．</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="value">
+        <a:documentation>当該葉の値を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="eTree">
+    <element name="eTree">
+      <a:documentation>(部分木) 木構造における部分木を示す．</a:documentation>
+      <ref name="eTree.content"/>
+      <ref name="eTree.attributes"/>
+    </element>
+  </define>
+  <define name="eTree.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="eTree"/>
+        <ref name="triangle"/>
+        <ref name="eLeaf"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="eTree.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="label">
+        <a:documentation>当該部分木のラベルを示す．</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="value">
+        <a:documentation>当該部分木の値を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="forest">
+    <element name="forest">
+      <a:documentation>(林)木のグループを示す．森の構成要素となる．</a:documentation>
+      <ref name="forest.content"/>
+      <ref name="forest.attributes"/>
+    </element>
+  </define>
+  <define name="forest.content">
+    <oneOrMore>
+      <choice>
+        <ref name="tree"/>
+        <ref name="eTree"/>
+        <ref name="triangle"/>
+      </choice>
+    </oneOrMore>
+  </define>
+  <define name="forest.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該林の種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="forestGrp">
+    <element name="forestGrp">
+      <a:documentation>(森) 林のグループを示す．</a:documentation>
+      <ref name="forestGrp.content"/>
+      <ref name="forestGrp.attributes"/>
+    </element>
+  </define>
+  <define name="forestGrp.content">
+    <oneOrMore>
+      <ref name="forest"/>
+    </oneOrMore>
+  </define>
+  <define name="forestGrp.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該林の種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="graph">
+    <element name="graph">
+      <a:documentation>グラフを示す．</a:documentation>
+      <ref name="graph.content"/>
+      <ref name="graph.attributes"/>
+    </element>
+  </define>
+  <define name="graph.content">
+    <choice>
+      <group>
+        <oneOrMore>
+          <ref name="node"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </oneOrMore>
+        <zeroOrMore>
+          <ref name="arc"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </zeroOrMore>
+      </group>
+      <group>
+        <oneOrMore>
+          <ref name="arc"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </oneOrMore>
+        <oneOrMore>
+          <ref name="node"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </oneOrMore>
+      </group>
+    </choice>
+  </define>
+  <define name="graph.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該グラフの種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="label">
+        <a:documentation>当該グラフのラベルを示す．</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="order">
+        <a:documentation>当該グラフに含まれるノード数を示す．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="size">
+        <a:documentation>当該グラフに含まれる辺数を示す．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="iNode">
+    <element name="iNode">
+      <a:documentation>(中間ノード) 木における非終端ノードを示す．</a:documentation>
+      <ref name="iNode.content"/>
+      <ref name="iNode.attributes"/>
+    </element>
+  </define>
+  <define name="iNode.content">
+    <empty/>
+  </define>
+  <define name="iNode.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="label">
+        <a:documentation>当該中間ノードのラベルを示す．</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="value">
+        <a:documentation>当該中間ノードの値を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <attribute name="children">
+      <a:documentation>当該中間ノードの子要素の識別子を示す．</a:documentation>
+      <ref name="data.pointers"/>
+    </attribute>
+    <optional>
+      <attribute name="parent">
+        <a:documentation>当該中間ノードの親要素の識別子を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="ord">
+        <a:documentation>当該中間ノードは，順序付かどうかを示す．</a:documentation>
+        <choice>
+          <value>true</value>
+          <a:documentation>(当該中間ノードの姉妹要素は順序付である．)</a:documentation>
+          <value>false</value>
+          <a:documentation>(当該中間ノードの姉妹要素間に順序はない．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="follow">
+        <a:documentation>当該中間ノードの姉要素相当の識別子を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="outDegree">
+        <a:documentation>当該中間ノードの子要素数を示す．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="leaf">
+    <element name="leaf">
+      <a:documentation>木構造における葉(終端ノード)を示す．</a:documentation>
+      <ref name="leaf.content"/>
+      <ref name="leaf.attributes"/>
+    </element>
+  </define>
+  <define name="leaf.content">
+    <empty/>
+  </define>
+  <define name="leaf.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="label">
+        <a:documentation>当該葉のラベルを示す．</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="value">
+        <a:documentation>当該葉の値を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="parent">
+        <a:documentation>当該葉の親要素の識別子を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="follow">
+        <a:documentation>当該葉の姉要素相当の識別子を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="node">
+    <element name="node">
+      <a:documentation>グラフにおけるノードを示す．</a:documentation>
+      <ref name="node.content"/>
+      <ref name="node.attributes"/>
+    </element>
+  </define>
+  <define name="node.content">
+    <empty/>
+  </define>
+  <define name="node.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="label">
+        <a:documentation>当該ノードのラベルを示す．</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="label2">
+        <a:documentation>当該ノードの下位ラベルを示す．
+gives a second label for a node.</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="value">
+        <a:documentation>当該ノードの値を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該ノードの種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="adjTo">
+        <a:documentation>有向グラフの場合，当該ノードから出る隣接ノードの識別子を示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="adjFrom">
+        <a:documentation>有向グラフの場合，当該ノードに入る隣接ノードの識別子を示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="adj">
+        <a:documentation>無向グラフの場合，当該ノードに隣接するノードを示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="inDegree">
+        <a:documentation>有向グラフの場合，当該ノードに入る隣接ノード数を示す．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="outDegree">
+        <a:documentation>有向グラフの場合，当該ノードから出る隣接ノード数を示す．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="degree">
+        <a:documentation>当該ノードの辺数を示す．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="root">
+    <element name="root">
+      <a:documentation>(根要素) 木の根要素を示す．</a:documentation>
+      <ref name="root.content"/>
+      <ref name="root.attributes"/>
+    </element>
+  </define>
+  <define name="root.content">
+    <empty/>
+  </define>
+  <define name="root.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="label">
+        <a:documentation>当該根要素のラベルを示す．</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="value">
+        <a:documentation>当該根要素の値を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <attribute name="children">
+      <a:documentation>当該根要素の子要素の識別子を示す．</a:documentation>
+      <ref name="data.pointers"/>
+    </attribute>
+    <optional>
+      <attribute name="ord">
+        <a:documentation>順序付であるかどうかを示す．</a:documentation>
+        <choice>
+          <value>true</value>
+          <a:documentation>(当該根要素の子要素は順序付である．)</a:documentation>
+          <value>false</value>
+          <a:documentation>(当該根要素の子要素は順序付でない．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="outDegree">
+        <a:documentation>当該根要素の子要素数を示す．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="tree">
+    <element name="tree">
+      <a:documentation>木構造を示す．</a:documentation>
+      <ref name="tree.content"/>
+      <ref name="tree.attributes"/>
+    </element>
+  </define>
+  <define name="tree.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="leaf"/>
+        <ref name="iNode"/>
+      </choice>
+    </zeroOrMore>
+    <ref name="root"/>
+    <zeroOrMore>
+      <choice>
+        <ref name="leaf"/>
+        <ref name="iNode"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="tree.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="label">
+        <a:documentation>当該木のラベルを示す．
+gives a label for a tree.</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="arity">
+        <a:documentation>当該木の子要素の最大数を示す．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <attribute name="ord" a:defaultValue="true">
+      <a:documentation>順序付であるかどうかを示す．</a:documentation>
+      <choice>
+        <value>true</value>
+        <a:documentation>(当該木の子要素は順序付である．)</a:documentation>
+        <value>partial</value>
+        <a:documentation>(当該木の子要素の一部は，順序付である．)</a:documentation>
+        <value>false</value>
+        <a:documentation>(当該木の子要素は順序付でない．)</a:documentation>
+      </choice>
+    </attribute>
+    <optional>
+      <attribute name="order">
+        <a:documentation>当該木の順番を示す．</a:documentation>
+        <ref name="data.count"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="triangle">
+    <element name="triangle">
+      <a:documentation>(補助木)未定義の部分木(eTree)を示す．</a:documentation>
+      <ref name="triangle.content"/>
+      <ref name="triangle.attributes"/>
+    </element>
+  </define>
+  <define name="triangle.content">
+    <zeroOrMore>
+      <choice>
+        <ref name="eTree"/>
+        <ref name="triangle"/>
+        <ref name="eLeaf"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="triangle.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="label">
+        <a:documentation>当該補助木のラベルを示す．</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="value">
+        <a:documentation>当該補助木の値を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

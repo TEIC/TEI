@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Text criticism
+  -->
+  <!-- Definitions from module textcrit -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <define name="model.rdgPart">
+    <choice>
+      <ref name="wit"/>
+      <ref name="witStart"/>
+      <ref name="witEnd"/>
+      <ref name="lacunaStart"/>
+      <ref name="lacunaEnd"/>
+    </choice>
+  </define>
+  <define name="att.rdgPart.attributes">
+    <ref name="att.rdgPart.attribute.wit"/>
+    <empty/>
+  </define>
+  <define name="att.rdgPart.attribute.wit">
+    <optional>
+      <attribute name="wit">
+        <a:documentation>テキスト批評の対象となる実現形を1つ以上示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.textCritical.attributes">
+    <ref name="att.textCritical.attribute.wit"/>
+    <ref name="att.textCritical.attribute.type"/>
+    <ref name="att.textCritical.attribute.cause"/>
+    <ref name="att.textCritical.attribute.varSeq"/>
+    <ref name="att.textCritical.attribute.resp"/>
+    <ref name="att.textCritical.attribute.hand"/>
+    <empty/>
+  </define>
+  <define name="att.textCritical.attribute.wit">
+    <optional>
+      <attribute name="wit">
+        <a:documentation>当該実現形を示す1つ以上のポインタを示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.textCritical.attribute.type">
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該読みの種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.textCritical.attribute.cause">
+    <optional>
+      <attribute name="cause">
+        <a:documentation>異なる読みが生じる原因の分類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.textCritical.attribute.varSeq">
+    <optional>
+      <attribute name="varSeq">
+        <a:documentation>当該読みの場所を示す．</a:documentation>
+        <data type="nonNegativeInteger"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.textCritical.attribute.resp">
+    <optional>
+      <attribute name="resp">
+        <a:documentation>当該読みの責任者を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.textCritical.attribute.hand">
+    <optional>
+      <attribute name="hand">
+        <a:documentation>当該読みを生む筆致を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+  </define>
+  <!-- 2. elements -->
+  <define name="app">
+    <element name="app">
+      <a:documentation>(批評資料) 批評研究の対象資料を示す．</a:documentation>
+      <ref name="app.content"/>
+      <ref name="app.attributes"/>
+    </element>
+  </define>
+  <define name="app.content">
+    <zeroOrMore>
+      <ref name="model.global"/>
+    </zeroOrMore>
+    <optional>
+      <ref name="lem"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="wit"/>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </optional>
+    </optional>
+    <oneOrMore>
+      <choice>
+        <group>
+          <ref name="rdg"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+          <optional>
+            <ref name="wit"/>
+            <zeroOrMore>
+              <ref name="model.global"/>
+            </zeroOrMore>
+          </optional>
+        </group>
+        <group>
+          <ref name="rdgGrp"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+          <optional>
+            <ref name="wit"/>
+            <zeroOrMore>
+              <ref name="model.global"/>
+            </zeroOrMore>
+          </optional>
+        </group>
+      </choice>
+    </oneOrMore>
+  </define>
+  <define name="app.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該資料の分類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="from">
+        <a:documentation>必要であれば，注解の始めを示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="to">
+        <a:documentation>必要であれば，注解の終わりを示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="loc">
+        <a:documentation>異種の在処を示す．</a:documentation>
+        <ref name="data.words"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="lacunaEnd">
+    <element name="lacunaEnd">
+      <a:documentation>脱文部分の終わりを示す．</a:documentation>
+      <ref name="lacunaEnd.content"/>
+      <ref name="lacunaEnd.attributes"/>
+    </element>
+  </define>
+  <define name="lacunaEnd.content">
+    <empty/>
+  </define>
+  <define name="lacunaEnd.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.rdgPart.attributes"/>
+    <empty/>
+  </define>
+  <define name="lacunaStart">
+    <element name="lacunaStart">
+      <a:documentation>脱文部分の始めを示す．</a:documentation>
+      <ref name="lacunaStart.content"/>
+      <ref name="lacunaStart.attributes"/>
+    </element>
+  </define>
+  <define name="lacunaStart.content">
+    <empty/>
+  </define>
+  <define name="lacunaStart.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.rdgPart.attributes"/>
+    <empty/>
+  </define>
+  <define name="lem">
+    <element name="lem">
+      <a:documentation>(釈文) オリジナルのテキストまたは原文と読む釈文を示す．</a:documentation>
+      <ref name="lem.content"/>
+      <ref name="lem.attributes"/>
+    </element>
+  </define>
+  <define name="lem.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.phrase"/>
+        <ref name="model.inter"/>
+        <ref name="model.global"/>
+        <ref name="model.rdgPart"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="lem.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.textCritical.attributes"/>
+    <empty/>
+  </define>
+  <define name="rdg">
+    <element name="rdg">
+      <a:documentation>(読み) 読みを示す．</a:documentation>
+      <ref name="rdg.content"/>
+      <ref name="rdg.attributes"/>
+    </element>
+  </define>
+  <define name="rdg.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.phrase"/>
+        <ref name="model.inter"/>
+        <ref name="model.global"/>
+        <ref name="model.rdgPart"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="rdg.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.textCritical.attributes"/>
+    <empty/>
+  </define>
+  <define name="rdgGrp">
+    <element name="rdgGrp">
+      <a:documentation>読みをまとめる．</a:documentation>
+      <ref name="rdgGrp.content"/>
+      <ref name="rdgGrp.attributes"/>
+    </element>
+  </define>
+  <define name="rdgGrp.content">
+    <oneOrMore>
+      <choice>
+        <group>
+          <ref name="rdgGrp"/>
+          <optional>
+            <ref name="wit"/>
+          </optional>
+        </group>
+        <zeroOrMore>
+          <optional>
+            <ref name="lem"/>
+            <optional>
+              <ref name="wit"/>
+            </optional>
+          </optional>
+          <group>
+            <ref name="rdg"/>
+            <optional>
+              <ref name="wit"/>
+            </optional>
+          </group>
+        </zeroOrMore>
+      </choice>
+    </oneOrMore>
+  </define>
+  <define name="rdgGrp.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.textCritical.attributes"/>
+    <empty/>
+  </define>
+  <define name="wit">
+    <element name="wit">
+      <a:documentation>読みの元になる実現形のリストを示す．</a:documentation>
+      <ref name="wit.content"/>
+      <ref name="wit.attributes"/>
+    </element>
+  </define>
+  <define name="wit.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="wit.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.rdgPart.attributes"/>
+    <empty/>
+  </define>
+  <define name="witDetail">
+    <element name="witDetail">
+      <a:documentation>特定読みの元になる実現形の詳細な情報を示す．</a:documentation>
+      <ref name="witDetail.content"/>
+      <ref name="witDetail.attributes"/>
+    </element>
+  </define>
+  <define name="witDetail.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="witDetail.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.placement.attributes"/>
+    <attribute name="target">
+      <a:documentation>当該実現形における読みの識別子を示す．</a:documentation>
+      <ref name="data.pointers"/>
+    </attribute>
+    <optional>
+      <attribute name="resp">
+        <a:documentation>当該実現形の責任者を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <attribute name="wit">
+      <a:documentation>当該情報が示す実現形の編集記号を示す．</a:documentation>
+      <ref name="data.code"/>
+    </attribute>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該情報の種類を示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="witEnd">
+    <element name="witEnd">
+      <a:documentation>当該部分的実現形の終点または休止点を示す．</a:documentation>
+      <ref name="witEnd.content"/>
+      <ref name="witEnd.attributes"/>
+    </element>
+  </define>
+  <define name="witEnd.content">
+    <empty/>
+  </define>
+  <define name="witEnd.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.rdgPart.attributes"/>
+    <empty/>
+  </define>
+  <define name="witList">
+    <element name="witList">
+      <a:documentation>(実現形集) 要素witまたは属性witで参照される実現形のリストを示す．</a:documentation>
+      <ref name="witList.content"/>
+      <ref name="witList.attributes"/>
+    </element>
+  </define>
+  <define name="witList.content">
+    <zeroOrMore>
+      <ref name="model.global"/>
+    </zeroOrMore>
+    <oneOrMore>
+      <ref name="witness"/>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </oneOrMore>
+  </define>
+  <define name="witList.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="witStart">
+    <element name="witStart">
+      <a:documentation>当該部分的実現形の視点または再開点を示す．</a:documentation>
+      <ref name="witStart.content"/>
+      <ref name="witStart.attributes"/>
+    </element>
+  </define>
+  <define name="witStart.content">
+    <empty/>
+  </define>
+  <define name="witStart.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.rdgPart.attributes"/>
+    <empty/>
+  </define>
+  <define name="witness">
+    <element name="witness">
+      <a:documentation>批評資料の1つ以上の実現形を含む．</a:documentation>
+      <ref name="witness.content"/>
+      <ref name="witness.attributes"/>
+    </element>
+  </define>
+  <define name="witness.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="witness.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="included">
+        <a:documentation>どの実現形が含まれるかを示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

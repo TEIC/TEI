@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Certainty and uncertainty
+  -->
+  <!-- Definitions from module certainty -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <!-- 2. elements -->
+  <define name="certainty">
+    <element name="certainty">
+      <a:documentation>マークアップの確信度を示す．</a:documentation>
+      <ref name="certainty.content"/>
+      <ref name="certainty.attributes"/>
+    </element>
+  </define>
+  <define name="certainty.content">
+    <ref name="macro.glossSeq"/>
+  </define>
+  <define name="certainty.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="target">
+      <a:documentation>確信度の対象となる要素を示す．</a:documentation>
+      <ref name="data.pointers"/>
+    </attribute>
+    <attribute name="locus">
+      <a:documentation>当該確信度が指定要素の何についてのことかを示す．</a:documentation>
+      <ref name="data.enumerated"/>
+    </attribute>
+    <optional>
+      <attribute name="assertedValue">
+        <a:documentation>確信度に依存して，選択可能性のある代替値を示す．</a:documentation>
+        <choice>
+          <ref name="data.pointer"/>
+          <ref name="data.name"/>
+          <ref name="data.word"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="given">
+        <a:documentation>当該確信度が成立する前提条件部分を示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="degree">
+        <a:documentation>当該確信度の程度を示す．</a:documentation>
+        <ref name="data.probability"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="respons">
+    <element name="respons">
+      <a:documentation>(責任者) 当該要素によるマークアップを決めた責任者を示す．</a:documentation>
+      <ref name="respons.content"/>
+      <ref name="respons.attributes"/>
+    </element>
+  </define>
+  <define name="respons.content">
+    <ref name="macro.glossSeq"/>
+  </define>
+  <define name="respons.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="target">
+      <a:documentation>責任対象となる要素の識別子を示す．</a:documentation>
+      <ref name="data.pointers"/>
+    </attribute>
+    <attribute name="locus">
+      <a:documentation>当該責任が要素の何についてのことかを示す．</a:documentation>
+      <ref name="data.enumerated"/>
+    </attribute>
+    <attribute name="resp">
+      <a:documentation>当該責任を持つ個人または団体を示す．</a:documentation>
+      <ref name="data.pointer"/>
+    </attribute>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

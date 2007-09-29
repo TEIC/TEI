@@ -1,0 +1,1236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Names and dates
+  -->
+  <!-- Definitions from module namesdates -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <define name="model.persNamePart">
+    <choice>
+      <ref name="surname"/>
+      <ref name="forename"/>
+      <ref name="genName"/>
+      <ref name="nameLink"/>
+      <ref name="addName"/>
+      <ref name="roleName"/>
+    </choice>
+  </define>
+  <define name="att.personal.attributes">
+    <ref name="att.personal.attribute.type"/>
+    <ref name="att.personal.attribute.full"/>
+    <ref name="att.personal.attribute.sort"/>
+    <empty/>
+  </define>
+  <define name="att.personal.attribute.type">
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該名前要素を分類するための情報，例えば，文化的，言語的，使用状況な
+どについて示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.personal.attribute.full">
+    <optional>
+      <attribute name="full" a:defaultValue="yes">
+        <a:documentation>当該名前要素は，省略なしか，省略があるか，イニシャルによるものか
+を示す．</a:documentation>
+        <choice>
+          <value>yes</value>
+          <a:documentation>(当該名前要素は，省略無く示されている．)</a:documentation>
+          <value>abb</value>
+          <a:documentation>(当該名前要素には，省略がある．)
+abbreviated form.) </a:documentation>
+          <value>init</value>
+          <a:documentation>(当該名前要素は，イニシャルで示されている．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="att.personal.attribute.sort">
+    <optional>
+      <attribute name="sort">
+        <a:documentation>個人名間で並び替えをする際の順番を示す．</a:documentation>
+        <data type="nonNegativeInteger"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="model.placeNamePart">
+    <choice>
+      <ref name="district"/>
+      <ref name="settlement"/>
+      <ref name="region"/>
+      <ref name="country"/>
+      <ref name="bloc"/>
+      <ref name="offset"/>
+      <ref name="distance"/>
+      <ref name="geog"/>
+    </choice>
+  </define>
+  <!-- 2. elements -->
+  <define name="addName">
+    <element name="addName">
+      <a:documentation>(付加名)付加的な名前要素を示す．例えば，愛称，渾名，別名など．</a:documentation>
+      <ref name="addName.content"/>
+      <ref name="addName.attributes"/>
+    </element>
+  </define>
+  <define name="addName.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="addName.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.personal.attributes"/>
+    <empty/>
+  </define>
+  <define name="affiliation">
+    <element name="affiliation">
+      <a:documentation>(所属) 人物が所属している団体に関する情報を示す．例えば，雇い主や
+出資者など．</a:documentation>
+      <ref name="affiliation.content"/>
+      <ref name="affiliation.attributes"/>
+    </element>
+  </define>
+  <define name="affiliation.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="affiliation.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <empty/>
+  </define>
+  <define name="birth">
+    <element name="birth">
+      <a:documentation>(出生) 人物の出生に関する情報を示す．例えば，日時や場所など．</a:documentation>
+      <ref name="birth.content"/>
+      <ref name="birth.attributes"/>
+    </element>
+  </define>
+  <define name="birth.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="birth.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <optional>
+      <attribute name="date">
+        <a:documentation>W3Cが規定する形式(YYYY-MM-DD)で出生日を示す．</a:documentation>
+        <ref name="data.temporal"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="bloc">
+    <element name="bloc">
+      <a:documentation>(地域) 1つ以上の国をまたぐ地域の地政学的な名前を示す．</a:documentation>
+      <ref name="bloc.content"/>
+      <ref name="bloc.attributes"/>
+    </element>
+  </define>
+  <define name="bloc.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="bloc.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="country">
+    <element name="country">
+      <a:documentation>(国) 1つの国家に相当する地政学的な名前を示す．植民地，共同体・連
+邦も含む．これは，要素blocよりも小さい単位になる．</a:documentation>
+      <ref name="country.content"/>
+      <ref name="country.attributes"/>
+    </element>
+  </define>
+  <define name="country.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="country.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <optional>
+      <attribute name="reg">
+        <a:documentation>当該国家相当地域をISO3166に従って示す．</a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="day">
+    <element name="day">
+      <a:documentation>(日) 年月日表現のうち，日を示す．</a:documentation>
+      <ref name="day.content"/>
+      <ref name="day.attributes"/>
+    </element>
+  </define>
+  <define name="day.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="day.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datePart.attributes"/>
+    <empty/>
+  </define>
+  <define name="death">
+    <element name="death">
+      <a:documentation>人物の死亡に関する情報を示す．例えば，日付や場所など．</a:documentation>
+      <ref name="death.content"/>
+      <ref name="death.attributes"/>
+    </element>
+  </define>
+  <define name="death.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="death.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <optional>
+      <attribute name="date">
+        <a:documentation>死亡日をW3Cの形式(YYYY-MM-DD)で示す．</a:documentation>
+        <ref name="data.temporal"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="distance">
+    <element name="distance">
+      <a:documentation>(距離) 当該場所を，特定地域からの相対的な距離関係を，時間や距離に
+よって示す．</a:documentation>
+      <ref name="distance.content"/>
+      <ref name="distance.attributes"/>
+    </element>
+  </define>
+  <define name="distance.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="distance.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datePart.attributes"/>
+    <optional>
+      <attribute name="exact" a:defaultValue="unknown">
+        <a:documentation>当該値の正確度を示す．</a:documentation>
+        <choice>
+          <value>true</value>
+          <a:documentation>(当該値は正確である．)</a:documentation>
+          <value>false</value>
+          <a:documentation>(当該値はおおよそのものである．)</a:documentation>
+          <value>unknown</value>
+          <a:documentation>(当該値の精度は不明である．)</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="district">
+    <element name="district">
+      <a:documentation>場所を示す要素として，要素sellementよりも小さい範囲の名前を示す．
+例えば，区，町，村など．</a:documentation>
+      <ref name="district.content"/>
+      <ref name="district.attributes"/>
+    </element>
+  </define>
+  <define name="district.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="district.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="education">
+    <element name="education">
+      <a:documentation>人物の学歴について示す．</a:documentation>
+      <ref name="education.content"/>
+      <ref name="education.attributes"/>
+    </element>
+  </define>
+  <define name="education.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="education.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <empty/>
+  </define>
+  <define name="faith">
+    <element name="faith">
+      <a:documentation>人物の信仰について示す．</a:documentation>
+      <ref name="faith.content"/>
+      <ref name="faith.attributes"/>
+    </element>
+  </define>
+  <define name="faith.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="faith.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <empty/>
+  </define>
+  <define name="floruit">
+    <element name="floruit">
+      <a:documentation>人物が活躍した時期に関する情報を示す．</a:documentation>
+      <ref name="floruit.content"/>
+      <ref name="floruit.attributes"/>
+    </element>
+  </define>
+  <define name="floruit.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="floruit.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <empty/>
+  </define>
+  <define name="forename">
+    <element name="forename">
+      <a:documentation>(名) 人物に与えられた姓名のうちの名を示す．個人を示す部分の名前．</a:documentation>
+      <ref name="forename.content"/>
+      <ref name="forename.attributes"/>
+    </element>
+  </define>
+  <define name="forename.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="forename.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.personal.attributes"/>
+    <empty/>
+  </define>
+  <define name="genName">
+    <element name="genName">
+      <a:documentation>似た名前を区別する為の，世代関係などの情報を示す．</a:documentation>
+      <ref name="genName.content"/>
+      <ref name="genName.attributes"/>
+    </element>
+  </define>
+  <define name="genName.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="genName.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.personal.attributes"/>
+    <empty/>
+  </define>
+  <define name="geog">
+    <element name="geog">
+      <a:documentation>(地理情報) 地物名と関連する地理情報を示す．例えば，谷，山，川など．</a:documentation>
+      <ref name="geog.content"/>
+      <ref name="geog.attributes"/>
+    </element>
+  </define>
+  <define name="geog.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="geog.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="geogName">
+    <element name="geogName">
+      <a:documentation>(地物名) 地物の名前を示す．例えば，シナイ山など．</a:documentation>
+      <ref name="geogName.content"/>
+      <ref name="geogName.attributes"/>
+    </element>
+  </define>
+  <define name="geogName.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="geog"/>
+        <ref name="model.nameLike"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="geogName.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該名前を分類するための，文化的，言語的，使用環境に関する情報を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="hour">
+    <element name="hour">
+      <a:documentation>(時間) 時間表現の内，時の値を示す．</a:documentation>
+      <ref name="hour.content"/>
+      <ref name="hour.attributes"/>
+    </element>
+  </define>
+  <define name="hour.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="hour.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datePart.attributes"/>
+    <empty/>
+  </define>
+  <define name="langKnowledge">
+    <element name="langKnowledge">
+      <a:documentation>当該人物の言語に関する知識を，自由記述または要素langKnownで示す．</a:documentation>
+      <ref name="langKnowledge.content"/>
+      <ref name="langKnowledge.attributes"/>
+    </element>
+  </define>
+  <define name="langKnowledge.content">
+    <choice>
+      <ref name="model.pLike"/>
+      <oneOrMore>
+        <ref name="langKnown"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="langKnowledge.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <optional>
+      <attribute name="tags">
+        <a:documentation>1つ以上の言語をRFC3033に従って示す．</a:documentation>
+        <list>
+          <oneOrMore>
+            <ref name="data.language"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="langKnown">
+    <element name="langKnown">
+      <a:documentation>(言語能力) 当該人物の，ある1つの言語に関する能力を示す．</a:documentation>
+      <ref name="langKnown.content"/>
+      <ref name="langKnown.attributes"/>
+    </element>
+  </define>
+  <define name="langKnown.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="langKnown.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <attribute name="tag">
+      <a:documentation>当該言語をRFC3066に従って示す．</a:documentation>
+      <ref name="data.language"/>
+    </attribute>
+    <optional>
+      <attribute name="level">
+        <a:documentation>a code indicating the person's level of knowledge for this language </a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="listPerson">
+    <element name="listPerson">
+      <a:documentation>特定可能な人物のリストを示す．例えば，対話の参加者，歴史資料中で
+参照されている人物など．</a:documentation>
+      <ref name="listPerson.content"/>
+      <ref name="listPerson.attributes"/>
+    </element>
+  </define>
+  <define name="listPerson.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <oneOrMore>
+          <choice>
+            <ref name="person"/>
+            <ref name="personGrp"/>
+          </choice>
+        </oneOrMore>
+        <optional>
+          <ref name="particLinks"/>
+        </optional>
+      </group>
+    </choice>
+  </define>
+  <define name="listPerson.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.declarable.attributes"/>
+    <empty/>
+  </define>
+  <define name="minute">
+    <element name="minute">
+      <a:documentation>(分) 時間表現のうち，分の値を示す．</a:documentation>
+      <ref name="minute.content"/>
+      <ref name="minute.attributes"/>
+    </element>
+  </define>
+  <define name="minute.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="minute.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datePart.attributes"/>
+    <empty/>
+  </define>
+  <define name="month">
+    <element name="month">
+      <a:documentation>(月) 年月日表現のうち，月の値を示す．</a:documentation>
+      <ref name="month.content"/>
+      <ref name="month.attributes"/>
+    </element>
+  </define>
+  <define name="month.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="month.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datePart.attributes"/>
+    <empty/>
+  </define>
+  <define name="nameLink">
+    <element name="nameLink">
+      <a:documentation>(わたり名) 名前を作る要素をつなぐ役割を果たしている要素を示す．例
+えば，von, of, deなど．</a:documentation>
+      <ref name="nameLink.content"/>
+      <ref name="nameLink.attributes"/>
+    </element>
+  </define>
+  <define name="nameLink.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="nameLink.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.personal.attributes"/>
+    <empty/>
+  </define>
+  <define name="nationality">
+    <element name="nationality">
+      <a:documentation>人物の国籍を示す．</a:documentation>
+      <ref name="nationality.content"/>
+      <ref name="nationality.attributes"/>
+    </element>
+  </define>
+  <define name="nationality.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="nationality.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <optional>
+      <attribute name="reg">
+        <a:documentation>当該国籍をISO3166に従って示す．</a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="occasion">
+    <element name="occasion">
+      <a:documentation>名前を使って特定時間を示す．例えば，休日，特定の時間，特定の日など．</a:documentation>
+      <ref name="occasion.content"/>
+      <ref name="occasion.attributes"/>
+    </element>
+  </define>
+  <define name="occasion.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="occasion.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datePart.attributes"/>
+    <empty/>
+  </define>
+  <define name="occupation">
+    <element name="occupation">
+      <a:documentation>人物の生業を示す．</a:documentation>
+      <ref name="occupation.content"/>
+      <ref name="occupation.attributes"/>
+    </element>
+  </define>
+  <define name="occupation.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="occupation.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="scheme">
+        <a:documentation>TEIヘダー内で宣言されている，当該項目で使用されている分類システムを示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="code">
+        <a:documentation>属性schemeで指定されている分類システムにある分類コードを示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="offset">
+    <element name="offset">
+      <a:documentation>(オフセット) 2点間の相対的な時空間表現を示す．</a:documentation>
+      <ref name="offset.content"/>
+      <ref name="offset.attributes"/>
+    </element>
+  </define>
+  <define name="offset.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="offset.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datePart.attributes"/>
+    <empty/>
+  </define>
+  <define name="orgDivn">
+    <element name="orgDivn">
+      <a:documentation>(下部組織) 組織における下部組織の名称を示す．例えば，部，部門，課
+など．</a:documentation>
+      <ref name="orgDivn.content"/>
+      <ref name="orgDivn.attributes"/>
+    </element>
+  </define>
+  <define name="orgDivn.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="orgDivn.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該下部組織名についての詳細を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="reg">
+        <a:documentation>当該下部組織名を，正規化・一般化された形式を示す．</a:documentation>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="orgName">
+    <element name="orgName">
+      <a:documentation>(組織の名前) 組織の名前を示す．</a:documentation>
+      <ref name="orgName.content"/>
+      <ref name="orgName.attributes"/>
+    </element>
+  </define>
+  <define name="orgName.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="orgTitle"/>
+        <ref name="orgType"/>
+        <ref name="orgDivn"/>
+        <ref name="model.phrase"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="orgName.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>組織の名前にある組織についての詳細を示す．例えば，ボランティア組織，
+政治組織，政府組織，生産組織，販売組織など．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="key">
+        <a:documentation>当該組織の別名を示す．例えば，データベースのキー名など．</a:documentation>
+        <ref name="data.key"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="reg">
+        <a:documentation>当該組織名を，正規化・一般化された形式で示す．</a:documentation>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="orgTitle">
+    <element name="orgTitle">
+      <a:documentation>(組織名) 当該組織の固有名詞にあたるものを示す．</a:documentation>
+      <ref name="orgTitle.content"/>
+      <ref name="orgTitle.attributes"/>
+    </element>
+  </define>
+  <define name="orgTitle.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="orgTitle.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該組織名についての詳細を示す．例えば，公式名，通称，省略名など．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="reg">
+        <a:documentation>当該組織名を，正規化・一般化された形式で示す．</a:documentation>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="orgType">
+    <element name="orgType">
+      <a:documentation>(組織の性格) 当該組織の構造上・役割上の性格を示す．</a:documentation>
+      <ref name="orgType.content"/>
+      <ref name="orgType.attributes"/>
+    </element>
+  </define>
+  <define name="orgType.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="orgType.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該組織についての詳細を示す．例えば，機能，構造など．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="reg">
+        <a:documentation>当該組織の性格を，正規化・一般化された形式で示す．</a:documentation>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="particLinks">
+    <element name="particLinks">
+      <a:documentation>(特定関係) 言葉を交わしている参加者間の社会的な関係を示す．</a:documentation>
+      <ref name="particLinks.content"/>
+      <ref name="particLinks.attributes"/>
+    </element>
+  </define>
+  <define name="particLinks.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="relation"/>
+      </oneOrMore>
+    </choice>
+  </define>
+  <define name="particLinks.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="persEvent">
+    <element name="persEvent">
+      <a:documentation>人物の人生における特定の事態についてします．</a:documentation>
+      <ref name="persEvent.content"/>
+      <ref name="persEvent.attributes"/>
+    </element>
+  </define>
+  <define name="persEvent.content">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="model.dateLike"/>
+    </optional>
+    <optional>
+      <ref name="placeName"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="model.pLike"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="model.noteLike"/>
+        <ref name="model.biblLike"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="persEvent.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <empty/>
+  </define>
+  <define name="persName">
+    <element name="persName">
+      <a:documentation>(個人名) 人物を示す固有名詞を示す．例えば，姓，名，敬称など．</a:documentation>
+      <ref name="persName.content"/>
+      <ref name="persName.attributes"/>
+    </element>
+  </define>
+  <define name="persName.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.persNamePart"/>
+        <ref name="model.phrase"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="persName.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該名前の種類について，自由記述で示す．例えば，結婚後の名前，旧
+姓，ペンネーム，宗教名など．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="persState">
+    <element name="persState">
+      <a:documentation>人物の現在の状態・状況について示す．</a:documentation>
+      <ref name="persState.content"/>
+      <ref name="persState.attributes"/>
+    </element>
+  </define>
+  <define name="persState.content">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="model.dateLike"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="model.pLike"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="model.noteLike"/>
+        <ref name="model.biblLike"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="persState.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <empty/>
+  </define>
+  <define name="persTrait">
+    <element name="persTrait">
+      <a:documentation>人物の文化的な特性を示す．</a:documentation>
+      <ref name="persTrait.content"/>
+      <ref name="persTrait.attributes"/>
+    </element>
+  </define>
+  <define name="persTrait.content">
+    <optional>
+      <ref name="label"/>
+    </optional>
+    <optional>
+      <ref name="model.dateLike"/>
+    </optional>
+    <zeroOrMore>
+      <ref name="model.pLike"/>
+    </zeroOrMore>
+    <zeroOrMore>
+      <choice>
+        <ref name="model.noteLike"/>
+        <ref name="model.biblLike"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="persTrait.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="person">
+    <element name="person">
+      <a:documentation>特定可能な人物を示す．例えば，言葉を交わしている参加者，歴史資料
+に登場する人物など．</a:documentation>
+      <ref name="person.content"/>
+      <ref name="person.attributes"/>
+    </element>
+  </define>
+  <define name="person.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="model.personPart"/>
+      </zeroOrMore>
+    </choice>
+  </define>
+  <define name="person.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="role">
+        <a:documentation>当該人物の主な役割やその分類を示す．</a:documentation>
+        <ref name="data.words"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="sex">
+        <a:documentation>当該人物の性別を示す．</a:documentation>
+        <ref name="data.sex"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="age">
+        <a:documentation>当該人物の年齢層を示す．</a:documentation>
+        <ref name="data.word"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="personGrp">
+    <element name="personGrp">
+      <a:documentation>(個人グループ) 複数人から成るグループではあるが，一人の人物として
+扱われるものを示す．</a:documentation>
+      <ref name="personGrp.content"/>
+      <ref name="personGrp.attributes"/>
+    </element>
+  </define>
+  <define name="personGrp.content">
+    <choice>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="model.personPart"/>
+      </zeroOrMore>
+    </choice>
+  </define>
+  <define name="personGrp.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="role">
+        <a:documentation>当該グループの役割を示す．</a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="sex">
+        <a:documentation>当該グループの性別を示す．</a:documentation>
+        <choice>
+          <ref name="data.sex"/>
+          <value>mixed</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="age">
+        <a:documentation>当該グループの年齢層を示す．</a:documentation>
+        <ref name="data.word"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="size">
+        <a:documentation>当該グループの大まかな規模を示す．</a:documentation>
+        <ref name="data.words"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="placeName">
+    <element name="placeName">
+      <a:documentation>(場所名) 絶対的・相対的に場所を示す．</a:documentation>
+      <ref name="placeName.content"/>
+      <ref name="placeName.attributes"/>
+    </element>
+  </define>
+  <define name="placeName.content">
+    <zeroOrMore>
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.placeNamePart"/>
+        <ref name="model.phrase"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
+  </define>
+  <define name="placeName.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <empty/>
+  </define>
+  <define name="region">
+    <element name="region">
+      <a:documentation>(地域) 行政上の地域単位名を示す．例えば，州，省，地方といった，居
+住地よりは広いが，国家よりは狭い地域を示す．</a:documentation>
+      <ref name="region.content"/>
+      <ref name="region.attributes"/>
+    </element>
+  </define>
+  <define name="region.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="region.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="relation">
+    <element name="relation">
+      <a:documentation>(関係) 参加者間の関連性を示す．</a:documentation>
+      <ref name="relation.content"/>
+      <ref name="relation.attributes"/>
+    </element>
+  </define>
+  <define name="relation.content">
+    <empty/>
+  </define>
+  <define name="relation.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <optional>
+      <attribute name="type" a:defaultValue="personal">
+        <a:documentation>当該関係の分類を示す．例えば，社会的，個人的関係など．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <attribute name="name">
+      <a:documentation>当該関係の名前を示す．</a:documentation>
+      <ref name="data.enumerated"/>
+    </attribute>
+    <optional>
+      <choice>
+        <attribute name="active">
+          <a:documentation>一方向の関係における主体的な参加者，または双方向の関係における全
+参加者を示す．</a:documentation>
+          <ref name="data.pointers"/>
+        </attribute>
+        <attribute name="mutual">
+          <a:documentation>双方向の関係における参加者を示す．</a:documentation>
+          <ref name="data.pointers"/>
+        </attribute>
+      </choice>
+    </optional>
+    <optional>
+      <attribute name="passive">
+        <a:documentation>一方向の関係における受動的な参加者を示す．</a:documentation>
+        <ref name="data.pointers"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="residence">
+    <element name="residence">
+      <a:documentation>(住居) 人物の住居を示す．</a:documentation>
+      <ref name="residence.content"/>
+      <ref name="residence.attributes"/>
+    </element>
+  </define>
+  <define name="residence.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="residence.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <empty/>
+  </define>
+  <define name="roleName">
+    <element name="roleName">
+      <a:documentation>(役割) 人物について，その社会における役割や地位を示す．</a:documentation>
+      <ref name="roleName.content"/>
+      <ref name="roleName.attributes"/>
+    </element>
+  </define>
+  <define name="roleName.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="roleName.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.personal.attributes"/>
+    <empty/>
+  </define>
+  <define name="second">
+    <element name="second">
+      <a:documentation>(秒) 時間表現のうち，秒の値を示す．</a:documentation>
+      <ref name="second.content"/>
+      <ref name="second.attributes"/>
+    </element>
+  </define>
+  <define name="second.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="second.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datePart.attributes"/>
+    <empty/>
+  </define>
+  <define name="settlement">
+    <element name="settlement">
+      <a:documentation>居住区の名前を示す．例えば，市，町，村などの地政学上，行政上の単
+位で示す．</a:documentation>
+      <ref name="settlement.content"/>
+      <ref name="settlement.attributes"/>
+    </element>
+  </define>
+  <define name="settlement.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="settlement.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <ref name="att.typed.attributes"/>
+    <empty/>
+  </define>
+  <define name="sex">
+    <element name="sex">
+      <a:documentation>人物の性別を示す．</a:documentation>
+      <ref name="sex.content"/>
+      <ref name="sex.attributes"/>
+    </element>
+  </define>
+  <define name="sex.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="sex.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <optional>
+      <attribute name="value">
+        <ref name="data.sex"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="socecStatus">
+    <element name="socecStatus">
+      <a:documentation>(社会経済状況) 人物の社会経済状況を示す．</a:documentation>
+      <ref name="socecStatus.content"/>
+      <ref name="socecStatus.attributes"/>
+    </element>
+  </define>
+  <define name="socecStatus.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="socecStatus.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datable.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.naming.attributes"/>
+    <optional>
+      <attribute name="scheme">
+        <a:documentation>当該社会経済状況を分類する分類システムを示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="code">
+        <a:documentation>属性schemeで示されている分類システムにある分類コードを示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="surname">
+    <element name="surname">
+      <a:documentation>(姓) 人物に与えられた姓名のうちの姓を示す．家系を示す部分の名前．</a:documentation>
+      <ref name="surname.content"/>
+      <ref name="surname.attributes"/>
+    </element>
+  </define>
+  <define name="surname.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="surname.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.personal.attributes"/>
+    <empty/>
+  </define>
+  <define name="week">
+    <element name="week">
+      <a:documentation>(週) 年月日表現のうち，週を示す．</a:documentation>
+      <ref name="week.content"/>
+      <ref name="week.attributes"/>
+    </element>
+  </define>
+  <define name="week.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="week.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datePart.attributes"/>
+    <empty/>
+  </define>
+  <define name="year">
+    <element name="year">
+      <a:documentation>(年) 年月日表現のうち，年を示す．</a:documentation>
+      <ref name="year.content"/>
+      <ref name="year.attributes"/>
+    </element>
+  </define>
+  <define name="year.content">
+    <ref name="macro.xtext"/>
+  </define>
+  <define name="year.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.datePart.attributes"/>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->

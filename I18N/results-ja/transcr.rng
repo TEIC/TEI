@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!--
+    Schema generated 2006-07-03T20:05:12+01:00..
+    Copyright 2005 TEI Consortium.
+    This is free software; you can redistribute it and/or
+    	    modify it under the terms of the GNU General Public
+    	    License as published by the Free Software Foundation;
+    	    either version 2 of the License, or (at your option) any
+    	    later version.
+    This material is distributed in the hope that it will be
+    	    useful, but WITHOUT ANY WARRANTY; without even the implied
+    	    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+    	    PURPOSE. See the GNU General Public License for more
+    	    details.
+    You should have received a copy of the GNU General Public
+    	    License along with this file; if not, write to the Free
+    	    Software Foundation, Inc., 59 Temple Place, Suite 330,
+    	    Boston, MA 02111-1307, USA.
+    To contact the TEI Consortium use the following addresses.
+    	    For general (non-technical) enquiries: 
+    		  target="mailto:info@tei-c.org"/>info@tei-c.orgFor membership enquiries: membership@tei-c.orgFor technical enquiries, particularly about the
+    		Guidelines, DTDs, schemas, or software available from
+    		the TEI-C: editors@tei-c.orgFor up to date information, consult the TEI web site at http://www.tei-c.org/P5Transcription of primary sources
+  -->
+  <!-- Definitions from module transcr -->
+  <!-- Set global predeclared macros -->
+  <!-- Set predeclared macros -->
+  <!-- 0. predeclared macros -->
+  <!-- 1. classes -->
+  <!-- 2. elements -->
+  <define name="addSpan">
+    <element name="addSpan">
+      <a:documentation>テキスト中に長めの追加テキストを挿入する始点を示す．</a:documentation>
+      <ref name="addSpan.content"/>
+      <ref name="addSpan.attributes"/>
+    </element>
+  </define>
+  <define name="addSpan.content">
+    <empty/>
+  </define>
+  <define name="addSpan.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.authorialIntervention.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.placement.attributes"/>
+    <ref name="att.spanning.attributes"/>
+    <empty/>
+  </define>
+  <define name="damage">
+    <element name="damage">
+      <a:documentation>損傷部分を示す．</a:documentation>
+      <ref name="damage.content"/>
+      <ref name="damage.attributes"/>
+    </element>
+  </define>
+  <define name="damage.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="damage.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該損傷の種類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="extent">
+        <a:documentation>当該損傷の量を示す．例えば，文字数，インチなどの単位を使用する．</a:documentation>
+        <ref name="data.words"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="hand">
+        <a:documentation>当該損傷部分の書き手が特定できる場合，それを示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="agent">
+        <a:documentation>当該損傷の原因の分類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="degree">
+        <a:documentation>当該損傷部分にあったテキストが確信できる場合，その損傷の程度を示す．</a:documentation>
+        <choice>
+          <ref name="data.probability"/>
+          <ref name="data.certainty"/>
+        </choice>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="delSpan">
+    <element name="delSpan">
+      <a:documentation>(削除範囲) 削除されるテキスト部分の始点を示す．</a:documentation>
+      <ref name="delSpan.content"/>
+      <ref name="delSpan.attributes"/>
+    </element>
+  </define>
+  <define name="delSpan.content">
+    <empty/>
+  </define>
+  <define name="delSpan.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <ref name="att.authorialIntervention.attributes"/>
+    <ref name="att.spanning.attributes"/>
+    <empty/>
+  </define>
+  <define name="fw">
+    <element name="fw">
+      <a:documentation>(欄外見出し) 脚注や欄外見出しを示す．</a:documentation>
+      <ref name="fw.content"/>
+      <ref name="fw.attributes"/>
+    </element>
+  </define>
+  <define name="fw.content">
+    <ref name="macro.phraseSeq"/>
+  </define>
+  <define name="fw.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.placement.attributes"/>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該欄外見出しの分類を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="hand">
+    <element name="hand">
+      <a:documentation>TEIヘダー中で，筆致のスタイルを示す．</a:documentation>
+      <ref name="hand.content"/>
+      <ref name="hand.attributes"/>
+    </element>
+  </define>
+  <define name="hand.content">
+    <empty/>
+  </define>
+  <define name="hand.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="scribe">
+        <a:documentation>当該筆致の名前または識別子を示す．</a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="style">
+        <a:documentation>スタイルを示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="mainLang">
+        <a:documentation>筆致の主要言語を示す．</a:documentation>
+        <ref name="data.language"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="ink">
+        <a:documentation>色合いを示す．例えば，茶色など．または筆記素材について示す．例えば，
+鉛筆，インクなど．</a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="writing">
+        <a:documentation>当該筆致について，追加の特徴を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="first">
+        <a:documentation>当該筆致が，当該文書中の中心的なものであるかどうかを示す．</a:documentation>
+        <ref name="data.truthValue"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="resp">
+        <a:documentation>当該筆致を特定した責任者を示す．</a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="handList">
+    <element name="handList">
+      <a:documentation>筆致のリストをまとめる．</a:documentation>
+      <ref name="handList.content"/>
+      <ref name="handList.attributes"/>
+    </element>
+  </define>
+  <define name="handList.content">
+    <zeroOrMore>
+      <ref name="hand"/>
+    </zeroOrMore>
+  </define>
+  <define name="handList.attributes">
+    <ref name="att.global.attributes"/>
+    <empty/>
+  </define>
+  <define name="handShift">
+    <element name="handShift">
+      <a:documentation>筆致何かが変化する場所を示す．例えば，筆致，スタイル，インク，特
+徴など．</a:documentation>
+      <ref name="handShift.content"/>
+      <ref name="handShift.attributes"/>
+    </element>
+  </define>
+  <define name="handShift.content">
+    <empty/>
+  </define>
+  <define name="handShift.attributes">
+    <ref name="att.global.attributes"/>
+    <attribute name="new">
+      <a:documentation>当該ヶ所から現れる新しい筆致を示す．</a:documentation>
+      <ref name="data.code"/>
+    </attribute>
+    <attribute name="old">
+      <a:documentation>当該ヶ所までに現れていた筆致を示す．</a:documentation>
+      <ref name="data.code"/>
+    </attribute>
+    <optional>
+      <attribute name="style">
+        <a:documentation>スタイルを示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="ink">
+        <a:documentation>色合いを示す．例えば，茶色など．または筆記素材について示す．例えば，
+鉛筆，インクなど．</a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="writing">
+        <a:documentation>追加の特徴を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="resp">
+        <a:documentation>筆致の変化を特定した責任者を示す．</a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="restore">
+    <element name="restore">
+      <a:documentation>一度削除と指定されたが，その削除が訂正され，そのまま生かす指定が
+されたテキストを示す．</a:documentation>
+      <ref name="restore.content"/>
+      <ref name="restore.attributes"/>
+    </element>
+  </define>
+  <define name="restore.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="restore.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <optional>
+      <attribute name="means">
+        <a:documentation>当該再指定の手法を示す．</a:documentation>
+        <ref name="data.code"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="type">
+        <a:documentation>当該再指定の対象となる削除について示す．</a:documentation>
+        <ref name="data.name"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="hand">
+        <a:documentation>当該再指定を指示する筆致を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="space">
+    <element name="space">
+      <a:documentation>重要な空白を示す．</a:documentation>
+      <ref name="space.content"/>
+      <ref name="space.attributes"/>
+    </element>
+  </define>
+  <define name="space.content">
+    <empty/>
+  </define>
+  <define name="space.attributes">
+    <ref name="att.global.attributes"/>
+    <optional>
+      <attribute name="dim">
+        <a:documentation>当該空白が縦長か横長かを示す．</a:documentation>
+        <choice>
+          <value>horizontal</value>
+          <a:documentation>横長</a:documentation>
+          <value>vertical</value>
+          <a:documentation>縦長</a:documentation>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="extent">
+        <a:documentation>当該空白のおよその大きさを示す．例えば，文字，インチなどの単位を
+使用する．</a:documentation>
+        <ref name="data.words"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="resp">
+        <a:documentation>当該空白を特定した責任者を示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+  <define name="supplied">
+    <element name="supplied">
+      <a:documentation>転記者や編者によって付加されたテキストを示す．元々は，判読できな
+い，破損しているなどの場所で，相当の理由がありテキストが付加され
+た場合である．</a:documentation>
+      <ref name="supplied.content"/>
+      <ref name="supplied.attributes"/>
+    </element>
+  </define>
+  <define name="supplied.content">
+    <ref name="macro.paraContent"/>
+  </define>
+  <define name="supplied.attributes">
+    <ref name="att.global.attributes"/>
+    <ref name="att.editLike.attributes"/>
+    <optional>
+      <attribute name="reason">
+        <a:documentation>当該テキストが付加された理由を示す．</a:documentation>
+        <ref name="data.words"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="hand">
+        <a:documentation>当該テキストの筆致と思われるものを示す．</a:documentation>
+        <ref name="data.pointer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="agent">
+        <a:documentation>当該テキストが，損傷によって失われていた場合，その原因を示す．</a:documentation>
+        <ref name="data.enumerated"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="source">
+        <a:documentation>当該テキストの元資料を示す．</a:documentation>
+        <ref name="data.names"/>
+      </attribute>
+    </optional>
+    <empty/>
+  </define>
+</grammar>
+<!-- 3. macros -->
