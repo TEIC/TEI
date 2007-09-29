@@ -923,13 +923,20 @@ function togglerelax (el) {
 
 <xsl:template name="formatHeadingNumber">
   <xsl:param name="text"/>
+  <xsl:param name="toc"/>
   <span class="headingNumber">
     <xsl:choose>
+      <xsl:when test="$toc =''">
+	<xsl:copy-of select="$text"/>
+      </xsl:when>
       <xsl:when test="number(normalize-space($text))&lt;10">
 	<xsl:text>&#8194;</xsl:text>
+	<xsl:copy-of select="$text"/>
       </xsl:when>
+      <xsl:otherwise>
+	<xsl:copy-of select="$text"/>
+      </xsl:otherwise>
     </xsl:choose>
-    <xsl:copy-of select="$text"/>
   </span>
 </xsl:template>
 
