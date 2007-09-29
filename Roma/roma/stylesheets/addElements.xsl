@@ -137,7 +137,10 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
         </td>
       </tr>
       <tr>
-        <td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_attributeClasses"/></td>
+        <td class="formlabeltop">
+	<xsl:value-of disable-output-escaping="yes"
+		      select="$res_form_attributeClasses"/>
+	</td>
         <td>
            <xsl:call-template name="attClassList"/>
          </td>
@@ -171,6 +174,22 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
        <td class="button" colspan="2"><input type="submit"/></td>
       </tr>
      </table>
+     <input type="hidden" name="originalClasses">
+       <xsl:attribute name="value">
+	 <xsl:for-each select="/addElement/attClassList/attClass">
+	   <xsl:if test="contains( $elementClasses, className )">
+	     <xsl:value-of select="className"/>
+	     <xsl:text> </xsl:text>
+	   </xsl:if>
+	 </xsl:for-each>
+	 <xsl:for-each select="/addElement/modelClassList/modelClass">
+	   <xsl:if test="contains( $elementClasses, className )">
+	     <xsl:value-of select="className"/>
+	     <xsl:text> </xsl:text>
+	   </xsl:if>
+	 </xsl:for-each>
+       </xsl:attribute>
+     </input>
     </form>
    </p>
    <xsl:call-template name="generateDivs"/>

@@ -1508,11 +1508,27 @@ class roma
 	  {
 	    if ( substr( $key, 0, 6 ) == 'class|' )
 	      {
-		$aszClasses[] = $value;
+		$aszClasses[$value] = "add";
 	      }
 	  }
-	  
-	$this->m_oRomaDom->replaceElementsClassesInModule( $_REQUEST[ 'name' ], $_REQUEST[ 'module' ], $aszClasses );
+	$originals = explode(" ", $_REQUEST ['originalClasses' ]);
+	foreach ($originals as $oclass) {
+	
+	if ($oclass == '') { }
+	elseif (array_key_exists($oclass,$aszClasses)) {
+
+     	     if ($aszClasses[$oclass] == "add") {
+		$aszClasses[$oclass] = "replace";
+	    }
+        }	    
+	else {
+		$aszClasses[$oclass] = "delete";
+	     }
+         }  
+	$this->m_oRomaDom->replaceElementsClassesInModule( 
+	$_REQUEST['name' ], 
+	$_REQUEST[ 'module' ], 
+	$aszClasses);
 
 }
 

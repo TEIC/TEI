@@ -1267,7 +1267,8 @@ class romaDom extends domDocument
       }
 
  
-    public function replaceElementsClassesInModule( $szElement, $szModule, $aszClasses )
+    public function replaceElementsClassesInModule( $szElement,
+      $szModule, $aszClasses)
       {
 	$this->getXPath( $oXPath );
         $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
@@ -1290,7 +1291,7 @@ class romaDom extends domDocument
 	//check whether there are any classes yet
 	$oClasses = $oXPath->query(
 	"/tei:TEI/tei:text//tei:elementSpec[@module='{$szModule}' and @ident='{$szElement}']/tei:classes" )->item(0);
-	
+
 	if ( is_object( $oClasses ) )
 	  {
 	    $oElementSpec->removeChild( $oClasses );
@@ -1299,13 +1300,17 @@ class romaDom extends domDocument
 	$theClasses = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'classes' );
 	$oClasses = $oElementSpec->appendChild( $theClasses );
 	
-	foreach ( $aszClasses as $szClass )
+
+	foreach ( $aszClasses as $szClass => $classValue )
+	  {
+	  if ($classValue != 'replace') 
 	  {
 	    $theMemberOf = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'memberOf' );
 	    $oMember = $oClasses->appendChild( $theMemberOf );
 	    $oMember->setAttribute( 'key', $szClass );
-	  }
-
+	    $oMember->setAttribute( 'mode',$classValue );
+	  } 			    
+	}
       }  
 
     public function addAttribute( $aszConfig )
