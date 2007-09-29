@@ -826,6 +826,13 @@
 	  </xsl:for-each>
 	</div>
       </xsl:when>
+      <xsl:when test="tei:biblStruct">
+	<xsl:apply-templates select="tei:biblStruct">
+	  <xsl:sort select="tei:*[1]/tei:author"/>
+	  <xsl:sort select="tei:*[1]/tei:editor"/>
+	  <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
+	</xsl:apply-templates>
+      </xsl:when>
       <xsl:otherwise>
 	<ol>
 	  <xsl:for-each select="tei:bibl|tei:biblItem|tei:biblStruct">
