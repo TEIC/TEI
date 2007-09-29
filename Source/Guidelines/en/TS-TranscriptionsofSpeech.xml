@@ -2,12 +2,11 @@
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
-See the file COPYING for details.
+See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TS"
-     n="11">
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TS" n="11">
 <head>Transcriptions of Speech</head>
 <note place="divtop">This chapter has not yet been revised to reflect
 developments in the field of speech transcription and multimodal
@@ -51,8 +50,14 @@ The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
 </p>
 <specGrp>
+
+
 &model.divPart.spoken;
+
+
+
 &model.inter.spoken;
+
 
 <specGrpRef target="#DTSCOMP"/>
 </specGrp>
@@ -60,15 +65,8 @@ The selection and combination of modules to form a TEI schema is described in
 <div type="div2" xml:id="TSOV"><head>General Considerations and Overview</head>
 <p>There is great variation in the ways different researchers have
 chosen to represent speech using the written medium.<note place="foot">For a
-discussion of several of these see <bibl>J.  A. Edwards and M. D.
-Lampert, eds., <title>Talking Language:  Transcription and Coding of
-Spoken Discourse</title> (Hillsdale, N.J.:  Lawrence Erlbaum Associates,
-1993)</bibl>; <bibl>Stig Johansson, <title level="a">Encoding a Corpus
-in Machine-Readable Form,</title> in <title>Computational Approaches
-to the Lexicon:  An Overview,</title> ed.  B. T. S. Atkins et al.
-(Oxford:  Oxford University Press, forthcoming)</bibl>; and
-<bibl>Stig Johansson et al.  <title>Working Paper on Spoken
-Texts,</title> document TEI AI2 W1, 1991</bibl>.</note> This
+discussion of several of these see <ptr type="cit" target="#TS-BIBL-1"/>; <ptr type="cit" target="#TS-BIBL-2"/>; and
+<ptr type="cit" target="#TS-BIBL-3"/>.</note> This
 reflects the special difficulties which apply to the encoding or <term rend="noindex">transcription</term> of speech.  Speech varies according to
 a large number of dimensions, many of which have no counterpart in
 writing (for example, tempo, loudness, pitch, etc.).  The audibility of
@@ -269,12 +267,8 @@ definitions in the <gi>editorialDecl</gi> element of the header (see
 is recoded from a text originally transcribed in the CHILDES
 format.<note place="foot">The original is a conversation between two children and
 their parents, recorded in 1987, and discussed in
-<bibl><author>Brian MacWhinney</author>
-<title>CHAT Manual</title>
-([Pittsburgh]: Dept of Psychology, Carnegie-Mellon University,
-1988), pp. 87ff.</bibl></note>
-Each utterance is encoded using a <gi>u</gi> element (see section <ptr
-target="#TSBAUT"/>). The speakers are defined using the
+<ptr type="cit" target="#TS-BIBL-4"/></note>
+Each utterance is encoded using a <gi>u</gi> element (see section <ptr target="#TSBAUT"/>). The speakers are defined using the
 <gi>listPerson</gi> element discussed in <ptr target="#NDPERSE"/> and each is
 given a unique identifier also used to identify their speech. Pauses marked by the transcriber are indicated
 using the <gi>pause</gi> element (see section <ptr target="#TSBAPA"/>).
@@ -370,21 +364,16 @@ interruptions constitute a change of utterance, or whether other
 elements may be used. In the case of self-interruption, the
 <gi>shift</gi> element may be used to show that the speaker has
 changed the quality of their speech:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u
-who="#a">Listen to this <shift new="reading"/>The government is
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#a">Listen to this <shift new="reading"/>The government is
 confident, he said, that the current economic problems will be
 completely overcome by June<shift/> what nonsense</u></egXML> 
-Alternatively the <gi>incident</gi> element described in section <ptr
-target="#TSBAVO"/> might be used, without transcribing the read material: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><u who="#a">Listen to this
+Alternatively the <gi>incident</gi> element described in section <ptr target="#TSBAVO"/> might be used, without transcribing the read material: <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#a">Listen to this
 <incident><desc>reads aloud from newspaper</desc></incident> what
 nonsense</u></egXML> 
 </p>
 <p>Often, back channelling is only semi-lexicalized and may therefore be
 represented using the <gi>vocal</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u
-who="#a">So what could I have done <vocal
-who="#b"><desc>tut-tutting</desc></vocal> about it anyway?</u></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#a">So what could I have done <vocal who="#b"><desc>tut-tutting</desc></vocal> about it anyway?</u></egXML>
 Where this is not possible, it is simplest to regard the back channel
 as a distinct utterance.</p>
 </div>
@@ -443,10 +432,7 @@ for all basic categories, the definition should be made clear in the
 <gi>encodingDesc</gi> element of the TEI header.
  </p>
 <p>Some typical examples follow (recoded from
-<bibl><editor>J. Maxwell Atkinson and John Heritage</editor> eds.,
-<title>Transcript notation. Structures of social action: Studies in
-conversation analysis,</title> Cambridge University Press,
-1984</bibl>).
+<ptr type="cit" target="#TS-BIBL-5"/>).
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#jan">This is just delicious</u>
 <incident><desc>telephone rings</desc></incident>
 <u who="#ann">I'll get it</u>
@@ -499,12 +485,8 @@ encoded as follows:
 pauses, kinesics, incidents, and writing elements may all take a common
 set of attributes providing information about their position in time.
 For this reason, these elements are regarded as forming a
-<term>class</term>, referred to here as <name
-type="class">att.timed</name>. The following attributes are common to
-all elements in this class: <specList><specDesc key="att.timed"
-atts="start end"/></specList> In addition, since <name
-type="class">att.timed</name> is a member of <name
-type="class">att.duration</name>, itself a member of <name type="class">att.duration.w3c</name>,
+<term>class</term>, referred to here as <name type="class">att.timed</name>. The following attributes are common to
+all elements in this class: <specList><specDesc key="att.timed" atts="start end"/></specList> In addition, since <name type="class">att.timed</name> is a member of <name type="class">att.duration</name>, itself a member of <name type="class">att.duration.w3c</name>,
 these elements also share the following attribute:
 <specList><specDesc key="att.duration.w3c" atts="dur"/></specList>
  Note that if <att>start</att> and
@@ -542,9 +524,7 @@ words <mentioned>Yes</mentioned> and <mentioned>Come and try this</mentioned> wi
 normal volume, and the words <mentioned>come on</mentioned> very loudly.
  </p>
 <p>The values proposed here for the <att>feature</att> attribute are
-based on those used by the Survey of English Usage;<note place="foot">For details see <bibl>S. Boase, <title>London-Lund
-Corpus: Example Text and Transcription Guide</title> (London: Survey
-of English Usage, University College London, 1990)</bibl>.</note> this
+based on those used by the Survey of English Usage;<note place="foot">For details see <ptr type="cit" target="#TS-BIBL-6"/>.</note> this
 list may be revised or supplemented using the methods outlined in
 section <ptr target="#MD"/>. </p>
 <p>The <att>new</att> attribute specifies the new state of the feature
@@ -625,13 +605,34 @@ feature should be provided in the encoding description section of the
 text header (see section <ptr target="#HD5"/>).
  </p>
 <specGrp xml:id="DTSCOMP" n="Components of Transcribed Speech">
+
+
 &u;
+
+
+
 &pause;
+
+
+
 &vocal;
+
+
+
 &kinesic;
+
+
+
 &incident;
+
+
+
 &writing;
+
+
+
 &shift;
+
 </specGrp>
 </div>
 </div>
@@ -660,9 +661,7 @@ Common examples include units defined both prosodically (by intonation,
 pausing, etc.) and syntactically (clauses, phrases, etc.)  The term
 <term>macrosyntagm</term> has been used by a number of researchers to
 define units peculiar to speech transcripts.<note place="foot">The term was
-apparently first proposed by <bibl><author>Bengt Loman and Nils
-Jørgensen</author> in <title>Manual for analys och beskrivning
-av makrosyntagmer</title> (Lund: Studentlitteratur, 1971)</bibl>,
+apparently first proposed by <ptr type="cit" target="#TS-BIBL-7"/>,
 where it is defined as follows: <q>A text can be analysed as a sequence
 of segments which are internally connected by a network of syntactic
 relations and externally delimited by the absence of such relations with
@@ -709,22 +708,22 @@ same stretch of speech, the <att>type</att> attribute may be used, as in
 the following example.  The example also shows the use of a
 user-specified extension to the TEI modules, for specifying
 paraphasia.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<u who="#T1">
-<seg type="C">I think </seg>
-<seg type="C">this chap was writing </seg>
-<seg type="C">and he <del type="repeated">said hello</del> said </seg>
-<seg type="M">hello </seg>
-<seg type="C">and he said </seg>
-<seg type="C">I'm going to a 
-<paraphasia>gate</paraphasia>
-            at twenty past seven </seg>
-<seg type="C">he said </seg>
-<seg type="M">ok </seg>
-<seg type="M">right away </seg>
-<seg type="C">and so <gap extent="1"/> on they went </seg>
-<seg type="C">and they were <gap extent="3"/>
-            writing there </seg>
-</u>]]></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;u who="#T1"&gt;
+&lt;seg type="C"&gt;I think &lt;/seg&gt;
+&lt;seg type="C"&gt;this chap was writing &lt;/seg&gt;
+&lt;seg type="C"&gt;and he &lt;del type="repeated"&gt;said hello&lt;/del&gt; said &lt;/seg&gt;
+&lt;seg type="M"&gt;hello &lt;/seg&gt;
+&lt;seg type="C"&gt;and he said &lt;/seg&gt;
+&lt;seg type="C"&gt;I'm going to a 
+&lt;paraphasia&gt;gate&lt;/paraphasia&gt;
+            at twenty past seven &lt;/seg&gt;
+&lt;seg type="C"&gt;he said &lt;/seg&gt;
+&lt;seg type="M"&gt;ok &lt;/seg&gt;
+&lt;seg type="M"&gt;right away &lt;/seg&gt;
+&lt;seg type="C"&gt;and so &lt;gap extent="1"/&gt; on they went &lt;/seg&gt;
+&lt;seg type="C"&gt;and they were &lt;gap extent="3"/&gt;
+            writing there &lt;/seg&gt;
+&lt;/u&gt;</egXML>
 <!-- <note>Reference needed!</note>                           -->
 In this example, recoded from a corpus of language-impaired speech
 prepared by Fletcher and Garman, the speaker's utterance has been fully
@@ -1040,12 +1039,12 @@ part of speech tags (see section <ptr target="#AILA"/>).</p>
 <p>In the following example, a small set of prosodic features are
 recorded throughout the transcript using a user-defined entity set such
 as the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY lf ".">    <!-- low fall intonation -->
-<!ENTITY fr ",">    <!-- fall rise intonation -->
-<!ENTITY lr "?">    <!-- low rise intonation -->
-<!ENTITY rf "!">    <!-- rise fall intonation -->
-<!ENTITY trunc "-"> <!-- truncated syllable -->
-<!ENTITY long ":">  <!-- lengthened syllable -->]]></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;!ENTITY lf "."&gt;    &lt;!-- low fall intonation --&gt;
+&lt;!ENTITY fr ","&gt;    &lt;!-- fall rise intonation --&gt;
+&lt;!ENTITY lr "?"&gt;    &lt;!-- low rise intonation --&gt;
+&lt;!ENTITY rf "!"&gt;    &lt;!-- rise fall intonation --&gt;
+&lt;!ENTITY trunc "-"&gt; &lt;!-- truncated syllable --&gt;
+&lt;!ENTITY long ":"&gt;  &lt;!-- lengthened syllable --&gt;</egXML>
 This set of entity definitions may be included directly within the
 document type declaration subset for the file, or more conveniently
 along with any other extensions or modifications within the user
@@ -1080,9 +1079,7 @@ to a conventional punctuation mark.
 <!-- Recoded from Gavioli and Mansfield: The PIXI Corpora     -->
 	<!-- (Bologna, 1990, CLUEB), p74                              --></p>
 <p>This example, which is taken from a corpus of bookshop service
-encounters<note place="foot"><bibl><author>Laura Gavioli and Gillian
-Mansfield</author> <title>The Pixi Corpora</title> (Bologna:
-Cooperativa Libraria Universitaria Editrice, 1990), p. 74. </bibl></note>
+encounters<note place="foot"><ptr type="cit" target="#TS-BIBL-8"/></note>
 also demonstrates the use of the <gi>unclear</gi> and <gi>gap</gi>
 elements discussed in section <ptr target="#COED"/>.  Where words are so
 unclear that only their extent can be recorded, the empty <gi>gap</gi>
@@ -1119,8 +1116,7 @@ the following way:
 <p>As previously noted, the <gi>gap</gi> element may be used to mark
 points within a transcript where words have been omitted, for example
 because they are inaudible:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><gap reason="passing
-truck" extent="10" unit="syllables"/></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><gap reason="passing truck" extent="10" unit="syllables"/></egXML></p>
 <p>The <gi>unclear</gi> element may be used to mark words which have
 been included although the transcriber is unsure of their accuracy:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u>...and then <unclear reason="passing truck">marbled queen</unclear></u></egXML></p>

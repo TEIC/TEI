@@ -2,27 +2,12 @@
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
-See the file COPYING for details.
+See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<!--
-* Links
-  - intro stays same, explains diff between ptr & link
-  - as now, explain links 1st with simple pointing mechannism
-* Pointing Elsewhere
-  - using http://blah \  probably move these 2 to SG or CO, and just remind reader here
-  - using bare names  /  or perhaps be redundant,
-  - using element()   element(/1/2/3) == xpath(/*[1]/*[2]/*[3])
-  - using TEI schemes
-    + xpath() xpath2()
-    + string-range()
-    + range()
-      ^ left()
-      ^ right()
--->
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="SA" n="14">
-  <head xmlns="http://www.tei-c.org/ns/1.0">Linking, Segmentation, and Alignment</head>
+  <head>Linking, Segmentation, and Alignment</head>
   <p>This chapter discusses a number of ways in which encoders may
   represent analyses of the structure of a text which are not
   necessarily linear or hierarchic. The module defined by this chapter
@@ -64,14 +49,11 @@ $Id$
     <ptr target="#SAAN"/>).</item>
   </list></p>
   <p>These facilities all use the same set of techniques based on the
-  W3C <ref
-  target="http://www.w3.org/TR/xptr-framework/">XPointer</ref>
-  mechanism, which includes a variety of <term
-  rend="noindex">schemes</term>. The most convenient technique, and
+  W3C <ref target="http://www.w3.org/TR/xptr-framework/">XPointer</ref>
+  mechanism, which includes a variety of <term rend="noindex">schemes</term>. The most convenient technique, and
   that which is recommended by these Guidelines wherever possible,
   makes use of the global <att>xml:id</att> attribute, as defined in
-  section <ptr target="#STGA"/>, and introduced in section <ptr
-  target="#SG-id"/>. For many of the topics discussed in this chapter,
+  section <ptr target="#STGA"/>, and introduced in section <ptr target="#SG-id"/>. For many of the topics discussed in this chapter,
   a choice of methods of encoding is offered, ranging from simple but
   less general ones, which use attribute values only, to more
   elaborate and more general ones, which use specialized elements.</p>
@@ -410,8 +392,14 @@ To avoid having
    <!-- ... -->
 </linkGrp></egXML></p>
       <specGrp xml:id="DSAPT" n="Links">
-        &link;
-        &linkGrp;
+        
+
+&link;
+
+        
+
+&linkGrp;
+
       </specGrp>
 
     </div>
@@ -743,8 +731,7 @@ kinds of object:
 	of a document. In TEI Pointing applications, node sets are
 	only allowed as the result of resolving a URI when multiple
 	URIs would have been allowed where it appears, i.e. in
-	attributes which are declared as permitting two or more <name
-	type="datatype">data.pointer</name> values as opposed to only
+	attributes which are declared as permitting two or more <name type="datatype">data.pointer</name> values as opposed to only
 	one. As the name <soCalled>set,</soCalled> implies, the
 	individual items in a node set are not ordered, and no
 	assumptions about relative ordering of items in a node set
@@ -825,8 +812,7 @@ towards revising this draft or issuing it as a recommendation.</p>
         <name type="datatype">data.pointer</name>, the result must be
         a single node, and it is an error if the result is a node set.
         When the URI reference is specified as the value of an
-        attribute declared to permit two or more <name
-        type="datatype">data.pointer</name> values, each node in the
+        attribute declared to permit two or more <name type="datatype">data.pointer</name> values, each node in the
         node set is treated as if it were the result of a separate URI
         reference.</p>
         <p>When an xpath is interpreted by a TEI processor, the
@@ -1541,9 +1527,18 @@ M&uuml;nchen: Rogner & Bernhard, 1972. *--></p>
 </div1></egXML>
       See further <ptr target="#CODR"/> and <ptr target="#DRPAL"/>.</p>
       <specGrp xml:id="DSASA" n="Blocks Segments and Anchors">
-        &ab;
-        &anchor;
-        &seg;
+        
+
+&ab;
+
+        
+
+&anchor;
+
+        
+
+&seg;
+
       </specGrp>
 
     </div>
@@ -1661,10 +1656,7 @@ English. This was revised by young<anchor xml:id="eng4"/>
           sentences to a single French sentence. These alignments
           [which were produced by a computer program] agreed with the
           results produced by a human judge.<note place="foot">See
-          <bibl><author>William A. Gale and Kenneth W. Church</author>
-          <title level="a">Program for aligning sentences in bilingual
-          corpora</title>, <title>Computational Linguistics</title> 19
-          (1993): 75–102</bibl>, from which the example in the
+          <ptr type="cit" target="#SA-BIBL-1"/>, from which the example in the
           text is taken.</note></q></p>
           <p>The alignment produced by Gale and Church's program can
           be expressed in four different ways. The encoder must first
@@ -1813,10 +1805,7 @@ other vernacular. Key terms in the two texts are typographically
 distinct, and are linked to the picture by numbers, which appear in the
 two texts and within the picture as well.<note place="foot">Our example uses the
 English translation of Charles Hoole (1659), and is taken from
-<bibl><editor>John E. Sadler</editor> ed., <title>John Amos
-Comenius Orbis Pictus: a facsimile of the first English edition of
-1659</title> (Oxford: Oxford University Press, 1968) (The Juvenile
-Library).</bibl></note></p>
+<ptr type="cit" target="#SA-BIBL-2"/></note></p>
 <p>First, we consider the text portions. The English and Latin portions
 have been encoded as distinct <gi>div</gi> elements. Identifiers have
 been attached to each typographic line, but no other encoding added, to
@@ -1858,15 +1847,7 @@ means of aligning arbitrary polygons and points, which uses the XML notation SVG
 Graphics). This provides appropriate facilities for both these
 requirements:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <image xlink:href="p1764.png" width="597" height="897" id="p9801"/>
-  <rect x="86.5" y="161.86218" width="440.5" height="303" style="fill:none;opacity:1;stroke:#eaac24;stroke-width:2"/>
-  <view id="p981" viewBox="86.5 161.86218 440.5 303"/>
-  <rect x="337.5" y="222.36218" width="158" height="222.5" style="fill:none;opacity:1;stroke:#eaac24;stroke-width:2"/>
-  <view id="p982" viewBox="337.5 222.36218 158 222.5"/>
-  <rect x="252" y="162.36218" width="270" height="153" style="fill:none;opacity:1;stroke:#eaac24;stroke-width:2"/>
-  <view id="p983" viewBox="252 162.36218 270 153"/>
-</svg></egXML>
+</egXML>
 <!--  <svg>
     <image
      xlink:href="p1764.png"
@@ -2008,12 +1989,12 @@ aligned.</p>
 <p>To illustrate the use of these mechanisms for marking synchrony,
 consider the following representation of a spoken text:
 <!-- From BNC, via LB, retranscribed without SGML markup -->
-<eg>B: The first time in twenty five years, we've cooked Christmas
+<eg><![CDATA[B: The first time in twenty five years, we've cooked Christmas
    (unclear) for a blooming great load of people.
 A: So you're [1] (unclear) [2]
 B: [1] It will be [2] nice in a way, but, [3] be strange. [4]
 A: [3] Yeah [4], yeah, cos it, it's [5] the [6]
-B: [5] not [6]</eg></p>
+B: [5] not [6]]]></eg></p>
 <p>This representation uses numbers in brackets to mark the points at
 which speakers overlap each other. For example, the <mentioned>[1]</mentioned>
 in A's first speech is to be understood as coinciding with the
@@ -2178,8 +2159,14 @@ transcribed text.</p>
 <p>For further discussion of this and related aspects of encoding
 transcribed speech, refer to chapter <ptr target="#TS"/>.</p>
 <specGrp xml:id="DSASYMP" n="Temporal specification">
-  &when;
-  &timeline;
+  
+
+&when;
+
+  
+
+&timeline;
+
 </specGrp></div></div>
 <div type="div2" xml:id="SAIE">
 <head>Identical Elements and Virtual Copies</head>
@@ -2646,8 +2633,14 @@ which its target is to be found, as in the following example:
         <!-- ]]> -->
         <!-- </eg> --></p>
 <specGrp xml:id="DSAAG" n="Aggregation">
-  &join;
-  &joinGrp;
+  
+
+&join;
+
+  
+
+&joinGrp;
+
 </specGrp></div>
 <div type="div2" xml:id="SAAT">
 <head>Alternation</head>
@@ -2982,8 +2975,14 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
     <alt targets="#bb #db" weights="0.45 0.90"/>
   </altGrp></egXML></p>
 <specGrp xml:id="DSAAT" n="Alternation">
-  &alt;
-  &altGrp;
+  
+
+&alt;
+
+  
+
+&altGrp;
+
 </specGrp></div>
 
 <div type="div2" xml:id="SASO">
@@ -3409,9 +3408,18 @@ chapters<!-- , particularly in sections <ptr target="#AILA"/>, <ptr target="#FSF
 The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
   <specGrp>
-    &att.global.linking;
-    &att.pointing;
-    &att.pointing.group;
+    
+
+&att.global.linking;
+
+    
+
+&att.pointing;
+
+    
+
+&att.pointing.group;
+
 <specGrpRef target="#DSAPT"/>
 <specGrpRef target="#DSASA"/>
 <specGrpRef target="#DSASYMP"/>
