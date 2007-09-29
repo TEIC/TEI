@@ -816,7 +816,7 @@
     <xsl:choose>
       <xsl:when test="@rend='labels'">
 	<div class="listBibl">
-	  <xsl:for-each select="tei:bibl|tei:biblItem">
+	  <xsl:for-each select="tei:bibl|tei:biblItem|tei:biblStruct">
 	    <div class="bibl">
 	      <span class="biblLabel">
 		<xsl:value-of select="@n"/>
@@ -828,7 +828,7 @@
       </xsl:when>
       <xsl:otherwise>
 	<ol>
-	  <xsl:for-each select="tei:bibl|tei:biblItem">
+	  <xsl:for-each select="tei:bibl|tei:biblItem|tei:biblStruct">
 	    <li>
 	      <xsl:apply-templates select="."/>
 	    </li>
