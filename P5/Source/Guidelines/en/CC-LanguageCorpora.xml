@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
-See the file COPYING for details.
+See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
@@ -92,11 +93,8 @@ large corpora.
 <p>Both unitary and composite texts may be encoded using these
 Guidelines; composite texts, including corpora, will typically make
 use of the following tags for their top-level organization.
-<specList><specDesc key="teiCorpus"/><specDesc key="TEI"/><specDesc
-key="teiHeader" atts="type "/><specDesc key="text"/><specDesc
-key="group"/></specList> Full descriptions of these may be found in
-chapter <ptr target="#HD"/> (for <gi>teiHeader</gi>), and chapter <ptr
-target="#DS"/> (for <gi>teiCorpus</gi> <gi>TEI</gi>, <gi>text</gi> and
+<specList><specDesc key="teiCorpus"/><specDesc key="TEI"/><specDesc key="teiHeader" atts="type "/><specDesc key="text"/><specDesc key="group"/></specList> Full descriptions of these may be found in
+chapter <ptr target="#HD"/> (for <gi>teiHeader</gi>), and chapter <ptr target="#DS"/> (for <gi>teiCorpus</gi> <gi>TEI</gi>, <gi>text</gi> and
 <gi>group</gi>); this section discusses their application to composite
 texts in particular.
  </p>
@@ -280,9 +278,18 @@ remainder of this chapter.
 
 
 <specGrp>
+
+
 &textDesc;
+
+
+
 &particDesc;
+
+
+
 &settingDesc;
+
 </specGrp>
 <specGrpRef target="#DCCAHTD"/>
 
@@ -300,8 +307,7 @@ organized as a set of values and optional prose descriptions for the
 following eight <term>situational parameters</term>, each represented by
 one of the following eight elements:
 <specList><specDesc key="channel" atts="mode"/><specDesc key="constitution" atts="type"/><specDesc key="derivation" atts="type"/><specDesc key="domain" atts="type"/><specDesc key="factuality" atts="type"/><specDesc key="interaction" atts="type active passive"/><specDesc key="preparedness" atts="type"/><specDesc key="purpose" atts="type degree"/></specList></p>
-<p>These elements constitute a model class called <ident
-type="class">model.textDescPart</ident>; new parameters may be defined
+<p>These elements constitute a model class called <ident type="class">model.textDescPart</ident>; new parameters may be defined
 by defining new elements and adding them to that class, as further
 described in <ptr target="#MD"/>.</p>
 
@@ -336,11 +342,7 @@ advantages:<note place="foot">Schemes similar to that proposed here were develop
 in the 1960s and 1970s by researchers such as Hymes, Halliday, and
 Crystal and Davy, but have rarely been implemented; one notable
 exception being the pioneering work on the Helsinki Diachronic Corpus
-of English, on which see <bibl><author>M. Kytö and
-M. Rissanen</author> <title level="a">The Helsinki Corpus of English
-Texts,</title> in <title>Corpus Linguistics: hard and soft</title>,
-<editor>M. Kytö, O. Ihalainen, and M. Rissanen</editor> eds.
-(Amsterdam: Rodopi, 1988).</bibl></note>
+of English, on which see <ptr type="cit" target="#CC-BIBL-1"/></note>
 <list type="bullets">
 <item> it enables a relatively continuous characterization of texts (in
 contrast to discrete categories based on type or topic)</item>
@@ -408,14 +410,38 @@ parameters might be used to characterize a novel:
 
 
 <specGrp xml:id="DCCAHTD" n="Text description">
+
+
 &channel;
+
+
+
 &constitution;
+
+
+
 &derivation;
+
+
+
 &domain;
+
+
+
 &factuality;
+
+
+
 &interaction;
+
+
+
 &preparedness;
+
+
+
 &purpose;
+
 </specGrp>
 
 
@@ -567,9 +593,18 @@ within a <gi>p</gi> element. The above examples assume that only the
 general purpose <gi>name</gi> element supplied in the core module is
 available.
 <specGrp xml:id="DCCAHSE" n="Setting description">
+
+
 &setting;
+
+
+
 &locale;
+
+
+
 &activity;
+
 </specGrp>
 </p></div></div>
 <div type="div2" xml:id="CCAS"><head>Associating Contextual
@@ -620,49 +655,49 @@ this common denominator.
 <p>For example, the following schematic shows the structure of a corpus
 comprising three texts, the first and last of which share the same
 encoding declaration.  The second one has its own encoding declaration
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<teiCorpus>
-  <teiHeader>
-    <fileDesc><!-- corpus file description--></fileDesc>
-    <encodingDesc>
-        <!-- default encoding description -->
-    </encodingDesc>
-    <revisionDesc><!-- corpus revision description --></revisionDesc>
-  </teiHeader>
-  <TEI>
-    <teiHeader>
-      <fileDesc>
-         <!-- file description for this corpus text --> 
-       </fileDesc>
-    </teiHeader>
-    <text>
-      <!-- first corpus text -->
-    </text>
-  </TEI>
-  <TEI>
-    <teiHeader>
-      <fileDesc>         
-        <!-- file description for this corpus text --> 
-      </fileDesc>
-      <encodingDesc>
-        <!-- encoding description for this corpus 
-             text, over-riding the default  --> 
-      </encodingDesc>
-    </teiHeader>
-    <text>
-      <!-- second corpus text -->
-    </text>
-  </TEI>
-  <TEI>
-    <teiHeader>
-      <fileDesc>
-        <!-- file description for third corpus text --> 
-      </fileDesc>
-    </teiHeader>
-    <text>      
-      <!-- third corpus text -->
-    </text>
-  </TEI>
-</teiCorpus>]]></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;teiCorpus&gt;
+  &lt;teiHeader&gt;
+    &lt;fileDesc&gt;&lt;!-- corpus file description--&gt;&lt;/fileDesc&gt;
+    &lt;encodingDesc&gt;
+        &lt;!-- default encoding description --&gt;
+    &lt;/encodingDesc&gt;
+    &lt;revisionDesc&gt;&lt;!-- corpus revision description --&gt;&lt;/revisionDesc&gt;
+  &lt;/teiHeader&gt;
+  &lt;TEI&gt;
+    &lt;teiHeader&gt;
+      &lt;fileDesc&gt;
+         &lt;!-- file description for this corpus text --&gt; 
+       &lt;/fileDesc&gt;
+    &lt;/teiHeader&gt;
+    &lt;text&gt;
+      &lt;!-- first corpus text --&gt;
+    &lt;/text&gt;
+  &lt;/TEI&gt;
+  &lt;TEI&gt;
+    &lt;teiHeader&gt;
+      &lt;fileDesc&gt;         
+        &lt;!-- file description for this corpus text --&gt; 
+      &lt;/fileDesc&gt;
+      &lt;encodingDesc&gt;
+        &lt;!-- encoding description for this corpus 
+             text, over-riding the default  --&gt; 
+      &lt;/encodingDesc&gt;
+    &lt;/teiHeader&gt;
+    &lt;text&gt;
+      &lt;!-- second corpus text --&gt;
+    &lt;/text&gt;
+  &lt;/TEI&gt;
+  &lt;TEI&gt;
+    &lt;teiHeader&gt;
+      &lt;fileDesc&gt;
+        &lt;!-- file description for third corpus text --&gt; 
+      &lt;/fileDesc&gt;
+    &lt;/teiHeader&gt;
+    &lt;text&gt;      
+      &lt;!-- third corpus text --&gt;
+    &lt;/text&gt;
+  &lt;/TEI&gt;
+&lt;/teiCorpus&gt;</egXML>
  </p></div>
 <div type="div3" xml:id="CCAS2"><head>Declarable Elements</head>
 <p>Certain of the elements which can appear within a TEI Header are

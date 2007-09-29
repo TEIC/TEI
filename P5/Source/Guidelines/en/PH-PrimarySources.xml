@@ -1,13 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
-See the file COPYING for details.
+See the file COPYING.txt for details.
 $Date$
-$Id $
+$Id$
 -->
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="PH"
-     n="18">
-<head xmlns="http://www.tei-c.org/ns/1.0">Representation of Primary Sources</head>
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="PH" n="18">
+<head>Representation of Primary Sources</head>
 
 <p>This chapter defines a module intended for use in the
 representation of primary sources, such as manuscripts or other
@@ -16,8 +16,7 @@ for the encoding of digital facsimiles or images of such materials,
 while the remainder of the chapter discusses ways of encoding detailed
 transcriptions of such materials. It is expected that this module will
 also be useful in the preparation of critical editions, but the module
-defined here is distinct from that defined in chapter <ptr
-target="#TC"/>, and may be used independently of it. Detailed metadata
+defined here is distinct from that defined in chapter <ptr target="#TC"/>, and may be used independently of it. Detailed metadata
 relating to primary sources of any kind may be recorded using the
 elements defined by the manuscript description module discussed in
 chapter <ptr target="#MS"/>, but again the present module may be used
@@ -29,8 +28,7 @@ textual components of a document than on those relating to the
 description of the document's physical characteristics such as the
 carrier medium or physical construction. These aspects, of particular
 importance in codicology and the bibliographic study of incunables,
-are touched on in the chapter on Manuscript Description (<ptr
-target="#MS"/>) and also form the subject of ongoing work in the TEI
+are touched on in the chapter on Manuscript Description (<ptr target="#MS"/>) and also form the subject of ongoing work in the TEI
 Physical Bibliography workgroup.</p>
 
 <p>Although this chapter discusses manuscript materials more
@@ -83,7 +81,7 @@ unit), and no more complex mapping between text and image is
 envisaged, then the <att>facs</att> attribute may be used to point
 directly to a graphic resource:
 
-<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <TEI>
 <teiHeader> <!--...--></teiHeader>
 <text>
@@ -98,8 +96,7 @@ directly to a graphic resource:
 By convention, this encoding indicates that the image indicated by
 <att>facs</att> attribute represents the whole of the text following
 the <gi>pb</gi> (pagebreak) element, up to the next <gi>pb</gi>
-element. Any convenient milestone element (see further <ptr
-target="#CORS5"/>) could be used in the same
+element. Any convenient milestone element (see further <ptr target="#CORS5"/>) could be used in the same
 way; for example if the images represent individual columns, the
 <gi>cb</gi> element might be used.  Though simple, this method has
 some drawbacks. It does not scale well to more complex cases (where,
@@ -135,8 +132,7 @@ digital facsimile:
 
 <p>The <gi>facsimile</gi> element is used to represent a digital
 facsimile. It appears within a TEI document along with, or instead of,
-the <gi>text</gi> element introduced in section <ptr
-target="#DS"/>. When this module is selected therefore, a
+the <gi>text</gi> element introduced in section <ptr target="#DS"/>. When this module is selected therefore, a
 legal TEI document may thus comprise any of the following:-
 <list>
 <item>a TEI Header and a text element</item>
@@ -152,7 +148,7 @@ in the same way as described in sections <ptr target="#DSFRONT"/> and
 <p>In the simplest case, a facsimile just contains a series of
 <gi>graphic</gi> elements, each of which identifies an image file:
 
-<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <facsimile>
   <graphic url="page1.png"/>
   <graphic url="page2.png"/>
@@ -161,8 +157,7 @@ in the same way as described in sections <ptr target="#DSFRONT"/> and
 </facsimile>
 </egXML>
 
-If desired, the <gi>binaryObject</gi> element described in <ptr
-target="#COGR"/> (or any other element from the
+If desired, the <gi>binaryObject</gi> element described in <ptr target="#COGR"/> (or any other element from the
 <ident>model.graphicLike</ident> class) can be used instead of a
 <gi>graphic</gi></p>
 
@@ -174,7 +169,7 @@ or in two different resolutions. The <gi>surface</gi> element may be
 used to indicate that there are two image files corresponding with the
 same area of the work:
 
-<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <facsimile>
   <graphic url="page1.png"/>
   <surface>
@@ -196,8 +191,7 @@ or indeed any two-dimensional surface, of any size. </p>
 <p>The actual dimensions of the object represented are not documented
 by the <gi>surface</gi> element; instead, the <gi>surface</gi> is
 located within an abstract coordinate space, which is defined by the
-following attributes, supplied by the <ident
-type="class">att.coordinated</ident> class:
+following attributes, supplied by the <ident type="class">att.coordinated</ident> class:
 <specList>
 <specDesc key="att.coordinated" atts="ulx uly lrx lry"/>
 </specList>
@@ -205,15 +199,12 @@ type="class">att.coordinated</ident> class:
 <p> The same coordinate space is used for a <gi>surface</gi> and for
 all of its child elements. <note place="foot">The coordinate space
 may be thought of as a grid superimposed on a rectangular
-space. Rectangular areas of the grid are defined as four numbers <hi
-rend="math">a b c d</hi>: the first two identify the grid point which
+space. Rectangular areas of the grid are defined as four numbers <hi rend="math">a b c d</hi>: the first two identify the grid point which
 is at the upper left corner of the rectangle; the second two give the
 grid point located at the lower right corner of the rectangle. The
 grid point <hi rend="math">a b</hi> is understood to be the point
 which is located <hi rend="math">a</hi> points from the origin along
-the <hi rend="math">x</hi> (horizontal) axis, and <hi
-rend="math">b</hi> points from the origin along the <hi
-rend="math">y</hi> (vertical) axis.</note>. It may be most convenient
+the <hi rend="math">x</hi> (horizontal) axis, and <hi rend="math">b</hi> points from the origin along the <hi rend="math">y</hi> (vertical) axis.</note>. It may be most convenient
 to derive a coordinate space from a digital image of the surface in
 question such that each pixel in the image corresponds with a whole
 number of units (typically 1) in the coordinate space. In other cases
@@ -254,14 +245,12 @@ surface. </p>
 non-rectangular area, nor of coping with distortions introduced by
 perspective or parallax; if this is needed, the more powerful
 mechanisms provided by the Standard Vector Graphics (SVG) language
-should be used to define an overlay, as further discussed in <ptr
-target="#SACSXA"/>. </p>
+should be used to define an overlay, as further discussed in <ptr target="#SACSXA"/>. </p>
 
 
 <p>For example, consider the following figure: 
 <figure><head>Relation
-between page, surface, and zone</head> <graphic
-url="Images/facs-fig2.jpg"/></figure> This is an image of a two page
+between page, surface, and zone</head> <graphic url="Images/facs-fig2.jpg"/></figure> This is an image of a two page
 spread from a manuscript in the Badische Landesbibliothek,
 Karlsruhe. We have no information as to the dimensions of the original object,
 but the  low resolution image displayed here contains 500 pixels
@@ -283,8 +272,7 @@ pixels in the image.  The left corner of the two page spread appears
 50 units from the left of the image and 20 units from the top, while
 the bottom right corner of the spread appears 400 units from the left
 of the image, and 280 units from the top. We therefore define the
-written surface within this image as follows: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+written surface within this image as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface ulx="50" uly="20" lrx="400" lry="280">
 	<!-- ... -->
 </surface>
@@ -302,8 +290,7 @@ element, within which we can place the uncropped <gi>graphic</gi>:
 </facsimile></egXML>
 </p>
 
-<p>If desired, the <gi>binaryObject</gi> element described in <ptr
-target="#COGR"/> (or any other element from the
+<p>If desired, the <gi>binaryObject</gi> element described in <ptr target="#COGR"/> (or any other element from the
 <ident>model.graphicLike</ident> class) can be used instead of a
 <gi>graphic</gi></p>
 
@@ -336,8 +323,7 @@ graphic itself:
 <gi>zone</gi> elements may also be used to select
 parts of each surface for analytical purposes. For
 example, to define the written part of the left hand page:
- <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 	<surface ulx="50" uly="20" lrx="210" lry="280">
 	  <desc>Left hand page</desc>
 		<zone ulx="0" uly="0" lrx="500" lry="321">
@@ -354,8 +340,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <p>In the following example, we discuss a hypothetical digital edition
 of an early 16th century French work, Charles de Bovelles'
 <title>Géometrie Pratique</title><note place="foot">The image is taken
-from the collection at <ptr
-target="http://ancilla.unice.fr/Illustr.html"/>, and was digitized from a copy
+from the collection at <ptr target="http://ancilla.unice.fr/Illustr.html"/>, and was digitized from a copy
 in the Bibliothèque Municipale de Lyon, by whose kind permission it is
 included here</note>. In this edition, each
 page has been digitized as a separate file: for example, recto page 49
@@ -365,8 +350,7 @@ define a <gi>surface</gi> element for this page, which we situate within a
 coordinate scale running from 0 to 200 in the x (horizontal) axis,
 and 0 to 300 in the y (vertical) axis.  The <gi>surface</gi> element
 contains a <gi>graphic</gi> 
-element which represents the whole of this surface: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+element which represents the whole of this surface: <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface ulx="0" uly="0" lrx="200" lry="300">
   <graphic url="Bovelles-49r.png"/>
 </surface>
@@ -383,8 +367,7 @@ coordinate system.
 </figure>
 The following encoding defines each of the four zones identified in
 the figure.
- <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface ulx="0" uly="0" lrx="200" lry="300">
 <graphic url="Bovelles-49r.png"/>
 	<zone ulx="25" uly="25" lrx="180" lry="60"> 
@@ -416,7 +399,7 @@ example, supposing that we have an additional image called
 <ident>Bovelles49r-detail.png</ident> containing an additional image
 of the figure in the third zone above, we might encode that zone as
 follows:
-<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
   <zone ulx="105" uly="76" lrx="175" lry="160"> 
     <graphic url="Bovelles49r-detail.png"/>
   </zone>
@@ -425,8 +408,7 @@ follows:
 <p>Now suppose that we wish to align a transcription of this page
 with the zones identified above. The first step is to give each
 relevant part of the facsimile an identifier:
- <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface ulx="0" uly="0" lrx="200" lry="300">
 	<zone ulx="0" uly="0" lrx="200" lry="300">
 		<graphic url="Bovelles-49r.png"/>
@@ -446,7 +428,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 </facsimile></egXML> 
 The alignment between transcription and image is made, as usual, by
 means of the <att>facs</att> attribute:
-<egXML  xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <pb facs="#B49r"/>
 <fw>De Geometrie 49</fw>
 <head facs="#B49rHead">
@@ -466,8 +448,7 @@ co<expan>n</expan>traires parties<lb/> co<expan>m</expan>me voyez icy
 figuré. Car qua<expan>n</expan>d <lb/> lune sera en hault, laultre
 declinera embas. Aultrement si elles decli<lb/>nent toutes deux
 ensembles en une mesme partie, elles seront discord, <lb/> &amp; sera
-leur sonnerie mal plaisante à oyr.<figure facs="#B49rFig1"><graphic
-url="Bovelles49r-detail.png"/> </figure></p>
+leur sonnerie mal plaisante à oyr.<figure facs="#B49rFig1"><graphic url="Bovelles49r-detail.png"/> </figure></p>
 </div>
 </egXML>
 </p>
@@ -480,9 +461,8 @@ of this chapter. </p>
 the function of the <att>start</att> attribute, which supplies the
 identifier of the element containing the transcribed text found within
 the surface or zone concerned. Thus, another way of linking this page
-with its transcription would be simply <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
-<surface start="#PB49R" >
+with its transcription would be simply <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+<surface start="#PB49R">
 <graphic url="Bovelles-49r.png"/>
 </surface>
 </facsimile>
@@ -495,12 +475,31 @@ xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
  </egXML></p>
 
 <specGrp xml:id="DPFACS">
+
+
 &facsimile;
+
+
+
 &att.global.facs;
+
+
+
 &surface;
+
+
+
+
 &att.coordinated;
+
+
+
 &zone;
+
+
+
 &model.resourceLike;
+
 </specGrp>
 
 
@@ -561,8 +560,7 @@ expansion of abbreviations, correction of the text (either by author,
 scribe, or later hand, or by previous or current editors or scholars),
 addition, deletion, or substitution of material, and the like.  The
 sections below describe how such phenomena may be encoded using either
-elements defined in the core module (defined in chapter <ptr
-target="#CO"/>) or specialized elements available only when the module
+elements defined in the core module (defined in chapter <ptr target="#CO"/>) or specialized elements available only when the module
 described in this chapter is available.</p>
 <!-- add and del for things added and removed
      supplied by later editor  (add suppress, or use gap) -> ed for
@@ -618,14 +616,11 @@ for: thus, <q>per</q>, <q>re</q>, <q>n</q>. Both of these views are
 supported by these Guidelines. </p>
 <p>In many cases the glyph found in the manuscript source also exists
 in the Unicode character set: for example the common Latin brevigraph
-&#x204a;, standing for <mentioned>et</mentioned> and often known as
+⁊, standing for <mentioned>et</mentioned> and often known as
 the <soCalled>Tironian et</soCalled> can be directly represented in
 any XML document as the Unicode character with code point
-<val>x204A</val> (see further <ptr target="#SG-er"/> and <ptr
-target="#CHSH"/>). In cases where it does not, these Guidelines
-recommend use of the <gi>g</gi> element provided by the <ident
-type="module">gaiji</ident> module described in chapter <ptr
-target="#WD"/>. This module allows the encoder great flexibility both
+<val>x204A</val> (see further <ptr target="#SG-er"/> and <ptr target="#CHSH"/>). In cases where it does not, these Guidelines
+recommend use of the <gi>g</gi> element provided by the <ident type="module">gaiji</ident> module described in chapter <ptr target="#WD"/>. This module allows the encoder great flexibility both
 in processing and in documenting non-standard characters or glyphs,
 including the ability to provide detailed documentation and images for
 them.
@@ -634,31 +629,21 @@ them.
 encoder may record, for any abbreviation, both the sequence of letters
 or marks which constitutes it, and its sense, that is, the letter or
 letters for which it is believed to stand. For example, in the
-following fragment<note place="foot">From <bibl><title level="a">The
-Manere of Good Lyuynge</title>, fol 126v of Bodleian MS Laud
-Misc. 517, plate 8(ii) in <title>English Cursive Book Hands 1250–
-1500</title> by M. B. Parkes (Clarendon Press: Oxford,
-1969)</bibl>.</note>, the phrase <mentioned>euery persone</mentioned>
+following fragment<note place="foot">From <ptr type="cit" target="#PH-BIBL-1"/>.</note>, the phrase <mentioned>euery persone</mentioned>
 is represented by a sequence of characters which may be transcribed
 directly, using the <gi>g</gi> element to indicate the two brevigraphs
-it contains as follows: <egXML
-xmlns="http://www.tei-c.org/ns/Examples">eu<g ref="#er"/>y <g
-ref="#per"/>sone that loketh after heuen hath a place in this
+it contains as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">eu<g ref="#er"/>y <g ref="#per"/>sone that loketh after heuen hath a place in this
 ladder</egXML> The transcriber may also wish to indicate that, because
 of the
 presence of these 
 particular characters, the two words are actually abbreviations, by using the <gi>abbr</gi>
-element: <egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<g
-ref="#er"/>y</abbr> <abbr><g ref="#per"/>sone</abbr> ... </egXML>
+element: <egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<g ref="#er"/>y</abbr> <abbr><g ref="#per"/>sone</abbr> ... </egXML>
 Alternatively, the transcriber may choose silently to expand these
-abbreviations, using the <gi>expan</gi> element: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><expan>euery</expan>
+abbreviations, using the <gi>expan</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples"><expan>euery</expan>
 <expan>persone</expan> ... </egXML> And, of course, the
 <gi>choice</gi> element can be used to show that one encoding is an
 alternaative for the other:
-<egXML
-xmlns="http://www.tei-c.org/ns/Examples"><choice><abbr>eu<g
-ref="#er"/>y</abbr><expan>euery</expan></choice></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><choice><abbr>eu<g ref="#er"/>y</abbr><expan>euery</expan></choice></egXML>
 </p>
 <p>When abbreviated forms such as these are expanded, two processes
 are carried out: some characters not present in the abbreviation are
@@ -681,12 +666,10 @@ as tittles or tildes, used to indicate the presence of an
 abbreviation, which are typically removed or replaced by other
 characters  in
 the expanded form of the abbreviation:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<am><g
-ref="#er"/></am>y</abbr> <abbr><am><g ref="#per"/></am>sone</abbr> ... </egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<am><g ref="#er"/></am>y</abbr> <abbr><am><g ref="#per"/></am>sone</abbr> ... </egXML>
 while the <gi>ex</gi> element may be used to indicate those characters
 within the expansion which are not present in the abbreviated
-form. <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><expan>eu<ex>er</ex>y</expan>
+form. <egXML xmlns="http://www.tei-c.org/ns/Examples"><expan>eu<ex>er</ex>y</expan>
 <expan><ex>per</ex>sone</expan> ... </egXML> 
 The content of the <gi>abbr</gi> element should usually include the
 whole of the abbreviated word, while the <gi>expan</gi> element should
@@ -694,9 +677,7 @@ include the whole of its expansion. If this is not considered
 necessary, the <gi>am</gi> and <gi>ex</gi> elements may be used within
 a <gi>choice</gi> element,
 as in this example:
-<egXML
-xmlns="http://www.tei-c.org/ns/Examples">eu<choice><am><g
-ref="#er"/></am><ex>er</ex></choice>y 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">eu<choice><am><g ref="#er"/></am><ex>er</ex></choice>y 
 <choice><am><g ref="#per"/></am><ex>per</ex></choice>sone ... </egXML> 
 </p>
 <p>As implied in the preceding discussion, making decisions about
@@ -731,16 +712,13 @@ of <mentioned>good</mentioned> to <mentioned>goode</mentioned>:
 good<ex xml:id="exp01">e</ex>
 I was welbeloued</egXML>
  <!--  abbr="&#x027d;" -->
-Then the note: <egXML xmlns="http://www.tei-c.org/ns/Examples"><note
-target="#exp01">The stroke added to the final d could signify the
-plural ending (-es, -is, -ys&gt;) but the singular <hi
-rend="it">good</hi> was used with the meaning <q>property</q>,
+Then the note: <egXML xmlns="http://www.tei-c.org/ns/Examples"><note target="#exp01">The stroke added to the final d could signify the
+plural ending (-es, -is, -ys&gt;) but the singular <hi rend="it">good</hi> was used with the meaning <q>property</q>,
 <q>wealth</q>, at this time (v. examples quoted in OED, sb. Good,
 C. 7, b, c, d and 8 spec.)</note></egXML> The editor might declare a
 degree of certainty for this expansion, based on the OED examples, and
-state the responsibility for the expansion: <egXML
-xmlns="http://www.tei-c.org/ns/Examples">For alle the while that I had
-good<ex resp="#mp" cert="high">e</ex > I was welbeloued</egXML> The
+state the responsibility for the expansion: <egXML xmlns="http://www.tei-c.org/ns/Examples">For alle the while that I had
+good<ex resp="#mp" cert="high">e</ex> I was welbeloued</egXML> The
 value supplied for the <att>resp</att> attribute should point to the
 name of the editor responsible for this and possibly other
 interventions; an appropriate element therefore might be a
@@ -788,8 +766,7 @@ advantages.</q> has been modified by James to begin <q>But One must
 ...</q>, without the inital capital O having been reduced to
 lowercase. This non-standard orthography could be recorded thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">But <sic>One</sic>
-must have lived ...</egXML> or corrected: <egXML
-xmlns="http://www.tei-c.org/ns/Examples">But <corr>one</corr> must
+must have lived ...</egXML> or corrected: <egXML xmlns="http://www.tei-c.org/ns/Examples">But <corr>one</corr> must
 have lived ...</egXML> or the two possibilities might be represented
 as a choice: <egXML xmlns="http://www.tei-c.org/ns/Examples">But
 <choice><sic>One</sic><corr>one</corr></choice> must have lived
@@ -812,8 +789,7 @@ used.</p>
 transcriber to be erroneous; in such cases, the <gi>corr</gi> element
 indicates the transcriber's correction of them. Where the transcriber
 considers that one or more words have been erroneously omitted in the
-original source and corrects this omission, the <gi>supplied</gi> element discussed in <ptr
-target="#PHOM"/> should be used in preference to <gi>corr</gi>. Thus,
+original source and corrects this omission, the <gi>supplied</gi> element discussed in <ptr target="#PHOM"/> should be used in preference to <gi>corr</gi>. Thus,
 in the following example, from George Moore's draft of additional materials for
 <title>Memoirs of My Dead Life</title>,<note place="foot">In Pierpont Morgan MA
   3421, from <title>British Literary Manuscripts/Series II:  from 1800
@@ -887,17 +863,14 @@ ywroght?
 <p>As remarked above, where the same annotation applies to several
 corrections, this may be represented by supplying multiple pointers on the
 note. Consider for example such
-corrections as the following, in Dudo of S. Quentin<note
-place="foot"><title>De moribus et actis primorum Normannie
+corrections as the following, in Dudo of S. Quentin<note place="foot"><title>De moribus et actis primorum Normannie
 ducum</title>, fol 4v of British Library MS Harley 3742, Parkes pl
 6(i).</note>. Parkes cites two cases in this manuscript of the same
 phenomenon: 
-<egXML
-xmlns="http://www.tei-c.org/ns/Examples">quamuis <choice xml:id="sic-1"><sic>mens</sic><corr>iners</corr></choice> que nutu dei
+<egXML xmlns="http://www.tei-c.org/ns/Examples">quamuis <choice xml:id="sic-1"><sic>mens</sic><corr>iners</corr></choice> que nutu dei
 gesta sunt ... unde esset uiriliter <choice xml:id="sic-2"><corr>uegetata</corr><sic>negata</sic></choice></egXML>
 which may be described as follows:
-<egXML
-xmlns="http://www.tei-c.org/ns/Examples"><note target="#sic-1 #sic-2">Substitution of a more familiar word which resembles
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><note target="#sic-1 #sic-2">Substitution of a more familiar word which resembles
 graphically what the scribe should be copying but which does not make
 sense in the context.</note></egXML>
 </p>
@@ -916,14 +889,12 @@ attribute on the <gi>corr</gi> element can be used to specify an
 arbitrary code for the particular kind of correction (or other
 editorial intervention) identified within it. This code can be chosen
 freely and is not treated as a pointer. 
-<egXML
-xmlns="http://www.tei-c.org/ns/Examples">quamuis
-<choice><sic>mens</sic><corr  type="graphSubs">iners</corr></choice> que nutu dei
+<egXML xmlns="http://www.tei-c.org/ns/Examples">quamuis
+<choice><sic>mens</sic><corr type="graphSubs">iners</corr></choice> que nutu dei
 gesta sunt ... unde esset uiriliter <choice><corr type="graphSubs">uegetata</corr><sic>negata</sic></choice></egXML>
 Note that this encoding might be extended to include a range of
 possible corrections:
-<egXML
-xmlns="http://www.tei-c.org/ns/Examples">quamuis
+<egXML xmlns="http://www.tei-c.org/ns/Examples">quamuis
 <choice><sic>mens</sic><corr type="graphSubs">iners</corr><corr type="reversal">inres</corr></choice> que nutu dei
 gesta sunt ...</egXML>
 In addition, the conscientious encoder will provide documentation
@@ -931,8 +902,7 @@ explaining the circumstances in which particular codes are judged
 appropriate. A suitable location for this might be within the
 <gi>correction</gi> element of the <gi>encodingDesc</gi> of the
 header, which might include a <gi>list</gi> such as the following:
-<egXML
-xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <correction>
 <p>The following codes are used to categorise corrections identified
 in this transcription:
@@ -950,8 +920,7 @@ subtype="graphicResemblence"</gi> for example. </p>
 <p>For a given project, it may well be desirable to limit the possible
 values for the <att>type</att> or <gi>subtype</gi> attributes automatically. This is easily
 done but requires customization of the TEI system using techniques
-described in <ptr target="#MD"/>, in particular <ptr
-target="#MDMDAL"/>, which should be consulted for further information
+described in <ptr target="#MD"/>, in particular <ptr target="#MDMDAL"/>, which should be consulted for further information
 on this topic.</p>
 <p>When making a correction in a source which forms part of a textual
 tradition attested by many witnesses, a textual editor will
@@ -1090,14 +1059,11 @@ ever</add> improve by recognition ....
 
 <p>Similarly, when the <gi>del</gi> element is used to
 record manuscript deletions. In the autograph manuscript of D.
-H. Lawrence's <title>Eloi, Eloi, lama sabachthani</title><note
-place="foot">In Pierpont Morgan MA 1892, (Klinkenborg 129).</note>,
+H. Lawrence's <title>Eloi, Eloi, lama sabachthani</title><note place="foot">In Pierpont Morgan MA 1892, (Klinkenborg 129).</note>,
 the author's deletion of <mentioned>my</mentioned> may be recorded as
 follows. In this case, the <att>hand</att> attribute indicating that
 the deletion was Lawrence's is complemented by a <att>rend</att>
-attribute indicating that the deletion was by strike-through: <egXML
-xmlns="http://www.tei-c.org/ns/Examples">For I hate this <del
-rend="strikethrough" hand="#dhl">my</del> body, which is so dear to me
+attribute indicating that the deletion was by strike-through: <egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this <del rend="strikethrough" hand="#dhl">my</del> body, which is so dear to me
 ...
 <handNote xml:id="dhl">D H Lawrence holograph</handNote>
 
@@ -1171,8 +1137,7 @@ otherwise
 crosses a structural boundary in the text being encoded, special
 treatment is needed. The <gi>addSpan</gi> and
 <gi>delSpan</gi> elements are provided by this  module for that
-purpose. (For a general discussion of the issue see further <ptr
-target="#NH"/>).</p>
+purpose. (For a general discussion of the issue see further <ptr target="#NH"/>).</p>
 
 <p>In this example of the use of <gi>addSpan</gi>, the
 insertion of a gathering containing four neo-Eddic poems into
@@ -1188,8 +1153,7 @@ used to mark its end.  The <att>hand</att> attribute on the
 <gi>addSpan</gi> element ascribes responsibility for the addition to
 the manuscript to Helgi, and the <att>spanTo</att> attribute points to
 the end of the added text:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><handNote xml:id="heol"
-scribe="HelgiÓlafsson"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><handNote xml:id="heol" scribe="HelgiÓlafsson"/>
 <!-- ... -->
 <body>
 <div><!-- text here --></div>
@@ -1229,8 +1193,7 @@ strike-through. Within the first of the two lines, the word
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l>
    <delSpan rend="verticalStrike" spanTo="#delend01"/>
    Tis moonlight <del>upon</del> <add>over</add> Oman's sky</l>
-<l>Her isles of pearl look lovelily<anchor
-xml:id="delend01"/></l></egXML>
+<l>Her isles of pearl look lovelily<anchor xml:id="delend01"/></l></egXML>
 In this case the <gi>anchor</gi> and <gi>delSpan</gi> have been
 placed within the structural elements (the <gi>l</gi>s) rather than
 between, as in the previous example. This is to indicate that
@@ -1245,8 +1208,7 @@ be enclosed by a <gi>del</gi> element, if it is thought useful to
 record the deletion explicitly using this element.-->  If the deleted
 text is partially legible, the <gi>unclear</gi> element described in
 section <ptr target="#PHDA"/> may be used to indicate areas of
-text which cannot be read with confidence. See further section <ptr
-target="#PHOM"/> and section <ptr target="#PHDA"/>.</p>
+text which cannot be read with confidence. See further section <ptr target="#PHOM"/> and section <ptr target="#PHDA"/>.</p>
 </div>
 
 <div type="div3" xml:id="PHSU"><head>Substitutions</head>
@@ -1273,8 +1235,7 @@ be encoded as follows:
 en by means<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>
    <delSpan rend="verticalStrike" spanTo="#delend02"/>
    Tis moonlight <subst><del>upon</del><add>over</add></subst> Oman's sky</l>
-<l>Her isles of pearl look lovelily<anchor
-xml:id="delend02"/></l></egXML>
+<l>Her isles of pearl look lovelily<anchor xml:id="delend02"/></l></egXML>
 Since the purpose of this element is solely to group its child elements
 together, the order in which they are presented is not significant. By
 convention, however, deletion precedes addition. This may be
@@ -1291,8 +1252,7 @@ a</mentioned> and this is then replaced by <mentioned>a</mentioned>.
 <note place="foot">The manuscript contains several other
 substitutions, ignored here for the sake of clarity.</note> This may
 be encoded as follows, representing the two changes as a sequence of
-additions and deletions: <egXML
-xmlns="http://www.tei-c.org/ns/Examples">One must have lived longer
+additions and deletions: <egXML xmlns="http://www.tei-c.org/ns/Examples">One must have lived longer
 with <subst><del seq="1">this</del> <del seq="2"><add seq="1">such
 a</add></del> <add seq="2">a</add></subst> system, to appreciate its
 advantages.</egXML> Note the nesting of an <gi>add</gi> element within
@@ -1401,13 +1361,11 @@ this can be determined.  For example, in
 the Beerbohm manuscript of <title>The Golden Drugget</title> cited
 above, the author has erased a passage amounting about 10 cm in length
 by inking over it completely:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Others <gap
-reason="cancelled" hand="#mb" extent="10" unit="cm"/>—and
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Others <gap reason="cancelled" hand="#mb" extent="10" unit="cm"/>—and
 here is one of them...</egXML></p>
 <p>In an autograph letter of Sydney Smith in the Pierpont Morgan
 library,<note place="foot">(Klinkenborg 11)</note> three words in the signature are quite illegible:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">I am dr Sr yr <gap
-reason="illegible" extent="3" unit="word"/>Sydney Smith</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">I am dr Sr yr <gap reason="illegible" extent="3" unit="word"/>Sydney Smith</egXML>
 
 The degree of
 precision attempted when measuring the size of a gap will vary with the purpose of the encoding and the
@@ -1430,8 +1388,7 @@ If another (imaginary) copy of the letter above preserved the
 signature as reading <q>I am dear Sir your very humble Servt Sydney
 Smith</q>, the text illegible in the autograph might be supplied in
 the transcription: <egXML xmlns="http://www.tei-c.org/ns/Examples">I
-am dr Sr yr <supplied reason="illegible" resp="#msm"
-source="#AmCo">very humble Servt</supplied> Sydney Smith</egXML> Here
+am dr Sr yr <supplied reason="illegible" resp="#msm" source="#AmCo">very humble Servt</supplied> Sydney Smith</egXML> Here
 the <att>source</att> and <att>resp</att> attributes are used, as
 elsewhere, to indicate respectively the sigil of a manuscript from
 which the supplied reading has been taken, and the identifier of the
@@ -1477,9 +1434,7 @@ TEI Header, depending on which modules are included in a schema. When
 the <ident type="class">transcr</ident> module defined by the present
 chapter is used, the element <gi>handNotes</gi> is available, within
 the <gi>profileDesc</gi> element of the Header, to hold one or more
-<gi>handNote</gi> elements. When the <ident
-type="class">msdescription</ident> module defined in chapter <ptr
-target="#MS"/> is included, the <gi>handDesc</gi> element described in
+<gi>handNote</gi> elements. When the <ident type="class">msdescription</ident> module defined in chapter <ptr target="#MS"/> is included, the <gi>handDesc</gi> element described in
 <ptr target="#msph2"/> also becomes available as part of a structured
 manuscript description. The encoder may choose to place
 <gi>handNote</gi> elements identifying individual hands in either
@@ -1550,8 +1505,7 @@ identifiers <val>h1</val> and <val>h2</val> by the following
 declarations, included in the TEI Header for this document:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
     <handNotes>
-      <handNote xml:id="h1" script="copperplate"
-		medium="brown-ink">Carefully written with regular descenders</handNote>
+      <handNote xml:id="h1" script="copperplate" medium="brown-ink">Carefully written with regular descenders</handNote>
       <handNote xml:id="h2" script="print" medium="pencil">Unschooled scrawl</handNote>
     </handNotes>
  </egXML>
@@ -1722,8 +1676,7 @@ elements should be used: <specList>
 <specDesc key="damage"/>
 <specDesc key="damageSpan"/>
 </specList>
-As members of the class <ident
-type="class">att.damaged</ident>, these elements  bear
+As members of the class <ident type="class">att.damaged</ident>, these elements  bear
 the following attributes
 <specList>
 <specDesc key="att.damaged" atts="extent hand agent degree group"/>
@@ -2073,9 +2026,7 @@ medium of the inscribing implement,
 the organisation of the carrier materials themselves (as
 quiring, collation, etc.), authorial instructions or scribal markup,
 etc. except insofaras these are involved in the broader question of
-manuscript description, as addressed by the <ident
-type="class">msdescription</ident> module described in chapter <ptr
-target="#MS"/>. </p></div>
+manuscript description, as addressed by the <ident type="class">msdescription</ident> module described in chapter <ptr target="#MS"/>. </p></div>
 <div><head>Formal declarations for transcriptional elements</head>
 
 <p>This chapter declares the <ident type="module">transcr</ident>
@@ -2087,19 +2038,58 @@ The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
 </p>
 <specGrp xml:id="DTCHD" n="Headers and footers">
+
+
 &addSpan;
+
+
+
 &damage;
+
+
+
 &damageSpan;
+
+
+
 &delSpan;
+
+
+
 &ex;
+
+
+
 &fw;
+
+
+
 &handNotes;
+
+
+
 &handShift;
+
+
+
 &am;
+
+
+
 &restore;
+
+
+
 &space;
+
+
+
 &subst;
+
+
+
 &supplied;
+
 </specGrp>
 
 
