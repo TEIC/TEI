@@ -154,6 +154,9 @@
       <xsl:apply-templates mode="depth" select="."/>
     </xsl:variable>
     <xsl:call-template name="formatHeadingNumber">
+      <xsl:with-param name="toc">
+	<xsl:value-of select="$toc"/>
+      </xsl:with-param>
       <xsl:with-param name="text">
     <xsl:choose>
       <xsl:when test="local-name(.) = 'TEI'"/>
@@ -259,6 +262,7 @@
   </xd:doc>
   <xsl:template name="formatHeadingNumber">
       <xsl:param name="text"/>
+      <xsl:param name="toc"/>
       <xsl:copy-of select="$text"/>
   </xsl:template>
 
