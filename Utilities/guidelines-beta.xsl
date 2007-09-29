@@ -246,8 +246,8 @@ function togglerelax (el) {
       <xsl:apply-templates mode="depth" select="."/>
     </xsl:variable>
     <xsl:if test="$d &gt; 0">
-    <span class="permalink">
-      <a class="permalink" href="#{$ident}">
+    <span class="bookmarklink">
+      <a class="bookmarklink" href="#{$ident}">
 	<xsl:attribute name="title">
 	  <xsl:text>bookmark </xsl:text>
 	  <xsl:value-of select="tei:head[1]"/>
@@ -256,8 +256,7 @@ function togglerelax (el) {
 	  <xsl:text>TEI: </xsl:text>
 	  <xsl:value-of select="tei:head[1]"/>
 	</span>
-	<xsl:text>+</xsl:text>
-	<!--&#x00B6;-->
+	<xsl:text>&#x00B6;</xsl:text>
       </a>
     </span>
     </xsl:if>

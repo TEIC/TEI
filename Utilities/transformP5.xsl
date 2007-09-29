@@ -11,6 +11,9 @@
 <xsl:key name="DIVS"
 	 match="tei:body/tei:div|tei:back/tei:div|tei:front/tei:div"
 	 use="1"/>
+<xsl:key name="IDS"
+	 match="tei:*"
+	 use="@xml:id"/>
 <xsl:key name="SPECS"
 	 match="tei:elementSpec|tei:classSpec|tei:macroSpec"
 	 use="1"/>
@@ -31,7 +34,7 @@
 <xsl:template match="/">
   <xsl:variable name="outName">
     <xsl:value-of select="$PREFIX"/>/Guidelines/en/guidelines-en.xml</xsl:variable>
-    <xsl:message>write <xsl:value-of select="$outName"/></xsl:message>
+<!--    <xsl:message>write <xsl:value-of select="$outName"/></xsl:message>-->
  <exsl:document         
    method="xml"
    encoding="utf-8"
@@ -90,7 +93,7 @@ $Id$
     <xsl:variable name="ident">
       <xsl:call-template name="Names"/>
     </xsl:variable>
-    <xsl:message>write <xsl:value-of select="$ident"/></xsl:message>
+<!--    <xsl:message>write <xsl:value-of select="$ident"/></xsl:message>-->
     <xsl:text disable-output-escaping="yes">&amp;</xsl:text>
     <xsl:value-of select="$ident"/>
     <xsl:text disable-output-escaping="yes">;</xsl:text>
@@ -124,7 +127,7 @@ $Id$
     <xsl:variable name="ident">
       <xsl:value-of select="@ident"/>
     </xsl:variable>
-    <xsl:message>write <xsl:value-of select="$ident"/> (<xsl:value-of select="@xml:id"/>) to <xsl:value-of select="$ident"/>.xml </xsl:message>
+<!--    <xsl:message>write <xsl:value-of select="$ident"/> (<xsl:value-of select="@xml:id"/>) to <xsl:value-of select="$ident"/>.xml </xsl:message>-->
     <xsl:text disable-output-escaping="yes">&amp;</xsl:text>
     <xsl:value-of select="$ident"/>
     <xsl:text disable-output-escaping="yes">;</xsl:text>

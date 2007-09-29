@@ -242,10 +242,24 @@ function togglerelax (el) {
     <xsl:variable name="ident">
       <xsl:apply-templates mode="ident" select="."/>
     </xsl:variable>
-    <span class="permalink">
-      <a class="permalink" href="#{$ident}"
-        title="Link to this section"> &#x00B6;</a>
+    <xsl:variable name="d">
+      <xsl:apply-templates mode="depth" select="."/>
+    </xsl:variable>
+    <xsl:if test="$d &gt; 0">
+    <span class="bookmarklink">
+      <a class="bookmarklink" href="#{$ident}">
+	<xsl:attribute name="title">
+	  <xsl:text>bookmark </xsl:text>
+	  <xsl:value-of select="tei:head[1]"/>
+	</xsl:attribute>
+	<span class="invisible">
+	  <xsl:text>TEI: </xsl:text>
+	  <xsl:value-of select="tei:head[1]"/>
+	</span>
+	<xsl:text>&#x00B6;</xsl:text>
+      </a>
     </span>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="startDivHook">
@@ -908,13 +922,20 @@ function togglerelax (el) {
 
 <xsl:template name="formatHeadingNumber">
   <xsl:param name="text"/>
+  <xsl:param name="toc"/>
   <span class="headingNumber">
     <xsl:choose>
+      <xsl:when test="$toc =''">
+	<xsl:copy-of select="$text"/>
+      </xsl:when>
       <xsl:when test="number(normalize-space($text))&lt;10">
 	<xsl:text>&#8194;</xsl:text>
+	<xsl:copy-of select="$text"/>
       </xsl:when>
+      <xsl:otherwise>
+	<xsl:copy-of select="$text"/>
+      </xsl:otherwise>
     </xsl:choose>
-    <xsl:copy-of select="$text"/>
   </span>
 </xsl:template>
 
