@@ -65,6 +65,13 @@
   <xsl:template name="copyrightStatement">Copyright TEI Consortium 2007</xsl:template>
 
   <xsl:key name="CHILDMOD" match="Element" use="@module"/>
+
+  <xsl:key name="MNAMES"
+   match="tei:monogr/tei:author[tei:surname]|tei:monogr/tei:editor[tei:surname]" 
+   use="ancestor::tei:biblStruct/@xml:id"/>
+  <xsl:key name="ANAMES"
+   match="tei:analytic/tei:author[tei:surname]|tei:analytic/tei:editor[tei:surname]" 
+   use ="ancestor::tei:biblStruct/@xml:id"/>
   
   <xsl:template name="metaHook">
     <xsl:param name="title"/>
@@ -420,6 +427,71 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
     </span>
   </xsl:template>
 
+
+<xsl:template match="tei:ptr[@type='cit']">
+ <a class="citlink">
+  <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
+    <xsl:attribute name="href">
+      <xsl:apply-templates select="."  mode="generateLink"/>
+    </xsl:attribute>
+    <xsl:choose>
+      <xsl:when test="not(tei:monogr or tei:analytic)">
+	<xsl:message terminate="yes">no monogr or analytic for <xsl:value-of select="@xml:id"/>
+	</xsl:message>
+      </xsl:when>
+      <xsl:when test="count(key('ANAMES',@xml:id))=1">
+	<xsl:value-of select="key('ANAMES',@xml:id)/tei:surname"/>
+      </xsl:when>
+      <xsl:when test="count(key('ANAMES',@xml:id))=2">
+	<xsl:value-of
+	    select="key('ANAMES',@xml:id)[1]/tei:surname"/>
+	<xsl:text> and </xsl:text>
+	<xsl:value-of select="key('ANAMES',@xml:id)[2]/tei:surname"/>
+      </xsl:when>
+      <xsl:when test="count(key('ANAMES',@xml:id))&gt;2">
+	<xsl:value-of
+	    select="key('ANAMES',@xml:id)[1]/tei:surname"/>
+	<xsl:text> et al.</xsl:text>
+      </xsl:when>
+      <xsl:when test="count(key('MNAMES',@xml:id))=1">
+	<xsl:value-of select="key('MNAMES',@xml:id)/tei:surname"/>
+      </xsl:when>
+      <xsl:when test="count(key('MNAMES',@xml:id))=2">
+	<xsl:value-of
+	 select="key('MNAMES',@xml:id)[1]/tei:surname"/>
+	<xsl:text> and </xsl:text>
+	<xsl:value-of select="key('MNAMES',@xml:id)[2]/tei:surname"/>
+      </xsl:when>
+      <xsl:when test="count(key('MNAMES',@xml:id))&gt;2">
+	<xsl:value-of
+	    select="key('MNAMES',@xml:id)[1]/tei:surname"/>
+	<xsl:text> et al.</xsl:text>
+      </xsl:when>
+      <xsl:when test=".//tei:author">
+	<xsl:value-of select=".//tei:author[1]"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<emph>
+	  <xsl:value-of select=".//tei:title[1]"/>
+	</emph>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="count(tei:monogr/tei:editor)=1">
+	<xsl:text> (ed.)</xsl:text>
+      </xsl:when>
+      <xsl:when test="count(tei:monogr/tei:editor)&gt;1">
+	<xsl:text> (eds.)</xsl:text>
+      </xsl:when>
+    </xsl:choose>
+    <xsl:if test="tei:monogr/tei:imprint/tei:date">
+      <xsl:text> (</xsl:text>
+      <xsl:value-of select="tei:monogr/tei:imprint/tei:date"/>
+      <xsl:text>)</xsl:text>
+    </xsl:if>
+  </xsl:for-each>
+ </a>
+</xsl:template>
 
 
 </xsl:stylesheet>
