@@ -17,6 +17,7 @@ my %hackers = (
     "louburnard"      => 'Lou Burnard <lou.burnard@oucs.ox.ac.uk>',
     "sbauman"         => 'Syd Bauman  <sbauman@brown.edu>',
     "mlforcada"       => 'Mikel L. Forcada <mlf@ua.es>',
+    "dsew"            => 'David Sewell <dsewell@virginia.edu>',
 );
 
 my $parse_next_line = 0;
