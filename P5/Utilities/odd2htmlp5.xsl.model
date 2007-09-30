@@ -497,7 +497,7 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 <!-- derived from from Roberto del Turco -->
 <!-- ############# single entry structure ############# -->
 
-<xsl:template match="tei:biblStructXX">
+<xsl:template match="tei:biblStruct">
  <p class="bibitem">
    <xsl:call-template name="makeAnchor"/>
    <xsl:call-template name="main"/>
@@ -547,55 +547,41 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 </xsl:template>
 
 <xsl:template name="pers-first">
-   <xsl:value-of select=".//tei:surname"/>,
-   <xsl:choose>
-    <xsl:when test=".//tei:foreName[@type='full']">
-     <xsl:value-of select=".//tei:foreName[@type='full']"/>
-     <xsl:if test="position()=last()">.</xsl:if>
-    </xsl:when>
-    <xsl:otherwise>
-     <xsl:value-of select=".//tei:foreName[@type='init']"/>
-    </xsl:otherwise>
-   </xsl:choose>
+   <xsl:value-of select=".//tei:surname"/>
+   <xsl:text>, </xsl:text>
+   <xsl:value-of select=".//tei:forename"/>
    <xsl:if test="position()=last()"><xsl:text> </xsl:text></xsl:if>
    <xsl:if test="position()!=last()">,<xsl:text> </xsl:text></xsl:if>
 </xsl:template>
 
 <xsl:template name="pers-middle">
-   <xsl:value-of select=".//tei:surname"/>,
-   <xsl:choose>
-    <xsl:when test=".//tei:foreName[@type='full']">
-     <xsl:value-of select=".//tei:foreName[@type='full']"/>
-    </xsl:when>
-    <xsl:otherwise>
-     <xsl:value-of select=".//tei:foreName[@type='init']"/>
-    </xsl:otherwise>
-   </xsl:choose>
+   <xsl:value-of select=".//tei:surname"/>
+   <xsl:text>, </xsl:text>
+   <xsl:value-of select=".//tei:forename"/>
    <xsl:if test="position()!=last()">,<xsl:text> </xsl:text></xsl:if>
 </xsl:template>
 
 <xsl:template name="pers-last">
-   and<xsl:text> </xsl:text>
-   <xsl:choose>
-    <xsl:when test=".//tei:foreName[@type='full']">
-     <xsl:value-of select=".//tei:foreName[@type='full']"/>
-    </xsl:when>
-    <xsl:otherwise>
-     <xsl:value-of select=".//tei:foreName[@type='init']"/>
-    </xsl:otherwise>
-   </xsl:choose>
+   <xsl:text> and </xsl:text>
+   <xsl:value-of select=".//tei:forename"/>
    <xsl:text> </xsl:text><xsl:value-of select=".//tei:surname"/>
    <xsl:choose>
-    <xsl:when test="name()='editor'">
+    <xsl:when test="local-name()='editor'">
      <xsl:call-template name="editor"/>
     </xsl:when>
     <xsl:otherwise>.<xsl:text> </xsl:text></xsl:otherwise>
    </xsl:choose>
 </xsl:template>
 
-<xsl:template name="editor">
- <xsl:variable name="edstring">ed<xsl:if test="preceding-sibling::editor">s</xsl:if>.</xsl:variable>	
- <xsl:text> </xsl:text>(<xsl:value-of select="$edstring"/>)
+<xsl:template name="tei:editor">
+ <xsl:variable name="edstring">
+ <xsl:text>ed</xsl:text>
+ <xsl:if test="preceding-sibling::tei:editor">s</xsl:if>
+ <xsl:text>.</xsl:text>
+ </xsl:variable>	
+ <xsl:text> (</xsl:text>
+ <xsl:value-of select="$edstring"/>
+ <xsl:text>)</xsl:text>
 </xsl:template>
 
 
@@ -627,7 +613,7 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 	  <!-- last name in a list -->
 	  <xsl:when test="position()=last()">
 	   <xsl:choose>
-        <xsl:when test="name()='editor'">
+        <xsl:when test="local-name()='editor'">
          <xsl:apply-templates/><xsl:text> </xsl:text>
          <xsl:call-template name="editor"/>
         </xsl:when>
@@ -682,14 +668,14 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 
 <xsl:template match="tei:imprint">
  <xsl:choose>
-  <xsl:when test="../title[@level='m']">
-   <xsl:apply-templates select="pubPlace"/>
-   <xsl:apply-templates select="publisher"/>
-   <xsl:apply-templates select="biblScope[@type='pages']"/>
+  <xsl:when test="../tei:title[@level='m']">
+   <xsl:apply-templates select="tei:pubPlace"/>
+   <xsl:apply-templates select="tei:publisher"/>
+   <xsl:apply-templates select="tei:biblScope[@type='pages']"/>
   </xsl:when>
   <xsl:otherwise>
-   <xsl:apply-templates select="biblScope[@type='vol']"/>
-   <xsl:apply-templates select="biblScope[@type='pages']"/>
+   <xsl:apply-templates select="tei:biblScope[@type='vol']"/>
+   <xsl:apply-templates select="tei:biblScope[@type='pages']"/>
   </xsl:otherwise>
  </xsl:choose>
 </xsl:template>
@@ -704,7 +690,7 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 
 <xsl:template match="tei:publisher">
  <xsl:choose>
-  <xsl:when test="../biblScope[@type='pages']">
+  <xsl:when test="../tei:biblScope[@type='pages']">
    <xsl:apply-templates/>,<xsl:text> </xsl:text>
   </xsl:when>
   <xsl:otherwise>
