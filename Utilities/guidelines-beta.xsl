@@ -27,6 +27,7 @@
   <xsl:param name="auto">false</xsl:param>
   <xsl:param name="numberFrontHeadings">true</xsl:param>
   <xsl:param name="cssFile">guidelines-beta.css</xsl:param>
+  <xsl:param name="cssSecondaryFile">udm.css</xsl:param>
   <xsl:param name="cssPrintFile">guidelines-print-beta.css</xsl:param>
   <xsl:param name="displayMode">both</xsl:param>
 
@@ -48,6 +49,10 @@
       <link href="{$cssPrintFile}" media="print" rel="stylesheet"
         type="text/css"/>
     </xsl:if>
+    <xsl:if test="not($cssSecondaryFile = '')">
+      <link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
+    </xsl:if>
+
   </xsl:template>
 
   <xsl:template name="generateSubTitle">
@@ -337,18 +342,7 @@ function togglerelax (el) {
 
   <xsl:template name="mainPage">
     <xsl:param name="currentID"/>
-    <div id="hdr">
-      <xsl:call-template name="hdr"/>
-    </div>
-    <div id="accessibility">
-      <span class="tocontent"><a href="{$REQUEST}?style=text">Text
-          only</a> | <a class="skiplinks" href="#rh-column"
-          title="Go to main page content">Skip links</a></span>
-    </div>
-    <div id="hdr2">
-      <xsl:call-template name="hdr2"/>
-    </div>
-
+    <xsl:call-template name="teiTOP"/>
     <div class="main-content" id="onecol">
       <xsl:call-template name="mainFrame">
         <xsl:with-param name="currentID" select="$currentID"/>
@@ -476,14 +470,7 @@ function togglerelax (el) {
                   <xsl:text>startUp()</xsl:text>
                 </xsl:attribute>
                 <xsl:call-template name="bodyHook"/>
-                <div id="hdr">
-		  <h1 class="maintitle">
-		  <a href="index.html">
-		    <xsl:call-template name="generateTitle"/>
-                  </a>
-		  </h1>
-                </div>
-		<hr/>
+		<xsl:call-template name="teiTOP"/>
 		<div>
 		  <xsl:call-template name="mainTOC"/>
 		</div>
@@ -939,4 +926,181 @@ function togglerelax (el) {
   </span>
 </xsl:template>
 
+
+
+<xsl:template name="teiTOP">
+<script type="text/javascript" 
+	src="http://www.tei-c.org/cms/system/modules/org.tei.www/_common/udm/udm-all.js"></script>
+                
+<script type="text/javascript" 
+	src="http://www.tei-c.org/cms/system/modules/org.tei.www/_common/udm/udm-dom.js"/>
+<script type="text/javascript" 
+	src="http://www.tei-c.org/cms/system/modules/org.tei.www/_common/udm/udm-mod-keyboard.js"/>
+
+<div id="container">
+   <a href="#contentstart" 
+      title="Skip to content" 
+      class="skip">skip to content</a>
+   <div id="banner">
+     <img src="http://www.tei-c.org/export/system/modules/org.tei.www/_common/images/banner.jpg"
+	  alt="Text Encoding Initiative logo and banner"/>
+   </div>
+   
+   <ul id="udm" class="udm">
+     <li>
+       <a href="http://www.tei-c.org/cms/">Home</a>
+     </li>
+     <li>
+       <a href="http://www.tei-c.org/cms/Guidelines/">Guidelines</a>
+       <ul>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/Guidelines/P5/">P5 Guidelines</a>
+	 </li>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/Guidelines/P4/">P4 Guidelines</a>
+	 </li>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/Guidelines/Lite/">TEI
+	   Lite</a>
+	 </li>
+	 <li>
+	   <a
+	       href="http://www.tei-c.org/cms/Guidelines/customize.xml"
+	       >Customizations</a>
+	 </li>
+	 <li>
+	   <a href="http://tei.sourceforge.net/">TEI @ SourceForge</a>
+	 </li>
+	 <li>
+	   <a
+	       href="http://www.tei-c.org/cms/Support/Learn/"
+	       >Learn the TEI</a>
+	 </li>
+	 
+	 
+       </ul>
+     </li>
+     <li>
+       <a href="/export/c:/Activities-temp/">Activities</a>
+       <ul>
+	 <li>
+	   <a href="/export/c:/Activities-temp/Council/">TEI
+	   Council</a>
+	 </li>
+	 <li>
+	   <a href="/export/c:/Activities-temp/Workgroups/"
+	      >Workgroups</a>
+	 </li>
+	 <li>
+	   <a href="/export/c:/Activities-temp/SIG/">SIGS</a>
+	 </li>
+	 <li>
+	   <a href="/export/c:/Activities-temp/Projects/"
+	      >Projects</a>
+	 </li>
+	 
+       </ul>
+     </li>
+     <li>
+       <a href="http://www.tei-c.org/cms/Tools/">Tools</a>
+       <ul>
+	 <li>
+	   <a href="http://tei.oucs.ox.ac.uk/Roma/">Roma</a>
+	 </li>
+	 
+	 <li>
+	   <a href="http://www.tei-c.org/cms/Tools/Stylesheets/"
+	      >Stylesheets</a>
+	 </li>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/Tools/I18N/">Internationalization</a>
+	 </li>
+	 <li>
+	   <a
+	       href="/export/c:/Activities-temp/SIG/Tools/"
+	       >Tools SIG</a>
+	 </li>
+	 <li>
+	   <a href="http://www.tei-c.org.uk/wiki/index.php/Category:Tools"
+	      >TEI Wiki Tools page</a>
+	 </li>
+       </ul>
+     </li>
+     <li>
+       <a href="http://www.tei-c.org/cms/Membership/">Membership</a>
+       <ul>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/Membership/join.xml">How
+	   to join</a>
+	 </li>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/Membership/benefits.xml"
+	      >Benefits</a>
+	 </li>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/Membership/Meetings/"
+	      >Meetings</a>
+	 </li>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/Membership/current.xml">
+	   List of members</a>
+	 </li>
+       </ul>
+     </li>
+     <li>
+       <a href="http://www.tei-c.org/cms/Support/">Support</a>
+       <ul>
+	 
+	 <li>
+	   <a href="http://www.tei-c.org.uk/wiki/">TEI Wiki </a>
+	 </li>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/Support/Learn/"
+	      >Learn the TEI</a>
+	 </li>
+       </ul>
+     </li>
+     <li>
+       <a href="http://www.tei-c.org/cms/About/">About</a>
+       <ul>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/About/faq.xml">FAQ</a>
+	 </li>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/About/mission.xml">Goals
+	   &amp; mission</a>
+	 </li>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/About/charter.xml"
+	      >Charter</a>
+	 </li>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/About/bylaws.xml"
+	      >Bylaws</a>
+	 </li>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/About/organization.xml"
+	      >Organization</a>
+	 </li>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/About/history.xml"
+	      >History</a>
+	 </li>
+	 <li>
+	   <a href="http://www.tei-c.org.uk/Vault/"
+	      >Archive</a>
+	 </li>
+	 <li>
+	   <a href="http://www.tei-c.org/cms/About/contact.xml"
+	      >Contact info</a>
+	 </li>
+	 
+       </ul>
+     </li>
+     <li>
+       <a href="http://www.tei-c.org/cms/News/">News</a>
+     </li>
+   </ul>
+</div>
+</xsl:template>
 </xsl:stylesheet>
