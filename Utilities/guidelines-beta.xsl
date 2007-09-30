@@ -929,6 +929,7 @@ function togglerelax (el) {
 
 
 <xsl:template name="teiTOP">
+<xsl:param name="name"/>
 <script type="text/javascript" 
 	src="udm-all.js"></script>
                 
