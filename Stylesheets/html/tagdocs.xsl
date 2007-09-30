@@ -1441,14 +1441,8 @@
                   <xsl:text>startUp()</xsl:text>
                 </xsl:attribute>
                 <xsl:call-template name="bodyHook"/>
-                <div id="hdr">
-                  <xsl:call-template name="stdheader">
-                    <xsl:with-param name="title">
-                      <xsl:value-of select="$name"/>
-                    </xsl:with-param>
-                  </xsl:call-template>
-                </div>
-                <div>
+		<xsl:call-template name="teiTOP"/>
+                <div class="main-content">
 		  <xsl:call-template name="startDivHook"/>
 
 		  <xsl:call-template name="makeAnchor">
@@ -1466,6 +1460,16 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+<xsl:template name="teiTOP">
+  <div id="hdr">
+    <xsl:call-template name="stdheader">
+      <xsl:with-param name="title">
+	<xsl:value-of select="$name"/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </div>
+</xsl:template>
 
   <xd:doc>
     <xd:short>[html] Provide a footer for each reference document</xd:short>
