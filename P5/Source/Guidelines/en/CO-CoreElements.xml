@@ -584,12 +584,12 @@ element <gi>note</gi> described in section <ptr target="#CONO"/>, or the
  <p>This section discusses the following elements, all of which are often
  rendered by the use of quotation marks:
  <specList>
-   <specDesc key="said"/>
+   <specDesc key="q"/>
+   <specDesc key="said" atts="direct aloud"/>
    <specDesc key="quote"/>
    <specDesc key="cit"/>
    <specDesc key="mentioned"/>
    <specDesc key="soCalled"/>
-   <specDesc key="q"/>
  </specList>
  </p>
  <p>One form of presentational variation found particularly frequently in
@@ -617,37 +617,34 @@ element <gi>note</gi> described in section <ptr target="#CONO"/>, or the
  the <gi>q</gi> element. The editorial policy in this respect
  should be stated in the encoding description of the TEI
  Header.</p>
- <p>Quotation may be rendered by changes in type face, by special
+ <p>Quotation may be indicated by changes in type face, by special
  punctuation marks (single or double or angled quotes, dashes,
  etc.) and by layout (indented paragraphs, etc.). If these
- characteristics are of interest, an appropriate value for the
- <att>rend</att> attribute should be given, to record how the
- <gi>said</gi> or <gi>quote</gi> element is rendered. For
- discussion of suggested values for this attribute, see
- below.</p>
+ characteristics are of interest, one or other of the global
+ <att>rend</att> or <att>rendition</att> attributes discussed in
+ section <ptr target="#STGA"/> may be used to record them. </p>
  <p>Quotation marks themselves may, like other punctuation marks, be
  felt for some purposes to be worth retaining within a text, quite
  independently of their description by the <att>rend</att> attribute.
- Where this is done, either an appropriate entity reference may be
- chosen from the standard ISO entity sets defined by ISO 8879,<note place="foot">ISO
- 8879-1986 (E) Annex D.4; see Goldfarb, p. 502. XML versions are
- available at <ptr target="http://www.tei-c.org/Entity_Sets/Unicode/iso-tech.ent"/>.</note>
- or the character code points may be entered either directly or as
- numeric character references. An entity reference has the advantage
+This should generally be done using the appropriate Unicode character,
+or, if this is not possible, a
+ numeric character reference (see <ptr target="#SG-er"/>). 
+<!--An entity reference has the advantage
  that the entity may be redefined as null when the punctuation is to be
  ignored for some analytic purpose. Well-known ambiguities, such as
  whether the character ' represents an apostrophe or a closing single
  quotation mark, or whether the character " represents an opening or
  closing double quotation mark may all be resolved by the use of
- appropriate entity references, as discussed in section <ptr target="#COPU"/>.</p>
+ appropriate entity references, as discussed in section <ptr target="#COPU"/>.--></p>
  <p>Alternatively, the encoder may suppress all quotation marks, possibly
- recording their form using the <att>rend</att> attribute. Where this is
- done, the following list of entity names (taken from the public entity
+ recording their form using some appropriate set of conventions 
+in the <att>rend</att> attribute. <!--Where this is
+ done, the following list of names (taken from the public entity
  sets <ident type="entset">ISOpub</ident> and <ident type="entset">ISOnum</ident>) may be found useful to describe
- quotation-mark styles common in European and American typesetting:
+ quotation-mark styles common in European and American typesetting:-->
  <!-- list restored under (mild) protest and with one necessary  -->
  <!-- addition                                     LB, oct 92    -->
- <list type="gloss">
+<!--  <list type="gloss">
    <label>ldquo</label>
    <item>double inverted comma (shaped like 66, superscript)</item>
    <label>lsquo</label>
@@ -670,15 +667,16 @@ element <gi>note</gi> described in section <ptr target="#CONO"/>, or the
    <item>single guillemet open to the left</item>
    <label>mdash</label>
    <item>dash the width of an uppercase <mentioned>M</mentioned></item>
- </list>
+ </list> -->
  <!-- J.Lavagnino suggests revisiting the issue of mdash in    -->
  <!-- P4:  perhaps this is too print-centered?  (msm)          -->
- These may be used in the <att>rend</att> attribute to show how the
+Some examples are shown below:
+<!-- These may be used in the <att>rend</att> attribute to show how the
  quotation was opened and closed. For example, if the words
  <mentioned>pre</mentioned> and <mentioned>post</mentioned> are used to indicate
  preceding and following punctuation, then the following example would
  describe a conventional American book printed using single quotation
- marks:
+ marks:-->
  <egXML xmlns="http://www.tei-c.org/ns/Examples"><said rend="PRE lsquo POST rsquo">Who-e debel
  you?</said> — he at last said — 
  <said rend="PRE lsquo POST rsquo">you no speak-e,
@@ -686,9 +684,6 @@ element <gi>note</gi> described in section <ptr target="#CONO"/>, or the
  the lighted tomahawk began flourishing
  about me in the dark.</egXML>
  <!-- Melville, Moby Dick (but where?) -->
- The following example demonstrates alternative policies which may be
- adopted with respect to encoding of the punctuation used to mark
- quotation:
  <egXML xmlns="http://www.tei-c.org/ns/Examples">Adolphe se tourna vers lui :
  <said>— Alors, Albert, quoi de neuf?</said>
  <said>— Pas grand-chose.</said>
@@ -700,8 +695,11 @@ element <gi>note</gi> described in section <ptr target="#CONO"/>, or the
  <said rend="PRE mdash">Il fait beau,</said>
  dit Robert.</egXML>
  <!-- Queneau, Exercices de style (1947) p.192 -->
- To make explicit who is speaking, which is not always stated in the
- above example, the <att>who</att> attribute may be used:
+ </p>
+<p>As  members of the <ident type="class">att.ascribed</ident> class,
+ elements <gi>said</gi> and <gi>q</gi>  share the following attribute:
+<specList><specDesc key="att.ascribed" atts="who"/></specList>
+This may be used to make explicit who is speaking:
  <egXML xmlns="http://www.tei-c.org/ns/Examples">Adolphe se tourna vers lui :
  <said who="#Adolphe">— Alors, Albert,
  quoi de neuf?</said>

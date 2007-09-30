@@ -1660,4 +1660,100 @@ with the current TEI schemas.</p>
 
 
 -->
+<!-- check to see if the following is already included : it's been
+moved here from ST -->
 
+<!--
+<p>In RELAX NG schema fragments, all attribute classes are defined as
+named patterns. For each class, one pattern combining
+the class name with the suffix <code>.attributes</code> is defined,
+and for each attribute supplied by membership in the class a further
+pattern is defined combining the class name, the string
+<code>attribute</code> and the attribute name. Thus, the class <ident
+type="class">att.naming</ident> is implemented using the pattern
+<ident type="pattern">att.naming.attributes</ident>, which is in turn
+a reference to the pattern <ident
+type="pattern">att.naming.attribute.key</ident>. The attribute
+<att>key</att> supplied by the class is declared using this
+pattern. </p>
+
+<p>Members of the class inherit its definition by referring to this
+pattern:
+<eg>
+name =
+  element name { name.content, name.attributes }
+name.content = macro.phraseSeq
+name.attributes =
+  att.global.attributes,
+  att.naming.attributes,
+  attribute type { data.enumerated }?,
+  empty
+</eg></p>
+ 
+<p>Superclasses are implemented using the same patterns. For example,
+the class <ident type="class">att.divLike</ident>, as noted above, is
+a subclass of the module-specific class <ident type="class">att.metrical</ident>. The corresponding RELAX NG pattern
+for the subclass therefore includes a reference to the superclass, as
+shown above. In the <ident type="module">tei</ident> module, the
+pattern <ident type="pattern">att.metrical.attributes</ident> is
+<term>predeclared</term> with the value <code>empty</code>; however,
+if the <ident type="module">verse</ident> module is loaded, a new
+definition is provided for this same pattern, which  includes the
+verse-specific attributes discussed above.</p>
+
+<p>In XML DTD fragments, the attributes shared by the members of an
+attribute class are defined by a parameter entity; member elements
+inherit their attributes by referring to this parameter entity within
+their attribute-list declaration. The parameter entities used for this
+purpose are named in the same way as the corresponding RELAX NG
+patterns: they take the name of the class they define (including the
+<code>att.</code> prefix), suffixed the string
+<mentioned>attributes</mentioned>.  For example, the declaration for
+the <ident type="class">att.naming</ident> class in the XML DTD
+fragment is :
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % att.naming.attributes '
+      key  CDATA #IMPLIED'> 
+]]></egXML> 
+Members of the class inherit the definition by referring to this
+parameter entity:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % name 'INCLUDE' >
+<!ELEMENT %n.name; %om.RR;  %phrase.seq;> 
+<!ATTLIST %n.name;
+      %att.global.attributes;
+      %att.naming.attributes;
+      type CDATA #IMPLIED  >
+]]></egXML>
+ </p>
+
+<p>Superclasses are also implemented using parameter entities. For
+example, the parameter entity corresponding with the <ident type="class">att.divLike</ident>  attribute class is defined as
+follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % att.divlike.attributes '
+	%att.metrical.attributes;
+ type  %data.enumerated;  #IMPLIED
+ org  (composite|uniform) "uniform" 
+ sample  (initial|medial|final|unknown|complete) "complete" 
+ part  (Y|N|I|M|F) "N" '> 
+]]></egXML> 
+Note the reference to <ident type="pe">att.metrical.attributes</ident>. This parameter entity is
+defined by the <ident type="module">tei</ident> module as a null
+string and therefore has no effect by default. However, if
+the verse module is included in a schema, the same parameter entity
+will have been already declared with the following values:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % att.metrical.attributes '
+ met  CDATA #IMPLIED
+ real  CDATA #IMPLIED
+ rhyme  CDATA #IMPLIED'> ]]></egXML>
+in such a way as to over-ride this default (see further <ptr
+target="#STPE"/>), thus extending the definition for <ident
+type="class">att.divLike</ident>. </p>
+
+<p>A similar mechanism is used to extend the definition for the <ident type="class">att.global</ident>  class when certain modules are
+included in the schema. The <ident type="module">tei</ident> module
+provides dummy declarations for all the attribute classes listed as
+<q>superclasses</q> in <ptr target="#tab-atts"/> above; the full
+declaration for each such class is only operational when the module
+containing it is loaded. 
+</p>
+-->
