@@ -460,37 +460,60 @@ for change individually.
           </xsl:choose>
           <!-- classes -->
 	  <tei:classes>
-	    <xsl:for-each select="tei:classes/tei:memberOf">
-	      <xsl:choose>
-		<xsl:when test="@mode='delete'"/>
-		<xsl:when test="@mode='add' or not (@mode)">
-		  <tei:memberOf key="{@key}"/>
-		</xsl:when>
-	      </xsl:choose>
-	    </xsl:for-each>
-	    <xsl:for-each select="$ORIGINAL">
-	      <xsl:for-each select="tei:classes/tei:memberOf">
-		<xsl:variable name="me">
-		  <xsl:value-of select="@key"/>
-		</xsl:variable>
-		<xsl:variable name="metoo">
-		  <xsl:value-of select="concat(../../@ident,@key)"/>
-		</xsl:variable>
-		<xsl:for-each select="$ODD">
+	    <xsl:choose>
+	      <xsl:when test="tei:classes[@mode='change']">
+		<xsl:for-each select="tei:classes/tei:memberOf">
 		  <xsl:choose>
-		    <xsl:when test="key('DELETE',$me)">
+		    <xsl:when test="@mode='delete'"/>
+		    <xsl:when test="@mode='add' or not (@mode)">
+		      <tei:memberOf key="{@key}"/>
 		    </xsl:when>
-		    <xsl:when test="key('MEMBEROFDELETE',$metoo)">
-		    </xsl:when>
-		    <xsl:when test="key('MEMBEROFADD',$metoo)">
-		    </xsl:when>
-		    <xsl:otherwise>
-		      <tei:memberOf key="{$me}"/>
-		    </xsl:otherwise>
 		  </xsl:choose>
 		</xsl:for-each>
-	      </xsl:for-each>
-	    </xsl:for-each>		  
+		<xsl:for-each select="$ORIGINAL">
+		  <xsl:for-each select="tei:classes/tei:memberOf">
+		    <xsl:variable name="me">
+		      <xsl:value-of select="@key"/>
+		    </xsl:variable>
+		    <xsl:variable name="metoo">
+		      <xsl:value-of select="concat(../../@ident,@key)"/>
+		    </xsl:variable>
+		    <xsl:for-each select="$ODD">
+		      <xsl:choose>
+			<xsl:when test="key('DELETE',$me)">
+			</xsl:when>
+			<xsl:when test="key('MEMBEROFDELETE',$metoo)">
+			</xsl:when>
+			<xsl:when test="key('MEMBEROFADD',$metoo)">
+			</xsl:when>
+			<xsl:otherwise>
+			  <tei:memberOf key="{$me}"/>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:for-each>
+		  </xsl:for-each>
+		</xsl:for-each>		
+	      </xsl:when>
+	      <xsl:when test="tei:classes">
+		<xsl:for-each select="tei:classes/tei:memberOf">
+		    <xsl:copy-of select="."/>
+		</xsl:for-each>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:for-each select="$ORIGINAL">
+		  <xsl:for-each select="tei:classes/tei:memberOf">
+		    <xsl:variable name="me">
+		      <xsl:value-of select="@key"/>
+		    </xsl:variable>
+		    <xsl:for-each select="$ODD">
+		      <xsl:if test="not(key('DELETE',@key))">
+			<tei:memberOf key="{$me}"/>
+		      </xsl:if>
+		    </xsl:for-each>		
+		  </xsl:for-each>
+		</xsl:for-each>
+	      </xsl:otherwise>
+	    </xsl:choose>  
 	  </tei:classes>
           <!-- element content -->
           <xsl:choose>
@@ -685,37 +708,60 @@ If so, use them as is.
 
           <!-- classes -->
 	  <tei:classes>
-	    <xsl:for-each select="tei:classes/tei:memberOf">
-	      <xsl:choose>
-		<xsl:when test="@mode='delete'"/>
-		<xsl:when test="@mode='add' or not (@mode)">
-		  <tei:memberOf key="{@key}"/>
-		</xsl:when>
-	      </xsl:choose>
-	    </xsl:for-each>
-	    <xsl:for-each select="$ORIGINAL">
-	      <xsl:for-each select="tei:classes/tei:memberOf">
-		<xsl:variable name="me">
-		  <xsl:value-of select="@key"/>
-		</xsl:variable>
-		<xsl:variable name="metoo">
-		  <xsl:value-of select="concat(../../@ident,@key)"/>
-		</xsl:variable>
-		<xsl:for-each select="$ODD">
+	    <xsl:choose>
+	      <xsl:when test="tei:classes[@mode='change']">
+		<xsl:for-each select="tei:classes/tei:memberOf">
 		  <xsl:choose>
-		    <xsl:when test="key('DELETE',$me)">
+		    <xsl:when test="@mode='delete'"/>
+		    <xsl:when test="@mode='add' or not (@mode)">
+		      <tei:memberOf key="{@key}"/>
 		    </xsl:when>
-		    <xsl:when test="key('MEMBEROFDELETE',$metoo)">
-		    </xsl:when>
-		    <xsl:when test="key('MEMBEROFADD',$metoo)">
-		    </xsl:when>
-		    <xsl:otherwise>
-		      <tei:memberOf key="{$me}"/>
-		    </xsl:otherwise>
 		  </xsl:choose>
 		</xsl:for-each>
-	      </xsl:for-each>
-	    </xsl:for-each>		  
+		<xsl:for-each select="$ORIGINAL">
+		  <xsl:for-each select="tei:classes/tei:memberOf">
+		    <xsl:variable name="me">
+		      <xsl:value-of select="@key"/>
+		    </xsl:variable>
+		    <xsl:variable name="metoo">
+		      <xsl:value-of select="concat(../../@ident,@key)"/>
+		    </xsl:variable>
+		    <xsl:for-each select="$ODD">
+		      <xsl:choose>
+			<xsl:when test="key('DELETE',$me)">
+			</xsl:when>
+			<xsl:when test="key('MEMBEROFDELETE',$metoo)">
+			</xsl:when>
+			<xsl:when test="key('MEMBEROFADD',$metoo)">
+			</xsl:when>
+			<xsl:otherwise>
+			  <tei:memberOf key="{$me}"/>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:for-each>
+		  </xsl:for-each>
+		</xsl:for-each>		
+	      </xsl:when>
+	      <xsl:when test="tei:classes">
+		<xsl:for-each select="tei:classes/tei:memberOf">
+		    <xsl:copy-of select="."/>
+		</xsl:for-each>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:for-each select="$ORIGINAL">
+		  <xsl:for-each select="tei:classes/tei:memberOf">
+		    <xsl:variable name="me">
+		      <xsl:value-of select="@key"/>
+		    </xsl:variable>
+		    <xsl:for-each select="$ODD">
+		      <xsl:if test="not(key('DELETE',@key))">
+			<tei:memberOf key="{$me}"/>
+		      </xsl:if>
+		    </xsl:for-each>		
+		  </xsl:for-each>
+		</xsl:for-each>
+	      </xsl:otherwise>
+	    </xsl:choose>
 	  </tei:classes>
           <!-- attList -->
           <tei:attList>
@@ -1310,14 +1356,30 @@ every attribute and see whether the attribute has changed-->
 	</xsl:call-template>
 	<xsl:variable name="classMembership">
 	  <x>
-	  <xsl:for-each select="tei:classes/tei:memberOf">
-	    <xsl:copy-of select="."/>
-	  </xsl:for-each>
-	  <xsl:for-each select="$ORIGINAL">
-	    <xsl:for-each select="tei:classes/tei:memberOf">
-	      <xsl:copy-of select="."/>
-	    </xsl:for-each>
-	  </xsl:for-each>
+	    <xsl:choose>
+	      <xsl:when test="tei:classes[@mode='change']">
+		<xsl:for-each select="tei:classes/tei:memberOf[not(@mode='delete')]">
+		  <xsl:copy-of select="."/>
+		</xsl:for-each>
+		<xsl:for-each select="$ORIGINAL">
+		  <xsl:for-each select="tei:classes/tei:memberOf">
+		    <xsl:copy-of select="."/>
+		  </xsl:for-each>
+		</xsl:for-each>
+	      </xsl:when>
+	      <xsl:when test="tei:classes">
+		<xsl:for-each select="tei:classes/tei:memberOf">
+		  <xsl:copy-of select="."/>
+		</xsl:for-each>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:for-each select="$ORIGINAL">
+		  <xsl:for-each select="tei:classes/tei:memberOf">
+		    <xsl:copy-of select="."/>
+		  </xsl:for-each>
+		</xsl:for-each>
+	      </xsl:otherwise>
+	    </xsl:choose>
 	  </x>
 	</xsl:variable>
 	<xsl:for-each select="exsl:node-set($classMembership)/x/tei:memberOf">
