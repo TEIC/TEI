@@ -494,4 +494,239 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 </xsl:template>
 
 
+<!-- derived from from Roberto del Turco -->
+<!-- ############# single entry structure ############# -->
+
+<xsl:template match="tei:biblStructXX">
+ <p class="bibitem">
+   <xsl:call-template name="makeAnchor"/>
+   <xsl:call-template name="main"/>
+ </p>
+</xsl:template>
+
+
+<!-- ############# named templates ############# -->
+
+<xsl:template name="main">
+ <xsl:choose>
+
+  <xsl:when test="tei:analytic">
+
+   <xsl:if test="tei:monogr/tei:title[@level='j']">
+    <xsl:apply-templates select=".//tei:author"/>
+    <xsl:apply-templates select=".//tei:imprint/date"/>
+    <xsl:apply-templates select=".//tei:title[@level='a']"/>
+    <xsl:apply-templates select=".//tei:editor"/>
+    <xsl:apply-templates select=".//tei:title[@level='j']"/>
+    <xsl:apply-templates select=".//tei:imprint"/>
+   </xsl:if>
+
+   <xsl:if test="monogr/title[@level='m']">
+    <xsl:apply-templates select=".//tei:author"/>
+    <xsl:apply-templates select=".//tei:imprint/date"/>
+    <xsl:apply-templates select=".//tei:title[@level='a']"/>
+    In <xsl:apply-templates select=".//tei:editor"/>
+    <xsl:apply-templates select=".//tei:title[@level='m']"/>
+    <xsl:apply-templates select=".//tei:imprint"/>
+    <xsl:apply-templates select=".//tei:series"/>
+   </xsl:if>
+
+  </xsl:when>
+
+  <xsl:otherwise>
+    <xsl:apply-templates select=".//tei:author"/>
+    <xsl:apply-templates select=".//tei:editor"/>
+    <xsl:apply-templates select=".//tei:imprint/date"/>
+    <xsl:apply-templates select=".//tei:title[@level]"/>
+    <xsl:apply-templates select=".//tei:note[@place='inline']" mode="inline"/>
+    <xsl:apply-templates select=".//tei:imprint"/>
+    <xsl:apply-templates select=".//tei:series"/>
+  </xsl:otherwise>
+
+ </xsl:choose>
+</xsl:template>
+
+<xsl:template name="pers-first">
+   <xsl:value-of select=".//tei:surname"/>,
+   <xsl:choose>
+    <xsl:when test=".//tei:foreName[@type='full']">
+     <xsl:value-of select=".//tei:foreName[@type='full']"/>
+     <xsl:if test="position()=last()">.</xsl:if>
+    </xsl:when>
+    <xsl:otherwise>
+     <xsl:value-of select=".//tei:foreName[@type='init']"/>
+    </xsl:otherwise>
+   </xsl:choose>
+   <xsl:if test="position()=last()"><xsl:text> </xsl:text></xsl:if>
+   <xsl:if test="position()!=last()">,<xsl:text> </xsl:text></xsl:if>
+</xsl:template>
+
+<xsl:template name="pers-middle">
+   <xsl:value-of select=".//tei:surname"/>,
+   <xsl:choose>
+    <xsl:when test=".//tei:foreName[@type='full']">
+     <xsl:value-of select=".//tei:foreName[@type='full']"/>
+    </xsl:when>
+    <xsl:otherwise>
+     <xsl:value-of select=".//tei:foreName[@type='init']"/>
+    </xsl:otherwise>
+   </xsl:choose>
+   <xsl:if test="position()!=last()">,<xsl:text> </xsl:text></xsl:if>
+</xsl:template>
+
+<xsl:template name="pers-last">
+   and<xsl:text> </xsl:text>
+   <xsl:choose>
+    <xsl:when test=".//tei:foreName[@type='full']">
+     <xsl:value-of select=".//tei:foreName[@type='full']"/>
+    </xsl:when>
+    <xsl:otherwise>
+     <xsl:value-of select=".//tei:foreName[@type='init']"/>
+    </xsl:otherwise>
+   </xsl:choose>
+   <xsl:text> </xsl:text><xsl:value-of select=".//tei:surname"/>
+   <xsl:choose>
+    <xsl:when test="name()='editor'">
+     <xsl:call-template name="editor"/>
+    </xsl:when>
+    <xsl:otherwise>.<xsl:text> </xsl:text></xsl:otherwise>
+   </xsl:choose>
+</xsl:template>
+
+<xsl:template name="editor">
+ <xsl:variable name="edstring">ed<xsl:if test="preceding-sibling::editor">s</xsl:if>.</xsl:variable>	
+ <xsl:text> </xsl:text>(<xsl:value-of select="$edstring"/>)
+</xsl:template>
+
+
+<!-- ############# entry items templates ############# -->
+
+<xsl:template match="tei:author|tei:editor">
+ <xsl:choose>
+
+  <!-- a complex author|editor entry with persName sub-element(s) -->
+  <xsl:when test="tei:persName">
+	 <xsl:choose>
+	  <xsl:when test="position()=1">
+	   <xsl:call-template name="pers-first"/>
+	  </xsl:when>
+	  <!-- last name in a list -->
+	  <xsl:when test="position()=last()">
+	   <xsl:call-template name="pers-last"/>
+	  </xsl:when>
+	  <!-- middle name in a list -->
+	  <xsl:otherwise>
+	   <xsl:call-template name="pers-middle"/>
+	  </xsl:otherwise>
+	 </xsl:choose>
+  </xsl:when>
+
+  <!-- a simple author|editor entry with no sub-elements -->
+  <xsl:otherwise>
+	 <xsl:choose>
+	  <!-- last name in a list -->
+	  <xsl:when test="position()=last()">
+	   <xsl:choose>
+        <xsl:when test="name()='editor'">
+         <xsl:apply-templates/><xsl:text> </xsl:text>
+         <xsl:call-template name="editor"/>
+        </xsl:when>
+        <xsl:otherwise><xsl:apply-templates/>.<xsl:text> </xsl:text></xsl:otherwise>
+       </xsl:choose>
+	  </xsl:when>
+	  <!-- first or middle name in a list -->
+	  <xsl:otherwise>
+	   <xsl:apply-templates/>,<xsl:text> </xsl:text>
+	  </xsl:otherwise>
+	 </xsl:choose>
+  </xsl:otherwise>
+ </xsl:choose>
+</xsl:template>
+
+<xsl:template match="tei:title">
+ <xsl:choose>
+  <xsl:when test="@level='m'">
+   <em class="titlem"><xsl:apply-templates/></em>.
+  </xsl:when>
+  <xsl:when test="@level='s'">
+   <em class="titles"><xsl:apply-templates/></em>,
+  </xsl:when>
+  <xsl:when test="@level='j'">
+   <em class="titlej"><xsl:apply-templates/></em><xsl:text> </xsl:text>
+  </xsl:when>
+  <xsl:when test="@level='a'">
+   <xsl:choose>
+    <xsl:when test="parent::bibl">
+     <span class="titlea"><xsl:apply-templates/></span>.
+    </xsl:when>
+    <xsl:otherwise>
+     <q class="titlea"><xsl:apply-templates/></q>.
+    </xsl:otherwise>
+   </xsl:choose>
+  </xsl:when>
+    <xsl:when test="@level='u'">
+      <xsl:choose>
+        <xsl:when test="parent::bibl">
+          <span class="titleu"><xsl:apply-templates/></span>.
+        </xsl:when>
+        <xsl:otherwise>
+          <q class="titleu"><xsl:apply-templates/></q>.
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:when>
+  <xsl:otherwise>
+      <b style="background-color:yellow"><xsl:apply-templates/></b>
+  </xsl:otherwise>
+ </xsl:choose>
+</xsl:template>
+
+<xsl:template match="tei:imprint">
+ <xsl:choose>
+  <xsl:when test="../title[@level='m']">
+   <xsl:apply-templates select="pubPlace"/>
+   <xsl:apply-templates select="publisher"/>
+   <xsl:apply-templates select="biblScope[@type='pages']"/>
+  </xsl:when>
+  <xsl:otherwise>
+   <xsl:apply-templates select="biblScope[@type='vol']"/>
+   <xsl:apply-templates select="biblScope[@type='pages']"/>
+  </xsl:otherwise>
+ </xsl:choose>
+</xsl:template>
+
+<xsl:template match="tei:date">
+ <xsl:apply-templates/>.
+</xsl:template>
+
+<xsl:template match="tei:pubPlace">
+ <xsl:apply-templates/>:<xsl:text> </xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:publisher">
+ <xsl:choose>
+  <xsl:when test="../biblScope[@type='pages']">
+   <xsl:apply-templates/>,<xsl:text> </xsl:text>
+  </xsl:when>
+  <xsl:otherwise>
+   <xsl:apply-templates/>.
+  </xsl:otherwise>
+ </xsl:choose>
+</xsl:template>
+
+<xsl:template match="tei:biblScope">
+ <xsl:choose>
+  <xsl:when test="@type='vol'">
+   <xsl:apply-templates/>:
+  </xsl:when>
+  <xsl:when test="@type='pages'">
+   <xsl:apply-templates/>. 
+  </xsl:when>
+ </xsl:choose>
+</xsl:template>
+
+<xsl:template match="tei:note[@type='URL']">
+ &lt;<a href="{normalize-space(.)}"><xsl:apply-templates/></a>&gt;.
+</xsl:template>
+
 </xsl:stylesheet>
+
