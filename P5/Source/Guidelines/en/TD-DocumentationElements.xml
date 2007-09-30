@@ -1010,6 +1010,63 @@ is provided </cell>
 </table>
 </p>
 </div>
+
+
+<div type="div3" xml:id="ST-aliens"><head>Combining TEI and Non-TEI Modules</head>
+
+<p>In the simplest case, all that is needed to include a non TEI
+module in a schema is to reference its RELAXNG source using the
+<att>url</att> attribute on <gi>moduleref</gi>. The following schema
+specification, for example, creates a schema in which declarations
+from the non-TEI module <ident>svg11.rng</ident> (defining Standard
+vector Graphics) are included. To avoid any risk of name clashes, the
+schema specifies that all TEI patterns generated should be prefixed by
+the string "TEI_".
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <schemaSpec prefix="tei_" ident="testsvg" start="TEI svg">
+      <moduleRef key="header"/>
+      <moduleRef key="core"/>
+      <moduleRef key="tei"/>
+      <moduleRef key="textstructure"/>
+      <moduleRef url="svg11.rng"/>
+    </schemaSpec></egXML>
+</p>
+
+<p>This specification generates a single schema which might be used to
+validate either a TEI document (with the root element <gi>TEI</gi>),
+or an SVG document (with a root element <gi>svg</gi>), but would
+<emph>not</emph> validate a TEI document containing <gi>svg</gi>
+elements. For that to be possible, the <gi>svg</gi> element must
+become a member of a TEI model class (<ptr target="#STEC"/>), so that
+it may be referenced by other TEI elements. To achieve this, we modify
+the last <gi>moduleRef</gi> in the above example as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <moduleRef url="svg11.rng">
+	<content xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/Examples">
+	  <rng:define name="tei_model.graphicLike" combine="choice">
+	    <rng:ref name="svg"/>
+	  </rng:define>
+	</content>
+      </moduleRef>
+</egXML></p>
+<p>This states that when the declarations from the
+<ident>svg11.rng</ident> module are combined with those from the other
+modules, the declaration for the model class model.graphicLike in the TEI module
+should be extended to include the element <gi>svg</gi> as an
+alternative. This has the effect that elements in the TEI scheme
+which define their content model in terms of that element class
+(notably <gi>figure</gi>) can now include it. A RELAX NG schema
+generated from such a specification can be used to validate documents
+in which the TEI <gi>figure</gi> element contains  any valid SVG
+representation of a graphic, embedded within an <gi>svg</gi> element.
+</p>
+
+
+<!-- add something on @base attribute ? -->
+
+</div>
+
+
 <div type="div2" xml:id="TDformal"><head>Formal Declaration</head>
 
 <p>This module makes available the following components:
