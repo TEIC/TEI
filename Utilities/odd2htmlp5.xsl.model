@@ -434,6 +434,13 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
     <xsl:attribute name="href">
       <xsl:apply-templates select="."  mode="generateLink"/>
     </xsl:attribute>
+    <xsl:apply-templates select="." mode="xref"/>
+  </xsl:for-each>
+ </a>
+</xsl:template>
+
+
+<xsl:template match="tei:biblStruct" mode="xref">
     <xsl:choose>
       <xsl:when test="not(tei:monogr or tei:analytic)">
 	<xsl:message terminate="yes">no monogr or analytic for <xsl:value-of select="@xml:id"/>
@@ -489,19 +496,44 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
       <xsl:value-of select="tei:monogr/tei:imprint/tei:date"/>
       <xsl:text>)</xsl:text>
     </xsl:if>
-  </xsl:for-each>
- </a>
 </xsl:template>
 
 
 <!-- derived from from Roberto del Turco -->
 <!-- ############# single entry structure ############# -->
 
+  <xsl:template match="tei:listBibl">
+    <xsl:choose>
+      <xsl:when test="tei:biblStruct">
+	<dl>
+	  <xsl:apply-templates select="tei:biblStruct">
+	    <xsl:sort select="tei:*[1]/tei:author/tei:surname"/>
+	    <xsl:sort select="tei:*[1]/tei:editor/tei:surname"/>
+	    <xsl:sort select="tei:*[1]/tei:title"/>
+	    <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
+	  </xsl:apply-templates>
+	</dl>
+      </xsl:when>
+      <xsl:otherwise>
+	<ol>
+	  <xsl:for-each select="tei:bibl|tei:biblItem|tei:biblStruct">
+	    <li>
+	      <xsl:apply-templates select="."/>
+	    </li>
+	  </xsl:for-each>
+	</ol>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 <xsl:template match="tei:biblStruct">
- <p class="bibitem">
-   <xsl:call-template name="makeAnchor"/>
-   <xsl:call-template name="main"/>
- </p>
+  <dt>
+    <xsl:call-template name="makeAnchor"/>
+    <xsl:apply-templates select="." mode="xref"/>
+  </dt>
+  <dd>
+    <xsl:call-template name="main"/>
+ </dd>
 </xsl:template>
 
 
@@ -514,16 +546,16 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 
    <xsl:if test="tei:monogr/tei:title[@level='j']">
     <xsl:apply-templates select=".//tei:author"/>
-    <xsl:apply-templates select=".//tei:imprint/date"/>
+    <xsl:apply-templates select=".//tei:imprint/tei:date"/>
     <xsl:apply-templates select=".//tei:title[@level='a']"/>
     <xsl:apply-templates select=".//tei:editor"/>
     <xsl:apply-templates select=".//tei:title[@level='j']"/>
     <xsl:apply-templates select=".//tei:imprint"/>
    </xsl:if>
 
-   <xsl:if test="monogr/title[@level='m']">
+   <xsl:if test="tei:monogr/tei:title[@level='m']">
     <xsl:apply-templates select=".//tei:author"/>
-    <xsl:apply-templates select=".//tei:imprint/date"/>
+    <xsl:apply-templates select=".//tei:imprint/tei:date"/>
     <xsl:apply-templates select=".//tei:title[@level='a']"/>
     In <xsl:apply-templates select=".//tei:editor"/>
     <xsl:apply-templates select=".//tei:title[@level='m']"/>
@@ -536,7 +568,7 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
   <xsl:otherwise>
     <xsl:apply-templates select=".//tei:author"/>
     <xsl:apply-templates select=".//tei:editor"/>
-    <xsl:apply-templates select=".//tei:imprint/date"/>
+    <xsl:apply-templates select=".//tei:imprint/tei:date"/>
     <xsl:apply-templates select=".//tei:title[@level]"/>
     <xsl:apply-templates select=".//tei:note[@place='inline']" mode="inline"/>
     <xsl:apply-templates select=".//tei:imprint"/>
@@ -544,6 +576,8 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
   </xsl:otherwise>
 
  </xsl:choose>
+ <xsl:apply-templates select="tei:idno"/>
+ <xsl:apply-templates select="tei:note"/>
 </xsl:template>
 
 <xsl:template name="pers-first">
@@ -573,7 +607,7 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
    </xsl:choose>
 </xsl:template>
 
-<xsl:template name="tei:editor">
+<xsl:template name="editor">
  <xsl:variable name="edstring">
  <xsl:text>ed</xsl:text>
  <xsl:if test="preceding-sibling::tei:editor">s</xsl:if>
@@ -581,7 +615,7 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
  </xsl:variable>	
  <xsl:text> (</xsl:text>
  <xsl:value-of select="$edstring"/>
- <xsl:text>)</xsl:text>
+ <xsl:text>) </xsl:text>
 </xsl:template>
 
 
@@ -589,43 +623,25 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 
 <xsl:template match="tei:author|tei:editor">
  <xsl:choose>
-
-  <!-- a complex author|editor entry with persName sub-element(s) -->
-  <xsl:when test="tei:persName">
-	 <xsl:choose>
-	  <xsl:when test="position()=1">
-	   <xsl:call-template name="pers-first"/>
-	  </xsl:when>
-	  <!-- last name in a list -->
-	  <xsl:when test="position()=last()">
-	   <xsl:call-template name="pers-last"/>
-	  </xsl:when>
-	  <!-- middle name in a list -->
-	  <xsl:otherwise>
-	   <xsl:call-template name="pers-middle"/>
-	  </xsl:otherwise>
-	 </xsl:choose>
-  </xsl:when>
-
-  <!-- a simple author|editor entry with no sub-elements -->
-  <xsl:otherwise>
-	 <xsl:choose>
-	  <!-- last name in a list -->
-	  <xsl:when test="position()=last()">
-	   <xsl:choose>
-        <xsl:when test="local-name()='editor'">
-         <xsl:apply-templates/><xsl:text> </xsl:text>
-         <xsl:call-template name="editor"/>
-        </xsl:when>
-        <xsl:otherwise><xsl:apply-templates/>.<xsl:text> </xsl:text></xsl:otherwise>
-       </xsl:choose>
-	  </xsl:when>
-	  <!-- first or middle name in a list -->
-	  <xsl:otherwise>
-	   <xsl:apply-templates/>,<xsl:text> </xsl:text>
-	  </xsl:otherwise>
-	 </xsl:choose>
-  </xsl:otherwise>
+   <!-- last name in a list -->
+   <xsl:when test="position()=last()">
+     <xsl:choose>
+       <xsl:when test="local-name()='editor'">
+	 <xsl:apply-templates/>
+	 <xsl:text> </xsl:text>
+	 <xsl:call-template name="editor"/>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:apply-templates/>
+	 <xsl:text>. </xsl:text>
+       </xsl:otherwise>
+     </xsl:choose>
+   </xsl:when>
+   <!-- first or middle name in a list -->
+   <xsl:otherwise>
+     <xsl:apply-templates/>
+     <xsl:text>, </xsl:text>
+   </xsl:otherwise>
  </xsl:choose>
 </xsl:template>
 
@@ -685,16 +701,26 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 </xsl:template>
 
 <xsl:template match="tei:pubPlace">
- <xsl:apply-templates/>:<xsl:text> </xsl:text>
+ <xsl:apply-templates/>
+ <xsl:choose>
+   <xsl:when test="../tei:publisher">
+     <xsl:text>: </xsl:text>
+   </xsl:when>
+   <xsl:otherwise>
+     <xsl:text>. </xsl:text>
+   </xsl:otherwise>
+ </xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:publisher">
  <xsl:choose>
   <xsl:when test="../tei:biblScope[@type='pages']">
-   <xsl:apply-templates/>,<xsl:text> </xsl:text>
+   <xsl:apply-templates/>
+   <xsl:text>, </xsl:text>
   </xsl:when>
   <xsl:otherwise>
-   <xsl:apply-templates/>.
+   <xsl:apply-templates/>
+   <xsl:text>. </xsl:text>
   </xsl:otherwise>
  </xsl:choose>
 </xsl:template>
@@ -710,9 +736,29 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
  </xsl:choose>
 </xsl:template>
 
-<xsl:template match="tei:note[@type='URL']">
- &lt;<a href="{normalize-space(.)}"><xsl:apply-templates/></a>&gt;.
+<xsl:template match="tei:idno[@type='url']">
+  <xsl:text>&lt;</xsl:text>
+  <a href="{normalize-space(.)}">
+    <xsl:apply-templates/>
+  </a>
+  <xsl:text>&gt;.</xsl:text>
 </xsl:template>
 
+<xsl:template  match="tei:forename"/>
+
+<xsl:template  match="tei:forename" mode="use">
+  <xsl:if test="preceding-sibling::tei:forename">
+    <xsl:text> </xsl:text>
+  </xsl:if>
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template  match="tei:surname">
+  <xsl:if test="../tei:forename">
+    <xsl:apply-templates select="../tei:forename" mode="use"/>
+    <xsl:text> </xsl:text>
+  </xsl:if>
+  <xsl:apply-templates/>
+</xsl:template>
 </xsl:stylesheet>
 
