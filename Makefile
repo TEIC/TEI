@@ -94,7 +94,7 @@ html-web-beta: check
 	-mkdir Guidelines-web-beta-tmp
 	echo making beta HTML Guidelines for language ${LANGUAGE}
 	mkdir -p Guidelines-web-beta-tmp/${LANGUAGE}/html
-	cp rightarrow.gif udm.css guidelines-beta.css COPYING.txt guidelines-print-beta.css TEI-glow.png Guidelines-web-beta-tmp/${LANGUAGE}/html/ 
+	cp rightarrow.gif udm.css udm*.js guidelines-beta.css COPYING.txt guidelines-print-beta.css TEI-glow.png Guidelines-web-beta-tmp/${LANGUAGE}/html/ 
 	xmllint  --noent --xinclude ${SOURCETREE}/Guidelines/${LANGUAGE}/guidelines-${LANGUAGE}.xml | \
 	xsltproc ${VERBOSE} \
 		--stringparam outputDir Guidelines-web-beta-tmp/${LANGUAGE}/html \

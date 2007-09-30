@@ -930,19 +930,17 @@ function togglerelax (el) {
 
 <xsl:template name="teiTOP">
 <script type="text/javascript" 
-	src="http://www.tei-c.org/cms/system/modules/org.tei.www/_common/udm/udm-all.js"></script>
+	src="udm-all.js"></script>
                 
-<script type="text/javascript" 
-	src="http://www.tei-c.org/cms/system/modules/org.tei.www/_common/udm/udm-dom.js"/>
-<script type="text/javascript" 
-	src="http://www.tei-c.org/cms/system/modules/org.tei.www/_common/udm/udm-mod-keyboard.js"/>
+<script type="text/javascript" src="udm-dom.js"/>
+<script type="text/javascript" src="udm-mod-keyboard.js"/>
 
 <div id="container">
    <a href="#contentstart" 
       title="Skip to content" 
       class="skip">skip to content</a>
    <div id="banner">
-     <img src="http://www.tei-c.org/export/system/modules/org.tei.www/_common/images/banner.jpg"
+     <img src="Images/banner.jpg"
 	  alt="Text Encoding Initiative logo and banner"/>
    </div>
    
