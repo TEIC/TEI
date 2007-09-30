@@ -704,15 +704,26 @@ encoding declaration.  The second one has its own encoding declaration
 &lt;/teiCorpus&gt;</egXML>
  </p></div>
 <div type="div3" xml:id="CCAS2"><head>Declarable Elements</head>
+
 <p>Certain of the elements which can appear within a TEI Header are
 known as <term>declarable elements</term>. These elements have in
 common the fact that they may be linked explicitly with a particular
-part of a text or corpus by means of a <att>decls</att> attribute. This
-linkage is used to over-ride the default association between
-declarations in the header and a corpus or corpus text. The only header
-elements which may be associated in this way are those which would not
-otherwise be meaningfully repeatable.
-An alphabetically ordered list of declarable elements follows:
+part of a text or corpus by means of a <att>decls</att> attribute on
+that element. This linkage is used to over-ride the default
+association between declarations in the header and a corpus or corpus
+text. The only header elements which may be associated in this way are
+those which would not otherwise be meaningfully repeatable.  </p>
+<p>Declarable elements are all members of the class <ident
+type="class">att.declarable</ident>; the corresponding declaring
+elements are all members of the  the class <ident
+type="class">att.declarable</ident>
+<specList>
+<specDesc key="att.declarable" atts="default"/>
+<specDesc key="att.declaring" atts="decls"/>
+</specList></p>
+
+<p>An alphabetically ordered list of declarable elements follows:
+
 <specList>
 <specDesc key="bibl"/>
 <specDesc key="biblFull"/>
@@ -747,13 +758,15 @@ apply:
 <item>every declarable element must bear a unique identifier</item>
 <item>for each different type of declarable element which occurs more
 than once within the same parent element, exactly one element must be
-specified as the default</item></list>
+specified as the default, by means of the <att>default</att> attribute
+</item></list>
  </p>
 <p>In the following example, an editorial declaration contains two
-possible <gi>correction</gi> policies, one identified as CorPol1 and the
-other as CorPol2.  Since there are two, one of them (in this case CorPol1) must be
-specified as the default:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><editorialDecl>
+possible <gi>correction</gi> policies, one identified as
+<val>CorPol1</val> and the other as <val>CorPol2</val>.  Since there
+are two, one of them (in this case <val>CorPol1</val>) must be
+specified as the default: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><editorialDecl>
    <correction xml:id="CorPol1" default="true">
       <p> ... </p>
    </correction>
@@ -764,20 +777,19 @@ specified as the default:
       <p> ... </p>
       <p> ... </p>
    </normalization>
-</editorialDecl></egXML>
-For texts associated with the header in which this declaration appears
-correction method CorPol1 will be assumed, unless they explicitly state
-otherwise.  Here is the structure for a text which does state otherwise:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
+</editorialDecl></egXML> For texts associated with the header in which
+this declaration appears correction method <val>CorPol1</val> will be
+assumed, unless they explicitly state otherwise.  Here is the
+structure for a text which does state otherwise: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><text>
   <body>
     <div1 n="d1">  </div1>
     <div1 n="d2" decls="#CorPol2">  </div1>
     <div1 n="d3">  </div1>
   </body>
-</text></egXML>
-In this case, the contents of the divisions D1 and D3 will both use
-correction policy CorPol1, and those of division D2 will use correction
-policy CorPol2.
+</text></egXML> In this case, the contents of the divisions D1 and D3
+will both use correction policy <val>CorPol1</val>, and those of
+division D2 will use correction policy <val>CorPol2</val>.
  </p>
 <p>The <att>decls</att> attribute is defined for any element which is a
 member of the class <term>declaring</term>.  This includes the major
@@ -821,11 +833,11 @@ example slightly:
 </encodingDesc></egXML>
  </p>
 <p>This encoding description now has two editorial declarations,
-identified as ED1 (the default) and ED2.  For texts not specifying
-otherwise, ED1 will apply.  If ED1 applies, correction method C1a and
+identified as <val>ED1</val> (the default) and <val>ED2</val>.  For texts not specifying
+otherwise, <val>ED1</val> will apply.  If <val>ED1</val> applies, correction method C1a and
 normalization method N1 apply, since these are the specified defaults
-within ED1.  In the same way, for a text specifying <att>decls</att> as
-<q>ED2</q>, correction C2a, 
+within <val>ED1</val>.  In the same way, for a text specifying <att>decls</att> as
+<q><val>ED2</val></q>, correction C2a, 
  and normalization N2b will
 apply.
  </p>
@@ -835,9 +847,9 @@ apply.
 required.  A tag such as <tag>text decls='ED1 ED2'</tag> would
 (obviously) be illegal, since it includes two elements of the same type;
 a tag such as <tag>text decls='ED2 C1a'</tag> is also illegal, since in
-this context <q>ED2</q> is synonymous with the defaults for that
-editorial declaration, namely <q>
-C2a N2b</q>, resulting in a list
+this context <val>ED2</val> is synonymous with the defaults for that
+editorial declaration, namely <val>
+C2a N2b</val>, resulting in a list
 that identifies two correction elements (C1a and C2a).
  </p></div>
 <div type="div3" xml:id="CCAS3"><head>Summary</head>
