@@ -1441,7 +1441,11 @@
                   <xsl:text>startUp()</xsl:text>
                 </xsl:attribute>
                 <xsl:call-template name="bodyHook"/>
-		<xsl:call-template name="teiTOP"/>
+		<xsl:call-template name="teiTOP">
+		  <xsl:with-param name="name">
+		    <xsl:value-of select="$name"/>
+		  </xsl:with-param>
+		</xsl:call-template>
                 <div class="main-content">
 		  <xsl:call-template name="startDivHook"/>
 
@@ -1462,6 +1466,7 @@
   </xsl:template>
 
 <xsl:template name="teiTOP">
+  <xsl:param name="name"/>
   <div id="hdr">
     <xsl:call-template name="stdheader">
       <xsl:with-param name="title">
