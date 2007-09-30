@@ -49,11 +49,19 @@ $Id$
     <ptr target="#SAAN"/>).</item>
   </list></p>
   <p>These facilities all use the same set of techniques based on the
-  W3C <ref target="http://www.w3.org/TR/xptr-framework/">XPointer</ref>
-  mechanism, which includes a variety of <term rend="noindex">schemes</term>. The most convenient technique, and
+  W3C <ref
+  target="http://www.w3.org/TR/xptr-framework/">XPointer</ref>
+  mechanism, which includes a variety of <term
+  rend="noindex">schemes</term>. The most convenient technique, and
   that which is recommended by these Guidelines wherever possible,
   makes use of the global <att>xml:id</att> attribute, as defined in
-  section <ptr target="#STGA"/>, and introduced in section <ptr target="#SG-id"/>. For many of the topics discussed in this chapter,
+  section <ptr target="#STGA"/>, and introduced in section <ptr
+  target="#SG-id"/>. When the <ident type="module">linking</ident>
+  module is included in a schema, the attribute class <ident
+  type="class">att.global</ident> is extended to include eight
+  additional attributes to support the various kinds of linking listed
+  above. Each of these attributes is introduced in the appropriate
+  section below. In addition, for many of the topics discussed,
   a choice of methods of encoding is offered, ranging from simple but
   less general ones, which use attribute values only, to more
   elaborate and more general ones, which use specialized elements.</p>
@@ -1563,11 +1571,13 @@ M&uuml;nchen: Rogner & Bernhard, 1972. *--></p>
         <att>corresp</att> may be used to encode such correspondence,
         once it has been identified.
         <specList>
-          <specDesc key="att.global.linking"/>
+          <specDesc key="att.global.linking" atts="corresp"/>
         </specList>
         This is one of the attributes made available by the mechanism
-        described in the introduction to this chapter (<ptr target="#SA"/>). Correspondence can also be expressed by means
-        of the <gi>link</gi> element introduced in section <ptr target="#SAPT"/>.</p>
+        described in the introduction to this chapter (<ptr
+        target="#SA"/>). Correspondence can also be expressed by means
+        of the <gi>link</gi> element introduced in section <ptr
+        target="#SAPT"/>.</p>
         <p>Where the correspondence is between <emph>spans</emph>, the
         <gi>seg</gi> element should be used, if no other element is
         available. Where the correspondence is between
@@ -1980,12 +1990,19 @@ generalizable for other kinds of alignment (for example, alignment of
 text elements with respect to space).</p>
 <div type="div3" xml:id="SASYNC">
 <head>Aligning Synchronous Events</head>
-<p>To mark synchronous elements, the <att>synch</att> attribute, which
-is one of the linking attributes that are available for all text
-elements, may be used. 
-Alternatively, the <gi>link</gi> and <gi>linkGrp</gi> elements may be
-used to make explicit the fact that the synchronous elements are
-aligned.</p>
+
+<p>Provided that explicit elements are available to represent the
+parts or places to be synchronized, then the global linking attribute
+<att>synch</att> may be used to encode such synchronization, once it
+has been identified.
+        <specList>
+          <specDesc key="att.global.linking" atts="synch"/>
+        </specList>
+        This is another of the attributes made globally available by
+        the mechanism described in the introduction to this chapter.
+        Alternatively, the <gi>link</gi> and <gi>linkGrp</gi> elements
+        may be used to make explicit the fact that the synchronous
+        elements are aligned.</p>
 <p>To illustrate the use of these mechanisms for marking synchrony,
 consider the following representation of a spoken text:
 <!-- From BNC, via LB, retranscribed without SGML markup -->
@@ -2175,13 +2192,21 @@ that is, an element which is not explicitly present in a text, but the
 presence of which an application can infer from the encoding supplied.
 In this section, we are concerned with virtual elements made by simply
 cloning existing elements. In the next section (<ptr target="#SAAG"/>), we
-discuss virtual elements made by aggregating existing elements.</p>
+discuss virtual elements made by aggregating existing elements. </p>
+<p>Provided
+        that explicit elements are available to represent the parts or
+        places to be linked, then the global linking attributes
+        <att>sameAs</att> and <att>copyOf</att> may be used to encode 
+this kind of equivalence:
+        <specList>
+          <specDesc key="att.global.linking" atts="sameAs copyOf"/>
+        </specList>
+</p>
 <p>It is useful to be able to represent the fact that one element of
 text is identical to others, for analytical purposes, or (especially if
 the elements have lengthy content) to obviate the need to repeat the
 content. For example, consider the repetition of the <tag>date</tag>
 element in the following material:
-        <!-- Orwell, Nineteen-Eighty-Four  -->
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>In small clumsy letters he wrote:
 <q rend="centered italic"><date xml:id="d840404">April 4th,
 1984</date>.</q></p>
@@ -2192,6 +2217,7 @@ and down the page, shedding first its capital letters
 and finally even its full stops:
 <q rend="italic"><date>April 4th, 1984</date>.
 Last night to the flicks. ... </q></p></egXML>
+        <!-- Orwell, Nineteen-Eighty-Four  -->
 Suppose now that we wish to encode the fact that the second
 <gi>date</gi> element above has identical content to the first. The
 <att>sameAs</att> attribute is provided for this purpose. Using it, we
@@ -2274,7 +2300,7 @@ aggregation of parts, and the <gi>joinGrp</gi> for grouping
 <p>The linking attributes for aggregation are <att>next</att> and
 <att>prev</att>; each of these attributes has a single identifier as its
 value:
-<specList><specDesc key="att.global.linking"/></specList></p>
+<specList><specDesc key="att.global.linking" atts="next prev"/></specList></p>
 <p>The <gi>join</gi> element is also a member of the class of <ident type="class">att.pointing</ident> elements, and so may carry any of the
 attributes of that class; for the list, see section <ptr target="#SAPT"/>.</p>
 <p>Here is the material on which we base our first illustration of the
@@ -2670,7 +2696,7 @@ certainty in general.</p>
 with any element assuming that they have been declared following the
 procedure discussed in the introduction to this chapter.
  <specList>
-   <specDesc key="att.global.linking"/>
+   <specDesc key="att.global.linking" atts="exclude select"/>
 </specList></p>
 <p>A more general way to mark alternation, encompassing both exclusive
 and inclusive alternation, is to use the linking element <gi>alt</gi>.
