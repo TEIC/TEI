@@ -1299,6 +1299,7 @@ class romaDom extends domDocument
 
 	$theClasses = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'classes' );
 	$oClasses = $oElementSpec->appendChild( $theClasses );
+	$oClasses->setAttribute( 'mode', 'change' );
 	
 
 	foreach ( $aszClasses as $szClass => $classValue )
