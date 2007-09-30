@@ -1368,7 +1368,11 @@ editorial practices:
   <specDesc key="add"/>
   <specDesc key="del"/>
   <specDesc key="choice"/>
-</specList></p><p>Encoders may choose to omit parts of the copy text for reasons
+</specList></p>
+
+
+
+<p>Encoders may choose to omit parts of the copy text for reasons
 ranging from illegibility of the source or impossibility of transcribing
 it, to editorial policy, e.g. a systematic exclusion of poetry or prose
 from an encoding. The full details of the policy decisions concerned
@@ -2874,15 +2878,20 @@ the graphical information is embedded directly within the document
 using some suitable binary format such as Base64, the
 <gi>binaryObject</gi> element may be used to contain it.
 </p>
+<p>The elements <gi>graphic</gi> and <gi>binaryObject</gi> are both
+members of the class <ident type="class">att.internetMedia</ident>,
+from which they inherit the following attribute:
+ <specList><specDesc key="att.internetMedia" atts="mimeType"/></specList></p>
+
 <p>For example, the following passage indicates that a copy of the  image
 found in the source text may be recovered from the URL
-<ident>zigzag2.gif</ident>:
+<ident>zigzag2.png</ident> and that this image is in PNG format:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>These were the four lines I moved in
 through my first, second, third, and
 fourth volumes.   -- In the fifth volume
 I have been very good,   -- the precise
 line I have described in it being this :     
-<graphic url="zigzag2.gif"/>      
+<graphic url="zigzag2.png" mimeType="image/png"/>      
 By which it appears, that except at the
 curve, marked A. where I took a trip
 to Navarre, -- and the indented curve B.
@@ -2910,13 +2919,8 @@ also provides the ability to associate an image with additional information
 such as a heading or a description.</p>
 <specGrp xml:id="DCOGR" n="Graphic containers">
 
-
 &graphic;
-
-
-
 &binaryObject;
-
 </specGrp>
 </div>	
 <div type="div2" xml:id="CORS"><head>Reference Systems</head>
