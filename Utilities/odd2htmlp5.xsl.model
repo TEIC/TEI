@@ -507,9 +507,8 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
       <xsl:when test="tei:biblStruct">
 	<dl>
 	  <xsl:apply-templates select="tei:biblStruct">
-	    <xsl:sort select="tei:*[1]/tei:author/tei:surname"/>
+	    <xsl:sort select="tei:*[1]/tei:author/tei:surname|tei:*[1]/tei:author/tei:name"/>
 	    <xsl:sort select="tei:*[1]/tei:editor/tei:surname"/>
-	    <xsl:sort select="tei:*[1]/tei:title"/>
 	    <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
 	  </xsl:apply-templates>
 	</dl>
@@ -545,7 +544,7 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
   <xsl:when test="tei:analytic">
 
    <xsl:if test="tei:monogr/tei:title[@level='j']">
-    <xsl:apply-templates select=".//tei:author"/>
+    <xsl:apply-templates select="./tei:analytic/tei:author"/>
     <xsl:apply-templates select=".//tei:imprint/tei:date"/>
     <xsl:apply-templates select=".//tei:title[@level='a']"/>
     <xsl:apply-templates select=".//tei:editor"/>
@@ -554,10 +553,10 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
    </xsl:if>
 
    <xsl:if test="tei:monogr/tei:title[@level='m']">
-    <xsl:apply-templates select=".//tei:author"/>
+    <xsl:apply-templates select="./tei:analytic/tei:author"/>
     <xsl:apply-templates select=".//tei:imprint/tei:date"/>
     <xsl:apply-templates select=".//tei:title[@level='a']"/>
-    In <xsl:apply-templates select=".//tei:editor"/>
+    In <xsl:apply-templates select="tei:monogr/tei:editor|tei:monogr/tei:author"/>
     <xsl:apply-templates select=".//tei:title[@level='m']"/>
     <xsl:apply-templates select=".//tei:imprint"/>
     <xsl:apply-templates select=".//tei:series"/>
@@ -683,17 +682,10 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 </xsl:template>
 
 <xsl:template match="tei:imprint">
- <xsl:choose>
-  <xsl:when test="../tei:title[@level='m']">
    <xsl:apply-templates select="tei:pubPlace"/>
    <xsl:apply-templates select="tei:publisher"/>
-   <xsl:apply-templates select="tei:biblScope[@type='pages']"/>
-  </xsl:when>
-  <xsl:otherwise>
+   <xsl:apply-templates select="tei:biblScope[@type='pp']"/>
    <xsl:apply-templates select="tei:biblScope[@type='vol']"/>
-   <xsl:apply-templates select="tei:biblScope[@type='pages']"/>
-  </xsl:otherwise>
- </xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:date">
@@ -714,7 +706,7 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 
 <xsl:template match="tei:publisher">
  <xsl:choose>
-  <xsl:when test="../tei:biblScope[@type='pages']">
+  <xsl:when test="../tei:biblScope[@type='pp']">
    <xsl:apply-templates/>
    <xsl:text>, </xsl:text>
   </xsl:when>
@@ -728,16 +720,18 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 <xsl:template match="tei:biblScope">
  <xsl:choose>
   <xsl:when test="@type='vol'">
-   <xsl:apply-templates/>:
+   <xsl:apply-templates/>
+   <xsl:text>:</xsl:text>
   </xsl:when>
-  <xsl:when test="@type='pages'">
-   <xsl:apply-templates/>. 
+  <xsl:when test="@type='pp'">
+   <xsl:apply-templates/>
+   <xsl:text>. </xsl:text>
   </xsl:when>
  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:idno[@type='url']">
-  <xsl:text>&lt;</xsl:text>
+  <xsl:text> &lt;</xsl:text>
   <a href="{normalize-space(.)}">
     <xsl:apply-templates/>
   </a>
