@@ -480,7 +480,7 @@ function togglerelax (el) {
                 </xsl:attribute>
                 <xsl:call-template name="bodyHook"/>
 		<xsl:call-template name="teiTOP"/>
-		<div>
+		<div class="container">
 		  <xsl:call-template name="mainTOC"/>
 		</div>
                 <xsl:call-template name="stdfooter"/>
