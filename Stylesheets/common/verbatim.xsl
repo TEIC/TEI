@@ -10,6 +10,9 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     exclude-result-prefixes="xlink xhtml dbk rng tei teix" >
 
+
+  <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
+
   <xsl:param name="startComment">&lt;span class="comment"&gt;</xsl:param>
   <xsl:param name="endComment">&lt;/span&gt;</xsl:param>
   <xsl:param name="startElement">&lt;span class="element"&gt;</xsl:param>
