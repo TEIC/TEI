@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0" 
   xmlns:xi="http://www.w3.org/2001/XInclude"
- xmlns:rng="http://relaxng.org/ns/structure/1.0"
- xmlns:teix="http://www.tei-c.org/ns/Examples">
+  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+  xmlns:teix="http://www.tei-c.org/ns/Examples">
  <teiHeader>
   <fileDesc>
    <titleStmt>
@@ -81,6 +81,87 @@
      </content>
     </macroSpec>
 
+    <!-- The goal here is to permit *any* element from the nh: namespace-->
+    <!-- The problem is that we can't do this via <elementSpec>, as it-->
+    <!-- requires a name be specified on ident=, and separates content-->
+    <!-- declaration from attribute declaration (maybe we could put the-->
+    <!-- attribute declaration inside elementSpec/content/, but it's not-->
+    <!-- how it is intended to work). So instead, we just define a macro-->
+    <!-- which will resolve the RELAX NG declarations we want-->
+
+    <macroSpec ident="anyNH" mode="add">
+      <content>
+	<element xmlns="http://relaxng.org/ns/structure/1.0">
+	  <nsName ns="http://www.example.org/ns/non-hierarchical"/>
+	  <zeroOrMore>
+	    <attribute>
+	      <anyName/>
+	      <data type="token"/>
+	    </attribute>
+	  </zeroOrMore>
+	</element>
+      </content>
+    </macroSpec>
+    
+    <!-- in examples we'd like to be able to show use of <xi:include>; of course, -->
+    <!-- we can't put in an <xi:include> element, or it will be processed! Thus, -->
+    <!-- here we use a bogus namespace -->
+    <elementSpec ident="include" ns="http://www.example.org/cannot/really/use/XInclude" mode="add">
+      <!-- the content and attributes were devised based on my reading of the spec at
+	   http://www.w3.org/TR/2006/REC-xinclude-20061115/, also having looked at
+	   Norm Walsh's implimentation for DocBook. -sb -->
+      <content>
+	<rng:optional>
+	  <rng:ref name="fallback"/>
+	</rng:optional>
+      </content>
+      <attList>
+	<attDef ident="href">
+	  <datatype>
+	    <rng:data type="anyURI">
+	      <rng:param name="pattern">[^#]+</rng:param>
+	    </rng:data>
+	  </datatype>
+	</attDef>
+	<attDef ident="parse">
+	  <defaultVal>xml</defaultVal>
+	  <valList>
+	    <valItem ident="xml"/>
+	    <valItem ident="text"/>
+	  </valList>
+	</attDef>
+	<attDef ident="xpointer">
+	  <datatype>
+	    <rng:data type="string"/>
+	  </datatype>
+	</attDef>
+	<attDef ident="encoding">
+	  <datatype>
+	    <rng:data type="string"/>
+	  </datatype>
+	</attDef>
+	<attDef ident="accept">
+	  <datatype>
+	    <rng:data type="string"/>
+	  </datatype>
+	</attDef>
+	<attDef ident="accept-language">
+	  <datatype>
+	    <rng:data type="string"/>
+	  </datatype>
+	</attDef>
+      </attList>
+    </elementSpec>
+    <!-- of course <xi:include> refers to <xi:fallback>, so we need to declare-->
+    <!-- that, too, just in case. -->
+    <elementSpec ident="fallback" ns="http://www.example.org/cannot/really/use/XInclude" mode="add">
+      <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	<rng:optional>
+	  <rng:ref name="anyTEI"/>
+	</rng:optional>
+      </content>
+    </elementSpec>
+
     <elementSpec ident="egXML" mode="change" module="tagdocs"
      ns="http://www.tei-c.org/ns/Examples" usage="mwa">
      <content>
@@ -92,6 +173,8 @@
         <ref name="svg"/>
         <ref name="define"/>
         <ref name="pattern"/>
+	<ref name="include"/>
+	<ref name="anyNH"/>
        </choice>
       </oneOrMore>
      </content>
@@ -139,6 +222,8 @@
          <ref name="anyTEI"/>
          <ref name="macro.schemapattern"/>
          <ref name="mathml.math"/>
+	 <ref name="anyNH"/>
+	 <ref name="include"/>
         </choice>
        </zeroOrMore>
       </element>
