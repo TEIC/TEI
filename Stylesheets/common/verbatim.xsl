@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <xsl:stylesheet 
     version="1.0" 
+    xmlns:m="http://www.w3.org/1998/Math/MathML"
+    xmlns:atom="http://www.w3.org/2005/Atom"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:dbk="http://docbook.org/ns/docbook"
@@ -8,7 +10,7 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
     xmlns:teix="http://www.tei-c.org/ns/Examples"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="xlink xhtml dbk rng tei teix" >
+    exclude-result-prefixes="xlink xhtml dbk rng m tei teix atom" >
 
 
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
@@ -210,6 +212,11 @@
         <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
         <xsl:apply-templates mode="verbatim"/>
         <xsl:choose>
+	  <xsl:when test="not(parent::*)  or parent::teix:egXML">
+            <xsl:call-template name="lineBreak">
+              <xsl:with-param name="id">6</xsl:with-param>
+            </xsl:call-template>
+	  </xsl:when>
           <xsl:when test="child::node()[last()]/self::text()[normalize-space(.)='']">
             <xsl:call-template name="lineBreak">
               <xsl:with-param name="id">3</xsl:with-param>
