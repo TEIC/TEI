@@ -125,6 +125,11 @@
 
 
   <xsl:template name="javascriptHook">
+
+  <script type="text/javascript" src="udm-all.js">
+    <xsl:comment>&#160;</xsl:comment>
+  </script>
+
     <script type="text/javascript">
       <xsl:comment>
         <xsl:text disable-output-escaping="yes">
@@ -928,11 +933,6 @@ function togglerelax (el) {
 
 
 
-<xsl:template name="javascriptHook">
-  <script type="text/javascript" src="udm-all.js">
-    <xsl:comment>&#160;</xsl:comment>
-  </script>
-</xsl:template>
 
 <xsl:template name="teiTOP">
 <xsl:param name="name"/>
