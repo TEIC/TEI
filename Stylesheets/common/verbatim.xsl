@@ -412,9 +412,25 @@
 
 
     <xsl:template name="makeIndent">
-    <xsl:for-each select="ancestor::*[not(namespace-uri()='http://www.tei-c.org/ns/1.0')]">
+      <xsl:variable name="depth"
+		    select="count(ancestor::*[not(namespace-uri()='http://www.tei-c.org/ns/1.0')])"/>
+      <xsl:call-template name="makeSpace">
+	<xsl:with-param name="d">
+	  <xsl:value-of select="$depth - 1"/>
+	</xsl:with-param>
+      </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="makeSpace">
+    <xsl:param name="d"/>
+    <xsl:if test="number($d)&gt;1">
       <xsl:value-of select="$spaceCharacter"/>
-    </xsl:for-each>
+      <xsl:call-template name="makeSpace">
+	<xsl:with-param name="d">
+	  <xsl:value-of select="$d -1"/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
   </xsl:template>
 
 <xsl:template match="@*" mode="verbatim">
