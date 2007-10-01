@@ -416,7 +416,7 @@
 		    select="count(ancestor::*[not(namespace-uri()='http://www.tei-c.org/ns/1.0')])"/>
       <xsl:call-template name="makeSpace">
 	<xsl:with-param name="d">
-	  <xsl:value-of select="$depth - 1"/>
+	  <xsl:value-of select="$depth"/>
 	</xsl:with-param>
       </xsl:call-template>
   </xsl:template>
