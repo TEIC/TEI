@@ -26,10 +26,6 @@
 	  <ref name="{@ident}"/>
 	</xsl:if>
     </xsl:for-each>
-    <ref name="mathml.math"/>
-    <ref name="svg"/>
-    <ref name="anySchematron"/>
-    <text/>
   </choice>
 </xsl:template>
 

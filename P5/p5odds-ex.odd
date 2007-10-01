@@ -18,7 +18,7 @@
   </teiHeader>
   <text>
     <body>
-      <schemaSpec ns="http://www.tei-c.org/ns/Examples" ident="p5examples" prefix="TEI_" start="egXML">
+      <schemaSpec ns="http://www.tei-c.org/ns/Examples" ident="p5examples" prefix="TEI_" start="egXML"  xmlns:rng="http://relaxng.org/ns/structure/1.0">
 	<moduleRef key="tei"/>
 	<moduleRef key="core"/>
 	<moduleRef url="Exemplars/mathml2-main.rng"/>
@@ -54,6 +54,38 @@
 	  </content>
 	</elementSpec>
 	
+	<macroSpec ident="anyTEI" mode="add">
+	  <content>
+	    <element xmlns="http://relaxng.org/ns/structure/1.0"
+		     ns="http://www.tei-c.org/ns/Examples">
+	      <xi:include href="Exemplars/names.xml">
+		<xi:fallback> ERROR: cannot locate list of
+		names</xi:fallback>
+	      </xi:include>
+	      <ref name="att.global.attribute.xmlid"/>
+	      <ref name="att.global.attribute.xmllang"/>
+	      <zeroOrMore>
+		<attribute>
+		  <anyName>
+		    <except>
+		      <name>xml:id</name>
+		      <name>xml:lang</name>
+		    </except>
+		  </anyName>
+		</attribute>
+	      </zeroOrMore>
+	      <zeroOrMore>
+		<choice>
+		  <text/>
+		  <ref name="anyTEI"/>
+		  <ref name="macro.schemapattern"/>
+		  <ref name="mathml.math"/>
+		</choice>
+	      </zeroOrMore>
+	    </element>
+	  </content>
+	</macroSpec>
+	
 	<macroSpec ident="anySchematron" mode="add">
 	  <content>
 	    <element xmlns="http://relaxng.org/ns/structure/1.0">
@@ -87,22 +119,107 @@
 	    </group>
 	  </content>
 	</macroSpec>
-	<!--
-	    <classSpec mode="change" xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="GLOBAL" type="atts" ident="tei.global">
-	    <attList>
-	    <attDef ident="xml:id" usage="opt">
-	    <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="NMTOKEN"/></datatype>
+
+	<elementSpec ident="fallback" ns="http://www.example.org/cannot/really/use/XInclude" mode="add">
+	  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	    <rng:optional>
+	      <rng:ref name="anyTEI"/>
+	    </rng:optional>
+	  </content>
+	</elementSpec>
+
+	<!-- The goal here is to permit *any* element from the nh: namespace-->
+	<!-- The prolbem is that we can't do this via <elementSpec>, as it-->
+	<!-- requires a name be specified on ident=, and separates contnent-->
+	<!-- declaration from attribute declaration (maybe we could put the-->
+	<!-- attribute declaration inside elementSpec/content/, but it's not-->
+	<!-- how it is intended to work). So instead, we just define a macro-->
+	<!-- which will resolve the RELAX NG declarations we want-->
+	<macroSpec ident="anyNH" mode="add">
+	  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	    <!-- macro defines a single element type, as it were, but -->
+	    <rng:element>
+	      <!-- there is no restriction on the local name part, but-->
+	      <!-- it must be in the following namespace: -->
+	      <rng:nsName ns="http://www.example.org/ns/non-hierarchical"/>
+	      <!-- element can have any number of any attrs with any values: -->
+	      <rng:zeroOrMore>
+		<rng:attribute>
+		  <rng:anyName/>
+		  <rng:data type="token"/>
+		</rng:attribute>
+	      </rng:zeroOrMore>
+	      <!-- but it has to be empty (this is NH, after all :-) -->
+	      <rng:empty/>
+	    </rng:element>
+	  </content>
+	</macroSpec>
+
+	<!-- in examples we'd like to be able to show use of <xi:include>; of course, -->
+	<!-- we can't put in an <xi:include> element, or it will be processed! Thus, -->
+	<!-- here we use a bogus namespace -->
+	<elementSpec ident="include" ns="http://www.example.org/cannot/really/use/XInclude" mode="add">
+	  <!-- the content and attributes were devised based on my reading of the spec at
+	       http://www.w3.org/TR/2006/REC-xinclude-20061115/, also having looked at
+	       Norm Walsh's implimentation for DocBook. -sb -->
+	  <content>
+	    <rng:optional>
+	      <rng:ref name="fallback"/>
+	    </rng:optional>
+	  </content>
+	  <attList>
+	    <attDef ident="href">
+	      <datatype>
+		<rng:data type="anyURI">
+		  <rng:param name="pattern">[^#]+</rng:param>
+		</rng:data>
+	      </datatype>
 	    </attDef>
-	    </attList>
-	    </classSpec>
-	-->
+	    <attDef ident="parse">
+	      <defaultVal>xml</defaultVal>
+	      <valList>
+		<valItem ident="xml"/>
+		<valItem ident="text"/>
+	      </valList>
+	    </attDef>
+	    <attDef ident="xpointer">
+	      <datatype>
+		<rng:data type="string"/>
+	      </datatype>
+	    </attDef>
+	    <attDef ident="encoding">
+	      <datatype>
+		<rng:data type="string"/>
+	      </datatype>
+	    </attDef>
+	    <attDef ident="accept">
+	      <datatype>
+		<rng:data type="string"/>
+	      </datatype>
+	    </attDef>
+	    <attDef ident="accept-language">
+	      <datatype>
+		<rng:data type="string"/>
+	      </datatype>
+	    </attDef>
+	  </attList>
+	</elementSpec>
+
 	<elementSpec ident="egXML" module="tagdocs" mode="change">
 	  <content>
 	    <group xmlns="http://relaxng.org/ns/structure/1.0">
-	      <zeroOrMore >
-		<xi:include href="Exemplars/exnames.xml">
-		  <xi:fallback> ERROR: cannot locate list of names</xi:fallback>
-		</xi:include>
+	      <zeroOrMore>
+		<choice>
+		  <xi:include href="Exemplars/exnames.xml">
+		    <xi:fallback> ERROR: cannot locate list of names</xi:fallback>
+		  </xi:include>
+		  <ref name="mathml.math"/>
+		  <ref name="svg"/>
+		  <ref name="anySchematron"/>
+		  <ref name="include"/>
+		  <ref name="anyNH"/>
+		  <text/>
+		</choice>
 	      </zeroOrMore>
 	    </group>
 	  </content>
