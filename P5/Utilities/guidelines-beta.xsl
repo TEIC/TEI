@@ -259,8 +259,7 @@ function togglerelax (el) {
     <span class="bookmarklink">
       <a class="bookmarklink" href="#{$ident}">
 	<xsl:attribute name="title">
-	  <xsl:text>bookmark </xsl:text>
-	  <xsl:value-of select="tei:head[1]"/>
+	  <xsl:text>link to this section </xsl:text>
 	</xsl:attribute>
 	<span class="invisible">
 	  <xsl:text>TEI: </xsl:text>
@@ -276,11 +275,34 @@ function togglerelax (el) {
     <xsl:if
       test="not(parent::tei:div) or not(local-name(preceding::*[1])='head')">
       <table class="miniTOC">
+        <xsl:if test="not(parent::tei:div) and child::tei:div">
+          <tr>
+            <td>
+              <xsl:call-template name="subtoc"/>
+	      <hr/>
+            </td>
+          </tr>
+        </xsl:if>
         <tr>
           <td>
-            <a class="navigation" href="index.html">Home</a> | <a
-              class="navigation" href="index-toc.html">Table of
-              Contents</a>
+            <xsl:call-template name="previousLink"/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <xsl:call-template name="nextLink"/>
+          </td>
+        </tr>
+
+	<tr>
+	  <td>
+	    <a class="navigation" href="index.html">Home</a> | <a
+	    class="navigation" href="index-toc.html">Table of
+	    Contents</a>
+	  </td>
+	</tr>
+        <tr>
+          <td>
             <xsl:choose>
 	      <xsl:when test="self::tei:elementSpec">
                 <xsl:text> | </xsl:text>
@@ -322,24 +344,6 @@ function togglerelax (el) {
             </xsl:choose>
           </td>
         </tr>
-        <tr>
-          <td>
-            <xsl:call-template name="previousLink"/>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <xsl:call-template name="nextLink"/>
-          </td>
-        </tr>
-
-        <xsl:if test="not(parent::tei:div) and child::tei:div">
-          <tr>
-            <td>
-              <xsl:call-template name="subtoc"/>
-            </td>
-          </tr>
-        </xsl:if>
       </table>
     </xsl:if>
   </xsl:template>
@@ -955,5 +959,8 @@ function togglerelax (el) {
    
    <xsl:copy-of select="document('staticnav.xml')/html:ul"/>
 </div>
+<div
+ class="mainhead"><h1>P5: Guidelines for Electronic Text Encoding and Interchange</h1></div>
+
 </xsl:template>
 </xsl:stylesheet>
