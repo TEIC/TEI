@@ -274,19 +274,25 @@ function togglerelax (el) {
             <xsl:choose>
 	      <xsl:when test="self::tei:elementSpec">
                 <xsl:text> | </xsl:text>
-                <a class="navigation" href="REFTAG.html">
+                <a class="navigation" href="REF-ELEMENTS.html">
                   Element catalogue</a>
               </xsl:when>
-	      <xsl:when test="self::tei:classSpec">
+	      <xsl:when test="self::tei:classSpec[@type='model']">
                 <xsl:text> | </xsl:text>
-                <a class="navigation" href="REFCLA.html">
-                  Class catalogue</a>
+                <a class="navigation" href="REF-CLASSES-MODEL.html">
+                  Attribute Class catalogue</a>
+              </xsl:when>
+	      <xsl:when test="self::tei:classSpec[@type='atts']">
+                <xsl:text> | </xsl:text>
+                <a class="navigation" href="REF-CLASSES-ATTS.html">
+                  Attribute Class catalogue</a>
               </xsl:when>
 	      <xsl:when test="self::tei:macroSpec">
                 <xsl:text> | </xsl:text>
-                <a class="navigation" href="REFENT.html">
+                <a class="navigation" href="REF-MACRO.html">
                   Macro and datatype catalogue</a>
               </xsl:when>
+
               <xsl:otherwise>
                 <xsl:for-each select="ancestor::tei:div">
 		  <div>
@@ -418,10 +424,13 @@ function togglerelax (el) {
             </li>
 -->
             <li>
-              <a href="REFCLA.html">Appendix A: Classes</a>
+              <a href="REF-CLASSES-MODEL.html">Model Classes</a>
             </li>
             <li>
-              <a href="REFTAG.html">Appendix B: Elements</a>
+              <a href="REF-CLASSES-ATTS.html">Attribute Classes</a>
+            </li>
+            <li>
+              <a href="REF-ELEMENTS.html">Elements</a>
             </li>
             <li>
               <a href="USE.html">Using the TEI</a>
