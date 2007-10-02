@@ -280,7 +280,7 @@ function togglerelax (el) {
 	      <xsl:when test="self::tei:classSpec[@type='model']">
                 <xsl:text> | </xsl:text>
                 <a class="navigation" href="REF-CLASSES-MODEL.html">
-                  Attribute Class catalogue</a>
+                  Model Class catalogue</a>
               </xsl:when>
 	      <xsl:when test="self::tei:classSpec[@type='atts']">
                 <xsl:text> | </xsl:text>
