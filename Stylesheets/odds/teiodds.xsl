@@ -63,7 +63,9 @@
   <xsl:key match="tei:*[@xml:id]" name="IDS" use="@xml:id"/>
   <xsl:key match="tei:macroSpec[@type='dt']" name="DATATYPES" use="1"/>
   <xsl:key match="tei:macroSpec" name="MACRODOCS" use="1"/>
-  <xsl:key match="tei:classSpec" name="CLASSDOCS" use="1"/>
+  <xsl:key match="tei:classSpec[@type='atts']" name="ATTCLASSDOCS"
+	   use="1"/>
+  <xsl:key match="tei:classSpec[@type='model']" name="MODELCLASSDOCS" use="1"/>
   <xsl:key match="tei:elementSpec" name="ELEMENTDOCS" use="1"/>
   <xsl:key match="tei:*" name="NameToID" use="@ident"/>
   <xsl:key match="tei:elementSpec" name="ElementModule" use="@module"/>
@@ -659,8 +661,14 @@ select="$makeDecls"/></xsl:message>
 <xsl:template match="tei:desc" mode="tangle"/>
 
 
-<xsl:template match="tei:divGen[@type='classcat']">
-    <xsl:apply-templates mode="weave" select="key('CLASSDOCS',1)">
+<xsl:template match="tei:divGen[@type='modelclasscat']">
+    <xsl:apply-templates mode="weave" select="key('MODELCLASSDOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+  </xsl:template>
+
+<xsl:template match="tei:divGen[@type='attclasscat']">
+    <xsl:apply-templates mode="weave" select="key('ATTCLASSDOCS',1)">
       <xsl:sort select="@ident"/>
     </xsl:apply-templates>
   </xsl:template>
@@ -673,7 +681,7 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
 
-  <xsl:template match="tei:divGen[@type='tagcat']">
+  <xsl:template match="tei:divGen[@type='elementcat']">
     <xsl:apply-templates mode="weave" select="key('ELEMENTDOCS',1)">
       <xsl:sort select="@ident"/>
     </xsl:apply-templates>

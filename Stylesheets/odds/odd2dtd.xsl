@@ -385,7 +385,8 @@
       <xsl:text>&#10;&lt;!--end of predeclared classes --&gt;&#10;</xsl:text>
     </xsl:if>
     <xsl:if test="$TEIC='true'">
-      <xsl:apply-templates mode="tangle" select="key('CLASSDOCS',1)"/>
+      <xsl:apply-templates mode="tangle" select="key('ATTCLASSDOCS',1)"/>
+      <xsl:apply-templates mode="tangle" select="key('MODELCLASSDOCS',1)"/>
     </xsl:if>
     <xsl:text>&#10;&lt;!-- start predeclared patterns --&gt;&#10;</xsl:text>
     <xsl:for-each select="tei:macroSpec[@predeclare='true']">
@@ -406,7 +407,8 @@
     <xsl:text>&#10;&lt;!-- end patterns --&gt;&#10;</xsl:text>
     <xsl:if test="$TEIC='false'">
       <xsl:text>&#10;&lt;!-- start classes --&gt;&#10;</xsl:text>
-      <xsl:apply-templates mode="tangle" select="key('CLASSDOCS',1)"/>
+      <xsl:apply-templates mode="tangle" select="key('ATTCLASSDOCS',1)"/>
+      <xsl:apply-templates mode="tangle" select="key('MODELCLASSDOCS',1)"/>
       <xsl:text>&#10;&lt;!-- stop classes --&gt;&#10;</xsl:text>
     </xsl:if>
     <xsl:text>&#10;&lt;!-- start elements --&gt;&#10;</xsl:text>

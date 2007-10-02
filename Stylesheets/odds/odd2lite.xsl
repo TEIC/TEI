@@ -988,17 +988,25 @@
     <xsl:call-template name="processSchemaFragment"/>
   </xsl:template>
 
-  <xsl:template match="tei:divGen[@type='classcat']">
-    <xsl:apply-templates mode="weave" select="key('CLASSDOCS',1)">
+  <xsl:template match="tei:divGen[@type='attclasscat']">
+    <xsl:apply-templates mode="weave" select="key('ATTCLASSDOCS',1)">
       <xsl:sort select="@ident"/>
     </xsl:apply-templates>
   </xsl:template>
+
+  <xsl:template match="tei:divGen[@type='modelclasscat']">
+    <xsl:apply-templates mode="weave" select="key('MODELCLASSDOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+  </xsl:template>
+
   <xsl:template match="tei:divGen[@type='macrocat']">
     <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
       <xsl:sort select="@ident"/>
     </xsl:apply-templates>
   </xsl:template>
-  <xsl:template match="tei:divGen[@type='tagcat']">
+
+  <xsl:template match="tei:divGen[@type='elementcat']">
     <xsl:apply-templates mode="weave" select="key('ELEMENTDOCS',1)">
       <xsl:sort select="@ident"/>
     </xsl:apply-templates>
