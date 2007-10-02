@@ -316,17 +316,22 @@ function togglerelax (el) {
             <xsl:choose>
 	      <xsl:when test="self::tei:elementSpec">
                 <xsl:text> | </xsl:text>
-                <a class="navigation" href="REFTAG.html">
+                <a class="navigation" href="REF-ELEMENTS.html">
                   Element catalogue</a>
               </xsl:when>
-	      <xsl:when test="self::tei:classSpec">
+	      <xsl:when test="self::tei:classSpec[@type='model']">
                 <xsl:text> | </xsl:text>
-                <a class="navigation" href="REFCLA.html">
-                  Class catalogue</a>
+                <a class="navigation" href="REF-CLASSES-MODEL.html">
+                  Attribute Class catalogue</a>
+              </xsl:when>
+	      <xsl:when test="self::tei:classSpec[@type='atts']">
+                <xsl:text> | </xsl:text>
+                <a class="navigation" href="REF-CLASSES-ATTS.html">
+                  Attribute Class catalogue</a>
               </xsl:when>
 	      <xsl:when test="self::tei:macroSpec">
                 <xsl:text> | </xsl:text>
-                <a class="navigation" href="REFENT.html">
+                <a class="navigation" href="REF-MACRO.html">
                   Macro and datatype catalogue</a>
               </xsl:when>
               <xsl:otherwise>
@@ -431,10 +436,13 @@ function togglerelax (el) {
             </li>
 -->
             <li>
-              <a href="REFCLA.html">Appendix A: Classes</a>
+              <a href="REF-CLASSES-MODEL.html">Model Classes</a>
             </li>
             <li>
-              <a href="REFTAG.html">Appendix B: Elements</a>
+              <a href="REF-CLASSES-ATTS.html">Attribute Classes</a>
+            </li>
+            <li>
+              <a href="REF-ELEMENTS.html">Elements</a>
             </li>
             <li>
               <a href="USE.html">Using the TEI</a>
@@ -490,7 +498,7 @@ function togglerelax (el) {
                 </xsl:attribute>
                 <xsl:call-template name="bodyHook"/>
 		<xsl:call-template name="teiTOP"/>
-		<div class="container">
+		<div id="container">
 		  <xsl:call-template name="mainTOC"/>
 		</div>
                 <xsl:call-template name="stdfooter"/>
@@ -732,13 +740,42 @@ function togglerelax (el) {
   </xsl:template>
   
 
-<xsl:template match="tei:divGen[@type='classcat']">
+<xsl:template match="tei:divGen[@type='attclasscat']">
   <h3>Alphabetical list</h3>
-  <xsl:apply-templates mode="weave" select="key('CLASSDOCS',1)">
+  <xsl:apply-templates mode="weave" select="key('ATTCLASSDOCS',1)">
     <xsl:sort select="@ident"/>
   </xsl:apply-templates>
 
-  <xsl:for-each select="key('CLASSDOCS',1)">
+  <xsl:for-each select="key('ATTCLASSDOCS',1)">
+    <xsl:sort select="@module"/>
+    <xsl:if
+	test="generate-id(.)=generate-id(key('CLASS-MODULE',@module)[1])">
+      <div id='class-{@module}'>
+      <h3>
+	<xsl:for-each select="key('MODULES',@module)">
+	  <xsl:value-of select="@ident"/>
+	  <xsl:text>: </xsl:text>
+	  <xsl:value-of select="tei:desc"/>
+	</xsl:for-each>
+      </h3>
+      <xsl:apply-templates mode="weave"
+			   select="key('CLASS-MODULE',@module)">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+      </div>
+    </xsl:if>
+  </xsl:for-each>
+
+</xsl:template>
+
+
+<xsl:template match="tei:divGen[@type='modelclasscat']">
+  <h3>Alphabetical list</h3>
+  <xsl:apply-templates mode="weave" select="key('MODELCLASSDOCS',1)">
+    <xsl:sort select="@ident"/>
+  </xsl:apply-templates>
+
+  <xsl:for-each select="key('MODELCLASSDOCS',1)">
     <xsl:sort select="@module"/>
     <xsl:if
 	test="generate-id(.)=generate-id(key('CLASS-MODULE',@module)[1])">
@@ -790,7 +827,7 @@ function togglerelax (el) {
 </xsl:template>
 
 
-<xsl:template match="tei:divGen[@type='tagcat']">
+<xsl:template match="tei:divGen[@type='elementcat']">
   <div id="azindex">
     <span>Elements sorted
     alphabetically, starting with:</span>
