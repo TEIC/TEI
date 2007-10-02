@@ -32,8 +32,8 @@
   <xsl:param name="displayMode">both</xsl:param>
 
 
-  <xsl:key name="CLASS-MODEL-MODULE" match="tei:classSpec[@type='model']"  use="@module"/>
-  <xsl:key name="CLASS-ATT-MODULE" match="tei:classSpec[@type='atts']"  use="@module"/>
+  <xsl:key name="MODEL-CLASS-MODULE" match="tei:classSpec[@type='model']"  use="@module"/>
+  <xsl:key name="ATT-CLASS-MODULE" match="tei:classSpec[@type='atts']"  use="@module"/>
   <xsl:key name="ELEMENT-MODULE" match="tei:elementSpec"
 	   use="@module"/>
   <xsl:key name="MACRO-MODULE" match="tei:macroSpec"
@@ -42,11 +42,11 @@
   <xsl:key name="ELEMENT-ALPHA" match="tei:elementSpec"
 	   use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),1,1)"/>
 
-  <xsl:key name="CLASS-MODEL-ALPHA" match="tei:classSpec[@type='model']"
-	   use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),8,1)"/>
+  <xsl:key name="MODEL-CLASS-ALPHA" match="tei:classSpec[@type='model']"
+	   use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),7,1)"/>
 
-  <xsl:key name="CLASS-ATTS-ALPHA" match="tei:classSpec[@type='atts']"
-	   use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),8,1)"/>
+  <xsl:key name="ATT-CLASS-ALPHA" match="tei:classSpec[@type='atts']"
+	   use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),5,1)"/>
 
 
   <xsl:template name="includeCSS">
@@ -184,22 +184,26 @@ for (var i = 0; i &lt; states.length; i++) {
   }
  }
  var mod;
- if ( mod = document.getElementById('elembymod') ) {
+ if ( mod = document.getElementById('byMod') ) {
      mod.style.display = "none";
  }
 }
 
 function showall() {
  for (var i = 0; i &lt; states.length; i++) {
-   var layer = document.getElementById(states[i]);
-   layer.style.display = "block";
+   var layer;
+   if (layer = document.getElementById(states[i]) ) {
+      layer.style.display = "block";
+      }
   }
 }
 
 function showByMod() {
   hideallExcept('');
-  var mod = document.getElementById('elembymod');
-  mod.style.display = "block";
+  var mod;
+  if (mod = document.getElementById('byMod') ) {
+     mod.style.display = "block";
+     }
 }
 
 function toggleToc(el){
@@ -328,7 +332,7 @@ function togglerelax (el) {
 	      <xsl:when test="self::tei:classSpec[@type='model']">
                 <xsl:text> | </xsl:text>
                 <a class="navigation" href="REF-CLASSES-MODEL.html">
-                  Attribute Class catalogue</a>
+                  Model Class catalogue</a>
               </xsl:when>
 	      <xsl:when test="self::tei:classSpec[@type='atts']">
                 <xsl:text> | </xsl:text>
@@ -746,34 +750,6 @@ function togglerelax (el) {
   </xsl:template>
   
 
-<xsl:template match="tei:divGen[@type='attclasscat']">
-  <h3>Alphabetical list</h3>
-  <xsl:apply-templates mode="weave" select="key('ATTCLASSDOCS',1)">
-    <xsl:sort select="@ident"/>
-  </xsl:apply-templates>
-
-  <xsl:for-each select="key('ATTCLASSDOCS',1)">
-    <xsl:sort select="@module"/>
-    <xsl:if
-	test="generate-id(.)=generate-id(key('CLASS-ATT-MODULE',@module)[1])">
-      <div id='class-{@module}'>
-      <h3>
-	<xsl:for-each select="key('MODULES',@module)">
-	  <xsl:value-of select="@ident"/>
-	  <xsl:text>: </xsl:text>
-	  <xsl:value-of select="tei:desc"/>
-	</xsl:for-each>
-      </h3>
-      <xsl:apply-templates mode="weave"
-			   select="key('CLASS-ATT-MODULE',@module)">
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-      </div>
-    </xsl:if>
-  </xsl:for-each>
-
-</xsl:template>
-
 
 <xsl:template match="tei:divGen[@type='macrocat']">
 
@@ -824,7 +800,7 @@ function togglerelax (el) {
     </xsl:if>
   </xsl:for-each>
 
-  <div id="elembymod">
+  <div id="byMod">
     <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:sort select="@module"/>
       <xsl:if
@@ -852,12 +828,12 @@ function togglerelax (el) {
     <xsl:for-each select="key('MODELCLASSDOCS',1)">
     <xsl:sort select="translate(substring-after(@ident,'model.'),$uc,$lc)"/>
     <xsl:variable name="letter">
-      <xsl:value-of select="substring(@ident,8,1)"/>
+      <xsl:value-of select="substring(@ident,7,1)"/>
     </xsl:variable>
     <xsl:if
-	test="generate-id(.)=generate-id(key('CLASS-MODEL-ALPHA',$letter)[1])">
+	test="generate-id(.)=generate-id(key('MODEL-CLASS-ALPHA',$letter)[1])">
       <ul class="atoz" id="element-{$letter}">	
-	<xsl:for-each select="key('CLASS-MODEL-ALPHA',$letter)">
+	<xsl:for-each select="key('MODEL-CLASS-ALPHA',$letter)">
 	  <xsl:sort select="substring-after(@ident,'model.')"/>
 	  <li>
 	    <xsl:apply-templates select="." mode="weave"/>
@@ -866,13 +842,76 @@ function togglerelax (el) {
       </ul>
     </xsl:if>
   </xsl:for-each>
+  <div id="byMod">
+    <xsl:for-each select="key('MODELCLASSDOCS',1)">
+      <xsl:sort select="@module"/>
+      <xsl:if
+	  test="generate-id(.)=generate-id(key('MODEL-CLASS-MODULE',@module)[1])">
+	<div>
+	  <h3>
+	    <xsl:for-each select="key('MODULES',@module)">
+	      <xsl:value-of select="@ident"/>
+	      <xsl:text>: </xsl:text>
+	      <xsl:value-of select="tei:desc"/>
+	    </xsl:for-each>
+	  </h3>
+	  <xsl:apply-templates mode="weave"
+			       select="key('MODEL-CLASS-MODULE',@module)">
+	    <xsl:sort select="@ident"/>
+	  </xsl:apply-templates>
+	</div>
+      </xsl:if>
+    </xsl:for-each>
+  </div>
+
+</xsl:template>
+
+<xsl:template match="tei:divGen[@type='attclasscat']">
+   <xsl:call-template name="atozHeader"/>
+   <xsl:for-each select="key('ATTCLASSDOCS',1)">
+     <xsl:sort select="translate(substring-after(@ident,'att.'),$uc,$lc)"/>
+     <xsl:variable name="letter">
+       <xsl:value-of select="substring(@ident,5,1)"/>
+     </xsl:variable>
+     <xsl:if
+	 test="generate-id(.)=generate-id(key('ATT-CLASS-ALPHA',$letter)[1])">
+       <ul class="atoz" id="element-{$letter}">	
+	 <xsl:for-each select="key('ATT-CLASS-ALPHA',$letter)">
+	   <xsl:sort select="substring-after(@ident,'att.')"/>
+	   <li>
+	     <xsl:apply-templates select="." mode="weave"/>
+	   </li>
+	 </xsl:for-each>
+       </ul>
+     </xsl:if>
+   </xsl:for-each>
+   <div id="byMod">
+     <xsl:for-each select="key('ATTCLASSDOCS',1)">
+       <xsl:sort select="@module"/>
+       <xsl:if
+	   test="generate-id(.)=generate-id(key('ATT-CLASS-MODULE',@module)[1])">
+	 <div>
+	   <h3>
+	     <xsl:for-each select="key('MODULES',@module)">
+	       <xsl:value-of select="@ident"/>
+	       <xsl:text>: </xsl:text>
+	       <xsl:value-of select="tei:desc"/>
+	     </xsl:for-each>
+	   </h3>
+	   <xsl:apply-templates mode="weave"
+				select="key('ATT-CLASS-MODULE',@module)">
+	     <xsl:sort select="@ident"/>
+	   </xsl:apply-templates>
+	 </div>
+       </xsl:if>
+     </xsl:for-each>
+  </div>
 
 </xsl:template>
 
 <xsl:template name="atozHeader">
   <div id="azindex">
-    <span>Elements sorted
-    alphabetically, starting with:</span>
+    <span>Sorted alphabetically, starting with:</span>
       <ul class="index">     
     <li>
 	<a onclick="hideallExcept('element-a');" href="#">a</a>
@@ -1009,7 +1048,9 @@ function togglerelax (el) {
    <xsl:copy-of select="document('staticnav.xml')/html:ul"/>
 </div>
 <div
- class="mainhead"><h1>P5: Guidelines for Electronic Text Encoding and Interchange</h1></div>
+ class="mainhead">
+  <h1>P5: Guidelines for Electronic Text Encoding and Interchange</h1>
+</div>
 
 </xsl:template>
 </xsl:stylesheet>
