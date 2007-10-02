@@ -871,68 +871,6 @@ members of a subclass inherit the ability to appear wherever any
 superclass can appear. </p>
 
 
-<!-- <p>Model classes are implemented by
-defining a parameter entity for use in the formal declaration of element
-content models.  The parameter entity takes the name of the class it
-defines, and prefixes the string <mentioned>m.</mentioned>, which can be
-interpreted as <gloss>model</gloss> or as <gloss>members</gloss>.  The
-replacement text of the entity is a list of the members of the class,
-separated by <mentioned>|</mentioned>, the content model symbol for alternation.</p>
-
-<p>For each class an additional entity is defined, which also takes
-the name of the class, this time prefixed by the string
-<mentioned>x.</mentioned> (for extension); the default value of these
-<term>x-dot entities</term> is always an empty string.  A reference to
-the corresponding x-dot entity is always included within the
-replacement string for each m-dot entity.  This enables an encoder to
-add new members to a class simply by declaring a new value for an
-x-dot entity.
- </p>
-<p>For example, the class <ident type="class">model.biblLike</ident> has the three
-members <gi>bibl</gi>, <gi>biblFull</gi>, and <gi>biblStruct</gi>.
-Its content-model entity is defined thus:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % x.bibl '' >
-<!ENTITY % model.biblLike '%x.bibl; bibl | biblFull | biblStruct' >]]></egXML>
-With the default value of the x-dot entity, this is the same as defining
-<ident type="pe">model.biblLike</ident> with the replacement text <code>bibl | biblFull | biblStruct</code>.  If an encoder wishes
-to add a new bibliographic element called <gi>my.bib</gi>, it can
-be added to the <ident type="class">model.biblLike</ident> class by redefining the
-x-dot entity thus:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % x.bibl 'my.bib |' >]]></egXML>
-This changes the replacement text of <ident type="pe">model.biblLike</ident> from
-its default value to <code>my.bib | bibl | biblFull |
-biblStruct</code>.  If more than one element is to be added to a class,
-the x-dot entity for the class should be redefined as a list of the new
-generic identifiers, each one <emph>(including the last)</emph> followed
-by a vertical bar.  The same effect could be achieved simply by
-redefining the whole of the new <ident type="pe">model.biblLike</ident> entity
-directly, but the x-dot method requires no repetition of the already
-existing members of the class and thus minimizes the chance of error.
- </p>
-<p> Superclasses transmit their location characteristics to their
-subclasses by referring, in declaring their m-dot entity, to the m-dot
-entities of the subclasses.
- </p>
-<p>For example, the class <ident type="class">model.phrase</ident> includes the
-classes <ident type="class">model.pPart.data</ident>, <ident type="class">model.pPart.edit</ident>,
-<ident type="class">model.hiLike</ident>, <ident type="class">model.ptrLike</ident>, and
-<ident type="class">model.segLike</ident> as members, as can be seen in the
-declaration for its m-dot entity:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % class.phrase "%x.class.phrase; %class.data; | %class.edit;
- | %class.formPointers; | %class.hqphrase; | %class.loc; 
- | %class.xmlPhrase; | %class.phrase.verse; | %class.seg; | %n.formula; 
- | %n.handShift;">]]></egXML>
- When the entity <ident type="pe">model.phrase</ident> is referred to in
-content models, all members of all subclasses are included in the model.
- </p>
-
-
-</div3>
-
-
-<div3 xml:id="STECOV"><head>High-level structural element classes</head>
-
--->
 
 <p>The TEI class system is structured around the following threefold
 division of elements:
@@ -1007,11 +945,110 @@ relevant section on the core tags.
 </specList>
 </p>
 
-<p>Here are the formal declarations for the generally-available model classes;
+<p>
 
-<!-- specGrp xml:id="DSTECLO" n="Primitive Lowlevel classes"-->
+</p>
+</div>
+<div type="div3" xml:id="STECHI"><head>High-Level Element Classes</head>
+<p>The following element classes are used to implement the threefold
+structural distinction among phrases, chunks, and intermediate elements
+discussed above in section <ptr target="#STECCM"/>.  In this terminology,
+<term>chunk</term>s (or <term>chunk elements</term>) are elements which
+can occur only in chunk-level sequences (e.g. between but not within
+paragraphs); <term>inter-level elements</term> can occur either within
+chunks (at phrase-level) or between chunks (e.g. at paragraph-level),
+and <term>phrase-level elements</term> can occur only at phrase level,
+within chunks (e.g. within but not between paragraphs).
+ </p>
+<p>The element class <ident type="class">model.common</ident> includes all
+component-level (chunk- and inter-level) elements <!-- common to more than
+one base.  It is used in implementing the combined bases described in
+section <ptr target="#STECMX"/>.-->
+  </p>
 
-these classes refer only to elements:
+</div>
+<div type="div3" xml:id="STECMK"><head>Elements Marked for Text Type</head>
+<p>The following element classes are used to group together
+component-level elements which are allowed only in texts of a particular
+type (i.e. texts using a specific module).
+<specList>
+<specDesc key="model.divPart.spoken"/>
+<specDesc key="model.frontPart.drama"/>
+<!--<specDesc key="model.divPart.stage"/>-->
+<specDesc key="model.entryLike"/>
+</specList>
+ </p>
+<p>Declarations for these module-specific element classes are included
+in a separate <ident type="module">-decls</ident> schema fragment when
+XML DTDs are used. In  RELAX NG  schema fragments, the corresponding
+declarations are given at the start of the same schema fragment as the
+other declarations. </p></div>
+
+<div type="div3" xml:id="STECMI"><head>Miscellaneous Content-Model Classes</head>
+<p>The following element classes occupy specific places in content
+models; most are relevant only when certain modules are selected
+<specList>
+<specDesc key="model.addrPart"/>
+<specDesc key="model.biblPart"/>
+<specDesc key="model.castItemPart"/>
+<specDesc key="model.handDescPart"/>
+<specDesc key="model.choicePart"/>
+<specDesc key="model.divWrapper"/>
+<specDesc key="model.divTopPart"/>
+<specDesc key="model.divTop"/>
+<specDesc key="model.divBottomPart"/>
+<specDesc key="model.divBottom"/>
+<specDesc key="model.frontPart"/>
+<specDesc key="model.frontPart.drama"/>
+<specDesc key="model.glossLike"/>
+<specDesc key="model.imprintPart"/>
+<specDesc key="model.lLike"/>
+<specDesc key="model.msItemPart"/>
+<specDesc key="model.nameLike.agent"/>
+<specDesc key="model.pLike.front"/>
+<specDesc key="model.persNamePart"/>
+<specDesc key="model.personPart"/>
+<specDesc key="model.physDescPart"/>
+<specDesc key="model.placeNamePart"/>
+<specDesc key="model.placeEventLike"/>
+<specDesc key="model.placeTraitLike"/>
+<specDesc key="model.placeStateLike"/>
+<specDesc key="model.publicationStmtPart"/>
+<specDesc key="model.quoteLike"/>
+<specDesc key="model.rdgLike"/>
+<specDesc key="model.recordingPart"/>
+<specDesc key="model.respLike"/>
+<specDesc key="model.settingPart"/>
+<specDesc key="model.stageLike"/>
+<specDesc key="model.textDescPart"/>
+<specDesc key="model.titlepagePart"/>
+<specDesc key="model.divLike"/>
+<specDesc key="model.divGenLike"/>
+<specDesc key="model.div1Like"/>
+<specDesc key="model.div2Like"/>
+<specDesc key="model.div3Like"/>
+<specDesc key="model.div4Like"/>
+<specDesc key="model.div5Like"/>
+<specDesc key="model.div6Like"/>
+<specDesc key="model.div7Like"/>
+</specList>
+ </p>
+</div>
+
+<div type="div3" xml:id="STECSD">
+<head>Structural Divisions</head>
+
+<p>The structure of a text body is often divided into sections;
+model classes are provided to specify these:
+
+<specList>
+</specList>
+</p>
+
+
+<!-- all model class declarations: nb order is critical -->
+
+
 
 <!-- inline things -->
 &model.nameLike.agent;
@@ -1110,107 +1147,12 @@ classes or to elements</p>-->
 &model.inter;  
 &model.common; <!-- needs model.inter -->
 </specGrp>
-</p>
-</div>
-<div type="div3" xml:id="STECHI"><head>High-Level Element Classes</head>
-<p>The following element classes are used to implement the threefold
-structural distinction among phrases, chunks, and intermediate elements
-discussed above in section <ptr target="#STECCM"/>.  In this terminology,
-<term>chunk</term>s (or <term>chunk elements</term>) are elements which
-can occur only in chunk-level sequences (e.g. between but not within
-paragraphs); <term>inter-level elements</term> can occur either within
-chunks (at phrase-level) or between chunks (e.g. at paragraph-level),
-and <term>phrase-level elements</term> can occur only at phrase level,
-within chunks (e.g. within but not between paragraphs).
- </p>
-<p>The element class <ident type="class">model.common</ident> includes all
-component-level (chunk- and inter-level) elements <!-- common to more than
-one base.  It is used in implementing the combined bases described in
-section <ptr target="#STECMX"/>.-->
-  </p>
 
 <specGrp xml:id="DSTECHI" n="Common high-level classes">
 <!-- model.phrase--> &model.phrase;&model.limitedPhrase;
 </specGrp>
-</div>
-<div type="div3" xml:id="STECMK"><head>Elements Marked for Text Type</head>
-<p>The following element classes are used to group together
-component-level elements which are allowed only in texts of a particular
-type (i.e. texts using a specific module).
-<specList>
-<specDesc key="model.divPart.spoken"/>
-<specDesc key="model.frontPart.drama"/>
-<!--<specDesc key="model.divPart.stage"/>-->
-<specDesc key="model.entryLike"/>
-</specList>
- </p>
-<p>Declarations for these module-specific element classes are included
-in a separate <ident type="module">-decls</ident> schema fragment when
-XML DTDs are used. In  RELAX NG  schema fragments, the corresponding
-declarations are given at the start of the same schema fragment as the
-other declarations. </p></div>
 
-<div type="div3" xml:id="STECMI"><head>Miscellaneous Content-Model Classes</head>
-<p>The following element classes occupy specific places in content
-models; most are relevant only when certain modules are selected
-<specList>
-<specDesc key="model.addrPart"/>
-<specDesc key="model.biblPart"/>
-<specDesc key="model.castItemPart"/>
-<specDesc key="model.handDescPart"/>
-<!-- specDesc key="model.datePart"/-->
-<specDesc key="model.choicePart"/>
-<specDesc key="model.divWrapper"/>
-<specDesc key="model.divTopPart"/>
-<specDesc key="model.divTop"/>
-<specDesc key="model.divBottomPart"/>
-<specDesc key="model.divBottom"/>
-<specDesc key="model.frontPart"/>
-<specDesc key="model.frontPart.drama"/>
-<specDesc key="model.glossLike"/>
-<specDesc key="model.imprintPart"/>
-<specDesc key="model.lLike"/>
-<specDesc key="model.msItemPart"/>
-<specDesc key="model.nameLike.agent"/>
-<specDesc key="model.pLike.front"/>
-<specDesc key="model.persNamePart"/>
-<specDesc key="model.personPart"/>
-<specDesc key="model.physDescPart"/>
-<specDesc key="model.placeNamePart"/>
-<specDesc key="model.placeEventLike"/>
-<specDesc key="model.placeTraitLike"/>
-<specDesc key="model.placeStateLike"/>
-<specDesc key="model.publicationStmtPart"/>
-<specDesc key="model.quoteLike"/>
-<specDesc key="model.rdgLike"/>
-<specDesc key="model.recordingPart"/>
-<specDesc key="model.respLike"/>
-<specDesc key="model.settingPart"/>
-<specDesc key="model.stageLike"/>
-<specDesc key="model.textDescPart"/>
-<specDesc key="model.titlepagePart"/>
-</specList>
- </p>
-</div>
 
-<div type="div3" xml:id="STECSD">
-<head>Structural Divisions</head>
-
-<p>The structure of a text body is often divided into sections;
-model classes are provided to specify these:
-
-<specList>
-<specDesc key="model.divLike"/>
-<specDesc key="model.divGenLike"/>
-<specDesc key="model.div1Like"/>
-<specDesc key="model.div2Like"/>
-<specDesc key="model.div3Like"/>
-<specDesc key="model.div4Like"/>
-<specDesc key="model.div5Like"/>
-<specDesc key="model.div6Like"/>
-<specDesc key="model.div7Like"/>
-</specList>
-</p>
 &model.divLike;
 &model.divGenLike;
 &model.div1Like;
