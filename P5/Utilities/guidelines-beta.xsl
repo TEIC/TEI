@@ -42,6 +42,12 @@
   <xsl:key name="ELEMENT-ALPHA" match="tei:elementSpec"
 	   use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),1,1)"/>
 
+  <xsl:key name="CLASS-MODEL-ALPHA" match="tei:classSpec[@type='model']"
+	   use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),8,1)"/>
+
+  <xsl:key name="CLASS-ATTS-ALPHA" match="tei:classSpec[@type='atts']"
+	   use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),8,1)"/>
+
 
   <xsl:template name="includeCSS">
     <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
@@ -769,35 +775,6 @@ function togglerelax (el) {
 </xsl:template>
 
 
-<xsl:template match="tei:divGen[@type='modelclasscat']">
-  <h3>Alphabetical list</h3>
-  <xsl:apply-templates mode="weave" select="key('MODELCLASSDOCS',1)">
-    <xsl:sort select="@ident"/>
-  </xsl:apply-templates>
-
-  <xsl:for-each select="key('MODELCLASSDOCS',1)">
-    <xsl:sort select="@module"/>
-    <xsl:if
-	test="generate-id(.)=generate-id(key('CLASS-MODEL-MODULE',@module)[1])">
-      <div id='class-{@module}'>
-      <h3>
-	<xsl:for-each select="key('MODULES',@module)">
-	  <xsl:value-of select="@ident"/>
-	  <xsl:text>: </xsl:text>
-	  <xsl:value-of select="tei:desc"/>
-	</xsl:for-each>
-      </h3>
-      <xsl:apply-templates mode="weave"
-			   select="key('CLASS-MODEL-MODULE',@module)">
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-      </div>
-    </xsl:if>
-  </xsl:for-each>
-
-</xsl:template>
-
-
 <xsl:template match="tei:divGen[@type='macrocat']">
 
   <h3>Alphabetical list</h3>
@@ -828,6 +805,71 @@ function togglerelax (el) {
 
 
 <xsl:template match="tei:divGen[@type='elementcat']">
+   <xsl:call-template name="atozHeader"/>
+    <xsl:for-each select="key('ELEMENTDOCS',1)">
+    <xsl:sort select="translate(@ident,$uc,$lc)"/>
+    <xsl:variable name="letter">
+      <xsl:value-of select="substring(@ident,1,1)"/>
+    </xsl:variable>
+    <xsl:if
+	test="generate-id(.)=generate-id(key('ELEMENT-ALPHA',$letter)[1])">
+      <ul class="atoz" id="element-{$letter}">	
+	<xsl:for-each select="key('ELEMENT-ALPHA',$letter)">
+	  <xsl:sort select="@ident"/>
+	  <li>
+	    <xsl:apply-templates select="." mode="weave"/>
+	  </li>
+	</xsl:for-each>
+      </ul>
+    </xsl:if>
+  </xsl:for-each>
+
+  <div id="elembymod">
+    <xsl:for-each select="key('ELEMENTDOCS',1)">
+      <xsl:sort select="@module"/>
+      <xsl:if
+	  test="generate-id(.)=generate-id(key('ELEMENT-MODULE',@module)[1])">
+	<div>
+	  <h3>
+	    <xsl:for-each select="key('MODULES',@module)">
+	      <xsl:value-of select="@ident"/>
+	      <xsl:text>: </xsl:text>
+	      <xsl:value-of select="tei:desc"/>
+	    </xsl:for-each>
+	  </h3>
+	  <xsl:apply-templates mode="weave"
+			       select="key('ELEMENT-MODULE',@module)">
+	    <xsl:sort select="@ident"/>
+	  </xsl:apply-templates>
+	</div>
+      </xsl:if>
+    </xsl:for-each>
+  </div>
+</xsl:template>
+
+<xsl:template match="tei:divGen[@type='modelclasscat']">
+   <xsl:call-template name="atozHeader"/>
+    <xsl:for-each select="key('MODELCLASSDOCS',1)">
+    <xsl:sort select="translate(substring-after(@ident,'model.'),$uc,$lc)"/>
+    <xsl:variable name="letter">
+      <xsl:value-of select="substring(@ident,8,1)"/>
+    </xsl:variable>
+    <xsl:if
+	test="generate-id(.)=generate-id(key('CLASS-MODEL-ALPHA',$letter)[1])">
+      <ul class="atoz" id="element-{$letter}">	
+	<xsl:for-each select="key('CLASS-MODEL-ALPHA',$letter)">
+	  <xsl:sort select="substring-after(@ident,'model.')"/>
+	  <li>
+	    <xsl:apply-templates select="." mode="weave"/>
+	  </li>
+	</xsl:for-each>
+      </ul>
+    </xsl:if>
+  </xsl:for-each>
+
+</xsl:template>
+
+<xsl:template name="atozHeader">
   <div id="azindex">
     <span>Elements sorted
     alphabetically, starting with:</span>
@@ -918,49 +960,9 @@ function togglerelax (el) {
 	<a onclick="showByMod();" href="#">Show by Module</a>
       </li>
     </ul>
+   <br style="clear:both;"/>
   </div>
 
-  <br style="clear:both;"/>
-
-    <xsl:for-each select="key('ELEMENTDOCS',1)">
-    <xsl:sort select="translate(@ident,$uc,$lc)"/>
-    <xsl:variable name="letter">
-      <xsl:value-of select="substring(@ident,1,1)"/>
-    </xsl:variable>
-    <xsl:if
-	test="generate-id(.)=generate-id(key('ELEMENT-ALPHA',$letter)[1])">
-      <ul class="atoz" id="element-{$letter}">	
-	<xsl:for-each select="key('ELEMENT-ALPHA',$letter)">
-	  <xsl:sort select="@ident"/>
-	  <li>
-	    <xsl:apply-templates select="." mode="weave"/>
-	  </li>
-	</xsl:for-each>
-      </ul>
-    </xsl:if>
-  </xsl:for-each>
-
-  <div id="elembymod">
-    <xsl:for-each select="key('ELEMENTDOCS',1)">
-      <xsl:sort select="@module"/>
-      <xsl:if
-	  test="generate-id(.)=generate-id(key('ELEMENT-MODULE',@module)[1])">
-	<div>
-	  <h3>
-	    <xsl:for-each select="key('MODULES',@module)">
-	      <xsl:value-of select="@ident"/>
-	      <xsl:text>: </xsl:text>
-	      <xsl:value-of select="tei:desc"/>
-	    </xsl:for-each>
-	  </h3>
-	  <xsl:apply-templates mode="weave"
-			       select="key('ELEMENT-MODULE',@module)">
-	    <xsl:sort select="@ident"/>
-	  </xsl:apply-templates>
-	</div>
-      </xsl:if>
-    </xsl:for-each>
-  </div>
 </xsl:template>
 
 <xsl:template name="formatHeadingNumber">
