@@ -1712,7 +1712,7 @@ this class may be extended by adding new elements if necessary. </p>
 <p>These Guidelines provide no particular means for encoding the
 substructure of an email address (for example, distinguishing the
 local part from the domain part), nor of distinguishing personal email
-addresses from generic or fictitious ones.
+addresses from generic or fictitious ones. 
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <email>editors@tei-c.org</email>
@@ -1723,29 +1723,42 @@ addresses from generic or fictitious ones.
 of distinct lines, just as they might be written on an envelope. The
 following element supports this view:
 <specList><specDesc key="addrLine"/></specList>
- </p>
-<p>Alternatively, an address may be encoded as a structure composed of
-the following elements, which constitute the <ident type="class">model.addrPart</ident> element class:
-<specList><specDesc key="street"/><specDesc key="name" atts="type"/><specDesc key="postCode"/><specDesc key="postBox"/></specList>
-Any number of  elements from the <ident type="class">model.addrPart</ident>
-class may appear
-within an address and in any order. None of them is required. Where
-code letters are commonly used in addresses (for example, to identify
-regions or countries) a useful practice is to supply the full name of
-the region or country as the content of the element, but to supply the
-abbreviatory code as the value of the global <att>n</att> attribute, so
-that (for example) an application preparing formatted labels can readily
-find the required information. Other components of addresses should be
-represented using the general-purpose <gi>name</gi> element.</p>
-
-<p>Some examples follow:
+Here is an example of a postal address encoded using this approach:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><address>
    <addrLine>110 Southmoor Road,</addrLine>
    <addrLine>Oxford OX2 6RB,</addrLine>
    <addrLine>UK</addrLine>
 </address></egXML>
  </p>
-<p>The above address could also be represented as follows:
+<p>Alternatively, an address may be encoded as a structure of
+more semantically rich elements. The class <ident
+type="class">model.addrPart</ident> element class identifies a number
+of such possible components: <specList><specDesc
+key="street"/><specDesc key="name" atts="type"/><specDesc
+key="postCode"/><specDesc key="postBox"/>
+<specDesc key="model.nameLike"/>
+<specDesc key="model.persNamePart"/>
+<specDesc key="model.placeNamePart"/>
+</specList> Any number of
+elements from the <ident type="class">model.addrPart</ident> class may
+appear within an address and in any order. None of them is
+required. </p>
+
+<p>Where code letters are commonly used in addresses (for
+example, to identify regions or countries) a useful practice is to
+supply the full name of the region or country as the content of the
+element, but to supply the abbreviatory code as the value of the
+global <att>n</att> attribute, so that (for example) an application
+preparing formatted labels can readily find the required
+information. Other components of addresses may be represented using
+the general-purpose <gi>name</gi> element or (when the additional
+module for names and dates is included) the more specialized  elements
+provided for that purpose.
+</p>
+
+<p>Using just the elements defined by the core module, the above
+address could thus be represented as follows:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><address>
    <street>110 Southmoor Road</street>
    <name type="city">Oxford</name>
@@ -1753,6 +1766,7 @@ represented using the general-purpose <gi>name</gi> element.</p>
    <name type="country">United Kingdom</name>
 </address></egXML>
  </p>
+
 <p>The order of elements within an address is highly culture-specific,
 and is therefore unconstrained:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><address>
@@ -1767,36 +1781,27 @@ and is therefore unconstrained:
 see section <ptr target="#CONA"/>. A full postal address may also include
 the name of the addressee, tagged as above using the general purpose
 <gi>name</gi> element.    </p>
-<p>Other components of addresses should be represented using the
-general purpose <gi>name</gi> element, unless the names and dates
-module is active, in which case additional elements such as specific
-elements such as <gi>country</gi> and <gi>settlement</gi> will be
-available in the class <ident>model.addrPart</ident> may therefore be
-used instead. </p>
+
+<p>When a schema includes the names and dates
+module discussed in chapter <ptr target="#ND"/>, a large number of more specific elements such as <gi>country</gi> or <gi>settlement</gi> will be
+available from the class <ident>model.addrPart</ident>. The above
+example might then be encoded as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><address>
+   <street>110 Southmoor Road</street>
+   <settlement>Oxford</settlement>
+   <postCode>OX2 6RB</postCode>
+   <country>United Kingdom</country>
+</address></egXML>
+</p>
+
 
 <specGrp xml:id="DCOAD" n="Addresses and their components">
 
-
 &email;
-
-
-
 &address;
-
-
-
 &addrLine;
-
-
-
 &street;
-
-
-
 &postCode;
-
-
-
 &postBox;
 
 </specGrp>
