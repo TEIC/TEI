@@ -274,15 +274,25 @@ function togglerelax (el) {
   <xsl:template name="startDivHook">
     <xsl:if
       test="not(parent::tei:div) or not(local-name(preceding::*[1])='head')">
-      <table class="miniTOC">
-        <xsl:if test="not(parent::tei:div) and child::tei:div">
+      <table>
+	<xsl:choose>
+        <xsl:when test="not(parent::tei:div) and child::tei:div">
+	  <xsl:attribute name="class">
+	    <xsl:text>miniTOC miniTOC_left</xsl:text>
+	  </xsl:attribute>
           <tr>
             <td>
               <xsl:call-template name="subtoc"/>
 	      <hr/>
             </td>
           </tr>
-        </xsl:if>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:attribute name="class">
+	    <xsl:text>miniTOC miniTOC_right</xsl:text>
+	  </xsl:attribute>
+	</xsl:otherwise>
+	</xsl:choose>
         <tr>
           <td>
             <xsl:call-template name="previousLink"/>
