@@ -762,100 +762,6 @@ portion of an ODD document. </cell><cell/></row>
 &att.typed;
 </specGrp>
 
-<!--
-<p>In RELAX NG schema fragments, all attribute classes are defined as
-named patterns. For each class, one pattern combining
-the class name with the suffix <code>.attributes</code> is defined,
-and for each attribute supplied by membership in the class a further
-pattern is defined combining the class name, the string
-<code>attribute</code> and the attribute name. Thus, the class <ident
-type="class">att.naming</ident> is implemented using the pattern
-<ident type="pattern">att.naming.attributes</ident>, which is in turn
-a reference to the pattern <ident
-type="pattern">att.naming.attribute.key</ident>. The attribute
-<att>key</att> supplied by the class is declared using this
-pattern. </p>
-
-<p>Members of the class inherit its definition by referring to this
-pattern:
-<eg>
-name =
-  element name { name.content, name.attributes }
-name.content = macro.phraseSeq
-name.attributes =
-  att.global.attributes,
-  att.naming.attributes,
-  attribute type { data.enumerated }?,
-  empty
-</eg></p>
- 
-<p>Superclasses are implemented using the same patterns. For example,
-the class <ident type="class">att.divLike</ident>, as noted above, is
-a subclass of the module-specific class <ident type="class">att.metrical</ident>. The corresponding RELAX NG pattern
-for the subclass therefore includes a reference to the superclass, as
-shown above. In the <ident type="module">tei</ident> module, the
-pattern <ident type="pattern">att.metrical.attributes</ident> is
-<term>predeclared</term> with the value <code>empty</code>; however,
-if the <ident type="module">verse</ident> module is loaded, a new
-definition is provided for this same pattern, which  includes the
-verse-specific attributes discussed above.</p>
-
-<p>In XML DTD fragments, the attributes shared by the members of an
-attribute class are defined by a parameter entity; member elements
-inherit their attributes by referring to this parameter entity within
-their attribute-list declaration. The parameter entities used for this
-purpose are named in the same way as the corresponding RELAX NG
-patterns: they take the name of the class they define (including the
-<code>att.</code> prefix), suffixed the string
-<mentioned>attributes</mentioned>.  For example, the declaration for
-the <ident type="class">att.naming</ident> class in the XML DTD
-fragment is :
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % att.naming.attributes '
-      key  CDATA #IMPLIED'> 
-]]></egXML> 
-Members of the class inherit the definition by referring to this
-parameter entity:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % name 'INCLUDE' >
-<!ELEMENT %n.name; %om.RR;  %phrase.seq;> 
-<!ATTLIST %n.name;
-      %att.global.attributes;
-      %att.naming.attributes;
-      type CDATA #IMPLIED  >
-]]></egXML>
- </p>
-
-<p>Superclasses are also implemented using parameter entities. For
-example, the parameter entity corresponding with the <ident type="class">att.divLike</ident>  attribute class is defined as
-follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % att.divlike.attributes '
-	%att.metrical.attributes;
- type  %data.enumerated;  #IMPLIED
- org  (composite|uniform) "uniform" 
- sample  (initial|medial|final|unknown|complete) "complete" 
- part  (Y|N|I|M|F) "N" '> 
-]]></egXML> 
-Note the reference to <ident type="pe">att.metrical.attributes</ident>. This parameter entity is
-defined by the <ident type="module">tei</ident> module as a null
-string and therefore has no effect by default. However, if
-the verse module is included in a schema, the same parameter entity
-will have been already declared with the following values:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY % att.metrical.attributes '
- met  CDATA #IMPLIED
- real  CDATA #IMPLIED
- rhyme  CDATA #IMPLIED'> ]]></egXML>
-in such a way as to over-ride this default (see further <ptr
-target="#STPE"/>), thus extending the definition for <ident
-type="class">att.divLike</ident>. </p>
-
-<p>A similar mechanism is used to extend the definition for the <ident type="class">att.global</ident>  class when certain modules are
-included in the schema. The <ident type="module">tei</ident> module
-provides dummy declarations for all the attribute classes listed as
-<q>superclasses</q> in <ptr target="#tab-atts"/> above; the full
-declaration for each such class is only operational when the module
-containing it is loaded. 
-</p>
--->
 </div>
 </div>
 
@@ -919,7 +825,7 @@ These classes may include both elements in the core and elements
 declared in particular modules; a reference is given at least to the
 relevant section on the core tags.
  </p>
-<p>The following are phrase-level element classes:
+<!--<p>The following are phrase-level element classes:
 <specList>
 <specDesc key="model.addressLike"/>
 <specDesc key="model.biblLike"/>
@@ -943,7 +849,7 @@ relevant section on the core tags.
 <specDesc key="model.qLike"/>
 <specDesc key="model.segLike"/>
 </specList>
-</p>
+</p>-->
 
 <p>
 
@@ -971,13 +877,12 @@ section <ptr target="#STECMX"/>.-->
 <p>The following element classes are used to group together
 component-level elements which are allowed only in texts of a particular
 type (i.e. texts using a specific module).
-<specList>
+<!--<specList>
 <specDesc key="model.divPart.spoken"/>
 <specDesc key="model.frontPart.drama"/>
-<!--<specDesc key="model.divPart.stage"/>-->
 <specDesc key="model.entryLike"/>
 </specList>
- </p>
+--> </p>
 <p>Declarations for these module-specific element classes are included
 in a separate <ident type="module">-decls</ident> schema fragment when
 XML DTDs are used. In  RELAX NG  schema fragments, the corresponding
@@ -987,43 +892,23 @@ other declarations. </p></div>
 <div type="div3" xml:id="STECMI"><head>Miscellaneous Content-Model Classes</head>
 <p>The following element classes occupy specific places in content
 models; most are relevant only when certain modules are selected
+</p></div>
+<div><head>List of model classes </head>
+<p>
 <specList>
 <specDesc key="model.addrPart"/>
+<specDesc key="model.addressLike"/>
+<specDesc key="model.applicationLike"/>
+<specDesc key="model.assertLike"/>
+<specDesc key="model.biblLike"/>
 <specDesc key="model.biblPart"/>
+<specDesc key="model.blockLike"/>
 <specDesc key="model.castItemPart"/>
-<specDesc key="model.handDescPart"/>
+<specDesc key="model.catDescPart"/>
 <specDesc key="model.choicePart"/>
-<specDesc key="model.divWrapper"/>
-<specDesc key="model.divTopPart"/>
-<specDesc key="model.divTop"/>
-<specDesc key="model.divBottomPart"/>
-<specDesc key="model.divBottom"/>
-<specDesc key="model.frontPart"/>
-<specDesc key="model.frontPart.drama"/>
-<specDesc key="model.glossLike"/>
-<specDesc key="model.imprintPart"/>
-<specDesc key="model.lLike"/>
-<specDesc key="model.msItemPart"/>
-<specDesc key="model.nameLike.agent"/>
-<specDesc key="model.pLike.front"/>
-<specDesc key="model.persNamePart"/>
-<specDesc key="model.personPart"/>
-<specDesc key="model.physDescPart"/>
-<specDesc key="model.placeNamePart"/>
-<specDesc key="model.placeEventLike"/>
-<specDesc key="model.placeTraitLike"/>
-<specDesc key="model.placeStateLike"/>
-<specDesc key="model.publicationStmtPart"/>
-<specDesc key="model.quoteLike"/>
-<specDesc key="model.rdgLike"/>
-<specDesc key="model.recordingPart"/>
-<specDesc key="model.respLike"/>
-<specDesc key="model.settingPart"/>
-<specDesc key="model.stageLike"/>
-<specDesc key="model.textDescPart"/>
-<specDesc key="model.titlepagePart"/>
-<specDesc key="model.divLike"/>
-<specDesc key="model.divGenLike"/>
+<specDesc key="model.common"/>
+<specDesc key="model.complexVal"/>
+<specDesc key="model.dateLike"/>
 <specDesc key="model.div1Like"/>
 <specDesc key="model.div2Like"/>
 <specDesc key="model.div3Like"/>
@@ -1031,10 +916,101 @@ models; most are relevant only when certain modules are selected
 <specDesc key="model.div5Like"/>
 <specDesc key="model.div6Like"/>
 <specDesc key="model.div7Like"/>
+<specDesc key="model.divBottom"/>
+<specDesc key="model.divBottomPart"/>
+<specDesc key="model.divGenLike"/>
+<specDesc key="model.divLike"/>
+<specDesc key="model.divPart"/>
+<specDesc key="model.divPart.spoken"/>
+<specDesc key="model.divTop"/>
+<specDesc key="model.divTopPart"/>
+<specDesc key="model.divWrapper"/>
+<specDesc key="model.editorialDeclPart"/>
+<specDesc key="model.egLike"/>
+<specDesc key="model.emphLike"/>
+<specDesc key="model.encodingPart"/>
+<specDesc key="model.entryLike"/>
+<specDesc key="model.entryParts"/>
+<specDesc key="model.entryParts.top"/>
+<specDesc key="model.featureVal"/>
+<specDesc key="model.formPart"/>
+<specDesc key="model.frontPart"/>
+<specDesc key="model.frontPart.drama"/>
+<specDesc key="model.gLike"/>
+<specDesc key="model.global"/>
+<specDesc key="model.global.edit"/>
+<specDesc key="model.global.meta"/>
+<specDesc key="model.glossLike"/>
+<specDesc key="model.gramPart"/>
+<specDesc key="model.graphicLike"/>
+<!--specDesc key="model.handDescPart"/-->
+<specDesc key="model.headLike"/>
+<specDesc key="model.headerPart"/>
+<specDesc key="model.hiLike"/>
+<specDesc key="model.hilighted"/>
+<specDesc key="model.imprintPart"/>
+<specDesc key="model.inter"/>
+<specDesc key="model.inter.spoken"/>
+<specDesc key="model.lLike"/>
+<specDesc key="model.lPart"/>
+<specDesc key="model.labelLike"/>
+<specDesc key="model.limitedPhrase"/>
+<specDesc key="model.listLike"/>
+<specDesc key="model.measureLike"/>
+<specDesc key="model.milestoneLike"/>
+<specDesc key="model.morphLike"/>
+<specDesc key="model.msItemPart"/>
+<specDesc key="model.nameLike"/>
+<specDesc key="model.nameLike.agent"/>
+<specDesc key="model.noteLike"/>
+<specDesc key="model.oddDecl"/>
+<specDesc key="model.oddRef"/>
+<specDesc key="model.orgStateLike"/>
+<specDesc key="model.pLike"/>
+<specDesc key="model.pLike.front"/>
+<specDesc key="model.pPart.data"/>
+<specDesc key="model.pPart.edit"/>
+<specDesc key="model.pPart.editorial"/>
+<specDesc key="model.pPart.msdesc"/>
+<specDesc key="model.pPart.transcriptional"/>
+<specDesc key="model.persEventLike"/>
+<specDesc key="model.persNamePart"/>
+<specDesc key="model.persStateLike"/>
+<specDesc key="model.persTraitLike"/>
+<specDesc key="model.personLike"/>
+<specDesc key="model.personPart"/>
+<specDesc key="model.phrase"/>
+<specDesc key="model.physDescPart"/>
+<specDesc key="model.placeEventLike"/>
+<specDesc key="model.placeLike"/>
+<specDesc key="model.placeNamePart"/>
+<specDesc key="model.placeStateLike"/>
+<specDesc key="model.placeTraitLike"/>
+<specDesc key="model.profileDescPart"/>
+<specDesc key="model.ptrLike"/>
+<specDesc key="model.ptrLike.form"/>
+<specDesc key="model.publicationStmtPart"/>
+<specDesc key="model.qLike"/>
+<specDesc key="model.quoteLike"/>
+<specDesc key="model.rdgLike"/>
+<specDesc key="model.rdgPart"/>
+<specDesc key="model.recordingPart"/>
+<specDesc key="model.resourceLike"/>
+<specDesc key="model.respLike"/>
+<specDesc key="model.segLike"/>
+<specDesc key="model.settingPart"/>
+<specDesc key="model.singleVal"/>
+<specDesc key="model.sourceDescPart"/>
+<specDesc key="model.specDescLike"/>
+<specDesc key="model.stageLike"/>
+<specDesc key="model.textDescPart"/>
+<specDesc key="model.titlepagePart"/>
+<specDesc key="model.xmlPhrase"/>
 </specList>
  </p>
-</div>
 
+
+<!--
 <div type="div3" xml:id="STECSD">
 <head>Structural Divisions</head>
 
@@ -1044,7 +1020,7 @@ model classes are provided to specify these:
 <specList>
 </specList>
 </p>
-
+-->
 
 <!-- all model class declarations: nb order is critical -->
 
