@@ -32,8 +32,8 @@
   <xsl:param name="displayMode">both</xsl:param>
 
 
-  <xsl:key name="CLASS-MODULE" match="tei:classSpec"
-	   use="@module"/>
+  <xsl:key name="CLASS-MODEL-MODULE" match="tei:classSpec[@type='model']"  use="@module"/>
+  <xsl:key name="CLASS-ATT-MODULE" match="tei:classSpec[@type='atts']"  use="@module"/>
   <xsl:key name="ELEMENT-MODULE" match="tei:elementSpec"
 	   use="@module"/>
   <xsl:key name="MACRO-MODULE" match="tei:macroSpec"
@@ -749,7 +749,7 @@ function togglerelax (el) {
   <xsl:for-each select="key('ATTCLASSDOCS',1)">
     <xsl:sort select="@module"/>
     <xsl:if
-	test="generate-id(.)=generate-id(key('CLASS-MODULE',@module)[1])">
+	test="generate-id(.)=generate-id(key('CLASS-ATT-MODULE',@module)[1])">
       <div id='class-{@module}'>
       <h3>
 	<xsl:for-each select="key('MODULES',@module)">
@@ -759,7 +759,7 @@ function togglerelax (el) {
 	</xsl:for-each>
       </h3>
       <xsl:apply-templates mode="weave"
-			   select="key('CLASS-MODULE',@module)">
+			   select="key('CLASS-ATT-MODULE',@module)">
 	<xsl:sort select="@ident"/>
       </xsl:apply-templates>
       </div>
@@ -778,7 +778,7 @@ function togglerelax (el) {
   <xsl:for-each select="key('MODELCLASSDOCS',1)">
     <xsl:sort select="@module"/>
     <xsl:if
-	test="generate-id(.)=generate-id(key('CLASS-MODULE',@module)[1])">
+	test="generate-id(.)=generate-id(key('CLASS-MODEL-MODULE',@module)[1])">
       <div id='class-{@module}'>
       <h3>
 	<xsl:for-each select="key('MODULES',@module)">
@@ -788,7 +788,7 @@ function togglerelax (el) {
 	</xsl:for-each>
       </h3>
       <xsl:apply-templates mode="weave"
-			   select="key('CLASS-MODULE',@module)">
+			   select="key('CLASS-MODEL-MODULE',@module)">
 	<xsl:sort select="@ident"/>
       </xsl:apply-templates>
       </div>
