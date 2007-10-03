@@ -83,12 +83,6 @@ describes in general terms the method of constructing  a TEI schema
 in a specific schema language such as XML DTD language, RELAX NG, or
 W3C Schema. </p>
 
-<!--
-<p>The <term>global attributes</term>, characteristics postulated of
-every element  in the encoding scheme, are discussed in section 
-<ptr target="#STGA" type="div2"/>.</p>
--->
-
 <p>The next and largest part of the chapter introduces the three
 fundamental components of the TEI infrastructure:
 <list>
@@ -101,7 +95,7 @@ range of legal values for TEI attributes (section <ptr target="#DTYPES"/>)</item
 commonly used content models (section <ptr target="#STmacros"/>)</item>
 </list>
 </p>
-<!-- STPE is now a part of IM -->
+
 
 <div type="div2" xml:id="STMA"><head>TEI Modules</head>
 
@@ -220,12 +214,7 @@ first. For blind interchange of TEI documents, it should be necessary
 to supply no more than a complete ODD specification along with the
 documents.
 </p>
-
-
-
-
 -->
-
 <!-- foregoing removed at behest of DB and berlin council mtg -->
 
 <div type="div3" xml:id="STINsimpleExample"><head>A Simple Customization</head>
@@ -243,14 +232,15 @@ looks like this:
 <p>This schema specification contains references to each of the four
 modules, identified by the <att>key</att> attribute on the
 <gi>moduleRef</gi> element. The schema specification itself is also
-given an identifier (<ident>TEI-minimal</ident>) and the start point, or
-root element, is specified by means of the <att>start</att> attribute.
-An ODD processor will generate an appropriate schema (which may be the XML DTD language, the ISO RELAX NG language,
-or the W3C Schema language) from this set of declarations, which would then be
-associated with the document instance by one of a number of different
-mechanisms, as further described in chapter <ptr target="#SG"/><!-- somewhere --> 
-Further information about the processing of an ODD specification is
-given in <ptr target="#IM"/>.
+given an identifier (<ident>TEI-minimal</ident>) and the start point,
+or root element, is specified by means of the <att>start</att>
+attribute.  An ODD processor will generate an appropriate schema
+(which may be the XML DTD language, the ISO RELAX NG language, or the
+W3C Schema language) from this set of declarations, which would then
+be associated with the document instance by one of a number of
+different mechanisms, as further described in chapter <ptr
+target="#SG"/><!-- somewhere --> Further information about the
+processing of an ODD specification is given in <ptr target="#IM"/>.
 </p>
 <!--
 <p>The same effect might be obtained by means of a RELAX NG
@@ -837,14 +827,18 @@ will differ depending on which modules are active.
 are loaded. One reason for declaring such a class is to make it easier
 for a customization to add new member elements in a specific place,
 particularly in areas where the TEI does not make fully elaborated
-proposals. For example, the TEI class model.rdgLike, intiailly empty,
-is expanded by the textcrit module to include just the TEI
+proposals. For example, the TEI class <ident type="class">model.rdgLike</ident>, initially empty,
+is expanded by the <ident type="module">textcrit</ident> module to include just the TEI
 <gi>rdg</gi> element. A project wishing to add an alternative way of
 structuring text critical information could do so by defining their
-own elements and adding it to thuis class.</p>
+own elements and adding it to this class.</p>
 <p>Another reason for declaring single-member classes is where the
-class members are not required in all documents, but where they are
-required, appear alongside elements which are so required. To make
+class members are not needed in all documents, but appear in the same
+place as elements which are very frequently required. For example, the
+specialised element <gi>g</gi> used to represent a non-Unicode
+character or glyph is the only member of the <ident
+type="class">model.gLike</ident>. 
+alongside elements which are so required. To make
 such elements members of the very commonly occurring class would be a
 nuisanbce. model.gLike is a case in point.</p>
 
