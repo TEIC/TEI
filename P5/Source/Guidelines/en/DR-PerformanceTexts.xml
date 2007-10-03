@@ -38,12 +38,12 @@ defined by chapter <ptr target="#DS"/>, as further discussed in
 section <ptr target="#DRDIV"/>.</p>
 
 <p>Two element classes are used by this module.
-The <ident type="class">model.divPart.stage</ident> class supplies
+The <ident type="class">model.frontPart.drama</ident> class supplies
 specialized elements which can appear only in the front or back matter
 of performance texts.  The <ident type="class">model.stageLike</ident>
 class supplies a set of elements for stage directions and similar
 items such as camera movements, which can occur between or within
-speeches. These two element classes were defined in <ptr target="#STEC"/> above.</p>
+speeches. </p>
 
 <specGrpRef target="#DDRFAB"/>
 <specGrpRef target="#DDRSTA"/>
@@ -59,20 +59,24 @@ on these, see chapter <ptr target="#DS"/>.
  </p>
 <p>The <gi>front</gi> and <gi>back</gi> elements are most likely to be
 of use when encoding preliminary materials in published performance
-texts.  These often contain specific textual elements not generally
-found in other forms of text.  These include:
+texts.  When the module defined by this chapter is included in a
+schema, the following additional elements not generally
+found in other forms of text become available as part of the front or
+back matter:
 <specList><specDesc key="performance"/><specDesc key="prologue"/><specDesc key="epilogue"/><specDesc key="set"/><specDesc key="castList"/></specList>
  </p>
+
 <p>Elements for encoding each of these specific kinds of front matter
 are discussed in the remainder of this section, in the order given
-above.  In addition, the front matter of dramatic texts may include the
-same elements as that of any other kind of text, notably title pages and
-various kinds of text division, as discussed in section <ptr target="#DSFRONT"/>.
-The encoder may choose to ignore the
-specialized elements discussed in this section and instead use
-constructions of the type <tag>div type="performance"</tag> or
-<tag>div1 type="set"</tag>.
+above.  In addition, the front matter of dramatic texts may include
+the same elements as that of any other kind of text, notably title
+pages and various kinds of text division, as discussed in section <ptr
+target="#DSFRONT"/>.  The encoder may choose to ignore the specialized
+elements discussed in this section and instead use constructions of
+the type <tag>div type="performance"</tag> or <tag>div1
+type="set"</tag>.
  </p>
+
 <p>Most other material in the front matter of a performance text will be
 marked with the default text structure elements described in chapter
 <ptr target="#DS"/>.  For example, the title
@@ -351,7 +355,13 @@ the name of an actor or actress (<q>Old Lady Squeamish. Mrs
 Rutter</q>).  Cast lists may be encoded with the general purpose
 <gi>list</gi> element described in section <ptr target="#COLI"/>, but for
 more detailed work the following specialized elements are provided:
-<specList><specDesc key="castList"/><specDesc key="castGroup"/><specDesc key="castItem" atts="type"/><specDesc key="role"/><specDesc key="roleDesc"/><specDesc key="actor"/></specList>
+<specList><specDesc key="castList"/><specDesc
+key="castGroup"/><specDesc key="castItem" atts="type"/></specList>
+</p><p>A <gi>castItem</gi> element may contain any mixture of elements
+taken from the <ident type="class">model.castItemPart</ident> class,
+members of which (when this module is included) are:
+<specList>
+<specDesc key="role"/><specDesc key="roleDesc"/><specDesc key="actor"/></specList>
 Cast lists often have an internal structure of their own; it is quite
 usual to find, for example, nobility and commoners, or male and female
 roles, presented in different groups or sublists.  Roles are also often

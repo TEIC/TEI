@@ -1698,15 +1698,21 @@ description of a particular taxonomy may be found.
     <title>Dewey Decimal Classification</title>
     <edition>Abridged Edition 12</edition>
   </bibl>
-</taxonomy></egXML>
-For less easily accessible schemes, the <gi>taxonomy</gi> element
-contains a description of the taxonomy itself as well as an optional
-bibliographic citation.  The description consists of a number of
-<gi>category</gi> elements, each defining a single category within the
-given typology.  The category is defined by the contents of a nested
-<gi>catDesc</gi> element, which may contain either a phrase describing
-the category, or a <gi>textDesc</gi> element defining it in terms of the
-situational parameters discussed in section <ptr target="#CCAHTD"/>.  If the
+</taxonomy></egXML> For less easily accessible schemes, the
+<gi>taxonomy</gi> element contains a description of the taxonomy
+itself as well as an optional bibliographic citation.  The description
+consists of a number of <gi>category</gi> elements, each defining a
+single category within the given typology.  The category is defined by
+the contents of a nested <gi>catDesc</gi> element, which may contain
+either a phrase describing the category, or any number of elements
+from the <ident type="class">model.catDescPart</ident> class. When the
+corpus module is included in a schema, this class provides the
+<gi>textDesc</gi> element whose components allow the definition of a
+text type in terms of a set of <soCalled>situational
+parameters</soCalled> (see further section <ptr target="#CCAHTD"/>; if
+the corpus module is not included in a schema, this class is empty and
+the <gi>catDesc</gi> element may contain only plain text. </p>
+<p>If the
 category is subdivided, each subdivision is represented by a nested
 <gi>category</gi> element, having the same structure.  Categories may be
 nested to an arbitrary depth in order to reflect the hierarchical
