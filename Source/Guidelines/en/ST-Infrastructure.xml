@@ -796,6 +796,58 @@ one specific element, or one class of element, for example. In other
 cases, elements may be permitted to appear in very many places, or in
 more than one such set of places. </p>
 
+<p>These factors are reflected in the way that model classes are
+named. If a model class has a name containing <val>part</val>, such as
+<ident type="class">model.divPart</ident> or <ident
+type="class">model.biblPart</ident> then it is primarily defined in
+terms of its structural location. Those elements (or classes of
+element) which appear as content of a <gi>div</gi> constitute the
+<ident type="class">model.divPart</ident> class; those which appear as
+content of a <gi>bibl</gi> constitute the <ident
+type="class">model.biblPart</ident> class. If, however, a model class
+has a name containing <val>like</val>, such as
+<ident>model.biblLike</ident> or <ident>model.nameLike</ident>, the
+implication is that its members all have some additional semantic
+property in common, for example containing a bibliographic
+description, or containing some form of name, respectively. These
+semantically-motivated classes often provide a useful way of dividing
+up large structurally-motivated classes: for example, the very general
+structural class <ident type="class">model.pPart.data</ident>
+(<soCalled>data elements that form part of a paragraph</soCalled>) is
+has four semantically-motivated member classes (<ident
+type="class">model.addressLike</ident>, <ident
+type="class">model.dateLike</ident>, <ident
+type="class">model.measureLike</ident>, and <ident
+type="class">model.nameLike</ident>, the last of these being itself a
+superclass with three members. </p>
+
+<p>Although most classes are defined by the <ident
+type="module">tei</ident> infrastructure module, a class will usually
+not be populated unless some other specific module is included in a
+schema, since element declarations are contained by modules. Classes
+are not declared <soCalled>top down</soCalled>, but instead gain their
+members as a consequence of individual elements' declaration of their
+membership. The same class will contain different members therefore,
+depending on which modules are active. In the same way, the content
+model of a given element (being expressed in terms of model classes)
+will differ depending on which modules are active.
+</p>
+
+<p>Some classes only contain a single member, even when all modules
+are loaded. One reason for declaring such a class is to make it easier
+for a customization to add new member elements in a specific place,
+particularly in areas where the TEI does not make fully elaborated
+proposals. For example, the TEI class model.rdgLike, intiailly empty,
+is expanded by the textcrit module to include just the TEI
+<gi>rdg</gi> element. A project wishing to add an alternative way of
+structuring text critical information could do so by defining their
+own elements and adding it to thuis class.</p>
+<p>Another reason for declaring single-member classes is where the
+class members are not required in all documents, but where they are
+required, appear alongside elements which are so required. To make
+such elements members of the very commonly occurring class would be a
+nuisanbce. model.gLike is a case in point.</p>
+
 
 <p>The TEI class system is structured around the following threefold
 division of elements:
@@ -844,35 +896,7 @@ These classes may include both elements in the core and elements
 declared in particular modules; a reference is given at least to the
 relevant section on the core tags.
  </p>
-<!--<p>The following are phrase-level element classes:
-<specList>
-<specDesc key="model.addressLike"/>
-<specDesc key="model.biblLike"/>
-<specDesc key="model.dateLike"/>
-<specDesc key="model.egLike"/>
-<specDesc key="model.global"/>
-<specDesc key="model.graphicLike"/>
-<specDesc key="model.hiLike"/>
-<specDesc key="model.emphLike"/>
-<specDesc key="model.headLike"/>
-<specDesc key="model.labelLike"/>
-<specDesc key="model.listLike"/>
-<specDesc key="model.measureLike"/>
-<specDesc key="model.noteLike"/>
-<specDesc key="model.pPart.data"/>
-<specDesc key="model.pPart.editorial"/>
-<specDesc key="model.pPart.msdesc"/>
-<specDesc key="model.pPart.transcriptional"/>
-<specDesc key="model.ptrLike"/>
-<specDesc key="model.ptrLike.form"/>
-<specDesc key="model.qLike"/>
-<specDesc key="model.segLike"/>
-</specList>
-</p>-->
 
-<p>
-
-</p>
 </div>
 <div type="div3" xml:id="STECHI"><head>High-Level Element Classes</head>
 <p>The following element classes are used to implement the threefold
@@ -886,9 +910,8 @@ and <term>phrase-level elements</term> can occur only at phrase level,
 within chunks (e.g. within but not between paragraphs).
  </p>
 <p>The element class <ident type="class">model.common</ident> includes all
-component-level (chunk- and inter-level) elements <!-- common to more than
-one base.  It is used in implementing the combined bases described in
-section <ptr target="#STECMX"/>.-->
+component-level (chunk- and inter-level) elements 
+
   </p>
 
 </div>
@@ -912,117 +935,118 @@ other declarations. </p></div>
 <p>The following element classes occupy specific places in content
 models; most are relevant only when certain modules are selected
 </p></div>
+
+
 <div><head>List of model classes </head>
 <p>
 <specList>
-<specDesc key="model.addrPart"/>
-<specDesc key="model.addressLike"/>
-<specDesc key="model.applicationLike"/>
-<specDesc key="model.biblLike"/>
-<specDesc key="model.biblPart"/>
-<specDesc key="model.castItemPart"/>
-<specDesc key="model.catDescPart"/>
-<specDesc key="model.choicePart"/>
-<specDesc key="model.common"/>
-<specDesc key="model.featureVal.complex"/>
-<specDesc key="model.featureVal.single"/>
-<specDesc key="model.dateLike"/>
-<specDesc key="model.div1Like"/>
-<specDesc key="model.div2Like"/>
-<specDesc key="model.div3Like"/>
-<specDesc key="model.div4Like"/>
-<specDesc key="model.div5Like"/>
-<specDesc key="model.div6Like"/>
-<specDesc key="model.div7Like"/>
-<specDesc key="model.divBottom"/>
-<specDesc key="model.divBottomPart"/>
-<specDesc key="model.divGenLike"/>
-<specDesc key="model.divLike"/>
-<specDesc key="model.divPart"/>
-<specDesc key="model.divPart.spoken"/>
-<specDesc key="model.divTop"/>
-<specDesc key="model.divTopPart"/>
-<specDesc key="model.divWrapper"/>
-<specDesc key="model.editorialDeclPart"/>
-<specDesc key="model.egLike"/>
-<specDesc key="model.emphLike"/>
-<specDesc key="model.encodingPart"/>
-<specDesc key="model.entryLike"/>
-<specDesc key="model.entryPart"/>
-<specDesc key="model.entryPart.top"/>
-<specDesc key="model.featureVal"/>
-<specDesc key="model.formPart"/>
-<specDesc key="model.frontPart"/>
-<specDesc key="model.frontPart.drama"/>
-<specDesc key="model.gLike"/>
-<specDesc key="model.global"/>
-<specDesc key="model.global.edit"/>
-<specDesc key="model.global.meta"/>
-<specDesc key="model.glossLike"/>
-<specDesc key="model.gramPart"/>
-<specDesc key="model.graphicLike"/>
-<!--specDesc key="model.handDescPart"/-->
-<specDesc key="model.headLike"/>
-<specDesc key="model.headerPart"/>
-<specDesc key="model.hiLike"/>
-<specDesc key="model.highlighted"/>
-<specDesc key="model.imprintPart"/>
-<specDesc key="model.inter"/>
-<specDesc key="model.inter.spoken"/>
-<specDesc key="model.lLike"/>
-<specDesc key="model.lPart"/>
-<specDesc key="model.labelLike"/>
-<specDesc key="model.limitedPhrase"/>
-<specDesc key="model.listLike"/>
-<specDesc key="model.measureLike"/>
-<specDesc key="model.milestoneLike"/>
-<specDesc key="model.morphLike"/>
-<specDesc key="model.msItemPart"/>
-<specDesc key="model.nameLike"/>
-<specDesc key="model.nameLike.agent"/>
-<specDesc key="model.noteLike"/>
-<specDesc key="model.oddDecl"/>
-<specDesc key="model.oddRef"/>
-<specDesc key="model.orgStateLike"/>
-<specDesc key="model.pLike"/>
-<specDesc key="model.pLike.front"/>
-<specDesc key="model.pPart.data"/>
-<specDesc key="model.pPart.edit"/>
-<specDesc key="model.pPart.editorial"/>
-<specDesc key="model.pPart.msdesc"/>
-<specDesc key="model.pPart.transcriptional"/>
-<specDesc key="model.persEventLike"/>
-<specDesc key="model.persNamePart"/>
-<specDesc key="model.persStateLike"/>
-<specDesc key="model.persTraitLike"/>
-<specDesc key="model.personLike"/>
-<specDesc key="model.personPart"/>
-<specDesc key="model.phrase"/>
-<specDesc key="model.physDescPart"/>
-<specDesc key="model.placeEventLike"/>
-<specDesc key="model.placeLike"/>
-<specDesc key="model.placeNamePart"/>
-<specDesc key="model.placeStateLike"/>
-<specDesc key="model.placeTraitLike"/>
-<specDesc key="model.profileDescPart"/>
-<specDesc key="model.ptrLike"/>
-<specDesc key="model.ptrLike.form"/>
-<specDesc key="model.publicationStmtPart"/>
-<specDesc key="model.qLike"/>
-<specDesc key="model.quoteLike"/>
-<specDesc key="model.rdgLike"/>
-<specDesc key="model.rdgPart"/>
-<specDesc key="model.recordingPart"/>
-<specDesc key="model.resourceLike"/>
-<specDesc key="model.respLike"/>
-<specDesc key="model.segLike"/>
-<specDesc key="model.settingPart"/>
-<specDesc key="model.sourceDescPart"/>
-<specDesc key="model.specDescLike"/>
-<specDesc key="model.stageLike"/>
-<specDesc key="model.textDescPart"/>
-<specDesc key="model.titlepagePart"/>
-<specDesc key="model.phrase.xml"/>
+<!-- --><specDesc key="model.addrPart"/>
+<!-- --><specDesc key="model.addressLike"/>
+<!--hdr --><specDesc key="model.applicationLike"/>
+<!-- --><specDesc key="model.biblLike"/>
+<!-- --><specDesc key="model.biblPart"/>
+<!--dram --><specDesc key="model.castItemPart"/>
+<!--hdr --><specDesc key="model.catDescPart"/>
+<!-- --><specDesc key="model.choicePart"/>
+<!-- --><specDesc key="model.common"/>
+<!--fs --><specDesc key="model.featureVal.complex"/>
+<!--fs --><specDesc key="model.featureVal.single"/>
+<!-- --><specDesc key="model.dateLike"/>
+<!-- --><specDesc key="model.div1Like"/>
+<!-- --><specDesc key="model.div2Like"/>
+<!-- --><specDesc key="model.div3Like"/>
+<!-- --><specDesc key="model.div4Like"/>
+<!-- --><specDesc key="model.div5Like"/>
+<!-- --><specDesc key="model.div6Like"/>
+<!-- --><specDesc key="model.div7Like"/>
+<!-- --><specDesc key="model.divBottom"/>
+<!-- --><specDesc key="model.divBottomPart"/>
+<!-- --><specDesc key="model.divGenLike"/>
+<!-- --><specDesc key="model.divLike"/>
+<!-- --><specDesc key="model.divPart"/>
+<!-- --><specDesc key="model.divPart.spoken"/>
+<!-- --><specDesc key="model.divTop"/>
+<!-- --><specDesc key="model.divTopPart"/>
+<!-- --><specDesc key="model.divWrapper"/>
+<!--hdr --><specDesc key="model.editorialDeclPart"/>
+<!-- --><specDesc key="model.egLike"/>
+<!-- --><specDesc key="model.emphLike"/>
+<!--hdr --><specDesc key="model.encodingPart"/>
+<!--dic --><specDesc key="model.entryLike"/>
+<!--dic --><specDesc key="model.entryPart"/>
+<!--dic --><specDesc key="model.entryPart.top"/>
+<!--fs --><specDesc key="model.featureVal"/>
+<!--dic --><specDesc key="model.formPart"/>
+<!-- --><specDesc key="model.frontPart"/>
+<!-- --><specDesc key="model.frontPart.drama"/>
+<!-- --><specDesc key="model.gLike"/>
+<!-- --><specDesc key="model.global"/>
+<!-- --><specDesc key="model.global.edit"/>
+<!-- --><specDesc key="model.global.meta"/>
+<!-- --><specDesc key="model.glossLike"/>
+<!--dic --><specDesc key="model.gramPart"/>
+<!-- --><specDesc key="model.graphicLike"/>
+<!-- --><specDesc key="model.headLike"/>
+<!-- --><specDesc key="model.headerPart"/>
+<!-- --><specDesc key="model.hiLike"/>
+<!-- --><specDesc key="model.highlighted"/>
+<!-- --><specDesc key="model.imprintPart"/>
+<!-- --><specDesc key="model.inter"/>
+<!--spo --><specDesc key="model.inter.spoken"/>
+<!-- --><specDesc key="model.lLike"/>
+<!-- --><specDesc key="model.lPart"/>
+<!-- --><specDesc key="model.labelLike"/>
+<!-- --><specDesc key="model.limitedPhrase"/>
+<!-- --><specDesc key="model.listLike"/>
+<!-- --><specDesc key="model.measureLike"/>
+<!-- --><specDesc key="model.milestoneLike"/>
+<!--dic --><specDesc key="model.morphLike"/>
+<!-- --><specDesc key="model.msItemPart"/>
+<!-- --><specDesc key="model.nameLike"/>
+<!-- --><specDesc key="model.nameLike.agent"/>
+<!-- --><specDesc key="model.noteLike"/>
+<!--odd --><specDesc key="model.oddDecl"/>
+<!--odd --><specDesc key="model.oddRef"/>
+<!--pers --><specDesc key="model.orgStateLike"/>
+<!-- --><specDesc key="model.pLike"/>
+<!-- --><specDesc key="model.pLike.front"/>
+<!-- --><specDesc key="model.pPart.data"/>
+<!-- --><specDesc key="model.pPart.edit"/>
+<!-- --><specDesc key="model.pPart.editorial"/>
+<!-- --><specDesc key="model.pPart.msdesc"/>
+<!-- --><specDesc key="model.pPart.transcriptional"/>
+<!--pers --><specDesc key="model.persEventLike"/>
+<!--pers --><specDesc key="model.persNamePart"/>
+<!--pers --><specDesc key="model.persStateLike"/>
+<!--pers --><specDesc key="model.persTraitLike"/>
+<!--pers --><specDesc key="model.personLike"/>
+<!--pers --><specDesc key="model.personPart"/>
+<!-- --><specDesc key="model.phrase"/>
+<!--ms --><specDesc key="model.physDescPart"/>
+<!--pers --><specDesc key="model.placeEventLike"/>
+<!--pers --><specDesc key="model.placeLike"/>
+<!--pers --><specDesc key="model.placeNamePart"/>
+<!--pers --><specDesc key="model.placeStateLike"/>
+<!--pers --><specDesc key="model.placeTraitLike"/>
+<!--hdr --><specDesc key="model.profileDescPart"/>
+<!-- --><specDesc key="model.ptrLike"/>
+<!-- --><specDesc key="model.ptrLike.form"/>
+<!--hdr --><specDesc key="model.publicationStmtPart"/>
+<!-- --><specDesc key="model.qLike"/>
+<!-- --><specDesc key="model.quoteLike"/>
+<!--tc --><specDesc key="model.rdgLike"/>
+<!--tc --><specDesc key="model.rdgPart"/>
+<!--hdr --><specDesc key="model.recordingPart"/>
+<!-- --><specDesc key="model.resourceLike"/>
+<!-- --><specDesc key="model.respLike"/>
+<!-- --><specDesc key="model.segLike"/>
+<!--hdr --><specDesc key="model.settingPart"/>
+<!--hdr --><specDesc key="model.sourceDescPart"/>
+<!--odd --><specDesc key="model.specDescLike"/>
+<!-- --><specDesc key="model.stageLike"/>
+<!--hdr --><specDesc key="model.textDescPart"/>
+<!-- --><specDesc key="model.titlepagePart"/>
+<!-- --><specDesc key="model.phrase.xml"/>
 </specList>
  </p>
 
