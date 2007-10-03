@@ -1828,6 +1828,7 @@ select="$makeDecls"/></xsl:message>
 	<span class="showmembers{$depth}" xmlns="http://www.w3.org/1999/xhtml">
 	  <xsl:if test="$depth &gt; 1"> [</xsl:if>
 	  <xsl:for-each select="key('CLASSMEMBERS',$this)">
+	    <xsl:sort select="local-name()"/>
 	    <xsl:sort select="@ident"/>
 	    <xsl:text> </xsl:text>
 	    <xsl:variable name="cl">
