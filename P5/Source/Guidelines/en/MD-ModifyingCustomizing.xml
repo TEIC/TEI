@@ -572,25 +572,24 @@ members of which simply share a set of attributes. </p>
 <p>The part of an element specification which determines its class
 membership is an element called <gi>classes</gi>. All classes to which
 the element belongs must be specified within this, using a
-<gi>memberOf</gi> element for each. This implies that, when the class
-membership of an element is changed, care must be taken to review and
-(if appropriate) preserve its existing memberships.</p>
-<p>For example, the <gi>eg</gi> element discussed in the previous
-section is already a member of two classes (<ident
-type="class">model.common</ident> and <ident
-type="class">model.graphicLike</ident>). To add it to another class as
-proposed above without also affecting its other class memberships,
-these declarations must be preserved. The modification which adds a
-<att>type</att> attribute to the <gi>element</gi> therefore looks like
-this:
+<gi>memberOf</gi> element for each. </p>
+<p>To add an element to a class in which it is not already a member,
+all that is needed is to supply a <gi>memberOf</gi> element with the
+implicit value for its <att>mode</att> attribute of
+<val>add</val>. For example, to add an element to the <ident
+type="class">att.typed</ident> class, we include a declaration like
+the following:
 <egXML rend="full" xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="eg"
 module="tagdocs" mode="change" ns="http://example.com/ns">
   <classes>
-    <memberOf key="model.common"/>
-    <memberOf key="model.graphicLike"/>
     <memberOf key="att.typed"/>
   </classes>
 </elementSpec></egXML>
+Any existing class memberships for the element being changed are not
+affected: in this case, the <gi>eg</gi> element retains its membership of 
+the two classes (<ident
+type="class">model.common</ident> and <ident
+type="class">model.graphicLike</ident>) to which it already belongs. 
 </p>
 <p>Equally, to remove the attributes which  an element
 inherits from its membership in some class, all that is needed is to
@@ -600,16 +599,36 @@ attribute classes, <ident type="class">att.typed</ident> and <ident
 type="class">att.declaring</ident>. It inherits the attributes
 <att>type</att> and <att>subtype</att> from the former, and the
 attribute <att>declaring</att> from the latter. To remove the last of these
-attributes from this element, we would supply a modification like the
-following: <egXML rend="full"
+attributes from this element, we need to remove it from that class:
+<egXML rend="full"
 xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="term"
 module="core" mode="change" ns="http://example.com/ns">
   <classes>
-    <memberOf key="model.emphLike"/>
-    <memberOf key="att.typed"/>
+    <memberOf key="att.declaring" mode="delete"/>
   </classes>
 </elementSpec></egXML>
 </p>
+<p>If the intention is to change the class membership of an element
+completely, rather than simply add or remove it to one or more
+classes, then the <gi>classes</gi> element may indicate this by means of
+its <att>mode</att> attribute. By default, this attribute has the
+value <val>change</val>, implying that the memberships indicated by
+its child <gi>memberOf</gi> elements are to be combined with the
+existing memberships for the element. If however the <att>mode</att>
+attribute is set to <val>replace</val>, the implication is that the
+memberships indicated by its child <gi>memberOf</gi> elements are the
+only ones applicable. Thus the following declaration: <egXML rend="full"
+xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="term"
+module="core" mode="change" ns="http://example.com/ns">
+  <classes mode="replace">
+    <memberOf key="att.interpLike"/>
+  </classes>
+</elementSpec></egXML>
+would have the effect of removing the element <gi>term</gi> from
+both its existing attribute classes, and adding it to the <ident
+type="class">att.interpLike</ident> class.
+</p>
+
 <p>To change or remove attributes inherited from an attribute class
 for all members of the class (as opposed to specific members of that
 class), it is also possible to  modify the class specification itself. For
@@ -635,8 +654,7 @@ unchanged. The only effect will therefore be to delete the <att>rend</att>
 attribute from the class. This in turn will affect the attributes
 inherited by all members of the class.</p>
 
-
-<p>Full details of the classes used in the TEI scheme are provided in
+<p>The classes used in the TEI scheme are further discussed in
 chapter <ptr target="#ST"/>. Note in particular that classes are
 themselves classified: the attributes inherited by a member of
 attribute class A may come to it directly from that class, or from
@@ -678,12 +696,12 @@ usually a simple operation and is also a clean modification. --> </p>
 
 <div type="div3" xml:id="MDMDNE"><head>Addition of New Elements</head>
 
-<p>To add  a completely new element into a schema involves providing a complete
-element specification for it, the <gi>classes</gi> element of which
-includes a reference to at least one TEI model class. Without such a
-reference, the new element will not be referenced by the content model
-of any other TEI element, and will therefore be inaccessible within a
-TEI document. </p>
+<p>To add a completely new element into a schema involves providing a
+complete element specification for it, the <gi>classes</gi> element of
+which includes a reference to at least one TEI model class. Without
+such a reference, the new element will not be referenced by the
+content model of any other TEI element, and will therefore be
+inaccessible within a TEI document. </p>
 
 <p>For example, the three elements  <gi>bibl</gi>, <gi>biblFull</gi>, and
 <gi>biblStruct</gi> are all defined as members of the class <ident
