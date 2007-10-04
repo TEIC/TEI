@@ -1119,7 +1119,9 @@ and to render account of any changes made to the text in preparing it.
 The tags described in this section may be used to record such editorial
 interventions, whether made by the encoder, by the editor of a printed
 edition used as a copy text, by earlier editors, or by the copyists of
-manuscripts.</p><p>The tags described here handle most common types of editorial
+manuscripts.</p>
+
+<p>The tags described here handle most common types of editorial
 intervention and stereotyped comment; where less structured commentary
 of other types is to be included, it should be marked using the
 <gi>note</gi> element described in section <ptr target="#CONO"/>.
@@ -1132,6 +1134,7 @@ of large or heterogenous spans of text, the mechanisms described in
 chapter <ptr target="#SA"/> should be used. To encode multiple
 witnesses of a particular text, a similar mechanism designed
 specifically for critical editions is described in chapter <ptr target="#TC"/>.</p>
+
 <p>For most of the elements discussed here, some encoders may wish to
 indicate both a <term>responsibility</term>, that is, a code
 indicating the person or agency responsible for making the editorial
@@ -1139,37 +1142,39 @@ intervention in question, and also am indication of the degree of
 <term>certainty</term> which the encoder wishes to associate with the
 intervention. Because these requirements are common to many of the
 elements discussed in this section, they are provided by an attribute
-class, called <ident type="class">att.editLike</ident>. All  members of this
-class carry the following optional attributes:
-<specList><specDesc key="att.editLike" atts="cert resp evidence"/></specList> 
+class, called <ident type="class">att.editLike</ident>. All members of
+this class carry the following optional attributes:
+<specList><specDesc key="att.editLike" atts="cert resp
+evidence"/></specList>
 </p>
-<p>Many of the elements discussed here (specifically <gi>sic</gi>, <gi>corr</gi>,
-<gi>reg</gi>, <gi>orig</gi>, <gi>unclear</gi>, <gi>add</gi>, and
-<gi>del</gi>) can be used in two ways. Their primary purpose is to indicate that the text
-encoded as the element's content represents an editorial intervention
-(or non-intervention) of a specific kind. However, pairs or other
-meaningful groupings of such elements can also be supplied,  wrapped
-withing a special purpose  <gi>choice</gi> element,
-in order to represent  simultaneously a text in its
-<soCalled>original</soCalled> uncorrected and unaltered form, and also
-one or more <soCalled>edited</soCalled> forms. Such grouped elements
-enable software to switch automatically between one
+
+<p>Many of the elements discussed here can be used in two ways. Their
+primary purpose is to indicate that the text encoded as the element's
+content represents an editorial intervention (or non-intervention) of
+a specific kind, indicated by the element itself. However, pairs or
+other meaningful groupings of such elements can also be supplied,
+wrapped within a special purpose <gi>choice</gi> element:
+  <specList>
+  <specDesc key="choice"/>
+</specList>
+This element enables the encoder to represent for example a text in
+its <soCalled>original</soCalled> uncorrected and unaltered form,
+alongside the same text in one or more <soCalled>edited</soCalled>
+forms. This usage permits software to switch automatically between one
 <soCalled>view</soCalled> of a text and another, so that (for example)
 a style-sheet may be set to display either the text in its original
-form or with editorial interventions of particular kinds.</p>
-<!--<p>The <gi>choice</gi> element indicates that its child elements should
-be considered as mutually exclusive or in parallel, depending on the
-processing goals. That is, the elements described here are intended to
-be used when multiple variations or views of a single piece of source
-text (say, the original erroneous version and the corrected version)
-are to be recorded. One common, but certainly not the only, processing
-model for such an element is that a style-sheet would select one and
-only one of the children of <gi>choice</gi> for display, printing, or
-other processing.</p>-->
+form or after the application of editorial interventions of particular
+kinds.</p>
+<p>Elements which can be combined in this way constitute the
+<ident type="class">model.choicePart</ident> class. The default
+members of this class are  <gi>sic</gi>,
+<gi>corr</gi>, <gi>reg</gi>, <gi>orig</gi>, <gi>unclear</gi>,
+<gi>add</gi>, and <gi>del</gi>; their functions and usage are
+described further below.</p>
 <p>Three categories of editorial intervention are discussed in this
 section:
 <list type="bullets">
-<item>indication or correction of apparent errors</item>
+<item>indication or correction of apparent errors </item>
 <item>indication or regularization of variant, irregular,
 non-standard, or eccentric forms</item>
 <item>editorial additions, suppressions, and
@@ -1187,7 +1192,6 @@ either the original or the correction.
 <specList>
   <specDesc key="sic"/>
   <specDesc key="corr"/>
-  <specDesc key="choice"/>
 </specList>
  </p><p>The following examples show alternative treatment of the same
 material. The copy text reads:
@@ -1367,7 +1371,6 @@ editorial practices:
   <specDesc key="unclear" atts="reason"/>
   <specDesc key="add"/>
   <specDesc key="del"/>
-  <specDesc key="choice"/>
 </specList></p>
 
 
@@ -1427,29 +1430,34 @@ yet hence his pray'r prevail'd</l></egXML>
 or from a spoken text:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>... and then <unclear reason="passing truck">marbled queen</unclear>...</p></egXML>
 </p>
+<!--
 <p>Where there is doubt about the reading of the material affected,
 the <att>cert</att> attribute may be used to indicate a degree of
 confidence in the reading provided as the content of
-<gi>unclear</gi>.</p>
-<p>In cases where the reading of an unclear passage is ambiguous, the
+<gi>unclear</gi>. 
+In cases where the reading of an unclear passage is ambiguous, the
 various possible readings can be simultaneously encoded using the
 <soCalled>choice</soCalled> mechanism. Simultaneously, the
 <att>cert</att> attribute may be used to indicate differing degrees of
 confidence about the variant readings.
+-->
 <!--Need better, preferably believable if not real, example:-->
-The following fictitious
+<!--The following fictitious
 example is illustrative, although in this case it is easy to verify
 the correct reading from other witnesses.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">His senses were all
 alert, his breath was suspended, his blood had stilled its tides as if
-to assist the silence. Who—what had <choice>
+to assist the silence. Who—what had <choice> 
   <unclear cert="high">woken</unclear>
   <unclear cert="low">waken</unclear>
   <unclear cert="medium">waked</unclear>
 </choice> him, and where was it?</egXML>
 <note type="cit">Ambrose Bierce, <title>The Boarded
 Window</title>; p. 370 of my wife's 1927 First Modern Library edition
-of <title>In the Midst of Life</title>.</note></p>
+of <title>In the Midst of Life</title>.</note>
+-->
+
+
 <p>Where the material affected is entirely illegible or inaudible, the
 <gi>gap</gi> element discussed above should be used in preference.</p>
 <p>The <gi>del</gi> element is used to mark material which is deleted in
@@ -1479,9 +1487,6 @@ addition:
 splendour of Corinthian white and gold</l></egXML> 
 <!-- The Waste Land. a facsimile and transcript... edited by -->
 	<!-- Valerie Eliot. Faber, 1971. p.37 -->
-<!-- the preceding example had del and add wrapped in a choice: that's
-definite nonsense, but it's not clear what the combining element
-should be LB 14 dec 04 -->
 The <gi>subst</gi> element discussed in <ptr target="#PHSU"/> provides
 a way of grouping additions and deletions of this kind. </p>
 <p>The <gi>del</gi> element should not be used where the deletion is
@@ -1524,24 +1529,11 @@ more than trivial amounts of alteration, the reader should consult
 chapter <ptr target="#TC"/>, and chapter <ptr target="#PH"/>.</p>
 -->
 </p>
-
 <specGrp xml:id="DCOEDA" n="Other editorial tags">
-
-
 &gap;
-
-
-
 &add;
-
-
-
 &del;
-
-
-
 &unclear;
-
 </specGrp>
 </div></div>
 <div type="div2" xml:id="CONA"><head>Names, Numbers, Dates, Abbreviations, and Addresses</head>
@@ -1936,15 +1928,16 @@ avoid the need to repeat all the normalizing attributes:
 <div type="div3" xml:id="CONADA"><head>Dates and Times</head>
 <p>Dates and times, like numbers, can appear in widely varying
 culture- and language-dependent forms, and can pose similar problems
-in automatic language processing. The following elements are provided
-to identify them:
+in automatic language processing. Such elements constitute the <ident
+type="class">model.dateLike</ident> class, of which the default
+members are:
  <specList>
    <specDesc key="date" atts="calendar"/>
    <specDesc key="time"/>
  </specList>
 These elements have some additional attributes by virtue of being
-members of the <name type="class">att.datable</name> and <name type="class">att.duration</name> classes which, in turn, are members
-of the <name type="class">att.datable.w3c</name> and <name type="class">att.duration.w3c</name> classes. In particular, the
+members of the <ident type="class">att.datable</ident> and <ident type="class">att.duration</ident> classes which, in turn, are members
+of the <ident type="class">att.datable.w3c</ident> and <ident type="class">att.duration.w3c</ident> classes. In particular, the
 <att>when</att> attribute will be discussed here:
 <specList>
  <specDesc key="att.datable.w3c" atts="when"/>
@@ -2058,7 +2051,6 @@ these tags:
 <specList>
 <specDesc key="abbr"/>
 <specDesc key="expan"/>
-<specDesc key="choice"/>
 </specList>
 </p><p>The <gi>abbr</gi> element is useful as a means of distinguishing
 semi-lexical items such as acronyms or jargon:
@@ -2075,70 +2067,39 @@ languages is currently nailing on <abbr>OOP</abbr> extensions.</egXML>
 of abbreviation by their function:<egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr type="title">Dr.</abbr> <abbr type="initial">M.</abbr> Deegan is
 the Director of the <abbr type="acronym">CTI</abbr> Centre for Textual Studies.</egXML>
  </p>
-<p>Abbreviations such as <mentioned>Dr. M.</mentioned> above may be treated as two
-abbreviations, as above, or as one:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr>Dr. M.</abbr> Deegan is the Director of
-the <abbr>CTI</abbr> Centre for Textual Studies.</egXML>
+<p>Abbreviations such as <mentioned>Dr. M.</mentioned> above may be
+treated as two abbreviations, as above, or as one: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><abbr>Dr. M.</abbr> Deegan is
+the Director of the <abbr>CTI</abbr> Centre for Textual Studies.</egXML>
  </p>
-
-<p>The <gi>expan</gi> element may be combined with the <gi>abbr</gi>
-element inside a <gi>choice</gi> element to provide an expansion of
-the abbreviation.<egXML xmlns="http://www.tei-c.org/ns/Examples"><choice><abbr>RELAXNG</abbr><expan>regular
+<p>The <gi>expan</gi> element may be used simply to record that an
+abbreviation has been silently expanded by the encoder, perhaps for
+reasons of house style or editorial policy. It should
+always include the whole of an abbreviated phrase or word. More
+usually however this will be combined with the <gi>abbr</gi> element
+inside a <gi>choice</gi> element to record both the abbreviation and
+its expansion: 
+<egXML
+xmlns="http://www.tei-c.org/ns/Examples"> the 
+<choice><expan>World Wide Web Consortium</expan>
+<abbr>W3C</abbr></choice></egXML>
+Nested abbreviations may also be handled in this way:
+<egXML
+xmlns="http://www.tei-c.org/ns/Examples"><choice><abbr>RELAXNG</abbr><expan>regular
 language for <choice><abbr>XML</abbr><expan>extensible markup
-language</expan></choice>, next generation</expan></choice></egXML>The
-<att>src</att> attribute may be supplied on the <gi>choice</gi>
-element to indicate whether the abbreviated or expanded version was
-that which was present in the copy text.</p>
+language</expan></choice>, next
+generation</expan></choice></egXML></p>
 
-<p>These elements are particularly useful where manuscript materials
-in which abbreviation is very frequent are being transcribed. For
-example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>Ex<choice><abbr type="brevigraph">&amp;per;</abbr><expan>per</expan></choice>ience,
-thogh noon auctoritee</l>
-<l>Were in this world, is right ynogh for me</l>
-<l>To speke of wo that is in mariage;</l></egXML>
-</p>
-
-<p>Here an entity reference <ident type="ge">per</ident> has been used
-to represent the common manuscript symbol
-<mentioned>crossed-p</mentioned>, and its expansion supplied in the
-associated <gi>expan</gi> element. (A better solution might be to use
-the <gi>g</gi> element supplied by the <ident>gaiji</ident> module
-described below <ptr target="#CH"/> to represent the brevigraph directly). </p>
-
-
-<p>Practice diverges on whether the <gi>expan</gi> element should be
-used, as here, to represent simply the material omitted in the
-abbreviated representation, or whether it should always represent the
-whole string abbreviated as in the modern examples cited above.</p>
-
-<!--
- In practice, it may be most convenient to transcribe the abbreviation
-as an entity reference; this allows the entity reference itself to be
-expanded either as an <gi>abbr</gi> or as an <gi>expan</gi> element,
-depending on the processing to be done at the moment. 
-The text shown here:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>Ex&amp;per;ience, thogh noon auctoritee</l>
-<l>Were in this world, is right ynogh for me</l>
-<l>To speke of wo that is in mariage;</l></egXML>
-may be expanded as desired by providing the appropriate choice among a
-variety of entity declarations:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY per "per">
-<!ENTITY per "<abbr type='brevigraph'>&amp;amp;p.crossed;</abbr>">
-<!ENTITY per "<expan resp='#PG'>per</expan>">
-<!ENTITY per "<choice><abbr>&amp;amp;p.crossed;</abbr><expan resp='#PG'>per</expan></choice>">
-]]></egXML>-->
-<p>For further discussion of manuscript abbreviations, see chapter <ptr target="#PH"/>. </p>
+<p>Abbreviation is a particularly important feature of manuscript
+and other source materials, the transcription of which needs more detailed treatment than
+is possible using these simple elements. A more detailed set of
+recommendations is discussed in <ptr target="#PHCH"/>, which includes
+additional elements made available for the purpose by the <ident
+type="module">transcr</ident> module. </p>
 
 <specGrp xml:id="DCOAB" n="Abbreviations">
-
-
 &abbr;
-
-
-
 &expan;
-
 </specGrp>
 </div></div>
 <div type="div2" xml:id="COXR"><head>Simple Links and Cross References</head>
@@ -3449,8 +3410,22 @@ pointers to them may appear at various places in a TEI text.  They are
 required at several points within the TEI Header's source description,
 as discussed in section <ptr target="#HD3"/>; they may also appear within
 the body of a text, either singly (for example within a footnote), or
-collected together in a list as a distinct part of a text.
- </p>
+collected together in a list as a distinct part of a text; detailed
+bibliographic descriptions of manuscript or other source materials may
+also be required. These Guidelines propose a number of specialised
+elements to encode such descriptions, which together constitute the <ident
+type="class">model.biblLike</ident> class.  By default, this class has
+the following members:
+<specList>
+<specDesc key="bibl"/>
+<specDesc key="biblStruct"/>
+<specDesc key="biblFull"/>
+</specList>
+Lists of such elements may also be encoded using the following element:
+<specList>
+<specDesc key="listBibl"/></specList>
+</p>
+
 <p>In printed texts, the individual constituents of a bibliographic
 reference are conventionally marked off from each other and from the
 flow of text by such features as bracketing, italics, special
@@ -3487,20 +3462,14 @@ section <ptr target="#HD3"/>; for a brief mention of related library
 standards see section <ptr target="#HD8"/>.
  </p>
 <div type="div3" xml:id="COBITY"><head>Elements of Bibliographic References</head>
-<p>The following elements are used to mark individual bibliographic
-references as wholes, or in groups:
-<specList>
-<specDesc key="bibl"/>
-<!--specDesc key="biblItem"/-->
-<specDesc key="biblStruct"/>
-<specDesc key="biblFull"/>
-<specDesc key="listBibl"/>
-</specList>
-These elements all share a number of possible component sub-elements.
-For the <gi>bibl</gi> and <gi>biblStruct</gi> elements, exactly the
-same sub-elements are concerned, and they are described together in
-section <ptr target="#COBICO"/>; for the <gi>biblFull</gi> element, the
-sub-elements concerned are fully described in section <ptr target="#HD2"/>.
+<p>
+The members of the <ident type="class">model.biblLike</ident> class
+all share a number of possible component sub-elements.  For the
+<gi>bibl</gi> and <gi>biblStruct</gi> elements, exactly the same
+sub-elements are concerned, and they are described together in section
+<ptr target="#COBICO"/>; for the <gi>biblFull</gi> element, the
+sub-elements concerned are fully described in section <ptr
+target="#HD2"/>.
  </p>
 <p>Different levels of specific tagging may be appropriate in different
 situations.  In some cases, it may be felt necessary to mark just the
@@ -3657,13 +3626,15 @@ or a simple <gi>list</gi>:
  </p>
 </div>
 <div type="div3" xml:id="COBICO"><head>Components of Bibliographic References</head>
-<p>This section discusses a number of very commonly occurring component
-elements of bibliographic references.  They fall into four groups:
+<p>This section discusses a number of very commonly occurring
+component elements of bibliographic references.  They fall into four
+groups:
 <list type="bullets">
 <item>elements for grouping components of the
-<term rend="noindex">analytic</term>,
-<term rend="noindex">monographic</term>,
-and <term rend="noindex">series</term>
+<term>analytic</term>,
+<term>monographic</term>,
+and <term>series</term>
+<!--
 <index><term>analytic level</term><index><term>bibliographic</term></index></index>
 <index><term>monographic level</term><index><term>bibliographic</term></index></index>
 <index><term>series level</term><index><term>bibliographic</term></index></index>
@@ -3671,17 +3642,21 @@ and <term rend="noindex">series</term>
 <index><term>bibliographic
 references</term><index><term>monographic
 level</term></index></index>
-<index><term>bibliographic references</term><index><term>series level</term></index></index>
+<index><term>bibliographic references</term><index><term>series
+level</term></index></index> -->
 levels in a structured bibliographic reference</item>
 <item>titles of various kinds, and statements of intellectual
 responsibility (authorship, etc.)</item>
 <item>information relating to the publication, pagination, etc. of an
-item</item>
+item (most of these
+constitute the default members of the <ident
+type="class">model.biblPart</ident> class) </item>
 <item>annotation, commentary, and further detail</item></list>
 The following sections describe the elements which may be used to
 represent such information within a <gi>bibl</gi> or
-<gi>biblStruct</gi> element.  Within the former, any or all of these
-may be used and in any order.  Within the latter, such of these elements
+<gi>biblStruct</gi> element.  Within the former, elements from the
+model.biblPart class, other phrase-level elements, and plain text may
+be combined without other constraint; within the latter, such of these elements
 as exist for a given reference must be distinguished, and must also be
 presented in a specific order, discussed further below (section <ptr target="#COBICOO"/>).
  </p>
@@ -3694,13 +3669,13 @@ part of a collection which itself appears in a series thus has a
 bibliographic description with three quite distinct levels of
 information:
 <list type="ordered">
-<item>the <term rend="noindex">analytic</term><index><term>analytic level</term><index><term>bibliographic</term></index></index>
-level, giving the title, author, etc., of the article;
+<item>the <term rend="noindex">analytic</term><!--<index><term>analytic level</term><index><term>bibliographic</term></index></index>
+level, giving the title, author, etc., of the article;-->
  </item>
-<item>the <term rend="noindex">monographic</term><index><term>monographic level</term><index><term>bibliographic</term></index></index>
+<item>the <term rend="noindex">monographic</term><!--<index><term>monographic level</term><index><term>bibliographic</term></index></index>-->
 level, giving the title, editor, etc., of the collection;
  </item>
-<item>the <term rend="noindex">series</term><index><term>series level</term><index><term>bibliographic</term></index></index>
+<item>the <term rend="noindex">series</term><!--<index><term>series level</term><index><term>bibliographic</term></index></index>-->
 level, giving the title of the series, possibly the names of its
 editors, etc., and the number of the volume within that series.
  </item></list>
@@ -3710,7 +3685,7 @@ monographic level describing the journal.
  </p>
 <p>These three levels may be distinguished within a <gi>bibl</gi>
 element, and must be distinguished within a <gi>biblStruct</gi> element
-if present, by means of the following tags:
+if present, by means of the following elements:
 
 <specList><specDesc key="analytic"/><specDesc key="monogr"/><specDesc key="series"/></specList>
  </p>
@@ -4446,7 +4421,9 @@ element when this is the case, as for example in an application
 concerned to normalize bibliographic references:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Nelson claims (<ref target="#NEL80">Nelson [1980]</ref> pages 13–37) ...</egXML>
  </p></div>
+
 <div type="div3" xml:id="COBIOT"><head>Relationship to Other Bibliographic Schemes</head>
+
 <p>The bibliographic tagging defined here can capture the distinctions
 required by most bibliographic encoding systems; for the benefit of
 users of some commonly used systems, the following lists of equivalences
@@ -4517,6 +4494,7 @@ value</item><label>volume      </label>
 <item>tag as <gi>date</gi>; if the date is not in a
 trivially parseable form, use the <att>value</att>
 attribute to provide an ISO-format equivalent</item></list></p></div></div>
+
 <div type="div2" xml:id="CODV"><head>Passages of Verse or Drama</head>
 <p>The following elements are included in the core module for the
 convenience of those encoding texts which include mixtures of prose,
@@ -4532,6 +4510,7 @@ describe only the elements listed above, all of which can appear in any
 text, whichever of the three modes prose, verse, or drama may predominate
 in it.
  </p>
+
 <div type="div3" xml:id="COVE"><head>Core Tags for Verse</head>
 <p>Like other written texts, verse texts or poems may be
 hierarchically subdivided, for example into books or cantos. These
