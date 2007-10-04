@@ -190,21 +190,35 @@ thou?</q><q>I'm the Mischievous Mosquito.</q>
 
 </div>
 <div type="div2" xml:id="COPU"><head>Treatment of Punctuation</head>
-<p>Punctuation marks cause problems for text markup because they may
-not be available in the character set used and because they are often
-ambiguous. In the former case entity names should be used to render
-the punctuation mark (see <ptr target="#CH" type="div1"/>). In the latter
-case, ambiguous punctuation may be treated as described below.
- </p>
-<p><term rend="noindex">Full stop (period)</term><index><term>full stop</term><index><term>functions</term></index></index><index><term>period</term><index><term>functions</term></index></index>
+
+<p>Punctuation marks cause problems for text markup when they are not
+available in the character set used and when they are significantly
+ambiguous. To a large extent, the availability of the Unicode
+character set addresses most such problems, since it provides specific
+codepoints for most punctuation marks, and also distinguishes glyphs
+(such as stop, comma, and hyphen) which are used with different
+functions. Thus, for example,  different Unicode code points
+are available for the hyphen used as a minus sign, as a word breaking
+hyphen, as a soft hyphen, or as a  <soCalled>non-breaking</soCalled>
+hyphen. The facilities described in chapter <ptr target="#WD"/> may
+also be used to define markup for non-standard punctuation
+characters. </p>
+
+<p><term rend="noindex">Full stop (period)</term><index><term>full
+stop</term><index><term>functions</term></index></index><index><term>period</term><index><term>functions</term></index></index>
 may mark (orthographic) sentence boundaries, abbreviations, decimal
 points, or serve as a visual aid in printing numbers. These usages can
 be distinguished by tagging S-units, abbreviations, and numbers, as
 described in sections <ptr target="#SASE"/>, <ptr target="#CONAAB"/>,
-and <ptr target="#CONANU"/>. There are independent reasons for tagging these,
-whether or not they are marked by full stops. Alternatively,
-entity names like the following might be used to distinguish stops
-(and other characters) used for these purposes:
+and <ptr target="#CONANU"/>. However, there are independent reasons
+for tagging these, whether or not they are marked by full
+stops, and the polysemy of the full stop itself is perhaps no different from
+that of any character in the writing system. </p>
+
+<!--
+
+. Alternatively, entity names like the following might be used to
+distinguish stops (and other characters) used for these purposes:
 <list type="gloss"><label>stop.abbr </label>
 <item>a stop used to end an abbreviation</item><label>stop.sent </label>
 <item>a stop used to end a sentence</item><label>stop.abse </label>
@@ -215,7 +229,7 @@ entity names like the following might be used to distinguish stops
 <item>a midline dot used as a decimal point</item><label>stop.space </label>
 <item>a stop used as a numeric space character</item><label>comma.space </label>
 <item>a comma used as a numeric space character</item></list>
- </p>
+ </p>-->
 <p><term rend="noindex">Question mark</term><index><term>question mark</term><index><term>functions</term></index></index>
 and <term rend="noindex">exclamation mark</term><index><term>exclamation mark</term><index><term>functions</term></index></index>
 typically mark the end of orthographic sentences, but may also be used
@@ -223,8 +237,10 @@ as a mid-sentence comment by the author (<mentioned>!</mentioned> to express
 surprise or some other strong feeling, <mentioned>?</mentioned> to query a word
 or expression or mark a sentence as dubious in linguistic discussion).
 These uses may be distinguished by marking S-units, in which case the
-mid-sentence uses of these punctuation marks may be left unmarked.
+mid-sentence uses of these punctuation marks may be left unmarked, or
+tagged using the <gi>c</gi> element discussed in <ptr target="#AILC"/>.
  </p>
+<!--
 <p><term rend="noindex">Hyphens</term><index><term>hyphen</term><index><term>functions</term></index></index><index><term>hyphen</term><index><term>soft and hard</term></index></index>
  at line-end may or may not indicate permanent
  (<soCalled>hard</soCalled>) hyphens in the word. Where the lineation
@@ -244,39 +260,43 @@ mid-sentence uses of these punctuation marks may be left unmarked.
  length, since  one cannot then easily tell whether the
  hyphens are soft or hard. When compounds or prefixed words
  are  hyphenated in mid-sentence, it may be impossible to tell whether the
- hyphenation is due to formatting or to linguistic concerns. </p>
- <p><term rend="noindex">Dashes</term><index><term>dash</term><index><term>functions</term></index></index> are best distinguished in form by using the
+ hyphenation is due to formatting or to linguistic concerns. </p>-->
+ <p><term
+	rend="noindex">Dashes</term><index><term>dash</term><index><term>functions</term></index></index> <!-- are best distinguished in form by using the
  entity names provided in the public entity set <ident type="entset">ISOpub</ident>, defined in ISO 8879: <ident type="ge">mdash</ident>, <ident type="ge">ndash</ident>, and <ident type="ge">dash</ident> (the <soCalled>true</soCalled>
  hyphen). Alternatively, in a standalone
  XML context, these entities may be represented as Unicode
  characters <code>&amp;#x2014;</code>, <code>&amp;#x2013;</code>,
  or <code>&amp;#x2010;</code> respectively.
- Dashes are used for a variety of purposes: insertion, interruption,
+ Dashes--> are used for a variety of purposes: insertion, interruption,
  new speaker (in dialogue), list item. In the latter two cases it is
  preferable to mark the underlying feature using the elements <tag>q</tag> or <tag>item</tag>, on which see section <ptr target="#COHQQ" type="div2"/>, and section <ptr target="#COLI" type="div2"/>,
  respectively.</p>
-<p><term rend="noindex">Quotation marks</term><index><term>quotation   marks</term><index><term>functions</term></index></index> should generally be replaced by the tags
+<p><term rend="noindex">Quotation marks</term><index><term>quotation   marks</term><index><term>functions</term></index></index> may be replaced by the tags
   <tag>q</tag> or <tag>quote</tag>, especially as quotations are not
   always marked by quotation marks (notably long quotations) or may be
   marked in a variety of ways; see the discussion of quotation and
   related features in section <ptr target="#COHQQ" type="div1"/>.</p>
-<p><term rend="noindex">Apostrophes</term><index><term>apostrophe</term><index><term>functions</term></index></index> must be distinguished from single quote marks.
+<p><term
+       rend="noindex">Apostrophes</term><index><term>apostrophe</term><index><term>functions</term></index></index> must be distinguished from single quote marks. As with hyphens, this disambiguation may be performed by selecting an apperopriate Unicode character, but it may also be represented by using explicit XML tags for quotations as suggested above. <!--
  This is best done by tagging quotations or other uses of quotation
- marks (see above). However, apostrophes have a variety of uses. In
+ marks (see above). --> However, apostrophes have a variety of uses. In
  English they mark contractions, genitive forms, and (occasionally)
  plural forms. Full disambiguation of these uses belongs to the level
  of linguistic analysis and interpretation.</p>
-<p><term rend="noindex">Parentheses</term><index><term>parentheses</term><index><term>functions</term></index></index> and other marks of suspension such as dashes or
- ellipses are often used to signal information about the syntactic
- structure of a text fragment. Full disambiguation of their uses also
- belongs to the level of linguistic analysis and interpretation, and
- is therefore discussed in chapter <ptr target="#AI"/>.
+<p><term
+rend="noindex">Parentheses</term><index><term>parentheses</term><index><term>functions</term></index></index>
+and other marks of suspension such as dashes or ellipses are often
+used to signal information about the syntactic structure of a text
+fragment. Full disambiguation of their uses also belongs to the level
+of linguistic analysis and interpretation, and is therefore discussed
+in chapter <ptr target="#AI"/>.
 </p>
 <p>Where punctuation marks are disambiguated by tagging the underlying
 feature they signal, it may be debated whether they should be excluded
 or left as part of the text. In the case of quotation marks, it may
-sometimes be more convenient to distinguish opening from closing marks
-simply by using the appropriate entity reference, rather than using the
+be more convenient to distinguish opening from closing marks
+simply by using the appropriate Unicode character than to use the
 <gi>q</gi> element, with or without a <att>rend</att> attribute. The
 solution chosen will vary depending upon the feature and depending upon
 the purpose of the project.
