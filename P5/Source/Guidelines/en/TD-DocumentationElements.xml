@@ -59,17 +59,20 @@ of these Guidelines. We do however use the ISO standard XML schema
 language RELAX NG (<ptr target="http://www.relaxng.org"/>) as a means
 of declaring content models, rather than inventing a completely new
 XML-based representation for them.</p>
+
 <p> In the TEI abstract model, a markup scheme (a <term>schema</term>)
 consists of a number of discrete <term>modules</term>, which can be
 combined more or less as required. Each major chapter of these
 Guidelines defines a distinct module. Each module declares a number of
 <term>elements</term> specific to that module, and may also populate
 particular <term>classes</term>. All classes are declared globally;
-particular modules extend the meaning of a class by adding elements or attributes
-to it. Wherever possible, element content models are defined in terms
-of classes rather than in terms of specific elements. Modules can also declare particular
-<term>patterns</term>, which act as short-cuts for commonly used
-content models or class references.</p>
+particular modules extend the meaning of a class by adding elements or
+attributes to it. Wherever possible, element content models are
+defined in terms of classes rather than in terms of specific
+elements. Modules can also declare particular <term>patterns</term>,
+which act as short-cuts for commonly used content models or class
+references.</p>
+
 <p>In the present chapter, we discuss the elements needed to support
 this system. In addition, section <ptr target="#TDphrase"/> discusses
 some general purpose elements which may be useful in any kind of
@@ -80,19 +83,21 @@ which are used to document XML <term>modules</term> and their high
 level components. Section <ptr target="#TDcrystals"/> discusses the
 elements which document  XML elements and their attributes,
 element classes, and generic patterns or macros. Finally, section <ptr target="#TDformal"/> gives an overview of the whole module.</p>
-<div type="div2" xml:id="TDphrase"><head>Phrase Level Documentary Elements</head>
+
+<div type="div2" xml:id="TDphrase"><head>Phrase Level Documentary
+Elements</head>
+
 <div type="div3" xml:id="TDphraseTE"><head>Phrase Level Terms</head>
 <p>In any kind of technical documentation, the following phrase-level
 elements may be found useful for marking up parts of a markup language
 or other formal language when these occur within the body of running text.
 <specList>
   <specDesc key="att"/>
-  <specDesc key="code"/>
-  <specDesc key="eg"/>
-  <specDesc key="egXML"/>
   <specDesc key="gi"/>
   <specDesc key="tag"/>
   <specDesc key="val"/>
+  <specDesc key="code"/>
+  <specDesc key="ident"/>
 </specList>
  </p>
 <p>As an example of the recommended use of these elements, we quote from
@@ -107,32 +112,55 @@ such might appear. So one might talk of an occurrence of the
 value; the default value is <val>spqr</val>, in memory of
 its creator.</p></egXML>
  </p>
-<p>The <gi>code</gi> and <gi>egXML</gi> elements are used to mark
-strings of formal code, or passages of markup. The first of these is
-intended for use in citing brief passages in some formal language such
+<p>The <gi>code</gi> and <gi>ident</gi> elements are
+intended for use when citing brief passages in some formal language such
 as a programming language, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <p>If the variable <ident>z</ident> has a value of zero, a statement 
 such as <code>x=y/z</code> will usually cause a fatal error.</p>
 </egXML>
 </p>
+
 <p>If the cited phrase is a mathematical or chemical formula, the more
-specific <gi>formula</gi> element defined by the
-<ident type="module">figures</ident> module (<ptr target="#FTFOR"/>) may be more
-appropriate. </p>
-<p>The <gi>eg</gi> element may be used to enclose any kind of example,
-which will typically be rendered as a distinct block, possibly using
+specific <gi>formula</gi> element defined by the <ident
+type="module">figures</ident> module (<ptr target="#FTFOR"/>) may be
+more appropriate. </p>
+
+<p>These elements (except for <gi>code</gi> and <gi>ident</gi>) are
+all members of the <ident type="class">model.phrase.XML</ident> class,
+which is populated by this module. The <gi>code</gi> and
+<gi>ident</gi> elements are members of the <ident
+type="class">model.emphLike</ident>. Both classes are subclasses of
+the generic <ident type="class">model.phrase</ident> class, and hence
+all these elements are available anywhere within paragraph level
+elements when this module is included in a schema.</p>
+
+<p>Within technical documentation, it is also often necessary to
+provide more extended examples of usage or to present passages of
+markup for discussion. The following special elements are provided for
+these purposes:
+<specList> 
+  <specDesc key="eg"/>
+  <specDesc key="egXML"/>
+</specList>
+</p>
+<p>Like the <gi>code</gi> element, the <gi>egXML</gi> element is used
+to mark strings of formal code, or passages of XML markup.  The
+<gi>eg</gi> element may be used to enclose any kind of example, which
+will typically be rendered as a distinct block, possibly using
 particular formatting conventions, when the document is processed. It
 is a specialised form of the more general <gi>q</gi> element provided
-by the TEI core module. In documents containing 
-examples of XML markup, the <gi>egXML</gi> element should be used for
-preference, as further discussed below in <ptr target="#TDeg"/>, since
-the content of this element can be checked for well-formedness. </p>
-<p>These elements are all members of the class
-<ident type="class">model.egLike</ident>, which is turn a member of the general
-<ident type="class">phrase</ident> class. When this module is included in a schema, this class is
-expanded to include these elements, and they are therefore available
-at any point that a phrase level element is available. </p>
+by the TEI core module. In documents containing examples of XML
+markup, the <gi>egXML</gi> element should be used for preference, as
+further discussed below in <ptr target="#TDeg"/>, since the content of
+this element can be checked for well-formedness. </p>
+
+<p>These elements are added to the class <ident
+type="class">model.egLike</ident> when this module is included in a
+schema. That class is a part of the general <ident
+type="class">model.inter</ident> class, thus permitting <gi>eg</gi> or
+<gi>egXML</gi> elements to appear either within or between
+paragraph-like elements. </p>
 </div>
 <div type="div3" xml:id="TDphraseEA"><head>Element and Attribute Descriptions</head>
 <p>Within the body of a document using this module, the following

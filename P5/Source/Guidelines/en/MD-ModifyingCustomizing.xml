@@ -469,7 +469,7 @@ the new attribute, but also an <gi>attList</gi> to hold it. </p>
 <egXML rend="full" xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="eg"
 module="tagdocs" mode="change" >
 <attList>
-<attDef ident="source" mode="add" ns="http://www.example.com/ns/hatstand">
+<attDef ident="source" mode="add" ns="http://www.example.org/ns/nonTEI">
 <desc>specifies the source of an example by pointing to a
 single bibliographic reference for it</desc>
 <datatype maxOccurs="1"
@@ -581,15 +581,16 @@ type="class">att.typed</ident> class, we include a declaration like
 the following:
 <egXML rend="full" xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="eg"
 module="tagdocs" mode="change" ns="http://example.com/ns">
-  <classes>
+  <classes mode="change">
     <memberOf key="att.typed"/>
   </classes>
-</elementSpec></egXML>
-Any existing class memberships for the element being changed are not
-affected: in this case, the <gi>eg</gi> element retains its membership of 
-the two classes (<ident
-type="class">model.common</ident> and <ident
-type="class">model.graphicLike</ident>) to which it already belongs. 
+</elementSpec></egXML> Any existing class memberships for the element
+being changed are not affected because the <att>mode</att> attribute
+of the <gi>classes</gi> element is set to <val>change</val> (rather
+than its default value of <val>replace</val>). Consequently, in this
+case, the <gi>eg</gi> element retains its membership of the two
+classes (<ident type="class">model.common</ident> and <ident
+type="class">model.graphicLike</ident>) to which it already belongs.
 </p>
 <p>Equally, to remove the attributes which  an element
 inherits from its membership in some class, all that is needed is to
@@ -603,30 +604,33 @@ attributes from this element, we need to remove it from that class:
 <egXML rend="full"
 xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="term"
 module="core" mode="change" ns="http://example.com/ns">
-  <classes>
+  <classes mode="change">
     <memberOf key="att.declaring" mode="delete"/>
   </classes>
 </elementSpec></egXML>
 </p>
 <p>If the intention is to change the class membership of an element
-completely, rather than simply add or remove it to one or more
-classes, then the <gi>classes</gi> element may indicate this by means of
-its <att>mode</att> attribute. By default, this attribute has the
-value <val>change</val>, implying that the memberships indicated by
-its child <gi>memberOf</gi> elements are to be combined with the
-existing memberships for the element. If however the <att>mode</att>
-attribute is set to <val>replace</val>, the implication is that the
-memberships indicated by its child <gi>memberOf</gi> elements are the
-only ones applicable. Thus the following declaration: <egXML rend="full"
+completely, rather than simply add or remove it to or from one or more
+classes, then the <gi>classes</gi> element may indicate this by
+defaulting its <att>mode</att> attribute. By default, this attribute
+has the value <val>replace</val>, implying that the memberships
+indicated by its child <gi>memberOf</gi> elements the only ones
+applicable. 
+Thus the following
+declaration: <egXML rend="full"
 xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="term"
 module="core" mode="change" ns="http://example.com/ns">
-  <classes mode="replace">
+  <classes>
     <memberOf key="att.interpLike"/>
   </classes>
 </elementSpec></egXML>
 would have the effect of removing the element <gi>term</gi> from
 both its existing attribute classes, and adding it to the <ident
-type="class">att.interpLike</ident> class.
+type="class">att.interpLike</ident> class.</p>
+<p>If however the <att>mode</att> attribute is set to
+<val>change</val>, the implication is that the memberships indicated
+by its child <gi>memberOf</gi> elements  are to be combined with
+the existing memberships for the element. 
 </p>
 
 <p>To change or remove attributes inherited from an attribute class
