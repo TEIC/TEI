@@ -197,7 +197,8 @@ valid: check
 #	messages via the grep -v command so we're not annoyed by the
 #	over 800 that are not really problems.
 	-${ONVDL} p5.nvdl ${DRIVER} \
-	 | grep -v ': error: unfinished element$$'
+	 | grep -v ': error: unfinished element$$' \
+	 | grep -v ': error: unfinished element .* required to finish the element$$'
 	@echo --------- Schematron
 	-${JING} p5.sch ${DRIVER} 
 	@echo --------- XSLT validator
@@ -234,6 +235,7 @@ subset:
 	 | xsltproc -o p5subset.xml Utilities/subset.xsl - || echo "failed to extract subset from ${DRIVER}." 
 
 fascicule: subset
+	find ${LANGTREE} -iname ${CHAP}*.xml
 #	fail if we can't find the chapter
 	test -n "${CHAPTER}"
 #	create fascicule file by appending head- and tail- boilerplate text to chapter
