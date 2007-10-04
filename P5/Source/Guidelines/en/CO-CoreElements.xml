@@ -318,16 +318,17 @@ of highlighting</item>
 <item>technical terms, glosses, etc.</item></list>
  </p>
 <div type="div3" xml:id="COHQW"><head>What Is Highlighting?</head>
-<p>By <mentioned>highlighting</mentioned> we mean the use of any combination of<index><term>highlighting</term></index>
- typographic features (font, size, hue,
-etc.) in a printed or written text in order to distinguish some passage
-of a text from its surroundings.<note place="foot">Although the way in which a spoken
-text is performed, (for example, the voice quality, loudness, etc.)
-might be regarded as analogous to <soCalled>highlighting</soCalled> in
-this sense, these Guidelines recommend distinct elements for the
-encoding of such <soCalled>highlighting</soCalled> in spoken texts. See
-further section <ptr target="#TSSASH"/>.</note> The purpose of highlighting
-is generally to draw the reader's attention to some feature or
+<p>By <mentioned>highlighting</mentioned> we mean the use of any
+combination of<index><term>highlighting</term></index> typographic
+features (font, size, hue, etc.) in a printed or written text in order
+to distinguish some passage of a text from its surroundings.<note
+place="foot">Although the way in which a spoken text is performed,
+(for example, the voice quality, loudness, etc.)  might be regarded as
+analogous to <soCalled>highlighting</soCalled> in this sense, these
+Guidelines recommend distinct elements for the encoding of such
+<soCalled>highlighting</soCalled> in spoken texts. See further section
+<ptr target="#TSSASH"/>.</note> The purpose of highlighting is
+generally to draw the reader's attention to some feature or
 characteristic of the passage highlighted; this section describes the
 elements recommended by these Guidelines for the encoding of such
 textual features.
@@ -349,24 +350,28 @@ text or outside it:  for example, direct speech or quotation.</item>
 proverbial phrases, words mentioned but not used, names of persons and
 places in older texts, editorial corrections or additions, etc.</item></list>
  </p>
-<p>The textual functions signalled by highlighting may not be rendered
+<p>The textual functions indicated by highlighting may not be rendered
 consistently in different parts of a text or in different texts. (For
 example, a foreign word may appear in italics if the surrounding text is
 in roman, but in roman if the surrounding text is in italics.)  For this
 reason, these Guidelines distinguish between the encoding of rendering
 itself and the encoding of the underlying feature expressed by it.
  </p>
-<p>Highlighting as such may be encoded by using the global
-<att>rend</att> attribute which can be specified for any element in the
-TEI scheme. This allows the encoder both to specify the function of a
-highlighted phrase or word, by selecting the appropriate element
-described here or elsewhere in the Guidelines, and to further describe
-the way in which it is highlighted, by means of the <att>rend</att>
-attribute. If the encoder wishes to offer no interpretation of the
-feature underlying the use of highlighting in the source text, then the
-<gi>hi</gi> element may be used, which indicates only that the text so
-tagged was highlighted in some way.
- </p>
+<p>Highlighting as such may be encoded by using either of the global
+attributes <att>rend</att> or <att>rendition</att> attributes (see
+<ptr target="#STGA"/>).  This allows the encoder both to specify the
+function of a highlighted phrase or word, by selecting the appropriate
+element described here or elsewhere in the Guidelines, and to further
+describe the way in which it is highlighted, by means of the
+<att>rend</att> attribute. If the encoder wishes to offer no
+interpretation of the feature underlying the use of highlighting in
+the source text, then the <gi>hi</gi> element may be used, which
+indicates only that the text so tagged was highlighted in some way.
+<specList>
+<specDesc key="hi"/>
+</specList>
+The <gi>hi</gi> element is provided by the <ident
+type="class">mode.hiLike</ident> class. </p>
 <p>The possible values carried by the <att>rend</att> attribute are not
 formally defined in this version of the Guidelines. Since the
 <att>rend</att> attribute may be used to document any peculiarity of the
@@ -396,8 +401,7 @@ mark the underlying function of highlighting (e.g. in the preparation of
 large text corpora), as well as cases in which it is not intellectually
 appropriate (as in the transcription of some older materials, or in the
 preparation of material for the study of typographic practice). In such
-cases, the <gi>hi</gi> element should be used, as further discussed
-below.
+cases, the <gi>hi</gi> element should be used.
  </p>
 <p>Elements which are sometimes realized by typographic distinction but
 which are not discussed in this section include <gi>title</gi>
@@ -406,8 +410,9 @@ in section <ptr target="#CONARS"/>).
  </p></div>
 <div type="div3" xml:id="COHQH"><head>Emphasis, Foreign Words, and Unusual Language</head>
 <p>This subsection discusses the following elements:
-<specList><specDesc key="foreign"/><specDesc key="emph"/><specDesc key="hi"/><specDesc key="distinct"/></specList>
- </p>
+<specList><specDesc key="foreign"/><specDesc key="emph"/><specDesc key="distinct"/></specList>
+These elements are all members of the <ident
+type="class">model.emphLike</ident> class. </p>
 <div type="div4" xml:id="COHQHF"><head>Foreign Words or Expressions</head>
 <p>Words or phrases which are not in the main language of the text
 should be tagged as such, at least where the fact is indicated in the
@@ -497,7 +502,7 @@ provided at <ptr target="#HD57"/>. </p>
 highlighted in some way, but for which identification of the intended
 distinction is difficult, controversial, or impossible. It enables an
 encoder simply to record the fact of highlighting, possibly describing
-it by the use of a <att>rend</att> attribute, as discussed above,
+it by the use of a <att>rend</att> or <att>rendition</att> attribute, as discussed above,
 without however taking a position as to the function of the
 highlighting. This may also be useful if the text is to be processed in
 two stages:  representing simply typographic distinctions during a first
@@ -519,13 +524,13 @@ boast of the advantage over him in only one respect. They
 often <hi rend="quoted">came down</hi> handsomely, and
 Scrooge never did.</egXML>
 <!-- Dickens Xmas Carol  p 12 -->
-In this example, the phrase <mentioned>came down</mentioned> uses inverted
-commas to indicate a play on words.<note place="foot">The Oxford English Dictionary
-documents the phrase <mentioned>to come down</mentioned> in the sense <quote>to
-bring or put down; <hi rend="it">esp.</hi> to lay down money; to
-make a disbursement</quote> as being in use, mostly in colloquial or
-humorous contexts, from at least 1700 to the latter half of the 19th
-century.
+In this example, the phrase <mentioned>came down</mentioned> uses
+inverted commas to indicate a play on words.<note place="foot">The
+Oxford English Dictionary documents the phrase <mentioned>to come
+down</mentioned> in the sense <quote>to bring or put down; <hi
+rend="it">esp.</hi> to lay down money; to make a disbursement</quote>
+as being in use, mostly in colloquial or humorous contexts, from at
+least 1700 to the latter half of the 19th century.
 	</note>
 <!-- a ref to OED would be handy here if you have time to find one -->
 In a second pass, the element <gi>soCalled</gi> might be preferred.
@@ -611,6 +616,10 @@ element <gi>note</gi> described in section <ptr target="#CONO"/>, or the
    <specDesc key="mentioned"/>
    <specDesc key="soCalled"/>
  </specList>
+The elements <gi>mentioned</gi> and <gi>soCalled</gi> are members of
+the class <ident type="class">model.emph</ident>; the others are
+members of the class <ident type="class">model.qLike</ident>.
+
  </p>
  <p>One form of presentational variation found particularly frequently in
  written and printed texts is the use of quotation marks. As with the
@@ -854,30 +863,12 @@ This may be used to make explicit who is speaking:
  <!-- Langendoen and Postal, Vastness of NLs, p. 24 note 12.        -->
  </p>
  <specGrp xml:id="DCOHQQ" n="Quotation">
-   
-
 &said;
-
-   
-
 &quote;
-
-   
-
 &q;
-
-   
-
 &cit;
-
-   
-
 &mentioned;
-
-   
-
 &soCalled;
-
  </specGrp>
 </div>
 <div type="div3" xml:id="COHQU"><head>Terms, Glosses, Equivalents, and Descriptions</head>
@@ -896,6 +887,8 @@ them less regularly.<specList>
         <specDesc key="term"/>
 	<specDesc key="gloss"/>
 </specList>
+These elements are also members of
+the class <ident type="class">model.emph</ident>.
 </p>
 <p>A <gi>term</gi> may appear with or without a gloss, as may a
 <gi>mentioned</gi> element.  Where the <gi>gloss</gi> is present, it may
@@ -926,7 +919,7 @@ second syllable of the word, and its participial derivative
 <!-- Sapir, Language (HBJ paperback), p. 79                        -->
  </p>
 
-<p>Another set of elements is used to supply different kinds of names
+<p>Another group of elements is used to supply different kinds of names
 for objects described by the TEI. Examples of this are documentation
 of elements, attributes, classes (and also attribute values where
 appropriate), and description of glyphs.
@@ -935,7 +928,11 @@ appropriate), and description of glyphs.
 <specDesc key="desc"/>
 <specDesc key="equiv"/>
 </specList>
-</p><p>When other elements need to refer to an object,
+Along with the <gi>gloss</gi> element mentioned above, these elements
+constitute the <ident type="class">model.glossLike</ident> class.</p>
+
+<!--
+<p>When other elements need to refer to an object,
 this will generally be done by supplying its identifier,
 the <att>ident</att> attribute. Elements in the
 TEI scheme also carry a different unique identifier supplied as the
@@ -943,7 +940,7 @@ value of the <att>xml:id</att> attribute: this is intended only for
 internal use, since it depends on the ID/IDREF mechanism.  Identifiers
 must be unique across all the modules to be combined in a given
 schema.</p>
-
+-->
 <p>The <gi>gloss</gi> element may be used to
 provide  a brief explanation of the object if this is not
 self-explanatory. For example, the specification for the element <gi>ab</gi> used to mark
@@ -952,22 +949,18 @@ arbitrary blocks of text begins as follows:
   <gloss>anonymous block</gloss>
 <!--... -->
 </elementSpec></egXML>
-A <gi>gloss</gi> is often used to expand the meaning of a particular
-attribute value, supplied within a <gi>valList</gi> element, as in the
-following example (taken from the specification of the
-<att>type</att> attribute of the <gi>abbr</gi> element):
+A <gi>gloss</gi> 
 may also be supplied for an attribute name or an
 attribute value as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><valList type="open">
-<valItem ident="suspension">
-<gloss>the abbreviation provides the first letter(s) 
-of the word or phrase, omitting the remainder.</gloss>
+<valItem ident="susp">
+<gloss>suspension</gloss>
+<desc>the abbreviation provides the first letter(s) 
+of the word or phrase, omitting the remainder.</desc>
 </valItem>
-<valItem ident="contraction">
-<gloss>the abbreviation omits some letter(s) in the middle.</gloss>
-</valItem>
-<valItem ident="brevigraph">
-<gloss>the abbreviation comprises a special symbol or mark.</gloss>
+<valItem ident="contr">
+<gloss>contraction</gloss>
+<desc>the abbreviation omits some letter(s) in the middle.</desc>
 </valItem>
 <!--...-->
 </valList></egXML>
@@ -986,11 +979,11 @@ the former might begin as follows:
 </elementSpec>
 </egXML>
 </p>
-<p>The following more complex example declares that the user-defined <gi>bo</gi> element is
-  conceptually equivalent to the markup construct <tag>hi
-  rend='bold'</tag>, and that an external definition of how to
-convert from <tag>bo</tag> is 
-  is performed by the XSL transformation at the URI indicated:
+<p>The following more complex example declares that the user-defined
+<gi>bo</gi> element is conceptually equivalent to the markup construct
+<tag>hi rend='bold'</tag>, and that an external definition of how to
+convert from <tag>bo</tag> is is performed by the XSL transformation
+at the URI indicated:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
  <elementSpec ident="bo">
     <equiv filter="http://www.example.com/equiv-filter.xsl" mimeType="text/xsl" name="bo"/>
@@ -1018,7 +1011,9 @@ identifier <ident>href</ident>:
 </elementSpec>
 </egXML>
 </p><p>By default, the <gi>altIdent</gi> of a component is
-identical to the value of its <att>ident</att> attribute. </p><p>The contents of the <gi>desc</gi> element provide a brief
+identical to the value of its <att>ident</att> attribute. </p>
+
+<p>The contents of the <gi>desc</gi> element provide a brief
 characterization of the intended function of the object
 being documented in a form that permits its quotation out of
 context, as in the following example:
@@ -1033,7 +1028,7 @@ By convention, a <gi>desc</gi> element begins with a verb such as
 <mentioned>indicates</mentioned>, 
 <mentioned>specifies</mentioned>, etc. and contains a single
 clause. </p>
-<specGrp xml:id="DCOHQU" n="Terms, glosses, equivs etc.">
+<specGrp xml:id="DCOHQU">
 
 
 &altIdent;
