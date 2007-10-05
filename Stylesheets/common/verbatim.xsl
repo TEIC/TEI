@@ -306,6 +306,31 @@
       </xsl:when>
 
       <xsl:when
+	  test="namespace-uri()='http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0'">
+	<xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
+	<xsl:text>nvdl:</xsl:text>
+	<xsl:value-of disable-output-escaping="yes"
+		      select="$endNamespace"/>
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+	
+      </xsl:when>
+
+      <xsl:when
+	  test="namespace-uri()='http://relaxng.org/ns/compatibility/annotations/1.0'">
+	<xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
+	<xsl:text>a:</xsl:text>
+	<xsl:value-of disable-output-escaping="yes"
+		      select="$endNamespace"/>
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+	
+      </xsl:when>
+      <xsl:when
 	  test="namespace-uri()='http://www.w3.org/1999/xhtml'">
 	<xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
 	<xsl:text>xhtml:</xsl:text>
