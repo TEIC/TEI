@@ -963,6 +963,7 @@ example dates of major updates or versions, such information
 must be clearly marked as relating to A rather than to B.
  </item></list>
  </p></div>
+
 <div type="div3" xml:id="HD32"><head>Computer Files Composed of Transcribed Speech</head>
 <p>Where a computer file is
 derived from a spoken text rather than a written one, it will usually
@@ -1086,26 +1087,11 @@ nested within the <gi>broadcast</gi> element.
  </p>
 
 <specGrp xml:id="D2231" n="Script statement and recording statement">
-
-
 &scriptStmt;
-
-
-
 &recordingStmt;
-
-
-
 &recording;
-
-
-
 &equipment;
-
-
-
 &broadcast;
-
 </specGrp>
 <p>This concludes the discussion of the <gi>fileDesc</gi> element and
 its contents.
@@ -1819,9 +1805,11 @@ defined above.
 
 <div type="div3" xml:id="HDAPP">
 <head>The Application Information Element</head>
-<p>The <gi>appInfo</gi> element is used to  provide
-application-specific information relating to the processing of the
-encoded  resource. It may be used for such purposes as:
+
+
+<p>It is sometimes convenient to store information relating to the
+processing of an encoded resource within its header. Typical uses for
+such information might be:
 <list>
 <item> to allow an
   application to discover that it has previously
@@ -1840,16 +1828,47 @@ encoded  resource. It may be used for such purposes as:
   those sections of the file.</item>
 </list> </p>
 
-<p>Each <gi>application</gi> child of <gi>appInfo</gi> identifies the
-current state of one software application with regard to the current
-file.  The <att>ident</att> and <att>version</att> attributes should
-be used to uniquely identify the application and its major version
-number (for example, <val>ImageMarkupTool 1.5</val>). It is not
-intended that an application should add a new <gi>application</gi>
-each time it touches the file.</p>
-<p><specList>
+<p>The class <ident type="class">model.applicationLike</ident>
+provides an element, <gi>application</gi>, which may be used to record
+such information within the <gi>appInfo</gi> element.
+
+<specList>
 <specDesc key="appInfo"/>
-</specList></p>
+<specDesc key="application" atts="ident version" />
+</specList>
+</p>
+
+<p>Each <gi>application</gi> element identifies the current state of
+one software application with regard to the current file.  This
+element is a member of the <att>att.datable</att> class, which
+provides a variety of attributes for associating this state with a
+date and time, or a temporal range. The <att>ident</att> and
+<att>version</att> attributes should be used to uniquely identify the
+application and its major version number (for example,
+<val>ImageMarkupTool 1.5</val>). It is not intended that an
+application should add a new <gi>application</gi> each time it touches
+the file.</p>
+<p>The following example shows how these elements might be used to
+document the fact that version 1.5 of an application called   <soCalled>Image Markup
+Tool</soCalled>  has an interest in two parts of a document
+which was last saved on June 6 2006. The parts concerned are
+accessible at the URLs given as target for the two <gi>ptr</gi>
+elements. 
+
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <appInfo>
+	<application  version="1.5"
+		      ident="ImageMarkupTool"
+		      notAfter="2006-06-01">
+	  <label>Image Markup Tool</label>
+	  <ptr target="#P1"/>
+	  <ptr target="#P2"/>
+	</application>
+      </appInfo>
+    </egXML>
+   
+
+</p>
 
 <specGrp xml:id="DHDAPP">
 
