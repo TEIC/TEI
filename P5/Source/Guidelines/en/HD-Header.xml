@@ -145,25 +145,8 @@ to a corpus or a single text.  A corpus may thus take the form:
 	<!-- teiCorpus! -sb, 2001-11-02                                  -->
 </p>
 
-<p>This module makes available the following components:
-
-<moduleSpec xml:id="DHD" ident="header">
-<altIdent type="FPI">Common Metadata</altIdent><desc>The TEI Header</desc>
-</moduleSpec><!--publicID:  -//TEI P5//ELEMENTS TEI Header//EN-->
-
-
-The selection and combination of modules to form a TEI schema is described in
-<ptr target="#STIN"/>. The header module is one of the four modules
-required for TEI conformance.
-</p>
-
 <specGrp xml:id="D221B">
-
-
 &model.headerPart;
-
-
-
 &teiHeader;
 
 <specGrpRef target="#D222"/>
@@ -172,6 +155,8 @@ required for TEI conformance.
 <specGrpRef target="#D224"/>
 <specGrpRef target="#D226"/></specGrp>
 </div>
+
+
 <div type="div3" xml:id="HD12"><head>Types of Content in the TEI Header</head>
 <p>The elements occurring within the TEI header may contain several
 types of content; the following list indicates how these types of
@@ -222,7 +207,42 @@ further described in section <ptr target="#CCAS"/>.
 <mentioned>Desc</mentioned> (e.g.  <gi>settingDesc</gi>,
 <gi>projectDesc</gi>) contain a prose description, possibly, but not
 necessarily, organized under some specific headings by suggested
-sub-elements.  </item></list> </p></div></div>
+sub-elements.  </item></list> </p>
+
+
+</div>
+
+<div><head>Model Classes in the TEI Header</head>
+<p>The TEI Header provides a very rich collection of metadata
+categories, but makes no claim to be exhaustive. It is certainly the
+case that individual projects may wish to record specialised metadata
+which either does not fit within one of the predefined categories
+identified by the TEI Header or requires a more specialized element
+structure than is proposed here. To overcome this problem, the encoder
+may elect to define additional elements using the customization
+methods discussed in <ptr target="#MD"/>. The TEI class system makes
+such customizations simpler to effect and easier to use in
+interchange.
+</p>
+<p>These  classes are specific to parts of the header:
+<specList>
+<specDesc key="model.applicationLike"/>
+<specDesc key="model.catDescPart"/>
+<specDesc key="model.editorialDeclPart"/>
+<specDesc key="model.encodingPart"/>
+<specDesc key="model.profileDescPart"/>
+<specDesc key="model.headerPart"/>
+<specDesc key="model.sourceDescPart"/>
+<specDesc key="model.textDescPart"/>
+</specList>
+</p>
+</div>
+
+</div>
+
+
+
+
 <div type="div2" xml:id="HD2"><head>The File Description</head>
 <p>This section describes the <gi>fileDesc</gi> element, which is the
 first component of the <gi>teiHeader</gi> element.
@@ -813,11 +833,25 @@ these.  An electronic file may also have no source, if what is being
 catalogued is an original text created in electronic form.
 <specList><specDesc key="sourceDesc"/></specList>
  </p>
-<p>The <gi>sourceDesc</gi> element may contain a simple prose
-description, or, more usefully, a bibliographic citation of some kind
-specifying the provenance of the text.  For written or printed sources,
-the source should be described in the same way as any other
-bibliographic citation, using one of the following elements:
+<p>The <gi>sourceDesc</gi> element may contain little more than a
+simple prose description, or a brief note stating that the document
+has no source: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><sourceDesc>
+   <p>Born digital.</p>
+</sourceDesc></egXML></p>
+<p>Alternatively, it may contain elements drawn from the following
+three classes:
+<specList>
+<specDesc key="model.biblLike"/>
+<specDesc key="model.sourceDescPart"/>
+<specDesc key="model.listLike"/>
+</specList>
+</p>
+<p>These classes make available by default a range of ways of
+providing bibliographic citations which specify the provenance of the
+text.  For written or printed sources, the source may be described in
+the same way as any other bibliographic citation, using one of the
+following elements:
 <specList>
 <specDesc key="bibl"/>
 <!--specDesc key="biblItem"/-->
@@ -825,32 +859,12 @@ bibliographic citation, using one of the following elements:
 <specDesc key="listBibl"/>
 </specList>
 These elements are described in more detail in section <ptr target="#COBI"/>
-.</p>
-<p>When the header describes a text derived from some pre-existing
-TEI-conformant or other digital document, it may be simpler to use the
-following element:
-<specList>
-<specDesc key="biblFull"/>
-</specList>
-since this is designed specifically for documents derived from texts
-which were <soCalled>born digital</soCalled>, as further discussed in
-section <ptr target="#HD31"/>.</p>
-<p>When the header describes a transcription of spoken material, the
-<gi>sourceDesc</gi> element may also include the following
-special-purpose elements, intended for cases where an electronic text
-is derived from a spoken text rather than a written one:
-<specList><specDesc key="scriptStmt"/><specDesc key="recordingStmt"/></specList>
-Full descriptions of these elements and their contents are given in
-section <ptr target="#HD32"/>.</p>
-<p>The <gi>sourceDesc</gi> element may contain a mixture of one or more
-of the above elements, as in the following examples:
+Using them, a source might be described in very simple terms:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><sourceDesc>
    <bibl>The first folio of Shakespeare, prepared by
    Charlton Hinman (The Norton Facsimile, 1968)</bibl>
 </sourceDesc></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><sourceDesc>
-   <p>Born digital.</p>
-</sourceDesc></egXML>
+or with more elaboration:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><sourceDesc>
   <biblStruct xml:lang="FR">
     <monogr>
@@ -865,21 +879,56 @@ of the above elements, as in the following examples:
     </monogr></biblStruct>
 </sourceDesc></egXML>
  </p>
+<p>When the header describes a text derived from some pre-existing
+TEI-conformant or other digital document, it may be simpler to use the
+following element:
+<specList>
+<specDesc key="biblFull"/>
+</specList>
+since this is designed specifically for documents derived from texts
+which were <soCalled>born digital</soCalled>, as further discussed in
+section <ptr target="#HD31"/>.</p>
+<p>When the module for manuscript description is included in a schema,
+this class also makes available the following element:
+<specList>
+<specDesc key="msDesc"/>
+</specList>
+which enables the encoder to record very detailed information about
+one or more manuscript or analogous sources, as further discussed in
+<ptr target="#MS"/>.</p>
+
+<p>The <ident type="class">model.sourceDescPart</ident> class also makes
+available additional elements when additional modules are
+included. For example, when the <ident type="module">spoken</ident>
+module is included, the
+<gi>sourceDesc</gi> element may also include the following
+special-purpose elements, intended for cases where an electronic text
+is derived from a spoken text rather than a written one:
+<specList><specDesc key="scriptStmt"/><specDesc key="recordingStmt"/></specList>
+Full descriptions of these elements and their contents are given in
+section <ptr target="#HD32"/>.</p>
+<p>The source description may also include lists of names, persons,
+places, etc. when these are considered to form part of the source for
+an encoded document. When such information is recorded using the
+specialized elements discussed in the <ident
+type="module">namesdates</ident> module (<ptr target="#ND"/>), the class
+<ident type="class">model.listLike</ident> makes available the
+following elements to hold such information:
+<specList>
+<specDesc key="listNym"/>
+<specDesc key="listOrg"/>
+<specDesc key="listPerson"/>
+<specDesc key="listPlace"/>
+</specList>
+</p>
+
 <specGrp xml:id="D223" n="The source description">
-
-
 &model.sourceDescPart;
-
-
-
 &sourceDesc;
-
-
-
 &biblFull;
-
 <specGrpRef target="#D2231"/>
 </specGrp>
+
 </div>
 <div type="div3" xml:id="HD31"><head>Computer Files Derived from Other Computer Files
  </head>
@@ -2481,6 +2530,23 @@ international standard which covers the same area is ISO 690:1987.
 Other relevant standards include BS 1629:1989, BS 5605:1978, and BS
 6371:1983.
 </item></list></p>
+</div>
+<div><head>Summary</head>
+
+<p>This module makes available the following components:
+
+<moduleSpec xml:id="DHD" ident="header">
+<altIdent type="FPI">Common Metadata</altIdent><desc>The TEI Header</desc>
+</moduleSpec><!--publicID:  -//TEI P5//ELEMENTS TEI Header//EN-->
+
+
+The selection and combination of modules to form a TEI schema is described in
+<ptr target="#STIN"/>. The header module is one of the four modules
+required for TEI conformance.
+</p>
+
+
+
 </div>
 
 	</div>
