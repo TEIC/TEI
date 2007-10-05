@@ -8,12 +8,6 @@ $Id$
 -->
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TS" n="11">
 <head>Transcriptions of Speech</head>
-<note place="divtop">This chapter has not yet been revised to reflect
-developments in the field of speech transcription and multimodal
-language annotation since its first publication. It is planned that
-a future revision of these Guidelines will include recommendations in
-these areas, which will in turn imply some revision of the features discussed
-here.</note>
 
 <p>The module described in this chapter is intended for use with a
 wide variety of transcribed spoken material.  It should be stressed,
@@ -27,38 +21,27 @@ may well require different methods from those outlined here, as may
 speech regarded solely as a process of social interaction.
 </p>
 <p>This chapter begins with a discussion of some of the problems
-commonly encountered in transcribing spoken language (section <ptr target="#TSOV"/>).  Section <ptr target="#TSBA"/> describes the basic
-structural elements of this module.  Finally, section <ptr target="#TSSA"/> of this chapter reviews further problems specific to the
-encoding of spoken language, demonstrating how mechanisms and elements
-discussed elsewhere in these Guidelines may be applied to them.</p>
-<p>The overall structure of a TEI spoken text is identical to that of
-any other TEI text:  the <gi>TEI</gi> element for a spoken text
-contains a <gi>teiHeader</gi> element, followed by a <gi>text</gi>
-element.  Even texts primarily composed of transcribed speech may also
-include conventional front and back matter, and may even be organized
-into divisions like printed texts. A complete transcript following
-these Guidelines should therefore include the header, structure, tei,
-and (in all probability) the common core modules along with the module
-described in this chapter.</p>
+commonly encountered in transcribing spoken language (section <ptr
+target="#TSOV"/>).  Section <ptr target="#HD32"/> documents some
+additional TEI Header elements which may be used to document the
+recording or other source from which transcribed text is taken.
+Section <ptr target="#TSBA"/> describes the basic structural elements
+provided by this module.  Finally, section <ptr target="#TSSA"/> of this
+chapter reviews further problems specific to the encoding of spoken
+language, demonstrating how mechanisms and elements discussed
+elsewhere in these Guidelines may be applied to them.</p>
+
+
 <p>This module makes available the following components:
 <moduleSpec xml:id="DTS" ident="spoken">
 <altIdent type="FPI">Transcribed Speech</altIdent>
 <desc>Transcribed Speech</desc></moduleSpec>
-
-
 The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
 </p>
 <specGrp>
-
-
 &model.divPart.spoken;
-
-
-
 &model.inter.spoken;
-
-
 <specGrpRef target="#DTSCOMP"/>
 </specGrp>
 
@@ -105,21 +88,32 @@ into units defined by phonological, prosodic, or syntactic phenomena;
 no clear agreement exists, however, even as to appropriate names for
 such segments.
  </p>
+
 <p>Spoken texts transcribed according to the guidelines presented here
-are organized as follows.  As noted above, speech is regarded as being
-composed of arbitrary high-level units called
-<term rend="noindex">texts</term>.<index><term>texts</term><index><term>as organizing unit for spoken material</term></index></index>
-A spoken <gi>text</gi> might typically be a conversation between a small
-number of people, a lecture, a broadcast TV item, or a similar event.
-Each such unit has associated with it a <gi>teiHeader</gi> providing
+are organized as follows.  The overall structure of a TEI spoken text
+is identical to that of any other TEI text: the <gi>TEI</gi> element
+for a spoken text contains a <gi>teiHeader</gi> element, followed by a
+<gi>text</gi> element.  Even texts primarily composed of transcribed
+speech may also include conventional front and back matter, and may
+even be organized into divisions like printed texts. </p>
+<p>We may say, therefore, that these Guidelines regard transcribed
+speech as being composed of arbitrary high-level units called <term
+rend="noindex">texts</term>.<index><term>texts</term><index><term>as
+organizing unit for spoken material</term></index></index> A spoken
+<gi>text</gi> might typically be a conversation between a small number
+of people, a lecture, a broadcast TV item, or a similar event.  Each
+such unit has associated with it a <gi>teiHeader</gi> providing
 detailed contextual information such as the source of the transcript,
 the identity of the participants, whether the speech is scripted or
 spontaneous, the physical and social setting in which the discourse
-takes place and a range of other aspects.  For details of the header in
-general, refer to chapter <ptr target="#HD"/>; for details of additional
-elements for the documentation of participant and contextual
-information, see section <ptr target="#CCAH"/>.
+takes place and a range of other aspects.  Details of the header
+in general are provided in  chapter <ptr target="#HD"/>; the
+particular elements it provides for use with spoken texts are
+described below (<ptr target="#HD32"/>). Details concerning
+additional elements which may be used for the documentation of participant and
+contextual information are given in  <ptr target="#CCAH"/>.
  </p>
+
 <p>Defining the bounds of a spoken text is frequently a matter of
 arbitrary convention or convenience.  In public or semi-public contexts,
 a text may be regarded as synonymous with, for example, a <term rend="noindex">lecture</term>, a <term rend="noindex">broadcast item</term>,
@@ -138,16 +132,18 @@ Deviation from these assumptions may be specified (for example, the
 <val>compos</val> to specify that the components of the
 text are discrete) but is not recommended.
  </p>
+
 <p>Within a <gi>text</gi> it may be necessary to identify subdivisions
 of various kinds, if only for convenience of handling.  The neutral
 <gi>div</gi> element discussed in section <ptr target="#DSDIV"/> is
 recommended for this purpose.  It may be found useful also for
 representing subdivisions relating to discourse structure, speech act
-theory, transactional analysis, etc., provided that these divisions
+theory, transactional analysis, etc., provided only that these divisions
 are hierarchically well-behaved.  Where they are not, as is often the
 case, the mechanisms discussed in chapters <ptr target="#SA"/> and
 <ptr target="#NH"/> may be used.
  </p>
+
 <p>A spoken text may contain any of the following components:
 <list type="simple">
 <item>utterances</item>
@@ -173,30 +169,28 @@ of the utterance; the other elements may all appear between utterances
 or next to each other, but except for <gi>writing</gi> they do not
 contain any other elements nor any data.
  </p>
-<div type="div3" xml:id="TSOSDC"><head>Divisions</head>
+
 <p>A spoken text itself may be without substructure, that is, it may
 consist simply of units such as utterances or pauses, not grouped
-together in any way, or it may be subdivided into one or more divisions
-as described in this section.
- </p>
-<p>If the notion of what constitutes a <soCalled>text</soCalled> in
-spoken discourse is inevitably rather an arbitrary one, the notion of
-formal subdivisions within such a <soCalled>text</soCalled> is even more
-debatable.  Nevertheless, such divisions may be useful for such types of
-discourse as debates, broadcasts, etc., where structural subdivisions
-can easily be identified, or more generally wherever it is desired to
-aggregate utterances or other parts of a transcript into units smaller
-than a complete <soCalled>text</soCalled>.  Examples might include
+together in any way, or it may be subdivided. If the notion of what
+constitutes a <soCalled>text</soCalled> in spoken discourse is
+inevitably rather an arbitrary one, the notion of formal subdivisions
+within such a <soCalled>text</soCalled> may appear even more debatable.
+Nevertheless, such divisions may be useful for such types of discourse
+as debates, broadcasts, etc., where structural subdivisions can easily
+be identified, or more generally wherever it is desired to aggregate
+utterances or other parts of a transcript into units smaller than a
+complete <soCalled>text</soCalled>.  Examples might include
 <q>conversations</q> or <q>discourse fragments</q>, or more narrowly,
 <q>that part of the conversation where topic x was discussed</q>,
-provided only that the set of all such divisions is coextensive with the
-text.
+provided only that the set of all such divisions is coextensive with
+the text.
  </p>
 <p>Each such division of a spoken text should be represented by the
 numbered or un-numbered <gi>div</gi> elements defined in chapter <ptr target="#DS"/>.  For some detailed kinds of analysis a hierarchy of such
 divisions may be found useful; nested <gi>div</gi> elements may be used
-for this purpose, as in the example below.
- </p>
+for this purpose, as in the following example showing how 
+<!--
 <p>The <gi>div</gi> element is a member of the classes <ident
 type="class">att.divLike</ident> and <ident type="class">att.typed</ident>, and therefore has
 the following attributes in common with other members of those classes:
@@ -205,9 +199,12 @@ the following attributes in common with other members of those classes:
  </p>
 <p>The <att>type</att> and <att>subtype</att> attributes may be used to characterize divisions
 in any way that is convenient; no specific recommendations are made in
-these Guidelines.  For example, a collection made up of transcribed
+these Guidelines.  For example,-->
+
+ a collection made up of transcribed
 <soCalled>sound bites</soCalled> taken from speeches given by a
-politician on different occasions, might encode each extract as a
+politician on different occasions, might be encoded.  Each extract is
+regarded as a
 distinct <gi>div</gi>, nested within a single composite <gi>div</gi> as
 follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="soundbites"
@@ -231,8 +228,139 @@ use where the divisions of a text do not all share the same set of the
 contextual declarations specified in the TEI header.  (See further
 section <ptr target="#CCAS"/>).
 </p> 
+
 </div>
+
+<div type="div3" xml:id="HD32"><head>Documenting the Source of Transcribed Speech</head>
+<p>Where a computer file is
+derived from a spoken text rather than a written one, it will usually
+be desirable to record additional information about the recording or
+broadcast which constitutes its source. Several additional elements
+are provided for this purpose within the source description component
+of the TEI Header:
+<specList>
+  <specDesc key="scriptStmt"/>
+  <specDesc key="recordingStmt"/>
+  <specDesc key="recording" atts="type"/>
+  <specDesc key="equipment"/>
+  <specDesc key="broadcast"/>
+</specList>
+ </p>
+<p>Note that detailed information about the participants or setting of
+an interview or other transcript of spoken language should be recorded
+in the appropriate division of the profile description, discussed in
+chapter <ptr target="#CC"/>, rather than as part of the source
+description.  The source description is used to hold information only
+about the source from which the transcribed speech was taken, for
+example, any script being read and any technical details of how the
+recording was  produced.  If the source was a previously-created
+transcript, it should be treated in the same way as any other source
+text.
+ </p>
+<p>The <gi>scriptStmt</gi> element should be used where it is known that
+one or more of the participants in a spoken text is speaking from a
+previously prepared script.  The script itself should be documented in
+the same way as any other written text, using one of the three citation
+tags mentioned above.  Utterances or groups of utterances may be linked
+to the script concerned by means of the <att>decls</att> attribute,
+described in section <ptr target="#CCAS"/>.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><sourceDesc>
+  <scriptStmt xml:id="CNN12">
+    <bibl>
+      <author>CNN Network News</author>
+      <title>News headlines</title>
+      <date when="1991-06-12">12 Jun 91</date>
+    </bibl>
+  </scriptStmt>
+</sourceDesc></egXML>
+ </p>
+<p>The <gi>recordingStmt</gi> is used to group together information
+relating to the recordings from which the spoken text was transcribed.
+The element may contain either a prose description or, more helpfully,
+one or more <gi>recording</gi> elements, each corresponding with a
+particular recording.  The linkage between utterances or groups of
+utterances and the relevant recording statement is made by means of the
+<att>decls</att> attribute, described in section <ptr target="#CCAS"/>.
+ </p>
+<p>The <gi>recording</gi> element should be used to provide a
+description of how and by whom a recording was made.  This information
+may be a prose description, within which such items as statements of
+responsibility, names, places, and dates should be identified using the
+appropriate phrase level tags.  The <gi>recording</gi> element takes two
+additional attributes, as indicated above:  <att>type</att> is used to
+specify the kind of recording concerned and <att>dur</att> to specify
+its length.
+ </p>
+<p>In addition, descriptive information relating to the kind of
+recording equipment used should be specified using the
+<gi>equipment</gi> element.  Where a recording is taken from a public
+broadcast, details of the broadcast should be given using the
+<gi>broadcast</gi> element described further below.  Specialized
+collections may wish to add further sub-elements to these major
+components.  Note however that this element should be used only for
+information relating to the recording process itself; information about
+the setting or participants (for example) is recorded elsewhere:  see
+sections <ptr target="#CCAHSE"/> and <ptr target="#CCAHPA"/> below.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><recording type="video">
+  <p>U-matic recording made by college audio-visual department staff, 
+    available as PAL-standard VHS transfer or sound-only casssette</p>
+</recording></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><recording type="audio" dur="P30M">
+  <respStmt>
+     <resp>Location recording by</resp>
+     <name>Sound Services Ltd.</name>
+  </respStmt>
+  <equipment>
+     <p>Multiple close microphones mixed down to stereo Digital
+     Audio Tape, standard play, 44.1 KHz sampling frequency</p>
+  </equipment>
+  <date>12 Jan 1987</date>
+</recording></egXML></p>
+<p>When a recording has been made from a public broadcast, details of
+the broadcast itself should be supplied within the <gi>recording</gi>
+element, as a nested <gi>broadcast</gi> element.  A broadcast is closely
+analogous to a publication and the <gi>broadcast</gi> element should
+therefore contain one or the other of the bibliographic citation
+elements <gi>bibl</gi>, <gi>biblStruct</gi>, or <gi>biblFull</gi>.  The
+broadcasting agency responsible for a broadcast is regarded as its
+author, while other participants (for example interviewers,
+interviewees, directors, producers, etc.) should be specified using the
+<gi>respStmt</gi> or <gi>editor</gi> element with an appropriate
+<gi>resp</gi> (see further section <ptr target="#COBI"/>).
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><recording type="audio" dur="P10M">
+  <equipment><p>Recorded from FM Radio to digital tape</p></equipment>
+  <broadcast>
+    <bibl>
+      <title>Interview on foreign policy</title>     <author>BBC Radio 5</author>
+      <respStmt><resp>interviewer</resp><name>Robin Day</name></respStmt>
+      <respStmt><resp>interviewee</resp><name>Margaret Thatcher</name></respStmt>
+      <series><title>The World Tonight</title></series>
+      <note>First broadcast on <date when="1989-11-27">27 Nov 1989</date></note>
+    </bibl>
+  </broadcast>
+</recording></egXML></p>
+<p>When a broadcast contains several distinct recordings (for example a
+compilation), additional <gi>recording</gi> elements may be further
+nested within the <gi>broadcast</gi> element.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><recording dur="P100M">
+   <broadcast>
+      <recording>
+      </recording>
+   </broadcast>
+</recording></egXML>
+<!-- need a real example here -->
+	<!-- damn straight.  -msm     -->
+ </p>
+
+<specGrp xml:id="D2231" n="Script statement and recording statement">
+&scriptStmt;
+&recordingStmt;
+&recording;
+&equipment;
+&broadcast;
+</specGrp>
 </div>
+
 <div type="div2" xml:id="TSBA"><head>Elements Unique to Spoken Texts</head>
 <p>The following elements characterize spoken texts, transcribed
 according to these Guidelines:
