@@ -284,18 +284,15 @@ function togglerelax (el) {
   <xsl:template name="startDivHook">
     <xsl:if
       test="not(parent::tei:div) or not(local-name(preceding::*[1])='head')">
-      <table>
+      <div>
 	<xsl:choose>
         <xsl:when test="not(parent::tei:div) and child::tei:div">
 	  <xsl:attribute name="class">
 	    <xsl:text>miniTOC miniTOC_left</xsl:text>
 	  </xsl:attribute>
-          <tr>
-            <td>
-              <xsl:call-template name="subtoc"/>
-	      <hr/>
-            </td>
-          </tr>
+          <div class="subtoc">
+	    <xsl:call-template name="subtoc"/>
+	  </div>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:attribute name="class">
@@ -303,73 +300,58 @@ function togglerelax (el) {
 	  </xsl:attribute>
 	</xsl:otherwise>
 	</xsl:choose>
-        <tr>
-          <td>
-            <xsl:call-template name="previousLink"/>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <xsl:call-template name="nextLink"/>
-          </td>
-        </tr>
-
-	<tr>
-	  <td>
-	    <a class="navigation" href="index.html">Home</a> | <a
-	    class="navigation" href="index-toc.html">Table of
-	    Contents</a>
-	  </td>
-	</tr>
-        <tr>
-          <td>
-            <xsl:choose>
-	      <xsl:when test="self::tei:elementSpec">
-                <xsl:text> | </xsl:text>
-                <a class="navigation" href="REF-ELEMENTS.html">
-                  Element catalogue</a>
-              </xsl:when>
-	      <xsl:when test="self::tei:classSpec[@type='model']">
-                <xsl:text> | </xsl:text>
-                <a class="navigation" href="REF-CLASSES-MODEL.html">
-                  Model Class catalogue</a>
-              </xsl:when>
-	      <xsl:when test="self::tei:classSpec[@type='atts']">
-                <xsl:text> | </xsl:text>
-                <a class="navigation" href="REF-CLASSES-ATTS.html">
-                  Attribute Class catalogue</a>
-              </xsl:when>
-	      <xsl:when test="self::tei:macroSpec">
-                <xsl:text> | </xsl:text>
-                <a class="navigation" href="REF-MACRO.html">
-                  Macro and datatype catalogue</a>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:for-each select="ancestor::tei:div">
-		  <div>
-		    <xsl:attribute name="style">
-		      <xsl:text>margin-left:</xsl:text>
-		      <xsl:value-of select="count(ancestor::tei:div) + 1"/>
-		      <xsl:text>em;</xsl:text>
-		    </xsl:attribute>
-		    <xsl:text>&#x21B3;</xsl:text>
-		    <a class="UP">
-		      <xsl:attribute name="href">
-			<xsl:apply-templates mode="generateLink"
-					     select="."/>
-		      </xsl:attribute>
-		      <xsl:call-template name="headerLink">
-			<xsl:with-param name="minimal"
-					select="$minimalCrossRef"/>
-		      </xsl:call-template>
-		    </a>
-		  </div>
-		</xsl:for-each>
-              </xsl:otherwise>
-            </xsl:choose>
-          </td>
-        </tr>
-      </table>
+	<ul class="subtoc">
+	  <li class="subtoc"><xsl:call-template name="previousLink"/></li>
+	  <li class="subtoc"><xsl:call-template name="nextLink"/></li>
+	  <li class="subtoc"><a class="navigation" href="index.html">Home</a> | <a
+	  class="navigation" href="index-toc.html">Table of
+	  Contents</a></li>
+	  <li class="subtoc">
+	  <xsl:choose>
+	    <xsl:when test="self::tei:elementSpec">
+		<a class="navigation" href="REF-ELEMENTS.html">
+		Element catalogue</a>
+	    </xsl:when>
+	    <xsl:when test="self::tei:classSpec[@type='model']">
+		<a class="navigation" href="REF-CLASSES-MODEL.html">
+		Model Class catalogue</a>
+	    </xsl:when>
+	    <xsl:when test="self::tei:classSpec[@type='atts']">
+		<a class="navigation" href="REF-CLASSES-ATTS.html">
+		Attribute Class catalogue</a>
+	    </xsl:when>
+	    <xsl:when test="self::tei:macroSpec">
+		<a class="navigation" href="REF-MACRO.html">
+		Macro and datatype catalogue</a>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <!--
+	      <xsl:for-each select="ancestor::tei:div">
+		<div>
+		  <xsl:attribute name="style">
+		    <xsl:text>margin-left:</xsl:text>
+		    <xsl:value-of select="count(ancestor::tei:div) + 1"/>
+		    <xsl:text>em;</xsl:text>
+		  </xsl:attribute>
+		  <xsl:text>&#x21B3;</xsl:text>
+		<a class="UP">
+		  <xsl:attribute name="href">
+		    <xsl:apply-templates mode="generateLink"
+					 select="."/>
+		  </xsl:attribute>
+		  <xsl:call-template name="headerLink">
+		    <xsl:with-param name="minimal"
+				    select="$minimalCrossRef"/>
+		  </xsl:call-template>
+		</a>
+		</div>
+	      </xsl:for-each>
+	      -->
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  </li>
+	</ul>
+      </div>
     </xsl:if>
   </xsl:template>
 
