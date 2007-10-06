@@ -59,7 +59,11 @@
   <xsl:template match="text()" mode="verbatim">
     <xsl:choose>
       <xsl:when test="not(preceding-sibling::node() or contains(.,'&#10;'))">
-	<xsl:value-of select="normalize-space(.)"/>
+	<xsl:call-template name="Text">
+	  <xsl:with-param name="words">
+	    <xsl:value-of select="."/>
+	  </xsl:with-param>
+	</xsl:call-template>
 	<xsl:if test="substring(.,string-length(.))=' '">
 	  <xsl:text> </xsl:text>
 	</xsl:if>
@@ -112,8 +116,12 @@
 	  <xsl:value-of select="$indent"/>
 	  <xsl:text> </xsl:text>
 	</xsl:if>
-	<xsl:value-of
-	    select="normalize-space(substring-before($text,'&#10;'))"/>
+	<xsl:call-template name="Text">
+	  <xsl:with-param name="words">
+	    <xsl:value-of
+		select="substring-before($text,'&#10;')"/>
+	  </xsl:with-param>
+	</xsl:call-template>
 <!--	<xsl:if test="not(substring-after($text,'&#10;')='')">-->
 	  <xsl:call-template name="lineBreak">
 	    <xsl:with-param name="id">6</xsl:with-param>
@@ -137,7 +145,30 @@
 	  <xsl:value-of select="$indent"/>
 	  <xsl:text> </xsl:text>
 	</xsl:if>
-	<xsl:value-of select="normalize-space($text)"/>
+	<xsl:call-template name="Text">
+	  <xsl:with-param name="words">
+	    <xsl:value-of select="$text"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="Text">
+    <xsl:param name="words"/>
+    <xsl:choose>
+      <xsl:when test="contains($words,'&amp;')">
+	<xsl:value-of
+	    select="normalize-space(substring-before($words,'&amp;'))"/>
+	<xsl:text>&amp;amp;</xsl:text>
+	<xsl:call-template name="Text">
+	  <xsl:with-param name="words">
+	    <xsl:value-of select="substring-after($words,'&amp;')"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="normalize-space($words)"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
