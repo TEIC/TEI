@@ -90,7 +90,6 @@
   </xsl:variable>
   <!-- lookup table of element contents, and templates to access the result -->
   <xsl:key match="Contains" name="ELEMENTPARENTS" use="."/>
-  <xsl:param name="wrapLength">65</xsl:param>
 
   <xsl:variable name="patternPrefixText">
     <xsl:choose>
@@ -1215,121 +1214,8 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="token" mode="commentline">
-    <xsl:call-template name="italicize">
-      <xsl:with-param name="text">
-        <xsl:value-of select="translate(.,'&#10;','')"/>
-      </xsl:with-param>
-    </xsl:call-template>
-    <xsl:if test="following-sibling::token">
-      <xsl:text>&#10;</xsl:text>
-      <xsl:choose>
-        <xsl:when test="contains(.,'--&gt;')">
-          <xsl:apply-templates mode="normalline"
-            select="following-sibling::token[1]"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates mode="commentline"
-            select="following-sibling::token[1]"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:if>
-  </xsl:template>
-
-  <xsl:template match="token" mode="normalline">
-    <xsl:choose>
-      <xsl:when test="contains(.,'&lt;!--')">
-        <xsl:call-template name="italicize">
-          <xsl:with-param name="text">
-            <xsl:value-of select="translate(.,'&#10;','')"/>
-          </xsl:with-param>
-        </xsl:call-template>
-        <xsl:if test="following-sibling::token">
-          <xsl:text>&#10;	  </xsl:text>
-          <xsl:choose>
-            <xsl:when test="contains(.,'--&gt;')">
-              <xsl:apply-templates mode="normalline"
-                select="following-sibling::token[1]"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:apply-templates mode="commentline"
-                select="following-sibling::token[1]"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:if>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="breakline"/>
-        <xsl:if test="following-sibling::token">
-          <xsl:text>&#10;	  </xsl:text>
-          <xsl:apply-templates mode="normalline"
-            select="following-sibling::token[1]"/>
-        </xsl:if>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template match="token" mode="verbatimline">
-    <xsl:call-template name="breakline"/>
-    <xsl:if test="following-sibling::token">
-      <xsl:text>&#10;</xsl:text>
-      <xsl:apply-templates mode="verbatimline"
-        select="following-sibling::token[1]"/>
-    </xsl:if>
-  </xsl:template>
-
-  <xsl:template match="token" mode="word">
-    <xsl:param name="len"/>
-    <xsl:choose>
-      <xsl:when test="$len +string-length(.) &gt; $wrapLength">
-        <xsl:text>&#10;	</xsl:text>
-        <xsl:value-of select="."/>
-        <xsl:text> </xsl:text>
-        <xsl:if test="following-sibling::token">
-          <xsl:apply-templates mode="word" select="following-sibling::token[1]">
-            <xsl:with-param name="len" select="8"/>
-          </xsl:apply-templates>
-        </xsl:if>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="."/>
-        <xsl:text> </xsl:text>
-        <xsl:if test="following-sibling::token">
-          <xsl:apply-templates mode="word" select="following-sibling::token[1]">
-            <xsl:with-param name="len" select="$len + string-length(.)"/>
-          </xsl:apply-templates>
-        </xsl:if>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template name="breakline">
-    <xsl:choose>
-      <xsl:when test="string-length(.)&lt;$wrapLength">
-        <xsl:value-of select="."/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:variable name="words" select="estr:tokenize(.)"/>
-        <xsl:apply-templates mode="word" select="$words[1]">
-          <xsl:with-param name="len" select="0"/>
-        </xsl:apply-templates>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
   <xsl:template name="compositeNumber">
     <xsl:choose>
-      <xsl:when test="ancestor::tei:div0">
-        <xsl:for-each select="ancestor::tei:div0">
-          <xsl:number/>
-        </xsl:for-each>
-	<xsl:text>-</xsl:text>
-        <xsl:for-each select="ancestor::tei:div1">
-          <xsl:number/>
-        </xsl:for-each>
-        <xsl:text>.</xsl:text>
-        <xsl:number from="tei:div1" level="any"/>
-      </xsl:when>
       <xsl:when test="ancestor::tei:div1">
         <xsl:for-each select="ancestor::tei:div1">
           <xsl:number/>

@@ -1539,9 +1539,6 @@
               <xsl:value-of select="$text"/>
             </xsl:with-param>
           </xsl:call-template>
-          <!--          <xsl:variable name="lines" select="estr:tokenize($text,'&#10;')"/>
-          <xsl:apply-templates select="$lines[1]" mode="normalline"/>
--->
         </xsl:otherwise>
       </xsl:choose>
     </div>

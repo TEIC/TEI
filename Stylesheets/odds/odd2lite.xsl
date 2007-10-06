@@ -883,19 +883,6 @@
       </xsl:if>
       <xsl:apply-templates mode="verbatim"/>
     </tei:eg>
-<!--      <xsl:if test="$startnewline='true'">
-        <xsl:text>&#10;</xsl:text>
-      </xsl:if>
-      <xsl:choose>
-        <xsl:when test="$autowrap='false'">
-          <xsl:value-of select="$text"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:variable name="lines" select="estr:tokenize($text,'&#10;')"/>
-          <xsl:apply-templates mode="normalline" select="$lines[1]"/>
-        </xsl:otherwise>
-      </xsl:choose>
--->
   </xsl:template>
   <xsl:template name="makeInternalLink">
     <xsl:param name="ptr"/>

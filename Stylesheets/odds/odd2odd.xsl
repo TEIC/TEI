@@ -1117,15 +1117,63 @@ so that is only put back in if there is some content
         </xsl:otherwise>
       </xsl:choose>
 
-      <!-- Now attributes referenced from classes we are a member of
+      <!-- Now attributes referenced from classes we are a member
+	   of. again, check whether we are in ODD or not
       -->
-      <xsl:for-each select="tei:classes/tei:memberOf">
-        <xsl:call-template name="classAttributes">
-	  <xsl:with-param name="whence">3</xsl:with-param>
-          <xsl:with-param name="elementName" select="$elementName"/>
-          <xsl:with-param name="className" select="@key"/>
-        </xsl:call-template>
-      </xsl:for-each>
+      <xsl:choose>
+	<xsl:when test="fromOdd='true' and tei:classes">
+	  <xsl:for-each select="tei:classes/tei:memberOf">
+	    <xsl:call-template name="classAttributes">
+	      <xsl:with-param name="whence">3</xsl:with-param>
+	      <xsl:with-param name="elementName" select="$elementName"/>
+	      <xsl:with-param name="className" select="@key"/>
+	    </xsl:call-template>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:when test="fromOdd='false'">
+	  <xsl:for-each select="tei:classes/tei:memberOf">
+	    <xsl:call-template name="classAttributes">
+	      <xsl:with-param name="whence">3</xsl:with-param>
+	      <xsl:with-param name="elementName" select="$elementName"/>
+	      <xsl:with-param name="className" select="@key"/>
+	    </xsl:call-template>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+          <xsl:choose>
+            <xsl:when test="not($localsource='')">
+              <xsl:for-each select="document($localsource)/tei:TEI">
+                <xsl:for-each select="key('ATTCLASSES',$className)">
+		  <xsl:for-each select="tei:classes/tei:memberOf">
+		    <xsl:call-template name="classAttributes">
+		      <xsl:with-param name="whence">3</xsl:with-param>
+		      <xsl:with-param name="elementName" select="$elementName"/>
+		      <xsl:with-param name="className" select="@key"/>
+		    </xsl:call-template>
+		  </xsl:for-each>
+                </xsl:for-each>
+              </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:variable name="ATTCLASSDOC">
+                <xsl:value-of select="$TEISERVER"/>
+                <xsl:text>classspecs.xq</xsl:text>
+              </xsl:variable>
+              <xsl:for-each select="document($ATTCLASSDOC)/List">
+                <xsl:for-each select="key('ATTCLASSES',$className)">
+		  <xsl:for-each select="tei:classes/tei:memberOf">
+		    <xsl:call-template name="classAttributes">
+		      <xsl:with-param name="whence">3</xsl:with-param>
+		      <xsl:with-param name="elementName" select="$elementName"/>
+		      <xsl:with-param name="className" select="@key"/>
+		    </xsl:call-template>
+		  </xsl:for-each>
+                </xsl:for-each>
+              </xsl:for-each>
+            </xsl:otherwise>
+          </xsl:choose>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:if>
   </xsl:template>
 
@@ -1165,7 +1213,6 @@ so that is only put back in if there is some content
   <xsl:template name="mergeClassAttribute">
     <!-- sitting on a source class. go over
 every attribute and see whether the attribute has changed-->
-
     <xsl:param name="source"/>
     <xsl:param name="element"/>
     <xsl:param name="class"/>
@@ -1198,6 +1245,7 @@ every attribute and see whether the attribute has changed-->
 	    <xsl:when test="fromOdd='false'">
 	      <xsl:for-each select="$wherefrom">
 		<xsl:call-template name="changedAtt">
+		  <xsl:with-param name="debug">1</xsl:with-param>
 		  <xsl:with-param name="lookingAt">
 		    <xsl:value-of select="$lookingAt"/>
 		  </xsl:with-param>
@@ -1218,6 +1266,7 @@ every attribute and see whether the attribute has changed-->
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:call-template name="changedAtt">
+		  <xsl:with-param name="debug">2</xsl:with-param>
 		<xsl:with-param name="lookingAt">
 		  <xsl:value-of select="$lookingAt"/>
 		</xsl:with-param>
@@ -1247,6 +1296,7 @@ every attribute and see whether the attribute has changed-->
  <xsl:param name="class"/>
  <xsl:param name="orig"/>
  <xsl:param name="attRef"/>
+ <xsl:param name="debug"/>
  <xsl:choose>
     <!-- don't make another reference to a class attribute 
 	 if we already have an attRef -->

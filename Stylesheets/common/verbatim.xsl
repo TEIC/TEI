@@ -30,6 +30,9 @@
 
   <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
   <xsl:param name="showNamespaceDecls">true</xsl:param>
+
+  <xsl:param name="wrapLength">65</xsl:param>
+
   <xsl:key name="Namespaces" match="*[ancestor::teix:egXML]" use="namespace-uri()"/>
 
   <xsl:key name="Namespaces" match="*[not(ancestor::*)]" use="namespace-uri()"/>
@@ -40,34 +43,6 @@
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
     <xsl:text>&#10;</xsl:text>
-  </xsl:template>
-
-  <xsl:template match="text()" mode="verbatim">
-    <xsl:choose>
-      <xsl:when test="not(preceding-sibling::node())">
-            <xsl:value-of select="."/>
-      </xsl:when>
-      <xsl:when test="normalize-space(.)=''">
-        <xsl:for-each select="following-sibling::*[1]">
-          <xsl:call-template name="lineBreak">
-            <xsl:with-param name="id">7</xsl:with-param>
-          </xsl:call-template>
-          <xsl:call-template name="makeIndent"/>
-        </xsl:for-each>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="wraptext">
-          <xsl:with-param name="indent">
-            <xsl:for-each select="parent::*">
-              <xsl:call-template name="makeIndent"/>
-            </xsl:for-each>
-          </xsl:with-param>
-          <xsl:with-param name="text">
-	    <xsl:value-of select="."/>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="comment()" mode="verbatim">
@@ -81,13 +56,62 @@
     <xsl:value-of  disable-output-escaping="yes" select="$endComment"/>
   </xsl:template>
 
+  <xsl:template match="text()" mode="verbatim">
+    <xsl:choose>
+      <xsl:when test="not(preceding-sibling::node() or contains(.,'&#10;'))">
+	<xsl:text>{1</xsl:text>
+	<xsl:value-of select="normalize-space(.)"/>
+	<xsl:if test="substring(.,string-length(.))=' '">
+	  <xsl:text>#</xsl:text>
+	</xsl:if>
+	<xsl:text>1}</xsl:text>
+      </xsl:when>
+      <xsl:when test="normalize-space(.)=''">
+	<xsl:text>{2</xsl:text>
+        <xsl:for-each select="following-sibling::*[1]">
+          <xsl:call-template name="lineBreak">
+            <xsl:with-param name="id">7</xsl:with-param>
+          </xsl:call-template>
+          <xsl:call-template name="makeIndent"/>
+        </xsl:for-each>
+	<xsl:text>2}</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>{3</xsl:text>
+	<xsl:if test="starts-with(.,' ')">
+	  <xsl:text>!</xsl:text>
+	</xsl:if>
+        <xsl:call-template name="wraptext">
+          <xsl:with-param name="count">0</xsl:with-param>
+          <xsl:with-param name="indent">
+            <xsl:for-each select="parent::*">
+              <xsl:call-template name="makeIndent"/>
+            </xsl:for-each>
+          </xsl:with-param>
+          <xsl:with-param name="text">
+	    <xsl:value-of select="."/>
+          </xsl:with-param>
+        </xsl:call-template>
+	<xsl:if test="substring(.,string-length(.))=' '">
+	  <xsl:text>#</xsl:text>
+	</xsl:if>
+	<xsl:text>3}</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template name="wraptext">
     <xsl:param name="indent"/>
     <xsl:param name="text"/>
+    <xsl:param name="count">0</xsl:param>
     <xsl:choose>
-      <xsl:when test="$text='&#10;'"/>
+      <xsl:when test="normalize-space($text)=''"/>
       <xsl:when test="contains($text,'&#10;')">
-        <xsl:value-of select="substring-before($text,'&#10;')"/>
+	<xsl:if test="$count &gt; 0">
+	  <xsl:value-of select="$indent"/>
+	  <xsl:text>|</xsl:text>
+	</xsl:if>
+	<xsl:value-of select="normalize-space(substring-before($text,'&#10;'))"/>
         <xsl:call-template name="lineBreak">
           <xsl:with-param name="id">6</xsl:with-param>
         </xsl:call-template>
@@ -99,10 +123,17 @@
           <xsl:with-param name="text">
             <xsl:value-of select="substring-after($text,'&#10;')"/>
           </xsl:with-param>
+          <xsl:with-param name="count">
+	    <xsl:value-of select="$count + 1"/>
+	  </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="$text"/>
+	<xsl:if test="$count &gt; 0 and parent::*">
+	  <xsl:value-of select="$indent"/>
+	  <xsl:text>[</xsl:text>
+	</xsl:if>
+	<xsl:value-of select="normalize-space($text)"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -110,6 +141,7 @@
   <xsl:template match="*" mode="verbatim">
     <xsl:choose>
       <xsl:when test="parent::xhtml:Wrapper"/>
+<!--      <xsl:when test="child::node()[last()]/self::text()[not(.='')] and child::node()[1]/self::text()[not(.='')]"/>-->
       <xsl:when test="not(parent::*)  or parent::teix:egXML">
 	<xsl:choose>
 	  <xsl:when test="preceding-sibling::*">
@@ -161,50 +193,6 @@
       </xsl:when>
       </xsl:choose>
     </xsl:if>
-<!--
-    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/2005/11/its']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/2005/11/its']">
-          <xsl:call-template name="lineBreak"/>
-	  <xsl:text>  xmlns:its="http://www.w3.org/2005/11/its" </xsl:text>
-    </xsl:if>
-    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.tei-c.org/ns/1.0']|descendant-or-self::*/@*[namespace-uri()='http://www.tei-c.org/ns/1.0']">
-    <xsl:call-template name="lineBreak"/>
-    <xsl:text>  xmlns:tei="http://www.tei-c.org/ns/1.0" </xsl:text>
-    </xsl:if>
-    <xsl:if test="descendant-or-self::*[namespace-uri()='http://docbook.org/ns/docbook']|descendant-or-self::*/@*[namespace-uri()='http://docbook.org/ns/docbook']">
-          <xsl:call-template name="lineBreak"/>
-	  <xsl:text>  xmlns:dbk="http://docbook.org/ns/docbook" </xsl:text>
-    </xsl:if>
-    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/1999/xhtml']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/1999/xhtml']">
-          <xsl:call-template name="lineBreak"/>
-	  <xsl:text>  xmlns:xhtml="http://www.w3.org/1999/xhtml" </xsl:text>
-    </xsl:if>
-    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/1999/xlink']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/1999/xlink']">
-          <xsl:call-template name="lineBreak"/>
-	  <xsl:text>  xmlns:xlink="http://www.w3.org/1999/xlink" </xsl:text>
-    </xsl:if>
-    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/2001/XMLSchema']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/2001/XMLSchema']">
-          <xsl:call-template name="lineBreak"/>
-	  <xsl:text>  xmlns:xs="http://www.w3.org/2001/XMLSchema" </xsl:text>
-    </xsl:if>
-    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.ascc.net/xml/schematron']|descendant-or-self::*/@*[namespace-uri()='http://www.ascc.net/xml/schematron']">
-          <xsl:call-template name="lineBreak"/>
-	  <xsl:text>  xmlns:sch="http://www.ascc.net/xml/schematron" </xsl:text>
-    </xsl:if>
-    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/2001/XMLSchema-instance']|descendant-or-self::*/@*[namespace-uri()='http://www.w3.org/2001/XMLSchema-instance']">
-          <xsl:call-template name="lineBreak"/>
-	  <xsl:text>  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" </xsl:text>
-    </xsl:if>
-
-    <xsl:if test="descendant-or-self::*[namespace-uri()='http://www.w3.org/1999/XSL/Transform']">
-          <xsl:call-template name="lineBreak"/>
-            <xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
-	  <xsl:text>   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" </xsl:text>
-            <xsl:value-of disable-output-escaping="yes"
-			  select="$endNamespace"/>
-          <xsl:call-template name="lineBreak"/>
-    </xsl:if>
--->
-     
 
     <xsl:choose>
       <xsl:when test="child::node()">
@@ -212,9 +200,11 @@
         <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
         <xsl:apply-templates mode="verbatim"/>
         <xsl:choose>
+          <xsl:when test="child::node()[last()]/self::text() and child::node()[1]/self::text()"/>
+
 	  <xsl:when test="not(parent::*)  or parent::teix:egXML">
             <xsl:call-template name="lineBreak">
-              <xsl:with-param name="id">6</xsl:with-param>
+              <xsl:with-param name="id">23</xsl:with-param>
             </xsl:call-template>
 	  </xsl:when>
           <xsl:when test="child::node()[last()]/self::text()[normalize-space(.)='']">
@@ -546,6 +536,112 @@
     </xsl:with-param>
   </xsl:apply-templates>
 </xsl:template>
+
+
+<!-- alternative tools for line-breaking -->
+
+  <xsl:template name="breakline">
+    <xsl:choose>
+      <xsl:when test="string-length(.)&lt;$wrapLength">
+        <xsl:value-of select="."/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="words" select="estr:tokenize(.)"/>
+        <xsl:apply-templates mode="word" select="$words[1]">
+          <xsl:with-param name="len" select="0"/>
+        </xsl:apply-templates>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="token" mode="word">
+    <xsl:param name="len"/>
+    <xsl:choose>
+      <xsl:when test="$len +string-length(.) &gt; $wrapLength">
+        <xsl:text>&#10;	</xsl:text>
+        <xsl:value-of select="."/>
+        <xsl:text> </xsl:text>
+        <xsl:if test="following-sibling::token">
+          <xsl:apply-templates mode="word" select="following-sibling::token[1]">
+            <xsl:with-param name="len" select="8"/>
+          </xsl:apply-templates>
+        </xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="."/>
+        <xsl:text> </xsl:text>
+        <xsl:if test="following-sibling::token">
+          <xsl:apply-templates mode="word" select="following-sibling::token[1]">
+            <xsl:with-param name="len" select="$len + string-length(.)"/>
+          </xsl:apply-templates>
+        </xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="token" mode="commentline">
+    <xsl:call-template name="italicize">
+      <xsl:with-param name="text">
+        <xsl:value-of select="translate(.,'&#10;','')"/>
+      </xsl:with-param>
+    </xsl:call-template>
+    <xsl:if test="following-sibling::token">
+      <xsl:text>&#10;</xsl:text>
+      <xsl:choose>
+        <xsl:when test="contains(.,'--&gt;')">
+          <xsl:apply-templates mode="normalline"
+            select="following-sibling::token[1]"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates mode="commentline"
+            select="following-sibling::token[1]"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="token" mode="normalline">
+    <xsl:choose>
+      <xsl:when test="contains(.,'&lt;!--')">
+        <xsl:call-template name="italicize">
+          <xsl:with-param name="text">
+            <xsl:value-of select="translate(.,'&#10;','')"/>
+          </xsl:with-param>
+        </xsl:call-template>
+        <xsl:if test="following-sibling::token">
+          <xsl:text>&#10;	  </xsl:text>
+          <xsl:choose>
+            <xsl:when test="contains(.,'--&gt;')">
+              <xsl:apply-templates mode="normalline"
+                select="following-sibling::token[1]"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="commentline"
+                select="following-sibling::token[1]"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="breakline"/>
+        <xsl:if test="following-sibling::token">
+          <xsl:text>&#10;	  </xsl:text>
+          <xsl:apply-templates mode="normalline"
+            select="following-sibling::token[1]"/>
+        </xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="token" mode="verbatimline">
+    <xsl:call-template name="breakline"/>
+    <xsl:if test="following-sibling::token">
+      <xsl:text>&#10;</xsl:text>
+      <xsl:apply-templates mode="verbatimline"
+        select="following-sibling::token[1]"/>
+    </xsl:if>
+  </xsl:template>
+
 
 </xsl:stylesheet>
 
