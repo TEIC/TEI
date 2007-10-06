@@ -392,16 +392,29 @@ different contexts</item>
 intended function of a highlighted phrase than simply that it is
 distinct.</item></list>
  </p>
-<p>In many, if not most, cases the underlying function of a highlighted
-phrase will be obvious and non-controversial, since the distinctions
-indicated by a change of highlighting correspond with distinctions
-discussed elsewhere in these Guidelines. It should be recognized,
-however, that cases do exist in which it is not economically feasible to
-mark the underlying function of highlighting (e.g. in the preparation of
-large text corpora), as well as cases in which it is not intellectually
-appropriate (as in the transcription of some older materials, or in the
-preparation of material for the study of typographic practice). In such
-cases, the <gi>hi</gi> element should be used.
+<p>In many, if not most, cases the underlying function of a
+highlighted phrase will be obvious and non-controversial, since the
+distinctions indicated by a change of highlighting correspond with
+distinctions discussed elsewhere in these Guidelines. The elements
+available to record such distinctions are, for the most part, members
+of the <ident type="class">model.emphLike</ident> class. This and the
+<ident type="class">model.hiLike</ident> class mentioned above
+constitute the <ident type="class">model.highlighted</ident> class,
+which is a phrase level class. Members of this class may appear
+anywhere within paragraph level elements.</p>
+<p>The distinction between the two classes is simple, and typified by
+the two elements <gi>hi</gi> and <gi>emph</gi>: the former marks
+simply that a passage is typographically distinct in some way, while
+the latter asserts that a passage is linguistically emphasized for
+some purpose. These two properties, though often combined, are not
+identical. It should however be recognized, however, that cases do
+exist in which it is not economically feasible to mark the underlying
+function (e.g. in the preparation of large text corpora), as well as
+cases in which it is not intellectually appropriate (as in the
+transcription of some older materials, or in the preparation of
+material for the study of typographic practice). In such cases, the
+<gi>hi</gi> element or some other element from the <ident
+type="class">model.hiLike</ident> class should be used.
  </p>
 <p>Elements which are sometimes realized by typographic distinction but
 which are not discussed in this section include <gi>title</gi>
@@ -4020,18 +4033,26 @@ this information, as in the following example:
 </specGrp>
 </div>
 <div type="div4" xml:id="COBICOI"><head>Imprint, Pagination, and Other Details</head>
-<p>By <mentioned>imprint</mentioned> is meant all the information relating to the
-publication of a work:  the person or organization by whose authority
-and in whose name a bibliographic entity such as a book is made public
-or distributed (whether a commercial publisher or some other
-organization), the place of publication, and a date.  It may also
-include a full address for the publisher or organization.
-Full bibliographic references usually specify either the number of pages
-in a print publication (or equivalent information for non-print
-materials), or the specific location of the material being cited within
-its containing publication.  The following elements are provided to hold
-this information:
-<specList><specDesc key="imprint"/><specDesc key="address"/><specDesc key="pubPlace"/><specDesc key="publisher"/><specDesc key="date"/><specDesc key="idno"/><specDesc key="extent"/><specDesc key="biblScope"/></specList>
+<p>By <mentioned>imprint</mentioned> is meant all the information
+relating to the publication of a work: the person or organization by
+whose authority and in whose name a bibliographic entity such as a
+book is made public or distributed (whether a commercial publisher or
+some other organization), the place of publication, and a date.  It
+may also include a full address for the publisher or organization.
+Full bibliographic references usually specify either the number of
+pages in a print publication (or equivalent information for non-print
+materials), or the specific location of the material being cited
+within its containing publication.  The following elements are
+provided to hold this information: <specList><specDesc
+key="imprint"/><specDesc key="address"/><specDesc
+key="pubPlace"/><specDesc key="publisher"/><specDesc
+key="date"/><specDesc key="idno"/><specDesc key="extent"/><specDesc
+key="biblScope"/></specList> The elements <gi>biblScope</gi>,
+<gi>pubPlace</gi> and <gi>publisher</gi> constitute the special class
+<ident type="class">model.imprintPart</ident>; members of this class
+may appear with a date inside an <gi>imprint</gi> element in a specific
+location within a <gi>biblStruct</gi>, or alternatively, they may
+appear alongside any other bibliographic component inside a <gi>bibl</gi>.
  </p>
 <p>For bibliographic purposes, usually only the place (or places) of
 publication are required, possibly including the name of the country,
@@ -4046,7 +4067,7 @@ that the information given is either a full address or the name of a
 city.
  </p>
 <p>The name of the publisher of an item should be marked using the
-<gi>publisher</gi> tag even if the item is made public
+<gi>publisher</gi> element even if the item is made public
 (<soCalled>published</soCalled>) by an organization other than a
 conventional publisher, as is frequently the case with technical
 reports:
@@ -4130,10 +4151,10 @@ present.  Where it is desired to distinguish different classes of such
 information (volume number, page number, chapter number, etc.), the
 <att>type</att> attribute may be used with any convenient typology.
  </p>
-<p>When the item being cited is a journal article, the <gi>imprint</gi>
-element describing the issue in which it appeared will typically contain
-<gi>biblScope</gi> elements for volume and page numbers, together with a
-<gi>date</gi> element.
+<p>When the item being cited is a journal article, the
+<gi>imprint</gi> element describing the issue in which it appeared
+may contain <gi>biblScope</gi> elements for volume and
+page numbers, together with a <gi>date</gi> element.
  </p>
 <p>For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
@@ -4148,10 +4169,10 @@ element describing the issue in which it appeared will typically contain
          <pubPlace>London</pubPlace>
          <publisher>Society of Genealogists</publisher>
          <date when="1968">1968</date>
+         <biblScope type="vol">vol. 1</biblScope>
+         <biblScope type="pp">pp. 155–167.</biblScope>
       </imprint>
-      <biblScope type="volume">vol. 1</biblScope>
-      <biblScope type="pages">pp. 155–167.</biblScope>
-   </monogr>
+         </monogr>
 </biblStruct></egXML>
  </p>
 <p>The <att>type</att> attribute on <gi>biblScope</gi> is optional:
@@ -4166,10 +4187,10 @@ both the following are legal examples:
    <monogr>
       <title level="j">Literary &amp; Linguistic Computing</title>
       <imprint>
-         <biblScope type="volume">7</biblScope>
+         <biblScope type="vol">7</biblScope>
          <biblScope type="issue">2</biblScope>
          <date>1992</date>
-         <biblScope type="pages">110-112</biblScope>
+         <biblScope type="pp">110-112</biblScope>
       </imprint>
    </monogr>
 </biblStruct></egXML>

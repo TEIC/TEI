@@ -610,17 +610,22 @@ dusting his old lexicons and grammars, ...</p></div1></egXML>
 <!-- H Melville, M.Dick -->
  </p>
 <p>Unlike some other markup schemes, the TEI scheme does
-<emph>not</emph> require that headings attached to textual subdivisions
-at different hierarchic levels have different identifiers. All kinds of
-heading are marked identically using the <gi>head</gi> tag; the type or
-level of heading intended is implied by the immediate parent of the
-<gi>head</gi> element, which may for example be a <gi>div1</gi>,
-<gi>div2</gi>, etc., an un-numbered <gi>div</gi>, or a <gi>list</gi>.
- </p>
+<emph>not</emph> require that headings attached to textual
+subdivisions at different hierarchic levels have different
+identifiers. All kinds of heading are marked identically using the
+<gi>head</gi> tag; the type or level of heading intended is implied by
+the immediate parent of the <gi>head</gi> element, which may for
+example be a <gi>div1</gi>, <gi>div2</gi>, etc., an un-numbered
+<gi>div</gi>, or any member of the <ident
+type="class">model.listLike</ident> class.  However, as with
+<gi>div</gi> elements, the encoder may choose to extend the <ident
+type="class">model.headLike</ident> class of which <gi>head</gi> is
+the sole member to include other such elements if required. </p>
 <p>In certain kinds of text (notably newspapers), there may be a need
 to categorize individual headings within the sequence at the start of
 a division, for example as <soCalled>main</soCalled> headings, or
-<soCalled>detail</soCalled> headings. Specific elements are provided
+<soCalled>detail</soCalled> headings: this may readily be done using the
+<att>type</att> or <att>subtype</att> attribute. Specific elements are provided
 for certain kinds of heading-like features, (notably <gi>byline</gi>,
 <gi>dateline</gi>, and <gi>salute</gi>; see further section <ptr
 target="#DSOC"/>), but the <att>type</att> or <att>subtype</att>
@@ -633,10 +638,10 @@ type="class">att.typed</ident> attribute class of which the
 story and its associated headlines have been encoded  as a <gi>div</gi>
 element, with appropriate <term>divtop</term> elements attached:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="story">
-<head rend="large underlined" type="sub">
+<head rend="underlined" type="sub">
 President pledges safeguards for 2,400 British
 troops in Bosnia</head>
-<head rend="very large bold" type="main">
+<head rend="scream" type="main">
 Major agrees to enforced no-fly zone</head>
 <byline>By George Jones, Political Editor, in Washington</byline>
 <p>Greater Western intervention in the conflict in
