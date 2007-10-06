@@ -377,7 +377,7 @@ function togglerelax (el) {
   <xsl:template name="mainPage">
     <xsl:param name="currentID"/>
     <xsl:call-template name="teiTOP"/>
-    <div class="main-content" id="onecol">
+    <div id="onecol" class="main-content">
       <xsl:call-template name="mainFrame">
         <xsl:with-param name="currentID" select="$currentID"/>
         <xsl:with-param name="minimal">true</xsl:with-param>
@@ -508,7 +508,7 @@ function togglerelax (el) {
                 </xsl:attribute>
                 <xsl:call-template name="bodyHook"/>
 		<xsl:call-template name="teiTOP"/>
-		<div id="container">
+		<div id="onecol" class="main-content">
 		  <xsl:call-template name="mainTOC"/>
 		</div>
                 <xsl:call-template name="stdfooter"/>
@@ -1051,6 +1051,12 @@ function togglerelax (el) {
  class="mainhead">
   <h1>P5: Guidelines for Electronic Text Encoding and Interchange</h1>
 </div>
+</xsl:template>
+
+<xsl:template name="lineBreak">
+  <xsl:param name="id"/>
+  <xsl:text disable-output-escaping="yes">&lt;br/&gt;</xsl:text>
 
 </xsl:template>
+
 </xsl:stylesheet>
