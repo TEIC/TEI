@@ -160,17 +160,26 @@ for use by such applications in a standard way.</p>
 those in the Unicode Character Database, which distinguishes
 <term>normative</term> and <term>informative</term> character
 properties. Additional, non-Unicode, properties may also be supplied.
-Since the list of properties will vary with different versions of
-the Unicode Standard, there may not be an exact correspondence between them and the
-list of properties defined in these Guidelines.</p>
-<p>Usage examples for  these elements are given below at <ptr target="#D25-30"/>
-     and  <ptr target="#D25-40"/>.
-The gaiji module itself is formally defined in section <ptr target="#WSD-DEF"/> below. It defines the following  additional
-     elements:
+Since the list of properties will vary with different versions of the
+Unicode Standard, there may not be an exact correspondence between
+them and the list of properties defined in these Guidelines.</p>
+
+<p>Usage examples for these elements are given below at <ptr
+target="#D25-30"/> and <ptr target="#D25-40"/>.  The gaiji module
+itself is formally defined in section <ptr target="#WSD-DEF"/>
+below. It declares the following additional elements:
 <specList>
 <specDesc key="charDecl"/>
 <specDesc key="g" atts="ref"/>
 </specList>
+The <gi>charDecl</gi> element is a member of the class <ident
+type="class">model.encodingPart</ident>, and thus becomes available within
+<gi>encodingDesc</gi> when this module is included in a schema. 
+The <gi>g</gi> element is the only member of the class <ident
+type="class">model.gLike</ident>: this class is referenced as an
+alternative to plain text in almost every element which contains plain
+text, thus permitting the <gi>g</gi> element also to appear at such
+places when this module is included in a schema. 
 </p>
 <p>The following elements may appear within a <gi>charDecl</gi>
      element:
@@ -191,30 +200,23 @@ refer to a very general abstract character, which can be rendered by a
 very large number of possible representations.  The <gi>glyph</gi>
 element is provided for cases where the encoder wants to specify a
 specific glyph (or family of glyphs) out of all possible glyphs.</p>
-<!--
-<p>As noted above, the <att>ucs</att> attribute specifies the Unicode
-codepoint corresponding with the character or glyph under
-discussion. Its value must match the pattern
-<ident>datatype.ucs</ident>, which is also defined by this
-module. Values matching this pattern take the form
-<code>U+xxxx</code>, where <code>xxxx</code> is the hexadecimal
-representation of any valid Unicode code point, including values taken
-from the <soCalled>Private Use Area</soCalled> (see further <ptr
-target="D25-50"/>).</p>
--->
-<p>The Unicode Standard recommends naming conventions which must be followed strictly
-where the intention is to annotate an existing Unicode character, and
-which should also be used as a model when creating new names for
-characters or glyphs<note>It should be noted, however, that this
-naming convention cannot meaningfully be applied to East Asian
-characters; the typical Unicode descriptions for these characters take the form  <q>CJK Unified
-Ideograph <code>U+4E00</code></q>, where <code>U+4E00</code> is simply
-the Unicode codepoint value of the character in question.  In cases
-where no Unicode codepoint exists, there is little hope of finding  a name
-that helps to identify the character. Names should therefore be constructed in a way meaningful to local
-practice, for example by using a reference number from a well-known
-character dictionary or a project specific serial number.</note>. For convenience of processing, the following
-distinct elements are proposed for naming characters and glyphs:
+
+<p>The Unicode Standard recommends naming conventions which should be
+followed strictly where the intention is to annotate an existing
+Unicode character, and which may also be used as a model when
+creating new names for characters or glyphs<note>It should be noted,
+however, that this naming convention cannot meaningfully be applied to
+East Asian characters; the typical Unicode descriptions for these
+characters take the form <q>CJK Unified Ideograph
+<code>U+4E00</code></q>, where <code>U+4E00</code> is simply the
+Unicode codepoint value of the character in question.  In cases where
+no Unicode codepoint exists, there is little hope of finding a name
+that helps to identify the character. Names should therefore be
+constructed in a way meaningful to local practice, for example by
+using a reference number from a well-known character dictionary or a
+project specific serial number.</note>. For convenience of processing,
+the following distinct elements are proposed for naming characters and
+glyphs:
 <specList>
 <specDesc key="charName"/>
 <specDesc key="glyphName"/>
@@ -226,9 +228,9 @@ distinct elements are proposed for naming characters and glyphs:
 <specDesc key="desc"/>
 <specDesc key="mapping"/>
 <specDesc key="graphic"/>
-<!--<specDesc key="remarks"/>-->
-     </specList>
+</specList>
 </p>
+
 <p>Four of these elements (<gi>gloss</gi>, <gi>desc</gi>,
 <gi>graphic</gi>, and <gi>remarks</gi>) are defined by other TEI
 modules, and their usage here is no different from their usage
@@ -237,23 +239,27 @@ link to an image of the character or glyph under discussion, or to
 contain a representation of it in SVG. Several <gi>graphic</gi>
 elements may be given, for example to provide images with different
 resolution, or in different formats. The <att>mimeType</att> attribute
-which <gi>graphic</gi> acquires from its membership of the <ident type="class">att.internetMedia</ident> class may
-be used to specify the format of the image.</p>
+which <gi>graphic</gi> acquires from its membership of the <ident
+type="class">att.internetMedia</ident> class may be used to specify
+the format of the image.</p>
+
 <p>The <gi>mapping</gi> element is similar to the standard TEI
-<gi>equiv</gi> element. While the latter is used to express correspondence 
-relationships between TEI concepts or elements and those in other
-systems or ontologies, the former is used to express any kind of
-relationship between the character or glyph under discussion and
-characters or glyphs defined elsewhere. It may contain any Unicode
-character, or a <gi>g</gi> element linked to some other <gi>char</gi> or
-<gi>glyph</gi> element, if, for example, the intention is to express an association
-between two non-standard characters. The type of association is
-indicated by the <att>type</att> attribute, which may take such values
-as <code>exact</code> for exact equivalences, <code>uppercase</code>
-for uppercase equivalences, <code>lowercase</code>  for lowercase equivalences,
-<code>standardized</code> for standardized forms,  and
-<code>simplified</code>  for simplified characters, etc., as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><charDecl>
+<gi>equiv</gi> element. While the latter is used to express
+correspondence relationships between TEI concepts or elements and
+those in other systems or ontologies, the former is used to express
+any kind of relationship between the character or glyph under
+discussion and characters or glyphs defined elsewhere. It may contain
+any Unicode character, or a <gi>g</gi> element linked to some other
+<gi>char</gi> or <gi>glyph</gi> element, if, for example, the
+intention is to express an association between two non-standard
+characters. The type of association is indicated by the
+<att>type</att> attribute, which may take such values as
+<code>exact</code> for exact equivalences, <code>uppercase</code> for
+uppercase equivalences, <code>lowercase</code> for lowercase
+equivalences, <code>standardized</code> for standardized forms, and
+<code>simplified</code> for simplified characters, etc., as in the
+following example: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><charDecl>
 <char xml:id="aenl">
 <charName>LATIN LETTER ENLARGED SMALL A</charName>
 <charProp>

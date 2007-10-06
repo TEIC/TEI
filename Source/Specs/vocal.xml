@@ -8,18 +8,16 @@ $Id$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" xml:id="VOCAL" usage="rec" ident="vocal">
   <equiv/>
-  <gloss>vocalized semi-lexical</gloss>
-  <gloss version="2007-01-21" xml:lang="it">fenomeno vocale semi-verbale</gloss>
-  <gloss version="2007-05-04" xml:lang="es">fenómeno vocal semiverbal.</gloss>
   <desc>any vocalized but not necessarily lexical phenomenon, for
   example voiced pauses, non-lexical backchannels, etc.</desc>
   <desc version="2007-01-21" xml:lang="it">qualsiasi fenomeno vocale ma non necessariamente verbale, come pause piene, backchannel non verbali, ecc.</desc>
   <desc version="2007-05-04" xml:lang="es">cualquier fenómeno vocal pero no necesariamente verbal, como pausa plena, backchannel no verbales, etc.</desc>
   <desc version="2006-10-28" xml:lang="ja">言語化された要素を示す．例えば，有声の間，相づちなど．</desc>
   <classes>
-    <memberOf key="model.inter.spoken"/>
+    <memberOf key="model.phrase.spoken"/>
     <memberOf key="att.timed"/>
     <memberOf key="att.ascribed"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.glossSeq"/>
@@ -35,9 +33,8 @@ $Id$
       </datatype>
       <defaultVal>false</defaultVal>
       <remarks>
-        <p>The value <val>true</val> indicates the phenomenon is
-	repeated, whereas the value <val>false</val> indicates that it
-	is atomic.</p>
+        <p>The value <val>true</val> indicates that the vocal effect
+	is repeated several times rather than just occurring once.</p>
       </remarks>
     </attDef>
   </attList>
@@ -45,6 +42,9 @@ $Id$
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <vocal dur="PT12S">
         <desc>whistles</desc>
+      </vocal>
+      <vocal iterated="true">
+	<desc>whistles intermittently</desc>
       </vocal>
     </egXML>
   </exemplum>
