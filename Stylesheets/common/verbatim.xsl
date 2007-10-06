@@ -59,27 +59,22 @@
   <xsl:template match="text()" mode="verbatim">
     <xsl:choose>
       <xsl:when test="not(preceding-sibling::node() or contains(.,'&#10;'))">
-	<xsl:text>{1</xsl:text>
 	<xsl:value-of select="normalize-space(.)"/>
 	<xsl:if test="substring(.,string-length(.))=' '">
-	  <xsl:text>#</xsl:text>
+	  <xsl:text> </xsl:text>
 	</xsl:if>
-	<xsl:text>1}</xsl:text>
       </xsl:when>
       <xsl:when test="normalize-space(.)=''">
-	<xsl:text>{2</xsl:text>
         <xsl:for-each select="following-sibling::*[1]">
           <xsl:call-template name="lineBreak">
             <xsl:with-param name="id">7</xsl:with-param>
           </xsl:call-template>
           <xsl:call-template name="makeIndent"/>
         </xsl:for-each>
-	<xsl:text>2}</xsl:text>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:text>{3</xsl:text>
 	<xsl:if test="starts-with(.,' ')">
-	  <xsl:text>!</xsl:text>
+	  <xsl:text>  </xsl:text>
 	</xsl:if>
         <xsl:call-template name="wraptext">
           <xsl:with-param name="count">0</xsl:with-param>
@@ -89,13 +84,19 @@
             </xsl:for-each>
           </xsl:with-param>
           <xsl:with-param name="text">
-	    <xsl:value-of select="."/>
+	    <xsl:choose>
+	      <xsl:when test="starts-with(.,'&#10;') and not (preceding-sibling::node())">
+		<xsl:value-of select="substring(.,2)"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="."/>
+	      </xsl:otherwise>
+	    </xsl:choose>
           </xsl:with-param>
         </xsl:call-template>
 	<xsl:if test="substring(.,string-length(.))=' '">
-	  <xsl:text>#</xsl:text>
+	  <xsl:text> </xsl:text>
 	</xsl:if>
-	<xsl:text>3}</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -109,29 +110,32 @@
       <xsl:when test="contains($text,'&#10;')">
 	<xsl:if test="$count &gt; 0">
 	  <xsl:value-of select="$indent"/>
-	  <xsl:text>|</xsl:text>
+	  <xsl:text> </xsl:text>
 	</xsl:if>
-	<xsl:value-of select="normalize-space(substring-before($text,'&#10;'))"/>
-        <xsl:call-template name="lineBreak">
-          <xsl:with-param name="id">6</xsl:with-param>
-        </xsl:call-template>
-        <xsl:value-of select="$indent"/>
-        <xsl:call-template name="wraptext">
-          <xsl:with-param name="indent">
-            <xsl:value-of select="$indent"/>
-          </xsl:with-param>
-          <xsl:with-param name="text">
-            <xsl:value-of select="substring-after($text,'&#10;')"/>
-          </xsl:with-param>
-          <xsl:with-param name="count">
-	    <xsl:value-of select="$count + 1"/>
-	  </xsl:with-param>
-        </xsl:call-template>
+	<xsl:value-of
+	    select="normalize-space(substring-before($text,'&#10;'))"/>
+<!--	<xsl:if test="not(substring-after($text,'&#10;')='')">-->
+	  <xsl:call-template name="lineBreak">
+	    <xsl:with-param name="id">6</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:value-of select="$indent"/>
+	  <xsl:call-template name="wraptext">
+	    <xsl:with-param name="indent">
+	      <xsl:value-of select="$indent"/>
+	    </xsl:with-param>
+	    <xsl:with-param name="text">
+	      <xsl:value-of select="substring-after($text,'&#10;')"/>
+	    </xsl:with-param>
+	    <xsl:with-param name="count">
+	      <xsl:value-of select="$count + 1"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+
       </xsl:when>
       <xsl:otherwise>
 	<xsl:if test="$count &gt; 0 and parent::*">
 	  <xsl:value-of select="$indent"/>
-	  <xsl:text>[</xsl:text>
+	  <xsl:text> </xsl:text>
 	</xsl:if>
 	<xsl:value-of select="normalize-space($text)"/>
       </xsl:otherwise>
@@ -144,6 +148,8 @@
 <!--      <xsl:when test="child::node()[last()]/self::text()[not(.='')] and child::node()[1]/self::text()[not(.='')]"/>-->
       <xsl:when test="not(parent::*)  or parent::teix:egXML">
 	<xsl:choose>
+	  <xsl:when test="preceding-sibling::node()[1][self::text()]
+			  and following-sibling::node()[1][self::text()]"/>
 	  <xsl:when test="preceding-sibling::*">
 	    <xsl:call-template name="lineBreak">
 	      <xsl:with-param name="id">-1</xsl:with-param>
