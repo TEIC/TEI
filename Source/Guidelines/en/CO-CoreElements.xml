@@ -4548,62 +4548,84 @@ structural subdivisions should be encoded using the general purpose
 chapters <ptr target="#DS"/> and <ptr target="#VE"/>. The fundamental
 unit of a verse text is the verse line rather than the paragraph,
 however.</p>
+
 <p>The <gi>l</gi> element is used to mark up verse lines, that is
-metrical rather than typographic lines.  Where a metrical line is
+metrical rather than typographic lines.  In some modern or free verse,
+it may be hard to decide whether the typographic line is to be
+regarded as a verse line or not, but the distinction is quite clear
+for verse following regular metrical patterns. Where a metrical line is
 interrupted by a typographic line break, the encoder may choose to
 ignore the fact entirely or to use the empty <gi>lb</gi> (line break)
-element discussed in <ptr target="#CORS"/>.  In the copy text, the
-following example is printed on four typographic lines, beginning with
-the words <mentioned>There</mentioned>, <mentioned>From</mentioned>, <mentioned>The</mentioned>,
-and <mentioned>the</mentioned>.
+element discussed in <ptr target="#CORS"/>.  By convention, the start
+of a metrical line implies the start of a typographic line; hence
+there is no need to introduce an <gi>lb</gi> tag at the start of every
+<gi>l</gi> element, but only at places where a new typographic line
+starts  within a metrical line, as in the following example:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<l>Of Mans First Disobedience, and<lb/> the Fruit</l>
+<l>Of that Forbidden Tree, whose<lb/> mortal tast</l>
+<l>Brought Death into the World,<lb/> and all our woe,</l>
+<l>With loss of Eden, till one greater Man</l>
+<l>Restore us, and regain the blissful Seat...</l>
+</egXML>
+<!-- Milton Paradise Lost I 1667 (Scolar press facs1968) -->
+In the original copy text, the presence of an ornamental capital at
+the start of the poem means that the measure is not wide enough to
+print the first four lines on four lines; instead each metrical line occupies
+two typographic lines, with a break at the point indicated. Note that
+this encoding makes no attempt to preserve information about the white
+space or indentation associated with either kind of line; if regarded
+as essential, this information would be recorded using the
+<att>rend</att> or <att>rendition</att> attributes discussed in <ptr
+target="#STGA"/>. </p>
+
+<!-- this example is prose according
+to
+http://etext.virginia.edu/etcbin/ot2www-pubeng?specfile=/web/data/whitman/whitman.o2w&act=surround&offset=87798&tag=%22Specimen+Days%22+;+from+Complete+Prose+Works+(1892)&query=odor+of+blood&id=WhiPro1
+certainly it appears in the Collected Prose of 1891 -->
+
+<!-- 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l>There they lie, in the largest, in an
 open space in the woods,</l>
 <l>From 500 to 600 poor fellows — the groans
 and screams —</l>
 <l>The odor of blood, mixed with the fresh scent
 of the night, <lb/>the grass, the trees —
-that Slaughter-house!</l></egXML>
+that Slaughter-house!</l></egXML> -->
 <!-- Walt Whitman, 1863, cited by Daniel Aaron, The           -->
 	<!-- Unwritten War:  American Writers and the Civil War       -->
 	<!-- (London:  OUP, 1973).  Aaron doesn't give any more       -->
 	<!-- detailed citation.  Need to replace this with an         -->
 	<!-- example from a more important edition, one about whose   -->
 	<!-- line breaks one might reasonably care.                   -->
- </p>
-<p>Where verse lines are not properly nested within the enclosing
-hierarchy (for example where verse lines cross larger boundaries such
-as verse paragraphs or speeches) the encoder may choose to use one of
-the techniques discussed in chapter <ptr target="#NH"/>, or to use the
-<att>part</att> attribute to indicate that the verse line is
-incomplete, as in the following example:
-<!-- <egXML xmlns="http://www.tei-c.org/ns/Examples"><l>Thou fumblest <name>Eros</name>, and my Queenes a Squire</l>
-<l>More tight at this, then thou:  Dispatch. O Loue,</l>
-<l>That thou couldst see my Warres to day, and knew'st</l>
-<l>The Royall Occupation, thou should'st see</l>
-<l part="I">A Workeman in't. <stage>Enter an Armed Soldier.</stage>
-</l>
-<l part="F">Good morrow to thee, welcome. ...</l></egXML> -->
-	<!-- Better example needed here -->
-	<!-- W. Shakespeare, Antony and Cleopatra, 4.4.14-21, cited   -->
-	<!-- from A New Variorum Edition of Shakespeare:  A & C,      -->
-	<!-- ed. Martin Spevack (NY:  MLA, 1990), p. 242.             -->
-	<!-- I have not had time to find a better example.  -MSM      -->
-	<!-- luckily I already have on in hand:   -Syd 2001-11-04     -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>On a tree by a river a little tomtit</l>
-<l>Sang <q>Willow, titwillow, titwillow!</q></l>
-<l part="I">And I said to him,</l> <q><l part="F">Dicky-bird, why do you sit</l>
-<l>Singing <q>Willow, titwillow, titwillow!</q></l></q>
-</egXML>
-<!-- Gilbert & Sullivan, Mikado -->
-</p>
+
+<!--In the copy text, this example is printed on four typographic lines,
+beginning with the words <mentioned>There</mentioned>,
+<mentioned>From</mentioned>, <mentioned>The</mentioned>, and
+<mentioned>the</mentioned>.-->
+
+<p>The <gi>l</gi> element should not be used to represent typographic
+lines in non-verse materials: if the line-breaking points in a prose
+text are considered important for analysis, they should be marked with
+the <gi>lb</gi> element. Alternatively, a neutral segmentation element
+such as <gi>seg</gi> or <gi>ab</gi> may be used; see further
+discussion of these elements in chapter <ptr target="#SA"/>. The
+<gi>l</gi> element is a member of the <ident
+type="class">model.lLike</ident> class, which is a subclass of the
+<ident type="class">model.divPart</ident> class, along with elements
+from the <ident type="class">model.pLike</ident> (paragraph-like)
+class.</p>
+
 <p>In some verse forms, regular groupings of lines are regarded as units
 of some kind, often identified by a regular verse scheme.  In stichic
 verse and couplets, groups of lines analogous to paragraphs are often
 indicated by indentation.  In other verse forms, lines are grouped into
-irregular sequences indicated simply by white space.  The neutral
+irregular sequences indicated simply by white space.  The 
 <gi>lg</gi> or line group element may be used to mark any such grouping
-of lines. As a member of the <ident type="class">att.typed</ident>
-class, this element bears the following attributes:
+of elements from the <ident
+type="class">model.lLike</ident> class. As a member of the <ident type="class">att.typed</ident>
+class, the <gi>lg</gi> element bears the following attributes:
 <specList><specDesc key="att.typed" atts="type subtype"/></specList>
 which may be used to further categorize the
 line group where this is felt desirable, as in the following example.
@@ -4630,7 +4652,7 @@ whether or not a line is indented.
 kinds of line group within the same piece of verse. Such line groups
 may self-nest, in much the same way as the un-numbered <gi>div</gi>
 element described in chapter <ptr target="#DS"/>. For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><lg type="poem.sonnet">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><lg type="sonnet">
   <lg type="octet">
     <l>Thus speaks the Muse, and bends her brow severe:—</l>
     <l>“Did I, <name>Lætitia</name>, lend my choicest lays,</l>
@@ -4667,6 +4689,44 @@ element described in chapter <ptr target="#DS"/>. For example:
 	<!-- so I ignored it:           -->
 	<!-- quote stanza from Sir Gawayn -->
  </p>
+<p>It is often the case that verse line boundaries conflict with the
+boundaries of other structural elements. In the following example, the
+single verse line <q>A Workeman in't... welcome</q> is interrupted by
+a stage direction:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>Thou fumblest <name>Eros</name>, and my Queenes a Squire</l>
+<l>More tight at this, then thou:  Dispatch. O Loue,</l>
+<l>That thou couldst see my Warres to day, and knew'st</l>
+<l>The Royall Occupation, thou should'st see</l>
+<l part="I">A Workeman in't. <stage>Enter an Armed Soldier.</stage>
+</l>
+<l part="F">Good morrow to thee, welcome. </l></egXML> 
+	<!-- Better example needed here -->
+	<!-- W. Shakespeare, Antony and Cleopatra, 4.4.14-21, cited   -->
+	<!-- from A New Variorum Edition of Shakespeare:  A & C,      -->
+	<!-- ed. Martin Spevack (NY:  MLA, 1990), p. 242.             -->
+	<!-- I have not had time to find a better example.  -MSM      -->
+In this encoding, the <att>part</att> attribute is used, as with
+<gi>div</gi>,  to indicate that the last two <gi>l</gi> elements
+should be regarded as the initial and final parts of a single line,
+rather than as two lines.</p>
+
+<p>The same technique may be used where verse lines are collected
+together into units such as verse paragraphs:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><lg n="6" type="para">
+<!-- ... -->
+<l>Unprofitably travelling toward the grave,</l>
+<l>Like a false steward who hath much received</l>
+<l part="I">And renders nothing back.</l></lg>
+<lg type="para" n="7">
+<l part="F">Was it for this</l>
+<l>That one, the fairest of all rivers, loved</l>
+<l>To blend his murmurs with my nurse's song,</l>
+<!-- ... -->
+</lg></egXML>
+<!-- WWordsworth Prelude (1850 version) from Bartleby -->
+
+</p>
 <p>The <att>part</att> attribute may also be attached to an <gi>lg</gi>
 element to indicate that it is incomplete, for example because it forms
 part of a group that is divided between two speakers, as in the
@@ -4695,14 +4755,8 @@ chapter <ptr target="#VE"/>.
  </p>
 
 <specGrp xml:id="DCOVE" n="Verse">
-
-
 &l;
-
-
-
 &lg;
-
 </specGrp>
 </div>
 <div type="div3" xml:id="CODR"><head>Core Tags for Drama</head><p>Like other written texts, dramatic and other <term>performance
