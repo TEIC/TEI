@@ -240,6 +240,7 @@
       </xsl:choose>
     </xsl:variable>
 
+    <h2><xsl:value-of select="$name"/></h2>
     <table border="1" class="wovenodd">
       <tr>
 	<td class="wovenodd-col2" colspan="2">
@@ -768,7 +769,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-
+    <h2><xsl:value-of select="$name"/></h2>
     <table border="1" class="wovenodd">
       <tr>
 	<td colspan="2">
