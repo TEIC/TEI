@@ -747,8 +747,9 @@ function togglerelax (el) {
       <div id='macro-{@module}'>
       <h3>
 	<xsl:for-each select="key('MODULES',@module)">
+	  <xsl:text>[</xsl:text>
 	  <xsl:value-of select="@ident"/>
-	  <xsl:text>: </xsl:text>
+	  <xsl:text>] </xsl:text>
 	  <xsl:value-of select="tei:desc"/>
 	</xsl:for-each>
       </h3>
