@@ -6,14 +6,11 @@ $Date$
 
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="VALITEM" usage="mwa" ident="valItem">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" xml:id="VALITEM" usage="mwa" ident="valItem">
   <equiv/>
-  <gloss>value definition</gloss>
-  <gloss version="2007-06-12" xml:lang="fr">définition de valeur</gloss>
-  <gloss version="2007-01-21" xml:lang="it">definizione del valore</gloss>
-  <gloss version="2007-05-04" xml:lang="es">definición de un valor</gloss>
-  <gloss version="2006-10-28" xml:lang="ja">値定義</gloss>
-  <desc>contains a single value and gloss  pair for an attribute.</desc>
+  <desc>documents a single attribute-value within a list of possible
+  or mandatory items.</desc>
   <desc version="2007-06-12" xml:lang="fr">contient une paire composée d'une valeur et de sa définition pour un attribut</desc>
   <desc version="2007-01-21" xml:lang="it">contiene un unico valore e un'unica coppia di glosse per un attributo</desc>
   <desc version="2007-05-04" xml:lang="es">contiene un único valor y una glosa para un atributo.</desc>
@@ -22,9 +19,9 @@ $Id$
     <memberOf key="att.identified"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:ref name="macro.glossSeq"/>
-    </rng:group>
+<rng:zeroOrMore>
+  <rng:ref name="model.glossLike"/>
+</rng:zeroOrMore>
   </content>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -32,6 +29,7 @@ $Id$
         <altIdent xml:lang="fr">dou</altIdent>
         <equiv name="unknown"/>
         <gloss>dubious</gloss>
+	<desc>used when the application of this element is doubtful or uncertain</desc>
       </valItem>
     </egXML>
   </exemplum>

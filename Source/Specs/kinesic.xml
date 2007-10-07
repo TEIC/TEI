@@ -6,9 +6,9 @@ $Date$
 
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" xml:id="KINESIC" usage="rec" ident="kinesic">
-  <gloss version="2007-05-04" xml:lang="es">fenómeno no vocal casi verbal.</gloss>
-  <gloss version="2006-10-28" xml:lang="ja">動作</gloss>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+module="spoken" xml:id="KINESIC" usage="rec" ident="kinesic">
   <desc>any communicative phenomenon, not necessarily vocalized, for
   example a gesture, frown, etc.</desc>
   <desc version="2007-01-21" xml:lang="it">qualsiasi fenomeno comunicativo non necessariamente vocale, come gesti, mimica facciale, ecc.</desc>
@@ -16,14 +16,15 @@ $Id$
   <desc version="2006-10-28" xml:lang="ja"> 必ずしも言語化されていない
   コミュニケーション状況で，例えば身振り，眉をしかめるなど．</desc>
   <classes>
-<!--    <memberOf key="model.divPart.spoken"/>-->
-    <memberOf key="model.phrase.spoken"/>
+    <memberOf key="model.global.spoken"/>
     <memberOf key="att.timed"/>
     <memberOf key="att.typed"/>
     <memberOf key="att.ascribed"/>
   </classes>
   <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.glossSeq"/>
+    <rng:zeroOrMore>
+      <rng:ref name="model.glossLike"/>
+    </rng:zeroOrMore>
   </content>
   <attList>
     <attDef ident="iterated" usage="opt">

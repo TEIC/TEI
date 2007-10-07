@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -6,7 +5,8 @@ $Date$
 
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="certainty" xml:id="RESPONS" usage="opt" ident="respons">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"  module="certainty" xml:id="RESPONS" usage="opt" ident="respons">
   <equiv/>
   <gloss>responsibility</gloss>
   <gloss version="2007-01-21" xml:lang="it">responsabilità</gloss>
@@ -21,7 +21,10 @@ markup of particular element(s).</desc>
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.glossSeq"/>
+    <rng:zeroOrMore>
+      <rng:ref name="model.glossLike"/>
+    </rng:zeroOrMore>
+<!--    <rng:ref name="macro.glossSeq"/>-->
   </content>
   <attList>
     <attDef ident="target" usage="req">

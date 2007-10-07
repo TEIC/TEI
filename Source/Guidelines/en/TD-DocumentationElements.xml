@@ -517,6 +517,8 @@ element contains the following <gi>classes</gi> element:
 <!--&egXML;-->
 &classes;
 &memberOf;
+&equiv;
+&altIdent;
 </specGrp>
 </div>
 <div type="div3" xml:id="TDTAG"><head>Element Specifications</head>
@@ -574,14 +576,14 @@ however, different naming conventions are used to distinguish amongst
 the objects being named. Unqualified names (<code>fileDesc</code>,
 <code>revisionDesc</code>) are always element names. Names prefixed
 with <code>model.</code> or <code>att.</code> (e.g. <code>model.headerPart</code>) are always class
-names. In DTD language, element classes are represented by parameter
+names. In DTD language, classes are represented by parameter
 entities (<code>%model.headerPart;</code> in the above example) See further
 <ptr target="#ST"/>.</p>
 <!-- more examples needed -->
 </div>
 <div type="div3" xml:id="TDATT"><head>Attribute List Specification</head>
 <p>The <gi>attList</gi> element is used to document information about a
-collection of attributes, either within a <gi>elementSpec</gi>, or within a
+collection of attributes, either within an <gi>elementSpec</gi>, or within a
 <gi>classSpec</gi>.  An attribute list can be organized either as a
 group of attribute definitions, all of which are understood to be
 available, or as a choice of attribute definitions, of which only one
@@ -603,7 +605,7 @@ following which are specific to attributes:
 <specDesc key="remarks"/-->
 </specList>
  </p>
-<p>The <gi>attList</gi> within a <gi>elementSpec</gi> is used to specify
+<p>The <gi>attList</gi> within an <gi>elementSpec</gi> is used to specify
 only the attributes which are specific to that particular
 element. Instances of the element may carry other attributes which are
 declared by the classes of which the element is a member.  These extra
@@ -653,7 +655,7 @@ definition of an explicit pattern, using the TEI-specific
 <gi>macroSpec</gi> element.</p>
 </div>
 <div type="div4" xml:id="TDATTvs"><head>Value Specification</head>
-<p>The <gi>valDesc</gi> element may be used to specify 
+<p>The <gi>valDesc</gi> element may be used to describe 
 constraints on data content in an informal way: for example
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><valDesc>must point to another <gi>align</gi>
     element logically preceding this
@@ -663,9 +665,10 @@ headings.</valDesc></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><valDesc>A bookseller's surname,
  taken from the list in <title>Pollard and Redgrave</title></valDesc></egXML>
 </p>
-<p>As noted above, the <gi>datatype</gi> element also constrains the
-possible values for an attribute. The <gi>valDesc</gi> can be used to
-specify further constraints. For example, to specify that an attribute
+<p>As noted above, the <gi>datatype</gi> element is the first
+constraint on the
+possible values for an attribute. The <gi>valDesc</gi> element can be used to
+describe further constraints. For example, to specify that an attribute
 <att>age</att> can take positive integer values less than 100, the
 datatype <ident type="datatype">data.numeric</ident> might be used in combination with
 a <gi>valDesc</gi> such as <q>values must be positive integers less

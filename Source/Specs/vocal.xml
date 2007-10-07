@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
 See the file COPYING for details
@@ -6,7 +5,8 @@ $Date$
 
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" xml:id="VOCAL" usage="rec" ident="vocal">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0" module="spoken" xml:id="VOCAL" usage="rec" ident="vocal">
   <equiv/>
   <desc>any vocalized but not necessarily lexical phenomenon, for
   example voiced pauses, non-lexical backchannels, etc.</desc>
@@ -14,13 +14,15 @@ $Id$
   <desc version="2007-05-04" xml:lang="es">cualquier fenómeno vocal pero no necesariamente verbal, como pausa plena, backchannel no verbales, etc.</desc>
   <desc version="2006-10-28" xml:lang="ja">言語化された要素を示す．例えば，有声の間，相づちなど．</desc>
   <classes>
-    <memberOf key="model.phrase.spoken"/>
+    <memberOf key="model.global.spoken"/>
     <memberOf key="att.timed"/>
     <memberOf key="att.ascribed"/>
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.glossSeq"/>
+<rng:zeroOrMore>
+  <rng:ref name="model.glossLike"/>
+</rng:zeroOrMore>
   </content>
   <attList>
     <attDef ident="iterated" usage="opt">
