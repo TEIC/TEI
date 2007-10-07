@@ -27,12 +27,13 @@
   <xsl:param name="auto">false</xsl:param>
   <xsl:param name="numberFrontHeadings">true</xsl:param>
   <xsl:param name="cssFile">guidelines.css</xsl:param>
+  <xsl:param name="cssSecondaryFile">udm.css</xsl:param>
   <xsl:param name="cssPrintFile">guidelines-print.css</xsl:param>
   <xsl:param name="displayMode">both</xsl:param>
 
 
-  <xsl:key name="CLASS-MODULE" match="tei:classSpec"
-	   use="@module"/>
+  <xsl:key name="MODEL-CLASS-MODULE" match="tei:classSpec[@type='model']"  use="@module"/>
+  <xsl:key name="ATT-CLASS-MODULE" match="tei:classSpec[@type='atts']"  use="@module"/>
   <xsl:key name="ELEMENT-MODULE" match="tei:elementSpec"
 	   use="@module"/>
   <xsl:key name="MACRO-MODULE" match="tei:macroSpec"
@@ -41,6 +42,12 @@
   <xsl:key name="ELEMENT-ALPHA" match="tei:elementSpec"
 	   use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),1,1)"/>
 
+  <xsl:key name="MODEL-CLASS-ALPHA" match="tei:classSpec[@type='model']"
+	   use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),7,1)"/>
+
+  <xsl:key name="ATT-CLASS-ALPHA" match="tei:classSpec[@type='atts']"
+	   use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),5,1)"/>
+
 
   <xsl:template name="includeCSS">
     <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
@@ -48,6 +55,10 @@
       <link href="{$cssPrintFile}" media="print" rel="stylesheet"
         type="text/css"/>
     </xsl:if>
+    <xsl:if test="not($cssSecondaryFile = '')">
+      <link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
+    </xsl:if>
+
   </xsl:template>
 
   <xsl:template name="generateSubTitle">
@@ -120,6 +131,11 @@
 
 
   <xsl:template name="javascriptHook">
+
+  <script type="text/javascript" src="udm-all.js">
+    <xsl:comment>&#160;</xsl:comment>
+  </script>
+
     <script type="text/javascript">
       <xsl:comment>
         <xsl:text disable-output-escaping="yes">
@@ -168,22 +184,26 @@ for (var i = 0; i &lt; states.length; i++) {
   }
  }
  var mod;
- if ( mod = document.getElementById('elembymod') ) {
+ if ( mod = document.getElementById('byMod') ) {
      mod.style.display = "none";
  }
 }
 
 function showall() {
  for (var i = 0; i &lt; states.length; i++) {
-   var layer = document.getElementById(states[i]);
-   layer.style.display = "block";
+   var layer;
+   if (layer = document.getElementById(states[i]) ) {
+      layer.style.display = "block";
+      }
   }
 }
 
 function showByMod() {
   hideallExcept('');
-  var mod = document.getElementById('elembymod');
-  mod.style.display = "block";
+  var mod;
+  if (mod = document.getElementById('byMod') ) {
+     mod.style.display = "block";
+     }
 }
 
 function toggleToc(el){
@@ -249,8 +269,7 @@ function togglerelax (el) {
     <span class="bookmarklink">
       <a class="bookmarklink" href="#{$ident}">
 	<xsl:attribute name="title">
-	  <xsl:text>bookmark </xsl:text>
-	  <xsl:value-of select="tei:head[1]"/>
+	  <xsl:text>link to this section </xsl:text>
 	</xsl:attribute>
 	<span class="invisible">
 	  <xsl:text>TEI: </xsl:text>
@@ -265,97 +284,82 @@ function togglerelax (el) {
   <xsl:template name="startDivHook">
     <xsl:if
       test="not(parent::tei:div) or not(local-name(preceding::*[1])='head')">
-      <table class="miniTOC">
-        <tr>
-          <td>
-            <a class="navigation" href="index.html">Home</a> | <a
-              class="navigation" href="index-toc.html">Table of
-              Contents</a>
-            <xsl:choose>
-	      <xsl:when test="self::tei:elementSpec">
-                <xsl:text> | </xsl:text>
-                <a class="navigation" href="REF-ELEMENTS.html">
-                  Element catalogue</a>
-              </xsl:when>
-	      <xsl:when test="self::tei:classSpec[@type='model']">
-                <xsl:text> | </xsl:text>
-                <a class="navigation" href="REF-CLASSES-MODEL.html">
-                  Model Class catalogue</a>
-              </xsl:when>
-	      <xsl:when test="self::tei:classSpec[@type='atts']">
-                <xsl:text> | </xsl:text>
-                <a class="navigation" href="REF-CLASSES-ATTS.html">
-                  Attribute Class catalogue</a>
-              </xsl:when>
-	      <xsl:when test="self::tei:macroSpec">
-                <xsl:text> | </xsl:text>
-                <a class="navigation" href="REF-MACRO.html">
-                  Macro and datatype catalogue</a>
-              </xsl:when>
-
-              <xsl:otherwise>
-                <xsl:for-each select="ancestor::tei:div">
-		  <div>
-		    <xsl:attribute name="style">
-		      <xsl:text>margin-left:</xsl:text>
-		      <xsl:value-of select="count(ancestor::tei:div) + 1"/>
-		      <xsl:text>em;</xsl:text>
-		    </xsl:attribute>
-		    <xsl:text>&#x21B3;</xsl:text>
-		    <a class="UP">
-		      <xsl:attribute name="href">
-			<xsl:apply-templates mode="generateLink"
-					     select="."/>
-		      </xsl:attribute>
-		      <xsl:call-template name="headerLink">
-			<xsl:with-param name="minimal"
-					select="$minimalCrossRef"/>
-		      </xsl:call-template>
-		    </a>
-		  </div>
-		</xsl:for-each>
-              </xsl:otherwise>
-            </xsl:choose>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <xsl:call-template name="previousLink"/>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <xsl:call-template name="nextLink"/>
-          </td>
-        </tr>
-
-        <xsl:if test="not(parent::tei:div) and child::tei:div">
-          <tr>
-            <td>
-              <xsl:call-template name="subtoc"/>
-            </td>
-          </tr>
-        </xsl:if>
-      </table>
+      <div>
+	<xsl:choose>
+        <xsl:when test="not(parent::tei:div) and child::tei:div">
+	  <xsl:attribute name="class">
+	    <xsl:text>miniTOC miniTOC_left</xsl:text>
+	  </xsl:attribute>
+          <div class="subtoc">
+	    <xsl:call-template name="subtoc"/>
+	  </div>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:attribute name="class">
+	    <xsl:text>miniTOC miniTOC_right</xsl:text>
+	  </xsl:attribute>
+	</xsl:otherwise>
+	</xsl:choose>
+	<ul class="subtoc">
+	  <li class="subtoc"><xsl:call-template name="previousLink"/></li>
+	  <li class="subtoc"><xsl:call-template name="nextLink"/></li>
+	  <li class="subtoc"><a class="navigation" href="index.html">Home</a> | <a
+	  class="navigation" href="index-toc.html">Table of
+	  Contents</a></li>
+	  <li class="subtoc">
+	  <xsl:choose>
+	    <xsl:when test="self::tei:elementSpec">
+		<a class="navigation" href="REF-ELEMENTS.html">
+		Element catalogue</a>
+	    </xsl:when>
+	    <xsl:when test="self::tei:classSpec[@type='model']">
+		<a class="navigation" href="REF-CLASSES-MODEL.html">
+		Model Class catalogue</a>
+	    </xsl:when>
+	    <xsl:when test="self::tei:classSpec[@type='atts']">
+		<a class="navigation" href="REF-CLASSES-ATTS.html">
+		Attribute Class catalogue</a>
+	    </xsl:when>
+	    <xsl:when test="self::tei:macroSpec">
+		<a class="navigation" href="REF-MACRO.html">
+		Macro and datatype catalogue</a>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <!--
+	      <xsl:for-each select="ancestor::tei:div">
+		<div>
+		  <xsl:attribute name="style">
+		    <xsl:text>margin-left:</xsl:text>
+		    <xsl:value-of select="count(ancestor::tei:div) + 1"/>
+		    <xsl:text>em;</xsl:text>
+		  </xsl:attribute>
+		  <xsl:text>&#x21B3;</xsl:text>
+		<a class="UP">
+		  <xsl:attribute name="href">
+		    <xsl:apply-templates mode="generateLink"
+					 select="."/>
+		  </xsl:attribute>
+		  <xsl:call-template name="headerLink">
+		    <xsl:with-param name="minimal"
+				    select="$minimalCrossRef"/>
+		  </xsl:call-template>
+		</a>
+		</div>
+	      </xsl:for-each>
+	      -->
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  </li>
+	</ul>
+      </div>
     </xsl:if>
   </xsl:template>
 
 
   <xsl:template name="mainPage">
     <xsl:param name="currentID"/>
-    <div id="hdr">
-      <xsl:call-template name="hdr"/>
-    </div>
-    <div id="accessibility">
-      <span class="tocontent"><a href="{$REQUEST}?style=text">Text
-          only</a> | <a class="skiplinks" href="#rh-column"
-          title="Go to main page content">Skip links</a></span>
-    </div>
-    <div id="hdr2">
-      <xsl:call-template name="hdr2"/>
-    </div>
-
-    <div class="main-content" id="onecol">
+    <xsl:call-template name="teiTOP"/>
+    <div id="onecol" class="main-content">
       <xsl:call-template name="mainFrame">
         <xsl:with-param name="currentID" select="$currentID"/>
         <xsl:with-param name="minimal">true</xsl:with-param>
@@ -485,15 +489,8 @@ function togglerelax (el) {
                   <xsl:text>startUp()</xsl:text>
                 </xsl:attribute>
                 <xsl:call-template name="bodyHook"/>
-                <div id="hdr">
-		  <h1 class="maintitle">
-		  <a href="index.html">
-		    <xsl:call-template name="generateTitle"/>
-                  </a>
-		  </h1>
-                </div>
-		<hr/>
-		<div>
+		<xsl:call-template name="teiTOP"/>
+		<div id="onecol" class="main-content">
 		  <xsl:call-template name="mainTOC"/>
 		</div>
                 <xsl:call-template name="stdfooter"/>
@@ -735,34 +732,6 @@ function togglerelax (el) {
   </xsl:template>
   
 
-<xsl:template match="tei:divGen[@type='classcat']">
-  <h3>Alphabetical list</h3>
-  <xsl:apply-templates mode="weave" select="key('CLASSDOCS',1)">
-    <xsl:sort select="@ident"/>
-  </xsl:apply-templates>
-
-  <xsl:for-each select="key('CLASSDOCS',1)">
-    <xsl:sort select="@module"/>
-    <xsl:if
-	test="generate-id(.)=generate-id(key('CLASS-MODULE',@module)[1])">
-      <div id='class-{@module}'>
-      <h3>
-	<xsl:for-each select="key('MODULES',@module)">
-	  <xsl:value-of select="@ident"/>
-	  <xsl:text>: </xsl:text>
-	  <xsl:value-of select="tei:desc"/>
-	</xsl:for-each>
-      </h3>
-      <xsl:apply-templates mode="weave"
-			   select="key('CLASS-MODULE',@module)">
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-      </div>
-    </xsl:if>
-  </xsl:for-each>
-
-</xsl:template>
-
 
 <xsl:template match="tei:divGen[@type='macrocat']">
 
@@ -778,8 +747,9 @@ function togglerelax (el) {
       <div id='macro-{@module}'>
       <h3>
 	<xsl:for-each select="key('MODULES',@module)">
+	  <xsl:text>[</xsl:text>
 	  <xsl:value-of select="@ident"/>
-	  <xsl:text>: </xsl:text>
+	  <xsl:text>] </xsl:text>
 	  <xsl:value-of select="tei:desc"/>
 	</xsl:for-each>
       </h3>
@@ -793,101 +763,11 @@ function togglerelax (el) {
 </xsl:template>
 
 
-<xsl:template match="tei:divGen[@type='tagcat']">
-  <div id="azindex">
-    <span>Elements sorted
-    alphabetically, starting with:</span>
-      <ul class="index">     
-    <li>
-	<a onclick="hideallExcept('element-a');" href="#">a</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-b');" href="#">b</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-c');" href="#">c</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-d');" href="#">d</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-e');" href="#">e</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-f');" href="#">f</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-g');" href="#">g</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-h');" href="#">h</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-i');" href="#">i</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-j');" href="#">j</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-k');" href="#">k</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-l');" href="#">l</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-m');" href="#">m</a>
-      </li>
-      
-      <li>
-	<a onclick="hideallExcept('element-n');" href="#">n</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-o');" href="#">o</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-p');" href="#">p</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-q');" href="#">q</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-r');" href="#">r</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-s');" href="#">s</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-t');" href="#">t</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-u');" href="#">u</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-v');" href="#">v</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-w');" href="#">w</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-x');" href="#">x</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-y');" href="#">y</a>
-      </li>
-      <li>
-	<a onclick="hideallExcept('element-z');" href="#">z</a>
-      </li>
-      <li class="showall">
-	<a onclick="showall();" href="#">Show All</a>
-      </li>
-      <li class="showall">
-	<a onclick="showByMod();" href="#">Show by Module</a>
-      </li>
-    </ul>
-  </div>
-
-  <br style="clear:both;"/>
-
+<xsl:template match="tei:divGen[@type='elementcat']">
+  <div class="atozwrapper">
+   <xsl:call-template name="atozHeader">
+     <xsl:with-param name="Key">ELEMENT-ALPHA</xsl:with-param>
+   </xsl:call-template>
     <xsl:for-each select="key('ELEMENTDOCS',1)">
     <xsl:sort select="translate(@ident,$uc,$lc)"/>
     <xsl:variable name="letter">
@@ -895,7 +775,11 @@ function togglerelax (el) {
     </xsl:variable>
     <xsl:if
 	test="generate-id(.)=generate-id(key('ELEMENT-ALPHA',$letter)[1])">
-      <ul class="atoz" id="element-{$letter}">	
+      <div  id="element-{$letter}" class="atoz">	
+	<span class="listhead">
+	  <xsl:value-of select="$letter"/>
+	</span>
+      <ul class="atoz">	
 	<xsl:for-each select="key('ELEMENT-ALPHA',$letter)">
 	  <xsl:sort select="@ident"/>
 	  <li>
@@ -903,10 +787,12 @@ function togglerelax (el) {
 	  </li>
 	</xsl:for-each>
       </ul>
+      </div>
     </xsl:if>
-  </xsl:for-each>
 
-  <div id="elembymod">
+    </xsl:for-each>
+  </div>
+  <div id="byMod">
     <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:sort select="@module"/>
       <xsl:if
@@ -914,8 +800,9 @@ function togglerelax (el) {
 	<div>
 	  <h3>
 	    <xsl:for-each select="key('MODULES',@module)">
+	      <xsl:text>[</xsl:text>
 	      <xsl:value-of select="@ident"/>
-	      <xsl:text>: </xsl:text>
+	      <xsl:text>] </xsl:text>
 	      <xsl:value-of select="tei:desc"/>
 	    </xsl:for-each>
 	  </h3>
@@ -926,6 +813,259 @@ function togglerelax (el) {
 	</div>
       </xsl:if>
     </xsl:for-each>
+  </div>
+</xsl:template>
+
+<xsl:template match="tei:divGen[@type='modelclasscat']">
+<div class="atozwrapper">
+   <xsl:call-template name="atozHeader">
+     <xsl:with-param name="Key">MODEL-CLASS-ALPHA</xsl:with-param>
+   </xsl:call-template>
+
+    <xsl:for-each select="key('MODELCLASSDOCS',1)">
+    <xsl:sort select="translate(substring-after(@ident,'model.'),$uc,$lc)"/>
+    <xsl:variable name="letter">
+      <xsl:value-of select="substring(@ident,7,1)"/>
+    </xsl:variable>
+    <xsl:if
+	test="generate-id(.)=generate-id(key('MODEL-CLASS-ALPHA',$letter)[1])">
+      <div  id="element-{$letter}" class="atoz">		
+	<span class="listhead">
+	  <xsl:value-of select="$letter"/>
+	</span>
+	<ul class="atoz">	
+	  <xsl:for-each select="key('MODEL-CLASS-ALPHA',$letter)">
+	    <xsl:sort select="substring-after(@ident,'model.')"/>
+	    <li>
+	      <xsl:apply-templates select="." mode="weave"/>
+	    </li>
+	  </xsl:for-each>
+	</ul>
+      </div>
+    </xsl:if>
+  </xsl:for-each>
+</div>
+  <div id="byMod">
+    <xsl:for-each select="key('MODELCLASSDOCS',1)">
+      <xsl:sort select="@module"/>
+      <xsl:if
+	  test="generate-id(.)=generate-id(key('MODEL-CLASS-MODULE',@module)[1])">
+	<div>
+	  <h3>
+	    <xsl:for-each select="key('MODULES',@module)">
+	      <xsl:text>[</xsl:text>
+	      <xsl:value-of select="@ident"/>
+	      <xsl:text>] </xsl:text>
+	      <xsl:value-of select="tei:desc"/>
+	    </xsl:for-each>
+	  </h3>
+	  <xsl:apply-templates mode="weave"
+			       select="key('MODEL-CLASS-MODULE',@module)">
+	    <xsl:sort select="@ident"/>
+	  </xsl:apply-templates>
+	</div>
+      </xsl:if>
+    </xsl:for-each>
+  </div>
+
+</xsl:template>
+
+<xsl:template match="tei:divGen[@type='attclasscat']">
+  <div class="atozwrapper">
+   <xsl:call-template name="atozHeader">
+     <xsl:with-param name="Key">ATT-CLASS-ALPHA</xsl:with-param>
+   </xsl:call-template>
+
+   <xsl:for-each select="key('ATTCLASSDOCS',1)">
+     <xsl:sort select="translate(substring-after(@ident,'att.'),$uc,$lc)"/>
+     <xsl:variable name="letter">
+       <xsl:value-of select="substring(@ident,5,1)"/>
+     </xsl:variable>
+     <xsl:if
+	 test="generate-id(.)=generate-id(key('ATT-CLASS-ALPHA',$letter)[1])">
+      <div  id="element-{$letter}" class="atoz">		
+	<span class="listhead">
+	  <xsl:value-of select="$letter"/>
+	</span>
+       <ul class="atoz">	
+	 <xsl:for-each select="key('ATT-CLASS-ALPHA',$letter)">
+	   <xsl:sort select="substring-after(@ident,'att.')"/>
+	   <li>
+	     <xsl:apply-templates select="." mode="weave"/>
+	   </li>
+	 </xsl:for-each>
+       </ul>
+      </div>
+     </xsl:if>
+   </xsl:for-each>
+  </div>
+   <div id="byMod">
+     <xsl:for-each select="key('ATTCLASSDOCS',1)">
+       <xsl:sort select="@module"/>
+       <xsl:if
+	   test="generate-id(.)=generate-id(key('ATT-CLASS-MODULE',@module)[1])">
+	 <div>
+	   <h3>
+	     <xsl:for-each select="key('MODULES',@module)">
+	      <xsl:text>[</xsl:text>
+	      <xsl:value-of select="@ident"/>
+	      <xsl:text>] </xsl:text>
+	      <xsl:value-of select="tei:desc"/>
+	     </xsl:for-each>
+	   </h3>
+	   <xsl:apply-templates mode="weave"
+				select="key('ATT-CLASS-MODULE',@module)">
+	     <xsl:sort select="@ident"/>
+	   </xsl:apply-templates>
+	 </div>
+       </xsl:if>
+     </xsl:for-each>
+  </div>
+
+</xsl:template>
+
+<xsl:template name="atozHeader">
+  <xsl:param name="Key"/>
+  <div id="azindex">
+    <span>Sorted alphabetically, starting with:</span>
+    <ul class="index">     
+      <xsl:if test="count(key($Key,'a'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-a');" href="#">a</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'b'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-b');" href="#">b</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'c'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-c');" href="#">c</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'d'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-d');" href="#">d</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'e'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-e');" href="#">e</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'f'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-f');" href="#">f</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'g'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-g');" href="#">g</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'h'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-h');" href="#">h</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'i'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-i');" href="#">i</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'j'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-j');" href="#">j</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'k'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-k');" href="#">k</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'l'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-l');" href="#">l</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'m'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-m');" href="#">m</a>
+      </li>      
+      </xsl:if>
+      <xsl:if test="count(key($Key,'n'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-n');" href="#">n</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'o'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-o');" href="#">o</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'p'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-p');" href="#">p</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'q'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-q');" href="#">q</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'r'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-r');" href="#">r</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'s'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-s');" href="#">s</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'t'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-t');" href="#">t</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'u'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-u');" href="#">u</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'v'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-v');" href="#">v</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'w'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-w');" href="#">w</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'x'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-x');" href="#">x</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'y'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-y');" href="#">y</a>
+      </li>
+      </xsl:if>
+      <xsl:if test="count(key($Key,'z'))&gt;0">
+      <li>
+	<a onclick="hideallExcept('element-z');" href="#">z</a>
+      </li>
+      </xsl:if>
+      <li class="showall">
+	<a onclick="showall();" href="#">Show All</a>
+      </li>
+      <li class="showall">
+	<a onclick="showByMod();" href="#">Show by Module</a>
+      </li>
+    </ul>
   </div>
 </xsl:template>
 
@@ -946,6 +1086,42 @@ function togglerelax (el) {
       </xsl:otherwise>
     </xsl:choose>
   </span>
+</xsl:template>
+
+
+
+
+<xsl:template name="teiTOP">
+<xsl:param name="name"/>
+               
+<script type="text/javascript" src="udm-dom.js">
+    <xsl:comment>&#160;</xsl:comment>
+</script>
+<script type="text/javascript" src="udm-mod-keyboard.js">
+  <xsl:comment>&#160;</xsl:comment>
+</script>
+
+<div id="container">
+   <a href="#contentstart" 
+      title="Skip to content" 
+      class="skip">skip to content</a>
+   <div id="banner">
+     <img src="Images/banner.jpg"
+	  alt="Text Encoding Initiative logo and banner"/>
+   </div>
+   
+   <xsl:copy-of select="document('staticnav.xml')/html:ul"/>
+</div>
+<div
+ class="mainhead">
+  <h1>P5: Guidelines for Electronic Text Encoding and Interchange</h1>
+</div>
+</xsl:template>
+
+<xsl:template name="lineBreak">
+  <xsl:param name="id"/>
+  <xsl:text disable-output-escaping="yes">&lt;br/&gt;</xsl:text>
+
 </xsl:template>
 
 </xsl:stylesheet>
