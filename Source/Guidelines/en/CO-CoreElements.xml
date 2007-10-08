@@ -619,6 +619,15 @@ element <gi>note</gi> described in section <ptr target="#CONO"/>, or the
 </specGrp>
 </div></div>
  <div type="div3" xml:id="COHQQ"><head>Quotation</head>
+
+ <p>One form of presentational variation found particularly frequently in
+ written and printed texts is the use of quotation marks. As with the
+ typographic variations discussed in the preceding section, it is
+ generally helpful to separate the encoding of the underlying textual
+ feature (for example, a quotation or a piece of direct speech) from the
+ encoding of its rendering (for example, the use of a particular style of
+ quotation marks).</p>
+
  <p>This section discusses the following elements, all of which are often
  rendered by the use of quotation marks:
  <specList>
@@ -630,39 +639,41 @@ element <gi>note</gi> described in section <ptr target="#CONO"/>, or the
    <specDesc key="soCalled"/>
  </specList>
 The elements <gi>mentioned</gi> and <gi>soCalled</gi> are members of
-the class <ident type="class">model.emph</ident>; the others are
-members of the class <ident type="class">model.qLike</ident>.
+the class <ident type="class">model.emph</ident>; the <gi>q</gi> and
+<gi>said</gi> are members of the class <ident
+type="class">model.qLike</ident> in their own right, while
+<gi>cit</gi> and <gi>quote</gi> are members of <ident
+type="class">model.quoteLike</ident>, a subclass of <ident
+type="class">model.qLike</ident>. This class is a subclass of <ident
+type="class">model.inter</ident>; hence all of these elements are
+permitted both within and between paragraph-level elements.</p>
 
- </p>
- <p>One form of presentational variation found particularly frequently in
- written and printed texts is the use of quotation marks. As with the
- typographic variations discussed in the preceding section, it is
- generally helpful to separate the encoding of the underlying textual
- feature (for example, a quotation or a piece of direct speech) from the
- encoding of its rendering (for example, the use of a particular style of
- quotation marks).</p>
  <p>The most common and important use of quotation marks is, of
- course, to mark <term>quotation</term>, by which we mean simply
- any part of the text attributed by the author or narrator to
- some agency other than the narrative voice. Typical examples
- include passages cited from other works, for which the element
- <gi>quote</gi> may be used, and words or phrases spoken or
- thought by people or characters within the current work, for
- which the element <gi>said</gi> may be used. The
- <gi>soCalled</gi> element is used for cases where the author or
- narrator distances him or herself from the words in question
- without however attributing them to any other voice in
- particular.</p>
- <p>If the distinction among the various reasons why a passage is
- offset from surrounding text cannot be made reliably, or is not
- of interest, then all quoted matter may simply be marked using
- the <gi>q</gi> element. The editorial policy in this respect
- should be stated in the encoding description of the TEI
- Header.</p>
- <p>Quotation may be indicated by changes in type face, by special
- punctuation marks (single or double or angled quotes, dashes,
- etc.) and by layout (indented paragraphs, etc.). If these
- characteristics are of interest, one or other of the global
+ course, to mark <term>quotation</term>, by which we mean simply any
+ part of the text attributed by the author or narrator to some agency
+ other than the narrative voice. The <gi>q</gi> element may be used if
+ no further distinction beyond this is judged necessary. If however it
+ is felt necessary to distinguish passages which are in some sense
+ external to the work from passages of direct speech or thought, a
+ more precise element may be chosen from the list above. Typical
+ examples include passages cited from other works, for which the
+ element <gi>quote</gi> may be used, and words or phrases spoken or
+ thought by people or characters within the current work, for which
+ the element <gi>said</gi> may be used. The <gi>soCalled</gi> element
+ is used for cases where the author or narrator distances him or
+ herself from the words in question without however attributing them
+ to any other voice in particular. The <gi>mentioned</gi> element is
+ appropriate for a case where a word or phrase is being discussed in
+ the body of a text rather than forming part of the text directly.
+ </p>
+ <p>As noted above, if the distinction among these various reasons why a
+ passage is offset from surrounding text cannot be made reliably, or
+ is not of interest, then all quoted matter may simply be marked using
+ the <gi>q</gi> element. </p>
+ <p>Quotation may be indicated in a printed source by changes in type
+ face, by special punctuation marks (single or double or angled
+ quotes, dashes, etc.) and by layout (indented paragraphs, etc.). If
+ these characteristics are of interest, one or other of the global
  <att>rend</att> or <att>rendition</att> attributes discussed in
  section <ptr target="#STGA"/> may be used to record them. </p>
  <p>Quotation marks themselves may, like other punctuation marks, be
@@ -671,13 +682,7 @@ members of the class <ident type="class">model.qLike</ident>.
 This should generally be done using the appropriate Unicode character,
 or, if this is not possible, a
  numeric character reference (see <ptr target="#SG-er"/>). 
-<!--An entity reference has the advantage
- that the entity may be redefined as null when the punctuation is to be
- ignored for some analytic purpose. Well-known ambiguities, such as
- whether the character ' represents an apostrophe or a closing single
- quotation mark, or whether the character " represents an opening or
- closing double quotation mark may all be resolved by the use of
- appropriate entity references, as discussed in section <ptr target="#COPU"/>.--></p>
+</p>
  <p>Alternatively, the encoder may suppress all quotation marks, possibly
  recording their form using some appropriate set of conventions 
 in the <att>rend</att> attribute. <!--Where this is
