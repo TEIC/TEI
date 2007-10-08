@@ -151,21 +151,6 @@ current release of the Guidelines:
 </table>
 
 </p>
-<!--
-<p>For RELAX NG and W3C each module generates a single schema fragment
-with the same name as the module. For XML DTD fragments, however, some
-modules generates two fragments: for example the <ident
-type="module">analysis</ident> module generates fragments called
-<ident type="schemafrag">analysis-decl</ident> and <ident
-type="schemafrag">analysis</ident>. This is because the declarations
-they contain are needed at different points in the creation of an XML
-DTD. The fragment suffixed <ident>-decls</ident> will typically
-contain additional class or macro declarations that complement those
-provided by the present chapter; for technical reasons, these must be
-available separately from the additional element and attribute
-declarations contained by the main fragment.  </p>
-
---> <!-- moved to IM -->
 </div>
 
 
@@ -267,8 +252,9 @@ from which the DTD is to be constructed, based on the use of parameter
 entities, as further discussed in section <ptr target="#STPE"/>.
 </p> -->
 </div>
+
 <div type="div3" xml:id="STINlargerExample"><head>A Larger Customization</head>
-<!-- does this belong here? -->
+
 <p>These Guidelines introduce each of the modules making up the TEI
 scheme one by one, and therefore, for clarity of exposition, each
 chapter tends to focus on elements drawn from a single module. In reality, of
@@ -287,15 +273,11 @@ others take the form of dictionary entries, and still others the form of
 scenes in a play</item>
 <item>when the encoded text includes detailed analytic annotation, for
 example of rhetorical or linguistic features</item>
-<item>when the encoded text combines  a literal transcription  with a diplomatic
-edition of the same or different sources</item>
+<item>when the encoded text combines a literal transcription with a
+diplomatic edition of the same or different sources</item>
 <item>when description of the text requires additional specialised metadata
 elements, for example when describing manuscript material in detail</item> 
 </list></p>
-<!--
-<item>when the text moves back and forth among forms not between
-sections but within a single section:  e.g. mixed prose-and-verse forms
-like many pastorals or like some portions of the Poetic Edda</item></list></p>-->
 
 <p>The TEI provides mechanisms to support all of these and many other
 use cases. The architecture permits elements and attributes from any
@@ -433,12 +415,12 @@ Members of the class <ident type="class">att.pointing</ident> will
 thus have these two attributes, while members of the class <ident
 type="class">att.pointing.group</ident> will have all four.</p>
 
-<p>Most attribute classes are defined within the <ident
-type="module">tei</ident> infrastructural module and
-are thus globally available. Some classes are specific to particular
-modules and thus defined in other chapters. Attributes defined by such
-classes will not be available unless the module concerned is included
-in a schema. </p>
+<p>Some attribute classes are defined within the <ident
+type="module">tei</ident> infrastructural module and are thus globally
+available. Other attribute classes are specific to particular modules
+and thus defined in other chapters. Attributes defined by such classes
+will not be available unless the module concerned is included in a
+schema. </p>
 
 <p>Note that some modules define superclasses of an existing
 infrastructural class.  For example, the global attribute class
@@ -462,8 +444,8 @@ only the three attributes first mentioned. </p>
 the relevant module rather than in the present chapter. One particular
 attribute class, known as <ident type="class">att.global</ident>, is
 common to all modules, and is therefore described in some detail in
-the next section. This description is followed by a reference list of
-all other attribute classes.
+the next section. A full list of all attribute classes is given in
+<ptr target="#REF-CLASSES-ATTS"/> below.
 </p>
 
 <div type="div2" xml:id="STGA"><head>Global Attributes</head>
@@ -682,22 +664,19 @@ information at the point of use within a document. Note that, in either
 case, the TEI attributes describe the rendition or appearance of
 the source document, <emph>not</emph> intended output renditions.  </p></div>
 
-
+<!--
 <div xml:id="STattclass"><head>Other Attribute Classes</head>
 
 <p>
-<!-- shd be generated -->
-
 <table xml:id="tab-atts"><row role="label"><cell>class</cell><cell>function</cell><cell>superclass</cell></row>
 <row><cell>att.ascribed</cell><cell>provides attributes for elements representing speech or action that can be ascribed to a specific individual.</cell><cell/></row>
-<!--<row><cell>att.authorialIntervention</cell><cell>provides attributes describing the nature of an authorial intervention.</cell><cell/></row>-->
 <row><cell>att.damaged</cell><cell>provides attributes describing the nature of any physical
   damage affecting a reading. </cell><cell></cell></row>
 <row><cell>att.datable</cell><cell>provides attributes for normalization of elements that contain datable events.</cell><cell>att.datable.w3c  att.datable.iso</cell></row>
 <row><cell>att.datable.w3c</cell><cell>provides attributes for normalization of elements that contain datable events.</cell><cell/></row>
 <row><cell>att.declarable</cell><cell>provides attributes for those elements in the TEI Header which may be independently selected by means of  the specialpurpose decls attribute.</cell><cell/></row>
 <row><cell>att.declaring</cell><cell>provides attributes for elements which may be independently associated with a particular declarable element within the header, thus overriding the inherited default for that element.</cell><cell/></row>
-<!-- <row><cell>att.dimensions</cell><cell>provides attributes which qualify a measurement of the lenght of a dimension of an object.</cell><cell/></row> -->
+
 <row><cell>att.divLike</cell><cell>provides a set of attributes common to all elements which behave in the same way as divisions.</cell><cell>att.metrical  </cell></row>
 <row><cell>att.duration</cell><cell>provides attributes for normalization of elements that contain temporal durations.</cell><cell>att.duration.w3c  att.duration.iso</cell></row>
 <row><cell>att.duration.w3c</cell><cell>provides attributes for normalization of elements that contain temporal durations.</cell><cell/></row>
@@ -722,10 +701,9 @@ portion of an ODD document. </cell><cell/></row>
 </table>
 </p>
 
-
+-->
 <specGrp xml:id="DSTECAT" n="Attribute classes">
 &att.ascribed;
-<!--&att.authorialIntervention;--> <!-- now renamed att.transcriptional -->
 &att.damaged;
 &att.datable.w3c;
 &att.datable;
@@ -752,7 +730,7 @@ portion of an ODD document. </cell><cell/></row>
 </specGrp>
 
 </div>
-</div>
+
 
 <div type="div2" xml:id="STECCM"><head>Model Classes</head>
 
@@ -1038,11 +1016,11 @@ models; most are relevant only when certain modules are selected
 <!-- --><specDesc key="model.qLike"/>
 <!-- --><specDesc key="model.quoteLike"/>
 <!--TC --><specDesc key="model.rdgLike"/>
-<!--tc --><specDesc key="model.rdgPart"/>
+<!--TC --><specDesc key="model.rdgPart"/>
 <!--hdr --><specDesc key="model.recordingPart"/>
 <!--PH --><specDesc key="model.resourceLike"/>
-<!-- --><specDesc key="model.respLike"/>
-<!-- --><specDesc key="model.segLike"/>
+<!--CO --><specDesc key="model.respLike"/>
+<!--SA --><specDesc key="model.segLike"/>
 <!--hdr --><specDesc key="model.settingPart"/>
 <!--HD --><specDesc key="model.sourceDescPart"/>
 <!--odd --><specDesc key="model.specDescLike"/>
@@ -1053,18 +1031,6 @@ models; most are relevant only when certain modules are selected
 </specList>
  </p>
 
-
-<!--
-<div type="div3" xml:id="STECSD">
-<head>Structural Divisions</head>
-
-<p>The structure of a text body is often divided into sections;
-model classes are provided to specify these:
-
-<specList>
-</specList>
-</p>
--->
 
 <!-- all model class declarations: nb order is critical -->
 
@@ -1080,7 +1046,7 @@ model classes are provided to specify these:
 &model.measureLike;
 &model.egLike;
 &model.graphicLike;
-&model.pPart.msdesc;  <!-- model.pPartMsdesc -->
+&model.pPart.msdesc;  
 &model.pPart.editorial; 
 &model.pPart.transcriptional;
 &model.pPart.edit; 
@@ -1112,18 +1078,14 @@ model classes are provided to specify these:
 &model.global.edit;
 &model.global.spoken;
 &model.divPart;
-<!--&model.blockLike;-->
 &model.persTraitLike;
 &model.persStateLike;
 &model.persEventLike;
-<!--&model.assertLike;-->
 &model.personLike;
 &model.personPart;
-
 &model.placeTraitLike;
 &model.placeStateLike;
 &model.placeEventLike;
-
 &model.publicationStmtPart;
 &model.glossLike;
 &model.quoteLike;
@@ -1143,36 +1105,28 @@ model classes are provided to specify these:
 &model.recordingPart;
 &model.imprintPart;
 &model.catDescPart;
-
 &model.settingPart;
 &model.textDescPart;
 &model.castItemPart;
 &model.physDescPart;
-<!--/specGrp-->
 
-<specGrp xml:id="DSTECLO-1" n="level 1 classes">
-<!--<p>These classes refer only to primitive lowlevel classes or to elements</p>-->
 &model.addressLike;
 &model.nameLike;
 &model.global;
 &model.featureVal;
-<!-- &model.common wuz ere;-->
 &model.biblPart;
 &model.frontPart;
-</specGrp>
-<specGrp xml:id="DSTECLO-2" n="level 2 classes">
+
 <!--<p>These classes refer only to level 1 or to primitive lowlevel
 classes or to elements</p>-->
+
 &model.addrPart; 
 &model.pPart.data;
 &model.inter;  
 &model.common; <!-- needs model.inter -->
-</specGrp>
 
-<specGrp xml:id="DSTECHI" n="Common high-level classes">
-<!-- model.phrase--> &model.phrase;&model.limitedPhrase;
-</specGrp>
-
+&model.phrase;
+&model.limitedPhrase;
 
 &model.divLike;
 &model.divGenLike;
@@ -1442,17 +1396,17 @@ organized as follows:
 </p>
 
 
-<p>The XML DTD module fragment corresponding to this chapter is organized as follows: 
+<p>The XML DTD module fragment corresponding to this chapter is
+organized as follows:
 <list>
 <item>Declare naming entities for all elements to permit renaming (see
 further <ptr target="#STPEGI"/>).</item>
 <item>Embed any user-supplied entity declarations (see
 further <ptr target="#STOVLO"/>).</item>
-<item>Embed all available datatype macro declarations (see <ptr target="#DTYPES"/>)</item>
-<!--<item>Declare TEI.XML marked section to permit SGML support (see
-further <ptr target="#STXML"/>). </item>-->
-<item>Embed all <soCalled>pre-declared</soCalled>  class and
-macro declarations</item>
+<item>Embed all available datatype macro declarations (see <ptr
+target="#DTYPES"/>)</item>
+<item>Embed all <soCalled>pre-declared</soCalled> class and macro
+declarations</item>
 <item>Embed all other globally available class declarations </item>
 <item>Embed conditionally available module-specific classes (see
 further <ptr target="#STPED"/>). </item>
@@ -1462,15 +1416,10 @@ further <ptr target="#STOVLO"/>).  </item>
 <item>Embed conditionally available module-specific declarations (see
 further <ptr target="#STPED"/>).</item>
 </list>
-Note that some of these components are automatically
-generated by the ODD processor. 
+Note that some of these components are automatically generated by the
+ODD processor.
 </p>
 
-<!--<p>This simpler structure is a consequence of the way that the RELAX NG
-schema language permits declarations to be combined from different
-modules in any order, provided that the patterns defining those
-declarations are properly initialised.</p>
--->
 </div>
 
 
