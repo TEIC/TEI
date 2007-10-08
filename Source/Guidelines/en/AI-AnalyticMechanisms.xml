@@ -63,9 +63,14 @@ a text into the traditional linguistic categories of
 <specDesc key="m" atts="baseForm"/><specDesc key="c"/></specList>
  </p>
 <p>As members of the <ident type="class">att.segLike</ident> class, these
-elements share the following attributes:
+elements all share the following attributes:
 <specList><specDesc key="att.segLike" atts="type function"/></specList>
 </p>
+<p>These elements are also all members of the <ident
+type="class">model.segLike</ident> class, which is a subclass of
+<ident type="class">mode.phrase</ident>. They may thus appear anywhere
+that text is permitted within a document, when the module defined by
+this chapter is included in a schema.</p>
 <p>The <gi>s</gi> element may be used simply to segment a text
 end-to-end  into a series of non-overlapping segments, referred to here
 and elsewhere as <term>s-units</term>, or <term>sentences</term>.
@@ -79,17 +84,25 @@ and elsewhere as <term>s-units</term>, or <term>sentences</term>.
     possession of marijuana.</s>
 </p></egXML>
 <note type="cit"><ptr type="cit" target="#AI-BIBL-1"/></note>
-The <gi>s</gi> may be thought of as  providing an abbreviated version of
-the tag <tag>seg type='s-unit'</tag>, with the important additional
-proviso that (unlike <gi>seg</gi> elements) <gi>s</gi> elements may not
-be nested within each other. The <att>type</att> attribute of the
-<gi>s</gi> element corresponds to the <att>subtype</att> attribute on
-the <gi>seg</gi> element, that is, a tag <tag>s type="xxx"</tag> should
-be thought of as synonymous with a tag <tag>seg type="s-unit"
-subtype="xxx"</tag>.  Similar considerations apply to the  <gi>cl</gi>
-and <gi>phr</gi> elements , which  can be thought of as short for
-<tag>seg type="clause"</tag> and <tag>seg type="phrase"</tag>,
-respectively.
+
+The <gi>s</gi> element is more restricted both in its content and its
+usage than the generic <gi>seg</gi> element. The <gi>seg</gi> unit may
+contain anything which can appear within a paragraph: thus it may be
+used to enclose members of the <ident type="class">model.inter</ident>
+class (such as <gi>bibl</gi> or <gi>list</gi>) as well as other phrase
+elements; the <gi>s</gi> unit may only contain phrase-level elements
+or text. Also, unlike <gi>seg</gi> elements, <gi>s</gi> elements
+should not be nested within each other.<note place="foot">Neither this
+constraint, nor the requirement that the whole of the text be
+segmented by <gi>s</gi> elements is enforced by the current TEI
+schemas; such constraints may however be introduced in a later version
+of these Guidelines.</note> The <gi>seg</gi> element is intended for
+use as a generic segmentation element, the specific function of which
+may be indicated by its <att>type</att> attribute; the other members
+of the class are more specialised. Thus, the <gi>s</gi>, <gi>cl</gi>, and
+<gi>phr</gi> elements may be thought of as equivalent to <tag>seg
+type="s-unit"</tag>, <tag>seg
+type="clause"</tag> and <tag>seg type="phrase"</tag>, respectively.
 </p>
 <p>The <gi>s</gi> element may be further subdivided into
 <term>clauses</term>, marked with the <gi>cl</gi> element,
@@ -150,7 +163,7 @@ about the function of the category. Legal values for these
 two attributes are not defined by these Guidelines, but should be
 documented in the <gi>segmentation</gi> element of the
 <gi>encodingDesc</gi> element within the document's header. 
-A general approach to the encoding of linguistic categories assigned to
+A general approach to the encoding of linguistic categories for 
 parts of a text is discussed in section <ptr target="#AILA"/> below.
 </p>
 <p>Using traditional terminology, these attributes provide a convenient
