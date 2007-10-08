@@ -610,8 +610,10 @@ added reference to SI units and changed some (LB 23 aug 07 ) -->
 <p>The <gi>publicationStmt</gi> element is the fourth component of the
 <gi>fileDesc</gi> element and is mandatory.
 <specList><specDesc key="publicationStmt"/></specList>
-It may contain either a simple prose description, or groups of the
-elements described below:
+It may contain either a simple prose description organized as one or
+more paragraphs, or one or more elements from the <ident
+type="class">model.publicationStmt</ident> class. This class groups
+a number of elements which are discussed in order below.
 <specList><specDesc key="publisher"/><specDesc key="distributor"/><specDesc key="authority"/></specList>
 </p>
 <p>The <term>publisher</term> is the person or institution by whose
@@ -622,10 +624,14 @@ published, but is nevertheless made available for circulation by some
 individual or organization, this person or institution is termed the
 <term>release authority</term>.
 </p>
-<p>At least one of the above three elements must be present, unless the
-entire publication statement is given as prose.  Each may be followed by
-one or more of the following elements, in the following order:
-<specList><specDesc key="pubPlace"/><specDesc key="address"/><specDesc key="idno" atts="type"/><specDesc key="availability" atts="status"/><specDesc key="date"/></specList>
+<p>At least one of the above three elements must be present, unless
+the entire publication statement is given as prose.  Each may be
+followed by one or more of the following elements, in the following order<note
+place="foot">This constraint is not however enforced by the current
+version of the TEI Guidelines. </note>:
+<specList><specDesc key="pubPlace"/><specDesc key="address"/><specDesc
+key="idno" atts="type"/><specDesc key="availability"
+atts="status"/><specDesc key="date"/></specList>
 </p>
 <p>Note that the dates, places, etc., given in the publication statement
 relate to the publisher, distributor, or release authority most recently
@@ -634,9 +640,10 @@ publication, its date of creation should be given within the
 <gi>profileDesc</gi> element, not in the publication statement.  Give
 any other useful dates (e.g., dates of collection of data) in a note.
 </p>
-<p>Additional detailed modules may be used for the encoding of names,
+<p>Additional detailed elements  may be used for the encoding of names,
 dates, and addresses, as further described in section <ptr target="#CONA"/>
-and chapter <ptr target="#ND"/>.
+when the module described in chapter <ptr target="#ND"/> is included
+in a schema.
 </p>
 <p>Examples:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
