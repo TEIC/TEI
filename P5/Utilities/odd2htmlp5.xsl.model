@@ -244,51 +244,63 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 
 <xsl:template name="generateChildren">
   <xsl:variable name="name" select="@ident"/>
-  <xsl:variable name="Children">
-    <Children xmlns="">
-      <xsl:for-each select="tei:content">
-	<xsl:call-template name="followRef"/>
-      </xsl:for-each>
-    </Children>
-  </xsl:variable>
-  <xsl:for-each select="exsl:node-set($Children)/Children">
   <xsl:choose>
-    <xsl:when test="count(Element)=0">
+    <xsl:when test="tei:content/rng:empty">
       <xsl:text>Empty element</xsl:text>
     </xsl:when>
+    <xsl:when test="tei:content/rng:text and count(tei:content/*)=1">
+      <xsl:text>Character data only</xsl:text>
+    </xsl:when>
     <xsl:otherwise>
-      <div class="specChildren">
-	<xsl:for-each select="Element">
-	  <xsl:sort select="@module"/>
-	  <xsl:sort select="@name"/>
-	  <xsl:if
-	      test="generate-id(.)=generate-id(key('CHILDMOD',@module)[1])">
-	    <div class="specChild">
-	      <span class="specChildModule">
-		<xsl:value-of select="@module"/>:
-	      </span>
-	      <span class="specChildElements">
-		<xsl:for-each select="key('CHILDMOD',@module)">
-		  <xsl:sort select="@name"/>
-		  <xsl:variable name="me">
-		    <xsl:value-of select="@name"/>
-		  </xsl:variable>
-		  <xsl:if test="not(preceding-sibling::Element/@name=$me)">
-		      <a href="ref-{@name}.html">
-			<xsl:value-of select="@name"/>
-		      </a>
-		      <xsl:text> </xsl:text>
-		  </xsl:if>
-		</xsl:for-each>
-	      </span>
+      <xsl:variable name="Children">
+	<Children xmlns="">
+	  <xsl:for-each select="tei:content">
+	    <xsl:call-template name="followRef"/>
+	  </xsl:for-each>
+	</Children>
+      </xsl:variable>
+      <xsl:for-each select="exsl:node-set($Children)/Children">
+	
+	<xsl:choose>
+	  <xsl:when test="count(Element)=0">
+	    <xsl:text>Empty element</xsl:text>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <div class="specChildren">
+	      <xsl:for-each select="Element">
+		<xsl:sort select="@module"/>
+		<xsl:sort select="@name"/>
+		<xsl:if
+		    test="generate-id(.)=generate-id(key('CHILDMOD',@module)[1])">
+		  <div class="specChild">
+		    <span class="specChildModule">
+		      <xsl:value-of select="@module"/>:
+		    </span>
+		    <span class="specChildElements">
+		      <xsl:for-each select="key('CHILDMOD',@module)">
+			<xsl:sort select="@name"/>
+			<xsl:variable name="me">
+			  <xsl:value-of select="@name"/>
+			</xsl:variable>
+			<xsl:if test="not(preceding-sibling::Element/@name=$me)">
+			  <a href="ref-{@name}.html">
+			    <xsl:value-of select="@name"/>
+			  </a>
+			  <xsl:text> </xsl:text>
+			</xsl:if>
+		      </xsl:for-each>
+		    </span>
+		  </div>
+		</xsl:if>
+	      </xsl:for-each>
 	    </div>
-	  </xsl:if>
-	</xsl:for-each>
-      </div>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
     </xsl:otherwise>
   </xsl:choose>
-  </xsl:for-each>
 </xsl:template>
+
 
 <xsl:template name="followRef">
   <xsl:for-each select=".//rng:ref">
