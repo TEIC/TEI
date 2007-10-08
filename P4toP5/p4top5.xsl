@@ -263,7 +263,13 @@
   </xsl:template>
   
   
-<!-- fool around with selected elements -->
+  <!-- fool around with selected elements -->
+  
+
+ <!-- imprint is no longer allowed inside bibl -->
+ <xsl:template match="bibl/imprint">
+    <xsl:apply-templates/>
+  </xsl:template>
 
   <xsl:template match="editionStmt/editor">
     <respStmt xmlns="http://www.tei-c.org/ns/1.0">    
@@ -328,6 +334,13 @@
     </publicationStmt>
   </xsl:template>
   
+ <!-- space does not have @extent any more -->
+  <xsl:template match="space/@extent">
+    <xsl:attribute name="quantity">
+      <xsl:vaue-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
+
   <!-- tagsDecl has a compulsory namespace child now -->
   <xsl:template match="tagsDecl">
     <xsl:if test="*">
@@ -339,7 +352,12 @@
     </xsl:if>
   </xsl:template>
   
-  
+  <!-- orgTitle inside orgName? redundant -->
+  <xsl:template match="orgName/orgTitle">
+      <xsl:apply-templates/>
+  </xsl:template>
+
+ <!-- no need for empty <p> in sourceDesc -->  
   <xsl:template match="sourceDesc/p[string-length(.)=0]"/>
   
   <!-- start creating the new choice element -->
