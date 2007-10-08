@@ -2,7 +2,8 @@
 <xsl:stylesheet 
     version="1.0" 
     xmlns:m="http://www.w3.org/1998/Math/MathML"
-    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:atom="http://www.w3.org/2005/Atom"  
+    xmlns:estr="http://exslt.org/strings"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     xmlns:dbk="http://docbook.org/ns/docbook"
@@ -615,6 +616,8 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template name="italicize"/>
 
   <xsl:template match="token" mode="commentline">
     <xsl:call-template name="italicize">
