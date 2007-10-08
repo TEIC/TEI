@@ -2156,17 +2156,20 @@ cross-reference, the <gi>ref</gi> element may be used without a
 for the complete XPointer specification, see <ptr target="http://www.w3.org/TR/xptr-framework/"/>, <ptr target="http://www.w3.org/TR/xptr-element/"/>, <ptr target="http://www.w3.org/TR/xptr-xmlns/"/>, and <ptr target="http://www.w3.org/TR/xptr-xpointer/#xpointer(id('chum')/quote)"/>; for a discussion of
 TEI schemes for XPointer, see <ptr target="#SATS"/>.</p>
 <p>
-<specList><specDesc key="ptr"/><specDesc key="ref"/></specList>
+<specList><specDesc key="ptr" atts="target cRef"/><specDesc key="ref"
+atts="target cRef"/></specList>
  </p>
-<p>The elements <gi>ptr</gi> and <gi>ref</gi> share, as members of the
-element class <ident type="class">att.pointing</ident>, the following
+<p>The elements <gi>ptr</gi> and <gi>ref</gi> are the default members
+of the phrase-level model class <ident type="model.ptrLike"/>. As
+members of the class <ident type="class">att.pointing</ident>, they
+also carry the following
 attributes:
-<specList><specDesc key="att.pointing"/></specList>
+<specList><specDesc key="att.pointing" atts="type evaluate"/></specList>
  </p>
-<p>The shared attributes of the two elements may be used in the same
-way; the difference between the elements is that while the <gi>ptr</gi>
+<p>The two elements may be used in the same
+way; the difference between them is simply that while the <gi>ptr</gi>
 element is empty, the <gi>ref</gi> element may contain phrases
-specifying, or defining more exactly, the target of a cross reference,
+specifying, or describing more exactly, the target of a cross reference,
 which form the content of the element. Since its content thus serves as
 a human-readable pointer, in the simplest case a <gi>ref</gi> element
 need not identify its target in any other way. For example:
