@@ -70,7 +70,7 @@ html-web: check
 	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
 	echo making HTML Guidelines for language $$i ; \
 	mkdir -p Guidelines-web-tmp/$$i/html; \
-	cp rightarrow.gif guidelines.css COPYING.txt TEI-glow.png Guidelines-web-tmp/$$i/html/ ; \
+	cp rightarrow.gif guidelines.css udm.css udm*.js COPYING.txt TEI-glow.png Guidelines-web-tmp/$$i/html/ ; \
 	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
 	| xsltproc ${VERBOSE} \
 		--stringparam outputDir Guidelines-web-tmp/$$i/html \
