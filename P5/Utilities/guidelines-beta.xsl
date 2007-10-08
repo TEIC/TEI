@@ -290,9 +290,7 @@ function togglerelax (el) {
 	  <xsl:attribute name="class">
 	    <xsl:text>miniTOC miniTOC_left</xsl:text>
 	  </xsl:attribute>
-          <div class="subtoc">
-	    <xsl:call-template name="subtoc"/>
-	  </div>
+	  <xsl:call-template name="subtoc"/>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:attribute name="class">
@@ -530,7 +528,7 @@ function togglerelax (el) {
       </xsl:when>
       <xsl:when test="$word='nextWord'">
         <span class="icon">
-          <xsl:text>&#8594;</xsl:text>
+          <xsl:text>&#8594; </xsl:text>
         </span>
       </xsl:when>
     </xsl:choose>
