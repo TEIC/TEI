@@ -89,29 +89,19 @@ Elements</head>
 
 <div type="div3" xml:id="TDphraseTE"><head>Phrase Level Terms</head>
 <p>In any kind of technical documentation, the following phrase-level
-elements may be found useful for marking up parts of a markup language
-or other formal language when these occur within the body of running text.
+elements may be found useful for marking up strings of text which need
+to be distinguished from the running text because they come from some
+formal language:
 <specList>
-  <specDesc key="att"/>
-  <specDesc key="gi"/>
-  <specDesc key="tag"/>
-  <specDesc key="val"/>
-  <specDesc key="code"/>
+  <specDesc key="code" atts="lang"/>
   <specDesc key="ident"/>
 </specList>
- </p>
-<p>As an example of the recommended use of these elements, we quote from
-an imaginary TEI working paper:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The <gi>gi</gi> element is used to tag
-element names when they appear in the text; the
-<gi>tag</gi> element however is used to show how a tag as
-such might appear. So one might talk of an occurrence of the
-<gi>blort</gi> element which had been tagged
-<tag>blort type='runcible'</tag>. The
-<att>type</att> attribute may take any name token as
-value; the default value is <val>spqr</val>, in memory of
-its creator.</p></egXML>
- </p>
+Like other phrase-level elements used to indicate the semantics of a
+typographically distinct string, these are members of the <ident
+type="class">model.emph</ident> class. They are available anywhere
+that running prose is permitted when the module defined by this
+chapter is included in a schema.</p>
+
 <p>The <gi>code</gi> and <gi>ident</gi> elements are
 intended for use when citing brief passages in some formal language such
 as a programming language, as in the following example:
@@ -126,14 +116,36 @@ specific <gi>formula</gi> element defined by the <ident
 type="module">figures</ident> module (<ptr target="#FTFOR"/>) may be
 more appropriate. </p>
 
-<p>These elements (except for <gi>code</gi> and <gi>ident</gi>) are
-all members of the <ident type="class">model.phrase.XML</ident> class,
-which is populated by this module. The <gi>code</gi> and
-<gi>ident</gi> elements are members of the <ident
-type="class">model.emphLike</ident>. Both classes are subclasses of
-the generic <ident type="class">model.phrase</ident> class, and hence
-all these elements are available anywhere within paragraph level
-elements when this module is included in a schema.</p>
+
+
+<p>A further group of similar phrase-level elements is also defined
+for the special case of representing parts of an XML document:
+<specList>
+  <specDesc key="att"/>
+  <specDesc key="gi"/>
+  <specDesc key="tag"/>
+  <specDesc key="val"/>
+</specList>
+These elements constitute the <ident
+type="class">model.phrase.xml</ident> class, which is also a subclass of <ident
+type="class">model.phrase</ident>. They are also available anywhere
+that running prose is permitted when the module defined by this
+chapter is included in a schema.
+ </p>
+
+<p>As an example of the recommended use of these elements, we quote from
+an imaginary TEI working paper:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The <gi>gi</gi> element is used to tag
+element names when they appear in the text; the
+<gi>tag</gi> element however is used to show how a tag as
+such might appear. So one might talk of an occurrence of the
+<gi>blort</gi> element which had been tagged
+<tag>blort type='runcible'</tag>. The
+<att>type</att> attribute may take any name token as
+value; the default value is <val>spqr</val>, in memory of
+its creator.</p></egXML>
+ </p>
+
 
 <p>Within technical documentation, it is also often necessary to
 provide more extended examples of usage or to present passages of
@@ -692,6 +704,13 @@ fragment generated. </p>
 for the values permitted and their significance, or to gloss the
 meaning of values implied by an attribute's datatype.
 </p>
+<p>Note that the <gi>gloss</gi> element is needed to explain the
+significance of the identifier for an item only when this is not
+apparent, for example because it is abbreviated, as in the above
+example. It should  not be used to provide a full description of the
+intended meaning (this is the function of the <gi>desc</gi> element),
+nor to comment on equivalent values in other schemes (this is the
+purpose of the <gi>equiv</gi> element).</p>
 </div>
 <div type="div4" xml:id="TDATTex"><head>Examples</head>
 <p>The following <gi>attList</gi> demonstrates some of the
@@ -705,19 +724,19 @@ the reference material in these Guidelines.
       <defaultVal>simple</defaultVal>
       <valList type="semi">
         <valItem ident="ordered">
-          <gloss>list items are numbered or lettered. </gloss>
+          <desc>list items are numbered or lettered. </desc>
         </valItem>
         <valItem ident="bulleted">
-          <gloss>list items are marked with a bullet or other 
-                 typographic device. </gloss>
+          <desc>list items are marked with a bullet or other 
+                 typographic device. </desc>
         </valItem>
         <valItem ident="simple">
-          <gloss>list items are not numbered or bulleted.</gloss>
+          <desc>list items are not numbered or bulleted.</desc>
         </valItem>
         <valItem ident="gloss">
-          <gloss>each list item glosses some term or
+          <desc>each list item glosses some term or
             concept, which is given by a label element preceding
-           the list item.</gloss>
+           the list item.</desc>
         </valItem>
       </valList>
       <remarks>
@@ -756,11 +775,7 @@ following components, additional to those already mentioned:
 <specList>
 <specDesc key="classSpec" atts="type"/>
 <specDesc key="attList"/>
-<!-- specDesc key="remarks"/>
-<specDesc key="classes"/>
-<specDesc key="memberOf" atts="key"/>
-<specDesc key="ptr"/>
-<specDesc key="equiv"/--></specList>
+</specList>
 </p>
 <p>The attribute <att>type</att> is used to distinguish between
 <soCalled>model</soCalled> and <soCalled>attribute</soCalled>
@@ -777,23 +792,30 @@ concerned. For example, the <gi>elementSpec</gi> for the element
   <memberOf key="model.hiLike"/>
 </classes>
 </egXML>
+
 which indicates that the <gi>hi</gi> element is a member of the class
-with identifier <ident type="class">model.hiLike</ident>. The <gi>classSpec</gi>
-documenting this class is as follows:
+with identifier <ident type="class">model.hiLike</ident>. The
+<gi>classSpec</gi> element that documents this class contains
+the following declarations:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><classSpec type="model" ident="model.hiLike">
-<desc>groups phrase-level elements related to highlighting that have no specific semantics </desc>
+<desc>groups phrase-level elements related to highlighting that have
+no specific semantics </desc>
   <classes>
     <memberOf key="model.highlighted"/>
   </classes>
 </classSpec>
 </egXML>
-which indicates that the class <ident type="class">model.hiLike</ident> is actually
-a member (or subclass) of the class <ident type="class">model.highlighted</ident>.
+which indicate that the class <ident type="class">model.hiLike</ident>
+is actually a member (or subclass) of the class <ident
+type="class">model.highlighted</ident>.
  </p>
+
 <p>When a model class is referenced in the content model of an element
-(i.e. in the <gi>content</gi> of an <gi>elementSpec</gi>), its
-meaning will depend on the value of the <att>generate</att>
-attribute on the class declaration, and also on the name used to reference the class. </p>
+(i.e. in the <gi>content</gi> of an <gi>elementSpec</gi>), its meaning
+will depend on the value of the <att>generate</att> attribute on the
+class declaration, and also on the name used to reference the
+class. </p>
 
 <p>The default and usual behaviour is to replace the class
 reference by an alternated list of all the current members of the
@@ -864,11 +886,11 @@ sequence options is used is that in which the elements are declared. </p>
 
 <p>When a <gi>classSpec</gi> contains an <gi>attList</gi> element, all
 the members of that class inherit the attributes specified by it. For
-example, the class <ident type="class">att.interpLike</ident> defines a small set of
-attributes common to all elements which are members of that
-class: those attributes are listed by the <gi>attList</gi> element
-contained by the <gi>classSpec</gi> for
-<ident type="class">att.interpLike</ident>. When processing the documentation
+example, the class <ident type="class">att.interpLike</ident> defines
+a small set of attributes common to all elements which are members of
+that class: those attributes are listed by the <gi>attList</gi>
+element contained by the <gi>classSpec</gi> for <ident
+type="class">att.interpLike</ident>. When processing the documentation
 elements for elements which are members of that class, an ODD
 processor is required to extend the <gi>attList</gi> (or equivalent)
 for such elements to include any attributes defined by the
@@ -906,26 +928,20 @@ following components additional to those already introduced:
 <specDesc key="macroSpec" atts="type"/>
 <specDesc key="remarks"/>
 <specDesc key="stringVal"/>
-<!-- specDesc key="ptr"/>
-<specDesc key="equiv"/-->
 </specList>
 </p>
-<!--<p>Note that the <gi>pattern</gi> element is taken from the RELAX NG name
-space, and therefore does not need to be declared above. It should be
-supplied in preference to the <gi>stringVal</gi> element if the intention
-is to document an RELAX NG pattern for which no SGML equivalent exists.-->
 </div>
 </div>
 <div type="div2" xml:id="TDbuild"><head>Building a Schema</head>
-<p>The specification elements, and several of their children, are all members of
-the <ident type="class">att.identified</ident> class, from which they inherit the
-following attributes:
+<p>The specification elements, and several of their children, are all
+members of the <ident type="class">att.identified</ident> class, from
+which they inherit the following attributes:
 
 <specList><specDesc key="att.identified" atts="ident predeclare module
   mode"/></specList>
 </p>
 &att.identified;
-<!-- shd this be in a specGrp? but what would it produce? -->
+
 <p>These attributes are used by an ODD processor to determine how
 declarations are to be combined to form a schema or DTD, as further
 discussed in this section.</p>
@@ -956,11 +972,11 @@ the following example:
 <elementSpec ident="soundClip">
 <classes><memberOf key="model.pPart.data"/></classes>
 </elementSpec>
-</schemaSpec></egXML>
-A declaration for the element <gi>soundClip</gi>, which is not defined in the TEI
-scheme, will be added to the output schema. This element will also be added to
-the existing TEI class <ident type="class">model.pPart.data</ident>, and will thus be
-avilable in TEI conformant documents.</p>
+</schemaSpec></egXML> A declaration for the element
+<gi>soundClip</gi>, which is not defined in the TEI scheme, will be
+added to the output schema. This element will also be added to the
+existing TEI class <ident type="class">model.pPart.data</ident>, and
+will thus be avilable in TEI conformant documents.</p>
 <p>A schema might also include re-declarations of existing elements, as
 in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
