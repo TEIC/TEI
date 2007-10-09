@@ -278,18 +278,9 @@ remainder of this chapter.
 
 
 <specGrp>
-
-
 &textDesc;
-
-
-
 &particDesc;
-
-
-
 &settingDesc;
-
 </specGrp>
 <specGrpRef target="#DCCAHTD"/>
 
@@ -446,13 +437,14 @@ parameters might be used to characterize a novel:
 
 
 </div>
-<div type="div3" xml:id="CCAHPA"><head>The Participants Description</head>
+<div type="div3" xml:id="CCAHPA"><head>The Participant Description</head>
 
 <p>The <gi>particDesc</gi> element in the <gi>profileDesc</gi> element
 provides additional information about the participants in a spoken
 text or, where this is judged appropriate, the persons named or
 depicted in a written text.  When the detailed elements provided by
-the Names and Dates module are included in a schema, this element can
+the <ident type="class">namesdates</ident> module described in <ptr
+target="#ND"/> are included in a schema, this element can
 contain detailed demographic or descriptive information about
 individual speakers or groups of speakers, such as their names or
 other personal characteristics. Individually identified persons may
@@ -471,12 +463,11 @@ and spoken texts.</p>
 participants in an interaction, which may be supplied as
 straightforward prose, possibly containing a list of names, encoded
 using the usual <gi>list</gi> and <gi>name</gi> elements, or
-alternatively using the more specific and detailed 
-<gi>listPerson</gi>, <gi>personGrp</gi>, or <gi>particLinks</gi>
-elements which are provided by the Names and Dates module described in
-chapter <ptr target="#ND"/>. 
+alternatively using the more specific and detailed <gi>listPerson</gi>
+element provided by the <ident type="class">namesdates</ident> module
+described in <ptr target="#ND"/>.
 </p>
-<p>For example, the participants in a recorded conversation might be
+<p>For example, a  participant in a recorded conversation might be
 described informally as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><particDesc xml:id="p2">
 <p>Female informant, well-educated, born in Shropshire UK, 12 Jan
@@ -484,15 +475,8 @@ described informally as follows:
     Socio-Economic status B2 in the PEP classification scheme.</p>
 </particDesc></egXML></p>
 
-<p>Dates and names of persons or places, if included in the prose
-description, may be encoded using either the general purpose
-<gi>date</gi>, <gi>name</gi> or <gi>rs</gi> elements discussed in
-section <ptr target="#CONA"/>, or the more specialised and detailed
-elements provided by chapter <ptr target="#ND"/>. In the latter case,
-the module for names and dates must be included in the schema along
-with that for language corpora.</p>
-
-<p>When this module is included, information about the participant
+<p>Alternatively, when the <ident type="class">namesdates</ident> module
+is included in a schema, information about the same participant
 described above might be provided in a more structured way as follows:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><person sex="2" age="mid">
@@ -521,7 +505,10 @@ definitions for their speakers; see further section <ptr target="#DRSP"/>.</note
 <item xml:id="DARCY"><name>Mr Darcy</name></item>
 <!-- ... -->
 </list></p></particDesc>
-</egXML></p>
+</egXML>
+Here, the characters are simply listed without the detailed
+structure which use of the <gi>listPerson</gi> element permits.
+</p>
 
 </div>
 <div type="div3" xml:id="CCAHSE">
@@ -538,17 +525,17 @@ element.
 </specList>
 
 
-Individual settings may be
-associated with particular participants by means of the optional
-<att>who</att> attribute which this element inherits as a member of
-the <ident type="class">att.ascribed</ident> if, for example, participants are in
-different places.  This attribute identifies one or more individual
-participants or participant groups, as discussed earlier in section
-<ptr target="#CCAHPA"/>.  If this attribute is not specified, the
-setting details provided are assumed to apply to all participants
-represented in the language interaction. Note however that it is not
-possible to encode different settings for the same participant: a
-participant is deemed to be a person within a specific setting.</p> 
+Individual settings may be associated with particular participants by
+means of the optional <att>who</att> attribute which this element
+inherits as a member of the <ident type="class">att.ascribed</ident>
+if, for example, participants are in different places.  This attribute
+identifies one or more individual participants or participant groups,
+as discussed earlier in section <ptr target="#CCAHPA"/>.  If this
+attribute is not specified, the setting details provided are assumed
+to apply to all participants represented in the language
+interaction. Note however that it is not possible to encode different
+settings for the same participant: a participant is deemed to be a
+person within a specific setting.</p>
 <p>The <gi>setting</gi> element may contain either a prose description
 or a selection of elements from the classes <ident
 type="class">model.nameLike.agent</ident>, <ident
@@ -600,25 +587,15 @@ way:
       <activity>radio performance</activity>
    </setting>
 </settingDesc></egXML></p>
-<p>For more detailed encoding of names of persons and places, the
-additional module described in chapter <ptr target="#ND"/> may
-additionally be used; if used, however, these elements may appear only
-within a <gi>p</gi> element. The above examples assume that only the
+<p>Again, a  more detailed encoding for  places is feasible if the
+<ident type="class">namesdates</ident> module is included in the
+schema. The above examples assume that only the
 general purpose <gi>name</gi> element supplied in the core module is
 available.
 <specGrp xml:id="DCCAHSE" n="Setting description">
-
-
 &setting;
-
-
-
 &locale;
-
-
-
 &activity;
-
 </specGrp>
 </p></div></div>
 <div type="div2" xml:id="CCAS"><head>Associating Contextual

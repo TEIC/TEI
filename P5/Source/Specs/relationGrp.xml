@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date: 2007-08-31 11:42:52 +0100 (Fri, 31 Aug 2007) $
+
+$Id: relationGrp.xml 3029 2007-08-31 10:42:52Z rahtz $
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" usage="opt" ident="relationGrp">
+  <equiv/>
+  <gloss>relation group</gloss>
+  <desc>provides information about relationships identified amongst people,
+  places, and organizations, either informally as prose or as formally
+  expressed relation links. </desc>
+<classes>
+<memberOf key="att.typed"/>
+</classes>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:oneOrMore>
+        <rng:ref name="relation"/>
+      </rng:oneOrMore>
+    </rng:choice>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listPerson>
+        <person xml:id="p1">
+<!-- data about person p1 -->
+        </person>
+<!-- more person elements here -->
+      </listPerson>
+      <relationGrp type="personal">
+        <relation name="parent" active="#p1 #p2" passive="#p3 #p4"/>
+        <relation  name="spouse" mutual="#p1 #p2"/>
+      </relationGrp>
+      <relationGrp type="social"> 
+        <relation  name="employer" active="#p1" passive="#p3 #p5 #p6 #p7"/>
+      </relationGrp>
+    </egXML>
+    <p>The persons with identifiers p1 and p2 are the parents of
+  p3 and p4; they are also married to each other; 
+  p1 is the employer of p3, p5, p6, and p7.</p>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <relationGrp>
+        <p>All speakers are members of the Ceruli family, born in Naples.</p>
+      </relationGrp>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain a prose description organized as
+    paragraphs, or a sequence of <gi>relation</gi> elements.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CCAHPA"/>
+  </listRef>
+</elementSpec>
