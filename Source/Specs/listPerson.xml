@@ -18,27 +18,28 @@ to in a historical source. </desc>
   <desc version="2006-10-28" xml:lang="ja">特定可能な人物のリストを示す．例えば，対話の参加者，歴史資料中で
 参照されている人物など．</desc>
   <classes>
-<!-- memberOf key="model.profileDescPart"/-->
     <memberOf key="att.typed"/>
     <memberOf key="att.declarable"/>
-<!--    <memberOf key="model.biblLike"/>-->
     <memberOf key="model.listLike"/>
-<!--    <memberOf key="model.personLike"/>-->
   </classes>
   <content>
-    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:oneOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:oneOrMore>
-      <rng:group>
-        <rng:oneOrMore>
-          <rng:ref name="model.personLike"/>
-        </rng:oneOrMore>
-        <rng:optional>
-          <rng:ref name="particLinks"/>
-        </rng:optional>
-      </rng:group>
-    </rng:choice>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<rng:zeroOrMore>
+  <rng:ref name="model.headLike"/>
+</rng:zeroOrMore>
+<rng:oneOrMore>
+<rng:choice>
+  <rng:ref name="model.personLike"/>
+  <rng:ref name="listPerson"/>
+</rng:choice>
+</rng:oneOrMore>
+<rng:zeroOrMore>
+<rng:choice>
+  <rng:ref name="relation"/>
+  <rng:ref name="relationGrp"/>
+</rng:choice>
+</rng:zeroOrMore>
+    </rng:group>
   </content>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -46,9 +47,9 @@ to in a historical source. </desc>
         <personGrp xml:id="PXXX"/>
         <person xml:id="P1234" sex="2" age="42"/>
         <person xml:id="P4332" sex="1" age="43"/>
-        <particLinks>
+        <relationGrp>
           <relation type="personal" name="spouse" mutual="#P1234 #P4332"/>
-        </particLinks>
+        </relationGrp>
       </listPerson>
     </egXML>
   </exemplum>

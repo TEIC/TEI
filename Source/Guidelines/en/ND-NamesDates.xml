@@ -846,14 +846,14 @@ information about a group of people with a distinct identity (for
 example a named theatrical troupe) should be recorded using the
 <gi>org</gi> element described in section <ptr target="#ND-org"/>
 below. </p>
-<p>These elements  may appear only within a <gi>listPerson</gi> element, which  groups such
-descriptions together, and optionally also describes relationships
-amongst the people listed.
+<p>These elements may appear only within a <gi>listPerson</gi>
+element, which groups such descriptions together, and optionally also
+describes relationships amongst the people listed.
 <specList>
 <specDesc key="person"/>
 <specDesc key="personGrp"/>
 <specDesc key="listPerson"/>
-<specDesc key="particLinks"/>
+<specDesc key="relationGrp"/>
 </specList>
 </p>
 
@@ -1019,7 +1019,6 @@ added as new types of trait:
 
 <specList>
 <specDesc key="persName"/>
-<!--specDesc key="relation"/-->
 <specDesc key="occupation"/>
 <specDesc key="residence"/>
 <specDesc key="affiliation"/>
@@ -1202,15 +1201,21 @@ of what happened, as in the following example:
 </p>
 </div>
 <div type="div4" xml:id="relations"><head>Personal Relationships</head>
-<!-- rename particLinks as personLinks ? -->
-<p>As noted above, the <gi>particLinks</gi> element is used to document
-personal or social relationships between individual persons, where
-this is felt to be of importance in the analysis.  This may be done
-either as an informal prose description, or more formally using the
-special purpose <gi>relation</gi> element, as described below:
-<specList><specDesc key="relation"/></specList></p>
+
+<p>When the module defined by this chapter is included in a schema,
+the following two elements may be used to document relationships
+amongst the persons, places, or organizations identified:
+<specList><specDesc key="relationGrp"/><specDesc key="relation"
+atts="name active mutual passive"/></specList>
+These elements are both members of the <gi>att.typed</gi> class, from
+which they inherit the <att>type</att> and <att>subtype</att>
+attributes in the usual way. The value specified for either attribute on
+a <gi>relationGrp</gi> element is implicitly applicable to all of its
+child <gi>relation</gi> elements, unless overriden.</p>
 <p>A <term>relationship</term>, as defined here, may be any kind of
-describable link between specified participants, for example a social
+describable link between specified participants. A participant (in
+this sense) might be a person, a place, or an organization. In the
+case of persons, therefore, a relationship might be a social
 relationship (such as employer/employee), a personal relationship
 (such as sibling, spouse, etc.) or something less precise such as
 <q>possessing shared knowledge</q>.  A relationship may be
@@ -1235,11 +1240,11 @@ children <q>active</q> in the relationship <mentioned>is child of</mentioned>;
 similarly <q>works for</q> inverts the active and passive roles of
 <q>employs</q>.</p>
 <p>For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><particLinks>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><relationGrp>
    <relation name="parent" active="#P1 #P2" passive="#P3 #P4"/>
    <relation name="spouse" mutual="#P1 #P2"/>
    <relation type="social" name="employer" active="#P1" passive="#P3 #P4"/>
-</particLinks></egXML>
+</relationGrp></egXML>
 This example defines the relationships amongst a number of people not
 further described here; we assume however that each person has been
 allocated an identifier such as <val>P1</val>, <val>P2</val>,
@@ -1252,6 +1257,12 @@ three relationships amongst the seven people referenced:
 — i.e.  P2 is the spouse of P1, and P1 is the spouse of P2.</item>
 <item>P1 has the social relationship <q>employer</q> with respect to P3,
 and P4.</item></list></p>
+<p>Relationships within places and organizations are further
+discussed in the relevant section below. Relationships between for
+example organizations and places, or places and persons, may be
+handled in exactly the same way. 
+<!-- examples plz! -->
+</p>
 </div>
 </div>
 
@@ -1348,30 +1359,35 @@ over time, (if they are known at all). For example:
 
 <div type="div2" xml:id="NDGEOG"><head>Places</head>
 
-<p>In <ptr target="#NDPLAC"/> we discuss various ways of naming places such as towns,
-  countries etc. In much the same way as these guidelines distinguish between the encoding
-  of names for people and the encoding of other data about people, so they also
-  distinguish between the encoding of names for places and the encoding of other data
-  about places. In this section we present elements which may be used to record in a
-  structured way data about places of any kind which might be named or referenced within a
-  text. Such data may be useful as a way of normalising or standardizing references to
-  particular places, as the raw material for a gazetteer or similar reference document
-  associated with a particular text or set of texts, or in conjunction with any form of
-  geographical information system.</p>
+<p>In <ptr target="#NDPLAC"/> we discuss various ways of naming places
+such as towns, countries etc. In much the same way as these guidelines
+distinguish between the encoding of names for people and the encoding
+of other data about people, so they also distinguish between the
+encoding of names for places and the encoding of other data about
+places. In this section we present elements which may be used to
+record in a structured way data about places of any kind which might
+be named or referenced within a text. Such data may be useful as a way
+of normalising or standardizing references to particular places, as
+the raw material for a gazetteer or similar reference document
+associated with a particular text or set of texts, or in conjunction
+with any form of geographical information system.</p>
 <p>The following elements are provided for this purpose: <specList>
     <specDesc key="listPlace"/>
     <specDesc key="place"/>
   </specList>
 </p>
-<p>A <gi>place</gi> element will usually contain at least one, and possibly several,
-    <gi>placeName</gi>-like elements indicating the names associated with it, by different
-  people, in different languages, or at different times. A place is defined, however, by
-  its physical location. Locations may be specified in a number of ways: as a set of
-  coordinates defining a point or an area on the surface of the earth, or by providing a
-  description of how the place may be found, usually in terms of other placeNames. For
-  example, we can identify the location of the Canadian city of London, either by
-  specifying its latitute and longitude, or by specifying that we mean the city called
-  London located in the province called Ontario within the country called Canada. </p>
+<p>A <gi>place</gi> element will usually contain at least one, and
+possibly several, <gi>placeName</gi>-like elements indicating the
+names associated with it, by different people, in different languages,
+or at different times. A place is defined, however, by its physical
+location. Locations may be specified in a number of ways: as a set of
+coordinates defining a point or an area on the surface of the earth,
+or by providing a description of how the place may be found, usually
+in terms of other placeNames. For example, we can identify the
+location of the Canadian city of London, either by specifying its
+latitute and longitude, or by specifying that we mean the city called
+London located in the province called Ontario within the country
+called Canada. </p>
 <p>In addition we may wish to supply a brief characterization of the
 place identified, for example to state that it is a city, an
 administrative area such as a country, or a landmark of some kind such
@@ -1388,11 +1404,12 @@ type="battlefield"</tag> etc. </p>
     <specDesc key="place"/>
   </specList>
 </p>
-<p> For example, the modern city of Lyon in France was in Roman times known as Lugdunum.
-  Although the modern and the Roman city are not physically co-extensive, they have
-  significant areas which overlap, and we may therefore wish to regard them as the same
-  place, while supplying both names with an indication of the time period during which
-  each was current. </p>
+<p> For example, the modern city of Lyon in France was in Roman times
+known as Lugdunum.  Although the modern and the Roman city are not
+physically co-extensive, they have significant areas which overlap,
+and we may therefore wish to regard them as the same place, while
+supplying both names with an indication of the time period during
+which each was current. </p>
 <p>The simplest method of specifying a location is by means of its
 geographic coordinates, supplied within the <gi>geo</gi>
 element. This may be used to supply any kind of positional
@@ -1418,7 +1435,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
   </egXML>
 </p>
 <div xml:id="NDGEOGva"><head>Varieties of Location</head>
-  <p>A location may be specified in one or more of the following ways:
+<p>A location may be specified in one or more of the following ways:
 <list type="ordered">
 <item>by supplying a  string representing its coordinates in some
 standardized way within a <gi>geo</gi> element, as shown above</item>
@@ -1510,11 +1527,12 @@ of name used to locate it, for example by characterizing the generic
     means of indicating that these are alternative ways of identifying the same place,
     rather than that place is spread across several locations. </p>
 
-  <p>The <gi>location</gi> element may thus identify a place to a greater or lesser degree
-    of precision, using a variety of means: a name, a set of names, or a set of
-    coordinates. The <gi>geo</gi> element introduced earlier is by
-    default understood to supply a value expressed in a specific (and
-    widely used) notation; this may be modified in two ways. </p>
+<p>The <gi>location</gi> element may thus identify a place to a
+greater or lesser degree of precision, using a variety of means: a
+name, a set of names, or a set of coordinates. The <gi>geo</gi>
+element introduced earlier is by default understood to supply a value
+expressed in a specific (and widely used) notation; this may be
+modified in two ways. </p>
 <p>Firstly,  the content of the <gi>geo</gi> element could be interpreted in
 some other way, that is, according to some different geodetic
 system. By default, a standard known as the World Geodetic System
@@ -1531,16 +1549,17 @@ example to embed mathematical expressions or vector graphics, and is
 further described and exemplified in <ptr target="#MDlite"/>. For
 geographic information, suitable non-TEI vocabularies include:
 <list>
-<item>  the Geographical Markup
-    Language (GML) being defined by the OGC<note place="foot">The OGC is an international
-      voluntary consensus standards organization whose members maintain the Geography
-      Markup Language standard. The OGC coordinates with the ISO TC 211 standards
-      organization to maintain consistency between OGC and ISO standards work. GML is in
-      the process of being adopted as an ISO standard (ISO 19136) and is expected to be
-      released as an International Standard in 2007.</note> </item>
+<item> the Geographical Markup Language (GML) being defined by the
+OGC<note place="foot">The OGC is an international voluntary consensus
+standards organization whose members maintain the Geography Markup
+Language standard. The OGC coordinates with the ISO TC 211 standards
+organization to maintain consistency between OGC and ISO standards
+work. GML is in the process of being adopted as an ISO standard (ISO
+19136) and is expected to be released as an International Standard in
+2007.</note> </item>
 <item> the Keyhole Markup Language (KML) now used by Google Maps<note
 place="foot">See <ptr
-target="http://code.google.com/apis/kml/documentation/index.html"/></note> 
+target="http://code.google.com/apis/kml/documentation/index.html"/></note>
 </item>
 </list>
 </p>
@@ -1612,18 +1631,19 @@ target="http://code.google.com/apis/kml/documentation/index.html"/></note>
       </place>
     </egXML>
   </p>
-  <p>This does not, of course, imply that Vilnius and Kaunas are the only places
-    constituting Lithuania; only that they are within it. A separate <gi>place</gi>
-    element may indicate that it is a part of Lithuania by supplying a <gi>relation</gi>
-    element, as discussed below (<ptr target="#place-rel"/>).</p>
+<p>This does not, of course, imply that Vilnius and Kaunas are the
+only places constituting Lithuania; only that they are within it. A
+separate <gi>place</gi> element may indicate that it is a part of
+Lithuania by supplying a <gi>relation</gi> element, as discussed below
+(<ptr target="#place-rel"/>).</p>
 
-  <p>As a further example, the islands of Mauritius, Réunion, and
-  Rodrigues are collectively known as the Mascarene Islands. Grouped
-  together with Mauritius there are also several smaller offshore
-  islands, with rather picturesque French names. These offshore
-  islands do not however constitute an identifiable place as a
-  whole. One way of representing this is as follows: <egXML
-  xmlns="http://www.tei-c.org/ns/Examples">
+<p>As a further example, the islands of Mauritius, Réunion, and
+Rodrigues are collectively known as the Mascarene Islands. Grouped
+together with Mauritius there are also several smaller offshore
+islands, with rather picturesque French names. These offshore islands
+do not however constitute an identifiable place as a whole. One way of
+representing this is as follows: <egXML
+xmlns="http://www.tei-c.org/ns/Examples">
       <place type="islandGroup">
         <placeName>Mascarene Islands</placeName>
         <placeName>Mascarenhas Archipelago</placeName>
@@ -1673,15 +1693,12 @@ target="http://code.google.com/apis/kml/documentation/index.html"/></note>
       </place>
     </egXML>
   </p>
-  <p>As noted previously, <gi>country</gi>, <gi>region</gi>, <gi>settlement</gi> are all
-    specializations of the generic <gi>placename</gi> element; they are not
-    specializations of the <gi>place</gi> element. If it is desired to distinguish amongst
-    kinds of <emph>place</emph> this can only be done by means of the <att>type</att>
-    attribute as in the above example.
-    <!-- The use of values for the type attribute which correspond to
-the names of a naming element ("country", "region", "settlement") is
-recommended when appropriate but not required. (removed this sentence
-as it is pretty incomprehensible) --></p>
+<p>As noted previously, <gi>country</gi>, <gi>region</gi>,
+<gi>settlement</gi> are all specializations of the generic
+<gi>placename</gi> element; they are not specializations of the
+<gi>place</gi> element. If it is desired to distinguish amongst kinds
+of <emph>place</emph> this can only be done by means of the
+<att>type</att> attribute as in the above example.</p>
   
 <p>This use of multiple <gi>place</gi> elements should be
 distinguished from the (possibly simpler) case where a number of
@@ -1855,7 +1872,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
     </egXML>
   </p>
 
-
+<!-- material on oxford colleges to go here -->
 
 
 
@@ -1939,7 +1956,7 @@ occupation and residence.</p>
 &nationality;
 &occupation;
 &org;
-&particLinks;
+&relationGrp;
 &person;
 &personGrp;
 &place;
