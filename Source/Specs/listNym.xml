@@ -14,7 +14,6 @@ $Id$
   <classes>
     <memberOf key="att.typed"/>
     <memberOf key="att.declarable"/>
-<!--    <memberOf key="model.biblLike"/>-->
     <memberOf key="model.listLike"/>
   </classes>
   <content>
@@ -28,7 +27,15 @@ $Id$
         <rng:ref name="listNym"/>
       </rng:choice>
     </rng:oneOrMore>
-    </rng:group>  </content>
+
+<rng:zeroOrMore>
+<rng:choice>
+<rng:ref name="relationGrp"/>
+  <rng:ref name="relation"/>
+</rng:choice>
+</rng:zeroOrMore>
+    </rng:group>  
+</content>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <listNym type="floral">
