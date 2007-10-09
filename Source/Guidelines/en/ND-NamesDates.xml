@@ -338,7 +338,9 @@ to distinguish a patronymic from other forenames:
 
 
 <p>This example also demonstrates the use of the <att>sort</att>
-attribute common to all members of the <ident type="class">model.persNamePart</ident> class; its effect is to state the sequence in which <gi>forename</gi> and <gi>surname</gi> elements
+attribute common to all members of the <ident
+type="class">model.persNamePart</ident> class; its effect is to state
+the sequence in which <gi>forename</gi> and <gi>surname</gi> elements
 should be combined when constructing a sort key for the name.
 </p>
 <p>Some names include generational or dynastic information, such as
@@ -661,13 +663,6 @@ as in the following examples:
 </placeName>
 </egXML>
 </p>
-<!--
-<p>Note that, even in the case where only one of these component place
-name elements is used, the <gi>placeName</gi> element must still be
-present.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">I'd rather be in <placeName><settlement type="city">Rochester</settlement></placeName> than any other place I know.</egXML>
-</p>
--->
 </div>
 <div type="div3" xml:id="NDPLGF"><head>Geographic Names</head>
 <p>Places may also be named in terms of geographic features such as
@@ -714,7 +709,9 @@ target="#NDNYM"/>.
 </p>
 </div>
 <div type="div3" xml:id="NDPLR"><head>Relative Place Names</head>
-<p>All the place name specifications so far discussed are <term rend="noindex">absolute</term>, in the sense that they define only one
+
+<p>All the place name specifications so far discussed are <term
+rend="noindex">absolute</term>, in the sense that they define only one
 place.  A place may however be specified in terms of its relationship
 to another place, for example <q>10 miles northeast of Paris</q> or
 <q>near the top of Mount Sinai</q>. These <term>relative place
@@ -756,9 +753,12 @@ names — complex and subject to an enormous amount of variation across
 time and different cultures. The recommendations in this section
 should however be adequate for a majority of users and applications;
 they may be extended using the mechanisms described in chapter <ptr
-target="#MD"/> to add new elements to the existing
-classes. Alternatively, the meaning structure itself may be
-represented using feature structures (<ptr target="#FS"/>).
+target="#MD"/> to add new elements to the existing classes. When the
+focus of interest is on the name components themselves, as in place
+name studies for example, the elements discussed in <ptr
+target="#NDNYM"/> may also be of use. Alternatively, the meaning
+structure itself may be represented using feature structures (<ptr
+target="#FS"/>).
  </p>
 <p>
 <specGrp xml:id="DNDPLAC" n="Names for places">
@@ -851,14 +851,12 @@ or assertions of the same or any of the other types.</p>
 <p>The elements defined by the module described in this chapter may,
 for the most part, all be regarded as specialisations of one or other
 of the above three classes. Generic elements for state, trait, and
-event are defined (see <ptr target=""/>) and also specialisations,
-each of which belongs to one or other of the following classes:
+event are also defined:
 <specList>
-<specDesc key="model.persTraitLike"/>
-<specDesc key="model.persStateLike"/>
-<specDesc key="model.persEventLike"/>
+<specDesc key="event" atts="where"/>
+<specDesc key="state" />
+<specDesc key="trait" />
 </specList>
-
 </p>
 </div>
  <div type="div3" xml:id="NDPERSE">
@@ -961,10 +959,10 @@ competence in the language. It is thus possible either to say:
 or
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <langKnowledge>
-    <langKnown level="#fluent" tag="ff">Fulani</langKnown>
-    <langKnown level="#fluent" tag="wo">Wolof</langKnown>
-    <langKnown level="#fluent" tag="fr">French</langKnown>
-    <langKnown level="#basic" tag="en">English</langKnown>
+    <langKnown level="fluent" tag="ff">Fulani</langKnown>
+    <langKnown level="fluent" tag="wo">Wolof</langKnown>
+    <langKnown level="fluent" tag="fr">French</langKnown>
+    <langKnown level="basic" tag="en">English</langKnown>
 </langKnowledge>
 </egXML>
 </p>
@@ -988,7 +986,7 @@ description of the feature itself supplied within a <gi>desc</gi>
 element. These may be followed by or one or more
 <gi>p</gi> elements supplying more detailed information about the
 trait. In either case, these may be followed by one or more
- notes or bibliographical references. The <att>type</att> and
+ notes or bibliographical references. The <att>type</att>, <att>ref</att>, and
  <att>key</att> attributes are available on the <gi>persTrait</gi>
 element to indicate a fuller definition of the combination of feature
 and value.
@@ -1129,7 +1127,6 @@ class comprise the following  elements:
 <specList>
 <specDesc key="birth"/>
 <specDesc key="death"/>
-<specDesc key="event"/>
 </specList>
 Only two specific elements (<gi>birth</gi> and <gi>death</gi>) are
 proposed.  The generic element <gi>event</gi> has a similar content
@@ -1137,13 +1134,14 @@ model to that of <gi>state</gi> and <gi>trait</gi>; the chief
 difference being that it can include a <gi>placeName</gi> element to
 identify the name of the place where the event occurred. It is used 
 to describe any event in the life of an individual. </p>
-<p>In the following example, we give a brief summary of the wedding of Jane Burden to the
-English writer, designer, and socialist William Morris, encoded as an
-<gi>event</gi> element embedded within the <gi>person</gi> element
-used to record data about Morris, though we could equally well have embedded
-the event within the <gi>person</gi> element for Burden, or have given
-it as a freestanding <gi>event</gi> independent of either
-<gi>person</gi> element:
+
+<p>In the following example, we give a brief summary of the wedding of
+Jane Burden to the English writer, designer, and socialist William
+Morris, encoded as an <gi>event</gi> element embedded within the
+<gi>person</gi> element used to record data about Morris, though we
+could equally well have embedded the event within the <gi>person</gi>
+element for Burden, or have given it as a freestanding <gi>event</gi>
+independent of either <gi>person</gi> element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <person xml:id="WM">
 <!-- ... -->
@@ -1412,18 +1410,25 @@ with any form of geographical information system.</p>
  one, and possibly several, <gi>placeName</gi>-like elements
  indicating the names associated with it, by different people, in
  different languages, or at different times. </p>
-<p>A place is defined,
- however, by its physical location, which does not typically change
- over timel we regard it therefore as a trait of the place, and
- represent it by means of elements from the <ident
- type="class">model.placeTraitLike</ident> class. Locations may be specified in a
- number of ways: as a set of coordinates defining a point or an area
- on the surface of the earth, or by providing a description of how the
- place may be found, usually in terms of other placeNames. For
- example, we can identify the location of the Canadian city of London,
- either by specifying its latitute and longitude, or by specifying
- that we mean the city called London located in the province called
- Ontario within the country called Canada. </p>
+
+<p> For example, the modern city of Lyon in France was in Roman times
+known as Lugdunum.  Although the modern and the Roman city are not
+physically co-extensive, they have significant areas which overlap,
+and we may therefore wish to regard them as the same place, while
+supplying both names with an indication of the time period during
+which each was current. </p>
+
+<p>A place is defined, however, by its physical location, which does
+not typically change over time; we regard the location therefore as a
+trait of the place, and represent it by means of elements from the
+<ident type="class">model.placeTraitLike</ident> class. Locations may
+be specified in a number of ways: as a set of coordinates defining a
+point or an area on the surface of the earth, or by providing a
+description of how the place may be found, usually in terms of other
+placeNames. For example, we can identify the location of the Canadian
+city of London, either by specifying its latitute and longitude, or by
+specifying that we mean the city called London located in the province
+called Ontario within the country called Canada. </p>
 <p>In addition we may wish to supply a brief characterization of the
 place identified, for example to state that it is a city, an
 administrative area such as a country, or a landmark of some kind such
@@ -1431,21 +1436,33 @@ as a monument or a battlefield. If our typology of places is simple,
 the open ended <att>type</att> attribute is the easiest way to
 represent it: so we might say <tag>place type="city"</tag>, <tag>place
 type="battlefield"</tag> etc. </p>
-<p>Within the <gi>place</gi> element, the following elements may be used to provide more
-  information about specific aspects of the place in a structured form: <specList>
+
+
+<p>Within the <gi>place</gi> element, the following elements may be
+used to provide more information about specific aspects of the place
+in a structured form: <specList>
     <specDesc key="placeName"/>
     <specDesc key="location"/>
-    <specDesc key="geo"/>
-    <specDesc key="listPlace"/>
-    <specDesc key="place"/>
   </specList>
 </p>
-<p> For example, the modern city of Lyon in France was in Roman times
-known as Lugdunum.  Although the modern and the Roman city are not
-physically co-extensive, they have significant areas which overlap,
-and we may therefore wish to regard them as the same place, while
-supplying both names with an indication of the time period during
-which each was current. </p>
+<div xml:id="NDGEOGva"><head>Varieties of Location</head>
+<p>A location may be specified in one or more of the following ways:
+<list type="ordered">
+<item>by supplying a  string representing its coordinates in some
+standardized way within a <gi>geo</gi> element, as shown above</item>
+<item>by supplying one or more place name component elements
+(e.g. <gi>country</gi>, <gi>settlement</gi> etc.)  to place it  within
+a geo-political context</item>
+<item>by supplying a postal address, e.g. using the <gi>address</gi>
+element</item>
+<item>by supplying a brief textual description, e.g. using the
+<gi>desc</gi> element</item>
+<item>by using a non-TEI XML vocabulary such as the Geographical Markup
+    Language</item>
+</list>
+We give examples of all of these methods in the remainder of this
+  section.</p>
+
 <p>The simplest method of specifying a location is by means of its
 geographic coordinates, supplied within the <gi>geo</gi>
 element. This may be used to supply any kind of positional
@@ -1470,26 +1487,11 @@ xmlns="http://www.tei-c.org/ns/Examples">
     </place>
   </egXML>
 </p>
-<div xml:id="NDGEOGva"><head>Varieties of Location</head>
-<p>A location may be specified in one or more of the following ways:
-<list type="ordered">
-<item>by supplying a  string representing its coordinates in some
-standardized way within a <gi>geo</gi> element, as shown above</item>
-<item>by supplying one or more place name component elements
-(e.g. <gi>country</gi>, <gi>settlement</gi> etc.)  to place it  within
-a geo-political context</item>
-<item>by supplying a postal address, e.g. using the <gi>address</gi>
-element</item>
-<item>by supplying a brief textual description, e.g. using the
-<gi>desc</gi> element</item>
-<item>by using a non-TEI XML vocabulary such as the Geographical Markup
-    Language</item>
-</list>
-We give examples of all of these methods in the remainder of this
-  section.</p>
-  <p>Identifying Lyon by its geo-political status as
-    a settlement within a country forming part of a larger political
-    entity, we might represent the place as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+
+  <p>Identifying Lyon by its geo-political status as a settlement
+  within a country forming part of a larger political entity, we might
+  represent the same <soCalled>place</soCalled> as follows: <egXML
+  xmlns="http://www.tei-c.org/ns/Examples">
       <place xml:id="LYON2">
         <placeName notBefore="1400">Lyon</placeName>
         <placeName notAfter="0056">Lugdunum</placeName>
@@ -1646,16 +1648,16 @@ target="http://code.google.com/apis/kml/documentation/index.html"/></note>
 
 -->
 
-  <p>A <gi>bibl</gi> element may be used within <gi>location</gi> to indicate the source
-    of the location information.</p>
+  <p>A <gi>bibl</gi> element may be used within <gi>location</gi> to
+  indicate the source of the location information.</p>
   <!-- example needed -->
 </div>
 <div xml:id="NDGEOGmp">
   <head>Multiple Places</head>
-  <p>A place may contain other places. This containment relation can be directly modelled
-    in XML: thus we can say that the towns of Vilnius and Kaunas are both in a place
-    called Lithuania (or Lietuva) as follows: <egXML
-      xmlns="http://www.tei-c.org/ns/Examples">
+  <p>A place may contain other places. This containment relation can
+  be directly modelled in XML: thus we can say that the towns of
+  Vilnius and Kaunas are both in a place called Lithuania (or Lietuva)
+  as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <place>
         <country>Lithuania</country>
         <country xml:lang="lt">Lietuva</country>
@@ -1788,8 +1790,7 @@ place. For example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
     </specList>
   </p>
   
-<p>The first of these is a specialization of the generic
-<gi>state</gi> element; while the second two are specializations of
+<p>These are all  specializations of the generic
 the generic <gi>trait</gi> element. The generic <gi>event</gi> element
 may be used for almost any kind of event in the life of a place; no
 specialized version of this element is proposed, nor do we attempt to
