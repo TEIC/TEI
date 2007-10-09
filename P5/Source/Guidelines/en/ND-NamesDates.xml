@@ -591,24 +591,29 @@ place, and hence as a kind of named place
 <specList><specDesc key="placeName"/><specDesc key="geogName"/>
 </specList>
 </p>
-<p>As members of the <ident type="class">att.naming</ident> class, all of these
-elements share the following attributes:
-<specList><specDesc key="att.naming" atts="key nymRef ref"/></specList>
+<p>As members of the <ident type="class">att.naming</ident> class, all
+of these elements share the following attributes: <specList><specDesc
+key="att.naming" atts="key nymRef ref"/></specList> These attributes
+are primarily useful as a means of linking a pplace name with
+information about a specific place. Recommendations for the encoding
+of information about a place, as distinct from its name, are provided
+in <ptr target="#NDGEOG"/> below.
 </p>
-<p>Like the <gi>persName</gi> element discussed in section <ptr target="#NDPER"/>, the <gi>placeName</gi> element may be regarded
-simply as an abbreviation for the elements <tag>name type="place"</tag> or
-<tag>rs type="place"</tag>. The following encodings are thus
-equivalent:<note place="foot">Strictly, a suitable value such as
-<val>figurative</val> should be added to the two place
+
+<p>Like the <gi>persName</gi> element discussed in section <ptr
+target="#NDPER"/>, the <gi>placeName</gi> element may be regarded
+simply as an abbreviation for the elements <tag>name
+type="place"</tag> or <tag>rs type="place"</tag>. The following
+encodings are thus equivalent:<note place="foot">Strictly, a suitable
+value such as <val>figurative</val> should be added to the two place
 names which are presented periphrastically in the second example here,
 in order to preserve the distinction indicated by the choice of
 <gi>rs</gi> rather than <gi>name</gi> to encode them in the first
-version.</note>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">After spending some
-time in our <rs key="NY1" type="place">modern <name key="BA1"
-type="place">Babylon</name></rs>, <name key="NY1" type="place">New
-York</name>, I have proceeded to the <rs key="PH1" type="place">City
-of Brotherly Love</rs>.</egXML>
+version.</note> <egXML xmlns="http://www.tei-c.org/ns/Examples">After
+spending some time in our <rs key="NY1" type="place">modern <name
+key="BA1" type="place">Babylon</name></rs>, <name key="NY1"
+type="place">New York</name>, I have proceeded to the <rs key="PH1"
+type="place">City of Brotherly Love</rs>.</egXML>
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">After spending some
 time in our <placeName key="NY1">modern <placeName
@@ -619,16 +624,17 @@ Brotherly Love</placeName>.</egXML>
 	<!-- 8 October, 1835, -->
 </p>
 <div type="div3" xml:id="NDPLGU"><head>Geo-political Place Names</head>
-<p>A place name may contain text with no indication of its internal structure:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName>Rochester, NY</placeName></egXML>
-More usually however, a place name of this kind will  be further
-analysed in terms of its constitutive
-geo-political or administrative units. These may be arranged in
-ascending sequence according to their size or administrative
-importance, for example: <q>Rochester, New York</q>, or as a single
-such unit, for example <q>Belgium</q>. These Guidelines provide a
-hierarchy of generic element names, each of which may be more exactly
-specified by means of a <att>type</att> attribute:
+<p>A place name may contain text with no indication of its internal
+structure: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><placeName>Rochester,
+NY</placeName></egXML> More usually however, a place name of this kind
+will be further analysed in terms of its constitutive geo-political or
+administrative units. These may be arranged in ascending sequence
+according to their size or administrative importance, for example:
+<q>Rochester, New York</q>, or as a single such unit, for example
+<q>Belgium</q>. These Guidelines provide a hierarchy of generic
+element names, each of which may be more exactly specified by means of
+a <att>type</att> attribute:
 <specList>
 <specDesc key="district"/>
 <specDesc key="settlement"/>
@@ -636,8 +642,9 @@ specified by means of a <att>type</att> attribute:
 <specDesc key="country"/>
 <specDesc key="bloc"/>
 </specList></p>
-<p>A <gi>placeName</gi> may contain any combination of these and other
-members of the <ident type="class">model.placeNamePart</ident> class,
+<p>These elements are all members of the <ident
+type="class">model.placeNamePart</ident> class, members of which may
+be used anywhere that text is permitted, including within each other
 as in the following examples: 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName>  
   <settlement type="city">Rochester</settlement>,
@@ -649,29 +656,32 @@ as in the following examples:
 </placeName></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName>
 <district type="arondissement">6ème</district>
- <settlement type="city">Paris</settlement>,
+ <settlement type="city">Paris, </settlement>
+ <country>France</country>
 </placeName>
 </egXML>
 </p>
+<!--
 <p>Note that, even in the case where only one of these component place
 name elements is used, the <gi>placeName</gi> element must still be
 present.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I'd rather be in <placeName><settlement type="city">Rochester</settlement></placeName> than any other place I know.</egXML>
-</p></div>
+</p>
+-->
+</div>
 <div type="div3" xml:id="NDPLGF"><head>Geographic Names</head>
 <p>Places may also be named in terms of geographic features such as
 mountains, lakes, or rivers, independently of geo-political units.  The
 <gi>geogName</gi> is provided to mark up such names, as an alternative
-to the <gi>placeName</gi> element discussed above. In addition to the
-usual phrase level elements, this element may include the following
-specialized elements:
+to the <gi>placeName</gi> element discussed above. 
+For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><geogName key="MIRI1" type="river">Mississippi River</geogName></egXML>
+</p>
+<p>In addition to the usual phrase level elements, the <gi>geogname</gi>
+element may contain the following specialized element:
 <specList>
   <specDesc key="geogFeat"/>
-<!--  <specDesc key="offset"/>-->
 </specList>
-</p>
-<p>For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><geogName key="MIRI1" type="river">Mississippi River</geogName></egXML>
 </p>
 <p>Where the <gi>geogFeat</gi> element is used to characterize the kind of
 geographic feature being named, the <gi>name</gi> element will generally
@@ -741,13 +751,14 @@ attributes of <gi>measure</gi>:
   <settlement type="city">Providence</settlement>, <region type="state">RI</region>
 </placeName></egXML>
 </p>
-<p>The internal structure of place names is like that of
-personal names — complex and subject to an enormous amount of variation
-across time and different cultures. The recommendations in this section
-will be adequate for a majority of users and applications. They may
-not, however, satisfy the most specialized inquiries or
-applications in which case it is recommended that the internal
-structure of place names be represented using feature structures (<ptr target="#FS"/>).
+<p>The internal structure of place names is like that of personal
+names — complex and subject to an enormous amount of variation across
+time and different cultures. The recommendations in this section
+should however be adequate for a majority of users and applications;
+they may be extended using the mechanisms described in chapter <ptr
+target="#MD"/> to add new elements to the existing
+classes. Alternatively, the meaning structure itself may be
+represented using feature structures (<ptr target="#FS"/>).
  </p>
 <p>
 <specGrp xml:id="DNDPLAC" n="Names for places">
@@ -820,10 +831,12 @@ anthropologists now considered to be more a social or mental construct
 than an objective biological fact.  Furthermore, while some
 characteristics will obviously change over time, hair colour for
 example, none, in principle — not even sex — is immutable.</p>
+
 <p><soCalled>States</soCalled> include, for example, marital status,
 place of residence and position or occupation.  Such states have a
 definite duration, i.e. have a beginning and an end, and are typically
 a consequence of the individual's own action or that of others.</p>
+
 <p>By <soCalled>changes in state</soCalled> are meant the events
 in a person's life such as birth, marriage, or appointment to office;
 such events will normally be associated with a specific date or a
@@ -834,18 +847,31 @@ multiple sources, possibly contradictory.  Taking all this into account
 it follows that each such statement or assertion needs to be able to be
 documented, put into a time frame and be relatable to other statements
 or assertions of the same or any of the other types.</p>
+
+<p>The elements defined by the module described in this chapter may,
+for the most part, all be regarded as specialisations of one or other
+of the above three classes. Generic elements for state, trait, and
+event are defined (see <ptr target=""/>) and also specialisations,
+each of which belongs to one or other of the following classes:
+<specList>
+<specDesc key="model.persTraitLike"/>
+<specDesc key="model.persStateLike"/>
+<specDesc key="model.persEventLike"/>
+</specList>
+
+</p>
 </div>
  <div type="div3" xml:id="NDPERSE">
 <head>The Person Element</head>
 <p>Information about a person, as distinct from references to a
 person, for example by name, is grouped together within a
 <gi>person</gi> element. Information about a group of people regarded
-as a single entity (for example <q>the audience</q> of a performance)
-may be encoded using the <gi>personGrp</gi> element. Note however that
-information about a group of people with a distinct identity (for
-example a named theatrical troupe) should be recorded using the
-<gi>org</gi> element described in section <ptr target="#ND-org"/>
-below. </p>
+as a single entity (for example <soCalled>the audience</soCalled> of a
+performance) may be encoded using the <gi>personGrp</gi> element. Note
+however that information about a group of people with a distinct
+identity (for example a named theatrical troupe) should be recorded
+using the <gi>org</gi> element described in section <ptr
+target="#ND-org"/> below. </p>
 <p>These elements may appear only within a <gi>listPerson</gi>
 element, which groups such descriptions together, and optionally also
 describes relationships amongst the people listed.
@@ -860,8 +886,9 @@ describes relationships amongst the people listed.
 <p>One or more <gi>listPerson</gi> elements may be supplied within the
 <gi>particDesc</gi> (participant description) element in the
 <gi>profileDesc</gi> element of a TEI Header (see <ptr
-target="#HD4"/>).  Like bibliographic lists, however, the
-<gi>listPerson</gi> can also appear within the body of a text.</p>
+target="#HD4"/>).  Like other forms of list, however, the
+<gi>listPerson</gi> can also appear within the body of a text when the
+module defined by this chapter is included in a schema.</p>
 
 <p>The <att>type</att> attribute may be used to distinguish lists of
 people of different kinds where this is considered convenient:
@@ -1360,7 +1387,7 @@ over time, (if they are known at all). For example:
 <div type="div2" xml:id="NDGEOG"><head>Places</head>
 
 <p>In <ptr target="#NDPLAC"/> we discuss various ways of naming places
-such as towns, countries etc. In much the same way as these guidelines
+such as towns, countries etc. In much the same way as these Guidelines
 distinguish between the encoding of names for people and the encoding
 of other data about people, so they also distinguish between the
 encoding of names for places and the encoding of other data about
@@ -1376,18 +1403,27 @@ with any form of geographical information system.</p>
     <specDesc key="place"/>
   </specList>
 </p>
-<p>A <gi>place</gi> element will usually contain at least one, and
-possibly several, <gi>placeName</gi>-like elements indicating the
-names associated with it, by different people, in different languages,
-or at different times. A place is defined, however, by its physical
-location. Locations may be specified in a number of ways: as a set of
-coordinates defining a point or an area on the surface of the earth,
-or by providing a description of how the place may be found, usually
-in terms of other placeNames. For example, we can identify the
-location of the Canadian city of London, either by specifying its
-latitute and longitude, or by specifying that we mean the city called
-London located in the province called Ontario within the country
-called Canada. </p>
+
+ <p>The <ident type="class">model.placeStateLike</ident> class
+ contains elements describing characteristics of a place which have a
+ definite duration, such as its name. Any member of the <ident
+ type="class">model.placeNamePart</ident> may be used for this
+ purpose, since a <gi>place</gi> element will usually contain at least
+ one, and possibly several, <gi>placeName</gi>-like elements
+ indicating the names associated with it, by different people, in
+ different languages, or at different times. </p>
+<p>A place is defined,
+ however, by its physical location, which does not typically change
+ over timel we regard it therefore as a trait of the place, and
+ represent it by means of elements from the <ident
+ type="class">model.placeTraitLike</ident> class. Locations may be specified in a
+ number of ways: as a set of coordinates defining a point or an area
+ on the surface of the earth, or by providing a description of how the
+ place may be found, usually in terms of other placeNames. For
+ example, we can identify the location of the Canadian city of London,
+ either by specifying its latitute and longitude, or by specifying
+ that we mean the city called London located in the province called
+ Ontario within the country called Canada. </p>
 <p>In addition we may wish to supply a brief characterization of the
 place identified, for example to state that it is a city, an
 administrative area such as a country, or a landmark of some kind such
@@ -1462,8 +1498,8 @@ We give examples of all of these methods in the remainder of this
           <country>France</country>
         </location>
       </place>
-    </egXML> The elements <gi>bloc</gi> etc. are specialised forms of <gi>placeName</gi>,
-    as discussed in <ptr target="#NDPLGU"/>. </p>
+    </egXML> The elements <gi>bloc</gi> etc. are specialised forms of
+    <gi>placeName</gi>, as discussed in <ptr target="#NDPLGU"/>. </p>
 <p>We may use the same procedure to represent the location of smaller
 places, such as a street or even an individual building:
  <egXML
@@ -1522,10 +1558,11 @@ of name used to locate it, for example by characterizing the generic
 <address><addrLine>Via Caio Cestio, 6</addrLine><addrLine>00153 Roma</addrLine></address>
         </location>
       </place>
-    </egXML> When, as here, the same place is given multiple locations, the
-    <att>type</att> attribute should be used to characterize the kind of location, as a
-    means of indicating that these are alternative ways of identifying the same place,
-    rather than that place is spread across several locations. </p>
+    </egXML> When, as here, the same place is given multiple
+    locations, the <att>type</att> attribute should be used to
+    characterize the kind of location, as a means of indicating that
+    these are alternative ways of identifying the same place, rather
+    than that place is spread across several locations. </p>
 
 <p>The <gi>location</gi> element may thus identify a place to a
 greater or lesser degree of precision, using a variety of means: a
@@ -2369,7 +2406,7 @@ limitation.</egXML>
   &model.persNamePart;    
   &model.orgStateLike;    
   &att.personal;    
-  &model.placeNamePart;    
+<!--  &model.placeNamePart;    moved to ST -->
   &model.placeLike;    
   &att.datable.iso; 
   &att.duration.iso; 
