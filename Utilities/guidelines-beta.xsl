@@ -518,7 +518,7 @@ function togglerelax (el) {
     <xsl:choose>
       <xsl:when test="$word='previousWord'">
         <span class="icon">
-          <xsl:text>&#8592; </xsl:text>
+          <xsl:text>&#xab; </xsl:text>
         </span>
       </xsl:when>
       <xsl:when test="$word='upWord'">
@@ -528,7 +528,7 @@ function togglerelax (el) {
       </xsl:when>
       <xsl:when test="$word='nextWord'">
         <span class="icon">
-          <xsl:text>&#8594; </xsl:text>
+          <xsl:text>&#xbb; </xsl:text>
         </span>
       </xsl:when>
     </xsl:choose>
