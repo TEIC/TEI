@@ -403,7 +403,7 @@
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:call-template name="classAttributes">
 	<xsl:with-param name="whence">2</xsl:with-param>
-	<xsl:with-param name="elementName" select="@ident"/>
+	<xsl:with-param name="elementName" select="../../@ident"/>
 	<xsl:with-param name="className" select="@key"/>
       </xsl:call-template>
     </xsl:for-each>
@@ -986,6 +986,12 @@ so that is only put back in if there is some content
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+<!--
+<xsl:message><xsl:value-of select="$elementName"/> + <xsl:value-of
+select="$className"/> + <xsl:value-of
+select="$fromOdd"/>+<xsl:value-of select="$use"/>+<xsl:value-of
+select="$M"/></xsl:message>
+-->
     <xsl:if test="$use='true'">
       <!-- 
 	   We need to put in the class attributes. We'll 
@@ -1133,7 +1139,7 @@ so that is only put back in if there is some content
 	<xsl:when test="fromOdd='false'">
 	  <xsl:for-each select="tei:classes/tei:memberOf">
 	    <xsl:call-template name="classAttributes">
-	      <xsl:with-param name="whence">3</xsl:with-param>
+	      <xsl:with-param name="whence">4</xsl:with-param>
 	      <xsl:with-param name="elementName" select="$elementName"/>
 	      <xsl:with-param name="className" select="@key"/>
 	    </xsl:call-template>
@@ -1146,7 +1152,7 @@ so that is only put back in if there is some content
                 <xsl:for-each select="key('ATTCLASSES',$className)">
 		  <xsl:for-each select="tei:classes/tei:memberOf">
 		    <xsl:call-template name="classAttributes">
-		      <xsl:with-param name="whence">3</xsl:with-param>
+		      <xsl:with-param name="whence">5</xsl:with-param>
 		      <xsl:with-param name="elementName" select="$elementName"/>
 		      <xsl:with-param name="className" select="@key"/>
 		    </xsl:call-template>
@@ -1163,7 +1169,7 @@ so that is only put back in if there is some content
                 <xsl:for-each select="key('ATTCLASSES',$className)">
 		  <xsl:for-each select="tei:classes/tei:memberOf">
 		    <xsl:call-template name="classAttributes">
-		      <xsl:with-param name="whence">3</xsl:with-param>
+		      <xsl:with-param name="whence">6</xsl:with-param>
 		      <xsl:with-param name="elementName" select="$elementName"/>
 		      <xsl:with-param name="className" select="@key"/>
 		    </xsl:call-template>
@@ -1400,7 +1406,7 @@ every attribute and see whether the attribute has changed-->
       <xsl:when test="$elementName=''"/>
       <xsl:otherwise>
 	<xsl:call-template name="classAttributes">
-	  <xsl:with-param name="whence">4</xsl:with-param>
+	  <xsl:with-param name="whence">7</xsl:with-param>
 	  <xsl:with-param name="elementName" select="$elementName"/>
 	  <xsl:with-param name="className" select="'att.global'"/>
 	</xsl:call-template>
@@ -1435,7 +1441,7 @@ every attribute and see whether the attribute has changed-->
 	<xsl:for-each select="exsl:node-set($classMembership)/x/tei:memberOf">
 	  <xsl:if test="not(preceding-sibling::tei:memberOf[@key=current()/@key])">
 	    <xsl:call-template name="classAttributes">
-	      <xsl:with-param name="whence">5</xsl:with-param>
+	      <xsl:with-param name="whence">8</xsl:with-param>
 	      <xsl:with-param name="elementName" select="$elementName"/>
 	      <xsl:with-param name="className" select="@key"/>
 	    </xsl:call-template>
@@ -1654,7 +1660,7 @@ every attribute and see whether the attribute has changed-->
         <tei:attList>
           <xsl:comment>1.</xsl:comment>
           <xsl:call-template name="classAttributesSimple">
-	    <xsl:with-param name="whence">6</xsl:with-param>
+	    <xsl:with-param name="whence">9</xsl:with-param>
             <xsl:with-param name="elementName" select="$elementName"/>
             <xsl:with-param name="className" select="'att.global'"/>
           </xsl:call-template>
@@ -1662,7 +1668,7 @@ every attribute and see whether the attribute has changed-->
           <xsl:for-each select="tei:classes/tei:memberOf">
             <xsl:comment>3: <xsl:value-of select="@key"/></xsl:comment>
             <xsl:call-template name="classAttributesSimple">
-	      <xsl:with-param name="whence">7</xsl:with-param>
+	      <xsl:with-param name="whence">10</xsl:with-param>
               <xsl:with-param name="elementName" select="$elementName"/>
               <xsl:with-param name="className" select="@key"/>
             </xsl:call-template>
@@ -1714,7 +1720,7 @@ every attribute and see whether the attribute has changed-->
         <xsl:for-each select="tei:classes/tei:memberOf">
           <xsl:variable name="cName" select="@key"/>
           <xsl:call-template name="classAttributesSimple">
-	    <xsl:with-param name="whence">8</xsl:with-param>
+	    <xsl:with-param name="whence">11</xsl:with-param>
             <xsl:with-param name="elementName" select="$elementName"/>
             <xsl:with-param name="className" select="$cName"/>
           </xsl:call-template>

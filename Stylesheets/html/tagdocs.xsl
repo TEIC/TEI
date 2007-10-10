@@ -514,15 +514,11 @@
             <Wrapper>
               <rng:element name="{$name}">
                 <xsl:if test="not(ancestor::tei:schemaSpec)">
-                  <rng:ref name="att.global.attributes"/>
-                  <xsl:for-each select="../tei:classes/tei:memberOf">
-                    <xsl:for-each select="key('IDENTS',@key)">
-                      <xsl:if test="tei:attList">
-                        <rng:ref name="{@ident}.attributes"/>
-                      </xsl:if>
-                    </xsl:for-each>
-                  </xsl:for-each>
-                </xsl:if>
+		  <rng:ref name="att.global.attributes"/>
+		  <xsl:for-each select="..">
+		    <xsl:call-template name="showClassAtts"/>
+		  </xsl:for-each>
+		</xsl:if>
                 <xsl:apply-templates mode="tangle" select="../tei:attList"/>
                 <xsl:copy-of select="rng:*"/>
               </rng:element>
@@ -532,6 +528,17 @@
       </td>
     </tr>
   </xsl:template>
+  <xsl:template name="showClassAtts">
+    <xsl:for-each select="tei:classes/tei:memberOf">
+      <xsl:for-each select="key('IDENTS',@key)">
+	<xsl:if test="tei:attList">
+	  <rng:ref name="{@ident}.attributes"/>
+	</xsl:if>
+	<xsl:call-template name="showClassAtts"/>
+      </xsl:for-each>
+    </xsl:for-each>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>Process the specification elements elements, classes and macros</xd:short>
     <xd:param name="atts">attributes we have been asked to display</xd:param>
