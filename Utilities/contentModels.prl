@@ -17,27 +17,43 @@ while (<>) {
 }
 
 
+
 print "$modelCount models found\n";
 
 foreach $key (sort by_value keys %models) {
 	$freq = $models{$key};
 	$cumTot += $freq;
 	$cumFreq = $cumTot/$modelCount;
-        print "$key  $freq ";
-             print " $cumTot ($cumFreq)"   if ($freq > 3) ;
-	print "\n         $modelkey{$key}\n\n" if ($verbose); 
-    } 
+	if ($freq > 3) {
+             print "$key  \[$freq \] $cumTot ($cumFreq)\n"    ;
+	     print "   $modelkey{$key}\n" if ($verbose); 
+	} else {
+	   $specialModels{$key} ++;
+	   $countRare ++;
+	}   
+  }
+print "\nRare models (<3) $countRare \n";
+      
+foreach $key (sort keys %specialModels) {
+	print "$key  $modelkey{$key} \n"; 
+}	
+
+
+
 
 sub by_value { $models{$b} <=> $models{$a}; }
 
 
+
 sub flush {
+my $model; my $gi;
     $content =~ s/\,\s*\n//; 
   $content =~ s/\n//g; 
    $content =~ s/ //g;
    $content =~ /([^=]+)\=\(*(.+)/;
-   $modelkey {$2} .= $1 . " ";
-   $models{$2} ++;
+   $model = $2; $gi = $1;
+   $modelkey {$model} .= "<$gi> ";
+   $models{$model} ++;
    $modelCount ++;
    $content="";
 }
