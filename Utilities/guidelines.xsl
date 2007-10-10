@@ -319,7 +319,7 @@ function togglerelax (el) {
 		Attribute Class catalogue</a>
 	    </xsl:when>
 	    <xsl:when test="self::tei:macroSpec">
-		<a class="navigation" href="REF-MACRO.html">
+		<a class="navigation" href="REF-MACROS.html">
 		Macro and datatype catalogue</a>
 	    </xsl:when>
 	    <xsl:otherwise>
