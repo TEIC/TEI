@@ -460,11 +460,6 @@ the next section. A full list of all attribute classes is given in
 atts="xml:id n xml:lang rend rendition"/></specList>
  </p>
 
-<!--<p>Some modules (e.g. those for transcription, linking, and analysis)
-define other global attributes; these additional attributes are
-documented along with the module concerned; see also section <ptr
-target="#STECAT"/>.
- </p>-->
 <p>These attributes are optionally available for any TEI element; none
 of them is required. <!--may be given values for <att>xml:id</att>, <att>n</att>,
 <att>xml:lang</att>, <att>rend</att>, or <att>rendition</att>, simply by
@@ -551,9 +546,6 @@ the following
 <!-- ....-->
 <l n="100"><!-- ....--></l>
 </egXML> is therefore probably redundant.</p>
-
-
-
 
 <p>The <att>xml:lang</att> attribute indicates the language, writing system,
 and character set associated with a given element and all its contents.
@@ -668,44 +660,6 @@ information at the point of use within a document. Note that, in either
 case, the TEI attributes describe the rendition or appearance of
 the source document, <emph>not</emph> intended output renditions.  </p>
 
-<!--
-<div xml:id="STattclass"><head>Other Attribute Classes</head>
-
-<p>
-<table xml:id="tab-atts"><row role="label"><cell>class</cell><cell>function</cell><cell>superclass</cell></row>
-<row><cell>att.ascribed</cell><cell>provides attributes for elements representing speech or action that can be ascribed to a specific individual.</cell><cell/></row>
-<row><cell>att.damaged</cell><cell>provides attributes describing the nature of any physical
-  damage affecting a reading. </cell><cell></cell></row>
-<row><cell>att.datable</cell><cell>provides attributes for normalization of elements that contain datable events.</cell><cell>att.datable.w3c  att.datable.iso</cell></row>
-<row><cell>att.datable.w3c</cell><cell>provides attributes for normalization of elements that contain datable events.</cell><cell/></row>
-<row><cell>att.declarable</cell><cell>provides attributes for those elements in the TEI Header which may be independently selected by means of  the specialpurpose decls attribute.</cell><cell/></row>
-<row><cell>att.declaring</cell><cell>provides attributes for elements which may be independently associated with a particular declarable element within the header, thus overriding the inherited default for that element.</cell><cell/></row>
-
-<row><cell>att.divLike</cell><cell>provides a set of attributes common to all elements which behave in the same way as divisions.</cell><cell>att.metrical  </cell></row>
-<row><cell>att.duration</cell><cell>provides attributes for normalization of elements that contain temporal durations.</cell><cell>att.duration.w3c  att.duration.iso</cell></row>
-<row><cell>att.duration.w3c</cell><cell>provides attributes for normalization of elements that contain temporal durations.</cell><cell/></row>
-<row><cell>att.editLike</cell><cell>provides attributes describing the nature of a encoded scholarly intervention or interpretation of any kind.</cell><cell/></row>
-<row><cell>att.global</cell><cell>provides a set of attributes common to all elements in the TEI encoding scheme.</cell><cell>att.global.linking  att.global.analytic  att.global.facs</cell></row>
-<row><cell>att.handFeatures</cell><cell>provides attributes describing aspects of the hand in which a
-  manuscript is written.</cell><cell></cell></row>
-<row><cell>att.internetMedia</cell><cell>provides attributes for specifying the type of a computer resource using a standard taxonomy</cell></row>
-<row><cell>att.interpLike</cell><cell>provides attributes for elements which represent a formal analysis or interpretation.</cell><cell/></row>
-<row><cell>att.measurement</cell><cell>provides attributes to represent a regularized or normalized measurement.</cell><cell/></row>
-<row><cell>att.naming</cell><cell>provides attributes common to  elements which refer to named persons, places, organizations etc.</cell><cell/></row>
-<row><cell>att.placement</cell><cell>provides attributes for describing where on the source page or object a textual element appears.</cell><cell/></row>
-<row><cell>att.segLike</cell><cell>provides attributes for elements used for arbitrary segmentation. </cell><cell>att.metrical  </cell></row>
-<row><cell>att.spanning</cell><cell>provides attributes for elements which delimit a span of text by pointing mechanisms rather than by enclosing it.</cell><cell/></row>
-<row><cell>att.tableDecoration</cell><cell>provides attributes used to decorate rows or cells of a table.</cell><cell/></row>
-<row><cell>att.timed</cell><cell>provides a set of attributes common to those elements which have a duration in time, expressed either absolutely or by reference to an alignment map.</cell><cell/></row>
-<row><cell>att.transcriptional</cell><cell>provides attributes specific to elements used when
-  transcribing manuscript or similar sources. </cell><cell/></row>
-<row><cell>att.translatable</cell><cell>provides attributes used to  indicate the status of a translatable
-portion of an ODD document. </cell><cell/></row>
-<row><cell>att.typed</cell><cell>provides generic attributes which can be used to classify or subclassify elements in any way. </cell><cell/></row>
-</table>
-</p>
-
--->
 <specGrp xml:id="DSTECAT" n="Attribute classes">
 &att.ascribed;
 &att.damaged;
@@ -793,7 +747,6 @@ type="class">model.measureLike</ident>, and <ident
 type="class">model.nameLike</ident>, the last of these being itself a
 superclass with three members. </p>
 
-
 <p>Although most classes are defined by the <ident
 type="module">tei</ident> infrastructure module, a class cannot be
 populated unless some other specific module is included in a schema,
@@ -866,18 +819,24 @@ division of elements:
 <list type="gloss">
 <label><term>divisions</term></label>
 <item>high level, possibly self-nesting, major divisions of
-texts. These elements populate the classes model.divLike vel sim.</item> 
+texts. These elements populate the classes <ident
+type="class">model.divLike</ident>,  <ident
+type="class">model.div1Like</ident>, etc.</item> 
+
 <label><term>chunks</term> </label>
 <item>elements such as paragraphs and other paragraph-level elements,
 which can appear directly within texts or within such divisions, but
 not within other chunks. These elements populate the class
-model.pLike vel sim.</item>
+<ident type="class">model.divPart</ident>,  either directly or by
+means of other classes such as <ident type="class">model.pLike</ident>
+(paragraph-like elements), <ident type="class">model.entryLike</ident> etc.</item>
 
 <label><term>phrase-level elements</term> </label>
 <item>elements such as highlighted phrases, book titles, or editorial
 corrections which can occur only within chunks (paragraphs or
 paragraph-level elements), but not between them (and thus cannot
-appear directly within a division). These elements populate the class model.phrase<note place="foot">Note that in this
+appear directly within a division). These elements populate the class
+<ident type="class">model.phrase</ident><note place="foot">Note that in this
 context, <term>phrase</term> means any string of characters, and can
 apply to individual words, parts of words, and groups of words
 indifferently; it does not refer only to linguistically motivated
@@ -887,21 +846,26 @@ applying the word in a more restrictive sense.</note></item>
 <label><term>inter-level elements</term></label>
 <item>elements such as lists, notes, quotations, etc. which can appear
 either between chunks (as children of a <gi>div</gi>) or within them;
-these elements populate the class model.inter. Note that this class is
-not a superset of the model.phrase and model.chunk classes but rather
+these elements populate the class <ident type="class">model.inter</ident>. Note that this class is
+not a superset of the <ident type="class">model.phrase</ident> and
+<ident type="class">model.chunk</ident> classes but rather
 the group of elements which are both chunk-like and phrase-like; the
-classes model.phrase, model.pLike, and model.inter are all
+classes <ident type="class">model.phrase</ident>, <ident
+type="class">model.pLike</ident>, and <ident type="class">model.inter</ident> are all
 disjoint. </item>
+
 <label><term>components</term>
 </label>
 <item>elements which can appear directly within texts or text
 divisions; this is a combination of the inter- and chunk- level
-elements defined above. These elements populate the class
-model.component, which is defined as a superset of the classes
-model.divPart, model.inter, and (when the dictionary module is
-included in a schema) model.entryLike. </item></list> Broadly speaking, the front,
-body, and back of a text each comprises a series of components,
-optionally grouped into divisions.
+elements defined above. These elements populate the class <ident
+type="class">model.common</ident>, which is defined as a superset
+of the classes <ident type="class">model.divPart</ident>, <ident
+type="class">model.inter</ident>, and (when the dictionary module is
+included in a schema) <ident
+type="class">model.entryLike</ident>. </item></list> Broadly speaking,
+the front, body, and back of a text each comprises a series of
+components, optionally grouped into divisions.
  </p>
 
 <p>As noted above, some elements and element classes belong to none of
@@ -910,119 +874,8 @@ in the present edition of these Guidelines are classified in this
 way. Future editions of these recommendations will extend and develop
 this classification scheme.</p>
 
-</div>
-<div><head>List of model classes </head>
-<p>
-<specList>
-<!--CO --><specDesc key="model.addrPart"/>
-<!--CO --><specDesc key="model.addressLike"/>
-<!--HD  --><specDesc key="model.applicationLike"/>
-<!--CO MS?! --><specDesc key="model.biblLike"/>
-<!--CO --><specDesc key="model.biblPart"/>
-<!--DR --><specDesc key="model.castItemPart"/>
-<!--HD --><specDesc key="model.catDescPart"/>
-<!-- CO --><specDesc key="model.choicePart"/>
-<!-- --><specDesc key="model.common"/>
-<!--fs --><specDesc key="model.featureVal.complex"/>
-<!--fs --><specDesc key="model.featureVal.single"/>
-<!--CO --><specDesc key="model.dateLike"/>
-<!--DS --><specDesc key="model.div1Like"/>
-<!--DS --><specDesc key="model.div2Like"/>
-<!--DS --><specDesc key="model.div3Like"/>
-<!--DS --><specDesc key="model.div4Like"/>
-<!--DS --><specDesc key="model.div5Like"/>
-<!--DS --><specDesc key="model.div6Like"/>
-<!--DS --><specDesc key="model.div7Like"/>
-<!--DS --><specDesc key="model.divBottom"/>
-<!--DS --><specDesc key="model.divBottomPart"/>
-<!--DS --><specDesc key="model.divGenLike"/>
-<!--DS --><specDesc key="model.divLike"/>
-<!--DS --><specDesc key="model.divPart"/>
-<!--TS --><specDesc key="model.divPart.spoken"/>
-<!--DS --><specDesc key="model.divTop"/>
-<!--DS --><specDesc key="model.divTopPart"/>
-<!--DS --><specDesc key="model.divWrapper"/>
-<!--HD --><specDesc key="model.editorialDeclPart"/>
-<!--TD --><specDesc key="model.egLike"/>
-<!--CO --><specDesc key="model.emphLike"/>
-<!--HD FS WD --><specDesc key="model.encodingPart"/>
-<!--DI --><specDesc key="model.entryLike"/>
-<!--DI --><specDesc key="model.entryPart"/>
-<!--dic --><specDesc key="model.entryPart.top"/>
-<!--FS --><specDesc key="model.featureVal"/>
-<!--DI --><specDesc key="model.formPart"/>
-<!-- --><specDesc key="model.frontPart"/>
-<!--DR --><specDesc key="model.frontPart.drama"/>
-<!--WD --><specDesc key="model.gLike"/>
-<!-- --><specDesc key="model.global"/>
-<!-- --><specDesc key="model.global.edit"/>
-<!-- --><specDesc key="model.global.meta"/> 
-<!--CO --><specDesc key="model.glossLike"/>
-<!--DI --><specDesc key="model.gramPart"/>
-<!--PH TD --><specDesc key="model.graphicLike"/>
-<!--DS --><specDesc key="model.headLike"/>
-<!--HD --><specDesc key="model.headerPart"/>
-<!--CO TD --><specDesc key="model.hiLike"/>
-<!--CO TD --><specDesc key="model.highlighted"/>
-<!--CO --><specDesc key="model.imprintPart"/>
-<!--SA --><specDesc key="model.inter"/>
-<!--TS --><specDesc key="model.global.spoken"/>
-<!--CO --><specDesc key="model.lLike"/>
-<!--VE --><specDesc key="model.lPart"/>
-<!-- --><specDesc key="model.labelLike"/>
-<!-- --><specDesc key="model.limitedPhrase"/>
-<!-- --><specDesc key="model.listLike"/>
-<!-- --><specDesc key="model.measureLike"/>
-<!-- --><specDesc key="model.milestoneLike"/>
-<!--DI --><specDesc key="model.morphLike"/>
-<!-- --><specDesc key="model.msItemPart"/>
-<!--CO --><specDesc key="model.nameLike"/>
-<!-- --><specDesc key="model.nameLike.agent"/>
-<!-- --><specDesc key="model.noteLike"/>
-<!--TD --><specDesc key="model.oddDecl"/>
-<!--odd --><specDesc key="model.oddRef"/>
-<!--ND --><specDesc key="model.orgStateLike"/>
-<!-- --><specDesc key="model.pLike"/>
-<!--DS --><specDesc key="model.pLike.front"/>
-<!--TD --><specDesc key="model.pPart.data"/>
-<!-- --><specDesc key="model.pPart.edit"/>
-<!-- --><specDesc key="model.pPart.editorial"/>
-<!-- --><specDesc key="model.pPart.msdesc"/>
-<!-- --><specDesc key="model.pPart.transcriptional"/>
-<!--ND --><specDesc key="model.persEventLike"/>
-<!--ND --><specDesc key="model.persNamePart"/>
-<!--ND --><specDesc key="model.persStateLike"/>
-<!--ND --><specDesc key="model.persTraitLike"/>
-<!--pers --><specDesc key="model.personLike"/>
-<!--pers --><specDesc key="model.personPart"/>
-<!--TD --><specDesc key="model.phrase"/>
-<!--ms --><specDesc key="model.physDescPart"/>
-<!--pers --><specDesc key="model.placeEventLike"/>
-<!--ND --><specDesc key="model.placeLike"/>
-<!--ND CO --><specDesc key="model.placeNamePart"/>
-<!--ND --><specDesc key="model.placeStateLike"/>
-<!--ND --><specDesc key="model.placeTraitLike"/>
-<!--HD --><specDesc key="model.profileDescPart"/>
-<!--CO --><specDesc key="model.ptrLike"/> <!-- ???? -->
-<!--DI --><specDesc key="model.ptrLike.form"/>
-<!--HD --><specDesc key="model.publicationStmtPart"/>
-<!--CI --><specDesc key="model.qLike"/>
-<!--CO --><specDesc key="model.quoteLike"/>
-<!--TC --><specDesc key="model.rdgLike"/>
-<!--TC --><specDesc key="model.rdgPart"/>
-<!--TS --><specDesc key="model.recordingPart"/>
-<!--PH --><specDesc key="model.resourceLike"/>
-<!--CO --><specDesc key="model.respLike"/>
-<!--SA --><specDesc key="model.segLike"/>
-<!--CC --><specDesc key="model.settingPart"/>
-<!--HD --><specDesc key="model.sourceDescPart"/>
-<!--odd --><specDesc key="model.specDescLike"/>
-<!--DR --><specDesc key="model.stageLike"/>
-<!--HD --><specDesc key="model.textDescPart"/>
-<!--DS --><specDesc key="model.titlepagePart"/>
-<!--TD--><specDesc key="model.phrase.xml"/>
-</specList>
- </p>
+<p>A complete alphabetical list of all model classes is provided below
+in <ptr target="#REF-CLASSES-MODEL"/>. </p>
 
 
 <!-- all model class declarations: nb order is critical -->
@@ -1142,11 +995,11 @@ classes or to elements</p>-->
 
 <div type="div2" xml:id="STmacros"><head>Macros</head>
 
-<p>The <ident type="module">tei</ident> module also declares a number
-of <term>macros</term>, or shortcut names for frequently occurring
-parts of other declarations. These are used in two ways in the TEI
-scheme: to stand for frequently-encountered content models, or parts
-of content models (<ptr target="#STECST"/>); and to stand for
+<p>The infrastructure module defined by this chapter also declares a
+number of <term>macros</term>, or shortcut names for frequently
+occurring parts of other declarations. Macros are used in two ways in
+the TEI scheme: to stand for frequently-encountered content models, or
+parts of content models (<ptr target="#STECST"/>); and to stand for
 attribute datatypes (<ptr target="#DTYPES"/>). Macros are implemented
 as patterns in the RELAX NG schema fragments, and as parameter
 entities in the XML DTD fragments.</p>
@@ -1166,8 +1019,32 @@ different elements.
 <specDesc key="macro.xtext"/>
 </specList>
 </p>
+<p>The present version of the TEI Guidelines includes some 500 different
+elements. The following table shows, in descending order of frequency,
+the seven most commonly used content models:
 
+<table>
+<row role="head"><cell>Content model</cell><cell>Number of elements using
+this</cell><cell>Description</cell></row>
+<row><cell>macro.phraseSeq</cell><cell>83</cell><cell>any combination
+of text with elements from the <ident
+type="class">model.gLike</ident>, <ident type="class">model.global</ident>, or
+<ident type="class">model.phrase</ident> classes</cell></row>
+<row><cell>macro.paraContent</cell><cell>49</cell><cell>Macro.phraseSeq
+with the addition of <ident type="class">model.inter</ident></cell></row>
+<row><cell>empty</cell><cell>39</cell><cell>Empty elements</cell></row>
+<row><cell>macro.specialPara</cell><cell>24</cell><cell>Macro.paraContent
+with the addition of <ident type="class">model.divPart</ident></cell></row>
+<row><cell>macro.phraseSeq.limited</cell><cell>24</cell><cell>A subset
+of <ident type="class">model.phraseSeq</ident> appropriate for use in non-transcriptional
+contexts</cell></row>
+<row><cell>text</cell><cell>21</cell><cell>Plain untagged text</cell></row>
+<row><cell>macro.xtext</cell><cell>19</cell><cell>Any combination of
+text with elements from the <ident type="class">model.gLike</ident> class </cell></row>
 
+</table>
+
+</p>
 
 <specGrp>
 &macro.paraContent;
@@ -1276,7 +1153,7 @@ coded values or names of some kind. These values may be constrained or
 defined in a number of different ways, each of which is given a
 different name, as follows:
 <specList>
-<specDesc key="data.key"/> <!-- 2 uses -->
+<specDesc key="data.key"/> 
 <specDesc key="data.word"/>
 <specDesc key="data.name"/>
 <specDesc key="data.enumerated"/>
@@ -1284,9 +1161,10 @@ different name, as follows:
 </specList>
 </p>
 
-<p>Attributes such as <att>key</att> of <gi>persName</gi> and other
-members of the <ident type="class">att.naming</ident> class are of
-type <ident type="datatype">data.key</ident>. They are used to supply
+<p>The attributes <att>key</att> provided by the <ident
+type="class">att.naming</ident> class is currently the only
+attribute defined as of type <ident
+type="datatype">data.key</ident>. It is  used to supply
 an externally-defined identifier, such as a database key or
 filename. Because such identifiers are externally-defined, no
 constraints are placed on their possible values: and any string of
