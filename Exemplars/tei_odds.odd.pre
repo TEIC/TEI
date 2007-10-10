@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI
+  xmlns:xi="http://www.w3.org/2001/XInclude"> 
+  xmlns="http://www.tei-c.org/ns/1.0" 
+  xmlns:teix="http://www.tei-c.org/ns/Examples" 
+  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI for authoring ODD</title>
+        <author>Sebastian Rahtz</author>
+      </titleStmt>
+      <publicationStmt>
+        <availability status="free">
+          <p>This template file is freely available and you are
+          hereby authorised to copy, modify, and redistribute it in
+          any way without further reference or permissions.</p>
+          <p>When making such modifications, you are strongly
+          recommended to change the present text to include an
+          accurate statement of the licencing conditions applicable
+          to your modified text.</p>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Written from scratch.</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>This customization loads the modules and external
+schemata necessary for writing TEI ODD documents.</p>
+      <schemaSpec ident="tei_odds" start="TEI schemaSpec elementSpec classSpec macroSpec div1 div2">
+        <moduleRef url="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/relaxng.rng"/>
+        <moduleRef key="header"/>
+        <moduleRef key="core"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="gaiji"/>
+        <moduleRef key="textstructure"/>
+        <moduleRef key="tagdocs"/>
+        <moduleRef key="dictionaries"/>
+        <moduleRef key="linking"/>
+        <moduleRef key="figures"/>
+        <macroSpec ident="macro.schemapattern" mode="change" module="tagdocs">
+          <content>
+            <group xmlns="http://relaxng.org/ns/structure/1.0">
+              <choice>
+                <text/>
+                <oneOrMore>
+                  <choice>
+                    <ref name="pattern"/>
+                    <ref name="define"/>
+                  </choice>
+                </oneOrMore>
+              </choice>
+              <zeroOrMore>
+                <ref name="anySchematron"/>
+              </zeroOrMore>
+            </group>
+          </content>
+        </macroSpec>
+        <elementSpec module="tagdocs" ns="http://www.tei-c.org/ns/Examples" usage="mwa" ident="egXML" mode="change">
+          <content>
+            <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+              <choice>
+                <text/>
+                <ref name="anyTEI"/>
+              </choice>
+            </oneOrMore>
+          </content>
+        </elementSpec>
+        <macroSpec ident="anySchematron" mode="add">
+          <content>
+            <element xmlns="http://relaxng.org/ns/structure/1.0">
+              <nsName ns="http://www.ascc.net/xml/schematron"/>
+              <zeroOrMore>
+                <choice>
+                  <attribute>
+                    <anyName/>
+                  </attribute>
+                  <ref name="anySchematron"/>
+                  <text/>
+                </choice>
+              </zeroOrMore>
+            </element>
+          </content>
+        </macroSpec>
+        <macroSpec ident="anyTEI" mode="add">
+          <content>
+            <element xmlns="http://relaxng.org/ns/structure/1.0">
+	      <xi:include href="exnames.xml">
+		<xi:fallback> ERROR: cannot locate list of names</xi:fallback>
+	      </xi:include>
+              <ref name="att.global.attribute.xmlid"/>
+              <ref name="att.global.attribute.xmllang"/>
+              <zeroOrMore>
+                <attribute>
+                  <anyName>
+                    <except>
+                      <name>xml:id</name>
+                      <name>xml:lang</name>
+                    </except>
+                  </anyName>
+                </attribute>
+              </zeroOrMore>
+              <zeroOrMore>
+                <choice>
+                  <text/>
+                  <ref name="anyTEI"/>
+                  <ref name="macro.schemapattern"/>
+                </choice>
+              </zeroOrMore>
+            </element>
+          </content>
+        </macroSpec>
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>
