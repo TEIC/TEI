@@ -833,7 +833,7 @@ function togglerelax (el) {
 	</span>
 	<ul class="atoz">	
 	  <xsl:for-each select="key('MODEL-CLASS-ALPHA',$letter)">
-	    <xsl:sort select="substring-after(@ident,'model.')"/>
+	    <xsl:sort select="translate(substring-after(@ident,'model.'),$lc,$uc)"/>
 	    <li>
 	      <xsl:apply-templates select="." mode="weave"/>
 	    </li>
@@ -887,7 +887,7 @@ function togglerelax (el) {
 	</span>
        <ul class="atoz">	
 	 <xsl:for-each select="key('ATT-CLASS-ALPHA',$letter)">
-	   <xsl:sort select="substring-after(@ident,'att.')"/>
+	   <xsl:sort select="translate(substring-after(@ident,'att.'),$lc,$uc)"/>
 	   <li>
 	     <xsl:apply-templates select="." mode="weave"/>
 	   </li>
