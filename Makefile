@@ -1,5 +1,4 @@
 LANGUAGE=en
-OTHERLANGUAGES=
 LATEX=pdflatex
 XELATEX=xelatex
 VERBOSE=
@@ -60,31 +59,6 @@ schemas:check
 	(for i in Schema/*.rnc; do t=`basename $$i .rnc`.tmp; mv $$i $$t; ./Utilities/fix_rnc_whitespace.perl < $$t > $$i; rm $$t; done)
 	xmllint --noent --xinclude ${DRIVER} | xsltproc Utilities/extract-sch.xsl - > p5.sch
 
-html-web: check
-	perl -p -e \
-		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
-		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
-		Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
-	-rm -rf Guidelines-web-tmp
-	-mkdir Guidelines-web-tmp
-	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
-	echo making HTML Guidelines for language $$i ; \
-	mkdir -p Guidelines-web-tmp/$$i/html; \
-	cp rightarrow.gif guidelines.css udm.css udm*.js COPYING.txt TEI-glow.png Guidelines-web-tmp/$$i/html/ ; \
-	xmllint --noent --xinclude ${SOURCETREE}/Guidelines/$$i/guidelines-$$i.xml \
-	| xsltproc ${VERBOSE} \
-		--stringparam outputDir Guidelines-web-tmp/$$i/html \
-		--stringparam displayMode both \
-	        --stringparam lang $$i \
-	        --stringparam doclang $$i \
-	    Utilities/guidelines.xsl - ; \
-	cp -r ${SOURCETREE}/Images Guidelines-web-tmp/$$i/html/ ; \
-	(cd Guidelines-web-tmp/$$i/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done); \
-	(cd Guidelines-web-tmp/$$i/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines.css); \
-	done
-	-rm -rf Guidelines-web
-	-mv Guidelines-web-tmp Guidelines-web
-
 html-web-beta: check
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
@@ -108,27 +82,37 @@ html-web-beta: check
 	-rm -rf Guidelines-web-beta
 	-mv Guidelines-web-beta-tmp Guidelines-web-beta
 
-validate-html:
-	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
-	(cd Guidelines-web/$$i/html;\
-	 for i in *.html; do \
-	echo validate $$i; \
-	xmllint --dropdtd $$i > z_$$i; \
-	$(JING) -c ../../../xhtml.rnc z_$$i; \
-	 rm z_$$i;\
-	 done); \
-	done
+html-web: check
+	perl -p -e \
+		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
+		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
+		Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
+	-rm -rf Guidelines-web-tmp
+	-mkdir Guidelines-web-tmp
+	echo making HTML Guidelines for language ${LANGUAGE}
+	mkdir -p Guidelines-web-tmp/${LANGUAGE}/html
+	cp rightarrow.gif udm.css udm*.js guidelines-beta.css COPYING.txt guidelines-print-beta.css TEI-glow.png Guidelines-web-tmp/${LANGUAGE}/html/ 
+	xmllint  --noent --xinclude ${SOURCETREE}/Guidelines/${LANGUAGE}/guidelines-${LANGUAGE}.xml | \
+	xsltproc ${VERBOSE} \
+		--stringparam outputDir Guidelines-web-tmp/${LANGUAGE}/html \
+		--stringparam displayMode both \
+	        --stringparam lang ${LANGUAGE} \
+	        --stringparam doclang ${LANGUAGE} \
+	    Utilities/guidelines-beta.xsl -
+	cp -r ${SOURCETREE}/Images Guidelines-web-tmp/${LANGUAGE}/html/
+	(cd Guidelines-web-tmp/${LANGUAGE}/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done)
+	(cd Guidelines-web-tmp/${LANGUAGE}/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines-beta.css)
+	-rm -rf Guidelines-web-beta
+	-mv Guidelines-web-tmp Guidelines-web-beta
 
-validate-html-beta:
-	for i in ${LANGUAGE} ${OTHERLANGUAGES} ; do \
-	(cd Guidelines-web-beta/$$i/html;\
-	 for i in *.html; do \
+validate-html:
+	(cd Guidelines-web/${LANGUAGE}/html; \
+	for i in *.html; do \
 	echo validate $$i; \
 	xmllint --dropdtd $$i > z_$$i; \
 	$(JING) -c ../../../xhtml.rnc z_$$i; \
 	 rm z_$$i;\
-	 done); \
-	done
+	 done)
 
 html:check subset
 	-rm -rf Guidelines
