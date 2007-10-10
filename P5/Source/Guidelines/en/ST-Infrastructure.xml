@@ -859,93 +859,56 @@ only to express the content model for the element <gi>address</gi>; it
 references some other classes of elements, which can appear elsewhere,
 and also some elements which can only appear inside an address.</p>
 
+<div><head>The Basic TEI Class Structure</head>
 
-<p>The TEI class system is structured around the following threefold
+<p>The TEI class system reflects the following threefold
 division of elements:
-<list type="gloss"><label><term>chunks</term> </label>
-<item>elements such as paragraphs and other
-paragraph-level elements, which can appear directly within texts or
-within text subdivisions (i.e. <gi>div</gi> elements), but not within
-other chunks</item><label><term>phrase-level elements</term> </label>
-<item>elements such as
-highlighted phrases, book titles, or editorial corrections which can
-occur only within chunks (paragraphs or paragraph-level elements), but
-not between them (and thus cannot appear directly within a
-<gi>div</gi>)<note place="foot">Note that in this context, <term>phrase</term> means
-any string of characters, and can apply to individual words, parts of
-words, and groups of words indifferently; it does not refer only to
-linguistically motivated phrasal units.  This may cause confusion for
-readers accustomed to applying the word in a more restrictive sense.</note></item>
+<list type="gloss">
+<label><term>divisions</term></label>
+<item>high level, possibly self-nesting, major divisions of
+texts. These elements populate the classes model.divLike vel sim.</item> 
+<label><term>chunks</term> </label>
+<item>elements such as paragraphs and other paragraph-level elements,
+which can appear directly within texts or within such divisions, but
+not within other chunks. These elements populate the class
+model.pLike vel sim.</item>
+
+<label><term>phrase-level elements</term> </label>
+<item>elements such as highlighted phrases, book titles, or editorial
+corrections which can occur only within chunks (paragraphs or
+paragraph-level elements), but not between them (and thus cannot
+appear directly within a division). These elements populate the class model.phrase<note place="foot">Note that in this
+context, <term>phrase</term> means any string of characters, and can
+apply to individual words, parts of words, and groups of words
+indifferently; it does not refer only to linguistically motivated
+phrasal units.  This may cause confusion for readers accustomed to
+applying the word in a more restrictive sense.</note></item>
+
 <label><term>inter-level elements</term></label>
-<item>elements such as lists,
-notes, quotations, etc. which can appear either between chunks (as
-children of a <gi>div</gi>) or within them</item></list>
- </p>
-<p>Together the two sets of <term>chunks</term> and <term>inter-level
-elements</term> make up the set of:
-<list type="gloss"><label><term>text components</term> </label>
-<item>elements which can appear
-directly within texts or text divisions; also called simply
-<term>components</term> or <soCalled>component-level elements</soCalled></item></list>
-In general, the body of any text comprises a series of components,
-optionally grouped into <gi>div</gi> elements.
- </p>
-<p>Some elements belong to none of these classes; these include
-high-level structural elements like <gi>TEI</gi> and
-<gi>group</gi> as well as some specialized elements which appear only
-within particular structures (like <gi>analytic</gi>,
-<gi>monographic</gi>, and <gi>series</gi>).  The majority of elements
-found in normal running text, however, are assigned  to
-one or the other of these classes.
- </p>
-</div>
-
-<div type="div3" xml:id="STECLO"><head>Low-Level Element Classes</head>
-<p>The following low-level classes
-group together sets of semantically or structurally similar elements.
-These classes may include both elements in the core and elements
-declared in particular modules; a reference is given at least to the
-relevant section on the core tags.
+<item>elements such as lists, notes, quotations, etc. which can appear
+either between chunks (as children of a <gi>div</gi>) or within them;
+these elements populate the class model.inter. Note that this class is
+not a superset of the model.phrase and model.chunk classes but rather
+the group of elements which are both chunk-like and phrase-like; the
+classes model.phrase, model.pLike, and model.inter are all
+disjoint. </item>
+<label><term>components</term>
+</label>
+<item>elements which can appear directly within texts or text
+divisions; this is a combination of the inter- and chunk- level
+elements defined above. These elements populate the class
+model.component, which is defined as a superset of the classes
+model.divPart, model.inter, and (when the dictionary module is
+included in a schema) model.entryLike. </item></list> Broadly speaking, the front,
+body, and back of a text each comprises a series of components,
+optionally grouped into divisions.
  </p>
 
-</div>
-<div type="div3" xml:id="STECHI"><head>High-Level Element Classes</head>
-<p>The following element classes are used to implement the threefold
-structural distinction among phrases, chunks, and intermediate elements
-discussed above in section <ptr target="#STECCM"/>.  In this terminology,
-<term>chunk</term>s (or <term>chunk elements</term>) are elements which
-can occur only in chunk-level sequences (e.g. between but not within
-paragraphs); <term>inter-level elements</term> can occur either within
-chunks (at phrase-level) or between chunks (e.g. at paragraph-level),
-and <term>phrase-level elements</term> can occur only at phrase level,
-within chunks (e.g. within but not between paragraphs).
- </p>
-<p>The element class <ident type="class">model.common</ident> includes all
-component-level (chunk- and inter-level) elements 
-
-  </p>
-
-</div>
-<div type="div3" xml:id="STECMK"><head>Elements Marked for Text Type</head>
-<p>The following element classes are used to group together
-component-level elements which are allowed only in texts of a particular
-type (i.e. texts using a specific module).
-<!--<specList>
-<specDesc key="model.divPart.spoken"/>
-<specDesc key="model.frontPart.drama"/>
-<specDesc key="model.entryLike"/>
-</specList>
---> </p>
-<p>Declarations for these module-specific element classes are included
-in a separate <ident type="module">-decls</ident> schema fragment when
-XML DTDs are used. In  RELAX NG  schema fragments, the corresponding
-declarations are given at the start of the same schema fragment as the
-other declarations. </p></div>
-
-<div type="div3" xml:id="STECMI"><head>Miscellaneous Content-Model Classes</head>
-<p>The following element classes occupy specific places in content
-models; most are relevant only when certain modules are selected
-</p></div>
+<p>As noted above, some elements and element classes belong to none of
+these groupings; however, over two-thirds of the 500+ elements defined
+in the present edition of these Guidelines are classified in this
+way. Future editions of these recommendations will extend and develop
+this classification scheme.</p>
 
 
 <div><head>List of model classes </head>
