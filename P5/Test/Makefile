@@ -53,7 +53,7 @@ TESTSPECIALFILES= \
 
 default: schemas test
 
-test: test-schema test-dtd test-dtd-xmllint test-extns test-xsd test-bad
+test: test-schema test-dtd test-dtd-xmllint test-extns test-xsd test-xsd-valid test-bad
 
 schemas:
 	xsltproc --xinclude --stringparam Modules \
@@ -102,7 +102,10 @@ test-xmllint:
 test-xsd:
 	echo JING .. for XSD....
 	-for i in $(TESTFILES);do echo $$i: ; jing $$i.xsd $$i.xml; done
+
+test-xsd-valid:
 	echo XSDVALID
+	which xsdvalid || echo no xsdvalid installed
 	-for i in $(TESTFILES);do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
 
 test-xerces:
