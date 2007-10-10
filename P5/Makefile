@@ -91,19 +91,19 @@ html-web: check
 	-mkdir Guidelines-web-tmp
 	echo making HTML Guidelines for language ${LANGUAGE}
 	mkdir -p Guidelines-web-tmp/${LANGUAGE}/html
-	cp rightarrow.gif udm.css udm*.js guidelines-beta.css COPYING.txt guidelines-print-beta.css TEI-glow.png Guidelines-web-tmp/${LANGUAGE}/html/ 
+	cp rightarrow.gif udm.css udm*.js guidelines.css COPYING.txt guidelines-print.css TEI-glow.png Guidelines-web-tmp/${LANGUAGE}/html/ 
 	xmllint  --noent --xinclude ${SOURCETREE}/Guidelines/${LANGUAGE}/guidelines-${LANGUAGE}.xml | \
 	xsltproc ${VERBOSE} \
 		--stringparam outputDir Guidelines-web-tmp/${LANGUAGE}/html \
 		--stringparam displayMode both \
 	        --stringparam lang ${LANGUAGE} \
 	        --stringparam doclang ${LANGUAGE} \
-	    Utilities/guidelines-beta.xsl -
+	    Utilities/guidelines.xsl -
 	cp -r ${SOURCETREE}/Images Guidelines-web-tmp/${LANGUAGE}/html/
 	(cd Guidelines-web-tmp/${LANGUAGE}/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done)
-	(cd Guidelines-web-tmp/${LANGUAGE}/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines-beta.css)
-	-rm -rf Guidelines-web-beta
-	-mv Guidelines-web-tmp Guidelines-web-beta
+	(cd Guidelines-web-tmp/${LANGUAGE}/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines.css)
+	-rm -rf Guidelines-web
+	-mv Guidelines-web-tmp Guidelines-web
 
 validate-html:
 	(cd Guidelines-web/${LANGUAGE}/html; \
