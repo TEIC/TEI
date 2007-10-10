@@ -459,32 +459,32 @@ element.</p>
 the <gi>egXML</gi> element. In such a case, it will clearly be necessary to
 distinguish the markup within the example from the
 markup of the document itself. In an XML schema environment, this is
-easily done by  nominating a different name
+easily done by  using a different name
 space for the  <gi>egXML</gi> element. For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The <gi>term</gi> element may be used 
+<eg><![CDATA[<p>The <gi>term</gi> element may be used 
 to mark any technical term, thus :
-<egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
   This <term>recursion</term> is 
   giving me a headache.</egXML></p>
-</egXML>
+]]></eg>
 </p>
 <p>Alternatively, the XML tagging within an example may be
 <soCalled>escaped</soCalled>, either by using entity
 references, or by wrapping the whole example in a CDATA marked
 section:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The <gi>term</gi> element may be used 
-to mark any technical term, thus :
-<egXML><![CDATA[
-  This <term>recursion</term> is 
-  giving me a headache.]]></egXML></p>
-</egXML>
-or, equivalently:
 <eg><![CDATA[<p>The <gi>term</gi> element may be used 
 to mark any technical term, thus :
-<eg><![CDATA[
-  This &lt;term>recursion&lt;/term> is 
-  giving me a headache.]]&gt;</eg>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  This &lt;term&gt;recursion&lt;/term&gt; is 
+  giving me a headache.</egXML></p>
 ]]></eg>
+or, equivalently:
+<eg>&lt;p&gt;The &lt;gi&gt;term&lt;/gi&gt; element may be used 
+to mark any technical term, thus :
+&lt;egXML xmlns="http://www.tei-c.org/ns/Examples"&gt;&lt;![CDATA[
+  This &lt;term&gt;recursion&lt;/term&gt; is 
+  giving me a headache.]]&gt;&lt;/egXML&gt;&lt;/p&gt;
+</eg>
 </p>
 <p>If the XML contained in an example is not well-formed then it must
 either be enclosed in a CDATA marked section, or
