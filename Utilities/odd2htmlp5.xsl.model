@@ -214,6 +214,26 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
   </xsl:template>
 
 
+  <xsl:template match="tei:ident">
+    <xsl:choose>
+      <xsl:when test="@type='class' and key('CLASSES',.)">
+	  <a href="ref-{.}.html">
+	      <xsl:value-of select="."/>
+	  </a>
+      </xsl:when>
+      <xsl:when test="@type">
+        <span class="ident-{@type}">
+          <xsl:apply-templates/>
+        </span>
+      </xsl:when>
+      <xsl:otherwise>
+        <span class="ident">
+          <xsl:apply-templates/>
+        </span>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="tei:gi">
     <xsl:choose>
       <xsl:when test="parent::tei:ref">
