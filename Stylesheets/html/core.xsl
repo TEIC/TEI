@@ -116,25 +116,6 @@
     </div>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements tei:analytic</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:analytic">
-    <xsl:apply-templates mode="biblStruct" select="tei:author"/>
-    <i>
-      <xsl:apply-templates mode="withbr" select="tei:title[not(@type='short')]"
-      />
-    </i>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:author</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:author" mode="biblStruct"><xsl:value-of
-      select="tei:name/@reg"/><xsl:for-each select="name[position()&gt;1]">,
-      <xsl:apply-templates/>
-    </xsl:for-each>. <br/></xsl:template>
-  <xd:doc>
     <xd:short>Process elements tei:bibl</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
@@ -157,41 +138,6 @@
 	  </xsl:with-param>
 	</xsl:call-template>
         <xsl:apply-templates/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:biblStruct</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:biblStruct">
-    <xsl:call-template name="makeAnchor"/>
-    <xsl:choose>
-      <xsl:when test="@copyOf">
-        <a class="biblink" href="{concat('#',substring(@copyOf,5,2))}">Zie
-            <xsl:value-of select="substring(@copyOf,5,2)"/></a>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:choose>
-          <xsl:when test="descendant::tei:analytic">
-            <br/>
-            <xsl:apply-templates select="tei:analytic"/>
-            <center>
-              <table border="0" width="90%">
-                <xsl:apply-templates mode="monograll" select="tei:monogr"/>
-              </table>
-            </center>
-          </xsl:when>
-          <xsl:otherwise>
-            <br/>
-            <xsl:apply-templates mode="monogrfirst" select="tei:monogr"/>
-            <center>
-              <table border="0" width="90%">
-                <xsl:apply-templates mode="monogrrest" select="tei:monogr"/>
-              </table>
-            </center>
-          </xsl:otherwise>
-        </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -861,76 +807,6 @@
     </xsl:choose>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements tei:monogr</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:monogr" mode="monograll">
-    <tr>
-      <td>
-        <xsl:choose>
-          <xsl:when test="preceding-sibling::tei:monogr"> Also in: </xsl:when>
-          <xsl:otherwise> In: </xsl:otherwise>
-        </xsl:choose>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <xsl:apply-templates mode="biblStruct" select="tei:author"/>
-        <i>
-          <xsl:apply-templates mode="withbr" select="tei:title"/>
-        </i>
-        <xsl:apply-templates select="tei:respStmt"/>
-        <xsl:apply-templates select="tei:editor"/>
-        <xsl:apply-templates select="tei:edition"/>
-        <xsl:apply-templates select="tei:imprint"/>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <xsl:apply-templates select="tei:biblScope"/>
-      </td>
-    </tr>
-    <xsl:apply-templates select="following-sibling::tei:series"/>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:monogr</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:monogr" mode="monogrfirst">
-    <xsl:apply-templates mode="biblStruct" select="tei:author"/>
-    <i>
-      <xsl:apply-templates mode="withbr" select="tei:title[not(@type='short')]"
-      />
-    </i>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:monogr</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:monogr" mode="monogrrest">
-    <tr>
-      <td>
-        <xsl:apply-templates select="tei:respStmt"/>
-        <xsl:apply-templates select="tei:editor"/>
-        <xsl:apply-templates select="tei:edition"/>
-        <xsl:apply-templates select="tei:imprint"/>
-        <xsl:if test="child::tei:note">
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Note</xsl:with-param>
-          </xsl:call-template>
-          <xsl:text>: </xsl:text>
-          <xsl:apply-templates select="child::tei:note"/>
-        </xsl:if>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <xsl:apply-templates select="tei:biblScope"/>
-      </td>
-    </tr>
-    <xsl:apply-templates select="following-sibling::tei:series"/>
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements tei:name</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
@@ -1397,29 +1273,6 @@
     <xd:short>Process element tei:title</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:title">
-    <xsl:choose>
-      <xsl:when test="@rend='plain'">
-        <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:when test="@level='j'">
-	<xsl:text>, </xsl:text>
-        <i>
-          <xsl:apply-templates/>
-        </i>
-      </xsl:when>
-      <xsl:when test="@level='a'">
-        <xsl:text>‘</xsl:text>
-        <xsl:apply-templates/>
-        <xsl:text>’ </xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <i>
-          <xsl:apply-templates/>
-        </i>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:witList</xd:short>
     <xd:detail> </xd:detail>
