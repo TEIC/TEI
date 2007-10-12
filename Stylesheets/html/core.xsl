@@ -30,6 +30,13 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
+  <xsl:key name="MNAMES"
+   match="tei:monogr/tei:author[tei:surname]|tei:monogr/tei:editor[tei:surname]" 
+   use="ancestor::tei:biblStruct/@xml:id"/>
+  <xsl:key name="ANAMES"
+   match="tei:analytic/tei:author[tei:surname]|tei:analytic/tei:editor[tei:surname]" 
+   use ="ancestor::tei:biblStruct/@xml:id"/>
+  
   <xd:doc>
     <xd:short>Process elements tei:*</xd:short>
     <xd:param name="forcedepth">forcedepth</xd:param>
@@ -754,30 +761,21 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:list/tei:label"/>
+
   <xd:doc>
     <xd:short>Process elements tei:listBibl</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
+
   <xsl:template match="tei:listBibl">
     <xsl:choose>
-      <xsl:when test="@rend='labels'">
-	<div class="listBibl">
-	  <xsl:for-each select="tei:bibl|tei:biblItem|tei:biblStruct">
-	    <div class="bibl">
-	      <span class="biblLabel">
-		<xsl:value-of select="@n"/>
-	      </span>
-	      <xsl:apply-templates select="."/>
-	    </div>
-	  </xsl:for-each>
-	</div>
-      </xsl:when>
       <xsl:when test="tei:biblStruct">
-	<xsl:apply-templates select="tei:biblStruct">
-	  <xsl:sort select="tei:*[1]/tei:author"/>
-	  <xsl:sort select="tei:*[1]/tei:editor"/>
-	  <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
-	</xsl:apply-templates>
+	<dl>
+	  <xsl:apply-templates select="tei:biblStruct">
+	    <xsl:sort select="translate(tei:*/tei:author/tei:surname|tei:*[1]/tei:author/tei:name|tei:*[1]/tei:editor/tei:surname|tei:*[1]/tei:editor/tei:name|tei:*[1]/tei:title,$uc,$lc)"/>
+	    <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
+	  </xsl:apply-templates>
+	</dl>
       </xsl:when>
       <xsl:otherwise>
 	<ol>
@@ -790,6 +788,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:mentioned</xd:short>
     <xd:detail> </xd:detail>
@@ -1187,17 +1186,6 @@
     <span class="{@type}">
       <xsl:apply-templates/>
     </span>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:series</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:series">
-    <tr>
-      <td>
-        <xsl:apply-templates/>
-      </td>
-    </tr>
   </xsl:template>
 
   <xd:doc>
@@ -2025,5 +2013,289 @@
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
+
+<!-- biblStruct -->
+<xsl:template match="tei:biblStruct" mode="xref">
+    <xsl:choose>
+      <xsl:when test="count(key('ANAMES',@xml:id))=1">
+	<xsl:value-of select="key('ANAMES',@xml:id)/tei:surname"/>
+      </xsl:when>
+      <xsl:when test="count(key('ANAMES',@xml:id))=2">
+	<xsl:value-of
+	    select="key('ANAMES',@xml:id)[1]/tei:surname"/>
+	<xsl:text> and </xsl:text>
+	<xsl:value-of select="key('ANAMES',@xml:id)[2]/tei:surname"/>
+      </xsl:when>
+      <xsl:when test="count(key('ANAMES',@xml:id))&gt;2">
+	<xsl:value-of
+	    select="key('ANAMES',@xml:id)[1]/tei:surname"/>
+	<xsl:text> et al.</xsl:text>
+      </xsl:when>
+      <xsl:when test="count(key('MNAMES',@xml:id))=1">
+	<xsl:value-of select="key('MNAMES',@xml:id)/tei:surname"/>
+      </xsl:when>
+      <xsl:when test="count(key('MNAMES',@xml:id))=2">
+	<xsl:value-of
+	 select="key('MNAMES',@xml:id)[1]/tei:surname"/>
+	<xsl:text> and </xsl:text>
+	<xsl:value-of select="key('MNAMES',@xml:id)[2]/tei:surname"/>
+      </xsl:when>
+      <xsl:when test="count(key('MNAMES',@xml:id))&gt;2">
+	<xsl:value-of
+	    select="key('MNAMES',@xml:id)[1]/tei:surname"/>
+	<xsl:text> et al.</xsl:text>
+      </xsl:when>
+      <xsl:when test=".//tei:author">
+	<xsl:value-of select=".//tei:author[1]"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<emph>
+	  <xsl:value-of select=".//tei:title[1]"/>
+	</emph>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="count(tei:*[1]/tei:editor)=1">
+	<xsl:text> (ed.)</xsl:text>
+      </xsl:when>
+      <xsl:when test="count(tei:*[1]/tei:editor)&gt;1">
+	<xsl:text> (eds.)</xsl:text>
+      </xsl:when>
+    </xsl:choose>
+    <xsl:if test="tei:monogr/tei:imprint/tei:date">
+      <xsl:text> (</xsl:text>
+      <xsl:value-of select="tei:monogr/tei:imprint/tei:date"/>
+      <xsl:text>)</xsl:text>
+    </xsl:if>
+</xsl:template>
+
+<xsl:template match="tei:biblStruct">
+<!-- biblStruct model is
+
+ analytic*
+ (monogr, series*)+
+ (model.noteLike | idno | relatedItem)*
+-->
+
+  <dt>
+    <xsl:call-template name="makeAnchor"/>
+    <xsl:apply-templates select="." mode="xref"/>
+  </dt>
+  <dd>
+  <xsl:apply-templates/>
+ </dd>
+</xsl:template>
+
+
+<!-- authors and editors -->
+<xsl:template match="tei:author|tei:editor">
+  <xsl:choose>
+    <!-- last name in a list -->
+    <xsl:when test="self::tei:author and not(following-sibling::tei:author)">
+      <xsl:apply-templates/>
+      <xsl:text>. </xsl:text>
+    </xsl:when>
+    <xsl:when test="self::tei:editor and not(following-sibling::tei:editor)">
+      <xsl:apply-templates/>
+      <xsl:text> (</xsl:text>
+      <xsl:text>ed</xsl:text>
+      <xsl:if test="preceding-sibling::tei:editor">s</xsl:if>
+      <xsl:text>.</xsl:text>
+      <xsl:text>) </xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <!-- first or middle name in a list -->
+      <xsl:apply-templates/>
+      <xsl:text>, </xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template  match="tei:surname">
+  <xsl:if test="../tei:forename">
+    <xsl:apply-templates select="../tei:forename" mode="use"/>
+    <xsl:text> </xsl:text>
+  </xsl:if>
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template  match="tei:forename"/>
+
+<xsl:template  match="tei:forename" mode="use">
+  <xsl:if test="preceding-sibling::tei:forename">
+    <xsl:text> </xsl:text>
+  </xsl:if>
+  <xsl:apply-templates/>
+</xsl:template>
+
+
+<!-- title  -->
+<xsl:template match="tei:title">
+ <xsl:choose>
+  <xsl:when test="@level='m' or not(@level)">
+   <em class="titlem"><xsl:apply-templates/></em>
+   <xsl:text>, </xsl:text>
+  </xsl:when>
+  <xsl:when test="@level='s'">
+   <span class="titles">
+     <xsl:apply-templates/>
+   </span>
+   <xsl:if test="following-sibling::*">
+     <xsl:text> </xsl:text>
+   </xsl:if>
+  </xsl:when>
+  <xsl:when test="@level='j'">
+   <em class="titlej"><xsl:apply-templates/></em>
+   <xsl:text> </xsl:text>
+  </xsl:when>
+  <xsl:when test="@level='a'">
+   <xsl:choose>
+    <xsl:when test="parent::bibl">
+     <span class="titlea"><xsl:apply-templates/></span>.
+    </xsl:when>
+    <xsl:otherwise>
+      <q class="titlea">
+	<xsl:apply-templates/>
+      </q>
+      <xsl:text>. </xsl:text>
+    </xsl:otherwise>
+   </xsl:choose>
+  </xsl:when>
+  <xsl:when test="@level='u'">
+    <xsl:choose>
+      <xsl:when test="parent::bibl">
+	<span class="titleu"><xsl:apply-templates/></span>
+	<xsl:text>. </xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<q class="titleu">
+	  <xsl:apply-templates/>
+	</q>
+	<xsl:text>. </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:when>
+  <xsl:otherwise>
+    <span class="titleu">
+      <xsl:apply-templates/>
+    </span>
+  </xsl:otherwise>
+ </xsl:choose>
+</xsl:template>
+
+
+<!-- publisher, imprint  -->
+<xsl:template match="tei:imprint">
+   <xsl:apply-templates select="tei:date"/>
+   <xsl:apply-templates select="tei:pubPlace"/>
+   <xsl:apply-templates select="tei:publisher"/>
+   <xsl:apply-templates select="tei:biblScope"/>
+</xsl:template>
+
+<xsl:template match="tei:date">
+ <xsl:apply-templates/>.
+</xsl:template>
+
+<xsl:template match="tei:pubPlace">
+ <xsl:apply-templates/>
+ <xsl:choose>
+   <xsl:when test="following-sibling::tei:pubPlace">
+     <xsl:text>, </xsl:text>
+   </xsl:when>
+   <xsl:when test="../tei:publisher">
+     <xsl:text>: </xsl:text>
+   </xsl:when>
+   <xsl:otherwise>
+     <xsl:text>. </xsl:text>
+   </xsl:otherwise>
+ </xsl:choose>
+</xsl:template>
+
+<xsl:template match="tei:publisher">
+   <xsl:apply-templates/>
+   <xsl:text>. </xsl:text>
+</xsl:template>
+
+<!-- details and notes -->
+<xsl:template match="tei:biblScope">
+ <xsl:choose>
+  <xsl:when test="@type='vol'">
+    <b>
+      <xsl:apply-templates/>
+    </b>
+  </xsl:when>
+  <xsl:when test="@type='chap'">
+   <xsl:text>chapter </xsl:text>
+   <xsl:apply-templates/>
+  </xsl:when>
+  <xsl:when test="@type='issue'">
+    <xsl:text> (</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>) </xsl:text>
+  </xsl:when>
+  <xsl:when test="@type='pp'">
+    <xsl:choose>
+      <xsl:when test="contains(.,'-')">
+	<xsl:text>pp. </xsl:text>
+      </xsl:when>
+      <xsl:when test="contains(.,'ff')">
+	<xsl:text>pp. </xsl:text>
+      </xsl:when>
+      <xsl:when test="contains(.,' ')">
+	<xsl:text>pp. </xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>p. </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+   <xsl:apply-templates/>
+  </xsl:when>
+  <xsl:otherwise>
+   <xsl:apply-templates/>
+  </xsl:otherwise>
+ </xsl:choose>
+ 
+ <xsl:choose>
+   <xsl:when test="@type='vol' and
+		   following-sibling::tei:biblScope[@type='issue']">
+     <xsl:text> </xsl:text>
+   </xsl:when>
+   <xsl:when test="@type='vol' and following-sibling::tei:biblScope">
+     <xsl:text> </xsl:text>
+   </xsl:when>
+   <xsl:when test="following-sibling::tei:biblScope">
+     <xsl:text> </xsl:text>
+   </xsl:when>
+   <xsl:otherwise>
+     <xsl:text>. </xsl:text>
+   </xsl:otherwise>
+ </xsl:choose>
+
+</xsl:template>
+
+<xsl:template match="tei:idno">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="tei:idno[@type='url']">
+  <xsl:text> &lt;</xsl:text>
+  <a href="{normalize-space(.)}">
+    <xsl:apply-templates/>
+  </a>
+  <xsl:text>&gt;.</xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:meeting">
+    <xsl:text> (</xsl:text>
+      <xsl:apply-templates/>
+    <xsl:text>)</xsl:text>
+    <xsl:if test="following-sibling::*">
+      <xsl:text> </xsl:text>
+    </xsl:if>
+</xsl:template>
+
+<xsl:template match="tei:series">
+  <xsl:apply-templates/>
+</xsl:template>
 
 </xsl:stylesheet>
