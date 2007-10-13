@@ -44,10 +44,14 @@ from yours: if the specific form of a character is important to you,
 then you should document it. </p></item>
       <item>Check the Proposed New Characters webpage (<ptr target="http://unicode.org/alloc/Pipeline.html"/>) to see whether
       the character is in line for approval.</item>
-<item>Ask on the Unicode email list (<ptr target="http://www.unicode.org/consortium/distlist.html"/>) to determine if a proposal is
-pending, or whether this is indeed a new character (or if this not a
-character at all, in which case it would not be eligible for addition
-to the Unicode Standard).  </item> </list> </p>
+
+<item>Ask on the Unicode email list (<ptr
+target="http://www.unicode.org/consortium/distlist.html"/>) to
+see whether  a proposal is pending, or to determine whether this
+character is considered eligible for addition
+to the Unicode Standard.  </item>
+
+</list> </p>
     <p>Since there are now close to 100,000 characters in Unicode,
     chances are good that what you need is already there, but it might
     not be easy to find, since it might have a different name in
@@ -289,20 +293,23 @@ described in the next section. Despite its name, this element may be
 used for either characters or glyphs.
 </p>
 <div type="div3" xml:id="ucsprops"><head>Character Properties</head>
-<p>The Unicode Standard documents <soCalled>ideal</soCalled> characters, defined by reference
-to a number of <term>properties</term> (or attribute-value pairs)
-which they are said to possess. For example, a lower case letter is
-said to have the value <code>Ll</code> for the property
-<code>general-category</code>. The Standard distinguishes between
-<term>normative</term> properties (i.e. properties which form part of
-the definition of a given character), and <term>informative</term> or
-<term>additional</term> properties which are not normative. It
-also allows for the addition of new properties, and (in some
-circumstances) alteration of the values currently assigned to certain
-properties. When making such modifications however, great care should
-be taken not to over-ride standard informative properties for
-characters which exist in the Unicode Standard.<note place="foot">See further the
-Unicode technical report TR23 <ref target="http://www.unicode.org/reports/tr23/"><title>Character Property Model</title></ref></note></p>
+<p>The Unicode Standard documents <soCalled>ideal</soCalled>
+characters, defined by reference to a number of
+<term>properties</term> (or attribute-value pairs) which they are said
+to possess. For example, a lower case letter is said to have the value
+<code>Ll</code> for the property <code>general-category</code>. The
+Standard distinguishes between <term>normative</term> properties
+(i.e. properties which form part of the definition of a given
+character), and <term>informative</term> or <term>additional</term>
+properties which are not normative. It also allows for the addition of
+new properties, and (in some circumstances) alteration of the values
+currently assigned to certain properties. When making such
+modifications, great care should be taken not to override standard
+informative properties for characters which already exist in the Unicode
+Standard.<note place="foot">See further the Unicode technical report
+TR23 <ref
+target="http://www.unicode.org/reports/tr23/"><title>Character
+Property Model</title></ref></note></p>
 <p>The <gi>charProp</gi> element allows an encoder to supply information
 about a character or glyph. Where the information concerned relates to
 a property which has already been identified in the Unicode Standard, encoders are
@@ -456,7 +463,7 @@ Character Database: Canonical Combining Class Values</ref>)<list type="gloss">
 	 the text direction: it has the value <code>Y</code>
 (character is mirrored) or <code>N</code> (code is not mirrored).</item>
 	</list></p>
-<p>the Unicode Standard also defines a set of informative (but non-normative)
+<p>The Unicode Standard also defines a set of informative (but non-normative)
 properties for Unicode characters.  If encoders want to provide such
 properties, they may be included using the suggested Unicode name,
 tagged using the <gi>unicodeName</gi> element. However, encoders may
@@ -534,7 +541,7 @@ each of the forms of the letter we wish to distinguish:
      markup in place, it will be possible to write programs to analyze
      the distribution of the different letters "r" as well as produce
      more <soCalled>faithful</soCalled> renderings of the original. It
-     will also be possible to produce normalized versions by simple ignoring
+     will also be possible to produce normalized versions by simply ignoring
      the annotation pointed to by the element <gi>g</gi>.  <!-- To make
      this kind of processing more efficient, the "type" attribute on
      <gi>g</gi> can be used, with an enumeration of different
@@ -584,8 +591,10 @@ the encoder wishes to treat it as a single precomposed character with
 transcription concerned, the encoder enters this letter as
 <code>&amp;ydotacute;</code>, which  when the
 transcription is processed can then be expanded in one of three ways,
-depending on the mapping in force. The entity reference  migh be translated into the
-sequence of corresponding Unicode codepoints, or into some locally-defined PUA character (say <code>&amp;#xE0A4</code>) for local
+depending on the mapping in force. The entity reference  might be
+translated into the sequence of corresponding Unicode codepoints, 
+or into some locally-defined PUA character 
+(say <code>&amp;#xE0A4</code>) for local
 processing only. Both these options have disadvantages; the former
 loses the fact that the sequence of composed characters is regarded as
 a single object; the second is not reliably portable. 
@@ -693,9 +702,9 @@ information provided in the <gi>char</gi> element.</p>
     document and use the properties provided through the <gi>char</gi>
     element as a handle to the character in other contexts.  </p>
 <p>In the fullness of time, a character may become standardized, and
-thus assigned a specific code point outside the PUA. Documents which
+thus assigned a specific codepoint outside the PUA. Documents which
 have been encoded using the mechanism must at the least ensure that
-this changed code point is recorded within the relevant <gi>char</gi>
+this changed codepoint is recorded within the relevant <gi>char</gi>
 element; it will however normally be simpler to remove the
 <gi>char</gi> element and replace all occurrences of <gi>g</gi>
 elements which reference it by occurrences of the newly coded
