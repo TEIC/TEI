@@ -25,6 +25,7 @@
       <xsl:choose>
       <xsl:when test="key('IDS',$x)">
 		<xsl:attribute name="corresp">
+		  <xsl:text>#</xsl:text>
 		  <xsl:value-of select="$x"/>
 		</xsl:attribute>
       </xsl:when>
