@@ -196,20 +196,23 @@
   </xd:doc>
   <xsl:template name="makeFigureEnd">
     <xsl:choose>
-      <xsl:when test="@rend='display' or tei:head or tei:p">
+      <xsl:when test="tei:head or tei:p">
         <xsl:text>&#10;	\caption{</xsl:text>
         <xsl:for-each select="tei:head">
 	  <xsl:apply-templates/>
 	</xsl:for-each>
         <xsl:text>}</xsl:text>
         <xsl:if test="@xml:id">\hypertarget{<xsl:value-of select="@xml:id"/>}{}</xsl:if>
-        <xsl:text>\end{figure}
-      </xsl:text>
       </xsl:when>
       <xsl:when test="@rend='centre'">
         <xsl:text>}\par</xsl:text>
       </xsl:when>
-      <xsl:otherwise> </xsl:otherwise>
+    </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="@rend='display' or not(@place='inline')">
+	<xsl:text>\end{figure}
+	</xsl:text>
+      </xsl:when>
     </xsl:choose>
   </xsl:template>
   <xd:doc>

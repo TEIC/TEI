@@ -113,6 +113,10 @@
               <xsl:when test="contains(@width,'pt')">
                 <xsl:value-of select="@width"/>
               </xsl:when>
+              <xsl:when test="contains(@width,'px') and $mode='latex'">
+                <xsl:value-of select="substring-before(@width,'px')"/>
+                <xsl:text>pt</xsl:text>
+              </xsl:when>
               <xsl:when test="contains(@width,'in')">
                 <xsl:value-of select="@width"/>
               </xsl:when>
