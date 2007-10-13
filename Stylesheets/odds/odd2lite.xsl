@@ -121,6 +121,8 @@
       </tei:item>
     </xsl:if>
   </xsl:template>
+  <xsl:template match="tei:specGrpRef"/>
+<!--
   <xsl:template match="tei:specGrpRef">
     <xsl:variable name="W">
       <xsl:choose>
@@ -179,6 +181,8 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+-->
+
   <xsl:template
     match="rng:*|tei:*|@*|processing-instruction()|tei:author|tei:title">
     <xsl:copy>
@@ -784,6 +788,9 @@
     </tei:hi>
   </xsl:template>
   <xsl:template name="logoFramePicture"/>
+
+  <xsl:template match="tei:specGrp"/>
+<!--
   <xsl:template match="tei:specGrp">
     <xsl:variable name="text">
       <xsl:text>The following declarations constitute
@@ -808,6 +815,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+-->
 
   <xsl:template name="makeAnchor">
     <xsl:param name="name"/>
