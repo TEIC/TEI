@@ -136,14 +136,6 @@
         </div>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="ident">
-          <xsl:apply-templates mode="ident" select="."/>
-        </xsl:variable>
-	<xsl:call-template name="makeAnchor">
-	  <xsl:with-param name="name">
-	    <xsl:value-of select="$ident"/>
-	  </xsl:with-param>
-	</xsl:call-template>
         <xsl:apply-templates/>
       </xsl:otherwise>
     </xsl:choose>
@@ -771,16 +763,28 @@
     <xsl:choose>
       <xsl:when test="tei:biblStruct">
 	<dl>
-	  <xsl:apply-templates select="tei:biblStruct">
+	  <xsl:for-each select="tei:biblStruct">
 	    <xsl:sort select="translate(tei:*/tei:author/tei:surname|tei:*[1]/tei:author/tei:name|tei:*[1]/tei:editor/tei:surname|tei:*[1]/tei:editor/tei:name|tei:*[1]/tei:title,$uc,$lc)"/>
 	    <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
-	  </xsl:apply-templates>
+	    <dt>
+	      <xsl:call-template name="makeAnchor"/>
+	      <xsl:apply-templates select="." mode="xref"/>
+	    </dt>
+	    <dd>
+	      <xsl:apply-templates select="."/>
+	    </dd>
+	  </xsl:for-each>
 	</dl>
       </xsl:when>
       <xsl:otherwise>
 	<ol>
-	  <xsl:for-each select="tei:bibl|tei:biblItem|tei:biblStruct">
+	  <xsl:for-each select="tei:bibl|tei:biblItem">
 	    <li>
+	      <xsl:call-template name="makeAnchor">
+		<xsl:with-param name="name">
+		  <xsl:apply-templates mode="ident" select="."/>
+		</xsl:with-param>
+	      </xsl:call-template>
 	      <xsl:apply-templates select="."/>
 	    </li>
 	  </xsl:for-each>
@@ -2077,13 +2081,7 @@
  (model.noteLike | idno | relatedItem)*
 -->
 
-  <dt>
-    <xsl:call-template name="makeAnchor"/>
-    <xsl:apply-templates select="." mode="xref"/>
-  </dt>
-  <dd>
   <xsl:apply-templates/>
- </dd>
 </xsl:template>
 
 
