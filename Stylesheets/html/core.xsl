@@ -1983,6 +1983,28 @@
           <xsl:comment>anchor</xsl:comment>
         </a>
       </xsl:when>
+      <xsl:otherwise>
+	<xsl:variable name="me">
+	<xsl:value-of select="$masterFile"/>-<xsl:value-of
+          select="local-name(.)"/>-<xsl:value-of
+	  select="generate-id()"/>
+	</xsl:variable>
+	<xsl:choose>
+	  <xsl:when test="$xhtml='true'">
+	    <span>
+	      <xsl:attribute name="id">
+		<xsl:value-of select="$me"/>
+	      </xsl:attribute>
+	    </span>	
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <a name="{$me}">
+	      <xsl:comment>anchor</xsl:comment>
+	    </a>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:otherwise>
+
     </xsl:choose>
   </xsl:template>
 
