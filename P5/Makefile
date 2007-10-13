@@ -146,10 +146,11 @@ pdf: xml
 	which ${XELATEX} || exit 1
 	xsltproc Utilities/guidelines-latex.xsl Guidelines.xml \
 	> Guidelines.tex
-	cp -r Source/Images .
+	mkdir -p Images
+	cp -r Source/Images/*.* Images
 	-${XELATEX} -interaction=nonstopmode Guidelines
 	-${XELATEX} -interaction=nonstopmode Guidelines
-	for i in Source/Images/*.png; do rm `basename $$i`;done
+	rm -rf Images
 
 validate: schemas oddschema exampleschema valid 
 
