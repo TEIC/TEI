@@ -14,31 +14,38 @@
    encoding="utf-8"
    cdata-section-elements="tei:eg"/>
 
-<!--
 <xsl:template match="teix:egXML">
+ 
     <xsl:variable name="x">
       <xsl:value-of select="ancestor::tei:div[@xml:id][1]/@xml:id"/>
       <xsl:text>-EGXML-</xsl:text>
       <xsl:number level="any"  from="tei:body/tei:div"/>
     </xsl:variable>
     <xsl:copy>
-      <xsl:attribute name="xml:id">
-	<xsl:value-of select="$x"/>
-      </xsl:attribute>
+      <xsl:choose>
+      <xsl:when test="key('IDS',$x)">
+		<xsl:attribute name="corresp">
+		  <xsl:value-of select="$x"/>
+		</xsl:attribute>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:message>no BIB for <xsl:value-of select="$x"/></xsl:message>
+      </xsl:otherwise>
+      </xsl:choose>
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates 
 	  select="teix:*|tei:*|rng:*|comment()|processing-instruction()|text()"/>
     </xsl:copy>
 </xsl:template>
--->
 
+
+<!--
 <xsl:template match="tei:bibl">
   <xsl:variable name="ID">
     <xsl:value-of select="ancestor::tei:div/@xml:id"/>
     <xsl:text>-BIBL-</xsl:text>
     <xsl:number level="any" from="tei:body/tei:div"/>
   </xsl:variable>
-<xsl:message>--------------------------------------</xsl:message>
   <xsl:choose>
     <xsl:when test="key('IDS',$ID)">
       <ptr xmlns="http://www.tei-c.org/ns/1.0" type="cit"
@@ -68,5 +75,6 @@ select="$ID"/>, <xsl:value-of select="key('IDS',$ID)"/></xsl:message>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
+-->
 
 </xsl:stylesheet>
