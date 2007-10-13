@@ -2113,7 +2113,9 @@
     <!-- last name in a list -->
     <xsl:when test="self::tei:author and not(following-sibling::tei:author)">
       <xsl:apply-templates/>
-      <xsl:text>. </xsl:text>
+      <xsl:if test="ancestor::tei:biblStruct">
+	<xsl:text>. </xsl:text>
+      </xsl:if>
     </xsl:when>
     <xsl:when test="self::tei:editor and not(following-sibling::tei:editor)">
       <xsl:apply-templates/>
@@ -2154,7 +2156,9 @@
  <xsl:choose>
   <xsl:when test="@level='m' or not(@level)">
    <em class="titlem"><xsl:apply-templates/></em>
-   <xsl:text>, </xsl:text>
+   <xsl:if test="ancestor::tei:biblStruct">
+     <xsl:text>, </xsl:text>
+   </xsl:if>
   </xsl:when>
   <xsl:when test="@level='s'">
    <span class="titles">
@@ -2171,13 +2175,20 @@
   <xsl:when test="@level='a'">
    <xsl:choose>
     <xsl:when test="parent::bibl">
-     <span class="titlea"><xsl:apply-templates/></span>.
+     <span class="titlea">
+       <xsl:apply-templates/>
+     </span>
+     <xsl:if test="ancestor::tei:biblStruct">
+       <xsl:text>. </xsl:text>
+     </xsl:if>
     </xsl:when>
     <xsl:otherwise>
       <q class="titlea">
 	<xsl:apply-templates/>
       </q>
-      <xsl:text>. </xsl:text>
+      <xsl:if test="ancestor::tei:biblStruct">
+	<xsl:text>. </xsl:text>
+      </xsl:if>
     </xsl:otherwise>
    </xsl:choose>
   </xsl:when>
@@ -2185,13 +2196,17 @@
     <xsl:choose>
       <xsl:when test="parent::bibl">
 	<span class="titleu"><xsl:apply-templates/></span>
-	<xsl:text>. </xsl:text>
+	<xsl:if test="ancestor::tei:biblStruct">
+	  <xsl:text>. </xsl:text>
+	</xsl:if>
       </xsl:when>
       <xsl:otherwise>
 	<q class="titleu">
 	  <xsl:apply-templates/>
 	</q>
-	<xsl:text>. </xsl:text>
+	<xsl:if test="ancestor::tei:biblStruct">
+	  <xsl:text>. </xsl:text>
+	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:when>
@@ -2213,7 +2228,10 @@
 </xsl:template>
 
 <xsl:template match="tei:date">
- <xsl:apply-templates/>.
+ <xsl:apply-templates/>
+ <xsl:if test="ancestor::tei:biblStruct">
+   <xsl:text>. </xsl:text>
+ </xsl:if>
 </xsl:template>
 
 <xsl:template match="tei:pubPlace">
@@ -2233,7 +2251,9 @@
 
 <xsl:template match="tei:publisher">
    <xsl:apply-templates/>
-   <xsl:text>. </xsl:text>
+   <xsl:if test="ancestor::tei:biblStruct">
+     <xsl:text>. </xsl:text>
+   </xsl:if>
 </xsl:template>
 
 <!-- details and notes -->
@@ -2286,9 +2306,9 @@
    <xsl:when test="following-sibling::tei:biblScope">
      <xsl:text> </xsl:text>
    </xsl:when>
-   <xsl:otherwise>
+   <xsl:when test="ancestor::tei:biblStruct">
      <xsl:text>. </xsl:text>
-   </xsl:otherwise>
+   </xsl:when>
  </xsl:choose>
 
 </xsl:template>
