@@ -1179,6 +1179,7 @@
 	  <xsl:text> cdata</xsl:text>
 	</xsl:if>
       </xsl:attribute>
+      <xsl:call-template name="makeAnchor"/>
       <xsl:apply-templates mode="verbatim"/>
     </div>
   </xsl:template>
