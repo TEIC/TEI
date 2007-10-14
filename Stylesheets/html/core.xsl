@@ -2111,7 +2111,7 @@
 <xsl:template match="tei:author|tei:editor">
   <xsl:choose>
     <!-- last name in a list -->
-    <xsl:when test="ancestor::tei:biblStruct">
+    <xsl:when test="ancestor::tei:bibl">
       <xsl:apply-templates/>
     </xsl:when>
     <xsl:when test="self::tei:author and not(following-sibling::tei:author)">
