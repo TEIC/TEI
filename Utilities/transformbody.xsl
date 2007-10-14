@@ -18,7 +18,7 @@
  
     <xsl:variable name="x">
       <xsl:value-of select="ancestor::tei:div[@xml:id][1]/@xml:id"/>
-      <xsl:text>-EGXML-</xsl:text>
+      <xsl:text>-eg-</xsl:text>
       <xsl:number level="any"  from="tei:body/tei:div"/>
     </xsl:variable>
     <xsl:copy>
