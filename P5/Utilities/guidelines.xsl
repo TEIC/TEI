@@ -31,6 +31,12 @@
   <xsl:param name="cssPrintFile">guidelines-print.css</xsl:param>
   <xsl:param name="displayMode">both</xsl:param>
 
+<xsl:key name="BACKLINKS" match="teix:egXML[@corresp]"
+	 use="substring-after(@corresp,'#')"/>
+
+<xsl:key name="BACKLINKS" match="tei:ptr[@type='cit']"
+	 use="substring-after(@target,'#')"/>
+
 
   <xsl:key name="MODEL-CLASS-MODULE" match="tei:classSpec[@type='model']"  use="@module"/>
   <xsl:key name="ATT-CLASS-MODULE" match="tei:classSpec[@type='atts']"  use="@module"/>
@@ -1119,7 +1125,25 @@ function togglerelax (el) {
 <xsl:template name="lineBreak">
   <xsl:param name="id"/>
   <xsl:text disable-output-escaping="yes">&lt;br/&gt;</xsl:text>
-
 </xsl:template>
+
+<!-- link from bibl back to egXML -->
+<xsl:template match="tei:listBibl/tei:biblStruct|tei:listBibl/tei:bibl">
+  <xsl:apply-templates/>
+  <xsl:for-each select="key('BACKLINKS',@xml:id)">
+    <xsl:if test="self::teix:egXML">
+      <xsl:text> </xsl:text>
+      <a class="link_return"
+	 title="Go back to text">
+	<xsl:attribute name="href">
+	  <xsl:apply-templates select="." mode="generateLink"/>
+	</xsl:attribute>
+	<xsl:text>&#8629;</xsl:text>
+      </a>
+    </xsl:if>
+  </xsl:for-each>
+</xsl:template>
+
+
 
 </xsl:stylesheet>
