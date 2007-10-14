@@ -1144,6 +1144,18 @@ function togglerelax (el) {
   </xsl:for-each>
 </xsl:template>
 
-
+<xsl:template name="egXMLHook">
+  <xsl:if test="@corresp and key('IDS',substring-after(@corresp,'#'))">
+    <div style="float: right;">
+	<a>
+	  <xsl:attribute name="href">
+	    <xsl:apply-templates mode="generateLink"
+				 select="key('IDS',substring-after(@corresp,'#'))"/>
+	  </xsl:attribute>
+	  <xsl:text>source</xsl:text>
+	</a>
+    </div>
+  </xsl:if>
+</xsl:template>
 
 </xsl:stylesheet>
