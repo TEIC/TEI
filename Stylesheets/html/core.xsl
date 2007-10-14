@@ -2238,6 +2238,7 @@
 <xsl:template match="tei:pubPlace">
  <xsl:apply-templates/>
  <xsl:choose>
+   <xsl:when test="ancestor::tei:bibl"/>
    <xsl:when test="following-sibling::tei:pubPlace">
      <xsl:text>, </xsl:text>
    </xsl:when>
@@ -2260,6 +2261,9 @@
 <!-- details and notes -->
 <xsl:template match="tei:biblScope">
  <xsl:choose>
+   <xsl:when test="ancestor::tei:bibl">
+     <xsl:apply-templates/>
+   </xsl:when>
   <xsl:when test="@type='vol'">
     <b>
       <xsl:apply-templates/>
