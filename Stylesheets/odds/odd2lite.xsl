@@ -57,6 +57,16 @@
   <xsl:param name="displayMode">rnc</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:variable name="top" select="/"/>
+
+
+  <xsl:template
+    match="rng:*|tei:*|@*|processing-instruction()|tei:author|tei:title">
+    <xsl:copy>
+      <xsl:apply-templates
+       select="tei:*|rng:*|@*|processing-instruction()|comment()|text()"/>
+    </xsl:copy>
+  </xsl:template>
+
   <xsl:template match="tei:tag">
     <tei:code>
       <xsl:text>&lt;</xsl:text>
@@ -183,13 +193,6 @@
   </xsl:template>
 -->
 
-  <xsl:template
-    match="rng:*|tei:*|@*|processing-instruction()|tei:author|tei:title">
-    <xsl:copy>
-      <xsl:apply-templates
-       select="tei:*|rng:*|@*|processing-instruction()|comment()|text()"/>
-    </xsl:copy>
-  </xsl:template>
   <xsl:template match="tei:specGrp/tei:p">
     <tei:label/>
     <tei:item>
@@ -304,12 +307,7 @@
       </xsl:call-template>
     </tei:p>
   </xsl:template>
-  <xsl:template match="tei:body">
-    <xsl:copy>
-      <xsl:apply-templates
-       select="tei:*|rng:*|@*|processing-instruction()|comment()|text()"/>
-    </xsl:copy>
-  </xsl:template>
+
   <xsl:template match="tei:classSpec" mode="weavebody">
     <xsl:apply-templates mode="weave"/>
     <tei:p>
@@ -373,12 +371,6 @@
     </tei:item>
   </xsl:template>
 
-  <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4">
-    <tei:div>
-      <xsl:apply-templates
-       select="tei:*|rng:*|@*|processing-instruction()|comment()|text()"/>
-    </tei:div>
-  </xsl:template>
   <xsl:template match="tei:elementSpec" mode="weavebody">
     <xsl:if test="not(tei:attList)">
       <tei:p>
@@ -604,14 +596,11 @@
       </tei:item>
     </tei:list>
   </xsl:template>
-  <xsl:template match="tei:p">
-    <tei:p>
-      <xsl:apply-templates/>
-    </tei:p>
-  </xsl:template>
+
   <xsl:template match="tei:remarks/tei:p">
       <xsl:apply-templates/>
   </xsl:template>
+
   <xsl:template match="tei:remarks" mode="doc">
     <xsl:if test="string-length(.)&gt;0">
       <tei:p>
@@ -691,22 +680,6 @@
     <xsl:apply-templates mode="contents" select="."/>
   </xsl:template>
 
-  <xsl:template match="teix:egXML">
-    <xsl:call-template name="verbatim">
-      <xsl:with-param name="label">
-        <xsl:if test="not(parent::tei:exemplum)">
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Example</xsl:with-param>
-          </xsl:call-template>
-          <xsl:text> </xsl:text>
-          <xsl:call-template name="compositeNumber"/>
-        </xsl:if>
-      </xsl:with-param>
-      <xsl:with-param name="text">
-        <xsl:apply-templates mode="verbatim"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
   <xsl:template name="moduleInfo">
     <tei:p>
       <tei:hi>
@@ -979,6 +952,7 @@
       </tei:div>
     </xsl:if>
   </xsl:template>
+
   <xsl:template match="tei:schemaSpec">
     <xsl:call-template name="processSchemaFragment"/>
   </xsl:template>
