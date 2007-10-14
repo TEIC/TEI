@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Copyright TEI Consortium. 
+<!--
+Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
-See the file COPYING for details
+See the file COPYING.txt for details
 $Date$
-
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" 
-	     xmlns:rng="http://relaxng.org/ns/structure/1.0" 
-	     ident="application" 
-	     module="header">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="application" module="header">
   <desc>provides information about an application which has acted
   upon the document.</desc>
   <classes>
@@ -17,7 +14,7 @@ $Id$
     <memberOf key="att.datable"/>
     <memberOf key="model.applicationLike"/>
   </classes>
-  <content xmlns:rng="http://relaxng.org/ns/structure/1.0" >
+  <content>
     <rng:group>
       <rng:oneOrMore>
 	<rng:ref name="model.labelLike"/>
@@ -37,17 +34,16 @@ $Id$
       <desc>Supplies an identifier for the application, independent of
       its version number or display name.</desc>
       <datatype>
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/>
+	<rng:ref name="data.name"/>
       </datatype>
     </attDef>
     
     <attDef ident="version" usage="req">
       <desc>Supplies a version number for the application, independent of
       its identifier or display name.</desc>
-      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <datatype>
 	<rng:data type="token">
-	  <rng:param 
-	      name="pattern">[\d]+[a-z]*[\d]*(\.[\d]+[a-z]*[\d]*){0,3}</rng:param>  
+	  <rng:param name="pattern">[\d]+[a-z]*[\d]*(\.[\d]+[a-z]*[\d]*){0,3}</rng:param>  
 	</rng:data>
 	<!--
 	    This matches the following types of version numbers:
@@ -68,9 +64,7 @@ $Id$
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <appInfo>
-	<application  version="1.5"
-		      ident="ImageMarkupTool1"
-		      notAfter="2006-06-01">
+	<application version="1.5" ident="ImageMarkupTool1" notAfter="2006-06-01">
 	  <label>Image Markup Tool</label>
 	  <ptr target="#P1"/>
 	  <ptr target="#P2"/>
