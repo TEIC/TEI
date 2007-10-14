@@ -2151,6 +2151,10 @@
   <xsl:apply-templates/>
 </xsl:template>
 
+<xsl:template
+    match="tei:biblStruct/tei:monogr/tei:respStmt/tei:persName">
+  <xsl:apply-templates/>
+</xsl:template>
 
 <!-- title  -->
 <xsl:template match="tei:title">
