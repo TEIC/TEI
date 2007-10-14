@@ -24,10 +24,10 @@
     <xsl:copy>
       <xsl:choose>
       <xsl:when test="key('IDS',$x)">
-		<xsl:attribute name="corresp">
-		  <xsl:text>#</xsl:text>
-		  <xsl:value-of select="$x"/>
-		</xsl:attribute>
+	<xsl:attribute name="corresp">
+	  <xsl:text>#</xsl:text>
+	  <xsl:value-of select="$x"/>
+	</xsl:attribute>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:message>no BIB for <xsl:value-of select="$x"/></xsl:message>
