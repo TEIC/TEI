@@ -2,7 +2,7 @@
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
-See the file COPYING for details.
+See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
@@ -33,8 +33,7 @@ will be used to provide an ODD processing environment.</p>
 to generate multiple outputs. These outputs will include:
 <list>
 <item>formal reference documentation for elements, attributes, element
-classes, patterns etc. such as those provided in <ptr
-target="#REF-ELEMENTS"/> below;</item>
+classes, patterns etc. such as those provided in <ptr target="#REF-ELEMENTS"/> below;</item>
 <item>detailed descriptive documentation, embedding some parts of the
 formal reference documentation, such as the tag description lists
 provided in this and other chapters of these Guidelines;</item>
@@ -97,8 +96,7 @@ formal language:
   <specDesc key="ident"/>
 </specList>
 Like other phrase-level elements used to indicate the semantics of a
-typographically distinct string, these are members of the <ident
-type="class">model.emph</ident> class. They are available anywhere
+typographically distinct string, these are members of the <ident type="class">model.emph</ident> class. They are available anywhere
 that running prose is permitted when the module defined by this
 chapter is included in a schema.</p>
 
@@ -112,8 +110,7 @@ such as <code>x=y/z</code> will usually cause a fatal error.</p>
 </p>
 
 <p>If the cited phrase is a mathematical or chemical formula, the more
-specific <gi>formula</gi> element defined by the <ident
-type="module">figures</ident> module (<ptr target="#FTFOR"/>) may be
+specific <gi>formula</gi> element defined by the <ident type="module">figures</ident> module (<ptr target="#FTFOR"/>) may be
 more appropriate. </p>
 
 
@@ -126,9 +123,7 @@ for the special case of representing parts of an XML document:
   <specDesc key="tag"/>
   <specDesc key="val"/>
 </specList>
-These elements constitute the <ident
-type="class">model.phrase.xml</ident> class, which is also a subclass of <ident
-type="class">model.phrase</ident>. They are also available anywhere
+These elements constitute the <ident type="class">model.phrase.xml</ident> class, which is also a subclass of <ident type="class">model.phrase</ident>. They are also available anywhere
 that running prose is permitted when the module defined by this
 chapter is included in a schema.
  </p>
@@ -167,10 +162,8 @@ markup, the <gi>egXML</gi> element should be used for preference, as
 further discussed below in <ptr target="#TDeg"/>, since the content of
 this element can be checked for well-formedness. </p>
 
-<p>These elements are added to the class <ident
-type="class">model.egLike</ident> when this module is included in a
-schema. That class is a part of the general <ident
-type="class">model.inter</ident> class, thus permitting <gi>eg</gi> or
+<p>These elements are added to the class <ident type="class">model.egLike</ident> when this module is included in a
+schema. That class is a part of the general <ident type="class">model.inter</ident> class, thus permitting <gi>eg</gi> or
 <gi>egXML</gi> elements to appear either within or between
 paragraph-like elements. </p>
 </div>
@@ -225,16 +218,46 @@ specification element is indicated by its <att>key</att> attribute,
 together with any associated attribute list, as in the example
 above.</p>
 <specGrp xml:id="TDSG1" n="Phrase-level elements for tag documentation">
+
+
 &att;
+
+
+
 &code;
+
+
+
 &eg;
+
+
+
 &egXML;
+
+
+
 &gi;
+
+
+
 &ident;
+
+
+
 &tag;
+
+
+
 &val;
+
+
+
 &specList;
+
+
+
 &specDesc;
+
 </specGrp>
 </div>
 </div>
@@ -272,8 +295,7 @@ module specification like the following:
 together with specifications for all the elements, classes, and
 patterns which make up that module, expressed using
 <gi>elementSpec</gi>, <gi>classSpec</gi>, or <gi>patternSpec</gi>
-elements as appropriate. (These elements are discussed in section <ptr
-target="#TDcrystals"/> below) Each of those specifications carries a
+elements as appropriate. (These elements are discussed in section <ptr target="#TDcrystals"/> below) Each of those specifications carries a
 <att>module</att> attribute, the value of which is
 <code>namesdates</code>. An ODD processor encountering the
 <gi>moduleSpec</gi> element above can thus generate a schema fragment
@@ -351,12 +373,30 @@ which they are defined, and cannot be referenced externally (unlike
 modules). </p>
 
 <specGrp xml:id="TDSG2" n="Modules and Specification Groups">
+
+
 &moduleRef;
+
+
+
 &moduleSpec;
+
+
+
 &schemaSpec;
+
+
+
 &specGrp;
+
+
+
 &specGrpRef;
+
+
+
 &stringVal;
+
 </specGrp>
 </div>
 
@@ -397,9 +437,18 @@ concerned in a catalogue of markup objects. These latter two actions
 always occur irrespective of whether or not the declaration is
 included in a <gi>specGrp</gi>. </p>
 <specGrp xml:id="TDSG3" n="Specification elements">
+
+
 &elementSpec;
+
+
+
 &classSpec;
+
+
+
 &macroSpec;
+
 </specGrp>
 </div>
 <div type="div3" xml:id="TDcrystalsCE"><head>Common Elements</head>
@@ -479,12 +528,12 @@ to mark any technical term, thus :
   giving me a headache.</egXML></p>
 ]]></eg>
 or, equivalently:
-<eg>&lt;p&gt;The &lt;gi&gt;term&lt;/gi&gt; element may be used 
+<eg><![CDATA[<p>The <gi>term</gi> element may be used 
 to mark any technical term, thus :
-&lt;egXML xmlns="http://www.tei-c.org/ns/Examples"&gt;&lt;![CDATA[
-  This &lt;term&gt;recursion&lt;/term&gt; is 
-  giving me a headache.]]&gt;&lt;/egXML&gt;&lt;/p&gt;
-</eg>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+  This <term>recursion</term> is 
+  giving me a headache.]]]]><![CDATA[></egXML></p>
+]]></eg>
 </p>
 <p>If the XML contained in an example is not well-formed then it must
 either be enclosed in a CDATA marked section, or
@@ -522,15 +571,36 @@ element contains the following <gi>classes</gi> element:
 
 <specGrp xml:id="TDSG4" n="Common specification elements">
 <!--&gloss;-->
+
+
 &remarks;
+
+
+
 &listRef;
+
+
+
 &exemplum;
+
 <!--eg.odd;-->
 <!--&egXML;-->
+
+
 &classes;
+
+
+
 &memberOf;
+
+
+
 &equiv;
+
+
+
 &altIdent;
+
 </specGrp>
 </div>
 <div type="div3" xml:id="TDTAG"><head>Element Specifications</head>
@@ -807,8 +877,7 @@ no specific semantics </desc>
 </classSpec>
 </egXML>
 which indicate that the class <ident type="class">model.hiLike</ident>
-is actually a member (or subclass) of the class <ident
-type="class">model.highlighted</ident>.
+is actually a member (or subclass) of the class <ident type="class">model.highlighted</ident>.
  </p>
 
 <p>When a model class is referenced in the content model of an element
@@ -889,8 +958,7 @@ the members of that class inherit the attributes specified by it. For
 example, the class <ident type="class">att.interpLike</ident> defines
 a small set of attributes common to all elements which are members of
 that class: those attributes are listed by the <gi>attList</gi>
-element contained by the <gi>classSpec</gi> for <ident
-type="class">att.interpLike</ident>. When processing the documentation
+element contained by the <gi>classSpec</gi> for <ident type="class">att.interpLike</ident>. When processing the documentation
 elements for elements which are members of that class, an ODD
 processor is required to extend the <gi>attList</gi> (or equivalent)
 for such elements to include any attributes defined by the
@@ -905,16 +973,46 @@ see section <ptr target="STEC"/>.-->
 
 
 <specGrp xml:id="TDSG5" n="Element specification elements">
+
+
 &content;
+
+
+
 &macro.schemapattern;
+
+
+
 &attList;
+
+
+
 &attDef;
+
+
+
 &attRef;
+
+
+
 &datatype;
+
+
+
 &defaultVal;
+
+
+
 &valDesc;
+
+
+
 &valItem;
+
+
+
 &valList;
+
 </specGrp>
 </div>
 <div type="div3" xml:id="TDENT"><head>Pattern Documentation</head>
@@ -937,10 +1035,12 @@ following components additional to those already introduced:
 members of the <ident type="class">att.identified</ident> class, from
 which they inherit the following attributes:
 
-<specList><specDesc key="att.identified" atts="ident predeclare module
-  mode"/></specList>
+<specList><specDesc key="att.identified" atts="ident predeclare module   mode"/></specList>
 </p>
+
+
 &att.identified;
+
 
 <p>These attributes are used by an ODD processor to determine how
 declarations are to be combined to form a schema or DTD, as further
@@ -1091,7 +1191,7 @@ it may be referenced by other TEI elements. To achieve this, we modify
 the last <gi>moduleRef</gi> in the above example as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
     <moduleRef url="svg11.rng">
-	<content xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/Examples">
+	<content xmlns:rng="http://relaxng.org/ns/structure/1.0">
 	  <rng:define name="tei_model.graphicLike" combine="choice">
 	    <rng:ref name="svg"/>
 	  </rng:define>

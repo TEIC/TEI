@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
-See the file COPYING for details.
+See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="FT" n="22"><head xmlns="http://www.tei-c.org/ns/1.0">Tables, Formulae, and Graphics</head>
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="FT" n="22"><head>Tables, Formulae, and Graphics</head>
 <p>Many documents, both historical and contemporary, include not only
 text, but also graphics, artwork, and other images.  Although some
 types of images can be represented directly with markup, 
@@ -56,7 +57,7 @@ Each one includes a very brief description.  These Guidelines recommend
 a few particular representations as being the most widely supported and
 understood.</p>
 
-<div type="div2" xml:id="FTTAB"><head xmlns="http://www.tei-c.org/ns/1.0">Tables</head>
+<div type="div2" xml:id="FTTAB"><head>Tables</head>
 <p>A table is the least <soCalled>graphic</soCalled> of the elements
 discussed in this chapter.  Almost any text structure can be presented
 as a series of rows and columns:  one might, for example, choose to show
@@ -85,7 +86,7 @@ section begins by describing a table schema of this kind; a brief
 summary of some other widely available table schemas is also provided
 in section <ptr target="#FTTAB2"/>.
  </p>
-<div type="div3" xml:id="FTTAB1"><head xmlns="http://www.tei-c.org/ns/1.0">TEI Tables</head>
+<div type="div3" xml:id="FTTAB1"><head>TEI Tables</head>
 <p>For encoding tables of low to moderate complexity, these Guidelines
 provide the following special purpose elements:
 <specList><specDesc key="table" atts="rows cols"/><specDesc key="row"/><specDesc key="cell"/></specList>
@@ -127,7 +128,7 @@ and <gi>row</gi> are members; see further <ptr target="#STECAT"/>. </p>
 <p>The following simple example demonstrates how the data presented as a
 labelled list in section <ptr target="#COLI"/> might be represented by an
 encoder wishing to preserve its original appearance as a table:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><table rend="boxed" rows="2" cols="2">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#FTTAB1-eg-1"><table rend="boxed" rows="2" cols="2">
    <head rend="it">Report of the conduct and progress
       of Ernest Pontifex.  Upper Vth form — half
       term ending Midsummer 1851</head>
@@ -234,12 +235,21 @@ means of conveying the same information:
 nature and significance of the information, rather than merely
 suggesting how to display it in rows and columns.</p>
 <specGrp xml:id="DFTTAB" n="Tables">
+
+
 &table;
+
+
+
 &row;
+
+
+
 &cell;
+
 </specGrp>
 </div>
-<div type="div3" xml:id="FTTAB2"><head xmlns="http://www.tei-c.org/ns/1.0">Other Table Schemas</head>
+<div type="div3" xml:id="FTTAB2"><head>Other Table Schemas</head>
 <p>Many authoring systems include built-in support for their
 own or for public table schemas.  These provide an enhanced user
 interface and good formatting capabilities, but are often
@@ -304,7 +314,7 @@ Style sheets provide a far more effective means of controlling layout
 and other visual characteristics in both HTML and XML documents.
 </p>
  </div></div>
-<div type="div2" xml:id="FTFOR"><head xmlns="http://www.tei-c.org/ns/1.0">Formulae and
+<div type="div2" xml:id="FTFOR"><head>Formulae and
 Mathematical Expressions</head>
 <p>Mathematical and chemical formulæ pose  problems similar to
 those posed by tables in that rendition may be of great significance and
@@ -355,7 +365,7 @@ contain character data which is not validated in any way:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><formula notation="TeX">$e=mc^2$</formula></egXML>
 The character data must still be well-formed, of course, which means that <mentioned>&lt;</mentioned> and
 <mentioned>&amp;</mentioned> must be escaped with entity references or numeric character references, e.g.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<formula notation="TeX">$\matrix{0 &amp; 1\cr&lt;0&amp;>1}$</formula>]]></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;formula notation="TeX"&gt;$\matrix{0 &amp;amp; 1\cr&amp;lt;0&amp;amp;&gt;1}$&lt;/formula&gt;</egXML>
 </p>
 <p>If desired, the content of the <gi>formula</gi> element may be
 redefined to include elements defined by some other module, such as
@@ -368,7 +378,7 @@ For further details see chapter <ptr target="#MD"/>.</note>
 XML the notation used should be
 specified using the <att>notation</att> attribute as above,
 and in the following longer example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>Achilles runs ten times faster than the tortoise and
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#FTFOR-eg-10"><p>Achilles runs ten times faster than the tortoise and
 gives the animal a headstart of ten meters.  Achilles runs
 those ten meters, the tortoise one; Achilles runs that
 meter, the tortoise runs a decimeter; Achilles runs that
@@ -413,29 +423,7 @@ expression. Most of its content elements correspond with the range of
 operators, relations, and named functions typically found at the high
 school level of mathematics. The tortoise example given above
 in TeX can be re-expressed in MathML as
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><math xmlns="http://www.w3.org/1998/Math/MathML"> 
-   <mfrac>
-      <mrow> <mn>1</mn> </mrow> 
-      <mrow> <mn>10</mn> </mrow>
-   </mfrac> 
-   <mo>+</mo>
-   <mfrac>
-      <mrow> <mn>1</mn> </mrow>
-      <mrow> <mn>100</mn> </mrow>
-   </mfrac> 
-   <mo>+</mo>
-   <mfrac>
-      <mrow> <mn>1</mn> </mrow> 
-      <mrow> <mn>1000</mn> </mrow>
-   </mfrac> 
-   <mo>+</mo>
-   <mfrac>
-      <mrow> <mn>1</mn> </mrow> 
-      <mrow> <mn>10000</mn> </mrow>
-   </mfrac> 
-   <mo>+</mo> 
-   <mo>…</mo>
-</math></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"/>
 </p>
   <p>MathML 2.0 (<ptr target="http://www.w3.org/TR/MathML2"/>)
 adds to these some additional elements for MathML Content Markup,
@@ -483,19 +471,7 @@ identify the formula, as in the following (imaginary) example:<note place="foot"
 included in the TEI name space</note>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The volume of a sphere is given by the formula:
 <formula xml:id="f12" n="12" rend="inline">
- <math xmlns="http://www.w3.org/1998/Math/MathML">
-   <mi>V</mi>
-   <mo>=</mo>
-   <mfrac>
-      <mrow> <mn>4</mn> </mrow>
-      <mrow> <mn>3</mn> </mrow>
-   </mfrac>
-   <mi>π</mi>
-   <msup>
-      <mrow> <mi>r</mi> </mrow>
-      <mrow> <mn>3</mn> </mrow>
-   </msup>
- </math>
+ 
 </formula>
 which is readily calculated.</p>
 <p>As we have seen in equation 
@@ -503,10 +479,13 @@ which is readily calculated.</p>
  </p>
 
 <specGrp xml:id="DFTFOR" n="Formulae">
+
+
 &formula;
+
 </specGrp>
 </div>
-<div type="div2" xml:id="FTGRA"><head xmlns="http://www.tei-c.org/ns/1.0">Specific Elements for Graphic Images</head>
+<div type="div2" xml:id="FTGRA"><head>Specific Elements for Graphic Images</head>
 <p>The following special purpose elements are used to indicate the presence of graphic images within a document:
 <specList>
 <specDesc key="figure"/>
@@ -532,7 +511,7 @@ Bridge</head></figure></egXML></p>
 by a paragraph or so of commentary or caption. One or more <gi>p</gi> or <gi>ab</gi>
 elements <!-- following the <gi>head</gi> --> may be used to transcribe any
 caption or discussion of the figure in the source:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><figure><graphic url="pullman.png"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#FTGRA-eg-16"><figure><graphic url="pullman.png"/>
   <head>Above:</head>
   <p>The drawing room of the Pullman house, the white and gold saloon
     where the magnate delighted in giving receptions for several
@@ -571,7 +550,7 @@ encoder's understanding of the relationship between the graphic and
 the surrounding text.</p>
 <p>A figure which is internally divided, or contains sub-figures, may
 be encoded with nested <gi>figure</gi> elements, as in the following example.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#FTGRA-eg-18">
   <figure n="6.45">
     <figure n="a">
       <graphic url="./figs/6.45a.png"/>
@@ -601,8 +580,7 @@ other. Referring to the example above, we will assume that the entity
 <ident>Fig1th</ident> contains a thumbnail version of the full Fig1.
 We can now embed a reference to that image using the simple
 <gi>ref</gi> element discussed in section <ptr target="#COXR"/>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><ref
-target="#IM1">Click here
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="#IM1">Click here
   <graphic url="fig1th.png"/>
   for enlightenment
 </ref>
@@ -630,15 +608,7 @@ easily done by pointing into an XML graphic representation, for example an SVG f
 <q>Fig1</q> by pointing at elements inside the XML file <ident type="file">Fig1.svg</ident>, which contains the following.
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<svg xmlns="http://www.w3.org/2000/svg"
-     width="8cm" height="3cm" viewBox="2 1 8 3">
- <g id="object1">
-  <ellipse style="fill: #ffffff" cx="3.875" cy="3.025" rx="1.175" ry="1.175"/>
- </g>
- <g id="object2">
-  <rect style="fill: #a81616" x="7.8" y="1.9" width="2.17581" height="2.24833"/>
-</g>
-</svg>
+
 </egXML>
 </p>
 <p>The next requirement is some way of identifying the parts of the
@@ -671,10 +641,16 @@ examples are provided in chapter <ptr target="#SA"/>.</p>
 
 
 <specGrp xml:id="DFTGRA" n="Figures">
+
+
 &figure;
+
+
+
 &figDesc;
+
 </specGrp></div>
-<div type="div2" xml:id="FTGROV"><head xmlns="http://www.tei-c.org/ns/1.0">Overview of Basic Graphics Concepts</head>
+<div type="div2" xml:id="FTGROV"><head>Overview of Basic Graphics Concepts</head>
 <p>The first major distinction in graphic representation is that between
 raster graphics and vector graphics.  A <term>raster image</term> is a
 list of points, or dots.  Scanners, fax machines and other simple
@@ -743,7 +719,7 @@ some shade of gray, the number of shades varying from system to system.
 In true polychrome images, points are rendered in different colours,
 again with varying limitations affecting the number of distinct shades
 and the means by which they are displayed.</p></div>
-<div type="div2" xml:id="FTGRNO"><head xmlns="http://www.tei-c.org/ns/1.0">Graphic Image Formats</head>
+<div type="div2" xml:id="FTGRNO"><head>Graphic Image Formats</head>
 
 <p>As noted above, there exists a bewildering variety of different
 graphics formats, and the following list is in no way exhaustive.
@@ -780,8 +756,8 @@ BSI, and many more), are available from those national organizations.
 Addresses may be found in any standard organizational directory for the
 country in question.
 	</p>
-<div type="div3" xml:id="FTGRAVGF"><head xmlns="http://www.tei-c.org/ns/1.0">Vector Graphic Formats</head>
-<list xmlns="http://www.tei-c.org/ns/1.0" type="gloss"><label>CGM:  Computer Graphics Metafile</label>
+<div type="div3" xml:id="FTGRAVGF"><head>Vector Graphic Formats</head>
+<list type="gloss"><label>CGM:  Computer Graphics Metafile</label>
 <item>This  vector graphics format is
 specified by an ISO standard, ISO 8632:1987, amended in 1990.
 It defines binary, character, and plain-text encodings;
@@ -802,8 +778,8 @@ readable by a limited range of software for other systems.
 Documentation is available from Apple Computer Company, Cupertino,
 California USA.
  </item></list></div>
-<div type="div3" xml:id="FTGRARGF"><head xmlns="http://www.tei-c.org/ns/1.0">Raster Graphic Formats</head>
-<list xmlns="http://www.tei-c.org/ns/1.0" type="gloss">
+<div type="div3" xml:id="FTGRARGF"><head>Raster Graphic Formats</head>
+<list type="gloss">
 <label>PNG:  Portable Network Graphics format</label>
 <item>PNG is the only non-proprietary raster format currently widely
 available. It provides an
@@ -856,8 +832,8 @@ is available from Microsoft Corporation.
  </item>
  </list></div>
 <div type="div3" xml:id="FTGRAMPEG">
-<head xmlns="http://www.tei-c.org/ns/1.0">Photographic and Motion Video Formats</head>
-<list xmlns="http://www.tei-c.org/ns/1.0" type="gloss"><label>JPEG:  Joint Photographic Experts Group</label>
+<head>Photographic and Motion Video Formats</head>
+<list type="gloss"><label>JPEG:  Joint Photographic Experts Group</label>
 <item>This standard is sponsored by CCITT and by ISO.  It is ISO/IEC
 Draft International Standard 10918-1, and CCITT T.81.  It handles
 monochrome and color images with a variety of compression techniques.

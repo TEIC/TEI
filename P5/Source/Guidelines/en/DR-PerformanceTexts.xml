@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
-See the file COPYING for details.
+See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="DR" n="10"><head xmlns="http://www.tei-c.org/ns/1.0">Performance Texts</head>
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="DR" n="10"><head>Performance Texts</head>
 <p>This module is intended for use when encoding printed dramatic
 texts, screen plays or radio scripts, and written transcriptions of any
 form of performance.
@@ -62,8 +63,7 @@ back matter:
 are discussed in the remainder of this section, in the order given
 above.  In addition, the front matter of dramatic texts may include
 the same elements as that of any other kind of text, notably title
-pages and various kinds of text division, as discussed in section <ptr
-target="#DSFRONT"/>.  The encoder may choose to ignore the specialized
+pages and various kinds of text division, as discussed in section <ptr target="#DSFRONT"/>.  The encoder may choose to ignore the specialized
 elements discussed in this section and instead use constructions of
 the type <tag>div type="performance"</tag> or <tag>div1
 type="set"</tag>.
@@ -128,7 +128,10 @@ following examples:
  </p>
 
 <specGrp xml:id="DDRSET" n="The set element">
+
+
 &set;
+
 </specGrp>
 </div>
 <div type="div3" xml:id="DRPRO"><head>Prologues and Epilogues</head>
@@ -141,7 +144,7 @@ appropriate.
 <specList><specDesc key="prologue"/><specDesc key="epilogue"/></specList>
 A prologue may be encoded just like a distinct poem, as in the following
 example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><front>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRPRO-eg-6"><front>
   <prologue>
     <head>Prologue, spoken by <name>Mr. Hart</name></head>
     <l>Poets like Cudgel'd Bullys, never do</l>
@@ -166,7 +169,7 @@ example:
 <gi>sp</gi> element described in section <ptr target="#CODR"/>.  This is
 particularly appropriate where stage directions, etc., are involved, as
 in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><epilogue>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRPRO-eg-7"><epilogue>
    <head>Written by <name>Colley Cibber, Esq</name>
     and spoken by <name>Mrs. Cibber</name></head>
    <sp>
@@ -198,7 +201,7 @@ play.  In the First Folio version of Shakespeare's
 <title>Tempest</title>, for example, Prospero's final speech is clearly
 marked off as a distinct textual unit by the headings and layout of the
 page, and might therefore be encoded as back matter:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRPRO-eg-8"><text>
   <body>
     <div1 type="scene">
       <sp>
@@ -235,7 +238,7 @@ page, and might therefore be encoded as back matter:
  </p>
 <p>In many modern editions, the editors have chosen to regard
 Prospero's speech as a part of the preceding scene:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRPRO-eg-9"><sp>
   <speaker>Prospero</speaker>
   <l part="Y">I'll deliver all,</l>
   <l>And promise you calm seas, auspicious gales,</l>
@@ -253,8 +256,14 @@ Prospero's speech as a part of the preceding scene:
  </p>
 
 <specGrp xml:id="DDRPRO" n="The prologue and epilogue elements">
+
+
 &prologue;
+
+
+
 &epilogue;
+
 </specGrp>
 </div>
 <div type="div3" xml:id="DRPERF"><head>Records of Performances</head>
@@ -283,7 +292,7 @@ No particular elements for such features as stagehouses,
 directors, etc., are proposed at this time.
  </p>
 <p>For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><performance>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRPERF-eg-12"><performance>
    <head>Death of a Salesman</head>
    <p>A New Play by Arthur Miller</p>
    <p>Staged by Elia Kazan</p>
@@ -323,7 +332,7 @@ directors, etc., are proposed at this time.
 	<!-- Last series of P elements could be LIST TYPE='SIMPLE'    -->
 	<!-- -msm                                                     -->
 Or:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><performance>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRPERF-eg-13"><performance>
    <p>La Machine Infernale a été
     représentée pour la première fois au
     <rs type="place-theatre">théâtre Louis-Jouvet</rs>
@@ -335,7 +344,10 @@ Or:
 <!-- La Machine Infernale, Jean Cocteau -->
  </p>
 <specGrp xml:id="DDRPERF" n="The performance element">
+
+
 &performance;
+
 </specGrp>
 </div>
 <div type="div3" xml:id="DRCAST"><head>Cast Lists</head>
@@ -347,8 +359,7 @@ the name of an actor or actress (<q>Old Lady Squeamish. Mrs
 Rutter</q>).  Cast lists may be encoded with the general purpose
 <gi>list</gi> element described in section <ptr target="#COLI"/>, but for
 more detailed work the following specialized elements are provided:
-<specList><specDesc key="castList"/><specDesc
-key="castGroup"/><specDesc key="castItem" atts="type"/></specList>
+<specList><specDesc key="castList"/><specDesc key="castGroup"/><specDesc key="castItem" atts="type"/></specList>
 </p><p>A <gi>castItem</gi> element may contain any mixture of elements
 taken from the <ident type="class">model.castItemPart</ident> class,
 members of which (when this module is included) are:
@@ -371,7 +382,7 @@ name of the producer or director, and so forth.  When the cast list
 relates to a specific performance, it should be embedded within a
 <gi>performance</gi> element (see section <ptr target="#DRPERF"/>), as in
 the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><performance>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRCAST-eg-16"><performance>
   <p>The first performance in Great Britain of <title>Waiting for
 	  Godot</title> was given at the Arts Theatre, London, on <date when="1955-08-03">3rd August 1955</date>. It was directed by
 	  <name>Peter Hall</name>, and the décor was by <name>Peter
@@ -401,7 +412,7 @@ speeches within the text explicitly to the role, using the
 <p>The occasionally lengthy descriptions of a role sometimes found in
 written play scripts may be marked using the <gi>roleDesc</gi> element,
 as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><castItem> 
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRCAST-eg-18"><castItem> 
    <role>Tom Thumb the Great</role>
    <roleDesc>a little hero with a great soul, something violent in his
     temper, which is a little abated by his love for Huncamunca</roleDesc>
@@ -435,7 +446,7 @@ use of whitespace), by long braces or by some other means.  A
 <gi>castGroup</gi> may contain  an optional heading (represented as
 usual by a <gi>head</gi> element) followed by a series of
 <gi>castItem</gi> elements:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><castGroup rend="braced">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRCAST-eg-21"><castGroup rend="braced">
    <head>friends of Mathias</head>
    <castItem>        
       <role>Walter</role>
@@ -468,7 +479,7 @@ alike, rather than in some cases being treated as headings. On the
 other hand there are also  cases, such as the following, where the
 role description does function more like a heading:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><castList>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRCAST-eg-23"><castList>
    <castGroup>
       <head rend="braced">Mendicants</head>
       <castItem> <role>Aafaa</role>    <actor>Femi Johnson</actor> </castItem>
@@ -495,12 +506,30 @@ role description does function more like a heading:
 <!-- Soyinka, Madmen and Specialists, Methuen 1971 -->
  </p>
 <specGrp xml:id="DDRCAST" n="The castList element">
+
+
 &castList;
+
+
+
 &castGroup;
+
+
+
 &castItem;
+
+
+
 &role;
+
+
+
 &roleDesc;
+
+
+
 &actor;
+
 </specGrp>
 </div>
 </div>
@@ -529,7 +558,7 @@ described in section <ptr target="#DSDIV"/>.  The <att>type</att> and
 <att>n</att> attributes may be used to define the type of division being
 marked, and to provide a name or number for it, as in the following
 example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRDIV-eg-31"><body>
    <div1 type="scene" n="1">
       <head>Night—Faust's Study (i)</head>
    </div1> 
@@ -542,7 +571,7 @@ example:
 subdivided, most obviously in the case of plays traditionally divided
 into acts and scenes, further nested text-division elements may be used,
 as in this example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRDIV-eg-32"><body>
   <div1 type="act" n="1">
 	<head>Act One</head>
 	<div2 type="scene" n="1">
@@ -626,7 +655,7 @@ codes included in it must correspond with codes which are specified
 elsewhere in the document as identifiers for particular elements,
 typically the <gi>role</gi> element in the cast list where the character
 is named or described, as discussed in <ptr target="#DRFAB"/> above.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><castList>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRSP-eg-34"><castList>
    <castItem> <role xml:id="menae">Menaechmus</role> </castItem>
    <castItem> <role xml:id="penic">Peniculus</role> </castItem>
 </castList>
@@ -644,7 +673,7 @@ part of an <gi>sp</gi> element. The distinction between the
 possible to encode uniformly characters whose names are not indicated in
 a uniform fashion throughout the play, or characters who appear in
 disguise, as in the following examples:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><castList>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRSP-eg-35"><castList>
    <castItem><role xml:id="hh">Henry Higgins</role></castItem>
 </castList>
 <sp who="#hh">
@@ -658,7 +687,7 @@ attribute), or are of no interest for the encoder of the text (as might
 be the case with editorially supplied attributions in older texts), then
 the <gi>speaker</gi> element need not be used; the former example above
 then might look like this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><castList>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRSP-eg-36"><castList>
    <castItem><role xml:id="menaechmus">Menaechmus</role></castItem>
    <castItem><role xml:id="peniculus">Peniculus</role></castItem>
    </castList>
@@ -670,7 +699,7 @@ then might look like this:
 <p>More than one identifier may be listed as value for the <att>who</att>
 attribute if the speech is spoken by more than one person, as in the
 following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><castList>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRSP-eg-37"><castList>
    <castItem><role xml:id="nan">Nano</role></castItem>
    <castItem><role xml:id="cas">Castrone</role></castItem>
    </castList><stage>Nano and Castrone sing</stage>
@@ -735,7 +764,7 @@ For example:
 <gi>sp</gi> elements.  It may contain a mixture of phrase level
 elements, possibly combined into paragraphs, as in the following
 example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 n="1" type="act">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRSTA-eg-40"><div1 n="1" type="act">
 <stage type="setting">
 <p>Scene. — A room furnished comfortably and
 tastefully but not extravagantly ...
@@ -789,7 +818,10 @@ Lo you! here she comes. This is her very guise; and,
 upon my life, fast asleep.</p>
 </sp></egXML></p>
 <specGrp xml:id="DDRSTA" n="Stage directions">
+
+
 &move;
+
 </specGrp>
 </div>
 <div type="div3" xml:id="DRPAL"><head>Speech Contents</head>
@@ -836,7 +868,7 @@ elements provides one simple way of indicating where the boundaries of a
 speech and of a verse line or line group do not coincide.  The encoder
 may simply indicate that a line or line group is metrically incomplete by
 specifying the value <val>Y</val> or <val>N</val>, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp><speaker>Face</speaker><l part="Y">Believ't, I will.</l></sp>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRPAL-eg-44"><sp><speaker>Face</speaker><l part="Y">Believ't, I will.</l></sp>
 <sp><speaker>Subtle</speaker><l part="Y">Thy worst. I fart at thee.</l></sp>
 <sp><speaker>Doll</speaker><l>Ha' you your wits? Why gentlemen! For love —</l></sp>
 <sp><speaker>Face</speaker><l part="Y">Sirrah, I'll strip you—.</l></sp>
@@ -888,7 +920,7 @@ across speakers in the same way as individual lines, and the same set of
 attributes is available to record this fact.  In the following example,
 an <gi>lg</gi> element is used to represent one verse of a song, which is
 divided between several voices:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><stage type="head">Song — Sir Joseph</stage>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRPAL-eg-46"><stage type="head">Song — Sir Joseph</stage>
 <sp>
   <lg type="song" part="I">
     <l>I am the monarch of the sea,</l>
@@ -1047,8 +1079,7 @@ might be encoded as follows:
 <p>The <att>next</att> and <att>prev</att> attributes are discussed in
 section <ptr target="#SAAG"/>: they form part of the module
 for alignment and linking; this module must therefore be inclued in a
-schema if they are to be used, as further discussed in section <ptr
-target="#STIN"/>.</p>
+schema if they are to be used, as further discussed in section <ptr target="#STIN"/>.</p>
 <p>The fragments of Ophelia's song might also be linked together using
 the <gi>join</gi> mechanism described in section <ptr target="#SAAG"/>.
 The <gi>join</gi> element is specifically intended to encode the fact
@@ -1116,7 +1147,7 @@ section <ptr target="#SACS"/>, as in the following example:
   <p>Look here: I'm going to take off all my clothes.</p>
   <stage type="action">he begins tearing off his coat.</stage>
 </sp>
-<sp xml:id="dr-s1" > <speaker>Lady Utterword</speaker>
+<sp xml:id="dr-s1"> <speaker>Lady Utterword</speaker>
   <p>Mr Mangan!</p>
 </sp>
 <sp xml:id="dr-s2"> <speaker>Captain Shotover</speaker>
@@ -1226,7 +1257,7 @@ watching Ryan carefully.</view>
 systems analyst, and one of the scientists
 from the Jet Propulsion Lab ...</p>
 </sp></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp> <speaker>Benjy</speaker>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DROTH-eg-57"><sp> <speaker>Benjy</speaker>
    <p>Now to business.</p>
 </sp>
 <sp> <speaker>Ford and Zaphod</speaker>
@@ -1237,7 +1268,7 @@ from the Jet Propulsion Lab ...</p>
 <sp> <speaker>Ford</speaker>
    <p>I'm sorry, I thought you were proposing a toast.</p> </sp></egXML>
 <!-- Hitch-hikers Guide, p.83 -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><camera>Zoom in to overlay showing some stock film
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DROTH-eg-58"><camera>Zoom in to overlay showing some stock film
   of hansom cabs galloping past.</camera>
 <caption>London, 1895.</caption>
 <caption>The residence of Mr Oscar Wilde.</caption>
@@ -1268,8 +1299,23 @@ other stage directions by using the specialized <gi>tech</gi> element:
 within a speech or between speeches.
  </p>
 <specGrp xml:id="DDROTH" n="Screenplays and other technical matters">
+
+
 &view;
-&camera;&sound;&caption;&tech;
+
+
+
+&camera;
+
+
+&sound;
+
+
+&caption;
+
+
+&tech;
+
 </specGrp>
 
 </div></div>

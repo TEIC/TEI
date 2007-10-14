@@ -2,7 +2,7 @@
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
-See the file COPYING for details.
+See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
@@ -45,8 +45,7 @@ then you should document it. </p></item>
       <item>Check the Proposed New Characters webpage (<ptr target="http://unicode.org/alloc/Pipeline.html"/>) to see whether
       the character is in line for approval.</item>
 
-<item>Ask on the Unicode email list (<ptr
-target="http://www.unicode.org/consortium/distlist.html"/>) to
+<item>Ask on the Unicode email list (<ptr target="http://www.unicode.org/consortium/distlist.html"/>) to
 see whether  a proposal is pending, or to determine whether this
 character is considered eligible for addition
 to the Unicode Standard.  </item>
@@ -168,19 +167,16 @@ Since the list of properties will vary with different versions of the
 Unicode Standard, there may not be an exact correspondence between
 them and the list of properties defined in these Guidelines.</p>
 
-<p>Usage examples for these elements are given below at <ptr
-target="#D25-30"/> and <ptr target="#D25-40"/>.  The gaiji module
+<p>Usage examples for these elements are given below at <ptr target="#D25-30"/> and <ptr target="#D25-40"/>.  The gaiji module
 itself is formally defined in section <ptr target="#WSD-DEF"/>
 below. It declares the following additional elements:
 <specList>
 <specDesc key="charDecl"/>
 <specDesc key="g" atts="ref"/>
 </specList>
-The <gi>charDecl</gi> element is a member of the class <ident
-type="class">model.encodingPart</ident>, and thus becomes available within
+The <gi>charDecl</gi> element is a member of the class <ident type="class">model.encodingPart</ident>, and thus becomes available within
 <gi>encodingDesc</gi> when this module is included in a schema. 
-The <gi>g</gi> element is the only member of the class <ident
-type="class">model.gLike</ident>: this class is referenced as an
+The <gi>g</gi> element is the only member of the class <ident type="class">model.gLike</ident>: this class is referenced as an
 alternative to plain text in almost every element which contains plain
 text, thus permitting the <gi>g</gi> element also to appear at such
 places when this module is included in a schema. 
@@ -243,8 +239,7 @@ link to an image of the character or glyph under discussion, or to
 contain a representation of it in SVG. Several <gi>graphic</gi>
 elements may be given, for example to provide images with different
 resolution, or in different formats. The <att>mimeType</att> attribute
-which <gi>graphic</gi> acquires from its membership of the <ident
-type="class">att.internetMedia</ident> class may be used to specify
+which <gi>graphic</gi> acquires from its membership of the <ident type="class">att.internetMedia</ident> class may be used to specify
 the format of the image.</p>
 
 <p>The <gi>mapping</gi> element is similar to the standard TEI
@@ -262,8 +257,7 @@ characters. The type of association is indicated by the
 uppercase equivalences, <code>lowercase</code> for lowercase
 equivalences, <code>standardized</code> for standardized forms, and
 <code>simplified</code> for simplified characters, etc., as in the
-following example: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><charDecl>
+following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><charDecl>
 <char xml:id="aenl">
 <charName>LATIN LETTER ENLARGED SMALL A</charName>
 <charProp>
@@ -307,8 +301,7 @@ currently assigned to certain properties. When making such
 modifications, great care should be taken not to override standard
 informative properties for characters which already exist in the Unicode
 Standard.<note place="foot">See further the Unicode technical report
-TR23 <ref
-target="http://www.unicode.org/reports/tr23/"><title>Character
+TR23 <ref target="http://www.unicode.org/reports/tr23/"><title>Character
 Property Model</title></ref></note></p>
 <p>The <gi>charProp</gi> element allows an encoder to supply information
 about a character or glyph. Where the information concerned relates to
@@ -397,8 +390,7 @@ Database</ref>:<list type="gloss">
 	  example the strokes making up CJK (Chinese, Japanese, and Korean) characters.  It
 	  records a class for these characters, which is used to
 	  determine how they interact typographically.  The following
-	  values are defined in  the Unicode Standard 5.0: (see <ref
-target="http://unicode.org/Public/UNIDATA/UCD.html#Canonical_Combining_Class_Values">Unicode
+	  values are defined in  the Unicode Standard 5.0: (see <ref target="http://unicode.org/Public/UNIDATA/UCD.html#Canonical_Combining_Class_Values">Unicode
 Character Database: Canonical Combining Class Values</ref>)<list type="gloss">
 <label>0</label><item>Spacing, split, enclosing, reordrant, and Tibetan subjoined </item>
 <label>1</label><item>Overlays and interior </item>
@@ -485,8 +477,7 @@ which are not specified by the Unicode Standard.</p>
     page. A digital facsimile, particularly one linked to a
     transcribed and encoded version of the text, will always provide a
     superior visual representation (for information on how to link a
-    digital facsimile to a transcribed text see <ptr
-    target="#PHFAX"/>), but cannot be used to support
+    digital facsimile to a transcribed text see <ptr target="#PHFAX"/>), but cannot be used to support
     arguments based on the distribution of such different
     forms. Character annotation as described here provides a solution
     to this problem.<note place="foot"> It should be kept in mind that
@@ -549,8 +540,8 @@ each of the forms of the letter we wish to distinguish:
     </p>
     <p>For brevity of encoding, it may be preferred to pre-define
     internal entities such as the following:
-     <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!ENTITY r1 '<g ref="#r1">r</g>' >
-<!ENTITY r2 '<g ref="#r2">r</g>' > ]]></egXML>
+     <egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;!ENTITY r1 '&lt;g ref="#r1"&gt;r&lt;/g&gt;' &gt;
+&lt;!ENTITY r2 '&lt;g ref="#r2"&gt;r&lt;/g&gt;' &gt; </egXML>
 which would enable the same material to be encoded as follows:
      <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>Wo&amp;r1;ds in this manusc&amp;r2;ipt are 
       sometimes written in a funny way.</p> </egXML>
@@ -600,9 +591,7 @@ loses the fact that the sequence of composed characters is regarded as
 a single object; the second is not reliably portable. 
 Therefore, the recommended
 representation is to use the <gi>g</gi> element defined by
-the module defined in this chapter: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><g
-ref="#ydotacute"/></egXML>. This makes it possible for the encoder to
+the module defined in this chapter: <egXML xmlns="http://www.tei-c.org/ns/Examples"><g ref="#ydotacute"/></egXML>. This makes it possible for the encoder to
 provide useful documentation for the particular character or glyph so referenced:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><char xml:id="ydotacute">
        <charName>LATIN SMALL LETTER Y WITH DOT ABOVE AND
@@ -611,8 +600,7 @@ provide useful documentation for the particular character or glyph so referenced
        <localName>entity</localName>
        <value>ydotacute</value>
      </charProp>
-     <mapping
-     type="composed">&amp;#x0079;&amp;#x0307;&amp;#x0301;</mapping>
+     <mapping type="composed">&amp;#x0079;&amp;#x0307;&amp;#x0301;</mapping>
      <mapping type="PUA">U+E0A4</mapping> </char></egXML> This
      definition specifies the mapping between this composed character
      and the individual Unicode-defined codepoints which make it
@@ -720,17 +708,50 @@ The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
 </p>
 <specGrp>
+
+
 &g;
+
+
+
 &char;
+
+
+
 &charName;
+
+
+
 &charProp;
+
+
+
 &charDecl;
+
+
+
 &glyph;
+
+
+
 &glyphName;
+
+
+
 &localName;
+
+
+
 &mapping;
+
+
+
 &unicodeName;
+
+
+
 &value;
+
 </specGrp>
 </div>
 </div>

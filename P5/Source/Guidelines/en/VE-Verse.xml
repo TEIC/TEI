@@ -2,11 +2,11 @@
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
-See the file COPYING for details.
+See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="VE" n="9"><head xmlns="http://www.tei-c.org/ns/1.0">Verse</head>
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="VE" n="9"><head>Verse</head>
 <p>This module is intended for use when encoding texts which are
 entirely or predominantly in verse, and for which the elements for
 encoding verse structure already provided by the core module are
@@ -66,7 +66,7 @@ including an example encoding for a verse anthology, see chapter <ptr target="#D
 	<!--                                                          -->
 	<!-- Or Emily Dickinson:                                      -->
 This short poem by Emily Dickinson is a simple case:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-1"><text>
    <front>
       <head>1755</head>
    </front>
@@ -87,7 +87,7 @@ stanzas, verse paragraphs, etc.  The <gi>lg</gi> element defined in the
 core tag set (in section <ptr target="#COVE"/>) may be used for all such
 groupings.  It may thus serve for informal groupings of lines such as
 those of the following example from Allen Ginsberg:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-2"><text>
    <body>
       <head>My Alba</head>
       <lg>
@@ -111,7 +111,7 @@ those of the following example from Allen Ginsberg:
 <p>It may also be used to mark the verse paragraphs into which longer
 poems are often divided, as in the following example from Samuel Taylor
 Coleridge's <title>Frost at Midnight</title>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><lg>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-3"><lg>
    <l>The Frost performs its secret ministry,</l>
    <l>Unhelped by any wind. ...</l>
    <l>Whose puny flaps and freaks the idling Spirit</l>
@@ -136,7 +136,7 @@ groups, as discussed in section <ptr target="#COVE"/>.
 <p>Most typically, however, the <gi>lg</gi> element is used to mark the
 highly regular line groups which characterize stanzaic and similar verse
 forms, as in the following example from Chaucer:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><lg>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-4"><lg>
    <l>Sire Thopas was a doghty swayn;</l>
    <l>White was his face as payndemayn,</l>
    <l>His lippes rede as rose;</l>
@@ -155,7 +155,7 @@ hierarchically.  For example, one particularly common English stanzaic
 form consists of a quatrain or sestet followed by a couplet.  The
 <gi>lg</gi> element may be used to encode both the stanza and its
 components, as in the following example from Byron:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><lg type="stanza">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-5"><lg type="stanza">
    <lg type="sestet">
       <l>In the first year of Freedom's second dawn</l>
       <l>Died George the Third; although no tyrant, one</l>
@@ -189,7 +189,7 @@ a body of twelve lines, itself subdivided into three quatrains:<!-- any suggesti
 	<!-- describe the twelve lines gratefully accepted ... (lb)   -->
 	<!-- done.  At least, *I* think it's better ... (msm)         -->
 	<!-- But LB preferred 'body' to 'quatrains'     (msm)         -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-6"><text>
    <body>
       <lg>
          <lg type="quatrain">
@@ -272,7 +272,7 @@ described in section <ptr target="#STIN"/>.   </p>
 are typically split into half lines. The <gi>seg</gi> element may be
 used to mark these explicitly, as in the following example from
 Langland's <title>Piers Plowman</title>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l><seg>In a somer seson,</seg>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VESE-eg-9"><l><seg>In a somer seson,</seg>
    <seg>whan softe was the sonne,</seg></l>
 <l><seg>I shoop me into shroudes</seg>
    <seg>as I a sheep were,</seg></l>
@@ -367,15 +367,14 @@ any division irrespective of foot boundaries.  No special-purpose <gi>diaeresis<
 example from Langland.  An encoder might choose simply to record the
 location of the caesura within each line, rather than encoding each
 half-line as a segment in its own right, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>In a somer seson, <caesura/> whan softe was the sonne, </l>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VESE-eg-12"><l>In a somer seson, <caesura/> whan softe was the sonne, </l>
 <l>I shoop me into shroudes <caesura/> as I a sheep were, </l>
 <l>In habite as an heremite <caesura/> unholy of werkes, </l>
 <l>Went wide in this world <caesura/> wondres to here. </l></egXML>
 <!-- Langland: The Vision of Piers Plowman B-text ed Schmidt --></p>
 <p>Logically, the opposite of caesura might be considered to be
 <term>enjambement</term>.  When the <ident type="module">verse</ident>
-module is included in a schema, an additional class called <ident
-type="class">att.enjamb</ident> is defined as follows:
+module is included in a schema, an additional class called <ident type="class">att.enjamb</ident> is defined as follows:
 <specList>
 <specDesc key="att.enjamb" atts="enjamb"/>
 </specList>
@@ -384,7 +383,7 @@ the use of the <att>enjamb</att> attribute to mark places where there is
 a discrepancy between the boundaries of the <gi>l</gi> elements and the
 syntactic structure of the verse (a discrepancy of some significance in
 some schools of verse):
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l enjamb="y">Un astrologue, un jour, se laissa choir</l>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VESE-eg-13"><l enjamb="y">Un astrologue, un jour, se laissa choir</l>
 <l>Au fond d'un puits.</l></egXML>
 <!-- La Fontaine, somewhere (Larousse) -->
 	<!-- There's no way of constraining enjamb to end of line.    -->
@@ -421,7 +420,7 @@ the actual realization of a rhyme pattern; see <ptr target="#VERH"/>.
 <div type="div3" xml:id="VEMEsamp"><head>Sample Metrical Analyses</head>
 <p>As a simple example of the use of these attributes, consider the
 following lines from Pope's <title level="a">Essay on Criticism</title>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="book" n="1" met="-+|-+|-+|-+|-+/" rhyme="aa">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEMEsamp-eg-14"><div type="book" n="1" met="-+|-+|-+|-+|-+/" rhyme="aa">
   <lg n="1" type="paragraph">
     <l>'Tis hard to say, if greater Want of Skill</l>
     <l>Appear in <hi>Writing</hi> or in <hi>Judging</hi> ill;</l>
@@ -489,8 +488,7 @@ implementation-dependent; so are the semantics and processing of the
 <p>A formal definition of the significance of each component of the
 pattern given as the value of the <att>met</att> attribute may be
 provided in the <gi>metDecl</gi> element within the
-<gi>encodingDecl</gi> element in the TEI header (see section <ptr
-target="#HDMN"/>).  The encoder is free to invent any notation
+<gi>encodingDecl</gi> element in the TEI header (see section <ptr target="#HDMN"/>).  The encoder is free to invent any notation
 appropriate to his or her analytic needs, provided that it is
 adequately documented in this element.  The notation may define
 metrical components using invented or traditional names (such as
@@ -657,7 +655,7 @@ follows a different metrical and rhyming scheme.  The solution to this
 problem is simply to specify a new <att>met</att> attribute on the
 eighth stanza itself, which will override the default value inherited
 from parent <gi>div</gi>, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div met=".....">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEMEana-eg-23"><div met=".....">
   <lg>
     <l> ... </l>
   </lg>
@@ -706,7 +704,7 @@ hyphen or an x, as in the following example:
 </egXML></p>
 <p>The <gi>rhyme</gi> element may be used to mark the 
 words (or parts of words) which rhyme according to a predefined pattern:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><lg type="couplet" rhyme="aa">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VERH-eg-25"><lg type="couplet" rhyme="aa">
 <l>Outside in the distance a wildcat did <rhyme>growl</rhyme></l>
 <l>Two riders were approaching and the wind began to <rhyme>howl</rhyme></l>
 </lg>
@@ -739,7 +737,7 @@ and not necessarily around a single word. It
 can thus be used to mark quite complex internal rhyming schemes, as in the
 following example:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><lg rhyme="ABCCBBA">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VERH-eg-27"><lg rhyme="ABCCBBA">
 <l>The sunlight on the <rhyme label="A">garden</rhyme></l>
 <l><rhyme label="A">Harden</rhyme>s and grows <rhyme label="B">cold</rhyme>,</l>
 <l>We cannot cage the <rhyme label="C">minute</rhyme></l>
@@ -867,8 +865,14 @@ Note here the use of the global <att>n</att> attribute to supply an
 additional name for the symbols being documented.</p>
 
 <specGrp xml:id="D2258" n="Metrical Notation Declaration">
+
+
 &metDecl;
+
+
+
 &metSym;
+
 </specGrp></div>
 
 <div type="div2" xml:id="VEETC"><head>Encoding Procedures for Other Verse Features</head>
@@ -931,10 +935,22 @@ The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
 </p>
 <specGrp>
+
+
 &att.metrical;
+
+
+
 &att.enjamb;
+
+
+
 &caesura;
+
+
+
 &rhyme;
+
 </specGrp></div>
 
 

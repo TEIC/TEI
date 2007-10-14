@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
-See the file COPYING for details.
+See the file COPYING.txt for details.
 $Date$
-$Id $
+$Id$
 -->
-<div type="div1" xml:id="MS"  xmlns="http://www.tei-c.org/ns/1.0">
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="MS">
 <head>Manuscript Description</head>
 <div type="div2" xml:id="msov">
 <head>Overview</head>
@@ -52,8 +53,7 @@ or as some combination of the two. However, in cases where the
 document being encoded is essentially a collection of manuscript
 descriptions, the <gi>msDesc</gi> element may be used in the same way
 as the bibliographic elements (<gi>bibl</gi> <gi>biblStruct</gi>, and
-<gi>biblItem</gi>) making up the TEI element class <ident
-type="class">model.biblLike</ident>. These typically appear within the
+<gi>biblItem</gi>) making up the TEI element class <ident type="class">model.biblLike</ident>. These typically appear within the
 <gi>listBibl</gi> element.
 <specList>
 <specDesc key="msDesc"/>
@@ -188,7 +188,10 @@ the 15th century</origDate> in <origPlace>Pembrokeshire, Wales</origPlace>.</p>
 </msDesc>
 </egXML></p>
 <specGrp xml:id="msdesc.def">
+
+
 &msDesc;
+
 </specGrp>
 
 </div>
@@ -271,8 +274,7 @@ bindings:
 <p>These element may appear
 wherever a term regarded as significant by the encoder occurs. The
 <gi>watermark</gi> element is most likely to be of use within the
-<gi>support</gi> element, as in the following example: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><support><material>Rag
+<gi>support</gi> element, as in the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><support><material>Rag
 paper</material> with <watermark>anchor</watermark>
 watermark</support></egXML></p>
 <p>The <gi>stamp</gi> element will typically appear when text from the source
@@ -314,8 +316,7 @@ of the description, as appropriate. </p>
 </p>
 <p>These three elements, as well as <gi>dimensions</gi> itself, are
 all members of the <ident type="class">att.dimensions</ident> class,
-and thus all carry the following attributes: <specList><specDesc
-key="att.dimensions" atts="unit scope quantity">
+and thus all carry the following attributes: <specList><specDesc key="att.dimensions" atts="unit scope quantity">
 </specDesc></specList></p>
 <p>Each of these elements, if present, must be given in the order
 specified. The <gi>dimensions</gi> element may be repeated as often as
@@ -387,8 +388,7 @@ Here, the <att>facs</att> attribute uses a URI reference to point directly to im
 relevant pages, held presumably in an image archive not forming part
 of the resource containing the manuscript description in question. In
 the case where such images do form part of a single virtual document,
-along with transcriptions and metadata, the methods described in <ptr
-target="#PHFAX"/> should be used in preference.</p>
+along with transcriptions and metadata, the methods described in <ptr target="#PHFAX"/> should be used in preference.</p>
 <p>Where a manuscript contains more than one foliation, the
 <att>scheme</att> attribute may be used to distinguish them. For
 example, MS 65 Corpus Christi College, Cambridge contains two fly
@@ -545,20 +545,64 @@ racchiudono l'inizio dell'epistolario di Paolino.</p>
 </egXML></p>
 
 <specGrp xml:id="xphrase.def">
+
+
 &catchwords;
+
+
+
 &dimensions;
+
+
+
 &height;
+
+
+
 &depth;
+
+
+
 &width;
+
+
+
 &heraldry;
+<!-- should this be better to rename as armsDesc? -->
+
+
+
 &locus;
+
+
+
 &material;
+
+
+
 &origDate;
+
+
+
 &origPlace;
+
+
+
 &secFol;
+
+
+
+
 &signatures;
+
+
+
 &stamp;
+
+
+
 &watermark;
+
 </specGrp>
 </div></div>
 <div type="div2" xml:id="msid">
@@ -806,12 +850,32 @@ three subelements <gi>settlement</gi>, <gi>repository</gi>, and
 minimum amount of information necessary to identify a manuscript.</p>
 
 <specGrp xml:id="msidentifier.def">
+
+
 &msIdentifier;
+
+
+
+
 &institution;
+
+
+
+
 &repository;
+
+
+
 &collection;
+
+
+
 &altIdentifier;
-&msName;</specGrp>
+
+
+
+&msName;
+</specGrp>
 </div>
 <div type="div2" xml:id="msdo">
 <head>The Manuscript Heading</head>
@@ -997,12 +1061,9 @@ yf<ex>ir</ex> danmork</explicit>
 </egXML></p>
 <p>The elements <gi>ex</gi>, <gi>am</gi>, and
 <gi>expan</gi> used in the above example are further discussed in
-section <ptr target="#PHAB"/>; they are available  only when the <ident
-type="module">transcr</ident> module defined by that chapter is
+section <ptr target="#PHAB"/>; they are available  only when the <ident type="module">transcr</ident> module defined by that chapter is
 selected. Similarly, the <gi>g</gi> element used in this example to
-represent the abbreviation mark is defined by the <ident
-type="module">gaiji</ident> module documented in chapter <ptr
-target="#WD"/>. </p>
+represent the abbreviation mark is defined by the <ident type="module">gaiji</ident> module documented in chapter <ptr target="#WD"/>. </p>
 </div>
 <div type="div3" xml:id="msat"><head>Authors and Titles</head>
 <p>The <gi>title</gi> element should be used to supply a regularized
@@ -1169,8 +1230,7 @@ identifier:
 <textLang mainLang="OCS-cyrs">Old Church Slavonic in Cyrillic script</textLang>
 </egXML></p>
 <p>The form and scope of language identifiers recommended by these
-Guidelines is based on the IANA standard described at <ptr
-target="#CHSH"/> and should be followed throughout. Where additional 
+Guidelines is based on the IANA standard described at <ptr target="#CHSH"/> and should be followed throughout. Where additional 
 detail is needed correctly  to describe a language, or to discuss its
 deployment in a given text, this should be done using the
 <gi>langUsage</gi> element in the TEI Header, within which
@@ -1193,20 +1253,65 @@ have a <gi>textLang</gi> element like the following:
 <textLang xml:lang="fr" mainLang="de" otherLangs="la">allemand et latin</textLang>
 </egXML></p>
 <specGrp xml:id="mscontents.def">
+
+
+
 &colophon;
+
+
+
+
 &explicit;
+
+
+
 &filiation;
+
+
+
+
 &finalRubric;
+
+
+
+
 &incipit;
+
+
+
+
 &msContents;
+
+
+
+
 &msItem;
+
+
+
+
 &msItemStruct;
+
+
+
+
 &rubric;
+
+
+
 &summary;
+
+
+
 &textLang;
+
 </specGrp>
 <specGrp xml:id="mscoclass.def">
-  &att.msExcerpt;
+  
+
+
+&att.msExcerpt;
+
 </specGrp>
 </div></div>
 <div type="div2" xml:id="msph">
@@ -1760,26 +1865,83 @@ Saga mun vera komin fra Sr Vigfuse á Helgafelle.</quote></p>
 </egXML></p>
 
 <specGrp xml:id="physdesc.def">
+
+
 &physDesc;
+
+
+
 &objectDesc;
+
+
+
 &supportDesc;
+
+
+
 &support;
+
+
+
 &collation;
+
+
+
 &foliation;
+
+
+
 &condition;
+
+
+
 &layoutDesc;
+
+
+
 &layout;
+
+
+
 &handDesc;
+
 <!-- &handNote;-->
+
+
 &musicNotation;
+
+
+
 &decoDesc;
+
+
+
 &decoNote;
+
+
+
 &additions;
+
+
+
 &bindingDesc;
+
+
+
 &binding;
+
+
+
 &sealDesc;
+
+
+
 &seal;
+
+
+
 &accMat;
+
 </specGrp>
 </div></div>
 <div type="div2" xml:id="mshy">
@@ -1847,10 +2009,22 @@ flyleaf), either in 1696 or 97.</p></acquisition>
 </history>
 </egXML></p>
 <specGrp xml:id="history.def">
+
+
 &history;
+
+
+
 &origin;
+
+
+
 &provenance;
+
+
+
 &acquisition;
+
 </specGrp>
 </div>
 <div type="div2" xml:id="msad">
@@ -1868,7 +2042,10 @@ element described in this section.
 required. If any is supplied, it may appear once only; furthermore,
 the order in which elements are supplied should be as specified above.</p>
 <specGrp xml:id="additional.def">
+
+
 &additional;
+
 </specGrp>
 <div type="div3" xml:id="msadad">
 <head>Administrative information</head>
@@ -1989,12 +2166,27 @@ Konserveringsværksted.</p></custEvent>
 </custodialHist>
 </egXML></p>
 <specGrp xml:id="adminfo.def">
+
+
 &adminInfo;
+
+
+
 &recordHist;
+
+
+
 &source;
+
 <!-- add &change.odd? -->
+
+
 &custodialHist;
+
+
+
 &custEvent;
+
 </specGrp>
 
 </div>
@@ -2042,7 +2234,10 @@ the process by which a digital or photographic image was made. For
 information about the inclusion of digital facsimile images within a
 TEI document, refer also to <ptr target="#PHFAX"/>. </p>
 <specGrp xml:id="surrogates.def">
+
+
 &surrogates;
+
 </specGrp>
 </div>
 </div>
@@ -2090,7 +2285,10 @@ element, as in the following example:
 </egXML>
 </p>
 <specGrp xml:id="mspart.def">
+
+
 &msPart;
+
 </specGrp>
 </div>
 <div type="div2" xml:id="MSref">
@@ -2107,7 +2305,10 @@ The selection and combination of modules to form a TEI schema is described in
 </p>
 
 <specGrp>
+
+
 &att.dimensions;
+
 <specGrpRef target="#msdesc.def"/>
 <specGrpRef target="#xphrase.def"/>
 <specGrpRef target="#msidentifier.def"/>
