@@ -51,14 +51,10 @@ provides for the following common requirements:
   </list></p>
 <p>These facilities all use the same set of techniques based on the
 W3C <ref target="http://www.w3.org/TR/xptr-framework/">XPointer</ref>
-mechanism, which includes a variety of <term
-rend="noindex">schemes</term>. The most convenient technique, and that
+mechanism, which includes a variety of <term rend="noindex">schemes</term>. The most convenient technique, and that
 which is recommended by these Guidelines wherever possible, makes use
-of the global <att>xml:id</att> attribute, as defined in section <ptr
-target="#STGA"/>, and introduced in section <ptr
-target="#SG-id"/>. When the <ident type="module">linking</ident>
-module is included in a schema, the attribute class <ident
-type="class">att.global</ident> is extended to include eight
+of the global <att>xml:id</att> attribute, as defined in section <ptr target="#STGA"/>, and introduced in section <ptr target="#SG-id"/>. When the <ident type="module">linking</ident>
+module is included in a schema, the attribute class <ident type="class">att.global</ident> is extended to include eight
 additional attributes to support the various kinds of linking listed
 above. Each of these attributes is introduced in the appropriate
 section below. In addition, for many of the topics discussed, a choice
@@ -160,7 +156,7 @@ Allusions to the most excellent of the Moderns.</q> In the
 source text, the text of the poem shares the page with two sets
 of notes, one headed <q>Remarks</q> and the other
 <q>Imitations</q>.</note>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>(Diff'rent our parties, but with equal grace</l>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTEG-eg-3"><l>(Diff'rent our parties, but with equal grace</l>
 <l>The Goddess smiles on Whig and Tory race,</l>
 <l><note type="imitation" place="foot" anchored="false">    
     <bibl>Virg. Æn. 10.</bibl>
@@ -186,7 +182,7 @@ that.</p>
 <p>Firstly, a <gi>ptr</gi> element might be placed at an
 appropriate point within the text to link it with the
 annotation:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>(Diff'rent our parties, but with equal grace</l>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTEG-eg-4"><l>(Diff'rent our parties, but with equal grace</l>
 <l>The Goddess smiles on Whig and Tory race,
    <ptr rend="unmarked" target="#note3.284"/></l>
 <l>'Tis the same rope at sev'ral ends they twist,</l>
@@ -221,7 +217,7 @@ annotating, this could be encoded using a <gi>ref</gi>
 element, which bears a <att>target</att> attribute of its own
 and contains a (slightly misquoted) extract from the text marked
 as a <gi>quote</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><note type="imitation" place="foot" anchored="false" target="#l3.284">    
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTEG-eg-6"><note type="imitation" place="foot" anchored="false" target="#l3.284">    
    <ref rend="sc" target="#l3.284">Verse 283–84.
  <quote>
    <l>——. With equal grace</l>
@@ -250,7 +246,7 @@ the annotations as well as for the verse lines, and use a <gi>link</gi> element 
 two. Note that the <gi>ptr</gi> element and the
 <att>target</att> attribute on the <gi>note</gi> may now be
 dispensed with:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTEG-eg-7">
 <note xml:id="n3.284" type="imitation" place="foot" anchored="false">    
    <ref rend="sc" target="#l3.284">Verse 283–84.
 <quote>
@@ -270,7 +266,7 @@ here bears the identifiers of the note followed by that of the
 verse line. For completeness, we could also allocate an
 identifier to the reference within the note and encode the
 association between it and the verse line in the same way:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><note xml:id="nt3.284" type="imitation" place="foot" anchored="false">    
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTEG-eg-8"><note xml:id="nt3.284" type="imitation" place="foot" anchored="false">    
    <ref rend="sc" xml:id="r3.284" target="#l3.284">Verse 283–84.
 <quote>
    <l>——. With equal grace</l>
@@ -402,11 +398,17 @@ the preceding example thus:
 <specGrp xml:id="DSAPT" n="Links">
   
 
+
+
 &link;
+
 
   
 
+
+
 &linkGrp;
+
 
 </specGrp>
 
@@ -440,7 +442,7 @@ is however the task of a processing application, and cannot be
 defined simply by the mark-up). The <att>xml:id</att> attribute
 provides an identifier which can then be linked to the
 <gi>note</gi> and <gi>ref</gi> elements:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><link evaluate="all" targets="#n3.284 #r3.284 #l3.283-284"/></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTIP-eg-17"><link evaluate="all" targets="#n3.284 #r3.284 #l3.283-284"/></egXML>
 <!-- Pope, Dunciad (1729) III.284 --></p>
 <p>The <val>all</val> value of <att>evaluate</att> is used on the
 <gi>link</gi> element to specify that any pointer encountered as
@@ -1269,8 +1271,7 @@ elements.
     <specList>
 <specDesc key="att.typed" atts="type subtype"/>
     </specList>
-    The <gi>seg</gi> element is a member of the class <ident
-    type="class">att.segLike</ident>, from which it inherits the
+    The <gi>seg</gi> element is a member of the class <ident type="class">att.segLike</ident>, from which it inherits the
     following attributes:
     <specList>
 <specDesc key="att.segLike" atts="type function part"/>
@@ -1282,14 +1283,12 @@ elements.
     where multiple views of a document are to be combined, for
     example, when a logical view based on paragraphs or verse lines is
     to be mapped on to a physical view based on manuscript lines. Like
-    those elements, it is a member of the class <ident
-    type="class">model.global</ident> and can therefore appear
+    those elements, it is a member of the class <ident type="class">model.global</ident> and can therefore appear
     anywhere within a document when the module defined by this chapter
     is included in a schema. Unlike the other elements in its class,
     the <gi>anchor</gi> element is primarily intended for use to mark
     an arbitrary point used for alignment, or as the target of a
-    spanning element such as those discussed in section <ptr
-    target="#PHAD"/>, rather than as a means of marking segment
+    spanning element such as those discussed in section <ptr target="#PHAD"/>, rather than as a means of marking segment
     boundaries for some arbitrary segmentation of a text.</p>
     <p>For example, suppose that we wish to mark the end of the fifth
     word following each occurrence of some term in a particular text,
@@ -1327,9 +1326,7 @@ passim)</item></list></p>
 
 <p>In the following simple example, the <gi>seg</gi> element simply
 delimits the extent of a stutter, a textual feature for which no
-element is provided in these Guidelines.  <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><q>Don't say <q><seg
-type="stutter">I-I-I</seg>'m afraid,</q> Melvin, just say <q>I'm
+element is provided in these Guidelines.  <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SASE-eg-32"><q>Don't say <q><seg type="stutter">I-I-I</seg>'m afraid,</q> Melvin, just say <q>I'm
 afraid.</q></q></egXML>
 <!-- David Shields, Dead Languages, 1990, p10 -->
 The <gi>seg</gi> element is particularly useful for the mark-up
@@ -1338,7 +1335,7 @@ that may be the output of an automatic parsing system. This
 example also demonstrates the use of the <att>xml:id</att>
 attribute to carry an identifier which other parts of a document
 may use to point to, or align with:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">  <seg xml:id="bl0034" type="sentence">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SASE-eg-33">  <seg xml:id="bl0034" type="sentence">  
     <seg xml:id="bl0034.1" type="phrase">Literate and illiterate speech</seg>
     <seg xml:id="bl0034.2" type="phrase">in a language like English</seg>
     <seg xml:id="bl0034.3" type="phrase">are plainly different.</seg>
@@ -1477,7 +1474,7 @@ member of the <ident type="class">model.pLike</ident> class.</p>
 
 <p>The <gi>ab</gi> element may be used, for
 example, to tag the canonical verse divisions of Biblical texts:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 n="Gen" type="book">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SASE-eg-40"><div1 n="Gen" type="book">
   <head>The First Book of Moses, Called</head>
   <head type="main">Genesis</head>
   <div2 n="1" type="chapter">
@@ -1499,7 +1496,7 @@ an alternative to the <gi>p</gi> element; it may
 <emph>not</emph> be used within paragraphs. The <gi>seg</gi>
 element, by contrast, may appear only within and not between
 paragraphs (or anonymous block elements).
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 n="Gen" type="book">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SASE-eg-41"><div1 n="Gen" type="book">
   <head>Das Erste Buch Mose.</head>
   <div2 n="1" type="chapter">
     <p>
@@ -1545,9 +1542,18 @@ Enter a Ship-master, and a Boteswaine.</stage>
 </div1></egXML>
 See further <ptr target="#CODR"/> and <ptr target="#DRPAL"/>.</p>
 <specGrp xml:id="DSASA" n="Blocks Segments and Anchors">
+
+
 &ab;
+
+
+
 &anchor;
+
+
+
 &seg;
+
 </specGrp>
     </div>
     <div type="div2" xml:id="SACS">
@@ -1574,10 +1580,8 @@ special purpose elements are proposed in section <ptr target="#SASY"/>.</p>
     <specDesc key="att.global.linking" atts="corresp"/>
   </specList>
   This is one of the attributes made available by the mechanism
-  described in the introduction to this chapter (<ptr
-  target="#SA"/>). Correspondence can also be expressed by means
-  of the <gi>link</gi> element introduced in section <ptr
-  target="#SAPT"/>.</p>
+  described in the introduction to this chapter (<ptr target="#SA"/>). Correspondence can also be expressed by means
+  of the <gi>link</gi> element introduced in section <ptr target="#SAPT"/>.</p>
   <p>Where the correspondence is between <emph>spans</emph>, the
   <gi>seg</gi> element should be used, if no other element is
   available. Where the correspondence is between
@@ -1585,7 +1589,7 @@ special purpose elements are proposed in section <ptr target="#SASY"/>.</p>
   used, if no other element is available.</p>
   <p>The use of the <att>corresp</att> attribute with spans of
   content is illustrated by the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><title xml:id="SHIRLEY">Shirley</title>, which made
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SACS1-eg-48"><title xml:id="SHIRLEY">Shirley</title>, which made
 its Friday night debut only a month ago, was
 not listed on <name xml:id="NBC">NBC</name>'s new schedule,
 although <seg corresp="#NBC" xml:id="NETWORK">the network</seg>
@@ -2178,11 +2182,17 @@ transcribed speech, refer to chapter <ptr target="#TS"/>.</p>
 <specGrp xml:id="DSASYMP" n="Temporal specification">
   
 
+
+
 &when;
+
 
   
 
+
+
 &timeline;
+
 
 </specGrp></div></div>
 <div type="div2" xml:id="SAIE">
@@ -2306,7 +2316,7 @@ attributes of that class; for the list, see section <ptr target="#SAPT"/>.</p>
 <p>Here is the material on which we base our first illustration of the
 use of these mechanisms. Our problem is to represent the S-units
 identified below as <val>qs3</val> and <val>qs4</val> as a single (but discontinuous) whole:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><q><s xml:id="qs2">Monsieur Paul, after he has taken equal
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAAG-eg-72"><q><s xml:id="qs2">Monsieur Paul, after he has taken equal
 parts of goose breast and the finest pork, and
 broken a certain number of egg yolks into them,
 and ground them <emph>very</emph>, very fine,
@@ -2661,11 +2671,17 @@ target="./#xpath1(//div1[6]/p[1]/q[1])"/>
 <specGrp xml:id="DSAAG" n="Aggregation">
   
 
+
+
 &join;
+
 
   
 
+
+
 &joinGrp;
+
 
 </specGrp></div>
 <div type="div2" xml:id="SAAT">
@@ -3003,11 +3019,17 @@ combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
 <specGrp xml:id="DSAAT" n="Alternation">
   
 
+
+
 &alt;
+
 
   
 
+
+
 &altGrp;
+
 
 </specGrp></div>
 
@@ -3430,9 +3452,18 @@ components:
 The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
   <specGrp>
+
+
 &att.global.linking;
+
+
+
 &att.pointing;
+
+
+
 &att.pointing.group;
+
 
 <specGrpRef target="#DSAPT"/>
 <specGrpRef target="#DSASA"/>

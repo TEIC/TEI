@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
@@ -20,8 +21,7 @@ may well require different methods from those outlined here, as may
 speech regarded solely as a process of social interaction.
 </p>
 <p>This chapter begins with a discussion of some of the problems
-commonly encountered in transcribing spoken language (section <ptr
-target="#TSOV"/>).  Section <ptr target="#HD32"/> documents some
+commonly encountered in transcribing spoken language (section <ptr target="#TSOV"/>).  Section <ptr target="#HD32"/> documents some
 additional TEI Header elements which may be used to document the
 recording or other source from which transcribed text is taken.
 Section <ptr target="#TSBA"/> describes the basic structural elements
@@ -83,8 +83,7 @@ for a spoken text contains a <gi>teiHeader</gi> element, followed by a
 speech may also include conventional front and back matter, and may
 even be organized into divisions like printed texts. </p>
 <p>We may say, therefore, that these Guidelines regard transcribed
-speech as being composed of arbitrary high-level units called <term
-rend="noindex">texts</term>.<index><term>texts</term><index><term>as
+speech as being composed of arbitrary high-level units called <term rend="noindex">texts</term>.<index><term>texts</term><index><term>as
 organizing unit for spoken material</term></index></index> A spoken
 <gi>text</gi> might typically be a conversation between a small number
 of people, a lecture, a broadcast TV item, or a similar event.  Each
@@ -193,8 +192,7 @@ politician on different occasions, might be encoded.  Each extract is
 regarded as a
 distinct <gi>div</gi>, nested within a single composite <gi>div</gi> as
 follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="soundbites"
-						     subtype="conservative" org="composite">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="soundbites" subtype="conservative" org="composite">
    <div sample="medial">
    </div>
    <div sample="medial">
@@ -344,20 +342,33 @@ nested within the <gi>broadcast</gi> element.
  </p>
 
 <specGrp xml:id="D2231" n="Script statement and recording statement">
+
+
 &scriptStmt;
+
+
+
 &recordingStmt;
+
+
+
 &recording;
+
+
+
 &equipment;
+
+
+
 &broadcast;
+
 </specGrp>
 </div>
 
 <div type="div2" xml:id="TSBA"><head>Elements Unique to Spoken Texts</head>
 <p>The following elements characterize spoken texts, transcribed
 according to these Guidelines:
-<specList><specDesc key="u"/><specDesc key="pause"/><specDesc
-key="vocal"/><specDesc key="kinesic"/><specDesc
-key="incident"/><specDesc key="writing" /><specDesc key="shift"/></specList>
+<specList><specDesc key="u"/><specDesc key="pause"/><specDesc key="vocal"/><specDesc key="kinesic"/><specDesc key="incident"/><specDesc key="writing"/><specDesc key="shift"/></specList>
  </p>
 <p>The <gi>u</gi> element may appear directly within a spoken text,
 and may contain any of the others; the others may also appear directly
@@ -365,17 +376,14 @@ and may contain any of the others; the others may also appear directly
 contain a <gi>u</gi> element. In terms of the basic TEI model,
 therefore, we regard the <gi>u</gi> element as analogous to a
 paragraph, and the others as analogous to
-<soCalled>phrase</soCalled> elements. The class <ident
-type="class">model.divPart.spoken</ident> provides the <gi>u</gi>
+<soCalled>phrase</soCalled> elements. The class <ident type="class">model.divPart.spoken</ident> provides the <gi>u</gi>
 element; the class <ident type="class">model.phrase.spoken</ident>
 provides the six other elements listed above.</p>
 
 <p>As  members of the <ident type="class">att.ascribed</ident> class,
 all of these elements  share the following attribute:
 <specList><specDesc key="att.ascribed" atts="who"/></specList>
-As  members of the <ident type="class">att.typed</ident> and <ident
-type="class">att.timed</ident> and <ident
-type="class">att.duration</ident> classes,
+As  members of the <ident type="class">att.typed</ident> and <ident type="class">att.timed</ident> and <ident type="class">att.duration</ident> classes,
 all of these elements except <gi>shift</gi> share the following attribute:
 <specList>
 <specDesc key="att.typed" atts="type subtype"/>
@@ -421,7 +429,7 @@ either with orthographic transcriptions or with the <gi>vocal</gi>
 element, and entirely non-linguistic but significant incidents such as
 the sound of the toy cat are represented by the <gi>incident</gi>
 elements (see section <ptr target="#TSBAVO"/>).
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#mar">you
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#TSBA-eg-19"><u who="#mar">you
 never <pause/> take this cat for show and tell
 <pause/> meow meow</u>
 <u who="#ros">yeah well I dont want to</u>
@@ -532,7 +540,7 @@ utterance.  A pause between utterances applies to all speakers.  The
 example as short, medium, or long; alternatively the attribute
 <att>dur</att> may be used to indicate its length more exactly, as in
 the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u>Okay <pause dur="PT2M"/>U-m<pause dur="PT75S"/>the scene opens up
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#TSBAPA-eg-24"><u>Okay <pause dur="PT2M"/>U-m<pause dur="PT75S"/>the scene opens up
 <pause dur="PT50S"/> with <pause dur="PT20S"/> um <pause dur="PT145S"/> you see
 a tree okay?</u></egXML>
 <!-- example recoded from Chafe  -->
@@ -647,9 +655,7 @@ versions of page 42...
 <div type="div3" xml:id="TSBATI"><head>Temporal Information</head>
 <p>As noted above, utterances, vocals, pauses, kinesics, incidents,
 and writing elements all inherit attributes providing information
-about their position in time from the classes <ident
-type="class">att.timed</ident> and <ident
-type="class">att.duration</ident>. These attributes can be used to
+about their position in time from the classes <ident type="class">att.timed</ident> and <ident type="class">att.duration</ident>. These attributes can be used to
 link parts of the transcription very exactly with points on a
 timeline, or simply to indicate their duration.  Note that if
 <att>start</att> and <att>end</att> point to <gi>when</gi> elements
@@ -771,13 +777,33 @@ text header (see section <ptr target="#HD5"/>).
  </p>
 <specGrp xml:id="DTSCOMP" n="Components of Transcribed Speech">
 
+
+
 &u;
+
+
+
 &pause;
+
+
+
 &vocal;
+
+
+
 &kinesic;
+
+
 &incident;
+
+
+
 &writing;
+
+
+
 &shift;
+
 
 </specGrp>
 </div>
@@ -829,7 +855,7 @@ prosodically (an acute accent
 has been used to mark the position immediately following the syllable
 bearing the primary accent or stress), and may be thought of as
 <soCalled>tone units</soCalled>.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#TSSASE-eg-37"><u>
    <seg>we went to the pub yesterday</seg>
    <pause/>
    <seg>there was no one there</seg>
@@ -852,15 +878,14 @@ to nest within each other.
 <p>Where segments of different kinds are to be distinguished within the
 same stretch of speech, the <att>type</att> attribute may be used, as in
 the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"
- xmlns:ext="http://www.example.org/ns/nonTEI"><u who="#T1">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:ext="http://www.example.org/ns/nonTEI"><u who="#T1">
 <seg type="C">I think </seg>
 <seg type="C">this chap was writing </seg>
 <seg type="C">and he <del type="repeated">said hello</del> said </seg>
 <seg type="M">hello </seg>
 <seg type="C">and he said </seg>
 <seg type="C">I'm going to a 
-<ext:paraphasia>gate</ext:paraphasia>
+
             at twenty past seven </seg>
 <seg type="C">he said </seg>
 <seg type="M">ok </seg>
@@ -1194,7 +1219,7 @@ These declarations might additionally provide information about
 how the characters concerned should be rendered,  their equivalent
 IPA form, etc. In the transcript itself references to them can then
 be include as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div n="Lod E-03" type="exchange">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#TSTPPR-eg-58"><div n="Lod E-03" type="exchange">
    <note>C is with a friend</note>
    <u who="#cwn">
       <unclear>Excuse me<g ref="#lf"/></unclear> <pause/> You dont have some
@@ -1287,8 +1312,7 @@ from one language to another,  may easily be represented in a
 transcript by using  the <gi>foreign</gi> element provided by  the
 core tagset:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<u who="#P1">I proposed that <foreign xml:lang="de"> wir können <pause 
-dur="PT1S"/> vielleicht </foreign> go to warsaw and <emph>vienna</emph> </u>
+<u who="#P1">I proposed that <foreign xml:lang="de"> wir können <pause dur="PT1S"/> vielleicht </foreign> go to warsaw and <emph>vienna</emph> </u>
 </egXML>
 <!-- example from Stefan Majewski on TEI-L 2007-10-05 -->
 
@@ -1323,11 +1347,13 @@ The selection and combination of modules to form a TEI schema is described in
 </p>
 <specGrp>
 
-&model.divPart.spoken; 
+
+
+&model.divPart.spoken;
+ 
 <specGrpRef target="#DTSCOMP"/>
 </specGrp>
 
 
 
 </div></div>
-
