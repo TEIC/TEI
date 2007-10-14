@@ -622,4 +622,11 @@ URL to link back to from foot of ODD reference pages
 <xsl:template name="navInterSep">
   <xsl:text>: </xsl:text>
 </xsl:template>
+
+  <xd:doc class="hook">
+    <xd:short>[html] Hook where HTML can be inserted when processing
+    &lt;egXML&gt; element</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+<xsl:template name="egXMLHook"/>
 </xsl:stylesheet>

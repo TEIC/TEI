@@ -826,13 +826,13 @@
   </xsl:template>
 
   <xd:doc>
-    <xd:short>Process elements tei:name</xd:short>
+    <xd:short>Process elements tei:name and tei:persName</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:name">
+  <xsl:template match="tei:name|tei:persName">
     <xsl:apply-templates/>
     <xsl:choose>
-      <xsl:when test="following-sibling::tei:name">
+      <xsl:when test="following-sibling::tei:name|following-sibling::tei:persName">
 	<xsl:text>, </xsl:text>
       </xsl:when>
       <xsl:otherwise>
@@ -1179,6 +1179,7 @@
   </xd:doc>
   <xsl:template match="tei:resp">
     <xsl:apply-templates/>
+    <xsl:text> </xsl:text>
   </xsl:template>
 
   <xd:doc>
