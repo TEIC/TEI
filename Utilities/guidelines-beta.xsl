@@ -1127,17 +1127,20 @@ function togglerelax (el) {
   <xsl:text disable-output-escaping="yes">&lt;br/&gt;</xsl:text>
 </xsl:template>
 
+<!-- link from bibl back to egXML -->
 <xsl:template match="tei:listBibl/tei:biblStruct|tei:listBibl/tei:bibl">
   <xsl:apply-templates/>
   <xsl:for-each select="key('BACKLINKS',@xml:id)">
-    <xsl:text> </xsl:text>
-    <a class="link_return"
-       title="Go back to text">
-      <xsl:attribute name="href">
-	<xsl:apply-templates select="." mode="generateLink"/>
-      </xsl:attribute>
-      <xsl:text>&#8629;</xsl:text>
-    </a>
+    <xsl:if test="self::teix:egXML">
+      <xsl:text> </xsl:text>
+      <a class="link_return"
+	 title="Go back to text">
+	<xsl:attribute name="href">
+	  <xsl:apply-templates select="." mode="generateLink"/>
+	</xsl:attribute>
+	<xsl:text>&#8629;</xsl:text>
+      </a>
+    </xsl:if>
   </xsl:for-each>
 </xsl:template>
 
