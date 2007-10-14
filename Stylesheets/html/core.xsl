@@ -810,7 +810,7 @@
     </xsl:choose>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements tei:name</xd:short>
+    <xd:short>Process elements tei:name in mode "plain"</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:name" mode="plain">
@@ -824,6 +824,23 @@
       </xsl:call-template>
     <xsl:apply-templates/>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements tei:name</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:name">
+    <xsl:apply-templates/>
+    <xsl:choose>
+      <xsl:when test="following-sibling::tei:name">
+	<xsl:text>, </xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>. </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:note</xd:short>
     <xd:detail> </xd:detail>
@@ -1155,6 +1172,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:resp</xd:short>
     <xd:detail> </xd:detail>
@@ -1162,17 +1180,14 @@
   <xsl:template match="tei:resp">
     <xsl:apply-templates/>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:respStmt</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:respStmt"><xsl:apply-templates select="tei:resp"
-      /><xsl:for-each select="tei:name[position()&lt;last()]"
-      ><xsl:apply-templates/>, </xsl:for-each><xsl:apply-templates
-      select="child::tei:name[position()=last()]"/>. <xsl:if
-      test="ancestor::tei:biblStruct">
-      <br/>
-    </xsl:if></xsl:template>
+  <xsl:template match="tei:respStmt">
+    <xsl:apply-templates/>
+  </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:salute</xd:short>
     <xd:detail> </xd:detail>
@@ -2148,11 +2163,6 @@
   <xsl:if test="preceding-sibling::tei:forename">
     <xsl:text> </xsl:text>
   </xsl:if>
-  <xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template
-    match="tei:biblStruct/tei:monogr/tei:respStmt/tei:persName">
   <xsl:apply-templates/>
 </xsl:template>
 
