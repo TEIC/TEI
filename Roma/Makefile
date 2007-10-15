@@ -1,4 +1,4 @@
-PREFIX=/
+PREFIX=
 FILES=ChangeLog \
 	g \
 	index.html \
