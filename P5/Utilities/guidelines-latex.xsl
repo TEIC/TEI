@@ -23,8 +23,8 @@
 <xsl:template name="latexPreambleHook">
 \usepackage{fontspec}
 \usepackage{xunicode}
-\setromanfont{Junicode}
-\setsansfont{Arial}
+\setromanfont{Gentium}%Junicode}
+\setsansfont{Bitstream-Vera-Sans}
 \setmonofont{Andale Mono}
 \setlength{\headheight}{14pt}
 </xsl:template>
