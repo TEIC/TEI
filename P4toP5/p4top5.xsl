@@ -595,18 +595,6 @@
 <!-- assorted atts -->
   <xsl:template match="@old"/>  
 
-  <xsl:template match="@date.created">  
-    <xsl:attribute name="dateCreated">
-      <xsl:value-of select="."/>
-    </xsl:attribute>
-  </xsl:template>
-
-  <xsl:template match="@date.updated">  
-    <xsl:attribute name="dateUpdated">
-      <xsl:value-of select="."/>
-    </xsl:attribute>
-  </xsl:template>
-
   <xsl:template match="@mergedin">  
     <xsl:attribute name="mergedIn">
       <xsl:value-of select="."/>
