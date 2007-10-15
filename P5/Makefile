@@ -59,29 +59,6 @@ schemas:check
 	(for i in Schema/*.rnc; do t=`basename $$i .rnc`.tmp; mv $$i $$t; ./Utilities/fix_rnc_whitespace.perl < $$t > $$i; rm $$t; done)
 	xmllint --noent --xinclude ${DRIVER} | xsltproc Utilities/extract-sch.xsl - > p5.sch
 
-html-web-beta: check
-	perl -p -e \
-		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
-		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
-		Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
-	-rm -rf Guidelines-web-beta-tmp
-	-mkdir Guidelines-web-beta-tmp
-	echo making beta HTML Guidelines for language ${LANGUAGE}
-	mkdir -p Guidelines-web-beta-tmp/${LANGUAGE}/html
-	cp rightarrow.gif udm.css udm*.js guidelines-beta.css COPYING.txt guidelines-print-beta.css TEI-glow.png Guidelines-web-beta-tmp/${LANGUAGE}/html/ 
-	xmllint  --noent --xinclude ${SOURCETREE}/Guidelines/${LANGUAGE}/guidelines-${LANGUAGE}.xml | \
-	xsltproc ${VERBOSE} \
-		--stringparam outputDir Guidelines-web-beta-tmp/${LANGUAGE}/html \
-		--stringparam displayMode both \
-	        --stringparam lang ${LANGUAGE} \
-	        --stringparam doclang ${LANGUAGE} \
-	    Utilities/guidelines-beta.xsl -
-	cp -r ${SOURCETREE}/Images Guidelines-web-beta-tmp/${LANGUAGE}/html/
-	(cd Guidelines-web-beta-tmp/${LANGUAGE}/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done)
-	(cd Guidelines-web-beta-tmp/${LANGUAGE}/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines-beta.css)
-	-rm -rf Guidelines-web-beta
-	-mv Guidelines-web-beta-tmp Guidelines-web-beta
-
 html-web: check
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \

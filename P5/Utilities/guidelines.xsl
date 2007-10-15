@@ -1152,7 +1152,7 @@ function togglerelax (el) {
 	    <xsl:apply-templates mode="generateLink"
 				 select="key('IDS',substring-after(@corresp,'#'))"/>
 	  </xsl:attribute>
-	  <xsl:text>source</xsl:text>
+	  <span class="citLink">†</span>
 	</a>
     </div>
   </xsl:if>
