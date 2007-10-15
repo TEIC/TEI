@@ -591,5 +591,14 @@
   </xsl:template>
   
   <xsl:template match="@TEIform"/>  
+
+<!-- assorted atts -->
+  <xsl:template match="@old"/>  
+
+  <xsl:template match="@mergedin">  
+    <xsl:attribute name="mergedIn">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
   
 </xsl:stylesheet>
