@@ -337,7 +337,7 @@
  <!-- space does not have @extent any more -->
   <xsl:template match="space/@extent">
     <xsl:attribute name="quantity">
-      <xsl:vaue-of select="."/>
+      <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
 
