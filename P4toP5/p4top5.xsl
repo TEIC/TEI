@@ -416,7 +416,6 @@
 	  <xsl:value-of select="respStmt/resp/text()"/>
 	</label>
       </xsl:if>
-      <p>
 	<xsl:for-each select="respStmt/name">
 	  <name xmlns="http://www.tei-c.org/ns/1.0">
 	    <xsl:apply-templates
@@ -427,7 +426,6 @@
 	  <xsl:apply-templates
 	      select="@*|*|comment()|processing-instruction()|text()"/>
 	</xsl:for-each>
-      </p>
     </change>
   </xsl:template>
   
