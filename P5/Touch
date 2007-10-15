@@ -1,0 +1,12 @@
+#!/bin/sh
+cd `dirname $0`
+cd ..
+touch /tmp/changed
+/usr/bin/svn -q update P5 Stylesheets 
+find P5 Stylesheets -newer /tmp/changed | grep -v .svn > /tmp/changed.files
+if test -s /tmp/changed.files 
+then 
+ cd P5
+ make html-web
+fi
+rm /tmp/changed.files /tmp/changed
