@@ -80,7 +80,7 @@
 
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
-    <xsl:text>\mbox{}\\&#10;</xsl:text>
+    <xsl:text>\mbox{}\newline &#10;</xsl:text>
   </xsl:template>
 
 </xsl:stylesheet>
