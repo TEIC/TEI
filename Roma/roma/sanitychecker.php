@@ -46,16 +46,11 @@ private $SCEH;
  La fonction constructeur
  Elle prend en paramètre l'arbre DOM du fichier de personnalisation ODD et le transforme en un arbre FLAT ODD
  **/
-public function __construct($dom_customization) {
+public function __construct($odd) {
 	$this->SCEH = new SanityCheckerErrorHandler($this);
-	$this->FILE_TMP_NAME = md5(time());
-	$fp = fopen(JERUSALEM_HTDOCS."tmp/".$this->FILE_TMP_NAME.".odd", "w");
-	fwrite($fp, $dom_customization->saveXML());
-	fclose($fp);
 	$this->SCEH->updateProgressBar(3);
-	exec(ROMA_SYSTEM." --compile ".JERUSALEM_HTDOCS."tmp/".$this->FILE_TMP_NAME.".odd /");
-	$xml_input = implode("", file(JERUSALEM_HTDOCS."tmp/".$this->FILE_TMP_NAME.".odd.compiled"));
-	$this->DOM = new romaDom($xml_input);
+        $this->DOM = new romaDom();	
+	$odd->getOddDom($this->DOM);
 	$this->SCEH->updateProgressBar(10);
 	$this->DOM->getXPath($xpath);
 	$this->ALL_ELEMENTS = $xpath->query("//tei:elementSpec");

@@ -1951,12 +1951,13 @@ class romaDom extends domDocument
     // --- Little Helpers
     // #####################################################################
 
-    protected function getOddDom( &$oDOC )
+    public function getOddDom( &$oDOC )
       {
 	$oXSL = new domDocument();
 	$oXSL->load( roma_StylesheetDir . '/odds/odd2odd.xsl' );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
+        $oProc->setParameter( null, 'stripped', 'true');	
 	$oProc->setParameter( null, 'TEISERVER', roma_xquery_server);
 //DEBUG	$oProc->setParameter( null, 'localsource', roma_local_p5);
 	$oProc->setParameter( null, 'TEIC', 'true');
@@ -2464,11 +2465,11 @@ class romaDom extends domDocument
       }
 
 	public function processSanityCheck() {
-		$checker = new SanityChecker($this);
-		$checker->pass1();
-		$checker->pass2();
-		$checker->pass3();
-		$checker->showErrors();
+ 	  $checker = new SanityChecker($this);
+	  $checker->pass1();
+	  $checker->pass2();
+	  $checker->pass3();
+	  $checker->showErrors();
 	}
 
 
