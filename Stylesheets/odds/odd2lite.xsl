@@ -62,7 +62,7 @@
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template  match="*">
+  <xsl:template  match="*|teix:egXML|tei:author|tei:title">
     <xsl:copy>
       <xsl:apply-templates
        select="*|@*|processing-instruction()|comment()|text()"/>
