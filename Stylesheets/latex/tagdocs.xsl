@@ -32,11 +32,13 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="teix:egXML">
+\par
 \begin{scriptsize}
 \bgroup
 \ttfamily\mbox{}
 <xsl:apply-templates mode="verbatim"/>
 \egroup
 \end{scriptsize}
+\par
   </xsl:template>
 </xsl:stylesheet>
