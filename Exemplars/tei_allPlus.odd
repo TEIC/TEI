@@ -91,10 +91,36 @@
        <choice>
         <text/>
         <ref name="anyTEI"/>
+        <ref name="svg"/>
+        <ref name="define"/>
+        <ref name="pattern"/>
+	<ref name="include"/>
+	<ref name="anyAlien"/>
        </choice>
       </oneOrMore>
      </content>
     </elementSpec>
+
+    <macroSpec ident="anyAlien" mode="add">
+      <content>
+	<element xmlns="http://relaxng.org/ns/structure/1.0">
+	  <nsName ns="http://www.example.org/ns/nonTEI"/>
+	  <zeroOrMore>
+	    <attribute>
+	      <anyName/>
+	      <data type="token"/>
+	    </attribute>
+	  </zeroOrMore>
+	  <zeroOrMore>
+	    <choice>
+	      <text/>
+	      <ref name="anyTEI"/>
+	      <ref name="anyAlien"/>
+	    </choice>
+	  </zeroOrMore>
+	</element>
+      </content>
+    </macroSpec>
 
     <macroSpec ident="anyTEI" mode="add">
      <content>
