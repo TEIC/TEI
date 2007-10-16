@@ -839,35 +839,32 @@ attribute or a <att>baz</att> attribute, but not both. The
 </div>
 </div>
 <div type="div3" xml:id="TDCLA"><head>Element Classes</head>
+
 <p>The element <gi>classSpec</gi> is used to document an <term>element
-class</term> or <soCalled>class</soCalled>, as defined in section <ptr target="#STEC"/>.  It has the
-following components, additional to those already mentioned:
+class</term> or <soCalled>class</soCalled>, as defined in section <ptr
+target="#STEC"/>.  It has the following components, additional to
+those already mentioned:
 <specList>
 <specDesc key="classSpec" atts="type"/>
 <specDesc key="attList"/>
 </specList>
 </p>
-<p>The attribute <att>type</att> is used to distinguish between
-<soCalled>model</soCalled> and <soCalled>attribute</soCalled>
-classes. In the case of attribute classes, the attributes which define
-membership in the class are documented by an <gi>attList</gi> element
-contained within the <gi>classSpec</gi>.  Members of the class
-documented by a <gi>classSpec</gi> point to it by supplying its
-identifier as the value of the <att>key</att> attribute on a
-<gi>memberOf</gi> element, given as a child of the <gi>classes</gi>
-element in the <gi>elementSpec</gi> that defines the element
-concerned. For example, the <gi>elementSpec</gi> for the element
-<gi>hi</gi> contains the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><classes>
+
+<p>A class specification does not list all of its members. Instead,
+its members declare that they belong to it by means of a
+<gi>classes</gi> element contained within the relevant
+<gi>elementSpec</gi>. This will contain a <gi>memberOf</gi> element
+for each class of which the relevant element is a member, supplying
+the name of the relevant class. For example, the <gi>elementSpec</gi>
+for the element <gi>hi</gi> contains the following: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><classes>
   <memberOf key="model.hiLike"/>
 </classes>
 </egXML>
-
-which indicates that the <gi>hi</gi> element is a member of the class
+This  indicates that the <gi>hi</gi> element is a member of the class
 with identifier <ident type="class">model.hiLike</ident>. The
 <gi>classSpec</gi> element that documents this class contains
 the following declarations:
-
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><classSpec type="model" ident="model.hiLike">
 <desc>groups phrase-level elements related to highlighting that have
 no specific semantics </desc>
@@ -877,24 +874,32 @@ no specific semantics </desc>
 </classSpec>
 </egXML>
 which indicate that the class <ident type="class">model.hiLike</ident>
-is actually a member (or subclass) of the class <ident type="class">model.highlighted</ident>.
+is actually a member (or subclass) of the class <ident
+type="class">model.highlighted</ident>.
  </p>
+
+<p>The attribute <att>type</att> is used to distinguish between
+<soCalled>model</soCalled> and <soCalled>attribute</soCalled>
+classes. In the case of attribute classes, the attributes provided by 
+membership in the class are documented by an <gi>attList</gi> element
+contained within the <gi>classSpec</gi>. In the case of model classes,
+no further information is neeeded to define the class beyond its
+description, its identifier, and optionally any classes of which it is
+a member. </p>
 
 <p>When a model class is referenced in the content model of an element
 (i.e. in the <gi>content</gi> of an <gi>elementSpec</gi>), its meaning
-will depend on the value of the <att>generate</att> attribute on the
-class declaration, and also on the name used to reference the
-class. </p>
+will depend on the name used to reference the class. </p>
 
-<p>The default and usual behaviour is to replace the class
-reference by an alternated list of all the current members of the
-class. For example, suppose that  the members of the class
-<ident type="class">model.hiLike</ident> are elements  <gi>hi</gi>,  <gi>it</gi>,
-and <gi>bo</gi>. Then a content model such as
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
-  <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<p>If the reference simply takes the form of the class name, it is
+interpreted to mean an alternated list of all the current members of
+the class. For example, suppose that the members of the class <ident
+type="class">model.hiLike</ident> are elements <gi>hi</gi>,
+<gi>it</gi>, and <gi>bo</gi>. Then a content model such as <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><content>
+  <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
    <rng:ref name="model.hiLike"/>
-</rng:optional></content></egXML>
+</rng:zeroOrMore></content></egXML>
 would be equivalent to the explicit content model:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -903,55 +908,58 @@ would be equivalent to the explicit content model:
      <rng:ref name="it"/>
      <rng:ref name="bo"/>
    </rng:choice>
-</rng:zeroOrMore></content></egXML> and would generate, in DTD
-language, a model such as <code>(hi|it|bo)*</code>. However, if the <att>generate</att>
-attribute on the <gi>classSpec</gi>
-defining <ident type="class">model.hiLike</ident> had the value <val>sequence</val>, a
-content model referencing the class as
-<code>model.hiLike_sequence</code> would be equivalent   to the
-following explicit content model:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+</rng:zeroOrMore></content></egXML> (or, to use RELAXNG compact
+syntax, <code>(hi|it|bo)*</code>). However, a content model
+referencing the class as <code>model.hiLike_sequence</code> would be
+equivalent to the following explicit content model: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><content>
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:ref name="hi"/>
      <rng:ref name="it"/>
      <rng:ref name="bo"/>
-</rng:zeroOrMore></content></egXML> and would generate, in DTD
-language, a model such as <code>(hi,it,bo)*</code>. Similarly, a value of
-<val>sequenceOptional</val> for this attribute (referenced as
-model.hiLike_sequenceOptional) would be equivalent to:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+</rng:zeroOrMore></content></egXML> (or, in RELAXNG compact syntax,
+<code>(hi,it,bo)*</code>. </p>
+<p>The following suffixes can be given to a class name when it is
+referenced in a content model:
+      <list type="gloss">
+        <label>alternation</label>
+          <item>members of the class are alternatives</item>
+        <label>sequence</label>
+          <item>members of the class are to be provided in sequence</item>
+        <label>sequenceOptional</label>
+          <item>members of the class may be provided, in sequence,
+	    but are optional</item>
+        <label>sequenceOptionalRepeatable</label>
+          <item>members of the class may be provided one or more
+	    times, in sequence, but are optional. </item>
+        <label>sequenceRepeatable</label>
+          <item>members of the class may be provided one or more times, in sequence</item>
+      </list>
+</p>
+<p>Thus a reference to
+<code>model.hiLike_sequenceOptional</code> in a content model would be equivalent to:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:optional><rng:ref name="hi"/></rng:optional>
      <rng:optional><rng:ref name="it"/></rng:optional>
      <rng:optional><rng:ref name="bo"/></rng:optional>
-</rng:zeroOrMore></content></egXML> and would generate, in DTD
-language, a model such as <code>(hi?,it?,bo?)*</code>.</p>
-<p>The repeatability of members of a class may also be specified
-independently, using the same mechanism. For example, a value
-of <val>sequenceRepeatable</val> for the <att>generate</att> attribute would be equivalent to:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+</rng:zeroOrMore></egXML>, while a reference to  <val>sequenceRepeatable</val>  would be equivalent to:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:oneOrMore><rng:ref name="hi"/></rng:oneOrMore>
      <rng:oneOrMore><rng:ref name="it"/></rng:oneOrMore>
      <rng:oneOrMore><rng:ref name="bo"/></rng:oneOrMore>
-</rng:zeroOrMore></content></egXML> and would generate, in DTD
-language, a model such as <code>(hi+,it+,bo+)*</code>.   Similarly, a value
-of <val>sequenceOptionalRepeatable</val> for the <att>generate</att> attribute would be equivalent to:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+</rng:zeroOrMore></egXML> and a reference to <val>sequenceOptionalRepeatable</val> would be equivalent to:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:zeroOrMore><rng:ref name="hi"/></rng:zeroOrMore>
      <rng:zeroOrMore><rng:ref name="it"/></rng:zeroOrMore>
      <rng:zeroOrMore><rng:ref name="bo"/></rng:zeroOrMore>
-</rng:zeroOrMore></content></egXML> and would generate, in DTD
-language, a model such as <code>(hi*,it*,bo*)*</code>.</p>
-<p>The generate attribute may specify more than one possible value.
-for example a value of <val>sequence alternates</val> would make
-available both a content model such as  <code>(hi,it,bo)*</code>,
-which would be referenced as <ident type="class">model.hiLike_sequence</ident>, and a content
-model such as <code>(hi|it|bo)*</code>, which would be referenced as
-<ident type="class">model.hiLike_alternates</ident>.</p>
-<p>The sequence in which members of a class appear in a content model when one of the
-sequence options is used is that in which the elements are declared. </p>
+</rng:zeroOrMore></egXML></p>
+
+<p>The <soCalled>sequence</soCalled> in which members of a class
+appear in a content model when one of the sequence options is used is
+that in which the elements are declared. </p>
 
 <p>When a <gi>classSpec</gi> contains an <gi>attList</gi> element, all
 the members of that class inherit the attributes specified by it. For
