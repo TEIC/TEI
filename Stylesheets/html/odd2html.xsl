@@ -47,7 +47,6 @@
 
   <xsl:output method="html" encoding="iso-8859-1"/>
   <xsl:variable name="top" select="/"/>
-  <xsl:template match="tei:divGen[@type='index']"/>
 
   <xsl:template name="header_for_odd2html">
     <xsl:param name="minimal">false</xsl:param>
@@ -88,9 +87,11 @@
       </xsl:choose>
     </xsl:if>
   </xsl:template>
+
   <xsl:variable name="headingNumberSuffix">
     <xsl:text> </xsl:text>
   </xsl:variable>
+
   <xsl:template name="processSchemaFragment">
     <xsl:param name="filename"/>
     <div class="schemaFragment">
@@ -127,6 +128,7 @@
       <xsl:apply-templates select="tei:specGrpRef"/>
     </div>
   </xsl:template>
+
   <xsl:template name="listSpecs">
     <xsl:for-each select="..//tei:schemaSpec">
       <hr/>
@@ -188,72 +190,6 @@
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
-
-  <xd:doc>
-    <xd:short>Process elements tei:listRef</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:listRef" mode="weave"/>
-
-  <xd:doc>
-    <xd:short>Process elements tei:ptr</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:ptr" mode="weave">
-    <xsl:choose>
-      <xsl:when test="parent::tei:listRef">
-	<xsl:choose>
-	<xsl:when test="starts-with(@target,'#') and key('IDS',substring-after(@target,'#'))">
-	  <xsl:call-template name="makeInternalLink">
-	    <xsl:with-param name="target"
-			    select="substring-after(@target,'#')"/>
-	    <xsl:with-param name="ptr">true</xsl:with-param>
-	    <xsl:with-param name="dest">
-	      <xsl:call-template name="generateEndLink">
-		<xsl:with-param name="where">
-		  <xsl:value-of select="substring-after(@target,'#')"/>
-		</xsl:with-param>
-	      </xsl:call-template>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:when>
-	<xsl:when test="starts-with(@target,'#')">
-	  <xsl:text>«</xsl:text>
-	  <xsl:value-of select="@target"/>
-	  <xsl:text>»</xsl:text>
-	</xsl:when>
-	<xsl:otherwise>
-	    <xsl:apply-imports/>
-	</xsl:otherwise>
-	</xsl:choose>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-imports/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template match="rng:*">
-    <xsl:copy>
-      <xsl:copy-of select="@*"/>
-      <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
-    </xsl:copy>
-  </xsl:template>
-  <xsl:template match="rng:zeroOrMore">
-    <xsl:choose>
-      <xsl:when test="count(rng:*)=1 and rng:zeroOrMore">
-        <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:copy>
-          <xsl:copy-of select="@*"/>
-          <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
-        </xsl:copy>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-<xsl:template match="tei:elementSpec[@mode='delete']" mode="weave"/>
 
 <xsl:template match="tei:elementSpec[@mode='delete']">
 <dt>Element <xsl:value-of select="@ident"/></dt>
@@ -361,5 +297,66 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template match="tei:divGen[@type='index']"/>
+
+  <xsl:template match="rng:*">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
+    </xsl:copy>
+  </xsl:template>
+  <xsl:template match="rng:zeroOrMore">
+    <xsl:choose>
+      <xsl:when test="count(rng:*)=1 and rng:zeroOrMore">
+        <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy>
+          <xsl:copy-of select="@*"/>
+          <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
+        </xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="tei:listRef" mode="weave"/>
+
+  <xsl:template match="tei:ptr" mode="weave">
+    <xsl:choose>
+      <xsl:when test="parent::tei:listRef">
+	<xsl:choose>
+	<xsl:when test="starts-with(@target,'#') and key('IDS',substring-after(@target,'#'))">
+	  <xsl:call-template name="makeInternalLink">
+	    <xsl:with-param name="target"
+			    select="substring-after(@target,'#')"/>
+	    <xsl:with-param name="ptr">true</xsl:with-param>
+	    <xsl:with-param name="dest">
+	      <xsl:call-template name="generateEndLink">
+		<xsl:with-param name="where">
+		  <xsl:value-of select="substring-after(@target,'#')"/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:when test="starts-with(@target,'#')">
+	  <xsl:text>«</xsl:text>
+	  <xsl:value-of select="@target"/>
+	  <xsl:text>»</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	    <xsl:apply-imports/>
+	</xsl:otherwise>
+	</xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-imports/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+<xsl:template match="tei:elementSpec[@mode='delete']" mode="weave"/>
+
 
 </xsl:stylesheet>
