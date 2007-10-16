@@ -33,7 +33,7 @@
   </xd:doc>
   <xsl:template match="teix:egXML">
 \par
-\begin{scriptsize}
+\noindent\begin{scriptsize}
 \bgroup
 \ttfamily\mbox{}
 <xsl:apply-templates mode="verbatim"/>
