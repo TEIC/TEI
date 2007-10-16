@@ -20,12 +20,14 @@
   
 <xsl:import href="/usr/share/xml/tei/stylesheet/latex/tei.xsl"/>
 <xsl:param name="reencode">false</xsl:param>
+<xsl:param name="classParameters">11pt,twoside</xsl:param>
+  <xsl:variable name="docClass">book</xsl:variable>
 <xsl:template name="latexPreambleHook">
 \usepackage{fontspec}
 \usepackage{xunicode}
-\setromanfont{Gentium}%Junicode}
-\setsansfont{Bitstream-Vera-Sans}
-\setmonofont{Andale Mono}
+\setromanfont{Gentium}
+\setsansfont[Scale=0.86]{Bitstream Vera Sans}
+\setmonofont[Scale=0.86]{Bitstream Vera Sans Mono}
 \setlength{\headheight}{14pt}
 </xsl:template>
 
