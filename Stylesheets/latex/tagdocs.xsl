@@ -35,8 +35,7 @@
 \par
 \noindent\begin{scriptsize}
 \bgroup
-\ttfamily\mbox{}
-<xsl:apply-templates mode="verbatim"/>
+\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
 \egroup
 \end{scriptsize}
 \par

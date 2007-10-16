@@ -204,7 +204,7 @@ XSL LaTeX stylesheet to make slides
 </xsl:template>
 
 <xsl:template match="teix:egXML">
-  <xsl:text>\begin{scriptsize}
+  <xsl:text>\noindent\begin{scriptsize}
   \bgroup
   \ttfamily\mbox{}</xsl:text>
   <xsl:apply-templates mode="verbatim"/>
