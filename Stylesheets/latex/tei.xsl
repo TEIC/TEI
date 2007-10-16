@@ -21,9 +21,9 @@
   <xsl:param name="startNamespace">\color{red}</xsl:param>
   <xsl:param name="startElement">{</xsl:param>
   <xsl:param name="startElementName">\textbf{</xsl:param>
-  <xsl:param name="startAttribute">\textit{</xsl:param>
-  <xsl:param name="startAttributeValue">\textrm{</xsl:param>
-  <xsl:param name="startComment">\textsf{</xsl:param>
+  <xsl:param name="startAttribute">{</xsl:param>
+  <xsl:param name="startAttributeValue">{</xsl:param>
+  <xsl:param name="startComment">\textit{</xsl:param>
   <xsl:param name="endElement">}</xsl:param>
   <xsl:param name="endElementName">}</xsl:param>
   <xsl:param name="endComment">}</xsl:param>
