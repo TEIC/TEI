@@ -1,5 +1,6 @@
 <xsl:stylesheet 
  xmlns:teix="http://www.tei-c.org/ns/Examples"
+ xmlns:s="http://www.ascc.net/xml/schematron" 
  xmlns:tei="http://www.tei-c.org/ns/1.0"
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -77,11 +78,11 @@ $Id$
 </xsl:template>
 
 
-<xsl:template match="teix:*|tei:*|rng:*">
+<xsl:template match="*">
  <xsl:copy>
   <xsl:apply-templates select="@*"/>
   <xsl:apply-templates 
-      select="teix:*|tei:*|rng:*|comment()|processing-instruction()|text()"/>
+      select="*|comment()|processing-instruction()|text()"/>
  </xsl:copy>
 </xsl:template>
 
