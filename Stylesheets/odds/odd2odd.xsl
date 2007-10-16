@@ -122,9 +122,26 @@
 	<xsl:call-template name="simplifyRelax"/>
       </xsl:for-each>
     </xsl:when>
+    <xsl:when test="starts-with($N,'data.')">
+      <xsl:apply-templates 
+	  select="key('MACROS',$N)/tei:content/*" 
+	  mode="final"/>
+    </xsl:when>
     <xsl:otherwise>
       <xsl:copy-of select="."/>      
     </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template
+      match="tei:valDesc|tei:equiv|tei:gloss|tei:desc|tei:remarks|tei:exemplum|tei:listRef"
+      mode="final">
+    <xsl:choose>
+      <xsl:when test="$stripped='true'">
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:copy-of select="."/>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
@@ -139,7 +156,10 @@
     <xsl:variable name="k" select="@ident"/>
     <xsl:choose>
       <xsl:when test="key('REFED',$k) or $stripped='true'">
-	<xsl:copy-of select="."/>
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates mode="final"/>
+	</xsl:copy>
       </xsl:when>
       <xsl:otherwise>
 <!--	<xsl:message>reject <xsl:value-of select="$k"/>	</xsl:message>-->
@@ -151,9 +171,14 @@
   <xsl:template match="tei:macroSpec" mode="final">
     <xsl:variable name="k" select="@ident"/>
     <xsl:choose>
-      <xsl:when test="$stripped='true' and starts-with(@ident,'macro.')"/>
+      <xsl:when test="$stripped='true' and
+		      starts-with(@ident,'macro.')"/>
+      <xsl:when test="starts-with(@ident,'data.')"/>
       <xsl:when test="key('REFED',$k)">
-	<xsl:copy-of select="."/>
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates mode="final"/>
+	</xsl:copy>
       </xsl:when>
       <xsl:otherwise>
 <!--	<xsl:message>reject <xsl:value-of select="$k"/>	</xsl:message>-->
@@ -839,10 +864,14 @@ so that is only put back in if there is some content
 		    <ref name="{$N}"
 			 xmlns="http://relaxng.org/ns/structure/1.0"/>
 		  </xsl:when>
+		  <xsl:when test="starts-with($N,'data.')">
+		    <xsl:apply-templates
+			select="key('MACROS',$N)/tei:content/*" mode="final"/>
+		  </xsl:when>
 		  <xsl:when test="key('DELETE',$N)"/>
 		  <xsl:otherwise>
-		    
-		    <ref name="{$N}" xmlns="http://relaxng.org/ns/structure/1.0"/>
+		    <ref name="{$N}" 
+			 xmlns="http://relaxng.org/ns/structure/1.0"/>
 		  </xsl:otherwise>
 		</xsl:choose>
               </xsl:for-each>
