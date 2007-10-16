@@ -60,10 +60,10 @@
 
 
   <xsl:template
-    match="rng:*|tei:*|@*|processing-instruction()|tei:author|tei:title">
+    match="*|@*|processing-instruction()|tei:author|tei:title">
     <xsl:copy>
       <xsl:apply-templates
-       select="tei:*|rng:*|@*|processing-instruction()|comment()|text()"/>
+       select="*|@*|processing-instruction()|comment()|text()"/>
     </xsl:copy>
   </xsl:template>
 
