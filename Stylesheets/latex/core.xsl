@@ -353,7 +353,7 @@
       <xsl:when test="@xml:id">
         <xsl:value-of select="@xml:id"/>
       </xsl:when>
-      <xsl:otherwise>bibitem-<xsl:number/></xsl:otherwise>
+      <xsl:otherwise>bibitem-<xsl:number level="any"/></xsl:otherwise>
     </xsl:choose>}<xsl:apply-templates/>
     <xsl:text>&#10;</xsl:text>
   </xsl:template>
