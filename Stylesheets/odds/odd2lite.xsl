@@ -58,7 +58,7 @@
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:variable name="top" select="/"/>
 
-  <xsl:template match="comment()|processing-instruction()|text()">
+  <xsl:template match="@*|comment()|processing-instruction()">
     <xsl:copy-of select="."/>
   </xsl:template>
 
