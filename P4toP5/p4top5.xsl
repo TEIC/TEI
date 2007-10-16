@@ -590,6 +590,8 @@
     </xsl:attribute>
   </xsl:template>
   
+  <xsl:template match="@langKey"/>  
+  
   <xsl:template match="@TEIform"/>  
 
 <!-- assorted atts -->
