@@ -32,6 +32,30 @@
 </xsl:template>
 
 
+<xsl:template name="latexBegin">
+\makeatletter
+\thispagestyle{plain}
+<xsl:if test="not(tei:text/tei:front/tei:titlePage)">
+  <xsl:call-template name="printTitleAndLogo"/>
+</xsl:if>
+\markright{\@title}%
+\markboth{\@title}{\@author}%
+\makeatother
+\fvset{frame=single,numberblanklines=false,xleftmargin=5mm,xrightmargin=5mm}
+\fancyhf{} 
+\setlength{\headheight}{14pt}
+\fancyhead[LE]{\bfseries\leftmark} 
+\fancyhead[RO]{\bfseries\rightmark} 
+\fancyfoot[RO]{\TheDate}
+\fancyfoot[CO]{\thepage}
+\fancyfoot[LO]{}
+\fancyfoot[LE]{\TheDate}
+\fancyfoot[CE]{\thepage}
+\fancyfoot[RE]{}
+\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
+<xsl:call-template name="beginDocumentHook"/>
+</xsl:template>
+
 
 </xsl:stylesheet>
 
