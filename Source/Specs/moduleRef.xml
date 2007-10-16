@@ -22,6 +22,14 @@ $Id$
     <rng:optional>
       <rng:ref name="content"/>
     </rng:optional>
+    <s:pattern xmlns:s="http://www.ascc.net/xml/schematron" name="testschemapattern">
+      <s:rule context="tei:moduleRef">
+        <s:report test="* and @key">
+	  child elements of moduleRef are only allowed when an external module
+	  is being loaded
+	</s:report>
+      </s:rule>
+    </s:pattern>
     
   </content>
   <attList>

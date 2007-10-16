@@ -19,6 +19,11 @@ $Id: transformP5.xsl 3417 2007-09-29 11:36:18Z rahtz $
   </classes>
   <content xmlns:s="http://www.ascc.net/xml/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0">
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <s:pattern name="spanTo_required">
+      <s:rule context="tei:delSpan">
+        <s:assert test="@spanTo">The spanTo= attribute of <s:name/> is required.</s:assert>
+      </s:rule>
+    </s:pattern>
     
   </content>
   <exemplum>
