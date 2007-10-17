@@ -52,9 +52,12 @@ public function __construct($odd) {
         $this->DOM = new romaDom();	
 	$odd->getOddDom($this->DOM);
 	$this->SCEH->updateProgressBar(10);
-	$this->DOM->getXPath($xpath);
-	$this->ALL_ELEMENTS = $xpath->query("//tei:elementSpec");
-	$this->ALL_CLASSES = $xpath->query("//tei:classSpec");
+        $this->xpath = new domxpath( $this->DOM );
+	$this->SCEH->updateProgressBar(50);
+	$this->xpath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );
+	$this->xpath->registerNamespace( 'tei', 'http://www.tei-c.org/ns/1.0' );
+	$this->ALL_ELEMENTS = $this->xpath->query("//tei:elementSpec");
+	$this->ALL_CLASSES = $this->xpath->query("//tei:classSpec");
 	$this->PARENTS = array();
 }
 
@@ -91,10 +94,8 @@ private function getContent($input) {
 		$childs = $input->childNodes;
 		foreach($childs as $child) {
 			if($child->nodeName == "ref") {
-				$this->DOM->getXPath($xpath);
-				$element = $xpath->query("//tei:elementSpec[@ident='".$child->getAttribute("name")."']")->item(0);
-				$this->DOM->getXPath($xpath);
-				$class = $xpath->query("//tei:classSpec[@ident='".$child->getAttribute("name")."']")->item(0);
+				$element = $this->xpath->query("//tei:elementSpec[@ident='".$child->getAttribute("name")."']")->item(0);
+				$class = $this->xpath->query("//tei:classSpec[@ident='".$child->getAttribute("name")."']")->item(0);
 				if(is_object($element)) $res[] = $element;
 				if(is_object($class)) $res[] = $class;
 			} else {
@@ -111,8 +112,7 @@ private function getContent($input) {
 		}
 	} else if ($input->nodeName == "classSpec") {
 		$res = array();
-		$this->DOM->getXPath($xpath1);
-		$items = $xpath1->query("//tei:*[tei:classes/tei:memberOf/@key='".$input->getAttribute("ident")."']");
+		$items = $this->xpath->query("//tei:*[tei:classes/tei:memberOf/@key='".$input->getAttribute("ident")."']");
 		foreach($items as $item) {
 			$res[] = $item;
 		}
@@ -126,8 +126,7 @@ private function getContent($input) {
  IE: il existe au moins un élément elementSpec dont l'attribut @ident = element
  **/
 private function isElement(&$element) {
-	$this->DOM->getXPath($xpath);
-	$tmp = $xpath->query("//tei:elementSpec[@ident='$element']" );
+	$tmp = $this->xpath->query("//tei:elementSpec[@ident='$element']" );
 	if($tmp->length == 0) {
 		return false;
 	} else {
@@ -142,8 +141,7 @@ private function isElement(&$element) {
  **/
 private function isClass(&$class) {
 	$class = $this->remove_sequences_from_classnames($class);
-	$this->DOM->getXPath($xpath);
-	$tmp = $xpath->query("//tei:classSpec[@ident='$class' and @type='model']" );
+	$tmp = $this->xpath->query("//tei:classSpec[@ident='$class' and @type='model']" );
 	if($tmp->length == 0) {
 		return false;
 	} else {
@@ -397,11 +395,11 @@ $this->getParentItem($element);
 		}
 		case "rng:ref":
 		case "ref": {
-			$this->DOM->getXPath($xpath);
+
 			if($this->isClass($element->getAttribute("name"))) {
-				$el = $xpath->query("//tei:classSpec[@ident='".$this->remove_sequences_from_classnames($element->getAttribute("name"))."']")->item(0);	
+				$el = $this->xpath->query("//tei:classSpec[@ident='".$this->remove_sequences_from_classnames($element->getAttribute("name"))."']")->item(0);	
 			} else if ($this->isElement($element->getAttribute("name"))) {
-				$el = $xpath->query("//tei:elementSpec[@ident='".$element->getAttribute("name")."']")->item(0);
+				$el = $this->xpath->query("//tei:elementSpec[@ident='".$element->getAttribute("name")."']")->item(0);
 			} else {
 				if($this->inOptionnality($this->addRecursion($recursion, $element))) {
 				  $this->SCEH->addError('Warning', $element->getAttribute("name"), $this->getParentItem($element)->getAttribute("ident"), 'does not exist');
@@ -432,14 +430,19 @@ $this->getParentItem($element);
  pass1() vérifie si toutes les racines du schéma sont satisfiables
 **/
 public function pass1() {
-	$this->DOM->getXPath($xpath);
-	$roots = explode(" ", $xpath->query("//tei:schemaSpec")->item(0)->getAttribute("start"));
+	$this->SCEH->updateProgressBar(51.1);
+	$roots = explode(" ",
+    $this->xpath->query("//tei:schemaSpec")->item(0)->getAttribute("start"));
+	$this->SCEH->updateProgressBar(51.2);
 	if(trim($roots[0]) == "") {
 		$roots = array();
 		$roots[0] = "TEI";
 	}
+	$this->SCEH->updateProgressBar(51.3);
 	foreach($roots as $root) {
-		$tmp = $xpath->query("//tei:elementSpec[@ident='".$root."']")->item(0);
+	$this->SCEH->updateProgressBar(51.4);
+	print   "<h1>" + $root + "x</h1>";
+		$tmp = $this->xpath->query("//tei:elementSpec[@ident='".$root."']")->item(0);
 		$root_node = $this->DOM->rootNode;
 		if(!$this->verifElem($tmp, $root_node, array())) $schema_broken = true;
 	}
@@ -457,7 +460,7 @@ public function pass1() {
  **/
 public function pass2() {
 	$res = true;
-	$this->DOM->getXPath($xpath);
+	$this->SCEH->updateProgressBar(51.4);
 	foreach($this->ALL_ELEMENTS as $element) {
 		if(!isset($this->COMPUTING[$element->getAttribute("ident")])) {
 			$res = false;
@@ -477,7 +480,6 @@ public function pass2() {
  **/
 public function pass3() {
 /*	$res = true;
-	$this->DOM->getXPath($xpath);
 	foreach($this->COMPUTING as $item => $valeur) {
 		if(!isset($this->RESULTS[Erro$item])) {
 			$existe = false;
