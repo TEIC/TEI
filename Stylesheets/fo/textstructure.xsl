@@ -232,10 +232,10 @@
     </xsl:call-template>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:div0|tei:div1|tei:div2|tei:div3|tei:div4</xd:short>
+    <xd:short>Process elements  tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4">
+  <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
     <xsl:choose>
       <xsl:when test="@type='letter'">
         <xsl:apply-templates/>
@@ -252,10 +252,10 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements
-    tei:div0|tei:div1|tei:div2|tei:div3|tei:div4 (toc mode)</xd:short>
+      tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5 (toc mode)</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4" mode="toc">
+  <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5" mode="toc">
     <xsl:call-template name="tocheading">
       <xsl:with-param name="level">
         <xsl:value-of select="substring-after(local-name(),'div')"/>
@@ -263,11 +263,11 @@
     </xsl:call-template>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:div0|tei:div1|tei:div2|tei:div3|tei:div4
+    <xd:short>Process elements  tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5
     (xref mode)</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template mode="xref" match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4">
+  <xsl:template mode="xref" match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
     <xsl:call-template name="xheading">
       <xsl:with-param name="level">
         <xsl:value-of select="local-name()"/>
@@ -342,7 +342,6 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="$titlePage='true'">
-          <fo:page-sequence format="{$formatFrontpage}" force-page-count="end-on-even" hyphenate="{$hyphenate}" language="{$language}">
             <xsl:call-template name="choosePageMaster">
               <xsl:with-param name="where">
                 <xsl:value-of select="$frontMulticolumns"/>
@@ -677,6 +676,9 @@
         <xsl:when test="$level=4">
           <xsl:call-template name="setupDiv4"/>
         </xsl:when>
+        <xsl:when test="$level=5">
+          <xsl:call-template name="setupDiv5"/>
+        </xsl:when>
       </xsl:choose>
       <xsl:call-template name="blockStartHook"/>
       <xsl:variable name="Number">
@@ -699,20 +701,27 @@
             <fo:marker marker-class-name="section2"/>
             <fo:marker marker-class-name="section3"/>
             <fo:marker marker-class-name="section4"/>
+            <fo:marker marker-class-name="section5"/>
           </xsl:when>
           <xsl:when test="$level=1">
             <fo:marker marker-class-name="section2"/>
             <fo:marker marker-class-name="section3"/>
             <fo:marker marker-class-name="section4"/>
+            <fo:marker marker-class-name="section5"/>
           </xsl:when>
           <xsl:when test="$level=2">
             <fo:marker marker-class-name="section3"/>
             <fo:marker marker-class-name="section4"/>
+            <fo:marker marker-class-name="section5"/>
           </xsl:when>
           <xsl:when test="$level=3">
             <fo:marker marker-class-name="section4"/>
+            <fo:marker marker-class-name="section5"/>
           </xsl:when>
-          <xsl:when test="$level=4"/>
+          <xsl:when test="$level=4">
+          <fo:marker marker-class-name="section5"/>
+          </xsl:when>
+          <xsl:when test="$level=5"/>                     
         </xsl:choose>
         <fo:marker marker-class-name="section{$level}">
           <xsl:if test="$numberHeadings='true'">
@@ -1273,6 +1282,11 @@
               <xsl:call-template name="makeBookMarkN"/>
             </xsl:for-each>
           </xsl:when>
+          <xsl:when test="$depth='5'">
+            <xsl:for-each select="tei:div6">
+              <xsl:call-template name="makeBookMarkN"/>
+            </xsl:for-each>
+          </xsl:when>
         </xsl:choose>
       </bookmark>
     </xsl:if>
@@ -1319,6 +1333,9 @@
         </xsl:when>
         <xsl:when test="$level='4'">
           <xsl:value-of select="$div4Tocindent"/>
+        </xsl:when>
+        <xsl:when test="$level='5'">
+          <xsl:value-of select="$div5Tocindent"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="$div1Tocindent"/>

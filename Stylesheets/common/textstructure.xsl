@@ -60,7 +60,7 @@
       <xsl:when test="ancestor::tei:front">
         <xsl:if test="not($numberFrontHeadings='')">
           <xsl:number
-            count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4"
+            count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5"
             format="{$numberFrontHeadings}" from="tei:front" level="multiple"/>
           <xsl:value-of select="$numbersuffix"/>
         </xsl:if>
@@ -72,14 +72,14 @@
           </xsl:call-template>
           <xsl:text> </xsl:text>
           <xsl:number
-            count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4"
+            count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5"
             format="{$numberBackHeadings}" from="tei:back" level="multiple"/>
           <xsl:value-of select="$numbersuffix"/>
         </xsl:if>
       </xsl:when>
       <xsl:otherwise>
         <xsl:number 
-	    count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4"
+          count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5"
 	    from="tei:body" 
 	    level="multiple"/>
 	<xsl:value-of select="$numbersuffix"/>
