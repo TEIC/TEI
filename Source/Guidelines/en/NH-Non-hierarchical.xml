@@ -8,12 +8,11 @@ $Id$
 -->
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="NH" n="31">
   <head>Non-hierarchical Structures</head>
-  <p>XML strongly emphasizes a hierarchical document model. At various
-  points, these Guidelines discuss problems which arise when using XML
-  to encode textual features that either do not naturally lend
-  themselves to representation in a strictly hierarchical form or
-  conflict with other hierarchies represented in the markup. Examples
-  of such situations include <list type="bullets">
+  <p>XML strongly emphasizes a hierarchical document model. At various points, these Guidelines
+    discuss problems which arise when using XML to encode textual features that either do not
+    naturally lend themselves to representation in a strictly hierarchical form or conflict with
+    other hierarchies represented in the markup. Examples of such situations include <list
+      type="bullets">
       <item>
         <p>Conflict between the hierarchy established by the physical structure of a document (e.g.
           volume, page, column, line) and its rhetorical or linguistic structure (e.g. chapters,
@@ -289,32 +288,29 @@ $Id$
         <l><s>Shakespeare unlocked his heart</s>; <s>the melody</s></l>
         <l><s>Of this small lute gave ease to Petrarch's wound</s>.</l>
       </egXML></p>
-    <p>There are two main problems with this type of encoding. The
-    first is that it usually means that the encoding has more elements
-    claiming to represent a feature than there are actual instances of
-    that feature in the text. Thus, for example, the passage from
-    <title level="a" >Scorn not the sonnet</title> marks seven spans
-    of text using <gi>s</gi>, even though there are only four
-    linguistic sentences in the passage.</p>
+    <p>There are two main problems with this type of encoding. The first is that it usually means
+      that the encoding has more elements claiming to represent a feature than there are actual
+      instances of that feature in the text. Thus, for example, the passage from <title level="a"
+        >Scorn not the sonnet</title> marks seven spans of text using <gi>s</gi>, even though there
+      are only four linguistic sentences in the passage.</p>
     <p>The second problem with this method is that it can be semantically misleading. Although it is
       tagged using <gi>s</gi>, the element for <term>sentence</term>, for example, the text
         <mentioned>Mindless of its just honours</mentioned> is not a linguistic sentence.</p>
-    <p>Taken together, these problems can make automatic analysis of
-    the fragmented feature difficult. An analysis that intended to
-    count the number of sentences in Wordsworth's poem, for example,
-    would arrive at an inflated figure if it just counted the
-    <gi>s</gi> tags.  Likewise, a project interested in doing a
-    linguistic analysis of Wordsworth's sentence syntax would not be
-    able to assume that each <gi>s</gi> represented a linguistic
-    sentence.</p>
-    <p>The technique of fragmentation is often complemented by the technique of virtual joins.
-      Virtual joins may be used to combine objects in the text to a new hierarchy. Here is <title
-        level="a">Scorn not the sonnet</title> again; this time the relationship between the parts
-      of the fragmented sentences is indicated explicitly using the <att>next</att> and
-      <att>prev</att> attributes described in <ptr target="#SAAG"/>. <egXML
-        xmlns="http://www.tei-c.org/ns/Examples">
+    <p>Taken together, these problems can make automatic analysis of the fragmented feature
+      difficult. An analysis that intended to count the number of sentences in Wordsworth's poem,
+      for example, would arrive at an inflated figure if it just counted the <gi>s</gi> tags.
+      Likewise, a project interested in doing a linguistic analysis of Wordsworth's sentence syntax
+      would not be able to assume that each <gi>s</gi> represented a linguistic sentence.</p>
+    <p>The technique of fragmentation is often complemented by the
+    technique of virtual joins.  Virtual joins may be used to combine
+    objects in the text to a new hierarchy. Here is <title
+    level="a">Scorn not the sonnet</title> again; this time the
+    relationship between the parts of the fragmented sentences is
+    indicated explicitly using the <att>next</att> and <att>prev</att>
+    attributes described in <ptr target="#SAAG"/>. <egXML
+    xmlns="http://www.tei-c.org/ns/Examples">
         <lg>
-          <l><s xml:id="s1">Scorn not the sonnet</s>; <s xml:id="s2a" next="s2b">critic, you have
+          <l><s xml:id="S01">Scorn not the sonnet</s>; <s xml:id="s2a" next="s2b">critic, you have
               frowned</s>,</l>
           <l><s xml:id="s2b" previous="s2a">Mindless of its just honours</s>; <s xml:id="s3a"
               next="s3b">with this key</s></l>
@@ -342,13 +338,11 @@ $Id$
       discontinuous textual features as well non-nesting ones. The use of part allows the encoder
       not only to delimit a quotation that crosses a metrical line boundary, it is also aggregating
       a quotation that is interrupted by the narrative <mentioned>She said</mentioned>.</p>
-    <p>The disadvantage of this mechanism is that it does not work
-    well for cases of self-overlap, or if there are nested occurences
-    of the the same element type, as it can become difficult to
-    ascertain which initial, medial, or final partial element should
-    be combined with which others. This can be illustrated using a
-    slightly modified verse from a Tom Lehrer song: <egXML
-    xmlns="http://www.tei-c.org/ns/Examples">
+    <p>The disadvantage of this mechanism is that it does not work well for cases of self-overlap,
+      or if there are nested occurences of the the same element type, as it can become difficult to
+      ascertain which initial, medial, or final partial element should be combined with which
+      others. This can be illustrated using a slightly modified verse from a Tom Lehrer song: <egXML
+        xmlns="http://www.tei-c.org/ns/Examples">
         <l>
           <s part="I">Don't say that he's hypocritical,</s>
         </l>
@@ -372,10 +366,12 @@ $Id$
       directly part of the encoding, e.g. the <gi>join</gi> element. In this method, a <gi>join</gi>
       element is used elsewhere in the document to indicate explicitly the members of the virtual
       element: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <l><w xml:id="w01">Scorn</w> <w xml:id="w02">not</w> <w
-        xml:id="w03">the</w> <w xml:id="w04">sonnet</w>; <w
-        xml:id="w05">critic</w>, <w xml:id="w06">you</w> <w
-        xml:id="w07">have</w> <w xml:id="w08">frowned</w>,</l>
+        <l><w xml:id="w01">Scorn</w>
+          <w xml:id="w02">not</w>
+          <w xml:id="w03">the</w>
+          <w xml:id="w04">sonnet</w>; <w xml:id="w05">critic</w>, <w xml:id="w06">you</w>
+          <w xml:id="w07">have</w>
+          <w xml:id="w08">frowned</w>,</l>
         <l><w xml:id="w09">Mindless</w>
           <w xml:id="w10">of</w>
           <w xml:id="w11">its</w>
@@ -409,37 +405,37 @@ $Id$
         </p>
       </egXML>
     </p>
-    <p>The major advantage of fragmentation and virtual joins is that
-    it allows all the hierarchies in the text to be handled
-    explicitly, both the privileged one directly represented, and the
-    alternate hierarchy which has been split up and rejoined. The
-    major disadvantages are that (like most of the other methods
-    described here) it privileges one hierarchy over the others,
-    requires special processing to reconstitute the elements of the
-    other hierarchies, and, except in the case of join, can be
-    semantically misleading.</p>
+    <p>The major advantage of fragmentation and virtual joins is that it allows all the hierarchies
+      in the text to be handled explicitly, both the privileged one directly represented, and the
+      alternate hierarchy which has been split up and rejoined. The major disadvantages are that
+      (like most of the other methods described here) it privileges one hierarchy over the others,
+      requires special processing to reconstitute the elements of the other hierarchies, and, except
+      in the case of join, can be semantically misleading.</p>
   </div>
   <div type="div2" xml:id="NHSO">
     <head>Stand-off Markup</head>
-    <p>Classic use of markup is characterized by embedding the
-    annotation in the text. An alternative approach separates the text
-    and the annotation. This approach is known as stand-off
-    annotation. See section <ptr target="#SASO"/> for more information
-    on and examples of stand-off markup. Stand-off annotation
-    establishes a new hierarchy by building a new tree whose nodes are
-    XML elements which do not contain textual content, but rather
-    links to another <term>layer</term>: <gloss>a node in another XML
-    document or a span of text</gloss>.
-      
-This approach can be subdivided according to different criteria. A first distinction concerns
+    <p>Classic use of markup is characterized by embedding the annotation in the text. An
+      alternative approach separates the text and the annotation. This approach is known as
+      stand-off annotation. See section <ptr target="#SASO"/> for more information on and examples
+      of stand-off markup. Stand-off annotation establishes a new hierarchy by building a new tree
+      whose nodes are XML elements which do not contain textual content, but rather links to another
+        <term>layer</term>: <gloss>a node in another XML document or a span of text</gloss>.
+      <?sb2aw In some respects a generalization of the virtual
+            joins, because not only contents of elements are joined, but also
+            ranges between points within the document. ?>
+      This approach can be subdivided according to different criteria. A first distinction concerns
       the link base, i.e. the content to which annotations are to be applied. Sometimes the link
       target contains markup that can be referred to explicitly, as in the following example where
       the offset markup uses the <att>xml:id</att> values on <gi>w</gi> to provide targets for
-        <gi>xinclude</gi>: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <l><w xml:id="w01">Scorn</w> <w xml:id="w02">not</w> <w
-        xml:id="w03">the</w> <w xml:id="w04">sonnet</w>; <w
-        xml:id="w05">critic</w>, <w xml:id="w06">you</w> <w
-        xml:id="w07">have</w> <w xml:id="w08">frowned</w>,</l>
+        <gi>xinclude</gi>: 
+<!--
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <l><w xml:id="w01">Scorn</w>
+          <w xml:id="w02">not</w>
+          <w xml:id="w03">the</w>
+          <w xml:id="w04">sonnet</w>; <w xml:id="w05">critic</w>, <w xml:id="w06">you</w>
+          <w xml:id="w07">have</w>
+          <w xml:id="w08">frowned</w>,</l>
         <l><w xml:id="w09">Mindless</w>
           <w xml:id="w10">of</w>
           <w xml:id="w11">its</w>
@@ -460,9 +456,10 @@ This approach can be subdivided according to different criteria. A first distinc
           <w xml:id="w28">ease</w>
           <w xml:id="w29">to</w>
           <w xml:id="w30">Petrarch's</w>
-          <w xml:id="w31">wound</w>.</l>
+          <w xml:id="w31">wound</w>.</l>-->
 
-        <!-- elsewhere in the document -->
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+
         <p xmlns:xi="http://www.example.org/cannot/really/use/XInclude">
           <s>
             <xi:include href="." xpointer="range(element(w01),element(w04))"/>
@@ -479,67 +476,49 @@ This approach can be subdivided according to different criteria. A first distinc
         </p>
       </egXML>
     </p>
-    <p>This is very similar to the use of <gi>join</gi> discussed
-    above; the main advantages of <gi>XInclude</gi> over <gi>join</gi>
-    are that it is possible to specify attributes on the aggregate
-    <gi>s</gi> elements, and that there exists off-the-shelf software
-    that will perform XInclude processing. Stand-off markup may be
-    used even when the base text being annotated is plain text,
-    i.e. does not have any XML encoding. In this case the range of
-    text to be annotated is indicated by character offsets. See <ptr
-    target="#SATS"/>, in particular <ptr target="#SATSSR"/>. Another
-    distinction concerns the number of files which can serve as link
-    targets. Often, one (dedicated) annotation is used as the link
-    target of all the other annotations. It is also possible to freely
-    interlink several layers.</p>
-    <p>It has been noted that stand-off markup has several advantages
-    over embedded annotations. In particular, it is possible to
-    produce annotations of a text even when the source document is
-    read-only. Furthermore, annotation files can be distributed
-    without distributing the source text. Further advantages mentioned
-    in the literature are that discontinuous segments of text can be
-    combined in a single annotation, that independent parallel coders
-    can produce independent annotations, and that different annotation
-    files can contain different layers of information. Lastly, it has
-    also been noted that this approach is elegant.</p>
-    <p>But there are also several drawbacks. First, new stand-off
-    annotated layers require a separate interpretation, and the layers 
-    — although separate — depend on each other. Moreover, although
-    all of the information of the multiple hierarchies is included,
-    the information may be difficult to access using generic
-    methods.</p>
+    <p>This is very similar to the use of <gi>join</gi> discussed above; the main advantages of
+        <gi>XInclude</gi> over <gi>join</gi> are that it is possible to specify attributes on the
+      aggregate <gi>s</gi> elements, and that there exists off-the-shelf software that will perform
+      XInclude processing. Stand-off markup may be used even when the base text being annotated is
+      plain text, i.e. does not have any XML encoding. In this case the range of text to be
+      annotated is indicated by character offsets. See <ptr target="#SATS"/>, in particular <ptr
+        target="#SATSSR"/>. Another distinction concerns the number of files which can serve as link
+      targets. Often, one (dedicated) annotation is used as the link target of all the other
+      annotations. It is also possible to freely interlink several layers.</p>
+    <p>It has been noted that stand-off markup has several advantages over embedded annotations. In
+      particular, it is possible to produce annotations of a text even when the source document is
+      read-only. Furthermore, annotation files can be distributed without distributing the source
+      text. Further advantages mentioned in the literature are that discontinuous segments of text
+      can be combined in a single annotation, that independent parallel coders can produce
+      independent annotations, and that different annotation files can contain different layers of
+      information. Lastly, it has also been noted that this approach is elegant.</p>
+    <p>But there are also several drawbacks. First, new stand-off annotated layers require a
+      separate interpretation, and the layers — although separate — depend on each other. Moreover,
+      although all of the information of the multiple hierarchies is included, the information may
+      be difficult to access using generic methods.</p>
   </div>
   <div type="div2" xml:id="NHNX">
     <head>Non-XML-based Approaches</head>
-    <p>There exist many non-XML methods of encoding a text that either
-    solve or do not suffer the problem of the inability to encode
-    overlapping hierarchies. These include, but are not limited to the
-    following proposals.</p>
-    <p>One attempt at extending XML is represented by the work of
-    Andreas Witt et.al. <ptr type="cit" target="#NH-BIBL-2"/>, who
-    have applied the notion of concurrent markup to XML (thus
-    reintroducing the CONCUR feature of SGML, which was omitted from
-    XML).</p>
-    <p>Alexander Dekhtyar and students at the University of Kentucky
-    have also developed a form of document representation in which
-    several trees share all or part of the same frontier, and in which
-    each individual view of the document has the form of a tree. <ptr
-    type="cit" target="#NH-BIBL-3"/></p>
-    <p>The <soCalled>colored XML</soCalled> proposal <ptr type="cit"
-    target="#NH-BIBL-4"/> stores a body of information as a set of
-    intertwined XML trees. The colored XML approach eliminates
-    unnecessary redundancy and makes the database readily updatable,
-    while allowing the user to exploit different hierarchical access
-    paths.</p>
-    <p>The MultiX proposal <ptr type="cit" target="#NH-BIBL-5"/>
-    represents documents as directed graphs. Because XML is used to
-    represent the graph, the document is, at least in principle,
-    manipulable with standard XML tools.</p>
-    <p>According to the Just-In-Time-Trees proposal <ptr type="cit"
-    target="#NH-BIBL-6"/>, documents may be stored using XML, but the
-    XML representation is processed in non-standard ways and may be
-    mapped onto different data structures than those known from
-    XML.</p>
+    <p>There exist many non-XML methods of encoding a text that either solve or do not suffer the
+      problem of the inability to encode overlapping hierarchies. These include, but are not limited
+      to the following proposals.</p>
+    <p>One attempt at extending XML is represented by the work of Andreas Witt et.al. <ptr
+        type="cit" target="#NH-BIBL-2"/>, who have applied the notion of concurrent markup to XML
+      (thus reintroducing the CONCUR feature of SGML, which was omitted from XML).</p>
+    <p>Alexander Dekhtyar and students at the University of Kentucky have also developed a form of
+      document representation in which several trees share all or part of the same frontier, and in
+      which each individual view of the document has the form of a tree. <ptr type="cit"
+        target="#NH-BIBL-3"/></p>
+    <p>The <soCalled>colored XML</soCalled> proposal <ptr type="cit" target="#NH-BIBL-4"/> stores a
+      body of information as a set of intertwined XML trees. The colored XML approach eliminates
+      unnecessary redundancy and makes the database readily updatable, while allowing the user to
+      exploit different hierarchical access paths.</p>
+    <p>The MultiX proposal <ptr type="cit" target="#NH-BIBL-5"/> represents documents as directed
+      graphs. Because XML is used to represent the graph, the document is, at least in principle,
+      manipulable with standard XML tools.</p>
+    <p>According to the Just-In-Time-Trees proposal <ptr type="cit" target="#NH-BIBL-6"/>, documents
+      may be stored using XML, but the XML representation is processed in non-standard ways and may
+      be mapped onto different data structures than those known from XML.</p>
     <p>The <choice>
         <abbr>LMNL</abbr>
         <expan>Layered Markup and Annotation Language</expan>
@@ -552,16 +531,15 @@ This approach can be subdivided according to different criteria. A first distinc
       </choice> provides a notation (TexMECS) and a data structure (Goddag) as well as a draft
       constraint language for the representation of non-hierarchical structures. <ptr type="cit"
         target="#NH-BIBL-8"/></p>
-    <p>These approaches are based either on non-standard XML
-    processing or data models, or not not based on XML at all. Since
-    TEI is currently based on XML they are not described any further
-    in these Guidelines.</p>
+    <p>These approaches are based either on non-standard XML processing or data models, or not not
+      based on XML at all. Since TEI is currently based on XML they are not described any further in
+      these Guidelines.</p>
   </div>
   <div type="div2" xml:id="NHDI">
     <head>Discussion</head>
-    <p>All proposed solutions of the multiple hierarchy problem have
-    advantages as well as drawbacks. For different applications and
-    usage scenarios, different solutions may be approriate.</p>
+    <p>All proposed solutions of the multiple hierarchy problem have advantages as well as
+      drawbacks. For different applications and usage scenarios, different solutions may be
+      approriate.</p>
     <list type="bullets">
       <item>
         <p>For editing purposes the following solutions may be most appropriate:<list type="bullets">
