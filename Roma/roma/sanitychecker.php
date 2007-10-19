@@ -59,6 +59,9 @@ public function __construct($odd) {
 	$this->ALL_ELEMENTS = $this->xpath->query("//tei:elementSpec");
 	$this->ALL_CLASSES = $this->xpath->query("//tei:classSpec");
 	$this->PARENTS = array();
+//   foreach($this->ALL_CLASSES as $oElement) {
+//     print "> " . $oElement->nodeValue;
+//     }
 }
 
 /**
@@ -441,10 +444,11 @@ public function pass1() {
 	$this->SCEH->updateProgressBar(51.3);
 	foreach($roots as $root) {
 	$this->SCEH->updateProgressBar(51.4);
-	print   "<h1>" + $root + "x</h1>";
-		$tmp = $this->xpath->query("//tei:elementSpec[@ident='".$root."']")->item(0);
-		$root_node = $this->DOM->rootNode;
-		if(!$this->verifElem($tmp, $root_node, array())) $schema_broken = true;
+	$tmp = $this->xpath->query("//tei:elementSpec[@ident='".$root."']")->item(0);
+	$root_node = $this->DOM->rootNode;
+	print   "<h1>" . $root_node->item(0) . "x</h1>";
+	return true;
+	if(!$this->verifElem($tmp, $root_node, array())) $schema_broken = true;
 	}
 	if($schema_broken) {
 		$this->SCEH->sanityCheckSchemaBroken();
@@ -460,7 +464,7 @@ public function pass1() {
  **/
 public function pass2() {
 	$res = true;
-	$this->SCEH->updateProgressBar(51.4);
+	$this->SCEH->updateProgressBar(51.5);
 	foreach($this->ALL_ELEMENTS as $element) {
 		if(!isset($this->COMPUTING[$element->getAttribute("ident")])) {
 			$res = false;

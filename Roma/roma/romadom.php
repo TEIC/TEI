@@ -2467,8 +2467,8 @@ class romaDom extends domDocument
 	public function processSanityCheck() {
  	  $checker = new SanityChecker($this);
 	  $checker->pass1();
-	  $checker->pass2();
-	  $checker->pass3();
+//	  $checker->pass2();
+//	  $checker->pass3();
 	  $checker->showErrors();
 	}
 
