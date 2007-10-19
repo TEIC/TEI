@@ -217,7 +217,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:epigraph/tei:q">
-    <fo:block text-align="left" space-before.optimum="4pt" space-after.optimum="4pt" start-indent="{$exampleMargin}">
+    <fo:block space-before.optimum="4pt" space-after.optimum="4pt" start-indent="{$exampleMargin}">
       <xsl:apply-templates/>
     </fo:block>
   </xsl:template>
@@ -250,16 +250,6 @@
       <xsl:text>&lt;</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>&gt;</xsl:text>
-    </fo:inline>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements  tei:att</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:att">
-    <fo:inline hyphenate="false" font-weight="bold" color="{$giColor}" font-family="{$typewriterFont}">
-      <xsl:text>@</xsl:text>
-      <xsl:apply-templates/>
     </fo:inline>
   </xsl:template>
   <xd:doc>

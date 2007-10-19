@@ -372,12 +372,12 @@ Colour for display of &lt;eg&gt; blocks.
   <xd:doc type="string" class="style">
 Colour for background display of &lt;eg&gt; blocks.
 </xd:doc>
-  <xsl:param name="exampleBackgroundColor">lightgrey</xsl:param>
+  <xsl:param name="exampleBackgroundColor">yellow</xsl:param>
   <xd:doc type="string" class="style">
 Calculation of font size for examples (add dimension)
 </xd:doc>
   <xsl:param name="exampleSize">
-    <xsl:value-of select="$bodyMaster * 0.6"/>
+    <xsl:value-of select="$bodyMaster * 0.8"/>
     <xsl:text>pt</xsl:text>
   </xsl:param>
   <xd:doc type="string" class="style">
@@ -487,37 +487,6 @@ Sans-serif font
   </xd:doc>
   <xsl:template name="setupDiv4">
     <xsl:attribute name="font-size">10pt</xsl:attribute>
-    <xsl:attribute name="text-align">left</xsl:attribute>
-    <xsl:attribute name="font-style">italic</xsl:attribute>
-    <xsl:attribute name="space-after">0pt</xsl:attribute>
-    <xsl:attribute name="space-before.optimum">4pt</xsl:attribute>
-    <xsl:attribute name="text-indent">
-      <xsl:value-of select="$headingOutdent"/>
-    </xsl:attribute>
-  </xsl:template>
-  <xd:doc class="style">
-    <xd:short>[fo] Set attributes for display of heading for 5th level sections </xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="setupDiv5">
-    <xsl:attribute name="font-size">10pt</xsl:attribute>
-    <xsl:attribute name="text-align">left</xsl:attribute>
-    <xsl:attribute name="font-style">italic</xsl:attribute>
-    <xsl:attribute name="space-after">0pt</xsl:attribute>
-    <xsl:attribute name="space-before.optimum">4pt</xsl:attribute>
-    <xsl:attribute name="text-indent">
-      <xsl:value-of select="$headingOutdent"/>
-    </xsl:attribute>
-  </xsl:template>
-  <xd:doc class="style">
-    <xd:short>[fo] Set attributes for display of heading for 6th level sections </xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="setupDiv6">
-    <xsl:attribute name="font-size">10pt</xsl:attribute>
-    <xsl:attribute name="text-align">left</xsl:attribute>
-    <xsl:attribute name="font-style">italic</xsl:attribute>
-    <xsl:attribute name="space-after">0pt</xsl:attribute>
     <xsl:attribute name="space-before.optimum">4pt</xsl:attribute>
     <xsl:attribute name="text-indent">
       <xsl:value-of select="$headingOutdent"/>
@@ -619,10 +588,6 @@ Indentation for level 3 TOC entries
 Indentation for level 4 TOC entries
 </xd:doc>
   <xsl:param name="div4Tocindent">1in</xsl:param>
-  <xd:doc type="string" class="toc">
-    Indentation for level 5 TOC entries
-  </xd:doc>
-  <xsl:param name="div5Tocindent">1.25in</xsl:param>
   <xd:doc type="boolean" class="toc">
 Make TOC for sections in &lt;back&gt;
 </xd:doc>

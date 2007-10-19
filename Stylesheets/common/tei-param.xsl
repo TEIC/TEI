@@ -127,7 +127,7 @@
   </xsl:template>
   <xd:doc class="numbering" type="string"> How to construct heading numbering in
     main matter</xd:doc>
-  <xsl:param name="numberBodyHeadings">1.1.1.1.1</xsl:param>
+  <xsl:param name="numberBodyHeadings">1.1.1.1</xsl:param>
   <xd:doc class="numbering" type="boolean"> Automatically number figures</xd:doc>
   <xsl:param name="numberFigures">true</xsl:param>
   <xd:doc class="numbering">
