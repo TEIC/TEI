@@ -36,7 +36,7 @@
       </xsl:choose>
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates 
-	  select="teix:*|tei:*|rng:*|comment()|processing-instruction()|text()"/>
+	  select="*|comment()|processing-instruction()|text()"/>
     </xsl:copy>
 </xsl:template>
 
