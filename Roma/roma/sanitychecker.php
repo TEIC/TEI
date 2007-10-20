@@ -51,9 +51,9 @@ public function __construct($odd) {
 	$this->SCEH->updateProgressBar(3);
         $this->DOM = new romaDom();	
 	$odd->getOddDom($this->DOM);
-	$this->SCEH->updateProgressBar(10);
+	$this->SCEH->updateProgressBar(4);
         $this->xpath = new domxpath( $this->DOM );
-	$this->SCEH->updateProgressBar(50);
+	$this->SCEH->updateProgressBar(5);
 	$this->xpath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );
 	$this->xpath->registerNamespace( 'tei', 'http://www.tei-c.org/ns/1.0' );
 	$this->ALL_ELEMENTS = $this->xpath->query("//tei:elementSpec");
@@ -200,7 +200,6 @@ private function computingStop($name) {
  n'a aucun impact sur la vérification de la cohérence même.
  **/
 private function getParentItem($element) {
-   error_log(" + check parent " . $element->nodeName);
    if($element->nodeName == "elementSpec" || $element->nodeName == "classSpec") {
 		return $element;
 	} else {
