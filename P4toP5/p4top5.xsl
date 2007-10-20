@@ -115,11 +115,12 @@
   
   <xsl:template match="figure/@url"/>
   
-  <xsl:template match="figure/@doc"/>
+  <xsl:template match="figure/@entity"/>
   
-  <xsl:template match="figure[@doc]">
+  <xsl:template match="figure[@entity]">
     <figure xmlns="http://www.tei-c.org/ns/1.0">
-      <graphic xmlns="http://www.tei-c.org/ns/1.0" url="{unparsed-entity-uri(@doc)}">
+      <graphic xmlns="http://www.tei-c.org/ns/1.0" 
+	       url="{unparsed-entity-uri(@entity)}">
 	<xsl:apply-templates select="@*"/>
       </graphic>
       <xsl:apply-templates/>
