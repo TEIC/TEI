@@ -50,11 +50,15 @@ provides for the following common requirements:
     <ptr target="#SAAN"/>).</item>
   </list></p>
 <p>These facilities all use the same set of techniques based on the
-W3C <ref target="http://www.w3.org/TR/xptr-framework/">XPointer</ref>
-mechanism, which includes a variety of <term rend="noindex">schemes</term>. The most convenient technique, and that
-which is recommended by these Guidelines wherever possible, makes use
-of the global <att>xml:id</att> attribute, as defined in section <ptr target="#STGA"/>, and introduced in section <ptr target="#SG-id"/>. When the <ident type="module">linking</ident>
-module is included in a schema, the attribute class <ident type="class">att.global</ident> is extended to include eight
+W3C XPointer framework (<ref target="#XPTRFMWK">Grosso et al,
+2003</ref>) This provides a variety of <term
+rend="noindex">schemes</term>; the most convenient of which, and that
+recommended by these Guidelines, makes use of the
+global <att>xml:id</att> attribute, as defined in section <ptr
+target="#STGA"/>, and introduced in section <ptr
+target="#SG-id"/>. When the <ident type="module">linking</ident>
+module is included in a schema, the attribute class <ident
+type="class">att.global</ident> is extended to include eight
 additional attributes to support the various kinds of linking listed
 above. Each of these attributes is introduced in the appropriate
 section below. In addition, for many of the topics discussed, a choice
@@ -182,7 +186,7 @@ that.</p>
 <p>Firstly, a <gi>ptr</gi> element might be placed at an
 appropriate point within the text to link it with the
 annotation:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTEG-eg-4"><l>(Diff'rent our parties, but with equal grace</l>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTEG-eg-3"><l>(Diff'rent our parties, but with equal grace</l>
 <l>The Goddess smiles on Whig and Tory race,
    <ptr rend="unmarked" target="#note3.284"/></l>
 <l>'Tis the same rope at sev'ral ends they twist,</l>
@@ -204,7 +208,7 @@ in the text to signal the existence of the annotation, the
 <gi>note</gi> element can be used to point at its associated
 text, provided that an <att>xml:id</att> attribute has been
 supplied for the associated text:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l xml:id="l3.283">(Diff'rent our parties, but with equal grace</l>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTEG-eg-3"><l xml:id="l3.283">(Diff'rent our parties, but with equal grace</l>
 <l xml:id="l3.284">The Goddess smiles on Whig and Tory race,</l>
 <l xml:id="l3.285">'Tis the same rope at sev'ral ends they twist,</l>
 <l xml:id="l3.286">To Dulness, Ridpath is as dear as Mist)</l>
@@ -217,7 +221,7 @@ annotating, this could be encoded using a <gi>ref</gi>
 element, which bears a <att>target</att> attribute of its own
 and contains a (slightly misquoted) extract from the text marked
 as a <gi>quote</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTEG-eg-6"><note type="imitation" place="foot" anchored="false" target="#l3.284">    
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTEG-eg-3"><note type="imitation" place="foot" anchored="false" target="#l3.284">    
    <ref rend="sc" target="#l3.284">Verse 283–84.
  <quote>
    <l>——. With equal grace</l>
@@ -246,7 +250,7 @@ the annotations as well as for the verse lines, and use a <gi>link</gi> element 
 two. Note that the <gi>ptr</gi> element and the
 <att>target</att> attribute on the <gi>note</gi> may now be
 dispensed with:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTEG-eg-7">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTEG-eg-3">
 <note xml:id="n3.284" type="imitation" place="foot" anchored="false">    
    <ref rend="sc" target="#l3.284">Verse 283–84.
 <quote>
@@ -266,7 +270,7 @@ here bears the identifiers of the note followed by that of the
 verse line. For completeness, we could also allocate an
 identifier to the reference within the note and encode the
 association between it and the verse line in the same way:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTEG-eg-8"><note xml:id="nt3.284" type="imitation" place="foot" anchored="false">    
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTEG-eg-3"><note xml:id="nt3.284" type="imitation" place="foot" anchored="false">    
    <ref rend="sc" xml:id="r3.284" target="#l3.284">Verse 283–84.
 <quote>
    <l>——. With equal grace</l>
@@ -502,22 +506,13 @@ entirely. In either case, the pointing can be accomplished
 absolutely (using the entire address of the target document) or
 relatively (using an address relative to the current base URI in
 force). The <soCalled>current base URI</soCalled> is defined
-according to the W3C <ref target="http://www.w3.org/TR/xmlbase/">XML Base</ref>
-recommendation. <!-- This recommendation defines an
-<att>xml:base</att> attribute that may be inserted into XML
-documents in order to make references more manageable. --> In
+according to <ref target="#XMLBASE">Marsh 2001</ref>. In
 general the current base URI in force is the value of the
 <att>xml:base</att> attribute of the closest ancestor that has one. If
 there is none, the base URI is that of the current document.
-<!-- The current base URI in force is as defined in the W3C
-<ref target="http://www.w3.org/TR/xmlbase/">XML Base</ref>
-recommendation. In general, it is the value of the
-<att>xml:base</att> attribute of the closest ancestor that has
-one, or if there are none, the URI of the location of the current document.-->
 </p>
 <p>The following example demonstrates an absolute URI reference
-that points to a remote document: <!--. It is the source code for the
-second to last sentence of the preceding paragraph.-->
+that points to a remote document: 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">The current base URI in force is as defined in the
  W3C <ref target="http://www.w3.org/TR/xmlbase/">XML
  Base</ref> recommendation.</egXML></p>
@@ -529,15 +524,14 @@ different protocol:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">This Debian package is distributed under the terms
  of the <ref target="file:///usr/share/common-licenses/GPL-2">GNU General Public License</ref>.</egXML></p>
 <p>In the  following example, we use a relative URI reference
-to point to a local document: <!--. It is the source for the figure
-in section <ptr target="#SACSXA"/>, later in this chapter.-->
+to point to a local document: 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><figure rend="float fullpage">
   <graphic url="Images/compic.png"/>
   <figDesc>The figure shows the page from the <title>Orbis
   pictus</title> of Comenius which is discussed in the text.</figDesc>
   </figure></egXML> 
 
-Since no xml:base is specified here, the location of the resource
+Since no <att>xml:base</att> is specified here, the location of the resource
 <ident>Figures/compic.png</ident> is determined relative to the
 resource indicated by the current base URI, which is the current
 document.
@@ -578,7 +572,7 @@ given scope
 pointer that is specified as a <term>bare name</term> fragment
 identifier alone acts as a pointer to an element in the current
 document, as in the following example.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="section" xml:id="sect106"><!-- ... --></div>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SA-eg-01"><div type="section" xml:id="sect106"><!-- ... --></div>
 <div type="section" n="107" xml:id="sect107">
   <head>Limitations on exclusive rights: Fair use</head>
   <p>Notwithstanding the provisions of
@@ -606,9 +600,6 @@ document, as in the following example.
   finding of fair use if such finding is made upon consideration
   of all the above factors.</p>
 </div></egXML>
-<note type="cit">Title 17, Section 107 of the <title>United
-States Code</title>, found at <ptr target="http://www.copyright.gov/title17/92chap1.html#107"/> and
-converted from HTML to TEI encoding.</note>
 This method of pointing, by referring to the <att>xml:id</att> of the
 target element as a bare name only (e.g., <val>#sect106</val>) is 
 the simplest and often the best approach where it can be applied, i.e. where
@@ -619,18 +610,18 @@ chapter and elsewhere in these Guidelines. </p>
     </div>
     <div type="div3" xml:id="SAES">
 <head>W3C element() Scheme</head>
-<p>If elements are not directly addressable by means of an
-identifier, they may still  be pointed to by means of their position in the XML
-element tree. This method of pointing uses the <name type="xpscheme">element</name>
-scheme defined by the World Wide Web Consortium.<note place="foot"><ref target="http://www.w3.org/TR/xptr-element/">XPointer element()
-Scheme</ref>.</note> In this scheme, an element may be identified by
-stepwise navigation  using a slash-separated list of child element
-numbers. For each step the integer <code>n</code> locates the
-<hi>n</hi>th child element of the previously located
-element. Thus a pointer such as <code>&lt;ptr
-target="foo.xml#element(1/4)"/&gt;</code> indicates the fourth
-child element starting from the root element of the document
-indicated by the URI <ident>foo.xml</ident>.   </p>
+<p>If elements are not directly addressable by means of an identifier,
+they may still be pointed to by means of their position in the XML
+element tree. This method of pointing uses the <name
+type="xpscheme">element</name> scheme defined by the World Wide Web
+Consortium (<ref target="#XPTRELEM">Grosso et al, 2003</ref>). In this
+scheme, an element may be identified by stepwise navigation using a
+slash-separated list of child element numbers. For each step the
+integer <code>n</code> locates the <hi>n</hi>th child element of the
+previously located element. Thus a pointer such as <code>&lt;ptr
+target="foo.xml#element(1/4)"/&gt;</code> indicates the fourth child
+element starting from the root element of the document indicated by
+the URI <ident>foo.xml</ident>.  </p>
 <p>For example, the following pointer selects
 one of Shakespeare's most famous lines:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="http://www.cs.mu.oz.au/621/2003project/hamlet.xml#element(/1/8/2/25/2)">2B|^2B…</ref></egXML>
@@ -681,17 +672,17 @@ line which does not have this requirement.  </p>
 <div type="div3" xml:id="SATS">
 <head>TEI XPointer Schemes</head>
 
-<p>The pointing scheme described in this chapter is one of a
-number of such schemes envisaged by the W3C, which together
-constitute a framework for addressing data within XML documents,
-known as the <ref target="http://www.w3.org/TR/xptr-framework/">XPointer
-Framework</ref>. This framework permits the definition of many
-other named addressing methods, each of which is known as an
-<term>XPointer Scheme</term>. The W3C has pre-defined a set of
-such schemes, and maintains a register for their expansion. The
-<name type="xpscheme">element</name> scheme described above is
-one such scheme, defined by the W3C, and widely implemented  by
-XML processing systems.</p>
+<p>The pointing scheme described in this chapter is one of a number of
+such schemes envisaged by the W3C, which together constitute a
+framework for addressing data within XML documents, known as the
+XPointer Framework (<ref target="#XPTRFMWK">Grosso et al
+2003</ref>). This framework permits the definition of many other named
+addressing methods, each of which is known as an <term>XPointer
+Scheme</term>. The W3C has pre-defined a set of such schemes, and
+maintains a register for their expansion. The <name
+type="xpscheme">element</name> scheme described above is one such
+scheme, defined by the W3C, and widely implemented by XML processing
+systems.</p>
 
 <p>Another important scheme, also defined by the W3C, and recommended
 by these Guidelines is the <name type="xpscheme">xpath1</name> pointer
@@ -1518,7 +1509,8 @@ speeches when it is not clear whether the speech is to be
 regarded as prose or verse. If, for example, an encoder does not
 wish to express an opinion as to whether the opening lines of
 Shakespeare's <title>The Tempest</title> are to be regarded as
-prose or as verse, they might be tagged as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><div1 n="I" type="act">
+prose or as verse, they might be tagged as follows: <egXML
+xmlns="http://www.tei-c.org/ns/Examples" corresp="#CODR-eg-295"><div1 n="I" type="act">
   <div2 n="1" type="scene">
     <head rend="italic">Actus primus, Scena prima.</head>
     <stage rend="italic" type="setting"> A tempestuous noise of 
@@ -1686,7 +1678,7 @@ English. This was revised by young<anchor xml:id="eng4"/>
     using a free standing <gi>linkGrp</gi> element.</p>
     <p>We present first a solution using <gi>anchor</gi>
     elements bearing only <att>corresp</att> attributes:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:lang="en" type="subsection">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SA-BIBL-1"><div xml:lang="en" type="subsection">
 <p><anchor corresp="#fa1" xml:id="ea1"/>According to our survey, 1988
 sales of mineral water and soft drinks were much higher than in 1987,
 reflecting the growing popularity of these products. Cola drink
@@ -1805,27 +1797,25 @@ in encoding links, they may for convenience be grouped within the
 linking).</p>
 <p>To demonstrate this facility, we consider how we might encode the
 alignments in an extract from Comenius' <title>Orbis Sensualium
-Pictus</title>.
+Pictus</title>, in the
+English translation of Charles Hoole (1659).
 <!-- Whenever this <figure> is changed, copy-and-paste it into the
      example in SAUR above. -->
 <figure xml:id="COMENIUS" rend="float fullpage">
 <graphic url="Images/compic.png"/>
-<figDesc>The figure shows the page from the <title>Orbis pictus</title>
-of Comenius which is discussed in the text.</figDesc></figure>
+</figure>
 Each topic covered in this work has three parts: a
 picture, a prose text in Latin describing the topic, and a
 carefully-aligned translation of the Latin into English, German, or some
 other vernacular. Key terms in the two texts are typographically
 distinct, and are linked to the picture by numbers, which appear in the
-two texts and within the picture as well.<note place="foot">Our example uses the
-English translation of Charles Hoole (1659), and is taken from
-<ptr type="cit" target="#SA-BIBL-2"/></note></p>
+two texts and within the picture as well.</p>
 <p>First, we consider the text portions. The English and Latin portions
 have been encoded as distinct <gi>div</gi> elements. Identifiers have
 been attached to each typographic line, but no other encoding added, to
 simplify the example.
 <!-- S tag changed to SEG -DTL  -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:id="e98" xml:lang="en" type="lesson">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SA-BIBL-2"><div xml:id="e98" xml:lang="en" type="lesson">
    <head>The Study</head>
    <p>
 <seg xml:id="e9801">The Study</seg>
@@ -1953,7 +1943,8 @@ simply those which rely on the existence of an <att>xml:id</att>
 attribute. For example, if the segments in our example did not have
 identifiers, they could still be addressed using the notation
 introduced in <ptr target="#SAES"/> above. Suppose our example had been
-more lightly tagged, as follows:<egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:id="E98" xml:lang="en" type="lesson">
+more lightly tagged, as follows:<egXML
+xmlns="http://www.tei-c.org/ns/Examples" corresp="#SA-BIBL-2"><div xml:id="E98" xml:lang="en" type="lesson">
    <head>The Study</head>
 <ab>The Study</ab>
 <ab>is a place</ab>
@@ -2030,7 +2021,7 @@ providing a <att>synch</att> attribute on one of each of the pairs of
 synchronous anchors. As noted in the example given above (section <ptr target="#SACSAL"/>), correspondence, and hence synchrony, is a
 symmetric relation; therefore the attribute need only be specified on
 one of the pairs of synchronous anchors.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">    <div xml:id="BNC-d1" type="convers">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SA-eg-02">    <div xml:id="BNC-d1" type="convers">
 <u xml:id="u2b" who="#b">
   The first time in twenty five years,
   we've cooked Christmas <unclear> for a blooming great
@@ -2217,7 +2208,7 @@ text is identical to others, for analytical purposes, or (especially if
 the elements have lengthy content) to obviate the need to repeat the
 content. For example, consider the repetition of the <tag>date</tag>
 element in the following material:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>In small clumsy letters he wrote:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SA-eg-03"><p>In small clumsy letters he wrote:
 <q rend="centered italic"><date xml:id="d840404">April 4th,
 1984</date>.</q></p>
 <p>He sat back. A sense of complete helplessness had
@@ -2227,7 +2218,6 @@ and down the page, shedding first its capital letters
 and finally even its full stops:
 <q rend="italic"><date>April 4th, 1984</date>.
 Last night to the flicks. ... </q></p></egXML>
-  <!-- Orwell, Nineteen-Eighty-Four  -->
 Suppose now that we wish to encode the fact that the second
 <gi>date</gi> element above has identical content to the first. The
 <att>sameAs</att> attribute is provided for this purpose. Using it, we
@@ -2268,8 +2258,8 @@ the content of the targetted element.</p>
 <p>The following example demonstrates how the <att>copyOf</att>
 attribute may be used in conjunction with the <gi>seg</gi> element to
 highlight the differences between almost identical repetitions:
-<!-- W.S. Gilbert, "A more humane Mikado", The Mikado  -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp><speaker>Mikado</speaker>
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COVE-eg-284"><sp><speaker>Mikado</speaker>
    <l>My <seg xml:id="Mik-l1s">object all sublime</seg></l>
    <l>I shall <seg xml:id="Mik-l2s">achieve in time</seg>—</l>
    <l xml:id="Mik-l3">To let <seg xml:id="l3s">the punishment fit the crime</seg>,</l>
@@ -2444,7 +2434,7 @@ follows:
 non-hierarchic structures (as further discussed in chapter <ptr target="#NH"/>). It may also be used as a convenient way of representing a
 variety of analytic units, like the <gi>span</gi> and <gi>interp</gi>
 elements discussed in chapter <ptr target="#AI"/>. As an example, consider
-the following passage:
+the following famous Zen koan:
 <q rend="display">
 <p>Zui-Gan called out to himself every day, <q>Master.</q></p>
 <p>Then he answered himself, <q>Yes, sir.</q></p>
@@ -2455,7 +2445,7 @@ others.</q></p>
 <p><q>Yes, sir; yes, sir,</q> he replied.</p></q></p>
 <p>Suppose now that we wish to represent an interpretation of the above
 passage in which we distinguish between the various
-<soCalled>voices</soCalled> adopted by the character Zui-Gan. In the
+<soCalled>voices</soCalled> adopted by Zui-Gan. In the
 following encoding, the <att>who</att> attribute has been used for this
 purpose; its value on each occasion supplies a pointer to the
 <q>voice</q> to which each speech is attributed. (For convenience in
@@ -2464,7 +2454,7 @@ each voice as the target for these pointers.) Note also that we add
 <att>xml:id</att> attributes to each distinct speech fragment, which
 we can then use to link the material
 spoken by each voice:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><text xml:id="zuitxt">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SA-eg-04"><text xml:id="zuitxt">
    <body>
 <p><name xml:id="zuigan">Zui-Gan</name> called out to himself every day,
    <q next="#zuiq2" xml:id="zuiq1" who="#zuigan"><name xml:id="master">Master</name>.</q></p>
@@ -2502,7 +2492,7 @@ using any of the methods described in sections <ptr target="#SAES"/>
 or <ptr target="#SATS"/>. The <att>xml:id</att> attributes of
 <emph>these</emph> elements may now be specified by the
 <att>targets</att> attribute on the <gi>join</gi> elements.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SA-eg-04"><text>
  <body>
     <p>Zui-Gan called out to himself every day, <q>Master.</q></p>
     <p>Then he answered himself, <q>Yes, sir.</q></p>
@@ -2531,157 +2521,9 @@ or <ptr target="#SATS"/>. The <att>xml:id</att> attributes of
 <val>rzuiq2</val> (for example) may be read as <q>the first
 <gi>q</gi> in the first <gi>p</gi>, within the sixth <gi>div1</gi>
 element of the current document.</q></p>
-<p>As mentioned above, there is no need for the <gi>join</gi> and
-<gi>ptr</gi> elements to be held in the same document as the text;
-indeed, if, for example, the text is held on a read-only medium, this
-may not be possible. The <att>doc</att> attribute of the <gi>ptr</gi>
-element may be used to specify the name of an external entity within
-which its target is to be found, as in the following example:
-<eg><![CDATA[<!ENTITY fazdoc SYSTEM 'faz.doc' NDATA w3cXML>
-<!-- ... -->
-<xptr xml:id='RZUIQ1'
-doc='fazdoc'
-target="./#xpath1(//div1[6]/p[1]/q[1])"/>
-<!-- ... -->]]></eg>
-<!-- deleted following example. nice though it is, it's too long -->
-  <!-- and adds nothing to preceding ones  -->
-  <!-- 
-<p>The second example is a possible reconstruction of    -->
-  <!-- the fragment of the diary that the main character has    -->
-  <!-- been keeping throughout the first chapter of a     -->
-  <!-- well-known twentieth-century novel.    -->
-  <!-- George Orwell, Nineteen-Eighty-Four, 1947 -->
-  <!-- empty head elements deleted, will be restored on demand. -->
-  <!-- diary excerpts retagged as Q not P (discussable).  -->
-  <!--  -msm -->
-  <!-- OK to both -dtl (93-07-08) -->
-  <!-- 
-<eg> -->
-  <!-- <![CDATA[-->
-  <!-- 
-<div1 xml:id='C1'>
-<head rend='large caps centered'>one</head> -->
-  <!-- 
-<div2 xml:id='C1S1'> -->
-  <!-- 
-<p> -->
-  <!-- <s>It was a bright cold day in April, and the clocks were striking -->
-  <!-- thirteen.</s> -->
-  <!-- ... -->
-  <!-- <s>In small clumsy letters he wrote:</s> -->
-  <!-- <q rend='centered italic' xml:id='D1'> -->
-  <!-- <date xml:id='D1.1' copyOf='d2.1'></date> -->
-  <!-- </q> -->
-  <!-- 
-<p><s>He sat back.</s> -->
-  <!-- <s>A sense of complete helplessness had descended upon him.</s> -->
-  <!-- ... -->
-  <!-- 
-<p> -->
-  <!-- <s>Suddenly he began writing in sheer panic, only imperfectly -->
-  <!-- aware of what he was setting down.</s> -->
-  <!-- <s>His small but childish handwriting straggled up and down the page, -->
-  <!-- shedding first its capital letters and finally even its full -->
-  <!-- stops:</s> -->
-  <!-- <q rend='italic' xml:id='D2'> -->
-  <!-- <date xml:id='D2.1'>April 4th, 1984.</date> -->
-  <!-- <s xml:id='D2.2'>Last night to the flicks.</s> -->
-  <!-- ... -->
-  <!-- <seg type='sentence' xml:id='D2.11.1'>then there was a wonderful shot of -->
-  <!-- a childs arm going up up up right up into the air</seg> -->
-  <!-- ... -->
-  <!-- <seg type='phrase' xml:id='D2.11.9'>typical prole reaction</seg> -->
-  <!-- <seg type='fragment' xml:id='D2.11.10'>they never&mdash;</seg> -->
-  <!-- </q> -->
-  <!-- 
-<p> -->
-  <!-- <s>Winston stopped writing, partly because he was suffering from -->
-  <!-- cramp.</s> -->
-  <!-- ... -->
-  <!-- 
-<p><s>For a moment he was seized by a kind of hysteria.</s> -->
-  <!-- <s>He began writing in a hurried untidy scrawl:</s> -->
-  <!-- <q rend='italic' xml:id='D3'> -->
-  <!-- <seg type='sentence' xml:id='D3.1'>theyll shoot me</seg> -->
-  <!-- <seg type='sentence' xml:id='D3.2'>i dont care</seg> -->
-  <!-- <seg type='sentence' xml:id='D3.3'>theyll shoot me in the back of the neck</seg> -->
-  <!-- <seg type='sentence' xml:id='D3.4'>i dont care </seg> -->
-  <!-- <seg type='phrase' xml:id='D3.5'>down with big brother</seg> -->
-  <!-- <seg type='sentence' xml:id='D3.6'>they always shoot you in the back of the -->
-  <!-- neck</seg> -->
-  <!-- <seg type='sentence' xml:id='D3.7'>i dont care</seg> -->
-  <!-- <seg type='phrase' xml:id='D3.8'>down with big brother&mdash;</seg> -->
-  <!-- </q> -->
-  <!-- 
-<p> -->
-  <!-- <s>He sat back in his chair, slightly ashamed of himself, and -->
-  <!-- laid down the pen.</s> -->
-  <!-- ... -->
-  <!-- <s>With the feeling that he was speaking to O'Brien, and also -->
-  <!-- that he was setting forth an important axiom, he wrote:</s> -->
-  <!-- <q rend='italic' xml:id='D15'> -->
-  <!-- <s xml:id='D15.1'>Freedom is the freedom to say that two plus two make -->
-  <!-- four.</s> -->
-  <!-- <s xml:id='D15.2'>If that is granted, all else follows.</s> -->
-  <!-- </q> -->
-  <!-- 
-<div2 xml:id='C1S8'>
-<head rend='large caps centered'>viii -->
-  <!-- ... -->
-  <!-- 
-<div1 xml:id='C2'>
-<head rend='large caps centered'>two</head> -->
-  <!-- ... -->
-  <!-- <joinGrp targType='q q' -->
-  <!--    domains='c1 c1' -->
-  <!--    extendTarg='2'> -->
-  <!--   <join  result="Winston Smith's diary" -->
-  <!--    targets='d2 d3 d4 d5 d6 d7 d8 d9 d10 d11 d12 d13 d14 d15'> -->
-  <!--   </joinGrp> -->
-  <!-- ]]> -->
-  <!-- </eg> -->
-  <!--   -->
-  <!-- Also dropped this example because I dont understand it.  -->
-  <!-- There's no relevant discussion at end of COse any more   -->
-  <!-- either   -->
-  <!-- Well, if you wouldn't axe things quite so liberally,     -->
-  <!-- you wouldn't find yourself left with no explanations of  -->
-  <!-- things, would you?   -->
-  <!-- <p>Finally, here is a solution to the markup problem     -->
-  <!-- discussed at the end of section <xref type='div3'    -->
-  <!-- target='COSE'>, concerning a quotation that is shared-->
-  <!-- between two identification ments.-->
-  <!-- Doris Lessing, The Four-Gated City, 1976, p257  -->
-  <!-- 
-<eg><![CDATA[-->
-  <!-- <s xml:id='S89235'>Martha said, -->
-  <!-- <q xml:id='Q89240'><s xml:id='S89240'>Mark.</s> -->
-  <!-- <s xml:id='S89245'>He's my employer, after all.</s></q></s> -->
-  <!-- <s id=S89250<q xml:id='Q89250'><s xml:id='S89255'>I suppose,</s></q> she -->
-  <!-- added, with a sort of desperation of her own which at least -->
-  <!-- hinted at the possibility of a return of the dry, cool, -->
-  <!-- irony where Mrs. Quest had never thought she might be able -->
-  <!-- to meet her daughter.</s> -->
-  <!-- <join rend='PRE ldquo POST rdquo' -->
-  <!-- result='full quote' -->
-  <!-- targType='q q' -->
-  <!-- targets='q89240 q89250'> -->
-  <!-- ]]> -->
-  <!-- </eg> --></p>
+
 <specGrp xml:id="DSAAG" n="Aggregation">
-  
-
-
-
-&join;
-
-
-  
-
-
-
-&joinGrp;
-
+  &join;&joinGrp;
 
 </specGrp></div>
 <div type="div2" xml:id="SAAT">
@@ -3282,7 +3124,7 @@ The semantics of XInclude require the creation of well-formed XML results even t
 	  <gi>xi:include</gi> element that contains an XPointer
 	  pointing to the desired content.</p>
 	<p>For instance the following portion of a TEI document:
-<eg><![CDATA[<text>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-1"><text>
    <body>
 <head>1755</head>
 <l>To make a prairie it takes a clover and one bee,</l>
@@ -3291,7 +3133,7 @@ The semantics of XInclude require the creation of well-formed XML results even t
 <l>The revery alone will do,</l>
 <l>If bees are few.</l>
    </body>
-</text>]]></eg>
+</text></egXML>
 	  can be externalized by placing the actual text in a separate
 	  document, and providing exactly the same markup with the
 	  <gi>xi:include</gi> elements:
