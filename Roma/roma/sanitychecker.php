@@ -60,7 +60,7 @@ public function __construct($odd) {
 	$this->ALL_CLASSES = $this->xpath->query("//tei:classSpec");
 	$this->PARENTS = array();
 //   foreach($this->ALL_CLASSES as $oElement) {
-//     print "> " . $oElement->nodeValue;
+//     print " + " . $oElement->nodeValue;
 //     }
 }
 
@@ -92,6 +92,8 @@ private function remove_sequences_from_classnames($class) {
  un tableau d'éléments si l'élément courant est une classe
  **/
 private function getContent($input) {
+ error_log(" get content for  " . $input->nodeName);
+
 	if($input->nodeName == "group" || $input->nodeName == "zeroOrMore" || $input->nodeName == "optional" || $input->nodeName == "oneOrMore") {
 		$res = array();
 		$childs = $input->childNodes;
@@ -200,7 +202,8 @@ private function computingStop($name) {
  n'a aucun impact sur la vérification de la cohérence même.
  **/
 private function getParentItem($element) {
-	if($element->nodeName == "elementSpec" || $element->nodeName == "classSpec") {
+   error_log(" + check parent " . $element->nodeName);
+   if($element->nodeName == "elementSpec" || $element->nodeName == "classSpec") {
 		return $element;
 	} else {
 		return $this->getParentItem($element->parentNode);
@@ -252,49 +255,105 @@ private function addRecursion($recursion, $element) {
 }
 
 /**
- La fonction verifElem(element, parent) est la principale fonction de l'algorithme.
- Elle renvoie
- vrai : si l'élément passé en paramètre est satisfiable (ie: son contenu est satifiable)
- faux : si l'élément passé en paramètre n'est pas satifisable (ie: son contenu n'est pas satisfiable)
+ La fonction verifElem(element, parent) est la principale fonction de
+ l'algorithme.  Elle renvoie vrai : si l'élément passé en paramètre
+ est satisfiable (ie: son contenu est satifiable) faux : si l'élément
+ passé en paramètre n'est pas satifisable (ie: son contenu n'est pas
+ satisfiable)
 
- Cette fonction est récursive. La premier appel à cette fonction se fait sur l'élément racine.
- Souvent, cet élément racine est l'élément <TEI> mais on peut avoir également d'autres racines possibles.
- Un schéma est "cassé" lorsque toutes les racines que ce schéma peut avoir sont cassées, IE
- la fonction verifElem renvoie faux pour chaque racine.
+ Cette fonction est récursive. La premier appel à cette fonction se
+ fait sur l'élément racine.  Souvent, cet élément racine est l'élément
+ <TEI> mais on peut avoir également d'autres racines possibles.  Un
+ schéma est "cassé" lorsque toutes les racines que ce schéma peut
+ avoir sont cassées, IE la fonction verifElem renvoie faux pour chaque
+ racine.
 
  Le principe de cette fonction est assez simple:
- Si l'élément a déjà été vérifié, on renvoie le résultat de la vérification précédente.
- Si l'élément est en cours de vérification, on le considère comme non satifiable jusqu'à preuve du contraire.
 
- Si l'élément courant est un élément: on vérifie tous les éléments qui sont dans son contenu. Si un seul de ces éléments est non satisfiable, l'élément courant est non satisfiable. Si l'élément n'a pas de contenu, c'est également une erreur.
- Si l'élément courant une une classe: on vérifie chaque élément membre de cette classe. Si à la fin de la vérification il ne reste plus aucun membre satisfiable dans cette classe, cette classe est considérée comme vide. Il est tenu compte des sequences, séquences répétables etc qui peuvent s'appliquer aux classes (cas particuliers).
- Si l'élément courant est une séquence d'éléments: on vérifie tous les éléments fils. Si un seul de ces éléments est non satisfiable, la séquence est considéré comme non satisfiable car la séquence a été interrompue.
- Si l'élément courant est un "zeroOrMore" ou "optionnal": On vérifie tous les éléments fils mais on ne tient pas compte du résultat. On renvoie vrai.
- Si l'élémen courant est un "oneOrMore" ou "choice": On vérifie tous les éléments fils. On renvoie vrai s'il y en a au moins un qui est satifisable, faux sinon.
- Si l'élément courant est un élément terminal comme "text", "rng:text", "rng:empty", "s:patter", "sch:pattern" on renvoie vrai.
- Si l'élément courant est une référence vers un élément ou une classe ("ref" ou "rng:ref"): on vérifie l'élément ou la classe correspondante. On renvoie vrai si l'élément sur lequel le pointeur pointe est satifiable, faux sinon.
+ Si l'élément a déjà été vérifié, on renvoie le résultat de la
+ vérification précédente.
+ 
+ Si l'élément est en cours de vérification, on le considère comme non
+ satifiable jusqu'à preuve du contraire.
 
- A chaque erreur trouvée, on doit renvoyer un message d'erreur. Le soucis est de savoir si l'erreur trouvée est une erreur ou un warning. C'est pour celà qu'on vérifie s'il y a une optionnalité parmi les éléments parents. S'il y a une optionnalité, cette optionnalité arretera la propagation de l'erreur, et on envoie un warning à l'utilisateur. S'il n'y a pas d'optionnalité parmi les éléments pères, l'erreur se propagera jusqu'à la racine et rendera le schéma incohérent de façon à n'avoir aucun document XML qui puisse le valide. Dans ce cas, on doit envoie le message sous la forme d'une erreur.
- **/
-private function verifElem(&$element, &$parent, $recursion) {
-$this->getParentItem($element);
-	if(!is_object($element)) return null;
-	$ident = $element->getAttribute("ident");
-	$name = $element->nodeName;
-	if($ident != "") $this->PARENTS[$element->getAttribute("ident")][] = $parent;
-	if($ident != "" && isset($this->RESULTS[$ident])) {
+ Si l'élément courant est un élément: on vérifie tous les éléments qui
+ sont dans son contenu. Si un seul de ces éléments est non
+ satisfiable, l'élément courant est non satisfiable. Si l'élément n'a
+ pas de contenu, c'est également une erreur.
+
+ Si l'élément courant une une classe: on vérifie chaque élément membre
+ de cette classe. Si à la fin de la vérification il ne reste plus
+ aucun membre satisfiable dans cette classe, cette classe est
+ considérée comme vide. Il est tenu compte des sequences, séquences
+ répétables etc qui peuvent s'appliquer aux classes (cas
+ particuliers).
+
+ Si l'élément courant est une séquence d'éléments: on vérifie tous les
+ éléments fils. Si un seul de ces éléments est non satisfiable, la
+ séquence est considéré comme non satisfiable car la séquence a été
+ interrompue.
+
+ Si l'élément courant est un "zeroOrMore" ou "optionnal": On vérifie
+ tous les éléments fils mais on ne tient pas compte du résultat. On
+ renvoie vrai.
+
+ Si l'élémen courant est un "oneOrMore" ou "choice": On vérifie tous
+ les éléments fils. On renvoie vrai s'il y en a au moins un qui est
+ satifisable, faux sinon.
+
+ Si l'élément courant est un élément terminal comme "text",
+ "rng:text", "rng:empty", "s:pattern", "sch:pattern" on renvoie vrai.
+
+ Si l'élément courant est une référence vers un élément ou une classe
+ ("ref" ou "rng:ref"): on vérifie l'élément ou la classe
+ correspondante. On renvoie vrai si l'élément sur lequel le pointeur
+ pointe est satifiable, faux sinon.
+
+ A chaque erreur trouvée, on doit renvoyer un message d'erreur. Le
+ soucis est de savoir si l'erreur trouvée est une erreur ou un
+ warning. C'est pour celà qu'on vérifie s'il y a une optionnalité
+ parmi les éléments parents. S'il y a une optionnalité, cette
+ optionnalité arretera la propagation de l'erreur, et on envoie un
+ warning à l'utilisateur. S'il n'y a pas d'optionnalité parmi les
+ éléments pères, l'erreur se propagera jusqu'à la racine et rendera le
+ schéma incohérent de façon à n'avoir aucun document XML qui puisse le
+ valide. Dans ce cas, on doit envoie le message sous la forme d'une
+ erreur.  **/ 
+
+private function verifElem($element, $parent,  $recursion) { 
+// $elementSpec = $this->getParentItem($element);
+ if(!is_object($element)) return null; 
+ $name = $element->nodeName;
+ if ($name == 'elementSpec' ) {
+    	    $ident = $element->getAttribute("ident"); 
+	    }
+else
+ if ($name == 'classSpec' ) {
+    	    $ident = $element->getAttribute("ident"); 
+}
+else 
+     { $ident = ''; }
+
+ error_log('now looking at a ' . $name . ' called ' . $ident);
+ if($ident != "") $this->PARENTS[$ident][] = $parent;
+ if($ident != "" && isset($this->RESULTS[$ident])) {
 		return $this->RESULTS[$ident];
 	}
-	if(!$this->computingProgress($ident)) {
+ if(!$this->computingProgress($ident)) {
 		$this->SCEH->increaseProgressBar();
-		//echo "verifElement: name=$name"; if($element->getAttribute("ident") != "") echo ", @ident=$ident"; if($element->getAttribute("name") != "") echo ", @name=".$element->getAttribute("name"); echo "\n";
+		//echo "verifElement: name=$name";
+// if($element->getAttribute("ident") != "") echo ", @ident=$ident";
+// if($element->getAttribute("name") != "") echo ",
+// @name=".$element->getAttribute("name"); echo "\n";
+ error_log('main switch on ' . $name);
+
 		switch($name) {
 		case "elementSpec": {
 			$content = $this->getContent($element);
 			$broken = false;
 			$this->computingStart($ident);
 			foreach($content->childNodes as $content_item) {
-				if(!$this->verifElem($content_item, &$element, $this->addRecursion($recursion, $element))) {
+				if(!$this->verifElem($content_item, $element, $this->addRecursion($recursion, $element))) {
 					$broken = true;
 					$faulty = $content_item;
 				}
@@ -340,13 +399,14 @@ $this->getParentItem($element);
 		case "group": {
 			$broken = false;
 			foreach($element->childNodes as $content_item) {
-				if(!$this->verifElem($content_item, &$element, $this->addRecursion($recursion, $element))) {
+				if(!$this->verifElem($content_item, $element, $this->addRecursion($recursion, $element))) {
 					$broken = true;
 					$faulty = $content_item;
 				}
 			}
 			if($broken) {
-				if($this->inOptionnality($this->addRecursion($recursion, $element))) {
+				if($this->inOptionnality($this->addRecursion($recursion,
+	$element))) {
 					if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Warning', $this->getElementName($this->getParentItem($parent)), '', 'group broken' );
 				} else {
 					if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Error', $this->getElementName($this->getParentItem($parent)), '', 'group broken' );
@@ -358,7 +418,7 @@ $this->getParentItem($element);
 		case "oneOrMore": {
 			$count = 0;
 			foreach($element->childNodes as $content_item) {
-				if($this->verifElem($content_item, &$element, $this->addRecursion($recursion, $element))) $count++;
+				if($this->verifElem($content_item, $element, $this->addRecursion($recursion, $element))) $count++;
 				else $faulty = $content_item;
 			}
 			if($count == 0) {
@@ -369,14 +429,14 @@ $this->getParentItem($element);
 		}
 		case "zeroOrMore": {
 			foreach($element->childNodes as $content_item) {
-				$this->verifElem($content_item, &$element, $this->addRecursion($recursion, $element));
+				$this->verifElem($content_item, $element, $this->addRecursion($recursion, $element));
 			}
 			break;
 		}
 		case "choice": {
 			$good_ones = $element->childNodes->length;
 			foreach($element->childNodes as $content_item) {
-				if(!$this->verifElem($content_item, &$element, $this->addRecursion($recursion, $element))) $good_ones--;
+				if(!$this->verifElem($content_item, $element, $this->addRecursion($recursion, $element))) $good_ones--;
 			}
 			if($good_ones == 0) {
 				return false;
@@ -385,10 +445,11 @@ $this->getParentItem($element);
 		}
 		case "optional": {
 			foreach($element->childNodes as $content_item) {
-				$this->verifElem($content_item, &$element, $this->addRecursion($recursion, $element));
+				$this->verifElem($content_item, $element, $this->addRecursion($recursion, $element));
 			}
 			break;
 		}
+		case "#text":
 		case "text":
 		case "rng:text":
 		case "rng:empty":
@@ -412,12 +473,12 @@ $this->getParentItem($element);
 				return false;
 			}
 			if($el->nodeName != "") {
-				return $this->verifElem($el, &$element, $this->addRecursion($recursion, $element));
+				return $this->verifElem($el, $element, $this->addRecursion($recursion, $element));
 			}
 			break;
 		}
 		default: {
-			$this->sanityCheckAddError("I can't process $name");
+			error_log("I can't process ". $name);
 			return false;
 		}
 		}
@@ -443,12 +504,12 @@ public function pass1() {
 	}
 	$this->SCEH->updateProgressBar(51.3);
 	foreach($roots as $root) {
-	$this->SCEH->updateProgressBar(51.4);
-	$tmp = $this->xpath->query("//tei:elementSpec[@ident='".$root."']")->item(0);
-	$root_node = $this->DOM->rootNode;
-	print   "<h1>" . $root_node->item(0) . "x</h1>";
-	return true;
-	if(!$this->verifElem($tmp, $root_node, array())) $schema_broken = true;
+	 $this->SCEH->updateProgressBar(51.4);
+// $this->DOM->save('/tmp/foo.xml');
+         $start = $this->xpath->query("//tei:elementSpec[@ident='".$root."']")->item(0);
+         error_log("Start with " . $tmp->nodeName . " from " . $root);	  
+         $root_node = $this->DOM->documentElement;
+	 if(!$this->verifElem($start, $root_node, array())) $schema_broken = true;
 	}
 	if($schema_broken) {
 		$this->SCEH->sanityCheckSchemaBroken();
@@ -468,7 +529,8 @@ public function pass2() {
 	foreach($this->ALL_ELEMENTS as $element) {
 		if(!isset($this->COMPUTING[$element->getAttribute("ident")])) {
 			$res = false;
-			$this->SCEH->addError('Warning', $element->getAttribute("ident"), '', 'is not reacheable from root');
+			$this->SCEH->addError('Warning',
+ $element->getAttribute("ident"), '', ' is not reachable from root');
 		}
 	}
 	$this->SCEH->updateProgressBar(95);
