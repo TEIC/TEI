@@ -92,8 +92,6 @@ private function remove_sequences_from_classnames($class) {
  un tableau d'éléments si l'élément courant est une classe
  **/
 private function getContent($input) {
- error_log(" get content for  " . $input->nodeName);
-
 	if($input->nodeName == "group" || $input->nodeName == "zeroOrMore" || $input->nodeName == "optional" || $input->nodeName == "oneOrMore") {
 		$res = array();
 		$childs = $input->childNodes;
@@ -321,20 +319,18 @@ private function addRecursion($recursion, $element) {
  erreur.  **/ 
 
 private function verifElem($element, $parent,  $recursion) { 
-// $elementSpec = $this->getParentItem($element);
  if(!is_object($element)) return null; 
  $name = $element->nodeName;
  if ($name == 'elementSpec' ) {
     	    $ident = $element->getAttribute("ident"); 
 	    }
-else
- if ($name == 'classSpec' ) {
+ else
+  if ($name == 'classSpec' ) {
     	    $ident = $element->getAttribute("ident"); 
-}
-else 
+ }
+ else 
      { $ident = ''; }
 
- error_log('now looking at a ' . $name . ' called ' . $ident);
  if($ident != "") $this->PARENTS[$ident][] = $parent;
  if($ident != "" && isset($this->RESULTS[$ident])) {
 		return $this->RESULTS[$ident];
@@ -345,7 +341,6 @@ else
 // if($element->getAttribute("ident") != "") echo ", @ident=$ident";
 // if($element->getAttribute("name") != "") echo ",
 // @name=".$element->getAttribute("name"); echo "\n";
- error_log('main switch on ' . $name);
 
 		switch($name) {
 		case "elementSpec": {
@@ -377,8 +372,9 @@ else
 			$sequence_broken = false;
 			$count = count($content);
 			$this->computingStart($ident);
+			$parentSpec = $this->getParentItem($element);
 			foreach($content as $content_item) {
-				if(!$this->verifElem($content_item, &$parent, $this->addRecursion($recursion, $element))) {
+				if(!$this->verifElem($content_item, $parentSpec, $this->addRecursion($recursion, $element))) {
 					$count--;
 					$sequence_broken = true;
 				}
@@ -502,12 +498,9 @@ public function pass1() {
 		$roots = array();
 		$roots[0] = "TEI";
 	}
-	$this->SCEH->updateProgressBar(51.3);
 	foreach($roots as $root) {
-	 $this->SCEH->updateProgressBar(51.4);
 // $this->DOM->save('/tmp/foo.xml');
          $start = $this->xpath->query("//tei:elementSpec[@ident='".$root."']")->item(0);
-         error_log("Start with " . $tmp->nodeName . " from " . $root);	  
          $root_node = $this->DOM->documentElement;
 	 if(!$this->verifElem($start, $root_node, array())) $schema_broken = true;
 	}
