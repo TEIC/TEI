@@ -1315,7 +1315,7 @@ select="$makeDecls"/></xsl:message>
 	  <xsl:choose>
 	    <xsl:when
 		test="tei:datatype/rng:ref[@name='data.enumerated']">
-	      <rng:data type="token"/>
+	      <rng:data type="Name"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:apply-templates mode="forceRNG"
