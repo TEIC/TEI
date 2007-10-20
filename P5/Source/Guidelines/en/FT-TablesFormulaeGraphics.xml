@@ -128,7 +128,7 @@ and <gi>row</gi> are members; see further <ptr target="#STECAT"/>. </p>
 <p>The following simple example demonstrates how the data presented as a
 labelled list in section <ptr target="#COLI"/> might be represented by an
 encoder wishing to preserve its original appearance as a table:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#FTTAB1-eg-1"><table rend="boxed" rows="2" cols="2">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COLI-eg-172"><table rend="boxed" rows="2" cols="2">
    <head rend="it">Report of the conduct and progress
       of Ernest Pontifex.  Upper Vth form — half
       term ending Midsummer 1851</head>
@@ -400,10 +400,6 @@ the series
 \dots
 $$</formula>
 the argument owes its fame.</p></egXML>
-<!-- Jorge Luis Borges, "Avatars of the Tortoise," transl.    -->
-	<!-- James E. Irby, in <title>Labyrinths:  Selected Stories   -->
-	<!-- and Other Writings</title> ([New York]:  New             -->
-	<!-- Directions, 1962), pp. 202-203.                          -->
 The <att>notation</att> attribute supplies the name of a
 notation (<q>TeX</q>), which is expected to be identified somewhere
 in document metadata. </p>
@@ -423,7 +419,29 @@ expression. Most of its content elements correspond with the range of
 operators, relations, and named functions typically found at the high
 school level of mathematics. The tortoise example given above
 in TeX can be re-expressed in MathML as
-<egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><math xmlns="http://www.w3.org/1998/Math/MathML"> 
+   <mfrac>
+      <mrow> <mn>1</mn> </mrow> 
+      <mrow> <mn>10</mn> </mrow>
+   </mfrac> 
+   <mo>+</mo>
+   <mfrac>
+      <mrow> <mn>1</mn> </mrow>
+      <mrow> <mn>100</mn> </mrow>
+   </mfrac> 
+   <mo>+</mo>
+   <mfrac>
+      <mrow> <mn>1</mn> </mrow> 
+      <mrow> <mn>1000</mn> </mrow>
+   </mfrac> 
+   <mo>+</mo>
+   <mfrac>
+      <mrow> <mn>1</mn> </mrow> 
+      <mrow> <mn>10000</mn> </mrow>
+   </mfrac> 
+   <mo>+</mo> 
+   <mo>…</mo>
+</math></egXML>
 </p>
   <p>MathML 2.0 (<ptr target="http://www.w3.org/TR/MathML2"/>)
 adds to these some additional elements for MathML Content Markup,
@@ -434,14 +452,17 @@ Java. It also provided a modularized version of the MathML DTD so that
 MathML fragments <soCalled>embedded</soCalled> in XHTML 1.1 documents
 as data islands can be correctly validated.</p>
 
-<p>The OpenMath (<ptr target="http://www.nag.co.uk/projects/OpenMath.html"/>) project is
-coordinated by the OpenMath Society (<ptr target="http://www.openmath.org/"/>)and funded by the European
+<p>The OpenMath (<ptr
+target="http://www.nag.co.uk/projects/OpenMath.html"/>) project is
+coordinated by the OpenMath Society (<ptr
+target="http://www.openmath.org/"/>)and funded by the European
 Commission under the Esprit Multimedia Standards Initiative that
 commenced in September 1997. It is likely to become a key standard for
 communicating semantically rich representations of mathematical
 objects both on and off the Web in a platform-independent manner.</p>
 
-<p>The OpenMath Standard (<ptr target="http://www.openmath.org/V2/standard/index.html"/>) consists of
+<p>The OpenMath Standard (<ptr
+target="http://www.openmath.org/V2/standard/index.html"/>) consists of
 specifications for
 <list type="ordered">
 <item>OpenMath objects, representing the structure of formulae (<ptr target="http://www.openmath.org/V2/standard/objects.html"/>);</item>
@@ -471,7 +492,20 @@ identify the formula, as in the following (imaginary) example:<note place="foot"
 included in the TEI name space</note>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The volume of a sphere is given by the formula:
 <formula xml:id="f12" n="12" rend="inline">
- 
+  <math xmlns="http://www.w3.org/1998/Math/MathML">
+   <mi>V</mi>
+   <mo>=</mo>
+   <mfrac>
+      <mrow> <mn>4</mn> </mrow>
+      <mrow> <mn>3</mn> </mrow>
+   </mfrac>
+   <mi>π</mi>
+   <msup>
+      <mrow> <mi>r</mi> </mrow>
+      <mrow> <mn>3</mn> </mrow>
+   </msup>
+ </math>
+
 </formula>
 which is readily calculated.</p>
 <p>As we have seen in equation 
@@ -588,26 +622,41 @@ We can now embed a reference to that image using the simple
 </egXML></p>
 <p>Another common requirement is to associate part or the whole of an
 image with a textual element not necessarily contiguous to it in the
-text; this is sometimes known as a <term>callout</term>. Again,
-chapter <ptr target="#SA"/> should be consulted for the full details of
-the mechanisms available for this purpose. This example assumes that
-we wish to associate one portion of the image held as <q>fig1</q> with
+text; this is sometimes known as a <term>callout</term>. When the
+module for transcription is included in a schema, specific attributes
+for parts of a text and parts (or all) of a digital image are
+available; these are discussed in <ptr target="#PHFAX"/>.  In
+addition, chapter <ptr target="#SA"/> may be consulted for other
+mechanisms available for this purpose. </p>
+<p>The following example assumes that we
+wish to associate one portion of the image held as <q>fig1</q> with
 chapter two of some text, and another portion of it with chapter
 three. The application may be thought of as a hypertext browser in
 which the user selects from a graphic image which part of a text to
 read next, but the mechanism is independent of this particular
-application.</p> 
+application.</p>
 
-<p>The first requirement is some way of identifying
-and hence pointing to sub-parts of a graphic image. This is most
-easily done by pointing into an XML graphic representation, for example an SVG file. Thus
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr xml:id="PD1" target="Fig1.svg#object1"/>
-<ptr target="Fig1.svg#object2"/></egXML></p>
+<p>The first requirement is some way of identifying and hence pointing
+to sub-parts of a graphic image. This may be done by pointing into an
+XML graphic representation, for example an SVG file. Thus <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><ptr xml:id="PD1"
+target="Fig1.svg#object1"/> <ptr
+target="Fig1.svg#object2"/></egXML></p>
 
 <p>These <gi>ptr</gi> elements identify two areas within the image
-<q>Fig1</q> by pointing at elements inside the XML file <ident type="file">Fig1.svg</ident>, which contains the following.
+<q>Fig1</q> by pointing at elements inside the XML file <ident
+type="file">Fig1.svg</ident>, which contains the following.
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="8cm" height="3cm" viewBox="2 1 8 3">
+ <g id="object1">
+  <ellipse style="fill: #ffffff" cx="3.875" cy="3.025" rx="1.175" ry="1.175"/>
+ </g>
+ <g id="object2">
+  <rect style="fill: #a81616" x="7.8" y="1.9" width="2.17581" height="2.24833"/>
+</g>
+</svg>
 
 </egXML>
 </p>
@@ -636,8 +685,7 @@ customizations of the TEI scheme, this is carried out using the
 techniques documented in section <ptr target="#STIN"/>; further
 examples are provided in chapter <ptr target="#SA"/>.</p>
 
-
-
+<!-- should add some way of doing the same thing using zones -->
 
 
 <specGrp xml:id="DFTGRA" n="Figures">
