@@ -23,7 +23,7 @@ Description
 <xsl:param name="host">http://localhost:8080/cocoon/Query</xsl:param>
 <xsl:param name="selectedMode">addElement</xsl:param>
 <xsl:param name="elementChangedName"/>
-<xsl:param name="namespace">http://www.tei-c.org/</xsl:param>
+<xsl:param name="namespace">http://www.example.org/ns/nonTEI</xsl:param>
 <xsl:param name="module"/>
 <xsl:param name="lang"/>
 <xsl:param name="changeNameERROR"/>
