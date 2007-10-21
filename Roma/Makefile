@@ -12,6 +12,7 @@ FILES=ChangeLog \
 	roma.sh \
 	roma.1 \
 	roma.css \
+	TEI-glow.png \
 	roma.js \
 	startroma.php \
 	teilogo.jpg \

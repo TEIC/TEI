@@ -56,22 +56,36 @@ Description
 
 
 <xsl:template name="processSelectedModules">
-   <xsl:for-each select=".//selectedModules/module[not(.='tei')]">
-     <xsl:variable name="thisModule"><xsl:value-of select="."/></xsl:variable>
-     <tr>
-       <td>
-	 <a class="action">
-	   <xsl:attribute name="href">?module=<xsl:value-of select="$thisModule"/>&amp;mode=removeModule</xsl:attribute>
-	   <xsl:value-of  disable-output-escaping="yes" select="$res_form_remove"/>
-	 </a>
-       </td>
-       <td>
-	 <a class="display">
-	   <xsl:attribute name="href">?mode=changeModule&amp;module=<xsl:value-of select="$thisModule"/></xsl:attribute>
-	   <xsl:value-of select="$thisModule"/>
-	 </a>
-       </td>
-     </tr>
+   <xsl:for-each select=".//selectedModules/module">
+     <xsl:variable name="thisModule">
+       <xsl:value-of select="."/>
+     </xsl:variable>
+     <xsl:choose>
+       <xsl:when test="$thisModule='tei'">
+	 <tr>
+	   <td>&#160;</td>
+	   <td>
+	     <xsl:value-of select="$thisModule"/>
+	   </td>
+	 </tr>
+       </xsl:when>
+       <xsl:otherwise>
+	 <tr>
+	   <td>
+	     <a class="action">
+	       <xsl:attribute name="href">?module=<xsl:value-of select="$thisModule"/>&amp;mode=removeModule</xsl:attribute>
+	       <xsl:value-of  disable-output-escaping="yes" select="$res_form_remove"/>
+	     </a>
+	   </td>
+	   <td>
+	     <a class="display">
+	       <xsl:attribute name="href">?mode=changeModule&amp;module=<xsl:value-of select="$thisModule"/></xsl:attribute>
+	       <xsl:value-of select="$thisModule"/>
+	     </a>
+	   </td>
+	 </tr>
+       </xsl:otherwise>
+     </xsl:choose>
    </xsl:for-each>
  </xsl:template>
  
