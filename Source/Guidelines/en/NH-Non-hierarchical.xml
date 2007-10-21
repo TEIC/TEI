@@ -8,12 +8,13 @@ $Id$
 -->
 <div n="31" type="div1" xml:id="NH" xmlns="http://www.tei-c.org/ns/1.0">
     <head>Non-hierarchical Structures</head>
-    <p>XML strongly emphasizes a hierarchical document model. At various points,
-        these Guidelines discuss problems which arise when using XML to encode
-        textual features that either do not naturally lend themselves to
-        representation in a strictly hierarchical form or conflict with other
-        hierarchies represented in the markup. Examples of such situations
-        include <list type="bullets">
+
+    <p>XML strongly emphasizes a hierarchical document model. At
+    various points, these Guidelines discuss problems which arise when
+    using XML to encode textual features that either do not naturally
+    lend themselves to representation in a strictly hierarchical form
+    or conflict with other hierarchies represented in the
+    markup. Examples of such situations include <list type="bullets">
             <item>
                 <p>Conflict between the hierarchy established by the physical
                     structure of a document (e.g. volume, page, column, line)
@@ -78,7 +79,7 @@ $Id$
     <p>In the sections which follow these techniques are described, and their
         advantages and disadvantages are briefly discussed. The various
         solutions to the problem will be exemplified using extracts from two
-        poems as examples. The first is the openning quatrain from William
+        poems as examples. The first is the opening quatrain from William
         Wordsworth's <title level="a">Scorn not the sonnet</title>: <quote>
             <l>Scorn not the sonnet; critic, you have frowned,</l>
             <l>Mindless of its just honours; with this key</l>
@@ -126,7 +127,8 @@ $Id$
             </egXML></p>
         <p>The <term>Grammatical View</term> would be encoded by taking the same
             text and replacing the metrical markup with information about its
-            sentence structure: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            sentence structure: <egXML
+	    xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
                 <p>
                     <s>Scorn not the sonnet</s>; <s>critic, you have frowned,
                         Mindless of its just honours</s>; <s>with this key
@@ -136,7 +138,7 @@ $Id$
         <p>Likewise, the more complex passage from Pinsky would be encoded in
             three different ways to reflect the different metrical, grammatical,
             and dialogic views of its text: <egXML
-                xmlns="http://www.tei-c.org/ns/Examples">
+                xmlns="http://www.tei-c.org/ns/Examples" corresp="NH-eg-02">
                 <lg>
                     <l>Catholic woman of twenty-seven with five children</l>
                     <l>And a first-rate body—pointed her finger</l>
@@ -176,13 +178,12 @@ $Id$
             be in separate files, are related to each other: it might prove
             difficult to combine the views or access information from one view
             while processing the file that contains the encoding of another.<note place="foot">
-                <p>It has been shown, however, that it is possible to relate the
-                    different annotations in an indirect way: if the textual
-                    content of the annotations is identical, the very text can
-                    serve as a means for linking the different annotations, as
-                    described by <ref
-                        target="http://xml.coverpages.org/Witt-allc2002.html"
-                        >Witt 2002</ref>.</p>
+                <p>It has been shown, however, that it is possible to
+                relate the different annotations in an indirect way:
+                if the textual content of the annotations is
+                identical, the very text can serve as a means for
+                linking the different annotations, as described in
+                <ptr target="NH-BIBL-01"/>.</p>
             </note></p>
     </div>
     <div type="div2" xml:id="NHBM">
@@ -263,39 +264,41 @@ $Id$
                 </item>
                 <item>
                     <p>Custom elements can be designed to provide richer
-                        information about the features being delimited and/or
-                        its boundaries as attribute values or part of the
-                        element name itself: e.g. <gi>boundary-start
-                            element="sentence"/</gi>... <gi>boundary-end
-                            element="sentence"/</gi>, <gi>sentence-boundary
-                            position="start"/</gi>... <gi>sentence-boundary
+                        information about the features being delimited or
+                        its boundaries as attribute values or as part of the
+                        element name itself: e.g. <gi>boundaryStart
+                            element="sentence"/</gi>... <gi>boundaryEnd
+                            element="sentence"/</gi>, <gi>sentenceBoundary
+                            position="start"/</gi>... <gi>sentenceBoundary
                             position="end"/</gi>, or
-                            <gi>sentence-boundary-start/</gi>...
-                        <gi>sentence-boundary-end/</gi>: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                            <l><sentence-boundary-start/>Scorn not the sonnet<sentence-boundary-end/>; <sentence-boundary-start/>critic, you have frowned,</l>
-                            <l>Mindless of its just honours<sentence-boundary-end/>; <sentence-boundary-start/>with this key</l>
-                            <l>Shakespeare unlocked his heart<sentence-boundary-end/>; <sentence-boundary-start/>the melody</l>
+                            <gi>sentenceBoundaryStart/</gi>...
+                        <gi>sentenceBoundaryEnd/</gi>: <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+                            <l><sentenceBoundaryStart/>Scorn not the sonnet<sentence-boundary-end/>; <sentenceBoundaryStart/>critic, you have frowned,</l>
+                            <l>Mindless of its just honours<sentence-boundary-end/>; <sentenceBoundaryStart/>with this key</l>
+                            <l>Shakespeare unlocked his heart<sentence-boundary-end/>; <sentenceBoundaryStart/>the melody</l>
                             <l>Of this small lute gave ease to Petrarch's wound<sentence-boundary-end/>.</l>
-                        </egXML>
+]]>                        </egXML>
                     </p>
                 </item>
             </list>
         </p>
-        <p>In each of the above examples, the relationship between the start and
-            end delimiters (where these exist) of a given feature is implicit:
-            it is assumed that "end" delimiters close the nearest preceding
-            "start" delimiter, or, in the case of milestones, that the next
-            milestone element marks the end of one feature and the beginning of
-            the next. Complications arise, however, when the non-nesting text
-            overlaps with other non-nesting text of the same type, as might be
-            the case, for example, in a grammatical analysis of the various
-            possible interpretations of the Noun Phrase <q>A Broadway Hit and
-                Run</q>—which can be interpreted as being either a description
-            of the simultaneous success of a New York play and marathon, or a
-            description of a car crash on a New York street. In order to
-            indicate the two possible analyses of this phrase, an unambiguous
-            method of associating opening and closing boundary-delimiters is
-            required: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <p>In each of the above examples, the relationship between the
+        start and end delimiters (where these exist) of a given
+        feature is implicit: it is assumed that "end" delimiters close
+        the nearest preceding "start" delimiter, or, in the case of
+        milestones, that the next milestone element marks the end of
+        one feature and the beginning of the next. Complications
+        arise, however, when the non-nesting text overlaps with other
+        non-nesting text of the same type, as might be the case, for
+        example, in a grammatical analysis of the various possible
+        interpretations of the Noun Phrase <q>A Broadway Hit and
+        Run</q>—which can be interpreted as being either a
+        description of the simultaneous success of a New York play and
+        marathon, or a description of a car crash on a New York
+        street. In order to indicate the two possible analyses of this
+        phrase, an unambiguous method of associating opening and
+        closing boundary-delimiters is required: <egXML
+        xmlns="http://www.tei-c.org/ns/Examples">
                 <phr>
                     <phr xml:id="NPOptionA-1" n="start"/>
                     Broadway
@@ -403,12 +406,12 @@ $Id$
                 <lg>
                     <l><s>Scorn not the sonnet</s>; <s next="#s2b"
                             xml:id="s2a">critic, you have frowned</s>,</l>
-                    <l><s previous="#s2a" xml:id="s2b">Mindless of its just
+                    <l><s prev="#s2a" xml:id="s2b">Mindless of its just
                             honours</s>; <s next="#s3b" xml:id="s3a">with this
                             key</s></l>
-                    <l><s previous="#s3a" xml:id="s3b">Shakespeare unlocked his
+                    <l><s prev="#s3a" xml:id="s3b">Shakespeare unlocked his
                             heart</s>; <s next="#s4b" xml:id="s4a">the melody</s></l>
-                    <l><s previous="#s4a" xml:id="s4b">Of this small lute gave
+                    <l><s prev="#s4a" xml:id="s4b">Of this small lute gave
                             ease to Petrarch's wound</s>.</l>
                 </lg>
             </egXML> This method of virtually joining partial elements is
@@ -424,42 +427,39 @@ $Id$
                     <l>And a first-rate body—pointed her finger</l>
                     <l>at the back of one certain man and asked me,</l>
                     <l><said>Is that guy a psychiatrist?</said> and by god he
-                        was! <said part="I">Yes,</said></l>
-                    <l>She said, <said part="F">He <emph>looks</emph> like a
-                            psychiatrist.</said></l>
+                        was! <seg type="said" part="I">Yes,</seg></l>
+                    <l>She said, <seg type="said" part="F">He <emph>looks</emph> like a
+                            psychiatrist.</seg></l>
                     <l>Grown quiet, I looked at his pink back, and thought.</l>
                 </lg>
             </egXML> As this example suggests, this mechanism can also be used
             for aggregating discontinuous textual features as well non-nesting
-            ones. The use of part allows the encoder not only to delimit a
+            ones. The use of <att>part</att> allows the encoder not only to delimit a
             quotation that crosses a metrical line boundary, it is also
             aggregating a quotation that is interrupted by the narrative
                 <mentioned>She said</mentioned>.</p>
         <p>The disadvantage of this mechanism is that it does not work well for
-            cases of self-overlap, or if there are nested occurences of the the
+            cases of self-overlap, or if there are nested occurences of the
             same element type, as it can become difficult to ascertain which
             initial, medial, or final partial element should be combined with
             which others. This can be illustrated using a slightly modified
             verse from a Tom Lehrer song: <egXML
                 xmlns="http://www.tei-c.org/ns/Examples">
-                <l>
-                    <s part="I">Don't say that he's hypocritical,</s>
+                <l  part="I">
+                    <s>Don't say that he's hypocritical,</s>
                 </l>
-                <l>
-                    <s part="F">Say rather that he's apolitical.</s>
+                <l part="F">
+                    <s>Say rather that he's apolitical.</s>
                 </l>
-                <l>
-                    <s part="I">
-                        <said>
+                <l><said>
                             <s part="I">Once rockets go up, who says where they
                                 come down —</s>
                         </said>
-                    </s>
+
                 </l>
-                <l>
-                    <s part="F"><said>
+                <l><said>
                             <s part="F">That's not my department!</s>
-                        </said>, says Wernher von Braun.</s>
+                        </said>, <s>says Wernher von Braun.</s>
                 </l>
             </egXML></p>
         <p>A third method for aggregating fragmented partial elements involves
