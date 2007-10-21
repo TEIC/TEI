@@ -1472,7 +1472,6 @@ class roma
       {
 	foreach( $_REQUEST as $key => $value )
 	  {
-//print "look at $key\n";
 	    if( substr( $key, 0, 8 ) == 'include_' )
 	      {
 		switch( $value )
@@ -1512,7 +1511,7 @@ class roma
 		$e->addError( 'elementChanged', 'name' );
 		//notam
 		$oNotam = new notam();
-		$oNotam->setHeadline( 'Illegal Tagname' );
+		$oNotam->setHeadline( 'Illegal name' );
 		$oNotam->setMessage(  roma_message_elementNameError );
 		$oNotam->setStatus( notam_status_error );
 		$oNotam->addNotam();
