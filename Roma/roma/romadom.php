@@ -619,7 +619,8 @@ class romaDom extends domDocument
 		      {
 			$oName->setAttribute( 'ident', $oChild->getAttribute( 'ident' )  );
 			$oAltIdent = $oChild->getElementsByTagName( 'altIdent' )->item(0);
-			if ( is_object( $oAltIdent ) )
+			if ( is_object( $oAltIdent ) &&
+		    $oAltIdent->nodeValue != $oChild->getAttribute( 'ident' ))
 			  {
 			    $oAlt = $oAtt->appendChild( new domElement( 'altName' ) );
 			    $oAlt->appendChild( new domText( $oAltIdent->nodeValue ) );

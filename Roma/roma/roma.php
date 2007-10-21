@@ -1487,7 +1487,12 @@ class roma
 	      }
 	    if( substr( $key, 0, 5 ) == 'name_' )
 	      {
-		$this->m_oRomaDom->changeAttributesName( substr( $key, 5 ), $value, $_REQUEST[ 'class' ], $_REQUEST[ 'module' ], $_REQUEST[ 'element' ] );
+	      $ATTNAME = substr( $key, 5 );
+	      if ($ATTNAME != $value) {
+		$this->m_oRomaDom->changeAttributesName($ATTNAME,
+      $value, $_REQUEST[ 'class' ], $_REQUEST[ 'module' ], $_REQUEST[
+      'element' ] );
+           }
 	      }
 	  }
       }
