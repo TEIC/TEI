@@ -380,7 +380,7 @@ private function verifElem($element, $parent,  $recursion) {
 			}
 			$this->computingStop($ident);
 			if($count == 0) {
-				if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Warning', $ident, $this->getParentItem($parent)->getAttribute("ident"), 'is empty');
+			// if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Warning', $ident, $this->getParentItem($parent)->getAttribute("ident"), 'is empty');
 				//$this->RESULTS[$ident] = false;
 				return false;
 			}
