@@ -910,7 +910,7 @@ would be equivalent to the explicit content model:
    </rng:choice>
 </rng:zeroOrMore></content></egXML> (or, to use RELAXNG compact
 syntax, <code>(hi|it|bo)*</code>). However, a content model
-referencing the class as <code>model.hiLike_sequence</code> would be
+referencing the class as <ident type="class">model.hiLike_sequence</ident> would be
 equivalent to the following explicit content model: <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><content>
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -937,19 +937,19 @@ referenced in a content model:
       </list>
 </p>
 <p>Thus a reference to
-<code>model.hiLike_sequenceOptional</code> in a content model would be equivalent to:
+<ident type="model">model.hiLike_sequenceOptional</ident> in a content model would be equivalent to:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:optional><rng:ref name="hi"/></rng:optional>
      <rng:optional><rng:ref name="it"/></rng:optional>
      <rng:optional><rng:ref name="bo"/></rng:optional>
-</rng:zeroOrMore></egXML>, while a reference to  <val>sequenceRepeatable</val>  would be equivalent to:
+</rng:zeroOrMore></egXML>, while a reference to  <ident type="class">model.hiLike_sequenceRepeatable</ident>  would be equivalent to:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:oneOrMore><rng:ref name="hi"/></rng:oneOrMore>
      <rng:oneOrMore><rng:ref name="it"/></rng:oneOrMore>
      <rng:oneOrMore><rng:ref name="bo"/></rng:oneOrMore>
-</rng:zeroOrMore></egXML> and a reference to <val>sequenceOptionalRepeatable</val> would be equivalent to:
+</rng:zeroOrMore></egXML> and a reference to <ident type="class">model.hiLike_sequenceOptionalRepeatable</ident> would be equivalent to:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:zeroOrMore><rng:ref name="hi"/></rng:zeroOrMore>
@@ -960,6 +960,19 @@ referenced in a content model:
 <p>The <soCalled>sequence</soCalled> in which members of a class
 appear in a content model when one of the sequence options is used is
 that in which the elements are declared. </p>
+
+<!--<p>In principal, all these possibilities are available to any
+element making reference  to any class. The <gi>classSpec</gi> element
+defining the class may however limit the possibilities by means of its
+<att>generateOnly</att> attribute, which can be used to say
+that this particular model may only be referenced in a
+content model with the suffixes it specifies. For example, if the
+<gi>classSpec</gi> for <ident type="class">model.hiLike</ident> took
+the form <tag>classSpec ident="model.hiLike" generateOnly="sequence
+sequenceOptional"</tag> then a content model referring to (say) <ident
+type="class">model.hiLike_sequenceRepeatable</ident> would be
+invalid. </p>-->
+
 
 <p>When a <gi>classSpec</gi> contains an <gi>attList</gi> element, all
 the members of that class inherit the attributes specified by it. For
