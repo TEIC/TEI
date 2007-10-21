@@ -117,6 +117,7 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
         </td>    
        </tr>
       </xsl:if>
+      <xsl:if test="not($selectedMode='changeElement')">
        <tr>
 	 <xsl:if test="//errorList/error/location[node()='namespace']">
 	   <xsl:attribute name="class">error</xsl:attribute>
