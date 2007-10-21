@@ -283,6 +283,9 @@
       <xsl:when test="contains(.,'.content')">
 	<xsl:value-of select="$n"/>
       </xsl:when>
+      <xsl:when test="ancestor::teix:egXML">
+	<xsl:value-of select="$n"/>
+      </xsl:when>
       <xsl:otherwise>
 	<xsl:for-each select="$top">
 	  <xsl:call-template name="linkTogether">
