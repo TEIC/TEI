@@ -6,7 +6,7 @@ form_add=Ein neues Attribut hinzufügen
 form_change=Attribut bearbeiten
 form_include=einbinden
 form_exclude=ausnehmen
-form_tagName=Name des Tags
+form_tagName=Name
 form_description=Beschreibung
 form_delete=Löschen
 
@@ -19,7 +19,7 @@ form_add=Add new attributes
 form_changeAttribute=Change attribute
 form_include=Include
 form_exclude=Exclude
-form_tagName=Tag name
+form_tagName=Name
 form_description=Description
 form_delete=Delete
 
@@ -32,7 +32,7 @@ form_add=Añadir nuevos atributos
 form_changeAttribute=Modificar atributo
 form_include=Incluir
 form_exclude=Excluir
-form_tagName=Nombre de la etiqueta
+form_tagName=Nombre
 form_description=Descripción
 form_delete=Eliminar
 
@@ -44,7 +44,7 @@ form_add=Ajouter des attributs
 form_changeAttribute=Changer un attribut
 form_include=Inclure
 form_exclude=Exclure
-form_tagName=Nom de balise
+form_tagName=Nom
 form_description=Description
 form_delete=Supprimer
 
@@ -57,7 +57,7 @@ form_add=Aggiungi nuovi attributi
 form_changeAttribute=Modifica attributo
 form_include=Includi
 form_exclude=Escludi
-form_tagName=Nome tag
+form_tagName=Nome
 form_description=Descrizione
 form_delete=Elimina
 
@@ -96,7 +96,7 @@ form_add=Lägg till nya attribut
 form_changeAttribute=Ändra attribut
 form_include=Inkludera
 form_exclude=Exkludera
-form_tagName=Namn på tagg
+form_tagName=Namn
 form_description=Beskrivning
 form_delete=Ta bort
 
@@ -122,7 +122,7 @@ form_add=Definir atributos novos
 form_changeAttribute=Modificar um atributo
 form_include=Inserir
 form_exclude=Remover
-form_tagName=Nome da etiqueta
+form_tagName=Nome
 form_description=Descriçao
 form_delete=Apagar
 
