@@ -268,22 +268,25 @@ This supports vertical and horizontal spanning and various kinds of text
 rotation and justification within cells and is also directly supported
 by a number of existing SGML software systems.
  </p>
-<p>The CALS table DTD is much too complex to describe fully here;
-information on it can be obtained, among other places, from the Graphic
-Communications Association in Alexandria, Virginia.  The formal name of
-the CALS SGML requirements is MIL-M-28001A.
-Tables conforming to the CALS DTD may be incorporated into documents
-conforming to these Guidelines, but this may require substantial
-modification of the TEI schema which may require
-expert advice.
+<p>The CALS table model is much too complex to describe fully here; for
+historical background  see <ptr
+target="http://www.hbingham.com/technical/tables/calstbhs.htm"/>;  for
+more recent simplifications of it and current implementations see <ptr
+target="http://www.oasis-open/specs/tablemodels.php"/>. As with any
+other XML vocabulary, the XML version of the CALS model may readily be
+included in a TEI schema, using the techniques described in <ptr
+target="#MD"/>. 
  </p>
-<p>The apparent complexity of the CALS table DTD has led to
+<!--
+<p>The apparent complexity of the CALS table DTDled to
 simplification efforts, most notably by OASIS in the form of  <title>OASIS
 Technical Resolution 9503:1995, Exchange Table Model Document Type
 		Definition</title> (<ptr target="http://www.oasis-open.org/specs/a503.htm"/>). An XML
 version of this is also defined in <title>OASIS Technical Memorandum TR 9901:1999,
-		XML Exchange Table Model DTD</title> (<ptr target="http://www.oasis-open.org/specs/tm9901.html"/>). </p>
-	<p>With the ascent of the Web, the HTML table model (<ptr target="http://www.w3.org/TR/html4/struct/tables.html"/>) has become very popular and widespread in use. The
+		XML Exchange Table Model DTD</title> (<ptr
+		target="http://www.oasis-open.org/specs/tm9901.html"/>). </p>-->
+
+<!--	<p>With the ascent of the Web, the HTML table model (<ptr target="http://www.w3.org/TR/html4/struct/tables.html"/>) has become very popular and widespread in use. The
 last few years have seen a growing access to information via devices
 of varying capabilities, ranging from desktop computers to handheld
 mobile phones.  In response to this demand, HTML has been both
@@ -297,21 +300,27 @@ document type. The Basic Tables Module is a
 <soCalled>diluted</soCalled> version of the Tables Module, retaining
 only the minimal functionality with the purpose of extending XHTML's
 reach onto resource-constrained devices. It is a part of the XHTML
-Basic document type (<ptr target="http://www.w3.org/TR/xhtml-basic"/>).</p>
-	<p>The XHTML table model is based on the HTML table model (<ptr target="http://www.w3.org/TR/html4/struct/tables.html"/>). It
-allows arrangement of data into rows and columns of cells. Table rows
-and columns may be grouped to convey additional structural information
-and may be rendered by user agents in ways that emphasize this
-structure. Support for incremental rendering of tables and for
-rendering on non-visual user agents (<ptr target="http://www.w3.org/TR/html4/struct/tables.html#non-visual-rendering"/>)
-is also available. Special elements and attributes are provided to
-associate metadata with tables. They indicate the table's purpose, or
-are for the benefit of people using speech or Braille-based user
-agents. Tables are not recommended for  use purely as a
-means to lay out document content, as this leads to many accessibility
-problems (see further <ptr target="http://www.w3.org/TR/WCAG10-HTML-TECHS/#tables"/>).
-Style sheets provide a far more effective means of controlling layout
-and other visual characteristics in both HTML and XML documents.
+Basic document type (<ptr target="http://www.w3.org/TR/xhtml-basic"/>).</p>-->
+	<p>The XHTML table model (<ptr target="#XHTML"/>) is based on the HTML table model
+	(<ptr
+	target="#HTML4"/>). Both models support
+	arrangement of arbitrary data into rows and columns of
+	cells. Table rows and columns may be grouped to convey
+	additional structural information and may be rendered by user
+	agents in ways that emphasize this structure. Support for
+	incremental rendering of tables and for rendering on
+	<soCalled>non-visual</soCalled> user agents <!-- (<ptr
+	target="http://www.w3.org/TR/html4/struct/tables.html#non-visual-rendering"/>)-->
+	is also available. Special elements and attributes are
+	provided to associate metadata with tables. They indicate the
+	table's purpose, or are for the benefit of people using speech
+	or Braille-based user agents. Tables are not recommended for
+	use purely as a means to lay out document content, as this
+	leads to many accessibility problems (see further <ptr
+	target="http://www.w3.org/TR/WCAG10-HTML-TECHS/#tables"/>).
+	Style sheets provide a far more effective means of controlling
+	layout and other visual characteristics in both HTML and XML
+	documents.
 </p>
  </div></div>
 <div type="div2" xml:id="FTFOR"><head>Formulae and
@@ -404,14 +413,14 @@ The <att>notation</att> attribute supplies the name of a
 notation (<q>TeX</q>), which is expected to be identified somewhere
 in document metadata. </p>
 <p>Mathematical Markup Language (MathML)
-(<ptr target="http://www.w3.org/Math/"/>) is a vocabulary for describing
+(<ptr target="#MATHML"/>) is a vocabulary for describing
 mathematical notation, capturing both its structure and
-content. MathML 1.0, which became a W3C Recommendation on April 7
+content. <!--MathML 1.0, which became a W3C Recommendation on April 7
 1998, was the first vocabulary based on XML syntax to reach that
 status. It was subsequently revised, as MathML 1.01 (W3C
 Recommendation July 7, 1999), and as the current version MathML 2.0,
 which became a W3C recommendation on February 21, 2001.</p>
-<p>MathML provides two types of markup: Presentation Markup, which
+<p>MathML--> It  provides two types of markup: Presentation Markup, which
 captures the <hi>notational</hi> structure of an expression and could
 be seen as the <soCalled>TeX for the Web</soCalled> and Content
 Markup, which captures the <hi>mathematical</hi> structure of an
@@ -443,10 +452,8 @@ in TeX can be re-expressed in MathML as
    <mo>…</mo>
 </math></egXML>
 </p>
-  <p>MathML 2.0 (<ptr target="http://www.w3.org/TR/MathML2"/>)
-adds to these some additional elements for MathML Content Markup,
-thereby further strengthening the support for a <soCalled>Semantic
-Math-Web</soCalled>. It also provides support for XML namespaces, and
+  <p>MathML 2.0 provides support for a <soCalled>Semantic
+Math-Web</soCalled>,  XML namespaces, and
 other current XML standards, such as XML DOM, OMG IDL, ECMAScript, and
 Java. It also provided a modularized version of the MathML DTD so that
 MathML fragments <soCalled>embedded</soCalled> in XHTML 1.1 documents
