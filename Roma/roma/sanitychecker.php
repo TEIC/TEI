@@ -373,7 +373,7 @@ private function verifElem($element, $parent,  $recursion) {
 			$this->computingStart($ident);
 			//$parentSpec = $this->getParentItem($element);
 			foreach($content as $content_item) {
-				if(!$this->verifElem($content_item, $element, $this->addRecursion($recursion, $element))) {
+				if(!$this->verifElem($content_item, $parent, $this->addRecursion($recursion, $element))) {
 					$count--;
 					$sequence_broken = true;
 				}
