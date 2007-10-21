@@ -513,8 +513,11 @@
     <xsl:when test="namespace-uri()='http://www.w3.org/1999/xlink'">
       <xsl:text>xlink:</xsl:text>
     </xsl:when>
-<!--
-    <xsl:otherwise>
+    <xsl:when
+	test="namespace-uri()='http://www.example.org/ns/nonTEI'">
+      <xsl:text>my:</xsl:text>
+    </xsl:when>
+<!--    <xsl:otherwise>
     <xsl:for-each select="namespace::*">
       <xsl:if test="not(name(.)='')">
 	  <xsl:value-of select="name(.)"/>
