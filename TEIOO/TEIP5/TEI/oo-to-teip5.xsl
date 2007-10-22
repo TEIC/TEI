@@ -536,7 +536,7 @@
   <xsl:template match="text:p[@text:style-name]">
     <xsl:choose>
       <xsl:when test="not(node())"/>
-      <xsl:when test="parent::text:note-body">
+      <xsl:when test="count(parent::text:note-body/text:p)=1">
           <xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="@text:style-name='Document Title'">
