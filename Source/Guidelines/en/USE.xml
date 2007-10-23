@@ -1775,7 +1775,7 @@ the content model, allowing either to be overridden.</p>
 are used to distinguish the two schema types. An ODD processor
 is not required to support both.</p>
 
-<p>Lastly, the problem of missing
+<p>Thirdly, the problem of missing
 components must be resolved. For example, consider this (simplified) model
 for <gi>sp</gi>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -1818,6 +1818,24 @@ since for a given member of <val>model.global</val> it is impossible to
 be sure which rule is being used. This situation is not detected when
 RELAX NG is used, since the language does not require that only a
 single rule be used.  </p>
+
+<p>Finally, we may wish to support some of the methods
+of associating a schema with a document. The TEI does not
+mandate any particular schema, but it is suggested that
+the W3C Schema mechanism be supported where possible. Although
+it is not part of the TEI <foreign>per se</foreign>, DTD schemas
+should declare a <att>schemaLocation</att> attribute to the root
+element. This means adding
+<eg><![CDATA[
+ xsi:schemaLocation CDATA #IMPLIED
+ xmlns:xsi CDATA #FIXED 'http://www.w3.org/2001/XMLSchema-instance'
+]]></eg>
+to the list of attributes, which forces the non-namespace-aware DTD 
+language to recognize the <code>xsl:schemaLocation</code> notation.
+It is recognised that this is an unsatisfactory solution, but it
+permits documents to be validated using both DTD and Schema processors
+without any conflict.</p>
+
 </div>
 
 <div xml:id="IM-naming">
