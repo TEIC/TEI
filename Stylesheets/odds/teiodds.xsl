@@ -758,6 +758,16 @@ select="$makeDecls"/></xsl:message>
                       </xsl:if>
                     </xsl:otherwise>
                   </xsl:choose>
+<!--
+		  <xsl:if test="@ident='TEI' or @ident='teiCorpus'">
+		    <rng:optional>
+		      <rng:attribute name="schemaLocation"
+				     ns="http://www.w3.org/2001/XMLSchema-instance">
+			<rng:text/>
+		      </rng:attribute>
+		    </rng:optional>
+		  </xsl:if>
+-->
                 </element>
 	      </define>
              <xsl:if test="$parameterize='true'">

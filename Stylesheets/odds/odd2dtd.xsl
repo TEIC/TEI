@@ -1097,6 +1097,13 @@
       <xsl:value-of select="$maybeatts"/>
       <xsl:text> &gt;</xsl:text>
     </xsl:if>
+    <xsl:if test="@ident='TEI' or @ident='teiCorpus'">
+      <xsl:text>&#10;&lt;!ATTLIST </xsl:text>
+      <xsl:value-of select="$ename"/>
+      <xsl:text> xsi:schemaLocation CDATA #IMPLIED&#10;</xsl:text>
+      <xsl:text> xmlns:xsi CDATA #FIXED 'http://www.w3.org/2001/XMLSchema-instance'&#10;</xsl:text>
+      <xsl:text> &gt;</xsl:text>
+    </xsl:if>
   </xsl:template>
   <xsl:template name="attclasses">
     <xsl:for-each select="tei:classes/tei:memberOf">
