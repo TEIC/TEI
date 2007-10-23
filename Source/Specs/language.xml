@@ -9,16 +9,16 @@ $Id$
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="LANGUAGE" usage="rec" ident="language">
   <equiv/>
   <gloss/>
-  <gloss xml:lang="fr">Langue</gloss>
   <desc>characterizes a single language or sublanguage used within a
   text.</desc>
+  <desc version="2007-06-12" xml:lang="fr">caractérise une seule
+      <!--A VALIDER : supprimer "seule"-->langue ou variété de langue utilisée dans un texte.</desc>
   <desc version="2006-10-18" xml:lang="de">bestimmt eine einzelne
   Sprache oder Subsprache in einem Text.</desc>
   <desc version="2007-05-04" xml:lang="es">caracteriza una lengua o jerga empleada en un texto.</desc>
   <desc version="2007-05-02" xml:lang="zh-tw">個別敘述文本中使用的語言或次要語言。</desc>
   <desc version="2007-01-21" xml:lang="it">indica una lingua o un linguaggio secondario utilizzato all'interno di un testo.</desc>
   <desc version="2006-10-28" xml:lang="ja">テキスト中で使用されている言語を1つ示す．</desc>
-  <desc xml:lang="fr">L’élément Langue <gi>language</gi> caractérise une seule langue ou variété de langue utilisée dans un texte.</desc>
   <content>
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq.limited"/>
   </content>
@@ -27,6 +27,12 @@ $Id$
       <gloss>identifier</gloss>
       <desc>Supplies a language code constructed as defined in <ref target="http://tools.ietf.org/html/bcp47">BCP 47</ref> which is used to identify the language documented
       by this element, and which is referenced by the global <att>xml:lang</att> attribute.</desc>
+      <desc version="2007-06-12" xml:lang="fr">Fournit un code de langue construit comme celui
+          qui est défini dans le
+          <!--A VALIDER : construit selon le modèle défini--><ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC 3066</ref> (ou son successeur) qui est
+          utilisé pour identifier la langue documentée par cet élément et qui est
+          <!--A VALIDER : code utilisé pour identifier la langue documentée par cet élément et référencé"-->
+          référencé par l'attribut global <att>xml:lang</att> attribute.</desc>
       <desc version="2006-10-18" xml:lang="de">gibt einen
   Sprachschlüssel an, aufgebaut nach <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC 3066</ref> (oder
   dessen Fortsetzung), der zur Angabe der im Element festgehaltenen
@@ -38,7 +44,6 @@ $Id$
           (o nei sui successori), utilizzato per identificare la lingua documentata da questo elemento e che è indicato dall'attributo globale <att>xml:lang</att>.</desc>
       <desc version="2006-10-28" xml:lang="ja">RFC3066にある言語コードを示す．これにより要素内で使用されている言
 語が特定される．これは，グローバル属性xml:langでも参照される．</desc>
-      <desc xml:lang="fr">fournit un code de langue issu de la recommandation <ref target="http://tools.ietf.org/html/bcp47">BCP 47</ref> utilisé pour identifier la langue précisée par cet élément, référencé par l’attribut global <att>xml:lang</att> s’appliquant à l’élément considéré.</desc>
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.language"/>
       </datatype>
@@ -48,6 +53,8 @@ $Id$
       <desc>specifies the approximate percentage (by volume) of the
       text which uses this language.
       </desc>
+      <desc version="2007-06-12" xml:lang="fr"> spécifie le pourcentage approximatif du volume
+          de texte utilisant cette langue..</desc>
       <desc version="2006-10-18" xml:lang="de">gibt den ungefähren
   Prozentsatz (nach Umfang) für die Verwendung dieser Sprache im Text
   an. </desc>
@@ -56,7 +63,6 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">specifica la percentuale approsimativa (per volume) di testo che usa questa lingua.</desc>
       <desc version="2006-10-28" xml:lang="ja">当該言語が，当該テキストにおいて，何パーセント使用されているかを
 示す．</desc>
-      <desc xml:lang="fr">spécifie le pourcentage approximatif du volume de texte utilisant cette langue.</desc>
       <datatype>
         <rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger">
           <rng:param name="maxInclusive">100</rng:param>
@@ -74,22 +80,10 @@ $Id$
       </langUsage>
     </egXML>
   </exemplum>
-  <exemplum xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <langUsage xml:lang="fr">
-        <language ident="en-US" usage="75">Anglais américain moderne</language>
-        <language ident="i-az-Arab" usage="20">Azerbaïdjanais en écriture arabe</language>
-        <language ident="x-lap" usage="05">Latin de cuisine</language>
-      </langUsage>
-    </egXML>
-  </exemplum>
   <remarks>
     <p rend="dataDesc">Particularly for sublanguages, an informal
     prose characterization should be supplied as content for the
     element.</p>
-  </remarks>
-  <remarks xml:lang="fr">
-    <p rend="dataDesc">Pour le cas particulier des variétés de langues, en l'absence d'un code normalisé, il faudra fournir le nom en clair dans l'élément.</p>
   </remarks>
   <listRef>
     <ptr target="#HD41"/>

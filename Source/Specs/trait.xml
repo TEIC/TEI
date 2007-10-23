@@ -9,6 +9,8 @@ $Id$
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="trait">
   <desc>contains a description of some culturally-determined characteristic
 attributed to a person or place.</desc>
+  <desc version="2007-06-12" xml:lang="fr">contient la description d'une caractéristique
+      culturellement déterminée attribuée à une personne ou à un lieu.</desc>
   <desc version="2007-05-04" xml:lang="es">contiene la descripción de una característica personal o cultural determinada atribuida a una persona.</desc>
   <desc version="2007-01-21" xml:lang="it">contiene la descrizione di una caratteristica personale o legata alla cultura di appartenenza di una determinata persona</desc>
   <desc version="2006-10-28" xml:lang="ja">人物の文化的な特性を示す．</desc>
@@ -18,40 +20,38 @@ attributed to a person or place.</desc>
     <memberOf key="att.naming"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.persTraitLike"/>
-        <memberOf key="model.placeTraitLike"/>
+    <memberOf key="model.placeTraitLike"/>
   </classes>
-      <content>
-        <rng:choice>
-<rng:oneOrMore>
-  <rng:ref name="trait"/>
-</rng:oneOrMore>
-<rng:group>
-  <rng:zeroOrMore>
-    <rng:ref name="model.headLike"/>
-  </rng:zeroOrMore>
-
-  <rng:oneOrMore>
-    <rng:ref name="model.pLike"/>
-  </rng:oneOrMore>
-  <rng:zeroOrMore>
+  <content>
     <rng:choice>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
+      <rng:oneOrMore>
+        <rng:ref name="trait"/>
+      </rng:oneOrMore>
+      <rng:group>
+        <rng:zeroOrMore>
+          <rng:ref name="model.headLike"/>
+        </rng:zeroOrMore>
+        <rng:oneOrMore>
+          <rng:ref name="model.pLike"/>
+        </rng:oneOrMore>
+        <rng:zeroOrMore>
+          <rng:choice>
+            <rng:ref name="model.noteLike"/>
+            <rng:ref name="model.biblLike"/>
+          </rng:choice>
+        </rng:zeroOrMore>
+      </rng:group>
+      <rng:group>
+        <rng:zeroOrMore>
+          <rng:choice>
+            <rng:ref name="model.labelLike"/>
+            <rng:ref name="model.noteLike"/>
+            <rng:ref name="model.biblLike"/>
+          </rng:choice>
+        </rng:zeroOrMore>
+      </rng:group>
     </rng:choice>
-  </rng:zeroOrMore>
-</rng:group>
-<rng:group>
-  <rng:zeroOrMore>
-    <rng:choice>
-      <rng:ref name="model.labelLike"/>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
-    </rng:choice>
-  </rng:zeroOrMore>
-</rng:group>
-        </rng:choice>
-      </content>
-
+  </content>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <trait cert="high" type="social" from="1987-01-01" to="1997-12-31">
