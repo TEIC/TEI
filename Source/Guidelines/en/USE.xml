@@ -515,16 +515,11 @@ predefined codes for it.</desc>
 <gi>valList</gi> supplied as part of any attribute in the TEI
 scheme.</p>
 
-<!-- following para uses diff meaning for clean acc. Birnbaum -->
-
-<p>The set of documents matched by a schema generated from an ODD
-modified in this way, and the set of documents matched by the
-unmodified schema may be related in several different ways.  It is
-certainly possible that the former could properly include the latter
-or vice versa; either of these could be said to be clean modifications
-because the set to be matched has become strictly larger or strictly
-smaller. But it is more likely that such modifications will be
-unclean. </p>
+<p>Depending on the modification, the set of documents matched by a
+schema generated from an ODD modified in this way, may or may not be a
+subset of the set of documents matched by the unmodified schema. As
+such, it is difficult to tell in principle whether such modifications
+are intriniscally unclean. </p>
 
 </div> 
 <div type="div3" xml:id="MDMDCL"><head>Class Modification</head>
@@ -679,11 +674,15 @@ etc. as further described in <ptr target="#TD"/>.
 
 <p>All the elements defined in the TEI scheme are labelled as
 belonging to a single <term>namespace</term>, maintained by the TEI
-and with the URI <val>http://www.tei-c.org/ns/1.0</val>.<note place="foot">This is not strictly the case, since the element
+and with the URI <val>http://www.tei-c.org/ns/1.0</val>.<note
+place="foot">This is not strictly the case, since the element
 <gi>egXML</gi> used to represent TEI examples is in its own namespace,
 <val>http://www.tei-c.org/ns/Examples</val>.</note> Only elements
- which are unmodified or which have undergone a clean
-modification may use this namespace. </p>
+which are unmodified or which have undergone a clean modification may
+use this namespace. In a TEI-conformant document, it is assumed that
+all attributes not explicitly labelled with a namespace (such as, for
+example <att>xml:id</att>) also belong to the TEI namespace, and are
+defined by the TEI. </p>
 
 <p>This implies that any other modification (including a renaming or
 reversible modification) must either specify a different namespace or
@@ -2285,8 +2284,8 @@ applying the customization. The TEI Roma tools take the latter
 approach, and operate on the result of the first stage processing
 described in <ptr target="#IM-unified"/>.</p>
 
-<p>Generating reference documentation for <gi>elementSpec</gi>
-<gi>classSpec</gi> and <gi>macroSpec</gi> elements is largely
+<p>Generating reference documentation for <gi>elementSpec</gi>, 
+<gi>classSpec</gi>,  and <gi>macroSpec</gi> elements is largely
 dependent on the design of the preferred output. Some applications
 may, for example, want to turn all names of objects into hyperlinks,
 show lists of class members, or present lists of attributes as tables,
@@ -2485,18 +2484,25 @@ declarations are handled, to allow the user's declarations to take
 priority.  If the user does not provide a <ident type="pe">TEI.extensions.ent</ident> entity, the entity will be expanded
 to the empty string.</p>
 <p>For example the encoder might wish to add two phrase-level elements
-<gi>it</gi> and <gi>bd</gi>, perhaps as synonyms for
-<tag>hi rend='italics'</tag> and <tag>hi rend='bold'</tag>.  As
-described in chapter <ptr target="#MD"/>, this involves two distinct steps:
-one to define the new elements, and the other to ensure that they are
-placed into the TEI document structure at the right place.  We deal with
-the second first, by specifying the element class to which the new
-elements should be attached.  To do this, the parameter entity
-<ident type="pe">macro.phraseSeq</ident> should be modified to include the two
-new generic identifiers.  The file containing local declarations of the
+<gi>it</gi> and <gi>bd</gi>, perhaps as synonyms for <tag>hi
+rend='italics'</tag> and <tag>hi rend='bold'</tag>.  As described in
+chapter <ptr target="#MD"/>, this involves two distinct steps: one to
+define the new elements, and the other to ensure that they are placed
+into the TEI document structure at the right place.  </p>
+<p>Creating the new declarations is done in the same way for
+user-defined elements as for any other; the same parameter entities
+need to be defined so that they may be referenced by other
+elements. The content models of these new elements may also reference
+other parameter entities, which is why they need to be declared after
+other declarations. </p>
+<p>The second step involves modifying the element class to
+which the new elements should be attached.  This requires that the
+parameter entity <ident type="pe">macro.phraseSeq</ident> should be
+modified to include the generic identifiers for the new elements we
+wish to create.  The file containing local declarations of the
 standard parameter entities will thus contain a declaration of the
-following form:
-<eg><![CDATA[<!ENTITY % macro.phraseSeq 'it | bd |' >]]></eg></p>
+following form: <eg><![CDATA[<!ENTITY % macro.phraseSeq 'it | bd |'
+>]]></eg></p>
 </div>
 
 </div>
