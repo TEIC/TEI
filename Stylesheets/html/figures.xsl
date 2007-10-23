@@ -130,6 +130,9 @@
       <xsl:when test="@rend='inline' or @place='inline'">
 	<xsl:call-template name="showGraphic"/>
       </xsl:when>
+      <xsl:when test="parent::tei:ref or parent::tei:xref">
+	<xsl:call-template name="showGraphic"/>
+      </xsl:when>
       <xsl:otherwise>
 	<div>
 	  <xsl:attribute name="class">
