@@ -513,14 +513,18 @@ form. </p>
 </div>
 <div type="div4" xml:id="ABAPP2"><head>Use for Interchange</head>
 <p>This kind of procedure is also appropriate when the TEI format is
-used specifically for interchange between projects using other
-encoding schemes, or alternative applications of the TEI.  For such
-translations to be carried out without loss of information, the scheme
-proposed here must be as expressive (in a formal sense) as any
+used simply as an  interchange format, permitting projects to share
+resources even when their local 
+encoding schemes differ.  If there are <val>n</val> different encoding
+formats, to provide a mapping between any given pair of formats
+requires <val>n*n-1</val> translations; with an interchange format
+requires only <val>2n</val> such mappings. However, for such
+translations to be carried out without loss of information, the
+interchange format chosen must be as expressive (in a formal sense) as any
 of the target formats; this is a further reason for the TEI's
 provision of both highly abstract or generic encodings and  highly
-specific ones. To
-translate between any pair of encoding schemes implies:
+specific ones. </p>
+<p>To translate between any pair of encoding schemes implies:
 <list type="ordered">
 <item>identifying the sets of textual features distinguished
 by the two schemes;</item>
@@ -538,30 +542,36 @@ There are three possibilities for each feature:
 <item>X has a feature which is absent from the TEI scheme;</item>
 <item>X has a feature which corresponds with more than one
 feature in the TEI scheme.</item></list>
-The first case is unproblematic.  The second requires an extension to
+The first case is a trivial renaming.  The second requires an extension to
 the TEI scheme, as described in chapter <ptr target="#MD"/>.  The third
-requires that a consistent choice be made.  The algorithm used to make
-that choice should be documented in the TEI header.  </item>
-<item>Using the table of equivalences so generated, a simple
-translation can be carried out between X and the TEI. </item></list></p>
-<p>The ease with which this translation can be carried out will of
-course depend on the clarity and explicitness with which scheme X
+is more problematic, but not impossible, provided that  a consistent
+choice can be made (and documented) amongst the alternatives.  </item>
+</list></p>
+<p>The ease with which this translation can be defined will of
+course depend on the clarity with which scheme X
 represents the features it encodes.</p>
 <p>Translating from the TEI into scheme X follows the same pattern,
 except that if a TEI feature has no equivalent in X, and X cannot be
 extended, information must be lost in translation.</p>
-<p>Similar procedures may be followed where the TEI scheme is to be
-used as an interlanguage for interchange among several different sites
-or applications, although the degree of TEI-conformance may vary.</p>
-<p>In the simplest case, where two sites or individuals exchanging texts
-know each other and know or can inquire what equipment the other is
-using, these Guidelines serve primarily as documentation for a file
-format, which can be referred to without actually being transmitted
-together with the file.  In the general case, where sender and recipient
-cannot communicate such information, a stricter degree of <term>TEI
-conformance</term> will be required for loss-free interchange.</p>
-<p>The rules defining such strict conformance to the Guidelines are
-given in some detail in chapter <ptr target="#CF" type="div1"/>.  
+<p>The rules defining conformance to the Guidelines are
+given in some detail in chapter <ptr target="#CF" type="div1"/>.
+The basic principles informing those rules may be summarized as
+follows:
+<list>
+<item>The TEI <term>abstract model</term> (that is, the set of
+categorical distinctions which it defines) must be respected. The
+correspondence between a tag X and the semantic function assigned to
+it by these Guidelines may not be changed; such changes are known
+as <term>tag abuse</term> and strongly deprecated.</item>
+<item>A TEI document must be expressed as a valid XML-conformant
+document which uses the TEI namespace appropriately. If, for example,
+the document encodes features not provided by the Guidelines, such
+extensions may not be associated with the TEI namespace.  </item>
+<item>It must be possible to  validate a TEI document against a schema
+derived from these Guidelines, possibly with extensions provided in
+the recommended manner.</item>
+ </list> 
+
 </p></div>
 <!-- The
 <term>interchange format</term> defined there requires that an
@@ -732,17 +742,61 @@ to be made on the normative case for TEI element names in XML. The
 TEI editors, with abundant assistance from others who have developed
 and used TEI, developed an update plan, and made tentative decisions
 on relevant syntactic issues. </p>
-<p>With the formation of the TEI Consortium in 2001, and with generous
-funding from the National Endowment for the Humanities, a formal
-update was undertaken. The goals of this update were to revise both
-the text and the DTDs of the scheme in a way compatible with the use
-of either SGML or XML. The P4 edition of the Guidelines constituted
-the first public draft of that update; work on revising and updating
-the whole of the Guidelines began almost immediately, and the present
-edition (P5) represents the first complete version of that effort.
-The editors hope that
-it maintains the quality and usefulness of P4, and solicit comments,
-suggestions, and other input wherever it does not.</p></div>
+
+<p>In January of 1999, the University of Virginia and the University
+of Bergen (Norway) formally proposed the creation of an international
+membership organization, to be known as the TEI Consortium, which
+would maintain, continue developing, and promote the TEI. Shortly
+thereafter, two further institutions with longstanding ties to the TEI
+(Brown University and Oxford University) joined them in formulating an
+Agreement to Establish a Consortium for the Maintenance of the Text
+Encoding Initiative (<ptr target="AB-eg-01"/>), on which basis the TEI
+Consortium was eventually established and incorporated as a
+not-for-profit legal entity at the end of the year 2000. The first
+members of the new TEI Board took office during January of 2001. </p>
+				
+<p>The goal of establishing the TEI Consortium was to maintain a
+permanent home for the TEI as a democratically constituted,
+academically and economically independent, self-sustaining, non-profit
+organization. In addition, the TEI Consortium was intended to foster a
+broad-based user community with sustained involvement in the future
+development and widespread use of the TEI Guidelines. </p>
+
+<p>Following the establishment of the TEI Consortium, a critical
+priority was the release of an XML version of the TEI Guidelines,
+updating P3 to enable users to work with the emerging XML toolset. The
+P4 version of the Guidelines was published in June 2002. It was
+essentially an XML version of P3, making no substantive changes to the
+constraints expressed in the schemas apart from those necessitated by
+the shift to XML, and changing only corrigible errors identified in
+the prose of the P3 Guidelines. However, given that P3 had by this
+time been in steady use since 1994, it was clear that a substantial
+revision of its content was necessary, and work began immediately on
+the P5 version of the Guidelines. This was planned as a thorough
+overhaul, involving a public call for features and new development in
+a number of important areas not previously addressed including
+character encoding, graphics, manuscript description, biographical and
+geographical data, and the language in which the TEI Guidelines
+themselves are written. </p>
+
+<p>To oversee and manage the revision process in collaboration with
+the TEI Editors, the Board appointed a Technical Council, with a
+membership elected from the TEI user community; the members of the
+Council and its associated workgroups are listed in <ptr
+target="#FM1"/>. Members of the Council have been attentive to the
+requirements and practice of the widest possible range of TEI users,
+who are now to be found in many different research communities across
+the world, and have been largely instrumental in transforming the TEI
+from a grant-supported international research project into a self-sustaining
+community-based effort. The present work is the result of a sustained
+period of consultation, drafting, and revision, with input from many
+different experts. Whatever merits it may have are to be attributed to
+them; the Editors accept responsibility only for the errors
+remaining. </p>
+
+
+</div>
+
 <div type="div3" xml:id="ABTEI4"><head>Future Developments</head>
 
 <!--
@@ -762,7 +816,16 @@ that future versions of the TEI scheme will be inconsistent with it in
 fundamental ways.  The TEI will be sensitive, in revising these
 Guidelines, to the possible problems which revision might pose for those
 who are already using this version of the Guidelines.  
-Wherever consistent with the
-long-term goals of the project, consistency with this version will be
-preserved in future revisions.  </p>
+</p>
+<p>With TEI P5, a version numbering system is introduced: the version
+number has two parts, a major number and a minor, for example
+<val>1.0</val>. The TEI undertakes that no change will be made to the
+formal expression of these Guidelines (that is, a TEI schema, as
+defined in <ptr target="#CF"/>) such that documents conformant to a
+given major numbered release cease to be
+compatible with a subsequent release of the same major
+number. Moreover, as far as possible, new minor releases will be made
+only for the purpose of adding new compatible features, or of
+correcting errors in  existing features.</p>
+
 </div></div></div>
