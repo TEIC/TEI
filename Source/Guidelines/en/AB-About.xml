@@ -127,6 +127,7 @@ grasp of the material covered by the first four chapters and the last
 two. Beyond that, the reader is recommended to select according to
 their specific interests: one of the strengths of the TEI architecture
 is its modular nature. </p>
+
 <p>As far as possible, extensive cross referencing is provided
 wherever related topics are dealt with; these are particularly
 effective in the online version of the Guidelines. In addition, a
@@ -137,54 +138,7 @@ detailed bibliography is provided, which identifies the source of many
 examples cited in the text as well as documenting works referred to,
 and listing other relevant publications.</p>
 
-<!--
-<p>Part II provides a systematic treatment of issues common to all
-text types: character representation (chapter <ptr target="#CH" type="div1"/>);
-in-file documentation of the text
-(chapter <ptr target="#HD" type="div1"/>); tags for text features found
-in all sorts of text: lists, notes, emphasis, quotations,
-cross-references, technical terms, names, dates, numbers, etc.
-(chapter <ptr target="#CO" type="div1"/>); and a definition for the
-default structure of all TEI documents (chapter <ptr target="#DS"/>).</p>
-<p>Part III documents various <term>base tag sets</term>: these
-include specialized tags for prose, for verse, for drama and other
-performance materials, for spoken materials, as well as for letters
-and memoranda, printed dictionaries, and terminological data.
-Additional sections discuss user-defined and mixed base tag sets. An
-instance of the TEI DTD must use one and only one base tag set,
-unless one of the <soCalled>mixed</soCalled> bases is used.</p>
-<p>Part IV documents various <term>additional tag sets</term>, which
-may be included or excluded, as appropriate. Topics covered include
-a variety of approaches to the analysis and interpretation of texts,
-and include representations for hypertextual links and other
-non-hierarchic structures, as well as specialized tags for the
-encoding of critical editions and language corpora.
-	</p>
-<p>Part V defines certain specialized <term>auxiliary document
-types</term>, used to encode information about the way that texts have
-been encoded, specifically:  the TEI header regarded as a distinct
-document; the TEI Writing System Declaration; the Feature System
-declaration; and the Tag Set Documentation.</p>
-<p>Part VI contains a number of technical discussions of a more
-specialist interest.  Topics covered include the notion of formal
-<term>conformance</term> to the TEI Guidelines; the controlled
-user-modification of the TEI DTD; practical aspects of the use of
-TEI markup both in local processing and in interchange; and the
-relationship of TEI markup to other markup standards.</p>
-<p>Part VII consists of an alphabetical reference list of all elements
-and element classes defined in the TEI encoding scheme.</p>
-<p>Part VIII provides further reference material:  specifically, a
-description of how to obtain current versions of the full TEI DTDs and
-the set of standard Writing System Declarations, a sample Feature System
-Declaration for basic grammatical annotation, sample tag documentation,
-and a formal grammar for the subset of SGML used in the TEI
-interchange format.  No formal subset has been defined for XML, since XML
-itself is a subset appropriate to these Guidelines.</p>
-<p>In the back matter, a bibliography lists works cited in the text of
-the Guidelines.  A mechanically generated index is also provided, which
-can serve, it is hoped, as a finding aid for the use of the
-Guidelines.</p>
--->
+
 <p>As an aid to the reader, most chapters of these Guidelines follow
 the same basic organization. The chapter begins with an overview of
 the subjects treated within it, linked to the following
@@ -195,156 +149,25 @@ appropriate by further discussion of each element, including wherever
 possible usage examples taken somewhat eclectically from a variety of
 real sources. These examples are not intended to be exhaustive, but
 rather to suggest typical ways in which the elements concerned may
-usefully be applied. </p>
-<p>Wherever XML elements or TEI element classes are mentioned in the
-text, they are linked in the online version to the relevant reference
+usefully be applied. Where appropriate, a link to a statement of the
+source for most examples is provided in the online version. Within the
+examples, use of whitespace such as newlines or indentation is simply
+inmtended to aid legibility, and is not prescriptive or normative </p>
+
+<p>Wherever XML elements or TEI classes are mentioned in the text,
+they are linked in the online version to the relevant reference
 specification for the element or class concerned. Element names are
 always given in the form <gi>name</gi>, where <q>name</q> is the
 <term>generic identifier</term> of the element. References to
 attributes take the form <att>attname</att>, where <q>attname</q> is
-the name of the attribute.  References to classes take the form <ident
-type="class">classname</ident>. </p>
-<p>XML examples are formatted for legibility; their use of whitespace
-such as newlines or indentation is not prescriptive.</p>
+the name of the attribute.  References to classes are also presented
+as links, for example <ident type="class">model.divLike</ident> for a
+model class, and <ident type="class">att.global</ident> for an
+attribute class.  </p>
 
+<div type="div3" xml:id="ABTEI2"><head>Design Principles</head>
 
-<!--
-<p>These Guidelines distinguish encoding practices and elements
-as required, recommended, or optional.  The phrases <q>must</q>,
-<q>is required to</q>, etc., mark practices and tags which are required
-for TEI conformance.  The phrases <q>should</q>, <q>it is recommended
-that</q>, <q>it is preferable to ...</q>, etc., are used in describing
-practices which are recommended but not required for TEI conformance.
-Modal verbs like <q>may</q>, <q>might</q>, etc., mark practices which
-are strictly optional.  Qualifying phrases like <q>if desired</q>,
-<q>where appropriate</q>, or <q>under some circumstances</q> are used
-when some tag or practice described may be desirable or acceptable under
-some circumstances and not under others.</p>
-<p>In the reference section in Part VII, elements and their attributes
-are all classed as one of: <list type="gloss"><label>required</label>
-<item>unconditionally required in a TEI-conformant
-document</item><label>mandatory when applicable</label>
-<item>required under the appropriate conditions; may be
-omitted if not applicable</item><label>recommended</label>
-<item>recommended unless there are good reasons, in the given
-circumstances, against it</item><label>recommended when applicable</label>
-<item>recommended under some circumstances (which should be
-clear from context)</item><label>optional</label>
-<item>strictly optional </item></list>
-	</p>
-<p>This reference section includes cross-references to the chapter or
-section of the main text within which each element is discussed.  Most
-sections of the main text in which elements are defined begin with a
-descriptive list of the elements concerned in the following format:
-<list type="gloss"><label><gi>tag</gi></label>
-<item>short description of the
-element marked by <tag>tag</tag>.  Where appropriate this is
-followed by a list of significant non-global attributes for
-the element as follows:
-<list type="gloss"><label><att>attribute</att></label>
-<item>description of the attribute's meaning or usage,
-optionally followed by a list of suggested or legal values:
-<list type="gloss"><label>value1</label>
-<item>meaning of value1</item><label>value2</label>
-<item>meaning of value2</item></list></item></list></item></list></p>
-<p>Not all attributes are always included in these lists; those which
-are shared with other elements in a class are usually listed separately,
-and those of relatively specialized interest are usually listed only in
-the reference section.  The values of the attribute are introduced with
-one of the following formulaic phrases:
-<list type="gloss"><label><mentioned>Legal values include:</mentioned></label>
-<item>The attribute cannot take values other than those given.  Other
-values will cause parsing errors.  (This is used relatively rarely
-in these Guidelines.)</item><label><mentioned>Suggested values include:</mentioned></label>
-<item>The values listed constitute a set which should suffice for most
-purposes, and they should be used where appropriate.  Developers of
-TEI-aware software should ensure that their software can process these
-values appropriately.  In some cases, however, it is conceivable that
-other values might be necessary, so the declaration for the
-attribute does not restrict legal values to those given.  TEI-aware
-software should have reasonable fallback processing for values not in
-the list.</item><label><mentioned>Sample values include:</mentioned></label>
-<item>The attribute can take any value; those listed are provided simply
-as examples of the kind of value possible.  </item></list></p>
-<p>Each list of elements is followed by some discussion of its
-semantics and usage, followed by one or more examples, taken
-wherever possible from real texts, and presented in the following
-format:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>This paragraph contains an <hi rend="it">italicized phrase</hi></p></egXML>
-All the examples are (or should be) legal SGML or XML, but because they are
-fragmentary they may not be parseable without additional
-context.  They also frequently make liberal use of white space to
-exhibit the logical structure of the encoding more clearly.  Although
-this does not affect the validity of the examples, some users
-will prefer not to follow it in practice, since not all processors will
-ignore the extra white space.  Except where otherwise noted, examples do not
-use minimization not permitted by XML, though SGML users may wish to exercise
-SGML's options to:
-<list type="bullets">
-<item>use empty end-tags (of the form
-<tag>/</tag>) to close the most recently
-opened element</item>
-<item>omit end-tags where they may legally be
-omitted (the TEI DTDs do not permit omission of any start-tags)</item></list>
--->
-<!-- <note resp='#CH'> Last list item (end-tag omission) removed   -->
-	<!-- </note>                                                  -->
-<!--Attribute values are given indifferently in single quotes or double
-quotes. Unquoted attribute values are not permitted in XML, and so are
-not used except where otherwise noted, for example to emphasize a comparison
-between SGML and XML.</p>
-<p>After the examples and usage notes, each section typically concludes
-with a DTD fragment containing the formal declarations for the elements
-described.  Each DTD fragment is given a heading, and may contain
-element and attribute list declarations, entity declarations, parameter
-entity references, comments, and references to DTD fragments in other
-sections.  The DTD fragments of a single chapter almost invariably
-belong to the same DTD file, the structure of which is typically
-described (with references to the included fragments) in one of the
-first or last sections of the chapter.</p>
-<p>The DTD fragments are identical to the DTDs distributed with
-these Guidelines, with the following exceptions:
-<list type="bullets">
-<item>In the text, the DTD fragments appear in an order dictated by
-organization of this document; the actual DTD files may re-order the
-material slightly.  This is indicated in the text by references from one
-DTD fragment to another.</item>
-<item>The DTD fragments in the text show the generic identifiers of all
-elements using the standard English names assigned in this document; the
-actual DTD files use parameter entities for all generic identifiers, so
-that elements can be conveniently renamed, as described in
-chapter <ptr target="#MD"/>.</item>
-<item>The actual DTD files include conditional marked sections
-surrounding the element and attribute list declaration for each element,
-to ensure that elements can conveniently be suppressed or redefined, as
-described in chapter <ptr target="#MD"/>.  The fragments in the text
-suppress the marked-section-open and marked-section-close markup.</item></list></p>
-<p>Note that, in both text and DTD, the omissibility indicators which must
-appear within an SGML declaration (but which are illegal in  XML) are
-always given in parameterized form, as in the following examples. This
-is to enable a single source to support both XML and SGML versions of
-the DTDs. </p>
-<p>What appears in the text, therefore, as:
-<eg><![CDATA[<!ELEMENT blort %om.RO; (farble+)>]]></eg>
-will appear thus in the actual DTD file:
-<eg><![CDATA[<![ %blort; [
-  <!ELEMENT %n.blort; %om.RO; ((%n.farble;)+)>
-  ]]]]></eg> </p>
-<p>For further discussion, see chapter <ptr target="#ST"/>,
-or chapter <ptr target="#MD"/>.</p>-->
-
-<div type="div2" xml:id="ABDPIU"><head>Underlying Principles and Intended Use</head>
-<div type="div3" xml:id="ABTEI2"><head>Design Principles of the TEI Scheme</head>
-<p>The planning conference held at Vassar College in November, 1987 (see
-section <ptr target="#ABTEI"/>) agreed on a number of principles concerning
-the basic design goals of the Text Encoding Initiative.  These
-principles are further expounded and discussed in a range of
-documents and review articles concerning the TEI project, most of which
-are listed in the TEI Bibliography (<ptr target="#BIB-RDG"/>). 
-<!--(notably TEI
-ED P1 and TEI ED P2 which may be found in the TEI Archive) and the interested reader is directed to those
-documents for further discussion.-->
-	</p>
+	
 <p>Because of its roots in the humanities research community, the TEI
 scheme is driven by its original goal of serving the needs of research,
 and is therefore committed to providing a maximum of comprehensibility,
@@ -352,8 +175,7 @@ flexibility, and extensibility.  More specific design goals of the TEI
 have been that the Guidelines should:
 <list type="simple">
 <item>provide a standard format for data interchange</item>
-<item>provide guidance for encoding of texts in this
-format</item>
+<item>provide guidance for encoding of texts in this format</item>
 <item>support the encoding of all kinds of features of all
 kinds of texts studied by researchers</item>
 <item>be application independent</item></list>
@@ -361,25 +183,18 @@ This has led to a number of important design decisions, such as:
 <list type="simple">
 <item>the choice of XML and Unicode</item>
 <item>the provision of a large predefined tag set</item>
-<!--<item>a distinction between required, recommended, and optional encoding
-practices</item>-->
 <item>encodings for different views of text</item>
 <item>alternative encodings for the same text features</item>
 <item>mechanisms for user-defined modification of the scheme</item></list>
-These goals and principles are expounded in more detail below.</p>
+We discuss some of these goals  in more detail below.</p>
+
 <p>The goals of creating a common interchange format which is
 application independent require the definition of a specific markup
 syntax as well as the definition of a large set of elements or
 concepts.  The syntax of the recommendations made in this document
 conforms to the World Wide Web Consortium's XML Recommendation, which
 defines an Extensible Markup Language, but their definition is as far
-as possible independent of any particular schema language. <!--Full
-document type declarations are provided for the scheme described in
-these Guidelines; they are constructed so that they can be easily
-converted to either language.  Reference is also made to ISO 646,
-which defines a standard seven-bit character set; and to Unicode,
-which defines a larger character set supporting most modern
-languages.--></p>
+as possible independent of any particular schema language. </p>
 <p>The goal of providing guidance for text encoding suggests that
 recommendations be made as to what textual features should be recorded
 in various situations. However, when selecting certain features for
@@ -393,8 +208,18 @@ importance of textual features.  The philosophy of the Guidelines is
 few features are mandatory. In the same spirit, while the Guidelines
 very rarely require any particular level of encoding, their correct
 use requires conformance to the meanings attached to the encodings
-they propose. 
-	</p>
+they propose. </p>
+<p>The requirement to support all kinds of materials likely to be of
+interest in research has largely conditioned the development of the
+TEI into a very flexible and modular system. The development of other
+XML vocabularies or standards is typically motivated by the desire to
+create a single fully specified encoding scheme for use in a
+well-defined application domain. By contrast, the TEI is intended for
+use in a large number of rather ill-defined and often overlapping
+domains. It achieves its generality by means of the modular
+architecture described in <ptr target="#ST"/> which enables each user
+to create a schema appropriate to their needs without compromising the
+interoperability of their data.</p>
 <p>The Guidelines have been written largely with a focus on text capture
 (i.e. the representation in electronic form of an already existing copy
 text in another medium) rather than text creation (where no such copy
@@ -463,9 +288,9 @@ scheme which makes it possible to encode different views of text,
 possibly intended for different applications, serving the majority of
 scholarly purposes of text studies in the humanities.  Because no
 predefined encoding scheme can possibly serve all research purposes,
-the TEI scheme is designed to facilitate both customization -- by
+the TEI scheme is designed to facilitate both customization — by
 reducing the scope of what markup is permitted in a given set of
-documents -- and modification by addition of new non-TEI markup. The
+documents — and modification by addition of new non-TEI markup. The
 underlying mechanisms which support these aspects of the scheme are
 introduced in chapter <ptr target="#ST"/>, and detailed discussions of
 their use provided in chapter <ptr target="#USE"/>).</p></div>
@@ -512,17 +337,17 @@ schemas may then be automatically converted to a more elaborated TEI
 form. </p>
 </div>
 <div type="div4" xml:id="ABAPP2"><head>Use for Interchange</head>
-<p>This kind of procedure is also appropriate when the TEI format is
-used simply as an  interchange format, permitting projects to share
-resources even when their local 
-encoding schemes differ.  If there are <val>n</val> different encoding
-formats, to provide a mapping between any given pair of formats
-requires <val>n*n-1</val> translations; with an interchange format
-requires only <val>2n</val> such mappings. However, for such
+
+<p>The TEI format may simply be used as an interchange format,
+permitting projects to share resources even when their local encoding
+schemes differ.  If there are <val>n</val> different encoding formats,
+to provide a mapping between any given pair of formats requires
+<val>n*n-1</val> translations; with an interchange format requires
+only <val>2n</val> such mappings are needed. However, for such
 translations to be carried out without loss of information, the
-interchange format chosen must be as expressive (in a formal sense) as any
-of the target formats; this is a further reason for the TEI's
-provision of both highly abstract or generic encodings and  highly
+interchange format chosen must be as expressive (in a formal sense) as
+any of the target formats; this is a further reason for the TEI's
+provision of both highly abstract or generic encodings and highly
 specific ones. </p>
 <p>To translate between any pair of encoding schemes implies:
 <list type="ordered">
@@ -573,32 +398,8 @@ the recommended manner.</item>
  </list> 
 
 </p></div>
-<!-- The
-<term>interchange format</term> defined there requires that an
-electronic text:
-<list type="ordered">
-<item>adhere to the SGML declaration defined in these Guidelines (when using SGML),
-or to the XML syntax rules (which imply a particular SGML declaration). These constructs
-are further discussed in chapter <ptr target="#SG"/>.</item>
-<item>conform to the document type
-declarations defined in these Guidelines, unless modified or extended as
-described in chapter <ptr target="#MD" type="div1"/>. These constructs
-are further discussed in chapter
-<ptr target="#SG"/>.<note resp="#SD" place="foot">These guidelines do not provide any
-other schema (XML Schema, RELAX NG, etc.) corresponding to
-the DTDs, although such may be provided at a later time.</note></item>
-<item>provide external documentation as described in chapter <ptr target="#TD" type="div1"/>
- for all elements not defined in these
-Guidelines, specifying a formal name (generic identifier) and a
-corresponding full natural-language name, describing its meaning and
-usage, specifying its legal content and also any attributes it may use.</item>
-<item>adhere to the requirements of the TEI header in providing
-bibliographic identification of the text and description of the encoding
-practices used (as described in chapter <ptr target="#HD"/>).  </item></list> </p>
-<p>Note that the interchange format makes no formal restriction on the
-character set to be used in interchange, as this will depend on the
-medium of interchange and the local character sets in use by sender and
-receiver.  For further information, refer to chapter <ptr target="#IN" type="div1"/>.-->
+
+
 <div type="div4" xml:id="ABAPP3"><head>Use for Local Processing</head>
 <p>Machine-readable text can be manipulated in many ways; some users:
 <list type="bullets">
@@ -624,8 +425,14 @@ means exhaustive.  The aim has been to make the TEI Guidelines useful
 for encoding the same texts for different purposes.  We have avoided
 anything which would restrict the use of the text for other
 applications.  We have also tried not to omit anything essential to any
-single application.</p></div></div></div></div>
+single application.</p>
+<p>Because the TEI format is expressed using XML, 
+almost any modern  text processing system is able to process it, and
+production of new TEI-aware software systems is able to build on a solid base
+of existing software libraries. </p> </div></div></div>
+
 <div type="div2" xml:id="ABTEI"><head>Historical Background</head>
+
 <p>The Text Encoding Initiative grew out of a planning conference
 sponsored by the Association for Computers and the Humanities (ACH) and
 funded by the U.S.  National Endowment for the Humanities (NEH), which
@@ -636,8 +443,10 @@ scheme and to make recommendations for its scope, structure, content,
 and drafting.  During the conference, the Association for Computational
 Linguistics and the Association for Literary and Linguistic Computing
 agreed to join ACH as sponsors of a project to develop the Guidelines.
-The outcome of the conference was this set of principles, which
+The outcome of the conference was a set of principles (the
+<soCalled>Poughkeepsie Principles</soCalled>, <ptr target="#AB-eg-01"/>), which
 determined the further course of the project.</p>
+<!--
 <list type="ordered">
 <item>The guidelines are intended to provide a standard format
 for data interchange in humanities research. </item>
@@ -689,25 +498,28 @@ recommended elements is rather small.  This document does not,
 however, define — at least not explicitly — <q>sets of coding
 conventions suited for various applications</q>, since consensus on
 suitable conventions for different applications proved elusive; this
-remains a goal for future work.</p>
-<div type="div3" xml:id="ABTEI1"><head>Origin and Development of the TEI</head>
-<p>The Text Encoding Initiative proper began in June 1988 with funding
+remains a goal for future work.</p>-->
+<!-- <div type="div3" xml:id="ABTEI1"><head>Origin and Development of the TEI</head>-->
+<p>The Text Encoding Initiative project began in June 1988 with funding
 from the NEH, soon followed by further funding from the Commission of
 the European Communities, the Andrew W. Mellon Foundation, and the
 Social Science and Humanities Research Council of Canada.  Four working
 committees, composed of distinguished scholars and researchers from both
 Europe and North America, were named to deal with problems of text
-documentation (resulting largely in chapter <ptr target="#HD" type="div1"/>),
-text representation, text analysis and interpretation (together
-responsible for most of what has become parts II, III, and IV), and
-metalanguage and syntax issues (largely responsible for part VI).</p>
-<p>A first draft version (1.0) of the Guidelines was distributed in July
+documentation <!-- (resulting largely in chapter <ptr target="#HD" type="div1"/>),-->,
+text representation, text analysis and interpretation <!-- (together
+responsible for most of what has become parts II, III, and IV),--> and
+metalanguage and syntax issues <!-- (largely responsible for part
+VI)-->. Each committee was charged with the task of identifying
+<soCalled>significant particularities</soCalled> in a range of texts,
+and two editors appointed to harmonise the resulting recommendations. </p>
+<p>A first draft version (P1) of the Guidelines was distributed in July
 1990 under the title <title>Guidelines for the Encoding and Interchange
-of Machine-Readable Texts</title>, with the TEI document number TEI
+of Machine-Readable Texts</title>. <!-- with the TEI document number TEI
 P1.  With minor changes and corrections, this version was reprinted as
-version 1.1 in November 1990.</p>
-<p>Extensive public comment and further work on areas not covered in
-version 1 resulted in the drafting of a revised version, TEI P2,
+version 1.1 in November 1990.</p>-->
+Extensive public comment and further work on areas not covered in
+this version resulted in the drafting of a revised version, TEI P2,
 distribution of which began in April 1992.  This version includes
 substantial amounts of new material, resulting from work carried out by
 several specialist working groups, set up in 1990 and 1991 to propose
@@ -715,72 +527,67 @@ extensions and revisions to the text of P1.  The overall organization,
 both of the draft itself and of the scheme it describes, was entirely
 revised and reorganized in response to public comment on the first
 draft.</p>
-<p>In June, 1993, the Advisory Board of the Text Encoding Initiative
-met to review the current state of the Guidelines, and recommended
-the formal publication of the work done to that time.  That version
-of the TEI Guidelines, TEI P3, represents a further revision of all
-chapters published under the document number TEI P2, and the addition
-of further chapters.  Although subject to revision and amendment on
-the basis of practical experience and public discussion, that version
-of the Guidelines was published in May of 1994 without the label
-<mentioned>draft</mentioned>, and marks the conclusion of the initial
-development work.
+<p>In June, 1993, an Advisory Board met to review the current state of
+the TEI Guidelines, and recommended the formal publication of the work
+done to that time.  That version of the TEI Guidelines, TEI P3,
+consolidated the work published as parts of TEI P2, along with some
+additional snew material and was finally published in May of 1994
+without the label <mentioned>draft</mentioned>, thus marking the
+conclusion of the initial development work.
 </p>
 <p>In February of 1998 the World Wide Web Consortium issued a final
-Recommendation for the Extensible Markup Language, XML. XML was
-developed as a far simpler subset of SGML, for many of the same
-reasons as the TEI interchange subset, and taking a very similar
-approach. Several TEI participants contributed heavily to the
-development of XML, most notably XML's senior co-editor
-C. M. Sperberg-McQueen, who served as the North
-American co-editor for these Guidelines up till 1998.</p>
-<p>Following the ratification of XML and its rapid adoption, many
-projects found need for an updated version of these Guidelines which
-supported XML unambiguously. For example, because SGML element names
-are normally case-insensitive while XML ones are not, a decision had
-to be made on the normative case for TEI element names in XML. The
-TEI editors, with abundant assistance from others who have developed
-and used TEI, developed an update plan, and made tentative decisions
-on relevant syntactic issues. </p>
+Recommendation for the Extensible Markup Language, XML. <note
+place="foot">XML was originally developed as a way of publishing on
+the World Wide Web richly encoded documents such as those for which
+the TEI was designed.  Several TEI participants contributed heavily to
+the development of XML, most notably XML's senior co-editor
+C. M. Sperberg-McQueen, who served as the North American editor for
+the TEI Guidelines from their inception up till 1998. </note>
+Following the rapid take-up of this new standard metalanguage, it
+became evident that the TEI Guidelines (which had been published
+originally as an SGML application) needed to be re-expressed in this
+new formalism if they were to survive. The TEI editors, with
+abundant assistance from others who had developed and used TEI,
+developed an update plan, and made tentative decisions on relevant
+syntactic issues. </p>
 
 <p>In January of 1999, the University of Virginia and the University
 of Bergen (Norway) formally proposed the creation of an international
 membership organization, to be known as the TEI Consortium, which
-would maintain, continue developing, and promote the TEI. Shortly
-thereafter, two further institutions with longstanding ties to the TEI
-(Brown University and Oxford University) joined them in formulating an
+would maintain, develop, and promote the TEI. Shortly thereafter, two
+further institutions with longstanding ties to the TEI (Brown
+University and Oxford University) joined them in formulating an
 Agreement to Establish a Consortium for the Maintenance of the Text
-Encoding Initiative (<ptr target="AB-eg-01"/>), on which basis the TEI
+Encoding Initiative (<ptr target="AB-eg-02"/>), on which basis the TEI
 Consortium was eventually established and incorporated as a
 not-for-profit legal entity at the end of the year 2000. The first
 members of the new TEI Board took office during January of 2001. </p>
 				
-<p>The goal of establishing the TEI Consortium was to maintain a
-permanent home for the TEI as a democratically constituted,
-academically and economically independent, self-sustaining, non-profit
-organization. In addition, the TEI Consortium was intended to foster a
-broad-based user community with sustained involvement in the future
-development and widespread use of the TEI Guidelines. </p>
+<p>The TEI Consortium was established in order to maintain a permanent
+home for the TEI as a democratically constituted, academically and
+economically independent, self-sustaining, non-profit organization. In
+addition, the TEI Consortium was intended to foster a broad-based user
+community with sustained involvement in the future development and
+widespread use of the TEI Guidelines.(<ptr target="#AB-eg-03"/>) </p>
 
-<p>Following the establishment of the TEI Consortium, a critical
-priority was the release of an XML version of the TEI Guidelines,
-updating P3 to enable users to work with the emerging XML toolset. The
-P4 version of the Guidelines was published in June 2002. It was
-essentially an XML version of P3, making no substantive changes to the
-constraints expressed in the schemas apart from those necessitated by
-the shift to XML, and changing only corrigible errors identified in
-the prose of the P3 Guidelines. However, given that P3 had by this
-time been in steady use since 1994, it was clear that a substantial
-revision of its content was necessary, and work began immediately on
-the P5 version of the Guidelines. This was planned as a thorough
-overhaul, involving a public call for features and new development in
-a number of important areas not previously addressed including
-character encoding, graphics, manuscript description, biographical and
-geographical data, and the language in which the TEI Guidelines
-themselves are written. </p>
+<p>Following the establishment of the TEI Consortium, an XML version
+of the TEI Guidelines was published, updating P3 to enable users to
+work with the emerging XML toolset. This, the P4 version of the Guidelines,
+was published in June 2002. It was essentially an XML version of P3,
+making no substantive changes to the constraints expressed in the
+schemas apart from those necessitated by the shift to XML, and
+changing only corrigible errors identified in the prose of the P3
+Guidelines. However, given that P3 had by this time been in steady use
+since 1994, it was clear that a substantial revision of its content
+was necessary, and work began immediately on the P5 version of the
+Guidelines. This was planned as a thorough overhaul, involving a
+public call for features and new development in a number of important
+areas not previously addressed including character encoding, graphics,
+manuscript description, biographical and geographical data, and the
+language in which the TEI Guidelines themselves are written. </p>
 
 <p>To oversee and manage the revision process in collaboration with
-the TEI Editors, the Board appointed a Technical Council, with a
+the TEI Editors, the TEI Board appointed a Technical Council, with a
 membership elected from the TEI user community; the members of the
 Council and its associated workgroups are listed in <ptr
 target="#FM1"/>. Members of the Council have been attentive to the
@@ -799,18 +606,6 @@ remaining. </p>
 
 <div type="div3" xml:id="ABTEI4"><head>Future Developments</head>
 
-<!--
-<p>Work on areas still not satisfactorily covered in this manual will
-continue, and resulting recommendations will be issued as supplements to
-the published Guidelines.  Work is expected to continue in at least the
-following areas:
-<list type="simple">
-<item>linguistic description and grammatical annotation</item>
-<item>historical analysis and interpretation </item>
-<item>base tag sets for further document types </item>
-<item>manuscript analysis and physical description of
-text</item></list></p>-->
-
 <p>The encoding recommended by this document may be used without fear
 that future versions of the TEI scheme will be inconsistent with it in
 fundamental ways.  The TEI will be sensitive, in revising these
@@ -828,4 +623,4 @@ number. Moreover, as far as possible, new minor releases will be made
 only for the purpose of adding new compatible features, or of
 correcting errors in  existing features.</p>
 
-</div></div></div>
+</div></div>
