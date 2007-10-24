@@ -16,15 +16,31 @@ XSL LaTeX stylesheet to make slides
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     version="1.0">
   <xsl:import href="../latex/tei.xsl"/>
-  <xsl:import href="slides-common.xsl"/>
+  <xsl:import href="../common/verbatim.xsl"/>
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:*"/>
   <xsl:output method="text" encoding="utf-8"/>
   <xsl:variable name="docClass">beamer</xsl:variable>
+  <xsl:param name="startNamespace">\color{red}</xsl:param>
+  <xsl:param name="startElement">{\color{red}</xsl:param>
+  <xsl:param name="startElementName">\textbf{\color{blue}</xsl:param>
+  <xsl:param name="startAttribute">{</xsl:param>
+  <xsl:param name="startAttributeValue">{</xsl:param>
+  <xsl:param name="startComment">\textit{</xsl:param>
+  <xsl:param name="endElement">}</xsl:param>
+  <xsl:param name="endElementName">}</xsl:param>
+  <xsl:param name="endComment">}</xsl:param>
+  <xsl:param name="endAttribute">}</xsl:param>
+  <xsl:param name="endAttributeValue">}</xsl:param>
+  <xsl:param name="endNamespace"/>
+  <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
   <xsl:param name="classParameters"/>
   <xsl:param name="beamerClass">PaloAlto</xsl:param>
-  <xsl:template name="newLine">
-    <xsl:text>&#10;</xsl:text>
+
+  <xsl:template name="lineBreak">
+    <xsl:param name="id"/>
+    <xsl:text>\mbox{}\newline &#10;</xsl:text>
   </xsl:template>
+
   <xsl:template name="latexPackages">
 \usepackage{colortbl}
 \usepackage{longtable}

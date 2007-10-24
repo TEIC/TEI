@@ -21,6 +21,15 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
+
+  <xsl:key name="MNAMES"
+   match="tei:monogr/tei:author[tei:surname]|tei:monogr/tei:editor[tei:surname]" 
+   use="ancestor::tei:biblStruct/@xml:id"/>
+  <xsl:key name="ANAMES"
+   match="tei:analytic/tei:author[tei:surname]|tei:analytic/tei:editor[tei:surname]" 
+   use ="ancestor::tei:biblStruct/@xml:id"/>
+  
+
   <xd:doc>
     <xd:short>Process all elements in depth</xd:short>
     <xd:detail> </xd:detail>
@@ -197,6 +206,71 @@
   <xsl:value-of select="$pre"/>
   <xsl:apply-templates/>
   <xsl:value-of select="$post"/>
+</xsl:template>
+
+<!-- biblStruct -->
+<xsl:template match="tei:biblStruct" mode="xref">
+    <xsl:choose>
+      <xsl:when test="count(key('ANAMES',@xml:id))=1">
+	<xsl:value-of select="key('ANAMES',@xml:id)/tei:surname"/>
+      </xsl:when>
+      <xsl:when test="count(key('ANAMES',@xml:id))=2">
+	<xsl:value-of
+	    select="key('ANAMES',@xml:id)[1]/tei:surname"/>
+	<xsl:text> and </xsl:text>
+	<xsl:value-of select="key('ANAMES',@xml:id)[2]/tei:surname"/>
+      </xsl:when>
+      <xsl:when test="count(key('ANAMES',@xml:id))&gt;2">
+	<xsl:value-of
+	    select="key('ANAMES',@xml:id)[1]/tei:surname"/>
+	<xsl:text> et al.</xsl:text>
+      </xsl:when>
+      <xsl:when test="count(key('MNAMES',@xml:id))=1">
+	<xsl:value-of select="key('MNAMES',@xml:id)/tei:surname"/>
+      </xsl:when>
+      <xsl:when test="count(key('MNAMES',@xml:id))=2">
+	<xsl:value-of
+	 select="key('MNAMES',@xml:id)[1]/tei:surname"/>
+	<xsl:text> and </xsl:text>
+	<xsl:value-of select="key('MNAMES',@xml:id)[2]/tei:surname"/>
+      </xsl:when>
+      <xsl:when test="count(key('MNAMES',@xml:id))&gt;2">
+	<xsl:value-of
+	    select="key('MNAMES',@xml:id)[1]/tei:surname"/>
+	<xsl:text> et al.</xsl:text>
+      </xsl:when>
+      <xsl:when test=".//tei:author[tei:surname]">
+	<xsl:value-of select=".//tei:author/tei:surname[1]"/>
+      </xsl:when>
+      <xsl:when test=".//tei:author[tei:orgName]">
+	<xsl:value-of select=".//tei:author/tei:orgName[1]"/>
+      </xsl:when>
+      <xsl:when test=".//tei:author">
+	<xsl:value-of select=".//tei:author[1]"/>
+      </xsl:when>
+      <xsl:when test=".//tei:editor[tei:surname]">
+	<xsl:value-of select=".//tei:editor/tei:surname[1]"/>
+      </xsl:when>
+      <xsl:when test=".//tei:editor">
+	<xsl:value-of select=".//tei:editor[1]"/>
+      </xsl:when>
+      <xsl:otherwise>
+	  <xsl:value-of select=".//tei:title[1]"/>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="count(tei:*[1]/tei:editor)=1">
+	<xsl:text> (ed.)</xsl:text>
+      </xsl:when>
+      <xsl:when test="count(tei:*[1]/tei:editor)&gt;1">
+	<xsl:text> (eds.)</xsl:text>
+      </xsl:when>
+    </xsl:choose>
+    <xsl:if test="tei:monogr/tei:imprint/tei:date">
+      <xsl:text> (</xsl:text>
+      <xsl:value-of select="tei:monogr/tei:imprint/tei:date"/>
+      <xsl:text>)</xsl:text>
+    </xsl:if>
 </xsl:template>
 
 </xsl:stylesheet>

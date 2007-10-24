@@ -45,56 +45,6 @@
     <xsl:number/>
     <xsl:text>]</xsl:text>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:biblStruct</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:biblStruct" mode="xref">
-    <xsl:choose>
-      <xsl:when test="descendant::tei:author">
-        <xsl:apply-templates mode="first"
-          select="descendant::tei:author[position()=1]"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates mode="first"
-          select="descendant::tei:editor[position()=1]"/>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:choose>
-      <xsl:when test="descendant::tei:title[@type='short']">
-        <xsl:apply-templates select="descendant::tei:title[@type='short']"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates select="descendant::tei:title[@type='main'][1]"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-  <xd:doc>
-    <xd:short>Process elements tei:author</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:author" mode="first">
-    <xsl:value-of select="tei:name/@reg"/>
-    <xsl:if test="name[position()&gt;1]">
-      <xsl:text>(e.a.)</xsl:text>
-    </xsl:if>
-    <xsl:text>: </xsl:text>
-  </xsl:template>
-
-  <xd:doc>
-    <xd:short>editor in cross-ref mode</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:editor" mode="first">
-    <xsl:value-of select="tei:name/@reg"/>
-    <xsl:text> (ed.)</xsl:text>
-    <xsl:if test="tei:name[position()&gt;1]">
-      <xsl:text> (e.a.)</xsl:text>
-    </xsl:if>
-    <xsl:text>: </xsl:text>
-  </xsl:template>
-
 
   <xd:doc>
     <xd:short>Process elements
