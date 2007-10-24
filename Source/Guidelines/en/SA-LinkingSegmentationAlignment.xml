@@ -1074,10 +1074,10 @@ specific steps to transform it into a URI reference.
   the appropriate <gi>refsDecl</gi>, in the order encountered:
   <list type="ordered">
     <item>match the value of <att>cRef</att> to the regular
-    expression found as the value of the <att>re</att>
+    expression found as the value of the <att>matchPattern</att>
     attribute</item>
     <item>if the <att>cRef</att> value matches, take the value
-    of the <att>pat</att> attribute and substitute the back
+    of the <att>replacementPattern</att> attribute and substitute the back
     references ($1, $2, etc.) with the corresponding matched
     substrings</item>
     <item>the result is taken as if it were a relative or
@@ -1087,15 +1087,15 @@ specific steps to transform it into a URI reference.
     <item>no further processing of this <att>cRef</att> against
     the <gi>refsDecl</gi> should take place</item>
     <item>if, however, the <att>cRef</att> value does not match
-    the regular expression specified on <att>re</att> attribute,
-    proceed to the next <gi>fragmentPatter</gi></item>
+    the regular expression specified on <att>matchPattern</att> attribute,
+    proceed to the next <gi>cRefPattern</gi></item>
   </list>
   </item>
   <item>If all the <gi>cRefPattern</gi> elements are
   examined in turn and none matches, the pointer fails.</item>
 </list></p>
 <p>The regular expression language used as the value of the
-<att>re</att> attribute is that used for the
+<att>matchPattern</att> attribute is that used for the
 <ident>pattern</ident> facet of the World Wide Web Consortium's
 XML Schema Language in an <ref target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix to
 XML Schema Part 2</ref>.<note place="foot">As always
@@ -1104,7 +1104,7 @@ precisely the same. For those used to Perl regular expressions,
 be warned that while in Perl the pattern <code>tei</code>
 matches any string that contains <mentioned>tei</mentioned>, in
 the W3C language it only matches the string <q>tei</q>.</note>
-The value of the <att>pat</att> attribute is simply a string,
+The value of the <att>replacementPattern</att> attribute is simply a string,
 except that occurences of <q>$1</q> through <q>$9</q> are
 replaced by the corresponding substring match. Note that since a
 maximum of nine substring matches are permitted, the string
@@ -1136,7 +1136,7 @@ corresponds to <q>Matt 5:7</q>.</p>
   <p>If
   the first regular expression matches, it applies the matched
   substrings (in this case, <q>Matt</q>, <q>5</q>, and <q>7</q>)
-  to the string in the <att>pat</att> attribute of that
+  to the string in the <att>replacementPattern</att> attribute of that
   <gi>cRefPattern</gi> element, substituting the first
   matched substring for $1, the second for $2, and so on, to
   produce an absolute or relative URI. In the case that a
