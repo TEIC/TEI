@@ -255,15 +255,32 @@ modified schema are also valid according to the unmodified schema.  To
 say this another way, the set of documents matching the new schema is
 contained by the set of documents matching the original schema.</p>
 
-<p>If however the element deleted by some modification is mandatory
-within the content model of some other (undeleted) element, the result
-is an unclean modification because some documents that would be
-regarded as valid by the new schema would be regarded as invalid
-according to the original schema.  If an element is defined as having
-some other specific element as a mandatory child, removing that child
-would break the TEI abstract model (<ptr target="#CFAM"/>), though the
-parent of a mandatory child can of course be removed safely if it is
-itself optional.</p>
+<p>There are however some elements in the TEI scheme which
+have mandatory children; for example, the element
+<gi>fileDesc</gi> must contain both a <gi>titleStmt</gi> and a
+<gi>sourceDesc</gi>. A modification which deleted either of these
+would be unclean, because it would regard as valid documents that the
+unmodified schema would regard as invalid. Deleting one of the many
+optional children of <gi>fileDesc</gi> (<gi>editionStmt</gi> or
+<gi>notesStmt</gi> for example) would not have this effect, and would
+be a clean modification. </p>
+
+<p>In general, whenever the element deleted by a modification is
+mandatory within the content model of some other (undeleted) element,
+the result is an unclean modification, and may also break the TEI
+abstract model (<ptr target="#CFAM"/>).  However, the parent of a
+mandatory child can of course be removed safely if it is itself
+optional.</p>
+
+<p>To determine whether or not an element is mandatory in a given
+context, the user  must inspect the content model of the element
+concerned. In most cases, content models are expressed in terms of
+model classes rather than elements; hence, removing an element will
+generally be a clean modification, since there will generally be other
+members of the class available. If a class is  completely depopulated
+by a modification, then the cleanliness of the modification will
+depend upon whether or not the class reference is mandatory or
+optional, in the same way as for an individual element.</p>
 
 </div>
 
