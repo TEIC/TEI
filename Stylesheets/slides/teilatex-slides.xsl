@@ -24,8 +24,8 @@ XSL LaTeX stylesheet to make slides
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:*"/>
   <xsl:output method="text" encoding="utf-8"/>
   <xsl:variable name="docClass">beamer</xsl:variable>
-  <xsl:param name="startNamespace">\color{red}</xsl:param>
-  <xsl:param name="startElement">{\color{red}</xsl:param>
+  <xsl:param name="startNamespace">\color{green}</xsl:param>
+  <xsl:param name="startElement">{</xsl:param>
   <xsl:param name="startElementName">\textbf{\color{blue}</xsl:param>
   <xsl:param name="startAttribute">{</xsl:param>
   <xsl:param name="startAttributeValue">{</xsl:param>
