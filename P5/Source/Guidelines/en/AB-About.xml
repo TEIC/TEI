@@ -59,9 +59,9 @@ and others creating or distributing electronic texts.  Although they
 focus on problems of representing in electronic form texts which
 already exist in traditional media, these Guidelines are also
 applicable to textual material which is <soCalled>born
-digital</soCalled>.  We believe them to be adequate to, but not
-limited by, the widest variety of existing practices in the usage of
-textual data in digital form.</p>
+digital</soCalled>.  We believe them to be adequate to 
+the widest variety of currently existing practices in using
+digital textual data, but by no means limited to them.</p>
 
 <p>The rules and recommendations made in these Guidelines are
 expressed in terms of what is currently the most widely-used markup
@@ -154,16 +154,19 @@ source for most examples is provided in the online version. Within the
 examples, use of whitespace such as newlines or indentation is simply
 intended to aid legibility, and is not prescriptive or normative. </p>
 
-<p>Wherever XML elements or TEI classes are mentioned in the text,
-they are linked in the online version to the relevant reference
+<p>Wherever TEI elements or classes are mentioned in the text, they
+are linked in the online version to the relevant reference
 specification for the element or class concerned. Element names are
 always given in the form <gi>name</gi>, where <q>name</q> is the
-<term>generic identifier</term> of the element. References to
-attributes take the form <att>attname</att>, where <q>attname</q> is
-the name of the attribute.  References to classes are also presented
-as links, for example <ident type="class">model.divLike</ident> for a
-model class, and <ident type="class">att.global</ident> for an
-attribute class.  </p>
+<term>generic identifier</term> of the element; empty elements such as
+<gi>pb</gi> or <gi>anchor</gi> include a closing slash to distinguish
+them wherever they are discussed. References to attributes take the
+form <att>attname</att>, where <q>attname</q> is the name of the
+attribute.  References to classes are also presented as links, for
+example <ident type="class">model.divLike</ident> for a model class,
+and <ident type="class">att.global</ident> for an attribute class.
+</p>
+
 
 <div type="div3" xml:id="ABTEI2"><head>Design Principles</head>
 
@@ -175,7 +178,7 @@ flexibility, and extensibility.  More specific design goals of the TEI
 have been that the Guidelines should:
 <list type="simple">
 <item>provide a standard format for data interchange</item>
-<item>provide guidance for encoding of texts in this format</item>
+<item>provide guidance for the encoding of texts in this format</item>
 <item>support the encoding of all kinds of features of all
 kinds of texts studied by researchers</item>
 <item>be application independent</item></list>
@@ -184,16 +187,17 @@ This has led to a number of important design decisions, such as:
 <item>the choice of XML and Unicode</item>
 <item>the provision of a large predefined tag set</item>
 <item>encodings for different views of text</item>
-<item>alternative encodings for the same text features</item>
+<item>alternative encodings for the same textual features</item>
 <item>mechanisms for user-defined modification of the scheme</item></list>
 We discuss some of these goals  in more detail below.</p>
 
-<p>The goals of creating a common interchange format which is
+<p>The goal of creating a common interchange format which is
 application independent require the definition of a specific markup
 syntax as well as the definition of a large set of elements or
 concepts.  The syntax of the recommendations made in this document
-conforms to the World Wide Web Consortium's XML Recommendation, which
-defines an Extensible Markup Language, but their definition is as far
+conforms to the World Wide Web Consortium's XML Recommendation (<ptr
+target="#XMLREC"/>)
+but their definition is as far
 as possible independent of any particular schema language. </p>
 <p>The goal of providing guidance for text encoding suggests that
 recommendations be made as to what textual features should be recorded
@@ -206,9 +210,10 @@ rare exceptions) no suggestions or restrictions as to the relative
 importance of textual features.  The philosophy of the Guidelines is
 <q>if you want to encode this feature, do it this way</q> — but very
 few features are mandatory. In the same spirit, while the Guidelines
-very rarely require any particular level of encoding, their correct
-use requires conformance to the meanings attached to the encodings
-they propose. </p>
+very rarely require you to require any particular feature, they do
+require you to be honest about which features you have encoded, that
+is, to respect the meanings and usage rules they recommend for
+specific elements and attributes proposed. </p>
 <p>The requirement to support all kinds of materials likely to be of
 interest in research has largely conditioned the development of the
 TEI into a very flexible and modular system. The development of other
@@ -226,9 +231,7 @@ text in another medium) rather than text creation (where no such copy
 text exists).  Hence the frequent use of terms like
 <soCalled>transcription</soCalled>, <soCalled>original</soCalled>,
 <soCalled>copy text</soCalled>, etc.  However, the Guidelines are
-equally applicable to text creation, and the two terms <term>text
-creation</term> and <term>text capture</term> are often used
-interchangeably. </p>
+equally applicable to text creation. </p>
 <p>Concerning text capture the TEI Guidelines do not specify a
 particular approach to the problem of fidelity to the source text and
 recoverability of the original; such a choice is the responsibility of
@@ -271,7 +274,7 @@ absolute recommendation to embody one specific view of text can apply
 to all texts and all approaches to them.  Within limits, the syntax of
 XML ensures that some encodings can be ignored for some purposes.  To
 enable encoding multiple views, these Guidelines not only treat a
-variety of text features, but sometimes provide several alternative
+variety of textual features, but sometimes provide several alternative
 encodings for what appear to be identical textual phenomena.  These
 Guidelines  offer the possibility of encoding many different
 views of the text, simultaneously if necessary. Where different views
@@ -316,20 +319,19 @@ create electronic texts should select the subset of features suitable
 for their project.  </p>
 <p>Problems specific to text creation or text
 <soCalled>capture</soCalled> have not been considered explicitly in
-this document.  For purposes of the TEI interchange format and for use
-of markup languages, it does not matter how a text is created or
-captured: it can be typed by hand, scanned from a printed book or
-typescript, read from a typesetter's tape, or acquired from another
-researcher who may have used another markup scheme (or no explicit
-markup at all).</p>
+this document.  These Guidelines are not concerned with the process by
+which a digital text comes into being: it can be typed by hand,
+scanned from a printed book or typescript, read from a typesetter's
+tape, or acquired from another researcher who may have used another
+markup scheme (or no explicit markup at all).</p>
 <p>We include here only some general points which are often raised about
 markup and the process of data capture.</p>
 <p>XML can appear distressingly verbose, particularly when (as in these
 Guidelines) the names of tags and attributes are chosen for clarity and
 not for brevity.  Editor macros and keyboard shorthands can allow a
 typist to enter frequently used tags with single keystrokes.
-Special-purpose software may be purchased which scans word-processor or
-scanner data and inserts tags.  Markup-aware software can help with
+Special-purpose software may be used to transform  word-processed or
+scanned text automatically.  Markup-aware software can help with
 maintaining the hierarchical structure of the document, and display the
 document with visual formatting rather than raw tags.</p>
 <p>The techniques described in chapter <ptr target="#MD" type="div1"/>
@@ -344,9 +346,9 @@ form. </p>
 <p>The TEI format may simply be used as an interchange format,
 permitting projects to share resources even when their local encoding
 schemes differ.  If there are <val>n</val> different encoding formats,
-to provide a mapping between any given pair of formats requires
-<val>n*n-1</val> translations; with an interchange format,
-only <val>2n</val> such mappings are needed. However, for such
+to provide  mappings between each possible pair of formats requires
+<formula>n*(n-1)</formula> translations; with an interchange format,
+only <formula>2n</formula> such mappings are needed. However, for such
 translations to be carried out without loss of information, the
 interchange format chosen must be as expressive (in a formal sense) as
 any of the target formats; this is a further reason for the TEI's
@@ -370,7 +372,7 @@ There are three possibilities for each feature:
 <item>X has a feature which is absent from the TEI scheme;</item>
 <item>X has a feature which corresponds with more than one
 feature in the TEI scheme.</item></list>
-The first case is a trivial renaming.  The second requires an extension to
+The first case is a trivial renaming.  The second will require an extension to
 the TEI scheme, as described in chapter <ptr target="#MD"/>.  The third
 is more problematic, but not impossible, provided that  a consistent
 choice can be made (and documented) amongst the alternatives.  </item>
@@ -523,14 +525,14 @@ P1.  With minor changes and corrections, this version was reprinted as
 version 1.1 in November 1990.</p>-->
 Extensive public comment and further work on areas not covered in
 this version resulted in the drafting of a revised version, TEI P2,
-distribution of which began in April 1992.  This version includes
+distribution of which began in April 1992.  This version included
 substantial amounts of new material, resulting from work carried out by
 several specialist working groups, set up in 1990 and 1991 to propose
 extensions and revisions to the text of P1.  The overall organization,
 both of the draft itself and of the scheme it describes, was entirely
 revised and reorganized in response to public comment on the first
 draft.</p>
-<p>In June, 1993, an Advisory Board met to review the current state of
+<p>In June 1993 an Advisory Board met to review the current state of
 the TEI Guidelines, and recommended the formal publication of the work
 done to that time.  That version of the TEI Guidelines, TEI P3,
 consolidated the work published as parts of TEI P2, along with some
@@ -545,7 +547,7 @@ the World Wide Web richly encoded documents such as those for which
 the TEI was designed.  Several TEI participants contributed heavily to
 the development of XML, most notably XML's senior co-editor
 C. M. Sperberg-McQueen, who served as the North American editor for
-the TEI Guidelines from their inception up till 1998. </note>
+the TEI Guidelines from their inception until 1999. </note>
 Following the rapid take-up of this new standard metalanguage, it
 became evident that the TEI Guidelines (which had been published
 originally as an SGML application) needed to be re-expressed in this
@@ -574,7 +576,7 @@ community with sustained involvement in the future development and
 widespread use of the TEI Guidelines (<ptr target="#AB-eg-03"/>). </p>
 
 <p>To oversee and manage the revision process in collaboration with
-the TEI Editors, the TEI Board appointed a Technical Council, with a
+the TEI Editors, the TEI Board formed a Technical Council, with a
 membership elected from the TEI user community. The Council met for
 the first time in January 2002 at King's College London. Its first
 task was to oversee production of an XML version
