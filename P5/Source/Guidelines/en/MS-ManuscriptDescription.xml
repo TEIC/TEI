@@ -81,6 +81,9 @@ These elements are all optional, but if used they must appear in the
 order given here.  Finally, in the case of a composite manuscript, a
 full description may also contain one or more <gi>msPart</gi> elements
 (<ptr target="#mspt"/>).</p>
+
+
+<!--
 <p>Here is a very simple example of a complete manuscript description, using no additional elements apart from the mandatory <gi>msIdentifier</gi>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msDesc>
@@ -187,12 +190,177 @@ the 15th century</origDate> in <origPlace>Pembrokeshire, Wales</origPlace>.</p>
 </history>
 </msDesc>
 </egXML></p>
+-->
+
+
+<p>To demonstrate the use of this module, consider the following
+sample manuscript description, chosen more or less at random from the
+Bodleian Library's <title level="m">Summary catalogue</title> (<ptr
+target="#MS-eg-001"/>)
+<figure corresp="#MS-eg-001">
+<graphic url="Images/MSadda61.png"/>
+<head>Entry for Bodleian MS. Add. A. 61 in Madan et al.
+    1895-1953</head>
+</figure>
+</p>
+
+<p>The simplest way of digitizing this catalogue entry would simply be
+to key in the text, tagging the relevant parts of it which make up
+the mandatory <gi>msIdentifier</gi> element, as follows:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#MS-eg-001">
+<msDesc>
+<msIdentifier>
+<settlement>Oxford</settlement>
+<repository>Bodleian Library</repository>
+<idno>MS. Add. A. 61</idno>
+<altIdentifier type="SC"><idno>28843</idno></altIdentifier>
+</msIdentifier>
+<p>In Latin, on parchment: written in more than one hand of the 13th
+cent. in England: 7¼ x 5⅜ in., i + 55 leaves, in double columns: with
+a few coloured capitals.</p>
+<p>'Hic incipit Bruitus Anglie,' the De origine et gestis Regum
+Angliae of Geoffrey of Monmouth (Galfridus Monumetensis: beg. 'Cum
+mecum multa &amp; de multis.'</p>
+<p>On fol. 54v very faint is 'Iste liber est fratris guillelmi de
+buria de ... Roberti ordinis fratrum Pred[icatorum],' 14th cent. (?):
+'hanauilla' is written at the foot of the page (15th cent.).  Bought
+from the rev. W. D. Macray on March 17, 1863, for £1 10s.</p>
+</msDesc></egXML>
+With a suitable style sheet, this encoding would be as readable as the
+original; it would not, however, be very useful for search purposes
+since only shelfmarks and other identifiers are distinguished. To
+improve on this, one might wrap the paragraphs in the appropriate
+special-purpose first-child-level elements of <gi>msDesc</gi> and add
+some of the phrase-level elements available when the manuscript
+description module is in use:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#MS-eg-001">
+<msDesc>
+<msIdentifier>
+ <settlement>Oxford</settlement>
+ <repository>Bodleian Library</repository>
+ <idno>MS. Add. A. 61</idno>
+ <altIdentifier type="SC">
+  <idno>28843</idno>
+ </altIdentifier>
+</msIdentifier>
+<msContents>
+ <p><quote>Hic incipit Bruitus  Anglie,</quote> the 
+<title>De origine et gestis Regum Angliae</title> 
+of Geoffrey of Monmouth (Galfridus Monumetensis): 
+beg. <quote>Cum mecum multa &amp; de multis.</quote> 
+In Latin.</p>
+</msContents>
+<physDesc>
+ <p><material>Parchment</material>: written in 
+more than one hand: 7¼ x 5⅜ in., i + 55 leaves, in double
+columns: with a few coloured capitals.</p>
+</physDesc>
+<history>
+ <p>Written in
+<origPlace>England</origPlace> in the
+   <origDate>13th cent.</origDate> On fol. 54v very faint is
+<quote>Iste liber est fratris guillelmi de buria de ... Roberti
+   ordinis fratrum Pred[icatorum],</quote> 14th cent. (?):
+<quote>hanauilla</quote> is written at the foot of the page
+   (15th cent.). Bought from the rev. W. D. Macray on March 17, 1863, for
+   £1 10s.</p>
+</history>
+   </msDesc>
+</egXML>
+Note that in this version the text has been slightly reorganized, but
+no actual rewriting has been necessary. The encoding now allows the
+user to search for such features as title, material, and date and
+place of origin; it is also possible to distinguish quoted material
+from descriptive passages and to search within descriptions relating
+to a particular topic (for example, history as distinct from
+material).</p>
+        
+<p>This process could be continued further, restructuring the whole
+entry so as to take full advantage of many more of the encoding
+possibilities provided by the module described in this chapter:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#MS-eg-001">
+<msDesc>
+<msIdentifier>
+ <settlement>Oxford</settlement>
+ <repository>Bodleian Library</repository>
+ <idno>MS. Add. A. 61</idno>
+ <altIdentifier type="SC">
+  <idno>28843</idno>
+ </altIdentifier>
+</msIdentifier>
+<msContents>
+ <msItem>
+  <author xml:lang="en">Geoffrey of Monmouth</author>
+  <author xml:lang="la">Galfridus Monumetensis</author>
+  <title type="uniform" xml:lang="la">De origine et
+   gestis Regum Angliae</title>
+  <rubric xml:lang="la">Hic incipit Bruitus Anglie</rubric>
+  <incipit xml:lang="la">Cum mecum multa &amp; de multis</incipit>
+  <textLang
+mainLang="la">Latin</textLang>
+ </msItem>
+</msContents>
+<physDesc>
+ <objectDesc form="codex">
+  <supportDesc material="perg">
+   <support>
+    <p>Parchment.</p>
+   </support>
+   <extent>i + 55 leaves
+<dimensions scope="all" type="leaf" unit="inch">
+     <height>7¼</height>
+     <width>5⅜</width>
+    </dimensions>
+   </extent>
+  </supportDesc>
+  <layoutDesc>
+   <layout columns="2">
+    <p>In double columns.</p>
+   </layout>
+  </layoutDesc>
+ </objectDesc>
+ <handDesc>
+  <p>Written in more than one  hand.</p>
+ </handDesc>
+ <decoDesc>
+  <p>With a few coloured capitals.</p>
+ </decoDesc>
+</physDesc>
+<history>
+ <origin>
+  <p>Written in <origPlace>England</origPlace> in the <origDate
+notAfter="1300" notBefore="1200">13th cent.</origDate></p>
+ </origin>
+ <provenance>
+  <p>On fol. 54v very faint is
+   <quote xml:lang="la">Iste liber est fratris guillelmi de buria de <gap/>
+   Roberti ordinis fratrum
+   Pred<ex>icatorum</ex></quote>, 14th cent. (?):
+<quote>hanauilla</quote> is written at the foot of the page
+   (15th cent.).</p>
+ </provenance>
+ <acquisition>
+  <p>Bought from the rev. <name key="MCRAYWD">W. D. Macray</name> on <date
+value="1863-03-17">March 17, 1863</date>, for £1
+10s.</p>
+ </acquisition>
+</history>
+</msDesc>
+</egXML>
+
+In the remainder of this chapter we discuss all of the encoding
+features demonstrated above, together with many other related
+matters.</p>
+
+
+
+
+
+
 <specGrp xml:id="msdesc.def">
-
-
-&msDesc;
-
-</specGrp>
+&msDesc;</specGrp>
 
 </div>
 <div type="div2" xml:id="msphrase">
