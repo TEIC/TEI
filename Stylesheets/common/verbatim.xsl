@@ -500,7 +500,7 @@
     </xsl:call-template>
     <xsl:call-template name="makeIndent"/>
   </xsl:if>
-  <xsl:text>&#xA0;</xsl:text>
+  <xsl:value-of select="$spaceCharacter"/>
   <xsl:value-of disable-output-escaping="yes" select="$startAttribute"/>
   <xsl:choose>
     <xsl:when test="namespace-uri()='http://www.w3.org/2005/11/its'">

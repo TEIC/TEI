@@ -14,6 +14,10 @@ XSL LaTeX stylesheet to make slides
     xmlns:teix="http://www.tei-c.org/ns/Examples" 
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    xmlns:s="http://www.ascc.net/xml/schematron" 
+    xmlns:map="http://apache.org/cocoon/sitemap/1.0"
+    exclude-result-prefixes="a s map atom xhtml teix tei rng"
     version="1.0">
   <xsl:import href="../latex/tei.xsl"/>
   <xsl:import href="../common/verbatim.xsl"/>
