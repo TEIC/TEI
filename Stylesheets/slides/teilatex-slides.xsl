@@ -25,10 +25,10 @@ XSL LaTeX stylesheet to make slides
   <xsl:output method="text" encoding="utf-8"/>
   <xsl:variable name="docClass">beamer</xsl:variable>
   <xsl:param name="startNamespace">\color{green}</xsl:param>
-  <xsl:param name="startElement">{</xsl:param>
+  <xsl:param name="startElement">{\color{blue}</xsl:param>
   <xsl:param name="startElementName">\textbf{\color{blue}</xsl:param>
-  <xsl:param name="startAttribute">{</xsl:param>
-  <xsl:param name="startAttributeValue">{</xsl:param>
+  <xsl:param name="startAttribute">{\color{blue}</xsl:param>
+  <xsl:param name="startAttributeValue">{\color{blue}</xsl:param>
   <xsl:param name="startComment">\textit{</xsl:param>
   <xsl:param name="endElement">}</xsl:param>
   <xsl:param name="endElementName">}</xsl:param>
