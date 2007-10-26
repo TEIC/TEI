@@ -223,14 +223,19 @@ XSL LaTeX stylesheet to make slides
   <xsl:text>\end{Verbatim}&#10;</xsl:text>
 </xsl:template>
 
-<xsl:template match="teix:egXML">
-  <xsl:text>\noindent\begin{scriptsize}
-  \bgroup
-  \ttfamily\mbox{}</xsl:text>
-  <xsl:apply-templates mode="verbatim"/>
-  <xsl:text>\egroup
-  \end{scriptsize}</xsl:text>
-</xsl:template>
+  <xsl:template match="teix:egXML">
+\bgroup\ttfamily\fontsize{9pt}{9pt}\selectfont\par
+\begin{exampleblock}{}
+\noindent\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
+\end{exampleblock}
+\par\egroup
+  </xsl:template>
+
+  <xsl:template match="tei:p[@rend='box']">
+    <xsl:text>\par\begin{exampleblock}{Important}&#10;</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>\end{exampleblock}\par&#10;</xsl:text>
+  </xsl:template>
 
 
 <xsl:template match="tei:table">

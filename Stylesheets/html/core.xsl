@@ -825,6 +825,7 @@
   <xsl:template match="tei:name|tei:persName">
     <xsl:apply-templates/>
     <xsl:choose>
+      <xsl:when test="not(ancestor::tei:person|ancestor::tei:biblStruct)"/>
       <xsl:when test="following-sibling::tei:name|following-sibling::tei:persName">
 	<xsl:text>, </xsl:text>
       </xsl:when>
