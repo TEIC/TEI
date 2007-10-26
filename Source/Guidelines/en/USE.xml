@@ -625,22 +625,26 @@ unchanged. The only effect will therefore be to delete the <att>rend</att>
 attribute from the class. This in turn will affect the attributes
 inherited by all members of the class.</p>
 
-<p>The classes used in the TEI scheme are further discussed in
-chapter <ptr target="#ST"/>. Note in particular that classes are
-themselves classified: the attributes inherited by a member of
-attribute class A may come to it directly from that class, or from
-another class of which A is itself a member. For example, the class
-<ident type="class">att.global</ident> is itself a member of the
-classes <ident type="class">att.global.linking</ident> and <ident type="class">att.global.analytic</ident>.  By default, these two
-classes are predefined as empty. However, if (for example) the <ident type="module">linking</ident> module is included in a schema, a number
+<p>The classes used in the TEI scheme are further discussed in chapter
+<ptr target="#ST"/>. Note in particular that classes are themselves
+classified: the attributes inherited by a member of attribute class A
+may come to it directly from that class, or from another class of
+which A is itself a member. For example, the class <ident
+type="class">att.global</ident> is itself a member of the classes
+<ident type="class">att.global.linking</ident> and <ident
+type="class">att.global.analytic</ident>.  By default, these two
+classes are predefined as empty. However, if (for example) the <ident
+type="module">linking</ident> module is included in a schema, a number
 of attributes (<att>corresp</att>, <att>sameAs</att>, etc) are defined
 as members of the <ident type="class">att.global.linking</ident>
-class.  All elements which are members of <ident type="class">att.global</ident> will then inherit these new attributes
+class.  All elements which are members of <ident
+type="class">att.global</ident> will then inherit these new attributes
 (see further section <ptr target="#STECAT"/>). A new attribute may
 thus be added to the global class in two ways: either by adding it to
-the <gi>attList</gi> defined within the class specification for
-att.global; or by defining a new attribute class, and changing the
-class membership of the att.global class to reference it. </p>
+the <gi>attList</gi> defined within the class specification for <ident
+type="class">att.global</ident>; or by defining a new attribute class,
+and changing the class membership of the <ident
+type="class">att.global</ident> class to reference it. </p>
 
 
 <p>Such global changes should be undertaken with caution: in general
@@ -1540,11 +1544,11 @@ inherited from a class. For example, consider this simple element:
   </content>
 </elementSpec>
 </egXML>
-The affect of the <val>att.typed</val> class is to provide <gi>p</gi>
-with a <att>type</att> attribute and a <att>subtype</att>
-attribute. If
-we wish <gi>p</gi> to <emph>not</emph> have <att>subtype</att>, we
-could extend the customization in our schema as follows:
+The effect of its membership in the <ident
+type="class">att.typed</ident> class is to provide <gi>p</gi> with a
+<att>type</att> attribute and a <att>subtype</att> attribute. If we
+wish <gi>p</gi> <emph>not</emph> to have <att>subtype</att>, we could
+extend the customization in our schema as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="p">
   <classes>
@@ -1622,13 +1626,14 @@ language is more forgiving than DTDs.</note> A content model like this:
 </elementSpec>
 </egXML>
 probably requires no special treatment, as everything is expressed in
-terms of model classes; if <val>model.personPart</val> is empty, the
-<gi>choice</gi> is simply <att>model.global</att>. An ODD processor
-may choose to simplify that by removing the wrapper RELAX NG
-<gi>choice</gi> element. However, if that <gi>choice</gi> is itself
-inside an <gi>zeroOrMore</gi> inside a <gi>group</gi>, the simplifying
-process may be harder, and the resolution is left to a later stage. If
-an element refers directly to an element child, like this:
+terms of model classes; if <ident
+type="class">model.personPart</ident> is empty, the <gi>choice</gi> is
+simply <att>model.global</att>. An ODD processor may choose to
+simplify that by removing the wrapper RELAX NG <gi>choice</gi>
+element. However, if that <gi>choice</gi> is itself inside an
+<gi>zeroOrMore</gi> inside a <gi>group</gi>, the simplifying process
+may be harder, and the resolution is left to a later stage. If an
+element refers directly to an element child, like this:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="figure">
   <!--…-->
@@ -1831,7 +1836,7 @@ result:
 </elementSpec>
 </egXML>
 which is illegal in DTD and W3C schema languages,
-since for a given member of <val>model.global</val> it is impossible to
+since for a given member of <ident type="class">model.global</ident> it is impossible to
 be sure which rule is being used. This situation is not detected when
 RELAX NG is used, since the language does not require that only a
 single rule be used.  </p>
