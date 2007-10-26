@@ -251,18 +251,26 @@ tagged using the <gi>c</gi> element discussed in <ptr target="#AILC"/>.
  hyphens are soft or hard. When compounds or prefixed words
  are  hyphenated in mid-sentence, it may be impossible to tell whether the
  hyphenation is due to formatting or to linguistic concerns. </p>-->
- <p><term rend="noindex">Dashes</term><index><term>dash</term><index><term>functions</term></index></index> <!-- are best distinguished in form by using the
- entity names provided in the public entity set <ident type="entset">ISOpub</ident>, defined in ISO 8879: <ident type="ge">mdash</ident>, <ident type="ge">ndash</ident>, and <ident type="ge">dash</ident> (the <soCalled>true</soCalled>
- hyphen). Alternatively, in a standalone
- XML context, these entities may be represented as Unicode
- characters <code>&amp;#x2014;</code>, <code>&amp;#x2013;</code>,
- or <code>&amp;#x2010;</code> respectively.
- Dashes--> are used for a variety of purposes: insertion, interruption,
- new speaker (in dialogue), list item. In the latter two cases it is
- preferable to mark the underlying feature using the elements <tag>q</tag> or <tag>item</tag>, on which see section <ptr target="#COHQQ" type="div2"/>, and section <ptr target="#COLI" type="div2"/>,
- respectively.</p>
-<p><term rend="noindex">Quotation marks</term><index><term>quotation   marks</term><index><term>functions</term></index></index> may be replaced by the tags
-  <tag>q</tag> or <tag>quote</tag>, especially as quotations are not
+ <p><term
+ rend="noindex">Dashes</term><index><term>dash</term><index><term>functions</term></index></index>
+ <!-- are best distinguished in form by using the entity names
+ provided in the public entity set <ident
+ type="entset">ISOpub</ident>, defined in ISO 8879: <ident
+ type="ge">mdash</ident>, <ident type="ge">ndash</ident>, and <ident
+ type="ge">dash</ident> (the <soCalled>true</soCalled>
+ hyphen). Alternatively, in a standalone XML context, these entities
+ may be represented as Unicode characters <code>&amp;#x2014;</code>,
+ <code>&amp;#x2013;</code>, or <code>&amp;#x2010;</code> respectively.
+ Dashes--> are used for a variety of purposes: insertion,
+ interruption, new speaker (in dialogue), list item. In the latter two
+ cases it is preferable to mark the underlying feature using the
+ elements <gi>q</gi> or <gi>item</gi>, on which see section <ptr
+ target="#COHQQ" type="div2"/>, and section <ptr target="#COLI"
+ type="div2"/>, respectively.</p>
+<p><term rend="noindex">Quotation marks</term><index><term>quotation
+marks</term><index><term>functions</term></index></index> may be
+removed from text contained by 
+  <gi>q</gi> or <gi>quote</gi> elements, especially as quotations are not
   always marked by quotation marks (notably long quotations) or may be
   marked in a variety of ways; see the discussion of quotation and
   related features in section <ptr target="#COHQQ" type="div1"/>.</p>
@@ -420,8 +428,8 @@ additionally that its language distinguishes it from the surrounding
 text. Any element in the TEI scheme may take a <att>xml:lang</att>
 attribute, which specifies both the writing system and the language used
 by its content (see section <ptr target="#CHSH"/> for discussion of this
-attribute). Where there is no other applicable element, the tag
-<tag>foreign</tag> may be used to provide a peg onto which the
+attribute). Where there is no other applicable element, the element
+<gi>foreign</gi> may be used to provide a peg onto which the
 <att>xml:lang</att> may be attached.
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQHF-eg-5"><q>Aren't you confusing <foreign xml:lang="la">post hoc</foreign>
 with <foreign xml:lang="la">propter hoc</foreign>?</q> said the Bee 
@@ -429,7 +437,7 @@ Master. <q>Wax-moth only succeed when weak bees let them in.</q></egXML>
 <!-- R Kipling 'The mother hive' in Actions and Reactions, 1909 -->
 	<!-- these could be tagged as TERM, of course. -MSM -->
  </p>
-<p>The <tag>foreign</tag> tag should not be used to encode foreign words
+<p>The <gi>foreign</gi> element should not be used to represent foreign words
 which are mentioned or glossed within the text:  for these use the
 appropriate element from section <ptr target="#COHQU"/> below. Compare the
 following example sentences:
@@ -505,7 +513,7 @@ it by the use of a <att>rend</att> or <att>rendition</att> attribute, as discuss
 without however taking a position as to the function of the
 highlighting. This may also be useful if the text is to be processed in
 two stages:  representing simply typographic distinctions during a first
-pass, and then replacing the <tag>hi</tag> tags with more specific tags
+pass, and then replacing the <gi>hi</gi> elements with more specific elements
 in a second pass.
  </p>
 <p>Some simple examples:
@@ -4395,7 +4403,7 @@ both the following are legal examples:
 <gi>biblStruct</gi> elements) be enclosed in a <gi>series</gi> element
 or (in a <gi>biblFull</gi> element) a <gi>seriesStmt</gi> element.  The
 title of the series may be tagged <tag>title level="s"</tag>, the
-volume number <tag>biblScope type="volume"</tag>, and responsibility
+volume number <tag>biblScope type="vol"</tag>, and responsibility
 statements for the series (e.g. the name and affiliation of the editor,
 as in the example in section <ptr target="#COBICOL"/>) may be tagged
 <gi>editor</gi> or <gi>respStmt</gi>.
@@ -4689,7 +4697,7 @@ thesis work is done; tag as <gi>publisher</gi>
 or <gi>title</gi> within <gi>series</gi></item><label>title       </label>
 <item>tag as <gi>title</gi> in appropriate
 context or with appropriate <att>level</att>
-value</item><label>volume      </label>
+value</item><label>volume</label>
 <item>tag as <tag>biblScope type="vol"</tag></item><label>year        </label>
 <item>tag as <gi>date</gi>; if the date is not in a
 trivially parseable form, use the <att>value</att>
