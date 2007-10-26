@@ -47,6 +47,10 @@
   </xsl:template>
 
   <xsl:template match="comment()" mode="verbatim">
+    <xsl:choose>
+      <xsl:when test="ancestor::Wrapper"/>
+      <xsl:when test="ancestor::xhtml:Wrapper"/>
+      <xsl:otherwise>
     <xsl:call-template name="lineBreak">
       <xsl:with-param name="id">21</xsl:with-param>
     </xsl:call-template>
@@ -54,7 +58,10 @@
     <xsl:text>&lt;!--</xsl:text>
     <xsl:value-of select="."/>
     <xsl:text>--&gt;</xsl:text>
-    <xsl:value-of  disable-output-escaping="yes" select="$endComment"/>
+    <xsl:value-of  disable-output-escaping="yes"
+		   select="$endComment"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="text()" mode="verbatim">
