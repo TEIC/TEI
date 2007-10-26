@@ -564,5 +564,45 @@
     <xsl:value-of select="$postQuote"/>
   </xsl:template>
 
+<xsl:template name="emphasize">
+  <xsl:param name="class"/>
+  <xsl:param name="content"/>
+  <xsl:choose>
+    <xsl:when test="$class='titlem'">
+      <xsl:text>\textit{</xsl:text>
+      <xsl:copy-of select="$content"/>
+      <xsl:text>}</xsl:text>
+    </xsl:when>
+    <xsl:when test="$class='titlea'">
+      <xsl:text>`</xsl:text>
+	<xsl:copy-of select="$content"/>
+      <xsl:text>'</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:copy-of select="$content"/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+
+  <xsl:template name="Text">
+    <xsl:param name="words"/>
+    <xsl:choose>
+      <xsl:when test="contains($words,'&amp;')">
+	<xsl:value-of
+	select="translate(normalize-space(substring-before($words,'&amp;')),'\{}','&#8421;&#10100;&#10101;')"/>
+	<xsl:text>&amp;amp;</xsl:text>
+	<xsl:call-template name="Text">
+	  <xsl:with-param name="words">
+	    <xsl:value-of select="translate(substring-after($words,'&amp;'),'\{}','&#8421;&#10100;&#10101;')"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="translate(normalize-space($words),'\{}','&#8421;&#10100;&#10101;')"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 
 </xsl:stylesheet>

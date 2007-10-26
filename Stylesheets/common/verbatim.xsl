@@ -97,11 +97,21 @@
           </xsl:with-param>
           <xsl:with-param name="text">
 	    <xsl:choose>
-	      <xsl:when test="starts-with(.,'&#10;') and not (preceding-sibling::node())">
-		<xsl:value-of select="substring(.,2)"/>
+	      <xsl:when test="starts-with(.,'&#10;') and not
+			      (preceding-sibling::node())">
+		<xsl:call-template name="Text">
+		  <xsl:with-param name="words">
+		    <xsl:value-of select="substring(.,2)"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+		
 	      </xsl:when>
 	      <xsl:otherwise>
-		<xsl:value-of select="."/>
+		<xsl:call-template name="Text">
+		  <xsl:with-param name="words">
+		    <xsl:value-of select="."/>
+		  </xsl:with-param>
+		</xsl:call-template>
 	      </xsl:otherwise>
 	    </xsl:choose>
           </xsl:with-param>
