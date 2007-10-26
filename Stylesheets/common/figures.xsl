@@ -171,6 +171,10 @@
               <xsl:when test="contains(@height,'pt')">
                 <xsl:value-of select="@height"/>
               </xsl:when>
+              <xsl:when test="contains(@height,'px') and $mode='latex'">
+                <xsl:value-of select="substring-before(@height,'px')"/>
+                <xsl:text>pt</xsl:text>
+              </xsl:when>
               <xsl:when test="contains(@height,'in')">
                 <xsl:value-of select="@height"/>
               </xsl:when>
