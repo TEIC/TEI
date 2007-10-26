@@ -273,4 +273,284 @@
     </xsl:if>
 </xsl:template>
 
+<xsl:template match="tei:biblStruct">
+<!-- biblStruct model is
+
+ analytic*
+ (monogr, series*)+
+ (model.noteLike | idno | relatedItem)*
+-->
+
+  <xsl:apply-templates/>
+</xsl:template>
+
+
+<!-- authors and editors -->
+<xsl:template match="tei:author|tei:editor">
+  <xsl:choose>
+    <!-- last name in a list -->
+    <xsl:when test="ancestor::tei:bibl">
+      <xsl:apply-templates/>
+    </xsl:when>
+    <xsl:when test="self::tei:author and not(following-sibling::tei:author)">
+      <xsl:apply-templates/>
+      <xsl:text>. </xsl:text>
+    </xsl:when>
+    <xsl:when test="self::tei:editor and not(following-sibling::tei:editor)">
+      <xsl:apply-templates/>
+      <xsl:text> (</xsl:text>
+      <xsl:text>ed</xsl:text>
+      <xsl:if test="preceding-sibling::tei:editor">s</xsl:if>
+      <xsl:text>.</xsl:text>
+      <xsl:text>) </xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <!-- first or middle name in a list -->
+      <xsl:apply-templates/>
+      <xsl:text>, </xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template  match="tei:surname">
+  <xsl:if test="../tei:forename">
+    <xsl:apply-templates select="../tei:forename" mode="use"/>
+    <xsl:text> </xsl:text>
+  </xsl:if>
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template  match="tei:forename"/>
+
+<xsl:template  match="tei:forename" mode="use">
+  <xsl:if test="preceding-sibling::tei:forename">
+    <xsl:text> </xsl:text>
+  </xsl:if>
+  <xsl:apply-templates/>
+</xsl:template>
+
+<!-- title  -->
+<xsl:template match="tei:title">
+  <xsl:choose>
+    <xsl:when test="@level='m' or not(@level)">
+      <xsl:call-template name="emphasize">
+	<xsl:with-param name="class">
+	  <xsl:text>titlem</xsl:text>
+	</xsl:with-param>
+	<xsl:with-param name="content">
+	  <xsl:apply-templates/>
+	</xsl:with-param>
+      </xsl:call-template>
+      <xsl:if test="ancestor::tei:biblStruct">
+	<xsl:text>, </xsl:text>
+      </xsl:if>
+    </xsl:when>
+    <xsl:when test="@level='s'">
+      <xsl:call-template name="emphasize">
+	<xsl:with-param name="class">
+	  <xsl:text>titles</xsl:text>
+	</xsl:with-param>
+	<xsl:with-param name="content">
+	  <xsl:apply-templates/>
+	</xsl:with-param>
+      </xsl:call-template>
+      <xsl:if test="following-sibling::*">
+	<xsl:text> </xsl:text>
+      </xsl:if>
+    </xsl:when>
+    <xsl:when test="@level='j'">
+      <xsl:call-template name="emphasize">
+	<xsl:with-param name="class">
+	  <xsl:text>titlej</xsl:text>
+	</xsl:with-param>
+	<xsl:with-param name="content">
+	  <xsl:apply-templates/>
+	</xsl:with-param>
+      </xsl:call-template>
+      <xsl:text> </xsl:text>
+    </xsl:when>
+    <xsl:when test="@level='a'">
+      <xsl:choose>
+	<xsl:when test="parent::bibl">
+	  <xsl:call-template name="emphasize">
+	    <xsl:with-param name="class">
+	      <xsl:text>titlea</xsl:text>
+	    </xsl:with-param>
+	    <xsl:with-param name="content">
+	      <xsl:apply-templates/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:if test="ancestor::tei:biblStruct">
+	    <xsl:text>. </xsl:text>
+	  </xsl:if>
+	</xsl:when>
+	<xsl:otherwise>
+	  <q class="titlea">
+	    <xsl:apply-templates/>
+	  </q>
+	  <xsl:if test="ancestor::tei:biblStruct">
+	    <xsl:text>. </xsl:text>
+	  </xsl:if>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:when>
+    <xsl:when test="@level='u'">
+      <xsl:call-template name="emphasize">
+	<xsl:with-param name="class">
+	  <xsl:text>titleu</xsl:text>
+	</xsl:with-param>
+	<xsl:with-param name="content">
+	  <xsl:apply-templates/>
+	</xsl:with-param>
+      </xsl:call-template>
+      <xsl:if test="ancestor::tei:biblStruct">
+	<xsl:text>. </xsl:text>
+      </xsl:if>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="emphasize">
+	<xsl:with-param name="class">
+	  <xsl:text>titleu</xsl:text>
+	</xsl:with-param>
+	<xsl:with-param name="content">
+	  <xsl:apply-templates/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+
+<xsl:template match="tei:idno[@type='url']">
+  <xsl:text> &lt;</xsl:text>
+  <xsl:call-template name="makeExternalLink">
+    <xsl:with-param name="ptr">true</xsl:with-param>
+    <xsl:with-param name="dest">
+      <xsl:value-of select="normalize-space(.)"/>
+    </xsl:with-param>
+  </xsl:call-template>
+  <xsl:text>&gt;.</xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:meeting">
+    <xsl:text> (</xsl:text>
+      <xsl:apply-templates/>
+    <xsl:text>)</xsl:text>
+    <xsl:if test="following-sibling::*">
+      <xsl:text> </xsl:text>
+    </xsl:if>
+</xsl:template>
+
+<xsl:template match="tei:series">
+  <xsl:apply-templates/>
+</xsl:template>
+<!-- publisher, imprint  -->
+<xsl:template match="tei:imprint">
+   <xsl:apply-templates select="tei:date"/>
+   <xsl:apply-templates select="tei:pubPlace"/>
+   <xsl:apply-templates select="tei:publisher"/>
+   <xsl:apply-templates select="tei:biblScope"/>
+</xsl:template>
+
+<xsl:template match="tei:date">
+ <xsl:apply-templates/>
+ <xsl:if test="ancestor::tei:biblStruct">
+   <xsl:text>. </xsl:text>
+ </xsl:if>
+</xsl:template>
+
+<xsl:template match="tei:pubPlace">
+ <xsl:apply-templates/>
+ <xsl:choose>
+   <xsl:when test="ancestor::tei:bibl"/>
+   <xsl:when test="following-sibling::tei:pubPlace">
+     <xsl:text>, </xsl:text>
+   </xsl:when>
+   <xsl:when test="../tei:publisher">
+     <xsl:text>: </xsl:text>
+   </xsl:when>
+   <xsl:otherwise>
+     <xsl:text>. </xsl:text>
+   </xsl:otherwise>
+ </xsl:choose>
+</xsl:template>
+
+<xsl:template match="tei:publisher">
+   <xsl:apply-templates/>
+   <xsl:if test="ancestor::tei:biblStruct">
+     <xsl:text>. </xsl:text>
+   </xsl:if>
+</xsl:template>
+
+<!-- details and notes -->
+<xsl:template match="tei:biblScope">
+ <xsl:choose>
+   <xsl:when test="ancestor::tei:bibl">
+     <xsl:apply-templates/>
+   </xsl:when>
+  <xsl:when test="@type='vol'">
+    <xsl:call-template name="emphasize">
+      <xsl:with-param name="class">
+	<xsl:text>vol</xsl:text>
+      </xsl:with-param>
+      <xsl:with-param name="content">
+	<xsl:apply-templates/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:when>
+  <xsl:when test="@type='chap'">
+   <xsl:text>chapter </xsl:text>
+   <xsl:apply-templates/>
+  </xsl:when>
+  <xsl:when test="@type='issue'">
+    <xsl:text> (</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>) </xsl:text>
+  </xsl:when>
+  <xsl:when test="@type='pp'">
+    <xsl:choose>
+      <xsl:when test="contains(.,'-')">
+	<xsl:text>pp. </xsl:text>
+      </xsl:when>
+      <xsl:when test="contains(.,'ff')">
+	<xsl:text>pp. </xsl:text>
+      </xsl:when>
+      <xsl:when test="contains(.,' ')">
+	<xsl:text>pp. </xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>p. </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+   <xsl:apply-templates/>
+  </xsl:when>
+  <xsl:otherwise>
+   <xsl:apply-templates/>
+  </xsl:otherwise>
+ </xsl:choose>
+ 
+ <xsl:choose>
+   <xsl:when test="@type='vol' and
+		   following-sibling::tei:biblScope[@type='issue']">
+     <xsl:text> </xsl:text>
+   </xsl:when>
+   <xsl:when test="@type='vol' and following-sibling::tei:biblScope">
+     <xsl:text> </xsl:text>
+   </xsl:when>
+   <xsl:when test="following-sibling::tei:biblScope">
+     <xsl:text> </xsl:text>
+   </xsl:when>
+   <xsl:when test="ancestor::tei:biblStruct">
+     <xsl:text>. </xsl:text>
+   </xsl:when>
+ </xsl:choose>
+
+</xsl:template>
+
+<xsl:template match="tei:idno">
+  <xsl:apply-templates/>
+</xsl:template>
+
+
+
 </xsl:stylesheet>

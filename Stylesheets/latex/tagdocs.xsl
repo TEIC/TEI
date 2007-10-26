@@ -31,13 +31,10 @@
     <xd:short>Example element</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
+
   <xsl:template match="teix:egXML">
-\par
-\noindent\begin{scriptsize}
-\bgroup
-\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
-\egroup
-\end{scriptsize}
-\par
+\bgroup\ttfamily\fontsize{9pt}{9pt}\selectfont\par\vskip 10pt
+\noindent\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
+\par\egroup
   </xsl:template>
 </xsl:stylesheet>

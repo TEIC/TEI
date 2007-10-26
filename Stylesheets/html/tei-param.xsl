@@ -629,4 +629,23 @@ URL to link back to from foot of ODD reference pages
     <xd:detail> </xd:detail>
   </xd:doc>
 <xsl:template name="egXMLHook"/>
+
+<xsl:template name="emphasize">
+  <xsl:param name="class"/>
+  <xsl:param name="content"/>
+  <xsl:choose>
+    <xsl:when test="$class='titlea'">
+      <q class="titlea">
+	<xsl:copy-of select="$content"/>
+      </q>
+    </xsl:when>
+    <xsl:otherwise>
+      <span class="{$class}">
+	<xsl:copy-of select="$content"/>
+      </span>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+
 </xsl:stylesheet>

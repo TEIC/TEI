@@ -343,8 +343,30 @@
     <xd:short>Process elements tei:listBibl</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:listBibl"> \begin{bibitemlist}{1}
-    <xsl:apply-templates/> \end{bibitemlist}</xsl:template>
+
+  <xsl:template match="tei:listBibl">
+    <xsl:choose>
+      <xsl:when test="tei:biblStruct">
+	<xsl:text>\begin{description}&#10;</xsl:text>
+	  <xsl:for-each select="tei:biblStruct">
+	    <xsl:sort select="translate(tei:*/tei:author/tei:surname|tei:*[1]/tei:author/tei:orgName|tei:*[1]/tei:author/tei:name|tei:*[1]/tei:editor/tei:surname|tei:*[1]/tei:editor/tei:name|tei:*[1]/tei:title,$uc,$lc)"/>
+	    <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
+	    <xsl:text>\item[</xsl:text>
+	      <xsl:apply-templates select="." mode="xref"/>
+	      <xsl:text>] </xsl:text>
+	      <xsl:apply-templates select="."/>
+	  </xsl:for-each>
+	  <xsl:text>&#10;\end{description}&#10;</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>\begin{bibitemlist}{1}&#10;</xsl:text>
+	<xsl:apply-templates/> 
+	<xsl:text>&#10;\end{bibitemlist}&#10;</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+
   <xd:doc>
     <xd:short>Process elements tei:listBibl/tei:bibl</xd:short>
     <xd:detail> </xd:detail>
@@ -474,33 +496,6 @@
   </xd:doc>
   <xsl:template match="tei:titlePart">
     <xsl:if test="ancestor::tei:group"> \part{<xsl:apply-templates/>} </xsl:if>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:title[@level='a']</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:title[@level='a']">
-    <xsl:text>``</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>''</xsl:text>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:title[@level='m']</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:title[@level='m']">
-    <xsl:text>\textit{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>}</xsl:text>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:title[@level='s']</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:title[@level='s']">
-    <xsl:text>\textit{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>}</xsl:text>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:xref[@type='cite']</xd:short>

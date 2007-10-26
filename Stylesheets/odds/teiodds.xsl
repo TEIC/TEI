@@ -1205,25 +1205,6 @@ select="$makeDecls"/></xsl:message>
     </xsl:call-template>
   </xsl:template>
 
-  <xsl:template match="tei:title">
-    <xsl:choose>
-      <xsl:when test="parent::tei:titleStmt">
-        <xsl:if test="preceding-sibling::tei:title">
-          <br/>
-        </xsl:if>
-        <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:when test="@level='A'"> ‘<xsl:apply-templates/>' </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="italicize">
-          <xsl:with-param name="text">
-            <xsl:apply-templates/>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
   <xsl:template name="compositeNumber">
     <xsl:choose>
       <xsl:when test="ancestor::tei:div1">

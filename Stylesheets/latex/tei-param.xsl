@@ -83,7 +83,7 @@ Use real name of graphics files rather than pointers
 <xsl:text>]{geometry}
 \usepackage{longtable}
 \usepackage{colortbl}
-\usepackage{ulem}
+\usepackage[normalem]{ulem}
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
@@ -364,6 +364,25 @@ capable of dealing with UTF-8 directly.
 \vspace{18pt}
 </xsl:template>
 
+<xsl:template name="emphasize">
+  <xsl:param name="class"/>
+  <xsl:param name="content"/>
+  <xsl:choose>
+    <xsl:when test="$class='titlem'">
+      <xsl:text>\textit{</xsl:text>
+      <xsl:copy-of select="$content"/>
+      <xsl:text>}</xsl:text>
+    </xsl:when>
+    <xsl:when test="$class='titlea'">
+      <xsl:text>`</xsl:text>
+	<xsl:copy-of select="$content"/>
+      <xsl:text>'</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:copy-of select="$content"/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
 
   
 
