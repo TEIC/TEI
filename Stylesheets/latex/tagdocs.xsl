@@ -34,7 +34,9 @@
 
   <xsl:template match="teix:egXML">
 \bgroup\ttfamily\fontsize{9pt}{9pt}\selectfont\par\vskip 10pt
+\begin{shaded}
 \noindent\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
+\end{shaded}
 \par\egroup
   </xsl:template>
 </xsl:stylesheet>

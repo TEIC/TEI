@@ -1439,6 +1439,7 @@
                 <xsl:if test="not($cssSecondaryFile = '')">
                   <link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
                 </xsl:if>
+		<xsl:call-template name="generateLocalCSS"/>
 		<meta name="generator" content="Text Encoding Initiative Consortium XSLT stylesheets"/>
 		<meta name="DC.Title" content="{$name}"/>
 		<meta http-equiv="Content-Type" 

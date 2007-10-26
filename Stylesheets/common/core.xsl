@@ -156,15 +156,6 @@
     <xsl:apply-templates select="tei:date"/>
   </xsl:template>
 
-  <xd:doc>
-    <xd:short>Process elements tei:publisher</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:publisher">
-    <xsl:apply-templates/>
-  </xsl:template>
-
-
 <xsl:template name="makeQuote">
   <xsl:variable name="pre">
     <xsl:choose>
@@ -460,7 +451,17 @@
 </xsl:template>
 
 <xsl:template match="tei:pubPlace">
- <xsl:apply-templates/>
+  <xsl:choose>
+    <xsl:when test="@rendition">
+      <span>
+	<xsl:call-template name="applyRendition"/>
+	<xsl:apply-templates/>
+      </span>
+    </xsl:when>
+    <xsl:otherwise>     
+      <xsl:apply-templates/>
+    </xsl:otherwise>
+  </xsl:choose>
  <xsl:choose>
    <xsl:when test="ancestor::tei:bibl"/>
    <xsl:when test="following-sibling::tei:pubPlace">
@@ -476,7 +477,18 @@
 </xsl:template>
 
 <xsl:template match="tei:publisher">
-   <xsl:apply-templates/>
+  <xsl:choose>
+    <xsl:when test="@rendition">
+      <span>
+	<xsl:call-template name="applyRendition"/>
+	<xsl:apply-templates/>
+      </span>
+    </xsl:when>
+    <xsl:otherwise>     
+      <xsl:apply-templates/>
+    </xsl:otherwise>
+  </xsl:choose>
+
    <xsl:if test="ancestor::tei:biblStruct">
      <xsl:text>. </xsl:text>
    </xsl:if>

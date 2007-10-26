@@ -116,6 +116,12 @@ Display figures.
   </xd:doc>
   <xsl:template name="imgHook"/>
   <xd:doc class="hook">
+    <xd:short>[html] Hook where HTML can be inserted when processing a
+    figure</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="figureHook"/>
+  <xd:doc class="hook">
     <xd:short>[html] Hook where extra Javascript functions can be defined</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>

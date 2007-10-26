@@ -308,22 +308,33 @@
     <xsl:param name="dest"/>
     <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/></xsl:param>
     <a>
-      <xsl:attribute name="class">
         <xsl:choose>
+	  <xsl:when test="@rendition">
+	    <xsl:call-template name="applyRendition"/>
+	  </xsl:when>
           <xsl:when test="@rend">
-            <xsl:value-of select="@rend"/>
+	    <xsl:attribute name="class">
+	      <xsl:value-of select="@rend"/>
+	    </xsl:attribute>
           </xsl:when>
           <xsl:when test="parent::tei:item/parent::tei:list[@rend]">
-            <xsl:value-of select="parent::tei:item/parent::tei:list/@rend"/>
+	    <xsl:attribute name="class">
+	      <xsl:value-of
+		  select="parent::tei:item/parent::tei:list/@rend"/>
+	    </xsl:attribute>
           </xsl:when>
-          <xsl:when test="parent::tei:item[@rend]">
-            <xsl:value-of select="parent::tei:item/@rend"/>
+	  <xsl:when test="parent::tei:item[@rend]">
+	    <xsl:attribute name="class">
+	      <xsl:value-of select="parent::tei:item/@rend"/>
+	    </xsl:attribute>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="$class"/>
+	    <xsl:attribute name="class">
+	      <xsl:value-of select="$class"/>
+	    </xsl:attribute>
           </xsl:otherwise>
         </xsl:choose>
-      </xsl:attribute>
+
       <xsl:if test="@type">
         <xsl:attribute name="type">
           <xsl:value-of select="@type"/>
@@ -442,16 +453,21 @@
       <xsl:otherwise>
         <a>
 	  <xsl:call-template name="htmlAttributes"/>
-          <xsl:attribute name="class">
             <xsl:choose>
-              <xsl:when test="@rend">
-                <xsl:value-of select="@rend"/>
+	      <xsl:when test="@rendition">
+		<xsl:call-template name="applyRendition"/>
+	      </xsl:when>
+	      <xsl:when test="@rend">
+		<xsl:attribute name="class">
+		  <xsl:value-of select="@rend"/>
+		</xsl:attribute>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:value-of select="$class"/>
+		<xsl:attribute name="class">
+		  <xsl:value-of select="$class"/>
+		</xsl:attribute>
               </xsl:otherwise>
             </xsl:choose>
-          </xsl:attribute>
           <xsl:attribute name="href">
             <xsl:choose>
               <xsl:when

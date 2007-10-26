@@ -35,4 +35,26 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:teiHeader"/>
+
+  <xd:doc>
+    <xd:short>Do something with rendition elements in the header</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  
+  <xsl:template name="generateLocalCSS">
+    <xsl:if
+	test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:encodingDesc/tei:tagsDecl/tei:rendition">
+      <style type="text/css">
+	<xsl:for-each
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:encodingDesc/tei:tagsDecl/tei:rendition">
+	  <xsl:text>&#10;.</xsl:text>
+	  <xsl:value-of select="@xml:id"/>
+	  <xsl:text> {&#10;	</xsl:text>
+	  <xsl:value-of select="."/>
+	  <xsl:text>&#10;}</xsl:text>
+	</xsl:for-each>
+	<xsl:text>&#10;</xsl:text>
+      </style>
+    </xsl:if>
+  </xsl:template>
 </xsl:stylesheet>

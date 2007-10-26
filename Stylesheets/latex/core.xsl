@@ -574,9 +574,9 @@
       <xsl:text>}</xsl:text>
     </xsl:when>
     <xsl:when test="$class='titlea'">
-      <xsl:text>`</xsl:text>
+      <xsl:text>‘</xsl:text>
 	<xsl:copy-of select="$content"/>
-      <xsl:text>'</xsl:text>
+      <xsl:text>’</xsl:text>
     </xsl:when>
     <xsl:otherwise>
       <xsl:copy-of select="$content"/>

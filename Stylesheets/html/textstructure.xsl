@@ -754,10 +754,22 @@ $ID: requests a particular page
     </xd:detail>
   </xd:doc>
   <xsl:template match="tei:docTitle|tei:docAuthor|tei:docImprint|tei:docDate">
-    <div class="{local-name()}">
+    <div>
+      <xsl:choose>
+	<xsl:when test="@rendition">
+	  <xsl:call-template name="applyRendition"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:attribute name="class">
+	    <xsl:value-of select="local-name()">
+	    </xsl:value-of>
+	  </xsl:attribute>
+	</xsl:otherwise>
+      </xsl:choose>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:opener</xd:short>
     <xd:detail> </xd:detail>
@@ -1233,6 +1245,7 @@ $ID: requests a particular page
     <xsl:if test="not($cssPrintFile='')">
       <link rel="stylesheet" media="print" type="text/css" href="{$cssPrintFile}"/>
     </xsl:if>
+    <xsl:call-template name="generateLocalCSS"/>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] Javascript functions to be declared in HTML header</xd:short>

@@ -135,16 +135,22 @@
       </xsl:when>
       <xsl:otherwise>
 	<div>
-	  <xsl:attribute name="class">
-	    <xsl:choose>
-	      <xsl:when test="@rend">
+	  <xsl:choose>
+	    <xsl:when test="@rendition">
+	      <xsl:call-template name="applyRendition"/>
+	    </xsl:when>
+	    <xsl:when test="@rend">
+	      <xsl:attribute name="class">
 		<xsl:value-of select="@rend"/>
-	      </xsl:when>
-	      <xsl:otherwise>
+	      </xsl:attribute>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:attribute name="class">
 		<xsl:text>figure</xsl:text>
-	      </xsl:otherwise>
-	    </xsl:choose>
-	  </xsl:attribute>
+	      </xsl:attribute>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  
 	  <xsl:if test="@xml:id">
 	    <xsl:choose>
 	      <xsl:when test="$xhtml='true'">
@@ -162,6 +168,7 @@
 	  <xsl:if test="@file|@url|@entity">
 	    <xsl:call-template name="showGraphic"/>
 	  </xsl:if>
+	  <xsl:call-template name="figureHook"/>
 	  <xsl:apply-templates/>
 	  <xsl:if test="tei:head">
 	    <div class="caption">
@@ -285,11 +292,16 @@
   </xd:doc>
   <xsl:template match="tei:table[@rend='simple']">
     <table>
-      <xsl:if test="@rend">
-        <xsl:attribute name="class">
-          <xsl:value-of select="@rend"/>
+      <xsl:choose>
+	<xsl:when test="@rendition">
+	  <xsl:call-template name="applyRendition"/>
+	</xsl:when>
+	<xsl:when test="@rend">
+	  <xsl:attribute name="class">
+	    <xsl:value-of select="@rend"/>
         </xsl:attribute>
-      </xsl:if>
+	</xsl:when>
+      </xsl:choose>
       <xsl:for-each select="@*">
         <xsl:if
           test="name(.)='summary'    or name(.) = 'width'    or name(.) = 'border'    or name(.) = 'frame'    or name(.) = 'rules'    or name(.) = 'cellspacing'    or name(.) = 'cellpadding'">

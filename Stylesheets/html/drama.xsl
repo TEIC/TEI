@@ -131,16 +131,21 @@
   </xd:doc>
   <xsl:template match="tei:roleDesc">
     <blockquote>
-	  <xsl:attribute name="class">
 	  <xsl:choose>
+	    <xsl:when test="@rendition">
+		<xsl:call-template name="applyRendition"/>
+	    </xsl:when>
 	    <xsl:when test="@rend">
-	      <xsl:value-of select="@rend"/>
+	      <xsl:attribute name="class">
+		<xsl:value-of select="@rend"/>
+	      </xsl:attribute>
 	    </xsl:when>
 	    <xsl:otherwise>
-	      <xsl:text>roleDesc</xsl:text>
+	      <xsl:attribute name="class">
+		<xsl:text>roleDesc</xsl:text>
+	      </xsl:attribute>
 	    </xsl:otherwise>
 	  </xsl:choose>
-	  </xsl:attribute>
       <xsl:choose>
         <xsl:when test="tei:p">
           <xsl:apply-templates/>
