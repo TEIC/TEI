@@ -23,11 +23,9 @@
 <xsl:param name="classParameters">11pt,twoside</xsl:param>
   <xsl:variable name="docClass">book</xsl:variable>
 <xsl:template name="latexPreambleHook">
-\usepackage{fontspec}
-\usepackage{xunicode}
 \setromanfont{Gentium}
-\setsansfont[Scale=0.86]{Bitstream Vera Sans}
-\setmonofont[Scale=0.86]{Bitstream Vera Sans Mono}
+\setsansfont[Scale=0.86]{Lucida Sans}
+\setmonofont[Scale=0.86]{Lucida Sans Typewriter}
 \setlength{\headheight}{14pt}
 </xsl:template>
 
