@@ -149,26 +149,33 @@ capable of dealing with UTF-8 directly.
 </xd:detail>
 </xd:doc>
 <xsl:template name="latexSetup">
-<xsl:if test="$reencode='true'">
+<xsl:choose>
+<xsl:when test="$reencode='true'">
 \IfFileExists{utf8x.def}%
  {\usepackage[utf8x]{inputenc}}%
  {\usepackage[utf8]{inputenc}}
 \usepackage[russianb,greek,english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[]{ucs}
-</xsl:if>
-\usepackage{relsize}
-<xsl:if test="$reencode='true'">
 \uc@dclc{8421}{default}{\textbackslash }
 \uc@dclc{10100}{default}{\{}
 \uc@dclc{10101}{default}{\}}
-</xsl:if>
+</xsl:when>
+<xsl:otherwise>
+\usepackage{fontspec}
+\usepackage{xunicode}
+\catcode`⃥=\active \def⃥{\textbackslash}
+\catcode`❴=\active \def❴{\{}
+\catcode`❵=\active \def❵{\}}
+</xsl:otherwise>
+</xsl:choose>
 \DeclareTextSymbol{\textpi}{OML}{25}
+\usepackage{relsize}
 \def\textsubscript#1{%
   \@textsubscript{\selectfont#1}}
 \def\@textsubscript#1{%
   {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
-\def\textquoted#1{`#1'}
+\def\textquoted#1{‘#1’}
 \def\textcal#1{\ensuremath{\mathcal{#1}}}
 \def\textsmall#1{{\small #1}}
 \def\textlarge#1{{\large #1}}
@@ -362,26 +369,6 @@ capable of dealing with UTF-8 directly.
 \vskip20pt
 \par\noindent{\fontsize{11pt}{13pt}\sffamily\itshape\raggedright\selectfont\@author\hfill\TheDate}
 \vspace{18pt}
-</xsl:template>
-
-<xsl:template name="emphasize">
-  <xsl:param name="class"/>
-  <xsl:param name="content"/>
-  <xsl:choose>
-    <xsl:when test="$class='titlem'">
-      <xsl:text>\textit{</xsl:text>
-      <xsl:copy-of select="$content"/>
-      <xsl:text>}</xsl:text>
-    </xsl:when>
-    <xsl:when test="$class='titlea'">
-      <xsl:text>`</xsl:text>
-	<xsl:copy-of select="$content"/>
-      <xsl:text>'</xsl:text>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:copy-of select="$content"/>
-    </xsl:otherwise>
-  </xsl:choose>
 </xsl:template>
 
   
