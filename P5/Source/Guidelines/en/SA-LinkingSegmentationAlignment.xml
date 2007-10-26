@@ -1284,7 +1284,7 @@ elements.
     <p>For example, suppose that we wish to mark the end of the fifth
     word following each occurrence of some term in a particular text,
     perhaps to assist with some collocational analysis. This can most
-    easily be done with the help of the <tag>anchor</tag> tag, as
+    easily be done with the help of the <gi>anchor</gi> element, as
     follows:
     <!-- Vladimir Nabokov, Pnin, 1953, p14 of 1967 Avon pb reprinting -->
     <egXML xmlns="http://www.tei-c.org/ns/Examples">English language. Except for not very<anchor xml:id="eng1"/>
@@ -2206,7 +2206,7 @@ this kind of equivalence:
 <p>It is useful to be able to represent the fact that one element of
 text is identical to others, for analytical purposes, or (especially if
 the elements have lengthy content) to obviate the need to repeat the
-content. For example, consider the repetition of the <tag>date</tag>
+content. For example, consider the repetition of the <gi>date</gi>
 element in the following material:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SA-eg-03"><p>In small clumsy letters he wrote:
 <q rend="centered italic"><date xml:id="d840404">April 4th,
@@ -2296,7 +2296,7 @@ described at the beginning of this chapter. We then describe how the
 finally introduce the <gi>join</gi> element, which is a
 special-purpose linking element specifically for representing the
 aggregation of parts, and the <gi>joinGrp</gi> for grouping
-<tag>join</tag> tags.</p>
+<gi>join</gi> elements.</p>
 <p>The linking attributes for aggregation are <att>next</att> and
 <att>prev</att>; each of these attributes has a single identifier as its
 value:
@@ -2332,9 +2332,9 @@ link the s-units with identifiers <val>qs3</val> and <val>qs4</val>, either sing
 <eg><![CDATA[  <s xml:id="qs3" next="#qs4"><emph>But</emph>,</s>
   <s xml:id="qs4" prev="#qs3">he never stops stirring it!</s>]]></eg>
 Double linking of the two S-units, as illustrated by the last of these
-encodings, is equivalent to specifying a <tag>link</tag> tag:
+encodings, is equivalent to specifying a <gi>link</gi> element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><link type="join" targets="#qs3 #qs4"/></egXML></p>
-<p>Such a <tag>link</tag> element must carry a <att>type</att>
+<p>Such a <gi>link</gi> element must carry a <att>type</att>
 attribute with a value of <val>join</val> to specify that the link is
 to be understood as joining its targets into a single aggregate.</p>
 <p>The <gi>join</gi> element is equivalent to a <gi>link</gi> element of
@@ -2411,8 +2411,8 @@ runs <q>When the old pond / gets a new frog, / it's a new pond.</q></p>
   <join targets="#frog-l1 #frog-l2 #frog-l3" result="lg" scope="root"/>
 </sp>
 </egXML>
-<p>As with other forms of link, a grouping element <tag>joinGrp</tag>
-is available for use when a number of <tag>join</tag> elements of the
+<p>As with other forms of link, a grouping element <gi>joinGrp</gi>
+is available for use when a number of <gi>join</gi> elements of the
 same kind co-occur. This avoids the need to specify the
 <att>result</att> attribute for each <gi>join</gi> if they are all of
 the same type, and also allows us to restrict the domain within which
@@ -2420,7 +2420,7 @@ their target elements are to be found, in the same way as for
 <gi>linkGrp</gi> elements (see <ptr target="#SAPTLG"/>). Like a
 <gi>join</gi>, a <gi>joinGrp</gi> may appear only where the elements
 represented by its contents are legal. Thus if we had created many
-<tag>join</tag> tags of the sort just described, we could group them
+<gi>join</gi> tags of the sort just described, we could group them
 together, and require that their components are all contained by an
 element with the identifier <val>MFKFhungry</val> as
 follows:
@@ -2579,17 +2579,18 @@ alternant containing <mentioned>sun</mentioned> and the <att>exclude</att>
 attribute on the remaining alternant. Alternatively, the encoder could
 preserve the fact that there was uncertainty in the original
 transcription by retaining the alternants, and assigning the
-<val>we.fun</val> value to the <att>select</att> attribute value on the <tag>div</tag> tag that
+<val>we.fun</val> value to the <att>select</att> attribute value on the <gi>div</gi> element that
 encompasses the alternants, as in:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div select="#we.fun2" type="interview">
-   <u exclude="#we.sun2" xml:id="we.fun2">We had fun at the beach today.</u>
+   <u exclude="#we.sun2" xml:id="we.fun2">We had fun at the beach
+   today.</u>
    <u exclude="#we.fun2" xml:id="we.sun2">We had sun at the beach today.</u>
 </div></egXML></p>
 <p>The above alternation (including the <att>select</att> attribute)
 could be recoded by assigning the <att>exclude</att> attributes to tags
 that enclose just the words or even the characters that are mutually
 exclusive, as in:<note place="foot">See section <ptr target="#AILC"/> for discussion of the
-<tag>w</tag> and <tag>c</tag> tags that can be used in the following
+<gi>w</gi> and <gi>c</gi> tags that can be used in the following
 examples instead of the <tag>seg type="word"</tag> and <tag>seg
 type="character"</tag> tags.</note>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
@@ -2637,10 +2638,11 @@ narrow down the range of alternants, as in:
   <u exclude="#we.fun5 #we.sun5" xml:id="lee.fun5">Lee had fun at the beach today.</u>
 </div></egXML>
 This is interpreted to mean that either the first or the third
-<tag>u</tag> tag appears, and is thus equivalent to just the alternation
+<gi>u</gi> element tag appears, and is thus equivalent to just the alternation
 of those two tags:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
-  <u exclude="#lee.fun6" xml:id="we.fun6">We had fun at the beach today.</u>
+  <u exclude="#lee.fun6" xml:id="we.fun6">We had fun at the beach
+  today.</u>
   <u exclude="#we.fun6" xml:id="lee.fun6">Lee had fun at the beach today.</u>
 </div></egXML></p>
 <p>The <att>exclude</att> attribute can also be used in case there is
@@ -2663,7 +2665,7 @@ representing this problem is discussed in chapter <ptr target="#CE"/>.</note>
 
 For example suppose that a particular <gi>div2</gi>
 element appears either as the third and last of the <gi>div2</gi>
-elements within the first <tag>div1</tag> element in the body of a
+elements within the first <gi>div1</gi> element in the body of a
 document, or as the first <gi>div2</gi> of the second <gi>div1</gi>.
 One solution would be to record the <gi>div2</gi> in its entirety in the
 first of these positions, and a virtual copy of it in the second, and
@@ -2678,14 +2680,14 @@ mark them as excluding each other as follows:
   </div1>
 </body></egXML>
 In this case, the <att>select</att> attribute, if used, would appear on
-the <tag>body</tag> tag.</p>
-<p>Mutual exclusion can also be expressed using a <tag>link</tag>; the
+the <gi>body</gi> element.</p>
+<p>Mutual exclusion can also be expressed using a <gi>link</gi>; the
 first example in this section can be recoded by removing the
-<att>exclude</att> attributes from the <tag>u</tag> tags, and adding a
-<tag>link</tag> as follows:<note place="foot">In this example, we have
-placed the <tag>link</tag> next to the tags that represent the
+<att>exclude</att> attributes from the <gi>u</gi> elements, and adding a
+<gi>link</gi> element as follows:<note place="foot">In this example, we have
+placed the <gi>link</gi> next to the elements that represent the
 alternants. It could also have been placed elsewhere in the document,
-perhaps within a <tag>linkGrp</tag>. </note>
+perhaps within a <gi>linkGrp</gi>. </note>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
   <u xml:id="we.had.fun">We had fun at the beach today.</u>
   <u xml:id="we.had.sun">We had sun at the beach today.</u>
@@ -2697,10 +2699,10 @@ assigning it a <att>mode</att> attribute, which can have either of the
 values <val>excl</val> (for exclusive) or <val>incl</val> (for
 inclusive). Then the following equivalence holds:
 <eg><![CDATA[<alt mode="excl"/> = <link type="exclusive alternation"/>]]></eg></p>
-<p>The
-preceding <tag>link</tag> may therefore be recoded as the following
-<tag>alt</tag> element.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><alt targets="#we.fun #we.sun" mode="excl"/></egXML></p>
+<p>The preceding <gi>link</gi> element may therefore be recoded as the
+following <gi>alt</gi> element.  <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><alt targets="#we.fun
+#we.sun" mode="excl"/></egXML></p>
 <p>Other attributes that are defined specifically for the <gi>alt</gi>
 element are <att>weights</att> and <att>percent</att>. The
 <att>weights</att> attribute is to be used if one wishes to assign
@@ -2712,9 +2714,10 @@ is used to indicate whether the weights are stated as percentages
 (<code>percent="N"</code>)--> If the alternants are mutually exclusive, then
 the weights must sum to 1.0.</p>
 <p>Suppose in the preceding example that it is equiprobable whether
-<mentioned>fun</mentioned> or <mentioned>sun</mentioned> appears. Then the
-<tag>alt</tag> that represents the alternation may be stated as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><alt targets="#we.fun #we.sun" mode="excl" weights="0.5 0.5"/></egXML></p>
+<mentioned>fun</mentioned> or <mentioned>sun</mentioned> appears. Then
+the <gi>alt</gi> element that represents the alternation may be stated
+as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><alt
+targets="#we.fun #we.sun" mode="excl" weights="0.5 0.5"/></egXML></p>
 <p>The assignment of a weight of 1.0 to one target (and weights of 0
 to all the others) is equivalent to selecting that target. Thus the
 following encoding is equivalent to the second example at the beginning
@@ -2834,8 +2837,8 @@ the probability that the first line contains <mentioned>Dimaggio's</mentioned>
 is 90%, and each of the others 5%; whereas if the second choice for the
 second line is correct, then the probability that the first line
 contains <mentioned>Dimaggio's</mentioned> is 10%, and each of the others is
-45%. This can be encoded, with an <tag>altGrp</tag> tag containing a
-combination of exclusive and inclusive <tag>alt</tag> tags, as follows.
+45%. This can be encoded, with an <gi>altGrp</gi> element containing a
+combination of exclusive and inclusive <gi>alt</gi> elements, as follows.
 <!-- Bloody Mary, from Rogers & Hammerstein, South Pacific -->
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div xml:id="bm" type="song">
   <l>Her skin is tender as
