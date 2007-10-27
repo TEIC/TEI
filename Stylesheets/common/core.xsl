@@ -69,21 +69,6 @@
   </xsl:template>
 
 
-<xd:doc>
-  <xd:short>tei:author inside a bibl</xd:short>
-  <xd:detail> </xd:detail>
-</xd:doc>
-<xsl:template match="tei:bibl/tei:author">
-<xsl:apply-templates/>
-<xsl:choose>
-  <xsl:when test="count(following-sibling::tei:author)=1">
-    <xsl:text> and </xsl:text>
-  </xsl:when>
-  <xsl:when test="following-sibling::tei:author">
-    <xsl:text>, </xsl:text>
-  </xsl:when>
-</xsl:choose>
-</xsl:template>
 
 <xd:doc>
   <xd:short>tei:editor</xd:short>
@@ -135,7 +120,9 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:biblScope">
-    <xsl:text> </xsl:text>
+    <xsl:if test="ancestor::tei:biblStruct">
+      <xsl:text> </xsl:text>
+    </xsl:if>
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -144,16 +131,24 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:imprint">
-    <xsl:apply-templates select="tei:biblScope"/>
-    <xsl:if test="tei:publisher">
-      <xsl:text>, </xsl:text>
-      <xsl:apply-templates select="tei:publisher"/>
-    </xsl:if>
-    <xsl:if test="tei:pubPlace">
-      <xsl:text>, </xsl:text>
-      <xsl:apply-templates select="tei:pubPlace"/>
-    </xsl:if>
-    <xsl:apply-templates select="tei:date"/>
+    <xsl:choose>
+    <xsl:when test="ancestor::tei:biblStruct">
+      <xsl:apply-templates select="tei:biblScope"/>
+      <xsl:if test="tei:publisher">
+	<xsl:text>, </xsl:text>
+	<xsl:apply-templates select="tei:publisher"/>
+      </xsl:if>
+      <xsl:if test="tei:pubPlace">
+	<xsl:text>, </xsl:text>
+	<xsl:apply-templates select="tei:pubPlace"/>
+      </xsl:if>
+      <xsl:apply-templates select="tei:date"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates/>
+    </xsl:otherwise>
+    </xsl:choose>
+
   </xsl:template>
 
 <xsl:template name="makeQuote">
