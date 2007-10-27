@@ -604,5 +604,7 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template name="applyRendition"/>
+
 
 </xsl:stylesheet>

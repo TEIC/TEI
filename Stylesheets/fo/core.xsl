@@ -1270,5 +1270,27 @@ simple, bullets, ordered, gloss, unordered
     <xsl:value-of select="$postQuote"/>
   </xsl:template>
 
+<xsl:template name="emphasize">
+  <xsl:param name="class"/>
+  <xsl:param name="content"/>
+  <xsl:choose>
+    <xsl:when test="$class='titlem'">
+      <fo:inline>
+	<xsl:attribute name="font-style">italic</xsl:attribute>
+	<xsl:copy-of select="$content"/>
+      </fo:inline>
+    </xsl:when>
+    <xsl:when test="$class='titlea'">
+      <xsl:text>‘</xsl:text>
+	<xsl:copy-of select="$content"/>
+      <xsl:text>’</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:copy-of select="$content"/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+  <xsl:template name="applyRendition"/>
 
 </xsl:stylesheet>
