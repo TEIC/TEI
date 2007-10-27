@@ -9,7 +9,7 @@ $Id$
 <div n="31" type="div1" xml:id="NH" xmlns="http://www.tei-c.org/ns/1.0">
     <head>Non-hierarchical Structures</head>
     <p>XML employs a strongly hierarchical document model. At various points, these Guidelines
-        discuss problems which arise when using XML to encode textual features that either do not
+        discuss problems that arise when using XML to encode textual features that either do not
         naturally lend themselves to representation in a strictly hierarchical form or conflict with
         other hierarchies represented in the markup. Examples of such situations include: <list
             type="bullets">
@@ -60,12 +60,12 @@ $Id$
                         target="#NHVE"/>)</p>
             </item>
             <item>
-                <p>stand-off markup: the annotation of information by pointing at it, rather than
+                <p>stand-off markup: the annotation of information by pointing at it, rather than by
                     placing XML tags within it (discussed in <ptr target="#NHSO"/>)</p>
             </item>
         </list> Some of these methods can be used in TEI Conformant or Conformable documents. Others
         require extension. </p>
-    <p>In the sections which follow these techniques are described, and their advantages and
+    <p>In the sections which follow these techniques are described and their advantages and
         disadvantages are briefly discussed. The various solutions to the problem will be
         exemplified using extracts from two poems as examples. The first is the opening quatrain
         from William Wordsworth's <title level="a">Scorn not the sonnet</title>: <quote>
@@ -84,7 +84,7 @@ $Id$
                 <l>Grown quiet, I looked at his pink back, and thought.</l>
             </lg>
         </quote> These two texts can be analysed in various ways. The first, which we might describe
-        as the <soCalled>Metrical View</soCalled> encodes the text according to its metrical
+        as the <soCalled>Metrical View</soCalled>, encodes the text according to its metrical
         features: line divisions (as here), stanzas or cantos in larger poems, and perhaps prosodic
         features like stress or syllable patterns, alliteration, or rhyme. A second view, which we
         might describe as the <soCalled>Grammatical</soCalled>, encodes linguistic and rhetorical
@@ -119,7 +119,7 @@ $Id$
                     <s>the melody Of this small lute gave ease to Petrarch's wound.</s>
                 </p>
             </egXML></p>
-        <p>Likewise, the more complex passage from Pinsky would be encoded in three different ways
+        <p>Likewise, the more complex passage from Pinsky could be encoded in three different ways
             to reflect the different metrical, grammatical, and dialogic views of its text: <egXML
                 xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-02">
                 <lg>
@@ -152,18 +152,17 @@ $Id$
                     his pink back, and thought.</ab>
             </egXML>
         </p>
-        <p>The advantages of this method of markup are that each way of looking at the information
-            is explicitly represented in the data and that the individual views are simple to
-            process. The disadvantages are that the method requires the maintenance of multiple
-            copies of identical textual content (an invitation to inconsistency) and that there is
-            no explicit indication that the various views, which might be in separate files, are
-            related to each other: it might prove difficult to combine the views or access
-            information from one view while processing the file that contains the encoding of
+        <p>This method is TEI Conformant. Its advantages are that each way of looking at the
+            information is explicitly represented in the data and that the individual views are
+            simple to process. The disadvantages are that the method requires the maintenance of
+            multiple copies of identical textual content (an invitation to inconsistency) and that
+            there is no explicit indication that the various views, which might be in separate
+            files, are related to each other: it might prove difficult to combine the views or
+            access information from one view while processing the file that contains the encoding of
                 another.<note place="foot">It has been shown, however, that it is possible to relate
                 the different annotations in an indirect way: if the textual content of the
                 annotations is identical, the very text can serve as a means for linking the
                 different annotations, as described in <ptr target="#NH-BIBL-01"/>. </note></p>
-        <p>The Multiple Encoding Method is TEI conformant.</p>
     </div>
     <div type="div2" xml:id="NHBM">
         <head>Boundary Marking with Empty Elements</head>
@@ -176,121 +175,109 @@ $Id$
             difficult.</p>
         <p>The empty elements used at each end are called <term>segment-boundary elements</term> or
                 <term>segment-boundary delimiters</term>. There are several variations on this
-            method of encoding: <list type="bullets">
-                <item>
-                    <p>For some common structural features, the TEI provides milestone elements that
-                        can be used to mark the beginning of a textual feature. These include
-                        <gi>lb</gi>, <gi>pb</gi>, <gi>cb</gi>, <gi>handShift</gi>, and the generic
-                            <gi>milestone</gi>. Using <gi>lb</gi>, for example, it is possible to
-                        indicate both the physical lineation of a poem on the page and its
-                        grammatical division into sentences:<egXML
-                            xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
-                            <p>
-                                <s><lb n="1"/>Scorn not the sonnet;</s>; <s>critic, you have
-                                    frowned, <lb n="2"/>Mindless of its just honours;</s>
-                                <s>with this key <lb n="3"/>Shakespeare unlocked his heart;</s>
-                                <s>the melody <lb n="4"/>Of this small lute gave ease to Petrarch's
-                                    wound.</s></p>
-                        </egXML></p>
-                    <p>The use of these elements is by definition TEI conformant. Care should be
-                        taken, however, that the semantic meaning of the milestone tags is
-                        preserved: semantically, for example, <gi>lb</gi> is used to mark the start
-                        of a new (typographical) line. While in much modern poetry, typographical
-                        and metrical line divisions correspond, <gi>lb</gi> does not itself make a
-                        metrical claim: in encoding verse from sources, such as Old English
-                        manuscripts, where physical line breaks are not used to indicate metrical
-                        lineation, the correspondence would break down entirely.</p>
-                </item>
-                <item>
-                    <p>The segment boundaries may be delimited by the generic <gi>anchor</gi>
-                        element. Attributes can then be used to indicate the type of feature being
-                        delimited and whether a given instance opens or closes the feature. <egXML
-                            xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
-                            <l>
-                                <anchor subtype="sentenceStart" type="delimiter"/> Scorn not the
-                                sonnet; <anchor subtype="sentenceEnd" type="delimiter"/>
-                                <anchor subtype="sentenceStart" type="delimiter"/> critic, you have
-                                frowned,</l>
-                            <l>Mindless of its just honours; <anchor subtype="sentenceEnd"
-                                    type="delimiter"/>
-                                <anchor subtype="sentenceStart" type="delimiter"/> with this key</l>
-                            <l>Shakespeare unlocked his heart; <anchor subtype="sentenceEnd"
-                                    type="delimiter"/>
-                                <anchor subtype="sentenceStart" type="delimiter"/> the melody</l>
-                            <l>Of this small lute gave ease to Petrarch's wound. <anchor
-                                    subtype="sentenceEnd" type="delimiter"/></l>
-                        </egXML>
-                    </p>
-                    <p>This method is TEI conformant.</p>
-                </item>
-                <item>
-                    <p>Custom elements can be designed to provide richer information about the
-                        feature being delimited or its boundaries. This information can be included
-                        as attribute values or as part of the element name itself: e.g.
-                            <gi>boundaryStart element="sentence"/</gi>... <gi>boundaryEnd
-                            element="sentence"/</gi>, <gi>sentenceBoundary position="start"/</gi>...
-                            <gi>sentenceBoundary position="end"/</gi>, or
-                        <gi>sentenceBoundaryStart/</gi>... <gi>sentenceBoundaryEnd/</gi>: <egXML
-                            xmlns="http://www.tei-c.org/ns/Examples"
-                            xmlns:n="http://www.example.org/ns/nonTEI" corresp="#NH-eg-01">
-                            <l>
-                                <n:sentenceBoundaryStart/>Scorn not the sonnet; <n:sentenceBoundaryEnd/>
-                                <n:sentenceBoundaryStart/>critic, you have frowned,</l>
-                            <l>Mindless of its just honours; <n:sentenceBoundaryEnd/>
-                                <n:sentenceBoundaryStart/>with this key</l>
-                            <l>Shakespeare unlocked his heart; <n:sentenceBoundaryEnd/>
-                                <n:sentenceBoundaryStart/>the melody</l>
-                            <l>Of this small lute gave ease to Petrarch's wound.
-                                <n:sentenceBoundaryEnd/></l>
-                        </egXML>
-                    </p>
-                    <p>If the custom elements can be replaced by the generic <gi>anchor</gi> tag
-                        without loss of information, this method is TEI Conformable (see <ptr
-                            target="#CF"/>); if the custom elements introduce information or
-                        distinctions that cannot be captured using standard TEI elements, the method
-                        is an extension of the TEI.</p>
-                </item>
-                <item>
-                    <p>Elements that are normally used to encode nesting textual features (e.g.
-                            <gi>said</gi>, <gi>s</gi>, <gi>l</gi>, etc.) can be adapted so that they
-                        serve as empty boundary delimiters when the features they encode cross
-                        hierarchical boundaries. Additional attributes (<att>sID</att> and
-                        <att>eID</att> in the example below) are added to the content model in order
-                        to allow the unambiguous correlation of start and end points (this method
-                        has been introduced in the markup literature under various names, including
-                        Trojan milestones, HORSE markup, CLIX, and COLT. It is described in detail
-                        by <ptr target="#NH-BIBL-1" type="cit"/>): <egXML
-                            xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
-                            <lg xmlns:hr="http://www.example.org/ns/nonTEI">
-                                <l>
-                                    <s>Scorn not the sonnet;</s><hr:s sID="s02"/>critic, you have
-                                    frowned, </l>
-                                <l>Mindless of its just honours; <hr:s eID="s02"/>
-                                    <hr:s sID="s03"/>with this key </l>
-                                <l>Shakespeare unlocked his heart; <hr:s eID="s03"/>
-                                    <hr:s sID="s04"/>the melody </l>
-                                <l>Of this small lute gave ease to Petrarch's wound. <hr:s eID="s04"
-                                    />
-                                </l>
-                            </lg>
-                        </egXML> Depending on how the modifications are carried out, this method may
-                        be TEI Conformable, represent a TEI Extension, or be non-Conformant. <list>
-                            <item>The method is TEI Conformable if the modified elements are placed
-                                in a distinct, non-TEI-namespace (see <ptr target="#CFNS"/>), and if
-                                the modified elements and attributes can be mapped directly to an
-                                existing TEI milestone or anchor tag automatically without loss of
-                                information (see <ptr target="#CF"/>).</item>
-                            <item>The method represents an Extension if the modified elements are
-                                placed in a distinct, non-TEI namespace, but contain information or
-                                distinctions that cannout be algorithmically translated to existing
-                                TEI elements without loss of information (see <ptr target="#CF"/>).</item>
-                            <item>The method is non-conformant—and indeed strongly deprecated—if the
-                                modified elements and attributes are not placed in a distinct,
-                                non-TEI namespace (see <ptr target="#CFAM"/>).</item>
-                        </list></p>
-                </item>
-            </list>
+            method of encoding:</p>
+
+        <p>For some common structural features, the TEI provides milestone elements that can be used
+            to mark the beginning of a textual feature. These include <gi>lb</gi>, <gi>pb</gi>,
+                <gi>cb</gi>, <gi>handShift</gi>, and the generic <gi>milestone</gi>. Using
+            <gi>lb</gi>, for example, it is possible to indicate both the physical lineation of a
+            poem on the page and its grammatical division into sentences:<egXML
+                xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
+                <p>
+                    <s><lb n="1"/>Scorn not the sonnet;</s>; <s>critic, you have frowned, <lb n="2"
+                        />Mindless of its just honours;</s>
+                    <s>with this key <lb n="3"/>Shakespeare unlocked his heart;</s>
+                    <s>the melody <lb n="4"/>Of this small lute gave ease to Petrarch's
+                wound.</s></p>
+            </egXML></p>
+        <p>The use of these elements is by definition TEI conformant. Care should be taken, however,
+            that the semantic meaning of the milestone tags is preserved: semantically, for example,
+                <gi>lb</gi> is used to mark the start of a new (typographical) line. While in much
+            modern poetry, typographical and metrical line divisions correspond, <gi>lb</gi> does
+            not itself make a metrical claim: in encoding verse from sources, such as Old English
+            manuscripts, where physical line breaks are not used to indicate metrical lineation, the
+            correspondence would break down entirely.</p>
+
+
+        <p>The segment boundaries may be delimited by the generic <gi>anchor</gi> element.
+            Attributes can then be used to indicate the type of feature being delimited and whether
+            a given instance opens or closes the feature. <egXML
+                xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
+                <l>
+                    <anchor subtype="sentenceStart" type="delimiter"/> Scorn not the sonnet; <anchor
+                        subtype="sentenceEnd" type="delimiter"/>
+                    <anchor subtype="sentenceStart" type="delimiter"/> critic, you have frowned,</l>
+                <l>Mindless of its just honours; <anchor subtype="sentenceEnd" type="delimiter"/>
+                    <anchor subtype="sentenceStart" type="delimiter"/> with this key</l>
+                <l>Shakespeare unlocked his heart; <anchor subtype="sentenceEnd" type="delimiter"/>
+                    <anchor subtype="sentenceStart" type="delimiter"/> the melody</l>
+                <l>Of this small lute gave ease to Petrarch's wound. <anchor subtype="sentenceEnd"
+                        type="delimiter"/></l>
+            </egXML>
         </p>
+        <p>This method is TEI conformant.</p>
+
+
+        <p>Custom elements can be designed to provide richer information about the feature being
+            delimited or its boundaries. This information can be included as attribute values or as
+            part of the element name itself: e.g. <gi>boundaryStart element="sentence"/</gi>...
+                <gi>boundaryEnd element="sentence"/</gi>, <gi>sentenceBoundary
+            position="start"/</gi>... <gi>sentenceBoundary position="end"/</gi>, or
+                <gi>sentenceBoundaryStart/</gi>... <gi>sentenceBoundaryEnd/</gi>: <egXML
+                xmlns="http://www.tei-c.org/ns/Examples" xmlns:n="http://www.example.org/ns/nonTEI"
+                corresp="#NH-eg-01">
+                <l>
+                    <n:sentenceBoundaryStart/>Scorn not the sonnet; <n:sentenceBoundaryEnd/>
+                    <n:sentenceBoundaryStart/>critic, you have frowned,</l>
+                <l>Mindless of its just honours; <n:sentenceBoundaryEnd/>
+                    <n:sentenceBoundaryStart/>with this key</l>
+                <l>Shakespeare unlocked his heart; <n:sentenceBoundaryEnd/>
+                    <n:sentenceBoundaryStart/>the melody</l>
+                <l>Of this small lute gave ease to Petrarch's wound. <n:sentenceBoundaryEnd/></l>
+            </egXML>
+        </p>
+        <p>If the custom elements can be replaced by the generic <gi>anchor</gi> tag without loss of
+            information, this method is TEI Conformable (see <ptr target="#CF"/>); if the custom
+            elements introduce information or distinctions that cannot be captured using standard
+            TEI elements, the method is an extension of the TEI.</p>
+
+
+        <p>Elements that are normally used to encode nesting textual features (e.g. <gi>said</gi>,
+                <gi>s</gi>, <gi>l</gi>, etc.) can be adapted so that they serve as empty boundary
+            delimiters when the features they encode cross hierarchical boundaries. Additional
+            attributes (<att>sID</att> and <att>eID</att> in the example below) are added to the
+            content model in order to allow the unambiguous correlation of start and end points
+            (this method has been introduced in the markup literature under various names, including
+            Trojan milestones, HORSE markup, CLIX, and COLT. It is described in detail by <ptr
+                target="#NH-BIBL-1" type="cit"/>): <egXML xmlns="http://www.tei-c.org/ns/Examples"
+                corresp="#NH-eg-01">
+                <lg xmlns:hr="http://www.example.org/ns/nonTEI">
+                    <l>
+                        <s>Scorn not the sonnet;</s><hr:s sID="s02"/>critic, you have frowned, </l>
+                    <l>Mindless of its just honours; <hr:s eID="s02"/>
+                        <hr:s sID="s03"/>with this key </l>
+                    <l>Shakespeare unlocked his heart; <hr:s eID="s03"/>
+                        <hr:s sID="s04"/>the melody </l>
+                    <l>Of this small lute gave ease to Petrarch's wound. <hr:s eID="s04"/>
+                    </l>
+                </lg>
+            </egXML> Depending on how the modifications are carried out, this method may be TEI
+            Conformable, represent a TEI Extension, or be non-Conformant. <list>
+                <item>The method is TEI Conformable if the modified elements are placed in a
+                    distinct, non-TEI-namespace (see <ptr target="#CFNS"/>), and if the modified
+                    elements and attributes can be mapped directly to an existing TEI milestone or
+                    anchor tag automatically without loss of information (see <ptr target="#CF"/>).</item>
+                <item>The method represents an Extension if the modified elements are placed in a
+                    distinct, non-TEI namespace, but contain information or distinctions that
+                    cannout be algorithmically translated to existing TEI elements without loss of
+                    information (see <ptr target="#CF"/>).</item>
+                <item>The method is non-conformant—and indeed strongly deprecated—if the modified
+                    elements and attributes are not placed in a distinct, non-TEI namespace (see
+                        <ptr target="#CFAM"/>).</item>
+            </list></p>
+
+
+
         <p>In each of the above examples (except the last), the relationship between the start and
             end delimiters (where these exist) of a given feature is implicit: it is assumed that
             "end" delimiters close the nearest preceding "start" delimiter, or, in the case of
