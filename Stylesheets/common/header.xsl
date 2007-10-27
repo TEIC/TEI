@@ -15,6 +15,7 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
+
   <xd:doc>
     <xd:short>Process elements tei:title</xd:short>
     <xd:detail> </xd:detail>

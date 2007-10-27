@@ -1369,17 +1369,8 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="applyRendition">
-    <xsl:variable name="container">
-      <xsl:choose>
-	<xsl:when test="starts-with(@rendition,'#')">
-	  <xsl:text>class</xsl:text>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:text>style</xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:attribute name="{$container}">
+    <xsl:attribute name="class">
+  
       <xsl:choose>
 	<xsl:when test="@rendition=''"/>
 	<xsl:when test="contains(normalize-space(@rendition),' ')">
@@ -1398,7 +1389,7 @@
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:attribute>
-  </xsl:template>
+   </xsl:template>
 
   <xd:doc>
     <xd:short>[html] Get another value from a space-separated list</xd:short>
@@ -1429,14 +1420,10 @@
 	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
-
   </xsl:template>
 
   <xsl:template name="findRendition">
     <xsl:param name="value"/>
-    <xsl:variable name="me">
-      <xsl:value-of select="local-name()"/>
-    </xsl:variable>
     <xsl:choose>
       <xsl:when test="starts-with($value,'#')">
 	<xsl:value-of select="substring-after($value,'#')"/>
@@ -1444,11 +1431,11 @@
       </xsl:when>
       <xsl:otherwise>
 	<xsl:for-each select="document($value)">
-	  <xsl:value-of select="."/>
+	  <xsl:apply-templates select="@xml:id"/>
+	  <xsl:text> </xsl:text>
 	</xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
-
   </xsl:template>
 
   <xd:doc>
