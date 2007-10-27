@@ -3466,16 +3466,18 @@ is recommended that the TEI header contain a description of its
 construction in the <gi>refsDecl</gi> element described in section
 <ptr target="#HD54" type="div3"/>. As described there, the declaration
 may consist either of a formal declaration using the
-<gi>cRefPattern</gi> element or an informal description in prose.
-The former is recommended because unlike prose it can be processed by
+<gi>cRefPattern</gi> element or an informal description in prose.  The
+former is recommended because unlike prose it can be processed by
 software.</p>
-<p>The three examples given in section <ptr target="#CORS1" type="div3"/> would be declared as follows. The first example encodes
+
+<p>The three examples given in section <ptr target="#CORS1"
+type="div3"/> would be declared as follows. The first example encodes
 the standard references for Ovid's <title>Amores</title> one level at
 a time, using the <att>n</att> attribute on the <gi>div1</gi>,
 <gi>div2</gi>, <gi>div3</gi>, and <gi>l</gi> tags. The header for such
-an encoding should look something like this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
-    <fileDesc><!-- ... --></fileDesc>
+an encoding should look something like this: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><teiHeader> <fileDesc><!--
+... --></fileDesc>
     <encodingDesc>
          <refsDecl>
            <cRefPattern matchPattern="([^ ]+) ([0-9]+)\.([0-9]+)\.([0-9]+)" replacementPattern="#xpath(//div1[@n='$1']/div2[@n='$2']/div3[@n='$3']/l[@n='$4']">
@@ -3506,18 +3508,18 @@ an encoding should look something like this:
     </encodingDesc>
 </teiHeader></egXML>
  </p>
-<p>The second example encodes the same reference system, again using the
-<att>n</att> attribute on the <gi>div1</gi>, <gi>div2</gi>,
+<p>The second example encodes the same reference system, again using
+the <att>n</att> attribute on the <gi>div1</gi>, <gi>div2</gi>,
 <gi>div3</gi>, and <gi>l</gi> tags, but giving the reference string in
 full on each tag. If canonical references are made only to lines, the
-reference system could be declared as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
+reference system could be declared as follows: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
   <cRefPattern matchPattern="([^ ]+ [0-9]+\.[0-9]+\.[0-9]+)" replacementPattern="#xpath(//l[@n='$1')"/>
 </refsDecl></egXML>
 Since the entire regular expression is enclosed as a parenthetical
 subgroup, the entire canonical reference string is sought as the value
 of the <att>n</att> attribute on an <gi>l</gi> element.
- </p>
+ q</p>
 <p>In order to handle references to poems as well as to individual
 lines, the declaration for the reference system must be more
 complicated:
@@ -3555,27 +3557,7 @@ derived from edition <val>E1</val>.
    <refState ed="E1" unit="line"/>
 </refsDecl></egXML>
  </p>
-<p>This is synonymous with the following declaration using the
-<gi>cRefPattern</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><refsDecl>
-  <cRefPattern matchPattern="([^ ]+ [0-9]+\.[0-9]+\.[0-9]+)" replacementPattern="???"/>
-</refsDecl></egXML>
-<?tei winita need to replace ??? above with something equivalent to:
-<refsDecl>
-   <step refunit="work" delim=" "
-	 from="DESCENDANT (1 MILESTONE EDITION E1 UNIT work N %1)"
-	 to="FOLLOWING (1 MILESTONE EDITION E1 UNIT work)"/>
-   <step refunit="book" delim="."
-	 from="DESCENDANT (1 MILESTONE EDITION E1 UNIT book N %2)"
-	 to="FOLLLOWING (1 MILESTONE EDITION E1 UNIT book)"/>
-   <step refunit="poem" delim="."
-	 from="DESCENDANT (1 MILESTONE EDITION E1 UNIT poem N %3)"
-	 to="FOLLLOWING (1 MILESTONE EDITION E1 UNIT poem)"/>
-   <step refunit="line"
-	 from="DESCENDANT (1 MILESTONE EDITION E1 UNIT line N %4)"
-	 to="FOLLLOWING (1 MILESTONE EDITION E1 UNIT line)"/>
-</refsDecl> ?>
-</p></div></div>
+</div></div>
 <div type="div2" xml:id="COBI"><head>Bibliographic Citations and References</head>
 <p>Bibliographic references (that is, full descriptions of bibliographic
 items such as books, articles, films, broadcasts, songs, etc.) or
@@ -3682,7 +3664,7 @@ bibliographic information, for example to make sure it conforms to a
 particular stylesheet or retrieval processor, the <gi>biblStruct</gi>
 element should be used.  Note that several of the features in this and
 later examples are explained later in the current section.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBITY-eg-240"><biblStruct>
    <monogr>
       <author>Edward R. Tufte</author>
       <title>Envisioning Information</title>
@@ -3702,7 +3684,7 @@ one existing digital text within that of another (see further section
 texts, and it may be used in the same way as any other bibliographic
 element, as in this example:
  	<!-- titstmt requires title first -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblFull>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBITY-eg-240"><biblFull>
    <titleStmt>
       <title>Envisioning Information</title>
       <author>Tufte, Edward R[olf]</author>
@@ -4088,7 +4070,7 @@ applies to the edition in question.
  </p>
 <p>In this example, the <gi>respStmt</gi> elements apply to the work as
 a whole, not merely to the first edition:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBICOR-eg-246"><bibl>    
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBICOR-eg-248"><bibl>    
    <author>Lominadze, D. G.</author>
    <title level="m">Cyclotron waves in plasma.</title>
    <respStmt>
@@ -4258,7 +4240,7 @@ reports:
    <idno type="NIST">NISTIR 4681</idno>
 </biblStruct></egXML>
 and with dissertations:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBICOR-eg-246"><biblStruct>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBICOI-eg-264"><biblStruct>
    <monogr>
       <author>Hansen, W.</author>
       <title level="u">Creation of hierarchic text
@@ -4773,30 +4755,6 @@ space or indentation associated with either kind of line; if regarded
 as essential, this information would be recorded using the
 <att>rend</att> or <att>rendition</att> attributes discussed in <ptr target="#STGA"/>. </p>
 
-<!-- this example is prose according
-to
-http://etext.virginia.edu/etcbin/ot2www-pubeng?specfile=/web/data/whitman/whitman.o2w&act=surround&offset=87798&tag=%22Specimen+Days%22+;+from+Complete+Prose+Works+(1892)&query=odor+of+blood&id=WhiPro1
-certainly it appears in the Collected Prose of 1891 -->
-
-<!-- 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l>There they lie, in the largest, in an
-open space in the woods,</l>
-<l>From 500 to 600 poor fellows — the groans
-and screams —</l>
-<l>The odor of blood, mixed with the fresh scent
-of the night, <lb/>the grass, the trees —
-that Slaughter-house!</l></egXML> -->
-<!-- Walt Whitman, 1863, cited by Daniel Aaron, The           -->
-	<!-- Unwritten War:  American Writers and the Civil War       -->
-	<!-- (London:  OUP, 1973).  Aaron doesn't give any more       -->
-	<!-- detailed citation.  Need to replace this with an         -->
-	<!-- example from a more important edition, one about whose   -->
-	<!-- line breaks one might reasonably care.                   -->
-
-<!--In the copy text, this example is printed on four typographic lines,
-beginning with the words <mentioned>There</mentioned>,
-<mentioned>From</mentioned>, <mentioned>The</mentioned>, and
-<mentioned>the</mentioned>.-->
 
 <p>The <gi>l</gi> element should not be used to represent typographic
 lines in non-verse materials: if the line-breaking points in a prose
