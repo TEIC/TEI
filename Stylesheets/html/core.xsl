@@ -1074,10 +1074,10 @@
     </p>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements tei:q</xd:short>
+    <xd:short>Process elements tei:q and tei:said</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:q">
+  <xsl:template match="tei:q|tei:said">
     <xsl:choose>
       <xsl:when test="tei:p">
         <blockquote>
