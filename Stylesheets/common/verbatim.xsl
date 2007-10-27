@@ -72,9 +72,11 @@
 	    <xsl:value-of select="."/>
 	  </xsl:with-param>
 	</xsl:call-template>
-	<xsl:if test="substring(.,string-length(.))=' '">
+<!--	
+        <xsl:if test="substring(.,string-length(.))=' '">
 	  <xsl:text> </xsl:text>
 	</xsl:if>
+-->
       </xsl:when>
       <xsl:when test="normalize-space(.)=''">
         <xsl:for-each select="following-sibling::*[1]">
@@ -85,9 +87,11 @@
         </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
+<!--
 	<xsl:if test="starts-with(.,' ')">
 	  <xsl:text> </xsl:text>
 	</xsl:if>
+-->
         <xsl:call-template name="wraptext">
           <xsl:with-param name="count">0</xsl:with-param>
           <xsl:with-param name="indent">
