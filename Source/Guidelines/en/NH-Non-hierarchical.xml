@@ -190,7 +190,7 @@ $Id$
                     <s>the melody <lb n="4"/>Of this small lute gave ease to Petrarch's
                 wound.</s></p>
             </egXML></p>
-        <p>The use of these elements is by definition TEI conformant. Care should be taken, however,
+        <p>The use of these elements is by definition TEI Conformant. Care should be taken, however,
             that the semantic meaning of the milestone tags is preserved: semantically, for example,
                 <gi>lb</gi> is used to mark the start of a new (typographical) line. While in much
             modern poetry, typographical and metrical line divisions correspond, <gi>lb</gi> does
@@ -215,7 +215,7 @@ $Id$
                         type="delimiter"/></l>
             </egXML>
         </p>
-        <p>This method is TEI conformant.</p>
+        <p>This method is TEI Conformant.</p>
 
 
         <p>Custom elements can be designed to provide richer information about the feature being
@@ -239,7 +239,7 @@ $Id$
         <p>If the custom elements can be replaced by the generic <gi>anchor</gi> tag without loss of
             information, this method is TEI Conformable (see <ptr target="#CF"/>); if the custom
             elements introduce information or distinctions that cannot be captured using standard
-            TEI elements, the method is an extension of the TEI.</p>
+            TEI elements, the method is an extension.</p>
 
 
         <p>Elements that are normally used to encode nesting textual features (e.g. <gi>said</gi>,
@@ -269,7 +269,7 @@ $Id$
                     anchor tag automatically without loss of information (see <ptr target="#CF"/>).</item>
                 <item>The method represents an Extension if the modified elements are placed in a
                     distinct, non-TEI namespace, but contain information or distinctions that
-                    cannout be algorithmically translated to existing TEI elements without loss of
+                    cannot be algorithmically translated to existing TEI elements without loss of
                     information (see <ptr target="#CF"/>).</item>
                 <item>The method is non-conformant—and indeed strongly deprecated—if the modified
                     elements and attributes are not placed in a distinct, non-TEI namespace (see
@@ -281,7 +281,7 @@ $Id$
         <p>In each of the above examples (except the last), the relationship between the start and
             end delimiters (where these exist) of a given feature is implicit: it is assumed that
             "end" delimiters close the nearest preceding "start" delimiter, or, in the case of
-            milestones, that the milestone marks both the end of the preceding feature and the
+            milestones, that the milestone marks both the end of the preceding example and the
             beginning of the next. Complications arise, however, when the non-nesting text overlaps
             with other non-nesting text of the same type, as, for example, in a grammatical analysis
             of the various possible interpretations of the Noun Phrase <q>fast trains and
@@ -292,28 +292,28 @@ $Id$
             phrase, an unambiguous method of associating opening and closing boundary-delimiters is
             required: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-03">
                 <phr function="NP">
-                    <anchor type="delimiter" subtype="NPstart" xml:id="NPOptionA-1"/>
+                    <anchor type="delimiter" subtype="NPstart" xml:id="NPOptionB-1"/>
                     <w function="adjective">Fast</w>
-                    <anchor type="delimiter" subtype="NPstart" xml:id="NPOptionB"/>
+                    <anchor type="delimiter" subtype="NPstart" xml:id="NPOptionA"/>
                     <w function="noun">trains</w>
-                    <anchor type="delimiter" subtype="NPend" corresp="#NPOptionA-1"/>
+                    <anchor type="delimiter" subtype="NPend" corresp="#NPOptionB-1"/>
                     <w function="conjunction">and</w>
-                    <anchor type="delimiter" subtype="NPstart" xml:id="NPOptionA-2"/>
+                    <anchor type="delimiter" subtype="NPstart" xml:id="NPOptionB-2"/>
                     <w function="noun">planes</w>
-                    <anchor type="delimiter" subtype="NPend" corresp="#NPOptionB"/>
-                    <anchor type="delimiter" subtype="NPend" corresp="#NPOptionA-2"/>
+                    <anchor type="delimiter" subtype="NPend" corresp="#NPOptionA"/>
+                    <anchor type="delimiter" subtype="NPend" corresp="#NPOptionB-2"/>
                 </phr>
             </egXML>
         </p>
         <p>In this encoding, the first interpretation (in which <mentioned>fast</mentioned> modifies
                 <mentioned>trains and planes</mentioned>), the phrase division is opened using an
                 <gi>anchor</gi> tag with the <att>xml:id</att> value
-            <mentioned>phraseOptionB</mentioned>; its end is indicated by an <gi>anchor</gi> with
-            the same value on its <att>corresp</att>; for the second reading (in which
+            <mentioned>phraseOptionA</mentioned>; its end is indicated by an <gi>anchor</gi> with
+            the same value on <att>corresp</att>; for the second reading (in which
                 <mentioned>fast</mentioned> modifies only <mentioned>trains</mentioned>) the two
             component Noun Phrases are opened using <gi>anchor</gi> tags with the <att>xml:id</att>
-            values <mentioned>phraseOptionA-1</mentioned> and <mentioned>phraseOptionA-2</mentioned>
-            and closed with <gi>anchor</gi> tags that use have the same values on their
+            values <mentioned>phraseOptionB-1</mentioned> and <mentioned>phraseOptionB-2</mentioned>
+            and closed with <gi>anchor</gi> tags that use have the same values on 
             <att>corresp</att>.</p>
         <p>Despite their advantages, segment-boundary delimiters incur the disadvantage of
             cumbersome processing: since the elements of the analysis (e.g. the sentences in the
@@ -345,7 +345,7 @@ $Id$
                 <soCalled>partial elements</soCalled>.</p>
         <p>In the case of our selection from Pinsky's poem, for example, the second passage of
             direct quotation, which crosses a line boundary and is broken up by a <mentioned>She
-                said</mentioned> in the narrator's voice, the encoding can be made to fit within the
+                said</mentioned> in the narrator's voice, can be made to fit within the
             hierarchy established by the metrical lineation by using two <gi>said</gi> elements:
                 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-02">
                 <lg>
@@ -392,7 +392,7 @@ $Id$
             difficult. An analysis that intended to count the number of sentences in Wordsworth's
             poem, for example, would arrive at an inflated figure if it understood the <gi>s</gi>
             tags to represent complete rhetorical sentences; if it wanted to do an analysis of his
-            syntax, it would not be able to assume that the <gi>s</gi> delimited linguistic
+            syntax, it would not be able to assume that <gi>s</gi> delimited linguistic
             sentences.</p>
         <p>The technique of fragmentation is often complemented by the technique of virtual joins.
             Virtual joins may be used to combine objects in the text to a new hierarchy. Here is
@@ -441,7 +441,7 @@ $Id$
                     <s part="F">Of this small lute gave ease to Petrarch's wound.</s>
                 </l>
             </egXML></p>
-        <p>This method is TEI conformant and simple to use. Its disadvantage is that it does not
+        <p>This method is TEI Conformant and simple to use. Its disadvantage is that it does not
             work well for cases of self-overlap, or if there are nested occurrences of the same
             element type, as it can become difficult to ascertain which initial, medial, or final
             partial element should be combined with which others or in which order. An example comes
@@ -521,7 +521,7 @@ $Id$
                 </p>
             </egXML>
         </p>
-        <p>This use of <gi>join</gi> is TEI conformant.</p>
+        <p>This use of <gi>join</gi> is TEI Conformant.</p>
         <p>The major advantage of fragmentation and virtual joins is that it allows all the
             hierarchies in the text to be handled explicitly: both the privileged one directly
             represented and the alternate hierarchy that has been split up and rejoined. The major
@@ -597,7 +597,7 @@ $Id$
                 </p>
             </egXML>
         </p>
-        <p>This is very similar to the use of <gi>join</gi> discussed above. Its main advantages of
+        <p>This is very similar to the use of <gi>join</gi> discussed above. The main advantages of
             the stand-off method are that it is possible to specify attributes on the aggregate
                 <gi>s</gi> elements, and that there exists off-the-shelf software that will perform
             appropriate processing. Stand-off markup may be used even when the base text being
