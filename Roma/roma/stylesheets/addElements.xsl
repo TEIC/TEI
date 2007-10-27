@@ -56,7 +56,10 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
      <input type="hidden" id="changedContent" name="changedContent" value="false"/>
      <table>
       <tr>
-       <td class="headline" colspan="2"><xsl:value-of disable-output-escaping="yes" select="$res_form_headline"/></td>
+       <td class="headline" colspan="2">
+	 <xsl:value-of select="$res_form_headline"/>:
+	 <xsl:value-of select="$elementName"/>
+       </td>
       </tr>
       <tr>
 	<xsl:if test="//errorList/error/location[text()='name']">

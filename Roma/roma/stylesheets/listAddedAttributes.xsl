@@ -33,7 +33,10 @@ Description
 	  <xsl:attribute name="value"><xsl:value-of select="$class"/></xsl:attribute>
 	</input>
 	<table>
-	  <tr><td class="headline" colspan="6"><xsl:value-of disable-output-escaping="yes" select="$res_form_headline"/></td></tr>
+	  <tr><td class="headline" colspan="6">
+	  <xsl:value-of select="$res_form_headline"/>:
+	  <xsl:value-of select="$element"/>
+	  </td></tr>
 	  <tr>
 	    <td colspan="6" class="spacer">
 	      <a>

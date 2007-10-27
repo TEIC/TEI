@@ -133,24 +133,29 @@ Description
 	    </td>
 	    <td class="formfield">
 	      <input class="radio" type="radio" name="optional" value="true">
-		<xsl:if
+		<xsl:choose>
+		  <xsl:when
 		       test="not(//currentAttribute/attDef/optional='req')">
-		  <xsl:attribute name="checked">1</xsl:attribute>
-		   </xsl:if>
-		   <xsl:if
+		    <xsl:attribute name="checked">1</xsl:attribute>
+		  </xsl:when>
+		   <xsl:when
 		       test="not(//currentAttribute)">
 		     <xsl:attribute name="checked">1</xsl:attribute>
-		   </xsl:if>
-		 </input>
-		 yes
-		 <br/>
-		 <input class="radio" type="radio" name="optional" value="no">
-		   <xsl:if
-		       test="//currentAttribute/attDef/optional='req'">
-		     <xsl:attribute name="checked">1</xsl:attribute>
-		   </xsl:if>
-		 </input>
-		 no
+		   </xsl:when>
+		</xsl:choose>
+	      </input>
+	      yes
+	      <br/>
+	      <input class="radio" 
+		     type="radio" 
+		     name="optional" 
+		     value="false">
+		<xsl:if
+		    test="//currentAttribute/attDef/optional='req'">
+		  <xsl:attribute name="checked">1</xsl:attribute>
+		</xsl:if>
+	      </input>
+	      no
 	       </td>
 	     </tr>
 	     <tr>

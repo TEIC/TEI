@@ -945,7 +945,8 @@ class roma
 	$this->addErrorsDom( $oListDom, $aoErrors );
 
         // Tell the stylesheet something about the Element
-        $aszParam = array( 'selectedMode' => 'changeElement', 'headline' => roma_message_headline_changeElement );
+        $aszParam = array( 'selectedMode' => 'changeElement',
+        'headline' => roma_message_headline_changeElement );
 
         $aszParam[ 'elementName' ] = $_REQUEST[ 'element' ];
         $aszParam[ 'elementClasses' ] = join( ';', $aszClasses );  

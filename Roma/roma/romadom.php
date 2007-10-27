@@ -202,7 +202,7 @@ class romaDom extends domDocument
     public function getIncludedElementsInModule( $szModule, &$aszElements )
       {
 	$oListDom = new domDocument();
-	$oListDom->loadXML( join( '', file( roma_xquery_server . 'elemsbymod.xq?module=' . $szModule ) ) );
+	$oListDom->loadXML( join( '', file( roma_xquery_server  . 'elemsbymod.xq?module=' . $szModule . '&lang=' . $_SESSION['docLang'] )));
 	$aoElements = $oListDom->getElementsByTagname( 'elementName' );
 	$this->getExcludedElementsInModule( $szModule, $aszExcluded );
 
@@ -1432,7 +1432,11 @@ class romaDom extends domDocument
 
 	    //optional
 	    
-	    if ($aszConfig[ 'optional' ] == 'no')
+	    if ($aszConfig[ 'optional' ] == 'true' )
+	    	{
+		    $oAttDef->setAttribute( 'usage', 'opt' );
+		    }
+	    else
 	    	{
 		    $oAttDef->setAttribute( 'usage', 'req' );
 		    }
