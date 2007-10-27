@@ -538,34 +538,30 @@ $Id$
                 </p>
             </egXML>
         </p>
+        <p>This use of <gi>join</gi> is TEI conformant.</p>
         <p>The major advantage of fragmentation and virtual joins is that it allows all the
-            hierarchies in the text to be handled explicitly, both the privileged one directly
-            represented, and the alternate hierarchy which has been split up and rejoined. The major
+            hierarchies in the text to be handled explicitly: both the privileged one directly
+            represented and the alternate hierarchy that has been split up and rejoined. The major
             disadvantages are that (like most of the other methods described here) it privileges one
             hierarchy over the others, requires special processing to reconstitute the elements of
-            the other hierarchies, and, except in the case of join, can be semantically misleading.</p>
-        <p>This method is TEI conformant.</p>
+            the other hierarchies, and, except in the case of <gi>join</gi>, can be semantically
+            misleading.</p>
     </div>
     <div type="div2" xml:id="NHSO">
         <head>Stand-off Markup</head>
-        <p>Classic use of markup is characterized by embedding the annotation in the text. An
-            alternative approach separates the text and the annotation. This approach is known as
-            stand-off annotation. See section <ptr target="#SASO"/> for more information on and
-            examples of stand-off markup. Stand-off annotation establishes a new hierarchy by
-            building a new tree whose nodes are XML elements which do not contain textual content,
-            but rather links to another <term>layer</term>: <gloss>a node in another XML document or
-                a span of text</gloss>.
-            <?sb2aw In some respects a generalization of the virtual
-            joins, because not only contents of elements are joined, but also
-            ranges between points within the document. ?>
-            This approach can be subdivided according to different criteria. A first distinction
-            concerns the link base, i.e. the content to which annotations are to be applied.
-            Sometimes the link target contains markup that can be referred to explicitly, as in the
-            following example where the offset markup uses the <att>xml:id</att> values on
-            <gi>w</gi> to provide targets for <gi>include</gi><note place="foot">A fake namespace is
-                given for XInclude here, to avoid the markup being interpreted literally during
-                processing.</note>: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                corresp="#NH-eg-01">
+        <p>Most markup is characterized by the embedding of elements in the text. An alternative
+            approach separates the text and the elements used to describe it. This approach is known
+            as stand-off markup (see section <ptr target="#SASO"/>). This approach establishes a new
+            hierarchy by building a new tree whose nodes are XML elements that do not contain
+            textual content, but rather links to another <term>layer</term>: <gloss>a node in
+                another XML document or a span of text</gloss>. This approach can be subdivided
+            according to different criteria. A first distinction concerns the link base, i.e. the
+            content to which annotations are to be applied. Sometimes the link target contains
+            markup that can be referred to explicitly, as in the following example where the offset
+            markup uses the <att>xml:id</att> values on <gi>w</gi> to provide targets for
+                <gi>include</gi><note place="foot">A fake namespace is given for XInclude here, to
+                avoid the markup being interpreted literally during processing.</note>: <egXML
+                xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
                 <l>
                     <w xml:id="w001">Scorn</w>
                     <w xml:id="w002">not</w>
@@ -618,16 +614,16 @@ $Id$
                 </p>
             </egXML>
         </p>
-        <p>This is very similar to the use of <gi>join</gi> discussed above; the main advantages of
-                <gi>xInclude</gi> over <gi>join</gi> are that it is possible to specify attributes
-            on the aggregate <gi>s</gi> elements, and that there exists off-the-shelf software that
-            will perform xInclude processing. Stand-off markup may be used even when the base text
-            being annotated is plain text, i.e. does not have any XML encoding. In this case the
-            range of text to be annotated is indicated by character offsets. See <ptr target="#SATS"
-            />, in particular <ptr target="#SATSSR"/>. Another distinction concerns the number of
-            files which can serve as link targets. Often, one (dedicated) annotation is used as the
-            link target of all the other annotations. It is also possible to freely interlink
-            several layers.</p>
+        <p>This is very similar to the use of <gi>join</gi> discussed above. Its main advantages of
+            the stand-off method are that it is possible to specify attributes on the aggregate
+                <gi>s</gi> elements, and that there exists off-the-shelf software that will perform
+            appropriate processing. Stand-off markup may be used even when the base text being
+            annotated is plain text, i.e. does not have any XML encoding. In this case, the range of
+            text to be marked up is indicated by character offsets (see <ptr target="#SATS"/>, in
+            particular <ptr target="#SATSSR"/>). Another distinction concerns the number of files
+            which can serve as link targets. Often, one (dedicated) annotation is used as the link
+            target of all the other annotations. It is also possible to freely interlink several
+            layers.</p>
         <p>It has been noted that stand-off markup has several advantages over embedded annotations.
             In particular, it is possible to produce annotations of a text even when the source
             document is read-only. Furthermore, annotation files can be distributed without
@@ -640,47 +636,49 @@ $Id$
             separate interpretation, and the layers — although separate — depend on each other.
             Moreover, although all of the information of the multiple hierarchies is included, the
             information may be difficult to access using generic methods.</p>
-        <p>In as much as it uses elements not included in the TEI namespace, standoff markup
+        <p>In as much as it uses elements not included in the TEI namespace, stand-off markup
             involves an extension of the TEI.</p>
     </div>
     <div type="div2" xml:id="NHNX">
         <head>Non-XML-based Approaches</head>
         <p>There exist many non-XML methods of encoding a text that either solve or do not suffer
             the problem of the inability to encode overlapping hierarchies. These include, but are
-            not limited to the following proposals.</p>
-        <p>One attempt at extending XML is represented by the work of Andreas Witt and others (<ptr
-                target="#NH-BIBL-2" type="cit"/>), who have applied the notion of concurrent markup
-            to XML (thus reintroducing the CONCUR feature of SGML, which was omitted from XML).</p>
-        <p>Alexander Dekhtyar and students at the University of Kentucky have also developed a form
-            of document representation in which several trees share all or part of the same
-            frontier, and in which each individual view of the document has the form of a tree; see
-                <ptr target="#NH-BIBL-3" type="cit"/></p>
-        <p>The <soCalled>colored XML</soCalled> proposal (<ptr target="#NH-BIBL-4" type="cit"/>)
-            stores a body of information as a set of intertwined XML trees. The colored XML approach
-            eliminates unnecessary redundancy and makes the database readily updateable, while
-            allowing the user to exploit different hierarchical access paths.</p>
-        <p>The MultiX proposal (<ptr target="#NH-BIBL-5" type="cit"/>) represents documents as
-            directed graphs. Because XML is used to represent the graph, the document is, at least
-            in principle, manipulable with standard XML tools.</p>
-        <p>According to the Just-In-Time-Trees proposal (<ptr target="#NH-BIBL-6" type="cit"/>),
-            documents may be stored using XML, but the XML representation is processed in
-            non-standard ways and may be mapped onto different data structures than those known from
-            XML.</p>
-        <p>The <choice>
-                <abbr>LMNL</abbr>
-                <expan>Layered Markup and Annotation Language</expan>
-            </choice> proposal offers alternatives to the basic XML linear form as well as its data
-            model and processing model, with an alternative notation to XML and a data structure
-            based on Core Range Algebra (<ptr target="#NH-BIBL-7" type="cit"/>).</p>
-        <p><choice>
-                <expan>Markup Languages for Complex Documents</expan>
-                <abbr>MLCD</abbr>
-            </choice> provides a notation (TexMECS) and a data structure (Goddag) as well as a draft
-            constraint language for the representation of non-hierarchical structures; see <ptr
-                target="#NH-BIBL-8" type="cit"/>.</p>
+            not limited to, the following proposals.</p>
+        <list>
+            <item>Applying the notion of concurrent markup to XML (<ptr target="#NH-BIBL-2"
+                    type="cit"/>). This reintroduces the CONCUR feature of SGML, which was omitted
+                from the XML specification.</item>
+            <item>Designing a form of document representation in which several trees share all or
+                part of the same frontier, and in which each individual view of the document has the
+                form of a tree (see <ptr target="#NH-BIBL-3" type="cit"/>).</item>
+            <item>The <soCalled>colored XML</soCalled> proposal (<ptr target="#NH-BIBL-4" type="cit"
+                />), which stores a body of information as a set of intertwined XML trees. This
+                approach eliminates unnecessary redundancy and makes the database readily
+                updateable, while allowing the user to exploit different hierarchical access paths.</item>
+            <item>The MultiX proposal (<ptr target="#NH-BIBL-5" type="cit"/>) , which represents
+                documents as directed graphs. Because XML is used to represent the graph, the
+                document is, at least in principle, manipulable with standard XML tools.</item>
+            <item>The Just-In-Time-Trees proposal (<ptr target="#NH-BIBL-6" type="cit"/>), which
+                stores documents using XML, but processes the XML representation in non-standard
+                ways and allows it to be mapped onto data structures that are different from those
+                known from XML.</item>
+            <item>The <choice>
+                    <abbr>LMNL</abbr>
+                    <expan>Layered Markup and Annotation Language</expan>
+                </choice> proposal. This offers alternatives to the basic XML linear form as well as
+                its data and processing models. It uses an alternative notation to XML and a data
+                structure based on Core Range Algebra (<ptr target="#NH-BIBL-7" type="cit"/>).</item>
+            <item><choice>
+                    <expan>Markup Languages for Complex Documents</expan>
+                    <abbr>MLCD</abbr>
+                </choice>. This provides a notation (TexMECS) and a data structure (Goddag) as well
+                as a draft constraint language for the representation of non-hierarchical
+                structures; see <ptr target="#NH-BIBL-8" type="cit"/>.</item>
+        </list>
         <p>These approaches are based either on non-standard XML processing or data models, or not
             not based on XML at all. Since TEI is currently based on XML they are not described any
-            further in these Guidelines.</p>
+            further in these Guidelines. Use of these methods with the TEI will certainly involve
+            extensions; in most cases the documents will also be non-Conformant.</p>
     </div>
     <div type="div2" xml:id="NHDI">
         <head>Discussion</head>
