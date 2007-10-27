@@ -138,7 +138,7 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
  	 </input>
         </td>    
        </tr>
-
+      </xsl:if>
       <tr>
 	<td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_description"/></td>
 	<td>
