@@ -8,96 +8,85 @@ $Id$
 -->
 <div n="31" type="div1" xml:id="NH" xmlns="http://www.tei-c.org/ns/1.0">
     <head>Non-hierarchical Structures</head>
-    <p>XML strongly emphasizes a hierarchical document model. At various points,
-        these Guidelines discuss problems which arise when using XML to encode
-        textual features that either do not naturally lend themselves to
-        representation in a strictly hierarchical form or conflict with other
-        hierarchies represented in the markup. Examples of such situations
-        include: <list type="bullets">
+    <p>XML strongly emphasizes a hierarchical document model. At various points, these Guidelines
+        discuss problems which arise when using XML to encode textual features that either do not
+        naturally lend themselves to representation in a strictly hierarchical form or conflict with
+        other hierarchies represented in the markup. Examples of such situations include: <list
+            type="bullets">
             <item>
-                <p>Conflict between the hierarchy established by the physical
-                    structure of a document (e.g. volume, page, column, line)
-                    and its rhetorical or linguistic structure (e.g. chapters,
-                    paragraphs, sentences, acts, scenes, etc.)</p>
+                <p>Conflict between the hierarchy established by the physical structure of a
+                    document (e.g. volume, page, column, line) and its rhetorical or linguistic
+                    structure (e.g. chapters, paragraphs, sentences, acts, scenes, etc.)</p>
             </item>
             <item>
-                <p>Conflict between a verse text's metrical structure (e.g. its
-                    arrangment in stanzas and metrical lines) and its rhetorical
-                    or linguistic structure (e.g. phrases, sentences, and, for
-                    plays, acts, scenes, and speeches).</p>
+                <p>Conflict between a verse text's metrical structure (e.g. its arrangement in
+                    stanzas and metrical lines) and its rhetorical or linguistic structure (e.g.
+                    phrases, sentences, and, for plays, acts, scenes, and speeches).</p>
             </item>
             <item>
-                <p>Conflict between metrical, rhetorical, or linguistic
-                    structure and the representation of direct speech,
-                    especially if the quoted speech is interrupted by other
-                    elements (e.g. <said>What</said>, she asked, <said>was that
-                        all about</said>) or crosses metrical, rhetorical, or
-                    linguistic boundaries.</p>
+                <p>Conflict between metrical, rhetorical, or linguistic structure and the
+                    representation of direct speech, especially if the quoted speech is interrupted
+                    by other elements (e.g. <said>What</said>, she asked, <said>was that all
+                    about</said>) or crosses metrical, rhetorical, or linguistic boundaries.</p>
             </item>
             <item>
-                <p>Conflict between different analytical views or descriptions
-                    of a text or document, e.g. markup intended to encode
-                    diplomatic information about a word's appearance in a
-                    manuscript with markup intended to describe its morphology
-                    or pronunciation.</p>
+                <p>Conflict between different analytical views or descriptions of a text or
+                    document, e.g. markup intended to encode diplomatic information about a word's
+                    appearance in a manuscript with markup intended to describe its morphology or
+                    pronunciation.</p>
             </item>
         </list>
     </p>
-    <p>Non-nesting information poses fundamental problems for any XML-based
-        encoding scheme, and it must be stated at the outset that no current
-        solution combines all the desirable attributes of formal simplicity,
-        capacity to represent all occurring or imaginable kinds of structures,
-        suitability for formal or mechanical validation. The representation of
-        non-hierarchical information is thus necessarily a matter of tradeoffs
-        among various sets of advantages and disadvantages.</p>
-    <p>These Guidelines support several methods for handling non-hierarchical
-        information: <list type="bullets">
+    <p>Non-nesting information poses fundamental problems for any XML-based encoding scheme, and it
+        must be stated at the outset that no current solution combines all the desirable attributes
+        of formal simplicity, capacity to represent all occurring or imaginable kinds of structures,
+        suitability for formal or mechanical validation. The representation of non-hierarchical
+        information is thus necessarily a matter of trade offs among various sets of advantages and
+        disadvantages.</p>
+    <p>These Guidelines support several methods for handling non-hierarchical information: <list
+            type="bullets">
             <item>
-                <p>redundant encoding of information in multiple forms
-                    (discussed in <ptr target="#NHME"/>)</p>
+                <p>redundant encoding of information in multiple forms (discussed in <ptr
+                        target="#NHME"/>)</p>
             </item>
             <item>
-                <p>the use of empty elements to delimit the boundaries of a
-                    non-nesting structure (discussed in <ptr target="#NHBM"
-                />)</p>
+                <p>the use of empty elements to delimit the boundaries of a non-nesting structure
+                    (discussed in <ptr target="#NHBM"/>)</p>
             </item>
             <item>
-                <p>the division of a logically single non-nesting element into
-                    segments that nest that properly in their immediate
-                    hierarchical context but can also be reconstituted virtually
-                    across these hierarchical boundaries (discussed <ptr target="#NHVE"
-                />)</p>
+                <p>the division of a logically single non-nesting element into segments that nest
+                    that properly in their immediate hierarchical context but can also be
+                    reconstituted virtually across these hierarchical boundaries (discussed <ptr
+                        target="#NHVE"/>)</p>
             </item>
             <item>
-                <p>stand-off markup: the annotation of information by pointing
-                    at it, rather than placing XML tags within it (discussed in
-                        <ptr target="#NHSO"/>)</p>
+                <p>stand-off markup: the annotation of information by pointing at it, rather than
+                    placing XML tags within it (discussed in <ptr target="#NHSO"/>)</p>
             </item>
-        </list>
-        Some of these methods can be used in TEI conformant documents. Others require extension.
-    </p>
-    <p>In the sections which follow these techniques are described, and their
-        advantages and disadvantages are briefly discussed. The various
-        solutions to the problem will be exemplified using extracts from two
-        poems as examples. The first is the opening quatrain from William
-        Wordsworth's <title level="a">Scorn not the sonnet</title>: <quote>
+        </list> Some of these methods can be used in TEI conformant documents. Others require
+        extension. </p>
+    <p>In the sections which follow these techniques are described, and their advantages and
+        disadvantages are briefly discussed. The various solutions to the problem will be
+        exemplified using extracts from two poems as examples. The first is the opening quatrain
+        from William Wordsworth's <title level="a">Scorn not the sonnet</title>: <quote>
             <l>Scorn not the sonnet; critic, you have frowned,</l>
             <l>Mindless of its just honours; with this key</l>
             <l>Shakespeare unlocked his heart; the melody</l>
             <l>Of this small lute gave ease to Petrarch's wound.</l>
-        </quote> The second example is the third stanza from the fourth section
-        of Robert Pinsky's <title level="a">Essay on Psychiatrists</title>: <quote>
+        </quote> The second example is the third stanza from the fourth section of Robert Pinsky's
+            <title level="a">Essay on Psychiatrists</title>: <quote>
             <!-- <l>But he would work late at the Bauhaus,</l>
             <l>And only came home now and then.</l>
             <l>She said, “What am I running, a chow house?</l>
             <l>It's time to change partners again!”</l> -->
-        <!--       <bibl>
+            <!--       <bibl>
         <author><persName>Lehrer, Tom</persName></author>
         <title level="a">Alma</title>
         <title level="m">That Was the Year that Was</title>
         <biblScope type="CD">track 11</biblScope>
         <biblScope type="LP">side 2, song 4</biblScope>
-        </bibl> -->            <lg>
+        </bibl> -->
+            <lg>
                 <l>Catholic woman of twenty-seven with five children</l>
                 <l>And a first-rate body—pointed her finger</l>
                 <l>at the back of one certain man and asked me,</l>
@@ -105,40 +94,35 @@ $Id$
                 <l>She said, "He <emph>looks</emph> like a psychiatrist."</l>
                 <l>Grown quiet, I looked at his pink back, and thought.</l>
             </lg>
-        </quote> These two texts can be analysed in various ways. The first,
-        which we might describe as the <soCalled>Metrical View</soCalled>
-        encodes the text according to its metrical features: line divisions (as
-        here), stanzas or cantos in larger poems, and perhaps prosodic features
-        like stress or syllable patterns, alliteration, or rhyme. A second view,
-        which we might describe as the <soCalled>Grammatical</soCalled>, encodes
-        linguistic and rhetorical features: phonemes, morphemes, words, phrases,
-        clauses, and sentences. A third view, the <soCalled>Dialogic</soCalled>,
-        might concentrate on narrative voice: distinguishing between the
-        narrator and his/her interlocutors and identifying individual segments
-        as direct quotations. In our examples, we will restrict ourselves to
-        relatively simple conflicts: for the <term>Metrical View</term> we will
-        encode only lines and linegroups; for the <term>Grammatical View</term>
-        we will restrict ourselves to encoding sentences; and for the
-            <term>Dialogic View</term>, we only will distinguish direct
-        quotation from other narration.</p>
+        </quote> These two texts can be analysed in various ways. The first, which we might describe
+        as the <soCalled>Metrical View</soCalled> encodes the text according to its metrical
+        features: line divisions (as here), stanzas or cantos in larger poems, and perhaps prosodic
+        features like stress or syllable patterns, alliteration, or rhyme. A second view, which we
+        might describe as the <soCalled>Grammatical</soCalled>, encodes linguistic and rhetorical
+        features: phonemes, morphemes, words, phrases, clauses, and sentences. A third view, the
+            <soCalled>Dialogic</soCalled>, might concentrate on narrative voice: distinguishing
+        between the narrator and his/her interlocutors and identifying individual segments as direct
+        quotations. In our examples, we will restrict ourselves to relatively simple conflicts: for
+        the <term>Metrical View</term> we will encode only lines and line groups; for the
+            <term>Grammatical View</term> we will restrict ourselves to encoding sentences; and for
+        the <term>Dialogic View</term>, we only will distinguish direct quotation from other
+        narration.</p>
     <div type="div2" xml:id="NHME">
         <head>Multiple Encodings of the Same Information</head>
-        <p>Conceptually, the simplest method of disentangling two (or more)
-            conflicting hierarchical views of the same information is to encode
-            it twice (or more), each time capturing a single view.</p>
-        <p>Thus, for example, the <term>Metrical View</term> of <title level="a">Scorn not
-                the sonnet</title> might be encoded as follows, using the
-            <gi>l</gi> element to encode each metrical line: <egXML
-                xmlns="http://www.tei-c.org/ns/Examples"  corresp="#NH-eg-01">
+        <p>Conceptually, the simplest method of disentangling two (or more) conflicting hierarchical
+            views of the same information is to encode it twice (or more), each time capturing a
+            single view.</p>
+        <p>Thus, for example, the <term>Metrical View</term> of <title level="a">Scorn not the
+                sonnet</title> might be encoded as follows, using the <gi>l</gi> element to encode
+            each metrical line: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
                 <l>Scorn not the sonnet; critic, you have frowned,</l>
                 <l>Mindless of its just honours; with this key</l>
                 <l>Shakespeare unlocked his heart; the melody</l>
                 <l>Of this small lute gave ease to Petrarch's wound.</l>
             </egXML></p>
-        <p>The <term>Grammatical View</term> would be encoded by taking the same
-            text and replacing the metrical markup with information about its
-            sentence structure: <egXML
-	    xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
+        <p>The <term>Grammatical View</term> would be encoded by taking the same text and replacing
+            the metrical markup with information about its sentence structure: <egXML
+                xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
                 <p>
                     <s>Scorn not the sonnet;</s>
                     <s>critic, you have frowned, Mindless of its just honours;</s>
@@ -146,9 +130,8 @@ $Id$
                     <s>the melody Of this small lute gave ease to Petrarch's wound.</s>
                 </p>
             </egXML></p>
-        <p>Likewise, the more complex passage from Pinsky would be encoded in
-            three different ways to reflect the different metrical, grammatical,
-            and dialogic views of its text: <egXML
+        <p>Likewise, the more complex passage from Pinsky would be encoded in three different ways
+            to reflect the different metrical, grammatical, and dialogic views of its text: <egXML
                 xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-02">
                 <lg>
                     <l>Catholic woman of twenty-seven with five children</l>
@@ -162,313 +145,283 @@ $Id$
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <p>
                     <s>Catholic woman of twenty-seven with five children And a first-rate
-                           body—pointed her finger at the back of one certain man and asked me,
-                           "Is that guy a psychiatrist?"  and by god he was!</s>
+                        body—pointed her finger at the back of one certain man and asked me, "Is
+                        that guy a psychiatrist?" and by god he was!</s>
                 </p>
                 <p>
-                    <s>"Yes," She said, "He <emph>looks</emph> like a  psychiatrist."</s>
+                    <s>"Yes," She said, "He <emph>looks</emph> like a psychiatrist."</s>
                 </p>
                 <p>
                     <s>Grown quiet, I looked at his pink back, and thought.</s>
                 </p>
             </egXML>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                 <p>
-                     Catholic woman of twenty-seven with five children And a first-rate
-                     body—pointed her finger at the back of one certain man and asked me,
-                     <said>Is that guy a psychiatrist?</said> and by god he was!
-                 </p>
+                <p> Catholic woman of twenty-seven with five children And a first-rate body—pointed
+                    her finger at the back of one certain man and asked me, <said>Is that guy a
+                        psychiatrist?</said> and by god he was! </p>
                 <p>
-                     <said>Yes,</said> She said, <said>He <emph>looks</emph> like a
-                     psychiatrist.</said>
+                    <said>Yes,</said> She said, <said>He <emph>looks</emph> like a
+                    psychiatrist.</said>
                 </p>
-                <p>
-                    Grown quiet, I looked at his pink back, and
-                     thought.
-                </p>
+                <p> Grown quiet, I looked at his pink back, and thought. </p>
             </egXML>
         </p>
-        <p>The advantages of this method of markup are that each way of looking
-            at the information is explicitly represented in the data and that
-            the individual views are simple to process. The disadvantages are
-            that the method requires the maintenance of multiple copies of
-            identical textual content (an invitation to inconsistency) and that
-            there is no explicit indication that the various views, which might
-            be in separate files, are related to each other: it might prove
-            difficult to combine the views or access information from one view
-            while processing the file that contains the encoding of another.<note place="foot">It has been shown, however, that it is possible to
-                relate the different annotations in an indirect way:
-                if the textual content of the annotations is
-                identical, the very text can serve as a means for
-                linking the different annotations, as described in
-                <ptr target="#NH-BIBL-01"/>.            </note></p>
+        <p>The advantages of this method of markup are that each way of looking at the information
+            is explicitly represented in the data and that the individual views are simple to
+            process. The disadvantages are that the method requires the maintenance of multiple
+            copies of identical textual content (an invitation to inconsistency) and that there is
+            no explicit indication that the various views, which might be in separate files, are
+            related to each other: it might prove difficult to combine the views or access
+            information from one view while processing the file that contains the encoding of
+                another.<note place="foot">It has been shown, however, that it is possible to relate
+                the different annotations in an indirect way: if the textual content of the
+                annotations is identical, the very text can serve as a means for linking the
+                different annotations, as described in <ptr target="#NH-BIBL-01"/>. </note></p>
         <p>The Multiple Encoding Method is TEI conformant.</p>
     </div>
     <div type="div2" xml:id="NHBM">
         <head>Boundary Marking with Empty Elements</head>
-        <p>A second method for accommodating non-hierarchical objects in an XML
-            document involves marking the starting and (usually) end points of
-            the non-nesting material. This prevents textual features that fall
-            outside the privileged hierarchy from invalidating the document
-            while identifying their beginnings and ends for further processing.
-            The disadvantage of this method is that no single XML element
-            represents the non-nesting material and, as a result, processing
-            with XML technologies is significantly more difficult.</p>
-        <p>The empty elements used at each end are called <term>segment-boundary
-                elements</term> or <term>segment-boundary delimiters</term>.
-            There are several variations on this method of encoding: <list
-                type="bullets">
+        <p>A second method for accommodating non-hierarchical objects in an XML document involves
+            marking the starting and (usually) end points of the non-nesting material. This prevents
+            textual features that fall outside the privileged hierarchy from invalidating the
+            document while identifying their beginnings and ends for further processing. The
+            disadvantage of this method is that no single XML element represents the non-nesting
+            material and, as a result, processing with XML technologies is significantly more
+            difficult.</p>
+        <p>The empty elements used at each end are called <term>segment-boundary elements</term> or
+                <term>segment-boundary delimiters</term>. There are several variations on this
+            method of encoding: <list type="bullets">
                 <item>
-                    <p>For some common structural features, the TEI provides
-                        milestone elements that can be used to mark the
-                        beginning of a textual feature. These include
-                        <gi>lb</gi>, <gi>pb</gi>, <gi>cb</gi>,
-                        <gi>handShift</gi>, and the generic <gi>milestone</gi>.
-                        Using <gi>lb</gi>, for example, it is possible to
+                    <p>For some common structural features, the TEI provides milestone elements that
+                        can be used to mark the beginning of a textual feature. These include
+                        <gi>lb</gi>, <gi>pb</gi>, <gi>cb</gi>, <gi>handShift</gi>, and the generic
+                            <gi>milestone</gi>. Using <gi>lb</gi>, for example, it is possible to
                         indicate both the physical lineation of a poem on the page and its
-                        grammatical division into sentences:<egXML xmlns="http://www.tei-c.org/ns/Examples"  corresp="#NH-eg-01">
+                        grammatical division into sentences:<egXML
+                            xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
                             <p>
-                                <s><lb n="1"/>Scorn not the sonnet;</s>;
-                                <s>critic, you have frowned, <lb n="2"/>Mindless of its just honours;</s> 
-                                <s>with this key <lb n="3"/>Shakespeare unlocked his heart;</s> 
-                                <s>the melody <lb n="4"/>Of this small lute gave ease to Petrarch's wound.</s></p>
+                                <s><lb n="1"/>Scorn not the sonnet;</s>; <s>critic, you have
+                                    frowned, <lb n="2"/>Mindless of its just honours;</s>
+                                <s>with this key <lb n="3"/>Shakespeare unlocked his heart;</s>
+                                <s>the melody <lb n="4"/>Of this small lute gave ease to Petrarch's
+                                    wound.</s></p>
                         </egXML></p>
-                    <p>The use of these elements is by definition TEI conformant. Care should be taken, however, that the semantic meaning of the milestone tags is preserved: semantically, for example, <gi>lb</gi> is used to mark the start of a new (typographical) line. While in much modern poetry, typographical and metrical line divisions correspond, <gi>lb</gi> does not itself make a metrical claim: in encoding verse from sources, such as Old English manuscripts, where physical line breaks are not used to indicate metrical lineation, the correspondence would break down entirely.</p>
+                    <p>The use of these elements is by definition TEI conformant. Care should be
+                        taken, however, that the semantic meaning of the milestone tags is
+                        preserved: semantically, for example, <gi>lb</gi> is used to mark the start
+                        of a new (typographical) line. While in much modern poetry, typographical
+                        and metrical line divisions correspond, <gi>lb</gi> does not itself make a
+                        metrical claim: in encoding verse from sources, such as Old English
+                        manuscripts, where physical line breaks are not used to indicate metrical
+                        lineation, the correspondence would break down entirely.</p>
                 </item>
                 <item>
-                    <p>The segment boundaries may be delimited by the generic
-                        <gi>anchor</gi> element. Attributes can then be used to indicate the type of feature being
-                        delimited and whether a given instance opens or closes the
-                        feature. <egXML xmlns="http://www.tei-c.org/ns/Examples"  corresp="#NH-eg-01">
+                    <p>The segment boundaries may be delimited by the generic <gi>anchor</gi>
+                        element. Attributes can then be used to indicate the type of feature being
+                        delimited and whether a given instance opens or closes the feature. <egXML
+                            xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
                             <l>
-                                <anchor subtype="sentenceStart" type="delimiter"/>
-Scorn not the sonnet;
-                                <anchor subtype="sentenceEnd" type="delimiter"/>
-                                <anchor subtype="sentenceStart" type="delimiter"/>
-critic, you have frowned,</l>
-                            <l>Mindless of its just honours;
-                                <anchor subtype="sentenceEnd" type="delimiter"/>
-                                <anchor subtype="sentenceStart" type="delimiter"/>
-with this key</l>
-                            <l>Shakespeare unlocked his heart;
-                                <anchor subtype="sentenceEnd" type="delimiter"/>
-                                <anchor subtype="sentenceStart" type="delimiter"/>
-the melody</l>
-                            <l>Of this small lute gave ease to Petrarch's wound.
-                                <anchor subtype="sentenceEnd" type="delimiter"/></l>
+                                <anchor subtype="sentenceStart" type="delimiter"/> Scorn not the
+                                sonnet; <anchor subtype="sentenceEnd" type="delimiter"/>
+                                <anchor subtype="sentenceStart" type="delimiter"/> critic, you have
+                                frowned,</l>
+                            <l>Mindless of its just honours; <anchor subtype="sentenceEnd"
+                                    type="delimiter"/>
+                                <anchor subtype="sentenceStart" type="delimiter"/> with this key</l>
+                            <l>Shakespeare unlocked his heart; <anchor subtype="sentenceEnd"
+                                    type="delimiter"/>
+                                <anchor subtype="sentenceStart" type="delimiter"/> the melody</l>
+                            <l>Of this small lute gave ease to Petrarch's wound. <anchor
+                                    subtype="sentenceEnd" type="delimiter"/></l>
                         </egXML>
                     </p>
                     <p>This method is TEI conformant.</p>
                 </item>
                 <item>
-                    <p>Custom elements can be designed to provide richer
-                        information about the features being delimited or
-                        its boundaries as attribute values or as part of the
-                        element name itself: e.g. <gi>boundaryStart
-                            element="sentence"/</gi>... <gi>boundaryEnd
-                            element="sentence"/</gi>, <gi>sentenceBoundary
-                            position="start"/</gi>... <gi>sentenceBoundary
-                            position="end"/</gi>, or
-                            <gi>sentenceBoundaryStart/</gi>...
-                            <gi>sentenceBoundaryEnd/</gi>: <egXML
+                    <p>Custom elements can be designed to provide richer information about the
+                        feature being delimited or its boundaries. This information can be included
+                        as attribute values or as part of the element name itself: e.g.
+                            <gi>boundaryStart element="sentence"/</gi>... <gi>boundaryEnd
+                            element="sentence"/</gi>, <gi>sentenceBoundary position="start"/</gi>...
+                            <gi>sentenceBoundary position="end"/</gi>, or
+                        <gi>sentenceBoundaryStart/</gi>... <gi>sentenceBoundaryEnd/</gi>: <egXML
                             xmlns="http://www.tei-c.org/ns/Examples"
-                            xmlns:n="http://www.example.org/ns/nonTEI"  corresp="#NH-eg-01">
+                            xmlns:n="http://www.example.org/ns/nonTEI" corresp="#NH-eg-01">
                             <l>
-                                <n:sentenceBoundaryStart/>Scorn not the sonnet;
-                                <n:sentenceBoundaryEnd/>
+                                <n:sentenceBoundaryStart/>Scorn not the sonnet; <n:sentenceBoundaryEnd/>
                                 <n:sentenceBoundaryStart/>critic, you have frowned,</l>
-                            <l>Mindless of its just honours;
-                                <n:sentenceBoundaryEnd/>
+                            <l>Mindless of its just honours; <n:sentenceBoundaryEnd/>
                                 <n:sentenceBoundaryStart/>with this key</l>
-                            <l>Shakespeare unlocked his heart;
-                                <n:sentenceBoundaryEnd/>
+                            <l>Shakespeare unlocked his heart; <n:sentenceBoundaryEnd/>
                                 <n:sentenceBoundaryStart/>the melody</l>
                             <l>Of this small lute gave ease to Petrarch's wound.
                                 <n:sentenceBoundaryEnd/></l>
-                            </egXML>
+                        </egXML>
                     </p>
-                    <p>Because it involves additions to the TEI abstract model, this method is an extension of the TEI.</p>
+                    <p>Because it involves additions to the TEI abstract model, this method is an
+                        extension of the TEI.</p>
                 </item>
                 <item>
-
-                    <p>A final method extends the TEI by changing
-                    elements that are normally not empty  so that they
-		    can be
-                    used without content as boundary
-                    delimiters.  Additional attributes 
-(<att>sID</att> and <att>eID</att> in the
-		    example below) are defined in
-                    order to allow the unambiguous correlation of
-                    start and end points (this method has been
-                    introduced in the markup literature under various
-                    names, e.g. Trojan milestones, HORSE markup, CLIX,
-                    and COLT, and has been described in detail by <ptr
-                    target="#NH-BIBL-1" type="cit"/>): <egXML
-                        xmlns="http://www.tei-c.org/ns/Examples"  corresp="#NH-eg-01">
-
-		    <lg xmlns:hr="http://www.example.org/ns/nonTEI">
-		      <l>
-			<hr:s sID="s01"/>Scorn not the sonnet;
-			<hr:s eID="s01"/><hr:s sID="s02"/>critic, you have frowned,
-		      </l>
-		      <l>Mindless of its just honours;
-		      <hr:s eID="s02"/> 
-		      <hr:s sID="s03"/>with this key
-		      </l>
-		      <l>Shakespeare unlocked his heart;
-		      <hr:s eID="s03"/>
-		      <hr:s sID="s04"/>the melody
-		      </l>
-		      <l>Of this small lute gave ease to Petrarch's wound.
-		      <hr:s eID="s04"/>
-		      </l>
-		    </lg>
-		  </egXML>
-                Because it involves the extension of existing TEI
-                elements, this method is non-conformant (see <ptr
-                target="#CFAM"/>), and indeed strongly deprecated,
-                unless the empty elements are placed outside the TEI
-                namespace as in the above example.</p>
+                    <p>A final method alters the TEI by adapting elements that are normally used to
+                        encode nesting textual features so that they also can be used as boundary
+                        delimiters when these features are non-nesting. Additional attributes
+                            (<att>sID</att> and <att>eID</att> in the example below) are added to
+                        the content model in order to allow the unambiguous correlation of start and
+                        end points (this method has been introduced in the markup literature under
+                        various names, including Trojan milestones, HORSE markup, CLIX, and COLT. It
+                        is described in detail by <ptr target="#NH-BIBL-1" type="cit"/>): <egXML
+                            xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
+                            <lg xmlns:hr="http://www.example.org/ns/nonTEI">
+                                <l>
+                                    <s>Scorn not the sonnet;</s><hr:s sID="s02"/>critic, you have
+                                    frowned, </l>
+                                <l>Mindless of its just honours; <hr:s eID="s02"/>
+                                    <hr:s sID="s03"/>with this key </l>
+                                <l>Shakespeare unlocked his heart; <hr:s eID="s03"/>
+                                    <hr:s sID="s04"/>the melody </l>
+                                <l>Of this small lute gave ease to Petrarch's wound. <hr:s eID="s04"
+                                    />
+                                </l>
+                            </lg>
+                        </egXML> Because it involves the extension of existing TEI elements, this
+                        method is non-conformant (see <ptr target="#CFAM"/>), and indeed strongly
+                        deprecated unless the empty form of the elements are placed outside the TEI
+                        namespace as in the above example.</p>
                 </item>
             </list>
         </p>
-        <p>In each of the above examples (except HORSE), the relationship between the start and
-            end delimiters (where these exist) of a given feature is implicit:
-            it is assumed that "end" delimiters close the nearest preceding
-            "start" delimiter, or, in the case of milestones, that the next
-            milestone element marks the end of one feature and the beginning of
-            the next. Complications arise, however, when the non-nesting text
-            overlaps with other non-nesting text of the same type, as, for example, in a 
-            grammatical analysis of the various possible interpretations of the Noun Phrase 
-            <q>A Broadway Hit and Run</q> (it is either a description of 
-            a popular play and a marathon—<q>A Broadway Hit</q> and 
-            a <q>run</q>—or a description of a car accident on Broadway). In order to
-            encode the possible analyses of this phrase, an unambiguous
-            method of associating opening and closing boundary-delimiters is
-            required: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <p>In each of the above examples (except HORSE), the relationship between the start and end
+            delimiters (where these exist) of a given feature is implicit: it is assumed that "end"
+            delimiters close the nearest preceding "start" delimiter, or, in the case of milestones,
+            that the milestone marks both the end of the preceding feature and the beginning of the
+            next. Complications arise, however, when the non-nesting text overlaps with other
+            non-nesting text of the same type, as, for example, in a grammatical analysis of the
+            various possible interpretations of the Noun Phrase <q>A Broadway Hit and Run</q> (it is
+            either a description of a popular play and a marathon—<q>A Broadway Hit</q> and a
+            <q>run</q>—or a description of a car accident on Broadway). In order to encode the
+            possible analyses of this phrase, an unambiguous method of associating opening and
+            closing boundary-delimiters is required: <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <phr>
-                    <phr n="start" xml:id="NPOptionA-1"/>Broadway 
-                       <phr n="start" xml:id="NPOptionB"/>hit 
-                    <phr corresp="#NPOptionA-1" n="end"/>and 
-                    <phr n="start" xml:id="NPOptionA-2"/>run
-                       <phr corresp="#NPOptionB" n="end"/>
+                    <phr n="start" xml:id="NPOptionA-1"/>Broadway <phr n="start" xml:id="NPOptionB"
+                    />hit <phr corresp="#NPOptionA-1" n="end"/>and <phr n="start"
+                        xml:id="NPOptionA-2"/>run <phr corresp="#NPOptionB" n="end"/>
                     <phr corresp="#NPOptionA-2" n="end"/>
                 </phr>
             </egXML>
         </p>
-        <p>In this encoding, the phrase is analysed
-            in two incompatible ways. The first interpretation (indicated by the
-                <att>xml:id</att> values <mentioned>phraseOptionA-1</mentioned>
-            and <mentioned>phraseOptionA-2</mentioned>) assumes that there are
-            two nouns in the sentence: <mentioned>hit</mentioned> (phraseOptionA-1, referring to
-            a play) and <mentioned>run</mentioned> (phraseOptionA-2, referring to a marathon).
-            The second intepretation (indicated by the <att>xml:id</att> value
-                <mentioned>phraseOptionB</mentioned> assumes that <mentioned>hit and
+        <p>In this encoding, the phrase is analysed in two incompatible ways. The first
+            interpretation (indicated by the <att>xml:id</att> values
+            <mentioned>phraseOptionA-1</mentioned> and <mentioned>phraseOptionA-2</mentioned>)
+            assumes that there are two nouns in the sentence: <mentioned>hit</mentioned>
+            (phraseOptionA-1, referring to a play) and <mentioned>run</mentioned> (phraseOptionA-2,
+            referring to a marathon). The second interpretation (indicated by the <att>xml:id</att>
+            value <mentioned>phraseOptionB</mentioned> assumes that <mentioned>hit and
             run</mentioned> is a single Noun Phrase modified by <mentioned>Broadway</mentioned>.</p>
-        <p>Despite their advantages, segment-boundary delimiters incur the
-            disadvantage of cumbersome processing: since the elements of the
-            analysis (e.g. the sentences in the poems, or phrases in the above example) are not uniformly
-            represented by nodes in the document tree, they must be
-            reconstituted by software in an ad hoc fashion, which is likely to
-            be difficult and may be error prone.</p>
-        <p>Most important for some encoders, the method also disguises the
-            relationship between the beginning and the ending of each logical
-            element. This makes it impossible for standard validation software
-            to provide the same kind of validation possible elsewhere in the
-            encoding. When using grammar based schema languages it is not
-            possible to define a content model for the range limited by empty
-                elements. This means, amongst other things, that the reconstituted document may not itself be valid.<note place="foot">
-                Grammar based schema languages (e.g. DTD, W3C Schema, and
-                    RELAX NG) are used to define markup languages (e.g. XHTML or
-                    TEI). Rule-based schema languages (e.g. Schematron) can be
-                    used to define further constrains. Such a rule-based schema
-                    language permits a sequence of certain elements between
-                    empty elements to be legitimized or prohibited.
-            </note></p>
+        <p>Despite their advantages, segment-boundary delimiters incur the disadvantage of
+            cumbersome processing: since the elements of the analysis (e.g. the sentences in the
+            poems, or phrases in the above example) are not uniformly represented by nodes in the
+            document tree, they must be reconstituted by software in an ad hoc fashion, which is
+            likely to be difficult and may be error prone.</p>
+        <p>Most important for some encoders, the method also disguises the relationship between the
+            beginning and the ending of each logical element. This makes it impossible for standard
+            validation software to provide the same kind of validation possible elsewhere in the
+            encoding. When using grammar based schema languages it is not possible to define a
+            content model for the range limited by empty elements. This means, amongst other things,
+            that the reconstituted document may not itself be valid.<note place="foot"> Grammar
+                based schema languages (e.g. DTD, W3C Schema, and RELAX NG) are used to define
+                markup languages (e.g. XHTML or TEI). Rule-based schema languages (e.g. Schematron)
+                can be used to define further constrains. Such a rule-based schema language permits
+                a sequence of certain elements between empty elements to be legitimized or
+                prohibited. </note></p>
     </div>
     <div type="div2" xml:id="NHVE">
         <head>Fragmentation and Reconstitution of Virtual Elements</head>
-        <p>A third method involves breaking what might be considered a single
-            logical (but non-nesting) element into multiple smaller structural
-            elements that fit within the dominant hierachy but can be
-            reconstituted virtually. For example, if a passage of direct
-            discourse begins in the middle of one paragraph and continues for
-            several more paragraphs, one could encode the passage as a series of
-                <gi>said</gi> elements, each fitting within a <gi>p</gi>
-            element. The resulting encoding is valid XML, but the text enclosed
-            within each set of <gi>said</gi> tags represents only a portion of
-            the complete passage of direct discourse. For this reason these
-            elements are sometimes called <soCalled>partial elements</soCalled>.</p>
-        <p>Thus the speech in our example from Pinsky's poem can be broken up to
-            fit into the hierarchy established by the metrical lineation: <egXML
-                xmlns="http://www.tei-c.org/ns/Examples"  corresp="#NH-eg-02">
+        <p>A third method involves breaking what might be considered a single logical (but
+            non-nesting) element into multiple smaller structural elements that fit within the
+            dominant hierarchy but can be reconstituted virtually. For example, if a passage of
+            direct discourse begins in the middle of one paragraph and continues for several more
+            paragraphs, one could encode the passage as a series of <gi>said</gi> elements, each
+            fitting within a <gi>p</gi> element. The resulting encoding is valid XML, but the text
+            enclosed within each set of <gi>said</gi> tags represents only a portion of the complete
+            passage of direct discourse. For this reason these elements are sometimes called
+                <soCalled>partial elements</soCalled>.</p>
+        <p>Thus the speech in our example from Pinsky's poem can be broken up to fit into the
+            hierarchy established by the metrical lineation: <egXML
+                xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-02">
                 <lg>
                     <l>Catholic woman of twenty-seven with five children</l>
                     <l>And a first-rate body—pointed her finger</l>
                     <l>at the back of one certain man and asked me,</l>
-<l><said>Is that guy a psychiatrist?</said> and by
-god he was! <said>Yes,</said></l>
-<l>She said, <said>He <emph>looks</emph> like a psychiatrist.</said></l>
-<l>Grown quiet, I looked at his pink back, and thought.</l>
+                    <l><said>Is that guy a psychiatrist?</said> and by god he was! <said>Yes,</said></l>
+                    <l>She said, <said>He <emph>looks</emph> like a psychiatrist.</said></l>
+                    <l>Grown quiet, I looked at his pink back, and thought.</l>
                 </lg>
             </egXML></p>
-        <p>Similarly, the sentences in our example from Wordsworth could be
-            encoded: <egXML xmlns="http://www.tei-c.org/ns/Examples"  corresp="#NH-eg-01">
-                <l><s>Scorn not the sonnet;</s> <s>critic, you have frowned,</s></l>
-                <l><s>Mindless of its just honours;</s> <s>with this key</s></l>
-                <l><s>Shakespeare unlocked his heart;</s> <s>the melody</s></l>
-                <l><s>Of this small lute gave ease to Petrarch's wound.</s></l>
-            </egXML></p>
-        <p>There are two main problems with this type of encoding. The first is
-            that it invariably means that the encoding will have more elements claiming
-            to represent a feature than there are actual instances of that
-            feature in the text. Thus, for example, the passage from <title
-                level="a">Scorn not the sonnet</title> marks seven spans of text
-            using <gi>s</gi>, even though there are only four linguistic
-            sentences in the passage.</p>
-        <p>The second problem is that it can be semantically
-            misleading. Although it is tagged using <gi>s</gi>, the element for
-                <term>sentence</term>, for example, the text <mentioned>Mindless
-                of its just honours</mentioned> is not a linguistic sentence.</p>
-        <p>Taken together, these problems can make automatic analysis of the
-            fragmented feature difficult. An analysis that intended to count the
-            number of sentences in Wordsworth's poem, for example, would arrive
-            at an inflated figure if it just counted the <gi>s</gi> tags.
-            Likewise, a project interested in doing a linguistic analysis of
-            Wordsworth's sentence syntax would not be able to assume that each
-                <gi>s</gi> represented a linguistic sentence.</p>
-        <p>The technique of fragmentation is often complemented by the technique
-            of virtual joins. Virtual joins may be used to combine objects in
-            the text to a new hierarchy. Here is <title level="a">Scorn not the
-                sonnet</title> again; this time the relationship between the
-            parts of the fragmented sentences is indicated explicitly using the
-                <att>next</att> and <att>prev</att> attributes described in <ptr
-                target="#SAAG"/>. <egXML
-                    xmlns="http://www.tei-c.org/ns/Examples"  corresp="#NH-eg-01">
-                    <l>
-                        <s>Scorn not the sonnet;</s> 
-                        <s next="#s2b" xml:id="s2a">critic, you have frowned,</s>
-                    </l>
-                    <l>
-                        <s prev="#s2a" xml:id="s2b">Mindless of its just honours;</s>
-                        <s next="#s3b" xml:id="s3a">with this key</s>
-                    </l>
-                    <l>
-                        <s prev="#s3a" xml:id="s3b">Shakespeare unlocked his heart;</s>
-                        <s next="#s4b" xml:id="s4a">the melody</s></l>
-                    <l>
-                        <s prev="#s4a" xml:id="s4b">Of this small lute gave ease to Petrarch's wound.</s>
-                    </l>
-            </egXML> This method of virtually joining partial elements is
-            sometimes called <soCalled>chaining</soCalled>. </p>
-        <p>For fragments encoded using <gi>ab</gi>, <gi>l</gi>, <gi>lg</gi>, <gi>div</gi>, 
-            or elements that belong to the <ident type="class">att.segLike</ident> class, an even simpler mechanism 
-            for virtually joining fragments exists: the use of the <att>part</att> 
-            attribute with the value <mentioned>I</mentioned> (Initial), <mentioned>M</mentioned> 
-            (Middle), or <mentioned>F</mentioned> (Final) as described in <ptr target="#SASE"/>. 
-            Here is the above example recoded to reflect this method: <egXML xmlns="http://www.tei-c.org/ns/Examples"  corresp="#NH-eg-01">
+        <p>Similarly, the sentences in our example from Wordsworth could be encoded: <egXML
+                xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
                 <l>
-                    <s>Scorn not the sonnet;</s> 
+                    <s>Scorn not the sonnet;</s>
+                    <s>critic, you have frowned,</s>
+                </l>
+                <l>
+                    <s>Mindless of its just honours;</s>
+                    <s>with this key</s>
+                </l>
+                <l>
+                    <s>Shakespeare unlocked his heart;</s>
+                    <s>the melody</s>
+                </l>
+                <l>
+                    <s>Of this small lute gave ease to Petrarch's wound.</s>
+                </l>
+            </egXML></p>
+        <p>There are two main problems with this type of encoding. The first is that it invariably
+            means that the encoding will have more elements claiming to represent a feature than
+            there are actual instances of that feature in the text. Thus, for example, the passage
+            from <title level="a">Scorn not the sonnet</title> marks seven spans of text using
+            <gi>s</gi>, even though there are only four linguistic sentences in the passage.</p>
+        <p>The second problem is that it can be semantically misleading. Although it is tagged using
+                <gi>s</gi>, the element for <term>sentence</term>, for example, the text
+                <mentioned>Mindless of its just honours</mentioned> is not a linguistic sentence.</p>
+        <p>Taken together, these problems can make automatic analysis of the fragmented feature
+            difficult. An analysis that intended to count the number of sentences in Wordsworth's
+            poem, for example, would arrive at an inflated figure if it just counted the <gi>s</gi>
+            tags. Likewise, a project interested in doing a linguistic analysis of Wordsworth's
+            sentence syntax would not be able to assume that each <gi>s</gi> represented a
+            linguistic sentence.</p>
+        <p>The technique of fragmentation is often complemented by the technique of virtual joins.
+            Virtual joins may be used to combine objects in the text to a new hierarchy. Here is
+                <title level="a">Scorn not the sonnet</title> again; this time the relationship
+            between the parts of the fragmented sentences is indicated explicitly using the
+                <att>next</att> and <att>prev</att> attributes described in <ptr target="#SAAG"/>.
+                <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
+                <l>
+                    <s>Scorn not the sonnet;</s>
+                    <s next="#s2b" xml:id="s2a">critic, you have frowned,</s>
+                </l>
+                <l>
+                    <s prev="#s2a" xml:id="s2b">Mindless of its just honours;</s>
+                    <s next="#s3b" xml:id="s3a">with this key</s>
+                </l>
+                <l>
+                    <s prev="#s3a" xml:id="s3b">Shakespeare unlocked his heart;</s>
+                    <s next="#s4b" xml:id="s4a">the melody</s>
+                </l>
+                <l>
+                    <s prev="#s4a" xml:id="s4b">Of this small lute gave ease to Petrarch's
+                    wound.</s>
+                </l>
+            </egXML> This method of virtually joining partial elements is sometimes called
+                <soCalled>chaining</soCalled>. </p>
+        <p>For fragments encoded using <gi>ab</gi>, <gi>l</gi>, <gi>lg</gi>, <gi>div</gi>, or
+            elements that belong to the <ident type="class">att.segLike</ident> class, an even
+            simpler mechanism for virtually joining fragments exists: the use of the <att>part</att>
+            attribute with the value <mentioned>I</mentioned> (Initial), <mentioned>M</mentioned>
+            (Middle), or <mentioned>F</mentioned> (Final) as described in <ptr target="#SASE"/>.
+            Here is the above example recoded to reflect this method: <egXML
+                xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
+                <l>
+                    <s>Scorn not the sonnet;</s>
                     <s part="I">critic, you have frowned,</s>
                 </l>
                 <l>
@@ -477,17 +430,17 @@ god he was! <said>Yes,</said></l>
                 </l>
                 <l>
                     <s part="F">Shakespeare unlocked his heart;</s>
-                    <s part="I">the melody</s></l>
+                    <s part="I">the melody</s>
+                </l>
                 <l>
                     <s part="F">Of this small lute gave ease to Petrarch's wound.</s>
-                </l>            </egXML></p>
-        <p>This method is TEI conformant and simple to use. Its disadvantage 
-            is that it does not work well for  cases of self-overlap, 
-            or if there are nested occurences of the the
-            same element type, as it can become difficult to ascertain which
-            initial, medial, or final partial element should be combined with
-            which others. This can be illustrated using a slightly modified
-            verse from a Tom Lehrer song: <egXML
+                </l>
+            </egXML></p>
+        <p>This method is TEI conformant and simple to use. Its disadvantage is that it does not
+            work well for cases of self-overlap, or if there are nested occurrences of the same
+            element type, as it can become difficult to ascertain which initial, medial, or final
+            partial element should be combined with which others. This can be illustrated using a
+            slightly modified verse from a Tom Lehrer song: <egXML
                 xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-03">
                 <l>
                     <s part="I">Don't say that he's hypocritical,</s>
@@ -504,34 +457,28 @@ god he was! <said>Yes,</said></l>
                 </l>
                 <l>
                     <said>
-                            <s part="F">That's not my department!</s>
-                    </said>, 
-                    <s part="F">says Wernher von Braun.</s>
+                        <s part="F">That's not my department!</s>
+                    </said>, <s part="F">says Wernher von Braun.</s>
                 </l>
             </egXML></p>
-        <p>A third method for aggregating fragmented partial elements involves
-            using markup that is not directly part of the encoding, e.g. the
-                <gi>join</gi> element. In this method, a <gi>join</gi> element
-            is used elsewhere in the document to indicate explicitly the members
-            of the virtual element: <egXML
-                xmlns="http://www.tei-c.org/ns/Examples"  corresp="#NH-eg-01">
+        <p>A third method for aggregating fragmented partial elements involves using markup that is
+            not directly part of the encoding, e.g. the <gi>join</gi> element. In this method, a
+                <gi>join</gi> element is used elsewhere in the document to indicate explicitly the
+            members of the virtual element: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+                corresp="#NH-eg-01">
                 <l>
                     <w xml:id="w01">Scorn</w>
                     <w xml:id="w02">not</w>
                     <w xml:id="w03">the</w>
-                    <w xml:id="w04">sonnet</w>;
-                    <w xml:id="w05">critic</w>,
-                    <w xml:id="w06">you</w>
+                    <w xml:id="w04">sonnet</w>; <w xml:id="w05">critic</w>, <w xml:id="w06">you</w>
                     <w xml:id="w07">have</w>
-                    <w xml:id="w08">frowned</w>,
-                </l>
+                    <w xml:id="w08">frowned</w>, </l>
                 <l>
                     <w xml:id="w09">Mindless</w>
                     <w xml:id="w10">of</w>
                     <w xml:id="w11">its</w>
                     <w xml:id="w12">just</w>
-                    <w xml:id="w13">honours</w>; 
-                    <w xml:id="w14">with</w>
+                    <w xml:id="w13">honours</w>; <w xml:id="w14">with</w>
                     <w xml:id="w15">this</w>
                     <w xml:id="w16">key</w>
                 </l>
@@ -539,8 +486,7 @@ god he was! <said>Yes,</said></l>
                     <w xml:id="w17">Shakespeare</w>
                     <w xml:id="w18">unlocked</w>
                     <w xml:id="w19">his</w>
-                    <w xml:id="w20">heart</w>;
-                    <w xml:id="w21">the</w>
+                    <w xml:id="w20">heart</w>; <w xml:id="w21">the</w>
                     <w xml:id="w22">melody</w>
                 </l>
                 <l>
@@ -552,70 +498,61 @@ god he was! <said>Yes,</said></l>
                     <w xml:id="w28">ease</w>
                     <w xml:id="w29">to</w>
                     <w xml:id="w30">Petrarch's</w>
-                    <w xml:id="w31">wound</w>.
-                </l>
+                    <w xml:id="w31">wound</w>. </l>
 
                 <!-- Elsewhere in the document -->
 
                 <p>
                     <join result="s" scope="root" targets="#w01 #w02 #w03 #w04"/>
-                    <join result="s" scope="root" targets="#w05 #w06 #w07 #w08 #w09 #w10 #w11 #w12 #w13"/>
+                    <join result="s" scope="root"
+                        targets="#w05 #w06 #w07 #w08 #w09 #w10 #w11 #w12 #w13"/>
                     <join result="s" scope="root" targets="#w14 #w15 #w16 #w17 #w18 #w19 #w20"/>
-                    <join result="s" scope="root" targets="#w21 #w22 #w23 #w24 #w25 #w26 #w27 #w28 #w29 #w30 #w31"/>
+                    <join result="s" scope="root"
+                        targets="#w21 #w22 #w23 #w24 #w25 #w26 #w27 #w28 #w29 #w30 #w31"/>
                 </p>
             </egXML>
         </p>
-        <p>The major advantage of fragmentation and virtual joins is that it
-            allows all the hierarchies in the text to be handled explicitly,
-            both the privileged one directly represented, and the alternate
-            hierarchy which has been split up and rejoined. The major
-            disadvantages are that (like most of the other methods described
-            here) it privileges one hierarchy over the others, requires special
-            processing to reconstitute the elements of the other hierarchies,
-            and, except in the case of join, can be semantically misleading.</p>
+        <p>The major advantage of fragmentation and virtual joins is that it allows all the
+            hierarchies in the text to be handled explicitly, both the privileged one directly
+            represented, and the alternate hierarchy which has been split up and rejoined. The major
+            disadvantages are that (like most of the other methods described here) it privileges one
+            hierarchy over the others, requires special processing to reconstitute the elements of
+            the other hierarchies, and, except in the case of join, can be semantically misleading.</p>
         <p>This method is TEI conformant.</p>
     </div>
     <div type="div2" xml:id="NHSO">
         <head>Stand-off Markup</head>
-        <p>Classic use of markup is characterized by embedding the annotation in
-            the text. An alternative approach separates the text and the
-            annotation. This approach is known as stand-off annotation. See
-            section <ptr target="#SASO"/> for more information on and examples
-            of stand-off markup. Stand-off annotation establishes a new
-            hierarchy by building a new tree whose nodes are XML elements which
-            do not contain textual content, but rather links to another
-                <term>layer</term>: <gloss>a node in another XML document or a
-                span of text</gloss>.
+        <p>Classic use of markup is characterized by embedding the annotation in the text. An
+            alternative approach separates the text and the annotation. This approach is known as
+            stand-off annotation. See section <ptr target="#SASO"/> for more information on and
+            examples of stand-off markup. Stand-off annotation establishes a new hierarchy by
+            building a new tree whose nodes are XML elements which do not contain textual content,
+            but rather links to another <term>layer</term>: <gloss>a node in another XML document or
+                a span of text</gloss>.
             <?sb2aw In some respects a generalization of the virtual
             joins, because not only contents of elements are joined, but also
             ranges between points within the document. ?>
-            This approach can be subdivided according to different criteria. A
-            first distinction concerns the link base, i.e. the content to which
-            annotations are to be applied. Sometimes the link target contains
-            markup that can be referred to explicitly, as in the following
-            example where the offset markup uses the <att>xml:id</att> values on
-                <gi>w</gi> to provide targets for
-		<gi>include</gi><note place="foot">A fake namespace is given for
-		XInclude here, to avoid the markup being interpreted
-		literally during processing.</note>: <egXML
-		    xmlns="http://www.tei-c.org/ns/Examples"  corresp="#NH-eg-01">
+            This approach can be subdivided according to different criteria. A first distinction
+            concerns the link base, i.e. the content to which annotations are to be applied.
+            Sometimes the link target contains markup that can be referred to explicitly, as in the
+            following example where the offset markup uses the <att>xml:id</att> values on
+            <gi>w</gi> to provide targets for <gi>include</gi><note place="foot">A fake namespace is
+                given for XInclude here, to avoid the markup being interpreted literally during
+                processing.</note>: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+                corresp="#NH-eg-01">
                 <l>
                     <w xml:id="w001">Scorn</w>
                     <w xml:id="w002">not</w>
                     <w xml:id="w003">the</w>
-                    <w xml:id="w004">sonnet</w>; 
-                    <w xml:id="w005">critic</w>, 
-                    <w xml:id="w006">you</w>
+                    <w xml:id="w004">sonnet</w>; <w xml:id="w005">critic</w>, <w xml:id="w006">you</w>
                     <w xml:id="w007">have</w>
-                    <w xml:id="w008">frowned</w>,
-                </l>
+                    <w xml:id="w008">frowned</w>, </l>
                 <l>
                     <w xml:id="w009">Mindless</w>
                     <w xml:id="w010">of</w>
                     <w xml:id="w011">its</w>
                     <w xml:id="w012">just</w>
-                    <w xml:id="w013">honours</w>; 
-                    <w xml:id="w014">with</w>
+                    <w xml:id="w013">honours</w>; <w xml:id="w014">with</w>
                     <w xml:id="w015">this</w>
                     <w xml:id="w016">key</w>
                 </l>
@@ -623,8 +560,7 @@ god he was! <said>Yes,</said></l>
                     <w xml:id="w017">Shakespeare</w>
                     <w xml:id="w018">unlocked</w>
                     <w xml:id="w019">his</w>
-                    <w xml:id="w020">heart</w>; 
-                    <w xml:id="w021">the</w>
+                    <w xml:id="w020">heart</w>; <w xml:id="w021">the</w>
                     <w xml:id="w022">melody</w>
                 </l>
                 <l>
@@ -636,141 +572,117 @@ god he was! <said>Yes,</said></l>
                     <w xml:id="w028">ease</w>
                     <w xml:id="w029">to</w>
                     <w xml:id="w030">Petrarch's</w>
-                    <w xml:id="w031">wound</w>.
-                </l>
+                    <w xml:id="w031">wound</w>. </l>
 
                 <!-- elsewhere in the document or in another document 
                     indicated by the value of @href -->
                 <p xmlns:xi="http://www.example.org/ns/nonTEI">
                     <s>
-                        <xi:include href="."
-                            xpointer="range(element(w001),element(w004))"/>
+                        <xi:include href="." xpointer="range(element(w001),element(w004))"/>
                     </s>
                     <s>
-                        <xi:include href="."
-                            xpointer="range(element(w005),element(w013))"/>
+                        <xi:include href="." xpointer="range(element(w005),element(w013))"/>
                     </s>
                     <s>
-                        <xi:include href="."
-                            xpointer="range(element(w014),element(w020))"/>
+                        <xi:include href="." xpointer="range(element(w014),element(w020))"/>
                     </s>
                     <s>
-                        <xi:include href="."
-                            xpointer="range(element(w021),element(w031))"/>
+                        <xi:include href="." xpointer="range(element(w021),element(w031))"/>
                     </s>
                 </p>
-           </egXML>
+            </egXML>
         </p>
-        <p>This is very similar to the use of <gi>join</gi> discussed above; the
-            main advantages of <gi>xInclude</gi> over <gi>join</gi> are that it
-            is possible to specify attributes on the aggregate <gi>s</gi>
-            elements, and that there exists off-the-shelf software that will
-            perform xInclude processing. Stand-off markup may be used even when
-            the base text being annotated is plain text, i.e. does not have any
-            XML encoding. In this case the range of text to be annotated is
-            indicated by character offsets. See <ptr target="#SATS"/>, in
-            particular <ptr target="#SATSSR"/>. Another distinction concerns the
-            number of files which can serve as link targets. Often, one
-            (dedicated) annotation is used as the link target of all the other
-            annotations. It is also possible to freely interlink several layers.</p>
-        <p>It has been noted that stand-off markup has several advantages over
-            embedded annotations. In particular, it is possible to produce
-            annotations of a text even when the source document is read-only.
-            Furthermore, annotation files can be distributed without
-            distributing the source text. Further advantages mentioned in the
-            literature are that discontinuous segments of text can be combined
-            in a single annotation, that independent parallel coders can produce
-            independent annotations, and that different annotation files can
-            contain different layers of information. Lastly, it has also been
-            noted that this approach is elegant.</p>
-        <p>But there are also several drawbacks. First, new stand-off annotated
-            layers require a separate interpretation, and the layers — although
-            separate — depend on each other. Moreover, although all of the
-            information of the multiple hierarchies is included, the information
-            may be difficult to access using generic methods.</p>
-        <p>In as much as it uses elements not included in the TEI namespace, standoff 
-            markup involves an extension of the TEI.</p>
+        <p>This is very similar to the use of <gi>join</gi> discussed above; the main advantages of
+                <gi>xInclude</gi> over <gi>join</gi> are that it is possible to specify attributes
+            on the aggregate <gi>s</gi> elements, and that there exists off-the-shelf software that
+            will perform xInclude processing. Stand-off markup may be used even when the base text
+            being annotated is plain text, i.e. does not have any XML encoding. In this case the
+            range of text to be annotated is indicated by character offsets. See <ptr target="#SATS"
+            />, in particular <ptr target="#SATSSR"/>. Another distinction concerns the number of
+            files which can serve as link targets. Often, one (dedicated) annotation is used as the
+            link target of all the other annotations. It is also possible to freely interlink
+            several layers.</p>
+        <p>It has been noted that stand-off markup has several advantages over embedded annotations.
+            In particular, it is possible to produce annotations of a text even when the source
+            document is read-only. Furthermore, annotation files can be distributed without
+            distributing the source text. Further advantages mentioned in the literature are that
+            discontinuous segments of text can be combined in a single annotation, that independent
+            parallel coders can produce independent annotations, and that different annotation files
+            can contain different layers of information. Lastly, it has also been noted that this
+            approach is elegant.</p>
+        <p>But there are also several drawbacks. First, new stand-off annotated layers require a
+            separate interpretation, and the layers — although separate — depend on each other.
+            Moreover, although all of the information of the multiple hierarchies is included, the
+            information may be difficult to access using generic methods.</p>
+        <p>In as much as it uses elements not included in the TEI namespace, standoff markup
+            involves an extension of the TEI.</p>
     </div>
     <div type="div2" xml:id="NHNX">
         <head>Non-XML-based Approaches</head>
-        <p>There exist many non-XML methods of encoding a text that either solve
-            or do not suffer the problem of the inability to encode overlapping
-            hierarchies. These include, but are not limited to the following
-            proposals.</p>
-        <p>One attempt at extending XML is represented by the work of
-        Andreas Witt and others (<ptr target="#NH-BIBL-2"
-        type="cit"/>), who have applied the notion of concurrent
-        markup to XML (thus reintroducing the CONCUR feature of SGML,
-        which was omitted from XML).</p>
-        <p>Alexander Dekhtyar and students at the University of Kentucky have
-            also developed a form of document representation in which several
-            trees share all or part of the same frontier, and in which each
-            individual view of the document has the form of a tree; see <ptr
-                target="#NH-BIBL-3" type="cit"/></p>
-        <p>The <soCalled>colored XML</soCalled> proposal (<ptr
-        target="#NH-BIBL-4" type="cit"/>) stores a body of information
-        as a set of intertwined XML trees. The colored XML approach
-        eliminates unnecessary redundancy and makes the database
-        readily updatable, while allowing the user to exploit
-        different hierarchical access paths.</p>
-        <p>The MultiX proposal (<ptr target="#NH-BIBL-5" type="cit"/>)
-        represents documents as directed graphs. Because XML is used
-        to represent the graph, the document is, at least in
-        principle, manipulable with standard XML tools.</p>
-        <p>According to the Just-In-Time-Trees proposal (<ptr
-        target="#NH-BIBL-6" type="cit"/>), documents may be stored
-        using XML, but the XML representation is processed in
-        non-standard ways and may be mapped onto different data
-        structures than those known from XML.</p>
+        <p>There exist many non-XML methods of encoding a text that either solve or do not suffer
+            the problem of the inability to encode overlapping hierarchies. These include, but are
+            not limited to the following proposals.</p>
+        <p>One attempt at extending XML is represented by the work of Andreas Witt and others (<ptr
+                target="#NH-BIBL-2" type="cit"/>), who have applied the notion of concurrent markup
+            to XML (thus reintroducing the CONCUR feature of SGML, which was omitted from XML).</p>
+        <p>Alexander Dekhtyar and students at the University of Kentucky have also developed a form
+            of document representation in which several trees share all or part of the same
+            frontier, and in which each individual view of the document has the form of a tree; see
+                <ptr target="#NH-BIBL-3" type="cit"/></p>
+        <p>The <soCalled>colored XML</soCalled> proposal (<ptr target="#NH-BIBL-4" type="cit"/>)
+            stores a body of information as a set of intertwined XML trees. The colored XML approach
+            eliminates unnecessary redundancy and makes the database readily updateable, while
+            allowing the user to exploit different hierarchical access paths.</p>
+        <p>The MultiX proposal (<ptr target="#NH-BIBL-5" type="cit"/>) represents documents as
+            directed graphs. Because XML is used to represent the graph, the document is, at least
+            in principle, manipulable with standard XML tools.</p>
+        <p>According to the Just-In-Time-Trees proposal (<ptr target="#NH-BIBL-6" type="cit"/>),
+            documents may be stored using XML, but the XML representation is processed in
+            non-standard ways and may be mapped onto different data structures than those known from
+            XML.</p>
         <p>The <choice>
                 <abbr>LMNL</abbr>
                 <expan>Layered Markup and Annotation Language</expan>
-            </choice> proposal offers alternatives to the basic XML linear form
-            as well as its data model and processing model, with an alternative
-            notation to XML and a data structure based on Core Range Algebra
-                (<ptr target="#NH-BIBL-7" type="cit"/>).</p>
+            </choice> proposal offers alternatives to the basic XML linear form as well as its data
+            model and processing model, with an alternative notation to XML and a data structure
+            based on Core Range Algebra (<ptr target="#NH-BIBL-7" type="cit"/>).</p>
         <p><choice>
                 <expan>Markup Languages for Complex Documents</expan>
                 <abbr>MLCD</abbr>
-            </choice> provides a notation (TexMECS) and a data structure
-            (Goddag) as well as a draft constraint language for the
-            representation of non-hierarchical structures; see <ptr
+            </choice> provides a notation (TexMECS) and a data structure (Goddag) as well as a draft
+            constraint language for the representation of non-hierarchical structures; see <ptr
                 target="#NH-BIBL-8" type="cit"/>.</p>
-        <p>These approaches are based either on non-standard XML processing or
-            data models, or not not based on XML at all. Since TEI is currently
-            based on XML they are not described any further in these
-        Guidelines.</p>
+        <p>These approaches are based either on non-standard XML processing or data models, or not
+            not based on XML at all. Since TEI is currently based on XML they are not described any
+            further in these Guidelines.</p>
     </div>
     <div type="div2" xml:id="NHDI">
         <head>Discussion</head>
-        <p>All proposed solutions of the multiple hierarchy problem have
-            advantages as well as drawbacks. For different applications and
-            usage scenarios, different solutions may be appropriate.</p>
+        <p>All proposed solutions of the multiple hierarchy problem have advantages as well as
+            drawbacks. For different applications and usage scenarios, different solutions may be
+            appropriate.</p>
         <list type="bullets">
             <item>
-                <p>For editing purposes the following solutions may be most
-                        appropriate:<list type="bullets">
+                <p>For editing purposes the following solutions may be most appropriate:<list
+                        type="bullets">
                         <item>Multiple encodings of the same information </item>
                         <item>Remodeling of the document class </item>
                         <item>Boundary marking with empty elements </item>
-                    </list> The choice of a solution depends on a number of
-                    specifics: <list type="bullets">
-                        <item>the number of different views and potential
-                            hierarchies</item>
+                    </list> The choice of a solution depends on a number of specifics: <list
+                        type="bullets">
+                        <item>the number of different views and potential hierarchies</item>
                         <item>the amount of overlap</item>
                         <item>how much, if any, customization is required</item>
-                        <item>how much encoding guidance annotators need from
-                            the XML editing software</item>
-                    </list>. If good (special purpose) software is available it
-                    might also be appropriate to use stand-off markup or non
-                    XML-based solutions.</p>
+                        <item>how much encoding guidance annotators need from the XML editing
+                            software</item>
+                    </list>. If good (special purpose) software is available it might also be
+                    appropriate to use stand-off markup or non XML-based solutions.</p>
             </item>
-            <item>For processing, the stand-off-approach often is quite easy to
-                handle. Several readily-available XML tools will perform
-                XInclude processing.</item>
-            <item>For sustainable storage and easy information transfer
-                redundant encoding is desirable. Other formats can be generated
-                by unifying the separate annotations.</item>
+            <item>For processing, the stand-off-approach often is quite easy to handle. Several
+                readily-available XML tools will perform XInclude processing.</item>
+            <item>For sustainable storage and easy information transfer redundant encoding is
+                desirable. Other formats can be generated by unifying the separate
+            annotations.</item>
         </list>
     </div>
 </div>
