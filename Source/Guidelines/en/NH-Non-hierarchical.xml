@@ -293,17 +293,17 @@ $Id$
                     <p>A final method extends the TEI by allowing
                     elements that are normally not empty so that they
                     can be used without content as boundary
-                    delimiters.  Additional attributes, such as
-                    <att>sID</att> and <att>eID</att>, are defined in
+                    delimiters.  Additional attributes, (in this case
+                    <att>sID</att> and <att>eID</att>), are defined in
                     order to allow the unambiguous correlation of
-                    start and end points.  (This method has been
+                    start and end points (this method has been
                     introduced in the markup literature under various
                     names, e.g. Trojan milestones, HORSE markup, CLIX,
                     and COLT, and has been described in detail by <ptr
                     target="#NH-BIBL-1" type="cit"/>): <egXML
                     xmlns="http://www.tei-c.org/ns/Examples">
 
-<![CDATA[                                <lg xmlns:hr="http://www.example.org/xInclude">
+                                <lg xmlns:hr="http://www.example.org/ns/nonTEI">
                                   <l>
                                       <hr:s sID="s01"/>
                                       Scorn not the sonnet;
@@ -325,7 +325,7 @@ $Id$
                                       <hr:s eID="s04"/>
                                   </l>
                                 </lg>
-         ]]>                   </egXML>
+                            </egXML>
                 Because it involves the extension of existing TEI elements, this method is non-Conformant 
                 (and indeed strongly deprecated) unless the empty elements are placed outside the 
                 TEI namespace (see <ptr target="#CFAM"/>).</p>
@@ -600,9 +600,12 @@ $Id$
             annotations are to be applied. Sometimes the link target contains
             markup that can be referred to explicitly, as in the following
             example where the offset markup uses the <att>xml:id</att> values on
-                <gi>w</gi> to provide targets for <gi>xInclude</gi>: <egXML
+                <gi>w</gi> to provide targets for
+		<gi>include</gi><note>A fake namespace is given for
+		XInclude here, to avoid the markup being interpreted
+		literally during processing.</note>: <egXML
                 xmlns="http://www.tei-c.org/ns/Examples">
-<![CDATA[                <l>
+                <l>
                     <w xml:id="w001">Scorn</w>
                     <w xml:id="w002">not</w>
                     <w xml:id="w003">the</w>
@@ -644,25 +647,25 @@ $Id$
 
                 <!-- elsewhere in the document or in another document 
                     indicated by the value of @href -->
-                <p xmlns:xi="http://www.example.org/xInclude">
+                <p xmlns:xi="http://www.example.org/ns/nonTEI">
                     <s>
-                        <xi:xInclude href="."
+                        <xi:include href="."
                             xpointer="range(element(w001),element(w004))"/>
                     </s>
                     <s>
-                        <xi:xInclude href="."
+                        <xi:include href="."
                             xpointer="range(element(w005),element(w013))"/>
                     </s>
                     <s>
-                        <xi:xInclude href="."
+                        <xi:include href="."
                             xpointer="range(element(w014),element(w020))"/>
                     </s>
                     <s>
-                        <xi:xInclude href="."
+                        <xi:include href="."
                             xpointer="range(element(w021),element(w031))"/>
                     </s>
                 </p>
-         ]]>   </egXML>
+           </egXML>
         </p>
         <p>This is very similar to the use of <gi>join</gi> discussed above; the
             main advantages of <gi>xInclude</gi> over <gi>join</gi> are that it
@@ -700,43 +703,45 @@ $Id$
             or do not suffer the problem of the inability to encode overlapping
             hierarchies. These include, but are not limited to the following
             proposals.</p>
-        <p>One attempt at extending XML is represented by the work of Andreas
-            Witt et.al. <ptr target="#NH-BIBL-2" type="cit"/>, who have applied
-            the notion of concurrent markup to XML (thus reintroducing the
-            CONCUR feature of SGML, which was omitted from XML).</p>
+        <p>One attempt at extending XML is represented by the work of
+        Andreas Witt and others (<ptr target="#NH-BIBL-2"
+        type="cit"/>), who have applied the notion of concurrent
+        markup to XML (thus reintroducing the CONCUR feature of SGML,
+        which was omitted from XML).</p>
         <p>Alexander Dekhtyar and students at the University of Kentucky have
             also developed a form of document representation in which several
             trees share all or part of the same frontier, and in which each
-            individual view of the document has the form of a tree. <ptr
+            individual view of the document has the form of a treel see <ptr
                 target="#NH-BIBL-3" type="cit"/></p>
-        <p>The <soCalled>colored XML</soCalled> proposal <ptr
-                target="#NH-BIBL-4" type="cit"/> stores a body of information as
-            a set of intertwined XML trees. The colored XML approach eliminates
-            unnecessary redundancy and makes the database readily updatable,
-            while allowing the user to exploit different hierarchical access
-            paths.</p>
-        <p>The MultiX proposal <ptr target="#NH-BIBL-5" type="cit"/> represents
-            documents as directed graphs. Because XML is used to represent the
-            graph, the document is, at least in principle, manipulable with
-            standard XML tools.</p>
-        <p>According to the Just-In-Time-Trees proposal <ptr target="#NH-BIBL-6"
-                type="cit"/>, documents may be stored using XML, but the XML
-            representation is processed in non-standard ways and may be mapped
-            onto different data structures than those known from XML.</p>
+        <p>The <soCalled>colored XML</soCalled> proposal (<ptr
+        target="#NH-BIBL-4" type="cit"/>) stores a body of information
+        as a set of intertwined XML trees. The colored XML approach
+        eliminates unnecessary redundancy and makes the database
+        readily updatable, while allowing the user to exploit
+        different hierarchical access paths.</p>
+        <p>The MultiX proposal (<ptr target="#NH-BIBL-5" type="cit"/>)
+        represents documents as directed graphs. Because XML is used
+        to represent the graph, the document is, at least in
+        principle, manipulable with standard XML tools.</p>
+        <p>According to the Just-In-Time-Trees proposal (<ptr
+        target="#NH-BIBL-6" type="cit"/>), documents may be stored
+        using XML, but the XML representation is processed in
+        non-standard ways and may be mapped onto different data
+        structures than those known from XML.</p>
         <p>The <choice>
                 <abbr>LMNL</abbr>
                 <expan>Layered Markup and Annotation Language</expan>
             </choice> proposal offers alternatives to the basic XML linear form
             as well as its data model and processing model, with an alternative
             notation to XML and a data structure based on Core Range Algebra
-                <ptr target="#NH-BIBL-7" type="cit"/>.</p>
+                (<ptr target="#NH-BIBL-7" type="cit"/>).</p>
         <p><choice>
                 <expan>Markup Languages for Complex Documents</expan>
                 <abbr>MLCD</abbr>
             </choice> provides a notation (TexMECS) and a data structure
             (Goddag) as well as a draft constraint language for the
-            representation of non-hierarchical structures. <ptr
-                target="#NH-BIBL-8" type="cit"/></p>
+            representation of non-hierarchical structures; see <ptr
+                target="#NH-BIBL-8" type="cit"/>.</p>
         <p>These approaches are based either on non-standard XML processing or
             data models, or not not based on XML at all. Since TEI is currently
             based on XML they are not described any further in these
