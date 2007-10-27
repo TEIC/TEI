@@ -156,14 +156,11 @@ $Id$
                 </p>
             </egXML>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <p> Catholic woman of twenty-seven with five children And a first-rate body—pointed
+                <ab>Catholic woman of twenty-seven with five children And a first-rate body—pointed
                     her finger at the back of one certain man and asked me, <said>Is that guy a
-                        psychiatrist?</said> and by god he was! </p>
-                <p>
-                    <said>Yes,</said> She said, <said>He <emph>looks</emph> like a
-                    psychiatrist.</said>
-                </p>
-                <p> Grown quiet, I looked at his pink back, and thought. </p>
+                        psychiatrist?</said> and by god he was! <said>Yes,</said> She said, <said>He
+                            <emph>looks</emph> like a psychiatrist.</said> Grown quiet, I looked at
+                    his pink back, and thought.</ab>
             </egXML>
         </p>
         <p>The advantages of this method of markup are that each way of looking at the information
@@ -305,33 +302,43 @@ $Id$
                 </item>
             </list>
         </p>
-        <p>In each of the above examples (except HORSE), the relationship between the start and end
-            delimiters (where these exist) of a given feature is implicit: it is assumed that "end"
-            delimiters close the nearest preceding "start" delimiter, or, in the case of milestones,
-            that the milestone marks both the end of the preceding feature and the beginning of the
-            next. Complications arise, however, when the non-nesting text overlaps with other
-            non-nesting text of the same type, as, for example, in a grammatical analysis of the
-            various possible interpretations of the Noun Phrase <q>A Broadway Hit and Run</q> (it is
-            either a description of a popular play and a marathon—<q>A Broadway Hit</q> and a
-            <q>run</q>—or a description of a car accident on Broadway). In order to encode the
-            possible analyses of this phrase, an unambiguous method of associating opening and
-            closing boundary-delimiters is required: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <phr>
-                    <phr n="start" xml:id="NPOptionA-1"/>Broadway <phr n="start" xml:id="NPOptionB"
-                    />hit <phr corresp="#NPOptionA-1" n="end"/>and <phr n="start"
-                        xml:id="NPOptionA-2"/>run <phr corresp="#NPOptionB" n="end"/>
-                    <phr corresp="#NPOptionA-2" n="end"/>
+        <p>In each of the above examples (except the last), the relationship between the start and
+            end delimiters (where these exist) of a given feature is implicit: it is assumed that
+            "end" delimiters close the nearest preceding "start" delimiter, or, in the case of
+            milestones, that the milestone marks both the end of the preceding feature and the
+            beginning of the next. Complications arise, however, when the non-nesting text overlaps
+            with other non-nesting text of the same type, as, for example, in a grammatical analysis
+            of the various possible interpretations of the Noun Phrase <q>fast trains and
+            planes</q>. In this case, the adjective <mentioned>fast</mentioned> can be understood as
+            either modifying both the <mentioned>trains</mentioned> and the
+            <mentioned>planes</mentioned> or just the <mentioned>trains</mentioned>. In order to
+            encode the possible analyses of this phrase, an unambiguous method of associating
+            opening and closing boundary-delimiters is required: <egXML
+                xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-03">
+                <phr function="NP">
+                    <anchor type="delimiter" subtype="NPstart" xml:id="NPOptionA-1"/>
+                    <w function="adjective">Fast</w>
+                    <anchor type="delimiter" subtype="NPstart" xml:id="NPOptionB"/>
+                    <w function="noun">trains</w>
+                    <anchor type="delimiter" subtype="NPend" corresp="#NPOptionA-1"/>
+                    <w function="conjunction">and</w>
+                    <anchor type="delimiter" subtype="NPstart" xml:id="NPOptionA-2"/>
+                    <w function="noun">planes</w>
+                    <anchor type="delimiter" subtype="NPend" corresp="#NPOptionB"/>
+                    <anchor type="delimiter" subtype="NPend" corresp="#NPOptionA-2"/>
                 </phr>
             </egXML>
         </p>
-        <p>In this encoding, the phrase is analysed in two incompatible ways. The first
-            interpretation (indicated by the <att>xml:id</att> values
-            <mentioned>phraseOptionA-1</mentioned> and <mentioned>phraseOptionA-2</mentioned>)
-            assumes that there are two nouns in the sentence: <mentioned>hit</mentioned>
-            (phraseOptionA-1, referring to a play) and <mentioned>run</mentioned> (phraseOptionA-2,
-            referring to a marathon). The second interpretation (indicated by the <att>xml:id</att>
-            value <mentioned>phraseOptionB</mentioned> assumes that <mentioned>hit and
-            run</mentioned> is a single Noun Phrase modified by <mentioned>Broadway</mentioned>.</p>
+        <p>In this encoding, the first interpretation (in which <mentioned>fast</mentioned> modifies
+                <mentioned>trains and planes</mentioned>), the phrase division is opened using an
+                <gi>anchor</gi> tag with the <att>xml:id</att> value
+            <mentioned>phraseOptionB</mentioned>; its end is indicated by an <gi>anchor</gi> with
+            the same value on its <att>corresp</att>; for the second reading (in which
+                <mentioned>fast</mentioned> modifies only <mentioned>trains</mentioned>) the two
+            component Noun Phrases are opened using <gi>anchor</gi> tags with the <att>xml:id</att>
+            values <mentioned>phraseOptionA-1</mentioned> and <mentioned>phraseOptionA-2</mentioned>
+            and closed with <gi>anchor</gi> tags that use have the same values on their
+            <att>corresp</att>.</p>
         <p>Despite their advantages, segment-boundary delimiters incur the disadvantage of
             cumbersome processing: since the elements of the analysis (e.g. the sentences in the
             poems, or phrases in the above example) are not uniformly represented by nodes in the
@@ -342,12 +349,12 @@ $Id$
             validation software to provide the same kind of validation possible elsewhere in the
             encoding. When using grammar based schema languages it is not possible to define a
             content model for the range limited by empty elements. This means, amongst other things,
-            that the reconstituted document may not itself be valid.<note place="foot"> Grammar
-                based schema languages (e.g. DTD, W3C Schema, and RELAX NG) are used to define
-                markup languages (e.g. XHTML or TEI). Rule-based schema languages (e.g. Schematron)
-                can be used to define further constrains. Such a rule-based schema language permits
-                a sequence of certain elements between empty elements to be legitimized or
-                prohibited. </note></p>
+            that the reconstituted document may not itself be valid.<note place="foot">Grammar based
+                schema languages (e.g. DTD, W3C Schema, and RELAX NG) are used to define markup
+                languages (e.g. XHTML or TEI). Rule-based schema languages (e.g. Schematron) can be
+                used to define further constrains. Such a rule-based schema language permits a
+                sequence of certain elements between empty elements to be legitimized or
+            prohibited.</note></p>
     </div>
     <div type="div2" xml:id="NHVE">
         <head>Fragmentation and Reconstitution of Virtual Elements</head>
@@ -360,34 +367,38 @@ $Id$
             enclosed within each set of <gi>said</gi> tags represents only a portion of the complete
             passage of direct discourse. For this reason these elements are sometimes called
                 <soCalled>partial elements</soCalled>.</p>
-        <p>Thus the speech in our example from Pinsky's poem can be broken up to fit into the
-            hierarchy established by the metrical lineation: <egXML
-                xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-02">
+        <p>In the case of our selection from Pinsky's poem, for example, the second passage of
+            direct quotation, which crosses a line boundary and is broken up by a <mentioned>She
+                said</mentioned> in the narrator's voice, the encoding can be made to fit within the
+            hierarchy established by the metrical lineation by using two <gi>said</gi> elements:
+                <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-02">
                 <lg>
                     <l>Catholic woman of twenty-seven with five children</l>
                     <l>And a first-rate body—pointed her finger</l>
                     <l>at the back of one certain man and asked me,</l>
-                    <l><said>Is that guy a psychiatrist?</said> and by god he was! <said>Yes,</said></l>
-                    <l>She said, <said>He <emph>looks</emph> like a psychiatrist.</said></l>
+                    <l><said n="quotation1">Is that guy a psychiatrist?</said> and by god he was!
+                            <said n="quotation2">Yes,</said></l>
+                    <l>She said, <said n="quotation2">He <emph>looks</emph> like a
+                        psychiatrist.</said></l>
                     <l>Grown quiet, I looked at his pink back, and thought.</l>
                 </lg>
             </egXML></p>
         <p>Similarly, the sentences in our example from Wordsworth could be encoded: <egXML
                 xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
                 <l>
-                    <s>Scorn not the sonnet;</s>
-                    <s>critic, you have frowned,</s>
+                    <s n="sentence1">Scorn not the sonnet;</s>
+                    <s n="sentence2">critic, you have frowned,</s>
                 </l>
                 <l>
-                    <s>Mindless of its just honours;</s>
-                    <s>with this key</s>
+                    <s n="sentence2">Mindless of its just honours;</s>
+                    <s n="sentence3">with this key</s>
                 </l>
                 <l>
-                    <s>Shakespeare unlocked his heart;</s>
-                    <s>the melody</s>
+                    <s n="sentence3">Shakespeare unlocked his heart;</s>
+                    <s n="sentence4">the melody</s>
                 </l>
                 <l>
-                    <s>Of this small lute gave ease to Petrarch's wound.</s>
+                    <s n="sentence4">Of this small lute gave ease to Petrarch's wound.</s>
                 </l>
             </egXML></p>
         <p>There are two main problems with this type of encoding. The first is that it invariably
@@ -395,15 +406,18 @@ $Id$
             there are actual instances of that feature in the text. Thus, for example, the passage
             from <title level="a">Scorn not the sonnet</title> marks seven spans of text using
             <gi>s</gi>, even though there are only four linguistic sentences in the passage.</p>
-        <p>The second problem is that it can be semantically misleading. Although it is tagged using
-                <gi>s</gi>, the element for <term>sentence</term>, for example, the text
-                <mentioned>Mindless of its just honours</mentioned> is not a linguistic sentence.</p>
-        <p>Taken together, these problems can make automatic analysis of the fragmented feature
+        <p>The second problem is that it can be semantically misleading. Although they are tagged
+            using the element for <term>sentence</term>, for example, very few of the textual
+            features encoded using <gi>s</gi> in this example represent actual linguistic sentences:
+                <mentioned>with this key</mentioned>, for example, is a Prepositional Phrase, not a
+            sentence; <mentioned>Of this small lute gave ease to Petrarch's wound</mentioned> is a
+            string corresponding to no single grammatical category.</p>
+        <p>Taken together, these problems can make automatic analysis of the fragmented features
             difficult. An analysis that intended to count the number of sentences in Wordsworth's
-            poem, for example, would arrive at an inflated figure if it just counted the <gi>s</gi>
-            tags. Likewise, a project interested in doing a linguistic analysis of Wordsworth's
-            sentence syntax would not be able to assume that each <gi>s</gi> represented a
-            linguistic sentence.</p>
+            poem, for example, would arrive at an inflated figure if it understood the <gi>s</gi>
+            tags to represent complete rhetorical sentences; if it wanted to do an analysis of his
+            syntax, it would not be able to assume that the <gi>s</gi> delimited linguistic
+            sentences.</p>
         <p>The technique of fragmentation is often complemented by the technique of virtual joins.
             Virtual joins may be used to combine objects in the text to a new hierarchy. Here is
                 <title level="a">Scorn not the sonnet</title> again; this time the relationship
@@ -454,9 +468,9 @@ $Id$
         <p>This method is TEI conformant and simple to use. Its disadvantage is that it does not
             work well for cases of self-overlap, or if there are nested occurrences of the same
             element type, as it can become difficult to ascertain which initial, medial, or final
-            partial element should be combined with which others. This can be illustrated using a
-            slightly modified verse from a Tom Lehrer song: <egXML
-                xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-03">
+            partial element should be combined with which others. This can be illustrated by
+            returning to our ambiguous Noun Phrase <mentioned>Fast Trains and Planes</mentioned>:
+                <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-04">
                 <l>
                     <s part="I">Don't say that he's hypocritical,</s>
                 </l>
@@ -465,15 +479,12 @@ $Id$
                 </l>
                 <l>
                     <s part="I">
-                        <said>
-                            <s part="I">Once rockets go up, who says where they come down —</s>
-                        </said>
+                        <s part="I">"Once rockets go up, who says where they come down —</s>
                     </s>
                 </l>
                 <l>
-                    <said>
-                        <s part="F">That's not my department!</s>
-                    </said>, <s part="F">says Wernher von Braun.</s>
+                    <s part="F">That's not my department!,"</s>
+                    <s part="F">says Wernher von Braun.</s>
                 </l>
             </egXML></p>
         <p>A third method for aggregating fragmented partial elements involves using markup that is
