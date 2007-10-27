@@ -23,7 +23,7 @@ Description
 <xsl:param name="host">http://localhost:8080/cocoon/Query</xsl:param>
 <xsl:param name="selectedMode">addElement</xsl:param>
 <xsl:param name="elementChangedName"/>
-<xsl:param name="namespace">http://www.example.org/ns/nonTEI</xsl:param>
+<xsl:param name="elementNamespace"/>
 <xsl:param name="module"/>
 <xsl:param name="lang"/>
 <xsl:param name="changeNameERROR"/>
@@ -120,28 +120,28 @@ test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if></xsl:attribut
         </td>    
        </tr>
       </xsl:if>
-      <xsl:if test="not($selectedMode='changeElement')">
+
        <tr>
-	 <xsl:if test="//errorList/error/location[node()='namespace']">
+	 <xsl:if test="//errorList/error/location[node()='elementNamespace']">
 	   <xsl:attribute name="class">error</xsl:attribute>
 	 </xsl:if>
         <td class="formlabel">Namespace</td>
         <td class="formfield">
-         <input type="text" size="53" name="namespace">
+         <input type="text" size="53" name="elementNamespace">
 	   <xsl:if
-	    test="//errorList/error/location[node()='namespace']">
+	    test="//errorList/error/location[node()='elementNamespace']">
 	     <xsl:attribute name="value"><xsl:value-of
 	    select="//errorList/error[child::location[node()='name']]/oldValue"/></xsl:attribute>
 	    </xsl:if>
 	    <xsl:if
-	     test="not(//errorList/error/location[node()='namespace'])">
+	     test="not(//errorList/error/location[node()='elementNamespace'])">
 	    <xsl:attribute name="value"><xsl:value-of
-	      select="$namespace"/></xsl:attribute>
+	      select="$elementNamespace"/></xsl:attribute>
 	    </xsl:if>
  	 </input>
         </td>    
        </tr>
-      </xsl:if>
+
       <tr>
 	<td class="formlabeltop"><xsl:value-of disable-output-escaping="yes" select="$res_form_description"/></td>
 	<td>

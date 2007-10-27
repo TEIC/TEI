@@ -318,6 +318,16 @@ class romaDom extends domDocument
 	$szContents = $this->SaveXML( $oContent );
       }
 
+    public function getAddedElementsNamespace( $szIdent, &$szContents )
+      {
+	$this->getXPath( $oXPath );
+        $szContents = $oXPath->query( "/tei:TEI/tei:text//tei:elementSpec[@ident='$szIdent']/@ns" )->item(0)->nodeValue;
+//	error_log("found " . $szContents . "!");
+	if ($szContents == '') {
+	   $szContents = 'http://www.tei-c.org/ns/1.0';
+	}
+      }
+
 
     public function getAddedElementsClasses( $szIdent, &$aszClasses )
       {
@@ -884,6 +894,16 @@ class romaDom extends domDocument
 	$szPrefix = $oXPath->query( "//tei:schemaSpec/@prefix" )->item(0)->nodeValue;
       }
 
+    public function getCustomizationNamespace( &$szNamespace )
+      {
+	$this->getXPath( $oXPath );
+	$szNamespace = $oXPath->query("//tei:schemaSpec/tei:elementSpec[@mode='add']/@ns"
+      )->item(0)->nodeValue;
+         if ($szNamespace == '' ){
+	    $szNamespace = 'http://www.example.org/ns/nonTEI';
+	 }
+      }
+
     public function getCustomizationLanguage( &$szLanguage )
       {
 	$this->getXPath( $oXPath );
@@ -993,7 +1013,11 @@ class romaDom extends domDocument
 	      {
 		$theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
 		$oElementSpec = $oSchema->appendChild( $theElementSpec );
-		$oElementSpec->setAttribute( 'ident', $aszConfig[ 'name' ] );
+		$oElementSpec->setAttribute( 'ident', $aszConfig['name' ] );
+	      
+	      if ($aszConfig[ 'namespace' ] != '') {
+		$oElementSpec->setAttribute( 'ns', $aszConfig['namespace' ] );
+		}
 		$oElementSpec->setAttribute( 'mode', ( ( $aszConfig[ 'added' ] == 'true' ) ? 'add' : 'change' ) );
 	      }
 

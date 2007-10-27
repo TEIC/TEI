@@ -8,7 +8,7 @@ form_language=Sprache
 form_author=Name des Autors
 form_description=Beschreibung
 form_prefix=Prefix for TEI pattern names in schema
-
+form_namespace=Namespace for new elements
 
 [en]
 helpmessage=This dialogue allows you to set global parameters
@@ -20,7 +20,7 @@ form_language=Language
 form_author=Author name
 form_description=Description
 form_prefix=Prefix for TEI pattern names in schema
-
+form_namespace=Namespace for new elements
 
 [es]
 helpmessage=Esta ventana te permite elegir los parámetros globales
@@ -32,6 +32,7 @@ form_language=Lengua
 form_author=Autor
 form_description=Descripción
 form_prefix=Prefijo para los nombres de los patrones TEI en el esquema
+form_namespace=Namespace for new elements
 
 [fr]
 helpmessage=Définissons les paramètres
@@ -43,7 +44,7 @@ form_language=Langage
 form_author=Auteur
 form_description=Description
 form_prefix=Prefix for TEI pattern names in schema
-
+form_namespace=Namespace for new elements
 
 [it]
 helpmessage=Questa finestra ti permette di impostare i parametri globali
@@ -55,7 +56,7 @@ form_language=Lingua
 form_author=Autore
 form_description=Descrizione
 form_prefix=Prefisso per nomi di pattern TEI nello schema
-
+form_namespace=Namespace for new elements
 
 [ja]
 helpmessage=グローバル属性を定義します。
@@ -67,7 +68,7 @@ form_language=言語
 form_author=制作者
 form_description=解説
 form_prefix=接頭辞
-
+form_namespace=Namespace for new elements
 
 [ru]
 helpmessage=Этот диалог позволит Вам ввести глобальные параметры headline=Введите Ваши параметры
@@ -79,7 +80,7 @@ form_doclanguage=Язык документации
 form_author=Имя автора
 form_description=Описание
 form_prefix=Префикс наименования модели TEI в данной схеме
-
+form_namespace=Namespace for new elements
 
 [sw]
 helpmessage=I denna vy väljer och ställer du in globala parametrar
@@ -92,7 +93,7 @@ form_doclanguage=Språk för dokumentation
 form_author=Författarnamn
 form_description=Beskrivning
 form_prefix=Prefix för TEI namnen i schemat
-
+form_namespace=Namespace for new elements
 
 [zh-tw]
 helpmessage=在這兒可以設定全域參數
@@ -104,7 +105,7 @@ form_language=語言
 form_author=作者
 form_description=描述
 form_prefix=Prefix for TEI pattern names in schema
-
+form_namespace=Namespace for new elements
 
 [pt]
 helpmessage=Este diálogo permite definir parametros globais 
@@ -117,4 +118,4 @@ form_doclanguage=Língua para a  documentaçao
 form_author=Nome do autor 
 form_description=Descriçao
 form_prefix=Prefixo para os nomes dos padroes TEI no esquema
-
+form_namespace=Namespace for new elements

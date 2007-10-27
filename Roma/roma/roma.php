@@ -31,25 +31,6 @@
 // --- The Roma PACKAGE
 // ######################################################################
 
-// The Roma package contains the following files:
-// roma/roma.php
-// roma/romadom.php
-// parser/parser.php
-// roma/templates/main.tem
-// roma/templates/createSchema.tem
-// roma/templates/customizeLanguage.tem
-// roma/stylesheets/addAttribute.xsl
-// roma/stylesheets/addElements.xsl
-// roma/stylesheets/changeModules.xsl
-// roma/stylesheets/modules.xsl
-// roma/stylesheets/listAddedElements.xsl
-// roma/stylesheets/listAddedAttributes.xsl
-// index.html
-// startroma.php
-//
-// furthermore there are a couple of XQueries bundled with Roma
-// 
-
 // ######################################################################
 // --- Installation
 // ######################################################################
@@ -453,6 +434,7 @@ class roma
 		}
 	      $aszConfig = array( 'name' => $_REQUEST[ 'name' ],
 				  'added' => $_REQUEST[ 'added' ],
+				  'namespace' => $_REQUEST[ 'elementNamespace' ],
 				  'content' => $_REQUEST[ 'content' ],
 				  'contentmodel' => $_REQUEST[ 'contentmodel' ],
 				  'userContent' => $_REQUEST['userContent'],
@@ -772,16 +754,22 @@ class roma
         $aszParam = array( 'host' => $_SERVER[ 'HTTP_HOST' ], 
 		  'MESSAGE' => $szMessage, 
 		  'selectedMode' => 'addElement' );
-        if ( $_REQUEST[ 'element' ] != '' )
+        $E =  $_REQUEST[ 'element' ];
+        if ( $E != '' )
           {
-            //get Elements Classes
-            $this->m_oRomaDom->getAddedElementsClasses( $_REQUEST[ 'element' ], $aszClasses );
-            //get Elements description
-            $this->m_oRomaDom->getAddedElementsDescription( $_REQUEST[ 'element' ], $szDesc );
-            //get Elements description
-            $this->m_oRomaDom->getAddedElementsContents( $_REQUEST[ 'element' ], $szContents );
-            $this->m_oRomaDom->getAddedElementsFullContents( $_REQUEST[ 'element' ], $szFullContents );
+            //get Element's Classes
+            $this->m_oRomaDom->getAddedElementsClasses($E, $aszClasses );
+            //get Element's description
+            $this->m_oRomaDom->getAddedElementsDescription($E, $szDesc );
+            //get Element's description
+            $this->m_oRomaDom->getAddedElementsContents($E, $szContents );
+            $this->m_oRomaDom->getAddedElementsFullContents($E, $szFullContents );
+            $this->m_oRomaDom->getAddedElementsNamespace($E, $szNamespace );
           }
+	else
+	  {
+        	$this->m_oRomaDom->getCustomizationNamespace( $szNamespace );	
+	  }
 	
 	if( is_array( $_SESSION[ 'addElements' ][ 'ERROR' ] ) )
 	  {
@@ -791,13 +779,14 @@ class roma
 	    unset( $_SESSION[ 'addElements' ] );
 	  }
 
-	$aszParam[ 'elementName' ] = $_REQUEST[ 'element' ];
+	$aszParam[ 'elementName' ] = $E;
 	$aszParam[ 'elementDesc' ] = $szDesc;
 	if (is_array( $aszClasses) )
 	  $aszParam[ 'elementClasses' ] = join( ';', $aszClasses );
 	$aszParam[ 'elementContents' ] = $szContents;
 	$aszParam[ 'host' ] = roma_xquery_server;
 	$aszParam[ 'elementFullContents' ] = $szFullContents;
+	$aszParam[ 'elementNamespace' ] = $szNamespace;
 
 	$this->applyStylesheet( $oListDom, 'addElements.xsl', $oNewDom, $aszParam, 'addElements'  );
 
@@ -1201,6 +1190,7 @@ class roma
 	$this->m_oRomaDom->getCustomizationAuthor( $szAuthor );
 	$this->m_oRomaDom->getCustomizationFilename( $szFilename );
 	$this->m_oRomaDom->getCustomizationPrefix( $szPrefix );
+	$this->m_oRomaDom->getCustomizationNamespace( $szNamespace );
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
 	$this->m_oRomaDom->getCustomizationDescription( $szDesc );
 
@@ -1213,6 +1203,7 @@ class roma
 	$oSchemaParser->AddReplacement( 'prefix', $szPrefix );
 	$oSchemaParser->AddReplacement( 'language', $szLanguage );
 	$oSchemaParser->AddReplacement( 'description', $szDesc );
+	$oSchemaParser->AddReplacement( 'namespace', $szNamespace );
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
 	
 	$oParser->addReplacement( 'lang', $szLanguage );
