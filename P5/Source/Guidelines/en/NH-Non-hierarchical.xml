@@ -258,18 +258,22 @@ $Id$
                                 <n:sentenceBoundaryEnd/></l>
                         </egXML>
                     </p>
-                    <p>Because it involves additions to the TEI abstract model, this method is an
-                        extension of the TEI.</p>
+                    <p>If the custom elements can be replaced by the generic <gi>anchor</gi> tag
+                        without loss of information, this method is TEI Conformable (see <ptr
+                            target="#CF"/>); if the custom elements introduce information or
+                        distinctions that cannot be captured using standard TEI elements, the method
+                        is an extension of the TEI.</p>
                 </item>
                 <item>
-                    <p>A final method alters the TEI by adapting elements that are normally used to
-                        encode nesting textual features so that they also can be used as boundary
-                        delimiters when these features are non-nesting. Additional attributes
-                            (<att>sID</att> and <att>eID</att> in the example below) are added to
-                        the content model in order to allow the unambiguous correlation of start and
-                        end points (this method has been introduced in the markup literature under
-                        various names, including Trojan milestones, HORSE markup, CLIX, and COLT. It
-                        is described in detail by <ptr target="#NH-BIBL-1" type="cit"/>): <egXML
+                    <p>Elements that are normally used to encode nesting textual features (e.g.
+                            <gi>said</gi>, <gi>s</gi>, <gi>l</gi>, etc.) can be adapted so that they
+                        serve as empty boundary delimiters when the features they encode cross
+                        hierarchical boundaries. Additional attributes (<att>sID</att> and
+                        <att>eID</att> in the example below) are added to the content model in order
+                        to allow the unambiguous correlation of start and end points (this method
+                        has been introduced in the markup literature under various names, including
+                        Trojan milestones, HORSE markup, CLIX, and COLT. It is described in detail
+                        by <ptr target="#NH-BIBL-1" type="cit"/>): <egXML
                             xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
                             <lg xmlns:hr="http://www.example.org/ns/nonTEI">
                                 <l>
@@ -283,10 +287,21 @@ $Id$
                                     />
                                 </l>
                             </lg>
-                        </egXML> Because it involves the extension of existing TEI elements, this
-                        method is non-conformant (see <ptr target="#CFAM"/>), and indeed strongly
-                        deprecated unless the empty form of the elements are placed outside the TEI
-                        namespace as in the above example.</p>
+                        </egXML> Depending on how the modifications are carried out, this method may
+                        be TEI Conformable, represent a TEI Extension, or be non-Conformant. <list>
+                            <item>The method is TEI Conformable if the modified elements are placed
+                                in a distinct, non-TEI-namespace (see <ptr target="#CFNS"/>), and if
+                                the modified elements and attributes can be mapped directly to an
+                                existing TEI milestone or anchor tag automatically without loss of
+                                information (see <ptr target="#CF"/>).</item>
+                            <item>The method represents an Extension if the modified elements are
+                                placed in a distinct, non-TEI namespace, but contain information or
+                                distinctions that cannout be algorithmically translated to existing
+                                TEI elements without loss of information (see <ptr target="#CF"/>).</item>
+                            <item>The method is non-conformant—and indeed strongly deprecated—if the
+                                modified elements and attributes are not placed in a distinct,
+                                non-TEI namespace (see <ptr target="#CFAM"/>).</item>
+                        </list></p>
                 </item>
             </list>
         </p>
