@@ -257,11 +257,18 @@
 	<xsl:text> (eds.)</xsl:text>
       </xsl:when>
     </xsl:choose>
-    <xsl:if test="tei:monogr/tei:imprint/tei:date">
-      <xsl:text> (</xsl:text>
-      <xsl:value-of select="tei:monogr/tei:imprint/tei:date"/>
-      <xsl:text>)</xsl:text>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="tei:monogr/tei:imprint/tei:date/@when">
+	<xsl:text> (</xsl:text>
+	<xsl:value-of select="substring-before(tei:monogr/tei:imprint/tei:date/@when,'-')"/>
+	<xsl:text>)</xsl:text>
+      </xsl:when>
+      <xsl:when test="tei:monogr/tei:imprint/tei:date">
+	<xsl:text> (</xsl:text>
+	<xsl:value-of select="tei:monogr/tei:imprint/tei:date"/>
+	<xsl:text>)</xsl:text>
+      </xsl:when>
+    </xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:biblStruct">
