@@ -28,6 +28,7 @@ TESTFILES= \
 	testoucs \
 	testp4compat \
 	testplace \
+	testrendition \
 	testspoken \
 	testtagdocs \
 	testtite \
