@@ -207,11 +207,17 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 	    <span>
 	      <xsl:attribute name="class">
 		<xsl:text>gi</xsl:text>
-		<xsl:if test="tei:content/rng:empty">
-		  <xsl:text> emptySlash</xsl:text>
-		</xsl:if>	 
 	      </xsl:attribute>
-	      <xsl:value-of select="@ident"/>
+	      <xsl:choose>
+		<xsl:when test="tei:content/rng:empty">
+		  <span class="emptySlash">
+		    <xsl:value-of select="@ident"/>
+		  </span>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="@ident"/>
+		</xsl:otherwise>
+	      </xsl:choose>
 	    </span>
 	  </a>
 	</xsl:for-each>
@@ -340,12 +346,16 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
     <h2>
       <xsl:text>&lt;</xsl:text>
       <span>
-	<xsl:if test="tei:content/rng:empty">
-	  <xsl:attribute name="class">
-	    <xsl:text> emptySlash</xsl:text>
-	  </xsl:attribute>
-	</xsl:if>	 
-	<xsl:value-of select="$name"/>
+	<xsl:choose>
+	  <xsl:when test="tei:content/rng:empty">
+	    <span class="emptySlash">
+	      <xsl:value-of select="$name"/>
+	    </span>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="$name"/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </span>
       <xsl:text>&gt;</xsl:text> 
     </h2>
@@ -356,11 +366,17 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 	    <span>
 	      <xsl:attribute name="class">
 		<xsl:text>label</xsl:text>
-		<xsl:if test="tei:content/rng:empty">
-		  <xsl:text> emptySlash</xsl:text>
-		</xsl:if>	 
 	      </xsl:attribute>
-	      <xsl:value-of select="$name"/>
+	      <xsl:choose>
+		<xsl:when test="tei:content/rng:empty">
+		  <span class="emptySlash">
+		    <xsl:value-of select="$name"/>
+		  </span>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="$name"/>
+		</xsl:otherwise>
+	      </xsl:choose>
 	    </span>
 	    <xsl:text>&gt; </xsl:text>
           <xsl:call-template name="makeDescription"/>
