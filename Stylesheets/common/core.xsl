@@ -361,29 +361,17 @@
       <xsl:text> </xsl:text>
     </xsl:when>
     <xsl:when test="@level='a'">
-      <xsl:choose>
-	<xsl:when test="parent::bibl">
-	  <xsl:call-template name="emphasize">
-	    <xsl:with-param name="class">
-	      <xsl:text>titlea</xsl:text>
-	    </xsl:with-param>
-	    <xsl:with-param name="content">
-	      <xsl:apply-templates/>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	  <xsl:if test="ancestor::tei:biblStruct">
-	    <xsl:text>. </xsl:text>
-	  </xsl:if>
-	</xsl:when>
-	<xsl:otherwise>
-	  <q class="titlea">
-	    <xsl:apply-templates/>
-	  </q>
-	  <xsl:if test="ancestor::tei:biblStruct">
-	    <xsl:text>. </xsl:text>
-	  </xsl:if>
-	</xsl:otherwise>
-      </xsl:choose>
+      <xsl:call-template name="emphasize">
+	<xsl:with-param name="class">
+	  <xsl:text>titlea</xsl:text>
+	</xsl:with-param>
+	<xsl:with-param name="content">
+	  <xsl:apply-templates/>
+	</xsl:with-param>
+      </xsl:call-template>
+      <xsl:if test="ancestor::tei:biblStruct">
+	<xsl:text>. </xsl:text>
+      </xsl:if>
     </xsl:when>
     <xsl:when test="@level='u'">
       <xsl:call-template name="emphasize">

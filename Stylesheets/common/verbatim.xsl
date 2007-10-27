@@ -120,9 +120,11 @@
 	    </xsl:choose>
           </xsl:with-param>
         </xsl:call-template>
+	<!--
 	<xsl:if test="substring(.,string-length(.))=' '">
 	  <xsl:text> </xsl:text>
 	</xsl:if>
+	-->
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
