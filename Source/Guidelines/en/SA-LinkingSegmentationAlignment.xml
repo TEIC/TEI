@@ -534,34 +534,51 @@ Since no <att>xml:base</att> is specified here, the location of the resource
 resource indicated by the current base URI, which is the current
 document.
 </p>
+
+
 <p>In the following example, however, we first change the current base
-URI by setting a new value for xml:base. The resource required
-is then identified by means of a relative URI:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="chap" xml:base="http://classics.mit.edu/">
+URI by setting a new value for <att>xml:base</att>. The resource
+required is then identified by means of a relative URI:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div
+type="chap" xml:base="http://classics.mit.edu/">
   <head>On Ancient Persian Manners</head>
-  <p>In the very first story of <ref target="Sadi/gulistan.2.i.html"><title>The Gulistan of Sa'di</title></ref>,
+  <p>In the very first story of <ref
+  target="Sadi/gulistan.2.i.html"><title>The Gulistan of
+  Sa'di</title></ref>,
   Sa'di relates moral advice worthy of Miss Minners ...</p>
   <!-- ... -->
 </div></egXML></p>
 <p>As noted above, the current base URI is found on the nearest
 ancestor. This provides a useful way of abbreviating URIs within a
-given scope
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><body><div n="A">
-<p>The base URI here is  the current document. A URI such as
-<code>a.xml</code>  is equivalent to <code>./a.xml</code> </p>
-</div><div n="B" xml:base="http://a.b.org/">
-<p>The base URI here is  <code>http://a.b.org</code>. A URI such as 
-<code>a.xml</code>  is equivalent to <code>http://a.b.org/a.xml</code> </p>
-</div><div n="C" xml:base="http://c.d.org/">
-<p>The base URI here is  <code>http://c.d.org</code>. A URI such as 
-<code>a.xml</code>  is equivalent to <code>http://c.d.org/a.xml</code> </p>
-</div>
-<div n="D">
-<p>The base URI here is  the current document. A URI such as
-<code>a.xml</code>  is equivalent to <code>./a.xml</code> </p>
-</div>
+given scope:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
+  <div n="A">
+    <p>The base URI here is the current document. A URI such as
+    <code>a.xml</code> is equivalent to
+    <code>./a.xml</code>.</p>
+  </div>
+  <div n="B" xml:base="http://www.example.org/">
+    <p>The base URI here is
+    <code>http://www.example.org/</code>. A
+    URI such as <code>a.xml</code> is equivalent to
+    <code>http://a.b.org/a.xml</code>.</p>
+  </div>
+  <div n="C" xml:base="ftp://ftp.example.net/mirror/">
+    <p>The base URI here is
+    <code>ftp://ftp.example.net/mirror/</code>. A URI such
+    as
+    <code>a.xml</code> is equivalent to
+    <code>ftp://ftp.example.net/mirror/a.xml</code>.</p>
+  </div>
+  <div n="D">
+    <p>The base URI here is the current document. A URI such as
+    <code>a.xml</code> is equivalent to
+    <code>./a.xml</code>.</p>
+  </div>
 </body></egXML>
 </p>
+
 
     </div>
     <div type="div3" xml:id="SABN">
