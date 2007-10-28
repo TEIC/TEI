@@ -10,28 +10,28 @@ $Id$
 	<head>Using the TEI</head>
 	
 
-<p>This chapter discusses several
-related  technical topics concerning the actual deployment of the TEI
-markup scheme documented elsewhere in these Guidelines. The TEI scheme
-is intended both to support best current practice and to facilitate
-enhancement and customization of that practice. In section <ptr target="#MD"/> we discuss the scope and variety of the TEI
-customization mechanisms, distinguishing between
-<soCalled>clean</soCalled> modifications, which result in a schema
-that supports a subset of the distinctions made in the full TEI
+<p>This section discusses some technical topics concerning the
+deployment of the TEI markup scheme documented elsewhere in these
+Guidelines. <!-- The TEI scheme is intended both to support best
+current practice and to facilitate enhancement and customization of
+that practice. --> In section <ptr target="#MD"/> we discuss the scope
+and variety of the TEI customization mechanisms, distinguishing
+between <soCalled>clean</soCalled> modifications, which result in a
+schema that supports a subset of the distinctions made in the full TEI
 system, on the one hand, from <soCalled>unclean</soCalled>
 modifications, which result in a schema that does not have this
-property. In section <ptr target="#CF"/> we define the notion of
-<term>TEI Conformance</term>, distinguishing between documents which
-are algorithmically TEI conformant  from those which are intrinsically
+property. In <ptr target="#CF"/> we define the notion of <term>TEI
+Conformance</term>, distinguishing between documents which are
+algorithmically TEI conformant from those which are intrinsically
 conformant; we also define the concept of a conformant TEI
-extension. Since the ODD markup description language defined in chapter
-<ptr target="#TD"/> is fundamental  to the way conformance and
+extension. Since the ODD markup description language defined in
+chapter <ptr target="#TD"/> is fundamental to the way conformance and
 customization are handled in the TEI system, these two definitional
-sections are followed by a section which describes in further detail
-the intended behaviour of an ODD processor. The chapter concludes with
-a similarly advisory section which discusses best practice in using
-the Guidelines to support markup of non-hierarchic overlapping
-structures (<ptr target="#NH"/>). </p>
+sections are followed by a section (<ptr target="#IM"/>) which
+describes the intended behaviour of an ODD processor. <!--The chapter
+concludes with a similarly advisory section which discusses best
+practice in using the Guidelines to support markup of non-hierarchic
+overlapping structures (<ptr target="#NH"/>).--> </p>
 	
 <div type="div1a" xml:id="DT" n="36"><head>Obtaining the TEI Schemas</head>
 <p>As discussed in chapter <ptr target="#TD"/>, the modules making up
@@ -1429,109 +1429,151 @@ normative. Its function is to further illustrate the intended scope
 and application of the elements documented in chapter <ptr target="#TD"/>, since it is believed that these may have application
 beyond the areas directly addressed by the TEI.</p>
 
-<p>An ODD processing system  has two tasks to undertake.
-Firstly, the application of changes and additions in an ODD customization
-(as described in <ptr target="#MD"/>) to the TEI P5 ODD specification
-through a process of selection,  merging, and deletion. Secondly,
-the conversion of the resulting unified ODD to the desired output.</p>
+<p>An ODD processing system has to accomplish two main tasks. A set of
+selections, deletions, changes, and additions supplied by an ODD
+customization (as described in <ptr target="#MD"/>) must first be
+merged with the published TEI P5 ODD specifications. Next, the
+resulting unified ODD must be processed to produce the desired outputs.</p>
 
-<p>An ODD processor is not mandated to do these two stages in sequence,
-but that can be a convenient way to simplify the second part of the
-work; this is how the tools used for the TEI Guidelines work.</p>
+<p>An ODD processor is not required to do these two stages in
+sequence, but that may well be the simplest approach; the ODD
+processing tools currently provided by the TEI Consortium, which are
+also used to process the source of these Guidelines, adopt this approach.</p>
 
 <div xml:id="IM-unified">
 <head>Making a Unified ODD</head>
-<p>Merging an ODD customization with the  TEI P5 ODD specification
-is driven by a <gi>schemaSpec</gi> element, which specifies
-the name and default namespace of the result. The content
-can be of four types:
-<list type="ordered">
-<item><gi>elementSpec</gi>, <gi>classSpec</gi>, or <gi>macroSpec</gi>
-elements; these must have a <att>mode</att> attribute which determines
-how they will be processed.<note place="foot">We do not here say what happens in
-case of errors; a specification in <val>add</val> mode which is also
-present in an imported module should obviously be flagged as an
-error.</note> If the value of <att>mode</att> is <val>add</val>, then
-the object is simply copied to the output, but if it is
-<val>change</val>, <val>delete</val>, or <val>replace</val>, then it
-will be looked at by other parts of the process.</item>
+<p>An ODD  customization must contain a single <gi>schemaSpec</gi>
+element, which defines the schema to be constructed.  
+ <specDesc key="schemaSpec" atts="ns start prefix targetLang docLang"/> 
+Amongst other attributes inherited from the <ident
+type="model">att.identified</ident> class, this element also carries a
+required <att>ident</att> attribute. This provides a name for the
+generated schema, which other components of the processing system may
+use to refer to the schema being generated, e.g. in issuing error
+messages or as part of the generated output schema file or files. The
+<att>ns</att> attribute may be used to specify the default namespace
+within which elements valid against the resulting schema belong, as
+discussed in <ptr target="#MDNS"/>.
+</p>
+<p>The <gi>schemaSpec</gi> element contains an unordered series of specialized
+elements, each of which is of one of the following four types:
+<list type="gloss">
+<label>specifications</label>
+<item>elements from the class <ident
+type="class">model.oddDecl</ident> (by default <gi>elementSpec</gi>,
+<gi>classSpec</gi>, <gi>moduleSpec</gi>, and <gi>macroSpec</gi>);
+these must have a <att>mode</att> attribute which determines how they
+will be processed.<note place="foot">An ODD processor should recognize
+as erroneous such obvious inconsistencies as an attempt to include an
+<gi>elementSpec</gi> in <val>add</val> mode for an element which is already present 
+in an imported module.</note> If the value of <att>mode</att> is
+<val>add</val>, then the object is simply copied to the output, but if
+it is <val>change</val>, <val>delete</val>, or <val>replace</val>,
+then it will be looked at by other parts of the process.</item>
+<label>references to specifications</label>
+<item><gi>specGrpRef</gi> elements refer to <gi>specGrp</gi> elements
+that occur elsewhere in this, or another, document.  A
+<gi>specGrp</gi> element, in turn, groups together a set of ODD
+specifications (among other things, including further
+<gi>specGrpRef</gi> elements). The use of <gi>specGrp</gi> and
+<gi>specGrpRef</gi> permits the ODD markup to occur at the points in
+documentation where they are discussed, rather than all inside
+<gi>schemaSpec</gi>. The <att>target</att> attribute of any
+<gi>specGrpRef</gi> should be followed, and the <gi>elementSpec</gi>,
+<gi>classSpec</gi>, and <gi>macroSpec</gi>, elements in the
+corresponding <gi>specGrp</gi> should be processed as described in the
+previous item; <gi>specGrpRef</gi> elements should be processed as
+described here.</item>
+<label>references to TEI Modules</label>
+<item><gi>moduleRef</gi> elements with <att>key</att> attributes refer to
+      components of the TEI. The value of the <att>key</att> attribute matches
+      the <att>ident</att> attribute of a TEI module. The <att>key</att> must be
+      dereferenced by some means, such as reading an XML file with the TEI ODD
+      specification (either from the local hard drive or off the web), or
+      looking up the reference in an XML database (again, locally or remotely);
+      whatever means is used, it should return a stream of XML containing the
+      element, class, and macro specifications 
+      collected together in  the specified module. 
+These specification elements are then processed in the same way as if
+they had been supplied directly within the <gi>schemaSpec</gi> being processed.</item>
 
-<item><gi>specGrpRef</gi> pointers to <gi>specGrp</gi> groups
-elsewhere in this, or another, document. A <gi>specGrp</gi> is used to
-hold chunks of ODD markup at the points in documentation where they
-are discussed, rather than being forced to put them all inside
-<gi>schemaSpec</gi>. The pointer to any such groups should be
-followed, and <gi>elementSpec</gi>, <gi>classSpec</gi>, or
-<gi>macroSpec</gi> elements in the <gi>specGrp</gi> be processed as
-described in the previous item.</item>
-
-<item><gi>moduleRef</gi> elements which refer to components
-of the TEI, using the <att>key</att> attribute. This reference
-must be satisfied by some means, such as reading an XML
-file with the TEI ODD specification, or looking up the reference
-in an XML database; whatever means is used, it should return a stream
-of XML containing the elements, classes, and macros belonging to the
-specified module. These elements can then be checked against overrides in
-the <gi>schemaSpec</gi> being processed.</item>
-
-<item><gi>moduleRef</gi> elements which refer to external
-schemas written in RELAX NG, using the <att>url</att> attribute.
-These will remain untouched, and passed directly to the output
-schema when that is created.
+    <label>references to external modules</label>
+<item>a <gi>moduleRef</gi> element may also refer to a compatible
+external module by means of its <att>url</att> attribute; the content
+of such modules, which must be available in the RELAXNG XML syntax, are
+passed directly and without modification to the output schema when
+that is created.
 </item>
 </list>
 </p>
 
 <p>Each object obtained from the TEI ODD specification using
-<gi>moduleRef</gi> must be checked against objects in the
+<gi>moduleRef</gi> by means of the <att>key</att> attribute must be checked against objects in the
 customization <gi>schemaSpec</gi> according to the following rules:
 <list type="ordered">
 <item>if there is an object  in the ODD customization with the same value for the
 <att>ident</att> attribute, and a <att>mode</att> value of
-<att>delete</att>,
-then the object from the module is ignored</item>
+<val>delete</val>,
+then the object from the module is ignored; </item>
 <item>if there is an object  in the ODD customization with the same value for the
 <att>ident</att> attribute, and a <att>mode</att> value of
-<att>replace</att>,
+<val>replace</val>,
 then the object from the module is ignored, and the one
-from the ODD customization is used in its place</item>
+from the ODD customization is used in its place; </item>
 <item>if there is an object  in the ODD customization
 with the same value for the
 <att>ident</att> attribute, and a <att>mode</att> value of
-<att>change</att>,
-then the two objects must be merged, as described below</item>
-<item>otherwise, the object from the module is copied to the result</item>
+<val>change</val>,
+then the two objects must be merged, as described below; </item>
+<item>if there is an object  in the ODD customization
+with the same value for the
+<att>ident</att> attribute, and a <att>mode</att> value of
+<val>add</val>,
+then an error condition should be raised; </item>
+
+<item>otherwise, the object from the module is copied to the result.</item>
 </list>
 </p>
 
 <p>To merge two objects with the same <att>ident</att>,
-each component (attributes and child elements) must be
-looked at, recursively. They can be of four types:
+their component attributes and child elements must be
+looked at recursively. Each component may fall into one of the
+following four categories:
 <list type="ordered">
 
-<item>objects which can only occur once (attributes,
-and <gi>altIdent</gi>,
-<gi>content</gi>, and <gi>classes</gi> elements) are taken from the
-ODD customization if present there, otherwise from the TEI ODD
-specifification.
+<item>Some components may occur only once within the merged object
+(for example attributes, and <gi>altIdent</gi>, <gi>content</gi>, or
+<gi>classes</gi> elements). If such a component is found in the ODD
+customization, it will be copied to the output; if it is not found
+there, but is present in the TEI ODD specification, then that will
+be copied to the output.
 </item>
 
-<item>grouping objects (<gi>attList</gi>, <gi>valList</gi>)
-are copied, and their children processed using these rules</item>
+<item>Some components are grouping objects (<gi>attList</gi>,
+<gi>valList</gi>, for example); these are always copied to the output,
+and their children are then processed following  the rules given in
+this list.</item>
 
-<item>objects which can occur multiple times, but have no
-identification (<gi>equiv</gi>, <gi>desc</gi>, <gi>gloss</gi>,
-<gi>exemplum</gi>, <gi>remarks</gi>, <gi>listRef</gi> in elements and
-macros, and <gi>datatype</gi> and <gi>defaultVal</gi> in attributes),
-should be copied from both the TEI ODD specification and the ODD
-customization, and all included in the output</item>
+<item>Some components are <soCalled>identifiable</soCalled>: this
+means that they are members of the <ident
+type="class">att.identified</ident> class from which they inherit the
+<att>ident</att> attribute; examples include <gi>attDef</gi> and
+<gi>valItem</gi>. A components of this type will be processed
+according to its <att>mode</att> attribute, following the rules given
+in this list.</item>
 
-<item>identified objects (i.e. those with an <att>ident</att>
-attribute, i.e. <gi>attDef</gi> and <gi>valItem</gi>) 
-are processed according to their <att>mode</att> attribute, following
-the rules in this list.</item>
+<item>Some components may occur multiple times, but are neither
+grouped nor identifiable. Examples include the members of <ident
+type="class">model.glossLike</ident> such as <gi>equiv</gi>,
+<gi>desc</gi>, <gi>gloss</gi>, the <gi>exemplum</gi>,
+<gi>remarks</gi>, <gi>listRef</gi>, <gi>datatype</gi> or
+<gi>defaultVal</gi> elements. These should be copied from both the TEI
+ODD specification and the ODD customization, and all occurrences
+included in the output.</item>
+
 </list>
 </p>
+
 <p>A special problem arises with elements which are members of
 attribute classes, as they are permitted to override attributes
 inherited from a class. For example, consider this simple element:
