@@ -1018,7 +1018,7 @@ class romaDom extends domDocument
 	      if ($aszConfig[ 'namespace' ] != '') {
 		$oElementSpec->setAttribute( 'ns', $aszConfig['namespace' ] );
 		}
-		$oElementSpec->setAttribute( 'mode', ( ( $aszConfig[ 'added' ] == 'true' ) ? 'add' : 'change' ) );
+    	     $oElementSpec->setAttribute( 'mode', ( ( $aszConfig[ 'added' ] == 'true' ) ? 'add' : 'change' ) );
 	      }
 
 	    $oDesc = $oXPath->query( "/tei:TEI/tei:text//tei:elementSpec[@ident='{$aszConfig[ 'name' ]}']/tei:desc" )->item(0);
@@ -1240,6 +1240,17 @@ class romaDom extends domDocument
 	  }
       }
     }
+
+    public function changeElementNamespaceInModule( $szName, $szNamespace )
+      {
+	$this->getXPath( $oXPath );
+	$oElementSpec = $oXPath->query("/tei:TEI/tei:text//tei:elementSpec[@ident='$szName']" )->item(0);
+	error_log("looking at change " . $szName . " to " . $szNamespace);	
+	if ( is_object( $oElementSpec ) ) {
+
+   	   $oElementSpec->setAttribute( 'ns', $szNamespace );
+        }
+}
 
     public function changeElementContentsInModule( $szElement, $szModule, $szContents )
       {

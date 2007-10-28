@@ -1511,6 +1511,11 @@ class roma
 		$errResult = true;
 	      }
           }
+
+// namespace
+	$this->m_oRomaDom->changeElementNamespaceInModule( $_REQUEST[ 'name' ], $_REQUEST[ 'elementNamespace' ] );
+	
+
 // description
         if ($_REQUEST[ 'changedDesc' ] == 'true')  {
 	$this->m_oRomaDom->changeElementDescInModule( $_REQUEST[ 'name' ], $_REQUEST[ 'module' ], $_REQUEST[ 'description' ] );
