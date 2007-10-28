@@ -253,6 +253,7 @@ dist-source:
 	p5sch.xsl \
 	schematron1-5.rnc \
 	*.css \
+	*.js \
 	validator.xsl \
 	xhtml.rnc \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
