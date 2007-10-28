@@ -237,7 +237,9 @@ dist-source:
 	COPYING.txt \
 	Makefile \
 	ReleaseNotes  \
-	Source  \
+	Source/Specs  \
+	Source/Guidelines/en  \
+	Source/Images  \
 	TEI-glow.png \
 	Utilities   \
 	VERSION  \
