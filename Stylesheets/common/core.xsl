@@ -347,7 +347,7 @@
 	  <xsl:apply-templates/>
 	</xsl:with-param>
       </xsl:call-template>
-      <xsl:if test="following-sibling::*">
+      <xsl:if test="following-sibling::* and ancestor::tei:biblStruct">
 	<xsl:text> </xsl:text>
       </xsl:if>
     </xsl:when>
@@ -417,7 +417,7 @@
     <xsl:text> (</xsl:text>
       <xsl:apply-templates/>
     <xsl:text>)</xsl:text>
-    <xsl:if test="following-sibling::*">
+    <xsl:if test="following-sibling::* and ancestor::tei:biblStruct">">
       <xsl:text> </xsl:text>
     </xsl:if>
 </xsl:template>
@@ -478,10 +478,9 @@
       <xsl:apply-templates/>
     </xsl:otherwise>
   </xsl:choose>
-
-   <xsl:if test="ancestor::tei:biblStruct">
+  <xsl:if test="ancestor::tei:biblStruct">
      <xsl:text>. </xsl:text>
-   </xsl:if>
+  </xsl:if>
 </xsl:template>
 
 <!-- details and notes -->
