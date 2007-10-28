@@ -284,37 +284,37 @@ $Id$
             milestones, that the milestone marks both the end of the preceding example and the
             beginning of the next. Complications arise, however, when the non-nesting text overlaps
             with other non-nesting text of the same type, as, for example, in a grammatical analysis
-            of the various possible interpretations of the Noun Phrase <q>fast trains and
-            planes</q>. In this case, the adjective <mentioned>fast</mentioned> can be understood as
-            either modifying <mentioned>trains and planes</mentioned> or just
-            <mentioned>trains</mentioned>: <graphic url="Images/tree1-2.jpg"/></p>
+            of the various possible interpretations of the <choice>
+                <expan>Noun Phrase</expan>
+                <abbr>NP</abbr>
+            </choice>
+            <q>fast trains and planes</q>. In this case, the adjective <mentioned>fast</mentioned>
+            can be understood as either modifying <mentioned>trains and planes</mentioned> or just
+                <mentioned>trains</mentioned>: <graphic url="Images/tree1-2.jpg"/></p>
         <p>In order to encode the possible analyses of this phrase, an unambiguous method of
             associating opening and closing boundary-delimiters is required: <egXML
                 xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-03">
                 <phr function="NP">
-                    <anchor type="delimiter" subtype="NPstart" xml:id="NPOptionB-1"/>
+                    <anchor type="delimiter" subtype="NPstart" xml:id="NPOptionB"/>
                     <w function="adjective">Fast</w>
                     <anchor type="delimiter" subtype="NPstart" xml:id="NPOptionA"/>
                     <w function="noun">trains</w>
-                    <anchor type="delimiter" subtype="NPend" corresp="#NPOptionB-1"/>
+                    <anchor type="delimiter" subtype="NPend" corresp="#NPOptionB"/>
                     <w function="conjunction">and</w>
-                    <anchor type="delimiter" subtype="NPstart" xml:id="NPOptionB-2"/>
                     <w function="noun">planes</w>
                     <anchor type="delimiter" subtype="NPend" corresp="#NPOptionA"/>
-                    <anchor type="delimiter" subtype="NPend" corresp="#NPOptionB-2"/>
                 </phr>
             </egXML>
         </p>
-        <p>In this encoding, the first interpretation (in which <mentioned>fast</mentioned> modifies
-                <mentioned>trains and planes</mentioned>), the phrase division is opened using an
-                <gi>anchor</gi> tag with the <att>xml:id</att> value
-            <mentioned>phraseOptionA</mentioned>; its end is indicated by an <gi>anchor</gi> with
-            the same value on <att>corresp</att>; for the second reading (in which
-            <mentioned>fast</mentioned> modifies only <mentioned>trains</mentioned>) the two
-            component Noun Phrases are opened using <gi>anchor</gi> tags with the <att>xml:id</att>
-            values <mentioned>phraseOptionB-1</mentioned> and <mentioned>phraseOptionB-2</mentioned>
-            and closed with <gi>anchor</gi> tags that use have the same values on
-            <att>corresp</att>.</p>
+        <p>In this encoding, the first interpretation, in which <mentioned>fast</mentioned> modifies
+            the NP <mentioned>trains and planes</mentioned>, the NP <mentioned>trains and
+            planes</mentioned> is opened using an <gi>anchor</gi> tag with the <att>xml:id</att>
+            value <mentioned>phraseOptionA</mentioned> and closed with an <gi>anchor</gi> with the
+            same value on <att>corresp</att>; the second interpretation, in which
+            <mentioned>fast</mentioned> forms a NP with <mentioned>trains</mentioned>, the NP
+                <mentioned>fast cars</mentioned> is opened using an <gi>anchor</gi> tags with the
+                <att>xml:id</att> value <mentioned>phraseOptionB</mentioned> and closed with an
+                <gi>anchor</gi> tag that has the same value on <att>corresp</att>.</p>
         <p>Despite their advantages, segment-boundary delimiters incur the disadvantage of
             cumbersome processing: since the elements of the analysis (e.g. the sentences in the
             poems, or phrases in the above example) are not uniformly represented by nodes in the
