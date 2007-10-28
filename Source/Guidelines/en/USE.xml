@@ -536,7 +536,7 @@ scheme.</p>
 schema generated from an ODD modified in this way, may or may not be a
 subset of the set of documents matched by the unmodified schema. As
 such, it is difficult to tell in principle whether such modifications
-are intriniscally unclean. </p>
+are intrinsically unclean. </p>
 
 </div> 
 <div type="div3" xml:id="MDMDCL"><head>Class Modification</head>
@@ -1576,7 +1576,7 @@ included in the output.</item>
 
 <p>A special problem arises with elements which are members of
 attribute classes, as they are permitted to override attributes
-inherited from a class. For example, consider this simple element:
+inherited from a class. For example, consider this simple modification:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="p">
   <classes>
@@ -1605,8 +1605,8 @@ extend the customization in our schema as follows:
   </attList>
 </elementSpec>
 </egXML>
-This means that when <code>&lt;memberOf
-key="att.typed"/&gt;</code> is processed, that class is looked up,
+This means that when <tag>memberOf
+key="att.typed"/</tag> is processed, that class is looked up,
 each attribute which it defines is examined in turn, and
 the customization is searched for  an override. 
 If the modification is of
@@ -1637,16 +1637,18 @@ Nothing prevents the user from supplying <gi>desc</gi> several times
 in the same language, and subsequent applications will have to 
 decide what that may mean. </p>
 
-<p>Multiple examples, possibly in different languages, are easier to
-deal with. Note that since the <gi>exemplum</gi> element is not
-identifiable, examples can only be deleted by supplying an entire new
-<gi>elementSpec</gi> in <val>replace</val> mode.</p>
+<p>Similar considerations apply to multiple example elements, though
+these are less likely to cause problems in documentation. Note that
+existing examples can only be deleted by supplying a completely new
+<gi>elementSpec</gi> in <val>replace</val> mode, since the
+<gi>exemplum</gi> element is not identifiable.</p>
 
-<p>When processing the content models of elements, and the content of
-macros, the processor has to decide whether to take account of deleted
-elements.<note place="foot">The carthago program behind the PizzaChef application,
+<p>When processing the content models of elements and the content of
+macros, the processor has to decide whether to take deleted
+elements into account.<note place="foot">The carthago program behind
+the Pizza Chef application,
 written by Michael Sperberg-McQueen for TEI P3 and P4, went to very
-great efforts to get this right. The tools behind the P5 Roma
+great efforts to get this right. The XSLT transformations used by the P5 Roma
 application are not as sophisticated, partly because the RELAX NG
 language is more forgiving than DTDs.</note> A content model like this:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -1670,13 +1672,14 @@ language is more forgiving than DTDs.</note> A content model like this:
 </egXML>
 probably requires no special treatment, as everything is expressed in
 terms of model classes; if <ident
-type="class">model.personPart</ident> is empty, the <gi>choice</gi> is
-simply <att>model.global</att>. An ODD processor may choose to
-simplify that by removing the wrapper RELAX NG <gi>choice</gi>
-element. However, if that <gi>choice</gi> is itself inside an
-<gi>zeroOrMore</gi> inside a <gi>group</gi>, the simplifying process
-may be harder, and the resolution is left to a later stage. If an
-element refers directly to an element child, like this:
+type="class">model.personPart</ident> is empty, then <ident
+type="class">model.global</ident> is left as the only child of
+<gi>rng:choice</gi>. An ODD processor may choose to simplify that by
+removing the wrapper <gi>rng:choice</gi> element. However, if
+that <gi>rng:choice</gi> is itself inside an <gi>rng:zeroOrMore</gi> inside a
+<gi>rng:group</gi>, the simplifying process may be harder, and the
+resolution is left to a later stage. If an element refers directly to
+an element child, like this:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="figure">
   <!--…-->
@@ -1695,44 +1698,51 @@ element refers directly to an element child, like this:
   <!--…-->
 </elementSpec>
 </egXML>
-and <gi>figDesc</gi> has been deleted,<note place="foot">Note that deletion of some
-elements, if they are not optional in the original specification, will
-cause the schema specification to be not suitable for validating TEI
-Documents, since they break the TEI abstract model; conformance topics
-are addressed in more detail in <ptr target="#CF"/>.</note> it will be
+and <gi>figDesc</gi> has been deleted,<note place="foot">Note that
+deletion of required elements will cause the schema specification to
+acccept as valid documents which cannot be TEI Conformant, since they
+no longer conform to the TEI abstract model; conformance topics are
+addressed in more detail in <ptr target="#CF"/>.</note> it will be
 necessary to remove that reference, or the resulting schema will be
-invalid.  Surrounding constructs, such as a <gi>zeroOrMore</gi>, may
-also have to be consequentially removed.</p>
+invalid.  Surrounding constructs, such as a <gi>rng:zeroOrMore</gi>
+(which cannot be empty), may also have to be removed.</p>
 
-<p>The result of the endeavours above will be a new
-<gi>schemaSpec</gi> which contains a flat set of element, class, and
-macro specifications, along with any <gi>moduleRef</gi>
-elements with <att>url</att> attributes identifying external
-schemas.</p>
+<p>The result of the work carried out should be a new
+<gi>schemaSpec</gi> which contains a complete and internally
+consistent set of element, class, and macro specifications, possibly
+also including <gi>moduleRef</gi> elements with <att>url</att>
+attributes identifying external modules. </p>
 
 </div>
 
 <div xml:id="IMGS">
 <head>Generating Schemas</head>
 <p>Assuming that any modifications have been resolved, as outlined in
-the previous section, making a schema is a four-fold task. Firstly, we
-must collect all datatype and other macro specifications, and declare
-them at the start of the output schema. Secondly, we must declare all
-classes. Thirdly, we declare the elements. Lastly, we process any
-<gi>moduleRef</gi> elements with a <att>url</att> attribute
-identifying an external schema. Working in this order gives the best
+the previous section, making a schema is now a four stage process:
+<list type="ordered">
+<item>all datatype and other macro specifications must be collected
+together and declared at the start of the output schema;</item>
+<item> all classes must be declared in the right order (since some
+classes reference others, the order is significant);</item>
+<item>all  elements are declared;</item>
+<item>any <gi>moduleRef</gi> elements with a <att>url</att> attribute
+identifying an external schema must be processed.</item>
+</list>
+ Working in this order gives the best
 chance of successfully supporting all the schema languages. However,
 there are a a number of obstacles to overcome along the way.</p>
 
-<p>Firstly, a decision must be made about which schema language is
-going to be used. The TEI ODD specification, using RELAX NG to express
-content models, is slightly biased towards this language, and the
-processing of these Guidelines adopts the following tactics:
-<list>
+<p>An ODD processor may use any desired schema language or languages
+for its schema output. The TEI ODD specification uses RELAX NG to
+express content models, and is therefore biased towards this
+language. However, the current TEI ODD processing system is capable of
+producing schema output in the three main schema languages, as
+follows:
 
+<list>
 <item>A RELAX NG (XML) schema is generated by creating 
-wrappers around the content models direct from the ODD specification;
-a RELAX NG compact version is generated using
+wrappers around the content models taken directly from the ODD specification;
+a  version re-expressed in the RELAX NG compact syntax is generated using
 James Clark's <ident>trang</ident> application.</item>
 
 <item>A DTD schema is generated by converting the RELAX NG
@@ -1742,6 +1752,7 @@ allow for the less-sophisticated output language.</item>
 <item>A W3C Schema schema is created by generating a RELAX NG schema
 and then using James Clark's <ident>trang</ident> application.</item>
 </list>
+
 Note that the method of generated W3C Schema means that
 a processor must ensure that the RELAX NG it generates
 follows the subset which <ident>trang</ident> is able to
@@ -1755,11 +1766,11 @@ schema. On the one hand, the schema can try to maintain all the
 flexibility of ODD by using the facilities of the schema language for
 parameterization; on the other, it can remove all customization
 features and produce a flat result which is not suitable for further
-manipulation. The TEI project generates both styles of schema; the
+manipulation. The TEI project currently generates both styles of schema; the
 first as a set of schema fragments in DTD and RELAX NG languages,
 which can be included as modules in other schemas, and customized
-further; the second as the output from the Roma processors, which
-produce single file schemas in as simple a style as possible.</p>
+further; the second as the output from a processor such as Roma, in
+which many of the parameterization features have been removed.</p>
 
 <p>The difference between the schema styles may be illustrated by
 considering this ODD specification:
@@ -1819,10 +1830,14 @@ performance =
   att.global.linking.attribute.select
 }
 ]]></eg>
-In this, the knowledge that the attributes such as <att>n</att> and
-<att>rend</att> come from the global attribute class is lost, and
-there is no easy way for another  schema to modify the element. A
-parameterized version may look this this:
+
+In the above, a subsequent redefinition of the attribute class (such
+as <ident type="class">att.global</ident>) would have no effect, since
+references to such classes have been expanded to reference their
+constituent attributes.</p>
+<p>
+The equivalent
+parameterized version might look this this:
 <eg><![CDATA[
 performance =
   element performance { performance.content, performance.attributes }
@@ -1832,16 +1847,20 @@ performance.content =
   (model.divBottom, model.global*)*
 performance.attributes = att.global.attributes, empty
 ]]></eg>
-Here, the class attributes are provided with a pointer (allowing
-for redefinition of the class), and the attributes are separated from
-the content model, allowing either to be overridden.</p>
-<p>In the remainder of these chapter, the terms 
-<term>simple schema</term> and <term>parameterized schema</term>
-are used to distinguish the two schema types. An ODD processor
-is not required to support both.</p>
+
+Here, the attribute class <ident type="class">att.global</ident> is
+provided via an explicit reference
+(<code>att.global.attributes</code>), and can therefore be
+redefined. Moreover, the attributes are separated from the content
+model, allowing either to be overridden.</p>
+<p>In the remainder of these chapter, the terms <term>simple
+schema</term> and <term>parameterized schema</term> are used to
+distinguish the two schema types. An ODD processor is not required to
+support both, though the simple schema output is generally
+preferable for most applications.</p>
 
 <p>Thirdly, the problem of missing
-components must be resolved. For example, consider this (simplified) model
+components must be resolved. For example, consider this (fictitious) model
 for <gi>sp</gi>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="sp">
@@ -1861,9 +1880,9 @@ for <gi>sp</gi>:
 </elementSpec>
 </egXML>
 This proposes anything from the global model class, followed by some
-<gi>speaker</gi> elements, followed by anything from the global model
-class. What happens if <gi>speaker</gi> is gone? The following would
-result:
+<gi>speaker</gi> elements, followed by anything from the <ident
+type="class">model.global</ident> class. What happens if
+<gi>speaker</gi> is removed? The following would result:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="sp">
   <!--…-->
@@ -1878,15 +1897,18 @@ result:
   <!--…-->
 </elementSpec>
 </egXML>
-which is illegal in DTD and W3C schema languages,
-since for a given member of <ident type="class">model.global</ident> it is impossible to
+which is illegal in DTD and W3C schema languages, since for a given
+member of <ident type="class">model.global</ident> it is impossible to
 be sure which rule is being used. This situation is not detected when
-RELAX NG is used, since the language does not require that only a
-single rule be used.  </p>
+RELAX NG is used, since the language is able to cope with
+non-deterministic content models of this kind and does not require
+that only a single rule be used.  </p>
 
-<p>Finally, we may wish to support some of the methods
-of associating a schema with a document. The TEI does not
-mandate any particular schema, but it is suggested that
+<p>Finally, an application will need to have some method of
+associating the schema  with document instances that use it. The TEI does not
+mandate any particular method of doing this, since different schema
+languages and processors vary considerably in their requirements. 
+<!-- , but it is suggested that
 the W3C Schema mechanism be supported where possible. Although
 it is not part of the TEI <foreign>per se</foreign>, DTD schemas
 should declare a <att>schemaLocation</att> attribute to the root
@@ -1899,22 +1921,24 @@ to the list of attributes, which forces the non-namespace-aware DTD
 language to recognize the <code>xsl:schemaLocation</code> notation.
 It is recognised that this is an unsatisfactory solution, but it
 permits documents to be validated using both DTD and Schema processors
-without any conflict.</p>
+without any conflict.
+-->
+</p>
 
 </div>
 
 <div xml:id="IM-naming">
-<head>Naming and Documenting in Generated Schemas</head>
-<p>When processing class, element or macro specifications, there are
+<head>Names and Documentation in Generated Schemas</head>
+<p>When processing class, element, or macro specifications, there are
 three general rules:
 <list type="ordered">
 <item>If a RELAX NG pattern or DTD parameter entity
 is being created, its name is the value of
-the <att>ident</att> attribute, prefixed by the value of any
+the corresponding <att>ident</att> attribute, prefixed by the value of any
 <att>prefix</att> attribute on <gi>schemaSpec</gi>. This allows for
 elements from an external schema to be mixed in without risk of name
 clashes, since all TEI  elements can be given a distinctive prefix
-such as e.g. <val>tei_</val>. 
+such as <val>tei_</val>. 
 Thus
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <schemaSpec ident="test" prefix="tei_">
@@ -1923,25 +1947,27 @@ Thus
   </elementSpec>
 </schemaSpec>
 </egXML>
-may generate a RELAX NG (compact) pattern like this:
-<eg><![CDATA[
+may generate a RELAX NG (compact syntax) pattern like this:
+<eg>
  tei_sp = element sp { ... }
-]]></eg>
-Referring strings have to be adjusted accordingly.
+</eg>
+
+References to these patterns (or, in DTDs, parameter entities) also need to
+be prefixed with the same value.
 </item>
 
 <item>If an element or attribute is being created, its default name is
 the value of the <att>ident</att> attribute, but if there is an
-<gi>altIdent</gi> child, the value of that is used instead.
+<gi>altIdent</gi> child, its content is used instead.
 </item>
 
 <item>Where appropriate, the documentation strings in <gi>gloss</gi>
 and <gi>desc</gi> should be copied into the generated schema. If there
-is only one use of these elements, they should be used regardless, but if
-there
-are several with different values of <att>xml:lang</att>, a locale
-indication in the processing environment should be used to decide
-which to use. For example, 
+is only one occurrence of either of these elements, it should be
+used regardless, but if there are several, local processing rules will
+need to be applied. For example, if there are several with different
+values of <att>xml:lang</att>, a locale indication in the processing
+environment might be used to decide which to use. For example,
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec module="core" ident="head">
   <equiv/>
@@ -1961,6 +1987,9 @@ head =
 ]]></eg>
 </item>
 </list>
+Alternatively, a selection might be made on the basis of the value of
+the <att>version</att> attribute which these elements carry as members
+of the <ident type="class">att.translatable</ident> class.
 </p>
 <p>In addition, there are three conventions about
 naming patterns relating to classes; ODD processors need not follow them,
@@ -1970,12 +1999,12 @@ project will find it necessary to understand them:
 <item>when a pattern for an  attribute class  is created,
 it is named after the attribute class identifier (as above)
 suffixed by <code>.attributes</code>
-(e.g. <code>att.editLike.attributes</code>).
+(e.g. <code>att.editLike.attributes</code>);
 </item>
 <item>when a pattern for an attribute  is created,
 it is named after the attribute class identifer (as above)
 suffixed by <code>.attribute.</code> and then the identifier
-of the attribute (e.g. <code>att.editLike.attribute.resp</code>).</item>
+of the attribute (e.g. <code>att.editLike.attribute.resp</code>);</item>
 
 <!-- check this -->
 <item>when a parameterized schema is created, each
@@ -2034,16 +2063,19 @@ produces
     </zeroOrMore>
   </define>
 </egXML>
-Note that in much of these Guidelines, we show the RELAX NG
-output in compact format; the ODD specification stores it in the more
-verbose XML format, but the two are interchangeable.</p>
+Although some versions of these Guidelines, show the RELAX NG output
+in compact format, both the content of the <gi>contents</gi> element
+and the unified ODD specification generated by the TEI ODD processing
+software always store RELAX NG in the more verbose XML
+format. However, the two formats are interchangeable.
+</p>
 </div>
 
 <div xml:id="IMCL">
 <head>Classes</head>
-<p>An ODD model class generates a RELAX NG alternation pattern listing 
-all the members of the class present in the ODD. So this
-example
+<p>An ODD model class reference generates a RELAX NG pattern
+definition listing all the members of the class present in the ODD in
+alternation. So this example
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <classSpec module="tei" type="model" ident="model.measureLike">
 <!-- ... -->
@@ -2118,7 +2150,7 @@ definitions of the appropriate attributes. So
   <attList>
     <attDef ident="enjamb" usage="opt">
       <equiv/>
-      <desc>indicates that the end of a verse line is marked by enjambement.</desc>
+      <desc>indicates whether the end of a verse line is marked by enjambement.</desc>
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
@@ -2156,35 +2188,36 @@ produces
   <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.enjamb.attribute.enjamb">
     <optional>
       <attribute name="enjamb">
-        
+        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(enjambement) indicates whether the end of a verse line is marked by enjambement.
+Sample values include: 1] no; 2] yes; 3] weak; 4] strong</a:documentation>
         <ref name="data.enumerated"/>
       </attribute>
     </optional>
   </define>
 </egXML>
-Since the processor may have expanded the attribute
-classes already, separate patterns are generated
-for each attribute in the class as well as one for
-the class itself. This allows an element to refer directly
-to a member of a class. Notice that the <gi>desc</gi> element
-is used to add a <gi>documentation</gi> element to the schema,
-which some editors use to provide help during composition. The 
-<gi>desc</gi> elements in the <gi>valList</gi> are used to create
-the human-readable sentence <quote>Sample values include: 1] no; 2]
-yes; 3] weak; 4] strong</quote> Naturally, this sort of use
-of the documentation elements is not mandatory, and other ODD
-processors may ignore them when creating schemas.</p>
+Since the processor may have expanded the attribute classes already,
+separate patterns are generated for each attribute in the class as
+well as one for the class itself. This allows an element to refer
+directly to a member of a class. Notice that the <gi>desc</gi> element
+is used to add an <gi>a:documentation</gi> element to the schema,
+which some editors use to provide help during composition. The
+<gi>desc</gi> elements in the <gi>valList</gi> are used to create the
+human-readable sentence <quote>Sample values include: 1] no; 2] yes;
+3] weak; 4] strong</quote> Naturally, this behaviour is not mandatory;
+and other ODD processors may create documentation in other ways, or
+ignore those parts of the ODD specifications when creating
+schemas.</p>
 
-<p>An individual attribute consists of a RELAX NG <gi>attribute</gi>
+<p>An individual attribute consists of an <gi>rng:attribute</gi>
 with a <att>name</att> attribute derived according to the naming rules
 described above. In addition, the ODD model supports a
-<gi>defaultVal</gi>, which is transformed to a <att>defaultValue</att>
+<gi>defaultVal</gi>, which is transformed to a <att>defaultValue</att> attribute
 in the namespace
-<ident>http://relaxng.org/ns/compatibility/annotations/1.0</ident>
-attribute on the RELAX NG <gi>attribute</gi>. The body of the
+<ident type="ns">http://relaxng.org/ns/compatibility/annotations/1.0</ident>
+attribute on the <gi>rng:attribute</gi>. The body of the
 attribute is taken from the <gi>datatype</gi> child, unless there is a
 supporting <gi>valList</gi> with a <att>type</att> value of
-<val>closed</val>. In that case a RELAX NG <gi>choice</gi> is created,
+<val>closed</val>. In that case an <gi>rng:choice</gi> is created,
 listing the allowed values. Thus the following attribute definition
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <attDef ident="full" usage="opt">
@@ -2208,22 +2241,29 @@ may generate this RELAX NG code:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.full">
     <optional>
-      <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="full" a:defaultValue="yes">
-        
+      <attribute
+	  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
+          name="full" a:defaultValue="yes">
         <choice>
           <value>yes</value>
-          
+          <a:documentation>
+	    the name component is spelled out in full.
+	  </a:documentation>  
           <value>abb</value>
-          
+	<a:documentation>
+	  the name component is given in an abbreviated form.
+	</a:documentation>
           <value>init</value>
-          
+	<a:documentation>
+	  the name component is indicated only by one initial.
+	</a:documentation>
         </choice>
       </attribute>
     </optional>
   </define>
 </egXML>
 Note the use of the 
-<ident>http://relaxng.org/ns/compatibility/annotations/1.0</ident>
+<ident type="ns">http://relaxng.org/ns/compatibility/annotations/1.0</ident>
 namespace to provide default values and documentation.
 </p>
 </div>
@@ -2253,7 +2293,7 @@ as RELAX NG generation, with one important exception — <hi>the order
 of declaration matters</hi>. 
 A DTD may not refer to an entity which
 has not yet been declared. 
-Since both macros and classes generate DTD entities,
+Since both macros and classes generate DTD parameter entities,
 the TEI Guidelines are constructed so that they can be
 declared in the right order. A processor
 must therefore work in the following order:
@@ -2268,8 +2308,8 @@ constructed)</item>
 <item>declare any remaining macros</item>
 <item>declare the elements and their attributes</item>
 </list>
-The implementer who avoids careful study of this issue
-will come to grief.</p>
+<!-- The implementer who avoids careful study of this issue
+will come to grief.--></p>
 <p>Let us consider a complete example, a simple
 element with no attributes of its own:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -2304,7 +2344,7 @@ Here the whole stanza is contained in a marked section
 entity references derived from the <gi>memberOf</gi> records in
 <gi>classes</gi>. Note the additional attribute which provides
 a default <att>xmlns</att> declaration for the element; the effect
-of this is that if the document is processing by a DTD-aware
+of this is that if the document is processed by a DTD-aware
 XML processor, the namespace declaration will be present 
 automatically without the document author even being aware of it.</p>
 
@@ -2349,15 +2389,15 @@ individual entity references.</p>
 <div xml:id="IMGD">
 <head>Generating Documentation</head>
 <p>In Donald Knuth's terminology of literate programming,
-the previous sections have dealt with process of <term>tangle</term>;
-to generate documentation, we now turn to the specification of
-<term>weave</term>.</p>
+the previous sections have dealt with the <term>tangle</term> process;
+to generate documentation, we now turn to the 
+<term>weave</term> process.</p>
 
 <p>An ODD customization may consist largely of general documentation
-and examples, which will be processed as normal, but in addition
-it will contain a <gi>schemaSpec</gi> and possibly some
-<gi>specGrp</gi>
-fragments.</p>
+and examples, requiring no ODD-specific processing. It will normally
+however also contain a <gi>schemaSpec</gi> element and possibly some
+<gi>specGrp</gi> fragments.</p>
+
 <p> The generated documentation may be of two forms. On the one hand,
 we may document the customization itself, that is, only those elements
 (etc.) which differ in their specification from that provided by the
