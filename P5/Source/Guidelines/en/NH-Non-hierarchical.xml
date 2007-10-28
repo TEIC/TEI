@@ -90,9 +90,9 @@ $Id$
         might describe as the <soCalled>Grammatical</soCalled>, encodes linguistic and rhetorical
         features: phonemes, morphemes, words, phrases, clauses, and sentences. A third view, the
             <soCalled>Dialogic</soCalled>, might concentrate on narrative voice: distinguishing
-        between the narrator and his/her interlocutors and identifying individual segments as direct
+        between the narrator and their interlocutors and identifying individual segments as direct
         quotations. In our examples, we will restrict ourselves to relatively simple conflicts: for
-        the <term>Metrical View</term> we will encode only lines and line groups; for the
+        the <term>Metrical View</term> we will encode only metrical lines and line groups; for the
             <term>Grammatical View</term> we will restrict ourselves to encoding sentences; and for
         the <term>Dialogic View</term>, we only will distinguish direct quotation from other
         narration.</p>
@@ -171,7 +171,7 @@ thought.</ab>
     <div type="div2" xml:id="NHBM">
         <head>Boundary Marking with Empty Elements</head>
         <p>A second method for accommodating non-hierarchical objects in an XML document involves
-            marking the starting and (usually) end points of the non-nesting material. This prevents
+            marking the start and end points of the non-nesting material. This prevents
             textual features that fall outside the privileged hierarchy from invalidating the
             document while identifying their beginnings and ends for further processing. The
             disadvantage of this method is that no single XML element represents the non-nesting
@@ -179,7 +179,7 @@ thought.</ab>
             difficult.</p>
         <p>The empty elements used at each end are called <term>segment-boundary elements</term> or
                 <term>segment-boundary delimiters</term>. There are several variations on this
-            method of encoding:</p>
+            method of encoding.</p>
 
         <p>For some common structural features, the TEI provides milestone elements that can be used
             to mark the beginning of a textual feature. These include <gi>lb</gi>, <gi>pb</gi>,
@@ -251,15 +251,19 @@ wound.</s></p></egXML>
             TEI elements, the method is an extension.</p>
 
 
-        <p>Finally, elements that are normally used to encode nesting textual features (e.g.
-                <gi>said</gi>, <gi>s</gi>, <gi>l</gi>, etc.) can be adapted so that they serve as
-            empty boundary delimiters when the features they encode cross hierarchical boundaries.
-            Additional attributes (<att>sID</att> and <att>eID</att> in the example below) are added
-            to the content model in order to allow the unambiguous correlation of start and end
-            points (this method has been introduced in the markup literature under various names,
-            including Trojan milestones, HORSE markup, CLIX, and COLT. It is described in detail by
-                <ptr target="#NH-BIBL-1" type="cit"/>): <egXML
-                xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
+        <p>Finally, elements that are normally used to encode nesting
+        textual features (e.g.  <gi>said</gi>, <gi>s</gi>, <gi>l</gi>,
+        etc.) can be adapted so that they serve as empty segment
+        boundary delimiters when the features they encode cross
+        hierarchical boundaries.  Additional attributes
+        (<att>sID</att> and <att>eID</att> in the example below) are
+        added to these elements in order to allow the unambiguous
+        correlation of start and end points. This method has been
+        introduced in the markup literature under various names,
+        including Trojan milestones, HORSE markup, CLIX, and COLT. It
+        is described in detail by <ptr target="#NH-BIBL-1"
+        type="cit"/>): <egXML xmlns="http://www.tei-c.org/ns/Examples"
+        corresp="#NH-eg-01">
                 <lg xmlns:hr="http://www.example.org/ns/nonTEI">
                     <l>
                         <s>Scorn not the sonnet;</s><hr:s sID="s02"/>critic, you have frowned, </l>
@@ -274,8 +278,9 @@ wound.</s></p></egXML>
             Conformable, represent an extension of the TEI, or produce a non-conformant document. <list>
                 <item>The method is TEI Conformable if the modified elements are placed in a
                     distinct, non-TEI-namespace (see <ptr target="#CFNS"/>), and if the modified
-                    elements and attributes can be mapped directly to an existing TEI milestone or
-                    anchor tag automatically without loss of information (see <ptr target="#CF"/>).</item>
+                    elements and attributes can be mapped without loss of information to
+		    existing TEI markup structures such as milestone or
+                    anchor elements automatically  (see <ptr target="#CF"/>).</item>
                 <item>The method represents an Extension if the modified elements are placed in a
                     distinct, non-TEI namespace, but contain information or distinctions that cannot
                     be algorithmically translated to existing TEI elements without loss of
@@ -293,11 +298,11 @@ wound.</s></p></egXML>
             milestones, that the milestone marks both the end of the preceding example and the
             beginning of the next. Complications arise, however, when the non-nesting text overlaps
             with other non-nesting text of the same type, as, for example, in a grammatical analysis
-            of the various possible interpretations of the <choice>
+            of the various possible interpretations of the <!--<choice>
                 <expan>Noun Phrase</expan>
                 <abbr>NP</abbr>
-            </choice>
-            <q>fast trains and planes</q>. In this case, the adjective <mentioned>fast</mentioned>
+            </choice>--> noun phrase
+            <mentioned>fast trains and planes</mentioned>. In this case, the adjective <mentioned>fast</mentioned>
             can be understood as either modifying <mentioned>trains and planes</mentioned> or just
                 <mentioned>trains</mentioned>: <figure>
                 <head>Two interpretations of the phrase <mentioned>Fast trains and
@@ -307,7 +312,7 @@ wound.</s></p></egXML>
                         trains and planes.</mentioned></figDesc>
             </figure></p>
         <p>In order to encode the possible analyses of this phrase, an unambiguous method of
-            associating opening and closing boundary-delimiters is required: <egXML
+            associating opening and closing segment boundary delimiters is required: <egXML
                 xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-03">
                 <phr function="NP">
                     <anchor type="delimiter" subtype="NPstart" xml:id="NPInterpretationB"/>
@@ -330,22 +335,26 @@ wound.</s></p></egXML>
                 <mentioned>fast cars</mentioned> is opened using an <gi>anchor</gi> tag with the
                 <att>xml:id</att> value <mentioned>NPInterpretationB</mentioned> and closed with an
                 <gi>anchor</gi> tag that has the same value on <att>corresp</att>.</p>
-        <p>Despite their advantages, segment-boundary delimiters incur the disadvantage of
+        <p>Despite their advantages, segment boundary delimiters incur the disadvantage of
             cumbersome processing: since the elements of the analysis (e.g. the sentences in the
             poems, or phrases in the above example) are not uniformly represented by nodes in the
             document tree, they must be reconstituted by software in an ad hoc fashion, which is
             likely to be difficult and may be error prone.</p>
-        <p>Most important for some encoders, the method also disguises the relationship between the
-            beginning and the ending of each logical element. This makes it impossible for standard
-            validation software to provide the same kind of validation possible elsewhere in the
-            encoding. When using grammar based schema languages it is not possible to define a
-            content model for the range limited by empty elements. This means, amongst other things,
-            that the reconstituted document may not itself be valid.<note place="foot">Grammar based
-                schema languages (e.g. DTD, W3C Schema, and RELAX NG) are used to define markup
-                languages (e.g. XHTML or TEI). Rule-based schema languages (e.g. Schematron) can be
-                used to define further constrains. Such a rule-based schema language permits a
-                sequence of certain elements between empty elements to be legitimized or
-            prohibited.</note></p>
+        <p>Most important for some encoders, the method also disguises
+        the relationship between the beginning and the ending of each
+        logical element. This makes it impossible for standard
+        validation software to provide the same kind of validation
+        possible elsewhere in the encoding. When using grammar based
+        schema languages it is not possible to define a content model
+        for the range limited by empty elements. <!-- This means, amongst
+        other things, that the reconstituted document may not itself
+        be valid.--><note place="foot">Grammar based schema languages
+        (e.g. DTD, W3C Schema, and RELAX NG) are used to define markup
+        languages (e.g. XHTML or TEI). Rule-based schema languages
+        (e.g. Schematron) can be used to define further
+        constrains. Such a rule-based schema language permits a
+        sequence of certain elements between empty elements to be
+        legitimized or prohibited.</note></p>
     </div>
     <div type="div2" xml:id="NHVE">
         <head>Fragmentation and Reconstitution of Virtual Elements</head>
@@ -403,12 +412,15 @@ psychiatrist.</said></l>
             there are actual instances of that feature in the text. Thus, for example, the passage
             from <title level="a">Scorn not the sonnet</title> marks seven spans of text using
             <gi>s</gi>, even though there are only four linguistic sentences in the passage.</p>
-        <p>The second problem is that it can be semantically misleading. Although they are tagged
-            using the element for <term>sentence</term>, for example, very few of the textual
-            features encoded using <gi>s</gi> in this example represent actual linguistic sentences:
-                <mentioned>with this key</mentioned>, for example, is a Prepositional Phrase, not a
-            sentence; <mentioned>Of this small lute gave ease to Petrarch's wound</mentioned> is a
-            string corresponding to no single grammatical category.</p>
+        <p>The second problem is that it can be semantically
+        misleading. Although they are tagged using the element for
+        <term>sentence</term>, for example, very few of the textual
+        features encoded using <gi>s</gi> in this example represent
+        actual linguistic sentences: <mentioned>with this
+        key</mentioned>, for example, is a prepositional phrase, not a
+        sentence; <mentioned>Of this small lute gave ease to
+        Petrarch's wound</mentioned> is a string corresponding to no
+        single grammatical category.</p>
         <p>Taken together, these problems can make automatic analysis of the fragmented features
             difficult. An analysis that intended to count the number of sentences in Wordsworth's
             poem, for example, would arrive at an inflated figure if it understood the <gi>s</gi>
@@ -461,12 +473,15 @@ psychiatrist.</said></l>
                     <s part="F">Of this small lute gave ease to Petrarch's wound.</s>
                 </l>
             </egXML></p>
-        <p>This method is TEI Conformant and simple to use. Its disadvantage is that it does not
-            work well for cases of self-overlap, or if there are nested occurrences of the same
-            element type, as it can become difficult to ascertain which initial, medial, or final
-            partial element should be combined with which others or in which order. An example comes
-            if we attempt to combine a detailed Grammatical view of the Pinsky example with its
-            metrical encoding: 
+        <p>This method is TEI Conformant and simple to use. Its
+        disadvantage is that it does not work well for cases of
+        self-overlap, or if there are nested occurrences of the same
+        element type, as it can become difficult to ascertain which
+        initial, medial, or final partial element should be combined
+        with which others or in which order. This problem becomes
+	evident if we
+        attempt to combine a detailed Grammatical view of the Pinsky
+        example with its metrical encoding:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-02">
   <lg>
     <l>
@@ -566,7 +581,7 @@ psychiatrist.</said></l>
             content to which annotations are to be applied. Sometimes the link target contains
             markup that can be referred to explicitly, as in the following example where the offset
             markup uses the <att>xml:id</att> values on <gi>w</gi> to provide targets for
-                <gi>include</gi><note place="foot">A fake namespace is given for XInclude here, to
+                <gi>xi:include</gi><note place="foot">A fake namespace is given for XInclude here, to
                 avoid the markup being interpreted literally during processing.</note>: <egXML
                 xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
                 <l>
