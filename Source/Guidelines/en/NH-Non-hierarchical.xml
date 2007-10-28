@@ -67,8 +67,8 @@ $Id$
         require extension. </p>
     <p>In the sections which follow these techniques are described and their advantages and
         disadvantages are briefly discussed. The various solutions to the problem will be
-        exemplified using extracts from two poems as examples. The first is the opening quatrain
-        from William Wordsworth's <title level="a">Scorn not the sonnet</title>: <quote>
+        exemplified using extracts from two poems. The first is the opening quatrain from William
+        Wordsworth's <title level="a">Scorn not the sonnet</title>: <quote>
             <l>Scorn not the sonnet; critic, you have frowned,</l>
             <l>Mindless of its just honours; with this key</l>
             <l>Shakespeare unlocked his heart; the melody</l>
@@ -199,7 +199,7 @@ $Id$
             correspondence would break down entirely.</p>
 
 
-        <p>The segment boundaries may be delimited by the generic <gi>anchor</gi> element.
+        <p>The segment boundaries also may be delimited by the generic <gi>anchor</gi> element.
             Attributes can then be used to indicate the type of feature being delimited and whether
             a given instance opens or closes the feature. <egXML
                 xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
@@ -218,14 +218,14 @@ $Id$
         <p>This method is TEI Conformant.</p>
 
 
-        <p>Custom elements can be designed to provide richer information about the feature being
-            delimited or its boundaries. This information can be included as attribute values or as
-            part of the element name itself: e.g. <gi>boundaryStart element="sentence"/</gi>...
-                <gi>boundaryEnd element="sentence"/</gi>, <gi>sentenceBoundary
-            position="start"/</gi>... <gi>sentenceBoundary position="end"/</gi>, or
-                <gi>sentenceBoundaryStart/</gi>... <gi>sentenceBoundaryEnd/</gi>: <egXML
-                xmlns="http://www.tei-c.org/ns/Examples" xmlns:n="http://www.example.org/ns/nonTEI"
-                corresp="#NH-eg-01">
+        <p>Another approach is to design custom elements that provide richer information about the
+            feature being delimited or its boundaries. This information can be included as attribute
+            values or as part of the element name itself: e.g. <gi>boundaryStart
+            element="sentence"/</gi>... <gi>boundaryEnd element="sentence"/</gi>,
+                <gi>sentenceBoundary position="start"/</gi>... <gi>sentenceBoundary
+            position="end"/</gi>, or <gi>sentenceBoundaryStart/</gi>...
+            <gi>sentenceBoundaryEnd/</gi>: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+                xmlns:n="http://www.example.org/ns/nonTEI" corresp="#NH-eg-01">
                 <l>
                     <n:sentenceBoundaryStart/>Scorn not the sonnet; <n:sentenceBoundaryEnd/>
                     <n:sentenceBoundaryStart/>critic, you have frowned,</l>
@@ -236,21 +236,21 @@ $Id$
                 <l>Of this small lute gave ease to Petrarch's wound. <n:sentenceBoundaryEnd/></l>
             </egXML>
         </p>
-        <p>If the custom elements can be replaced by the generic <gi>anchor</gi> tag without loss of
+        <p>If the custom elements can be replaced by TEI tags and attributes without loss of
             information, this method is TEI Conformable (see <ptr target="#CF"/>); if the custom
             elements introduce information or distinctions that cannot be captured using standard
             TEI elements, the method is an extension.</p>
 
 
-        <p>Elements that are normally used to encode nesting textual features (e.g. <gi>said</gi>,
-                <gi>s</gi>, <gi>l</gi>, etc.) can be adapted so that they serve as empty boundary
-            delimiters when the features they encode cross hierarchical boundaries. Additional
-            attributes (<att>sID</att> and <att>eID</att> in the example below) are added to the
-            content model in order to allow the unambiguous correlation of start and end points
-            (this method has been introduced in the markup literature under various names, including
-            Trojan milestones, HORSE markup, CLIX, and COLT. It is described in detail by <ptr
-                target="#NH-BIBL-1" type="cit"/>): <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                corresp="#NH-eg-01">
+        <p>Finally, elements that are normally used to encode nesting textual features (e.g.
+                <gi>said</gi>, <gi>s</gi>, <gi>l</gi>, etc.) can be adapted so that they serve as
+            empty boundary delimiters when the features they encode cross hierarchical boundaries.
+            Additional attributes (<att>sID</att> and <att>eID</att> in the example below) are added
+            to the content model in order to allow the unambiguous correlation of start and end
+            points (this method has been introduced in the markup literature under various names,
+            including Trojan milestones, HORSE markup, CLIX, and COLT. It is described in detail by
+                <ptr target="#NH-BIBL-1" type="cit"/>): <egXML
+                xmlns="http://www.tei-c.org/ns/Examples" corresp="#NH-eg-01">
                 <lg xmlns:hr="http://www.example.org/ns/nonTEI">
                     <l>
                         <s>Scorn not the sonnet;</s><hr:s sID="s02"/>critic, you have frowned, </l>
@@ -315,11 +315,11 @@ $Id$
         <p>In this encoding, the first interpretation, in which <mentioned>fast</mentioned> modifies
             the NP <mentioned>trains and planes</mentioned>, the NP <mentioned>trains and
             planes</mentioned> is opened using an <gi>anchor</gi> tag with the <att>xml:id</att>
-            value <mentioned>NPInterpretationA</mentioned> and closed with an <gi>anchor</gi> with the
-            same value on <att>corresp</att>; the second interpretation, in which
-            <mentioned>fast</mentioned> forms a NP with <mentioned>trains</mentioned>, the NP
+            value <mentioned>NPInterpretationA</mentioned> and closed with an <gi>anchor</gi> with
+            the same value on <att>corresp</att>; the second interpretation, in which
+                <mentioned>fast</mentioned> forms a NP with <mentioned>trains</mentioned>, the NP
                 <mentioned>fast cars</mentioned> is opened using an <gi>anchor</gi> tags with the
-            <att>xml:id</att> value <mentioned>NPInterpretationB</mentioned> and closed with an
+                <att>xml:id</att> value <mentioned>NPInterpretationB</mentioned> and closed with an
                 <gi>anchor</gi> tag that has the same value on <att>corresp</att>.</p>
         <p>Despite their advantages, segment-boundary delimiters incur the disadvantage of
             cumbersome processing: since the elements of the analysis (e.g. the sentences in the
