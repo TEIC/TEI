@@ -22,8 +22,8 @@ system, on the one hand, from <soCalled>unclean</soCalled>
 modifications, which result in a schema that does not have this
 property. In <ptr target="#CF"/> we define the notion of <term>TEI
 Conformance</term>, distinguishing between documents which are
-algorithmically TEI conformant from those which are intrinsically
-conformant; we also define the concept of a conformant TEI
+algorithmically TEI conformant ("TEI Conformable") from those which are intrinsically
+conformant ("TEI Conformant"); we also define the concept of a conformant TEI
 extension. Since the ODD markup description language defined in
 chapter <ptr target="#TD"/> is fundamental to the way conformance and
 customization are handled in the TEI system, these two definitional
@@ -114,7 +114,7 @@ further discussed in section <ptr target="#CF"/>.</p>
 
 <p>The TEI scheme is designed to support modification and
 customization in a documented way that can be validated by an XML
-processor. This is achieved by writing a small TEI-conformant
+processor. This is achieved by writing a small TEI Conformant
 document, from which an appropriate processor can generate both
 human-readable documentation, and a schema expressed in a language
 such as RELAX NG or DTD.  The mechanisms used to instantiate a TEI
@@ -816,7 +816,7 @@ are available as part of the standard release, within the directory
 <list type="gloss">
           <label>tei_bare</label>
           <item>The schema generated from this customization is the
-	  minimum needed for TEI conformance. It provides only a
+	  minimum needed for TEI Conformance. It provides only a
 	  handful of elements. </item>
 	  <label>tei_all</label>
           <item>The schema generated from this customization combines
@@ -940,7 +940,7 @@ support extensions and modifications, it should not be assumed that
 no TEI document can  include extensions: an extension which is
 expressed by means of the recommended mechanisms is also a TEI
 document provided that those parts of it which are not extensions are
-TEI conformant, or Conformable.</p>
+TEI Conformant, or Conformable.</p>
 
 <p>A TEI Conformant (or Conformable) document is said to follow
 <term>TEI Recommended Practice</term> if, wherever the Guidelines
@@ -967,7 +967,7 @@ Conal -->
 format. With release P5, the only representation format supported
 by these Guidelines becomes valid XML; legacy documents in SGML format
 should therefore be converted using appropriate software.</p>
-<p>A TEI conformant document must use the TEI namespace, and therefore
+<p>A TEI Conformant document must use the TEI namespace, and therefore
 must also include an XML-conformant namespace declaration, as defined
 below (<ptr target="#CFNS"/>).</p> 
 <p>The use of XML greatly reduces the need to consider hardware or
@@ -1132,7 +1132,7 @@ schemes should be adopted, such as graphics or mathematics. It is also
 considered desirable that users of other markup schemes should be able
 to integrate documents using TEI markup with their own system. To meet
 these objectives without compromising the reliability of its encoding,
-a TEI conformant document is required to make appropriate use of the
+a TEI Conformant document is required to make appropriate use of the
 TEI namespace.</p>
 
 <p>All elements in a TEI Schema which represents
@@ -1179,7 +1179,7 @@ the interchange and interoperability of TEI documents, it cannot be
 assumed that every customization will necessarily result in a schema
 that validates only TEI Conformant documents. The ODD language permits
 modifications which conflict with the TEI abstract model, even though
-observing this model  is a requirement for TEI conformance. The ODD
+observing this model  is a requirement for TEI Conformance. The ODD
 language can in fact be used to describe many kinds of markup scheme,
 including schemes  which have nothing to do with the TEI at all. </p>
 
@@ -1402,7 +1402,7 @@ lacks an accompanying ODD. Instead, the schema used to validate it is
 produced simply by combining TEI schema fragments in the same way as
 an ODD processor would, given the ODD. If the resulting schema is a
 clean subset of tei_all, such a document is indistinguishable from a
-TEI conformant one, but there is no way of determining (without
+TEI Conformant one, but there is no way of determining (without
 inspection) whether this is the case if any modification or extension
 has been applied. Its status is therefore, like that of Text E,
 impossible to determine.</p>
@@ -1923,6 +1923,50 @@ It is recognised that this is an unsatisfactory solution, but it
 permits documents to be validated using both DTD and Schema processors
 without any conflict.
 -->
+<!-- Syd propose rewriting the foregoing as:
+
+
+
+      <p>Finally, ODD processors may wish to build in support for
+      some of the methods for associating a document instance with a
+      schema. The TEI does not mandate any particular method, but
+      does suggest that those which are already part of XML (the
+      DOCTYPE declaration for DTDs) and W3C Schema (the
+      <att>xsi:schemaLocation</att> attribute) be supported where
+      possible.</p>
+
+      <p>In order for the <att>xsi:schemaLocation</att> attribute to
+      be valid when a document is validated against either a DTD or a
+      RELAX NG schema, ODD processors may wish to add a declaration
+      for this attribute to the root element, even though it is not
+      part of the TEI <foreign>per se</foreign>. For DTDs this means
+      adding
+      <eg>xsi:schemaLocation CDATA #IMPLIED
+ xmlns:xsi CDATA #FIXED 'http://www.w3.org/2001/XMLSchema-instance'</eg>
+      to the list of attributes on the root element, which permits
+      the non-namespace-aware DTD language to recognize the
+      <code>xsi:schemaLocation</code> notation. For RELAX NG, the
+      namespace and attribute would be declared in the usual way:
+      <eg>namespace xsi = "http://www.w3.org/2001/XMLSchema-instance"</eg> and
+      <eg>attribute xsi:schemaLocation { list { data.namespace, data.pointer }+ }</eg>
+      inside the root element declaration.</p>
+
+      <p>Note that declaration of the <att>xsi:schemaLocation</att>
+      attribute in a W3C Schema schema is not permitted. Therefore,
+      if W3C Schemas are being generated by converting the RELAX NG
+      schema (for example, with <name type="pgm">trang</name>), it
+      may be necessary to perform that conversion prior to adding the
+      <att>xsi:schemaLocation</att> declaration to the RELAX NG.</p>
+
+      <p>It is recognised that this is an unsatisfactory solution,
+      but it permits users to take advantage of the W3C Schema
+      facility for indicating a schema, while still permitting
+      documents to be validated using DTD and RELAX NG processors
+      without any conflict.</p>
+
+-->
+
+
 </p>
 
 </div>

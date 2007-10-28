@@ -1152,7 +1152,7 @@ corresponds to <q>Matt 5:7</q>.</p>
   above, an application comes across a <att>cRef</att> value of
   <val>Matt 5:7</val> inside a <gi>div</gi> which has an
   <att>xml:base</att> of
-  <val>http://www.jph.org/resources/books/Bible.xml</val>. The
+  <val>http://www.example.org/resources/books/Bible.xml</val>. The
   application would first apply the regular expression
   <code>(.+) (.+):(.+)</code> to <q>Matt 5:7</q>. This regular
   expression would successfully match. The first matched
@@ -1163,7 +1163,7 @@ corresponds to <q>Matt 5:7</q>.</p>
   <code>#xpath1(//div[@n='Matt']/div[5]/div[7])</code>. It would
   append this to the <att>xml:base</att> in force, thus
   generating the complete URI Reference
-  <code>http://www.jph.org/resources/books/Bible.xml#xpath1(//div[@n='Matt']/div[5]/div[7])</code>.
+  <code>http://www.example.org/resources/books/Bible.xml#xpath1(//div[@n='Matt']/div[5]/div[7])</code>.
   </p>
   <p>If, however, the input string had been <q>Matt 5</q>, the
   first regular expression would not have matched. The
@@ -1175,13 +1175,13 @@ corresponds to <q>Matt 5:7</q>.</p>
   fragment identifier, which when appended to the
   <att>xml:base</att> in force produces the absolute URI
   reference 
-  <code>http://www.jph.org/resources/books/Bible.xml#xpath1(//div[@n='Matt']/div[5])</code>.</p>
+  <code>http://www.example.org/resources/books/Bible.xml#xpath1(//div[@n='Matt']/div[5])</code>.</p>
   <p>If the input string had been <q>Matt</q>, neither the first
     nor the second regular expressions would have successfully
     matched. The application would have then tried the third,
     <code>(.+)</code>, producing the matched substring <q>Matt</q>,
     and the URI Reference
-    <code>http://www.jph.org/resources/books/Bible.xml#xpath1(//div[@n='Matt'])</code>.</p>
+    <code>http://www.example.org/resources/books/Bible.xml#xpath1(//div[@n='Matt'])</code>.</p>
   <p>It is an error to reference more matched substrings than
     are produced by the regular expression. For example:
     <egXML xmlns="http://www.tei-c.org/ns/Examples"><cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="//div[@n='$1']/div[$2]/div[$3]/p[$4]"/></egXML>
