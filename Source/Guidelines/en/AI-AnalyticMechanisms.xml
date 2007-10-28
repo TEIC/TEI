@@ -15,7 +15,7 @@ part of a text. Examples discussed in this chapter include familiar
 linguistic categorizations (such as <q>clause</q>, <q>morpheme</q>,
 <q>part-of-speech</q> etc.) and  characterizations of narrative
 structure (such as <q>theme</q>, <q>reconciliation</q> etc.). The
-mechanisms presented in this chapter offer simpler but less powerful
+mechanisms presented in this chapter are simpler but less powerful
 than those described in chapter <ptr target="#FS"/>.
 	</p>
 <p>Section <ptr target="#AILC"/> introduces a module for characterizing
@@ -55,7 +55,7 @@ elements all share the following attributes:
 <specList><specDesc key="att.segLike" atts="type function"/></specList>
 </p>
 <p>These elements are also all members of the <ident type="class">model.segLike</ident> class, which is a subclass of
-<ident type="class">mode.phrase</ident>. They may thus appear anywhere
+<ident type="class">model.phrase</ident>. They may thus appear anywhere
 that text is permitted within a document, when the module defined by
 this chapter is included in a schema.</p>
 <p>The <gi>s</gi> element may be used simply to segment a text
@@ -217,12 +217,12 @@ formatting if they are to be easily readable however.
 	<phr type="NP" function="complement">a sentence in state prison
 	<phr type="PP" function="complement">for possession of marijuana</phr>
 </phr></phr></cl></cl></s>.</p></egXML></p>
-<p>This style of markup, however, introduces spurious new lines and
-blanks into the text, which could make restoring the text to its
-original layout problematic. If the original layout is important, the
-original line breaks and font shifts should be recorded using
-<gi>lb</gi> elements, the global <att>rend</att> attribute, etc.
+<p>This style of markup may introduce spurious new lines and blanks
+into the text. If the original layout is important, it should be
+explicitly encoded, using such facilities as the <gi>lb</gi> element,
+the global <att>rend</att> or <att>rendition</att> attributes, etc.
 </p>
+
 <p>The <gi>w</gi>, <gi>m</gi>, and <gi>c</gi> elements are also
 identical in meaning to the <gi>seg</gi> element with a
 <att>type</att> attribute of <q>w</q>, <q>m</q>, or <q>c</q>, and may
@@ -232,9 +232,9 @@ the <gi>w</gi> element can only contain <gi>w</gi>, <gi>m</gi>, and
 <gi>c</gi> elements, or plain text; the <gi>m</gi> element can contain
 only <gi>c</gi> elements or plain text; the <gi>c</gi> element can
 contain only plain text, and will often contain only a single
-character. Consequently, while <gi>m</gi> <foreign>et
-al</foreign>. can be translated directly into typed <gi>seg</gi>
-elements, the reverse is not necessarily the case.
+character. Consequently, while these more specific elements can be
+translated directly into typed <gi>seg</gi> elements, the reverse is
+not necessarily the case.
  </p>
 <p>The restriction on the content of the <gi>w</gi> attribute in
 particular requires that a certain care must be exercised when using it,
@@ -303,48 +303,12 @@ such segment with a more detailed formal analysis.
 This matter is taken up in detail in section <ptr target="#AILA"/>. 
  </p>
 <specGrp xml:id="DAILC" n="Linguistic Segment Categories">
-
-
-
-
 &s;
-
-
-
-
-
-
 &cl;
-
-
-
-
-
-
 &phr;
-
-
-
-
-
-
 &w;
-
-
-
-
-
-
 &m;
-
-
-
-
-
-
 &c;
-
-
 </specGrp>
 
 </div>
@@ -427,7 +391,7 @@ text near the textual span it is associated with. Alternatively, it  may be plac
 elsewhere in the same or a different document. Where several
 <gi>span</gi> or <gi>interp</gi> elements share the same attributes,
 for example having the same responsibility or type, it may be
-convenient to group them within a <gi>spanGrp</gi> element as follows:
+convenient to group them within a <gi>spanGrp</gi> or <gi>interpGrp</gi> element as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><spanGrp>
   <span from="#MaQp1s2p114s3" to="#MaQp1s2p114s5">the moment</span>
   <!-- other spans identified by DTL here -->
@@ -590,7 +554,8 @@ whose content is a set of <gi>link</gi> elements which point to each
 interpretive element and its corresponding text unit.  This method does
 not require the use of the <att>ana</att> attribute on the text
 units.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp targFunc="text interpretation">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp
+						    targFunc="interpretation text">
   <link targets="#INTRO    #SS1-SS3"/>
   <link targets="#CONFLICT #SS4A"/>
   <link targets="#CLIMAX   #SS4B"/>
@@ -679,18 +644,18 @@ discussed in section <ptr target="#CCAS"/>.
 </p>
 <p>As one example of such types of analysis, consider the following
 sentence, taken from the Lancaster/IBM Treebank
-Project(<ref target="#AI-BIBL-5">Leech and Garside 1991</ref>).
+Project (<ptr target="#AI-BIBL-5"/>).
  <q rend="display">The victim's friends told police that Kruger drove
 into the quarry and never surfaced.</q> </p> <p>Our discussion focuses
 on the way that this sentence might be analysed using the Claws system
 developed at the University of Lancaster but exactly the same
 principles may be applied to a wide variety of other systems.<note place="foot">For the word-class tagging method used by Claws see
-<ref target="#AI-BIBL-6">Marshall 1983</ref>; 
+<ptr target="#AI-BIBL-6"/>; 
 For an overview of the system see <ptr type="cit" target="#AI-BIBL-7"/>. The example sentence was processed
 using an online version of the CLAWS tagger at <ptr target="http://www.comp.lancs.ac.uk/ucrel/claws/trial.html"/> </note>
 Output from the system consists of a segmented and tokenized version
 of the text, in which word class codes have been associated with each
-token. CLAWS offers outputs in a variety of non-XML and XML format:
+token. CLAWS offers outputs in a variety of non-XML and XML formats:
 for example, the simplest format for the sample sentence would be:
 <eg><![CDATA[
 The_AT0 victim_NN1 's_POS friends_NN2 told_VVD police_NN2 that_CJT Kruger_NP0 
