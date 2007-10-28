@@ -14,17 +14,17 @@ represent analyses of the structure of a text which are not
 necessarily linear or hierarchic. The module defined by this chapter
 provides for the following common requirements:
   <list type="bullets">
-    <item>to <emph>link</emph> disparate elements 
+    <item>to link disparate elements 
     using the <att>xml:id</att> attribute (section <ptr target="#SAPT"/>);</item>
     <item>to link disparate elements without using the
     <att>xml:id</att> attribute (sections <ptr target="#SAUR"/>, <ptr target="#SAES"/>, and <ptr target="#SATS"/>);</item>
-    <item>to <emph>segment</emph> text into elements convenient for
+    <item>to segment text into elements convenient for
     the encoder and to mark arbitrary points within documents (section
     <ptr target="#SASE"/>);</item>
-    <item>to represent <term>correspondence</term> or
-    <term>alignment</term> among groups of text elements, both those
-    with content and those which are empty (section <ptr target="#SACS"/>);<note place="foot">We use the term alignment as a
-    special case of the more general notion of correspondence. Using A
+    <item>to represent correspondence or
+    alignment among groups of text elements, both those
+    with content and those which are empty (section <ptr target="#SACS"/>);<note place="foot">We use the term <term>alignment</term> as a
+    special case for the more general notion of correspondence. Using A
     as a short form for <q>an element with its attribute <att>xml:id</att>
     set to the value <val>A</val></q>, and suppose elements A1, A2,
     and A3 occur in that order and form one group, while elements B1,
@@ -33,38 +33,37 @@ provides for the following common requirements:
     A3 corresponds to B3 is an alignment. On the other hand, a
     relation in which A1 corresponds to B2, B1 to C2, and C1 to A2 is
     not an alignment.</note></item>
-    <item>to <term rend="noindex">synchronize</term> elements of a
+    <item>to synchronize elements of a
     text, that is to represent temporal correspondences and alignments
     among text elements (section <ptr target="#SASY"/>) and also to
     align them with specific points in time (section <ptr target="#SASYMP"/>);</item>
-    <item>to specify that one text element is <emph>identical</emph>
-    to or a <emph>copy</emph> of another (section <ptr target="#SAIE"/>);</item>
-    <item>to <emph>aggregate</emph> possibly noncontinguous elements
+    <item>to specify that one text element is identical
+    to or a copy of another (section <ptr target="#SAIE"/>);</item>
+    <item>to aggregate possibly noncontinguous elements
     (section <ptr target="#SAAG"/>);</item>
     <item>to specify that different elements are
-    <emph>alternatives</emph> to one another and to express
-    <emph>preferences</emph> among the alternatives (section <ptr target="#SAAT"/>);</item>
+    alternatives to one another and to express
+    preferences among the alternatives (section <ptr target="#SAAT"/>);</item>
     <item>to store markup separately from the the data it describes (section <ptr target="#SASO"/>);</item>
     <item>to associate segments of a text
     with interpretations or analyses of their significance (section
     <ptr target="#SAAN"/>).</item>
   </list></p>
 <p>These facilities all use the same set of techniques based on the
-W3C XPointer framework (<ref target="#XPTRFMWK">Grosso et al,
-2003</ref>) This provides a variety of <term
-rend="noindex">schemes</term>; the most convenient of which, and that
-recommended by these Guidelines, makes use of the
+W3C XPointer framework (<ptr target="#XPTRFMWK"/>) This provides a
+variety of <term rend="noindex">schemes</term>; the most convenient of
+which, and that recommended by these Guidelines, makes use of the
 global <att>xml:id</att> attribute, as defined in section <ptr
-target="#STGA"/>, and introduced in section <ptr
-target="#SG-id"/>. When the <ident type="module">linking</ident>
-module is included in a schema, the attribute class <ident
-type="class">att.global</ident> is extended to include eight
-additional attributes to support the various kinds of linking listed
-above. Each of these attributes is introduced in the appropriate
-section below. In addition, for many of the topics discussed, a choice
-of methods of encoding is offered, ranging from simple but less
-general ones, which use attribute values only, to more elaborate and
-more general ones, which use specialized elements.</p>
+target="#STGA"/>, and introduced in the section of <ptr target="#SG"/>
+titled <ptr target="#SG-id"/> . When the <ident
+type="module">linking</ident> module is included in a schema, the
+attribute class <ident type="class">att.global</ident> is extended to
+include eight additional attributes to support the various kinds of
+linking listed above. Each of these attributes is introduced in the
+appropriate section below. In addition, for many of the topics
+discussed, a choice of methods of encoding is offered, ranging from
+simple but less general ones, which use attribute values only, to more
+elaborate and more general ones, which use specialized elements.</p>
   <div type="div2" xml:id="SAPT">
     <head>Links</head>
     <p>We say that one element <term rend="noindex">points</term> to
@@ -76,9 +75,10 @@ more general ones, which use specialized elements.</p>
     These elements all indicate an association between one place in
     the document (the location of the pointer itself) and one or more
     others (the elements whose identifiers are specified by the
-    pointer's <att>target</att> attribute). This element set defines a
+    pointer's <att>target</att> attribute). The module described in
+    this chapter introduces  a
     variation on this basic kind of pointer, known as a
-    <term>link</term> which specifies both <soCalled>ends</soCalled>
+    <term>link</term>,  which specifies both <soCalled>ends</soCalled>
     of an association. In addition, we define a syntax for
     representing locations in a document by a variety of means not
     dependent on the use of <att>xml:id</att> attributes.</p>
@@ -96,20 +96,18 @@ irrelevant to the intended linkage.
   <specDesc key="link" atts="targets"/>
 </specList>
 The <gi>ptr</gi> element may be called a <soCalled>pure
-pointer</soCalled>, because its primary function is simply to
-point. A pointer sets up a <term rend="noindex">connection</term>
-between an element (which, in
-the case of a pure pointer, can be thought of simply as a
-location in a document), and one or more others, known
+pointer</soCalled>, because its primary function is simply to point. A
+pointer sets up a <term rend="noindex">connection</term> between an
+element (which, in the case of a pure pointer, can be thought of
+simply as a location in a document), and one or more others, known
 collectively as its <term>target</term>. The <gi>ptr</gi> and
 <gi>ref</gi> elements bear a <att>target</att> attribute (in the
-singular), because they point, conceptually, at a single target,
-even if that target may be discontinuous in the document. The
-<gi>link</gi> element bears a <att>targets</att> attribute, with
-a plural name, because it specifies at least two targets, each
-of which is a unitary object. It may be thought of as a
-representing a <term>double link</term> between the objects
-specified.</p>
+singular), because they point, conceptually, at a single target, even
+if that target may be discontinuous in the document. The <gi>link</gi>
+element bears a <att>targets</att> attribute (in the plural), because
+it specifies at least two targets, each of which is a unitary
+object. It may be thought of as a representing a <term>double
+link</term> between the objects specified.</p>
 <p>As members of the class <ident type="class">att.pointing</ident>,
 these elements share a common set of attributes:
 <specList>
@@ -517,7 +515,7 @@ that points to a remote document:
  W3C <ref target="http://www.w3.org/TR/xmlbase/">XML
  Base</ref> recommendation.</egXML></p>
 <p>This example points explicitly to a location on the Web,
-accessible via HTTP, the web Protocol. Suppose however that wish
+accessible via HTTP<!--, the web Protocol-->. Suppose however that we wish
 to access a document stored locally in a file. Again we will
 supply an absolute URI reference, but this time using a
 different protocol:
@@ -613,7 +611,7 @@ chapter and elsewhere in these Guidelines. </p>
 <p>If elements are not directly addressable by means of an identifier,
 they may still be pointed to by means of their position in the XML
 element tree. This method of pointing uses the <name
-type="xpscheme">element</name> scheme defined by the World Wide Web
+type="xpscheme">element()</name> scheme defined by the World Wide Web
 Consortium (<ref target="#XPTRELEM">Grosso et al, 2003</ref>). In this
 scheme, an element may be identified by stepwise navigation using a
 slash-separated list of child element numbers. For each step the
@@ -634,7 +632,7 @@ element <q><![CDATA[<LINE>To be, or not to be: that is the
 question:</LINE>]]></q>.</note> -->
 The  URI  in this example references an XML resource assumed to be
 available via the HTTP protocol on the web; within
-that file, the specified <name type="xpscheme">element</name>
+that file, the specified <name type="xpscheme">element()</name>
 scheme is used to select  <q>the first (root-level)  element's 8th
 child element's 2nd child element's 25th child element's 2nd
 child element</q>. This is equivalent to the XPath
@@ -652,7 +650,7 @@ identifier <val>sha-ham301</val> is the identifier for the
 second child of the 22nd child of this <gi>div</gi> element
 contains the desired <gi>l</gi> element. This is equivalent to
 the XPath specfication
-<code>id(sha-ham301)/*[22]/*[2]</code>.</p>
+<code>id(sha-ham301)/*[22]/*[2]</code>. </p>
 <p>As noted above, we could also point directly to this line if it had an
 identifier of its own. In another digital edition of Shakespeare,
 based on the first folio, each
@@ -662,7 +660,7 @@ simply as <tag>ptr target="#element(Ham01245)"/</tag>, or even more
 simply as <tag>ptr target="#Ham01245"/</tag>. The notation <gi>ptr
 target="#xxx"/</gi> is a convenient abbreviation for  <gi>ptr
 target="#element(xxx)"/</gi>. This method requires, of course, that
-the through line number is supplied as the value of an
+the <soCalled>Through Line Number</soCalled> is supplied as the value of an
 <att>xml:id</att> attribute on each line, and must therefore be unique
 within each document. In
 section <ptr target="#SACR"/> we discuss a method of pointing to the
@@ -680,12 +678,12 @@ XPointer Framework (<ref target="#XPTRFMWK">Grosso et al
 addressing methods, each of which is known as an <term>XPointer
 Scheme</term>. The W3C has pre-defined a set of such schemes, and
 maintains a register for their expansion. The <name
-type="xpscheme">element</name> scheme described above is one such
+type="xpscheme">element()</name> scheme described above is one such
 scheme, defined by the W3C, and widely implemented by XML processing
 systems.</p>
 
 <p>Another important scheme, also defined by the W3C, and recommended
-by these Guidelines is the <name type="xpscheme">xpath1</name> pointer
+by these Guidelines is the <name type="xpscheme">xpath1()</name> pointer
 scheme, which allows for any part of an XML structure to be selected
 using the syntax defined by the XPath specification. This is further
 discussed below, <ptr target="#SATSXP"/>. These Guidelines also define
@@ -767,28 +765,28 @@ kinds of object:
 
      <p>The TEI has registered the following five pointer schemes:
 <list type="gloss">
-<label><name type="xpscheme">xpath1</name></label>
-<item>Addresses a mode or nodeset using the XPath syntax. (<ptr target="#SATSXP"/>)</item>
+<label><name type="xpscheme">xpath1()</name></label>
+<item>Addresses a node or nodeset using the XPath syntax. (<ptr target="#SATSXP"/>)</item>
 <!-- xpath2 deleted until
-standardized <name type="xpscheme">xpath2</name>, --> 
-<label><name type="xpscheme">left</name> and <name type="xpscheme">right</name></label><item>addresses the point
+standardized <name type="xpscheme">xpath2()</name>, --> 
+<label><name type="xpscheme">left()</name> and <name type="xpscheme">right()</name></label><item>addresses the point
 before (left) or after (right) a node or node set (<ptr target="#SATSLR"/>) </item>
-<label><name type="xpscheme">range</name></label>
+<label><name type="xpscheme">range()</name></label>
 <item>addresses the range between two points (<ptr target="#SATSRN"/>)</item>
-<label><name type="xpscheme">string-range</name></label>
+<label><name type="xpscheme">string-range()</name></label>
 <item>addresses a range of a specified length starting from a
 specified point (<ptr target="#SATSRN"/>)</item>
-<label><name type="xpscheme">match</name></label>
+<label><name type="xpscheme">match()</name></label>
 <item>addresses a range which matches a specified string within a node
 (<ptr target="#SATSMA"/>)</item>
 </list>
      </p>
-<p>The <name type="xpscheme">xpath1</name> scheme refers to the
+<p>The <name type="xpscheme">xpath1()</name> scheme refers to the
 existing XPath specification which is adopted without
 modification or extension.
 </p>
 <p>The other five schemes overlap in functionality with a W3C draft
-specification known as the <name type="xpscheme">xpointer
+specification known as the <name type="xpscheme">XPointer
 scheme</name> draft, but are individually much simpler. At the time of
 this writing, there is no current or scheduled activity at the W3C
 towards revising this draft or issuing it as a recommendation.</p>
@@ -796,13 +794,13 @@ towards revising this draft or issuing it as a recommendation.</p>
 
 <div type="div4" xml:id="SATSXP">
     <head>xpath1(path)</head>
-    <p>The <name type="xpscheme">xpath1</name> scheme locates a
+    <p>The <name type="xpscheme">xpath1()</name> scheme locates a
     node or node set within an XML Information Set. The single
     argument <rs>path</rs> is an XPath path as defined in the
     <ref target="http://www.w3.org/TR/xpath">W3C XPath 1
     Recommendation</ref>. The node or node set resulting from
     evaluating the XPath is the reference of an address using
-    the <name type="xpscheme">xpath1</name> scheme. For example,
+    the <name type="xpscheme">xpath1()</name> scheme. For example,
     the following example selects the first paragraph of the <gi scheme="extreme">ftnote</gi> element with <att>id</att> of
     <val>fn6</val> of a paper that discusses XPointers. <egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr target="http://tinyurl.com/267z62/xml/2004/Thompson01/EML2004Thompson01.xml#xpath1(//ftnote[@id='fn6']/para[1])"/></egXML></p>
 	  <!-- I tried "xpath1(id(fn6)/para[1])" but it didn't work in
@@ -829,9 +827,9 @@ towards revising this draft or issuing it as a recommendation.</p>
   selecting an XML element or its contents where an
   <att>xml:id</att> is not present. The ability to use element
   names and attribute names and
-  values makes <name type="xpscheme">xpath1</name> pointers more
+  values makes <name type="xpscheme">xpath1()</name> pointers more
   robust than the other mechanisms discussed in this section 
-<!--<name type="xpscheme">element</name> pointers,-->
+<!--<name type="xpscheme">element()</name> pointers,-->
   even if the designated document changes. For durability in the
   presence of editing, use of <att>xml:id</att> is always
   recommended when possible.</p>
@@ -839,49 +837,49 @@ towards revising this draft or issuing it as a recommendation.</p>
  <!-- xpath2 deleted for the time being, as it is not standardized
  <div4 type="subsubsection" xml:id="SATSXP2">
     <head>xpath2(path)</head>
-    <p>The <name type="xpscheme">xpath2</name> scheme locates a node within
+    <p>The <name type="xpscheme">xpath2()</name> scheme locates a node within
 an XML Information Set. The single argument
 <rs>path</rs> is an XPath 2.0 path as defined in the
 <ref target="http://www.w3.org/TR/xpath20/">W3C XPath 2
   Recommendation</ref>. The results of the xpath2() pointer scheme are treated exactly as the
-  results of an <name type="xpscheme">xpath1</name> pointer scheme. </p>
+  results of an <name type="xpscheme">xpath1()</name> pointer scheme. </p>
   </div4> -->
 <!-- examples needed -->
 
    <div type="div4" xml:id="SATSLR">
     <head>left(pointer) and right(pointer)</head>
-    <p>The <name type="xpscheme">left</name> (<name type="xpscheme">right</name>) scheme locates the point
+    <p>The <name type="xpscheme">left()</name> (<name type="xpscheme">right()</name>) scheme locates the point
     immediately preceding (following) its argument. The single
-    <rs>pointer</rs> argument to <name type="xpscheme">left</name> or <name type="xpscheme">right</name> is treated like a fragment
+    <rs>pointer</rs> argument to <name type="xpscheme">left()</name> or <name type="xpscheme">right()</name> is treated like a fragment
     identifier itself, and must be a bare name or XPointer
     pointer.  The designation of this argument is
     resolved with respect to the base URI in effect for the
-    <name type="xpscheme">left</name> or <name type="xpscheme">right</name> according to the normal
+    <name type="xpscheme">left()</name> or <name type="xpscheme">right()</name> according to the normal
     rules.<note place="foot">Like other XPointer schemes, bare
     names (i.e. values of <gi>xml:id</gi>
     references) are permitted as pointer arguments to all TEI-defined
     XPointer pointer scheme parameters.</note> Because
     most pointer schemes return nodes or ranges rather than
     points, the following description lists the behavior of
-    <name type="xpscheme">left</name> and <name type="xpscheme">right</name> for all three types of possible
+    <name type="xpscheme">left()</name> and <name type="xpscheme">right()</name> for all three types of possible
     location that might result from interpreting its argument.
 <list type="gloss">
     <label>A Node</label>
   <item> When <rs>pointer</rs> resolves to a node, the
   point designated is the point immediately preceding
-  (<name type="xpscheme">left</name>) or following (<name type="xpscheme">right</name>) the node.
+  (<name type="xpscheme">left()</name>) or following (<name type="xpscheme">right()</name>) the node.
   </item>
 <label>A Node Set</label> 
 <item> When <rs>pointer</rs> resolves to a
 node set, the point designated is the point preceding the first
-element of the set (<name type="xpscheme">left</name>) or following
-the last element of the set (<name type="xpscheme">right</name>)</item>
+element of the set (<name type="xpscheme">left()</name>) or following
+the last element of the set (<name type="xpscheme">right()</name>)</item>
     <label>A range</label> <item> When <rs>pointer</rs>
     resolves to a range, the point designated is the point
-    designating the start (<name type="xpscheme">left</name>) or end (<name type="xpscheme">right</name>) of the range.
+    designating the start (<name type="xpscheme">left()</name>) or end (<name type="xpscheme">right()</name>) of the range.
   </item>
 <label>A Point</label> <item> When <rs>pointer</rs> resolves to a
-point, that point is the result. The pointer schemes <name type="xpscheme">left</name> and <name type="xpscheme">right</name>
+point, that point is the result. The pointer schemes <name type="xpscheme">left()</name> and <name type="xpscheme">right()</name>
 make no change when given a point as argument.
    </item>
 </list>
@@ -899,19 +897,19 @@ make no change when given a point as argument.
 
  <div type="div4" xml:id="SATSRN">
     <head>range(pointer1, pointer2)</head>
-    <p>The <name type="xpscheme">range</name> scheme locates a
+    <p>The <name type="xpscheme">range()</name> scheme locates a
     range between two points in an XML information set. The two
-    pointer  arguments to <name type="xpscheme">range</name>
+    pointer  arguments to <name type="xpscheme">range()</name>
     locate the boundaries of the range by two points, and are
     interpreted as fragment identifiers. The parameters
     <rs>pointer1</rs> and <rs>pointer2</rs> are XPointers
     themselves, and are resolved according to the rules
     specified in the definition of the pointer scheme they use.
     <note place="foot">Bare names (i.e., <att>xml:id</att>
-    values), like other Xpointer schemes, are permitted as <name type="xpscheme">range</name> parameters.</note>
+    values), like other Xpointer schemes, are permitted as <name type="xpscheme">range()</name> parameters.</note>
     Because most pointer schemes return nodes or ranges rather
     than points, the following description lists the behavior of
-    <name type="xpscheme">range</name> for all three types of
+    <name type="xpscheme">range()</name> for all three types of
     possible result.
 <list>
   <label>A Node</label>
@@ -939,7 +937,7 @@ make no change when given a point as argument.
 
 <div type="div4" xml:id="SATSSR">
     <head>string-range(pointer, offset [, length])</head>
-    <p>The <name type="xpscheme">string-range</name> scheme
+    <p>The <name type="xpscheme">string-range()</name> scheme
     locates a range based on character positions.
     <!-- what is it? -->
     While
@@ -967,9 +965,9 @@ make no change when given a point as argument.
 	 answer is 1, is it the one to its left or right? More
 	 reason we need an example. -Syd
 	 -->
-    <p>The <rs>pointer</rs> argument to <name type="xpscheme">string-range</name> designates a node or a
+    <p>The <rs>pointer</rs> argument to <name type="xpscheme">string-range()</name> designates a node or a
     range within which a string is to be located. No string
-    range, even an empty one, can be defined by a <name type="xpscheme">string-range</name> if <rs>pointer</rs> has
+    range, even an empty one, can be defined by a <name type="xpscheme">string-range()</name> if <rs>pointer</rs> has
 	  the empty string as string value.
 	  <!-- DGD: we haven't mentioned the concept of 'string value'
 	 before; do we need to? Either way, should the above
@@ -1021,7 +1019,7 @@ make no change when given a point as argument.
 <p>By <soCalled>canonical</soCalled> reference we mean any means
 of pointing into documents, specific to a community or
 corpus. For example, biblical scholars might understand <q>Matt
-5:7</q> to mean <q>the book called <title>Matt</title>, chapter
+5:7</q> to mean <q>the book called <title>Matthew</title>, chapter
 5, verse 7.</q> They might then wish to translate the string
 <q>Matt 5:7</q> into a pointer into a TEI-encoded document,
 selecting the element which corresponds to the seventh
@@ -1254,7 +1252,7 @@ elements.
     <specList>
 <specDesc key="anchor"/>
 <specDesc key="ab" atts="part"/>
-<specDesc key="seg"/>
+<specDesc key="seg" atts="subtype"/>
     </specList>
     The elements <gi>anchor</gi> and <gi>ab</gi> are both members of
     the class <ident type="class">att.typed</ident>, from which they
@@ -1262,7 +1260,8 @@ elements.
     <specList>
 <specDesc key="att.typed" atts="type subtype"/>
     </specList>
-    The <gi>seg</gi> element is a member of the class <ident type="class">att.segLike</ident>, from which it inherits the
+    The <gi>seg</gi> element is a member of the classes <ident
+    type="class">att.segLike</ident> from which it inherits the
     following attributes:
     <specList>
 <specDesc key="att.segLike" atts="type function part"/>
@@ -1277,7 +1276,7 @@ elements.
     those elements, it is a member of the class <ident type="class">model.global</ident> and can therefore appear
     anywhere within a document when the module defined by this chapter
     is included in a schema. Unlike the other elements in its class,
-    the <gi>anchor</gi> element is primarily intended for use to mark
+    the <gi>anchor</gi> element is primarily intended  to mark
     an arbitrary point used for alignment, or as the target of a
     spanning element such as those discussed in section <ptr target="#PHAD"/>, rather than as a means of marking segment
     boundaries for some arbitrary segmentation of a text.</p>
@@ -1713,7 +1712,7 @@ pureté.</p>
   mutual association. However, it may simplify processing to do
   so, and also avoids giving the impression that the English is
   translating the French, or vice versa. More seriously, this
-  encoding does not make explicit the fact that it is in fact
+  encoding does not make explicit that it is in fact
   the entire stretch of text between the anchors which is being
   aligned, not simply the points themselves. If for example one
   text contained material omitted from the other, this approach
@@ -1775,7 +1774,7 @@ of these products.</s>
 growth rates.</s>
   </ab>
 </div>
-<div xml:id="frencg" xml:lang="fr" type="subsection">
+<div xml:id="french" xml:lang="fr" type="subsection">
   <ab xml:id="french1">  
     <s xml:id="fs1">Quant aux eaux minérales et aux limonades, elles
 rencontrent toujours plus d'adeptes.</s>
@@ -1847,19 +1846,19 @@ page itself, and secondly a representation of the areas within that image
 which are to be aligned. In section <ptr target="#PHFAX"/> we present a
 simple way of doing this using the TEI-defined markup for alignment of
 facsimiles. In the present chapter we demonstrate a more powerful
-means of aligning arbitrary polygons and points, which uses the XML notation SVG (Standard Vector
+means of aligning arbitrary polygons and points, which uses the XML notation SVG (Scalable Vector
 Graphics). This provides appropriate facilities for both these
 requirements:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-</egXML>
-<!--  <svg>
+<![CDATA[  <svg>
     <image
      xlink:href="p1764.png"
      width="597"  height="897"
      id="p981" />
   <rect id="p982" x="75" y="75"  width="25" height="10"/>
   <rect id="p983" x="55" y="42"  width="25" height="10"/>
-  </svg>-->
+  </svg>
+]]></egXML>
 This example of SVG defines three rectangles 
 at the locations with the specified x and y coordinates. A view is
 defined on these, enabling them to be 
@@ -2164,7 +2163,7 @@ Synchronized Multimedia Integration Language (SMIL, pronounced
 <audio src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
  xml:id="au6" begin="07.4s" />
 ]]></eg>
-URIs pointing to the <gi scheme="SMIL">audi</gi> elements could also
+URIs pointing to the <gi scheme="SMIL">audio</gi> elements could also
 be included as a fourth component in each of the above <gi>link</gi>
 elements, thus providing a synchronized audio track to complement the
 transcribed text.</p>
@@ -2227,7 +2226,7 @@ Last night to the flicks ... </egXML></p>
 <p>The <att>sameAs</att> attribute may be used to document the fact
 that two elements have identical content. It may be regarded as a
 special kind of link. It should only be attached to an element with
-identical content to that it indicates, or to one the content of which
+identical content to that which it targets, or to one the content of which
 clearly designates it as a repetition, such as the word
 <mentioned>repeat</mentioned> or <mentioned>bis</mentioned> in the
 representation of the chorus of a song, the second time it is to be
@@ -2518,7 +2517,7 @@ or <ptr target="#SATS"/>. The <att>xml:id</att> attributes of
   </body>
 </text></egXML></p>
 <p> The extended pointer with identifier
-<val>rzuiq2</val> (for example) may be read as <q>the first
+<val>rzuiq2</val>, for example, may be read as <q>the first
 <gi>q</gi> in the first <gi>p</gi>, within the sixth <gi>div1</gi>
 element of the current document.</q></p>
 
@@ -2630,7 +2629,7 @@ attributes on the word segments <mentioned>We</mentioned>, <mentioned>Lee</menti
   <seg exclude="#fun #lee" xml:id="sun" type="word">sun</seg>
   at the beach today.</u></egXML></p>
 <p>The value of the <att>select</att> attribute is defined as a list of
-identifiers (<ident type="kw">IDREFS</ident>); hence it can also be used to
+identifiers; hence it can also be used to
 narrow down the range of alternants, as in:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div select="#we.fun5 #lee.fun5" type="interview">
   <u exclude="#we.sun5 #lee.fun5" xml:id="we.fun5">We had fun at the beach today.</u>
@@ -2819,8 +2818,8 @@ today</mentioned>, and 43% that it is <mentioned>Lee had fun at the beach
 today</mentioned>.</p>
 <p>Another very similar example is the following regarding the text of a
 Broadway song. In three different versions of the song, the same line
-reads <q>Her skin is tender as a leather glove,</q> <q>Her skin is
-tender as a baseball glove,</q> and <q>Her skin is tender as Dimaggio's
+reads <q>Her skin is tender as a leather glove</q>,  <q>Her skin is
+tender as a baseball glove</q>, and <q>Her skin is tender as Dimaggio's
 glove.</q><note place="foot">The variant readings are found in the commercial sheet
 music, the performance score, and the Broadway cast recording.</note></p>
 <p>If we wish to express this textual variation using the <gi>alt</gi>
@@ -2986,7 +2985,7 @@ pointing  schemes discussed in section <ptr target="#SAXP"/>.</p>
 	  inclusion within an XML document of data fragments placed in
 	  different resources. Included resources can be either plain
 	  text or XML. XInclude instructions within an XML document
-	  are meant to be replaced by a resource being pointed at by a
+	  are meant to be replaced by a resource targetted by a
 	  URI, possibly augmented by an XPointer that identifies the
 	  exact subresource to be included. Fallback content or
 	  resources can be specified in case of a failure to fetch the
@@ -3108,8 +3107,8 @@ The semantics of XInclude require the creation of well-formed XML results even t
   practice in work with linguistic text corpora. In such corpora, each
   potentially overlapping hierarchy of elements for the text is
   represented as a separate stream of stand-off
-  markup. Generally the source text contains markup for features
-  of the smallest significant units of analysis in the corpus,
+  markup. Generally the source text contains markup for
+ the smallest significant units of analysis in the corpus,
   such as words or morphemes, this information and its markup
   representing a layer of common information that is shared by
   all the various hierarchies. As a way of organizing the
@@ -3186,7 +3185,7 @@ If bees are few.\n
 	resource). The <gi>xi:fallback</gi> element is optional; if it
 	is not present an XInclude processor must signal a fatal error
 	when a resource is not found. This is the preferred behaviour
-	for use with stand-off markup, thus these Guidelines recommend
+	for use with stand-off markup. These Guidelines recommend
 	against the use of <gi>xi:fallback</gi> for stand-off
 	markup.</p>
 </div>
@@ -3198,7 +3197,7 @@ If bees are few.\n
 	  an XInclude processor is required to ensure that the resulting
 	  internalized document is
 	  well-formed. This has obvious implications when the external
-	  document contains XML markup:a plain text source document
+	  document contains XML markup. A plain text source document
 	  will always create a well-formed
 	  internalized document.</p>
 	<p>While a TEI customization may permit
@@ -3234,8 +3233,8 @@ If bees are few.\n
     </body>
 </html>]]></eg>
 	  the expression <code>range(/1/2/1.0,/1/2/11.1)</code> will
-	  select the whole poem, text content <emph>and</emph>
-	  <gi>div</gi> elements <emph>and</emph> hypertext links (NB:
+	  select the whole poem, text content <emph>and
+</emph>	  <gi>div</gi> elements <emph>and</emph> hypertext links (NB:
 	  in XPointer whitespace-only text nodes count).</p>
 	<p>On the contrary, the expressions
 	  <code>xpointer(//text()/range-to(.))</code> and
