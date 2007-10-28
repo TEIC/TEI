@@ -642,7 +642,7 @@ in the Unicode character set: for example the common Latin brevigraph
 ⁊, standing for <mentioned>et</mentioned> and often known as
 the <soCalled>Tironian et</soCalled> can be directly represented in
 any XML document as the Unicode character with code point
-<val>x204A</val> (see further <ptr target="#SG-er"/> and <ptr target="#CHSH"/>). In cases where it does not, these Guidelines
+<val>U+204A</val> (see further <ptr target="#SG-er"/> and <ptr target="#CHSH"/>). In cases where it does not, these Guidelines
 recommend use of the <gi>g</gi> element provided by the <ident type="module">gaiji</ident> module described in chapter <ptr target="#WD"/>. This module allows the encoder great flexibility both
 in processing and in documenting non-standard characters or glyphs,
 including the ability to provide detailed documentation and images for
@@ -656,18 +656,25 @@ following fragment the phrase <mentioned>euery persone</mentioned>
 is represented by a sequence of characters which may be transcribed
 directly, using the <gi>g</gi> element to indicate the two brevigraphs
 it contains as follows: <egXML
-xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-BIBL-1">eu<g ref="#er"/>y <g ref="#per"/>sone that loketh after heuen hath a place in this
-ladder</egXML> The transcriber may also wish to indicate that, because
-of the
-presence of these 
-particular characters, the two words are actually abbreviations, by using the <gi>abbr</gi>
-element: <egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<g ref="#er"/>y</abbr> <abbr><g ref="#per"/>sone</abbr> ... </egXML>
-Alternatively, the transcriber may choose silently to expand these
-abbreviations, using the <gi>expan</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples"><expan>euery</expan>
+xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-BIBL-1">eu<g ref="#er">er</g>y <g ref="#per">per</g>sone that loketh after heuen hath a place in this
+ladder</egXML> 
+Note that in each case the <gi>g</gi> element may contain a suggested
+replacement for the referenced brevigraph; this is purely advisory
+however, and may not be appropriate in all cases. 
+</p>
+<p>The transcriber may also wish to indicate that, because of the
+presence of these particular characters, the two words are actually
+abbreviations, by using the <gi>abbr</gi> element: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<g
+ref="#er">er</g>y</abbr> <abbr><g ref="#per">per</g>sone</abbr>
+... </egXML> Alternatively, the transcriber may choose silently to
+expand these abbreviations, using the <gi>expan</gi> element: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><expan>euery</expan>
 <expan>persone</expan> ... </egXML> And, of course, the
 <gi>choice</gi> element can be used to show that one encoding is an
-alternaative for the other:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><choice><abbr>eu<g ref="#er"/>y</abbr><expan>euery</expan></choice></egXML>
+alternative for the other: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><choice><abbr>eu<g
+ref="#er">er</g>y</abbr><expan>euery</expan></choice></egXML>
 </p>
 <p>When abbreviated forms such as these are expanded, two processes
 are carried out: some characters not present in the abbreviation are
