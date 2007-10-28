@@ -188,12 +188,12 @@ part of the standard TEI  release: see further section <ptr target="#MDlite"/> b
 <p>For ease of discussion, we distinguish the following different kinds of
 modification:
 <list type="ordered">
-<item>deletion of elements;</item><!-- <ptr target="#MDMDSU"/>-->
-<item>renaming of elements;</item><!-- <ptr target="#MDMDNM"/>-->
-<item>modification of content models;</item> <!-- <ptr target="#MDMDCM"/>-->
-<item>modification of attribute and attribute-value lists;</item> <!-- <ptr target="#MDMDAT"/>-->
-<item>modification of class membership;</item> <!-- <ptr target="#MDMDCL"/>-->
-<item>addition of new elements.</item></list>  <!-- <ptr target="#MDMDNE"/>-->
+<item>deletion of elements;</item>
+<item>renaming of elements;</item>
+<item>modification of content models;</item>
+<item>modification of attribute and attribute-value lists;</item>
+<item>modification of class membership;</item>
+<item>addition of new elements.</item></list> 
 Each of these is described in the following  sections.</p>
 
 <p>Each kind of modification changes the set of documents that will be
@@ -658,9 +658,7 @@ to some namespace other than the TEI.</p>
 classes. Care should be taken when modifying the model class
 membership of existing elements since model class membership is what
 determines the content model of most elements in the TEI scheme, and a
-small change may have unintended consequences.  <!-- Adding new members to
-an existing model class (discussed in the next section) is however
-usually a simple operation and is also a clean modification. --> </p>
+small change may have unintended consequences.  </p>
 
 
 </div> 
@@ -681,8 +679,9 @@ inaccessible within a TEI document. </p>
 <gi>elementSpec</gi> defining our new element a <gi>memberOf</gi>
 element which nominates the intended class:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="myBibl" mode="add" ns="http://www.example.com/ns/">
-<classes><memberOf key="model.biblLike"/></classes> <!-- other parts
-of the new declaration here --></elementSpec></egXML> The other parts
+<classes><memberOf key="model.biblLike"/></classes> 
+<!-- other parts of the new declaration here -->
+</elementSpec></egXML> The other parts
 of this declaration will typically include a description for the new
 element and information about its content model, its attributes,
 etc. as further described in <ptr target="#TD"/>.
@@ -808,8 +807,6 @@ conformance</term> in the next section, <ptr target="#CF"/>. </p></div>
 
 <div type="div2" xml:id="MDlite"><head>Examples of Modification </head>
 
-<!--    <div xml:id="CFCUSTEX" type="div3">-->
-
 <p>Several  examples of customizations of the TEI
 are available as part of the standard release, within the directory
 <ident>Exemplars</ident>. They include the following:
@@ -865,20 +862,6 @@ further described within the document.</p>
 
 <div type="div1a" xml:id="CF">
 
-  <!-- OVERALL NOTES:
-  - standardise use of scheme vs schema
-  - the phrase 'Valid TEI ODD file' is used but we don't really define
-  what  this means in the section about it, nor where in the header
-  to point to the ODD.
-
-conformant -> 
-conformable ->
-extension ->
-
-clean ->
-unclean ->
-
-  -->
 <head>Conformance</head>
 
 <p>The notion of <term>TEI Conformance</term> is intended to assist
@@ -892,9 +875,6 @@ unclean ->
         of texts from, archives; </item>
     <item> specifying the form of documents to be produced by or for a given
         project. </item>
-<!--    <item>characterising the extent to which a document may be
-        re-used by some other project than that which originated it,
-        or integrated with other documents. </item>-->
   </list> It is not intended to provide any other evaluation, for
     example of scholarly merit, intellectual integrity, or value
     for money. A document may be of major intellectual importance and
@@ -1037,7 +1017,7 @@ relationships, for example stating that
 <soCalled>heading</soCalled>s. These Guidelines also define classes of
 elements, which have both semantic and structural properties in
 common. Those semantic and structural properties are also a part of
-the TEI abstract model; <!-- not quite --> the class membership of an existing TEI
+the TEI abstract model; the class membership of an existing TEI
 element cannot therefore be changed without changing the
 model. Elements can however be removed from a class by deletion, and
 new non-TEI elements can be added to existing TEI classes.</p>
@@ -1228,8 +1208,7 @@ other namespaces, then the document may be TEI Conformant.</item>
 <item>Is the document valid according to a schema made by combining
 all TEI modules as well as valid according to the schema derived from
 its associated ODD specification? If so, the document is TEI
-Conformant. <!-- and the schema associated with it is a
-<soCalled>clean</soCalled> modification--></item>
+Conformant. </item>
 <item>Is the document valid according to the schema derived from its
 associated ODD specification, but not according to <ident type="schema">tei_all</ident>? If so, the
 document uses a TEI extension. </item>
@@ -1908,66 +1887,41 @@ that only a single rule be used.  </p>
 associating the schema  with document instances that use it. The TEI does not
 mandate any particular method of doing this, since different schema
 languages and processors vary considerably in their requirements. 
-<!-- , but it is suggested that
-the W3C Schema mechanism be supported where possible. Although
-it is not part of the TEI <foreign>per se</foreign>, DTD schemas
-should declare a <att>schemaLocation</att> attribute to the root
-element. This means adding
-<eg><![CDATA[
- xsi:schemaLocation CDATA #IMPLIED
- xmlns:xsi CDATA #FIXED 'http://www.w3.org/2001/XMLSchema-instance'
-]]></eg>
-to the list of attributes, which forces the non-namespace-aware DTD 
-language to recognize the <code>xsl:schemaLocation</code> notation.
-It is recognised that this is an unsatisfactory solution, but it
-permits documents to be validated using both DTD and Schema processors
-without any conflict.
--->
-<!-- Syd propose rewriting the foregoing as:
-
-
-
-      <p>Finally, ODD processors may wish to build in support for
-      some of the methods for associating a document instance with a
-      schema. The TEI does not mandate any particular method, but
-      does suggest that those which are already part of XML (the
-      DOCTYPE declaration for DTDs) and W3C Schema (the
-      <att>xsi:schemaLocation</att> attribute) be supported where
-      possible.</p>
-
-      <p>In order for the <att>xsi:schemaLocation</att> attribute to
-      be valid when a document is validated against either a DTD or a
-      RELAX NG schema, ODD processors may wish to add a declaration
-      for this attribute to the root element, even though it is not
-      part of the TEI <foreign>per se</foreign>. For DTDs this means
-      adding
-      <eg>xsi:schemaLocation CDATA #IMPLIED
- xmlns:xsi CDATA #FIXED 'http://www.w3.org/2001/XMLSchema-instance'</eg>
-      to the list of attributes on the root element, which permits
-      the non-namespace-aware DTD language to recognize the
-      <code>xsi:schemaLocation</code> notation. For RELAX NG, the
-      namespace and attribute would be declared in the usual way:
-      <eg>namespace xsi = "http://www.w3.org/2001/XMLSchema-instance"</eg> and
-      <eg>attribute xsi:schemaLocation { list { data.namespace, data.pointer }+ }</eg>
-      inside the root element declaration.</p>
-
-      <p>Note that declaration of the <att>xsi:schemaLocation</att>
-      attribute in a W3C Schema schema is not permitted. Therefore,
-      if W3C Schemas are being generated by converting the RELAX NG
-      schema (for example, with <name type="pgm">trang</name>), it
-      may be necessary to perform that conversion prior to adding the
-      <att>xsi:schemaLocation</att> declaration to the RELAX NG.</p>
-
-      <p>It is recognised that this is an unsatisfactory solution,
-      but it permits users to take advantage of the W3C Schema
-      facility for indicating a schema, while still permitting
-      documents to be validated using DTD and RELAX NG processors
-      without any conflict.</p>
-
--->
-
-
 </p>
+
+<p>Finally, ODD processors may wish to build in support for some of
+the methods for associating a document instance with a schema. The TEI
+does not mandate any particular method, but does suggest that those
+which are already part of XML (the DOCTYPE declaration for DTDs) and
+W3C Schema (the <att>xsi:schemaLocation</att> attribute) be supported
+where possible.</p>
+
+<p>In order for the <att>xsi:schemaLocation</att> attribute to be
+valid when a document is validated against either a DTD or a RELAX NG
+schema, ODD processors may wish to add a declaration for this
+attribute to the root element, even though it is not part of the TEI
+<foreign>per se</foreign>. For DTDs this means adding
+<eg>xsi:schemaLocation CDATA #IMPLIED xmlns:xsi CDATA #FIXED
+'http://www.w3.org/2001/XMLSchema-instance'</eg> to the list of
+attributes on the root element, which permits the non-namespace-aware
+DTD language to recognize the <code>xsi:schemaLocation</code>
+notation. For RELAX NG, the namespace and attribute would be declared
+in the usual way: <eg>namespace xsi =
+"http://www.w3.org/2001/XMLSchema-instance"</eg> and <eg>attribute
+xsi:schemaLocation { list { data.namespace, data.pointer }+ }</eg>
+inside the root element declaration.</p>
+
+<p>Note that declaration of the <att>xsi:schemaLocation</att>
+attribute in a W3C Schema schema is not permitted. Therefore, if W3C
+Schemas are being generated by converting the RELAX NG schema (for
+example, with <name type="pgm">trang</name>), it may be necessary to
+perform that conversion prior to adding the
+<att>xsi:schemaLocation</att> declaration to the RELAX NG.</p>
+
+<p>It is recognised that this is an unsatisfactory solution, but it
+permits users to take advantage of the W3C Schema facility for
+indicating a schema, while still permitting documents to be validated
+using DTD and RELAX NG processors without any conflict.</p>
 
 </div>
 
@@ -2432,7 +2386,7 @@ individual entity references.</p>
 
 <div xml:id="IMGD">
 <head>Generating Documentation</head>
-<p>In Donald Knuth's terminology of literate programming,
+<p>In Donald Knuth's  literate programming terminology (<ptr target="#KNUTH"/>),
 the previous sections have dealt with the <term>tangle</term> process;
 to generate documentation, we now turn to the 
 <term>weave</term> process.</p>
