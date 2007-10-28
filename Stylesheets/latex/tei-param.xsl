@@ -154,7 +154,7 @@ capable of dealing with UTF-8 directly.
 \IfFileExists{utf8x.def}%
  {\usepackage[utf8x]{inputenc}}%
  {\usepackage[utf8]{inputenc}}
-\usepackage[russianb,greek,english]{babel}
+<xsl:call-template name="latexBabel"/>
 \usepackage[T1]{fontenc}
 \usepackage[]{ucs}
 \uc@dclc{8421}{default}{\textbackslash }
@@ -225,6 +225,14 @@ capable of dealing with UTF-8 directly.
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\Div[#1]#2{\section*{#2}}
 \catcode`\_=12\relax
+</xsl:template>
+
+<xd:doc class="layout">
+    <xd:short>LaTeX babel setup</xd:short>
+    <xd:detail>LaTeX loading of babel with options</xd:detail>
+</xd:doc>
+<xsl:template name="latexBabel">
+\usepackage[russianb,greek,english]{babel}
 </xsl:template>
 
 <xd:doc class="layout">
