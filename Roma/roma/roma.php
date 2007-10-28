@@ -57,7 +57,7 @@
 require_once( 'config.php' );
 
 // The parser is used to do some simple replacements for which
-// XSLT would have been much to powerful
+// XSLT would have been much too powerful
 
 require_once( 'parser/parser.php' );
 
@@ -65,7 +65,7 @@ require_once( 'parser/parser.php' );
 // Customization file.
 require_once( 'roma/romadom.php' );
 
-//sanity chercker files
+//sanity cherker files
 require_once( 'roma/sanitychecker_errorhandler.php' );
 require_once( 'roma/sanitychecker.php' );
 
@@ -75,7 +75,7 @@ require_once( 'notam/notamHandler.php' );
 //Exceptions
 require_once( 'roma/exception.php' );
 
-//Ressources
+//Resources
 require_once( 'resource/resource.php' );
 
 // ######################################################################

@@ -1,7 +1,7 @@
 <script language="php">
 // ######################################################################
 //
-// Path: /usr/local/includes/php/roma/romadom.php
+// Path: roma/romadom.php
 //
 // ######################################################################
 
@@ -322,7 +322,6 @@ class romaDom extends domDocument
       {
 	$this->getXPath( $oXPath );
         $szContents = $oXPath->query( "/tei:TEI/tei:text//tei:elementSpec[@ident='$szIdent']/@ns" )->item(0)->nodeValue;
-//	error_log("found " . $szContents . "!");
 	if ($szContents == '') {
 	   $szContents = 'http://www.tei-c.org/ns/1.0';
 	}
@@ -1009,6 +1008,7 @@ class romaDom extends domDocument
             //check whether element already exists
             $oElementSpec = $oXPath->query( "/tei:TEI/tei:text//tei:elementSpec[@ident='" . $aszConfig[ 'name' ] . "']" )->item(0);
 
+// see if it is already there. if not, create it.
 	    if ( ! is_object( $oElementSpec ) )
 	      {
 		$theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
@@ -1021,6 +1021,9 @@ class romaDom extends domDocument
     	     $oElementSpec->setAttribute( 'mode', ( ( $aszConfig[ 'added' ] == 'true' ) ? 'add' : 'change' ) );
 	      }
 
+// whether or not it existed before, it does  now
+
+// description
 	    $oDesc = $oXPath->query( "/tei:TEI/tei:text//tei:elementSpec[@ident='{$aszConfig[ 'name' ]}']/tei:desc" )->item(0);
 
 	    if ( is_object( $oDesc ) )
@@ -1031,6 +1034,11 @@ class romaDom extends domDocument
             $oDesc = $oElementSpec->appendChild( $theDesc );
 	    $oDesc->appendChild( new domText( stripslashes( $aszConfig[ 'description' ] ) ) );
 
+// namespace
+
+   	   $oElementSpec->setAttribute( 'ns', $aszConfig[ 'namespace'] );
+
+// classes
 	    $oClasses = $oElementSpec->getElementsByTagname( 'classes' )->item(0);
 	    if ( is_object( $oClasses ) )
 	      {
@@ -1046,6 +1054,7 @@ class romaDom extends domDocument
 		$oMember->setAttribute( 'key', $szClass );
               }
 
+// content model
 	    $oContent = $oElementSpec->getElementsByTagname( 'content' )->item(0);
             $szDesc=$aszConfig[ 'description' ];
 	    if ( is_object( $oContent ) )
@@ -1245,7 +1254,7 @@ class romaDom extends domDocument
       {
 	$this->getXPath( $oXPath );
 	$oElementSpec = $oXPath->query("/tei:TEI/tei:text//tei:elementSpec[@ident='$szName']" )->item(0);
-	error_log("looking at change " . $szName . " to " . $szNamespace);	
+
 	if ( is_object( $oElementSpec ) ) {
 
    	   $oElementSpec->setAttribute( 'ns', $szNamespace );
