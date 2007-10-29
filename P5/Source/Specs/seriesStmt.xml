@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="SERSTMT" usage="opt" ident="seriesStmt">
+  <equiv/>
+  <gloss>series statement</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">Mention de collection</gloss>
+  <gloss version="2006-10-18" xml:lang="de">Erklärung zu einer Publikationsreihe</gloss>
+  <gloss version="2007-05-04" xml:lang="es">declaración de serie</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">集叢陳述</gloss>
+  <gloss version="2007-01-21" xml:lang="it">dichiarazione sulla serie</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">シリーズ</gloss>
+  <desc>groups information about the series, if any, to which
+a publication belongs.</desc>
+  <desc version="2007-06-12" xml:lang="fr">regroupe toute information relative à la collection
+      (si elle existe) à laquelle appartient une publication. </desc>
+  <desc version="2006-10-18" xml:lang="de">umfasst (wenn nötig)
+  Angaben zu einer Reihe, zu der eine Veröffentlichung gehört</desc>
+  <desc version="2007-05-04" xml:lang="es">agrupa información sobre la serie, si la hay, a la que pertenece una publicación.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">若出版品隸屬於某叢書，則在此匯集該叢書的相關資訊。</desc>
+  <desc version="2007-01-21" xml:lang="it">raggruppa le informazioni circa la serie alla quale eventualmente la pubblicazione appartiene.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 当該シリーズの情報をまとめる．</desc>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:group>
+        <rng:oneOrMore>
+          <rng:ref name="title"/>
+        </rng:oneOrMore>
+        <rng:zeroOrMore>
+          <rng:choice>
+            <rng:ref name="idno"/>
+            <rng:ref name="respStmt"/>
+          </rng:choice>
+        </rng:zeroOrMore>
+      </rng:group>
+    </rng:choice>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <seriesStmt>
+        <title>Machine-Readable Texts for the Study of Indian
+               Literature</title>
+        <respStmt>
+          <resp>ed. by</resp>
+          <name>Jan Gonda</name>
+        </respStmt>
+        <idno type="vol">1.2</idno>
+        <idno type="ISSN">0 345 6789</idno>
+      </seriesStmt>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#HD26"/>
+    <ptr target="#HD2"/>
+  </listRef>
+</elementSpec>

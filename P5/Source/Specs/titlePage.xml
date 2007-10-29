@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" xml:id="TITLEPA" usage="rec" ident="titlePage">
+  <equiv/>
+  <gloss>title page</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">page de titre</gloss>
+  <gloss version="2006-10-18" xml:lang="de">Titelseite</gloss>
+  <gloss version="2007-05-04" xml:lang="es">frontispicio</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">題名頁</gloss>
+  <gloss version="2007-01-21" xml:lang="it">frontespizio</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">タイトルページ</gloss>
+  <desc>contains the title page of a text, appearing within the front
+or back matter. </desc>
+  <desc version="2007-06-12" xml:lang="fr">contient la page de titre d’un texte, laquelle
+            figure à l’intérieur des parties liminaires</desc>
+  <desc version="2006-10-18" xml:lang="de">enthält die Titelseite eines Textes, die entweder im Vorspann (front) oder Nachspann (back) steht.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene el frontispicio de un texto incluido en el paratexto inicial o final</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含文本的題名頁，出現在正文前資訊或正文後資訊之中</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene il frontespizio di un testo compreso nel peritesto iniziale o finale</desc>
+  <desc version="2006-10-28" xml:lang="ja"> テキストのタイトルページを示す．</desc>
+  <classes>
+    <memberOf key="model.frontPart"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+      <rng:group>
+        <rng:ref name="model.titlepagePart"/>
+      </rng:group>
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.titlepagePart"/>
+          <rng:ref name="model.global"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+      <equiv/>
+      <desc>classifies the title page according to any convenient typology.</desc>
+      <desc version="2007-06-12" xml:lang="fr">classe la page de titre selon toute
+                    typologie adéquate</desc>
+      <desc version="2006-10-18" xml:lang="de">bestimmt die Titelseite entsprechend einer geeigneten Typologie </desc>
+      <desc version="2007-05-04" xml:lang="es">clasifica el frontispicio de acuerdo con una tipología funcional.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">將題名頁分類。</desc>
+      <desc version="2007-01-21" xml:lang="it">classifica il frontespizio in base a una tipologia funzionale</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該タイトルページの分類を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valDesc>Any string, e.g. <mentioned>full</mentioned>, <mentioned>half</mentioned>, <mentioned>Series</mentioned>, etc.</valDesc>
+      <remarks>
+        <p>This attribute allows the same element to be used for
+volume title pages, series title pages, etc., as well as for the
+<soCalled>main</soCalled> title page of a work.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <titlePage>
+        <docTitle>
+          <titlePart type="main">THOMAS OF Reading.</titlePart>
+          <titlePart type="alt">OR, The sixe worthy yeomen
+         of the West.</titlePart>
+        </docTitle>
+        <docEdition>Now the fourth time corrected and enlarged</docEdition>
+        <byline>By T.D.</byline>
+        <figure>
+          <head>TP</head>
+          <p>Thou shalt labor till thou returne to duste</p>
+          <figDesc>Printers Ornament used by TP</figDesc>
+        </figure>
+        <docImprint>Printed at <name type="place">London</name> 
+         for <name>T.P.</name>
+      <date>1612.</date>
+   </docImprint>
+      </titlePage>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#DSTITL"/>
+  </listRef>
+</elementSpec>

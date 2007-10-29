@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" xml:id="BYLINE" usage="opt" ident="byline">
+  <equiv/>
+  <gloss/>
+  <gloss version="2007-06-12" xml:lang="fr">signature</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">署名</gloss>
+  <desc>contains the primary statement of responsibility given for a work
+on its title page or at the head or end of the work.</desc>
+  <desc version="2007-06-12" xml:lang="fr">contient la mention de responsabilité principale
+            pour une œuvre donnée sur sa page de titre ou bien au début ou à la fin de
+        l’œuvre</desc>
+  <desc version="2006-10-18" xml:lang="de">enthält Angaben zur Autorisation eines Werks, entweder auf der Titelseite oder am Anfang oder Ende des Werks.
+</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene la declaración principal de responsabilidad para una obra, así como aparece en su título correspondiente, o al inicio o fin de la obra.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含作品的主要責任陳述，出現在題名頁或作品開頭或結尾處。</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene la principale dichiarazione di responsabilità per un'opera così come appare sul corrispondente frontespizio oppure all'inizio o alla fine dell'opera stessa</desc>
+  <desc version="2006-10-28" xml:lang="ja">タイトルページや作品の冒頭や最後にある，作品の責任者を示す．</desc>
+  <classes>
+    <memberOf key="model.divWrapper"/>
+    <memberOf key="model.titlepagePart"/>
+    <memberOf key="model.pLike.front"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="docAuthor"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <byline>Written by a CITIZEN who continued all the
+while in London. Never made publick before.</byline>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <byline>Written from her own MEMORANDUMS</byline>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <byline>By George Jones, Political Editor, in Washington</byline>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <dateline>Zagreb:</dateline>
+      <byline>de notre envoyé spécial.</byline>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <byline>BY
+<docAuthor>THOMAS PHILIPOTT,</docAuthor>
+Master of Arts,
+(Somtimes)
+Of Clare-Hall in Cambridge.</byline>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>The byline on a title page may include either the name
+or a description for the document's author. Where the name is included,
+it may optionally be tagged using the <gi>docAuthor</gi> element.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#DSOC"/>
+    <ptr target="#DSFRONT"/>
+  </listRef>
+</elementSpec>

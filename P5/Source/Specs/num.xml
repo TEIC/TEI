@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="NUM" usage="opt" ident="num">
+  <equiv/>
+  <gloss>number</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">nombre</gloss>
+  <gloss version="2007-05-04" xml:lang="es">número</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">數字</gloss>
+  <gloss version="2007-01-21" xml:lang="it">numero</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">数</gloss>
+  <desc>contains a number, written in any form.</desc>
+  <desc version="2007-06-12" xml:lang="fr">contient un nombre sous toute forme
+                  d'écriture</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene un número, escrito en cualquier forma.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含一個以任何形式呈現的數字。</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene un numero in qualsiasi forma.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 各種の数を示す．</desc>
+  <classes>
+    <memberOf key="model.measureLike"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+      <equiv/>
+      <desc>indicates the type of numeric value.</desc>
+      <desc version="2007-06-12" xml:lang="fr">indique le type de valeur
+                              numérique</desc>
+      <desc version="2007-05-04" xml:lang="es">indica el tipo de valor numérico.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">說明數值的種類</desc>
+      <desc version="2007-01-21" xml:lang="it">indica il tipo di valore numerico</desc>
+      <desc version="2006-10-28" xml:lang="ja">数の種類を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="semi">
+        <valItem ident="cardinal">
+          <equiv/>
+          <desc>absolute number, e.g. 21, 21.5</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">獨立的數字，例如21、21.5</desc>
+          <desc version="2007-01-21" xml:lang="it">numero assoluto, ad esempio 21 o 21,5</desc>
+        </valItem>
+        <valItem ident="ordinal">
+          <equiv/>
+          <desc>ordinal number, e.g. 21st</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">代表順序的數字，例如第21</desc>
+          <desc version="2007-01-21" xml:lang="it">numero ordinale, ad esempio 21°</desc>
+        </valItem>
+        <valItem ident="fraction">
+          <equiv/>
+          <desc>fraction, e.g. one half or three-quarters</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">分數，例如二分之ㄧ或是四分之三</desc>
+          <desc version="2007-01-21" xml:lang="it">frazione, ad esempio un terzo o tre quarti</desc>
+        </valItem>
+        <valItem ident="percentage">
+          <equiv/>
+          <desc>a percentage</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">百分比</desc>
+          <desc version="2007-01-21" xml:lang="it">percentuale</desc>
+        </valItem>
+      </valList>
+      <remarks>
+        <p>If a different typology is desired, other values can be used
+for this attribute.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="value" usage="opt">
+      <equiv/>
+      <desc>supplies the value of the number in standard form.</desc>
+      <desc version="2007-06-12" xml:lang="fr">fournit la valeur d'un nombre
+                              sous une forme normalisée</desc>
+      <desc version="2007-05-04" xml:lang="es">proporciona el valor del número de forma estándard.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">用標準形式來說明該數字所代表的值。</desc>
+      <desc version="2007-01-21" xml:lang="it">indica il valore del numero in formato standard</desc>
+      <desc version="2006-10-28" xml:lang="ja">標準的な形で当該の数値を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
+      </datatype>
+      <valDesc>a numeric value.</valDesc>
+      <remarks>
+        <p>The standard form used is defined by the TEI datatype
+	data.numeric.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>I reached <num type="cardinal" value="21">twenty-one</num>
+on my <num type="ordinal" value="21">twenty-first</num> birthday...
+light travels at <num value="10E10">10<hi rend="sup">10</hi></num> cm per second.</p>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>Detailed analyses of quantities and units of measure in
+historical documents may also use the feature structure mechanism
+described in chapter <ptr target="#FS"/>.	The <gi>num</gi> element is
+intended for use in simple applications.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CONANU" type="div3"/>
+  </listRef>
+</elementSpec>

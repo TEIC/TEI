@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="facsimile" module="transcr">
+<desc>contains a representation of some written source in the form of
+a set of images rather than as transcribed or encoded text.</desc>
+ <classes>
+<memberOf key="model.resourceLike"/>
+ </classes>
+<content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <rng:group>
+    <rng:optional>
+      <rng:ref name="front"/>
+    </rng:optional>
+    <rng:oneOrMore>
+      <rng:choice>
+	<rng:ref name="model.graphicLike"/>
+	<rng:ref name="surface"/>
+      </rng:choice>
+    </rng:oneOrMore>
+    <rng:optional>
+      <rng:ref name="back"/>
+    </rng:optional>
+  </rng:group>
+</content>
+</elementSpec>

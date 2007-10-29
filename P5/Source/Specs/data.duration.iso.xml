@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<macroSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="dt" ident="data.duration.iso">
+  <desc>defines the range of attribute values available for representation of a duration in time using ISO 8601 standard formats</desc>
+  <desc version="2007-06-12" xml:lang="fr">définit la gamme de valeurs d'attributs disponibles
+      pour la représentation d'une durée dans le temps utilisant l'ISO 8601 qui concerne les formats
+      standards</desc>
+  <desc version="2007-05-04" xml:lang="es">define la gama de valores de atributos posibles para representar la duración en el tiempo usando formatos estàndards ISO 8601.</desc>
+  <content>
+    <?tei winita need to improve this regexp to match duration better --sb ?>
+    <rng:data type="token">
+      <rng:param name="pattern">[0-9.,DHMPRSTWYZ/:+\-]+</rng:param>
+    </rng:data>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <time dur-iso="PT0,75H">three-quarters of an hour</time>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <date dur-iso="P1,5D">a day and a half</date>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <date dur-iso="P14D">a fortnight</date>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <time dur-iso="PT0.02S">20 ms</time>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>A duration is expressed as a sequence of number-letter pairs,
+    preceded by the letter P; the letter gives the unit and may be Y
+    (year), M (month), D (day), H (hour), M (minute), or S (second),
+    in that order. The numbers are all unsigned integers, except for
+    the last, which may have a decimal component (using either
+    <code>.</code> or <code>,</code> as the decimal point; the latter
+    is preferred). If any number is <mentioned>0</mentioned>, then
+    that number-letter pair may be omitted. If any of the H (hour), M
+    (minute), or S (second) number-letter pairs are present, then the
+    separator <code>T</code> must precede the first
+    <soCalled>time</soCalled> number-letter pair.</p>
+    <p>For complete details, see ISO 8601 <title>Data elements and
+    interchange formats — Information interchange — Representation of
+    dates and times</title>.</p>
+  </remarks>
+</macroSpec>

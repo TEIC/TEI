@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" xml:id="FDECL" usage="mwa" ident="fDecl">
+  <equiv/>
+  <gloss>feature declaration</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">déclaration de trait</gloss>
+  <gloss version="2007-05-04" xml:lang="es">declaración de rasgo</gloss>
+  <gloss version="2007-01-21" xml:lang="it">dichiarazione di tratti</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">素性宣言</gloss>
+  <desc>declares a single feature, specifying its name, organization,
+range of allowed values, and optionally its default value.</desc>
+  <desc version="2007-06-12" xml:lang="fr">déclare un trait unique, en en précisant le nom,
+      l'organisation, la liste de valeurs autorisées et, éventuellement, la valeur par défaut</desc>
+  <desc version="2007-05-04" xml:lang="es">declara un único rasgo, indicando su nombre, organización, gama de valores posibles y, opcionalmente, su valor predeterminado.</desc>
+  <desc version="2007-01-21" xml:lang="it">dichiara un singolo tratto, specificandone il nome, l'organizzazione, la gamma di valori permessi, e opzionale il suo valore predefinito.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 要素fに対応する素性を宣言する．例えば，名前，データ構
+造，定義域，既定値など．</desc>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:optional>
+        <rng:ref name="fDescr"/>
+      </rng:optional>
+      <rng:ref name="vRange"/>
+      <rng:optional>
+        <rng:ref name="vDefault"/>
+      </rng:optional>
+    </rng:group>
+  </content>
+  <attList>
+    <attDef ident="name" usage="req">
+      <equiv/>
+      <desc>indicates the name of the feature being declared; matches the
+<att>name</att> attribute of <gi>f</gi> elements in the text.</desc>
+      <desc version="2007-06-12" xml:lang="fr">indique le nom du trait déclaré ; correspond à
+          l'attribut <att>nom</att> des éléments <gi>f</gi> du texte</desc>
+      <desc version="2007-05-04" xml:lang="es">indica el nombre del rasgo que está siendo declarado; combina el atributo <att>name</att> de elementos <gi>f</gi> en el texto.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica il nome del tratto che si sta dichiarando; corrisponde all'attributo <att>name</att> dell'elemento <gi>f</gi> nel testo.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該素性の名前を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/>
+      </datatype>
+      <valDesc>any string of characters</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p/>
+      </remarks>
+    </attDef>
+    <attDef usage="opt" ident="optional">
+      <equiv/>
+      <desc>indicates whether or not the value of this feature may
+	be present.</desc>
+      <desc version="2007-06-12" xml:lang="fr">indique si la valeur de ce trait peut ou non
+          exister</desc>
+      <desc version="2007-05-04" xml:lang="es">indica si el valor del rasgo debe estar presente o no.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica se il valore del tratto possa o meno essere presente</desc>
+      <datatype>
+        <rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="boolean"/>
+      </datatype>
+      <defaultVal>true</defaultVal>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p>If a feature is marked as optional, it is possible
+	for it to be omitted from a feature structure. If an
+	obligatory feature is omitted, then it is understood to have a
+	default value, either explicitly declared, or, if no default
+	is supplied, the special value  
+<val>any</val>. If an optional feature is omitted, then it is
+	understood to be missing and any possible value (including
+	the default) is ignored. </p>
+      </remarks>
+    </attDef>
+    <!--    <attDef ident="org" usage="opt">
+      <gloss>organization</gloss>
+      <desc>specifies the organizing discipline of the feature value.</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica la disciplina organizativa del valor de rasgo.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該素性値をデータ構造を示す．</desc>
+      <defaultVal>unit</defaultVal>
+      <valList type="closed">
+        <valItem ident="unit">
+          <equiv/>
+          <desc>unitary atomic value</desc>
+          <desc version="2007-05-04" xml:lang="es">valor aislado unitario</desc>
+          <desc version="2006-10-28" xml:lang="ja">(単独)</desc>
+        </valItem>
+        <valItem ident="set">
+          <equiv/>
+          <desc>set value (unordered, no duplicates)</desc>
+          <desc version="2007-05-04" xml:lang="es">valor de conjunto (desordenado, no duplicado)</desc>
+          <desc version="2006-10-28" xml:lang="ja">(集合，すなわち順序・重複が無い．)</desc>
+        </valItem>
+        <valItem ident="bag">
+          <equiv/>
+          <desc>bag value (unordered, may have duplicates)</desc>
+          <desc version="2007-05-04" xml:lang="es">valor de multiconjunto (desordenado, puede ser duplicado)</desc>
+          <desc version="2006-10-28" xml:lang="ja">(バック，すなわち順序が無く，重複有り．)</desc>
+        </valItem>
+        <valItem ident="list">
+          <equiv/>
+          <desc>list value (ordered, may have duplicates)</desc>
+          <desc version="2007-05-04" xml:lang="es">valor de lista (ordenado, puede ser duplicado)</desc>
+          <desc version="2006-10-28" xml:lang="ja">(リスト，すなわち順序が有り，重複も有る．)</desc>
+        </valItem>
+      </valList>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p/>
+      </remarks>
+    </attDef>-->
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+  </exemplum>
+  <remarks>
+    <p/>
+  </remarks>
+  <listRef>
+    <ptr target="#FD"/>
+  </listRef>
+</elementSpec>

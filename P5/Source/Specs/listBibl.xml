@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="LISTBIBL" usage="opt" ident="listBibl">
+  <equiv/>
+  <gloss>citation list</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">liste de citations</gloss>
+  <gloss version="2007-05-04" xml:lang="es">lista de cita</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">書目列表</gloss>
+  <gloss version="2007-01-21" xml:lang="it">lista di citazioni</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">引用リスト</gloss>
+  <desc>contains a list of bibliographic citations of any kind. </desc>
+  <desc version="2007-06-12" xml:lang="fr">contient une liste de citations
+                  bibliographiques de tout type</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene una lista de citas bibliográficas de cualquier tipo.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含任何種類的書目資料列表。</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene una lista di citazioni bibliografiche di qualsiasi natura.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 書誌情報のおける各種の引用のリスト．</desc>
+  <classes>
+    <memberOf key="model.listLike"/>
+    <memberOf key="att.declarable"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="model.msItemPart"/>
+  </classes>
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:group>
+      <rng:zeroOrMore>
+        <rng:ref name="model.headLike"/>
+      </rng:zeroOrMore>
+      <rng:oneOrMore>
+        <rng:choice>
+          <rng:ref name="model.biblLike"/>
+          <rng:ref name="listBibl"/>
+        </rng:choice>
+      </rng:oneOrMore>
+    </rng:group>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listBibl>
+        <head>Works consulted</head>
+        <bibl>Blain, Clements and Grundy: Feminist Companion to
+       Literature in English (Yale, 1990)
+ </bibl>
+        <biblStruct>
+          <analytic>
+            <title>The Interesting story of the Children in the Wood</title>
+          </analytic>
+          <monogr>
+            <title>The Penny Histories</title>
+            <author>Victor E Neuberg</author>
+            <imprint>
+              <publisher>OUP</publisher>
+              <date>1968</date>
+            </imprint>
+          </monogr>
+        </biblStruct>
+      </listBibl>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#COBITY"/>
+    <ptr target="#HD3"/>
+    <ptr target="#CCAS2"/>
+  </listRef>
+</elementSpec>

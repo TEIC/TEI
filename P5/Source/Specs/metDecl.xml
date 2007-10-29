@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="verse" xml:id="METDECL" usage="rec" ident="metDecl">
+  <equiv/>
+  <gloss>metrical notation declaration</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">Déclaration métrique</gloss>
+  <desc>documents the notation employed to represent a metrical
+  pattern when this is specified as the value of a <att>met</att>,
+  <att>real</att>, or <att>rhyme</att> attribute on any structural
+  element of a metrical text (e.g. <gi>lg</gi>, <gi>l</gi>, or
+  <gi>seg</gi>).</desc>
+  <desc version="2007-06-12" xml:lang="fr">documente la notation employée pour représenter un
+      schéma métrique lorsque celui-ci est précisé comme valeur d’un attribut <gi>met</gi>, <gi>real
+      </gi>ou <gi>rhyme</gi> sur
+      <!--A VALIDER : dans--> tout élément structural
+      <!--A VALIDER : structurel--> d’un texte métrique (ex. <gi>lg</gi>, <gi>l</gi>, ou
+      <gi>seg</gi>).</desc>
+  <desc version="2006-10-18" xml:lang="de">Notation eines metrischen
+  Musters, sofern dies als Wert eines Attributs <att>met</att>,
+  <att>real</att>, oder <att>rhyme</att> angegeben ist, für ein
+  beliebiges Strukturelement eines metrischen Textes (z.B.
+  <gi>lg</gi>, <gi>l</gi>, oder <gi>seg</gi>).
+
+</desc>
+  <desc version="2007-05-04" xml:lang="es">documenta la notación empleada para representar un patrón métrico cuando éste se especifica como el valor de un atributo <att>met</att>, <att>real</att>, o <att>rhyme</att> en cualquier elemento estructural de un texto métrico (p.ej. <gi>lg</gi>, <gi>l</gi>, or <gi>seg</gi>).</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">在標記韻文時所用到的結構性元素(例：<gi>lg</gi>、<gi>l</gi>、或<gi>seg</gi>)當中，若使用<att>met</att>、<att>real</att>、或<att>rhyme</att>等屬性的屬性值來表示文章的韻律模式，則在此宣告標記韻律模式的方法。</desc>
+  <desc version="2007-01-21" xml:lang="it">documenta l'annotazione adottata nella rappresentazione di uno schema metrico, specificato come valore di un attributo <att>met</att>, <att>real</att>, o <att>rhyme</att> su un qualsiasi elemento strutturale di un testo metrico (ad esempio <gi>lg</gi>, <gi>l</gi>, or <gi>seg</gi>).</desc>
+  <desc version="2006-10-28" xml:lang="ja">韻律パタンの表記法を示す．</desc>
+  <classes>
+    <memberOf key="model.encodingPart"/>
+    <memberOf key="att.declarable"/>
+  </classes>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:choice>
+          <rng:ref name="model.pLike"/>
+          <rng:ref name="model.noteLike"/>
+        </rng:choice>
+      </rng:oneOrMore>
+      <rng:oneOrMore>
+        <rng:ref name="metSym"/>
+      </rng:oneOrMore>
+    </rng:choice>
+  </content>
+  <attList>
+    <attDef ident="type" usage="mwa">
+      <equiv/>
+      <desc>indicates whether the notation conveys the abstract
+      metrical form, its actual prosodic realization, or the rhyme
+      scheme, or some combination thereof.</desc>
+      <desc version="2007-06-12" xml:lang="fr">Indique si la notation transcrit la forme
+          métrique abstraite, sa réalisation prosodique réelle, la répartition des rimes, ou une
+          certaine combinaison des deux
+          <!--A VALIDER : trois--> .</desc>
+      <desc version="2006-10-18" xml:lang="de">zeigt an, ob die Notation
+  die abstrakte metrische Form, die tatsächliche prosodische
+  Realisierung oder das Reimschema oder eine Kombination dessen
+  wiedergibt. </desc>
+      <desc version="2007-05-04" xml:lang="es">indica si la notación indica la forma métrica abstracta, su realización prosódica real,  el esquema rítmico o alguna combinación de todo ello.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica se l'annotazione fornisce la forma metrica estratta, la sua realizzazione prosodica,lo schema delle rime o un loro combinazione</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該表記法が，抽象的韻律
+      形式，実際に出現する韻律形，押韻規則，これらの組み合わせなのかを
+      示す．</desc>
+      <datatype minOccurs="1" maxOccurs="3">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <defaultVal>met real</defaultVal>
+      <valList>
+        <valItem ident="met">
+          <gloss><att>met</att> attribute</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">attribut <att>met</att>
+            </gloss>
+          <gloss version="2007-05-04" xml:lang="es">atributo <att>met</att></gloss>
+          <gloss version="2007-05-04" xml:lang="es">atributo <att>rhyme (rima)</att></gloss>
+          <desc>declaration applies to the abstract metrical form
+	  recorded on the <att>met</att> attribute</desc>
+          <desc version="2007-06-12" xml:lang="fr">la déclaration s'applique à la structure
+              métrique abstraite notée par l'attribut <att>met</att>.</desc>
+          <desc version="2007-05-04" xml:lang="es">declaración aplicada a la forma métrica abstracta codificada en el atributo <att>met</att>.</desc>
+          <desc version="2007-05-04" xml:lang="es">declaración aplicada al esquema rítmico codificado en el atributo  <att>rhyme</att>.</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">屬性<att>met</att></desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">TO BE TRANSLATED</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">屬性<att>rhyme</att></desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">TO BE TRANSLATED</desc>
+        </valItem>
+        <valItem ident="real">
+          <gloss><att>real</att> attribute</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">attribut <att>real</att></gloss>
+          <gloss version="2007-05-04" xml:lang="es">atributo <att>real</att></gloss>
+          <desc>declaration applies to the actual realization of the
+	  conventional metrical structure recorded on the
+	  <att>real</att> attribute</desc>
+          <desc version="2007-06-12" xml:lang="fr">la déclaration s'applique à la structure
+              métrique abstraite
+              <!--A VALIDER : à l'implémentation réelle de la structure métrique conventionnelle-->notée
+              par l'attribut <att>real</att> .</desc>
+          <desc version="2007-05-04" xml:lang="es">declaración aplicada a la realización concreta de una estructura métrica convencional codificada en el atributo <att>real</att>.</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">屬性<att>real</att></desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">TO BE TRANSLATED</desc>
+        </valItem>
+        <valItem ident="rhyme">
+          <gloss><att>rhyme</att> attribute</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">attribut <att>rime</att></gloss>
+          <desc>declaration applies to the rhyme scheme
+	  recorded on the <att>rhyme</att> attribute</desc>
+          <desc version="2007-06-12" xml:lang="fr">la déclaration s'applique à la structure
+              métrique abstraite
+              <!--A VALIDER : au schéma de rimes décrit dans-->notée par l'attribut
+              <att>rhyme</att>.</desc>
+        </valItem>
+      </valList>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p>By default, the <gi>metDecl</gi> element documents the
+        notation used for metrical pattern and realization. It may
+        also be used to document the notation used for rhyme scheme
+        information; if not otherwise documented, the rhyme scheme
+        notation defaults to the traditional <q>abab</q> notation.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="pattern" usage="opt">
+      <gloss>regular expression pattern</gloss>
+      <desc>specifies a regular expression defining any value that
+	is legal for this notation.</desc>
+      <desc version="2007-06-12" xml:lang="fr">Spécifie une expression régulière définissant
+          quelle valeur est autorisée pour cette notation.</desc>
+      <desc version="2006-10-18" xml:lang="de">definiert einen regulären
+  Ausdruck, der einen zulässigen Wert für diese Notation vorgibt.
+</desc>
+      <desc version="2007-05-04" xml:lang="es">indica una expresión regular que define cualquier valor válido para esta notación.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">TO BE TRANSLATED</desc>
+      <desc version="2007-01-21" xml:lang="it">specifica un'espressione regolare che definisce qualsiasi valore legale per l'annotazione</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該表記法に叶う値を正規表現で示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pattern"/>
+      </datatype>
+      <valDesc>the value must be a valid regular expression per the
+      World Wide Web Consortium's <title>XML Schema Part 2: Datatypes
+      Second Edition</title>, <ref target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix
+      F</ref></valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <metDecl xml:id="ip" type="met" pattern="((SU|US)USUSUSUS/)">
+        <metSym value="S">stressed syllable</metSym>
+        <metSym value="U">unstressed syllable</metSym>
+        <metSym value="/">metrical line boundary</metSym>
+      </metDecl>
+    </egXML>
+    <p>This example is intended for the far more restricted case
+    typified by the Shakespearean iambic pentameter. Only metrical
+    patterns containing exactly ten syllables, alternately stressed
+    and unstressed, (except for the first two which may be in either
+    order) to each metrical line can be expressed using this
+    notation.</p>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">The encoder may choose whether to define the
+    notation formally or informally. However, the two methods may not
+    be mixed. That is, <gi>metDecl</gi> may contain either a sequence
+    of <gi>metSym</gi> elements or, alternately, a series of
+    paragraphs or other components. If the <att>pattern</att>
+    attribute is specified and <gi>metSym</gi> elements are used, then
+    all the codes appearing within the <att>pattern</att> attribute
+    should be documented.</p>
+    <p>Only usable within the header if the verse module is used.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#HDMN"/>
+    <ptr target="#VEME"/>
+  </listRef>
+</elementSpec>

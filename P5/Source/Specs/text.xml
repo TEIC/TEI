@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" xml:id="TEXT" usage="req" ident="text">
+  <equiv/>
+  <gloss/>
+  <gloss version="2007-06-12" xml:lang="fr">texte</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">文本</gloss>
+  <desc>contains a single text of any kind, whether unitary or
+composite, for example a poem or drama, a collection of essays, a novel,
+a dictionary, or a corpus sample.</desc>
+  <desc version="2007-06-12" xml:lang="fr">contient un seul texte quelconque, qu’il soit
+            unitaire ou composite, par exemple un poème ou une pièce de théâtre, un recueil
+            d’essais, un roman, un dictionnaire ou un échantillon d’un corpus</desc>
+  <desc version="2006-10-18" xml:lang="de">enthält eigenständigen oder aus mehreren Teilen bestehenden Text, zum Beispiel ein Gedicht oder Drama, eine Sammlung von Aufsätzen, einen Roman, ein Wörterbuch oder eine Auswahl aus einem Korpus</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene un único texto de cualquier tipo, sea este unitario o combinado, p.ej. un texto en verso o teatral, una recopilación de ensayos, una novela, un diccionario, o una fragmento de corpus.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含ㄧ份任何種類的文本，無論是單一或是複合文件，像是詩詞或戲劇、散文集、小說、字典、或是文集。</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene un unico testo di qualsiasi tipo, sia esso unitario o composito, per esempio un testo in versi o teatrale, una raccolta di saggi, un romanzo, un dizionario, o una porzione di corpus</desc>
+  <desc version="2006-10-28" xml:lang="ja">各種テキストを示す．複合体でも良い．</desc>
+  <classes>
+    <!--    <memberOf key="model.inter"/>-->
+    <memberOf key="att.declaring"/>
+    <memberOf key="att.typed"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="front"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+      <rng:choice>
+        <rng:ref name="body"/>
+        <rng:ref name="group"/>
+      </rng:choice>
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="back"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+    </rng:group>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <text>
+        <front>
+          <docTitle>
+            <titlePart>Autumn Haze</titlePart>
+          </docTitle>
+        </front>
+        <body>
+          <l>Is it a dragonfly or a maple leaf</l>
+          <l>That settles softly down upon the water?</l>
+        </body>
+      </text>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <p>The body of a text may be replaced by a group of nested texts, as
+in the following schematic:</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <text>
+        <front/>
+        <group>
+          <text>
+            <front/>
+            <body/>
+            <back/>
+          </text>
+          <text/>
+        </group>
+      </text>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>This element should not be used to represent a text
+  which is inserted at an arbitrary point within the structure of
+  another, for example as in an embedded or quoted narrative; the
+  <gi>floatingText</gi> is provided for this purpose.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#DS"/>
+    <ptr target="#CCDEF"/>
+  </listRef>
+</elementSpec>

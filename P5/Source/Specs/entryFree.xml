@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="ENTRYFR" usage="mwa" ident="entryFree">
+  <gloss>unstructured entry</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">entrée libre</gloss>
+  <desc>contains a dictionary entry which does not necessarily conform to the constraints imposed
+        by the <gi>entry</gi> element.</desc>
+  <desc version="2007-06-12" xml:lang="fr">contient une entrée de dictionnaire qui ne se
+			conforme pas nécessairement aux contraintes imposées par l’élément
+		<gi>entry</gi>.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene una entrada de diccionario no necesariamente conforme con las restricciones impuestas por el elemento <gi>entry (entrada).</gi></desc>
+  <desc version="2007-01-21" xml:lang="it">contiene una voce di dizionario non necessariamente conforme ai vincoli imposti dall'elemento entry.</desc>
+  <desc version="2006-10-28" xml:lang="ja">要素<gi>entry</gi>に課せられる制約を受けない必要のない辞書項目を示す．</desc>
+  <classes>
+    <memberOf key="model.entryLike"/>
+    <memberOf key="att.entryLike"/>
+    <memberOf key="att.lexicographic"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="model.entryPart"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="model.inter"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <entryFree><orth>biryani</orth> or <orth>biriani</orth>
+                <pron>(%bIrI"A:nI)</pron>
+                <def>any of a variety of Indian dishes ...</def>
+                <etym>[from <lang>Urdu</lang>]</etym>
+            </entryFree>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain any dictionary elements in any combination.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#DIBO"/>
+    <ptr target="#DIEN"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="TRANS" usage="rec" ident="trans">
+  <equiv/>
+  <gloss>translation information</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">informations sur la traduction</gloss>
+  <gloss version="2007-05-04" xml:lang="es">información traducida</gloss>
+  <gloss version="2007-01-21" xml:lang="it">informazioni sulla traduzione</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">翻訳情報</gloss>
+  <desc>contains translation text and related information (within an entry in a multilingual dictionary).</desc>
+  <desc version="2007-06-12" xml:lang="fr">contient le texte de la traduction et les
+			informations associées (dans l’entrée d'un dictionnaire multilingue)</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene el texto traducido y la información relativa (al interno de una entrada en diccionario multilingüe)</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene una traduzione ed informazioni ad essea collegate (all'interno di una voce in un dizionario multilinue).</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 翻訳または翻訳に関する情報を示す．</desc>
+  <classes>
+    <memberOf key="model.entryPart.top"/>
+    <memberOf key="model.entryPart"/>
+    <memberOf key="att.lexicographic"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="model.inter"/>
+        <rng:ref name="model.entryPart"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain character data mixed with any other elements defined in the
+            dictionary tag set.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#DITPTR" type="div2"/>
+  </listRef>
+</elementSpec>

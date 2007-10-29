@@ -1,0 +1,320 @@
+<?xml version="1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en">
+<teiHeader>
+<fileDesc>
+<titleStmt>
+<title>Facsimile</title>
+<author><ref target="mailto:conal@nzetc.org">Conal Tuohy</ref></author>
+</titleStmt>
+<publicationStmt>
+<p>Draft schema for TEI Council</p>
+</publicationStmt>
+<sourceDesc>
+<p>Based on documents developed by Conal and Dot for the TEI Council in 2006</p>
+</sourceDesc>
+</fileDesc>
+</teiHeader>
+<text>
+<body>
+<head>Linking pages of text to graphical facsimiles</head>
+
+<p>This document combines <ref
+target="http://lists.village.virginia.edu/pipermail/tei-council/2006/001993.html">Conal's
+posting to TEI council</ref> on 23 Nov 07 with the <ref
+target="http://www.tei-c.org.uk/wiki/index.php/FacsimileMarkupODD">sample
+ODD</ref> announced by Dot on 16 Mar 07, together with a few minor
+syntactic corrections needed to make it a valid ODD. A schema
+corresponding with this can be generated with roma, but no test file
+exists as yet. (LB, 21 Apr 07)</p>
+
+<div><head>Linking page breaks to pages</head>
+
+<p>Each <gi>pb</gi> is the link target of a <gi>pg</gi> element in the <gi>sourceDesc</gi> which represents the physical page which the <gi>pb</gi> introduces. e.g.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"> 
+<sourceDesc>
+   ...
+   <pg start="#pb-1">
+   ...
+   </pg>
+</sourceDesc>
+...
+<pb xml:id="pb-1"/>
+</egXML>
+An open question is how this <gi>pg</gi> element will fit with the
+physical bibliography draft. It appears that <gi>pg</gi> element here
+may be equivalent to the <gi>page</gi>described in the PB draft (<ptr
+target="http://www.tei-c.org/Activities/PB/draft-0714.html"/>)
+</p>
+</div>
+<div><head>Linking pages to images</head>
+
+<p>Each <gi>pg</gi> element may contain 1 or more <gi>graphic</gi> elements which represent facsimiles of the page.
+
+e.g.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<!-- example showing page with multiple facsimile images -->
+<pg start="#pb-1">
+	<graphic url="p1.jpg" mimeType="image/jpeg" type="#access"/>
+	<graphic url="p1-t.jpg" mimeType="image/jpeg" type="#thumbnail"/>
+</pg>
+</egXML></p></div>
+
+<div><head>Geometric transformations</head>
+
+<p>The existing P5 element <gi>graphic</gi> refers to an image file
+with a <att>url</att> attribute, and provides a <att>scalefactor</att>
+attribute to scale the image uniformly (i.e. the same horizontally and
+vertically).</p>
+
+<p>This proposal defines a larger set of attributes (in a class "att.projection") to permit the encoding of a more general class of geometric projection; not only to scale but also maybe to shear (skew), rotate, and translate (move) the linked image. This would allow a <gi>graphic</gi> element to document the geometric relationship between a page and an image file which is a facsimile of that page. For example, if an image file is a scan of 2 pages, then 2 <gi>graphic</gi> elements might point at the same file, but pan and zoom to show either of the 2 pages contained in it. </p>
+
+<p>The att.projection class might include a variety of attributes to allow for this transformation to be specified as a combination of rotation, scaling, etc, which would be more intuitive for encoders, or using matrix algebra, which might be a more convenient encoding scheme for using with image-markup tools, or for unusual cases. A perspective projection, for instance, might be used to correct the foreshortening effect in photographs of inscriptions on large monuments.
+</p>
+<p>We may need to tweak this class a bit and it would be a candidate
+for customisation in projects where the source material is unusual. It
+may be that there are better ways to represent these geometric
+transformations as XML attributes, such as as a single attribute
+containing multiple tokens. For now, though, att.projection would
+define:
+<list>
+<item>@scale</item>
+<item>@rotation</item>
+<item>@x (left edge)</item>
+<item>@y (top edge)</item>
+<item>@width</item>
+<item>@height</item>
+</list>
+e.g.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<graphic mimeType="image/jpeg" url="foo.jpg" x="0" y="0" width="100px" height="100px"/>
+<!-- conventionally, the coordinate system has origin at top left. -->
+<!-- positive x is to the right, positive y is below the origin -->
+<!-- (same as the initial coordinate systems of PostScript and SVG) --> 
+</egXML></p></div>
+
+<div><head>Classifying graphics</head>
+
+<p>Each graphic has a MIME content-type, but it can also be typed in
+other ways by linking it to one or more category elements defined in a
+taxonomy. We should define a base taxonomy including core concepts
+such as "access image", "thumbnail", "colour", "monochrome", etc, and
+allow users to refine these concepts by adding subordinate taxa to the
+taxonomy.
+
+e.g.
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<taxonomy xml:id="graph-tax">
+	<category xml:id="master">
+		<catDesc>Master image files. Not for access.</catDesc>
+	</category>
+	<category xml:id="access">
+		<catDesc>Regular access files.</catDesc>
+	</category>
+	<category xml:id="thumbnail">
+		<catDesc>Small thumbnail image files</catDesc>
+	</category>
+	<category xml:id="ultraviolet">
+		<catDesc>Image files taken under UV lighting</catDesc>
+	</category>
+	<category xml:id="microfilm">
+		<catDesc>Image files scanned from microfilm</catDesc>
+	</category>
+</taxonomy>
+
+...
+
+<pg start="#pb-1">
+	<graphic url="p1.tiff" mimeType="image/tiff" type="#master"/>
+	<graphic url="p1.jpg" mimeType="image/jpeg" type="#access"/>
+	<graphic url="p1-t.jpg" mimeType="image/jpeg" type="#thumbnail"/>
+	<graphic url="../uv/p1.tiff" mimeType="image/jpeg" type="#ultraviolet #master"/>
+	<graphic url="../mf/p1.tiff" mimeType="image/jpeg" type="#microfilm #master"/>
+	<graphic url="../uv/p1.jpg" mimeType="image/jpeg" type="#ultraviolet #access"/>
+	<graphic url="../mf/p1.jpg" mimeType="image/jpeg" type="#microfilm #access"/>
+</pg>
+</egXML></p></div>
+
+<div><head>Linking units of text to regions within pages</head>
+
+<p>Each unit of text may be linked to a geometric region of a page. The coordinates of this region are given in the coordinate system of the page. In turn, this coordinate system is independently related to the coordinate systems of each facsimile image of that page, by the att.projection attributes of the <gi>graphic</gi> element of each facsimile image. If the att.projection attributes of a <gi>graphic</gi> were to specify an identity transformation (e.g. if these attributes were all empty) then the region coordinates would be interpreted as defining a region in terms of the coordinate space of the <gi>graphic</gi>. 
+</p>
+<p>In general each unit of text falls within a region of a page. Any element whose position on a page it is desirable to encode should therefore be a member of the att.projection class so that it has the geometric attributes. The coordinate space of the element would be relative to the page on which the element falls. e.g.
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<pb xml:id="pb-2"/>
+<seg x="100" y="50" width="20" height="10">foo</seg>
+</egXML></p>
+<p>In a variorum edition, a unit of text may appear in multiple editions, and hence it must relate to distinct regions of distinct pages from each edition. A given piece of text may appear at the top of page 2 in one edition, and at the bottom of page 1 in another. In this case it would be necessary to separately define 2 regions, one for each edition. In this case each unit of text could be encoded using special-purpose <gi>region</gi> elements which would be children of the <gi>pg</gi> representing the page on which they fall, and would be linked to the element containing the unit of text with @corresp. 
+</p>
+<p>Alternatively these regions could be encoded multiply (parallel
+segmentation, using <gi>app</gi> and <gi>rdg</gi>), with each
+<gi>rdg</gi> having its own location. The coordinate space of each
+<gi>rdg</gi> would be relative to the <gi>pg</gi> corresponding to the
+<gi>pb</gi> which corresponds to the rdg (i.e. the preceding pb whose
+@ed matches that of the rdg).</p>
+
+<p>For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<pb n="1" xml:id="pb-A-1" ed="A"/>
+...
+<pb n="2" xml:id="pb-B-2" ed="B"/>
+...
+<app>
+	<rdg ed="A" left="100" top="100">foo</rdg>
+	<rdg ed="B" left="200" top="100">bar</rdg>
+</app>
+
+</egXML></p></div>
+<div><head>Sample schema</head>
+
+<p>The following specification generates a schema in which the
+changes outlined above have been made.</p>
+
+
+
+<schemaSpec ident="testfacs" xml:lang="en" >
+
+<elementSpec ident="pg" mode="add">
+<desc>Defines a page and associated graphical facsimiles</desc>
+<classes>
+<memberOf key="model.sourceDescPart"/>
+<memberOf key="att.global"/>
+</classes>
+<content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<rng:zeroOrMore>
+<rng:ref name="model.graphicLike"/>
+</rng:zeroOrMore>
+</content>
+<attList>
+<attDef ident="start" mode="add">
+<desc>Pointer to the pb element where the page starts.</desc>
+<datatype>
+<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+</datatype>
+</attDef>
+</attList>
+</elementSpec>
+
+<moduleRef key="core"/>
+<moduleRef key="textstructure"/>
+<moduleRef key="tei"/>
+<moduleRef key="header"/>
+
+<elementSpec ident="graphic" module="core" mode="change">
+<classes>
+<memberOf key="model.graphicLike"/>
+<memberOf key="model.titlepagePart"/>
+<memberOf key="att.typed"/>
+<memberOf key="att.projection"/>
+</classes>
+</elementSpec>
+
+<elementSpec ident="catDesc" module="header" mode="change">
+<classes>
+<memberOf key="att.naming"/>
+</classes>
+</elementSpec>
+
+<!-- Graphical projections -->
+<classSpec ident="att.projection" type="atts" mode="add">
+<attList>
+<attDef ident="rotation" mode="add">
+<desc>Specifies an angle in degrees to rotate the graphic in a clockwise direction</desc>
+<datatype>
+<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
+</datatype>
+<defaultVal>0</defaultVal>
+</attDef>
+<attDef ident="left" mode="add">
+<desc>Specifies the position of the left edge of an area within the image</desc>
+<datatype>
+<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+</datatype>
+<defaultVal>0</defaultVal>
+</attDef>
+
+<attDef ident="top" mode="add">
+<desc>Specifies the position of the top edge of an area within the image</desc>
+<datatype>
+<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+</datatype>
+<defaultVal>0</defaultVal>
+</attDef>
+<attDef ident="right" mode="add">
+<desc>Specifies the position of the right edge of an area within the image</desc>
+<datatype>
+<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+</datatype>
+</attDef>
+<attDef ident="bottom" mode="add">
+<desc>Specifies the position of the bottom edge of an area within the image</desc>
+<datatype>
+<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+</datatype>
+</attDef>
+<attDef ident="scale" mode="add">
+<desc>Specifies a scale factor to apply to the image</desc>
+<datatype>
+<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+</datatype>
+<defaultVal>1</defaultVal>
+</attDef>
+<attDef ident="xscale" mode="add">
+<desc>Specifies a scale factor to apply to the image in the horizontal dimension</desc>
+<datatype>
+<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+</datatype>
+<defaultVal>1</defaultVal>
+</attDef>
+<attDef ident="yscale" mode="add">
+<desc>Specifies a scale factor to apply to the image in the vertical dimension</desc>
+<datatype>
+<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+</datatype>
+<defaultVal>1</defaultVal>
+</attDef>
+</attList>
+</classSpec>
+
+<elementSpec ident="area" mode="add">
+<desc>Defines a rectangular area on a page. The corresp attribute contains the value of the xml:id attribute of any TEI element whose content corresponds to this area.</desc>
+<classes>
+<memberOf key="model.graphicLike"/>
+<memberOf key="att.projection"/>
+<memberOf key="att.global.linking"/>
+</classes>
+<content>
+<rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+</content>
+</elementSpec>
+
+<elementSpec ident="p" mode="change">
+<classes>
+<memberOf key="model.pLike"/>
+<memberOf key="model.divPart"/>
+<memberOf key="att.projection"/>
+</classes>
+</elementSpec>
+
+<elementSpec ident="seg" mode="change">
+<classes>
+<memberOf key="model.blockLike"/>
+<memberOf key="model.segLike"/>
+<memberOf key="att.segLike"/>
+<memberOf key="model.choicePart"/>
+<memberOf key="att.projection"/>
+</classes>
+</elementSpec>
+<elementSpec ident="ab" mode="change">
+<classes>
+<memberOf key="model.pLike"/>
+<memberOf key="model.divPart"/>
+<memberOf key="att.typed"/>
+<memberOf key="att.projection"/>
+</classes>
+</elementSpec>
+</schemaSpec>
+</div></body>
+</text>
+</TEI>

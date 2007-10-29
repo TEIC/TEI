@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="EXEMPLUM" usage="rwa" ident="exemplum">
+  <equiv/>
+  <gloss/>
+  <gloss version="2007-06-12" xml:lang="fr">exemple</gloss>
+  <desc>contains a single example demonstrating the use of an element,
+  together with optional paragraphs of commentary.</desc>
+  <desc version="2007-06-12" xml:lang="fr">contient un exemple qui montre l'utilisation d'un
+			élément, accompagné éventuellement de paragraphes de commentaires</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene un ejemplo demostrativo del uso de un elemento, junto a eventuales párrafos explicativos.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene un unico esempio che illustra l'utilizzo di un elemento insieme ad eventuali paragrafi di discussione</desc>
+  <desc version="2006-10-28" xml:lang="ja">段落を伴った散文形式の説明を含めて，当該要素の使用例を示す．</desc>
+  <classes>
+    <memberOf key="att.typed"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:zeroOrMore>
+      <rng:choice>
+        <rng:ref name="egXML"/>
+        <rng:ref name="eg"/>
+      </rng:choice>
+      <rng:zeroOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <exemplum>
+        <p>The <gi>name</gi> element can be used for both
+   personal names and place names:</p>
+        <eg>&lt;![CDATA[
+     &lt;q&gt;My dear &lt;name type="person"&gt;Mr. Bennet&lt;/name&gt;,&lt;/q&gt;
+     said his lady to him one day, &lt;q&gt;have you heard that
+     &lt;name type="place"&gt;Netherfield Park&lt;/name&gt; is let
+     at last?&lt;/q&gt;]]&gt;</eg>
+        <p>As shown above, the <att>type</att> attribute may be used
+   to distinguish the one from the other.</p>
+      </exemplum>
+    </egXML>
+    <!-- OK wise guy, so how *do* I get this example tagged legal? -->
+    <!-- Make the enclosing CDATA marked section RCDATA           -->
+    <!-- instead, and use &nil; inside the embedded msc (]]>) to  -->
+    <!-- keep the parser from recognizing the msc.  Nothing       -->
+    <!-- needs to be done about the embedded CDATA marked         -->
+    <!-- section opener, since it will be ignored within an       -->
+    <!-- RCDATA marked section. (msm)                             -->
+    <p>Note that an explicit end-tag must be supplied for the
+paragraph immediately preceding the <gi>eg</gi> element within an
+<gi>exemplum</gi>, to prevent the <gi>eg</gi> from being mistaken for
+part of the paragraph.</p>
+  </exemplum>
+  <listRef>
+    <ptr target="#TDTAG"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" xml:id="WRITING" usage="rec" ident="writing">
+  <gloss version="2006-10-28" xml:lang="ja">書き起こし</gloss>
+  <desc>a passage of written text revealed to participants in the
+  course of a spoken text.</desc>
+  <desc version="2007-06-12" xml:lang="fr">passage d'un texte écrit communiqué aux
+			participants à l'intérieur d'un texte parlé.</desc>
+  <desc version="2007-05-04" xml:lang="es">pasaje escrito hecho disponible para los participantes durante un texto dialogado.</desc>
+  <desc version="2007-01-21" xml:lang="it">testo scritto reso disponibile durante un testo parlato</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 発話されたテキストに関する
+  書き起こしを示す．</desc>
+  <classes>
+    <memberOf key="model.global.spoken"/>
+    <memberOf key="att.ascribed"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.timed"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+  </content>
+  <attList>
+    <attDef ident="source" usage="opt">
+      <equiv/>
+      <desc>points to a bibliographic citation in the header giving
+	a full description of the source or script of the
+	writing.</desc>
+      <desc version="2007-01-21" xml:lang="it">rimanda a un riferimento bibliografico contenuto nell'intestazione che fornisce una descrizione dettagliata della fonte del testo scritto</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該書き起こしで使われ
+	ている文字を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/>
+      </datatype>
+      <valDesc>Must be a valid identifier for a bibliographic element
+      in the TEI header</valDesc>
+    </attDef>
+    <attDef ident="gradual" usage="opt">
+      <equiv/>
+      <desc>indicates whether the writing is revealed all at once or
+	gradually.</desc>
+      <desc version="2007-06-12" xml:lang="fr">indique si l'écrit est communiqué en une
+					fois ou progressivement.</desc>
+      <desc version="2007-05-04" xml:lang="es">indica si el texto escrito aparece de repente o gradualmente.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica se il testo scritto appare in un'unica soluzione o gradualmente</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該書き起こしは，一度
+	に見られるものか，少しずつ見られるものかを示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
+      </datatype>
+      <remarks>
+        <p>The value <val>true</val> indicates the writing is
+	  revealed gradually; the value <val>false</val> that the
+	  writing is revealed all at once.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+  </exemplum>
+  <remarks>
+    <p>The <gi>writing</gi> element will usually be short
+    and most simply transcribed as a character string; the content
+    model also allows a sequence of paragraphs and paragraph-level
+    elements, in case the writing has enough internal structure to
+    warrant such markup.  In either case the usual phrase-level
+    tags for written text are available.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#TSBAWR"/>
+  </listRef>
+</elementSpec>

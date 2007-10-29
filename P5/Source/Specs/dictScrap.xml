@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" xml:id="DICSCRAP" usage="mwa" ident="dictScrap">
+  <equiv/>
+  <gloss>dictionary scrap</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">bloc d'informations</gloss>
+  <desc>encloses a part of a dictionary entry in which other phrase-level dictionary elements are
+        freely combined.</desc>
+  <desc version="2007-06-12" xml:lang="fr">contient la partie d'une entrée de dictionnaire
+			dans laquelle d'autres éléments de niveau "expression" sont librement associés.</desc>
+  <desc version="2007-05-04" xml:lang="es">engloba una parte de la entrada del diccionario en la que otros elementos de nivel sintagmático del diccionario se combinan de forma libre.</desc>
+  <desc version="2007-01-21" xml:lang="it">include una parte di una voce di dizionario in cui sono combinati liberamente altri elementi di dizionario a livello sintagmatico</desc>
+  <desc version="2006-10-28" xml:lang="ja">他の句レベルの辞書項目と結合する，辞書項目の一部を示す．</desc>
+  <classes>
+    <memberOf key="model.entryPart.top"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="model.entryPart"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="model.inter"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <entry>
+        <dictScrap><orth>biryani</orth> or <orth>biriani</orth>
+                    <pron>(%bIrI"A:nI)</pron>
+                    <def>any of a variety of Indian dishes ...</def>
+                    <etym>[from <lang>Urdu</lang>]</etym>
+                </dictScrap>
+      </entry>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain any dictionary elements in any combination.</p>
+    <p>This element is used to mark part of a dictionary entry in which lower level dictionary
+            elements appear, but which does not itself form an identifiable structural unit.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#DIBO"/>
+    <ptr target="#DIEN"/>
+  </listRef>
+</elementSpec>

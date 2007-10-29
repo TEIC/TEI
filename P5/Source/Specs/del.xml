@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="DEL" usage="opt" ident="del">
+  <equiv/>
+  <gloss>deletion</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">suppression</gloss>
+  <gloss version="2007-05-04" xml:lang="es">cancelación</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">刪除</gloss>
+  <gloss version="2007-01-21" xml:lang="it">cancellatura</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">削除</gloss>
+  <desc>contains a letter, word, or passage deleted, marked as deleted,
+or otherwise indicated as superfluous or spurious in the copy text by an
+author, scribe, annotator, or corrector.</desc>
+  <desc version="2007-06-12" xml:lang="fr">contient une lettre, un mot ou un passage
+                  supprimé, marqué comme supprimé ou autrement indiqué comme superflu ou erroné dans
+                  le texte par un auteur, un copiste, un annotateur ou un correcteur</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene una letra, palabra o pasaje cancelado, marcado como omitido o bien como supérfluo o espurio en el texto por el autor, transcriptor, glosador o corrector.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">標記在文本中被作者、抄寫者、註解者、或更正者刪除、標上刪除記號、或者是被標明為多餘或偽造的字母或單字。</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene un carattere, parola o brano cancellati, codificati come cancellati, o altrimenti indicati come superflui o spuri, nella copia originale da parte di un autore, copista, commentatore o correttore.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 削除された文字・語彙．または，複写物で，著作者・筆写者・注
+釈者・校正者によって削除されているもの示す．</desc>
+  <classes>
+    <memberOf key="model.pPart.transcriptional"/>
+    <!--    <memberOf key="att.editLike"/> -->
+    <memberOf key="att.transcriptional"/>
+    <memberOf key="att.typed"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <l><del rend="overtyped">Mein</del> Frisch
+<del rend="overstrike" type="primary">schwebt</del> weht der Wind</l>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>Cf. <gi>gap</gi>.</p>
+    <p>Degrees of uncertainty over what can
+still be read may be indicated by use of the
+<gi>certainty</gi> element (see <ptr target="#CE"/>).</p>
+    <p>This element  should be used for deletion of shorter
+sequences of text, typically single words or phrases.
+The <gi>delSpan</gi> element should be used for longer
+sequences of text, for those containing structural
+subdivisions, and for those containing overlapping
+additions and deletions.</p>
+    <p>The text deleted must be at least partially legible, in order for
+the encoder to be able to transcribe it.  If it is not legible at
+all, the <gi>del</gi> tag should not be used.  Rather, the
+<gi>gap</gi> tag should be employed to signal that text cannot be
+transcribed, with the value of the <att>reason</att> attribute giving
+the cause for the omission from the transcription as deletion.  If it
+is not fully legible, the <gi>unclear</gi> element (available when
+using the additional tagset for transcription of primary sources)
+should be used to signal the areas of text which cannot be read with
+confidence.  See further sections <ptr target="#PHOM"/> and, for the
+close association of the <gi>del</gi> tag with the <gi>gap</gi>,
+<gi>damage</gi>, <gi>unclear</gi> and <gi>supplied</gi> elements (the
+latter three tags available when using the additional tagset for
+transcription of primary sources), <ptr target="#PHCOMB"/>.</p>
+    <p>The <gi>del</gi> tag should not be used for deletions made by
+editors or encoders.  In these cases, either the <gi>corr</gi> tag or
+the <gi>gap</gi> tag should be used.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#COEDADD" type="div3"/>
+  </listRef>
+</elementSpec>

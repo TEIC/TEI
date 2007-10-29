@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="PTR" usage="opt" ident="ptr">
+  <gloss>pointer</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">pointeur</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">指標</gloss>
+  <desc>defines a pointer to another location.</desc>
+  <desc version="2007-06-12" xml:lang="fr">définit un pointeur vers un autre emplacement</desc>
+  <desc version="2007-05-04" xml:lang="es">define un señalizador a otra localización.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">標明與其他位置相連結的指標。</desc>
+  <desc version="2007-01-21" xml:lang="it">definisce un puntatore ad un'altra posizione.</desc>
+  <desc version="2006-10-28" xml:lang="ja">他の場所を示すポインター．</desc>
+  <classes>
+    <memberOf key="model.ptrLike"/>
+    <memberOf key="att.pointing"/>
+    <memberOf key="att.declaring"/>
+  </classes>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList org="choice">
+    <attDef ident="target" usage="req">
+      <equiv/>
+      <desc>specifies the destination of the pointer by supplying one or
+      more URI References</desc>
+      <desc version="2007-06-12" xml:lang="fr">précise la cible du pointeur en
+                              fournissant une ou plusieurs références URI</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica la destinación del señalizador proporcionando una o más referencias URI.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">用一個或多個URI參照來說明指標所指位置。</desc>
+      <desc version="2007-01-21" xml:lang="it">specifica la destinazione del puntatore fornendo uno o più  URI</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該ポインターが示す場所を,1つ以上のURLで示す．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>One or more syntactically valid URI references,
+      separated by white space. Because whitespace is used to separate
+      URIs, no whitespace is permitted inside a single URI. If a
+      whitespace character is required in a URI, it should be escaped
+      with the normal mechanism, e.g.
+      <code>TEI%20Consortium</code>.</valDesc>
+    </attDef>
+    <attDef ident="cRef" usage="opt">
+      <gloss>canonical reference</gloss>
+      <desc>specifies the destination of the pointer by supplying a
+      canonical reference from a scheme defined in a <gi>refsDecl</gi>
+      element in the TEI header</desc>
+      <desc version="2007-06-12" xml:lang="fr">précise la cible du pointeur en
+                              fournissant une référence canonique issue d'un modèle défini par un
+                              élément <gi>refsDecl</gi>dans l'En-tête TEI</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica la destinación de un señalizador proporcionando una referencia canónica de un esquema definido en un elemento <gi>refsDecl</gi> en el encabezado TEI. </desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">用元素<gi>參照宣告</gi>在TEI標頭內所定義的權威參照來說明指標所指位置。</desc>
+      <desc version="2007-01-21" xml:lang="it">specifica la destinazione di un puntatore usando un riferimento canonico a partire da uno schema definito in un elemento <gi>refsDecl</gi> nell'intestazione TEI</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該ポインターが示す場所を，当該プロジェクトで使用されている参照
+方法で示す．この参照方法は，TEIヘダーにあるrefsDecl要素で定義されて
+いる．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+      <valDesc>the result of applying the algorithm for the resolution
+      of canonical references (described in section <ptr target="#SACR"/>) should be a valid URI reference to the
+      intended target</valDesc>
+      <remarks>
+        <p>The <gi>refsDecl</gi> to use may be indicated with the
+	<att>decls</att> attribute.</p>
+        <p>Currently these Guidelines only provide for a single
+	canonical reference to be encoded on any given <gi>ptr</gi>
+	element.</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <ptr target="#p143 #p144"/>
+      <ptr target="http://www.tei-c.org"/>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>The <att>target</att> and <att>cRef</att> attributes are
+    mutually exclusive.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#COXR"/>
+    <ptr target="#SAPT"/>
+  </listRef>
+</elementSpec>

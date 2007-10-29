@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# exit if this is not P5 source
+if [ -f Source/Specs/TEI.xml ]
+then
+ echo merge language script
+else
+ echo This is not P5 source. Exit
+ exit 1
+fi
+overwrite=false
+while test $# -gt 0; do
+  case $1 in
+    --overwrite)  overwrite=true;;
+    --lang=*)  language=`echo $1 | sed 's/.*=//'`;;
+     *) if test "$1" = "${1#--}" ; then 
+	   break
+	else
+	   echo "WARNING: Unrecognized option '$1' ignored"
+	   echo "For usage syntax issue $0 --help"
+	fi ;;
+  esac
+  shift
+done
+
+X=`(cd ../I18N/results-$language; pwd)`
+for i in $X/*.xml
+do
+ for N in `xsltproc Utilities/getident.xsl $i`
+ do
+ if [ -f Source/Specs/$N.xml ]
+ then
+    xsltproc --stringparam overwrite $overwrite \
+	--stringparam newLang $language --stringparam newFile $i \
+    Utilities/mergeLang.xsl Source/Specs/$N.xml \
+	| xmllint --format --encode utf-8 - > tmp
+    mv tmp Source/Specs/$N.xml
+ else
+   echo WARNING: no file Source/Specs/$N.xml 
+ fi
+ done
+done

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" xml:id="FSTAG" usage="rwa" ident="fs">
+  <gloss>feature structure</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">structure de traits</gloss>
+  <gloss version="2007-05-04" xml:lang="es">Estructura de rasgo</gloss>
+  <gloss version="2007-01-21" xml:lang="it">struttura dei tratti</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">素性構造</gloss>
+  <desc>represents a <term>feature structure</term>, that is, a
+  collection of feature-value pairs organized as a
+structural unit.</desc>
+  <desc version="2007-06-12" xml:lang="fr">représente une <term>structure de traits</term>,
+      c'est-à-dire un ensemble de paires trait-valeur organisé comme une unité structurelle.</desc>
+  <desc version="2007-05-04" xml:lang="es">representa una <term>feature structure (estructura de rasgos)</term>, es decir, un conjunto de pares de valores de rasgos organizados como una unidad estructural.</desc>
+  <desc version="2007-01-21" xml:lang="it">rappresenta una <term>feature structure</term>, cioè una raccolta di coppie di valori tratti organizzata come una unità strutturale.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 素性構造を示す．</desc>
+  <classes>
+    <memberOf key="model.featureVal.complex"/>
+    <memberOf key="model.global.meta"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="f"/>
+    </rng:zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="type" usage="rwa">
+      <equiv/>
+      <desc>specifies the type of the feature structure.</desc>
+      <desc version="2007-06-12" xml:lang="fr">spécifie le type de la structure de traits.</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica el tipo de estructura de rasgo.</desc>
+      <desc version="2007-01-21" xml:lang="it">specifica il tipo di struttura dei tratti</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該素性構造の種類を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valDesc>Character string, e.g. <term>word structure</term>.</valDesc>
+    </attDef>
+    <attDef ident="feats" usage="opt">
+      <gloss>features</gloss>
+      <desc>references the feature-value specifications making up this feature structure.</desc>
+      <desc version="2007-06-12" xml:lang="fr">référence les spécifications trait-valeur qui
+          caractérisent cette structure de traits</desc>
+      <desc version="2007-05-04" xml:lang="es">indica las especificaciones de valor de rasgo que constituyen esta estructura de
+rasgo.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica le specifiche del valore dei tratti che formano questa struttura.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該素性構造を構成する素性値定義を示す．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>one or more identifiers of <gi>f</gi> elements.</valDesc>
+      <remarks>
+        <p>May be used either instead of having features as content, or in
+  addition. In the latter case, the features referenced and contained
+  are unified. </p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <fs type="agreement_structure">
+        <f name="person">
+          <symbol value="third"/>
+        </f>
+        <f name="number">
+          <symbol value="singular"/>
+        </f>
+      </fs>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#FSBI" type="div3"/>
+  </listRef>
+</elementSpec>

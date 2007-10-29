@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en" xmlns="http://www.tei-c.org/ns/1.0"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0">
+ <teiHeader>
+  <fileDesc>
+   <titleStmt>
+    <title type="main">The TEI Tite</title>
+    <title type="sub">A standard for off-site text encoding</title>
+    <author>Perry Trolard</author>
+   </titleStmt>
+   <publicationStmt>
+    <p>Written as the principal product of an independent study under <name>John
+      Unsworth</name> at the <name>Graduate School of Library and Information
+      Science</name>, <name>University of Illinois at Urbana-Champaign</name>,
+      <date>Spring 2006</date>.</p>
+   </publicationStmt>
+   <sourceDesc>
+    <p>This electronic document is the original, but it primarily synthesizes
+     work done at the <list>
+      <item><name>University of Michigan Digital Library Production
+       Service</name>, </item>
+      <item><name>University of Virginia Digital Library Production
+       Service</name>, </item>
+      <item>and the <name>California Digital Library</name></item>
+     </list> and represented in their documents <list>
+      <item><ref target="http://www.umdl.umich.edu/docs/encodingstandards.html">
+        <title>Minimum standards for text capture</title>
+       </ref>, </item>
+      <item><ref
+        target="http://pogo.lib.virginia.edu/dlps/public/text/vendor/vendor.html">
+        <title>Text Encoding Guidelines for Keyboarding Vendors</title>
+       </ref>, </item>
+      <item> and <ref
+        target="http://www.cdlib.org/inside/diglib/stwg/base/BASE_BPG.html">
+        <title>CDL TEI Base Encoding Guidelines</title>
+       </ref>. </item>
+     </list>, respectively. </p>
+   </sourceDesc>
+  </fileDesc>
+  <revisionDesc>
+   <change when="2007-01-23" who="PJT">Modified available attributes for
+    <gi>gap</gi>, <gi>unclear</gi>; added <att>ed</att> attribute to
+    <gi>cols</gi>.</change>
+   <change when="2007-01-20" who="PJT">Misc. prose edits; cleaned up unnecessary
+     <gi>elementSpec</gi> elements.</change>
+   <change when="2006-12-21" who="PJT">Added <gi>text</gi> as alternate root (on
+     <att>start</att> attribute of <gi>schemaSpec</gi>), making teitite-nohead
+    redundant; added <gi>div0</gi> to list of elements Tite excludes (it's
+    always been exluded, but now is reported).</change>
+   <change when="2006-12-16" who="PJT">Finished initial draft.</change>
+  </revisionDesc>
+ </teiHeader>
+ <text>
+  <body>
+    <p>Here is the TEI Tite schema itself:</p>
+
+    <schemaSpec docLang="en" ident="testtite" start="TEI text" targetLang="en">
+     <moduleRef key="tei"/>
+     <moduleRef key="core"/>
+     <moduleRef key="header"/>
+     <moduleRef key="textstructure"/>
+     <moduleRef key="figures"/>
+     <moduleRef key="linking"/>
+
+     <!-- deletions in common with Lite -->
+     <elementSpec ident="altGrp" mode="delete" module="linking"/>
+     <elementSpec ident="alt" mode="delete" module="linking"/>
+     <elementSpec ident="analytic" mode="delete" module="core"/>
+     <elementSpec ident="biblItem" mode="delete" module="core"/>
+     <elementSpec ident="biblStruct" mode="delete" module="core"/>
+     <elementSpec ident="binaryObject" mode="delete" module="core"/>
+     <elementSpec ident="broadcast" mode="delete" module="header"/>
+     <elementSpec ident="correction" mode="delete" module="header"/>
+     <elementSpec ident="distinct" mode="delete" module="core"/>
+     <elementSpec ident="div0" mode="delete" module="textstructure"/>
+     <elementSpec ident="equipment" mode="delete" module="header"/>
+     <elementSpec ident="equiv" mode="delete" module="core"/>
+     <elementSpec ident="fsdDecl" mode="delete" module="header"/>
+     <elementSpec ident="headItem" mode="delete" module="core"/>
+     <elementSpec ident="headLabel" mode="delete" module="core"/>
+     <elementSpec ident="hyphenation" mode="delete" module="header"/>
+     <elementSpec ident="imprimatur" mode="delete" module="textstructure"/>
+     <elementSpec ident="interpretation" mode="delete" module="header"/>
+     <elementSpec ident="joinGrp" mode="delete" module="linking"/>
+     <elementSpec ident="join" mode="delete" module="linking"/>
+     <elementSpec ident="linkGrp" mode="delete" module="linking"/>
+     <elementSpec ident="link" mode="delete" module="linking"/>
+     <elementSpec ident="measure" mode="delete" module="core"/>
+     <elementSpec ident="meeting" mode="delete" module="core"/>
+     <elementSpec ident="metDecl" mode="delete" module="header"/>
+     <elementSpec ident="metSym" mode="delete" module="header"/>
+     <elementSpec ident="m" mode="delete" module="analysis"/>
+     <elementSpec ident="monogr" mode="delete" module="core"/>
+     <elementSpec ident="normalization" mode="delete" module="header"/>
+     <elementSpec ident="phr" mode="delete" module="analysis"/>
+     <elementSpec ident="postBox" mode="delete" module="core"/>
+     <elementSpec ident="postCode" mode="delete" module="core"/>
+     <elementSpec ident="quotation" mode="delete" module="header"/>
+     <elementSpec ident="quote" mode="delete" module="core"/>
+     <elementSpec ident="recording" mode="delete" module="header"/>
+     <elementSpec ident="recordingStmt" mode="delete" module="header"/>
+     <elementSpec ident="schemaSpec" mode="delete" module="tagdocs"/>
+     <elementSpec ident="scriptStmt" mode="delete" module="header"/>
+     <elementSpec ident="segmentation" mode="delete" module="header"/>
+     <elementSpec ident="series" mode="delete" module="core"/>
+     <elementSpec ident="state" mode="delete" module="header"/>
+     <elementSpec ident="stdVals" mode="delete" module="header"/>
+     <elementSpec ident="street" mode="delete" module="core"/>
+     <elementSpec ident="tagsDecl" mode="delete" module="header"/>
+     <elementSpec ident="timeline" mode="delete" module="linking"/>
+     <elementSpec ident="variantEncoding" mode="delete" module="header"/>
+     <elementSpec ident="when" mode="delete" module="linking"/>
+
+     <!-- Tite additions -->
+     <elementSpec ident="b" mode="add" ns="http://www.tei-c.org/ns/tite/1.0">
+       <equiv filter="tite.xsl" mimeType="text/xsl" name="b"/>
+       <desc>(bold) for capturing typographical feature: bold glyphs.</desc>
+      <classes>
+       <memberOf key="model.hiLike"/>
+      </classes>
+      <content>
+       <rng:ref name="macro.paraContent"/>
+      </content>
+     </elementSpec>
+     <elementSpec ident="i" mode="add" ns="http://www.tei-c.org/ns/tite/1.0">
+       <equiv filter="tite.xsl" mimeType="text/xsl" name="i"/>
+      <desc>(italics) for capturing typographical feature: italicized glyphs.
+      </desc>
+      <classes>
+       <memberOf key="model.hiLike"/>
+      </classes>
+      <content>
+       <rng:ref name="macro.paraContent"/>
+      </content>
+     </elementSpec>
+     <elementSpec ident="ul" mode="add" ns="http://www.tei-c.org/ns/tite/1.0">
+       <equiv filter="tite.xsl" mimeType="text/xsl" name="ul"/>
+      <desc>(underline) for capturing typographical feature: underlined glyphs.
+      </desc>
+      <classes>
+       <memberOf key="model.hiLike"/>
+      </classes>
+      <content>
+       <rng:ref name="macro.paraContent"/>
+      </content>
+     </elementSpec>
+     <elementSpec ident="sub" mode="add" ns="http://www.tei-c.org/ns/tite/1.0">
+       <equiv filter="tite.xsl" mimeType="text/xsl" name="sub"/>
+      <desc>(subscript) for capturing typographical feature: subscript glyphs.
+      </desc>
+      <classes>
+       <memberOf key="model.hiLike"/>
+      </classes>
+      <content>
+       <rng:ref name="macro.paraContent"/>
+      </content>
+     </elementSpec>
+     <elementSpec ident="sup" mode="add" ns="http://www.tei-c.org/ns/tite/1.0">
+       <equiv filter="tite.xsl" mimeType="text/xsl" name="sup"/>
+      <desc>(superscript) for capturing typographical feature: superscript
+       glyphs. </desc>
+      <classes>
+       <memberOf key="model.hiLike"/>
+      </classes>
+      <content>
+       <rng:ref name="macro.paraContent"/>
+      </content>
+     </elementSpec>
+     <elementSpec ident="smcap" mode="add" ns="http://www.tei-c.org/ns/tite/1.0">
+       <equiv filter="tite.xsl" mimeType="text/xsl" name="smcap"/>
+      <desc>(smallcaps) for capturing typographical feature: glyphs in small
+       capitals.</desc>
+      <classes>
+       <memberOf key="model.hiLike"/>
+      </classes>
+      <content>
+       <rng:ref name="macro.paraContent"/>
+      </content>
+     </elementSpec>
+     <elementSpec ident="cols" mode="add" ns="http://www.tei-c.org/ns/tite/1.0">
+      <desc>(columns) with the "n" attribute (denoting new number of columns) is
+       used to mark where a document changes columnar layout.</desc>
+      <classes>
+       <memberOf key="model.milestoneLike"/>
+      </classes>
+      <content>
+       <rng:empty/>
+      </content>
+      <attList>
+       <attDef ident="ed" mode="add" ns="http://www.tei-c.org/ns/tite/1.0">
+        <desc>indicates the edition or version in which the change in columnar
+         layout is located at this point</desc>
+        <datatype>
+         <rng:ref name="data.code"/>
+        </datatype>
+        <!--<default value=""/>
+  <valList type="open"/>-->
+       </attDef>
+      </attList>
+     </elementSpec>
+     <elementSpec ident="ornament" mode="add" ns="http://www.tei-c.org/ns/tite/1.0">
+      <desc>for capturing typographical feature: printer's ornament, horizontal
+       line, strings of asterisks or periods, etc, indicating an informal
+       division that does not call for a new &lt;div&gt; element. If a
+       horizontal rule or printer's ornament, use appropriate "type" attribute
+       and leave the element empy; if the ornament can be represented with
+       characters, set "type" value to "characters" and include these in the
+       element.</desc>
+      <classes>
+       <!-- 
+  ornament appears where figure can appear
+  -->
+       <memberOf key="model.inter"/>
+       <memberOf key="model.titlepagePart"/>
+<!--       <memberOf key="model.common"/>-->
+       <memberOf key="att.typed"/>
+      </classes>
+      <content>
+       <rng:text/>
+      </content>
+     </elementSpec>
+
+     <!-- Tite deletions -->
+     <elementSpec ident="add" mode="delete" module="core"/>
+     <elementSpec ident="altIdent" mode="delete" module="core"/>
+     <elementSpec ident="biblFull" mode="delete" module="core"/>
+     <elementSpec ident="choice" mode="delete" module="core"/>
+     <elementSpec ident="corr" mode="delete" module="core"/>
+     <elementSpec ident="del" mode="delete" module="core"/>
+     <elementSpec ident="divGen" mode="delete" module="core"/>
+     <elementSpec ident="emph" mode="delete" module="core"/>
+     <elementSpec ident="expan" mode="delete" module="core"/>
+     <elementSpec ident="gloss" mode="delete" module="core"/>
+     <elementSpec ident="imprint" mode="delete" module="core"/>
+     <elementSpec ident="index" mode="delete" module="core"/>
+     <elementSpec ident="mentioned" mode="delete" module="core"/>
+     <elementSpec ident="orig" mode="delete" module="core"/>
+     <elementSpec ident="reg" mode="delete" module="core"/>
+     <elementSpec ident="rs" mode="delete" module="core"/>
+     <elementSpec ident="sic" mode="delete" module="core"/>
+     <elementSpec ident="soCalled" mode="delete" module="core"/>
+     <elementSpec ident="teiCorpus" mode="delete" module="core"/>
+     <elementSpec ident="term" mode="delete" module="core"/>
+     <elementSpec ident="div" mode="delete" module="textstructure"/>
+     <elementSpec ident="anchor" mode="delete" module="linking"/>
+     <elementSpec ident="figDesc" mode="delete" module="figures"/>
+
+     <!-- Tite attribute modifications -->
+     <!-- classes -->
+     <classSpec ident="att.authorialIntervention" mode="change" module="tei"
+      type="atts">
+      <attList>
+	<!-- junk some of the lesser-used attributes -->
+       <attDef ident="hand" mode="delete"/>
+       <attDef ident="status" mode="delete"/>
+       <attDef ident="type" mode="delete"/>
+      </attList>
+     </classSpec>
+     <classSpec ident="att.declarable" mode="change" module="tei" type="atts">
+      <attList>
+       <attDef ident="default" mode="delete"/>
+      </attList>
+     </classSpec>
+     <classSpec ident="att.divLike" mode="change" module="tei" type="atts">
+      <attList>
+       <attDef ident="org" mode="delete"/>
+       <attDef ident="sample" mode="delete"/>
+       <attDef ident="part" mode="delete"/>
+      </attList>
+     </classSpec>
+     <classSpec ident="att.editLike" mode="change" module="tei" type="atts">
+      <attList>
+       <attDef ident="cert" mode="delete"/>
+       <attDef ident="resp" mode="delete"/>
+       <attDef ident="evidence" mode="delete"/>
+      </attList>
+     </classSpec>
+     <classSpec ident="att.global.linking" mode="change" module="linking"
+      type="atts">
+      <attList>
+       <attDef ident="corresp" mode="delete"/>
+       <attDef ident="synch" mode="delete"/>
+       <attDef ident="sameAs" mode="delete"/>
+       <attDef ident="copyOf" mode="delete"/>
+       <attDef ident="next" mode="delete"/>
+       <attDef ident="prev" mode="delete"/>
+       <attDef ident="exclude" mode="delete"/>
+       <attDef ident="select" mode="delete"/>
+      </attList>
+     </classSpec>
+     <classSpec ident="att.segLike" mode="change" module="tei" type="atts">
+      <attList>
+       <attDef ident="type" mode="delete"/>
+       <attDef ident="function" mode="delete"/>
+       <attDef ident="part" mode="delete"/>
+      </attList>
+     </classSpec>
+     <classSpec ident="att.typed" mode="change" module="tei" type="atts">
+      <attList>
+       <attDef ident="subtype" mode="delete"/>
+      </attList>
+     </classSpec>
+     <!-- elements -->
+     <elementSpec ident="gap" mode="change" module="core">
+      <attList>
+       <attDef ident="hand" mode="delete"/>
+       <attDef ident="agent" mode="delete"/>
+       <attDef ident="extent" mode="delete"/>
+       <attDef ident="cert" mode="delete"/>
+       <attDef ident="resp" mode="delete"/>
+       <attDef ident="evidence" mode="delete"/>
+      </attList>
+     </elementSpec>
+     <elementSpec ident="unclear" mode="change" module="core">
+      <attList>
+       <attDef ident="hand" mode="delete"/>
+       <attDef ident="agent" mode="delete"/>
+       <attDef ident="cert" mode="delete"/>
+       <attDef ident="resp" mode="delete"/>
+       <attDef ident="evidence" mode="delete"/>
+      </attList>
+     </elementSpec>
+    </schemaSpec>
+  </body>
+ </text>
+</TEI>

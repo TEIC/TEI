@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" xml:id="REVDESC" usage="rec" ident="revisionDesc">
+  <gloss>revision description</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">Description des révisions</gloss>
+  <gloss version="2006-10-18" xml:lang="de">Beschreibung der Textrevision</gloss>
+  <gloss version="2007-05-04" xml:lang="es">descripción de la revisión</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">修訂描述</gloss>
+  <gloss version="2007-01-21" xml:lang="it">descirzione della revisione</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">改訂情報</gloss>
+  <desc>summarizes the revision history for a file.</desc>
+  <desc version="2007-06-12" xml:lang="fr">fournit un résumé de l’historique des révisions d’un
+      fichier.</desc>
+  <desc version="2006-10-18" xml:lang="de">enthällt alle
+  Revisionsschritte, die an der Datei vorgenommen wurden.</desc>
+  <desc version="2007-05-04" xml:lang="es">resume el historial de la revisión de un archivo.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">概述檔案的修訂歷史。</desc>
+  <desc version="2007-01-21" xml:lang="it">sintetizza la storia delle revisioni di un file</desc>
+  <desc version="2006-10-28" xml:lang="ja"> データファイルの改訂歴を示す．</desc>
+  <!--  <classes>
+    <memberOf key="model.headerPart"/>
+  </classes>-->
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="list"/>
+      <rng:oneOrMore>
+        <rng:ref name="change"/>
+      </rng:oneOrMore>
+    </rng:choice>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <revisionDesc>
+        <change when="1991-11-11">
+            EMB deleted chapter 10
+        </change>
+      </revisionDesc>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>Record changes with most recent changes at the top of the
+list.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#HD6"/>
+    <ptr target="#HD11"/>
+  </listRef>
+</elementSpec>

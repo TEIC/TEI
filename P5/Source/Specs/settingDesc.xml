@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" xml:id="SETTDESC" usage="opt" ident="settingDesc">
+  <equiv/>
+  <gloss>setting description</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">description du contexte</gloss>
+  <gloss version="2007-05-04" xml:lang="es">descripción de realización</gloss>
+  <gloss version="2007-01-21" xml:lang="it">descrizione dello scenario</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">状況記述</gloss>
+  <desc>describes the setting or settings within which a language
+interaction takes place, either as a prose description or as a
+series of setting elements.</desc>
+  <desc version="2007-06-12" xml:lang="fr">décrit le(s) contexte(s) dans lesquels se situe une
+      interaction linguistique, soit sous forme de description en prose, soit comme une série
+      d'éléments de contexte. </desc>
+  <desc version="2007-05-04" xml:lang="es">describe en prosa, o mediante una serie de elementos de realización, la realización o realizaciones dentro de las cuales una interacción lingüística tiene lugar.</desc>
+  <desc version="2007-01-21" xml:lang="it">descrive lo scenario o gli scenari nei quali si svolge l'interazione linuistica, sia in forma di prosa descrittiva sia con elementi di scenario.</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 言語交流が行われた状況の情報をまとめる．</desc>
+  <classes>
+    <memberOf key="model.profileDescPart"/>
+    <memberOf key="att.declarable"/>
+  </classes>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:oneOrMore>
+        <rng:ref name="setting"/>
+      </rng:oneOrMore>
+    </rng:choice>
+  </content>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <settingDesc>
+        <p>Texts recorded in the Canadian Parliament building
+  in Ottawa, between April and November 1988
+  </p>
+      </settingDesc>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain a prose description organized as paragraphs, or
+a series of <gi>setting</gi> elements.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CCAH"/>
+    <ptr target="#HD4"/>
+  </listRef>
+</elementSpec>

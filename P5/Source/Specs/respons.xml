@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="certainty" xml:id="RESPONS" usage="opt" ident="respons">
+  <equiv/>
+  <gloss>responsibility</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">Responsabilité</gloss>
+  <gloss version="2007-05-04" xml:lang="es">responsabilidad</gloss>
+  <gloss version="2007-01-21" xml:lang="it">responsabilità</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">責任者</gloss>
+  <desc>identifies the individual(s) responsible for some aspect of the
+markup of particular element(s).</desc>
+  <desc version="2007-06-12" xml:lang="fr">identifie le ou les personne(s) responsable(s) d'un
+      aspect du balisage d'un ou de plusieurs éléments particuliers. </desc>
+  <desc version="2007-05-04" xml:lang="es">Identifica la responsabilidad individual/es de algún aspecto del marcaje de un elemento/s particular.</desc>
+  <desc version="2007-01-21" xml:lang="it">indica i soggetti responsabili della codifica di determinati elementi</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 当該要素によるマークアップを決めた責任者を示す．</desc>
+  <classes>
+    <memberOf key="model.global.meta"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore>
+      <rng:ref name="model.glossLike"/>
+    </rng:zeroOrMore>
+    <!--    <rng:ref name="macro.glossSeq"/>-->
+  </content>
+  <attList>
+    <attDef ident="target" usage="req">
+      <equiv/>
+      <desc>gives the identifier(s) of the element(s) for which some
+aspect of the responsibility is being
+assigned.</desc>
+      <desc version="2007-06-12" xml:lang="fr">donne le(s) identifiant(s) du ou des éléments sur
+          le(s)quel(s) porte un aspect de la responsabilité.</desc>
+      <desc version="2007-05-04" xml:lang="es">proporciona el identificador/es del elemeto/s por el cual un aspecto de la responsabilidad está siendo asignado.</desc>
+      <desc version="2007-01-21" xml:lang="it">fornisce l'identificatore dell'elemento a cui è attribuita una certa responsabilità</desc>
+      <desc version="2006-10-28" xml:lang="ja">責任対象となる要素の識別子を示す．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref name="data.pointer"/>
+      </datatype>
+      <valDesc>one or more valid
+identifiers, separated by white space.</valDesc>
+      <remarks>
+        <p/>
+      </remarks>
+    </attDef>
+    <attDef ident="locus" usage="req">
+      <equiv/>
+      <desc>indicates the specific aspect of the markup for which
+responsibility is being assigned.</desc>
+      <desc version="2007-06-12" xml:lang="fr">Indique l'aspect spécifique du balisage sur
+          lequel porte la responsabilité</desc>
+      <desc version="2007-05-04" xml:lang="es">indica el aspecto específico del marcaje por el cual la responsabilidad está siendo asignada</desc>
+      <desc version="2007-01-21" xml:lang="it">indica l'aspetto specifico della codifica per il qaule è attribuita la responsabilità</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該責任が要素の何についてのことかを示す．</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <rng:ref name="data.enumerated"/>
+      </datatype>
+      <valList type="semi">
+        <valItem ident="gi">
+          <gloss>element name</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">Responsabilité de l'assertion selon laquelle
+              l'information encodée est du type indiqué par le balisage</gloss>
+          <gloss version="2007-05-04" xml:lang="es">responsabilidad por la necesidad que un elemento sea del tipo indicado por el marcaje</gloss>
+          <desc>responsibility for the claim that the element is of the
+type indicated by the markup</desc>
+          <desc version="2007-01-21" xml:lang="it">responsabilità per l'affermazione che un elemento sia del tipo indicato dalla codifica</desc>
+        </valItem>
+        <valItem ident="location">
+          <equiv/>
+          <desc>responsibility for the claim that the element
+begins and ends where indicated</desc>
+          <desc version="2007-01-21" xml:lang="it">responsabilità per l'affermazione che un elemento inizi e finisca dove indicato</desc>
+        </valItem>
+        <valItem ident="startLoc">
+          <gloss>start location</gloss>
+          <desc>responsibility for the claim that the element begins
+          where indicated</desc>
+        </valItem>
+        <valItem ident="endLoc">
+          <gloss>end location</gloss>
+          <desc>responsibility for the claim that the element ends
+          where indicated</desc>
+        </valItem>
+        <valItem ident="attrName">
+          <gloss>attribute name</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">Responsabilité de l'assertion selon laquelle
+              le nom de l'attribut utilisé correspond bien à l'information que l'on veut
+            donner</gloss>
+          <gloss version="2007-05-04" xml:lang="es">responsabilidad por la necesidad que el nombre del atributo tenga el valor dado en el marcaje.</gloss>
+          <desc>responsibility for the claim that the
+name attribute has the value given in the markup</desc>
+        </valItem>
+        <valItem ident="transcribedContent">
+          <equiv/>
+          <desc>responsibility for the transcription of
+the element content</desc>
+          <desc version="2007-01-21" xml:lang="it">responsabilità per la trascrizione del contenuto dell'elemento</desc>
+        </valItem>
+        <valItem ident="suppliedContent">
+          <equiv/>
+          <desc>responsibility for the contents supplied by
+the encoder (corrections, expansions of abbreviations, etc.)</desc>
+          <desc version="2007-01-21" xml:lang="it">responsabilità per i contenuti inseriti dal codificatore (correzioni, espansione di abbreviazioni, ecc.)</desc>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="resp" usage="req">
+      <gloss>responsible party</gloss>
+      <desc>identifies the individual or agency responsible for the indicated
+aspect of the electronic text.</desc>
+      <desc version="2007-06-12" xml:lang="fr">Identifie la personne ou l'organisme responsable
+          de l'aspect en question dans le document TEI</desc>
+      <desc version="2007-05-04" xml:lang="es">indentifica el individuo o grupo responsable del aspecto indicado en un texto electrónico.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica il soggetto responsabile dell'aspetto del test elettronico</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該責任を持つ個人または団体を示す．</desc>
+      <datatype>
+        <rng:ref name="data.pointer"/>
+      </datatype>
+      <valDesc>a pointer to one of the identifiers declared in the
+      document header, associated with a person asserted as
+      responsible for some aspect of the text's creation,
+      transcription, editing, or encoding</valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <respons target="#p1" locus="gi location" resp="#encoder1"/>
+      <respons target="#p2" locus="rend" resp="#encoder2"/>
+      <list type="encoders">
+        <item xml:id="encoder1"/>
+        <item xml:id="encoder2"/>
+      </list>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>The <gi>respons</gi> element is designed for cases in which
+fine-grained information about specific aspects of the markup of a text
+is desirable for whatever reason.  Global responsibility for certain
+aspects of markup is usually more simply indicated in the TEI header,
+using the <gi>respStmt</gi> element within the title statement, edition
+statement, or change log.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CERESP"/>
+  </listRef>
+</elementSpec>

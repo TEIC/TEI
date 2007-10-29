@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en">
+<teiHeader>
+<fileDesc>
+<titleStmt>
+<title>Related Item Test</title>
+<author>John A. Walsh</author>
+</titleStmt>
+<publicationStmt>
+<p>for use by whoever wants it</p>
+</publicationStmt>
+<sourceDesc>
+<p>This document is the original source; created on 23 November 2006.</p>
+</sourceDesc>
+</fileDesc>
+</teiHeader>
+<text>
+<body>
+<divGen type="toc"/>
+<schemaSpec ident="relatedItem" start="TEI" xml:lang="en">
+<moduleRef key="core"/>
+<moduleRef key="tei"/>
+<moduleRef key="header"/>
+<moduleRef key="textstructure"/>
+<moduleRef key="namesdates"/>
+
+<elementSpec ident="relatedItem" mode="add">
+
+<desc>contains or references some other bibliographic item which is
+related to the present one in some specified manner, for example as a
+constituent or alternative version of it.</desc>
+<classes>
+  <memberOf key="model.biblPart"/>
+  <memberOf key="att.typed"/>
+</classes>
+<content>
+  <rng:choice>
+    <rng:ref name="bibl"/>
+    <rng:ref name="biblStruct"/>
+    <rng:ref name="ref"/>
+  </rng:choice>
+</content>
+</elementSpec>
+
+<elementSpec ident="biblStruct" module="core" mode="change">
+<content>
+<rng:group>
+<rng:zeroOrMore>
+<rng:ref name="analytic"/>
+</rng:zeroOrMore>
+<rng:oneOrMore>
+<rng:ref name="monogr"/>
+<rng:zeroOrMore>
+<rng:ref name="series"/>
+</rng:zeroOrMore>
+</rng:oneOrMore>
+<rng:zeroOrMore>
+<rng:choice>
+<rng:ref name="model.noteLike"/>
+<rng:ref name="idno"/>
+</rng:choice>
+</rng:zeroOrMore>
+<rng:zeroOrMore>
+<rng:ref name="relatedItem"/>
+</rng:zeroOrMore>
+</rng:group>
+</content>
+</elementSpec>
+
+</schemaSpec>
+</body>
+</text>
+</TEI>

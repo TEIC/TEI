@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="GLOBAL" type="atts" ident="att.global">
+  <desc>provides attributes common to all elements in the TEI
+  encoding scheme.</desc>
+  <desc version="2007-06-12" xml:lang="fr">fournit un jeu d'attributs communs à tous les
+      éléments dans le système de codage TEI.</desc>
+  <desc version="2007-05-04" xml:lang="es">proporciona un conjunto de atributos común a todos los elementos del esquema de codificación TEI.</desc>
+  <desc version="2007-01-21" xml:lang="it">stabilisce un insieme di attributi comuni a tutti gli elementi dello schema di codifica TEI</desc>
+  <classes>
+    <memberOf key="att.global.linking"/>
+    <memberOf key="att.global.analytic"/>
+    <memberOf key="att.global.facs"/>
+  </classes>
+  <attList>
+    <attDef ident="xml:id" usage="opt">
+      <gloss>identifier</gloss>
+      <desc>provides a unique identifier for the element bearing the
+      attribute.</desc>
+      <desc version="2007-06-12" xml:lang="fr">fournit un identificateur unique pour l'élément
+          qui porte l'attribut</desc>
+      <desc version="2007-05-04" xml:lang="es">proporciona un identificador único para el elemento al cual se asocia el atributo.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un identificatore unico all'elemento a cui è associato l'attributo</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該要素にユニークなIDを与える．</desc>
+      <datatype>
+        <rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="ID"/>
+      </datatype>
+      <valDesc>any valid XML identifier .</valDesc>
+      <remarks>
+        <p>The <att>xml:id</att> attribute may be used to specify a
+        canonical reference for an element; see section <ptr target="#CORS"/>.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="n" usage="opt">
+      <gloss>number</gloss>
+      <desc>gives a number (or other label) for an element, which is
+      not necessarily unique within the document.</desc>
+      <desc version="2007-06-12" xml:lang="fr">donne un numéro (ou une autre étiquette) pour un
+          élément, qui n'est pas nécessairement unique dans le document TEI.</desc>
+      <desc version="2007-05-04" xml:lang="es">proporciona un número (u otra etiqueta) a un elemento que no es necesariamente único en el documento.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un numero (o altra etichetta) a un elemento che non è necessariamente unico all'interno del documento</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該要素に数値やラベルを与える．これは当該文書中でユニー
+クである必要はない．</desc>
+      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0" maxOccurs="unbounded">
+        <rng:ref name="data.word"/>
+      </datatype>
+      <valDesc>any string of characters; often, but not necessarily,
+      numeric.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+      </exemplum>
+      <remarks>
+        <p>The <att>n</att> attribute may be used to specify the
+	numbering of chapters, sections, list items, etc.; it may also
+	be used in the specification of a standard reference system
+	for the text.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="xml:lang" usage="opt">
+      <gloss>language</gloss>
+      <desc>indicates the language of the element content using a
+      <soCalled>tag</soCalled> generated according to <ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref></desc>
+      <desc version="2007-06-12" xml:lang="fr">indique la langue du contenu de l'élément en
+          utilisant les codes du <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC 3066</ref></desc>
+      <desc version="2007-05-04" xml:lang="es">indica la lengua del contenido del elemento utilizando los códigos extraídos de <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC 3066</ref></desc>
+      <desc version="2007-01-21" xml:lang="it">indica la lingua del contenuto dell'elemento utilizzando i codici tratti da <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC
+      3066</ref></desc>
+      <desc version="2006-10-28" xml:lang="ja">当該要素の内容で使用されている言語を，RFC3006に従って示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.language"/>
+      </datatype>
+      <valDesc>The value must conform to BCP 47. If the value is a
+      private use code (i.e., starts with <code>x-</code> or contains
+      <code>-x-</code>) it should, and if not it may, match the value
+      of an <att>ident</att> attribute of a <gi>language</gi> element
+      supplied in the TEI Header of the current document.</valDesc>
+      <remarks>
+        <p>If no value is specified for <att>xml:lang</att>, the
+        <att>xml:lang</att> value for the immediately enclosing
+        element is inherited; for this reason, a value should always
+        be specified on the outermost element (<gi>TEI</gi>).</p>
+      </remarks>
+    </attDef>
+    <attDef ident="rend" usage="opt">
+      <gloss>rendition</gloss>
+      <desc>indicates how the element in question was rendered or
+	presented in the source text.</desc>
+      <desc version="2007-06-12" xml:lang="fr">indique comment l'élément en question a été rendu
+          ou présenté dans le texte source</desc>
+      <desc version="2007-05-04" xml:lang="es">indica cómo el elemento en cuestión ha sido dado o proporcionado en el texto fuente.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica come l'elemento in questione è stato reso o rappresentato nel testo originario</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該要素が，元資料においてどのように表示されていたのかを示す．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+      <valDesc>any string of characters; if the typographic rendition
+      of a text is to be systematically recorded, a systematic set of
+      values for the <att>rend</att> attribute should be
+      defined.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <head rend="align(center) case(allcaps)"><lb/>To The
+  <lb/>Duchesse
+  <lb/>of
+  <lb/>Newcastle,
+  <lb/>On Her
+  <lb/><hi rend="case(mixed)">New Blazing-World</hi>.
+</head>
+        </egXML>
+        <!--    <p>
+          <note type="cit">From the forward by William Newcastle in
+        Margaret Cavendish, Duchess of Newcastle's <title>The
+        description of a new world, called the blazing-world</title>,
+        WWP TR00253</note>
+        </p>-->
+      </exemplum>
+      <remarks>
+        <p>These Guidelines make no binding recommendations for the
+        values of the <att>rend</att> attribute; the characteristics
+        of visual presentation vary too much from text to text and the
+        decision to record or ignore individual characteristics varies
+        too much from project to project. Some potentially useful
+        conventions are noted from time to time at appropriate points
+        in the Guidelines.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="rendition" usage="opt">
+      <desc>points to a description of the rendering  or
+	presentation used for this element in the source text.</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>one or more URIs, separated by white space.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <head rendition="#ac #sc"><lb/>To The
+  <lb/>Duchesse
+  <lb/>of
+  <lb/>Newcastle,
+  <lb/>On Her
+  <lb/><hi rendition="#no">New Blazing-World</hi>.
+</head>
+          <!-- elsewhere... -->
+          <rendition xml:id="sc" scheme="css">font-variant: smallcaps</rendition>
+          <rendition xml:id="no" scheme="css">font-variant: normal</rendition>
+          <rendition xml:id="ac" scheme="css">text-align: center</rendition>
+        </egXML>
+      </exemplum>
+      <remarks>
+        <p>The <att>rendition</att> attribute is used  in a very similar way to
+	the <att>class</att> attribute defined for XHTML but with the
+	important distinction that its function is to describe the
+	appearance of the source text, not necessarily to determine
+	how that text should be presented on screen or paper.</p>
+        <p>Where both <att>rendition</att> and <att>rend</att> are supplied,
+the latter is understood to override or complement the former.</p>
+        <p>Each URI provided should indicate a <gi>rendition</gi>
+      element defining the intended rendition in terms of some
+      appropriate style language, as indicated by the
+      <att>scheme</att> attribute.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="xml:base" usage="opt">
+      <equiv/>
+      <desc>provides a base URI reference with which applications can
+      resolve relative URI references into absolute URI
+      references.</desc>
+      <desc version="2007-06-12" xml:lang="fr">donne une référence URI de base au moyen de
+          laquelle les applications peuvent résoudre des références d'URI relatives en références
+          d'URI absolues</desc>
+      <desc version="2007-05-04" xml:lang="es">proporciona una referencia URI de base gracias a la aplicación eventual de la cual pueden analizarse tanto referencias URI relativas como referencias URI absolutas.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un riferimento URI di base grazie al quale eventuali applicazioni possono analizzare riferimenti URI relativi come riferimenti URI assoluti</desc>
+      <desc version="2006-10-28" xml:lang="ja">相対URIから絶対URIを構成する際に必要なベースURIを示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>any syntactically valid URI reference.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <div type="bibl">
+            <head>Bibliography</head>
+            <listBibl xml:base="http://www.lib.ucdavis.edu/BWRP/Works/">
+              <bibl n="1">
+                <author>
+                  <name>Landon, Letitia Elizabeth</name>
+                </author>
+                <ref target="LandLVowOf.sgm">
+                  <title>The Vow of the Peacock</title>
+                </ref>
+              </bibl>
+              <bibl n="2">
+                <author>
+                  <name>Compton, Margaret Clephane</name>
+                </author>
+                <ref target="NortMIrene.sgm">
+                  <title>Irene, a Poem in Six Cantos</title>
+                </ref>
+              </bibl>
+              <bibl n="3">
+                <author>
+                  <name>Taylor, Jane</name>
+                </author>
+                <ref target="TaylJEssay.sgm">
+                  <title>Essays in Rhyme on Morals and Manners</title>
+                </ref>
+              </bibl>
+            </listBibl>
+          </div>
+        </egXML>
+      </exemplum>
+    </attDef>
+  </attList>
+  <remarks>
+    <p>The global attributes described here are made part of the
+    attribute definition list declaration of each element by including
+    a reference to the pattern <ident type="class">att.global.attributes</ident> in each such
+    declaration. <!-- Some global attributes are made available when
+    certain additional tag sets are selected; these are incorporated
+    into the global attributes by references to the appropriate
+    patterns. When the tag sets in question have not been selected,
+    the patterns in question expand to the empty string.--></p>
+  </remarks>
+  <listRef>
+    <ptr target="#STGA"/>
+  </listRef>
+</classSpec>

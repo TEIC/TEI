@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="HANDDESC" ident="handDesc">
+  <gloss>description of hands</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">description des écritures</gloss>
+  <desc xml:id="script.desc">contains a description of all the different kinds of writing  used in a manuscript.</desc>
+  <desc version="2007-06-12" xml:lang="fr">contient la description des différents types
+      d'écriture utilisés dans un manuscrit.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene una descripción de todos los diferentes tipos de escritura usados en un manuscrito.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene una descrizione dei diversi tipi di scrittura usati in un manoscritto</desc>
+  <desc version="2006-10-28" xml:lang="ja">当該手書き文書中で使用されている，全ての書記システムを示す．</desc>
+  <classes>
+    <memberOf key="model.physDescPart"/>
+  </classes>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:oneOrMore>
+        <rng:ref name="handNote"/>
+      </rng:oneOrMore>
+    </rng:choice>
+  </content>
+  <attList>
+    <attDef ident="hands">
+      <equiv/>
+      <gloss/>
+      <gloss version="2007-06-12" xml:lang="fr">mains</gloss>
+      <desc>specifies the number of distinct hands identified within the manuscript</desc>
+      <desc version="2007-06-12" xml:lang="fr">spécifie le nombre de mains différentes qui ont
+          pu être identifiées dans le manuscrit</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica el número de manos distintas identificadas al interno de un manuscrito.</desc>
+      <desc version="2007-01-21" xml:lang="it">specifica il numero delle diverse mani identificate all'interno del manoscritto</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該手書き文書中にある，筆致の種類の数を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+      </datatype>
+      <valDesc>A whole number, or the string "many"</valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <handDesc>
+        <handNote scope="major">Written throughout in <term>angelicana formata</term>.</handNote>
+      </handDesc>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <handDesc hands="2">
+        <p>The manuscript is written in two contemporary hands, otherwise
+unknown, but clearly those of practised scribes.  Hand I writes
+ff. 1r-22v and hand II ff. 23 and 24. Some scholars, notably
+Verner Dahlerup and Hreinn Benediktsson, have argued for a third hand
+on f. 24, but the evidence for this is insubstantial.</p>
+      </handDesc>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <handDesc hands="2">
+        <handNote xml:id="TSE" medium="typescript">Authorial typescript
+	</handNote>
+        <handNote xml:id="EP" medium="red-ink">Ezra Pound's
+	annotations</handNote>
+      </handDesc>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#msph2"/>
+  </listRef>
+</elementSpec>

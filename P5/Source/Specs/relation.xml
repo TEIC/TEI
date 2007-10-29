@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" usage="opt" ident="relation">
+  <equiv/>
+  <gloss>relationship</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">relation</gloss>
+  <gloss version="2007-05-04" xml:lang="es">relación</gloss>
+  <gloss version="2007-01-21" xml:lang="it">relazione</gloss>
+  <gloss version="2006-10-28" xml:lang="ja">関係</gloss>
+  <desc>describes any kind of relationship or linkage amongst a specified
+group of participants.</desc>
+  <desc version="2007-06-12" xml:lang="fr">décrit tout type de relation ou de lien à l'intérieur
+      d'un groupe donné de participants</desc>
+  <desc version="2007-05-04" xml:lang="es">describe cualquier tipo de relación o vínculo entre un determinato grupo de personas.</desc>
+  <desc version="2007-01-21" xml:lang="it">descrive una qualsiasi relazione o legame all'interno di un determinato gruppo di persone</desc>
+  <desc version="2006-10-28" xml:lang="ja"> 参加者間の関連性を示す．</desc>
+  <classes>
+    <!--      <memberOf key="model.persStateLike"/>-->
+    <!--    <memberOf key="model.personLike"/>-->
+    <memberOf key="att.datable"/>
+    <memberOf key="att.editLike"/>
+    <memberOf key="att.naming"/>
+  </classes>
+  <content>
+    <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="desc"/>
+    </rng:optional>
+  </content>
+  <attList>
+    <attDef ident="type">
+      <equiv/>
+      <desc>categorizes the relationship in some respect, e.g.
+as social, personal or other.</desc>
+      <desc version="2007-06-12" xml:lang="fr">caractérise la relation sous un certain aspect,
+          par exemple social, personnel ou autre</desc>
+      <desc version="2007-05-04" xml:lang="es">clasifica la relación, como social, personal, etc. </desc>
+      <desc version="2007-01-21" xml:lang="it">classifica la relazione come sociale, personale, o altro</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該関係の分類を示す．例えば，社会的，個人的関係など．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <defaultVal>personal</defaultVal>
+      <valList type="semi">
+        <valItem ident="social">
+          <equiv/>
+          <desc>relationship concerned with social roles</desc>
+          <desc version="2007-01-21" xml:lang="it">relazione basata su ruoli sociali</desc>
+        </valItem>
+        <valItem ident="personal">
+          <equiv/>
+          <desc>relationship concerned with personal roles, e.g.
+kinship, marriage, etc.</desc>
+          <desc version="2007-01-21" xml:lang="it">relazione che interessa ruoli sociali, come parentela, matrimonio, ecc.</desc>
+        </valItem>
+        <valItem ident="other">
+          <equiv/>
+          <desc>other kinds of relationship</desc>
+          <desc version="2007-01-21" xml:lang="it">altro tipo di relazione</desc>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="name" usage="req">
+      <equiv/>
+      <desc>supplies a name for the kind of  relationship of which
+	this is an instance.</desc>
+      <desc version="2007-06-12" xml:lang="fr">fournit un nom pour le type de relation dont elle
+          est une instance.</desc>
+      <desc version="2007-05-04" xml:lang="es">proporciona un nombre para elipo de relación que representan.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un nome al tipo di relazione che rappresenta</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該関係の名前を示す．</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valDesc>an open list of application-dependent keywords</valDesc>
+    </attDef>
+    <attList org="choice">
+      <attDef ident="active">
+        <equiv/>
+        <desc>identifies the <soCalled>active</soCalled> participants in a non-mutual
+relationship, or all the participants in a mutual one.</desc>
+        <desc version="2006-10-28" xml:lang="ja">一方向の関係における主体的な参加者，または双方向の関係における全
+参加者を示す．</desc>
+        <datatype maxOccurs="unbounded">
+          <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        </datatype>
+        <valDesc>a list of identifier values for participant or participant
+groups</valDesc>
+      </attDef>
+      <attDef ident="mutual" usage="mwa">
+        <equiv/>
+        <desc>supplies a list of participants amongst all of whom the relationship holds equally.</desc>
+        <desc version="2006-10-28" xml:lang="ja">双方向の関係における参加者を示す．</desc>
+        <datatype maxOccurs="unbounded">
+          <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        </datatype>
+        <valDesc>a list of identifier values for participant or participant
+groups</valDesc>
+      </attDef>
+    </attList>
+    <attDef ident="passive" usage="opt">
+      <equiv/>
+      <desc>identifies the <soCalled>passive</soCalled> participants in a non-mutual
+relationship.</desc>
+      <desc version="2007-06-12" xml:lang="fr">identifie les participants <q>passifs</q> dans
+          une relation non mutuelle</desc>
+      <desc version="2007-05-04" xml:lang="es">identifica los participantes <q>pasivos</q> en una relación de no reciprocidad.</desc>
+      <desc version="2007-01-21" xml:lang="it">identifica i partecipanti <q>passivi</q>all'interno di una relazione di non reciprocità.</desc>
+      <desc version="2006-10-28" xml:lang="ja">一方向の関係における受動的な参加者を示す．</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>a list of identifier values for participant or participant
+groups</valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <relation type="social" name="supervisor" active="#p1" passive="#p2 #p3 #p4"/>
+    </egXML>
+    <p>This indicates that the person with identifier p1 is supervisor of
+persons p2, p3, and p4.</p>
+  </exemplum>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <relation type="personal" name="friends" mutual="#p2 #p3 #p4"/>
+    </egXML>
+    <p>This indicates that p2, p3, and p4 are all friends.</p>
+  </exemplum>
+  <remarks>
+    <p>Only one of the attributes <att>active</att> and
+  <att>mutual</att> may be supplied; the attribute <att>passive</att>
+  may be supplied only if the attribute <att>active</att>  is supplied. Not all
+  of these constraints can be enforced in all schema languages.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#CCAHPA"/>
+  </listRef>
+</elementSpec>
