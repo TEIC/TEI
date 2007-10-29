@@ -27,7 +27,7 @@
        
   -->
   <xsl:output method="xml" encoding="utf-8"
-	      indent="yes" cdata-section-elements="tei:eg" omit-xml-declaration="yes"/>
+    cdata-section-elements="tei:eg" omit-xml-declaration="yes"/>
   
   <xsl:variable name="processor">
     <xsl:value-of select="system-property('xsl:vendor')"/>
