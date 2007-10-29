@@ -1,0 +1,78 @@
+#!/usr/bin/perl
+use English;
+use File::Basename;
+my $File=$ARGV[0];
+my $fname;
+my $where;
+my $fsuffix;
+my $fpath;
+my $zap;
+($fname,$fpath,$fsuffix) = fileparse($File,'.html');
+print "process $File ($fpath, $fname, $fsuffix)\n";
+my $Email=$ARGV[1];
+if ($Email eq "") { $Email = 'advisory'; }
+open (T,">config.$$") or die ("cannot write config.$$");
+    print T "word-2000: yes\ndoctype: strict\nenclose-text: yes\nenclose-block-text: yes\nshow-warnings: no\n";
+close T;
+my $Tidy="tidy -config config.$$ -q -n -asxml";
+($SysSec,$SysMin,$SysHour,$SysMday,$SysMon,$SysYear,$SysWday,$SysYday,$isdst) =
+						localtime(time);
+$SysMon=$SysMon +1 ;
+if ($SysMon < 10) { $SysMon= "0" . $SysMon; }
+if ($SysMday < 10) { $SysMday= "0" . $SysMday; }
+if ($SysHour < 10) { $SysHour= "0" . $SysHour; }
+$SysYear=$SysYear+1900;
+my $Date="$SysYear/$SysMon/$SysMday";
+my $x_input;
+open(X,"$File") or die ("cannot open $File");
+{
+    local $/ = undef; #slurp
+    $x_input = <X>;
+}
+close X;
+
+# a) insert a paragraph after a heading if not present
+# b) author -> address
+# c) no closing author
+# d) spaces at the start of an element belong before it.
+for ($x_input) {
+    s{(</h[1-5]>\n)([^<])}{$1<p>$2}g;
+    s{<author>}{<address>}g;
+    s{</author>}{}g;
+    s{<([^>]*)> }{ <$1>}g;
+}
+open (Y,"|$Tidy > convert1.$$");
+ print Y $x_input;
+close Y;
+open (Y,"convert1.$$");
+open (Z,">convert2.$$");
+    while (<Y>) { 
+	$zap=0;
+ if (/<html/) { s/<html/<html xmlns:v="\http:\/\/non\/sense\"/; }
+ if (/\!DOCTYPE/) { $zap=1;}
+ if (/html1-strict/) { $zap=1;}
+ if (!$zap) { print Z;}
+}
+close Z;
+print "saxon convert2.$$ http://www.oucs.ox.ac.uk/stylesheets/xhtml2tei.xsl filename=$fname\n";
+
+open (Y,">$fpath$fname.xml");
+open (X,"saxon convert2.$$ /stylesheets/xhtml2tei.xsl filename=$fname |");
+ while(<X>) {
+   s/\n$//;
+   s/^\[<ref target=.Contents.*\]//;
+   s/TODAYSDATE/$Date/;
+   s/^ *<p>/<p>/;
+   s/ <\/([A-z]*)>/<\/$1> /;
+   s/ *$//;
+   s/<p\/>//;
+   s/<p><\/p>//;
+   s/date>Date: /date>/;
+   s/<email>advisory@/<email>$Email@/;
+   if ($_ ne "") {   print Y "$_\n"; }
+}
+close(X);
+close(Y);
+unlink "convert1.$$";
+unlink "convert2.$$";
+unlink "config.$$";
