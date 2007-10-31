@@ -33,12 +33,12 @@ function addError(el_name, prepend, in_bold, append) {
 	var element_name = document.createElement('a');
 	element_name.appendChild(document.createTextNode(el_name));
 	element_name.setAttribute('style', 'color: black; font-weight: bold');
-	element_name.setAttribute('href', 'http://www.tei-c.org/release/doc/tei-p5-doc/en/html/'+el_name+'.html');
+	element_name.setAttribute('href', '/release/doc/tei-p5-doc/en/html/ref-'+el_name+'.html');
 
 	var bolded_text = document.createElement('a');
 	bolded_text.appendChild(document.createTextNode(in_bold));
 	bolded_text.setAttribute('style', 'color: black; font-weight: bold; font-decoration: none');
-	bolded_text.setAttribute('href', 'http://www.tei-c.org/release/doc/tei-p5-doc/en/html/'+in_bold+'.html');
+	bolded_text.setAttribute('href', '/release/doc/tei-p5-doc/en/html/ref-'+in_bold+'.html');
 
 	newdiv.appendChild(error_bold);
 	newdiv.appendChild(dots);
@@ -63,12 +63,12 @@ function addWarning(el_name, prepend, in_bold, append) {
 	var element_name = document.createElement('a');
 	element_name.appendChild(document.createTextNode(el_name));
 	element_name.setAttribute('style', 'color: black; font-weight: bold');
-	element_name.setAttribute('href', 'http://www.tei-c.org/release/doc/tei-p5-doc/en/html/'+el_name+'.html');
+	element_name.setAttribute('href', '/release/doc/tei-p5-doc/en/html/ref-'+el_name+'.html');
 
 	var bolded_text = document.createElement('a');
 	bolded_text.appendChild(document.createTextNode(in_bold));
 	bolded_text.setAttribute('style', 'color: black; font-weight: bold; font-decoration: none');
-	bolded_text.setAttribute('href', 'http://www.tei-c.org/release/doc/tei-p5-doc/en/html/'+in_bold+'.html');
+	bolded_text.setAttribute('href', '/release/doc/tei-p5-doc/en/html/ref-'+in_bold+'.html');
 
 	newdiv.appendChild(error_bold);
 	newdiv.appendChild(dots);
@@ -89,7 +89,7 @@ function addElementContainer(el_name) {
 	var element_name = document.createElement('a');
 	element_name.appendChild(document.createTextNode('In ' + el_name));
 	element_name.setAttribute('style', 'color: black; font-weight: bold');
-	element_name.setAttribute('href', 'http://www.tei-c.org/release/doc/tei-p5-doc/en/html/'+el_name+'.html');
+	element_name.setAttribute('href', '/release/doc/tei-p5-doc/en/html/ref-'+el_name+'.html');
 
 	newdiv.appendChild(element_name);
 	newdiv.appendChild(document.createElement('br'));
@@ -104,7 +104,7 @@ function addElementContainerError(used, element, problem) {
 	var element_name = document.createElement('a');
 	element_name.appendChild(document.createTextNode(element));
 	element_name.setAttribute('style', 'font-weight: bold; font-weight: bold; color: red;');
-	element_name.setAttribute('href', 'http://www.tei-c.org/release/doc/tei-p5-doc/en/html/'+element+'.html');
+	element_name.setAttribute('href', '/release/doc/tei-p5-doc/en/html/ref-'+element+'.html');
 	newdiv.appendChild(element_name);
 	newdiv.appendChild(document.createTextNode(' ' + problem));
 	div.appendChild(newdiv);
@@ -118,7 +118,7 @@ function addElementContainerWarning(used, element, problem) {
 	var element_name = document.createElement('a');
 	element_name.appendChild(document.createTextNode(element));
 	element_name.setAttribute('style', 'color: black; font-weight: bold');
-	element_name.setAttribute('href', 'http://www.tei-c.org/release/doc/tei-p5-doc/en/html/'+element+'.html');
+	element_name.setAttribute('href', '/release/doc/tei-p5-doc/en/html/ref-'+element+'.html');
 	newdiv.appendChild(element_name);
 	newdiv.appendChild(document.createTextNode(' ' + problem));
 	div.appendChild(newdiv);
