@@ -232,7 +232,7 @@ XSL LaTeX stylesheet to make slides
   </xsl:template>
 
   <xsl:template match="tei:p[@rend='box']">
-    <xsl:text>\par\begin{exampleblock}{Important}&#10;</xsl:text>
+    <xsl:text>\par\begin{exampleblock}{}&#10;</xsl:text>
     <xsl:apply-templates/>
     <xsl:text>\end{exampleblock}\par&#10;</xsl:text>
   </xsl:template>
