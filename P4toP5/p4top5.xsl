@@ -82,6 +82,18 @@
     </teiCorpus>
   </xsl:template>
   
+  <xsl:template match="witness/@sigil">
+    <xsl:attribute name="xml:id">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
+
+  <xsl:template match="witList">
+    <listWit xmlns="http://www.tei-c.org/ns/1.0">
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
+    </listWit>
+  </xsl:template>
+  
   
   <xsl:template match="TEI.2">
     <TEI xmlns="http://www.tei-c.org/ns/1.0">
@@ -232,7 +244,11 @@
   
   <!-- all pointing attributes preceded by # -->
   
-  <xsl:template match="@ana|@active|@adj|@adjFrom|@adjTo|@children|@children|@class|@code|@code|@copyOf|@corresp|@decls|@domains|@end|@exclude|@fVal|@feats|@follow|@from|@hand|@inst|@langKey|@location|@mergedin|@new|@next|@old|@origin|@otherLangs|@parent|@passive|@perf|@prev|@render|@resp|@sameAs|@scheme|@script|@select|@since|@start|@synch|@target|@targetEnd|@to|@to|@value|@value|@who">
+  <xsl:template match="variantEncoding/@location">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="@ana|@active|@adj|@adjFrom|@adjTo|@children|@children|@class|@code|@code|@copyOf|@corresp|@decls|@domains|@end|@exclude|@fVal|@feats|@follow|@from|@hand|@inst|@langKey|@location|@mergedin|@new|@next|@old|@origin|@otherLangs|@parent|@passive|@perf|@prev|@render|@resp|@sameAs|@scheme|@script|@select|@since|@start|@synch|@target|@targetEnd|@to|@to|@value|@value|@who|@wit">
     <xsl:attribute name="{name(.)}">
       <xsl:call-template name="splitter">
 	<xsl:with-param name="val">
@@ -429,7 +445,30 @@
 	</xsl:for-each>
     </change>
   </xsl:template>
-  
+
+
+  <xsl:template match="respStmt[resp]">
+    <respStmt xmlns="http://www.tei-c.org/ns/1.0">
+      <xsl:choose>
+	<xsl:when test="resp/name">
+	  <resp  xmlns="http://www.tei-c.org/ns/1.0">
+	    <xsl:value-of select="resp/text()"/>
+	  </resp>
+	    <xsl:for-each select="resp/name">
+	      <name xmlns="http://www.tei-c.org/ns/1.0">
+		<xsl:apply-templates/>
+	      </name>
+	    </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <resp  xmlns="http://www.tei-c.org/ns/1.0">
+	    <xsl:apply-templates/>
+	  </resp>
+	</xsl:otherwise>
+      </xsl:choose>
+    </respStmt>
+  </xsl:template>
+
   <xsl:template match="q/@direct"/>
   
   <xsl:template match="q">
