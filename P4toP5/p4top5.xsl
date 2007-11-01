@@ -461,9 +461,9 @@
 	    </xsl:for-each>
 	</xsl:when>
 	<xsl:otherwise>
-	  <resp  xmlns="http://www.tei-c.org/ns/1.0">
-	    <xsl:apply-templates/>
-	  </resp>
+	  <xsl:apply-templates/>
+	  <name  xmlns="http://www.tei-c.org/ns/1.0">
+	  </name>
 	</xsl:otherwise>
       </xsl:choose>
     </respStmt>
@@ -642,5 +642,31 @@
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  
+
+<!-- deal with the loss of div0 -->  
+
+  <xsl:template match="div1|div2|div3|div4|div5|div6">
+    <xsl:variable name="divName">
+    <xsl:choose>
+      <xsl:when test="ancestor::div0">
+	<xsl:text>div</xsl:text>
+	<xsl:value-of select="number(substring-after(local-name(.),'div')) + 1"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="local-name()"/>
+      </xsl:otherwise>
+    </xsl:choose>
+    </xsl:variable>
+    <xsl:element name="{$divName}" namespace="http://www.tei-c.org/ns/1.0">
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template match="div0">
+    <div1 xmlns="http://www.tei-c.org/ns/1.0">
+    <xsl:apply-templates 
+	select="*|@*|processing-instruction()|comment()|text()"/>
+    </div1>
+  </xsl:template>
+
 </xsl:stylesheet>
