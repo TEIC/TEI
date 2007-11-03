@@ -52,9 +52,16 @@
 	<ul class="subtoc">
 	  <li class="subtoc"><xsl:call-template name="previousLink"/></li>
 	  <li class="subtoc"><xsl:call-template name="nextLink"/></li>
-	  <li class="subtoc"><a class="navigation" href="index.html">Home</a> | <a
-	  class="navigation" href="index-toc.html">Table of
-	  Contents</a></li>
+	  <li class="subtoc"><a class="navigation" href="index.html">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">homeWord</xsl:with-param>
+	  </xsl:call-template>
+	  </a> | <a
+	  class="navigation" href="index-toc.html">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">tocWords</xsl:with-param>
+	  </xsl:call-template>
+	  </a></li>
 	  <li class="subtoc">
 	  <xsl:choose>
 	    <xsl:when test="self::tei:elementSpec">
