@@ -1,12 +1,14 @@
 LANGUAGE=en
+INPUTLANGUAGE=en
+DOCUMENTATIONLANGUAGE=en
 LATEX=pdflatex
 XELATEX=xelatex
 VERBOSE=
 PREFIX=/usr
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
 SOURCETREE=Source
-LANGTREE=${SOURCETREE}/Guidelines/${LANGUAGE}
-DRIVER=${LANGTREE}/guidelines-${LANGUAGE}.xml
+LANGTREE=${SOURCETREE}/Guidelines/${INPUTLANGUAGE}
+DRIVER=${LANGTREE}/guidelines-${INPUTLANGUAGE}.xml
 FASCFILE=${LANGTREE}/FASC-${CHAP}.xml
 ROMAOPTS="--localsource=${DRIVER}"
 XSL=/usr/share/xml/tei/stylesheet
@@ -32,6 +34,7 @@ dtds: check
 	xmllint --noent --xinclude ${DRIVER} | \
 	xsltproc --stringparam outputDir DTD 	\
 	--stringparam lang ${LANGUAGE} \
+	--stringparam documentationLanguage ${DOCUMENTATIONLANGUAGE} \
 	--stringparam TEIC true \
 	${XSL}/odds/odd2dtd.xsl -
 	#for i in DTD/* ; do perl -i Utilities/cleandtd.pl $$i; done	
