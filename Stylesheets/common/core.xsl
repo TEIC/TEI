@@ -111,7 +111,9 @@
   </xd:doc>
   <xsl:template match="tei:edition">
     <xsl:apply-templates/>
-    <xsl:text>.&#10;</xsl:text>
+    <xsl:if test="ancestor::tei:biblStruct">
+      <xsl:text>.&#10;</xsl:text>
+    </xsl:if>
   </xsl:template>
 
 
