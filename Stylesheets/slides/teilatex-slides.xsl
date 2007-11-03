@@ -214,7 +214,9 @@ XSL LaTeX stylesheet to make slides
 <xsl:template match="tei:item[@rend='pause']">
   <xsl:text>\item </xsl:text>
   <xsl:apply-templates/>
-  <xsl:text>\pause </xsl:text>
+  <xsl:if test="following-sibling::tei:item">
+    <xsl:text>\pause </xsl:text>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="tei:eg">
@@ -258,5 +260,11 @@ XSL LaTeX stylesheet to make slides
 <xsl:text> \hline </xsl:text>
 </xsl:template>
 
+<xsl:template match="tei:att">
+  <xsl:text>\emph{@</xsl:text>
+    <xsl:apply-templates/>
+  <xsl:text>}</xsl:text>
+
+</xsl:template>
 
 </xsl:stylesheet>
