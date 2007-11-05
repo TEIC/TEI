@@ -1283,9 +1283,9 @@
   </xd:doc>
   <xsl:template match="tei:space">
     <xsl:choose>
-      <xsl:when test="@extent">
+      <xsl:when test="@quantity">
         <xsl:call-template name="space_loop">
-          <xsl:with-param name="extent" select="@extent"/>
+          <xsl:with-param name="extent" select="@quantity"/>
         </xsl:call-template>
         <xsl:apply-templates/>
       </xsl:when>
