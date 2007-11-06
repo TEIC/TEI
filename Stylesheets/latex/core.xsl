@@ -590,7 +590,7 @@
     <xsl:choose>
       <xsl:when test="contains($words,'&amp;')">
 	<xsl:value-of
-	select="translate(normalize-space(substring-before($words,'&amp;')),'\{}','&#8421;&#10100;&#10101;')"/>
+	select="translate(substring-before($words,'&amp;'),'\{}','&#8421;&#10100;&#10101;')"/>
 	<xsl:text>&amp;amp;</xsl:text>
 	<xsl:call-template name="Text">
 	  <xsl:with-param name="words">
@@ -599,7 +599,7 @@
 	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:value-of select="translate(normalize-space($words),'\{}','&#8421;&#10100;&#10101;')"/>
+	<xsl:value-of select="translate($words,'\{}','&#8421;&#10100;&#10101;')"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
