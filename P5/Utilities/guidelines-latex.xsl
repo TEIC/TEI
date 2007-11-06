@@ -64,21 +64,42 @@
 
   <xsl:template match="tei:titlePage">
   \begin{titlepage}
-\fontsize{30pt}{36pt}\bfseries\textsf\selectfont
-<xsl:apply-templates/>
+  \fontsize{30pt}{36pt}\bfseries\textsf\selectfont
+  <xsl:apply-templates/>
   \maketitle
   \end{titlepage}
   \cleardoublepage
 </xsl:template>
 
 <xsl:template match="tei:list">
-  <xsl:if test="parent::tei:item">\\</xsl:if>
+  <xsl:if test="parent::tei:item">\mbox{}\newline </xsl:if>
   <xsl:apply-imports/>
 </xsl:template>
 
-  <xsl:template match="text()" mode="verbatim">
-	    <xsl:value-of select="."/>
+  <xsl:template name="lineBreak">
+    <xsl:param name="id"/>
+    <xsl:text>\mbox{}\newline &#10;</xsl:text>
   </xsl:template>
+
+  <xsl:template name="Text">
+    <xsl:param name="words"/>
+    <xsl:choose>
+      <xsl:when test="contains($words,'&amp;')">
+	<xsl:value-of
+	select="translate(substring-before($words,'&amp;'),'\{}','&#8421;&#10100;&#10101;')"/>
+	<xsl:text>&amp;amp;</xsl:text>
+	<xsl:call-template name="Text">
+	  <xsl:with-param name="words">
+	    <xsl:value-of select="translate(substring-after($words,'&amp;'),'\{}','&#8421;&#10100;&#10101;')"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="translate($words,'\{}','&#8421;&#10100;&#10101;')"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>
 
 
