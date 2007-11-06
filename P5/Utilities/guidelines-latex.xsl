@@ -20,12 +20,15 @@
   
 <xsl:import href="/usr/share/xml/tei/stylesheet/latex/tei.xsl"/>
 <xsl:param name="reencode">false</xsl:param>
+<xsl:param name="numberBackHeadings">false</xsl:param>
 <xsl:param name="classParameters">11pt,twoside</xsl:param>
   <xsl:variable name="docClass">book</xsl:variable>
 <xsl:template name="latexPreambleHook">
+\usepackage{framed}
+\definecolor{shadecolor}{gray}{0.9}
 \setromanfont{Gentium}
-\setsansfont[Scale=0.86]{Lucida Sans}
-\setmonofont[Scale=0.86]{Lucida Sans Typewriter}
+\setsansfont[Scale=0.9]{Lucida Sans}
+\setmonofont[Scale=0.9]{Lucida Sans Typewriter}
 \setlength{\headheight}{14pt}
 </xsl:template>
 
@@ -54,7 +57,28 @@
 <xsl:call-template name="beginDocumentHook"/>
 </xsl:template>
 
+<xsl:param name="latexGeometryOptions">twoside,letterpaper,lmargin=.8in,rmargin=.8in,tmargin=.8in,bmargin=.8in</xsl:param>
 
+<xsl:template match="tei:byline"/>
+<xsl:template match="tei:titlePage/tei:note"/>
+
+  <xsl:template match="tei:titlePage">
+  \begin{titlepage}
+\fontsize{30pt}{36pt}\bfseries\textsf\selectfont
+<xsl:apply-templates/>
+  \maketitle
+  \end{titlepage}
+  \cleardoublepage
+</xsl:template>
+
+<xsl:template match="tei:list">
+  <xsl:if test="parent::tei:item">\\</xsl:if>
+  <xsl:apply-imports/>
+</xsl:template>
+
+  <xsl:template match="text()" mode="verbatim">
+	    <xsl:value-of select="."/>
+  </xsl:template>
 </xsl:stylesheet>
 
 
