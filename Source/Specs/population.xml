@@ -7,48 +7,43 @@ $Date$
 $Id$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="population" module="namesdates">
- <desc>contains information about the population of a place.</desc>
-      <classes>
-        <memberOf key="att.datable"/>
-        <memberOf key="att.editLike"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="model.placeTraitLike"/>
-      </classes>
-      <content>
-<rng:group>
-  <rng:zeroOrMore>
-    <rng:ref name="model.headLike"/>
-  </rng:zeroOrMore>
-
-<rng:optional>
-
-<rng:choice>
-<rng:group>
-  <rng:oneOrMore>
-    <rng:ref name="model.pLike"/>
-  </rng:oneOrMore>
-</rng:group>
-<rng:group>
-  <rng:oneOrMore>
-      <rng:ref name="model.labelLike"/>
-  </rng:oneOrMore>
-</rng:group>
-</rng:choice>
-
-<rng:zeroOrMore>
-    <rng:choice>
-      <rng:ref name="model.noteLike"/>
-      <rng:ref name="model.biblLike"/>
-    </rng:choice>
-  </rng:zeroOrMore>
-</rng:optional>
-
-<rng:zeroOrMore>
-  <rng:ref name="population"/>
-</rng:zeroOrMore>
-
-</rng:group>
-
-      </content>
+  <desc>contains information about the population of a place.</desc>
+  <desc version="2007-11-06" xml:lang="it">contiene informazioni relative alla popolazione di un dato luogo</desc>
+  <classes>
+    <memberOf key="att.datable"/>
+    <memberOf key="att.editLike"/>
+    <memberOf key="att.naming"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="model.placeTraitLike"/>
+  </classes>
+  <content>
+    <rng:group>
+      <rng:zeroOrMore>
+        <rng:ref name="model.headLike"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:choice>
+          <rng:group>
+            <rng:oneOrMore>
+              <rng:ref name="model.pLike"/>
+            </rng:oneOrMore>
+          </rng:group>
+          <rng:group>
+            <rng:oneOrMore>
+              <rng:ref name="model.labelLike"/>
+            </rng:oneOrMore>
+          </rng:group>
+        </rng:choice>
+        <rng:zeroOrMore>
+          <rng:choice>
+            <rng:ref name="model.noteLike"/>
+            <rng:ref name="model.biblLike"/>
+          </rng:choice>
+        </rng:zeroOrMore>
+      </rng:optional>
+      <rng:zeroOrMore>
+        <rng:ref name="population"/>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
 </elementSpec>
