@@ -21,6 +21,7 @@
 <xsl:import href="/usr/share/xml/tei/stylesheet/latex/tei.xsl"/>
 <xsl:param name="reencode">false</xsl:param>
 <xsl:param name="numberBackHeadings">false</xsl:param>
+<xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
 <xsl:param name="classParameters">11pt,twoside</xsl:param>
   <xsl:variable name="docClass">book</xsl:variable>
 <xsl:template name="latexPreambleHook">
