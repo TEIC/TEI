@@ -122,7 +122,7 @@ xml: check subset
 	--stringparam displayMode rnc  \
 	${XSL}/odds/odd2lite.xsl -
 	@echo Success. Created Guidelines.xml. now attempt to validate
-	-rnv Exemplars/teilite.rnc Guidelines.xml
+	#-rnv Exemplars/teilite.rnc Guidelines.xml
 
 pdf: xml
 	@echo Checking you have a running ${LATEX} before trying to make PDF...
