@@ -8,25 +8,28 @@ $Id: transformP5.xsl 3417 2007-09-29 11:36:18Z rahtz $
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="transcr" ident="subst">
   <gloss>substitution</gloss>
+  <gloss version="2007-11-06" xml:lang="it">sostituzione</gloss>
   <desc>groups one or more deletions with one or more additions when
   the combination is to be regarded as a single intervention in the text.</desc>
+  <desc version="2007-11-06" xml:lang="it">raggruppa ona o più cancellazioni insieme a una o più aggiunte quando la combinazione va considerata come singolo intervento sul testo</desc>
   <classes>
     <memberOf key="model.pPart.editorial"/>
     <memberOf key="att.transcriptional"/>
   </classes>
   <content>
-    <rng:group><rng:group>
-      <rng:ref name="model.pPart.transcriptional"/>
+    <rng:group>
+      <rng:group>
+        <rng:ref name="model.pPart.transcriptional"/>
+      </rng:group>
+      <rng:oneOrMore>
+        <rng:ref name="model.pPart.transcriptional"/>
+      </rng:oneOrMore>
     </rng:group>
-    <rng:oneOrMore>
-    <rng:ref name="model.pPart.transcriptional"/>
-    </rng:oneOrMore>
-    </rng:group>  </content>
-<remarks>
-<p>Although a substitution may contain any mixture of additions and deletions;
+  </content>
+  <remarks>
+    <p>Although a substitution may contain any mixture of additions and deletions;
 there should be an addition for each deletion bearing the same
 sequence number. This constraint cannot be modelled in the schema
 language currently deployed.</p>
-</remarks>
-
+  </remarks>
 </elementSpec>

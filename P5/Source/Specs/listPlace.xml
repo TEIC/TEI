@@ -8,35 +8,35 @@ $Id$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" usage="opt" ident="listPlace">
   <gloss>list of places</gloss>
-      <desc>contains a list of places, optionally followed by a list
+  <gloss version="2007-11-06" xml:lang="it">elenco dei luoghi</gloss>
+  <desc>contains a list of places, optionally followed by a list
       of relationships (other than containment) defined amongst
       them. </desc>
-      <classes>
-        <memberOf key="att.typed"/>
-        <memberOf key="att.declarable"/>
+  <desc version="2007-11-06" xml:lang="it">contiene una lista di luoghi, eventualmente seguita da una lista di relazioni tra questi (ad eccezione di quella contenete-contenuto)</desc>
+  <classes>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.declarable"/>
     <memberOf key="model.listLike"/>
-<!--        <memberOf key="model.biblLike"/>-->
-<!--        <memberOf key="model.placeLike"/>-->
-      </classes>
-      <content>
-        <rng:group>
-<rng:zeroOrMore>
-  <rng:ref name="model.headLike"/>
-</rng:zeroOrMore>
-<rng:oneOrMore>
-<rng:choice>
-  <rng:ref name="model.placeLike"/>
-  <rng:ref name="listPlace"/>
-</rng:choice>
-</rng:oneOrMore>
-<rng:zeroOrMore>
-<rng:choice>
-<rng:ref name="relationGrp"/>
-  <rng:ref name="relation"/>
-</rng:choice>
-</rng:zeroOrMore>
-        </rng:group>
-      </content>
-
-
-    </elementSpec>
+    <!--        <memberOf key="model.biblLike"/>-->
+    <!--        <memberOf key="model.placeLike"/>-->
+  </classes>
+  <content>
+    <rng:group>
+      <rng:zeroOrMore>
+        <rng:ref name="model.headLike"/>
+      </rng:zeroOrMore>
+      <rng:oneOrMore>
+        <rng:choice>
+          <rng:ref name="model.placeLike"/>
+          <rng:ref name="listPlace"/>
+        </rng:choice>
+      </rng:oneOrMore>
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="relationGrp"/>
+          <rng:ref name="relation"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+</elementSpec>
