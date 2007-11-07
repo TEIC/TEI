@@ -983,4 +983,9 @@
     </xsl:apply-templates>
   </xsl:template>
 
+  <xsl:template name="showSpace">
+    <xsl:text> </xsl:text>
+    <xsl:processing-instruction name="tex">\ </xsl:processing-instruction>
+  </xsl:template>
+
 </xsl:stylesheet>

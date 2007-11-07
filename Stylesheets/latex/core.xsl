@@ -204,7 +204,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:gloss">
-    <xsl:text>\textit{</xsl:text>
+    <xsl:text> \textit{</xsl:text>
     <xsl:apply-templates/>
     <xsl:text>}</xsl:text>
   </xsl:template>
@@ -592,5 +592,8 @@
 
   <xsl:template name="applyRendition"/>
 
+<xsl:template match="tei:seg">
+  <xsl:apply-templates/>
+</xsl:template>
 
 </xsl:stylesheet>

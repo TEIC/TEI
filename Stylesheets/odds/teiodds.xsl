@@ -1707,7 +1707,7 @@ select="$makeDecls"/></xsl:message>
 	  <xsl:for-each select="key('CLASSMEMBERS',$this)">
 	    <xsl:sort select="local-name()"/>
 	    <xsl:sort select="@ident"/>
-	    <xsl:text> </xsl:text>
+	    <xsl:call-template name="showSpace"/>
 	    <xsl:variable name="cl">
 	      <xsl:choose>
 		<xsl:when test="self::tei:elementSpec">
@@ -1772,33 +1772,6 @@ select="$makeDecls"/></xsl:message>
 
 
 
-  <xsl:template name="generateParents">
-  <!--
-    <xsl:variable name="p">
-      <p>
-	<xsl:call-template name="generateParentsByElement"/>
-	<xsl:call-template name="generateParentsByMacro"/>
-	<xsl:call-template name="generateParentsByClass"/>
-      </p>
-    </xsl:variable>
-
-    <span class="parent" xmlns="http://www.w3.org/1999/xhtml">
-      <xsl:for-each select="exsl:node-set($p)/p//html:a">
-	<xsl:sort select="."/>
-	<xsl:if
-	    test="not(text()=preceding::html:a/text())">
-	  <xsl:copy-of select="."/>
-	  <xsl:text> </xsl:text>
-	</xsl:if>
-      </xsl:for-each>
-    </span>
-   -->
-  <span class="parent" xmlns="http://www.w3.org/1999/xhtml">
-    <xsl:call-template name="generateParentsByElement"/>
-    <xsl:call-template name="generateParentsByMacro"/>
-    <xsl:call-template name="generateParentsByClass"/>
-  </span>
-  </xsl:template>
 
   <xsl:template name="generateParentsByElement">
     <xsl:variable name="this" select="@ident"/>
@@ -2349,12 +2322,12 @@ select="$makeDecls"/></xsl:message>
       <xsl:when test="not(tei:gloss)"/>
       <xsl:when test="string-length(tei:gloss)=0"/>
       <xsl:when test="count(tei:gloss)=1 and not(tei:gloss[@xml:lang])">
-	<xsl:text>(</xsl:text>
+	<xsl:text> (</xsl:text>
 	<xsl:value-of select="tei:gloss"/>
 	<xsl:text>) </xsl:text>
       </xsl:when>
       <xsl:when test="tei:gloss[@xml:lang=$firstLang]">
-	<xsl:text>(</xsl:text>
+	<xsl:text> (</xsl:text>
 	<xsl:value-of select="tei:gloss[@xml:lang=$firstLang]"/>
 	<xsl:text>) </xsl:text>
       </xsl:when>
@@ -2373,7 +2346,7 @@ select="$makeDecls"/></xsl:message>
 	</xsl:variable>
 	<xsl:choose>
 	  <xsl:when test="$G='' and tei:gloss[not(@xml:lang)]">
-	    <xsl:text>(</xsl:text>
+	    <xsl:text> (</xsl:text>
 	    <xsl:value-of select="tei:gloss[not(@xml:lang)]"/>
 	    <xsl:text>) </xsl:text>
 	  </xsl:when>
@@ -2510,6 +2483,20 @@ select="$makeDecls"/></xsl:message>
 	<xsl:text>en</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="generateParents">
+      <span class="parent" xmlns="http://www.w3.org/1999/xhtml">
+	<xsl:call-template name="generateParentsByElement"/>
+	<xsl:call-template name="generateParentsByMacro"/>
+	<xsl:call-template name="generateParentsByClass"/>
+      </span>
+
+  </xsl:template>
+
+
+  <xsl:template name="showSpace">
+    <xsl:text> </xsl:text>
   </xsl:template>
 
 </xsl:stylesheet>
