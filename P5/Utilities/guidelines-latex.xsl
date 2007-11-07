@@ -23,6 +23,10 @@
 <xsl:param name="numberBackHeadings">false</xsl:param>
 <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
 <xsl:param name="classParameters">11pt,twoside</xsl:param>
+<xsl:param name="startNamespace"></xsl:param>
+<xsl:param name="tocNumberSuffix">.\ </xsl:param>
+<xsl:param name="numberSpacer">\ </xsl:param>
+
   <xsl:variable name="docClass">book</xsl:variable>
 <xsl:template name="latexPreambleHook">
 \usepackage{framed}
