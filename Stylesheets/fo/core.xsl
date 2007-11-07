@@ -253,6 +253,16 @@
     </fo:inline>
   </xsl:template>
   <xd:doc>
+    <xd:short>Process elements  tei:att</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:att">
+    <fo:inline hyphenate="false" color="{$giColor}" font-family="{$typewriterFont}" font-weight="bold">
+      <xsl:text>@</xsl:text>
+      <xsl:apply-templates/>
+    </fo:inline>
+  </xsl:template>
+  <xd:doc>
     <xd:short>Process elements  tei:gloss</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>

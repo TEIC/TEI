@@ -335,7 +335,7 @@
   </xd:doc>
   <xsl:template match="tei:gi">
     <span class="gi">
-      <xsl:apply-templates/>
+      &lt;<xsl:apply-templates/>&gt;
     </span>
   </xsl:template>
   <xd:doc>
@@ -345,6 +345,17 @@
   <xsl:template match="tei:gi" mode="plain">
     <span class="gi">
       <xsl:apply-templates/>
+    </span>
+  </xsl:template>
+  <xd:doc>
+    <xd:short>Process elements tei:att</xd:short>
+    <xd:detail>
+      <p> special purpose </p >
+    </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:att">
+    <span class="gi">
+      <b>@<xsl:apply-templates/></b>
     </span>
   </xsl:template>
   <xd:doc>
