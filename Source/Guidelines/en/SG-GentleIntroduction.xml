@@ -289,9 +289,9 @@ off element occurrences within the running text, in rather the
 same way as different types of parentheses or quotation marks are used
 in conventional punctuation. For example, a quotation element in a
 text might be tagged as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">... Rosalind's 
+<eg><![CDATA[... Rosalind's 
 remarks <quote>This is the silliest stuff that ere I heard 
-of!</quote> clearly indicate ...</egXML>
+of!</quote> clearly indicate ...]]></eg>
 
 As this example shows, a start-tag takes the form <tag>quote</tag>,
 where the opening angle bracket indicates the start of the start-tag,
@@ -331,7 +331,7 @@ composed. In XML terms, our <term>document type</term> is the
 this model might appear as follows:<note place="foot">The example is
 taken from William Blake's <title>Songs of innocence and
 experience</title> (1794).</note>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;anthology&gt;
+<eg>&lt;anthology&gt;
   &lt;poem&gt;&lt;heading&gt;The SICK ROSE&lt;/heading&gt;
     &lt;stanza&gt;
       &lt;line&gt;O Rose thou art sick.&lt;/line&gt;
@@ -347,7 +347,7 @@ experience</title> (1794).</note>
     &lt;/stanza&gt;
   &lt;/poem&gt;
   &lt;!-- more poems go here --&gt;
-&lt;/anthology&gt;</egXML></p>
+&lt;/anthology&gt;</eg></p>
 <p>It should be stressed that this example does <emph>not</emph> use
 the names proposed for corresponding elements elsewhere
 in these Guidelines: the above is  thus <emph>not</emph> a valid TEI
@@ -358,7 +358,7 @@ sense that this term is defined in <ptr target="#CF"/>.</note> It will however s
 Whitespace and line breaks have been added to the example for the
 sake of visual clarity only; they have no particular significance in the
 XML encoding itself.  Also, the line
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><!-- more poems go here    --></egXML>
+<eg><![CDATA[<!-- more poems go here    -->]]></eg>
 is an XML <term>comment</term> and is not treated as part of the text.</p>
 <p>As it stands, the above example is what is known as a
 <term>well-formed</term> XML document because it obeys the following simple rules:
@@ -505,14 +505,14 @@ for the same purpose. </note> Although we will use the RELAX NG compact syntax
 for illustration in what follows, the reader should bear in mind that analogous
 concepts are expressed differently in other schema languages. </p>
 <p>The following  schema might be used to validate our example poem:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<eg>
 anthology_p = element anthology { poem_p+ }
 poem_p = element poem { heading_p?, stanza_p+ }
 stanza_p = element stanza {line_p+}
 heading_p = element heading { text }
 line_p = element line { text }
 start = anthology_p
-</egXML>
+</eg>
 </p>
 
 <p>Note that this is not the only way in which a RELAX NG schema might
@@ -631,8 +631,8 @@ moment), <note place="foot">It will not have escaped the astute reader
 that the fact that verse paragraphs need not start on a line boundary
 seriously complicates the issue; see further section <ptr target="#SG152"/>.</note> so no additional elements need be defined
 for it.  A couplet is defined as a <gi>firstLine</gi> followed by a
-<gi>secondLine</gi>.  <egXML xmlns="http://www.tei-c.org/ns/Examples">
-couplet_p = element couplet {firstLine_p, secondLine_p}</egXML>
+<gi>secondLine</gi>.  <eg>
+couplet_p = element couplet {firstLine_p, secondLine_p}</eg>
 <!-- Can't believe it's a good idea to use as an example -->
 	<!-- something we would never do ourselves.              -->
 	<!-- Why not define SONNET, OCTET, QUATRAIN, SESTET?     --></p>
@@ -643,16 +643,16 @@ however a rather artifical example; XPath, for example, provides  ways of distin
 elements in an XML structure by their position without the need to
 give them distinct names. </note> ); these will have exactly
 the same content model as the existing <gi>line</gi> element; we will
-therefore add the following two lines to our example schema: <egXML xmlns="http://www.tei-c.org/ns/Examples">firstLine_p =
+therefore add the following two lines to our example schema: <eg>firstLine_p =
 element firstLine {text} 
-secondLine_p = element secondLine {text}</egXML>
+secondLine_p = element secondLine {text}</eg>
 Next, we can change the declaration for the <gi>poem</gi> element to
-include all three possibilities: <egXML xmlns="http://www.tei-c.org/ns/Examples"> poem_p = element poem
-{ heading_p?, (stanza_p+ | couplet_p+ | line_p+) }</egXML> That is, a poem
+include all three possibilities: <eg> poem_p = element poem
+{ heading_p?, (stanza_p+ | couplet_p+ | line_p+) }</eg> That is, a poem
 consists of an optional heading, followed by one or several stanzas,
 or one or several couplets, or one or several lines.  Note the
-difference between this declaration and the following: <egXML xmlns="http://www.tei-c.org/ns/Examples">poem_p = element poem
-{heading_p?, (stanza_p | couplet_p | line_p)+ }</egXML> The second version,
+difference between this declaration and the following: <eg>poem_p = element poem
+{heading_p?, (stanza_p | couplet_p | line_p)+ }</eg> The second version,
 by applying the occurrence indicator to the group rather than to each
 element within it, would allow a single poem to contain a mixture
 of stanzas, couplets, or lines.</p>
@@ -663,8 +663,8 @@ intervening stretches of character data. For example, if we wished to
 mark place names wherever they appear inside our verse lines, then,
 assuming we have also added a pattern for  the
 <gi>name</gi> element, we could change the definition for
-<gi>line</gi> to <egXML xmlns="http://www.tei-c.org/ns/Examples">line_p = element
-line { (text | name_p )* }</egXML>
+<gi>line</gi> to <eg>line_p = element
+line { (text | name_p )* }</eg>
 </p>
 
 <p>XML places constraints on the way that mixed content models may be
@@ -684,9 +684,9 @@ chorus appears.  Like a stanza, a refrain consists of repetitions of
 the line element.  A refrain can appear at the start of a poem only,
 or as an optional addition following each stanza.  This could be
 expressed by a pattern such as the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">refrain_p = element refrain {line_p+}
+<eg>refrain_p = element refrain {line_p+}
 poem_p = element poem   {heading_p?, ( line_p+ | (refrain_p?, (stanza_p,
-refrain_p?)+ )) }</egXML>
+refrain_p?)+ )) }</eg>
 
 That is, a poem consists of an optional heading, followed by either a
 sequence of lines or an un-named group, which starts with an optional
@@ -704,8 +704,8 @@ and that if there is both a heading and a stanza they must appear in
 that order.</p>
 <p>Note that the apparent complexity of this model derives from the
 constraints expressed informally above. A simpler model, such as
-<egXML xmlns="http://www.tei-c.org/ns/Examples">poem_p =
-element poem {heading_p?, (line_p|refrain_p|stanza_p)+ }</egXML> would not enforce any of them, and would therefore permit
+<eg>poem_p =
+element poem {heading_p?, (line_p|refrain_p|stanza_p)+ }</eg> would not enforce any of them, and would therefore permit
 such anomalies as a poem consisting only of refrains, or an arbitrary mixture of
 lines and refrains.</p>
 
@@ -730,7 +730,7 @@ ancestor at one end and many children (mostly the elements containing
 simple text) at the other.  For example, we could represent an anthology
 containing two poems, the first of which contains two four-line
 stanzas and the second a single stanza,  by a tree structure like the following figure:</p>
-<figure><graphic url="Images/xmlpic.png"/></figure>
+<figure><graphic   width="80%" url="Images/xmlpic.png"/></figure>
 <!-- graphic needs redoing, took out scaling looks much better(JC)  -->
 <p>This graphic representation of the structure of an XML document is
 close to the abstract model implicit in most XML processing
@@ -820,8 +820,7 @@ has no significance; they must however be separated by at least one
 whitespace (blank, newline, or tab) character. The value part
 must always be given inside matching quotation marks, either single or
 double.</p>
-<p>For example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-&lt;poem xml:id="P1" status="draft"&gt; ... &lt;/poem&gt;</egXML> 
+<p>For example: <eg>&lt;poem xml:id="P1" status="draft"&gt; ... &lt;/poem&gt;</eg> 
 Here attribute values are being specified for two attributes
 previously declared for the <gi>poem</gi> element: <att>xml:id</att>
 and <att>status.</att> For the instance of a <gi>poem</gi> in this
@@ -848,8 +847,7 @@ is acceptable for an attribute.<!-- and a default value.--></p>
 <p>In the compact syntax of RELAX NG, an attribute is defined by means
 of an attribute pattern, like the following: 
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">att.status =
-    attribute status {"draft" | "revised" | "published"}</egXML>
+<eg>att.status = attribute status {"draft" | "revised" | "published"}</eg>
 
 This defines a new pattern, called <code>att.status</code>, whose
 value is an attribute pattern defining an attribute named
@@ -893,8 +891,8 @@ because a list of acceptable values is predefined, a parser can check
 that no <gi>poem</gi> is defined for which the <att>status</att>
 attribute does not have one of <val>draft</val>, <val>revised</val>,
 or <val>published</val> as its value. By contrast, with a definition
-such as <egXML xmlns="http://www.tei-c.org/ns/Examples">att.status =
-attribute status {text}</egXML> a parser would accept almost any
+such as <eg>att.status =
+attribute status {text}</eg> a parser would accept almost any
 unbroken string of characters (<code>status="awful"</code>,
 <code>status="awe-ful"</code>, or <code>status="12345678"</code>) as
 valid for this attribute.  Sometimes, of course, the set of possible
@@ -958,20 +956,19 @@ the parser may safely ignore the lack of one in those that do not.
 Only poems to which we intend to refer need use this attribute; for
 each such poem we should now include in its start-tag some unique
 identifier, for example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;poem xml:id="Rose"&gt;
+<eg>&lt;poem xml:id="Rose"&gt;
 &lt;/poem&gt;
 &lt;poem xml:id="P40"&gt;
 &lt;/poem&gt;
 &lt;poem&gt;
 &lt;/poem&gt;
-</egXML></p>
+</eg></p>
 <p>Next we need to define a new element for the cross reference
 itself.  This will not have any content – it is only a
 pointer – but it has an attribute, the value of which will be
 the identifier of the element pointed at.  This is achieved by
 the following definition:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-  poemRef_p = element poemRef {attribute target {anyURI},  empty}</egXML>
+<eg>poemRef_p = element poemRef {attribute target {anyURI},  empty}</eg>
 </p>
 
 <p>The <gi>poemRef</gi> element has no content, but a single attribute
@@ -990,8 +987,8 @@ attribute pattern, it must be supplied on each occurrence — a
 the poem whose <att>xml:id</att> attribute specifies that its
 identifier is <val>Rose</val> as follows:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Blake's poem on the sick rose 
-&lt;poemRef target='#Rose'/&gt; ...</egXML>
+<eg>Blake's poem on the sick rose 
+&lt;poemRef target='#Rose'/&gt; ...</eg>
 <!--
 In this example, we have used the special syntax defined by XML for
 representing empty elements in which the end-tag and the start-tag are
@@ -1104,8 +1101,7 @@ would have the following form: <eg><![CDATA[<!ENTITY eacute "é">]]></eg>
 <p>Entities of this kind are useful also for <term>string
 substitution</term> purposes, where the same text needs to be repeated
 uniformly throughout a text. For example, if a declaration such as
-<egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;!ENTITY TEI
-"Text Encoding Initiative"&gt;</egXML> is included with a document,
+<eg>&lt;!ENTITY TEI "Text Encoding Initiative"&gt;</eg> is included with a document,
 then references such as <code>&amp;TEI;</code> may be used within it,
 each of which will be expanded in the same way and replaced by the
 string "Text Encoding Initiative" before the text is validated.</p>
@@ -1207,21 +1203,20 @@ use the "null" namespace. Alternatively, the root element of a
 document may supply a default namespace using the special purpose
 <att>xmlns</att> attribute. This attribute simply provides a
 unique name for our namespace, in the form of a URI:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<eg>
 &lt;anthology xmlns="http://www.example.net/anthology/ns"&gt;
 ...
 &lt;/anthology&gt;
-</egXML>
+</eg>
 In exactly the same way, on the root element for each part of our
 document which uses the SVG language, we might introduce the SVG
 namespace name:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-&lt;anthology xmlns="http://www.example.net/anthology/ns"&gt;
+<eg>&lt;anthology xmlns="http://www.example.net/anthology/ns"&gt;
   <!-- anthology markup elements here -->
    
   <!-- more anthology markup elements here -->
 &lt;/anthology&gt;
-</egXML>
+</eg>
 Although a namespace name usually uses the URI (Uniform Resource
 Identifier) syntax, it is not  treated as an online address
 and an XML processor regards it just as a string, providing a longer name for the
@@ -1231,7 +1226,7 @@ name with the namespace it defines. This is very useful if we want to
 mingle elements from different namespaces within the same document,
 since the prefix can be attached to any element, over-riding the
 implicit namespace for itself (but not its children):
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<eg>
 &lt;anthology xmlns="http://www.example.net/anthology/ns"
 	   xmlns:svg="http://www.w3.org/2000/svg"&gt;
   &lt;!-- anthology markup elements here --&gt;
@@ -1239,7 +1234,7 @@ implicit namespace for itself (but not its children):
       &lt;!-- SVG markup elements here --&gt;
    &lt;/svg:svg&gt;
   &lt;!-- more anthology markup elements here --&gt;
-&amp;lt;/anthology&gt;</egXML>
+&amp;lt;/anthology&gt;</eg>
 </p>
 <p>There is no limit on the number of namespaces that a document can
 use. Provided that each is uniquely identified, an XML processor can
@@ -1248,7 +1243,7 @@ extend our example further, we might decide to add a linguistic
 analysis to each of the poems, using a set of elements such as
 <gi>aux</gi>, <gi>adj</gi>, etc. derived from some pre-existing XML
 vocabulary for linguistic analysis. 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<eg>
 &lt;anthology xmlns="http://www.example.net/anthology/ns"
            xmlns:gram="http://www.gram.org"
 	   xmlns:svg="http://www.w3.org/2000/svg"&gt;
@@ -1263,7 +1258,7 @@ vocabulary for linguistic analysis.
       &lt;gram:aux&gt;art&lt;/gram:aux &gt;
       &lt;gram:adj&gt;sick&lt;/gram:adj&gt;
 &lt;/line&gt;
-&lt;/anthology&gt;</egXML>
+&lt;/anthology&gt;</eg>
 </p>
 
 <div type="div3" xml:id="SG-ms"><head>Marked Sections</head>
@@ -1290,10 +1285,10 @@ references encountered are therefore treated as if they were plain
 text. For example, when we come to write the users' manual for our
 anthology, we may find ourselves often producing text like the
 following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-Here is an example of the use of the <gi>line</gi> element:
+<eg>
+Here is an example of the use of the &lt;gi&gt;line&lt;/gi&gt; element:
 &lt;![CDATA[&lt;line&gt;....&lt;/line&gt;]]&gt;
-</egXML>
+</eg>
 </p>
 
 </div>
