@@ -587,21 +587,7 @@
 
   <xsl:template name="Text">
     <xsl:param name="words"/>
-    <xsl:choose>
-      <xsl:when test="contains($words,'&amp;')">
-	<xsl:value-of
-	select="translate(substring-before($words,'&amp;'),'\{}','&#8421;&#10100;&#10101;')"/>
-	<xsl:text>&amp;amp;</xsl:text>
-	<xsl:call-template name="Text">
-	  <xsl:with-param name="words">
-	    <xsl:value-of select="translate(substring-after($words,'&amp;'),'\{}','&#8421;&#10100;&#10101;')"/>
-	  </xsl:with-param>
-	</xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:value-of select="translate($words,'\{}','&#8421;&#10100;&#10101;')"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:value-of select="translate($words,'\{}','&#8421;&#10100;&#10101;')"/>
   </xsl:template>
 
   <xsl:template name="applyRendition"/>
