@@ -27,7 +27,7 @@
 <xsl:template name="latexPreambleHook">
 \usepackage{framed}
 \definecolor{shadecolor}{gray}{0.9}
-\setromanfont{Lucida Bright}
+\setromanfont[Scale=0.9]{Lucida Bright}
 \setsansfont[Scale=0.9]{Lucida Sans}
 \setmonofont[Scale=0.9]{Lucida Sans Typewriter}
 \setlength{\headheight}{14pt}
