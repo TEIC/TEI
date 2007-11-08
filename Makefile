@@ -124,11 +124,13 @@ xml: check subset
 	@echo Success. Created Guidelines.xml. now attempt to validate
 	#-rnv Exemplars/teilite.rnc Guidelines.xml
 
-pdf: xml
-	@echo Checking you have a running ${LATEX} before trying to make PDF...
-	which ${XELATEX} || exit 1
+tex: xml
 	xsltproc Utilities/guidelines-latex.xsl Guidelines.xml \
 	> Guidelines.tex
+
+pdf: tex
+	@echo Checking you have a running ${LATEX} before trying to make PDF...
+	which ${XELATEX} || exit 1
 	mkdir -p Images
 	cp -r Source/Images/*.* Images
 	-${XELATEX} -interaction=nonstopmode Guidelines
