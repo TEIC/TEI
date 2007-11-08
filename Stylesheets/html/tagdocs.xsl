@@ -34,6 +34,251 @@
     <xd:short>Process elements tei:attDef</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
+
+  <xd:doc>
+    <xd:short>[html] Document an element, macro, or class</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="refdoc">
+    <xsl:if test="$verbose='true'">
+      <xsl:message> refdoc for <xsl:value-of select="name(.)"/> - <xsl:value-of
+          select="@ident"/>
+      </xsl:message>
+    </xsl:if>
+    <xsl:variable name="objectname">
+      <xsl:choose>
+        <xsl:when test="tei:altIdent">
+          <xsl:value-of select="tei:altIdent"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="@ident"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="name">
+      <xsl:value-of select="$objectname"/>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="self::tei:classSpec and not(@ident='att.global') and
+		      count(key('CLASSMEMBERS',@ident))=0">
+    <xsl:if test="$verbose='true'">
+      <xsl:message> class <xsl:value-of select="@ident"/> omitted as it has no members
+      </xsl:message>
+    </xsl:if>
+
+      </xsl:when>
+      <xsl:when test="$splitLevel=-1 or $STDOUT='true'">
+        <h2>
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name">
+	      <xsl:value-of select="@ident"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+          <xsl:value-of select="$name"/>
+        </h2>
+	<xsl:apply-templates mode="weavebody" select="."/>
+      </xsl:when>
+      <xsl:otherwise> 
+	<span class="refDocLink">
+	  <a href="ref-{@ident}{$outputSuffix}">
+          <xsl:value-of select="$name"/>
+        </a>
+	<xsl:text> </xsl:text>
+	</span>
+	<xsl:variable name="BaseFile">
+          <xsl:value-of select="$masterFile"/>
+          <xsl:if test="ancestor::tei:teiCorpus">
+            <xsl:text>-</xsl:text>
+            <xsl:choose>
+              <xsl:when test="@xml:id">
+                <xsl:value-of select="@xml:id"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:number/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:if>
+        </xsl:variable>
+        <xsl:call-template name="outputChunk">
+          <xsl:with-param name="ident">
+            <xsl:text>ref-</xsl:text>
+            <xsl:value-of select="@ident"/>
+          </xsl:with-param>
+          <xsl:with-param name="content">
+            <html>
+              <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (7) </xsl:comment>
+              <head>
+                <title>
+                  <xsl:value-of select="$name"/>
+                </title>
+		<xsl:choose>
+		  <xsl:when test="$cssFile = ''"/>
+		  <xsl:when test="$cssFileInclude='true'">
+		    <style>
+		      <include xmlns="http://www.w3.org/2001/XInclude"
+			  href="{$cssFile}" 
+			  parse="text"/>
+		    </style>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+                <xsl:if test="not($cssSecondaryFile = '')">
+                  <link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
+                </xsl:if>
+		<xsl:call-template name="generateLocalCSS"/>
+		<meta name="generator" content="Text Encoding Initiative Consortium XSLT stylesheets"/>
+		<meta name="DC.Title" content="{$name}"/>
+		<meta http-equiv="Content-Type" 
+		      content="application/xhtml+xml; charset=utf-8"/>
+                <xsl:call-template name="includeJavascript"/>
+                <xsl:call-template name="javascriptHook"/>
+              </head>
+              <body id="TOP">
+                <xsl:attribute name="onload">
+                  <xsl:text>startUp()</xsl:text>
+                </xsl:attribute>
+                <xsl:call-template name="bodyHook"/>
+		<xsl:call-template name="teiTOP">
+		  <xsl:with-param name="name">
+		    <xsl:value-of select="$name"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+                <div class="main-content">
+		  <xsl:call-template name="startDivHook"/>
+
+		  <xsl:call-template name="makeAnchor">
+		    <xsl:with-param name="name">
+		      <xsl:value-of select="@ident"/>
+		    </xsl:with-param>
+		  </xsl:call-template>
+		  <xsl:apply-templates mode="weavebody" select="."/>
+                </div>
+		<xsl:call-template name="stdfooter"/>
+              </body>
+            </html>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xd:doc>
+    <xd:short>[html] </xd:short>
+    <xd:param name="text">text</xd:param>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="embolden">
+    <xsl:param name="text"/>
+    <b>
+      <xsl:copy-of select="$text"/>
+    </b>
+  </xsl:template>
+  <xd:doc>
+    <xd:short>[html] </xd:short>
+    <xd:param name="text">text</xd:param>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="italicize">
+    <xsl:param name="text"/>
+    <em>
+      <xsl:copy-of select="$text"/>
+    </em>
+  </xsl:template>
+  <xd:doc>
+    <xd:short>[html] make a link</xd:short>
+    <xd:param name="class">class</xd:param>
+    <xd:param name="id">id</xd:param>
+    <xd:param name="name">name</xd:param>
+    <xd:param name="text">text</xd:param>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="makeLink">
+    <xsl:param name="class"/>
+    <xsl:param name="name"/>
+    <xsl:param name="text"/>
+    <a class="{$class}">
+      <xsl:attribute name="href">
+        <xsl:choose>
+          <xsl:when test="$splitLevel=-1">
+            <xsl:text>#</xsl:text>
+            <xsl:value-of select="$name"/>
+          </xsl:when>
+	  <xsl:when test="$STDOUT='true'">
+	    <xsl:for-each select="key('IDENTS',$name)">
+	      <xsl:call-template name="getSpecURL">
+		<xsl:with-param name="name">
+		  <xsl:value-of select="$name"/>
+		</xsl:with-param>
+		<xsl:with-param name="type">
+		  <xsl:value-of select="substring-before(local-name(),'Spec')"/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	      </xsl:for-each>
+	  </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>ref-</xsl:text>
+            <xsl:value-of select="$name"/>
+	    <xsl:value-of select="$outputSuffix"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:attribute>
+      <xsl:copy-of select="$text"/>
+    </a>
+  </xsl:template>
+<xsl:template name="teiTOP">
+  <xsl:param name="name"/>
+  <div id="hdr">
+    <xsl:call-template name="stdheader">
+      <xsl:with-param name="title">
+	<xsl:value-of select="$name"/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </div>
+</xsl:template>
+
+  <xd:doc>
+    <xd:short>[html] Provide a footer for each reference document</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+
+  <xsl:template name="refdocFooter">
+    <xsl:call-template name="preAddressHook"/>
+    <div style="margin: 20pt; font-weight: bold;">
+      <a href="{$refDocFooterURL}">
+	<xsl:value-of select="$refDocFooterText"/>
+      </a>
+    </div>
+  </xsl:template>
+
+  <xd:doc>
+    <xd:short>[html] </xd:short>
+    <xd:param name="text">text</xd:param>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="ttembolden">
+    <xsl:param name="text"/>
+    <b>
+      <tt>
+        <xsl:copy-of select="$text"/>
+      </tt>
+    </b>
+  </xsl:template>
+  <xd:doc>
+    <xd:short>[html] </xd:short>
+    <xd:param name="text">text</xd:param>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="typewriter">
+    <xsl:param name="text"/>
+    <tt>
+      <xsl:copy-of select="$text"/>
+    </tt>
+  </xsl:template>
+
+
+<!-- ............................ -->
   <xsl:template match="tei:attDef" mode="summary">
     <xsl:variable name="name">
       <xsl:choose>
@@ -188,20 +433,6 @@
   </xsl:template>
 
   <xd:doc>
-    <xd:short>Process elements tei:attList</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:attList" mode="show">
-    <xsl:call-template name="displayAttList">
-      <xsl:with-param name="mode">summary</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:attList</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:attList" mode="weave"/>
-  <xd:doc>
     <xd:short>Process elements tei:classSpec</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
@@ -325,66 +556,6 @@
     </table>
   </xsl:template>
 
-  <xd:doc>
-    <xd:short>Process elements tei:classes</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:classes" mode="weave">
-<!--
-    <xsl:if test="tei:memberOf">
-      <tr>
-        <td   class="wovenodd-col1">
-          <span class="label">
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Class</xsl:with-param>
-            </xsl:call-template>
-          </span>
-        </td>
-        <td colspan="2" class="wovenodd-col2">
-          <xsl:for-each select="tei:memberOf">
-            <xsl:choose>
-              <xsl:when test="key('IDENTS',@key)">
-                <xsl:variable name="Key">
-                  <xsl:value-of select="@key"/>
-                </xsl:variable>
-                <xsl:for-each select="key('IDENTS',@key)">
-                  <xsl:if
-                    test="not(generate-id(.)=generate-id(key('IDENTS',$Key)[1]))">
-                    <xsl:text> |  </xsl:text>
-                  </xsl:if>
-                  <xsl:call-template name="linkTogether">
-                    <xsl:with-param name="name" select="@ident"/>
-                  </xsl:call-template>
-                </xsl:for-each>
-              </xsl:when>
-	      <xsl:when test="ancestor::tei:schemaSpec">
-	      </xsl:when>
-              <xsl:otherwise>
-                <xsl:call-template name="linkTogether">
-                  <xsl:with-param name="name" select="@key"/>
-                </xsl:call-template>
-              </xsl:otherwise>
-            </xsl:choose>
-            <xsl:text> </xsl:text>
-          </xsl:for-each>
-        </td>
-      </tr>
-    </xsl:if>
--->
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:defaultVal</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:defaultVal" mode="weave" />
-
-  <xd:doc>
-    <xd:short>Process elements tei:desc</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:desc">
-    <xsl:apply-templates/>
-  </xsl:template>
 
   <xd:doc>
     <xd:short>Process elements tei:elementSpec</xd:short>
@@ -1161,13 +1332,6 @@
   </xsl:template>
 
   <xd:doc>
-    <xd:short>Process elements tei:valList</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:valList" mode="weave">
-    <xsl:apply-templates mode="contents" select="."/>
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements teix:egXML</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
@@ -1283,247 +1447,6 @@
 	</xsl:choose>
 	</table>
       </xsl:if>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>[html] </xd:short>
-    <xd:param name="text">text</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="embolden">
-    <xsl:param name="text"/>
-    <b>
-      <xsl:copy-of select="$text"/>
-    </b>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>[html] </xd:short>
-    <xd:param name="text">text</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="italicize">
-    <xsl:param name="text"/>
-    <em>
-      <xsl:copy-of select="$text"/>
-    </em>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>[html] make a link</xd:short>
-    <xd:param name="class">class</xd:param>
-    <xd:param name="id">id</xd:param>
-    <xd:param name="name">name</xd:param>
-    <xd:param name="text">text</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="makeLink">
-    <xsl:param name="class"/>
-    <xsl:param name="name"/>
-    <xsl:param name="text"/>
-    <a class="{$class}">
-      <xsl:attribute name="href">
-        <xsl:choose>
-          <xsl:when test="$splitLevel=-1">
-            <xsl:text>#</xsl:text>
-            <xsl:value-of select="$name"/>
-          </xsl:when>
-	  <xsl:when test="$STDOUT='true'">
-	    <xsl:for-each select="key('IDENTS',$name)">
-	      <xsl:call-template name="getSpecURL">
-		<xsl:with-param name="name">
-		  <xsl:value-of select="$name"/>
-		</xsl:with-param>
-		<xsl:with-param name="type">
-		  <xsl:value-of select="substring-before(local-name(),'Spec')"/>
-		</xsl:with-param>
-	      </xsl:call-template>
-	      </xsl:for-each>
-	  </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>ref-</xsl:text>
-            <xsl:value-of select="$name"/>
-	    <xsl:value-of select="$outputSuffix"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:attribute>
-      <xsl:copy-of select="$text"/>
-    </a>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>[html] Document an element, macro, or class</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="refdoc">
-    <xsl:if test="$verbose='true'">
-      <xsl:message> refdoc for <xsl:value-of select="name(.)"/> - <xsl:value-of
-          select="@ident"/>
-      </xsl:message>
-    </xsl:if>
-    <xsl:variable name="objectname">
-      <xsl:choose>
-        <xsl:when test="tei:altIdent">
-          <xsl:value-of select="tei:altIdent"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="@ident"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:variable name="name">
-      <xsl:value-of select="$objectname"/>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="self::tei:classSpec and not(@ident='att.global') and
-		      count(key('CLASSMEMBERS',@ident))=0">
-    <xsl:if test="$verbose='true'">
-      <xsl:message> class <xsl:value-of select="@ident"/> omitted as it has no members
-      </xsl:message>
-    </xsl:if>
-
-      </xsl:when>
-      <xsl:when test="$splitLevel=-1 or $STDOUT='true'">
-        <h2>
-	  <xsl:call-template name="makeAnchor">
-	    <xsl:with-param name="name">
-	      <xsl:value-of select="@ident"/>
-	    </xsl:with-param>
-	  </xsl:call-template>
-          <xsl:value-of select="$name"/>
-        </h2>
-	<xsl:apply-templates mode="weavebody" select="."/>
-      </xsl:when>
-      <xsl:otherwise> 
-	<span class="refDocLink">
-	  <a href="ref-{@ident}{$outputSuffix}">
-          <xsl:value-of select="$name"/>
-        </a>
-	<xsl:text> </xsl:text>
-	</span>
-	<xsl:variable name="BaseFile">
-          <xsl:value-of select="$masterFile"/>
-          <xsl:if test="ancestor::tei:teiCorpus">
-            <xsl:text>-</xsl:text>
-            <xsl:choose>
-              <xsl:when test="@xml:id">
-                <xsl:value-of select="@xml:id"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:number/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:if>
-        </xsl:variable>
-        <xsl:call-template name="outputChunk">
-          <xsl:with-param name="ident">
-            <xsl:text>ref-</xsl:text>
-            <xsl:value-of select="@ident"/>
-          </xsl:with-param>
-          <xsl:with-param name="content">
-            <html>
-              <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (7) </xsl:comment>
-              <head>
-                <title>
-                  <xsl:value-of select="$name"/>
-                </title>
-		<xsl:choose>
-		  <xsl:when test="$cssFile = ''"/>
-		  <xsl:when test="$cssFileInclude='true'">
-		    <style>
-		      <include xmlns="http://www.w3.org/2001/XInclude"
-			  href="{$cssFile}" 
-			  parse="text"/>
-		    </style>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
-		  </xsl:otherwise>
-		</xsl:choose>
-                <xsl:if test="not($cssSecondaryFile = '')">
-                  <link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
-                </xsl:if>
-		<xsl:call-template name="generateLocalCSS"/>
-		<meta name="generator" content="Text Encoding Initiative Consortium XSLT stylesheets"/>
-		<meta name="DC.Title" content="{$name}"/>
-		<meta http-equiv="Content-Type" 
-		      content="application/xhtml+xml; charset=utf-8"/>
-                <xsl:call-template name="includeJavascript"/>
-                <xsl:call-template name="javascriptHook"/>
-              </head>
-              <body id="TOP">
-                <xsl:attribute name="onload">
-                  <xsl:text>startUp()</xsl:text>
-                </xsl:attribute>
-                <xsl:call-template name="bodyHook"/>
-		<xsl:call-template name="teiTOP">
-		  <xsl:with-param name="name">
-		    <xsl:value-of select="$name"/>
-		  </xsl:with-param>
-		</xsl:call-template>
-                <div class="main-content">
-		  <xsl:call-template name="startDivHook"/>
-
-		  <xsl:call-template name="makeAnchor">
-		    <xsl:with-param name="name">
-		      <xsl:value-of select="@ident"/>
-		    </xsl:with-param>
-		  </xsl:call-template>
-		  <xsl:apply-templates mode="weavebody" select="."/>
-                </div>
-		<xsl:call-template name="stdfooter"/>
-              </body>
-            </html>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-<xsl:template name="teiTOP">
-  <xsl:param name="name"/>
-  <div id="hdr">
-    <xsl:call-template name="stdheader">
-      <xsl:with-param name="title">
-	<xsl:value-of select="$name"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </div>
-</xsl:template>
-
-  <xd:doc>
-    <xd:short>[html] Provide a footer for each reference document</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-
-  <xsl:template name="refdocFooter">
-    <xsl:call-template name="preAddressHook"/>
-    <div style="margin: 20pt; font-weight: bold;">
-      <a href="{$refDocFooterURL}">
-	<xsl:value-of select="$refDocFooterText"/>
-      </a>
-    </div>
-  </xsl:template>
-
-  <xd:doc>
-    <xd:short>[html] </xd:short>
-    <xd:param name="text">text</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="ttembolden">
-    <xsl:param name="text"/>
-    <b>
-      <tt>
-        <xsl:copy-of select="$text"/>
-      </tt>
-    </b>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>[html] </xd:short>
-    <xd:param name="text">text</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="typewriter">
-    <xsl:param name="text"/>
-    <tt>
-      <xsl:copy-of select="$text"/>
-    </tt>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>

@@ -2499,4 +2499,49 @@ select="$makeDecls"/></xsl:message>
     <xsl:text> </xsl:text>
   </xsl:template>
 
+
+  <xd:doc>
+    <xd:short>Process elements tei:valList</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:valList" mode="weave">
+    <xsl:apply-templates mode="contents" select="."/>
+  </xsl:template>
+
+
+  <xd:doc>
+    <xd:short>Process elements tei:attList</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:attList" mode="show">
+    <xsl:call-template name="displayAttList">
+      <xsl:with-param name="mode">summary</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+  <xd:doc>
+    <xd:short>Process elements tei:attList</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:attList" mode="weave"/>
+
+  <xd:doc>
+    <xd:short>Process elements tei:classes</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:classes" mode="weave">
+  </xsl:template>
+  <xd:doc>
+    <xd:short>Process elements tei:defaultVal</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:defaultVal" mode="weave" />
+
+  <xd:doc>
+    <xd:short>Process elements tei:desc</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:desc">
+    <xsl:apply-templates/>
+  </xsl:template>
+
 </xsl:stylesheet>
