@@ -22,15 +22,6 @@
    <schemaSpec 
        ident="p5odds" prefix="TEI_"
        start="TEI schemaSpec elementSpec classSpec macroSpec div">
-    <moduleRef url="Exemplars/svg11.rng">
-     <content>
-      <rng:define combine="choice" name="tei_model.graphicLike">
-       <rng:ref name="svg"/>
-      </rng:define>
-     </content>
-    </moduleRef>
-    <moduleRef url="Exemplars/mathml2-main.rng"/>
-    <moduleRef url="Exemplars/relaxng.rng"/>
     <moduleRef key="header"/>
     <moduleRef key="core"/>
     <moduleRef key="tei"/>
@@ -64,188 +55,20 @@
       </content>
     </elementSpec>
 
-    <macroSpec ident="macro.schemaPattern" mode="change" module="tagdocs">
-     <content>
-      <group xmlns="http://relaxng.org/ns/structure/1.0">
-       <choice>
-        <text/>
-        <oneOrMore>
-         <choice>
-          <ref name="pattern"/>
-          <ref name="define"/>
-         </choice>
-        </oneOrMore>
-       </choice>
-       <zeroOrMore>
-        <ref name="anySchematron"/>
-       </zeroOrMore>
-      </group>
-     </content>
-    </macroSpec>
+    <elementSpec ident="div1" module="textstructure" mode="delete"/>
+    <elementSpec ident="div2" module="textstructure" mode="delete"/>
+    <elementSpec ident="div3" module="textstructure" mode="delete"/>
+    <elementSpec ident="div4" module="textstructure" mode="delete"/>
+    <elementSpec ident="div5" module="textstructure" mode="delete"/>
+    <elementSpec ident="div6" module="textstructure" mode="delete"/>
+    <elementSpec ident="div7" module="textstructure" mode="delete"/>
 
-    <!-- The goal here is to permit *any* element from the extension
-         namespace The problem is that we can't do this via
-         <elementSpec>, as it requires a name be specified on ident=,
-         and separates content declaration from attribute declaration
-         (maybe we could put the attribute declaration inside
-         elementSpec/content/, but it's not how it is intended to
-         work). So instead, we just define a macro which will resolve
-         the RELAX NG declarations we want-->
+    <xi:include href="oddity.odd"
+		xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:body/*)">
+      <xi:fallback> ERROR: cannot locate XInclude ODD elements </xi:fallback>
+    </xi:include>
 
-    <macroSpec ident="anyAlien" mode="add">
-      <content>
-	<element xmlns="http://relaxng.org/ns/structure/1.0">
-	  <nsName ns="http://www.example.org/ns/nonTEI"/>
-	  <zeroOrMore>
-	    <attribute>
-	      <anyName/>
-	      <data type="token"/>
-	    </attribute>
-	  </zeroOrMore>
-	  <zeroOrMore>
-	    <choice>
-	      <text/>
-	      <ref name="anyTEI"/>
-	      <ref name="anyAlien"/>
-	    </choice>
-	  </zeroOrMore>
-	</element>
-      </content>
-    </macroSpec>
-    
-    <!-- in examples we'd like to be able to show use of <xi:include>; of course, -->
-    <!-- we can't put in an <xi:include> element, or it will be processed! Thus, -->
-    <!-- here we use a bogus namespace -->
-    <elementSpec ident="include" ns="http://www.example.org/cannot/really/use/XInclude" mode="add">
-      <!-- the content and attributes were devised based on my reading of the spec at
-	   http://www.w3.org/TR/2006/REC-xinclude-20061115/, also having looked at
-	   Norm Walsh's implimentation for DocBook. -sb -->
-      <content>
-	<rng:optional>
-	  <rng:ref name="fallback"/>
-	</rng:optional>
-      </content>
-      <attList>
-	<attDef ident="href">
-	  <datatype>
-	    <rng:data type="anyURI">
-	      <rng:param name="pattern">[^#]+</rng:param>
-	    </rng:data>
-	  </datatype>
-	</attDef>
-	<attDef ident="parse">
-	  <defaultVal>xml</defaultVal>
-	  <valList>
-	    <valItem ident="xml"/>
-	    <valItem ident="text"/>
-	  </valList>
-	</attDef>
-	<attDef ident="xpointer">
-	  <datatype>
-	    <rng:data type="string"/>
-	  </datatype>
-	</attDef>
-	<attDef ident="encoding">
-	  <datatype>
-	    <rng:data type="string"/>
-	  </datatype>
-	</attDef>
-	<attDef ident="accept">
-	  <datatype>
-	    <rng:data type="string"/>
-	  </datatype>
-	</attDef>
-	<attDef ident="accept-language">
-	  <datatype>
-	    <rng:data type="string"/>
-	  </datatype>
-	</attDef>
-      </attList>
-    </elementSpec>
-    <!-- of course <xi:include> refers to <xi:fallback>, so we need to declare-->
-    <!-- that, too, just in case. -->
-    <elementSpec ident="fallback" ns="http://www.example.org/cannot/really/use/XInclude" mode="add">
-      <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	<rng:optional>
-	  <rng:ref name="anyTEI"/>
-	</rng:optional>
-      </content>
-    </elementSpec>
 
-    <elementSpec ident="egXML" mode="change" module="tagdocs"
-     ns="http://www.tei-c.org/ns/Examples" usage="mwa">
-     <content>
-      <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-       <choice>
-        <text/>
-        <ref name="anyTEI"/>
-        <ref name="mathml.math"/>
-        <ref name="svg"/>
-        <ref name="define"/>
-        <ref name="pattern"/>
-	<ref name="include"/>
-	<ref name="anyAlien"/>
-       </choice>
-      </oneOrMore>
-     </content>
-    </elementSpec>
-
-    <macroSpec ident="anySchematron" mode="add">
-     <content>
-      <element xmlns="http://relaxng.org/ns/structure/1.0">
-       <nsName ns="http://www.ascc.net/xml/schematron"/>
-       <zeroOrMore>
-        <choice>
-         <attribute>
-          <anyName/>
-         </attribute>
-         <ref name="anySchematron"/>
-         <text/>
-        </choice>
-       </zeroOrMore>
-      </element>
-     </content>
-    </macroSpec>
-
-    <macroSpec ident="anyTEI" mode="add">
-     <content>
-      <element xmlns="http://relaxng.org/ns/structure/1.0"
-	       ns="http://www.tei-c.org/ns/Examples">
-        <xi:include href="Exemplars/names.xml">
-          <xi:fallback> ERROR: cannot locate list of names</xi:fallback>
-	</xi:include>
-       <ref name="att.global.attribute.xmlid"/>
-       <ref name="att.global.attribute.xmllang"/>
-       <zeroOrMore>
-        <attribute>
-         <anyName>
-          <except>
-           <name>xml:id</name>
-           <name>xml:lang</name>
-          </except>
-         </anyName>
-        </attribute>
-       </zeroOrMore>
-       <zeroOrMore>
-        <choice>
-         <text/>
-         <ref name="anyTEI"/>
-         <ref name="macro.schemaPattern"/>
-         <ref name="mathml.math"/>
-	 <ref name="anyAlien"/>
-	 <ref name="include"/>
-        </choice>
-       </zeroOrMore>
-      </element>
-     </content>
-    </macroSpec>
-      <elementSpec ident="div1" module="textstructure" mode="delete"/>
-      <elementSpec ident="div2" module="textstructure" mode="delete"/>
-      <elementSpec ident="div3" module="textstructure" mode="delete"/>
-      <elementSpec ident="div4" module="textstructure" mode="delete"/>
-      <elementSpec ident="div5" module="textstructure" mode="delete"/>
-      <elementSpec ident="div6" module="textstructure" mode="delete"/>
-      <elementSpec ident="div7" module="textstructure" mode="delete"/>
    </schemaSpec>
   </body>
  </text>
