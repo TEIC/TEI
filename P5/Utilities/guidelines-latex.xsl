@@ -72,11 +72,30 @@
   <xsl:apply-imports/>
 </xsl:template>
 
-  <xsl:template name="lineBreak">
-    <xsl:param name="id"/>
-    <xsl:text>\mbox{}\newline &#10;</xsl:text>
-  </xsl:template>
+<xsl:template name="lineBreak">
+  <xsl:param name="id"/>
+  <xsl:text>\mbox{}\newline &#10;</xsl:text>
+</xsl:template>
 
+<xsl:template match="tei:hi[@rend='specList-elementSpec']">
+  <xsl:text>\textbf{&lt;</xsl:text>
+  <xsl:value-of select="."/>
+  <xsl:text>&gt;}</xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:hi[@rend='specList-macroSpec']">
+ <xsl:text>\textbf{</xsl:text>
+  <xsl:value-of select="."/>
+ <xsl:text>}</xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:hi[@rend='specList-classSpec']">
+ <xsl:text>\textbf{</xsl:text>
+ <xsl:value-of select="."/>
+ <xsl:text>}</xsl:text>
+</xsl:template>
+
+<xsl:template name="tableHline"/>
 
 </xsl:stylesheet>
 

@@ -116,11 +116,10 @@ html:check subset
 	(cd Guidelines; perl -p -i -e 's+ xmlns:html="http://www.w3.org/1999/xhtml"++' index.html)
 	-xmllint --noout --valid Guidelines/index.html
 
-xml: check subset 
-	xmllint --noent --xinclude ${DRIVER} |  \
-	xsltproc  -o Guidelines.xml \
-	--stringparam displayMode rnc  \
-	${XSL}/odds/odd2lite.xsl -
+xml: check  
+	xsltproc  --xinclude --stringparam displayMode rnc  \
+	${XSL}/odds/odd2lite.xsl ${DRIVER} \
+	 | xmllint --format - > Guidelines.xml
 	@echo Success. Created Guidelines.xml. now attempt to validate
 	#-rnv Exemplars/teilite.rnc Guidelines.xml
 
