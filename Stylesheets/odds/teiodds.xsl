@@ -638,11 +638,6 @@ select="$makeDecls"/></xsl:message>
 <xsl:template match="tei:classSpec/@ident"/>
 
 
-<xsl:template match="tei:classSpec|tei:elementSpec|tei:macroSpec" mode="weave">
-  <xsl:call-template name="refdoc"/>
-</xsl:template>
-
-
 <xsl:template match="tei:code">
   <xsl:call-template name="typewriter">
     <xsl:with-param name="text">
@@ -660,34 +655,6 @@ select="$makeDecls"/></xsl:message>
 <xsl:template match="tei:desc" mode="tangle"/>
 
 
-<xsl:template match="tei:divGen[@type='modelclasscat']">
-    <xsl:apply-templates mode="weave" select="key('MODELCLASSDOCS',1)">
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
-  </xsl:template>
-
-<xsl:template match="tei:divGen[@type='attclasscat']">
-    <xsl:apply-templates mode="weave" select="key('ATTCLASSDOCS',1)">
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
-  </xsl:template>
-
-
-  <xsl:template match="tei:divGen[@type='macrocat']">
-    <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
-  </xsl:template>
-
-
-  <xsl:template match="tei:divGen[@type='elementcat']">
-    <xsl:apply-templates mode="weave" select="key('ELEMENTDOCS',1)">
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
-  </xsl:template>
-
-
-  <xsl:template match="tei:editor"><xsl:apply-templates/>: </xsl:template>
 
 
   <xsl:template match="tei:elementSpec" mode="tangle">
@@ -920,21 +887,6 @@ select="$makeDecls"/></xsl:message>
     <xd:detail> </xd:detail>
   </xd:doc>
 
-  <xsl:template match="tei:exemplum" mode="weave">
-    <xsl:if test="teix:egXML/* or teix:egXML/text() or text()">
-      <xsl:apply-templates select="." mode="doc"/>
-    </xsl:if>
-  </xsl:template>
-
-  <xd:doc>
-    <xd:short>No-op processing of elements tei:gloss and tei:desc in
-    normal modes, as they will always be called explicitly if
-    needed.</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-
-  <xsl:template match="tei:desc|tei:gloss" mode="weave"/>
-
   <xsl:template match="tei:elementSpec/tei:desc"/>
 
   <xsl:template match="tei:classSpec/tei:desc"/>
@@ -1148,40 +1100,6 @@ select="$makeDecls"/></xsl:message>
 
 
   <xsl:template match="tei:remarks" mode="tangle"/>
-
-
-  <xsl:template match="tei:remarks" mode="weave">
-    <xsl:variable name="documentationLanguage">
-      <xsl:call-template name="generateDoc"/>
-    </xsl:variable>
-
-    <xsl:variable name="langs">
-      <xsl:value-of
-	  select="concat(normalize-space($documentationLanguage),' ')"/>
-    </xsl:variable>
-    <xsl:variable name="firstLang">
-      <xsl:value-of select="substring-before($langs,' ')"/>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="preceding-sibling::tei:remarks"/>
-      <xsl:when test="count(../tei:remarks)=1">
-	<xsl:apply-templates select="." mode="doc"/>
-      </xsl:when>
-      <xsl:when test="@xml:lang=$firstLang">
-	<xsl:apply-templates select="." mode="doc"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:for-each select="../tei:remarks">
-	  <xsl:variable name="currentLang">
-	    <xsl:call-template name="findLanguage"/>
-	  </xsl:variable>
-	  <xsl:if test="contains($langs,concat($currentLang,' '))">
-	    <xsl:apply-templates select="." mode="doc"/>
-	  </xsl:if>
-	</xsl:for-each>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
 
 
   <xsl:template match="tei:specGrp" mode="ok">
@@ -2352,15 +2270,6 @@ select="$makeDecls"/></xsl:message>
 
 
   <xd:doc>
-    <xd:short>Process elements tei:valList</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:valList" mode="weave">
-    <xsl:apply-templates mode="contents" select="."/>
-  </xsl:template>
-
-
-  <xd:doc>
     <xd:short>Process elements tei:attList</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
@@ -2369,30 +2278,6 @@ select="$makeDecls"/></xsl:message>
       <xsl:with-param name="mode">summary</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:attList</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:attList" mode="weave"/>
 
-  <xd:doc>
-    <xd:short>Process elements tei:classes</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:classes" mode="weave">
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:defaultVal</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:defaultVal" mode="weave" />
-
-  <xd:doc>
-    <xd:short>Process elements tei:desc</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:desc">
-    <xsl:apply-templates/>
-  </xsl:template>
 
 </xsl:stylesheet>
