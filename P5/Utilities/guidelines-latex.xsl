@@ -20,7 +20,7 @@
   
 <xsl:import href="/usr/share/xml/tei/stylesheet/latex/tei.xsl"/>
 <xsl:param name="reencode">false</xsl:param>
-<xsl:param name="numberBackHeadings">false</xsl:param>
+<xsl:param name="numberBackHeadings">true</xsl:param>
 <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
 <xsl:param name="classParameters">11pt,twoside</xsl:param>
 <xsl:param name="startNamespace"></xsl:param>
@@ -30,9 +30,11 @@
   <xsl:variable name="docClass">book</xsl:variable>
 <xsl:template name="latexPreambleHook">
 \usepackage{framed}
-\definecolor{shadecolor}{gray}{0.9}
-\setromanfont[Scale=0.9]{Lucida Bright}
-\setsansfont[Scale=0.9]{Lucida Sans}
+\definecolor{shadecolor}{gray}{0.95}
+\setromanfont{Times Roman}
+\setsansfont{Arial}
+%\setromanfont[Scale=0.9]{Lucida Bright}
+%\setsansfont[Scale=0.9]{Lucida Sans}
 \setmonofont[Scale=0.9]{Lucida Sans Typewriter}
 \setlength{\headheight}{14pt}
 </xsl:template>
@@ -97,6 +99,87 @@
 
 <xsl:template name="tableHline"/>
 
+<xsl:template name="makeTable">
+  <xsl:variable name="r">
+    <xsl:value-of select="@rend"/>
+  </xsl:variable>
+  <xsl:text>{</xsl:text>
+  <xsl:if test="$r='rules'">|</xsl:if>
+  <xsl:choose>
+    <xsl:when test="@rend='wovenodd'">
+      <xsl:text>L{.15\textwidth}P{.85\textwidth}</xsl:text>
+    </xsl:when>
+    <xsl:when test="@rend='attList'">
+      <xsl:text>L{.15\textwidth}P{.7\textwidth}</xsl:text>
+    </xsl:when>
+    <xsl:when test="@rend='valList'">
+      <xsl:text>L{.1\textwidth}P{.6\textwidth}</xsl:text>
+    </xsl:when>
+    <xsl:when test="@preamble">
+      <xsl:value-of select="@preamble"/>
+    </xsl:when>
+    <xsl:when test="function-available('exsl:node-set')">
+      <xsl:call-template name="makePreamble-complex">
+	<xsl:with-param name="r" select="$r"/>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="makePreamble-simple">
+	<xsl:with-param name="r" select="$r"/>
+      </xsl:call-template>
+    </xsl:otherwise>
+  </xsl:choose>
+  <xsl:text>}&#10;</xsl:text>
+  <xsl:call-template name="tableHline"/>
+  <xsl:choose>
+    <xsl:when test="tei:head and not(@rend='display')">
+      <xsl:if test="not(ancestor::tei:table)">
+	<xsl:text>\endfirsthead </xsl:text>
+	<xsl:text>\multicolumn{</xsl:text>
+	<xsl:value-of select="count(tei:row[1]/tei:cell)"/>
+	<xsl:text>}{c}{</xsl:text>
+	<xsl:apply-templates mode="ok" select="tei:head"/>
+	<xsl:text>(cont.)}\\\hline \endhead </xsl:text>
+      </xsl:if>
+      <xsl:text>\caption{</xsl:text>
+      <xsl:apply-templates mode="ok" select="tei:head"/>
+      <xsl:text>}\\ </xsl:text>
+    </xsl:when>
+    <xsl:otherwise> </xsl:otherwise>
+  </xsl:choose>
+    <xsl:if test="$r='rules'">\hline </xsl:if>
+    <xsl:apply-templates/>
+    <xsl:if test="$r='rules'">
+      <xsl:text>\\ \hline </xsl:text>
+    </xsl:if>
+</xsl:template>
+
+  <xsl:template match="tei:table">
+    <xsl:if test="@xml:id">
+      <xsl:text>\label{</xsl:text>
+      <xsl:value-of   select="@xml:id"/>
+      <xsl:text>}</xsl:text>
+    </xsl:if>
+    <xsl:text> \par</xsl:text>
+    <xsl:choose>
+      <xsl:when test="@rend='wovenodd' or @rend='attList' or
+		      @rend='valList'"> 
+	<xsl:text>\begin{small}\begin{tabular}</xsl:text>
+	<xsl:call-template name="makeTable"/>
+	<xsl:text>\end{tabular}\end{small}\par</xsl:text>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:table"> 
+	<xsl:text>\begin{tabular}</xsl:text>
+	<xsl:call-template  name="makeTable"/> 
+	<xsl:text>\end{tabular}</xsl:text>
+      </xsl:when>
+      <xsl:otherwise> 
+	<xsl:text>\begin{longtable}</xsl:text>
+	<xsl:call-template name="makeTable"/>
+	<xsl:text>\end{longtable} \par</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 </xsl:stylesheet>
 
 
