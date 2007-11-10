@@ -31,11 +31,11 @@
 <xsl:template name="latexPreambleHook">
 \usepackage{framed}
 \definecolor{shadecolor}{gray}{0.95}
-\setromanfont{Times Roman}
-\setsansfont{Arial}
-%\setromanfont[Scale=0.9]{Lucida Bright}
-%\setsansfont[Scale=0.9]{Lucida Sans}
-\setmonofont[Scale=0.9]{Lucida Sans Typewriter}
+\defaultfontfeatures{Scale=MatchLowercase}
+\setromanfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}
+%\setmonofont[Scale=0.9]{Lucida Sans Typewriter}
 \setlength{\headheight}{14pt}
 </xsl:template>
 
@@ -112,8 +112,11 @@
     <xsl:when test="@rend='attList'">
       <xsl:text>L{.15\textwidth}P{.7\textwidth}</xsl:text>
     </xsl:when>
-    <xsl:when test="@rend='valList'">
+    <xsl:when test="@rend='attDef'">
       <xsl:text>L{.1\textwidth}P{.6\textwidth}</xsl:text>
+    </xsl:when>
+    <xsl:when test="@rend='valList'">
+      <xsl:text>L{.1\textwidth}P{.5\textwidth}</xsl:text>
     </xsl:when>
     <xsl:when test="@preamble">
       <xsl:value-of select="@preamble"/>
@@ -163,7 +166,7 @@
     <xsl:text> \par</xsl:text>
     <xsl:choose>
       <xsl:when test="@rend='wovenodd' or @rend='attList' or
-		      @rend='valList'"> 
+		      @rend='valList' or @rend='attDef'"> 
 	<xsl:text>\begin{small}\begin{tabular}</xsl:text>
 	<xsl:call-template name="makeTable"/>
 	<xsl:text>\end{tabular}\end{small}\par</xsl:text>
