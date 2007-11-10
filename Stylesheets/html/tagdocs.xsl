@@ -338,6 +338,29 @@
     </span>
   </xsl:template>
 
+  <xsl:template name="emptySlash">
+    <xsl:param name="name"/>
+    <span class="emptySlash">
+	<xsl:value-of select="$name"/>
+    </span>
+  </xsl:template>
 
+  <xd:doc>
+    <xd:short>Process elements teix:egXML</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="teix:egXML">
+    <div>
+      <xsl:attribute name="class">
+	<xsl:text>pre</xsl:text>
+	<xsl:if test="not(*)">
+	  <xsl:text> cdata</xsl:text>
+	</xsl:if>
+      </xsl:attribute>
+      <xsl:call-template name="egXMLHook"/>
+      <xsl:call-template name="makeAnchor"/>
+      <xsl:apply-templates mode="verbatim"/>
+    </div>
+  </xsl:template>
 
 </xsl:stylesheet>

@@ -225,6 +225,7 @@ capable of dealing with UTF-8 directly.
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\Div[#1]#2{\section*{#2}}
 \catcode`\_=12\relax
+\def\exampleFontSet{\ttfamily\fontsize{9pt}{9pt}\selectfont}
 </xsl:template>
 
 <xd:doc class="layout">
@@ -304,7 +305,8 @@ capable of dealing with UTF-8 directly.
 \def\backmatter{%
   \clearpage
   \appendix
-  \@mainmatterfalse}
+%  \@mainmatterfalse
+}
 \newenvironment{bibitemlist}[1]{%
    \list{\@biblabel{\@arabic\c@enumiv}}%
        {\settowidth\labelwidth{\@biblabel{#1}}%

@@ -453,6 +453,7 @@
     <xd:short>Process elements tei:elementSpec</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
+
   <xsl:template match="tei:elementSpec" mode="weavebody">
     <xsl:variable name="name">
       <xsl:choose>
@@ -463,113 +464,174 @@
           <xsl:value-of select="@ident"/>
         </xsl:otherwise>
       </xsl:choose>
-      <xsl:if test="tei:content/rng:empty">
-        <xsl:text>/</xsl:text>
-      </xsl:if>
     </xsl:variable>
-
     <xsl:call-template name="makeSection">
       <xsl:with-param name="id">
         <xsl:value-of select="@ident"/>
       </xsl:with-param>
       <xsl:with-param name="name">
-        <xsl:value-of select="$name"/>
+	<xsl:text>&lt;</xsl:text>
+	<xsl:choose>
+	  <xsl:when test="tei:content/rng:empty">
+	    <xsl:call-template name="emptySlash">
+	      <xsl:with-param name="name">
+		<xsl:value-of select="$name"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="$name"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+	<xsl:text>&gt;</xsl:text>
       </xsl:with-param>
       <xsl:with-param name="contents">
-
-
-        <xsl:element namespace="{$outputNS}" name="{$tableName}">
-          <xsl:attribute name="{$rendName}">
-            <xsl:text>wovenodd</xsl:text>
-          </xsl:attribute>
-          <xsl:element namespace="{$outputNS}" name="{$rowName}">
-            <xsl:element namespace="{$outputNS}" name="{$cellName}">
-              <xsl:attribute name="{$colspan}">2</xsl:attribute>
-              <xsl:attribute name="{$rendName}">
-                <xsl:text>wovenodd-col2</xsl:text>
-              </xsl:attribute>
-              <xsl:element namespace="{$outputNS}" name="{$hiName}">
-                <xsl:attribute name="{$rendName}">
-                  <xsl:text>label</xsl:text>
-                </xsl:attribute>
-                <xsl:text>&lt;</xsl:text>
-                <xsl:value-of select="$name"/>
-                <xsl:if test="tei:content/rng:empty">
-                  <xsl:text>/</xsl:text>
-                </xsl:if>
-                <xsl:text>&gt; </xsl:text>
-              </xsl:element>
-              <xsl:call-template name="makeDescription"/>
-              <xsl:if test="tei:listRef">
-                <xsl:for-each select="tei:listRef/tei:ptr">
-                  <xsl:text> </xsl:text>
-                  <xsl:apply-templates mode="weave" select="."/>
-                </xsl:for-each>
-              </xsl:if>
-            </xsl:element>
-          </xsl:element>
-          <xsl:if test="@module">
-            <xsl:call-template name="moduleInfo"/>
-          </xsl:if>
-          <xsl:element namespace="{$outputNS}" name="{$rowName}">
-            <xsl:element namespace="{$outputNS}" name="{$cellName}">
-              <xsl:attribute name="{$rendName}">
-                <xsl:text>wovenodd-col1</xsl:text>
-              </xsl:attribute>
-              <xsl:element namespace="{$outputNS}" name="{$hiName}">
-                <xsl:attribute name="{$rendName}">
-                  <xsl:text>label</xsl:text>
-                </xsl:attribute>
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Used by</xsl:with-param>
-                </xsl:call-template>
-              </xsl:element>
+	<xsl:element namespace="{$outputNS}" name="{$tableName}">
+	  <xsl:attribute name="{$rendName}">
+	    <xsl:text>wovenodd</xsl:text>
+	  </xsl:attribute>
+	  <xsl:element name="{$rowName}">
+	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	      <xsl:attribute name="{$colspan}">2</xsl:attribute>
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>wovenodd-col2</xsl:text>
+	      </xsl:attribute>
+	      <xsl:element namespace="{$outputNS}" name="{$hiName}">
+		<xsl:attribute name="{$rendName}">
+		  <xsl:text>label</xsl:text>
+		</xsl:attribute>
+		<xsl:text>&lt;</xsl:text>
+		<xsl:call-template name="emptySlash">
+		  <xsl:with-param name="name">
+		    <xsl:value-of select="$name"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+		<xsl:text>&gt; </xsl:text>
+	      </xsl:element>
+	      <xsl:call-template name="makeDescription"/>
+	      <xsl:if test="tei:listRef">
+		<xsl:for-each select="tei:listRef/tei:ptr">
+		  <xsl:text> </xsl:text>
+		  <xsl:apply-templates mode="weave" select="."/>
+		</xsl:for-each>
+	      </xsl:if>
+	    </xsl:element>
+	  </xsl:element>
+	  
+	  <xsl:if test="@module">
+	    <xsl:call-template name="moduleInfo"/>
+	  </xsl:if>
+	  
+	  <xsl:element name="{$rowName}">
+	    <xsl:element namespace="{$outputNS}" name="{$rowName}">
+	      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+		<xsl:attribute name="{$rendName}">
+		  <xsl:text>wovenodd-col1</xsl:text>
+		</xsl:attribute>
+		<xsl:element namespace="{$outputNS}" name="{$hiName}">
+		  <xsl:attribute name="{$rendName}">
+		    <xsl:text>label</xsl:text>
+		  </xsl:attribute>
+		  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">Used by</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:element>
+	      </xsl:element>
+	      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+		<xsl:attribute name="{$rendName}">
+		  <xsl:text>wovenodd-col2</xsl:text>
+		</xsl:attribute>
+		<xsl:call-template name="generateParents"/>
+	      </xsl:element>
+	    </xsl:element>
+	  </xsl:element>
+	  
+	  <xsl:element namespace="{$outputNS}" name="{$rowName}">
+	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>wovenodd-col1</xsl:text>
+	      </xsl:attribute>
+	      <xsl:element namespace="{$outputNS}" name="{$hiName}">
+		<xsl:attribute name="{$rendName}">
+		  <xsl:text>label</xsl:text>
+		</xsl:attribute>
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">Attributes</xsl:with-param>
+		</xsl:call-template>
+	      </xsl:element>
 	    </xsl:element>
 	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
 	      <xsl:attribute name="{$rendName}">
-                  <xsl:text>wovenodd-col2</xsl:text>
+		<xsl:text>wovenodd-col2</xsl:text>
+	      </xsl:attribute>
+	      <xsl:choose>
+		<xsl:when test="not(tei:attList)">
+		  <xsl:call-template name="showAttClasses"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:for-each select="tei:attList">
+		    <xsl:call-template name="displayAttList">
+		      <xsl:with-param name="mode">all</xsl:with-param>
+		    </xsl:call-template>
+		  </xsl:for-each>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:element>
+	  </xsl:element>
+	  
+	  <xsl:apply-templates mode="weave"/>
+	  
+	  <xsl:element name="{$rowName}">
+	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>wovenodd-col1</xsl:text>
+	      </xsl:attribute>
+	      <xsl:element namespace="{$outputNS}" name="{$hiName}">
+		<xsl:attribute name="{$rendName}">
+		  <xsl:text>label</xsl:text>
+		</xsl:attribute>
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">Contained by</xsl:with-param>
+		</xsl:call-template>
+	      </xsl:element>
+	    </xsl:element>
+	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>wovenodd-col2</xsl:text>
 	      </xsl:attribute>
 	      <xsl:call-template name="generateParents"/>
 	    </xsl:element>
-          </xsl:element>
-          <xsl:element namespace="{$outputNS}" name="{$rowName}">
-            <xsl:element namespace="{$outputNS}" name="{$cellName}">
-              <xsl:attribute name="{$rendName}">
-                <xsl:text>wovenodd-col1</xsl:text>
-              </xsl:attribute>
-              <xsl:element namespace="{$outputNS}" name="{$hiName}">
-                <xsl:attribute name="{$rendName}">
-                  <xsl:text>label</xsl:text>
-                </xsl:attribute>
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Attributes</xsl:with-param>
-                </xsl:call-template>
-              </xsl:element>
-            </xsl:element>
-            <xsl:element namespace="{$outputNS}" name="{$cellName}">
-              <xsl:attribute name="{$rendName}">
-                <xsl:text>wovenodd-col2</xsl:text>
-              </xsl:attribute>
-              <xsl:choose>
-                <xsl:when test="not(tei:attList)">
-                  <xsl:call-template name="showAttClasses"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:for-each select="tei:attList">
-                    <xsl:call-template name="displayAttList">
-                      <xsl:with-param name="mode">all</xsl:with-param>
-                    </xsl:call-template>
-                  </xsl:for-each>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:element>
-          </xsl:element>
-          <xsl:apply-templates mode="weave"/>
-        </xsl:element>
+	  </xsl:element>
+	  
+	  <xsl:element name="{$rowName}">
+	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>wovenodd-col1</xsl:text>
+	      </xsl:attribute>
+	      <xsl:element namespace="{$outputNS}" name="{$hiName}">
+		<xsl:attribute name="{$rendName}">
+		  <xsl:text>label</xsl:text>
+		</xsl:attribute>
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">
+		    <xsl:text>May contain</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:element>     
+	    </xsl:element>
+	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>wovenodd-col2</xsl:text>
+	      </xsl:attribute>
+	      <xsl:call-template name="generateChildren"/>
+	    </xsl:element>
+	  </xsl:element>
+	  
+	</xsl:element>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-
+  
   <xd:doc>
     <xd:short>Process elements tei:elementSpec/tei:content</xd:short>
     <xd:detail> </xd:detail>
@@ -577,63 +639,63 @@
   <xsl:template match="tei:elementSpec/tei:content" mode="weave">
     <xsl:variable name="name">
       <xsl:choose>
-        <xsl:when test="../tei:altIdent">
-          <xsl:value-of select="../tei:altIdent"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="../@ident"/>
-        </xsl:otherwise>
+	<xsl:when test="../tei:altIdent">
+	  <xsl:value-of select="../tei:altIdent"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="../@ident"/>
+	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
-        <xsl:attribute name="{$rendName}">
-          <xsl:text>wovenodd-col1</xsl:text>
-        </xsl:attribute>
-        <xsl:element namespace="{$outputNS}" name="{$hiName}">
-          <xsl:attribute name="{$rendName}">
-            <xsl:text>label</xsl:text>
-          </xsl:attribute>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Declaration</xsl:with-param>
-          </xsl:call-template>
-        </xsl:element>
+	<xsl:attribute name="{$rendName}">
+	  <xsl:text>wovenodd-col1</xsl:text>
+	</xsl:attribute>
+	<xsl:element namespace="{$outputNS}" name="{$hiName}">
+	  <xsl:attribute name="{$rendName}">
+	    <xsl:text>label</xsl:text>
+	  </xsl:attribute>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Declaration</xsl:with-param>
+	  </xsl:call-template>
+	</xsl:element>
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
-        <xsl:attribute name="{$rendName}">
-          <xsl:text>wovenodd-col2</xsl:text>
-        </xsl:attribute>
-        <xsl:call-template name="bitOut">
-          <xsl:with-param name="grammar"/>
-          <xsl:with-param name="content">
-            <Wrapper>
-              <rng:element name="{$name}">
-                <xsl:if test="not(ancestor::tei:schemaSpec)">
-                  <rng:ref name="att.global.attributes"/>
-                  <xsl:for-each select="..">
-                    <xsl:call-template name="showClassAtts"/>
-                  </xsl:for-each>
-                </xsl:if>
-                <xsl:apply-templates mode="tangle" select="../tei:attList"/>
-                <xsl:copy-of select="rng:*"/>
-              </rng:element>
-            </Wrapper>
-          </xsl:with-param>
-        </xsl:call-template>
+	<xsl:attribute name="{$rendName}">
+	  <xsl:text>wovenodd-col2</xsl:text>
+	</xsl:attribute>
+	<xsl:call-template name="bitOut">
+	  <xsl:with-param name="grammar"/>
+	  <xsl:with-param name="content">
+	    <Wrapper>
+	      <rng:element name="{$name}">
+		<xsl:if test="not(ancestor::tei:schemaSpec)">
+		  <rng:ref name="att.global.attributes"/>
+		  <xsl:for-each select="..">
+		    <xsl:call-template name="showClassAtts"/>
+		  </xsl:for-each>
+		</xsl:if>
+		<xsl:apply-templates mode="tangle" select="../tei:attList"/>
+		<xsl:copy-of select="rng:*"/>
+	      </rng:element>
+	    </Wrapper>
+	  </xsl:with-param>
+	</xsl:call-template>
       </xsl:element>
     </xsl:element>
   </xsl:template>
   <xsl:template name="showClassAtts">
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:for-each select="key('IDENTS',@key)">
-        <xsl:if test="tei:attList">
-          <rng:ref name="{@ident}.attributes"/>
-        </xsl:if>
-        <xsl:call-template name="showClassAtts"/>
+	<xsl:if test="tei:attList">
+	  <rng:ref name="{@ident}.attributes"/>
+	</xsl:if>
+	<xsl:call-template name="showClassAtts"/>
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
-
+  
   <xd:doc>
     <xd:short>Process the specification elements elements, classes and macros</xd:short>
     <xd:param name="atts">attributes we have been asked to display</xd:param>
@@ -643,51 +705,51 @@
     <xsl:param name="atts"/>
     <xsl:variable name="name">
       <xsl:choose>
-        <xsl:when test="tei:altIdent">
-          <xsl:value-of select="tei:altIdent"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="@ident"/>
-        </xsl:otherwise>
+	<xsl:when test="tei:altIdent">
+	  <xsl:value-of select="tei:altIdent"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="@ident"/>
+	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:element namespace="{$outputNS}" name="{$hiName}">
       <xsl:attribute name="{$rendName}">
-        <xsl:text>specList-</xsl:text>
-        <xsl:value-of select="local-name(.)"/>
+	<xsl:text>specList-</xsl:text>
+	<xsl:value-of select="local-name(.)"/>
       </xsl:attribute>
       <xsl:element name="{$xrefName}">
-        <xsl:attribute name="{$urlName}">
-          <xsl:choose>
-            <xsl:when test="$splitLevel=-1">
-              <xsl:text>#</xsl:text>
-              <xsl:value-of select="$name"/>
-            </xsl:when>
-            <xsl:when test="$STDOUT='true'">
-              <xsl:for-each select="key('IDENTS',$name)">
-                <xsl:call-template name="getSpecURL">
-                  <xsl:with-param name="name">
-                    <xsl:value-of select="$name"/>
-                  </xsl:with-param>
-                  <xsl:with-param name="type">
-                    <xsl:value-of select="substring-before(local-name(),'Spec')"/>
-                  </xsl:with-param>
-                </xsl:call-template>
-              </xsl:for-each>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:text>ref-</xsl:text>
-              <xsl:value-of select="$name"/>
-              <xsl:text>.html</xsl:text>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:attribute>
-        <xsl:value-of select="$name"/>
-        <xsl:for-each select="key('IDENTS',$name)">
-          <xsl:if test="tei:content/rng:empty">
-            <xsl:text>/</xsl:text>
-          </xsl:if>
-        </xsl:for-each>
+	<xsl:attribute name="{$urlName}">
+	  <xsl:choose>
+	    <xsl:when test="$splitLevel=-1">
+	      <xsl:text>#</xsl:text>
+	      <xsl:value-of select="$name"/>
+	    </xsl:when>
+	    <xsl:when test="$STDOUT='true'">
+	      <xsl:for-each select="key('IDENTS',$name)">
+		<xsl:call-template name="getSpecURL">
+		  <xsl:with-param name="name">
+		    <xsl:value-of select="$name"/>
+		  </xsl:with-param>
+		  <xsl:with-param name="type">
+		    <xsl:value-of select="substring-before(local-name(),'Spec')"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:for-each>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>ref-</xsl:text>
+	      <xsl:value-of select="$name"/>
+	      <xsl:text>.html</xsl:text>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:attribute>
+	<xsl:value-of select="$name"/>
+	<xsl:for-each select="key('IDENTS',$name)">
+	  <xsl:if test="tei:content/rng:empty">
+	    <xsl:text>/</xsl:text>
+	  </xsl:if>
+	</xsl:for-each>
       </xsl:element>
     </xsl:element>
     <xsl:text> </xsl:text>
@@ -695,39 +757,39 @@
     <xsl:choose>
       <xsl:when test="$atts='-'"/>
       <xsl:when test="$atts='+'">
-        <xsl:call-template name="showAttClasses">
-          <xsl:with-param name="minimal">true</xsl:with-param>
-        </xsl:call-template>
+	<xsl:call-template name="showAttClasses">
+	  <xsl:with-param name="minimal">true</xsl:with-param>
+	</xsl:call-template>
       </xsl:when>
       <xsl:when test="$atts=''"/>
       <xsl:when test="string-length($atts)&gt;0">
-        <xsl:element namespace="{$outputNS}" name="{$tableName}">
-          <xsl:attribute name="{$rendName}">
-            <xsl:text>specDesc</xsl:text>
-          </xsl:attribute>
-          <xsl:variable name="HERE" select="."/>
-          <xsl:call-template name="splitAttTokens">
-            <xsl:with-param name="HERE" select="$HERE"/>
-            <xsl:with-param name="atts" select="$atts"/>
-          </xsl:call-template>
-        </xsl:element>
+	<xsl:element namespace="{$outputNS}" name="{$tableName}">
+	  <xsl:attribute name="{$rendName}">
+	    <xsl:text>specDesc</xsl:text>
+	  </xsl:attribute>
+	  <xsl:variable name="HERE" select="."/>
+	  <xsl:call-template name="splitAttTokens">
+	    <xsl:with-param name="HERE" select="$HERE"/>
+	    <xsl:with-param name="atts" select="$atts"/>
+	  </xsl:call-template>
+	</xsl:element>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:if test="tei:attList//tei:attDef">
-          <xsl:element namespace="{$outputNS}" name="{$tableName}">
-            <xsl:attribute name="{$rendName}">
-              <xsl:text>attList</xsl:text>
-            </xsl:attribute>
-            <xsl:apply-templates mode="summary" select="tei:attList//tei:attDef"/>
-          </xsl:element>
-        </xsl:if>
-        <xsl:call-template name="showAttClasses">
-          <xsl:with-param name="minimal">true</xsl:with-param>
-        </xsl:call-template>
+	<xsl:if test="tei:attList//tei:attDef">
+	  <xsl:element namespace="{$outputNS}" name="{$tableName}">
+	    <xsl:attribute name="{$rendName}">
+	      <xsl:text>attList</xsl:text>
+	    </xsl:attribute>
+	    <xsl:apply-templates mode="summary" select="tei:attList//tei:attDef"/>
+	  </xsl:element>
+	</xsl:if>
+	<xsl:call-template name="showAttClasses">
+	  <xsl:with-param name="minimal">true</xsl:with-param>
+	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
+  
   <xd:doc>
     <xd:short>Show a selected attribute</xd:short>
     <xd:param name="HERE">the starting node </xd:param>
@@ -739,20 +801,20 @@
     <xsl:param name="TOKEN"/>
     <xsl:choose>
       <xsl:when test="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
-        <xsl:for-each select="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
-          <xsl:call-template name="showAnAttribute"/>
-        </xsl:for-each>
+	<xsl:for-each select="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
+	  <xsl:call-template name="showAnAttribute"/>
+	</xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:for-each select="$HERE/tei:classes/tei:memberOf">
-          <xsl:for-each select="key('IDENTS',@key)/tei:attList//tei:attDef[@ident=$TOKEN]">
-            <xsl:call-template name="showAnAttribute"/>
-          </xsl:for-each>
-        </xsl:for-each>
+	<xsl:for-each select="$HERE/tei:classes/tei:memberOf">
+	  <xsl:for-each select="key('IDENTS',@key)/tei:attList//tei:attDef[@ident=$TOKEN]">
+	    <xsl:call-template name="showAnAttribute"/>
+	  </xsl:for-each>
+	</xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
+  
   <xd:doc>
     <xd:short>Split up and process a space-separated list of attribute names</xd:short>
     <xd:param name="HERE">the starting node </xd:param>
@@ -764,24 +826,24 @@
     <xsl:param name="atts"/>
     <xsl:choose>
       <xsl:when test="contains($atts,' ')">
-        <xsl:call-template name="doAnAttToken">
-          <xsl:with-param name="HERE" select="$HERE"/>
-          <xsl:with-param name="TOKEN" select="substring-before($atts,' ')"/>
-        </xsl:call-template>
-        <xsl:call-template name="splitAttTokens">
-          <xsl:with-param name="HERE" select="$HERE"/>
-          <xsl:with-param name="atts" select="substring-after($atts,' ')"/>
-        </xsl:call-template>
+	<xsl:call-template name="doAnAttToken">
+	  <xsl:with-param name="HERE" select="$HERE"/>
+	  <xsl:with-param name="TOKEN" select="substring-before($atts,' ')"/>
+	</xsl:call-template>
+	<xsl:call-template name="splitAttTokens">
+	  <xsl:with-param name="HERE" select="$HERE"/>
+	  <xsl:with-param name="atts" select="substring-after($atts,' ')"/>
+	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="doAnAttToken">
-          <xsl:with-param name="HERE" select="$HERE"/>
-          <xsl:with-param name="TOKEN" select="$atts"/>
-        </xsl:call-template>
+	<xsl:call-template name="doAnAttToken">
+	  <xsl:with-param name="HERE" select="$HERE"/>
+	  <xsl:with-param name="TOKEN" select="$atts"/>
+	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
+  
   <xd:doc>
     <xd:short>Display of an attribute</xd:short>
     <xd:detail> </xd:detail>
@@ -789,29 +851,29 @@
   <xsl:template name="showAnAttribute">
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
-        <xsl:attribute name="{$rendName}">
-          <xsl:text>Attribute</xsl:text>
-        </xsl:attribute>
-        <xsl:element namespace="{$outputNS}" name="{$hiName}">
-          <xsl:attribute name="{$rendName}">
-            <xsl:text>att</xsl:text>
-          </xsl:attribute>
-          <xsl:choose>
-            <xsl:when test="tei:altIdent">
-              <xsl:value-of select="tei:altIdent"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="@ident"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:element>
+	<xsl:attribute name="{$rendName}">
+	  <xsl:text>Attribute</xsl:text>
+	</xsl:attribute>
+	<xsl:element namespace="{$outputNS}" name="{$hiName}">
+	  <xsl:attribute name="{$rendName}">
+	    <xsl:text>att</xsl:text>
+	  </xsl:attribute>
+	  <xsl:choose>
+	    <xsl:when test="tei:altIdent">
+	      <xsl:value-of select="tei:altIdent"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="@ident"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:element>
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
-        <xsl:call-template name="makeDescription"/>
+	<xsl:call-template name="makeDescription"/>
       </xsl:element>
     </xsl:element>
   </xsl:template>
-
+  
   <xd:doc>
     <xd:short>Process elements tei:exemplum</xd:short>
     <xd:detail> </xd:detail>
@@ -819,11 +881,11 @@
   <xsl:template match="tei:exemplum" mode="doc">
     <xsl:choose>
       <xsl:when test="parent::tei:attDef">
-        <xsl:element namespace="{$outputNS}" name="{$rowName}">
-          <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:attribute name="{$colspan}">
-              <xsl:text>2</xsl:text>
-            </xsl:attribute>
+	<xsl:element namespace="{$outputNS}" name="{$rowName}">
+	  <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	    <xsl:attribute name="{$colspan}">
+	      <xsl:text>2</xsl:text>
+	    </xsl:attribute>
             <xsl:apply-templates/>
           </xsl:element>
         </xsl:element>
@@ -1737,5 +1799,100 @@
   <xsl:template match="tei:attList[@org='choice']">
     <xsl:apply-templates/>
   </xsl:template>
+
+
+<xsl:template name="generateChildren">
+  <xsl:variable name="name" select="@ident"/>
+  <xsl:choose>
+    <xsl:when test="tei:content/rng:empty">
+      <xsl:text>Empty element</xsl:text>
+    </xsl:when>
+    <xsl:when test="tei:content/rng:text and count(tei:content/*)=1">
+      <xsl:text>Character data only</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:variable name="Children">
+	<Children xmlns="">
+	  <xsl:for-each select="tei:content">
+	    <xsl:call-template name="followRef"/>
+	  </xsl:for-each>
+	</Children>
+      </xsl:variable>
+      <xsl:for-each select="exsl:node-set($Children)/Children">
+	
+	<xsl:choose>
+	  <xsl:when test="count(Element)=0">
+	    <xsl:text>Empty element</xsl:text>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <div class="specChildren">
+	      <xsl:for-each select="Element">
+		<xsl:sort select="@module"/>
+		<xsl:sort select="@name"/>
+		<xsl:if
+		    test="generate-id(.)=generate-id(key('CHILDMOD',@module)[1])">
+		  <div class="specChild">
+		    <span class="specChildModule">
+		      <xsl:value-of select="@module"/>:
+		    </span>
+		    <span class="specChildElements">
+		      <xsl:for-each select="key('CHILDMOD',@module)">
+			<xsl:sort select="@name"/>
+			<xsl:variable name="me">
+			  <xsl:value-of select="@name"/>
+			</xsl:variable>
+			<xsl:if test="not(preceding-sibling::Element/@name=$me)">
+			  <a href="ref-{@name}.html">
+			    <xsl:value-of select="@name"/>
+			  </a>
+			  <xsl:text> </xsl:text>
+			</xsl:if>
+		      </xsl:for-each>
+		    </span>
+		  </div>
+		</xsl:if>
+	      </xsl:for-each>
+	    </div>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+
+<xsl:template name="followRef">
+  <xsl:for-each select=".//rng:ref">
+    <xsl:for-each select="key('IDENTS',@name)">
+      <xsl:choose>
+	<xsl:when test="self::tei:elementSpec">
+	  <Element  xmlns="" name="{@ident}" module="{@module}"/>
+	</xsl:when>
+	<xsl:when test="self::tei:macroSpec">
+	  <xsl:for-each select="tei:content">
+	    <xsl:call-template name="followRef"/>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:when test="self::tei:classSpec">
+	  <xsl:call-template name="followMembers"/>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:for-each>
+</xsl:template>
+
+<xsl:template name="followMembers">
+  <xsl:for-each select="key('CLASSMEMBERS',@ident)">
+    <xsl:choose>
+      <xsl:when test="self::tei:elementSpec">
+	<Element xmlns="" name="{@ident}" module="{@module}"/>
+      </xsl:when>
+      <xsl:when test="self::tei:classSpec">
+	<xsl:call-template name="followMembers"/>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:for-each>
+</xsl:template>
+
 
 </xsl:stylesheet>

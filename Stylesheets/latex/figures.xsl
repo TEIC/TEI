@@ -59,7 +59,7 @@
       <xsl:when test="@cols &gt; 1">
         <xsl:text>\multicolumn{</xsl:text>
         <xsl:value-of select="@cols"/>
-        <xsl:text>}{c}{</xsl:text>
+        <xsl:text>}{P{.99\textwidth}}{</xsl:text>
         <xsl:apply-templates/>
         <xsl:text>}</xsl:text>
       </xsl:when>

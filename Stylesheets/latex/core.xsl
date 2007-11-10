@@ -123,6 +123,12 @@
     <xsl:if test="ancestor::tei:list[@type='gloss']">
       <xsl:text>\hspace{1em}\hfill\linebreak</xsl:text>
     </xsl:if>
+\par\bgroup\exampleFontSet\vskip 10pt
+\begin{shaded}
+\noindent\obeylines\obeyspaces <xsl:apply-templates mode="eg"/>
+\end{shaded}
+\par\egroup
+<!--
     <xsl:choose>
       <xsl:when test="@n">
 	<xsl:text>&#10;\begin{Verbatim}[fontsize=\scriptsize,numbers=left,label={</xsl:text>
@@ -137,6 +143,7 @@
 	<xsl:text>&#10;\end{Verbatim}&#10;</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
+-->
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:emph</xd:short>
@@ -326,7 +333,7 @@
       </xsl:if>
     <xsl:choose>
       <xsl:when test="not(tei:item)"/>
-      <xsl:when test="@type='gloss'"> \begin{description}<xsl:apply-templates
+      <xsl:when test="@type='gloss' or tei:label"> \begin{description}<xsl:apply-templates
           mode="gloss" select="tei:item"/> \end{description} </xsl:when>
       <xsl:when test="@type='unordered'"> \begin{itemize}<xsl:apply-templates/>
         \end{itemize} </xsl:when>
@@ -537,10 +544,11 @@
   <xsl:template match="text()" mode="eg">
     <xsl:choose>
       <xsl:when test="starts-with(.,'&#10;')">
-        <xsl:value-of select="substring-after(.,'&#10;')"/>
+        <xsl:value-of select="substring-after(translate(.,'\{}','&#8421;&#10100;&#10101;'),'&#10;')"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="."/>
+        <xsl:value-of 
+	    select="translate(.,'\{}','&#8421;&#10100;&#10101;')"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

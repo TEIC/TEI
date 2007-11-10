@@ -273,12 +273,10 @@
     <xsl:param name="name"/>
     <xsl:param name="id"/>
     <xsl:param name="contents"/>
-    <div>
-
+    <div type="refdoc">
       <xsl:attribute name="xml:id">
         <xsl:value-of select="$id"/>
       </xsl:attribute>
-
       <head>
         <xsl:value-of select="$name"/>
       </head>
@@ -347,6 +345,13 @@
     <xsl:param name="style"/>
     <xsl:param name="contents"/>
     <xsl:value-of select="$contents"/>
+  </xsl:template>
+
+
+  <xsl:template name="emptySlash">
+    <xsl:param name="name"/>
+    <xsl:value-of select="$name"/>
+    <xsl:text>/</xsl:text>
   </xsl:template>
 
 </xsl:stylesheet>
