@@ -149,7 +149,11 @@
     <xd:short>Process elements tei:emph</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:emph">\textit{<xsl:apply-templates/>}</xsl:template>
+  <xsl:template match="tei:emph">
+    <xsl:text>\textit{</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:foreign</xd:short>
     <xd:detail> </xd:detail>
@@ -401,7 +405,11 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:note">
-    <xsl:if test="@xml:id">\hypertarget{<xsl:value-of select="@xml:id"/>}{}</xsl:if>
+    <xsl:if test="@xml:id">
+      <xsl:text>\hypertarget{</xsl:text>
+      <xsl:value-of select="@xml:id"/>
+      <xsl:text>}{}</xsl:text>
+    </xsl:if>
     <xsl:choose>
       <xsl:when test="@place='end'">
         <xsl:text>\endnote{</xsl:text>

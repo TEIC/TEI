@@ -33,10 +33,16 @@
   </xd:doc>
 
   <xsl:template match="teix:egXML">
-\par\bgroup\exampleFontSet\vskip 10pt
+    <xsl:if test="not(parent::tei:cell)">
+      <xsl:text>\par</xsl:text>
+    </xsl:if>
+<xsl:text>\bgroup\exampleFontSet\vskip 10pt
 \begin{shaded}
-\noindent\mbox{}<xsl:apply-templates mode="verbatim"/>
+\noindent\mbox{}</xsl:text>
+<xsl:apply-templates mode="verbatim"/>
 \end{shaded}
-\par\egroup
+<xsl:if test="not(parent::tei:cell)">
+  <xsl:text>\par</xsl:text>
+</xsl:if>
   </xsl:template>
 </xsl:stylesheet>

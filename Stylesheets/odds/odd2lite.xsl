@@ -354,4 +354,38 @@
     <xsl:text>/</xsl:text>
   </xsl:template>
 
+  <xsl:template match="tei:gi">
+    <xsl:choose>
+      <xsl:when test="parent::tei:ref or parent::tei:head">
+	<xsl:text>&lt;</xsl:text>
+	  <xsl:apply-templates/>
+	<xsl:text>&gt;</xsl:text>
+      </xsl:when>
+      <xsl:when test="key('ELEMENTS',.)">
+	<xsl:for-each select="key('ELEMENTS',.)">
+	  <ref target="#{@ident}">
+	    <xsl:text>&lt;</xsl:text>
+	      <xsl:choose>
+		<xsl:when test="tei:content/rng:empty">
+		  <span class="emptySlash">
+		    <xsl:value-of select="@ident"/>
+		  </span>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="@ident"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	      <xsl:text>&gt;</xsl:text>
+	  </ref>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>&lt;</xsl:text>
+	  <xsl:apply-templates/>
+	<xsl:text>&gt;</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+
 </xsl:stylesheet>

@@ -49,8 +49,11 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="labelme">
-    <xsl:if test="../@xml:id">\hypertarget{<xsl:value-of select="../@xml:id"
-      />}{}</xsl:if>
+    <xsl:if test="../@xml:id">
+      <xsl:text>\hypertarget{</xsl:text>
+      <xsl:value-of select="../@xml:id"/>
+      <xsl:text>}{}</xsl:text>
+    </xsl:if>
   </xsl:template>
   <xd:doc>
     <xd:short>[latex] </xd:short>
