@@ -61,7 +61,7 @@
 \fancyfoot[LE]{\TheDate}
 \fancyfoot[CE]{\thepage}
 \fancyfoot[RE]{}
-\hyperset{bookmarksnumbered=true}
+\hypersetup{bookmarksnumbered=true}
 \makeatletter
 \def\l@section{\@dottedtocline{1}{3em}{2.3em}}
 \def\l@subsection{\@dottedtocline{2}{5em}{3.2em}}
