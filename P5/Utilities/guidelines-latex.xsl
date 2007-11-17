@@ -61,8 +61,29 @@
 \fancyfoot[LE]{\TheDate}
 \fancyfoot[CE]{\thepage}
 \fancyfoot[RE]{}
-
+\hyperset{bookmarksnumbered=true}
 \makeatletter
+\def\@pnumwidth{3.5em}
+\def\ps@headings{%
+      \let\@oddfoot\@empty\let\@evenfoot\@empty
+      \def\@evenhead{\thepage\hfil\leftmark}%
+      \def\@oddhead{{\rightmark}\hfil\thepage}%
+      \let\@mkboth\markboth
+    \def\chaptermark##1{%
+      \markboth {%
+        \ifnum \c@secnumdepth >\m@ne
+          \if@mainmatter
+            \@chapapp\ \thechapter. \ %
+          \fi
+        \fi
+        ##1}{}}%
+    \def\sectionmark##1{%
+      \markright {%
+        \ifnum \c@secnumdepth >\z@
+          \thesection. \ %
+        \fi
+        ##1}}}
+
 \def\tableofcontents{\clearpage\section*{\contentsname}\@starttoc{toc}}
 \makeatother
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
@@ -118,10 +139,10 @@
       <xsl:text>L{.15\textwidth}P{.65\textwidth}</xsl:text>
     </xsl:when>
     <xsl:when test="@rend='attDef'">
-      <xsl:text>L{.1\textwidth}P{.55\textwidth}</xsl:text>
+      <xsl:text>L{.1\textwidth}P{.5\textwidth}</xsl:text>
     </xsl:when>
     <xsl:when test="@rend='valList'">
-      <xsl:text>L{.1\textwidth}P{.45\textwidth}</xsl:text>
+      <xsl:text>L{.1\textwidth}P{.4\textwidth}</xsl:text>
     </xsl:when>
     <xsl:when test="@preamble">
       <xsl:value-of select="@preamble"/>
@@ -188,6 +209,31 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template match="tei:gi">
+    <xsl:choose>
+      <xsl:when test="parent::tei:ref">
+	<xsl:text>\texttt{&lt;</xsl:text>
+	<xsl:apply-templates/>
+	<xsl:text>&gt;}</xsl:text>
+      </xsl:when>
+      <xsl:when test="key('IDS',.)">
+	<xsl:text>\hyperlink{</xsl:text>
+	<xsl:value-of select="."/>
+	<xsl:text>}{</xsl:text>
+	<xsl:text>\texttt{&lt;</xsl:text>
+	<xsl:apply-templates/>
+	<xsl:text>&gt;}</xsl:text>
+	<xsl:text>}</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>\texttt{&lt;</xsl:text>
+	<xsl:apply-templates/>
+	<xsl:text>&gt;}</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>
 
 
