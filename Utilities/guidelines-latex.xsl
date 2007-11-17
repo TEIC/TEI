@@ -63,7 +63,12 @@
 \fancyfoot[RE]{}
 \hyperset{bookmarksnumbered=true}
 \makeatletter
-\def\@pnumwidth{3.5em}
+\def\l@section{\@dottedtocline{1}{3em}{2.3em}}
+\def\l@subsection{\@dottedtocline{2}{5em}{3.2em}}
+\def\l@subsubsection{\@dottedtocline{3}{7.0em}{4.1em}}
+\def\l@paragraph{\@dottedtocline{4}{10em}{5em}}
+\def\l@subparagraph{\@dottedtocline{5}{12em}{6em}}
+\def\@pnumwidth{2em}
 \def\ps@headings{%
       \let\@oddfoot\@empty\let\@evenfoot\@empty
       \def\@evenhead{\thepage\hfil\leftmark}%
