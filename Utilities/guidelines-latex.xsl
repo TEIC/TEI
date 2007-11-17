@@ -21,6 +21,7 @@
 <xsl:import href="/usr/share/xml/tei/stylesheet/latex/tei.xsl"/>
 <xsl:param name="reencode">false</xsl:param>
 <xsl:param name="numberBackHeadings">true</xsl:param>
+<xsl:param name="numberFrontHeadings">true</xsl:param>
 <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
 <xsl:param name="classParameters">11pt,twoside</xsl:param>
 <xsl:param name="startNamespace"></xsl:param>
@@ -60,6 +61,10 @@
 \fancyfoot[LE]{\TheDate}
 \fancyfoot[CE]{\thepage}
 \fancyfoot[RE]{}
+
+\makeatletter
+\def\tableofcontents{\clearpage\section*{\contentsname}\@starttoc{toc}}
+\makeatother
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
 <xsl:call-template name="beginDocumentHook"/>
 </xsl:template>
@@ -110,13 +115,13 @@
       <xsl:text>L{.15\textwidth}P{.85\textwidth}</xsl:text>
     </xsl:when>
     <xsl:when test="@rend='attList'">
-      <xsl:text>L{.15\textwidth}P{.7\textwidth}</xsl:text>
+      <xsl:text>L{.15\textwidth}P{.65\textwidth}</xsl:text>
     </xsl:when>
     <xsl:when test="@rend='attDef'">
-      <xsl:text>L{.1\textwidth}P{.6\textwidth}</xsl:text>
+      <xsl:text>L{.1\textwidth}P{.55\textwidth}</xsl:text>
     </xsl:when>
     <xsl:when test="@rend='valList'">
-      <xsl:text>L{.1\textwidth}P{.5\textwidth}</xsl:text>
+      <xsl:text>L{.1\textwidth}P{.45\textwidth}</xsl:text>
     </xsl:when>
     <xsl:when test="@preamble">
       <xsl:value-of select="@preamble"/>

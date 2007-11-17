@@ -437,4 +437,7 @@
 
   </xsl:template>
 
+
+  <xsl:template match="tei:divGen[@type='toc']"/>
+
 </xsl:stylesheet>
