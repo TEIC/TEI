@@ -31,6 +31,8 @@
   <xsl:variable name="docClass">book</xsl:variable>
 <xsl:template name="latexPreambleHook">
 \usepackage{framed}
+\usepackage{makeidx}
+\makeindex
 \definecolor{shadecolor}{gray}{0.95}
 \defaultfontfeatures{Scale=MatchLowercase}
 \setromanfont{DejaVu Serif}
@@ -63,8 +65,8 @@
 \fancyfoot[RE]{}
 \hypersetup{bookmarksnumbered=true}
 \makeatletter
-\def\l@section{\@dottedtocline{1}{4em}{2.3em}}
-\def\l@subsection{\@dottedtocline{2}{5em}{3.2em}}
+\def\l@section{\@dottedtocline{1}{5.5em}{2.3em}}
+\def\l@subsection{\@dottedtocline{2}{6em}{3.2em}}
 \def\l@subsubsection{\@dottedtocline{3}{7.0em}{4.1em}}
 \def\l@paragraph{\@dottedtocline{4}{10em}{5em}}
 \def\l@subparagraph{\@dottedtocline{5}{12em}{6em}}
@@ -88,7 +90,6 @@
           \thesection. \ %
         \fi
         ##1}}}
-
 \def\tableofcontents{\clearpage\section*{\contentsname}\@starttoc{toc}}
 \makeatother
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
@@ -215,29 +216,55 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="tei:gi">
-    <xsl:choose>
-      <xsl:when test="parent::tei:ref">
-	<xsl:text>\texttt{&lt;</xsl:text>
-	<xsl:apply-templates/>
-	<xsl:text>&gt;}</xsl:text>
-      </xsl:when>
-      <xsl:when test="key('IDS',.)">
-	<xsl:text>\hyperlink{</xsl:text>
-	<xsl:value-of select="."/>
-	<xsl:text>}{</xsl:text>
-	<xsl:text>\texttt{&lt;</xsl:text>
-	<xsl:apply-templates/>
-	<xsl:text>&gt;}</xsl:text>
-	<xsl:text>}</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:text>\texttt{&lt;</xsl:text>
-	<xsl:apply-templates/>
-	<xsl:text>&gt;}</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
+<xsl:template match="tei:term">
+  <xsl:apply-imports/>
+  <xsl:if test="not(@rend='noindex')">
+    <xsl:text>\index{</xsl:text>
+    <xsl:value-of select="normalize-space(.)"/>
+    <xsl:text>}</xsl:text>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="tei:ident">
+  <xsl:apply-imports/>
+    <xsl:if test="@type">
+     <xsl:processing-instruction name="xmltex">
+      <xsl:text>\index{</xsl:text>
+      <xsl:value-of select="normalize-space(.)"/>
+      <xsl:text> (</xsl:text>
+      <xsl:value-of select="@type"/>
+      <xsl:text>)}</xsl:text>
+     </xsl:processing-instruction>
+    </xsl:if>
+</xsl:template>
+
+  <xsl:template match="teix:egXML">
+  <xsl:apply-imports/>
+<xsl:for-each select=".//teix:*">
+<xsl:variable name="Me">
+<xsl:value-of select="local-name(.)"/>
+</xsl:variable>
+<xsl:text>\index{</xsl:text>
+<xsl:value-of select="$Me"/>
+<xsl:text>@</xsl:text>
+<xsl:choose>
+  <xsl:when test="ancestor::tei:elementSpec[@ident=$Me]">
+    <xsl:text>\textbf</xsl:text>
+  </xsl:when>
+  <xsl:otherwise>
+    <xsl:text>\textit</xsl:text>
+  </xsl:otherwise>
+</xsl:choose>
+<xsl:text>{&lt;</xsl:text>
+<xsl:value-of select="$Me"/>
+<xsl:text>&gt;}}</xsl:text>
+</xsl:for-each>
+<xsl:text>\egroup </xsl:text>
   </xsl:template>
+
+<xsl:template name="latexEnd">
+\printindex
+</xsl:template>
 
 </xsl:stylesheet>
 

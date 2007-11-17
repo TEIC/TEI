@@ -134,6 +134,8 @@ pdf: tex
 	cp -r Source/Images/*.* Images
 	-${XELATEX} -interaction=nonstopmode Guidelines
 	-${XELATEX} -interaction=nonstopmode Guidelines
+	makeindex Guidelines
+	-${XELATEX} -interaction=nonstopmode Guidelines
 	rm -rf Images
 
 validate: schemas oddschema exampleschema valid 
