@@ -192,6 +192,7 @@
         </xsl:choose>
         <xsl:choose>
           <xsl:when test="ancestor::tei:q">Star</xsl:when>
+          <xsl:when test="@rend='nonumber'">Star</xsl:when>
           <xsl:when
             test="ancestor::tei:back and $numberBackHeadings='false'"
             >Star</xsl:when>

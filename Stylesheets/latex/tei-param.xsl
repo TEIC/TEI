@@ -292,13 +292,11 @@ capable of dealing with UTF-8 directly.
 \newif\if@mainmatter 
 \@mainmattertrue
 \def\frontmatter{%
-  \setcounter{secnumdepth}{-1}
   \@mainmatterfalse
   \pagenumbering{roman}}
 \def\mainmatter{%
 <xsl:if test="$numberHeadings='true'">
   \setcounter{section}{0}
-  \setcounter{secnumdepth}{4}
 </xsl:if>
   \@mainmattertrue
   \pagenumbering{arabic}}
