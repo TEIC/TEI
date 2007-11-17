@@ -335,7 +335,9 @@
   </xd:doc>
   <xsl:template match="tei:gi">
     <span class="gi">
-      &lt;<xsl:apply-templates/>&gt;
+      <xsl:text>&lt;</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>&gt;</xsl:text>
     </span>
   </xsl:template>
   <xd:doc>

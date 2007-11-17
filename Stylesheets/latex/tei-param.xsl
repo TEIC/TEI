@@ -293,34 +293,21 @@ capable of dealing with UTF-8 directly.
 \@mainmattertrue
 \def\frontmatter{%
   \pagenumbering{roman}
-  \def\thechapter {\roman{chapter}}
-  \def\thesection {\thechapter.\roman{section}}
-  \def\thesubsection {\thesection.\roman{subsection}}
-  \def\thesubsubsection {\thesubsection.\roman{subsubsection}}
-  \def\theparagraph {\theparagraph.\roman{paragraph}}
-  \def\thesubparagraph {\thesubparagraph.\roman{subparagraph}}
+  \renewcommand\thechapter{\@roman\c@chapter}
 }
 \def\mainmatter{%
   \cleardoublepage
-  \setcounter(chapter){0}
+  \renewcommand\thechapter{\@arabic\c@chapter}
+  \setcounter{chapter}{0}
   \setcounter{section}{0}
-  \def\thechapter {\arabic{chapter}}
-  \def\thesection {\thechapter.\arabic{section}}
-  \def\thesubsection {\thesection.\arabic{subsection}}
-  \def\thesubsubsection {\thesubsection.\arabic{subsubsection}}
-  \def\theparagraph {\theparagraph.\arabic{paragraph}}
-  \def\thesubparagraph {\thesubparagraph.\arabic{subparagraph}}
-  \pagenumbering{arabic}}
+  \pagenumbering{arabic}
+}
 \def\backmatter{%
   \cleardoublepage
-  \setcounter(chapter){0}
+  \setcounter{chapter}{0}
   \setcounter{section}{0}
-  \def\thechapter {\Roman{chapter}}
-  \def\thesection {\thechapter.\arabic{section}}
-  \def\thesubsection {\thesection.\arabic{subsection}}
-  \def\thesubsubsection {\thesubsection.\arabic{subsubsection}}
-  \def\theparagraph {\theparagraph.\arabic{paragraph}}
-  \def\thesubparagraph {\thesubparagraph.\arabic{subparagraph}}
+  \renewcommand\@chapapp{\appendixname}%
+  \renewcommand\thechapter{\@Alph\c@chapter}
   \appendix
 }
 \newenvironment{bibitemlist}[1]{%
