@@ -292,18 +292,36 @@ capable of dealing with UTF-8 directly.
 \newif\if@mainmatter 
 \@mainmattertrue
 \def\frontmatter{%
-  \@mainmatterfalse
-  \pagenumbering{roman}}
+  \pagenumbering{roman}
+  \def\thechapter {\roman{chapter}}
+  \def\thesection {\thechapter.\roman{section}}
+  \def\thesubsection {\thesection.\roman{subsection}}
+  \def\thesubsubsection {\thesubsection.\roman{subsubsection}}
+  \def\theparagraph {\theparagraph.\roman{paragraph}}
+  \def\thesubparagraph {\thesubparagraph.\roman{subparagraph}}
+}
 \def\mainmatter{%
-<xsl:if test="$numberHeadings='true'">
+  \cleardoublepage
+  \setcounter(chapter){0}
   \setcounter{section}{0}
-</xsl:if>
-  \@mainmattertrue
+  \def\thechapter {\arabic{chapter}}
+  \def\thesection {\thechapter.\arabic{section}}
+  \def\thesubsection {\thesection.\arabic{subsection}}
+  \def\thesubsubsection {\thesubsection.\arabic{subsubsection}}
+  \def\theparagraph {\theparagraph.\arabic{paragraph}}
+  \def\thesubparagraph {\thesubparagraph.\arabic{subparagraph}}
   \pagenumbering{arabic}}
 \def\backmatter{%
-  \clearpage
+  \cleardoublepage
+  \setcounter(chapter){0}
+  \setcounter{section}{0}
+  \def\thechapter {\Roman{chapter}}
+  \def\thesection {\thechapter.\arabic{section}}
+  \def\thesubsection {\thesection.\arabic{subsection}}
+  \def\thesubsubsection {\thesubsection.\arabic{subsubsection}}
+  \def\theparagraph {\theparagraph.\arabic{paragraph}}
+  \def\thesubparagraph {\thesubparagraph.\arabic{subparagraph}}
   \appendix
-%  \@mainmatterfalse
 }
 \newenvironment{bibitemlist}[1]{%
    \list{\@biblabel{\@arabic\c@enumiv}}%
