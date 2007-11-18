@@ -28,6 +28,9 @@
     <xd:cvsId>$Id: odd2lite.xsl 3964 2007-11-08 23:20:10Z rahtz $</xd:cvsId>
     <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
+
+ <xsl:key name="CHILDMOD" match="Element" use="@module"/>
+
   <xsl:template match="tei:attDef" mode="summary">
     <xsl:variable name="name">
       <xsl:choose>
@@ -522,27 +525,25 @@
 	    <xsl:call-template name="moduleInfo"/>
 	  </xsl:if>
 	  
-	  <xsl:element name="{$rowName}">
-	    <xsl:element namespace="{$outputNS}" name="{$rowName}">
-	      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	  <xsl:element namespace="{$outputNS}" name="{$rowName}">
+	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>wovenodd-col1</xsl:text>
+	      </xsl:attribute>
+	      <xsl:element namespace="{$outputNS}" name="{$hiName}">
 		<xsl:attribute name="{$rendName}">
-		  <xsl:text>wovenodd-col1</xsl:text>
+		  <xsl:text>label</xsl:text>
 		</xsl:attribute>
-		<xsl:element namespace="{$outputNS}" name="{$hiName}">
-		  <xsl:attribute name="{$rendName}">
-		    <xsl:text>label</xsl:text>
-		  </xsl:attribute>
-		  <xsl:call-template name="i18n">
-		    <xsl:with-param name="word">Used by</xsl:with-param>
-		  </xsl:call-template>
-		</xsl:element>
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">Used by</xsl:with-param>
+		</xsl:call-template>
 	      </xsl:element>
-	      <xsl:element namespace="{$outputNS}" name="{$cellName}">
-		<xsl:attribute name="{$rendName}">
-		  <xsl:text>wovenodd-col2</xsl:text>
-		</xsl:attribute>
-		<xsl:call-template name="generateParents"/>
-	      </xsl:element>
+	    </xsl:element>
+	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>wovenodd-col2</xsl:text>
+	      </xsl:attribute>
+	      <xsl:call-template name="generateParents"/>
 	    </xsl:element>
 	  </xsl:element>
 	  
@@ -1825,41 +1826,53 @@
 	    <xsl:text>Empty element</xsl:text>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <div class="specChildren">
+	    <xsl:element namespace="{$outputNS}" name="{$divName}">
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>specChildren</xsl:text>
+	      </xsl:attribute>
 	      <xsl:for-each select="Element">
 		<xsl:sort select="@module"/>
 		<xsl:sort select="@name"/>
 		<xsl:if
 		    test="generate-id(.)=generate-id(key('CHILDMOD',@module)[1])">
-		  <div class="specChild">
-		    <span class="specChildModule">
+		  <xsl:element namespace="{$outputNS}" name="{$segName}">
+		    <xsl:attribute name="{$rendName}">
+		      <xsl:text>specChild</xsl:text>
+		    </xsl:attribute>
+		    <xsl:element namespace="{$outputNS}" name="{$segName}">
+		      <xsl:attribute name="{$rendName}">
+			<xsl:text>specChildModule</xsl:text>
+		      </xsl:attribute>
 		      <xsl:value-of select="@module"/>:
-		    </span>
-		    <span class="specChildElements">
+		    </xsl:element>
+		    <xsl:element namespace="{$outputNS}" name="{$segName}">
+		      <xsl:attribute name="{$rendName}">
+			<xsl:text>specChildElements</xsl:text>
+		      </xsl:attribute>
 		      <xsl:for-each select="key('CHILDMOD',@module)">
 			<xsl:sort select="@name"/>
 			<xsl:variable name="me">
 			  <xsl:value-of select="@name"/>
 			</xsl:variable>
-			<xsl:if test="not(preceding-sibling::Element/@name=$me)">
-			  <a href="ref-{@name}.html">
-			    <xsl:value-of select="@name"/>
-			  </a>
-			  <xsl:text> </xsl:text>
+			<xsl:if
+			    test="not(preceding-sibling::Element/@name=$me)">
+			  <xsl:call-template name="linkTogether">
+			    <xsl:with-param name="name" select="@name"/>
+			  </xsl:call-template>
+			  <xsl:call-template name="showSpace"/>
 			</xsl:if>
 		      </xsl:for-each>
-		    </span>
-		  </div>
+		    </xsl:element>
+		  </xsl:element>
 		</xsl:if>
 	      </xsl:for-each>
-	    </div>
+	    </xsl:element>
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:for-each>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
-
 
 <xsl:template name="followRef">
   <xsl:for-each select=".//rng:ref">

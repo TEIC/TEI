@@ -47,7 +47,8 @@
   <xsl:param name="rendName">rend</xsl:param>
   <xsl:param name="rowName">row</xsl:param>
   <xsl:param name="tableName">table</xsl:param>
-  <xsl:param name="divName">ab</xsl:param>
+  <xsl:param name="divName">seg</xsl:param>
+  <xsl:param name="segName">seg</xsl:param>
   <xsl:param name="outputNS">http://www.tei-c.org/ns/1.0</xsl:param>
   <xsl:param name="startAttribute"/>
   <xsl:param name="endAttribute"/>
@@ -328,7 +329,7 @@
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-
+    <ref target="#{$partialname}">    
       <xsl:choose>
         <xsl:when test="$reftext=''">
           <xsl:value-of select="$name"/>
@@ -337,7 +338,7 @@
           <xsl:value-of select="$reftext"/>
         </xsl:otherwise>
       </xsl:choose>
-
+    </ref>
 
   </xsl:template>
 
@@ -367,9 +368,11 @@
 	    <xsl:text>&lt;</xsl:text>
 	      <xsl:choose>
 		<xsl:when test="tei:content/rng:empty">
-		  <span class="emptySlash">
-		    <xsl:value-of select="@ident"/>
-		  </span>
+		  <xsl:call-template name="emptySlash">
+		    <xsl:with-param name="name">
+		      <xsl:value-of select="@ident"/>
+		    </xsl:with-param>
+		  </xsl:call-template>
 		</xsl:when>
 		<xsl:otherwise>
 		  <xsl:value-of select="@ident"/>

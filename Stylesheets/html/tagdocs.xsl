@@ -51,6 +51,7 @@
   <xsl:param name="rowName">tr</xsl:param>
   <xsl:param name="tableName">table</xsl:param>
   <xsl:param name="divName">div</xsl:param>
+  <xsl:param name="segName">span</xsl:param>
   <xsl:param name="outputNS">http://www.w3.org/1999/xhtml</xsl:param>
 
   <xsl:template name="lineBreak">

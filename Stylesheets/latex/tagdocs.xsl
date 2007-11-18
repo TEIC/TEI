@@ -45,4 +45,19 @@
   <xsl:text>\par</xsl:text>
 </xsl:if>
   </xsl:template>
+
+<xsl:template match="tei:seg[@rend='specChild']">
+  <xsl:apply-templates/>\newline 
+</xsl:template>
+
+<xsl:template match="tei:seg[@rend='specChildModule']">
+  <xsl:text>\textbf{</xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>}</xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:seg[@rend='specChildElements']">
+  <xsl:apply-templates/>
+</xsl:template>
+
 </xsl:stylesheet>
