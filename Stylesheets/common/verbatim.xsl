@@ -540,6 +540,10 @@
 	test="namespace-uri()='http://www.example.org/ns/nonTEI'">
       <xsl:text>my:</xsl:text>
     </xsl:when>
+    <xsl:when
+	    test="namespace-uri()='http://relaxng.org/ns/compatibility/annotations/1.0'">
+      <xsl:text>a:</xsl:text>
+    </xsl:when>
 <!--    <xsl:otherwise>
     <xsl:for-each select="namespace::*">
       <xsl:if test="not(name(.)='')">
