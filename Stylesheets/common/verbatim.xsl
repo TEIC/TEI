@@ -541,7 +541,7 @@
       <xsl:text>my:</xsl:text>
     </xsl:when>
     <xsl:when
-	    test="namespace-uri()='http://relaxng.org/ns/compatibility/annotations/1.0'">
+	test="namespace-uri()='http://relaxng.org/ns/compatibility/annotations/1.0'">
       <xsl:text>a:</xsl:text>
     </xsl:when>
 <!--    <xsl:otherwise>
