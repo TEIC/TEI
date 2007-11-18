@@ -494,6 +494,32 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements tei:quote</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:quote">
+    <xsl:choose>
+      <xsl:when test="parent::tei:cit">
+        <xsl:text>`</xsl:text>
+          <xsl:apply-templates/>
+        <xsl:text>'</xsl:text>
+      </xsl:when>
+      <xsl:when test="@rend='quoted'">
+        <xsl:value-of select="$preQuote"/>
+        <xsl:apply-templates/>
+        <xsl:value-of select="$postQuote"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>\begin{quote}</xsl:text>
+	<xsl:apply-templates/>
+	<xsl:text>\end{quote}</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+
   <xd:doc>
     <xd:short>Process elements p[@rend='display']</xd:short>
     <xd:detail> </xd:detail>
