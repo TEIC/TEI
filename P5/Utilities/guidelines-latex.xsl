@@ -63,7 +63,7 @@
 \fancyfoot[LE]{\TheDate}
 \fancyfoot[CE]{\thepage}
 \fancyfoot[RE]{}
-\hypersetup{bookmarksnumbered=true}
+\hypersetup{bookmarksnumbered=true,hyperindex}
 \makeatletter
 \def\l@section{\@dottedtocline{1}{5.5em}{2.3em}}
 \def\l@subsection{\@dottedtocline{2}{6em}{3.2em}}
@@ -71,28 +71,13 @@
 \def\l@paragraph{\@dottedtocline{4}{10em}{5em}}
 \def\l@subparagraph{\@dottedtocline{5}{12em}{6em}}
 \def\@pnumwidth{2em}
-\def\ps@headings{%
-      \let\@oddfoot\@empty\let\@evenfoot\@empty
-      \def\@evenhead{\thepage\hfil\leftmark}%
-      \def\@oddhead{{\rightmark}\hfil\thepage}%
-      \let\@mkboth\markboth
-    \def\chaptermark##1{%
-      \markboth {%
-        \ifnum \c@secnumdepth >\m@ne
-          \if@mainmatter
-            \@chapapp\ \thechapter. \ %
-          \fi
-        \fi
-        ##1}{}}%
-    \def\sectionmark##1{%
-      \markright {%
-        \ifnum \c@secnumdepth >\z@
-          \thesection. \ %
-        \fi
-        ##1}}}
 \def\tableofcontents{\clearpage\section*{\contentsname}\@starttoc{toc}}
-\makeatother
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
+\def\chaptermark#1{\markboth {\thechapter. \ #1}{}}
+\def\sectionmark#1{\markright {\thesection. \ #1}}
+\def\exampleindex#1{{\itshape\hyperpage{#1}}}
+\def\mainexampleindex#1{{\bfseries\itshape\hyperpage{#1}}}
+\makeatother
 <xsl:call-template name="beginDocumentHook"/>
 </xsl:template>
 
@@ -216,6 +201,7 @@
     </xsl:choose>
   </xsl:template>
 
+<!--
 <xsl:template match="tei:term">
   <xsl:apply-imports/>
   <xsl:if test="not(@rend='noindex')">
@@ -224,7 +210,7 @@
     <xsl:text>}</xsl:text>
   </xsl:if>
 </xsl:template>
-
+-->
 <xsl:template match="tei:ident">
   <xsl:apply-imports/>
     <xsl:if test="@type">
@@ -238,8 +224,8 @@
     </xsl:if>
 </xsl:template>
 
-  <xsl:template match="teix:egXML">
-  <xsl:apply-imports/>
+<xsl:template match="teix:egXML">
+<xsl:apply-imports/>
 <xsl:for-each select=".//teix:*">
 <xsl:variable name="Me">
 <xsl:value-of select="local-name(.)"/>
@@ -247,17 +233,18 @@
 <xsl:text>\index{</xsl:text>
 <xsl:value-of select="$Me"/>
 <xsl:text>@</xsl:text>
-<xsl:choose>
-  <xsl:when test="ancestor::tei:elementSpec[@ident=$Me]">
-    <xsl:text>\textbf</xsl:text>
+<xsl:text>&lt;</xsl:text>
+<xsl:value-of select="$Me"/>
+<xsl:text>&gt;</xsl:text>
+<xsl:text>|</xsl:text><xsl:choose>
+  <xsl:when test="ancestor::tei:div[@xml:id=$Me]">
+    <xsl:text>mainexampleindex</xsl:text>
   </xsl:when>
   <xsl:otherwise>
-    <xsl:text>\textit</xsl:text>
+    <xsl:text>exampleindex</xsl:text>
   </xsl:otherwise>
 </xsl:choose>
-<xsl:text>{&lt;</xsl:text>
-<xsl:value-of select="$Me"/>
-<xsl:text>&gt;}}</xsl:text>
+<xsl:text>}</xsl:text>
 </xsl:for-each>
 <xsl:text>\egroup </xsl:text>
   </xsl:template>
