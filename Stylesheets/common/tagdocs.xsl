@@ -504,11 +504,18 @@
 		  <xsl:text>label</xsl:text>
 		</xsl:attribute>
 		<xsl:text>&lt;</xsl:text>
-		<xsl:call-template name="emptySlash">
-		  <xsl:with-param name="name">
+		<xsl:choose>
+		  <xsl:when test="tei:content/rng:empty">
+		    <xsl:call-template name="emptySlash">
+		      <xsl:with-param name="name">
+			<xsl:value-of select="$name"/>
+		      </xsl:with-param>
+		    </xsl:call-template>
+		  </xsl:when>
+		  <xsl:otherwise>
 		    <xsl:value-of select="$name"/>
-		  </xsl:with-param>
-		</xsl:call-template>
+		  </xsl:otherwise>
+		</xsl:choose>
 		<xsl:text>&gt; </xsl:text>
 	      </xsl:element>
 	      <xsl:call-template name="makeDescription"/>
