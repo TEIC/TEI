@@ -30,10 +30,8 @@
 
   <xsl:variable name="docClass">book</xsl:variable>
 <xsl:template name="latexPreambleHook">
-\usepackage{framed}
 \usepackage{makeidx}
 \makeindex
-\definecolor{shadecolor}{gray}{0.95}
 \defaultfontfeatures{Scale=MatchLowercase}
 \setromanfont{DejaVu Serif}
 \setsansfont{DejaVu Sans}
