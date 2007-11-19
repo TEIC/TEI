@@ -420,6 +420,18 @@
       </xsl:when>
 
       <xsl:when
+	  test="namespace-uri()='http://earth.google.com/kml/2.1'">
+	<xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
+	<xsl:text>kml:</xsl:text>
+	<xsl:value-of disable-output-escaping="yes"
+		      select="$endNamespace"/>
+	<xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+	
+      </xsl:when>
+
+      <xsl:when
 	  test="namespace-uri()='http://www.w3.org/2005/11/its'">
 	<xsl:value-of disable-output-escaping="yes" select="$startNamespace"/>
 	<xsl:text>its:</xsl:text>
@@ -578,6 +590,7 @@
       <xsl:choose>
 	<xsl:when test="contains($list,$ns)"/>
 	<xsl:when test=".='http://relaxng.org/ns/structure/1.0'"/>
+	<xsl:when test=".='http://www.w3.org/2001/XInclude'"/>
 	<xsl:when test=".='http://www.tei-c.org/ns/Examples'"/>
 	<xsl:when test=".='http://relaxng.org/ns/compatibility/annotations/1.0'"/>
 	<xsl:when test="name(.)=''"/>
@@ -595,7 +608,7 @@
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
-  </xsl:variable>
+    </xsl:variable>
   <xsl:copy-of select="$used"/>
   <xsl:apply-templates mode="ns">
     <xsl:with-param name="list">

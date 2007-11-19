@@ -24,7 +24,7 @@ XSL LaTeX stylesheet to make slides
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:*"/>
   <xsl:output method="text" encoding="utf-8"/>
   <xsl:variable name="docClass">beamer</xsl:variable>
-  <xsl:param name="startNamespace">\color{green}</xsl:param>
+  <xsl:param name="startNamespace">\color{black}</xsl:param>
   <xsl:param name="startElement">{\color{blue}</xsl:param>
   <xsl:param name="startElementName">\textbf{\color{blue}</xsl:param>
   <xsl:param name="startAttribute">{\color{blue}</xsl:param>
@@ -266,5 +266,26 @@ XSL LaTeX stylesheet to make slides
   <xsl:text>}</xsl:text>
 
 </xsl:template>
+
+
+  <xsl:template name="Text">
+    <xsl:param name="words"/>
+    <xsl:choose>
+      <xsl:when test="contains($words,'&amp;')">
+	<xsl:value-of
+	    select="substring-before($words,'&amp;')"/>
+	<xsl:text>&amp;amp;</xsl:text>
+	<xsl:call-template name="Text">
+	  <xsl:with-param name="words">
+	<xsl:value-of select="translate(substring-after($words,'&amp;'),'\{}','&#8421;&#10100;&#10101;')"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="translate($words,'\{}','&#8421;&#10100;&#10101;')"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 
 </xsl:stylesheet>
