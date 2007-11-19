@@ -81,6 +81,8 @@ Use real name of graphics files rather than pointers
 <xsl:text>&#10;\usepackage[</xsl:text>
 <xsl:value-of select="$latexGeometryOptions"/>
 <xsl:text>]{geometry}
+\usepackage{framed}
+\definecolor{shadecolor}{gray}{0.95}
 \usepackage{longtable}
 \usepackage{colortbl}
 \usepackage[normalem]{ulem}
