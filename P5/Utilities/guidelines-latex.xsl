@@ -75,6 +75,41 @@
 \def\sectionmark#1{\markright {\thesection. \ #1}}
 \def\exampleindex#1{{\itshape\hyperpage{#1}}}
 \def\mainexampleindex#1{{\bfseries\itshape\hyperpage{#1}}}
+\renewcommand\normalsize{\@setfontsize\normalsize{10}{12}%
+  \abovedisplayskip 10\p@ plus2\p@ minus5\p@
+  \belowdisplayskip \abovedisplayskip
+  \abovedisplayshortskip  \z@ plus3\p@
+  \belowdisplayshortskip  6\p@ plus3\p@ minus3\p@
+  \let\@listi\@listI
+}
+\renewcommand\small{\@setfontsize\small{9pt}{11pt}%
+   \abovedisplayskip 8.5\p@ plus3\p@ minus4\p@
+   \belowdisplayskip \abovedisplayskip
+   \abovedisplayshortskip \z@ plus2\p@
+   \belowdisplayshortskip 4\p@ plus2\p@ minus2\p@
+   \def\@listi{\leftmargin\leftmargini
+               \topsep 4\p@ plus2\p@ minus2\p@
+               \parsep 2\p@ plus\p@ minus\p@
+               \itemsep \parsep}
+}
+\renewcommand\footnotesize{\@setfontsize\footnotesize{8}{9.5}%
+  \abovedisplayskip 6\p@ plus2\p@ minus4\p@
+  \belowdisplayskip \abovedisplayskip
+  \abovedisplayshortskip \z@ plus\p@
+  \belowdisplayshortskip 3\p@ plus\p@ minus2\p@
+  \def\@listi{\leftmargin\leftmargini
+              \topsep 3\p@ plus\p@ minus\p@
+              \parsep 2\p@ plus\p@ minus\p@
+              \itemsep \parsep}
+}
+\renewcommand\scriptsize{\@setfontsize\scriptsize{7}{8}}
+\renewcommand\tiny{\@setfontsize\tiny{5}{6}}
+\renewcommand\large{\@setfontsize\large{12}{14.4}}
+\renewcommand\Large{\@setfontsize\Large{14.4}{18}}
+\renewcommand\LARGE{\@setfontsize\LARGE{17.28}{22}}
+\renewcommand\huge{\@setfontsize\huge{20.74}{25}}
+\renewcommand\Huge{\@setfontsize\Huge\@xxvpt{30}}
+
 \makeatother
 <xsl:call-template name="beginDocumentHook"/>
 </xsl:template>
@@ -249,6 +284,32 @@
 
 <xsl:template name="latexEnd">
 \printindex
+</xsl:template>
+
+<xsl:template match="tei:table[@rend='wovenodd' or @rend='attList' or
+		      @rend='valList' or @rend='attDef']">
+  <xsl:text>
+\begin{description}
+  </xsl:text>
+<xsl:apply-templates/>
+  <xsl:text>
+\end{description}
+  </xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:table[@rend='wovenodd' or @rend='attList' or
+		      @rend='valList' or @rend='attDef']/tei:row">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="tei:table[@rend='wovenodd' or @rend='attList' or
+		      @rend='valList' or @rend='attDef']/tei:row/tei:cell[1]">
+\item[<xsl:apply-templates/>]
+</xsl:template>
+
+<xsl:template match="tei:table[@rend='wovenodd' or @rend='attList' or
+		      @rend='valList' or @rend='attDef']/tei:row/tei:cell[2]">
+  <xsl:apply-templates/>
 </xsl:template>
 
 </xsl:stylesheet>
