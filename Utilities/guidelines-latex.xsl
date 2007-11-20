@@ -312,6 +312,11 @@
   <xsl:apply-templates/>
 </xsl:template>
 
+<xsl:template match="tei:table[@rend='wovenodd' or @rend='attList' or
+		      @rend='valList' or @rend='attDef']/tei:row/tei:cell[2][@cols=2]">
+\item  <xsl:apply-templates/>
+</xsl:template>
+
 </xsl:stylesheet>
 
 
