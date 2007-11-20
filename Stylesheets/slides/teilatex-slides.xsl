@@ -46,6 +46,8 @@ XSL LaTeX stylesheet to make slides
   </xsl:template>
 
   <xsl:template name="latexPackages">
+\usepackage{framed}
+\definecolor{shadecolor}{gray}{0.95}
 \usepackage{colortbl}
 \usepackage{longtable}
 \usetheme{<xsl:value-of select="$beamerClass"/>}
