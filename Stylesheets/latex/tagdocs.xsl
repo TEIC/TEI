@@ -33,17 +33,19 @@
   </xd:doc>
 
   <xsl:template match="teix:egXML">
-    <xsl:if test="not(parent::tei:cell)">
-      <xsl:text>\par</xsl:text>
-    </xsl:if>
-<xsl:text>\bgroup\exampleFontSet\vskip 10pt
+    <xsl:choose>
+      <xsl:when test="parent::tei:cell">
+\noindent\mbox{}<xsl:apply-templates mode="verbatim"/>
+      </xsl:when>
+      <xsl:otherwise>
+      <xsl:text>\par
+\bgroup\exampleFontSet\vskip 10pt
 \begin{shaded}
 \noindent\mbox{}</xsl:text>
 <xsl:apply-templates mode="verbatim"/>
-\end{shaded}
-<xsl:if test="not(parent::tei:cell)">
-  <xsl:text>\par</xsl:text>
-</xsl:if>
+\end{shaded}\par
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 <xsl:template match="tei:seg[@rend='specChild']">

@@ -120,14 +120,30 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:eg|tei:q[@rend='eg']">
-    <xsl:if test="ancestor::tei:list[@type='gloss']">
-      <xsl:text>\hspace{1em}\hfill\linebreak</xsl:text>
-    </xsl:if>
-\par\bgroup\exampleFontSet\vskip 10pt
+    <xsl:choose>
+      <xsl:when test="ancestor::tei:cell">
+<xsl:text>\mbox{}\newline
+\bgroup\exampleFontSet
+\noindent\obeylines\obeyspaces </xsl:text>
+<xsl:apply-templates mode="eg"/>
+<xsl:text>\egroup </xsl:text>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:list[@type='gloss']">
+	<xsl:text>\hspace{1em}\hfill\linebreak</xsl:text>
+<xsl:text>\bgroup\exampleFontSet\vskip 10pt
 \begin{shaded}
 \noindent\obeylines\obeyspaces <xsl:apply-templates mode="eg"/>
 \end{shaded}
-\par\egroup
+\egroup</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+<xsl:text>\par\bgroup\exampleFontSet\vskip 10pt
+\begin{shaded}
+\noindent\obeylines\obeyspaces <xsl:apply-templates mode="eg"/>
+\end{shaded}
+\par\egroup</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
 <!--
     <xsl:choose>
       <xsl:when test="@n">
