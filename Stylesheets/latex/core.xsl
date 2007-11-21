@@ -132,16 +132,18 @@
 	<xsl:text>\hspace{1em}\hfill\linebreak</xsl:text>
 <xsl:text>\bgroup\exampleFontSet\vskip 10pt
 \begin{shaded}
-\noindent\obeylines\obeyspaces <xsl:apply-templates mode="eg"/>
-\end{shaded}
-\egroup</xsl:text>
+\noindent\obeylines\obeyspaces </xsl:text>
+<xsl:apply-templates mode="eg"/>
+<xsl:text>\end{shaded}
+\egroup </xsl:text>
       </xsl:when>
       <xsl:otherwise>
 <xsl:text>\par\bgroup\exampleFontSet\vskip 10pt
 \begin{shaded}
-\noindent\obeylines\obeyspaces <xsl:apply-templates mode="eg"/>
-\end{shaded}
-\par\egroup</xsl:text>
+\noindent\obeylines\obeyspaces </xsl:text>
+<xsl:apply-templates mode="eg"/>
+<xsl:text>\end{shaded}
+\par\egroup </xsl:text>
       </xsl:otherwise>
     </xsl:choose>
 <!--
