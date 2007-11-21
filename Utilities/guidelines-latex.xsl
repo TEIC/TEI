@@ -279,7 +279,6 @@
 </xsl:choose>
 <xsl:text>}</xsl:text>
 </xsl:for-each>
-<xsl:text>\egroup </xsl:text>
   </xsl:template>
 
 <xsl:template name="latexEnd">
@@ -304,17 +303,19 @@
 
 <xsl:template match="tei:table[@rend='wovenodd' or @rend='attList' or
 		      @rend='valList' or @rend='attDef']/tei:row/tei:cell[1]">
-\item[<xsl:apply-templates/>]
+<xsl:choose>
+  <xsl:when test="@cols='2'">
+    \item[] <xsl:apply-templates/>
+  </xsl:when>
+  <xsl:otherwise>
+    \item[<xsl:apply-templates/>]
+  </xsl:otherwise>
+</xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:table[@rend='wovenodd' or @rend='attList' or
 		      @rend='valList' or @rend='attDef']/tei:row/tei:cell[2]">
   <xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="tei:table[@rend='wovenodd' or @rend='attList' or
-		      @rend='valList' or @rend='attDef']/tei:row/tei:cell[2][@cols=2]">
-\item  <xsl:apply-templates/>
 </xsl:template>
 
 </xsl:stylesheet>
