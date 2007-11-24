@@ -35,18 +35,23 @@
   <xsl:template match="teix:egXML">
     <xsl:choose>
       <xsl:when test="parent::tei:cell">
-\noindent\mbox{}<xsl:apply-templates mode="verbatim"/>
+	<xsl:text>\mbox{}\hfill\newline\bgroup\exampleFontSet\begin{shaded}</xsl:text>
+	<xsl:apply-templates mode="verbatim"/>
+	<xsl:text>\end{shaded}\egroup </xsl:text>
       </xsl:when>
       <xsl:otherwise>
-      <xsl:text>\par
-\bgroup\exampleFontSet\vskip 10pt
+      <xsl:text>\par\bgroup\exampleFontSet\vskip 10pt
 \begin{shaded}
 \noindent\mbox{}</xsl:text>
 <xsl:apply-templates mode="verbatim"/>
-\end{shaded}\par
+\end{shaded}\egroup\par
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+<xsl:template match="tei:seg[@rend='specChildren']">
+  <xsl:apply-templates/>\mbox\hfill\newline 
+</xsl:template>
 
 <xsl:template match="tei:seg[@rend='specChild']">
   <xsl:apply-templates/>\newline 

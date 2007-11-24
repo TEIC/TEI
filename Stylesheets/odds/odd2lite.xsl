@@ -390,5 +390,20 @@
     </xsl:choose>
   </xsl:template>
 
+<!-- debugging
+<xsl:template name="SHOW">
+ &lt;<xsl:value-of select="name()"/>
+<xsl:for-each select="@*">
+  <xsl:text> </xsl:text>
+  <xsl:value-of select="name()"/>="<xsl:value-of select="."/>"
+</xsl:for-each>
+&gt;
+   <xsl:for-each select="*">
+     <xsl:call-template name="SHOW"/>
+   </xsl:for-each>
+ &lt;/<xsl:value-of select="name()"/>&gt;
+</xsl:template>
+
+-->
 
 </xsl:stylesheet>

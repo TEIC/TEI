@@ -364,4 +364,66 @@
     </div>
   </xsl:template>
 
+  <xd:doc>
+    <xd:short>[html] </xd:short>
+    <xd:param name="grammar">grammar</xd:param>
+    <xd:param name="content">content</xd:param>
+    <xd:param name="element">element</xd:param>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+
+  <xsl:template name="bitOut">
+    <xsl:param name="grammar"/>
+    <xsl:param name="content"/>
+    <xsl:param name="element">pre</xsl:param>
+    <xsl:choose>
+      <xsl:when test="$displayMode='both'">
+	<div class="displayRelax">
+	  <span class="displayRelax"
+		onclick="togglerelax(this)">RNG</span>
+	  <pre class="eg_rng" style="display:none">
+	    <xsl:apply-templates mode="verbatim"
+				 select="exsl:node-set($content)/*/*"/>
+	  </pre>
+	  <pre class="eg_rnc" style="display:block">
+	  <xsl:call-template name="make-body-from-r-t-f">
+	    <xsl:with-param name="schema">
+	      <xsl:for-each select="exsl:node-set($content)/*">
+		<xsl:call-template name="make-compact-schema"/>
+	      </xsl:for-each>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	  </pre>
+	</div>
+      </xsl:when>
+      <xsl:when test="$displayMode='rng'">
+	<xsl:element name="{$element}">
+	  <xsl:attribute name="class">eg</xsl:attribute>
+	  <xsl:apply-templates mode="verbatim"
+			       select="exsl:node-set($content)/*/*"/>
+	</xsl:element>
+      </xsl:when>
+      <xsl:when test="$displayMode='rnc'">
+	<xsl:element name="{$element}">
+	  <xsl:attribute name="class">eg</xsl:attribute>
+	  <xsl:call-template name="make-body-from-r-t-f">
+	    <xsl:with-param name="schema">
+	      <xsl:for-each select="exsl:node-set($content)/*">
+		<xsl:call-template name="make-compact-schema"/>
+	      </xsl:for-each>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:element>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:element name="{$element}">
+	  <xsl:attribute name="class">eg</xsl:attribute>
+	  <xsl:for-each select="exsl:node-set($content)/*">
+	    <xsl:apply-templates mode="literal"/>
+	  </xsl:for-each>
+	</xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>

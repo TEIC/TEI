@@ -122,11 +122,16 @@
   <xsl:template match="tei:eg|tei:q[@rend='eg']">
     <xsl:choose>
       <xsl:when test="ancestor::tei:cell">
+<xsl:text>\mbox{}\hfill\\[-10pt]\begin{Verbatim}[fontsize=\scriptsize]&#10;</xsl:text>
+<xsl:apply-templates mode="eg"/>
+<xsl:text>&#10;\end{Verbatim}&#10;</xsl:text>
+<!--
 <xsl:text>\mbox{}\newline
 \bgroup\exampleFontSet
 \noindent\obeylines\obeyspaces </xsl:text>
 <xsl:apply-templates mode="eg"/>
 <xsl:text>\egroup </xsl:text>
+-->
       </xsl:when>
       <xsl:when test="ancestor::tei:list[@type='gloss']">
 	<xsl:text>\hspace{1em}\hfill\linebreak</xsl:text>

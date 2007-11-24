@@ -1398,6 +1398,13 @@
   <xsl:template name="make-body-from-r-t-f">
     <xsl:param name="schema"/>
 <!--
+<xsl:message>
+<xsl:for-each select="exsl:node-set($schema)/*">
+  <xsl:call-template name="SHOW"/>
+</xsl:for-each>
+</xsl:message>
+-->
+<!--
 <xsl:comment>
 Schema:
 	    <xsl:apply-templates mode="verbatim"
