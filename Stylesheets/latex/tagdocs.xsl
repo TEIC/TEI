@@ -50,7 +50,7 @@
   </xsl:template>
 
 <xsl:template match="tei:seg[@rend='specChildren']">
-  <xsl:apply-templates/>\mbox\hfill\newline 
+  \mbox\hfill\newline <xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="tei:seg[@rend='specChild']">
