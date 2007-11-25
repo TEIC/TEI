@@ -33,10 +33,12 @@
 \usepackage{makeidx}
 \makeindex
 \defaultfontfeatures{Scale=MatchLowercase}
-\setromanfont{DejaVu Serif}
-\setsansfont{DejaVu Sans}
-\setmonofont{DejaVu Sans Mono}
-%\setmonofont[Scale=0.9]{Lucida Sans Typewriter}
+%\setromanfont{DejaVu Serif}
+%\setsansfont{DejaVu Sans}
+%\setmonofont{DejaVu Sans Mono}
+\setmonofont[Scale=0.9]{Lucida Sans Typewriter}
+\setsansfont[Scale=0.85]{Lucida Sans}
+\setromanfont{Times New Roman}
 \setlength{\headheight}{14pt}
 </xsl:template>
 
@@ -49,7 +51,6 @@
 </xsl:if>
 \markright{\@title}%
 \markboth{\@title}{\@author}%
-\makeatother
 \fvset{frame=single,numberblanklines=false,xleftmargin=5mm,xrightmargin=5mm}
 \fancyhf{} 
 \setlength{\headheight}{14pt}
@@ -61,8 +62,7 @@
 \fancyfoot[LE]{\TheDate}
 \fancyfoot[CE]{\thepage}
 \fancyfoot[RE]{}
-\hypersetup{bookmarksnumbered=true,hyperindex}
-\makeatletter
+\hypersetup{bookmarksnumbered=true}
 \def\l@section{\@dottedtocline{1}{5.5em}{2.3em}}
 \def\l@subsection{\@dottedtocline{2}{6em}{3.2em}}
 \def\l@subsubsection{\@dottedtocline{3}{7.0em}{4.1em}}
@@ -75,6 +75,13 @@
 \def\sectionmark#1{\markright {\thesection. \ #1}}
 \def\exampleindex#1{{\itshape\hyperpage{#1}}}
 \def\mainexampleindex#1{{\bfseries\itshape\hyperpage{#1}}}
+\renewcommand{\@listI}{%
+   \setlength{\leftmargin}{\leftmargini}%
+   \setlength{\topsep}{\medskipamount}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\listparindent}{1em}%
+   \setlength{\rightskip}{1em}%
+}
 \renewcommand\normalsize{\@setfontsize\normalsize{10}{12}%
   \abovedisplayskip 10\p@ plus2\p@ minus5\p@
   \belowdisplayskip \abovedisplayskip
@@ -88,9 +95,9 @@
    \abovedisplayshortskip \z@ plus2\p@
    \belowdisplayshortskip 4\p@ plus2\p@ minus2\p@
    \def\@listi{\leftmargin\leftmargini
-               \topsep 4\p@ plus2\p@ minus2\p@
+               \topsep 2\p@ plus1\p@ minus1\p@
                \parsep 2\p@ plus\p@ minus\p@
-               \itemsep \parsep}
+               \itemsep 1pt}
 }
 \renewcommand\footnotesize{\@setfontsize\footnotesize{8}{9.5}%
   \abovedisplayskip 6\p@ plus2\p@ minus4\p@
@@ -98,7 +105,7 @@
   \abovedisplayshortskip \z@ plus\p@
   \belowdisplayshortskip 3\p@ plus\p@ minus2\p@
   \def\@listi{\leftmargin\leftmargini
-              \topsep 3\p@ plus\p@ minus\p@
+              \topsep 2\p@ plus\p@ minus\p@
               \parsep 2\p@ plus\p@ minus\p@
               \itemsep \parsep}
 }
@@ -109,7 +116,44 @@
 \renewcommand\LARGE{\@setfontsize\LARGE{17.28}{22}}
 \renewcommand\huge{\@setfontsize\huge{20.74}{25}}
 \renewcommand\Huge{\@setfontsize\Huge\@xxvpt{30}}
-
+%\parskip3pt
+%\parindent0em
+% for refdocs
+\renewenvironment{itemize}{%
+  \advance\@itemdepth \@ne
+  \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+  \begin{list}{\csname\@itemitem\endcsname}
+  {%
+   \setlength{\topsep}{2pt}%
+   \setlength{\itemsep}{2pt}%
+   \setlength{\itemindent}{2pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\hfil##1\hfil}}%
+  }
+  {\end{list}}
+\newenvironment{reflist}{%
+  \begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\itshape ##1}}%
+  }
+  {\end{list}}
+\newenvironment{sansreflist}{%
+  \begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\upshape\sffamily ##1}}%
+  }
+  {\end{list}}
 \makeatother
 <xsl:call-template name="beginDocumentHook"/>
 </xsl:template>
@@ -129,22 +173,32 @@
   <xsl:text>\mbox{}\newline &#10;</xsl:text>
 </xsl:template>
 
+<xsl:template match="tei:list[@rend='specList']">
+\begin{sansreflist}
+  <xsl:apply-templates/>
+\end{sansreflist}
+</xsl:template>
+
 <xsl:template match="tei:hi[@rend='specList-elementSpec']">
-  <xsl:text>\textbf{&lt;</xsl:text>
+  <xsl:text>[\textbf{&lt;</xsl:text>
   <xsl:value-of select="."/>
-  <xsl:text>&gt;}</xsl:text>
+  <xsl:text>&gt;}]</xsl:text>
 </xsl:template>
 
 <xsl:template match="tei:hi[@rend='specList-macroSpec']">
- <xsl:text>\textbf{</xsl:text>
+ <xsl:text>[\textbf{</xsl:text>
   <xsl:value-of select="."/>
- <xsl:text>}</xsl:text>
+ <xsl:text>}]</xsl:text>
 </xsl:template>
 
 <xsl:template match="tei:hi[@rend='specList-classSpec']">
- <xsl:text>\textbf{</xsl:text>
+ <xsl:text>[\textbf{</xsl:text>
  <xsl:value-of select="."/>
- <xsl:text>}</xsl:text>
+ <xsl:text>}]</xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:hi[@rend='label']">
+ <xsl:value-of select="."/>
 </xsl:template>
 
 <xsl:template name="tableHline"/>
@@ -285,27 +339,46 @@
 \printindex
 </xsl:template>
 
-<xsl:template match="tei:table[@rend='wovenodd' or @rend='attList' or
-		      @rend='valList' or @rend='attDef']">
+<xsl:template match="tei:table[@rend='wovenodd' 
+     or @rend='attDef']">
   <xsl:text>
-\begin{description}
-  </xsl:text>
+\begin{reflist}</xsl:text>
 <xsl:apply-templates/>
   <xsl:text>
-\end{description}
-  </xsl:text>
+\end{reflist}  </xsl:text>
 </xsl:template>
 
-<xsl:template match="tei:table[@rend='wovenodd' or @rend='attList' or
-		      @rend='valList' or @rend='attDef']/tei:row">
+<xsl:template match="tei:table[@rend='valList' 
+     or @rend='attList' 
+     or @rend='specDesc']">
+<xsl:text>\hfil\\[-10pt]\begin{sansreflist}</xsl:text>
+<xsl:apply-templates/>
+  <xsl:text>
+\end{sansreflist}  </xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:table[@rend='wovenodd' 
+    or @rend='attList' 
+    or @rend='valList' 
+    or @rend='attDef' 
+    or @rend='specDesc']/tei:row">
   <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="tei:table[@rend='wovenodd' or @rend='attList' or
-		      @rend='valList' or @rend='attDef']/tei:row/tei:cell[1]">
+<xsl:template match="tei:table[@rend='wovenodd' 
+     or @rend='attList' 
+     or @rend='specDesc' 
+     or @rend='valList' 
+     or @rend='attDef']/tei:row/tei:cell[1]">
 <xsl:choose>
+  <xsl:when test="ancestor::tei:table/@rend='valList'">
+    \item[<xsl:apply-templates/>]
+  </xsl:when>
+  <xsl:when test="ancestor::tei:table/@rend='specDesc'">
+    \item[@<xsl:apply-templates/>]
+  </xsl:when>
   <xsl:when test="@cols='2'">
-    \item[] <xsl:apply-templates/>
+    \item[]\begin{shaded}<xsl:apply-templates/>\end{shaded}
   </xsl:when>
   <xsl:otherwise>
     \item[<xsl:apply-templates/>]
@@ -313,9 +386,18 @@
 </xsl:choose>
 </xsl:template>
 
-<xsl:template match="tei:table[@rend='wovenodd' or @rend='attList' or
-		      @rend='valList' or @rend='attDef']/tei:row/tei:cell[2]">
+<xsl:template match="tei:table[@rend='wovenodd' 
+      or @rend='attList' 
+      or @rend='valList' 
+      or @rend='specDesc' 
+      or @rend='attDef']/tei:row/tei:cell[2]">
   <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="tei:seg[@rend='specChildren']">
+<xsl:text>\hfil\\[-10pt]\begin{sansreflist}</xsl:text>
+<xsl:apply-templates/>
+<xsl:text>\end{sansreflist}</xsl:text>
 </xsl:template>
 
 </xsl:stylesheet>
