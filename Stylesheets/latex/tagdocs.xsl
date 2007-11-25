@@ -40,31 +40,32 @@
 	<xsl:text>\end{shaded}\egroup </xsl:text>
       </xsl:when>
       <xsl:otherwise>
-      <xsl:text>\par\bgroup\exampleFontSet\vskip 10pt
-\begin{shaded}
-\noindent\mbox{}</xsl:text>
+      <xsl:text>\par\bgroup\exampleFontSet
+\begin{shaded}\noindent\mbox{}</xsl:text>
 <xsl:apply-templates mode="verbatim"/>
 \end{shaded}\egroup\par
+<xsl:if test="parent::tei:p and following-sibling::node()">\noindent </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
 <xsl:template match="tei:seg[@rend='specChildren']">
-  \mbox\hfill\newline <xsl:apply-templates/>
+<xsl:text>\mbox{ }\\ \begin{description}</xsl:text>
+<xsl:apply-templates/>
+<xsl:text>\end{description}</xsl:text>
 </xsl:template>
 
 <xsl:template match="tei:seg[@rend='specChild']">
-  <xsl:apply-templates/>\newline 
+<xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="tei:seg[@rend='specChildModule']">
-  <xsl:text>\textbf{</xsl:text>
-  <xsl:apply-templates/>
-  <xsl:text>}</xsl:text>
+    \item[<xsl:apply-templates/>]
 </xsl:template>
 
 <xsl:template match="tei:seg[@rend='specChildElements']">
   <xsl:apply-templates/>
 </xsl:template>
+
 
 </xsl:stylesheet>
