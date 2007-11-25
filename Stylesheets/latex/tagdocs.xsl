@@ -67,5 +67,24 @@
   <xsl:apply-templates/>
 </xsl:template>
 
+<xsl:template match="tei:hi[@rend='parent']">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="tei:hi[@rend='showmembers1']">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="tei:hi[@rend='showmembers2']">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="tei:hi[@rend='showmembers3']">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="tei:hi[@rend='showmembers4']">
+  <xsl:apply-templates/>
+</xsl:template>
 
 </xsl:stylesheet>
