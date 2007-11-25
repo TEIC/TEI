@@ -63,10 +63,6 @@
 
   <xsl:variable name="top" select="/"/>
 
-  <xsl:template name="showSpace">
-    <xsl:text> </xsl:text>
-  </xsl:template>
-
   <xd:doc>
     <xd:short>[odds] Document an element, macro, or class</xd:short>
     <xd:detail> </xd:detail>

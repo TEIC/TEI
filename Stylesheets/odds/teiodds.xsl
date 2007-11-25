@@ -33,7 +33,7 @@
     <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:include href="RngToRnc.xsl"/>
-
+  <xsl:param name="STDOUT">true</xsl:param>
   <xsl:param name="outputSuffix">.html</xsl:param>
   <xd:doc type="string" class="output">
     Public Doctype of output file(s).
@@ -1665,26 +1665,6 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
 
-  <xsl:template name="makeTagsetInfo">
-    <xsl:value-of select="@module"/>
-    <xsl:for-each
-	select="key('MODULES',@module)/ancestor::tei:div[last()]">
-      <xsl:text> — </xsl:text>
-        <xsl:call-template name="makeInternalLink">
-          <xsl:with-param name="target" select="@xml:id"/>
-          <xsl:with-param name="ptr">true</xsl:with-param>
-          <xsl:with-param name="dest">
-            <xsl:value-of select="tei:head"/>
-	  </xsl:with-param>
-        </xsl:call-template>
-    </xsl:for-each>
-    <xsl:if test="$verbose='true'">
-      <xsl:message> tagset <xsl:value-of select="@xml:id"/>: <xsl:value-of
-          select="@module"/></xsl:message>
-    </xsl:if>
-  </xsl:template>
-
-
   <xsl:template name="processSchemaFragment">
     <xsl:param name="filename"/>
     <xsl:variable name="secnum">
@@ -1710,72 +1690,6 @@ select="$makeDecls"/></xsl:message>
     -->
   </xsl:template>
 
-  <xsl:template name="processSpecDesc">
-    <xsl:variable name="name">
-      <xsl:value-of select="@key"/>
-    </xsl:variable>
-    <xsl:variable name="atts">
-      <xsl:choose>
-        <xsl:when test="@rend='noatts'">-</xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="normalize-space(@atts)"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="$name=''">
-        <xsl:message>ERROR: no key attribute on specDesc</xsl:message>
-      </xsl:when>
-      <xsl:when test="key('IDENTS',$name)">
-        <xsl:apply-templates mode="show" select="key('IDENTS',$name)">
-          <xsl:with-param name="atts" select="$atts"/>
-        </xsl:apply-templates>
-      </xsl:when>
-      <xsl:when test="not($localsource='')">
-        <xsl:for-each select="document($localsource)/tei:TEI">
-          <xsl:apply-templates mode="show" select="tei:*[@ident=$name]">
-            <xsl:with-param name="atts" select="$atts"/>
-          </xsl:apply-templates>
-        </xsl:for-each>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:variable name="loc">
-          <xsl:value-of select="$TEISERVER"/>
-          <xsl:text>copytag.xq?name=</xsl:text>
-          <xsl:value-of select="$name"/>
-        </xsl:variable>
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Accessing TEISERVER: <xsl:value-of select="$loc"
-          /></xsl:message>
-        </xsl:if>
-        <xsl:apply-templates mode="show" select="document($loc)/tei:*">
-          <xsl:with-param name="atts" select="$atts"/>
-        </xsl:apply-templates>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template name="processatts">
-    <xsl:param name="values"/>
-    <xsl:if test="not($values = '')">
-      <xsl:apply-templates select="key('IDENTS',substring-before($values,' '))"/>
-      <xsl:call-template name="processatts">
-        <xsl:with-param name="values" select="substring-after($values,' ')"/>
-      </xsl:call-template>
-    </xsl:if>
-  </xsl:template>
-
-  <xsl:template name="sectionNumber">
-    <xsl:for-each
-      select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4)[last()]">
-      <xsl:for-each select="ancestor-or-self::tei:div1">
-        <xsl:number from="tei:body" level="any"/>
-        <xsl:text>.</xsl:text>
-      </xsl:for-each>
-      <xsl:number count="tei:div2|tei:div3|tei:div4" from="tei:div1"
-        level="multiple"/>
-    </xsl:for-each>
-  </xsl:template>
 
   <xsl:template name="make-ns-declaration">
     <xsl:param name="is-default"/>
@@ -1901,12 +1815,10 @@ select="$makeDecls"/></xsl:message>
           <xsl:message> File [<xsl:value-of select="$outputDir"/>/<xsl:value-of
               select="@ident"/><xsl:value-of select="$suffix"/>] </xsl:message>
         </xsl:if>
-        <xsl:if test="element-available('exsl:document')">
-          <exsl:document href="{$outputDir}/{@ident}{$suffix}" indent="yes"
+	<exsl:document href="{$outputDir}/{@ident}{$suffix}" indent="yes"
             method="xml">
             <xsl:copy-of select="$body"/>
           </exsl:document>
-        </xsl:if>
       </xsl:when>
       <xsl:otherwise>
         <xsl:copy-of select="$body"/>
@@ -2114,20 +2026,17 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="showSpace">
-    <xsl:text> </xsl:text>
+
+  <xsl:template name="sectionNumber">
+    <xsl:for-each
+      select="(ancestor::tei:div1|ancestor::tei:div2|ancestor::tei:div3|ancestor::tei:div4)[last()]">
+      <xsl:for-each select="ancestor-or-self::tei:div1">
+        <xsl:number from="tei:body" level="any"/>
+        <xsl:text>.</xsl:text>
+      </xsl:for-each>
+      <xsl:number count="tei:div2|tei:div3|tei:div4" from="tei:div1"
+        level="multiple"/>
+    </xsl:for-each>
   </xsl:template>
-
-
-  <xd:doc>
-    <xd:short>Process elements tei:attList</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:attList" mode="show">
-    <xsl:call-template name="displayAttList">
-      <xsl:with-param name="mode">summary</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-
 
 </xsl:stylesheet>

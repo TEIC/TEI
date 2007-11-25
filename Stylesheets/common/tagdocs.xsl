@@ -2067,6 +2067,97 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template name="processSpecDesc">
+    <xsl:variable name="name">
+      <xsl:value-of select="@key"/>
+    </xsl:variable>
+    <xsl:variable name="atts">
+      <xsl:choose>
+        <xsl:when test="@rend='noatts'">-</xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="normalize-space(@atts)"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$name=''">
+        <xsl:message>ERROR: no key attribute on specDesc</xsl:message>
+      </xsl:when>
+      <xsl:when test="key('IDENTS',$name)">
+        <xsl:apply-templates mode="show" select="key('IDENTS',$name)">
+          <xsl:with-param name="atts" select="$atts"/>
+        </xsl:apply-templates>
+      </xsl:when>
+      <xsl:when test="not($localsource='')">
+        <xsl:for-each select="document($localsource)/tei:TEI">
+          <xsl:apply-templates mode="show" select="tei:*[@ident=$name]">
+            <xsl:with-param name="atts" select="$atts"/>
+          </xsl:apply-templates>
+        </xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="loc">
+          <xsl:value-of select="$TEISERVER"/>
+          <xsl:text>copytag.xq?name=</xsl:text>
+          <xsl:value-of select="$name"/>
+        </xsl:variable>
+        <xsl:if test="$verbose='true'">
+          <xsl:message>Accessing TEISERVER: <xsl:value-of select="$loc"
+          /></xsl:message>
+        </xsl:if>
+        <xsl:apply-templates mode="show" select="document($loc)/tei:*">
+          <xsl:with-param name="atts" select="$atts"/>
+        </xsl:apply-templates>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="processatts">
+    <xsl:param name="values"/>
+    <xsl:if test="not($values = '')">
+      <xsl:apply-templates select="key('IDENTS',substring-before($values,' '))"/>
+      <xsl:call-template name="processatts">
+        <xsl:with-param name="values" select="substring-after($values,' ')"/>
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+
+  <xsl:template name="showSpace">
+    <xsl:text> </xsl:text>
+  </xsl:template>
+
+
+  <xd:doc>
+    <xd:short>Process elements tei:attList</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:attList" mode="show">
+    <xsl:call-template name="displayAttList">
+      <xsl:with-param name="mode">summary</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="makeTagsetInfo">
+    <xsl:value-of select="@module"/>
+    <xsl:for-each
+	select="key('MODULES',@module)/ancestor::tei:div[last()]">
+      <xsl:text> — </xsl:text>
+        <xsl:call-template name="makeInternalLink">
+          <xsl:with-param name="target" select="@xml:id"/>
+          <xsl:with-param name="ptr">true</xsl:with-param>
+          <xsl:with-param name="dest">
+            <xsl:value-of select="tei:head"/>
+	  </xsl:with-param>
+        </xsl:call-template>
+    </xsl:for-each>
+    <xsl:if test="$verbose='true'">
+      <xsl:message> tagset <xsl:value-of select="@xml:id"/>: <xsl:value-of
+          select="@module"/></xsl:message>
+    </xsl:if>
+  </xsl:template>
+
+
 
 
 </xsl:stylesheet>

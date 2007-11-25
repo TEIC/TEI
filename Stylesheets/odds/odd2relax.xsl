@@ -105,7 +105,7 @@
           </xsl:if>
           <xsl:apply-templates mode="tangle" select="tei:specGrpRef"/>
           <xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
-          <xsl:for-each select="tei:macroSpec">
+          <xsl:for-each select=".//tei:macroSpec">
             <xsl:apply-templates mode="tangle" select="."/>
             <!--
 	      <xsl:choose>
@@ -118,7 +118,7 @@
 -->
           </xsl:for-each>
           <xsl:apply-templates mode="tangle"
-            select="tei:elementSpec|tei:classSpec"/>
+            select=".//tei:elementSpec|.//tei:classSpec"/>
 
 	    <xsl:choose>
             <xsl:when test="@start and @start=''"/>
