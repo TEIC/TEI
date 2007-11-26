@@ -565,8 +565,6 @@
 	    </xsl:element>
 	  </xsl:element>
 	  
-	  <xsl:apply-templates mode="weave"/>
-	  
 	  <xsl:element  namespace="{$outputNS}" name="{$rowName}">
 	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
 	      <xsl:attribute name="{$rendName}">
@@ -612,6 +610,9 @@
 	      <xsl:call-template name="generateChildren"/>
 	    </xsl:element>
 	  </xsl:element>
+
+	  <xsl:apply-templates mode="weave"/>
+	  
 	  
 	</xsl:element>
       </xsl:with-param>
@@ -1975,7 +1976,6 @@
 	    </xsl:choose>
 	  </xsl:with-param>
 	</xsl:call-template>
-	<xsl:text>: </xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
