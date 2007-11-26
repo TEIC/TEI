@@ -50,8 +50,8 @@
       <xsl:when test="not($namespacePrefix='')">
         <xsl:value-of select="$namespacePrefix"/>
       </xsl:when>
-      <xsl:when test="//tei:schemaSpec/@ns">
-        <xsl:variable name="n" select="//tei:schemaSpec/@ns"/>
+      <xsl:when test="key('SCHEMASPECS',1)[1]/@ns">
+        <xsl:variable name="n" select="key('SCHEMASPECS',1)[1]/@ns"/>
         <xsl:choose>
           <xsl:when test="$n='http://www.w3.org/2005/11/its'">its:</xsl:when>
           <xsl:when test="$n='http://www.tei-c.org/ns/1.0'">tei:</xsl:when>
@@ -62,8 +62,8 @@
   <xsl:key match="tei:moduleSpec[@ident]" name="FILES" use="@ident"/>
   <xsl:template match="/">
     <xsl:choose>
-      <xsl:when test=".//tei:schemaSpec">
-        <xsl:apply-templates select=".//tei:schemaSpec"/>
+      <xsl:when test="key('SCHEMASPECS',1)[1]">
+        <xsl:apply-templates select="key('SCHEMASPECS',1)[1]"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="byModule"/>
@@ -422,7 +422,7 @@
   <xsl:template name="NameList">
     <!-- walk over all the elementSpec elements and make list of 
        elements -->
-    <xsl:for-each select="//tei:elementSpec">
+    <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:sort select="@ident"/>
       <xsl:if test="not(starts-with(@ident,'%'))">
         <xsl:text>&lt;!ENTITY % n.</xsl:text>
@@ -807,9 +807,9 @@
       <xsl:when test="parent::tei:content/parent::tei:macroSpec">
         <xsl:call-template name="topLevel"/>
       </xsl:when>
-      <xsl:when test="count(parent::tei:content/*)&gt;1">
+      <xsl:when test="count(parent::tei:content/rng:*)&gt;1">
 	  <xsl:choose>
-	    <xsl:when test="not(preceding-sibling::*)">
+	    <xsl:when test="not(preceding-sibling::rng:*)">
 	    <xsl:text>(</xsl:text>
 	    </xsl:when>
 	    <xsl:otherwise>
@@ -818,7 +818,7 @@
 	  </xsl:choose>
 	  <xsl:call-template name="refbody"/>
 
-	  <xsl:if test="not(following-sibling::*)">
+	  <xsl:if test="not(following-sibling::rng:*)">
 	    <xsl:text>)</xsl:text>
 	  </xsl:if>
       </xsl:when>
@@ -1075,7 +1075,7 @@
       <xsl:text>&gt;</xsl:text>
       <xsl:choose>
       <xsl:when test="@ns=''"/>
-      <xsl:when test="ancestor::tei:schemaSpec/@ns=''"/>
+      <xsl:when test="key('SCHEMASPECS',1)[1]/@ns=''"/>
       <xsl:when test="@ns">
 	<xsl:text>&#10;&lt;!ATTLIST </xsl:text>
 	<xsl:value-of select="$ename"/>
@@ -1084,7 +1084,7 @@
 	<xsl:text>"</xsl:text>
 	<xsl:text>&gt;</xsl:text>
       </xsl:when>
-      <xsl:when test="ancestor::tei:schemaSpec/@ns">
+      <xsl:when test="key('SCHEMASPECS',1)[1]/@ns">
 	<xsl:text>&#10;&lt;!ATTLIST </xsl:text>
 	<xsl:value-of select="$ename"/>
 	<xsl:text> xmlns CDATA "</xsl:text>
@@ -1564,16 +1564,16 @@
 
 
   <xsl:template name="checkEnd">
-    <xsl:if test="count(parent::tei:content[parent::tei:elemenSpec]/*)&gt;1 and
-		  not(following-sibling::*)">
+    <xsl:if test="count(parent::tei:content[parent::tei:elementSpec]/rng:*)&gt;1 and
+		  not(following-sibling::rng:*)">
       <xsl:text>)</xsl:text>
     </xsl:if>
   </xsl:template>
 
   <xsl:template name="checkStart">
-    <xsl:if test="count(parent::tei:content[parent::tei:elemenSpec]/*)&gt;1">
+    <xsl:if test="count(parent::tei:content[parent::tei:elementSpec]/rng:*)&gt;1">
       <xsl:choose>
-      <xsl:when test="preceding-sibling::*">
+      <xsl:when test="preceding-sibling::rng:*">
 	<xsl:text>,</xsl:text>
       </xsl:when>
       <xsl:otherwise>
