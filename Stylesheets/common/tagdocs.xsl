@@ -223,12 +223,6 @@
   </xsl:template>
 
   <xd:doc>
-    <xd:short>Process elements tei:attList</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:attList" mode="weave"/>
-
-  <xd:doc>
     <xd:short>Process elements tei:classSpec</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
@@ -418,20 +412,6 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:classes" mode="weave"> </xsl:template>
-
-  <xd:doc>
-    <xd:short>Process elements tei:defaultVal</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:defaultVal" mode="weave"/>
-
-  <xd:doc>
-    <xd:short>Process elements tei:desc</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:desc">
-    <xsl:apply-templates/>
-  </xsl:template>
 
   <xd:doc>
     <xd:short>Process elements tei:elementSpec</xd:short>
@@ -657,7 +637,7 @@
 	  <xsl:with-param name="content">
 	    <Wrapper>
 	      <rng:element name="{$name}">
-		<xsl:if test="not(ancestor::tei:schemaSpec)">
+		<xsl:if test="not(key('SCHEMASPECS',1))">
 		  <rng:ref name="att.global.attributes"/>
 		  <xsl:for-each select="..">
 		    <xsl:call-template name="showClassAtts"/>
@@ -1647,12 +1627,6 @@
   <xsl:template match="tei:attList" mode="weave"/>
 
   <xd:doc>
-    <xd:short>Process elements tei:classes</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:classes" mode="weave">
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements tei:defaultVal</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
@@ -2134,7 +2108,27 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:template match="tei:schemaSpec">
+   <h2>Model classes</h2>
+    <xsl:apply-templates mode="weave" select="key('MODELCLASSDOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
 
+   <h2>Attribute classes</h2>
+    <xsl:apply-templates mode="weave" select="key('ATTCLASSDOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+
+   <h2>Macros</h2>
+    <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+
+   <h2>Elements</h2>
+    <xsl:apply-templates mode="weave" select="key('ELEMENTDOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+  </xsl:template>
 
 
 </xsl:stylesheet>
