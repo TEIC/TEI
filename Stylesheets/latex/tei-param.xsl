@@ -308,6 +308,7 @@ capable of dealing with UTF-8 directly.
   \cleardoublepage
   \setcounter{chapter}{0}
   \setcounter{section}{0}
+  \setcounter{secnumdepth}{0}
   \renewcommand\@chapapp{\appendixname}%
   \renewcommand\thechapter{\@Alph\c@chapter}
   \appendix

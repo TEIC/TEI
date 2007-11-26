@@ -531,29 +531,7 @@
 	  <xsl:if test="@module">
 	    <xsl:call-template name="moduleInfo"/>
 	  </xsl:if>
-	  
-	  <xsl:element namespace="{$outputNS}" name="{$rowName}">
-	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
-	      <xsl:attribute name="{$rendName}">
-		<xsl:text>wovenodd-col1</xsl:text>
-	      </xsl:attribute>
-	      <xsl:element namespace="{$outputNS}" name="{$hiName}">
-		<xsl:attribute name="{$rendName}">
-		  <xsl:text>label</xsl:text>
-		</xsl:attribute>
-		<xsl:call-template name="i18n">
-		  <xsl:with-param name="word">Used by</xsl:with-param>
-		</xsl:call-template>
-	      </xsl:element>
-	    </xsl:element>
-	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
-	      <xsl:attribute name="{$rendName}">
-		<xsl:text>wovenodd-col2</xsl:text>
-	      </xsl:attribute>
-	      <xsl:call-template name="generateParents"/>
-	    </xsl:element>
-	  </xsl:element>
-	  
+	    
 	  <xsl:element namespace="{$outputNS}" name="{$rowName}">
 	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
 	      <xsl:attribute name="{$rendName}">
@@ -599,7 +577,7 @@
 		  <xsl:text>label</xsl:text>
 		</xsl:attribute>
 		<xsl:call-template name="i18n">
-		  <xsl:with-param name="word">Contained by</xsl:with-param>
+		  <xsl:with-param name="word">Used by</xsl:with-param>
 		</xsl:call-template>
 	      </xsl:element>
 	    </xsl:element>
@@ -1021,6 +999,9 @@
                   <xsl:attribute name="{$rendName}">
                     <xsl:text>label</xsl:text>
                   </xsl:attribute>
+		  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">Used by</xsl:with-param>
+		  </xsl:call-template>
                 </xsl:element>
               </xsl:element>
               <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -1994,6 +1975,7 @@
 	    </xsl:choose>
 	  </xsl:with-param>
 	</xsl:call-template>
+	<xsl:text>: </xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -2123,11 +2105,6 @@
   </xsl:template>
 
 
-  <xsl:template name="showSpace">
-    <xsl:text> </xsl:text>
-  </xsl:template>
-
-
   <xd:doc>
     <xd:short>Process elements tei:attList</xd:short>
     <xd:detail> </xd:detail>
@@ -2142,7 +2119,7 @@
     <xsl:value-of select="@module"/>
     <xsl:for-each
 	select="key('MODULES',@module)/ancestor::tei:div[last()]">
-      <xsl:text> — </xsl:text>
+      <xsl:text> — see </xsl:text>
         <xsl:call-template name="makeInternalLink">
           <xsl:with-param name="target" select="@xml:id"/>
           <xsl:with-param name="ptr">true</xsl:with-param>

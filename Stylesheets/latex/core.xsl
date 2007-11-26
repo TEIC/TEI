@@ -121,6 +121,16 @@
   </xd:doc>
   <xsl:template match="tei:eg|tei:q[@rend='eg']">
     <xsl:choose>
+      <xsl:when test="ancestor::tei:cell and count(*)=1">
+	<xsl:text>\verb|</xsl:text>
+	<xsl:apply-templates mode="eg"/>
+	<xsl:text>|</xsl:text>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:cell and not(*)">
+	<xsl:text>\verb|</xsl:text>
+	<xsl:apply-templates mode="eg"/>
+	<xsl:text>|</xsl:text>
+      </xsl:when>
       <xsl:when test="ancestor::tei:cell">
 <xsl:text>\mbox{}\hfill\\[-10pt]\begin{Verbatim}[fontsize=\scriptsize]&#10;</xsl:text>
 <xsl:apply-templates mode="eg"/>

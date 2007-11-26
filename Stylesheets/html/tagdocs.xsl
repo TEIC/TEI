@@ -422,4 +422,10 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template name="showSpace">
+    <xsl:text> </xsl:text>
+  </xsl:template>
+
+
+
 </xsl:stylesheet>
