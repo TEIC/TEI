@@ -63,6 +63,7 @@
   <xsl:key match="tei:*[@xml:id]" name="IDS" use="@xml:id"/>
   <xsl:key match="tei:macroSpec[@type='dt']" name="DATATYPES" use="1"/>
   <xsl:key match="tei:macroSpec" name="MACRODOCS" use="1"/>
+  <xsl:key match="tei:schemaSpec" name="SCHEMASPECS" use="1"/>
   <xsl:key match="tei:classSpec[@type='atts']" name="ATTCLASSDOCS"
 	   use="1"/>
   <xsl:key match="tei:classSpec[@type='model']" name="MODELCLASSDOCS" use="1"/>
@@ -84,7 +85,7 @@
   <xsl:variable name="parameterize">
     <xsl:choose>
       <xsl:when test="$TEIC='false'">true</xsl:when>
-      <xsl:when test="//tei:schemaSpec">false</xsl:when>
+      <xsl:when test="key('SCHEMASPECS',1)">false</xsl:when>
       <xsl:otherwise>true</xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -96,8 +97,8 @@
       <xsl:when test="string-length($patternPrefix)&gt;0">
 	<xsl:value-of select="$patternPrefix"/>
       </xsl:when>
-      <xsl:when test="//tei:schemaSpec[@prefix]">
-	<xsl:value-of select="//tei:schemaSpec/@prefix"/>
+      <xsl:when test="key('SCHEMASPECS',1)[1][@prefix]">
+	<xsl:value-of select="key('SCHEMASPECS',1)[1]/@prefix"/>
       </xsl:when>
     </xsl:choose>
   </xsl:variable>
@@ -107,8 +108,8 @@
       <xsl:when test="string-length($lang)&gt;0">
 	<xsl:value-of select="$lang"/>
       </xsl:when>
-      <xsl:when test="//tei:schemaSpec[@targetLang]">
-	<xsl:value-of select="//tei:schemaSpec/@targetLang"/>
+      <xsl:when test="key('SCHEMASPECS',1)[1][@targetLang]">
+	<xsl:value-of select="key('SCHEMASPECS',1)[1]/@targetLang"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:text>en</xsl:text>
@@ -122,8 +123,8 @@
       <xsl:when test="string-length($doclang)&gt;0">
 	<xsl:value-of select="$doclang"/>
       </xsl:when>
-      <xsl:when test="ancestor-or-self::tei:schemaSpec/@docLang">
-	<xsl:value-of select="//tei:schemaSpec[1]/@docLang"/>
+      <xsl:when test="key('SCHEMASPECS',1)[1]/@docLang">
+	<xsl:value-of select="key('SCHEMASPECS',1)[1]/@docLang"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:text>en</xsl:text>
@@ -1105,7 +1106,7 @@ select="$makeDecls"/></xsl:message>
   <xsl:template match="tei:specGrp" mode="ok">
     <xsl:param name="filename"/>
     <xsl:if test="$verbose='true'">
-      <xsl:message> processing spec grp <xsl:value-of select="@ident"
+      <xsl:message> processing specGrp <xsl:value-of select="@xml:id"
       /></xsl:message>
     </xsl:if>
     <xsl:call-template name="processSchemaFragment">
@@ -1681,7 +1682,8 @@ select="$makeDecls"/></xsl:message>
 	</xsl:comment>
 	</xsl:if>
     -->
-    <xsl:apply-templates mode="tangle"/>
+      <xsl:apply-templates mode="tangle"/>
+
     <!--
 	<xsl:if test="@xml:id">
 	<xsl:comment> end of [<xsl:value-of select="@xml:id"/>]  <xsl:value-of select="$secnum"/>    
