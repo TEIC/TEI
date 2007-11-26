@@ -44,8 +44,8 @@
   <xsl:template match="tei:moduleSpec[@type='decls']"/>
   <xsl:template match="/">
     <xsl:choose>
-      <xsl:when test=".//tei:schemaSpec">
-        <xsl:apply-templates select=".//tei:schemaSpec"/>
+      <xsl:when test="key('SCHEMASPECS',1)">
+        <xsl:apply-templates select="key('SCHEMASPECS',1)[1]"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:apply-templates select="key('Modules',1)"/>
@@ -284,7 +284,7 @@
   <xsl:template match="tei:specGrpRef" mode="tangle">
     <xsl:param name="filename"/>
     <xsl:if test="$verbose='true'">
-      <xsl:message> spec grp ref to <xsl:value-of select="@target"
+      <xsl:message> specGrpRef to <xsl:value-of select="@target"
       /></xsl:message>
     </xsl:if>
     <xsl:choose>
