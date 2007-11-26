@@ -450,9 +450,11 @@
   <xsl:template name="linkStyle"/>
   <xsl:template name="makeAnchor"/>
   <xsl:template name="makeLink"/>
+
   <xsl:template match="rng:element[rng:anyName]">
     <xsl:text>#PCDATA</xsl:text>
   </xsl:template>
+
   <xsl:template match="rng:zeroOrMore">
     <xsl:variable name="body">
       <xsl:call-template name="content">
@@ -460,10 +462,13 @@
       </xsl:call-template>
     </xsl:variable>
     <xsl:if test="not($body='')">
+      <xsl:call-template name="checkStart"/>
       <xsl:value-of select="$body"/>
       <xsl:text>*</xsl:text>
+      <xsl:call-template name="checkEnd"/>
     </xsl:if>
   </xsl:template>
+
   <xsl:template match="rng:oneOrMore">
     <xsl:variable name="body">
       <xsl:call-template name="content">
@@ -471,8 +476,10 @@
       </xsl:call-template>
     </xsl:variable>
     <xsl:if test="not($body='')">
+      <xsl:call-template name="checkStart"/>
       <xsl:value-of select="$body"/>
       <xsl:text>+</xsl:text>
+      <xsl:call-template name="checkEnd"/>
     </xsl:if>
   </xsl:template>
 
@@ -486,13 +493,16 @@
       <xsl:when test="$body=''">
       </xsl:when>
       <xsl:otherwise>
+	<xsl:call-template name="checkStart"/>
 	<xsl:value-of select="$body"/>
 	<xsl:text>?</xsl:text>
+	<xsl:call-template name="checkEnd"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
   <xsl:template match="rng:choice">
+    <xsl:call-template name="checkStart"/>
     <xsl:choose>
       <xsl:when test="rng:value"> 
 	<xsl:text> (</xsl:text>
@@ -508,6 +518,7 @@
 	  </xsl:call-template>
 	</xsl:otherwise>
     </xsl:choose>
+    <xsl:call-template name="checkEnd"/>
   </xsl:template>
 
   <xsl:template match="rng:group|rng:mixed">
@@ -790,10 +801,26 @@
   <xsl:template match="processing-instruction()[name(.)='teidtd']" mode="tangle">
     <xsl:value-of select="."/>
   </xsl:template>
+
   <xsl:template match="rng:ref">
     <xsl:choose>
       <xsl:when test="parent::tei:content/parent::tei:macroSpec">
         <xsl:call-template name="topLevel"/>
+      </xsl:when>
+      <xsl:when test="count(parent::tei:content/*)&gt;1">
+	  <xsl:choose>
+	    <xsl:when test="not(preceding-sibling::*)">
+	    <xsl:text>(</xsl:text>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>,</xsl:text>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  <xsl:call-template name="refbody"/>
+
+	  <xsl:if test="not(following-sibling::*)">
+	    <xsl:text>)</xsl:text>
+	  </xsl:if>
       </xsl:when>
       <xsl:when test="key('MACROS',@name)">
         <xsl:call-template name="refbody"/>
@@ -936,7 +963,7 @@
   </xsl:template>
   <xsl:template name="macroBody">
     <xsl:text>&#10;&lt;!ENTITY </xsl:text>
-    <xsl:if test="@type='defaultpe' or @type='pe' or @type='epe' or @type='dt'">
+    <xsl:if test="not(@type) or @type='defaultpe' or @type='pe' or @type='epe' or @type='dt'">
       <xsl:text>%</xsl:text>
     </xsl:if>
     <xsl:text> </xsl:text>
@@ -1534,4 +1561,26 @@
     <xsl:value-of select="$text"/>
     <xsl:text>&#10;--&gt;&#10;</xsl:text>
   </xsl:template>
+
+
+  <xsl:template name="checkEnd">
+    <xsl:if test="count(parent::tei:content[parent::tei:elemenSpec]/*)&gt;1 and
+		  not(following-sibling::*)">
+      <xsl:text>)</xsl:text>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="checkStart">
+    <xsl:if test="count(parent::tei:content[parent::tei:elemenSpec]/*)&gt;1">
+      <xsl:choose>
+      <xsl:when test="preceding-sibling::*">
+	<xsl:text>,</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>(</xsl:text>
+      </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+
 </xsl:stylesheet>
