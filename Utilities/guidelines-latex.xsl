@@ -37,8 +37,11 @@
 %\setsansfont{DejaVu Sans}
 %\setmonofont{DejaVu Sans Mono}
 \setmonofont[Scale=0.9]{Lucida Sans Typewriter}
-\setsansfont[Scale=0.85]{Lucida Sans}
-\setromanfont{Times New Roman}
+%\setsansfont[Scale=0.85]{Lucida Sans}
+%\setromanfont{Times New Roman}
+\setromanfont{Minion Pro}
+%\setmonofont{CourierStd}
+\setsansfont{Myriad Pro}
 \setlength{\headheight}{14pt}
 </xsl:template>
 
