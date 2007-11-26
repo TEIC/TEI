@@ -65,7 +65,7 @@ Whether to include CSS by reference or by XInclusion
   <xd:doc type="anyURI" class="CSS">
 CSS style file to be associated with output file(s)
 </xd:doc>
-  <xsl:param name="cssFile">http://www.tei-c.org/stylesheet/tei.css</xsl:param>
+  <xsl:param name="cssFile">http://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
   <xd:doc type="anyURI" class="CSS">
 Secondary CSS style file; this will be given a media=screen attribute,
 so that it does not affect printing. It should be used for screen layout.
