@@ -1,6 +1,7 @@
 ;; XML/SGML loading for tei-emacs project
 ;; C Wittern/S Rahtz April/May/June 2001
 ;; Revised September-November 2003 for nxml-mode
+;; Revised September 2007 for emacs22
 
 ;; set this to some value if you want XML files to
 ;; start off in anything other than utf-8
@@ -63,7 +64,7 @@ buffers local variables list."
 )
 
 
-(require 'uni-input)
+;;(require 'uni-input)
 
 ;;; XML Characters from Norm Walsh
 
