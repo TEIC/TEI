@@ -411,29 +411,29 @@
 
 
   <xsl:template match="tei:note[@place='foot']">
-    <text:footnote-citation>
+    <text:note text:note-class="footnote">
+    <text:note-citation>
       <xsl:number level="any" count="tei:note[@place='foot']"/>
-    </text:footnote-citation>
-    <text:footnote>
-      <text:footnote-body>
+    </text:note-citation>
+      <text:note-body>
 	<text:p text:style-name="Footnote">
 	  <xsl:apply-templates/>
 	</text:p>
-      </text:footnote-body>
-    </text:footnote>
+      </text:note-body>
+    </text:note>  
   </xsl:template>
 
   <xsl:template match="tei:note[@place='end']">
-    <text:endnote-citation>
+    <text:note text:note-class="endnote">
+    <text:note-citation>
       <xsl:number format="i" level="any" count="tei:note[@place='end']"/>
-    </text:endnote-citation>
-    <text:endnote>
-      <text:endnote-body>
+    </text:note-citation>
+      <text:note-body>
 	<text:p text:style-name="Endnote">
 	  <xsl:apply-templates/>
 	</text:p>
-      </text:endnote-body>
-    </text:endnote>
+      </text:note-body>
+    </text:note>
   </xsl:template>
 
 

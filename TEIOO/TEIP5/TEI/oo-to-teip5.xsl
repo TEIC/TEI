@@ -62,8 +62,8 @@
     name="headchildren"
     match="text:p | text:alphabetical-index | table:table | text:span
 	   | office:annotation | text:ordered-list | text:list |
-	   text:footnote | text:a | text:list-item | draw:plugin |
-	   draw:text-box | text:footnote-body | text:section" 
+	   text:note | text:a | text:list-item | draw:plugin |
+	   draw:text-box | text:note-body | text:section" 
     use="generate-id((..|preceding-sibling::text:h[@text:outline-level])[last()])"/>
 
   <xsl:key match="text:h[@text:outline-level='2']" name="children1"
