@@ -43,6 +43,7 @@
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:param name="generateNamespacePrefix">false</xsl:param>
   <xsl:param name="namespacePrefix"/>
+  <xsl:param name="selectedSchema"/>
   <xsl:key match="tei:moduleSpec" name="Modules" use="1"/>
   <xsl:variable name="nsPrefix">
     <xsl:choose>
@@ -62,8 +63,16 @@
   <xsl:key match="tei:moduleSpec[@ident]" name="FILES" use="@ident"/>
   <xsl:template match="/">
     <xsl:choose>
-      <xsl:when test="key('SCHEMASPECS',1)[1]">
-        <xsl:apply-templates select="key('SCHEMASPECS',1)[1]"/>
+      <xsl:when test="key('SCHEMASPECS',1)">
+	<xsl:choose>
+	  <xsl:when test="not($selectedSchema)">
+	    <xsl:apply-templates select="key('SCHEMASPECS',1)[1]"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:apply-templates 
+		select="key('LISTSCHEMASPECS',$selectedSchema)"/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="byModule"/>

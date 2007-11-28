@@ -450,6 +450,7 @@ for change individually.
       <xsl:for-each select="$ODD">
         <xsl:for-each select="key('CHANGE',$elementName)">
           <!-- if there is an altIdent, use it -->
+	  <xsl:copy-of select="@ns"/>
           <xsl:copy-of select="tei:altIdent"/>
           <!-- equiv, gloss, desc trio -->
           <xsl:choose>

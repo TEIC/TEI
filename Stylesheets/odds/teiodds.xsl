@@ -64,6 +64,7 @@
   <xsl:key match="tei:macroSpec[@type='dt']" name="DATATYPES" use="1"/>
   <xsl:key match="tei:macroSpec" name="MACRODOCS" use="1"/>
   <xsl:key match="tei:schemaSpec" name="SCHEMASPECS" use="1"/>
+  <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="@ident"/>
   <xsl:key match="tei:classSpec[@type='atts']" name="ATTCLASSDOCS"
 	   use="1"/>
   <xsl:key match="tei:classSpec[@type='model']" name="MODELCLASSDOCS" use="1"/>
