@@ -45,7 +45,7 @@
   <xsl:template match="/">
     <xsl:choose>
       <xsl:when test="key('SCHEMASPECS',1)">
-        <xsl:apply-templates select="key('SCHEMASPECS',1)[1]"/>
+        <xsl:apply-templates select="key('LISTSCHEMASPECS',$whichSchemaSpec)"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:apply-templates select="key('Modules',1)"/>
@@ -103,22 +103,19 @@
 	      <xsl:call-template name="copyright"/>
 	    </xsl:comment>
           </xsl:if>
-          <xsl:apply-templates mode="tangle" select="tei:specGrpRef"/>
+	  <xsl:variable name="SPECS">
+	    <tei:schemaSpec>
+	      <xsl:copy-of select="@*"/>
+	      <xsl:apply-templates mode="expandSpecs"/>
+	    </tei:schemaSpec>
+	  </xsl:variable>
+	  <xsl:for-each select="exsl:node-set($SPECS)/tei:schemaSpec">
           <xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
-          <xsl:for-each select=".//tei:macroSpec">
+          <xsl:for-each select="tei:macroSpec">
             <xsl:apply-templates mode="tangle" select="."/>
-            <!--
-	      <xsl:choose>
-		<xsl:when test="@predeclare='true'"/>
-		<xsl:when test="key('PredeclareMacros',@ident)"/>
-		<xsl:otherwise>
-		  <xsl:apply-templates select="." mode="tangle"/>
-		</xsl:otherwise>
-	    </xsl:choose>
--->
           </xsl:for-each>
           <xsl:apply-templates mode="tangle"
-            select=".//tei:elementSpec|.//tei:classSpec"/>
+            select="tei:elementSpec|tei:classSpec"/>
 
 	    <xsl:choose>
             <xsl:when test="@start and @start=''"/>
@@ -150,10 +147,12 @@
               </rng:start>
             </xsl:otherwise>
           </xsl:choose>
+	  </xsl:for-each>
         </rng:grammar>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+
   <xsl:template name="startNames">
     <xsl:param name="toks"/>
     <xsl:if test="not($toks='')">

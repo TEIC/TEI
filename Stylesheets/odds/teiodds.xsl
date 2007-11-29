@@ -91,6 +91,17 @@
       <xsl:otherwise>true</xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
+  <xsl:variable name="whichSchemaSpec">
+    <xsl:choose>
+      <xsl:when test="$selectedSchema">
+	<xsl:value-of select="$selectedSchema"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="key('SCHEMASPECS',1)[1]/@ident"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
   <!-- lookup table of element contents, and templates to access the result -->
   <xsl:key match="Contains" name="ELEMENTPARENTS" use="."/>
 
@@ -99,8 +110,8 @@
       <xsl:when test="string-length($patternPrefix)&gt;0">
 	<xsl:value-of select="$patternPrefix"/>
       </xsl:when>
-      <xsl:when test="key('SCHEMASPECS',1)[1][@prefix]">
-	<xsl:value-of select="key('SCHEMASPECS',1)[1]/@prefix"/>
+      <xsl:when test="key('LISTSCHEMASPECS',$whichSchemaSpec)[@prefix]">
+	<xsl:value-of select="key('LISTSCHEMASPECS',$whichSchemaSpec)/@prefix"/>
       </xsl:when>
     </xsl:choose>
   </xsl:variable>
@@ -110,8 +121,8 @@
       <xsl:when test="string-length($lang)&gt;0">
 	<xsl:value-of select="$lang"/>
       </xsl:when>
-      <xsl:when test="key('SCHEMASPECS',1)[1][@targetLang]">
-	<xsl:value-of select="key('SCHEMASPECS',1)[1]/@targetLang"/>
+      <xsl:when test="key('LISTSCHEMASPECS',$whichSchemaSpec)[@targetLang]">
+	<xsl:value-of select="key('LISTSCHEMASPECS',$whichSchemaSpec)/@targetLang"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:text>en</xsl:text>
@@ -125,8 +136,8 @@
       <xsl:when test="string-length($doclang)&gt;0">
 	<xsl:value-of select="$doclang"/>
       </xsl:when>
-      <xsl:when test="key('SCHEMASPECS',1)[1]/@docLang">
-	<xsl:value-of select="key('SCHEMASPECS',1)[1]/@docLang"/>
+      <xsl:when test="key('LISTSCHEMASPECS',$whichSchemaSpec)/@docLang">
+	<xsl:value-of select="key('LISTSCHEMASPECS',$whichSchemaSpec)/@docLang"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:text>en</xsl:text>
@@ -1673,25 +1684,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="secnum">
       <xsl:call-template name="sectionNumber"/>
     </xsl:variable>
-    <!--
-	<xsl:if test="@xml:id">
-	<xsl:comment>[<xsl:value-of select="@xml:id"/>] <xsl:value-of
-	select="$secnum"/>
-	<xsl:if test="@n">
-	<xsl:text>: </xsl:text>
-	<xsl:value-of select="@n"/>
-	</xsl:if>
-	</xsl:comment>
-	</xsl:if>
-    -->
-      <xsl:apply-templates mode="tangle"/>
-
-    <!--
-	<xsl:if test="@xml:id">
-	<xsl:comment> end of [<xsl:value-of select="@xml:id"/>]  <xsl:value-of select="$secnum"/>    
-	</xsl:comment>
-	</xsl:if>
-    -->
+    <xsl:apply-templates mode="tangle"/>
   </xsl:template>
 
 
@@ -2041,6 +2034,26 @@ select="$makeDecls"/></xsl:message>
       <xsl:number count="tei:div2|tei:div3|tei:div4" from="tei:div1"
         level="multiple"/>
     </xsl:for-each>
+  </xsl:template>
+
+
+  <xsl:template match="*" mode="expandSpecs">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="tei:specGrpRef" mode="expandSpecs">
+    <xsl:choose>
+      <xsl:when test="starts-with(@target,'#')">
+	<xsl:for-each select="key('IDS',substring-after(@target,'#'))">
+	  <xsl:apply-templates mode="expandSpecs"/>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each select="document(@target)">
+	  <xsl:apply-templates mode="expandSpecs"/>
+	</xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>
