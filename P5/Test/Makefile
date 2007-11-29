@@ -1,7 +1,9 @@
 LANGUAGE=en
-DRIVER=guidelines-${LANGUAGE}.xml
+INPUTLANGUAGE=en
+DOCUMENTATIONLANGUAGE=en
+DRIVER=guidelines-${INPUTLANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
-ROMAOPTS=--localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER}
+ROMAOPTS=--doclang=${DOCUMENTATIONLANGUAGE} --lang=${LANGUAGE} --localsource=../Source/Guidelines/${INPUTLANGUAGE}/${DRIVER}
 
 TESTFILES= \
 	testClasses \
@@ -57,6 +59,7 @@ default: schemas test
 test: test-schema test-dtd test-dtd-xmllint test-extns test-xsd test-xsd-valid test-bad
 
 schemas:
+	echo SETUP IS $(ROMAOPTS)
 	xsltproc --xinclude --stringparam Modules \
 	"tei core textstructure figures header linking" \
 	../Utilities/makenames.xsl \
