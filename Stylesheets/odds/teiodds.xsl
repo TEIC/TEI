@@ -68,7 +68,8 @@
   <xsl:key match="tei:classSpec[@type='atts']" name="ATTCLASSDOCS"
 	   use="1"/>
   <xsl:key match="tei:classSpec[@type='model']" name="MODELCLASSDOCS" use="1"/>
-  <xsl:key match="tei:elementSpec" name="ELEMENTDOCS" use="1"/>
+  <xsl:key match="tei:elementSpec" name="ELEMENTDOCS"
+	   use="ancestor::tei:schemaSpec/@ident"/>
   <xsl:key match="tei:*" name="NameToID" use="@ident"/>
   <xsl:key match="tei:elementSpec" name="ElementModule" use="@module"/>
   <xsl:key match="tei:classSpec" name="ClassModule" use="@module"/>

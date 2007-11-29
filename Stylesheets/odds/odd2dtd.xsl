@@ -337,6 +337,9 @@
     </xsl:call-template>
   </xsl:template>
   <xsl:template match="tei:schemaSpec">
+    <xsl:if   test="$verbose='true'">
+      <xsl:message>schemaSpec <xsl:value-of select="@ident"/></xsl:message>
+    </xsl:if>
     <xsl:choose>
       <xsl:when test="$outputDir='' or $outputDir='-'">
         <xsl:call-template name="schemaOut"/>
@@ -421,7 +424,7 @@
       <xsl:text>&#10;&lt;!-- stop classes --&gt;&#10;</xsl:text>
     </xsl:if>
     <xsl:text>&#10;&lt;!-- start elements --&gt;&#10;</xsl:text>
-    <xsl:apply-templates mode="tangle" select="key('ELEMENTDOCS',1)">
+    <xsl:apply-templates mode="tangle" select="key('ELEMENTDOCS',@ident)">
       <xsl:sort select="@ident"/>
     </xsl:apply-templates>
     <xsl:text>&#10;&lt;!-- end elements --&gt;&#10;</xsl:text>
@@ -431,7 +434,7 @@
   <xsl:template name="NameList">
     <!-- walk over all the elementSpec elements and make list of 
        elements -->
-    <xsl:for-each select="key('ELEMENTDOCS',1)">
+    <xsl:for-each select="key('ELEMENTDOCS',@ident)">
       <xsl:sort select="@ident"/>
       <xsl:if test="not(starts-with(@ident,'%'))">
         <xsl:text>&lt;!ENTITY % n.</xsl:text>

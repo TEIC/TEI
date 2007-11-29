@@ -1842,6 +1842,7 @@
 
 <xsl:template name="followRef">
   <xsl:for-each select=".//rng:ref">
+    <xsl:if test="not(@name='anyTEI')">
     <xsl:for-each select="key('IDENTS',@name)">
       <xsl:choose>
 	<xsl:when test="self::tei:elementSpec">
@@ -1857,6 +1858,7 @@
 	</xsl:when>
       </xsl:choose>
     </xsl:for-each>
+</xsl:if>
   </xsl:for-each>
 </xsl:template>
 
