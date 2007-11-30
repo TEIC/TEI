@@ -38,6 +38,7 @@
   <xd:doc type="string" class="output">
     Public Doctype of output file(s).
   </xd:doc>
+  <xsl:param name="selectedSchema"/>
   <xsl:param name="outputDir"/>
   <xsl:param name="localsource"/>
   <xsl:param name="lang"/>
@@ -68,8 +69,7 @@
   <xsl:key match="tei:classSpec[@type='atts']" name="ATTCLASSDOCS"
 	   use="1"/>
   <xsl:key match="tei:classSpec[@type='model']" name="MODELCLASSDOCS" use="1"/>
-  <xsl:key match="tei:elementSpec" name="ELEMENTDOCS"
-	   use="ancestor::tei:schemaSpec/@ident"/>
+  <xsl:key match="tei:elementSpec" name="ELEMENTDOCS" use="1"/>
   <xsl:key match="tei:*" name="NameToID" use="@ident"/>
   <xsl:key match="tei:elementSpec" name="ElementModule" use="@module"/>
   <xsl:key match="tei:classSpec" name="ClassModule" use="@module"/>

@@ -43,7 +43,6 @@
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:param name="generateNamespacePrefix">false</xsl:param>
   <xsl:param name="namespacePrefix"/>
-  <xsl:param name="selectedSchema"/>
   <xsl:key match="tei:moduleSpec" name="Modules" use="1"/>
   <xsl:variable name="nsPrefix">
     <xsl:choose>
@@ -331,8 +330,7 @@
   </xsl:template>
   <xsl:template match="tei:schemaSpec">
     <xsl:if   test="$verbose='true'">
-      <xsl:message>schemaSpec <xsl:value-of 
-      select="@ident"/> (aka <xsl:value-of select="$whichSchemaSpec"/>)</xsl:message>
+      <xsl:message>schemaSpec <xsl:value-of select="@ident"/> </xsl:message>
     </xsl:if>
     <xsl:choose>
       <xsl:when test="$outputDir='' or $outputDir='-'">
@@ -361,40 +359,52 @@
 	<xsl:call-template name="makeDescription"/>
       </xsl:with-param>
     </xsl:call-template>
-    <xsl:variable name="SPECS">
-      <tei:schemaSpec>
-	<xsl:copy-of select="@*"/>
-	<xsl:apply-templates mode="expandSpecs"/>
-      </tei:schemaSpec>
-    </xsl:variable>
-    <xsl:for-each select="exsl:node-set($SPECS)/tei:schemaSpec">
-      <xsl:if test="$parameterize='true'">
-	<xsl:text>&lt;!ENTITY % NS '</xsl:text>
-	<xsl:value-of select="$nsPrefix"/>
-	<xsl:text>' &gt;&#10;</xsl:text>
-	<xsl:call-template name="NameList"/>
-      </xsl:if>
-      <xsl:text>&#10;&lt;!-- start datatypes --&gt;&#10;</xsl:text>
-      <xsl:apply-templates mode="tangle"
-			   select="tei:macroSpec[@type='dt']"/>
-      <xsl:text>&#10;&lt;!-- end datatypes --&gt;&#10;</xsl:text>
-      <xsl:if test="$TEIC='true'">
-	<xsl:text>&#10;&lt;!--predeclared classes --&gt;&#10;</xsl:text>
-	<xsl:for-each select="tei:classSpec[@type='predeclare']">
-	  <xsl:choose>
-	    <xsl:when test="@type='atts'">
-	      <xsl:call-template name="classAtt">
-		<xsl:with-param name="declare">false</xsl:with-param>
-	      </xsl:call-template>
-	    </xsl:when>
-	    <xsl:when test="@type='model' and $parameterize='false'">
-	      <xsl:call-template name="classModel">
-		<xsl:with-param name="declare">true</xsl:with-param>
-	      </xsl:call-template>
-	    </xsl:when>	
-	  </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="tei:specGrpRef">
+	<xsl:variable name="SPECS">
+	  <tei:schemaSpec>
+	    <xsl:copy-of select="@*"/>
+	    <xsl:apply-templates mode="expandSpecs"/>
+	  </tei:schemaSpec>
+	</xsl:variable>
+	<xsl:for-each select="exsl:node-set($SPECS)/tei:schemaSpec">
+	  <xsl:call-template name="schemaSpecBody"/>
 	</xsl:for-each>
-	<xsl:text>&#10;&lt;!--end of predeclared classes --&gt;&#10;</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	  <xsl:call-template name="schemaSpecBody"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="schemaSpecBody">
+    <xsl:if test="$parameterize='true'">
+      <xsl:text>&lt;!ENTITY % NS '</xsl:text>
+      <xsl:value-of select="$nsPrefix"/>
+      <xsl:text>' &gt;&#10;</xsl:text>
+      <xsl:call-template name="NameList"/>
+    </xsl:if>
+    <xsl:text>&#10;&lt;!-- start datatypes --&gt;&#10;</xsl:text>
+    <xsl:apply-templates mode="tangle"
+			 select="tei:macroSpec[@type='dt']"/>
+    <xsl:text>&#10;&lt;!-- end datatypes --&gt;&#10;</xsl:text>
+    <xsl:if test="$TEIC='true'">
+      <xsl:text>&#10;&lt;!--predeclared classes --&gt;&#10;</xsl:text>
+      <xsl:for-each select="tei:classSpec[@type='predeclare']">
+	<xsl:choose>
+	  <xsl:when test="@type='atts'">
+	    <xsl:call-template name="classAtt">
+	      <xsl:with-param name="declare">false</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:when>
+	  <xsl:when test="@type='model' and $parameterize='false'">
+	    <xsl:call-template name="classModel">
+	      <xsl:with-param name="declare">true</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:when>	
+	</xsl:choose>
+      </xsl:for-each>
+      <xsl:text>&#10;&lt;!--end of predeclared classes --&gt;&#10;</xsl:text>
       </xsl:if>
       <xsl:if test="$TEIC='true'">
 	<xsl:apply-templates mode="tangle" select="tei:classSpec"/>
@@ -426,11 +436,10 @@
 	<xsl:sort select="@ident"/>
       </xsl:apply-templates>
       <xsl:text>&#10;&lt;!-- end elements --&gt;&#10;</xsl:text>
-    </xsl:for-each>
   </xsl:template>
 
 
-  <xsl:template match="tei:macroSpec[@id='TEIGIS' or @xml:id='TEIGIS']"
+  <xsl:template match="tei:macroSpec[@xml:id='TEIGIS']"
     mode="tangle"/>
   <xsl:template name="NameList">
     <!-- walk over all the elementSpec elements and make list of 

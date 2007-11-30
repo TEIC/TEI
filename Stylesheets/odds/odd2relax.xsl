@@ -103,54 +103,65 @@
 	      <xsl:call-template name="copyright"/>
 	    </xsl:comment>
           </xsl:if>
-	  <xsl:variable name="SPECS">
-	    <tei:schemaSpec>
-	      <xsl:copy-of select="@*"/>
-	      <xsl:apply-templates mode="expandSpecs"/>
-	    </tei:schemaSpec>
-	  </xsl:variable>
-	  <xsl:for-each select="exsl:node-set($SPECS)/tei:schemaSpec">
-          <xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
-          <xsl:for-each select="tei:macroSpec">
-            <xsl:apply-templates mode="tangle" select="."/>
-          </xsl:for-each>
-          <xsl:apply-templates mode="tangle"
-            select="tei:elementSpec|tei:classSpec"/>
-
-	    <xsl:choose>
-            <xsl:when test="@start and @start=''"/>
-            <xsl:when test="@start and contains(@start,' ')">
-              <rng:start>
-                <rng:choice>
-                  <xsl:call-template name="startNames">
-                    <xsl:with-param name="toks" select="@start"/>
-                  </xsl:call-template>
-                </rng:choice>
-              </rng:start>
-            </xsl:when>
-            <xsl:when test="@start">
-              <rng:start>
-                <rng:ref name="{$patternPrefixText}{@start}"/>
-              </rng:start>
-            </xsl:when>
-            <xsl:when test="key('IDENTS','teiCorpus')">
-              <rng:start>
-                <rng:choice>
-                  <rng:ref name="{$patternPrefixText}TEI"/>
-                  <rng:ref name="{$patternPrefixText}teiCorpus"/>
-                </rng:choice>
-              </rng:start>
-            </xsl:when>
-            <xsl:otherwise>
-              <rng:start>
-                <rng:ref name="{$patternPrefixText}TEI"/>
-              </rng:start>
-            </xsl:otherwise>
-          </xsl:choose>
-	  </xsl:for-each>
-        </rng:grammar>
+	  <xsl:choose>
+	    <xsl:when test="tei:specGrpRef">
+	      <xsl:variable name="SPECS">
+		<tei:schemaSpec>
+		  <xsl:copy-of select="@*"/>
+		  <xsl:apply-templates mode="expandSpecs"/>
+		</tei:schemaSpec>
+	      </xsl:variable>
+	      <xsl:for-each select="exsl:node-set($SPECS)/tei:schemaSpec">
+		<xsl:call-template name="schemaSpecBody"/>
+	      </xsl:for-each>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:call-template name="schemaSpecBody"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</rng:grammar>
       </xsl:with-param>
     </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="schemaSpecBody">
+    <xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
+    <xsl:for-each select="tei:macroSpec">
+      <xsl:apply-templates mode="tangle" select="."/>
+    </xsl:for-each>
+    <xsl:apply-templates mode="tangle"
+			 select="tei:elementSpec|tei:classSpec"/>
+    
+    <xsl:choose>
+      <xsl:when test="@start and @start=''"/>
+      <xsl:when test="@start and contains(@start,' ')">
+	<rng:start>
+	  <rng:choice>
+	    <xsl:call-template name="startNames">
+	      <xsl:with-param name="toks" select="@start"/>
+	    </xsl:call-template>
+	  </rng:choice>
+	</rng:start>
+      </xsl:when>
+      <xsl:when test="@start">
+	<rng:start>
+	  <rng:ref name="{$patternPrefixText}{@start}"/>
+	</rng:start>
+      </xsl:when>
+      <xsl:when test="key('IDENTS','teiCorpus')">
+	<rng:start>
+	  <rng:choice>
+	    <rng:ref name="{$patternPrefixText}TEI"/>
+	    <rng:ref name="{$patternPrefixText}teiCorpus"/>
+	  </rng:choice>
+	</rng:start>
+      </xsl:when>
+      <xsl:otherwise>
+	<rng:start>
+	  <rng:ref name="{$patternPrefixText}TEI"/>
+	</rng:start>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="startNames">
@@ -259,9 +270,11 @@
   <xsl:template name="NameList">
     <!-- walk over all the elementSpec elements and make list of 
        elements -->
-    <xsl:for-each select="//tei:elementSpec">
+    <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:sort select="@ident"/>
-      <rng:define combine="choice" name="{@ident}"><rng:notAllowed/></rng:define>
+      <rng:define combine="choice" name="{@ident}">
+	<rng:notAllowed/>
+      </rng:define>
     </xsl:for-each>
   </xsl:template>
 
