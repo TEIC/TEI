@@ -59,10 +59,10 @@
 \setlength{\headheight}{14pt}
 \fancyhead[LE]{\bfseries\leftmark} 
 \fancyhead[RO]{\bfseries\rightmark} 
-\fancyfoot[RO]{\TheDate}
+\fancyfoot[RO]{}
 \fancyfoot[CO]{\thepage}
 \fancyfoot[LO]{}
-\fancyfoot[LE]{\TheDate}
+\fancyfoot[LE]{}
 \fancyfoot[CE]{\thepage}
 \fancyfoot[RE]{}
 \hypersetup{bookmarksnumbered=true}
@@ -75,7 +75,10 @@
 \def\tableofcontents{\clearpage\section*{\contentsname}\@starttoc{toc}}
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
 \def\chaptermark#1{\markboth {\thechapter. \ #1}{}}
-\def\sectionmark#1{\markright {\thesection. \ #1}}
+\def\sectionmark#1{\markright { \ifnum \c@secnumdepth >\z@
+          \thesection. \ %
+        \fi
+	#1}}
 \def\exampleindex#1{{\itshape\hyperpage{#1}}}
 \def\mainexampleindex#1{{\bfseries\itshape\hyperpage{#1}}}
 \renewcommand{\@listI}{%
@@ -135,28 +138,6 @@
    \def\makelabel##1{\hfil##1\hfil}}%
   }
   {\end{list}}
-\newenvironment{reflist}{%
-  \begin{list}{}
-  {%
-   \setlength{\topsep}{0pt}%
-   \setlength{\itemsep}{0pt}%
-   \setlength{\itemindent}{0pt}%
-   \setlength{\parskip}{0pt}%
-   \setlength{\parsep}{2pt}%
-   \def\makelabel##1{\itshape ##1}}%
-  }
-  {\end{list}}
-\newenvironment{sansreflist}{%
-  \begin{list}{}
-  {%
-   \setlength{\topsep}{0pt}%
-   \setlength{\itemindent}{0pt}%
-   \setlength{\parskip}{0pt}%
-   \setlength{\itemsep}{0pt}%
-   \setlength{\parsep}{2pt}%
-   \def\makelabel##1{\upshape\sffamily ##1}}%
-  }
-  {\end{list}}
 \makeatother
 <xsl:call-template name="beginDocumentHook"/>
 </xsl:template>
@@ -174,34 +155,6 @@
 <xsl:template name="lineBreak">
   <xsl:param name="id"/>
   <xsl:text>\mbox{}\newline &#10;</xsl:text>
-</xsl:template>
-
-<xsl:template match="tei:list[@rend='specList']">
-\begin{sansreflist}
-  <xsl:apply-templates/>
-\end{sansreflist}
-</xsl:template>
-
-<xsl:template match="tei:hi[@rend='specList-elementSpec']">
-  <xsl:text>[\textbf{&lt;</xsl:text>
-  <xsl:value-of select="."/>
-  <xsl:text>&gt;}]</xsl:text>
-</xsl:template>
-
-<xsl:template match="tei:hi[@rend='specList-macroSpec']">
- <xsl:text>[\textbf{</xsl:text>
-  <xsl:value-of select="."/>
- <xsl:text>}]</xsl:text>
-</xsl:template>
-
-<xsl:template match="tei:hi[@rend='specList-classSpec']">
- <xsl:text>[\textbf{</xsl:text>
- <xsl:value-of select="."/>
- <xsl:text>}]</xsl:text>
-</xsl:template>
-
-<xsl:template match="tei:hi[@rend='label']">
- <xsl:value-of select="."/>
 </xsl:template>
 
 <xsl:template name="tableHline"/>
@@ -264,6 +217,7 @@
     </xsl:if>
 </xsl:template>
 
+<!--
   <xsl:template match="tei:table">
     <xsl:if test="@xml:id">
       <xsl:text>\label{</xsl:text>
@@ -290,6 +244,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+-->
 
 <!--
 <xsl:template match="tei:term">
@@ -342,66 +297,6 @@
 \printindex
 </xsl:template>
 
-<xsl:template match="tei:table[@rend='wovenodd' 
-     or @rend='attDef']">
-  <xsl:text>
-\begin{reflist}</xsl:text>
-<xsl:apply-templates/>
-  <xsl:text>
-\end{reflist}  </xsl:text>
-</xsl:template>
-
-<xsl:template match="tei:table[@rend='valList' 
-     or @rend='attList' 
-     or @rend='specDesc']">
-<xsl:text>\hfil\\[-10pt]\begin{sansreflist}</xsl:text>
-<xsl:apply-templates/>
-  <xsl:text>
-\end{sansreflist}  </xsl:text>
-</xsl:template>
-
-<xsl:template match="tei:table[@rend='wovenodd' 
-    or @rend='attList' 
-    or @rend='valList' 
-    or @rend='attDef' 
-    or @rend='specDesc']/tei:row">
-  <xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="tei:table[@rend='wovenodd' 
-     or @rend='attList' 
-     or @rend='specDesc' 
-     or @rend='valList' 
-     or @rend='attDef']/tei:row/tei:cell[1]">
-<xsl:choose>
-  <xsl:when test="ancestor::tei:table/@rend='valList'">
-    \item[<xsl:apply-templates/>]
-  </xsl:when>
-  <xsl:when test="ancestor::tei:table/@rend='specDesc'">
-    \item[@<xsl:apply-templates/>]
-  </xsl:when>
-  <xsl:when test="@cols='2'">
-    \item[]\begin{shaded}<xsl:apply-templates/>\end{shaded}
-  </xsl:when>
-  <xsl:otherwise>
-    \item[<xsl:apply-templates/>]
-  </xsl:otherwise>
-</xsl:choose>
-</xsl:template>
-
-<xsl:template match="tei:table[@rend='wovenodd' 
-      or @rend='attList' 
-      or @rend='valList' 
-      or @rend='specDesc' 
-      or @rend='attDef']/tei:row/tei:cell[2]">
-  <xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="tei:seg[@rend='specChildren']">
-<xsl:text>\hfil\\[-10pt]\begin{sansreflist}</xsl:text>
-<xsl:apply-templates/>
-<xsl:text>\end{sansreflist}</xsl:text>
-</xsl:template>
 
 </xsl:stylesheet>
 
