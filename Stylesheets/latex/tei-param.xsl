@@ -222,12 +222,37 @@ capable of dealing with UTF-8 directly.
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
 \definecolor{label}{gray}{0.75}
-</xsl:text>
+\newenvironment{reflist}{%
+  \begin{raggedright}\begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\rightmargin}{0.25in}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\itshape ##1}}%
+  }
+  {\end{list}\end{raggedright}}
+\newenvironment{sansreflist}{%
+  \begin{raggedright}\begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\rightmargin}{0.25in}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\upshape\sffamily ##1}}%
+  }
+  {\end{list}\end{raggedright}}
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\Div[#1]#2{\section*{#2}}
 \catcode`\_=12\relax
-\def\exampleFontSet{\ttfamily\fontsize{9pt}{9pt}\selectfont}
+\def\exampleFontSet{\ttfamily\fontsize{9pt}{10pt}\selectfont}
+</xsl:text>
+
 </xsl:template>
 
 <xd:doc class="layout">
@@ -295,11 +320,11 @@ capable of dealing with UTF-8 directly.
 \@mainmattertrue
 \def\frontmatter{%
   \pagenumbering{roman}
-  \renewcommand\thechapter{\@roman\c@chapter}
+  \def\thechapter{\@roman\c@chapter}
 }
 \def\mainmatter{%
   \cleardoublepage
-  \renewcommand\thechapter{\@arabic\c@chapter}
+  \def\thechapter{\@arabic\c@chapter}
   \setcounter{chapter}{0}
   \setcounter{section}{0}
   \pagenumbering{arabic}
@@ -309,8 +334,8 @@ capable of dealing with UTF-8 directly.
   \setcounter{chapter}{0}
   \setcounter{section}{0}
   \setcounter{secnumdepth}{0}
-  \renewcommand\@chapapp{\appendixname}%
-  \renewcommand\thechapter{\@Alph\c@chapter}
+  \def\@chapapp{\appendixname}%
+  \def\thechapter{\@Alph\c@chapter}
   \appendix
 }
 \newenvironment{bibitemlist}[1]{%

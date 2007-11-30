@@ -87,4 +87,97 @@
   <xsl:apply-templates/>
 </xsl:template>
 
+<xsl:template match="tei:table[@rend='wovenodd' or @rend='attDef']" >
+  <xsl:text>
+\begin{reflist}</xsl:text>
+<xsl:apply-templates/>
+  <xsl:text>
+\end{reflist}  </xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:table[@rend='valList' 
+     or @rend='attList' 
+     or @rend='specDesc']">
+<xsl:text>\hfil\\[-10pt]\begin{sansreflist}</xsl:text>
+<xsl:apply-templates/>
+  <xsl:text>
+\end{sansreflist}  </xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:table[@rend='wovenodd' 
+    or @rend='attList' 
+    or @rend='valList' 
+    or @rend='attDef' 
+    or @rend='specDesc']/tei:row">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="tei:table[@rend='wovenodd' 
+     or @rend='attList' 
+     or @rend='specDesc' 
+     or @rend='valList' 
+     or @rend='attDef']/tei:row/tei:cell[1]">
+<xsl:choose>
+  <xsl:when test="parent::tei:row/parent::tei:table[@rend='attList']">
+    \item[@<xsl:apply-templates/>]
+  </xsl:when>
+  <xsl:when test="ancestor::tei:table[@rend='valList']">
+    \item[<xsl:apply-templates/>]
+  </xsl:when>
+  <xsl:when test="ancestor::tei:table[@rend='specDesc']">
+    \item[@<xsl:apply-templates/>]
+  </xsl:when>
+  <xsl:when test="@cols='2'">
+    \item[]\begin{shaded}<xsl:apply-templates/>\end{shaded}
+  </xsl:when>
+  <xsl:otherwise>
+    \item[<xsl:apply-templates/>]
+  </xsl:otherwise>
+</xsl:choose>
+</xsl:template>
+
+<xsl:template match="tei:table[@rend='wovenodd' 
+      or @rend='attList' 
+      or @rend='valList' 
+      or @rend='specDesc' 
+      or @rend='attDef']/tei:row/tei:cell[2]">
+  <xsl:apply-templates/>
+</xsl:template>
+
+
+<xsl:template match="tei:list[@rend='specList']">
+\begin{sansreflist}
+  <xsl:apply-templates/>
+\end{sansreflist}
+</xsl:template>
+
+<xsl:template match="tei:hi[@rend='specList-elementSpec']">
+  <xsl:text>[\textbf{&lt;</xsl:text>
+  <xsl:value-of select="."/>
+  <xsl:text>&gt;}]</xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:hi[@rend='specList-macroSpec']">
+ <xsl:text>[\textbf{</xsl:text>
+  <xsl:value-of select="."/>
+ <xsl:text>}]</xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:hi[@rend='specList-classSpec']">
+ <xsl:text>[\textbf{</xsl:text>
+ <xsl:value-of select="."/>
+ <xsl:text>}]</xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:hi[@rend='label']">
+ <xsl:value-of select="."/>
+</xsl:template>
+
+<xsl:template match="tei:seg[@rend='specChildren']">
+<xsl:text>\hfil\\[-10pt]\begin{sansreflist}</xsl:text>
+<xsl:apply-templates/>
+<xsl:text>\end{sansreflist}</xsl:text>
+</xsl:template>
+
+
 </xsl:stylesheet>

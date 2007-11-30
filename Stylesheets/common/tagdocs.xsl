@@ -747,7 +747,8 @@
 	    <xsl:attribute name="{$rendName}">
 	      <xsl:text>attList</xsl:text>
 	    </xsl:attribute>
-	    <xsl:apply-templates mode="summary" select="tei:attList//tei:attDef"/>
+	    <xsl:apply-templates mode="summary" 
+				 select="tei:attList//tei:attDef"/>
 	  </xsl:element>
 	</xsl:if>
 	<xsl:call-template name="showAttClasses">

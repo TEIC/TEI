@@ -392,16 +392,20 @@
   <xsl:template match="tei:listBibl">
     <xsl:choose>
       <xsl:when test="tei:biblStruct">
-	<xsl:text>\begin{description}&#10;</xsl:text>
+	<xsl:text>\begin{bibitemlist}{1}&#10;</xsl:text>
 	  <xsl:for-each select="tei:biblStruct">
 	    <xsl:sort select="translate(tei:*/tei:author/tei:surname|tei:*[1]/tei:author/tei:orgName|tei:*[1]/tei:author/tei:name|tei:*[1]/tei:editor/tei:surname|tei:*[1]/tei:editor/tei:name|tei:*[1]/tei:title,$uc,$lc)"/>
 	    <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
-	    <xsl:text>\item[</xsl:text>
+	    <xsl:text>\bibitem[</xsl:text>
 	      <xsl:apply-templates select="." mode="xref"/>
-	      <xsl:text>] </xsl:text>
+	      <xsl:text>]{</xsl:text>
+	      <xsl:value-of select="@xml:id"/>
+	      <xsl:text>}\hypertarget{</xsl:text>
+	      <xsl:value-of select="@xml:id"/>
+	      <xsl:text>}{}</xsl:text>
 	      <xsl:apply-templates select="."/>
 	  </xsl:for-each>
-	  <xsl:text>&#10;\end{description}&#10;</xsl:text>
+	  <xsl:text>&#10;\end{bibitemlist}&#10;</xsl:text>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:text>\begin{bibitemlist}{1}&#10;</xsl:text>
@@ -645,6 +649,11 @@
   <xsl:param name="content"/>
   <xsl:choose>
     <xsl:when test="$class='titlem'">
+      <xsl:text>\textit{</xsl:text>
+      <xsl:copy-of select="$content"/>
+      <xsl:text>}</xsl:text>
+    </xsl:when>
+    <xsl:when test="$class='titlej'">
       <xsl:text>\textit{</xsl:text>
       <xsl:copy-of select="$content"/>
       <xsl:text>}</xsl:text>

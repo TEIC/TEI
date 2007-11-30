@@ -312,15 +312,24 @@
     <xsl:apply-templates select="../tei:forename" mode="use"/>
     <xsl:text> </xsl:text>
   </xsl:if>
+  <xsl:if test="../tei:nameLink">
+    <xsl:apply-templates select="../tei:nameLink" mode="use"/>
+    <xsl:text> </xsl:text>
+  </xsl:if>
   <xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template  match="tei:forename"/>
+<xsl:template  match="tei:nameLink"/>
 
 <xsl:template  match="tei:forename" mode="use">
   <xsl:if test="preceding-sibling::tei:forename">
     <xsl:text> </xsl:text>
   </xsl:if>
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template  match="tei:nameLink" mode="use">
   <xsl:apply-templates/>
 </xsl:template>
 
