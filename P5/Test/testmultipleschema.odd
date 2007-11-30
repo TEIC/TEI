@@ -24,23 +24,37 @@
 <p>Here is the introduction to your document</p>
   <p>Here is the schema:</p>
    <specGrp xml:id="baz">
+     <macroSpec ident="baz_mac">
+       <content>
+	  <rng:text/>
+       </content>
+     </macroSpec>
       <elementSpec ident="baz">
 	<content>
-	  <rng:text/>
+	  <rng:ref name="baz_mac"/>
 	</content>
       </elementSpec>
    </specGrp>
 
-    <schemaSpec ident="testmultiple1" start="TEI">
+    <schemaSpec ident="testmultiple1" start="foo">
       <elementSpec ident="foo">
 	<content>
 	  <rng:text/>
 	</content>
       </elementSpec>
     </schemaSpec>
-    <schemaSpec ident="testmultiple2" start="TEI">
+
+    <schemaSpec ident="testmultiple2" start="bar" ns="">
        <specGrpRef target="#baz"/>
       <elementSpec ident="bar">
+	<content>
+	  <rng:text/>
+	</content>
+      </elementSpec>
+    </schemaSpec>
+
+    <schemaSpec ident="testmultiple3" start="x" ns="http://www.any.org/ns">
+      <elementSpec ident="x">
 	<content>
 	  <rng:text/>
 	</content>
