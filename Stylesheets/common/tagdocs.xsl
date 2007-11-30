@@ -1881,32 +1881,7 @@
   <xsl:variable name="clatts">
     <xsl:for-each
 	select="ancestor-or-self::tei:elementSpec|ancestor-or-self::tei:classSpec">
-      <xsl:for-each select="tei:classes/tei:memberOf">
-	<xsl:choose>
-	  <xsl:when test="key('CLASSES',@key)">
-	    <xsl:for-each select="key('CLASSES',@key)">
-	      <xsl:if test="@type='atts'">
-		<xsl:call-template name="makeLink">
-		  <xsl:with-param name="class">classlink</xsl:with-param>
-		  <xsl:with-param name="name">
-		    <xsl:value-of select="@ident"/>
-		  </xsl:with-param>
-		  <xsl:with-param name="text">
-		    <xsl:value-of select="@ident"/>
-		  </xsl:with-param>
-		</xsl:call-template>
-		<xsl:call-template name="showSpace"/>
-	      </xsl:if>
-	    </xsl:for-each>
-	  </xsl:when>
-	  <xsl:when test="ancestor::tei:schemaSpec">
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of select="@key"/>
-	    <xsl:call-template name="showSpace"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:for-each>
+      <xsl:call-template name="attClassDetails"/>
     </xsl:for-each>
   </xsl:variable>
   <xsl:if test="$minimal='true'">
@@ -1935,9 +1910,7 @@
         </xsl:call-template>
 	</xsl:if>
 	<xsl:text> </xsl:text>
-	<xsl:text> [</xsl:text>
 	<xsl:copy-of select="$clatts"/>
-	<xsl:text>] </xsl:text>
       </xsl:when>
       <xsl:when test="ancestor::tei:schemaSpec and not(key('CLASSES','att.global'))"/>
       <xsl:otherwise>
@@ -1957,7 +1930,58 @@
     </xsl:choose>
   </xsl:template>
   
-
+  <xsl:template name="attClassDetails">
+      <xsl:for-each select="tei:classes/tei:memberOf">
+	<xsl:choose>
+	  <xsl:when test="key('CLASSES',@key)">
+	    <xsl:for-each select="key('CLASSES',@key)">
+	      <xsl:if test="@type='atts'">
+		<xsl:call-template name="makeLink">
+		  <xsl:with-param name="class">classlink</xsl:with-param>
+		  <xsl:with-param name="name">
+		    <xsl:value-of select="@ident"/>
+		  </xsl:with-param>
+		  <xsl:with-param name="text">
+		    <xsl:value-of select="@ident"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+		<xsl:if test=".//tei:attDef">
+		  <xsl:text> (</xsl:text>
+		  <xsl:for-each select=".//tei:attDef">
+		    <xsl:call-template name="emphasize">
+		      <xsl:with-param name="class">attribute</xsl:with-param>
+		      <xsl:with-param name="content">
+			<xsl:text>@</xsl:text>
+			<xsl:choose>
+			  <xsl:when test="tei:altIdent">
+			    <xsl:value-of select="tei:altIdent"/>
+			  </xsl:when>
+			  <xsl:otherwise>
+			    <xsl:value-of select="@ident"/>
+			  </xsl:otherwise>
+			</xsl:choose>
+		      </xsl:with-param>
+		    </xsl:call-template>
+		    <xsl:if test="following-sibling::tei:attDef">
+		      <xsl:text>, </xsl:text>
+		    </xsl:if>
+		  </xsl:for-each>
+		  <xsl:text>)</xsl:text>
+		  <xsl:call-template name="showSpace"/>
+		</xsl:if>
+		<xsl:call-template name="attClassDetails"/>
+	      </xsl:if>
+	    </xsl:for-each>
+	  </xsl:when>
+	  <xsl:when test="ancestor::tei:schemaSpec">
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="@key"/>
+	    <xsl:call-template name="showSpace"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
+  </xsl:template>
 
   <xsl:template name="showElement">
     <xsl:param name="name"/>

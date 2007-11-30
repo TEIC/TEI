@@ -406,4 +406,13 @@
 
 -->
 
+<xsl:template name="emphasize">
+  <xsl:param name="class"/>
+  <xsl:param name="content"/>
+  <hi rend="{$class}">
+	<xsl:copy-of select="$content"/>
+  </hi>
+</xsl:template>
+
+
 </xsl:stylesheet>

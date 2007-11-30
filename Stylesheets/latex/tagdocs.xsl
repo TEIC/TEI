@@ -173,6 +173,13 @@
  <xsl:value-of select="."/>
 </xsl:template>
 
+
+<xsl:template match="tei:hi[@rend='attribute']">
+  <xsl:text>\textit{</xsl:text>
+ <xsl:value-of select="."/>
+  <xsl:text>}</xsl:text>
+</xsl:template>
+
 <xsl:template match="tei:seg[@rend='specChildren']">
 <xsl:text>\hfil\\[-10pt]\begin{sansreflist}</xsl:text>
 <xsl:apply-templates/>
