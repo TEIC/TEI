@@ -255,6 +255,7 @@
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+
   <xsl:template name="normalClasses">
     <xsl:call-template name="dtdComment">
       <xsl:with-param name="text">
@@ -268,6 +269,7 @@
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+
   <xsl:template name="predeclaredClasses">
     <xsl:call-template name="dtdComment">
       <xsl:with-param name="text">
@@ -390,7 +392,7 @@
     <xsl:text>&#10;&lt;!-- end datatypes --&gt;&#10;</xsl:text>
     <xsl:if test="$TEIC='true'">
       <xsl:text>&#10;&lt;!--predeclared classes --&gt;&#10;</xsl:text>
-      <xsl:for-each select="tei:classSpec[@type='predeclare']">
+      <xsl:for-each select="tei:classSpec[@predeclare='true']">
 	<xsl:choose>
 	  <xsl:when test="@type='atts'">
 	    <xsl:call-template name="classAtt">
@@ -442,10 +444,25 @@
   <xsl:template match="tei:macroSpec[@xml:id='TEIGIS']"
     mode="tangle"/>
   <xsl:template name="NameList">
+    <xsl:choose>
+      <xsl:when test="self::tei:schemaSpec">
+	<xsl:for-each select="tei:elementSpec">
+	  <xsl:sort select="@ident"/>
+	  <xsl:call-template name="declareAnElement"/>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each select="key('ELEMENTDOCS',1)">
+	  <xsl:sort select="@ident"/>
+	  <xsl:call-template name="declareAnElement"/>      
+	</xsl:for-each>	
+      </xsl:otherwise>
+    </xsl:choose>
     <!-- walk over all the elementSpec elements and make list of 
        elements -->
-    <xsl:for-each select="tei:elementSpec">
-      <xsl:sort select="@ident"/>
+  </xsl:template>
+
+  <xsl:template name="declareAnElement">
       <xsl:if test="not(starts-with(@ident,'%'))">
         <xsl:text>&lt;!ENTITY % n.</xsl:text>
         <xsl:value-of select="@ident"/>
@@ -466,7 +483,6 @@
         </xsl:choose>
         <xsl:text>"&gt;&#10;</xsl:text>
       </xsl:if>
-    </xsl:for-each>
   </xsl:template>
   <xsl:template name="italicize"/>
   <xsl:template name="linkStyle"/>
