@@ -560,9 +560,10 @@
 </xsl:template>
 
 <xsl:template match="tei:idno">
+  <xsl:text> </xsl:text>
   <xsl:apply-templates/>
 </xsl:template>
 
-
+<xsl:template match="tei:idno[@type='doi']"/>
 
 </xsl:stylesheet>

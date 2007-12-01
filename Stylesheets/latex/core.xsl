@@ -122,19 +122,27 @@
   <xsl:template match="tei:eg|tei:q[@rend='eg']">
     <xsl:choose>
       <xsl:when test="ancestor::tei:cell and count(*)=1">
-	<xsl:text>\verb|</xsl:text>
-	<xsl:apply-templates mode="eg"/>
-	<xsl:text>| </xsl:text>
+	<xsl:variable name="stuff">
+	  <xsl:apply-templates mode="eg"/>
+	</xsl:variable>
+	<xsl:text>\fbox{\ttfamily </xsl:text>
+	<xsl:value-of select="translate($stuff,
+	  '\{}','&#8421;&#10100;&#10101;')"/>
+	<xsl:text>} </xsl:text>
       </xsl:when>
       <xsl:when test="ancestor::tei:cell and not(*)">
-	<xsl:text>\verb|</xsl:text>
-	<xsl:apply-templates mode="eg"/>
-	<xsl:text>| </xsl:text>
+	<xsl:variable name="stuff">
+	  <xsl:apply-templates mode="eg"/>
+	</xsl:variable>
+	<xsl:text>\fbox{\ttfamily </xsl:text>
+	<xsl:value-of select="translate($stuff,
+	  '\{}','&#8421;&#10100;&#10101;')"/>
+	<xsl:text>} </xsl:text>
       </xsl:when>
       <xsl:when test="ancestor::tei:cell">
 <xsl:text>\mbox{}\hfill\\[-10pt]\begin{Verbatim}[fontsize=\footnotesize]&#10;</xsl:text>
-<xsl:apply-templates mode="eg"/>
-<xsl:text>&#10;\end{Verbatim}&#10;</xsl:text>
+	<xsl:apply-templates mode="eg"/>
+	<xsl:text>&#10;\end{Verbatim}&#10;</xsl:text>
 <!--
 <xsl:text>\mbox{}\newline
 \bgroup\exampleFontSet
@@ -448,6 +456,11 @@
       <xsl:text>}{}</xsl:text>
     </xsl:if>
     <xsl:choose>
+      <xsl:when test="@place='inline' or ancestor::tei:bibl or ancestor::tei:biblStruct"> 
+	<xsl:text>(</xsl:text>
+	<xsl:apply-templates/>
+	<xsl:text>) </xsl:text>
+      </xsl:when>
       <xsl:when test="@place='end'">
         <xsl:text>\endnote{</xsl:text>
         <xsl:apply-templates/>
