@@ -66,7 +66,7 @@ html-web: check
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
-		Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
+		Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
 	-rm -rf Guidelines-web-tmp
 	-mkdir Guidelines-web-tmp
 	echo making HTML Guidelines for language ${LANGUAGE}
@@ -99,7 +99,7 @@ validate-html:
 html:check subset
 	-rm -rf Guidelines
 	-mkdir Guidelines
-	perl -p -e "s+/usr/share/xml/tei/stylesheet+${XSL}+" Utilities/odd2htmlp5.xsl.model > Utilities/odd2htmlp5.xsl
+	perl -p -e "s+/usr/share/xml/tei/stylesheet+${XSL}+" Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
 	xsltproc \
 	    --stringparam outputDir Guidelines \
 	    --stringparam localsource `pwd`/p5subset.xml \
