@@ -71,7 +71,8 @@
 \def\l@subsubsection{\@dottedtocline{3}{7.0em}{4.1em}}
 \def\l@paragraph{\@dottedtocline{4}{10em}{5em}}
 \def\l@subparagraph{\@dottedtocline{5}{12em}{6em}}
-\def\@pnumwidth{2em}
+\def\@pnumwidth{3em}
+\setcounter{tocdepth}{2}
 \def\tableofcontents{\clearpage\section*{\contentsname}\@starttoc{toc}}
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
 \def\chaptermark#1{\markboth {\thechapter. \ #1}{}}
