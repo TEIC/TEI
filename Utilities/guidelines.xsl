@@ -19,7 +19,8 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:import href="odd2htmlp5.xsl"/>
+  <xsl:import href="/usr/share/xml/tei/stylesheet/odds/odd2html.xsl"/>
+
   <xsl:param name="lang"/>
   <xsl:param name="doclang"/>
   <xsl:param name="splitLevel">0</xsl:param>
@@ -31,6 +32,24 @@
   <xsl:param name="cssPrintFile">guidelines-print.css</xsl:param>
   <xsl:param name="displayMode">both</xsl:param>
 
+  <xsl:param name="feedbackURL">http://www.tei-c.org/Consortium/contact.xml</xsl:param>
+  <xsl:param name="homeLabel">TEI P5 Guidelines</xsl:param>
+  <xsl:param name="homeWords">TEI P5</xsl:param>
+  <xsl:param name="institution">Text Encoding Initiative</xsl:param>
+  <xsl:param name="outputDir">Guidelines</xsl:param>
+  <xsl:param name="parentURL">http://www.tei-c.org/Consortium/</xsl:param>
+  <xsl:param name="parentWords">TEI Consortium</xsl:param>
+
+  <xsl:template name="copyrightStatement">Copyright TEI Consortium 2007</xsl:template>
+
+  <xsl:template name="metaHook">
+    <xsl:param name="title"/>
+    <meta name="DC.Title" content="{$title}"/>
+    <meta name="DC.Language" content="(SCHEME=iso639) en"/> 
+    <meta name="DC.Creator" content="TEI,Oxford University Computing Services, 13 Banbury Road, Oxford OX2 6NN, United Kingdom"/>
+    <meta name="DC.Creator.Address" content="tei@oucs.ox.ac.uk"/>
+  </xsl:template>
+  
 
   <xsl:template name="startDivHook">
     <xsl:if
