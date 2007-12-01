@@ -27,11 +27,7 @@
   <xsl:param name="footnoteFile">false</xsl:param>
   <xsl:param name="auto">false</xsl:param>
   <xsl:param name="numberFrontHeadings">true</xsl:param>
-  <xsl:param name="cssFile">guidelines.css</xsl:param>
-  <xsl:param name="cssSecondaryFile">udm.css</xsl:param>
-  <xsl:param name="cssPrintFile">guidelines-print.css</xsl:param>
   <xsl:param name="displayMode">both</xsl:param>
-
   <xsl:param name="feedbackURL">http://www.tei-c.org/Consortium/contact.xml</xsl:param>
   <xsl:param name="homeLabel">TEI P5 Guidelines</xsl:param>
   <xsl:param name="homeWords">TEI P5</xsl:param>
@@ -39,6 +35,16 @@
   <xsl:param name="outputDir">Guidelines</xsl:param>
   <xsl:param name="parentURL">http://www.tei-c.org/Consortium/</xsl:param>
   <xsl:param name="parentWords">TEI Consortium</xsl:param>
+  <xsl:param name="cssFile">guidelines.css</xsl:param>
+  <xsl:param name="cssSecondaryFile">odd.css</xsl:param>
+  <xsl:param name="cssPrintFile">guidelines-print.css</xsl:param>
+
+  <xsl:key name="BACKLINKS" match="teix:egXML[@corresp]"
+	   use="substring-after(@corresp,'#')"/>
+  
+  <xsl:key name="BACKLINKS" match="tei:ptr[@type='cit']"
+	 use="substring-after(@target,'#')"/>
+
 
   <xsl:template name="copyrightStatement">Copyright TEI Consortium 2007</xsl:template>
 
@@ -458,5 +464,177 @@
 
 
   <xsl:template match="tei:divGen[@type='toc']"/>
+
+  <xsl:template name="javascriptHook">
+    <script type="text/javascript" src="udm-all.js">
+       <xsl:comment>&#160;</xsl:comment>
+    </script>
+  </xsl:template>
+
+  <xsl:template name="sectionHeadHook">
+    <xsl:variable name="ident">
+      <xsl:apply-templates mode="ident" select="."/>
+    </xsl:variable>
+    <xsl:variable name="d">
+      <xsl:apply-templates mode="depth" select="."/>
+    </xsl:variable>
+    <xsl:if test="$d &gt; 0">
+    <span class="bookmarklink">
+      <a class="bookmarklink" href="#{$ident}">
+	<xsl:attribute name="title">
+	  <xsl:text>link to this section </xsl:text>
+	</xsl:attribute>
+	<span class="invisible">
+	  <xsl:text>TEI: </xsl:text>
+	  <xsl:value-of select="tei:head[1]"/>
+	</span>
+	<xsl:text>&#x00B6;</xsl:text>
+      </a>
+    </span>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="/div"> </xsl:template>
+
+
+  <xsl:template name="myi18n">
+    <xsl:param name="word"/>
+    <xsl:choose>
+      <xsl:when test="$word='previousWord'">
+        <span class="icon">
+          <xsl:text>&#xab; </xsl:text>
+        </span>
+      </xsl:when>
+      <xsl:when test="$word='upWord'">
+        <span class="icon">
+          <xsl:text>&#8593; </xsl:text>
+        </span>
+      </xsl:when>
+      <xsl:when test="$word='nextWord'">
+        <span class="icon">
+          <xsl:text>&#xbb; </xsl:text>
+        </span>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
+<!-- link from bibl back to egXML -->
+<xsl:template match="tei:listBibl/tei:biblStruct|tei:listBibl/tei:bibl">
+  <xsl:apply-templates/>
+  <xsl:for-each select="key('BACKLINKS',@xml:id)">
+    <xsl:if test="self::teix:egXML">
+      <xsl:text> </xsl:text>
+      <a class="link_return"
+	 title="Go back to text">
+	<xsl:attribute name="href">
+	  <xsl:apply-templates select="." mode="generateLink"/>
+	</xsl:attribute>
+	<xsl:text>&#8629;</xsl:text>
+      </a>
+    </xsl:if>
+  </xsl:for-each>
+</xsl:template>
+
+<xsl:template name="egXMLHook">
+  <xsl:if test="@corresp and key('IDS',substring-after(@corresp,'#'))">
+    <div style="float: right;">
+	<a>
+	  <xsl:attribute name="href">
+	    <xsl:apply-templates mode="generateLink"
+				 select="key('IDS',substring-after(@corresp,'#'))"/>
+	  </xsl:attribute>
+	  <xsl:text>bibliography</xsl:text>
+<!--	  <span class="citLink">&#x270d;</span>-->
+	</a>
+    </div>
+  </xsl:if>
+</xsl:template>
+
+
+<xsl:template name="figureHook">
+  <xsl:if test="@corresp and key('IDS',substring-after(@corresp,'#'))">
+    <div style="float: right;">
+      <a>
+	<xsl:attribute name="href">
+	  <xsl:apply-templates mode="generateLink"
+			       select="key('IDS',substring-after(@corresp,'#'))"/>
+	</xsl:attribute>
+	<xsl:text>bibliography</xsl:text>
+      </a>
+    </div>
+  </xsl:if>
+</xsl:template>
+
+
+  <xsl:template name="stdfooter">
+    <xsl:param name="style" select="'plain'"/>
+    <xsl:variable name="date">
+      <xsl:call-template name="generateDate"/>
+    </xsl:variable>
+    <xsl:variable name="author">
+      <xsl:call-template name="generateAuthor"/>
+    </xsl:variable>
+    <div class="stdfooter">
+      <hr/>
+      <xsl:if test="$linkPanel='true'">
+        <div class="footer">
+          <xsl:if test="not($parentURL='')"><a class="{$style}"
+              href="{$parentURL}">
+              <xsl:value-of select="$parentWords"/>
+            </a>  </xsl:if>
+          <xsl:if test="$searchURL"> | <a class="{$style}" href="{$searchURL}"
+              target="_top">
+              <xsl:call-template name="searchWords"/>
+            </a>
+          </xsl:if>
+          <xsl:if test="$feedbackURL"> | <a class="{$style}" href="{$feedbackURL}">
+              <xsl:call-template name="feedbackWords"/>
+            </a>
+          </xsl:if>
+        </div>
+        <hr/>
+      </xsl:if>
+      <address>
+        <xsl:call-template name="copyrightStatement"/>
+        <xsl:text> </xsl:text>
+        <a href="COPYING.txt">Licensed under the GPL.</a>
+        <xsl:text> Copying and redistribution is permitted and encouraged. </xsl:text>
+	<br/>
+        <xsl:text>Version </xsl:text>
+        <xsl:value-of 
+select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+        <xsl:text>This page generated on </xsl:text> 
+	<xsl:call-template name="whatsTheDate"/>
+
+    </address>
+    </div>
+  </xsl:template>
+
+<xsl:template name="teiTOP">
+  <xsl:param name="name"/>
+  
+  <script type="text/javascript" src="udm-dom.js">
+    <xsl:comment>&#160;</xsl:comment>
+  </script>
+  <script type="text/javascript" src="udm-mod-keyboard.js">
+    <xsl:comment>&#160;</xsl:comment>
+  </script>
+  
+  <div id="container">
+    <a href="#contentstart" 
+       title="Skip to content" 
+       class="skip">skip to content</a>
+    <div id="banner">
+      <img src="Images/banner.jpg"
+	   alt="Text Encoding Initiative logo and banner"/>
+    </div>
+    
+    <xsl:copy-of select="document('staticnav.xml')/html:ul"/>
+  </div>
+  <div
+      class="mainhead">
+    <h1>P5: Guidelines for Electronic Text Encoding and Interchange</h1>
+  </div>
+</xsl:template>
 
 </xsl:stylesheet>
