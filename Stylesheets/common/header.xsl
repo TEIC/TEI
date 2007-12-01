@@ -237,4 +237,46 @@
       <xsl:otherwise> (unknown date) </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements  tei:div/tei:docAuthor</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:div/tei:docAuthor"/>
+  <xd:doc>
+    <xd:short>Process elements  tei:div/tei:docDate</xd:short>
+    <xd:detail>
+      <p> omit if found outside front matter </p>
+    </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:div/tei:docDate"/>
+  <xd:doc>
+    <xd:short>Process elements  tei:div/tei:docTitle</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:div/tei:docTitle"/>
+  <xd:doc>
+    <xd:short>Process elements  tei:docAuthor</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:docAuthor" mode="heading">
+    <xsl:if test="preceding-sibling::tei:docAuthor">
+      <xsl:choose>
+        <xsl:when test="not(following-sibling::tei:docAuthor)">
+          <xsl:text> and </xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>, </xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements  tei:docImprint</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:docImprint"/>
+
 </xsl:stylesheet>

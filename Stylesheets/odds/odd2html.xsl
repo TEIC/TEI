@@ -69,7 +69,7 @@
   <xsl:param name="line-width" select="80"/>
   <xsl:param name="numberBackHeadings">A.1</xsl:param>
   <xsl:param name="numberFrontHeadings"></xsl:param>
-  <xsl:param name="oddmode">xml</xsl:param>
+  <xsl:param name="oddmode">html</xsl:param>
   <xsl:param name="pageLayout">CSS</xsl:param>
   <xsl:param name="prenumberedHeadings">false</xsl:param>
   <xsl:param name="searchURL"/>
@@ -118,80 +118,6 @@
 
   <xsl:template match="processing-instruction()"/>
  
-  <xsl:template match="tei:docAuthor">
-    <div class="center">
-      <em>
-	<xsl:value-of select="@n"/>
-	<xsl:text> </xsl:text>
-	<xsl:apply-templates/>
-      </em>
-    </div>
-  </xsl:template>
-  
-  <xsl:template match="tei:docImprint|tei:docDate">
-    <div class="center">
-      <xsl:apply-templates/>
-    </div>
-  </xsl:template>
-  
-  <xsl:template match="tei:docTitle">
-      <xsl:apply-templates/>
-  </xsl:template>
-  
-  <xsl:template match="tei:revisionDesc//tei:date">
-    <xsl:apply-templates/>
-  </xsl:template>
-  
-  <xsl:template match="tei:term">
-    <em>
-      <xsl:apply-templates/>
-    </em>
-  </xsl:template>
-  
-  <xsl:template match="tei:titlePart">
-    <xsl:apply-templates/>
-  </xsl:template>
-  
-  <xsl:template name="header_for_odd2html">
-    <xsl:param name="minimal">false</xsl:param>
-    <xsl:param name="toc"/>
-    <xsl:variable name="depth">
-      <xsl:apply-templates mode="depth" select="."/>
-    </xsl:variable>
-    <xsl:if test="$numberHeadingsDepth &gt;= $depth">
-      <xsl:call-template name="calculateNumber">
-        <xsl:with-param name="numbersuffix" select="$headingNumberSuffix"/>
-      </xsl:call-template>
-    </xsl:if>
-    <xsl:if test="$minimal='false'">
-      <xsl:value-of select="$headingNumberSuffix"/>
-      <xsl:choose>
-        <xsl:when test="contains(name(.),'Spec')">
-          <xsl:call-template name="makeLink">
-            <xsl:with-param name="class">toc</xsl:with-param>
-            <xsl:with-param name="name">
-              <xsl:value-of select="@ident"/>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:when>
-        <xsl:when test="not($toc='')">
-          <xsl:call-template name="makeInternalLink">
-            <xsl:with-param name="class">toc</xsl:with-param>
-            <xsl:with-param name="dest">
-              <xsl:value-of select="$toc"/>
-            </xsl:with-param>
-            <xsl:with-param name="body">
-              <xsl:apply-templates mode="plain" select="tei:head"/>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates mode="plain" select="tei:head"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:if>
-  </xsl:template>
-
   <xsl:variable name="headingNumberSuffix">
     <xsl:text> </xsl:text>
   </xsl:variable>
@@ -1148,11 +1074,6 @@
 </xsl:template>
 
 
-
-<xsl:template name="lineBreak">
-  <xsl:param name="id"/>
-  <xsl:text disable-output-escaping="yes">&lt;br/&gt;</xsl:text>
-</xsl:template>
 
   <xsl:template name="navInterSep"> </xsl:template>
 
