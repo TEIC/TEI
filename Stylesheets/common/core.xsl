@@ -21,7 +21,9 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
-
+  <xsl:output indent="no"/>
+    <xsl:strip-space 
+	elements="tei:author tei:forename tei:surname tei:editor"/>
   <xsl:key name="MNAMES"
    match="tei:monogr/tei:author[tei:surname]|tei:monogr/tei:editor[tei:surname]" 
    use="ancestor::tei:biblStruct/@xml:id"/>
@@ -70,41 +72,6 @@
 
 
 
-<xd:doc>
-  <xd:short>tei:editor</xd:short>
-  <xd:detail> </xd:detail>
-</xd:doc>
-<xsl:template match="tei:editor">
-  <xsl:choose>
-    <xsl:when test="tei:name">
-      <xsl:apply-templates select="tei:name[position()=1]"/>
-      <xsl:for-each select="tei:name[position()&gt;1]">
-	<xsl:text>, </xsl:text>
-	<xsl:apply-templates/>
-      </xsl:for-each>
-      <xsl:text> (ed).&#10;</xsl:text>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:apply-templates/>
-      <xsl:choose>
-	<xsl:when test="count(following-sibling::tei:editor)=1">
-	  <xsl:text> and </xsl:text>
-	</xsl:when>
-	<xsl:when test="following-sibling::tei:author">
-	  <xsl:text>, </xsl:text>
-	</xsl:when>
-	<xsl:when test="preceding-sibling::tei:editor and
-			not(following-sibling::tei:editor)">
-	  <xsl:text> (eds.)</xsl:text>
-	</xsl:when>
-	<xsl:when test="not(following-sibling::tei:editor)">
-	  <xsl:text> (ed.)</xsl:text>
-	</xsl:when>
-      </xsl:choose>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
-
   <xd:doc>
     <xd:short>Process elements tei:edition</xd:short>
     <xd:detail> </xd:detail>
@@ -118,33 +85,16 @@
 
 
   <xd:doc>
-    <xd:short>Process elements tei:biblScope</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:biblScope">
-    <xsl:if test="ancestor::tei:biblStruct">
-      <xsl:text> </xsl:text>
-    </xsl:if>
-    <xsl:apply-templates/>
-  </xsl:template>
-
-  <xd:doc>
     <xd:short>Process elements tei:imprint</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:imprint">
     <xsl:choose>
     <xsl:when test="ancestor::tei:biblStruct">
-      <xsl:apply-templates select="tei:biblScope"/>
-      <xsl:if test="tei:publisher">
-	<xsl:text>, </xsl:text>
-	<xsl:apply-templates select="tei:publisher"/>
-      </xsl:if>
-      <xsl:if test="tei:pubPlace">
-	<xsl:text>, </xsl:text>
+	<xsl:apply-templates select="tei:date"/>
 	<xsl:apply-templates select="tei:pubPlace"/>
-      </xsl:if>
-      <xsl:apply-templates select="tei:date"/>
+	<xsl:apply-templates select="tei:publisher"/>
+	<xsl:apply-templates select="tei:biblScope"/>
     </xsl:when>
     <xsl:otherwise>
       <xsl:apply-templates/>
@@ -268,18 +218,6 @@
     </xsl:choose>
 </xsl:template>
 
-<xsl:template match="tei:biblStruct">
-<!-- biblStruct model is
-
- analytic*
- (monogr, series*)+
- (model.noteLike | idno | relatedItem)*
--->
-
-  <xsl:apply-templates/>
-</xsl:template>
-
-
 <!-- authors and editors -->
 <xsl:template match="tei:author|tei:editor">
   <xsl:choose>
@@ -319,8 +257,11 @@
   <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template  match="tei:forename"/>
-<xsl:template  match="tei:nameLink"/>
+<xsl:template match="tei:forename">
+</xsl:template>
+
+<xsl:template match="tei:nameLink">
+</xsl:template>
 
 <xsl:template  match="tei:forename" mode="use">
   <xsl:if test="preceding-sibling::tei:forename">
@@ -435,13 +376,6 @@
 
 <xsl:template match="tei:series">
   <xsl:apply-templates/>
-</xsl:template>
-<!-- publisher, imprint  -->
-<xsl:template match="tei:imprint">
-   <xsl:apply-templates select="tei:date"/>
-   <xsl:apply-templates select="tei:pubPlace"/>
-   <xsl:apply-templates select="tei:publisher"/>
-   <xsl:apply-templates select="tei:biblScope"/>
 </xsl:template>
 
 <xsl:template match="tei:date">

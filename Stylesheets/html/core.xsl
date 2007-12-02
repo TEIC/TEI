@@ -798,7 +798,7 @@
   <xsl:template match="tei:listBibl">
     <xsl:choose>
       <xsl:when test="tei:biblStruct">
-	<dl>
+	<dl class="listBibl">
 	  <xsl:for-each select="tei:biblStruct">
 	    <xsl:sort select="translate(tei:*/tei:author/tei:surname|tei:*[1]/tei:author/tei:orgName|tei:*[1]/tei:author/tei:name|tei:*[1]/tei:editor/tei:surname|tei:*[1]/tei:editor/tei:name|tei:*[1]/tei:title,$uc,$lc)"/>
 	    <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
@@ -813,7 +813,7 @@
 	</dl>
       </xsl:when>
       <xsl:otherwise>
-	<ol>
+	<ol class="listBibl">
 	  <xsl:for-each select="tei:bibl|tei:biblItem">
 	    <li>
 	      <xsl:call-template name="makeAnchor">

@@ -123,6 +123,10 @@ XSL FO "provisional-distance-between starts"
 XSL FO "provisional-distance-between starts" for gloss lists
 </xd:doc>
   <xsl:param name="distanceBetweenGlossStarts">42pt</xsl:param>
+  <xd:doc type="string" class="layout">
+XSL FO "provisional-distance-between starts" for bibliographies
+</xd:doc>
+  <xsl:param name="distanceBetweenBiblStarts">50pt</xsl:param>
   <xd:doc type="boolean" class="layout">
 Display section headings in running heads
 </xd:doc>
@@ -163,10 +167,6 @@ How to format page numbers in front matter (use XSLT number format)
 Put front matter in multiple columns
 </xd:doc>
   <xsl:param name="frontMulticolumns">false</xsl:param>
-  <xd:doc type="string" class="layout">
-Indentation for bibliography entries
-</xd:doc>
-  <xsl:param name="indentBibl">1em</xsl:param>
   <xd:doc type="string" class="layout">
 XSL FO "provisional-label-separation"
 </xd:doc>

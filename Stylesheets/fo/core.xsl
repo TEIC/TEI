@@ -74,13 +74,6 @@
     </xsl:choose>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:bibl</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:bibl">
-    <xsl:apply-templates/>
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements  tei:byline</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
@@ -344,7 +337,7 @@
     <xd:short>Process elements  tei:item</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:item">
+  <xsl:template match="tei:item|tei:bibl|tei:biblStruct">
     <xsl:call-template name="makeItem"/>
   </xsl:template>
   <xsl:template match="tei:item" mode="xref">
@@ -405,7 +398,7 @@
     <xd:short>Process elements  tei:label</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template mode="print" match="tei:label">
+  <xsl:template match="tei:label" mode="print">
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
@@ -453,7 +446,7 @@
     <xd:short>Process elements  tei:list</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:list">
+  <xsl:template match="tei:list|tei:listBibl">
     <xsl:if test="child::tei:head">
       <fo:block font-style="italic" text-align="start" space-before.optimum="4pt">
         <xsl:for-each select="tei:head">
@@ -464,7 +457,7 @@
     <xsl:choose>
       <xsl:when test="@type='runin'">
         <fo:block>
-          <xsl:apply-templates select="tei:item" mode="runin"/>
+          <xsl:apply-templates mode="runin"/>
         </fo:block>
       </xsl:when>
       <xsl:otherwise>
@@ -476,43 +469,11 @@
     </xsl:choose>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:listBibl</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:listBibl">
-    <xsl:choose>
-<!-- is it in the back matter? -->
-      <xsl:when test="ancestor::tei:back">
-        <fo:block>
-          <xsl:call-template name="listBiblSetup"/>
-        </fo:block>
-        <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements  tei:listBibl/tei:bibl</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:listBibl/tei:bibl">
-    <fo:block>
-      <xsl:call-template name="addID"/>
-      <xsl:attribute name="space-before.optimum">
-        <xsl:value-of select="$spaceBeforeBibl"/>
-      </xsl:attribute>
-      <xsl:attribute name="space-after.optimum">
-        <xsl:value-of select="$spaceAfterBibl"/>
-      </xsl:attribute>
-      <xsl:attribute name="text-indent">-<xsl:value-of select="$indentBibl"/>
-</xsl:attribute>
-      <xsl:attribute name="start-indent">
-        <xsl:value-of select="$indentBibl"/>
-      </xsl:attribute>
-      <xsl:apply-templates/>
-    </fo:block>
+    <xsl:call-template name="makeItem"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:list[@type='catalogue']</xd:short>
@@ -955,34 +916,6 @@
     </fo:inline>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:title</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:title">
-    <xsl:choose>
-      <xsl:when test="@level='a'">
-        <xsl:text>‘</xsl:text>
-        <xsl:apply-templates/>
-        <xsl:text>’</xsl:text>
-      </xsl:when>
-      <xsl:when test="@level='m'">
-        <fo:inline font-style="italic">
-          <xsl:apply-templates/>
-        </fo:inline>
-      </xsl:when>
-      <xsl:when test="@level='s'">
-        <fo:inline font-style="italic">
-          <xsl:apply-templates/>
-        </fo:inline>
-      </xsl:when>
-      <xsl:otherwise>
-        <fo:inline font-style="italic">
-          <xsl:apply-templates/>
-        </fo:inline>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements  tei:unclear</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
@@ -1074,20 +1007,9 @@
     <xd:short>[fo] </xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template name="listBiblSetup">
-    <xsl:call-template name="setupDiv0"/>
-    <xsl:call-template name="addID"/>
-    <xsl:call-template name="i18n">
-      <xsl:with-param name="word">biblioWords</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>[fo] </xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
   <xsl:template name="makeItem">
 <!-- item behaviour depends on the type attribute of our parent:
-simple, bullets, ordered, gloss, unordered
+simple, bullets, ordered, gloss, unordered, or bibliography
 -->
     <xsl:variable name="listdepth" select="count(ancestor::tei:list)"/>
     <fo:list-item>
@@ -1113,15 +1035,18 @@ simple, bullets, ordered, gloss, unordered
               <xsl:attribute name="text-align">end</xsl:attribute>
               <xsl:apply-templates mode="xref" select="."/>
             </xsl:when>
-            <xsl:when test="../@type='ordered'">
+            <xsl:when test="../@type='ordered' or self::tei:bibl">
               <xsl:attribute name="text-align">end</xsl:attribute>
               <xsl:apply-templates mode="xref" select="."/>
               <xsl:text>.</xsl:text>
             </xsl:when>
-            <xsl:when test="../@type='gloss'">
+            <xsl:when test="../@type='gloss' or self::tei:biblStruct">
               <xsl:attribute name="text-align">start</xsl:attribute>
               <xsl:attribute name="font-weight">bold</xsl:attribute>
               <xsl:choose>
+		<xsl:when test="self::tei:biblStruct">
+                  <xsl:apply-templates mode="xref" select="."/>
+		</xsl:when>
                 <xsl:when test="tei:label">
                   <xsl:apply-templates mode="print" select="tei:label"/>
                 </xsl:when>
@@ -1218,6 +1143,9 @@ simple, bullets, ordered, gloss, unordered
   <xsl:template name="setListIndents">
     <xsl:attribute name="provisional-distance-between-starts">
       <xsl:choose>
+        <xsl:when test="self::tei:listBibl[tei:biblStruct]">
+          <xsl:value-of select="$distanceBetweenBiblStarts"/>
+        </xsl:when>
         <xsl:when test="@type='gloss'">
           <xsl:value-of select="$distanceBetweenGlossStarts"/>
         </xsl:when>
