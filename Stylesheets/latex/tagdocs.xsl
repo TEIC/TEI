@@ -128,12 +128,22 @@
     \item[@<xsl:apply-templates/>]
   </xsl:when>
   <xsl:when test="@cols='2'">
-    \item[]\begin{shaded}<xsl:apply-templates/>\end{shaded}
+   <xsl:text>\item[]\begin{specHead}{</xsl:text>
+   <xsl:value-of select="ancestor::tei:div[1]/@xml:id"/>
+   <xsl:text>}</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>\end{specHead} </xsl:text>
   </xsl:when>
   <xsl:otherwise>
     \item[<xsl:apply-templates/>]
   </xsl:otherwise>
 </xsl:choose>
+</xsl:template>
+
+<xsl:template match="tei:div[@type='refdoc']/tei:head"/>
+
+<xsl:template match="tei:div[@type='refdoc']">
+<xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="tei:table[@rend='wovenodd' 
@@ -170,7 +180,9 @@
 </xsl:template>
 
 <xsl:template match="tei:hi[@rend='label']">
+ <xsl:text>{</xsl:text>
  <xsl:value-of select="."/>
+ <xsl:text>}</xsl:text>
 </xsl:template>
 
 

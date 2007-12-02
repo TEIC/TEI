@@ -246,6 +246,13 @@ capable of dealing with UTF-8 directly.
    \def\makelabel##1{\upshape\sffamily ##1}}%
   }
   {\end{list}\end{raggedright}}
+\newenvironment{specHead}[2]%
+ {\vspace{20pt}\hrule\vspace{10pt}%
+  \hypertarget{#1}{}%
+  \pdfbookmark[1]{#2}{#1}%
+  \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
+  \begin{shaded}}
+ {\end{shaded}}
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\Div[#1]#2{\section*{#2}}
