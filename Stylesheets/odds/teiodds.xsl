@@ -1603,6 +1603,9 @@ select="$makeDecls"/></xsl:message>
     <xsl:choose>
       <xsl:when test="not(key('IDENTS',$partialname))">
         <xsl:choose>
+	  <xsl:when test="$TEIC='false'">
+	    <xsl:value-of select="$link"/>
+	  </xsl:when>
           <xsl:when test="$oddmode='tei'">
             <tei:ref>
               <xsl:attribute name="target">

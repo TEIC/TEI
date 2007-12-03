@@ -96,14 +96,6 @@
 
       </xsl:when>
       <xsl:when test="$splitLevel=-1 or $STDOUT='true'">
-        <h2>
-	  <xsl:call-template name="makeAnchor">
-	    <xsl:with-param name="name">
-	      <xsl:value-of select="@ident"/>
-	    </xsl:with-param>
-	  </xsl:call-template>
-          <xsl:value-of select="$name"/>
-        </h2>
 	<xsl:apply-templates mode="weavebody" select="."/>
       </xsl:when>
       <xsl:otherwise> 
@@ -426,6 +418,28 @@
     <xsl:text> </xsl:text>
   </xsl:template>
 
+
+  <xsl:template match="tei:schemaSpec">
+   <h2>Model classes</h2>
+    <xsl:apply-templates mode="weave" select="key('MODELCLASSDOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+
+   <h2>Attribute classes</h2>
+    <xsl:apply-templates mode="weave" select="key('ATTCLASSDOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+
+   <h2>Macros</h2>
+    <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+
+   <h2>Elements</h2>
+    <xsl:apply-templates mode="weave" select="key('ELEMENTDOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+  </xsl:template>
 
 
 </xsl:stylesheet>

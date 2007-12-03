@@ -406,9 +406,14 @@
   <xsl:template match="tei:ident">
     <xsl:choose>
       <xsl:when test="@type='class' and key('CLASSES',.)">
-	  <a href="ref-{.}.html">
+	  <xsl:call-template name="linkTogether">
+	    <xsl:with-param name="name">
 	      <xsl:value-of select="."/>
-	  </a>
+	    </xsl:with-param>
+	    <xsl:with-param name="reftext">
+	      <xsl:value-of select="."/>
+	    </xsl:with-param>
+	  </xsl:call-template>
       </xsl:when>
       <xsl:when test="@type">
         <span class="ident-{@type}">
@@ -432,11 +437,12 @@
       </xsl:when>
       <xsl:when test="key('ELEMENTS',.)">
 	<xsl:for-each select="key('ELEMENTS',.)">
-	  <a href="ref-{@ident}.html">
-	    <span>
-	      <xsl:attribute name="class">
-		<xsl:text>gi</xsl:text>
-	      </xsl:attribute>
+	  <xsl:call-template name="linkTogether">
+	    <xsl:with-param name="class">gi</xsl:with-param>
+	    <xsl:with-param name="name">
+	      <xsl:value-of select="@ident"/>
+	    </xsl:with-param>
+	    <xsl:with-param name="reftext">
 	      <xsl:choose>
 		<xsl:when test="tei:content/rng:empty">
 		  <span class="emptySlash">
@@ -447,8 +453,8 @@
 		  <xsl:value-of select="@ident"/>
 		</xsl:otherwise>
 	      </xsl:choose>
-	    </span>
-	  </a>
+	    </xsl:with-param>
+	  </xsl:call-template>
 	</xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
@@ -501,9 +507,14 @@
 			  <xsl:value-of select="@name"/>
 			</xsl:variable>
 			<xsl:if test="not(preceding-sibling::Element/@name=$me)">
-			  <a href="ref-{@name}.html">
-			    <xsl:value-of select="@name"/>
-			  </a>
+			  <xsl:call-template name="linkTogether">
+			    <xsl:with-param name="name">
+			      <xsl:value-of select="@name"/>
+			    </xsl:with-param>
+			    <xsl:with-param name="reftext">
+			      <xsl:value-of select="@name"/>
+			    </xsl:with-param>
+			  </xsl:call-template>
 			  <xsl:text> </xsl:text>
 			</xsl:if>
 		      </xsl:for-each>
@@ -570,7 +581,12 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <h2>
+    <h3>
+      <xsl:call-template name="makeAnchor">
+	<xsl:with-param name="name">
+	  <xsl:value-of select="@ident"/>
+	</xsl:with-param>
+      </xsl:call-template>
       <xsl:text>&lt;</xsl:text>
       <span>
 	<xsl:choose>
@@ -585,7 +601,7 @@
 	</xsl:choose>
       </span>
       <xsl:text>&gt;</xsl:text> 
-    </h2>
+    </h3>
     <table class="wovenodd" border="1">
       <tr>
         <td class="wovenodd-col2" colspan="2">

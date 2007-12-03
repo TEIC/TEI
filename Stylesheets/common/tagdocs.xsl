@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.tei-c.org/ns/1.0"
+  xmlns:s="http://www.ascc.net/xml/schematron"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings"
   xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format"
@@ -7,7 +8,7 @@
   xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  exclude-result-prefixes="exsl estr edate fo a xd tei html rng local teix xs"
+  exclude-result-prefixes="exsl estr edate fo s a xd tei html rng local teix xs"
   extension-element-prefixes="edate exsl estr" version="1.0">
 
   <xd:doc type="stylesheet">
@@ -649,6 +650,11 @@
 	    </Wrapper>
 	  </xsl:with-param>
 	</xsl:call-template>
+	<xsl:if test="s:*">
+	  <div class="pre">
+	    <xsl:apply-templates select="s:*" mode="verbatim"/>
+	  </div>
+	</xsl:if>
       </xsl:element>
     </xsl:element>
   </xsl:template>
@@ -1988,7 +1994,6 @@
     <xsl:variable name="documentationLanguage">
       <xsl:call-template name="generateDoc"/>
     </xsl:variable>
-
     <xsl:choose>
       <xsl:when test="$oddmode='tei'">
         <tei:ref target="#{$name}">
@@ -2025,7 +2030,7 @@
               <xsl:value-of select="$name"/>
             </a>
           </xsl:when>
-          <xsl:otherwise>
+          <xsl:when test="$TEIC='true'">
 	    <a xmlns="http://www.w3.org/1999/xhtml">
 	      <xsl:attribute name="href">
 		<xsl:value-of select="$TEISERVER"/>
@@ -2036,6 +2041,9 @@
 	      </xsl:attribute>
               <xsl:value-of select="$name"/>
             </a>
+	  </xsl:when>
+          <xsl:otherwise>
+	    <xsl:value-of select="$name"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
@@ -2135,27 +2143,6 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="tei:schemaSpec">
-   <h2>Model classes</h2>
-    <xsl:apply-templates mode="weave" select="key('MODELCLASSDOCS',1)">
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
-
-   <h2>Attribute classes</h2>
-    <xsl:apply-templates mode="weave" select="key('ATTCLASSDOCS',1)">
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
-
-   <h2>Macros</h2>
-    <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
-
-   <h2>Elements</h2>
-    <xsl:apply-templates mode="weave" select="key('ELEMENTDOCS',1)">
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
-  </xsl:template>
 
 
 </xsl:stylesheet>
