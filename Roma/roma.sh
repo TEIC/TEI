@@ -65,7 +65,7 @@ makeHTMLDOC()
     xsltproc 	-o $RESULTS/$N.doc.html $DEBUG  $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
 	--stringparam STDOUT true \
 	--stringparam splitLevel -1 \
-	$DOCFLAGS $TEIXSLDIR/html/odd2html.xsl $RESULTS/$ODD.compiled
+	$DOCFLAGS $TEIXSLDIR/odds/odd2html.xsl $RESULTS/$ODD.compiled
 }
 
 makePDFDOC() 
