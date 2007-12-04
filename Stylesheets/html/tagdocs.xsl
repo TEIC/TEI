@@ -312,10 +312,14 @@
     <xsl:param name="name"/>
     <xsl:param name="id"/>
     <xsl:param name="contents"/>
-    <h2>
-      <xsl:call-template name="makeAnchor"/>
+    <h3 class="oddSpec">
+      <xsl:call-template name="makeAnchor">
+	<xsl:with-param name="name">
+	  <xsl:value-of select="$id"/>
+	</xsl:with-param>
+      </xsl:call-template>
       <xsl:value-of select="$name"/>
-    </h2>
+    </h3>
     <xsl:copy-of select="$contents"/>
   </xsl:template>
 
@@ -420,25 +424,58 @@
 
 
   <xsl:template match="tei:schemaSpec">
-   <h2>Model classes</h2>
-    <xsl:apply-templates mode="weave" select="key('MODELCLASSDOCS',1)">
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
+    
+    <xsl:choose>
+      <xsl:when test="tei:specGrpRef">
+	<xsl:variable name="SPECS">
+	  <tei:schemaSpec>
+	    <xsl:copy-of select="@*"/>
+	    <xsl:apply-templates mode="expandSpecs"/>
+	  </tei:schemaSpec>
+	</xsl:variable>
+	<xsl:for-each select="exsl:node-set($SPECS)/tei:schemaSpec">
+	  <xsl:call-template name="schemaSpecWeave"/>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="schemaSpecWeave"/>
+      </xsl:otherwise>
+    </xsl:choose>
 
-   <h2>Attribute classes</h2>
-    <xsl:apply-templates mode="weave" select="key('ATTCLASSDOCS',1)">
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
+  </xsl:template>
 
-   <h2>Macros</h2>
-    <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
+  <xsl:template name="schemaSpecWeave">
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Processing schemaSpec <xsl:value-of
+      select="@ident"/></xsl:message>
+    </xsl:if>
+    <xsl:if test="tei:classSpec[@type='model']">
+      <h2>Schema <xsl:value-of select="@ident"/>: Model classes</h2>
+      <xsl:apply-templates mode="weave" select="tei:classSpec[@type='model']">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+    </xsl:if>
+    
+    
+    <xsl:if test="tei:classSpec[@type='atts']">
+      <h2>Schema <xsl:value-of select="@ident"/>: Attribute classes</h2>
+      <xsl:apply-templates mode="weave" select="tei:classSpec[@type='atts']">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+    </xsl:if>
+    
+    <xsl:if test="tei:macroSpec">
+      <h2>Schema <xsl:value-of select="@ident"/>: Macros</h2>
+      <xsl:apply-templates mode="weave" select="tei:macroSpec">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+      
+    </xsl:if>
+    <h2>Schema <xsl:value-of select="@ident"/>: Elements</h2>
+    <xsl:apply-templates mode="weave" select="tei:elementSpec">
       <xsl:sort select="@ident"/>
     </xsl:apply-templates>
-
-   <h2>Elements</h2>
-    <xsl:apply-templates mode="weave" select="key('ELEMENTDOCS',1)">
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
+    
   </xsl:template>
 
 

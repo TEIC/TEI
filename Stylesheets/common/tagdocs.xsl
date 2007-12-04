@@ -1289,7 +1289,7 @@
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
         </xsl:attribute>
-        <xsl:element namespace="{$outputNS}" name="{$tableName}">
+        <xsl:element namespace="{$outputNS}" name="{$dlName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>valList</xsl:text>
           </xsl:attribute>
@@ -1304,14 +1304,13 @@
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:variable>
-            <xsl:element namespace="{$outputNS}" name="{$rowName}">
-              <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	    <xsl:element namespace="{$outputNS}" name="{$dtName}">
                 <xsl:attribute name="{$rendName}">
                   <xsl:text>odd_label</xsl:text>
                 </xsl:attribute>
                 <xsl:value-of select="$name"/>
               </xsl:element>
-              <xsl:element namespace="{$outputNS}" name="{$cellName}">
+              <xsl:element namespace="{$outputNS}" name="{$ddName}">
                 <xsl:attribute name="{$rendName}">
                   <xsl:text>odd_value</xsl:text>
                 </xsl:attribute>
@@ -1329,7 +1328,6 @@
                   </xsl:element>
                 </xsl:if>
               </xsl:element>
-            </xsl:element>
           </xsl:for-each>
         </xsl:element>
       </xsl:element>
@@ -1775,113 +1773,6 @@
   </xsl:template>
 
 
-<xsl:template name="generateChildren">
-  <xsl:variable name="name" select="@ident"/>
-  <xsl:choose>
-    <xsl:when test="tei:content/rng:empty">
-      <xsl:text>Empty element</xsl:text>
-    </xsl:when>
-    <xsl:when test="tei:content/rng:text and count(tei:content/*)=1">
-      <xsl:text>Character data only</xsl:text>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:variable name="Children">
-	<Children xmlns="">
-	  <xsl:for-each select="tei:content">
-	    <xsl:call-template name="followRef"/>
-	  </xsl:for-each>
-	</Children>
-      </xsl:variable>
-      <xsl:for-each select="exsl:node-set($Children)/Children">
-	
-	<xsl:choose>
-	  <xsl:when test="count(Element)=0">
-	    <xsl:text>Empty element</xsl:text>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:element namespace="{$outputNS}" name="{$divName}">
-	      <xsl:attribute name="{$rendName}">
-		<xsl:text>specChildren</xsl:text>
-	      </xsl:attribute>
-	      <xsl:for-each select="Element">
-		<xsl:sort select="@module"/>
-		<xsl:sort select="@name"/>
-		<xsl:if
-		    test="generate-id(.)=generate-id(key('CHILDMOD',@module)[1])">
-		  <xsl:element namespace="{$outputNS}" name="{$segName}">
-		    <xsl:attribute name="{$rendName}">
-		      <xsl:text>specChild</xsl:text>
-		    </xsl:attribute>
-		    <xsl:element namespace="{$outputNS}" name="{$segName}">
-		      <xsl:attribute name="{$rendName}">
-			<xsl:text>specChildModule</xsl:text>
-		      </xsl:attribute>
-		      <xsl:value-of select="@module"/>:
-		    </xsl:element>
-		    <xsl:element namespace="{$outputNS}" name="{$segName}">
-		      <xsl:attribute name="{$rendName}">
-			<xsl:text>specChildElements</xsl:text>
-		      </xsl:attribute>
-		      <xsl:for-each select="key('CHILDMOD',@module)">
-			<xsl:sort select="@name"/>
-			<xsl:variable name="me">
-			  <xsl:value-of select="@name"/>
-			</xsl:variable>
-			<xsl:if
-			    test="not(preceding-sibling::Element/@name=$me)">
-			  <xsl:call-template name="linkTogether">
-			    <xsl:with-param name="name" select="@name"/>
-			  </xsl:call-template>
-			  <xsl:call-template name="showSpace"/>
-			</xsl:if>
-		      </xsl:for-each>
-		    </xsl:element>
-		  </xsl:element>
-		</xsl:if>
-	      </xsl:for-each>
-	    </xsl:element>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:for-each>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
-
-<xsl:template name="followRef">
-  <xsl:for-each select=".//rng:ref">
-<xsl:if test="not(@name='anyTEI' or @name='anyAlien' or @name='AnyThing')">
-    <xsl:for-each select="key('IDENTS',@name)">
-      <xsl:choose>
-	<xsl:when test="self::tei:elementSpec">
-	  <Element  xmlns="" name="{@ident}" module="{@module}"/>
-	</xsl:when>
-	<xsl:when test="self::tei:macroSpec">
-	  <xsl:for-each select="tei:content">
-	    <xsl:call-template name="followRef"/>
-	  </xsl:for-each>
-	</xsl:when>
-	<xsl:when test="self::tei:classSpec">
-	  <xsl:call-template name="followMembers"/>
-	</xsl:when>
-      </xsl:choose>
-    </xsl:for-each>
-</xsl:if>
-  </xsl:for-each>
-</xsl:template>
-
-<xsl:template name="followMembers">
-  <xsl:for-each select="key('CLASSMEMBERS',@ident)">
-    <xsl:choose>
-      <xsl:when test="self::tei:elementSpec">
-	<Element xmlns="" name="{@ident}" module="{@module}"/>
-      </xsl:when>
-      <xsl:when test="self::tei:classSpec">
-	<xsl:call-template name="followMembers"/>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:for-each>
-</xsl:template>
-
 <xsl:template name="showAttClasses">
   <xsl:param name="minimal">false</xsl:param>
   <xsl:variable name="clatts">
@@ -1893,7 +1784,7 @@
   <xsl:if test="$minimal='true'">
     <xsl:text> — </xsl:text>
   </xsl:if>
-    <xsl:choose>
+  <xsl:choose>
       <xsl:when test="$minimal='true' and not($clatts='')">
 	<xsl:text> [+ </xsl:text>
 	<xsl:copy-of select="$clatts"/>
@@ -1918,7 +1809,9 @@
 	<xsl:text> </xsl:text>
 	<xsl:copy-of select="$clatts"/>
       </xsl:when>
-      <xsl:when test="ancestor::tei:schemaSpec and not(key('CLASSES','att.global'))"/>
+      <xsl:when test="ancestor::tei:schemaSpec and
+		      not(key('CLASSES','att.global'))">
+      </xsl:when>
       <xsl:otherwise>
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">
@@ -2143,6 +2036,116 @@
     </xsl:if>
   </xsl:template>
 
+
+  <xsl:template name="generateChildren">
+    <xsl:variable name="name" select="@ident"/>
+    <xsl:variable name="Original" select="/"/>
+    <xsl:choose>
+      <xsl:when test="tei:content/rng:empty">
+        <xsl:text>Empty element</xsl:text>
+      </xsl:when>
+      <xsl:when test="tei:content/rng:text and count(tei:content/*)=1">
+        <xsl:text>Character data only</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="Children">
+          <Children xmlns="">
+            <xsl:for-each select="tei:content">
+              <xsl:call-template name="followRef"/>
+            </xsl:for-each>
+          </Children>
+        </xsl:variable>
+        <xsl:for-each select="exsl:node-set($Children)/Children">
+          <xsl:choose>
+            <xsl:when test="count(Element)=0">
+              <xsl:text>Empty element</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:element namespace="{$outputNS}" name="{$divName}">
+                <xsl:attribute name="{$rendName}">
+                  <xsl:text>specChildren</xsl:text>
+                </xsl:attribute>
+                <xsl:for-each select="Element">
+                  <xsl:sort select="@module"/>
+                  <xsl:sort select="@name"/>
+                  <xsl:if test="generate-id(.)=generate-id(key('CHILDMOD',@module)[1])">
+                    <xsl:element namespace="{$outputNS}" name="{$segName}">
+                      <xsl:attribute name="{$rendName}">
+                        <xsl:text>specChild</xsl:text>
+                      </xsl:attribute>
+                        <xsl:if test="string-length(@module)&gt;0">
+
+			  <xsl:element namespace="{$outputNS}" name="{$segName}">
+			    <xsl:attribute name="{$rendName}">
+			      <xsl:text>specChildModule</xsl:text>
+			    </xsl:attribute>
+			    <xsl:value-of select="@module"/>
+			    <xsl:text>: </xsl:text>
+			  </xsl:element>
+			</xsl:if>
+			<xsl:element namespace="{$outputNS}" name="{$segName}">
+			  <xsl:attribute name="{$rendName}">
+			    <xsl:text>specChildElements</xsl:text>
+			  </xsl:attribute>
+			  <xsl:for-each select="key('CHILDMOD',@module)">
+			    <xsl:sort select="@name"/>
+			    <xsl:variable name="me">
+			      <xsl:value-of select="@name"/>
+			    </xsl:variable>
+			    <xsl:if
+				test="not(preceding-sibling::Element/@name=$me)">
+			      <xsl:for-each select="$Original">
+				<xsl:call-template name="linkTogether">
+				  <xsl:with-param name="name" select="$me"/>
+				</xsl:call-template>
+			      </xsl:for-each>
+			      <xsl:call-template name="showSpace"/>
+			    </xsl:if>
+			  </xsl:for-each>
+			</xsl:element>
+		    </xsl:element>
+		  </xsl:if>
+		</xsl:for-each>
+	      </xsl:element>
+	    </xsl:otherwise>
+          </xsl:choose>
+        </xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template name="followRef">
+    <xsl:for-each select=".//rng:ref">
+      <xsl:if test="not(@name='anyTEI' or @name='anyAlien' or @name='AnyThing')">
+        <xsl:for-each select="key('IDENTS',@name)">
+          <xsl:choose>
+            <xsl:when test="self::tei:elementSpec">
+              <Element xmlns="" name="{@ident}" module="{@module}"/>
+            </xsl:when>
+            <xsl:when test="self::tei:macroSpec">
+              <xsl:for-each select="tei:content">
+                <xsl:call-template name="followRef"/>
+              </xsl:for-each>
+            </xsl:when>
+            <xsl:when test="self::tei:classSpec">
+              <xsl:call-template name="followMembers"/>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:for-each>
+      </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+  <xsl:template name="followMembers">
+    <xsl:for-each select="key('CLASSMEMBERS',@ident)">
+      <xsl:choose>
+        <xsl:when test="self::tei:elementSpec">
+          <Element xmlns="" name="{@ident}" module="{@module}"/>
+        </xsl:when>
+        <xsl:when test="self::tei:classSpec">
+          <xsl:call-template name="followMembers"/>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:template>
 
 
 </xsl:stylesheet>

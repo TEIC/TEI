@@ -2130,6 +2130,7 @@
 	  <xsl:attribute name="id">
 	    <xsl:value-of select="$name"/>
 	  </xsl:attribute>
+	  <xsl:comment>anchor</xsl:comment>
 	</span>	
       </xsl:when>
       <xsl:when test="$name">
