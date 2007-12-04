@@ -227,39 +227,7 @@
 </xsl:template>
 
 <xsl:template match="tei:divGen[@type='toc']">
-
-<xsl:call-template name="mainTOC"/>
-
-<div><b>Classes:</b>
-  <div class="oddToc">
-    <xsl:for-each
-	select="ancestor-or-self::tei:text//tei:classSpec">
-    <xsl:sort select="@ident"/>
-    <xsl:call-template name="oddTocEntry"/>
-    </xsl:for-each>
-  </div>
-</div>
-
-<div><b>Elements:</b>
-  <div class="oddToc">
-    <xsl:for-each
-	select="ancestor-or-self::tei:text//tei:elementSpec">
-    <xsl:sort select="@ident"/>
-    <xsl:call-template name="oddTocEntry"/>
-    </xsl:for-each>
-  </div>
-</div>
-
-<div><b>Macros:</b>
-  <div class="oddToc">
-    <xsl:for-each
-	select="ancestor-or-self::tei:text//tei:macroSpec">
-    <xsl:sort select="@ident"/>
-    <xsl:call-template name="oddTocEntry"/>
-    </xsl:for-each>
-  </div>
-</div>
-
+  <xsl:call-template name="mainTOC"/>
 </xsl:template>
 
 <xsl:template name="oddTocEntry">

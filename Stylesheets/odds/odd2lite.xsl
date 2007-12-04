@@ -274,6 +274,9 @@
   <xsl:template name="makeSectionHead">
     <xsl:param name="name"/>
     <xsl:param name="id"/>
+    <xsl:attribute name="xml:id">
+     <xsl:value-of select="$id"/>
+    </xsl:attribute>
     <head>
       <xsl:value-of select="$name"/>
     </head>
