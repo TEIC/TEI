@@ -140,7 +140,7 @@
 	<xsl:text>} </xsl:text>
       </xsl:when>
       <xsl:when test="ancestor::tei:cell">
-<xsl:text>\mbox{}\hfill\\[-10pt]\begin{Verbatim}[fontsize=\footnotesize]&#10;</xsl:text>
+<xsl:text>\mbox{}\hfill\\[-10pt]\begin{Verbatim}[fontsize=\small]&#10;</xsl:text>
 	<xsl:apply-templates mode="eg"/>
 	<xsl:text>&#10;\end{Verbatim}&#10;</xsl:text>
 <!--

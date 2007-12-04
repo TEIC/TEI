@@ -257,7 +257,7 @@ capable of dealing with UTF-8 directly.
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\Div[#1]#2{\section*{#2}}
 \catcode`\_=12\relax
-\def\exampleFontSet{\ttfamily\fontsize{9pt}{10pt}\selectfont}
+\def\exampleFontSet{\ttfamily\small\selectfont}
 </xsl:text>
 
 </xsl:template>
