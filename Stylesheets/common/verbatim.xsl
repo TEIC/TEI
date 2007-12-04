@@ -576,7 +576,58 @@
 </xsl:template>
 
 <xsl:template match="@*" mode="attributetext">
-  <xsl:value-of select="."/>
+  <xsl:choose>
+    <xsl:when test="string-length(.)&gt;50">
+      <xsl:choose>
+	<xsl:when test="contains(.,'|')">
+	  <xsl:call-template name="breakMe">
+	    <xsl:with-param name="text">
+	      <xsl:value-of select="."/>
+	    </xsl:with-param>
+	    <xsl:with-param name="sep">
+	      <xsl:text>|</xsl:text>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="breakMe">
+	    <xsl:with-param name="text">
+	      <xsl:value-of select="."/>
+	    </xsl:with-param>
+	    <xsl:with-param name="sep">
+	      <xsl:text> </xsl:text>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:value-of select="."/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template name="breakMe">
+  <xsl:param name="text"/>
+  <xsl:param name="sep"/>
+  <xsl:choose>
+    <xsl:when test="string-length($text)&lt;50">
+      <xsl:value-of select="$text"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:value-of select="substring-before($text,$sep)"/>
+      <xsl:text>&#10;</xsl:text>
+      <xsl:value-of select="$sep"/>
+      <xsl:call-template name="breakMe">
+	<xsl:with-param name="text">
+	  <xsl:value-of select="substring-after($text,$sep)"/>
+	</xsl:with-param>
+	<xsl:with-param name="sep">
+	  <xsl:value-of select="$sep"/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 
