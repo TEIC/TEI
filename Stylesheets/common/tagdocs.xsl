@@ -2068,7 +2068,7 @@
                   <xsl:sort select="@module"/>
                   <xsl:sort select="@name"/>
                   <xsl:if test="generate-id(.)=generate-id(key('CHILDMOD',@module)[1])">
-                    <xsl:element namespace="{$outputNS}" name="{$segName}">
+                    <xsl:element namespace="{$outputNS}" name="{$divName}">
                       <xsl:attribute name="{$rendName}">
                         <xsl:text>specChild</xsl:text>
                       </xsl:attribute>

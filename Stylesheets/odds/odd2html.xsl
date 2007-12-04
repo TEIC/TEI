@@ -876,15 +876,13 @@
 
   <xsl:template name="navInterSep"> </xsl:template>
 
-  <xsl:template name="includeCSS">
-    <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
-    <xsl:if test="not($cssPrintFile='')">
-      <link href="{$cssPrintFile}" media="print" rel="stylesheet"
-        type="text/css"/>
-    </xsl:if>
-    <xsl:if test="not($cssSecondaryFile = '')">
-      <link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
-    </xsl:if>
+
+  <xsl:template name="javascriptHook">
+    <xsl:call-template name="jsForOdds"/>
+  </xsl:template>
+
+  <xsl:template name="jsForOdds">
+
   <script type="text/javascript">
       <xsl:comment>
         <xsl:text disable-output-escaping="yes">
@@ -1008,6 +1006,7 @@ function togglerelax (el) {
     </script>
 
   </xsl:template>
+
 
   <xsl:template name="generateSubTitle">
     <xsl:value-of select="tei:head"/>
