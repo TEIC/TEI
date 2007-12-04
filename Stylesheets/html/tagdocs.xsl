@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
-  exclude-result-prefixes="exsl estr edate a fo local rng tei teix xd html"
+  exclude-result-prefixes="html exsl estr edate a fo local rng tei teix xd"
   extension-element-prefixes="exsl estr edate" version="1.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:edate="http://exslt.org/dates-and-times"
@@ -51,6 +51,7 @@
   <xsl:param name="rowName">tr</xsl:param>
   <xsl:param name="tableName">table</xsl:param>
   <xsl:param name="divName">div</xsl:param>
+  <xsl:param name="sectionName">div</xsl:param>
   <xsl:param name="segName">span</xsl:param>
   <xsl:param name="outputNS">http://www.w3.org/1999/xhtml</xsl:param>
 
@@ -299,30 +300,6 @@
   </xsl:template>
 
 
-  <xd:doc>
-    <xd:short>[odds] make a link</xd:short>
-    <xd:param name="class">class</xd:param>
-    <xd:param name="id">id</xd:param>
-    <xd:param name="name">name</xd:param>
-    <xd:param name="text">text</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-
-  <xsl:template name="makeSection">
-    <xsl:param name="name"/>
-    <xsl:param name="id"/>
-    <xsl:param name="contents"/>
-    <h3 class="oddSpec">
-      <xsl:call-template name="makeAnchor">
-	<xsl:with-param name="name">
-	  <xsl:value-of select="$id"/>
-	</xsl:with-param>
-      </xsl:call-template>
-      <xsl:value-of select="$name"/>
-    </h3>
-    <xsl:copy-of select="$contents"/>
-  </xsl:template>
-
   <xsl:template name="showRNC">
     <xsl:param name="style"/>
     <xsl:param name="contents"/>
@@ -478,5 +455,25 @@
     
   </xsl:template>
 
+
+  <xd:doc>
+    <xd:short>[odds] make a link</xd:short>
+    <xd:param name="name">name</xd:param>
+    <xd:param name="id">id</xd:param>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+
+  <xsl:template name="makeSectionHead">
+    <xsl:param name="name"/>
+    <xsl:param name="id"/>
+    <h3 class="oddSpec">
+      <xsl:call-template name="makeAnchor">
+       <xsl:with-param name="name">
+         <xsl:value-of select="$id"/>
+       </xsl:with-param>
+      </xsl:call-template>
+      <xsl:value-of select="$name"/>
+    </h3>
+  </xsl:template>
 
 </xsl:stylesheet>

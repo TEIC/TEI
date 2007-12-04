@@ -2143,6 +2143,7 @@
 	  <xsl:attribute name="id">
 	    <xsl:value-of select="@xml:id"/>
 	  </xsl:attribute>
+	  <xsl:comment>anchor</xsl:comment>
 	</span>	
       </xsl:when>
       <xsl:when test="@xml:id">
@@ -2162,6 +2163,7 @@
 	      <xsl:attribute name="id">
 		<xsl:value-of select="$me"/>
 	      </xsl:attribute>
+	      <xsl:comment>anchor</xsl:comment>
 	    </span>	
 	  </xsl:when>
 	  <xsl:otherwise>

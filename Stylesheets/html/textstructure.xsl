@@ -1087,21 +1087,10 @@ $ID: requests a particular page
       <xsl:value-of select="$masterFile"/>
       <xsl:call-template name="addCorpusID"/>
     </xsl:variable>
-    <xsl:call-template name="outputChunk">
-      <xsl:with-param name="ident">
-        <xsl:choose>
-          <xsl:when test="$STDOUT='true'"/>
-          <xsl:when test="not($currentID='')">
-            <xsl:value-of select="$currentID"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$BaseFile"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:with-param>
-      <xsl:with-param name="content">
-        <xsl:choose>
-          <xsl:when test="$pageLayout='CSS'">
+    <xsl:choose>
+      <xsl:when test="$STDOUT='true'">
+	  <xsl:choose>
+	    <xsl:when test="$pageLayout='CSS'">
             <xsl:call-template name="pageLayoutCSS">
               <xsl:with-param name="currentID" select="$currentID"/>
             </xsl:call-template>
@@ -1112,9 +1101,38 @@ $ID: requests a particular page
             </xsl:call-template>
           </xsl:when>
         </xsl:choose>
-      </xsl:with-param>
-    </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="outputChunk">
+	  <xsl:with-param name="ident">
+	    <xsl:choose>
+	      <xsl:when test="not($currentID='')">
+		<xsl:value-of select="$currentID"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="$BaseFile"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:with-param>
+	  <xsl:with-param name="content">
+	    <xsl:choose>
+	      <xsl:when test="$pageLayout='CSS'">
+		<xsl:call-template name="pageLayoutCSS">
+		  <xsl:with-param name="currentID" select="$currentID"/>
+		</xsl:call-template>
+	      </xsl:when>
+	      <xsl:when test="$pageLayout='Table'">
+		<xsl:call-template name="pageLayoutTable">
+		  <xsl:with-param name="currentID" select="$currentID"/>
+		</xsl:call-template>
+	      </xsl:when>
+	    </xsl:choose>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:detail> </xd:detail>

@@ -47,6 +47,7 @@
   <xsl:param name="rendName">rend</xsl:param>
   <xsl:param name="rowName">row</xsl:param>
   <xsl:param name="tableName">table</xsl:param>
+  <xsl:param name="sectionName">div</xsl:param>
   <xsl:param name="divName">seg</xsl:param>
   <xsl:param name="segName">seg</xsl:param>
   <xsl:param name="outputNS">http://www.tei-c.org/ns/1.0</xsl:param>
@@ -273,16 +274,9 @@
   <xsl:template name="makeSection">
     <xsl:param name="name"/>
     <xsl:param name="id"/>
-    <xsl:param name="contents"/>
-    <div type="refdoc">
-      <xsl:attribute name="xml:id">
-        <xsl:value-of select="$id"/>
-      </xsl:attribute>
-      <head>
-        <xsl:value-of select="$name"/>
-      </head>
-      <xsl:copy-of select="$contents"/>
-    </div>
+    <head>
+      <xsl:value-of select="$name"/>
+    </head>
   </xsl:template>
 
   <xd:doc>

@@ -266,16 +266,16 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:call-template name="makeSection">
-      <xsl:with-param name="id">
-        <xsl:value-of select="@ident"/>
-      </xsl:with-param>
-      <xsl:with-param name="name">
-        <xsl:value-of select="$name"/>
-      </xsl:with-param>
-      <xsl:with-param name="contents">
-
-        <xsl:element namespace="{$outputNS}" name="{$tableName}">
+    <xsl:element name="{$sectionName}">
+      <xsl:call-template name="makeSectionHead">
+	<xsl:with-param name="id">
+	  <xsl:value-of select="@ident"/>
+	</xsl:with-param>
+	<xsl:with-param name="name">
+	  <xsl:value-of select="$name"/>
+	</xsl:with-param>
+      </xsl:call-template>
+      <xsl:element namespace="{$outputNS}" name="{$tableName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>wovenodd</xsl:text>
           </xsl:attribute>
@@ -404,8 +404,7 @@
           </xsl:if>
           <xsl:apply-templates mode="weave"/>
         </xsl:element>
-      </xsl:with-param>
-    </xsl:call-template>
+    </xsl:element>
   </xsl:template>
 
   <xd:doc>
@@ -449,28 +448,29 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:call-template name="makeSection">
-      <xsl:with-param name="id">
-        <xsl:value-of select="@ident"/>
-      </xsl:with-param>
-      <xsl:with-param name="name">
-	<xsl:text>&lt;</xsl:text>
-	<xsl:choose>
-	  <xsl:when test="tei:content/rng:empty">
-	    <xsl:call-template name="emptySlash">
-	      <xsl:with-param name="name">
-		<xsl:value-of select="$name"/>
-	      </xsl:with-param>
-	    </xsl:call-template>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of select="$name"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-	<xsl:text>&gt;</xsl:text>
-      </xsl:with-param>
-      <xsl:with-param name="contents">
-	<xsl:element namespace="{$outputNS}" name="{$tableName}">
+    <xsl:element name="{$sectionName}">
+      <xsl:call-template name="makeSectionHead">
+	<xsl:with-param name="id">
+	  <xsl:value-of select="@ident"/>
+	</xsl:with-param>
+	<xsl:with-param name="name">
+	  <xsl:text>&lt;</xsl:text>
+	  <xsl:choose>
+	    <xsl:when test="tei:content/rng:empty">
+	      <xsl:call-template name="emptySlash">
+		<xsl:with-param name="name">
+		  <xsl:value-of select="$name"/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="$name"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  <xsl:text>&gt;</xsl:text>
+	</xsl:with-param>
+      </xsl:call-template>
+    <xsl:element namespace="{$outputNS}" name="{$tableName}">
 	  <xsl:attribute name="{$rendName}">
 	    <xsl:text>wovenodd</xsl:text>
 	  </xsl:attribute>
@@ -596,8 +596,7 @@
 	  
 	  
 	</xsl:element>
-      </xsl:with-param>
-    </xsl:call-template>
+    </xsl:element>
   </xsl:template>
   
   <xd:doc>
@@ -942,16 +941,17 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:call-template name="makeSection">
-      <xsl:with-param name="id">
-        <xsl:value-of select="@ident"/>
-      </xsl:with-param>
-      <xsl:with-param name="name">
-        <xsl:value-of select="$name"/>
-      </xsl:with-param>
-      <xsl:with-param name="contents">
 
-        <xsl:element namespace="{$outputNS}" name="{$tableName}">
+    <xsl:element name="{$sectionName}">
+      <xsl:call-template name="makeSectionHead">
+	<xsl:with-param name="id">
+	  <xsl:value-of select="@ident"/>
+	</xsl:with-param>
+	<xsl:with-param name="name">
+	  <xsl:value-of select="$name"/>
+	</xsl:with-param>
+      </xsl:call-template>
+      <xsl:element namespace="{$outputNS}" name="{$tableName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>wovenodd</xsl:text>
           </xsl:attribute>
@@ -1002,8 +1002,7 @@
           </xsl:if>
           <xsl:apply-templates mode="weave"/>
         </xsl:element>
-      </xsl:with-param>
-    </xsl:call-template>
+    </xsl:element>
   </xsl:template>
 
   <xd:doc>
