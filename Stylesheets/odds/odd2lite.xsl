@@ -271,7 +271,7 @@
     </ref>
   </xsl:template>
 
-  <xsl:template name="makeSection">
+  <xsl:template name="makeSectionHead">
     <xsl:param name="name"/>
     <xsl:param name="id"/>
     <head>
