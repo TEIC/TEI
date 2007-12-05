@@ -127,12 +127,15 @@
   <xsl:when test="ancestor::tei:table[@rend='specDesc']">
     \item[@<xsl:apply-templates/>]
   </xsl:when>
-  <xsl:when test="@cols='2'">
+  <xsl:when test="@cols='2' and not(parent::tei:row/preceding-sibling::tei:row)">
    <xsl:text>\item[]\begin{specHead}{</xsl:text>
    <xsl:value-of select="ancestor::tei:div[1]/@xml:id"/>
    <xsl:text>}</xsl:text>
     <xsl:apply-templates/>
     <xsl:text>\end{specHead} </xsl:text>
+  </xsl:when>
+  <xsl:when test="@cols='2'">
+    \item[]<xsl:apply-templates/>
   </xsl:when>
   <xsl:otherwise>
     \item[<xsl:apply-templates/>]

@@ -251,8 +251,7 @@ capable of dealing with UTF-8 directly.
   \hypertarget{#1}{}%
   \pdfbookmark[1]{#2}{#1}%
   \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
-  \begin{shaded}}
- {\end{shaded}}
+  }{}
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\Div[#1]#2{\section*{#2}}
