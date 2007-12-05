@@ -254,7 +254,9 @@
     <xd:short>Process elements  tei:div/tei:docTitle</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:div/tei:docTitle"/>
+  <xsl:template match="tei:div/tei:docTitle">
+    <xsl:apply-templates/>
+  </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:docAuthor</xd:short>
     <xd:detail> </xd:detail>

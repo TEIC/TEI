@@ -395,7 +395,7 @@ Colour for display of element names
   <xd:doc type="string" class="style">
 Indentation of headings
 </xd:doc>
-  <xsl:param name="headingOutdent">-3em</xsl:param>
+  <xsl:param name="headingOutdent">0em</xsl:param>
   <xd:doc type="boolean" class="style">
 Hyphenate text
 </xd:doc>
