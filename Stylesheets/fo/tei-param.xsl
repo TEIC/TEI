@@ -372,7 +372,7 @@ Colour for display of &lt;eg&gt; blocks.
   <xd:doc type="string" class="style">
 Colour for background display of &lt;eg&gt; blocks.
 </xd:doc>
-  <xsl:param name="exampleBackgroundColor">lightgrey</xsl:param>
+  <xsl:param name="exampleBackgroundColor">gray</xsl:param>
   <xd:doc type="string" class="style">
 Calculation of font size for examples (add dimension)
 </xd:doc>

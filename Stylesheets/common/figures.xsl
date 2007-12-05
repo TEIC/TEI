@@ -120,6 +120,9 @@
               <xsl:when test="contains(@width,'in')">
                 <xsl:value-of select="@width"/>
               </xsl:when>
+              <xsl:when test="contains(@width,'px')">
+                <xsl:value-of select="@width"/>
+              </xsl:when>
               <xsl:when test="contains(@width,'cm')">
                 <xsl:value-of select="@width"/>
               </xsl:when>
@@ -176,6 +179,9 @@
                 <xsl:text>pt</xsl:text>
               </xsl:when>
               <xsl:when test="contains(@height,'in')">
+                <xsl:value-of select="@height"/>
+              </xsl:when>
+              <xsl:when test="contains(@height,'px')">
                 <xsl:value-of select="@height"/>
               </xsl:when>
               <xsl:when test="contains(@height,'cm')">

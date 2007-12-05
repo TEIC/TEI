@@ -173,6 +173,21 @@
       <xsl:value-of select="translate(.,' ',' ')"/>
     </fo:block>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements  tei:eg</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="teix:egXML">
+    <fo:block font-family="{$typewriterFont}" background-color="{$exampleBackgroundColor}" color="{$exampleColor}" white-space-treatment="preserve" linefeed-treatment="preserve" white-space-collapse="false" wrap-option="no-wrap" text-indent="0em" hyphenate="false" start-indent="{$exampleMargin}" text-align="start" font-size="{$exampleSize}" space-before.optimum="4pt" space-after.optimum="4pt">
+      <xsl:if test="not($flowMarginLeft='')">
+        <xsl:attribute name="padding-start">
+          <xsl:value-of select="$exampleMargin"/>
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates mode="verbatim"/>
+    </fo:block>
+  </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:eg[@rend='kwic']/lb</xd:short>
     <xd:detail> </xd:detail>
@@ -337,7 +352,7 @@
     <xd:short>Process elements  tei:item</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:item|tei:bibl|tei:biblStruct">
+  <xsl:template match="tei:item|tei:biblStruct">
     <xsl:call-template name="makeItem"/>
   </xsl:template>
   <xsl:template match="tei:item" mode="xref">

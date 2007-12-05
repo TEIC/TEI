@@ -110,14 +110,16 @@
         </fo:float>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:choose>
-          <xsl:when test="@url or @entity">
-            <xsl:call-template name="makePic"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:apply-templates/>
-          </xsl:otherwise>
-        </xsl:choose>
+	<fo:block>
+	  <xsl:choose>
+	    <xsl:when test="@url or @entity">
+	      <xsl:call-template name="makePic"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:apply-templates/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</fo:block>
         <xsl:choose>
           <xsl:when test="$captionInlineFigures='true'">
             <fo:block>
