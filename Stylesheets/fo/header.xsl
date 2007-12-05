@@ -55,7 +55,8 @@
     </xd:detail>
   </xd:doc>
   <xsl:template match="tei:docTitle">
-    <fo:block text-align="left" font-size="{$titleSize}">
+    <fo:block text-align="left" font-size="{$titleSize}" >
+>
       <xsl:if test="ancestor::tei:group/tei:text/tei:front">
         <xsl:attribute name="id">
           <xsl:choose>
@@ -68,9 +69,7 @@
           </xsl:choose>
         </xsl:attribute>
       </xsl:if>
-      <fo:inline font-weight="bold">
-        <xsl:apply-templates select="tei:titlePart"/>
-      </fo:inline>
+      <xsl:apply-templates select="tei:titlePart"/>
     </fo:block>
   </xsl:template>
   <xd:doc>

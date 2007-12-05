@@ -592,9 +592,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="Header">
-    <fo:block>
-      <fo:inline-container>
-        <fo:table>
+    <fo:table>
           <fo:table-column column-number="1" column-width="100%">
             <xsl:if test="$foEngine='passivetex'">
               <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">R</xsl:attribute>
@@ -633,8 +631,6 @@
             </fo:table-row>
           </fo:table-body>
         </fo:table>
-      </fo:inline-container>
-    </fo:block>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>
