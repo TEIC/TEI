@@ -139,6 +139,9 @@
    \def\makelabel##1{\hfil##1\hfil}}%
   }
   {\end{list}}
+\catcode`人=\active \def人{{\fontspec{Kochi Mincho}\char20154}}
+\catcode`⁊=\active \def⁊{{\fontspec{Junicode}\char8266}} 
+\catcode`Å=\active \defÅ{{\fontspec{Gentium}\char216}} 
 \makeatother
 <xsl:call-template name="beginDocumentHook"/>
 </xsl:template>
