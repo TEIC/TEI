@@ -182,7 +182,7 @@
   <xd:doc class="tables" type="string"> Default alignment of table cells</xd:doc>
   <xsl:param name="cellAlign">left</xsl:param>
   <xd:doc class="tables" type="string"> Default alignment of tables</xd:doc>
-  <xsl:param name="tableAlign">leftTable</xsl:param>
+  <xsl:param name="tableAlign">left</xsl:param>
 
   <xd:doc class="hook">
     <xd:short>[common] Hook where actions can be inserted when making
