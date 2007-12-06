@@ -66,7 +66,7 @@ schemas:
 	../Source/Guidelines/en/guidelines-en.xml > names.xml
 	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTBADFILES); do \
 		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK stage; \
-		xsltproc --xinclude ../Utilities/odd2exodd.xsl $$i.odd > $$i-ex.odd; \
+		xsltproc --stringparam TEIC true --xinclude ../Utilities/odd2exodd.xsl $$i.odd > $$i-ex.odd; \
 		roma $(ROMAOPTS) --nodtd --noxsd  --xsl=$(XSL)	$$i-ex.odd . ; \
 		echo check egXML in $$i.odd; \
 		perl -p -e "s/testlite-examples/$$i-examples/" ex.nvdl > $$i.nvdl; \
