@@ -19,8 +19,12 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+<xsl:param name="TEIC">false</xsl:param>
+
 <xsl:output method="xml" indent="yes"/>
+
 <xsl:key name="SPEC" match="tei:schemaSpec|tei:specGrp" use="1"/>
+
 <xsl:template match="*">
  <xsl:copy>
   <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
@@ -31,22 +35,25 @@
   <xsl:copy-of select="."/>
 </xsl:template>
 
-<xsl:template match="tei:back|tei:front"/>
-<xsl:template match="tei:body">
+<xsl:template match="tei:text">
+ <tei:text>
   <tei:body>
     <xsl:apply-templates select="key('SPEC',1)"/>
-    <elementSpec ident="egXML" module="tagdocs" mode="change">
-      <content>
-	<group xmlns="http://relaxng.org/ns/structure/1.0">
-	  <zeroOrMore >
-	    <xi:include href="../Exemplars/exnames.xml">
-	      <xi:fallback> ERROR: cannot locate list of names</xi:fallback>
-	    </xi:include>
-	  </zeroOrMore>
+    <xsl:if test="$TEIC='true'">
+      <elementSpec ident="egXML" module="tagdocs" mode="change">
+	<content>
+	  <group xmlns="http://relaxng.org/ns/structure/1.0">
+	    <zeroOrMore >
+	      <xi:include href="../Exemplars/exnames.xml">
+		<xi:fallback> ERROR: cannot locate list of names</xi:fallback>
+	      </xi:include>
+	    </zeroOrMore>
 	</group>
-      </content>
-    </elementSpec>
+	</content>
+      </elementSpec>
+    </xsl:if>
   </tei:body>
+ </tei:text>
 </xsl:template>
 
 <xsl:template match="tei:schemaSpec/@ident">
