@@ -141,7 +141,10 @@
   {\end{list}}
 \catcode`人=\active \def人{{\fontspec{Kochi Mincho}\char20154}}
 \catcode`⁊=\active \def⁊{{\fontspec{Junicode}\char8266}} 
-\catcode`Å=\active \defÅ{{\fontspec{Gentium}\char216}} 
+\catcode`Å=\active \defÅ{{\fontspec{Gentium}\char8491}} 
+\catcode`⁻=\active \def⁻{\textsuperscript{-}}
+\catcode` =\active \def {\,}
+
 \makeatother
 <xsl:call-template name="beginDocumentHook"/>
 </xsl:template>
