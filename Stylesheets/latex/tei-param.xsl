@@ -292,19 +292,19 @@ capable of dealing with UTF-8 directly.
 \renewcommand\section{\@startsection {section}{1}{\z@}%
      {-1.75ex \@plus -0.5ex \@minus -.2ex}%
      {0.5ex \@plus .2ex}%
-     {\reset@font\large\bfseries\sffamily}}
+     {\reset@font\Large\bfseries\sffamily}}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
      {-1.75ex\@plus -0.5ex \@minus- .2ex}%
      {0.5ex \@plus .2ex}%
-     {\reset@font\large\sffamily}}
+     {\reset@font\Large\sffamily}}
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
      {-1.5ex\@plus -0.35ex \@minus -.2ex}%
      {0.5ex \@plus .2ex}%
-     {\reset@font\normalsize\sffamily}}
+     {\reset@font\large\sffamily}}
 \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
-     {1.5ex \@plus0.5ex \@minus.2ex}%
-     {-1em}%
-     {\reset@font\normalsize\bfseries}}
+     {-1ex \@plus-0.35ex \@minus -0.2ex}%
+     {0.5ex \@plus .2ex}%
+     {\reset@font\normalsize\sffamily}}
 \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
      {1.5ex \@plus1ex \@minus .2ex}%
      {-1em}%
@@ -327,6 +327,7 @@ capable of dealing with UTF-8 directly.
 \def\frontmatter{%
   \pagenumbering{roman}
   \def\thechapter{\@roman\c@chapter}
+  \def\theHchapter{\alph{chapter}}
 }
 \def\mainmatter{%
   \cleardoublepage
@@ -334,6 +335,8 @@ capable of dealing with UTF-8 directly.
   \setcounter{chapter}{0}
   \setcounter{section}{0}
   \pagenumbering{arabic}
+  \setcounter{secnumdepth}{6}
+  \def\theHchapter{\arabic{chapter}}
 }
 \def\backmatter{%
   \cleardoublepage
@@ -342,6 +345,7 @@ capable of dealing with UTF-8 directly.
   \setcounter{secnumdepth}{0}
   \def\@chapapp{\appendixname}%
   \def\thechapter{\@Alph\c@chapter}
+  \def\theHchapter{\Alph{chapter}}
   \appendix
 }
 \newenvironment{bibitemlist}[1]{%
