@@ -97,9 +97,6 @@
         <xsl:text>\hyperlink{</xsl:text>
         <xsl:value-of select="$dest"/>
         <xsl:text>}{</xsl:text>
-	<xsl:if test="$ptr='true'">
-	  <xsl:text>\textit{</xsl:text>
-	</xsl:if>
         <xsl:choose>
           <xsl:when test="not($body='')">
             <xsl:value-of select="$body"/>
@@ -114,9 +111,6 @@
           </xsl:otherwise>
         </xsl:choose>
         <xsl:text>}</xsl:text>
-	<xsl:if test="$ptr='true'">
-	  <xsl:text>}</xsl:text>
-	</xsl:if>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>«</xsl:text>

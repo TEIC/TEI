@@ -1124,7 +1124,7 @@
                 <xsl:call-template name="linkTogether">
                   <xsl:with-param name="name" select="@ident"/>
                 </xsl:call-template>
-                <xsl:text> </xsl:text>
+		<xsl:call-template name="showSpace"/>
               </xsl:for-each>
             </xsl:element>
           </xsl:if>

@@ -163,7 +163,7 @@
       <xsl:otherwise>
 <xsl:text>\par\bgroup\exampleFontSet\vskip 10pt
 \begin{shaded}
-\noindent\obeylines\obeyspaces </xsl:text>
+\obeylines\obeyspaces </xsl:text>
 <xsl:apply-templates mode="eg"/>
 <xsl:text>\end{shaded}
 \par\egroup </xsl:text>
@@ -369,9 +369,9 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:list">
-    <xsl:if test="tei:head"> \centerline{<xsl:for-each select="tei:head">
+    <xsl:if test="tei:head"> \leftline{\textbf{<xsl:for-each select="tei:head">
         <xsl:apply-templates/>
-      </xsl:for-each>} </xsl:if>
+      </xsl:for-each>}} </xsl:if>
       <xsl:if test="@xml:id">
 	<xsl:text>\label{</xsl:text>
 	<xsl:value-of  select="@xml:id"/>
