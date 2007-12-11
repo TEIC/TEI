@@ -82,6 +82,7 @@
 	#1}}
 \def\exampleindex#1{{\itshape\hyperpage{#1}}}
 \def\mainexampleindex#1{{\bfseries\itshape\hyperpage{#1}}}
+\setlength{\leftmargini}{2\parindent}%
 \renewcommand{\@listI}{%
    \setlength{\leftmargin}{\leftmargini}%
    \setlength{\topsep}{\medskipamount}%
@@ -131,6 +132,8 @@
   \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
   \begin{list}{\csname\@itemitem\endcsname}
   {%
+   \setlength{\leftmargin}{\parindent}%
+   \setlength{\labelwidth}{.7\parindent}%
    \setlength{\topsep}{2pt}%
    \setlength{\itemsep}{2pt}%
    \setlength{\itemindent}{2pt}%
@@ -173,6 +176,12 @@
   <xsl:text>{</xsl:text>
   <xsl:if test="$r='rules'">|</xsl:if>
   <xsl:choose>
+    <xsl:when test="@xml:id='tab-content-models'">
+      <xsl:text>P{.25\textwidth}P{.25\textwidth}P{.5\textwidth}</xsl:text>
+    </xsl:when>
+    <xsl:when test="@xml:id='tab-mods'">
+      <xsl:text>L{.25\textwidth}P{.4\textwidth}L{.35\textwidth}</xsl:text>
+    </xsl:when>
     <xsl:when test="@rend='wovenodd'">
       <xsl:text>L{.15\textwidth}P{.85\textwidth}</xsl:text>
     </xsl:when>
