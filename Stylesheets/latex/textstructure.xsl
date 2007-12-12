@@ -275,6 +275,9 @@
            </xsl:otherwise>
          </xsl:choose>
       </xsl:when>
+      <xsl:when test="ancestor::tei:quote">
+          <xsl:apply-templates/>\\
+      </xsl:when>
       <xsl:otherwise>
           \leftline{<xsl:apply-templates/>}
       </xsl:otherwise>
