@@ -191,16 +191,26 @@ places when this module is included in a schema.
      </specList>
     </p>
 <p>The <gi>char</gi> and <gi>glyph</gi> elements have similar contents
-and are used in similar ways, but their functions are different.  The
+and are used in similar ways, but their functions are different. The
 <gi>char</gi> element is provided to define a character which is not
 available in the current document character set, for whatever reason,
-as stated above.  The <gi>glyph</gi> element is used to annotate an
-existing character, usually by providing a specific glyph that shows
-how a character appeared in the original document.  Unicode codepoints
-refer to a very general abstract character, which can be rendered by a
-very large number of possible representations.  The <gi>glyph</gi>
-element is provided for cases where the encoder wants to specify a
-specific glyph (or family of glyphs) out of all possible glyphs.</p>
+as stated above. The <gi>glyph</gi> element is used to annotate a
+character that has already been defined somewhere (either in the
+document character set, or through a <gi>char</gi> element) by
+providing a specific glyph that shows how a character appeared in the
+original document. This is necessary since Unicode codepoints refer
+not to a single, specific glyph shape of a character, but rather to a
+set of glyphs, which can all be used to render the codeopoint in
+question; in some cases they can differ considerably.</p>
+<p>The <gi>glyph</gi> element is provided for cases where the encoder
+wants to specify a specific glyph (or family of glyphs) out of all
+possible glyphs. Unfortunately, due to the way Unicode has been
+defined, there are cases where several glyphs that should belong to
+the same class have been given separate codepoints, especially in the
+blocks defining East-Asian characters. In such cases, <gi>glyph</gi>
+elements can be used to express the view that they are all instances
+of the same character (see section <ptr target="#D25-30"/>,
+below).</p>
 
 <p>The Unicode Standard recommends naming conventions which should be
 followed strictly where the intention is to annotate an existing
@@ -557,7 +567,60 @@ represented as follows:<egXML xmlns="http://www.tei-c.org/ns/Examples">
     annotation on that character. Therefore, it cannot be used in
     places where such markup constructs are not allowed, notably in
     attribute values. 
-    </p>   </div>
+    </p>
+
+    <p>Since the need to use these constructs to annotate or define
+    characters occurs frequently in Chinese, Korean, and Japanese
+    documents, here are some issues that are specific to these
+    documents. There are two slightly different versions of the
+    problem. In the first case, due to the way Unicode is defined,
+    there are occasions when more than one glyph is defined for a
+    character. In such an occasion, one might want to retain the
+    character as used, but add information in a way so that a
+    normalizer (for search or indexing operations) could take
+    advantage of this information. To achieve this, we simply define
+    within a <gi>charDecl</gi> element a <gi>glyph</gi> that has two
+    <gi>mapping</gi> elements, as shown here:
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <charDecl>
+	<glyph xml:id="u8aaa">
+	  <mapping type="Unicode">&#x8AAA;</mapping>
+	  <mapping type="Standard">&#x8AAC;</mapping>
+	</glyph>
+      </charDecl>
+    </egXML>
+    The first of these <gi>mapping</gi>s, of type <val>Unicode</val>,
+    simply maps our glyph to the codepoint where Unicode defined it.
+    The other one, of type <val>Standard</val>, encodes the fact that
+    in our view, this glyph is a variation of the standard character
+    given in the content of the element. We could then use this
+    <gi>glyph</gi> element's unique identifier <val>u8aaa</val> to
+    refer to it from within a text as follows.
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <g ref="#u8aaa">&#x8AAA;</g>
+    </egXML>
+    </p>
+    <p>A slightly different, but related problem occurs when we have
+    two variants, neither of which has been defined in Unicode. In
+    this case, we need to define one as a new character using
+    <gi>char</gi>, and the other as a glyph using <gi>glyph</gi>.
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <charDecl>
+	<char xml:id="newchar1">
+	  <!-- more properties here -->
+	</char>
+	<glyph xml:id="varofnewchar1">
+	  <!-- more properties here -->
+	  <mapping type="Standard"><g ref="#newchar1"/></mapping>
+	</glyph>
+      </charDecl>
+    </egXML>
+    The <gi>char</gi> defines the character, to which the
+    <gi>glyph</gi> element then adds a variant glyph of the same
+    character. Obviously in actualy usage it is neccesary to provide
+    more properties to make them identifiable.</p>
+  </div>
+
    <div type="div2" xml:id="D25-40">
     <head>Adding New Characters</head>
     <p>The creation of additional characters for use in text encoding
