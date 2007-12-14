@@ -547,12 +547,12 @@
 	<xsl:for-each select="rng:value">
           <xsl:value-of select="."/>
           <xsl:if test="following-sibling::rng:value">
-	    <xsl:text>|</xsl:text>
+	    <xsl:text>|&#10;</xsl:text>
 	  </xsl:if>
         </xsl:for-each>) </xsl:when>
 	<xsl:otherwise>
 	  <xsl:call-template name="content">
-          <xsl:with-param name="sep" select="' | '"/>
+          <xsl:with-param name="sep" select="' |&#10; '"/>
 	  </xsl:call-template>
 	</xsl:otherwise>
     </xsl:choose>
@@ -661,14 +661,14 @@
 		<xsl:otherwise>
 		<xsl:value-of select="."/>
 		<xsl:choose>
-		  <xsl:when test="self::N[1]='|'"/>
+		  <xsl:when test="self::N[1]='|&#10;'"/>
 		  <xsl:when test="self::N[1]='('"/>
 		  <xsl:when test="self::N[1]=')'and position() &lt; last()">
 		    <xsl:value-of select="$sep"/>
 		  </xsl:when>
 		  <xsl:when test="following-sibling::N[1]='('"/>
 		  <xsl:when test="following-sibling::N[1]=')'"/>
-		  <xsl:when test="following-sibling::N[1]='|'"/>
+		  <xsl:when test="following-sibling::N[1]='|&#10;'"/>
 		  <xsl:when test="position() &lt; last()">
 		    <xsl:value-of select="$sep"/>
 		  </xsl:when>
@@ -800,7 +800,7 @@
         <xsl:text>(</xsl:text>
         <xsl:for-each select="rng:value">
           <xsl:value-of select="."/>
-          <xsl:if test="following-sibling::rng:value">|</xsl:if>
+          <xsl:if test="following-sibling::rng:value">|&#10;</xsl:if>
         </xsl:for-each>
         <xsl:if test="rng:data/@type='boolean'">
           <xsl:text> | true | false</xsl:text>
@@ -962,7 +962,7 @@
         <xsl:choose>
           <xsl:when test="preceding-sibling::processing-instruction()"/>
           <xsl:otherwise>
-            <xsl:text>|</xsl:text>
+            <xsl:text>|&#10;</xsl:text>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:if>
@@ -1438,7 +1438,7 @@
 	  <xsl:if test="position() &lt; last()">, </xsl:if>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:if test="position() &lt; last()"> | </xsl:if>
+	  <xsl:if test="position() &lt; last()"> |&#10; </xsl:if>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
@@ -1488,7 +1488,7 @@
         <xsl:text> (</xsl:text>
         <xsl:for-each select="tei:valList/tei:valItem">
           <xsl:value-of select="@ident"/>
-          <xsl:if test="following-sibling::tei:valItem">|</xsl:if>
+          <xsl:if test="following-sibling::tei:valItem">|&#10;</xsl:if>
         </xsl:for-each>
         <xsl:text>)</xsl:text>
       </xsl:when>

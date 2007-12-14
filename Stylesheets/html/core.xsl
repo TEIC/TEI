@@ -1022,6 +1022,7 @@
   </xd:doc>
   <xsl:template match="tei:pb">
       <xsl:call-template name="makeAnchor"/>
+      <p style="page-break-before: always"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process element tei:p</xd:short>

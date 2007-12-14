@@ -93,10 +93,11 @@
             </xsl:choose>
           </xsl:attribute>
           <xsl:comment>
-	    <xsl:text>Schema generated from ODD source </xsl:text>
+	    <xsl:text>&#10;Schema generated from ODD source </xsl:text>
 	    <xsl:call-template name="showDate"/>
 	    <xsl:text>. </xsl:text>
 	    <xsl:call-template name="makeDescription"/>
+	    <xsl:text>&#10;</xsl:text>
 	  </xsl:comment>
 	  <xsl:if test="$TEIC='true'">
 	    <xsl:comment>
