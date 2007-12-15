@@ -1015,12 +1015,12 @@ elements onto existing constructs in the TEI, using the
 implementation of the mapping. This is useful when a TEI customization
 (see <ptr target="#MD"/>) defines <soCalled>shortcuts</soCalled> for
 convenience of data entry or markup readability.  For example, suppose
-that in some TEI customization an  element <gi>bo</gi> has been
+that in some TEI customization an element <gi scheme="imaginary">bo</gi> has been
 defined which is 
 conceptually equivalent to the standard markup construct <tag>hi
 rend='bold'</tag>. The following declarations would additionally
 indicate that instances of the
-<gi>bo</gi> element can be converted to canonical TEI by obtaining a
+<gi scheme="imaginary">bo</gi> element can be converted to canonical TEI by obtaining a
 filter from the URI specified, and running the procedure
 with the name  <ident>bold</ident>. The <att>mimeType</att> attribute
 specifies the language (in this case XSL) in which the filter is
@@ -4643,62 +4643,78 @@ intentionally compatible with that of Scribe, although it omits some
 fields used by Scribe. Hence only one list of fields is given
 here.</note>Elements and structures available in the module defined here which
 have no analogues in Scribe and BibTeX are not noted.
-<list type="gloss"><label>address     </label>
-<item>tag as <gi>city</gi>, <gi>place</gi>,
-or <gi>address</gi></item><label>annote      </label>
-<item>tag as <gi>note</gi></item><label>author      </label>
-<item>tag as <gi>author</gi></item><label>booktitle   </label>
-<item>tag as <gi>title level="m"</gi>
-or <gi>title</gi> within <gi>monogr</gi></item><label>chapter     </label>
-<item>tag as <tag>biblScope type="chapter"</tag></item><label>date        </label>
-<item>used only to record date entry was made in the
-bibliographic database; not supported</item><label>edition     </label>
-<item>tag as <gi>edition</gi></item><label>editor      </label>
-<item>tag as <gi>editor</gi> or <gi>respStmt</gi></item><label>editors     </label>
-<item>tag as multiple <gi>editor</gi>
-or <gi>respStmt</gi> elements</item><label>fullauthor  </label>
-<item>use the <att>reg</att> attribute
-on <gi>author</gi> or <gi>name</gi></item><label>fullorganization </label>
-<item>use the <att>reg</att> attribute
-on <tag>name type="org"</tag></item><label>howpublished  </label>
-<item>tag as <gi>note</gi>, possibly using
-the form <tag>note place="inline"</tag></item><label>institution </label>
-<item>used only for issuer of technical reports;
-tag as <gi>publisher</gi>
-</item><label>journal     </label>
-<item>tag as <tag>title level="j"</tag>
-or <gi>title</gi> within <gi>monogr</gi></item><label>key         </label>
-<item>used to specify an alternate sort key for
-the bibliographic item, for use instead of
-author's or editor's name; not supported</item><label>meeting     </label>
-<item>tag as <gi>meeting</gi> or as <gi>note</gi></item><label>month       </label>
-<item>use <gi>date</gi>; if the date is not in a
-trivially parseable form, use the <att>when</att>
-attribute to provide a normalized equivalent in one of the format from <title>XML Schema Part 2: Datatypes Second Edition</title>
-</item><label>note        </label>
-<item>tag as <gi>note</gi></item><label>number      </label>
-<item>tag as <tag>biblScope type="issue"</tag>
-or <tag>biblScope type="number"</tag>; for
-technical report numbers, use <tag>idno
-type="docno"</tag></item><label>organization </label>
-<item>used only for sponsor of conference;
-use <tag>name type="org"</tag>
-within <gi>respStmt</gi>
-within <gi>meeting</gi> element</item><label>pages       </label>
-<item>tag as <tag>biblScope type="pp"</tag></item><label>publisher   </label>
-<item>tag as <gi>publisher</gi></item><label>school      </label>
-<item>used only for institutions at which
-thesis work is done; tag as <gi>publisher</gi>
-</item><label>series      </label>
-<item>tag as <tag>title level="s"</tag>
-or <gi>title</gi> within <gi>series</gi></item><label>title       </label>
-<item>tag as <gi>title</gi> in appropriate
-context or with appropriate <att>level</att>
-value</item><label>volume</label>
-<item>tag as <tag>biblScope type="vol"</tag></item><label>year        </label>
-<item>tag as <gi>date</gi>; if the date is not in a
-trivially parseable form, use the <att>value</att>
-attribute to provide an ISO-format equivalent</item></list></p></div></div>
+<list type="gloss">
+  <label>address</label>
+  <item>tag as <gi>placeName</gi> or <gi>address</gi></item>
+  <label>annote</label>
+  <item>tag as <gi>note</gi></item>
+  <label>author</label>
+  <item>tag as <gi>author</gi></item>
+  <label>booktitle</label>
+  <item>tag as <tag>title level="m"</tag> or <gi>title</gi> within
+    <gi>monogr</gi></item>
+  <label>chapter</label>
+  <item>tag as <tag>biblScope type="chapter"</tag></item>
+  <label>date</label>
+  <item>used only to record date entry was made in the bibliographic database;
+    not supported</item>
+  <label>edition</label>
+  <item>tag as <gi>edition</gi></item>
+  <label>editor</label>
+  <item>tag as <gi>editor</gi> or <gi>respStmt</gi></item>
+  <label>editors</label>
+  <item>tag as multiple <gi>editor</gi> or <gi>respStmt</gi> elements</item>
+  <label>fullauthor</label>
+  <item>use the <att>reg</att> attribute on <gi>author</gi> or <gi>name</gi></item>
+  <label>fullorganization</label>
+  <item>use the <att>reg</att> attribute on <tag>name type="org"</tag></item>
+  <label>howpublished</label>
+  <item>tag as <gi>note</gi>, possibly using the form <tag>note
+    place="inline"</tag></item>
+  <label>institution</label>
+  <item>used only for issuer of technical reports; tag as <gi>publisher</gi></item>
+  <label>journal</label>
+  <item>tag as <tag>title level="j"</tag> or <gi>title</gi> within
+    <gi>monogr</gi></item>
+  <label>key</label>
+  <item>used to specify an alternate sort key for the bibliographic item, for
+    use instead of author's or editor's name; not supported</item>
+  <label>meeting</label>
+  <item>tag as <gi>meeting</gi> or as <gi>note</gi></item>
+  <label>month</label>
+  <item>use <gi>date</gi>; if the date is not in a trivially parseable form, use
+    the <att>when</att> attribute to provide a normalized equivalent in one of
+    the format from <title>XML Schema Part 2: Datatypes Second Edition</title></item>
+  <label>note</label>
+  <item>tag as <gi>note</gi></item>
+  <label>number</label>
+  <item>tag as <tag>biblScope type="issue"</tag> or <tag>biblScope
+    type="number"</tag>; for technical report numbers, use <tag>idno
+      type="docno"</tag></item>
+  <label>organization</label>
+  <item>used only for sponsor of conference; use <tag>name type="org"</tag>
+    within <gi>respStmt</gi> within <gi>meeting</gi> element</item>
+  <label>pages</label>
+  <item>tag as <tag>biblScope type="pp"</tag></item>
+  <label>publisher</label>
+  <item>tag as <gi>publisher</gi></item>
+  <label>school</label>
+  <item>used only for institutions at which thesis work is done; tag as
+      <gi>publisher</gi></item>
+  <label>series</label>
+  <item>tag as <tag>title level="s"</tag> or <gi>title</gi> within
+    <gi>series</gi></item>
+  <label>title</label>
+  <item>tag as <gi>title</gi> in appropriate context or with appropriate
+      <att>level</att> value</item>
+  <label>volume</label>
+  <item>tag as <tag>biblScope type="vol"</tag></item>
+  <label>year</label>
+  <item>tag as <gi>date</gi>; if the date is not in a trivially parseable form,
+    use the <att>value</att> attribute to provide an ISO-format
+    equivalent</item>
+</list>
+</p></div></div>
 
 <div type="div2" xml:id="CODV"><head>Passages of Verse or Drama</head>
 <p>The following elements are included in the core module for the
