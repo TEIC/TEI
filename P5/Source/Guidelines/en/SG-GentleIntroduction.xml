@@ -12,7 +12,7 @@ $Id$
 
 <p>The encoding scheme defined by these Guidelines is formulated as an
 application of the Extensible Markup Language (XML) (<ptr target="#XMLREC"/>).<!--note place="foot">World Wide Web Consortium: <title>Extensible Markup
-Language (XML) 1.0</title>, available from <ptr target="http://www.w3.org/TR/REC-xml"/></note--> XML is widely-used for
+Language (XML) 1.0</title>, available from <ptr target="http://www.w3.org/TR/REC-xml"/></note--> XML is widely used for
 the definition of device-independent, system-independent methods of
 storing and processing texts in electronic form. It is now also the
 interchange and communication format used by many applications on the
@@ -60,7 +60,7 @@ required for the last.</p>
 <p>The present chapter attempts to give an informal introduction to
 those parts of XML of which a proper understanding is necessary to
 make best use of these Guidelines. The interested reader should also
-consult one or more of the many excellent introductory text books
+consult one or more of the many excellent introductory textbooks
 and web sites now available on the subject.<note place="foot">New
 textbooks about XML appear at regular intervals and to select any one
 of them would be invidious. A useful list of pointers to introductory
@@ -150,13 +150,13 @@ to this formal definition, would not formally be a report, and neither
 would a sequence of paragraphs followed by an abstract, whatever other
 report-like characteristics these might have for the human reader.</p>
 
-<p>If documents are of known types, a special purpose program (called
+<p>If documents are of known types, a special-purpose program (called
 a <term>parser</term>), once provided with an unambiguous definition
 of a document type, can check that any  document claiming to be of 
 that type does in fact conform to the specification. A parser
-can check that all and only elements specified for a particular
-document type are present, that they are combined in appropriate ways,
-correctly ordered and so forth.  More significantly, different
+can check that all elements specified for a particular
+document type are present and no others, that they are combined in appropriate ways,
+correctly ordered, and so forth.  More significantly, different
 documents of the same type can be processed in a uniform way. Programs
 can be written which take advantage of the knowledge encapsulated in
 the document type information, and which can thus behave in a
@@ -181,7 +181,7 @@ standard,<note place="foot">ISO/IEC 10646-1993 <title>Information
 Technology — Universal Multiple-Octet Coded Character Set</title>
 (UCS)</note> which is implemented by a universal character set
 maintained by an industry group called the Unicode Consortium, and
-known as Unicode.<note place="foot">See <ptr target="http://www.unicode.org/"/></note> The Unicode standard
+known as Unicode.<note place="foot">See <ptr target="http://www.unicode.org/"/></note> Unicode 
 provides a standardised way of representing any of the many thousands of
 discrete symbols making up the world's writing systems, past and
 present. </p>
@@ -201,7 +201,7 @@ target="#SG-er"/>.</p>-->
 those which do not, XML provides a mechanism for the indirect
 representation of single characters  by means of
 their character number, known as <term>character references</term>; see further
-<ptr target="#SG-er"/></p>
+<ptr target="#SG-er"/>.</p>
 </div>
 </div>
 <div type="div2" xml:id="SG12"><head>Textual structures</head>
@@ -280,7 +280,7 @@ intended use in text markup.  That is the chief purpose of documents
 such as the TEI Guidelines.  From the need to choose element names
 indicative of function comes the technical term for the name of an
 element type, which is <term>generic identifier</term>, or GI.</p>
-<p>Within a marked up text (a <term>document instance</term>), each
+<p>Within a marked-up text (a <term>document instance</term>), each
 element must be explicitly marked or tagged in some way.  This is done
 by inserting a tag at the beginning of the element (a
 <term>start-tag</term>) and another at its end (an
@@ -332,7 +332,8 @@ this model might appear as follows:<note place="foot">The example is
 taken from William Blake's <title>Songs of innocence and
 experience</title> (1794).</note>
 <eg>&lt;anthology&gt;
-  &lt;poem&gt;&lt;heading&gt;The SICK ROSE&lt;/heading&gt;
+  &lt;poem&gt;
+    &lt;heading&gt;The SICK ROSE&lt;/heading&gt;
     &lt;stanza&gt;
       &lt;line&gt;O Rose thou art sick.&lt;/line&gt;
       &lt;line&gt;The invisible worm,&lt;/line&gt;
@@ -393,7 +394,7 @@ to move word processor files around.</p>
 
 <p>As we noted above, one of the attractions of XML is that it enables
 us to make up our own names for the elements rather than requiring us
-always to use names pre-defined by other agencies. Clearly, however,
+always to use names predefined by other agencies. Clearly, however,
 if we wish to exchange our poems with others, or to include poems
 others have marked up in our anthology, we will need to know a bit
 more about the names used for the tags. The means that XML provides
@@ -405,7 +406,7 @@ which it belongs. For example, if one person defines an element <gi>line</gi>
 and another person also defines an element <gi>line</gi> possibly with
 a different meaning, when they wish to share
 data they will find it necessary to distinguish the two <q>line</q>
-components in their marked up
+components in their marked-up
 texts. This is achieved by including a <term>namespace prefix</term>
 within the markup, for example like this: <eg><![CDATA[
 <my:line>This is one of my lines</my:line> 
@@ -472,7 +473,7 @@ structure is a major desideratum.  In the production of technical
 documentation, for example, it is of major importance that sections
 and subsections should be properly nested, that cross references
 should be properly resolved and so forth.  In such situations,
-documents are seen as raw material to match against pre-defined sets
+documents are seen as raw material to match against predefined sets
 of rules.  As discussed above, however, the use of simple rules can
 also greatly simplify the task of tagging accurately elements of less
 rigidly constrained texts.  By making these rules explicit, the
@@ -491,7 +492,7 @@ the RELAX NG language (<ptr target="http://relaxng.org/"/>) originally
 developed within the OASIS Technical Committee and now an
 ISO standard<note place="foot">ISO/IEC FDIS 19757-2 Document
 Schema Definition Language (DSDL) -- Part 2: Regular-grammar-based
-validation -- RELAX NG</note>).  In this chapter, and throughout these
+validation -- RELAX NG</note>.  In this chapter, and throughout these
 Guidelines, we give examples using the <soCalled>compact
 syntax</soCalled> of RELAX NG, but the specifications within these
 Guidelines are expressed in a way that is largely independent of the
@@ -517,7 +518,7 @@ start = anthology_p
 
 <p>Note that this is not the only way in which a RELAX NG schema might
 be written;<note place="foot">For a good tutorial introduction to RELAX
-NG, see <ptr type="cit" target="#SG-BIBL-1"/>.</note> we have adopted this idiom however because it
+NG, see <ptr type="cit" target="#SG-BIBL-1"/>.</note> we have adopted this idiom, however, because it
 matches that used throughout the rest of the Guidelines.  </p>
 
 <p>A RELAX NG schema expresses rules about the possible structure of a
@@ -554,7 +555,7 @@ simplifies the processing task by providing an <q>entry point</q>.</p>
 the generic identifier (often abbreviated to GI) of the element 
 being defined, for example <mentioned>poem</mentioned>,
 <mentioned>heading</mentioned>, etc.  A GI may contain alphabetic
-characters, digits, hyphens, underscore characters, or fullstops, but
+characters, digits, hyphens, underscore characters, or full stops, but
 must begin with a letter.<note place="foot">In XML, a single colon may
 also appear in a GI, where it has a special significance related to
 the use of <term>namespaces</term>, as further discussed in section
@@ -618,7 +619,7 @@ stanzas – but not both!</p></div>
 <div type="div4" xml:id="SG146"><head>Groups</head>
 <p>In our example so far, the components of each content model have
 been either single patterns or <code>text</code>.  It is quite
-permissible however to define content models in which the components
+permissible, however, to define content models in which the components
 are lists of patterns, combined by connectors.  Such lists may also be
 modified by occurrence indicators and themselves combined by
 connectors.  To demonstrate these facilities, let us expand our
@@ -642,9 +643,8 @@ enable studies of rhyme scheme, for example<note place="foot">This is
 however a rather artifical example; XPath, for example, provides  ways of distinguishing
 elements in an XML structure by their position without the need to
 give them distinct names. </note> ); these will have exactly
-the same content model as the existing <gi>line</gi> element; we will
-therefore add the following two lines to our example schema: <eg>firstLine_p =
-element firstLine {text} 
+the same content model as the existing <gi>line</gi> element. We will
+therefore add the following two lines to our example schema: <eg>firstLine_p = element firstLine {text} 
 secondLine_p = element secondLine {text}</eg>
 Next, we can change the declaration for the <gi>poem</gi> element to
 include all three possibilities: <eg> poem_p = element poem
@@ -655,7 +655,7 @@ difference between this declaration and the following: <eg>poem_p = element poem
 {heading_p?, (stanza_p | couplet_p | line_p)+ }</eg> The second version,
 by applying the occurrence indicator to the group rather than to each
 element within it, would allow a single poem to contain a mixture
-of stanzas, couplets, or lines.</p>
+of stanzas, couplets, and lines.</p>
 <p>A group of this kind can contain <code>text</code> as well as named
 elements: this combination, known as <term>mixed content</term>,
 allows for elements in which the sub-components appear with
@@ -689,8 +689,8 @@ poem_p = element poem   {heading_p?, ( line_p+ | (refrain_p?, (stanza_p,
 refrain_p?)+ )) }</eg>
 
 That is, a poem consists of an optional heading, followed by either a
-sequence of lines or an un-named group, which starts with an optional
-refrain and is followed by one of more occurrences of another group, each
+sequence of lines or an unnamed group, which starts with an optional
+refrain and is followed by one or more occurrences of another group, each
 member of which is composed of a stanza followed by an optional
 refrain.  A sequence such as <mentioned>refrain - stanza - stanza -
 refrain</mentioned> follows this pattern, as does the sequence
@@ -705,7 +705,7 @@ that order.</p>
 <p>Note that the apparent complexity of this model derives from the
 constraints expressed informally above. A simpler model, such as
 <eg>poem_p =
-element poem {heading_p?, (line_p|refrain_p|stanza_p)+ }</eg> would not enforce any of them, and would therefore permit
+element poem {heading_p?, (line_p | refrain_p | stanza_p)+ }</eg> would not enforce any of them, and would therefore permit
 such anomalies as a poem consisting only of refrains, or an arbitrary mixture of
 lines and refrains.</p>
 
@@ -751,7 +751,7 @@ collection of elements: for example, the expression
 <code>/anthology/poem</code> refers to all poems in an anthology and
 the expression <code>/anthology/poem/heading</code> refers to all their headings. </p>
 <p>The solidus within an XPath expression behaves in much the same way
-as the solidus or back slash in a filename specification: it
+as the solidus or backslash in a filename specification: it
 indicates that the item to the left directly contains the item to the
 right of it. In XPath it is also possible to indicate that any number
 of other items may intervene by repeating the solidus. For example,
@@ -781,7 +781,7 @@ of different editions of the same text.</p>
 <p>In the OHCO model of text, representation of cases where different
 elements overlap so that several different trees may be identified in
 the same document is generally problematic. All the elements marked
-up in a document, no matter what name space they belong to, must fit
+up in a document, no matter what namespace they belong to, must fit
 within a single hierarchy. To represent overlapping structures,
 therefore, a single hierarchy must be chosen, and the points at which
 other hierarchies intersect with it marked. For example,
@@ -806,7 +806,7 @@ occurrences of some elements in a document to indicate their degree of
 reliability, or to add an <att>identifier</att> attribute so that you
 could refer to particular element occurrences from elsewhere within a
 document.  Attributes are useful in precisely such circumstances.</p>
-<p>Although different elements may have attributes with the same name,
+<p>Although different elements may have attributes with the same name
 (for example, in the TEI scheme, every element is defined as having an
 attribute named <att>n</att>), they are always regarded as
 different, and may have different values assigned to them.  If an
@@ -840,7 +840,7 @@ used for cross reference purposes, as discussed further below (<ptr target="#SG-
 <div type="div3" xml:id="SG-att"><head>Declaring attributes</head>
 
 <p>Attributes are declared in a schema in the same way as elements.
-As well as specifying its name and the element to which it is to be
+As well as specifying an attribute's name and the element to which it is to be
 attached, it is possible to specify (within limits) what kind of value
 is acceptable for an attribute.<!-- and a default value.--></p>
 
@@ -896,7 +896,7 @@ attribute status {text}</eg> a parser would accept almost any
 unbroken string of characters (<code>status="awful"</code>,
 <code>status="awe-ful"</code>, or <code>status="12345678"</code>) as
 valid for this attribute.  Sometimes, of course, the set of possible
-values cannot be pre-defined.  Where it can, as in this case, it is
+values cannot be predefined.  Where it can, as in this case, it is
 generally better to do so.</p>
 
 <p>Schema languages vary widely in the extent to which they support
@@ -935,7 +935,7 @@ element from within another, an obvious example being phrases such as
 being produced the actual numbers associated with the notes or
 chapters may not be certain.  If we are using descriptive markup, such
 things as page or chapter numbers, being entirely matters of
-presentation, will not in any case be present in the marked up text:
+presentation, will not in any case be present in the marked-up text:
 they will be assigned by whatever processor is operating on the text
 (and may indeed differ in different applications).  XML therefore
 predefines an attribute that may be used to provide any element
@@ -956,12 +956,11 @@ the parser may safely ignore the lack of one in those that do not.
 Only poems to which we intend to refer need use this attribute; for
 each such poem we should now include in its start-tag some unique
 identifier, for example:
-<eg>&lt;poem xml:id="Rose"&gt;
-&lt;/poem&gt;
-&lt;poem xml:id="P40"&gt;
-&lt;/poem&gt;
-&lt;poem&gt;
-&lt;/poem&gt;
+<eg>&lt;poem xml:id="Rose"&gt; ... &lt;/poem&gt;
+
+&lt;poem xml:id="P40"&gt; ... &lt;/poem&gt;
+
+&lt;poem&gt; ... &lt;/poem&gt;
 </eg></p>
 <p>Next we need to define a new element for the cross reference
 itself.  This will not have any content – it is only a
