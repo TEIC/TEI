@@ -1238,8 +1238,8 @@ These seem to have no obvious translation
   <xsl:template match="text:s"/>
 
 
-  <xsl:template match="text:*"> [[[UNTRANSLATED <xsl:value-of select="name(.)"/>
-    <xsl:apply-templates/>]]] </xsl:template>
+  <xsl:template match="text:*"> [[[UNTRANSLATED <xsl:value-of
+  select="name(.)"/>:     <xsl:apply-templates/>]]] </xsl:template>
 
 
   <!-- sections of the OO format we don't need at present -->
@@ -1280,4 +1280,21 @@ These seem to have no obvious translation
   <xsl:apply-templates select="normalize-space(.)"/>
 </xsl:template>
 -->
+
+<xsl:template match="text:section">
+  <xsl:apply-templates/>
+</xsl:template>
+
+
+<xsl:template match="text:sequence">
+  <xsl:apply-templates/>
+</xsl:template>
+
+
+<xsl:template match="text:section-source"/>
+
+
+<xsl:template match="text:soft-page-break">
+</xsl:template>
+
 </xsl:stylesheet>
