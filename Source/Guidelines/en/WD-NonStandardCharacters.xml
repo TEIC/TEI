@@ -200,17 +200,17 @@ document character set, or through a <gi>char</gi> element) by
 providing a specific glyph that shows how a character appeared in the
 original document. This is necessary since Unicode codepoints refer
 not to a single, specific glyph shape of a character, but rather to a
-set of glyphs, which can all be used to render the codeopoint in
+set of glyphs, any of which may be used to render the codepoint in
 question; in some cases they can differ considerably.</p>
 <p>The <gi>glyph</gi> element is provided for cases where the encoder
 wants to specify a specific glyph (or family of glyphs) out of all
 possible glyphs. Unfortunately, due to the way Unicode has been
-defined, there are cases where several glyphs that should belong to
-the same class have been given separate codepoints, especially in the
-blocks defining East-Asian characters. In such cases, <gi>glyph</gi>
-elements can be used to express the view that they are all instances
-of the same character (see section <ptr target="#D25-30"/>,
-below).</p>
+defined, there are cases where several glyphs that logically belong
+together have been given separate codepoints, especially in the blocks
+defining East Asian characters. In such cases, <gi>glyph</gi> elements
+can also be used to express the view that these apparently distinct
+characters are to be regarded as instances of the same character (see
+further <ptr target="#D25-30"/>).</p>
 
 <p>The Unicode Standard recommends naming conventions which should be
 followed strictly where the intention is to annotate an existing
@@ -486,17 +486,20 @@ which are not specified by the Unicode Standard.</p>
     page. A digital facsimile, particularly one linked to a
     transcribed and encoded version of the text, will always provide a
     superior visual representation (for information on how to link a
-    digital facsimile to a transcribed text see <ptr target="#PHFAX"/>), but cannot be used to support
-    arguments based on the distribution of such different
-    forms. Character annotation as described here provides a solution
-    to this problem.<note place="foot"> It should be kept in mind that
-    any kind of text encoding is an abstraction and an interpretation of
-    the text at hand, which will not necessarily  be useful in reproducing an exact
+    digital facsimile to a transcribed text see <ptr
+    target="#PHFAX"/>), but cannot be used to support arguments based
+    on the distribution of such different forms. Character annotation
+    as described here provides a solution to this problem.<note
+    place="foot"> It should be kept in mind that any kind of text
+    encoding is an abstraction and an interpretation of the text at
+    hand, which will not necessarily be useful in reproducing an exact
     facsimile of the appearance of a manuscript.</note> </p>
-<p>Assuming that we wish to distinguish the variant glyphs from the standard representation for the character
-concerned, we will need to define distinct <gi>glyph</gi> elements, one for
-each of the forms of the letter we wish to distinguish:
-     <egXML xmlns="http://www.tei-c.org/ns/Examples"><charDecl>
+
+<p>Assuming that we wish to distinguish the variant glyphs from the
+standard representation for the character concerned, we will need to
+define distinct <gi>glyph</gi> elements, one for each of the forms of
+the letter we wish to distinguish: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><charDecl>
   <glyph xml:id="r1">
   <glyphName>LATIN SMALL LETTER R WITH ONE FUNNY STROKE</glyphName>
    <charProp>
@@ -615,10 +618,10 @@ represented as follows:<egXML xmlns="http://www.tei-c.org/ns/Examples">
 	</glyph>
       </charDecl>
     </egXML>
-    The <gi>char</gi> defines the character, to which the
-    <gi>glyph</gi> element then adds a variant glyph of the same
-    character. Obviously in actualy usage it is neccesary to provide
-    more properties to make them identifiable.</p>
+    The <gi>char</gi> defines a new character, while the
+    <gi>glyph</gi> element then defines a variant glyph of this newly
+    defined character. Additional properties should be specified in
+    order to make these both identifiable.</p>
   </div>
 
    <div type="div2" xml:id="D25-40">
