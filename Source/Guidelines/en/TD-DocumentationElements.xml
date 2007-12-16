@@ -306,14 +306,14 @@ module specification like the following:
 </egXML>
 together with specifications for all the elements, classes, and
 patterns which make up that module, expressed using
-<gi>elementSpec</gi>, <gi>classSpec</gi>, or <gi>patternSpec</gi>
-elements as appropriate. (These elements are discussed in section <ptr target="#TDcrystals"/> below) Each of those specifications carries a
+<gi>elementSpec</gi>, <gi>classSpec</gi>, or <gi>macroSpec</gi>
+elements as appropriate. (These elements are discussed in section <ptr
+target="#TDcrystals"/> below) Each of those specifications carries a
 <att>module</att> attribute, the value of which is
 <code>namesdates</code>. An ODD processor encountering the
 <gi>moduleSpec</gi> element above can thus generate a schema fragment
 for the TEI <ident type="module">namesdates</ident> module that
-includes declarations for all the elements (etc.) which reference
-it. </p>
+includes declarations for all the elements (etc.) which reference it.</p>
 <p>In most realistic applications, it will be desirable to combine
 more than one module together to form a complete <term>schema</term>.
 A schema consists of references to one or more modules or
@@ -1079,7 +1079,7 @@ the following example:
 <classes><memberOf key="model.pPart.data"/></classes>
 </elementSpec>
 </schemaSpec></egXML> A declaration for the element
-<gi>soundClip</gi>, which is not defined in the TEI scheme, will be
+<gi scheme="imaginary">soundClip</gi>, which is not defined in the TEI scheme, will be
 added to the output schema. This element will also be added to the
 existing TEI class <ident type="class">model.pPart.data</ident>, and
 will thus be avilable in TEI conformant documents.</p>
@@ -1170,7 +1170,7 @@ is provided </cell>
 <div type="div3" xml:id="ST-aliens"><head>Combining TEI and Non-TEI Modules</head>
 
 <p>In the simplest case, all that is needed to include a non TEI
-module in a schema is to reference its RELAXNG source using the
+module in a schema is to reference its RELAX NG source using the
 <att>url</att> attribute on <gi>moduleRef</gi>. The following 
 specification, for example, creates a schema in which declarations
 from the non-TEI module <ident>svg11.rng</ident> (defining Standard
@@ -1189,12 +1189,13 @@ the string "TEI_".
 
 <p>This specification generates a single schema which might be used to
 validate either a TEI document (with the root element <gi>TEI</gi>),
-or an SVG document (with a root element <gi>svg</gi>), but would
-<emph>not</emph> validate a TEI document containing <gi>svg</gi>
-elements. For that to be possible, the <gi>svg</gi> element must
-become a member of a TEI model class (<ptr target="#STEC"/>), so that
-it may be referenced by other TEI elements. To achieve this, we modify
-the last <gi>moduleRef</gi> in the above example as follows:
+or an SVG document (with a root element <gi>svg:svg</gi>), but would
+<emph>not</emph> validate a TEI document containing <gi>svg:svg</gi>
+or other elements from the SVG language. For that to be possible, the
+<gi>svg:svg</gi> element must become a member of a TEI model class
+(<ptr target="#STEC"/>), so that it may be referenced by other TEI
+elements. To achieve this, we modify the last <gi>moduleRef</gi> in
+the above example as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
     <moduleRef url="svg11.rng">
 	<content xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -1207,13 +1208,13 @@ the last <gi>moduleRef</gi> in the above example as follows:
 <p>This states that when the declarations from the
 <ident>svg11.rng</ident> module are combined with those from the other
 modules, the declaration for the model class model.graphicLike in the TEI module
-should be extended to include the element <gi>svg</gi> as an
+should be extended to include the element <gi>svg:svg</gi> as an
 alternative. This has the effect that elements in the TEI scheme
 which define their content model in terms of that element class
 (notably <gi>figure</gi>) can now include it. A RELAX NG schema
 generated from such a specification can be used to validate documents
-in which the TEI <gi>figure</gi> element contains  any valid SVG
-representation of a graphic, embedded within an <gi>svg</gi> element.
+in which the TEI <gi>figure</gi> element contains any valid SVG
+representation of a graphic, embedded within an <gi>svg:svg</gi> element.
 </p>
 
 
