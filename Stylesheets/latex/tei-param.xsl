@@ -329,6 +329,7 @@ capable of dealing with UTF-8 directly.
   \def\thechapter{\@roman\c@chapter}
   \def\theHchapter{\alph{chapter}}
 }
+\newcounter{chapter}
 \def\mainmatter{%
   \cleardoublepage
   \def\thechapter{\@arabic\c@chapter}
