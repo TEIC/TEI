@@ -322,6 +322,7 @@ capable of dealing with UTF-8 directly.
 \def\l@paragraph{\@dottedtocline{4}{7.0em}{4.1em}}
 \def\l@subparagraph{\@dottedtocline{5}{10em}{5em}}
 \@ifundefined{c@section}{\newcounter{section}}{}
+\@ifundefined{c@chapter}{\newcounter{chapter}}{}
 \newif\if@mainmatter 
 \@mainmattertrue
 \def\frontmatter{%
@@ -329,7 +330,6 @@ capable of dealing with UTF-8 directly.
   \def\thechapter{\@roman\c@chapter}
   \def\theHchapter{\alph{chapter}}
 }
-\newcounter{chapter}
 \def\mainmatter{%
   \cleardoublepage
   \def\thechapter{\@arabic\c@chapter}
