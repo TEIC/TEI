@@ -102,9 +102,22 @@
             <xsl:value-of select="$body"/>
           </xsl:when>
           <xsl:when test="$ptr='true'">
-            <xsl:apply-templates mode="xref" select="key('IDS',$dest)">
-              <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-            </xsl:apply-templates>
+	    <xsl:for-each select="key('IDS',$dest)">
+	      <xsl:choose>
+		<xsl:when test="starts-with(local-name(.),'div')">
+		  <xsl:text>\textit{</xsl:text>
+		  <xsl:apply-templates mode="xref" select=".">
+		    <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+		  </xsl:apply-templates>
+		  <xsl:text>}</xsl:text>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:apply-templates mode="xref" select=".">
+		    <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+		  </xsl:apply-templates>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each>
           </xsl:when>
           <xsl:otherwise>
             <xsl:apply-templates/>
