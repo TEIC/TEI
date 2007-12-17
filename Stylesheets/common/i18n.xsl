@@ -50,6 +50,10 @@
 		 select="key('KEYS',normalize-space($word))/text[@xml:lang=$documentationLanguage]"/>
 	   </xsl:when>
 	   <xsl:otherwise>
+<xsl:if test="$verbose='true'">
+<xsl:message>NO TRANSLATION for <xsl:value-of 
+select="$word"/> in <xsl:value-of select="$documentationLanguage"/></xsl:message>
+</xsl:if>
 	     <xsl:value-of select="$word"/>
 	   </xsl:otherwise>
 	 </xsl:choose>
