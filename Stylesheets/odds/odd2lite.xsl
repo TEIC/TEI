@@ -357,7 +357,7 @@
 
   <xsl:template match="tei:gi">
     <xsl:choose>
-      <xsl:when test="parent::tei:ref or parent::tei:head">
+      <xsl:when test="not(@scheme='') or parent::tei:ref or parent::tei:head">
 	<xsl:text>&lt;</xsl:text>
 	  <xsl:apply-templates/>
 	<xsl:text>&gt;</xsl:text>

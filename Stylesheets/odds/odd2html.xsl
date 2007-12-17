@@ -398,7 +398,7 @@
 
   <xsl:template match="tei:gi">
     <xsl:choose>
-      <xsl:when test="parent::tei:ref">
+      <xsl:when test="parent::tei:ref or not(@scheme='')">
 	<span class="gi">
 	  <xsl:apply-templates/>
 	</span>
