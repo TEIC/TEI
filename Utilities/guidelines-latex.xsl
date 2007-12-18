@@ -148,6 +148,15 @@
 \catcode`⁻=\active \def⁻{\textsuperscript{-}}
 \catcode` =\active \def {\,}
 \fancyhfoffset[LO,LE]{2em}
+\renewcommand\section{\@startsection {section}{1}{-2em}%
+     {-1.75ex \@plus -0.5ex \@minus -.2ex}%
+     {0.5ex \@plus .2ex}%
+     {\reset@font\Large\bfseries\sffamily}}
+\renewcommand\subsection{\@startsection{subsection}{2}{-2em}%
+     {-1.75ex\@plus -0.5ex \@minus- .2ex}%
+     {0.5ex \@plus .2ex}%
+     {\reset@font\Large\sffamily}}
+
 \makeatother
 <xsl:call-template name="beginDocumentHook"/>
 </xsl:template>
