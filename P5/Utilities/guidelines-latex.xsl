@@ -176,6 +176,9 @@
   <xsl:text>{</xsl:text>
   <xsl:if test="$r='rules'">|</xsl:if>
   <xsl:choose>
+    <xsl:when test="@xml:id='tab-conformance'">
+      <xsl:text>P{.35\textwidth}llllllll</xsl:text>
+    </xsl:when>
     <xsl:when test="@xml:id='tab-content-models'">
       <xsl:text>P{.25\textwidth}P{.25\textwidth}P{.5\textwidth}</xsl:text>
     </xsl:when>
