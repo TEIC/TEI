@@ -65,12 +65,12 @@
 \fancyfoot[LE]{}
 \fancyfoot[CE]{\thepage}
 \fancyfoot[RE]{}
-\hypersetup{bookmarksnumbered=true}
-\def\l@section{\@dottedtocline{1}{5.5em}{2.3em}}
-\def\l@subsection{\@dottedtocline{2}{6em}{3.2em}}
-\def\l@subsubsection{\@dottedtocline{3}{7.0em}{4.1em}}
-\def\l@paragraph{\@dottedtocline{4}{10em}{5em}}
-\def\l@subparagraph{\@dottedtocline{5}{12em}{6em}}
+\hypersetup{bookmarksnumbered=true,letterpaper}
+\def\l@section{\@dottedtocline{1}{3em}{2.3em}}
+\def\l@subsection{\@dottedtocline{2}{4em}{3.2em}}
+\def\l@subsubsection{\@dottedtocline{3}{5em}{4.1em}}
+\def\l@paragraph{\@dottedtocline{4}{6em}{6em}}
+\def\l@subparagraph{\@dottedtocline{5}{7em}{6em}}
 \def\@pnumwidth{3em}
 \setcounter{tocdepth}{2}
 \def\tableofcontents{\clearpage\section*{\contentsname}\@starttoc{toc}}
@@ -147,12 +147,12 @@
 \catcode`Å=\active \defÅ{{\fontspec{Gentium}\char8491}} 
 \catcode`⁻=\active \def⁻{\textsuperscript{-}}
 \catcode` =\active \def {\,}
-
+\fancyhfoffset[LO,LE]{2em}
 \makeatother
 <xsl:call-template name="beginDocumentHook"/>
 </xsl:template>
 
-<xsl:param name="latexGeometryOptions">twoside,letterpaper,lmargin=.8in,rmargin=.8in,tmargin=.8in,bmargin=.8in</xsl:param>
+<xsl:param name="latexGeometryOptions">twoside,letterpaper,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in</xsl:param>
 
 <xsl:template match="tei:byline"/>
 <xsl:template match="tei:titlePage/tei:note"/>
@@ -312,6 +312,16 @@
 <xsl:template name="latexEnd">
 \printindex
 </xsl:template>
+
+  <xsl:template name="numberFrontDiv">
+    <xsl:param name="minimal"/>
+    <xsl:if test="count(ancestor::tei:div)&lt;3">
+      <xsl:number count="tei:div" format="i.1.1" level="multiple"/>
+      <xsl:if test="$minimal='false'">
+	<xsl:value-of select="$numberSpacer"/>
+      </xsl:if>
+    </xsl:if>
+  </xsl:template>
 
 
 </xsl:stylesheet>
