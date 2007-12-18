@@ -1451,35 +1451,39 @@ $ID: requests a particular page
     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text">
       <!-- front matter -->
       <xsl:for-each select="tei:front">
-        <div class="tocFront">
-          <xsl:element name="{$tocContainerElement}">
-            <xsl:attribute name="class">
-              <xsl:text>tocContainer</xsl:text>
-            </xsl:attribute>
-            <xsl:call-template name="tocSection">
-              <xsl:with-param name="id" select="$thisOne"/>
-              <xsl:with-param name="style" select="$style"/>
-              <xsl:with-param name="force" select="$virtualPages"/>
-            </xsl:call-template>
-          </xsl:element>
-        </div>
+	<xsl:if test="tei:div1|tei:div">
+	  <div class="tocFront">
+	    <xsl:element name="{$tocContainerElement}">
+	      <xsl:attribute name="class">
+		<xsl:text>tocContainer</xsl:text>
+	      </xsl:attribute>
+	      <xsl:call-template name="tocSection">
+		<xsl:with-param name="id" select="$thisOne"/>
+		<xsl:with-param name="style" select="$style"/>
+		<xsl:with-param name="force" select="$virtualPages"/>
+	      </xsl:call-template>
+	    </xsl:element>
+	  </div>
+	</xsl:if>
       </xsl:for-each>
       <!-- body matter -->
       <xsl:for-each select="tei:body">
-        <div class="tocBody">
-          <xsl:comment>start TOC</xsl:comment>
-          <xsl:element name="{$tocContainerElement}">
-            <xsl:attribute name="class">
-              <xsl:text>tocContainer</xsl:text>
-            </xsl:attribute>
-            <xsl:comment>TOC components</xsl:comment>
-            <xsl:call-template name="tocSection">
-              <xsl:with-param name="id" select="$thisOne"/>
-              <xsl:with-param name="style" select="$style"/>
-              <xsl:with-param name="force" select="$virtualPages"/>
-            </xsl:call-template>
-          </xsl:element>
-        </div>
+	<xsl:if test="tei:div1|tei:div">
+	  <div class="tocBody">
+	    <xsl:comment>start TOC</xsl:comment>
+	    <xsl:element name="{$tocContainerElement}">
+	      <xsl:attribute name="class">
+		<xsl:text>tocContainer</xsl:text>
+	      </xsl:attribute>
+	      <xsl:comment>TOC components</xsl:comment>
+	      <xsl:call-template name="tocSection">
+		<xsl:with-param name="id" select="$thisOne"/>
+		<xsl:with-param name="style" select="$style"/>
+		<xsl:with-param name="force" select="$virtualPages"/>
+	      </xsl:call-template>
+	    </xsl:element>
+	  </div>
+	</xsl:if>
       </xsl:for-each>
       <!-- back matter -->
       <xsl:for-each select="tei:back">
