@@ -142,6 +142,8 @@
    \def\makelabel##1{\hfil##1\hfil}}%
   }
   {\end{list}}
+\catcode`說=\active \def說{{\fontspec{Kochi Mincho}\char35498}}
+\catcode`説=\active \def説{{\fontspec{Kochi Mincho}\char35500}}
 \catcode`人=\active \def人{{\fontspec{Kochi Mincho}\char20154}}
 \catcode`⁊=\active \def⁊{{\fontspec{Junicode}\char8266}} 
 \catcode`Å=\active \defÅ{{\fontspec{Gentium}\char8491}} 
