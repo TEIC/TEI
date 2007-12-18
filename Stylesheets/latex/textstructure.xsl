@@ -129,6 +129,18 @@
     <xsl:text>)</xsl:text>
 </xsl:if>
 <xsl:text>}
+\def\TheID{</xsl:text>
+<xsl:choose>
+  <xsl:when test="not($REQUEST='')">
+    <xsl:value-of select="not($REQUEST='')"/>
+  </xsl:when>
+  <xsl:when
+      test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:idno">
+    <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:idno"/>
+  </xsl:when>
+
+</xsl:choose>
+<xsl:text>}
 \def\TheDate{</xsl:text>
 <xsl:call-template name="generateDate"/>
 <xsl:text>}

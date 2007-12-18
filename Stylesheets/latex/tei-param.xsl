@@ -249,6 +249,7 @@ capable of dealing with UTF-8 directly.
 \newenvironment{specHead}[2]%
  {\vspace{20pt}\hrule\vspace{10pt}%
   \hypertarget{#1}{}%
+  \markright{#1}%
   \pdfbookmark[1]{#2}{#1}%
   \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
   }{}
@@ -396,10 +397,10 @@ capable of dealing with UTF-8 directly.
 \fancyhead[RO]{\bfseries\rightmark} 
 \fancyfoot[RO]{\TheFullDate}
 \fancyfoot[CO]{\thepage}
-\fancyfoot[LO]{<xsl:value-of select="$REQUEST"/>}
+\fancyfoot[LO]{\TheID}
 \fancyfoot[LE]{\TheFullDate}
 \fancyfoot[CE]{\thepage}
-\fancyfoot[RE]{<xsl:value-of select="$REQUEST"/>}
+\fancyfoot[RE]{\TheID}
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
 <xsl:call-template name="beginDocumentHook"/>
 </xsl:template>
