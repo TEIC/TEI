@@ -299,8 +299,7 @@
     </xsl:if>
 </xsl:template>
 
-<xsl:template match="teix:egXML">
-<xsl:apply-imports/>
+<xsl:template name="egXMLHook">
 <xsl:for-each select=".//teix:*">
 <xsl:variable name="Me">
 <xsl:value-of select="local-name(.)"/>
