@@ -142,11 +142,11 @@
    \def\makelabel##1{\hfil##1\hfil}}%
   }
   {\end{list}}
-\catcode`說=\active \def說{{\fontspec{Kochi Mincho}\char35498}}
+\catcode`說=\active \def說{{\fontspec{AR PL ZenKai Uni}\char35498}}
 \catcode`説=\active \def説{{\fontspec{Kochi Mincho}\char35500}}
 \catcode`人=\active \def人{{\fontspec{Kochi Mincho}\char20154}}
 \catcode`⁊=\active \def⁊{{\fontspec{Junicode}\char8266}} 
-\catcode`Å=\active \defÅ{{\fontspec{Gentium}\char8491}} 
+\catcode`Å=\active \defÅ{{\fontspec{DejaVu Serif}\char8491}} 
 \catcode`⁻=\active \def⁻{\textsuperscript{-}}
 \catcode` =\active \def {\,}
 \fancyhfoffset[LO,LE]{2em}
@@ -191,7 +191,7 @@
       <xsl:text>P{.35\textwidth}llllllll</xsl:text>
     </xsl:when>
     <xsl:when test="@xml:id='tab-content-models'">
-      <xsl:text>P{.25\textwidth}P{.25\textwidth}P{.5\textwidth}</xsl:text>
+      <xsl:text>P{.25\textwidth}P{.15\textwidth}P{.5\textwidth}</xsl:text>
     </xsl:when>
     <xsl:when test="@xml:id='tab-mods'">
       <xsl:text>L{.25\textwidth}P{.4\textwidth}L{.35\textwidth}</xsl:text>
