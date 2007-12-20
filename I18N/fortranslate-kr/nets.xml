@@ -1,0 +1,654 @@
+<moduleSpec xmlns="http://www.tei-c.org/ns/1.0" ident="nets">
+  <elementSpec ident="graph" module="nets">
+  
+  <gloss/><gloss xml:lang="kr" notBefore="2007-12-20"/>
+  
+  <desc>encodes a graph, which is a collection of nodes, and arcs which
+connect the nodes.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+  
+  
+  <attList>
+    <attDef ident="type" usage="rec">
+      
+      <desc>describes the type of graph.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valList type="semi">
+        <valItem ident="undirected">
+          
+          <desc>undirected graph</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+          
+        </valItem>
+        <valItem ident="directed">
+          
+          <desc>directed graph</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+          
+        </valItem>
+        <valItem ident="transitionNetwork">
+          
+          <desc>a directed graph with distinguished initial and final nodes</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+          
+        </valItem>
+        <valItem ident="transducer">
+          
+          <desc>a transition network with up to two labels on each arc</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+          
+        </valItem>
+      </valList>
+      
+    </attDef>
+    <attDef ident="order" usage="opt">
+      
+      <desc>states the order of the graph, i.e., the number of its nodes.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A positive integer.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+    <attDef ident="size" usage="opt">
+      
+      <desc>states the size of the graph, i.e., the number of its arcs.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A non-negative integer.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+  </attList>
+  
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="node" module="nets">
+  
+  <gloss/><gloss xml:lang="kr" notBefore="2007-12-20"/>
+  
+  <desc>encodes a node, a possibly labeled point in a graph.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+  
+  <attList>
+    <attDef ident="value" usage="opt">
+      
+      <desc>provides the value of a node, which is a feature structure or
+other analytic element.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A valid identifier.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+    <attDef ident="type" usage="opt">
+      
+      <desc>provides a type for a node.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valList type="semi">
+        <valItem ident="initial">
+          
+          <desc>initial node in a transition network</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+          
+        </valItem>
+        <valItem ident="final">
+          
+          <desc>final node in a transition network</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+          
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="adjTo" usage="rwa">
+      <gloss>adjacent to</gloss><gloss xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</gloss>
+      
+      <desc>gives the identifiers of the nodes which are adjacent to the current node.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A list of identifiers.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+    <attDef ident="adjFrom" usage="rwa">
+      <gloss>adjacent from</gloss><gloss xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</gloss>
+      
+      <desc>gives the identifiers of the nodes which are adjacent from the current
+node.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A list of identifiers.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+    <attDef ident="adj" usage="rwa">
+      <gloss>adjacent</gloss><gloss xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</gloss>
+      
+      <desc>gives the identifiers of the nodes which are both adjacent to and
+adjacent from the current node.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A list of identifiers.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+      
+    </attDef>
+    <attDef ident="inDegree" usage="opt">
+      
+      <desc>gives the in degree of the node, the number of nodes which
+are adjacent from the given node.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A non-negative integer.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+    <attDef ident="outDegree" usage="opt">
+      
+      <desc>gives the out degree of the node, the number of nodes which
+are adjacent to the given node.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A non-negative integer.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+    <attDef ident="degree" usage="opt">
+      
+      <desc>gives the degree of the node, the number of arcs with which
+the node is incident.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A non-negative integer.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+      
+    </attDef>
+  </attList>
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="arc" module="nets">
+  
+  <gloss/><gloss xml:lang="kr" notBefore="2007-12-20"/>
+  
+  <desc>encodes an arc, the connection from one node to another in a graph.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+  
+  <attList>
+    <attDef ident="from" usage="req">
+      
+      <desc>gives the identifier of the node which is adjacent from this arc.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>The identifier of a node.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+    <attDef ident="to" usage="req">
+      
+      <desc>gives the identifier of the node which is adjacent to this arc.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>The identifier of a node.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+  </attList>
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="tree" module="nets">
+  
+  <gloss/><gloss xml:lang="kr" notBefore="2007-12-20"/>
+  
+  <desc>encodes a tree, which is made up of a root, internal nodes,
+leaves, and arcs from root to leaves.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+  
+  
+  <attList>
+    <attDef ident="arity" usage="opt">
+      
+      <desc>gives the maximum number of children of the root and internal
+nodes of the tree.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A nonnegative integer.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+    <attDef ident="ord" usage="req">
+      <gloss>ordered</gloss><gloss xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</gloss>
+      
+      <desc>indicates whether or not the tree is ordered, or if it is
+partially ordered.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      
+      <valList type="closed">
+        <valItem ident="true">
+          
+          <desc>indicates that all of the branching nodes of the tree are ordered.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+          
+          
+        </valItem>
+        <valItem ident="partial">
+          
+          <desc>indicates that some of the branching nodes of the tree are ordered
+and some are unordered.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+          
+          
+        </valItem>
+        <valItem ident="false">
+          
+          <desc>indicates that all of the branching nodes of the tree are
+unordered.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+          
+          
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="order" usage="opt">
+      
+      <desc>gives the order of the tree, i.e., the number of its nodes.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A nonnegative integer.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+      
+    </attDef>
+  </attList>
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="root" module="nets">
+  
+  <gloss>root node</gloss><gloss xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</gloss>
+  
+  
+  
+  
+  <desc>represents the root node of a tree.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+  
+  <attList>
+    <attDef ident="value" usage="rwa">
+      
+      <desc>provides the value of the root, which is a feature structure or
+other analytic element.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A valid identifier of a feature structure or other analytic
+element.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+    <attDef ident="children" usage="req">
+      
+      <desc>provides a list of identifiers of the elements which are the children of
+the root node.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A list of valid identifiers.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+      
+    </attDef>
+    <attDef ident="ord" usage="rwa">
+      <gloss>ordered</gloss><gloss xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</gloss>
+      
+      <desc>indicates whether or not the root is ordered.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      
+    </attDef>
+    <attDef ident="outDegree" usage="opt">
+      
+      <desc>gives the out degree of the root, the number of its children.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A nonnegative integer.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+      
+    </attDef>
+  </attList>
+  
+  
+</elementSpec>
+  <elementSpec ident="iNode" module="nets">
+  
+  <gloss>intermediate (or internal) node</gloss><gloss xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</gloss>
+  
+  
+  
+  
+  <desc>represents an intermediate (or internal) node of a tree.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+  
+  <attList>
+    <attDef ident="value" usage="rwa">
+      
+      <desc>provides the value of an intermediate node, which is a feature
+structure or other analytic element.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A valid identifier of a feature structure or other analytic
+element.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+    <attDef ident="children" usage="req">
+      
+      <desc>provides a list of identifiers of the elements which are the children of
+the intermediate node.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A list of identifiers.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+    <attDef ident="parent" usage="opt">
+      
+      <desc>provides the identifier of the element which is the parent of this node.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>The identifier of the parent node.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+    <attDef ident="ord" usage="opt">
+      <gloss>ordered</gloss><gloss xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</gloss>
+      
+      <desc>indicates whether or not the internal node is ordered.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      
+    </attDef>
+    <attDef ident="follow" usage="rwa">
+      
+      <desc>provides an identifier of
+the element which this node
+follows.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>The identifier of another intermediate node or leaf of the tree.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+      
+    </attDef>
+    <attDef ident="outDegree" usage="opt">
+      
+      <desc>gives the out degree of an intermediate node, the number of its
+children.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A nonnegative integer.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+      
+    </attDef>
+  </attList>
+  
+  
+</elementSpec>
+  <elementSpec ident="leaf" module="nets">
+  
+  <gloss/><gloss xml:lang="kr" notBefore="2007-12-20"/>
+  
+  <desc>encodes the leaves (terminal nodes) of a tree.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+  
+  <attList>
+    <attDef ident="value" usage="rwa">
+      
+      <desc>provides a pointer to a feature
+structure or other analytic element.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A valid identifier of a feature structure or other analytic
+element.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+    <attDef ident="parent" usage="opt">
+      
+      <desc>provides the identifier of parent of a leaf.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>The identifier of the parent node.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+    <attDef ident="follow" usage="rwa">
+      
+      <desc>provides an identifier of an element which this leaf follows.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>The identifier of another intermediate node or leaf of the tree.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+      
+    </attDef>
+  </attList>
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="eTree" module="nets">
+  
+  <gloss>embedding tree</gloss><gloss xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</gloss>
+  
+  
+  
+  
+  <desc>provides an alternative to tree element for representing
+ordered rooted tree structures.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+  
+  
+  <attList>
+    <attDef ident="value" usage="rwa">
+      
+      <desc>provides the value of an embedding tree, which is a feature
+structure or other analytic element.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A valid identifier of a feature structure or other analytic
+element.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+  </attList>
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="triangle" module="nets">
+  <gloss>underspecified embedding tree, so called because of its
+  characteristic shape when drawn</gloss><gloss xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</gloss>
+  
+  
+  
+  
+  <desc>Provides for an underspecified eTree, that is, an eTree with
+  information left out.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+  
+  <attList>
+    <attDef ident="value" usage="rwa">
+      
+      <desc>provides the value of a triangle, which is the identifier of a feature
+structure or other analytic element.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A valid identifier of a feature structure or other analytic
+element.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+  </attList>
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="eLeaf" module="nets">
+  <gloss>leaf or terminal node of an embedding tree</gloss><gloss xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</gloss>
+  
+  
+  
+  
+  <desc>provides explicitly for a leaf of an embedding tree, which may also
+be encoded with the eTree element.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+  
+  
+  <attList>
+    <attDef ident="value" usage="rwa">
+      
+      <desc>provides the value of an embedding leaf, which is a feature
+structure or other analytic element.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      <valDesc>A valid identifier of a feature structure or other analytic
+element.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+  </attList>
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="forest" module="nets">
+  
+  <gloss/><gloss xml:lang="kr" notBefore="2007-12-20"/>
+  
+  
+  <desc>provides for groups of rooted trees.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+  
+  
+  <attList>
+    <attDef ident="type" usage="opt">
+      
+      <desc>identifies the type of the forest.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A character string.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+  </attList>
+  
+  
+  
+</elementSpec>
+  <elementSpec ident="forestGrp" module="nets">
+  <gloss>forest group</gloss><gloss xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</gloss>
+  
+  
+  
+  
+  <desc>provides for groups of forests.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+  
+  
+  
+  
+  
+  
+  <attList>
+    <attDef ident="type" usage="opt">
+      
+      <desc>identifies the type of the forest group.</desc><desc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</desc>
+      
+      
+      
+      
+      
+      <valDesc>A character string.</valDesc><valDesc xml:lang="kr" notBefore="2007-12-20">TO BE TRANSLATED</valDesc>
+    </attDef>
+  </attList>
+  
+  
+  
+</elementSpec>
+</moduleSpec>
