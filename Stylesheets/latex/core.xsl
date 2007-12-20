@@ -356,7 +356,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:item/tei:label">
-    <xsl:text>\textit{</xsl:text>
+    <xsl:text>\textbf{</xsl:text>
     <xsl:apply-templates/>
     <xsl:text>}</xsl:text>
   </xsl:template>
