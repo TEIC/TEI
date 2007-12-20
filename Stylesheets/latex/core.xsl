@@ -350,6 +350,17 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:label"/>
+
+  <xd:doc>
+    <xd:short>Process elements tei:label in normal mode, inside an item</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:item/tei:label">
+    <xsl:text>\textit{</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:label in gloss mode</xd:short>
     <xd:detail> </xd:detail>
