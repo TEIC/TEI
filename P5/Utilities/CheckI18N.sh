@@ -24,5 +24,5 @@ do
 # compare with todays results. ignore <gloss> for now.
 #
 
- diff -r -q $i today | grep -v Only | grep -v gloss > $i.DIFF
+ diff -r -q $i today | grep -v Only > $i.DIFF
 done
