@@ -477,8 +477,8 @@ XPointer schemes.</item>
     defined as a URI reference<note place="foot">The URI (Universal
     Resource Indicator)  is defined in <ref target="http://www.ietf.org/rfc/rfc2396.txt">RFC2396</ref></note>;
     the cases so far discussed are all simple examples of a URI
-    reference. Another familiar example is the mechanism used in  HTML to create
-    represent hypertext links by means of the <att>href</att>
+    reference. Another familiar example is the mechanism used in XHTML to create
+    represent hypertext links by means of the XHTML <att scheme="XHTML">href</att>
     attribute. A URI reference can reference
 a single XML resource such as a document or an XML element, but also a
     sub-portion of it  identified by means of an
@@ -496,7 +496,7 @@ a single XML resource such as a document or an XML element, but also a
     mechanisms is readily available elsewhere.<!-- where? --></p>
     <div type="div3" xml:id="SAUR">
 <head>Pointing Elsewhere</head>
-<p>Like the ubiquitous if misnamed HTML pointing attribute <att scheme="HTML">href</att>, the TEI pointing attributes can point
+<p>Like the ubiquitous if misnamed XHTML pointing attribute <att scheme="XHTML">href</att>, the TEI pointing attributes can point
 to a document that is not the current document (the one that
 contains the pointing element) whether it is in the same local
 filesystem as the current document, or on a different system
@@ -818,7 +818,7 @@ towards revising this draft or issuing it as a recommendation.</p>
     Recommendation</ref>. The node or node set resulting from
     evaluating the XPath is the reference of an address using
     the <name type="xpscheme">xpath1()</name> scheme. For example,
-    the following example selects the first paragraph of the <gi scheme="extreme">ftnote</gi> element with <att>id</att> of
+    the following example selects the first paragraph of the <gi scheme="extreme">ftnote</gi> element with <att scheme="extreme">id</att> of
     <val>fn6</val> of a paper that discusses XPointers. <egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr target="http://tinyurl.com/267z62/xml/2004/Thompson01/EML2004Thompson01.xml#xpath1(//ftnote[@id='fn6']/para[1])"/></egXML></p>
 	  <!-- I tried "xpath1(id(fn6)/para[1])" but it didn't work in
 	 my implementations of XPath (jEdit, oXygen, IIRC) -Syd
@@ -2719,9 +2719,8 @@ inclusive). Then the following equivalence holds:
 following <gi>alt</gi> element.  <egXML
 xmlns="http://www.tei-c.org/ns/Examples"><alt targets="#we.fun
 #we.sun" mode="excl"/></egXML></p>
-<p>Other attributes that are defined specifically for the <gi>alt</gi>
-element are <att>weights</att> and <att>percent</att>. The
-<att>weights</att> attribute is to be used if one wishes to assign
+<p>Another attribute that is defined specifically for the <gi>alt</gi>
+element is <att>weights</att>, which is to be used if one wishes to assign
 <term>probabilistic weights</term> to the targets (alternants). Its
 value is a list of numbers, corresponding to the targets, expressing the
 probability that each target appears. <!--The <att>percent</att> attribute
@@ -3008,12 +3007,12 @@ pointing  schemes discussed in section <ptr target="#SAXP"/>.</p>
 	  resources can be specified in case of a failure to fetch the
 	  requested resource. </p>
 
-	  <p>The <gi>xi:include</gi> element uses the <att>href</att>
+	  <p>The <gi>xi:include</gi> element uses the <att scheme="XI">href</att>
 	  attribute to specify the location of the resource to be
 	  included; its value is an IURI <!-- this is the only
 	  occurence of "IURI" in the Guidelines; does it need to be
 	  explained?, or is it an error?-->containing, if necessary,
-	  an XPointer. Additionally, it uses the <att>parse</att>
+	  an XPointer. Additionally, it uses the <att scheme="XI">parse</att>
 	  attribute (whose only valid values are <val>text</val> and
 	  <val>xml</val>) to specify whether the included content is
 	  plain text or an XML fragment, and the <att>encoding</att>
