@@ -16,7 +16,7 @@ target="#XMLREC"/>). XML is widely used for
 the definition of device-independent, system-independent methods of
 storing and processing texts in electronic form. It is now also the
 interchange and communication format used by many applications on the
-World Wide Web. In the present chapter we  informally introduce some of
+World Wide Web. In the present chapter we informally introduce some of
 its basic concepts and attempt to explain to the reader encountering
 them for the first time how and why they are used in the TEI
 scheme. More detailed technical accounts of TEI practice in this
@@ -79,7 +79,7 @@ system.</item></list> These three aspects are discussed briefly below,
 and then in more depth in the remainder of this chapter.</p>
 
 <p>XML is frequently compared with HTML, the language in which web
-pages are generally written, which
+pages have generally been written, which
 shares some of the above characteristics. Compared with HTML, however,
 XML has some other important features:
 
@@ -149,7 +149,7 @@ report-like characteristics these might have for the human reader.</p>
 
 <p>If documents are of known types, a special-purpose program (called
 a <term>parser</term>), once provided with an unambiguous definition
-of a document type, can check that any  document claiming to be of 
+of a document type, can check that any document claiming to be of 
 that type does in fact conform to the specification. A parser
 can check that all elements specified for a particular
 document type are present and no others, that they are combined in appropriate ways,
@@ -171,7 +171,7 @@ characters that make up a document.  All XML documents,
 whatever languages or writing systems they employ, use the same
 underlying character encoding (that is, the same method of
 representing as binary data those graphic forms making up a particular
-writing system ).<note place="foot">See <title>Extensible Markup
+writing system).<note place="foot">See <title>Extensible Markup
 Language (XML) 1.0</title>, available from <ptr target="http://www.w3.org/TR/REC-xml"/>, Section 2.2
 Characters.</note> This encoding is defined by an international
 standard,<note place="foot">ISO/IEC 10646-1993 <title>Information
@@ -196,7 +196,7 @@ target="#SG-er"/>.</p>-->
 
 <p>Most modern computing systems now support Unicode directly; for
 those which do not, XML provides a mechanism for the indirect
-representation of single characters  by means of
+representation of single characters by means of
 their character number, known as <term>character references</term>; see further
 <ptr target="#SG-er"/>.</p>
 </div>
@@ -213,7 +213,7 @@ gatherings, and pages.</p>
 <p>Structural units of this kind are most often used to identify
 specific locations or refer to points within a text (<q>the third
 sentence of the second paragraph in chapter ten</q>; <q>canto 10, line
-1234</q>; <q>page 412</q>, etc.)  but they may also be used to
+1234</q>; <q>page 412</q>, etc.) but they may also be used to
 subdivide a text into meaningful fragments for analytic purposes
 (<q>is the average sentence length of section 2 different from that of
 section 5?</q> <q>how many paragraphs separate each occurrence of the
@@ -293,7 +293,7 @@ of!</quote> clearly indicate ...]]></eg>
 As this example shows, a start-tag takes the form <tag>quote</tag>,
 where the opening angle bracket indicates the start of the start-tag,
 <q>quote</q> is the generic identifier of the element that is being
-delimited, and the closing angle bracket indicates the end of a tag.
+delimited, and the closing angle bracket indicates the end of the start-tag.
 An end-tag takes an identical form, except that the opening angle
 bracket is followed by a solidus (slash) character, so that the
 corresponding end-tag is <tag>/quote</tag>.<note place="foot">Because
@@ -348,7 +348,7 @@ experience</title> (1794).</note>
 &lt;/anthology&gt;</eg></p>
 <p>It should be stressed that this example does <emph>not</emph> use
 the names proposed for corresponding elements elsewhere
-in these Guidelines: the above is  thus <emph>not</emph> a valid TEI
+in these Guidelines: the above is thus <emph>not</emph> a valid TEI
 document.<note place="foot">The element names here have been chosen for
 clarity of exposition; there is however a TEI element corresponding to
 each, so that this example may be regarded as TEI conformable in the
@@ -356,7 +356,7 @@ sense that this term is defined in <ptr target="#CF"/>.</note> It will however s
 Whitespace and line breaks have been added to the example for the
 sake of visual clarity only; they have no particular significance in the
 XML encoding itself.  Also, the line
-<eg><![CDATA[<!-- more poems go here    -->]]></eg>
+<eg><![CDATA[<!-- more poems go here   -->]]></eg>
 is an XML <term>comment</term> and is not treated as part of the text.</p>
 <p>As it stands, the above example is what is known as a
 <term>well-formed</term> XML document because it obeys the following simple rules:
@@ -370,45 +370,48 @@ overlap one another;</item>
 <item>a tag explicitly marks the start and end of each element.</item>
 </list>
 </p>
-<p>A well-formed XML document can be processed in a number
-of useful ways.  A simple indexing program could extract only the
-relevant text elements in order to make a list of headings, first lines,
-or words used in the poem text; a simple formatting program could
-insert blank lines between stanzas, perhaps indenting the first line
-of each, or inserting a stanza number.  Different parts of each poem
-could be typeset in different ways.  A more ambitious analytic program
-could relate the use of punctuation marks to stanzaic and metrical
+<p>A well-formed XML document can be processed in a number of useful
+ways.  A simple indexing program could extract only the relevant text
+elements in order to make a list of headings, first lines, or words
+used in the poem text; a simple formatting program could insert blank
+lines between stanzas, perhaps indenting the first line of each, or
+inserting a stanza number.  Different parts of each poem could be
+typeset in different ways.  A more ambitious analytic program could
+relate the use of punctuation marks to stanzaic and metrical
 divisions.<note place="foot">Note that this simple example has not
 addressed the problem of marking elements such as sentences
-explicitly; the implications of this are discussed in section <ptr target="#SG152"/>.</note> Scholars wishing to see
-the implications of changing the stanza or line divisions chosen by
-the editor of this poem can do so simply by altering the position of
-the tags.  And of course, the text as presented above can be
-transported from one computer to another and processed by any program
-(or person) capable of making sense of the tags embedded within it
-with no need for the sort of transformations and translations needed
-to move word processor files around.</p>
+explicitly; the implications of this are discussed in section <ptr
+target="#SG152"/>.</note> Scholars wishing to see the implications of
+changing the stanza or line divisions chosen by the editor of this
+poem can do so simply by altering the position of the tags.  And of
+course, the text as presented above can be transported from one
+computer to another and processed by any program (or person) capable
+of making sense of the tags embedded within it with no need for the
+sort of transformations and translations needed for files which have
+been saved in one or other of the proprietary formats preferred by
+most word-processing programs.</p>
 
 <p>As we noted above, one of the attractions of XML is that it enables
 us to make up our own names for the elements rather than requiring us
-always to use names predefined by other agencies. Clearly, however,
-if we wish to exchange our poems with others, or to include poems
-others have marked up in our anthology, we will need to know a bit
-more about the names used for the tags. The means that XML provides
-for this is called a <term>namespace</term>. In our simple example,
-the tags just contain a simple name. As we shall see, it is also
-possible to use tags that include a <term>qualified name</term>, that
-is, a name with an optional prefix  identifying the set of names to
-which it belongs. For example, if one person defines an element <gi scheme="imaginary">line</gi>
-and another person also defines an element <gi scheme="imaginary">line</gi> possibly with
-a different meaning, when they wish to share
-data they will find it necessary to distinguish the two <q>line</q>
-components in their marked-up
-texts. This is achieved by including a <term>namespace prefix</term>
-within the markup, for example like this: <eg><![CDATA[
-<my:line>This is one of my lines</my:line> 
-  <!-- ... --> 
-<yr:line>This is one of your lines</yr:line>]]></eg> 
+always to use names predefined by other agencies. Clearly, however, if
+we wish to exchange our poems with others, or to include poems others
+have marked up in our anthology, we will need to know a bit more about
+the names used for the tags. The means that XML provides for this is
+called a <term>namespace</term>. In our simple example, the tags just
+contain a simple name. As we shall see, it is also possible to use
+tags that include a <term>qualified name</term>, that is, a name with
+an optional prefix identifying the set of names to which it
+belongs. For example, we have defined an element <gi
+scheme="imaginary">line</gi> for the purpose of marking lines of
+verse. Another person might however define an element called <gi
+scheme="imaginary">line</gi> for the purpose of marking typographic
+lines, or drawn lines. Because of these different meanings, if we wish
+to share data it will be necessary to distinguish the two <q>line</q>
+components in our marked-up texts. This is achieved by including a
+<term>namespace prefix</term> within the markup, for example like
+this: <eg><![CDATA[ <my:line>This is one of my lines</my:line> 
+<!-- ... --> 
+<yr:line>This is one of your lines</yr:line>]]></eg>
 
 This feature is particularly important if we have different
 definitions of what a <soCalled>line</soCalled> is, of course, but
@@ -503,7 +506,7 @@ XML vocabulary to define content models, which is adopted by the TEI
 for the same purpose. </note> Although we will use the RELAX NG compact syntax
 for illustration in what follows, the reader should bear in mind that analogous
 concepts are expressed differently in other schema languages. </p>
-<p>The following  schema might be used to validate our example poem:
+<p>The following schema might be used to validate our example poem:
 <eg>
 anthology_p = element anthology { poem_p+ }
 poem_p = element poem { heading_p?, stanza_p+ }
@@ -530,12 +533,12 @@ pattern's name, and the material following it declares a meaning for
 the pattern. Patterns may also be of particular types; the ones that
 interest us here are called <term>element patterns</term> and
 <term>attribute patterns</term>. In this example we see definitions
-for four element patterns. Note that we have used similar names for
+for five element patterns. Note that we have used similar names for
 the pattern and the element which the pattern describes: so, for
 example, the line <code>anthology_p = element anthology {poem_p+}</code> defines an element pattern called <code>anthology_p</code>,
 the value of which defines an element called
 <code>anthology</code>. These naming conventions are 
-unimportant; we could use the same name for the pattern as
+arbitrary; we could use the same name for the pattern as
 for the element, since the two are syntactically quite distinct. The
 name, or <term>generic identifier</term>, of the element follows the
 word <q>element</q>, and the <term>content model</term> for the
@@ -544,26 +547,28 @@ these parts is discussed further below.
 </p>
 <p>The last line of the schema above tells a RELAX NG validator which
 element (or elements) in a document can be used as the root element:
-in our case only <gi scheme="imaginary">anthology</gi>. This enables the validator to
-detect whether a particular document is well formed but incomplete; it also
-simplifies the processing task by providing an <q>entry point</q>.</p>
+in our case only <gi scheme="imaginary">anthology</gi>. This enables
+the validator to detect whether a particular document is well-formed
+but incomplete; it also simplifies the processing task by providing an
+<q>entry point</q>.</p>
 
 <div type="div4" xml:id="SG141x"><head>Generic identifier</head>
 <p>Following the word <q>element</q> each pattern declaration gives
-the generic identifier (often abbreviated to GI) of the element 
-being defined, for example <mentioned>poem</mentioned>,
-<mentioned>heading</mentioned>, etc.  A GI may contain alphabetic
-characters, digits, hyphens, underscore characters, or full stops, but
-must begin with a letter.<note place="foot">In XML, a single colon may
-also appear in a GI, where it has a special significance related to
-the use of <term>namespaces</term>, as further discussed in section
-<ptr target="#SGname"/>. The characters defined by Unicode as
+the generic identifier (often abbreviated to GI) of the element being
+defined, for example <mentioned>poem</mentioned>,
+<mentioned>heading</mentioned>, etc.  A GI may contain letters,
+digits, hyphens, underscore characters, or full stops, but must begin
+with a letter.<note place="foot">In XML, a single colon may also
+appear in a GI, where it has a special significance related to the use
+of <term>namespaces</term>, as further discussed in section <ptr
+target="#SGname"/>. The characters defined by Unicode as
 <term>combining characters</term> and as <term>extenders</term> are
-also permitted.</note> Uppercase and lowercase letters are
-quite distinct: an element with the GI <gi scheme="imaginary">foo</gi>
-is <emph>not</emph> the same as an element with the GI <gi scheme="imaginary">Foo</gi>;
-the root element of a TEI-conformant document is  <gi>TEI</gi>,
-<emph>not </emph> <gi scheme="imaginary">tei</gi>.</p></div>
+also permitted.</note> Uppercase and lowercase letters are quite
+distinct: an element with the GI <gi scheme="imaginary">foo</gi> is
+<emph>not</emph> the same as an element with the GI <gi
+scheme="imaginary">Foo</gi>; the root element of a TEI-conformant
+document is <gi>TEI</gi>, <emph>not</emph> <gi
+scheme="imaginary">tei</gi>.</p></div>
 <div type="div4" xml:id="SG143"><head>Content model</head>
 <p>The second part of each declaration, enclosed in curly braces, is
 called the <term>content model</term> of the element being defined, because it
@@ -593,7 +598,7 @@ repeated.  There are three occurrence indicators: the plus sign, the
 question mark, and the asterisk or star.  The plus sign means that
 the pattern can match one or more times; the
 question mark means that it may match at most once but is not
-mandatory;  the star means that the pattern concerned is not
+mandatory; the star means that the pattern concerned is not
 mandatory, but may match more than once. Thus, if the content model for
 <gi scheme="imaginary">stanza</gi> were <code>{line_p*}</code>, stanzas with no lines
 would be possible as well as those with more than one line.  If it
@@ -638,7 +643,7 @@ couplet_p = element couplet {firstLine_p, secondLine_p}</eg>
 <p>The patterns firstLine_p and secondLine_p define elements
 <gi scheme="imaginary">firstLine</gi> and <gi scheme="imaginary">secondLine</gi> (which are distinguished to
 enable studies of rhyme scheme, for example<note place="foot">This is
-however a rather artifical example; XPath, for example, provides  ways of distinguishing
+however a rather artificial example; XPath, for example, provides ways of distinguishing
 elements in an XML structure by their position without the need to
 give them distinct names. </note> ); these will have exactly
 the same content model as the existing <gi scheme="imaginary">line</gi> element. We will
@@ -659,7 +664,7 @@ elements: this combination, known as <term>mixed content</term>,
 allows for elements in which the sub-components appear with
 intervening stretches of character data. For example, if we wished to
 mark place names wherever they appear inside our verse lines, then,
-assuming we have also added a pattern for  the
+assuming we have also added a pattern for the
 <gi scheme="imaginary">name</gi> element, we could change the definition for
 <gi scheme="imaginary">line</gi> to <eg>line_p = element
 line { (text | name_p )* }</eg>
@@ -718,7 +723,7 @@ lines and refrains.</p>
 </div>
 <div type="div2" xml:id="SG152"><head>Complicating the issue</head>
 <p>In the simple cases described so far, we have assumed that one
-can identify the immediate constituents of every element  in a
+can identify the immediate constituents of every element in a
 textual structure.  A poem consists of stanzas, and an anthology
 consists of poems.  Stanzas do not float around unattached to poems or
 combined into some other unrelated element; a poem cannot contain an
@@ -728,7 +733,7 @@ ancestor at one end and many children (mostly the elements containing
 simple text) at the other.  For example, we could represent an anthology
 containing two poems, the first of which contains two four-line
 stanzas and the second a single stanza,  by a tree structure like the following figure:</p>
-<figure><graphic   width="80%" url="Images/xmlpic.png"/></figure>
+<figure><graphic  width="80%" url="Images/xmlpic.png"/></figure>
 <!-- graphic needs redoing, took out scaling looks much better(JC)  -->
 <p>This graphic representation of the structure of an XML document is
 close to the abstract model implicit in most XML processing
@@ -784,7 +789,7 @@ within a single hierarchy. To represent overlapping structures,
 therefore, a single hierarchy must be chosen, and the points at which
 other hierarchies intersect with it marked. For example,
 we might choose the verse structure as our primary hierarchy, and then
-mark the pagination by means of empty elements inserted at the  boundary
+mark the pagination by means of empty elements inserted at the boundary
 points between one page and the next. Or we could represent alternative
 hierarchies by means of the pointing and linking mechanisms described
 in chapter <ptr target="#SA"/> of the Guidelines. These mechanisms all
@@ -823,10 +828,10 @@ Here attribute values are being specified for two attributes
 previously declared for the <gi scheme="imaginary">poem</gi> element: <att>xml:id</att>
 and <att scheme="imaginary">status</att>. For the instance of a <gi scheme="imaginary">poem</gi> in this
 example, represented here by an ellipsis, the <att>xml:id</att>
-attribute has the value <val>P1</val> and the <att>status</att>
+attribute has the value <val>P1</val> and the <att scheme="imaginary">status</att>
 attribute has the value <val>draft</val>. An XML processor can use the
 values of the attributes in any way it chooses; for example, a
-<gi scheme="imaginary">poem</gi> in which the <att>status</att> attribute has the value
+<gi scheme="imaginary">poem</gi> in which the <att scheme="imaginary">status</att> attribute has the value
 <val>draft</val> might be formatted differently from one in which the same
 attribute has the value <val>revised</val>; another processor might use the
 same attribute to determine whether or not poem elements are to be
@@ -916,14 +921,14 @@ the following:
 <label>boolean</label>
 <item>values must be either true or false</item>
 <label>numeric</label>
-<item>values must represent a numeric quantity  of some
+<item>values must represent a numeric quantity of some
 kind</item>
 <label>date</label>
 <item>values must represent a possible date and time in some calendar</item>
 </list></p>
 <p>Two further datatypes of particular usefulness in managing XML documents
-are commonly  known as <code>ID</code> — for identifier —  and
-<code>URI</code>  — for Universal Resource Indicator, or pointer for
+are commonly known as <code>ID</code> — for identifier —  and
+<code>URI</code> — for Universal Resource Indicator, or pointer for
 short. These are discussed in the next section.</p>
 </div>
 <div xml:id="SG-id"><head>Identifiers and indicators</head>
@@ -973,8 +978,8 @@ called <att>target</att>.  The value of this attribute must be a
 pointer or web reference of type <code>anyURI</code>;<note place="foot">The word <q>anyURI</q> is a predefined name, used in
 schema languages to mean that any <term>Uniform Resource
 Identifier</term> (URI) may be supplied here. The accepted syntax for
-URIs is an Internet Standard, defined in  <ptr target="http://tools.ietf.org/html/rfc3986"/>. <code>anyURI</code>
-is  one of the <term>datatypes</term> defined by the W3C
+URIs is an Internet Standard, defined in <ptr target="http://tools.ietf.org/html/rfc3986"/>. <code>anyURI</code>
+is one of the <term>datatypes</term> defined by the W3C
 Schema datatype library.</note>
 furthermore, because there is no indication of optionality on the
 attribute pattern, it must be supplied on each occurrence — a
@@ -995,14 +1000,15 @@ xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<poemRef
 target="#Rose"></poemRef>]]></egXML>)
 -->
 </p>
-<p>A processor may take any number of actions when
-it encounters a link encoded in this way: a formatter might construct
-an exact page and line reference for the location of the poem in the
-current document and insert it, or just quote the poem's title or
-first lines.  A hypertext style processor might use this element as a
-signal to activate a link to the poem being referred to.  The purpose
-of the XML markup is simply to indicate that a cross reference exists:
-it does not determine what the processor is to do with it.</p>
+<p>A processor may take any number of actions when it encounters a
+link encoded in this way: a formatter might construct an exact page
+and line reference for the location of the poem in the current
+document and insert it, or just quote the poem's title or first lines.
+A hypertext style processor might use this element as a signal to
+activate a link to the poem being referred to, for example by
+displaying it in a new window.  Note however that the purpose of the
+XML markup is simply to indicate that a cross reference exists: it
+does not necessarily determine what the processor is to do with it.</p>
 
 <p>The target of a URI can be located anywhere: it may not necessarily
 be part of the same document, nor even located on the same computer
@@ -1010,18 +1016,19 @@ system. Equally, it can be a resource of any kind, not necessarily an
 XML document or document fragment. It is thus a very convenient way of
 including references to non-XML data such as image files within a
 document. If, for example, we wished to include an illustration
-containing a reproduction of
-Blake's original in our anthology,  the most appropriate method would
-probably be to define a new element called (for the sake of argument)
-<gi scheme="imaginary">graphic</gi>  with a <att>target</att> attribute of datatype URI:
-<eg><![CDATA[graphic_p = element graphic {att.url, empty}
-att.url = attribute url {anyURI}]]></eg>
-With these additions to the schema, we can now represent the location
-of the illustration within our text like this:
-<eg><![CDATA[<poem><graphic
+containing a reproduction of Blake's original in our anthology, the
+most appropriate method would probably be to define a new element
+called (for the sake of argument) <gi scheme="imaginary">graphic</gi>
+with a <att>target</att> attribute of datatype URI:
+<eg><![CDATA[graphic_p = element graphic {att.url, empty} att.url =
+attribute url {anyURI}]]></eg> With these additions to the schema, we
+can now represent the location of the illustration within our text
+like this: <eg><![CDATA[<poem><graphic
 url="http://en.wikisource.org/wiki/Image:Blake_sick_rose.jpg"/>
-</poem>]]></eg>
-</p>
+</poem>]]></eg> By providing a location from which a reproduction of
+the required image can be downloaded, this encoding makes it possible
+for appropriate software able to display the image as well as record
+its existence. </p>
 <p>Attributes form part of the structure of an XML document in the
 same way as elements, and can therefore be accessed using XPath. For
 example, to refer to all the poems in our anthology whose
@@ -1071,29 +1078,31 @@ to be predefined, since the underlying character encoding for XML is
 always the same.</p>
 
 <p>To aid legibility however, it is also possible to use a mnemonic
-name (such as <code>eacute</code>) for such character references,
-provided that each such name is mapped to the required Unicode value
-by means of a construct known as an <term>entity
-declaration</term>. There is also a small set of mnemonic character
-entity references that do not have to be declared because they form
-part of the definition of XML. These include the names used for characters
-such as the ampersand and less-than sign, which could not easily
-otherwise be included in an XML document without ambiguity.</p>
+name (such as <code>eacute</code> rather than character &#xe09;) for
+such character references, provided that each such name is mapped to
+the required Unicode value by means of a construct known as an
+<term>entity declaration</term>. There is also a small set of mnemonic
+character entity references that do not have to be declared because
+they form part of the definition of XML. These include the names used
+for characters such as the ampersand (<code>amp</code>) or the open
+angle bracket or less-than sign (<code>lt</code>), which could not
+easily otherwise be included in an XML document without ambiguity.</p>
 
-<p>A reference to a named character entity, whether predefined or not,
+<p>A reference to a named character entity always
 takes the form of an ampersand, followed by the name, followed by a
 semicolon. For example an XML document containing the string
-<q>T&amp;C</q> might be encoded as <code>T&amp;amp;C</code>. Other
-predefined character entities include <code>&amp;lt;</code> (&lt;) and
-<code>&amp;apos;</code> (&apos;). </p>
+<q>T&amp;C</q> would be encoded as <code>T&amp;amp;C</code>. </p>
 
 <p>For other named character entities, a set of entity declarations
 must be provided to an XML processor before the document referring to
-them can validated. The declaration itself uses a non-XML syntax
+them can be validated. The declaration itself uses a non-XML syntax
 inherited from SGML; for example, to define an entity named
 <ident>eacute</ident> with the replacement value é, the declaration
-would have the following form: <eg><![CDATA[<!ENTITY eacute "é">]]></eg>
-</p>
+would have any of the following forms: <eg><![CDATA[<!ENTITY eacute
+"é">]]></eg> or, using hexadecimal notation: <eg><![CDATA[<!ENTITY
+eacute "&#xe9;">]]></eg> or, using decimal notation:
+<eg><![CDATA[<!ENTITY eacute "&#233;">]]></eg>
+ </p>
 
 <p>Entities of this kind are useful also for <term>string
 substitution</term> purposes, where the same text needs to be repeated
@@ -1123,7 +1132,7 @@ and effective way of doing this without interfering with other aspects
 of the markup.</p>
 <p>Here is an example XML processing instruction: 
 <eg><![CDATA[<?tex \newpage ?>]]></eg> It begins with
-<code>&lt;?</code> and  ends with
+<code>&lt;?</code> and ends with
 <code>?&gt;</code>. In between are two space-separated strings: by
 convention, the first is the name of some processor (<code>tex</code>
 in the above example) and the second is some data intended for the use
@@ -1134,18 +1143,21 @@ sequence of characters, not including the closing character-sequence
 <code>?&gt;</code>.
 </p>
 
-<p>A construct which looks like a processing instruction
-(but is not) is the
-<term>XML declaration</term> which can be supplied at the beginning of an
-XML document, for example: <eg><![CDATA[<?xml version="1.0"
-encoding="iso-8859-1"?>]]></eg> The XML declaration specifies the version
-number of the XML Recommendation applicable to the document it
-introduces (in this case, version 1.0), and additionally the character
-encoding used to represent the Unicode characters within it. In this
-case, the 16-bit characters of Unicode have been mapped to the 8-bit
-character set known as ISO 8859-1; any characters present in the
-document but not available in the target character set will therefore be
-represented as character references (<ptr target="#SG-er"/>). The XML declaration is purely documentary.</p>
+<p>A construct which looks like a processing instruction (but is not)
+is the <term>XML declaration</term> which can be supplied at the
+beginning of an XML document, for example: <eg><![CDATA[<?xml
+version="1.0" encoding="iso-8859-1"?>]]></eg> The XML declaration
+specifies the version number of the XML Recommendation applicable to
+the document it introduces (in this case, version 1.0), and optionally
+also the character encoding used to represent the Unicode characters
+within it. By default an XML document uses the character encoding
+UTF-8 or UTF-16; in this case, the 16-bit characters of Unicode have
+been mapped to the 8-bit character set known as ISO 8859-1; any
+characters present in the document but not available in the target
+character set will therefore need to be represented as character
+references (<ptr target="#SG-er"/>). The XML declaration is purely
+documentary, but if it is wrong many XML-aware processors will be
+unable to process the associated text.</p>
 
 </div>
 <div type="div3" xml:id="SGname"><head>Namespaces</head>
@@ -1175,7 +1187,7 @@ in an XML document is its distinctive <term>prefix</term> and the
 identifying <term>name</term> associated with it.</p>
 
 <p>Suppose for example that we wish to extend our anthology to include
-a complex diagram. We might start by considering whether  or
+a complex diagram. We might start by considering whether or
 not to extend our simple schema to include XML markup for such
 features as arcs, polygons, and other graphical elements. XML can be
 used to represent any kind of structure, not simply text, and there
@@ -1197,12 +1209,12 @@ element with the SVG <gi scheme="imaginary">line</gi>, which means something qui
 different. </p>
 <p>An XML document need not specify any namespace: it is then said to
 use the <soCalled>null</soCalled> namespace. Alternatively, the root element of a
-document may supply a default namespace using the special purpose
-<att scheme="XML">xmlns</att> attribute. This attribute simply provides a
-unique name for our namespace, in the form of a URI:
+document may supply a default namespace, understood to apply to all elements which have no namespace prefix. This is the function of the
+<att scheme="XML">xmlns</att> attribute which provides a
+unique name for the default namespace, in the form of a URI:
 <eg>
 &lt;anthology xmlns="http://www.example.net/anthology/ns"&gt;
-...
+  <!-- anthology markup elements here -->
 &lt;/anthology&gt;
 </eg>
 In exactly the same way, on the root element for each part of our
@@ -1210,12 +1222,14 @@ document which uses the SVG language, we might introduce the SVG
 namespace name:
 <eg>&lt;anthology xmlns="http://www.example.net/anthology/ns"&gt;
   <!-- anthology markup elements here -->
-   
+   &lt;svg xmlns="http://www.w3.org/2000/svg">
+ <!-- SVG markup elements here -->
+  &lt;/svg>
   <!-- more anthology markup elements here -->
 &lt;/anthology&gt;
 </eg>
 Although a namespace name usually uses the URI (Uniform Resource
-Identifier) syntax, it is not  treated as an online address
+Identifier) syntax, it is not treated as an online address
 and an XML processor regards it just as a string, providing a longer name for the
 namespace.</p>
 <p>The <att scheme="XML">xmlns</att> attribute can also be used to associate a short prefix
@@ -1259,7 +1273,7 @@ derived from some pre-existing XML vocabulary for linguistic analysis.
 </p>
 
 <div type="div3" xml:id="SG-ms"><head>Marked Sections</head>
-<p>We mentioned above that the  syntax of XML requires the encoder to
+<p>We mentioned above that the syntax of XML requires the encoder to
 take special action if characters with a syntactic meaning in XML
 (such as the left angle bracket or ampersand) are to be used in a
 document to stand for themselves, rather than to signal the start of a
@@ -1295,7 +1309,7 @@ Here is an example of the use of the &lt;gi&gt;line&lt;/gi&gt; element:
 <div type="div2" xml:id="SG18"><head>Putting it all together</head>
 
 <p>In this chapter we have discussed most of the components of an XML
-document and its associated schema. We  have described informally 
+document and its associated schema. We have described informally 
 how an XML document is represented, and also introduced one
 way of representing the rules a RELAX NG validator might use to
 validate it. In a working system, the following issues will also need
@@ -1311,8 +1325,7 @@ operating system files; how should they be assembled together?</item>
 when processing an XML document, or how to interpret any processing
 instructions it contains?</item>
 <item>how does a processor enforce more exact validation than simple
-datatypes permit(for example
-of element content)?</item>
+datatypes permit (for example of element content)?</item>
 </list>
 </p>
 
@@ -1329,7 +1342,7 @@ instance</head>
 <p>In <ptr target="#SG-er"/> we introduced the syntax used for the
 definition of named character entities such as <code>eacute</code>,
 which XML inherited from SGML. Different schema languages vary in the
-ways they make a collection of such definitions  available
+ways they make a collection of such definitions available
 to an XML processor, but fortunately there is one method that all
 current schema languages support.</p>
 <p>As well as, and following, the XML declaration (<ptr target="#SG-pi"/>), an XML document instance may be prefixed with a
@@ -1337,7 +1350,7 @@ special <code>DOCTYPE</code> statement. This declarative statement has
 been inherited by XML from SGML; in its full form it provides a large
 number of facilities, but we are here concerned only with the small
 subset of those facilities recognized by all schema languages.</p>
-<p>Here is an example  DOCTYPE statement which we might consider
+<p>Here is an example DOCTYPE statement which we might consider
 prefixing to the final version of our anthology:
 <eg><![CDATA[<!DOCTYPE anthology [
 <!ENTITY mdash "&#2014;">
@@ -1426,7 +1439,7 @@ for example to indicate whether the stylesheet is written in CSS or
 XSLT, using a specialized form of processing instruction.</p>
 <p>Assuming therefore that we have made a CSS conformant stylesheet
 for our anthology and stored it in a file called
-<code>anthology.css</code> which is available from  the same location
+<code>anthology.css</code> which is available from the same location
 as the anthology itself, we could make it available over the web simply
 by adding a processing instruction like the following to the anthology:
 <eg><![CDATA[<?xml-stylesheet href="anthology.css"
@@ -1445,18 +1458,21 @@ support XSLT.</p>
 <div type="div3" xml:id="SG-val"><head>Content validation</head>
 
 <p>As we noted above, most schema languages provide some degree of
-datatype validation for attribute values (<ptr target="#SG-att"/>). They
-vary greatly in the validation facilities they offer for the
-content of elements, other than the syntactic constraints already
-discussed. Thus, while we may very easily check that our
-<gi scheme="imaginary">stanza</gi> elements contain only <gi scheme="imaginary">line</gi> elements, we
-cannot easily check that <gi scheme="imaginary">line</gi> elements contain between five
-and 500 correctly-spelled English words, should we wish to constrain
-our poetry in such a way. Also, because attributes and elements are
+datatype validation for attribute values (<ptr
+target="#SG-att"/>). They vary greatly in the validation facilities
+they offer for the content of elements, other than the syntactic
+constraints already discussed. Thus, while we may very easily check
+that our <gi scheme="imaginary">stanza</gi> elements contain only <gi
+scheme="imaginary">line</gi> elements, we cannot easily check that <gi
+scheme="imaginary">line</gi> elements contain between five and 500
+correctly-spelled English words, should we wish to constrain our
+poetry in such a way. Also, because attributes and elements are
 treated differently, it is difficult or impossible to express
-co-occurrence constraints: for example, if the status of a poem is
-<val>draft</val> we might wish to permit elements such as
-<gi scheme="imaginary">editorialQuery</gi> within its content, but not otherwise.  </p>
+co-occurrence constraints: for example, if the <att
+scheme="imaginary">status</att> of a poem is <val>draft</val> we might
+wish to permit elements such as <gi
+scheme="imaginary">editorialQuery</gi> within its content, but not
+otherwise.  </p>
 
 <p>The XML DTD language offers very little beyond syntactic checking
 of element content. By contrast, a major impetus behind the design and
@@ -1473,10 +1489,10 @@ for attribute values; it is unlike other schema languages in
 this respect. In addition, for content validation,
 a different component of DSDL known as Schematron can be used. Schematron
 is a pattern matching (rather than a grammar-based) language, which
-allows us to test the components of a specific document against
+allows us to test the components of a document against
 templates that express constraints such as those mentioned above.</p>
 
-<p>Like other XML processors, Schematron uses  XPath to identify parts
+<p>Like other XML processors, Schematron uses XPath to identify parts
 of an XML document; in addition, it provides elements that describe
 assertions to be tested and conditions which must be validated, as
 well as elements to report the results of the test. </p>
