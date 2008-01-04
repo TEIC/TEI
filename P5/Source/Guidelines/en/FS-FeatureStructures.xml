@@ -1105,7 +1105,7 @@ its <att>xml:id</att> attribute.  Each <gi>fsdLink</gi> element
 associates a specific feature structure type with a URI which resolves
 to an <gi>fsDecl</gi> element, by using its <att>xml:id</att> value. </p>
 
-<p>For example, suppose that a document <ident>doc.xml</ident>
+<p>For example, suppose that a document <ident type="file">doc.xml</ident>
 contains feature structures of two types: <val>gpsg</val> and
 <val>lex</val>. We might simply embed an <gi>fsDecl</gi> element for
 each within the header attached to the document as follows:
@@ -1146,7 +1146,7 @@ corresponding declarations, we will need to provide a means of
 pointing to them from this second document.  The easiest<note place="foot">Ways of pointing to components of a TEI document without
 using an XML identifier are discussed in <ptr target="#SAUR"/></note>
 way of accomplishing this is to add an XML identifier to each
-<gi>fsDecl</gi> element in <ident>doc1.xml</ident>:
+<gi>fsDecl</gi> element in <ident type="file">doc1.xml</ident>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
            <!-- ... -->
            <fsdDecl>
@@ -1183,12 +1183,12 @@ pointers to the <gi>fsDecl</gi> elements in the first:
       <!-- an instance of the typed feature structure "lex" -->
    </fs></body></text>
    </TEI></egXML>
-Note that in <ident>doc2</ident> there is no requirement for the local
+Note that in <ident type="file">doc2.xml</ident> there is no requirement for the local
 name for a given type of feature structures to be the same as that
-used by <ident>doc1</ident>. We assume in this encoding that the type
-called <ident>lexx</ident> in <ident>doc2</ident> is declared as
+used by <ident type="file">doc1.xml</ident>. We assume in this encoding that the type
+called <name>lexx</name> in <ident type="file">doc2.xml</ident> is declared as
 having identical constraints and other properties to those declared
-for the type called <ident>lex</ident> in <ident>doc1</ident>.</p>
+for the type called <name>lex</name> in <ident type="file">doc1.xml</ident>.</p>
 
 <p>A <gi>fsdDecl</gi> may be given, as above, within the
 encoding description of the <gi>teiHeader</gi> element of a TEI
@@ -1370,7 +1370,7 @@ discussion of the <gi>none</gi> element).</p>-->
 conditions for supplying default values is based on the operation of
 <term>subsumption</term>.  Subsumption is a standard operation in
 feature-structure-based formalisms.  Informally, a feature structure
-<ident>FS</ident> subsumes all feature structures that are at least as
+<name>FS</name> subsumes all feature structures that are at least as
 informative as itself; that is, all feature structures that
 specify all of the feature values that FS does with values that are
 subsumed by the values that FS has, and that have all of the
