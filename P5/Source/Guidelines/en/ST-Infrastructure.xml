@@ -188,32 +188,8 @@ may be processed to generate a formal schema, expressed in a variety
 of specific schema languages, such as XML DTD language, RELAX NG, or
 W3C Schema. These output schemas can then be used by an XML processor
 such as a validator or editor to validate or otherwise process
-documents.</p>
-
-<!--
-<list>
-<item>the ODD specification may be processed to generate
-a schema document in whichever schema language the editor
-supports</item>
-<item>for an editor using DTD language, a DTD subset declaration
-invoking the DTD fragments corresponding with the schema specification
-may be produced, together with XML DTD code for any additional
-modifications</item>
-<item>for an editor using RELAX NG language, a schema referencing the
-appropriate predefined RELAX NG patterns may be produced, together
-with any additional definitions required to support
-modifications</item>
-</list>
-</p>
-<p>The schema fragments produced by the TEI are delivered in a
-parameterised form which facilitates the second and third options
-listed above. The recommended method of customization is however the
-first. For blind interchange of TEI documents, it should be necessary
-to supply no more than a complete ODD specification along with the
-documents.
-</p>
--->
-<!-- foregoing removed at behest of DB and berlin council mtg -->
+documents. Further information about the processing of a TEI formal
+specification is given in chapter <ptr target="#USE"/>. </p>
 
 <div type="div3" xml:id="STINsimpleExample"><head>A Simple Customization</head>
 <p>The simplest customization of the TEI scheme combines just the
@@ -412,13 +388,15 @@ customization of the system. </p>
 common attributes.  Attribute classes are given names beginning
 <code>att.</code> and are usually adjectival. For example, the members
 of the class <ident type="class">att.naming</ident> have in common a
-<att>key</att> attribute, which is inherited from their membership in
-the class rather than individually defined for each element.  This
+<att>key</att> and a <att>ref</att> attribute, both of which are inherited from their membership in
+the class rather than individually defined for each element.  These
 attribute is said to be defined by (or inherited from) the <ident type="class">att.naming</ident> class. If another element were to be
-added to the TEI scheme for which a similar <att>key</att> attribute
-was considered useful, the simplest way to add it would be to make the
+added to the TEI scheme for which these attributes
+were considered useful, the simplest way to provide them would be to make the
 new element a member of the <ident type="class">att.naming</ident>
-class. </p>
+class. Note also that this method ensures that the attributes in
+question are always defined in the same way, taking the same default
+values etc., no matter which element they are attached to.</p>
 
 <p>Some attribute classes are defined within the <ident type="module">tei</ident> infrastructural module and are thus globally
 available. Other attribute classes are specific to particular modules
@@ -626,7 +604,7 @@ discussed below) and specify a <att>rend</att> value
 only for any elements which deviate from the stated rendition.
  </p>
 <p>Although the contents of the <att>rend</att> attribute are free
-text, in any given project, encoders are advised to settle on a
+text, in any given project, encoders are advised to adopt a
 standard vocabulary with which to describe typographic or manuscript
 rendition of the text.</p>
 <p>The  <gi>rendition</gi>
@@ -1338,7 +1316,8 @@ significance of suggested or (in the case of closed lists) all
 possible values.</p>
 <!-- but can we put a valList in a macroSpec ? -->
 <p>TEI-defined datatypes may be grouped into those which define
-normalised values for numeric quantities or probabilities, those which
+normalised values for numeric quantities, probabilities, or temporal
+expressions,   those which
 define various kinds of short-hand codes or keys, and those which
 define pointers or links. </p>
 
@@ -1601,7 +1580,7 @@ list of possible values, together with a prose description of their
 intended significance.  This list may be open (in which case the list
 is advisory), or closed (in which case, it determines the range of
 legal values). In this latter case, the datatype will not be
-data.enumerated, but an explicit list of the possible values.</p>
+<ident type="datatype">data.enumerated</ident>, but an explicit list of the possible values.</p>
 
 
 <p>Attributes of type <ident type="datatype">data.code</ident><!-- such as
