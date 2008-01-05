@@ -111,10 +111,10 @@
               <xsl:if test="$TEIC='true'">
                 <xsl:call-template name="omissability"/>
               </xsl:if>
+              <xsl:call-template name="entityModules"/>
               <xsl:call-template name="predeclaredClasses"/>
               <xsl:call-template name="predeclaredMacros"/>
               <xsl:call-template name="normalClasses"/>
-              <xsl:call-template name="entityModules"/>
               <xsl:call-template name="normalMacros"/>
               <xsl:if test="$TEIC='true'">
                 <xsl:text>&#10;&lt;!ENTITY % TEI.extensions.dtd '' &gt;&#10;</xsl:text>

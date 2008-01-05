@@ -15,7 +15,7 @@ XSL stylesheet to process TEI documents using ODD markup
   <xsl:key name="ELEMENTS" match="element" use="@ident"/>
   <xsl:key name="ATTRIBUTES" match="attribute" use="@ident"/>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
-  <xsl:param name="I18N"/>
+  <xsl:param name="I18N">../i18n.xml</xsl:param>
   <xsl:variable name="i18n">
     <xsl:choose>
       <xsl:when test="$I18N=''">
