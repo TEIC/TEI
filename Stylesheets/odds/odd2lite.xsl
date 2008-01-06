@@ -447,9 +447,9 @@
 	      </term>
 	      <xsl:for-each select=".//tei:attDef">
 		<index indexName="ODDS">
-		  <term sortBy="@ident">
+		  <term sortBy="{@ident}">
+		    <xsl:text>@</xsl:text>
 		    <xsl:value-of select="@ident"/>
-		    <xsl:text> (attribute)</xsl:text>
 		  </term>
 		</index>
 	      </xsl:for-each>
@@ -462,7 +462,8 @@
 	      </term>
 	      <xsl:for-each select=".//tei:attDef">
 		<index indexName="ODDS">
-		  <term>
+		  <term sortBy="{@ident}">
+		    <xsl:text>@</xsl:text>
 		    <xsl:value-of select="@ident"/>
 		  </term>
 		</index>

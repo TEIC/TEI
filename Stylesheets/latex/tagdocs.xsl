@@ -36,11 +36,11 @@
     <xsl:choose>
       <xsl:when test="parent::tei:cell">
 	<xsl:text>\mbox{}\\\bgroup</xsl:text>
-	<xsl:call-template name="egXMLStartHook"/>
 	<xsl:text>\exampleFontSet\begin{shaded}</xsl:text>
+	<xsl:call-template name="egXMLStartHook"/>
 	<xsl:apply-templates mode="verbatim"/>
-	<xsl:text>\end{shaded}</xsl:text>
 	<xsl:call-template name="egXMLEndHook"/>
+	<xsl:text>\end{shaded}</xsl:text>
 	<xsl:text>\egroup </xsl:text>
       </xsl:when>
       <xsl:otherwise>
