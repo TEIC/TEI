@@ -36,24 +36,29 @@
     <xsl:choose>
       <xsl:when test="parent::tei:cell">
 	<xsl:text>\mbox{}\\\bgroup</xsl:text>
-	<xsl:call-template name="egXMLHook"/>
+	<xsl:call-template name="egXMLStartHook"/>
 	<xsl:text>\exampleFontSet\begin{shaded}</xsl:text>
 	<xsl:apply-templates mode="verbatim"/>
-	<xsl:text>\end{shaded}\egroup </xsl:text>
+	<xsl:text>\end{shaded}</xsl:text>
+	<xsl:call-template name="egXMLEndHook"/>
+	<xsl:text>\egroup </xsl:text>
       </xsl:when>
       <xsl:otherwise>
       <xsl:text>\par\bgroup</xsl:text>
-      <xsl:call-template name="egXMLHook"/>
+      <xsl:call-template name="egXMLStartHook"/>
       <xsl:text>\exampleFontSet\begin{shaded}\noindent\mbox{}</xsl:text>
       <xsl:apply-templates mode="verbatim"/>
-      <xsl:text>\end{shaded}\egroup\par</xsl:text>
+      <xsl:text>\end{shaded}</xsl:text>
+      <xsl:call-template name="egXMLEndHook"/>
+      <xsl:text>\egroup\par</xsl:text>
       <xsl:if test="parent::tei:p and following-sibling::node()">\noindent </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
 
-<xsl:template name="egXMLHook"/>
+<xsl:template name="egXMLStartHook"/>
+<xsl:template name="egXMLEndHook"/>
 
 <xsl:template match="tei:seg[@rend='specChildren']">
 <xsl:text>\mbox{ }\\ \begin{description}</xsl:text>

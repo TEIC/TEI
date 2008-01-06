@@ -630,11 +630,12 @@ URL to link back to from foot of ODD reference pages
 </xsl:template>
 
   <xd:doc class="hook">
-    <xd:short>[html] Hook where HTML can be inserted when processing
+    <xd:short>[html] Hooks where HTML can be inserted when processing
     &lt;egXML&gt; element</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-<xsl:template name="egXMLHook"/>
+<xsl:template name="egXMLStartHook"/>
+<xsl:template name="egXMLEndHook"/>
 
 <xsl:template name="emphasize">
   <xsl:param name="class"/>

@@ -247,8 +247,17 @@
             test="ancestor::tei:front and $numberFrontHeadings='false'"
             >Star</xsl:when>
         </xsl:choose>
-        <xsl:call-template name="sectionhead"/>
-        <xsl:call-template name="labelme"/>
+	<xsl:text>[</xsl:text>
+	<xsl:value-of select="normalize-space(.)"/>
+	<xsl:text>]</xsl:text>
+	<xsl:text>{</xsl:text>
+	<xsl:apply-templates/>
+	<xsl:text>}</xsl:text>
+	<xsl:if test="../@xml:id">
+	  <xsl:text>\label{</xsl:text>
+	  <xsl:value-of select="../@xml:id"/>
+	  <xsl:text>}</xsl:text>
+	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

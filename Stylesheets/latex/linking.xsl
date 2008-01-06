@@ -94,36 +94,48 @@
     <xsl:param name="body"/>
     <xsl:choose>
       <xsl:when test="key('IDS',$dest)">
-        <xsl:text>\hyperlink{</xsl:text>
-        <xsl:value-of select="$dest"/>
-        <xsl:text>}{</xsl:text>
         <xsl:choose>
           <xsl:when test="not($body='')">
-            <xsl:value-of select="$body"/>
+	    <xsl:text>\hyperlink{</xsl:text>
+	    <xsl:value-of select="$dest"/>
+	    <xsl:text>}{</xsl:text>
+	    <xsl:value-of select="$body"/>
+	    <xsl:text>}</xsl:text>
           </xsl:when>
           <xsl:when test="$ptr='true'">
 	    <xsl:for-each select="key('IDS',$dest)">
 	      <xsl:choose>
 		<xsl:when test="starts-with(local-name(.),'div')">
-		  <xsl:text>\textit{</xsl:text>
+		  <xsl:text>\textit{\hyperref[</xsl:text>
+		  <xsl:value-of select="$dest"/>
+		  <xsl:text>]{</xsl:text>
+		  <xsl:apply-templates mode="xref" select=".">
+		    <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+		  </xsl:apply-templates>
+		  <xsl:text>}}</xsl:text>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:text>\hyperlink{</xsl:text>
+		  <xsl:value-of select="$dest"/>
+		  <xsl:text>}{</xsl:text>
+		  <xsl:value-of select="$body"/>
 		  <xsl:apply-templates mode="xref" select=".">
 		    <xsl:with-param name="minimal" select="$minimalCrossRef"/>
 		  </xsl:apply-templates>
 		  <xsl:text>}</xsl:text>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:apply-templates mode="xref" select=".">
-		    <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-		  </xsl:apply-templates>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:for-each>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:apply-templates/>
-          </xsl:otherwise>
+	    <xsl:text>\hyperlink{</xsl:text>
+	    <xsl:value-of select="$dest"/>
+	    <xsl:text>}{</xsl:text>
+	    <xsl:value-of select="$body"/>
+	    <xsl:apply-templates/>
+	    <xsl:text>}</xsl:text>
+	  </xsl:otherwise>
         </xsl:choose>
-        <xsl:text>}</xsl:text>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>«</xsl:text>

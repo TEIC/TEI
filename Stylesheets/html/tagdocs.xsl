@@ -327,9 +327,10 @@
 	  <xsl:text> cdata</xsl:text>
 	</xsl:if>
       </xsl:attribute>
-      <xsl:call-template name="egXMLHook"/>
+      <xsl:call-template name="egXMLStartHook"/>
       <xsl:call-template name="makeAnchor"/>
       <xsl:apply-templates mode="verbatim"/>
+      <xsl:call-template name="egXMLEndHook"/>
     </div>
   </xsl:template>
 

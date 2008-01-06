@@ -345,16 +345,5 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xd:doc>
-    <xd:short>[latex] </xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="sectionhead">
-    <xsl:text>[</xsl:text>
-    <xsl:value-of select="normalize-space(.)"/>
-    <xsl:text>]</xsl:text>
-    <xsl:text>{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>}</xsl:text>
-  </xsl:template>
+
 </xsl:stylesheet>
