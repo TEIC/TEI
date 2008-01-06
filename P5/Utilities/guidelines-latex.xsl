@@ -73,15 +73,19 @@
 \def\l@subparagraph{\@dottedtocline{5}{7em}{6em}}
 \def\@pnumwidth{3em}
 \setcounter{tocdepth}{2}
-\def\tableofcontents{\clearpage\section*{\contentsname}\@starttoc{toc}}
+\def\tableofcontents{\clearpage
+\pdfbookmark[0]{Table of Contents}{TOC}
+\hypertarget{TOC}{}
+\section*{\contentsname}\@starttoc{toc}}
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
 \def\chaptermark#1{\markboth {\thechapter. \ #1}{}}
 \def\sectionmark#1{\markright { \ifnum \c@secnumdepth >\z@
           \thesection. \ %
         \fi
 	#1}}
-\def\exampleindex#1{{\itshape\hyperpage{#1}}}
-\def\mainexampleindex#1{{\bfseries\itshape\hyperpage{#1}}}
+\def\oddindex#1{{\bfseries\hyperpage{#1}}}
+\def\exampleindex#1{{\itshape\ttfamily\hyperpage{#1}}}
+\def\mainexampleindex#1{{\bfseries\ttfamily\itshape\hyperpage{#1}}}
 \setlength{\leftmargini}{2\parindent}%
 \renewcommand{\@listI}{%
    \setlength{\leftmargin}{\leftmargini}%
@@ -288,25 +292,74 @@
 -->
 <xsl:template match="tei:ident">
   <xsl:apply-imports/>
-    <xsl:if test="@type">
-     <xsl:processing-instruction name="xmltex">
+  <xsl:if test="@type">
+    <xsl:processing-instruction name="xmltex">
       <xsl:text>\index{</xsl:text>
       <xsl:value-of select="normalize-space(.)"/>
       <xsl:text> (</xsl:text>
       <xsl:value-of select="@type"/>
       <xsl:text>)}</xsl:text>
-     </xsl:processing-instruction>
-    </xsl:if>
+    </xsl:processing-instruction>
+  </xsl:if>
 </xsl:template>
 
-<xsl:template name="egXMLHook">
+<xsl:template match="tei:index"/>
+
+<xsl:template match="tei:index[@indexName='ODDS']">
+  <xsl:for-each select="tei:term">
+    <xsl:text>\index{</xsl:text>
+    <xsl:choose>
+      <xsl:when test="@sortBy">
+	<xsl:value-of select="@sortBy"/>
+	<xsl:text>=</xsl:text>
+	<xsl:value-of select="."/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text>|oddindex</xsl:text>
+    <xsl:text>}</xsl:text>
+  </xsl:for-each>
+  <xsl:for-each select="tei:index/tei:term">
+    <xsl:text>\index{</xsl:text>
+    <xsl:choose>
+      <xsl:when test="@sortBy">
+	<xsl:value-of select="@sortBy"/>
+	<xsl:text>=</xsl:text>
+	<xsl:value-of select="."/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text>!</xsl:text>
+    <xsl:value-of select="../../tei:term"/>
+    <xsl:text>|oddindex</xsl:text>
+    <xsl:text>}</xsl:text>
+  </xsl:for-each>
+
+</xsl:template>
+
+
+<xsl:template name="egXMLEndHook">
+  <xsl:if test="@corresp and key('IDS',substring-after(@corresp,'#'))">
+    <xsl:text>\newline [{\footnotesize </xsl:text>
+    <xsl:for-each select="key('IDS',substring-after(@corresp,'#'))">
+      <xsl:apply-templates/>
+    </xsl:for-each>
+    <xsl:text>}]</xsl:text>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template name="egXMLStartHook">
 <xsl:for-each select=".//teix:*">
 <xsl:variable name="Me">
 <xsl:value-of select="local-name(.)"/>
 </xsl:variable>
 <xsl:text>\index{</xsl:text>
 <xsl:value-of select="$Me"/>
-<xsl:text>@</xsl:text>
+<xsl:text>=</xsl:text>
 <xsl:text>&lt;</xsl:text>
 <xsl:value-of select="$Me"/>
 <xsl:text>&gt;</xsl:text>
@@ -319,10 +372,29 @@
   </xsl:otherwise>
 </xsl:choose>
 <xsl:text>}</xsl:text>
+<xsl:for-each select="@*">
+  <xsl:choose>
+    <xsl:when test="starts-with(name(),'xml:')"/>
+    <xsl:otherwise>
+      <xsl:text>\index{</xsl:text>
+      <xsl:value-of select="name()"/>
+      <xsl:text>=@</xsl:text>
+      <xsl:value-of select="name()"/>
+      <xsl:text>!&lt;</xsl:text>
+      <xsl:value-of select="$Me"/>
+      <xsl:text>&gt;</xsl:text>
+      <xsl:text>|exampleindex}</xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:for-each>
-  </xsl:template>
+</xsl:for-each>
+</xsl:template>
+
 
 <xsl:template name="latexEnd">
+\cleardoublepage
+\pdfbookmark[0]{Index}{INDEX}
+\hypertarget{INDEX}{}
 \printindex
 </xsl:template>
 

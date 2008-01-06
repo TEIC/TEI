@@ -134,7 +134,8 @@ pdf: tex
 	cp -r Source/Images/*.* Images
 	-${XELATEX} -interaction=nonstopmode Guidelines
 	-${XELATEX} -interaction=nonstopmode Guidelines
-	makeindex Guidelines
+	makeindex -s p5.ist Guidelines
+	-${XELATEX} -interaction=nonstopmode Guidelines
 	-${XELATEX} -interaction=nonstopmode Guidelines
 	rm -rf Images
 
