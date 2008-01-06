@@ -28,4 +28,10 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
+
+  <xsl:template name="specHook">
+    <xsl:param name="name"/>
+  </xsl:template>
+
+
 </xsl:stylesheet>

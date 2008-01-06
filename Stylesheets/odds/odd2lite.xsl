@@ -422,6 +422,54 @@
     </code>
   </xsl:template>
 
-
+  <xsl:template name="specHook">
+      <xsl:param name="name"/>
+      <index indexName="ODDS">
+	  <xsl:choose>
+	    <xsl:when test="local-name()='macroSpec'">
+	      <term>
+		<xsl:value-of select="$name"/>
+		<xsl:text> (macro)</xsl:text>
+	      </term>
+	    </xsl:when>
+	    <xsl:when test="local-name()='classSpec' and
+			    @type='model'">
+	      <term>
+		<xsl:value-of select="$name"/>
+		<xsl:text> (model class)</xsl:text>
+	      </term>
+	    </xsl:when>
+	    <xsl:when test="local-name()='classSpec' and
+			    @type='atts'">
+	      <term>
+		<xsl:value-of select="$name"/>
+		<xsl:text> (attribute class)</xsl:text>
+	      </term>
+	      <xsl:for-each select=".//tei:attDef">
+		<index indexName="ODDS">
+		  <term sortBy="@ident">
+		    <xsl:value-of select="@ident"/>
+		    <xsl:text> (attribute)</xsl:text>
+		  </term>
+		</index>
+	      </xsl:for-each>
+	    </xsl:when>
+	    <xsl:when test="local-name()='elementSpec'">
+	      <term sortBy="{$name}">
+		<xsl:text>&lt;</xsl:text>
+		<xsl:value-of select="$name"/>
+		<xsl:text>&gt;</xsl:text>
+	      </term>
+	      <xsl:for-each select=".//tei:attDef">
+		<index indexName="ODDS">
+		  <term>
+		    <xsl:value-of select="@ident"/>
+		  </term>
+		</index>
+	      </xsl:for-each>
+	    </xsl:when>
+	  </xsl:choose>
+      </index>
+  </xsl:template>
 
 </xsl:stylesheet>

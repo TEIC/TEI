@@ -48,8 +48,8 @@
       <xsl:call-template name="egXMLStartHook"/>
       <xsl:text>\exampleFontSet\begin{shaded}\noindent\mbox{}</xsl:text>
       <xsl:apply-templates mode="verbatim"/>
-      <xsl:text>\end{shaded}</xsl:text>
       <xsl:call-template name="egXMLEndHook"/>
+      <xsl:text>\end{shaded}</xsl:text>
       <xsl:text>\egroup\par</xsl:text>
       <xsl:if test="parent::tei:p and following-sibling::node()">\noindent </xsl:if>
       </xsl:otherwise>
@@ -210,6 +210,10 @@
 <xsl:text>\hfil\\[-10pt]\begin{sansreflist}</xsl:text>
 <xsl:apply-templates/>
 <xsl:text>\end{sansreflist}</xsl:text>
+</xsl:template>
+
+<xsl:template name="specHook">
+  <xsl:param name="name"/>
 </xsl:template>
 
 

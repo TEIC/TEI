@@ -477,4 +477,9 @@
     </h3>
   </xsl:template>
 
+  <xsl:template name="specHook">
+    <xsl:param name="name"/>
+  </xsl:template>
+
+
 </xsl:stylesheet>

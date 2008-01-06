@@ -80,6 +80,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
@@ -271,6 +272,11 @@
 	<xsl:with-param name="id">
 	  <xsl:value-of select="@ident"/>
 	</xsl:with-param>
+	<xsl:with-param name="name">
+	  <xsl:value-of select="$name"/>
+	</xsl:with-param>
+      </xsl:call-template>
+      <xsl:call-template name="specHook">
 	<xsl:with-param name="name">
 	  <xsl:value-of select="$name"/>
 	</xsl:with-param>
@@ -470,7 +476,12 @@
 	  <xsl:text>&gt;</xsl:text>
 	</xsl:with-param>
       </xsl:call-template>
-    <xsl:element namespace="{$outputNS}" name="{$tableName}">
+      <xsl:call-template name="specHook">
+	<xsl:with-param name="name">
+	  <xsl:value-of select="$name"/>
+	</xsl:with-param>
+      </xsl:call-template>
+      <xsl:element namespace="{$outputNS}" name="{$tableName}">
 	  <xsl:attribute name="{$rendName}">
 	    <xsl:text>wovenodd</xsl:text>
 	  </xsl:attribute>
@@ -941,7 +952,6 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-
     <xsl:element name="{$sectionName}">
       <xsl:call-template name="makeSectionHead">
 	<xsl:with-param name="id">
@@ -951,6 +961,11 @@
 	  <xsl:value-of select="$name"/>
 	</xsl:with-param>
       </xsl:call-template>
+    <xsl:call-template name="specHook">
+      <xsl:with-param name="name">
+	<xsl:value-of select="$name"/>
+      </xsl:with-param>
+    </xsl:call-template>
       <xsl:element namespace="{$outputNS}" name="{$tableName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>wovenodd</xsl:text>
@@ -2145,6 +2160,5 @@
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
-
 
 </xsl:stylesheet>
