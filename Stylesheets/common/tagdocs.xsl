@@ -276,11 +276,6 @@
 	  <xsl:value-of select="$name"/>
 	</xsl:with-param>
       </xsl:call-template>
-      <xsl:call-template name="specHook">
-	<xsl:with-param name="name">
-	  <xsl:value-of select="$name"/>
-	</xsl:with-param>
-      </xsl:call-template>
       <xsl:element namespace="{$outputNS}" name="{$tableName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>wovenodd</xsl:text>
@@ -297,6 +292,11 @@
                 </xsl:attribute>
                 <xsl:value-of select="$name"/>
               </xsl:element>
+	      <xsl:call-template name="specHook">
+		<xsl:with-param name="name">
+		  <xsl:value-of select="$name"/>
+		</xsl:with-param>
+	      </xsl:call-template>
               <xsl:text> </xsl:text>
               <xsl:call-template name="makeDescription"/>
               <xsl:if test="tei:listRef">
