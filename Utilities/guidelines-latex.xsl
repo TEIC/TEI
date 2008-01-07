@@ -83,7 +83,7 @@
           \thesection. \ %
         \fi
 	#1}}
-\def\egxmlcite#1{\raisebox{12pt}[0pt][0pt]{\parbox{.97\textwidth}{\raggedleft #1}}}
+\def\egxmlcite#1{\raisebox{12pt}[0pt][0pt]{\parbox{.96\textwidth}{\raggedleft #1}}}
 \def\oddindex#1{{\bfseries\hyperpage{#1}}}
 \def\exampleindex#1{{\itshape\hyperpage{#1}}}
 \def\mainexampleindex#1{{\bfseries\itshape\hyperpage{#1}}}
@@ -347,11 +347,9 @@
   <xsl:if test="@corresp and key('IDS',substring-after(@corresp,'#'))">
     <xsl:text>\egxmlcite{</xsl:text>
     <xsl:for-each select="key('IDS',substring-after(@corresp,'#'))">
-      <xsl:text>Source: [\hyperref[</xsl:text>
+      <xsl:text>Source: \cite{</xsl:text>
       <xsl:value-of select="@xml:id"/>
-      <xsl:text>]{</xsl:text>
-      <xsl:number/>
-      <xsl:text>}]</xsl:text>
+      <xsl:text>}</xsl:text>
     </xsl:for-each>
     <xsl:text>}</xsl:text>
   </xsl:if>
