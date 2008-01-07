@@ -199,7 +199,7 @@
       <xsl:text>P{.25\textwidth}P{.15\textwidth}P{.5\textwidth}</xsl:text>
     </xsl:when>
     <xsl:when test="@xml:id='tab-mods'">
-      <xsl:text>L{.25\textwidth}P{.4\textwidth}L{.35\textwidth}</xsl:text>
+      <xsl:text>L{.15\textwidth}P{.4\textwidth}L{.35\textwidth}</xsl:text>
     </xsl:when>
     <xsl:when test="@rend='wovenodd'">
       <xsl:text>L{.15\textwidth}P{.85\textwidth}</xsl:text>
@@ -347,9 +347,11 @@
   <xsl:if test="@corresp and key('IDS',substring-after(@corresp,'#'))">
     <xsl:text>\egxmlcite{</xsl:text>
     <xsl:for-each select="key('IDS',substring-after(@corresp,'#'))">
-      <xsl:text>Source: [</xsl:text>
+      <xsl:text>Source: [\hyperref[</xsl:text>
+      <xsl:value-of select="@xml:id"/>
+      <xsl:text>]{</xsl:text>
       <xsl:number/>
-      <xsl:text>]</xsl:text>
+      <xsl:text>}]</xsl:text>
     </xsl:for-each>
     <xsl:text>}</xsl:text>
   </xsl:if>
