@@ -330,6 +330,7 @@ capable of dealing with UTF-8 directly.
   \pagenumbering{roman}
   \def\thechapter{\@roman\c@chapter}
   \def\theHchapter{\alph{chapter}}
+  \def\@chapapp{}%
 }
 \def\mainmatter{%
   \cleardoublepage
@@ -338,6 +339,7 @@ capable of dealing with UTF-8 directly.
   \setcounter{section}{0}
   \pagenumbering{arabic}
   \setcounter{secnumdepth}{6}
+  \def\@chapapp{Chapter}%
   \def\theHchapter{\arabic{chapter}}
 }
 \def\backmatter{%
