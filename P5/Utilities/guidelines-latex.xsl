@@ -83,9 +83,10 @@
           \thesection. \ %
         \fi
 	#1}}
+\def\egxmlcite#1{\raisebox{12pt}[0pt][0pt]{\parbox{.97\textwidth}{\raggedleft #1}}}
 \def\oddindex#1{{\bfseries\hyperpage{#1}}}
-\def\exampleindex#1{{\itshape\ttfamily\hyperpage{#1}}}
-\def\mainexampleindex#1{{\bfseries\ttfamily\itshape\hyperpage{#1}}}
+\def\exampleindex#1{{\itshape\hyperpage{#1}}}
+\def\mainexampleindex#1{{\bfseries\itshape\hyperpage{#1}}}
 \setlength{\leftmargini}{2\parindent}%
 \renewcommand{\@listI}{%
    \setlength{\leftmargin}{\leftmargini}%
@@ -344,11 +345,13 @@
 
 <xsl:template name="egXMLEndHook">
   <xsl:if test="@corresp and key('IDS',substring-after(@corresp,'#'))">
-    <xsl:text>\newline [{\footnotesize </xsl:text>
+    <xsl:text>\egxmlcite{</xsl:text>
     <xsl:for-each select="key('IDS',substring-after(@corresp,'#'))">
-      <xsl:apply-templates/>
+      <xsl:text>Source: [</xsl:text>
+      <xsl:number/>
+      <xsl:text>]</xsl:text>
     </xsl:for-each>
-    <xsl:text>}]</xsl:text>
+    <xsl:text>}</xsl:text>
   </xsl:if>
 </xsl:template>
 
