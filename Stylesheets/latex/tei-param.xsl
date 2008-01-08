@@ -384,12 +384,12 @@ capable of dealing with UTF-8 directly.
     the document</xd:detail>
 </xd:doc>
 <xsl:template name="latexBegin">
-\makeatletter
-\thispagestyle{plain}
+<xsl:text>\makeatletter
+\thispagestyle{plain}</xsl:text>
 <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
   <xsl:call-template name="printTitleAndLogo"/>
 </xsl:if>
-\markright{\@title}%
+<xsl:text>\markright{\@title}%
 \markboth{\@title}{\@author}%
 \makeatother
 \fvset{frame=single,numberblanklines=false,xleftmargin=5mm,xrightmargin=5mm}
@@ -403,7 +403,7 @@ capable of dealing with UTF-8 directly.
 \fancyfoot[LE]{\TheFullDate}
 \fancyfoot[CE]{\thepage}
 \fancyfoot[RE]{\TheID}
-\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
+\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}</xsl:text>
 <xsl:call-template name="beginDocumentHook"/>
 </xsl:template>
 

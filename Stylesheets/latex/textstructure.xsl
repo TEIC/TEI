@@ -161,7 +161,7 @@
 \catcode`\#=12\relax
 \catcode`\%=12\relax&#10;</xsl:text>
 <xsl:text disable-output-escaping="yes">\let\tabcellsep&amp;
-\catcode`\&amp;=12\relax&#10;</xsl:text>
+\catcode`\&amp;=12\relax </xsl:text>
 <xsl:apply-templates select="tei:text"/>
 <xsl:call-template name="latexEnd"/>
 <xsl:text>
@@ -175,7 +175,7 @@
   </xd:doc>
   <xsl:template match="tei:back">
     <xsl:if test="not(preceding::tei:back)">
-   \backmatter
+      <xsl:text>\backmatter </xsl:text>
  </xsl:if>
     <xsl:apply-templates/>
   </xsl:template>
@@ -185,7 +185,7 @@
   </xd:doc>
   <xsl:template match="tei:body">
     <xsl:if test="not(preceding::tei:body)">
-   \mainmatter
+      <xsl:text>\mainmatter </xsl:text>
  </xsl:if>
     <xsl:apply-templates/>
   </xsl:template>
@@ -247,7 +247,7 @@
   </xd:doc>
   <xsl:template match="tei:front">
     <xsl:if test="not(preceding::tei:front)">
-   \frontmatter
+      <xsl:text>\frontmatter </xsl:text>
  </xsl:if>
     <xsl:apply-templates/>
   </xsl:template>
