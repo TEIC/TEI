@@ -132,12 +132,29 @@ pdf: tex
 	which ${XELATEX} || exit 1
 	mkdir -p Images
 	cp -r Source/Images/*.* Images
-	-${XELATEX} -interaction=nonstopmode Guidelines
-	-${XELATEX} -interaction=nonstopmode Guidelines
+	-echo '*' | ${XELATEX} Guidelines
+	-echo '*' | ${XELATEX} Guidelines
 	makeindex -s p5.ist Guidelines
-	-${XELATEX} -interaction=nonstopmode Guidelines
-	-${XELATEX} -interaction=nonstopmode Guidelines
+	-echo '*' | ${XELATEX} Guidelines
+	-echo '*' | ${XELATEX} Guidelines
+	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
 	rm -rf Images
+
+chapterpdf:
+	@echo Checking you have a running ${LATEX} before trying to make PDF...
+	which ${XELATEX} || exit 1
+	mkdir -p Images
+	cp -r Source/Images/*.* Images
+	-echo  ${CHAP} | ${XELATEX} Guidelines
+	rm -rf Images
+
+chapterpdfs:
+	for i in `grep "\\include{" Guidelines.tex | sed 's/.*{\(.*\)}.*/\\1/'`; \
+	do echo PDF for chapter $$i; \
+	make CHAP=$$i chapterpdf; \
+	mv Guidelines.pdf $$i.pdf; \
+	perl -p -i -e 's/.*zf@fam.*//' $$i.aux; \
+	done
 
 validate: schemas oddschema exampleschema valid 
 
@@ -378,7 +395,7 @@ catalogue:
 
 clean:
 	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~ 
-	-rm Guidelines.??? \
+	-rm Guidelines.??? Guidelines-* \
 	p5examples.rng \
 	p5odds.rng \
 	*.xsd \
