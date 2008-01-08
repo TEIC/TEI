@@ -30,7 +30,7 @@
 
   <xsl:variable name="docClass">book</xsl:variable>
 <xsl:template name="latexPreambleHook">
-\usepackage{makeidx}
+\usepackage{makeidx,askinclude}
 \makeindex
 \defaultfontfeatures{Scale=MatchLowercase}
 %\setromanfont{DejaVu Serif}
@@ -47,12 +47,12 @@
 
 
 <xsl:template name="latexBegin">
-\makeatletter
-\thispagestyle{plain}
+<xsl:text>\makeatletter
+\thispagestyle{plain}</xsl:text>
 <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
   <xsl:call-template name="printTitleAndLogo"/>
 </xsl:if>
-\markright{\@title}%
+<xsl:text>\markright{\@title}%
 \markboth{\@title}{\@author}%
 \fvset{frame=single,numberblanklines=false,xleftmargin=5mm,xrightmargin=5mm}
 \fancyhf{} 
@@ -73,7 +73,8 @@
 \def\l@subparagraph{\@dottedtocline{5}{7em}{6em}}
 \def\@pnumwidth{3em}
 \setcounter{tocdepth}{2}
-\def\tableofcontents{\clearpage
+\def\tableofcontents{
+\clearpage
 \pdfbookmark[0]{Table of Contents}{TOC}
 \hypertarget{TOC}{}
 \section*{\contentsname}\@starttoc{toc}}
@@ -83,7 +84,7 @@
           \thesection. \ %
         \fi
 	#1}}
-\def\egxmlcite#1{\raisebox{12pt}[0pt][0pt]{\parbox{.96\textwidth}{\raggedleft #1}}}
+\def\egxmlcite#1{\raisebox{12pt}[0pt][0pt]{\parbox{.95\textwidth}{\raggedleft #1}}}
 \def\oddindex#1{{\bfseries\hyperpage{#1}}}
 \def\exampleindex#1{{\itshape\hyperpage{#1}}}
 \def\mainexampleindex#1{{\bfseries\itshape\hyperpage{#1}}}
@@ -163,8 +164,7 @@
      {-1.75ex\@plus -0.5ex \@minus- .2ex}%
      {0.5ex \@plus .2ex}%
      {\reset@font\Large\sffamily}}
-
-\makeatother
+\makeatother </xsl:text>
 <xsl:call-template name="beginDocumentHook"/>
 </xsl:template>
 
@@ -395,10 +395,14 @@
 
 
 <xsl:template name="latexEnd">
+<xsl:text>\include{Guidelines-index}
+</xsl:text>
+<exsl:document href="Guidelines-index.tex" method="text" encoding="utf8">
 \cleardoublepage
 \pdfbookmark[0]{Index}{INDEX}
 \hypertarget{INDEX}{}
 \printindex
+</exsl:document>
 </xsl:template>
 
   <xsl:template name="numberFrontDiv">
@@ -411,6 +415,42 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:template match="tei:div[parent::tei:front| parent::tei:body|parent::tei:back]">
+    <xsl:text>\include{Guidelines-</xsl:text>
+    <xsl:value-of select="@xml:id"/>
+    <xsl:text>}&#10;</xsl:text>
+    <exsl:document 
+	href="Guidelines-{@xml:id}.tex" 
+	method="text" 
+	encoding="utf8">
+    <xsl:apply-templates/>
+    </exsl:document>
+  </xsl:template>
+
+  <xsl:template match="tei:divGen[@type='toc']">
+    <exsl:document 
+	href="Guidelines-toc.tex" 
+	method="text" 
+	encoding="utf8">
+      \tableofcontents
+    </exsl:document>
+  </xsl:template>
+
+  <xsl:template match="tei:titlePage">
+<xsl:text>
+\include{Guidelines-titlepage} 
+</xsl:text>
+    <exsl:document 
+	href="Guidelines-titlepage.tex" 
+	method="text" 
+	encoding="utf8">
+  \begin{titlepage}
+<xsl:apply-templates/>
+  \maketitle
+  \end{titlepage}
+  \cleardoublepage
+    </exsl:document>
+  </xsl:template>
 
 </xsl:stylesheet>
 
