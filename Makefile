@@ -140,21 +140,20 @@ pdf: tex
 	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
 	rm -rf Images
 
-chapterpdf:
+
+chapterpdfs:
 	@echo Checking you have a running ${LATEX} before trying to make PDF...
 	which ${XELATEX} || exit 1
 	mkdir -p Images
 	cp -r Source/Images/*.* Images
-	-echo  ${CHAP} | ${XELATEX} Guidelines
-	rm -rf Images
-
-chapterpdfs:
 	for i in `grep "\\include{" Guidelines.tex | sed 's/.*{\(.*\)}.*/\\1/'`; \
 	do echo PDF for chapter $$i; \
-	make CHAP=$$i chapterpdf; \
+	-echo  $$i | ${XELATEX} Guidelines
+	-echo  $$i | ${XELATEX} Guidelines
 	mv Guidelines.pdf $$i.pdf; \
 	perl -p -i -e 's/.*zf@fam.*//' $$i.aux; \
 	done
+	rm -rf Images
 
 validate: schemas oddschema exampleschema valid 
 
