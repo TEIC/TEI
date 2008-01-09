@@ -332,6 +332,7 @@
         </div>
       </xsl:when>
       <xsl:otherwise>
+
         <xsl:variable name="sectvar">
           <xsl:text>div</xsl:text>
         </xsl:variable>
@@ -457,6 +458,11 @@
     <xsl:text>&quot;</xsl:text>
     <xsl:call-template name="id.attribute.literal"/>
     <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
+<!--
+<xsl:message>*HEAD <xsl:value-of select="."/>: <xsl:value-of
+select="$current"/>:<xsl:value-of select="$prev"/></xsl:message>
+-->
+
     <xsl:choose>
       <xsl:when test="$current &gt; $prev+1">
         <head/>
@@ -472,11 +478,18 @@
         <xsl:variable name="this">
           <xsl:value-of select="generate-id()"/>
         </xsl:variable>
+<!--
+<xsl:message> .. [ headchildren <xsl:value-of
+select="$this"/></xsl:message>
+-->
         <xsl:for-each select="key('headchildren', $this)">
           <xsl:if test="not(parent::text:h)">
             <xsl:apply-templates select="."/>
           </xsl:if>
         </xsl:for-each>
+<!--
+<xsl:message> .. <xsl:value-of select="$this"/>]</xsl:message>
+-->
 	<xsl:choose>
 	  <xsl:when test="$current=1">
 	    <xsl:apply-templates select="key('children1',
@@ -586,6 +599,10 @@
       </xsl:when>
       <xsl:when test="normalize-space(.)=''"/>
       <xsl:otherwise>
+<!--
+<xsl:message>P: <xsl:value-of
+select="substring(.,1,50)"/></xsl:message>
+-->
         <p>
           <xsl:apply-templates/>
         </p>
@@ -1139,6 +1156,14 @@
     <xsl:comment>
       <xsl:value-of select="."/>
     </xsl:comment>
+  </xsl:template>
+
+  <xsl:template match="text:user-index-mark">
+    <index indexName="{@text:index-name}">
+      <term>
+	<xsl:value-of select="@text:string-value"/>
+      </term>
+    </index>
   </xsl:template>
 
   <xsl:template match="text:alphabetical-index-mark">
