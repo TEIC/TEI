@@ -64,8 +64,10 @@
 	   | office:annotation | text:ordered-list | text:list |
 	   text:note | text:a | text:list-item | draw:plugin |
 	   draw:text-box | text:note-body | text:section" 
-    use="generate-id((..|preceding-sibling::text:h[@text:outline-level])[last()])"/>
+use="generate-id(
+   preceding-sibling::text:h[@text:outline-level][last()])"/>
 
+<!-- did have ..| -->
   <xsl:key match="text:h[@text:outline-level='2']" name="children1"
     use="generate-id(preceding-sibling::text:h[@text:outline-level='1'][1])"/>
 
@@ -458,10 +460,9 @@
     <xsl:text>&quot;</xsl:text>
     <xsl:call-template name="id.attribute.literal"/>
     <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
-<!--
+
 <xsl:message>*HEAD <xsl:value-of select="."/>: <xsl:value-of
 select="$current"/>:<xsl:value-of select="$prev"/></xsl:message>
--->
 
     <xsl:choose>
       <xsl:when test="$current &gt; $prev+1">
@@ -478,22 +479,27 @@ select="$current"/>:<xsl:value-of select="$prev"/></xsl:message>
         <xsl:variable name="this">
           <xsl:value-of select="generate-id()"/>
         </xsl:variable>
-<!--
+
 <xsl:message> .. [ headchildren <xsl:value-of
 select="$this"/></xsl:message>
--->
+
         <xsl:for-each select="key('headchildren', $this)">
           <xsl:if test="not(parent::text:h)">
             <xsl:apply-templates select="."/>
           </xsl:if>
         </xsl:for-each>
-<!--
+
 <xsl:message> .. <xsl:value-of select="$this"/>]</xsl:message>
--->
+
 	<xsl:choose>
 	  <xsl:when test="$current=1">
+<xsl:message> .. [ children1 <xsl:value-of
+select="$this"/></xsl:message>
+
 	    <xsl:apply-templates select="key('children1',
 					 generate-id())"/>
+<xsl:message> .. children1 <xsl:value-of
+select="$this"/>]</xsl:message>
 	  </xsl:when>
 	  <xsl:when test="$current=2">
 	    <xsl:apply-templates select="key('children2',
@@ -599,10 +605,14 @@ select="$this"/></xsl:message>
       </xsl:when>
       <xsl:when test="normalize-space(.)=''"/>
       <xsl:otherwise>
-<!--
-<xsl:message>P: <xsl:value-of
+
+<xsl:message>P: <xsl:for-each
+    select="preceding-sibling::text:h[@text:outline-level][last()]">parent is <xsl:value-of select="generate-id()"/>
+</xsl:for-each>
+<xsl:text> </xsl:text>
+<xsl:value-of
 select="substring(.,1,50)"/></xsl:message>
--->
+
         <p>
           <xsl:apply-templates/>
         </p>
