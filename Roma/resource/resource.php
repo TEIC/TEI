@@ -34,11 +34,14 @@ class resource
     private function readFile( $szPath )
       {
 	$aszFile = file( $szPath . '.res' );
-	
 	$szLang = '';
 
 	foreach( $aszFile as $szLine )
 	  {
+// chop carriage return
+        $szLine = substr($szLine, 0, -1); 
+
+	if ( $szLine != '' ) {
 	    switch( substr( $szLine, 0, 1 ) )
 	      {
 	      case '#':
@@ -51,6 +54,7 @@ class resource
 		list( $key, $value ) = explode( '=', $szLine, 2 );
 		$this->m_aszRessource[ $szLang ][ $key ] = $value;
 		break;
+	      	}
 	      }
 	  }
       }
