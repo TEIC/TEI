@@ -614,9 +614,10 @@ several.  </p></div>
 one component, and thus needs additionally to specify the order in
 which these patterns (<gi scheme="imaginary">heading_p</gi> and <gi scheme="imaginary">stanza_p</gi>) may appear.
 This ordering is determined by the <term>connector</term> (the comma)
-used between its components.  There are two possible connectors: the
-comma, representing sequence, and the vertical bar, representing
-choice.  If the comma in this example were replaced by a vertical
+used between its components.  The
+comma connector indicates that the patterns concerned must appear in
+the sequence given. Another commonly encountered connector is the
+vertical bar, representing alternation. If the comma in this example were replaced by a vertical
 bar, then a <gi scheme="imaginary">poem</gi> would consist of either a heading or just
 stanzas – but not both!</p></div>
 <div type="div4" xml:id="SG146"><head>Groups</head>
@@ -631,7 +632,7 @@ demonstration, we will categorize poems as one of the following:
 <term>stanzaic</term>, <term>couplets</term>, or <term>blank</term>
 (or <term>stichic</term>).  A blank-verse poem consists simply of
 lines (we ignore the possibility of verse paragraphs for the
-moment), <note place="foot">It will not have escaped the astute reader
+moment),<note place="foot">It will not have escaped the astute reader
 that the fact that verse paragraphs need not start on a line boundary
 seriously complicates the issue; see further section <ptr target="#SG152"/>.</note> so no additional elements need be defined
 for it.  A couplet is defined as a <gi scheme="imaginary">firstLine</gi> followed by a
@@ -670,15 +671,14 @@ assuming we have also added a pattern for the
 line { (text | name_p )* }</eg>
 </p>
 
-<p>XML places constraints on the way that mixed content models may be
-defined. In brief, if <code>text</code> appears with other elements in
-a content model: it must always appear as the first option in an
-alternation; it may appear once only, and in the outermost model
-group; and if the group containing it is repeated, the star operator
-must be used.<note place="foot">The (good) rationale for these
-restrictions is beyond the scope of this tutorial, as are the
-consequences of attempting to evade them. The TEI content models all
-obey these constraints.</note></p>
+<p>Some XML schema languages place no constraints on the way that
+mixed content models may be defined, but in the XML DTD language, when
+<code>text</code> appears with other elements in a content model: it
+must always appear as the first option in an alternation; it may
+appear once only, and in the outermost model group; and if the group
+containing it is repeated, the star operator must be used. Although
+these constraints do not apply to (for example) schemas expressed in
+the RELAX NG language, all TEI content models currently obey them.</p>
 
 <p>Quite complex models can easily be built up in this way, to match
 the structural complexity of many types of text.  As a further
