@@ -14,7 +14,8 @@ makeODD()
     if test "x$lang" = "x"
     then
 	xmllint --noent --xinclude $ODD \
-	    | xsltproc -o $RESULTS/$ODD.compiled $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
+	    | xsltproc -o $RESULTS/$ODD.compiled \
+	    $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
 	    $DEBUG  $TEIXSLDIR/odds/odd2odd.xsl -
@@ -218,7 +219,7 @@ if test "x$doclang" = "x"
 then
   DOCLANG=" "
 else 
-  DOCLANG=" --stringparam doclang $doclang "
+  DOCLANG=" --stringparam doclang $doclang --stringparam documentationLanguage $doclang"
 fi
 
 if test "x$lang" = "x"
