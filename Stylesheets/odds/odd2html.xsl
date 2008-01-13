@@ -70,7 +70,7 @@
   <xsl:param name="numberBackHeadings">A.1</xsl:param>
   <xsl:param name="numberFrontHeadings"></xsl:param>
   <xsl:param name="oddmode">html</xsl:param>
-  <xsl:param name="pageLayout">CSS</xsl:param>
+  <xsl:param name="pageLayout">Simple</xsl:param>
   <xsl:param name="prenumberedHeadings">false</xsl:param>
   <xsl:param name="searchURL"/>
   <xsl:param name="searchWords"/>
