@@ -1191,7 +1191,7 @@ specifically for critical editions is described in chapter <ptr target="#TC"/>.<
 <p>For most of the elements discussed here, some encoders may wish to
 indicate both a <term>responsibility</term>, that is, a code
 indicating the person or agency responsible for making the editorial
-intervention in question, and also am indication of the degree of
+intervention in question, and also an indication of the degree of
 <term>certainty</term> which the encoder wishes to associate with the
 intervention. Because these requirements are common to many of the
 elements discussed in this section, they are provided by an attribute
@@ -1630,7 +1630,7 @@ names and dates module (see chapter <ptr target="#ND"/>).</p>
 
 <div type="div3" xml:id="CONARS"><head>Referring Strings</head>
 <p>A <term>referring string</term> is a phrase which refers to some
-person, place, object etc. Two elements are provided to mark such
+person, place, object, etc. Two elements are provided to mark such
 strings:
 <specList>
 <specDesc key="rs"/>
@@ -2065,7 +2065,7 @@ are generally optional.
 <att>when</att> attribute by simply omitting a part of the value
 supplied.  Imprecise dates or times (for example <mentioned>early
 August</mentioned>, <mentioned>some time after ten and before twelve</mentioned>)
-may be expressed as date or time ranges. <!-- If either end of the date or
+may be expressed as date or time ranges. <!-- If either the end of the date or
 time range is known to be accurate (for example, <mentioned>at some time
 before 1230</mentioned>, <mentioned>a few days after Hallowe'en</mentioned>), the
 <att>exact</att> attribute may be used to specify this. -->
@@ -2304,7 +2304,7 @@ an analytic index is to be encoded, as in the following example:
 	<!-- 1846, p743                                               -->
 Here the targets of the cross references are simply page numbers; it
 is assumed that corresponding elements with identifiers
-<ident>p299</ident>,  <ident>p143</ident>, etc. have been provided in
+<ident>p299</ident>, <ident>p143</ident>, etc. have been provided in
 the body of the text, for example as page breaks
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <pb xml:id="p143"/>
@@ -2617,20 +2617,21 @@ in the margin, or in some other place.
 editorial, and may have been added later.  Attributes may be used to
 specify these and other characteristics of notes, as detailed below.
  </p>
-<p>Where possible, the body of a note should be inserted in the text at
-the point at which its identifier or mark first appears.  This may not
-be possible for example with marginal notes, which may not be anchored
-to an exact location.  For simplicity, it may be adequate to position
-marginal notes before the relevant paragraph or other element.  In some
-cases, however, it may be desirable to transcribe notes not at their
-point of attachment to the text but at their point of appearance (at the
-end of the volume, or the end of the chapter — not, in general, when
-the notes appear at the foot of the page); in this case the
-<att>target</att> and <att>targetEnd</att> attributes should be used to
-specify the point of attachment.  In some cases, the note is explicitly
-attached not to a point but to a span of text; for a full discussion of
-pointing to points and spans in the text, see section <ptr target="#COXR" />.
- </p>
+<p>Where possible, the body of a note should be inserted in the text
+at the point at which its identifier or mark first appears. This may
+not be possible for example with marginal notes, which may not be
+anchored to an exact location. For simplicity, it may be adequate to
+position marginal notes before the relevant paragraph or other
+element. In some cases, however, it may be desirable to transcribe
+notes not at their point of attachment to the text but at their point
+of appearance (at the end of the volume, or the end of the chapter —
+not, in general, when the notes appear at the foot of the page); in
+this case the <att>target</att> attribute should be used to specify
+the point of attachment. In some cases, the note is explicitly
+attached not to a point but to a span of text; in which case both the
+<att>target</att> and <att>targetEnd</att> attributes should be used
+to specify the span of attachment. For a full discussion of pointing
+to points and spans in the text, see section <ptr target="#COXR" />.</p>
 <p>Examples:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#CONONO-eg-189"><l>The self-same moment I could pray</l>
 <l>And from my neck so free</l>
@@ -3813,8 +3814,8 @@ part of a collection which itself appears in a series thus has a
 bibliographic description with three quite distinct levels of
 information:
 <list type="ordered">
-<item>the <term rend="noindex">analytic</term><!--<index><term>analytic level</term><index><term>bibliographic</term></index></index>
-level, giving the title, author, etc., of the article;-->
+<item>the <term rend="noindex">analytic</term><!--<index><term>analytic level</term><index><term>bibliographic</term></index></index>-->
+level, giving the title, author, etc., of the article;
  </item>
 <item>the <term rend="noindex">monographic</term><!--<index><term>monographic level</term><index><term>bibliographic</term></index></index>-->
 level, giving the title, editor, etc., of the collection;
@@ -3894,7 +3895,7 @@ German language series:
 </biblStruct></egXML>
  </p>
 
-<p>The practice of analytic vs monographic citation, as described here,
+<p>The practice of analytic vs. monographic citation, as described here,
 should be distinguished from the practice of including within one
 citation a reference to another work, which the encoder considers
 to be related to in some way: see further <ptr target="#COBIRI"/> below.</p>
@@ -3955,7 +3956,7 @@ value <val>a</val> implies the analytic level; the values
 <val>m</val>, <val>j</val>, and <val>u</val> imply the monographic level; the value <val>s</val> implies the series level.  Note, however, that the
 semantic error occurs only if the nested title is directly enclosed by
 the <gi>analytic</gi>, <gi>monogr</gi>, or <gi>series</gi> element; if
-it is enclosed only indirectly, no semantic error need be present.  For
+it is enclosed only indirectly (i.e., nested more deeply), no semantic error need be present.  For
 example, the analytic title may contain a monographic title:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
    <analytic>
@@ -4403,7 +4404,7 @@ as in the example in section <ptr target="#COBICOL"/>) may be tagged
 <div type="div4" xml:id="COBIRI"><head>Related items</head>
 
 <p>In bibliographic parlance, a <term>related item</term> is any
-bibliographic item which though related to that being defined is
+bibliographic item which, though related to that being defined, is
 distinct from it. The distinction between analytic and monographic
 items made above may be thought of as a special case  of this kind of <q>related</q>
 item. More usually however, the term is applied to such items as
@@ -4636,7 +4637,7 @@ defined for use in the Scribe and BibTeX systems of bibliographic
 databases and the elements defined in this module.<note place="foot">The BibTeX scheme is
 intentionally compatible with that of Scribe, although it omits some
 fields used by Scribe. Hence only one list of fields is given
-here.</note>Elements and structures available in the module defined here which
+here.</note> Elements and structures available in the module defined here which
 have no analogues in Scribe and BibTeX are not noted.
 <list type="gloss">
   <label>address</label>
@@ -4996,7 +4997,7 @@ incomplete:
 <add place="right">Now call'd <name xml:id="barnardo">Bernardo</name> &amp; 
 <name xml:id="francisco">Francesco</name>.</add></stage>
 <sp who="#francisco"> <speaker>1.</speaker>
-   <l part="Y">STand: who is that?</l>
+   <l part="Y">Stand: who is that?</l>
 </sp>
 <sp who="#barnardo"> <speaker>2.</speaker>
    <l part="Y">Tis I.</l>
