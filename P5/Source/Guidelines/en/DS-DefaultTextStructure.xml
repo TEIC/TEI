@@ -22,7 +22,7 @@ constituents. </p>
 defined for the representation of language corpora, or other
 collections of encoded texts. A <gi>teiCorpus</gi> consists of one or
 more complete <gi>TEI</gi> elements, each combining a
-<gi>teiHeader</gi> and a <gi>text</gi>, which itself carries a
+<gi>teiHeader</gi> and a <gi>text</gi> which itself carries a
 <gi>teiHeader</gi>. This permits the encoder to distinguish metadata
 applicable to the whole collection of encoded texts, which is
 represented by the outermost <gi>teiHeader</gi>, from that applicable
@@ -342,14 +342,14 @@ to some extent on the complexity of the material: un-numbered
 divisions allow for an arbitrary depth of nesting, while numbered
 divisions limit the depth of the tree which can be constructed.  Where
 divisions at different levels should be processed differently (for
-example to ensure that chapters, but not sections begin on a new
+example to ensure that chapters, but not sections, begin on a new
 page), numbered divisions slightly simplify the task of defining the
 desired processing for each level, though this distinction could also
 be made by supplying this information on the <att>type</att> attribute
 of an un-numbered <gi>div</gi>.  Some software may find numbered
 divisions easier to process, as there is no need to maintain knowledge
 of the whole document structure in order to know the level at which a
-division occurs; such software may however find it difficult to cope
+division occurs; such software may, however, find it difficult to cope
 with some other aspects of the TEI scheme.  On the other hand, in a
 collection of many works it may prove difficult or impossible to
 ensure that the same numbered division always corresponds with the
@@ -461,16 +461,28 @@ Equivalently, using the numbered style:
 
 Now, assuming a customization in which a new element
 <gi scheme="imaginary">diaryEntry</gi> has been added to the <ident type="class">model.divLike</ident> class: <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:my="http://www.example.org/ns/nonTEI"><body>
-
-
+<my:diaryEntry type="entry" n="1">
+  <my:diaryEntry type="morning" n="1.1"><p>....</p></my:diaryEntry>
+  <my:diaryEntry type="afternoon" n="1.2"><p>....</p></my:diaryEntry>
+</my:diaryEntry>
+<my:diaryEntry type="entry" n="1">
+  <my:diaryEntry type="morning" n="1.1"><p>....</p></my:diaryEntry>
+  <my:diaryEntry type="afternoon" n="1.2"><p>....</p></my:diaryEntry>
+ </my:diaryEntry>
 <!-- ...-->
 </body></egXML>
 
 And finally, assuming a customization in which three new elements have
 been added: <gi scheme="imaginary">diaryEntry</gi> to the <ident type="class">model.div1</ident> class, and <gi scheme="imaginary">amEntry</gi> and
-<gi scheme="imaginary">pmEntry</gi> both to the to the <ident type="class">model.div2</ident> class: <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:my="http://www.example.org/ns/nonTEI"><body>
-
-
+<gi scheme="imaginary">pmEntry</gi> both to the <ident type="class">model.div2</ident> class: <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:my="http://www.example.org/ns/nonTEI"><body>
+<my:diaryEntry type="entry" n="1">
+   <my:amEntry type="morning" n="1.1"><p>....</p></my:amEntry>
+   <my:pmEntry type="afternoon" n="1.2"><p>....</p></my:pmEntry>
+ </my:diaryEntry>
+ <my:diaryEntry type="entry" n="1">
+   <my:amEntry type="morning" n="1.1"><p>....</p></my:amEntry>
+   <my:pmEntry type="afternoon" n="1.1"><p>....</p></my:pmEntry>
+ </my:diaryEntry>
 <!-- ... -->
 </body></egXML>
 </p>
@@ -503,10 +515,14 @@ with a <gi>div</gi> element in the following form:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div n="xx" sample="initial" part="Y" type="chapter">
   <p> ... </p>
 </div></egXML>
-where <q>xx</q> represents a number for the chapter.  The <gi>gap</gi>
+where <val>xx</val> represents a number for the chapter, and the
+<att>part</att> attribute takes the value <val>Y</val> to indicate
+that this division is incomplete in some respect. Other possible
+values for this attribute indicate whether material has been omitted at the end
+(F), the beginning (B), or in the middle (M) of the division, while the <gi>gap</gi>
 element (<ptr target="#COEDADD"/>) may be used to indicate exactly
 where material has been omitted: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div n="xx" part="Y" type="chapter">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div n="xx" part="M" type="chapter">
   <p> ... </p>
   <gap extent="2" reason="sampling"/>
   <p> ... </p>
@@ -613,7 +629,7 @@ element, section <ptr target="#DSAE"/>.</p>
 
 <p>The <gi>head</gi> element is used to identify a heading prefixed to
 the start of any textual division, at any level. A given division may
-of course contain more than one such element, as in the following example:
+contain more than one such element, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DSHD-eg-30"><div1 n="Etym">
 <head>Etymology</head>
 <head>(Supplied by a late consumptive usher to a
@@ -646,7 +662,7 @@ heading. These attributes are provided, as elsewhere, by the <ident type="class"
  </p>
 <p>In the following example, taken from a British newspaper, the lead
 story and its associated headlines have been encoded  as a <gi>div</gi>
-element, with appropriate <term>divtop</term> elements attached:
+element, with appropriate <ident type="class">model.divTop</ident> elements attached:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DSHD-eg-31"><div type="story">
 <head rend="underlined" type="sub">
 President pledges safeguards for 2,400 British
@@ -891,7 +907,7 @@ modules in use; in all cases, at least the component-level structural
 elements defined in the core will be available (paragraphs, lists,
 dramatic speeches, verse lines and line groups etc.). If the drama
 module has been selected, then other component- or phrase- level items
-specialised for performance texts (for example, cast lists, or camera
+specialised for performance texts (for example, cast lists or camera
 angles) will be available, as defined in
 chapter <ptr target="#DR"/>) will be available. If the dictionary
 module is in use, then dictionary entries, related entries, etc. (as
@@ -899,7 +915,7 @@ defined in chapter <ptr target="#DI"/>) will also be available; if the
 module for transcribed speech is in use, then utterances, pauses,
 vocals, kinesics, etc., as defined in chapter <ptr target="#TSBA"/>
 will be available; and so on.</p>
-<p>Where a text contains low level elements from more than one
+<p>Where a text contains low-level elements from more than one
 module these may appear at any point; there is no requirement that
 elements from the same module be kept together.</p>
 <specGrp xml:id="DDSDIVX">
@@ -1056,7 +1072,7 @@ therefore be encoded as such. It is rather more arbitrary as to
 whether the two posthumous collections should be treated as two
 groups, following the practice of the <title>Muses Library</title>
 edition. An encoder might elect to combine the two into a single
-group, or simply to treat each fragment as an ungrouped unitary text.
+group or simply to treat each fragment as an ungrouped unitary text.
  </p>
 <p>The <title>Muses Library</title> edition reprints the whole of each
 of the three original collections, including their original front
@@ -1427,7 +1443,7 @@ processing instruction, or by using the special purpose
 element. The <gi>divGen</gi> element is a member of the
 <ident type="class">att.typed</ident> class, from which it  inherits the
 <att>type</att> and <att>subtype</att> attributes. It may appear
-wherever a <gi>div</gi> or <gi>div1</gi> element may appear.</p>
+wherever a <gi>div</gi> or <gi>div1</gi> (<gi>div2</gi>, etc.)  element may appear.</p>
 
 
 
@@ -1441,8 +1457,8 @@ of some text with a translated version of it, it may be desired to
 represent  the transcript, the translation, and an aligned version of
 the two as three distinct divisions. This could be achieved by an
 encoding like the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><div><!-- transcript
-							  here--></div>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><div>
+<!-- transcript here--></div>
 <div><!-- translation here --></div> <divGen type="alignment"/></egXML> The processing to be carried out when a
 <gi>divGen</gi> element is rendered will be determined by the
 application program or stylesheet in use: the function of the TEI
@@ -1528,7 +1544,7 @@ in the next example, this time containing a table of contents, which
 contains a <gi>list</gi> element (as described in section 
 <ptr target="#COLI"/>).  Note the use of the <gi>ptr</gi> element to provide
 page-references:  the implication here is that the target identifiers
-supplied (fish1, fish2 etc.) will correspond with identifiers used  for
+supplied (fish1, fish2, etc.) will correspond with identifiers used  for
 the <gi>div</gi> elements containing chapters of the text itself. (For the
 <gi>ptr</gi> element, see <ptr target="#COXR"/>.)  
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DS-eg-05"><div type="contents">
@@ -1655,7 +1671,7 @@ from this class can appear grouped together within a
 <gi>titlePage</gi> element. The <gi>figure</gi> element is included so
 as to enable encoders to record the presence of complex non-textual
 material on a title page. For simple cases such as printers'
-ornaments, illustrations, etc. the <gi>graphic</gi> element discussed
+ornaments or illustrations the <gi>graphic</gi> element discussed
 in section <ptr target="#COGR"/> should be adequate.  </p>
 <p>The elements listed above, together with the <gi>head</gi> element,
 also constitute the class <ident type="class">model.pLike.front</ident>. The elements in this class can
@@ -1710,9 +1726,9 @@ where necessary:
 <p>Where, as here, it is considered important to encode salient
 features of the way a title page was originally rendered,
 the techniques exemplified in <ptr target="#HD57"/> may also be
-useful. 
+useful. </p>
+
 <specGrp xml:id="DDSTPAGE">
-<!--n="Tags for title pages"-->
 &titlePage;
 &docTitle;
 &titlePart;
@@ -1722,14 +1738,14 @@ useful.
 &docImprint;
 &docDate;
 </specGrp>
-</p>
+
 <p>Where title pages are encoded, their physical rendition is
 often of considerable importance.  One approach to this requirement
 would be to use the <gi>seg</gi> tag, described in chapter <ptr target="#SA"/>, to segment the typographic content of each part of the
 title page, and then use the global <att>rend</att> attribute to specify
 its rendition.  Another would be to use a module specialized for the
 description of typographic entities such as pages, lines, rules, etc.,
-bearing special-purpose attributes to describe line height, leading,
+bearing special-purpose attributes to describe line-height, leading,
 degree of kerning, font, etc. Further discussion of these problems is
 provided in chapter <ptr target="#PH"/>.
  </p>
