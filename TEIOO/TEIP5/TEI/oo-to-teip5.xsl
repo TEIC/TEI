@@ -67,6 +67,14 @@
     use="generate-id(
 	 preceding-sibling::text:h[@text:outline-level][1])"/>
 
+  <xsl:key
+    name="headchildren"
+    match=" text:p | text:alphabetical-index | table:table | text:span
+	   | office:annotation | text:ordered-list | text:list |
+	   text:note | text:a | text:list-item | draw:plugin |
+	   draw:text-box | text:note-body | text:section" 
+    use="generate-id(parent::office:text)"/>
+
 <!-- did have ..| -->
 
   <xsl:key match="text:h[@text:outline-level='2']" name="children1"
@@ -155,7 +163,7 @@
 
   <xsl:output encoding="utf-8" indent="yes"/>
 
-  <xsl:strip-space elements="text:span"/>
+<!--  <xsl:strip-space elements="text:span"/>-->
 
   <xsl:variable name="document-title">
     <xsl:choose>
@@ -868,7 +876,7 @@
       <xsl:when test="../text:h">
         <xsl:apply-templates/>
       </xsl:when>
-      <xsl:when test="normalize-space(.)=''"/>
+<!--      <xsl:when test="normalize-space(.)=''"/>-->
       <xsl:otherwise>
         <xsl:call-template name="applyStyle"/>
       </xsl:otherwise>
