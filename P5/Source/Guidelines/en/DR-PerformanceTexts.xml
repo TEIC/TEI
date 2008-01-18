@@ -428,7 +428,7 @@ For non-speaking or un-named roles, a <gi>castItem</gi> may contain a
  </p>
 <p>When a list of such minor roles is given together, the
 <att>type</att> attribute of the <gi>castItem</gi> should indicate that
-it contains more than one role.  The encoder may or may not elect to
+it contains more than one role, by taking a value such as <val>list</val>.  The encoder may or may not elect to
 encode each separate constituent within such a composite
 <gi>castItem</gi>.  Thus, either of the following is acceptable:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><castItem type="list">Constables, Drawer, Turnkey, etc.</castItem>
@@ -741,12 +741,12 @@ possibilities.
 <stage type="location">At a window.</stage>
 <stage type="novelistic">Having had enough, and embarrassed
      for the family.</stage></egXML></p>
-<p>Where possible, the values used for the <att>type</att> attribute on
-<gi>stage</gi> elements should be defined within the <gi>tagUsage</gi>
+<p>The meaning of the values used for the <att>type</att> attribute on
+<gi>stage</gi> elements may be defined within the <gi>tagUsage</gi>
 element of the TEI header (described in section <ptr target="#HD57"/>).
 For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><tagUsage gi="stage">This element is used for all stage directions,
-  editorial or authorial. The type= attribute on this element takes
+  editorial or authorial. The type attribute on this element takes
   one or more of the following values:
   <list type="gloss">
 	<label>setting</label>
@@ -761,6 +761,32 @@ For example:
 	<item>describes character's emotional state or through line</item>
   </list>
 </tagUsage></egXML></p>
+<p>This approach is purely documentary; in a real project it would generally be more effective  to define the range of
+permitted values explicitly within the project's schema specification,
+using the techniques described in chapter <ptr target="#MD"/>. For
+example, a specification like the following might be used to produce a
+schema in which the <att>type</att> attribute of the
+<gi>stage</gi> element is permitted to take only the values listed
+above:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<schemaSpec ident="myDrama">
+<moduleRef key="core"/>
+<moduleRef key="structure"/>
+<moduleRef key="header"/>
+<moduleRef key="drama"/>
+<elementSpec ident="stage" mode="change">
+<attList>
+<attDef ident="type">
+<valList type="closed">
+<valItem ident="setting"><desc>describes the set</desc></valItem>
+<valItem ident="blocking"><desc>describes movement across stage, position, etc.</desc></valItem>
+<valItem ident="business"><desc>describes movement other than blocking</desc></valItem>
+<valItem ident="delivery"><desc>describes how the line is said</desc></valItem>
+<valItem ident="motivation"><desc>describes character's emotional state or through line</desc>
+</valItem>
+</valList>
+</attDef></attList></elementSpec></schemaSpec></egXML>
+</p>
 <p>The <gi>stage</gi> element may appear both between and within
 <gi>sp</gi> elements.  It may contain a mixture of phrase level
 elements, possibly combined into paragraphs, as in the following
@@ -788,7 +814,7 @@ discussed in section <ptr target="#DROTH"/>.</p>
 <p>The <gi>move</gi> element is intended to help overcome the fact that
 the stage directions of a printed text may often not provide full
 information about either the intended or the actual movement of actors
-etc. on stage.  It may be used to keep track of entrances and exits in
+on stage.  It may be used to keep track of entrances and exits in
 detail, so as to know which characters are on stage at which time.  Its
 attributes permit a relatively formal specification for movements of
 characters, using user-defined codes to identify the characters involved
@@ -869,50 +895,29 @@ elements provides one simple way of indicating where the boundaries of a
 speech and of a verse line or line group do not coincide.  The encoder
 may simply indicate that a line or line group is metrically incomplete by
 specifying the value <val>Y</val> or <val>N</val>, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRPAL-eg-44"><sp><speaker>Face</speaker><l part="Y">Believ't, I will.</l></sp>
-<sp><speaker>Subtle</speaker><l part="Y">Thy worst. I fart at thee.</l></sp>
-<sp><speaker>Doll</speaker><l>Ha' you your wits? Why gentlemen! For love —</l></sp>
-<sp><speaker>Face</speaker><l part="Y">Sirrah, I'll strip you—.</l></sp>
-<sp><speaker>Subtle</speaker><l part="Y">What to do? Lick figs</l>
-  <l part="Y">Out at my—</l></sp>
-<sp><speaker>Face</speaker><l part="Y">Rogue, rogue, out of all your sleights.</l></sp>
-</egXML>
-<!-- Jonson, Alchemist, I.1, ed Brown, p.9 -->
-	<!-- <sp who="volp">
- <l part="Y">Now, now my clients</l>
-  <l>Begin their visitation! Vulture, kite,</l>
-  <l>Raven, and gorcrow, all my birds of prey,</l>
-  <l>That think me turning carcase, now they come:</l>
-  <l part="Y">I am not for 'em yet.</l>
-  <stage>Re-enter MOSCA with the gown, etc.</stage>
-  <l part="Y">How now? the news?</l>
-</sp>]]></egXML> -->
-	<!-- Jonson, Volpone, I.1 177ff (ed Bamborough, p 15) -->
-	<!-- why not just embed the STAGE in the L? -msm --></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"
+       corresp="#DRPAL-eg-44"><sp><speaker>Face</speaker><l part="N">You most
+notorious whelp, you insolent slave</l>
+<l part="Y">Dare you do this?</l></sp>
+<sp><speaker>Subtle</speaker><l part="Y">Yes faith, yes faith.</l></sp>
+<sp><speaker>Face</speaker><l part="Y">Why! Who</l>
+<l part="Y">Am I, my mongrel? Who am I?</l></sp>
+<sp><speaker>Subtle</speaker><l part="Y">I'll tell you,</l>
+...
+</sp></egXML>
 <p>Alternatively, where the fragments of the line or line group are
 consecutive in the text (though possibly interrupted by stage
 directions), the values <val>I</val> (initial), <val>M</val> (medial), and <val>F</val> (final)
-may be used to indicate how metrical lines should be reconstituted:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp><speaker>Face</speaker><l part="I">Believ't, I will.</l></sp>
-<sp><speaker>Subtle</speaker><l part="F">Thy worst. I fart at thee.</l></sp>
-<sp><speaker>Doll</speaker><l>Ha' you your wits? Why gentlemen! For love —</l></sp>
-<sp><speaker>Face</speaker><l part="I">Sirrah, I'll strip you—.</l></sp>
-<sp><speaker>Subtle</speaker><l part="M">What to do? Lick figs</l>
-  <l part="I">Out at my—</l></sp>
-<sp><speaker>Face</speaker><l part="F">Rogue, rogue, out of all your sleights.</l></sp>
-</egXML>
-<!-- or first, medial and last? -->
-	<!-- <egXML xmlns="http://www.tei-c.org/ns/Examples"><sp who="barnardo">
-  <l>If you do meet Horatio and Marcellus,</l>
-  <l>The rivals of my watch, bid them make haste.</l> </sp>
-  <stage>Enter Horatio and Marcellus.</stage>
-<sp who="francisco">
-  <l>I think I hear them. &mdash; Stand! Who's there?</l> </sp>
-<sp who="horatio">
-  <l part="I">Friends to this ground.</l> </sp>
-<sp who="marcellus">
-  <l part="F">And liegemen to the Dane.</l> </sp>
-</egXML> -->
+may be used to indicate how metrical lines are constituted:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp><speaker>Face</speaker><l>You most
+notorious whelp, you insolent slave</l>
+<l part="I">Dare you do this?</l></sp>
+<sp><speaker>Subtle</speaker><l part="M">Yes faith, yes faith.</l></sp>
+<sp><speaker>Face</speaker><l part="F">Why! Who</l>
+<l part="I">Am I, my mongrel? Who am I?</l></sp>
+<sp><speaker>Subtle</speaker><l part="F">I'll tell you,</l>
+...
+</sp></egXML>
 </p>
 <p>In dramatic texts, the <gi>lg</gi> or line group element is most
 often of use for the encoding of songs and other stanzaic material, as
@@ -1072,14 +1077,11 @@ might be encoded as follows:
       </lg>
       <p>O, ho!</p>
     </sp>
-
-<!-- need better example of nested text -->
-
   </div2>
 </div1></egXML></p>
 <p>The <att>next</att> and <att>prev</att> attributes are discussed in
 section <ptr target="#SAAG"/>: they form part of the module
-for alignment and linking; this module must therefore be inclued in a
+for alignment and linking; this module must therefore be included in a
 schema if they are to be used, as further discussed in section <ptr target="#STIN"/>.</p>
 <p>The fragments of Ophelia's song might also be linked together using
 the <gi>join</gi> mechanism described in section <ptr target="#SAAG"/>.
@@ -1160,7 +1162,8 @@ section <ptr target="#SACS"/>, as in the following example:
 <sp xml:id="dr-s4"> <speaker>Ellie</speaker>
   <p>Please dont.</p>
 </sp>
-<stage corresp="#dr-s1 #dr-s2 #dr-s3 #dr-s4" xml:id="dr-d1" type="delivery">in consternation</stage>
+<stage corresp="#dr-s1 #dr-s2 #dr-s3 #dr-s4" xml:id="dr-d1"
+       rend="braced" type="delivery">in consternation</stage>
 <sp> <speaker>Mrs. Hushabye</speaker>
   <stage type="action">catching his arm and stopping him</stage>
   <p>Alfred: for shame! Are you mad?</p>
@@ -1168,12 +1171,16 @@ section <ptr target="#SACS"/>, as in the following example:
 <p>In the original, the stage direction <q>in consternation</q> is
 printed opposite a brace grouping all four speeches, indicating that all
 four characters speak at once, and that the stage direction applies to
-all of them. In the example, the <gi>stage</gi> element has been moved
-to an arbitrary place, and the four speeches with which it is to be
-associated are specified by identifier as the value of the
+all of them. Rather than attempting to represent the appearance of the
+source, this example encoding represents its presumed meaning: the
+<gi>stage</gi> element is placed arbitrarily after the last relevant
+speech,  and the four speeches with which it is to be
+associated are pointed to by means of the
 <att>corresp</att> attribute. This attribute, which is enabled by the
-linking module, provides the simplest way of indicating the temporal
-alignment of speeches or actions in a play.
+linking module, provides a simple way of indicating the temporal
+alignment of speeches or actions in a play. Producing a readable
+version of the text which simulates the original printed effect may
+however require more complex mark up and processing.
 </p>
 <p>More powerful and more precise mechanisms for temporal alignment are
 defined in chapter <ptr target="#TS"/>.  These would be appropriate for
