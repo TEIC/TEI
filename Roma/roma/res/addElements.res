@@ -31,8 +31,8 @@ form_contents=Contenido
 form_description=Descripción
 
 [fr]
-helpmessage=Créion d'un élément
-headline=Créion d'un élément
+helpmessage=Création d'un élément
+headline=Création d'un élément
 form_headline=Création d'un élément en cours
 form_name=Nom
 form_modelClasses=Classes structurales

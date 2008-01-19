@@ -2344,6 +2344,7 @@ class romaDom extends domDocument
 
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
+//--stringparam doclang $doclang --stringparam documentationLanguage $doclang
 	$oProc->setParameter( null, 'TEIC', 'true');	
 	$oProc->setParameter( null, 'displayMode', 'rnc' );
 	$oProc->setParameter( null, 'STDOUT', 'true' );
