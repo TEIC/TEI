@@ -1,16 +1,21 @@
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 declare namespace rng="http://relaxng.org/ns/structure/1.0";
+let $lang := request:get-parameter("lang", "en")
 <teiModulesList>
 {
 for $t in collection("/db/TEI")//tei:moduleSpec[not(@type='decls')]
 let $what:=$t/@ident
-let $desc:=$t/tei:desc
+let $Desc:=
+    if ($t/tei:desc[@xml:lang=$lang]) then
+        $t/tei:desc[@xml:lang=$lang]
+    else
+        $t/tei:desc[not(@xml:lang)]
 let $chapter:=$t/ancestor::tei:div[last()]/@xml:id
 order by $t/@ident
 return
   <teiModule>
    <moduleName>{data($what)}</moduleName>
-   <moduleDesc>{data($desc)}</moduleDesc>
+   <moduleDesc>{$desc}</moduleDesc>
    <moduleChapter>{data($chapter)}</moduleChapter>
   </teiModule>
 }
