@@ -7,7 +7,7 @@ $Date$
 $Id$
 -->
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="USE">
-	<head>Using the TEI</head>
+	<head>Using the TEI</head><head xml:lang="fr">Utiliser la TEI</head>
 	
 
 <p>This section discusses some technical topics concerning the
@@ -629,22 +629,16 @@ inherited by all members of the class.</p>
 <ptr target="#ST"/>. Note in particular that classes are themselves
 classified: the attributes inherited by a member of attribute class A
 may come to it directly from that class, or from another class of
-which A is itself a member. For example, the class <ident
-type="class">att.global</ident> is itself a member of the classes
-<ident type="class">att.global.linking</ident> and <ident
-type="class">att.global.analytic</ident>.  By default, these two
-classes are predefined as empty. However, if (for example) the <ident
-type="module">linking</ident> module is included in a schema, a number
+which A is itself a member. For example, the class <ident type="class">att.global</ident> is itself a member of the classes
+<ident type="class">att.global.linking</ident> and <ident type="class">att.global.analytic</ident>.  By default, these two
+classes are predefined as empty. However, if (for example) the <ident type="module">linking</ident> module is included in a schema, a number
 of attributes (<att>corresp</att>, <att>sameAs</att>, etc) are defined
 as members of the <ident type="class">att.global.linking</ident>
-class.  All elements which are members of <ident
-type="class">att.global</ident> will then inherit these new attributes
+class.  All elements which are members of <ident type="class">att.global</ident> will then inherit these new attributes
 (see further section <ptr target="#STECAT"/>). A new attribute may
 thus be added to the global class in two ways: either by adding it to
-the <gi>attList</gi> defined within the class specification for <ident
-type="class">att.global</ident>; or by defining a new attribute class,
-and changing the class membership of the <ident
-type="class">att.global</ident> class to reference it. </p>
+the <gi>attList</gi> defined within the class specification for <ident type="class">att.global</ident>; or by defining a new attribute class,
+and changing the class membership of the <ident type="class">att.global</ident> class to reference it. </p>
 
 
 <p>Such global changes should be undertaken with caution: in general
@@ -694,8 +688,7 @@ etc. as further described in <ptr target="#TD"/>.
 
 <p>All the elements defined in the TEI scheme are labelled as
 belonging to a single <term>namespace</term>, maintained by the TEI
-and with the URI <val>http://www.tei-c.org/ns/1.0</val>.<note
-place="foot">This is not strictly the case, since the element
+and with the URI <val>http://www.tei-c.org/ns/1.0</val>.<note place="foot">This is not strictly the case, since the element
 <gi>egXML</gi> used to represent TEI examples is in its own namespace,
 <val>http://www.tei-c.org/ns/Examples</val></note> Only elements
 which are unmodified or which have undergone a clean modification may
@@ -1102,8 +1095,7 @@ itself conformant.</p>
 <div type="div3" xml:id="CFNS">
   <head>Use of the <term>TEI Namespace</term></head>
 
-<p>The Namespaces Recommendation of the W3C (<ptr
-target="#NAMESPACES"/>) provides a way for an XML document to combine
+<p>The Namespaces Recommendation of the W3C (<ptr target="#NAMESPACES"/>) provides a way for an XML document to combine
 markup from different vocabularies without risking name collision and
 consequent processing difficulties.  While the scope of the TEI is
 large, there are many areas in which it makes no particular
@@ -1423,11 +1415,9 @@ also used to process the source of these Guidelines, adopt this approach.</p>
 <head>Making a Unified ODD</head>
 <p>An ODD  customization must contain a single <gi>schemaSpec</gi>
 element, which defines the schema to be constructed.  
- <specList> <specDesc key="schemaSpec" atts="ns start prefix
- targetLang docLang"/> 
+ <specList> <specDesc key="schemaSpec" atts="ns start prefix  targetLang docLang"/> 
  </specList>
-Amongst other attributes inherited from the <ident
-type="class">att.identified</ident> class, this element also carries a
+Amongst other attributes inherited from the <ident type="class">att.identified</ident> class, this element also carries a
 required <att>ident</att> attribute. This provides a name for the
 generated schema, which other components of the processing system may
 use to refer to the schema being generated, e.g. in issuing error
@@ -1440,8 +1430,7 @@ discussed in <ptr target="#MDNS"/>.
 elements, each of which is of one of the following four types:
 <list type="gloss">
 <label>specifications</label>
-<item>elements from the class <ident
-type="class">model.oddDecl</ident> (by default <gi>elementSpec</gi>,
+<item>elements from the class <ident type="class">model.oddDecl</ident> (by default <gi>elementSpec</gi>,
 <gi>classSpec</gi>, <gi>moduleSpec</gi>, and <gi>macroSpec</gi>);
 these must have a <att>mode</att> attribute which determines how they
 will be processed.<note place="foot">An ODD processor should recognize
@@ -1536,16 +1525,14 @@ and their children are then processed following  the rules given in
 this list.</item>
 
 <item>Some components are <soCalled>identifiable</soCalled>: this
-means that they are members of the <ident
-type="class">att.identified</ident> class from which they inherit the
+means that they are members of the <ident type="class">att.identified</ident> class from which they inherit the
 <att>ident</att> attribute; examples include <gi>attDef</gi> and
 <gi>valItem</gi>. A components of this type will be processed
 according to its <att>mode</att> attribute, following the rules given
 in this list.</item>
 
 <item>Some components may occur multiple times, but are neither
-grouped nor identifiable. Examples include the members of <ident
-type="class">model.glossLike</ident> such as <gi>equiv</gi>,
+grouped nor identifiable. Examples include the members of <ident type="class">model.glossLike</ident> such as <gi>equiv</gi>,
 <gi>desc</gi>, <gi>gloss</gi>, the <gi>exemplum</gi>,
 <gi>remarks</gi>, <gi>listRef</gi>, <gi>datatype</gi> or
 <gi>defaultVal</gi> elements. These should be copied from both the TEI
@@ -1568,8 +1555,7 @@ inherited from a class. For example, consider this simple modification:
   </content>
 </elementSpec>
 </egXML>
-The effect of its membership in the <ident
-type="class">att.typed</ident> class is to provide <gi>p</gi> with a
+The effect of its membership in the <ident type="class">att.typed</ident> class is to provide <gi>p</gi> with a
 <att>type</att> attribute and a <att>subtype</att> attribute. If we
 wish <gi>p</gi> <emph>not</emph> to have <att>subtype</att>, we could
 extend the customization in our schema as follows:
@@ -1652,9 +1638,7 @@ language is more forgiving than DTDs.</note> A content model like this:
 </elementSpec>
 </egXML>
 probably requires no special treatment, as everything is expressed in
-terms of model classes; if <ident
-type="class">model.personPart</ident> is empty, then <ident
-type="class">model.global</ident> is left as the only child of
+terms of model classes; if <ident type="class">model.personPart</ident> is empty, then <ident type="class">model.global</ident> is left as the only child of
 <gi>rng:choice</gi>. An ODD processor may choose to simplify that by
 removing the wrapper <gi>rng:choice</gi> element. However, if
 that <gi>rng:choice</gi> is itself inside an <gi>rng:zeroOrMore</gi> inside a
@@ -1861,8 +1845,7 @@ for <gi>sp</gi>:
 </elementSpec>
 </egXML>
 This proposes anything from the global model class, followed by some
-<gi>speaker</gi> elements, followed by anything from the <ident
-type="class">model.global</ident> class. What happens if
+<gi>speaker</gi> elements, followed by anything from the <ident type="class">model.global</ident> class. What happens if
 <gi>speaker</gi> is removed? The following would result:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="sp">
@@ -1903,14 +1886,14 @@ valid when a document is validated against either a DTD or a RELAX NG
 schema, ODD processors may wish to add a declaration for this
 attribute to the root element, even though it is not part of the TEI
 <foreign>per se</foreign>. For DTDs this means adding
-<eg>xsi:schemaLocation CDATA #IMPLIED xmlns:xsi CDATA #FIXED
-'http://www.w3.org/2001/XMLSchema-instance'</eg> to the list of
+<eg><![CDATA[xsi:schemaLocation CDATA #IMPLIED xmlns:xsi CDATA #FIXED
+'http://www.w3.org/2001/XMLSchema-instance']]></eg> to the list of
 attributes on the root element, which permits the non-namespace-aware
 DTD language to recognize the <code>xsi:schemaLocation</code>
 notation. For RELAX NG, the namespace and attribute would be declared
-in the usual way: <eg>namespace xsi =
-"http://www.w3.org/2001/XMLSchema-instance"</eg> and <eg>attribute
-xsi:schemaLocation { list { data.namespace, data.pointer }+ }</eg>
+in the usual way: <eg><![CDATA[namespace xsi =
+"http://www.w3.org/2001/XMLSchema-instance"]]></eg> and <eg><![CDATA[attribute
+xsi:schemaLocation { list { data.namespace, data.pointer }+ }]]></eg>
 inside the root element declaration.</p>
 
 <p>Note that declaration of the <att>xsi:schemaLocation</att>
@@ -1948,9 +1931,9 @@ Thus
 </schemaSpec>
 </egXML>
 may generate a RELAX NG (compact syntax) pattern like this:
-<eg>
+<eg><![CDATA[
  tei_sp = element sp { ... }
-</eg>
+]]></eg>
 
 References to these patterns (or, in DTDs, parameter entities) also need to
 be prefixed with the same value.
@@ -2240,9 +2223,7 @@ may generate this RELAX NG code:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.full">
     <optional>
-      <attribute
-	  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
-          name="full" a:defaultValue="yes">
+      <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="full" a:defaultValue="yes">
         <choice>
           <value>yes</value>
           <a:documentation>

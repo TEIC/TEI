@@ -7,7 +7,7 @@ $Date$
 $Id$
 -->
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="PH" n="18">
-<head>Representation of Primary Sources</head>
+<head>Representation of Primary Sources</head><head xml:lang="fr">Représentation de sources primaires</head>
 
 <p>This chapter defines a module intended for use in the
 representation of primary sources, such as manuscripts or other
@@ -253,14 +253,12 @@ should be used to define an overlay, as further discussed in <ptr target="#SACSX
 
 
 <p>For example, consider the following figure: <figure><head>Relation
-between page, surface, and zone</head> <graphic
-url="Images/facs-fig2.jpg"/></figure> This is an image of a two page
+between page, surface, and zone</head> <graphic url="Images/facs-fig2.jpg"/></figure> This is an image of a two page
 spread from a manuscript in the Badische Landesbibliothek,
 Karlsruhe. We have no information as to the dimensions of the original
 object, but the low resolution image displayed here contains 500
 pixels horizontally and 321 pixels vertically. For convenience, we
-might map each pixel to one cell of the coordinate space.<note
-place="foot">The coordinate space used here is based on pixels, but
+might map each pixel to one cell of the coordinate space.<note place="foot">The coordinate space used here is based on pixels, but
 the mapping between pixels and units in the coordinate space need not
 be one-to-one; it might be convenient to define a more delicate grid,
 to enable us to address much smaller parts of the image. This can be
@@ -284,8 +282,7 @@ define a zone of interest which represents an area larger than this
 surface. Using the same coordinate system as that defined for the
 surface, its coordinates are <val>0,0,500,321</val>. This zone of
 interest can be defined by a <gi>zone</gi> element, within which we can
-place the uncropped <gi>graphic</gi>: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+place the uncropped <gi>graphic</gi>: <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface ulx="50" uly="20" lrx="400" lry="280">
 <zone ulx="0" uly="0" lrx="500" lry="321">
 <graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
@@ -482,6 +479,8 @@ with its transcription would be simply <egXML xmlns="http://www.tei-c.org/ns/Exa
 
 
 
+
+
 &facsimile;
 
 
@@ -489,7 +488,13 @@ with its transcription would be simply <egXML xmlns="http://www.tei-c.org/ns/Exa
 
 
 
+
+
+
 &att.global.facs;
+
+
+
 
 
 
@@ -505,7 +510,13 @@ with its transcription would be simply <egXML xmlns="http://www.tei-c.org/ns/Exa
 
 
 
+
+
+
 &att.coordinated;
+
+
+
 
 
 
@@ -519,7 +530,11 @@ with its transcription would be simply <egXML xmlns="http://www.tei-c.org/ns/Exa
 
 
 
+
+
+
 &model.resourceLike;
+
 
 
 </specGrp>
@@ -638,7 +653,7 @@ for: thus, <q>per</q>, <q>re</q>, <q>n</q>. Both of these views are
 supported by these Guidelines. </p>
 <p>In many cases the glyph found in the manuscript source also exists
 in the Unicode character set: for example the common Latin brevigraph
-&#x204a;, standing for <mentioned>et</mentioned> and often known as
+⁊, standing for <mentioned>et</mentioned> and often known as
 the <soCalled>Tironian et</soCalled> can be directly represented in
 any XML document as the Unicode character with code point
 <val>U+204A</val> (see further <ptr target="#SG-er"/> and <ptr target="#CHSH"/>). In cases where it does not, these Guidelines
@@ -654,8 +669,7 @@ letters for which it is believed to stand. For example, in the
 following fragment the phrase <mentioned>euery persone</mentioned>
 is represented by a sequence of characters which may be transcribed
 directly, using the <gi>g</gi> element to indicate the two brevigraphs
-it contains as follows: <egXML
-xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-BIBL-1">eu<g ref="#er">er</g>y <g ref="#per">per</g>sone that loketh after heuen hath a place in this
+it contains as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-BIBL-1">eu<g ref="#er">er</g>y <g ref="#per">per</g>sone that loketh after heuen hath a place in this
 ladder</egXML> 
 Note that in each case the <gi>g</gi> element may contain a suggested
 replacement for the referenced brevigraph; this is purely advisory
@@ -663,17 +677,12 @@ however, and may not be appropriate in all cases.
 </p>
 <p>The transcriber may also wish to indicate that, because of the
 presence of these particular characters, the two words are actually
-abbreviations, by using the <gi>abbr</gi> element: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<g
-ref="#er">er</g>y</abbr> <abbr><g ref="#per">per</g>sone</abbr>
+abbreviations, by using the <gi>abbr</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<g ref="#er">er</g>y</abbr> <abbr><g ref="#per">per</g>sone</abbr>
 ... </egXML> Alternatively, the transcriber may choose silently to
-expand these abbreviations, using the <gi>expan</gi> element: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><expan>euery</expan>
+expand these abbreviations, using the <gi>expan</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples"><expan>euery</expan>
 <expan>persone</expan> ... </egXML> And, of course, the
 <gi>choice</gi> element can be used to show that one encoding is an
-alternative for the other: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><choice><abbr>eu<g
-ref="#er">er</g>y</abbr><expan>euery</expan></choice></egXML>
+alternative for the other: <egXML xmlns="http://www.tei-c.org/ns/Examples"><choice><abbr>eu<g ref="#er">er</g>y</abbr><expan>euery</expan></choice></egXML>
 </p>
 <p>When abbreviated forms such as these are expanded, two processes
 are carried out: some characters not present in the abbreviation are
@@ -888,14 +897,9 @@ ywroght?
 corrections, this may be represented by supplying multiple pointers on
 the note. Consider for example such corrections as the following, in
 Dudo of S. Quentin. Parkes cites two cases in this manuscript of the
-same phenomenon: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-corresp="#PH-eg-04">quamuis <choice
-xml:id="sic-1"><sic>mens</sic><corr>iners</corr></choice> que nutu dei
-gesta sunt ... unde esset uiriliter <choice
-xml:id="sic-2"><corr>uegetata</corr><sic>negata</sic></choice></egXML>
-which may be described as follows: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><note target="#sic-1
-#sic-2">Substitution of a more familiar word which resembles
+same phenomenon: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-04">quamuis <choice xml:id="sic-1"><sic>mens</sic><corr>iners</corr></choice> que nutu dei
+gesta sunt ... unde esset uiriliter <choice xml:id="sic-2"><corr>uegetata</corr><sic>negata</sic></choice></egXML>
+which may be described as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><note target="#sic-1 #sic-2">Substitution of a more familiar word which resembles
 graphically what the scribe should be copying but which does not make
 sense in the context.</note></egXML>
 </p>
@@ -1087,8 +1091,7 @@ H. Lawrence's <title>Eloi, Eloi, lama sabachthani</title>
 the author's deletion of <mentioned>my</mentioned> may be recorded as
 follows. In this case, the <att>hand</att> attribute indicating that
 the deletion was Lawrence's is complemented by a <att>rend</att>
-attribute indicating that the deletion was by strike-through: <egXML
-xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-06">For I hate this <del rend="strikethrough" hand="#dhl">my</del> body, which is so dear to me
+attribute indicating that the deletion was by strike-through: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-06">For I hate this <del rend="strikethrough" hand="#dhl">my</del> body, which is so dear to me
 ...
 <handNote xml:id="dhl">D H Lawrence holograph</handNote>
 
@@ -1109,8 +1112,7 @@ classifications.</p>
 <p>The <att>place</att> attribute is also available to indicate the
 location of an addition. For example, consider the following passage
 from a draft letter by Robert Graves:
-<figure><graphic url="Images/PHgraves2.png"
-width="500px"/></figure>
+<figure><graphic url="Images/PHgraves2.png" width="500px"/></figure>
 
 At the end of this extract, the writer
 inserts the word <q>cant,</q> above the line, with a stroke to
@@ -1124,8 +1126,7 @@ A little earlier in the same extract, Graves writes <q>for an
 abridgement</q> above the line, and then deletes it. This may be
 encoded similarly:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-07">
-As for 'significant artist.' You quote the  O.E.D <add hand="RG"
-place="supralinear"><del>for an abridgement</del></add>in
+As for 'significant artist.' You quote the  O.E.D <add hand="RG" place="supralinear"><del>for an abridgement</del></add>in
 explanation... </egXML>
 Similarly, in the margin, the word <q>Norton</q> has been added and then deleted:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-07">
@@ -1322,8 +1323,7 @@ a</mentioned> and this is then replaced by
 <mentioned>a</mentioned>.<note place="foot">The manuscript contains
 several other substitutions, ignored here for the sake of
 clarity.</note> This may be encoded as follows, representing the two
-changes as a sequence of additions and deletions: <egXML
-xmlns="http://www.tei-c.org/ns/Examples">One must have lived longer
+changes as a sequence of additions and deletions: <egXML xmlns="http://www.tei-c.org/ns/Examples">One must have lived longer
 with <subst><del seq="1">this</del> <del seq="2"><add seq="1">such
 a</add></del> <add seq="2">a</add></subst> system, to appreciate its
 advantages.</egXML> Note the nesting of an <gi>add</gi> element within
@@ -2094,7 +2094,12 @@ manuscript description, as addressed by the <ident type="module">msdescription</
 <p>The module described in this chapter makes available the following
 components:
 
-<moduleSpec xml:id="DPH" ident="transcr"><altIdent type="FPI">Transcription of Primary Sources</altIdent><desc>Transcription of primary sources</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Transcription of Primary Sources//EN-->
+<moduleSpec xml:id="DPH" ident="transcr"><altIdent
+					     type="FPI">Transcription
+of Primary Sources</altIdent><desc>Transcription of primary
+sources</desc>
+<desc xml:lang="fr">Représentation de sources primaires</desc>
+</moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Transcription of Primary Sources//EN-->
 
 The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
@@ -2102,7 +2107,12 @@ The selection and combination of modules to form a TEI schema is described in
 <specGrp xml:id="DTCHD" n="Headers and footers">
 
 
+
+
 &addSpan;
+
+
+
 
 
 
@@ -2110,7 +2120,13 @@ The selection and combination of modules to form a TEI schema is described in
 
 
 
+
+
+
 &damageSpan;
+
+
+
 
 
 
@@ -2118,7 +2134,13 @@ The selection and combination of modules to form a TEI schema is described in
 
 
 
+
+
+
 &ex;
+
+
+
 
 
 
@@ -2126,7 +2148,13 @@ The selection and combination of modules to form a TEI schema is described in
 
 
 
+
+
+
 &handNotes;
+
+
+
 
 
 
@@ -2134,7 +2162,13 @@ The selection and combination of modules to form a TEI schema is described in
 
 
 
+
+
+
 &am;
+
+
+
 
 
 
@@ -2142,7 +2176,13 @@ The selection and combination of modules to form a TEI schema is described in
 
 
 
+
+
+
 &space;
+
+
+
 
 
 
@@ -2150,7 +2190,11 @@ The selection and combination of modules to form a TEI schema is described in
 
 
 
+
+
+
 &supplied;
+
 
 </specGrp>
 </div>
