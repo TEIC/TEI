@@ -854,6 +854,7 @@
   <script type="text/javascript">
       <xsl:comment>
         <xsl:text disable-output-escaping="yes">
+var displayXML=0;
 states=new Array()
 states[0]="element-a"
 states[1]="element-b"
@@ -945,12 +946,27 @@ function toggleToc(el){
   }
 
 function togglerelax (el) {
-    if (el.innerHTML == 'XML format to compact') {
-         el.innerHTML = 'Compact to XML format';
+    if (displayXML == 1) {
+         el.innerHTML = '</xsl:text>
+
+	 <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Compact to XML format</xsl:with-param>
+	  </xsl:call-template>
+
+	  <xsl:text disable-output-escaping="yes">';
+	  displayXML == 0;
       }
    else
      {
-      el.innerHTML = 'XML format to compact';
+	  displayXML == 1;
+	  el.innerHTML = '</xsl:text>
+
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">XML format to compact</xsl:with-param>
+	  </xsl:call-template>
+
+	  <xsl:text disable-output-escaping="yes">';
+      
    }
    var div = el.parentNode; 
    for (j=0;j&lt;div.childNodes.length;j++)
@@ -993,8 +1009,11 @@ function togglerelax (el) {
     <xsl:choose>
       <xsl:when test="$displayMode='both'">
         <div class="displayRelax">
-          <button class="displayRelax" onclick="togglerelax(this)"
-            >Compact to XML format</button>
+          <button class="displayRelax" onclick="togglerelax(this)">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Compact to XML format</xsl:with-param>
+	  </xsl:call-template>
+	  </button>
           <pre class="eg_rng" style="display:none">
             <xsl:apply-templates mode="verbatim"
               select="exsl:node-set($content)/*/*"/>

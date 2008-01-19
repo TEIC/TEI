@@ -1811,10 +1811,12 @@
 	    <xsl:with-param name="word">
 	      <xsl:choose>
 		<xsl:when test=".//tei:attDef">
-		  <xsl:text>In addition to global attributes and those inherited from</xsl:text>
+		  <xsl:call-template name="i18n">
+	  <xsl:with-param name="word">In addition to global attributes and those inherited from</xsl:with-param></xsl:call-template>
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:text>Global attributes and those inherited from</xsl:text>
+		  <xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Global attributes and those inherited from</xsl:with-param></xsl:call-template>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:with-param>
@@ -1831,10 +1833,12 @@
 	  <xsl:with-param name="word">
 	    <xsl:choose>
 	      <xsl:when test=".//tei:attDef">
-		<xsl:text>In addition to global attributes</xsl:text>
+				  <xsl:call-template name="i18n">
+	  <xsl:with-param name="word">In addition to global attributes</xsl:with-param></xsl:call-template>
 	      </xsl:when>
 	      <xsl:otherwise>
-		<xsl:text>Global attributes only</xsl:text>
+		<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Global attributes only</xsl:with-param></xsl:call-template>
               </xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:with-param>
@@ -2035,7 +2039,7 @@
     <xsl:value-of select="@module"/>
     <xsl:for-each
 	select="key('MODULES',@module)/ancestor::tei:div[last()]">
-      <xsl:text> — see </xsl:text>
+      <xsl:text> — </xsl:text>
         <xsl:call-template name="makeInternalLink">
           <xsl:with-param name="target" select="@xml:id"/>
           <xsl:with-param name="ptr">true</xsl:with-param>
@@ -2056,10 +2060,14 @@
     <xsl:variable name="Original" select="/"/>
     <xsl:choose>
       <xsl:when test="tei:content/rng:empty">
-        <xsl:text>Empty element</xsl:text>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Empty element</xsl:with-param>
+	</xsl:call-template>
       </xsl:when>
       <xsl:when test="tei:content/rng:text and count(tei:content/*)=1">
-        <xsl:text>Character data only</xsl:text>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Character data only</xsl:with-param>
+	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="Children">
@@ -2072,7 +2080,9 @@
         <xsl:for-each select="exsl:node-set($Children)/Children">
           <xsl:choose>
             <xsl:when test="count(Element)=0">
-              <xsl:text>Empty element</xsl:text>
+	      <xsl:call-template name="i18n">
+		<xsl:with-param name="word">Empty element</xsl:with-param>
+	      </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
               <xsl:element namespace="{$outputNS}" name="{$divName}">
