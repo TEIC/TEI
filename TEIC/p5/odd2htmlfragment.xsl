@@ -73,7 +73,8 @@ odd2html.xsl
 <xsl:param name="line-width" select="80"/>
 
 <xsl:key name="NameToID" match="tei:*" use="@ident"/>
-<xsl:param name="cssFile">/stylesheet/teic.css</xsl:param>
+<xsl:param name="cssFile">/stylesheet/tei.css</xsl:param>
+<xsl:param name="cssSecondaryFile">/stylesheet/odd.css</xsl:param>
 <xsl:param name="institution">Text Encoding Initiative</xsl:param>
 <xsl:param name="STDOUT">true</xsl:param>
 <xsl:param name="BITS">Bits</xsl:param>
