@@ -9,10 +9,15 @@ let $Desc:=
         $c/tei:desc[@xml:lang=$lang]
     else
         $c/tei:desc[not(@xml:lang)]
+let $Gloss:=
+    if ($c/tei:gloss[@xml:lang=$lang]) then
+        $c/tei:gloss[@xml:lang=$lang]
+    else
+        $c/tei:gloss[not(@xml:lang)]
 return
 <Element>
   <elementName>{data($c/@ident)}</elementName>
-  <elementDesc>{data($Desc)}</elementDesc>
+  <elementDesc>{data($Gloss)}{data($Desc)}</elementDesc>
   <elementContent>{$c/tei:content/*}</elementContent>
   <elementClasses>
   {
