@@ -147,88 +147,115 @@
       </xsl:call-template>
       <xsl:if test="$currentID=''">
         <div style="float:left; margin:4%;">
-          <h3>Versions of the Guidelines</h3>
+          <h3>
+	  	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Versions of the Guidelines</xsl:with-param>
+		  </xsl:call-template>
+	  </h3>
           <ul>
             <li>
               <a href="index-toc.html">Table of Contents</a>
             </li>
-<!--
-            <li>
-              <a href="guidelines.html">One single HTML file</a>
-            </li>
             <li>
               <a href="guidelines.pdf">One single PDF file </a>
             </li>
--->
-<!--
+            <li><a
+              href="http://www.tei-c.org/Council/tcw06.xml">
+	      	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Getting the most recent version</xsl:with-param>
+		  </xsl:call-template>
+	    </a></li>
+            <li><a
+              href="http://tei.svn.sourceforge.net/viewvc/tei/">
+              	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Sourceforge Subversion Repository</xsl:with-param>
+		  </xsl:call-template>
+	    </a></li>
             <li>
               <a
-                href="http://books.lulu.com/content/123WeHaveNotSubmittedThemYetSorry/"
-                >Hardcopy Printed Version</a>
-            </li>
--->
-            <li><a
-              href="http://www.tei-c.org/Council/tcw06.xml">Getting
-              the most recent version</a></li>
-            <li><a
-              href="http://tei.svn.sourceforge.net/viewvc/tei/">Sourceforge
-              Subversion Repository</a></li>
-            <li>
-              <a
-                href="http://sourceforge.net/tracker/?group_id=106328&amp;func=browse">Bug
-                Reports, Feature Requests, etc.</a>
-            </li>
-            
+                href="http://sourceforge.net/tracker/?group_id=106328&amp;func=browse">
+	      	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Bug Reports, Feature Requests, etc.</xsl:with-param>
+		  </xsl:call-template>
+	      </a>
+	    </li>
           </ul>
         </div>
         <div style="float:left; margin:4%;">
-          <h3>Some Popular Sections</h3>
+          <h3>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Some Popular Sections</xsl:with-param>
+	  </xsl:call-template>
+	  </h3>
           <ul>
             <li>
-              <a href="AB.html">About These Guidelines</a>
+	      <a href="AB.html">
+	      <xsl:for-each select="key('IDS','AB')">
+		<xsl:call-template name="showHead"/>
+	      </xsl:for-each>
+	      </a>
             </li>
             <li>
-              <a href="ST.html">The TEI Infrastructure</a>
+	      <a href="ST.html">
+	      <xsl:for-each select="key('IDS','ST')">
+		<xsl:call-template name="showHead"/>
+	      </xsl:for-each>
+	      </a>
             </li>
             <li>
-              <a href="SG.html">A Gentle Introduction to XML</a>
+	      <a href="SG.html">
+	      <xsl:for-each select="key('IDS','SG')">
+		<xsl:call-template name="showHead"/>
+	      </xsl:for-each>
+	      </a>
             </li>
             <li>
-              <a href="HD.html">The TEI Header</a>
+	      <a href="HD.html">
+	      <xsl:for-each select="key('IDS','HD')">
+		<xsl:call-template name="showHead"/>
+	      </xsl:for-each>
+	      </a>
             </li>
             <li>
-              <a href="CO.html">Elements Available in All TEI
-                Documents</a>
-            </li>
-<!--
-            <li>
-              <a href="DS.html">Default Text Structure</a>
-            </li>
-            <li>
-              <a href="ND.html">Names, Dates, People, and Places</a>
-            </li>
--->
-            <li>
-              <a href="REF-CLASSES-MODEL.html">Model Classes</a>
+	      <a href="CO.html">
+	      <xsl:for-each select="key('IDS','CO')">
+		<xsl:call-template name="showHead"/>
+	      </xsl:for-each>
+	      </a>
             </li>
             <li>
-              <a href="REF-CLASSES-ATTS.html">Attribute Classes</a>
+	      <a href="REF-CLASSES-MODEL.html">
+	      <xsl:for-each select="key('IDS','REF-CLASSES-MODEL')">
+		<xsl:call-template name="showHead"/>
+	      </xsl:for-each>
+	      </a>
             </li>
             <li>
-              <a href="REF-ELEMENTS.html">Elements</a>
+	      <a href="REF-CLASSES-ATTS.html">
+	      <xsl:for-each select="key('IDS','REF-CLASSES-ATTS')">
+		<xsl:call-template name="showHead"/>
+	      </xsl:for-each>
+	      </a>
             </li>
             <li>
-              <a href="USE.html">Using the TEI</a>
+	      <a href="REF-ELEMENTS.html">
+	      <xsl:for-each select="key('IDS','REF-ELEMENTS')">
+		<xsl:call-template name="showHead"/>
+	      </xsl:for-each>
+	      </a>
             </li>
-<!--
             <li>
-              <a href="BIB.html">Bibliography</a>
+	      <a href="USE.html">
+	      <xsl:for-each select="key('IDS','USE')">
+		<xsl:call-template name="showHead"/>
+	      </xsl:for-each>
+	      </a>
             </li>
--->
           </ul>
         </div>
 
-        <xsl:variable name="name"> TEI Guidelines TOC </xsl:variable>
+
+        <xsl:variable name="name">TEI Guidelines TOC </xsl:variable>
         <xsl:call-template name="outputChunk">
           <xsl:with-param name="ident">
             <xsl:text>index-toc</xsl:text>
@@ -285,6 +312,17 @@
     </div>
   </xsl:template>
 
+
+  <xsl:template name="showHead">
+    <xsl:choose>
+      <xsl:when test="tei:head[@xml:lang=$documentationLanguage]">
+	<xsl:value-of select="tei:head[@xml:lang=$documentationLanguage]"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="tei:head[not(@xml:lang)]"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
   <xsl:template name="numberFrontDiv">
     <xsl:param name="minimal"/>
@@ -413,7 +451,11 @@
     <xsl:param name="force"/>
 
     <div class="toc_back">
-      <h3>Back Matter</h3>
+      <h3>
+      	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Back Matter</xsl:with-param>
+	  </xsl:call-template>
+      </h3>
       <xsl:for-each
 	  select="ancestor-or-self::tei:TEI/tei:text/tei:back">
 	<xsl:if
@@ -429,7 +471,11 @@
     </div>
 
     <div class="toc_front">
-      <h3>Front Matter</h3>
+      <h3>
+      	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Front Matter</xsl:with-param>
+	  </xsl:call-template>
+      </h3>
       <xsl:for-each
 	  select="ancestor-or-self::tei:TEI/tei:text/tei:front">
 	<xsl:if
@@ -445,7 +491,11 @@
     </div>
 
     <div class="toc_body">
-      <h3>Text Body</h3>
+      <h3>
+      	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Text Body</xsl:with-param>
+	  </xsl:call-template>
+      </h3>
       <xsl:for-each
         select="ancestor-or-self::tei:TEI/tei:text/tei:body">
         <xsl:if
@@ -635,7 +685,11 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
   </div>
   <div
       class="mainhead">
-    <h1>P5: Guidelines for Electronic Text Encoding and Interchange</h1>
+    <h1>P5: 
+    	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Guidelines for Electronic Text Encoding and Interchange</xsl:with-param>
+	  </xsl:call-template>
+    </h1>
   </div>
 </xsl:template>
 
