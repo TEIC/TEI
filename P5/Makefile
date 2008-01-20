@@ -76,6 +76,7 @@ html-web: check
 	xsltproc ${VERBOSE} \
 		--stringparam outputDir Guidelines-web-tmp/${LANGUAGE}/html \
 		--stringparam displayMode both \
+		--stringparam pageLayout CSS \
 	        --stringparam lang ${LANGUAGE} \
 	        --stringparam doclang ${LANGUAGE} \
 	        --stringparam documentationLanguage ${DOCUMENTATIONLANGUAGE} \

@@ -1,18 +1,32 @@
+declare namespace fn="http://www.w3.org/2003/05/xpath-functions";
 declare namespace tei="http://www.tei-c.org/ns/1.0";
 declare namespace rng="http://relaxng.org/ns/structure/1.0";
 declare namespace html="http://www.w3.org/1999/xhtml";
 declare namespace request="http://exist-db.org/xquery/request";
+declare namespace util="http://exist-db.org/xquery/util";
+
 <tei:TEI xmlns="http://www.tei-c.org/ns/1.0" 
      xmlns:xi="http://www.w3.org/2001/XInclude"> 
+<tei:teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI Query</title>
+      </titleStmt>
+         <editionStmt>
+            <edition>
+               <date>{fn:current-dateTime()}</date>
+            </edition>
+      </editionStmt>
+      <publicationStmt>
+	  <p/>
+      </publicationStmt>
+      <sourceDesc>
+        <p/>
+      </sourceDesc>
+    </fileDesc>
+</tei:teiHeader>
 <tei:text>
 <tei:body>
-<tei:p>
-{
-let $ename := request:get-parameter("name", "")
-for $c in collection("/db/TEI")//i18n/element[@ident=$ename]
-return $c
-}
-</tei:p>
 <tei:p>
 {
 let $name := request:get-parameter("name", "")
