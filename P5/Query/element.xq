@@ -17,7 +17,8 @@ let $Gloss:=
 return
 <Element>
   <elementName>{data($c/@ident)}</elementName>
-  <elementDesc>{data($Gloss)}{data($Desc)}</elementDesc>
+  <elementDesc>{data($Desc)}</elementDesc>
+  <elementGloss>{data($Gloss)}</elementGloss>
   <elementContent>{$c/tei:content/*}</elementContent>
   <elementClasses>
   {
