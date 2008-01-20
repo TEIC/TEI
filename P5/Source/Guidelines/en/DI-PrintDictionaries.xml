@@ -10,14 +10,17 @@ $Id$
 <head>Dictionaries</head>
 
 <p>This chapter defines a module for encoding human-oriented
-monolingual and multilingual dictionaries which may also be
-useful for computational lexica intended for use by
-language-processing software. Dictionaries are most familiar in their
-printed form; however, increasing numbers of dictionaries exist also
-in electronic forms which are independent of any particular printed
-form, but from which various displays can be produced.</p>
+monolingual and multilingual dictionaries, glossaries, and similar
+documents. The elements described here may also be useful in the
+encoding of computational lexica and similar resources intended for
+use by language-processing software; they may also be used to provide
+a rich encoding for wordlists, lexica, glossaries, etc. included
+within other documents.  Dictionaries are most familiar in
+their printed form; however, increasing numbers of dictionaries exist
+also in electronic forms which are independent of any particular
+printed form, but from which various displays can be produced. </p>
 
-<p>Both typographically and structurally, dictionaries are extremely
+<p>Both typographically and structurally, print dictionaries are extremely
 complex. In addition, dictionaries are of interest to many communities with
 different and sometimes conflicting goals. As a result, many general
 problems of text encoding are particularly pronounced here, and more
@@ -71,7 +74,7 @@ illustrates this with the provision of a closed set of values for
 grammatical descriptors.</p>
 
 <p>This chapter contains a large number of examples taken from
-existing dictionaries; in each case, the original source is
+existing print dictionaries; in each case, the original source is
 identified. In presenting such examples, we have tried to retain the
 original typographic appearance of the example as well as presenting a
 suggested encoding for it. Where this has not been possible (for
@@ -124,8 +127,28 @@ elements defined in this chapter.</p>
 <term>entries</term>, optionally grouped into one or several
 <gi>div</gi> elements. These text divisions might correspond, for
 example, sections for different letters of the alphabet, or to
-sections for different languages in bilingual dictionaries, etc. In
-print dictionaries, entries are typically typographically distinct
+sections for different languages in bilingual dictionaries, as in the
+following example:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<body>
+<div><head>English-French</head>
+<entry><!-- ... --></entry>
+<entry><!-- ... --></entry>
+<entry><!-- ... --></entry>
+</div>
+<div>
+<head>French-English</head>
+<entry><!-- ... --></entry>
+<entry><!-- ... --></entry>
+<entry><!-- ... --></entry>
+</div>
+</body>
+</egXML>
+</p><!-- why both same type? -->
+
+<p>In a
+print dictionary, the entries are typically typographically distinct
 entities, each headed by some morphological form of the lexical item
 described (the <term>headword</term>), and sorted in alphabetical
 order or (especially for non-alphabetic scripts) in some other
@@ -158,24 +181,8 @@ sequence (as, for example, when an entry for <q>3D</q> appears at the
 place where <q>three-D</q> would appear). </p>
 <!-- maybe rename this attribute to avoid confusion with existing @key -->
 
-<p>The body of a bilingual dictionary with two parts will thus have an
-overall structure resembling the following:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<body>
-<div type="dictionary">
-<entry><!-- ... --></entry>
-<entry><!-- ... --></entry>
-<entry><!-- ... --></entry>
-</div>
-<div type="dictionary">
-<entry><!-- ... --></entry>
-<entry><!-- ... --></entry>
-<entry><!-- ... --></entry>
-</div>
-</body>
-</egXML>
-</p><!-- why both same type? -->
 
-<p>A dictionary with no internal divisions might have a structure like
+<p>A dictionary with no internal divisions might thus have a structure like
 the following; a <gi>superEntry</gi> is shown grouping two homograph
 entries.<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <body>
@@ -192,17 +199,7 @@ entries.<egXML xmlns="http://www.tei-c.org/ns/Examples">
 
 <specGrpRef target="#DEDIMV"/> 
 
-
-
-
-
-
 &model.entryLike;
-
-
- 
-
-
 
 
 
@@ -223,10 +220,7 @@ entries.<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <specGrpRef target="#DDITPRE"/>
 <specGrpRef target="#DDIHW"/>
 
-<specGrp xml:id="DEDIMV" n="Attributes for dictionary work"> 
-
-
-
+<specGrp xml:id="DEDIMV" n="Attributes for dictionary work">
 
 
 &att.lexicographic;
@@ -333,16 +327,15 @@ treated as entries, optionally grouped in a <gi>superEntry</gi>:<egXML xmlns="ht
 </superEntry>
 </egXML>
 </p>
-<p>The hierarchical levels of dictionary entries are declared as shown in the following
-schema fragment. As may be seen, the content model for <gi>entry</gi> specifies that
-entries do not nest, that homographs nest within entries, and that senses nest
-within entries, homographs, or senses, and may be nested to any depth to reflect the
-embedding of sub-senses. Any of the top-level constituents (<gi>def</gi>,
-<gi>usg</gi>, <gi>form</gi>, etc.) can appear at any level (i.e., within entries,
-homographs, or senses).<specGrp xml:id="DDIEN" n="Dictionary entries and their structure"> 
-
-
-
+<p>The hierarchic structure of a dictionary entry is enforced by the
+structures defined in this module. The content model for
+<gi>entry</gi> specifies that entries do not nest, that homographs
+nest within entries, and that senses nest within entries, homographs,
+or senses, and may be nested to any depth to reflect the embedding of
+sub-senses. Any of the top-level constituents (<gi>def</gi>,
+<gi>usg</gi>, <gi>form</gi>, etc.) can appear at any level (i.e.,
+within entries, homographs, or senses).<specGrp xml:id="DDIEN"
+n="Dictionary entries and their structure">
 
 
 &superEntry;
@@ -358,16 +351,10 @@ homographs, or senses).<specGrp xml:id="DDIEN" n="Dictionary entries and their s
 &entry;
 
 
- 
-
-
 
 
 
 &entryFree;
-
-
- 
 
 
 
@@ -376,16 +363,10 @@ homographs, or senses).<specGrp xml:id="DDIEN" n="Dictionary entries and their s
 &hom;
 
 
- 
-
-
 
 
 
 &sense;
-
-
- 
 
 
 
@@ -499,9 +480,9 @@ G. &amp; C. Merriam Co., 1975). </item>
 </gramGrp>
 <def>person who competes.</def>
 </entry>
-</egXML> For the elements which appear within the <gi>form</gi> and <gi>gramGrp</gi>
-elements of this example, see below, section <ptr target="#DITPFO"/>, and section
-<ptr target="#DITPGR"/>. </p>
+</egXML> 
+For the elements which appear within the <gi>form</gi> and <gi>gramGrp</gi>
+elements of this and other  examples, see below, section <ptr target="#DITPFO"/>, and section<ptr target="#DITPGR"/>. </p>
 <p>Any top-level constituent can appear at any level when the
 hierarchical structure of the entry is more complex. The most obvious examples are
 <gi>def</gi> and <gi>cit</gi>, which appear at the <gi>sense</gi> level when
@@ -552,6 +533,7 @@ make a cry or sound of this kind. <ref target="#DIC-OALD">OALD</ref> </q>
 </hom>
 </entry>
 </egXML>
+
 </p>
 <p>Information of the same kind can appear at different levels within the same entry;
 here, grammatical information occurs both at entry and homograph level.<q rend="display">
@@ -863,201 +845,30 @@ relations:<q rend="display">
 <pron>"hQspIt@l@</pron>
 </form>
 </egXML>
-<!-- suppressed; supererogatory (msm) -->
-<!-- 
-<p>In this example, the "pl." specification applies to   -->
-<!-- two orthographic forms, but a pronunciation is   -->
-<!-- associated with only one of them:-->
-<!-- <q rend='display'> -->
-<!-- pinna ("pIn@) n., pl. -nae (-ni:) or -nas.   ... <ref target="#DIC-CED">CED</ref>   -->
-<!-- </q> -->
-<!-- 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"> -->
-<!-- <![CDATA[-->
-<!-- <form>   -->
-<!--   <orth>pinna</orth> -->
-<!--   
-<pron>"pIn@</pron> -->
-<!-- </form>  -->
-<!-- <gramGrp>-->
-<!--   
-<pos>n</pos>   -->
-<!-- </gramGrp>   -->
-<!-- <form type='infl'> -->
-<!--   <num>pl</num>  -->
-<!--   <form> -->
-<!-- <orth type='lat' extent='part'>-nae</orth>   -->
-<!-- 
-<pron extent='part'>-ni:</pron>-->
-<!--   </form>-->
-<!--   <orth type='std' extent='part'>-nas</orth> -->
-<!-- </form>  -->
-<!-- ]]>  -->
-<!-- </egXML>-->
-<!-- ... end suppression (msm)-->
+
 </p>
-<p>The formal declarations for the elements of the <gi>form</gi> group are
-these:<specGrp xml:id="DDITPFO" n="The form group"> 
-
-
-
-
-
+<specGrp xml:id="DDITPFO" n="The form group">
 &form;
-
-
- 
-
-
-
-
-
 &orth;
-
-
-
-
-
-
-
-
-
 &pron;
-
-
- 
-
-
-
-
-
 &hyph;
-
-
- 
-
-
-
-
-
 &syll;
-
-
- 
-
-
-
-
-
 &stress;
-
-
- 
-
-
-
-
-
 &gram;
-
-
- 
-
-
-
-
-
 &gen;
-
-
- 
-
-
-
-
-
 &number;
-
-
-
-
-
-
-
-
-
 &case;
-
-
- 
-
-
-
-
-
 &per;
-
-
- 
-
-
-
-
-
 &tns;
-
-
- 
-
-
-
-
-
 &mood;
-
-
- 
-
-
-
-
-
 &iType;
-
-
  </specGrp>
-</p>
-<p>The classes of morphological elements, and of elements allowed within the
-<gi>form</gi> group, are declared thus: <specGrp xml:id="DEDITPFO" n="Classes for morphological, grammatical, and form information">
-
-
-
-
-
-
+<specGrp xml:id="DEDITPFO" n="Classes for morphological, grammatical, and form information">
 &model.morphLike;
-
-
- 
-
-
-
-
-
 &model.gramPart;
-
-
- 
-
-
-
-
-
 &model.formPart;
-
-
  </specGrp>
-</p>
+
 </div>
 <div type="div3" xml:id="DITPGR">
 <head>Grammatical Information</head>
@@ -1101,8 +912,7 @@ tagged using specialized grammatical elements:<egXML xmlns="http://www.tei-c.org
 <gramGrp>
 <gram type="pos">v</gram>
 <gram type="subc">t ind</gram>
-<gram>de</gram>
-<?winita LR -- the above <gram> had type="colloc / prep", but that is not valid -- SB ?>
+<gram type="collocPrep">de</gram>
 </gramGrp>
 </egXML>
 </p>
@@ -1189,25 +999,16 @@ reason and act, esp. quickly … <ref target="#DIC-CED">CED</ref> </q>
 &gramGrp;
 
 
- 
-
-
 
 
 
 &pos;
 
 
- 
-
-
 
 
 
 &subc;
-
-
- 
 
 
 
@@ -1298,10 +1099,7 @@ distinguished from the translation information within which it appears.<q rend="
 </entry>
 </egXML>
 </p>
-<specGrp xml:id="DDITPDE" n="Definition text"> 
-
-
-
+<specGrp xml:id="DDITPDE" n="Definition text">
 
 
 &def;
@@ -1522,9 +1320,6 @@ the notation of Gregorian chant … [WNC]</q>
 &etym;
 
 
- 
-
-
 
 
 
@@ -1653,10 +1448,12 @@ with a <gi>cit</gi> element:<q rend="display">
 </div>
 <div type="div4" xml:id="DITPUS">
 <head>Usage Information and Other Labels</head>
-<p>Most dictionaries provide restrictive labels and phrases indicating the usage of
-given words or particular senses. Other labels, not necessarily related to
-usage, may be attached to forms, translations, cross references, and examples.
-Usage and other labels should be marked with the following elements:<specList>
+
+<p>Most dictionaries provide restrictive labels and phrases indicating
+the usage of given words or particular senses. Other labels, not
+necessarily related to usage, may be attached to forms, translations,
+cross references, and examples.  Usage and other labels should be
+marked with the following elements:<specList>
 <specDesc key="usg"/>
 <specDesc key="lbl"/>
 </specList> Typical usage labels mark<list type="simple">
@@ -1840,25 +1637,9 @@ synonyms associated with different senses:<q rend="display">
 </entry>
 </egXML>
 </p>
-<specGrp xml:id="DDITPUS" n="Usage information"> 
-
-
-
-
-
+<specGrp xml:id="DDITPUS" n="Usage information">
 &usg;
-
-
-
-
-
-
-
-
-
 &lbl;
-
-
  </specGrp>
 
 </div>
@@ -1986,7 +1767,7 @@ nullité</hi>, contenant un vice de forme ou passé par un incapable*. <ref targ
 <!-- surely this should have been tagged as a <ref> not a 
 <ptr> LB ? --> In
 some cases, the form in the definition is inflected, and thus <gi>ref</gi> must
-be used, as here:<q rend="display">
+be used to indicate more exactly the intended target, as here:<q rend="display">
 <hi rend="bold">justifier</hi> …4. IMPRIM Donner a (une ligne) une longeur
 convenable au moyen de blancs (2, sens 1, 3). <ref target="#DIC-DNT">DNT</ref> </q>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -1998,10 +1779,7 @@ convenable au moyen de blancs (2, sens 1, 3). <ref target="#DIC-DNT">DNT</ref> <
 </sense>
 </egXML>
 </p>
-<specGrp xml:id="DDITPXR" n="Cross References"> 
-
-
-
+<specGrp xml:id="DDITPXR" n="Cross References">
 
 
 &xr;
@@ -2420,16 +2198,10 @@ within any other element defined for dictionary entries. </p>
 (swung dash, first letter abbreviated form, capitalization, or italicization of the word,
 etc.) the exact method used should be documented in the header. </p>
 
-<specGrp xml:id="DEDIHW" n="Classes for headword references"> 
-
-
-
+<specGrp xml:id="DEDIHW" n="Classes for headword references">
 
 
 &model.ptrLike.form;
-
-
- 
 
 
 
@@ -2441,16 +2213,10 @@ etc.) the exact method used should be documented in the header. </p>
 
 </specGrp>
 
-<specGrp xml:id="DDIHW" n="Headword references"> 
-
-
-
+<specGrp xml:id="DDIHW" n="Headword references">
 
 
 &oRef;
-
-
- 
 
 
 
@@ -2459,16 +2225,10 @@ etc.) the exact method used should be documented in the header. </p>
 &oVar;
 
 
- 
-
-
 
 
 
 &pRef;
-
-
- 
 
 
 
