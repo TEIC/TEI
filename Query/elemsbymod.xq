@@ -18,14 +18,11 @@ let $Desc:=
     else
         $c/tei:desc[not(@xml:lang)]
 
-let $G:=  if (string-length($Gloss) > 0) then
-                  concat(    "(", $Gloss, ") ") 
-	  else ""
-
 return
 <teiElement>
   <elementName>{data($c/@ident)}</elementName>
-  <elementDesc>{$G}  {data($Desc)}</elementDesc>
+  <elementDesc>{data($Desc)}</elementDesc>
+  <elementGloss>{data($Gloss)}</elementGloss>
   <elementContent>{$c/tei:content/*}</elementContent>
   <elementAttributes>
   {
