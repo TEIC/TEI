@@ -52,11 +52,10 @@
   <xsl:param name="institution">Text Encoding Initiative</xsl:param>
   <xsl:param name="searchURL"/>
   <xsl:param name="searchWords"/>
-<!--http://www.tei-c.org/release/xml/tei/stylesheet-->
-  <xsl:param
-      name="cssFile">../Stylesheets/tei.css</xsl:param>
-  <xsl:param name="cssSecondaryFile">../Stylesheets/odd.css</xsl:param>
 
+  <xsl:param name="cssFile">http://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
+  <xsl:param name="cssSecondaryFile">http://www.tei-c.org/release/xml/tei/stylesheet/odd.css</xsl:param>
+  
   <xsl:variable name="top" select="/"/>
 
 
