@@ -68,7 +68,7 @@
 	 preceding-sibling::text:h[@text:outline-level][1])"/>
 
   <xsl:key
-    name="headchildren"
+    name="onlychildren"
     match=" text:p | text:alphabetical-index | table:table | text:span
 	   | office:annotation | text:ordered-list | text:list |
 	   text:note | text:a | text:list-item | draw:plugin |
@@ -305,7 +305,14 @@
 
   <xsl:template match="office:text">
     <body>
-      <xsl:call-template name="aSection"/>
+      <xsl:choose>
+	<xsl:when test="text:h">
+	  <xsl:call-template name="aSection"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates/>
+	</xsl:otherwise>
+      </xsl:choose>
     </body>
   </xsl:template>
 
