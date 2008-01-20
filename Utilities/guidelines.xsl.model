@@ -20,7 +20,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:import href="/usr/share/xml/tei/stylesheet/odds/odd2html.xsl"/>
-
+  <xsl:key name="HEADS" match="tei:head" use="concat(@xml:lang,@corresp)"/>
   <xsl:param name="lang"/>
   <xsl:param name="doclang"/>
   <xsl:param name="splitLevel">0</xsl:param>
@@ -91,19 +91,39 @@
 	  <xsl:choose>
 	    <xsl:when test="self::tei:elementSpec">
 		<a class="navigation" href="REF-ELEMENTS.html">
-		Element catalogue</a>
+		  <xsl:call-template name="showHead">
+		    <xsl:with-param name="ID">
+		      <xsl:text>REF-ELEMENTS</xsl:text>
+		    </xsl:with-param>
+		  </xsl:call-template>
+		</a>
 	    </xsl:when>
 	    <xsl:when test="self::tei:classSpec[@type='model']">
 		<a class="navigation" href="REF-CLASSES-MODEL.html">
-		Model Class catalogue</a>
+		  <xsl:call-template name="showHead">
+		    <xsl:with-param name="ID">
+		      <xsl:text>REF-CLASSES-MODEL</xsl:text>
+		    </xsl:with-param>
+		  </xsl:call-template>
+		</a>
 	    </xsl:when>
 	    <xsl:when test="self::tei:classSpec[@type='atts']">
 		<a class="navigation" href="REF-CLASSES-ATTS.html">
-		Attribute Class catalogue</a>
+		<xsl:call-template name="showHead">
+		  <xsl:with-param name="ID">
+		    <xsl:text>REF-CLASSES-ATTS</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
+		</a>
 	    </xsl:when>
 	    <xsl:when test="self::tei:macroSpec">
 		<a class="navigation" href="REF-MACROS.html">
-		Macro and datatype catalogue</a>
+		  <xsl:call-template name="showHead">
+		    <xsl:with-param name="ID">
+		      <xsl:text>REF-MACROS</xsl:text>
+		    </xsl:with-param>
+		  </xsl:call-template>
+		</a>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <!--
@@ -154,10 +174,14 @@
 	  </h3>
           <ul>
             <li>
-              <a href="index-toc.html">Table of Contents</a>
+              <a href="index-toc.html">
+	      	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">tocWords</xsl:with-param>
+		  </xsl:call-template>
+	      </a>
             </li>
             <li>
-              <a href="guidelines.pdf">One single PDF file </a>
+              <a href="guidelines.pdf">PDF</a>
             </li>
             <li><a
               href="http://www.tei-c.org/Council/tcw06.xml">
@@ -190,65 +214,83 @@
           <ul>
             <li>
 	      <a href="AB.html">
-	      <xsl:for-each select="key('IDS','AB')">
-		<xsl:call-template name="showHead"/>
-	      </xsl:for-each>
+		<xsl:call-template name="showHead">
+		  <xsl:with-param name="ID">
+		    <xsl:text>AB</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
 	      </a>
             </li>
             <li>
 	      <a href="ST.html">
-	      <xsl:for-each select="key('IDS','ST')">
-		<xsl:call-template name="showHead"/>
-	      </xsl:for-each>
+		<xsl:call-template name="showHead">
+		  <xsl:with-param name="ID">
+		    <xsl:text>ST</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
 	      </a>
             </li>
             <li>
 	      <a href="SG.html">
-	      <xsl:for-each select="key('IDS','SG')">
-		<xsl:call-template name="showHead"/>
-	      </xsl:for-each>
+		<xsl:call-template name="showHead">
+		  <xsl:with-param name="ID">
+		    <xsl:text>SG</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
 	      </a>
             </li>
             <li>
 	      <a href="HD.html">
-	      <xsl:for-each select="key('IDS','HD')">
-		<xsl:call-template name="showHead"/>
-	      </xsl:for-each>
+		<xsl:call-template name="showHead">
+		  <xsl:with-param name="ID">
+		    <xsl:text>HD</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
 	      </a>
             </li>
             <li>
 	      <a href="CO.html">
-	      <xsl:for-each select="key('IDS','CO')">
-		<xsl:call-template name="showHead"/>
-	      </xsl:for-each>
+		<xsl:call-template name="showHead">
+		  <xsl:with-param name="ID">
+		    <xsl:text>CO</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
 	      </a>
             </li>
             <li>
 	      <a href="REF-CLASSES-MODEL.html">
-	      <xsl:for-each select="key('IDS','REF-CLASSES-MODEL')">
-		<xsl:call-template name="showHead"/>
-	      </xsl:for-each>
+		<xsl:call-template name="showHead">
+		  <xsl:with-param name="ID">
+		    <xsl:text>REF-CLASSES-MODEL</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
 	      </a>
             </li>
             <li>
 	      <a href="REF-CLASSES-ATTS.html">
-	      <xsl:for-each select="key('IDS','REF-CLASSES-ATTS')">
-		<xsl:call-template name="showHead"/>
-	      </xsl:for-each>
+		<xsl:call-template name="showHead">
+		  <xsl:with-param name="ID">
+		    <xsl:text>REF-CLASSES-ATTS</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
 	      </a>
             </li>
             <li>
 	      <a href="REF-ELEMENTS.html">
-	      <xsl:for-each select="key('IDS','REF-ELEMENTS')">
-		<xsl:call-template name="showHead"/>
-	      </xsl:for-each>
+		<xsl:call-template name="showHead">
+		  <xsl:with-param name="ID">
+		    <xsl:text>REF-ELEMENTS</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
 	      </a>
             </li>
             <li>
 	      <a href="USE.html">
-	      <xsl:for-each select="key('IDS','USE')">
-		<xsl:call-template name="showHead"/>
-	      </xsl:for-each>
+		<xsl:call-template name="showHead">
+		  <xsl:with-param name="ID">
+		    <xsl:text>USE</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
 	      </a>
             </li>
           </ul>
@@ -314,14 +356,25 @@
 
 
   <xsl:template name="showHead">
-    <xsl:choose>
-      <xsl:when test="tei:head[@xml:lang=$documentationLanguage]">
-	<xsl:value-of select="tei:head[@xml:lang=$documentationLanguage]"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:value-of select="tei:head[not(@xml:lang)]"/>
+    <xsl:param name="ID"/>
+    <xsl:variable name="Here" select="/"/>
+    <xsl:for-each select="document('')">
+      <xsl:choose>
+	<xsl:when
+	    test="key('HEADS',concat($documentationLanguage,$ID))">
+	  <xsl:for-each select="key('HEADS',concat($documentationLanguage,$ID))">
+	    <xsl:value-of select="."/>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:for-each select="$Here">
+	    <xsl:for-each select="key('IDS',$ID)">
+	      <xsl:value-of select="tei:head"/>
+	    </xsl:for-each>
+	  </xsl:for-each>
       </xsl:otherwise>
-    </xsl:choose>
+      </xsl:choose>
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template name="numberFrontDiv">
@@ -692,5 +745,45 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
     </h1>
   </div>
 </xsl:template>
+
+<heads xmlns="http://www.tei-c.org/ns/1.0">
+<head xml:lang="fr" corresp="AB">À propos des Principes directeurs</head>
+<head xml:lang="fr" corresp="AI">Mécanismes analytiques simples</head>
+<head xml:lang="fr" corresp="BIB">Bibliographie</head>
+<head xml:lang="fr" corresp="CC">Corpus linguistiques</head>
+<head xml:lang="fr" corresp="CE">Degré de certitude et responsabilité</head>
+<head xml:lang="fr" corresp="CH">Langues et jeux de caractères </head>
+<head xml:lang="fr" corresp="CO">Éléments disponibles pour tous les documents TEI</head>
+<head xml:lang="fr" corresp="COL">Colophon</head>
+<head xml:lang="fr" corresp="dedication">Dédicace</head>
+<head xml:lang="fr" corresp="DI">Dictionnaires</head>
+<head xml:lang="fr" corresp="DR">Théâtre</head>
+<head xml:lang="fr" corresp="DS">Structure textuelle par défaut</head>
+<head xml:lang="fr" corresp="FS">Structures de traits</head>
+<head xml:lang="fr" corresp="FT">Tableaux, formules et graphiques</head>
+<head xml:lang="fr" corresp="GD">Graphes, réseaux et arbres</head>
+<head xml:lang="fr" corresp="HD">En-tête TEI</head>
+<head xml:lang="fr" corresp="MS">Description de manuscrits</head>
+<head xml:lang="fr" corresp="ND">Noms, dates, personnes et lieux</head>
+<head xml:lang="fr" corresp="NH">Structures non hiérarchiques</head>
+<head xml:lang="fr" corresp="PH">Représentation de sources primaires</head>
+<head xml:lang="fr" corresp="PREF">Préface et remerciements</head>
+<head xml:lang="fr" corresp="PREFS">Notes préliminaires </head>
+<head xml:lang="fr" corresp="REF-CLASSES-ATTS">Classes attributives</head>
+<head xml:lang="fr" corresp="REF-CLASSES-MODEL">Classes structurales</head>
+<head xml:lang="fr" corresp="REF-ELEMENTS">Éléments</head>
+<head xml:lang="fr" corresp="REF-MACROS">Types de données et autres macros </head>
+<head xml:lang="fr" corresp="SA">Liens, segmentation et alignement</head>
+<head xml:lang="fr" corresp="SG">Petite introduction à XML</head>
+<head xml:lang="fr" corresp="ST">Infrastructure de la TEI</head>
+<head xml:lang="fr" corresp="TC">Apparat critique</head>
+<head xml:lang="fr" corresp="TD">Éléments de déclaration d’un modèle</head>
+<head xml:lang="fr" corresp="TitlePageVerso">Versions des Principes directeurs</head>
+<head xml:lang="fr" corresp="TS">Transcriptions de la parole</head>
+<head xml:lang="fr" corresp="USE">Utiliser la TEI</head>
+<head xml:lang="fr" corresp="VE">Poésie</head>
+<head xml:lang="fr" corresp="WD">Représentation des caractères et des glyphes non standard</head>
+</heads>
+
 
 </xsl:stylesheet>
