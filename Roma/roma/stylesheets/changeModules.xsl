@@ -135,6 +135,11 @@ Description
           </a>
         </td>
         <td width="400">
+	  <xsl:if test="not(elementGloss='')">
+	    <xsl:text>(</xsl:text>
+	    <xsl:value-of select="elementGloss"/>
+	    <xsl:text>) </xsl:text>
+	  </xsl:if>
           <xsl:value-of select="elementDesc"/>
         </td>
         <td>
