@@ -615,7 +615,8 @@ class roma
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
-	$this->getListDom( roma_xquery_server . 'modules.xq', $oListDom );
+	$this->getListDom( roma_xquery_server . 'modules.xq?lang='
+	. $_SESSION['docLang'] , $oListDom );
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 
 	// build param list
@@ -690,7 +691,9 @@ class roma
 
 	$aszParam =  array( 'module' => $_REQUEST[ 'module' ],
 	'lang' => $_SESSION['docLang'] ,
-	'TEISERVER' => roma_xquery_server);
+	'TEISERVER' => roma_xquery_server,
+	'TEIWEB' => roma_teiweb_server
+	);
 	$this->applyStylesheet( $oListDom, 'changeModules.xsl', $oNewDom, $aszParam , 'changeModule');
 	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );

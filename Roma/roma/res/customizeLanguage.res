@@ -29,7 +29,7 @@ helpmessage=Specifier un langage
 headline=Choisissons un autre langage
 form_headline=Préfériez-vous voir les noms des éléments et des attributs dans une autre langue?
 form_language=Quelle  langue préfériez-vous?
-form_doclanguage=Language for documentation
+form_doclanguage=Langage pour documentation
 form_clearCustomization=Enlever personnalisation (retourner en anglais)
 
 

@@ -2003,7 +2003,7 @@ class romaDom extends domDocument
     public function getOddDom( &$oDOC )
       {
 	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/odds/odd2odd.xsl' );
+	$oXSL->load( roma_teiweb_server . '/xml/tei/stylesheet/odds/odd2odd.xsl' );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
         $oProc->setParameter( null, 'stripped', 'true');	
@@ -2017,7 +2017,7 @@ class romaDom extends domDocument
 	else
 	   {
               $oXSL2 = new domDocument();
-              $oXSL2->load( roma_StylesheetDir . '/odds/translate-odd.xsl' );
+              $oXSL2->load(  roma_teiweb_server . '/xml/tei/stylesheet/odds/translate-odd.xsl' );
               $oProc2 = new XsltProcessor();
  	      $oProc2->setParameter( null, 'TEIC', 'true');	
 //DEBUG	      $oProc2->setParameter( null, 'localsource', roma_local_p5);
@@ -2031,7 +2031,7 @@ class romaDom extends domDocument
     protected function getDocDom( &$oDOC )
       {
 	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/odds/odd2odd.xsl' );
+	$oXSL->load(  roma_teiweb_server . '/xml/tei/stylesheet/odds/odd2odd.xsl' );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 	$oProc->setParameter( null, 'TEISERVER', roma_xquery_server);
@@ -2044,7 +2044,7 @@ class romaDom extends domDocument
 	else
 	   {
               $oXSL2 = new domDocument();
-              $oXSL2->load( roma_StylesheetDir . '/odds/translate-odd.xsl' );
+              $oXSL2->load(  roma_teiweb_server . '/xml/tei/stylesheet/odds/translate-odd.xsl' );
               $oProc2 = new XsltProcessor();
  	      $oProc2->setParameter( null, 'TEIC', 'true');	
 //DEBUG	      $oProc2->setParameter( null, 'localsource', roma_local_p5);
@@ -2059,7 +2059,7 @@ class romaDom extends domDocument
       {
 	$this->getDocDom( $oDOC );
         $oXSL = new domDocument();
- 	$oXSL->load( roma_StylesheetDir . '/odds/odd2relax.xsl'  );
+ 	$oXSL->load(  roma_teiweb_server . '/xml/tei/stylesheet/odds/odd2relax.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 //DEBUG        $oProc->setParameter( null, 'localsource', roma_local_p5);
@@ -2113,7 +2113,7 @@ class romaDom extends domDocument
         $this->m_oRomaDom->updateProgressBar( '55' );
 	$this->getDocDom( $oDOC );
         $oXSL = new domDocument();
- 	$oXSL->load( roma_StylesheetDir . '/odds/odd2lite.xsl'  );
+ 	$oXSL->load(  roma_teiweb_server . '/xml/tei/stylesheet/odds/odd2lite.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 	$oProc->setParameter( null, 'TEIC', 'true');
@@ -2178,7 +2178,7 @@ class romaDom extends domDocument
 	  $this->m_oRomaDom->updateProgressBar( '70' );
 
 	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/latex/tei.xsl'  );
+	$oXSL->load(  roma_teiweb_server . '/xml/tei/stylesheet/latex/tei.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 	
@@ -2199,7 +2199,7 @@ class romaDom extends domDocument
 
 	
 	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/latex/tei.xsl'  );
+	$oXSL->load(  roma_teiweb_server . '/xml/tei/stylesheet/latex/tei.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 
@@ -2251,7 +2251,7 @@ class romaDom extends domDocument
 	  $this->m_oRomaDom->updateProgressBar( '60' );
 
 	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/fo/tei.xsl' );
+	$oXSL->load(  roma_teiweb_server . '/xml/tei/stylesheet/fo/tei.xsl' );
 	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -2293,7 +2293,7 @@ class romaDom extends domDocument
 	  $this->m_oRomaDom->updateProgressBar( '60' );
 
 	$oXSL = new domDocument();
-	$oXSL->load( roma_StylesheetDir . '/latex/tei.xsl');
+	$oXSL->load(  roma_teiweb_server . '/xml/tei/stylesheet/latex/tei.xsl');
 	
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -2340,7 +2340,7 @@ class romaDom extends domDocument
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '55' );
         $oXSL = new domDocument();
- 	$oXSL->load( roma_StylesheetDir . '/odds/odd2html.xsl'  );
+ 	$oXSL->load(  roma_teiweb_server . '/xml/tei/stylesheet/odds/odd2html.xsl'  );
 
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
@@ -2501,7 +2501,7 @@ class romaDom extends domDocument
 	  }
 	$this->getDocDom( $oDOC );
         $oXSL = new domDocument();
- 	$oXSL->load( roma_StylesheetDir . '/odds/odd2dtd.xsl'  );
+ 	$oXSL->load( roma_teiweb_server . '/xml/tei/stylesheet/odds/odd2dtd.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 	$oProc->setParameter( null, 'TEIC', 'true');	

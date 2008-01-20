@@ -41,7 +41,7 @@ form_headline=Modification d'un attribut en cours
 form_name=Nom d'attribut
 form_optional=Facultatif?
 form_contents=Contenu
-form_defaultValue=Valeur par d&eacutefaut
+form_defaultValue=Valeur par défaut
 form_description=Description
 form_valList=Liste des valeurs
 

@@ -16,15 +16,19 @@ Description
   <xsl:param name="excludedElements"/>
   <xsl:param name="changedElementNames"/>
   <xsl:param name="module"/>
-  <xsl:param name="lang"/>
+  <xsl:param name="lang">en</xsl:param>
+  <xsl:param name="doclang">en</xsl:param>
   <xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk/Query/</xsl:param>
+  <xsl:param name="TEIWEB">http://www.tei-c.org/release/doc/tei-p5-doc</xsl:param>
   <xsl:template match="/">
     <p class="roma">
       <a href="?mode=main"> back </a>
       <br/>
       <form method="POST">
-        <xsl:attribute name="action"> ?mode=moduleChanged&amp;module=<xsl:value-of select="$module"/>
-				</xsl:attribute>
+        <xsl:attribute name="action">
+	  <xsl:text>?mode=moduleChanged&amp;module=</xsl:text>
+	  <xsl:value-of select="$module"/>
+	</xsl:attribute>
         <table>
           <tr>
             <td class="headline" colspan="7">
@@ -120,13 +124,12 @@ Description
         <td>
           <a target="_new">
             <xsl:attribute name="href">
-              <xsl:value-of select="$TEISERVER"/>
-              <xsl:text>tag.xq?documentationLanguage=</xsl:text>
-              <xsl:value-of select="$lang"/>
-              <xsl:text>&amp;doclang=</xsl:text>
-              <xsl:value-of select="$lang"/>
-              <xsl:text>&amp;name=</xsl:text>
+	      <xsl:value-of select="$TEIWEB"/>
+	      <xsl:text>/doc/tei-p5-doc/</xsl:text>
+              <xsl:value-of select="$doclang"/>
+	      <xsl:text>/html/ref-</xsl:text>
               <xsl:value-of select="elementName"/>
+	      <xsl:text>.html</xsl:text>
             </xsl:attribute>
             <span class="helpMe">?</span>
           </a>
