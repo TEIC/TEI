@@ -40,8 +40,8 @@ entirely opposite priorities. At one
 extreme, a project may simply wish to capture an existing catalogue in
 a form that can be displayed on the web, and which can be searched for
 literal strings, or for such features such as titles, authors and
-dates; at the other, a project may wish to create in highly structured
-and encoded form a detailed database of information about the physical
+dates; at the other, a project may wish to create, in highly structured
+and encoded form, a detailed database of information about the physical
 characteristics, history, interpretation, etc. of the material, able
 to support practitioners of <term>quantitative codicology</term> as
 well as librarians.</p>
@@ -424,7 +424,7 @@ attributes:
 <div type="div3" xml:id="msmat">
 <head>Material</head>
 <p>The <gi>material</gi> element can be used to tag any specific term
-used for the material of which a manuscript (or binding, seal, etc.)
+used for the physical material of which a manuscript (or binding, seal, etc.)
 is composed.
 <specList>
 <specDesc key="material"/>
@@ -450,7 +450,8 @@ bindings:
 <p>These element may appear
 wherever a term regarded as significant by the encoder occurs. The
 <gi>watermark</gi> element is most likely to be of use within the
-<gi>support</gi> element, as in the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><support><material>Rag
+<gi>support</gi> element discussed in <ptr target="#msph1sup"/>
+below. We give a simple example here: <egXML xmlns="http://www.tei-c.org/ns/Examples"><support><material>Rag
 paper</material> with <watermark>anchor</watermark>
 watermark</support></egXML></p>
 <p>The <gi>stamp</gi> element will typically appear when text from the source
@@ -879,7 +880,7 @@ adhered to. Where such a format also contains information which might
 additionally be supplied as a distinct subcomponent of the
 <gi>msIdentifier</gi>, for example a collection name,
 a decision must be taken as to whether to use the more specific
-element, or to include within the <gi>idno</gi> element. For
+element, or to include such information within the <gi>idno</gi> element. For
 example, the manuscript formally identified as <q>El 26 C 0</q> forms
 a part of the Ellesmere (<q>El</q>) collection. Either of the
 following encodings is therefore feasible:
@@ -1249,8 +1250,7 @@ that in the former, the order and number of child elements is not
 constrained; any element, in other words, may be given in any order,
 and repeated as often as is judged necessary. In the latter, however, the
 sub-elements, if used, must be given in the order specified above and
-only some of  they
-may be repeated; specifically,  <gi>rubric</gi>,
+only some of  them may be repeated; specifically,  <gi>rubric</gi>,
 <gi>finalRubric</gi>.  <gi>incipit</gi>, <gi>textLang</gi> and
 <gi>explicit</gi> can appear only once.</p>
 <p>While  neither
@@ -1260,7 +1260,7 @@ form of  one
 or more paragraphs of text. They differ in this respect also: if
 paragraphs are supplied as the content of an <gi>msItem</gi>, then
 none of the other component elements listed above is permitted; in the
-<gi>msItemStruct</gi> case, however, paragraphs may appear anywhere in
+<gi>msItemStruct</gi> case, however, paragraphs may appear anywhere
 as an alternative to any of the component elements listed above. 
 </p>
 <p>As noted above, both
@@ -1276,9 +1276,9 @@ which they inherit the <att>defective</att> attribute.
 <specList>
 <specDesc key="att.msExcerpt" atts="defective"/>
 </specList>
-This attribute can be used for example for collections
+This attribute can be used for example with collections
 of fragments, where each fragment is given as a separate
-<gi>msItem</gi> and the first and last words of each transcribed as
+<gi>msItem</gi> and the first and last words of each fragment are transcribed as
 defective incipits and explicits, as in the following example, a
 manuscript containing four fragments of a single work:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -1303,7 +1303,7 @@ selected. Similarly, the <gi>g</gi> element used in this example to
 represent the abbreviation mark is defined by the <ident type="module">gaiji</ident> module documented in chapter <ptr target="#WD"/>. </p>
 </div>
 <div type="div3" xml:id="msat"><head>Authors and Titles</head>
-<p>The <gi>title</gi> element should be used to supply a regularized
+<p>When used within a manuscript description, the <gi>title</gi> element should be used to supply a regularized
 form of the item's title, as distinct from any rubric quoted from the
 manuscript. If the item concerned has a standardized distinctive
 title, e.g. <mentioned>Roman de la Rose</mentioned>, then this should
@@ -1315,7 +1315,7 @@ designation of the contents, then a <soCalled>supplied</soCalled>
 title can be given, e.g. <mentioned>missal</mentioned>, in which case
 the <att>type</att> attribute on the <gi>title</gi> should be given
 the value <code>supplied</code>.</p>
-<p>The <gi>author</gi> element, if used, should always
+<p>Similarly, if used within a manuscript description, the <gi>author</gi> element should always
 contain the normalized form of an author's name, irrespective of how
 (or whether) this form of the name is cited in the manuscript. If it
 is desired to retain the form of the author's name as given in the
@@ -1447,7 +1447,7 @@ the same range of values as the global <att>xml:lang</att> attribute,
 on which see further <ptr target="#CHSH"/>. In the following
 example a manuscript written chiefly in Old Church Slavonic is described:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<textLang mainLang="OCS">Old Church Slavonic</textLang>
+<textLang mainLang="chu">Old Church Slavonic</textLang>
 </egXML></p>
 <!-- here I would like to add the these two attributes are also available on msContents -->
 <p>A manuscript item will sometimes contain material in more than one language. The 
@@ -1455,7 +1455,7 @@ example a manuscript written chiefly in Old Church Slavonic is described:
 Other languages used may be specified using the <att>otherLangs</att>
 attribute as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<textLang mainLang="OCS" otherLangs="RUS HEL">Mostly Old Church 
+<textLang mainLang="chu" otherLangs="RUS HEL">Mostly Old Church 
 Slavonic, with some Russian and Greek material</textLang>
 </egXML>
 </p>
@@ -1464,7 +1464,7 @@ Cyrillic or Glagolitic scripts, and even occasionally in both within the
 same manuscript, it might be preferable to use a more explicit
 identifier:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<textLang mainLang="OCS-cyrs">Old Church Slavonic in Cyrillic script</textLang>
+<textLang mainLang="chu-Cyrs">Old Church Slavonic in Cyrillic script</textLang>
 </egXML></p>
 <p>The form and scope of language identifiers recommended by these
 Guidelines is based on the IANA standard described at <ptr target="#CHSH"/> and should be followed throughout. Where additional 
@@ -1591,13 +1591,20 @@ have a <gi>textLang</gi> element like the following:
 <head>Physical Description</head>
 <p>Under the general heading <soCalled>physical description</soCalled>
 we subsume a large number of different aspects generally regarded as
-useful in the description of a given manuscript. These include aspects
+useful in the description of a given manuscript. These include:
+<list>
+<item>aspects
 of the form, support, extent, and quire structure of the manuscript
-object and of the way in which the text is laid out on the page (<ptr target="#msph1"/>); the styles  of writing, such as the
+object and of the way in which the text is laid out on the page (<ptr
+target="#msph1"/>);</item>
+<item>the styles  of writing, such as the
 way it is laid out on the page, the styles of writing,  decorative
 features, any musical
-notation employed and any annotations or marginalia (<ptr target="#msph2"/>); and discussion of its binding, seals, and any
-accompanying material (<ptr target="#msph3"/>).</p>
+notation employed and any annotations or marginalia (<ptr
+target="#msph2"/>);</item>
+<item> and discussion of its binding, seals, and any
+accompanying material (<ptr target="#msph3"/>).</item>
+</list></p>
 <p>Most manuscript descriptions touch on several of these categories
 of information though few include them all, and not all distinguish
 them as clearly as we propose here. In particular, it is often the
@@ -1608,12 +1615,12 @@ description using the structure proposed here, or to retain the
 existing prose, marked up simply as a series of <gi>p</gi> elements,
 directly within the <gi>physDesc</gi> element.</p>
 <p>The <gi>physDesc</gi> element may thus be used in either of two
-distinct ways: it may contain a series of paragraphs addressing topics
-listed above and similar ones; or it may act as a container for any
+distinct ways. It may contain a series of paragraphs addressing topics
+listed above and similar ones. Alternatively, it may act as a container for any
 choice of the more specialized elements described in the remainder of
 this section, each of which itself contains a series of paragraphs,
 and may also have more specific attributes. Note that the two ways
-should, and indeed may, <emph>not</emph> be combined within the same
+must <emph>not</emph> be combined within the same
 description.</p>
 <div type="div3" xml:id="msph1"><head>Object Description</head>
 <p>The <gi>objectDesc</gi> element is used to group together those
@@ -1621,7 +1628,7 @@ parts of the physical description which relate specifically to the
 text-bearing object, its format, constitution, layout, etc. The
 <att>form</att> attribute is used to indicate the specific type of
 writing vehicle being described, for example, as a codex, roll,
-tablet, etc. It has two parts: a description of the
+tablet, etc. The <gi>objectDesc</gi> element has two parts: a description of the
 <term>support</term>, i.e. the physical carrier on which the text is
 inscribed; and a description of the <term>layout</term>, i.e. the way
 text is organized on the carrier.</p>
@@ -2007,7 +2014,7 @@ for example in the <gi>history</gi> element, in cases where the
 marginalia provide evidence of ownership. Some examples follow:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <additions><p>Doodles on most leaves, possibly by children, and often quite amusing.</p></additions>
-<additions><p>Quelques annotations marginales des XVIe et XVIIe s.</p></additions>
+<additions><p xml:lang="fr">Quelques annotations marginales des XVIe et XVIIe s.</p></additions>
 <additions>
 <p>The text of this manuscript is not interpolated with sentences from 
 Royal decrees promulgated in 1294, 1305 and 1314. In the margins, however, 
@@ -2140,135 +2147,59 @@ Saga mun vera komin fra Sr Vigfuse á Helgafelle.</quote></p>
 </egXML></p>
 
 <specGrp xml:id="physdesc.def">
-
-
-
-
 &physDesc;
-
-
-
-
 
 
 &objectDesc;
 
 
-
-
-
-
 &supportDesc;
-
-
-
-
 
 
 &support;
 
 
-
-
-
-
 &collation;
-
-
-
-
 
 
 &foliation;
 
 
-
-
-
-
 &condition;
-
-
-
-
 
 
 &layoutDesc;
 
 
-
-
-
-
 &layout;
-
-
-
-
 
 
 &handDesc;
 
 
 <!-- &handNote;-->
-
-
-
-
 &musicNotation;
-
-
-
-
 
 
 &decoDesc;
 
 
-
-
-
-
 &decoNote;
-
-
-
-
 
 
 &additions;
 
 
-
-
-
-
 &bindingDesc;
-
-
-
-
 
 
 &binding;
 
 
-
-
-
-
 &sealDesc;
 
 
-
-
-
-
 &seal;
-
-
-
-
 
 
 &accMat;
@@ -2342,29 +2273,13 @@ flyleaf), either in 1696 or 97.</p></acquisition>
 </history>
 </egXML></p>
 <specGrp xml:id="history.def">
-
-
-
-
 &history;
-
-
-
-
 
 
 &origin;
 
 
-
-
-
-
 &provenance;
-
-
-
-
 
 
 &acquisition;
@@ -2387,20 +2302,16 @@ element described in this section.
 required. If any is supplied, it may appear once only; furthermore,
 the order in which elements are supplied should be as specified above.</p>
 <specGrp xml:id="additional.def">
-
-
-
-
 &additional;
 
 
 </specGrp>
 <div type="div3" xml:id="msadad">
 <head>Administrative information</head>
-<p>A variety of information relating to the curation and management of
-a manuscript may be recorded as simple prose narrative tagged using
-the standard <gi>p</gi> element. Alternatively, different aspects of this
-information may be presented grouped within one or more
+<p>The <gi>adminInfo</gi> element is used to hold information relating to the curation and management of
+a manuscript.  This may be supplied as a note using the global
+<gi>note</gi> element. Alternatively, different aspects of this
+information may be presented grouped within one<!-- or more-->
 of the following specialized elements:
 <specList>
 <specDesc key="recordHist"/>
@@ -2408,7 +2319,8 @@ of the following specialized elements:
 <specDesc key="custodialHist"/>
 </specList></p>
 <div type="div4" xml:id="msrh"><head>Record History</head>
-<p>The <gi>recordHist</gi> element, if supplied, must contain a
+<p>The <gi>recordHist</gi> element may contain simply a series of
+paragraphs. Alternatively it may contain a
 <gi>source</gi> element, followed by an optional series of
 <gi>change</gi> elements. 
 <specList>
@@ -2458,7 +2370,7 @@ repeated here. Instead, it should be referenced using the standard TEI
   </listBibl>
 </additional>
 </egXML></p>
-<p>The <gi>change</gi> element is a standard TEI element, which
+<p>The <gi>change</gi> element 
 may also appear within the <gi>revisionDesc</gi> element of the
 standard TEI Header; its use here is intended to signal the
 similarity of function between the two container elements. Where the
@@ -2471,7 +2383,8 @@ the individual description, as in the following example:
 <name>MJD</name> converted to P5</change>
 </egXML></p>
 </div><div type="div4" xml:id="msadch"><head>Availability and Custodial History</head>
-<p>The <gi>availability</gi> element is a standard TEI element,
+<p>The <gi>availability</gi> element is another element also available
+in  the TEI Header,
 which should be used here to supply any information concerning
 access to the current manuscript, such as its physical location (where this
 is not implicit in its identifier), any restrictions on access, information
@@ -2493,8 +2406,8 @@ it should therefore not be used or lent out until it has been conserved.</p>
 <p>The <gi>custodialHist</gi> record is used to describe the custodial
 history of a manuscript, recording any significant events noted during
 the period that it has been located within its holding institution. It
-may contain either a series of paragraphs tagged with the standard TEI
-<gi>p</gi> element, or a series of <gi>custEvent</gi> elements, each
+may contain either a series of 
+<gi>p</gi> elements, or a series of <gi>custEvent</gi> elements, each
 describing a distinct incident or event, further specified by a
 <att>type</att> attribute, and carrying dating information by virtue
 of its membership in the <ident type="class">att.datable</ident> class, as noted above.
@@ -2514,37 +2427,17 @@ Konserveringsværksted.</p></custEvent>
 </custodialHist>
 </egXML></p>
 <specGrp xml:id="adminfo.def">
-
-
-
-
 &adminInfo;
 
 
-
-
-
-
 &recordHist;
-
-
-
-
 
 
 &source;
 
 
 <!-- add &change.odd? -->
-
-
-
-
 &custodialHist;
-
-
-
-
 
 
 &custEvent;
@@ -2568,7 +2461,7 @@ information about representations of the manuscript available within
 published works; this should normally be documented within the
 <gi>listBibl</gi> element within the <gi>additional</gi>
 element. However, it is often also convenient to record information
-such as negative numbers, digital identifiers etc. for unpublished
+such as negative numbers or digital identifiers for unpublished
 collections of manuscript images maintained within the holding
 institution, as well as to provide more detailed descriptive
 information about the surrogate itself. Such information may be provided
@@ -2597,10 +2490,6 @@ the process by which a digital or photographic image was made. For
 information about the inclusion of digital facsimile images within a
 TEI document, refer also to <ptr target="#PHFAX"/>. </p>
 <specGrp xml:id="surrogates.def">
-
-
-
-
 &surrogates;
 
 
@@ -2651,10 +2540,6 @@ element, as in the following example:
 </egXML>
 </p>
 <specGrp xml:id="mspart.def">
-
-
-
-
 &msPart;
 
 
@@ -2676,10 +2561,6 @@ The selection and combination of modules to form a TEI schema is described in
 </p>
 
 <specGrp>
-
-
-
-
 &att.dimensions;
 
 
