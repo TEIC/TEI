@@ -19,7 +19,7 @@ Description
   <xsl:param name="lang">en</xsl:param>
   <xsl:param name="doclang">en</xsl:param>
   <xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk/Query/</xsl:param>
-  <xsl:param name="TEIWEB">http://www.tei-c.org/release/doc/tei-p5-doc</xsl:param>
+  <xsl:param name="TEIWEB">http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:param>
   <xsl:template match="/">
     <p class="roma">
       <a href="?mode=main"> back </a>
@@ -125,7 +125,6 @@ Description
           <a target="_new">
             <xsl:attribute name="href">
 	      <xsl:value-of select="$TEIWEB"/>
-	      <xsl:text>/doc/tei-p5-doc/</xsl:text>
               <xsl:value-of select="$doclang"/>
 	      <xsl:text>/html/ref-</xsl:text>
               <xsl:value-of select="elementName"/>

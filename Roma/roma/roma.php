@@ -689,10 +689,12 @@ class roma
 
 	$this->createChangeInListDom( $oListDom, array ( $oChanged, $oExcludedElements ) );
 
-	$aszParam =  array( 'module' => $_REQUEST[ 'module' ],
-	'lang' => $_SESSION['docLang'] ,
-	'TEISERVER' => roma_xquery_server,
-	'TEIWEB' => roma_teiweb_server
+	$aszParam =  array( 
+          'module' => $_REQUEST[ 'module' ],
+	  'lang' => szLanguage ,
+	  'doclang' => $_SESSION['docLang'],
+	  'TEISERVER' => roma_xquery_server,
+	  'TEIWEB' => roma_teiweb_server
 	);
 	$this->applyStylesheet( $oListDom, 'changeModules.xsl', $oNewDom, $aszParam , 'changeModule');
 	$oParser->addReplacement( 'lang', $szLanguage );
@@ -897,7 +899,7 @@ class roma
       {
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
-
+	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 
 	$oModelClassDom = new domDocument();
@@ -1050,6 +1052,7 @@ class roma
 	  {
 	    $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	    $this->getParser( $oParser );
+	    $this->m_oRomaDom->getCustomizationLanguage( $szLanguage );	
 	    $this->m_oRomaDom->getCustomizationTitle( $szTitle );
 
 	    $this->applyStylesheet( $oElementsDom, 'listAddedElements.xsl', $oNewDom, array(), 'listElements' );
@@ -1138,7 +1141,6 @@ class roma
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
 	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
-
 	$oListDom = new domDocument();
 	$oListDom->loadXML( join ( '', file( roma_xquery_server . 'attclasses.xq?lang=' . $_SESSION['docLang'] ) ) );
 
