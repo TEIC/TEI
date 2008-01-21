@@ -301,7 +301,14 @@ dist-schema: schemas dtds oddschema exampleschema
 	ln -s tei-p5-schema tei-p5-schema-`cat ../VERSION` ; \
 	zip -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION` )
 
-dist-doc:  html-web
+dist-doc:  
+	make html-web
+	make LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
+	make LANGUAGE=de DOCUMENTATIONLANGUAGE=de html-web
+	make LANGUAGE=ja DOCUMENTATIONLANGUAGE=ja html-web
+	make LANGUAGE=fr DOCUMENTATIONLANGUAGE=fr html-web
+	make LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web
+	make LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
 	rm -rf release/tei-p5-doc*
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
