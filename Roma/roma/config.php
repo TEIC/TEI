@@ -20,7 +20,7 @@ define( 'roma_pdflatex', 'pdflatex' );
 define ( 'roma_temporaryFilesDir',   '/tmp' );
 define ( 'roma_xquery_server',       'http://tei.oucs.ox.ac.uk/Query/' );
 define ( 'roma_teiweb_server',       'http://www.tei-c.org/release/doc/tei-p5-doc/' );
-define ( 'roma_tei',                 '/usr/share/xml/tei/' );
+define ( 'roma_tei',                 '/usr/share/' );
 define ( 'roma_localStylesheetDir',  'roma/stylesheets' );
 define ( 'roma_templateDir',         'roma/templates' );
 define ( 'roma_resource_path',       'roma/res' );
