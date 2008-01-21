@@ -66,8 +66,8 @@ language=Langage
 schema=Schéma
 documentation=Documentation
 searchtei=Rechercher base TEI
-sanitycheck=Sanity Checker
-workingon=You are currently working on
+sanitycheck=Contrôleur de validité
+workingon=Vous travaillez actuellement sur
 
 
 [it]
@@ -176,5 +176,3 @@ documentation=Documentaçao
 searchtei=Procurar na base de dados TEI 
 sanitycheck=Sanity Checker
 workingon=You are currently working on
-
-

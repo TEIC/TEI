@@ -43,8 +43,8 @@ form_filename=Nom du fichier
 form_language=Langage
 form_author=Auteur
 form_description=Description
-form_prefix=Prefix for TEI pattern names in schema
-form_namespace=Namespace for new elements
+form_prefix=Préfixe pour des noms de modèle TEI  dans un schéma
+form_namespace=Espace de nommage pour de nouveaux éléments
 
 [it]
 helpmessage=Questa finestra ti permette di impostare i parametri globali
