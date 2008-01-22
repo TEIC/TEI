@@ -369,7 +369,7 @@
     <xsl:text> (</xsl:text>
       <xsl:apply-templates/>
     <xsl:text>)</xsl:text>
-    <xsl:if test="following-sibling::* and ancestor::tei:biblStruct">">
+    <xsl:if test="following-sibling::* and ancestor::tei:biblStruct">
       <xsl:text> </xsl:text>
     </xsl:if>
 </xsl:template>
