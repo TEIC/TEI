@@ -324,21 +324,42 @@
           <xsl:apply-templates select="text:h[@text:outline-level='1']"/>
         </xsl:when>
         <xsl:when test="text:h[@text:outline-level='2']">
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
           <xsl:apply-templates select="text:h[@text:outline-level='2']"/>
         </xsl:when>
         <xsl:when test="text:h[@text:outline-level='3']">
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
           <xsl:apply-templates select="text:h[@text:outline-level='3']"/>
         </xsl:when>
         <xsl:when test="text:h[@text:outline-level='4']">
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
           <xsl:apply-templates select="text:h[@text:outline-level='4']"/>
         </xsl:when>
         <xsl:when test="text:h[@text:outline-level='5']">
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
           <xsl:apply-templates select="text:h[@text:outline-level='5']"/>
         </xsl:when>
         <xsl:when test="text:h[@text:outline-level='6']">
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
           <xsl:apply-templates select="text:h[@text:outline-level='6']"/>
         </xsl:when>
         <xsl:when test="text:h[@text:outline-level='7']">
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
           <xsl:apply-templates select="text:h[@text:outline-level='7']"/>
         </xsl:when>
       </xsl:choose>
