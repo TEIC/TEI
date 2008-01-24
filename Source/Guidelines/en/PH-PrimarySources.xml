@@ -18,7 +18,8 @@ transcriptions of such materials. It is expected that this module will
 also be useful in the preparation of critical editions, but the module
 defined here is distinct from that defined in chapter <ptr target="#TC"/>, and may be used independently of it. Detailed metadata
 relating to primary sources of any kind may be recorded using the
-elements defined by the manuscript description module discussed in
+elements defined by the manuscript description module discussed inI hope you don't mind I finish submitting my chapter notes before getting to your replies... Here's Chapter 11...
+
 chapter <ptr target="#MS"/>, but again the present module may be used
 independently if such data is not required.
 </p>
@@ -410,7 +411,7 @@ with the zones identified above. The first step is to give each
 relevant part of the facsimile an identifier:
  <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface ulx="0" uly="0" lrx="200" lry="300">
-	<zone ulx="0" uly="0" lrx="200" lry="300">
+	<zone xml:id="B49r" ulx="0" uly="0" lrx="200" lry="300">
 		<graphic url="Bovelles-49r.png"/>
 	</zone>
 	<zone ulx="105" uly="76" lrx="175" lry="160"> 
@@ -881,7 +882,7 @@ emendation on a broad scale: high, medium, or low. The attribute
 proposed emendation. Its value is a pointer, which will typically
 indicate a <gi>respStmt</gi> or <gi>name</gi> element in the header of the transcribed
 document, but can point anywhere, for example to some online authority
-file. Using these two attributes, we the <gi>corr</gi> element
+file. Using these two attributes, the <gi>corr</gi> element
 presented above might usefully be enhanced as follows:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -1010,7 +1011,7 @@ parfit wis a
 <app>
   <rdg wit="#Hg">wight</rdg>
   <rdg wit="#Ln #Ry2 #Ld"><corr resp="#ETD">wright</corr></rdg>
-  <rdg wit="#Gg"><corr resp="mp">wyf</corr></rdg>
+  <rdg wit="#Gg"><corr resp="#mp">wyf</corr></rdg>
 </app></egXML>
 
 This encoding asserts that the reading <mentioned>wyf</mentioned>
@@ -1119,18 +1120,18 @@ inserts the word <q>cant,</q> above the line, with a stroke to
 indicate insertion: this might be encoded as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-07">
 The O.E.D.  is not a dictionary so much as a corpus of
-precedents <del hand="RG">in the</del>: current, 
-obsolete, <add hand="RG" place="supralinear">cant,</add> 
+precedents <del hand="#RG">in the</del>: current, 
+obsolete, <add hand="#RG" place="supralinear">cant,</add> 
 cataphretic and nonce-words are all included. </egXML>
 A little earlier in the same extract, Graves writes <q>for an
 abridgement</q> above the line, and then deletes it. This may be
 encoded similarly:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-07">
-As for 'significant artist.' You quote the  O.E.D <add hand="RG" place="supralinear"><del>for an abridgement</del></add>in
+As for 'significant artist.' You quote the  O.E.D <add hand="#RG" place="supralinear"><del>for an abridgement</del></add>in
 explanation... </egXML>
 Similarly, in the margin, the word <q>Norton</q> has been added and then deleted:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-07">
-You quote the <add hand="RG" place="left"><del>Norton</del></add>
+You quote the <add hand="#RG" place="left"><del>Norton</del></add>
 O.E.D...</egXML>
 The word <q>O.E.D.</q> in this first sentence has also clearly been
 the result of some  redrafting: it may be that Graves started to write
@@ -1183,7 +1184,7 @@ upper-case T at the start of <q>the</q>.
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-07">
 ...
-are all included. <del hand="RG">It is</del> 
+are all included. <del hand="#RG">It is</del> 
 <subst><add>T</add><del>t</del></subst>he expressed
 </egXML>
 
@@ -1310,16 +1311,16 @@ be encoded as follows:
 Since the purpose of this element is solely to group its child elements
 together, the order in which they are presented is not significant. By
 convention, however, deletion precedes addition. This may be
-over-ridden by means of the <att>seq</att> attribute, which is of
+overridden by means of the <att>seq</att> attribute, which is of
 particular usefulness when a sequence of deletions and additions
 occurs.
 </p>
 
 <p>For example, returning to the example from William James, in a
 passage first written out by James as <q>One must have lived longer
-with this system, to appreciate its advantages</q> the word
+with this system, to appreciate its advantages</q>, the word
 <mentioned>this</mentioned> is first replaced by <mentioned>such
-a</mentioned> and this is then replaced by
+a</mentioned> and <mentioned>this</mentioned> is then replaced by
 <mentioned>a</mentioned>.<note place="foot">The manuscript contains
 several other substitutions, ignored here for the sake of
 clarity.</note> This may be encoded as follows, representing the two
@@ -1334,12 +1335,12 @@ deletions are believed by the encoder to have been carried out, and
 thus provide a simple method of supporting the kind of
 <soCalled>genetic</soCalled> textual criticism typified by (for
 example) Hans Walter Gabler's work on the reconstruction of the
-<q>overlay</q> levels of implicit in the manuscripts of James Joyce's
+<soCalled>overlay</soCalled> levels implicit in the manuscripts of James Joyce's
 <title>Ulysses</title>.
 </p>
 <p>As a more complex example, consider the following passage in one of
 the manuscripts of Wilfred Owen's <title>Dulce et decorum
-est</title>
+est</title>:
 <figure><graphic width="500px" url="Images/PHowen.png"/></figure>
 This passage might be encoded as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-16">
@@ -1388,7 +1389,7 @@ deleted text.  Such cancellation may be indicated by the
 elements. These may be used to supply further information such as
 the hand in which the restoration is carried out, the type of
 restoration, and the person
-rsponsible for identifying the restoration as such, in the same way as
+responsible for identifying the restoration as such, in the same way as
 elsewhere. </p>
 <p>Presume that Lawrence decided to restore <mentioned>my</mentioned> to the
 phrase of <title>Eloi, Eloi, lama sabachthani</title> first written
@@ -1806,11 +1807,12 @@ used to indicate which tagged features are part of the same physical
 phenomenon. </p>
 
 <p>If the damage has been so severe as to render parts of the text
-only  imperfectly
-legible, the  <gi>unclear</gi> element should be used to mark the
-fact. Returning to the Eddic example above, an encoder less confident
-in the <mentioned>daga</mentioned> reading, may indicate this as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">um aldr d<unclear reason="damage">aga</unclear> yndisniota</egXML></p>
+only imperfectly legible, the <gi>unclear</gi> element should be used
+to mark the fact. Returning to the Eddic example above, an encoder
+less confident in the <mentioned>daga</mentioned> reading, may
+indicate this as follows: <egXML
+xmlns="http://www.tei-c.org/ns/Examples">um aldr d<unclear
+reason="damage">aga</unclear> yndisniota</egXML></p>
 <p>If it is desired to supply more information about the kind of
 damage, it is also possible to nest an <gi>unclear</gi> element within
 the <gi>damage</gi> element:
@@ -1822,7 +1824,7 @@ the conjecture to Finnur Jónsson:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">um aldr d<supplied reason="rubbing" resp="#FJ">aga</supplied> yndisniota</egXML>
 The <gi>supplied</gi> element may if desired be enclosed within a
 <gi>damage</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">um aldr d<damage agent="rubbing"><supplied source="FJ">aga</supplied></damage> yndisniota</egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">um aldr d<damage agent="rubbing"><supplied source="#FJ">aga</supplied></damage> yndisniota</egXML></p>
 <p>Contrast the use of <gi>gap</gi> in the next line, where the
 transcriber believes that four letters cannot be read at all because
 of the damage:
@@ -1912,7 +1914,7 @@ as written.</egXML></item>
 <att>seq</att> attribute does not indicate otherwise, it should be
 assumed that the inner 
 deletion was made before the enclosing one. In the following example,
-the words <mentioned>redundant</mentioned> was deleted before a second
+the word <mentioned>redundant</mentioned> was deleted before a second
 second deletion removed the entire passage:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><del>This sentence contains
 some <del>redundant</del> unnecessary
@@ -1955,7 +1957,7 @@ As <space quantity="7" unit="char"/> han within her oratoryes</egXML>
 The <gi>supplied</gi> element discussed in the previous section may be
 used to supply the text presumed missing:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">By god if wommen had writen storyes
-As <supplied reason="space" resp="#ES" source="Hg">preestes</supplied>
+As <supplied reason="space" resp="#ES" source="#Hg">preestes</supplied>
 han within her oratoryes</egXML>
 Here, the fact of the space within the manuscript is indicated by the
 value of the <att>reason</att> attribute.  The source of the supplied
@@ -2015,11 +2017,11 @@ mark a deletion, the <gi>delSpan</gi> element may be used.  Where it is
 desired simply to record the marking of a span of text in circumstances
 where it is not possible to surround the text with a <gi>hi</gi>
 element, the <gi>span</gi> element may be used with the <att>rend</att>
-attribute indicating the style of line-marking.</p>
+or <att>type</att> attribute indicating the style of line-marking.</p>
 <p>More work needs to be done on clarifying the treatment of other
 textual features marked by lines which might so overlap or nest.  For
 example, in many Middle English manuscripts (e.g. the Jesus and Digby
-verse collections) marginal sidebars may indicate metrical structure:
+verse collections), marginal sidebars may indicate metrical structure:
 couplets may be linked in pairs, with the pairs themselves linked
 into stanzas. Or, marginal sidebars may indicate emphasis, or may
 point out a region of text on which there is some annotation: in many
@@ -2055,8 +2057,8 @@ The name <mentioned>fw</mentioned> is short for <q>forme work</q>. It
 may be used  to encode any of
 the unchanging portions of a page forme, such as:
 <list type="simple">
-<item>running heads (whether repeated on every page, or changing on
-every page)</item>
+<item>running heads (whether repeated or changing on every page, or
+alternating pages)</item>
 <item>running footers</item>
 <item>page numbers</item>
 <item>catch-words</item>
@@ -2086,7 +2088,7 @@ description of textual witnesses:  the materials of the carrier, the
 medium of the inscribing implement, 
 the organisation of the carrier materials themselves (as
 quiring, collation, etc.), authorial instructions or scribal markup,
-etc. except insofaras these are involved in the broader question of
+etc., except insofaras these are involved in the broader question of
 manuscript description, as addressed by the <ident type="module">msdescription</ident> module described in chapter <ptr target="#MS"/>. </p></div>
 
 <div><head>Module for Transcription of Primary Sources</head>
