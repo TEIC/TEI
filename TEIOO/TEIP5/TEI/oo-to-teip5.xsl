@@ -916,6 +916,10 @@
       <xsl:value-of select="@text:style-name"/>
     </xsl:variable>
     <xsl:choose>
+      <xsl:when test="string-length(.)=0"/>
+      <xsl:when test="text:note">
+	<xsl:apply-templates/>
+      </xsl:when>
       <xsl:when test="key('STYLES',$name)">
         <xsl:variable name="contents">
           <xsl:apply-templates/>
@@ -1411,6 +1415,15 @@ These seem to have no obvious translation
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
+
+<xsl:template match="text:sequence-decl">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="text:sequence-decls">
+  <xsl:apply-templates/>
+</xsl:template>
+
 
 <xsl:template match="text:sequence">
   <xsl:apply-templates/>
