@@ -252,8 +252,16 @@ LOCAL=$H/tei$$.xml
 fi
 
 makeODD
-$relax && makeRelax
-$relax && $xsd && makeXSD
+( $relax || $xsd ) && makeRelax
+if $xsd 
+then
+   if ! $relax 
+   then
+      echo Ignored --norelax, RELAX NG required\
+     to generate W3C XML Schema
+   fi
+   makeXSD
+fi
 $dtd && makeDTD
 $dochtml && doc=true
 $docpdf && doc=true
