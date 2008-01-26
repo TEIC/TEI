@@ -24,7 +24,7 @@ set when this module is selected.</p>
 <p>Information about variant readings (whether or not represented by a
 critical apparatus in the source text) may be recorded in a series of
 <term>apparatus entries</term>, each entry documenting one
-<term>variation</term>, or set of readings, in the text.  Tags for the
+<term>variation</term>, or set of readings, in the text.  Elements for the
 apparatus entry and readings, and for the documentation of the witnesses
 whose readings are included in the apparatus, are described in
 section <ptr target="#TCAPLL"/>. Special tags for fragmentary witnesses are
@@ -49,7 +49,7 @@ Peniarth 392D (<label>Hg</label>)
 <!--<q rend="display">Experience thogh noon Auctoritee /
 Were in this world, is right ynogh for me /
 To speke of wo that is in mariage; ...</q>--></item>
-<item> (<label>La</label>)
+<item> British Library Lansdowne 851 (<label>La</label>)
 <!--<q rend="display">Experiment thouh none auctorite /
 Were in this world, is right ynohe for me /
 To speke of wo that is in mariage; ...</q>--></item>
@@ -240,7 +240,8 @@ witness is one among several, the <gi>witDetail</gi> element should be
 used; see section <ptr target="#TCAPLW"/>.</p>
 <p>Where there is a greater weight of editorial discussion and
 interpretation than can conveniently be expressed through the attributes
-provided on these tags (e.g. multiple causes for a single reading;
+provided on these elements (for example where there are multiple
+witnesses for a single reading or
 multiple editorial responsibility for an emendation) this information
 can be attached to the apparatus in a note, or recorded in the feature
 structure notation defined in chapter <ptr target="#FS"/>.  In particular,
@@ -349,7 +350,7 @@ by gathering the readings into three groups according to the
 normalized form of their reading.  All the readings within each group
 may be accounted subvariants of the main reading for the group, which
 may be indicated by tagging it as a <gi>lem</gi> element or as
-<tag>rdg type='group base'</tag>.</p>
+<tag>rdg type='groupBase'</tag>.</p>
 <p>In this example, the different subvariants on <mentioned>Experience</mentioned>,
 <mentioned>Experiment</mentioned>, and <mentioned>Eriment</mentioned> are held within three
 <gi>rdgGrp</gi> elements nested within the enclosing <gi>app</gi>
@@ -537,7 +538,7 @@ The advantage of holding witness information in the <att>wit</att>
 attribute of <gi>lem</gi> or <gi>rdg</gi> is that <!-- this may make
 it more convenient for -->an application can check that every sigil
 identifier has been declared elsewhere in the document. Because the
-<att>wit</att> attribute has declared datatype of one or more <ident type="datatype">data.pointer</ident> values a check can be made that
+<att>wit</att> attribute has declared datatype of one or more <ident type="datatype">data.pointer</ident> values, a check can be made that
 readings are assigned only to witness sigla which have been identified
 (using the <att>xml:id</att> attribute) within a <gi>listWit</gi>
 element (see section <ptr target="#TCAPWL"/>). Such checking is more
@@ -548,7 +549,7 @@ witness information in the <att>wit</att> attribute of <gi>lem</gi>
 and <gi>rdg</gi>, where possible. Thus, as in the examples below, even
 when a reference to a witness is exactly reproduced in the
 <gi>wit</gi> element, the corresponding sigil for that witness can be
-   written into the <att>wit</att> attribute of the matching <gi>rdg</gi> or
+written into the <att>wit</att> attribute of the matching <gi>rdg</gi> or
 <gi>lem</gi>. However, in cases where it is uncertain  how the witness
 reference contained in the <gi>wit</gi> element should be interpreted,
 or where no witness exists, the <att>wit</att> attribute on the
@@ -568,10 +569,11 @@ matching <gi>rdg</gi> or <gi>lem</gi> may be left empty. <egXML xmlns="http://ww
     </app>
 </egXML>
 <!-- MF 39,18, ed. Moser/Tervooren, p. 66.                    -->
-Of course, the siglum used for a particular witness in the 
-source, as recorded in the <gi>wit</gi> element, may well differ from
-that used to indicated the same witness in  the <att>wit</att> attribute, as shown particularly in
-the apparatus for the second line of the poem (Diet.1.2).</p>
+Of course, the siglum used for a particular witness in the source, as
+recorded in the <gi>wit</gi> element, may well differ from that used
+to indicated the same witness in the <att>wit</att> attribute, as
+shown particularly in the apparatus for the second line of the poem
+(Diet.1.2).</p>
 
 <specGrp xml:id="DTCSCWL" n="Sourcetext Witness Lists in Apparatus">
 
@@ -625,15 +627,14 @@ citation, as in the following examples:
   <witness xml:id="El">Ellesmere, Huntingdon Library 26.C.9</witness>
   <witness xml:id="Hg">Hengwrt, National Library of Wales,
     Aberystwyth, Peniarth 392D</witness>
-<!-- <witness xml:id="La">British Library Lansdowne 851   </witness>-->
   <witness xml:id="Ra2">Bodleian Library Rawlinson Poetic 149
 (see further <ptr target="#MSRP149"/>)</witness>
 </listWit></egXML>
-As the last example shows, the witness description here may complement
-the short characterisation provided with a reference to a full
+As the last example shows, the witness description here may be complemented
+by a reference to a full
 description of the manuscript supplied elsewhere, typically as the
 content of a <gi>msDesc</gi> or <gi>bibl</gi> element. 
-Alternatively, it may contains a whole paragraph of
+Alternatively, it may contain a whole paragraph of
 commentary for each witness :
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBICOR-eg-25"><listWit>
    <witness xml:id="A">die sog. <soCalled>Kleine (oder alte)
@@ -697,13 +698,18 @@ manuscripts of the <title>Canterbury Tales</title> which make up <soCalled>Const
 Group C</soCalled> are themselves first allocated sigla in individual
 <gi>witness</gi> elements, and then those sigla are given as the
 <att>included</att> value of a further <gi>witness</gi> element. --> 
-For example, the Constance Group C of mss comprising witnesses Cp, La,
+For example, the Constant Group C of manuscripts comprising witnesses Cp, La,
 and S12, might be represented as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><listWit xml:id="Con">
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<listWit>
+<witness xml:id="El">Ellesmere, Huntingdon Library 26.C.9</witness>
+<!-- ... -->
+<listWit xml:id="Con">
    <head>Constant Group C</head>
    <witness xml:id="Cp">Corpus Christi Oxford MS 198</witness>
    <witness xml:id="La">British Library Lansdowne 851</witness>
    <witness xml:id="Sl2">British Library Sloane MS 1686</witness>
+</listWit>
 </listWit></egXML>
 <!--   <witness xml:id="c" included="#Cp #La #Sl2">Constant Group c</witness>-->
 That the reading <mentioned>Experiment</mentioned> occurs in all three manuscripts
@@ -901,7 +907,7 @@ readings, the <gi>lem</gi> element may be used:
   </app></l>
 <l>Were in this world ...</l></egXML>
 Often the lemma will have no attributes, being simply the
-<soCalled>base-text reading</soCalled> and requiring no qualification,
+<soCalled>base text reading</soCalled> and requiring no qualification,
 but it may optionally carry the normal attributes, as shown here.  Some
 text critics prefer to abbreviate or elide the lemma, in order to save
 space or trouble; such practice is not forbidden by these Guidelines,
@@ -923,7 +929,7 @@ its lemma.  It or the parallel-segmentation method should be used in all
 cases where this is desired, for example where the apparatus is intended
 to enable full reconstruction of the text, or of the substantives, of
 every witness.</p>
-<p>When the double endpoint attachment method is used, the
+<p>When the double end-point attachment method is used, the
 <att>from</att> and <att>to</att> attributes of the <gi>app</gi> element
 are used to indicate the beginning and ending points of the reading in
 the base text: their values are identifiers which occur at the
@@ -976,14 +982,14 @@ lemma, and itself therefore marks the end of the lemma.
 <p>The lemma need not be repeated within the <gi>app</gi> element in
 this method, as it may be extracted reliably from the base text.  If an
 exhaustive list of witnesses is available, it will also not be necessary
-to specify just which manuscripts agree with the base-text to enable
+to specify just which manuscripts agree with the base text to enable
 reconstruction of witnesses.  An application will be able to determine
 the manuscripts that witness the base reading, by noting which witnesses
-are attested as having a variant reading, and inferring the base-text
+are attested as having a variant reading, and inferring the base text
 reading for all others after adjusting for fragmentary witnesses and for
 witnesses carrying overlapping variant readings.</p>
 <p>Alternatively, if it is desired to make an explicit record of the
-attestation of the base text the <gi>lem</gi> element may be embedded
+attestation of the base text, the <gi>lem</gi> element may be embedded
 within <gi>app</gi>, carrying the witnesses to the base. Thus
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><app from="#WBP.1" to="#WBP-A2">
    <lem wit="#El #Hg">Experience</lem>
@@ -1000,7 +1006,7 @@ Library Harleian 7334) read:
 <label>Ha4</label><item>And in what wise was a wight ywroght</item></list></p>
 <p>In this case, one might wish to record <mentioned>in what wise was</mentioned> in Ha4
 as a single variant for <mentioned>of so parfit wys</mentioned> in Hg, and <mentioned>was a
-wight</mentioned> in El and H4 as a variant on <mentioned>wys a wight</mentioned> in Hg.  This method
+wight</mentioned> in El and Ha4 as a variant on <mentioned>wys a wight</mentioned> in Hg.  This method
 can readily cope with such difficult situations, typically found in
 large and complex traditions:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l xml:id="WBP.117" n="117"> And
@@ -1109,7 +1115,7 @@ variants which overlap without nesting:  such variants must be broken up
 into pieces in order to keep all witnesses synchronized.
  </p></div></div>
 <div type="div2" xml:id="TCTR"><head>Using Apparatus Elements in Transcriptions</head>
-<p>It is often desirable to record different transcriptions of the one
+<p>It is often desirable to record different transcriptions of one
 stretch of text.  These variant transcriptions may be grouped within a
 single <gi>app</gi> element.  An application may then construct
 different <soCalled>views</soCalled> of the transcription by extraction of the
@@ -1138,10 +1144,14 @@ structure, as follows:
   <rdg resp="#FJF">perfectio<ex>u</ex>n</rdg>
   <rdg resp="#PGR">perfectiou<ex>n</ex></rdg>
 </app></egXML>
-This example uses special purpose elements <gi>am</gi> and
-<gi>ex</gi> used to represent abbreviation marks and editorial
-expansion respectively; these elements are provided by the <ident type="module">transcr</ident> module documented in chapter <ptr target="#PH"/>, which should be consulted for further discussion of
-methods of representing multiple readings of a source. <!-- This example illustrates the adaptation of the <gi>rdg</gi> aelement for
+This example uses special purpose elements <gi>am</gi> and <gi>ex</gi>
+used to represent abbreviation marks and editorial expansion
+respectively; these elements are provided by the <ident
+type="module">transcr</ident> module documented in chapter <ptr
+target="#PH"/>, which should be consulted for further discussion of
+methods of representing multiple readings of a source.
+
+<!-- This example illustrates the adaptation of the <gi>rdg</gi> aelement for
 use within the transcription of a particular witness.  The
 <att>wit</att> attribute, which may be compulsory in recording variant
 readings of many witnesses within a critical apparatus, is redundant
@@ -1177,7 +1187,7 @@ expansion and an explanation of that preference is given:
 <!-- ... <note> appearing elsewhere in the document ... -->
 <note target="#r105 #f105">Furnivall's expansion implies that the bar
   is an abbreviation for 'u'. There are no certain instances of
-  this mark as an abbreviation for 'u' in these MSS and it is
+  this mark as an abbreviation for 'u' in these manuscripts and it is
   widely used as an abbreviation for 'n'. Ruggiers' expansion is to
   be accepted.</note></egXML>
 </p>
