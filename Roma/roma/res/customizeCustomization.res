@@ -104,8 +104,8 @@ form_filename=檔名
 form_language=語言
 form_author=作者
 form_description=描述
-form_prefix=Prefix for TEI pattern names in schema
-form_namespace=Namespace for new elements
+form_prefix=文件模型中TEI模式名稱前綴
+form_namespace=新元素命名空間
 
 [pt]
 helpmessage=Este diálogo permite definir parametros globais 

@@ -73,7 +73,7 @@ helpmessage=選擇另一種語言
 headline=選擇另一種語言
 form_headline=您想要讓元素和屬性用另一種語言來呈現嗎？
 form_language=您想要用什麼語言?
-form_doclanguage=Language for documentation
+form_doclanguage=說明檔語言
 form_clearCustomization=還原 (go back to english)
 
 
@@ -83,6 +83,6 @@ headline=Escolher uma língua diferente
 form_headline=Prefere uma outra língua para o esquema?
 form_language=Língua para os nomes dos elementos e atributos
 form_doclanguage=Língua para a documentaçao
-form_clearCustomization=Remover as modificaçoes(voltar ao Inglês)
+form_clearCustomization=Remover as modificaçoes (voltar ao Inglês)
 
 

@@ -102,8 +102,8 @@ language=言語
 schema=スキーマ
 documentation=ドキュメント
 searchtei=TEIデータベースの検索
-sanitycheck=Sanity Checker
-workingon=You are currently working on
+sanitycheck=合理性檢查工具
+workingon=正在編輯中:
 
 
 [ru]
