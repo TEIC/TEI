@@ -400,7 +400,9 @@
     <xsl:choose>
       <xsl:when test="parent::tei:ref or not(@scheme='')">
 	<span class="gi">
+	  <xsl:text>&lt;</xsl:text>
 	  <xsl:apply-templates/>
+	  <xsl:text>&gt;</xsl:text>
 	</span>
       </xsl:when>
       <xsl:when test="key('ELEMENTS',.)">
@@ -427,7 +429,9 @@
       </xsl:when>
       <xsl:otherwise>
 	<span class="gi">
+	  <xsl:text>&lt;</xsl:text>
 	  <xsl:apply-templates/>
+	  <xsl:text>&gt;</xsl:text>
 	</span>
       </xsl:otherwise>
     </xsl:choose>
