@@ -64,7 +64,8 @@ as a series of rows and columns:  one might, for example, choose to show
 a glossary or other form of list in tabular form, without necessarily
 regarding it as a table.  In such cases, the global <att>rend</att>
 attribute is an appropriate way of indicating that some element is being
-presented in tabular format.  When tabular presentation is regarded as
+presented in tabular format, for example by using an appropriate
+display property in CSS.  When tabular presentation is regarded as
 of less intrinsic importance, it is correspondingly simpler to encode
 descriptive or functional information about the contents of the table,
 for example to identify one cell as containing a name and another as
@@ -75,9 +76,9 @@ tabular arrangement itself, then one or other of the various
 <soCalled>table schemas</soCalled> now available may be preferable.
 The schemas in common use generally view a table as a special text
 element, made up of row elements,
-themselves composed of cells.<note place="foot">A markup scheme could
+themselves composed of cells.<!--note place="foot">A markup scheme could
 equally well define tables as being composed of columns of cells, but
-this is rarely if ever done in practice.</note> Table cells generally appear in
+this is rarely if ever done in practice.</note--> Table cells generally appear in
 row-major order, with the first row from left to right, then the
 second row, and so on. Details of appearance such as column widths,
 border lines, and alignment are generally encoded by numerous
@@ -105,7 +106,9 @@ material which is not presented as a simple matrix.
 <p>The attributes <att>rows</att> and <att>cols</att> may be used to
 indicate the size of a table, or to indicate that a particular cell or
 row of a table spans more than one row or column.  For both tables and cells,
-rows and columns are always given in top-to-bottom, left-to-right order.
+rows and columns are always given in top-to-bottom, left-to-right
+order, although formatting properties such as those provided by CSS may
+be used to specify that they should be displayed differently.
 These Guidelines do not require that the size of a table be specified;
 for most formatting and many other applications, it will be necessary to
 process the whole table in two passes in any case.
@@ -197,7 +200,7 @@ and alignment mechanisms described in chapter <ptr target="#SA"/> may also
 be applied to individual cells of a table.
  </p>
 <p>The content of a table cell need not be simply character data.  It
-may also contain any sequence of the phrase level elements described in
+may also contain any sequence of the phrase-level elements described in
 chapter <ptr target="#CO"/>, thus allowing for the encoding of potentially
 more useful semantic information, as in the following example, where the
 fact that one cell contains a number and the other contains a place name
@@ -271,7 +274,7 @@ together with the table DTD documented in ISO Technical Report 9537,
 and now forms part of ISO 12083. The TEI table model described above
 has functionality very similar to that defined by ISO 12083.
  </p>
-<p>For more complex tables, the most effective publically available DTD
+<p>For more complex tables, the most effective publicly-available DTD
 is probably that developed by the US Department of Defense CALS project.
 This supports vertical and horizontal spanning and various kinds of text
 rotation and justification within cells and is also directly supported
@@ -382,10 +385,10 @@ The character data must still be well-formed, of course, which means that <menti
 </p>
 <p>If desired, the content of the <gi>formula</gi> element may be
 redefined to include elements defined by some other module, such as
-that of ISO 12083, or to use the more recently defined OpenMath or
-MathML DTDs.<note place="foot"> In this case additional redefinitions
+that of ISO 12083, or to use elements from the more recently defined OpenMath or
+MathML schemas.<!--note place="foot">In this case additional redefinitions
 may also be needed to avoid name clashes with existing TEI elements.
-For further details see chapter <ptr target="#MD"/>.</note>
+For further details see chapter <ptr target="#MD"/>.</note-->
  </p>
 <p>When the content of a <gi>formula</gi> element is not expressed in
 XML the notation used should be
@@ -461,10 +464,12 @@ Math-Web</soCalled>,  XML namespaces, and
 other current XML standards, such as XML DOM, OMG IDL, ECMAScript, and
 Java. It also provided a modularized version of the MathML DTD so that
 MathML fragments <soCalled>embedded</soCalled> in XHTML 1.1 documents
-as data islands can be correctly validated.</p>
+<!-- as data islands --> can be correctly validated.</p>
 
-<p>The OpenMath (<ptr target="http://www.nag.co.uk/projects/OpenMath.html"/>) project is
-coordinated by the OpenMath Society (<ptr target="http://www.openmath.org/"/>)and funded by the European
+<p>The OpenMath (<ptr
+target="http://www.nag.co.uk/projects/OpenMath.html"/>) project is
+coordinated by the OpenMath Society (<ptr
+target="http://www.openmath.org/"/>) and funded by the European
 Commission under the Esprit Multimedia Standards Initiative that
 commenced in September 1997. It is likely to become a key standard for
 communicating semantically rich representations of mathematical
@@ -479,7 +484,7 @@ specifications for
 XML (<ptr target="http://www.openmath.org/V2/standard/xml.html"/>).</item></list></p>
 
 <p>OpenMath and MathML have certain common aspects. They both use
-prefix operators, both are XML based and they both construct their
+prefix operators, both are XML-based and they both construct their
 objects by applying certain rules recursively. Such similarities
 facilitate mapping between the two standards. There are also some key
 differences between MathML and OpenMath. OpenMath does not provide
@@ -495,10 +500,13 @@ structures such as axioms, theorems, proofs, definitions, texts
 (mixing formal content with mathematical text). </p>
 <p>In-line versus block placement for an equation can be distinguished
 if desired, via the global <att>rend</att> attribute.  The global
-<att>n</att> and <att>xml:id</att> attributes may also be used to label or
-identify the formula, as in the following (imaginary) example:<note place="foot">We do not show here how the MathML names are to be
-included in the TEI namespace</note>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The volume of a sphere is given by the formula:
+<att>n</att> and <att>xml:id</att> attributes may also be used to
+label or identify the formula, as in the following 
+example:<!--note place="foot">We do not show here how elements from the
+MathML namespace may be included in a TEI document; see further
+discussion at .</note-->
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>The volume of a
+sphere is given by the formula:
 <formula xml:id="f12" n="12" rend="inline">
   <math xmlns="http://www.w3.org/1998/Math/MathML">
    <mi>V</mi>
@@ -621,7 +629,7 @@ electronic file: one a low resolution or
 <soCalled>thumbnail</soCalled> version which, when selected by the
 user, causes the other, high resolution, version to be accessed. In
 TEI terms, the thumbnail image acts as a <term>reference</term> to the
-other. Supposing tha a thumbnail
+other. Supposing that a thumbnail
 version of the  figure discussed above is available as <ident type="file">fig1th.png"</ident>, we might embed a reference to the
 image using the simple <gi>ref</gi> element discussed in section <ptr target="#COXR"/>: <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="#IM1">Click here
   <graphic url="fig1th.png"/>
@@ -647,7 +655,10 @@ application.</p>
 
 <p>The first requirement is some way of identifying and hence pointing
 to sub-parts of a graphic image. This may be done by pointing into an
-XML graphic representation, for example an SVG file. Thus <egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr xml:id="PD1" target="Fig1.svg#object1"/> <ptr target="Fig1.svg#object2"/></egXML></p>
+XML graphic representation, for example an SVG file. Thus <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><ptr xml:id="PD1"
+target="Fig1.svg#object1"/> <ptr xml:id="PD2"
+target="Fig1.svg#object2"/></egXML></p>
 
 <p>These <gi>ptr</gi> elements identify two areas within the image
 <q>Fig1</q> by pointing at elements inside the XML file <ident type="file">Fig1.svg</ident>, which contains the following.
@@ -902,7 +913,7 @@ Interchange Format (JFIF), as commonly done for Internet delivery.
 <label>QuickTime:  Apple real-time image system</label>
 <item>QuickTime is a proprietary method introduced by Apple Computer
 Company to synchronize the display of various data.  The data can
-include frames of video, sound, lighting control equipment, and other
+include frames of video, sound, lighting control mechanisms, and other
 things.  Viewers for QuickTime productions are available for Apple and
 other computers.  Further information is available from Apple Computer
 Incorporated, 10201 North de Anza Boulevard MS 23AQ, Cupertino,
