@@ -1,26 +1,25 @@
 
-\documentclass[11pt]{article}
-    \makeatletter
+\documentclass[11pt]{article}\makeatletter
 
 \IfFileExists{utf8x.def}%
  {\usepackage[utf8x]{inputenc}}%
  {\usepackage[utf8]{inputenc}}
+
 \usepackage[russianb,greek,english]{babel}
+
 \usepackage[T1]{fontenc}
 \usepackage[]{ucs}
-
-\usepackage{relsize}
-
 \uc@dclc{8421}{default}{\textbackslash }
 \uc@dclc{10100}{default}{\{}
 \uc@dclc{10101}{default}{\}}
 
 \DeclareTextSymbol{\textpi}{OML}{25}
+\usepackage{relsize}
 \def\textsubscript#1{%
   \@textsubscript{\selectfont#1}}
 \def\@textsubscript#1{%
   {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
-\def\textquoted#1{`#1'}
+\def\textquoted#1{‘#1’}
 \def\textcal#1{\ensuremath{\mathcal{#1}}}
 \def\textsmall#1{{\small #1}}
 \def\textlarge#1{{\large #1}}
@@ -65,16 +64,49 @@
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
 \definecolor{label}{gray}{0.75}
-
+\newenvironment{reflist}{%
+  \begin{raggedright}\begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\rightmargin}{0.25in}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\itshape ##1}}%
+  }
+  {\end{list}\end{raggedright}}
+\newenvironment{sansreflist}{%
+  \begin{raggedright}\begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\rightmargin}{0.25in}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\upshape\sffamily ##1}}%
+  }
+  {\end{list}\end{raggedright}}
+\newenvironment{specHead}[2]%
+ {\vspace{20pt}\hrule\vspace{10pt}%
+  \hypertarget{#1}{}%
+  \markright{#1}%
+  \pdfbookmark[1]{#2}{#1}%
+  \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
+  }{}
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\Div[#1]#2{\section*{#2}}
 \catcode`\_=12\relax
+\def\exampleFontSet{\ttfamily\small\selectfont}
 
 \usepackage[twoside,a4paper,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in]{geometry}
+\usepackage{framed}
+\definecolor{shadecolor}{gray}{0.95}
 \usepackage{longtable}
 \usepackage{colortbl}
-\usepackage{ulem}
+\usepackage[normalem]{ulem}
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
@@ -104,19 +136,19 @@
 \renewcommand\section{\@startsection {section}{1}{\z@}%
      {-1.75ex \@plus -0.5ex \@minus -.2ex}%
      {0.5ex \@plus .2ex}%
-     {\reset@font\large\bfseries\sffamily}}
+     {\reset@font\Large\bfseries\sffamily}}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
      {-1.75ex\@plus -0.5ex \@minus- .2ex}%
      {0.5ex \@plus .2ex}%
-     {\reset@font\large\sffamily}}
+     {\reset@font\Large\sffamily}}
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
      {-1.5ex\@plus -0.35ex \@minus -.2ex}%
      {0.5ex \@plus .2ex}%
-     {\reset@font\normalsize\sffamily}}
+     {\reset@font\large\sffamily}}
 \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
-     {1.5ex \@plus0.5ex \@minus.2ex}%
-     {-1em}%
-     {\reset@font\normalsize\bfseries}}
+     {-1ex \@plus-0.35ex \@minus -0.2ex}%
+     {0.5ex \@plus .2ex}%
+     {\reset@font\normalsize\sffamily}}
 \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
      {1.5ex \@plus1ex \@minus .2ex}%
      {-1em}%
@@ -134,21 +166,35 @@
 \def\l@paragraph{\@dottedtocline{4}{7.0em}{4.1em}}
 \def\l@subparagraph{\@dottedtocline{5}{10em}{5em}}
 \@ifundefined{c@section}{\newcounter{section}}{}
+\@ifundefined{c@chapter}{\newcounter{chapter}}{}
 \newif\if@mainmatter 
 \@mainmattertrue
 \def\frontmatter{%
-  \setcounter{secnumdepth}{-1}
-  \@mainmatterfalse
-  \pagenumbering{roman}}
+  \pagenumbering{roman}
+  \def\thechapter{\@roman\c@chapter}
+  \def\theHchapter{\alph{chapter}}
+  \def\@chapapp{}%
+}
 \def\mainmatter{%
+  \cleardoublepage
+  \def\thechapter{\@arabic\c@chapter}
+  \setcounter{chapter}{0}
   \setcounter{section}{0}
-  \setcounter{secnumdepth}{4}
-  \@mainmattertrue
-  \pagenumbering{arabic}}
+  \pagenumbering{arabic}
+  \setcounter{secnumdepth}{6}
+  \def\@chapapp{Chapter}%
+  \def\theHchapter{\arabic{chapter}}
+}
 \def\backmatter{%
-  \clearpage
+  \cleardoublepage
+  \setcounter{chapter}{0}
+  \setcounter{section}{0}
+  \setcounter{secnumdepth}{0}
+  \def\@chapapp{\appendixname}%
+  \def\thechapter{\@Alph\c@chapter}
+  \def\theHchapter{\Alph{chapter}}
   \appendix
-  \@mainmatterfalse}
+}
 \newenvironment{bibitemlist}[1]{%
    \list{\@biblabel{\@arabic\c@enumiv}}%
        {\settowidth\labelwidth{\@biblabel{#1}}%
@@ -171,7 +217,7 @@
 \def\tableofcontents{\section*{\contentsname}\@starttoc{toc}}
 \usepackage[pdftitle={A Christmas Carol},
  pdfauthor={Dickens, Charles, 1812-1870}]{hyperref}
-\hyperbaseurl{http://www.tei-c.org}
+\hyperbaseurl{}
 
 \@ifundefined{chapter}{%
     \def\DivI{\section}
@@ -197,47 +243,36 @@
     \def\DivVStar[#1]#2{\paragraph*{#2}}
 }
 \makeatother
-    
-\def\TheFullDate{1992-11-01
-  (revised: 
-  1992-10)
-}
+\def\TheFullDate{1992-11-01 (revised: 
+    1992-10)}
+\def\TheID{dick1736}
 \def\TheDate{1992-11-01}
 \title{A Christmas Carol}
 \author{Dickens, Charles, 1812-1870}
 \begin{document}
-
 \makeatletter
-\thispagestyle{plain}
-
-\markright{\@title}%
+\thispagestyle{plain}\markright{\@title}%
 \markboth{\@title}{\@author}%
 \makeatother
-
-\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
-
 \fvset{frame=single,numberblanklines=false,xleftmargin=5mm,xrightmargin=5mm}
 \fancyhf{} 
+\setlength{\headheight}{14pt}
 \fancyhead[LE]{\bfseries\leftmark} 
 \fancyhead[RO]{\bfseries\rightmark} 
 \fancyfoot[RO]{\TheFullDate}
 \fancyfoot[CO]{\thepage}
-\fancyfoot[LO]{}
+\fancyfoot[LO]{\TheID}
 \fancyfoot[LE]{\TheFullDate}
 \fancyfoot[CE]{\thepage}
-\fancyfoot[RE]{}
+\fancyfoot[RE]{\TheID}
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
-
 \catcode`\$=12\relax
 \catcode`\^=12\relax
 \catcode`\~=12\relax
 \catcode`\#=12\relax
 \catcode`\%=12\relax
 \let\tabcellsep&
-\catcode`\&=12\relax
-
-   \frontmatter
- 
+\catcode`\&=12\relax \frontmatter 
 \DivI[(half title note)]{(half title note)}\par The Original Edition of A CHRISTMAS CAROL has been out of print
 for many years, and this Edition is a reprint from the stereotype
 plates of that Edition.
@@ -253,19 +288,12 @@ by
 Ghost of an Idea, which shall not put my readers out of humour
 with themselves, with each other, with the season, or with me.
 May it haunt their houses pleasantly, and no one wish to lay
-it.  Their faithful Friend and Servant, C.D. December, 1843. \centerline{Contents.}  \begin{itemize}
-\item Marley's ghost \hyperlink{S1}{\textit{1}}
-\item The first of
-the three spirits «39»
-\item The second of the three spirits «74»
-\item The last of
-the spirits «121»
-\item The end of it «152» \end{itemize}
-      
-   \mainmatter
- 
+it.  Their faithful Friend and Servant, C.D. December, 1843. \leftline{\textbf{Contents.}}  \begin{description}\item[Stave I]Marley's ghost \hyperlink{S1}{1}\item[Stave II]The first of
+the three spirits «39»\item[Stave
+III ]The second of the three spirits «74»\item[Stave IV ]The last of
+the spirits «121»\item[Stave V]The end of it «152» \end{description} \mainmatter 
 \Div[A CHRISTMAS CAROL.]{A CHRISTMAS CAROL.}
-\DivI[MARLEY'S GHOST]{MARLEY'S GHOST}\hypertarget{S1}{}\par Marley was dead: to begin with.  There is no doubt whatever
+\DivI[MARLEY'S GHOST]{MARLEY'S GHOST}\label{S1}\par Marley was dead: to begin with.  There is no doubt whatever
 about that.  The register of his burial was signed by the
 clergyman, the clerk, the undertaker, and the chief mourner. 
 Scrooge signed it.  And Scrooge's name was good upon 'Change,
@@ -543,10 +571,10 @@ purpose.  The owner of one scant young nose, gnawed and mumbled
 by the hungry cold as bones are gnawed by dogs, stooped down at
 Scrooge's keyhole to regale him with a Christmas carol: but at
 the first sound of  ‘
-  \leftline{God bless you, merry gentleman!  }
-
-  \leftline{May nothing you dismay! }
-’ Scrooge seized the ruler
+          \leftline{God bless you, merry gentleman!  }
+      
+          \leftline{May nothing you dismay! }
+      ’ Scrooge seized the ruler
 with such energy of action that the singer fled in
 terror, leaving the keyhole to the fog and even more congenial
 frost.
