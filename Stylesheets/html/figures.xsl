@@ -253,14 +253,11 @@
   <xsl:template match="tei:table">
     <div>
       <xsl:attribute name="class">
-        <xsl:choose>
-          <xsl:when test="@align">
-            <xsl:value-of select="@align"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$tableAlign"/>
-          </xsl:otherwise>
-        </xsl:choose>
+	<xsl:value-of select="$tableAlign"/>
+	<xsl:if test="@align">
+	  <xsl:text> </xsl:text>
+	  <xsl:value-of select="@align"/>
+	</xsl:if>
       </xsl:attribute>
       <xsl:call-template name="makeAnchor"/>
       <table>
