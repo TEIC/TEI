@@ -683,7 +683,11 @@
 <xsl:template name="atozHeader">
   <xsl:param name="Key"/>
   <div id="azindex">
-    <span>Sorted alphabetically, starting with:</span>
+    <span>
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">Sorted alphabetically</xsl:with-param>
+      </xsl:call-template>
+    </span>
     <ul class="index">     
       <xsl:if test="count(key($Key,'a'))&gt;0">
       <li>
@@ -816,10 +820,17 @@
       </li>
       </xsl:if>
       <li class="showall">
-	<a onclick="showall();" href="#">Show All</a>
+	<a onclick="showall();" href="#">
+	 <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Show all</xsl:with-param>
+	 </xsl:call-template>l</a>
       </li>
       <li class="showall">
-	<a onclick="showByMod();" href="#">Show by Module</a>
+	<a onclick="showByMod();" href="#">
+	 <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Show by module</xsl:with-param>
+	 </xsl:call-template>
+	</a>
       </li>
     </ul>
   </div>
