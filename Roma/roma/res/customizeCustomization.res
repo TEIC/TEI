@@ -55,8 +55,8 @@ form_filename=Nome file
 form_language=Lingua
 form_author=Autore
 form_description=Descrizione
-form_prefix=Prefisso per nomi di pattern TEI nello schema
-form_namespace=Namespace per elementi nuovi
+form_prefix=Prefisso per i nomi appartenenti al pattern TEI presenti nello schema
+form_namespace=Namespace per gli elementi nuovi 
 
 [ja]
 helpmessage=グローバル属性を定義します。

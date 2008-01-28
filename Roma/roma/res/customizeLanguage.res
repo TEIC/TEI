@@ -38,7 +38,7 @@ helpmessage=Scegli una lingua
 headline=Impostazione della lingua
 form_headline=Vuoi che i componenti TEI nello schema siano visualizzati in un'altra lingua?
 form_language=Personalizza lingua 
-form_doclanguage=Linguaggio di documentazione
+form_doclanguage=Linguaggio per la documentazione
 form_clearCustomization=Annulla personalizza (torna all'inglese)
 
 [ja]
