@@ -11,7 +11,7 @@ $Id$
 
 <p>The term <term>language corpus</term> is used to mean a number of
 rather different things.  It may refer simply to any collection of
-linguistic data (written, spoken, or a mixture of the two), although
+linguistic data (for example, written, spoken, signed, or multimodal), although
 many practitioners prefer to reserve it for collections which have
 been organized or collected with a particular end in view, generally to
 characterize a particular state or variety of one or more languages.
@@ -188,7 +188,7 @@ right, if only for historical reasons.  In conventional publishing, at
 least, anthologies are published as units, with single editorial
 responsibility and common front and back matter which may need to be
 included in their electronic encodings.  The texts collected in the
-anthology, of course, may also need to identifiable as distinct
+anthology, of course, may also need to be identifiable as distinct
 individual objects for study.
  </p>
 <p>Poem cycles, epistolary novels, and epistolary essays differ from
@@ -358,7 +358,7 @@ contrast to discrete categories based on type or topic)</item>
 <item>it enables meaningful comparisons across corpora</item>
 <item>it allows analysts to build and compare their own text-types
 based on the particular parameters of interest to them</item>
-<item>it is equally applicable to spoken and written texts</item></list></p>
+<item>it is equally applicable to spoken, written, or signed texts</item></list></p>
 <p>Two alternative approaches to the use of these parameters are
 supported by these Guidelines.  One is to use pre-existing taxonomies
 such as those used in subject classification or other types of text
@@ -522,8 +522,8 @@ attribute.</p>
 intended that the same mechanisms may be used to characterize fictional
 personæ or <soCalled>voices</soCalled> within a written text, except
 where otherwise stated.  For the purposes of analysis of language usage,
-the information specified here should be equally applicable to written
-and spoken texts.</p>
+the information specified here should be equally applicable to
+written, spoken, or signed texts.</p>
 <p>The element <gi>particDesc</gi> contains a description of the
 participants in an interaction, which may be supplied as
 straightforward prose, possibly containing a list of names, encoded
@@ -704,7 +704,7 @@ separately in what follows; however, they may be combined as
 desired.
  </p>
 <div type="div3" xml:id="CCAS1"><head>Combining Corpus and Text Headers</head>
-<p>A TEI conformant document may have more than one header only in the
+<p>A TEI-conformant document may have more than one header only in the
 case of a TEI corpus, which must have a header in its own right, as well
 as the obligatory header for each text.  Every element specified in a
 corpus-header is understood as if it appeared within every text header
@@ -844,7 +844,7 @@ specified as the default: <egXML xmlns="http://www.tei-c.org/ns/Examples"><edito
       <p> ... </p>
    </normalization>
 </editorialDecl></egXML> For texts associated with the header in which
-this declaration appears correction method <val>CorPol1</val> will be
+this declaration appears, correction method <val>CorPol1</val> will be
 assumed, unless they explicitly state otherwise.  Here is the
 structure for a text which does state otherwise: <egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
   <body>
@@ -873,7 +873,7 @@ instances of one or more other elements should be interpreted as if it
 explicitly identified the elements identified as the default in each
 such set of repeated elements</item>
 <item>Each element specified, explicitly or implicitly, by the list of
-identifiers must be of a different type.</item></list>
+identifiers must be of a different kind.</item></list>
  </p>
 <p>To demonstrate how these rules operate, we now expand our earlier
 example slightly:
@@ -899,22 +899,22 @@ example slightly:
  </p>
 <p>This encoding description now has two editorial declarations,
 identified as <val>ED1</val> (the default) and <val>ED2</val>.  For texts not specifying
-otherwise, <val>ED1</val> will apply.  If <val>ED1</val> applies, correction method C1a and
+otherwise, <val>ED1</val> will apply.  If <val>ED1</val> applies, correction method C1A and
 normalization method N1 apply, since these are the specified defaults
 within <val>ED1</val>.  In the same way, for a text specifying <att>decls</att> as
-<q><val>ED2</val></q>, correction C2a, 
- and normalization N2b will
+<q><val>ED2</val></q>, correction C2A, 
+ and normalization N2B will
 apply.
  </p>
 <p>A finer grained approach is also possible.  A text might specify
-<tag>text decls='C2b N2a'</tag>, 
+<tag>text decls='C2B N2A'</tag>, 
  to <soCalled>mix and match</soCalled> declarations as
 required.  A tag such as <tag>text decls='ED1 ED2'</tag> would
 (obviously) be illegal, since it includes two elements of the same type;
-a tag such as <tag>text decls='ED2 C1a'</tag> is also illegal, since in
+a tag such as <tag>text decls='ED2 C1A'</tag> is also illegal, since in
 this context <val>ED2</val> is synonymous with the defaults for that
-editorial declaration, namely <val>C2a N2b</val>, resulting in a list
-that identifies two correction elements (C1a and C2a).
+editorial declaration, namely <val>C2A N2B</val>, resulting in a list
+that identifies two correction elements (C1A and C2A).
  </p></div>
 <div type="div3" xml:id="CCAS3"><head>Summary</head>
 <p>The rules determing which of the declarable elements are applicable
@@ -1000,7 +1000,7 @@ practised in corpus linguistics is given in section <ptr target="#AILA"/>.
 encoding of a far greater variety of textual features and
 characteristics than is likely to be either feasible or desirable in
 any one language corpus, however large and ambitious.  The reasoning
-behind this catholic approach is further discussed in chapter <ptr target="#AB"/>.  For most large scale corpus projects, it will therefore
+behind this catholic approach is further discussed in chapter <ptr target="#AB"/>.  For most large-scale corpus projects, it will therefore
 be necessary to determine a subset of TEI recommended elements
 appropriate to the anticipated needs of the project, as further
 discussed in chapter <ptr target="#MD"/>; these mechanisms include
@@ -1022,7 +1022,12 @@ encoded wherever economically and practically feasible; where present
 but not encoded, a note in the header should be made.</item><label>optional</label>
 <item>textual features in this category may or may not
 be encoded; no conclusion about the absence of such features can be
-inferred from the absence of the corresponding element in a given text.</item></list>
+inferred from the absence of the corresponding element in a given
+text.</item>
+<label>proscribed</label>
+<item>textual features in this category are deliberately not encoded; they may be
+transcribed as unmarked up text, or represented as <gi>gap</gi>
+elements, or silently omitted, as appropriate.</item></list>
 </p> 
 </div>
 <div><head>Module for Language Corpora</head>
