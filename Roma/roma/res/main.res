@@ -84,8 +84,8 @@ language=Lingua
 schema=Schema
 documentation=Documentazione
 searchtei=Interroga database TEI 
-sanitycheck=Sanity Checker
-workingon=You are currently working on
+sanitycheck=Controllore di coerenza
+workingon=Stai attualmente lavorando
 
 
 [ja]
