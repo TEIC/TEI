@@ -16,18 +16,21 @@
    cdata-section-elements="tei:eg"/>
 
 
-<xsl:template match="tei:div[@type='div1']/tei:head">
-  <head xmlns="http://www.tei-c.org/ns/1.0">
+<xsl:template match="tei:moduleSpec">
+  <moduleSpec xmlns="http://www.tei-c.org/ns/1.0">
     <xsl:apply-templates select="@*"/>
-      <xsl:value-of select="."/>
-  </head>
-  <xsl:variable name="ID">
-    <xsl:value-of select="parent::tei:div/@xml:id"/>
-  </xsl:variable>
-  <xsl:for-each select="document('frheads.xml')/x/head[@xml:id=$ID]">
-    <head xmlns="http://www.tei-c.org/ns/1.0" xml:lang="fr">
-      <xsl:value-of select="."/>
-    </head>
+    <xsl:apply-templates select="*|comment()|text()"/>
+    <xsl:variable name="ID">
+      <xsl:value-of select="ancestor::tei:div[last()]/@xml:id"/>
+    </xsl:variable>
+    <xsl:for-each select="document('heads.xml')//head[@corresp=$ID]">
+<xsl:message>doing for <xsl:value-of select="$ID"/></xsl:message>
+      <desc xmlns="http://www.tei-c.org/ns/1.0">
+	<xsl:copy-of select="@xml:lang"/>
+	<xsl:value-of select="."/>
+      </desc>
   </xsl:for-each>
+  </moduleSpec>
 </xsl:template>
+
 </xsl:stylesheet>
