@@ -222,19 +222,19 @@
 	      </a>
             </li>
             <li>
-	      <a href="ST.html">
+	      <a href="SG.html">
 		<xsl:call-template name="showHead">
 		  <xsl:with-param name="ID">
-		    <xsl:text>ST</xsl:text>
+		    <xsl:text>SG</xsl:text>
 		  </xsl:with-param>
 		</xsl:call-template>
 	      </a>
             </li>
             <li>
-	      <a href="SG.html">
+	      <a href="ST.html">
 		<xsl:call-template name="showHead">
 		  <xsl:with-param name="ID">
-		    <xsl:text>SG</xsl:text>
+		    <xsl:text>ST</xsl:text>
 		  </xsl:with-param>
 		</xsl:call-template>
 	      </a>
@@ -253,6 +253,15 @@
 		<xsl:call-template name="showHead">
 		  <xsl:with-param name="ID">
 		    <xsl:text>CO</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </a>
+            </li>
+            <li>
+	      <a href="USE.html">
+		<xsl:call-template name="showHead">
+		  <xsl:with-param name="ID">
+		    <xsl:text>USE</xsl:text>
 		  </xsl:with-param>
 		</xsl:call-template>
 	      </a>
@@ -280,15 +289,6 @@
 		<xsl:call-template name="showHead">
 		  <xsl:with-param name="ID">
 		    <xsl:text>REF-ELEMENTS</xsl:text>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </a>
-            </li>
-            <li>
-	      <a href="USE.html">
-		<xsl:call-template name="showHead">
-		  <xsl:with-param name="ID">
-		    <xsl:text>USE</xsl:text>
 		  </xsl:with-param>
 		</xsl:call-template>
 	      </a>
@@ -358,6 +358,20 @@
   <xsl:template name="showHead">
     <xsl:param name="ID"/>
     <xsl:variable name="Here" select="/"/>
+    <xsl:for-each select="key('IDS',$ID)">
+      <xsl:choose>
+	<xsl:when test="ancestor::tei:front">
+	  <xsl:number format="i"/>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:back">
+	  <xsl:number format="A"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:number/>
+	</xsl:otherwise>
+      </xsl:choose>
+      <xsl:text> </xsl:text>
+    </xsl:for-each>
     <xsl:for-each select="document('')">
       <xsl:choose>
 	<xsl:when
@@ -858,6 +872,37 @@ disponibili in tutti i moduli TEI</head>
   <head xml:lang="it" corresp="REF-CLASSES-MODEL">Classi di modelli</head>
   <head xml:lang="it" corresp="REF-ELEMENTS">Elementi</head>
   <head xml:lang="it" corresp="REF-MACROS">Datatype e altre macro</head>
+
+
+  <head xml:lang="pt" corresp="AI">Mecanismos simples de análise</head> 
+  <head xml:lang="pt" corresp="CE">Certeza e incerteza</head> 
+  <head xml:lang="pt" corresp="CO">Elementos comuns a todos os documentos TEI</head> 
+  <head xml:lang="pt" corresp="CC">Textos do corpora</head> 
+  <head xml:lang="pt" corresp="DI">Dicionários impressos</head> 
+  <head xml:lang="pt" corresp="DR">Textos de actuação</head> 
+  <head xml:lang="pt" corresp="FT">Tabelas, fórmulas, e figuras</head> 
+  <head xml:lang="pt" corresp="WD">Documentação dos carateres</head> 
+  <head xml:lang="pt" corresp="HD">O cabeçalho TEI</head> 
+  <head xml:lang="pt" corresp="FS">Estrutura das características</head> 
+  <head xml:lang="pt" corresp="SA">Ligação, segmentação e alinhamento</head> 
+  <head xml:lang="pt" corresp="MS">Descrição do manuscrito</head> 
+  <head xml:lang="pt" corresp="ND">Nomes e datas</head> 
+  <head xml:lang="pt" corresp="GD">Grafos, redes, e árvores</head> 
+  <head xml:lang="pt" corresp="TS">Transcrição do discurso</head> 
+  <head xml:lang="pt" corresp="TD">Documentação dos módulos TEI</head> 
+  <head xml:lang="pt" corresp="ST">Declaraçoes de classes, tipos de dados, e macros disponíveis em todos os módulos  TEI </head> 
+  <head xml:lang="pt" corresp="TC">Critical Apparatus</head> 
+  <head xml:lang="pt" corresp="DS">Estrutura do texto por defeito</head> 
+  <head xml:lang="pt" corresp="PH">Transcrição de fontes primárias</head> 
+  <head xml:lang="pt" corresp="VE">Estrutura dos versos</head> 
+  <head xml:lang="pt" corresp="COL">Colophon</head> 
+  <head xml:lang="pt" corresp="dedication">Dedicação</head> 
+  <head xml:lang="pt" corresp="PREF">Prefácio e agradecimentos</head> 
+  <head xml:lang="pt" corresp="PREFS">Notas de prefácio</head>
+  <head xml:lang="pt" corresp="REF-CLASSES-ATTS">Classes dos atributos</head> 
+  <head xml:lang="pt" corresp="REF-CLASSES-MODEL">Classes do modelo</head> 
+  <head xml:lang="pt" corresp="REF-ELEMENTS">Elementos</head> 
+  <head xml:lang="pt" corresp="REF-MACROS">Tipos de dados e outras macros</head> 
 
 </heads>
 
