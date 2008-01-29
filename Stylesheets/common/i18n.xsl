@@ -30,6 +30,9 @@
   </xd:doc>
   <xsl:template name="i18n">
     <xsl:param name="word"/>
+    <xsl:variable name="Word">
+      <xsl:value-of select="normalize-space($word)"/>
+    </xsl:variable>
     <xsl:variable name="local">
       <xsl:call-template name="myi18n">
 	<xsl:with-param name="word">
@@ -45,9 +48,9 @@
        <xsl:for-each select="document('../i18n.xml',document(''))">
 	 <xsl:choose>
 	   <xsl:when
-	       test="key('KEYS',normalize-space($word))/text[@xml:lang=$documentationLanguage]">
+	       test="key('KEYS',$Word)/text[@xml:lang=$documentationLanguage]">
 	     <xsl:value-of
-		 select="key('KEYS',normalize-space($word))/text[@xml:lang=$documentationLanguage]"/>
+		 select="key('KEYS',$Word)/text[@xml:lang=$documentationLanguage]"/>
 	   </xsl:when>
 	   <xsl:otherwise>
 <!--
@@ -56,7 +59,7 @@
 select="$word"/> in <xsl:value-of select="$documentationLanguage"/></xsl:message>
 </xsl:if>
 -->
-	     <xsl:value-of select="$word"/>
+	     <xsl:value-of select="key('KEYS',$Word)/text[@xml:lang='en']"/>
 	   </xsl:otherwise>
 	 </xsl:choose>
        </xsl:for-each>
