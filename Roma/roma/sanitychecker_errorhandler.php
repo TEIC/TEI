@@ -223,7 +223,7 @@ class SanityCheckerErrorHandler {
 	**/
 	public function sanityCheckSchemaBroken() {
 		echo '<script type="text/javascript">';
-		echo "schemaBroken('Schema is broken !');";
+		echo "schemaBroken('Schema may have problems');";
 		echo '</script>';
 		flush();
 	}
