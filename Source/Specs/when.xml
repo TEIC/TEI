@@ -7,14 +7,16 @@ $Date$
 $Id$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" xml:id="WHEN" usage="opt" ident="when">
-  <gloss version="2006-10-28" xml:lang="ja">時点</gloss>
   <desc>indicates a point in time either relative to other elements in the
 same timeline tag, or absolutely.</desc>
+  <desc version="2008-01-30" xml:lang="ja">
+  同じ要素<gi>timeline</gi>中にある他の要素に対応する時点，または絶対
+  的な時点を示す．
+  </desc>
   <desc version="2007-06-12" xml:lang="fr">indique un point dans le temps, soit relatif à
       d'autres éléments de la même balise chronologique, soit dans l'absolu.</desc>
   <desc version="2007-05-04" xml:lang="es">proporciona una indicación temporal en términos relativos respecto a otros elementos determinados sobre la misma escala temporal, o en términos absolutos.</desc>
   <desc version="2007-01-21" xml:lang="it">fornisce un'indicazione temporale in termini relativi, rispetto ad altri elementi determinati sulla stessa scala temporale, o in termini assoluti</desc>
-  <desc version="2006-10-28" xml:lang="ja"> 要素timeline中にある時点を示す．</desc>
   <content>
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
   </content>
@@ -22,10 +24,12 @@ same timeline tag, or absolutely.</desc>
     <attDef ident="absolute" usage="rwa">
       <equiv/>
       <desc>supplies an absolute value for the time.</desc>
+      <desc version="2008-01-30" xml:lang="ja">
+      当該時点の，絶対時間を示す．
+      </desc>
       <desc version="2007-06-12" xml:lang="fr">contient une valeur temporelle absolue.</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona un valor temporal absoluto</desc>
       <desc version="2007-01-21" xml:lang="it">indica un valore temporale assoluto</desc>
-      <desc version="2006-10-28" xml:lang="ja">当該時点の絶対時間を示す．</desc>
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
       </datatype>
@@ -40,13 +44,15 @@ Encoding Declarations section of the header.</valDesc>
       <equiv/>
       <desc>specifies the unit of time in which the  <att>interval</att>
 value is expressed, if this is not inherited from the parent <gi>timeline</gi>.</desc>
+      <desc version="2008-01-30" xml:lang="ja">
+      親要素<gi>timeLine</gi>から継承されない場合，属性
+      <att>interval</att>で示される時間の単位を示す．
+      </desc>
       <desc version="2007-06-12" xml:lang="fr">spécifie l'unité de temps dans laquelle la valeur
           de l'attribut <att>interval</att> est exprimée, si elle n'est pas héritée de l'élément
           parent <gi>timeLine</gi>.</desc>
       <desc version="2007-05-04" xml:lang="es">especifica la unidad temporal en la que se expresa el valor <att>interval</att>, si este valor no es heredado del padre <gi>timeline</gi>.</desc>
       <desc version="2007-01-21" xml:lang="it">specifica l'unità temporale nel quale è espresso l'attributo  <att>interval</att>, se questo non è ereditato dal genitore <gi>timeline</gi></desc>
-      <desc version="2006-10-28" xml:lang="ja">当該時点で使用される時間幅の単位を示す．指定がない場合は，要素
-timelineの値を継承する．</desc>
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
@@ -86,11 +92,13 @@ timelineの値を継承する．</desc>
     <attDef ident="interval" usage="rwa">
       <equiv/>
       <desc>specifies the numeric portion of a time interval</desc>
+      <desc version="2008-01-30" xml:lang="ja">
+      時間幅を数値で示す．
+      </desc>
       <desc version="2007-06-12" xml:lang="fr">spécifie la partie numérique d'un intervalle de
           temps.</desc>
       <desc version="2007-05-04" xml:lang="es">especifica los componentes numéricos de un intervalo temporal. </desc>
       <desc version="2007-01-21" xml:lang="it">indica la componente numerica di un intervallo temporale</desc>
-      <desc version="2006-10-28" xml:lang="ja">時間幅を数値で示す．</desc>
       <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0">
         <rng:choice>
           <rng:data type="float">
@@ -111,12 +119,15 @@ timelineの値を継承する．</desc>
       <desc>identifies the reference point for determining the time of the
 current <gi>when</gi> element, which is obtained by adding the interval to the
 time of the reference point.</desc>
+      <desc version="2008-01-30" xml:lang="ja">
+      当該要素<gi>when</gi>の時間となる参照時点を示す．参照時点に時間
+      幅を足すことで得られる．
+      </desc>
       <desc version="2007-06-12" xml:lang="fr">identifie le point de référence pour déterminer
           la date ou l'heure de l'élément courant <gi>when</gi> qui s'obtient en
           ajoutant la valeur de l'intervalle à la date du point de référence.</desc>
       <desc version="2007-05-04" xml:lang="es">identifica el punto de referencia para la determinación del valor temporal del elemento <gi>when</gi> (cuando) en cuestión, obtenido añadiendo el intervalo al punto de referencia temporal.</desc>
       <desc version="2007-01-21" xml:lang="it">identifica il punto di riferimento per la determinazione del valore temporale dell'elemento <gi>when</gi> corrente, ottenuto aggiungendo l'intervallo al punto di riferimento temporale</desc>
-      <desc version="2006-10-28" xml:lang="ja">当該時点を決める参照地点を示す．</desc>
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
