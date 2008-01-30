@@ -461,9 +461,15 @@ private function verifElem($element, $parent,  $recursion) {
 				$el = $this->xpath->query("//tei:elementSpec[@ident='".$element->getAttribute("name")."']")->item(0);
 			} else {
 				if($this->inOptionnality($this->addRecursion($recursion, $element))) {
-				  $this->SCEH->addError('Warning', $element->getAttribute("name"), $this->getParentItem($element)->getAttribute("ident"), 'does not exist');
+				  $this->SCEH->addError('Warning',
+				$element->getAttribute("name"),
+				$this->getParentItem($element)->getAttribute("ident"),
+				'has been removed');
 				} else {
-					$this->SCEH->addError('Error', $element->getAttribute("name"), $this->getParentItem($element)->getAttribute("ident"), 'does not exist');
+					$this->SCEH->addError('Error',
+				$element->getAttribute("name"),
+				$this->getParentItem($element)->getAttribute("ident"),
+				'has been removed');
 				}
 				return false;
 			}
