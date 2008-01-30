@@ -1508,6 +1508,9 @@
         <xsl:value-of select="tei:defaultVal"/>
         <xsl:text>" </xsl:text>
       </xsl:when>
+      <xsl:when test="parent::tei:attList[@org='choice']">
+        <xsl:text> #IMPLIED</xsl:text>
+      </xsl:when>
       <xsl:when test="@usage='req'">
         <xsl:text> #REQUIRED</xsl:text>
       </xsl:when>
