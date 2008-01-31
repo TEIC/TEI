@@ -36,11 +36,13 @@ any inclusions have been resolved. <gi>include</gi> is set up here to
   be allowed in the <gi>teiHeader</gi> and instead of or between
   paragraph-like objects.</p>
 
-    <schemaSpec ident="tei_xinclude" start="TEI">
+    <schemaSpec ident="tei_xinclude" start="TEI teiCorpus">
       <moduleRef key="header"/>
       <moduleRef key="core"/>
       <moduleRef key="tei"/>
       <moduleRef key="textstructure"/>
+      <!-- required to avoid Sanity Checker complaint -->
+      <elementSpec ident="handNote" mode="delete" module="header"/>
       <elementSpec 
 	  xmlns:rng="http://relaxng.org/ns/structure/1.0"
 	  ident="include" 
