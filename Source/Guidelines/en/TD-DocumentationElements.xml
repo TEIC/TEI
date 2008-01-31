@@ -32,7 +32,7 @@ tools which will be used to provide an ODD processing environment.</p>
 to generate multiple outputs. These outputs will include:
 <list type="simple">
 <item>formal reference documentation for elements, attributes, element
-classes, patterns etc. such as those provided in <ptr target="#REF-ELEMENTS"/> below;</item>
+classes, patterns, etc. such as those provided in <ptr target="#REF-ELEMENTS"/> below;</item>
 <item>detailed descriptive documentation, embedding some parts of the
 formal reference documentation, such as the tag description lists
 provided in this and other chapters of these Guidelines;</item>
@@ -50,13 +50,13 @@ using the module defined by this chapter. In order to support more
 than one schema language, this module uses a comparatively high-level
 model which can then be mapped by an ODD processor to the specific
 constructs appropriate to the schema language in use. Although some
-modern schema languages such as RELAX NG or W3Schema natively support
+modern schema languages such as RELAX NG or W3C Schema natively support
 self-documentary features of this kind, we have chosen to retain the
 ODD model, if only for reasons of compatibility with earlier versions
 of these Guidelines. We do however use the ISO standard XML schema
 language RELAX NG (<ptr target="http://www.relaxng.org"/>) as a means
 of declaring content models, rather than inventing a completely new
-XML-based representation for them.</p>
+XML-based representation for them. </p>
 
 <p> In the TEI abstract model, a markup scheme (a <term>schema</term>)
 consists of a number of discrete <term>modules</term>, which can be
@@ -222,169 +222,20 @@ identifier be unique.</p>
 <p>A <gi>specDesc</gi> generates in the documentation the identifier,
 and also the contents of the <gi>desc</gi> child of whatever
 specification element is indicated by its <att>key</att> attribute,
-together with any associated attribute list, as in the example
-above.</p>
+as in the example above. Documentation for any attributes specified by
+the <att>atts</att> attribute will also be generated as an 
+associated attribute list, .</p>
 <specGrp xml:id="TDSG1" n="Phrase-level elements for tag documentation">
-
-
-
-
-
-
-
-
-
-
 &att;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &code;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &eg;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &egXML;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &gi;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &ident;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &tag;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &val;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &specList;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &specDesc;
-
-
-
-
-
 </specGrp>
 </div>
 </div>
@@ -405,7 +256,7 @@ and other declarations and associating an externally-visible name with
 the group. A <term>specification group</term> performs essentially the
 same function, but the resulting group is not accessible outside the
 scope of the ODD document in which it is defined, whereas a module can
-be accessed by name from any TEI schema.  Modules, elements, and their
+be accessed by name from any TEI schema.Modules, elements, and their
 attributes, element classes, and patterns are all individually
 documented using further elements described in section <ptr target="#TDcrystals"/> below; part of that specification includes the
 name of a module to which the component belongs. An ODD processor
@@ -423,7 +274,8 @@ module specification like the following:
 together with specifications for all the elements, classes, and
 patterns which make up that module, expressed using
 <gi>elementSpec</gi>, <gi>classSpec</gi>, or <gi>macroSpec</gi>
-elements as appropriate. (These elements are discussed in section <ptr target="#TDcrystals"/> below) Each of those specifications carries a
+elements as appropriate. (These elements are discussed in section <ptr
+target="#TDcrystals"/> below.) Each of those specifications carries a
 <att>module</att> attribute, the value of which is
 <code>namesdates</code>. An ODD processor encountering the
 <gi>moduleSpec</gi> element above can thus generate a schema fragment
@@ -450,14 +302,14 @@ a module, as further discussed in section <ptr target="#TDbuild"/></p>
 declarations smaller than the whole, and to document them in a
 specific order: such collections are called <term>specGrps</term>
 (specification groups). Individual <gi>specGrp</gi> elements are
-identified using the global <att>xml:id</att> attribute, and may then be
-referenced from any point in an ODD document using the
+identified using the global <att>xml:id</att> attribute, and may then
+be referenced from any point in an ODD document using the
 <gi>specGrpRef</gi> element. This is useful if, for example, it is
 desired to describe particular groups of elements in a specific
-sequence. Note however that the order in which  element declarations
+sequence. Note however that the order in which element declarations
 appear within the schema code generated from a <gi>moduleSpec</gi>
-element cannot be altered, and is not affected by the order of
-declarations within a <gi>specGrp</gi>. </p>
+element is not in general affected by the order of declarations within
+a <gi>specGrp</gi>. </p>
 <p>An ODD processor will generate a piece of schema code
 corresponding with the declarations contained by a <gi>specGrp</gi>
 element in the documentation being output, and a cross-reference to
@@ -610,10 +462,10 @@ patterns for inclusion in a given module:
 <p>Unlike most elements in the TEI scheme, each of these elements has
 a fairly rigid internal structure consisting of a large number of
 child elements which are always presented in the same order. For this
-reason, we refer to them informally as
+reason, we refer to them metaphorically as
 <soCalled>crystals</soCalled>. Furthermore, since these elements all
 describe markup objects in broadly similar ways, they have several
-child elements in common. In the remainder of this section, we discuss
+child elements in common. In the remainder of this chapter, we discuss
 first the elements which are common to all the specification elements,
 and then those which are specific to a particular type.  </p>
 <p>Specification elements may appear at any point in an ODD document,
@@ -696,9 +548,19 @@ exemplification, and classification of the specification elements.</p>
 <specDesc key="listRef"/>
 </specList>
 </p>
-<p>A <gi>desc</gi> element is used to provide a brief
-characterization of the intended function of the element, class,
-value etc. being documented.</p>
+
+<p>One or more <gi>desc</gi> elements defined by the core module may
+be used
+to provide a brief characterization of the intended function of the
+element, class, value etc. being documented, as in the following
+example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="drama"  usage="opt" ident="actor">
+  <desc>Name of an actor appearing within a cast list.</desc>
+  <desc xml:lang="ja"> 登場人物リスト中にある役者名を示す．</desc>
+  <desc xml:lang="it">nome di un attore che appare nella lista dei personaggi.</desc>
+<!-- ... --></elementSpec>
+</egXML>
+</p>
 <p>The <gi>remarks</gi> element contains any additional
 commentary about how the item concerned may be used, details of
 implementation-related issues, suggestions for other ways of treating
@@ -725,7 +587,8 @@ grouped together into a <gi>listRef</gi> element: in the case of the
 <egXML xmlns="http://www.tei-c.org/ns/Examples"> <listRef>
     <ptr target="#COHQHF"/>
   </listRef>
-</egXML></p>
+</egXML> where the value <val>COHQF</val> is the identifier of the
+section in the Guidelines where this element is fully documented. </p>
 </div>
 <div type="div4" xml:id="TDeg"><head>Exemplification of Components</head>
 <p><specList>
@@ -769,6 +632,8 @@ to mark any technical term, thus :
   This <term>recursion</term> is 
   giving me a headache.]]]]><![CDATA[></egXML></p>
 ]]></eg>
+However, escaping the markup in this way will make it impossible to
+validate, and should therefore generally be avoided.
 </p>
 <p>If the XML contained in an example is not well-formed then it must
 either be enclosed in a CDATA marked section, or
@@ -805,121 +670,13 @@ element contains the following <gi>classes</gi> element:
 </egXML></p>
 
 <specGrp xml:id="TDSG4" n="Common specification elements">
-<!--&gloss;-->
-
-
-
-
-
-
-
-
-
-
 &remarks;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &listRef;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &exemplum;
-
-
-
-
-
-<!--eg.odd;-->
-<!--&egXML;-->
-
-
-
-
-
-
-
-
-
-
 &classes;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &memberOf;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &equiv;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &altIdent;
-
-
-
-
-
 </specGrp>
 </div>
 <div type="div3" xml:id="TDTAG"><head>Element Specifications</head>
@@ -971,14 +728,15 @@ generated from this is <code>(fileDesc, (%model.headerPart;)*,
 revisionDesc?)</code>.
 </p>
 <p>The RELAX NG language does not formally distinguish element names,
-class names, or macro names: all names are patterns which are handled
-in the same way, as the above example shows. Within the TEI scheme,
-however, different naming conventions are used to distinguish amongst
-the objects being named. Unqualified names (<code>fileDesc</code>,
-<code>revisionDesc</code>) are always element names. Names prefixed
-with <code>model.</code> or <code>att.</code> (e.g. <ident type="class">model.headerPart</ident> are always class
-names. In DTD language, classes are represented by parameter
-entities (<code>%model.headerPart;</code> in the above example) See further
+attribute names, class names, or macro names: all names are patterns
+which are handled in the same way, as the above example shows. Within
+the TEI scheme, however, different naming conventions are used to
+distinguish amongst the objects being named. Unqualified names
+(<code>fileDesc</code>, <code>revisionDesc</code>) are always element
+names. Names prefixed with <code>model.</code> or <code>att.</code>
+(e.g. <ident type="class">model.headerPart</ident> are always class
+names. In DTD language, classes are represented by parameter entities
+(<code>%model.headerPart;</code> in the above example); see further
 <ptr target="#ST"/>.</p>
 <!-- more examples needed -->
 </div>
@@ -996,14 +754,11 @@ selection from the common elements already mentioned and the
 following which are specific to attributes:
 <specList>
 <specDesc key="attDef" atts="usage"/>
-<!--specDesc key="equiv"/-->
 <specDesc key="datatype"/>
 <specDesc key="defaultVal"/>
 <specDesc key="valDesc"/>
 <specDesc key="valList"/>
 <specDesc key="valItem"/>
-<!--specDesc key="desc"/>
-<specDesc key="remarks"/-->
 </specList>
  </p>
 <p>The <gi>attList</gi> within an <gi>elementSpec</gi> is used to specify
@@ -1053,7 +808,7 @@ another. In the TEI abstract model, datatyping should preferably be
 carried out either by explicit enumeration of permitted values (using
 the TEI-specific <gi>valList</gi> element described below), or by
 definition of an explicit pattern, using the TEI-specific
-<gi>macroSpec</gi> element.</p>
+<gi>macroSpec</gi> element discussed further in section <ptr target="#TDENT"/>.</p>
 </div>
 <div type="div4" xml:id="TDATTvs"><head>Value Specification</head>
 <p>The <gi>valDesc</gi> element may be used to describe 
@@ -1066,8 +821,8 @@ headings.</valDesc></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><valDesc>A bookseller's surname,
  taken from the list in <title>Pollard and Redgrave</title></valDesc></egXML>
 </p>
-<p>As noted above, the <gi>datatype</gi> element is the first
-constraint on the
+<p>As noted above, the <gi>datatype</gi> element 
+constrains  the
 possible values for an attribute. The <gi>valDesc</gi> element can be used to
 describe further constraints. For example, to specify that an attribute
 <att>age</att> can take positive integer values less than 100, the
@@ -1090,9 +845,11 @@ only the values enumerated and glossed above are legal, and an ODD
 processor will typically enforce these constraints in the schema
 fragment generated. </p>
 <p>The <gi>valList</gi> element is also used to provide illustrative examples
-for the values permitted and their significance, or to gloss the
-meaning of values implied by an attribute's datatype.
-</p>
+of the kinds of values expected. In such cases
+the <att>type</att> attribute will have the value <val>open</val> and
+the datatype will usually be <ident type="datatype">data.enumerated</ident>.</p>
+
+
 <p>Note that the <gi>gloss</gi> element is needed to explain the
 significance of the identifier for an item only when this is not
 apparent, for example because it is abbreviated, as in the above
@@ -1232,7 +989,7 @@ equivalent to the following explicit content model: <egXML xmlns="http://www.tei
      <rng:ref name="bo"/>
 </rng:zeroOrMore></content></egXML> (or, in RELAX NG compact syntax,
 <code>(hi,it,bo)*</code>. </p>
-<p>The following suffixes can be given to a class name when it is
+<p>The following suffixes, appended with an underscore, can be given to a class name when it is
 referenced in a content model:
       <list type="gloss">
         <label>alternation</label>
@@ -1246,7 +1003,7 @@ referenced in a content model:
           <item>members of the class may be provided one or more
 	    times, in sequence, but are optional. </item>
         <label>sequenceRepeatable</label>
-          <item>members of the class may be provided one or more times, in sequence</item>
+          <item>members of the class must be provided one or more times, in sequence</item>
       </list>
 </p>
 <p>Thus a reference to
@@ -1297,7 +1054,8 @@ elements for elements which are members of that class, an ODD
 processor is required to extend the <gi>attList</gi> (or equivalent)
 for such elements to include any attributes defined by the
 <gi>classSpec</gi> elements concerned.  There is a single global
-attribute class, <ident type="class">att.global</ident>.
+attribute class, <ident type="class">att.global</ident>, the
+membership of which may be expanded by some modules.
 <!-- eh what ? -->
 <!-- Membership of an attribute class can be inherited by any class, but
 model-only classes may not include attribute-only classes amongst their
@@ -1307,143 +1065,21 @@ see section <ptr target="STEC"/>.-->
 
 
 <specGrp xml:id="TDSG5" n="Element specification elements">
-
-
-
-
-
-
-
-
-
-
 &content;
-
-
-
-
-
-
-
-
-
-
-
-
 &macro.schemaPattern;
-
-
-
-
-
-
-
-
-
-
-
-
 &attList;
-
-
-
-
-
-
-
-
-
-
-
-
 &attDef;
-
-
-
-
-
-
-
-
-
-
-
-
 &attRef;
-
-
-
-
-
-
-
-
-
-
-
-
 &datatype;
-
-
-
-
-
-
-
-
-
-
-
-
 &defaultVal;
-
-
-
-
-
-
-
-
-
-
-
-
 &valDesc;
-
-
-
-
-
-
-
-
-
-
-
-
 &valItem;
-
-
-
-
-
-
-
-
-
-
-
-
 &valList;
-
-
-
-
-
 </specGrp>
 </div>
 <div type="div3" xml:id="TDENT"><head>Pattern Documentation</head>
-<p>The <gi>macroSpec</gi> element is used to document patterns not
+<p>The <gi>macroSpec</gi> element is used to document predefined
+strings or patterns not
 otherwise documented by the elements described in this chapter.  Its
 chief uses are to provide systematic documentation of the parameter
 entities used within TEI DTD fragments and to describe common
@@ -1515,7 +1151,7 @@ the following example:
 <gi scheme="imaginary">soundClip</gi>, which is not defined in the TEI scheme, will be
 added to the output schema. This element will also be added to the
 existing TEI class <ident type="class">model.pPart.data</ident>, and
-will thus be avilable in TEI conformant documents.</p>
+will thus be available in TEI conformant documents.</p>
 <p>A schema might also include re-declarations of existing elements, as
 in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
@@ -1602,7 +1238,7 @@ is provided </cell>
 
 <div type="div3" xml:id="ST-aliens"><head>Combining TEI and Non-TEI Modules</head>
 
-<p>In the simplest case, all that is needed to include a non TEI
+<p>In the simplest case, all that is needed to include a non-TEI
 module in a schema is to reference its RELAX NG source using the
 <att>url</att> attribute on <gi>moduleRef</gi>. The following 
 specification, for example, creates a schema in which declarations
@@ -1679,7 +1315,7 @@ structure module documented in <ptr target="#ST"/>. </p>
 
 <p>In addition, some elements are members of the
 <ident type="class">att.identified</ident> class, which is documented in <ptr target="#TDbuild"/> above, and make use of the
-<code>macro.schemapattern</code> pattern, which is documented in <ptr target="#TDTAG"/> above. 
+<code>macro.schemaPattern</code> pattern, which is documented in <ptr target="#TDTAG"/> above. 
 </p>
 <specGrp>
 <specGrpRef target="#TDSG1"/>
