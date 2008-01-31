@@ -96,8 +96,8 @@ irrelevant to the intended linkage.
 The <gi>ptr</gi> element may be called a <soCalled>pure
 pointer</soCalled>, because its primary function is simply to point. A
 pointer sets up a <term rend="noindex">connection</term> between an
-element (which, in the case of a pure pointer, can be thought of
-simply as a location in a document), and one or more others, known
+element (which, in the case of a pure pointer, is
+simply a location in a document), and one or more others, known
 collectively as its <term>target</term>. The <gi>ptr</gi> and
 <gi>ref</gi> elements bear a <att>target</att> attribute (in the
 singular), because they point, conceptually, at a single target, even
@@ -125,14 +125,14 @@ encoding:
 points to <val>sa-p1</val>. This is logically
 equivalent to the more compact encoding:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><link targets="#sa-p1 #sa-p2"/></egXML></p>
-<p>As noted above, elements pointed to or linked by this simple
-method must be identifiable using the global <att>xml:id</att>
-attribute. This implies that they must be present in the same
-document, and that they must bear unique <att>xml:id</att>
-values. Pointing or linking to external documents and pointing
-or linking where identifiers are not available is implemented by
-more complete forms of URI references, as described below in
-section <ptr target="#SAXP"/>.</p>
+<p>As noted elsewhere, both <att>target</att> and <att>targets</att>
+attributes take as value one or more URI reference. In the simplest
+case, a URI reference might indicate an element in the current
+document (or in some other document) by supplying the value used for
+its global <att>xml:id</att> attribute. Pointing or linking to
+external documents and pointing and linking where identifiers are not
+available are implemented by more complex forms of URI references, as
+described below in section <ptr target="#SAXP"/>.</p>
     </div>
     <div type="div3" xml:id="SAPTEG">
 <head>Using Pointers and Links</head>
@@ -884,23 +884,25 @@ an XML Information Set. The single argument
 
    <div type="div4" xml:id="SATSLR">
     <head>left(pointer) and right(pointer)</head>
-    <p>The <name type="xpscheme">left()</name> (<name type="xpscheme">right()</name>) scheme locates the point
-    immediately preceding (following) its argument. The single
-    <rs>pointer</rs> argument to <name type="xpscheme">left()</name> or <name type="xpscheme">right()</name> is treated like a fragment
-    identifier itself, and must be a bare name or XPointer
-    pointer.  The designation of this argument is
-    resolved with respect to the base URI in effect for the
-    <name type="xpscheme">left()</name> or <name type="xpscheme">right()</name> according to the normal
-    rules.<note place="foot">Like other XPointer schemes, bare
-    names (i.e. values of <att>xml:id</att>
-    references) are permitted as pointer arguments to all TEI-defined
-    XPointer pointer scheme parameters.</note> Because
-    most pointer schemes return nodes or ranges rather than
-    points, the following description lists the behavior of
-    <name type="xpscheme">left()</name> and <name type="xpscheme">right()</name> for all three types of possible
-    location that might result from interpreting its argument.
+
+<p>The <name type="xpscheme">left()</name> (<name
+type="xpscheme">right()</name>) scheme locates the point immediately
+preceding (following) its argument. The single <rs>pointer</rs>
+argument to <name type="xpscheme">left()</name> or <name
+type="xpscheme">right()</name> is treated like a fragment identifier
+itself, and must be a bare name or XPointer pointer.  The designation
+of this argument is resolved with respect to the base URI in effect
+for the <name type="xpscheme">left()</name> or <name
+type="xpscheme">right()</name> according to the normal rules.<note
+place="foot">Like other XPointer schemes, bare names (i.e. values of
+<att>xml:id</att> references) are permitted as pointer arguments to
+all TEI-defined XPointer pointer scheme parameters.</note> Most
+pointer schemes return nodes or ranges rather than points; the
+possibilities for  <name
+type="xpscheme">left()</name> and <name type="xpscheme">right()</name>
+pointer schemes are as follows:
 <list type="gloss">
-    <label>A Node</label>
+<label>A Node</label>
   <item> When <rs>pointer</rs> resolves to a node, the
   point designated is the point immediately preceding
   (<name type="xpscheme">left()</name>) or following (<name type="xpscheme">right()</name>) the node.
@@ -910,7 +912,7 @@ an XML Information Set. The single argument
 node set, the point designated is the point preceding the first
 element of the set (<name type="xpscheme">left()</name>) or following
 the last element of the set (<name type="xpscheme">right()</name>)</item>
-    <label>A range</label> <item> When <rs>pointer</rs>
+ <label>A range</label> <item> When <rs>pointer</rs>
     resolves to a range, the point designated is the point
     designating the start (<name type="xpscheme">left()</name>) or end (<name type="xpscheme">right()</name>) of the range.
   </item>
@@ -920,15 +922,17 @@ make no change when given a point as argument.
    </item>
 </list>
 </p>
-	    <p>The following example points to the spot immediately
-	    following the last character of the element found by
-	    walking down the document tree to the 6th child of the
-	    3rd child of the 3rd child of the 1st child of the root
-	    element. In this case, the path takes us to a <gi scheme="extreme">postcode</gi> node which contains the string
-	    <q>20850</q>, so the point being pointed to is that
-	    following the  <q>0</q> character at the end of the
-	    element content. <egXML xmlns="http://www.tei-c.org/ns/Examples"><p xml:base="http://www.mulberrytech.com/Extreme/Proceedings/xml/2002/">
-<ptr target="Usdin01/EML2002Usdin01.xml#right(element(/1/1/3/3/6))"/></p></egXML></p>
+<p>The following example points to the spot immediately following the
+last character of the element found by walking down the document tree
+to the 6th child of the 3rd child of the 3rd child of the 1st child of
+the root element. In this case, the path takes us to a <gi
+scheme="extreme">postcode</gi> node which contains the string
+<q>20850</q>, so the point being pointed to is that following the
+<q>0</q> character at the end of the element content. <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><p
+xml:base="http://www.mulberrytech.com/Extreme/Proceedings/xml/2002/">
+<ptr
+target="Usdin01/EML2002Usdin01.xml#right(element(/1/1/3/3/6))"/></p></egXML></p>
      </div>
 
  <div type="div4" xml:id="SATSRN">
@@ -942,10 +946,10 @@ make no change when given a point as argument.
     themselves, and are resolved according to the rules
     specified in the definition of the pointer scheme they use.<note place="foot">Bare names (i.e., <att>xml:id</att>
     values), like other Xpointer schemes, are permitted as <name type="xpscheme">range()</name> parameters.</note>
-    Because most pointer schemes return nodes or ranges rather
-    than points, the following description lists the behavior of
-    <name type="xpscheme">range()</name> for all three types of
-    possible result.
+Most
+pointer schemes return nodes or ranges rather than points; the
+possibilities for      <name type="xpscheme">range()</name>
+pointer schemes are as follows:    
 <list type="gloss">
   <label>A Node</label>
 	<item>When <rs>pointer1</rs> resolves to a node, the
@@ -2238,9 +2242,6 @@ transcribed text.</p>
 <p>For further discussion of this and related aspects of encoding
 transcribed speech, refer to chapter <ptr target="#TS"/>.</p>
 <specGrp xml:id="DSASYMP" n="Temporal specification">
-  
-
-
 
 
 
@@ -2255,9 +2256,6 @@ transcribed speech, refer to chapter <ptr target="#TS"/>.</p>
 
 
 
-
-
-  
 
 
 
@@ -2619,9 +2617,6 @@ or <ptr target="#SATS"/>. The <att>xml:id</att> attributes of
 element of the current document.</q></p>
 
 <specGrp xml:id="DSAAG" n="Aggregation">
-  
-
-
 
 
 
@@ -2838,9 +2833,9 @@ as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><alt targets="#we.fu
 to all the others) is equivalent to selecting that target. Thus the
 following encoding is equivalent to the second example at the beginning
 of this section.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="we.had.fun">We had fun at the beach today.</u>
-<u xml:id="we.had.sun">We had sun at the beach today.</u>
-<alt targets="#we.had.fun #we.had.sun" mode="excl" weights="1 0"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="we.fun">We had fun at the beach today.</u>
+<u xml:id="we.sun">We had sun at the beach today.</u>
+<alt targets="#we.fun #we.sun" mode="excl" weights="1 0"/>
 </egXML>
 <!-- 
 <p>Inclusive alternation can only be expressed by the    -->
@@ -2904,17 +2899,21 @@ the value <val>first.alternant next.alternant</val>. <!-- Thus, specifying
 the value <val>2</val> for the <att>extendTarg</att> attribute permits
 the alternants to be extended indefinitely.--></p>
 
-<p>To illustrate, consider again the example of a transcribed utterance,
-in which it is uncertain whether the first word is <mentioned>We</mentioned> or
-<mentioned>Lee</mentioned>, whether the third word is <mentioned>fun</mentioned> or
-<mentioned>sun</mentioned>, but that if the first word is <mentioned>Lee</mentioned>,
-then the third word is <mentioned>fun</mentioned>. Now suppose we have the
-following additional information: if <mentioned>we</mentioned> occurs, then the
+<p>To illustrate, consider again the example of a transcribed
+utterance, in which it is uncertain whether the first word is
+<mentioned>We</mentioned> or <mentioned>Lee</mentioned>, whether the
+third word is <mentioned>fun</mentioned> or
+<mentioned>sun</mentioned>, but that if the first word is
+<mentioned>Lee</mentioned>, then the third word is
+<mentioned>fun</mentioned>. Now suppose we have the following
+additional information: if <mentioned>we</mentioned> occurs, then the
 probability that <mentioned>fun</mentioned> occurs is 50% and that
-<mentioned>sun</mentioned> occurs is 50%; if <mentioned>fun</mentioned> occurs, then the
-probability that <mentioned>we</mentioned> occurs is 40% and that
-<mentioned>Lee</mentioned> occurs is 60%. This situation can be encoded as
-follows.
+<mentioned>sun</mentioned> occurs is 50%; if
+<mentioned>fun</mentioned> occurs, then the probability that
+<mentioned>we</mentioned> occurs is 40% and that
+<mentioned>Lee</mentioned> occurs is 60%. This situation can be
+encoded as follows.
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u>
   <seg exclude="#lee2" xml:id="we2" type="word">We</seg>
   <seg exclude="#we2" xml:id="lee2" type="word">Lee</seg>
@@ -2927,7 +2926,11 @@ follows.
    <alt targets="#fun2 #sun2"/>
    <alt targets="#we2 #fun2" mode="incl" weights="0.5 0.5"/>
    <alt targets="#lee2 #fun2" mode="incl" weights="1.0 0.6"/>
-</altGrp></egXML></p>
+</altGrp></egXML>
+As noted above, when the <att>mode</att> attribute on an
+<gi>alt</gi> has the value <val>incl</val>, then each weight states
+the probability that the corresponding alternative occurs,  given that at least one of the other alternatives occurs.
+</p>
 <p>From the information in this encoding, we can determine that the
 probability is about 28.5% that the utterance is <q>We had fun at the
 beach today</q>, 28.5% that it is <mentioned>We had sun at the beach
@@ -2978,44 +2981,8 @@ combination of exclusive and inclusive <gi>alt</gi> elements, as follows.
     <alt targets="#bb #db" weights="0.45 0.90"/>
   </altGrp></egXML></p>
 <specGrp xml:id="DSAAT" n="Alternation">
-  
-
-
-
-
-
-
-
-
-
-
-
 &alt;
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
 &altGrp;
-
-
-
-
-
-
 </specGrp></div>
 
 <div type="div2" xml:id="SASO">
@@ -3104,23 +3071,24 @@ new source may be a plain text document</item>
 <head>Overview of XInclude </head>
 
 
-   <p>Stand-off markup which relies on the  inclusion of 
-virtual content is adequately supported by the W3C XInclude
-recommendation, which is also recommended for use by these Guidelines.<note place="foot">The version on which
-	    this text is based on is the <ref target="http://www.w3.org/TR/2004/REC-xinclude-20041220/">W3C
-	 Recommendation dated <date when="2004-12-20">20 December
-	 	2004</date>.</ref>.</note> XInclude defines a namespace
-	  (<mentioned>http://www.w3.org/2001/XInclude</mentioned>),
-	  which in these Guidelines will be associated with the prefix 
-	  <mentioned>xi:</mentioned>, and exactly two elements,
-	  <gi>xi:include</gi> and <gi>xi:fallback</gi>. XInclude
-	  relies on the <ref target="http://www.w3.org/TR/xptr-framework/">XPointer
-	  framework</ref> discussed elsewhere in this chapter
-	  to point to the actual fragments of text to be
-	  internalized. Although
-	  XInclude only requires support for the <ref target="http://www.w3.org/TR/xptr-element/"><code>element()</code></ref> 
-	  scheme of XPointer, these Guidelines permit the use of any of the
-pointing  schemes discussed in section <ptr target="#SAXP"/>.</p>
+   <p>Stand-off markup which relies on the inclusion of virtual
+   content is adequately supported by the W3C XInclude recommendation,
+   which is also recommended for use by these Guidelines.<note
+   place="foot">The version on which this text is based is the <ref
+   target="http://www.w3.org/TR/2004/REC-xinclude-20041220/">W3C
+   Recommendation dated <date when="2004-12-20">20 December
+   2004</date>.</ref>.</note> XInclude defines a namespace
+   (<mentioned>http://www.w3.org/2001/XInclude</mentioned>), which in
+   these Guidelines will be associated with the prefix
+   <mentioned>xi:</mentioned>, and exactly two elements,
+   <gi>xi:include</gi> and <gi>xi:fallback</gi>. XInclude relies on
+   the <ref target="http://www.w3.org/TR/xptr-framework/">XPointer
+   framework</ref> discussed elsewhere in this chapter to point to the
+   actual fragments of text to be internalized. Although XInclude only
+   requires support for the <ref
+   target="http://www.w3.org/TR/xptr-element/"><code>element()</code></ref>
+   scheme of XPointer, these Guidelines permit the use of any of the
+   pointing schemes discussed in section <ptr target="#SAXP"/>.</p>
  
 	<p>XInclude is a W3C recommendation which specifies a syntax for the
 	  inclusion within an XML document of data fragments placed in
@@ -3130,20 +3098,20 @@ pointing  schemes discussed in section <ptr target="#SAXP"/>.</p>
 	  URI, possibly augmented by an XPointer that identifies the
 	  exact subresource to be included. </p>
 
-	  <p>The <gi>xi:include</gi> element uses the <att scheme="XI">href</att>
-	  attribute to specify the location of the resource to be
-	  included; its value is an URI containing, if necessary,
-	  an XPointer. Additionally, it uses the <att scheme="XI">parse</att>
-	  attribute (whose only valid values are <val>text</val> and
-	  <val>xml</val>) to specify whether the included content is
-	  plain text or an XML fragment, and the <att>encoding</att>
-	  attribute to provide a hint, when the included fragment is
-	  text, of the character encoding of the fragment. An optional
-	  <gi>xi:fallback</gi> element is also permitted within an
-	  <gi>xi:include</gi>; it specifies alternative content to be
-	  used when the external resource cannot be fetched for some
-	  reason. Its use is not however recommended for stand-off
-	  markup.</p>
+	  <p>The <gi>xi:include</gi> element uses the <att
+	  scheme="XI">href</att> attribute to specify the location of
+	  the resource to be included; its value is an URI containing,
+	  if necessary, an XPointer. Additionally, it uses the <att
+	  scheme="XI">parse</att> attribute (whose only valid values
+	  are <val>text</val> and <val>xml</val>) to specify whether
+	  the included content is plain text or an XML fragment, and
+	  the <att>encoding</att> attribute to provide a hint, when
+	  the included fragment is text, of the character encoding of
+	  the fragment. An optional <gi>xi:fallback</gi> element is
+	  also permitted within an <gi>xi:include</gi>; it specifies
+	  alternative content to be used when the external resource
+	  cannot be fetched for some reason. Its use is not however
+	  recommended for stand-off markup.</p>
  
 	  <p>XInclude currently only requires support for one XPointer
 	  scheme, called <code>element()</code>. As described in <ptr target="#SAES"/>, the <code>element()</code> scheme can use
