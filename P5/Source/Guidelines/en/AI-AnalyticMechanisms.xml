@@ -89,7 +89,8 @@ may be indicated by its <att>type</att> attribute; the other members
 of the class are more specialised. Thus, the <gi>s</gi>, <gi>cl</gi>, and
 <gi>phr</gi> elements may be thought of as equivalent to <tag>seg
 type="s-unit"</tag>, <tag>seg
-type="clause"</tag> and <tag>seg type="phrase"</tag>, respectively.
+type="clause"</tag> and <tag>seg type="phrase"</tag>, respectively,
+but with the above-mentioned restrictions.
 </p>
 <p>The <gi>s</gi> element may be further subdivided into
 <term>clauses</term>, marked with the <gi>cl</gi> element,
@@ -229,11 +230,11 @@ identical in meaning to the <gi>seg</gi> element with a
 <att>type</att> attribute of <q>w</q>, <q>m</q>, or <q>c</q>, and may
 occur wherever <gi>seg</gi> is permitted to occur. However, they have
 more restricted content models than does <gi>seg</gi>: for example,
-the <gi>w</gi> element can only contain <gi>w</gi>, <gi>m</gi>, and
-<gi>c</gi> elements, or plain text; the <gi>m</gi> element can contain
-only <gi>c</gi> elements or plain text; the <gi>c</gi> element can
-contain only plain text, and will often contain only a single
-character. Consequently, while these more specific elements can be
+the <gi>w</gi> element should only contain <gi>w</gi>, <gi>m</gi>, and
+<gi>c</gi> elements, or plain text; the <gi>m</gi> element should contain
+only <gi>c</gi> elements or plain text; the <gi>c</gi> element should
+contain only plain text, most often only a single
+character or a sequence of graphemes to be treated as a single character. Consequently, while these more specific elements can be
 translated directly into typed <gi>seg</gi> elements, the reverse is
 not necessarily the case.
  </p>
@@ -456,12 +457,10 @@ elsewhere in the same or a different document. Where several
 <gi>span</gi> or <gi>interp</gi> elements share the same attributes,
 for example having the same responsibility or type, it may be
 convenient to group them within a <gi>spanGrp</gi> or <gi>interpGrp</gi> element as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><spanGrp>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><spanGrp resp="#DTL">
   <span from="#MaQp1s2p114s3" to="#MaQp1s2p114s5">the moment</span>
   <!-- other spans identified by DTL here -->
 </spanGrp></egXML>
-<!-- As may be seen, the <att>type</att> attribute may be omitted in order to
-associate a span of text simply with a descriptive name.-->
  </p>
 <p>Spans may also be used to represent structural divisions within 
 a narrative, particularly when these do not coincide with the
@@ -601,8 +600,8 @@ follows:
 <s xml:id="SS3">Borghild, Sigmund's wife, had a brother ... </s>
 </seg>
 <s xml:id="SS4A" ana="#CONFLICT">But Sinfiotli ... wooed the same woman</s>
-<s xml:id="SS4B" ana="#I3">and Sinfiotli killed him over it.</s>
-<seg xml:id="SS5-SS17" ana="#CLIMAX">
+<s xml:id="SS4B" ana="#CLIMAX">and Sinfiotli killed him over it.</s>
+<seg xml:id="SS5-SS17" ana="#REVENGE">
 <s xml:id="SS5">And when he came home, ... she was obliged to accept it.</s>
 <s xml:id="SS6">At the funeral feast Borghild was serving beer.</s>
 <s xml:id="SS17">Sinfiotli drank it off and at once fell dead.</s>
@@ -724,7 +723,7 @@ code) may be associated with each word or token, or with groups of such
 tokens, which may be continuous, discontinuous, or nested.  A code may
 also be associated with relationships (such as cohesion) perceived as
 existing between distinct parts of a text.  The codes themselves may
-stand for discrete non-decomposable categories, or they may represent
+stand for discrete and non-decomposable categories, or they may represent
 highly articulated bundles of textual features.  Their function may be
 to place the annotated part of the text somewhere within a narrowly
 linguistic or discoursal domain of analysis, or within a more general
@@ -746,9 +745,9 @@ sentence, taken from the Lancaster/IBM Treebank
 Project (<ptr target="#AI-BIBL-5"/>).
  <q rend="display">The victim's friends told police that Kruger drove
 into the quarry and never surfaced.</q> </p> <p>Our discussion focuses
-on the way that this sentence might be analysed using the Claws system
+on the way that this sentence might be analysed using the CLAWS system
 developed at the University of Lancaster but exactly the same
-principles may be applied to a wide variety of other systems.<note place="foot">For the word-class tagging method used by Claws see
+principles may be applied to a wide variety of other systems.<note place="foot">For the word-class tagging method used by CLAWS see
 <ptr target="#AI-BIBL-6"/>; 
 For an overview of the system see <ptr type="cit" target="#AI-BIBL-7"/>. The example sentence was processed
 using an online version of the CLAWS tagger at <ptr target="http://www.comp.lancs.ac.uk/ucrel/claws/trial.html"/> </note>
@@ -763,14 +762,13 @@ drove_VVD into_PRP the_AT0 quarry_NN1 and_CJC never_AV0 surfaced_VVD
 </p>
 <p>This may be easily transformed into an equivalent TEI XML representation:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><s><w ana="#AT0">The</w> 
-<w ana="#NN1">victim</w> 
-<w ana="#POS">'s</w> <w ana="#NN2">friends</w> 
-<w ana="#VVD">told</w> <w ana="#NN2">police</w> 
-<w ana="#CJT">that</w> <w ana="#NP0">Kruger</w> 
-<w ana="#VVD">drove</w> <w ana="#PRP">into</w> 
-<w ana="#AT0">the</w> <w ana="#NN1">quarry</w> 
-<w ana="#CJC">and</w> <w ana="#AV0">never</w> 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><s><w ana="#AT0">The </w> 
+<w ana="#NN1">victim</w><w ana="#POS">'s</w> 
+<w ana="#NN2">friends </w> <w ana="#VVD">told </w> 
+<w ana="#NN2">police </w> <w ana="#CJT">that </w> 
+<w ana="#NP0">Kruger </w> <w ana="#VVD">drove </w> <w ana="#PRP">into </w> 
+<w ana="#AT0">the </w> <w ana="#NN1">quarry </w> 
+<w ana="#CJC">and </w> <w ana="#AV0">never </w> 
 <w ana="#VVD">surfaced</w></s></egXML> 
 
 Although the names used for the attribute values here may have some
@@ -806,10 +804,10 @@ on the <gi>fs</gi> element defined in chapter <ptr target="#FS"/>.
 </p>
 <p>This approach requires the text to be fully segmented, using the
 linguistic segment elements described in section <ptr target="#AILC"/>, so that the scope of the <att>ana</att> attribute
-used to point to each interpretation is clearly defined. However,
+used to point to each interpretation is clearly defined. A further
 analysis into phrase and clause elements can be superimposed on the
 word and morpheme tagging in the preceding illustration. For example,
-Claws provides the following constituent analysis of the sample
+CLAWS provides the following constituent analysis of the sample
 sentence (the word class codes have been deleted): <eg><![CDATA[[N [G The
 victim's G] friends N] [V told [N police N] [Fn that [N Krueger N] [V
 [V& drove [P into [N the quarry N]P]V&] and [V+ never surfaced
@@ -824,9 +822,9 @@ second part, has been replaced by <val>V2</val>).
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s type="sentence">
    <phr ana="#n">  
       <phr ana="#gn">    
-         <w ana="#AT">The</w>
+         <w ana="#AT0">The</w>
          <w ana="#NN1">victim</w>
-         <m ana="#GEN">'s</m>
+         <m ana="#POS">'s</m>
       </phr>
       <w ana="#NN2">friends</w>
    </phr>
@@ -838,7 +836,7 @@ second part, has been replaced by <val>V2</val>).
       <cl ana="#fn">    
          <w ana="#CJT">that</w>
          <phr ana="#n">
-            <w ana="#NP1">Krueger</w>
+            <w ana="#NP0">Krueger</w>
          </phr>
          <phr ana="#v">      
             <phr ana="#v1">        
@@ -915,9 +913,8 @@ course apply in all types of analysis, and these Guidelines provide a
 number of mechanisms to support the representation of discontinuities or
 multiple analyses.  A brief overview of these facilities is provided in
 chapter <ptr target="#NH"/>; also see <ptr target="#SA"/>.  These mechanisms
-all depend to a greater or lesser degree on the ability to associate a
-unique identifier with any element in a TEI-conformant text, and then to
-specify that identifier as the target of a pointing element of some kind.
+all depend to a greater or lesser degree on the use of pointing
+elements of various kinds.
 </p>
 <p>The mechanisms proposed in this chapter may also be used to encode
 analyses of an entirely different kind, for example discourse function.

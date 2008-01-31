@@ -108,7 +108,8 @@ precision.  To record merely that we are not certain that <q>Essex</q>
 is in fact a place name, as it is tagged, we use the <att>target</att>
 attribute to identify the element in question, and the <att>locus</att>
 attribute to indicate what aspect of the markup we are uncertain about
-(in this case, whether we have used the correct element type):
+(in this case, whether we have used the correct <q>gi</q>, that is,
+element type, to mark it):
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to 
 <placeName xml:id="CE-pl1">Essex</placeName>.
 <!-- ... elsewhere in the document ... -->
@@ -126,10 +127,10 @@ number between 0 and 1, representing the estimated probability):
 <certainty target="#CE-pl1" locus="gi" degree="0.6"/></egXML>
 According to one expert, there is a 60 percent chance of <q>Essex</q>
 being a place name here, and a 40 percent chance of its being a
-personal name. We use two <gi>certainty</gi> elements to indicate the
+personal name. We can use two <gi>certainty</gi> elements to indicate the
 two probabilities independently. Both elements indicate the same location in the
 text, but the second provides an alternative choice of generic
-identifier (in this case <gi>persName</gi>) is given as the
+identifier (in this case <gi>persName</gi>), which is given as the
 value of the <att>assertedValue</att> attribute:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <!-- ... -->
@@ -167,6 +168,7 @@ particular markup given the assertional content of the
 <gi>certainty</gi> elements indicated—that is, <emph>if the markup
 described in the indicated <gi>certainty</gi> elements is
 correct.</emph></p>
+
 <p>Conditional confidence may be less that 100 percent:  given the sentence
 <q>Ernest went to old Saybrook</q>, we may interpret <q>Saybrook</q> as
 a personal name or a place name, assigning a 60 percent probability to the
@@ -174,23 +176,28 @@ former. If it is a place name, there may be a 50 percent chance that the
 place name actually in question is <q>Old Saybrook</q> rather than
 <q>Saybrook</q>, while if it is correctly tagged as a personal name, it
 is much more likely (say, 90 percent certain) that the name is <q>Saybrook</q>.
-This state of affairs can be expressed using the
-<gi>certainty</gi> element thus:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Earnest went to <anchor xml:id="CE-a1"/> old <persName xml:id="CE-p2">Saybrook</persName>.
+Hence there is uncertainty about the correct location for the markup
+as well as about which markup to use.  This state of affairs can be expressed using the <gi>certainty</gi> element thus:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Ernest went to <anchor xml:id="CE-a1"/> old <persName xml:id="CE-p2">Saybrook</persName>.
 <certainty xml:id="cert1" target="#CE-p2" locus="gi" degree="0.6"/>
 <certainty target="#CE-p2" locus="startLoc" given="#cert1" degree="0.9"/>
 <certainty xml:id="cert2" target="#CE-p2" locus="gi" assertedValue="placeName" degree="0.4"/>
 <certainty target="#CE-p2" locus="startLoc" given="#cert2" degree="0.5"/>
-<certainty xml:id="cert3" target="#CE-p2" locus="startLoc" assertedValue="CE-a1" given="#cert1" degree="0.5"/></egXML>
-In this case, the <att>assertedValue</att> on <gi>certainty</gi> element
-<val>cert3</val> is a reference to an <gi>anchor</gi> element at the alternative starting
+<certainty xml:id="cert3" target="#CE-p2" locus="startLoc"
+	   assertedValue="CE-a1" given="#cert1" degree="0.1"/>
+<certainty xml:id="cert4" target="#CE-p2" locus="startLoc" assertedValue="CE-a1" given="#cert2" degree="0.5"/></egXML>
+
+Note the use of the <att>assertedValue</att> on <gi>certainty</gi>
+elements <val>cert3</val> and <val>cert4</val> to reference
+the <gi>anchor</gi> element placed at the alternative starting
 point for the element.</p>
+
 <p>Multiplying the numeric values out, this markup may be interpreted as
 assigning specific probabilities to three different ways of
 marking up the sentence:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Earnest went to old <persName>Saybrook</persName>.    (0.6 * 0.9, or 0.54)
-Earnest went to old <placeName>Saybrook</placeName>.  (0.4 * 0.5, or 0.20)
-Earnest went to <placeName>old Saybrook</placeName>.  (0.4 * 0.5, or 0.20)</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Ernest went to old <persName>Saybrook</persName>.    (0.6 * 0.9, or 0.54)
+Ernest went to old <placeName>Saybrook</placeName>.  (0.4 * 0.5, or 0.20)
+Ernest went to <placeName>old Saybrook</placeName>.  (0.4 * 0.5, or 0.20)</egXML>
 The probabilities do not add up to 1.00 because the markup indicates
 that if <q>Saybrook</q> is (part of) a personal name, there is a
 10 percent likelihood that the element should start somewhere other than the
