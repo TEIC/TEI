@@ -29,10 +29,10 @@ not, see <ptr target="#D4-42"/>. </p>
     encoders should follow the following steps:
 <list type="ordered">
       <item><p>Check the Unicode
-      website at <ptr target="http://www.unicode.org"/>, in particular the page <ref target="http://unicode.org/standard/where/">"Where is my
+      web site at <ptr target="http://www.unicode.org"/>, in particular the page <ref target="http://unicode.org/standard/where/">"Where is my
       Character?"</ref>, and the associated character code charts.
       Alternatively, users can check the latest published version of
-      <title>The Unicode Standard</title> (<ref target="#CH-BIBL-3">Unicode Consortium (2006)</ref>), though the website is
+      <title>The Unicode Standard</title> (<ref target="#CH-BIBL-3">Unicode Consortium (2006)</ref>), though the web site is
       often more up to date than the printed version, and should be
       checked for preference.</p> 
 <p>The pictures (<soCalled>glyphs</soCalled>) in the Unicode code
@@ -42,7 +42,7 @@ project, refer to the guidelines contained below under <ref target="#D25-30">Ann
 encoded document may be rendered on a system which has different fonts
 from yours: if the specific form of a character is important to you,
 then you should document it. </p></item>
-      <item>Check the Proposed New Characters webpage (<ptr target="http://unicode.org/alloc/Pipeline.html"/>) to see whether
+      <item>Check the Proposed New Characters web page (<ptr target="http://unicode.org/alloc/Pipeline.html"/>) to see whether
       the character is in line for approval.</item>
 
 <item>Ask on the Unicode email list (<ptr target="http://www.unicode.org/consortium/distlist.html"/>) to
@@ -197,15 +197,15 @@ as stated above. The <gi>glyph</gi> element is used to annotate a
 character that has already been defined somewhere (either in the
 document character set, or through a <gi>char</gi> element) by
 providing a specific glyph that shows how a character appeared in the
-original document. This is necessary since Unicode codepoints refer
+original document. This is necessary since Unicode code points refer
 not to a single, specific glyph shape of a character, but rather to a
-set of glyphs, any of which may be used to render the codepoint in
+set of glyphs, any of which may be used to render the code point in
 question; in some cases they can differ considerably.</p>
 <p>The <gi>glyph</gi> element is provided for cases where the encoder
 wants to specify a specific glyph (or family of glyphs) out of all
 possible glyphs. Unfortunately, due to the way Unicode has been
 defined, there are cases where several glyphs that logically belong
-together have been given separate codepoints, especially in the blocks
+together have been given separate code points, especially in the blocks
 defining East Asian characters. In such cases, <gi>glyph</gi> elements
 can also be used to express the view that these apparently distinct
 characters are to be regarded as instances of the same character (see
@@ -218,8 +218,8 @@ however, that this naming convention cannot meaningfully be applied to
 East Asian characters; the typical Unicode descriptions for these
 characters take the form <q>CJK Unified Ideograph
 <code>U+4E00</code></q>, where <code>U+4E00</code> is simply the
-Unicode codepoint value of the character in question.  In cases where
-no Unicode codepoint exists, there is little hope of finding a name
+Unicode code point value of the character in question.  In cases where
+no Unicode code point exists, there is little hope of finding a name
 that helps to identify the character. Names should therefore be
 constructed in a way meaningful to local practice, for example by
 using a reference number from a well-known character dictionary or a
@@ -299,7 +299,7 @@ used for either characters or glyphs.
 <p>The Unicode Standard documents <soCalled>ideal</soCalled>
 characters, defined by reference to a number of
 <term>properties</term> (or attribute-value pairs) which they are said
-to possess. For example, a lower case letter is said to have the value
+to possess. For example, a lowercase letter is said to have the value
 <code>Ll</code> for the property <code>general-category</code>. The
 Standard distinguishes between <term>normative</term> properties
 (i.e. properties which form part of the definition of a given
@@ -587,7 +587,7 @@ represented as follows:<eg><![CDATA[<abbr>&r1;</abbr>]]></eg></p>
       </charDecl>
     </egXML>
     The first of these <gi>mapping</gi>s, of type <val>Unicode</val>,
-    simply maps our glyph to the codepoint where Unicode defined it.
+    simply maps our glyph to the code point where Unicode defined it.
     The other one, of type <val>Standard</val>, encodes the fact that
     in our view, this glyph is a variation of the standard character
     given in the content of the element. We could then use this
@@ -626,15 +626,15 @@ represented as follows:<eg><![CDATA[<abbr>&r1;</abbr>]]></eg></p>
     character instance in the text to a character definition provided
     within the <gi>charDecl</gi> element. This character definition
     takes the form of a <gi>char</gi> element.  The element <gi>g</gi>
-    itself will usually be empty, but could contain a codepoint from
+    itself will usually be empty, but could contain a code point from
     the Private Use Area (PUA) of the Unicode Standard, which is an
     area set aside for the very purpose of privately adding new
     characters to a document.  Recommendations on how to use such PUA
     characters are given in the following section.  </p>
 <p>In some circumstances, it may be desirable to provide a single
 precomposed form of a character that is encoded in Unicode only as a
-sequence of codepoints. For example, in Medieval
-Nordic material, a character looking like a lower case letter Y with a
+sequence of code points. For example, in Medieval
+Nordic material, a character looking like a lowercase letter Y with a
 dot and an acute-accent above it may be encountered so frequently that
 the encoder wishes to treat it as a single precomposed character with
     one single coded value. In the
@@ -642,7 +642,7 @@ transcription concerned, the encoder enters this letter as
 <code>&amp;ydotacute;</code>, which  when the
 transcription is processed can then be expanded in one of three ways,
 depending on the mapping in force. The entity reference  might be
-translated into the sequence of corresponding Unicode codepoints 
+translated into the sequence of corresponding Unicode code points 
 or into some locally-defined PUA character 
 (say <code>&amp;#xE0A4;</code>) for local
 processing only. Both these options have disadvantages; the former
@@ -662,7 +662,7 @@ provide useful documentation for the particular character or glyph so referenced
      <mapping type="composed">&amp;#x0079;&amp;#x0307;&amp;#x0301;</mapping>
      <mapping type="PUA">U+E0A4</mapping> </char></egXML> This
      definition specifies the mapping between this composed character
-     and the individual Unicode-defined codepoints which make it
+     and the individual Unicode-defined code points which make it
      up. It also supplies a single locally-defined property
      (<soCalled>entity</soCalled>) for the character concerned, the
      purpose of which is to supply a recommended character entity name
@@ -708,39 +708,39 @@ the <gi>g</gi> element. In general, however, the <gi>g</gi> element
 will be empty.</p>
    </div>
    <div type="div2" xml:id="D25-50">
-    <head>How to Use Codepoints from the Private Use Area</head>
+    <head>How to Use Code Points from the Private Use Area</head>
     <p>The developers of the Unicode Standard have set aside an
     area of the codespace for the private use of software vendors,
     user groups, or individuals.  As of this writing (Unicode 5.0),
-    there are around 137,000 codepoints available in this area, which
-    should be enough for most needs. No codepoint assignments will be made
+    there are around 137,000 code points available in this area, which
+    should be enough for most needs. No code point assignments will be made
     to this area by standard bodies and only some very basic default
     properties have been assigned (which may be overwritten where
     necessary by the mechanism outlined in this chapter). Therefore,
-    unlike all other codepoints defined by the Unicode Standard, PUA codepoints should
+    unlike all other code points defined by the Unicode Standard, PUA code points should
     <emph>not</emph> be used directly in documents intended for blind interchange.
-<!--    Instead of using PUA codepoints directly in the document content,
+<!--    Instead of using PUA code points directly in the document content,
     entity references should be used.  This will make it easier for
     receiving parties to find out what PUA characters are used in a
-    document and where possible codepoint clashes with local use on
+    document and where possible code point clashes with local use on
     the receiving site might occur.--></p>
 <p>In the two previous examples, we mentioned that the variant
-characters concerned might well be assigned specific codepoints from
+characters concerned might well be assigned specific code points from
 the PUA. This might, for example, facilitate the use of a particular
-font which displays the desired character at this codepoint in the
+font which displays the desired character at this code point in the
 local processing environment.  Since however this assignment would be
-valid only on the local site, documents containing such codepoints are
+valid only on the local site, documents containing such code points are
 unsuitable for blind interchange.  During the process of preparing
-such documents for interchange, any PUA codepoints should be replaced by an appropriate use of the <gi>g</gi> element,  such as <tag>g ref="#xxxx"</tag>, thus associating the character required
+such documents for interchange, any PUA code points should be replaced by an appropriate use of the <gi>g</gi> element,  such as <tag>g ref="#xxxx"</tag>, thus associating the character required
 with the documentation of it provided by the referenced  <gi>char</gi> element.  The PUA character
 used during the preparation of the document might be recorded in the
 <gi>char</gi> element, as shown in the example in <ptr target="#D25-40"/>, or retained as content of the <gi>g</gi> element. However, since there is no requirement that the same PUA
 character be used to represent it at the receiving site, and since it
 may well be the case that this other site has already made an
-assignment of some other character to the original PUA codepoint, it is best practice to remove the locally-defined PUA character. It is to be expected that a further translation into the
+assignment of some other character to the original PUA code point, it is best practice to remove the locally-defined PUA character. It is to be expected that a further translation into the
 local processing environment at the receiving site will be necessary
 to handle such characters, during which variant letters can be
-converted to hitherto unused codepoints on the basis of the
+converted to hitherto unused code points on the basis of the
 information provided in the <gi>char</gi> element.</p>
     <p>This mechanism is rather weak in cases where DOM trees or
     parsed XML fragments are exchanged, which may increasingly be the
@@ -749,9 +749,9 @@ information provided in the <gi>char</gi> element.</p>
     document and use the properties provided through the <gi>char</gi>
     element as a handle to the character in other contexts.  </p>
 <p>In the fullness of time, a character may become standardized, and
-thus assigned a specific codepoint outside the PUA. Documents which
+thus assigned a specific code point outside the PUA. Documents which
 have been encoded using the mechanism must at the least ensure that
-this changed codepoint is recorded within the relevant <gi>char</gi>
+this changed code point is recorded within the relevant <gi>char</gi>
 element; it will however normally be simpler to remove the
 <gi>char</gi> element and replace all occurrences of <gi>g</gi>
 elements which reference it by occurrences of the newly coded
