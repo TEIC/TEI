@@ -34,7 +34,7 @@
         provided by this module have been deleted from this customization. In
         addition the <att>xml:base</att> and <att>xml:space</att> attributes
         have been removed.</p>
-      <schemaSpec ident="tei_drama" start="TEI">
+      <schemaSpec ident="tei_drama" start="TEI teiCorpus">
         <!-- get required modules -->
         <moduleRef key="header"/>
         <moduleRef key="core"/>
@@ -43,6 +43,8 @@
         <!-- get optional modules -->
         <moduleRef key="linking"/>
         <moduleRef key="drama"/>
+        <!-- required to avoid Sanity Checker complaint -->
+        <elementSpec ident="handNote" mode="delete" module="header"/>
         <!-- remove some global attributes -->
         <classSpec predeclare="true" module="linking" xml:id="CLLINK"
           type="atts" ident="att.global.linking" mode="change">

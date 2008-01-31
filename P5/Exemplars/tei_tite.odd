@@ -38,6 +38,10 @@
    </sourceDesc>
   </fileDesc>
   <revisionDesc>
+   <change when="2008-01-30" who="DRS">Removed @rendition from att.global, as there
+     is no <gi>tagsDecl</gi> element to contain a <gi>rendition</gi> target. 
+     Added several more element exclusions from TEI Lite (handNote, namespace,
+     rendition, tagUsage).</change>
    <change when="2007-06-24" who="SPQR">Added sugar elements to att.global</change>
    <change when="2007-06-07" who="SPQR">Added equiv for ornament and
    cols,
@@ -777,6 +781,7 @@ Whilst some of their sad friends
      <elementSpec ident="equipment" mode="delete" module="header"/>
      <elementSpec ident="equiv" mode="delete" module="core"/>
      <elementSpec ident="fsdDecl" mode="delete" module="header"/>
+     <elementSpec ident="handNote" mode="delete" module="header"/>
      <elementSpec ident="headItem" mode="delete" module="core"/>
      <elementSpec ident="headLabel" mode="delete" module="core"/>
      <elementSpec ident="hyphenation" mode="delete" module="header"/>
@@ -792,6 +797,7 @@ Whilst some of their sad friends
      <elementSpec ident="metSym" mode="delete" module="header"/>
      <elementSpec ident="m" mode="delete" module="analysis"/>
      <elementSpec ident="monogr" mode="delete" module="core"/>
+     <elementSpec ident="namespace" mode="delete" module="header"/>
      <elementSpec ident="normalization" mode="delete" module="header"/>
      <elementSpec ident="phr" mode="delete" module="analysis"/>
      <elementSpec ident="postBox" mode="delete" module="core"/>
@@ -800,6 +806,7 @@ Whilst some of their sad friends
      <elementSpec ident="quote" mode="delete" module="core"/>
      <elementSpec ident="recording" mode="delete" module="header"/>
      <elementSpec ident="recordingStmt" mode="delete" module="header"/>
+     <elementSpec ident="rendition" mode="delete" module="header"/>
      <elementSpec ident="schemaSpec" mode="delete" module="tagdocs"/>
      <elementSpec ident="scriptStmt" mode="delete" module="header"/>
      <elementSpec ident="segmentation" mode="delete" module="header"/>
@@ -808,6 +815,7 @@ Whilst some of their sad friends
      <elementSpec ident="stdVals" mode="delete" module="header"/>
      <elementSpec ident="street" mode="delete" module="core"/>
      <elementSpec ident="tagsDecl" mode="delete" module="header"/>
+     <elementSpec ident="tagUsage" mode="delete" module="header"/>
      <elementSpec ident="timeline" mode="delete" module="linking"/>
      <elementSpec ident="variantEncoding" mode="delete" module="header"/>
      <elementSpec ident="when" mode="delete" module="linking"/>
@@ -980,6 +988,13 @@ Whilst some of their sad friends
        <attDef ident="resp" mode="delete"/>
        <attDef ident="evidence" mode="delete"/>
       </attList>
+     </classSpec>
+     <!-- Note that the following modification will need to be removed
+          if tagsDecl is ever restored. -->
+     <classSpec ident="att.global" type="atts" mode="change" module="tei">
+       <attList>
+         <attDef ident="rendition" mode="delete"/>
+       </attList>
      </classSpec>
      <classSpec ident="att.global.linking" mode="change" module="linking"
       type="atts">
