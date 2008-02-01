@@ -16,6 +16,7 @@
    cdata-section-elements="tei:eg"/>
 
 
+<!--
 <xsl:template match="tei:moduleSpec">
   <moduleSpec xmlns="http://www.tei-c.org/ns/1.0">
     <xsl:apply-templates select="@*"/>
@@ -32,5 +33,22 @@
   </xsl:for-each>
   </moduleSpec>
 </xsl:template>
+-->
 
+<xsl:template match="tei:desc[@xml:lang]">
+  <xsl:choose>
+    <xsl:when test="parent::*/tei:gloss[not(@xml:lang)] and
+		    not(parent::*/tei:desc[not(@xml:lang)])">
+	<xsl:message>change desc to gloss for <xsl:value-of
+	select="../@ident"/> for <xsl:value-of select="@xml:lang"/></xsl:message>
+      <gloss xmlns="http://www.tei-c.org/ns/1.0">
+	<xsl:apply-templates
+	    select="@*|*|text()|comment()|processing-instruction()"/>
+      </gloss>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:copy-of select="."/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
 </xsl:stylesheet>
