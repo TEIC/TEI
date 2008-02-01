@@ -552,9 +552,8 @@ membership is an element called <gi>classes</gi>. All classes to which
 the element belongs must be specified within this, using a
 <gi>memberOf</gi> element for each. </p>
 <p>To add an element to a class in which it is not already a member,
-all that is needed is to supply a <gi>memberOf</gi> element with the
-implicit value for its <att>mode</att> attribute of
-<val>add</val>. For example, to add an element to the <ident type="class">att.typed</ident> class, we include a declaration like
+all that is needed is to add new <gi>memberOf</gi> element.
+For example, to add an element to the <ident type="class">att.typed</ident> class, we include a declaration like
 the following:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="eg" module="tagdocs" mode="change" ns="http://example.com/ns">
   <classes mode="change">
@@ -563,7 +562,10 @@ the following:
 </elementSpec></egXML> Any existing class memberships for the element
 being changed are not affected because the <att>mode</att> attribute
 of the <gi>classes</gi> element is set to <val>change</val> (rather
-than its default value of <val>replace</val>). Consequently, in this
+than its default value of <val>replace</val>). 
+The <att>mode</att> attribute <gi>memberOf</gi> has an implicit
+value here <val>add</val>. 
+Consequently, in this
 case, the <gi>eg</gi> element retains its membership of the two
 classes (<ident type="class">model.common</ident> and <ident type="class">model.graphicLike</ident>) to which it already belongs.
 </p>
@@ -583,14 +585,15 @@ attributes from this element, we need to remove it from that class:
 </p>
 <p>If the intention is to change the class membership of an element
 completely, rather than simply add or remove it to or from one or more
-classes, then the <gi>classes</gi> element may indicate this by
-defaulting its <att>mode</att> attribute. By default, this attribute
-has the value <val>replace</val>, implying that the memberships
-indicated by its child <gi>memberOf</gi> elements the only ones
+classes, the value of <att>mode</att> attribute of
+<gi>classes</gi> can be set to <val>replace</val>
+(which is the default if no value is specified), 
+indicating that the memberships indicated by
+its child <gi>memberOf</gi> elements are the only ones
 applicable. 
 Thus the following
 declaration: <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="term" module="core" mode="change" ns="http://example.com/ns">
-  <classes>
+  <classes mode="replace">
     <memberOf key="att.interpLike"/>
   </classes>
 </elementSpec></egXML>
@@ -686,7 +689,7 @@ etc. as further described in <ptr target="#TD"/>.
 
 <div type="div2" xml:id="MDNS"><head>Modification and Namespaces</head>
 
-<p>All the elements defined in the TEI scheme are labelled as
+<p>Essentially all the elements defined in the TEI scheme are labelled as
 belonging to a single <term>namespace</term>, maintained by the TEI
 and with the URI <val>http://www.tei-c.org/ns/1.0</val>.<note place="foot">This is not strictly the case, since the element
 <gi>egXML</gi> used to represent TEI examples is in its own namespace,
@@ -728,10 +731,11 @@ Peter...</p>
 
 <p>Since <att scheme="imaginary">topic</att> is explicitly labelled as belonging to
 something other than the TEI namespace, we regard the modification
-which introduced it as clean. A namespace-aware processor will regard
+which introduced it as clean. A processor which validates
+elenents  will regard
 this document as valid according to the unmodified schema.<note place="foot">Namespace support does not exist in the DTD language, and
 therefore these techniques are available only to users of more modern
-schema languages such as RELAX NG or W3C schema.</note></p>
+schema languages such as RELAX NG or W3C Schema.</note></p>
 <p>Similar methods may be used if a modification (clean or unclean) is
 made to the content model or some other aspect of an element, or if it
 declares a new element. </p>
@@ -750,11 +754,11 @@ has no namespace, even though it comprises declarations from the TEI
 </schemaSpec></egXML>
 </p>
 <p>In addition to the TEI canonical namespace mentioned above, the TEI
-also defines namespaces for approved translations of the TEI scheme
+may also define namespaces for approved translations of the TEI scheme
 into other languages. These may be used as appropriate to indicate that a
 customization uses a standardized set of renamings. The namespace for
 such translations is the same as that for the canonical namespace,
-suffixed by the two character language identifier. A schema specification using
+suffixed by the ISO character language identifier. A schema specification using
 the  Chinese
 translation, for example, would use the namespace <ident type="ns">http://www.tei-c.org/ns/1.0/zh</ident>
 </p></div>
@@ -1107,13 +1111,12 @@ these objectives without compromising the reliability of its encoding,
 a TEI Conformant document is required to make appropriate use of the
 TEI namespace.</p>
 
-<p>All elements in a TEI Schema which represents
-concepts from the TEI abstract model belong to the TEI namespace,
-<ident type="ns">http://www.tei-c.org/ns/1.0</ident>, maintained by
-the TEI along with additional namespaces for language variants. A
-TEI Conformant document is required to declare the namespace for all
-the elements it contains whether  these come from the TEI namespace or
-from other schemes. </p>
+<p>Essentially all elements in a TEI Schema which represents concepts
+from the TEI abstract model belong to the TEI namespace, <ident
+type="ns">http://www.tei-c.org/ns/1.0</ident>, maintained by the
+TEI. A TEI Conformant document is required to declare the namespace
+for all the elements it contains whether these come from the TEI
+namespace or from other schemes. </p>
 
 <p>A TEI Schema may be created which assigns TEI elements to some
 other namespace, or to no namespace at all. A document using such a
