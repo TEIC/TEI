@@ -15,6 +15,9 @@ Guidelines)</bibl>
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2008-02-01" who="SPQR">remove some 
+      unreachable elements, and remove @rendition (since its not
+      useable without <gi>tagsDecl</gi>)</change>
       <change when="2007-01-25" who="LB">restored quote (under protest)
 </change>
       <change when="2006-12-06" who="LB">fix titlePage problem
@@ -2415,7 +2418,15 @@ schema:
           <elementSpec ident="tagUsage" mode="delete" module="header"/>
           <elementSpec ident="imprint" mode="delete" module="core"/>
           <elementSpec ident="rendition" mode="delete" module="header"/>
-          <elementSpec ident="namespace" mode="delete" module="header"/>
+          <elementSpec ident="namespace" mode="delete"
+		       module="header"/>
+
+	  <classSpec ident="att.global" type="atts" mode="change" module="tei">
+	    <attList>
+	      <attDef ident="rendition" mode="delete"/>
+	    </attList>
+	  </classSpec>
+
         </schemaSpec>
       </div>
     </back>
