@@ -4,17 +4,19 @@
 	  exclude-result-prefixes="rng tei"
 	  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="xml" encoding="utf-8" indent="yes"/>
-<xsl:param name="lang">it</xsl:param>
-<xsl:param name="date">2007-10-14</xsl:param>
+<xsl:param name="lang">ja</xsl:param>
+<xsl:param name="date">2008-01-30</xsl:param>
 <xsl:key name="GLOSS" match="tei:gloss[not(@xml:lang) and string-length(.)&gt;0]" use="1"/>
 <xsl:key name="DESC"  match="tei:desc[not(@xml:lang) and string-length(.)&gt;0]" use="1"/>
 <xsl:template match="/">
   <TEI  xmlns="http://www.tei-c.org/ns/1.0">
+<!--
     <xsl:for-each select="key('GLOSS',1)">
       <xsl:if test="not(../tei:gloss[@xml:lang=$lang])">
 	<xsl:call-template name="foo"/>
       </xsl:if>
     </xsl:for-each>
+-->
     <xsl:for-each select="key('DESC',1)">
       <xsl:if test="not(../tei:desc[@xml:lang=$lang])">
 	<xsl:call-template name="foo"/>
