@@ -46,7 +46,7 @@ questions of design, layout, and placement.</p>
 is a set of <term>nodes</term> (or <term>vertices</term>) together with
 a set of pairs of those vertices, called <term>arcs</term> or
 <term>edges</term>.  Each node in an arc of an undirected graph is said
-to be <term>incident</term> with that arc, and the two vertices which
+to be <term>incident</term> with that arc, and the two vertices (nodes) which
 make up an arc are said to be <term>adjacent</term>.  An directed graph
 is like an undirected graph except that the arcs are <term>ordered
 pairs</term> of nodes.  In the case of directed graphs, the term
@@ -215,7 +215,11 @@ designate the arcs.
   <arc from="#PHX4" to="#LAX4"/>
   <arc from="#PHX4" to="#TUS4"/>
   <arc from="#TUS4" to="#PHX4"/>
-</graph></egXML></p>
+</graph></egXML>
+The attributes <att>inDegree</att> and <att>outDegree</att> indicate
+the number of nodes which are adjacent to and from the node concerned
+respectively. </p>
+
 <p>Here is another encoding of the graph, using the <att>adjTo</att> and
 <att>adjFrom</att> attributes on nodes to designate the arcs.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="directed" xml:id="RDG2" order="5" size="5">
@@ -1230,7 +1234,7 @@ special theoretical constructs (<term>empty category</term> and
 	<label>NP</label>
       </eTree>
     </eTree>
-    <eTree xml:id="S2S" corresp="#s1s">
+    <eTree xml:id="S2S" corresp="#S1S">
       <label>S</label>
       <eTree xml:id="S2NP1" copyOf="#S1NP1">
 	<label>NP</label>
@@ -1430,7 +1434,7 @@ labelled A is not derived solely from its parent node (labelled ε)
 but also demonstrates contamination from the node labelled γ. The
 easiest way to accomplish this is to include an appropriately-typed
 <gi>ptr</gi> element within the node in question, the
-<att>target</att> of which points to the the node labelled γ. This
+<att>target</att> of which points to the node labelled γ. This
 requires that this latter node be supplied with a value for its
 <att>xml:id</att> attribute. The complete representation is thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
