@@ -177,7 +177,7 @@ features (<term>case</term>, <term>gender</term>, and
 <term>number</term>) are used to define morpho-syntactic properties of
 a word. Each of these features can take one of a small number of
 values (for example, case can be <code>nominative</code>,
-<code>genitive</code>, <code>dative</code>, <code>accusative</code>
+<code>genitive</code>, <code>dative</code>, <code>accusative</code>,
 etc.)  and it is therefore appropriate to represent the values taken
 in this instance as <gi>symbol</gi> elements.  Note that, instead of
 using a symbolic value for grammatical number, one could have named
@@ -389,15 +389,15 @@ library for each of the major syntactic categories (N, V, ADJ, PREP):
 </egXML>
 </p>
 <p>This library allows us to use shortcut codes (<code>N</code>,
-<code>V</code> etc.) to reference a complete definition for the
+<code>V</code>, etc.) to reference a complete definition for the
 corresponding feature structure. Each definition may be explicitly
 contained within the <gi>fs</gi> element, as a number of <gi>f</gi>
 elements. Alternatively, the relevant features may be referenced by
 their identifiers, supplied as the value of the <att>feats</att>
 attribute, as in these examples:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">&lt;!-- ... --&gt;
-&lt;fs xml:id="ADJ" type="adjective" feats="#N1 #V1"/&gt;
-&lt;fs xml:id="PREP" type="preposition" feats="#N0 #V0"/&gt;
+&lt;fs xml:id="ADJ" type="adjective" feats="#F1 #F2"/&gt;
+&lt;fs xml:id="PREP" type="preposition" feats="#F1 #F3"/&gt;
 &lt;!-- ... --&gt;
 </egXML>
 </p>
@@ -414,11 +414,11 @@ containing specifications for the basic feature categories like the following:
 </fLib>
 </egXML>
 </p>
-<p>With these libraries in place, and assuming the availability of
+<p>With such libraries in place, and assuming the availability of
 similarly predefined feature structures for transitivity and
 semantics, the preceding example could be considerably simplified:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs type="word">
-<f name="surf"><string>love</string></f>
+<f name="surface"><string>love</string></f>
    <f name="syntax">
 	<fs type="category">
 	  <f name="pos" fVal="#V"/>
@@ -490,7 +490,7 @@ name <code>NVAL1</code>. </p>
 </div>
 <div type="div2" xml:id="FSSS"><head>Collections as Complex Feature Values</head>
 <p>Complex feature values need not always be represented as feature
-structures. Multiple values may also be organized as as sets, bags or
+structures. Multiple values may also be organized as sets, bags or
 multisets, or lists of atomic values of any type. The <gi>vColl</gi>
 element is provided to represent such cases:
 <specList>
@@ -575,7 +575,7 @@ the <mentioned>agreement</mentioned> feature structure are
 of no particular significance, the following simpler representation
 may be used:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><fs type="word">
-  <f name="word.oddss"> <symbol value="verb"/> </f>
+  <f name="category"> <symbol value="verb"/> </f>
   <f name="tense"> <symbol value="present"/> </f>
   <f name="agreement">
      <vColl org="set">
@@ -652,7 +652,7 @@ a house has two or three bathrooms. As we have already shown, one
 simple way to represent this would be with a numeric maximum:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="number.of.bathrooms"><numeric value="2" max="3"/></f></egXML>
  </p>
-<p>A better, and more general, way would be to represent the
+<p>A  more general way would be to represent the
 alternation explicitly, in this way:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="number.of.bathrooms"> <vAlt><numeric value="2"/><numeric value="3"/> </vAlt></f></egXML>
  </p>
@@ -730,8 +730,8 @@ view.  This can be represented as follows.
 <p>If a large number of ambiguities or uncertainties need to be
 represented, involving a relatively small number of features and
 values, it is recommended that a stand-off technique, for example
-using the general-purpose <gi>alt</gi> element discussed in <!--
-section <ptr target="SAAT"/> of --> TEI P5, be used, rather than the
+using the general-purpose <gi>alt</gi> element discussed in
+section <ptr target="SAAT"/> <!-- of  TEI P5,--> be used, rather than the
 special-purpose <gi>vAlt</gi> element.
 </p>
 </div>
@@ -969,9 +969,10 @@ their phonological representations.
   </linkGrp></egXML>
  </p>
 <p>As this example shows, a stand-off solution requires that every
-component to be linked to must bear an identifier. To handle the
-POS tagging example above, therefore, each annotated element would
-need an identifier of some sort, as follows:
+component to be linked to must be addressable in some way, by means of
+an XPointer. To handle the
+POS tagging example above, for example, each annotated element might be
+given an identifier of some sort, as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><s xml:id="mds09" n="00741">
    <w xml:id="mds0901">The</w>
    <w xml:id="mds0902">closest</w>
@@ -1097,10 +1098,12 @@ of a standard TEI document, or as a standalone document in its own
 right. It contains one or more <gi>fsdLink</gi> or <gi>fsDecl</gi>
 elements. </p>
 
+<!--
 <p>Each <gi>fsDecl</gi> has a unique identifier, given as the value of
 its <att>xml:id</att> attribute.  Each <gi>fsdLink</gi> element
 associates a specific feature structure type with a URI which resolves
 to an <gi>fsDecl</gi> element, by using its <att>xml:id</att> value. </p>
+-->
 
 <p>For example, suppose that a document <ident type="file">doc.xml</ident>
 contains feature structures of two types: <val>gpsg</val> and
@@ -1407,7 +1410,7 @@ feature-structure-based formalisms.  Informally, a feature structure
 informative as itself; that is, all feature structures that
 specify all of the feature values that FS does with values that are
 subsumed by the values that FS has, and that have all of the
-re-entrancies that FS does. (<ptr type="cit" target="#FS-BIBL-5"/>;
+re-entrancies (see <ptr target="#FSVAR"/>) that FS does. (<ptr type="cit" target="#FS-BIBL-5"/>;
 see also <ptr type="cit" target="#FS-BIBL-1"/> and <ptr type="cit" target="#FS-BIBL-2"/>)
 A more formal definition is provided in ISO 24610-1:2006 <!-- <ptr
 target="#reviewSec"/>-->. </p>
@@ -1441,7 +1444,7 @@ even if it is not valid.
 </p>
 <!-- restore discussion of subsumption removed from old FS here? -->
 <p>As an example of feature declarations, consider the following extract
-from Gazdar et al's <title>Generalized Phrase Structure
+from Gazdar et al.'s <title>Generalized Phrase Structure
      Grammar</title>. In the appendix to their book, they
 propose a feature system for English of which this is just a sampling:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#FS-BIBL-3">feature    value range
