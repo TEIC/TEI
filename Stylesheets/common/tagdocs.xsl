@@ -1102,7 +1102,7 @@
         <xsl:text>: </xsl:text>
         <xsl:call-template name="makeDescription"/>
       </xsl:element>
-      <xsl:element namespace="{$outputNS}" name="{$itemName}">
+      <xsl:element namespace="{$outputNS}" name="{$ddName}">
         <xsl:element namespace="{$outputNS}" name="{$ulName}">
           <xsl:if test="key('ElementModule',@ident)">
             <xsl:element namespace="{$outputNS}" name="{$itemName}">
