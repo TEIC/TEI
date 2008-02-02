@@ -1622,14 +1622,14 @@ existing examples can only be deleted by supplying a completely new
 <gi>elementSpec</gi> in <val>replace</val> mode, since the
 <gi>exemplum</gi> element is not identifiable.</p>
 
-<p>When processing the content models of elements and the content of
-macros, the processor has to decide whether to take deleted
-elements into account.<note place="foot">The carthago program behind
-the Pizza Chef application,
+<p>In the processing of the content models of elements and the content
+of macros, deleted elements may require special attention.<note
+place="foot">The carthago program behind the Pizza Chef application,
 written by Michael Sperberg-McQueen for TEI P3 and P4, went to very
-great efforts to get this right. The XSLT transformations used by the P5 Roma
-application are not as sophisticated, partly because the RELAX NG
-language is more forgiving than DTDs.</note> A content model like this:
+great efforts to get this right. The XSLT transformations used by the
+P5 Roma application are not as sophisticated, partly because the RELAX
+NG language is more forgiving than DTDs.</note> A content model like
+this:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="person">
   <!--…-->
@@ -1649,14 +1649,19 @@ language is more forgiving than DTDs.</note> A content model like this:
   <!--…-->
 </elementSpec>
 </egXML>
-probably requires no special treatment, as everything is expressed in
-terms of model classes; if <ident type="class">model.personPart</ident> is empty, then <ident type="class">model.global</ident> is left as the only child of
-<gi>rng:choice</gi>. An ODD processor may choose to simplify that by
-removing the wrapper <gi>rng:choice</gi> element. However, if
-that <gi>rng:choice</gi> is itself inside an <gi>rng:zeroOrMore</gi> inside a
-<gi>rng:group</gi>, the simplifying process may be harder, and the
-resolution is left to a later stage. If an element refers directly to
-an element child, like this:
+requires no special treatment because everything is expressed in
+terms of model classes; if deletions result in <ident
+type="class">model.personPart</ident> having no members, then <ident type="class">model.global</ident> is left as the only child of
+<gi>rng:choice</gi>. An ODD processor may or may not elect to simplify
+the resulting choice between nothing and <ident
+type="class">model.global</ident> by
+removing the wrapper <gi>rng:choice</gi> element. However, such
+simplification may be considerably more complex in the general case (if
+for example the <gi>rng:choice</gi> is itself inside an <gi>rng:zeroOrMore</gi> inside a
+<gi>rng:group</gi>), and an ODD processor is therefore likely to be
+more successful in carrying out such simplification as a distinct
+stage during processing of ODD sources.</p>
+<p>If an element refers directly to an element child, like this:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="figure">
   <!--…-->
@@ -1884,9 +1889,7 @@ that only a single rule be used.  </p>
 associating the schema  with document instances that use it. The TEI does not
 mandate any particular method of doing this, since different schema
 languages and processors vary considerably in their requirements. 
-</p>
-
-<p>Finally, ODD processors may wish to build in support for some of
+ODD processors may wish to build in support for some of
 the methods for associating a document instance with a schema. The TEI
 does not mandate any particular method, but does suggest that those
 which are already part of XML (the DOCTYPE declaration for DTDs) and
@@ -2175,7 +2178,7 @@ definitions of the appropriate attributes. So
 </classSpec>
 </egXML>
 produces
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
   <define xmlns="http://relaxng.org/ns/structure/1.0" name="att.enjamb.attributes">
     <ref name="att.enjamb.attribute.enjamb"/>
     <empty/>
@@ -2189,7 +2192,7 @@ Sample values include: 1] no; 2] yes; 3] weak; 4] strong</a:documentation>
       </attribute>
     </optional>
   </define>
-</egXML>
+]]></egXML>
 Since the processor may have expanded the attribute classes already,
 separate patterns are generated for each attribute in the class as
 well as one for the class itself. This allows an element to refer
@@ -2198,16 +2201,14 @@ is used to add an <gi>a:documentation</gi> element to the schema,
 which some editors use to provide help during composition. The
 <gi>desc</gi> elements in the <gi>valList</gi> are used to create the
 human-readable sentence <quote>Sample values include: 1] no; 2] yes;
-3] weak; 4] strong</quote>in the schema documentation (though they
-have been stripped out of the display above).
-Naturally, this behaviour is not mandatory;
+3] weak; 4] strong</quote> Naturally, this behaviour is not mandatory;
 and other ODD processors may create documentation in other ways, or
 ignore those parts of the ODD specifications when creating
 schemas.</p>
 
 <p>An individual attribute consists of an <gi>rng:attribute</gi>
 with a <att>name</att> attribute derived according to the naming rules
-described above. In addition, the ODD model supports a
+described above (<ptr target="#IM-naming"/>). In addition, the ODD model supports a
 <gi>defaultVal</gi>, which is transformed to a <att scheme="RNGANN">defaultValue</att> attribute
 in the namespace
 <ident type="ns">http://relaxng.org/ns/compatibility/annotations/1.0</ident>
@@ -2612,14 +2613,18 @@ need to be defined so that they may be referenced by other
 elements. The content models of these new elements may also reference
 other parameter entities, which is why they need to be declared after
 other declarations. </p>
-<p>The second step involves modifying the element class to
-which the new elements should be attached.  This requires that the
-parameter entity <ident type="pe">macro.phraseSeq</ident> should be
-modified to include the generic identifiers for the new elements we
-wish to create.  The file containing local declarations of the
-standard parameter entities will thus contain a declaration of the
-following form: 
-<eg><![CDATA[<!ENTITY % macro.phraseSeq 'it | bd |'>]]></eg></p>
+<p>The second step involves modifying the element class to which the
+new elements should be attached.  This requires that the parameter
+entity <ident type="pe">macro.phraseSeq</ident> should be modified to
+include the generic identifiers for the new elements we wish to
+create.  The declaration for each modifiable parameter entity in the
+DTD includes a reference to an additional parameter entity with the
+same name prefixed by an <code>x.</code>; these entities are declared
+by default as the null string. However, in the file containing local
+declarations they may be redeclared to include references to the new
+class members: <eg><![CDATA[<!ENTITY % x.macro.phraseSeq 'it | bd
+|'>]]></eg> and this declaration will take precedence over the default
+when the declaration for macro.phraseSeq is evaluated. </p>
 </div>
 
 </div>
