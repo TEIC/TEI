@@ -969,11 +969,11 @@ function togglerelax (el) {
 	  </xsl:call-template>
 
 	  <xsl:text disable-output-escaping="yes">';
-	  displayXML == 0;
+	  displayXML = 0;
       }
    else
      {
-	  displayXML == 1;
+	  displayXML = 1;
 	  el.innerHTML = '</xsl:text>
 
 	  <xsl:call-template name="i18n">

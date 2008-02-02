@@ -273,7 +273,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:element name="{$sectionName}">
+    <xsl:element  namespace="{$outputNS}" name="{$sectionName}">
       <xsl:call-template name="makeSectionHead">
 	<xsl:with-param name="id">
 	  <xsl:value-of select="@ident"/>
@@ -460,7 +460,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:element name="{$sectionName}">
+    <xsl:element  namespace="{$outputNS}" name="{$sectionName}">
       <xsl:call-template name="makeSectionHead">
 	<xsl:with-param name="id">
 	  <xsl:value-of select="@ident"/>
@@ -1409,7 +1409,7 @@
   </xsl:template>
 
   <xsl:template name="generateParents">
-    <xsl:element name="{$hiName}">
+    <xsl:element  namespace="{$outputNS}" name="{$hiName}">
       <xsl:attribute name="{$rendName}">parent</xsl:attribute>
       <xsl:call-template name="generateParentsByElement"/>
       <xsl:call-template name="generateParentsByMacro"/>
