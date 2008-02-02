@@ -85,7 +85,7 @@ html-web: check
 	(cd Guidelines-web-tmp/${LANGUAGE}/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done)
 	(cd Guidelines-web-tmp/${LANGUAGE}/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines.css)
 	-rm -rf Guidelines-web/${LANGUAGE}
-	-mv Guidelines-web-tmp/${LANGUAGE} Guidelines-web
+	-mv Guidelines-web-tmp/${LANGUAGE} Guidelines-web/${LANGUAGE}
 	-rmdir Guidelines-web-tmp
 
 validate-html:
@@ -303,6 +303,7 @@ dist-schema: schemas dtds oddschema exampleschema
 
 dist-doc:  
 	make html-web
+	make pdf
 	make LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
 	make LANGUAGE=de DOCUMENTATIONLANGUAGE=de html-web
 	make LANGUAGE=ja DOCUMENTATIONLANGUAGE=ja html-web
@@ -311,6 +312,7 @@ dist-doc:
 	make LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
 	rm -rf release/tei-p5-doc*
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc
+	cp Guidelines.pdf release/tei-p5-doc/share/doc/tei-p5-doc
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
 	for i in ReleaseNotes/readme*xml; do  \
