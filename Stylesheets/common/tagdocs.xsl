@@ -196,7 +196,11 @@
           <xsl:value-of select="$minOccurs"/>
           <xsl:text>–</xsl:text>
           <xsl:value-of select="$maxOccurs"/>
-          <xsl:text> occurrences of </xsl:text>
+	  <xsl:text> </xsl:text>
+          <xsl:call-template name="i18n">
+            <xsl:with-param name="word">occurrences of</xsl:with-param>
+          </xsl:call-template>
+          <xsl:text>  </xsl:text>
         </xsl:if>
         <xsl:call-template name="bitOut">
           <xsl:with-param name="grammar"/>
@@ -208,7 +212,9 @@
           <xsl:with-param name="element">code</xsl:with-param>
         </xsl:call-template>
         <xsl:if test="$minOccurs != 1  or  $maxOccurs != 1">
-          <xsl:text>separated by whitespace</xsl:text>
+          <xsl:call-template name="i18n">
+            <xsl:with-param name="word">separated by whitespace</xsl:with-param>
+          </xsl:call-template>
         </xsl:if>
       </xsl:element>
     </xsl:element>
