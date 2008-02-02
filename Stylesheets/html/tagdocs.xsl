@@ -168,12 +168,6 @@
 		</xsl:call-template>
                 <div class="main-content">
 		  <xsl:call-template name="startDivHook"/>
-
-		  <xsl:call-template name="makeAnchor">
-		    <xsl:with-param name="name">
-		      <xsl:value-of select="@ident"/>
-		    </xsl:with-param>
-		  </xsl:call-template>
 		  <xsl:apply-templates mode="weavebody" select="."/>
                 </div>
 		<xsl:call-template name="stdfooter"/>
