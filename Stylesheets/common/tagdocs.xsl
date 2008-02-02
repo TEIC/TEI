@@ -128,11 +128,15 @@
                   </xsl:call-template>
                 </xsl:when>
                 <xsl:when test="@usage='req'">
-                  <hi>
+		  <xsl:element namespace="{$outputNS}"
+			       name="{$hiName}">
+                    <xsl:attribute name="{$rendName}">
+                      <xsl:text>required</xsl:text>
+                    </xsl:attribute>
                     <xsl:call-template name="i18n">
                       <xsl:with-param name="word">Required</xsl:with-param>
                     </xsl:call-template>
-                  </hi>
+		  </xsl:element>
                 </xsl:when>
                 <xsl:when test="@usage='rwa'">
                   <xsl:call-template name="i18n">
@@ -667,9 +671,12 @@
 	  </xsl:with-param>
 	</xsl:call-template>
 	<xsl:if test="s:*">
-	  <div class="pre">
+	  <xsl:element namespace="{$outputNS}" name="{$divName}">
+	    <xsl:attribute name="{$rendName}">
+	      <xsl:text>pre</xsl:text>
+	    </xsl:attribute>
 	    <xsl:apply-templates select="s:*" mode="verbatim"/>
-	  </div>
+	  </xsl:element>
 	</xsl:if>
       </xsl:element>
     </xsl:element>
