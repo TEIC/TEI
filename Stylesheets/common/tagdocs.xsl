@@ -707,7 +707,7 @@
 	<xsl:text>specList-</xsl:text>
 	<xsl:value-of select="local-name(.)"/>
       </xsl:attribute>
-      <xsl:element name="{$xrefName}">
+      <xsl:element namespace="{$outputNS}" name="{$xrefName}">
 	<xsl:attribute name="{$urlName}">
 	  <xsl:choose>
 	    <xsl:when test="$splitLevel=-1">
@@ -958,7 +958,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:element name="{$sectionName}">
+    <xsl:element namespace="{$outputNS}" name="{$sectionName}">
       <xsl:call-template name="makeSectionHead">
 	<xsl:with-param name="id">
 	  <xsl:value-of select="@ident"/>
@@ -1424,7 +1424,7 @@
     <xsl:choose>
       <xsl:when test="$this=$me"/>
       <xsl:when test="key('CLASSMEMBERS',$this)">
-        <xsl:element name="{$hiName}">
+        <xsl:element namespace="{$outputNS}" name="{$hiName}">
           <xsl:attribute name="{$rendName}">
             <xsl:text>showmembers</xsl:text>
             <xsl:value-of select="$depth"/>
