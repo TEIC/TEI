@@ -207,7 +207,7 @@ properly contained in the set of documents considered to be valid
 according to the modified schema.  We use the term <term>clean
 modification</term> to describe a modification which regards as valid
 a subset of the documents considered valid by the same combination of
-TEI modules unmodified. On the other hand, the set of documents considered
+TEI modules unmodified. Alternatively, the set of documents considered
 valid by the original schema might be disjoint from the set of
 documents considered valid by the modified schema, with neither being
 properly contained by the other.  Modifications that have this result
@@ -224,10 +224,9 @@ TEI namespace. </p>
 <div type="div3" xml:id="MDMDSU"><head>Deletion of Elements</head>
 
 <p>The simplest way to modify the supplied modules is to suppress one
-or more of the supplied elements.  This is done by setting the
-<att>mode</att> attribute of the <gi>classes</gi> element to
-<val>delete</val> on an <gi>elementSpec</gi> for the element
-concerned.
+or more of the supplied elements.  This is simply done by setting the
+<att>mode</att> attribute to <val>delete</val> on an
+<gi>elementSpec</gi> for the element concerned.
 </p>
 
 <p>For example, if the <gi>note</gi>
@@ -554,7 +553,8 @@ membership is an element called <gi>classes</gi>. All classes to which
 the element belongs must be specified within this, using a
 <gi>memberOf</gi> element for each. </p>
 <p>To add an element to a class in which it is not already a member,
-all that is needed is to add new <gi>memberOf</gi> element.
+all that is needed is to supply a  new <gi>memberOf</gi> element
+within the <gi>classes</gi> element for the element concerned.
 For example, to add an element to the <ident type="class">att.typed</ident> class, we include a declaration like
 the following:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="eg" module="tagdocs" mode="change" ns="http://example.com/ns">
@@ -565,8 +565,8 @@ the following:
 being changed are not affected because the <att>mode</att> attribute
 of the <gi>classes</gi> element is set to <val>change</val> (rather
 than its default value of <val>replace</val>). 
-The <att>mode</att> attribute <gi>memberOf</gi> has an implicit
-value here <val>add</val>. 
+<!--The <att>mode</att> attribute <gi>memberOf</gi> has an implicit
+value here <val>add</val>. -->
 Consequently, in this
 case, the <gi>eg</gi> element retains its membership of the two
 classes (<ident type="class">model.common</ident> and <ident type="class">model.graphicLike</ident>) to which it already belongs.
@@ -764,7 +764,7 @@ may also define namespaces for approved translations of the TEI scheme
 into other languages. These may be used as appropriate to indicate that a
 customization uses a standardized set of renamings. The namespace for
 such translations is the same as that for the canonical namespace,
-suffixed by the ISO character language identifier. A schema specification using
+suffixed by the appropriate ISO language identifier (<ptr target="#CHSH"/>). A schema specification using
 the  Chinese
 translation, for example, would use the namespace <ident type="ns">http://www.tei-c.org/ns/1.0/zh</ident>
 </p></div>
@@ -969,7 +969,7 @@ document which matches a specific set of rules or syntactic
 constraints, defined by a <term>schema</term>. As noted above, TEI
 conformance implies that the schema used to determine validity of a
 given document should be derived from the present Guidelines,
-preferably by means of an ODD which references and documents the
+by means of an ODD which references and documents the
 schema fragments which the Guidelines define.
 </p></div>
 
@@ -992,7 +992,7 @@ section <ptr target="#MD"/>. We call the formal output of this process a
  file</term> that references the TEI Guidelines. Some of what is
  syntactically possible using the ODD formalism cannot be represented
  by all schema languages; and there are some features of some schema
- languages which have no counterpart in ODD. No schema language fully
+ languages which have no counterpart in ODD. No single schema language fully
  captures all the constraints implied by conformance to the TEI
  abstract model. A document which is valid according to a TEI schema
  represented using one schema language may not be valid against the
@@ -1024,7 +1024,7 @@ common. Those semantic and structural properties are also a part of
 the TEI abstract model; the class membership of an existing TEI
 element cannot therefore be changed without changing the
 model. Elements can however be removed from a class by deletion, and
-new non-TEI elements can be added to existing TEI classes.</p>
+new non-TEI elements within their own namespaces can be added to existing TEI classes.</p>
 
 
 <div xml:id="CFAMsc"><head>Semantic Constraints</head>
