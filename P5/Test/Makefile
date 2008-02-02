@@ -48,6 +48,7 @@ TESTDOCBOOKFILES=
 TESTSPECIALFILES= \
 	testallplus \
 	testsvg  \
+	testits  \
 	testodds \
 	testplace-gml \
 	testplace-kml \

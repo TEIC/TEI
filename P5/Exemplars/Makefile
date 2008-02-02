@@ -12,6 +12,7 @@ schemas: names
 	-rm tei_allPlus.dtd tei_allPlus.xsd
 	-rm tei_svg.dtd tei_svg.xsd
 	-rm tei_math.dtd tei_math.xsd
+	-rm tei_its.dtd tei_its.xsd
 	-rm tei_xinclude.dtd tei_xinclude.xsd
 
 names:
