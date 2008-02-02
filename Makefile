@@ -312,9 +312,9 @@ dist-doc:
 	make LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
 	rm -rf release/tei-p5-doc*
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc
-	cp Guidelines.pdf release/tei-p5-doc/share/doc/tei-p5-doc
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
+	cp Guidelines.pdf release/tei-p5-doc/share/doc/tei-p5-doc/en
 	for i in ReleaseNotes/readme*xml; do  \
 	xsltproc \
 	--stringparam cssFile html/guidelines.css \
