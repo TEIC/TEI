@@ -69,6 +69,7 @@ html-web: check
 		Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
 	-rm -rf Guidelines-web-tmp
 	-mkdir Guidelines-web-tmp
+	-mkdir Guidelines-web
 	echo making HTML Guidelines for language ${LANGUAGE}
 	mkdir -p Guidelines-web-tmp/${LANGUAGE}/html
 	cp rightarrow.gif odd.css udm.css udm*.js guidelines.css COPYING.txt guidelines-print.css TEI-glow.png Guidelines-web-tmp/${LANGUAGE}/html/ 
