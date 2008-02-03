@@ -129,7 +129,12 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
       </xsl:if>
     </xsl:for-each>
 
-    <TEI.2 lang="{normalize-space(/office:document/office:meta/dc:language)}">
+    <TEI.2>
+      <xsl:for-each select="/office:document/office:meta/dc:language">
+	<xsl:attribute name="lang">
+	  <xsl:value-of select="normalize-space(.)"/>
+	</xsl:attribute>
+      </xsl:for-each>
       <xsl:call-template name="teiHeader"/>
       <xsl:apply-templates/>
     </TEI.2>
@@ -172,6 +177,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
       </sourceDesc>
     </fileDesc>
     <profileDesc>
+      <xsl:if test="/office:document/office:meta/dc:language">
       <langUsage>
 	<language>
 	  <xsl:attribute name="id">
@@ -181,6 +187,7 @@ use="generate-id(preceding-sibling::text:p[@text:style-name = 'Index
 	  <xsl:value-of select="/office:document/office:meta/dc:language"/>
 	</language>
       </langUsage>
+      </xsl:if>
       <xsl:if test="/office:document/office:meta/meta:keyword">
 	<textClass>
 	  <keywords>
@@ -1061,6 +1068,9 @@ These seem to have no obvious translation
 <xsl:template match="meta:generator"/>
 
 <xsl:template match="meta:user-defined"/>
+
+<xsl:template match="text:soft-page-break">
+</xsl:template>
 
 <!--
 <xsl:template match="text()">
