@@ -990,36 +990,45 @@ e.g. <q>Historical commentary provided by Mark Cohen</q></item>
 <item>availability of the file in an additional medium or information not
 already recorded about the availability of documentation:
 e.g. <q>User manual is loose-leaf in eleven paginated sections</q></item>
-<item>language of work and abstract:  e.g. <q>Text in English with
+<item>language of work and abstract, if not encoded in the <gi>langUsage</gi>
+element, e.g. <q>Text in English with
 summaries in French and German</q></item>
 <item>The unique name assigned to a serial by the International Serials
-Data System (ISDS)</item>
+Data System (ISDS), if not encoded in an <gi>idno</gi></item>
 <item>lists of related publications, either describing the source itself,
 or concerned with the creation or use of the electronic work, e.g.
-<q>Texts used in <ptr type="cit" target="#HD-BIBL-2"/></q></item></list>
-</p>
-<p>Each such item of information should be tagged using the
-general-purpose <gi>note</gi> element, which is described in section <ptr target="#CONO"/>.  Groups of notes are contained within the
+<q>Texts used in <ptr type="cit" target="#HD-BIBL-2"/></q></item>
+</list></p>
+<p>Each such item of information may be tagged using the
+general-purpose <gi>note</gi> element, which is described in section
+<ptr target="#CONO"/>. Groups of notes are contained within the
 <gi>notesStmt</gi> element, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><notesStmt>
   <note>Historical commentary provided by Mark Cohen.</note>
   <note>OCR scanning done at University of Toronto.</note>
 </notesStmt></egXML>
-
-
+There are advantages, however, to encoding such information with more
+precise elements elsewhere in the TEI header, when such elements are
+available. For example, the notes above might be encoded as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <titleStmt>
+        <!-- ... -->
+        <respStmt>
+          <persName>Mark Cohen</persName>
+          <resp>historical commentary</resp>
+	</respStmt>
+        <respStmt>
+          <orgName>University of Toronto</orgName>
+          <resp>OCR scanning</resp>
+	</respStmt>
+      </titleStmt></egXML>
 <specGrp xml:id="D2226" n="The notes statement">
 
 
 
 
 
-
-
-
-
 &notesStmt;
-
-
 
 
 
@@ -1508,8 +1517,9 @@ the text in the first instance. A simple example follows:
       Websters 9th Collegiate dictionary.</p>
   </normalization>
   <quotation marks="all" form="std">
-    <p>All opening quotation marks represented by entity reference ODQ; all closing
-      quotation marks represented by entity reference CDQ.</p>
+    <p>All opening quotation marks represented by entity reference
+    <ident type="ge">odq</ident>; all closing quotation marks
+    represented by entity reference <ident type="ge">cdq</ident>.</p>
   </quotation>
 </editorialDecl></egXML>
 </p>
@@ -2681,15 +2691,18 @@ corresp="#HD43-eg-123" but I think we dont need to cite source          --></p>
 <p>The <gi>classCode</gi> element
 also categorizes an individual text, by supplying a numerical or other
 code used in a recognized classification scheme, such as the Dewey
-Decimal Classification.  The <att>scheme</att> attribute is used to
+Decimal Classification. The <att>scheme</att> attribute is used to
 indicate the source of the classification scheme: this may be a
-pointer of any kind, either to some element in the current document as
-in the <gi>keywords</gi> element above, or to some canonical source
-for the scheme, as in the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><classCode scheme="http://www.example.com/udc">005.756</classCode> <classCode scheme="#lc">QA76.9</classCode></egXML>
+pointer of any kind, either to a TEI element, likely in the current document, as
+in the <gi>keywords</gi> examples above, or to some canonical source
+for the scheme, as in the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><classCode scheme="http://www.example.com/udc">005.756</classCode> <classCode scheme="#lc">QA76.9</classCode></egXML>
 <!-- subject classifications from Date, Guide to SQL Std  corresp="#HD43-eg-124"     -->
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><classCode scheme="http://www.example.com/udc">820.285</classCode>
 </egXML>
 <!-- subject classifications from Potter, Lit Comp & Lit Crit corresp="#HD43-eg-125"--></p>
+<!-- do we actually know where the canonical source to UDC is?-->
+<!-- If so, shouldn't we use it instead of example.com? -->
 <p>The <gi>catRef</gi> element categorizes an individual text by
 pointing to one or more <gi>category</gi> elements.  The
 <gi>category</gi> element (which is fully described in section <ptr target="#HD55"/>) holds information about a particular classification or
