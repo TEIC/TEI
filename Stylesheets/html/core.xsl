@@ -1187,7 +1187,7 @@
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="@rend='quoted'">
+      <xsl:when test="contains(concat(' ', @rend, ' '), ' quoted ')">
         <xsl:value-of select="$preQuote"/>
         <xsl:apply-templates/>
         <xsl:value-of select="$postQuote"/>
