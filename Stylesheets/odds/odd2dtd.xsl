@@ -542,6 +542,9 @@
   <xsl:template match="rng:choice">
     <xsl:call-template name="checkStart"/>
     <xsl:choose>
+      <xsl:when test="rng:value and ancestor::tei:elementSpec">
+	<xsl:text>(#PCDATA)</xsl:text>
+      </xsl:when>
       <xsl:when test="rng:value"> 
 	<xsl:text> (</xsl:text>
 	<xsl:for-each select="rng:value">
