@@ -309,14 +309,14 @@
     <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/></xsl:param>
     <a>
         <xsl:choose>
-	  <xsl:when test="@rendition">
-	    <xsl:call-template name="applyRendition"/>
-	  </xsl:when>
           <xsl:when test="@rend">
 	    <xsl:attribute name="class">
 	      <xsl:value-of select="@rend"/>
 	    </xsl:attribute>
           </xsl:when>
+	  <xsl:when test="@rendition">
+	    <xsl:call-template name="applyRendition"/>
+	  </xsl:when>
           <xsl:when test="parent::tei:item/parent::tei:list[@rend]">
 	    <xsl:attribute name="class">
 	      <xsl:value-of
@@ -454,14 +454,14 @@
         <a>
 	  <xsl:call-template name="htmlAttributes"/>
             <xsl:choose>
-	      <xsl:when test="@rendition">
-		<xsl:call-template name="applyRendition"/>
-	      </xsl:when>
 	      <xsl:when test="@rend">
 		<xsl:attribute name="class">
 		  <xsl:value-of select="@rend"/>
 		</xsl:attribute>
               </xsl:when>
+	      <xsl:when test="@rendition">
+		<xsl:call-template name="applyRendition"/>
+	      </xsl:when>
               <xsl:otherwise>
 		<xsl:attribute name="class">
 		  <xsl:value-of select="$class"/>

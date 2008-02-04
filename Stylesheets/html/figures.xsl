@@ -136,13 +136,13 @@
       <xsl:otherwise>
 	<div>
 	  <xsl:choose>
-	    <xsl:when test="@rendition">
-	      <xsl:call-template name="applyRendition"/>
-	    </xsl:when>
 	    <xsl:when test="@rend">
 	      <xsl:attribute name="class">
 		<xsl:value-of select="@rend"/>
 	      </xsl:attribute>
+	    </xsl:when>
+	    <xsl:when test="@rendition">
+	      <xsl:call-template name="applyRendition"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:attribute name="class">
@@ -290,13 +290,13 @@
   <xsl:template match="tei:table[@rend='simple']">
     <table>
       <xsl:choose>
-	<xsl:when test="@rendition">
-	  <xsl:call-template name="applyRendition"/>
-	</xsl:when>
 	<xsl:when test="@rend">
 	  <xsl:attribute name="class">
 	    <xsl:value-of select="@rend"/>
         </xsl:attribute>
+	</xsl:when>
+	<xsl:when test="@rendition">
+	  <xsl:call-template name="applyRendition"/>
 	</xsl:when>
       </xsl:choose>
       <xsl:for-each select="@*">
