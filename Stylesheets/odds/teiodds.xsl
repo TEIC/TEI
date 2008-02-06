@@ -1903,7 +1903,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:when test="not(tei:desc)">
       </xsl:when>
       <xsl:when test="count(tei:desc)=1">
-	<xsl:value-of select="tei:desc"/>
+	<xsl:apply-templates select="tei:desc"/>
       </xsl:when>
       <xsl:when test="tei:desc[@xml:lang=$firstLang]">
 	<xsl:apply-templates select="tei:desc[@xml:lang=$firstLang]"/>
