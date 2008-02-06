@@ -2768,108 +2768,62 @@ in the text to which a header is prefixed. However, it is recommended
 TEI practice to include entries also for significant changes in the
 header itself (other than the revision description itself, of
 course). At the very least, an entry should be supplied indicating the
-date of creation of the header.</p><p>The log consists of a list of entries, one for each change.  This
-may be encoded using either the regular <gi>list</gi> element,
-as described in section <ptr target="#COLI"/> or as a series of
-special purpose <gi>change</gi> elements, each of which contains a
-more detailed description of the changes made. The attributes
-<att>when</att> and <att>resp</att> are used to indicate the date of and
-responsibility for the change. The description of the change itself  can
-range from a simple phrase to a series of paragraphs.
-If a number is to be associated with one or more changes (for
-example, a revision number), the global <att>n</att>
-attribute may be used to indicate it.
-</p>
+date of creation of the header.</p>
+<p>The log consists of a list of entries, one for each change. This
+may be encoded using either the regular <gi>list</gi> element, as
+described in section <ptr target="#COLI"/> or as a series of special
+purpose <gi>change</gi> elements, each of which contains a more
+detailed description of the changes made. The attributes
+<att>when</att> and <att>resp</att> are used to indicate the date of
+and responsibility for the change. The description of the change
+itself can range from a simple phrase to a series of paragraphs. If a
+number is to be associated with one or more changes (for example, a
+revision number), the global <att>n</att> attribute may be used to
+indicate it.</p>
 <p>It is recommended to give changes in reverse chronological order,
-most recent first.	
-	</p>
-<p>For example:<!-- is this example perhaps not a bit over long? -->
-	<!-- possibly, i just took a real one from a file -->
-	<!-- it's now a little bit shorter; i extracted this from the -->
-	<!-- WWP file elizabeth.godmed.sgml, and made some minor      -->
-	<!-- changes -sb 2001-11-03  [from 66 to 51 lines]            -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><revisionDesc>
-<change n="RCS:1.70" when="2001-04-11" who="#ZM">On Wed, 11 Apr 01
-    <name key="zmizuho.zgk" xml:id="ZM">Zoë Mizuho</name>
-    made correx entries (unfinished from <date when="1999-03-05">March 1999</date>.) all in text not tag.
-      supravalidated.
-    </change>
-<change n="RCS:1.62" when="1999-08-24" who="#JR">On Tue, 24 Aug 99
-    <name key="jrussom.zxg" xml:id="JR">Jacque Russom</name>
-    removed vuji markup from FOREIGN and BIBL contents;
-          standardized vuji tags.    </change>
-<change n="RCS:1.47" when="1999-07-05">
-    On Mon, 05 Jul 99
-    <name key="edillon.pal">Erica Dillon</name>
-    deleted cit elements in Concluding matter, and propagated
-          attributes from this element to the q element. However,
-          only q elements exist in this text, where the quote element
-          actually seems to be more appropriate. This should be
-          looked into.
-    </change>
-<change n="RCS:1.45" when="1999-06-30" who="#CM">On Wed, 30 Jun 99
-    <name key="cmah.dci" xml:id="CM">Carole Mah</name>
-     fixed n= attribute on PB; they were mis-numbered.
-    </change>
-<change when="1997-03-13">On 13 March 1997
-    <name key="lmayer.ins">Lauryn S. Mayer</name>
-    began capture using Author/Editor v. 3.1 on Mac with
-          version 1.0.14 of DTD.
-    </change> 
-<change when="1997-06-12" who="#LM">On 12 June 1997
-    <name key="lmayer.ins" xml:id="LM">Lauryn S. Mayer</name>
-    began entering corrections with version 1.1.2a of DTD
-    </change>
-</revisionDesc>
+most recent first.</p>
+<p>For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <titleStmt>
+        <title>The Amorous Prince, or, the Curious Husband, 1671</title>
+        <author><persName ref="#abehn.aeh">Behn, Aphra</persName></author>
+	<respStmt xml:id="pcaton.xzc">
+          <persName>Caton, Paul</persName>
+          <resp>electronic publication editor</resp>
+        </respStmt>
+        <respStmt xml:id="wgui.ner">
+          <persName>Gui, Weihsin</persName>
+          <resp>encoder</resp>
+        </respStmt>
+        <respStmt xml:id="jwernimo.lrv">
+          <persName>Wernimont, Jacqueline</persName>
+          <resp>encoder</resp>
+        </respStmt>
+      </titleStmt>
+      <!-- ... -->
+      <revisionDesc>
+        <change n="RCS:1.39" when="2007-08-08" who="#jwernimo.lrv">Changed <val>drama.verse</val>
+          <gi>lg</gi>s to <gi>p</gi>s. <note>we have opened a discussion about the need for a new
+          value for <att>type</att> of <gi>lg</gi>, <val>drama.free.verse</val>, in order to address
+          the verse of Behn which is not in regular iambic pentameter. For the time being these
+          instances are marked with a comment note until we are able to fully consider the best way
+          to encode these instances.</note>
+        </change>
+        <change n="RCS:1.33" when="2007-06-28" who="#pcaton.xzc">Added <att>key</att> and <att>reg</att>
+          to <gi>name</gi>s.</change>
+        <change n="RCS:1.31" when="2006-12-04" who="#wgui.ner">Completed renovation. Validated.</change>
+      </revisionDesc>
 </egXML>
-</p>
-<!--<change n="RCS:1.43"><date value="1999-06-18">Fri, 18 Jun 99</date>
-    <respStmt><name key="pcaton.xzc">Paul Caton</name>
-    <resp>Electronic Publications Editor</resp></respStmt>
-    <item>Within FIGURE, moved P to its correct position after
-          FIGDESC. Validated against DTD 1.1.30b</item>
-    </change>
-<change><date value="1998-07-04">04 July 1998</date>
-    <respStmt><name key="kmessman.yec">Kevin Messman</name>
-    <resp>Encoder</resp></respStmt>
-    <item>Double-proofed and entered final corrections.</item>
-    </change>
--->
+<!-- adapted from WWP TR00241 -->
+In the above example, the <att>who</att> attributes point to
+<gi>respStmt</gi> elements; they could equally well point to
+<gi>person</gi> elements.</p>
 <specGrp xml:id="D226" n="The Revision Description">
-
-
-
-
-
-
-
-
 &revisionDesc;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &change;
-
-
-
-
-
-
 </specGrp>
-
 </div>
+
 <div type="div2" xml:id="HD7"><head>Minimal and Recommended Headers
  </head>
 <p>The TEI header allows for the provision of a very large amount of
