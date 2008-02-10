@@ -1126,6 +1126,58 @@ people of different kinds where this is considered convenient:
 </particDesc>
 </profileDesc></egXML>
 </p>
+
+<p>The <gi>person</gi> element provides several useful attributes.
+First, as a member of <ident type="class">att.editLike</ident>, the
+<gi>person</gi> element may carry attributes useful for indicating
+details about the scholarly interpretations made about the information
+recorded for the person in question: <specList><specDesc
+key="att.editLike" atts="cert resp evidence source"/></specList>
+Second, attributes specific to <gi>person</gi> (and
+<gi>personGrp</gi>) allow specification of some particular information
+about the person (or group). <specList><specDesc key="person"
+atts="role sex age"/></specList></p>
+<p>It is worth noting that the <att>age</att> attribute is not
+intended to record the person's age expressed in years, months, or
+other temporal unit. Rather it is intended to record into which age
+bracket, for the purposes of some analysis, the person falls. A simple
+(perhaps too simple to be useful) binary classification of age
+brackets would be <val>child</val> and <val>adult</val>. The actual
+age brackets useful to various projects are likely to be varied and
+idosyncratic, and thus these Guidelines make no particular
+recommendation as to possible values. However, it is likely to be of
+great value to encoders to have a closed list of possible values and
+documention of those values. Thus projects will typically declare the
+values being used in their customization file. For example, the
+following declaration might be useful.
+<egXML xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/Examples">
+	<elementSpec ident="person" module="namesdates" mode="change">
+	  <attList>
+	    <attDef mode="replace" ident="age">
+	      <datatype>
+		<rng:ref name="data.enumerated"/>
+	      </datatype>
+	      <valList type="closed">
+		<valItem ident="child">
+		  <desc>less than 18 years of age</desc>
+		</valItem>
+		<valItem ident="adult">
+		  <desc>18 to 65 years of age</desc>
+		</valItem>
+		<valItem ident="retired">
+		  <desc>over 65 years of age</desc>
+		</valItem>
+	      </valList>
+	    </attDef>
+	  </attList>
+	</elementSpec>
+</egXML>
+The above declaration, were it properly placed in a customization
+file, establishes that the <att>age</att> attribute of <gi>person</gi>
+has only three possible values, <val>child</val>, <val>adult</val>,
+and <val>retired</val>. For more information on customization see <ptr
+target="#MD"/>.</p>
+
 <p>The <gi>person</gi> element may contain many sub-elements, each
 specifying a different property of the person being described.  The
 remainder of this section describes these more specific elements. For
