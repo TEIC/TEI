@@ -75,8 +75,6 @@
 	   draw:text-box | text:note-body | text:section" 
     use="generate-id(parent::office:text)"/>
 
-<!-- did have ..| -->
-
   <xsl:key match="text:h[@text:outline-level='2']" name="children1"
     use="generate-id(preceding-sibling::text:h[@text:outline-level='1'][1])"/>
 
@@ -307,6 +305,7 @@
     <body>
       <xsl:choose>
 	<xsl:when test="text:h">
+	  <xsl:apply-templates select="table:table[not(preceding-sibling::text:h)]|text:p[not(preceding-sibling::text:h)]"/>
 	  <xsl:call-template name="aSection"/>
 	</xsl:when>
 	<xsl:otherwise>
@@ -1408,6 +1407,7 @@ These seem to have no obvious translation
 <xsl:template match="text:section">
   <xsl:choose>
     <xsl:when test="text:h">
+    <xsl:apply-templates select="key('headchildren', generate-id())"/>
       <xsl:call-template name="aSection"/>
     </xsl:when>
     <xsl:otherwise>
