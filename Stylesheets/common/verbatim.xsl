@@ -33,7 +33,7 @@
   <xsl:param name="showNamespaceDecls">true</xsl:param>
 
   <xsl:param name="wrapLength">65</xsl:param>
-
+  <xsl:param name="attLength">40</xsl:param>
   <xsl:param name="attsOnSameLine">3</xsl:param>
   <xsl:key name="Namespaces" match="*[ancestor::teix:egXML]" use="namespace-uri()"/>
 
@@ -518,9 +518,10 @@
       <xsl:value-of select="."/>
     </xsl:for-each>
   </xsl:variable>
-    <xsl:if test="count(../@*)&gt;$attsOnSameLine or string-length($L)&gt;40 or
+    <xsl:if test="count(../@*)&gt;$attsOnSameLine or 
+		  string-length($L)&gt;$attLength or
 		  namespace-uri()='http://www.w3.org/2005/11/its' or
-		  string-length(.)+string-length(name(.)) &gt; 40">
+		  string-length(.)+string-length(name(.)) &gt; $attLength">
     <xsl:call-template name="lineBreak">
       <xsl:with-param name="id">5</xsl:with-param>
     </xsl:call-template>
