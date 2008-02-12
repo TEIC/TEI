@@ -919,7 +919,7 @@
   </xd:doc>
   <xsl:template match="tei:item">
     <xsl:choose>
-      <xsl:when test="parent::tei:list[@type='gloss']">
+      <xsl:when test="parent::tei:list[@type='gloss'] or preceding-sibling::tei:label">
         <xsl:element namespace="{$outputNS}" name="{$ddName}">
           <xsl:apply-templates/>
         </xsl:element>

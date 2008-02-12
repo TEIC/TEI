@@ -739,7 +739,7 @@
           </table>
         </p>
       </xsl:when>
-      <xsl:when test="@type='gloss'">
+      <xsl:when test="@type='gloss' or  tei:label">
         <dl>
           <xsl:call-template name="rendToClass"/>
           <xsl:apply-templates mode="gloss" select="tei:item"/>
