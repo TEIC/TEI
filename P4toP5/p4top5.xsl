@@ -669,4 +669,23 @@
     </div1>
   </xsl:template>
 
+<!-- from Conal Tuohy -->
+<xsl:template match="orig[@reg]">
+  <choice  xmlns="http://www.tei-c.org/ns/1.0">
+    <orig><xsl:apply-templates select="*|@*|processing-instruction()|
+    comment()|text()"/></orig>
+    <reg><xsl:value-of select="@reg"/></reg>
+  </choice>
+</xsl:template>
+
+<xsl:template match="reg[@orig]">
+  <choice  xmlns="http://www.tei-c.org/ns/1.0">
+    <reg><xsl:apply-templates select="*|@*|processing-instruction()|
+    comment()|text()"/></reg>
+    <orig><xsl:value-of select="@orig"/></orig>
+  </choice>
+</xsl:template>
+
+<xsl:template match="@orig|@reg"/>
+	
 </xsl:stylesheet>
