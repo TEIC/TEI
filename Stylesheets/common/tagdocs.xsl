@@ -1285,7 +1285,9 @@
       <xsl:attribute name="{$rendName}">
         <xsl:text>tag</xsl:text>
       </xsl:attribute>
+      <xsl:text>&lt;</xsl:text>
       <xsl:apply-templates/>
+      <xsl:text>&gt;</xsl:text>
     </xsl:element>
   </xsl:template>
 
