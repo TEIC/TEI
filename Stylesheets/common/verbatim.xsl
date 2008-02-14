@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <xsl:stylesheet 
     version="1.0" 
+    xmlns:sch="http://www.ascc.net/xml/schematron"
     xmlns:m="http://www.w3.org/1998/Math/MathML"
     xmlns:atom="http://www.w3.org/2005/Atom"  
     xmlns:estr="http://exslt.org/strings"
@@ -11,7 +12,7 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
     xmlns:teix="http://www.tei-c.org/ns/Examples"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="xlink xhtml dbk rng m tei teix atom" >
+    exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom" >
 
 
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
@@ -58,7 +59,22 @@
     </xsl:call-template>
     <xsl:value-of  disable-output-escaping="yes" select="$startComment"/>
     <xsl:text>&lt;!--</xsl:text>
-    <xsl:value-of select="."/>
+    <xsl:choose>
+      <xsl:when test="$forceWrap='true'">
+	<xsl:call-template name="reformatText">
+	  <xsl:with-param name="sofar">0</xsl:with-param>
+	  <xsl:with-param name="indent">
+	    <xsl:text> </xsl:text>
+          </xsl:with-param>
+          <xsl:with-param name="text">
+	    <xsl:value-of select="normalize-space(.)"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
     <xsl:text>--&gt;</xsl:text>
     <xsl:value-of  disable-output-escaping="yes"
 		   select="$endComment"/>
@@ -74,7 +90,7 @@
 	    <xsl:call-template name="makeIndent"/>
 	  </xsl:for-each>
 	</xsl:variable>
-	<xsl:if test="string-length(.)&gt;$wrapLength">
+	<xsl:if test="string-length(.)&gt;$wrapLength or parent::sch:assert">
 	  <xsl:text>&#10;</xsl:text>
 	  <xsl:value-of select="$indent"/>
 	</xsl:if>
@@ -87,7 +103,7 @@
 	    <xsl:value-of select="normalize-space(.)"/>
 	  </xsl:with-param>
 	</xsl:call-template>
-	<xsl:if test="string-length(.)&gt;$wrapLength">
+	<xsl:if test="string-length(.)&gt;$wrapLength or parent::sch:assert">
 	  <xsl:text>&#10;</xsl:text>
 	  <xsl:value-of select="$indent"/>
 	</xsl:if>
@@ -597,6 +613,7 @@
   </xsl:variable>
     <xsl:if test="count(../@*)&gt;$attsOnSameLine or 
 		  string-length($L)&gt;$attLength or
+		  ancestor::tei:cell or
 		  namespace-uri()='http://www.w3.org/2005/11/its' or
 		  string-length(.)+string-length(name(.)) &gt; $attLength">
     <xsl:call-template name="lineBreak">
