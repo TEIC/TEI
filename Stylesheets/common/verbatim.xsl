@@ -32,6 +32,7 @@
   <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
   <xsl:param name="showNamespaceDecls">true</xsl:param>
 
+  <xsl:param name="forceWrap">false</xsl:param>
   <xsl:param name="wrapLength">65</xsl:param>
   <xsl:param name="attLength">40</xsl:param>
   <xsl:param name="attsOnSameLine">3</xsl:param>
@@ -67,17 +68,36 @@
 
   <xsl:template match="text()" mode="verbatim">
     <xsl:choose>
+      <xsl:when test="$forceWrap='true'">
+	<xsl:variable name="indent">
+	  <xsl:for-each select="parent::*">
+	    <xsl:call-template name="makeIndent"/>
+	  </xsl:for-each>
+	</xsl:variable>
+	<xsl:if test="string-length(.)&gt;$wrapLength">
+	  <xsl:text>&#10;</xsl:text>
+	  <xsl:value-of select="$indent"/>
+	</xsl:if>
+        <xsl:call-template name="reformatText">
+          <xsl:with-param name="sofar">0</xsl:with-param>
+          <xsl:with-param name="indent">
+	    <xsl:value-of select="$indent"/>
+          </xsl:with-param>
+          <xsl:with-param name="text">
+	    <xsl:value-of select="normalize-space(.)"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+	<xsl:if test="string-length(.)&gt;$wrapLength">
+	  <xsl:text>&#10;</xsl:text>
+	  <xsl:value-of select="$indent"/>
+	</xsl:if>
+      </xsl:when>
       <xsl:when test="not(preceding-sibling::node() or contains(.,'&#10;'))">
 	<xsl:call-template name="Text">
 	  <xsl:with-param name="words">
 	    <xsl:value-of select="."/>
 	  </xsl:with-param>
 	</xsl:call-template>
-<!--	
-        <xsl:if test="substring(.,string-length(.))=' '">
-	  <xsl:text> </xsl:text>
-	</xsl:if>
--->
       </xsl:when>
       <xsl:when test="normalize-space(.)=''">
         <xsl:for-each select="following-sibling::*[1]">
@@ -121,6 +141,63 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template name="reformatText">
+    <xsl:param name="indent"/>
+    <xsl:param name="text"/>
+    <xsl:param name="sofar"/>
+    <xsl:choose>
+      <xsl:when test="$sofar&gt;$wrapLength">
+	<xsl:text>&#10;</xsl:text>
+	<xsl:value-of select="$indent"/>
+	<xsl:call-template name="reformatText">
+	  <xsl:with-param name="text">
+	    <xsl:value-of
+		select="$text"/>
+	  </xsl:with-param>
+	  <xsl:with-param name="sofar">
+	    <xsl:text>0</xsl:text>
+	  </xsl:with-param>
+	  <xsl:with-param name="indent">
+	    <xsl:value-of select="$indent"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:when test="not(contains($text,' '))">
+	<xsl:call-template name="Text">
+	  <xsl:with-param name="words">
+	    <xsl:value-of select="$text"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:variable name="chunk">
+	    <xsl:value-of
+		select="substring-before($text,' ')"/>
+	</xsl:variable>
+	<xsl:call-template name="Text">
+	  <xsl:with-param name="words">
+	    <xsl:value-of select="$chunk"/>
+	    <xsl:text> </xsl:text>
+	  </xsl:with-param>
+	</xsl:call-template>
+	<xsl:call-template name="reformatText">
+	  <xsl:with-param name="text">
+	    <xsl:value-of
+		select="substring-after($text,' ')"/>
+	  </xsl:with-param>
+	  <xsl:with-param name="sofar">
+	    <xsl:value-of select="$sofar + string-length($chunk) + 1"/>
+	  </xsl:with-param>
+	  <xsl:with-param name="indent">
+	    <xsl:value-of
+		select="$indent"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+
   <xsl:template name="wraptext">
     <xsl:param name="indent"/>
     <xsl:param name="text"/>
@@ -148,7 +225,7 @@
 	    <xsl:value-of select="$indent"/>
 	  </xsl:with-param>
 	  <xsl:with-param name="text">
-	    <xsl:value-of select="substring-after($text,'&#10;')"/>
+	    <xsl:value-of select="normalize-space(substring-after($text,'&#10;'))"/>
 	  </xsl:with-param>
 	  <xsl:with-param name="count">
 	    <xsl:value-of select="$count + 1"/>
@@ -162,7 +239,7 @@
 	</xsl:if>
 	<xsl:call-template name="Text">
 	  <xsl:with-param name="words">
-	    <xsl:value-of select="$text"/>
+	    <xsl:value-of select="normalize-space($text)"/>
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:otherwise>
@@ -569,55 +646,19 @@
 
 <xsl:template match="@*" mode="attributetext">
   <xsl:choose>
-    <xsl:when test="string-length(.)&gt;50">
-      <xsl:choose>
-	<xsl:when test="contains(.,'|')">
-	  <xsl:call-template name="breakMe">
-	    <xsl:with-param name="text">
-	      <xsl:value-of select="."/>
-	    </xsl:with-param>
-	    <xsl:with-param name="sep">
-	      <xsl:text>|</xsl:text>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:call-template name="breakMe">
-	    <xsl:with-param name="text">
-	      <xsl:value-of select="."/>
-	    </xsl:with-param>
-	    <xsl:with-param name="sep">
-	      <xsl:text> </xsl:text>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:otherwise>
-      </xsl:choose>
+    <xsl:when test="string-length(.)&gt;$attLength">
+      <xsl:call-template name="reformatText">
+	<xsl:with-param name="sofar">0</xsl:with-param>
+	<xsl:with-param name="indent">
+	  <xsl:text> </xsl:text>
+	</xsl:with-param>
+	<xsl:with-param name="text">
+	  <xsl:value-of select="normalize-space(.)"/>
+	</xsl:with-param>
+      </xsl:call-template>
     </xsl:when>
     <xsl:otherwise>
       <xsl:value-of select="."/>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
-
-<xsl:template name="breakMe">
-  <xsl:param name="text"/>
-  <xsl:param name="sep"/>
-  <xsl:choose>
-    <xsl:when test="string-length($text)&lt;50">
-      <xsl:value-of select="$text"/>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:value-of select="substring-before($text,$sep)"/>
-      <xsl:text>&#10;</xsl:text>
-      <xsl:value-of select="$sep"/>
-      <xsl:call-template name="breakMe">
-	<xsl:with-param name="text">
-	  <xsl:value-of select="substring-after($text,$sep)"/>
-	</xsl:with-param>
-	<xsl:with-param name="sep">
-	  <xsl:value-of select="$sep"/>
-	</xsl:with-param>
-      </xsl:call-template>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
