@@ -389,6 +389,12 @@
     </choice>
   </xsl:template>
   
+  <xsl:template match="gap/@desc">
+    <desc  xmlns="http://www.tei-c.org/ns/1.0">
+      <xsl:value-of select="."/>
+    </desc>
+  </xsl:template>
+
   <xsl:template match="sic[@corr]">
     <choice  xmlns="http://www.tei-c.org/ns/1.0">
       <sic  xmlns="http://www.tei-c.org/ns/1.0">
