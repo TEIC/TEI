@@ -361,6 +361,52 @@
 	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
           <xsl:apply-templates select="text:h[@text:outline-level='7']"/>
         </xsl:when>
+        <xsl:when test="text:h[@text:outline-level='8']">
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+          <xsl:apply-templates select="text:h[@text:outline-level='8']"/>
+        </xsl:when>
+        <xsl:when test="text:h[@text:outline-level='9']">
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+          <xsl:apply-templates select="text:h[@text:outline-level='9']"/>
+        </xsl:when>
+        <xsl:when test="text:h[@text:outline-level='10']">
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+          <xsl:apply-templates select="text:h[@text:outline-level='10']"/>
+        </xsl:when>
+        <xsl:when test="text:h[@text:outline-level='11']">
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+	  <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
+          <xsl:apply-templates select="text:h[@text:outline-level='11']"/>
+        </xsl:when>
       </xsl:choose>
 
       <xsl:call-template name="closedivloop">
@@ -471,7 +517,8 @@
 	   text:h[@text:outline-level='7'] | 
 	   text:h[@text:outline-level='8'] | 
 	   text:h[@text:outline-level='9'] | 
-	   text:h[@text:outline-level='10']">
+	   text:h[@text:outline-level='10'] | 
+	   text:h[@text:outline-level='11']">
     <xsl:variable name="level">
       <xsl:value-of select="@text:outline-level"/>
     </xsl:variable>
@@ -533,48 +580,48 @@
 
     <xsl:choose>
       <xsl:when test="$current &gt; $prev+1">
-        <head/>
-        <xsl:call-template name="make-section">
-          <xsl:with-param name="current" select="$current"/>
-          <xsl:with-param name="prev" select="$prev+1"/>
-        </xsl:call-template>
+	<head/>
+	<xsl:call-template name="make-section">
+	  <xsl:with-param name="current" select="$current"/>
+	  <xsl:with-param name="prev" select="$prev+1"/>
+	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-        <head>
-          <xsl:apply-templates/>
-        </head>
-	    <xsl:variable name="this">
-	      <xsl:value-of select="generate-id()"/>
-	    </xsl:variable>
-	    
-	    <xsl:for-each select="key('headchildren', $this)">
-	      <xsl:if test="not(parent::text:h)">
-		<xsl:apply-templates select="."/>
-	      </xsl:if>
-	    </xsl:for-each>
-
-	    <xsl:choose>
-	      <xsl:when test="$current=1">
-		<xsl:apply-templates select="key('children1',
-					     generate-id())"/>
-	      </xsl:when>
-	      <xsl:when test="$current=2">
-		<xsl:apply-templates select="key('children2',
-					     generate-id())"/>
-	      </xsl:when>
-	      <xsl:when test="$current=3">
-		<xsl:apply-templates select="key('children3',
-					     generate-id())"/>
-	      </xsl:when>
-	      <xsl:when test="$current=4">
-		<xsl:apply-templates select="key('children4',
-					     generate-id())"/>
-	      </xsl:when>
-	      <xsl:when test="$current=5">
-		<xsl:apply-templates select="key('children5',
-					     generate-id())"/>
-	      </xsl:when>
-	      <xsl:when test="$current=6">
+	<head>
+	  <xsl:apply-templates/>
+	</head>
+	<xsl:variable name="this">
+	  <xsl:value-of select="generate-id()"/>
+	</xsl:variable>
+	
+	<xsl:for-each select="key('headchildren', $this)">
+	  <xsl:if test="not(parent::text:h)">
+	    <xsl:apply-templates select="."/>
+	  </xsl:if>
+	</xsl:for-each>
+	
+	<xsl:choose>
+	  <xsl:when test="$current=1">
+	    <xsl:apply-templates select="key('children1',
+					 generate-id())"/>
+	  </xsl:when>
+	  <xsl:when test="$current=2">
+	    <xsl:apply-templates select="key('children2',
+					 generate-id())"/>
+	  </xsl:when>
+	  <xsl:when test="$current=3">
+	    <xsl:apply-templates select="key('children3',
+					 generate-id())"/>
+	  </xsl:when>
+	  <xsl:when test="$current=4">
+	    <xsl:apply-templates select="key('children4',
+					 generate-id())"/>
+	  </xsl:when>
+	  <xsl:when test="$current=5">
+	    <xsl:apply-templates select="key('children5',
+					 generate-id())"/>
+	  </xsl:when>
+	  <xsl:when test="$current=6">
 	    <xsl:apply-templates select="key('children6',
 					 generate-id())"/>
 	  </xsl:when>
