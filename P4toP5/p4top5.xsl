@@ -392,7 +392,7 @@
   <xsl:template match="sic[@corr]">
     <choice  xmlns="http://www.tei-c.org/ns/1.0">
       <sic  xmlns="http://www.tei-c.org/ns/1.0">
-	<xsl:value-of select="text()" />
+	<xsl:apply-templates/>
       </sic>
       <corr  xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:value-of select="@corr" />
@@ -403,7 +403,7 @@
   <xsl:template match="abbr[@expan]">
     <choice  xmlns="http://www.tei-c.org/ns/1.0">
       <abbr  xmlns="http://www.tei-c.org/ns/1.0">
-	<xsl:value-of select="text()" />
+	<xsl:apply-templates/>
       </abbr>
       <expan  xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:value-of select="@expan" />
@@ -414,7 +414,7 @@
   <xsl:template match="expan[@abbr]">
     <choice xmlns="http://www.tei-c.org/ns/1.0">
       <expan xmlns="http://www.tei-c.org/ns/1.0">
-	<xsl:value-of select="text()" />
+	<xsl:apply-templates/>
       </expan>
       <abbr xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:value-of select="@abbr" />
