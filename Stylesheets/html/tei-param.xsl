@@ -467,10 +467,19 @@ Be talkative while working.
 Automatically number paragraphs.
 </xd:doc>
   <xsl:param name="numberParagraphs">false</xsl:param>
+
   <xd:doc type="string" class="output">
 An ID passed to the stylesheet to indicate which section to display
 </xd:doc>
   <xsl:param name="ID"/>
+
+  <xd:doc type="string" class="output">
+A wrapper around the ID, to allow for other ways of getting it
+</xd:doc>
+  <xsl:param name="requestedID">
+    <xsl:value-of select="$ID"/>
+  </xsl:param>
+
   <xd:doc type="string" class="output">
 A path fragment to put before all internal URLs 
 </xd:doc>

@@ -1655,7 +1655,7 @@
             </xsl:with-param>
           </xsl:call-template>
         </xsl:when>
-	<xsl:when test="$splitLevel &gt;-1 and $ID='' and
+	<xsl:when test="$splitLevel &gt;-1 and $requestedID='' and
 			$STDOUT='true'"/>
 
 	<xsl:when test="$splitLevel &gt;-1 and self::tei:text"/>

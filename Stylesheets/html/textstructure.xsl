@@ -109,7 +109,7 @@ $STDOUT: true or false
 
 $splitLevel: -1 to 3
 
-$ID: requests a particular page
+$requestedID: requests a particular page
 -->
       <!-- we are making a composite layout and there is a TEI(2) element -->
       <xsl:when
@@ -120,7 +120,7 @@ $ID: requests a particular page
         </xsl:if>
         <xsl:for-each select="tei:TEI|tei:teiCorpus">
           <xsl:call-template name="doPageTable">
-            <xsl:with-param name="currentID" select="$ID"/>
+            <xsl:with-param name="currentID" select="$requestedID"/>
           </xsl:call-template>
         </xsl:for-each>
         <xsl:if test="$STDOUT='false'">
@@ -136,20 +136,20 @@ $ID: requests a particular page
         <xsl:call-template name="doFrames"/>
       </xsl:when>
       <!-- we have been asked for a particular section of the document -->
-      <xsl:when test="not($ID='')">
+      <xsl:when test="not($requestedID='')">
         <xsl:if test="$verbose='true'">
-          <xsl:message>case 3: ID <xsl:value-of select="$ID"/>, pageLayout
+          <xsl:message>case 3: ID <xsl:value-of select="$requestedID"/>, pageLayout
               <xsl:value-of select="$pageLayout"/></xsl:message>
         </xsl:if>
         <xsl:choose>
-          <xsl:when test="$ID='frametoc___'">
+          <xsl:when test="$requestedID='frametoc___'">
             <xsl:call-template name="writeFrameToc"/>
           </xsl:when>
-          <xsl:when test="$ID='prelim___'">
+          <xsl:when test="$requestedID='prelim___'">
             <xsl:apply-templates/>
           </xsl:when>
-          <xsl:when test="count(key('IDS',$ID))&gt;0">
-            <xsl:for-each select="key('IDS',$ID)">
+          <xsl:when test="count(key('IDS',$requestedID))&gt;0">
+            <xsl:for-each select="key('IDS',$requestedID)">
               <xsl:call-template name="writeDiv"/>
             </xsl:for-each>
           </xsl:when>
@@ -159,7 +159,7 @@ $ID: requests a particular page
 		 The real XPath syntax is changed to avoid problems
 	    -->
             <xsl:apply-templates mode="xpath" select="tei:TEI/tei:text">
-              <xsl:with-param name="xpath" select="$ID"/>
+              <xsl:with-param name="xpath" select="$requestedID"/>
             </xsl:apply-templates>
           </xsl:otherwise>
         </xsl:choose>
@@ -1049,7 +1049,7 @@ $ID: requests a particular page
       <xsl:call-template name="addCorpusID"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="$ID='toclist___'">
+      <xsl:when test="$requestedID='toclist___'">
         <xsl:call-template name="writeFrameToc"/>
       </xsl:when>
       <xsl:when test="$STDOUT='true'">
@@ -1276,8 +1276,8 @@ $ID: requests a particular page
 	<xsl:if test="$virtualPages='true'"> 
 	  <xsl:text>var thisDiv; var curID = '</xsl:text>
 	  <xsl:choose>
-            <xsl:when test="not($ID='')">
-              <xsl:value-of select="$ID"/>
+            <xsl:when test="not($requestedID='')">
+              <xsl:value-of select="$requestedID"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:apply-templates mode="ident" select=".//tei:body/tei:div[1]"
@@ -2155,7 +2155,7 @@ $ID: requests a particular page
           width="{$linksWidth}">
           <xsl:call-template name="searchbox"/>
           <xsl:call-template name="leftHandFrame">
-            <xsl:with-param name="currentID" select="$ID"/>
+            <xsl:with-param name="currentID" select="$requestedID"/>
           </xsl:call-template>
           <hr/>
         </td>
@@ -2755,10 +2755,10 @@ $ID: requests a particular page
         <xsl:call-template name="aCrumb">
           <xsl:with-param name="crumbBody">
             <xsl:choose>
-              <xsl:when test="$rest='index.xsp' and $ID=''">
+              <xsl:when test="$rest='index.xsp' and $requestedID=''">
                 <xsl:value-of select="$current"/>
               </xsl:when>
-              <xsl:when test="$rest='index.xml' and $ID=''">
+              <xsl:when test="$rest='index.xml' and $requestedID=''">
                 <xsl:value-of select="$current"/>
               </xsl:when>
               <xsl:otherwise>
