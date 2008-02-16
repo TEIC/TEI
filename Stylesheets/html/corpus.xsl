@@ -88,6 +88,7 @@
 	</div>
         <xsl:call-template name="corpusBody"/>
         <xsl:call-template name="stdfooter"/>
+        <xsl:call-template name="bodyEndHook"/>
       </body>
     </html>
   </xsl:template>

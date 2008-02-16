@@ -171,6 +171,7 @@
 		  <xsl:apply-templates mode="weavebody" select="."/>
                 </div>
 		<xsl:call-template name="stdfooter"/>
+		<xsl:call-template name="bodyEndHook"/>
               </body>
             </html>
           </xsl:with-param>

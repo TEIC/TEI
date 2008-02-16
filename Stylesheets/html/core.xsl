@@ -2075,6 +2075,7 @@
             select="descendant::tei:note[@place]"/>
         </div>
         <xsl:call-template name="stdfooter"/>
+        <xsl:call-template name="bodyEndHook"/>
       </body>
     </html>
   </xsl:template>

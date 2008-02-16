@@ -368,6 +368,7 @@ $requestedID: requests a particular page
                 <xsl:apply-templates/>
                 <xsl:call-template name="printNotes"/>
                 <xsl:call-template name="htmlFileBottom"/>
+		<xsl:call-template name="bodyEndHook"/>
               </body>
             </html>
           </xsl:otherwise>
@@ -423,6 +424,7 @@ $requestedID: requests a particular page
         <xsl:call-template name="startHook"/>
         <xsl:call-template name="simpleBody"/>
         <xsl:call-template name="stdfooter"/>
+        <xsl:call-template name="bodyEndHook"/>
       </body>
     </html>
     <xsl:if test="$verbose='true'">
@@ -2061,6 +2063,7 @@ $requestedID: requests a particular page
         <xsl:call-template name="mainbody"/>
         <xsl:call-template name="printNotes"/>
         <xsl:call-template name="htmlFileBottom"/>
+        <xsl:call-template name="bodyEndHook"/>
       </body>
     </html>
   </xsl:template>
@@ -2124,6 +2127,7 @@ $requestedID: requests a particular page
         <xsl:call-template name="pageLayoutTableBody">
           <xsl:with-param name="currentID" select="$currentID"/>
         </xsl:call-template>
+        <xsl:call-template name="bodyEndHook"/>
       </body>
     </html>
   </xsl:template>
@@ -2869,6 +2873,7 @@ $requestedID: requests a particular page
             </xsl:call-template>
           </xsl:if>
           <xsl:call-template name="stdfooter"/>
+	  <xsl:call-template name="bodyEndHook"/>
         </div>
       </body>
     </html>
@@ -2924,6 +2929,7 @@ $requestedID: requests a particular page
           <xsl:with-param name="style" select="'toclist'"/>
         </xsl:call-template>
         <xsl:call-template name="stdfooterFrame"/>
+        <xsl:call-template name="bodyEndHook"/>
       </body>
     </html>
   </xsl:template>
