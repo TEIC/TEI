@@ -2079,7 +2079,7 @@
 	  <xsl:with-param name="word">Empty element</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
-      <xsl:when test="tei:content/rng:text and count(tei:content/*)=1">
+      <xsl:when test="tei:content/rng:text and count(tei:content/rng:*)=1">
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">Character data only</xsl:with-param>
 	</xsl:call-template>

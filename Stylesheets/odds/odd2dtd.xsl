@@ -59,6 +59,10 @@
       </xsl:when>
     </xsl:choose>
   </xsl:variable>
+  <xsl:key name="NSELEMENTS" 
+	   match="tei:elementSpec[@ns]|tei:attDef[@ns]"
+	   use="1"/>
+
   <xsl:key match="tei:moduleSpec[@ident]" name="FILES" use="@ident"/>
   <xsl:template match="/">
     <xsl:choose>
@@ -101,10 +105,13 @@
 		  <xsl:text>list of element names</xsl:text>
 		</xsl:with-param>
               </xsl:call-template>
-              <xsl:if test="$parameterize='true'">
+              <xsl:if test="$parameterize='true' and 
+			    count(key('NSELEMENTS',1))&gt;0">
                 <xsl:text>&lt;!ENTITY % NS '</xsl:text>
                 <xsl:value-of select="$nsPrefix"/>
                 <xsl:text>' &gt;&#10;</xsl:text>
+	      </xsl:if>
+              <xsl:if test="$parameterize='true'">
                 <xsl:call-template name="NameList"/>
               </xsl:if>
               <xsl:call-template name="datatypeMacros"/>
@@ -380,10 +387,13 @@
   </xsl:template>
 
   <xsl:template name="schemaSpecBody">
-    <xsl:if test="$parameterize='true'">
+    <xsl:if test="$parameterize='true' and 
+			    count(key('NSELEMENTS',1))&gt;0">
       <xsl:text>&lt;!ENTITY % NS '</xsl:text>
       <xsl:value-of select="$nsPrefix"/>
       <xsl:text>' &gt;&#10;</xsl:text>
+    </xsl:if>
+    <xsl:if test="$parameterize='true'">
       <xsl:call-template name="NameList"/>
     </xsl:if>
     <xsl:text>&#10;&lt;!-- start datatypes --&gt;&#10;</xsl:text>
@@ -1115,7 +1125,7 @@
     </xsl:choose>
       <xsl:text>&gt;</xsl:text>
       <xsl:choose>
-      <xsl:when test="@ns=''"/>
+      <xsl:when test="string-length(@ns)=0"/>
       <xsl:when test="key('LISTSCHEMASPECS',$whichSchemaSpec)/@ns=''"/>
       <xsl:when test="@ns">
 	<xsl:text>&#10;&lt;!ATTLIST </xsl:text>
