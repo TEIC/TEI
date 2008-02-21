@@ -7,18 +7,6 @@
  **/  
 
 /**
- *Les constantes
- *JERUSALEM_HTDOCS : le dossier où se trouvent les fichiers constituant le site
- *ROMA_SYSTEM : l'emplacement de l'outil binaire roma
- *Ces deux chemins doivent être de préférence absolus
- *Pour une utilisation sans la base de données, eXist, decommenter la ligne suivante en modifiant biensur les chemins
- * define("ROMA_SYSTEM", "/usr/bin/roma --xsl=/home/tei/sourceforge/trunk/Stylesheets --localsource=/home/tei/sourceforge/trunk/P5/Source/Guidelines/en/guidelines-en.xml")
- *Par défaut, l'outil Roma en ligne de commande utilise la base de données eXist tei.oucs.ox.ac.uk ! 
- **/
-define("JERUSALEM_HTDOCS", "/");
-define("ROMA_SYSTEM", "/usr/bin/roma");
-
-/**
  La classe SanityChecker vérifie la cohérence d'un schéma TEI.
  Elle se construit à partir d'un arbre DOM qui correspond au fichier ODD de personnalisation
  **/
@@ -379,11 +367,15 @@ private function verifElem($element, $parent,  $recursion) {
 				}
 			}
 			$this->computingStop($ident);
+//Do not bother to check if classes are empty
+/**
 			if($count == 0) {
-			// if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Warning', $ident, $this->getParentItem($parent)->getAttribute("ident"), 'is empty');
-				//$this->RESULTS[$ident] = false;
+			if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Warning', $ident, $this->getParentItem($parent)->getAttribute("ident"), 'is empty');
+				$this->RESULTS[$ident] = false;
 				return false;
 			}
+
+**/
 			if(($sequence == "sequence" || $sequence == "sequenceRepeatable") && $sequence_broken) {
 				if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Error', $ident, '', 'sequence broken');
 				//$this->RESULTS[$ident] = false;

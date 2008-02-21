@@ -2506,7 +2506,7 @@ class romaDom extends domDocument
 	return $szError;
       }
 
-	public function processSanityCheck() {
+    public function processSanityCheck() {
     	  $this->getOddDom($foo);
  	  $checker = new SanityChecker($this);
 	  $checker->pass1();
