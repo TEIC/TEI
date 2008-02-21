@@ -335,7 +335,7 @@ private function verifElem($element, $parent,  $recursion) {
 			$this->computingStop($ident);
 			if($broken) {
 				if(!$this->computingProgress($ident) && $ident != $this->getElementName($faulty)) $this->SCEH->addError('Error', $ident, $this->getElementName($parent), 'has NO VALID CONTENT because '.$this->getElementName($faulty).' neither');
-				$this->RESULTS[$ident] = false;
+				//$this->RESULTS[$ident] = false;
 				return false;
 			}
 			break;
@@ -487,7 +487,14 @@ public function pass1() {
 // $this->DOM->save('/tmp/foo.xml');
          $start = $this->xpath->query("//tei:elementSpec[@ident='".$root."']")->item(0);
          $root_node = $this->DOM->documentElement;
-	 if(!$this->verifElem($start, $root_node, array())) $schema_broken = true;
+	 $result=$this->verifElem($start, $root_node, array());
+	 if(!$result)
+ 	     {   $schema_broken = true; 
+		echo '<script type="text/javascript">';
+		echo "schemaBroken('problem with " . $root . " "
+ . $result . "');";
+		echo '</script>';
+		}
 	}
 	if($schema_broken) {
 		$this->SCEH->sanityCheckSchemaBroken();
