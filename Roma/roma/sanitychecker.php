@@ -7,6 +7,18 @@
  **/  
 
 /**
+ *Les constantes
+ *JERUSALEM_HTDOCS : le dossier où se trouvent les fichiers constituant le site
+ *ROMA_SYSTEM : l'emplacement de l'outil binaire roma
+ *Ces deux chemins doivent être de préférence absolus
+ *Pour une utilisation sans la base de données, eXist, decommenter la ligne suivante en modifiant biensur les chemins
+ * define("ROMA_SYSTEM", "/usr/bin/roma --xsl=/home/tei/sourceforge/trunk/Stylesheets --localsource=/home/tei/sourceforge/trunk/P5/Source/Guidelines/en/guidelines-en.xml")
+ *Par défaut, l'outil Roma en ligne de commande utilise la base de données eXist tei.oucs.ox.ac.uk ! 
+ **/
+define("JERUSALEM_HTDOCS", "/");
+define("ROMA_SYSTEM", "/usr/bin/roma");
+
+/**
  La classe SanityChecker vérifie la cohérence d'un schéma TEI.
  Elle se construit à partir d'un arbre DOM qui correspond au fichier ODD de personnalisation
  **/
@@ -50,6 +62,14 @@ public function __construct($odd) {
 //   foreach($this->ALL_CLASSES as $oElement) {
 //     print " + " . $oElement->nodeValue;
 //     }
+}
+
+/**
+ Fonction qui supprime les fichiers temporaires
+ **/
+private function deleteTemporary() {
+	exec("rm ".JERUSALEM_HTDOCS."tmp/*.odd");
+	exec("rm ".JERUSALEM_HTDOCS."tmp/*.compiled");
 }
 
 /**
@@ -476,9 +496,8 @@ private function verifElem($element, $parent,  $recursion) {
 **/
 public function pass1() {
 	$this->SCEH->updateProgressBar(51.1);
-	$schema_broken = false;
 	$roots = explode(" ",
-        $this->xpath->query("//tei:schemaSpec")->item(0)->getAttribute("start"));
+    $this->xpath->query("//tei:schemaSpec")->item(0)->getAttribute("start"));
 	$this->SCEH->updateProgressBar(51.2);
 	if(trim($roots[0]) == "") {
 		$roots = array();
@@ -488,7 +507,7 @@ public function pass1() {
 // $this->DOM->save('/tmp/foo.xml');
          $start = $this->xpath->query("//tei:elementSpec[@ident='".$root."']")->item(0);
          $root_node = $this->DOM->documentElement;
-         if(!$this->verifElem($tmp, $root_node, array())) $schema_broken = true;
+	 if(!$this->verifElem($start, $root_node, array())) $schema_broken = true;
 	}
 	if($schema_broken) {
 		$this->SCEH->sanityCheckSchemaBroken();
