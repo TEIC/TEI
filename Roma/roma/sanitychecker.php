@@ -476,8 +476,9 @@ private function verifElem($element, $parent,  $recursion) {
 **/
 public function pass1() {
 	$this->SCEH->updateProgressBar(51.1);
+	$schema_broken = false;
 	$roots = explode(" ",
-    $this->xpath->query("//tei:schemaSpec")->item(0)->getAttribute("start"));
+        $this->xpath->query("//tei:schemaSpec")->item(0)->getAttribute("start"));
 	$this->SCEH->updateProgressBar(51.2);
 	if(trim($roots[0]) == "") {
 		$roots = array();
@@ -487,14 +488,7 @@ public function pass1() {
 // $this->DOM->save('/tmp/foo.xml');
          $start = $this->xpath->query("//tei:elementSpec[@ident='".$root."']")->item(0);
          $root_node = $this->DOM->documentElement;
-	 $result=$this->verifElem($start, $root_node, array());
-	 if(!$result)
- 	     {   $schema_broken = true; 
-		echo '<script type="text/javascript">';
-		echo "schemaBroken('problem with " . $root . " "
- . $result . "');";
-		echo '</script>';
-		}
+         if(!$this->verifElem($tmp, $root_node, array())) $schema_broken = true;
 	}
 	if($schema_broken) {
 		$this->SCEH->sanityCheckSchemaBroken();
