@@ -7,18 +7,6 @@
  **/  
 
 /**
- *Les constantes
- *JERUSALEM_HTDOCS : le dossier où se trouvent les fichiers constituant le site
- *ROMA_SYSTEM : l'emplacement de l'outil binaire roma
- *Ces deux chemins doivent être de préférence absolus
- *Pour une utilisation sans la base de données, eXist, decommenter la ligne suivante en modifiant biensur les chemins
- * define("ROMA_SYSTEM", "/usr/bin/roma --xsl=/home/tei/sourceforge/trunk/Stylesheets --localsource=/home/tei/sourceforge/trunk/P5/Source/Guidelines/en/guidelines-en.xml")
- *Par défaut, l'outil Roma en ligne de commande utilise la base de données eXist tei.oucs.ox.ac.uk ! 
- **/
-define("JERUSALEM_HTDOCS", "/");
-define("ROMA_SYSTEM", "/usr/bin/roma");
-
-/**
  La classe SanityChecker vérifie la cohérence d'un schéma TEI.
  Elle se construit à partir d'un arbre DOM qui correspond au fichier ODD de personnalisation
  **/
@@ -62,14 +50,6 @@ public function __construct($odd) {
 //   foreach($this->ALL_CLASSES as $oElement) {
 //     print " + " . $oElement->nodeValue;
 //     }
-}
-
-/**
- Fonction qui supprime les fichiers temporaires
- **/
-private function deleteTemporary() {
-	exec("rm ".JERUSALEM_HTDOCS."tmp/*.odd");
-	exec("rm ".JERUSALEM_HTDOCS."tmp/*.compiled");
 }
 
 /**
@@ -355,7 +335,7 @@ private function verifElem($element, $parent,  $recursion) {
 			$this->computingStop($ident);
 			if($broken) {
 				if(!$this->computingProgress($ident) && $ident != $this->getElementName($faulty)) $this->SCEH->addError('Error', $ident, $this->getElementName($parent), 'has NO VALID CONTENT because '.$this->getElementName($faulty).' neither');
-				//$this->RESULTS[$ident] = false;
+				$this->RESULTS[$ident] = false;
 				return false;
 			}
 			break;
