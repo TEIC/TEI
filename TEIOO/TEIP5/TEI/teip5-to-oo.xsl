@@ -473,10 +473,13 @@
 
   <xsl:template match="tei:div" mode="crossref">
     <xsl:number format="1.1.1.1.1"
-		level="multiple" count="tei:div"/>
+		level="multiple" 
+		count="tei:div"/>
   </xsl:template>
 
-  <xsl:template match="tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6" mode="crossref">
+  <xsl:template
+      match="tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6" 
+      mode="crossref">
     <xsl:number format="1.1.1.1.1"
         count="tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
         level="multiple"/>
