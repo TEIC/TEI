@@ -267,7 +267,7 @@ capable of dealing with UTF-8 directly.
     <xd:detail>LaTeX loading of babel with options</xd:detail>
 </xd:doc>
 <xsl:template name="latexBabel">
-\usepackage[russianb,greek,english]{babel}
+\usepackage[english]{babel}
 </xsl:template>
 
 <xd:doc class="layout">
