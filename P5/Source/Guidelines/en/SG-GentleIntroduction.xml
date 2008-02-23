@@ -815,7 +815,9 @@ would be redundant.</p>
 has no significance; they must, however, be separated by at least one
 whitespace (blank, newline, or tab) character. The value part
 must always be given inside matching quotation marks, either single or
-double.</p>
+double<note place="foot">In the unlikely event that both kinds of quotation marks are needed within the
+quoted string, either or both can also be presented in escaped form, using the
+predefined character entities <code>&amp;apos;</code> or <code>&amp;quot;</code></note>.</p>
 <p>For example: <eg><![CDATA[<poem xml:id="P1" status="draft"> ... </poem>]]></eg> 
 Here attribute values are being specified for two attributes
 previously declared for the <gi scheme="imaginary">poem</gi> element: <att>xml:id</att>
@@ -1074,19 +1076,23 @@ always the same.</p>
 name (such as <code>eacute</code>) for such character references,
 provided that each such name is mapped to the required Unicode value
 by means of a construct known as an <term>entity
-declaration</term>. There is a small set of mnemonic character
+declaration</term>.  A reference to a named character entity always
+takes the form of an ampersand, followed by the name, followed by a
+semicolon. For example an XML document containing the string
+<q>T&amp;C</q> might be encoded as <code>T&amp;amp;C</code>. </p>
+
+<p>There is a small set of such character
 entity references that do not have to be declared because they form
 part of the definition of XML. These include the names used for
 characters such as the ampersand (<code>amp</code>) and the open angle
 bracket or less-than sign (<code>lt</code>), which could not easily
-otherwise be included in an XML document without ambiguity.</p>
+otherwise be included in an XML document without ambiguity. Other
+predeclared entity names are those for quotation marks (<code>quot</code>
+and <code>apos</code> for double and single respectively), and for
+completeness the closing angle bracket or greater-than sign
+(<code>gt</code>).</p>
 
-<p>A reference to a named character entity always
-takes the form of an ampersand, followed by the name, followed by a
-semicolon. For example an XML document containing the string
-<q>T&amp;C</q> would be encoded as <code>T&amp;amp;C</code>. </p>
-
-<p>For named character entities, a set of entity declarations
+<p>For all other named character entities, a set of entity declarations
 must be provided to an XML processor before the document referring to
 them can be validated. The declaration itself uses a non-XML syntax
 inherited from SGML; for example, to define an entity named
@@ -1270,16 +1276,16 @@ take special action if characters with a syntactic meaning in XML
 (such as the left angle bracket or ampersand) are to be used in a
 document to stand for themselves, rather than to signal the start of a
 tag or an entity reference respectively. The predefined entities
-<code>&amp;amp;</code> and <code>&amp;lt</code> provide one method of
-dealing with this problem, if the number of occurrences of such things
-is small. Other methods may be considered when
-the number is large, as in an XML document like the
-present Guidelines, which contains hundreds of examples of XML markup. One is to label the XML
-examples as belonging to a different namespace from that of the
-document itself, which is the approach taken in the present
-Guidelines. Another and simpler approach is provided by one of the features
-inherited by XML from its parent SGML: the <soCalled>marked
-section</soCalled>. </p>
+<code>&amp;amp;</code>, <code>&amp;lt;</code>, and
+<code>&amp;gt;</code> provide one method of dealing with this problem,
+if the number of occurrences of such things is small. Other methods
+may be considered when the number is large, as in an XML document like
+the present Guidelines, which contains hundreds of examples of XML
+markup. One is to label the XML examples as belonging to a different
+namespace from that of the document itself, which is the approach
+taken in the present Guidelines. Another and simpler approach is
+provided by one of the features inherited by XML from its parent SGML:
+the <soCalled>marked section</soCalled>. </p>
 <p>A marked section is a block of text within an XML document
 introduced by the characters <code>&lt;![CDATA[</code> and terminated
 by the characters <code>]]&gt;</code>. Between these rather strange
