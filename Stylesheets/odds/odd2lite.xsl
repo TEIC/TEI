@@ -473,4 +473,10 @@
       </index>
   </xsl:template>
 
+  <xsl:template match="tei:specGrpRef">
+    <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
+      <xsl:apply-templates mode="weave"/>
+    </xsl:for-each>
+  </xsl:template>
+
 </xsl:stylesheet>

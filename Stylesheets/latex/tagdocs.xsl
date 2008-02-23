@@ -61,10 +61,18 @@
 <xsl:template name="egXMLEndHook"/>
 
 <xsl:template match="tei:seg[@rend='specChildren']">
+<xsl:text>\hfil\\[-10pt]\begin{sansreflist}</xsl:text>
+<xsl:apply-templates/>
+<xsl:text>\end{sansreflist}</xsl:text>
+</xsl:template>
+
+<!--
+<xsl:template match="tei:seg[@rend='specChildren']">
 <xsl:text>\mbox{ }\\ \begin{description}</xsl:text>
 <xsl:apply-templates/>
 <xsl:text>\end{description}</xsl:text>
 </xsl:template>
+-->
 
 <xsl:template match="tei:seg[@rend='specChild']">
 <xsl:apply-templates/>
@@ -204,12 +212,6 @@
   <xsl:text>\textit{</xsl:text>
  <xsl:value-of select="."/>
   <xsl:text>}</xsl:text>
-</xsl:template>
-
-<xsl:template match="tei:seg[@rend='specChildren']">
-<xsl:text>\hfil\\[-10pt]\begin{sansreflist}</xsl:text>
-<xsl:apply-templates/>
-<xsl:text>\end{sansreflist}</xsl:text>
 </xsl:template>
 
 <xsl:template name="specHook">
