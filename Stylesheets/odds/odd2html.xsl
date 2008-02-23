@@ -43,7 +43,7 @@
   <xsl:key match="tei:*" name="NameToID" use="@ident"/>
 
   <xsl:output method="xml"
-	      doctype-public="//W3C//DTD XHTML 1.1//EN"
+	      doctype-public="-//W3C//DTD XHTML 1.1//EN"
 	      doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"
 	      encoding="utf-8"
 	      />  
