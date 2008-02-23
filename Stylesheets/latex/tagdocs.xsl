@@ -61,9 +61,16 @@
 <xsl:template name="egXMLEndHook"/>
 
 <xsl:template match="tei:seg[@rend='specChildren']">
+  <xsl:choose>
+    <xsl:when test=".//tei:seg[@rend='specChildModule']">
 <xsl:text>\hfil\\[-10pt]\begin{sansreflist}</xsl:text>
 <xsl:apply-templates/>
 <xsl:text>\end{sansreflist}</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates/>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <!--
@@ -216,6 +223,43 @@
 
 <xsl:template name="specHook">
   <xsl:param name="name"/>
+</xsl:template>
+
+
+<xsl:template match="tei:index[@indexName='ODDS']">
+  <xsl:for-each select="tei:term">
+    <xsl:text>\index{</xsl:text>
+    <xsl:choose>
+      <xsl:when test="@sortBy">
+	<xsl:value-of select="@sortBy"/>
+	<xsl:text>=</xsl:text>
+	<xsl:value-of select="."/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text>|oddindex</xsl:text>
+    <xsl:text>}</xsl:text>
+  </xsl:for-each>
+  <xsl:for-each select="tei:index/tei:term">
+    <xsl:text>\index{</xsl:text>
+    <xsl:choose>
+      <xsl:when test="@sortBy">
+	<xsl:value-of select="@sortBy"/>
+	<xsl:text>=</xsl:text>
+	<xsl:value-of select="."/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text>!</xsl:text>
+    <xsl:value-of select="../../tei:term"/>
+    <xsl:text>|oddindex</xsl:text>
+    <xsl:text>}</xsl:text>
+  </xsl:for-each>
+
 </xsl:template>
 
 
