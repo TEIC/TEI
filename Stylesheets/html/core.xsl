@@ -1270,7 +1270,19 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:seg">
-    <span class="{@type}">
+    <span>
+	<xsl:choose>
+	  <xsl:when test="@type">
+	    <xsl:attribute name="class">
+	      <xsl:value-of select="@type"/>
+	    </xsl:attribute>
+	  </xsl:when>
+	  <xsl:when test="@rend">
+	    <xsl:attribute name="class">
+	      <xsl:value-of select="@rend"/>
+	    </xsl:attribute>
+	  </xsl:when>
+	</xsl:choose>
       <xsl:apply-templates/>
     </span>
   </xsl:template>

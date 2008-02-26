@@ -35,7 +35,6 @@
   </xd:doc>
 
 
-  <xsl:param name="cellName">td</xsl:param>
   <xsl:param name="xrefName">a</xsl:param>
   <xsl:param name="urlName">href</xsl:param>
   <xsl:param name="ulName">ul</xsl:param>
@@ -50,6 +49,7 @@
   <xsl:param name="rendName">class</xsl:param>
   <xsl:param name="rowName">tr</xsl:param>
   <xsl:param name="tableName">table</xsl:param>
+  <xsl:param name="cellName">td</xsl:param>
   <xsl:param name="divName">div</xsl:param>
   <xsl:param name="sectionName">div</xsl:param>
   <xsl:param name="segName">span</xsl:param>
