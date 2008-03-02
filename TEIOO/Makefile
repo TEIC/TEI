@@ -1,9 +1,16 @@
 package:
-	(cd TEIP4; jar cf ../teioop4.jar *)
-	(cd TEIP5; jar cf ../teioop5.jar *)
+	(cd TEIP4; jar cf ../teioop4-`cat ../VERSION`.jar *)
+	(cd TEIP5; jar cf ../teioop5-`cat ../VERSION`.jar *)
 u:
-	xsltproc testunicode.xsl ../unicode.xml > chars.xml
+	xsltproc unicode.xsl ../unicode.xml > chars.xml
 	xmllint --format --noent test11.xml | grep -v chars.xml > test12.xml
+
+changelog:
+	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \
+	svn log -v -r 'HEAD:{'$$LastDate'}' | perl ../gnuify-changelog.pl | grep -v "^;" > newchanges)
+	mv ChangeLog oldchanges
+	cat newchanges oldchanges > ChangeLog
+	rm newchanges oldchanges
 
 test-from:
 	for i in test-from-oo/*.fodt;	do \
