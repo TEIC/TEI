@@ -88,6 +88,10 @@
 	    use="generate-id(preceding-sibling::text:h[@text:outline-level='2' 
 	 or @text:outline-level='1'][1])"/>
 
+  <xsl:key  name="children2"
+	    match="text:h[@text:outline-level='4'] "
+	    use="generate-id(preceding-sibling::text:h[@text:outline-level&lt;4][1])"/>
+
   <xsl:key  name="children3"
 	    match="text:h[@text:outline-level='4']"
 	    use="generate-id(preceding-sibling::text:h[@text:outline-level='3' 
@@ -590,7 +594,8 @@
     <xsl:call-template name="id.attribute.literal"/>
     <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
     
-<!-- 
+ 
+<!--
      <xsl:message>** <xsl:value-of select="$current"/>:
 <xsl:value-of select="."/></xsl:message>
 -->
@@ -614,11 +619,12 @@
 
 
     <xsl:if test="$next &gt; $current+1">
-      <!--
+
+<!--
 	  <xsl:message>found a gap in hierarchy: <xsl:value-of 
 	  select="$current"/> meets <xsl:value-of select="$next"/>:
 	  <xsl:value-of select="($next - $current)-1"/></xsl:message>
-      -->
+-->
       <xsl:call-template name="generateDivs">
 	<xsl:with-param name="n">
 	  <xsl:value-of select="($next - $current)-1"/>
