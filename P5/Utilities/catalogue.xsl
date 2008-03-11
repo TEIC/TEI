@@ -25,6 +25,8 @@
   
   <xsl:param name="oddmode">tei</xsl:param>
   
+  <xsl:param name="DOCUMENTATIONLANG">en</xsl:param>
+  
   <xsl:variable name="top" select="/"/>
   
   <xsl:key name="ELEMENTINMOD" match="tei:elementSpec" use="@module"/>
@@ -32,7 +34,8 @@
   <xsl:key name="MCLASSINMOD" match="tei:classSpec[@type='model']" use="@module"/>
   <xsl:key name="MACROINMOD" match="tei:macroSpec" use="@module"/>
   
-  <xsl:key name="REFS" match="tei:elementSpec|tei:macroSpec"
+  <xsl:key name="REFS" 
+	   match="tei:elementSpec|tei:macroSpec"
 	   use=".//rng:ref/@name"/>
   
   <xsl:key name="IDENTS" match="tei:*[@ident]"	  use="@ident"/>
@@ -103,7 +106,7 @@
 			      <xsl:value-of select="@ident">
 			      </xsl:value-of>
 			    </xsl:attribute>
-			    <ref n="{normalize-space(tei:desc)}"
+			    <ref n="{normalize-space(tei:desc[1])}"
 				 target="http://tei.oucs.ox.ac.uk/Query/tag.xq?name={@ident}">
 			      <xsl:value-of select="@ident"/>
 			    </ref>
@@ -184,7 +187,7 @@
 			      </xsl:value-of>
 			    </xsl:attribute>
 			    
-			    <ref n="{normalize-space(tei:desc)}"
+			    <ref n="{normalize-space(tei:desc[1])}"
 				 target="http://tei.oucs.ox.ac.uk/Query/tag.xq?name={@ident}">
 			      <xsl:value-of select="@ident"/>
 			    </ref>
@@ -257,7 +260,7 @@
 			      <xsl:value-of select="@ident">
 			      </xsl:value-of>
 			    </xsl:attribute>
-			    <ref n="{normalize-space(tei:desc)}"
+			    <ref n="{normalize-space(tei:desc[1])}"
 				 target="http://tei.oucs.ox.ac.uk/Query/tag.xq?name={@ident}">
 			      <xsl:value-of select="@ident"/>
 			    </ref>
@@ -267,7 +270,18 @@
 			    <ref target="http://localhost/TV/draw.php?nt={@ident}">pic</ref>
 			  </cell>
 -->
-			  <cell><xsl:value-of select="normalize-space(tei:desc)"/></cell>
+			  <cell>
+			  <xsl:choose>
+			    <xsl:when test="tei:desc/@xml:lang=$DOCUMENTATIONLANG">
+			      <xsl:value-of
+				  select="tei:desc[@xml:lang=$DOCUMENTATIONLANG]"/>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <xsl:value-of
+				  select="normalize-space(tei:desc[not(@xml:lang)])"/>
+			    </xsl:otherwise>
+			  </xsl:choose>
+			    </cell>
 			  <cell><xsl:for-each select="tei:classes">
 			    <xsl:for-each select="tei:memberOf">
 			      <xsl:sort select="@key"/>
@@ -276,15 +290,17 @@
 				    select="key('IDENTS',@key)">
 				  <xsl:choose>
 				    <xsl:when test="@type='model'">
-				      <hi><xsl:value-of select="@ident"/></hi>
+				      <hi><xsl:value-of
+				      select="@ident"/></hi>
+				      <xsl:text>: </xsl:text>
 				    </xsl:when>
 				    <xsl:otherwise>
 				      <xsl:value-of select="@ident"/>
+				      <xsl:text>: </xsl:text>
 				    </xsl:otherwise>
 				  </xsl:choose>
 				</xsl:for-each>
 			      </ref>
-			      <xsl:text>: </xsl:text>
 			    </xsl:for-each>
 			  </xsl:for-each>
 			  </cell>
@@ -293,16 +309,18 @@
 			      <xsl:sort select="@ident"/>
 			      <ref target="#summary_{@ident}">
 				<xsl:choose>
+				  <xsl:when test="self::rng:ref"/>
 				  <xsl:when
 				      test="string-length(@ident)=0">
-4<xsl:value-of select="name(.)"/>
+				    <xsl:value-of select="name(.)"/>
+				    <xsl:text>: </xsl:text>
 				  </xsl:when>
 				  <xsl:otherwise>
-				<xsl:value-of select="@ident"/> 
+				    <xsl:value-of select="@ident"/> 
+				    <xsl:text>: </xsl:text>
 				  </xsl:otherwise>
 				</xsl:choose>
 			      </ref>
-			      <xsl:text>: </xsl:text>
 			    </xsl:for-each>
 			  </cell>
 			  <cell>
@@ -350,7 +368,7 @@
 			      </xsl:value-of>
 			    </xsl:attribute>
 			    
-			    <ref n="{normalize-space(tei:desc)}"
+			    <ref n="{normalize-space(tei:desc[1])}"
 				 target="http://tei.oucs.ox.ac.uk/Query/tag.xq?name={@ident}">
 			      <xsl:value-of select="@ident"/>
 			    </ref>
