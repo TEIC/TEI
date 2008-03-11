@@ -69,10 +69,10 @@
   <xsl:param name="makingSlides">true</xsl:param>
 
   <xsl:template match="tei:div" mode="number">
-    <xsl:number/>
+    <xsl:number level="any"/>
   </xsl:template>
 
-  <xsl:template match="tei:div1" mode="number">
+  <xsl:template match="tei:div0/tei:div1" mode="number">
     <xsl:for-each select="parent::tei:div0">
       <xsl:number/>
     </xsl:for-each>
@@ -108,7 +108,7 @@
       </xsl:with-param>
     </xsl:call-template>
     <xsl:for-each select="tei:text/tei:body">
-      <xsl:apply-templates select="tei:div|tei:div0"/>
+      <xsl:apply-templates select="tei:div|tei:div0|tei:div1"/>
     </xsl:for-each>
   </xsl:template>
 
@@ -118,6 +118,9 @@
       <xsl:choose>
         <xsl:when test="preceding-sibling::tei:div">
           <xsl:apply-templates select="preceding-sibling::tei:div[1]" mode="genid"/>
+        </xsl:when>
+        <xsl:when test="preceding::tei:div">
+          <xsl:apply-templates select="preceding::tei:div[1]" mode="genid"/>
         </xsl:when>
         <xsl:when test="preceding::tei:div1">
           <xsl:apply-templates select="preceding::tei:div1[1]" mode="genid"/>
@@ -135,8 +138,14 @@
     </a>
     <xsl:variable name="next">
       <xsl:choose>
+        <xsl:when test="tei:div">
+          <xsl:apply-templates select="tei:div[1]" mode="genid"/>
+	</xsl:when>
         <xsl:when test="following-sibling::tei:div">
           <xsl:apply-templates select="following-sibling::tei:div[1]" mode="genid"/>
+        </xsl:when>
+        <xsl:when test="following::tei:div">
+          <xsl:apply-templates select="following::tei:div[1]" mode="genid"/>
         </xsl:when>
         <xsl:when test="following::tei:div1">
           <xsl:apply-templates select="following::tei:div1[1]" mode="genid"/>
@@ -151,6 +160,7 @@
     <xsl:text> </xsl:text>
     <xsl:apply-templates select="." mode="number"/>
   </xsl:template>
+
   <xsl:template name="mainslide">
     <html>
       <xsl:call-template name="addLangAtt"/>
@@ -189,13 +199,17 @@
 	    <img id="logo" src="{$logoFile}" width="{$logoWidth}" height="{$logoHeight}" alt="logo"/>
 	  </div>
 	  <div class="slidebottom-text">
-	    <xsl:variable name="next"><xsl:value-of select="$masterFile"/>1</xsl:variable>
+	    <xsl:variable name="next">
+	      <xsl:value-of select="$masterFile"/>
+	      <xsl:text>1</xsl:text>
+	    </xsl:variable>
 	    <a accesskey="n" href="{concat($next,'.xhtml')}">Start</a>
 	  </div>
         </div>
       </body>
     </html>
   </xsl:template>
+
 <xsl:template name="includeJavascript">
   <xsl:variable   name="prev">
     <xsl:choose>	
@@ -205,6 +219,9 @@
       <xsl:when test="preceding::tei:div1">
 	<xsl:apply-templates select="preceding::tei:div1[1]" mode="genid"/>
       </xsl:when>
+      <xsl:when test="preceding::tei:div">
+	<xsl:apply-templates select="preceding::tei:div[1]" mode="genid"/>
+      </xsl:when>
       <xsl:otherwise>
 	<xsl:value-of select="$masterFile"/>
 	<xsl:text>0</xsl:text>
@@ -213,11 +230,18 @@
   </xsl:variable>
   <xsl:variable name="next">
     <xsl:choose>
+        <xsl:when test="tei:div">
+          <xsl:apply-templates select="tei:div[1]" mode="genid"/>
+	</xsl:when>
+
       <xsl:when test="following-sibling::tei:div">
 	<xsl:apply-templates select="following-sibling::tei:div[1]" mode="genid"/>
       </xsl:when>
       <xsl:when test="following::tei:div1">
 	<xsl:apply-templates select="following::tei:div1[1]" mode="genid"/>
+      </xsl:when>
+      <xsl:when test="following::tei:div">
+	<xsl:apply-templates select="following::tei:div[1]" mode="genid"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:value-of select="$masterFile"/>
@@ -281,7 +305,7 @@
     </xsl:call-template>
 </xsl:template>
 
-  <xsl:template match="tei:body/tei:div0">
+  <xsl:template match="tei:body/tei:div[tei:div]">
     <xsl:variable name="slidenum">
       <xsl:value-of select="$masterFile"/>
       <xsl:number/>
@@ -310,10 +334,10 @@
         </html>
       </xsl:with-param>
     </xsl:call-template>
-    <xsl:apply-templates select="tei:div1"/>
+    <xsl:apply-templates select="tei:div"/>
   </xsl:template>
 
-  <xsl:template match="tei:body/tei:div|tei:div1">
+  <xsl:template match="tei:body/tei:div|tei:div">
     <xsl:choose>
       <xsl:when test="$splitLevel&gt;-1">
         <xsl:variable name="slidenum">
@@ -333,6 +357,8 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+
   <xsl:template name="slideout">
     <html>
       <xsl:call-template name="addLangAtt"/>
@@ -350,6 +376,7 @@
       </body>
     </html>
   </xsl:template>
+
   <xsl:template name="slidebody">
     <div class="slidetop">
       <div class="slidetitle">
@@ -407,8 +434,8 @@
 
     <xsl:template match="teix:egXML">
       <div class="pre">
-      <xsl:apply-templates mode="verbatim"/>
-    </div>
+	<xsl:apply-templates mode="verbatim"/>
+      </div>
   </xsl:template>
 
   <xsl:template match="xhtml:*">

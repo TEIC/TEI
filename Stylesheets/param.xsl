@@ -3,6 +3,7 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:XSL="http://www.w3.org/1999/XSL/Transform" 
+    xmlns="http://www.tei-c.org/ns/1.0"
     exclude-result-prefixes="tei xd"
     version="1.0">
 
@@ -38,9 +39,9 @@
 
 <xsl:output indent="yes" encoding="utf-8" omit-xml-declaration="yes"/>
 
-<xsl:include href="verbatim.xsl"/>
+<xsl:include href="/usr/share/xml/tei/stylesheet/common/verbatim.xsl"/>
 
-<xsl:template match="div">
+<xsl:template match="tei:div">
 <xsl:copy>
 <xsl:apply-templates select="@*|text()|*"/>
 <xsl:if test="@id">
