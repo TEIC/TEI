@@ -75,23 +75,25 @@
 	   draw:text-box | text:note-body | text:section" 
     use="generate-id(parent::office:text)"/>
 
+
   <xsl:key  name="children1"
 	    match="text:h[@text:outline-level='2'] "
 	    use="generate-id(preceding-sibling::text:h[@text:outline-level='1'][1])"/>
 
+<!--
   <xsl:key  name="children1"
 	    match="text:h[@text:outline-level='3'] "
-	    use="generate-id(preceding-sibling::text:h[@text:outline-level&lt;3][1])"/>
-
+	    use="generate-id(preceding-sibling::text:h[number(@text:outline-level)&lt;3][1])"/>
+-->
   <xsl:key  name="children2"
 	    match="text:h[@text:outline-level='3']"
 	    use="generate-id(preceding-sibling::text:h[@text:outline-level='2' 
 	 or @text:outline-level='1'][1])"/>
-
+<!--
   <xsl:key  name="children2"
 	    match="text:h[@text:outline-level='4'] "
-	    use="generate-id(preceding-sibling::text:h[@text:outline-level&lt;4][1])"/>
-
+	    use="generate-id(preceding-sibling::text:h[number(@text:outline-level)&lt;4][1])"/>
+-->
   <xsl:key  name="children3"
 	    match="text:h[@text:outline-level='4']"
 	    use="generate-id(preceding-sibling::text:h[@text:outline-level='3' 
@@ -537,14 +539,21 @@
       <xsl:value-of select="@text:outline-level"/>
     </xsl:variable>
     <xsl:variable name="prelevel">
-      <xsl:value-of select="preceding::text:h[1]/@text:outline-level "/>
+      <xsl:value-of select="preceding::text:h[1]/@text:outline-level"/>
     </xsl:variable>
+<!--
+<xsl:message>|on <xsl:value-of select="$level"/> close div <xsl:value-of
+select="$prelevel"/>,<xsl:value-of select="($prelevel - $level) +
+1"/>, <xsl:value-of select="."/></xsl:message>
+-->
     <xsl:if test="not($level &gt; $prelevel)">
       <xsl:call-template name="closedivloop">
         <xsl:with-param name="start">
 	  <xsl:value-of select="$prelevel"/>
 	</xsl:with-param>
-        <xsl:with-param name="repeat" select="$prelevel - $level + 1"/>
+        <xsl:with-param name="repeat">
+	  <xsl:value-of select="($prelevel - $level) + 1"/>
+	</xsl:with-param>
       </xsl:call-template>
     </xsl:if>
     <xsl:if test="not(normalize-space(.)='')">
@@ -586,6 +595,9 @@
   <xsl:template name="make-section">
     <xsl:param name="current"/>
     <xsl:param name="prev"/>
+    <xsl:variable name="this">
+      <xsl:value-of select="generate-id()"/>
+    </xsl:variable>
     
     <xsl:text disable-output-escaping="yes">&lt;div</xsl:text>
     <xsl:text> type=&quot;div</xsl:text>
@@ -594,18 +606,13 @@
     <xsl:call-template name="id.attribute.literal"/>
     <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
     
- 
-<!--
-     <xsl:message>** <xsl:value-of select="$current"/>:
-<xsl:value-of select="."/></xsl:message>
--->
-    
+ <!--
+     <xsl:message>|* <xsl:value-of select="$current"/>: <xsl:value-of
+     select="."/>; my predecessor is <xsl:value-of select="generate-id(preceding-sibling::text:h[@text:outline-level&lt;$current][1])"/></xsl:message>
+    -->
     <head>
       <xsl:apply-templates/>
     </head>
-    <xsl:variable name="this">
-      <xsl:value-of select="generate-id()"/>
-    </xsl:variable>
     
     <xsl:for-each select="key('headchildren', $this)">
       <xsl:if test="not(parent::text:h)">
@@ -621,7 +628,7 @@
     <xsl:if test="$next &gt; $current+1">
 
 <!--
-	  <xsl:message>found a gap in hierarchy: <xsl:value-of 
+	  <xsl:message>|found a gap in hierarchy: <xsl:value-of 
 	  select="$current"/> meets <xsl:value-of select="$next"/>:
 	  <xsl:value-of select="($next - $current)-1"/></xsl:message>
 -->
@@ -631,19 +638,27 @@
 	</xsl:with-param>
       </xsl:call-template>
     </xsl:if>
-
     <xsl:choose>
       <xsl:when test="$current=1">
 	<xsl:for-each select="key('children1',$this)">
 	  <xsl:apply-templates select="."/>
 	</xsl:for-each>
+	<xsl:for-each select="key('children2',$this)">
+	  <xsl:apply-templates select="."/>
+	</xsl:for-each>
       </xsl:when>
       <xsl:when test="$current=2">
-	<xsl:apply-templates select="key('children2',
-				     $this)"/>
+	<xsl:for-each select="key('children2',  $this)">
+	  <xsl:apply-templates select="."/>
+	</xsl:for-each>
+	<xsl:for-each select="key('children3',  $this)">
+	  <xsl:apply-templates select="."/>
+	</xsl:for-each>
       </xsl:when>
       <xsl:when test="$current=3">
 	<xsl:apply-templates select="key('children3',
+				     $this)"/>
+	<xsl:apply-templates select="key('children4',
 				     $this)"/>
       </xsl:when>
       <xsl:when test="$current=4">
@@ -675,7 +690,6 @@
 				     $this)"/>
       </xsl:when>
     </xsl:choose>
-
   </xsl:template>
 
   <!-- special case paragraphs -->
