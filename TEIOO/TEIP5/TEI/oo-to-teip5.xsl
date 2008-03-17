@@ -179,6 +179,8 @@
 
   <xsl:param name="META" select="/"/>
 
+  <xsl:param name="verbose">false</xsl:param>
+
   <xsl:output encoding="utf-8" indent="yes"/>
 
 <!--  <xsl:strip-space elements="text:span"/>-->
@@ -606,10 +608,14 @@ select="$prelevel"/>,<xsl:value-of select="($prelevel - $level) +
     <xsl:call-template name="id.attribute.literal"/>
     <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
     
- <!--
-     <xsl:message>|* <xsl:value-of select="$current"/>: <xsl:value-of
-     select="."/>; my predecessor is <xsl:value-of select="generate-id(preceding-sibling::text:h[@text:outline-level&lt;$current][1])"/></xsl:message>
-    -->
+ <xsl:if test="$verbose='true'">
+   <xsl:message>| <xsl:call-template name="stars">
+   <xsl:with-param name="n">
+     <xsl:value-of select="$current"/>
+   </xsl:with-param>
+   </xsl:call-template>: <xsl:value-of
+     select="."/></xsl:message>
+ </xsl:if>
     <head>
       <xsl:apply-templates/>
     </head>
@@ -627,11 +633,11 @@ select="$prelevel"/>,<xsl:value-of select="($prelevel - $level) +
 
     <xsl:if test="$next &gt; $current+1">
 
-<!--
+<xsl:if test="$verbose='true'">
 	  <xsl:message>|found a gap in hierarchy: <xsl:value-of 
 	  select="$current"/> meets <xsl:value-of select="$next"/>:
 	  <xsl:value-of select="($next - $current)-1"/></xsl:message>
--->
+</xsl:if>
       <xsl:call-template name="generateDivs">
 	<xsl:with-param name="n">
 	  <xsl:value-of select="($next - $current)-1"/>
@@ -1528,5 +1534,15 @@ These seem to have no obvious translation
 <xsl:template match="text:soft-page-break">
 </xsl:template>
 
-
+<xsl:template name="stars">
+   <xsl:param name="n"/>
+   <xsl:if test="$n &gt;0">
+     <xsl:text>*</xsl:text>
+     <xsl:call-template name="stars">
+       <xsl:with-param name="n">
+	 <xsl:value-of select="$n - 1"/>
+       </xsl:with-param>
+     </xsl:call-template>
+   </xsl:if>
+</xsl:template>
 </xsl:stylesheet>
