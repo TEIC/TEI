@@ -107,7 +107,7 @@
           <xsl:value-of select="$cellAlign"/>
         </xsl:attribute>
       </xsl:if>
-      <xsl:if test="@role">
+      <xsl:if test="@role and not (@rend)">
         <xsl:attribute name="class">
           <xsl:value-of select="@role"/>
         </xsl:attribute>
