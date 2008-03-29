@@ -1054,9 +1054,6 @@
 
   <xsl:template match="text:alphabetical-index">
     <index>
-      <title>
-        <xsl:value-of select="text:index-body/text:index-title/text:p"/>
-      </title>
       <xsl:apply-templates select="text:index-body"/>
     </index>
   </xsl:template>
