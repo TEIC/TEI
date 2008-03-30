@@ -342,9 +342,54 @@
 	  </xsl:call-template>
 	</xsl:when>
 	<xsl:when test="starts-with(@target,'#')">
-	  <xsl:text>«</xsl:text>
-	  <xsl:value-of select="@target"/>
-	  <xsl:text>»</xsl:text>
+	  <xsl:variable name="Chapter">
+	    <xsl:value-of select="substring(@target,2,2)"/>
+	  </xsl:variable>
+	  <xsl:choose>
+	    <xsl:when test="$Chapter='AB' or
+			    $Chapter='AI' or
+			    $Chapter='CC' or
+			    $Chapter='CE' or
+			    $Chapter='CH' or
+			    $Chapter='CO' or
+			    $Chapter='DI' or
+			    $Chapter='DR' or
+			    $Chapter='DS' or
+			    $Chapter='FS' or
+			    $Chapter='FT' or
+			    $Chapter='GD' or
+			    $Chapter='HD' or
+			    $Chapter='MS' or
+			    $Chapter='ND' or
+			    $Chapter='NH' or
+			    $Chapter='PH' or
+			    $Chapter='SA' or
+			    $Chapter='SG' or
+			    $Chapter='ST' or
+			    $Chapter='TC' or
+			    $Chapter='TD' or
+			    $Chapter='TS' or
+			    $Chapter='USE' or
+			    $Chapter='VE' or
+			    $Chapter='WD'">
+	  <xsl:call-template name="makeExternalLink">
+	    <xsl:with-param name="ptr">true</xsl:with-param>
+	    <xsl:with-param name="dest">
+	      <xsl:text>http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:text>
+	      <xsl:value-of select="$documentationLanguage"/>
+	      <xsl:text>/html/</xsl:text>
+	      <xsl:value-of select="$Chapter"/>
+	      <xsl:text>.html</xsl:text>
+	      <xsl:value-of select="@target"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>«</xsl:text>
+	      <xsl:value-of select="@target"/>
+	      <xsl:text>»</xsl:text>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	</xsl:when>
 	<xsl:otherwise>
 	    <xsl:apply-imports/>
