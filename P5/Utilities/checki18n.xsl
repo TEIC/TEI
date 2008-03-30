@@ -9,6 +9,7 @@
 <xsl:key name="REMARKS" match="tei:remarks[not(@xml:lang) and string-length(.)&gt;0]" use="1"/>
 <xsl:key name="GLOSS" match="tei:gloss[not(@xml:lang) and string-length(.)&gt;0]" use="1"/>
 <xsl:key name="DESC"  match="tei:desc[not(@xml:lang) and string-length(.)&gt;0]" use="1"/>
+<xsl:key name="VALDESC"  match="tei:valDesc[not(@xml:lang) and string-length(.)&gt;0]" use="1"/>
 <xsl:template match="/">
   <TEI  xmlns="http://www.tei-c.org/ns/1.0">
 
@@ -24,6 +25,13 @@
       </xsl:if>
     </xsl:for-each>
 
+<!--
+    <xsl:for-each select="key('VALDESC',1)">
+      <xsl:if test="not(../tei:valDesc[@xml:lang=$lang])">
+	<xsl:call-template name="foo"/>
+      </xsl:if>
+    </xsl:for-each>
+-->
     <xsl:for-each select="key('REMARKS',1)">
       <xsl:if test="not(../tei:remarks[@xml:lang=$lang])">
 	<xsl:call-template name="foo"/>
@@ -110,10 +118,22 @@
     <xsl:attribute name="xml:lang">
       <xsl:value-of select="$lang"/>
     </xsl:attribute>
-    <xsl:processing-instruction name="translate">
-      <xsl:value-of select="."/>
-    </xsl:processing-instruction>
+    <xsl:comment>ENGLISH:  <xsl:value-of
+    select="translate(.,'-','–')"/></xsl:comment>
+      <xsl:apply-templates/>
   </xsl:element>
+</xsl:template>
+
+<xsl:template match="@*|text()">
+  <xsl:copy/>
+</xsl:template>
+
+<xsl:template match="*">
+ <xsl:copy>
+  <xsl:apply-templates select="@*"/>
+  <xsl:apply-templates       
+      select="*|text()"/>
+ </xsl:copy>
 </xsl:template>
 
 </xsl:stylesheet>
