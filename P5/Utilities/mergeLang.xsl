@@ -45,6 +45,7 @@
   <xsl:param name="verbose"/>
   <xsl:param name="newFile"/>
   <xsl:param name="newLang"/>
+  <xsl:param name="source"/>
   <xsl:param name="overwrite">false</xsl:param>
 
   <xsl:output encoding="utf-8" indent="yes"/>
@@ -58,6 +59,7 @@
 <xsl:message>
 Language: <xsl:value-of select="$newLang"/>
 File: <xsl:value-of select="$newFile"/>
+Source: <xsl:value-of select="$source"/>
 Overwrite: <xsl:value-of select="$overwrite"/>
 </xsl:message>
 </xsl:if>
@@ -81,13 +83,12 @@ Overwrite: <xsl:value-of select="$overwrite"/>
   </xsl:variable>
 
   <xsl:choose>
-    <xsl:when test="@xml:lang and $overwrite='false'">
-      <xsl:copy-of select="."/>
-    </xsl:when>
     <xsl:when test="@xml:lang and not(@xml:lang=$newLang)">
       <xsl:copy-of select="."/>
     </xsl:when>
-    <xsl:when test="@xml:lang and @xml:lang=$newLang"/>
+    <xsl:when test="@xml:lang=$newLang and $overwrite='false'">
+      <xsl:copy-of select="."/>
+    </xsl:when>
     <xsl:otherwise>
       <xsl:copy-of select="."/>
       <xsl:variable name="this">

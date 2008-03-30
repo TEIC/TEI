@@ -5,13 +5,15 @@ if [ -f Source/Specs/TEI.xml ]
 then
  echo merge language script
 else
- echo This is not P5 source. Exit
+ echo This is not a copy of the P5 source. Exitting.
  exit 1
 fi
 overwrite=false
+verbose=false
 while test $# -gt 0; do
   case $1 in
     --overwrite)  overwrite=true;;
+    --verbose)  verbose=true;;
     --lang=*)  language=`echo $1 | sed 's/.*=//'`;;
      *) if test "$1" = "${1#--}" ; then 
 	   break
@@ -26,12 +28,15 @@ done
 X=`(cd ../I18N/results-$language; pwd)`
 for i in $X/*.xml
 do
- for N in `xsltproc Utilities/getident.xsl $i`
+ for N in `xsltproc Utilities/getident.xsl $i | sort -u`
  do
  if [ -f Source/Specs/$N.xml ]
  then
     xsltproc --stringparam overwrite $overwrite \
-	--stringparam newLang $language --stringparam newFile $i \
+	--stringparam verbose $verbose \
+	--stringparam newLang $language \
+	--stringparam newFile $i \
+	--stringparam source $N \
     Utilities/mergeLang.xsl Source/Specs/$N.xml \
 	| xmllint --format --encode utf-8 - > tmp
     mv tmp Source/Specs/$N.xml
