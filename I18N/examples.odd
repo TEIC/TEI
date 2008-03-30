@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+  xmlns:teix="http://www.tei-c.org/ns/Examples">
+ <teiHeader>
+  <fileDesc>
+   <titleStmt>
+    <title>TEI examples</title>
+    <author>Sebastian Rahtz</author>
+   </titleStmt>
+   <publicationStmt>
+    <p> </p>
+   </publicationStmt>
+   <sourceDesc>
+    <p>authored from scratch</p>
+   </sourceDesc>
+  </fileDesc>
+ </teiHeader>
+ <text>
+  <body>
+   <schemaSpec 
+       ident="examples" prefix="TEI_" start="TEI">
+    <moduleRef key="header"/>
+    <moduleRef key="core"/>
+    <moduleRef key="tei"/>
+    <moduleRef key="linking"/>
+    <moduleRef key="textstructure"/>
+    <moduleRef key="tagdocs"/>
+    <xi:include href="../P5/oddity.odd"
+		xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:body/*)">
+      <xi:fallback> ERROR: cannot locate XInclude ODD elements </xi:fallback>
+    </xi:include>
+
+    <elementSpec ident="TEI" mode="change">
+      <content>
+	<rng:zeroOrMore>
+	  <rng:ref name="elementSpec"/>
+	</rng:zeroOrMore>
+      </content>
+    </elementSpec>
+
+    <elementSpec ident="elementSpec" mode="change">
+      <content>
+	<rng:zeroOrMore>
+	  <rng:choice>
+	    <rng:ref name="egXML"/>
+	    <rng:ref name="note"/>
+	  </rng:choice>
+	</rng:zeroOrMore>
+      </content>
+    </elementSpec>
+
+   </schemaSpec>
+  </body>
+ </text>
+</TEI>
