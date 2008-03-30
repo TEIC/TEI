@@ -9,7 +9,7 @@
  * This class is responsible for Romas customization file. 
  *
  * @author: Arno Mittelbach <arno@mittelbach-online.de>
- * @version: 0.9 (CVS $Id$)
+ * @version: 0.9 ($Id$)
  * @access:  public
  * @package: roma
  */
@@ -2336,7 +2336,8 @@ class romaDom extends domDocument
 
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
-//--stringparam doclang $doclang --stringparam documentationLanguage $doclang
+	$oProc->setParameter( null, 'doclang', $_SESSION['docLang']);
+	$oProc->setParameter( null, 'documentationLanguage', $_SESSION['docLang']);
 	$oProc->setParameter( null, 'TEIC', 'true');	
 	$oProc->setParameter( null, 'displayMode', 'rnc' );
 	$oProc->setParameter( null, 'STDOUT', 'true' );
@@ -2345,7 +2346,7 @@ class romaDom extends domDocument
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '80' );
 
-	$szHTML = $oProc->transformToDoc( $oDOC )->SaveHTML();
+	$szHTML = $oProc->transformToDoc( $oDOC )->SaveXML();
 
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '100' );

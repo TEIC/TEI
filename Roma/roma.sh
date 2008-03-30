@@ -63,7 +63,8 @@ makeDTD()
 makeHTMLDOC() 
 {
     echo "8. make HTML documentation $N.doc.html "
-    xsltproc 	-o $RESULTS/$N.doc.html $DEBUG  $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
+    xsltproc 	-o $RESULTS/$N.doc.html \
+	$DEBUG  $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
 	--stringparam STDOUT true \
 	--stringparam splitLevel -1 \
 	$DOCFLAGS $TEIXSLDIR/odds/odd2html.xsl $RESULTS/$ODD.compiled
