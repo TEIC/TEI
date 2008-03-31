@@ -1202,9 +1202,7 @@ These seem to have no obvious translation
   <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="text:table-of-content">
-  <divGen type="toc"/>
-</xsl:template>
+<xsl:template match="text:table-of-content"/>
 <xsl:template match="text:index-entry-chapter"/>
 <xsl:template match="text:index-entry-page-number"/>
 <xsl:template match="text:index-entry-tab-stop"/>
