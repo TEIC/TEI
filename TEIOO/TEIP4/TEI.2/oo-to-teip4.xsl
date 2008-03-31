@@ -116,7 +116,7 @@
 
     <TEI.2>
       <xsl:for-each select="/office:document/office:meta/dc:language">
-	<xsl:attribute name="xml:lang">
+	<xsl:attribute name="lang">
 	  <xsl:value-of select="normalize-space(.)"/>
 	</xsl:attribute>
       </xsl:for-each>
@@ -194,17 +194,23 @@
 	  </xsl:if>
 	</profileDesc>
       </xsl:if>
-      <revisionDesc>
-	<change>
-	  <name>
+
+    <revisionDesc>
+      <change>
+        <date>
+	    <xsl:apply-templates
+		select="/office:document/office:meta/dc:date"/>
+	</date>
+        <respStmt>
+          <name>
 	    <xsl:apply-templates
 		select="/office:document/office:meta/dc:creator"/>
 	  </name>
-	  <date>
-	    <xsl:apply-templates select="/office:document/office:meta/dc:date"/>
-	  </date>
-	</change>
-      </revisionDesc>
+        </respStmt>
+        <item></item>
+      </change>
+    </revisionDesc>
+
     </teiHeader>
   </xsl:template>
 
@@ -736,7 +742,7 @@
   <xsl:template match="table:table">
     <table rend="frame">
       <xsl:if test="@table:name and not(@table:name = 'local-table')">
-        <xsl:attribute name="xml:id">
+        <xsl:attribute name="id">
           <xsl:value-of select="@table:name"/>
         </xsl:attribute>
       </xsl:if>
