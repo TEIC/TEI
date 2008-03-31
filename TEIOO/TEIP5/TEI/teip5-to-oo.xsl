@@ -74,6 +74,9 @@
   <xsl:decimal-format name="staff" digit="D"/>
   <xsl:variable name="doc_type">TEI</xsl:variable>
 
+  <xsl:param name="postQuote">’</xsl:param>
+  <xsl:param name="preQuote">‘</xsl:param>
+
   <xsl:key name='IDS' match="tei:*[@xml:id]" use="@xml:id"/>
 
   <xsl:template match="/">
@@ -138,14 +141,24 @@
 	<xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
-	<text:p>
-	  <xsl:choose>
-	    <xsl:when test="parent::tei:appendix">
-	      <xsl:attribute name="text:style-name">Appendix Title</xsl:attribute>
-	    </xsl:when>
-	  </xsl:choose>
-	  <xsl:apply-templates/>
-	</text:p>
+	<xsl:choose>
+	  <xsl:when test="parent::tei:appendix">
+	    <text:p text:style-name="Appendix">
+	      <xsl:apply-templates/>	   
+	    </text:p>	
+	  </xsl:when>
+	  <xsl:when test="parent::tei:body">
+	    <text:h text:outline-level="1">
+	      <xsl:apply-templates/>
+	    </text:h>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <text:p>
+	      <xsl:apply-templates/>	   
+	    </text:p>
+	  </xsl:otherwise>
+	</xsl:choose>
+
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -332,7 +345,7 @@
 
   <xsl:template match="tei:list[@type='ordered']">
     <xsl:call-template name="startHook"/>
-    <text:list text:style-name="L2">
+    <text:list text:style-name="L1">
       <xsl:apply-templates/>
     </text:list>
     <xsl:call-template name="endHook"/>
@@ -1404,4 +1417,9 @@
 
   <xsl:template name="italicize"/>
 
+  <xsl:template match="tei:soCalled">
+    <xsl:value-of select="$preQuote"/>
+    <xsl:apply-templates/>
+    <xsl:value-of select="$postQuote"/>
+  </xsl:template>
 </xsl:stylesheet>
