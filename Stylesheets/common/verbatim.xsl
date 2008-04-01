@@ -571,6 +571,10 @@
 	  <xsl:text> xmlns="</xsl:text>
 	  <xsl:value-of select="namespace-uri()"/>
 	  <xsl:text>"</xsl:text>
+	  <xsl:call-template name="lineBreak">
+	    <xsl:with-param name="id">5</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:call-template name="makeIndent"/>
 	</xsl:if>
       </xsl:when>
 
