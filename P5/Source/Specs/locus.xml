@@ -78,8 +78,8 @@ $Id$
     </attDef>
     <attDef ident="target">
       <equiv/>
-      <desc>supplies a link to one or more transcriptions of the
-      specified range of folios.</desc>
+      <desc>supplies a link to one or more page images or
+	transcriptions of the specified range of folios.</desc>
       <desc version="2008-03-30" xml:lang="fr">fournit un lien vers une ou plusieurs images
 ou transcriptions de pages d'un ensemble déterminé de folios.</desc>
       <desc version="2008-01-30" xml:lang="ja">
@@ -90,57 +90,19 @@ ou transcriptions de pages d'un ensemble déterminé de folios.</desc>
       <datatype maxOccurs="unbounded">
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <exemplum>
-	<egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <msItem n="1">
-              <locus facs="#f1r #f1v #f2r">ff. 1r-2r</locus>
-              <author>Ben Jonson</author>
-              <title>Ode to himself</title>
-              <rubric>
-                <hi rend="italics">An Ode<lb/> to him selfe.</hi>
-              </rubric>
-              <incipit>Com leaue the loathed stage</incipit>
-              <explicit>And see his chariot triumph ore his wayne.</explicit>
-              <bibl><name>Beal</name>, <title>Index 1450-1625</title>, JnB 380</bibl>
-            </msItem>
-	    <!-- ... -->
-	    <pb xml:id="f1r"/>
-	    <!-- ... -->
-	    <pb xml:id="f1v"/>
-	    <!-- ... -->
-	    <pb xml:id="f2r"/>
-	    <!-- ... -->
-	</egXML>
-      </exemplum>
-      <remarks>
-         <p>The <att>target</att> attribute may point to any element
-         that contains or indicates a transcription of the locus being
-         described. One common use is to point to the <gi>pb</gi>
-         element that begins each transcribed page, as shown
-         above.</p>
-      </remarks>
     </attDef>
   </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <msItem>
-          <locus facs="images/08v.jpg images/09r.jpg images/09v.jpg images/10r.jpg images/10v.jpg">fols. 8v-10v</locus>
-          <title>Birds Praise of Love</title>
-          <bibl>
-            <title>IMEV</title>
-            <biblScope>1506</biblScope>
-          </bibl>
-        </msItem>
+      <locus target="#P12 #P13 #P14 #P16">fols 12-14, 16r</locus>
+      <!-- ... -->
+      <pb xml:id="P12"/>
+      <pb xml:id="P13"/>
+      <pb xml:id="P14"/>
+      <pb xml:id="P15"/>
+      <pb xml:id="P16"/>
     </egXML>
   </exemplum>
-  <remarks>
-    <p>The global <att>facs</att> attribute may be used to point to
-    the page image or images of the locus being described, as in the
-    previous example. As always with <att>facs</att>, it may point to
-    a <gi>surface</gi> or <gi>zone</gi> element, or for particularly
-    simple cases, directly to a <gi>graphic</gi> element,
-    <gi>binaryObject</gi> element, or image file.</p>
-  </remarks>
   <listRef>
     <ptr target="#msloc"/>
   </listRef>
