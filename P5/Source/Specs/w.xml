@@ -13,7 +13,7 @@ $Id$
   <gloss version="2007-05-04" xml:lang="es">palabra</gloss>
   <gloss version="2007-01-21" xml:lang="it">parola</gloss>
   <desc>represents a grammatical (not necessarily orthographic) word.</desc>
-  <desc version="2008-04-05" xml:lang="ja">
+  <desc version="2008-01-30" xml:lang="ja">
   文法上の語を示す(正書形である必要はない)．
   </desc>
   <desc version="2007-06-12" xml:lang="fr">représente un mot grammatical (pas nécessairement
@@ -39,7 +39,7 @@ $Id$
       <equiv/>
       <desc>provides a lemma for the word, such as an uninflected
       dictionary entry form.</desc>
-      <desc version="2008-04-05" xml:lang="ja">
+      <desc version="2008-01-30" xml:lang="ja">
       当該語の，辞書の見出し形を示す．
       </desc>
       <desc version="2007-06-12" xml:lang="fr">identifie le lemme du mot (entrée du
@@ -47,26 +47,25 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">identifica el lema de una palabra (forma en que se encuentra como entrada en un diccionario).</desc>
       <desc version="2007-01-21" xml:lang="it">identifica il lemma (la voce di un dizionario)</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.key"/>
       </datatype>
     </attDef>
+<attDef ident="lemmaRef">
+<desc>provides a pointer to a definition for the root form of this word
+form.</desc>
+      <datatype maxOccurs="1">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>any valid URI</valDesc>
+</attDef>
+
+
   </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <w type="verb" lemma="hit">hitt<m type="suffix">ing</m></w>
+      <w type="verb" lemma="hit" lemmaRef="http://www.example.com/lexicon/hitvb.xml">hitt<m type="suffix">ing</m></w>
     </egXML>
   </exemplum>
-  <remarks>
-    <p rend="dataDesc">May contain character data and
-<gi>seg</gi>, <gi>w</gi>, <gi>m</gi> and <gi>c</gi>
-elements.</p>
-  </remarks>
-  <remarks xml:lang="ja">
-    <p rend="dataDesc">
-    文字列と，要素<gi>seg</gi>, <gi>w</gi>, <gi>m</gi>, <gi>c</gi>をと
-    る．
-    </p>
-  </remarks>
   <listRef>
     <ptr target="#AILC"/>
   </listRef>

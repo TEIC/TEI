@@ -28,9 +28,33 @@ closing markup delimiter characters.</desc>
     <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
+<attDef ident="type" usage="opt">
+<desc>indicates the type of XML tag intended</desc>
+<valList type="closed">
+<valItem ident="start">
+<desc>a start-tag, with delimiters &lt; and &gt; is intended</desc>
+</valItem>
+<valItem ident="end">
+<desc>an end-tag, with delimiters &lt;/ and &gt; is intended</desc>
+</valItem>
+<valItem ident="empty">
+<desc>a empty tag, with delimiters &lt; and /&gt; is intended</desc>
+</valItem>
+<valItem ident="pi">
+<desc>a pi (processing instruction), with delimiters &lt;? and ?&gt;  is intended</desc>
+</valItem>
+<valItem ident="comment">
+<desc>a comment, with delimiters &lt;!-- and --&gt;  is intended</desc>
+</valItem>
+<valItem ident="ms">
+<desc>a marked-section, with delimiters &lt;[CDATA[ and ]]&gt;  is intended</desc>
+</valItem>
+</valList>
+</attDef>
+
     <attDef ident="scheme" usage="opt">
       <equiv/>
-      <desc>supplies the name of the scheme in which this name is defined.</desc>
+      <desc>supplies the name of the schema in which this tag is defined.</desc>
       <desc version="2008-04-05" xml:lang="ja">
       当該タグ名が定義されているスキームの名前を示す．
       </desc>
@@ -42,11 +66,7 @@ closing markup delimiter characters.</desc>
       <valList type="closed">
         <valItem ident="TEI">
           <gloss>text encoding initiative</gloss>
-          <gloss version="2007-06-12" xml:lang="fr">cette balise fait partie du
-							modèle TEI</gloss>
-          <gloss version="2007-11-06" xml:lang="it">TEI</gloss>
-          <gloss version="2007-05-04" xml:lang="es">esta etiqueta es parte del esquema TEI.</gloss>
-          <desc>this tag is part of the TEI scheme.</desc>
+          <desc>This tag is defined as part of the TEI scheme.</desc>
           <desc version="2008-04-05" xml:lang="ja">
           当該タグは，TEIスキームに属する．
           </desc>
@@ -56,10 +76,6 @@ TEI.</desc>
         </valItem>
         <valItem ident="DBK">
           <gloss>docbook</gloss>
-          <gloss version="2007-06-12" xml:lang="fr">cet élément fait partie du
-							modèle Docbook</gloss>
-          <gloss version="2007-11-06" xml:lang="it">Docbook</gloss>
-          <gloss version="2007-05-04" xml:lang="es">este elemento es parte del esquema Docbook.</gloss>
           <desc>this tag is part of the Docbook scheme.</desc>
           <desc version="2008-04-05" xml:lang="ja">
           当該タグは，DOcbookスキームに属する．
@@ -82,10 +98,12 @@ inconnu.</desc>
         </valItem>
       </valList>
     </attDef>
+
   </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">Mark the start of each italicised phrase with a <tag>hi rend="it"</tag>
-    tag, and its end with a <tag>/hi</tag> tag.
+    tag, and its end with a <tag type="end">hi</tag> tag.
+<tag type="comment">Example updated on 2008-04-05</tag>
     </egXML>
   </exemplum>
   <listRef>
