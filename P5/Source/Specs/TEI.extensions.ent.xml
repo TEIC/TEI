@@ -28,6 +28,28 @@ classes, datatypes, or macros described in chapter <ptr target="#ST"/>.  </p>
 defined in TEI P4. The recommended method of TEI customization at P5,
 irrespective of schema language, is to define an ODD.</p>
   </remarks>
+  <remarks xml:lang="ja">
+    <p>
+当該エンティティで示されたファイルの中身は，DTDの中では，他の宣言を行
+う前に埋め込む必要がある．デフォルトでは，当該エンティティは，空文字と
+して展開される．すなわち，利用者は，当該エンティティを必要な値で宣言す
+ることにより，デフォルト値を上書きすることが出来る．
+例えば，以下の場合では，<ident type="file">project.ent</ident>は，追加
+するエンティティ宣言を含むファイル名を示している．
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+&lt;!ENTITY %TEI.extensions.ent SYSTEM 'project.ent' &gt;
+</egXML>
+ここで追加する宣言はTEIモジュールにある要素やエンティティを参照しては
+いけない．当該エンティティは，デフォルト値として既にTEI規定のクラス，
+データ型，マクロとして規定されている(<ptr target="#ST"/>)エンティティ
+を上書きするためのものである．
+ </p>
+    <p>
+このマクロは，TEI P4で規定されているDTD修正機能で使われるものである．
+TEI P5では，修正を行う場合，使用するスキーマ言語に関係なく，ODDを定義
+することが推奨方法になっている．
+</p>
+  </remarks>
   <listRef>
     <ptr target="#STOV"/>
   </listRef>

@@ -34,6 +34,34 @@ $Id$
     provide shorter names than those documented here.  See further
     chapter <ptr target="#MD"/>.</p>
   </remarks>
+  <remarks xml:lang="ja">
+    <p>
+当該ファイル中にあるパラメータエンティティは，以下のような形式になって
+    いる．
+<eg><![CDATA[
+
+<!ENTITY % n.div0 'div0' >
+<!ENTITY % n.div1 'div1' >
+]]></eg>
+
+DTDにある要素宣言や属性リスト宣言では，パラメータエンティティ
+<ident type="pe">n.div1</ident>を参照しており，共通識別子<gi>div1</gi>
+を直接参照しているわけではない．これにより，もし新しい共通識別子に変更
+する場合においても，当該宣言はそのまま機能することになる．
+例えば，<gi>div1</gi>の代わりに<gi>caput</gi>に変更したり，
+<gi>div0</gi>に代わって<gi>liber</gi>に変えたりする場合には，以下のよ
+うにすればよい．
+<code>
+&lt;!ENTITY % n.div0 'liber' &gt; 
+&lt;!ENTITY % n.div1 'caput' &gt;
+</code>
+</p>
+    <p>
+この仕組みにより，必要とあれば共通識別子の名前も変えることが出来る．
+例えば，英語以外の言語で名前を付けたり，より短い名前にしたりすることが
+可能である．この詳細については，以下の章を参照のこと．
+<ptr target="#MD"/></p>
+  </remarks>
   <listRef>
     <ptr target="#STPEGI"/>
   </listRef>
