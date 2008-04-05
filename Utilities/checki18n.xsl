@@ -112,7 +112,7 @@
 
 <xsl:template name="show">
   <xsl:element name="{local-name(.)}" xmlns="http://www.tei-c.org/ns/1.0">
-    <xsl:attribute name="date">
+    <xsl:attribute name="version">
       <xsl:value-of select="$date"/>
     </xsl:attribute>
     <xsl:attribute name="xml:lang">
