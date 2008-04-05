@@ -173,7 +173,24 @@ Overwrite: <xsl:value-of select="$overwrite"/>
     <xsl:variable name="this">
       <xsl:value-of select="normalize-space(.)"/>
     </xsl:variable>
-    <xsl:variable name="What" select="concat(local-name(..),../@ident)"/>
+    <xsl:variable name="What">
+      <xsl:choose>
+	<xsl:when test="parent::tei:attDef">
+	  <xsl:value-of select="ancestor::tei:elementSpec/@ident|ancestor::tei:classSpec/@ident"/>
+	  <xsl:text>_</xsl:text>
+	  <xsl:value-of select="../@ident"/>
+	</xsl:when>
+	<xsl:when test="parent::tei:classSpec">
+	  <xsl:value-of select="../@ident"/>
+	</xsl:when>
+	<xsl:when test="parent::tei:elementSpec">
+	  <xsl:value-of select="../@ident"/>
+	</xsl:when>
+	<xsl:when test="parent::tei:macroSpec">
+	  <xsl:value-of select="../@ident"/>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:for-each select="$New">
       <xsl:for-each select="key('IDENTS',$What)/tei:remarks">
 	<xsl:if test="@xml:lang=$newLang">
