@@ -55,6 +55,7 @@
   <xsl:key match="tei:classSpec" name="CLASSES" use="@ident"/> 
   <xsl:key match="rng:ref" name="CLASSREFS" use="@name"/>
   <xsl:key match="tei:elementSpec/tei:content//rng:ref" name="REFS" use="@name"/>
+  <xsl:key match="tei:datatype/rng:ref" name="ATTREFS" use="@name"/>
   <xsl:key match="tei:macroSpec/tei:content//rng:ref" name="MACROREFS"
 	   use="@name"/>
   <xsl:key match="tei:elementSpec|tei:classSpec" name="CLASSMEMBERS"
@@ -64,6 +65,8 @@
   <xsl:key match="tei:*[@xml:id]" name="IDS" use="@xml:id"/>
   <xsl:key match="tei:macroSpec[@type='dt']" name="DATATYPES" use="1"/>
   <xsl:key match="tei:macroSpec" name="MACRODOCS" use="1"/>
+  <xsl:key match="tei:attDef" name="ATTDOCS" use="1"/>
+  <xsl:key match="tei:attDef" name="ATTRIBUTES" use="@ident"/>
   <xsl:key match="tei:schemaSpec" name="SCHEMASPECS" use="1"/>
   <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="@ident"/>
   <xsl:key match="tei:classSpec[@type='atts']" name="ATTCLASSDOCS"

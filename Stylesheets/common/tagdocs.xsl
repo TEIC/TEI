@@ -1005,10 +1005,11 @@
           <xsl:if test="@module">
             <xsl:call-template name="moduleInfo"/>
           </xsl:if>
-          <xsl:if test="@type='pe'">
-            <xsl:element namespace="{$outputNS}" name="{$rowName}">
-              <xsl:element namespace="{$outputNS}" name="{$cellName}">
-                <xsl:attribute name="{$rendName}">
+          <xsl:choose>
+	    <xsl:when test="@type='pe' or @type='dt'">
+	      <xsl:element namespace="{$outputNS}" name="{$rowName}">
+		<xsl:element namespace="{$outputNS}" name="{$cellName}">
+		  <xsl:attribute name="{$rendName}">
                   <xsl:text>wovenodd-col1</xsl:text>
                 </xsl:attribute>
                 <xsl:element namespace="{$outputNS}" name="{$hiName}">
@@ -1027,7 +1028,8 @@
                 <xsl:call-template name="generateParents"/>
               </xsl:element>
             </xsl:element>
-          </xsl:if>
+	    </xsl:when>
+	  </xsl:choose>
           <xsl:apply-templates mode="weave"/>
         </xsl:element>
     </xsl:element>
@@ -1421,6 +1423,7 @@
     <xsl:element  namespace="{$outputNS}" name="{$hiName}">
       <xsl:attribute name="{$rendName}">parent</xsl:attribute>
       <xsl:call-template name="generateParentsByElement"/>
+      <xsl:call-template name="generateParentsByAttribute"/>
       <xsl:call-template name="generateParentsByMacro"/>
       <xsl:call-template name="generateParentsByClass"/>
     </xsl:element>
@@ -1516,6 +1519,34 @@
     </xsl:for-each>
   </xsl:template>
 
+  <xsl:template name="generateParentsByAttribute">
+    <xsl:variable name="this" select="@ident"/>
+    <xsl:for-each select="key('ATTREFS',$this)">
+      <xsl:sort select="ancestor::tei:attList[last()]/parent::*/@ident"/>
+      <xsl:sort select="@ident"/>
+      <xsl:for-each select="ancestor::tei:attList[last()]/parent::*">
+	<xsl:call-template name="linkTogether">
+	  <xsl:with-param name="name">
+	    <xsl:value-of select="@ident"/>
+	  </xsl:with-param>
+	  <xsl:with-param name="class">
+	    <xsl:choose>
+	      <xsl:when test="self::tei:classSpec">
+		<xsl:text>link_odd_class</xsl:text>
+	      </xsl:when>
+	      <xsl:when test="self::tei:elementSpec">
+		<xsl:text>link_odd_element</xsl:text>
+	      </xsl:when>
+	    </xsl:choose>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:for-each>
+      <xsl:text>/@</xsl:text>
+      <xsl:value-of select="ancestor::tei:attDef/@ident"/>
+      <xsl:call-template name="showSpace"/>
+    </xsl:for-each>
+  </xsl:template>
+
   <xsl:template name="generateParentsByMacro">
     <xsl:variable name="this" select="@ident"/>
     <xsl:if test="key('MACROREFS',$this)">
@@ -1585,6 +1616,12 @@
 
   <xsl:template match="tei:divGen[@type='macrocat']">
     <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+  </xsl:template>
+
+  <xsl:template match="tei:divGen[@type='attcat']">
+    <xsl:apply-templates mode="weave" select="key('ATTDOCS',1)">
       <xsl:sort select="@ident"/>
     </xsl:apply-templates>
   </xsl:template>
