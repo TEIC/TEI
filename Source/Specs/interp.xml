@@ -9,15 +9,13 @@ $Id$
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" xml:id="INTERP" usage="opt" ident="interp">
   <equiv/>
   <gloss>interpretation</gloss>
-  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2008-01-30" xml:lang="ja">解釈</gloss>
   <gloss version="2007-06-12" xml:lang="fr">interprétation</gloss>
   <gloss version="2007-05-04" xml:lang="es">interpretación</gloss>
   <gloss version="2007-01-21" xml:lang="it">interpretazione</gloss>
   <desc>summarizes a specific interpretative annotation which can be
 linked to a span of text.</desc>
-  <desc version="2008-04-05" xml:lang="ja">
-  あるテキスト部分とリンクする，特定の解釈的注釈をまとめる．
-  </desc>
+  <desc version="2008-01-30" xml:lang="ja"> あるテキストの解釈を示す．</desc>
   <desc version="2007-06-12" xml:lang="fr">résume une annotation interprétative particulière,
       qui peut être liée à un passage de texte</desc>
   <desc version="2007-05-04" xml:lang="es">resume una anotación interpretativa específica que puede ser conectada con un periodo de texto.</desc>
@@ -27,8 +25,10 @@ linked to a span of text.</desc>
     <memberOf key="att.interpLike"/>
   </classes>
   <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq.limited"/>
-  </content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="model.glossLike"/>
+    </rng:zeroOrMore>
+</content>
   <!--    <attDef ident="value" usage="req">
 	<equiv/>
 	<desc>identifies the specific phenomenon being annotated.</desc>
