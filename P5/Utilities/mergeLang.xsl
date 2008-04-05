@@ -89,6 +89,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
     <xsl:when test="@xml:lang=$newLang and $overwrite='false'">
       <xsl:copy-of select="."/>
     </xsl:when>
+    <xsl:when test="@xml:lang=$newLang and $overwrite='true'"/>
     <xsl:otherwise>
       <xsl:copy-of select="."/>
       <xsl:variable name="this">
