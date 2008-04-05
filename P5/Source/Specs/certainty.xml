@@ -53,6 +53,15 @@ $Id$
         further discussion of this indirect pointing mechanism, see
         chapter <ptr target="#SA"/>.</p>
       </remarks>
+      <remarks xml:lang="ja">
+        <p>
+	複数の識別子がある場合，要素<gi>certainty</gi>は，その全ての要
+	素を対象にすると解釈される．注釈対象となる要素に識別子が付与さ
+	れていない場合，当該要素の値は要素<gi>ptr</gi>の識別子であるべ
+	きである．この間接参照機能についての詳細は<ptr target="#SA"/>
+	を参照のこと．
+	</p>
+      </remarks>
     </attDef>
     <attDef ident="locus" usage="req">
       <equiv/>
@@ -169,6 +178,12 @@ cas des éléments corr et abbrev.</desc>
         <p>If the name of an attribute is supplied, it must be
 	  prefixed by <code>att.</code>.</p>
       </remarks>
+      <remarks xml:lang="ja">
+        <p>
+	当該属性が付与される場合，名前には必ず接頭辞<code>att.</code>
+	が付く．
+	</p>
+      </remarks>
     </attDef>
     <attDef ident="assertedValue" usage="rec">
       <equiv/>
@@ -229,6 +244,14 @@ of the markup. In the example above the encoder is expressing
 the likelihood (.2) that the generic identifier should be
 <gi>place</gi> rather than <gi>persName</gi>, which is the coded
 element.</p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p>
+	当該属性は，当該要素に対する代替値の確信度を示している．
+	上の例では，符号化する人が当該可能性(.2)を示している．これは当
+	該要素に使用される共通識別子は，<gi>persName</gi>ではなく
+	<gi>place</gi>であるべき可能性の度合いを示している．
+	</p>
       </remarks>
     </attDef>
     <!--    <attDef ident="desc" usage="rec">
@@ -301,6 +324,38 @@ structure connectives such as <gi>alt</gi>, <gi>join</gi>, and
 <gi>note</gi>.  However, we do not believe that the
 <gi>certainty</gi> element gives, at this time, a comprehensive
 ambiguity-free system for indicating certainty.</p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p>
+	プロジェクトによっては，当該属性で使用される用語を管理したいだ
+      ろう．
+      </p>
+        <p>
+	当該属性値として考えられるものは，他の要素<gi>certainty</gi>の
+      識別子またはそのリストである．従って，この要素<gi>certainty</gi>
+      による連鎖は，確率ネットワークを作ることができる．この確率ネット
+      ワークは，条件の付かない(属性<att>given</att>がない)要素
+      <gi>certainty</gi>をベースに作られる．この要素の鎖は，以下のよう
+      に解釈することができる．
+      ある要素<gi>certainty</gi>を前提条件として参照している場合，
+      属性にある確信度は，前提条件の内容ではなく，当該要素に関する記述
+      を対象としたものである．例えば，上の例では，初めの要素
+      <gi>certainty</gi>は，<mentioned>msm</mentioned>としてある新しい
+      筆写者の識別子の確信度を示している．2番目のそれは，新しい筆写者
+      が<mentioned>msm</mentioned>とすれば，
+      <mentioned>Essex</mentioned>が個人名であるということの確信度を示
+      している．この2番目の要素<gi>certainty</gi>にあるのは，msmが新し
+      筆写者である確信度が0.6であるということではなく，msmは新しい筆写
+      者であるとしていることに注意して欲しい．このように確率ネットワー
+      クを作ることが推奨される．
+      </p>
+        <p>
+	果敢な人は，他の要素や散文的記述を参照し，要素<gi>alt</gi>,
+      <gi>join</gi>, <gi>not</gi>などの素性構造向け連結子を使い，
+      複雑な確率ネットワークを作ろうとするかもしれない．しかし，当該要
+      素<gi>certainty</gi>が，確信度を明瞭に示す包括的な解決策であると
+      は，現時点では考えていない．
+      </p>
       </remarks>
     </attDef>
     <attDef ident="degree" usage="opt">
