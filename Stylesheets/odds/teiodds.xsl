@@ -1871,9 +1871,11 @@ select="$makeDecls"/></xsl:message>
 	<xsl:text>) </xsl:text>
       </xsl:when>
       <xsl:when test="tei:gloss[@xml:lang=$firstLang]">
-	<xsl:text> (</xsl:text>
-	<xsl:value-of select="tei:gloss[@xml:lang=$firstLang]"/>
-	<xsl:text>) </xsl:text>
+	<xsl:if test="not(tei:gloss[@xml:lang=$firstLang]='')">
+	  <xsl:text> (</xsl:text>
+	  <xsl:value-of select="tei:gloss[@xml:lang=$firstLang]"/>
+	  <xsl:text>) </xsl:text>
+	</xsl:if>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:variable name="G">
