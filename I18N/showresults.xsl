@@ -40,6 +40,23 @@
      <profileDesc>
      </profileDesc>
      <html:style type="text/css">
+       table.inner {
+         width: 100%;
+	 border: solid black 1pt;
+       }
+       td.label {
+        width: 10%;
+       }
+       td.trans1 {
+          width: 40%;
+	  background-color: #dddddd;
+       }
+       td.trans2 {
+          width: 40%;
+       }
+       td.transall {
+          width: 90%;
+       }
        #lh-col{
        width: 1%;
        color: #000000;
@@ -73,27 +90,27 @@
 	 <xsl:sort select="local-name(.)"/>
 	 <xsl:sort select="@ident"/>
 	 <row>
-	   <cell>
+	   <cell rend="label">
 	     <hi>
 	       <xsl:value-of select="@ident"/>
 	     </hi>
 	   </cell>
-	   <cell>
+	   <cell rend="transall">
 	     <xsl:call-template name="show"/>
 	   </cell>
 	 </row>
 	 <xsl:for-each select=".//tei:attDef">
 	   <row>
-	     <cell>&#160;@<xsl:value-of select="@ident"/></cell>
-	     <cell>
+	     <cell rend="label">&#160;@<xsl:value-of select="@ident"/></cell>
+	     <cell rend="transall">
 	       <xsl:call-template name="show"/>
 	     </cell>
 	   </row>
 	   <xsl:for-each
 	       select="tei:valList/tei:valItem">
 	   <row>
-	     <cell>&#160;&#160;<emph><xsl:value-of select="@ident"/></emph></cell>
-	     <cell>
+	     <cell rend="label">&#160;&#160;<emph><xsl:value-of select="@ident"/></emph></cell>
+	     <cell rend="transall">
 	       <xsl:call-template name="show"/>
 	     </cell>
 	   </row>
@@ -107,22 +124,22 @@
 </xsl:template>
 
 <xsl:template name="show">
-  <table rend="rules">
+  <table rend="inner">
     <xsl:if test="tei:gloss">
       <row>
-	<cell>
+	<cell rend="trans1">
 	  <xsl:value-of select="tei:gloss[not(@xml:lang)]"/>
 	</cell>
-	<cell>
+	<cell rend="trans2">
 	  <xsl:value-of select="tei:gloss[@xml:lang=$lang]"/>
 	</cell>
       </row>
     </xsl:if>
       <row>
-	<cell>
+	<cell rend="trans1">
 	  <xsl:value-of select="tei:desc[not(@xml:lang)]"/>
 	</cell>
-	<cell>
+	<cell rend="trans2">
 	  <xsl:value-of select="tei:desc[@xml:lang=$lang]"/>
 	</cell>
       </row>
