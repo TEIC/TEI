@@ -868,7 +868,8 @@
 	<a onclick="showall();" href="#">
 	 <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">Show all</xsl:with-param>
-	 </xsl:call-template>l</a>
+	 </xsl:call-template>
+	</a>
       </li>
       <li class="showall">
 	<a onclick="showByMod();" href="#">
