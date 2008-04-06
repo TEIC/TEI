@@ -48,16 +48,36 @@
    </teiHeader>
    <text>
      <body>
-       <table>
+       <table rend="rules">
        <xsl:for-each select="key('Stuff',1)">
 	 <xsl:sort select="local-name(.)"/>
 	 <xsl:sort select="@ident"/>
 	 <row>
-	   <cell><xsl:value-of select="@ident"/></cell>
+	   <cell>
+	     <hi>
+	       <xsl:value-of select="@ident"/>
+	     </hi>
+	   </cell>
 	   <cell>
 	     <xsl:call-template name="show"/>
 	   </cell>
 	 </row>
+	 <xsl:for-each select=".//tei:attDef">
+	   <row>
+	     <cell>&#160;<xsl:value-of select="@ident"/></cell>
+	     <cell>
+	       <xsl:call-template name="show"/>
+	     </cell>
+	   </row>
+	   <xsl:for-each select=".//tei:attDef/tei:valItem">
+	   <row>
+	     <cell>&#160;&#160;<emph><xsl:value-of select="@ident"/></emph></cell>
+	     <cell>
+	       <xsl:call-template name="show"/>
+	     </cell>
+	   </row>
+	   </xsl:for-each>
+	 </xsl:for-each>
        </xsl:for-each>
        </table>
      </body>
