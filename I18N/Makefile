@@ -1,6 +1,14 @@
 S=/usr/share/xml/tei/stylesheet
 lang=es
 
+
+results:
+	for i in zh-tw ja de es it fr; do \
+	xsltproc -o show-en-$$i.xml \
+	   --stringparam lang $$i showresults.xsl \
+	   ../P5/Source/Guidelines/en/guidelines-en.xml ;\
+	done
+
 test:
 	perl -p -e 's/schemaSpec ident=.test./schemaSpec ident="test-$(lang)"/' \
 	testodd.xml > testodd-$(lang).xml
