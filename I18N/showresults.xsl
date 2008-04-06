@@ -107,7 +107,7 @@
 </xsl:template>
 
 <xsl:template name="show">
-  <table>
+  <table rend="rules">
     <xsl:if test="tei:gloss">
       <row>
 	<cell>
