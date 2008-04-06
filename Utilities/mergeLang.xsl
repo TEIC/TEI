@@ -126,7 +126,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
 	      </xsl:choose>
 	    </xsl:variable>
 	    <!--<xsl:message>look for <xsl:value-of select="$What"/> giving <xsl:value-of select="$that"/></xsl:message>-->
-	    <xsl:if test="not($that=$this) and not($that='')">
+	    <xsl:if test="not($that=$this)">
 	      <xsl:variable name="date">
 		<xsl:choose>
 		  <xsl:when test="@notBefore">
