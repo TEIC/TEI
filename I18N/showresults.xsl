@@ -2,6 +2,7 @@
 <xsl:stylesheet 
      xmlns:s="http://www.ascc.net/xml/schematron" 
      xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+     xmlns:html="http://www.w3.org/1999/xhtml"
      xmlns:tei="http://www.tei-c.org/ns/1.0"
      xmlns="http://www.tei-c.org/ns/1.0"
      xmlns:estr="http://exslt.org/strings"
@@ -11,7 +12,7 @@
      xmlns:exsl="http://exslt.org/common"
      xmlns:rng="http://relaxng.org/ns/structure/1.0"
      extension-element-prefixes="exsl estr edate"
-     exclude-result-prefixes="exsl edate estr tei t a rng s" 
+     exclude-result-prefixes="exsl edate estr tei t a rng s html" 
      version="1.0">
 
   <xsl:param name="lang">fr</xsl:param>
@@ -38,6 +39,25 @@
      </fileDesc>
      <profileDesc>
      </profileDesc>
+     <html:style type="text/css">
+       #lh-col{
+       width: 1%;
+       color: #000000;
+       margin-right: 0pt;
+       padding: 0px;
+       float: left;
+       }
+       
+       #rh-col{
+       background-color: #FFFFFF;
+       color: #333333;
+       margin: 2pt;
+       padding: 5px ;
+       margin-left: 1%;
+       width: 99%;
+       font-weight:normal;
+       }
+     </html:style>
      <revisionDesc>
        <change>
 	 <p><date>$Date: 2005-10-18 14:54:32 +0100 (Tue, 18 Oct 2005) $.</date>
@@ -64,12 +84,13 @@
 	 </row>
 	 <xsl:for-each select=".//tei:attDef">
 	   <row>
-	     <cell>&#160;<xsl:value-of select="@ident"/></cell>
+	     <cell>&#160;@<xsl:value-of select="@ident"/></cell>
 	     <cell>
 	       <xsl:call-template name="show"/>
 	     </cell>
 	   </row>
-	   <xsl:for-each select=".//tei:attDef/tei:valItem">
+	   <xsl:for-each
+	       select="tei:valList/tei:valItem">
 	   <row>
 	     <cell>&#160;&#160;<emph><xsl:value-of select="@ident"/></emph></cell>
 	     <cell>
