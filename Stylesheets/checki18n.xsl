@@ -10,7 +10,8 @@
   <i18n>
     <xsl:for-each select="entry">
       <xsl:if test="not(text[@xml:lang=$lang])">
-	<entry key="@key">
+	<entry>
+	  <xsl:copy-of select="key"/>
 	  <xsl:copy-of select="text[@xml:lang='en']"/>
 	  <text xml:lang="{$lang}"></text>
 	</entry>
