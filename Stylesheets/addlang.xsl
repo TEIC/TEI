@@ -11,6 +11,8 @@
 
 <xsl:param name="newfile"/>
 <xsl:param name="newlang"/>
+<xsl:param name="overwrite">true</xsl:param>
+
 <xsl:key name="K" match="entry" use="key"/>
 
 <xsl:template match="@*|processing-instruction()|comment()|text()" >
@@ -18,10 +20,15 @@
 </xsl:template>
 
 <xsl:template match="text">
-<xsl:if test="not(@xml:lang=$newlang)">
-  <xsl:if test="string-length(.)&gt;0"><xsl:copy-of
-  select="."/></xsl:if>
-</xsl:if>
+ <xsl:choose>
+ <xsl:when test="not(@xml:lang) or not(@xml:lang=$newlang)">
+ <xsl:copy-of  select="."/>
+ </xsl:when>
+ <xsl:when test="$overwrite='false' and @xml:lang=$newlang">
+ <xsl:copy-of  select="."/>
+ </xsl:when>
+ </xsl:choose>
+
 </xsl:template>
 
 <xsl:template match="*" >
@@ -38,6 +45,7 @@
 	select="*|@*|processing-instruction()|comment()|text()" />
     <xsl:for-each select="document($newfile)/i18n">
       <xsl:for-each select="key('K',$k)">
+      <xsl:message>foo <xsl:value-of select="$k"/></xsl:message>
 	<xsl:copy-of select="text[@xml:lang=$newlang]"/>
       </xsl:for-each>
     </xsl:for-each>
