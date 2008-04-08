@@ -31,6 +31,7 @@
   </xd:doc>
   <xsl:output encoding="utf-8" indent="yes"/>
   <xsl:param name="TEIC">false</xsl:param>
+  <xsl:param name="selectedSchema"/>
   <xsl:param name="verbose"/>
   <xsl:param name="stripped">false</xsl:param>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
@@ -42,6 +43,8 @@
   <xsl:key name='REFED' use="substring-before(@name,'_')" match="rng:ref[contains(@name,'_')]"/>
   <xsl:key name='REFED' use="@key" match="tei:memberOf"/>
   <xsl:key name='REFED' use="substring-before(@name,'.attribute')" match="tei:attRef"/>
+  <xsl:key match="tei:schemaSpec" name="SCHEMASPECS" use="@ident"/>
+  <xsl:key match="tei:schemaSpec" name="ALLSCHEMASPECS" use="1"/>
   <xsl:key match="tei:*[@xml:id]" name="IDS" use="@xml:id"/>
   <xsl:key match="tei:classSpec[@type='atts' and @mode='add']"
     name="NEWATTCLASSES" use="@ident"/>
@@ -54,6 +57,7 @@
     use="concat(../../@ident,'_',@ident)"/>
   <xsl:key match="tei:attDef[@mode='change']" name="CHANGEATT"
     use="concat(../../@ident,'_',@ident)"/>
+
   <xsl:key match="tei:elementSpec[@mode='delete']" name="DELETE" use="@ident"/>
   <xsl:key match="tei:elementSpec[@mode='replace']" name="REPLACE" use="@ident"/>
   <xsl:key match="tei:elementSpec[@mode='change']" name="CHANGE" use="@ident"/>
@@ -66,19 +70,79 @@
   <xsl:key match="tei:moduleRef" name="MODULES" use="@key"/>
   <xsl:key match="tei:attRef" name="ATTREFS"
     use="concat(@name,'_',../../@ident)"/>
-  <xsl:variable name="ODD" select="/"/>
 
   <xsl:variable name="AnonymousModule">
     <xsl:text>module-from-</xsl:text>
     <xsl:value-of select="//tei:schemaSpec/@ident"/>
   </xsl:variable>
 
+  <xsl:variable name="ODD">
+    <xsl:choose>
+      <xsl:when test="key('SCHEMASPECS',$selectedSchema)">
+	<xsl:for-each
+	    select="key('SCHEMASPECS',$selectedSchema)">
+	  <xsl:copy>
+	    <xsl:copy-of select="@*"/>
+	    <xsl:apply-templates mode="flattenSchemaSpec"/>
+	  </xsl:copy>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each select="key('ALLSCHEMASPECS',1)[1]">
+	  <xsl:copy>
+	    <xsl:copy-of select="@*"/>
+	    <xsl:apply-templates mode="flattenSchemaSpec"/>
+	  </xsl:copy>
+	</xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+  <xsl:template match="text()|@*|comment()|processing-instruction()" 
+		mode="flattenSchemaSpec">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="*" mode="flattenSchemaSpec">
+    <xsl:copy>
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates
+	  select="*|text()|comment()|processing-instruction()"
+	  mode="flattenSchemaSpec"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="tei:specGrpRef" mode="flattenSchemaSpec">
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Phase 0: expand specGrpRef <xsl:value-of select="@target"/></xsl:message>
+    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="starts-with(@target,'#')">
+	<xsl:for-each select="key('IDS',substring-after(@target,'#'))">
+	  <xsl:apply-templates
+	      select="*|text()|comment()|processing-instruction()"
+	      mode="flattenSchemaSpec"/>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each select="document(@target)/tei:specGrp">
+	  <xsl:apply-templates
+	      select="*|text()|comment()|processing-instruction()"
+	      mode="flattenSchemaSpec"/>
+	</xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+    
+  </xsl:template>
+<!-- **************************************************** -->
   <xsl:template match="/">
-    <xsl:apply-templates/>
+    <xsl:for-each select="exsl:node-set($ODD)">
+      <xsl:apply-templates select="tei:schemaSpec"/>
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template match="tei:schemaSpec">
-    <xsl:variable name="compiled">
+      <xsl:variable name="compiled">
       <xsl:copy>
 	<xsl:copy-of select="@*"/>
 	<xsl:if test="$verbose='true'">
@@ -245,7 +309,7 @@
       <xsl:variable name="Current" select="."/>
       <xsl:variable name="elementName" select="@ident"/>
       <xsl:variable name="N" select="local-name(.)"/>
-      <xsl:for-each select="$ODD">
+      <xsl:for-each select="exsl:node-set($ODD)">
         <xsl:choose>
           <xsl:when test="key('DELETE',$elementName)">
             <xsl:if test="$verbose='true'">
@@ -296,37 +360,6 @@
     <xsl:for-each select="tei:elementSpec[@mode='add' or not(@mode)]">
       <xsl:apply-templates mode="copy" select="."/>
     </xsl:for-each>
-    <xsl:if test="$verbose='true'">
-      <xsl:message>Phase 2: expand specGrpRef</xsl:message>
-    </xsl:if>
-    <xsl:for-each select="tei:specGrpRef">
-      <xsl:choose>
-        <xsl:when test="starts-with(@target,'#')">
-          <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
-            <xsl:for-each select="tei:classSpec[not(@mode) or @mode='add']">
-              <xsl:call-template name="createCopy"/>
-            </xsl:for-each>
-            <xsl:apply-templates mode="copy"
-              select="tei:elementSpec[not(@mode) or @mode='add']"/>
-            <xsl:for-each select="tei:macroSpec[not(@mode) or @mode='add']">
-              <xsl:call-template name="createCopy"/>
-            </xsl:for-each>
-          </xsl:for-each>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:for-each select="document(@target)/tei:specGrp">
-            <xsl:for-each select="tei:classSpec[not(@mode) or @mode='add']">
-              <xsl:call-template name="createCopy"/>
-            </xsl:for-each>
-            <xsl:apply-templates mode="copy"
-              select="tei:elementSpec[not(@mode) or @mode='add']"/>
-            <xsl:for-each select="tei:macroSpec[not(@mode) or @mode='add']">
-              <xsl:call-template name="createCopy"/>
-            </xsl:for-each>
-          </xsl:for-each>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
   </xsl:template>
 
   <xsl:template match="@*|processing-instruction()|comment()|text()"
@@ -347,7 +380,7 @@
 
   <xsl:template match="tei:memberOf" mode="copy">
     <xsl:variable name="k" select="@key"/>
-    <xsl:for-each select="$ODD">
+    <xsl:for-each select="exsl:node-set($ODD)">
       <xsl:choose>
 	<xsl:when test="key('DELETE',$k)"/>
 	<xsl:otherwise>
@@ -447,7 +480,7 @@ and see if they are present in the change mode version.
 If so, use them as is. Only the attributes are identifiable
 for change individually.
  -->
-      <xsl:for-each select="$ODD">
+      <xsl:for-each select="exsl:node-set($ODD)">
         <xsl:for-each select="key('CHANGE',$elementName)">
           <!-- if there is an altIdent, use it -->
 	  <xsl:copy-of select="@ns"/>
@@ -504,7 +537,7 @@ for change individually.
 		    <xsl:variable name="metoo">
 		      <xsl:value-of select="concat(../../@ident,@key)"/>
 		    </xsl:variable>
-		    <xsl:for-each select="$ODD">
+		    <xsl:for-each select="exsl:node-set($ODD)">
 		      <xsl:choose>
 			<xsl:when test="key('DELETE',$me)">
 			</xsl:when>
@@ -531,7 +564,7 @@ for change individually.
 		    <xsl:variable name="me">
 		      <xsl:value-of select="@key"/>
 		    </xsl:variable>
-		    <xsl:for-each select="$ODD">
+		    <xsl:for-each select="exsl:node-set($ODD)">
 		      <xsl:if test="not(key('DELETE',@key))">
 			<tei:memberOf key="{$me}"/>
 		      </xsl:if>
@@ -610,7 +643,7 @@ For each macro, go through most of the sections one by one
 and see if they are present in the change mode version.
 If so, use them as is. 
  -->
-      <xsl:for-each select="$ODD">
+      <xsl:for-each select="exsl:node-set($ODD)">
         <xsl:for-each select="key('CHANGE',$elementName)">
           <!-- if there is an altIdent, use it -->
           <xsl:copy-of select="tei:altIdent"/>
@@ -716,7 +749,7 @@ If so, use them as is.
       <!-- for each section of the class spec, 
      go through the sections one by one
      and see if they are present in the change mode version -->
-      <xsl:for-each select="$ODD">
+      <xsl:for-each select="exsl:node-set($ODD)">
         <xsl:for-each select="key('CHANGE',$className)">
 <!-- context is now a classSpec in change mode in the ODD spec -->
           <!-- description -->
@@ -752,7 +785,7 @@ If so, use them as is.
 		    <xsl:variable name="metoo">
 		      <xsl:value-of select="concat(../../@ident,@key)"/>
 		    </xsl:variable>
-		    <xsl:for-each select="$ODD">
+		    <xsl:for-each select="exsl:node-set($ODD)">
 		      <xsl:choose>
 			<xsl:when test="key('DELETE',$me)">
 			</xsl:when>
@@ -779,7 +812,7 @@ If so, use them as is.
 		    <xsl:variable name="me">
 		      <xsl:value-of select="@key"/>
 		    </xsl:variable>
-		    <xsl:for-each select="$ODD">
+		    <xsl:for-each select="exsl:node-set($ODD)">
 		      <xsl:if test="not(key('DELETE',@key))">
 			<tei:memberOf key="{$me}"/>
 		      </xsl:if>
@@ -859,7 +892,7 @@ so that is only put back in if there is some content
             </xsl:when>
             <xsl:when test="self::rng:ref">
               <xsl:variable name="N" select="@name"/>
-	      <xsl:for-each select="$ODD">
+	      <xsl:for-each select="exsl:node-set($ODD)">
 		<xsl:choose>
 		  <xsl:when test="$stripped='true'">
 		    <ref name="{$N}"
@@ -928,7 +961,7 @@ so that is only put back in if there is some content
     $elementName. We travel to the ODD first
     to see if it has some overrides
     -->
-    <xsl:for-each select="$ODD">
+    <xsl:for-each select="exsl:node-set($ODD)">
       <xsl:choose>
         <xsl:when test="$TEIC='false'"/>
 	<xsl:when
@@ -1003,7 +1036,7 @@ so that is only put back in if there is some content
           <xsl:text>true</xsl:text>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:for-each select="$ODD">
+          <xsl:for-each select="exsl:node-set($ODD)">
             <xsl:choose>
               <xsl:when test="key('DELETE',$className)"/>
               <xsl:when
@@ -1265,7 +1298,7 @@ every attribute and see whether the attribute has changed-->
       <xsl:value-of select="concat($element,'_',$A)"/>
     </xsl:variable>
     <xsl:variable name="wherefrom" select="."/>
-    <xsl:for-each select="$ODD">
+    <xsl:for-each select="exsl:node-set($ODD)">
       <xsl:choose>
         <xsl:when test="key('DELETEATT',concat($class,'_',$att))"/>
         <xsl:when test="key('DELETEATT',$lookingAt)"/>
@@ -1389,7 +1422,7 @@ every attribute and see whether the attribute has changed-->
             <xsl:variable name="lookingAt">
               <xsl:value-of select="concat(../../../@ident,'_',@ident)"/>
             </xsl:variable>
-            <xsl:for-each select="$ODD">
+            <xsl:for-each select="exsl:node-set($ODD)">
               <xsl:choose>
                 <xsl:when test="key('DELETEATT',$lookingAt)"/>
                 <xsl:when test="key('REPLACEATT',$lookingAt)"/>
@@ -1413,7 +1446,7 @@ every attribute and see whether the attribute has changed-->
         <xsl:variable name="lookingAt">
           <xsl:value-of select="concat(../../@ident,'_',@ident)"/>
         </xsl:variable>
-        <xsl:for-each select="$ODD">
+        <xsl:for-each select="exsl:node-set($ODD)">
           <xsl:choose>
             <xsl:when test="key('DELETEATT',$lookingAt)"/>
             <xsl:when test="key('REPLACEATT',$lookingAt)"/>
