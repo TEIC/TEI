@@ -296,7 +296,7 @@
   <xsl:template match="tei:*" mode="tangle"/>
 
   <xsl:template match="tei:attRef" mode="tangle">
-    <ref name="{$patternPrefixText}{@name}" xmlns="http://relaxng.org/ns/structure/1.0"/>
+    <ref name="{@name}" xmlns="http://relaxng.org/ns/structure/1.0"/>
   </xsl:template>
 
   <xsl:template match="tei:attDef" mode="tangle">
@@ -394,7 +394,7 @@
                   <xsl:when test="tei:attList//tei:attDef">
                     <xsl:for-each select="tei:attList//tei:attDef">
                       <xsl:if test="not(starts-with(@ident,'xmlns'))">
-                        <ref name="{$patternPrefixText}{$c}.attribute.{translate(@ident,':','')}"
+                        <ref name="{$c}.attribute.{translate(@ident,':','')}"
                           xmlns="http://relaxng.org/ns/structure/1.0"/>
                       </xsl:if>
                     </xsl:for-each>

@@ -77,39 +77,35 @@
   </xsl:variable>
 
   <xsl:variable name="ODD">
-    <xsl:choose>
-      <xsl:when test="key('SCHEMASPECS',$selectedSchema)">
-	<xsl:for-each
-	    select="key('SCHEMASPECS',$selectedSchema)">
-	  <xsl:copy>
-	    <xsl:copy-of select="@*"/>
-	    <xsl:apply-templates mode="flattenSchemaSpec"/>
-	  </xsl:copy>
-	</xsl:for-each>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:for-each select="key('ALLSCHEMASPECS',1)[1]">
-	  <xsl:copy>
-	    <xsl:copy-of select="@*"/>
-	    <xsl:apply-templates mode="flattenSchemaSpec"/>
-	  </xsl:copy>
-	</xsl:for-each>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:for-each select="/tei:TEI">
+      <xsl:copy>
+	<xsl:copy-of select="@*"/>
+	<xsl:apply-templates mode="flattenSchemaSpec"/>
+      </xsl:copy>
+    </xsl:for-each>
   </xsl:variable>
 
-  <xsl:template match="text()|@*|comment()|processing-instruction()" 
-		mode="flattenSchemaSpec">
-    <xsl:copy-of select="."/>
-  </xsl:template>
+  <xsl:template match="tei:specGrp" mode="flattenSchemaSpec"/>
 
-  <xsl:template match="*" mode="flattenSchemaSpec">
-    <xsl:copy>
-      <xsl:apply-templates select="@*"/>
-      <xsl:apply-templates
-	  select="*|text()|comment()|processing-instruction()"
-	  mode="flattenSchemaSpec"/>
-    </xsl:copy>
+  <xsl:template match="tei:schemaSpec" mode="flattenSchemaSpec">
+    <xsl:choose>
+      <xsl:when test="@ident=$selectedSchema">
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates 
+	      select="*|text()|comment()|processing-instruction()"
+	      mode="flattenSchemaSpec"/>
+	</xsl:copy>
+      </xsl:when>
+      <xsl:when test="$selectedSchema='' and not(preceding-sibling::tei:schemaSpec)">
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates 
+	      select="*|text()|comment()|processing-instruction()"
+	      mode="flattenSchemaSpec"/>
+	</xsl:copy>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tei:specGrpRef" mode="flattenSchemaSpec">
@@ -134,14 +130,32 @@
     </xsl:choose>
     
   </xsl:template>
+
+
+  <xsl:template match="text()|@*|comment()|processing-instruction()" 
+		mode="flattenSchemaSpec">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="*" mode="flattenSchemaSpec">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates
+	  select="*|text()|comment()|processing-instruction()"
+	  mode="flattenSchemaSpec"/>
+    </xsl:copy>
+  </xsl:template>
+
+
 <!-- **************************************************** -->
   <xsl:template match="/">
     <xsl:for-each select="exsl:node-set($ODD)">
-      <xsl:apply-templates select="tei:schemaSpec"/>
+      <xsl:apply-templates mode="iden"/>
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template match="tei:schemaSpec">
+  <xsl:template match="tei:schemaSpec" mode="iden">
+
       <xsl:variable name="compiled">
       <xsl:copy>
 	<xsl:copy-of select="@*"/>
@@ -307,33 +321,33 @@
   <xsl:template name="phase1a">
     <xsl:for-each select="*">
       <xsl:variable name="Current" select="."/>
-      <xsl:variable name="elementName" select="@ident"/>
+      <xsl:variable name="specName" select="@ident"/>
       <xsl:variable name="N" select="local-name(.)"/>
       <xsl:for-each select="exsl:node-set($ODD)">
         <xsl:choose>
-          <xsl:when test="key('DELETE',$elementName)">
+          <xsl:when test="key('DELETE',$specName)">
             <xsl:if test="$verbose='true'">
-              <xsl:message> Phase 3: remove <xsl:value-of select="$elementName"
+              <xsl:message> Phase 3: remove <xsl:value-of select="$specName"
                 /></xsl:message>
             </xsl:if>
             <!--
 	      <xsl:element name="{$N}" xmlns="http://www.tei-c.org/ns/1.0">
-	      <xsl:attribute name="ident"><xsl:value-of select="$elementName"/></xsl:attribute>
+	      <xsl:attribute name="ident"><xsl:value-of select="$specName"/></xsl:attribute>
 	      <xsl:attribute name="mode">delete</xsl:attribute>
 	      </xsl:element>
 	  -->
           </xsl:when>
-          <xsl:when test="key('REPLACE',$elementName)">
+          <xsl:when test="key('REPLACE',$specName)">
             <xsl:if test="$verbose='true'">
-              <xsl:message> Phase 3: replace <xsl:value-of select="$elementName"
+              <xsl:message> Phase 3: replace <xsl:value-of select="$specName"
                 /></xsl:message>
             </xsl:if>
             <xsl:apply-templates mode="copy"
-              select="key('REPLACE',$elementName)"/>
+              select="key('REPLACE',$specName)"/>
           </xsl:when>
-          <xsl:when test="key('CHANGE',$elementName)">
+          <xsl:when test="key('CHANGE',$specName)">
             <xsl:if test="$verbose='true'">
-              <xsl:message> Phase 3: change <xsl:value-of select="$elementName"
+              <xsl:message> Phase 3: change <xsl:value-of select="$specName"
                 /></xsl:message>
             </xsl:if>
             <xsl:apply-templates mode="change" select="$Current"/>
@@ -1401,7 +1415,7 @@ every attribute and see whether the attribute has changed-->
       </xsl:call-template>
     </xsl:when>
     <xsl:otherwise>
-      <tei:attRef n="3" name="{$class}.attribute.{translate($att,':','')}"/>
+      <tei:attRef n="3-{$debug}" name="{$class}.attribute.{translate($att,':','')}"/>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
@@ -1807,5 +1821,21 @@ every attribute and see whether the attribute has changed-->
       <xsl:apply-templates mode="copy" select="@*|*"/>
     </xsl:element>
   </xsl:template>
+
+
+  <xsl:template 
+      match="@*|processing-instruction()|comment()|text()"
+      mode="iden">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="*" mode="iden">
+    <xsl:copy>
+      <xsl:apply-templates mode="iden"
+        select="*|@*|processing-instruction()|comment()|text()"/>
+    </xsl:copy>
+
+  </xsl:template>
+
 
 </xsl:stylesheet>
