@@ -31,7 +31,7 @@
       License along with this library; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA xs </xd:detail>
     <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id: textcrit.xsl 2169 2007-03-06 21:26:47Z rahtz $</xd:cvsId>
+    <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
 

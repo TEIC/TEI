@@ -25,7 +25,7 @@
    
       </xd:detail>
     <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id: verse.xsl 1944 2006-11-25 15:00:49Z rahtz $</xd:cvsId>
+    <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
 
