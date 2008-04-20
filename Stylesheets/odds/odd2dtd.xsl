@@ -1125,8 +1125,10 @@
     </xsl:choose>
       <xsl:text>&gt;</xsl:text>
       <xsl:choose>
-      <xsl:when test="string-length(@ns)=0"/>
-      <xsl:when test="key('LISTSCHEMASPECS',$whichSchemaSpec)/@ns=''"/>
+      <xsl:when test="@ns and @ns=''">
+      </xsl:when>
+      <xsl:when test="key('LISTSCHEMASPECS',$whichSchemaSpec)/@ns=''">
+      </xsl:when>
       <xsl:when test="@ns">
 	<xsl:text>&#10;&lt;!ATTLIST </xsl:text>
 	<xsl:value-of select="$ename"/>
