@@ -9,6 +9,9 @@ $Id: transformP5.xsl 3417 2007-09-29 11:36:18Z rahtz $
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.damaged">
   <desc>provides attributes describing the nature of any physical
   damage affecting a reading. </desc>
+  <desc version="2008-04-21" xml:lang="ja">
+    読みに影響を与える物理的損傷の性格を示す属性を示す．
+  </desc>
   <desc version="2008-04-06" xml:lang="es">proporciona los atributos que describen la naturaleza de cualquier daño físico que afecta a una lectura. </desc>
   <desc version="2008-03-30" xml:lang="fr">fournit des attributs décrivant la nature de tout
 dommage physique affectant la lecture.</desc>
@@ -19,6 +22,10 @@ dommage physique affectant la lecture.</desc>
       <desc>indicates approximately how much text is in the damaged area,
 in letters, minims, inches, or any appropriate unit, where this
 cannot be deduced from the contents of the tag.  </desc>
+      <desc version="2008-04-21" xml:lang="ja">
+       当該損傷の量を示す．例えば，文字数，インチなどの単位を使用する．
+       但し，要素の内容からは推測できるものではない．
+      </desc>
       <desc version="2008-04-05" xml:lang="ja">
        当該損傷の量を示す．例えば，文字数，インチなどの単位を使用する．
        但し，要素の内容からは推測できるものではない．
@@ -57,6 +64,9 @@ aspect of the text's creation, transcription, editing, or encoding
       <desc>In the case of damage (deliberate defacement, inking out,
       etc.) assignable to a distinct hand, signifies the hand
       responsible for the damage.</desc>
+      <desc version="2008-04-21" xml:lang="ja">
+      当該損傷部分の書き手が特定できる場合，それを示す．
+      </desc>
       <desc version="2008-04-05" xml:lang="ja">
       当該損傷部分の書き手が特定できる場合，それを示す．
       </desc>
@@ -76,6 +86,9 @@ header (see section <ptr target="#PHDH"/>).</valDesc>
     <attDef ident="agent" usage="opt">
       <equiv/>
       <desc>categorizes the cause of the damage, if it can be identified.</desc>
+      <desc version="2008-04-21" xml:lang="ja">
+      当該損傷の原因の分類を示す．
+      </desc>
       <desc version="2008-04-05" xml:lang="ja">
       当該損傷の原因の分類を示す．
       </desc>
@@ -90,6 +103,9 @@ lorsqu'elle peut être identifiée</desc>
         <valItem ident="rubbing">
           <desc>damage results from rubbing of the
   leaf edges</desc>
+          <desc version="2008-04-21" xml:lang="ja">
+          紙の端の擦り切れによる損傷．
+          </desc>
           <desc version="2008-04-05" xml:lang="ja">
           紙の端の擦り切れによる損傷．
           </desc>
@@ -100,6 +116,9 @@ les bords du feuillet</desc>
         </valItem>
         <valItem ident="mildew">
           <desc>damage results from mildew on the leaf surface</desc>
+          <desc version="2008-04-21" xml:lang="ja">
+          紙上の白カビによる損傷．	  
+          </desc>
           <desc version="2008-04-05" xml:lang="ja">
           紙上の白カビによる損傷．	  
           </desc>
@@ -110,6 +129,9 @@ la surface du feuillet</desc>
         </valItem>
         <valItem ident="smoke">
           <desc>damage results from smoke</desc>
+          <desc version="2008-04-21" xml:lang="ja">
+          煙による損傷．
+          </desc>
           <desc version="2008-04-05" xml:lang="ja">
           煙による損傷．
           </desc>
@@ -128,6 +150,12 @@ la surface du feuillet</desc>
 The <gi>damage</gi> tag with the <att>degree</att> attribute should
 only be used where the text may be read with some confidence; text
 supplied from other sources should be tagged as <gi>supplied</gi>.</desc>
+      <desc version="2008-04-21" xml:lang="ja">
+      当該損傷部分の程度を示す．要素<gi>damage</gi>の属性
+      <att>degree</att>は，当該損傷部分のテキストが確認できる場合にの
+      み使用されるべきである．他の資料から補われたテキストの場合には，
+      要素<gi>supplied</gi>で示されるべきである．
+      </desc>
       <desc version="2008-04-05" xml:lang="ja">
       当該損傷部分の程度を示す．要素<gi>damage</gi>の属性
       <att>degree</att>は，当該損傷部分のテキストが確認できる場合にの
@@ -173,6 +201,19 @@ concerning the damage given in the attribute values of these tags.
 See section <ptr target="#PHCOMB"/> for discussion of the use of these
 tags in particular circumstances.</p>
       </remarks>
+      <remarks xml:lang="ja">
+        <p>
+       属性<att>degree</att>を伴う要素<gi>damage</gi>は，損傷はあって
+       も，当該テキストがある程度の確信を持って読める場合にのみ使用さ
+       れるべきである．当該テキストの可読度を示すものではないが，その
+       損傷の程度は記録しておいた方がよい(風化した碑文の場合など)．当
+       該損傷が，テキストの可読性にある程度影響を与えるような場合には，
+       要素<gi>unclear</gi>(部分的に読めない)や要素<gi>gap</gi>(完全に
+       読めない)を使用すべきである．この場合は，損傷の程度は属性値で示
+       される．特定の場合で，これらのタグをどう使用するかについては，
+       <ptr target="#PHCOMB"/>を参照のこと．
+       </p>
+      </remarks>
       <remarks xml:lang="es">
         <p> La etiqueta <gi>daño</gi> con el atributo <att>grado</att> debe ser utilizado solamente donde el texto se puede leer con certeza a pesar del daño.
         Es apropiada donde se desee registrar el daño, aunque éste no haya afectado a la legibilidad del texto (como puede ser el caso de materiales desgastados).  Donde el daño ha provocado que el texto sea más o menos ilegible conviene usar la etiqueta <gi>ilegible</gi> (para la ilegibilidad parcial) o  la etiqueta <gi>agujero</gi> (para la ilegibilidad completa, carente del texto suministrado), con la información referente al daño en los valores de atributo de estas etiquetas.
@@ -195,6 +236,9 @@ Ver la sección <ptr target="#PHCOMB"/> para la discusión sobre el uso de estas
     <attDef ident="group" usage="mwa">
       <desc>assigns an arbitrary number to each stretch of damage
       regarded as forming part of the same physical phenomenon.</desc>
+      <desc version="2008-04-21" xml:lang="ja">
+      各損傷部分に，物理的状況を示す，任意の数値を付与する．
+      </desc>
       <desc version="2008-04-06" xml:lang="es">asigna un número arbitrario a cada fragmento del daño considerado como parte del mismo fenómeno físico.</desc>
       <desc version="2008-04-05" xml:lang="ja">
       各損傷部分に，物理的状況を示す，任意の数値を付与する．
