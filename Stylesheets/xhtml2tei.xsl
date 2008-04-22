@@ -12,6 +12,11 @@
 
 <xsl:param name="filename"/>
 
+<xsl:key name="H" match="h:h1" use="1"/>
+<xsl:key name="H" match="h:h2" use="1"/>
+<xsl:key name="H" match="h:h3" use="1"/>
+<xsl:key name="H" match="h:h4" use="1"/>
+
 <xsl:template match="h:html">
 <xsl:variable name="author">
  <xsl:choose>
@@ -46,9 +51,6 @@
    <xsl:otherwise>OUCS</xsl:otherwise>
  </xsl:choose>
 </xsl:variable>
-<xsl:text disable-output-escaping="yes">
-&lt;!DOCTYPE TEI.2 SYSTEM "../dtds/tei-oucs.dtd"&gt;
-</xsl:text>
 <TEI.2>
   <teiHeader>
     <fileDesc>
@@ -93,19 +95,18 @@ created by converting an HTML file to TEI XML on TODAYSDATE.</p>
   <!--     the correct number of /divs. At the moment it fails if there are -->
   <!-- Hn tags inside td's, which we are intending to make cell labels -->
    <xsl:variable name="starter">    
-   <xsl:value-of select="substring(name(//*[(name()='h1' or name()='h2' or name()='h3' or name()='h4') and name(..)!= 'td'][1]),2)"/>
+     <xsl:value-of select="substring(name(key('H',1)[1]),2)"/>
    </xsl:variable>
    <xsl:variable name="ender">
-     <xsl:value-of select="substring(name(//*[(name()='h1' or name()='h2' or name()='h3' or name()='h4') and name(..)!= 'td'][last()]),2)"/>
+     <xsl:value-of select="substring(name(key('H',1)[last()]),2)"/>
    </xsl:variable>
    <xsl:variable name="difference">
       <xsl:value-of select="$starter - $ender"/>
     </xsl:variable>
     <xsl:comment>
-<xsl:element name="comment">
      Started with a <xsl:value-of select="$starter"/>, ended with a <xsl:value-of select="$ender"/>
    diff=<xsl:value-of select="$difference"/>
-</xsl:element></xsl:comment>
+</xsl:comment>
 <!-- test call of for loop to handle closure of divs
 got to find a way to set a trigger for closing div if no headers -->
  <xsl:call-template name="for-loop">
@@ -127,9 +128,9 @@ got to find a way to set a trigger for closing div if no headers -->
       <emph><xsl:value-of select="."/></emph>
     </xsl:when>
   <xsl:otherwise>
-<xsl:if test="preceding-sibling::h:h1 or preceding-sibling::h:h2 or preceding-sibling::h:h3 or preceding-sibling::h:h4">
+<xsl:if test="preceding::h:h1 or preceding::h:h2 or preceding::h:h3 or preceding::h:h4">
    <xsl:variable name="previous">
-<xsl:value-of select="substring(name(preceding-sibling::*[name()='h1' or name()='h2' or name()='h3' or name()='h4'][1]),2)"/>
+<xsl:value-of select="substring(name(preceding::*[name()='h1' or name()='h2' or name()='h3' or name()='h4'][1]),2)"/>
    </xsl:variable>
    <xsl:variable name="me">
 <xsl:value-of select="substring(name(.),2)"/>
@@ -137,9 +138,11 @@ got to find a way to set a trigger for closing div if no headers -->
    <xsl:variable name="difference">
       <xsl:value-of select="$me - $previous"/>
    </xsl:variable>
-   <!--- 
+<!--
+   <xsl:message>
  I am a <xsl:value-of select="$me"/>, previous is <xsl:value-of select="$previous"/>, difference is <xsl:value-of select="$difference"/>
 
+   </xsl:message>
 -->
 <!-- test call of for loop to handle this ... -->
 <xsl:if test="$difference &lt; 1">
@@ -165,9 +168,9 @@ got to find a way to set a trigger for closing div if no headers -->
      <xsl:value-of select="h:a[@name]/@name"/>
    <xsl:text disable-output-escaping="yes">"&gt;</xsl:text>
  </xsl:when>
- <xsl:when test="preceding-sibling::h:a[1][@name]">
+ <xsl:when test="preceding::h:a[1][@name]">
    <xsl:text disable-output-escaping="yes">&lt;div id="</xsl:text>
-     <xsl:value-of select="preceding-sibling::h:a[1][@name]/@name"/>
+     <xsl:value-of select="preceding::h:a[1][@name]/@name"/>
    <xsl:text disable-output-escaping="yes">"&gt;</xsl:text>
  </xsl:when>   
  <xsl:otherwise>
