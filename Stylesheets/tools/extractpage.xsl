@@ -20,6 +20,9 @@ $Id$
 
 2008, TEI Consortium
 -->
+
+<!-- based entirely on an XQuery solution by David Sewell -->
+
 <xsl:output method="xml" indent="yes"/>
 <xsl:param name="start">1</xsl:param>
 <xsl:param name="end">2</xsl:param>
