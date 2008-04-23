@@ -1326,7 +1326,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:if test="@ns">
         <xsl:copy-of select="@ns"/>
       </xsl:if>
-      <xsl:if test="tei:defaultVal">
+      <xsl:if test="tei:defaultVal and not(tei:defaultVal='')">
         <xsl:attribute name="a:defaultValue">
           <xsl:value-of select="normalize-space(tei:defaultVal)"/>
         </xsl:attribute>
