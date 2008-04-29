@@ -1663,7 +1663,47 @@ over time, (if they are known at all). For example:
 </org>
 </egXML>
 </p>
+<p>The following example demonstrates the use of the <gi>listOrg</gi>
+element to group together a number of <gi>org</gi> elements, each of
+which is defined solely by means of an informal description, itself
+containing other names. 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<p>The TEI institutional hosts are: <listOrg>
+ <org xml:id="bu">
+  <orgName>Brown University</orgName>
+  <desc>The host contribution is made jointly by the <name
+  type="project">Brown University Women Writers Project</name> and the
+  <orgName>Brown University Library's Center for Digital
+  Initiatives</orgName>.</desc>
+ </org>
+ <org xml:id="na">
+  <orgName>Nancy</orgName>
+  <desc>Hosting is provided by a group of institutions located in
+  Nancy, France, coordinated by <orgName>Loria</orgName> and also
+  including <orgName>ATILF</orgName> and <orgName>INIST</orgName>.</desc>
+ </org>
+ <org xml:id="ou">
+  <orgName>Oxford University</orgName> 
+  <desc>Hosting is provided by the <orgName>Research Technologies
+  Service</orgName> at <orgName>Oxford University Computing
+  Services</orgName>.</desc>
+ </org>
+ <org xml:id="uv">
+  <orgName>University of Virginia</orgName>
+  <desc>Virginia's host support comes jointly from the
+  <orgName>Institute for Advanced Technology in the
+  Humanities</orgName> and the <orgName>University of Virginia
+  Library</orgName>.</desc>
+ </org>
+   <!--  from http://www.tei-c.org/About/hosting.xml-->
+    </listOrg>
+</p></egXML>
+In a more elaborated version of this example, the organizational names
+tagged using <gi>orgName</gi> might be linked using the <att>key</att>
+or <att>ref</att> attribute to a unique <gi>org</gi> element elsewhere. 
 
+
+ </p>
         </div>
 
 <div type="div2" xml:id="NDGEOG"><head>Places</head>
@@ -2100,7 +2140,50 @@ any of these generic elements. </p>
     </egXML>
   </p>
   
-<p>Like <gi>place</gi> elements, <gi>state</gi> and <gi>trait</gi>
+<p>In the following example, the <gi>climate</gi> example is used to
+provided a detailed discussion of this particular aspect of the
+information available about a particular place:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<place xml:id="greece">
+ <placeName>Greece</placeName>
+ <climate>
+  <desc>Greece's climate is divided into three well defined
+  classes:</desc>
+  <climate>
+   <label>Mediterranean</label>
+   <desc>It features mild, wet winters and hot, dry
+   summers. Temperatures rarely reach extremes, although snowfalls do
+   occur occasionally even in <placeName>Athens</placeName>,
+   <placeName>Cyclades</placeName> or <placeName>Crete</placeName>
+   during the winter.</desc>
+  </climate>
+  <climate>
+   <label>Alpine</label>
+   <desc>It is found primarily in <placeName><offset>Western</offset>
+   Greece</placeName> (<placeName>Epirus</placeName>,
+   <placeName><offset>Central</offset> Greece</placeName>,
+   <placeName>Thessaly</placeName>,
+   <placeName><offset>Western</offset> Macedonia</placeName> as well
+   as central parts of <placeName>Peloponnesus</placeName> like
+   <placeName>Achaea</placeName>, <placeName>Arcadia</placeName> and
+   parts of <placeName>Laconia</placeName> where the Alpine range pass
+   by)</desc>
+  </climate>
+  <climate>
+   <label>Temperate</label>
+   <desc>It is found in <placeName><offset>Central</offset> and
+   <offset>Eastern</offset> Macedonia</placeName> as well as in
+   <placeName>Thrace</placeName> at places like
+   <placeName>Komotini</placeName>, <placeName>Xanthi</placeName> and
+   <placeName><offset>northern</offset> Evros</placeName>. It features
+   cold, damp winters and hot, dry summers.</desc>
+  </climate>
+ </climate>
+</place>
+</egXML>   <!--  adapted from http://greekinfo.wordpress.com/ -->
+</p>
+<p>As the above exanmple shows,  <gi>state</gi> and <gi>trait</gi>
 elements, and others of the same class, can be nested hierarchically
 within each other. When this is done, values for the <att>type</att>
 attribute are to be understood as cumulatively inherited, as elsewhere
@@ -2262,356 +2345,48 @@ occupation and residence.</p>
 
 &affiliation;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &age;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &birth;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &climate;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &death;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &education;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &event;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &faith;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &floruit;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &geo;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &geoDecl;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &langKnowledge;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &langKnown;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &listOrg;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &listPerson;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &listPlace;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &location;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &nationality;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &occupation;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &org;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &relationGrp;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &person;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &personGrp;
 
@@ -2631,131 +2406,19 @@ occupation and residence.</p>
 
 &place;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &population;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &relation;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &residence;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &sex;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &socecStatus;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &state;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &terrain;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &trait;
 
@@ -2945,20 +2608,6 @@ or organizational names as well. For example:
 
 
 &nym;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 &listNym;
 
