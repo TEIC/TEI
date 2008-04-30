@@ -72,8 +72,8 @@
     use="concat(@name,'_',../../@ident)"/>
 
   <xsl:variable name="AnonymousModule">
-    <xsl:text>module-from-</xsl:text>
-    <xsl:value-of select="//tei:schemaSpec/@ident"/>
+    <xsl:text>derived-module-</xsl:text>
+    <xsl:variable name="$selectedSchema"/>
   </xsl:variable>
 
   <xsl:variable name="ODD">
@@ -240,7 +240,9 @@
 	</xsl:copy>
       </xsl:when>
       <xsl:otherwise>
-<!--	<xsl:message>reject <xsl:value-of select="$k"/>	</xsl:message>-->
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>reject <xsl:value-of select="$k"/> </xsl:message>
+	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -259,7 +261,9 @@
 	</xsl:copy>
       </xsl:when>
       <xsl:otherwise>
-<!--	<xsl:message>reject <xsl:value-of select="$k"/>	</xsl:message>-->
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>reject <xsl:value-of select="$k"/>	</xsl:message>
+	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
