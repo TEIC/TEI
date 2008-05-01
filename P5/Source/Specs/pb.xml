@@ -53,8 +53,37 @@ at this point</desc>
 for the edition.</valDesc>
     </attDef>
   </attList>
-  <exemplum>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
+
+<exemplum>
+<p>Page numbers may vary in different editions of a text.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <p>
+	      ... 
+	    <pb n="145" ed="ed2"/> 
+	    <!-- Page 145 in edition "ed2" starts here -->
+	    ...
+	    <pb n="283" ed="ed1"/>
+	    <!-- Page 283 in edition "ed1" starts here-->
+	    ...
+	    </p>
+    </egXML>
+</exemplum>  <exemplum>
+<p>A page break may be associated with a facsimile image of the page
+it introduces by means of the <att>facs</att> attribute</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+       <TEI>
+          <teiHeader>
+             <!--...-->
+          </teiHeader>
+          <text>
+             <pb n="1" facs="page1.png"/>
+             <!-- page1.png contains an image of the page;
+                 the text it contains is encoded here -->
+             <pb n="2" facs="page2.png"/>
+             <!-- similarly, for page 2 -->
+          </text>
+       </TEI>
+    </egXML>
   </exemplum>
   <remarks>
     <p>On this element, the global <att>n</att> attribute indicates the number or other value associated with the page
