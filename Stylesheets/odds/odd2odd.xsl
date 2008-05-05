@@ -73,7 +73,7 @@
 
   <xsl:variable name="AnonymousModule">
     <xsl:text>derived-module-</xsl:text>
-    <xsl:variable name="$selectedSchema"/>
+    <xsl:value-of  select="$selectedSchema"/>
   </xsl:variable>
 
   <xsl:variable name="ODD">
