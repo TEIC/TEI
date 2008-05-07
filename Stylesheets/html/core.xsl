@@ -760,7 +760,14 @@
           <xsl:apply-templates mode="runin" select="tei:item"/>
         </p>
       </xsl:when>
-      <xsl:when test="@type='unordered' or @type='simple'">
+      <xsl:when test="@type='simple' or not(@type)">
+        <!-- default list is 'simple' -->
+        <ul style="list-style:none">
+          <xsl:call-template name="rendToClass"/>
+          <xsl:apply-templates select="tei:item"/>
+        </ul>
+      </xsl:when>
+      <xsl:when test="@type='unordered'">
         <ul>
           <xsl:call-template name="rendToClass"/>
           <xsl:apply-templates select="tei:item"/>
