@@ -941,7 +941,6 @@ so that is only put back in if there is some content
       </xsl:for-each>
     </xsl:variable>
     <xsl:choose>
-
       <xsl:when
         test="$entCount=1 and local-name(exsl:node-set($contents)/WHAT/*)=$element">
         <xsl:copy-of select="exsl:node-set($contents)/WHAT/node()"/>
@@ -955,6 +954,14 @@ so that is only put back in if there is some content
         test="$element='optional' and $entCount=1 and
 		      local-name(exsl:node-set($contents)/WHAT/*)='oneOrMore'">
         <xsl:copy-of select="exsl:node-set($contents)/WHAT/node()"/>
+      </xsl:when>
+      <xsl:when test="$element='oneOrMore' and $entCount=1 and
+		      local-name(exsl:node-set($contents)/WHAT/*)='zeroOrMore'">
+        <oneOrMore
+          xmlns="http://relaxng.org/ns/structure/1.0">
+	  <xsl:copy-of
+	      select="exsl:node-set($contents)/WHAT/rng:zeroOrMore/*"/>
+	</oneOrMore>
       </xsl:when>
       <xsl:when
         test="self::rng:zeroOrMore/rng:ref/@name='model.global'
