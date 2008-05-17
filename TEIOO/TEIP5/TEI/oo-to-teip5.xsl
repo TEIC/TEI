@@ -1089,14 +1089,19 @@
     </anchor>
   </xsl:template>
 
+  <xsl:template match="text:bookmark-end">
+  </xsl:template>
+
+  <xsl:template match="text:bookmark">
+    <anchor>
+      <xsl:attribute name="xml:id">
+	<xsl:value-of select="@text:name"/>
+      </xsl:attribute>
+    </anchor>
+  </xsl:template>
   <!--
 These seem to have no obvious translation
 -->
-
-
-  <xsl:template match="text:bookmark-end"/>
-
-  <xsl:template match="text:bookmark"/>
 
   <xsl:template match="text:endnotes-configuration"/>
 
