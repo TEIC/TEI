@@ -253,7 +253,7 @@
   <xsl:template match="tei:table">
     <div>
       <xsl:attribute name="class">
-	<xsl:value-of select="$tableAlign"/>
+	<xsl:text>table</xsl:text>
 	<xsl:if test="@align">
 	  <xsl:text> </xsl:text>
 	  <xsl:value-of select="@align"/>

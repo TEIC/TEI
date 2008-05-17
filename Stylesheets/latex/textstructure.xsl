@@ -81,7 +81,7 @@
       </xsl:for-each>
       <xsl:text>&#10;%ENDFIGMAP&#10;</xsl:text>
     </xsl:if>
-    <xsl:text>&#10;\documentclass[</xsl:text>
+    <xsl:text>\documentclass[</xsl:text>
     <xsl:value-of select="$classParameters"/>
     <xsl:text>]{</xsl:text>
     <xsl:value-of select="$docClass"/>
