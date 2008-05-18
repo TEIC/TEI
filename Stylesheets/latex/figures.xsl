@@ -264,7 +264,7 @@
       <xsl:value-of select="@rend"/>
     </xsl:variable>
     <xsl:text>{</xsl:text>
-    <xsl:if test="$r='rules'">|</xsl:if>
+    <xsl:if test="contains($r,'rules')">|</xsl:if>
     <xsl:choose>
       <xsl:when test="@preamble">
         <xsl:value-of select="@preamble"/>
@@ -298,9 +298,9 @@
       </xsl:when>
       <xsl:otherwise> </xsl:otherwise>
     </xsl:choose>
-    <xsl:if test="$r='rules'">\hline </xsl:if>
+    <xsl:if test="contains($r,'rules')">\hline</xsl:if>
     <xsl:apply-templates/>
-    <xsl:if test="$r='rules'">
+    <xsl:if test="contains($r,'rules')">
       <xsl:text>\\ \hline </xsl:text>
     </xsl:if>
   </xsl:template>
@@ -318,6 +318,13 @@
   </xd:doc>
   <xsl:template name="makePreamble-complex">
     <xsl:param name="r"/>
+    <xsl:variable name="valign">
+      <xsl:choose>
+	<xsl:when test="contains($r,'bottomAlign')">B</xsl:when>
+	<xsl:when test="contains($r,'midAlign')">M</xsl:when>
+	<xsl:otherwise>P</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:variable name="tds">
       <xsl:for-each select=".//tei:cell">
         <xsl:variable name="stuff">
@@ -342,10 +349,11 @@
           <xsl:value-of
             select="sum(following-sibling::cell[$c=@col]) + current()"/>
         </xsl:variable>
-        <xsl:text>P{</xsl:text>
+	<xsl:value-of select="$valign"/>
+        <xsl:text>{</xsl:text>
         <xsl:value-of select="($len div $total) * $tableMaxWidth"/>
         <xsl:text>\textwidth}</xsl:text>
-        <xsl:if test="$r='rules'">|</xsl:if>
+        <xsl:if test="contains($r,'rules')">|</xsl:if>
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
@@ -357,7 +365,7 @@
     <xsl:param name="r"/>
     <xsl:for-each select="tei:row[1]/tei:cell">
       <xsl:text>l</xsl:text>
-      <xsl:if test="$r='rules'">|</xsl:if>
+      <xsl:if test="contains($r,'rules')">|</xsl:if>
     </xsl:for-each>
   </xsl:template>
 </xsl:stylesheet>

@@ -218,6 +218,8 @@ capable of dealing with UTF-8 directly.
 \newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{){\raggedleft\arraybackslash}p{#1}}
 \newcolumntype{P}[1]{){\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{){\arraybackslash}b{#1}}
+\newcolumntype{M}[1]{){\arraybackslash}m{#1}}
 \IfFileExists{xcolor.sty}%
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
