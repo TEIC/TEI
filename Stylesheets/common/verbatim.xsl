@@ -667,7 +667,7 @@
 
 <xsl:template match="@*" mode="attributetext">
   <xsl:choose>
-    <xsl:when test="string-length(.)&gt;$attLength">
+    <xsl:when test="string-length(.)&gt;$attLength and contains(.,' ')">
       <xsl:call-template name="reformatText">
 	<xsl:with-param name="sofar">0</xsl:with-param>
 	<xsl:with-param name="indent">
