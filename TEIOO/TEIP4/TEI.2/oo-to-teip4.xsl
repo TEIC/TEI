@@ -1088,7 +1088,7 @@
     </ref>
   </xsl:template>
 
-  <xsl:template match="text:bookmark-start">
+  <xsl:template match="text:bookmark">
     <anchor>
       <xsl:attribute name="id">
 	<xsl:value-of select="@text:name"/>
@@ -1096,9 +1096,18 @@
     </anchor>
   </xsl:template>
 
-  <xsl:template match="text:bookmark">
-    <anchor>
+  <xsl:template match="text:bookmark-start">
+    <anchor type="bookmark-start">
       <xsl:attribute name="id">
+	<xsl:value-of select="@text:name"/>
+      </xsl:attribute>
+    </anchor>
+  </xsl:template>
+
+  <xsl:template match="text:bookmark-end">
+    <anchor type="bookmark-end">
+      <xsl:attribute name="corresp">
+	<xsl:text>#</xsl:text>
 	<xsl:value-of select="@text:name"/>
       </xsl:attribute>
     </anchor>
@@ -1108,8 +1117,6 @@
 These seem to have no obvious translation
 -->
 
-
-  <xsl:template match="text:bookmark-end"/>
 
   <xsl:template match="text:endnotes-configuration"/>
 

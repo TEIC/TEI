@@ -1082,7 +1082,7 @@
   </xsl:template>
 
   <xsl:template match="text:bookmark-start">
-    <anchor>
+    <anchor type="bookmark-start">
       <xsl:attribute name="xml:id">
 	<xsl:value-of select="@text:name"/>
       </xsl:attribute>
@@ -1090,6 +1090,12 @@
   </xsl:template>
 
   <xsl:template match="text:bookmark-end">
+    <anchor type="bookmark-end">
+      <xsl:attribute name="corresp">
+	<xsl:text>#</xsl:text>
+	<xsl:value-of select="@text:name"/>
+      </xsl:attribute>
+    </anchor>
   </xsl:template>
 
   <xsl:template match="text:bookmark">
