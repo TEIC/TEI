@@ -88,10 +88,10 @@
   <xsl:param name="feedbackURL">#</xsl:param>
   <xsl:param name="homeLabel">Home</xsl:param>
   <xsl:param name="homeWords">Home</xsl:param>
-  <xsl:param name="institution">Institution</xsl:param>
+  <xsl:param name="institution"></xsl:param>
   <xsl:param name="outputDir">html</xsl:param>
   <xsl:param name="parentURL">http://www.example.com/</xsl:param>
-  <xsl:param name="parentWords">Parent</xsl:param>
+  <xsl:param name="parentWords"></xsl:param>
 
   <xsl:key name="MODEL-CLASS-MODULE" match="tei:classSpec[@type='model']"  use="@module"/>
   <xsl:key name="ATT-CLASS-MODULE" match="tei:classSpec[@type='atts']"  use="@module"/>
