@@ -645,6 +645,16 @@ for change individually.
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
+          <xsl:choose>
+            <xsl:when test="s:pattern">
+              <xsl:copy-of select="s:pattern"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:for-each select="$ORIGINAL">
+                <xsl:copy-of select="s:pattern"/>
+              </xsl:for-each>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:for-each>
       </xsl:for-each>
     </xsl:copy>
