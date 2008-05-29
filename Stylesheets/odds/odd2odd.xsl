@@ -179,7 +179,6 @@
       </xsl:for-each>
       <xsl:copy-of select="tei:moduleRef[@url]"/>
       <xsl:call-template name="phase2"/>
-      <xsl:copy-of select="s:*"/>
       </xsl:copy>
     </xsl:variable>
 
@@ -593,17 +592,19 @@ for change individually.
 	    </xsl:choose>  
 	  </tei:classes>
           <!-- element content -->
-          <xsl:choose>
-            <xsl:when test="tei:content">
-
-              <xsl:apply-templates mode="copy" select="tei:content"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:for-each select="$ORIGINAL">
-                <xsl:apply-templates mode="copy" select="tei:content"/>
-              </xsl:for-each>
-            </xsl:otherwise>
-          </xsl:choose>
+	  <content xmlns="http://www.tei-c.org/ns/1.0">
+	    <xsl:copy-of select="s:*"/>
+	    <xsl:choose>
+	      <xsl:when test="tei:content">
+		<xsl:apply-templates mode="copy" select="tei:content/*"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:for-each select="$ORIGINAL">
+		  <xsl:apply-templates mode="copy" select="tei:content/*"/>
+		</xsl:for-each>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </content>
           <!-- attList -->
           <tei:attList>
             <xsl:copy-of select="tei:attList/@org"/>
