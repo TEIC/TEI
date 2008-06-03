@@ -8,6 +8,8 @@ ROMAOPTS=--dochtml --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER} --xs
 
 schemas: names
 	for i in *.odd; do echo Process $$i; ${BIN}/roma ${ROMAOPTS} $$i .; done
+
+foo:
 	-rm tei_odds.dtd tei_odds.xsd
 	-rm tei_allPlus.dtd tei_allPlus.xsd
 	-rm tei_svg.dtd tei_svg.xsd
