@@ -592,19 +592,22 @@ for change individually.
 	    </xsl:choose>  
 	  </tei:classes>
           <!-- element content -->
-	  <content xmlns="http://www.tei-c.org/ns/1.0">
-	    <xsl:copy-of select="s:*"/>
-	    <xsl:choose>
-	      <xsl:when test="tei:content">
-		<xsl:apply-templates mode="copy" select="tei:content/*"/>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:for-each select="$ORIGINAL">
+	  <tei:content>
+	      <xsl:choose>
+		<xsl:when test="tei:content/rng:*">
 		  <xsl:apply-templates mode="copy" select="tei:content/*"/>
-		</xsl:for-each>
+		</xsl:when>
+		<xsl:when test="tei:content/tei:*">
+		  <xsl:apply-templates mode="copy" select="tei:content/*"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:copy-of select="s:*"/>
+		  <xsl:for-each select="$ORIGINAL">
+		    <xsl:apply-templates mode="copy" select="tei:content/*"/>
+		  </xsl:for-each>
 	      </xsl:otherwise>
-	    </xsl:choose>
-	  </content>
+	      </xsl:choose>
+	  </tei:content>
           <!-- attList -->
           <tei:attList>
             <xsl:copy-of select="tei:attList/@org"/>
