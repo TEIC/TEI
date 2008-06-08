@@ -1,5 +1,8 @@
 PREFIX=/usr
 BIN=${PREFIX}/bin
+ODDS=tei_all tei_allPlus tei_bare tei_corpus tei_dictionaries	\
+	tei_drama tei_its teilite tei_math tei_minimal tei_ms tei_odds	\
+	tei_speech tei_svg tei_tite tei_xinclude.odd
 DOCODDS=tei_tite teilite
 LANGUAGE=en
 DRIVER=guidelines-${LANGUAGE}.xml
@@ -7,7 +10,7 @@ XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--dochtml --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER} --xsl=${XSL}
 
 schemas: names
-	for i in *.odd; do echo Process $$i; ${BIN}/roma ${ROMAOPTS} $$i .; done
+	for i in $(ODDS); do echo Process $$i; ${BIN}/roma ${ROMAOPTS} $$i.odd .; done
 
 foo:
 	-rm tei_odds.dtd tei_odds.xsd
