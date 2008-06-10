@@ -601,7 +601,7 @@ for change individually.
 		  <xsl:apply-templates mode="copy" select="tei:content/*"/>
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:copy-of select="s:*"/>
+		  <xsl:copy-of select="tei:content/s:*"/>
 		  <xsl:for-each select="$ORIGINAL">
 		    <xsl:apply-templates mode="copy" select="tei:content/*"/>
 		  </xsl:for-each>
