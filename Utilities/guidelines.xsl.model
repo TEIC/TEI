@@ -20,7 +20,8 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:import href="/usr/share/xml/tei/stylesheet/odds/odd2html.xsl"/>
-  <xsl:key name="HEADS" match="tei:head" use="concat(@xml:lang,@corresp)"/>
+  <xsl:key name="HEADS" match="tei:head"  use="concat(@xml:lang,@corresp)"/>
+  <xsl:param name="googleAnalytics"></xsl:param>
   <xsl:param name="lang"/>
   <xsl:param name="doclang"/>
   <xsl:param name="splitLevel">0</xsl:param>
@@ -735,6 +736,16 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 
     </address>
     </div>
+    <xsl:if test="not($googleAnalytics='')">
+      <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"><!-- comment --></script>
+      <script type="text/javascript">
+	<xsl:text>_uacct = "</xsl:text>
+	<xsl:value-of select="$googleAnalytics"/>
+	<xsl:text>";
+	urchinTracker();
+	</xsl:text>
+      </script>
+      </xsl:if>
   </xsl:template>
 
 <xsl:template name="teiTOP">

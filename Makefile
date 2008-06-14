@@ -1,4 +1,5 @@
 LANGUAGE=en
+GOOGLEANALYTICS=""
 INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
 LATEX=pdflatex
@@ -80,6 +81,7 @@ html-web: check
 		--stringparam pageLayout CSS \
 	        --stringparam lang ${LANGUAGE} \
 	        --stringparam doclang ${LANGUAGE} \
+		--stringparam googleAnalytics ${GOOGLEANALYTICS} \
 	        --stringparam documentationLanguage ${DOCUMENTATIONLANGUAGE} \
 	    Utilities/guidelines.xsl -
 	cp -r ${SOURCETREE}/Images Guidelines-web-tmp/${LANGUAGE}/html/
