@@ -16,21 +16,28 @@
      version="1.0">
 
   <xsl:param name="lang">fr</xsl:param>
-  <xsl:key name="Stuff" 
-	   match="tei:classSpec|tei:elementSpec|tei:macroSpec"
-	   use="1"/>
+
+<xsl:key name="Mo" match="tei:moduleSpec" use="1"/>
+<xsl:key name="E"  match="tei:elementSpec" use="@module"/>
+<xsl:key name="Ma" match="tei:macroSpec" use="@module"/>
+<xsl:key name="AC" match="tei:classSpec[@type='atts']" use="@module"/>
+<xsl:key name="MC" match="tei:classSpec[@type='model']" use="@module"/>
 
 <xsl:template match="/">
   <TEI  xmlns="http://www.tei-c.org/ns/1.0">
    <teiHeader>
+
      <fileDesc>
        <titleStmt>
 	 <title>TEI I18N summary: language <xsl:value-of select="$lang"/></title>
        </titleStmt>
        <editionStmt>
-       <edition><date>April 2008</date></edition></editionStmt>
+	 <edition>
+	   <date>June 2008</date>
+	 </edition>
+       </editionStmt>
        <publicationStmt>
-            <authority>The Text Encoding Initiative</authority>
+	 <authority>The Text Encoding Initiative</authority>
 	 <p>TEI Web</p>      
        </publicationStmt>
        <sourceDesc>
@@ -38,8 +45,12 @@
        </sourceDesc>
      </fileDesc>
      <profileDesc>
+
      </profileDesc>
      <html:style type="text/css">
+       .missing {
+       color: red;
+       }
        table.inner {
          width: 100%;
 	 border: solid black 1pt;
@@ -85,42 +96,111 @@
    </teiHeader>
    <text>
      <body>
-       <table rend="rules">
-       <xsl:for-each select="key('Stuff',1)">
-	 <xsl:sort select="local-name(.)"/>
-	 <xsl:sort select="@ident"/>
-	 <row>
-	   <cell rend="label">
-	     <hi>
-	       <xsl:value-of select="@ident"/>
-	     </hi>
-	   </cell>
-	   <cell rend="transall">
-	     <xsl:call-template name="show"/>
-	   </cell>
-	 </row>
-	 <xsl:for-each select=".//tei:attDef">
-	   <row>
-	     <cell rend="label">&#160;@<xsl:value-of select="@ident"/></cell>
-	     <cell rend="transall">
-	       <xsl:call-template name="show"/>
-	     </cell>
-	   </row>
-	   <xsl:for-each
-	       select="tei:valList/tei:valItem">
-	   <row>
-	     <cell rend="label">&#160;&#160;<emph><xsl:value-of select="@ident"/></emph></cell>
-	     <cell rend="transall">
-	       <xsl:call-template name="show"/>
-	     </cell>
-	   </row>
-	   </xsl:for-each>
-	 </xsl:for-each>
-       </xsl:for-each>
-       </table>
+       <xsl:apply-templates select="key('Mo',1)"/>
      </body>
    </text>
   </TEI>
+</xsl:template>
+  
+  <xsl:template match="tei:moduleSpec">
+    
+    <div>
+      <xsl:attribute name="xml:id">
+	<xsl:value-of select="@ident"/> 
+      </xsl:attribute>
+      <head>[<xsl:value-of select="@ident"/>]
+      <xsl:value-of select="tei:desc"/>
+      </head>
+      <xsl:if test="count(key('AC',@ident))&gt;0">
+	<div>
+	  <head>Attribute classes</head>
+	  <table rend="rules">
+	    <xsl:apply-templates select="key('AC',@ident)">
+	      <xsl:sort select="@ident"/>
+	    </xsl:apply-templates>
+	  </table>
+	</div>
+      </xsl:if>
+      <xsl:if test="count(key('AC',@ident))&gt;0">
+	<div>
+	  <head>Model classes</head>
+	  <table rend="rules">
+	    <xsl:apply-templates select="key('AC',@ident)">
+	      <xsl:sort select="@ident"/>
+	    </xsl:apply-templates>
+	  </table>
+	</div>
+      </xsl:if>
+      <xsl:if test="count(key('E',@ident))&gt;0">
+	<div>
+	  <head>Elements</head>
+	  <table rend="rules">
+	    <xsl:apply-templates select="key('E',@ident)">
+	      <xsl:sort select="@ident"/>
+	    </xsl:apply-templates>
+	  </table>
+	</div>
+      </xsl:if>
+      <xsl:if test="count(key('Ma',@ident))&gt;0">
+	<div>
+	  <head>Macros</head>
+	  <table rend="rules">
+	    <xsl:apply-templates select="key('Ma',@ident)">
+	      <xsl:sort select="@ident"/>
+	    </xsl:apply-templates>
+	  </table>
+	</div>
+      </xsl:if>
+    </div>
+  </xsl:template>
+
+
+  <xsl:template match="tei:classSpec|tei:macroSpec|tei:elementSpec">
+    <row>
+      <cell rend="label">
+	<hi>
+	  <xsl:value-of select="@ident"/>
+	</hi>
+      </cell>
+      <cell rend="transall">
+	<xsl:call-template name="show"/>
+      </cell>
+    </row>
+    <xsl:if test=".//tei:attDef">
+      <row>
+	<cell>&#160;</cell>
+	<cell>
+	  <table rend="rules">
+	    <xsl:for-each select=".//tei:attDef">
+	      <row>
+		<cell rend="label">&#160;@<xsl:value-of select="@ident"/></cell>
+		<cell rend="transall">
+		  <xsl:call-template name="show"/>
+		</cell>
+	      </row>
+	      <xsl:if test="tei:valList">
+		<row>
+		  <cell>&#160;</cell>
+		  <cell>
+		    <table rend="rules">
+		      <xsl:for-each
+			  select="tei:valList/tei:valItem">
+			<row>
+			  <cell rend="label">&#160;&#160;<emph><xsl:value-of select="@ident"/></emph></cell>
+			  <cell rend="transall">
+			    <xsl:call-template name="show"/>
+			  </cell>
+			</row>
+		      </xsl:for-each>
+		    </table>
+		  </cell>
+		</row>
+	      </xsl:if>
+	    </xsl:for-each>
+	  </table>
+	</cell>
+      </row>
+      </xsl:if>
 </xsl:template>
 
 <xsl:template name="show">
@@ -131,7 +211,16 @@
 	  <xsl:value-of select="tei:gloss[not(@xml:lang)]"/>
 	</cell>
 	<cell rend="trans2">
-	  <xsl:value-of select="tei:gloss[@xml:lang=$lang]"/>
+	  <xsl:choose>
+	    <xsl:when test="tei:gloss[@xml:lang=$lang]">
+	      <xsl:value-of select="tei:gloss[@xml:lang=$lang]"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <hi rend="missing">No <xsl:value-of select="$lang"/> for
+	      <xsl:value-of select="tei:gloss[not(@xml:lang)]"/>
+	      </hi>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	</cell>
       </row>
     </xsl:if>
@@ -140,7 +229,16 @@
 	  <xsl:value-of select="tei:desc[not(@xml:lang)]"/>
 	</cell>
 	<cell rend="trans2">
-	  <xsl:value-of select="tei:desc[@xml:lang=$lang]"/>
+	  <xsl:choose>
+	    <xsl:when test="tei:desc[@xml:lang=$lang]">
+	      <xsl:value-of select="tei:desc[@xml:lang=$lang]"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <hi rend="missing">No <xsl:value-of select="$lang"/> for
+	      <xsl:value-of select="tei:desc[not(@xml:lang)]"/>
+	      </hi>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	</cell>
       </row>
   </table>
