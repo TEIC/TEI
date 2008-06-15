@@ -122,6 +122,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
       <xsl:for-each select="$New">
 	<xsl:for-each select="key('IDENTS',$What)">
 	  <xsl:choose>
+	    <xsl:when test="$Name='gloss' and tei:gloss and not(tei:desc)"/>
 	    <xsl:when test="$Name='gloss' and tei:gloss">
 	      <xsl:for-each select="tei:gloss">
 	      <xsl:call-template name="bits">
