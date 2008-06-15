@@ -899,11 +899,6 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template match="tei:elementSpec/@ident"/>
 
-  <xd:doc>
-    <xd:short>Process elements tei:exemplum</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-
   <xsl:template match="tei:elementSpec/tei:desc"/>
 
   <xsl:template match="tei:classSpec/tei:desc"/>

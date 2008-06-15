@@ -876,7 +876,23 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:exemplum" mode="doc">
+    <xsl:variable name="documentationLanguage">
+      <xsl:call-template name="generateDoc"/>
+    </xsl:variable>
+<!--
+<xsl:message>check example <xsl:value-of select="."/> with lang <xsl:value-of
+select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xsl:message>-->
     <xsl:choose>
+      <xsl:when test="@xml:lang and
+		      not(@xml:lang='$documentationLanguage')">
+<!--	<xsl:message>reject exemplum <xsl:value-of select="."/> cos 1</xsl:message>-->
+      </xsl:when>
+      <xsl:when test="not(@xml:lang) and
+		      not($documentationLanguage='en') 
+		      and
+		      ../tei:exemplum[@xml:lang='$documentationLanguage']">
+<!--      	<xsl:message>reject exemplum <xsl:value-of select="."/> cos 2</xsl:message>-->
+      </xsl:when>
       <xsl:when test="parent::tei:attDef">
 	<xsl:element namespace="{$outputNS}" name="{$rowName}">
 	  <xsl:element namespace="{$outputNS}" name="{$cellName}">
