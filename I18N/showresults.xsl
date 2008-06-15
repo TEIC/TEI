@@ -68,23 +68,6 @@
        td.transall {
           width: 90%;
        }
-       #lh-col{
-       width: 1%;
-       color: #000000;
-       margin-right: 0pt;
-       padding: 0px;
-       float: left;
-       }
-       
-       #rh-col{
-       background-color: #FFFFFF;
-       color: #333333;
-       margin: 2pt;
-       padding: 5px ;
-       margin-left: 1%;
-       width: 99%;
-       font-weight:normal;
-       }
      </html:style>
      <revisionDesc>
        <change>
@@ -217,13 +200,14 @@
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <hi rend="missing">No <xsl:value-of select="$lang"/> for
-	      <xsl:value-of select="tei:gloss[not(@xml:lang)]"/>
+	      "<xsl:value-of select="tei:gloss[not(@xml:lang)]"/>"
 	      </hi>
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</cell>
       </row>
     </xsl:if>
+    <xsl:if test="tei:desc[not(@xml:lang)]">
       <row>
 	<cell rend="trans1">
 	  <xsl:value-of select="tei:desc[not(@xml:lang)]"/>
@@ -235,12 +219,13 @@
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <hi rend="missing">No <xsl:value-of select="$lang"/> for
-	      <xsl:value-of select="tei:desc[not(@xml:lang)]"/>
+	      "<xsl:value-of select="tei:desc[not(@xml:lang)]"/>"
 	      </hi>
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</cell>
       </row>
+    </xsl:if>
   </table>
 </xsl:template>
 </xsl:stylesheet>
