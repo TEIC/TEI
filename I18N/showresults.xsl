@@ -187,9 +187,9 @@
 </xsl:template>
 
 <xsl:template name="show">
-<xsl:if test="tei:gloss or tei:desc">
+<xsl:if test="tei:gloss[not(@xml:lang)] or tei:desc[not(@xml:lang)]">
   <table rend="inner">
-    <xsl:if test="tei:gloss">
+    <xsl:if test="tei:gloss[not(@xml:lang)]">
       <row>
 	<cell rend="trans1">
 	  <xsl:value-of select="tei:gloss[not(@xml:lang)]"/>
