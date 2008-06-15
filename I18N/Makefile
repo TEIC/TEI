@@ -7,6 +7,8 @@ results:
 	xsltproc -o show-en-$$i.xml \
 	   --stringparam lang $$i showresults.xsl \
 	   ../P5/Source/Guidelines/en/guidelines-en.xml ;\
+	   xsltproc http://tei.oucs.ox.ac.uk/Oxford/Stylesheets/teioucs-onecol.xsl \
+	show-en-$$i.xml  > show-en-$$i.xhtml; \
 	done
 
 test:
