@@ -187,6 +187,7 @@
 </xsl:template>
 
 <xsl:template name="show">
+<xsl:if test="tei:gloss or tei:desc">
   <table rend="inner">
     <xsl:if test="tei:gloss">
       <row>
@@ -227,6 +228,7 @@
       </row>
     </xsl:if>
   </table>
+</xsl:if>
 </xsl:template>
 </xsl:stylesheet>
 
