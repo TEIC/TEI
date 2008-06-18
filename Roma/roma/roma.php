@@ -652,7 +652,6 @@ class roma
 	$oSchemaParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
 	$oSchemaParser->addReplacement( 'output', $_REQUEST[ 'output' ] );
-
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
 	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );

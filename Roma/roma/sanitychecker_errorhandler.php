@@ -3,138 +3,25 @@
 /**
  *Bernevig Ioan
  *i.bernevig@gmail.com 
- *Juin 2007
+ *Juin 2007, 2008
  **/
  
-/**
- *Error sample:
- *[error: 0][element] = div
- *[error: 0][used_in] = p
- *[error: 0][problem] = does not exist
- *[error: 0][type] = warning
- **/      
+   
  
 class SanityCheckerErrorHandler {
 
-	public $ERRORS;
 	private $sc;
 
 	/**
 	 *Le constructeur
 	 **/
 	public function __construct(&$sc) {
-		$this->ERRORS = array();
 		$this->sc = $sc;
 		$this->loadProgressBar();
 	}
 
 	/**
-	 *Ajouter une erreur à la liste
-	 **/
-	public function addError($type, $element, $used_in, $problem) {
-		$item = array();
-		$item['type'] = $type;
-		$item['element'] = $element;
-		$item['problem'] = $problem;
-		$item['used_in'] = $used_in;
-		$this->ERRORS[] = $item;
-	}
-
-	/**
-	 *Fonction qui trie les erreurs
-	 **/
-	private function getSortedErrors() {
-		return $this->ERRORS;
-	}
-
-	/**
-	 *Fonction qui affiche toutes les erreurs
-	 **/
-	public function showErrors_1() {
-		$distinct_items = array();
-		foreach($this->ERRORS as $error) $distinct_items[] = $error['element'];
-		$distinct_items = array_unique($distinct_items);
-		foreach($distinct_items as $element) {
-			$used_in = array();
-			$type = array();
-			$problem = array();
-			foreach($this->ERRORS as $error) {
-				if($error['element'] == $element) {
-					$used_in[] = $error['used_in'];
-					$type[] = $error['type'];
-					$problem[] = $error['problem'];	
-				}
-			}
-			$type = $type[0];
-			$used_in = array_unique($used_in);
-			$problem = array_unique($problem);
-			$bold = ' ';
-			for($i=0; $i<count($used_in);$i++) {
-				
-				if($i != count($used_in) - 1 && $used_in[$i] != '') {
-					$bold .= $used_in[$i] . ', ';
-				} else {
-					$bold .= $used_in[$i];
-				}
-			}
-			$prepend = ' ';
-			foreach($problem as $b) {
-				$prepend .= $b . ' ';
-			}
-			if(!(count($used_in) == 1 && $used_in[0] == '')) $prepend .= ' and used in ';
-			if($type == 'Error') {
-				$this->sanityCheckAddError($element, $prepend, $bold, $append);
-			} else {
-				$this->sanityCheckAddWarning($element, $prepend, $bold, $append);
-			}
-		}
-	}
-
-	/**
-	 *Fonction qui affiche toutes les erreurs
-	 **/
-	public function showErrors_2() {
-		foreach($this->ERRORS as $error) {
-			if($error['used_in'] == '') {
-				if($error['type'] == 'Error') {
-					$this->sanityCheckAddError($error['element'], $error['problem'], '', '');
-				} else {
-					$this->sanityCheckAddWarning($error['element'], $error['problem'], '', '');
-				}
-			}
-		}
-		$used_items = array();
-		foreach($this->ERRORS as $error) if($error['used_in'] != '') $used_items[] = $error['used_in'];
-		$used_items = array_unique($used_items);
-		$not_shown = array();
-		foreach($used_items as $used_element) {
-			$this->addElementContainer($used_element);
-			foreach($this->ERRORS as $error) {
-				if($error['used_in'] == $used_element) {
-					if($error['type'] == 'Error') {
-						$this->addElementContainerError($used_element, $error['element'], $error['problem']);
-					} else {
-						$this->addElementContainerWarning($used_element, $error['element'], $error['problem']);
-					}
-				} else {
-					$not_shown[] = $error;
-				}
-			}
-		}
-	}
-
-	/**
-	 *just for debugging
-	 **/
-	public function debug() {
-		$sorted = $this->getSortedErrors();
-		echo '<pre>';
-		print_r($sorted);
-		echo '</pre>';
-	}
-
-	/**
-	 *Charge la barre de progression
+	 *Loads the progress bar
 	 **/
 	public function loadProgressBar() {
 		echo '<script type="text/javascript">';
@@ -144,7 +31,7 @@ class SanityCheckerErrorHandler {
 	}
 
 	/**
-	 *Met à jour le curseur de la barre de progression
+	 *Updates the progress bar
 	 **/
 	public function updateProgressBar($nPercentage) {
 		echo '<script type="text/javascript">';
@@ -155,53 +42,39 @@ class SanityCheckerErrorHandler {
 	}
 
 	/**
-	 *Incrémente de 1 la barre de progresion
+	 *Updates the status
+	 **/
+	public function updateStatus($status) {
+		echo '<script type="text/javascript">';
+		echo "
+		var el = document.getElementById('status_div');
+		el.innerHTML = '$status';
+		";
+		echo '</script>';
+		flush();
+	}
+
+	/**
+	 *updates the progressbar to the current status
 	 **/
 	public function increaseProgressBar() {
+		if($this->sc->CURRENT_PASS == 3) $criteria = 'reached'; else $criteria = 'result';
 		$min = 10;
 		$max = 100;
+		$verified = 0;
 		$current = $this->PGB_CURRENT;
-		if(isset($this->sc->ALL_ELEMENTS)) $nb_el = $this->sc->ALL_ELEMENTS->length + 1;
-		if(isset($this->sc->ALL_CLASSES)) $nb_class = $this->sc->ALL_CLASSES->length + 1;
-		$verified = count($this->sc->COMPUTING);
-		$state = round(($verified/($nb_el+$nb_class))*($max-$min)) + $min;
+		if(isset($this->sc->ALL_ELEMENTS)) $nb_el = count($this->sc->ALL_ELEMENTS); else $nb_el = 999999;
+		foreach($this->sc->ALL_ELEMENTS as $cle => $el) {
+			if(isset($el[$criteria])) $verified++;
+		}
+		$state = round(($verified/($nb_el))*($max-$min)) + $min;
 		$this->updateProgressBar($state);
-	}
-
-	/**
-	 *Ajoute le conteneur d'un élément "In element <bla> etc ..."
-	 **/
-	private function addElementContainer($el_name) {
-		echo '<script type="text/javascript">';
-		echo "addElementContainer('".$el_name."');";
-		echo '</script>';
-		flush();
-	}
-
-	/**
-	 *Ajoute l'erreur dans le conteneur aproprié
-	 **/
-	private function addElementContainerError($used_element, $element, $problem) {
-		echo '<script type="text/javascript">';
-		echo "addElementContainerError('".$used_element."', '".$element."', '".$problem."');";
-		echo '</script>';
-		flush();
-	}
-
-	/**
-	 *Ajoute l'erreur dans le conteneur aproprié
-	 **/
-	private function addElementContainerWarning($used_element, $element, $problem) {
-		echo '<script type="text/javascript">';
-		echo "addElementContainerWarning('".$used_element."', '".$element."', '".$problem."');";
-		echo '</script>';
-		flush();
 	}
 
 	/**
 	 *Ajoute un message d'erreur
 	 **/
-	private function sanityCheckAddError($el_name, $prepend, $bold, $append) {
+	public function sanityCheckAddError($el_name, $prepend, $bold = false, $append = false) {
 		echo '<script type="text/javascript">';
 		echo "addError('".$el_name."', '".$prepend."', '".$bold."', '".$append."');";
 		echo '</script>';
@@ -211,7 +84,7 @@ class SanityCheckerErrorHandler {
 	/**
 	*Ajoute un avertissement
 	**/
-	private function sanityCheckAddWarning($el_name, $prepend, $bold, $append) {
+	public function sanityCheckAddWarning($el_name, $prepend, $bold = false, $append = false) {
 		echo '<script type="text/javascript">';
 		echo "addWarning('".$el_name."', '".$prepend."', '".$bold."', '".$append."');";
 		echo '</script>';
@@ -219,11 +92,72 @@ class SanityCheckerErrorHandler {
 	}
 
 	/**
+	*Affiche les erreurs 
+	**/
+	public function showErrors() {
+	
+		// Elements which cannot be used
+		foreach($this->sc->ALL_ELEMENTS as $cle => $el) {
+			if(isset($el['result']) && $el['result'] == false) $this->sanityCheckAddError($cle, " cannot be used");
+		}
+	
+		// Elements never reached
+		foreach($this->sc->ALL_ELEMENTS as $cle => $el) {
+			if(!isset($el['reached']) && $el['result']) $this->sanityCheckAddWarning($cle, " is never reached from roots elements");
+		}
+		
+		// Elements you can use
+		echo '<script language="javascript">
+		var tmp = document.getElementById(\'elements_you_can_use\');
+		tmp.innerHTML = \'<span style="color: black">Elements you can use:</span> <br /> \'; 
+		</script>';
+		$ok_elements = array();
+		foreach($this->sc->ALL_ELEMENTS as $cle => $el) {
+			if($el['result'] == true) {
+				$ok_elements[] = $cle;
+			}
+		}
+		natcasesort($ok_elements);
+		$html_buffer = '';
+		foreach($ok_elements as $cle) {
+			$html_buffer .= '<a class="href_element_you_can_use" href="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-'.$cle.'.html" target="_blank">'.$cle.'</a> ';
+		}		
+		echo '<script language="javascript">
+		var tmp = document.getElementById(\'elements_you_can_use\');
+		tmp.innerHTML = tmp.innerHTML + \' '.$html_buffer.' \'; 
+		</script>';
+
+
+		// Classes utilisables
+		$ok_classes = array();
+		foreach($this->sc->ELL_CLASSES as $cle => $el) {
+			if(isset($el['result']) && !isset($el['attribute'])) {
+				$tmp = explode('_', $cle);
+				$ok_classes[$tmp[1]][] = $tmp[0];
+			}
+		}
+		$buffer = '';
+		foreach($ok_classes as $mode => $table) {
+			$buffer .= '<p><u>In <b>'.$mode.'</b> mode:</u> <br />';
+			natcasesort($table);
+			foreach($table as $item) $buffer .= '<a class="href_element_you_can_use" href="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-'.$item.'.html" target="_blank">'.$item.'</a> ';
+			$buffer .= '</p>';
+		}
+		echo '<script language="javascript">
+		var tmp = document.getElementById(\'classes_you_can_use\');
+		tmp.innerHTML = \'<span style="color: black">Model classes you can use:</span> <br /> '.$buffer.' \'; 
+		</script>';
+		
+		
+		
+	}
+
+	/**
 	*Ajoute le message qui dit que le schéma est invalide
 	**/
 	public function sanityCheckSchemaBroken() {
 		echo '<script type="text/javascript">';
-		echo "schemaBroken('Schema may have problems');";
+		echo "schemaBroken('Schema is BROKEN !');";
 		echo '</script>';
 		flush();
 	}
@@ -233,7 +167,7 @@ class SanityCheckerErrorHandler {
 	**/
 	public function sanityCheckSchemaOk() {
 		echo '<script type="text/javascript">';
-		echo "schemaOk('Schema is correct !');";
+		echo "schemaOk('Schema is CORRECT !');";
 		echo '</script>';
 		flush();
 	}

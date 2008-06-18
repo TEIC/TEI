@@ -3,7 +3,7 @@
 /**
  *Bernevig Ioan
  *i.bernevig@gmail.com 
- *Juin 2007
+ *Juin 2007, 2008
  **/  
 
 /**
@@ -12,23 +12,24 @@
  **/
 class SanityChecker {
 /**
- *COMPUTING    : tableau contenant les noms des éléments en cours de vérification
- *RESULTS      : tableau contenant les noms des éléments dont on connaît le résultat
- *DOM          : objet DOM qui représente le fichier flat ODD en mémoire
- *FILE_TMP_NAME: le nom temporaire du fichier ODD sur le disque dur
- *ALL_ELEMENTS : liste de tous les elements dans le schema (même ceux non joignables)
- *ALL_CLASSES  : liste de toutes les classes
+ *ALL_ELEMENTS : array which contains all elements, their DOM representation, thein result if exists, their computing status ...
+ *ALL_CLASSES  : exactly as the ALL_ELEMENTS array we have the model classes array, without the result
+               : the same array stores attributes classes defined in the schema.
+ *ELL_CLASSES  : model classes array which indicated for each model class the "mode" in which the class is processed (alternate, sequence, ...)
+               : the same array indicated which attribute is defined in the schema
+ *CURRENT_PASS : integer representing the current sanity checker pass (1, 2, 3)
+ *DOM          : DOM representation of the flat odd
  *PARENTS      : tableau associant à chaque nom d'élément le "dernier parent connu"
  *SCEH         : sanity checker error handler 
  **/         
-public $COMPUTING = array();
-public $RESULTS = array();
-private $DOM;
-private $FILE_TMP_NAME;
 public $ALL_ELEMENTS;
 public $ALL_CLASSES;
+public $ELL_CLASSES;
+public $CURRENT_PASS = 0;
+private $DOM;
 private $PARENTS;
 private $SCEH;
+private $SCHEMA_BROKEN = true;
 
 /**
  La fonction constructeur
@@ -36,28 +37,56 @@ private $SCEH;
  **/
 public function __construct($odd) {
 	$this->SCEH = new SanityCheckerErrorHandler($this);
+	$this->SCEH->updateStatus("Generating flat ODD");
 	$this->SCEH->updateProgressBar(3);
-        $this->DOM = new romaDom();	
+  $this->DOM = new romaDom();	
 	$odd->getOddDom($this->DOM);
 	$this->SCEH->updateProgressBar(4);
-        $this->xpath = new domxpath( $this->DOM );
+  $this->xpath = new domxpath( $this->DOM );
 	$this->SCEH->updateProgressBar(5);
 	$this->xpath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );
 	$this->xpath->registerNamespace( 'tei', 'http://www.tei-c.org/ns/1.0' );
-	$this->ALL_ELEMENTS = $this->xpath->query("//tei:elementSpec");
-	$this->ALL_CLASSES = $this->xpath->query("//tei:classSpec");
-	$this->PARENTS = array();
-//   foreach($this->ALL_CLASSES as $oElement) {
-//     print " + " . $oElement->nodeValue;
-//     }
+	$this->getAllElements();
+	$this->getAllClasses();
+	if(DEBUG) error_reporting(E_ALL);
 }
 
-/**
- Fonction qui supprime les fichiers temporaires
- **/
-private function deleteTemporary() {
-	exec("rm ".JERUSALEM_HTDOCS."tmp/*.odd");
-	exec("rm ".JERUSALEM_HTDOCS."tmp/*.compiled");
+/*
+ This function get all elements using an XPath query and stores them in a table
+ */
+private function getAllElements() {
+	$this->ALL_ELEMENTS = array();
+	$objets = $this->xpath->query("//tei:elementSpec");
+	foreach($objets as $objet) {
+		$monObjet = array("domNode"=>$objet, "parents"=>array());
+		$ident = $objet->getAttribute('ident');
+		$this->ALL_ELEMENTS[$ident] = $monObjet;
+	}
+}
+
+/*
+ Exactly the same as getAllElements() ...
+ */
+private function getAllClasses() {
+	// Le tableau d'utilisation des classes
+	$this->ELL_CLASSES = array();
+	
+	// Le tableau global des classes
+	$this->ALL_CLASSES = array();
+	$objets = $this->xpath->query("//tei:classSpec");
+	foreach($objets as $objet) {
+		$ident = $objet->getAttribute('ident');
+		$type = $objet->getAttribute('type');
+		$monObjet = array("domNode"=>$objet, "type"=>$type);
+		if($type == 'atts')	{
+			$this->ELL_CLASSES[$ident.'.attributes'] = $monObjet;
+			$o_sons = $objet->childNodes;
+			foreach($o_sons as $o_son) {
+				if($o_son->localName == 'attList') foreach($o_son->childNodes as $o_attdef) if($o_attdef->localName == 'attDef') $this->ELL_CLASSES[$ident.'.attribute.'.$o_attdef->getAttribute('ident')] = array("domNode"=>$o_attdef, "result"=>true, "attribute"=>true);
+			}
+		}
+		$this->ALL_CLASSES[$ident] = $monObjet;
+	}
 }
 
 /**
@@ -65,8 +94,8 @@ private function deleteTemporary() {
  On se sert pour retrouver le nom de la classe dans une référence qui porte des précisions sur le type de séquence.
  **/
 private function remove_sequences_from_classnames($class) {
-	if(ereg('_sequence', $class)) {
-		$tab = explode('_sequence', $class);
+	if(ereg('_alternation', $class) || ereg('_sequence', $class) || ereg('_sequenceOptional', $class) || ereg('_sequenceOptionalRepeatable', $class) || ereg('_sequenceRepeatable', $class)) {
+		$tab = explode('_', $class);
 		return $tab[0];
 	} else {
 		return $class;
@@ -80,28 +109,33 @@ private function remove_sequences_from_classnames($class) {
  un tableau d'éléments si l'élément courant est une classe
  **/
 private function getContent($input) {
-	if($input->nodeName == "group" || $input->nodeName == "zeroOrMore" || $input->nodeName == "optional" || $input->nodeName == "oneOrMore") {
+	if($input->localName == "interleave" ||
+		 $input->localName == "mixed" ||
+		 $input->localName == "element" || 
+		 $input->localName == "group" || 
+		 $input->localName == "zeroOrMore" || 
+		 $input->localName == "optional" || 
+		 $input->localName == "oneOrMore" || 
+		 $input->localName == "choice") {
 		$res = array();
 		$childs = $input->childNodes;
 		foreach($childs as $child) {
-			if($child->nodeName == "ref") {
-				$element = $this->xpath->query("//tei:elementSpec[@ident='".$child->getAttribute("name")."']")->item(0);
-				$class = $this->xpath->query("//tei:classSpec[@ident='".$child->getAttribute("name")."']")->item(0);
-				if(is_object($element)) $res[] = $element;
-				if(is_object($class)) $res[] = $class;
+			if($child->localName == "ref") {
+				if($this->isElement($child->getAttribute("name"))) $res[] = $this->ALL_ELEMENTS[$child->getAttribute("name")]['domNode'];
+				else if ($this->isClass($child->getAttribute("name"))) $res[] = $this->ALL_CLASSES[$this->remove_sequences_from_classnames($child->getAttribute("name"))]['domNode']; 
 			} else {
 				$res[] = $child;
 			}
 		}
 		return $res;
-	} else if ($input->nodeName == "elementSpec") {
+	} else if ($input->localName == "elementSpec") {
 		$childs = $input->childNodes;
 		foreach($childs as $child) {
-			if($child->nodeName == "content") {
+			if($child->localName == "content") {
 				return $child;
 			}
 		}
-	} else if ($input->nodeName == "classSpec") {
+	} else if ($input->localName == "classSpec") {
 		$res = array();
 		$items = $this->xpath->query("//tei:*[tei:classes/tei:memberOf/@key='".$input->getAttribute("ident")."']");
 		foreach($items as $item) {
@@ -109,6 +143,7 @@ private function getContent($input) {
 		}
 		return $res;
 	}
+	if(DEBUG) echo "getContent(".$input->localName.") echoue<br>";
 }
 
 /**
@@ -116,45 +151,112 @@ private function getContent($input) {
  correspond ou pas à un élément dans l'arbre DOM
  IE: il existe au moins un élément elementSpec dont l'attribut @ident = element
  **/
-private function isElement(&$element) {
-	$tmp = $this->xpath->query("//tei:elementSpec[@ident='$element']" );
-	if($tmp->length == 0) {
-		return false;
-	} else {
+private function isElement($element) {
+	if(isset($this->ALL_ELEMENTS[$element])) {
 		return true;
+	} else {
+		return false;
 	}
 }
 
 /**
- La fonction isClass(class) renvoie si la la chaine passée en paramètres
- correspond ou pas à une classe dans l'arbre DOM
- IE: il existe au moins un élément classSpec dont l'attribut @ident = class
+ Retourne la première grammaire (en "montant" dans la brache courante de l'arbre)
  **/
-private function isClass(&$class) {
-	$class = $this->remove_sequences_from_classnames($class);
-	$tmp = $this->xpath->query("//tei:classSpec[@ident='$class' and @type='model']" );
-	if($tmp->length == 0) {
+private function getFirstGrammar($element) {
+	if(!$element->parentNode) return false;
+	if($element->localName == 'grammar') return $element;
+	else return $this->getFirstGrammar($element->parentNode);
+}
+
+/**
+ *Returns all <define> elements in a given grammar
+ **/
+private function getDefinesInGrammar($element) {
+	if($element->localName == 'define') {
+		return array($element);
+	} else {
+		$res = array();
+		foreach($element->childNodes as $noeud) {
+			$res = array_merge($res, $this->getDefinesInGrammar($noeud));
+		}
+		return $res;
+	}
+}
+
+/**
+ *Returns the <define> element that matches the rng:ref element (param)
+ **/
+private function getDefine($element) {
+	if(is_object($element)) {
+  	$premiere_grammaire = $this->getFirstGrammar($element);
+  	if(!is_object($premiere_grammaire)) return false;
+  	$items = $this->xpath->query("//node()", $premiere_grammaire);
+  	$items = $this->getDefinesInGrammar($premiere_grammaire);
+		foreach($items as $item) {
+			if($element->getAttribute('name') == $item->getAttribute("name")) return $item;
+		}
 		return false;
 	} else {
+		return false;
+	}
+}
+
+/**
+ *Returns true if the string $class matches a classname in the ODD document
+ *
+ IE: there is at least one <classSpec> with the @ident attribute. The @type attribute can be "model" or "atts".
+ **/
+private function isClass($class) {
+	if(DEBUG) echo "isClass($class) <br>";
+	$class = $this->remove_sequences_from_classnames($class);
+	if(isset($this->ALL_CLASSES[$class]) || isset($this->ELL_CLASSES[$class])) {
+		if(DEBUG) echo "isClass($class) TRUE<br>";
 		return true;
+	} else {
+		if(DEBUG) echo "isClass($class) FALSE<br>";
+		return false;
+	}
+}
+
+/**
+ *Returns true if the name $attname matches an attribute name
+ **/
+private function isAttribute($attname) {
+	if(DEBUG) echo "isAttribute($attname) <br>";
+	if(isset($this->ELL_CLASSES[$attname]) && $this->ELL_CLASSES[$attname]['attribute']) {
+		if(DEBUG) echo "isAttribute($attname) TRUE<br>";
+		return true;
+	} else {
+		if(DEBUG) echo "isAttribute($attname) FALSE<br>";
+		return false;
 	}
 }
 
 /**
  La fonction computingStart(name) enregistre dans un tableau le fait que
  l'élément name est "en cours de calcul"
- IE: on se trouve à l'intérieur de la fonction verifElem(name)
+ IE: on se trouve à l'intérieur de la fonction pass1_verifElem(name)
  **/
 private function computingStart($name) {
-	if($name != "") $this->COMPUTING[$name] = true;
+	if($name != "") {
+		if($this->isElement($name)) {
+			$this->ALL_ELEMENTS[$name]['computing'] = 'started';
+		} else if($this->isClass($name)) {
+			$this->ELL_CLASSES[$name]['computing'] = 'started';
+		}
+	}
 }
 
 /**
- La fonction computingProgress(name) renvoie vrai si la fonction verifElem(name) 
+ La fonction computingProgress(name) renvoie vrai si la fonction pass1_verifElem(name) 
  est en cours d'exécution sur l'élément dont le nom est name
  **/
 private function computingProgress($name) {
-	if(trim($name) != "" && isset($this->COMPUTING[$name]) && $this->COMPUTING[$name]) {
+	if(trim($name) != "" && (
+		(isset($this->ALL_ELEMENTS[$name]['computing']) && $this->ALL_ELEMENTS[$name]['computing'] == 'started') || 
+		(isset($this->ALL_CLASSES[$name]['computing']) && $this->ALL_CLASSES[$name]['computing'] == 'started') ||
+		(isset($this->ELL_CLASSES[$name]['computing']) && $this->ELL_CLASSES[$name]['computing'] == 'started')
+		)) {
 		return true;
 	} else {
 		return false;
@@ -164,10 +266,16 @@ private function computingProgress($name) {
 /**
  La fonction computingStop(name) enregistre dans un tableau le fait que
  l'élément name n'est plus "en cours de calcul"
- IE: la fonction verifElem(name) s'est terminée
+ IE: la fonction pass1_verifElem(name) s'est terminée
  **/
 private function computingStop($name) {
-	$this->COMPUTING[$name] = false;
+	if($name != "") {
+		if($this->isElement($name)) {
+			$this->ALL_ELEMENTS[$name]['computing'] = 'stopped';
+		} else if($this->isClass($name)) {
+			$this->ELL_CLASSES[$name]['computing'] = 'stopped';
+		}
+	}
 }
 
 /**
@@ -188,7 +296,7 @@ private function computingStop($name) {
  n'a aucun impact sur la vérification de la cohérence même.
  **/
 private function getParentItem($element) {
-   if($element->nodeName == "elementSpec" || $element->nodeName == "classSpec") {
+   if($element->localName == "elementSpec" || $element->localName == "classSpec" || $element->localName == "element") {
 		return $element;
 	} else {
 		return $this->getParentItem($element->parentNode);
@@ -206,9 +314,10 @@ private function getParentItem($element) {
  Cette fonction est récursive.
  **/
 private function getElementName($element) {
-	if($element->nodeName == "elementSpec" || $element->nodeName == "classSpec") {
+	if(!is_object($element)) return false;
+	if($element->localName == "elementSpec" || $element->localName == "classSpec") {
 		return $element->getAttribute("ident");
-	} else if($element->nodeName == "ref" || $element->nodeName == "rng:ref") {
+	} else if($element->localName == "ref" || $element->localName == "element") {
 		return $element->getAttribute("name");
 	} else {
 		return $this->getElementName($element->parentNode);
@@ -216,31 +325,7 @@ private function getElementName($element) {
 }
 
 /**
- La fonction inOptionnality(element) renvoie si quelque part au dessus dans 
- l'hiérarchie il existe un élément qui ne soit pas obligatoire.
- IE: Il existe au moins un élément "zeroOrMore" OU "optionnal" OU "choice" 
- (quoi que pour choice, c'est un cas spécial) parmi les pères (et les pères
- des pères, et ainsi de suite) de l'élément element.
- **/
-private function inOptionnality($recursion) {
-	foreach($recursion as $recursion_item) {
-		if($recursion_item->nodeName == "zeroOrMore" || $recursion_item->nodeName == "optional" || $recursion_item->nodeName == "choice") {
-			return true;
-		}
-	}
-	return false;
-}
-
-/**
- Ajoute l'élément courant à la liste de la récursion
- **/
-private function addRecursion($recursion, $element) {
-	$recursion[] = $element;
-	return $recursion;
-}
-
-/**
- La fonction verifElem(element, parent) est la principale fonction de
+ La fonction pass1_verifElem(element, parent) est la principale fonction de
  l'algorithme.  Elle renvoie vrai : si l'élément passé en paramètre
  est satisfiable (ie: son contenu est satifiable) faux : si l'élément
  passé en paramètre n'est pas satifisable (ie: son contenu n'est pas
@@ -250,7 +335,7 @@ private function addRecursion($recursion, $element) {
  fait sur l'élément racine.  Souvent, cet élément racine est l'élément
  <TEI> mais on peut avoir également d'autres racines possibles.  Un
  schéma est "cassé" lorsque toutes les racines que ce schéma peut
- avoir sont cassées, IE la fonction verifElem renvoie faux pour chaque
+ avoir sont cassées, IE la fonction pass1_verifElem renvoie faux pour chaque
  racine.
 
  Le principe de cette fonction est assez simple:
@@ -305,253 +390,414 @@ private function addRecursion($recursion, $element) {
  valide. Dans ce cas, on doit envoie le message sous la forme d'une
  erreur.  **/ 
 
-private function verifElem($element, $parent,  $recursion) { 
- if(!is_object($element)) return null; 
- $name = $element->nodeName;
- if ($name == 'elementSpec' ) {
-    	    $ident = $element->getAttribute("ident"); 
-	    }
- else
-  if ($name == 'classSpec' ) {
-    	    $ident = $element->getAttribute("ident"); 
- }
- else 
-     { $ident = ''; }
-
- if($ident != "") $this->PARENTS[$ident][] = $parent;
- if($ident != "" && isset($this->RESULTS[$ident])) {
-		return $this->RESULTS[$ident];
+private function pass1_verifElem($element, $parent) { 
+	if(!is_object($element)) return null; 
+	if(DEBUG) {
+		echo "pass1_element: nodeName=".$element->nodeName." localName=".$element->localName."<br>";
 	}
- if(!$this->computingProgress($ident)) {
-		$this->SCEH->increaseProgressBar();
-		//echo "verifElement: name=$name";
-// if($element->getAttribute("ident") != "") echo ", @ident=$ident";
-// if($element->getAttribute("name") != "") echo ",
-// @name=".$element->getAttribute("name"); echo "\n";
-
-		switch($name) {
+	switch($element->localName) {
+ 		case 'elementSpec':
+ 		case 'classSpec': $ident = $element->getAttribute("ident"); break;
+ 		case 'ref': $ident = $element->getAttribute("name"); break;
+ 		default: $ident = '';
+	}
+	
+	if($ident != "") {
+		if($this->isElement($ident)) {
+			$this->ALL_ELEMENTS[$ident]['parents'][] = $parent;
+			if(isset($this->ALL_ELEMENTS[$ident]['result'])) return $this->ALL_ELEMENTS[$ident]['result'];
+		} else if($this->isClass($ident)) {
+			$this->ALL_CLASSES[$ident]['parents'][] = $parent;
+			if(isset($this->ALL_CLASSES[$ident]['result'])) return $this->ALL_CLASSES[$ident]['result'];
+		}
+	}
+	
+	if(!$this->computingProgress($ident)) {
+		switch($element->localName) {
 		case "elementSpec": {
 			$content = $this->getContent($element);
 			$broken = false;
 			$this->computingStart($ident);
 			foreach($content->childNodes as $content_item) {
-				if(!$this->verifElem($content_item, $element, $this->addRecursion($recursion, $element))) {
-					$broken = true;
-					$faulty = $content_item;
+				if(!$this->pass1_verifElem($content_item, $element)) {
+					$this->computingStop($ident);
+					if(DEBUG) echo "$ident FALSE because ".$content_item->localName."<br>";
+					return false;
 				}
 			}
 			$this->computingStop($ident);
-			if($broken) {
-				if(!$this->computingProgress($ident) && $ident != $this->getElementName($faulty)) $this->SCEH->addError('Error', $ident, $this->getElementName($parent), 'has NO VALID CONTENT because '.$this->getElementName($faulty).' neither');
-				//$this->RESULTS[$ident] = false;
-				return false;
-			}
 			break;
 		}
-		case "classSpec": {
-			$sequence = "";
-			if(isset($parent) && $parent->nodeName == "ref") {
-				$tmp = explode("_", $parent->getAttribute("name"));
-				if(isset($tmp[1])) $sequence = $tmp[1];
-			}
-			$broken = false;
-			$content = $this->getContent($element);
-			$sequence_broken = false;
-			$count = count($content);
-			$this->computingStart($ident);
-			//$parentSpec = $this->getParentItem($element);
-			foreach($content as $content_item) {
-				if(!$this->verifElem($content_item, $parent, $this->addRecursion($recursion, $element))) {
-					$count--;
-					$sequence_broken = true;
-				}
-			}
-			$this->computingStop($ident);
-//Do not bother to check if classes are empty
-/**
-			if($count == 0) {
-			if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Warning', $ident, $this->getParentItem($parent)->getAttribute("ident"), 'is empty');
-				$this->RESULTS[$ident] = false;
-				return false;
-			}
-
-**/
-			if(($sequence == "sequence" || $sequence == "sequenceRepeatable") && $sequence_broken) {
-				if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Error', $ident, '', 'sequence broken');
-				//$this->RESULTS[$ident] = false;
-				return false;
-			}
-			break;
-		}
+		case "define":
+		case "mixed":
+		case "interleave":
+		case "oneOrMore":
+		case "element":
 		case "group": {
-			$broken = false;
 			foreach($element->childNodes as $content_item) {
-				if(!$this->verifElem($content_item, $element, $this->addRecursion($recursion, $element))) {
-					$broken = true;
-					$faulty = $content_item;
+				if(!$this->pass1_verifElem($content_item, $element)) {
+					return false;
 				}
-			}
-			if($broken) {
-				if($this->inOptionnality($this->addRecursion($recursion,
-	$element))) {
-					if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Warning', $this->getElementName($this->getParentItem($parent)), '', 'group broken' );
-				} else {
-					if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Error', $this->getElementName($this->getParentItem($parent)), '', 'group broken' );
-				}
-				return false;
-			}
-			break;
-		}
-		case "oneOrMore": {
-			$count = 0;
-			foreach($element->childNodes as $content_item) {
-				if($this->verifElem($content_item, $element, $this->addRecursion($recursion, $element))) $count++;
-				else $faulty = $content_item;
-			}
-			if($count == 0) {
-				if(!$this->computingProgress($this->getElementName($element))) $this->SCEH->addError('Error', $this->getElementName($faulty), $this->getElementName($this->getParentItem($parent)), 'is required at least once' );
-				return false;
-			}
-			break;
-		}
-		case "zeroOrMore": {
-			foreach($element->childNodes as $content_item) {
-				$this->verifElem($content_item, $element, $this->addRecursion($recursion, $element));
 			}
 			break;
 		}
 		case "choice": {
 			$good_ones = $element->childNodes->length;
 			foreach($element->childNodes as $content_item) {
-				if(!$this->verifElem($content_item, $element, $this->addRecursion($recursion, $element))) $good_ones--;
+				if($this->pass1_verifElem($content_item, $element)) return true;
 			}
-			if($good_ones == 0) {
-				return false;
-			}
+			return false;
 			break;
 		}
-		case "optional": {
+		case "grammar": {
 			foreach($element->childNodes as $content_item) {
-				$this->verifElem($content_item, $element, $this->addRecursion($recursion, $element));
+				if($content_item->localName  == 'start') {
+					$fils = $content_item->childNodes;
+					$resultat = true;
+					foreach($fils as $fils_item) {
+						$resultat = $resultat && $this->pass1_verifElem($fils_item, $content_item);
+					}
+					return $resultat;
+				}
 			}
 			break;
 		}
+		case "notAllowed": {
+			return false;
+			break;
+		}
+		case "zeroOrMore":
+		case "optional":
 		case "#text":
 		case "text":
-		case "rng:text":
-		case "rng:empty":
-		case "s:pattern":
-		case "sch:pattern": {
+		case "empty":
+		case "ns":
+		case "attribute":
+		case "value":
+		case "list":
+		case "valList":
+		case "valItem":
+		case "data":
+		case "pattern": {
 			break;
 		}
-		case "rng:ref":
+		case "parentRef":
 		case "ref": {
-
-			if($this->isClass($element->getAttribute("name"))) {
-				$el = $this->xpath->query("//tei:classSpec[@ident='".$this->remove_sequences_from_classnames($element->getAttribute("name"))."']")->item(0);	
-			} else if ($this->isElement($element->getAttribute("name"))) {
-				$el = $this->xpath->query("//tei:elementSpec[@ident='".$element->getAttribute("name")."']")->item(0);
-			} else {
-				if($this->inOptionnality($this->addRecursion($recursion, $element))) {
-				  $this->SCEH->addError('Warning',
-				$element->getAttribute("name"),
-				$this->getParentItem($element)->getAttribute("ident"),
-				'has been removed');
-				} else {
-					$this->SCEH->addError('Error',
-				$element->getAttribute("name"),
-				$this->getParentItem($element)->getAttribute("ident"),
-				'has been removed');
-				}
+			$nom = $element->getAttribute("name");
+			if(DEBUG) echo "pass1_ref: $nom<br />";
+			if($this->computingProgress($nom)) {
+				if(DEBUG) echo "<p color=red>on ne peut pas compter sur ".$nom." dans ".$this->getElementName($element)."</p>";
 				return false;
 			}
-			if($el->nodeName != "") {
-				return $this->verifElem($el, $element, $this->addRecursion($recursion, $element));
+			if($this->isClass($nom)) {
+				if(DEBUG) echo "pass1_ref_$nom is a class !! <br>";
+				$a = $this->pass1_verifClass($nom, $element);
+				return $a;
+			} else if ($this->isElement($nom)) {
+				return $this->pass1_verifElem($this->ALL_ELEMENTS[$nom]['domNode'], $element);
+			} else if($noeud_define = $this->getDefine($element)) {
+				return $this->pass1_verifElem($noeud_define, $element);
+			} else if($this->isAttribute($nom)) {
+				return true;
+			} else {
+				$this->SCEH->sanityCheckAddError($nom, ' is used in ' , $this->getElementName($parent), ' and never defined (schema may be unusable)');
+				if(DEBUG) echo "Where is the --$nom-- define ???<br />";
+				return false;
 			}
 			break;
 		}
 		default: {
-			error_log("I can't process ". $name);
+			if(DEBUG) echo "pass1: I can't process ". $element->localName."<br>";
 			return false;
 		}
-		}
-		if($ident != "") $this->RESULTS[$ident] = true;
-		return true;
+	}
 	} else {
+		if(DEBUG) echo "(".$element->localName.") $ident false car en cours de calcul<br>";
 		return false;
 	}
+	if($ident != "") {
+		if($this->isElement($ident)) {
+			$this->ALL_ELEMENTS[$ident]['result'] = true;
+		} else if($this->isClass($ident)) {
+			$this->ALL_CLASSES[$ident]['result'] = true;
+		}
+	}
+	return true;
+}
+
+private function pass1_verifClass($nomclasse, $parent) {
+	//Si la classe est en cours de vérification, on renvoie false (sans enregistrer le résultat
+	if($this->computingProgress($nomclasse)) return false;
+	
+	// Paramètres d'initialisation
+	$buffer = explode('_', $nomclasse);
+	$nom = $buffer[0];
+	
+	//Si c'est une classe d'attributs, on renvoie true
+	if(isset($this->ELL_CLASSES[$nom])) {
+		if(DEBUG) echo "Je ne verifie pas class:$nom <br/>";
+		return true;
+	} 
+	
+	// Il s'agit d'une classe modèle
+	$classe = $this->ALL_CLASSES[$nom]['domNode'];
+	if(isset($buffer[1])) $mode = $buffer[1]; else $mode = false;
+	if(!$mode) $mode = 'alternation';
+	$this->computingStart($nom.'_'.$mode);
+
+	// On regarde tous les modes possibles avec cette classe
+	$modesAutorises = array("alternation", "sequence", "sequenceOptional", "sequenceOptionalRepeatable", "sequenceRepeatable");
+	$att_generate = explode(' ', $classe->getAttribute('generate'));
+	
+	// Si aucune précision, tous les modes sont possibles
+	if(count($att_generate) > 0 && $att_generate[0] == false) $att_generate = $modesAutorises;
+	
+	// On regarde si le mode voulu est possible
+	$autorise = false;
+	foreach($att_generate as $a) {
+		if($mode == $a)	$autorise = true;
+	}
+	if(!$autorise) {
+		//echo '<p style="color: red">Le mode '.$mode.' n\'est pas possible dans '.$nom.'. Choisissez parmi '; print_r($att_generate); echo '</p>';
+		flush();
+		return false;
+	} 
+	
+	// On regarde pour chaque type de sequence si la classe est valide ou non
+	$content = $this->getContent($classe);
+	$count = count($content);
+	switch($mode) {
+		case 'alternation': {
+			$bons = 0;
+			foreach($content as $content_item) {
+				if($this->isClass($content_item->getAttribute("ident"))) $result = $this->pass1_verifClass($content_item->getAttribute("ident"), $classe);
+				else if($this->isElement($content_item->getAttribute("ident"))) $result = $this->pass1_verifElem($content_item, $classe);
+				if($result) {
+					$bons++;
+					$this->ELL_CLASSES[$nom.'_'.$mode]['result'] = true;
+					$this->computingStop($nom.'_'.$mode);
+					return true;
+				}
+			}
+			if($bons == 0) {
+				//echo "Classe $nom vide<br>";
+				return false;
+			}
+		}
+		case 'sequence': 
+		case 'sequenceRepeatable': {
+			foreach($content as $content_item) {
+				if($this->isClass($content_item->getAttribute("ident"))) $result = $this->pass1_verifClass($content_item->getAttribute("ident"), $classe);
+				else if($this->isElement($content_item->getAttribute("ident"))) $result = $this->pass1_verifElem($content_item, $classe);
+				if(!$result) {
+					if(DEBUG) echo "======== ".$content_item->localName." brise la sequence de  ".$classe->localName."<br>";
+					return false;
+				}
+			}
+			break;
+		}
+		case 'sequenceOptional': 
+		case 'sequenceOptionalRepeatable': break;
+		default : {
+			//echo "$mode <br>";
+		}
+	}
+	$this->ELL_CLASSES[$nom.'_'.$mode]['result'] = true;
+	$this->computingStop($nom.'_'.$mode);
+	return true;
+}
+
+private function pass3_verifClass($nomclasse) {
+	$buffer = explode('_', $nomclasse);
+	$nom = $buffer[0];
+	//Si c'est une classe d'attributs, on renvoie true
+	if(isset($this->ELL_CLASSES[$nom])) {
+		if(DEBUG) echo "Je ne verifie pas class:$nom <br/>";
+		return true;
+	} 
+	$classe = $this->ALL_CLASSES[$nom]['domNode'];
+	if(isset($buffer[1])) $mode = $buffer[1]; else $mode = false;
+	if(!$mode) $mode = 'alternation';
+	
+	// Pour éviter les boucles
+	if(isset($this->ALL_CLASSES[$nom]['reached'])) return true;	
+	
+	// Traitement de la classe
+	//echo '<span style="color: red">'.$nom. "</span> ";flush();
+	$this->ALL_CLASSES[$nom]['reached'] = true;
+	$this->SCEH->increaseProgressBar();
+	
+	if($this->pass1_verifClass($nomclasse, false)) {
+			$content = $this->getContent($this->ALL_CLASSES[$nom]['domNode']);
+			foreach($content as $item) {
+				if($this->isClass($item->getAttribute("ident"))) $this->pass3_verifClass($item->getAttribute("ident"), false);
+				else if($this->isElement($item->getAttribute("ident"))) $this->pass3_verifElem($item, false);
+			}
+	}
+	
+}
+private function pass3_verifElem($element) {
+	if(!is_object($element)) return true;
+
+	// Pour éviter les boucles
+	if($element->localName == 'elementSpec' || $element->localName == 'classSpec') $ident = $element->getAttribute('ident');
+	else $ident = false;
+	if($ident) {
+		if(isset($this->ALL_CLASSES[$this->remove_sequences_from_classnames($ident)]['reached']) ||
+		isset($this->ALL_ELEMENTS[$ident]['reached'])) return true;
+	}
+	
+	// On enregistre le fait qu'on est passé par là si c'est un élément
+	if($element->localName == "elementSpec" && $this->ALL_ELEMENTS[$element->getAttribute('ident')]['result']) {
+		if(DEBUG) echo '<span style="color: magenta">'.$element->getAttribute('ident') . "</span> ";flush();
+		$this->ALL_ELEMENTS[$element->getAttribute('ident')]['reached'] = true;
+		$this->SCEH->increaseProgressBar();
+	}
+	
+	// Si c'est une référence
+	if($element->localName == 'ref' || $element->localName == 'parentRef') {
+		if($this->isClass($element->getAttribute('name'))) {
+			$this->pass3_verifClass($element->getAttribute('name'));
+		}	else if($noeud_define = $this->getDefine($element)) {
+				return $this->pass3_verifElem($noeud_define, $element);
+		}	else {
+			$this->pass3_verifElem($this->ALL_ELEMENTS[$element->getAttribute('name')]['domNode']);
+		}
+	} else {
+		if($element->localName == 'elementSpec' || $element->localName == 'classSpec') $ident = $element->getAttribute('ident');
+		else $ident = false;
+		$ident = $element->getAttribute('ident');
+		if($ident && $this->isClass($ident)) {
+			$this->pass1_verifClass($ident, false);
+		} else if($this->pass1_verifElem($element, false) ) {
+			$content = $this->getContent($element);
+			switch($element->localName) {
+				case 'elementSpec': {
+					foreach($content->childNodes as $content_item) $this->pass3_verifElem($content_item);
+					break;
+				}
+				case 'grammar': {
+					foreach($element->childNodes as $content_item) {
+						if($content_item->localName  == 'start') {
+							$fils = $content_item->childNodes;
+							$resultat = true;
+							foreach($fils as $fils_item) {
+								$this->pass3_verifElem($fils_item, $content_item);
+							}
+							return $resultat;
+						}
+					}
+					break;
+				}
+				case 'define':
+				case 'classSpec':
+				case 'oneOrMore':
+				case 'choice':
+				case 'optional':
+				case 'zeroOrMore': 
+				case 'element':
+				case 'interleave':
+				case 'mixed':
+				case 'group': {
+					$liste = $element->childNodes;
+					foreach($liste as $content_item) {
+						$this->pass3_verifElem($content_item);
+					}
+					break;
+				}
+				case 'text':
+				case 'empty':
+				case 'ns':
+				case 'list':
+				case 'attribute':
+				case 'value':
+				case 'valList':
+				case 'valItem':
+				case 'notAllowed':
+				case 'data':
+				case "pattern": {
+					break;
+				}
+				default : echo "je ne sais pas faire ".$element->localName."<br>";flush();
+			}
+		}
+	}
+	return true;
 }
 
 /**
  Est-ce que le schéma est cohérent ?
  pass1() vérifie si toutes les racines du schéma sont satisfiables
+ Seule une petite partie du document est vérifiée
 **/
 public function pass1() {
+	$this->CURRENT_PASS = 1;
+	$this->SCEH->updateStatus("PASS1 starts");
 	$this->SCEH->updateProgressBar(51.1);
-	$roots = explode(" ",
-    $this->xpath->query("//tei:schemaSpec")->item(0)->getAttribute("start"));
+	$roots = explode(" ", $this->xpath->query("//tei:schemaSpec")->item(0)->getAttribute("start"));
 	$this->SCEH->updateProgressBar(51.2);
 	if(trim($roots[0]) == "") {
 		$roots = array();
 		$roots[0] = "TEI";
 	}
 	foreach($roots as $root) {
-// $this->DOM->save('/tmp/foo.xml');
-         $start = $this->xpath->query("//tei:elementSpec[@ident='".$root."']")->item(0);
-         $root_node = $this->DOM->documentElement;
-	 if(!$this->verifElem($start, $root_node, array())) $schema_broken = true;
+		$start = $this->ALL_ELEMENTS[$root]['domNode'];
+    $root_node = $this->DOM->documentElement;
+	 	if($this->pass1_verifElem($start, $root_node)) {
+	 		$this->SCEH->updateStatus("PASS1 ends, element $root checked");
+	 		$this->SCEH->sanityCheckSchemaOk();
+	 		$this->SCHEMA_BROKEN = false;
+			return true;
+	 	}
 	}
-	if($schema_broken) {
-		$this->SCEH->sanityCheckSchemaBroken();
-		return true;
-	} else {
-		$this->SCEH->sanityCheckSchemaOk();
-		return false;
-	}
+	
+	$this->SCEH->updateStatus("<b>Schema is BROKEN</b>");
+	$this->SCHEMA_BROKEN = true;
+	$this->SCEH->sanityCheckSchemaBroken();
+	return false;
 }
 
 /**
- Est-ce que tous les éléments sont joignables à partir des racines ?
+ On vérifie la satisfiabilité de chaque élément
  **/
 public function pass2() {
-	$res = true;
-	$this->SCEH->updateProgressBar(51.5);
-	foreach($this->ALL_ELEMENTS as $element) {
-		if(!isset($this->COMPUTING[$element->getAttribute("ident")])) {
-			$res = false;
-			$this->SCEH->addError('Warning',
- $element->getAttribute("ident"), '', ' is not reachable from root');
-		}
+	$this->CURRENT_PASS = 2;
+	
+	$this->SCEH->updateStatus("PASS2 starts, checking all elements");
+	foreach($this->ALL_ELEMENTS as $cle => $element) {
+		$this->ALL_ELEMENTS[$cle]['result'] = $this->pass1_verifElem($element['domNode'], $this->DOM->documentElement);
+		$this->SCEH->updateStatus("<b>$cle</b> checked");
+		$this->SCEH->increaseProgressBar();
 	}
-	$this->SCEH->updateProgressBar(95);
-	return $res;
+	$this->SCEH->updateStatus("PASS2 ends, all elements have been checked");
+	
+	return true;
 }
 
 /**
- *Est-ce qu'il y a des cas où les éléments bouclent sur eux-mêmes
- *Un élément boucle sur lui même si
- * - il exist dans COMPUTING
- * - il n'existe pas dans RESULTS
- * - il n'existe pas dans la liste d'erreurs
+ *Elément joignable depuis la racine
  **/
 public function pass3() {
-/*	$res = true;
-	foreach($this->COMPUTING as $item => $valeur) {
-		if(!isset($this->RESULTS[Erro$item])) {
-			$existe = false;
-			foreach($this->SCEH->ERRORS as $error) {
-				if($error['element'] == $item) $existe = true;
-			}
-			if(!$existe) $this->SCEH->addError('Error', $item, '', 'is looping');
-		}
+	
+	$this->CURRENT_PASS = 3;
+	
+	$this->SCEH->updateStatus("PASS3 starts");
+	$roots = explode(" ", $this->xpath->query("//tei:schemaSpec")->item(0)->getAttribute("start"));
+
+	if(trim($roots[0]) == "") {
+		$roots = array();
+		$roots[0] = "TEI";
 	}
-*/
-	$this->SCEH->updateProgressBar(100);
-	return $res;
+
+	foreach($roots as $root) {
+	 	$this->pass3_verifElem($this->ALL_ELEMENTS[$root]['domNode']);
+	}
+	
+	$this->SCEH->updateStatus("PASS3 ends, all roots have been tested");
 }
 
 public function showErrors() {
-	$this->SCEH->showErrors_2();
+	$this->SCEH->showErrors();
 }
 
 }

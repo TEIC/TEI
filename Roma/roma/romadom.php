@@ -2006,7 +2006,7 @@ class romaDom extends domDocument
 	$oXSL->load( roma_tei . '/xml/tei/stylesheet/odds/odd2odd.xsl' );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
-        $oProc->setParameter( null, 'stripped', 'true');	
+  $oProc->setParameter( null, 'stripped', 'true');
 	$oProc->setParameter( null, 'TEISERVER', roma_xquery_server);
 	$oProc->setParameter( null, 'TEIC', 'true');
 	$this->getOddLanguage( $szOddLanguage );
