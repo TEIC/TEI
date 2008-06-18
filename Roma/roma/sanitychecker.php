@@ -413,6 +413,7 @@ private function pass1_verifElem($element, $parent) {
 	}
 	
 	if(!$this->computingProgress($ident)) {
+		if($element->nodeName == '#text') return true;
 		switch($element->localName) {
 		case "elementSpec": {
 			$content = $this->getContent($element);
@@ -468,7 +469,6 @@ private function pass1_verifElem($element, $parent) {
 		}
 		case "zeroOrMore":
 		case "optional":
-		case "#text":
 		case "text":
 		case "empty":
 		case "ns":
@@ -637,7 +637,7 @@ private function pass3_verifClass($nomclasse) {
 	
 }
 private function pass3_verifElem($element) {
-	if(!is_object($element)) return true;
+	if(!is_object($element) || $element->nodeName == '#text') return true;
 
 	// Pour éviter les boucles
 	if($element->localName == 'elementSpec' || $element->localName == 'classSpec') $ident = $element->getAttribute('ident');
