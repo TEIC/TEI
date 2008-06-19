@@ -226,9 +226,10 @@
       </xsl:when>
       </xsl:choose>
     </xsl:variable>
+<!--
 <xsl:message>my text is [<xsl:value-of select="$text"/>]</xsl:message>
 <xsl:message>my space is [<xsl:value-of select="$finalSpace"/>]</xsl:message>
-
+-->
     <xsl:choose>
       <xsl:when test="normalize-space($text)=''"/>
       <xsl:when test="contains($text,'&#10;')">
