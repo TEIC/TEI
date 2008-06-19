@@ -110,11 +110,17 @@
       </xsl:when>
       <xsl:when test="not(preceding-sibling::node() or
 		      contains(.,'&#10;'))">
+	<xsl:if test="starts-with(.,' ')">
+	  <xsl:text> </xsl:text>
+	</xsl:if>
 	<xsl:call-template name="Text">
 	  <xsl:with-param name="words">
-	    <xsl:value-of select="."/>
+	    <xsl:value-of select="normalize-space(.)"/>
 	  </xsl:with-param>
 	</xsl:call-template>
+	<xsl:if test="substring(.,string-length(.),1)=' '">
+	  <xsl:text> </xsl:text>
+	</xsl:if>
       </xsl:when>
       <xsl:when test="normalize-space(.)=''">
         <xsl:for-each select="following-sibling::*[1]">
@@ -125,7 +131,6 @@
         </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
-
         <xsl:call-template name="wraptext">
           <xsl:with-param name="count">0</xsl:with-param>
           <xsl:with-param name="indent">
@@ -137,10 +142,10 @@
 	    <xsl:choose>
 	      <xsl:when test="starts-with(.,'&#10;') and not
 			      (preceding-sibling::node())">
-		    <xsl:value-of select="substring(.,2)"/>
+		<xsl:value-of select="translate(substring(.,2),'&#10;','&#10100;')"/>
 	      </xsl:when>
 	      <xsl:otherwise>
-		    <xsl:value-of select="."/>
+		    <xsl:value-of select="translate(.,'&#10;','&#10100;')"/>
 	      </xsl:otherwise>
 	    </xsl:choose>
           </xsl:with-param>
@@ -221,7 +226,7 @@
       <xsl:when test="substring($text,string-length($text),1)=' '">
 	<xsl:text> </xsl:text>
       </xsl:when>
-      <xsl:when test="substring($text,string-length($text),1)='&#10;'">
+      <xsl:when test="substring($text,string-length($text),1)='&#10100;'">
 	<xsl:text> </xsl:text>
       </xsl:when>
       </xsl:choose>
@@ -232,15 +237,18 @@
 -->
     <xsl:choose>
       <xsl:when test="normalize-space($text)=''"/>
-      <xsl:when test="contains($text,'&#10;')">
+      <xsl:when test="contains($text,'&#10100;')">
 	<xsl:if test="$count &gt; 0">
 	  <xsl:value-of select="$indent"/>
+	  <xsl:text> </xsl:text>
+	</xsl:if>
+	<xsl:if test="starts-with($text,' ')">
 	  <xsl:text> </xsl:text>
 	</xsl:if>
 	<xsl:call-template name="Text">
 	  <xsl:with-param name="words">
 	    <xsl:value-of
-		select="substring-before($text,'&#10;')"/>
+		select="normalize-space(substring-before($text,'&#10100;'))"/>
 	  </xsl:with-param>
 	</xsl:call-template>
 	<!--	<xsl:if test="not(substring-after($text,'&#10;')='')">-->
@@ -254,7 +262,7 @@
 	  </xsl:with-param>
 	  <xsl:with-param name="text">
 	    <xsl:value-of
-		select="substring-after($text,'&#10;')"/>
+		select="normalize-space(substring-after($text,'&#10100;'))"/>
 	    <xsl:value-of select="$finalSpace"/>
 	  </xsl:with-param>
 	  <xsl:with-param name="count">
@@ -266,7 +274,6 @@
 	<xsl:if test="starts-with($text,' ')">
 	  <xsl:text> </xsl:text>
 	</xsl:if>
-
 	<xsl:if test="$count &gt; 0 and parent::*">
 	  <xsl:value-of select="$indent"/>
 	  <xsl:text> </xsl:text>
