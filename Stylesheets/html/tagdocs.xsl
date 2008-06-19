@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
-  exclude-result-prefixes="html exsl estr edate a fo local rng tei teix xd"
+  xmlns:s="http://www.ascc.net/xml/schematron"
+  exclude-result-prefixes="s html exsl estr edate a fo local rng tei teix xd"
   extension-element-prefixes="exsl estr edate" version="1.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:edate="http://exslt.org/dates-and-times"

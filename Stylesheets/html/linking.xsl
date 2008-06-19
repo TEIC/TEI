@@ -306,7 +306,8 @@
   <xsl:template name="makeExternalLink">
     <xsl:param name="ptr"/>
     <xsl:param name="dest"/>
-    <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/></xsl:param>
+    <xsl:param name="class">link_<xsl:value-of
+    select="local-name(.)"/></xsl:param>
     <a>
         <xsl:choose>
           <xsl:when test="@rend">
@@ -391,6 +392,9 @@
               <xsl:when test="starts-with($dest,'file:')">
                 <xsl:value-of select="substring-after($dest,'file:')"/>
               </xsl:when>
+	      <xsl:when test="$dest=''">
+		<xsl:text>??</xsl:text>
+	      </xsl:when>
               <xsl:otherwise>
                 <xsl:value-of select="$dest"/>
               </xsl:otherwise>
@@ -496,11 +500,14 @@
             <xsl:when test="not($body='')">
               <xsl:value-of select="$body"/>
             </xsl:when>
-            <xsl:when test="$ptr='true'">
+            <xsl:when test="$ptr='true' and count(key('IDS',$W))&gt;0">
               <xsl:apply-templates mode="xref" select="key('IDS',$W)">
                 <xsl:with-param name="minimal" select="$minimalCrossRef"/>
               </xsl:apply-templates>
             </xsl:when>
+            <xsl:when test="$ptr='true'">
+	      <xsl:text>??</xsl:text>
+	    </xsl:when>
             <xsl:otherwise>
               <xsl:apply-templates/>
             </xsl:otherwise>

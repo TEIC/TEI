@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
   version="1.0"
+  xmlns:s="http://www.ascc.net/xml/schematron"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:dbk="http://docbook.org/ns/docbook"
@@ -16,7 +17,7 @@
   xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  exclude-result-prefixes="xlink dbk rng tei teix xhtml a edate estr html pantor xd xs xsl"
+  exclude-result-prefixes="xlink dbk rng tei teix s xhtml a edate estr html pantor xd xs xsl"
   extension-element-prefixes="exsl estr edate" 
 >
   <xsl:import href="teiodds.xsl"/>
