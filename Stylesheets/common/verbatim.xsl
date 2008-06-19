@@ -125,11 +125,11 @@
         </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
-<!--
+
 	<xsl:if test="starts-with(.,' ')">
 	  <xsl:text> </xsl:text>
 	</xsl:if>
--->
+
         <xsl:call-template name="wraptext">
           <xsl:with-param name="count">0</xsl:with-param>
           <xsl:with-param name="indent">
