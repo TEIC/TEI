@@ -126,10 +126,6 @@
       </xsl:when>
       <xsl:otherwise>
 
-	<xsl:if test="starts-with(.,' ')">
-	  <xsl:text> </xsl:text>
-	</xsl:if>
-
         <xsl:call-template name="wraptext">
           <xsl:with-param name="count">0</xsl:with-param>
           <xsl:with-param name="indent">
@@ -230,6 +226,9 @@
       </xsl:when>
       </xsl:choose>
     </xsl:variable>
+<xsl:message>my text is [<xsl:value-of select="$text"/>]</xsl:message>
+<xsl:message>my space is [<xsl:value-of select="$finalSpace"/>]</xsl:message>
+
     <xsl:choose>
       <xsl:when test="normalize-space($text)=''"/>
       <xsl:when test="contains($text,'&#10;')">
@@ -263,6 +262,10 @@
 	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
+	<xsl:if test="starts-with($text,' ')">
+	  <xsl:text> </xsl:text>
+	</xsl:if>
+
 	<xsl:if test="$count &gt; 0 and parent::*">
 	  <xsl:value-of select="$indent"/>
 	  <xsl:text> </xsl:text>
