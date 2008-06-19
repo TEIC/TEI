@@ -16,7 +16,7 @@ define( 'roma_latex', 'latex' );
 define( 'roma_pdflatex', 'pdflatex' );
 
 // Defines if we are in debugging mode
-define('DEBUG', false);
+define('DEBUG', true);
 
 // Increasing the time limit
 ini_set("max_execution_time", 60);

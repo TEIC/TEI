@@ -17,6 +17,7 @@ class SanityChecker {
                : the same array stores attributes classes defined in the schema.
  *ELL_CLASSES  : model classes array which indicated for each model class the "mode" in which the class is processed (alternate, sequence, ...)
                : the same array indicated which attribute is defined in the schema
+ *ALL_MACROS   : the same ...
  *CURRENT_PASS : integer representing the current sanity checker pass (1, 2, 3)
  *DOM          : DOM representation of the flat odd
  *PARENTS      : tableau associant à chaque nom d'élément le "dernier parent connu"
@@ -24,6 +25,7 @@ class SanityChecker {
  **/         
 public $ALL_ELEMENTS;
 public $ALL_CLASSES;
+public $ALL_MACROS;
 public $ELL_CLASSES;
 public $CURRENT_PASS = 0;
 private $DOM;
@@ -48,6 +50,7 @@ public function __construct($odd) {
 	$this->xpath->registerNamespace( 'tei', 'http://www.tei-c.org/ns/1.0' );
 	$this->getAllElements();
 	$this->getAllClasses();
+	$this->getAllMacros();
 	if(DEBUG) error_reporting(E_ALL);
 }
 
@@ -61,6 +64,19 @@ private function getAllElements() {
 		$monObjet = array("domNode"=>$objet, "parents"=>array());
 		$ident = $objet->getAttribute('ident');
 		$this->ALL_ELEMENTS[$ident] = $monObjet;
+	}
+}
+
+/*
+ This function get all macros using an XPath query and stores them in a table
+ */
+private function getAllMacros() {
+	$this->ALL_MACROS = array();
+	$objets = $this->xpath->query("//tei:macroSpec");
+	foreach($objets as $objet) {
+		$monObjet = array("domNode"=>$objet, "parents"=>array());
+		$ident = $objet->getAttribute('ident');
+		$this->ALL_MACROS[$ident] = $monObjet;
 	}
 }
 
@@ -121,14 +137,14 @@ private function getContent($input) {
 		$childs = $input->childNodes;
 		foreach($childs as $child) {
 			if($child->localName == "ref") {
-				if($this->isElement($child->getAttribute("name"))) $res[] = $this->ALL_ELEMENTS[$child->getAttribute("name")]['domNode'];
+				if($this->isElement($child->getAttribute("name")) || $this->isMacro($child->getAttribute("name"))) $res[] = $this->ALL_ELEMENTS[$child->getAttribute("name")]['domNode'];
 				else if ($this->isClass($child->getAttribute("name"))) $res[] = $this->ALL_CLASSES[$this->remove_sequences_from_classnames($child->getAttribute("name"))]['domNode']; 
 			} else {
 				$res[] = $child;
 			}
 		}
 		return $res;
-	} else if ($input->localName == "elementSpec") {
+	} else if ($input->localName == "elementSpec" || $input->localName == "macroSpec") {
 		$childs = $input->childNodes;
 		foreach($childs as $child) {
 			if($child->localName == "content") {
@@ -155,6 +171,34 @@ private function isElement($element) {
 	if(isset($this->ALL_ELEMENTS[$element])) {
 		return true;
 	} else {
+		return false;
+	}
+}
+
+private function isMacro($macro) {
+	if(DEBUG) echo "isMacro($macro) <br>";
+	if(isset($this->ALL_MACROS[$macro])) {
+		if(DEBUG) echo "isMacro($macro) TRUE<br>";
+		return true;
+	} else {
+		if(DEBUG) echo "isMacro($macro) FALSE<br>";
+		return false;
+	}
+}
+
+/**
+ *Returns true if the string $class matches a classname in the ODD document
+ *
+ IE: there is at least one <classSpec> with the @ident attribute. The @type attribute can be "model" or "atts".
+ **/
+private function isClass($class) {
+	if(DEBUG) echo "isClass($class) <br>";
+	$class = $this->remove_sequences_from_classnames($class);
+	if(isset($this->ALL_CLASSES[$class]) || isset($this->ELL_CLASSES[$class])) {
+		if(DEBUG) echo "isClass($class) TRUE<br>";
+		return true;
+	} else {
+		if(DEBUG) echo "isClass($class) FALSE<br>";
 		return false;
 	}
 }
@@ -188,32 +232,47 @@ private function getDefinesInGrammar($element) {
  **/
 private function getDefine($element) {
 	if(is_object($element)) {
+  	$noeuds = array();
+  	$mode = false;
   	$premiere_grammaire = $this->getFirstGrammar($element);
   	if(!is_object($premiere_grammaire)) return false;
   	$items = $this->xpath->query("//node()", $premiere_grammaire);
   	$items = $this->getDefinesInGrammar($premiere_grammaire);
 		foreach($items as $item) {
-			if($element->getAttribute('name') == $item->getAttribute("name")) return $item;
+			if($element->getAttribute('name') == $item->getAttribute("name")) $noeuds[] = $item;
+		}
+		if(count($noeuds) == 1) return $noeuds[0];
+		if(count($noeuds) > 1) {
+			$nb_with_combine = 0;
+			foreach($noeuds as $noeud) {
+				if($noeud->getAttribute("combine")) {
+					if(!$mode) $mode = $noeud->getAttribute("combine");
+					if($noeud->getAttribute("combine") && $noeud->getAttribute("combine") != $mode) return false;
+					$nb_with_combine++;
+				}
+			}
+			if($nb_with_combine != count($noeuds) - 1) return false;
+			/* Maintenant on peut commencer à les combiner :) */
+			$o_define = $this->DOM->createElementNS('http://relaxng.org/ns/structure/1.0', 'define');
+			$o_define->setAttribute('name', $element->getAttribute('name'));
+			$o_mode = false;
+			if($mode == 'choice') {
+				$o_mode = $this->DOM->createElementNS('http://relaxng.org/ns/structure/1.0', 'choice');
+			} else if($mode == 'interleave') {
+				$o_mode = $this->DOM->createElementNS('http://relaxng.org/ns/structure/1.0', 'interleave');
+			}
+			if($o_mode) {
+				foreach($noeuds as $noeud) {
+					foreach($noeud->childNodes as $fils) {
+						$o_mode->appendChild($fils);
+					}
+				}
+				$o_define->appendChild($o_mode);
+			}
+			return $o_define;
 		}
 		return false;
 	} else {
-		return false;
-	}
-}
-
-/**
- *Returns true if the string $class matches a classname in the ODD document
- *
- IE: there is at least one <classSpec> with the @ident attribute. The @type attribute can be "model" or "atts".
- **/
-private function isClass($class) {
-	if(DEBUG) echo "isClass($class) <br>";
-	$class = $this->remove_sequences_from_classnames($class);
-	if(isset($this->ALL_CLASSES[$class]) || isset($this->ELL_CLASSES[$class])) {
-		if(DEBUG) echo "isClass($class) TRUE<br>";
-		return true;
-	} else {
-		if(DEBUG) echo "isClass($class) FALSE<br>";
 		return false;
 	}
 }
@@ -396,6 +455,7 @@ private function pass1_verifElem($element, $parent) {
 		echo "pass1_element: nodeName=".$element->nodeName." localName=".$element->localName."<br>";
 	}
 	switch($element->localName) {
+		case 'macroSpec':
  		case 'elementSpec':
  		case 'classSpec': $ident = $element->getAttribute("ident"); break;
  		case 'ref': $ident = $element->getAttribute("name"); break;
@@ -409,12 +469,16 @@ private function pass1_verifElem($element, $parent) {
 		} else if($this->isClass($ident)) {
 			$this->ALL_CLASSES[$ident]['parents'][] = $parent;
 			if(isset($this->ALL_CLASSES[$ident]['result'])) return $this->ALL_CLASSES[$ident]['result'];
+		} else if($this->isMacro($ident)) {
+			$this->ALL_MACROS[$ident]['parents'][] = $parent;
+			if(isset($this->ALL_MACROS[$ident]['result'])) return $this->ALL_MACROS[$ident]['result'];
 		}
 	}
 	
 	if(!$this->computingProgress($ident)) {
 		if($element->nodeName == '#text') return true;
 		switch($element->localName) {
+		case "macroSpec":
 		case "elementSpec": {
 			$content = $this->getContent($element);
 			$broken = false;
@@ -495,6 +559,8 @@ private function pass1_verifElem($element, $parent) {
 				return $a;
 			} else if ($this->isElement($nom)) {
 				return $this->pass1_verifElem($this->ALL_ELEMENTS[$nom]['domNode'], $element);
+			} else if ($this->isMacro($nom)) {
+				return $this->pass1_verifElem($this->ALL_MACROS[$nom]['domNode'], $element);
 			} else if($noeud_define = $this->getDefine($element)) {
 				return $this->pass1_verifElem($noeud_define, $element);
 			} else if($this->isAttribute($nom)) {
@@ -640,7 +706,7 @@ private function pass3_verifElem($element) {
 	if(!is_object($element) || $element->nodeName == '#text') return true;
 
 	// Pour éviter les boucles
-	if($element->localName == 'elementSpec' || $element->localName == 'classSpec') $ident = $element->getAttribute('ident');
+	if($element->localName == 'elementSpec' || $element->localName == 'classSpec' || $element->localName == 'macroSpec') $ident = $element->getAttribute('ident');
 	else $ident = false;
 	if($ident) {
 		if(isset($this->ALL_CLASSES[$this->remove_sequences_from_classnames($ident)]['reached']) ||
@@ -659,12 +725,14 @@ private function pass3_verifElem($element) {
 		if($this->isClass($element->getAttribute('name'))) {
 			$this->pass3_verifClass($element->getAttribute('name'));
 		}	else if($noeud_define = $this->getDefine($element)) {
-				return $this->pass3_verifElem($noeud_define, $element);
-		}	else {
+				$this->pass3_verifElem($noeud_define, $element);
+		} else if($this->isMacro($element->getAttribute('name'))) {
+				$this->pass3_verifElem($this->ALL_MACROS[$element->getAttribute('name')]['domNode']);
+		}	else if($this->isElement($element->getAttribute('name'))) {
 			$this->pass3_verifElem($this->ALL_ELEMENTS[$element->getAttribute('name')]['domNode']);
 		}
 	} else {
-		if($element->localName == 'elementSpec' || $element->localName == 'classSpec') $ident = $element->getAttribute('ident');
+		if($element->localName == 'elementSpec' || $element->localName == 'classSpec' || $element->localName == 'macroSpec') $ident = $element->getAttribute('ident');
 		else $ident = false;
 		$ident = $element->getAttribute('ident');
 		if($ident && $this->isClass($ident)) {
@@ -672,6 +740,7 @@ private function pass3_verifElem($element) {
 		} else if($this->pass1_verifElem($element, false) ) {
 			$content = $this->getContent($element);
 			switch($element->localName) {
+				case 'macroSpec':
 				case 'elementSpec': {
 					foreach($content->childNodes as $content_item) $this->pass3_verifElem($content_item);
 					break;
