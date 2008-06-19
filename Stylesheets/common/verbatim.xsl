@@ -254,7 +254,7 @@
 	  </xsl:with-param>
 	  <xsl:with-param name="text">
 	    <xsl:value-of
-		select="normalize-space(substring-after($text,'&#10;'))"/>
+		select="substring-after($text,'&#10;')"/>
 	    <xsl:value-of select="$finalSpace"/>
 	  </xsl:with-param>
 	  <xsl:with-param name="count">
