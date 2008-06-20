@@ -205,6 +205,20 @@ private function isClass($class) {
 }
 
 /**
+ *Returns true if the name $attname matches an attribute name
+ **/
+private function isAttribute($attname) {
+	if(DEBUG) echo "isAttribute($attname) <br>";
+	if(isset($this->ELL_CLASSES[$attname]) && $this->ELL_CLASSES[$attname]['attribute']) {
+		if(DEBUG) echo "isAttribute($attname) TRUE<br>";
+		return true;
+	} else {
+		if(DEBUG) echo "isAttribute($attname) FALSE<br>";
+		return false;
+	}
+}
+
+/**
  Retourne la première grammaire (en "montant" dans la brache courante de l'arbre)
  **/
 private function getFirstGrammar($element) {
@@ -279,20 +293,6 @@ private function getDefine($element) {
 }
 
 /**
- *Returns true if the name $attname matches an attribute name
- **/
-private function isAttribute($attname) {
-	if(DEBUG) echo "isAttribute($attname) <br>";
-	if(isset($this->ELL_CLASSES[$attname]) && $this->ELL_CLASSES[$attname]['attribute']) {
-		if(DEBUG) echo "isAttribute($attname) TRUE<br>";
-		return true;
-	} else {
-		if(DEBUG) echo "isAttribute($attname) FALSE<br>";
-		return false;
-	}
-}
-
-/**
  La fonction computingStart(name) enregistre dans un tableau le fait que
  l'élément name est "en cours de calcul"
  IE: on se trouve à l'intérieur de la fonction pass1_verifElem(name)
@@ -303,6 +303,8 @@ private function computingStart($name) {
 			$this->ALL_ELEMENTS[$name]['computing'] = 'started';
 		} else if($this->isClass($name)) {
 			$this->ELL_CLASSES[$name]['computing'] = 'started';
+		} else if($this->isMacro($name)) {
+			$this->ALL_MACROS[$name]['computing'] = 'started';
 		}
 	}
 }
@@ -313,7 +315,8 @@ private function computingStart($name) {
  **/
 private function computingProgress($name) {
 	if(trim($name) != "" && (
-		(isset($this->ALL_ELEMENTS[$name]['computing']) && $this->ALL_ELEMENTS[$name]['computing'] == 'started') || 
+		(isset($this->ALL_ELEMENTS[$name]['computing']) && $this->ALL_ELEMENTS[$name]['computing'] == 'started') ||
+		(isset($this->ALL_MACROS[$name]['computing']) && $this->ALL_MACROS[$name]['computing'] == 'started') || 
 		(isset($this->ALL_CLASSES[$name]['computing']) && $this->ALL_CLASSES[$name]['computing'] == 'started') ||
 		(isset($this->ELL_CLASSES[$name]['computing']) && $this->ELL_CLASSES[$name]['computing'] == 'started')
 		)) {
@@ -334,6 +337,8 @@ private function computingStop($name) {
 			$this->ALL_ELEMENTS[$name]['computing'] = 'stopped';
 		} else if($this->isClass($name)) {
 			$this->ELL_CLASSES[$name]['computing'] = 'stopped';
+		} else if($this->isMacro($name)) {
+			$this->ALL_MACROS[$name]['computing'] = 'stopped';
 		}
 	}
 }
