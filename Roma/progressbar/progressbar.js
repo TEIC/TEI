@@ -20,15 +20,12 @@ function setPgb(pgbID, pgbValue)
       }
   }
 
-function addError(el_name, prepend, in_bold, append) {
-	var div = document.getElementById("error_div");
+function addUndefined(el_name, prepend, in_bold, append) {
+	var div = document.getElementById("undefined_div");
 	var newdiv = document.createElement('div');
-	newdiv.setAttribute('class', 'errorDiv');
+	newdiv.setAttribute('class', 'undefinedDiv');
 	
 	var error_bold = document.createElement('b');
-	error_bold.appendChild(document.createTextNode('Error'));
-
-	var dots = document.createTextNode(': ');
 
 	var element_name = document.createElement('a');
 	element_name.appendChild(document.createTextNode(el_name));
@@ -40,8 +37,29 @@ function addError(el_name, prepend, in_bold, append) {
 	bolded_text.setAttribute('style', 'color: black; font-weight: bold; font-decoration: none');
 	bolded_text.setAttribute('href', '/release/doc/tei-p5-doc/en/html/ref-'+in_bold+'.html');
 
-	newdiv.appendChild(error_bold);
-	newdiv.appendChild(dots);
+	newdiv.appendChild(element_name);
+	newdiv.appendChild(document.createTextNode(prepend));
+	newdiv.appendChild(bolded_text);
+	newdiv.appendChild(document.createTextNode(append));
+
+	div.appendChild(newdiv);
+}
+
+function addError(el_name, prepend, in_bold, append) {
+	var div = document.getElementById("error_div");
+	var newdiv = document.createElement('div');
+	newdiv.setAttribute('class', 'errorDiv');
+	
+	var element_name = document.createElement('a');
+	element_name.appendChild(document.createTextNode(el_name));
+	element_name.setAttribute('style', 'color: black; font-weight: bold');
+	element_name.setAttribute('href', '/release/doc/tei-p5-doc/en/html/ref-'+el_name+'.html');
+
+	var bolded_text = document.createElement('a');
+	bolded_text.appendChild(document.createTextNode(in_bold));
+	bolded_text.setAttribute('style', 'color: black; font-weight: bold; font-decoration: none');
+	bolded_text.setAttribute('href', '/release/doc/tei-p5-doc/en/html/ref-'+in_bold+'.html');
+
 	newdiv.appendChild(element_name);
 	newdiv.appendChild(document.createTextNode(prepend));
 	newdiv.appendChild(bolded_text);

@@ -80,6 +80,16 @@ class SanityCheckerErrorHandler {
 		echo '</script>';
 		flush();
 	}
+	
+	/**
+	 *Ajoute un message d'erreur
+	 **/
+	public function sanityCheckAddUndefined($el_name, $prepend, $bold = false, $append = false) {
+		echo '<script type="text/javascript">';
+		echo "addUndefined('".$el_name."', '".$prepend."', '".$bold."', '".$append."');";
+		echo '</script>';
+		flush();
+	}
 
 	/**
 	*Ajoute un avertissement
@@ -105,7 +115,7 @@ class SanityCheckerErrorHandler {
 		foreach($this->sc->ALL_ELEMENTS as $cle => $el) {
 			if(!isset($el['reached']) && $el['result']) $this->sanityCheckAddWarning($cle, " is never reached from roots elements");
 		}
-		
+
 		// Elements you can use
 		echo '<script language="javascript">
 		var tmp = document.getElementById(\'elements_you_can_use\');
@@ -113,7 +123,7 @@ class SanityCheckerErrorHandler {
 		</script>';
 		$ok_elements = array();
 		foreach($this->sc->ALL_ELEMENTS as $cle => $el) {
-			if($el['result'] == true) {
+			if($el['result'] == true && $el['reached'] == true) {
 				$ok_elements[] = $cle;
 			}
 		}
@@ -131,7 +141,7 @@ class SanityCheckerErrorHandler {
 		// Classes utilisables
 		$ok_classes = array();
 		foreach($this->sc->ELL_CLASSES as $cle => $el) {
-			if(isset($el['result']) && !isset($el['attribute'])) {
+			if(isset($el['result']) && !isset($el['attribute']) && $el['reached'] == true) {
 				$tmp = explode('_', $cle);
 				$ok_classes[$tmp[1]][] = $tmp[0];
 			}

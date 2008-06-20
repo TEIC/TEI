@@ -126,6 +126,7 @@ private function remove_sequences_from_classnames($class) {
  **/
 private function getContent($input) {
 	if($input->localName == "interleave" ||
+		 $input->localName == "start" ||
 		 $input->localName == "mixed" ||
 		 $input->localName == "element" || 
 		 $input->localName == "group" || 
@@ -493,6 +494,7 @@ private function pass1_verifElem($element, $parent) {
 			$this->computingStop($ident);
 			break;
 		}
+		case "start":
 		case "define":
 		case "mixed":
 		case "interleave":
@@ -515,15 +517,29 @@ private function pass1_verifElem($element, $parent) {
 			break;
 		}
 		case "grammar": {
-			foreach($element->childNodes as $content_item) {
-				if($content_item->localName  == 'start') {
-					$fils = $content_item->childNodes;
-					$resultat = true;
-					foreach($fils as $fils_item) {
-						$resultat = $resultat && $this->pass1_verifElem($fils_item, $content_item);
-					}
-					return $resultat;
+			$start_mode = false;
+			$starts_el = array();
+			foreach($element->childNodes as $item) if($item->localName  == 'start') $starts_el[] = $item;
+			if(count($starts_el) == 0) return false;
+			if(count($starts_el) == 1) {
+				$resultat = true;
+				foreach($starts_el[0]->childNodes as $node) $resultat = $resultat && $this->pass1_verifElem($node, $element);
+				return $resultat;
+			} else if(count($starts_el) > 1) {
+				foreach($starts_el as $el_start) {
+					if(!$start_mode && $el_start->getAttribute('combine')) $start_mode = $el_start->getAttribute('combine');
+					if($start_mode && $start_mode != $el_start->getAttribute('combine')) return false;
 				}
+				if($start_mode == 'choice') {
+					$good = false;
+					foreach($starts_el as $el_start) $good = $good || $this->pass1_verifElem($el_start, $element);
+					return $good;
+				} else if($start_mode == 'interleave') {
+					$good = true;
+					foreach($starts_el as $el_start) $good = $good && $this->pass1_verifElem($el_start, $element);
+					return $good;
+				}
+				return false;
 			}
 			break;
 		}
@@ -566,7 +582,7 @@ private function pass1_verifElem($element, $parent) {
 			} else if($this->isAttribute($nom)) {
 				return true;
 			} else {
-				$this->SCEH->sanityCheckAddError($nom, ' is used in ' , $this->getElementName($parent), ' and never defined (schema may be unusable)');
+				$this->SCEH->sanityCheckAddUndefined($nom, ' is used in ' , $this->getElementName($parent), ' and never defined.');
 				if(DEBUG) echo "Where is the --$nom-- define ???<br />";
 				return false;
 			}
