@@ -39,7 +39,7 @@
 
 <xsl:output indent="yes" encoding="utf-8" omit-xml-declaration="yes"/>
 
-<xsl:include href="/usr/share/xml/tei/stylesheet/common/verbatim.xsl"/>
+<xsl:include href="common/verbatim.xsl"/>
 
 <xsl:template match="tei:div">
 <xsl:copy>
