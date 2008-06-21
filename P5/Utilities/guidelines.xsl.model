@@ -443,22 +443,13 @@
 
 
 
-  <!-- JC Adding headings -->
-  <xsl:template name="class_toc">
-    <xsl:param name="depth"/>
-    <xsl:text>toc</xsl:text>
-    <xsl:text> </xsl:text>
-    <xsl:text>toc</xsl:text>
-    <xsl:value-of select="$depth"/>
-  </xsl:template>
-
   <xsl:template name="continuedToc">
     <xsl:if
-      test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	test="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
       <ul class="toc">
-        <xsl:apply-templates mode="maketoc"
-          select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
-        />
+	<xsl:apply-templates mode="maketoc"
+			     select="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
+			     />
       </ul>
     </xsl:if>
   </xsl:template>
@@ -486,22 +477,6 @@
         <xsl:apply-templates mode="generateLink" select="."/>
       </xsl:variable>
       <li>
-	<xsl:choose>
-	<xsl:when test="not(ancestor::tei:div) and tei:div">
-	  <xsl:attribute name="class">
-	    <xsl:text>tocTree</xsl:text>
-	  </xsl:attribute>
-	  <a class="collapsed" 
-	     title="Click here to expand list of sections in this chapter" 
-	     href="#" onclick="toggleToc(this);return false;">&#160;</a>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:attribute name="class">
-	    <xsl:text>toc</xsl:text>
-	  </xsl:attribute>
-	  <a class="normaltoc">&#160;</a>
-	</xsl:otherwise>
-	</xsl:choose>
 	<xsl:call-template name="header">
 	  <xsl:with-param name="toc" select="$pointer"/>
 	  <xsl:with-param name="minimal">false</xsl:with-param>
@@ -583,10 +558,27 @@
   <xsl:template match="tei:divGen[@type='toc']"/>
 
   <xsl:template name="javascriptHook">
-    <script type="text/javascript" src="udm-all.js">
-       <xsl:comment>&#160;</xsl:comment>
+    <script type="text/javascript" src="jquery-1.2.6.min.js">	
+       <xsl:comment>JQuery</xsl:comment>
     </script>
-    <xsl:call-template name="jsForOdds"/>
+    <script type="text/javascript" src="jquery.treeview.js">	
+       <xsl:comment>JQuery treeview</xsl:comment>
+    </script>
+    <script type="text/javascript">
+	$(function() {
+		$("ul.toc").treeview({
+			collapsed: true,
+			animated: "medium",
+			persist: "location"
+		});
+	})
+    </script>
+    <xsl:if test="not($googleAnalytics='')">
+      <script type="text/javascript" src="udm-all.js">
+	<xsl:comment>UDM</xsl:comment>
+      </script>
+      <link rel="stylesheet" href="udm.css" />
+    </xsl:if>
 
   </xsl:template>
 
@@ -750,14 +742,14 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 
 <xsl:template name="teiTOP">
   <xsl:param name="name"/>
-  
-  <script type="text/javascript" src="udm-dom.js">
-    <xsl:comment>&#160;</xsl:comment>
-  </script>
-  <script type="text/javascript" src="udm-mod-keyboard.js">
-    <xsl:comment>&#160;</xsl:comment>
-  </script>
-  
+  <xsl:if test="not($googleAnalytics='')">
+    <script type="text/javascript" src="udm-dom.js">
+      <xsl:comment>&#160;</xsl:comment>
+    </script>
+    <script type="text/javascript" src="udm-mod-keyboard.js">
+      <xsl:comment>&#160;</xsl:comment>
+    </script>
+  </xsl:if>
   <div id="container">
     <a href="#contentstart" 
        title="Skip to content" 
@@ -766,8 +758,9 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
       <img src="Images/banner.jpg"
 	   alt="Text Encoding Initiative logo and banner"/>
     </div>
-    
-    <xsl:copy-of select="document('staticnav.xml')/html:ul"/>
+    <xsl:if test="not($googleAnalytics='')">    
+      <xsl:copy-of select="document('staticnav.xml')/html:ul"/>
+    </xsl:if>
   </div>
   <div
       class="mainhead">
