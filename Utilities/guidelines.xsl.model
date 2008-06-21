@@ -491,66 +491,74 @@
 
   <xsl:template name="mainTOC">
     <xsl:param name="force"/>
-
-    <div class="toc_back">
-      <h3>
-      	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">Back Matter</xsl:with-param>
-	  </xsl:call-template>
-      </h3>
-      <xsl:for-each
-	  select="ancestor-or-self::tei:TEI/tei:text/tei:back">
-	<xsl:if
-	    test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-	  <ul class="toc{$force} toc_back">
-	    <xsl:apply-templates mode="maketoc"
-				 select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-	      <xsl:with-param name="forcedepth" select="$force"/>
-              </xsl:apply-templates>
-	  </ul>
-	</xsl:if>
-      </xsl:for-each>
+    <div id="sidetreecontrol"> 
+      <a href="?#"> - </a> | <a href="?#">
+	 <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Show all</xsl:with-param>
+	 </xsl:call-template>
+      </a> 
     </div>
-
-    <div class="toc_front">
-      <h3>
-      	  <xsl:call-template name="i18n">
+    <ul class="toc">
+      <li>
+	<span class="tocListHead">
+	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">Front Matter</xsl:with-param>
 	  </xsl:call-template>
-      </h3>
-      <xsl:for-each
-	  select="ancestor-or-self::tei:TEI/tei:text/tei:front">
-	<xsl:if
-	    test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-	  <ul class="toc{$force} toc_front">
-	    <xsl:apply-templates mode="maketoc"
-				 select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-	      <xsl:with-param name="forcedepth" select="$force"/>
-	    </xsl:apply-templates>
-            </ul>
-	</xsl:if>
-      </xsl:for-each>
-    </div>
-
-    <div class="toc_body">
-      <h3>
-      	  <xsl:call-template name="i18n">
+	</span>
+	<xsl:for-each
+	    select="ancestor-or-self::tei:TEI/tei:text/tei:front">
+	  <xsl:if
+	      test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	    <ul class="toc{$force} toc_front">
+	      <xsl:apply-templates mode="maketoc"
+				   select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+		<xsl:with-param name="forcedepth" select="$force"/>
+	      </xsl:apply-templates>
+	    </ul>
+	  </xsl:if>
+	</xsl:for-each>
+      </li>
+      
+      <li>
+	<span class="tocListHead">
+	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">Text body</xsl:with-param>
 	  </xsl:call-template>
-      </h3>
-      <xsl:for-each
-        select="ancestor-or-self::tei:TEI/tei:text/tei:body">
-        <xsl:if
-          test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-          <ul class="toc{$force}  toc_body">
-            <xsl:apply-templates mode="maketoc"
-              select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-              <xsl:with-param name="forcedepth" select="$force"/>
-            </xsl:apply-templates>
-          </ul>
-        </xsl:if>
-      </xsl:for-each>
-    </div>
+	</span>
+	<xsl:for-each
+	    select="ancestor-or-self::tei:TEI/tei:text/tei:body">
+	  <xsl:if
+	      test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	    <ul class="toc{$force}  toc_body">
+	      <xsl:apply-templates mode="maketoc"
+				   select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+		<xsl:with-param name="forcedepth" select="$force"/>
+	      </xsl:apply-templates>
+	    </ul>
+	  </xsl:if>
+	</xsl:for-each>
+      </li>
+
+      <li>
+	<span class="tocListHead">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Back Matter</xsl:with-param>
+	  </xsl:call-template>
+	</span>
+	<xsl:for-each
+	    select="ancestor-or-self::tei:TEI/tei:text/tei:back">
+	  <xsl:if
+	      test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	    <ul class="toc{$force} toc_back">
+	      <xsl:apply-templates mode="maketoc"
+				   select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+		<xsl:with-param name="forcedepth" select="$force"/>
+	      </xsl:apply-templates>
+	    </ul>
+	  </xsl:if>
+	</xsl:for-each>
+      </li>      
+    </ul>
 
   </xsl:template>
 
@@ -567,6 +575,12 @@
     <script type="text/javascript">
 	$(function() {
 		$("ul.toc").treeview({
+			control:"#sidetreecontrol",
+			collapsed: true,
+			animated: "medium",
+			persist: "location"
+		});
+		$("ul.attrefs").treeview({
 			collapsed: true,
 			animated: "medium",
 			persist: "location"
@@ -579,6 +593,8 @@
       </script>
       <link rel="stylesheet" href="udm.css" />
     </xsl:if>
+
+    <xsl:call-template name="jsForOdds"/>
 
   </xsl:template>
 
