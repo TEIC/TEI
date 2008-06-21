@@ -1537,19 +1537,15 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 
   <xsl:template name="generateParentsByAttribute">
     <xsl:variable name="this" select="@ident"/>
-    <ul class="attrefs">
-      <li>	  
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">
 	    <xsl:text>Class</xsl:text>
 	  </xsl:with-param>
 	</xsl:call-template>
 	<xsl:text>: </xsl:text>
-	<ul>
 	<xsl:for-each select="key('ATTREFS-CLASS',$this)">
 	  <xsl:sort select="ancestor::tei:classSpec/@ident"/>
 	  <xsl:sort select="@ident"/>
-	  <li>
 	  <xsl:for-each select="ancestor::tei:classSpec">
 	    <xsl:call-template name="linkTogether">
 	      <xsl:with-param name="name">
@@ -1563,18 +1559,13 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	  <xsl:text>/@</xsl:text>
 	  <xsl:value-of select="ancestor::tei:attDef/@ident"/>
 	  <xsl:call-template name="showSpace"/>
-	  </li>
 	</xsl:for-each>
-	</ul>
-      </li>
-      <li>	
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">
 	    <xsl:text>Element</xsl:text>
 	  </xsl:with-param>
 	</xsl:call-template>
 	<xsl:text>: </xsl:text>
-	<ul>
 	<xsl:for-each select="key('ATTREFS-ELEMENT',$this)">
 	  <xsl:sort select="ancestor::tei:elementSpec/@ident"/>
 	  <xsl:sort select="@ident"/>
@@ -1594,9 +1585,6 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	  <xsl:call-template name="showSpace"/>
 	  </li>
 	</xsl:for-each>
-	</ul>
-      </li>
-    </ul>
   </xsl:template>
 
   <xsl:template name="generateParentsByMacro">
