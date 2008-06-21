@@ -269,35 +269,107 @@ Overwrite: <xsl:value-of select="$overwrite"/>
       <xsl:copy-of select="."/>
     </xsl:when>
     <xsl:when test="$overwrite='false'">
-      <xsl:copy-of select="."/>
+       <xsl:copy-of select="."/>
     </xsl:when>
     <xsl:when test="not(@xml:lang=$newLang)">
       <xsl:copy-of select="."/>
     </xsl:when>
+    <xsl:when test="$overwrite='true' and @xml:lang=$newLang"/>
   </xsl:choose>
-  <xsl:if test="not(preceding-sibling::tei:exemplum)">
-    <xsl:variable name="this">
-      <xsl:value-of select="normalize-space(.)"/>
+    <xsl:variable name="What">
+      <xsl:choose>
+	<xsl:when test="parent::tei:attDef">
+	  <xsl:value-of select="ancestor::tei:elementSpec/@ident|ancestor::tei:classSpec/@ident"/>
+	  <xsl:text>_</xsl:text>
+	  <xsl:value-of select="../@ident"/>
+	</xsl:when>
+	<xsl:when test="parent::tei:classSpec">
+	  <xsl:value-of select="../@ident"/>
+	</xsl:when>
+	<xsl:when test="parent::tei:elementSpec">
+	  <xsl:value-of select="../@ident"/>
+	</xsl:when>
+	<xsl:when test="parent::tei:macroSpec">
+	  <xsl:value-of select="../@ident"/>
+	</xsl:when>
+      </xsl:choose>
     </xsl:variable>
-    <xsl:variable name="What" select="concat(local-name(..),../@ident)"/>
+  <xsl:if test="not(preceding-sibling::tei:exemplum)">
     <xsl:for-each select="$New">
-      <xsl:for-each select="key('IDENTS',$What)/tei:exemplum">
-	<xsl:if test="@xml:lang=$newLang">
-	<xsl:variable name="that">
-	  <xsl:value-of select="normalize-space(.)"/>
-	</xsl:variable>
-	<xsl:if test="not($that=$this) and not($that='')">
-	  <exemplum xmlns="http://www.tei-c.org/ns/1.0">
-	    <xsl:attribute name="xml:lang">
-	      <xsl:value-of select="$newLang"/>
-	    </xsl:attribute>
-	    <xsl:apply-templates/>
+      <xsl:for-each select="key('IDENTS',$What)">
+	<xsl:for-each select="teix:egXML[@xml:lang=$newLang]">
+	  <exemplum xmlns="http://www.tei-c.org/ns/1.0"
+		    xml:lang="{$newLang}">
+	    <egXML xmln="http://www.tei-c.org/ns/Examples">
+	      <xsl:apply-templates mode="iden"/>
+	    </egXML>
 	  </exemplum>
-	</xsl:if>
-	</xsl:if>
+	</xsl:for-each>
       </xsl:for-each>
     </xsl:for-each>
   </xsl:if>
+</xsl:template>
+
+<xsl:template 
+    match="@xml:id" 
+    mode="iden">
+  <xsl:attribute name="xml:id">
+    <xsl:value-of select="concat($newLang,'_')"/>
+    <xsl:value-of select="."/>
+  </xsl:attribute>
+</xsl:template>
+
+<xsl:template 
+    match="@active|@children|@from|@mergedIn|@mutual|@origin|@parent|@ref|@render|@replacementPattern|@resp|@scheme|@since|@spanTo|@target|@targets|@who|@wit"
+    mode="iden">
+  <xsl:choose>
+    <xsl:when test="starts-with(.,'#')">
+      <xsl:attribute name="{local-name(.)}">
+	<xsl:call-template name="mangle">
+	  <xsl:with-param name="text">
+	    <xsl:value-of select="substring-after(.,'#')"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:attribute>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:copy-of select="."/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template 
+    match="@*|text()|comment()|processing-instruction()"  
+    mode="iden">
+ <xsl:copy-of select="."/>
+</xsl:template>
+
+
+<xsl:template match="*" mode="iden">
+  <xsl:copy>
+    <xsl:apply-templates 
+	select="*|@*|processing-instruction()|comment()|text()"
+	mode="iden"/>
+  </xsl:copy>
+</xsl:template>
+
+<xsl:template name="mangle">
+  <xsl:param name="text"/>
+  <xsl:text>#</xsl:text>
+  <xsl:value-of select="concat($newLang,'_')"/>
+  <xsl:choose>
+    <xsl:when test="contains($text,' #')">
+      <xsl:value-of select="substring-before($text,'#')"/>
+      <xsl:call-template name="mangle">
+	<xsl:with-param name="text">
+	  <xsl:value-of select="substring-after($text,'#')"/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:value-of select="$text"/>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 
