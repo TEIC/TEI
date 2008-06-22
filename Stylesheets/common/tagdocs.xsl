@@ -1711,7 +1711,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	  </xsl:element>
 	</xsl:if>
       </xsl:for-each>
-    </table>
+    </xsl:element>
   </xsl:template>
 
 
