@@ -1667,32 +1667,18 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
   </xsl:template>
 
   <xsl:template match="tei:divGen[@type='attcat']">
-    <table>
-      <thead>
-	<tr>
-	  <td>      
-	    <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">Attributes</xsl:with-param>
-	  </xsl:call-template>
-	  </td>
-	    <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">Used by</xsl:with-param>
-	  </xsl:call-template>
-	  <td>
-	  </td>
-	</tr>
-      </thead>
+    <xsl:element namespace="{$outputNS}" name="{$tableName}">
       <xsl:for-each select="key('ATTDOCS',1)">
 	<xsl:sort select="@ident"/>
 	<xsl:variable name="this">
 	  <xsl:value-of select="@ident"/>
 	</xsl:variable>
 	<xsl:if test="generate-id()=generate-id(key('ATTRIBUTES',$this)[1])">
-	  <tr>
-	    <td>
-	    <xsl:value-of select="$this"/>
-	  </td>
-	  <td>
+	  <xsl:element namespace="{$outputNS}" name="{$rowName}">
+	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	      <xsl:value-of select="$this"/>
+	    </xsl:element>
+	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
 	    <xsl:for-each select="key('ATTRIBUTES-CLASS',$this)">
 	      <xsl:sort select="ancestor::tei:classSpec/@ident"/>
 	      <xsl:for-each select="ancestor::tei:classSpec|ancestor::elementSpec">
@@ -1721,8 +1707,8 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	      </xsl:for-each>
 	      <xsl:text> </xsl:text>
 	    </xsl:for-each>
-	  </td>
-	  </tr>
+	    </xsl:element>
+	  </xsl:element>
 	</xsl:if>
       </xsl:for-each>
     </table>
