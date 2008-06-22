@@ -1163,16 +1163,18 @@ glyphes non standard</head>
 
 
   <xsl:template match="tei:divGen[@type='attcat']">
-    <ul>
+    <dl>
       <xsl:for-each select="key('ATTDOCS',1)">
 	<xsl:sort select="@ident"/>
 	<xsl:variable name="this">
 	  <xsl:value-of select="@ident"/>
 	</xsl:variable>
 	<xsl:if test="generate-id()=generate-id(key('ATTRIBUTES',$this)[1])">
-	  <li>
+	  <dt>
 	    <xsl:value-of select="$this"/>
-	    <ul>
+	  </dt>
+	  <dd>
+	    <ul class="attref">
 	      <xsl:for-each select="key('ATTRIBUTES-CLASS',$this)">
 		<xsl:sort select="ancestor::tei:classSpec/@ident"/>
 		<li>
@@ -1186,6 +1188,7 @@ glyphes non standard</head>
 		      </xsl:with-param>
 		    </xsl:call-template>
 		  </xsl:for-each>
+		  <xsl:text> </xsl:text>
 		</li>
 	      </xsl:for-each>
 	      <xsl:for-each select="key('ATTRIBUTES-ELEMENT',$this)">
@@ -1201,13 +1204,14 @@ glyphes non standard</head>
 		      </xsl:with-param>
 		    </xsl:call-template>
 		  </xsl:for-each>
+		  <xsl:text> </xsl:text>
 		</li>
 	      </xsl:for-each>
 	    </ul>
-	  </li>
+	  </dd>
 	</xsl:if>
       </xsl:for-each>
-    </ul>
+    </dl>
   </xsl:template>
 
 
