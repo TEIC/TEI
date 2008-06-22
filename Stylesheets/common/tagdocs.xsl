@@ -1676,9 +1676,15 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	<xsl:if test="generate-id()=generate-id(key('ATTRIBUTES',$this)[1])">
 	  <xsl:element namespace="{$outputNS}" name="{$rowName}">
 	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>attcat-col1</xsl:text>
+	      </xsl:attribute>
 	      <xsl:value-of select="$this"/>
 	    </xsl:element>
 	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>attcat-col2</xsl:text>
+	      </xsl:attribute>
 	    <xsl:for-each select="key('ATTRIBUTES-CLASS',$this)">
 	      <xsl:sort select="ancestor::tei:classSpec/@ident"/>
 	      <xsl:for-each select="ancestor::tei:classSpec|ancestor::elementSpec">
