@@ -1660,18 +1660,74 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
     </xsl:apply-templates>
   </xsl:template>
 
-  <xsl:template match="tei:divGen[@type='attcat']">
-    <xsl:apply-templates mode="weave" select="key('ATTDOCS',1)">
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
-  </xsl:template>
-
-
   <xsl:template match="tei:divGen[@type='elementcat']">
     <xsl:apply-templates mode="weave" select="key('ELEMENTDOCS',1)">
       <xsl:sort select="@ident"/>
     </xsl:apply-templates>
   </xsl:template>
+
+  <xsl:template match="tei:divGen[@type='attcat']">
+    <table>
+      <thead>
+	<tr>
+	  <td>      
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Attributes</xsl:with-param>
+	  </xsl:call-template>
+	  </td>
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Used by</xsl:with-param>
+	  </xsl:call-template>
+	  <td>
+	  </td>
+	</tr>
+      </thead>
+      <xsl:for-each select="key('ATTDOCS',1)">
+	<xsl:sort select="@ident"/>
+	<xsl:variable name="this">
+	  <xsl:value-of select="@ident"/>
+	</xsl:variable>
+	<xsl:if test="generate-id()=generate-id(key('ATTRIBUTES',$this)[1])">
+	  <tr>
+	    <td>
+	    <xsl:value-of select="$this"/>
+	  </td>
+	  <td>
+	    <xsl:for-each select="key('ATTRIBUTES-CLASS',$this)">
+	      <xsl:sort select="ancestor::tei:classSpec/@ident"/>
+	      <xsl:for-each select="ancestor::tei:classSpec|ancestor::elementSpec">
+		<xsl:call-template name="linkTogether">
+		  <xsl:with-param name="name">
+		    <xsl:value-of select="@ident"/>
+		  </xsl:with-param>
+		  <xsl:with-param name="class">
+		    <xsl:text>link_odd</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:for-each>
+	      <xsl:text> </xsl:text>
+	    </xsl:for-each>
+	    <xsl:for-each select="key('ATTRIBUTES-ELEMENT',$this)">
+	      <xsl:sort select="ancestor::tei:elementSpec/@ident"/>
+	      <xsl:for-each select="ancestor::tei:elementSpec">
+		<xsl:call-template name="linkTogether">
+		  <xsl:with-param name="name">
+		    <xsl:value-of select="@ident"/>
+		  </xsl:with-param>
+		  <xsl:with-param name="class">
+		    <xsl:text>link_odd</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:for-each>
+	      <xsl:text> </xsl:text>
+	    </xsl:for-each>
+	  </td>
+	  </tr>
+	</xsl:if>
+      </xsl:for-each>
+    </table>
+  </xsl:template>
+
 
   <xsl:template match="tei:exemplum" mode="weave">
     <xsl:if test="teix:egXML/* or teix:egXML/text() or text()">
@@ -2267,5 +2323,8 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
+
+
+
 
 </xsl:stylesheet>
