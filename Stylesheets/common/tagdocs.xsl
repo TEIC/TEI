@@ -1537,54 +1537,65 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 
   <xsl:template name="generateParentsByAttribute">
     <xsl:variable name="this" select="@ident"/>
-	<xsl:call-template name="i18n">
-	  <xsl:with-param name="word">
-	    <xsl:text>Class</xsl:text>
-	  </xsl:with-param>
-	</xsl:call-template>
-	<xsl:text>: </xsl:text>
+    <xsl:if test="count(key('ATTREFS-CLASS',$this))&gt;0">
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">
+	  <xsl:text> Class</xsl:text>
+	</xsl:with-param>
+      </xsl:call-template>
+      <xsl:text>: </xsl:text>
+      <xsl:element namespace="{$outputNS}" name="{$ulName}">
 	<xsl:for-each select="key('ATTREFS-CLASS',$this)">
 	  <xsl:sort select="ancestor::tei:classSpec/@ident"/>
 	  <xsl:sort select="@ident"/>
-	  <xsl:for-each select="ancestor::tei:classSpec">
-	    <xsl:call-template name="linkTogether">
-	      <xsl:with-param name="name">
-		<xsl:value-of select="@ident"/>
-	      </xsl:with-param>
-	      <xsl:with-param name="class">
-		<xsl:text>link_odd_class</xsl:text>
-	      </xsl:with-param>
-	    </xsl:call-template>
-	  </xsl:for-each>
-	  <xsl:text>/@</xsl:text>
-	  <xsl:value-of select="ancestor::tei:attDef/@ident"/>
-	  <xsl:call-template name="showSpace"/>
+	  <xsl:element namespace="{$outputNS}" name="{$liName}">
+	    <xsl:for-each select="ancestor::tei:classSpec">
+	      <xsl:call-template name="linkTogether">
+		<xsl:with-param name="name">
+		  <xsl:value-of select="@ident"/>
+		</xsl:with-param>
+		<xsl:with-param name="class">
+		  <xsl:text>link_odd_class</xsl:text>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	    <xsl:text>/@</xsl:text>
+	    <xsl:value-of select="ancestor::tei:attDef/@ident"/>
+	    <xsl:call-template name="showSpace"/>
+	  </xsl:element>
 	</xsl:for-each>
+      </xsl:element>
+    </xsl:if>
+
+    <xsl:if test="count(key('ATTREFS-ELEMENT',$this))&gt;0">
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">
 	    <xsl:text>Element</xsl:text>
 	  </xsl:with-param>
 	</xsl:call-template>
 	<xsl:text>: </xsl:text>
+      <xsl:element namespace="{$outputNS}" name="{$ulName}">
 	<xsl:for-each select="key('ATTREFS-ELEMENT',$this)">
 	  <xsl:sort select="ancestor::tei:elementSpec/@ident"/>
 	  <xsl:sort select="@ident"/>
-	  <li>
-	  <xsl:for-each select="ancestor::tei:elementSpec">
-	    <xsl:call-template name="linkTogether">
-	      <xsl:with-param name="name">
-		<xsl:value-of select="@ident"/>
-	      </xsl:with-param>
-	      <xsl:with-param name="class">
-		<xsl:text>link_odd_element</xsl:text>
-	      </xsl:with-param>
-	    </xsl:call-template>
-	  </xsl:for-each>
-	  <xsl:text>/@</xsl:text>
-	  <xsl:value-of select="ancestor::tei:attDef/@ident"/>
-	  <xsl:call-template name="showSpace"/>
-	  </li>
+	  <xsl:element namespace="{$outputNS}" name="{$liName}">
+	    <xsl:for-each select="ancestor::tei:elementSpec">
+	      <xsl:call-template name="linkTogether">
+		<xsl:with-param name="name">
+		  <xsl:value-of select="@ident"/>
+		</xsl:with-param>
+		<xsl:with-param name="class">
+		  <xsl:text>link_odd_element</xsl:text>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	    <xsl:text>/@</xsl:text>
+	    <xsl:value-of select="ancestor::tei:attDef/@ident"/>
+	    <xsl:call-template name="showSpace"/>
+	  </xsl:element>
 	</xsl:for-each>
+      </xsl:element>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="generateParentsByMacro">
