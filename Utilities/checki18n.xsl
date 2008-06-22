@@ -12,13 +12,13 @@
 <xsl:key name="VALDESC"  match="tei:valDesc[not(@xml:lang) and string-length(.)&gt;0]" use="1"/>
 <xsl:template match="/">
   <TEI  xmlns="http://www.tei-c.org/ns/1.0">
-
+<!--
     <xsl:for-each select="key('GLOSS',1)">
       <xsl:if test="not(../tei:gloss[@xml:lang=$lang])">
 	<xsl:call-template name="foo"/>
       </xsl:if>
     </xsl:for-each>
-
+-->
     <xsl:for-each select="key('DESC',1)">
       <xsl:if test="not(../tei:desc[@xml:lang=$lang])">
 	<xsl:call-template name="foo"/>
