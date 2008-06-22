@@ -446,10 +446,9 @@
   <xsl:template name="continuedToc">
     <xsl:if
 	test="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-      <ul class="toc">
+      <ul class="continuedtoc">
 	<xsl:apply-templates mode="maketoc"
-			     select="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
-			     />
+			     select="tei:div"/>
       </ul>
     </xsl:if>
   </xsl:template>
@@ -491,74 +490,121 @@
 
   <xsl:template name="mainTOC">
     <xsl:param name="force"/>
-    <div id="sidetreecontrol"> 
-      <a href="?#"> - </a> | <a href="?#">
-	 <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">Show all</xsl:with-param>
-	 </xsl:call-template>
-      </a> 
-    </div>
-    <ul class="toc">
-      <li>
-	<span class="tocListHead">
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">Front Matter</xsl:with-param>
-	  </xsl:call-template>
-	</span>
-	<xsl:for-each
-	    select="ancestor-or-self::tei:TEI/tei:text/tei:front">
-	  <xsl:if
-	      test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-	    <ul class="toc{$force} toc_front">
-	      <xsl:apply-templates mode="maketoc"
-				   select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-		<xsl:with-param name="forcedepth" select="$force"/>
-	      </xsl:apply-templates>
-	    </ul>
-	  </xsl:if>
-	</xsl:for-each>
-      </li>
-      
-      <li>
-	<span class="tocListHead">
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">Text body</xsl:with-param>
-	  </xsl:call-template>
-	</span>
-	<xsl:for-each
-	    select="ancestor-or-self::tei:TEI/tei:text/tei:body">
-	  <xsl:if
-	      test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-	    <ul class="toc{$force}  toc_body">
-	      <xsl:apply-templates mode="maketoc"
-				   select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-		<xsl:with-param name="forcedepth" select="$force"/>
-	      </xsl:apply-templates>
-	    </ul>
-	  </xsl:if>
-	</xsl:for-each>
-      </li>
+    <p><span class="tocListHead">
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">Front Matter</xsl:with-param>
+      </xsl:call-template>
+    </span>
+    <xsl:for-each
+	select="ancestor-or-self::tei:TEI/tei:text/tei:front">
+      <xsl:if test="tei:div">
+	<ul class="toc_front">
+	  <xsl:apply-templates mode="maketoc"
+			       select="tei:div">
+	    <xsl:with-param name="forcedepth">0</xsl:with-param>
+	  </xsl:apply-templates>
+	</ul>
+      </xsl:if>
+    </xsl:for-each>
+    </p>
 
-      <li>
-	<span class="tocListHead">
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">Back Matter</xsl:with-param>
-	  </xsl:call-template>
-	</span>
-	<xsl:for-each
-	    select="ancestor-or-self::tei:TEI/tei:text/tei:back">
-	  <xsl:if
-	      test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-	    <ul class="toc{$force} toc_back">
-	      <xsl:apply-templates mode="maketoc"
-				   select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-		<xsl:with-param name="forcedepth" select="$force"/>
-	      </xsl:apply-templates>
-	    </ul>
-	  </xsl:if>
-	</xsl:for-each>
-      </li>      
-    </ul>
+    <p>
+    <span class="tocListHead">
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">Text body</xsl:with-param>
+      </xsl:call-template>
+    </span>
+    <xsl:for-each
+	select="ancestor-or-self::tei:TEI/tei:text/tei:body">
+      <xsl:if
+	  test="tei:div">
+	<ul class="toc_body">
+	  <xsl:apply-templates mode="maketoc"
+			       select="tei:div">
+	    <xsl:with-param name="forcedepth">0</xsl:with-param>
+	  </xsl:apply-templates>
+	</ul>
+      </xsl:if>
+    </xsl:for-each>
+    </p>
+
+    <p>
+      <span class="tocListHead">
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Back Matter</xsl:with-param>
+	</xsl:call-template>
+      </span>
+      <xsl:for-each
+	  select="ancestor-or-self::tei:TEI/tei:text/tei:back">
+	<xsl:if
+	    test="tei:div">
+	  <ul class="toc_back">
+	    <xsl:apply-templates mode="maketoc" select="tei:div">
+	      <xsl:with-param name="forcedepth">0</xsl:with-param>
+	    </xsl:apply-templates>
+	  </ul>
+	</xsl:if>
+      </xsl:for-each>
+    </p>
+    <hr/>
+    <p>
+      <span class="tocListHead">
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Front Matter</xsl:with-param>
+	</xsl:call-template>
+      </span>
+      <xsl:for-each
+	  select="ancestor-or-self::tei:TEI/tei:text/tei:front">
+	<xsl:if
+	    test="tei:div">
+	  <ul class="toc{$force}">
+	    <xsl:apply-templates mode="maketoc" select="tei:div">
+	      <xsl:with-param name="forcedepth" select="$force"/>
+	    </xsl:apply-templates>
+	  </ul>
+	</xsl:if>
+      </xsl:for-each>
+    </p>
+
+    <p>
+      <span class="tocListHead">
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Text body</xsl:with-param>
+	</xsl:call-template>
+      </span>
+      <xsl:for-each
+	  select="ancestor-or-self::tei:TEI/tei:text/tei:body">
+	<xsl:if
+	    test="tei:div">
+	  <ul class="toc{$force}">
+	    <xsl:apply-templates mode="maketoc"
+				 select="tei:div">
+	      <xsl:with-param name="forcedepth" select="$force"/>
+	    </xsl:apply-templates>
+	  </ul>
+	</xsl:if>
+      </xsl:for-each>
+    </p>
+
+    <p>
+      <span class="tocListHead">
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Back Matter</xsl:with-param>
+	</xsl:call-template>
+      </span>
+      <xsl:for-each
+	  select="ancestor-or-self::tei:TEI/tei:text/tei:back">
+	<xsl:if
+	    test="tei:div">
+	  <ul class="toc{$force}">
+	    <xsl:apply-templates mode="maketoc"
+				 select="tei:div">
+	      <xsl:with-param name="forcedepth" select="$force"/>
+	    </xsl:apply-templates>
+	  </ul>
+	</xsl:if>
+      </xsl:for-each>
+    </p>
 
   </xsl:template>
 
@@ -578,20 +624,16 @@
 
     <script type="text/javascript">
 	$(function() {
-		$("ul.toc").treeview({
-			control:"#sidetreecontrol",
-			collapsed: true,
-			animated: "medium",
-			persist: "location"
-		});
 		$("ul.attrefsx").treeview({
 			collapsed: false,
 			animated: "medium",
 			persist: "location"
 		});  
-		$('ul.attrefs-class').columnizeList({cols:3,width:13,unit:'em'});  
+		$('ul.attrefs-class').columnizeList({cols:3,width:16,unit:'em'});  
 		$('ul.attrefs-element').columnizeList({cols:3,width:13,unit:'em'});  
-		$('ul.attributes').columnizeList({cols:3,width:13,unit:'em'});  
+		$('ul.toc_front').columnizeList({cols:3,width:33,unit:'%'});  
+		$('ul.toc_body').columnizeList({cols:2,width:50,unit:'%'});  
+		$('ul.toc_back').columnizeList({cols:3,width:33,unit:'%'});  
 	})
     </script>
     <xsl:if test="not($googleAnalytics='')">
@@ -1133,39 +1175,22 @@ glyphes non standard</head>
 	<xsl:if test="generate-id()=generate-id(key('ATTRIBUTES',$this)[1])">
 	  <li>
 	    <xsl:value-of select="$this"/>
-	    <p>
-	    <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">
-		<xsl:text>Class</xsl:text>
-	      </xsl:with-param>
-	    </xsl:call-template>
-	    <xsl:text>: </xsl:text>
-	  <ul>
-	    <xsl:for-each select="key('ATTRIBUTES-CLASS',$this)">
-	      <xsl:sort select="ancestor::tei:classSpec/@ident"/>
-	      <li>
-		<xsl:for-each select="ancestor::tei:classSpec|ancestor::elementSpec">
-		  <xsl:call-template name="linkTogether">
-		    <xsl:with-param name="name">
-		      <xsl:value-of select="@ident"/>
-		    </xsl:with-param>
-		    <xsl:with-param name="class">
-		      <xsl:text>link_odd</xsl:text>
-		    </xsl:with-param>
-		  </xsl:call-template>
-		</xsl:for-each>
-	      </li>
-	    </xsl:for-each>
-	  </ul>
-	    </p>
-	    <p>
-	    <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">
-		<xsl:text>Element</xsl:text>
-	      </xsl:with-param>
-	    </xsl:call-template>
-	    <xsl:text>: </xsl:text>
 	    <ul>
+	      <xsl:for-each select="key('ATTRIBUTES-CLASS',$this)">
+		<xsl:sort select="ancestor::tei:classSpec/@ident"/>
+		<li>
+		  <xsl:for-each select="ancestor::tei:classSpec|ancestor::elementSpec">
+		    <xsl:call-template name="linkTogether">
+		      <xsl:with-param name="name">
+			<xsl:value-of select="@ident"/>
+		      </xsl:with-param>
+		      <xsl:with-param name="class">
+			<xsl:text>link_odd</xsl:text>
+		      </xsl:with-param>
+		    </xsl:call-template>
+		  </xsl:for-each>
+		</li>
+	      </xsl:for-each>
 	      <xsl:for-each select="key('ATTRIBUTES-ELEMENT',$this)">
 		<xsl:sort select="ancestor::tei:elementSpec/@ident"/>
 		<li>
@@ -1175,14 +1200,13 @@ glyphes non standard</head>
 			<xsl:value-of select="@ident"/>
 		      </xsl:with-param>
 		      <xsl:with-param name="class">
-		    <xsl:text>link_odd</xsl:text>
+			<xsl:text>link_odd</xsl:text>
 		      </xsl:with-param>
 		    </xsl:call-template>
 		  </xsl:for-each>
 		</li>
 	      </xsl:for-each>
 	    </ul>
-	    </p>
 	  </li>
 	</xsl:if>
       </xsl:for-each>
