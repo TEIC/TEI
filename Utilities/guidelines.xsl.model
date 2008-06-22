@@ -1058,6 +1058,7 @@ glyphes non standard</head>
 
   <xsl:template name="generateParentsByAttribute">
     <xsl:variable name="this" select="@ident"/>
+    <xsl:if test="count(key('ATTREFS-CLASS',$this))&gt;0">
     <p>
       <xsl:call-template name="i18n">
 	<xsl:with-param name="word">
@@ -1087,6 +1088,8 @@ glyphes non standard</head>
 	</xsl:for-each>
       </ul>
     </p>
+    </xsl:if>
+    <xsl:if test="count(key('ATTREFS-ELEMENT',$this))&gt;0">
     <p>	
       <xsl:call-template name="i18n">
 	<xsl:with-param name="word">
@@ -1116,6 +1119,7 @@ glyphes non standard</head>
 	</xsl:for-each>
       </ul>
     </p>
+    </xsl:if>
   </xsl:template>
 
 
