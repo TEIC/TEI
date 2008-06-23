@@ -141,7 +141,7 @@ class SanityCheckerErrorHandler {
 		// Classes utilisables
 		$ok_classes = array();
 		foreach($this->sc->ELL_CLASSES as $cle => $el) {
-			if(isset($el['result']) && !isset($el['attribute']) && $el['reached'] == true) {
+			if(isset($el['result']) && !isset($el['attribute'])) {
 				$tmp = explode('_', $cle);
 				$ok_classes[$tmp[1]][] = $tmp[0];
 			}

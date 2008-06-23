@@ -510,6 +510,19 @@ class roma
             case roma_sanity_check:
               $this->processSanityCheck( $szOutput );
 	      break;
+	      	case 'roma_sc_model': {
+		      	header('Content-Type: text/xml');
+		      	echo '<?xml version="1.0" encoding="UTF-8"?>';
+		     		echo $_SESSION['model_document'];
+	      		break;
+	      	}
+	    case 'roma_sc_model_html': {
+	    			echo '<pre>';
+	    			echo htmlspecialchars('<?xml version="1.0" encoding="UTF-8"?>');
+	    			echo htmlspecialchars(str_replace("><", ">\n<", $_SESSION['model_document']));
+	    			echo '</pre>';
+	      		break;
+	      	}
 	    case roma_mode_customizeCustomization:
 	    default;
 	      $this->processCustomizeCustomization( $szOutput );

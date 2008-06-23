@@ -28,6 +28,7 @@ public $ALL_CLASSES;
 public $ALL_MACROS;
 public $ELL_CLASSES;
 public $CURRENT_PASS = 0;
+public $EXAMPLE_DOCUMENT;
 private $DOM;
 private $PARENTS;
 private $SCEH;
@@ -471,7 +472,12 @@ private function pass1_verifElem($element, $parent) {
 	if($ident != "") {
 		if($this->isElement($ident)) {
 			$this->ALL_ELEMENTS[$ident]['parents'][] = $parent;
-			if(isset($this->ALL_ELEMENTS[$ident]['result'])) return $this->ALL_ELEMENTS[$ident]['result'];
+			if(isset($this->ALL_ELEMENTS[$ident]['result'])) {
+				if($this->CURRENT_PASS == 1) {
+					$this->EXAMPLE_DOCUMENT .= '<'.$ident.' xmlns="http://www.tei-c.org/ns/1.0"></'.$ident.'>';
+				}
+				return $this->ALL_ELEMENTS[$ident]['result'];
+			}
 		} else if($this->isClass($ident)) {
 			$this->ALL_CLASSES[$ident]['parents'][] = $parent;
 			if(isset($this->ALL_CLASSES[$ident]['result'])) return $this->ALL_CLASSES[$ident]['result'];
@@ -488,15 +494,22 @@ private function pass1_verifElem($element, $parent) {
 		case "elementSpec": {
 			$content = $this->getContent($element);
 			$broken = false;
+			if($this->CURRENT_PASS == 1) {
+				$this->EXAMPLE_DOCUMENT .= '<'.$ident.' xmlns="http://www.tei-c.org/ns/1.0">';
+			}
 			$this->computingStart($ident);
 			foreach($content->childNodes as $content_item) {
 				if(!$this->pass1_verifElem($content_item, $element)) {
 					$this->computingStop($ident);
 					if(DEBUG) echo "$ident FALSE because ".$content_item->localName."<br>";
+					$this->EXAMPLE_DOCUMENT = '';
 					return false;
 				}
 			}
 			$this->computingStop($ident);
+			if($this->CURRENT_PASS == 1) {
+				$this->EXAMPLE_DOCUMENT .= '</'.$ident.'>';
+			}
 			break;
 		}
 		case "start":
@@ -837,6 +850,7 @@ public function pass1() {
 	 		$this->SCEH->updateStatus("PASS1 ends, element $root checked");
 	 		$this->SCEH->sanityCheckSchemaOk();
 	 		$this->SCHEMA_BROKEN = false;
+	 		$_SESSION['model_document'] = $this->EXAMPLE_DOCUMENT;
 			return true;
 	 	}
 	}
