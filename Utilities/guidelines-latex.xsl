@@ -213,6 +213,9 @@
     <xsl:when test="@rend='valList'">
       <xsl:text>L{.1\textwidth}P{.4\textwidth}</xsl:text>
     </xsl:when>
+    <xsl:when test="@rend='attCat'">
+      <xsl:text>L{.2\textwidth}P{.8\textwidth}</xsl:text>
+    </xsl:when>
     <xsl:when test="@preamble">
       <xsl:value-of select="@preamble"/>
     </xsl:when>
