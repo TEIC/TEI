@@ -982,29 +982,6 @@ function showByMod() {
      }
 }
 
-function toggleToc(el){
-   var item = el.parentNode; 
-   for (j=0;j&lt;item.childNodes.length;j++)
-   {
-     if (item.childNodes[j].nodeType != 1) continue;
-     if (item.childNodes[j].nodeName != 'UL') continue;
-     var thisone=item.childNodes[j];
-     var state=thisone.style.display;
-     if (state == 'block')
-      {  
-        thisone.style.display='none'; 
-	el.className="collapsed";
-	el.title="Click here to expand list";
-      }
-     else
-      {  
-        thisone.style.display='block';
-	el.className="expanded";
-	el.title="Click here to collapse list";
-      }
-    }
-  }
-
 	</xsl:text>
       </xsl:comment>
     </script>
