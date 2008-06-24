@@ -1679,6 +1679,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 
   <xsl:template match="tei:divGen[@type='attcat']">
     <xsl:element namespace="{$outputNS}" name="{$tableName}">
+      <xsl:attribute name="xml:id">attcat</xsl:attribute>
       <xsl:for-each select="key('ATTDOCS',1)">
 	<xsl:sort select="@ident"/>
 	<xsl:variable name="this">
@@ -1722,6 +1723,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 		  </xsl:with-param>
 		</xsl:call-template>
 	      </xsl:for-each>
+	      <xsl:value-of select="$spaceCharacter"/>
 	      <xsl:text> </xsl:text>
 	    </xsl:for-each>
 	    </xsl:element>
