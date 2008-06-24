@@ -472,17 +472,23 @@
         <xsl:apply-templates mode="generateLink" select="."/>
       </xsl:variable>
       <li>
-	<xsl:choose>
-	<xsl:when test="not(ancestor::tei:div) and tei:div">
-	  <xsl:attribute name="class">
-	    <xsl:text>tocTree</xsl:text>
-	  </xsl:attribute>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:attribute name="class">
-	    <xsl:text>toc</xsl:text>
-	  </xsl:attribute>
-	  <a class="normaltoc">&#160;</a>
+	  <xsl:choose>
+	    <xsl:when test="not(ancestor::tei:div) and tei:div">
+	      <xsl:attribute name="class">
+		<xsl:text>tocTree</xsl:text>
+	      </xsl:attribute>
+	      <span class="showhide">
+		<span class="tocShow"><img src="images/plus.gif"/> </span>
+		<span class="tocHide"><img src="images/minus.gif"/> </span>
+	      </span> 
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:attribute name="class">
+		<xsl:text>toc</xsl:text>
+	      </xsl:attribute>
+	      <span class="notshowhide">
+		<xsl:text>&#160;&#160;</xsl:text>
+	      </span>
 	</xsl:otherwise>
 	</xsl:choose>
 	<xsl:call-template name="header">
@@ -546,7 +552,7 @@
       </h3>
       <xsl:for-each
         select="ancestor-or-self::tei:TEI/tei:text/tei:body">
-        <xsl:if          test="tei:div"/
+        <xsl:if          test="tei:div">
           <ul class="toc{$force}  toc_body">
             <xsl:apply-templates mode="maketoc"
               select="tei:div">
@@ -575,15 +581,20 @@
     <script type="text/javascript" src="columnlist.js">	
        <xsl:comment>JQuery columnlist</xsl:comment>
     </script>
-
+    
     <script type="text/javascript">
-	$(function() {
-	$('ul.attrefs-class').columnizeList({cols:3,width:30,unit:'%'});  
-	$('ul.attrefs-element').columnizeList({cols:3,width:30,unit:'%'});  
-	$('ul.toc_front').columnizeList({cols:3,width:33,unit:'%'});  
-	$('ul.toc_body').columnizeList({cols:2,width:50,unit:'%'});  
-	$('ul.toc_back').columnizeList({cols:3,width:33,unit:'%'});  
-	})
+        $(function() {
+         $('ul.attrefs-class').columnizeList({cols:3,width:30,unit:'%'});
+         $('ul.attrefs-element').columnizeList({cols:3,width:30,unit:'%'});
+         $(".displayRelaxButton").click(function() {
+           $(this).parent().find('.RNG_XML').toggle();
+           $(this).parent().find('.RNG_Compact').toggle();
+         });
+         $(".tocTree .showhide").click(function() {
+          $(this).find(".tocShow,.tocHide").toggle();
+          $(this).parent().find("ul.continuedtoc").toggle();
+	  });
+        })
     </script>
     <xsl:if test="not($googleAnalytics='')">
       <script type="text/javascript" src="udm-all.js">
