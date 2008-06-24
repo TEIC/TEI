@@ -142,10 +142,10 @@
 	    <xsl:choose>
 	      <xsl:when test="starts-with(.,'&#10;') and not
 			      (preceding-sibling::node())">
-		<xsl:value-of select="translate(substring(.,2),'&#10;','&#10100;')"/>
+		<xsl:value-of select="translate(substring(.,2),'&#10;','&#x2324;')"/>
 	      </xsl:when>
 	      <xsl:otherwise>
-		    <xsl:value-of select="translate(.,'&#10;','&#10100;')"/>
+		    <xsl:value-of select="translate(.,'&#10;','&#x2324;')"/>
 	      </xsl:otherwise>
 	    </xsl:choose>
           </xsl:with-param>
@@ -226,7 +226,7 @@
       <xsl:when test="substring($text,string-length($text),1)=' '">
 	<xsl:text> </xsl:text>
       </xsl:when>
-      <xsl:when test="substring($text,string-length($text),1)='&#10100;'">
+      <xsl:when test="substring($text,string-length($text),1)='&#x2324;'">
 	<xsl:text> </xsl:text>
       </xsl:when>
       </xsl:choose>
@@ -237,7 +237,7 @@
 -->
     <xsl:choose>
       <xsl:when test="normalize-space($text)=''"/>
-      <xsl:when test="contains($text,'&#10100;')">
+      <xsl:when test="contains($text,'&#x2324;')">
 	<xsl:if test="$count &gt; 0">
 	  <xsl:value-of select="$indent"/>
 	  <xsl:text> </xsl:text>
@@ -248,7 +248,7 @@
 	<xsl:call-template name="Text">
 	  <xsl:with-param name="words">
 	    <xsl:value-of
-		select="normalize-space(substring-before($text,'&#10100;'))"/>
+		select="normalize-space(substring-before($text,'&#x2324;'))"/>
 	  </xsl:with-param>
 	</xsl:call-template>
 	<!--	<xsl:if test="not(substring-after($text,'&#10;')='')">-->
@@ -262,7 +262,7 @@
 	  </xsl:with-param>
 	  <xsl:with-param name="text">
 	    <xsl:value-of
-		select="normalize-space(substring-after($text,'&#10100;'))"/>
+		select="normalize-space(substring-after($text,'&#x2324;'))"/>
 	    <xsl:value-of select="$finalSpace"/>
 	  </xsl:with-param>
 	  <xsl:with-param name="count">
