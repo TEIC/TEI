@@ -1005,47 +1005,7 @@ function toggleToc(el){
     }
   }
 
-function togglerelax (el) {
-    if (displayXML == 1) {
-         el.innerHTML = '</xsl:text>
-
-	 <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">Compact to XML format</xsl:with-param>
-	  </xsl:call-template>
-
-	  <xsl:text disable-output-escaping="yes">';
-	  displayXML = 0;
-      }
-   else
-     {
-	  displayXML = 1;
-	  el.innerHTML = '</xsl:text>
-
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">XML format to compact</xsl:with-param>
-	  </xsl:call-template>
-
-	  <xsl:text disable-output-escaping="yes">';
-      
-   }
-   var div = el.parentNode; 
-   for (j=0;j&lt;div.childNodes.length;j++)
-     {
-       if (div.childNodes[j].nodeType != 1) continue;
-       if (div.childNodes[j].nodeName != 'PRE') continue;
-       var thisone=div.childNodes[j];
-       var state=thisone.style.display;
-       if (state == 'block')
-        {  
-       thisone.style.display='none'; 
-        }
-       else
-        {  
-       thisone.style.display='block';
-       }
-      }
-  }
-      </xsl:text>
+	</xsl:text>
       </xsl:comment>
     </script>
 
@@ -1060,63 +1020,6 @@ function togglerelax (el) {
 
   <xsl:template match="tei:titlePage" mode="paging">
     <xsl:apply-templates select="."/>
-  </xsl:template>
-
-  <xsl:template name="bitOut">
-    <xsl:param name="grammar"/>
-    <xsl:param name="content"/>
-    <xsl:param name="element">pre</xsl:param>
-    <xsl:choose>
-      <xsl:when test="$displayMode='both'">
-        <div class="displayRelax">
-          <button class="displayRelax" onclick="togglerelax(this)">
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">Compact to XML format</xsl:with-param>
-	  </xsl:call-template>
-	  </button>
-          <pre class="eg_rng" style="display:none">
-            <xsl:apply-templates mode="verbatim"
-              select="exsl:node-set($content)/*/*"/>
-          </pre>
-          <pre class="eg_rnc" style="display:block">
-            <xsl:call-template name="make-body-from-r-t-f">
-              <xsl:with-param name="schema">
-                <xsl:for-each select="exsl:node-set($content)/*">
-                  <xsl:call-template name="make-compact-schema"/>
-                </xsl:for-each>
-              </xsl:with-param>
-            </xsl:call-template>
-          </pre>
-        </div>
-      </xsl:when>
-      <xsl:when test="$displayMode='rng'">
-        <xsl:element name="{$element}">
-          <xsl:attribute name="class">eg</xsl:attribute>
-          <xsl:apply-templates mode="verbatim"
-            select="exsl:node-set($content)/*/*"/>
-        </xsl:element>
-      </xsl:when>
-      <xsl:when test="$displayMode='rnc'">
-        <xsl:element name="{$element}">
-          <xsl:attribute name="class">eg</xsl:attribute>
-          <xsl:call-template name="make-body-from-r-t-f">
-            <xsl:with-param name="schema">
-              <xsl:for-each select="exsl:node-set($content)/*">
-                <xsl:call-template name="make-compact-schema"/>
-              </xsl:for-each>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:element>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:element name="{$element}">
-          <xsl:attribute name="class">eg</xsl:attribute>
-          <xsl:for-each select="exsl:node-set($content)/*">
-            <xsl:apply-templates mode="literal"/>
-          </xsl:for-each>
-        </xsl:element>
-      </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>
 
 

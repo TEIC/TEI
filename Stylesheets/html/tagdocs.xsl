@@ -345,21 +345,31 @@
     <xsl:choose>
       <xsl:when test="$displayMode='both'">
 	<div class="displayRelax">
-	  <span class="displayRelax"
-		onclick="togglerelax(this)">RNG</span>
-	  <pre class="eg_rng" style="display:none">
+	 <button class="displayRelaxButton">
+	  <span class="RNG_Compact">
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Compact to XML format</xsl:with-param>
+	    </xsl:call-template>
+	  </span>
+	  <span class="RNG_XML">
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">XML format to compact</xsl:with-param>
+	    </xsl:call-template>
+	  </span>
+	 </button>
+	 <pre class="RNG_XML">
 	    <xsl:apply-templates mode="verbatim"
 				 select="exsl:node-set($content)/*/*"/>
-	  </pre>
-	  <pre class="eg_rnc" style="display:block">
-	  <xsl:call-template name="make-body-from-r-t-f">
-	    <xsl:with-param name="schema">
-	      <xsl:for-each select="exsl:node-set($content)/*">
-		<xsl:call-template name="make-compact-schema"/>
-	      </xsl:for-each>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	  </pre>
+	 </pre>
+	 <pre class="RNG_Compact">
+	   <xsl:call-template name="make-body-from-r-t-f">
+	     <xsl:with-param name="schema">
+	       <xsl:for-each select="exsl:node-set($content)/*">
+		 <xsl:call-template name="make-compact-schema"/>
+	       </xsl:for-each>
+	     </xsl:with-param>
+	   </xsl:call-template>
+	 </pre>
 	</div>
       </xsl:when>
       <xsl:when test="$displayMode='rng'">
@@ -391,6 +401,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
 
   <xsl:template name="showSpace">
     <xsl:text> </xsl:text>
