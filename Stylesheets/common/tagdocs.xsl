@@ -1548,7 +1548,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	<xsl:for-each select="key('ATTREFS-CLASS',$this)">
 	  <xsl:sort select="ancestor::tei:classSpec/@ident"/>
 	  <xsl:sort select="@ident"/>
-	  <xsl:element namespace="{$outputNS}" name="{$liName}">
+	  <xsl:element namespace="{$outputNS}" name="{$itemName}">
 	    <xsl:for-each select="ancestor::tei:classSpec">
 	      <xsl:call-template name="linkTogether">
 		<xsl:with-param name="name">
@@ -1578,7 +1578,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	<xsl:for-each select="key('ATTREFS-ELEMENT',$this)">
 	  <xsl:sort select="ancestor::tei:elementSpec/@ident"/>
 	  <xsl:sort select="@ident"/>
-	  <xsl:element namespace="{$outputNS}" name="{$liName}">
+	  <xsl:element namespace="{$outputNS}" name="{$itemName}">
 	    <xsl:for-each select="ancestor::tei:elementSpec">
 	      <xsl:call-template name="linkTogether">
 		<xsl:with-param name="name">
