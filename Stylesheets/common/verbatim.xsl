@@ -223,12 +223,15 @@
 
     <xsl:variable name="finalSpace">
       <xsl:choose>
-      <xsl:when test="substring($text,string-length($text),1)=' '">
-	<xsl:text> </xsl:text>
-      </xsl:when>
-      <xsl:when test="substring($text,string-length($text),1)='&#x2324;'">
-	<xsl:text> </xsl:text>
-      </xsl:when>
+	<xsl:when test="substring($text,string-length($text),1)=' '">
+	  <xsl:text> </xsl:text>
+	</xsl:when>
+	<xsl:when test="substring($text,string-length($text),1)='&#x2324;'">
+	  <xsl:text> </xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text></xsl:text>
+	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
 <!--
