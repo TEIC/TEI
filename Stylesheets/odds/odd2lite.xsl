@@ -414,14 +414,6 @@
   </hi>
 </xsl:template>
 
-  <xsl:template match="tei:tag">
-    <code>
-      <xsl:text>&lt;</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>&gt;</xsl:text>
-    </code>
-  </xsl:template>
-
   <xsl:template name="specHook">
       <xsl:param name="name"/>
       <index indexName="ODDS">
@@ -508,6 +500,8 @@
       </xsl:apply-templates>
     </div>
   </xsl:template>
+
+  <xsl:template name="applyRendition"/>
 
 </xsl:stylesheet>
 

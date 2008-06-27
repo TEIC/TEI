@@ -328,6 +328,7 @@ capable of dealing with UTF-8 directly.
 \@ifundefined{c@chapter}{\newcounter{chapter}}{}
 \newif\if@mainmatter 
 \@mainmattertrue
+\def\chaptername{Chapter}
 \def\frontmatter{%
   \pagenumbering{roman}
   \def\thechapter{\@roman\c@chapter}
@@ -341,7 +342,7 @@ capable of dealing with UTF-8 directly.
   \setcounter{section}{0}
   \pagenumbering{arabic}
   \setcounter{secnumdepth}{6}
-  \def\@chapapp{Chapter}%
+  \def\@chapapp{\chaptername}%
   \def\theHchapter{\arabic{chapter}}
 }
 \def\backmatter{%
