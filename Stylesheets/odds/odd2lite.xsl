@@ -481,7 +481,7 @@
 
     <div>
       <head>Model classes</head>
-      <xsl:apply-templates mode="weave" select="tei:macroSpec[@type='model']">
+      <xsl:apply-templates mode="weave" select="tei:classSpec[@type='model']">
 	<xsl:sort select="@ident"/>
       </xsl:apply-templates>
     </div>
