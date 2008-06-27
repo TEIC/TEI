@@ -479,4 +479,37 @@
     </xsl:for-each>-->
   </xsl:template>
 
+  <xsl:template match="tei:schemaSpec">
+    <div>
+      <head>Macros</head>
+      <xsl:apply-templates mode="weave" select="tei:macroSpec">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+    </div>
+
+    <div>
+      <head>Model classes</head>
+      <xsl:apply-templates mode="weave" select="tei:macroSpec[@type='model']">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+    </div>
+
+    <div>
+      <head>Attribute classes</head>
+      <xsl:apply-templates mode="weave" select="tei:classSpec[@type='atts']">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+    </div>
+
+    <div>
+      <head>Elements</head>
+      <xsl:apply-templates mode="weave" select="tei:elementSpec">
+	<xsl:sort select="@ident"/>
+      </xsl:apply-templates>
+    </div>
+  </xsl:template>
+
 </xsl:stylesheet>
+
+
+

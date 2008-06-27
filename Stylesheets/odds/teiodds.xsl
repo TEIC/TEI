@@ -2063,4 +2063,9 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
+<!-- list inside <desc> -->
+   <xsl:template match="tei:desc/tei:list/tei:item">
+     <xsl:text> * </xsl:text>
+     <xsl:apply-templates/>
+   </xsl:template>
 </xsl:stylesheet>
