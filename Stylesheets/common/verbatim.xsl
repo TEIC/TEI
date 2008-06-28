@@ -646,9 +646,10 @@
   </xsl:variable>
     <xsl:if test="count(../@*)&gt;$attsOnSameLine or 
 		  string-length($L)&gt;$attLength or
-		  ancestor::tei:cell or
+		  ancestor::tei:cell[not(@rend='wovenodd-col2')] or
 		  namespace-uri()='http://www.w3.org/2005/11/its' or
-		  string-length(.)+string-length(name(.)) &gt; $attLength">
+		  string-length(.)+string-length(name(.)) &gt;
+		  $attLength">
     <xsl:call-template name="lineBreak">
       <xsl:with-param name="id">5</xsl:with-param>
     </xsl:call-template>
