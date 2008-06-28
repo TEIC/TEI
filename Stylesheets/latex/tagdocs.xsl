@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet exclude-result-prefixes="xd exsl estr edate a rng tei teix"
+<xsl:stylesheet exclude-result-prefixes="xd exsl s estr edate a rng tei teix"
   extension-element-prefixes="exsl estr edate" version="1.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:edate="http://exslt.org/dates-and-times"
+  xmlns:s="http://www.ascc.net/xml/schematron"
   xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
   xmlns:tei="http://www.tei-c.org/ns/1.0"

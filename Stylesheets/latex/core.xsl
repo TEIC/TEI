@@ -121,7 +121,7 @@
   </xd:doc>
   <xsl:template match="tei:eg|tei:q[@rend='eg']">
     <xsl:choose>
-      <xsl:when test="ancestor::tei:cell and count(*)=1">
+      <xsl:when test="ancestor::tei:cell and count(*)=1 and string-length(.)&lt;60">
 	<xsl:variable name="stuff">
 	  <xsl:apply-templates mode="eg"/>
 	</xsl:variable>
@@ -130,7 +130,7 @@
 	  '\{}','&#8421;&#10100;&#10101;')"/>
 	<xsl:text>} </xsl:text>
       </xsl:when>
-      <xsl:when test="ancestor::tei:cell and not(*)">
+      <xsl:when test="ancestor::tei:cell and not(*)  and string-length(.)&lt;60">
 	<xsl:variable name="stuff">
 	  <xsl:apply-templates mode="eg"/>
 	</xsl:variable>
