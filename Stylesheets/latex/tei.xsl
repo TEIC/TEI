@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:exsl="http://exslt.org/common" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="exsl xd" extension-element-prefixes="exsl" version="1.0">
+<xsl:stylesheet   xmlns:s="http://www.ascc.net/xml/schematron"
+xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+xmlns:tei="http://www.tei-c.org/ns/1.0"
+xmlns:exsl="http://exslt.org/common"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+exclude-result-prefixes="exsl s xd" extension-element-prefixes="exsl" version="1.0">
   <xsl:import href="../common/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
   <xsl:import href="../common/verbatim.xsl"/>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet exclude-result-prefixes="xd tei fotex fo" version="1.0"
+<xsl:stylesheet exclude-result-prefixes="xd s tei fotex fo" version="1.0"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
-  xmlns:fotex="http://www.tug.org/fotex" xmlns:tei="http://www.tei-c.org/ns/1.0"
+  xmlns:s="http://www.ascc.net/xml/schematron"
+  xmlns:fotex="http://www.tug.org/fotex" 
+  xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:import href="tei-param.xsl"/>

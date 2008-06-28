@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" extension-element-prefixes="exsl estr edate" exclude-result-prefixes="xd exsl estr edate a rng tei teix xd" version="1.0">
+<xsl:stylesheet 
+xmlns:s="http://www.ascc.net/xml/schematron"
+xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+xmlns:edate="http://exslt.org/dates-and-times"
+xmlns:estr="http://exslt.org/strings"
+xmlns:exsl="http://exslt.org/common"
+xmlns:rng="http://relaxng.org/ns/structure/1.0"
+xmlns:tei="http://www.tei-c.org/ns/1.0"
+xmlns:teix="http://www.tei-c.org/ns/Examples"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+extension-element-prefixes="exsl estr edate" 
+exclude-result-prefixes="xd s exsl estr edate a rng tei teix xd" version="1.0">
 
 <xd:doc type="stylesheet">
     <xd:short>TEI stylesheet customization module for LaTeX output.</xd:short>
