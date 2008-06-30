@@ -1680,6 +1680,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
   <xsl:template match="tei:divGen[@type='attcat']">
     <xsl:element namespace="{$outputNS}" name="{$tableName}">
       <xsl:attribute name="xml:id">attcat</xsl:attribute>
+      <xsl:attribute name="rend">attcat</xsl:attribute>
       <xsl:for-each select="key('ATTDOCS',1)">
 	<xsl:sort select="@ident"/>
 	<xsl:variable name="this">
