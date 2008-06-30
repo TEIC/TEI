@@ -113,7 +113,7 @@ class SanityCheckerErrorHandler {
 	
 		// Elements never reached
 		foreach($this->sc->ALL_ELEMENTS as $cle => $el) {
-			if(!isset($el['reached']) && $el['result']) $this->sanityCheckAddWarning($cle, " is never reached from roots elements");
+			if(!isset($el['reached']) && $el['result']) $this->sanityCheckAddWarning($cle, " is not reachable reached from root elements");
 		}
 
 		// Elements you can use

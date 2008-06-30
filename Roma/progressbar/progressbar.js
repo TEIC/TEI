@@ -152,7 +152,7 @@ function schemaBroken(schema_broken_text) {
 function schemaOk(schema_ok_text) {
 	div = document.getElementById("schema_ok_div");
 	var sc = document.createTextNode(schema_ok_text);
-	var truc = '<br/><span style="font-size: 12px; color: blue; text-decoration: none">A proof ! (<a href="startroma.php?mode=roma_sc_model" target="_blank">XML</a>, <a href="startroma.php?mode=roma_sc_model_html" target="_blank">text</a>)</span>';
+	var truc = '<br/><span style="font-size: 12px; color: blue; text-decoration: none">Proof: (<a href="startroma.php?mode=roma_sc_model" target="_blank">XML</a>, <a href="startroma.php?mode=roma_sc_model_html" target="_blank">text</a>)</span>';
 	div.appendChild(sc);
 	div.innerHTML = div.innerHTML + truc;
 }
