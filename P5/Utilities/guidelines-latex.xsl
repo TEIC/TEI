@@ -395,6 +395,9 @@
   </xsl:template>
 
   <xsl:template match="tei:divGen[@type='toc']">
+<xsl:text>
+\include{Guidelines-toc} 
+</xsl:text>
     <exsl:document 
 	href="Guidelines-toc.tex" 
 	method="text" 
@@ -412,6 +415,26 @@
 	method="text" 
 	encoding="utf8">
   \begin{titlepage}
+\begin{center}
+\vfill
+\fontsize{36pt}{46pt}\bfseries\selectfont
+<xsl:value-of select="tei:docTitle/tei:titlePart[1]"/>\\
+<xsl:value-of select="tei:docTitle/tei:titlePart[2]"/>
+\vskip 1in
+\fontsize{30pt}{40pt}\mdseries\selectfont
+<xsl:value-of select="tei:byline"/>
+\vfill
+\fontsize{20pt}{24pt}\selectfont
+<xsl:for-each select="tei:note">
+  <xsl:value-of select="."/>\\
+</xsl:for-each>
+\vskip 0.5in\itshape
+  <xsl:value-of select="tei:docAuthor"/>
+\vskip 1in\upshape
+  <xsl:value-of select="tei:docImprint"/>\\
+  <xsl:value-of select="tei:docDate"/>
+\end{center}
+
 <xsl:apply-templates/>
   \maketitle
   \end{titlepage}
