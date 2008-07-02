@@ -401,7 +401,7 @@ changelog:
 
 
 catalogue:
-	xsltproc -o catalogue.xml --stringparam DOCUMENTATIONLANG $(DOCUMENTATIONLANG) \
+	xsltproc -o catalogue.xml --stringparam DOCUMENTATIONLANG ${DOCUMENTATIONLANGUAGE} \
 	Utilities/catalogue.xsl ${DRIVER}
 	xsltproc --xinclude ${XSL}/html/tei.xsl  catalogue.xml > catalogue.html
 	echo Made catalogue.html
