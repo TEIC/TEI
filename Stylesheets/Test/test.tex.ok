@@ -1,11 +1,10 @@
-
 \documentclass[11pt]{article}\makeatletter
 
 \IfFileExists{utf8x.def}%
  {\usepackage[utf8x]{inputenc}}%
  {\usepackage[utf8]{inputenc}}
 
-\usepackage[russianb,greek,english]{babel}
+\usepackage[english]{babel}
 
 \usepackage[T1]{fontenc}
 \usepackage[]{ucs}
@@ -60,6 +59,8 @@
 \newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{){\raggedleft\arraybackslash}p{#1}}
 \newcolumntype{P}[1]{){\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{){\arraybackslash}b{#1}}
+\newcolumntype{M}[1]{){\arraybackslash}m{#1}}
 \IfFileExists{xcolor.sty}%
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
@@ -169,6 +170,7 @@
 \@ifundefined{c@chapter}{\newcounter{chapter}}{}
 \newif\if@mainmatter 
 \@mainmattertrue
+\def\chaptername{Chapter}
 \def\frontmatter{%
   \pagenumbering{roman}
   \def\thechapter{\@roman\c@chapter}
@@ -182,7 +184,7 @@
   \setcounter{section}{0}
   \pagenumbering{arabic}
   \setcounter{secnumdepth}{6}
-  \def\@chapapp{Chapter}%
+  \def\@chapapp{\chaptername}%
   \def\theHchapter{\arabic{chapter}}
 }
 \def\backmatter{%

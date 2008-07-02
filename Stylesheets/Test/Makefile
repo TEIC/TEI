@@ -17,6 +17,11 @@ test:
 	-xalan -param verbose true -in test.xml -xsl ../release/tei-xsl/p5/latex/tei.xsl > test.tex
 	-diff test.tex test.tex.ok
 
+testsplit:
+	xsltproc --stringparam STDOUT false ../release/tei-xsl/p5/html/tei.xsl test6.xml
+	-saxon test6.xml ../release/tei-xsl/p5/html/tei.xsl STDOUT=false
+	xalan -param STDOUT false -in test6.xml -xsl ../release/tei-xsl/p5/html/tei.xsl
+
 testp4:
 	xsltproc -o dummy --stringparam verbose true ../release/tei-xsl/p4/html/tei.xsl testp4.xml 
 	saxon -o dummy -novw  testp4.xml ../release/tei-xsl/p4/html/tei.xsl verbose=true 
