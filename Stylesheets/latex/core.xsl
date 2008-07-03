@@ -322,7 +322,7 @@
     <xd:short>Process elements tei:hr</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:hr"> \hline</xsl:template>
+  <xsl:template match="tei:hr"> \hline </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:ident</xd:short>
     <xd:detail> </xd:detail>

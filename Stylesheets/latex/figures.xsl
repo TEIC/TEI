@@ -298,7 +298,7 @@
       </xsl:when>
       <xsl:otherwise> </xsl:otherwise>
     </xsl:choose>
-    <xsl:if test="contains($r,'rules')">\hline</xsl:if>
+    <xsl:if test="contains($r,'rules')">\hline </xsl:if>
     <xsl:apply-templates/>
     <xsl:if test="contains($r,'rules')">
       <xsl:text>\\ \hline </xsl:text>
