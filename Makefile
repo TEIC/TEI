@@ -132,7 +132,7 @@ tex: xml
 	> Guidelines.tex
 
 pdf: tex
-	@echo Checking you have a running ${LATEX} before trying to make PDF...
+	@echo Checking you have a running ${XELATEX} before trying to make PDF...
 	which ${XELATEX} || exit 1
 	mkdir -p Images
 	cp -r Source/Images/*.* Images
@@ -270,7 +270,6 @@ dist-source:
 	Source/Specs  \
 	Source/Guidelines/en  \
 	Source/Images  \
-	TEI-glow.png \
 	Utilities   \
 	VERSION  \
 	fasc-head.xml \
@@ -283,7 +282,7 @@ dist-source:
 	p5sch.xsl \
 	schematron1-5.rnc \
 	*.css \
-	*.js \
+	webnav \
 	validator.xsl \
 	xhtml.rnc \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
