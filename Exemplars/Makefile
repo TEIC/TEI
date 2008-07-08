@@ -2,7 +2,7 @@ PREFIX=/usr
 BIN=${PREFIX}/bin
 ODDS=tei_all tei_allPlus tei_bare tei_corpus tei_dictionaries	\
 	tei_drama tei_its teilite tei_math tei_minimal tei_ms tei_odds	\
-	tei_speech tei_svg tei_tite tei_xinclude.odd
+	tei_speech tei_svg tei_tite tei_xinclude
 DOCODDS=tei_tite teilite
 LANGUAGE=en
 DRIVER=guidelines-${LANGUAGE}.xml
