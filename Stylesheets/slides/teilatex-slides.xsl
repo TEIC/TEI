@@ -213,7 +213,7 @@ XSL LaTeX stylesheet to make slides
   <xsl:text>}</xsl:text>
 </xsl:template>
 
-<xsl:template match="tei:item[@rend='pause']">
+<xsl:template match="tei:item[@rend='pause' or parent::tei:list/@rend='pause']">
   <xsl:text>\item </xsl:text>
   <xsl:apply-templates/>
   <xsl:if test="following-sibling::tei:item">
