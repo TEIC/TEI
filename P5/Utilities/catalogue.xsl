@@ -120,12 +120,10 @@
 			    <xsl:for-each select="key('REFS',@ident)">
 			      <xsl:if 
 				  test="not(generate-id(.)=generate-id(key('REFS',@ident)[1]))"> 
-			      </xsl:if>
 			      <ref target="#summary_{@ident}">
 				<xsl:choose>
 				  <xsl:when
 				      test="string-length(@ident)=0">
-1<xsl:value-of select="name(.)"/>
 				  </xsl:when>
 				  <xsl:otherwise>
 				<xsl:value-of select="@ident"/> 
@@ -133,6 +131,8 @@
 				</xsl:choose>
 			      </ref>
 				<xsl:text>: </xsl:text>
+			      </xsl:if>
+
 			    </xsl:for-each>
 			    <xsl:call-template name="refsbyclass"/>
 			  </cell>
@@ -143,7 +143,6 @@
 				<xsl:choose>
 				  <xsl:when
 				      test="string-length(@ident)=0">
-2<xsl:value-of select="name(.)"/>
 				  </xsl:when>
 				  <xsl:otherwise>
 				<xsl:value-of select="@ident"/> 
@@ -240,7 +239,7 @@
 		    <head><xsl:value-of select="@ident"/> Elements</head>
 		    <table rend="rules">
 		      <xsl:attribute name="preamble">
-			<xsl:text>P{0.1\textwidth}|P{0.35\textwidth}|P{0.2\textwidth}|P{0.2\textwidth}|P{0.15\textwidth}|</xsl:text>
+			<xsl:text>P{0.1\textwidth}|P{0.35\textwidth}|P{0.2\textwidth}|P{0.2\textwidth}|P{0.15\textwidth}|P{0.15\textwidth}|</xsl:text>
 		      </xsl:attribute>
 		      <row role="label">
 			<cell>Name</cell>
