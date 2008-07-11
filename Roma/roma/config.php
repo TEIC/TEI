@@ -34,6 +34,6 @@ define ( 'roma_tei',                 '/usr/share/' );
 define ( 'roma_localStylesheetDir',  'roma/stylesheets' );
 define ( 'roma_templateDir',         'roma/templates' );
 define ( 'roma_resource_path',       'roma/res' );
-define ( 'roma_version','3.2');
-define ( 'roma_date','2008-01-20');
+define ( 'roma_version','3.4');
+define ( 'roma_date','2008-07-07');
 ?>

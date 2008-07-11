@@ -41,6 +41,7 @@ dist:  release
 	zip -r tei-roma-`cat ../VERSION`.zip tei-roma-`cat ../VERSION` )
 
 release: clean
+	rm -rf release/tei-roma
 	mkdir -p release/tei-roma
 	V=`cat VERSION` D=`head -1 ChangeLog | awk '{print $$1}'`;export D V; \
 	perl -p -i -e "s+(define \(.roma_date.,).*(\'.*)+\1\'$$D\2+;s+(define \(.roma_version.,).*(\'.*)+\1\'$$V\2+" \
