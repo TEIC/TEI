@@ -106,10 +106,7 @@
 			      <xsl:value-of select="@ident">
 			      </xsl:value-of>
 			    </xsl:attribute>
-			    <ref n="{normalize-space(tei:desc[1])}"
-				 target="http://tei.oucs.ox.ac.uk/Query/tag.xq?name={@ident}">
 			      <xsl:value-of select="@ident"/>
-			    </ref>
 			  </cell>
 <!--
 			  <cell>
@@ -120,36 +117,32 @@
 			    <xsl:for-each select="key('REFS',@ident)">
 			      <xsl:if 
 				  test="not(generate-id(.)=generate-id(key('REFS',@ident)[1]))"> 
-			      <ref target="#summary_{@ident}">
 				<xsl:choose>
 				  <xsl:when
 				      test="string-length(@ident)=0">
 				  </xsl:when>
 				  <xsl:otherwise>
-				<xsl:value-of select="@ident"/> 
+				    <xsl:value-of select="@ident"/> 
+				    <xsl:text>: </xsl:text>
 				  </xsl:otherwise>
 				</xsl:choose>
-			      </ref>
-				<xsl:text>: </xsl:text>
 			      </xsl:if>
-
 			    </xsl:for-each>
 			    <xsl:call-template name="refsbyclass"/>
 			  </cell>
 			  <cell >
 			    <xsl:for-each select="key('LOCALCLASSREFS',@ident)">
 			      <xsl:sort select="@ident"/>
-			      <ref target="#summary_{@ident}">
-				<xsl:choose>
-				  <xsl:when
-				      test="string-length(@ident)=0">
-				  </xsl:when>
-				  <xsl:otherwise>
-				<xsl:value-of select="@ident"/> 
-				  </xsl:otherwise>
-				</xsl:choose>
-			      </ref>
-			      <xsl:text>: </xsl:text>
+
+			      <xsl:choose>
+				<xsl:when
+				    test="string-length(@ident)=0">
+				</xsl:when>
+				<xsl:otherwise>
+				  <xsl:value-of select="@ident"/> 
+				  <xsl:text>: </xsl:text>
+				</xsl:otherwise>
+			      </xsl:choose>
 			    </xsl:for-each>
 			  </cell>
 			</row>
@@ -186,10 +179,7 @@
 			      </xsl:value-of>
 			    </xsl:attribute>
 			    
-			    <ref n="{normalize-space(tei:desc[1])}"
-				 target="http://tei.oucs.ox.ac.uk/Query/tag.xq?name={@ident}">
 			      <xsl:value-of select="@ident"/>
-			    </ref>
 			  </cell>
 <!--
 			  <cell>
@@ -200,16 +190,15 @@
 			    <xsl:variable name="ID" select="@ident"/>
 			    <xsl:for-each select="key('LOCALCLASSREFS',@ident)">
 			      <xsl:sort select="@ident"/>
-			      <ref target="#summary_{@ident}">
 				<xsl:choose>
 				  <xsl:when
 				      test="string-length(@ident)=0">
+3<xsl:value-of select="name(.)"/>
 				  </xsl:when>
 				  <xsl:otherwise>
-				    <xsl:value-of select="@ident"/> 
+				<xsl:value-of select="@ident"/> 
 				  </xsl:otherwise>
 				</xsl:choose>
-			      </ref>
 			      <xsl:text>: </xsl:text>
 			    </xsl:for-each>
 			  </cell>
@@ -238,7 +227,7 @@
 		    <head><xsl:value-of select="@ident"/> Elements</head>
 		    <table rend="rules">
 		      <xsl:attribute name="preamble">
-			<xsl:text>P{0.1\textwidth}|P{0.35\textwidth}|P{0.2\textwidth}|P{0.2\textwidth}|P{0.15\textwidth}|P{0.15\textwidth}|</xsl:text>
+			<xsl:text>P{0.1\textwidth}|P{0.25\textwidth}|P{0.25\textwidth}|P{0.15\textwidth}|P{0.15\textwidth}|</xsl:text>
 		      </xsl:attribute>
 		      <row role="label">
 			<cell>Name</cell>
@@ -247,7 +236,6 @@
 			<cell>Classes</cell>
 			<cell>Used in</cell>
 			<cell>Attributes</cell>
-			<cell>Content model</cell>
 		      </row>
 		      <xsl:for-each select="key('ELEMENTINMOD',@ident)">
 			<xsl:sort select="@ident"/>
@@ -258,10 +246,7 @@
 			      <xsl:value-of select="@ident">
 			      </xsl:value-of>
 			    </xsl:attribute>
-			    <ref n="{normalize-space(tei:desc[1])}"
-				 target="http://tei.oucs.ox.ac.uk/Query/tag.xq?name={@ident}">
 			      <xsl:value-of select="@ident"/>
-			    </ref>
 			  </cell>
 <!--
 			  <cell>
@@ -283,7 +268,6 @@
 			  <cell><xsl:for-each select="tei:classes">
 			    <xsl:for-each select="tei:memberOf">
 			      <xsl:sort select="@key"/>
-			      <ref target="#summary_{@key}">
 				<xsl:for-each
 				    select="key('IDENTS',@key)">
 				  <xsl:choose>
@@ -298,14 +282,12 @@
 				    </xsl:otherwise>
 				  </xsl:choose>
 				</xsl:for-each>
-			      </ref>
 			    </xsl:for-each>
 			  </xsl:for-each>
 			  </cell>
 			  <cell >
 			    <xsl:for-each select="key('REFS',@ident)">
 			      <xsl:sort select="@ident"/>
-			      <ref target="#summary_{@ident}">
 				<xsl:choose>
 				  <xsl:when test="self::rng:ref"/>
 				  <xsl:when
@@ -318,7 +300,6 @@
 				    <xsl:text>: </xsl:text>
 				  </xsl:otherwise>
 				</xsl:choose>
-			      </ref>
 			    </xsl:for-each>
 			  </cell>
 			  <cell>
@@ -331,16 +312,6 @@
 			    </xsl:for-each>
 			  </cell>
 			  
-			      <cell><q rend="eg">
-			      <xsl:call-template name="make-body-from-r-t-f">
-			      <xsl:with-param name="schema">
-			      <xsl:for-each  select="tei:content">
-			      <xsl:call-template name="make-compact-schema"/>
-			      </xsl:for-each>
-			      </xsl:with-param>
-			      </xsl:call-template>
-			      </q></cell>
-
 			</row>
 		      </xsl:for-each>
 		    </table>
@@ -366,10 +337,7 @@
 			      </xsl:value-of>
 			    </xsl:attribute>
 			    
-			    <ref n="{normalize-space(tei:desc[1])}"
-				 target="http://tei.oucs.ox.ac.uk/Query/tag.xq?name={@ident}">
 			      <xsl:value-of select="@ident"/>
-			    </ref>
 			  </label>
 			  <item>
 			    <xsl:text>used in </xsl:text>
@@ -379,7 +347,6 @@
 				  test="not(generate-id(.)=generate-id(key('REFS',$ID)[1]))"> 
 				<xsl:text>: </xsl:text>
 			      </xsl:if>
-			      <ref target="#summary_{@ident}">
 				<xsl:choose>
 				  <xsl:when
 				      test="string-length(@ident)=0">
@@ -389,7 +356,6 @@
 				<xsl:value-of select="@ident"/> 
 				  </xsl:otherwise>
 				</xsl:choose>
-			      </ref>
 			    </xsl:for-each>
 			    <q rend="eg">
 			      <xsl:call-template name="make-body-from-r-t-f">
@@ -422,25 +388,11 @@
   
   <xsl:template name="showElement">
     <xsl:param name="name"/>
-    <ref target="#summary_{$name}"><xsl:value-of
-    select="$name"/></ref>
+    <xsl:value-of    select="$name"/>
     <xsl:value-of select="name(.)"/>
   </xsl:template>
 
   
-  <xsl:template name="linkTogether">
-    <xsl:param name="name"/>
-    <xsl:param name="reftext"/>
-    <xsl:variable name="link">
-      <xsl:choose>
-	<xsl:when test="$reftext=''"><xsl:value-of select="$name"/></xsl:when>
-	<xsl:otherwise><xsl:value-of select="$reftext"/></xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <ref target="#summary_{$name}">
-      <xsl:value-of select="$link"/>
-    </ref>
-  </xsl:template>
   
   <xsl:template match="teix:egXML">
     <xsl:copy-of select="."/>
@@ -476,9 +428,7 @@
 	    <xsl:if 
 		test="not(generate-id(.)=generate-id(key('REFS',@ident)[1]))">:
 	    </xsl:if>
-	    <ref target="#summary_{@ident}">
 	      <xsl:value-of select="@ident"/> 
-	    </ref>
 	  </xsl:for-each>
 	<xsl:call-template name="refsbyclass"/>
 	</xsl:for-each>
