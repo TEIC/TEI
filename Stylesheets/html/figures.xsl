@@ -340,11 +340,9 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:if test="$calcvalue&gt;0">
-      <xsl:attribute name="{$name}">
-        <xsl:value-of select="$calcvalue"/>
-      </xsl:attribute>
-    </xsl:if>
+    <xsl:attribute name="{$name}">
+      <xsl:value-of select="$calcvalue"/>
+    </xsl:attribute>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
