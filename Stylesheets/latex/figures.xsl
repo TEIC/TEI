@@ -131,7 +131,7 @@
       <xsl:value-of   select="@xml:id"/>
       <xsl:text>}</xsl:text>
     </xsl:if>
-    <xsl:text> \par</xsl:text>
+    <xsl:text> \par </xsl:text>
     <xsl:choose>
       <xsl:when test="ancestor::tei:table"> 
 	<xsl:text>\begin{tabular}</xsl:text>
@@ -141,7 +141,7 @@
       <xsl:otherwise> 
 	<xsl:text>\begin{longtable}</xsl:text>
 	<xsl:call-template name="makeTable"/>
-	<xsl:text>\end{longtable} \par</xsl:text>
+	<xsl:text>\end{longtable} \par </xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -205,7 +205,7 @@
         <xsl:if test="@xml:id">\hypertarget{<xsl:value-of select="@xml:id"/>}{}</xsl:if>
       </xsl:when>
       <xsl:when test="@rend='centre'">
-        <xsl:text>}\par</xsl:text>
+        <xsl:text>}\par </xsl:text>
       </xsl:when>
     </xsl:choose>
     <xsl:choose>

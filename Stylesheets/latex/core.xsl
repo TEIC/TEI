@@ -32,7 +32,7 @@
   </xd:doc>
   <xsl:template match="tei:ab">
     <xsl:apply-templates/>
-    <xsl:if test="following-sibling::tei:ab">\par</xsl:if>
+    <xsl:if test="following-sibling::tei:ab">\par </xsl:if>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:bibl</xd:short>
