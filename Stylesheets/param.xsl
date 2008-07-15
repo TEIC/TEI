@@ -43,11 +43,14 @@
 
 <xsl:template match="tei:div">
 <xsl:copy>
-<xsl:apply-templates select="@*|text()|*"/>
-<xsl:if test="@id">
+  <xsl:apply-templates select="@*|text()|*"/>
+<xsl:if test="@xml:id">
 <div>
   <head>Variables</head>
-  <table rend="rules">
+  <table rend="rules" >
+	 <xsl:attribute name="preamble">
+	 <xsl:text>P{0.1\textwidth}|P{0.25\textwidth}|P{0.36\textwidth}|P{0.22\textwidth}|</xsl:text>
+	 </xsl:attribute>
     <row role="label">
       <cell>Type</cell>
       <cell>Name</cell>
@@ -90,7 +93,7 @@
 
 <xsl:template name="listtemplates">
   <xsl:param name="Type"/>
-  <xsl:variable name="I" select="@id"/>
+  <xsl:variable name="I" select="@xml:id"/>
     <xsl:for-each select="document(concat($Type,'/tei-param.xsl'))">
       <xsl:if test="count(key('XDS',$I))&gt;0">
 	<list type="gloss">
@@ -123,10 +126,9 @@
 	      <xsl:for-each select="following-sibling::xsl:*[1]">
 		<xsl:choose>
 		  <xsl:when test="*">
-		    <eg>
-		      <xsl:apply-templates select="*|text()"
-					   mode="verbatim"/>
-		    </eg>
+		    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+		      <xsl:copy-of select="*|text()"/>
+		    </egXML>
 		  </xsl:when>
 		  <xsl:otherwise>
 		    <xsl:value-of select="."/>
@@ -143,7 +145,7 @@
 
 <xsl:template name="listparams">
   <xsl:param name="Type"/>
-  <xsl:variable name="I" select="@id"/>
+  <xsl:variable name="I" select="@xml:id"/>
     <xsl:for-each select="document(concat($Type,'/tei-param.xsl'))">
       <xsl:for-each select="key('XDS',$I)">
 	<xsl:if test="not(following-sibling::xsl:*[1]/self::xsl:template)">
@@ -186,10 +188,9 @@
 	  <xsl:for-each select="following-sibling::xsl:*[1]">
 	    <xsl:choose>
 	      <xsl:when test="*">
-		<eg>
-		<xsl:apply-templates select="*|text()"
-				     mode="verbatim"/>
-		</eg>
+		<egXML xmlns="http://www.tei-c.org/ns/Examples">
+		<xsl:copy-of select="*|text()"/>
+		</egXML>
 	      </xsl:when>
 	      <xsl:otherwise>
 		<xsl:value-of select="."/>
