@@ -184,7 +184,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:body">
-    <xsl:if test="not(preceding::tei:body)">
+    <xsl:if test="not(preceding::tei:body) and preceding::tei:front">
       <xsl:text>\mainmatter </xsl:text>
  </xsl:if>
     <xsl:apply-templates/>
