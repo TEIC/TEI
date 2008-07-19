@@ -130,6 +130,13 @@ xml: check
 tex: xml
 	xsltproc Utilities/guidelines-latex.xsl Guidelines.xml \
 	> Guidelines.tex
+	for i in Guidelines-REF*tex; \
+	  do \
+	     perl Utilities/rewrapRNC-in-TeX.pl <$$i>$$i.new; \
+		echo NOTE: diff $$i.new $$i; \
+		diff $$i.new $$i; \
+		mv $$i.new $$i; \
+	done
 
 pdf: tex
 	@echo Checking you have a running ${XELATEX} before trying to make PDF...
