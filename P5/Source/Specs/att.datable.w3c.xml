@@ -42,7 +42,7 @@ s'inscrit.</desc>
     </attDef>
     <!--     <attList>org="choice">-->
     <attDef ident="when" usage="opt">
-      <desc>supplies the value of a date or time in a standard form,
+      <desc>supplies the value of the date or time in a standard form,
       e.g. yyyy-mm-dd.</desc>
       <desc version="2008-04-05" xml:lang="ja">
       日付や時間を，標準形式で示す．
@@ -96,36 +96,19 @@ Mrs. Cornell,</salute> Sunday <time when="12:00:00">noon.</time>
 	       </p>-->
       </exemplum>
       <remarks>
-        <p>The value of the <att>when</att> attribute is a string
-	  representing a date or time, or both, in any
-	  one of the following forms:
-	  <list><item>a date in any of the standard formats described by
-	  <title>XML Schema Part 2: Datatypes Second Edition</title>,
-	  i.e. most commonly <code>yyyy-mm-dd</code>, but also
+        <p>The value of the <att>when</att> attribute should be the
+        normalized representation of the date, time, or combined date
+        &amp; time intended, in any of the standard formats specified
+        by <title>XML Schema Part 2: Datatypes Second Edition</title>, using the Gregorian calendar. </p>
+<p>The most commonly-encountered format for the date part of the <att>when</att>
+attribute is  <code>yyyy-mm-dd</code>, but
 	  <code>yyyy</code>, <code>--mm</code>, <code>---dd</code>,
-	  <code>yyyy-mm</code>, or <code>--mm-dd</code></item><item>a time in the standard format described by 
-	  <title>XML Schema Part 2: Datatypes Second
-	  Edition</title>, i.e. <code>hh:mm:ss</code></item><item>a combined date and time in any of the standard
-	  formats described by <title>XML Schema Part 2: Datatypes
-	  Second Edition</title>, i.e.
-	  <code>yyyy-mm-ddThh:mm:ss</code></item></list>
-	  </p>
-        <p>The value of <att>when</att> is constrained to be in one of
-	  the date, time, or combined date &amp; time formats recognized
-	  by the W3C <title>XML Schema Part 2: Datatypes</title>
-	  specification. This is true whether the date component (if
-	  any) is a Gregorian or a proleptic Gregorian date.</p>
-        <p>At the time of this writing, the W3C does not permit the
-	  year <val>0000</val>, which would normally be used to
-	  represent the year 1 BCE. Using the current W3C system, the
-	  year 1 BCE is indicated with <val>-0001</val>, the year 2 BCE
-	  with <val>-0002</val>, etc. <quote>It is the intention of the
-	  XML Schema Working Group to allow <val>0000</val> as …
-	  the lexical representation of 1 BCE (which is a leap year),
-	  <val>-0001</val> will become the lexical representation of 2
-	  BCE, <val>-0002</val> of 3 BCE, etc.</quote> Thus in some
-	  cases it may be advantageous to use the <att>when-iso</att>
-	  attribute to indicate years BCE instead.</p>
+	  <code>yyyy-mm</code>, or <code>--mm-dd</code> may also be
+	  used. For the time part, the form <code>hh:mm:ss</code> is
+	  used. </p>
+<p>Note that this format does not currently permit use of the
+	  value <val>0000</val> to represent the year 1 BCE; instead
+	  the value <val>-0001</val> should be used. </p>
       </remarks>
       <remarks xml:lang="es">
         <p>El valor del atributo <att>cuando</att> es una serie que representa una fecha o una hora, o ambas, en cualquiera de los siguientes formatos:
