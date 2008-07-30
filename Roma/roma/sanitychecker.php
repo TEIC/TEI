@@ -900,6 +900,25 @@ public function pass3() {
 	$this->SCEH->updateStatus("PASS3 ends, all roots have been tested");
 }
 
+/**
+ *memberOf on classes which not exist
+ *In fact, this is not a good idea. It offten happens that some element is member of a class form a module that the personalisation does not include it.
+ **/
+/*public function pass4() {
+	
+	$this->CURRENT_PASS = 4;
+	
+	$this->SCEH->updateStatus("PASS4 starts");
+	$all_memberOf = $this->xpath->query("//tei:memberOf");
+	foreach($all_memberOf as $item) {
+		$key = $item->getAttribute("key");
+		if(!$this->isClass($key)) {
+			$this->SCEH->sanityCheckAddUndefined($key, ' is used in ' , $this->getElementName($item), ' and never defined.');
+		}
+	}
+	$this->SCEH->updateStatus("PASS4 ends");
+}*/
+
 public function showErrors() {
 	$this->SCEH->showErrors();
 }
