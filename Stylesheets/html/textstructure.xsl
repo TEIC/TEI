@@ -639,7 +639,7 @@ $requestedID: requests a particular page
       </xsl:when>
       <!-- 1. our section depth is below the splitting level -->
       <xsl:when
-        test="$depth &gt; $splitLevel or         @rend='nosplit' or         ancestor::tei:TEI/@rend='all' or         ancestor::tei:TEI/@rend='frontpage' or         ancestor::tei:TEI/@rend='nosplit'">
+        test="$depth &gt; $splitLevel or         @rend='nosplit' or ancestor::tei:TEI/@rend='all' or         ancestor::tei:TEI/@rend='frontpage' or         ancestor::tei:TEI/@rend='nosplit'">
         <div>
           <xsl:call-template name="divClassAttribute">
             <xsl:with-param name="depth" select="$depth"/>
@@ -2608,7 +2608,7 @@ $requestedID: requests a particular page
         <xsl:variable name="depth">
           <xsl:apply-templates mode="depth" select="."/>
         </xsl:variable>
-        <xsl:if test="($splitLevel&gt;$depth  or $force='true')">
+        <xsl:if test="($splitLevel&gt;$depth  or $force='true' or ancestor::tei:TEI/@rend='nosplit')">
           <xsl:for-each select="tei:div[tei:head or $autoHead='true']">
             <xsl:call-template name="tocEntry">
               <xsl:with-param name="style" select="$style"/>
