@@ -53,6 +53,9 @@ public function __construct($odd) {
 	$this->getAllClasses();
 	$this->getAllMacros();
 	if(DEBUG) error_reporting(E_ALL);
+	if(DEBUG) {
+		echo "<pre>".htmlentities($this->DOM->saveXML())."</pre>";
+	}
 }
 
 /*
@@ -139,7 +142,7 @@ private function getContent($input) {
 		$childs = $input->childNodes;
 		foreach($childs as $child) {
 			if($child->localName == "ref") {
-				if($this->isElement($child->getAttribute("name")) || $this->isMacro($child->getAttribute("name"))) $res[] = $this->ALL_ELEMENTS[$child->getAttribute("name")]['domNode'];
+				if($this->isElement($child->getAttribute("name")) || $this->isMacro($child->getAttribute("name"))) $res[] = $this->ALL_MACROS[$child->getAttribute("name")]['domNode'];
 				else if ($this->isClass($child->getAttribute("name"))) $res[] = $this->ALL_CLASSES[$this->remove_sequences_from_classnames($child->getAttribute("name"))]['domNode']; 
 			} else {
 				$res[] = $child;
@@ -236,6 +239,7 @@ private function getDefinesInGrammar($element) {
 		return array($element);
 	} else {
 		$res = array();
+		if(!$element->childNodes) return $res;
 		foreach($element->childNodes as $noeud) {
 			$res = array_merge($res, $this->getDefinesInGrammar($noeud));
 		}
