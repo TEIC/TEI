@@ -592,45 +592,23 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="Header">
-    <fo:table>
-          <fo:table-column column-number="1" column-width="100%">
-            <xsl:if test="$foEngine='passivetex'">
-              <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">R</xsl:attribute>
-            </xsl:if>
-          </fo:table-column>
-          <fo:table-body>
-            <fo:table-row>
-              <fo:table-cell border-top-style="solid">
-                <fo:block font-size="12pt" padding-before="6pt">
-                  <fo:inline>
-                    <xsl:value-of select="$institution"/>
-                  </fo:inline>
-                </fo:block>
-              </fo:table-cell>
-            </fo:table-row>
-            <fo:table-row>
-              <fo:table-cell>
-                <fo:block font-size="12pt" font-weight="bold">
-                  <xsl:call-template name="generateTitle"/>
-                </fo:block>
-              </fo:table-cell>
-            </fo:table-row>
-            <fo:table-row>
-              <fo:table-cell>
-                <fo:block>
-                  <xsl:call-template name="generateAuthor"/>
-                </fo:block>
-              </fo:table-cell>
-            </fo:table-row>
-            <fo:table-row>
-              <fo:table-cell border-bottom-style="solid">
-                <fo:block padding-after="6pt">
-                  <xsl:call-template name="generateDate"/>
-                </fo:block>
-              </fo:table-cell>
-            </fo:table-row>
-          </fo:table-body>
-        </fo:table>
+    <fo:block font-size="12pt" padding-before="6pt">
+      <fo:inline>
+	<xsl:value-of select="$institution"/>
+      </fo:inline>
+    </fo:block>
+    
+    <fo:block font-size="12pt" font-weight="bold">
+      <xsl:call-template name="generateTitle"/>
+    </fo:block>
+    
+    <fo:block>
+      <xsl:call-template name="generateAuthor"/>
+    </fo:block>
+    
+    <fo:block padding-after="6pt">
+      <xsl:call-template name="generateDate"/>
+    </fo:block>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>
