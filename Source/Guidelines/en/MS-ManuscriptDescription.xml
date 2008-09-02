@@ -92,115 +92,6 @@ full description may also contain one or more <gi>msPart</gi> elements
 (<ptr target="#mspt"/>).</p>
 
 
-<!--
-<p>Here is a very simple example of a complete manuscript description, using no additional elements apart from the mandatory <gi>msIdentifier</gi>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<msDesc>
-<msIdentifier>
-<settlement>Oxford</settlement>
-<repository>Bodleian Library</repository>
-<idno>MS. Rawlinson poet. 149</idno>
-</msIdentifier>
-<p>Geoffrey Chaucer, The Canterbury Tales. Written in the third 
-quarter of the 15th century in Pembrokeshire (Wales). Mutilated 
-at beginning and end; contains A431-I1092 in the Riverside edition 
-numbering.</p>
-<p>Parchment. 136 folios: 280 x 190 mm. Twenty-three quires of 
-eight, of which only nine are not defective, and a final (defective) 
-quire of six. Margined and ruled with crayon through fol. 51v, 
-thereafter in drypoint. Single columns of 38-74 lines per page.</p>
-<p>Four hands, varying between cursive anglicana (the first hand) 
-and mixed secretary (the fourth hand). Hand 4 is responsible for 
-around two-thirds of the manuscript, from fol. 45 to the end; 
-hand 3 writes only three lines and a few words on fol. 38r; 
-the other two hands divide the remainder of the manuscript, 
-to fol. 45, between them.</p>
-</msDesc>
-</egXML></p>
-<p>Here is the same description, using some of the manuscript-specific phrase-level elements described below, but still fairly simple:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<msDesc>
-<msIdentifier>
-<settlement>Oxford</settlement>
-<repository>Bodleian Library</repository>
-<idno>MS. Rawlinson poet. 149</idno>
-</msIdentifier>
-<p>Geoffrey Chaucer, <title>The Canterbury Tales</title>. Written 
-in <origDate notBefore="1475" notAfter="1500">the third quarter of 
-the 15th century</origDate> in <origPlace>Pembrokeshire, Wales</origPlace>. 
-Mutilated at beginning and end; contains A431-I1092 in the Riverside 
-edition numbering.</p>
-<p><material>Parchment</material>; 136 folios: 
-<dimensions><height>280</height><width>190</width></dimensions>. 
-Twenty-three quires of eight, of which only nine are not defective, 
-and a final (defective) quire of six. Margined and ruled with crayon 
-through fol. 51v, thereafter in drypoint. Single columns of 38-74 
-lines per page.</p>
-<p>Four hands, varying between <term type="script">cursive anglicana</term> 
-(the first hand) and <term type="script">mixed secretary</term> (the fourth 
-hand). Hand 4 is responsible for around two-thirds of the manuscript, from 
-fol. 45 to the end; hand 3 writes only three lines and a few words on fol. 
-38r; the other two hands divide the remainder of the manuscript, to fol. 45, 
-between them.</p>
-</msDesc> 
-</egXML></p>
-
-<p>And finally, a more structured description of the same manuscript,
-using many, but by no means all, of the elements described in the
-following sections. Note that some slight reordering of the material
-has been necessary.
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<msDesc xml:id="MSRP149">
-<msIdentifier>
-<settlement>Oxford</settlement>
-<repository>Bodleian Library</repository>
-<idno>MS. Rawlinson poet. 149</idno>
-</msIdentifier>
-<msContents>
-<msItem defective="true">
-<author>Geoffrey Chaucer</author>
-<title type="uniform">The Canterbury Tales</title>
-<note>Mutilated at beginning and end; contains A431-I1092 in the 
-Riverside edition numbering.</note>
-</msItem>
-</msContents>
-<physDesc>
-<objectDesc form="codex">
-<supportDesc material="perg">
-<support><p>Parchment.</p></support>
-<extent>136 folios: <dimensions><height>280</height>
-<width>190</width></dimensions></extent>
-<collation>
-<p>Twenty-three quires of eight, of which only nine are not defective, 
-and a final (defective) quire of six.</p>
-</collation>
-</supportDesc>
-<layoutDesc>
-<layout columns="1" ruledLines="38 74">
-<p>Margined and ruled with crayon through fol. 51v, thereafter in drypoint. 
-Single columns of 38-74 lines per page.</p>
-</layout>
-</layoutDesc>
-</objectDesc>
-<handDesc hands="4">
-<p>Four hands, varying between <term type="script">cursive anglicana</term> 
-(the first hand) and <term type="script">mixed secretary</term> (the fourth 
-hand). Hand 4 is responsible for around two-thirds of the manuscript, from 
-fol. 45 to the end; hand 3 writes only three lines and a few words on fol. 38r; 
-the other two hands divide the remainder of the manuscript, up to fol. 45, 
-between them.</p></handDesc>
-</physDesc>
-<history>
-<origin>
-<p>Written in <origDate notBefore="1450" notAfter="1475">the third quarter of 
-the 15th century</origDate> in <origPlace>Pembrokeshire, Wales</origPlace>.</p>
-</origin>
-</history>
-</msDesc>
-</egXML></p>
--->
-
 
 <p>To demonstrate the use of this module, consider the following
 sample manuscript description, chosen more or less at random from the
@@ -1943,16 +1834,72 @@ distinct ways. It may contain a series of paragraphs addressing topics
 listed above and similar ones. Alternatively, it may act as a container for any
 choice of the more specialized elements described in the remainder of
 this section, each of which itself contains a series of paragraphs,
-and may also have more specific attributes. Note that the two ways
+and may also have more specific attributes. <!--Note that the two ways
 must <emph>not</emph> be combined within the same
-description.</p>
+description.--></p>
+
+<p>In general, it is not recommended to combine unstructured prose
+description with usage of the more specialised elements, as such an
+approach complicates processing, and may lead to inconsistency within
+a single manuscript description. A single <gi>physDesc</gi> element
+will normally contain either a series of <ident
+type="class">model.pLike</ident> elements, or a sequence of
+specialised elements from the <ident type="class">model.physDescPart</ident>
+class. There are however circumstances in which this is not feasible,
+for example:
+<list>
+<item>the description already exists in a prose form where some of the
+specialised topics are treated together in paragraphs of prose, but
+others are treated distinctly;</item>
+<item>although all  parts of the description are clearly
+distinguished, some of them cannot be mapped to a pre-existing
+specialised element.</item>
+</list></p>
+<p>In such situations, both specialised and generic
+(<ident>model.Plike</ident>) elements may be combined in a single
+<gi>physDesc</gi>. Note however that all generic elements given must
+precede the first specialised element in the description. Thus the
+following is valid:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<physDesc>
+<p>Generic descriptive prose...</p>
+<!-- other generic elements here -->
+<objectDesc form="codex"> 
+<!-- ... -->
+</objectDesc>
+<!-- other specific elements here -->
+</physDesc></egXML>
+but neither of the following is valid:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+<physDesc>
+<objectDesc form="codex"> 
+<!-- ... -->
+</objectDesc>
+<p>Generic descriptive prose...</p>
+</physDesc>]]></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
+<physDesc>
+<objectDesc form="codex"> 
+  <!-- ... -->
+</objectDesc>
+<p>Generic descriptive prose...</p>
+<!-- other specific elements here -->
+</physDesc>]]></egXML>
+The order in which specific elements may appear is also constrained by
+the content model; again this is for simplicity of processing. They
+may of course be processed or displayed in any desired order, but for
+ease of validation, they must be given in the order specified
+below.</p>
+
+
 <div type="div3" xml:id="msph1"><head>Object Description</head>
 <p>The <gi>objectDesc</gi> element is used to group together those
 parts of the physical description which relate specifically to the
 text-bearing object, its format, constitution, layout, etc. The
 <att>form</att> attribute is used to indicate the specific type of
 writing vehicle being described, for example, as a codex, roll,
-tablet, etc. The <gi>objectDesc</gi> element has two parts: a description of the
+tablet, etc. If used it must appear first in the sequence of
+specialised elements. The <gi>objectDesc</gi> element has two parts: a description of the
 <term>support</term>, i.e. the physical carrier on which the text is
 inscribed; and a description of the <term>layout</term>, i.e. the way
 text is organized on the carrier.</p>
@@ -2102,7 +2049,12 @@ corner of each recto page.</p></foliation>
 physical state of a manuscript, in particular where such information
 is not recorded elsewhere in the description. It should not, however, be
 used to describe changes or repairs to a manuscript, as these are more
-appropriately described as a part of its custodial history (see <ptr target="#msadch"/>). 
+appropriately described as a part of its custodial history (see <ptr
+target="#msadch"/>). When it appears directly within the physical
+description, it discusses any part of the manuscript; when it appears
+within the <gi>bindingDesc</gi> or <gi>binding</gi> elements (<ptr
+target="#msphbi"/>) it discusses only the condition of the binding or
+bindings concerned.</p>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <condition><p>The manuscript shows signs of damage from water and mould on its outermost leaves.</p></condition>
 <condition><p>Despite tears on many of the leaves the codex is reasonably well preserved. 
@@ -2110,7 +2062,9 @@ The top and the bottom of f. 1 is damaged, and only a thin slip is left of the o
 leaf (now foliated as 1bis). The lower margin of f. 92 has been cut away. There is a lacuna of 
 one leaf between ff. 193 and 194. The manuscript ends defectively (there are approximately six 
 leaves missing).</p></condition>
-</egXML></p>
+</egXML>
+<!-- need another condition example -->
+
 </div>
 <div type="div4" xml:id="msphla"><head>Layout Description</head>
 <p>The second part of the <gi>objectDesc</gi> element is the
@@ -2174,14 +2128,16 @@ in a manuscript, including additions made in later hands — the <soCalled>text<
 <specList>
 <specDesc key="handDesc"/>
 <specDesc key="handNote"/>
+<specDesc key="typeDesc"/>
+<specDesc key="typeNote"/>
 <specDesc key="decoDesc"/>
 <specDesc key="decoNote"/>
 <specDesc key="musicNotation"/>
 <specDesc key="additions"/>
 </specList></p>
+
 <div type="div4" xml:id="msphwr">
 <head>Writing</head>
-
 <p>The <gi>handDesc</gi> element can contain a short description of
 the general characteristics of the writing observed in a manuscript,
 as in the following example:
@@ -2237,9 +2193,53 @@ element described in <ptr target="#PHDH"/> can be used to link the
 relevant parts of the transcription to the appropriate
 <gi>handNote</gi> element in the description: for example, at the
 point in the transcript where the second hand listed above starts
-(i.e. at folio 72v:4), we might insert <tag>handShift
-new="#Eirsp-2"/</tag>.</p>
+(i.e. at folio 72v:4), we might insert <gi>handShift
+new="#Eirsp-2"/</gi>.</p>
+
+
+<p>The elements <gi>typeDesc</gi>,  and <gi>typeNote</gi>
+are used
+to provide information about the printing of a source, in exactly the same way as the <gi>handDesc</gi> or <gi>handNote</gi>
+elements provide information about its writing. They are provided for
+the convenience of those using this module to provide information
+about early printed sources and incunables. The <gi>typeDesc</gi>
+element can simply provide a summary description:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<typeDesc><p>Uses a mixture of Roman and Black Letter types.</p></typeDesc>
+</egXML>
+</p>
+<p>Where detailed information about individual typefaces is to be
+recorded, this may be done using the <gi>typeNote</gi> element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<typeDesc><summary>Uses a mixture of Roman and Black Letter types.</summary>
+<typeNote>Antiqua typeface, showing influence of Jenson's Venetian
+fonts.</typeNote>
+<typeNote>The black letter face is a variant of Schwabacher.</typeNote>
+</typeDesc>
+</egXML>
+</p>
+<p>Where information is required about both typography and written
+script, for example where a printed book contains extensive
+handwritten annotation, both <gi>handDesc</gi> and <gi>typeDesc</gi>
+elements should be supplied. Similarly, in the following example, the
+source text is a typescript with extensive handwritten annotation:
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <typeDesc>
+        <typeNote xml:id="TSET">Authorial
+	typescript, probably produced on Eliot's own Remington.
+	</typeNote>
+      </typeDesc>
+      <handDesc>
+        <handNote xml:id="EP" medium="red-ink">Ezra Pound's
+	annotations.</handNote>
+        <handNote xml:id="TSE" medium="black-ink">Commentary in
+	Eliot's hand.</handNote>
+      </handDesc>
+    </egXML>
+</p>
 </div>
+
+
 <div type="div4" xml:id="msphdec">
 <head>Decoration</head>
 <p>It can be difficult to draw a clear distinction between aspects of
@@ -2390,9 +2390,9 @@ seals and accompanying material. These may be described using the following spec
 <p>The <gi>bindingDesc</gi> element contains a description of the state of
 the present and former bindings of a manuscript, including information
 about its material, any distinctive marks, and provenance information. This may
-be given as a series of paragraphs, if only one binding is being described, or
+be given as a series of paragraphs if only one binding is being described, or
 as a series of distinct <gi>binding</gi> elements, each describing a distinct
-binding, where these are separately described. For example:
+binding where these are separately described. For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <bindingDesc>
 <p>Sewing not visible; tightly rebound over 19th-century pasteboards, reusing 
@@ -2404,10 +2404,11 @@ coloured endbands; the edges of the leaves and boards gilt. Boxed.</p>
 </bindingDesc>
 </egXML>
 </p>
-<p>Within a binding description, the element <gi>decoNote</gi> is
-available, as an alternative to <gi>p</gi>, for paragraphs dealing
+<p>Within a binding description, the elements <gi>decoNote</gi> and
+<gi>condition</gi> are
+available, as alternatives to <gi>p</gi>, for paragraphs dealing
 exclusively with information about decorative features of a binding,
-as in the following example:
+or about its condition, respectively.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <binding><p>Bound, s. XVIII (?), in <material>diced russia leather</material>
 retaining most of the original 15th century metal ornaments (but with 
@@ -2416,9 +2417,16 @@ some replacements) as well as the heavy wooden boards.</p>
 a sunburst, and a flower.</p></decoNote> 
 <decoNote><p>On the cornerpieces, one of which is missing, a rectangular stamp 
 of the Agnus Dei.</p></decoNote> 
+<condition>Front and back leather inlaid panels very badly worn.</condition>
 <p>Rebacked during the 19th century.</p>
 </binding>
 </egXML></p>
+<p>As noted above, (<ptr target="#msphco"/>) the element <gi>condition</gi>
+,may also be used as an alternative to <gi>p</gi> for paragraphs
+concerned exclusively with the condition of a binding, where this has
+not been supplied as part of the physical description.</p>
+
+
 </div>
 <div type="div4" xml:id="msphse">
 <head>Seals</head>
@@ -2576,17 +2584,6 @@ Saga mun vera komin fra Sr Vigfuse á Helgafelle.</quote></p>
 
 
 &layout;
-
-
-
-
-
-
-
-
-
-
-
 &handDesc;
 
 
@@ -2594,108 +2591,22 @@ Saga mun vera komin fra Sr Vigfuse á Helgafelle.</quote></p>
 
 
 <!-- &handNote;-->
+<!-- not declared here, but in TEI Header, since it is also used by
+transcr element <handNotes> ; maybe same shd be true of typeNote -->
 
-
-
+&typeDesc;
+&typeNote;
 
 
 
 &musicNotation;
-
-
-
-
-
-
-
-
-
-
-
 &decoDesc;
-
-
-
-
-
-
-
-
-
-
-
 &decoNote;
-
-
-
-
-
-
-
-
-
-
-
 &additions;
-
-
-
-
-
-
-
-
-
-
-
 &bindingDesc;
-
-
-
-
-
-
-
-
-
-
-
 &binding;
-
-
-
-
-
-
-
-
-
-
-
 &sealDesc;
-
-
-
-
-
-
-
-
-
-
-
 &seal;
-
-
-
-
-
-
-
-
-
-
-
 &accMat;
 
 
@@ -2777,41 +2688,8 @@ flyleaf), either in 1696 or 97.</p></acquisition>
 
 
 &history;
-
-
-
-
-
-
-
-
-
-
-
 &origin;
-
-
-
-
-
-
-
-
-
-
-
 &provenance;
-
-
-
-
-
-
-
-
-
-
-
 &acquisition;
 
 
@@ -2976,29 +2854,7 @@ Konserveringsværksted.</p></custEvent>
 
 
 &adminInfo;
-
-
-
-
-
-
-
-
-
-
-
 &recordHist;
-
-
-
-
-
-
-
-
-
-
-
 &source;
 
 
@@ -3013,17 +2869,6 @@ Konserveringsværksted.</p></custEvent>
 
 
 &custodialHist;
-
-
-
-
-
-
-
-
-
-
-
 &custEvent;
 
 

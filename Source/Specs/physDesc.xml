@@ -26,17 +26,15 @@ specialised elements from the model.physDescPart class.</desc>
       plus spécialisés appartenant à la classe model.physDescPart.</desc>
   <desc version="2007-05-04" xml:lang="es">contiene una descripción física completa de un manuscrito o de una de sus partes que puede ser ulteriormente subdividida utilizando elementos específicos de la clase model.physDescPart.</desc>
   <desc version="2007-01-21" xml:lang="it">contiene una descrizione fisica completa di un manoscritto o di una sua parte che può essere ulteriormente suddivisa utilizzando elementi specifici della classe .physDescPart.</desc>
-  <!-- ELEMENT physDesc (p+ | (support?, handDesc?, musicNotation?, decoDesc?, additions?, bindingDesc?, sealDesc?, accMat)) -->
+<!-- content relaxed per SF 2032879 -->
   <content>
-    <rng:choice>
-      <rng:oneOrMore>
+      <rng:zeroOrMore>
         <rng:ref name="model.pLike"/>
-      </rng:oneOrMore>
+      </rng:zeroOrMore>
       <rng:group>
         <!-- not sure if this group is needed -->
         <rng:ref name="model.physDescPart_sequenceOptional"/>
       </rng:group>
-    </rng:choice>
   </content>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -61,6 +59,7 @@ specialised elements from the model.physDescPart class.</desc>
       </physDesc>
     </egXML>
   </exemplum>
+<!-- more examples needed -->
   <listRef>
     <ptr target="#msph"/>
   </listRef>
