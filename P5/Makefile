@@ -84,7 +84,8 @@ html-web: check
 		--stringparam googleAnalytics ${GOOGLEANALYTICS} \
 	        --stringparam documentationLanguage ${DOCUMENTATIONLANGUAGE} \
 	    Utilities/guidelines.xsl -
-	cp -r ${SOURCETREE}/Images Guidelines-web-tmp/${LANGUAGE}/html/
+	mkdir Guidelines-web-tmp/${LANGUAGE}/html/Images
+	cp  ${SOURCETREE}/Images/*.* Guidelines-web-tmp/${LANGUAGE}/html/Images
 	(cd Guidelines-web-tmp/${LANGUAGE}/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done)
 	(cd Guidelines-web-tmp/${LANGUAGE}/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines.css)
 	-rm -rf Guidelines-web/${LANGUAGE}
