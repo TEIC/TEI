@@ -267,6 +267,13 @@ fascicule: subset
 
 dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exemplars
 
+foo:
+	rm -f release/tei-`cat VERSION`.zip
+	export V=`cat VERSION`;\
+	for i in source schema doc test database exemplars; \
+	  do (cd release/tei-p5-$$i-$$V/share; \
+	zip -q -r ../../tei-$$V.zip .);done
+
 dist-source: 
 	rm -rf release/tei-p5-source*
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
@@ -295,7 +302,7 @@ dist-source:
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-source tei-p5-source-`cat ../VERSION` ; \
-	zip -r tei-p5-source-`cat ../VERSION`.zip tei-p5-source-`cat ../VERSION` )
+	zip -q -r tei-p5-source-`cat ../VERSION`.zip tei-p5-source-`cat ../VERSION` )
 
 dist-schema: schemas dtds oddschema exampleschema
 	rm -rf release/tei-p5-schema*
@@ -308,7 +315,7 @@ dist-schema: schemas dtds oddschema exampleschema
 	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-schema tei-p5-schema-`cat ../VERSION` ; \
-	zip -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION` )
+	zip -q -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION` )
 
 dist-doc:  
 	make html-web
@@ -332,7 +339,7 @@ dist-doc:
 	done
 	(cd release; 	\
 	ln -s tei-p5-doc tei-p5-doc-`cat ../VERSION` ; \
-	zip -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION` )
+	zip -q -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION` )
 
 dist-test: 
 	rm -rf release/tei-p5-test*
@@ -342,7 +349,7 @@ dist-test:
 	| (cd release/tei-p5-test/share/tei; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-test tei-p5-test-`cat ../VERSION` ; \
-	zip -r tei-p5-test-`cat ../VERSION`.zip tei-p5-test-`cat ../VERSION` )
+	zip -q -r tei-p5-test-`cat ../VERSION`.zip tei-p5-test-`cat ../VERSION` )
 
 dist-exemplars: 
 	(cd Exemplars; make dist)
@@ -354,7 +361,7 @@ dist-database:
 	| (cd release/tei-p5-database/share/xml/tei/xquery; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-database tei-p5-database-`cat ../VERSION` ; \
-	zip -r tei-p5-database-`cat ../VERSION`.zip tei-p5-database-`cat ../VERSION` )
+	zip -q -r tei-p5-database-`cat ../VERSION`.zip tei-p5-database-`cat ../VERSION` )
 
 install-schema: dist-schema
 	@echo Making schema release in ${PREFIX}
