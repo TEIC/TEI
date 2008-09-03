@@ -429,8 +429,10 @@
   <xsl:value-of select="."/>\\
 </xsl:for-each>
 \vskip 0.5in\itshape
-  <xsl:value-of select="tei:docAuthor"/>
-\vskip 1in\upshape
+  <xsl:value-of select="tei:docAuthor"/>\\
+  <xsl:value-of
+      select="ancestor::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+  \vskip 1in\upshape
   <xsl:value-of select="tei:docImprint"/>\\
   <xsl:value-of select="tei:docDate"/>
 \end{center}
