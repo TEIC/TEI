@@ -405,6 +405,10 @@
     <xsl:choose>
       <xsl:when test="$showFigures='true'">
         <img src="{$graphicsPrefix}{$File}">
+          <xsl:attribute name="alt">
+            <xsl:value-of select="$Alt"/>
+          </xsl:attribute>
+          <xsl:call-template name="imgHook"/>
           <xsl:if test="@xml:id and $xhtml='true'">
             <xsl:attribute name="id">
               <xsl:value-of select="@xml:id"/>
@@ -427,10 +431,6 @@
               <xsl:with-param name="name">height</xsl:with-param>
             </xsl:call-template>
           </xsl:if>
-          <xsl:attribute name="alt">
-            <xsl:value-of select="$Alt"/>
-          </xsl:attribute>
-          <xsl:call-template name="imgHook"/>
         </img>
       </xsl:when>
       <xsl:otherwise>

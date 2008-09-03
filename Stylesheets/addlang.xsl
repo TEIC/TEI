@@ -45,7 +45,7 @@
 	select="*|@*|processing-instruction()|comment()|text()" />
     <xsl:for-each select="document($newfile)/i18n">
       <xsl:for-each select="key('K',$k)">
-      <xsl:message>foo <xsl:value-of select="$k"/></xsl:message>
+      <xsl:message>Go <xsl:value-of select="$k"/></xsl:message>
 	<xsl:copy-of select="text[@xml:lang=$newlang]"/>
       </xsl:for-each>
     </xsl:for-each>
