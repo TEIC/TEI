@@ -433,6 +433,16 @@
 	       PassiveTeX implements it as a real line break
 	  -->
           <xsl:when test="$foEngine='passivetex'"> </xsl:when>
+	  <xsl:when test="parent::tei:list">
+	    <fo:list-item>
+	      <fo:list-item-label>
+		<fo:block/>
+	      </fo:list-item-label>
+	      <fo:list-item-body>
+		<fo:block/>
+	      </fo:list-item-body>
+	    </fo:list-item>
+	  </xsl:when>
           <xsl:otherwise>
 	    <fo:block/>
 	    <!--
@@ -1106,16 +1116,27 @@ simple, bullets, ordered, gloss, unordered, or bibliography
         </fo:block>
       </fo:list-item-label>
       <fo:list-item-body start-indent="body-start()">
-        <xsl:choose>
-          <xsl:when test="tei:p">
+	<xsl:choose>
+	  <xsl:when test="*">
+	    <xsl:for-each select="*">
+	      <xsl:choose>
+		<xsl:when test="self::tei:list">
+		  <xsl:apply-templates select="."/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <fo:block font-weight="normal">
+		    <xsl:apply-templates/>
+		  </fo:block>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each>
+	  </xsl:when>
+        <xsl:otherwise>
+          <fo:block font-weight="normal">
             <xsl:apply-templates/>
-          </xsl:when>
-          <xsl:otherwise>
-            <fo:block font-weight="normal">
-              <xsl:apply-templates/>
-            </fo:block>
-          </xsl:otherwise>
-        </xsl:choose>
+          </fo:block>
+        </xsl:otherwise>
+      </xsl:choose>
       </fo:list-item-body>
     </fo:list-item>
   </xsl:template>
