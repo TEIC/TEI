@@ -129,9 +129,55 @@ Examples are given below.</p>
 
 <p>Members of the <ident type="class">att.datable</ident> class
 share the following attributes:
-<specList><specDesc key="att.datable.w3c" atts="when notBefore notAfter from to"/></specList>
-These attributes can be combined in various
-ways to provide additional nuances. Consider, for example, the following:
+<specList><specDesc key="att.datable.w3c" atts="period when notBefore notAfter from to"/></specList>
+</p>
+<p>The <att>period</att> attribute provides a convenient way of
+associating an event or date with a named period. Its value is a
+pointer which should indicate some other element where the period
+concerned is more precisely defined. A convenient location for such
+definitions is the <gi>taxonomy</gi> element in the <gi>classDecl</gi>
+(classification declaration) in the <gi>encodingDesc</gi> of a TEI
+Header. A <gi>taxonomy</gi> may contain simply a bibliographic
+reference to an external definition for it. More usefully, it may also
+contain a series of <gi>category</gi> elements, each with an
+identifier and a description. The identifier can then be used as the
+target for a <att>period</att> attribute. For example, a taxonomy of named periods might be defined as
+follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<taxonomy xml:id="greekperiods">
+<category xml:id="tyranny">
+<catDesc>Before 510 BC</catDesc></category>
+<category xml:id="classical">
+<catDesc>Between 510 and 323 BC</catDesc></category>
+          <category xml:id="hellenistic">
+            <catDesc>
+              <ref target="http://www.wikipedia.com/wiki/Hellenistic"
+                >Hellenistic</ref>. Commonly treated as <date
+		notBefore="-0323" notAfter="-0031">from the death of Alexander to the Roman conquest.</date>
+            </catDesc>
+          </category>
+          <category xml:id="roman">
+            <catDesc>
+              <ref target="http://www.wikipedia.com/wiki/Roman_Empire"
+              >Roman</ref>
+            </catDesc>
+          </category>
+          <category xml:id="christian">
+            <catDesc> The Christian period technically starts at the
+	    birth of Jesus, but in
+	    practice is considered to date from the conversion of Constantine
+	    in <date when="0312">312 AD</date>. </catDesc>
+          </category>
+        </taxonomy>
+</egXML>
+</p>
+<p>With these definitions in place, any datable event may be
+associated with a specific period:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<placeName period="#christian">Stauropolis</placeName></egXML></p>
+<p>The other dating attributes provided by this class support a wide
+range of methods of specifying temporal information in a normalized
+form. Some simple examples follow:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <birth when="1857-03-15">15 March 1857.</birth> 
 </egXML>
@@ -147,8 +193,12 @@ in March or April of 1857.</birth>
 some time in April of 1857.</residence>
 </egXML>
 </p>
-<p>More specialized standard date formats may also be used, about
-which see <ptr target="#NDDATEISO"/>.</p>
+<p>Normalisation of date and time values permits the efficient
+processing of data (for example, to determine whether one event
+precedes or follows another). These examples all use the W3C standard
+format for representation of dates and times. Further examples, and
+discussion of some alternative approaches to normalization are given
+in section <ptr target="#NDDATEISO"/> below. </p>
 <!-- need reference to something on date normalization issues here -->
 </div>
 
@@ -546,134 +596,14 @@ example:
 
 <p>
 <specGrp xml:id="DNDPER" n="Personal and organizational names">
-
-
-
-
-
-
-
-
-
-
 &orgName;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &persName;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &surname;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &forename;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &genName;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &nameLink;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &addName;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&roleName;
-
-
-
-
-</specGrp>
+&roleName;</specGrp>
 </p></div>
 
 <div type="div2" xml:id="NDPLAC"><head>Place Names</head>
@@ -850,150 +780,15 @@ name studies for example, the elements discussed in <ptr target="#NDNYM"/> may a
 structure itself may be represented using feature structures (<ptr target="#FS"/>).</p>
 <p>
 <specGrp xml:id="DNDPLAC" n="Names for places">
-
-
-
-
-
-
-
-
-
-
 &placeName;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &bloc;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &country;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &region;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &district;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &settlement;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &offset;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &geogName;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &geogFeat;
-
-
-
-
-
 </specGrp>
 </p>
 </div>
@@ -2333,16 +2128,6 @@ occupation and residence.</p>
 </div3>
 -->
 <specGrp xml:id="DCCAHPA" n="Historical data">
-
-
-
-
-
-
-
-
-
-
 &affiliation;
 
 &age;
@@ -2391,17 +2176,7 @@ occupation and residence.</p>
 &personGrp;
 
 
-
-
-
-
-
     
-
-
-
-
-
 
 
 &place;
@@ -2421,11 +2196,6 @@ occupation and residence.</p>
 &terrain;
 
 &trait;
-
-
-
-
-
 </specGrp>
 </div>
 </div>
@@ -2597,24 +2367,9 @@ or organizational names as well. For example:
 
 <p>
 <specGrp xml:id="DNDNYM" n="Canonical names">
-
-
-
-
-
-
-
-
-
-
 &nym;
 
 &listNym;
-
-
-
-
-
 </specGrp>
 As noted above, use of these elements implies that both the <ident type="module">dictionaries</ident> and the <ident type="module">namesdates</ident>  modules are included in a
 schema.</p>
@@ -2838,103 +2593,13 @@ it expires by its own limitation.</egXML>
 
 <specGrp>
 <!--  &macro.anyGML; -->
-  
-
-
-
-
-
-
-
-
-
-&model.persNamePart;
-
-
-
-
-    
-  
-
-
-
-
-
-
-
-
-
-&model.orgStateLike;
-
-
-
-
-    
-  
-
-
-
-
-
-
-
-
-
-&att.personal;
-
-
-
-
-    
+  &model.persNamePart;    
+  &model.orgStateLike;    
+  &att.personal;    
 <!--  &model.placeNamePart;    moved to ST -->
-  
-
-
-
-
-
-
-
-
-
-&model.placeLike;
-
-
-
-
-    
-  
-
-
-
-
-
-
-
-
-
-&att.datable.iso;
-
-
-
-
- 
-  
-
-
-
-
-
-
-
-
-
-&att.duration.iso;
-
-
-
-
- 
+  &model.placeLike;    
+  &att.datable.iso; 
+  &att.duration.iso; 
   
 <!--Copyright 2005 TEI Consortium. 
 Licensed under the GNU General Public License. 
@@ -2943,20 +2608,10 @@ $Date$
 
 $Id$
 -->
-
-
-
-
-
 
 
 
 &data.temporal.iso;
-
-
-
-
-
   
 <!--Copyright 2005 TEI Consortium. 
 Licensed under the GNU General Public License. 
@@ -2968,17 +2623,7 @@ $Id$
 
 
 
-
-
-
-
-
 &data.duration.iso;
-
-
-
-
-
     <specGrpRef target="#DNDPER"/>
     <specGrpRef target="#DNDPLAC"/>
     <specGrpRef target="#DCCAHPA"/>
