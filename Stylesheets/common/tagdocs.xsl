@@ -1436,7 +1436,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
   </xsl:template>
 
   <xsl:template name="generateParents">
-    <xsl:element  namespace="{$outputNS}" name="{$hiName}">
+    <xsl:element  namespace="{$outputNS}" name="{$divName}">
       <xsl:attribute name="{$rendName}">parent</xsl:attribute>
       <xsl:call-template name="generateParentsByElement"/>
       <xsl:call-template name="generateParentsByAttribute"/>
@@ -1679,8 +1679,9 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 
   <xsl:template match="tei:divGen[@type='attcat']">
     <xsl:element namespace="{$outputNS}" name="{$tableName}">
-      <xsl:attribute name="xml:id">attcat</xsl:attribute>
-      <xsl:attribute name="rend">attcat</xsl:attribute>
+      <xsl:attribute name="{$rendName}">
+	<xsl:text>attcat</xsl:text>
+      </xsl:attribute>
       <xsl:for-each select="key('ATTDOCS',1)">
 	<xsl:sort select="@ident"/>
 	<xsl:variable name="this">
