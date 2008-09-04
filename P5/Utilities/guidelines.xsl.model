@@ -480,8 +480,8 @@
 		<xsl:text>tocTree</xsl:text>
 	      </xsl:attribute>
 	      <span class="showhide">
-		<span class="tocShow"><img src="icons/plus.gif"/> </span>
-		<span class="tocHide"><img src="icons/minus.gif"/> </span>
+		<span class="tocShow"><img alt="+" src="icons/plus.gif"/> </span>
+		<span class="tocHide"><img alt="-" src="icons/minus.gif"/> </span>
 	      </span> 
 	    </xsl:when>
 	    <xsl:otherwise>
@@ -1063,7 +1063,7 @@ glyphes non standard</head>
   <xsl:template name="generateParentsByAttribute">
     <xsl:variable name="this" select="@ident"/>
     <xsl:if test="count(key('ATTREFS-CLASS',$this))&gt;0">
-    <p>
+    <div>
       <xsl:call-template name="i18n">
 	<xsl:with-param name="word">
 	  <xsl:text>Class</xsl:text>
@@ -1091,10 +1091,10 @@ glyphes non standard</head>
 	  </li>
 	</xsl:for-each>
       </ul>
-    </p>
+    </div>
     </xsl:if>
     <xsl:if test="count(key('ATTREFS-ELEMENT',$this))&gt;0">
-    <p>	
+    <div>	
       <xsl:call-template name="i18n">
 	<xsl:with-param name="word">
 	  <xsl:text>Element</xsl:text>
@@ -1122,7 +1122,7 @@ glyphes non standard</head>
 	  </li>
 	</xsl:for-each>
       </ul>
-    </p>
+    </div>
     </xsl:if>
   </xsl:template>
 
