@@ -2070,4 +2070,21 @@ select="$makeDecls"/></xsl:message>
      <xsl:text> * </xsl:text>
      <xsl:apply-templates/>
    </xsl:template>
-</xsl:stylesheet>
+
+   <xsl:template name="makeTEIVersion">
+     <xsl:choose>
+       <xsl:when
+	   test="ancestor-or-self::tei:TEI/processing-instruction()[name()='TEIVERSION']">
+	 <xsl:text>&#10;TEI Edition: </xsl:text>
+	 <xsl:value-of
+	     select="ancestor-or-self::tei:TEI/processing-instruction()[name()='TEIVERSION']"/>
+	 <xsl:text>&#10;</xsl:text>
+       </xsl:when>
+       <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
+	 <xsl:text>&#10;Edition: </xsl:text>
+	 <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+	 <xsl:text>&#10;</xsl:text>
+       </xsl:when>
+     </xsl:choose>
+   </xsl:template>
+ </xsl:stylesheet>

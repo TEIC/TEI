@@ -80,6 +80,9 @@
     <xsl:for-each select="/tei:TEI">
       <xsl:copy>
 	<xsl:copy-of select="@*"/>
+	<xsl:processing-instruction name="TEIVERSION">
+	  <xsl:call-template name="getversion"/>
+	</xsl:processing-instruction>
 	<xsl:apply-templates mode="flattenSchemaSpec"/>
       </xsl:copy>
     </xsl:for-each>
@@ -1862,5 +1865,27 @@ every attribute and see whether the attribute has changed-->
 
   </xsl:template>
 
+  <xsl:template name="getversion">
+    <xsl:choose>
+      <xsl:when test="$TEIC='false'">
+	<xsl:text>unknown</xsl:text>
+      </xsl:when>
+      <xsl:when test="not($localsource='')">
+	<xsl:for-each
+	    select="document($localsource)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
+	  <xsl:value-of select="."/>
+	</xsl:for-each>
+        </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="Remote">
+          <xsl:value-of select="$TEISERVER"/>
+          <xsl:text>getversion.xq</xsl:text>
+        </xsl:variable>
+        <xsl:for-each select="document($Remote)/tei:edition">
+	  <xsl:value-of select="."/>
+        </xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
 </xsl:stylesheet>

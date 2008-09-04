@@ -87,11 +87,15 @@
         <xsl:with-param name="body">
           <xsl:call-template name="dtdComment">
             <xsl:with-param name="text"> TEI P5 DTD module <xsl:value-of
-                select="@ident"/>. Generated <xsl:call-template name="showDate"
-              />. <xsl:if test="$TEIC='true'">
+                select="@ident"/>
+	    <xsl:text>. Generated </xsl:text>
+	    <xsl:call-template name="showDate"/>
+	    <xsl:text>. </xsl:text>
+	    <xsl:if test="$TEIC='true'">
                 <xsl:call-template name="copyright"/>
-              </xsl:if>
-	      <xsl:call-template name="makeDescription"/>
+	    </xsl:if>
+	    <xsl:call-template name="makeTEIVersion"/>
+	    <xsl:call-template name="makeDescription"/>
             </xsl:with-param>
           </xsl:call-template>
           <xsl:choose>
@@ -154,6 +158,7 @@
                 <xsl:if test="$TEIC='true'">
                   <xsl:call-template name="copyright"/>
                 </xsl:if>
+		<xsl:call-template name="makeTEIVersion"/>
 		<xsl:call-template name="makeDescription"/>
               </xsl:with-param>
             </xsl:call-template>
@@ -365,6 +370,7 @@
 	<xsl:if test="$TEIC='true'">
 	  <xsl:call-template name="copyright"/>
 	</xsl:if>
+	<xsl:call-template name="makeTEIVersion"/>
 	<xsl:call-template name="makeDescription"/>
       </xsl:with-param>
     </xsl:call-template>

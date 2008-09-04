@@ -96,12 +96,7 @@
 	    <xsl:text>&#10;Schema generated from ODD source </xsl:text>
 	    <xsl:call-template name="showDate"/>
 	    <xsl:text>. </xsl:text>
-	    <xsl:for-each
-		select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
-	      <xsl:text>&#10;Edition: </xsl:text>
-	      <xsl:value-of select="."/>
-	      <xsl:text>&#10;</xsl:text>
-	    </xsl:for-each>
+	    <xsl:call-template name="makeTEIVersion"/>
 	    <xsl:call-template name="makeDescription"/>
 	    <xsl:text>&#10;</xsl:text>
 	  </xsl:comment>
@@ -209,12 +204,7 @@
                 <xsl:comment>
 		  <xsl:text>Schema generated </xsl:text>
 		  <xsl:call-template name="showDate"/>
-		  <xsl:for-each
-		      select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
-		    <xsl:text>&#10;Edition: </xsl:text>
-		    <xsl:value-of select="."/>
-		    <xsl:text>&#10;</xsl:text>
-		  </xsl:for-each>
+		  <xsl:call-template name="makeTEIVersion"/>
 		  <xsl:if test="$TEIC='true'">
                     <xsl:call-template name="copyright"/>
                   </xsl:if>
