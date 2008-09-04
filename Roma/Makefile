@@ -57,7 +57,7 @@ clean:
 	-find . -name "*~" | xargs rm -f
 	-find . -name semantic.cache | xargs rm -f
 
-changelog:
+log:
 	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \
 	svn log -v -r 'HEAD:{'$$LastDate'}' | perl ../gnuify-changelog.pl | grep -v "^;" > newchanges)
 	mv ChangeLog oldchanges

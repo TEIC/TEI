@@ -2452,10 +2452,11 @@ class romaDom extends domDocument
 	$szID = md5( uniqid(rand(), true ) );
 	
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tmp';    
-	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.xsd';    
+	$szOutputFile = $szID . '.xsd';    
+	$szOutputFileZip = $szID . '.zip';    
 
 	file_put_contents( $szInputFile ,$oRNG ->SaveXML());
-	
+	chdir (roma_temporaryFilesDir );
 
 	if ( $bBar )
 	    $this->updateProgressBar( '70' );
@@ -2464,18 +2465,17 @@ class romaDom extends domDocument
 	System( roma_trang . 
 	' -I rng -O xsd -o disable-abstract-elements ' . 
 	$szInputFile . ' ' . $szOutputFile  . ' 2>&1;' .
-	'perl -p -i -e	"s+\"xml.xsd\"+\"http://www.w3.org/2004/10/xml.xsd\"+" ' .
-        $szOutputFile);
+	'zip -r -q $szOutputFileZip "*.xsd");
 	$szError = ob_get_clean();
 	ob_end_clean();
 
 	if ( $bBar )
 	    $this->updateProgressBar( '90' );
 
-	if ( file_exists( $szOutputFile ) )
+	if ( file_exists( $szOutputFileZip ) )
 	  { 
-	    $szXSD = join( '', file( $szOutputFile ) );
-	    unlink( $szOutputFile );
+	    $szXSD = join( '', file( $szOutputFileZip ) );
+	    unlink( $szOutputFileZip );
 	  }
 
 	unlink( $szInputFile );
