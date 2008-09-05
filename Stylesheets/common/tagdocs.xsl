@@ -2310,7 +2310,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
     <xsl:for-each select=".//rng:ref">
       <xsl:if test="not(@name='anyTEI' 
 		    or @name='anyOOXML'
-		    or @name='anyXML'
+		    or @name='macro.anyXML'
 		    or @name='anyOOXMLMath'
 		    or @name='anySchematron' 
 		    or @name='anyAlien' 
