@@ -68,7 +68,7 @@ class romaDom extends domDocument
 	$oDivgen->setAttribute( 'type', 'toc' );
 
 	$oSchema = $oBody->appendChild( new domElement( 'schemaSpec' ) );
-	$oSchema->setAttribute( 'ident', 'myLmf' );
+	$oSchema->setAttribute( 'ident', 'myTEI' );
 	$oSchema->setAttribute('docLang', 'en' );
 	$oSchema->setAttribute('start', 'TEI' );
 	$oSchema->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:lang', 'en' );
