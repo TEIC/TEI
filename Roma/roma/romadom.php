@@ -2437,7 +2437,7 @@ class romaDom extends domDocument
 	return $szError;
       }
 
-    public function createSchemaXSD( &$szXSD, $bBar = false )
+    public function createSchemaXSD( &$szXSD, $bBar = false, $fileName )
       {
 	if ( $bBar )
 	  {
@@ -2462,11 +2462,13 @@ class romaDom extends domDocument
 	    $this->updateProgressBar( '70' );
 	
 	ob_start();
-	System( "echo Put XSD in zip; " .  roma_trang . 
-	' -I rng -O xsd -o disable-abstract-elements ' . 
-	$szInputFile . ' ' . $szOutputFile  . ' 2>&1;' .
-	'find . -type f  | zip -r ' . $szOutputFileZip . 
-        ' -@  -x ' . $szInputFile . ' 2>&1; echo done');
+	System( 
+	' mkdir ' .  $szID . ';' .
+	' (cd ' .  $szID . ';' .
+	roma_trang . ' -I rng -O xsd -o disable-abstract-elements ' . 
+	$szInputFile . ' ' . $fileName  . '.xsd 2>&1;' .
+	'find . -type f  | zip -q -r ../' . $szOutputFileZip . 
+        ' -@  ' . ' 2>&1); rm -rf ' . $szID );
 	$szError = ob_get_clean();
 	ob_end_clean();
 

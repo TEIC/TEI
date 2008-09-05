@@ -1297,13 +1297,18 @@ class roma
 	$this->processCreateSchema( $szOut );
 	echo $szOut;
 	
+        $this->m_oRomaDom->getCustomizationFilename( $szFilename );
+	$szFilename = ( $szFilename ) ? $szFilename : 'myTei';
+
+	$postFix=  $_REQUEST[ 'output' ] ;
 	switch( $_REQUEST[ 'output' ] )
 	  {
 	  case 'rnc':
 	    $szError = $this->m_oRomaDom->createSchemaRNC( $szSchema, true );
 	    break;
 	  case 'xsd':
-	    $szError = $this->m_oRomaDom->createSchemaXSD( $szSchema, true );
+	    $szError = $this->m_oRomaDom->createSchemaXSD( $szSchema, true, $szFilename );
+	    $postFix = "zip";
 	    break;
 	  case 'dtd':
 	    $szError = $this->m_oRomaDom->createSchemaDTD( $szSchema, true );
@@ -1317,11 +1322,9 @@ class roma
 	  {
 	    echo '<pre>' . $szError . '</pre>';
 
-	    $this->m_oRomaDom->getCustomizationFilename( $szFilename );
-	    $szFilename = ( $szFilename ) ? $szFilename : 'myTei';
 	    $this->redirectBrowserMeta( "http://" . $_SERVER[
 	    'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ] . '?mode='
-	    . roma_mode_downloadFile . '&prefix=' . $szPrefix . '&file=' . $szFilename . '.' . $_REQUEST[ 'output' ] . '&nextpage=' .  roma_mode_createSchema );	    
+	    . roma_mode_downloadFile . '&prefix=' . $szPrefix . '&file=' . $szFilename . '.' . $postFix . '&nextpage=' .  roma_mode_createSchema );	    
 
 	    $_SESSION[ 'download' ] = $szSchema;
 	  }
