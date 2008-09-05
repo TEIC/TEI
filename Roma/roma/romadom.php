@@ -2462,10 +2462,11 @@ class romaDom extends domDocument
 	    $this->updateProgressBar( '70' );
 	
 	ob_start();
-	System( roma_trang . 
+	System( "echo Put XSD in zip; " .  roma_trang . 
 	' -I rng -O xsd -o disable-abstract-elements ' . 
 	$szInputFile . ' ' . $szOutputFile  . ' 2>&1;' .
-	'zip -r -q $szOutputFileZip "*.xsd"');
+	'find . -type f | ' . zip . ' -r ' . $szOutputFileZip . 
+        ' -@  -x ' . $szInputFile . ' 2>&1; echo done');
 	$szError = ob_get_clean();
 	ob_end_clean();
 
