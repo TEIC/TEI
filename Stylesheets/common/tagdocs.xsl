@@ -2003,11 +2003,13 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
   </xsl:template>
   
   <xsl:template name="attClassDetails">
+    <xsl:param name="depth">1</xsl:param>
       <xsl:for-each select="tei:classes/tei:memberOf">
 	<xsl:choose>
 	  <xsl:when test="key('CLASSES',@key)">
 	    <xsl:for-each select="key('CLASSES',@key)">
 	      <xsl:if test="@type='atts'">
+		<xsl:if test="$depth > 1"> (</xsl:if>
 		<xsl:call-template name="makeLink">
 		  <xsl:with-param name="class">classlink</xsl:with-param>
 		  <xsl:with-param name="name">
@@ -2039,9 +2041,16 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 		    </xsl:if>
 		  </xsl:for-each>
 		  <xsl:text>)</xsl:text>
-		  <xsl:call-template name="showSpace"/>
+		  <xsl:if test="$depth=1">
+		    <xsl:call-template name="showSpace"/>
+		  </xsl:if>
 		</xsl:if>
-		<xsl:call-template name="attClassDetails"/>
+		<xsl:call-template name="attClassDetails">
+		  <xsl:with-param name="depth">
+		    <xsl:value-of select="$depth + 1"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+		<xsl:if test="$depth > 1">) </xsl:if>
 	      </xsl:if>
 	    </xsl:for-each>
 	  </xsl:when>
@@ -2234,6 +2243,11 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
         </xsl:variable>
         <xsl:for-each select="exsl:node-set($Children)/Children">
           <xsl:choose>
+	    <xsl:when test="Text and count(Element)=0">
+	      <xsl:call-template name="i18n">
+		<xsl:with-param name="word">Character data only</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:when>
             <xsl:when test="count(Element)=0">
 	      <xsl:call-template name="i18n">
 		<xsl:with-param name="word">Empty element</xsl:with-param>
@@ -2308,7 +2322,14 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
             </xsl:when>
             <xsl:when test="self::tei:macroSpec">
               <xsl:for-each select="tei:content">
-                <xsl:call-template name="followRef"/>
+		<xsl:choose>
+		  <xsl:when test="rng:text and count(rng:*)=1">
+		    <Text xmlns=""/>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:call-template name="followRef"/>
+		  </xsl:otherwise>
+		</xsl:choose>
               </xsl:for-each>
             </xsl:when>
             <xsl:when test="self::tei:classSpec">
