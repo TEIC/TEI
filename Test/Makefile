@@ -110,8 +110,7 @@ test-xsd:
 
 test-xsd-valid:
 	echo XSDVALID
-	which xsdvalid || echo no xsdvalid installed
-	-for i in $(TESTFILES);do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
+	- which xsdvalid && for i in $(TESTFILES);do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
 
 test-xerces:
 	-for i in $(TESTFILES) ;do echo $$i: ; java -cp ~/jar/xercesSamples.jar jaxp.SourceValidator -HS -VA -GA -a $$i.xsd -i $$i.xml; done
@@ -125,7 +124,8 @@ test-dtd:
 # testall, testp4compat, testodds have no DOCTYPE
 test-dtd-xmllint:
 	echo xmllint DTD using DTD fragments....
-	-for i in `echo $(TESTFILES) | sed 's/testlite//' | sed 's/testnames//' | sed 's/testi18n//' | sed 's/testodds//'  | sed 's/testall//' | sed 's/testp4compat//'`; do xmllint --noout --valid $$i.xml; done
+	-for i in  $(TESTFILES); do grep DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml; \
+	done
 
 test-extns:
 	echo check whether user extensions work ....
