@@ -2453,7 +2453,7 @@ class romaDom extends domDocument
 	
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tmp';    
 	$szOutputFile = $szID . '.xsd';    
-	$szOutputFileZip = $szID . '.zip';    
+	$szOutputFileZip = roma_temporaryFilesDir . '/' . $szID . '.zip';    
 
 	file_put_contents( $szInputFile ,$oRNG ->SaveXML());
 	chdir (roma_temporaryFilesDir );
@@ -2467,8 +2467,7 @@ class romaDom extends domDocument
 	' (cd ' .  $szID . ';' .
 	roma_trang . ' -I rng -O xsd -o disable-abstract-elements ' . 
 	$szInputFile . ' ' . $fileName  . '.xsd 2>&1;' .
-	'find . -type f  | zip -q -r ../' . $szOutputFileZip . 
-        ' -@  ' . ' 2>&1); rm -rf ' . $szID );
+	'zip -q  ' . $szOutputFileZip . ' *  ' . ' 2>&1); rm -rf ' . $szID );
 	$szError = ob_get_clean();
 	ob_end_clean();
 
