@@ -1,0 +1,36 @@
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei"
+	   type="atts" ident="att.canonical" mode="add">
+  <desc>provides attributes which can be used to associate a
+  representation such as a name or title with canonical information about
+  the object being named or referenced.</desc>
+  <attList>
+    <attDef ident="key" usage="opt">
+      <equiv/>
+      <desc>provides an externally-defined means
+ of identifying the entity (or entities) being named, using a coded value
+      of some kind.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.key"/>
+      </datatype>
+      <valDesc>any string of Unicode characters</valDesc>
+      <remarks>
+        <p>The value may be a unique identifier from a database, or
+	any other externally-defined string identifying the referent. </p>
+      </remarks>
+    </attDef>
+    <attDef ident="ref" usage="opt">
+      <gloss>reference</gloss>
+      <desc>provides an explicit means of locating a full definition
+      for the entity being named by means of one or more URIs.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <remarks>
+        <p>The value must point directly to one or more XML elements
+        by means of one or more URIs, separated by whitespace. If more
+        than one is supplied, the implication is that the name
+        identifies several distinct entities. </p>
+      </remarks>
+    </attDef>
+  </attList>
+</classSpec>
