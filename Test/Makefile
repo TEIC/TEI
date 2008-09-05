@@ -101,7 +101,7 @@ test-rnv:
 	xmllint --dropdtd testlite.xml | 	rnv testfrag.rnc 
 
 test-xmllint:
-	echo XMLLINT ... for DTD ....
+	echo XMLLINT ... for RELAXNG ....
 	for i in $(TESTFILES); do xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; done
 
 test-xsd:
