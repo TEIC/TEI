@@ -1902,25 +1902,29 @@ la</mentioned> may or may not be included as part of the reference
 form of a name, depending on the language and country of origin of the
 bearer. </p>
 
-<p>Two issues arise in this context: firstly, there may be a
-need to encode a regularised form of a name, distinct from the actual
-form in the source to hand; secondly, there may be a need to
-identify the particular person, place, etc. referred to by the name,
-irrespective of whether the name itself is normalized or not. The
-element <gi>reg</gi>, introduced in <ptr target="#COEDREG"/> is provided for
-the former purpose; the attribute <att>key</att> for the latter.</p>
+<p>Two issues arise in this context: firstly, there may be a need to
+encode a regularised form of a name, distinct from the actual form in
+the source to hand; secondly, there may be a need to identify the
+particular person, place, etc. referred to by the name, irrespective
+of whether the name itself is normalized or not. The element
+<gi>reg</gi>, introduced in <ptr target="#COEDREG"/> is provided for
+the former purpose; the attributes <att>key</att> or <att>ref</att>
+for the latter.</p>
 
-<p>The <att>key</att> attribute is common to all members of the
-<ident type="class">att.naming</ident> class and is defined as follows:
-<specList><specDesc key="att.naming" atts="key"/></specList>
+<p>The <att>key</att> and <att>ref</att> attributes are common to all
+members of the <ident type="class">att.canonical</ident> class and are
+defined as follows: <specList><specDesc key="att.canonical" atts="key
+ref"/></specList>
  </p>
 
-<p>Its main use is as a means of gathering together all references to
-the same individual or location scattered throughout a document:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p><q>My dear <rs key="BENM1" type="person"> Mr. Bennet</rs>,</q> 
-said <rs key="BENM2" type="person">his lady</rs> to him one day, 
-<q>have you heard that <rs key="NETP1" type="place">Netherfield
-Park</rs>  is let at last?</q></p></egXML>
+<p>A very useful application for them is as a means of gathering
+together all references to the same individual or location scattered
+throughout a document: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><p><q>My dear <rs key="BENM1"
+type="person"> Mr. Bennet</rs>,</q> said <rs key="BENM2"
+type="person">his lady</rs> to him one day, <q>have you heard that <rs
+key="NETP1" type="place">Netherfield Park</rs> is let at
+last?</q></p></egXML>
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#CONARS-eg-108">
 <p><name key="VOM1" type="person">Mme. de Volanges</name> marie <rs key="VOM2">sa fille</rs>: c'est encore un secret;
@@ -1928,13 +1932,23 @@ mais elle m'en a fait part hier.</p></egXML>
 <!-- de Laclos: Les Liaisons dangereuses, 1963, p.13 -->
 </p>
 
-<p>The value of the <att>key</att> attribute may be an unexpanded code, as
-in the examples above, with no significance. More usually however, it
-will reference  some other resource providing more information about
-the entity named by the element, which might itself include a number of
-alternative forms of name for the entity in question. </p>
+<p>The value of the <att>key</att> attribute may be an unexpanded
+code, as in the examples above, with no particular significance. More
+usually however, it will be an externally defined code of some kind,
+as provided by a standard reference source.
 
+<egXML xmlns="http://www.tei-c.org/ns/Examples" >
+<p><name key="LHR" type="airport">Heathrow</name> </p></egXML>
+</p>
+<p>The <att>ref</att> attribute can be used to point directly
+to  some other resource providing more information about the
+entity named by the element, such as an authority record in a
+database, an encylopaedia entry, another element in the same
+or a different document etc. 
 
+<egXML xmlns="http://www.tei-c.org/ns/Examples" >
+<p><name ref="http://en.wikipedia.org/wiki/Heathrow_airport" type="airport">Heathrow</name> </p></egXML>
+</p>
 <p>This use should be distinguished from the use of a nested
 <gi>reg</gi> (regularization) element to provide the standard form
 of a referring string, as in this example: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#CONARS-eg-109"><p>My personal life during
