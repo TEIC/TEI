@@ -2315,7 +2315,17 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 		    or @name='anySchematron' 
 		    or @name='anyAlien' 
 		    or @name='AnyThing')">
-        <xsl:for-each select="key('IDENTS',@name)">
+	<xsl:variable name="Name">
+	  <xsl:choose>
+	    <xsl:when test="contains(@name,'_sequen')">
+	      <xsl:value-of select="substring-before(@name,'_')"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="@name"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:variable>
+        <xsl:for-each select="key('IDENTS',$Name)">
           <xsl:choose>
             <xsl:when test="self::tei:elementSpec">
               <Element xmlns="" name="{@ident}" module="{@module}"/>
