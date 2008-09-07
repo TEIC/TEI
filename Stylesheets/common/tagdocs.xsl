@@ -2317,7 +2317,10 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 		    or @name='AnyThing')">
 	<xsl:variable name="Name">
 	  <xsl:choose>
-	    <xsl:when test="contains(@name,'_sequen')">
+	    <xsl:when test="contains(@name,'_sequence')">
+	      <xsl:value-of select="substring-before(@name,'_')"/>
+	    </xsl:when>
+	    <xsl:when test="contains(@name,'_alternat')">
 	      <xsl:value-of select="substring-before(@name,'_')"/>
 	    </xsl:when>
 	    <xsl:otherwise>
