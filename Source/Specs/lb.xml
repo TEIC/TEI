@@ -26,6 +26,7 @@ edition or version of a text.</desc>
   <desc version="2007-01-21" xml:lang="it">segna l'inizio di una nuova riga (tipografica) in qualche edizione o versione di un testo.</desc>
   <classes>
     <memberOf key="model.milestoneLike"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
@@ -66,7 +67,7 @@ for the edition.</valDesc>
     <p>Indicating line structure of title page, display text, etc.:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <docTitle>
-        <titlePart type="main">THE
+        <titlePart type="main"><lb/>THE
               <lb/>Pilgrim's Progress 
               <lb/>FROM
               <lb/>THIS WORLD,
@@ -78,17 +79,19 @@ for the edition.</valDesc>
     </egXML>
   </exemplum>
   <remarks>
-    <p>On this element, the global <att>n</att> attribute indicates the number or other value associated with the line
-which follows the point of insertion of this <gi>lb</gi>.
-Encoders should adopt a clear and consistent policy as to
-whether the numbers associated with line breaks relate to the physical
-sequence number of the line within the page, or to some aspect of the
-logical structure of the text.
-By convention, <gi>lb</gi> elements should appear at the start of the
-line to which they refer.</p>
-    <p>The <gi>lb</gi> tag is intended for making typographic line breaks
-in prose. It should be carefully distinguished from the <gi>l</gi>
-element, used to mark lines of verse.</p>
+    <p>By convention, <gi>lb</gi> elements should appear at the point
+    in the text where a new line starts. The <att>n</att> attribute,
+    if used, indicates the number or other value associated with the
+    text between this point and the next <gi>lb</gi>
+    element, typically the sequence number of the line
+    within the page, or other appropriate unit. This element is
+    intended to be used for marking actual line breaks on a manuscript
+    or printed page, at the point where they occur; it should not be
+    used to tag structural units such as lines of verse (for which the
+    <gi>l</gi> element is available) except in circumstances where
+    structural units cannot otherwise be marked. </p>
+	<p>The <att>type</att> attribute may be used to characterize the
+	linebreak in any respect, for example as word-breaking or not. </p>
   </remarks>
   <remarks xml:lang="ja">
     <p>
