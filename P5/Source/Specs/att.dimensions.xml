@@ -7,8 +7,7 @@ $Date$
 $Id$
 -->
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="atts" ident="att.dimensions">
-  <desc>provides attributes for describing the size of physical
-  objects.</desc>
+  <desc>provides attributes for describing the size of physical  objects.</desc>
   <desc version="2007-05-02" xml:lang="zh-tw">提供符合某種度量值的屬性值。
     </desc>
   <desc version="2008-04-05" xml:lang="ja">
@@ -88,15 +87,68 @@ $Id$
         <rng:ref name="data.numeric"/>
       </datatype>
     </attDef>
+<attDef ident="extent" usage="opt">
+      <equiv/>
+      <desc>indicates the size of the object concerned using a
+      project-specific vocabulary combining quantity and units in a
+      single string of words.  </desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+      <valDesc>any measurement phrase, e.g. <mentioned>25 letters</mentioned>, <mentioned>2 × 3
+inches</mentioned>.</valDesc>
+      <exemplum>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	  <gap extent="5 words"/>
+	  <height extent="2 ft 8 in"/>
+	</egXML>
+      </exemplum>
+    </attDef>
+
+    <attDef ident="atLeast">
+      <desc>gives a minimum  estimated value for the  measurement.</desc>
+      <datatype>        
+<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
+      </datatype></attDef>
+
+
+    <attDef ident="atMost">
+      <desc>gives a maximum  estimated value for the  measurement.</desc>
+      <datatype>        
+<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
+      </datatype></attDef>
+
+
+    <attDef ident="min">
+      <desc>where the measurement summarizes more than one
+      observation, supplies the minimum value observed.</desc>
+      <datatype>        
+<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
+      </datatype></attDef>
+
+    <attDef ident="max">
+      <desc>where the measurement summarizes more than one
+      observation, supplies the maximum value observed.</desc>
+      <datatype>        
+<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
+      </datatype></attDef>
+
+
+
     <attDef ident="precision">
-      <desc>characterizes the precision of the specified measurement.</desc>
+      <desc>characterizes the precision of the values specified by the
+      other attributes.</desc>
       <datatype>        
 <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.certainty"/>
-      </datatype></attDef>
+      </datatype>
+</attDef>
+
+
+
     <attDef ident="scope" usage="opt">
       <equiv/>
-      <desc>specifies the applicability of this measurement, where
-      more than one object is being measured.</desc>
+      <desc>where the measurement summarizes more than one
+      observation, specifies the applicability of this measurement.</desc>
       <desc version="2007-05-02" xml:lang="zh-tw">測量多個物件時，標明此度量的可應用範圍。</desc>
       <desc version="2008-04-05" xml:lang="ja">
       対象物が複数あった場合に，当該数値の適応範囲を示す．
