@@ -394,27 +394,84 @@ of the description, as appropriate. </p>
 <p>These three elements, as well as <gi>dimensions</gi> itself, are
 all members of the <ident type="class">att.dimensions</ident> class,
 and thus all carry the following attributes: <specList><specDesc
-key="att.dimensions" atts="unit scope quantity precision">
+key="att.dimensions" atts="scope extent unit quantity atLeast atMost min max
+extent">
 </specDesc></specList></p>
-<p>Each of these elements, if present, must be given in the order
-specified. The <gi>dimensions</gi> element may be repeated as often as
+<p>Attributes <att>min</att> and <att>max</att> are used only when the
+measurement applies to several items, for example the size of all
+leaves in a manuscript; attributes <att>atLeast</att> and
+<att>atMost</att> are used when the measurement applies to a single
+item, for example the size of a  specific codex  but has had to be
+estimated. Attribute <gi>quantity</gi> is used when the measurement
+can be given exactly, and applies to a single item; this is the usual
+situation.  The units in which dimensions are measured should always
+be specified using the <att>unit</att> attribute, which will normally
+take from a closed set of values appropriate to the project, using
+standard units of measurement wherever possible, such as 
+following values:
+<val>cm</val>, 
+<val>mm</val>,
+<val>in</val>,
+<val>line</val>,
+<val>char</val>. If the only data available for the measurement uses
+some other unit, or it is preferred to normalize it in some other way,
+then it may be supplied as a string value using the
+<att>extent</att> attribute.
+</p>
+<p>In the simplest case, only the <att>extent</att> attribute may be
+supplied: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><width
+extent="6 cubit">six cubits</width></egXML> 
+More usually, the measurement will be normalised into a value 
+and an appropriate SI unit: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><width quantity="270" unit="cm">six cubits</width></egXML>
+Where the exact value is uncertain, the attributes <att>atLeast</att>
+and <att>atMost</att> may be used to indicate the upper and lower
+bounds of an estimated value:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><width atLeast="250"
+						       atMost="300" unit="cm">six cubits</width></egXML>
+</p>
+
+<p>It is often convenient to supply a measurement which applies to a
+number of discrete observations: for example, the number of ruled
+lines on the pages of a manuscript (which may not all be the same), or
+the diameter of an object like a bell, which will differ depending
+where it is measured. In such cases, the <att>scope</att> attribute
+may be used to specify the observations for which this measurement is
+applicable:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><height unit="line"
+							scope="most"
+							atLeast="20"/>
+</egXML>
+This indicates that most pages have at least 20 lines. The attributes
+<att>min</att> and <att>max</att> can also be used to specify the possible
+range of values: for example, to show that  all pages have between 12 
+and 30 lines: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><height unit="line"
+scope="all" min="12" max="30"/>
+</egXML>
+</p>
+<p>The <gi>dimensions</gi> element may be repeated as often as
 necessary, with appropriate attribute values to indicate the nature
 and scope of the measurement concerned. For example, in the following
 case the leaf size and ruled space of the leaves of the manuscript are
 specified:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<dimensions type="leaves" unit="mm">
- <height scope="range">157-160</height>
- <width>105</width>
-</dimensions>
 <dimensions type="ruled" unit="mm">
- <height scope="most">90</height>
- <width scope="most">48</width>
+ <height scope="most"  quantity="90" unit="mm"/>
+ <width scope="most" quantity="48" unit="mm"/>
+</dimensions>
+<dimensions type="leaves">
+ <height min="157" max="160"  unit="mm"/>
+ <width quantity="105"/>
 </dimensions>
 </egXML>
 This indicates that for most leaves of the manuscript being described
 the ruled space is 90 mm high and 48 mm wide, while the leaves throughout 
 are between 157 and 160 mm in height and 105 mm in width.</p>
+
+
+
 </div>
 <div type="div3" xml:id="msloc"><head>References to Locations within a Manuscript</head>
 <p>The <gi>locus</gi> element is a specialized form of the <gi>ref</gi> element.
@@ -1478,14 +1535,15 @@ Benedictio salis et aquae</explicit>
 </msItem>
 </msContents>
 </egXML></p>
-<p>In the following example, standard TEI elements for the transcription of primary sources have been used to mark
-the expansion of abbreviations and other features present in the original:
+<p>In the following example, standard TEI elements for the
+transcription of primary sources have been used to mark the expansion
+of abbreviations and other features present in the original:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <msItem defective="true">
 <locus>ff. 1r-24v</locus>
 <title type="uniform">Ágrip af Noregs konunga sǫgum</title>
 <incipit defective="true">regi oc h<ex>ann</ex> seti 
-ho<gap reason="illegible" extent="7" unit="mm"/><lb/>sc heim se<ex>m</ex> þio</incipit>
+ho<gap reason="illegible" quantity="7" unit="mm"/><lb/>sc heim se<ex>m</ex> þio</incipit>
 <explicit defective="true">h<ex>on</ex> hev<ex>er</ex>
 <ex>oc</ex> þa buit hesta .ij. <lb/>annan viþ fé en
 h<ex>on</ex>o<ex>m</ex> annan til reiþ<ex>ar</ex></explicit>
