@@ -203,7 +203,7 @@ test -d $TEIXSLDIR/odds || \
      die "stylesheet location $TEIXSLDIR is not accessible"
 if test "x$schema" = "x"
 then
- schema=$(xsltproc $TEIXSLDIR/odds/extract-schemaSpec-ident.xsl $1 | head -1)
+ schema=$(xsltproc --xinclude $TEIXSLDIR/odds/extract-schemaSpec-ident.xsl $1 | head -1)
  schema=${schema:?"Unable to ascertain ident= of <schemaSpec>"}
 fi
 echo "Results to: $RESULTS"
