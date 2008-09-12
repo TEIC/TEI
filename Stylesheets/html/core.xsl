@@ -909,12 +909,12 @@
       <xsl:when test="ancestor::tei:bibl"> (<xsl:apply-templates/>)
       </xsl:when>
       <xsl:when test="@place='marg'">
-	<div class="margnote">
+	<span class="margnote">
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="$identifier"/>
 	  </xsl:call-template>
 	  <xsl:apply-templates/>
-	</div>
+	</span>
       </xsl:when>
       <xsl:when test="@place='inline'">
 	<xsl:call-template name="makeAnchor">
