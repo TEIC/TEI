@@ -1638,42 +1638,78 @@ $requestedID: requests a particular page
   </xd:doc>
   <xsl:template name="mainTOC">
     <xsl:param name="force"/>
-    <xsl:if test="$tocFront">
-      <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:front">
-        <xsl:if
-          test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-          <ul class="toc{$force} toc_front">
-            <xsl:apply-templates mode="maketoc"
-              select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-              <xsl:with-param name="forcedepth" select="$force"/>
-            </xsl:apply-templates>
-          </ul>
-        </xsl:if>
-      </xsl:for-each>
-    </xsl:if>
-    <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
-      <xsl:if
-        test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-        <ul class="toc{$force}  toc_body">
-          <xsl:apply-templates mode="maketoc"
-            select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-            <xsl:with-param name="forcedepth" select="$force"/>
-          </xsl:apply-templates>
-        </ul>
-      </xsl:if>
-    </xsl:for-each>
-    <xsl:if test="$tocBack">
-      <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
-        <xsl:if
-          test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-          <ul class="toc{$force} toc_back">
-            <xsl:apply-templates mode="maketoc"
-              select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-              <xsl:with-param name="forcedepth" select="$force"/>
-            </xsl:apply-templates>
-          </ul>
-        </xsl:if>
-      </xsl:for-each>
+    <xsl:choose>
+      <xsl:when test="ancestor-or-self::tei:TEI/tei:text/tei:group">
+	<ol>
+	<xsl:for-each
+	    select="ancestor-or-self::tei:TEI/tei:text/tei:group/tei:text">
+	  <li>Text <xsl:number/>:
+	    <xsl:for-each select="tei:front">
+	      <xsl:call-template name="partTOC">
+		<xsl:with-param name="force" select="$force"/>
+		<xsl:with-param name="part">front</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+
+	    <xsl:for-each select="tei:body">
+	      <xsl:call-template name="partTOC">
+		<xsl:with-param name="force" select="$force"/>
+		<xsl:with-param name="part">body</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+
+	    <xsl:for-each select="tei:back">
+	      <xsl:call-template name="partTOC">
+		<xsl:with-param name="force" select="$force"/>
+		<xsl:with-param name="part">back</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	  </li>
+	</xsl:for-each>
+	</ol>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:if test="$tocFront">
+	  <xsl:for-each
+	      select="ancestor-or-self::tei:TEI/tei:text/tei:front">
+	    <xsl:call-template name="partTOC">
+	      <xsl:with-param name="force" select="$force"/>
+	      <xsl:with-param name="part">front</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:for-each>
+	</xsl:if>
+	
+	<xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
+	  <xsl:call-template name="partTOC">
+	    <xsl:with-param name="force" select="$force"/>
+	    <xsl:with-param name="part">body</xsl:with-param>
+	  </xsl:call-template>
+	</xsl:for-each>
+
+	<xsl:if test="$tocBack">
+	  <xsl:for-each
+	      select="ancestor-or-self::tei:TEI/tei:text/tei:back">
+	    <xsl:call-template name="partTOC">
+	      <xsl:with-param name="force" select="$force"/>
+	      <xsl:with-param name="part">back</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:for-each>
+	</xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="partTOC">
+    <xsl:param name="part"/>
+    <xsl:param name="force"/>
+    <xsl:if
+	test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+      <ul class="toc{$force} toc_{$part}">
+	<xsl:apply-templates mode="maketoc"
+			     select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	  <xsl:with-param name="forcedepth" select="$force"/>
+	</xsl:apply-templates>
+      </ul>
     </xsl:if>
   </xsl:template>
   <xd:doc>

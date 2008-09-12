@@ -462,11 +462,19 @@ Show a title and author at start of document
   <xd:doc type="boolean" class="misc">
 Be talkative while working.
 </xd:doc>
+
   <xsl:param name="verbose">false</xsl:param>
   <xd:doc type="boolean" class="numbering">
 Automatically number paragraphs.
 </xd:doc>
+
   <xsl:param name="numberParagraphs">false</xsl:param>
+
+  <xd:doc type="boolean" class="layout">
+    Make all notes into endnotes
+  </xd:doc>
+  <xsl:param name="autoEndNotes">false</xsl:param>
+
 
   <xd:doc type="string" class="output">
 An ID passed to the stylesheet to indicate which section to display

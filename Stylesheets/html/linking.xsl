@@ -54,6 +54,8 @@
 	    </xsl:if>
 	  </xsl:for-each>
 	</xsl:variable>
+	<xsl:value-of select="$masterFile"/>
+	<xsl:text>-</xsl:text>
         <xsl:value-of select="substring-after($xpath,'TEI.1_text.1_')"/>
       </xsl:when>
       <xsl:otherwise><xsl:value-of select="$BaseFile"/>-<xsl:value-of

@@ -325,7 +325,15 @@
     <xd:short>Process elements tei:gap</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:gap"> [...]<xsl:apply-templates/>
+  <xsl:template match="tei:gap">
+    <span class="gap">
+      <xsl:if test="tei:desc">
+	<xsl:attribute name="title">
+	  <xsl:value-of select="tei:desc" />
+	</xsl:attribute>
+      </xsl:if>
+      <xsl:text> [...]</xsl:text>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:gi</xd:short>
@@ -898,7 +906,16 @@
       <xsl:call-template name="noteID"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="ancestor::tei:bibl"> (<xsl:apply-templates/>) </xsl:when>
+      <xsl:when test="ancestor::tei:bibl"> (<xsl:apply-templates/>)
+      </xsl:when>
+      <xsl:when test="@place='marg'">
+	<div class="margnote">
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name" select="$identifier"/>
+	  </xsl:call-template>
+	  <xsl:apply-templates/>
+	</div>
+      </xsl:when>
       <xsl:when test="@place='inline'">
 	<xsl:call-template name="makeAnchor">
 	  <xsl:with-param name="name" select="$identifier"/>
@@ -932,7 +949,7 @@
           </p>
         </blockquote>
       </xsl:when>
-      <xsl:when test="@place='foot' or @place='end'">
+      <xsl:when test="@place='foot' or @place='end' or $autoEndNotes='true'">
 	<xsl:call-template name="makeAnchor">
 	  <xsl:with-param name="name" select="concat($identifier,'_return')"/>
 	</xsl:call-template>
