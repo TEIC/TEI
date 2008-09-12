@@ -97,7 +97,7 @@
   </xd:doc>
   <xsl:template match="tei:body">
     <xsl:choose>
-      <xsl:when test="ancestor::tei:q">
+      <xsl:when test="ancestor::tei:floatingText">
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="ancestor::tei:p">
@@ -331,7 +331,7 @@
   <xsl:template match="tei:front">
     <xsl:comment>Front matter</xsl:comment>
     <xsl:choose>
-      <xsl:when test="ancestor::tei:q">
+      <xsl:when test="ancestor::tei:floatingText">
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="ancestor::tei:p">

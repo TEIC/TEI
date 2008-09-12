@@ -609,6 +609,16 @@ $requestedID: requests a particular page
 	 we may do one of two things: -->
     <xsl:choose>
       <!-- -1. Override at top level -->
+      <xsl:when test="ancestor::tei:floatingText">
+        <div>
+          <xsl:call-template name="divClassAttribute">
+            <xsl:with-param name="depth" select="$depth"/>
+          </xsl:call-template>
+          <xsl:call-template name="doDivBody">
+            <xsl:with-param name="Type" select="$depth"/>
+          </xsl:call-template>
+        </div>
+      </xsl:when>
       <xsl:when test="ancestor::tei:TEI/@rend='all'">
         <div>
           <xsl:call-template name="divClassAttribute">
@@ -3001,5 +3011,29 @@ $requestedID: requests a particular page
         <xsl:call-template name="nextLink"/>
       </xsl:if>
     </p>
+  </xsl:template>
+
+  <xd:doc>
+    <xd:short>[html] </xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:floatingText">
+    <div class="floatingText">
+	<xsl:for-each select="tei:front">
+	  <div class="floatingText_front">
+	    <xsl:apply-templates/>
+	  </div>
+	</xsl:for-each>
+	<xsl:for-each select="tei:body">
+	  <div class="floatingText_body">
+	    <xsl:apply-templates/>
+	  </div>
+	</xsl:for-each>
+	<xsl:for-each select="tei:back">
+	  <div class="floatingText_back">
+	    <xsl:apply-templates/>
+	  </div>
+	</xsl:for-each>
+    </div>
   </xsl:template>
 </xsl:stylesheet>

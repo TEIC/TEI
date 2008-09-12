@@ -1112,7 +1112,7 @@
   </xd:doc>
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
-      <xsl:when test="tei:p">
+      <xsl:when test="tei:p|tei:l">
         <blockquote>
 	  <xsl:choose>
 	    <xsl:when test="@rend">

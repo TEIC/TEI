@@ -236,7 +236,7 @@
           <xsl:when test="$depth=4">V</xsl:when>
         </xsl:choose>
         <xsl:choose>
-          <xsl:when test="ancestor::tei:q">Star</xsl:when>
+          <xsl:when test="ancestor::tei:floatingText">Star</xsl:when>
           <xsl:when test="parent::tei:div/@rend='nonumber'">Star</xsl:when>
           <xsl:when
             test="ancestor::tei:back and $numberBackHeadings='false'"
