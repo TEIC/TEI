@@ -54,9 +54,9 @@
 	    </xsl:if>
 	  </xsl:for-each>
 	</xsl:variable>
-	<xsl:value-of select="$masterFile"/>
+	<xsl:value-of select="$BaseFile"/>
 	<xsl:text>-</xsl:text>
-        <xsl:value-of select="substring-after($xpath,'TEI.1_text.1_')"/>
+        <xsl:value-of select="substring-after(substring-after($xpath,'_text.'),'_')"/>
       </xsl:when>
       <xsl:otherwise><xsl:value-of select="$BaseFile"/>-<xsl:value-of
           select="local-name(.)"/>-<xsl:value-of select="generate-id()"

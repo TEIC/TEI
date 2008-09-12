@@ -54,14 +54,6 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:teiCorpus">
-    <!--
-	<xsl:for-each select="tei:TEI">
-	<xsl:if test="$verbose">
-	<xsl:message>Process <xsl:value-of select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/></xsl:message>
-	</xsl:if>
-	<xsl:apply-templates select="." mode="split"/>
-	</xsl:for-each>
-    -->
     <html>
       <xsl:call-template name="addLangAtt"/>
       <head>
@@ -91,6 +83,65 @@
         <xsl:call-template name="bodyEndHook"/>
       </body>
     </html>
+  </xsl:template>
+  <xsl:template match="tei:teiCorpus" mode="split">
+    <xsl:variable name="BaseFile">
+      <xsl:value-of select="$masterFile"/>
+      <xsl:call-template name="addCorpusID"/>
+    </xsl:variable>
+    <xsl:if test="$verbose='true'">
+      <xsl:message>TEI HTML: run start hook template teiStartHook</xsl:message>
+    </xsl:if>
+    <xsl:call-template name="teiStartHook"/>
+    <xsl:if test="$verbose='true'">
+      <xsl:message>TEI HTML in corpus splitting mode, base file is <xsl:value-of
+          select="$BaseFile"/>
+      </xsl:message>
+    </xsl:if>
+    <xsl:call-template name="outputChunk">
+      <xsl:with-param name="ident">
+        <xsl:value-of select="$BaseFile"/>
+      </xsl:with-param>
+      <xsl:with-param name="content">
+    <html>
+      <xsl:call-template name="addLangAtt"/>
+      <xsl:call-template name="includeCSS"/>
+      <head>
+        <title>
+          <xsl:apply-templates
+            select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text()"/>
+        </title>
+        <xsl:call-template name="includeCSS"/>
+        <xsl:call-template name="cssHook"/>
+      </head>
+      <body class="simple">
+        <xsl:attribute name="onload">
+          <xsl:text>startUp()</xsl:text>
+        </xsl:attribute>
+        <xsl:call-template name="bodyHook"/>
+        <xsl:call-template name="bodyJavascriptHook"/>
+	<div class="stdheader">
+        <xsl:call-template name="stdheader">
+          <xsl:with-param name="title">
+            <xsl:apply-templates
+              select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+          </xsl:with-param>
+        </xsl:call-template>
+	</div>
+        <xsl:call-template name="corpusBody"/>
+        <xsl:call-template name="stdfooter"/>
+        <xsl:call-template name="bodyEndHook"/>
+      </body>
+    </html>
+
+      </xsl:with-param>
+    </xsl:call-template>
+    <xsl:if test="$verbose='true'">
+      <xsl:message>TEI HTML: run end hook template teiEndHook</xsl:message>
+    </xsl:if>
+    <xsl:call-template name="teiEndHook"/>
+    <xsl:apply-templates select="tei:TEI" mode="split"/>
+
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
