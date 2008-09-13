@@ -169,7 +169,7 @@
   <xsl:param name="STDOUT">true</xsl:param>
   <xd:doc class="style" type="string"> Display of &lt;pb&gt; element.
     Choices are "visible", "active" and "none".</xd:doc>
-  <xsl:param name="pagebreakStyle">none</xsl:param>
+  <xsl:param name="pagebreakStyle">visible</xsl:param>
   <xd:doc class="style" type="string"> How to display Relax NG schema fragments
     (rnc or rng)</xd:doc>
   <xsl:param name="displayMode">rnc</xsl:param>

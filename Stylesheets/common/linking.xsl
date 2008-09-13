@@ -27,7 +27,7 @@
   </xd:doc>
   <xsl:template match="tei:TEI" mode="xref">
     <xsl:apply-templates
-      select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+      select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:anchor|tei:p in xref mode</xd:short>
@@ -153,7 +153,7 @@
       <xsl:choose>
         <xsl:when test="local-name(.) = 'TEI' or local-name(.)='TEI.2'">
           <xsl:apply-templates
-            select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+            select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]"/>
         </xsl:when>
         <xsl:when test="not(tei:head) and @n">
           <xsl:value-of select="@n"/>

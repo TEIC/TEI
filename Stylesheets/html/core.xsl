@@ -1042,9 +1042,28 @@
       make it an anchor if it has an ID.</xd:detail>
   </xd:doc>
   <xsl:template match="tei:pb">
-      <xsl:call-template name="makeAnchor"/>
-      <p style="page-break-before: always"/>
+    <xsl:choose>
+      <xsl:when test="$pagebreakStyle='active'">
+        <div class="pagebreak">
+	  <xsl:call-template name="makeAnchor"/>
+	</div>
+      </xsl:when>
+      <xsl:when test="$pagebreakStyle='visible'">
+	<span class="pagebreak">
+	  <xsl:text> [</xsl:text>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">page</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text> </xsl:text>
+	  <xsl:value-of select="@n"/>
+	  <xsl:call-template name="makeAnchor"/>
+	  <xsl:text>] </xsl:text>
+	</span>
+	</xsl:when>
+      <xsl:otherwise> </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process element tei:p</xd:short>
     <xd:detail> </xd:detail>
