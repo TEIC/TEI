@@ -276,6 +276,10 @@
 
 <!-- title  -->
 <xsl:template match="tei:title">
+   <xsl:if test="preceding-sibling::tei:title">
+      <xsl:text> &#8212; </xsl:text>
+    </xsl:if>
+
   <xsl:choose>
     <xsl:when test="@level='m' or not(@level)">
       <xsl:call-template name="emphasize">

@@ -30,4 +30,22 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2007, TEI Consortium</xd:copyright>
   </xd:doc>
+
+  <xsl:template match="tei:listPerson">
+    <ul>
+      <xsl:apply-templates/>
+    </ul>
+  </xsl:template>
+
+  <xsl:template match="tei:person">
+    <li>
+      <xsl:apply-templates/>
+    </li>
+  </xsl:template>
+
+  <xsl:template match="tei:affiliation">
+    <br/>
+    <xsl:apply-templates/>
+  </xsl:template>
+
 </xsl:stylesheet>

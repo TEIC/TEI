@@ -22,6 +22,9 @@
   </xd:doc>
   <xsl:template match="tei:title" mode="htmlheader">
     <xsl:apply-templates/>
+    <xsl:if test="following-sibling::tei:title">
+	<xsl:text> &#8212; </xsl:text>
+    </xsl:if>
   </xsl:template>
   <xd:doc>
     <xd:short>[common] Find a plausible main author name</xd:short>

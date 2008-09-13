@@ -2449,7 +2449,7 @@ $requestedID: requests a particular page
 	<xsl:call-template name="makeHTMLHeading">
 	  <xsl:with-param name="class">maintitle</xsl:with-param>
 	  <xsl:with-param name="text">
-	    <xsl:value-of select="$title"/>
+	    <xsl:copy-of select="$title"/>
 	  </xsl:with-param>
 	  <xsl:with-param name="level">1</xsl:with-param>
 	</xsl:call-template>

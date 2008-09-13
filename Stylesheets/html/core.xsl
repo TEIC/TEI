@@ -1370,20 +1370,6 @@
     <br/>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements tei:titleStmt/tei:title</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:titleStmt/tei:title">
-    <xsl:if test="preceding-sibling::tei:title">
-      <br/>
-    </xsl:if>
-    <xsl:apply-templates/>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process element tei:title</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xd:doc>
     <xd:short>Process elements tei:witList</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>

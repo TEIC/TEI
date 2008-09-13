@@ -383,7 +383,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</xd:detail>
 	<xsl:attribute name="class">
 	  <xsl:value-of select="$class"/>
 	</xsl:attribute>
-	<xsl:value-of select="$text"/>
+	<xsl:copy-of select="$text"/>
       </xsl:element>
     </xsl:if>
   </xsl:template>
