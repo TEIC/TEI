@@ -26,7 +26,7 @@
       </xd:detail>
     <xd:author>See AUTHORS</xd:author>
     <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2007, TEI Consortium</xd:copyright>
+    <xd:copyright>2008, TEI Consortium</xd:copyright>
   </xd:doc>
 
   <xsl:template match="tei:facsimile"/>

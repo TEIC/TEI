@@ -35,7 +35,7 @@ exclude-result-prefixes="xd s exsl estr edate a rng tei teix xd" version="1.0">
       </xd:detail>
     <xd:author>See AUTHORS</xd:author>
     <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2007, TEI Consortium</xd:copyright>
+    <xd:copyright>2008, TEI Consortium</xd:copyright>
 </xd:doc>
 
 <xd:doc class="hook">

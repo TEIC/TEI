@@ -28,7 +28,7 @@
       </xd:detail>
     <xd:author>See AUTHORS</xd:author>
     <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2007, TEI Consortium</xd:copyright>
+    <xd:copyright>2008, TEI Consortium</xd:copyright>
   </xd:doc>
   <xd:doc type="string" class="CSS">
 CSS class for links derived from &lt;ptr&gt;

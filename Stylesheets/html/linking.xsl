@@ -28,7 +28,7 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
     <xd:author>See AUTHORS</xd:author>
     <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2007, TEI Consortium</xd:copyright>
+    <xd:copyright>2008, TEI Consortium</xd:copyright>
   </xd:doc>
   <xd:doc>
     <xd:short>Process elements * to work out a unique identififying string</xd:short>

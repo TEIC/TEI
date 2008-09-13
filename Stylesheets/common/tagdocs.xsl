@@ -27,7 +27,7 @@
     02111-1307 USA </xd:detail>
     <xd:author>See AUTHORS</xd:author>
     <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2007, TEI Consortium</xd:copyright>
+    <xd:copyright>2008, TEI Consortium</xd:copyright>
   </xd:doc>
 
  <xsl:key name="CHILDMOD" match="Element" use="@module"/>
