@@ -454,7 +454,14 @@ $requestedID: requests a particular page
     </xsl:if>
     <xsl:call-template name="outputChunk">
       <xsl:with-param name="ident">
-        <xsl:value-of select="$BaseFile"/>
+	<xsl:choose>
+	  <xsl:when test="parent::tei:teiCorpus">
+	    <xsl:apply-templates select="." mode="ident"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="$BaseFile"/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:with-param>
       <xsl:with-param name="content">
         <xsl:call-template name="pageLayoutSimple"/>
