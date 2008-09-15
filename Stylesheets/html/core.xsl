@@ -1054,8 +1054,10 @@
 	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">page</xsl:with-param>
 	  </xsl:call-template>
-	  <xsl:text> </xsl:text>
-	  <xsl:value-of select="@n"/>
+	  <xsl:if test="@n">
+	    <xsl:text> </xsl:text>
+	    <xsl:value-of select="@n"/>
+	  </xsl:if>
 	  <xsl:call-template name="makeAnchor"/>
 	  <xsl:text>] </xsl:text>
 	</span>
