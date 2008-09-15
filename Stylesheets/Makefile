@@ -41,7 +41,7 @@ p5:
 	perl -p -i -e 's/name="xhtml">false</name="xhtml">true</' release/tei-xsl/p5/xhtml/tei-param.xsl
 	perl -p -i -e 's/name="xhtml">false</name="xhtml">true</' release/tei-xsl/p4/xhtml/tei-param.xsl
 
-changelog:
+log:
 	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \
 	svn log -v -r 'HEAD:{'$$LastDate'}' | perl ../gnuify-changelog.pl | grep -v "^;" > newchanges)
 	mv ChangeLog oldchanges
