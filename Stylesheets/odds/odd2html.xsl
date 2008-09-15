@@ -53,7 +53,7 @@
   <xsl:param name="TAG"/>
   <xsl:param name="alignNavigationPanel">left</xsl:param>
   <xsl:param name="authorWord"></xsl:param>
-  <xsl:param name="autoToc">false</xsl:param>
+  <xsl:param name="autoToc">true</xsl:param>
   <xsl:param name="bottomNavigationPanel">true</xsl:param>
   <xsl:param
       name="cssFile">http://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
