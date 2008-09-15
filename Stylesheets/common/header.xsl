@@ -193,10 +193,10 @@
       </xsl:when>
       <xsl:when
         test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle">
-        <xsl:apply-templates select="ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle"/>
+        <xsl:apply-templates select="ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle[1]"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:for-each select="ancestor-or-self::tei:TEI|ancestor-or-self::tei:teiCorpus">
+        <xsl:for-each select="ancestor-or-self::tei:TEI|ancestor-or-self::tei:teiCorpus[1]">
           <xsl:apply-templates mode="htmlheader"
             select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type='subordinate')]"/>
         </xsl:for-each>
