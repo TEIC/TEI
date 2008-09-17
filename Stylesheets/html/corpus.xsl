@@ -124,7 +124,7 @@
         <xsl:call-template name="stdheader">
           <xsl:with-param name="title">
             <xsl:apply-templates
-              select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+              select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]"/>
           </xsl:with-param>
         </xsl:call-template>
 	</div>
