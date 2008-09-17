@@ -432,6 +432,7 @@
   <!-- special consideration for <change> element -->
   <xsl:template match="change">
     <change>
+      <xsl:apply-templates select="item/@*"/>
       
       <xsl:apply-templates select="date"/>
       
@@ -448,7 +449,7 @@
 	</xsl:for-each>
 	<xsl:for-each select="item">
 	  <xsl:apply-templates
-	      select="@*|*|comment()|processing-instruction()|text()"/>
+	      select="*|comment()|processing-instruction()|text()"/>
 	</xsl:for-each>
     </change>
   </xsl:template>
