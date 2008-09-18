@@ -129,7 +129,9 @@
         </div>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:apply-templates/>
+	<span class="bibl">
+	  <xsl:apply-templates/>
+	</span>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
