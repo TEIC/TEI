@@ -118,9 +118,9 @@
  "SK>" "Romanized Sanskrit postfix modifiers"
  "quail-sanskrit")
 
-(if (> emacs-major-version 20)        
-(progn
-(require 'un-define)
-))
+;(if (> emacs-major-version 20)        
+;(progn
+;(require 'un-define)
+;))
 
 

@@ -33,6 +33,7 @@
   <xsl:param name="TEIC">false</xsl:param>
   <xsl:param name="selectedSchema"/>
   <xsl:param name="verbose"/>
+  <xsl:param name="useVersionFromTEI">true</xsl:param>
   <xsl:param name="stripped">false</xsl:param>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="localsource"/>
@@ -80,9 +81,11 @@
     <xsl:for-each select="/tei:TEI">
       <xsl:copy>
 	<xsl:copy-of select="@*"/>
-	<xsl:processing-instruction name="TEIVERSION">
-	  <xsl:call-template name="getversion"/>
-	</xsl:processing-instruction>
+	<xsl:if test="$useVersionFromTEI='true'">
+	  <xsl:processing-instruction name="TEIVERSION">
+	    <xsl:call-template name="getversion"/>
+	  </xsl:processing-instruction>
+	</xsl:if>
 	<xsl:apply-templates mode="flattenSchemaSpec"/>
       </xsl:copy>
     </xsl:for-each>

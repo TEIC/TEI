@@ -16,6 +16,7 @@ makeODD()
 	xmllint --noent --xinclude $ODD \
 	    | xsltproc -o $RESULTS/$ODD.compiled \
 	    $SELECTEDSCHEMA $LANGUAGE $DOCLANG \
+	    --stringparam useVersionFromTEI $useVersionFromTEI \
 	    --stringparam TEIC $TEIC \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
@@ -25,6 +26,7 @@ makeODD()
 	xmllint --noent --xinclude $ODD \
 	    | xsltproc \
 	    --stringparam TEIC $TEIC \
+	    --stringparam useVersionFromTEI $useVersionFromTEI \
 	    --stringparam TEISERVER $TEISERVER  \
 	    --stringparam localsource "$LOCAL"  \
 	   $DEBUG  $TEIXSLDIR/odds/odd2odd.xsl - \
@@ -129,6 +131,7 @@ echo "  --nodtd            # suppress DTD creation"
 echo "  --norelax          # suppress RELAX NG creation"
 echo "  --noteic           # suppress TEI-specific features"
 echo "  --noxsd            # suppress W3C XML Schema creation"
+echo "  --useteiversion    # use version data from TEI P5"
 echo "  --parameterize     # create parameterized DTD"
 echo "  --patternprefix=STRING # prefix RELAX NG patterns with STRING"
 echo "  --schema=NAME      # select name schema spec"
@@ -138,6 +141,7 @@ exit 1
 # --------- main routine starts here --------- #
 TEISERVER=http://tei.oucs.ox.ac.uk/Query/
 TEIXSLDIR=/usr/share/xml/tei/stylesheet
+useVersionFromTEI=true
 LOCALSOURCE=
 LOCAL=
 TEIC=true
@@ -171,6 +175,7 @@ while test $# -gt 0; do
     --norelax)     relax=false;;
     --noteic)      TEIC=false;;
     --noxsd)       xsd=false;;
+    --useteiversion=*) useVersionFromTEI=`echo $1 | sed 's/.*=//'`;;
     --parameterize)       parameterize=true;;
     --schema=*)    schema=`echo $1 | sed 's/.*=//'`;;
     --patternprefix=*) PATTERNPREFIX=`echo $1 | sed 's/.*=//'`;;
