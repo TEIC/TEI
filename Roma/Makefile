@@ -6,7 +6,6 @@ FILES=ChangeLog \
 	notam \
 	parser \
 	progressbar \
-	release \
 	resource \
 	roma \
 	roma.sh \
@@ -49,7 +48,7 @@ release: clean
 	echo version $$V of date $$D; \
 	perl -p -i -e "s+(define \(.roma_date.,).*(\'.*)+\1\'$$D\2+;s+(define \(.roma_version.,).*(\'.*)+\1\'$$V\2+" \
 	roma/config-dist.php; \
-	tar --exclude=.svn -c -f - $(FILES) | (cd release/tei-roma; tar xf -); \
+	tar --exclude=.svn -c  -f - $(FILES) | (cd release/tei-roma; tar xf -); \
 	perl -p -i -e "s/{roma_version}/$$V/;s/{roma_date}/$$D/" release/tei-roma/roma/templates/main.tem
 
 clean:
