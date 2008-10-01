@@ -203,7 +203,8 @@ class romaDom extends domDocument
     public function getIncludedElementsInModule( $szModule, &$aszElements )
       {
 	$oListDom = new domDocument();
-	$oListDom->loadXML( join( '', file( roma_xquery_server  . 'elemsbymod.xq?module=' . $szModule . '&lang=' . $_SESSION['docLang'] )));
+	$this->getDocLanguage( $szDocLanguage );
+	$oListDom->loadXML( join( '', file( roma_xquery_server  . 'elemsbymod.xq?module=' . $szModule . '&lang=' . $szDocLanguage )));
 	$aoElements = $oListDom->getElementsByTagname( 'elementName' );
 	$this->getExcludedElementsInModule( $szModule, $aszExcluded );
 
@@ -384,8 +385,8 @@ class romaDom extends domDocument
     public function getClassesByElementNameInModule( $szElement, $szModule, &$aszClasses )
       {
         $aszClasses = array();
-
 	$this->getXPath( $oXPath );
+	$this->getDocLanguage( $szDocLanguage );
 	$oClasses = $oXPath->query(
 	"/tei:TEI/tei:text//tei:elementSpec[@module='$szModule'
 	and @mode='change' and @ident='$szElement']/tei:classes" )->item(0);
@@ -401,7 +402,7 @@ class romaDom extends domDocument
 	  {
 	    $oElementDom = new domDocument();
 	    $oElementDom->loadXML( join( '', file( roma_xquery_server
-	  . 'element.xq?lang=' . $_SESSION['docLang'] . '&name=' . $szElement ) ) );
+	  . 'element.xq?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $aoClasses = $oXPath->query( "/Element/elementClasses/class" );
@@ -434,7 +435,8 @@ class romaDom extends domDocument
     public function getDescriptionByElementName($szElement, &$szDesc )
       {
 	$oElementDom = new domDocument();
-	$oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?lang=' . $_SESSION['docLang'] .'&name=' . $szElement ) ) );
+	$this->getDocLanguage( $szDocLanguage );
+	$oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?lang=' . $szDocLanguage .'&name=' . $szElement ) ) );
 	
 	$oXPath = new domxpath( $oElementDom );
 	$oDesc = $oXPath->query( "/Element/elementDesc" )->item(0);
@@ -448,7 +450,7 @@ class romaDom extends domDocument
     public function getContentsByElementNameInModuleDom( $szElement, $szModule, &$oContents )
       {
 	$this->getXPath( $oXPath );
-
+	$this->getDocLanguage( $szDocLanguage );
 	$oContent = $oXPath->query(
       "/tei:TEI/tei:text//tei:elementSpec[@module='$szModule'
       and @mode='change' and @ident='$szElement']/tei:content" )->item(0);
@@ -463,7 +465,7 @@ class romaDom extends domDocument
 	  {
 	    $oElementDom = new domDocument();
 	    $oElementDom->loadXML( join( '', file( roma_xquery_server
-          . 'element.xq?lang=' . $_SESSION['docLang'] . '&name=' . $szElement ) ) );
+          . 'element.xq?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $oXPath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );
@@ -484,6 +486,7 @@ class romaDom extends domDocument
     public function getContentsByElementNameInModule( $szElement, $szModule, &$szContents )
       {
 	$this->getXPath( $oXPath );
+	$this->getDocLanguage( $szDocLanguage );
 	$oContent = $oXPath->query(
       "/tei:TEI/tei:text//tei:elementSpec[@module='$szModule'
       and @mode='change' and @ident='$szElement']/tei:content" )->item(0);
@@ -498,7 +501,7 @@ class romaDom extends domDocument
 	else
 	  {
 	    $oElementDom = new domDocument();
-	    $oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?lang=' . $_SESSION['docLang'] . '&name=' . $szElement ) ) );
+	    $oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $oXPath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );
@@ -521,10 +524,10 @@ class romaDom extends domDocument
     public function getAttributesByElement( $szElement, &$aszAttributes )
       {
 	$aszAttributes = array();
-
+	$this->getDocLanguage( $szDocLanguage );
 	$oAttributesDom = new domDocument();
 	$oAttributesDom->loadXML( join( '', file( roma_xquery_server
-	. 'attsbyelem.xq?lang=' . $_SESSION['docLang'] . '&name=' . $szElement ) ) );
+	. 'attsbyelem.xq?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
 	
 	$oElement = $oAttributesDom->documentElement;
 	foreach( $oElement->childNodes as $oChild )
@@ -539,12 +542,12 @@ class romaDom extends domDocument
 
 	$oAttDom = new domDocument;
 	$this->getXPath( $oXPath );
-
+	$this->getDocLanguage( $szDocLanguage );
 	if ( $szModule != '' && $szClass == '')
 	  {
 // I get here if I edit an attribute on an existing element
 	    @$oAttDom->loadXML( join( '', file( roma_xquery_server
-	  . 'attsbyelem.xq?lang=' . $_SESSION['docLang'] . '&name=' . $szElement ) ) );
+	  . 'attsbyelem.xq?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
 	    $oElement = $oAttDom->documentElement;
 		
 	    if ( is_object( $oElement ) )
@@ -579,7 +582,7 @@ class romaDom extends domDocument
 	    $oElement = $oAttDom->documentElement;
 
 	    $oAttClassDom = new domDocument;
-	    $oAttClassDom->loadXML( join( '', file( roma_xquery_server . 'attclassbyname.xq?lang=' . $_SESSION['docLang'] . '&class=' . $szClass ) ) );
+	    $oAttClassDom->loadXML( join( '', file( roma_xquery_server . 'attclassbyname.xq?lang=' . $szDocLanguage . '&class=' . $szClass ) ) );
 	    $oRoot = $oAttClassDom->documentElement;
 	    $oAttributes = $oAttClassDom->getElementsByTagName( 'attributes' )->item(0);
 
@@ -996,7 +999,8 @@ class romaDom extends domDocument
 
 	//check if name already exists
 	$oTmpDom = new domDocument();
-	if ( @$oTmpDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?lang=' . $_SESSION['docLang'] . '&name=' . $aszConfig[ 'name' ] ) ) ) )
+	$this->getDocLanguage( $szDocLanguage );
+	if ( @$oTmpDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?lang=' . $szDocLanguage . '&name=' . $aszConfig[ 'name' ] ) ) ) )
 	  {
 	    throw new elementExistsException( $aszConfig[ 'name' ] );
 	  }
@@ -2055,12 +2059,13 @@ class romaDom extends domDocument
     protected function getSchemaRNGDom( &$oRNG )
       {
 	$this->getDocDom( $oDOC );
+	$this->getDocLanguage( $szDocLanguage );
         $oXSL = new domDocument();
  	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/odds/odd2relax.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 	$oProc->setParameter( null, 'TEIC', 'true');
-        $oProc->setParameter( null, 'doclang', $_SESSION['docLang'] );
+        $oProc->setParameter( null, 'doclang', $szDocLanguage );
 	$oProc->setParameter( null, 'displayMode', 'rnc' );
 	$oProc->setParameter( null, 'outputDir', '-' );
 	$oRNG = $oProc->transformToDoc( $oDOC );
@@ -2330,6 +2335,7 @@ class romaDom extends domDocument
     public function outputHTML ( &$szHTML )
       {
 	$this->getDocDom( $oDOC );
+	$this->getDocLanguage( $szDocLanguage );
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '55' );
         $oXSL = new domDocument();
@@ -2337,8 +2343,8 @@ class romaDom extends domDocument
 
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
-	$oProc->setParameter( null, 'doclang', $_SESSION['docLang']);
-	$oProc->setParameter( null, 'documentationLanguage', $_SESSION['docLang']);
+	$oProc->setParameter( null, 'doclang', $szDocLanguage);
+	$oProc->setParameter( null, 'documentationLanguage', $szDocLanguage);
 	$oProc->setParameter( null, 'TEIC', 'true');	
 	$oProc->setParameter( null, 'displayMode', 'rnc' );
 	$oProc->setParameter( null, 'STDOUT', 'true' );

@@ -404,6 +404,7 @@ class roma
               break;
             case roma_mode_processCustomizeLanguage:
 	    	$this->getParser( $oParser );
+		$this->m_oRomaDom->getDocLanguage( $this->m_szDocLanguage );
 		$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
 	      //notam
 	      $this->m_oRomaDom->setOddLanguage( $_REQUEST[ 'language' ] );
@@ -412,7 +413,7 @@ class roma
 	      $oNotam->setHeadline( 'Language customization' );
 	      $oNotam->setMessage( 'Translate to ' .
               $_REQUEST['language' ] . 
-	      ' for names and ' . 
+	      ' for element names and ' . 
 	      $_REQUEST[ 'doclanguage' ] . 
 	      ' for documentation: session lang is ' . 
 	      $_SESSION['docLang'] . 
@@ -628,8 +629,9 @@ class roma
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
+	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );	
 	$this->getListDom( roma_xquery_server . 'modules.xq?lang='
-	. $_SESSION['docLang'] , $oListDom );
+	. $szDocLanguage , $oListDom );
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 
 	// build param list
@@ -638,9 +640,9 @@ class roma
 
 	$this->createChangeInListDom( $oListDom, array ( $oModules, $oChanged ) );
 
-	$this->applyStylesheet( $oListDom, 'modules.xsl', $oNewDom, array('lang' => $_SESSION['docLang'] ), 'modules' );
+	$this->applyStylesheet( $oListDom, 'modules.xsl', $oNewDom, array('lang' => $szDocLanguage ), 'modules' );
 	$oParser->addReplacement( 'lang', $szLanguage );
-	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oParser->addReplacement( 'doclang', $szDocLanguage);
 	$oParser->addReplacement( 'mode', 'modules' );
 	$oParser->addReplacement( 'view', 'main' );
 	$oParser->addReplacement( 'title', $szTitle );
@@ -661,13 +663,14 @@ class roma
 	
 	$oSchemaParser = new parser();
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
+	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );	
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 	$oSchemaParser->addReplacement( 'lang', $szLanguage );
-	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oSchemaParser->addReplacement( 'doclang',  $szDocLanguage );
 	$oSchemaParser->addReplacement( 'output', $_REQUEST[ 'output' ] );
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
 	$oParser->addReplacement( 'lang', $szLanguage );
-	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'main' );
 	$oParser->addReplacement( 'view', 'sanitycheck' );
 	$oParser->addReplacement( 'title', $szTitle );
@@ -687,10 +690,11 @@ class roma
      */
     private function processChangeModule( &$szOutput )
       {
+	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );	
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
 	$this->getListDom( roma_xquery_server . 'elemsbymod.xq?lang='
-	. $_SESSION['docLang'] . '&module=' . $_REQUEST[ 'module' ], $oListDom );
+	. $szDocLanguage . '&module=' . $_REQUEST[ 'module' ], $oListDom );
 	notamHandler::getError( 'moduleChanged', $aoErrors );
 	notamHandler::deleteError( 'moduleChanged' );
 	$this->addErrorsDom( $oListDom, $aoErrors );
@@ -700,17 +704,18 @@ class roma
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 
 	$this->createChangeInListDom( $oListDom, array ( $oChanged, $oExcludedElements ) );
+	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
 
 	$aszParam =  array( 
           'module' => $_REQUEST[ 'module' ],
-	  'lang' => szLanguage ,
-	  'doclang' => $_SESSION['docLang'],
+	  'lang' => $szLanguage ,
+	  'doclang' => $szDocLanguage ,
 	  'TEISERVER' => roma_xquery_server,
 	  'TEIWEB' => roma_teiweb_server
 	);
 	$this->applyStylesheet( $oListDom, 'changeModules.xsl', $oNewDom, $aszParam , 'changeModule');
 	$oParser->addReplacement( 'lang', $szLanguage );
-	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'changeModule' );
 	$oParser->addReplacement( 'view', 'main' );
 	$oParser->addReplacement( 'title', $szTitle );
@@ -729,15 +734,15 @@ class roma
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
-
+	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );	
 	$oModelClassDom = new domDocument();
-	$oModelClassDom->loadXML( join( '', file( roma_xquery_server  . 'classes.xq?lang=' . $_SESSION['docLang'] ) ) );
+	$oModelClassDom->loadXML( join( '', file( roma_xquery_server  . 'classes.xq?lang=' . $szDocLanguage ) ) );
 	$oRootClass = $oModelClassDom->documentElement;
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 
 	$oAttributeDom = new domDocument();
 	$oAttributeDom->loadXML( join( '', 
-	file( roma_xquery_server . 'attclasses.xq?lang=' . $_SESSION['docLang']) 
+	file( roma_xquery_server . 'attclasses.xq?lang=' . $szDocLanguage) 
 	) );
 	$oRootAtt = $oAttributeDom->documentElement;
 
@@ -814,7 +819,7 @@ class roma
 	$this->applyStylesheet( $oListDom, 'addElements.xsl', $oNewDom, $aszParam, 'addElements'  );
 
 	$oParser->addReplacement( 'lang', $szLanguage );
-	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'addElements' );
 	$oParser->addReplacement( 'view', 'listElements' );
 	$oParser->addReplacement( 'title', $szTitle );
@@ -836,9 +841,10 @@ class roma
 	
 	$oSchemaParser = new parser();
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
+	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );	
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 	$oSchemaParser->addReplacement( 'lang', $szLanguage );
-	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oSchemaParser->addReplacement( 'output', $_REQUEST[ 'output' ] );
 	//validate file
 	if ( roma_validate_schema )
@@ -862,7 +868,7 @@ class roma
 
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
 	$oParser->addReplacement( 'lang', $szLanguage );
-	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'createSchema' );
 	$oParser->addReplacement( 'view', 'createSchema' );
 	$oParser->addReplacement( 'title', $szTitle );
@@ -885,14 +891,14 @@ class roma
 	$oLanguageParser = new parser();
 	$this->getParser( $oParser );
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
+	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );	
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
-	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );
 	$this->m_oRomaDom->getOddLanguage( $szOddLanguage );
-	$oLanguageParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oLanguageParser->addReplacement( 'doclang', $szDocLanguage );
 	$oLanguageParser->addReplacement( 'oddlang', $szOddLanguage );
 	$oLanguageParser->Parse( $szLangTem, $szLango );
 	$oParser->addReplacement( 'lang', $szLanguage );
-	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oParser->addReplacement( 'doclang', $szDocLanguage);
 	$oParser->addReplacement( 'mode', 'customizeLanguage' );
 	$oParser->addReplacement( 'view', 'customizeLanguage' );
 	$oParser->addReplacement( 'title', $szTitle );
@@ -912,14 +918,15 @@ class roma
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
+	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );	
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 
 	$oModelClassDom = new domDocument();
-	$oModelClassDom->loadXML( join( '', file( roma_xquery_server . 'classes.xq?lang=' . $_SESSION['docLang'] ) ) );
+	$oModelClassDom->loadXML( join( '', file( roma_xquery_server . 'classes.xq?lang=' . $szDocLanguage ) ) );
 	$oRootClass = $oModelClassDom->documentElement;
 
 	$oAttributeDom = new domDocument();
-	$oAttributeDom->loadXML( join( '', file( roma_xquery_server . 'attclasses.xq?lang=' . $_SESSION['docLang'] ) ) );
+	$oAttributeDom->loadXML( join( '', file( roma_xquery_server . 'attclasses.xq?lang=' . $szDocLanguage ) ) );
 	$oRootAtt = $oAttributeDom->documentElement;
 
 	$oDatatypeDom = new domDocument();
@@ -970,7 +977,7 @@ class roma
 	$this->applyStylesheet( $oListDom, 'addElements.xsl', $oNewDom, $aszParam, 'changeElement'  );
 
 	$oParser->addReplacement( 'lang', $szLanguage );
-	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'changeElement' );
 	$oParser->addReplacement( 'view', 'main' );
 	$oParser->addReplacement( 'title', $szTitle );
@@ -1044,7 +1051,7 @@ class roma
 	  }
 	$oParser->addReplacement( 'title', $szTitle );
 	$oParser->addReplacement( 'lang', $szLanguage );
-	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'addAttributes' );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
         $oParser->Parse( $szTemplate, $szOutput );
@@ -1065,12 +1072,13 @@ class roma
 	    $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	    $this->getParser( $oParser );
 	    $this->m_oRomaDom->getCustomizationLanguage( $szLanguage );	
+	    $this->m_oRomaDom->getDocLanguage( $szDocLanguage );		
 	    $this->m_oRomaDom->getCustomizationTitle( $szTitle );
 
 	    $this->applyStylesheet( $oElementsDom, 'listAddedElements.xsl', $oNewDom, array(), 'listElements' );
 
 	    $oParser->addReplacement( 'lang', $szLanguage );
-	    $oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	    $oParser->addReplacement( 'doclang', $szDocLanguage );
 	    $oParser->addReplacement( 'mode', 'listElements' );
 	    $oParser->addReplacement( 'view', 'listElements' );
 	    $oParser->addReplacement( 'title', $szTitle );
@@ -1154,14 +1162,14 @@ class roma
 	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 	$oListDom = new domDocument();
-	$oListDom->loadXML( join ( '', file( roma_xquery_server . 'attclasses.xq?lang=' . $_SESSION['docLang'] ) ) );
+	$oListDom->loadXML( join ( '', file( roma_xquery_server . 'attclasses.xq?lang=' . $szDocLanguage ) ) );
 
 	$this->applyStylesheet( $oListDom, 'changeClasses.xsl',
-	$oNewDom, array( 'host' => roma_xquery_server,  'doclang' => $_SESSION['docLang'],
+	$oNewDom, array( 'host' => roma_xquery_server,  'doclang' => $szDocLanguage,
 'class' => $_REQUEST[ 'class' ], 'module' => $_REQUEST[ 'module' ] ), 'changeClasses' );
 
 	$oParser->addReplacement( 'lang', $szLanguage );
-	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'changeClasses' );
 	$oParser->addReplacement( 'view', 'changeClasses' );
 	$oParser->addReplacement( 'title', $szTitle );
@@ -1182,14 +1190,15 @@ class roma
 
 	$oDocParser = new parser();
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
+	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );	
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 	$oDocParser->addReplacement( 'lang', $szLanguage );
-	$oDocParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oDocParser->addReplacement( 'doclang', $szDocLanguage );
 	$oDocParser->addReplacement( 'format', $_REQUEST[ 'format' ] );
 	$oDocParser->Parse( $szDocTem, $szDoc );
 
 	$oParser->addReplacement( 'lang', $szLanguage );
-	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'createDocumentation' );
 	$oParser->addReplacement( 'view', 'createDocumentation' );
 	$oParser->addReplacement( 'title', $szTitle );
@@ -1215,9 +1224,9 @@ class roma
 	$this->m_oRomaDom->getCustomizationNamespace( $szNamespace );
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
 	$this->m_oRomaDom->getCustomizationDescription( $szDesc );
-
+	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );	
 	$oSchemaParser->addReplacement( 'lang', $szLanguage );
-	$oSchemaParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oSchemaParser->addReplacement( 'doclang', $szDocLanguage );
 	$oSchemaParser->addReplacement( 'oddlang', $szOddLanguage );
 	$oSchemaParser->AddReplacement( 'title', $szTitle );
 	$oSchemaParser->AddReplacement( 'author', $szAuthor );
@@ -1229,7 +1238,7 @@ class roma
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
 	
 	$oParser->addReplacement( 'lang', $szLanguage );
-	$oParser->addReplacement( 'doclang', $_SESSION['docLang'] );
+	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'customizeCustomization' );
 	$oParser->addReplacement( 'view', 'customizeCustomization' );
 	$oParser->addReplacement( 'template', $szSchema );
