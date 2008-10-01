@@ -1909,10 +1909,14 @@ select="$makeDecls"/></xsl:message>
       <xsl:when test="not(tei:desc)">
       </xsl:when>
       <xsl:when test="count(tei:desc)=1">
-	<xsl:apply-templates select="tei:desc"/>
+	<xsl:for-each select="tei:desc">
+	  <xsl:apply-templates/>
+	</xsl:for-each>
       </xsl:when>
       <xsl:when test="tei:desc[@xml:lang=$firstLang]">
-	<xsl:apply-templates select="tei:desc[@xml:lang=$firstLang]"/>
+	<xsl:for-each select="tei:desc[@xml:lang=$firstLang]">
+	  <xsl:apply-templates/>
+	</xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:variable name="D">
@@ -1927,7 +1931,9 @@ select="$makeDecls"/></xsl:message>
 	</xsl:variable>
 	<xsl:choose>
 	  <xsl:when test="$D='' and tei:desc[not(@xml:lang)]">
-	    <xsl:apply-templates select="tei:desc[not(@xml:lang)]"/>
+	    <xsl:for-each select="tei:desc[not(@xml:lang)]">
+	      <xsl:apply-templates/>
+	    </xsl:for-each>
 	  </xsl:when>
 	  <xsl:when test="$coded='false'">
 	    <xsl:value-of select="$D"/>
