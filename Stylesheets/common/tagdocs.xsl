@@ -527,6 +527,7 @@
 		  <xsl:apply-templates mode="weave" select="."/>
 		</xsl:for-each>
 	      </xsl:if>
+	      <xsl:apply-templates select="tei:remarks" mode="weave"/>
 	    </xsl:element>
 	  </xsl:element>
 	  
