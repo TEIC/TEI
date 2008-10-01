@@ -55,6 +55,13 @@ $Id$
         further discussion of this indirect pointing mechanism, see
         chapter <ptr target="#SA"/>.</p>
       </remarks>
+      <remarks xml:lang="fr">
+        <p>Si plusieurs identifiants sont fournis, l'élément <gi>certainty</gi> est
+                        considéré comme s'appliquant à tous. S'il n'y a pas d'identifiant présent
+                        sur l'élément annoté, l'attribut doit donner l'identifiant d'un élément
+                            <gi>ptr</gi> pointant vers l'élément annoté ; pour plus de détails sur
+                        ce mécanisme de pointage indirect, voir le chapitre .</p>
+      </remarks>
       <remarks xml:lang="ja">
         <p>
 	複数の識別子がある場合，要素<gi>certainty</gi>は，その全ての要
@@ -195,6 +202,10 @@ cas des éléments corr et abbrev.</desc>
         <p>If the name of an attribute is supplied, it must be
 	  prefixed by <code>att.</code>.</p>
       </remarks>
+      <remarks xml:lang="fr">
+        <p>Si le nom d'un attribut est donné, il doit être préfixé par
+                        <code>att.</code>.</p>
+      </remarks>
       <remarks xml:lang="ja">
         <p>
 	当該属性が付与される場合，名前には必ず接頭辞<code>att.</code>
@@ -263,6 +274,12 @@ the likelihood (.2) that the generic identifier should be
 <gi>place</gi> rather than <gi>persName</gi>, which is the coded
 element.</p>
       </remarks>
+      <remarks xml:lang="fr"> --&gt; <p>Cet attribut permet
+                        d'indiquer le degré de confiance dans une alternative spécifique à un aspect
+                        du balisage. Dans l'exemple qui précède l'encodeur exprime la probabilité
+                        qu'il faille un identifiant générique <gi>place</gi> plutôt que
+                        <gi>persName</gi>, qui est l'élément encodé.</p>
+                </remarks>
       <remarks xml:lang="ja">
         <p>
 	当該属性は，当該要素に対する代替値の確信度を示している．
@@ -272,7 +289,7 @@ element.</p>
 	</p>
       </remarks>
     </attDef>
-    <!--    <attDef ident="desc" usage="rec">
+<!--    <attDef ident="desc" usage="rec">
 	<equiv/>
 	<desc>further describes the uncertainty in prose, perhaps
 indicating its nature, cause, or the justification for the
@@ -343,6 +360,35 @@ structure connectives such as <gi>alt</gi>, <gi>join</gi>, and
 <gi>note</gi>.  However, we do not believe that the
 <gi>certainty</gi> element gives, at this time, a comprehensive
 ambiguity-free system for indicating certainty.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p> Un projet peut souhaiter utiliser un vocabulaire contrôlé pour cet attribut.</p>
+        <p>La valeur typique à laquelle on pense pour cet attribut serait l'identifiant
+                        d'un autre élément <gi>certainty</gi> ou une liste comportant de tels
+                        identifiants. Il serait ainsi possible de construire des réseaux de
+                        probabilité en chaînant ensemble des éléments <gi>certainty</gi>. Ces
+                        réseaux seraient en définitive fondés sur des éléments <gi>certainty</gi>
+                        inconditionnels (sans attribut <att>given</att>). La sémantique de ce
+                        chaînage est à comprendre ainsi : si un élément <gi>certainty</gi> est
+                        spécifié comme postulat au moyen d'une référence (présence d'un attribut
+                            <att>given</att>), alors l'assertion même constitue le postulat, et non
+                        pas l'attribution d'un caractère d'incertitude. Ainsi, dans l'exemple
+                        ci-dessus, le premier élément <gi>certainty</gi> formule l'hypothèse que le
+                        nouveau scripteur est <mentioned>msm</mentioned>. Le second indique le degré
+                        de confiance dans le fait que <mentioned>Essex</mentioned> est un nom de
+                        personne, étant donné que le nouveau scripteur est
+                        <mentioned>msm</mentioned>. Notez que le postulat dans le deuxième élément
+                            <gi>certainty</gi> n'est pas que le degré de probabilité que msm soit le
+                        nouveau scripteur est de 0.6, mais simplement que msm est le nouveau
+                        scripteur ; il est recommandé d'utiliser cette convention pour faciliter la
+                        construction de réseaux.</p>
+        <p>Les encodeurs ambitieux peuvent souhaiter construire des réseaux ou des
+                        assertions de probabilité complexes, en faisant référence à d'autres
+                        éléments ou à des assertions en texte libre, et en établissant des relations
+                        entre structures de traits, telles que <gi>alt</gi>, <gi>join</gi> et
+                            <gi>note</gi>. Toutefois nous ne pensons pas que l'élément
+                        <gi>certainty</gi> procure actuellement un système complet et sans ambiguïté
+                        pour indiquer le degré de certitude.</p>
       </remarks>
       <remarks xml:lang="ja">
         <p>
