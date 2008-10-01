@@ -2111,9 +2111,12 @@ class romaDom extends domDocument
         $this->m_oRomaDom->updateProgressBar( '55' );
 	$this->getDocDom( $oDOC );
         $oXSL = new domDocument();
+	$this->getDocLanguage( $szDocLanguage );
  	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/odds/odd2lite.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
+	$oProc->setParameter( null, 'doclang', $szDocLanguage);
+	$oProc->setParameter( null, 'documentationLanguage', $szDocLanguage);
 	$oProc->setParameter( null, 'TEIC', 'true');
 	$oProc->setParameter( null, 'displayMode', 'rnc' );
 	
@@ -2503,10 +2506,13 @@ class romaDom extends domDocument
 	  }
 	$this->getDocDom( $oDOC );
         $oXSL = new domDocument();
+	$this->getDocLanguage( $szDocLanguage );
  	$oXSL->load( roma_tei . '/xml/tei/stylesheet/odds/odd2dtd.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 	$oProc->setParameter( null, 'TEIC', 'true');	
+	$oProc->setParameter( null, 'doclang', $szDocLanguage);
+	$oProc->setParameter( null, 'documentationLanguage', $szDocLanguage);
 	$oProc->setParameter( null, 'outputDir', '-' );
 	if ( $bBar )
 	    $this->updateProgressBar( '70' );
