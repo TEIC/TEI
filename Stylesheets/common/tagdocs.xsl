@@ -527,7 +527,6 @@
 		  <xsl:apply-templates mode="weave" select="."/>
 		</xsl:for-each>
 	      </xsl:if>
-	      <xsl:apply-templates select="tei:remarks" mode="weave"/>
 	    </xsl:element>
 	  </xsl:element>
 	  
@@ -1756,7 +1755,6 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
     <xsl:variable name="documentationLanguage">
       <xsl:call-template name="generateDoc"/>
     </xsl:variable>
-
     <xsl:variable name="langs">
       <xsl:value-of
 	  select="concat(normalize-space($documentationLanguage),' ')"/>
@@ -1765,22 +1763,19 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
       <xsl:value-of select="substring-before($langs,' ')"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="preceding-sibling::tei:remarks"/>
-      <xsl:when test="count(../tei:remarks)=1">
-	<xsl:apply-templates select="." mode="doc"/>
-      </xsl:when>
       <xsl:when test="@xml:lang=$firstLang">
 	<xsl:apply-templates select="." mode="doc"/>
       </xsl:when>
+      <xsl:when test="not(@xml:lang) and $documentationLanguage='en'">
+	<xsl:apply-templates select="." mode="doc"/>
+      </xsl:when>
       <xsl:otherwise>
-	<xsl:for-each select="../tei:remarks">
-	  <xsl:variable name="currentLang">
-	    <xsl:call-template name="findLanguage"/>
-	  </xsl:variable>
-	  <xsl:if test="contains($langs,concat($currentLang,' '))">
-	    <xsl:apply-templates select="." mode="doc"/>
-	  </xsl:if>
-	</xsl:for-each>
+	<xsl:variable name="currentLang">
+	  <xsl:call-template name="findLanguage"/>
+	</xsl:variable>
+	<xsl:if test="contains($langs,concat($currentLang,' '))">
+	  <xsl:apply-templates select="." mode="doc"/>
+	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
