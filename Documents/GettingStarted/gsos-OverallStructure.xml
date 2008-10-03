@@ -4,6 +4,8 @@
     <p>To introduce the structure of a TEI document, we'll begin at the level of a smaller text fragment, and then gradually add the larger document structure around it. 
     Our example is based on the <ref target="#liprograves">Diary of Robert Graves</ref>. For educational purposes, the encoding that we will show here is slightly different 
     from the encoding applied in that project.</p>
+<div xml:id="osfra">
+    <head>A text fragment </head>
     <p>Suppose we were to create an edition of the diary of Robert Graves. We have a facsimile of a diary page, which looks like this:</p>
     <figure>
         <figDesc>Page from the diary of Robert Graves, Oct. 10 1938</figDesc>
@@ -30,7 +32,7 @@
             Karl.</eg>
     </p>
     <p>The first thing to remark here is that in a diary transcription we'll want to identify the date that the entry belongs to. We may also want to say that 
-        this piece of text actually <emph>is</emph> a diary entry. The next thing we notice is that the netry has a heading (<q>Oct 10 Monday</q>) 
+        this piece of text actually <emph>is</emph> a diary entry. The next thing we notice is that the entry has a heading (<q>Oct 10 Monday</q>) 
         and consists of a number of paragraphs. We introduce some XML elements and attributes to account for these facts. 
     </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -67,7 +69,7 @@
     </p>
     <p>Before moving on to the larger document structure, we'll add a few more refinements. Not every project will find these refinements 
         necessary, but they give an indication of the kind of phenomena TEI can handle. To begin with, the word <q>fugon</q> is a word taken 
-        from Spanish, and should probably italicised in an edition. We use the <gi>foreign</gi> element to indicate this. To expain what it means, 
+        from Spanish, and should probably be italicised in an edition. We use the <gi>foreign</gi> element to indicate this. To expain what it means, 
         we add a <gi>note</gi>. Then, there is a small drawing of a cup, which our transcription renders as <q>[sketch of cup]</q>. From the 
         transcription, no-one would know that these aren't Graves' own words. We will use a <gi>figure</gi> element and an embedded 
         <gi>figDesc</gi> (figure description) to place the description. We will indicate that <q>ch</q> is an abbreviation. And finally, we will want 
@@ -95,6 +97,41 @@
                 Karl.</p>
         </div>
     </egXML>
-    <p>Introduce sample document (without header), explain elements and attributes. 8p</p>
-    <p>Add header. 5p</p>
+    <p>Let's now put this fragment into context.</p>
+    </div>
+    <div xml:id="oscon">
+        <head>The larger document structure</head>
+        <p>Texts do not live in isolation. They're often introduced by title pages, introductions, tables of contents and dedications; they're often 
+        followed by an index, appendices, and similar material. We represent this structure by a <gi>text</gi> element that a <gi>front</gi>, 
+            <gi>body</gi> and <gi>back</gi>. In our case, the editors of Graves' correspondence have created monthly abstracts of the diary entries. 
+            These might very well have been placed in the <gi>front</gi> element. Supposing for the moment that there is no other front matter and no 
+            back matter, that would give us this
+        </p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <text>
+                <front>
+                    <div type="abstract">
+                        <head>OCTOBER 1938</head>
+                        <p>The rains set in, and Graves works in his bedroom with the fire going. ...</p> 
+                    </div>
+                    <!-- abstracts for other months -->
+                </front>
+                <body>
+                    <div type="diaryentry" n="1938-10-10">
+                        <!-- text of entry -->
+                    </div>
+                    <!-- other entries -->
+                </body>
+            </text>
+        </egXML>
+        <p>Notice, by the way, the use of <![CDATA[<!-- ...  -->]]> to write comments in XML text. Comments are used to explain something about the 
+        encoding to a human reader and will usually be ignored by programs that process the XML.</p>
+        
+        
+    </div>
+    <div xml:id="oshea">
+        <head>The TEI header</head>
+        <p>Add header. 5p</p>
+    </div>
+    
 </div>
