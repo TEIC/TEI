@@ -1,6 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div xml:id="os" xmlns="http://www.tei-c.org/ns/1.0">
     <head>Overall structure of a TEI text</head>
+    <p>To introduce the structure of a TEI document, we'll begin at the level of a smaller text fragment, and then gradually add the larger document structure around it. 
+    Our example is based on the <ref target="#liprograves">Diary of Robert Graves</ref>. For educational purposes, the encoding that we will show here is slightly different 
+    from the encoding applied in that project.</p>
+    <p>Suppose we were to create an edition of the diary of Robert Graves. We have a facsimile of a diary page, which looks like this:</p>
+    <figure>
+        <figDesc>Page from the diary of Robert Graves, Oct. 10 1938</figDesc>
+        <graphic url="images/graves1938-10-10.jpg"/>
+    </figure>
+    <p>An initial transcription of the text might look like this:
+        <eg>Oct 10 Monday
+            Ghost, completing ch IX
+            Dictionary with Alan.
+            A lot of time goes to making 
+            charcoal for 'Marthe', Beryl's 
+            now using this fugon for warming 
+            her attic.
+            Went to Montauban with 
+            David – first visit for about 
+            10 days – ordered small wood for 
+            Dorothy's cresset.
+            Now almost always win at 
+            Cambeluk: we are playing a 
+            correspondence game with Harry.
+            Nono broke Laura's particular 
+            coffee cup,  [sketch of cup]  and she 
+            her blue glass bottle given by 
+            Karl.</eg>
+    </p>
+    <p>The first thing to remark here is that in a diary transcription we'll want to identify the date that the entry belongs to. We may also want to say that 
+        this piece of text actually <emph>is</emph> a diary entry. The next thing we notice is that the netry has a heading (<q>Oct 10 Monday</q>) 
+        and consists of a number of paragraphs. We introduce some XML elements and attributes to account for these facts. 
+    </p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <div type="diaryentry" n="1938-10-10">
+            <head>Oct 10 Monday</head>
+        <p>Ghost, completing ch IX</p>
+        <p>Dictionary with Alan.</p>
+        <p>A lot of time goes to making 
+        charcoal for 'Marthe', Beryl's 
+        now using this fugon for warming 
+        her attic.</p>
+        <p>Went to Montauban with 
+        David – first visit for about 
+        10 days – ordered small wood for 
+        Dorothy's cresset.</p>
+        <p>Now almost always win at 
+        Cambeluk: we are playing a 
+        correspondence game with Harry.</p>
+        <p>Nono broke Laura's particular 
+        coffee cup, [sketch of cup]  and she 
+        her blue glass bottle given by 
+        Karl.</p>
+        </div>
+    </egXML>
+    <p>The <gi>div</gi> element is what is used to describe textual divisions. We use here the <att>n</att> attribute to indicate the date, and the 
+    <att>type</att> attribute to state this piece of text is a diary entry. <gi>head</gi> is used to describe a heading, <gi>p</gi>  describes a 
+        paragraph. A question might be why we don't simply indicate paragraphs by newline characters, the way many programs do (such as 
+        Notepad on Windows). One reason is that different operating systems use different characters to indicate the beginning of a new line. Another 
+        reason is that an accidental new line character in our source would cause a rendering application to begin a new paragraph. The best way to 
+        avoid  ambiguity and to make our encoding portable between platforms is to explicitly indicate new paragraphs. We might even have indicated 
+        the locations where Graves begins a new line. TEI provides the <gi>lb</gi> element for that purpose. This, as most other 
+        decisions about encoding, is a matter of editorial choice. Is the beginning of a new line important enough to be retained in an edition? The TEI 
+        does not prescribe editorial policies.
+    </p>
+    <p>Before moving on to the larger document structure, we'll add a few more refinements. Not every project will find these refinements 
+        necessary, but they give an indication of the kind of phenomena TEI can handle. To begin with, the word <q>fugon</q> is a word taken 
+        from Spanish, and should probably italicised in an edition. We use the <gi>foreign</gi> element to indicate this. To expain what it means, 
+        we add a <gi>note</gi>. Then, there is a small drawing of a cup, which our transcription renders as <q>[sketch of cup]</q>. From the 
+        transcription, no-one would know that these aren't Graves' own words. We will use a <gi>figure</gi> element and an embedded 
+        <gi>figDesc</gi> (figure description) to place the description. We will indicate that <q>ch</q> is an abbreviation. And finally, we will want 
+        to indicate a number of changes that Graves made in his text. We will use <gi>del</gi> and <gi>add</gi> elements to indicate deletions 
+        and additions to the text. The result is as follows:</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <div type="diaryentry" n="1938-10-10">
+            <head>Oct 10 <del>Tuesday.</del><add>Monday</add></head>
+            <p>Ghost, completing <abbr>ch</abbr> IX</p>
+            <p>Dictionary with Alan.</p>
+            <p>A lot of time goes to making 
+                charcoal for 'Marthe', Beryl's 
+                now using this <foreign>fugon</foreign><note>charcoal-burner</note> for warming 
+                her attic.</p>
+            <p>Went to Montauban with 
+                David – first visit for about 
+                10 days – <del>got</del><add>ordered</add> small wood for 
+                Dorothy's cresset.</p>
+            <p>Now almost always win at 
+                Cambeluk: we are playing a 
+                correspondence game with Harry.</p>
+            <p>Nono broke Laura's particular 
+                coffee cup, <figure><figDesc>sketch of cup</figDesc></figure>  and she 
+                her blue glass bottle given by 
+                Karl.</p>
+        </div>
+    </egXML>
     <p>Introduce sample document (without header), explain elements and attributes. 8p</p>
     <p>Add header. 5p</p>
 </div>
