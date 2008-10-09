@@ -1,4 +1,4 @@
-<script language="php">
+<?php
 // ######################################################################
 //
 // ######################################################################
@@ -1522,11 +1522,10 @@ class roma
 	  }
       }
 
-    public function elementChanged()
-      {
-	$errResult = false;
-
-// element name
+    public function elementChanged() {
+	print_r($_REQUEST);
+		$errResult = false;
+		// element name
         if ( $_REQUEST[ 'name' ] != $_REQUEST[ 'newName' ] )
           {
 	    try {
@@ -1557,7 +1556,6 @@ class roma
 	 }
 
 // class membership
-
    if ($_REQUEST[ 'changedClasses' ] == 'true' ) {
 	$aszClasses = array();
 	foreach( $_REQUEST as $key => $value )
@@ -1580,7 +1578,8 @@ class roma
 	else {
 		$aszClasses[$oclass] = "delete";
 	     }
-         }  
+         }
+		 print_r($aszClasses);
 	$this->m_oRomaDom->replaceElementsClassesInModule( 
 	$_REQUEST['name' ], 
 	$_REQUEST[ 'module' ], 
@@ -1728,4 +1727,4 @@ class roma
     }
 
 }
-</script>
+?>
