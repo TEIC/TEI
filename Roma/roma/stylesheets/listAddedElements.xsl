@@ -60,7 +60,7 @@ Description
           <xsl:call-template name="generateList"/>
           <tr>
             <td class="button">
-              <input class="submit" type="submit"/>
+              <input class="submit" type="submit" value="Save"/>
             </td>
           </tr>
         </table>

@@ -62,7 +62,7 @@ Description
           <xsl:call-template name="listElements"/>
           <tr>
             <td class="button" colspan="6">
-              <input type="submit"/>
+              <input type="submit" value="Save"/>
             </td>
           </tr>
         </table>
