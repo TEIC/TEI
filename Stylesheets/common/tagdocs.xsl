@@ -2304,12 +2304,8 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
   </xsl:template>
   <xsl:template name="followRef">
     <xsl:for-each select=".//rng:ref">
-      <xsl:if test="not(@name='anyTEI' 
-		    or @name='anyOOXML'
-		    or @name='macro.anyXML'
-		    or @name='anyOOXMLMath'
-		    or @name='anySchematron' 
-		    or @name='anyAlien' 
+      <xsl:if test="not(starts-with(@name,'any') 
+		    or starts-wih(@name,'macro.any')
 		    or @name='AnyThing')">
 	<xsl:variable name="Name">
 	  <xsl:choose>
