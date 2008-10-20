@@ -324,7 +324,7 @@
 <!-- lists -->
   <xsl:template match="tei:list">
     <xsl:call-template name="startHook"/>
-    <xsl:if test="head">
+    <xsl:if test="tei:head">
       <text:p><xsl:apply-templates select="tei:head" mode="show"/></text:p>
     </xsl:if>
     <text:list text:style-name="L3">
@@ -672,7 +672,7 @@
       </table:table-column>
       <xsl:apply-templates/>
     </table:table>
-    <xsl:if test="head">
+    <xsl:if test="tei:head">
       <text:p text:style-name="Table">
 	<xsl:apply-templates select="tei:head" mode="show"/>
       </text:p>
@@ -740,23 +740,6 @@
   </text:span>
 </xsl:template>
 
-
-<!-- local oddities -->
-<xsl:template match="Filespec|Code|Input">
-   <text:span text:style-name="{name(.)}">
-    <xsl:apply-templates/>
-   </text:span>
-</xsl:template>
-
-<xsl:template match="Screen|Output">
-  <xsl:call-template name="startHook"/>
-     <xsl:call-template name="Literal">
-       <xsl:with-param name="Text">
-         <xsl:value-of select="."/>
-       </xsl:with-param>
-     </xsl:call-template>
-  <xsl:call-template name="endHook"/>
-</xsl:template>
 
 
 
