@@ -440,6 +440,21 @@
 <xsl:apply-templates/>
   \maketitle
   \end{titlepage}
+  \begin{titlepage}
+  \mbox{}\vskip4in
+  \begin{center}
+  \fontsize{14pt}{16pt}\selectfont
+
+  <xsl:value-of
+      select="ancestor::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+  \end{center}
+
+  <xsl:for-each
+      select="ancestor::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability">
+    <xsl:apply-templates/>
+  </xsl:for-each>
+
+  \end{titlepage}
   \cleardoublepage
     </exsl:document>
   </xsl:template>
