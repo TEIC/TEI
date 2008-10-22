@@ -2306,6 +2306,7 @@ $requestedID: requests a particular page
   </xd:doc>
   <xsl:template name="stdfooter">
     <xsl:param name="style" select="'plain'"/>
+    <xsl:param name="file"/>
     <xsl:variable name="date">
       <xsl:call-template name="generateDate"/>
     </xsl:variable>

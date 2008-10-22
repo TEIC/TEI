@@ -171,7 +171,12 @@
 		  <xsl:call-template name="startDivHook"/>
 		  <xsl:apply-templates mode="weavebody" select="."/>
                 </div>
-		<xsl:call-template name="stdfooter"/>
+		<xsl:call-template name="stdfooter">
+		  <xsl:with-param name="file">
+		    <xsl:text>ref-</xsl:text>
+		    <xsl:value-of select="@ident"/>
+		  </xsl:with-param>
+		</xsl:call-template>
 		<xsl:call-template name="bodyEndHook"/>
               </body>
             </html>
