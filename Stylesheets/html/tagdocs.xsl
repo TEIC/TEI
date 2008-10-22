@@ -128,6 +128,7 @@
           </xsl:with-param>
           <xsl:with-param name="content">
             <html>
+	      <xsl:call-template name="addLangAtt"/>
               <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (7) </xsl:comment>
               <head>
                 <title>
@@ -150,8 +151,7 @@
                   <link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
                 </xsl:if>
 		<xsl:call-template name="generateLocalCSS"/>
-		<meta name="generator" content="Text Encoding Initiative Consortium XSLT stylesheets"/>
-		<meta name="DC.Title" content="{$name}"/>
+		<xsl:call-template name="metaHTML"/>
 		<meta http-equiv="Content-Type" 
 		      content="application/xhtml+xml; charset=utf-8"/>
                 <xsl:call-template name="includeJavascript"/>
