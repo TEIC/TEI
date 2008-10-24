@@ -23,11 +23,32 @@
 <head>Stress Test for Globals</head>
 <p>This schema permits numbered or unnumbered divs only.</p>
   <p>Here is the schema:</p>
-    <schemaSpec ident="testglobals" start="TEI">
+  <schemaSpec ident="testglobals" start="TEI">
       <moduleRef key="tei"/>
       <moduleRef key="core"/>
       <moduleRef key="header"/>
       <moduleRef key="textstructure"/>
+      <elementSpec mode="change" ident="p">
+	<attList>
+	  <attDef ident="n" mode="delete"/>
+	</attList>
+      </elementSpec>
+      <classSpec mode="change" ident="att.global" type="atts">
+	<attList>
+	  <attDef ident="really" mode="add">
+	    <datatype>
+	      <rng:data type="boolean"/>
+	    </datatype>
+	  </attDef>
+	  <attDef ident="rendition" mode="delete"/>
+	  <attDef ident="rend" mode="change">
+	    <valList>
+	      <valItem ident="nice"/>
+	      <valItem ident="nasty"/>
+	    </valList>
+	  </attDef>
+	</attList>
+      </classSpec>
     </schemaSpec>
 </div>
 </body>
