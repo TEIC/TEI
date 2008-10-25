@@ -438,12 +438,15 @@
 \end{center}
 
 <xsl:apply-templates/>
+  \bgroup
+  \fontsize{16pt}{14pt}\selectfont
   \maketitle
-  \end{titlepage}
-  \begin{titlepage}
+  \egroup
+  \newpage
   \mbox{}\vskip4in
-  \begin{center}
+  \bgroup
   \fontsize{14pt}{16pt}\selectfont
+  \begin{center}
 
   <xsl:value-of
       select="ancestor::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
@@ -453,7 +456,7 @@
       select="ancestor::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability">
     <xsl:apply-templates/>
   </xsl:for-each>
-
+  \egroup
   \end{titlepage}
   \cleardoublepage
     </exsl:document>
