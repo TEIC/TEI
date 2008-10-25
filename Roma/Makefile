@@ -43,11 +43,11 @@ release: clean
 	rm -rf release/tei-roma
 	mkdir -p release/tei-roma
 	V=`cat VERSION` D=`head -1 ChangeLog | awk '{print $$1}'`;export D V; \
-	perl -p -i -e "s+(define \(.roma_date.,).*(\'.*)+\1\'$$D\2+;s+(define \(.roma_version.,).*(\'.*)+\1\'$$V\2+" \
-	roma/config.php; \
 	echo version $$V of date $$D; \
-	perl -p -i -e "s+(define \(.roma_date.,).*(\'.*)+\1\'$$D\2+;s+(define \(.roma_version.,).*(\'.*)+\1\'$$V\2+" \
-	roma/config-dist.php; \
+	perl -p -i -e "s+.*define.*roma_date.*+define (\'roma_date\',\'$$D\');+" roma/config.php; \
+	perl -p -i -e "s+.*define.*roma_version.*+define (\'roma_version\',\'$$V\');+" roma/config.php; \
+	perl -p -i -e "s+.*define.*roma_date.*+define (\'roma_date\',\'$$D\');+" roma/config-dist.php; \
+	perl -p -i -e "s+.*define.*roma_version.*+define (\'roma_version\',\'$$V\');+" roma/config-dist.php; \
 	tar --exclude=.svn -c  -f - $(FILES) | (cd release/tei-roma; tar xf -); \
 	perl -p -i -e "s/{roma_version}/$$V/;s/{roma_date}/$$D/" release/tei-roma/roma/templates/main.tem
 

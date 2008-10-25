@@ -1,4 +1,7 @@
 <script language="php">
+
+session_start(); 
+
 //#########################
 // Program calls
 //
@@ -30,6 +33,6 @@ define ( 'roma_tei',                 '/usr/share/' );
 define ( 'roma_localStylesheetDir',  'roma/stylesheets' );
 define ( 'roma_templateDir',         'roma/templates' );
 define ( 'roma_resource_path',       'roma/res' );
-define ( 'roma_version','3.4');
-define ( 'roma_date','2008-07-07');
+define ('roma_version','3.5');
+define ('roma_date','2008-10-10');
 </script>
