@@ -318,7 +318,6 @@ dist-schema: schemas dtds oddschema exampleschema
 
 dist-doc:  
 	make html-web
-	make pdf
 	make LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
 	make LANGUAGE=de DOCUMENTATIONLANGUAGE=de html-web
 	make LANGUAGE=ja DOCUMENTATIONLANGUAGE=ja html-web
@@ -329,13 +328,14 @@ dist-doc:
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
-	cp Guidelines.pdf release/tei-p5-doc/share/doc/tei-p5-doc/en
 	for i in ReleaseNotes/readme*xml; do  \
 	xsltproc \
 	--stringparam cssFile html/guidelines.css \
 	${XSL}/teic/teihtml-teic.xsl $$i \
 	> release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
+	-make pdf
+	-cp Guidelines.pdf release/tei-p5-doc/share/doc/tei-p5-doc/en
 	(cd release; 	\
 	ln -s tei-p5-doc tei-p5-doc-`cat ../VERSION` ; \
 	zip -q -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION` )
