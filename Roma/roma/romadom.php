@@ -1381,6 +1381,7 @@ class romaDom extends domDocument
 	  {
 	    $this->getXPath( $oXPath );
 
+
 	    if ( $aszConfig[ 'module' ] != '' && $aszConfig[ 'class' ] == '' )
 	      {
 		$oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='{$aszConfig[ 'module' ]}']" )->item(0);
@@ -1476,26 +1477,30 @@ class romaDom extends domDocument
 	      }
 
 	    //optional
-	    
-	    if ($aszConfig[ 'optional' ] == 'true' )
+	    if ($aszConfig[ 'changedUsage'] == 'true' ) {
+	      if ($aszConfig[ 'optional' ] == 'true' )
 	    	{
-		    $oAttDef->setAttribute( 'usage', 'opt' );
-		    }
-	    else
+		  $oAttDef->setAttribute( 'usage', 'opt' );
+		}
+	      else
 	    	{
-		    $oAttDef->setAttribute( 'usage', 'req' );
-		    }
-	    //desc
-	    $oDesc = $oAttDef->getElementsByTagname( 'desc' )->item(0);
-	    if ( is_object( $oDesc ) )
+		  $oAttDef->setAttribute( 'usage', 'req' );
+		}
+	    }
+	    //desc, has it changed?
+	    if ($aszConfig[ 'changedDesc'] == 'true' ) {
+ 	     $oDesc = $oAttDef->getElementsByTagname( 'desc' )->item(0);
+	     if ( is_object( $oDesc ) )
 	      {
 		$oAttDef->removeChild( $oDesc );
 	      }
-	    $theDesc = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'desc' );
-	    $oDesc = $oAttDef->appendChild( $theDesc );
-	    $oDesc->appendChild( new domText( stripslashes($aszConfig[ 'description' ]) ) );
+	     $theDesc = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'desc' );
+	     $oDesc = $oAttDef->appendChild( $theDesc );
+	     $oDesc->appendChild( new domText( stripslashes($aszConfig[ 'description' ]) ) );
+	    }
 
 	    //content
+	    if ($aszConfig[ 'changedContent'] == 'true' ) {
 	    $oContent = $oAttDef->getElementsByTagname( 'datatype' )->item(0);
 	    if ( is_object( $oContent ) )
 	      {
@@ -1518,7 +1523,7 @@ class romaDom extends domDocument
 		    $oRef->setAttribute( 'name', $aszConfig[ 'content' ] );
 		    break;
 	      }
-
+	    }
 	      	    
 	    //default
 	    if ($aszConfig[ 'defaultValue' ] != '') {
@@ -1568,7 +1573,8 @@ class romaDom extends domDocument
 	        }
 	     }
 	  }
-        if (!$oAttDef ->hasChildNodes()) {
+        if ( (!$oAttDef ->hasChildNodes() ) && $aszConfig[ 'changedUsage'] == 'false' )
+	  {
 	  $oAttList->removeChild( $oAttDef );
 	}
 	return $errResult;

@@ -257,14 +257,8 @@ function setChangedClass(obj) {
    box.value='true';
 }
 
-function setChangedDesc(obj) {
+function setChanged(obj,target) {
    obj.style.border = "solid red 1pt";
-   var box = document.getElementById('changedDesc');
+   var box = document.getElementById(target);
    box.value='true';
 }
-function setChangedContent(obj) {
-   obj.style.border = "solid red 1pt";
-   var box = document.getElementById('changedContent');
-   box.value='true';
-}
-

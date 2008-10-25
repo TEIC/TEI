@@ -328,6 +328,9 @@ class roma
 	      $aszOptions = array( 'name' => $_REQUEST[ 'name' ],
 				   'class' => $_REQUEST[ 'class' ],
 				   'module' => $_REQUEST[ 'module' ],
+				   'changedDesc' => $_REQUEST[ 'changedDesc'],
+				   'changedUsage' => $_REQUEST[ 'changedUsage'],
+				   'changedContent' => $_REQUEST[ 'changedContent'],
 				   'element' => $_REQUEST[ 'element' ],
 				   'valList' => $_REQUEST[ 'valList' ],
 				   'added' => $_REQUEST[ 'added' ],
@@ -1012,7 +1015,6 @@ class roma
 	$oRootAtts = $oAtts->documentElement;
 	$oRootAtts = $oListDom->importNode( $oRootAtts, true );
 	$oAddAttribute->appendChild( $oRootAtts );
-
 
 	//Parameters
 	$aszParam = array( 

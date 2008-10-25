@@ -65,7 +65,8 @@ Description
             </xsl:choose>
           </xsl:attribute>
         </input>
-        <input type="hidden" id="changedDesc" name="changedDesc" value="false"/>
+        <input type="hidden" id="changedDesc" name="changedDesc"  value="false"/>
+        <input type="hidden" id="changedUsage" name="changedUsage" value="false"/>
         <input type="hidden" id="changedContent" name="changedContent" value="false"/>
         <table>
           <tr>
@@ -119,9 +120,30 @@ Description
             <td class="formlabel">
               <xsl:value-of disable-output-escaping="yes" select="$res_form_optional"/>
             </td>
-            <td class="formfield"><input class="radio" type="radio" name="optional" value="true"><xsl:choose><xsl:when test="not(//currentAttribute/attDef/optional='req')"><xsl:attribute name="checked">1</xsl:attribute></xsl:when><xsl:when test="not(//currentAttribute)"><xsl:attribute name="checked">1</xsl:attribute></xsl:when></xsl:choose></input> yes <br/>
-							<input class="radio" type="radio" name="optional" value="false"><xsl:if test="//currentAttribute/attDef/optional='req'"><xsl:attribute name="checked">1</xsl:attribute></xsl:if></input> no </td>
-          </tr>
+            <td class="formfield">
+	      <input class="radio" type="radio" name="optional"
+		     value="true" onChange="setChanged(this,'changedUsage')">
+		<xsl:choose>
+		  <xsl:when   test="not(//currentAttribute/attDef/optional='req')">
+		    <xsl:attribute name="checked">
+		      <xsl:text>1</xsl:text>
+		    </xsl:attribute>
+		  </xsl:when>
+		  <xsl:when  test="not(//currentAttribute)">
+		    <xsl:attribute name="checked">
+		      <xsl:text>1</xsl:text>
+		    </xsl:attribute>
+		  </xsl:when>
+	      </xsl:choose>
+	      </input> 
+	      yes <br/>
+	      <input class="radio" type="radio" name="optional"
+		     value="false" onChange="setChanged(this,'changedUsage')">
+		<xsl:if test="//currentAttribute/attDef/optional='req'">
+		  <xsl:attribute name="checked">1</xsl:attribute>
+		</xsl:if>
+	    </input> no </td>
+	  </tr>
           <tr>
             <td class="formlabel">
               <xsl:value-of disable-output-escaping="yes" select="$res_form_contents"/>
@@ -168,7 +190,7 @@ Description
               <xsl:value-of disable-output-escaping="yes" select="$res_form_description"/>
             </td>
             <td class="formfield">
-              <textarea name="description" rows="5" cols="70" onChange="setChangedDesc(this)">
+              <textarea name="description" rows="5" cols="70" onChange="setChanged(this,'changedDesc')">
                 <xsl:value-of select="//currentAttribute/attDef/desc"/>
               </textarea>
             </td>
@@ -184,7 +206,7 @@ Description
   </xsl:template>
   <xsl:template name="contentTypes">
     <div class="HideItem">
-      <select name="content" size="1" onChanged="setChangedContent">
+      <select name="content" size="1" onChange="setChanged(this,'changedContent')">
         <option value="text"><xsl:if test="string(//currentAttribute/attDef/datatype)='text'"><xsl:attribute name="selected">1</xsl:attribute></xsl:if> Text </option>
         <xsl:for-each select="/addAttribute/dataList/*">
           <option>
@@ -219,7 +241,7 @@ Description
         </xsl:choose>
       </xsl:variable>
       <xsl:text> &gt;=</xsl:text>
-      <select name="minOccurs" size="1" onChanged="setChangedContent">
+      <select name="minOccurs" size="1" onChange="setChanged(this,'changedContent')">
         <option value="0">
           <xsl:if test="$currentMin=0">
             <xsl:attribute name="selected">1</xsl:attribute>
@@ -240,7 +262,7 @@ Description
         </option>
       </select>
       <xsl:text> &lt;=</xsl:text>
-      <select name="maxOccurs" size="1" onChanged="setChangedContent">
+      <select name="maxOccurs" size="1" onChange="setChanged(this,'changedContent')">
         <option value="0">
           <xsl:if test="$currentMax=0">
             <xsl:attribute name="selected">1</xsl:attribute>
