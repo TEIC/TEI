@@ -646,6 +646,7 @@ class roma
 	$this->applyStylesheet( $oListDom, 'modules.xsl', $oNewDom, array('lang' => $szDocLanguage ), 'modules' );
 	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'doclang', $szDocLanguage);
+	$oParser->addReplacement ('Version', $_SESSION['Version']);
 	$oParser->addReplacement( 'mode', 'modules' );
 	$oParser->addReplacement( 'view', 'main' );
 	$oParser->addReplacement( 'title', $szTitle );
@@ -670,10 +671,12 @@ class roma
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 	$oSchemaParser->addReplacement( 'lang', $szLanguage );
 	$oSchemaParser->addReplacement( 'doclang',  $szDocLanguage );
+	$oParser->addReplacement ('Version', $_SESSION['Version']);
 	$oSchemaParser->addReplacement( 'output', $_REQUEST[ 'output' ] );
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
 	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'doclang', $szDocLanguage );
+	$oParser->addReplacement ('Version', $_SESSION['Version']);
 	$oParser->addReplacement( 'mode', 'main' );
 	$oParser->addReplacement( 'view', 'sanitycheck' );
 	$oParser->addReplacement( 'title', $szTitle );
@@ -721,6 +724,7 @@ class roma
 	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'changeModule' );
 	$oParser->addReplacement( 'view', 'main' );
+	$oParser->addReplacement ('Version', $_SESSION['Version']);
 	$oParser->addReplacement( 'title', $szTitle );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
         $oParser->Parse( $szTemplate, $szOutput );
@@ -824,6 +828,7 @@ class roma
 	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'addElements' );
+	$oParser->addReplacement ('Version', $_SESSION['Version']);
 	$oParser->addReplacement( 'view', 'listElements' );
 	$oParser->addReplacement( 'title', $szTitle );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
@@ -873,6 +878,7 @@ class roma
 	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'createSchema' );
+	$oParser->addReplacement ('Version', $_SESSION['Version']);
 	$oParser->addReplacement( 'view', 'createSchema' );
 	$oParser->addReplacement( 'title', $szTitle );
 	$oParser->addReplacement( 'template', $szSchema );
@@ -903,6 +909,7 @@ class roma
 	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'doclang', $szDocLanguage);
 	$oParser->addReplacement( 'mode', 'customizeLanguage' );
+	$oParser->addReplacement ('Version', $_SESSION['Version']);
 	$oParser->addReplacement( 'view', 'customizeLanguage' );
 	$oParser->addReplacement( 'title', $szTitle );
 	$oParser->addReplacement( 'template', $szLango );
@@ -982,6 +989,7 @@ class roma
 	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'changeElement' );
+	$oParser->addReplacement ('Version', $_SESSION['Version']);
 	$oParser->addReplacement( 'view', 'main' );
 	$oParser->addReplacement( 'title', $szTitle );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
@@ -1055,6 +1063,7 @@ class roma
 	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'addAttributes' );
+	$oParser->addReplacement ('Version', $_SESSION['Version']);
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
         $oParser->Parse( $szTemplate, $szOutput );
 
@@ -1082,6 +1091,7 @@ class roma
 	    $oParser->addReplacement( 'lang', $szLanguage );
 	    $oParser->addReplacement( 'doclang', $szDocLanguage );
 	    $oParser->addReplacement( 'mode', 'listElements' );
+	    $oParser->addReplacement ('Version', $_SESSION['Version']);
 	    $oParser->addReplacement( 'view', 'listElements' );
 	    $oParser->addReplacement( 'title', $szTitle );
 	    $oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
@@ -1142,6 +1152,7 @@ class roma
 	      }
 	    $oParser->addReplacement( 'title', $szTitle );
 	    $oParser->addReplacement( 'mode', 'listAttributes' );
+	    $oParser->addReplacement ('Version', $_SESSION['Version']);
 	    $oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
 	    $oParser->Parse( $szTemplate, $szOutput );
 	  }
@@ -1173,6 +1184,7 @@ class roma
 	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'changeClasses' );
+	$oParser->addReplacement ('Version', $_SESSION['Version']);
 	$oParser->addReplacement( 'view', 'changeClasses' );
 	$oParser->addReplacement( 'title', $szTitle );
 	$oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
@@ -1201,6 +1213,7 @@ class roma
 
 	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'doclang', $szDocLanguage );
+	$oParser->addReplacement ('Version', $_SESSION['Version']);
 	$oParser->addReplacement( 'mode', 'createDocumentation' );
 	$oParser->addReplacement( 'view', 'createDocumentation' );
 	$oParser->addReplacement( 'title', $szTitle );
@@ -1238,7 +1251,7 @@ class roma
 	$oSchemaParser->AddReplacement( 'description', $szDesc );
 	$oSchemaParser->AddReplacement( 'namespace', $szNamespace );
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
-	
+	$oParser->addReplacement ('Version', $_SESSION['Version']);
 	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'customizeCustomization' );
