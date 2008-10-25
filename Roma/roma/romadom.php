@@ -1568,6 +1568,9 @@ class romaDom extends domDocument
 	        }
 	     }
 	  }
+        if (!$oAttDef ->hasChildNodes()) {
+	  $oAttList->removeChild( $oAttDef );
+	}
 	return $errResult;
 
       }
@@ -1664,6 +1667,9 @@ class romaDom extends domDocument
 	  }
 
 	$oAttDef->setAttribute( 'mode', 'change' );
+        if (!$oAttDef ->hasChildNodes()) {
+	  $oAttList->removeChild( $oAttDef );
+	}
       }
     
 
