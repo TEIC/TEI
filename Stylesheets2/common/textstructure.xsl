@@ -27,21 +27,14 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template
-    match="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
+    match="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
     mode="depth">
     <xsl:choose>
       <xsl:when test="local-name(.) = 'div'">
         <xsl:value-of select="count(ancestor::tei:div)"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:choose>
-          <xsl:when test="ancestor-or-self::tei:div0">
-            <xsl:value-of select="substring-after(local-name(.),'div')"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="substring-after(local-name(.),'div') - 1"/>
-          </xsl:otherwise>
-        </xsl:choose>
+	<xsl:value-of select="number(substring-after(local-name(.),'div')) - 1"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -60,7 +53,7 @@
       <xsl:when test="ancestor::tei:front">
         <xsl:if test="not($numberFrontHeadings='')">
           <xsl:number
-            count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4"
+            count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4"
             format="{$numberFrontHeadings}" from="tei:front" level="multiple"/>
           <xsl:value-of select="$numbersuffix"/>
         </xsl:if>
@@ -72,14 +65,14 @@
           </xsl:call-template>
           <xsl:text> </xsl:text>
           <xsl:number
-            count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4"
+            count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4"
             format="{$numberBackHeadings}" from="tei:back" level="multiple"/>
           <xsl:value-of select="$numbersuffix"/>
         </xsl:if>
       </xsl:when>
       <xsl:otherwise>
         <xsl:number 
-	    count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4"
+	    count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4"
 	    from="tei:body" 
 	    level="multiple"/>
 	<xsl:value-of select="$numbersuffix"/>

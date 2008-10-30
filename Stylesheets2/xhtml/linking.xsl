@@ -233,11 +233,11 @@
         <xsl:choose>
           <xsl:when test="$splitLevel = 0">
             <xsl:apply-templates mode="ident"
-              select="ancestor::tei:div1|ancestor::tei:div0"/>
+              select="ancestor::tei:div1"/>
           </xsl:when>
           <xsl:when test="$splitLevel = 1">
             <xsl:apply-templates mode="ident"
-              select="ancestor::tei:div2|ancestor::tei:div1|ancestor::tei:div0"
+              select="ancestor::tei:div2|ancestor::tei:div1"/>
             />
           </xsl:when>
           <xsl:when test="$splitLevel = 2">
@@ -273,11 +273,11 @@
         <xsl:choose>
           <xsl:when test="$splitLevel = 0">
             <xsl:apply-templates mode="ident"
-              select="ancestor::tei:div1|ancestor::tei:div0"/>
+              select="ancestor::tei:div1"/>
           </xsl:when>
           <xsl:when test="$splitLevel = 1">
             <xsl:apply-templates mode="ident"
-              select="(ancestor::tei:div2|ancestor::tei:div1|ancestor::tei:div0)[last()]"
+              select="(ancestor::tei:div2|ancestor::tei:div1)[last()]"
             />
           </xsl:when>
           <xsl:when test="$splitLevel = 2">

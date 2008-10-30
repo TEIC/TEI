@@ -100,7 +100,7 @@
   <xsl:template name="numberBackDiv">
     <xsl:if test="not($numberBackHeadings='')">
       <xsl:number
-        count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
+        count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
         format="A.1.1.1.1.1" level="multiple"/>
     </xsl:if>
   </xsl:template>
@@ -120,7 +120,7 @@
   <xsl:template name="numberBodyDiv">
     <xsl:if test="$numberHeadings='true'">
       <xsl:number
-        count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
+        count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
         level="multiple"/>
     </xsl:if>
   </xsl:template>
@@ -136,7 +136,7 @@
   <xsl:template name="numberFrontDiv">
     <xsl:param name="minimal"/>
       <xsl:number
-        count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
+        count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
         level="multiple"/>
       <xsl:if test="$minimal='false'">
 	<xsl:value-of select="$numberSpacer"/>

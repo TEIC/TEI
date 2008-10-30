@@ -57,14 +57,7 @@
             <xsl:value-of select="count(ancestor::tei:div)"/>
           </xsl:when>
           <xsl:when test="starts-with($myName,'div')">
-            <xsl:choose>
-              <xsl:when test="ancestor-or-self::tei:div0">
-                <xsl:value-of select="substring-after($myName,'div')"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="substring-after($myName,'div') - 1"/>
-              </xsl:otherwise>
-            </xsl:choose>
+	    <xsl:value-of select="number(substring-after($myName,'div')) - 1"/>
           </xsl:when>
           <xsl:otherwise>99</xsl:otherwise>
         </xsl:choose>
@@ -1518,10 +1511,10 @@
   </xd:doc>
   <xsl:template name="continuedToc">
     <xsl:if
-      test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+      test="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
       <ul class="toc">
         <xsl:apply-templates mode="maketoc"
-          select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
+          select="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
         />
       </ul>
     </xsl:if>
@@ -1876,11 +1869,11 @@
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="$value='quoted'">
-        <xsl:text>פער</xsl:text>
+        <xsl:text>ג€˜</xsl:text>
         <xsl:call-template name="applyRend">
           <xsl:with-param name="value" select="$rest"/>
         </xsl:call-template>
-        <xsl:text>פעש</xsl:text>
+        <xsl:text>ג€™</xsl:text>
       </xsl:when>
       <xsl:when test="$value='sub'">
         <sub>
@@ -1917,7 +1910,7 @@
         <xsl:call-template name="applyRend">
           <xsl:with-param name="value" select="$rest"/>
         </xsl:call-template>
-        <xsl:text>´</xsl:text>
+        <xsl:text>ֲ´</xsl:text>
       </xsl:when>
       <xsl:when test="$value='overbar'">
         <span style="text-decoration:overline">

@@ -76,20 +76,6 @@ Stylesheet constant setting the name of the main output file.
           </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="contains($processor,'SAXON 8')">
-        <xsl:call-template name="get-basename">
-          <xsl:with-param name="file">
-            <xsl:value-of xmlns:sax8="http://saxon.sf.net/" select="substring-after(sax8:system-id(),':')"/>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:when test="contains($processor,'SAXON 6')">
-        <xsl:call-template name="get-basename">
-          <xsl:with-param name="file">
-            <xsl:value-of xmlns:saxon="http://icl.com/saxon" select="substring-after(saxon:system-id(),':')"/>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:when>
       <xsl:when test="$STDOUT='true'">
         <xsl:text>index.xml</xsl:text>
       </xsl:when>

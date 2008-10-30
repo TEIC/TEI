@@ -601,11 +601,11 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements
-      tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6</xd:short>
+      tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template
-    match="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+    match="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
     <xsl:variable name="depth">
       <xsl:apply-templates mode="depth" select="."/>
     </xsl:variable>
@@ -1044,7 +1044,7 @@ $requestedID: requests a particular page
   <xsl:template name="doDivs">
     <xsl:for-each select="tei:TEI/tei:text">
       <xsl:for-each select="tei:front|tei:body|tei:back">
-        <xsl:for-each select="tei:div|tei:div0|tei:div1">
+        <xsl:for-each select="tei:div|tei:div1">
           <xsl:variable name="currentID">
             <xsl:apply-templates mode="ident" select="."/>
           </xsl:variable>
@@ -1624,7 +1624,7 @@ $requestedID: requests a particular page
     <xsl:comment> process front matter </xsl:comment>
     <xsl:apply-templates select="tei:text/tei:front"/>
     <xsl:if
-      test="$autoToc='true' and (descendant::tei:div or descendant::tei:div0 or descendant::tei:div1) and not(descendant::tei:divGen[@type='toc'])">
+      test="$autoToc='true' and (descendant::tei:div or descendant::tei:div1) and not(descendant::tei:divGen[@type='toc'])">
       <h2>
         <xsl:call-template name="i18n">
           <xsl:with-param name="word">tocWords</xsl:with-param>
@@ -1717,10 +1717,10 @@ $requestedID: requests a particular page
     <xsl:param name="part"/>
     <xsl:param name="force"/>
     <xsl:if
-	test="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	test="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
       <ul class="toc{$force} toc_{$part}">
 	<xsl:apply-templates mode="maketoc"
-			     select="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+			     select="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
 	  <xsl:with-param name="forcedepth" select="$force"/>
 	</xsl:apply-templates>
       </ul>
@@ -1754,11 +1754,6 @@ $requestedID: requests a particular page
         test="parent::tei:front/following-sibling::tei:body/tei:div[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generateNextLink"
           select="parent::tei:front/following-sibling::tei:body/tei:div[1]"/>
-      </xsl:when>
-      <xsl:when
-        test="$myName='div0' and following-sibling::tei:div0[tei:head or $autoHead='true']">
-        <xsl:apply-templates mode="generateNextLink"
-          select="following-sibling::tei:div0[1]"/>
       </xsl:when>
       <xsl:when
         test="$myName='div1' and following-sibling::tei:div1[tei:head or $autoHead='true']">
@@ -2188,11 +2183,6 @@ $requestedID: requests a particular page
           select="parent::tei:body/preceding-sibling::tei:body/tei:div[last()]"/>
       </xsl:when>
       <xsl:when
-        test="$myName='div0' and preceding-sibling::tei:div0[tei:head or $autoHead='true']">
-        <xsl:apply-templates mode="generatePreviousLink"
-          select="preceding-sibling::tei:div0[1]"/>
-      </xsl:when>
-      <xsl:when
         test="$myName='div1' and preceding-sibling::tei:div1[tei:head or $autoHead='true']">
         <xsl:apply-templates mode="generatePreviousLink"
           select="preceding-sibling::tei:div1[1]"/>
@@ -2213,7 +2203,7 @@ $requestedID: requests a particular page
     <!-- front matter -->
     <xsl:apply-templates select="tei:text/tei:front"/>
     <xsl:if
-      test="$autoToc='true' and (descendant::tei:div or descendant::tei:div0 or descendant::tei:div1) and not(descendant::tei:divGen[@type='toc'])">
+      test="$autoToc='true' and (descendant::tei:div or descendant::tei:div1) and not(descendant::tei:divGen[@type='toc'])">
       <h2>
         <xsl:call-template name="i18n">
           <xsl:with-param name="word">tocWords</xsl:with-param>
@@ -2560,14 +2550,6 @@ $requestedID: requests a particular page
     <xsl:param name="id"/>
     <xsl:param name="force">false</xsl:param>
     <xsl:choose>
-      <xsl:when test="tei:div0">
-        <xsl:for-each select="tei:div0[tei:head or $autoHead='true']">
-          <xsl:call-template name="tocEntry">
-            <xsl:with-param name="style" select="$style"/>
-            <xsl:with-param name="id" select="$id"/>
-          </xsl:call-template>
-        </xsl:for-each>
-      </xsl:when>
       <xsl:when test="tei:div1">
         <xsl:for-each select="tei:div1[tei:head or $autoHead='true']">
           <xsl:call-template name="tocEntry">

@@ -48,14 +48,14 @@
 
   <xd:doc>
     <xd:short>Process elements
-      tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6 in
+      tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6 in
       xref mode</xd:short>
     <xd:param name="minimal">whether to make a link with just numbers or with
       text too</xd:param>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template
-    match="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
+    match="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
     mode="xref">
     <xsl:param name="minimal">false</xsl:param>
     <xsl:call-template name="header">
