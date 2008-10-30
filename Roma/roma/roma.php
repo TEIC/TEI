@@ -327,8 +327,10 @@ class roma
             case roma_mode_attributeAdded:
 	      $aszOptions = array( 'name' => $_REQUEST[ 'name' ],
 				   'class' => $_REQUEST[ 'class' ],
+				   'altname' => $_REQUEST[ 'altname' ],
 				   'module' => $_REQUEST[ 'module' ],
 				   'changedDesc' => $_REQUEST[ 'changedDesc'],
+				   'changedName' => $_REQUEST[ 'changedName'],
 				   'changedUsage' => $_REQUEST[ 'changedUsage'],
 				   'changedContent' => $_REQUEST[ 'changedContent'],
 				   'element' => $_REQUEST[ 'element' ],
@@ -349,13 +351,13 @@ class roma
 		  $oNotam = new notam();
 		  if ( $_REQUEST[ 'added' ] == 'true' )
 		    {
-		      $oNotam->setHeadline( 'Change Attribute' );
-		      $oNotam->setMessage( 'Attribute ' . $_REQUEST[ 'name' ] . ' was successfully changed' );
+		      $oNotam->setHeadline( 'Add Attribute' );
+		      $oNotam->setMessage( 'Attribute ' . $_REQUEST[ 'name' ] . ' was successfully added' );
 		    }
 		  else
 		    {
-		      $oNotam->setHeadline( 'Add Attribute' );
-		      $oNotam->setMessage( 'Attribute ' . $_REQUEST[ 'name' ] . ' was successfully added' );
+		      $oNotam->setHeadline( 'Change Attribute' );
+		      $oNotam->setMessage( 'Attribute ' . $_REQUEST[ 'name' ] . ' was successfully changed' );
 		    }
 		  $oNotam->setStatus( notam_status_success );
 		  $oNotam->addNotam();
@@ -1088,19 +1090,19 @@ class roma
 
 	    $this->applyStylesheet( $oElementsDom, 'listAddedElements.xsl', $oNewDom, array(), 'listElements' );
 
+	    $oParser->addReplacement ('Version', $_SESSION['Version']);
 	    $oParser->addReplacement( 'lang', $szLanguage );
 	    $oParser->addReplacement( 'doclang', $szDocLanguage );
 	    $oParser->addReplacement( 'mode', 'listElements' );
-	    $oParser->addReplacement ('Version', $_SESSION['Version']);
 	    $oParser->addReplacement( 'view', 'listElements' );
 	    $oParser->addReplacement( 'title', $szTitle );
 	    $oParser->addReplacement( 'template', $oNewDom->SaveHTML() );
 	    $oParser->Parse( $szTemplate, $szOutput );
 	  }
 	else
-	  {
-	    $this->processAddElements( $szOutput );
-	  }
+	 {
+	   $this->processAddElements( $szOutput );
+	 }
 
 	$this->appendOutput( $szOutput );
       }

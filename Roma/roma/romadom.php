@@ -70,6 +70,7 @@ class romaDom extends domDocument
 	$oSchema = $oBody->appendChild( new domElement( 'schemaSpec' ) );
 	$oSchema->setAttribute( 'ident', 'myTEI' );
 	$oSchema->setAttribute('docLang', 'en' );
+	$oSchema->setAttribute('prefix', 'tei_' );
 	$oSchema->setAttribute('start', 'TEI' );
 	$oSchema->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:lang', 'en' );
 
@@ -545,7 +546,7 @@ class romaDom extends domDocument
 	$this->getDocLanguage( $szDocLanguage );
 	if ( $szModule != '' && $szClass == '')
 	  {
-// I get here if I edit an attribute on an existing element
+// I get here if I edit an attribute for the first time on an existing element
 	    @$oAttDom->loadXML( join( '', file( roma_xquery_server
 	  . 'attsbyelem.xq?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
 	    $oElement = $oAttDom->documentElement;
@@ -568,7 +569,7 @@ class romaDom extends domDocument
 	  }
 	elseif( $szClass == '' )
 	  {
-// I get here if I edit an attribute on an attribute on a new element
+// I get here if I edit an attribute on a new element
 	    $oAttDom->appendChild( new domElement( 'Element' ) );
 	    $oElement = $oAttDom->documentElement;
 
@@ -608,6 +609,7 @@ class romaDom extends domDocument
 	    foreach ( $oAttList->childNodes as $oChild )
 	      {
    	        if ($oChild->nodeType != XML_ELEMENT_NODE) { continue; }
+
 		$oAtt = $oAttXPath->query( "/Element/att[child::name[node()='" . $oChild->getAttribute( 'ident' ) . "']]" )->item(0);
 		if ( ( $szModule != '' && ! is_object( $oAtt ) ) || $szModule == '' ) //if attribute was added
 		  { 
@@ -631,13 +633,6 @@ class romaDom extends domDocument
 		    if( is_object( $oName ) && $oAtt->getAttribute( 'ident' ) != $oChild->getAttribute( 'ident' ) )
 		      {
 			$oName->setAttribute( 'ident', $oChild->getAttribute( 'ident' )  );
-			$oAltIdent = $oChild->getElementsByTagName( 'altIdent' )->item(0);
-			if ( is_object( $oAltIdent ) &&
-		    $oAltIdent->nodeValue != $oChild->getAttribute( 'ident' ))
-			  {
-			    $oAlt = $oAtt->appendChild( new domElement( 'altName' ) );
-			    $oAlt->appendChild( new domText( $oAltIdent->nodeValue ) );
-			  }
 		      }
 		    if( is_object( $oName ) && $oAtt->getAttribute( 'usage' ) != $oChild->getAttribute( 'usage' ) )
 		      {
@@ -655,8 +650,7 @@ class romaDom extends domDocument
 			$oAttDesc = $oAtt->appendChild( new domElement( 'desc' ) );
 			$oAttDesc->appendChild( new domText( $oChildDesc->nodeValue ) );
 		      }
-		    
-		    
+	    
 		    $oChildDefault = $oChild->getElementsByTagName( 'defaultVal' )->item(0);
 		    $oDefault = $oAtt->getElementsByTagName( 'defaultVal' )->item(0);
 		    if ( is_object( $oDefault ) && is_object( $oChildDefault ) && $oDefault->nodeValue != $oChildDefault->nodeValue )
@@ -667,6 +661,13 @@ class romaDom extends domDocument
 		      {
 			$oAttDef = $oAtt->appendChild( new domElement( 'defaultVal' ) );
 			$oAttDef->appendChild( new domText( $oChildDefault->nodeValue ) );
+		      }
+
+		    $oChildAlt = $oChild->getElementsByTagName( 'altIdent' )->item(0);
+		    if ( is_object( $oChildAlt ) )
+		      {
+			$oAttDef = $oAtt->appendChild( new domElement( 'altName' ) );
+			$oAttDef->appendChild( new domText( $oChildAlt->nodeValue ) );
 		      }
 
 		    $oChildDat = $oChild->getElementsByTagName( 'datatype' )->item(0);
@@ -749,6 +750,10 @@ class romaDom extends domDocument
 		$oName->appendChild( new domText( $oChild->nodeValue ) );
 		$oOpt = $oRoot->appendChild( new domElement( 'optional' ) );
 		$oOpt->appendChild( new domText( $oChild->getAttribute( 'usage' ) ) );
+		break;
+	      case 'altname':
+		$oName = $oRoot->appendChild( new domElement( 'altName' ) );
+		$oName->appendChild( new domText( $oChild->nodeValue ) );
 		break;
 	      case 'datatype':
 		$oNode = $oRoot->appendChild( new domElement( 'datatype' ) );
@@ -1000,7 +1005,8 @@ class romaDom extends domDocument
 	//check if name already exists
 	$oTmpDom = new domDocument();
 	$this->getDocLanguage( $szDocLanguage );
-	if ( @$oTmpDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?lang=' . $szDocLanguage . '&name=' . $aszConfig[ 'name' ] ) ) ) )
+	if ($aszConfig['namespace' ] == 'http://www.tei-c.org/ns/1.0' &&
+	    @$oTmpDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?lang=' . $szDocLanguage . '&name=' . $aszConfig[ 'name' ] ) ) ) )
 	  {
 	    throw new elementExistsException( $aszConfig[ 'name' ] );
 	  }
@@ -1023,7 +1029,8 @@ class romaDom extends domDocument
 	      if ($aszConfig[ 'namespace' ] != '') {
 		$oElementSpec->setAttribute( 'ns', $aszConfig['namespace' ] );
 		}
-    	     $oElementSpec->setAttribute( 'mode', ( ( $aszConfig[ 'added' ] == 'true' ) ? 'add' : 'change' ) );
+	      //$oElementSpec->setAttribute( 'mode', ( ( $aszConfig[ 'added' ] == 'true' ) ? 'add' : 'change' )
+	      $oElementSpec->setAttribute( 'mode', 'add');
 	      }
 
 // whether or not it existed before, it does  now
@@ -1381,7 +1388,6 @@ class romaDom extends domDocument
 	  {
 	    $this->getXPath( $oXPath );
 
-
 	    if ( $aszConfig[ 'module' ] != '' && $aszConfig[ 'class' ] == '' )
 	      {
 		$oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='{$aszConfig[ 'module' ]}']" )->item(0);
@@ -1499,6 +1505,37 @@ class romaDom extends domDocument
 	     $oDesc->appendChild( new domText( stripslashes($aszConfig[ 'description' ]) ) );
 	    }
 
+	    //	    echo "<p>name = " .  $aszConfig[ 'name' ];
+	    //	    echo "<p>altname = " .  $aszConfig[ 'altname' ];
+	    //	    echo "<p>class = " .  $aszConfig[ 'class' ];
+	    //	    echo "<p>module = " .  $aszConfig[ 'module' ];
+	    //	    echo "<p>changedDesc = " .  $aszConfig[ 'changedDesc'];
+	    //	    echo "<p>changedName = " .  $aszConfig[ 'changedName'];
+	    //	    echo "<p>changedUsage = " .  $aszConfig[ 'changedUsage'];
+	    //	    echo "<p>changedContent = " .  $aszConfig[ 'changedContent'];
+	    //	    echo "<p>element = " .  $aszConfig[ 'element' ];
+	    //	    echo "<p>valList = " .  $aszConfig[ 'valList' ];
+	    //	    echo "<p>added = " .  $aszConfig[ 'added' ];
+	    //	    echo "<p>optional = " .  $aszConfig[ 'optional' ];
+	    //	    echo "<p>maxOccurs = " .  $aszConfig[ 'maxOccurs' ];
+	    //	    echo "<p>minOccurs = " .  $aszConfig[ 'minOccurs' ];
+	    //	    echo "<p>closed = " .  $aszConfig[ 'closed' ];
+	    //	    echo "<p>content = " .  $aszConfig[ 'content' ];
+	    //	    echo "<p>defaultValue = " .  $aszConfig[ 'defaultValue' ];
+	    //	    echo "<p>description = " .  $aszConfig[ 'description' ] ;
+
+	    // what about the altIdent?
+	    if ($aszConfig[ 'changedName'] == 'true' ) {
+ 	     $oAlt = $oAttDef->getElementsByTagname( 'altIdent' )->item(0);
+	     if ( is_object( $oAlt) )
+	      {
+		$oAttDef->removeChild( $oAlt);
+	      }
+	     $theAlt = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'altIdent' );
+	     $oAlt = $oAttDef->appendChild( $theAlt );
+	     $oAlt->appendChild( new domText( stripslashes($aszConfig[ 'altname' ]) ) );
+	    }
+
 	    //content
 	    if ($aszConfig[ 'changedContent'] == 'true' ) {
 	    $oContent = $oAttDef->getElementsByTagname( 'datatype' )->item(0);
@@ -1573,10 +1610,12 @@ class romaDom extends domDocument
 	        }
 	     }
 	  }
-        if ( (!$oAttDef ->hasChildNodes() ) && $aszConfig[ 'changedUsage'] == 'false' )
+
+
+        if ( (!$oAttDef ->hasChildNodes() ) && $aszConfig[ 'changedUsage'] == 'false')
 	  {
 	  $oAttList->removeChild( $oAttDef );
-	}
+	  }
 	return $errResult;
 
       }
@@ -1700,6 +1739,7 @@ class romaDom extends domDocument
 		$theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
 		$oElementSpec = $oSchema->appendChild( $theElementSpec );
 		$oElementSpec->setAttribute( 'ident', $szElement );
+		$oElementSpec->setAttribute( 'module', $szModule );
 		$oElementSpec->setAttribute( 'mode', 'change' );
 	      }
 	
@@ -1888,8 +1928,12 @@ class romaDom extends domDocument
 	    $oAttDef = $oXPath->query(
 	  "/tei:TEI/tei:text//tei:classSpec[@module='{$szModule}' and @ident='{$szClass}']/tei:attList/tei:attDef[@ident='{$szAttribute}']" )->item(0);
 	  }
-
-	$oAttDef->parentNode->removeChild( $oAttDef );
+	if (is_Object($attDef)) {
+	  $oAttDef->parentNode->removeChild( $oAttDef );
+	}
+	else {
+	  $this->excludeAttributeInElement( $szAttribute, $szClass, $szModule, $szElement );
+	}
       }  
 
 

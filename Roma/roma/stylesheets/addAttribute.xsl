@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 #######################################
 Roma Stylesheet
@@ -28,13 +28,34 @@ Description
     <p>
       <xsl:value-of select="name(.)"/>
     </p>
-    <!--
- for debugging 
-    <pre><xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
-      <xsl:copy-of select="*" />
-<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
+<!--
+    <pre>
+      <xsl:for-each select=".//currentAttribute">
+      <xsl:for-each select=".//*">
+	<xsl:for-each select="ancestor::*">
+	  <xsl:text> </xsl:text>
+	</xsl:for-each>
+	<xsl:text>&lt;</xsl:text>
+	<xsl:value-of select="local-name()"/>
+	<xsl:text>&gt;</xsl:text>
+	  <xsl:text>
+</xsl:text>
+	<xsl:for-each select="@*">
+	<xsl:for-each select="ancestor::*">
+	  <xsl:text> </xsl:text>
+	</xsl:for-each>
+	  <xsl:text>  </xsl:text>
+	  <xsl:value-of select="local-name()"/>="<xsl:value-of select="."/>"
+	</xsl:for-each>
+	<xsl:text>[</xsl:text>
+	<xsl:value-of select="text()"/>
+	<xsl:text>]
+ </xsl:text>
+      </xsl:for-each>
+      </xsl:for-each>
     </pre>
 -->
+
     <p class="roma">
       <a>
         <xsl:attribute name="href">
@@ -65,9 +86,22 @@ Description
             </xsl:choose>
           </xsl:attribute>
         </input>
+        <input type="hidden" id="changedName" name="changedName"  value="false"/>
         <input type="hidden" id="changedDesc" name="changedDesc"  value="false"/>
         <input type="hidden" id="changedUsage" name="changedUsage" value="false"/>
         <input type="hidden" id="changedContent" name="changedContent" value="false"/>
+<!--
+<ul>
+<li>element is <xsl:value-of select="$element"/></li>
+<li>module is <xsl:value-of select="$module"/></li>
+<li>class is <xsl:value-of select="$class"/></li>
+<li>type is <xsl:value-of select="$type"/></li>
+<li>closed is <xsl:value-of select="$closed"/></li>
+<li>minOccurs is <xsl:value-of select="$minOccurs"/></li>
+<li>maxOccurs is <xsl:value-of select="$maxOccurs"/></li>
+<li>added is <xsl:value-of select="$added"/></li>
+</ul>
+-->
         <table>
           <tr>
             <td class="headline" colspan="4">
@@ -76,17 +110,18 @@ Description
           </tr>
           <tr>
             <xsl:choose>
-              <xsl:when test="$type='change'">
+	      <xsl:when test="$type='changed'">
                 <td class="formlabel">
-                  <input type="hidden" name="name">
-                    <xsl:attribute name="value">
-                      <xsl:value-of select="//currentAttribute/attDef/attName"/>
-                    </xsl:attribute>
-                  </input>
                   <xsl:value-of disable-output-escaping="yes" select="$res_form_name"/>
                 </td>
                 <td class="formfield">
-                  <xsl:value-of select="//currentAttribute/attDef/attName"/>
+                  <input type="text" size="53"
+			 name="altname">
+		    <xsl:attribute name="value">
+		      <xsl:value-of
+			  select="//currentAttribute/attDef/attName"/>
+		    </xsl:attribute>
+		  </input>
                 </td>
               </xsl:when>
               <xsl:otherwise>
@@ -94,15 +129,29 @@ Description
                   <xsl:attribute name="class">error</xsl:attribute>
                 </xsl:if>
                 <td class="formlabel">
-                  <xsl:value-of disable-output-escaping="yes" select="$res_form_headline"/>
+                  <xsl:value-of disable-output-escaping="yes" select="$res_form_name"/>
                 </td>
                 <td class="formfield">
-                  <input type="text" size="53" name="name">
-                    <xsl:if test="//errorList/error/location[text()='name']">
-                      <xsl:attribute name="value">
-                        <xsl:value-of select="//errorList/error[child::location[text()='name']]/oldValue"/>
-                      </xsl:attribute>
-                    </xsl:if>
+		  <xsl:value-of
+		      select="//currentAttribute/attDef/attName"/>:
+                  <input type="hidden" name="name" value="{//currentAttribute/attDef/attName}"/>
+                  <input type="text" size="53" name="altname"
+			 onChange="setChanged(this,'changedName')">
+		    <xsl:attribute name="value">
+			<xsl:choose>
+			  <xsl:when test="//errorList/error/location[text()='name']">
+			    <xsl:value-of
+				select="//errorList/error[child::location[text()='name']]/oldValue"/>
+			  </xsl:when>
+			  <xsl:when
+			      test="//currentAttribute/attDef/altName=''">
+			    <xsl:value-of select="//currentAttribute/attDef/attName"/>
+			  </xsl:when>
+			  <xsl:otherwise>
+			    <xsl:value-of select="//currentAttribute/attDef/altName"/>
+			  </xsl:otherwise>
+			</xsl:choose>
+		      </xsl:attribute>
                   </input>
                 </td>
               </xsl:otherwise>

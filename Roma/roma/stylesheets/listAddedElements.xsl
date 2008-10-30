@@ -35,16 +35,6 @@ Description
               <xsl:value-of select="$res_form_changeElement"/>
             </td>
             <td>
-              <a href="javascript:includeAllAttributes()">
-                <xsl:value-of disable-output-escaping="yes" select="$res_form_include"/>
-              </a>
-            </td>
-            <td>
-              <a href="javascript:excludeAllAttributes()">
-                <xsl:value-of disable-output-escaping="yes" select="$res_form_exclude"/>
-              </a>
-            </td>
-            <td>
               <xsl:value-of disable-output-escaping="yes" select="$res_form_tagName"/>
             </td>
             <td width="400">
@@ -58,11 +48,13 @@ Description
             </td>
           </tr>
           <xsl:call-template name="generateList"/>
-          <tr>
-            <td class="button">
-              <input class="submit" type="submit" value="Save"/>
-            </td>
+	  <!--
+	  <tr>
+	    <td class="button">
+	      <input class="submit" type="submit" value="Save"/>
+	    </td>
           </tr>
+	  -->
         </table>
       </form>
     </p>
@@ -75,22 +67,6 @@ Description
             <xsl:attribute name="href">?mode=addElements&amp;element=<xsl:value-of select="elementName"/></xsl:attribute>
             <xsl:value-of select="elementName"/>
           </a>
-        </td>
-        <td>
-          <input class="radio" type="radio" value="yes">
-            <xsl:if test="not(string(include)='delete')">
-              <xsl:attribute name="checked">1</xsl:attribute>
-            </xsl:if>
-            <xsl:attribute name="name">include_<xsl:value-of select="elementName"/></xsl:attribute>
-          </input>
-        </td>
-        <td>
-          <input class="radio" type="radio" value="no">
-            <xsl:if test="string(include)='delete'">
-              <xsl:attribute name="checked">1</xsl:attribute>
-            </xsl:if>
-            <xsl:attribute name="name">include_<xsl:value-of select="elementName"/></xsl:attribute>
-          </input>
         </td>
         <td>
           <xsl:value-of select="elementName"/>
