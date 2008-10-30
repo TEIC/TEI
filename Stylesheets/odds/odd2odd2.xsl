@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
-    version="1.0"
-  extension-element-prefixes="edate exsl estr"
+    version="2.0"
   xmlns:s="http://www.ascc.net/xml/schematron"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:edate="http://exslt.org/dates-and-times"
-  xmlns:estr="http://exslt.org/strings" 
-  xmlns:exsl="http://exslt.org/common"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:teix="http://www.tei-c.org/ns/Examples"
   xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  exclude-result-prefixes="exsl estr edate teix a s tei rng xd">
+  exclude-result-prefixes="teix a s tei rng xd">
   <xd:doc type="stylesheet">
     <xd:short> TEI stylesheet for simplifying TEI ODD markup </xd:short>
     <xd:detail> This library is free software; you can redistribute it and/or
@@ -26,7 +22,7 @@
       License along with this library; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
     <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id$</xd:cvsId>
+    <xd:cvsId>$Id: odd2odd.xsl 4811 2008-09-23 09:10:42Z rahtz $</xd:cvsId>
     <xd:copyright>2008, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:output encoding="utf-8" indent="yes"/>
@@ -155,7 +151,7 @@
 
 <!-- **************************************************** -->
   <xsl:template match="/">
-    <xsl:for-each select="exsl:node-set($ODD)">
+    <xsl:for-each select="$ODD">
       <xsl:apply-templates mode="iden"/>
     </xsl:for-each>
   </xsl:template>
@@ -188,7 +184,7 @@
       </xsl:copy>
     </xsl:variable>
 
-    <xsl:for-each select="exsl:node-set($compiled)">
+    <xsl:for-each select="$compiled">
       <xsl:apply-templates mode="final"/>
     </xsl:for-each>
 
@@ -310,7 +306,7 @@
             </xsl:for-each>
           </List>
         </xsl:variable>
-        <xsl:for-each select="exsl:node-set($Local)/List">
+        <xsl:for-each select="$Local/List">
           <xsl:call-template name="phase1a"/>
         </xsl:for-each>
       </xsl:when>
@@ -332,7 +328,7 @@
       <xsl:variable name="Current" select="."/>
       <xsl:variable name="specName" select="@ident"/>
       <xsl:variable name="N" select="local-name(.)"/>
-      <xsl:for-each select="exsl:node-set($ODD)">
+      <xsl:for-each select="$ODD">
         <xsl:choose>
           <xsl:when test="key('DELETE',$specName)">
             <xsl:if test="$verbose='true'">
@@ -403,7 +399,7 @@
 
   <xsl:template match="tei:memberOf" mode="copy">
     <xsl:variable name="k" select="@key"/>
-    <xsl:for-each select="exsl:node-set($ODD)">
+    <xsl:for-each select="$ODD">
       <xsl:choose>
 	<xsl:when test="key('DELETE',$k)"/>
 	<xsl:otherwise>
@@ -503,7 +499,7 @@ and see if they are present in the change mode version.
 If so, use them as is. Only the attributes are identifiable
 for change individually.
  -->
-      <xsl:for-each select="exsl:node-set($ODD)">
+      <xsl:for-each select="$ODD">
         <xsl:for-each select="key('CHANGE',$elementName)">
           <!-- if there is an altIdent, use it -->
 	  <xsl:copy-of select="@ns"/>
@@ -560,7 +556,7 @@ for change individually.
 		    <xsl:variable name="metoo">
 		      <xsl:value-of select="concat(../../@ident,@key)"/>
 		    </xsl:variable>
-		    <xsl:for-each select="exsl:node-set($ODD)">
+		    <xsl:for-each select="$ODD">
 		      <xsl:choose>
 			<xsl:when test="key('DELETE',$me)">
 			</xsl:when>
@@ -587,8 +583,8 @@ for change individually.
 		    <xsl:variable name="me">
 		      <xsl:value-of select="@key"/>
 		    </xsl:variable>
-		    <xsl:for-each select="exsl:node-set($ODD)">
-		      <xsl:if test="not(key('DELETE',@key))">
+		    <xsl:for-each select="$ODD">
+		      <xsl:if test="not(key('DELETE',$me))">
 			<tei:memberOf key="{$me}"/>
 		      </xsl:if>
 		    </xsl:for-each>		
@@ -681,7 +677,7 @@ For each macro, go through most of the sections one by one
 and see if they are present in the change mode version.
 If so, use them as is. 
  -->
-      <xsl:for-each select="exsl:node-set($ODD)">
+      <xsl:for-each select="$ODD">
         <xsl:for-each select="key('CHANGE',$elementName)">
           <!-- if there is an altIdent, use it -->
           <xsl:copy-of select="tei:altIdent"/>
@@ -787,7 +783,7 @@ If so, use them as is.
       <!-- for each section of the class spec, 
      go through the sections one by one
      and see if they are present in the change mode version -->
-      <xsl:for-each select="exsl:node-set($ODD)">
+      <xsl:for-each select="$ODD">
         <xsl:for-each select="key('CHANGE',$className)">
 <!-- context is now a classSpec in change mode in the ODD spec -->
           <!-- description -->
@@ -823,7 +819,7 @@ If so, use them as is.
 		    <xsl:variable name="metoo">
 		      <xsl:value-of select="concat(../../@ident,@key)"/>
 		    </xsl:variable>
-		    <xsl:for-each select="exsl:node-set($ODD)">
+		    <xsl:for-each select="$ODD">
 		      <xsl:choose>
 			<xsl:when test="key('DELETE',$me)">
 			</xsl:when>
@@ -850,8 +846,8 @@ If so, use them as is.
 		    <xsl:variable name="me">
 		      <xsl:value-of select="@key"/>
 		    </xsl:variable>
-		    <xsl:for-each select="exsl:node-set($ODD)">
-		      <xsl:if test="not(key('DELETE',@key))">
+		    <xsl:for-each select="$ODD">
+		      <xsl:if test="not(key('DELETE',$me))">
 			<tei:memberOf key="{$me}"/>
 		      </xsl:if>
 		    </xsl:for-each>		
@@ -930,7 +926,7 @@ so that is only put back in if there is some content
             </xsl:when>
             <xsl:when test="self::rng:ref">
               <xsl:variable name="N" select="@name"/>
-	      <xsl:for-each select="exsl:node-set($ODD)">
+	      <xsl:for-each select="$ODD">
 		<xsl:choose>
 		  <xsl:when test="$stripped='true'">
 		    <ref name="{$N}"
@@ -956,31 +952,31 @@ so that is only put back in if there is some content
       </WHAT>
     </xsl:variable>
     <xsl:variable name="entCount">
-      <xsl:for-each select="exsl:node-set($contents)/WHAT">
+      <xsl:for-each select="$contents/WHAT">
         <xsl:value-of select="count(*)"/>
       </xsl:for-each>
     </xsl:variable>
     <xsl:choose>
       <xsl:when
-        test="$entCount=1 and local-name(exsl:node-set($contents)/WHAT/*)=$element">
-        <xsl:copy-of select="exsl:node-set($contents)/WHAT/node()"/>
+        test="$entCount=1 and local-name($contents/WHAT/*)=$element">
+        <xsl:copy-of select="$contents/WHAT/node()"/>
       </xsl:when>
       <xsl:when
         test="$element='optional' and $entCount=1 and
-		      local-name(exsl:node-set($contents)/WHAT/*)='zeroOrMore'">
-        <xsl:copy-of select="exsl:node-set($contents)/WHAT/node()"/>
+		      local-name($contents/WHAT/*)='zeroOrMore'">
+        <xsl:copy-of select="$contents/WHAT/node()"/>
       </xsl:when>
       <xsl:when
         test="$element='optional' and $entCount=1 and
-		      local-name(exsl:node-set($contents)/WHAT/*)='oneOrMore'">
-        <xsl:copy-of select="exsl:node-set($contents)/WHAT/node()"/>
+		      local-name($contents/WHAT/*)='oneOrMore'">
+        <xsl:copy-of select="$contents/WHAT/node()"/>
       </xsl:when>
       <xsl:when test="$element='oneOrMore' and $entCount=1 and
-		      local-name(exsl:node-set($contents)/WHAT/*)='zeroOrMore'">
+		      local-name($contents/WHAT/*)='zeroOrMore'">
         <oneOrMore
           xmlns="http://relaxng.org/ns/structure/1.0">
 	  <xsl:copy-of
-	      select="exsl:node-set($contents)/WHAT/rng:zeroOrMore/*"/>
+	      select="$contents/WHAT/rng:zeroOrMore/*"/>
 	</oneOrMore>
       </xsl:when>
       <xsl:when
@@ -990,7 +986,7 @@ so that is only put back in if there is some content
       <xsl:when test="$entCount&gt;0 or $stripped='true'">
         <xsl:element name="{$element}"
           xmlns="http://relaxng.org/ns/structure/1.0">
-          <xsl:copy-of select="exsl:node-set($contents)/WHAT/node()"/>
+          <xsl:copy-of select="$contents/WHAT/node()"/>
         </xsl:element>
       </xsl:when>
     </xsl:choose>
@@ -1006,7 +1002,7 @@ so that is only put back in if there is some content
     $elementName. We travel to the ODD first
     to see if it has some overrides
     -->
-    <xsl:for-each select="exsl:node-set($ODD)">
+    <xsl:for-each select="$ODD">
       <xsl:choose>
         <xsl:when test="$TEIC='false'"/>
 	<xsl:when
@@ -1081,7 +1077,7 @@ so that is only put back in if there is some content
           <xsl:text>true</xsl:text>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:for-each select="exsl:node-set($ODD)">
+          <xsl:for-each select="$ODD">
             <xsl:choose>
               <xsl:when test="key('DELETE',$className)"/>
               <xsl:when
@@ -1343,7 +1339,7 @@ every attribute and see whether the attribute has changed-->
       <xsl:value-of select="concat($element,'_',$A)"/>
     </xsl:variable>
     <xsl:variable name="wherefrom" select="."/>
-    <xsl:for-each select="exsl:node-set($ODD)">
+    <xsl:for-each select="$ODD">
       <xsl:choose>
         <xsl:when test="key('DELETEATT',concat($class,'_',$att))"/>
         <xsl:when test="key('DELETEATT',$lookingAt)"/>
@@ -1467,7 +1463,7 @@ every attribute and see whether the attribute has changed-->
             <xsl:variable name="lookingAt">
               <xsl:value-of select="concat(../../../@ident,'_',@ident)"/>
             </xsl:variable>
-            <xsl:for-each select="exsl:node-set($ODD)">
+            <xsl:for-each select="$ODD">
               <xsl:choose>
                 <xsl:when test="key('DELETEATT',$lookingAt)"/>
                 <xsl:when test="key('REPLACEATT',$lookingAt)"/>
@@ -1491,7 +1487,7 @@ every attribute and see whether the attribute has changed-->
         <xsl:variable name="lookingAt">
           <xsl:value-of select="concat(../../@ident,'_',@ident)"/>
         </xsl:variable>
-        <xsl:for-each select="exsl:node-set($ODD)">
+        <xsl:for-each select="$ODD">
           <xsl:choose>
             <xsl:when test="key('DELETEATT',$lookingAt)"/>
             <xsl:when test="key('REPLACEATT',$lookingAt)"/>
@@ -1546,7 +1542,7 @@ every attribute and see whether the attribute has changed-->
 	    </xsl:choose>
 	  </x>
 	</xsl:variable>
-	<xsl:for-each select="exsl:node-set($classMembership)/x/tei:memberOf">
+	<xsl:for-each select="$classMembership/x/tei:memberOf">
 	  <xsl:if test="not(preceding-sibling::tei:memberOf[@key=current()/@key])">
 	    <xsl:call-template name="classAttributes">
 	      <xsl:with-param name="whence">8</xsl:with-param>
@@ -1810,9 +1806,9 @@ every attribute and see whether the attribute has changed-->
     </xsl:copy>
   </xsl:template>
   <xsl:template name="classAttributesSimple">
+    <xsl:param name="whence"/>
     <xsl:param name="elementName"/>
     <xsl:param name="className"/>
-    <xsl:param name="whence"/>
     <xsl:comment>START on <xsl:value-of select="$className"/></xsl:comment>
     <xsl:for-each select="key('ATTCLASSES',$className)">
       <xsl:variable name="CURRENTCLASS" select="."/>
