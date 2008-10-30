@@ -31,7 +31,7 @@
   </xd:doc>
   <xd:doc>
     <xd:short>Process element dicteg</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:dicteg">
     <xsl:apply-templates/>

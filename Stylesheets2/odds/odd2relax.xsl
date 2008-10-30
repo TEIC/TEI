@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet exclude-result-prefixes="exsl edate estr tei t a rng s xd xs"
-  extension-element-prefixes="exsl estr edate"  version="2.0"
+<xsl:stylesheet exclude-result-prefixes="tei t a rng s xd xs"
+  version="2.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  
-  xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
   xmlns:s="http://www.ascc.net/xml/schematron"
   xmlns:t="http://www.thaiopensource.com/ns/annotations"
@@ -113,7 +111,7 @@
 		  <xsl:apply-templates mode="expandSpecs"/>
 		</tei:schemaSpec>
 	      </xsl:variable>
-	      <xsl:for-each select="exsl:node-set($SPECS)/tei:schemaSpec">
+	      <xsl:for-each select="$SPECS/tei:schemaSpec">
 		<xsl:call-template name="schemaSpecBody"/>
 	      </xsl:for-each>
 	    </xsl:when>
@@ -322,7 +320,7 @@
     <xsl:param name="grammar"/>
     <xsl:param name="TAG"/>
     <xsl:param name="content"/>
-    <xsl:for-each select="exsl:node-set($content)/Wrapper">
+    <xsl:for-each select="$content/Wrapper">
       <xsl:copy-of select="*"/>
     </xsl:for-each>
   </xsl:template>

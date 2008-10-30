@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
-  exclude-result-prefixes="exsl estr edate svg a fo local rng tei teix xd m"
-  extension-element-prefixes="exsl estr edate"  version="2.0"
+  exclude-result-prefixes="svg a fo local rng tei teix xd m"
+  version="2.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  
-  xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:svg="http://www.w3.org/2000/svg"
   xmlns:html="http://www.w3.org/1999/xhtml"
@@ -34,7 +32,7 @@
   </xd:doc>
   <xd:doc>
     <xd:short>Process elements m:*|@*|comment()|processing-instruction()|text()</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="m:*|@*|comment()|processing-instruction()|text()"
     mode="math">
@@ -45,7 +43,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements m:math</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="m:math">
     <m:math>
@@ -55,7 +53,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:cell</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:cell">
     <td valign="top">
@@ -118,12 +116,12 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:figDesc</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:figDesc"/>
   <xd:doc>
     <xd:short>Process elements tei:figure</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:figure">
     <xsl:choose>
@@ -160,7 +158,7 @@
 	      </xsl:when>
 	      <xsl:otherwise>
 		<a class="f" name="{@xml:id}">
-		  <xsl:comment> </xsl:comment>
+		  <xsl:comment>Â </xsl:comment>
 		</a>
 	      </xsl:otherwise>
 	    </xsl:choose>
@@ -209,31 +207,31 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:figure/tei:head</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:figure/tei:head"/>
   <xd:doc>
     <xd:short>Process elements tei:formula</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:formula" mode="xref">
     <xsl:number/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:graphic</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:graphic">
     <xsl:if test="@xml:id and not($xhtml='true')">
 	<a class="g" name="{@xml:id}">
-	  <xsl:comment> </xsl:comment>
+	  <xsl:comment>Â </xsl:comment>
 	</a>
     </xsl:if>
     <xsl:call-template name="showGraphic"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:row</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:row">
     <tr>
@@ -248,7 +246,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:table</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:table">
     <div>
@@ -285,7 +283,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:table[@rend='simple']</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:table[@rend='simple']">
     <table>
@@ -313,7 +311,7 @@
     <xd:short>[html] </xd:short>
     <xd:param name="name">name</xd:param>
     <xd:param name="value">value</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="setDimension">
     <xsl:param name="name"/>
@@ -346,7 +344,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="showGraphic">
     <xsl:variable name="File">

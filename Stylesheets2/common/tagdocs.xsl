@@ -1086,7 +1086,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
                 </Stuff>
               </xsl:variable>
               <xsl:variable name="entCount">
-                <xsl:for-each select="exsl:node-set($entCont)/html:Stuff">
+                <xsl:for-each select="$entCont/html:Stuff">
                   <xsl:value-of select="count(*)"/>
                 </xsl:for-each>
               </xsl:variable>
@@ -2239,7 +2239,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
             </xsl:for-each>
           </Children>
         </xsl:variable>
-        <xsl:for-each select="exsl:node-set($Children)/Children">
+        <xsl:for-each select="$Children/Children">
           <xsl:choose>
 	    <xsl:when test="Text and count(Element)=0">
 	      <xsl:call-template name="i18n">

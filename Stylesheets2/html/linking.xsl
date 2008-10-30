@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
-  exclude-result-prefixes="exsl estr edate a fo local rng tei teix xd"
-  extension-element-prefixes="exsl estr edate"  version="2.0"
+    version="2.0"
+  exclude-result-prefixes="a fo local rng tei teix xd"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  
-  xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:local="http://www.pantor.com/ns/local"
@@ -32,7 +30,7 @@
   </xd:doc>
   <xd:doc>
     <xd:short>Process elements * to work out a unique identififying string</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="*" mode="ident">
     <xsl:variable name="BaseFile">
@@ -65,7 +63,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements *</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="*" mode="generateLink">
     <xsl:variable name="ident">
@@ -151,14 +149,14 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:anchor</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:anchor">
       <xsl:call-template name="makeAnchor"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process extra elements in generateLink mode</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template
     match="tei:label|tei:figure|tei:table|tei:item|tei:p|tei:bibl|tei:anchor|tei:cell|tei:lg|tei:list|tei:sp"
@@ -189,7 +187,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:note</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:note" mode="generateLink">
     <xsl:text>#</xsl:text>
@@ -198,7 +196,7 @@
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="where">where</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="generateEndLink">
     <xsl:param name="where"/>
@@ -219,7 +217,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="locateParent">
     <xsl:choose>
@@ -260,7 +258,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="locateParentdiv">
     <xsl:choose>
@@ -303,7 +301,7 @@
     <xd:param name="ptr">ptr</xd:param>
     <xd:param name="dest">dest</xd:param>
     <xd:param name="class">class</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="makeExternalLink">
     <xsl:param name="ptr"/>
@@ -416,7 +414,7 @@
     <xd:param name="dest">dest</xd:param>
     <xd:param name="body">body</xd:param>
     <xd:param name="class">class</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="makeInternalLink">
     <xsl:param name="target"/>

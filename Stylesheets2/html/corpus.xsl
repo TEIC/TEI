@@ -30,7 +30,7 @@
   </xd:doc>
   <xd:doc>
     <xd:short>Process elements tei:catRef</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:catRef"><xsl:variable name="W">
       <xsl:choose>
@@ -49,7 +49,7 @@
     </em>: <xsl:apply-templates select="key('IDS',$W)/catDesc"/></xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:teiCorpus</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:teiCorpus">
     <html>
@@ -143,7 +143,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="corpusBody">
     <ul>

@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
    version="2.0"
-  exclude-result-prefixes="exsl estr edate a fo local rng tei teix xd"
-  extension-element-prefixes="exsl estr edate" 
+  exclude-result-prefixes="a fo local rng tei teix xd"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  
-  xmlns:estr="http://exslt.org/strings" 
-  xmlns:exsl="http://exslt.org/common"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:local="http://www.pantor.com/ns/local"
@@ -39,13 +35,13 @@
 
   <xd:doc>
     <xd:short>Process elements tei:teiHeader</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:teiHeader"/>
 
   <xd:doc>
     <xd:short>make a local style section from rendition elements in the header</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   
   <xsl:template name="generateLocalCSS">
@@ -85,7 +81,7 @@
 
   <xd:doc>
     <xd:short>rendition elements in the header</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   
 

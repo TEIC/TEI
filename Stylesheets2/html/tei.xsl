@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"  xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:local="http://www.pantor.com/ns/local" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" extension-element-prefixes="exsl estr edate" exclude-result-prefixes="html xd exsl estr edate a fo local rng tei teix"  version="2.0">
+<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+		xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"  
+		xmlns:fo="http://www.w3.org/1999/XSL/Format" 
+		xmlns:local="http://www.pantor.com/ns/local" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="html xd a fo local rng tei teix"  version="2.0">
   <xsl:import href="../common/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
   <xd:doc type="stylesheet">
@@ -98,7 +101,7 @@ Stylesheet constant setting the name of the main output file.
   <xd:doc>
     <xd:short>[html] How to work out the filename component of a path</xd:short>
     <xd:param name="file">filename</xd:param>
-    <xd:detail>Å†</xd:detail>
+    <xd:detail>¬†</xd:detail>
   </xd:doc>
   <xsl:template name="get-basename">
     <xsl:param name="file"/>

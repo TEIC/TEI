@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
-  exclude-result-prefixes="xd exsl estr edate a fo local rng tei teix"
-  extension-element-prefixes="exsl estr edate"  version="2.0"
+  exclude-result-prefixes="xd  a fo local rng tei teix"
+  version="2.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  
-  xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:local="http://www.pantor.com/ns/local"
@@ -32,7 +30,7 @@
   </xd:doc>
   <xd:doc>
     <xd:short>Process elements tei:actor</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:actor">
     <span class="actor">
@@ -41,7 +39,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:camera</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:camera">
     <span class="camera">
@@ -50,7 +48,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:caption</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:caption">
     <span class="caption">
@@ -59,7 +57,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:castGroup</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:castGroup">
     <ul>
@@ -68,7 +66,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:castItem</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:castItem">
     <li>
@@ -77,7 +75,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:castList</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:castList">
     <xsl:if test="tei:head">
@@ -95,12 +93,12 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:castList/tei:head</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:castList/tei:head"/>
   <xd:doc>
     <xd:short>Process elements tei:role</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:role">
     <span class="role">
@@ -109,7 +107,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:sp/tei:stage</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:sp/tei:stage">
     <span class="stage">
@@ -118,7 +116,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:role</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:role">
     <strong>
@@ -127,7 +125,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:roleDesc</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:roleDesc">
     <blockquote>
@@ -160,7 +158,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:set</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:set">
     <span class="set">
@@ -169,7 +167,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:sound</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:sound">
     <span class="sound">
@@ -197,14 +195,14 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:sp/tei:p</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:sp/tei:p">
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:stage</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:stage">
     <p>
@@ -215,7 +213,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:tech</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:tech">
     <span class="tech">
@@ -224,7 +222,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:view</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:view">
     <span class="view">

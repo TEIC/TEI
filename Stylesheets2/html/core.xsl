@@ -86,7 +86,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:ab</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:ab">
     <div>
@@ -98,7 +98,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:addrLine</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:addrLine">
     <xsl:apply-templates/>
@@ -106,7 +106,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:address</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:address">
     <div class="address">
@@ -115,7 +115,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:bibl</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:bibl">
     <xsl:choose>
@@ -146,7 +146,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process element tei:change</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:change">
     <tr>
@@ -160,7 +160,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process element tei:choice</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:choice">
     <xsl:choose>
@@ -214,7 +214,7 @@
 
   <xd:doc>
     <xd:short>Process elements tei:code</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:code">
     <tt>
@@ -244,7 +244,7 @@
 
   <xd:doc>
     <xd:short>Process elements tei:eg</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:eg">
     <div>
@@ -262,7 +262,7 @@
 
   <xd:doc>
     <xd:short>Process elements tei:emph</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:emph">
     <xsl:choose>
@@ -283,7 +283,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:epigraph</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:epigraph">
     <div class="epigraph">
@@ -292,7 +292,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:epigraph/lg</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:epigraph/tei:lg">
     <table>
@@ -301,7 +301,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:foreign</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:foreign">
     <xsl:choose>
@@ -323,7 +323,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:gap</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:gap">
     <span class="gap">
@@ -350,7 +350,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:gi</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:gi" mode="plain">
     <span class="gi">
@@ -372,7 +372,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:gloss</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:gloss">
     <span class="gloss">
@@ -393,7 +393,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process element tei:head in plain mode</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:head" mode="plain">
     <xsl:if test="preceding-sibling::tei:head">
@@ -403,7 +403,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:hi</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:hi">
     <xsl:choose>
@@ -425,7 +425,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:ident</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:ident">
     <xsl:choose>
@@ -443,7 +443,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:item</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:item" mode="bibl">
     <p>
@@ -453,7 +453,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:item</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:item" mode="glosstable">
     <tr>
@@ -471,7 +471,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:item</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:item" mode="gloss">
     <dt>
@@ -485,7 +485,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:item</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:item">
     <li>
@@ -516,7 +516,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:item</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:item" mode="inline">
     <xsl:if test="preceding-sibling::tei:item">, </xsl:if>
@@ -528,7 +528,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:item/label</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:item/label">
     <xsl:choose>
@@ -550,7 +550,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:kw</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:kw">
     <span class="kw">
@@ -559,7 +559,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:l</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:l" mode="Copying">
     <xsl:apply-templates/>
@@ -585,7 +585,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:label</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:label">
       <xsl:call-template name="makeAnchor"/>
@@ -593,7 +593,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:label</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:label" mode="print">
     <xsl:call-template name="makeAnchor"/>
@@ -614,7 +614,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:lb</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:lb">
     <br>
@@ -623,7 +623,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:l</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:l">
     <div class="l">
@@ -632,7 +632,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:lg</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:lg">
     <div class="lg">
@@ -641,7 +641,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:lg/tei:l</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:lg/tei:l">
     <div>
@@ -672,7 +672,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:lg</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:lg" mode="Copying">
     <xsl:apply-templates/>
@@ -798,13 +798,13 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:list/tei:label</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:list/tei:label"/>
 
   <xd:doc>
     <xd:short>Process elements tei:listBibl</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
 
   <xsl:template match="tei:listBibl">
@@ -843,7 +843,7 @@
 
   <xd:doc>
     <xd:short>Process elements tei:mentioned</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:mentioned">
     <xsl:choose>
@@ -865,7 +865,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:name in mode "plain"</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:name" mode="plain">
     <xsl:variable name="ident">
@@ -881,7 +881,7 @@
 
   <xd:doc>
     <xd:short>Process elements tei:name and tei:persName</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:name|tei:persName">
     <xsl:apply-templates/>
@@ -898,7 +898,7 @@
 
   <xd:doc>
     <xd:short>Process elements tei:note</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:note">
     <xsl:variable name="identifier">
@@ -990,7 +990,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:note</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:note" mode="printnotes">
     <xsl:if test="not(ancestor::tei:bibl)">
@@ -1028,7 +1028,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:note[@type='action']</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:note[@type='action']">
     <div class="right"><b>Action <xsl:number count="tei:note[@type='action']"
@@ -1068,7 +1068,7 @@
 
   <xd:doc>
     <xd:short>Process element tei:p</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:p">
     <xsl:variable name="wrapperElement">
@@ -1120,7 +1120,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:p[@rend='box']</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:p[@rend='box']">
     <p class="box">
@@ -1129,7 +1129,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:q and tei:said</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
@@ -1171,7 +1171,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:q[@rend='display']</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:q[@rend='display']">
     <blockquote>
@@ -1204,7 +1204,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:q[@rend='eg']</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:q[@rend='eg']">
     <div>
@@ -1216,7 +1216,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:quote</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:quote">
     <xsl:choose>
@@ -1280,7 +1280,7 @@
 
   <xd:doc>
     <xd:short>Process elements tei:resp</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:resp">
     <xsl:apply-templates/>
@@ -1289,14 +1289,14 @@
 
   <xd:doc>
     <xd:short>Process elements tei:respStmt</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:respStmt">
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:salute</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:salute">
     <p class="left">
@@ -1305,7 +1305,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:seg</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:seg">
     <span>
@@ -1336,7 +1336,7 @@
 
   <xd:doc>
     <xd:short>Process elements tei:signed</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:signed">
     <p class="left">
@@ -1345,7 +1345,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:space</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:space">
     <xsl:choose>
@@ -1356,13 +1356,13 @@
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:text> </xsl:text>
+        <xsl:text>Â </xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:term</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:term">
     <xsl:choose>
@@ -1384,7 +1384,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:title</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:title" mode="withbr">
     <xsl:value-of select="."/>
@@ -1392,14 +1392,14 @@
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:witList</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:witList">
     <xsl:apply-templates select="./witness"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:witness</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:witness">
     <p>
@@ -1418,7 +1418,7 @@
   <xd:doc>
     <xd:short>[html] Activate a value for @rendition</xd:short>
     <xd:param name="value">value</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="applyRendition">
     <xsl:attribute name="class">
@@ -1446,7 +1446,7 @@
   <xd:doc>
     <xd:short>[html] Get another value from a space-separated list</xd:short>
     <xd:param name="value">value</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="splitRendition">
     <xsl:param name="value"/>
@@ -1493,7 +1493,7 @@
   <xd:doc>
     <xd:short>[html] Active a value for @rend</xd:short>
     <xd:param name="value">value</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="applyRend">
     <xsl:param name="value"/>
@@ -1514,7 +1514,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="continuedToc">
     <xsl:if
@@ -1528,7 +1528,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>[html] How to identify a note</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="noteID">
     <xsl:choose>
@@ -1546,7 +1546,7 @@
 
   <xd:doc>
     <xd:short>[html] How to label a note</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="noteN">
     <xsl:choose>
@@ -1633,7 +1633,7 @@
   <xd:doc>
     <xd:short>[html] Show relevant footnotes</xd:short>
     <xd:param name="currentID">currentID</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="partialFootNotes">
     <xsl:param name="currentID"/>
@@ -1667,7 +1667,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
 
   <xsl:template name="printNotes">
@@ -1794,7 +1794,7 @@
     <xd:param name="value">the current segment of the value of the rend
       attribute</xd:param>
     <xd:param name="rest">the remainder of the attribute</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="renderingInner">
     <xsl:param name="value"/>
@@ -2008,14 +2008,14 @@
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="extent">extent</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="space_loop">
     <xsl:param name="extent"/>
     <xsl:choose>
       <xsl:when test="$extent &lt; 1"> </xsl:when>
       <xsl:otherwise>
-        <xsl:text> </xsl:text>
+        <xsl:text>Â </xsl:text>
         <xsl:variable name="newextent">
           <xsl:value-of select="$extent - 1"/>
         </xsl:variable>
@@ -2030,7 +2030,7 @@
     an HTML class</xd:short>
     <xd:param name="value">current value</xd:param>
     <xd:param name="rest">remaining values</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
 
   <xsl:template name="unknownRendBlock">
@@ -2051,7 +2051,7 @@
     an HTML class</xd:short>
     <xd:param name="value">value</xd:param>
     <xd:param name="rest">rest</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
 
   <xsl:template name="unknownRendInline">
@@ -2067,7 +2067,7 @@
   </xsl:template>
   <xd:doc>
     <xd:short>[html] create external notes file</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="writeNotes">
     <html>
@@ -2119,7 +2119,7 @@
 
   <xd:doc>
     <xd:short>[html] convert rend attribute to HTML class</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="rendToClass">
     <xsl:param name="id">true</xsl:param>
@@ -2163,7 +2163,7 @@
   <xd:doc>
     <xd:short>[html] Create a point to which we can link in the HTML</xd:short>
     <xd:param name="name">value for identifier</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="makeAnchor">
     <xsl:param name="name"/>
@@ -2222,7 +2222,7 @@
 
   <xd:doc>
     <xd:short>Process elements tei:soCalled</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:soCalled">
     <xsl:choose>
@@ -2246,7 +2246,7 @@
 
   <xd:doc>
     <xd:short>Copy all attributes in HTML namespace</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="htmlAttributes">
     <xsl:for-each select="@*">

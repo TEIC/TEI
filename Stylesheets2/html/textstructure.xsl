@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
-  exclude-result-prefixes="exsl estr edate a fo local dbk xlink xhtml rng tei teix xd"
-  extension-element-prefixes="exsl estr edate saxon7 saxon6"  version="2.0"
+  exclude-result-prefixes="a fo local dbk xlink xhtml rng tei teix xd"
+  version="2.0"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:dbk="http://docbook.org/ns/docbook"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -9,12 +9,9 @@
   xmlns:teix="http://www.tei-c.org/ns/Examples"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  
-  xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:local="http://www.pantor.com/ns/local"
-  xmlns:saxon6="http://icl.com/saxon" xmlns:saxon7="http://saxon.sf.net/"
   xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xd:doc type="stylesheet">
@@ -36,14 +33,14 @@
   </xd:doc>
   <xd:doc>
     <xd:short>Process elements * in inner mode</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="*" mode="innertext">
     <xsl:apply-templates select="."/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements * in paging mode</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="*" mode="paging">
     <xsl:choose>
@@ -206,14 +203,14 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements processing-instruction()[name()='xmltex']</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="processing-instruction()[name()='xmltex']">
     <xsl:value-of select="."/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:*</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:*" mode="generateNextLink">
     <span class="nextLink">
@@ -242,7 +239,7 @@ $requestedID: requests a particular page
 
   <xd:doc>
     <xd:short>Process elements looking for something to link to backwards</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:*" mode="generatePreviousLink">
     <span class="previousLink">
@@ -474,7 +471,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:body|tei:back</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:body|tei:back" mode="split">
     <xsl:for-each select="*">
@@ -490,14 +487,14 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:body in inner mode</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:body" mode="inner">
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:closer</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:closer">
     <blockquote class="closer">
@@ -515,7 +512,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:dateline</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:dateline">
     <div class="dateline">
@@ -524,7 +521,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:divGen[@type='actions']</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:divGen[@type='actions']">
     <h3>Actions arising</h3>
@@ -557,7 +554,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:div[@type='canto']</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:div[@type='canto']">
     <xsl:variable name="divlevel" select="count(ancestor::tei:div)"/>
@@ -572,7 +569,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:div*, @type='letter'</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:div1[@type='letter']|tei:div[@type='letter']">
     <div class="letter">
@@ -581,7 +578,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:div[@type='epistle']</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:div[@type='epistle']">
     <div class="epistle">
@@ -590,14 +587,14 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:div[@type='frontispiece']</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:div[@type='frontispiece']">
     <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:div[@type='illustration']</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:div[@type='illustration']">
     <xsl:apply-templates/>
@@ -605,7 +602,7 @@ $requestedID: requests a particular page
   <xd:doc>
     <xd:short>Process elements
       tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template
     match="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
@@ -699,7 +696,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>Create a new output page for a section</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
     <xd:param name="depth">depth of section (1, 2 3, 4 etc)</xd:param>
   </xd:doc>
   <xsl:template name="makeDivPage">
@@ -757,7 +754,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:docAuthor in "author" mode"</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:docAuthor" mode="author">
     <xsl:if test="preceding-sibling::tei:docAuthor">
@@ -791,7 +788,7 @@ $requestedID: requests a particular page
 
   <xd:doc>
     <xd:short>Process elements tei:opener</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:opener">
     <blockquote class="opener">
@@ -809,7 +806,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:text</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:text">
     <xsl:choose>
@@ -828,7 +825,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:titlePage</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:titlePage">
     <div class="titlePage">
@@ -838,7 +835,7 @@ $requestedID: requests a particular page
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="crumbBody">crumbBody</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="aCrumb">
     <xsl:param name="crumbBody"/>
@@ -848,7 +845,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="addCorpusID">
     <xsl:if test="ancestor-or-self::tei:teiCorpus">
@@ -867,7 +864,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="addLangAtt">
     <xsl:variable name="documentationLanguage">
@@ -913,7 +910,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="crumbPath">
     <div class="breadcrumb">
@@ -941,7 +938,7 @@ $requestedID: requests a particular page
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="Head">Head</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="doBody">
     <xsl:param name="Head"/>
@@ -991,7 +988,7 @@ $requestedID: requests a particular page
   <xd:doc>
     <xd:short>[html] Make a section</xd:short>
     <xd:param name="Type">Type</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="doDivBody">
     <xsl:param name="Type"/>
@@ -1042,7 +1039,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="doDivs">
     <xsl:for-each select="tei:TEI/tei:text">
@@ -1060,7 +1057,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="doFrames">
     <xsl:variable name="BaseFile">
@@ -1098,7 +1095,7 @@ $requestedID: requests a particular page
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="currentID">currentID</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="doPageTable">
     <xsl:param name="currentID"/>
@@ -1154,21 +1151,21 @@ $requestedID: requests a particular page
 
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="generateDivheading">
     <xsl:apply-templates mode="xref" select="."/>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="generateDivtitle">
     <xsl:apply-templates select="tei:head/text()"/>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="generateUpLink">
     <xsl:variable name="myName">
@@ -1243,7 +1240,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="htmlFileTop">
     <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (6)</xsl:comment>
@@ -1266,7 +1263,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="includeCSS">
     <xsl:choose>
@@ -1286,7 +1283,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] Javascript functions to be declared in HTML header</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="includeJavascript">
     <xsl:text>&#10;</xsl:text>
@@ -1400,7 +1397,7 @@ $requestedID: requests a particular page
   <xd:doc>
     <xd:short>[html] Make contents of left-hand column</xd:short>
     <xd:param name="currentID">currentID</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="leftHandFrame">
     <xsl:param name="currentID"/>
@@ -1433,12 +1430,12 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] bypass sidebar lists in normal mode</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:list[@type='sidebar']"/>
   <xd:doc>
     <xd:short>[html] Summary links in left-hand column</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="makeSidebar">
     <xsl:for-each
@@ -1456,7 +1453,7 @@ $requestedID: requests a particular page
   <xd:doc>
     <xd:short>[html] Summary table of contents in left-hand column</xd:short>
     <xd:param name="style">style</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="linkListContents">
     <xsl:param name="style" select="'toc'"/>
@@ -1524,7 +1521,7 @@ $requestedID: requests a particular page
   <xd:doc>
     <xd:short>[html] Main page in right-hand column</xd:short>
     <xd:param name="currentID">currentID</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="mainFrame">
     <xsl:param name="currentID"/>
@@ -1651,7 +1648,7 @@ $requestedID: requests a particular page
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="force">force</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="mainTOC">
     <xsl:param name="force"/>
@@ -1784,7 +1781,7 @@ $requestedID: requests a particular page
     <xd:short>[html] Generate a chunk of output</xd:short>
     <xd:param name="ident">ident</xd:param>
     <xd:param name="content">content</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="outputChunk">
     <xsl:param name="ident"/>
@@ -1806,86 +1803,23 @@ $requestedID: requests a particular page
       <xsl:when test="$ident=''">
         <xsl:copy-of select="$content"/>
       </xsl:when>
-      <xsl:when test="element-available('exsl:document')">
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Opening <xsl:value-of select="$outName"/> with exsl:document</xsl:message>
-        </xsl:if>
-        <xsl:if test="element-available('exsl:document')">
-          <exsl:document doctype-public="{$doctypePublic}"
+      <xsl:otherwise>
+	<xsl:result-document doctype-public="{$doctypePublic}"
             doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
             href="{$outName}" method="{$outputMethod}">
             <xsl:copy-of select="$content"/>
-          </exsl:document>
-        </xsl:if>
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Closing file <xsl:value-of select="$outName"
-          /></xsl:message>
-        </xsl:if>
-      </xsl:when>
-      <xsl:when test="contains($processor,'SAXON 7')">
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon
-          8</xsl:message>
-        </xsl:if>
-        <saxon7:output doctype-public="{$doctypePublic}"
-          doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
-          href="{$outName}" method="{$outputMethod}">
-          <xsl:copy-of select="$content"/>
-          <xsl:fallback>
-            <xsl:copy-of select="$content"/>
-          </xsl:fallback>
-        </saxon7:output>
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Closing file <xsl:value-of select="$outName"
-          /></xsl:message>
-        </xsl:if>
-      </xsl:when>
-      <xsl:when test="contains($processor,'SAXON 6')">
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon
-          6</xsl:message>
-        </xsl:if>
-        <saxon6:output doctype-public="{$doctypePublic}"
-          doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
-          href="{$outName}" method="{$outputMethod}">
-          <xsl:copy-of select="$content"/>
-          <xsl:fallback>
-            <xsl:copy-of select="$content"/>
-          </xsl:fallback>
-        </saxon6:output>
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Closing file <xsl:value-of select="$outName"
-          /></xsl:message>
-        </xsl:if>
-      </xsl:when>
-      <xsl:when test="contains($processor,'Apache')">
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Opening <xsl:value-of select="$outName"/> with
-          Xalan</xsl:message>
-        </xsl:if>
-        <xalan:write file="{$outName}"
-          xmlns:xalan="org.apache.xalan.xslt.extensions.Redirect"
-          xsl:extension-element-prefixes="xalan">
-          <xsl:copy-of select="$content"/>
-          <xsl:fallback>
-            <xsl:copy-of select="$content"/>
-          </xsl:fallback>
-        </xalan:write>
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Closing file <xsl:value-of select="$outName"
-          /></xsl:message>
-        </xsl:if>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:message terminate="yes">Creation of <xsl:value-of select="$outName"/> not
-            possible with <xsl:value-of select="$processor"/></xsl:message>
+	</xsl:result-document>
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Closing file <xsl:value-of select="$outName"
+	  /></xsl:message>
+	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] Make a new page using CSS layout </xd:short>
     <xd:param name="currentID">current ID</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="pageLayoutCSS">
     <xsl:param name="currentID"/>
@@ -1959,7 +1893,7 @@ $requestedID: requests a particular page
 
   <xd:doc>
     <xd:short>[html] the main page structure</xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="mainPage">
     <xsl:param name="currentID"/>
@@ -2014,7 +1948,7 @@ $requestedID: requests a particular page
 
   <xd:doc>
     <xd:short>[html] what to do in column 1 of 3 column arrangement </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="col1">
     <div id="col1">
@@ -2025,7 +1959,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] what to do in column 2 of 3 column arrangement </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="col2">
     <div id="col2">
@@ -2036,7 +1970,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] what to do in column 3 of 3 column arrangement </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="col3">
     <div id="col3">
@@ -2048,7 +1982,7 @@ $requestedID: requests a particular page
   <xd:doc>
     <xd:short>[html] arrangment of page as HTML divs </xd:short>
     <xd:param name="currentID">currentID</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="bodyLayout">
     <xsl:param name="currentID"/>
@@ -2092,7 +2026,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] Generate a page using simple layout </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="pageLayoutSimple">
     <html>
@@ -2123,7 +2057,7 @@ $requestedID: requests a particular page
   <xd:doc>
     <xd:short>[html] Generate a page using table layout</xd:short>
     <xd:param name="currentID">currentID</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="pageLayoutTable">
     <xsl:param name="currentID"/>
@@ -2187,7 +2121,7 @@ $requestedID: requests a particular page
   <xd:doc>
     <xd:short>[html] The page body, when using table layout</xd:short>
     <xd:param name="currentID">currentID</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="pageLayoutTableBody">
     <xsl:param name="currentID"/>
@@ -2228,7 +2162,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="previousLink">
     <xsl:variable name="myName">
@@ -2302,7 +2236,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="stdfooter">
     <xsl:param name="style" select="'plain'"/>
@@ -2378,7 +2312,7 @@ $requestedID: requests a particular page
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="style">CSS style</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="stdfooterFrame">
     <xsl:param name="style" select="'plain'"/>
@@ -2441,7 +2375,7 @@ $requestedID: requests a particular page
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="title">title</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="stdheader">
     <xsl:param name="title" select="'(no title)'"/>
@@ -2510,7 +2444,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="subtoc">
     <xsl:if
@@ -2565,7 +2499,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="summaryToc">
     <div class="teidiv">
@@ -2599,7 +2533,7 @@ $requestedID: requests a particular page
             <td class="link" valign="top">
               <xsl:for-each select=".//xref|.//xptr">
                 <xsl:if test="position() &gt; 1">
-                  <xsl:text> </xsl:text>
+                  <xsl:text>Â </xsl:text>
                   <img alt="*" src="/images/dbluball.gif"/>
                   <xsl:text> </xsl:text>
                 </xsl:if>
@@ -2619,7 +2553,7 @@ $requestedID: requests a particular page
     <xd:param name="id">ID to link to</xd:param>
     <xd:param name="force">whether to force a TOC entry even if other rules
       would normally prevent it</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="tocSection">
     <xsl:param name="style"/>
@@ -2685,7 +2619,7 @@ $requestedID: requests a particular page
     <xd:short>[html] Make a TOC entry </xd:short>
     <xd:param name="style">style</xd:param>
     <xd:param name="id">id</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="tocEntry">
     <xsl:param name="style"/>
@@ -2736,7 +2670,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="topNavigation">
     <xsl:if test="ancestor::teiCorpus">
@@ -2756,7 +2690,7 @@ $requestedID: requests a particular page
     <xd:short>[html] </xd:short>
     <xd:param name="up">the link to which "Up" goes</xd:param>
     <xd:param name="title">the text of the link</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="upLink">
     <xsl:param name="up"/>
@@ -2796,7 +2730,7 @@ $requestedID: requests a particular page
     <xd:param name="path">path</xd:param>
     <xd:param name="class">class</xd:param>
     <xd:param name="whole">whole</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="walkTree">
     <xsl:param name="path"/>
@@ -2865,7 +2799,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="writeDiv">
     <xsl:variable name="BaseFile">
@@ -2934,7 +2868,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html]provide a class attribute and/or ID for each div </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
     <xd:param name="depth">depth of section (1, 2 3, 4 etc)</xd:param>
   </xd:doc>
   <xsl:template name="divClassAttribute">
@@ -2961,7 +2895,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="writeFrameToc">
     <html>
@@ -2991,7 +2925,7 @@ $requestedID: requests a particular page
     <xd:short>[html] </xd:short>
     <xd:param name="homepage">homepage</xd:param>
     <xd:param name="mode">mode</xd:param>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template name="xrefpanel">
     <xsl:param name="homepage"/>
@@ -3023,7 +2957,7 @@ $requestedID: requests a particular page
 
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:detail>Â </xd:detail>
   </xd:doc>
   <xsl:template match="tei:floatingText">
     <div class="floatingText">

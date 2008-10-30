@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet exclude-result-prefixes="a t xd tei fo exsl rng edate xs"
-  extension-element-prefixes="exsl edate rng"  version="2.0"
+<xsl:stylesheet exclude-result-prefixes="a t xd tei fo exsl rng xs"
+  version="2.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  
-  xmlns:exsl="http://exslt.org/common"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
   xmlns:t="http://www.thaiopensource.com/ns/annotations"
@@ -382,7 +380,7 @@
 	    <xsl:apply-templates mode="expandSpecs"/>
 	  </tei:schemaSpec>
 	</xsl:variable>
-	<xsl:for-each select="exsl:node-set($SPECS)/tei:schemaSpec">
+	<xsl:for-each select="$SPECS/tei:schemaSpec">
 	  <xsl:call-template name="schemaSpecBody"/>
 	</xsl:for-each>
       </xsl:when>
@@ -592,141 +590,134 @@
 
   <xsl:template name="content">
     <xsl:param name="sep"/>
-    <xsl:choose>
-      <xsl:when test="function-available('exsl:node-set')">
-        <xsl:variable name="parent" select="local-name(..)"/>
-        <xsl:variable name="contentbody">
-          <xsl:variable name="members">
-            <M>
-              <xsl:for-each select="rng:*|processing-instruction()">
-                <xsl:variable name="F">
-                  <xsl:choose>
-                    <xsl:when test="self::processing-instruction()">
-                      <xsl:apply-templates select="."/>
-                    </xsl:when>
-                    <xsl:when test="self::rng:ref and $parameterize='false'">
-                      <xsl:choose>
-                        <xsl:when test="key('CLASSES',@name)">
-                          <xsl:variable name="exists">
-                            <xsl:call-template name="checkClass">
-                              <xsl:with-param name="id" select="@name"/>
-                            </xsl:call-template>
-                          </xsl:variable>
-			  <xsl:choose>
-			    <xsl:when test="$exists=''">
-			      <xsl:text>_DUMMY_</xsl:text>
-			      <xsl:value-of select="@name"/>
-			    </xsl:when>
-			    <xsl:otherwise>
-			      <xsl:apply-templates select="."/>
-			    </xsl:otherwise>
-			  </xsl:choose>
-                        </xsl:when>
-                        <xsl:when test="key('CLASSES',substring-before(@name,'_'))">
-                          <xsl:variable name="exists">
-                            <xsl:call-template name="checkClass">
-                              <xsl:with-param name="id" select="substring-before(@name,'_')"/>
-                            </xsl:call-template>
-                          </xsl:variable>
-			  <xsl:choose>
-			    <xsl:when test="$exists=''">
-			      <xsl:text>_DUMMY_</xsl:text>
-			      <xsl:value-of select="@name"/>
-			    </xsl:when>
-			    <xsl:otherwise>
-			      <xsl:apply-templates select="."/>
-			    </xsl:otherwise>
-			  </xsl:choose>
-                        </xsl:when>
-                        <xsl:when test="key('MACROS',@name)">
-                          <xsl:apply-templates select="."/>
-                        </xsl:when>
-                        <xsl:when test="key('ELEMENTS',@name)">
-                          <xsl:apply-templates select="."/>
-                        </xsl:when>
-                      </xsl:choose>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:apply-templates select="."/>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </xsl:variable>
-                <xsl:if test="not($F='')">
-                  <N>
-                    <xsl:value-of select="$F"/>
-                  </N>
-                </xsl:if>
-              </xsl:for-each>
-            </M>
-          </xsl:variable>
-          <xsl:for-each select="exsl:node-set($members)/M">
-            <xsl:choose>
-              <xsl:when test="starts-with(N[1],'(') and count(N)=1"/>
-              <xsl:when test="$parent='content' and count(N)=1 and starts-with(N[1],'%macro.')"/>
-              <xsl:when test="$parent='content' and count(N)=1">
-                <xsl:text>(</xsl:text>
-              </xsl:when>
-              <xsl:when test="count(N)=1 and starts-with(N,'%')">
-                <xsl:text>(</xsl:text>
-              </xsl:when>
-              <xsl:when test="count(N)&gt;1">
-                <xsl:text>(</xsl:text>
-              </xsl:when>
-            </xsl:choose>
-            <xsl:for-each select="N">
+    <xsl:variable name="parent" select="local-name(..)"/>
+    <xsl:variable name="contentbody">
+      <xsl:variable name="members">
+	<M>
+	  <xsl:for-each select="rng:*|processing-instruction()">
+	    <xsl:variable name="F">
 	      <xsl:choose>
-		<xsl:when test="starts-with(.,'_DUMMY_') and
-				.=preceding-sibling::N[1]"/>
+		<xsl:when test="self::processing-instruction()">
+		  <xsl:apply-templates select="."/>
+		</xsl:when>
+		<xsl:when test="self::rng:ref and $parameterize='false'">
+		  <xsl:choose>
+		    <xsl:when test="key('CLASSES',@name)">
+		      <xsl:variable name="exists">
+			<xsl:call-template name="checkClass">
+			  <xsl:with-param name="id" select="@name"/>
+			</xsl:call-template>
+		      </xsl:variable>
+		      <xsl:choose>
+			<xsl:when test="$exists=''">
+			  <xsl:text>_DUMMY_</xsl:text>
+			  <xsl:value-of select="@name"/>
+			</xsl:when>
+			<xsl:otherwise>
+			  <xsl:apply-templates select="."/>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:when>
+		    <xsl:when test="key('CLASSES',substring-before(@name,'_'))">
+		      <xsl:variable name="exists">
+			<xsl:call-template name="checkClass">
+			  <xsl:with-param name="id" select="substring-before(@name,'_')"/>
+			</xsl:call-template>
+		      </xsl:variable>
+		      <xsl:choose>
+			<xsl:when test="$exists=''">
+			  <xsl:text>_DUMMY_</xsl:text>
+			  <xsl:value-of select="@name"/>
+			</xsl:when>
+			<xsl:otherwise>
+			  <xsl:apply-templates select="."/>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:when>
+		    <xsl:when test="key('MACROS',@name)">
+		      <xsl:apply-templates select="."/>
+		    </xsl:when>
+		    <xsl:when test="key('ELEMENTS',@name)">
+		      <xsl:apply-templates select="."/>
+		    </xsl:when>
+		  </xsl:choose>
+		</xsl:when>
 		<xsl:otherwise>
-		<xsl:value-of select="."/>
-		<xsl:choose>
-		  <xsl:when test="self::N[1]='|&#10;'"/>
-		  <xsl:when test="self::N[1]='('"/>
-		  <xsl:when test="self::N[1]=')'and position() &lt; last()">
-		    <xsl:value-of select="$sep"/>
-		  </xsl:when>
-		  <xsl:when test="following-sibling::N[1]='('"/>
-		  <xsl:when test="following-sibling::N[1]=')'"/>
-		  <xsl:when test="following-sibling::N[1]='|&#10;'"/>
-		  <xsl:when test="position() &lt; last()">
-		    <xsl:value-of select="$sep"/>
-		  </xsl:when>
-		</xsl:choose>
+		  <xsl:apply-templates select="."/>
 		</xsl:otherwise>
 	      </xsl:choose>
-            </xsl:for-each>
-            <xsl:choose>
-              <xsl:when test="starts-with(N[1],'(') and count(N)=1"/>
-              <xsl:when test="$parent='content' and count(N)=1 and starts-with(N[1],'%macro.')"/>
-              <xsl:when test="$parent='content' and count(N)=1">
-                <xsl:text>)</xsl:text>
-              </xsl:when>
-              <xsl:when test="count(N)=1 and starts-with(N,'%')">
-                <xsl:text>)</xsl:text>
-              </xsl:when>
-              <xsl:when test="count(N)&gt;1">
-                <xsl:text>)</xsl:text>
-              </xsl:when>
-            </xsl:choose>
-          </xsl:for-each>
-        </xsl:variable>
-        <xsl:choose>
-          <xsl:when test="$contentbody=''"/>
-          <xsl:when test="$contentbody='()'"/>
-          <xsl:when test="$contentbody='(#PCDATA |  #PCDATA)'">
-	    <xsl:text>(#PCDATA)</xsl:text>
+	    </xsl:variable>
+	    <xsl:if test="not($F='')">
+	      <N>
+		<xsl:value-of select="$F"/>
+	      </N>
+	    </xsl:if>
+	  </xsl:for-each>
+	</M>
+      </xsl:variable>
+      <xsl:for-each select="$members/M">
+	<xsl:choose>
+	  <xsl:when test="starts-with(N[1],'(') and count(N)=1"/>
+	  <xsl:when test="$parent='content' and count(N)=1 and starts-with(N[1],'%macro.')"/>
+	  <xsl:when test="$parent='content' and count(N)=1">
+	    <xsl:text>(</xsl:text>
 	  </xsl:when>
-          <xsl:when test="contains($contentbody, '| ()')">
-            <xsl:value-of select="substring-before($contentbody,'| ()')"/>
-            <xsl:value-of select="substring-after($contentbody,'| ()')"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$contentbody"/>
-          </xsl:otherwise>
-        </xsl:choose>
+	  <xsl:when test="count(N)=1 and starts-with(N,'%')">
+	    <xsl:text>(</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="count(N)&gt;1">
+	    <xsl:text>(</xsl:text>
+	  </xsl:when>
+	</xsl:choose>
+	<xsl:for-each select="N">
+	  <xsl:choose>
+	    <xsl:when test="starts-with(.,'_DUMMY_') and
+			    .=preceding-sibling::N[1]"/>
+	    <xsl:otherwise>
+	      <xsl:value-of select="."/>
+	      <xsl:choose>
+		<xsl:when test="self::N[1]='|&#10;'"/>
+		<xsl:when test="self::N[1]='('"/>
+		<xsl:when test="self::N[1]=')'and position() &lt; last()">
+		  <xsl:value-of select="$sep"/>
+		</xsl:when>
+		<xsl:when test="following-sibling::N[1]='('"/>
+		<xsl:when test="following-sibling::N[1]=')'"/>
+		<xsl:when test="following-sibling::N[1]='|&#10;'"/>
+		<xsl:when test="position() &lt; last()">
+		  <xsl:value-of select="$sep"/>
+		</xsl:when>
+	      </xsl:choose>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
+	<xsl:choose>
+	  <xsl:when test="starts-with(N[1],'(') and count(N)=1"/>
+	  <xsl:when test="$parent='content' and count(N)=1 and starts-with(N[1],'%macro.')"/>
+	  <xsl:when test="$parent='content' and count(N)=1">
+	    <xsl:text>)</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="count(N)=1 and starts-with(N,'%')">
+	    <xsl:text>)</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="count(N)&gt;1">
+	    <xsl:text>)</xsl:text>
+	  </xsl:when>
+	</xsl:choose>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$contentbody=''"/>
+      <xsl:when test="$contentbody='()'"/>
+      <xsl:when test="$contentbody='(#PCDATA |  #PCDATA)'">
+	<xsl:text>(#PCDATA)</xsl:text>
+      </xsl:when>
+      <xsl:when test="contains($contentbody, '| ()')">
+	<xsl:value-of select="substring-before($contentbody,'| ()')"/>
+	<xsl:value-of select="substring-after($contentbody,'| ()')"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:message>sorry no exsl:node-set available</xsl:message>
+	<xsl:value-of select="$contentbody"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -1425,7 +1416,7 @@
         </xsl:for-each>
       </M>
     </xsl:variable>
-    <xsl:for-each select="exsl:node-set($members)/M">
+    <xsl:for-each select="$members/M">
       <xsl:call-template name="memberOfClassDefinition">
 	<xsl:with-param name="type" select="$type"/>
       </xsl:call-template>

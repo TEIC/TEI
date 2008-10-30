@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
   xmlns:s="http://www.ascc.net/xml/schematron"
-  exclude-result-prefixes="s html exsl estr edate a fo local rng tei teix xd"
-  extension-element-prefixes="exsl estr edate"  version="2.0"
+  exclude-result-prefixes="s html a fo local rng tei teix xd"
+  version="2.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  
-  xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:local="http://www.pantor.com/ns/local"
@@ -67,7 +65,7 @@
 
   <xd:doc>
     <xd:short>[odds] Document an element, macro, or class</xd:short>
-    <xd:detail>Å†</xd:detail>
+    <xd:detail>¬†</xd:detail>
   </xd:doc>
   <xsl:template name="refdoc">
     <xsl:if test="$verbose='true'">
@@ -190,7 +188,7 @@
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="text">text</xd:param>
-    <xd:detail>Å†</xd:detail>
+    <xd:detail>¬†</xd:detail>
   </xd:doc>
   <xsl:template name="embolden">
     <xsl:param name="text"/>
@@ -201,7 +199,7 @@
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="text">text</xd:param>
-    <xd:detail>Å†</xd:detail>
+    <xd:detail>¬†</xd:detail>
   </xd:doc>
   <xsl:template name="italicize">
     <xsl:param name="text"/>
@@ -215,7 +213,7 @@
     <xd:param name="id">id</xd:param>
     <xd:param name="name">name</xd:param>
     <xd:param name="text">text</xd:param>
-    <xd:detail>Å†</xd:detail>
+    <xd:detail>¬†</xd:detail>
   </xd:doc>
   <xsl:template name="makeLink">
     <xsl:param name="class"/>
@@ -263,7 +261,7 @@
 
   <xd:doc>
     <xd:short>[html] Provide a footer for each reference document</xd:short>
-    <xd:detail>Å†</xd:detail>
+    <xd:detail>¬†</xd:detail>
   </xd:doc>
 
   <xsl:template name="refdocFooter">
@@ -278,7 +276,7 @@
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="text">text</xd:param>
-    <xd:detail>Å†</xd:detail>
+    <xd:detail>¬†</xd:detail>
   </xd:doc>
   <xsl:template name="ttembolden">
     <xsl:param name="text"/>
@@ -291,7 +289,7 @@
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="text">text</xd:param>
-    <xd:detail>Å†</xd:detail>
+    <xd:detail>¬†</xd:detail>
   </xd:doc>
   <xsl:template name="typewriter">
     <xsl:param name="text"/>
@@ -318,7 +316,7 @@
 
   <xd:doc>
     <xd:short>Process elements teix:egXML</xd:short>
-    <xd:detail>Å†</xd:detail>
+    <xd:detail>¬†</xd:detail>
   </xd:doc>
   <xsl:template match="teix:egXML">
     <div>
@@ -340,7 +338,7 @@
     <xd:param name="grammar">grammar</xd:param>
     <xd:param name="content">content</xd:param>
     <xd:param name="element">element</xd:param>
-    <xd:detail>Å†</xd:detail>
+    <xd:detail>¬†</xd:detail>
   </xd:doc>
 
   <xsl:template name="bitOut">
@@ -364,12 +362,12 @@
 	 </button>
 	 <pre class="RNG_XML">
 	    <xsl:apply-templates mode="verbatim"
-				 select="exsl:node-set($content)/*/*"/>
+				 select="$content/*/*"/>
 	 </pre>
 	 <pre class="RNG_Compact">
 	   <xsl:call-template name="make-body-from-r-t-f">
 	     <xsl:with-param name="schema">
-	       <xsl:for-each select="exsl:node-set($content)/*">
+	       <xsl:for-each select="$content/*">
 		 <xsl:call-template name="make-compact-schema"/>
 	       </xsl:for-each>
 	     </xsl:with-param>
@@ -381,7 +379,7 @@
 	<xsl:element name="{$element}">
 	  <xsl:attribute name="class">eg</xsl:attribute>
 	  <xsl:apply-templates mode="verbatim"
-			       select="exsl:node-set($content)/*/*"/>
+			       select="$content/*/*"/>
 	</xsl:element>
       </xsl:when>
       <xsl:when test="$displayMode='rnc'">
@@ -389,7 +387,7 @@
 	  <xsl:attribute name="class">eg</xsl:attribute>
 	  <xsl:call-template name="make-body-from-r-t-f">
 	    <xsl:with-param name="schema">
-	      <xsl:for-each select="exsl:node-set($content)/*">
+	      <xsl:for-each select="$content/*">
 		<xsl:call-template name="make-compact-schema"/>
 	      </xsl:for-each>
 	    </xsl:with-param>
@@ -399,7 +397,7 @@
       <xsl:otherwise>
 	<xsl:element name="{$element}">
 	  <xsl:attribute name="class">eg</xsl:attribute>
-	  <xsl:for-each select="exsl:node-set($content)/*">
+	  <xsl:for-each select="$content/*">
 	    <xsl:apply-templates mode="literal"/>
 	  </xsl:for-each>
 	</xsl:element>
@@ -423,7 +421,7 @@
 	    <xsl:apply-templates mode="expandSpecs"/>
 	  </tei:schemaSpec>
 	</xsl:variable>
-	<xsl:for-each select="exsl:node-set($SPECS)/tei:schemaSpec">
+	<xsl:for-each select="$SPECS/tei:schemaSpec">
 	  <xsl:call-template name="schemaSpecWeave"/>
 	</xsl:for-each>
       </xsl:when>
@@ -473,7 +471,7 @@
     <xd:short>[odds] make a link</xd:short>
     <xd:param name="name">name</xd:param>
     <xd:param name="id">id</xd:param>
-    <xd:detail>Å†</xd:detail>
+    <xd:detail>¬†</xd:detail>
   </xd:doc>
 
   <xsl:template name="makeSectionHead">
