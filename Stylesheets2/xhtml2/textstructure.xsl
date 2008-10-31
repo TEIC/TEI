@@ -171,7 +171,7 @@ $requestedID: requests a particular page
         <xsl:apply-templates/>
       </xsl:when>
       <!-- we want the document split up into separate files -->
-      <xsl:when test="tei:TEI or tei:teiCorpus and $splitLevel&gt;-1">
+      <xsl:when test="tei:TEI or tei:teiCorpus and number($splitLevel)&gt;-1">
         <xsl:if test="$verbose='true'">
           <xsl:message>case 5: split output, <xsl:value-of select="$splitLevel"
             /> pageLayout <xsl:value-of select="$pageLayout"/></xsl:message>
@@ -654,7 +654,7 @@ $requestedID: requests a particular page
       </xsl:when>
       <!-- 1. our section depth is below the splitting level -->
       <xsl:when
-        test="$depth &gt; $splitLevel or         @rend='nosplit' or ancestor::tei:TEI/@rend='all' or         ancestor::tei:TEI/@rend='frontpage' or         ancestor::tei:TEI/@rend='nosplit'">
+        test="number($depth) &gt; number($splitLevel) or         @rend='nosplit' or ancestor::tei:TEI/@rend='all' or         ancestor::tei:TEI/@rend='frontpage' or         ancestor::tei:TEI/@rend='nosplit'">
         <div>
           <xsl:call-template name="divClassAttribute">
             <xsl:with-param name="depth" select="$depth"/>
@@ -667,18 +667,18 @@ $requestedID: requests a particular page
       <!-- 2. we are at or above splitting level, 
 	   so start a new page  -->
       <xsl:when
-        test="$depth &lt;= $splitLevel and ancestor::tei:front         and $splitFrontmatter='true'">
+        test="number($depth) &lt;= number($splitLevel) and ancestor::tei:front         and $splitFrontmatter='true'">
         <xsl:call-template name="makeDivPage">
           <xsl:with-param name="depth" select="$depth"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:when
-        test="$depth &lt;= $splitLevel and ancestor::tei:back and $splitBackmatter='true'">
+        test="number($depth) &lt;= number($splitLevel) and ancestor::tei:back and $splitBackmatter='true'">
         <xsl:call-template name="makeDivPage">
           <xsl:with-param name="depth" select="$depth"/>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="$depth &lt;= $splitLevel and ancestor::tei:body">
+      <xsl:when test="number($depth) &lt;= number($splitLevel) and ancestor::tei:body">
         <xsl:call-template name="makeDivPage">
           <xsl:with-param name="depth" select="$depth"/>
         </xsl:call-template>
@@ -1531,7 +1531,7 @@ $requestedID: requests a particular page
       <xsl:when test="$currentID='current'">
         <xsl:apply-templates/>
       </xsl:when>
-      <xsl:when test="$currentID='' and $splitLevel=-1">
+      <xsl:when test="$currentID='' and number($splitLevel)=-1">
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="$currentID='' and $virtualPages='true'">
@@ -2559,7 +2559,7 @@ $requestedID: requests a particular page
           </xsl:call-template>
         </xsl:for-each>
       </xsl:when>
-      <xsl:when test="tei:div2 and ($splitLevel &gt;=1 or $force='true')">
+      <xsl:when test="tei:div2 and (number($splitLevel) &gt;=1 or $force='true')">
         <xsl:for-each select="tei:div2[tei:head or $autoHead='true']">
           <xsl:call-template name="tocEntry">
             <xsl:with-param name="style" select="$style"/>
@@ -2567,7 +2567,7 @@ $requestedID: requests a particular page
           </xsl:call-template>
         </xsl:for-each>
       </xsl:when>
-      <xsl:when test="tei:div3 and ($splitLevel &gt;=2 or $force='true')">
+      <xsl:when test="tei:div3 and (number($splitLevel) &gt;=2 or $force='true')">
         <xsl:for-each select="tei:div3[tei:head or $autoHead='true']">
           <xsl:call-template name="tocEntry">
             <xsl:with-param name="style" select="$style"/>
@@ -2579,7 +2579,7 @@ $requestedID: requests a particular page
         <xsl:variable name="depth">
           <xsl:apply-templates mode="depth" select="."/>
         </xsl:variable>
-        <xsl:if test="($splitLevel&gt;$depth  or $force='true' or ancestor::tei:TEI/@rend='nosplit')">
+        <xsl:if test="(number($splitLevel)&gt;number($depth)  or $force='true' or ancestor::tei:TEI/@rend='nosplit')">
           <xsl:for-each select="tei:div[tei:head or $autoHead='true']">
             <xsl:call-template name="tocEntry">
               <xsl:with-param name="style" select="$style"/>

@@ -720,7 +720,7 @@ version="2.0">
       <xsl:element namespace="{$outputNS}" name="{$xrefName}">
 	<xsl:attribute name="{$urlName}">
 	  <xsl:choose>
-	    <xsl:when test="$splitLevel=-1">
+	    <xsl:when test="number($splitLevel)=-1">
 	      <xsl:text>#</xsl:text>
 	      <xsl:value-of select="$name"/>
 	    </xsl:when>
@@ -2076,7 +2076,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
       </xsl:when>
       <xsl:when test="$oddmode='html'">
         <xsl:choose>
-          <xsl:when test="key('IDENTS',$name) and $splitLevel=-1">
+          <xsl:when test="key('IDENTS',$name) and number($splitLevel)=-1">
             <a class="link_element" href="#{$name}"
               xmlns="http://www.w3.org/1999/xhtml">
               <xsl:value-of select="$name"/>

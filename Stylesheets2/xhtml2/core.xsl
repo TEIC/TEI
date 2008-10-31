@@ -1633,7 +1633,7 @@
     <xsl:param name="currentID"/>
     <xsl:choose>
       <xsl:when test="$currentID='current'"/>
-      <xsl:when test="$currentID='' and $splitLevel=-1">
+      <xsl:when test="$currentID='' and number($splitLevel)=-1">
         <xsl:call-template name="printNotes"/>
       </xsl:when>
       <xsl:when test="$currentID=''">
@@ -1686,7 +1686,7 @@
 	    <xsl:apply-templates mode="depth" select="."/>
 	  </xsl:variable>
 	  <xsl:choose>
-	    <xsl:when test="$depth &lt; $splitLevel ">
+	    <xsl:when test="number($depth) &lt; $splitLevel ">
 	  <xsl:if test="child::*[not(self::tei:div)]/descendant::tei:note[@place='foot' or @place='end']">
 	    <div class="notes">
 	      <div class="noteHeading">
@@ -1716,7 +1716,7 @@
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:when>
-	<xsl:when test="$splitLevel &gt;-1 and $requestedID='' and
+	<xsl:when test="number($splitLevel) &gt;-1 and $requestedID='' and
 			$STDOUT='true'">
 	  <xsl:for-each
 	      select="descendant-or-self::text/*[1]/*[1]">
@@ -1724,7 +1724,7 @@
 	  </xsl:for-each>
 	</xsl:when>
 
-	<xsl:when test="$splitLevel &gt;-1 and self::tei:text"/>
+	<xsl:when test="number($splitLevel) &gt;-1 and self::tei:text"/>
 	<!--
 	    <div class="notes text">
 	    <div class="noteHeading">

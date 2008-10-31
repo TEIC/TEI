@@ -251,7 +251,7 @@
     <ref>
       <xsl:attribute name="target">
         <xsl:choose>
-          <xsl:when test="$splitLevel=-1">
+          <xsl:when test="number($splitLevel)=-1">
             <xsl:text>#</xsl:text>
             <xsl:value-of select="$name"/>
           </xsl:when>

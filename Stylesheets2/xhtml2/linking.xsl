@@ -77,12 +77,12 @@
       <xsl:text>#</xsl:text>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="$rawXML='true' and $depth &lt;= $splitLevel">
+      <xsl:when test="$rawXML='true' and number($depth) &lt;= number($splitLevel)">
         <xsl:text>JavaScript:void(gotoSection('','</xsl:text>
         <xsl:value-of select="$ident"/>
         <xsl:text>'));</xsl:text>
       </xsl:when>
-      <xsl:when test="$STDOUT='true' and $depth &lt;= $splitLevel">
+      <xsl:when test="$STDOUT='true' and number($depth) &lt;= number($splitLevel)">
         <xsl:value-of select="$masterFile"/>
         <xsl:value-of select="$standardSuffix"/>
         <xsl:value-of select="$urlChunkPrefix"/>
@@ -94,16 +94,16 @@
       <xsl:when test="ancestor::tei:front and not($splitFrontmatter)">
         <xsl:value-of select="concat($Hash,$ident)"/>
       </xsl:when>
-      <xsl:when test="$splitLevel= -1 and ancestor::tei:teiCorpus">
+      <xsl:when test="number($splitLevel)= -1 and ancestor::tei:teiCorpus">
         <xsl:value-of select="$masterFile"/>
         <xsl:call-template name="addCorpusID"/>
         <xsl:value-of select="$standardSuffix"/>
         <xsl:value-of select="concat($Hash,$ident)"/>
       </xsl:when>
-      <xsl:when test="$splitLevel= -1">
+      <xsl:when test="number($splitLevel)= -1">
         <xsl:value-of select="concat($Hash,$ident)"/>
       </xsl:when>
-      <xsl:when test="$depth &lt;= $splitLevel">
+      <xsl:when test="number($depth) &lt;= number($splitLevel)">
         <xsl:value-of select="concat($ident,$standardSuffix)"/>
       </xsl:when>
       <xsl:otherwise>
@@ -224,32 +224,32 @@
     <xsl:choose>
       <xsl:when test="self::tei:div">
         <xsl:apply-templates mode="ident"
-          select="ancestor::tei:div[last() - $splitLevel + 1]"/>
+          select="ancestor::tei:div[last() - number($splitLevel) + 1]"/>
       </xsl:when>
       <xsl:when test="ancestor::tei:div">
         <xsl:apply-templates mode="ident"
-          select="ancestor::tei:div[last() - $splitLevel]"/>
+          select="ancestor::tei:div[last() - number($splitLevel)]"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:choose>
-          <xsl:when test="$splitLevel = 0">
+          <xsl:when test="number($splitLevel) = 0">
             <xsl:apply-templates mode="ident"
               select="ancestor::tei:div1"/>
           </xsl:when>
-          <xsl:when test="$splitLevel = 1">
+          <xsl:when test="number($splitLevel) = 1">
             <xsl:apply-templates mode="ident"
               select="ancestor::tei:div2|ancestor::tei:div1"/>
             />
           </xsl:when>
-          <xsl:when test="$splitLevel = 2">
+          <xsl:when test="number($splitLevel) = 2">
             <xsl:apply-templates mode="ident"
               select="ancestor::tei:div3|ancestor::tei:div2"/>
           </xsl:when>
-          <xsl:when test="$splitLevel = 3">
+          <xsl:when test="number($splitLevel) = 3">
             <xsl:apply-templates mode="ident"
               select="ancestor::tei:div4|ancestor::tei:div3"/>
           </xsl:when>
-          <xsl:when test="$splitLevel = 4">
+          <xsl:when test="number($splitLevel) = 4">
             <xsl:apply-templates mode="ident"
               select="ancestor::tei:div5|ancestor::tei:div4"/>
           </xsl:when>
@@ -263,33 +263,33 @@
   </xd:doc>
   <xsl:template name="locateParentdiv">
     <xsl:choose>
-      <xsl:when test="ancestor-or-self::tei:div and $splitLevel &lt; 0">
+      <xsl:when test="ancestor-or-self::tei:div and number($splitLevel) &lt; 0">
         <xsl:apply-templates mode="ident" select="ancestor::tei:div[last()]"/>
       </xsl:when>
       <xsl:when test="ancestor-or-self::tei:div">
         <xsl:apply-templates mode="ident"
-          select="ancestor::tei:div[last() - $splitLevel]"/>
+          select="ancestor::tei:div[last() - number($splitLevel)]"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:choose>
-          <xsl:when test="$splitLevel = 0">
+          <xsl:when test="number($splitLevel) = 0">
             <xsl:apply-templates mode="ident"
               select="ancestor::tei:div1"/>
           </xsl:when>
-          <xsl:when test="$splitLevel = 1">
+          <xsl:when test="number($splitLevel) = 1">
             <xsl:apply-templates mode="ident"
               select="(ancestor::tei:div2|ancestor::tei:div1)[last()]"
             />
           </xsl:when>
-          <xsl:when test="$splitLevel = 2">
+          <xsl:when test="number($splitLevel) = 2">
             <xsl:apply-templates mode="ident"
               select="(ancestor::tei:div3|ancestor::tei:div2)[last()]"/>
           </xsl:when>
-          <xsl:when test="$splitLevel = 3">
+          <xsl:when test="number($splitLevel) = 3">
             <xsl:apply-templates mode="ident"
               select="(ancestor::tei:div4|ancestor::tei:div3)[last()]"/>
           </xsl:when>
-          <xsl:when test="$splitLevel = 4">
+          <xsl:when test="number($splitLevel) = 4">
             <xsl:apply-templates mode="ident"
               select="(ancestor::tei:div5|ancestor::tei:div4)[last()]"/>
           </xsl:when>
@@ -357,7 +357,7 @@
             <xsl:attribute name="target">_blank</xsl:attribute>
           </xsl:when>
           <xsl:when
-            test="@rend='noframe' or $splitLevel=-1 or substring(@url,string-length(@url),1)='/'">
+            test="@rend='noframe' or number($splitLevel)=-1 or substring(@url,string-length(@url),1)='/'">
             <xsl:attribute name="target">_top</xsl:attribute>
           </xsl:when>
           <xsl:when
@@ -367,7 +367,7 @@
           <xsl:when test="substring($dest,string-length($dest),1)='/'">
             <xsl:attribute name="target">_top</xsl:attribute>
           </xsl:when>
-          <xsl:when test="$splitLevel=-1">
+          <xsl:when test="number($splitLevel)=-1">
             <xsl:attribute name="target">_top</xsl:attribute>
           </xsl:when>
         </xsl:choose>

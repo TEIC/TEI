@@ -1633,7 +1633,7 @@ select="$makeDecls"/></xsl:message>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
-      <xsl:when test="$oddmode='html' and $splitLevel=-1">
+      <xsl:when test="$oddmode='html' and number($splitLevel)=-1">
         <a class="{$class}" href="#{$partialname}" xmlns="http://www.w3.org/1999/xhtml">
           <xsl:value-of select="$link"/>
         </a>

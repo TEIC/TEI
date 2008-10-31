@@ -96,7 +96,7 @@
     </xsl:if>
 
       </xsl:when>
-      <xsl:when test="$splitLevel=-1 or $STDOUT='true'">
+      <xsl:when test="number($splitLevel)=-1 or $STDOUT='true'">
 	<xsl:apply-templates mode="weavebody" select="."/>
       </xsl:when>
       <xsl:otherwise> 
@@ -223,7 +223,7 @@
     <a class="{$class}">
       <xsl:attribute name="href">
         <xsl:choose>
-          <xsl:when test="$splitLevel=-1">
+          <xsl:when test="number($splitLevel)=-1">
             <xsl:text>#</xsl:text>
             <xsl:value-of select="$name"/>
           </xsl:when>
