@@ -87,7 +87,7 @@
   <xsl:param name="homeLabel">Home</xsl:param>
   <xsl:param name="homeWords">Home</xsl:param>
   <xsl:param name="institution"></xsl:param>
-  <xsl:param name="outputDir">html</xsl:param>
+  <xsl:param name="outputDir"></xsl:param>
   <xsl:param name="parentURL">http://www.example.com/</xsl:param>
   <xsl:param name="parentWords"></xsl:param>
 

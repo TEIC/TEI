@@ -1782,7 +1782,9 @@ select="$makeDecls"/></xsl:message>
     <xsl:call-template name="processSchemaFragment"/>
   </xsl:template>
 
-  <xsl:template name="typewriter"/>
+  <xsl:template name="typewriter">
+    <xsl:param name="text"/>
+  </xsl:template>
 
   <xsl:template name="refdoc"/>
 

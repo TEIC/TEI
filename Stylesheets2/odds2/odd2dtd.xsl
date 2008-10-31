@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet exclude-result-prefixes="a t xd tei fo exsl rng xs"
+<xsl:stylesheet exclude-result-prefixes="a t xd tei fo rng xs"
   version="2.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
@@ -28,7 +28,7 @@
   </xd:doc>
   <xsl:output method="text"/>
   <xsl:param name="verbose"/>
-  <xsl:param name="outputDir">DTD</xsl:param>
+  <xsl:param name="outputDir"></xsl:param>
   <xsl:param name="appendixWords"> </xsl:param>
   <xsl:param name="filesuffix"/>
   <xsl:param name="headingNumberSuffix"> </xsl:param>

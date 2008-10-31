@@ -32,7 +32,7 @@
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
   <xsl:key name="SCHEMATRON" match="s:ns|s:pattern" use="1"/>
   <xsl:param name="verbose"/>
-  <xsl:param name="outputDir">Schema</xsl:param>
+  <xsl:param name="outputDir"></xsl:param>
   <xsl:param name="appendixWords"/>
   <xsl:template name="italicize">
     <xsl:param name="text"/>
