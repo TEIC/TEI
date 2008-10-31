@@ -128,7 +128,7 @@ public class Roma extends org.eclipse.swt.widgets.Composite {
 	private void initGUI() {
 		try {
 			this.setSize(525, 408);
-			this.setBackground(SWTResourceManager.getColor(192, 192, 192));
+			//this.setBackground(SWTResourceManager.getColor(192, 192, 192));
 			this.setLayout(null);
 			{
 				Options = new TabFolder(this, SWT.NONE);
@@ -139,7 +139,7 @@ public class Roma extends org.eclipse.swt.widgets.Composite {
 						optionsTabComposite = new Composite(Options, SWT.NONE);
 						optionsTab.setControl(optionsTabComposite);
 						optionsTabComposite.setLayout(null);
-						optionsTabComposite.setBackground(SWTResourceManager.getColor(192, 192, 192));
+						//optionsTabComposite.setBackground(SWTResourceManager.getColor(192, 192, 192));
 						{
 							cbCreateXSD = new Button(optionsTabComposite, SWT.CHECK | SWT.LEFT);
 							cbCreateXSD.setText("generate XSD");
@@ -195,7 +195,6 @@ public class Roma extends org.eclipse.swt.widgets.Composite {
 						advOptionsTab.setControl(composite1);
 						composite1.setBounds(26, 52, 60, 30);
 						composite1.setLayout(null);
-						composite1.setBackground(SWTResourceManager.getColor(192,192,192));
 						{
 							cbCompile = new Button(composite1, SWT.CHECK | SWT.LEFT);
 							cbCompile.setText("compile");
@@ -209,7 +208,7 @@ public class Roma extends org.eclipse.swt.widgets.Composite {
 						{
 							cbTEIVersion = new Button(composite1, SWT.CHECK | SWT.LEFT);
 							cbTEIVersion.setText("use version from TEI");
-							cbTEIVersion.setBounds(146, 0, 203, 30);
+							cbTEIVersion.setBounds(146, 0, 168, 30);
 							cbTEIVersion.setSelection(true);
 						}
 						{
@@ -225,7 +224,6 @@ public class Roma extends org.eclipse.swt.widgets.Composite {
 							labelPatternPrefix = new Label(composite1, SWT.LEFT);
 							labelPatternPrefix.setText("pattern prefix:");
 							labelPatternPrefix.setBounds(146, 45, 90, 17);
-							labelPatternPrefix.setBackground(SWTResourceManager.getColor(192,192,192));
 						}
 					}
 				}
@@ -304,16 +302,18 @@ public class Roma extends org.eclipse.swt.widgets.Composite {
 				{
 					selectedInputFileLabel = new CLabel(InputOutputGroup, SWT.NONE);
 					selectedInputFileLabel.setBounds(158, 9, 226, 30);
+					selectedInputFileLabel.setBackground(SWTResourceManager.getColor(203, 203, 203));
 				}
 				{
 					selectedOutputDirLabel = new CLabel(InputOutputGroup, SWT.NONE);
 					selectedOutputDirLabel.setBounds(158, 45, 226, 30);
+					selectedOutputDirLabel.setBackground(SWTResourceManager.getColor(203, 203, 203));
 				}
 				{
 					schemaToGenerateLabel = new Label(InputOutputGroup, SWT.RIGHT);
 					schemaToGenerateLabel.setText("Select Schema:");
 					schemaToGenerateLabel.setBounds(10, 87, 140, 20);
-					schemaToGenerateLabel.setBackground(SWTResourceManager.getColor(192, 192, 192));
+				//	schemaToGenerateLabel.setBackground(SWTResourceManager.getColor(192, 192, 192));
 				}
 				{
 					combSchema = new Combo(InputOutputGroup, SWT.DROP_DOWN | SWT.READ_ONLY | SWT.SINGLE );
