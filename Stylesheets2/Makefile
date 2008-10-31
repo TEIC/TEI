@@ -27,8 +27,6 @@ log:
 	rm newchanges oldchanges
 
 release: xsl 
-	cp i18n.xml release/tei-xsl2
-	cp *.css release/tei-xsl2
 	mkdir -p release/tei-xsl2/doc
 	cp ChangeLog LICENSE release/tei-xsl2/doc
 
@@ -61,6 +59,8 @@ install: release
 	(cd ${PREFIX}/share/xml/tei/stylesheet; tar xf -)
 	mkdir -p ${PREFIX}/share/doc/tei-xsl2
 	(cd release/tei-xsl2/doc; tar cf - .) | (cd ${PREFIX}/share/doc/tei-xsl2; tar xf -)
+
+installdoc:
 	mkdir -p ${PREFIX}/lib/cgi-bin
 	cp stylebear ${PREFIX}/lib/cgi-bin/stylebear
 	chmod 755 ${PREFIX}/lib/cgi-bin/stylebear
