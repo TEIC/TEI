@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
+  xmlns="http://www.w3.org/1999/xhtml"
   exclude-result-prefixes="a fo local dbk xlink xhtml rng tei teix xd"
   version="2.0"
   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -1812,7 +1813,7 @@ $requestedID: requests a particular page
     </xsl:choose>
   </xsl:template>
   <xd:doc>
-    <xd:short>[html] Make a new page using CSS layout </xd:short>
+    <xd:short>[html] Make a new page using CSS layout </xd:short>v
     <xd:param name="currentID">current ID</xd:param>
     <xd:detail> </xd:detail>
   </xd:doc>

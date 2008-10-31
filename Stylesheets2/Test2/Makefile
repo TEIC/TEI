@@ -19,5 +19,9 @@ test4:
 	echo differences:
 	diff dummy dummy4
 
+odd:
+	saxon testdrama.odd ../release/tei-xsl2/odds2/odd2odd.xsl \
+	TEIC=true localsource=`pwd`/p5subset.xml > testdrama.compiled.xml
+
 clean:
 	-rm test.tex test.fo *.html *~ dummy*

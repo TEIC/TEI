@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.tei-c.org/ns/1.0"
+  xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:s="http://www.ascc.net/xml/schematron"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:html="http://www.w3.org/1999/xhtml" 
@@ -197,7 +198,7 @@ version="2.0">
             <xsl:otherwise>1</xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
-        <xsl:if test="$minOccurs != 1  or  $maxOccurs != 1">
+        <xsl:if test="$minOccurs != '1'  or  $maxOccurs != '1'">
           <xsl:text> </xsl:text>
           <xsl:value-of select="$minOccurs"/>
           <xsl:text>–</xsl:text>
@@ -217,7 +218,7 @@ version="2.0">
           </xsl:with-param>
           <xsl:with-param name="element">code</xsl:with-param>
         </xsl:call-template>
-        <xsl:if test="$minOccurs != 1  or  $maxOccurs != 1">
+        <xsl:if test="$minOccurs != '1'  or  $maxOccurs != '1'">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">separated by whitespace</xsl:with-param>
           </xsl:call-template>

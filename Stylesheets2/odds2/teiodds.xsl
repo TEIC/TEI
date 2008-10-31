@@ -1418,10 +1418,10 @@ select="$makeDecls"/></xsl:message>
             </rng:zeroOrMore>
           </rng:list>
         </xsl:when>
-        <xsl:when test="$minOccurs=1 and $maxOccurs=1">
+        <xsl:when test="$minOccurs='1' and $maxOccurs='1'">
           <xsl:call-template name="attributeData"/>
         </xsl:when>
-        <xsl:when test="$minOccurs=1 and $maxOccurs=2">
+        <xsl:when test="$minOccurs='1' and $maxOccurs='2'">
           <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
             <xsl:call-template name="attributeData"/>
             <rng:optional>
@@ -1429,7 +1429,7 @@ select="$makeDecls"/></xsl:message>
             </rng:optional>
           </rng:list>
         </xsl:when>
-        <xsl:when test="$minOccurs=1 and $maxOccurs=3">
+        <xsl:when test="$minOccurs='1' and $maxOccurs='3'">
           <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
             <xsl:call-template name="attributeData"/>
             <rng:optional>
@@ -1440,32 +1440,32 @@ select="$makeDecls"/></xsl:message>
             </rng:optional>
           </rng:list>
         </xsl:when>
-        <xsl:when test="$minOccurs=1 and $maxOccurs > 3">
+        <xsl:when test="$minOccurs='1' and number($maxOccurs) > 3">
           <xsl:call-template name="occursOutOfBounds">
             <xsl:with-param name="min"><xsl:value-of select="$minOccurs"/></xsl:with-param>
             <xsl:with-param name="max"><xsl:value-of select="$maxOccurs"/></xsl:with-param>
           </xsl:call-template>
         </xsl:when>
-        <xsl:when test="$minOccurs=1 and $maxOccurs='unbounded'">
+        <xsl:when test="$minOccurs='1' and $maxOccurs='unbounded'">
           <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
             <rng:oneOrMore>
               <xsl:call-template name="attributeData"/>
             </rng:oneOrMore>
           </rng:list>
         </xsl:when>
-        <xsl:when test="$minOccurs=2 and $maxOccurs=2">
+        <xsl:when test="$minOccurs='2' and $maxOccurs='2'">
           <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
             <xsl:call-template name="attributeData"/>
             <xsl:call-template name="attributeData"/>
           </rng:list>
         </xsl:when>
-        <xsl:when test="$minOccurs=2 and $maxOccurs > 2">
+        <xsl:when test="$minOccurs='2' and $maxOccurs > '2'">
           <xsl:call-template name="occursOutOfBounds">
             <xsl:with-param name="min"><xsl:value-of select="$minOccurs"/></xsl:with-param>
             <xsl:with-param name="max"><xsl:value-of select="$maxOccurs"/></xsl:with-param>
           </xsl:call-template>
         </xsl:when>
-        <xsl:when test="$minOccurs=2 and $maxOccurs='unbounded'">
+        <xsl:when test="$minOccurs='2' and $maxOccurs='unbounded'">
           <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
             <xsl:call-template name="attributeData"/>
             <rng:oneOrMore>
@@ -1473,7 +1473,7 @@ select="$makeDecls"/></xsl:message>
             </rng:oneOrMore>
           </rng:list>
         </xsl:when>
-        <xsl:when test="$minOccurs > 2">
+        <xsl:when test="$minOccurs > '2'">
           <xsl:call-template name="occursOutOfBounds">
             <xsl:with-param name="min"><xsl:value-of select="$minOccurs"/></xsl:with-param>
             <xsl:with-param name="max"><xsl:value-of select="$maxOccurs"/></xsl:with-param>
@@ -1832,7 +1832,7 @@ select="$makeDecls"/></xsl:message>
     <!-- first the gloss -->
     <xsl:choose>
       <xsl:when test="not(tei:gloss)"/>
-      <xsl:when test="string-length(tei:gloss)=0"/>
+      <xsl:when test="string-length(tei:gloss[1])=0"/>
       <xsl:when test="count(tei:gloss)=1 and not(tei:gloss[@xml:lang])">
 	<xsl:text> (</xsl:text>
 	<xsl:value-of select="tei:gloss"/>

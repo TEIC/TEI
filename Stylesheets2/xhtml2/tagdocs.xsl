@@ -3,6 +3,7 @@
   xmlns:s="http://www.ascc.net/xml/schematron"
   exclude-result-prefixes="s html a fo local rng tei teix xd"
   version="2.0"
+  xmlns="http://www.w3.org/1999/xhtml"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:html="http://www.w3.org/1999/xhtml"
