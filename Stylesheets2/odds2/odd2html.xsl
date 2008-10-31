@@ -247,7 +247,7 @@
     </div>
 </xsl:template>
 
-<xsl:template name="lineBreak">
+<xsl:template name="verbatim-lineBreak">
   <xsl:param name="id"/>
   <xsl:text disable-output-escaping="yes">&lt;br/&gt;</xsl:text>
 </xsl:template>

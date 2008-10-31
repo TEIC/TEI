@@ -504,7 +504,7 @@ Directory in which to place generated files.
   <xd:doc type="string" class="output">
 Encoding of output file(s).
 </xd:doc>
-  <xsl:param name="outputEncoding">iso-8859-1</xsl:param>
+  <xsl:param name="outputEncoding">utf-8</xsl:param>
   <xd:doc type="string" class="output">
 Output method for output file(s).
 </xd:doc>

@@ -67,7 +67,7 @@
   <xsl:param name="displayMode">rnc</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>
 
-  <xsl:template name="lineBreak">
+  <xsl:template name="verbatim-lineBreak">
     <xsl:param name="id"/>
     <xsl:text>&#10;</xsl:text>
   </xsl:template>

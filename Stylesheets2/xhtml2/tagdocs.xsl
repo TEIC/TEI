@@ -55,7 +55,7 @@
   <xsl:param name="segName">span</xsl:param>
   <xsl:param name="outputNS">http://www.w3.org/1999/xhtml</xsl:param>
 
-  <xsl:template name="lineBreak">
+  <xsl:template name="verbatim-lineBreak">
     <xsl:param name="id"/>
     <xsl:text>&#10;</xsl:text>
   </xsl:template>
