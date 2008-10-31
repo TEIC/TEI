@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet exclude-result-prefixes="tei t a rng s xd xs"
-  version="2.0"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:s="http://www.ascc.net/xml/schematron"
-  xmlns:t="http://www.thaiopensource.com/ns/annotations"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet 
+    exclude-result-prefixes="t tei a rng s xd xlink xs teix"
+    version="2.0"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:teix="http://www.tei-c.org/ns/Examples"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xmlns:s="http://www.ascc.net/xml/schematron"
+    xmlns:t="http://www.thaiopensource.com/ns/annotations"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:import href="teiodds.xsl"/>
   <xd:doc type="stylesheet">
     <xd:short> TEI stylesheet for making Relax NG schema from ODD </xd:short>
@@ -31,9 +34,17 @@
   <xsl:param name="verbose"/>
   <xsl:param name="outputDir">Schema</xsl:param>
   <xsl:param name="appendixWords"/>
-  <xsl:template name="italicize"/>
-  <xsl:template name="makeAnchor"/>
-  <xsl:template name="makeLink"/>
+  <xsl:template name="italicize">
+    <xsl:param name="text"/>
+  </xsl:template>
+  <xsl:template name="makeAnchor">
+    <xsl:param name="name"/>
+  </xsl:template>
+  <xsl:template name="makeLink">
+    <xsl:param name="name"/>
+    <xsl:param name="class"/>
+    <xsl:param name="text"/>
+  </xsl:template>
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:variable name="oddmode">dtd</xsl:variable>
   <xsl:variable name="filesuffix"/>
@@ -78,6 +89,7 @@
           xmlns:rng="http://relaxng.org/ns/structure/1.0"
           xmlns:t="http://www.thaiopensource.com/ns/annotations"
 	  xmlns:xlink="http://www.w3.org/1999/xlink"
+	  xmlns:tei="http://www.tei-c.org/ns/1.0"
           xmlns:teix="http://www.tei-c.org/ns/Examples">
           <xsl:attribute name="ns">
             <xsl:choose>
@@ -198,6 +210,7 @@
                 datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
+		xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:t="http://www.thaiopensource.com/ns/annotations">
                 <xsl:comment>
 		  <xsl:text>Schema generated </xsl:text>
@@ -325,7 +338,9 @@
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="refdoc"/>
-  <xsl:template name="typewriter"/>
+  <xsl:template name="typewriter">
+    <xsl:param name="text"/>
+  </xsl:template>
   <xsl:template name="ttembolden"/>
   <xsl:template match="processing-instruction()"/>
   <xsl:template match="processing-instruction()" mode="tangle"/>

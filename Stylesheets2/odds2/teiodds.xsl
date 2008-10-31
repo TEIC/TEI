@@ -924,12 +924,11 @@ select="$makeDecls"/></xsl:message>
 
 
   <xsl:template match="tei:macroSpec" mode="tangle">
-    <xsl:param name="msection"/>
     <xsl:param name="filename"/>
     <xsl:variable name="entCont">
       <BLAH>
         <xsl:choose>
-          <xsl:when test="not($msection='') and tei:content/rng:group">
+          <xsl:when test="tei:content/rng:group">
             <rng:choice>
               <xsl:apply-templates select="tei:content/rng:group/rng:*"/>
             </rng:choice>

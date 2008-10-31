@@ -498,10 +498,18 @@
         <xsl:text>"&gt;&#10;</xsl:text>
       </xsl:if>
   </xsl:template>
-  <xsl:template name="italicize"/>
+  <xsl:template name="italicize">
+    <xsl:param name="text"/>
+  </xsl:template>
   <xsl:template name="linkStyle"/>
-  <xsl:template name="makeAnchor"/>
-  <xsl:template name="makeLink"/>
+  <xsl:template name="makeAnchor">
+    <xsl:param name="name"/>
+  </xsl:template>
+  <xsl:template name="makeLink">
+    <xsl:param name="name"/>
+    <xsl:param name="class"/>
+    <xsl:param name="text"/>
+  </xsl:template>
 
   <xsl:template match="rng:element[rng:anyName]">
     <xsl:text>#PCDATA</xsl:text>

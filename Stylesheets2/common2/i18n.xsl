@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet exclude-result-prefixes="xd tei fotex fo"  version="2.0"
-  xmlns:fo="http://www.w3.org/1999/XSL/Format"
-  xmlns:fotex="http://www.tug.org/fotex" xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet 
+    exclude-result-prefixes="xd tei fotex fo"  
+    version="2.0"
+    xmlns:fo="http://www.w3.org/1999/XSL/Format"
+    xmlns:fotex="http://www.tug.org/fotex" 
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xd:doc type="stylesheet">
     <xd:short> TEI stylesheet definitions common for all of HTML, FO and LaTeX
       outputs </xd:short>

@@ -309,10 +309,10 @@
         <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:copy>
+	<rng:zeroOrMore>
           <xsl:copy-of select="@*"/>
           <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
-        </xsl:copy>
+	</rng:zeroOrMore>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

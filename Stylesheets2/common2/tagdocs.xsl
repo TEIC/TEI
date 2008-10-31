@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns="http://www.tei-c.org/ns/1.0"
+<xsl:stylesheet 
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:s="http://www.ascc.net/xml/schematron"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"

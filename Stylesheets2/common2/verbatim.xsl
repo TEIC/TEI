@@ -1,12 +1,18 @@
 <?xml version="1.0"?>
-<xsl:stylesheet version="2.0" xmlns:sch="http://www.ascc.net/xml/schematron"
-  xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:atom="http://www.w3.org/2005/Atom"
-  xmlns:estr="http://exslt.org/strings" xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:dbk="http://docbook.org/ns/docbook"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom">
-
+<xsl:stylesheet 
+    version="2.0" 
+    xmlns:sch="http://www.ascc.net/xml/schematron"
+    xmlns:m="http://www.w3.org/1998/Math/MathML" 
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:estr="http://exslt.org/strings" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+    xmlns:dbk="http://docbook.org/ns/docbook"
+    xmlns:rng="http://relaxng.org/ns/structure/1.0" 
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:teix="http://www.tei-c.org/ns/Examples" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom">
 
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
 
