@@ -12,8 +12,8 @@
   xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xsl:import href="../common/verbatim.xsl"/>
-  <xsl:import href="../common/i18n.xsl"/>
+  <xsl:import href="../common2/verbatim.xsl"/>
+  <xsl:import href="../common2/i18n.xsl"/>
   <xd:doc type="stylesheet">
     <xd:short> TEI stylesheet for processing TEI ODD markup </xd:short>
     <xd:detail> This library is free software; you can redistribute it and/or

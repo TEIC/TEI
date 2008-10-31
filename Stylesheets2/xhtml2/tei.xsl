@@ -3,7 +3,7 @@
 		xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"  
 		xmlns:fo="http://www.w3.org/1999/XSL/Format" 
 		xmlns:local="http://www.pantor.com/ns/local" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="html xd a fo local rng tei teix"  version="2.0">
-  <xsl:import href="../common/tei.xsl"/>
+  <xsl:import href="../common2/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
   <xd:doc type="stylesheet">
     <xd:short>

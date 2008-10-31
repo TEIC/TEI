@@ -1,3 +1,4 @@
+DIRS=odds2 xhtml2 common2
 PREFIX=/usr
 .PHONY: doc release
 
@@ -15,7 +16,7 @@ dist: clean xsl release
 	zip -r tei-xsl2-`cat ../VERSION`.zip tei-xsl2-`cat ../VERSION` )
 
 xsl:
-	for i in  odds xhtml common ; do \
+	for i in  ${DIRS} ; do \
 	mkdir -p release/tei-xsl2/$$i; cp $$i/*.xsl release/tei-xsl2/$$i; \
 	done
 
@@ -27,14 +28,15 @@ log:
 	rm newchanges oldchanges
 
 release: xsl 
+	cp i18n.xml release/tei-xsl2
 	mkdir -p release/tei-xsl2/doc
-	cp ChangeLog LICENSE release/tei-xsl2/doc
+	cp ChangeLog2 release/tei-xsl2/doc
 
 releasedoc: release
 	mkdir -p release/tei-xsl2/doc/xsltdoc
 	-test -d xsltdoc && cp -r doc/xsltdoc doc/*.png release/tei-xsl2/doc
 	-test -d xsltdoc && cp doc/*.css release/tei-xsl2/doc/xsltdoc
-	cp ChangeLog style.xml customize.xml LICENSE release/tei-xsl2/doc
+	cp style.xml customize.xml release/tei-xsl2/doc
 	cp teixsl.xml release/tei-xsl2/doc/index.xml
 
 doc:
@@ -43,7 +45,7 @@ doc:
 	saxon -o style.xml param.xml  paramform.xsl 
 
 test: xsl release
-	(cd Test; make )
+	(cd Test2; make )
 
 clean:
 	-rm `find . -name semantic.cache`

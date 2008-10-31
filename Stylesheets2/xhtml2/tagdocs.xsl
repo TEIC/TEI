@@ -13,7 +13,7 @@
   xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:include href="../common/tagdocs.xsl"/>
+  <xsl:include href="../common2/tagdocs.xsl"/>
 
   <xd:doc type="stylesheet">
     <xd:short> TEI stylesheet dealing with elements from the tagdocs module,

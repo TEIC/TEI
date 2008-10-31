@@ -8,10 +8,10 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   exclude-result-prefixes="fo a xd tei html rng local teix xs"
   version="2.0">
-  <xsl:import href="../common/verbatim.xsl"/>
+  <xsl:import href="../common2/verbatim.xsl"/>
   <xsl:import href="teiodds.xsl"/>
-  <xsl:import href="../common/tei.xsl"/>
-  <xsl:include href="../common/tagdocs.xsl"/>
+  <xsl:import href="../common2/tei.xsl"/>
+  <xsl:include href="../common2/tagdocs.xsl"/>
 
   <xd:doc type="stylesheet">
     <xd:short> TEI stylesheet for making TEI Lite XML from ODD </xd:short>

@@ -18,8 +18,8 @@
   exclude-result-prefixes="xlink dbk rng tei teix s xhtml a html pantor xd xs xsl"
 >
   <xsl:import href="teiodds.xsl"/>
-  <xsl:import href="../xhtml/tei.xsl"/>
-  <xsl:import href="../xhtml/tagdocs.xsl"/>
+  <xsl:import href="../xhtml2/tei.xsl"/>
+  <xsl:import href="../xhtml2/tagdocs.xsl"/>
   <xsl:import href="RngToRnc.xsl"/>
   <xsl:param name="xhtml">true</xsl:param>
   <xd:doc type="stylesheet">
