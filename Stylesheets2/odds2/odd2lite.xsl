@@ -100,6 +100,7 @@
     <xsl:param name="ptr"/>
     <xsl:param name="target"/>
     <xsl:param name="dest"/>
+    <xsl:param name="class"/>
     <xsl:param name="body"/>
     <xsl:variable name="W">
       <xsl:choose>
