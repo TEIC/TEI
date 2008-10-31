@@ -100,6 +100,7 @@ public class Roma extends org.eclipse.swt.widgets.Composite {
 	private TabFolder Options;
 	private Combo combLanguage;
 	private Combo combSchema;
+	private String baseDir;
 
 	{
 		//Register as a resource user - SWTResourceManager will
@@ -109,6 +110,15 @@ public class Roma extends org.eclipse.swt.widgets.Composite {
 
 	public Roma(Composite parent, int style) {
 		super(parent, style);
+		
+		baseDir = RomaProcessor.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		baseDir = baseDir.substring(0, baseDir.lastIndexOf(File.separator));
+		File baseDirFile = new File(baseDir + File.separator + "resources");
+		if(!baseDirFile.exists())
+			baseDir = baseDir.substring(0, baseDir.lastIndexOf(File.separator));
+		baseDir += File.separator;
+		
+		
 		initGUI();
 	}
 	
@@ -316,9 +326,10 @@ public class Roma extends org.eclipse.swt.widgets.Composite {
 			{
 				imageLabel = new Label(this, SWT.NONE);
 				try{
-					Image image = new Image(Display.getDefault(),"resources/images/TEI.png");
-					if(null != image);
+					Image image = new Image(Display.getDefault(), baseDir + "resources/images/TEI.png");
+					if(null != image){
 						imageLabel.setImage(image);
+					}
 					imageLabel.setBounds(14, 14, 100, 89);
 				} catch(Exception e){
 					System.out.println(e.getMessage());

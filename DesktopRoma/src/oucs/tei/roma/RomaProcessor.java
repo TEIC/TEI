@@ -72,8 +72,15 @@ public class RomaProcessor implements Runnable{
     private static final int DEFAULT_LINE_LENGTH = 72;
     private static final int DEFAULT_INDENT = 2;	
 	
+    private String baseDir;
+    
 	public RomaProcessor(){
-		
+		baseDir = RomaProcessor.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		baseDir = baseDir.substring(0, baseDir.lastIndexOf(File.separator));
+		File baseDirFile = new File(baseDir + File.separator + "resources");
+		if(!baseDirFile.exists())
+			baseDir = baseDir.substring(0, baseDir.lastIndexOf(File.separator));
+		baseDir += File.separator;
 	}
 	
 
@@ -216,7 +223,7 @@ public class RomaProcessor implements Runnable{
 		
 		// prepare transformer
 		XsltCompiler comp = proc.newXsltCompiler();
-		XsltExecutable odd2oddExec = comp.compile(new StreamSource(SCHEMA_DIRECTORY + File.separator + "odd2odd.xsl"));
+		XsltExecutable odd2oddExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2odd.xsl"));
 		XsltTransformer odd2oddTransformer = odd2oddExec.load();
 		
 		odd2oddTransformer.setParameter(new QName("selectedSchema"), new XdmAtomicValue(schemaName));
@@ -247,7 +254,7 @@ public class RomaProcessor implements Runnable{
 		
 		// prepare transformer
 		XsltCompiler comp = proc.newXsltCompiler();
-		XsltExecutable odd2relaxExec = comp.compile(new StreamSource(SCHEMA_DIRECTORY + File.separator + "odd2relax.xsl"));
+		XsltExecutable odd2relaxExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2relax.xsl"));
 		XsltTransformer odd2relaxTransformer = odd2relaxExec.load();
 		
 		if(debug)
@@ -273,7 +280,7 @@ public class RomaProcessor implements Runnable{
 		
 		// prepare transformer
 		XsltCompiler comp = proc.newXsltCompiler();
-		XsltExecutable odd2dtdExec = comp.compile(new StreamSource(SCHEMA_DIRECTORY + File.separator + "odd2dtd.xsl"));
+		XsltExecutable odd2dtdExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2dtd.xsl"));
 		XsltTransformer odd2dtdTransformer = odd2dtdExec.load();
 		
 		if(debug)
@@ -339,7 +346,7 @@ public class RomaProcessor implements Runnable{
 		
 		// prepare transformer
 		XsltCompiler comp = proc.newXsltCompiler();
-		XsltExecutable odd2teiDocExec = comp.compile(new StreamSource(SCHEMA_DIRECTORY + File.separator + "odd2lite.xsl"));
+		XsltExecutable odd2teiDocExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2lite.xsl"));
 		XsltTransformer odd2teiDocTransformer = odd2teiDocExec.load();
 		
 		odd2teiDocTransformer.setParameter(new QName("TEIC"), new XdmAtomicValue("true") );
@@ -361,7 +368,7 @@ public class RomaProcessor implements Runnable{
 		
 		// prepare transformer
 		XsltCompiler comp = proc.newXsltCompiler();
-		XsltExecutable odd2HTMLDocExec = comp.compile(new StreamSource(SCHEMA_DIRECTORY + File.separator + "odd2html.xsl"));
+		XsltExecutable odd2HTMLDocExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2html.xsl"));
 		XsltTransformer odd2HTMLDocTransformer = odd2HTMLDocExec.load();
 		
 		odd2HTMLDocTransformer.setParameter(new QName("STDOUT"), new XdmAtomicValue("true") );
@@ -379,8 +386,8 @@ public class RomaProcessor implements Runnable{
 		odd2HTMLDocTransformer.transform();
 		
 		// copy css
-		Utils.copyFile(new File(CSS_DIRECTORY + File.separator + "tei.css"), new File( outputDocDir + File.separator + "tei.css") );
-		Utils.copyFile(new File(CSS_DIRECTORY + File.separator + "odd.css"), new File( outputDocDir + File.separator + "odd.css") );
+		Utils.copyFile(new File(baseDir + CSS_DIRECTORY + File.separator + "tei.css"), new File( outputDocDir + File.separator + "tei.css") );
+		Utils.copyFile(new File(baseDir + CSS_DIRECTORY + File.separator + "odd.css"), new File( outputDocDir + File.separator + "odd.css") );
 	}
 	
 
