@@ -97,7 +97,7 @@ test-jing:
 
 test-rnv:
 	echo RNV....
-	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do echo $$i: ; xx -P $$i.xml | rnv $$i.rnc ; done
+	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do echo $$i: ; xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc ; done
 	xmllint --dropdtd testlite.xml | 	rnv testfrag.rnc 
 
 test-xmllint:
@@ -140,7 +140,7 @@ test-bad:
 	-for i in $(TESTBADFILES); do \
 	jing -t $$i.rng $$i.xml ; \
 	echo RNV.... ; \
-	xx -P $$i.xml | rnv $$i.rnc ; \
+	xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc ; \
 	echo JING XSD; \
 	jing $$i.xsd $$i.xml; done
 
