@@ -273,10 +273,11 @@ dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exempl
 	  do (cd release/tei-p5-$$i-$$V/share; \
 	zip -q -r ../../tei-$$V.zip .);done
 
-dist-source: 
+dist-source: subset
 	rm -rf release/tei-p5-source*
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
 	tar -c -f - --exclude "*~" --exclude .svn 	\
+	p5subset.xml \
 	COPYING.txt \
 	Makefile \
 	ReleaseNotes  \
