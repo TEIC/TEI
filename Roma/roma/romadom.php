@@ -1616,6 +1616,10 @@ class romaDom extends domDocument
 	  {
 	  $oAttList->removeChild( $oAttDef );
 	  }
+        if ( (!$oAttList ->hasChildNodes() ))
+	  {
+	  $oElementSpec->removeChild( $oAttList );
+	  }
 	return $errResult;
 
       }

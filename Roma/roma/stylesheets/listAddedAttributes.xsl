@@ -51,6 +51,19 @@ Description
             <td>
               <xsl:value-of disable-output-escaping="yes" select="$res_form_changeAttribute"/>
             </td>
+            <td>
+              <a href="javascript:includeAllAttributes()">
+                <xsl:value-of disable-output-escaping="yes" select="$res_form_include"/>
+              </a>
+            </td>
+            <td>
+              <a href="javascript:excludeAllAttributes()">
+                <xsl:value-of disable-output-escaping="yes" select="$res_form_exclude"/>
+              </a>
+            </td>
+            <td>
+              <xsl:value-of disable-output-escaping="yes" select="$res_form_tagName"/>
+            </td>
             <td width="400">
               <xsl:value-of disable-output-escaping="yes" select="$res_form_description"/>
             </td>
@@ -59,14 +72,11 @@ Description
             </td>
           </tr>
           <xsl:call-template name="generateList"/>
-<!--
-
           <tr>
             <td class="button" colspan="6">
               <input type="submit" value="Save"/>
             </td>
           </tr>
--->
         </table>
       </form>
     </p>
@@ -80,14 +90,52 @@ Description
             <xsl:value-of select="name"/>
           </a>
         </td>
+        <td>
+          <input class="radio" type="radio" value="yes">
+            <xsl:if test="not(string(include)='delete')">
+              <xsl:attribute name="checked">1</xsl:attribute>
+            </xsl:if>
+            <xsl:attribute name="name">include_<xsl:value-of select="name"/></xsl:attribute>
+          </input>
+        </td>
+        <td>
+          <input class="radio" type="radio" value="no">
+            <xsl:if test="string(include)='delete'">
+              <xsl:attribute name="checked">1</xsl:attribute>
+            </xsl:if>
+            <xsl:attribute name="name">include_<xsl:value-of select="name"/></xsl:attribute>
+          </input>
+        </td>
+        <td>
+          <xsl:if test="@added='true'">
+            <xsl:value-of select="name"/>
+          </xsl:if>
+          <xsl:if test="not(@added='true')">
+            <input type="text">
+              <xsl:attribute name="name">name_<xsl:value-of select="name"/></xsl:attribute>
+              <xsl:if test="not(string(altName)='')">
+                <xsl:attribute name="value">
+                  <xsl:value-of select="altName"/>
+                </xsl:attribute>
+              </xsl:if>
+              <xsl:if test="string(altName)=''">
+                <xsl:attribute name="value">
+                  <xsl:value-of select="name"/>
+                </xsl:attribute>
+              </xsl:if>
+            </input>
+          </xsl:if>
+        </td>
         <td width="400">
           <xsl:value-of select="desc"/>
         </td>
         <td>
-	  <a>
-	    <xsl:attribute name="href">?mode=deleteAttribute&amp;element=<xsl:value-of select="$element"/>&amp;module=<xsl:value-of select="$module"/>&amp;class=<xsl:value-of select="$class"/>&amp;attribute=<xsl:value-of select="name"/></xsl:attribute>
-	    <xsl:value-of disable-output-escaping="yes" select="$res_form_delete"/>
-	  </a>
+          <xsl:if test="@added='true'">
+            <a>
+              <xsl:attribute name="href">?mode=deleteAttribute&amp;element=<xsl:value-of select="$element"/>&amp;module=<xsl:value-of select="$module"/>&amp;class=<xsl:value-of select="$class"/>&amp;attribute=<xsl:value-of select="name"/></xsl:attribute>
+              <xsl:value-of disable-output-escaping="yes" select="$res_form_delete"/>
+            </a>
+          </xsl:if>
         </td>
       </tr>
     </xsl:for-each>
