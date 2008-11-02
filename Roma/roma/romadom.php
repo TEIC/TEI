@@ -1616,10 +1616,6 @@ class romaDom extends domDocument
 	  {
 	  $oAttList->removeChild( $oAttDef );
 	  }
-        if ( (!$oAttList ->hasChildNodes() ))
-	  {
-	  $oElementSpec->removeChild( $oAttList );
-	  }
 	return $errResult;
 
       }
@@ -1909,6 +1905,10 @@ class romaDom extends domDocument
 	  {
 	    throw new falseTagnameException( $szOldName, $szNewName );
 	    $errResult = true;
+	  }
+        if ( (!$oAttList ->hasChildNodes() ))
+	  {
+	  $oElementSpec->removeChild( $oAttList );
 	  }
 
 	return $errResult;
@@ -2274,7 +2274,7 @@ class romaDom extends domDocument
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tex';    
 	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.pdf';    
 	
-	file_put_contents( $szInputFile , $szTmp );
+	file_put_contents( $szInputFile ,$szTmp );
 
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '85' );
@@ -2586,7 +2586,42 @@ class romaDom extends domDocument
 	  $checker->pass3();
 	  $checker->showErrors();
 	}
+  
+    public function checkForEmpty ($name,$class) {
+	$this->getXPath( $oXPath );
+	//check whether element already exists
+	$oElementSpec = $oXPath->query( "/tei:TEI/tei:text//tei:elementSpec[@ident='$name']" )->item(0);
+    
+	if (  is_object( $oElementSpec ) )
+	  {
+	    $oAttList = $oXPath->query( "/tei:TEI/tei:text//tei:elementSpec[@ident='$name']/tei:attList" )->item(0);
+	    if (is_object( $oAttList ) and !$oAttList->hasChildNodes())
+	      {	  
+		$oElementSpec->removeChild( $oAttList);
+	      }
+	    if ( !$oElementSpec->hasChildNodes() )
+	      {
+		$oElementSpec ->parentNode->removeChild($oElementSpec);
+	      }	    
+	  }
+	else 
+	  {
+	    $oClassSpec = $oXPath->query( "/tei:TEI/tei:text//tei:classSpec[@ident='$class' ]")->item(0);
 
-
+	    if (  is_object( $oClassSpec ) )
+	      {
+		$oAttList = $oXPath->query( "/tei:TEI/tei:text//tei:classSpec[@ident='$class']/tei:attList" )->item(0);
+		if (is_object( $oAttList ) and !$oAttList->hasChildNodes())
+		  {	  
+		    $oClassSpec->removeChild( $oAttList);
+		  }
+		if ( !$oClassSpec->hasChildNodes() )
+		  {
+		    $oClassSpec ->parentNode->removeChild($oClassSpec);
+		  }	    
+	      }
+	  }
+    }
   }
+
 ?>

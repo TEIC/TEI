@@ -1537,6 +1537,8 @@ class roma
            }
 	      }
 	  }
+	$this->m_oRomaDom->checkForEmpty ($_REQUEST['element'],$_REQUEST['class']);
+
       }
 
     public function elementChanged() {
