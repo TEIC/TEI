@@ -1,4 +1,4 @@
-package oucs.tei.roma;
+package oucs.tei.vesta;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ import com.cloudgarden.resource.SWTResourceManager;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class Roma extends org.eclipse.swt.widgets.Composite {
+public class Vesta extends org.eclipse.swt.widgets.Composite {
 
 	private String selectedFileName;
 	private String selectedOutputDir;
@@ -108,10 +108,10 @@ public class Roma extends org.eclipse.swt.widgets.Composite {
 		SWTResourceManager.registerResourceUser(this);
 	}
 
-	public Roma(Composite parent, int style) {
+	public Vesta(Composite parent, int style) {
 		super(parent, style);
 		
-		baseDir = RomaProcessor.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		baseDir = VestaProcessor.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		baseDir = baseDir.substring(0, baseDir.lastIndexOf(File.separator));
 		File baseDirFile = new File(baseDir + File.separator + "resources");
 		if(!baseDirFile.exists())
@@ -351,11 +351,11 @@ public class Roma extends org.eclipse.swt.widgets.Composite {
 	* org.eclipse.swt.widgets.Composite inside a new Shell.
 	*/
 	public static void main(String[] args) {
-		Display.setAppName("Roma");
+		Display.setAppName("Vesta");
 		Display display = Display.getDefault();
 		
 		Shell shell = new Shell(display,SWT.DIALOG_TRIM);
-		Roma inst = new Roma(shell, SWT.NULL);
+		Vesta inst = new Vesta(shell, SWT.NULL);
 		Point size = inst.getSize();
 		shell.setLayout(new FillLayout());
 		shell.layout();
@@ -434,7 +434,7 @@ public class Roma extends org.eclipse.swt.widgets.Composite {
 		}
 		
 		// start up processor
-		final RomaProcessor proc = new RomaProcessor();
+		final VestaProcessor proc = new VestaProcessor();
 		proc.setOddFile(selectedFileName);
 		proc.setOutputDir(selectedOutputDir);
 		proc.setSchemaName(combSchema.getItem(combSchema.getSelectionIndex()));

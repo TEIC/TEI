@@ -1,4 +1,4 @@
-package oucs.tei.roma;
+package oucs.tei.vesta;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,6 +38,7 @@ public class Utils {
 	public static XdmNode readInputStreamIntoSaxonDoc(InputStream in){
 		Processor proc = SaxonProcFactory.getProcessor();
 		net.sf.saxon.s9api.DocumentBuilder builder = proc.newDocumentBuilder();
+		
 		try {
 			return builder.build(new StreamSource(in));
 		} catch (SaxonApiException e) {

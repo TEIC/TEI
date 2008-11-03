@@ -1,4 +1,4 @@
-package oucs.tei.roma;
+package oucs.tei.vesta;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +41,7 @@ import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
 import com.thaiopensource.util.UriOrFile;
 import com.thaiopensource.xml.sax.ErrorHandlerImpl;
 
-public class RomaProcessor implements Runnable{
+public class VestaProcessor implements Runnable{
 
 	private String oddFile;
 	private String outputDir;
@@ -74,8 +74,8 @@ public class RomaProcessor implements Runnable{
 	
     private String baseDir;
     
-	public RomaProcessor(){
-		baseDir = RomaProcessor.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+	public VestaProcessor(){
+		baseDir = VestaProcessor.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		baseDir = baseDir.substring(0, baseDir.lastIndexOf(File.separator));
 		File baseDirFile = new File(baseDir + File.separator + "resources");
 		if(!baseDirFile.exists())
