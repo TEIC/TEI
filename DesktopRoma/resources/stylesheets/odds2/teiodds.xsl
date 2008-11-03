@@ -1473,7 +1473,7 @@ select="$makeDecls"/></xsl:message>
             </rng:oneOrMore>
           </rng:list>
         </xsl:when>
-        <xsl:when test="number($minOccurs) > '2'">
+        <xsl:when test="number($minOccurs) > 2">
           <xsl:call-template name="occursOutOfBounds">
             <xsl:with-param name="min"><xsl:value-of select="$minOccurs"/></xsl:with-param>
             <xsl:with-param name="max"><xsl:value-of select="$maxOccurs"/></xsl:with-param>
