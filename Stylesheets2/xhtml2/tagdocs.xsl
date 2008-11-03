@@ -14,6 +14,8 @@
   xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+  <xsl:param name="cssFile"/>
+  <xsl:param name="cssSecondaryFile"/>
   <xsl:include href="../common2/tagdocs.xsl"/>
 
   <xd:doc type="stylesheet">
@@ -139,7 +141,9 @@
 		    <style>
 		      <include xmlns="http://www.w3.org/2001/XInclude"
 			  href="{$cssFile}" 
-			  parse="text"/>
+			  parse="text">
+			<fallback/>
+		      </include>
 		    </style>
 		  </xsl:when>
 		  <xsl:otherwise>
