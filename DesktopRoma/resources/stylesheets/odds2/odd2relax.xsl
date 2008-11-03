@@ -236,7 +236,7 @@
     <xsl:comment>Set global predeclared macros</xsl:comment>
     <xsl:if test="@type='core'">
       <xsl:call-template name="NameList"/>
-      <xsl:for-each select="key('PredeclareAllMacros','1')">
+      <xsl:for-each select="key('PredeclareAllMacros',1)">
         <define name="{@ident}" xmlns="http://relaxng.org/ns/structure/1.0">
           <choice>
             <notAllowed/>
