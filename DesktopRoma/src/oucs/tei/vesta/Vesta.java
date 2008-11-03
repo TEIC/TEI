@@ -77,8 +77,10 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 	private ToolBar toolBar1;
 	private CoolItem coolItem1;
 	private Button cbCreateXSD;
+	private Label messagesLabel;
+	private Label selectLanguageLabel;
 	private Label imageLabel;
-	final private Text textInformation = new Text(this, SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+	final private Text textInformation = new Text(this, SWT.MULTI | SWT.READ_ONLY | SWT.V_SCROLL);
 	private Label schemaToGenerateLabel;
 	private Label labelPatternPrefix;
 	private Text textPatternPrefix;
@@ -148,7 +150,7 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 						}
 						{
 							combLanguage = new Combo(optionsTabComposite, SWT.DROP_DOWN | SWT.READ_ONLY | SWT.SINGLE );
-							combLanguage.setBounds(0, 0, 159, 30);
+							combLanguage.setBounds(0, 36, 159, 30);
 							combLanguage.add("English");
 							combLanguage.add("Español");
 							combLanguage.add("Deutsch");
@@ -185,6 +187,11 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 							cbDocDocX.setText("documentation (docx)");
 							cbDocDocX.setBounds(316, 72, 173, 30);
 						}
+						{
+							selectLanguageLabel = new Label(optionsTabComposite, SWT.NONE);
+							selectLanguageLabel.setText("select language:");
+							selectLanguageLabel.setBounds(6, 17, 113, 19);
+						}
 					}
 				}
 				{
@@ -208,7 +215,7 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 						{
 							cbTEIVersion = new Button(composite1, SWT.CHECK | SWT.LEFT);
 							cbTEIVersion.setText("use version from TEI");
-							cbTEIVersion.setBounds(146, 0, 168, 30);
+							cbTEIVersion.setBounds(146, 0, 143, 30);
 							cbTEIVersion.setSelection(true);
 						}
 						{
@@ -321,7 +328,7 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 				}
 			}
 			{
-				textInformation.setBounds(12, 301, 393, 97);
+				textInformation.setBounds(12, 324, 393, 74);
 			}
 			{
 				imageLabel = new Label(this, SWT.NONE);
@@ -335,6 +342,11 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 					System.out.println(e.getMessage());
 					e.printStackTrace();
 				}
+			}
+			{
+				messagesLabel = new Label(this, SWT.NONE);
+				messagesLabel.setText("Messages:");
+				messagesLabel.setBounds(12, 301, 79, 17);
 			}
 			{
 				menu1 = new Menu(getShell(), SWT.BAR);

@@ -209,6 +209,8 @@ public class VestaProcessor implements Runnable{
 
 				public void run() {
 					informationArea.setText(informationArea.getText() + "\n" + text);
+					informationArea.setTopIndex(informationArea.getLineCount());
+					System.out.println(informationArea.getTopIndex());
 				}
 				
 			} );
