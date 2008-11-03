@@ -1459,7 +1459,7 @@ select="$makeDecls"/></xsl:message>
             <xsl:call-template name="attributeData"/>
           </rng:list>
         </xsl:when>
-        <xsl:when test="$minOccurs='2' and $maxOccurs > 2">
+        <xsl:when test="$minOccurs='2' and number($maxOccurs) > 2">
           <xsl:call-template name="occursOutOfBounds">
             <xsl:with-param name="min"><xsl:value-of select="$minOccurs"/></xsl:with-param>
             <xsl:with-param name="max"><xsl:value-of select="$maxOccurs"/></xsl:with-param>
@@ -1473,7 +1473,7 @@ select="$makeDecls"/></xsl:message>
             </rng:oneOrMore>
           </rng:list>
         </xsl:when>
-        <xsl:when test="$minOccurs > '2'">
+        <xsl:when test="number($minOccurs) > '2'">
           <xsl:call-template name="occursOutOfBounds">
             <xsl:with-param name="min"><xsl:value-of select="$minOccurs"/></xsl:with-param>
             <xsl:with-param name="max"><xsl:value-of select="$maxOccurs"/></xsl:with-param>
