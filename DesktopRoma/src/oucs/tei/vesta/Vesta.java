@@ -12,9 +12,11 @@ import net.sf.saxon.sxpath.XPathExpression;
 import net.sf.saxon.trans.XPathException;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -80,7 +82,7 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 	private Label messagesLabel;
 	private Label selectLanguageLabel;
 	private Label imageLabel;
-	final private Text textInformation = new Text(this, SWT.MULTI | SWT.READ_ONLY | SWT.V_SCROLL);
+	final private Text textInformation = new Text(this, SWT.MULTI | SWT.READ_ONLY | SWT.V_SCROLL | SWT.BORDER);
 	private Label schemaToGenerateLabel;
 	private Label labelPatternPrefix;
 	private Text textPatternPrefix;
@@ -147,10 +149,12 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 							cbCreateXSD.setText("generate XSD");
 							cbCreateXSD.setBounds(182, 36, 114, 30);
 							cbCreateXSD.setSelection(true);
+							cbCreateXSD.setToolTipText("Generate a W3C Schema");
 						}
 						{
 							combLanguage = new Combo(optionsTabComposite, SWT.DROP_DOWN | SWT.READ_ONLY | SWT.SINGLE );
 							combLanguage.setBounds(0, 36, 159, 30);
+							combLanguage.setToolTipText("put a label saying \"language for documentation\"");
 							combLanguage.add("English");
 							combLanguage.add("Español");
 							combLanguage.add("Deutsch");
@@ -165,32 +169,38 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 							cbCreateRNG.setText("generate RNG");
 							cbCreateRNG.setBounds(182, 0, 114, 30);
 							cbCreateRNG.setSelection(true);
+							cbCreateRNG.setToolTipText("Generate a RELAX NG schema in XML and compact format");
 						}
 						{
 							cbCreateDTD = new Button(optionsTabComposite, SWT.CHECK | SWT.LEFT);
 							cbCreateDTD.setText("generate DTD");
 							cbCreateDTD.setBounds(182, 72, 107, 30);
 							cbCreateDTD.setSelection(true);
+							cbCreateDTD.setToolTipText("Generate an XML DTD");
 						}
 						{
 							cbDocTEI = new Button(optionsTabComposite, SWT.CHECK | SWT.LEFT);
 							cbDocTEI.setText("documentation (TEI)");
 							cbDocTEI.setBounds(316, 0, 173, 30);
+							cbDocTEI.setToolTipText("Create documentation for your schema, in TEI XML conforming to the TEI Lite schema");
 						}
 						{
 							cbDocHTML = new Button(optionsTabComposite, SWT.CHECK | SWT.LEFT);
 							cbDocHTML.setText("documentation (HTML)");
 							cbDocHTML.setBounds(316, 36, 173, 30);
+							cbDocHTML.setToolTipText("Create HTML documentation for your schema");
 						}
 						{
 							cbDocDocX = new Button(optionsTabComposite, SWT.CHECK | SWT.LEFT);
 							cbDocDocX.setText("documentation (docx)");
 							cbDocDocX.setBounds(316, 72, 173, 30);
+							cbDocDocX.setToolTipText("Create documentation for your schema as Microsoft Word 2007 document");
 						}
 						{
 							selectLanguageLabel = new Label(optionsTabComposite, SWT.NONE);
 							selectLanguageLabel.setText("select language:");
 							selectLanguageLabel.setBounds(6, 17, 113, 19);
+							selectLanguageLabel.setToolTipText("put a label saying \"language for documentation\"");
 						}
 					}
 				}
@@ -206,31 +216,38 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 							cbCompile = new Button(composite1, SWT.CHECK | SWT.LEFT);
 							cbCompile.setText("compile");
 							cbCompile.setBounds(12, 0, 102, 30);
+							cbCompile.setToolTipText("create intermediate representation of the ODD file after it has been merged with the main TEI");
 						}
 						{
 							cbDebug = new Button(composite1, SWT.CHECK | SWT.LEFT);
 							cbDebug.setText("debug");
 							cbDebug.setBounds(12, 36, 102, 30);
+							cbDebug.setToolTipText("produce verbose messages");
 						}
 						{
 							cbTEIVersion = new Button(composite1, SWT.CHECK | SWT.LEFT);
 							cbTEIVersion.setText("use version from TEI");
-							cbTEIVersion.setBounds(146, 0, 143, 30);
+							cbTEIVersion.setBounds(146, 0, 168, 30);
 							cbTEIVersion.setSelection(true);
+							cbTEIVersion.setToolTipText("use the date and version of the current TEI Guidelines in documentation, rather than the date and version in your ODD");
 						}
 						{
 							cbParameterized = new Button(composite1, SWT.CHECK | SWT.LEFT);
 							cbParameterized.setText("parameterized DTD");
 							cbParameterized.setBounds(326, 0, 146, 30);
+							cbParameterized.setToolTipText("create a DTD suitable for customizing in a document DTD subset");
 						}
 						{
 							textPatternPrefix = new Text(composite1, SWT.NONE);
 							textPatternPrefix.setBounds(242, 42, 230, 22);
+							textPatternPrefix.setText("tei_");
+							textPatternPrefix.setToolTipText("name all RELAX NG patterns with a name prefix to avoid clashes with other vocabularies");
 						}
 						{
 							labelPatternPrefix = new Label(composite1, SWT.LEFT);
 							labelPatternPrefix.setText("pattern prefix:");
 							labelPatternPrefix.setBounds(146, 45, 90, 17);
+							labelPatternPrefix.setToolTipText("name all RELAX NG patterns with a name prefix to avoid clashes with other vocabularies");
 						}
 					}
 				}
@@ -256,11 +273,14 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 					selectInputFile = new Button(InputOutputGroup, SWT.PUSH | SWT.CENTER);
 					selectInputFile.setText("Select Input File");
 					selectInputFile.setBounds(9, 8, 143, 32);
+					selectInputFile.setToolTipText("Choose a TEI ODD specification");
 					selectInputFile.addSelectionListener(new SelectionAdapter() {
 						public void widgetSelected(SelectionEvent evt) {
 							FileDialog fileDialog = new FileDialog(getShell());
-							fileDialog.setFilterExtensions(new String[]{"*.xml", "*.odd"});
+							fileDialog.setFilterExtensions(new String[]{ "*.odd", "*.xml"});
 							selectedFileName = fileDialog.open();
+							if(null == selectedFileName)
+								return;
 							selectedInputFileLabel.setText(selectedFileName);
 							
 
@@ -298,10 +318,13 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 					selectOutputDir = new Button(InputOutputGroup, SWT.PUSH | SWT.CENTER);
 					selectOutputDir.setText("Select Output Dir ");
 					selectOutputDir.setBounds(9, 45, 143, 32);
+					selectOutputDir.setToolTipText("Choose a directory in which Vesta can create schemas and documentation");
 					selectOutputDir.addSelectionListener(new SelectionAdapter() {
 						public void widgetSelected(SelectionEvent evt) {
 							DirectoryDialog dirDialog = new DirectoryDialog(getShell());
 							selectedOutputDir = dirDialog.open();
+							if(null == selectedOutputDir)
+								return;
 							selectedOutputDirLabel.setText(selectedOutputDir);
 						}
 					});
@@ -310,21 +333,25 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 					selectedInputFileLabel = new CLabel(InputOutputGroup, SWT.NONE);
 					selectedInputFileLabel.setBounds(158, 9, 226, 30);
 					selectedInputFileLabel.setBackground(SWTResourceManager.getColor(203, 203, 203));
+					selectedInputFileLabel.setToolTipText("Choose a TEI ODD specification");
 				}
 				{
 					selectedOutputDirLabel = new CLabel(InputOutputGroup, SWT.NONE);
 					selectedOutputDirLabel.setBounds(158, 45, 226, 30);
 					selectedOutputDirLabel.setBackground(SWTResourceManager.getColor(203, 203, 203));
+					selectedOutputDirLabel.setToolTipText("Choose a directory in which Vesta can create schemas and documentation");
 				}
 				{
 					schemaToGenerateLabel = new Label(InputOutputGroup, SWT.RIGHT);
 					schemaToGenerateLabel.setText("Select Schema:");
 					schemaToGenerateLabel.setBounds(10, 87, 140, 20);
+					schemaToGenerateLabel.setToolTipText("Choose which schema to process from your ODD file");
 				//	schemaToGenerateLabel.setBackground(SWTResourceManager.getColor(192, 192, 192));
 				}
 				{
 					combSchema = new Combo(InputOutputGroup, SWT.DROP_DOWN | SWT.READ_ONLY | SWT.SINGLE );
 					combSchema.setBounds(154, 82, 159, 30);
+					combSchema.setToolTipText("Choose which schema to process from your ODD file");
 				}
 			}
 			{
@@ -494,15 +521,9 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 		
 		textInformation.setText("Start processing " + combSchema.getItem(combSchema.getSelectionIndex()));
 		proc.setInformationArea(textInformation);
-		try{
-			Thread procThread = new Thread(proc);
-			procThread.start();
-		} catch(Exception e){
-			MessageBox mb = new MessageBox(getShell());
-			mb.setMessage(e.getMessage());
-			mb.open();
-			return;
-		}
+	
+		Thread procThread = new Thread(proc);
+		procThread.start();
 	}
 
 }

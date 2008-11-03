@@ -47,15 +47,11 @@ public class Utils {
 		return null;
 	}
 	
-	public static XdmNode readFileIntoSaxonDoc(File file){
+	public static XdmNode readFileIntoSaxonDoc(File file) throws SaxonApiException{
 		Processor proc = SaxonProcFactory.getProcessor();
 		net.sf.saxon.s9api.DocumentBuilder builder = proc.newDocumentBuilder();
-		try {
-			return builder.build(file);
-		} catch (SaxonApiException e) {
-			e.printStackTrace();
-		}
-		return null;
+		
+		return builder.build(file);
 	}
 	
 	public static void storeSaxonDoc(XdmNode node, File file){

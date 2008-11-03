@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.transform.ErrorListener;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
 
@@ -25,8 +26,11 @@ import net.sf.saxon.trans.XPathException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import com.thaiopensource.relaxng.edit.SchemaCollection;
 import com.thaiopensource.relaxng.input.InputFailedException;
@@ -41,7 +45,7 @@ import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
 import com.thaiopensource.util.UriOrFile;
 import com.thaiopensource.xml.sax.ErrorHandlerImpl;
 
-public class VestaProcessor implements Runnable{
+public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler{
 
 	private String oddFile;
 	private String outputDir;
@@ -89,6 +93,29 @@ public class VestaProcessor implements Runnable{
 	 * @throws MoreThanOneSchemaSpecException 
 	 */
 	public void run() throws IllegalArgumentException{
+		try{
+			process();
+		} catch(final IllegalArgumentException e){
+			Display.getDefault().asyncExec( new Runnable() {
+				public void run() {
+					MessageBox mb = new MessageBox(Display.getDefault().getActiveShell());
+					mb.setMessage(e.getMessage());
+					mb.open();
+				}
+			} );
+			return;
+		}
+		
+		Display.getDefault().asyncExec( new Runnable() {
+			public void run(){
+				MessageBox mb = new MessageBox(Display.getDefault().getActiveShell());
+				mb.setMessage("Done");
+				mb.open();
+			}
+		});
+	}
+	
+	private void process() throws IllegalArgumentException{
 		// load file
 		File inputFile = new File(oddFile);
 		File outputDir = new File(this.outputDir);
@@ -101,6 +128,12 @@ public class VestaProcessor implements Runnable{
 		XdmNode doc = null;
 		try {
 			doc = Utils.readFileIntoSaxonDoc(inputFile);
+		} catch(SaxonApiException e){
+			Throwable nested = e.getCause();
+			if(nested instanceof XPathException)
+				throw new IllegalArgumentException("Could not parse input file: " + ((XPathException)nested).getMessageAndLocation());
+			else
+				throw new IllegalArgumentException("Could not parse input file: " + e.getMessage());
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Could not parse input file: " + e.getMessage());
 		}
@@ -210,7 +243,6 @@ public class VestaProcessor implements Runnable{
 				public void run() {
 					informationArea.setText(informationArea.getText() + "\n" + text);
 					informationArea.setTopIndex(informationArea.getLineCount());
-					System.out.println(informationArea.getTopIndex());
 				}
 				
 			} );
@@ -225,6 +257,7 @@ public class VestaProcessor implements Runnable{
 		
 		// prepare transformer
 		XsltCompiler comp = proc.newXsltCompiler();
+		comp.setErrorListener(this);
 		XsltExecutable odd2oddExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2odd.xsl"));
 		XsltTransformer odd2oddTransformer = odd2oddExec.load();
 		
@@ -256,6 +289,7 @@ public class VestaProcessor implements Runnable{
 		
 		// prepare transformer
 		XsltCompiler comp = proc.newXsltCompiler();
+		comp.setErrorListener(this);
 		XsltExecutable odd2relaxExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2relax.xsl"));
 		XsltTransformer odd2relaxTransformer = odd2relaxExec.load();
 		
@@ -282,6 +316,7 @@ public class VestaProcessor implements Runnable{
 		
 		// prepare transformer
 		XsltCompiler comp = proc.newXsltCompiler();
+		comp.setErrorListener(this);
 		XsltExecutable odd2dtdExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2dtd.xsl"));
 		XsltTransformer odd2dtdTransformer = odd2dtdExec.load();
 		
@@ -306,8 +341,7 @@ public class VestaProcessor implements Runnable{
 		
 		String[] inputParamArray = new String[]{};
 		String[] outputParamArray = new String[]{"disable-abstract-elements"};
-		final ErrorHandlerImpl eh = new ErrorHandlerImpl();
-		SchemaCollection sc =  inFormat.load(UriOrFile.toUri(input.getAbsolutePath()), inputParamArray, "rnc", eh);
+		SchemaCollection sc =  inFormat.load(UriOrFile.toUri(input.getAbsolutePath()), inputParamArray, "rnc", this);
 		
 		OutputDirectory od = new LocalOutputDirectory( 
 				sc.getMainUri(),
@@ -318,7 +352,7 @@ public class VestaProcessor implements Runnable{
                 DEFAULT_INDENT
         );
 		
-		of.output(sc, od, outputParamArray, "rng", eh);
+		of.output(sc, od, outputParamArray, "rng", this);
 	}
 	
 	public void generateXSD(File input) throws InputFailedException, InvalidParamsException, IOException, SAXException, OutputFailedException{
@@ -327,8 +361,7 @@ public class VestaProcessor implements Runnable{
 		
 		String[] inputParamArray = new String[]{};
 		String[] outputParamArray = new String[]{"disable-abstract-elements"};
-		final ErrorHandlerImpl eh = new ErrorHandlerImpl();
-		SchemaCollection sc =  inFormat.load(UriOrFile.toUri(input.getAbsolutePath()), inputParamArray, "xsd", eh);
+		SchemaCollection sc =  inFormat.load(UriOrFile.toUri(input.getAbsolutePath()), inputParamArray, "xsd", this);
 		
 		OutputDirectory od = new LocalOutputDirectory( 
 				sc.getMainUri(),
@@ -339,7 +372,7 @@ public class VestaProcessor implements Runnable{
                 DEFAULT_INDENT
         );
 		
-		of.output(sc, od, outputParamArray, "rng", eh);
+		of.output(sc, od, outputParamArray, "rng", this);
 	}
 	
 	public void generateTEIDocumentation(XdmNode doc) throws SaxonApiException{
@@ -348,6 +381,7 @@ public class VestaProcessor implements Runnable{
 		
 		// prepare transformer
 		XsltCompiler comp = proc.newXsltCompiler();
+		comp.setErrorListener(this);
 		XsltExecutable odd2teiDocExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2lite.xsl"));
 		XsltTransformer odd2teiDocTransformer = odd2teiDocExec.load();
 		
@@ -370,6 +404,7 @@ public class VestaProcessor implements Runnable{
 		
 		// prepare transformer
 		XsltCompiler comp = proc.newXsltCompiler();
+		comp.setErrorListener(this);
 		XsltExecutable odd2HTMLDocExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2html.xsl"));
 		XsltTransformer odd2HTMLDocTransformer = odd2HTMLDocExec.load();
 		
@@ -549,6 +584,41 @@ public class VestaProcessor implements Runnable{
 
 	public void setInformationArea(Text textInformation) {
 		this.informationArea = textInformation;
+	}
+
+
+	public void error(TransformerException exception)
+			throws TransformerException {
+		appendInfo(exception.getMessage());
+	}
+
+
+	public void fatalError(TransformerException exception)
+			throws TransformerException {
+		appendInfo(exception.getMessage());
+		throw exception;
+	}
+
+
+	public void warning(TransformerException exception)
+			throws TransformerException {
+		appendInfo(exception.getMessage());	
+	}
+
+
+	public void error(SAXParseException exception) throws SAXException {
+		appendInfo(exception.getMessage());
+	}
+
+
+	public void fatalError(SAXParseException exception) throws SAXException {
+		appendInfo(exception.getMessage());
+		throw exception;
+	}
+
+
+	public void warning(SAXParseException exception) throws SAXException {
+		appendInfo(exception.getMessage());
 	}
 	
 	
