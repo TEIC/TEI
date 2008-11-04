@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.transform.ErrorListener;
+import javax.xml.transform.SourceLocator;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
 
 import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.s9api.MessageListener;
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
@@ -25,9 +27,16 @@ import net.sf.saxon.sxpath.XPathExpression;
 import net.sf.saxon.trans.XPathException;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.events.ShellListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.tei.iso.converter.DocX;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -45,7 +54,7 @@ import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
 import com.thaiopensource.util.UriOrFile;
 import com.thaiopensource.xml.sax.ErrorHandlerImpl;
 
-public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler{
+public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, MessageListener{
 
 	private String oddFile;
 	private String outputDir;
@@ -67,7 +76,6 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler{
 	private boolean useVersionFromTEI = true;
 	private boolean parameterizedDTD = false;
 	private String patternPrefix = "";
-	private Text informationArea = null;
 	
 	private static final String P5SUBSET = "../../local/p5subset.xml";
 	private static final String SCHEMA_DIRECTORY = "resources/stylesheets/odds2";
@@ -76,9 +84,14 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler{
     private static final int DEFAULT_LINE_LENGTH = 72;
     private static final int DEFAULT_INDENT = 2;	
 	
+    private final RunDialog runDialog;
+    private final Shell shell;
     private String baseDir;
     
 	public VestaProcessor(){
+		shell = new Shell(Display.getDefault());
+		runDialog = new RunDialog(shell, SWT.RESIZE | SWT.NO_TRIM | SWT.CLOSE);
+		
 		baseDir = VestaProcessor.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		baseDir = baseDir.substring(0, baseDir.lastIndexOf(File.separator));
 		File baseDirFile = new File(baseDir + File.separator + "resources");
@@ -87,32 +100,56 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler{
 		baseDir += File.separator;
 	}
 	
-
+	
 	/**
 	 * start processing
 	 * @throws MoreThanOneSchemaSpecException 
 	 */
 	public void run() throws IllegalArgumentException{
+		boolean bErrror = false;
+		
+		Display.getDefault().asyncExec(new Runnable(){
+			public void run() {
+				runDialog.open();
+				runDialog.appendLine("Start processing " + oddFile);
+			}
+			
+		});
+		
 		try{
 			process();
 		} catch(final IllegalArgumentException e){
+			e.printStackTrace();
 			Display.getDefault().asyncExec( new Runnable() {
 				public void run() {
-					MessageBox mb = new MessageBox(Display.getDefault().getActiveShell());
+					MessageBox mb = new MessageBox(shell);
 					mb.setMessage(e.getMessage());
 					mb.open();
 				}
 			} );
-			return;
+			
+			bErrror = true;
 		}
 		
-		Display.getDefault().asyncExec( new Runnable() {
-			public void run(){
-				MessageBox mb = new MessageBox(Display.getDefault().getActiveShell());
-				mb.setMessage("Done");
-				mb.open();
-			}
-		});
+		if(!bErrror){
+			Display.getDefault().asyncExec( new Runnable() {
+				public void run(){
+					MessageBox mb = new MessageBox(shell);
+					mb.setMessage("Done");
+					mb.open();
+				}
+			});
+		} else {
+			Display.getDefault().asyncExec( new Runnable() {
+				public void run(){
+					MessageBox mb = new MessageBox(shell);
+					mb.setMessage("Errors occured while processing " + oddFile);
+					mb.open();
+				}
+			});
+		}
+		
+		runDialog.setAllowClose(true);
 	}
 	
 	private void process() throws IllegalArgumentException{
@@ -195,6 +232,9 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler{
 			throw new IllegalArgumentException("Could not run trang: " + e.getMessage());
 		}
 		
+		// free memory
+		relaxDocument = null;
+		
 		// documentation
 		if(documentationDocX || documentationHTML || documentationTEI){
 			appendInfo("Generate Documentation");
@@ -205,19 +245,31 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler{
 				docDir.mkdir();
 		}
 		
-		if(documentationDocX)
-			throw new IllegalArgumentException("The conversion to docx is not yet supported.");
 		
-		if(documentationTEI){
+		XdmNode teiDocumentation = null;
+		if(documentationTEI || documentationDocX){
 			try {
-				generateTEIDocumentation(oddDocument);
+				teiDocumentation = generateTEIDocumentation(oddDocument);
 			} catch (SaxonApiException e) {
 				throw  new IllegalArgumentException("Could not create TEI documentation: " + e.getMessage());
 			}
 		}
 		
+		// store file
+		if(documentationTEI){
+			appendInfo("Generate Documentation (TEI)");
+			File teiDocFile = new File(outputDocDir + File.separator + schemaName + ".xml");
+			Utils.storeSaxonDoc(teiDocumentation, teiDocFile);
+		}
+		
+		if(documentationDocX){
+			appendInfo("Generate Documentation (docx)");
+			generateDocXDocumentation(teiDocumentation);
+		}
+		
 		if(documentationHTML){
 			try{
+				appendInfo("Generate Documentation (HTML)");
 				generateHTMLDocumentation(oddDocument);
 			} catch (Exception e) {
 				throw  new IllegalArgumentException("Could not create HTML documentation: " + e.getMessage());
@@ -236,15 +288,13 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler{
 		appendInfo("done");
 	}
 	
-	private void appendInfo(final String text) {
-		if(null != informationArea){
-			Display.getDefault().asyncExec( new Runnable() {
 
+	private void appendInfo(final String text) {
+		if(! runDialog.getParent().isDisposed()){
+			Display.getDefault().asyncExec( new Runnable() {
 				public void run() {
-					informationArea.setText(informationArea.getText() + "\n" + text);
-					informationArea.setTopIndex(informationArea.getLineCount());
+					runDialog.appendLine(text);
 				}
-				
 			} );
 			
 		}
@@ -275,6 +325,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler{
 		odd2oddTransformer.setParameter(new QName("doclang"), new XdmAtomicValue(language));
 		odd2oddTransformer.setParameter(new QName("useVersionFromTEI"), new XdmAtomicValue( useVersionFromTEI ? "true" : "false" ));
 		
+		odd2oddTransformer.setMessageListener(this);
 		odd2oddTransformer.setInitialContextNode(doc);
 		XdmDestination result = new XdmDestination();
 		odd2oddTransformer.setDestination(result);
@@ -302,6 +353,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler{
 		odd2relaxTransformer.setParameter(new QName("parameterize"), new XdmAtomicValue(parameterizedDTD ? "true" : "false"));
 		odd2relaxTransformer.setParameter(new QName("patternPrefix"), new XdmAtomicValue(patternPrefix));
 		
+		odd2relaxTransformer.setMessageListener(this);
 		odd2relaxTransformer.setInitialContextNode(doc);
 		XdmDestination result = new XdmDestination();
 		odd2relaxTransformer.setDestination(result);
@@ -328,6 +380,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler{
 		odd2dtdTransformer.setParameter(new QName("doclang"), new XdmAtomicValue(language));
 		odd2dtdTransformer.setParameter(new QName("parameterize"), new XdmAtomicValue(parameterizedDTD ? "true" : "false"));
 		
+		odd2dtdTransformer.setMessageListener(this);
 		odd2dtdTransformer.setInitialContextNode(doc);
 		Serializer result = new Serializer();
 		result.setOutputFile(new File(outputDir + File.separator + schemaName + ".dtd") );
@@ -375,7 +428,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler{
 		of.output(sc, od, outputParamArray, "rng", this);
 	}
 	
-	public void generateTEIDocumentation(XdmNode doc) throws SaxonApiException{
+	public XdmNode generateTEIDocumentation(XdmNode doc) throws SaxonApiException{
 		// load stylesheets
 		Processor proc = SaxonProcFactory.getProcessor();
 		
@@ -385,18 +438,28 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler{
 		XsltExecutable odd2teiDocExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2lite.xsl"));
 		XsltTransformer odd2teiDocTransformer = odd2teiDocExec.load();
 		
+		
 		odd2teiDocTransformer.setParameter(new QName("TEIC"), new XdmAtomicValue("true") );
 		odd2teiDocTransformer.setParameter(new QName("localsource"), new XdmAtomicValue(P5SUBSET));
 		odd2teiDocTransformer.setParameter(new QName("lang"), new XdmAtomicValue(language));
 		odd2teiDocTransformer.setParameter(new QName("doclang"), new XdmAtomicValue(language));
 		
-		
+		odd2teiDocTransformer.setMessageListener(this);
 		odd2teiDocTransformer.setInitialContextNode(doc);
-		Serializer result = new Serializer();
-		result.setOutputFile(new File(outputDocDir + File.separator + schemaName + ".xml") );
+		XdmDestination result = new XdmDestination();
 		odd2teiDocTransformer.setDestination(result);
 		odd2teiDocTransformer.transform();
+		
+		return (XdmNode) result.getXdmNode();
 	}
+	
+	private void generateDocXDocumentation(XdmNode oddDocument) {
+		DocX docx = new DocX(schemaName, null);
+		docx.mergeTEI(oddDocument);
+		File zipFile = docx.getDocXFile();
+		zipFile.renameTo(new File(outputDocDir + File.separator + schemaName + ".docx"));
+		docx.cleanUp();
+	}	
 	
 	public void generateHTMLDocumentation(XdmNode doc) throws SaxonApiException, IOException{
 		// load stylesheets
@@ -416,6 +479,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler{
 		odd2HTMLDocTransformer.setParameter(new QName("cssFile"), new XdmAtomicValue("tei.css"));
 		odd2HTMLDocTransformer.setParameter(new QName("cssSecondaryFile"), new XdmAtomicValue("odd.css"));
 		
+		odd2HTMLDocTransformer.setMessageListener(this);
 		odd2HTMLDocTransformer.setInitialContextNode(doc);
 		Serializer result = new Serializer();
 		result.setOutputFile(new File(outputDocDir + File.separator + schemaName + ".html") );
@@ -582,43 +646,46 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler{
 	}
 
 
-	public void setInformationArea(Text textInformation) {
-		this.informationArea = textInformation;
-	}
-
-
+	
+	
 	public void error(TransformerException exception)
 			throws TransformerException {
-		appendInfo(exception.getMessage());
+		appendInfo("Error: " + exception.getMessage());
 	}
 
 
 	public void fatalError(TransformerException exception)
 			throws TransformerException {
-		appendInfo(exception.getMessage());
+		appendInfo("Fatal Error: " + exception.getMessage());
 		throw exception;
 	}
 
 
 	public void warning(TransformerException exception)
 			throws TransformerException {
-		appendInfo(exception.getMessage());	
+		appendInfo("Warning: " + exception.getMessage());	
 	}
 
 
 	public void error(SAXParseException exception) throws SAXException {
-		appendInfo(exception.getMessage());
+		appendInfo("Error: " + exception.getMessage());
 	}
 
 
 	public void fatalError(SAXParseException exception) throws SAXException {
-		appendInfo(exception.getMessage());
+		appendInfo("Fatal Error: " + exception.getMessage());
 		throw exception;
 	}
 
 
 	public void warning(SAXParseException exception) throws SAXException {
-		appendInfo(exception.getMessage());
+		appendInfo("Warning: " + exception.getMessage());
+	}
+
+
+	public void message(XdmNode content, boolean terminate, SourceLocator locator) {
+		appendInfo("Message: " + content.getStringValue());
+		
 	}
 	
 	

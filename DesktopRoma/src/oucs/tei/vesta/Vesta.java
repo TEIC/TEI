@@ -3,29 +3,14 @@ package oucs.tei.vesta;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.xml.transform.dom.DOMSource;
-
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.s9api.XdmNode;
-import net.sf.saxon.sxpath.XPathEvaluator;
-import net.sf.saxon.sxpath.XPathExpression;
-import net.sf.saxon.trans.XPathException;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -36,16 +21,13 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -79,10 +61,8 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 	private ToolBar toolBar1;
 	private CoolItem coolItem1;
 	private Button cbCreateXSD;
-	private Label messagesLabel;
 	private Label selectLanguageLabel;
 	private Label imageLabel;
-	final private Text textInformation = new Text(this, SWT.MULTI | SWT.READ_ONLY | SWT.V_SCROLL | SWT.BORDER);
 	private Label schemaToGenerateLabel;
 	private Label labelPatternPrefix;
 	private Text textPatternPrefix;
@@ -131,7 +111,7 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 	*/
 	private void initGUI() {
 		try {
-			this.setSize(525, 408);
+			this.setSize(525, 334);
 			//this.setBackground(SWTResourceManager.getColor(192, 192, 192));
 			this.setLayout(null);
 			{
@@ -257,7 +237,7 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 			{
 				goButton = new Button(this, SWT.PUSH | SWT.CENTER);
 				goButton.setText("GO");
-				goButton.setBounds(411, 372, 102, 32);
+				goButton.setBounds(411, 301, 102, 32);
 				goButton.addSelectionListener(new SelectionAdapter() {
 					public void widgetSelected(SelectionEvent evt) {
 						goButtonWidgetSelected(evt);
@@ -355,7 +335,6 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 				}
 			}
 			{
-				textInformation.setBounds(12, 324, 393, 74);
 			}
 			{
 				imageLabel = new Label(this, SWT.NONE);
@@ -369,11 +348,6 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 					System.out.println(e.getMessage());
 					e.printStackTrace();
 				}
-			}
-			{
-				messagesLabel = new Label(this, SWT.NONE);
-				messagesLabel.setText("Messages:");
-				messagesLabel.setBounds(12, 301, 79, 17);
 			}
 			{
 				menu1 = new Menu(getShell(), SWT.BAR);
@@ -518,9 +492,6 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 		proc.setUseVersionFromTEI(getCbTEIVersion().getSelection());
 		proc.setParameterizedDTD(getCbParameterized().getSelection());
 		proc.setPatternPrefix(getTextPatternPrefix().getText());
-		
-		textInformation.setText("Start processing " + combSchema.getItem(combSchema.getSelectionIndex()));
-		proc.setInformationArea(textInformation);
 	
 		Thread procThread = new Thread(proc);
 		procThread.start();
