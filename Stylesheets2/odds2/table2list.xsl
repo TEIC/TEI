@@ -12,11 +12,12 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 
+
 <xsl:template match="tei:table[@rend='valList' 
 		     or @rend='attDef'
 		     or @rend='attList' 
 		     or @rend='specDesc']">
-  <list type="gloss">
+  <list type="termlist">
     <xsl:apply-templates/>
   </list>
 </xsl:template>
@@ -25,7 +26,9 @@
     or @rend='valList' 
     or @rend='attDef' 
     or @rend='specDesc']/tei:row">
-  <xsl:apply-templates/>
+  <item>
+    <xsl:apply-templates/>
+  </item>
 </xsl:template>
 
 <xsl:template match="tei:table[@rend='attList' 
@@ -35,18 +38,18 @@
 
 <xsl:choose>
   <xsl:when test="parent::tei:row/parent::tei:table[@rend='attList']">
-    <label>@<xsl:apply-templates/></label>
+    <hi rend="bold">@<xsl:apply-templates/></hi>
   </xsl:when>
   <xsl:when test="ancestor::tei:table[@rend='valList']">
-    <label><xsl:apply-templates/></label>
+    <hi rend="bold"><xsl:apply-templates/></hi>
   </xsl:when>
   <xsl:when test="ancestor::tei:table[@rend='specDesc']">
-    <label>@<xsl:apply-templates/></label>
+    <hi rend="bold">@<xsl:apply-templates/></hi>
   </xsl:when>
   <xsl:otherwise>
-    <label>
+    <hi  rend="bold">
       <xsl:apply-templates/>
-    </label>
+    </hi>
   </xsl:otherwise>
 </xsl:choose>
 </xsl:template>
@@ -55,9 +58,11 @@
       or @rend='valList' 
       or @rend='specDesc' 
       or @rend='attDef']/tei:row/tei:cell[2]">
-  <item>
-    <xsl:apply-templates/>
-  </item>
+  <c rend="tab">
+    <xsl:text>&#009;</xsl:text>
+  </c>
+   <xsl:apply-templates/>
+ 
 </xsl:template>
 
 <xsl:template match="tei:index"/>
