@@ -71,7 +71,9 @@
 	I18N setup:
 	Pattern prefix: <xsl:value-of select="$patternPrefixText"/>
 	Target language: <xsl:value-of select="$targetLanguage"/>
-	Documentation language: <xsl:value-of select="$documentationLanguage"/>
+	Documentation language: <xsl:value-of
+	select="$documentationLanguage"/>
+	Parameterization: <xsl:value-of select="$parameterise"/>
       </xsl:message>
     </xsl:if>
     <xsl:variable name="filename" select="@ident"/>
@@ -137,6 +139,9 @@
   </xsl:template>
 
   <xsl:template name="schemaSpecBody">
+    <xsl:if test="$verbose='true'">
+      start importing  moduleRef  components
+    </xsl:if>
     <xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
     <xsl:for-each select="tei:macroSpec">
       <xsl:apply-templates mode="tangle" select="."/>
