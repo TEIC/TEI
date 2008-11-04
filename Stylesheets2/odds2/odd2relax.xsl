@@ -140,7 +140,7 @@
 
   <xsl:template name="schemaSpecBody">
     <xsl:if test="$verbose='true'">
-      start importing  moduleRef  components
+      <xsl:message>start importing  moduleRef  components</xsl:message>
     </xsl:if>
     <xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
     <xsl:for-each select="tei:macroSpec">
