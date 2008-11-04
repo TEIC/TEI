@@ -1686,7 +1686,7 @@
 	    <xsl:apply-templates mode="depth" select="."/>
 	  </xsl:variable>
 	  <xsl:choose>
-	    <xsl:when test="number($depth) &lt; $splitLevel ">
+	    <xsl:when test="number($depth) &lt; number($splitLevel) ">
 	  <xsl:if test="child::*[not(self::tei:div)]/descendant::tei:note[@place='foot' or @place='end']">
 	    <div class="notes">
 	      <div class="noteHeading">
