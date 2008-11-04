@@ -5,6 +5,9 @@
 	useVersionFromTEI=true \
 	TEIC=true \
 	localsource=`pwd`/../p5subset.xml
+    echo "     html "
+    saxon -o x.html x.odd ../../Stylesheets2/odds2/odd2html.xsl STDOUT=true
+exit 1
     echo "     rng "
     saxon -o x.rng x.odd  ../../Stylesheets2/odds2/odd2relax.xsl  TEIC=true 
     echo "     xsd "
@@ -13,5 +16,3 @@
     trang x.rng x.rnc
     echo "     dtd "
     saxon -o x.dtd x.odd  ../../Stylesheets2/odds2/odd2dtd.xsl TEIC=true 
-    echo "     html "
-    saxon -o x.html x.odd ../../Stylesheets2/odds2/odd2html.xsl splitLevel=-1 STDOUT=true
