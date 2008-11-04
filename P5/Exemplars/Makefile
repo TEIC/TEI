@@ -24,6 +24,7 @@ names:
 	xsltproc ../Utilities/makenames.xsl  ../Source/Guidelines/${LANGUAGE}/${DRIVER} > names.xml
 	xsltproc ../Utilities/makeexnames.xsl  ../Source/Guidelines/${LANGUAGE}/${DRIVER} > exnames.xml
 	xmllint --xinclude tei_odds.odd.pre > tei_odds.odd
+	xmllint --xinclude tei_allPlus.odd.pre > tei_allPlus.odd
 
 
 dist: schemas
