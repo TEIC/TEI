@@ -73,7 +73,7 @@
 	Target language: <xsl:value-of select="$targetLanguage"/>
 	Documentation language: <xsl:value-of
 	select="$documentationLanguage"/>
-	Parameterization: <xsl:value-of select="$parameterise"/>
+	Parameterization: <xsl:value-of select="$parameterize"/>
       </xsl:message>
     </xsl:if>
     <xsl:variable name="filename" select="@ident"/>
