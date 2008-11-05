@@ -683,27 +683,32 @@
     <!-- 
         Handle value lists
     -->
-    <xsl:template match="tei:list[tei:label]">
-        <xsl:param name="nop"/>
-        <xsl:call-template name="block-element">
-            <xsl:with-param name="style">dl</xsl:with-param>
-            <xsl:with-param name="nop" select="$nop"/>
-        </xsl:call-template>
-    </xsl:template>
-    
     <xsl:template match="tei:label[following-sibling::tei:*[1]/self::tei:item]">
-        <xsl:apply-templates/>
-        <w:r>
-            <w:tab/>
-        </w:r>
+        <xsl:param name="nop"/>
+        
+       <w:p>
+           <w:pPr>
+               <w:pStyle w:val="dl"/>
+               <w:ind w:left="567" w:hanging="567"/>
+           </w:pPr>
+           <xsl:apply-templates>
+               <xsl:with-param name="nop">true</xsl:with-param>
+           </xsl:apply-templates>
+           <w:r>
+               <w:tab/>
+           </w:r>
+           <xsl:apply-templates select="following-sibling::tei:*[1]/*|
+                                        following-sibling::tei:*[1]/processing-instruction()|
+                                        following-sibling::tei:*[1]/comment()|
+                                        following-sibling::tei:*[1]/text()">
+               <xsl:with-param name="nop">true</xsl:with-param>
+           </xsl:apply-templates>
+           
+       </w:p>
     </xsl:template>
     
-    <xsl:template match="tei:item[preceding-sibling::tei:*[1]/self::tei:label]">
-        <xsl:apply-templates/>
-        <w:r>
-            <w:br/>
-        </w:r>
-    </xsl:template>
+    <xsl:template match="tei:item[preceding-sibling::tei:*[1]/self::tei:label]"/>
+    
 
     <!-- 
         Handle list items

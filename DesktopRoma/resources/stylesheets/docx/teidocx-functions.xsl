@@ -166,8 +166,6 @@
                     self::tei:graphic or
                     self::tei:hi[not(w:*)] or
                     self::tei:idno or
-                    self::tei:item[preceding-sibling::tei:*[1]/self::tei:label] or
-                    self::tei:label[following-sibling::tei:*[1]/self::tei:item] or
                     self::tei:lb or
                     self::tei:name or
                     self::tei:note[@place='foot'] or

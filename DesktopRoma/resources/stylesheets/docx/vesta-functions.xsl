@@ -47,7 +47,19 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:function>
-
+    
+    <xsl:function name="teidocx:render-bold" as="xs:boolean">
+        <xsl:param name="element"/>
+        <xsl:for-each select="$element">
+            <xsl:choose>
+                <xsl:when test="@rend='odd_label'">true</xsl:when>
+                <xsl:when test="self::tei:hi[@rend='label']">true</xsl:when>
+                <xsl:when test="self::tei:label[following-sibling::tei:item]">true</xsl:when>
+                <xsl:when test="self::tei:term">true</xsl:when>
+                <xsl:otherwise>false</xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
+    </xsl:function>
     
 
 </xsl:stylesheet>
