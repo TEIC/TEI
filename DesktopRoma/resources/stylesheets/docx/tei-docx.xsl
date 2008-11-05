@@ -440,7 +440,7 @@
 	      <w:t>
 		<xsl:attribute name="xml:space">preserve</xsl:attribute>
 		<xsl:choose>
-		  <xsl:when test=".=' '">
+		  <xsl:when test=".=' ' or ../@xml:space='preserve'">
 		    <xsl:value-of select="."/>
 		  </xsl:when>
 		  <xsl:otherwise>
@@ -982,7 +982,11 @@
             <xsl:with-param name="style">egXML</xsl:with-param>
             <xsl:with-param name="select">
                 <tei:p>
-                    <xsl:call-template name="create-egXML-section"/>
+                    <xsl:attribute name="xml:space">preserve</xsl:attribute>
+                    <xsl:for-each select="tokenize(.,'\n')">
+                        <xsl:value-of select="."/>
+                        <tei:lb/>
+                    </xsl:for-each>                    
                 </tei:p>
             </xsl:with-param>
         </xsl:call-template>

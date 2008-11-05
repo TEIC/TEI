@@ -54,9 +54,6 @@
       <xsl:when test="$ns='http://www.w3.org/1999/XSL/Transform'">xsl</xsl:when>
       <xsl:when test="$ns='http://www.w3.org/2005/Atom'">atom</xsl:when>
       <xsl:when test="$ns='http://purl.org/rss/1.0/modules/event/'">ev</xsl:when>
-      <xsl:when test="$ns=''">dbk</xsl:when>
-      <xsl:when test="$ns=''">dbk</xsl:when>
-      <xsl:when test="$ns=''">dbk</xsl:when>
     </xsl:choose>
 
   </xsl:template>
