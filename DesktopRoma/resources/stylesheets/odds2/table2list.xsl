@@ -12,6 +12,15 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 
+  <xsl:template match="tei:table[@rend='wovenodd' ]">
+    <list type="gloss">
+    <xsl:for-each select="tei:row">
+      <label><xsl:apply-templates select="tei:cell[1]"/></label>
+      <item><xsl:apply-templates select="tei:cell[2]"/></item>
+    </xsl:for-each>
+    </list>
+</xsl:template>
+
 <xsl:template match="tei:table[@rend='valList' 
 		     or @rend='attDef'
 		     or @rend='attList' 
@@ -51,13 +60,6 @@
 </xsl:choose>
 </xsl:template>
 
-<!--
-<xsl:template match="tei:div[@type='refdoc']/tei:head"/>
-
-<xsl:template match="tei:div[@type='refdoc']">
-<xsl:apply-templates/>
-</xsl:template>
--->
 <xsl:template match="tei:table[@rend='attList' 
       or @rend='valList' 
       or @rend='specDesc' 
@@ -72,6 +74,7 @@
 <xsl:template match="processing-instruction()[name()='tex' and .='\ ']">
  <c xml:space="preserve"> </c>
 </xsl:template>
+
 <!-- identity transform -->
 <xsl:output method="xml" indent="yes"/>
 
