@@ -19,23 +19,19 @@
     xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
     xmlns:w10="urn:schemas-microsoft-com:office:word"
     xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+    xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
     xmlns:mml="http://www.w3.org/1998/Math/MathML"
     xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
     xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
     xmlns:contypes="http://schemas.openxmlformats.org/package/2006/content-types"
     xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-    exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn xsi dc dcterms dcmitype contypes teidocx teix">
+    exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn xsi dc dcterms dcmitype contypes teidocx teix html">
     <!-- $Id: tei-docx.xsl 4113 2008-10-28 13:43:11Z oucs0063 $ -->
     <!--  <xsl:import href="mml2omml.xsl"/>-->
     <xsl:import href="teidocx-functions.xsl"/>
     <xsl:import href="tei-docx-verbatim.xsl"/>
     <xsl:import href="variables.xsl"/>
-
-
-    <!-- dummy functions -->
-    <xsl:function name="teidocx:is-inline" as="xs:boolean">
-        <xsl:param name="element"/> false </xsl:function>
 
     <xsl:variable name="align">right</xsl:variable>
 
@@ -684,6 +680,30 @@
         </xsl:call-template>
     </xsl:template>
 
+    <!-- 
+        Handle value lists
+    -->
+    <xsl:template match="tei:list[tei:label]">
+        <xsl:param name="nop"/>
+        <xsl:call-template name="block-element">
+            <xsl:with-param name="style">dl</xsl:with-param>
+            <xsl:with-param name="nop" select="$nop"/>
+        </xsl:call-template>
+    </xsl:template>
+    
+    <xsl:template match="tei:label[following-sibling::tei:*[1]/self::tei:item]">
+        <xsl:apply-templates/>
+        <w:r>
+            <w:tab/>
+        </w:r>
+    </xsl:template>
+    
+    <xsl:template match="tei:item[preceding-sibling::tei:*[1]/self::tei:label]">
+        <xsl:apply-templates/>
+        <w:r>
+            <w:br/>
+        </w:r>
+    </xsl:template>
 
     <!-- 
         Handle list items
@@ -783,10 +803,9 @@
                   @height and 
                   not(number(substring(@width,0,string-length(@width)-1))=NAN) and 
                   not(number(substring(@height,0,string-length(@height)-1))=NAN)">
-            <xsl:variable name="imageWidth"
-                select="(number(substring(@width,0,string-length(@width)-1)) * 360000) cast as xs:integer"/>
+            <xsl:variable name="imageWidth" select="teidocx:convert-dim-emu(@width)"/>
             <xsl:variable name="imageHeight"
-                select="(number(substring(@height,0,string-length(@height)-1)) * 360000)  cast as xs:integer"/>
+                select="teidocx:convert-dim-emu(@height)"/>
 
             <!-- prepare actual graphic -->
             <xsl:variable name="graphic-element">
@@ -945,6 +964,17 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
+    
+    <xsl:template match="tei:eg">
+        <xsl:call-template name="block-element">
+            <xsl:with-param name="style">egXML</xsl:with-param>
+            <xsl:with-param name="select">
+                <tei:p>
+                    <xsl:call-template name="create-egXML-section"/>
+                </tei:p>
+            </xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
 
 
     <!-- 
@@ -959,28 +989,28 @@
                 </xsl:when>
                 <xsl:otherwise>
                     <w:tblPr>
-                        <w:tblStyle w:val="TableGrid"/>
                         <w:tblW w:w="0" w:type="auto"/>
-                        <w:tblLook w:val="04A0"/>
                     </w:tblPr>
                 </xsl:otherwise>
             </xsl:choose>
             <xsl:choose>
+                <xsl:when test="html:colgroup">
+                    <w:tblGrid>
+                        <xsl:for-each select="html:colgroup/html:col">
+                            <w:gridCol>
+                                <xsl:attribute name="w:w" select="teidocx:convert-dim-pt20(@width)"/>
+                            </w:gridCol>
+                        </xsl:for-each>
+                    </w:tblGrid>
+                </xsl:when>
+                <!-- if it is definied in word's namespace -->
                 <xsl:when test="w:tblGrid">
                     <xsl:copy-of select="w:tblGrid"/>
                 </xsl:when>
-                <xsl:otherwise>
-                    <w:tblGrid>
-                        <w:gridCol w:w="1915"/>
-                        <w:gridCol w:w="2423"/>
-                        <w:gridCol w:w="1407"/>
-                        <w:gridCol w:w="1915"/>
-                        <w:gridCol w:w="1916"/>
-                    </w:tblGrid>
-                </xsl:otherwise>
             </xsl:choose>
             <xsl:apply-templates select="tei:row"/>
         </w:tbl>
+        <w:p/>
     </xsl:template>
 
     <xsl:template name="table-header">
@@ -1001,6 +1031,9 @@
                 </xsl:when>
                 <xsl:otherwise> </xsl:otherwise>
             </xsl:choose>
+            <w:tblPrEx>
+                <w:tblLayout w:type="autofit"/> 
+            </w:tblPrEx>
             <xsl:apply-templates select="tei:cell"/>
         </w:tr>
     </xsl:template>
@@ -1013,7 +1046,7 @@
                 </xsl:when>
                 <xsl:otherwise>
                     <w:tcPr>
-                        <w:tcW w:w="1915" w:type="dxa"/>
+                        <!--w:tcW w:w="1915" w:type="dxa"/-->
                         <xsl:if test="@cols">
                             <w:gridSpan w:val="{@cols}"/>
                         </xsl:if>

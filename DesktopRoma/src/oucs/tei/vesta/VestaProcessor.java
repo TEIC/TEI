@@ -251,7 +251,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 			try {
 				teiDocumentation = generateTEIDocumentation(oddDocument);
 			} catch (SaxonApiException e) {
-				throw  new IllegalArgumentException("Could not create TEI documentation: " + e.getMessage());
+				appendInfo("Error: Could not create TEI documentation: " + e.getMessage());
 			}
 		}
 		
@@ -264,7 +264,11 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		
 		if(documentationDocX){
 			appendInfo("Generate Documentation (docx)");
-			generateDocXDocumentation(teiDocumentation);
+			try {
+				generateDocXDocumentation(teiDocumentation);
+			} catch (SaxonApiException e) {
+				appendInfo("Error: Could not create docx documentation: " + e.getMessage());
+			}
 		}
 		
 		if(documentationHTML){
@@ -272,7 +276,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 				appendInfo("Generate Documentation (HTML)");
 				generateHTMLDocumentation(oddDocument);
 			} catch (Exception e) {
-				throw  new IllegalArgumentException("Could not create HTML documentation: " + e.getMessage());
+				appendInfo("Error: Could not create HTML documentation: " + e.getMessage());
 			}
 		}
 		
@@ -453,9 +457,9 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		return (XdmNode) result.getXdmNode();
 	}
 	
-	private void generateDocXDocumentation(XdmNode oddDocument) {
+	private void generateDocXDocumentation(XdmNode teiDocumentation) throws SaxonApiException {
 		DocX docx = new DocX(schemaName, null);
-		docx.mergeTEI(oddDocument);
+		docx.mergeTEI(teiDocumentation);
 		File zipFile = docx.getDocXFile();
 		zipFile.renameTo(new File(outputDocDir + File.separator + schemaName + ".docx"));
 		docx.cleanUp();

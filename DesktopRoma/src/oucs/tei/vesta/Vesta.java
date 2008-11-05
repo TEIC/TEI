@@ -154,7 +154,7 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 						{
 							cbCreateDTD = new Button(optionsTabComposite, SWT.CHECK | SWT.LEFT);
 							cbCreateDTD.setText("generate DTD");
-							cbCreateDTD.setBounds(182, 72, 107, 30);
+							cbCreateDTD.setBounds(182, 72, 114, 30);
 							cbCreateDTD.setSelection(true);
 							cbCreateDTD.setToolTipText("Generate an XML DTD");
 						}
@@ -214,7 +214,7 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 						{
 							cbParameterized = new Button(composite1, SWT.CHECK | SWT.LEFT);
 							cbParameterized.setText("parameterized DTD");
-							cbParameterized.setBounds(326, 0, 146, 30);
+							cbParameterized.setBounds(326, 0, 157, 30);
 							cbParameterized.setToolTipText("create a DTD suitable for customizing in a document DTD subset");
 						}
 						{
@@ -236,8 +236,8 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 			}
 			{
 				goButton = new Button(this, SWT.PUSH | SWT.CENTER);
-				goButton.setText("GO");
-				goButton.setBounds(411, 301, 102, 32);
+				goButton.setText("Go");
+				goButton.setBounds(409, 301, 104, 32);
 				goButton.addSelectionListener(new SelectionAdapter() {
 					public void widgetSelected(SelectionEvent evt) {
 						goButtonWidgetSelected(evt);

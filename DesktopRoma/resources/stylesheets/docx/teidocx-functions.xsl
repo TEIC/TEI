@@ -21,6 +21,58 @@
     <!-- import variables -->
     <xsl:import href="variables.xsl"/>
     
+    <!-- Converts a dimension into the 20th of a ps point -->
+    <xsl:function name="teidocx:convert-dim-pt20" as="xs:integer">
+        <xsl:param name="dim"/>
+        <xsl:value-of select="teidocx:convert-dim-pt($dim)*20"/>
+    </xsl:function>
+    
+    <xsl:function name="teidocx:convert-dim-pt" as="xs:integer">
+        <xsl:param name="dim"/>
+        <xsl:choose>
+            <xsl:when test="ends-with($dim,'cm')">
+                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1))*28.3464567 cast as xs:integer"/>
+            </xsl:when>
+            <xsl:when test="ends-with($dim,'in')">
+                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1))*72 cast as xs:integer"/>
+            </xsl:when>
+            
+            <xsl:when test="ends-with($dim,'mm')">
+                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1))*2.83464567 cast as xs:integer"/>
+            </xsl:when>
+            <xsl:when test="ends-with($dim,'pt')">
+                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1)) cast as xs:integer"/>
+            </xsl:when>
+            
+            <xsl:otherwise>
+                -1
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+    
+    <!-- convert a dimension into english metric unit -->
+    <xsl:function name="teidocx:convert-dim-emu" as="xs:integer">
+        <xsl:param name="dim"/>
+        <xsl:choose>
+            <xsl:when test="ends-with($dim,'cm')">
+                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1))*360000 cast as xs:integer"/>
+            </xsl:when>
+            <xsl:when test="ends-with($dim,'in')">
+                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1))*91440 cast as xs:integer"/>
+            </xsl:when>
+            
+            <xsl:when test="ends-with($dim,'mm')">
+                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1))*36000 cast as xs:integer"/>
+            </xsl:when>
+            <xsl:when test="ends-with($dim,'pt')">
+                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1))*91440*72 cast as xs:integer"/>
+            </xsl:when>
+            
+            <xsl:otherwise>
+                -1
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
     
     <!-- returns a listtype for a given stylename (return empty string to figure it out dynamically) -->
     <xsl:function name="teidocx:get-listtype" as="xs:string">
@@ -65,49 +117,83 @@
     <!-- define special rendering for attributes -->
     <xsl:function name="teidocx:render-bold" as="xs:boolean">
         <xsl:param name="element"/>
-        false
+        <xsl:for-each select="$element">
+            <xsl:choose>
+                <xsl:when test="self::tei:hi[@rend='label']">true</xsl:when>
+                <xsl:when test="self::tei:label[following-sibling::tei:item]">true</xsl:when>
+                <xsl:when test="self::tei:term">true</xsl:when>
+                <xsl:otherwise>false</xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
     </xsl:function>
     
     <xsl:function name="teidocx:render-italic" as="xs:boolean">
         <xsl:param name="element"/>
-        false
+        <xsl:for-each select="$element">
+            <xsl:choose>
+                <xsl:when test="self::tei:code">true</xsl:when>
+                <xsl:when test="self::tei:name">true</xsl:when>
+                <xsl:when test="self::tei:soCalled">true</xsl:when>
+                <xsl:otherwise>false</xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
     </xsl:function>
     
     <!-- is given an element and defines whether or not this element is to be rendered inline. -->
     <xsl:function name="teidocx:is-inline" as="xs:boolean">
         <xsl:param name="element"/>
-        
         <xsl:for-each select="$element">
             <xsl:choose>
                 <xsl:when test="self::m:oMath or
+                    
                     self::teidocx:dynamicContent or
                     
                     self::w:drawing or
                     self::w:object or
+                    
                     self::iso:wordObject[w:object] or
+                    
                     self::tei:abbr or
                     self::tei:author or
+                    self::tei:br or
                     self::tei:c or
+                    self::tei:code or
                     self::tei:editionStmt or
                     self::tei:date or
                     self::tei:emph or
+                    
                     self::tei:foreign or
+                    self::tei:graphic or
                     self::tei:hi[not(w:*)] or
                     self::tei:idno or
+                    self::tei:item[preceding-sibling::tei:*[1]/self::tei:label] or
+                    self::tei:label[following-sibling::tei:*[1]/self::tei:item] or
                     self::tei:lb or
+                    self::tei:name or
                     self::tei:note[@place='foot'] or
                     self::tei:note[@place='end'] or
+                    
                     self::tei:num or
                     self::tei:mentioned or
                     self::tei:orgName or
                     self::tei:publisher or
                     self::tei:pb or
+                    self::tei:ptr or
+                    self::tei:q or
                     self::tei:ref or
                     self::tei:seg or
+                    self::tei:soCalled or
+                    self::tei:term[not(ancestor-or-self::*/@type='termsAndDefinitions')] or
                     self::tei:title">
                     true
                 </xsl:when>
-                <xsl:otherwise>false</xsl:otherwise>
+                <xsl:otherwise>
+                    <xsl:choose>
+                        <xsl:when test="empty($element/..)">false</xsl:when>
+                        <xsl:when test="teidocx:is-inline($element/..)">true</xsl:when>
+                        <xsl:otherwise>false</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
     </xsl:function>

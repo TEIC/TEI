@@ -191,45 +191,7 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-    
-    <!-- Definition lists -->
-    <xsl:template match="tei:list[@type='gloss']">
-      <xsl:for-each select="tei:head">
-        <xsl:call-template name="block-element">
-            <xsl:with-param name="pPr">
-                <w:pPr>
-                        <w:pStyle w:val="dl"/>
-                        <w:tabs>
-                            <w:tab w:val="left" w:pos="403"/>
-                        </w:tabs>
-                </w:pPr>
-            </xsl:with-param>
-        </xsl:call-template>
-      </xsl:for-each>
-        
-        
-      <xsl:for-each select="tei:label">
-        <w:p>
-            <w:pPr>
-                <w:pStyle w:val="dl"/>
-                <w:tabs>
-                    <w:tab w:val="left" w:pos="403"/>
-                </w:tabs>
-            </w:pPr>
-    	    <xsl:apply-templates>
-    	      <xsl:with-param name="nop">true</xsl:with-param>
-    	    </xsl:apply-templates>
-            <w:r>
-                <w:tab/>
-            </w:r>
-            <xsl:for-each select="following-sibling::tei:item[1]">
-                <xsl:apply-templates>
-                    <xsl:with-param name="nop">true</xsl:with-param>
-                </xsl:apply-templates>
-            </xsl:for-each>
-        </w:p>
-      </xsl:for-each>
-    </xsl:template>
+   
     
     
     <!-- who created this document -->
