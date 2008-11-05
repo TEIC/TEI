@@ -1642,7 +1642,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	</xsl:variable>
 	<xsl:for-each select="$list/List/Item">
 	  <xsl:copy-of select="*|text()"/>
-	  <xsl:if test="following-item::Item">
+	  <xsl:if test="following-sibling::Item">
 	    <xsl:call-template name="showSpace"/>
 	  </xsl:if>
 	</xsl:for-each>
@@ -1683,7 +1683,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	</xsl:variable>
 	<xsl:for-each select="$list/List/Item">
 	  <xsl:copy-of select="*|text()"/>
-	  <xsl:if test="following-item::Item">
+	  <xsl:if test="following-sibling::Item">
 	    <xsl:call-template name="showSpace"/>
 	  </xsl:if>
 	</xsl:for-each>
@@ -1709,7 +1709,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
       </xsl:variable>
       <xsl:for-each select="$list/List/Item">
 	<xsl:copy-of select="*|text()"/>
-	<xsl:if test="following-item::Item">
+	<xsl:if test="following-sibling::Item">
 	  <xsl:call-template name="showSpace"/>
 	</xsl:if>
       </xsl:for-each>
@@ -1754,7 +1754,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
       </xsl:variable>
       <xsl:for-each select="$list/List/Item">
 	<xsl:copy-of select="*|text()"/>
-	<xsl:if test="following-item::Item">
+	<xsl:if test="following-sibling::Item">
 	  <xsl:call-template name="showSpace"/>
 	</xsl:if>
       </xsl:for-each>
