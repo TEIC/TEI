@@ -437,15 +437,22 @@
                 <xsl:message>CDATA found in body! [<xsl:value-of select="."/>]</xsl:message>
             </xsl:when>
             <xsl:otherwise>
-                <w:t>
-                    <xsl:attribute name="xml:space">preserve</xsl:attribute>
-                    <xsl:if test="starts-with(.,' ')">
-                        <xsl:text> </xsl:text>
-                    </xsl:if>
-                    <xsl:value-of select="normalize-space(.)"/>
-                    <xsl:if test="substring(.,string-length(.),1)=' '">
-                        <xsl:text> </xsl:text>
-                    </xsl:if>
+	      <w:t>
+		<xsl:attribute name="xml:space">preserve</xsl:attribute>
+		<xsl:choose>
+		  <xsl:when test=".=' '">
+		    <xsl:value-of select="."/>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:if test="starts-with(.,' ')">
+		      <xsl:text> </xsl:text>
+		    </xsl:if>
+		    <xsl:value-of select="normalize-space(.)"/>
+		    <xsl:if test="substring(.,string-length(.),1)=' '">
+		      <xsl:text> </xsl:text>
+		    </xsl:if>
+		  </xsl:otherwise>
+		</xsl:choose>
                 </w:t>
             </xsl:otherwise>
         </xsl:choose>
