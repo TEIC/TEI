@@ -1636,7 +1636,6 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 		</xsl:for-each>
 		<xsl:text>/@</xsl:text>
 		<xsl:value-of select="ancestor::tei:attDef/@ident"/>
-		<xsl:call-template name="showSpace"/>
 	      </xsl:element>
 	    </xsl:for-each>
 	  </List>
@@ -1700,12 +1699,11 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	  <xsl:for-each select="key('MACROREFS',$this)/ancestor::tei:macroSpec">
 	    <xsl:sort select="@ident"/>
 	    <Item>
-	      <xsl:call-template name="showSpace"/>
-	  <xsl:call-template name="linkTogether">
-	    <xsl:with-param name="name" select="@ident"/>
-	    <xsl:with-param name="class">link_odd_macro</xsl:with-param>
-	  </xsl:call-template>
-	  </Item>
+	      <xsl:call-template name="linkTogether">
+		<xsl:with-param name="name" select="@ident"/>
+		<xsl:with-param name="class">link_odd_macro</xsl:with-param>
+	      </xsl:call-template>
+	    </Item>
 	  </xsl:for-each>
 	</List>
       </xsl:variable>
