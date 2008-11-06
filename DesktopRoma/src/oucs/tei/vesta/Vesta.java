@@ -1,6 +1,8 @@
 package oucs.tei.vesta;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -52,6 +54,8 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 	private String selectedFileName;
 	private String selectedOutputDir;
 	
+	private boolean useCompiledODD = true;
+	
 	private Menu menu1;
 	private CLabel selectedOutputDirLabel;
 	private CLabel selectedInputFileLabel;
@@ -100,8 +104,14 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 		File baseDirFile = new File(baseDir + File.separator + "resources");
 		if(!baseDirFile.exists())
 			baseDir = baseDir.substring(0, baseDir.lastIndexOf(File.separator));
+		
 		baseDir += File.separator;
 		
+		try {
+			baseDir = URLDecoder.decode(baseDir,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		
 		initGUI();
 	}
@@ -252,7 +262,7 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 				{
 					selectInputFile = new Button(InputOutputGroup, SWT.PUSH | SWT.CENTER);
 					selectInputFile.setText("Select Input File");
-					selectInputFile.setBounds(9, 8, 143, 32);
+					selectInputFile.setBounds(9, 7, 143, 32);
 					selectInputFile.setToolTipText("Choose a TEI ODD specification");
 					selectInputFile.addSelectionListener(new SelectionAdapter() {
 						public void widgetSelected(SelectionEvent evt) {
@@ -281,12 +291,47 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 									throw new IllegalArgumentException("Could not find a schemaSpec in the input file.");
 								}
 								
+								// enable potential disabled gui elements
+								cbCreateDTD.setEnabled(true);
+								cbCreateRNG.setEnabled(true);
+								cbCreateXSD.setEnabled(true);
+								cbCompile.setEnabled(true);
+								cbDebug.setEnabled(true);
+								cbDocTEI.setEnabled(true);
+								cbDocHTML.setEnabled(true);
+								combLanguage.setEnabled(true);
+								cbParameterized.setEnabled(true);
+								cbTEIVersion.setEnabled(true);
+								textPatternPrefix.setEnabled(true);
+								
+								// lets create a compiled odd
+								useCompiledODD = true;
+							} catch (IllegalArgumentException e) {
+								// if no schemaSpec was found .. deactivate everything but docx and html
+								cbCreateDTD.setEnabled(false);
+								cbCreateRNG.setEnabled(false);
+								cbCreateXSD.setEnabled(false);
+								cbCompile.setEnabled(false);
+								cbDebug.setEnabled(false);
+								cbDocTEI.setEnabled(false);
+								cbDocHTML.setEnabled(false);
+								combLanguage.setEnabled(false);
+								cbParameterized.setEnabled(false);
+								cbTEIVersion.setEnabled(false);
+								textPatternPrefix.setEnabled(false);
+								
+								// lets not create a compiled odd but only allow for the transformation
+								useCompiledODD = false;
+								
+								// preselect docX creation
+								cbDocDocX.setSelection(true);
 							} catch (Exception e) {
-								MessageBox mb = new MessageBox(getShell());
-								mb.setMessage(e.getMessage());
-								mb.open();
 								selectedFileName = null;
 								selectedInputFileLabel.setText("");
+								
+								MessageBox mb = new MessageBox(Display.getCurrent().getActiveShell());
+								mb.setMessage(e.getMessage());
+								mb.open();
 							}
 							
 
@@ -326,7 +371,6 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 					schemaToGenerateLabel.setText("Select Schema:");
 					schemaToGenerateLabel.setBounds(10, 87, 140, 20);
 					schemaToGenerateLabel.setToolTipText("Choose which schema to process from your ODD file");
-				//	schemaToGenerateLabel.setBackground(SWTResourceManager.getColor(192, 192, 192));
 				}
 				{
 					combSchema = new Combo(InputOutputGroup, SWT.DROP_DOWN | SWT.READ_ONLY | SWT.SINGLE );
@@ -450,7 +494,15 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 		final VestaProcessor proc = new VestaProcessor();
 		proc.setOddFile(selectedFileName);
 		proc.setOutputDir(selectedOutputDir);
-		proc.setSchemaName(combSchema.getItem(combSchema.getSelectionIndex()));
+		if(useCompiledODD)
+			proc.setSchemaName(combSchema.getItem(combSchema.getSelectionIndex()));
+		else {
+			String name =new File(selectedFileName).getName();
+			if(name.indexOf(".") != -1)
+				name = name.substring(0, name.indexOf(".") - 1);
+			proc.setSchemaName(name);
+		}
+		proc.setUseCompiledODD(useCompiledODD);
 		
 		proc.setGenerateDTD(getCbCreateDTD().getSelection());
 		proc.setGenerateRNG(getCbCreateRNG().getSelection());

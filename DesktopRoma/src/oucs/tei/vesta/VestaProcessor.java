@@ -2,6 +2,8 @@ package oucs.tei.vesta;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,6 +89,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
     private final RunDialog runDialog;
     private final Shell shell;
     private String baseDir;
+	private boolean useCompiledODD;
     
 	public VestaProcessor(){
 		shell = new Shell(Display.getDefault());
@@ -98,6 +101,12 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		if(!baseDirFile.exists())
 			baseDir = baseDir.substring(0, baseDir.lastIndexOf(File.separator));
 		baseDir += File.separator;
+		
+		try {
+			baseDir = URLDecoder.decode(baseDir,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -118,7 +127,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		
 		try{
 			process();
-		} catch(final IllegalArgumentException e){
+		} catch(final Exception e){
 			e.printStackTrace();
 			Display.getDefault().asyncExec( new Runnable() {
 				public void run() {
@@ -162,9 +171,9 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 			throw new IllegalArgumentException("The selected output directory does not exist or is not a directory.");
 		
 		// read input file in DomDocument
-		XdmNode doc = null;
+		XdmNode inputDocument = null;
 		try {
-			doc = Utils.readFileIntoSaxonDoc(inputFile);
+			inputDocument = Utils.readFileIntoSaxonDoc(inputFile);
 		} catch(SaxonApiException e){
 			Throwable nested = e.getCause();
 			if(nested instanceof XPathException)
@@ -177,63 +186,72 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		
 		// generateODD
 		XdmNode oddDocument = null;
-		try {
-			 appendInfo("Create compiled odd");
-			 oddDocument = generateODD(doc);
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Could not run odd2odd transformation: " + e.getMessage());
-		}
-
-		// store file
-		if(compile || debug){
-			File compiledODDFile = new File(outputDir + File.separator + schemaName + ".odd");
-			Utils.storeSaxonDoc(oddDocument, compiledODDFile);
-		}
-		
-		// generate Relax
-		XdmNode relaxDocument = null;
-		File relaxFile = null;
-		if(generateRNG || generateXSD){
+		if(useCompiledODD){
 			try {
-				appendInfo("Create Relax NG");
-				relaxDocument = generateRelax(oddDocument);
+				 appendInfo("Create compiled odd");
+				 oddDocument = generateODD(inputDocument);
 			} catch (Exception e) {
-				throw new IllegalArgumentException("Could not run odd2relax transformation: " + e.getMessage());		
+				throw new IllegalArgumentException("Could not run odd2odd transformation: " + e.getMessage());
+			}
+	
+			// store file
+			if(compile || debug){
+				File compiledODDFile = new File(outputDir + File.separator + schemaName + ".odd");
+				Utils.storeSaxonDoc(oddDocument, compiledODDFile);
 			}
 			
-			// store file
-			relaxFile = new File(outputDir + File.separator + schemaName + ".rng");
-			Utils.storeSaxonDoc(relaxDocument, relaxFile);
-		}
-
-		// generate dtd
-		if(generateDTD){
+			// generate Relax
+			XdmNode relaxDocument = null;
+			File relaxFile = null;
+			if(generateRNG || generateXSD){
+				try {
+					appendInfo("Create Relax NG");
+					relaxDocument = generateRelax(oddDocument);
+				} catch (Exception e) {
+					throw new IllegalArgumentException("Could not run odd2relax transformation: " + e.getMessage());		
+				}
+				
+				// store file
+				relaxFile = new File(outputDir + File.separator + schemaName + ".rng");
+				Utils.storeSaxonDoc(relaxDocument, relaxFile);
+			}
+	
+			// generate dtd
+			if(generateDTD){
+				try {
+					appendInfo("Create DTD");
+					generateDTD(oddDocument);
+				} catch (SaxonApiException e) {
+					throw new IllegalArgumentException("Could not run odd2dtd transformation: " + e.getMessage());
+				}
+			}
+			
+			// run trang
 			try {
-				appendInfo("Create DTD");
-				generateDTD(oddDocument);
-			} catch (SaxonApiException e) {
-				throw new IllegalArgumentException("Could not run odd2dtd transformation: " + e.getMessage());
+				// generate compact relax
+				if(generateRNG){
+					appendInfo("Create Compact Relax NG");
+					generateRelaxCompact(relaxFile);
+				}
+				// generate xsd
+				if(generateXSD){
+					appendInfo("Create XSD");
+					generateXSD(relaxFile);
+				}
+			} catch (Exception e) {
+				throw new IllegalArgumentException("Could not run trang: " + e.getMessage());
+			}
+			
+			// free memory
+			relaxDocument = null;
+			
+			// clean up?
+			if(! debug ){
+				if(! generateXSD && null != relaxFile){
+					relaxFile.delete();
+				}
 			}
 		}
-		
-		// run trang
-		try {
-			// generate compact relax
-			if(generateRNG){
-				appendInfo("Create Compact Relax NG");
-				generateRelaxCompact(relaxFile);
-			}
-			// generate xsd
-			if(generateXSD){
-				appendInfo("Create XSD");
-				generateXSD(relaxFile);
-			}
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Could not run trang: " + e.getMessage());
-		}
-		
-		// free memory
-		relaxDocument = null;
 		
 		// documentation
 		if(documentationDocX || documentationHTML || documentationTEI){
@@ -247,46 +265,50 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		
 		
 		XdmNode teiDocumentation = null;
-		if(documentationTEI || documentationDocX){
-			try {
-				teiDocumentation = generateTEIDocumentation(oddDocument);
-			} catch (SaxonApiException e) {
-				appendInfo("Error: Could not create TEI documentation: " + e.getMessage());
+		if(useCompiledODD){
+			// create the TEI documentation if it we are supposed to create it or the docx documentation
+			if(documentationTEI || documentationDocX){
+				try {
+					teiDocumentation = generateTEIDocumentation(oddDocument);
+				} catch (SaxonApiException e) {
+					appendInfo("Error: Could not create TEI documentation: " + e.getMessage());
+				}
 			}
-		}
+			
+			// store file
+			if(documentationTEI){
+				appendInfo("Generate Documentation (TEI)");
+				File teiDocFile = new File(outputDocDir + File.separator + schemaName + ".xml");
+				Utils.storeSaxonDoc(teiDocumentation, teiDocFile);
+			}
+			
+			if(documentationHTML){
+				try{
+					appendInfo("Generate Documentation (HTML)");
+					generateHTMLDocumentation(oddDocument);
+				} catch (Exception e) {
+					appendInfo("Error: Could not create HTML documentation: " + e.getMessage());
+				}
+			}
+		} 
 		
-		// store file
-		if(documentationTEI){
-			appendInfo("Generate Documentation (TEI)");
-			File teiDocFile = new File(outputDocDir + File.separator + schemaName + ".xml");
-			Utils.storeSaxonDoc(teiDocumentation, teiDocFile);
-		}
 		
-		if(documentationDocX){
+		if(documentationDocX && useCompiledODD){
 			appendInfo("Generate Documentation (docx)");
 			try {
 				generateDocXDocumentation(teiDocumentation);
 			} catch (SaxonApiException e) {
 				appendInfo("Error: Could not create docx documentation: " + e.getMessage());
 			}
-		}
-		
-		if(documentationHTML){
-			try{
-				appendInfo("Generate Documentation (HTML)");
-				generateHTMLDocumentation(oddDocument);
-			} catch (Exception e) {
-				appendInfo("Error: Could not create HTML documentation: " + e.getMessage());
+		} else if(documentationDocX){
+			appendInfo("Generate docx file from: " + inputFile);
+			try {
+				generateDocXDocumentation(inputDocument);
+			} catch (SaxonApiException e) {
+				appendInfo("Error: Could not create docx file: " + e.getMessage());
 			}
 		}
 		
-		
-		// clean up?
-		if(! debug ){
-			if(! generateXSD && null != relaxFile){
-				relaxFile.delete();
-			}
-		}
 		
 		//
 		appendInfo("done");
@@ -403,7 +425,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		OutputDirectory od = new LocalOutputDirectory( 
 				sc.getMainUri(),
 				new File(outputDir + File.separator + schemaName + ".rnc"),
-				"xsd",
+				"rnc",
 				DEFAULT_OUTPUT_ENCODING,
                 DEFAULT_LINE_LENGTH,
                 DEFAULT_INDENT
@@ -649,6 +671,10 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		this.patternPrefix = patternPrefix;
 	}
 
+	public void setUseCompiledODD(boolean useCompiledODD) {
+		this.useCompiledODD = useCompiledODD;
+	}
+	
 
 	
 	
@@ -691,8 +717,6 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		appendInfo("Message: " + content.getStringValue());
 		
 	}
-	
-	
 	
 
 }

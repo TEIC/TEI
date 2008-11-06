@@ -3,6 +3,8 @@ package org.tei.iso.converter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
@@ -58,6 +60,11 @@ public class PropertiesProvider {
 			baseDir = baseDir.substring(0, baseDir.lastIndexOf(File.separator));
 		baseDir += File.separator;
 		
+		try {
+			baseDir = URLDecoder.decode(baseDir,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
