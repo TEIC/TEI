@@ -200,4 +200,27 @@
     </xsl:template>
 
 
+    <!-- fake listPerson into an unordered list -->
+  <xsl:template match="tei:listPerson">
+    <xsl:variable name="mylist">
+      <list type="ordered">
+	<xsl:apply-templates/>
+      </list>
+    </xsl:variable>
+    <xsl:apply-templates select="$mylist"/>
+  </xsl:template>
+
+  <xsl:template match="tei:person">
+    <tei:item>
+      <xsl:copy-of select="*|text()"/>
+    </tei:item>
+  </xsl:template>
+
+  <xsl:template match="tei:affiliation">
+    <w:r>
+      <w:br/>
+    </w:r>
+    <xsl:apply-templates/>
+  </xsl:template>
+
 </xsl:stylesheet>
