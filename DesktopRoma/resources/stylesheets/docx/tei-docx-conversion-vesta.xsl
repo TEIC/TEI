@@ -203,7 +203,7 @@
     <!-- fake listPerson into an unordered list -->
   <xsl:template match="tei:listPerson">
     <xsl:variable name="mylist">
-      <tei:list type="ordered">
+      <tei:list type="unordered">
 	    <xsl:apply-templates/>
       </tei:list>
     </xsl:variable>

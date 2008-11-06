@@ -910,7 +910,6 @@
         </xsl:if>
     </xsl:template>
 
-
     <!-- dynamic content -->
     <xsl:template match="teidocx:dynamicContent">
         <xsl:choose>
@@ -3064,9 +3063,23 @@ under new name -->
         </o:OLEObject>
     </xsl:template>
 
+    <!-- Document title -->
+    <xsl:template name="document-title">
+        <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
+            <xsl:call-template name="block-element">
+                <xsl:with-param name="style">Title</xsl:with-param>
+            </xsl:call-template>
+        </xsl:for-each>
+        <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='sub']">
+            <xsl:call-template name="block-element">
+                <xsl:with-param name="style">Subtitle</xsl:with-param>
+            </xsl:call-template>
+        </xsl:for-each>
+        
+    </xsl:template>
+
     <!-- place holder -->
     <xsl:template name="titlepages"/>
-    <xsl:template name="document-title"/>
     <xsl:template name="generateTitle"/>
     <xsl:template name="created-by"/>
 
