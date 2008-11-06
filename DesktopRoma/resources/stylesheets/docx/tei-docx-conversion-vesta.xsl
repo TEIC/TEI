@@ -16,7 +16,7 @@
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
                 xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-                exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
+                exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn tei teidocx">
     <!-- import conversion style -->
     <xsl:import href="tei-docx.xsl"/>
     
@@ -203,9 +203,9 @@
     <!-- fake listPerson into an unordered list -->
   <xsl:template match="tei:listPerson">
     <xsl:variable name="mylist">
-      <list type="ordered">
-	<xsl:apply-templates/>
-      </list>
+      <tei:list type="ordered">
+	    <xsl:apply-templates/>
+      </tei:list>
     </xsl:variable>
     <xsl:apply-templates select="$mylist"/>
   </xsl:template>
@@ -218,9 +218,9 @@
 
   <xsl:template match="tei:affiliation">
     <w:r>
-      <w:br/>
-    </w:r>
-    <xsl:apply-templates/>
+        <w:br/>
+    </w:r>   
+     <xsl:apply-templates/>
   </xsl:template>
 
 </xsl:stylesheet>

@@ -967,9 +967,13 @@
         GI
     -->
     <xsl:template match="tei:gi">
-        <xsl:text>&lt;</xsl:text>
+        <w:r>
+            <w:t>&lt;</w:t>
+        </w:r>
         <xsl:apply-templates/>
-        <xsl:text>&gt;</xsl:text>
+        <w:r>
+            <w:t>&gt;</w:t>
+        </w:r>
     </xsl:template>
     
 

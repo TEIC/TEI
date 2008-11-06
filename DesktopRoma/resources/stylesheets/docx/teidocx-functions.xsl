@@ -154,6 +154,7 @@
                     self::iso:wordObject[w:object] or
                     
                     self::tei:abbr or
+                    self::tei:affiliation or
                     self::tei:author or
                     self::tei:br or
                     self::tei:c or
