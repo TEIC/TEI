@@ -298,11 +298,13 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 								cbCompile.setEnabled(true);
 								cbDebug.setEnabled(true);
 								cbDocTEI.setEnabled(true);
-								cbDocHTML.setEnabled(true);
 								combLanguage.setEnabled(true);
 								cbParameterized.setEnabled(true);
 								cbTEIVersion.setEnabled(true);
 								textPatternPrefix.setEnabled(true);
+								
+								cbDocHTML.setText("documentation (HTML)");
+								cbDocDocX.setText("documentation (docx)");
 								
 								// lets create a compiled odd
 								useCompiledODD = true;
@@ -314,16 +316,19 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 								cbCompile.setEnabled(false);
 								cbDebug.setEnabled(false);
 								cbDocTEI.setEnabled(false);
-								cbDocHTML.setEnabled(false);
 								combLanguage.setEnabled(false);
 								cbParameterized.setEnabled(false);
 								cbTEIVersion.setEnabled(false);
 								textPatternPrefix.setEnabled(false);
 								
+								cbDocHTML.setText("transform to HTML");
+								cbDocDocX.setText("transform to docx");
+								
 								// lets not create a compiled odd but only allow for the transformation
 								useCompiledODD = false;
 								
-								// preselect docX creation
+								// preselect docX and HTML creation
+								cbDocHTML.setSelection(true);
 								cbDocDocX.setSelection(true);
 							} catch (Exception e) {
 								selectedFileName = null;
@@ -499,7 +504,7 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 		else {
 			String name =new File(selectedFileName).getName();
 			if(name.indexOf(".") != -1)
-				name = name.substring(0, name.indexOf(".") - 1);
+				name = name.substring(0, name.indexOf("."));
 			proc.setSchemaName(name);
 		}
 		proc.setUseCompiledODD(useCompiledODD);

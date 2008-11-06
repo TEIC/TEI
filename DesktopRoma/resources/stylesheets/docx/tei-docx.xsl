@@ -964,6 +964,16 @@
     </xsl:template>
 
     <!-- 
+        GI
+    -->
+    <xsl:template match="tei:gi">
+        <xsl:text>&lt;</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:text>&gt;</xsl:text>
+    </xsl:template>
+    
+
+    <!-- 
         Handle examples
     -->
     <xsl:template match="teix:egXML">

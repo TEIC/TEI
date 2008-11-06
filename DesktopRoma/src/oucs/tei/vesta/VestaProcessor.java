@@ -290,7 +290,15 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 					appendInfo("Error: Could not create HTML documentation: " + e.getMessage());
 				}
 			}
-		} 
+		} else if(documentationHTML){
+			try{
+				appendInfo("Generate HTML file");
+				generateHTMLDocumentation(inputDocument);
+			} catch (Exception e) {
+				appendInfo("Error: Could not create HTML file : " + e.getMessage());
+			}
+		}
+		
 		
 		
 		if(documentationDocX && useCompiledODD){
