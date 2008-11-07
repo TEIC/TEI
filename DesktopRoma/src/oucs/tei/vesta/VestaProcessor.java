@@ -51,6 +51,7 @@ import com.thaiopensource.relaxng.output.LocalOutputDirectory;
 import com.thaiopensource.relaxng.output.OutputDirectory;
 import com.thaiopensource.relaxng.output.OutputFailedException;
 import com.thaiopensource.relaxng.output.OutputFormat;
+import com.thaiopensource.relaxng.output.rnc.RncOutputFormat;
 import com.thaiopensource.relaxng.output.xsd.XsdOutputFormat;
 import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
 import com.thaiopensource.util.UriOrFile;
@@ -424,10 +425,10 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 	
 	public void generateRelaxCompact(File input) throws InputFailedException, InvalidParamsException, IOException, SAXException, OutputFailedException{
 		InputFormat inFormat = new SAXParseInputFormat();
-		OutputFormat of = new XsdOutputFormat();
+		OutputFormat of = new RncOutputFormat();
 		
 		String[] inputParamArray = new String[]{};
-		String[] outputParamArray = new String[]{"disable-abstract-elements"};
+		String[] outputParamArray = new String[]{};
 		SchemaCollection sc =  inFormat.load(UriOrFile.toUri(input.getAbsolutePath()), inputParamArray, "rnc", this);
 		
 		OutputDirectory od = new LocalOutputDirectory( 
