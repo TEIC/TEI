@@ -519,10 +519,10 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 			proc.setLanguage("en");
 			break;
 		case 1:
-			proc.setLanguage("de");
+			proc.setLanguage("es");
 			break;
 		case 2:
-			proc.setLanguage("es");
+			proc.setLanguage("de");
 			break;
 		case 3:
 			proc.setLanguage("fr");
