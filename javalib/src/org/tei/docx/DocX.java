@@ -1,27 +1,14 @@
 package org.tei.docx;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.UUID;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
 
-import javax.print.attribute.standard.Destination;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
-
-import org.tei.utils.FileUtils;
-import org.tei.utils.SaxonProcFactory;
-import org.tei.utils.XMLUtils;
 
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
@@ -33,6 +20,11 @@ import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XsltCompiler;
 import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
+
+import org.tei.exceptions.ConfigurationException;
+import org.tei.utils.FileUtils;
+import org.tei.utils.SaxonProcFactory;
+import org.tei.utils.XMLUtils;
 
 public class DocX {
 
@@ -55,7 +47,6 @@ public class DocX {
 	};
 	
 	private String[] archiveFilesToCopy = new String[]{
-		 "[Content_Types].xml"
 	};
 	
 	private File zipFile;
@@ -71,8 +62,11 @@ public class DocX {
 	 * Constructs a docx object from some docx inputstream
 	 * @param name
 	 * @param in
+	 * @param propertiesProvider
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public DocX(String name, InputStream in, DocXPropertiesProvider propertiesProvider){
+	public DocX(String name, InputStream in, DocXPropertiesProvider propertiesProvider) throws FileNotFoundException, IOException{
 		this.name = name;
 		this.propertiesProvider = propertiesProvider;
 		unzipData(in);
@@ -81,8 +75,11 @@ public class DocX {
 	/**
 	 * Constructs a docx object from the empty template
 	 * @param teiDoc
+	 * @param propertiesProvider
+	 * @throws ConfigurationException 
+	 * @throws IOException 
 	 */
-	public DocX(String name, DocXPropertiesProvider propertiesProvider){
+	public DocX(String name, DocXPropertiesProvider propertiesProvider) throws ConfigurationException, IOException{
 		this.name = name;
 		this.propertiesProvider = propertiesProvider;
 		
@@ -92,22 +89,29 @@ public class DocX {
 			InputStream in = new FileInputStream(templateFile);
 			unzipData(in);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			ConfigurationException ic = new ConfigurationException("Could not load docx template at: " + propertiesProvider.docx_pp_getDocXTemplateFile());
+			ic.initCause(e);
+			throw ic;
 		}
 	}
 	
-	public DocX(String name, TEIArchive archive, DocXPropertiesProvider propertiesProvider){
+	/**
+	 * Creates a new DocX object from an existing TEIArchive
+	 * 
+	 * @param name
+	 * @param archive
+	 * @param propertiesProvider
+	 * @throws ConfigurationException 
+	 * @throws IOException 
+	 */
+	public DocX(String name, TEIArchive archive, DocXPropertiesProvider propertiesProvider) throws ConfigurationException, IOException{
 		this(name, propertiesProvider);
 
 		// copy directories from archive in docx file 
 		for(String dirName : archiveDirectoriesToCopy){
 			File dir = new File(archive.getDirectory() + File.separator + dirName);
 			if(dir.exists() && dir.isDirectory()){
-				try {
-					FileUtils.copyDir(dir, new File(directoryName + File.separator + dirName));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				FileUtils.copyDir(dir, new File(directoryName + File.separator + dirName));
 			}
 		}
 		
@@ -115,11 +119,7 @@ public class DocX {
 		for(String fileName : archiveFilesToCopy){
 			File file = new File(archive.getDirectory() + File.separator + fileName);
 			if(file.exists()){
-				try {
-					FileUtils.copyFile(file, new File(directoryName + File.separator + fileName));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				FileUtils.copyFile(file, new File(directoryName + File.separator + fileName));
 			}
 		}
 	}
@@ -130,8 +130,10 @@ public class DocX {
 	/**
 	 * Unzips the .docx file
 	 * @param in
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	private void unzipData(InputStream in) {
+	private void unzipData(InputStream in) throws FileNotFoundException, IOException {
 		// where should we unzip the file to
 		String tmpDir = propertiesProvider.docx_pp_getTempDir();
 		// name of the directory

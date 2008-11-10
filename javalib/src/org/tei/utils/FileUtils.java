@@ -85,8 +85,10 @@ public class FileUtils {
 	 * Unzips a zip compressed file to some output directory.
 	 * @param in The InputStream.
 	 * @param outputDir The output directory.
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public static void unzipFile(InputStream in, File outputDir) {
+	public static void unzipFile(InputStream in, File outputDir) throws FileNotFoundException, IOException {
 		// name of the directory
 		String directoryName = outputDir.getAbsolutePath();
 
@@ -104,34 +106,31 @@ public class FileUtils {
 		
 		// decompress file
 		ZipEntry entry;
-		try {
-			while((entry = zis.getNextEntry()) != null) {
-				// if it is a directory, create it
-				if(entry.isDirectory()){
-					File dir = new File(directoryName + File.separator + entry.getName()); 
-					if(! dir.exists())
-						dir.mkdirs();
-					continue;
-				}
-				
-				// create directories if necessary
-				new File( new File(directoryName + File.separator + entry.getName()).getParent() ).mkdirs();
-				
-				
-				int count;
-				byte data[] = new byte[BUFFER];
-	            // write the files to the disk
-				FileOutputStream fos = new FileOutputStream(directoryName + File.separator + entry.getName());
-	            dest = new BufferedOutputStream(fos, BUFFER);
-	            while ((count = zis.read(data, 0, BUFFER)) != -1) {
-	               dest.write(data, 0, count);
-	            }
-	            dest.flush();
-	            dest.close();
+		while((entry = zis.getNextEntry()) != null) {
+			// if it is a directory, create it
+			if(entry.isDirectory()){
+				File dir = new File(directoryName + File.separator + entry.getName()); 
+				if(! dir.exists())
+					dir.mkdirs();
+				continue;
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
+			
+			// create directories if necessary
+			new File( new File(directoryName + File.separator + entry.getName()).getParent() ).mkdirs();
+			
+			
+			int count;
+			byte data[] = new byte[BUFFER];
+            // write the files to the disk
+			FileOutputStream fos = new FileOutputStream(directoryName + File.separator + entry.getName());
+            dest = new BufferedOutputStream(fos, BUFFER);
+            while ((count = zis.read(data, 0, BUFFER)) != -1) {
+               dest.write(data, 0, count);
+            }
+            dest.flush();
+            dest.close();
+		}
+	
 	}
 	
 	/**
