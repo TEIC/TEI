@@ -17,31 +17,28 @@
 	xmlns:mml="http://www.w3.org/1998/Math/MathML"
 	xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
 	xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
+	xmlns:xd="http://www.pnp-software.com/XSLTdoc"
 	exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso edate">
-  <!-- $Id: docx-tei-grouping.xsl 4102 2008-10-28 09:36:39Z oucs0063 $ 
-    $Id: docx-tei-grouping.xsl 4102 2008-10-28 09:36:39Z oucs0063 $
- 
-    The Contents of this file are made available subject to
-    the terms of GNU Lesser General Public License Version 2.1.
- 
- 
-      GNU Lesser General Public License Version 2.1
-      =============================================
-      Copyright 2005 by Sun Microsystems, Inc.
-      901 San Antonio Road, Palo Alto, CA 94303, USA
- 
-      This library is free software; you can redistribute it and/or
-      modify it under the terms of the GNU Lesser General Public
-      License version 2.1, as published by the Free Software Foundation.
- 
-      This library is distributed in the hope that it will be useful,
-      but WITHOUT ANY WARRANTY; without even the implied warranty of
-      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-      Lesser General Public License for more details.
--->
-
-	<xsl:import href="omml2mml.xsl"/>
+	
+	<!--xsl:import href="omml2mml.xsl"/-->
 	<xsl:import href="teidocx-functions.xsl"/>
+	
+	<xd:doc type="stylesheet">
+		<xd:short> TEI stylesheet for converting Word docx files to TEI </xd:short>
+		<xd:detail> This library is free software; you can redistribute it and/or
+			modify it under the terms of the GNU Lesser General Public License as
+			published by the Free Software Foundation; either version 2.1 of the
+			License, or (at your option) any later version. This library is
+			distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+			without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+			PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+			details. You should have received a copy of the GNU Lesser General Public
+			License along with this library; if not, write to the Free Software
+			Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
+		<xd:author>See AUTHORS</xd:author>
+		<xd:cvsId>$Id: odd2html.xsl 4802 2008-09-15 10:55:05Z rahtz $</xd:cvsId>
+		<xd:copyright>2008, TEI Consortium</xd:copyright>
+	</xd:doc>
 	
 	<xsl:variable name="convert-graphics">true</xsl:variable>
 	<xsl:variable name="convert-headers">true</xsl:variable>

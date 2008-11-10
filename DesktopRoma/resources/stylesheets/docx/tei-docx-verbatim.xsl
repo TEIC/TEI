@@ -12,10 +12,28 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
     xmlns:teix="http://www.tei-c.org/ns/Examples"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
     exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom w estr" >
     
     <xsl:import href="verbatim.xsl"/>
+    
+    <xd:doc type="stylesheet">
+        <xd:short> TEI Utility stylesheet to create verbatim XML for the TEI to Word conversion </xd:short>
+        <xd:detail> This library is free software; you can redistribute it and/or
+            modify it under the terms of the GNU Lesser General Public License as
+            published by the Free Software Foundation; either version 2.1 of the
+            License, or (at your option) any later version. This library is
+            distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+            without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+            PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+            details. You should have received a copy of the GNU Lesser General Public
+            License along with this library; if not, write to the Free Software
+            Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
+        <xd:author>See AUTHORS</xd:author>
+        <xd:cvsId>$Id: odd2html.xsl 4802 2008-09-15 10:55:05Z rahtz $</xd:cvsId>
+        <xd:copyright>2008, TEI Consortium</xd:copyright>
+    </xd:doc>
     
     <!--
         <xsl:param name="startComment">&lt;span class="comment"&gt;</xsl:param>

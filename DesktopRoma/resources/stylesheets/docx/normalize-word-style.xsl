@@ -13,8 +13,26 @@
     xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
     xmlns:mml="http://www.w3.org/1998/Math/MathML"
     xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+  <xd:doc type="stylesheet">
+    <xd:short> TEI Utility stylesheet for making Word docx files from TEI XML (see tei-docx.xsl)</xd:short>
+    <xd:detail> This library is free software; you can redistribute it and/or
+      modify it under the terms of the GNU Lesser General Public License as
+      published by the Free Software Foundation; either version 2.1 of the
+      License, or (at your option) any later version. This library is
+      distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+      without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+      PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+      details. You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
+    <xd:author>See AUTHORS</xd:author>
+    <xd:cvsId>$Id: odd2html.xsl 4802 2008-09-15 10:55:05Z rahtz $</xd:cvsId>
+    <xd:copyright>2008, TEI Consortium</xd:copyright>
+  </xd:doc>
 
   <xsl:key name="STYLES" match="w:style" use="@w:styleId"/>
   <xsl:param name="word-directory" >..</xsl:param>

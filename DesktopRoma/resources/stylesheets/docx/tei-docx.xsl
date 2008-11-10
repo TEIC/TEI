@@ -23,15 +23,33 @@
     xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
     xmlns:mml="http://www.w3.org/1998/Math/MathML"
     xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
     xmlns:contypes="http://schemas.openxmlformats.org/package/2006/content-types"
     xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
     exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn xsi dc dcterms dcmitype contypes teidocx teix html">
-    <!-- $Id: tei-docx.xsl 4113 2008-10-28 13:43:11Z oucs0063 $ -->
-    <!--  <xsl:import href="mml2omml.xsl"/>-->
     <xsl:import href="teidocx-functions.xsl"/>
     <xsl:import href="tei-docx-verbatim.xsl"/>
     <xsl:import href="variables.xsl"/>
+    
+    <xd:doc type="stylesheet">
+        <xd:short> TEI stylesheet for making Word docx files from TEI XML </xd:short>
+        <xd:detail> This library is free software; you can redistribute it and/or
+            modify it under the terms of the GNU Lesser General Public License as
+            published by the Free Software Foundation; either version 2.1 of the
+            License, or (at your option) any later version. This library is
+            distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+            without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+            PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+            details. You should have received a copy of the GNU Lesser General Public
+            License along with this library; if not, write to the Free Software
+            Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
+        <xd:author>See AUTHORS</xd:author>
+        <xd:cvsId>$Id: odd2html.xsl 4802 2008-09-15 10:55:05Z rahtz $</xd:cvsId>
+        <xd:copyright>2008, TEI Consortium</xd:copyright>
+    </xd:doc>
+    
+    
 
     <xsl:variable name="align">right</xsl:variable>
 
@@ -2711,7 +2729,7 @@ under new name -->
 
                 
                 <!-- copy every default from the original, that we do -->
-                <xsl:for-each select="document(concat($word-directory,'/Content_Types.xml'))//contypes:Default">
+                <xsl:for-each select="document(concat($word-directory,'/%5BContent_Types%5D.xml'))//contypes:Default">
                     <xsl:choose>
                         <xsl:when test="@Extension='jpeg'"/>
                         <xsl:when test="@Extension='jpg'"/>
@@ -2735,7 +2753,7 @@ under new name -->
                 
                 
                 <!-- copy every override from the original, that we do -->
-                <xsl:for-each select="document(concat($word-directory,'/Content_Types.xml'))//contypes:Override">
+                <xsl:for-each select="document(concat($word-directory,'/%5BContent_Types%5D.xml'))//contypes:Override">
                     <xsl:choose>
                         <xsl:when test="@PartName='/docProps/core.xml'"/>
                         <xsl:when test="@PartName='/docProps/app.xml'"/>

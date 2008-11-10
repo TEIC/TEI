@@ -15,10 +15,28 @@
     xmlns:mml="http://www.w3.org/1998/Math/MathML"
     xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
     xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
     exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
 
     <xsl:import href="variables.xsl"/>
+    
+    <xd:doc type="stylesheet">
+        <xd:short> Specialized TEI stylesheet for transforming tei into Word docx files for Vesta </xd:short>
+        <xd:detail> This library is free software; you can redistribute it and/or
+            modify it under the terms of the GNU Lesser General Public License as
+            published by the Free Software Foundation; either version 2.1 of the
+            License, or (at your option) any later version. This library is
+            distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+            without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+            PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+            details. You should have received a copy of the GNU Lesser General Public
+            License along with this library; if not, write to the Free Software
+            Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
+        <xd:author>See AUTHORS</xd:author>
+        <xd:cvsId>$Id: odd2html.xsl 4802 2008-09-15 10:55:05Z rahtz $</xd:cvsId>
+        <xd:copyright>2008, TEI Consortium</xd:copyright>
+    </xd:doc>
     
     <!-- returns a listtype for a given stylename (return empty string to figure it out dynamically)-->
     <xsl:function name="teidocx:get-listtype" as="xs:string">
