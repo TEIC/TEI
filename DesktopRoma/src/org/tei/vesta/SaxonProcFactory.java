@@ -1,4 +1,4 @@
-package oucs.tei.vesta;
+package org.tei.vesta;
 
 import net.sf.saxon.FeatureKeys;
 import net.sf.saxon.s9api.Processor;

@@ -8,7 +8,8 @@ import java.net.URLDecoder;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
-import oucs.tei.vesta.VestaProcessor;
+import org.tei.vesta.VestaProcessor;
+
 
 /**
  * Provides access to various properties.

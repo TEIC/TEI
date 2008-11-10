@@ -5,6 +5,6 @@ import net.sf.saxon.s9api.Processor;
 public class SaxonProcFactory {
 
 	public static Processor getProcessor(){
-		return oucs.tei.vesta.SaxonProcFactory.getProcessor();
+		return org.tei.vesta.SaxonProcFactory.getProcessor();
 	}
 }

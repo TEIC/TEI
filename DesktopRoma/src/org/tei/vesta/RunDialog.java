@@ -1,4 +1,4 @@
-package oucs.tei.vesta;
+package org.tei.vesta;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

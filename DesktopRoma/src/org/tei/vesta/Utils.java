@@ -1,4 +1,4 @@
-package oucs.tei.vesta;
+package org.tei.vesta;
 
 import java.io.File;
 import java.io.FileInputStream;
