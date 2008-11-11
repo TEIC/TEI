@@ -16,7 +16,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.CoolBar;
 import org.eclipse.swt.widgets.CoolItem;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
@@ -30,6 +29,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
+import org.tei.utils.XMLUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -81,7 +81,6 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 	private Button cbCreateRNG;
 	private Button cbCreateDTD;
 	private Composite optionsTabComposite;
-	private CoolBar coolBar1;
 	private Group InputOutputGroup;
 	private TabItem advOptionsTab;
 	private TabItem optionsTab;
@@ -97,9 +96,10 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 	}
 
 	public Vesta(Composite parent, int style) {
+		
 		super(parent, style);
 		
-		baseDir = VestaProcessor.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		baseDir = Vesta.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		baseDir = baseDir.substring(0, baseDir.lastIndexOf(File.separator));
 		File baseDirFile = new File(baseDir + File.separator + "resources");
 		if(!baseDirFile.exists())
@@ -122,7 +122,6 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 	private void initGUI() {
 		try {
 			this.setSize(525, 334);
-			//this.setBackground(SWTResourceManager.getColor(192, 192, 192));
 			this.setLayout(null);
 			{
 				Options = new TabFolder(this, SWT.NONE);
@@ -133,7 +132,6 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 						optionsTabComposite = new Composite(Options, SWT.NONE);
 						optionsTab.setControl(optionsTabComposite);
 						optionsTabComposite.setLayout(null);
-						//optionsTabComposite.setBackground(SWTResourceManager.getColor(192, 192, 192));
 						{
 							cbCreateXSD = new Button(optionsTabComposite, SWT.CHECK | SWT.LEFT);
 							cbCreateXSD.setText("generate XSD");
@@ -273,13 +271,12 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 								return;
 							selectedInputFileLabel.setText(selectedFileName);
 							
-
 							// read input file in DomDocument and search for schemas
 							Document doc = null;
 							try {
-								doc = Utils.readInputFileAsXML(new File(selectedFileName));
+								doc = XMLUtils.readInputFileIntoJAXPDoc(new File(selectedFileName));
 								NodeList list = doc.getDocumentElement().getElementsByTagName("schemaSpec");
-
+								
 								if(list.getLength() > 0){
 									java.util.List<String> idents = new ArrayList<String>();
 									for(int i = 0; i < list.getLength(); i++){
@@ -290,7 +287,6 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 								} else {
 									throw new IllegalArgumentException("Could not find a schemaSpec in the input file.");
 								}
-								
 								// enable potential disabled gui elements
 								cbCreateDTD.setEnabled(true);
 								cbCreateRNG.setEnabled(true);
@@ -413,25 +409,29 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 	* org.eclipse.swt.widgets.Composite inside a new Shell.
 	*/
 	public static void main(String[] args) {
-		Display.setAppName("Vesta");
-		Display display = Display.getDefault();
-		
-		Shell shell = new Shell(display,SWT.DIALOG_TRIM);
-		Vesta inst = new Vesta(shell, SWT.NULL);
-		Point size = inst.getSize();
-		shell.setLayout(new FillLayout());
-		shell.layout();
-		if(size.x == 0 && size.y == 0) {
-			inst.pack();
-			shell.pack();
-		} else {
-			Rectangle shellBounds = shell.computeTrim(0, 0, size.x, size.y);
-			shell.setSize(shellBounds.width, shellBounds.height);
-		}
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
+		try{
+			Display.setAppName("Vesta");
+			Display display = Display.getDefault();
+			Shell shell = new Shell(display,SWT.DIALOG_TRIM);
+			Vesta inst = new Vesta(shell, SWT.NULL);
+			Point size = inst.getSize();
+			shell.setLayout(new FillLayout());
+			shell.layout();
+			
+			if(size.x == 0 && size.y == 0) {
+				inst.pack();
+				shell.pack();
+			} else {
+				Rectangle shellBounds = shell.computeTrim(0, 0, size.x, size.y);
+				shell.setSize(shellBounds.width, shellBounds.height);
+			}
+			shell.open();
+			while (!shell.isDisposed()) {
+				if (!display.readAndDispatch())
+					display.sleep();
+			}
+		} catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 	

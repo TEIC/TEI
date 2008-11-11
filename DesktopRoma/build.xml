@@ -7,6 +7,8 @@
 	<property name="lib.dir"     value="lib"/>
 	<property name="deploy.dir"     value="deploy"/>
 	<property name="resources.dir"     value="resources"/>	
+	<property name="stylesheets.dir"     value="../Stylesheets2"/> 
+	<property name="tei-javalib.dir"   value="../TEI-javalib/deploy"/>
 	
 	<property name="swt.linux.dir" value="lib/swt-3.4-gtk-linux-x86"/>
 	<property name="swt.windows.dir" value="lib/swt-3.4-win32-win32-x86"/>
@@ -20,6 +22,7 @@
 		<path id="classpath">
 			<pathelement location="src"/>
 			<fileset dir="${lib.dir}" includes="**/*.jar"/>
+			<fileset dir="${tei-javalib.dir}" includes="**/*.jar"/>
 	    </path>
 	</target>
 	
@@ -83,24 +86,21 @@
 	    <echo message="==========================================" />
     	
 		<copy todir="${build.dir}">
-	      	 <fileset dir="${src.dir}" includes="**/*.*"/>
+	      	 <fileset dir="${src.dir}" includes="**/*.java"/>
+			 <fileset dir="${src.dir}" includes="**/*.class"/>
+			 <fileset file="${src.dir}/properties-jar.xml"/>
 	    </copy>
+		
+		<move file="${build.dir}/properties-jar.xml" tofile="${build.dir}/properties.xml"/>
     </target>
 	
 	<target name="deploy">
 		
 		<jar destfile="${deploy.dir}/${deploy.dir.env}/vesta.jar" 
 					 basedir="${build.dir}" includes="**/*.*">
-					<zipfileset src="${lib.dir}/saxonb9-1-0-1j//saxon9-dom.jar" includes="**/*.*"/>
-					<zipfileset src="${lib.dir}/saxonb9-1-0-1j/saxon9-dom4j.jar" includes="**/*.*"/>
-					<zipfileset src="${lib.dir}/saxonb9-1-0-1j/saxon9-jdom.jar" includes="**/*.*"/>
-					<zipfileset src="${lib.dir}/saxonb9-1-0-1j/saxon9-s9api.jar" includes="**/*.*"/>
-					<zipfileset src="${lib.dir}/saxonb9-1-0-1j/saxon9-xpath.jar" includes="**/*.*"/>
-					<zipfileset src="${lib.dir}/saxonb9-1-0-1j/saxon9.jar" includes="**/*.*"/>
 
-					<zipfileset src="${lib.dir}/trang-20081028/trang.jar" includes="**/*.*"/>
-
-					<zipfileset src="${swt.jar}" includes="**/*.*"/>
+			        <zipfileset src="${tei-javalib.dir}/tei-utils.jar" includes="**/*.*"/>
+			        <zipfileset src="${swt.jar}" includes="**/*.*"/>
 			        <manifest>
 		   	      	  <attribute name="Built-By" value="${user.name}"/>
 				      <attribute name="Implementation-Title" value="Vesta"/>
@@ -112,8 +112,12 @@
 		
 		<!-- copy resources -->
 		<copy todir="${deploy.dir}/${deploy.dir.env}/resources">
-         <fileset dir="${resources.dir}"/>
+          <fileset dir="${resources.dir}"/>
         </copy>
+		
+		<copy todir="${deploy.dir}/${deploy.dir.env}/resources/stylesheets">
+			<fileset dir="${stylesheets.dir}"/>
+		</copy>
 
 	</target>
 	

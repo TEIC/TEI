@@ -38,7 +38,11 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.tei.iso.converter.DocX;
+import org.tei.docx.DocX;
+import org.tei.exceptions.ConfigurationException;
+import org.tei.utils.FileUtils;
+import org.tei.utils.SaxonProcFactory;
+import org.tei.utils.XMLUtils;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -55,7 +59,6 @@ import com.thaiopensource.relaxng.output.rnc.RncOutputFormat;
 import com.thaiopensource.relaxng.output.xsd.XsdOutputFormat;
 import com.thaiopensource.relaxng.translate.util.InvalidParamsException;
 import com.thaiopensource.util.UriOrFile;
-import com.thaiopensource.xml.sax.ErrorHandlerImpl;
 
 public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, MessageListener{
 
@@ -80,10 +83,8 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 	private boolean parameterizedDTD = false;
 	private String patternPrefix = "";
 	
-	private static final String P5SUBSET = "../../local/p5subset.xml";
-	private static final String SCHEMA_DIRECTORY = "resources/stylesheets/odds2";
-	private static final String CSS_DIRECTORY = "resources/stylesheets";
-    private static final String DEFAULT_OUTPUT_ENCODING = "UTF-8";
+	
+	private static final String DEFAULT_OUTPUT_ENCODING = "UTF-8";
     private static final int DEFAULT_LINE_LENGTH = 72;
     private static final int DEFAULT_INDENT = 2;	
 	
@@ -91,6 +92,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
     private final Shell shell;
     private String baseDir;
 	private boolean useCompiledODD;
+	private PropertiesProvider properties;
     
 	public VestaProcessor(){
 		shell = new Shell(Display.getDefault());
@@ -108,6 +110,9 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
+		
+		// load properties
+		this.properties = PropertiesProvider.getInstance();
 	}
 	
 	
@@ -174,7 +179,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		// read input file in DomDocument
 		XdmNode inputDocument = null;
 		try {
-			inputDocument = Utils.readFileIntoSaxonDoc(inputFile);
+			inputDocument = XMLUtils.readFileIntoSaxonDoc(inputFile);
 		} catch(SaxonApiException e){
 			Throwable nested = e.getCause();
 			if(nested instanceof XPathException)
@@ -198,7 +203,11 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 			// store file
 			if(compile || debug){
 				File compiledODDFile = new File(outputDir + File.separator + schemaName + ".odd");
-				Utils.storeSaxonDoc(oddDocument, compiledODDFile);
+				try {
+					XMLUtils.storeDocument(oddDocument, compiledODDFile);
+				} catch (IOException e) {
+					appendInfo("Error: Could not store compiled ODD file: " + e.getMessage());
+				}
 			}
 			
 			// generate Relax
@@ -214,7 +223,11 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 				
 				// store file
 				relaxFile = new File(outputDir + File.separator + schemaName + ".rng");
-				Utils.storeSaxonDoc(relaxDocument, relaxFile);
+				try {
+					XMLUtils.storeDocument(relaxDocument, relaxFile);
+				} catch (IOException e) {
+					appendInfo("Error: Could not store relaxNG schema: " + e.getMessage());
+				}
 			}
 	
 			// generate dtd
@@ -280,7 +293,11 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 			if(documentationTEI){
 				appendInfo("Generate Documentation (TEI)");
 				File teiDocFile = new File(outputDocDir + File.separator + schemaName + ".xml");
-				Utils.storeSaxonDoc(teiDocumentation, teiDocFile);
+				try {
+					XMLUtils.storeDocument(teiDocumentation, teiDocFile);
+				} catch (IOException e) {
+					appendInfo("Error: Could not store TEI documentation: " + e.getMessage());
+				}
 			}
 			
 			if(documentationHTML){
@@ -306,14 +323,14 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 			appendInfo("Generate Documentation (docx)");
 			try {
 				generateDocXDocumentation(teiDocumentation);
-			} catch (SaxonApiException e) {
+			} catch (Exception e) {
 				appendInfo("Error: Could not create docx documentation: " + e.getMessage());
 			}
 		} else if(documentationDocX){
 			appendInfo("Generate docx file from: " + inputFile);
 			try {
 				generateDocXDocumentation(inputDocument);
-			} catch (SaxonApiException e) {
+			} catch (Exception e) {
 				appendInfo("Error: Could not create docx file: " + e.getMessage());
 			}
 		}
@@ -343,7 +360,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		// prepare transformer
 		XsltCompiler comp = proc.newXsltCompiler();
 		comp.setErrorListener(this);
-		XsltExecutable odd2oddExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2odd.xsl"));
+		XsltExecutable odd2oddExec = comp.compile(new StreamSource(PropertiesProvider.getInstance().getStylesheetDir() + File.separator + "odd2odd.xsl"));
 		XsltTransformer odd2oddTransformer = odd2oddExec.load();
 		
 		odd2oddTransformer.setParameter(new QName("selectedSchema"), new XdmAtomicValue(schemaName));
@@ -354,7 +371,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 			odd2oddTransformer.setParameter(new QName("stripped"), new XdmAtomicValue("true"));
 		
 		
-		odd2oddTransformer.setParameter(new QName("localsource"), new XdmAtomicValue(P5SUBSET));
+		odd2oddTransformer.setParameter(new QName("localsource"), new XdmAtomicValue(PropertiesProvider.getInstance().getP5Subset()));
 		odd2oddTransformer.setParameter(new QName("TEIC"), new XdmAtomicValue("true") );
 		odd2oddTransformer.setParameter(new QName("lang"), new XdmAtomicValue(language));
 		odd2oddTransformer.setParameter(new QName("doclang"), new XdmAtomicValue(language));
@@ -376,7 +393,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		// prepare transformer
 		XsltCompiler comp = proc.newXsltCompiler();
 		comp.setErrorListener(this);
-		XsltExecutable odd2relaxExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2relax.xsl"));
+		XsltExecutable odd2relaxExec = comp.compile(new StreamSource(PropertiesProvider.getInstance().getStylesheetDir() + File.separator + "odd2relax.xsl"));
 		XsltTransformer odd2relaxTransformer = odd2relaxExec.load();
 		
 		if(debug)
@@ -404,7 +421,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		// prepare transformer
 		XsltCompiler comp = proc.newXsltCompiler();
 		comp.setErrorListener(this);
-		XsltExecutable odd2dtdExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2dtd.xsl"));
+		XsltExecutable odd2dtdExec = comp.compile(new StreamSource(PropertiesProvider.getInstance().getStylesheetDir() + File.separator + "odd2dtd.xsl"));
 		XsltTransformer odd2dtdTransformer = odd2dtdExec.load();
 		
 		if(debug)
@@ -470,12 +487,12 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		// prepare transformer
 		XsltCompiler comp = proc.newXsltCompiler();
 		comp.setErrorListener(this);
-		XsltExecutable odd2teiDocExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2lite.xsl"));
+		XsltExecutable odd2teiDocExec = comp.compile(new StreamSource(PropertiesProvider.getInstance().getStylesheetDir() + File.separator + "odd2lite.xsl"));
 		XsltTransformer odd2teiDocTransformer = odd2teiDocExec.load();
 		
 		
 		odd2teiDocTransformer.setParameter(new QName("TEIC"), new XdmAtomicValue("true") );
-		odd2teiDocTransformer.setParameter(new QName("localsource"), new XdmAtomicValue(P5SUBSET));
+		odd2teiDocTransformer.setParameter(new QName("localsource"), new XdmAtomicValue(PropertiesProvider.getInstance().getP5Subset()));
 		odd2teiDocTransformer.setParameter(new QName("lang"), new XdmAtomicValue(language));
 		odd2teiDocTransformer.setParameter(new QName("doclang"), new XdmAtomicValue(language));
 		
@@ -488,8 +505,8 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		return (XdmNode) result.getXdmNode();
 	}
 	
-	private void generateDocXDocumentation(XdmNode teiDocumentation) throws SaxonApiException {
-		DocX docx = new DocX(schemaName, null);
+	private void generateDocXDocumentation(XdmNode teiDocumentation) throws SaxonApiException, ConfigurationException, IOException {
+		DocX docx = new DocX(schemaName, new PropertiesProvider());
 		docx.mergeTEI(teiDocumentation);
 		File zipFile = docx.getDocXFile();
 		zipFile.renameTo(new File(outputDocDir + File.separator + schemaName + ".docx"));
@@ -503,7 +520,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		// prepare transformer
 		XsltCompiler comp = proc.newXsltCompiler();
 		comp.setErrorListener(this);
-		XsltExecutable odd2HTMLDocExec = comp.compile(new StreamSource(baseDir + SCHEMA_DIRECTORY + File.separator + "odd2html.xsl"));
+		XsltExecutable odd2HTMLDocExec = comp.compile(new StreamSource(PropertiesProvider.getInstance().getStylesheetDir() + File.separator + "odd2html.xsl"));
 		XsltTransformer odd2HTMLDocTransformer = odd2HTMLDocExec.load();
 		
 		odd2HTMLDocTransformer.setParameter(new QName("STDOUT"), new XdmAtomicValue("true") );
@@ -522,8 +539,8 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		odd2HTMLDocTransformer.transform();
 		
 		// copy css
-		Utils.copyFile(new File(baseDir + CSS_DIRECTORY + File.separator + "tei.css"), new File( outputDocDir + File.separator + "tei.css") );
-		Utils.copyFile(new File(baseDir + CSS_DIRECTORY + File.separator + "odd.css"), new File( outputDocDir + File.separator + "odd.css") );
+		FileUtils.copyFile(new File(PropertiesProvider.getInstance().getCSSDir() + File.separator + "tei.css"), new File( outputDocDir + File.separator + "tei.css") );
+		FileUtils.copyFile(new File(PropertiesProvider.getInstance().getCSSDir() + File.separator + "odd.css"), new File( outputDocDir + File.separator + "odd.css") );
 	}
 	
 
