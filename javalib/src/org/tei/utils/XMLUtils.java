@@ -94,11 +94,12 @@ public class XMLUtils {
 	 */
 	public static Document readInputFileIntoJAXPDoc(File file) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-        docBuilderFactory.setNamespaceAware(true);
+		docBuilderFactory.setNamespaceAware(true);
 		DocumentBuilder docBuilder;
         Document doc = null;
        
 		docBuilder = docBuilderFactory.newDocumentBuilder();
+		
 		doc = docBuilder.parse(file);
 	    
         return doc;

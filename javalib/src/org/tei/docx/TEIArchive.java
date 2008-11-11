@@ -24,23 +24,19 @@ public class TEIArchive {
 	private String directoryName;
 	private TEIArchivePropertiesProvider propertiesProvider;
 
-	public TEIArchive(String name, InputStream in, TEIArchivePropertiesProvider propertiesProvider){
+	public TEIArchive(String name, InputStream in, TEIArchivePropertiesProvider propertiesProvider) throws FileNotFoundException, IOException{
 		this.name = name;
 		this.propertiesProvider = propertiesProvider;
 		unzipData(in);
 	}
 	
-	public TEIArchive(String name, File in, TEIArchivePropertiesProvider propertiesProvider){
+	public TEIArchive(String name, File in, TEIArchivePropertiesProvider propertiesProvider) throws FileNotFoundException, IOException{
 		this.name = name;
 		this.propertiesProvider = propertiesProvider;
-		try {
-			unzipData(new FileInputStream(in));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		unzipData(new FileInputStream(in));
 	}
 
-	private void unzipData(InputStream in) {
+	private void unzipData(InputStream in) throws FileNotFoundException, IOException {
 		// where should we unzip the file to
 		String tmpDir = propertiesProvider.teiarc_pp_getTempDir();
 		// name of the directory
@@ -58,33 +54,29 @@ public class TEIArchive {
 		
 		// decompress file
 		ZipEntry entry;
-		try {
-			while((entry = zis.getNextEntry()) != null) {
-				// if it is a directory, create it
-				if(entry.isDirectory()){
-					File dir = new File(directoryName + File.separator + entry.getName()); 
-					if(! dir.exists())
-						dir.mkdirs();
-					continue;
-				}
-				
-				// create directories if necessary
-				new File( new File(directoryName + File.separator + entry.getName()).getParent() ).mkdirs();
-				
-				int count;
-				byte data[] = new byte[BUFFER];
-	            // write the files to the disk
-				FileOutputStream fos = new FileOutputStream(directoryName + File.separator + entry.getName());
-	            dest = new BufferedOutputStream(fos, BUFFER);
-	            while ((count = zis.read(data, 0, BUFFER)) != -1) {
-	               dest.write(data, 0, count);
-	            }
-	            dest.flush();
-	            dest.close();
+		while((entry = zis.getNextEntry()) != null) {
+			// if it is a directory, create it
+			if(entry.isDirectory()){
+				File dir = new File(directoryName + File.separator + entry.getName()); 
+				if(! dir.exists())
+					dir.mkdirs();
+				continue;
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
+			
+			// create directories if necessary
+			new File( new File(directoryName + File.separator + entry.getName()).getParent() ).mkdirs();
+			
+			int count;
+			byte data[] = new byte[BUFFER];
+            // write the files to the disk
+			FileOutputStream fos = new FileOutputStream(directoryName + File.separator + entry.getName());
+            dest = new BufferedOutputStream(fos, BUFFER);
+            while ((count = zis.read(data, 0, BUFFER)) != -1) {
+               dest.write(data, 0, count);
+            }
+            dest.flush();
+            dest.close();
+		}
 	}
 	
 	public XdmNode getTEIDocument(){

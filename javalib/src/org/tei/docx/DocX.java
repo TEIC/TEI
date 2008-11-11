@@ -59,21 +59,8 @@ public class DocX {
 	private DocXPropertiesProvider propertiesProvider;
 	
 	/**
-	 * Constructs a docx object from some docx inputstream
-	 * @param name
-	 * @param in
-	 * @param propertiesProvider
-	 * @throws IOException 
-	 * @throws FileNotFoundException 
-	 */
-	public DocX(String name, InputStream in, DocXPropertiesProvider propertiesProvider) throws FileNotFoundException, IOException{
-		this.name = name;
-		this.propertiesProvider = propertiesProvider;
-		unzipData(in);
-	}
-	
-	/**
 	 * Constructs a docx object from the empty template
+	 * 
 	 * @param teiDoc
 	 * @param propertiesProvider
 	 * @throws ConfigurationException 
@@ -94,6 +81,21 @@ public class DocX {
 			throw ic;
 		}
 	}
+	
+	/**
+	 * Constructs a docx object from some docx inputstream
+	 * @param name
+	 * @param in
+	 * @param propertiesProvider
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 */
+	public DocX(String name, InputStream in, DocXPropertiesProvider propertiesProvider) throws FileNotFoundException, IOException{
+		this.name = name;
+		this.propertiesProvider = propertiesProvider;
+		unzipData(in);
+	}
+	
 	
 	/**
 	 * Creates a new DocX object from an existing TEIArchive
@@ -267,17 +269,12 @@ public class DocX {
 		
 		return teiArchive;
 	}
-	
 
-	public void mergeTEI(XdmNode teiDoc) {
-		mergeTEI(teiDoc, null);
-	}
-	
 	/**
 	 * Merges a TEI document back into a docx
 	 * @param teiDoc
 	 */
-	public void mergeTEI(XdmNode teiDoc, String template) {
+	public void mergeTEI(XdmNode teiDoc) {
 		// load stylesheets
 		TransformerFactory transFact = TransformerFactory.newInstance();
 		try {
@@ -288,14 +285,7 @@ public class DocX {
 			XsltTransformer toDocX = toDocXExec.load();
 			
 			toDocX.setParameter(new QName("word-directory"), new XdmAtomicValue(directoryName));
-
-			if(null != template)
-				toDocX.setParameter(new QName("template"), new XdmAtomicValue(template));
 			
-			// move [Content_Types].xml to Content_Types.xml
-			File orgConTypesFile = new File(directoryName + File.separator + "[Content_Types].xml");
-			File tmpConTypesFile = new File(directoryName + File.separator + "Content_Types.xml");
-			orgConTypesFile.renameTo(tmpConTypesFile);
 			
 			// transform and write back to document.xml
 			File wordDotXMLFile = new File(directoryName + File.separator + "word" + File.separator + "document.xml");
@@ -314,10 +304,8 @@ public class DocX {
 			File newCoreFile = new File(directoryName + File.separator + "docProps" + File.separator + "newcore.xml");
 			newCoreFile.renameTo(orgCoreFile);
 			
-			// remove Content_Types.xml
-			tmpConTypesFile.delete();
-			
 			// move new ContentTypes 
+			File orgConTypesFile = new File(directoryName + File.separator + "[Content_Types].xml");
 			File newConTypesFile = new File(directoryName + File.separator + "newContent_Types.xml");
 			newConTypesFile.renameTo(orgConTypesFile);
 		} catch (SaxonApiException e) {
