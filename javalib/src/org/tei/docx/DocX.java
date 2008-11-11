@@ -22,6 +22,7 @@ import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
 
 import org.tei.exceptions.ConfigurationException;
+import org.tei.tei.TEIArchive;
 import org.tei.utils.FileUtils;
 import org.tei.utils.SaxonProcFactory;
 import org.tei.utils.XMLUtils;

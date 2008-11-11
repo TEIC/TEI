@@ -1,4 +1,4 @@
-package org.tei.docx;
+package org.tei.tei;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

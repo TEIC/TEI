@@ -1,4 +1,4 @@
-package org.tei.docx;
+package org.tei.tei;
 
 public interface TEIArchivePropertiesProvider {
 	
