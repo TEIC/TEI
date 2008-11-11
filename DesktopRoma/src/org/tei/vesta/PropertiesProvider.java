@@ -65,6 +65,7 @@ public class PropertiesProvider
 	}
 	
 	public String getStylesheetDir(){
+		System.out.println(baseDir + properties.getProperty("stylesheets.dir"));
 		return baseDir + properties.getProperty("stylesheets.dir");
 	}
 	
@@ -73,11 +74,11 @@ public class PropertiesProvider
 	}
 	
 	public String docx_pp_getDocXTemplateFile() {
-		return baseDir + "../Stylesheets2/docx-templates/template.docx";
+		return baseDir + properties.getProperty("stylesheets.dir") + "/docx-templates/template.docx";
 	}
 
 	public String docx_pp_getStylesheetCheckDocx() {
-		return baseDir + "../Stylesheets2/docx/tei-docx-conversion-vesta.xsl";
+		return baseDir + properties.getProperty("stylesheets.dir") + "/docx/tei-docx-conversion-vesta.xsl";
 	}
 
 	public String docx_pp_getStylesheetDocx2TEI() {
@@ -85,11 +86,11 @@ public class PropertiesProvider
 	}
 
 	public String docx_pp_getStylesheetNormalizeWordStyles() {
-		return baseDir + "../Stylesheets2/docx/normalize-word-style.xsl";
+		return baseDir + properties.getProperty("stylesheets.dir") + "/docx/normalize-word-style.xsl";
 	}
 
 	public String docx_pp_getStylesheetTEI2Docx() {
-		return baseDir + "../Stylesheets2/docx/tei-docx-conversion-vesta.xsl";
+		return baseDir + properties.getProperty("stylesheets.dir") + "/docx/tei-docx-conversion-vesta.xsl";
 	}
 
 	public String docx_pp_getTempDir() {
@@ -101,11 +102,11 @@ public class PropertiesProvider
 	}
 
 	public String tei_pp_getStylesheetsDir() {
-		return baseDir + "../Stylesheets2/odds2";
+		return baseDir + properties.getProperty("stylesheets.dir");
 	}
 
 	public String tei_pp_getP5Subset() {
-		return baseDir + "resources/local/p5subset.xml";
+		return baseDir + properties.getProperty("p5subset");
 	}
 
 }
