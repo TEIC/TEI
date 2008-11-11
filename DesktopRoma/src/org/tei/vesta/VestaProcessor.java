@@ -40,6 +40,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.tei.docx.DocX;
 import org.tei.exceptions.ConfigurationException;
+import org.tei.tei.DTDGenerationProperties;
+import org.tei.tei.DocXTransformationProperties;
+import org.tei.tei.DocumentationGenerationProperties;
+import org.tei.tei.HTMLTransformationProperties;
+import org.tei.tei.ODDGenerationProperties;
+import org.tei.tei.RelaxGenerationProperties;
+import org.tei.tei.TEI;
 import org.tei.utils.FileUtils;
 import org.tei.utils.SaxonProcFactory;
 import org.tei.utils.XMLUtils;
@@ -170,16 +177,19 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 	private void process() throws IllegalArgumentException{
 		// load file
 		File inputFile = new File(oddFile);
-		File outputDir = new File(this.outputDir);
+		final File outputDir = new File(this.outputDir);
 		if(! inputFile.exists() )
 			throw new IllegalArgumentException("The selected odd file does not exist.");
 		if(! outputDir.exists() || ! outputDir.isDirectory())
 			throw new IllegalArgumentException("The selected output directory does not exist or is not a directory.");
 		
+		// set properties provider in TEI
+		TEI.setPropertiesProvider(properties);
+		
 		// read input file in DomDocument
-		XdmNode inputDocument = null;
+		TEI tei = null;
 		try {
-			inputDocument = XMLUtils.readFileIntoSaxonDoc(inputFile);
+			tei = new TEI(inputFile);
 		} catch(SaxonApiException e){
 			Throwable nested = e.getCause();
 			if(nested instanceof XPathException)
@@ -191,24 +201,61 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		}
 		
 		// generateODD
-		XdmNode oddDocument = null;
+		TEI oddDocument = null;
 		if(useCompiledODD){
 			try {
 				 appendInfo("Create compiled odd");
-				 oddDocument = generateODD(inputDocument);
+				 oddDocument = tei.generateODD(new ODDGenerationProperties(){
+					@Override
+					public String getSchemaName() {
+						return schemaName;
+					}
+					
+					@Override
+					public boolean isStripped(){
+						return compile;
+					}
+					
+					@Override
+					public boolean isVerbose(){
+						return debug;
+					}
+					
+					@Override
+					public String getLanguage(){
+						return language;
+					}
+					
+					@Override
+					public boolean isUseVersionFromTEI(){
+						return useVersionFromTEI;
+					}
+					
+					@Override
+					public ErrorListener getErrorListener() {
+						return VestaProcessor.this;
+					}
+					
+					@Override
+					public MessageListener getMessageListener() {
+						return VestaProcessor.this;
+					} 
+					 
+				 });
 			} catch (Exception e) {
 				throw new IllegalArgumentException("Could not run odd2odd transformation: " + e.getMessage());
 			}
 	
 			// store file
 			if(compile || debug){
-				File compiledODDFile = new File(outputDir + File.separator + schemaName + ".odd");
 				try {
-					XMLUtils.storeDocument(oddDocument, compiledODDFile);
+					oddDocument.storeFile(new File(outputDir + File.separator + schemaName + ".odd"));
 				} catch (IOException e) {
 					appendInfo("Error: Could not store compiled ODD file: " + e.getMessage());
 				}
 			}
+			
+			
 			
 			// generate Relax
 			XdmNode relaxDocument = null;
@@ -216,7 +263,42 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 			if(generateRNG || generateXSD){
 				try {
 					appendInfo("Create Relax NG");
-					relaxDocument = generateRelax(oddDocument);
+					relaxDocument = oddDocument.generateRelax(new RelaxGenerationProperties(){
+						@Override
+						public String getSchemaName() {
+							return schemaName;
+						}
+						
+						@Override
+						public boolean isVerbose(){
+							return debug;
+						}
+						
+						@Override
+						public String getLanguage(){
+							return language;
+						}
+						
+						@Override
+						public String getPatternPrefix(){
+							return patternPrefix;
+						}
+						
+						@Override
+						public boolean isParameterizedDTD(){
+							return parameterizedDTD;
+						}
+						
+						@Override
+						public ErrorListener getErrorListener() {
+							return VestaProcessor.this;
+						}
+						
+						@Override
+						public MessageListener getMessageListener() {
+							return VestaProcessor.this;
+						} 
+					});
 				} catch (Exception e) {
 					throw new IllegalArgumentException("Could not run odd2relax transformation: " + e.getMessage());		
 				}
@@ -234,7 +316,44 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 			if(generateDTD){
 				try {
 					appendInfo("Create DTD");
-					generateDTD(oddDocument);
+					oddDocument.generateDTD(new DTDGenerationProperties(){
+
+						@Override
+						public File getOutputFile() {
+							return new File(outputDir + File.separator + schemaName + ".dtd");
+						}
+
+						@Override
+						public String getSchemaName() {
+							return schemaName;
+						}
+						
+						@Override
+						public boolean isVerbose(){
+							return debug;
+						}
+						
+						@Override
+						public String getLanguage(){
+							return language;
+						}
+						
+						@Override
+						public boolean isParameterizedDTD(){
+							return parameterizedDTD;
+						}
+						
+						@Override
+						public ErrorListener getErrorListener() {
+							return VestaProcessor.this;
+						}
+						
+						@Override
+						public MessageListener getMessageListener() {
+							return VestaProcessor.this;
+						} 
+						
+					});
 				} catch (SaxonApiException e) {
 					throw new IllegalArgumentException("Could not run odd2dtd transformation: " + e.getMessage());
 				}
@@ -244,6 +363,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 			try {
 				// generate compact relax
 				if(generateRNG){
+					System.out.println(relaxFile);
 					appendInfo("Create Compact Relax NG");
 					generateRelaxCompact(relaxFile);
 				}
@@ -278,12 +398,24 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		}
 		
 		
-		XdmNode teiDocumentation = null;
+		TEI teiDocumentation = null;
 		if(useCompiledODD){
 			// create the TEI documentation if it we are supposed to create it or the docx documentation
 			if(documentationTEI || documentationDocX){
 				try {
-					teiDocumentation = generateTEIDocumentation(oddDocument);
+					teiDocumentation = oddDocument.generateDocumentation(new DocumentationGenerationProperties(){
+						public ErrorListener getErrorListener() {
+							return VestaProcessor.this;
+						}
+
+						public MessageListener getMessageListener() {
+							return VestaProcessor.this;
+						} 
+						
+						public String getLanguage(){
+							return language;
+						}
+					});
 				} catch (SaxonApiException e) {
 					appendInfo("Error: Could not create TEI documentation: " + e.getMessage());
 				}
@@ -292,47 +424,30 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 			// store file
 			if(documentationTEI){
 				appendInfo("Generate Documentation (TEI)");
-				File teiDocFile = new File(outputDocDir + File.separator + schemaName + ".xml");
 				try {
-					XMLUtils.storeDocument(teiDocumentation, teiDocFile);
+					teiDocumentation.storeFile(new File(outputDocDir + File.separator + schemaName + ".xml"));
 				} catch (IOException e) {
 					appendInfo("Error: Could not store TEI documentation: " + e.getMessage());
 				}
 			}
 			
 			if(documentationHTML){
-				try{
-					appendInfo("Generate Documentation (HTML)");
-					generateHTMLDocumentation(oddDocument);
-				} catch (Exception e) {
-					appendInfo("Error: Could not create HTML documentation: " + e.getMessage());
-				}
+				appendInfo("Generate Documentation (HTML)");
+				transformToHTML(oddDocument);
 			}
 		} else if(documentationHTML){
-			try{
-				appendInfo("Generate HTML file");
-				generateHTMLDocumentation(inputDocument);
-			} catch (Exception e) {
-				appendInfo("Error: Could not create HTML file : " + e.getMessage());
-			}
+			appendInfo("Generate HTML file");
+			transformToHTML(tei);
 		}
 		
 		
 		
 		if(documentationDocX && useCompiledODD){
 			appendInfo("Generate Documentation (docx)");
-			try {
-				generateDocXDocumentation(teiDocumentation);
-			} catch (Exception e) {
-				appendInfo("Error: Could not create docx documentation: " + e.getMessage());
-			}
+			transformToDocX(teiDocumentation);
 		} else if(documentationDocX){
 			appendInfo("Generate docx file from: " + inputFile);
-			try {
-				generateDocXDocumentation(inputDocument);
-			} catch (Exception e) {
-				appendInfo("Error: Could not create docx file: " + e.getMessage());
-			}
+			transformToDocX(tei);
 		}
 		
 		
@@ -348,106 +463,94 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 					runDialog.appendLine(text);
 				}
 			} );
-			
+		}
+	}
+	
+	
+	private void transformToHTML(TEI doc){
+		try{
+			doc.transformToHTML(new HTMLTransformationProperties(){
+				@Override
+				public ErrorListener getErrorListener() {
+					return VestaProcessor.this;
+				}
+				
+				@Override
+				public MessageListener getMessageListener() {
+					return VestaProcessor.this;
+				} 
+				
+				@Override
+				public File getOutputFile() {
+					return new File(outputDocDir + File.separator + schemaName + ".html");
+				}
+				
+				@Override
+				public String getCSSFile(){
+					return "tei.css";
+				}
+				
+				@Override
+				public String getCSSSecondaryFile(){
+					return "odd.css";
+				}
+			});
+
+			// copy css
+			FileUtils.copyFile(new File(PropertiesProvider.getInstance().getCSSDir() + File.separator + "tei.css"), new File( outputDocDir + File.separator + "tei.css") );
+			FileUtils.copyFile(new File(PropertiesProvider.getInstance().getCSSDir() + File.separator + "odd.css"), new File( outputDocDir + File.separator + "odd.css") );
+		} catch (Exception e) {
+			appendInfo("Error: Could not create HTML file : " + e.getMessage());
+		}
+	}
+	
+	private void transformToDocX(TEI doc){
+		try {
+			doc.transformToDocX(new DocXTransformationProperties(){
+
+				@Override
+				public File getOutputFile() {
+					return new File(outputDocDir + File.separator + schemaName + ".docx");
+				}
+
+				public String docx_pp_getDocXTemplateFile() {
+					return properties.docx_pp_getDocXTemplateFile();
+				}
+
+				public String docx_pp_getStylesheetCheckDocx() {
+					return properties.docx_pp_getStylesheetCheckDocx();
+				}
+
+				public String docx_pp_getStylesheetDocx2TEI() {
+					return properties.docx_pp_getStylesheetDocx2TEI();
+				}
+
+				public String docx_pp_getStylesheetNormalizeWordStyles() {
+					return properties.docx_pp_getStylesheetNormalizeWordStyles();
+				}
+
+				public String docx_pp_getStylesheetTEI2Docx() {
+					return properties.docx_pp_getStylesheetTEI2Docx();
+				}
+
+				public String docx_pp_getTempDir() {
+					return properties.docx_pp_getTempDir();
+				}
+				
+			});
+		} catch (Exception e) {
+			appendInfo("Error: Could not create docx file: " + e.getMessage());
 		}
 	}
 
 
-	private XdmNode generateODD(XdmNode doc) throws TransformerException, SaxonApiException {
-		// load stylesheets
-		Processor proc = SaxonProcFactory.getProcessor();
-		
-		// prepare transformer
-		XsltCompiler comp = proc.newXsltCompiler();
-		comp.setErrorListener(this);
-		XsltExecutable odd2oddExec = comp.compile(new StreamSource(PropertiesProvider.getInstance().getStylesheetDir() + File.separator + "odd2odd.xsl"));
-		XsltTransformer odd2oddTransformer = odd2oddExec.load();
-		
-		odd2oddTransformer.setParameter(new QName("selectedSchema"), new XdmAtomicValue(schemaName));
-		
-		if(debug)
-			odd2oddTransformer.setParameter(new QName("verbose"), new XdmAtomicValue("true"));
-		if(compile)
-			odd2oddTransformer.setParameter(new QName("stripped"), new XdmAtomicValue("true"));
-		
-		
-		odd2oddTransformer.setParameter(new QName("localsource"), new XdmAtomicValue(PropertiesProvider.getInstance().getP5Subset()));
-		odd2oddTransformer.setParameter(new QName("TEIC"), new XdmAtomicValue("true") );
-		odd2oddTransformer.setParameter(new QName("lang"), new XdmAtomicValue(language));
-		odd2oddTransformer.setParameter(new QName("doclang"), new XdmAtomicValue(language));
-		odd2oddTransformer.setParameter(new QName("useVersionFromTEI"), new XdmAtomicValue( useVersionFromTEI ? "true" : "false" ));
-		
-		odd2oddTransformer.setMessageListener(this);
-		odd2oddTransformer.setInitialContextNode(doc);
-		XdmDestination result = new XdmDestination();
-		odd2oddTransformer.setDestination(result);
-		odd2oddTransformer.transform();
-		
-		return (XdmNode) result.getXdmNode();
-	}
-	
-	private XdmNode generateRelax(XdmNode doc) throws TransformerException, SaxonApiException{
-		// load stylesheets
-		Processor proc = SaxonProcFactory.getProcessor();
-		
-		// prepare transformer
-		XsltCompiler comp = proc.newXsltCompiler();
-		comp.setErrorListener(this);
-		XsltExecutable odd2relaxExec = comp.compile(new StreamSource(PropertiesProvider.getInstance().getStylesheetDir() + File.separator + "odd2relax.xsl"));
-		XsltTransformer odd2relaxTransformer = odd2relaxExec.load();
-		
-		if(debug)
-			odd2relaxTransformer.setParameter(new QName("verbose"), new XdmAtomicValue("true"));
-
-		odd2relaxTransformer.setParameter(new QName("TEIC"), new XdmAtomicValue("true") );
-		odd2relaxTransformer.setParameter(new QName("lang"), new XdmAtomicValue(language));
-		odd2relaxTransformer.setParameter(new QName("doclang"), new XdmAtomicValue(language));
-		odd2relaxTransformer.setParameter(new QName("parameterize"), new XdmAtomicValue(parameterizedDTD ? "true" : "false"));
-		odd2relaxTransformer.setParameter(new QName("patternPrefix"), new XdmAtomicValue(patternPrefix));
-		
-		odd2relaxTransformer.setMessageListener(this);
-		odd2relaxTransformer.setInitialContextNode(doc);
-		XdmDestination result = new XdmDestination();
-		odd2relaxTransformer.setDestination(result);
-		odd2relaxTransformer.transform();
-		
-		return (XdmNode) result.getXdmNode();
-	}
-	
-	public void generateDTD(XdmNode doc) throws SaxonApiException{
-		// load stylesheets
-		Processor proc = SaxonProcFactory.getProcessor();
-		
-		// prepare transformer
-		XsltCompiler comp = proc.newXsltCompiler();
-		comp.setErrorListener(this);
-		XsltExecutable odd2dtdExec = comp.compile(new StreamSource(PropertiesProvider.getInstance().getStylesheetDir() + File.separator + "odd2dtd.xsl"));
-		XsltTransformer odd2dtdTransformer = odd2dtdExec.load();
-		
-		if(debug)
-			odd2dtdTransformer.setParameter(new QName("verbose"), new XdmAtomicValue("true"));
-		
-		odd2dtdTransformer.setParameter(new QName("TEIC"), new XdmAtomicValue("true") );
-		odd2dtdTransformer.setParameter(new QName("lang"), new XdmAtomicValue(language));
-		odd2dtdTransformer.setParameter(new QName("doclang"), new XdmAtomicValue(language));
-		odd2dtdTransformer.setParameter(new QName("parameterize"), new XdmAtomicValue(parameterizedDTD ? "true" : "false"));
-		
-		odd2dtdTransformer.setMessageListener(this);
-		odd2dtdTransformer.setInitialContextNode(doc);
-		Serializer result = new Serializer();
-		result.setOutputFile(new File(outputDir + File.separator + schemaName + ".dtd") );
-		odd2dtdTransformer.setDestination(result);
-		odd2dtdTransformer.transform();
-	}
 	
 	public void generateRelaxCompact(File input) throws InputFailedException, InvalidParamsException, IOException, SAXException, OutputFailedException{
 		InputFormat inFormat = new SAXParseInputFormat();
 		OutputFormat of = new RncOutputFormat();
-		
 		String[] inputParamArray = new String[]{};
 		String[] outputParamArray = new String[]{};
 		SchemaCollection sc =  inFormat.load(UriOrFile.toUri(input.getAbsolutePath()), inputParamArray, "rnc", this);
-		
 		OutputDirectory od = new LocalOutputDirectory( 
 				sc.getMainUri(),
 				new File(outputDir + File.separator + schemaName + ".rnc"),
@@ -456,7 +559,6 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
                 DEFAULT_LINE_LENGTH,
                 DEFAULT_INDENT
         );
-		
 		of.output(sc, od, outputParamArray, "rng", this);
 	}
 	
@@ -478,69 +580,6 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
         );
 		
 		of.output(sc, od, outputParamArray, "rng", this);
-	}
-	
-	public XdmNode generateTEIDocumentation(XdmNode doc) throws SaxonApiException{
-		// load stylesheets
-		Processor proc = SaxonProcFactory.getProcessor();
-		
-		// prepare transformer
-		XsltCompiler comp = proc.newXsltCompiler();
-		comp.setErrorListener(this);
-		XsltExecutable odd2teiDocExec = comp.compile(new StreamSource(PropertiesProvider.getInstance().getStylesheetDir() + File.separator + "odd2lite.xsl"));
-		XsltTransformer odd2teiDocTransformer = odd2teiDocExec.load();
-		
-		
-		odd2teiDocTransformer.setParameter(new QName("TEIC"), new XdmAtomicValue("true") );
-		odd2teiDocTransformer.setParameter(new QName("localsource"), new XdmAtomicValue(PropertiesProvider.getInstance().getP5Subset()));
-		odd2teiDocTransformer.setParameter(new QName("lang"), new XdmAtomicValue(language));
-		odd2teiDocTransformer.setParameter(new QName("doclang"), new XdmAtomicValue(language));
-		
-		odd2teiDocTransformer.setMessageListener(this);
-		odd2teiDocTransformer.setInitialContextNode(doc);
-		XdmDestination result = new XdmDestination();
-		odd2teiDocTransformer.setDestination(result);
-		odd2teiDocTransformer.transform();
-		
-		return (XdmNode) result.getXdmNode();
-	}
-	
-	private void generateDocXDocumentation(XdmNode teiDocumentation) throws SaxonApiException, ConfigurationException, IOException {
-		DocX docx = new DocX(schemaName, new PropertiesProvider());
-		docx.mergeTEI(teiDocumentation);
-		File zipFile = docx.getDocXFile();
-		zipFile.renameTo(new File(outputDocDir + File.separator + schemaName + ".docx"));
-		docx.cleanUp();
-	}	
-	
-	public void generateHTMLDocumentation(XdmNode doc) throws SaxonApiException, IOException{
-		// load stylesheets
-		Processor proc = SaxonProcFactory.getProcessor();
-		
-		// prepare transformer
-		XsltCompiler comp = proc.newXsltCompiler();
-		comp.setErrorListener(this);
-		XsltExecutable odd2HTMLDocExec = comp.compile(new StreamSource(PropertiesProvider.getInstance().getStylesheetDir() + File.separator + "odd2html.xsl"));
-		XsltTransformer odd2HTMLDocTransformer = odd2HTMLDocExec.load();
-		
-		odd2HTMLDocTransformer.setParameter(new QName("STDOUT"), new XdmAtomicValue("true") );
-		odd2HTMLDocTransformer.setParameter(new QName("splitLevel"), new XdmAtomicValue("-1"));
-		odd2HTMLDocTransformer.setParameter(new QName("lang"), new XdmAtomicValue(language));
-		odd2HTMLDocTransformer.setParameter(new QName("doclang"), new XdmAtomicValue(language));
-		odd2HTMLDocTransformer.setParameter(new QName("documentationLanguage"), new XdmAtomicValue(language));
-		odd2HTMLDocTransformer.setParameter(new QName("cssFile"), new XdmAtomicValue("tei.css"));
-		odd2HTMLDocTransformer.setParameter(new QName("cssSecondaryFile"), new XdmAtomicValue("odd.css"));
-		
-		odd2HTMLDocTransformer.setMessageListener(this);
-		odd2HTMLDocTransformer.setInitialContextNode(doc);
-		Serializer result = new Serializer();
-		result.setOutputFile(new File(outputDocDir + File.separator + schemaName + ".html") );
-		odd2HTMLDocTransformer.setDestination(result);
-		odd2HTMLDocTransformer.transform();
-		
-		// copy css
-		FileUtils.copyFile(new File(PropertiesProvider.getInstance().getCSSDir() + File.separator + "tei.css"), new File( outputDocDir + File.separator + "tei.css") );
-		FileUtils.copyFile(new File(PropertiesProvider.getInstance().getCSSDir() + File.separator + "odd.css"), new File( outputDocDir + File.separator + "odd.css") );
 	}
 	
 

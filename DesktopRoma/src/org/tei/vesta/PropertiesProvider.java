@@ -9,10 +9,14 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
 import org.tei.docx.DocXPropertiesProvider;
-import org.tei.docx.TEIArchivePropertiesProvider;
+import org.tei.tei.TEIArchivePropertiesProvider;
+import org.tei.tei.TEIPropertiesProvider;
 
-public class PropertiesProvider implements DocXPropertiesProvider,
-		TEIArchivePropertiesProvider {
+public class PropertiesProvider 
+	implements 
+		DocXPropertiesProvider,
+		TEIArchivePropertiesProvider,
+		TEIPropertiesProvider{
 
 	private static org.tei.vesta.PropertiesProvider instance;
 	private String baseDir;
@@ -94,6 +98,14 @@ public class PropertiesProvider implements DocXPropertiesProvider,
 
 	public String teiarc_pp_getTempDir() {
 		return baseDir + "resources/tmp";
+	}
+
+	public String tei_pp_getStylesheetsDir() {
+		return baseDir + "../Stylesheets2/odds2";
+	}
+
+	public String tei_pp_getP5Subset() {
+		return baseDir + "resources/local/p5subset.xml";
 	}
 
 }
