@@ -1,0 +1,30 @@
+#!/bin/sh
+HERE=`pwd`
+D=`dirname $1`
+F=`basename $1 .xml`
+THERE=`(cd $D; pwd)`
+X=`dirname $0`
+APP=`(cd $X; pwd)`
+echo read $1 from $THERE, app is in $APP
+TEMPLATES=$APP/docx-templates
+XSL=$APP/docx
+mkdir /tmp/docx$$
+mkdir /tmp/docx$$/media
+saxon $HERE/$F.xml $XSL/listgraphics.xsl DIR=/tmp/docx$$/media > /tmp/docx$$/fetch
+sh /tmp/docx$$/fetch
+rm /tmp/docx$$/fetch
+(cd /tmp/docx$$/media; for i in *; do  exiftool -q -o $i.xmp $i; done)
+cd /tmp/docx$$
+saxon -o /tmp/docx$$/tmp.xml  $HERE/$F.xml $XSL/fixgraphics.xsl DIR=`pwd`
+unzip -o -q $TEMPLATES/template.docx
+grep "<graphic" tmp.xml
+saxon -o word/document.xml tmp.xml $XSL/tei-docx-conversion-vesta.xsl  \
+    debug=true styleDoc=/tmp/docx$$/word/styles.xml word-directory=/tmp/docx$$
+rm tmp.xml media/*.xmp
+mv newContent_Types.xml "[Content_Types].xml"
+mv docProps/newcore.xml  docProps/core.xml 
+zip -q -r $THERE/$F.docx word _rels docProps customXml *.xml 
+cd $HERE
+rm -rf /tmp/docx$$
+echo wrote $F.docx in `pwd`
+
