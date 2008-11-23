@@ -34,7 +34,14 @@
   <xsl:import href="teidocx-functions.xsl"/>
   <xsl:import href="tei-docx-verbatim.xsl"/>
   <xsl:import href="variables.xsl"/>
-
+<!--
+A4 is 210mm x 297mm; leaving 1in margin (25mm),
+gives 185 x 272 approx useable area.  In Microsoft speak, 
+1mm = 35998 units. so page size is 6659630 x 9791456
+Divide by 100 to avoid overflow.
+-->
+  <xsl:variable name="pageWidth">66596.30</xsl:variable>
+  <xsl:variable name="pageHeight">97914.56</xsl:variable>
   <xsl:key name="SECTPR" match="w:sectPr" use="1"/>
     
     <xd:doc type="stylesheet">
@@ -851,8 +858,7 @@ is there a number present?
             <xsl:variable name="imageWidth">
 	      <xsl:choose>
 		<xsl:when test="contains(@width,'%')">
-		  <xsl:value-of select="(12240 *
-					(number(substring-before(@width,'%')) div 100)) cast as xs:integer"/>
+		  <xsl:value-of select="($pageWidth * (number(substring-before(@width,'%')) div 100)) cast as xs:integer"/>
 		</xsl:when>
 		<xsl:otherwise>
 		  <xsl:value-of select="teidocx:convert-dim-emu(@width)"/>
@@ -864,8 +870,8 @@ is there a number present?
             <xsl:variable name="imageHeight">
 	      <xsl:choose>
 		<xsl:when test="contains(@height,'%')">
-		  <xsl:value-of select="(15840 *
-					(number(substring-before(@width,'%')) div 100)) cast as xs:integer"/>
+		  <xsl:value-of select="($pageHeight *
+					(number(substring-before(@height,'%')) div 100)) cast as xs:integer"/>
 		</xsl:when>
 		<xsl:otherwise>
 		  <xsl:value-of select="teidocx:convert-dim-emu(@height)"/>
@@ -903,8 +909,8 @@ is there a number present?
                             <pic:spPr>
                                 <a:xfrm>
                                     <a:off x="0" y="0"/>
-                                    <a:ext cx="{$imageWidth * 10}"
-					   cy="{$imageHeight * 10}"/>
+                                    <a:ext cx="{$imageWidth}00"
+					   cy="{$imageHeight}00"/>
                                 </a:xfrm>
                                 <a:prstGeom prst="rect">
                                     <a:avLst/>
@@ -923,7 +929,8 @@ is there a number present?
                         <!-- render image as inline -->
                         <xsl:when test="@rend='inline'">
                             <wp:inline>
-                                <wp:extent cx="{$imageWidth}" cy="{$imageHeight}"/>
+                                <wp:extent cx="{$imageWidth}00"
+					   cy="{$imageHeight}00"/>
                                 <wp:docPr name="{tokenize(@url, '/')[last()]}">
                                     <xsl:attribute name="id">
                                         <xsl:number level="any"/>
@@ -944,7 +951,8 @@ is there a number present?
                                 <wp:positionV relativeFrom="paragraph">
                                     <wp:align>center</wp:align>
                                 </wp:positionV>
-                                <wp:extent cx="{$imageWidth}" cy="{$imageHeight}"/>
+                                <wp:extent cx="{$imageWidth}00"
+					   cy="{$imageHeight}00"/>
                                 <wp:wrapTopAndBottom/>
                                 <wp:docPr name="Some Image">
                                     <xsl:attribute name="id">
@@ -957,7 +965,6 @@ is there a number present?
                         </xsl:otherwise>
                     </xsl:choose>
                     <!-- end inline/block -->
-
 
 
                 </w:drawing>
