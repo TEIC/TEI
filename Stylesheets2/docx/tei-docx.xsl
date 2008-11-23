@@ -862,10 +862,9 @@ is there a number present?
 		</xsl:when>
 		<xsl:when test="@scale">
 		  <xsl:value-of select="(@teidocx:width *  number(@scale)) cast as xs:integer"/>
-		  <xsl:text>pt</xsl:text>
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:value-of select="teidocx:width"/>
+		  <xsl:value-of select="@teidocx:width"/>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:variable>
@@ -877,10 +876,9 @@ is there a number present?
 		</xsl:when>
 		<xsl:when test="@scale">
 		  <xsl:value-of select="(@teidocx:height *  number(@scale)) cast as xs:integer"/>
-		  <xsl:text>pt</xsl:text>
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:value-of select="teidocx:height"/>
+		  <xsl:value-of select="@teidocx:height"/>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:variable>

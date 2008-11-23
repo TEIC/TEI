@@ -6,24 +6,24 @@ THERE=`(cd $D; pwd)`
 X=`dirname $0`
 APP=`(cd $X; pwd)`
 echo read $1 from $THERE, app is in $APP
-TEMPDIR=docx$$
+TEMPDIR=/tmp/docx$$
 TEMPLATES=$APP/docx-templates
 XSL=$APP/docx
-mkdir -p /tmp/$TEMPDIR/word/media
-saxon $HERE/$F.xml $XSL/listgraphics.xsl DIR=/tmp/$TEMPDIR/word/media > /tmp/$TEMPDIR/fetch
-sh /tmp/$TEMPDIR/fetch
-rm /tmp/$TEMPDIR/fetch
-(cd /tmp/$TEMPDIR/word/media; for i in *; do  exiftool -q -o $i.xmp $i; done)
-cd /tmp/$TEMPDIR
-saxon -o /tmp/$TEMPDIR/tmp.xml  $HERE/$F.xml $XSL/fixgraphics.xsl DIR=`pwd`/word
+mkdir -p $TEMPDIR/word/media
+saxon $HERE/$F.xml $XSL/listgraphics.xsl DIR=$TEMPDIR/word/media > $TEMPDIR/fetch
+sh $TEMPDIR/fetch
+rm $TEMPDIR/fetch
+(cd $TEMPDIR/word/media; for i in *; do  exiftool -q -o $i.xmp $i; done)
+cd $TEMPDIR
+saxon -o $TEMPDIR/tmp.xml  $HERE/$F.xml $XSL/fixgraphics.xsl DIR=`pwd`/word
 unzip -o -q $TEMPLATES/template.docx
 saxon -o word/document.xml tmp.xml $XSL/tei-docx-conversion-vesta.xsl  \
-    debug=true styleDoc=/tmp/$TEMPDIR/word/styles.xml word-directory=/tmp/$TEMPDIR
+    debug=true styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR
 rm -f tmp.xml word/media/*.xmp
 mv newContent_Types.xml \[Content_Types\].xml
 mv docProps/newcore.xml docProps/core.xml 
 zip -q -r $THERE/$F.docx word _rels docProps customXml \[Content_Types\].xml
 cd $HERE
-rm -rf /tmp/$TEMPDIR
+rm -rf $TEMPDIR
 echo wrote $F.docx in $HERE
 
