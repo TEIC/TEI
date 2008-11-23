@@ -21,7 +21,7 @@
     
     <!-- import variables -->
     <xsl:import href="variables.xsl"/>
-    
+
     <xd:doc type="stylesheet">
         <xd:short> TEI Utility stylesheet for making Word docx files from TEI XML (see tei-docx.xsl)</xd:short>
         <xd:detail> This library is free software; you can redistribute it and/or
@@ -71,25 +71,30 @@
     <!-- convert a dimension into english metric unit -->
     <xsl:function name="teidocx:convert-dim-emu" as="xs:integer">
         <xsl:param name="dim"/>
+	<xsl:variable name="result">
         <xsl:choose>
             <xsl:when test="ends-with($dim,'cm')">
-                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1))*360000 cast as xs:integer"/>
+                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1))*3600 cast as xs:integer"/>
             </xsl:when>
             <xsl:when test="ends-with($dim,'in')">
-                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1))*91440 cast as xs:integer"/>
+                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1))*9144 cast as xs:integer"/>
             </xsl:when>
             
             <xsl:when test="ends-with($dim,'mm')">
-                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1))*36000 cast as xs:integer"/>
+                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1))*360 cast as xs:integer"/>
             </xsl:when>
             <xsl:when test="ends-with($dim,'pt')">
-                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1))*91440*72 cast as xs:integer"/>
+                <xsl:value-of
+		    select="(number(substring($dim,0,string-length($dim)-1))
+			    div 72) * 9144"/>
             </xsl:when>
             
             <xsl:otherwise>
                 -1
             </xsl:otherwise>
         </xsl:choose>
+	</xsl:variable>
+	<xsl:value-of select="$result"/>
     </xsl:function>
     
     <!-- returns a listtype for a given stylename (return empty string to figure it out dynamically) -->
@@ -137,6 +142,7 @@
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
             <xsl:choose>
+                <xsl:when test="self::tei:hi">true</xsl:when>
                 <xsl:when test="self::tei:hi[@rend='label']">true</xsl:when>
                 <xsl:when test="self::tei:label[following-sibling::tei:item]">true</xsl:when>
                 <xsl:when test="self::tei:term">true</xsl:when>

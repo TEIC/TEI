@@ -21,6 +21,10 @@
       <xsl:value-of select="$F"/>
       <xsl:text> </xsl:text>
       <xsl:value-of select="$DIR"/>
+      <xsl:text>/image</xsl:text>
+      <xsl:number level="any"/>
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="substring-after(@url,'.')"/>
 <xsl:text>
 </xsl:text>
     </xsl:for-each>

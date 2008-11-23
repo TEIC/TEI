@@ -23,41 +23,32 @@
   <xsl:template match="tei:graphic">
     <xsl:copy>
 	<xsl:variable name="newName">
-	  <xsl:choose>
-	    <xsl:when test="contains(@url,'/')">
-	      <xsl:value-of select="tokenize(@url, '/')[last()]"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:value-of select="@url"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
+	  <xsl:text>media/image</xsl:text>
+	  <xsl:number level="any"/>
+	  <xsl:text>.</xsl:text>
+	  <xsl:value-of select="substring-after(@url,'.')"/>
 	</xsl:variable>
-      <xsl:attribute name="url">
-	<xsl:text>media/</xsl:text>
-	<xsl:value-of select="$newName"/>
-      </xsl:attribute>
+	<xsl:attribute name="url">
+	  <xsl:value-of select="$newName"/>
+	</xsl:attribute>
  
       <xsl:attribute name="height">
 	<xsl:variable name="h">
 	  <xsl:for-each
-	      select="document(concat($DIR,'/media/',$newName,'.xmp'),/)">
+	      select="document(concat($DIR,'/',$newName,'.xmp'),/)">
 	    <xsl:value-of select="number(key('H',1))"/>
 	  </xsl:for-each>
 	</xsl:variable>
 	<xsl:choose>
-	  <xsl:when test="contains(@height,'%')">
-	    <xsl:value-of select="($h *
-				  (number(substring-before(@height,'%'))
-				  div 100)) cast as xs:integer"/>
+	  <xsl:when test="@scale">
+	    <xsl:value-of select="($h *  number(@scale)) cast as xs:integer"/>
 	    <xsl:text>pt</xsl:text>
 	  </xsl:when>
 	  <xsl:when test="@height">
 	    <xsl:value-of select="@height"/>
 	  </xsl:when>
 	  <xsl:when test="contains(@width,'%')">
-	    <xsl:value-of select="($h *
-	      (number(substring-before(@width,'%')) div 100)) cast as xs:integer"/>
-	    <xsl:text>pt</xsl:text>
+	    <xsl:value-of select="@width"/>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:value-of select="$h cast as xs:integer"/>
@@ -69,15 +60,14 @@
      <xsl:attribute name="width">
 	<xsl:variable name="h">
 	  <xsl:for-each
-	      select="document(concat($DIR,'/media/',$newName,'.xmp'),/)">
+	      select="document(concat($DIR,'/',$newName,'.xmp'),/)">
 	    <xsl:value-of select="number(key('W',1))"/>
 	  </xsl:for-each>
 	</xsl:variable>
 	<xsl:variable name="new">
 	<xsl:choose>
-	  <xsl:when test="contains(@width,'%')">
-	    <xsl:value-of select="($h *
-	      (number(substring-before(@width,'%')) div 100)) cast as xs:integer"/>
+	  <xsl:when test="@scale">
+	    <xsl:value-of select="($h *  number(@scale)) cast as xs:integer"/>
 	    <xsl:text>pt</xsl:text>
 	  </xsl:when>
 	  <xsl:when test="@width">
@@ -89,8 +79,6 @@
 	  </xsl:otherwise>
 	</xsl:choose>
 	</xsl:variable>
-	<xsl:message><xsl:value-of select="@width"/>, <xsl:value-of
-	select="$h"/>, <xsl:value-of select="$new"/></xsl:message>
 	<xsl:value-of select="$new"/>
       </xsl:attribute>
     </xsl:copy>

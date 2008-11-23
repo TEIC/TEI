@@ -27,10 +27,15 @@
     xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
     xmlns:contypes="http://schemas.openxmlformats.org/package/2006/content-types"
     xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-    exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn xsi dc dcterms dcmitype contypes teidocx teix html">
-    <xsl:import href="teidocx-functions.xsl"/>
-    <xsl:import href="tei-docx-verbatim.xsl"/>
-    <xsl:import href="variables.xsl"/>
+    exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso
+			     tei a xs pic fn xsi dc dcterms dcmitype
+			     contypes teidocx teix html">
+
+  <xsl:import href="teidocx-functions.xsl"/>
+  <xsl:import href="tei-docx-verbatim.xsl"/>
+  <xsl:import href="variables.xsl"/>
+
+  <xsl:key name="SECTPR" match="w:sectPr" use="1"/>
     
     <xd:doc type="stylesheet">
         <xd:short> TEI stylesheet for making Word docx files from TEI XML </xd:short>
@@ -402,7 +407,13 @@
 
             <!-- bold? -->
             <xsl:choose>
-                <xsl:when test="@rend='bold' or teidocx:render-bold(.)">
+                <xsl:when test="@rend='bold'">
+                    <w:b/>
+                </xsl:when>
+                <xsl:when test="teidocx:render-bold(.)">
+                    <w:b/>
+                </xsl:when>
+                <xsl:when test="self::tei:hi[not(@rend)]">
                     <w:b/>
                 </xsl:when>
             </xsl:choose>
@@ -828,14 +839,39 @@
 
         <!-- perform some tests on the graphic -->
         <xsl:if
-            test="@url and
-                  @width and 
-                  @height and 
+            test="@url and @width and @height">
+<!--
+
+is there a number present?
+
                   not(number(substring(@width,0,string-length(@width)-1))=NAN) and 
                   not(number(substring(@height,0,string-length(@height)-1))=NAN)">
-            <xsl:variable name="imageWidth" select="teidocx:convert-dim-emu(@width)"/>
-            <xsl:variable name="imageHeight"
-                select="teidocx:convert-dim-emu(@height)"/>
+
+-->
+            <xsl:variable name="imageWidth">
+	      <xsl:choose>
+		<xsl:when test="contains(@width,'%')">
+		  <xsl:value-of select="(12240 *
+					(number(substring-before(@width,'%')) div 100)) cast as xs:integer"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="teidocx:convert-dim-emu(@width)"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:variable>
+
+
+            <xsl:variable name="imageHeight">
+	      <xsl:choose>
+		<xsl:when test="contains(@height,'%')">
+		  <xsl:value-of select="(15840 *
+					(number(substring-before(@width,'%')) div 100)) cast as xs:integer"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="teidocx:convert-dim-emu(@height)"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:variable>
 
             <!-- prepare actual graphic -->
             <xsl:variable name="graphic-element">
@@ -843,7 +879,7 @@
                     <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
                         <pic:pic>
                             <pic:nvPicPr>
-                                <pic:cNvPr name="Some Image">
+                                <pic:cNvPr name="{tokenize(@url, '/')[last()]}">
                                     <xsl:attribute name="id">
                                         <xsl:number level="any"/>
                                     </xsl:attribute>
@@ -867,7 +903,8 @@
                             <pic:spPr>
                                 <a:xfrm>
                                     <a:off x="0" y="0"/>
-                                    <a:ext cx="{$imageWidth}" cy="{$imageHeight}"/>
+                                    <a:ext cx="{$imageWidth * 10}"
+					   cy="{$imageHeight * 10}"/>
                                 </a:xfrm>
                                 <a:prstGeom prst="rect">
                                     <a:avLst/>
@@ -887,7 +924,7 @@
                         <xsl:when test="@rend='inline'">
                             <wp:inline>
                                 <wp:extent cx="{$imageWidth}" cy="{$imageHeight}"/>
-                                <wp:docPr name="Some Image">
+                                <wp:docPr name="{tokenize(@url, '/')[last()]}">
                                     <xsl:attribute name="id">
                                         <xsl:number level="any"/>
                                     </xsl:attribute>
@@ -1054,6 +1091,13 @@
                 <xsl:when test="w:tblGrid">
                     <xsl:copy-of select="w:tblGrid"/>
                 </xsl:when>
+		<xsl:otherwise>
+                    <w:tblGrid>
+		      <xsl:for-each select="tei:row[1]/tei:cell">
+			<w:gridCol w:w="500"/>
+		      </xsl:for-each>
+		    </w:tblGrid>		  
+		</xsl:otherwise>
             </xsl:choose>
             <xsl:apply-templates select="tei:row"/>
         </w:tbl>
@@ -1156,6 +1200,15 @@
         <w:r>
             <w:br/>
         </w:r>
+    </xsl:template>
+
+    <!-- hyperlink -->
+    <xsl:template match="tei:ptr">
+      <w:r>
+	<w:t>
+	  <xsl:value-of select="@target"/>
+	</w:t>
+      </w:r>
     </xsl:template>
 
 
@@ -3025,8 +3078,6 @@ under new name -->
             />
         </xsl:copy>
     </xsl:template>
-
-
 
     <!-- drawings -->
     <xsl:template match="a:blip" mode="iden">
