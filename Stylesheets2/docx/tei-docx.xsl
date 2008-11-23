@@ -846,7 +846,7 @@ Divide by 100 to avoid overflow.
 
         <!-- perform some tests on the graphic -->
         <xsl:if
-            test="@url and @width and @height">
+            test="@url and @teidocx:width and @teidocx:height">
 <!--
 
 is there a number present?
@@ -860,24 +860,32 @@ is there a number present?
 		<xsl:when test="contains(@width,'%')">
 		  <xsl:value-of select="($pageWidth * (number(substring-before(@width,'%')) div 100)) cast as xs:integer"/>
 		</xsl:when>
+		<xsl:when test="@scale">
+		  <xsl:value-of select="(@teidocx:width *  number(@scale)) cast as xs:integer"/>
+		  <xsl:text>pt</xsl:text>
+		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:value-of select="teidocx:convert-dim-emu(@width)"/>
+		  <xsl:value-of select="teidocx:width"/>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:variable>
-
 
             <xsl:variable name="imageHeight">
 	      <xsl:choose>
 		<xsl:when test="contains(@height,'%')">
-		  <xsl:value-of select="($pageHeight *
-					(number(substring-before(@height,'%')) div 100)) cast as xs:integer"/>
+		  <xsl:value-of select="($pageHeight * (number(substring-before(@height,'%')) div 100)) cast as xs:integer"/>
+		</xsl:when>
+		<xsl:when test="@scale">
+		  <xsl:value-of select="(@teidocx:height *  number(@scale)) cast as xs:integer"/>
+		  <xsl:text>pt</xsl:text>
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:value-of select="teidocx:convert-dim-emu(@height)"/>
+		  <xsl:value-of select="teidocx:height"/>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:variable>
+
+
 
             <!-- prepare actual graphic -->
             <xsl:variable name="graphic-element">
