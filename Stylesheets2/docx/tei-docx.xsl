@@ -154,6 +154,7 @@ Divide by 100 to avoid overflow.
 		    </xsl:apply-templates>
 		  </xsl:when>
 		  <xsl:otherwise>
+<!--
 		    <w:sectPr>
 		      <w:pgSz>
 			<xsl:attribute name="w:w">12240</xsl:attribute>
@@ -163,6 +164,7 @@ Divide by 100 to avoid overflow.
 			       w:footer="720" w:header="720"/>
 		      <w:docGrid w:linePitch="360"/>
 		    </w:sectPr>
+-->
 		  </xsl:otherwise>
 		</xsl:choose>
             </w:body>
@@ -1303,24 +1305,52 @@ is there a number present?
 
     <!-- hyperlink -->
     <xsl:template match="tei:ptr">
-      <w:hyperlink>
-	<xsl:attribute name="r:id">
+      <w:r>
+	<w:fldChar w:fldCharType="begin"/>
+      </w:r>
+      <w:r>
+	<w:instrText>HYPERLINK "<xsl:value-of select="@target"/>" \h</w:instrText>
+      </w:r>
+      <w:r>
+	<w:fldChar w:fldCharType="separate"/>
+      </w:r>
+      <w:r w:rsidR="00765EBE">
+	<w:rPr>
+	  <w:rStyle w:val="Hyperlink"/>
+	</w:rPr>
+	<w:t><xsl:value-of select="@target"/></w:t>
+      </w:r>
+      <w:r>
+	<w:fldChar w:fldCharType="end"/>
+      </w:r>
+<!--
+      <w:r>
+          <w:rPr>
+            <w:rStyle w:val="Hyperlink"/>
+          </w:rPr>
+
+	<w:instrText>HYPERLINK "<xsl:value-of select="@target"/>"\h</w:instrText>
+      </w:r>
+-->
+<!--
+	<xsl:variable name="rid">
 	  <xsl:text>rId</xsl:text>
 	  <xsl:variable name="n">
 	    <xsl:number level="any"/>
 	  </xsl:variable>
 	  <xsl:value-of select="$n + 3000"/>
-	</xsl:attribute>
+	</xsl:variable>
+      <w:hyperlink r:id="{$rid}">
         <w:r>
           <w:rPr>
             <w:rStyle w:val="Hyperlink"/>
-            <w:rFonts w:asciiTheme="minorHAnsi" w:hAnsiTheme="minorHAnsi"/>
           </w:rPr>
           <w:t>
 	    <xsl:value-of select="@target"/>
 	  </w:t>
-      </w:r>
+	</w:r>
       </w:hyperlink>
+-->
     </xsl:template>
 
 
@@ -3070,11 +3100,13 @@ under new name -->
                 </xsl:for-each>
 
 		<!-- hyperlinks -->
+<!--
 		<xsl:for-each select="//tei:ptr">
 		  <Relationship 
 		      Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
 		      Target="{@target}" 
 		      TargetMode="External">
+<xsl:message>H <xsl:value-of select="@target"/></xsl:message>
 		     <xsl:attribute name="Id">
 		       <xsl:text>rId</xsl:text>
 		       <xsl:variable name="n">
@@ -3084,7 +3116,7 @@ under new name -->
 		     </xsl:attribute>
 		  </Relationship>
 		</xsl:for-each>
-
+-->
                 <xsl:for-each select="//tei:graphic[@url]">
                     <Relationship Id="rId{position() + 300}"
                         Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
