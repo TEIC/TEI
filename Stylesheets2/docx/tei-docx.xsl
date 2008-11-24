@@ -36,13 +36,12 @@
   <xsl:import href="variables.xsl"/>
 <!--
 A4 is 210mm x 297mm; leaving 1in margin (25mm),
-gives 185 x 272 approx useable area.  In Microsoft speak, 
+gives 160 x 247 approx useable area.  In Microsoft speak, 
 1mm = 35998 units. so page size is 6659630 x 9791456
 Divide by 100 to avoid overflow.
 -->
-  <xsl:variable name="pageWidth">66596.30</xsl:variable>
-  <xsl:variable name="pageHeight">97914.56</xsl:variable>
-  <xsl:key name="SECTPR" match="w:sectPr" use="1"/>
+   <xsl:variable name="pageWidth">57596.80</xsl:variable>
+  <xsl:variable name="pageHeight">88915.06</xsl:variable>
     
     <xd:doc type="stylesheet">
         <xd:short> TEI stylesheet for making Word docx files from TEI XML </xd:short>
@@ -68,6 +67,14 @@ Divide by 100 to avoid overflow.
     <xsl:strip-space elements="*"/>
     <xsl:preserve-space elements="tei:text"/>
     <xsl:output method="xml" version="1.0" encoding="UTF-8"/>
+
+    <xsl:key name="FOOTERS" match="tei:fw[@type='footer']" use="@xml:id"/>
+    <xsl:key name="HEADERS" match="tei:fw[@type='header']" use="@xml:id"/>
+    <xsl:key name="ALLFOOTERS" match="tei:fw[@type='footer']" use="1"/>
+    <xsl:key name="ALLHEADERS" match="tei:fw[@type='header']" use="1"/>
+
+    <xsl:key name='ENDNOTES' match="tei:note[@place='end']" use="1"/>
+    <xsl:key name='FOOTNOTES' match="tei:note[@place='foot']" use="1"/>
 
     <xsl:param name="word-directory">..</xsl:param>
     <xsl:param name="debug">false</xsl:param>
@@ -140,9 +147,24 @@ Divide by 100 to avoid overflow.
                 <xsl:apply-templates select="tei:text/tei:back"/>
 
                 <!-- write out final sectPr .. if exists -->
-                <xsl:apply-templates select="tei:text/tei:milestone[1]">
-                    <xsl:with-param name="final-section">true</xsl:with-param>
-                </xsl:apply-templates>
+		<xsl:choose>
+		  <xsl:when test="tei:text/tei:milestone">
+		    <xsl:apply-templates select="tei:text/tei:milestone[1]">
+		      <xsl:with-param name="final-section">true</xsl:with-param>
+		    </xsl:apply-templates>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <w:sectPr>
+		      <w:pgSz>
+			<xsl:attribute name="w:w">12240</xsl:attribute>
+			<xsl:attribute name="w:h">15840</xsl:attribute>
+		      </w:pgSz>
+		      <w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:gutter="0"
+			       w:footer="720" w:header="720"/>
+		      <w:docGrid w:linePitch="360"/>
+		    </w:sectPr>
+		  </xsl:otherwise>
+		</xsl:choose>
             </w:body>
         </w:document>
     </xsl:template>
@@ -423,6 +445,12 @@ Divide by 100 to avoid overflow.
                 <xsl:when test="self::tei:hi[not(@rend)]">
                     <w:b/>
                 </xsl:when>
+		<xsl:when test="self::tei:cell[@role='label']">
+                    <w:b/>
+		</xsl:when>
+		<xsl:when test="self::tei:cell and parent::tei:row[@role='label']">
+                    <w:b/>
+		</xsl:when>
             </xsl:choose>
 
             <!-- italic -->
@@ -581,17 +609,18 @@ Divide by 100 to avoid overflow.
     -->
     <xsl:template match="tei:milestone">
         <xsl:param name="final-section">false</xsl:param>
-
+	
         <!-- construct sectPr -->
         <xsl:variable name="sectPr">
             <w:sectPr>
-                <xsl:variable name="numberOfFooters" select="count(//tei:fw[@type='footer'])"/>
+                <xsl:variable name="numberOfFooters" select="count(key('ALLFOOTERS',1))"/>
 
                 <xsl:for-each select="teidocx:header">
                     <xsl:variable name="ref" select="@ref"/>
                     <xsl:variable name="headernum">
-                        <xsl:number select="//tei:fw[@type='header' and @xml:id=$ref]"
-                            count="//tei:fw[@type='header']" level="any"/>
+                        <xsl:for-each select="key('HEADERS',$ref)">
+			  <xsl:number level="any"/>
+			</xsl:for-each>
                     </xsl:variable>
                     <xsl:variable name="rid" select="concat('rId',100+$headernum+$numberOfFooters)"/>
                     <w:headerReference w:type="{@type}" r:id="{$rid}"/>
@@ -600,9 +629,10 @@ Divide by 100 to avoid overflow.
                 <xsl:for-each select="teidocx:footer">
                     <xsl:variable name="ref" select="@ref"/>
                     <xsl:variable name="footernum">
-                        <xsl:number select="//tei:fw[@type='footer' and @xml:id=$ref]"
-                            count="//tei:fw[@type='footer']" level="any"/>
-                    </xsl:variable>
+		      <xsl:for-each select="key('FOOTERS',$ref)">
+			<xsl:number level="any"/>
+		      </xsl:for-each>
+		    </xsl:variable>
                     <xsl:variable name="rid" select="concat('rId',100+$footernum)"/>
 
                     <w:footerReference w:type="{@type}" r:id="{$rid}"/>
@@ -842,6 +872,16 @@ Divide by 100 to avoid overflow.
         Handle figures 
     -->
     
+    <xsl:template match="tei:figure[not(@rend)]">
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="pPr">
+	  <w:pPr>
+	    <w:spacing w:before="240"/>
+	    <w:jc w:val="center"/>
+	  </w:pPr>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:template>
     <xsl:template match="tei:figure/tei:figDesc"/>
 
     <xsl:template match="tei:figure/tei:head">
@@ -970,22 +1010,8 @@ is there a number present?
                 <w:drawing>
                     <!-- choose between inline and block -->
                     <xsl:choose>
-                        <!-- render image as inline -->
-                        <xsl:when test="@rend='inline'">
-                            <wp:inline>
-                                <wp:extent cx="{$imageWidth}00"
-					   cy="{$imageHeight}00"/>
-                                <wp:docPr name="{tokenize(@url, '/')[last()]}">
-                                    <xsl:attribute name="id">
-                                        <xsl:number level="any"/>
-                                    </xsl:attribute>
-                                </wp:docPr>
-                                <xsl:copy-of select="$graphic-element"/>
-                            </wp:inline>
-                        </xsl:when>
-
-                        <!-- render image as block -->
-                        <xsl:otherwise>
+		      <xsl:when test="parent::tei:figure[@rend='display']">
+                        <!-- render  as block -->
                             <wp:anchor simplePos="0" relativeHeight="10" behindDoc="0" locked="0"
                                 layoutInCell="1" allowOverlap="1">
                                 <wp:simplePos x="0" y="0"/>
@@ -1006,7 +1032,19 @@ is there a number present?
 
                                 <xsl:copy-of select="$graphic-element"/>
                             </wp:anchor>
-                        </xsl:otherwise>
+		      </xsl:when>
+		      <xsl:otherwise>
+                            <wp:inline>
+                                <wp:extent cx="{$imageWidth}00"
+					   cy="{$imageHeight}00"/>
+                                <wp:docPr name="{tokenize(@url, '/')[last()]}">
+                                    <xsl:attribute name="id">
+                                        <xsl:number level="any"/>
+                                    </xsl:attribute>
+                                </wp:docPr>
+                                <xsl:copy-of select="$graphic-element"/>
+                            </wp:inline>
+		      </xsl:otherwise>
                     </xsl:choose>
                     <!-- end inline/block -->
 
@@ -1125,6 +1163,15 @@ is there a number present?
                 <xsl:otherwise>
                     <w:tblPr>
                         <w:tblW w:w="0" w:type="auto"/>
+			<w:jc w:val="center"/>
+			<w:tblBorders>
+			  <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+			  <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+			  <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+			  <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+			  <w:insideH w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+			  <w:insideV w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+			</w:tblBorders>
                     </w:tblPr>
                 </xsl:otherwise>
             </xsl:choose>
@@ -1138,14 +1185,14 @@ is there a number present?
                         </xsl:for-each>
                     </w:tblGrid>
                 </xsl:when>
-                <!-- if it is definied in word's namespace -->
+                <!-- if it is defined in word's namespace -->
                 <xsl:when test="w:tblGrid">
                     <xsl:copy-of select="w:tblGrid"/>
                 </xsl:when>
 		<xsl:otherwise>
                     <w:tblGrid>
 		      <xsl:for-each select="tei:row[1]/tei:cell">
-			<w:gridCol w:w="500"/>
+			<w:gridCol w:w="500"/> <!-- notional amount -->
 		      </xsl:for-each>
 		    </w:tblGrid>		  
 		</xsl:otherwise>
@@ -1256,11 +1303,24 @@ is there a number present?
 
     <!-- hyperlink -->
     <xsl:template match="tei:ptr">
-      <w:r>
-	<w:t>
-	  <xsl:value-of select="@target"/>
-	</w:t>
+      <w:hyperlink>
+	<xsl:attribute name="r:id">
+	  <xsl:text>rId</xsl:text>
+	  <xsl:variable name="n">
+	    <xsl:number level="any"/>
+	  </xsl:variable>
+	  <xsl:value-of select="$n + 3000"/>
+	</xsl:attribute>
+        <w:r>
+          <w:rPr>
+            <w:rStyle w:val="Hyperlink"/>
+            <w:rFonts w:asciiTheme="minorHAnsi" w:hAnsiTheme="minorHAnsi"/>
+          </w:rPr>
+          <w:t>
+	    <xsl:value-of select="@target"/>
+	  </w:t>
       </w:r>
+      </w:hyperlink>
     </xsl:template>
 
 
@@ -1307,7 +1367,7 @@ is there a number present?
 
     <!-- HEADER / FOOTER TEMPLATES -->
     <xsl:template name="write-header-files">
-        <xsl:for-each select="//tei:fw[@type='header']">
+        <xsl:for-each select="key('ALLHEADERS',1)">
             <xsl:variable name="num" select="position()"/>
             <xsl:result-document href="{concat($word-directory,'/word/header',$num,'.xml')}">
                 <w:hdr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
@@ -1329,24 +1389,31 @@ is there a number present?
 
 
     <xsl:template name="write-footer-files">
-        <xsl:for-each select="//tei:fw[@type='footer']">
-            <xsl:variable name="num" select="position()"/>
-            <xsl:result-document href="{concat($word-directory,'/word/footer',$num,'.xml')}">
-                <w:ftr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
-                    xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
-                    xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:o="urn:schemas-microsoft-com:office:office"
-                    xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-                    xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-                    xmlns:v="urn:schemas-microsoft-com:vml"
-                    xmlns:w10="urn:schemas-microsoft-com:office:word"
-                    xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-                    xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
+      <xsl:choose>
+	<xsl:when test="count(key('ALLFOOTERS',1))=0">
+	  <!-- create a default footer ? -->
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:for-each select="key('ALLFOOTERS',1)">
+	    <xsl:variable name="num" select="position()"/>
+	    <xsl:result-document href="{concat($word-directory,'/word/footer',$num,'.xml')}">
+	      <w:ftr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
+		     xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
+		     xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		     xmlns:o="urn:schemas-microsoft-com:office:office"
+		     xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+		     xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
+		     xmlns:v="urn:schemas-microsoft-com:vml"
+		     xmlns:w10="urn:schemas-microsoft-com:office:word"
+		     xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+		     xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
                     xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">
-                    <xsl:apply-templates select="."/>
-                </w:ftr>
-            </xsl:result-document>
+		<xsl:apply-templates select="."/>
+	      </w:ftr>
+	    </xsl:result-document>
         </xsl:for-each>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
 
 
@@ -2915,7 +2982,7 @@ under new name -->
                     ContentType="application/vnd.openxmlformats-officedocument.theme+xml"/>
                 
                 <!-- headers -->
-                <xsl:for-each select="//tei:fw[@type='header']">
+                <xsl:for-each select="key('ALLHEADERS',1)">
                     <xsl:variable name="num" select="position()"/>
                     <Override 
                         ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml">
@@ -2924,7 +2991,7 @@ under new name -->
                 </xsl:for-each>
                 
                 <!-- footers -->
-                <xsl:for-each select="//tei:fw[@type='footer']">
+                <xsl:for-each select="key('ALLFOOTERS',1)">
                     <xsl:variable name="num" select="position()"/>
                     <Override 
                         ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml">
@@ -3000,9 +3067,23 @@ under new name -->
                                 Target="{@r:link}" TargetMode="External"/>
                         </xsl:otherwise>
                     </xsl:choose>
-
-
                 </xsl:for-each>
+
+		<!-- hyperlinks -->
+		<xsl:for-each select="//tei:ptr">
+		  <Relationship 
+		      Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
+		      Target="{@target}" 
+		      TargetMode="External">
+		     <xsl:attribute name="Id">
+		       <xsl:text>rId</xsl:text>
+		       <xsl:variable name="n">
+			 <xsl:number level="any"/>
+		       </xsl:variable>
+		       <xsl:value-of select="$n + 3000"/>
+		     </xsl:attribute>
+		  </Relationship>
+		</xsl:for-each>
 
                 <xsl:for-each select="//tei:graphic[@url]">
                     <Relationship Id="rId{position() + 300}"
@@ -3026,7 +3107,7 @@ under new name -->
 
 
                 <!-- our headers and footers -->
-                <xsl:for-each select="//tei:fw[@type='footer']">
+                <xsl:for-each select="key('ALLFOOTERS',1)">
                     <xsl:variable name="num" select="position()"/>
                     <Relationship
                         Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer">
@@ -3043,8 +3124,8 @@ under new name -->
                 </xsl:for-each>
 
                 <!-- count all footers -->
-                <xsl:variable name="numberOfFooters" select="count(//tei:fw[@type='footer'])"/>
-                <xsl:for-each select="//tei:fw[@type='header']">
+                <xsl:variable name="numberOfFooters" select="count(key('ALLFOOTERS',1))"/>
+                <xsl:for-each select="key('ALLHEADERS',1)">
                     <xsl:variable name="num" select="position()"/>
                     <Relationship
                         Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/header">
