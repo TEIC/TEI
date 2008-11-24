@@ -846,7 +846,12 @@ Divide by 100 to avoid overflow.
 
         <!-- perform some tests on the graphic -->
         <xsl:if
-            test="@url and @teidocx:width and @teidocx:height">
+            test="@url and 
+		  (
+		  (@teidocx:width and @teidocx:height)
+		  or
+		  (@width and @height))">
+	  
 <!--
 
 is there a number present?
@@ -860,11 +865,19 @@ is there a number present?
 		<xsl:when test="contains(@width,'%')">
 		  <xsl:value-of select="($pageWidth * (number(substring-before(@width,'%')) div 100)) cast as xs:integer"/>
 		</xsl:when>
-		<xsl:when test="@scale">
+		<xsl:when test="@width">
+		  <xsl:value-of select="teidocx:convert-dim-emu(@width)"/>
+		</xsl:when>
+		<xsl:when test="@scale and @teidocx:width">
 		  <xsl:value-of select="(@teidocx:width *  number(@scale)) cast as xs:integer"/>
 		</xsl:when>
-		<xsl:otherwise>
+		<xsl:when test="@teidocx:width">
 		  <xsl:value-of select="@teidocx:width"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:message terminate="yes">no way to work out
+		  image width for <xsl:value-of select="@url"/>
+		  </xsl:message>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:variable>
@@ -874,11 +887,24 @@ is there a number present?
 		<xsl:when test="contains(@height,'%')">
 		  <xsl:value-of select="($pageHeight * (number(substring-before(@height,'%')) div 100)) cast as xs:integer"/>
 		</xsl:when>
-		<xsl:when test="@scale">
+		<xsl:when test="@height">
+		  <xsl:value-of select="teidocx:convert-dim-emu(@height)"/>
+		</xsl:when>
+		<xsl:when test="@scale and @teidocx:height">
 		  <xsl:value-of select="(@teidocx:height *  number(@scale)) cast as xs:integer"/>
 		</xsl:when>
-		<xsl:otherwise>
+		<xsl:when test="@width and @teidocx:height and
+				@teidocx:width">
+		  <xsl:value-of select="($imageWidth *
+		    @teidocx:height) div @teidocx:width"/>
+		</xsl:when>
+		<xsl:when test="@teidocx:height">
 		  <xsl:value-of select="@teidocx:height"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:message terminate="yes">no way to work out
+		  image height for <xsl:value-of select="@url"/>
+		  </xsl:message>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:variable>
