@@ -841,6 +841,14 @@ Divide by 100 to avoid overflow.
     <!-- 
         Handle figures 
     -->
+    
+    <xsl:template match="tei:figure/tei:figDesc"/>
+
+    <xsl:template match="tei:figure/tei:head">
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="style">Figuretitle</xsl:with-param>
+      </xsl:call-template>
+    </xsl:template>
 
     <xsl:template match="tei:graphic">
 
@@ -1160,10 +1168,11 @@ is there a number present?
     <xsl:template match="tei:row">
         <w:tr>
             <xsl:choose>
-                <xsl:when test="w:trPr">
-                    <xsl:copy-of select="w:trPr"/>
-                </xsl:when>
-                <xsl:otherwise> </xsl:otherwise>
+	      <xsl:when test="w:trPr">
+		<xsl:copy-of select="w:trPr"/>
+	      </xsl:when>
+	      <xsl:otherwise> 
+	      </xsl:otherwise>
             </xsl:choose>
             <w:tblPrEx>
                 <w:tblLayout w:type="autofit"/> 
