@@ -40,9 +40,12 @@ gives 160 x 247 approx useable area.  In Microsoft speak,
 1mm = 35998 units. so page size is 6659630 x 9791456
 Divide by 100 to avoid overflow.
 -->
-   <xsl:variable name="pageWidth">57596.80</xsl:variable>
-  <xsl:variable name="pageHeight">88915.06</xsl:variable>
-    
+   <xsl:param name="pageWidth">57596.80</xsl:param>
+   <xsl:param name="pageHeight">88915.06</xsl:param>
+   <xsl:param name="defaultHeaderFooterFile">default.xml</xsl:param>
+   <xsl:param name="postQuote">’</xsl:param>
+   <xsl:param name="preQuote">‘</xsl:param>
+
     <xd:doc type="stylesheet">
         <xd:short> TEI stylesheet for making Word docx files from TEI XML </xd:short>
         <xd:detail> This library is free software; you can redistribute it and/or
@@ -154,17 +157,11 @@ Divide by 100 to avoid overflow.
 		    </xsl:apply-templates>
 		  </xsl:when>
 		  <xsl:otherwise>
-<!--
-		    <w:sectPr>
-		      <w:pgSz>
-			<xsl:attribute name="w:w">12240</xsl:attribute>
-			<xsl:attribute name="w:h">15840</xsl:attribute>
-		      </w:pgSz>
-		      <w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:gutter="0"
-			       w:footer="720" w:header="720"/>
-		      <w:docGrid w:linePitch="360"/>
-		    </w:sectPr>
--->
+		    <xsl:apply-templates
+			select="document($defaultHeaderFooterFile)/tei:TEI/tei:text/tei:milestone">
+		      <xsl:with-param
+			  name="final-section">true</xsl:with-param>
+		    </xsl:apply-templates>
 		  </xsl:otherwise>
 		</xsl:choose>
             </w:body>
@@ -612,22 +609,10 @@ Divide by 100 to avoid overflow.
     <xsl:template match="tei:milestone">
         <xsl:param name="final-section">false</xsl:param>
 	
+
         <!-- construct sectPr -->
         <xsl:variable name="sectPr">
             <w:sectPr>
-                <xsl:variable name="numberOfFooters" select="count(key('ALLFOOTERS',1))"/>
-
-                <xsl:for-each select="teidocx:header">
-                    <xsl:variable name="ref" select="@ref"/>
-                    <xsl:variable name="headernum">
-                        <xsl:for-each select="key('HEADERS',$ref)">
-			  <xsl:number level="any"/>
-			</xsl:for-each>
-                    </xsl:variable>
-                    <xsl:variable name="rid" select="concat('rId',100+$headernum+$numberOfFooters)"/>
-                    <w:headerReference w:type="{@type}" r:id="{$rid}"/>
-
-                </xsl:for-each>
                 <xsl:for-each select="teidocx:footer">
                     <xsl:variable name="ref" select="@ref"/>
                     <xsl:variable name="footernum">
@@ -636,9 +621,20 @@ Divide by 100 to avoid overflow.
 		      </xsl:for-each>
 		    </xsl:variable>
                     <xsl:variable name="rid" select="concat('rId',100+$footernum)"/>
-
                     <w:footerReference w:type="{@type}" r:id="{$rid}"/>
                 </xsl:for-each>
+
+                <xsl:for-each select="teidocx:header">
+                    <xsl:variable name="ref" select="@ref"/>
+                    <xsl:variable name="headernum">
+                        <xsl:for-each select="key('HEADERS',$ref)">
+			  <xsl:number level="any"/>
+			</xsl:for-each>
+                    </xsl:variable>
+                    <xsl:variable name="rid" select="concat('rId',100+$headernum)"/>
+                    <w:headerReference w:type="{@type}" r:id="{$rid}"/>
+                </xsl:for-each>
+
                 <w:pgSz>
                     <xsl:choose>
                         <!-- landscape -->
@@ -1072,6 +1068,20 @@ is there a number present?
         </xsl:choose>
     </xsl:template>
 
+    <!-- quoted text -->
+    <xsl:template match="tei:q">
+        <w:r>
+	  <w:t>
+	    <xsl:value-of select="$preQuote"/>
+	  </w:t>
+	</w:r>
+	<xsl:apply-templates/>
+        <w:r>
+	  <w:t>
+	    <xsl:value-of select="$postQuote"/>
+	  </w:t>
+	</w:r>
+    </xsl:template>
 
     <!-- TBX -->
 
@@ -1262,10 +1272,19 @@ is there a number present?
                                         </xsl:attribute>
                                     </w:pStyle>
                                 </xsl:if>
-                                <xsl:if test="@align">
-                                    <w:jc w:val="{@align}"/>
-                                </xsl:if>
-                            </w:pPr>
+				<xsl:choose>
+				  <xsl:when test="@align">
+				    <w:jc w:val="{@align}"/>
+				  </xsl:when>
+				  <xsl:when test="parent::tei:row[@role='label']
+						  or @role='label'">
+				    <w:jc w:val="left"/>
+				  </xsl:when>
+				  <xsl:otherwise>
+				    <w:jc w:val="right"/>
+				  </xsl:otherwise>
+				</xsl:choose>
+			    </w:pPr>
                         </xsl:with-param>
                     </xsl:call-template>
                 </xsl:otherwise>
@@ -1317,6 +1336,7 @@ is there a number present?
       <w:r w:rsidR="00765EBE">
 	<w:rPr>
 	  <w:rStyle w:val="Hyperlink"/>
+	  <w:u w:val="none"/>
 	</w:rPr>
 	<w:t><xsl:value-of select="@target"/></w:t>
       </w:r>
@@ -1397,558 +1417,75 @@ is there a number present?
 
     <!-- HEADER / FOOTER TEMPLATES -->
     <xsl:template name="write-header-files">
-        <xsl:for-each select="key('ALLHEADERS',1)">
-            <xsl:variable name="num" select="position()"/>
-            <xsl:result-document href="{concat($word-directory,'/word/header',$num,'.xml')}">
-                <w:hdr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
-                    xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
-                    xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:o="urn:schemas-microsoft-com:office:office"
-                    xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-                    xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-                    xmlns:v="urn:schemas-microsoft-com:vml"
-                    xmlns:w10="urn:schemas-microsoft-com:office:word"
-                    xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-                    xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
-                    xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">
-                    <xsl:apply-templates select="."/>
-                </w:hdr>
-            </xsl:result-document>
-        </xsl:for-each>
-    </xsl:template>
-
-
-    <xsl:template name="write-footer-files">
       <xsl:choose>
-	<xsl:when test="count(key('ALLFOOTERS',1))=0">
-	  <!-- create a default footer ? -->
+	<xsl:when test="count(key('ALLHEADERS',1))=0">
+	  <xsl:for-each select="document($defaultHeaderFooterFile)">
+	    <xsl:call-template name="the-header-files"/>
+	  </xsl:for-each>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:for-each select="key('ALLFOOTERS',1)">
-	    <xsl:variable name="num" select="position()"/>
-	    <xsl:result-document href="{concat($word-directory,'/word/footer',$num,'.xml')}">
-	      <w:ftr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
-		     xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
-		     xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		     xmlns:o="urn:schemas-microsoft-com:office:office"
-		     xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-		     xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-		     xmlns:v="urn:schemas-microsoft-com:vml"
-		     xmlns:w10="urn:schemas-microsoft-com:office:word"
-		     xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-		     xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
-                    xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">
-		<xsl:apply-templates select="."/>
-	      </w:ftr>
-	    </xsl:result-document>
-        </xsl:for-each>
+	  <xsl:call-template name="the-header-files"/>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
 
+    <xsl:template name="the-header-files">
+      <xsl:for-each select="key('ALLHEADERS',1)">
+	<xsl:variable name="num" select="position()"/>
+	<xsl:result-document href="{concat($word-directory,'/word/header',$num,'.xml')}">
+	  <w:hdr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
+		 xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
+		 xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		 xmlns:o="urn:schemas-microsoft-com:office:office"
+		 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+		 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
+		 xmlns:v="urn:schemas-microsoft-com:vml"
+		 xmlns:w10="urn:schemas-microsoft-com:office:word"
+		 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+		 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
+		 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">
+		  <xsl:apply-templates select="."/>
+	  </w:hdr>
+	</xsl:result-document>
+      </xsl:for-each>
+    </xsl:template>
 
-    <!--
-    <xsl:template name="header1">
-        <xsl:result-document href="{concat($word-directory,'/word/header1.xml')}">
-            <w:hdr>
-                <w:p w:rsidR="00DE0314" w:rsidRDefault="00DE0314">
-                    <w:pPr>
-                        <w:pStyle>
-                            <xsl:attribute name="w:val">
-                                <xsl:call-template name="getStyleName">
-                                    <xsl:with-param name="in">
-                                        <xsl:text>header</xsl:text>
-                                    </xsl:with-param>
-                                </xsl:call-template>
-                            </xsl:attribute>
-                        </w:pStyle>
-                    </w:pPr>
-                    <w:r w:rsidRPr="00A44124">
-                        <w:rPr>
-                            <w:rStyle w:val="refnum"/>
-                        </w:rPr>
-                        <w:t>
-			  <xsl:attribute name="xml:space">preserve</xsl:attribute>
-			  <xsl:call-template name="getiso_header"/>
-			</w:t>
-                    </w:r>
-                    <w:sdt>
-                        <w:sdtPr>
-                            <w:rPr>
-                                <w:color w:val="C0504D" w:themeColor="accent2"/>
-                            </w:rPr>
-                            <w:alias w:val="serialNumber"/>
-                            <w:tag w:val="serialNumber"/>
-                            <w:id w:val="33359551"/>
-                            <w:placeholder>
-                                <w:docPart w:val="5FBCD23BCCA641399CCBC6A2D6312613"/>
-                            </w:placeholder>
-                            <w:text/>
-                        </w:sdtPr>
-                        <w:sdtContent>
-                            <w:r w:rsidRPr="000C097E">
-                                <w:rPr>
-                                    <w:color w:val="C0504D" w:themeColor="accent2"/>
-                                </w:rPr>
-                                <w:t>
-                                    <xsl:call-template name="docID"/>
-                                </w:t>
-                            </w:r>
-                        </w:sdtContent>
-                    </w:sdt>
-                </w:p>
-            </w:hdr>
-        </xsl:result-document>
+    <xsl:template name="write-footer-files">
+      <xsl:choose>
+	<xsl:when test="count(key('ALLFOOTERS',1))=0">
+	  <xsl:for-each select="document($defaultHeaderFooterFile)">
+	    <xsl:call-template name="the-footer-files"/>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	    <xsl:call-template name="the-footer-files"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
+
+    
+    <xsl:template name="the-footer-files">
+      <xsl:for-each select="key('ALLFOOTERS',1)">
+	<xsl:variable name="num" select="position()"/>
+	<xsl:result-document href="{concat($word-directory,'/word/footer',$num,'.xml')}">
+	  <w:ftr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
+		 xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
+		 xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		 xmlns:o="urn:schemas-microsoft-com:office:office"
+		 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+		 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
+		 xmlns:v="urn:schemas-microsoft-com:vml"
+		 xmlns:w10="urn:schemas-microsoft-com:office:word"
+		 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+		 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
+		 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">
+	    <xsl:apply-templates select="."/>
+	  </w:ftr>
+	</xsl:result-document>
+      </xsl:for-each>
     </xsl:template>
 
 
-    <xsl:template name="header2">
-        <xsl:result-document href="{concat($word-directory,'/word/header2.xml')}">
-            <w:hdr>
-                <w:p w:rsidR="00DE0314" w:rsidRDefault="00DE0314" w:rsidP="00807BF4">
-                    <w:pPr>
-                        <w:pStyle>
-                            <xsl:attribute name="w:val">
-                                <xsl:call-template name="getStyleName">
-                                    <xsl:with-param name="in">
-                                        <xsl:text>header</xsl:text>
-                                    </xsl:with-param>
-                                </xsl:call-template>
-                            </xsl:attribute>
-                        </w:pStyle>
-                        <w:jc w:val="right"/>
-                    </w:pPr>
-                    <w:r w:rsidRPr="00A44124">
-                        <w:rPr>
-                            <w:rStyle w:val="refnum"/>
-                        </w:rPr>
-			<w:t>
-			  <xsl:attribute name="xml:space">preserve</xsl:attribute>
-			  <xsl:call-template name="getiso_header"/>
-			</w:t>
-                    </w:r>
-                    <w:sdt>
-                        <w:sdtPr>
-                            <w:rPr>
-                                <w:rStyle w:val="refnum"/>
-                            </w:rPr>
-                            <w:alias w:val="serialNumber"/>
-                            <w:tag w:val="serialNumber"/>
-                            <w:id w:val="33359565"/>
-                            <w:placeholder>
-                                <w:docPart w:val="96942ABFEE194059AEB771B3D3FCEF3A"/>
-                            </w:placeholder>
-                            <w:text/>
-                        </w:sdtPr>
-                        <w:sdtContent>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rStyle w:val="refnum"/>
-                                </w:rPr>
-                                <w:t>
-                                    <xsl:call-template name="docID"/>
-                                </w:t>
-                            </w:r>
-                        </w:sdtContent>
-                    </w:sdt>
-                </w:p>
-            </w:hdr>
-        </xsl:result-document>
-    </xsl:template>
-
-
-    <xsl:template name="header3">
-        <xsl:result-document href="{concat($word-directory,'/word/header3.xml')}">
-            <w:hdr>
-                <w:p w:rsidR="00DE0314" w:rsidRDefault="00DE0314" w:rsidP="00807BF4">
-                    <w:pPr>
-                        <w:pStyle>
-                            <xsl:attribute name="w:val">
-                                <xsl:call-template name="getStyleName">
-                                    <xsl:with-param name="in">
-                                        <xsl:text>header</xsl:text>
-                                    </xsl:with-param>
-                                </xsl:call-template>
-                            </xsl:attribute>
-                        </w:pStyle>
-                    </w:pPr>
-                    <w:r>
-                        <w:rPr>
-                            <w:color w:val="C0504D" w:themeColor="accent2"/>
-                        </w:rPr>
-                        <w:t>
-			  <xsl:text>© </xsl:text>
-			  <xsl:call-template name="getiso_publisher"/>
-			  <xsl:text> </xsl:text>
-			  <xsl:call-template name="getiso_year"/>
-			  <xsl:text> – All rights reserved</xsl:text>
-			</w:t>
-		    </w:r>
-                </w:p>
-                <w:p w:rsidR="00DE0314" w:rsidRDefault="00DE0314">
-                    <w:pPr>
-                        <w:pStyle>
-                            <xsl:attribute name="w:val">
-                                <xsl:call-template name="getStyleName">
-                                    <xsl:with-param name="in">
-                                        <xsl:text>header</xsl:text>
-                                    </xsl:with-param>
-                                </xsl:call-template>
-                            </xsl:attribute>
-                        </w:pStyle>
-
-                    </w:pPr>
-                </w:p>
-            </w:hdr>
-        </xsl:result-document>
-    </xsl:template>
-
-    <xsl:template name="header4">
-        <xsl:result-document href="{concat($word-directory,'/word/header4.xml')}">
-
-            <w:hdr>
-                <w:tbl>
-                    <w:tblPr>
-                        <w:tblW w:w="0" w:type="auto"/>
-                        <w:jc w:val="center"/>
-                        <w:tblInd w:w="8" w:type="dxa"/>
-                        <w:tblLayout w:type="fixed"/>
-                        <w:tblCellMar>
-                            <w:left w:w="0" w:type="dxa"/>
-                            <w:right w:w="0" w:type="dxa"/>
-                        </w:tblCellMar>
-                        <w:tblLook w:val="0000"/>
-                    </w:tblPr>
-                    <w:tblGrid>
-                        <w:gridCol w:w="5387"/>
-                        <w:gridCol w:w="4366"/>
-                    </w:tblGrid>
-                    <w:tr w:rsidR="00DE0314" w:rsidTr="00DE4DC1">
-                        <w:trPr>
-                            <w:cantSplit/>
-                            <w:jc w:val="center"/>
-                        </w:trPr>
-                        <w:tc>
-                            <w:tcPr>
-                                <w:tcW w:w="5387" w:type="dxa"/>
-                                <w:tcBorders>
-                                    <w:top w:val="single" w:sz="18" w:space="0" w:color="auto"/>
-                                    <w:bottom w:val="single" w:sz="18" w:space="0" w:color="auto"/>
-                                </w:tcBorders>
-                            </w:tcPr>
-                            <w:p w:rsidR="00DE0314" w:rsidRPr="00F436AE" w:rsidRDefault="00DE0314"
-                                w:rsidP="00DE4DC1">
-                                <w:pPr>
-                                    <w:pStyle>
-                                        <xsl:attribute name="w:val">
-                                            <xsl:call-template name="getStyleName">
-                                                <xsl:with-param name="in">
-                                                  <xsl:text>header</xsl:text>
-                                                </xsl:with-param>
-                                            </xsl:call-template>
-                                        </xsl:attribute>
-                                    </w:pStyle>
-                                    <w:spacing w:before="120" w:after="120" w:line="-230"
-                                        w:lineRule="auto"/>
-                                    <w:rPr>
-                                        <w:color w:val="C0504D" w:themeColor="accent2"/>
-                                    </w:rPr>
-                                </w:pPr>
-                                <w:r>
-                                    <w:rPr>
-                                        <w:color w:val="C0504D" w:themeColor="accent2"/>
-                                    </w:rPr>
-                                    <w:t>
-                                        <xsl:variable name="stage">
-					  <xsl:value-of 
-					      select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:idno[@type='stage']"/>
-
-                                        </xsl:variable>
-                                        <xsl:choose>
-                                            <xsl:when test="$stage='00'">Preliminary</xsl:when>
-                                            <xsl:when test="$stage='20'">Preparation</xsl:when>
-                                            <xsl:when test="$stage='30'">Committee</xsl:when>
-                                            <xsl:when test="$stage='40'">Enquiry</xsl:when>
-                                            <xsl:when test="$stage='50'">Final Draft</xsl:when>
-                                            <xsl:when test="$stage='60'">Publication</xsl:when>
-					    <xsl:otherwise>Working Draft</xsl:otherwise>
-                                        </xsl:choose>
-                                    </w:t>
-                                </w:r>
-                            </w:p>
-                        </w:tc>
-                        <w:tc>
-                            <w:tcPr>
-                                <w:tcW w:w="4366" w:type="dxa"/>
-                                <w:tcBorders>
-                                    <w:top w:val="single" w:sz="18" w:space="0" w:color="auto"/>
-                                    <w:bottom w:val="single" w:sz="18" w:space="0" w:color="auto"/>
-                                </w:tcBorders>
-                            </w:tcPr>
-                            <w:p w:rsidR="00DE0314" w:rsidRPr="00F436AE" w:rsidRDefault="00DE0314"
-                                w:rsidP="000C097E">
-                                <w:pPr>
-                                    <w:pStyle>
-                                        <xsl:attribute name="w:val">
-                                            <xsl:call-template name="getStyleName">
-                                                <xsl:with-param name="in">
-                                                  <xsl:text>header</xsl:text>
-                                                </xsl:with-param>
-                                            </xsl:call-template>
-                                        </xsl:attribute>
-                                    </w:pStyle>
-                                    <w:spacing w:before="120" w:after="120" w:line="-230"
-                                        w:lineRule="auto"/>
-                                    <w:jc w:val="right"/>
-                                    <w:rPr>
-                                        <w:color w:val="C0504D" w:themeColor="accent2"/>
-                                    </w:rPr>
-                                </w:pPr>
-                                <w:r w:rsidRPr="00F436AE">
-                                    <w:rPr>
-                                        <w:color w:val="C0504D" w:themeColor="accent2"/>
-                                    </w:rPr>
-                                    <w:t>
-				      <xsl:attribute name="xml:space">preserve</xsl:attribute>
-				      <xsl:call-template name="getiso_header"/>
-				    </w:t>
-                                </w:r>
-                                <w:r>
-                                    <w:rPr>
-                                        <w:color w:val="C0504D" w:themeColor="accent2"/>
-                                    </w:rPr>
-                                    <w:t>
-                                        <xsl:call-template name="docID"/>
-                                    </w:t>
-                                </w:r>
-                            </w:p>
-                        </w:tc>
-                    </w:tr>
-                </w:tbl>
-                <w:p w:rsidR="00DE0314" w:rsidRDefault="00DE0314">
-                    <w:pPr>
-                        <w:pStyle>
-                            <xsl:attribute name="w:val">
-                                <xsl:call-template name="getStyleName">
-                                    <xsl:with-param name="in">
-                                        <xsl:text>header</xsl:text>
-                                    </xsl:with-param>
-                                </xsl:call-template>
-                            </xsl:attribute>
-                        </w:pStyle>
-                    </w:pPr>
-                </w:p>
-            </w:hdr>
-        </xsl:result-document>
-    </xsl:template>
-    -->
-
-
-    <!-- FOOTER TEMPLATES -->
-    <!--
-    <xsl:template name="footer1">
-        <xsl:result-document href="{concat($word-directory,'/word/footer1.xml')}">
-            <w:ftr>
-                <w:p w:rsidR="00DE0314" w:rsidRDefault="0020092E">
-                    <w:pPr>
-                        <w:pStyle>
-                            <xsl:attribute name="w:val">
-                                <xsl:call-template name="getStyleName">
-                                    <xsl:with-param name="in">
-                                        <xsl:text>footer</xsl:text>
-                                    </xsl:with-param>
-                                </xsl:call-template>
-                            </xsl:attribute>
-                        </w:pStyle>
-                    </w:pPr>
-                    <w:fldSimple w:instr=" PAGE   \* MERGEFORMAT ">
-                        <w:r w:rsidR="008F63D3">
-                            <w:rPr>
-                                <w:noProof/>
-                            </w:rPr>
-                            <w:t>8</w:t>
-                        </w:r>
-                    </w:fldSimple>
-                    <w:r w:rsidR="00DE0314">
-                        <w:ptab w:relativeTo="margin" w:alignment="center" w:leader="none"/>
-                    </w:r>
-                    <w:r w:rsidR="00DE0314">
-                        <w:ptab w:relativeTo="margin" w:alignment="right" w:leader="none"/>
-                    </w:r>
-                    <w:r w:rsidR="00DE0314">
-                        <w:rPr>
-                            <w:color w:val="C0504D" w:themeColor="accent2"/>
-                        </w:rPr>
-                        <w:t>
-			  <xsl:text>© </xsl:text>
-			  <xsl:call-template name="getiso_publisher"/>
-			  <xsl:text> </xsl:text>
-			  <xsl:call-template name="getiso_year"/>
-			  <xsl:text>  – All rights reserved</xsl:text>
-			</w:t>
-                    </w:r>
-                </w:p>
-            </w:ftr>
-        </xsl:result-document>
-    </xsl:template>
-
-    <xsl:template name="footer2">
-        <xsl:result-document href="{concat($word-directory,'/word/footer2.xml')}">
-            <w:ftr>
-                <w:p w:rsidR="00DE0314" w:rsidRDefault="00DE0314">
-                    <w:pPr>
-                        <w:pStyle>
-                            <xsl:attribute name="w:val">
-                                <xsl:call-template name="getStyleName">
-                                    <xsl:with-param name="in">
-                                        <xsl:text>footer</xsl:text>
-                                    </xsl:with-param>
-                                </xsl:call-template>
-                            </xsl:attribute>
-                        </w:pStyle>
-                    </w:pPr>
-                    <w:r>
-                    </w:r>
-                    <w:r>
-                        <w:rPr>
-                            <w:color w:val="C0504D" w:themeColor="accent2"/>
-                        </w:rPr>
-                        <w:t>
-			  <xsl:text>© </xsl:text>
-			  <xsl:call-template name="getiso_publisher"/>
-			  <xsl:text> </xsl:text>
-			  <xsl:call-template name="getiso_year"/>
-			  <xsl:text>  – All rights reserved</xsl:text>
-			</w:t>
-                    </w:r>
-                    <w:r>
-                        <w:ptab w:relativeTo="margin" w:alignment="center" w:leader="none"/>
-                    </w:r>
-                    <w:r>
-                        <w:ptab w:relativeTo="margin" w:alignment="right" w:leader="none"/>
-                    </w:r>
-                    <w:fldSimple w:instr=" PAGE   \* MERGEFORMAT ">
-                        <w:r w:rsidR="008F63D3">
-                            <w:rPr>
-                                <w:noProof/>
-                            </w:rPr>
-                            <w:t>7</w:t>
-                        </w:r>
-                    </w:fldSimple>
-                </w:p>
-            </w:ftr>
-        </xsl:result-document>
-    </xsl:template>
-
-    <xsl:template name="footer3">
-        <xsl:result-document href="{concat($word-directory,'/word/footer3.xml')}">
-            <w:ftr>
-                <w:p w:rsidR="00DE0314" w:rsidRDefault="00DE0314" w:rsidP="00807BF4">
-                    <w:pPr>
-                        <w:pStyle>
-                            <xsl:attribute name="w:val">
-                                <xsl:call-template name="getStyleName">
-                                    <xsl:with-param name="in">
-                                        <xsl:text>footer</xsl:text>
-                                    </xsl:with-param>
-                                </xsl:call-template>
-                            </xsl:attribute>
-                        </w:pStyle>
-
-                    </w:pPr>
-                    <w:r>
-                        <w:rPr>
-                            <w:color w:val="C0504D" w:themeColor="accent2"/>
-                        </w:rPr>
-		      <w:t>
-			  <xsl:text>© </xsl:text>
-			  <xsl:call-template name="getiso_publisher"/>
-			  <xsl:text> </xsl:text>
-			  <xsl:call-template name="getiso_year"/>
-			  <xsl:text> – All rights reserved</xsl:text>
-		      </w:t>
-		    </w:r>
-                    <w:r>
-                        <w:ptab w:relativeTo="margin" w:alignment="center" w:leader="none"/>
-                    </w:r>
-                    <w:r>
-                        <w:ptab w:relativeTo="margin" w:alignment="right" w:leader="none"/>
-                    </w:r>
-                    <w:fldSimple w:instr=" PAGE   \* MERGEFORMAT ">
-                        <w:r w:rsidR="008F63D3">
-                            <w:rPr>
-                                <w:noProof/>
-                            </w:rPr>
-                            <w:t>1</w:t>
-                        </w:r>
-                    </w:fldSimple>
-                </w:p>
-            </w:ftr>
-        </xsl:result-document>
-    </xsl:template>
-
-
-    <xsl:template name="footer4">
-        <xsl:result-document href="{concat($word-directory,'/word/footer4.xml')}">
-            <w:ftr>
-                <w:p w:rsidR="00DE0314" w:rsidRDefault="00DE0314" w:rsidP="00807BF4">
-                    <w:pPr>
-                        <w:pStyle>
-                            <xsl:attribute name="w:val">
-                                <xsl:call-template name="getStyleName">
-                                    <xsl:with-param name="in">
-                                        <xsl:text>footer</xsl:text>
-                                    </xsl:with-param>
-                                </xsl:call-template>
-                            </xsl:attribute>
-                        </w:pStyle>
-                    </w:pPr>
-                    <w:r>
-                        <w:t xml:space="preserve">© </w:t>
-                    </w:r>
-                    <w:r>
-                        <w:rPr>
-                            <w:color w:val="C0504D" w:themeColor="accent2"/>
-                        </w:rPr>
-			<w:t>
-			  <xsl:text>© </xsl:text>
-			  <xsl:call-template name="getiso_publisher"/>
-			  <xsl:text> </xsl:text>
-			  <xsl:call-template name="getiso_year"/>
-			  <xsl:text> – All rights reserved</xsl:text>
-			</w:t>
-		    </w:r>
-                    <w:r>
-                        <w:ptab w:relativeTo="margin" w:alignment="center" w:leader="none"/>
-                    </w:r>
-                    <w:r>
-                        <w:ptab w:relativeTo="margin" w:alignment="right" w:leader="none"/>
-                    </w:r>
-                    <w:fldSimple w:instr=" PAGE   \* MERGEFORMAT ">
-                        <w:r w:rsidR="008F63D3">
-                            <w:rPr>
-                                <w:noProof/>
-                            </w:rPr>
-                            <w:t>1</w:t>
-                        </w:r>
-                    </w:fldSimple>
-                    <w:r>
-                        <w:t>Lala</w:t>
-                    </w:r>
-                    <w:fldSimple w:instr=" STYLEREF 'Heading2' ">
-                        <w:r w:rsidR="008F63D3">
-                            <w:rPr>
-                                <w:noProof/>
-                            </w:rPr>
-                            <w:t>1</w:t>
-                        </w:r>
-                    </w:fldSimple>
-                    
-                </w:p>
-            </w:ftr>
-        </xsl:result-document>
-    </xsl:template>
-    -->
 
     <!-- Write out the numbering definition file -->
     <xsl:template name="write-numbering-definition">
@@ -2080,140 +1617,10 @@ is there a number present?
 
 
                 <!-- unordered lists -->
-                <w:abstractNum w:abstractNumId="2">
-                    <w:multiLevelType w:val="singleLevel"/>
-                    <w:lvl w:ilvl="0">
-                        <w:start w:val="1"/>
-                        <w:numFmt w:val="bullet"/>
-                        <w:pStyle w:val="ListBullet"/>
-                        <w:lvlText w:val=""/>
-                        <w:lvlJc w:val="left"/>
-                        <w:pPr>
-                            <w:ind w:left="720" w:hanging="360"/>
-                        </w:pPr>
-                        <w:rPr>
-                            <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
-                            <w:color w:val="auto"/>
-                        </w:rPr>
-                    </w:lvl>
-                </w:abstractNum>
+		<xsl:call-template name="defineUnorderedLists"/>
 
                 <!-- ordered lists -->
-                <w:abstractNum w:abstractNumId="3">
-                    <w:multiLevelType w:val="multilevel"/>
-                    <w:lvl w:ilvl="0">
-                        <w:start w:val="1"/>
-                        <w:numFmt w:val="lowerLetter"/>
-                        <w:pStyle w:val="ListNumber"/>
-                        <w:lvlText w:val="%1)"/>
-                        <w:lvlJc w:val="left"/>
-                        <w:pPr>
-                            <w:ind w:left="360" w:hanging="360"/>
-                        </w:pPr>
-                        <w:rPr>
-                            <w:rFonts w:hint="default"/>
-                        </w:rPr>
-                    </w:lvl>
-                    <w:lvl w:ilvl="1">
-                        <w:start w:val="1"/>
-                        <w:numFmt w:val="decimal"/>
-                        <w:pStyle w:val="ListNumber2"/>
-                        <w:lvlText w:val="%2)"/>
-                        <w:lvlJc w:val="left"/>
-                        <w:pPr>
-                            <w:ind w:left="720" w:hanging="360"/>
-                        </w:pPr>
-                        <w:rPr>
-                            <w:rFonts w:hint="default"/>
-                        </w:rPr>
-                    </w:lvl>
-                    <w:lvl w:ilvl="2">
-                        <w:start w:val="1"/>
-                        <w:numFmt w:val="lowerRoman"/>
-                        <w:pStyle w:val="ListNumber3"/>
-                        <w:lvlText w:val="%3)"/>
-                        <w:lvlJc w:val="left"/>
-                        <w:pPr>
-                            <w:ind w:left="1080" w:hanging="360"/>
-                        </w:pPr>
-                        <w:rPr>
-                            <w:rFonts w:hint="default"/>
-                        </w:rPr>
-                    </w:lvl>
-                    <w:lvl w:ilvl="3">
-                        <w:start w:val="1"/>
-                        <w:numFmt w:val="upperRoman"/>
-                        <w:pStyle w:val="ListNumber4"/>
-                        <w:lvlText w:val="%4)"/>
-                        <w:lvlJc w:val="left"/>
-                        <w:pPr>
-                            <w:ind w:left="1440" w:hanging="360"/>
-                        </w:pPr>
-                        <w:rPr>
-                            <w:rFonts w:hint="default"/>
-                        </w:rPr>
-                    </w:lvl>
-                    <w:lvl w:ilvl="4">
-                        <w:start w:val="1"/>
-                        <w:numFmt w:val="lowerLetter"/>
-                        <w:lvlText w:val="(%5)"/>
-                        <w:lvlJc w:val="left"/>
-                        <w:pPr>
-                            <w:ind w:left="1800" w:hanging="360"/>
-                        </w:pPr>
-                        <w:rPr>
-                            <w:rFonts w:hint="default"/>
-                        </w:rPr>
-                    </w:lvl>
-                    <w:lvl w:ilvl="5">
-                        <w:start w:val="1"/>
-                        <w:numFmt w:val="lowerRoman"/>
-                        <w:lvlText w:val="(%6)"/>
-                        <w:lvlJc w:val="left"/>
-                        <w:pPr>
-                            <w:ind w:left="2160" w:hanging="360"/>
-                        </w:pPr>
-                        <w:rPr>
-                            <w:rFonts w:hint="default"/>
-                        </w:rPr>
-                    </w:lvl>
-                    <w:lvl w:ilvl="6">
-                        <w:start w:val="1"/>
-                        <w:numFmt w:val="decimal"/>
-                        <w:lvlText w:val="%7."/>
-                        <w:lvlJc w:val="left"/>
-                        <w:pPr>
-                            <w:ind w:left="2520" w:hanging="360"/>
-                        </w:pPr>
-                        <w:rPr>
-                            <w:rFonts w:hint="default"/>
-                        </w:rPr>
-                    </w:lvl>
-                    <w:lvl w:ilvl="7">
-                        <w:start w:val="1"/>
-                        <w:numFmt w:val="lowerLetter"/>
-                        <w:lvlText w:val="%8."/>
-                        <w:lvlJc w:val="left"/>
-                        <w:pPr>
-                            <w:ind w:left="2880" w:hanging="360"/>
-                        </w:pPr>
-                        <w:rPr>
-                            <w:rFonts w:hint="default"/>
-                        </w:rPr>
-                    </w:lvl>
-                    <w:lvl w:ilvl="8">
-                        <w:start w:val="1"/>
-                        <w:numFmt w:val="lowerRoman"/>
-                        <w:lvlText w:val="%9."/>
-                        <w:lvlJc w:val="left"/>
-                        <w:pPr>
-                            <w:ind w:left="3240" w:hanging="360"/>
-                        </w:pPr>
-                        <w:rPr>
-                            <w:rFonts w:hint="default"/>
-                        </w:rPr>
-                    </w:lvl>
-                </w:abstractNum>
+		<xsl:call-template name="defineOrderedLists"/>
 
 
                 <!-- for sections in Annex -->
@@ -2722,6 +2129,146 @@ is there a number present?
         </xsl:result-document>
     </xsl:template>
 
+    <xsl:template name="defineUnorderedLists">
+                <w:abstractNum w:abstractNumId="2">
+                    <w:multiLevelType w:val="singleLevel"/>
+                    <w:lvl w:ilvl="0">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="bullet"/>
+                        <w:pStyle w:val="ListBullet"/>
+                        <w:lvlText w:val=""/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="720" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
+                            <w:color w:val="auto"/>
+                        </w:rPr>
+                    </w:lvl>
+                </w:abstractNum>
+    </xsl:template>
+    
+    <!-- ordered lists -->
+    <xsl:template name="defineOrderedLists">
+      <w:abstractNum w:abstractNumId="3">
+                    <w:multiLevelType w:val="multilevel"/>
+                    <w:lvl w:ilvl="0">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="lowerLetter"/>
+                        <w:pStyle w:val="ListNumber"/>
+                        <w:lvlText w:val="%1)"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="360" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="1">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="decimal"/>
+                        <w:pStyle w:val="ListNumber2"/>
+                        <w:lvlText w:val="%2)"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="720" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="2">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="lowerRoman"/>
+                        <w:pStyle w:val="ListNumber3"/>
+                        <w:lvlText w:val="%3)"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="1080" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="3">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="upperRoman"/>
+                        <w:pStyle w:val="ListNumber4"/>
+                        <w:lvlText w:val="%4)"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="1440" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="4">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="lowerLetter"/>
+                        <w:lvlText w:val="(%5)"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="1800" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="5">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="lowerRoman"/>
+                        <w:lvlText w:val="(%6)"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="2160" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="6">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="decimal"/>
+                        <w:lvlText w:val="%7."/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="2520" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="7">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="lowerLetter"/>
+                        <w:lvlText w:val="%8."/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="2880" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="8">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="lowerRoman"/>
+                        <w:lvlText w:val="%9."/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="3240" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                </w:abstractNum>
+
+    </xsl:template>
+
     <xsl:template name="write-appFiles">
         <xsl:variable name="now">
             <xsl:value-of
@@ -3012,25 +2559,52 @@ under new name -->
                     ContentType="application/vnd.openxmlformats-officedocument.theme+xml"/>
                 
                 <!-- headers -->
-                <xsl:for-each select="key('ALLHEADERS',1)">
-                    <xsl:variable name="num" select="position()"/>
-                    <Override 
-                        ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml">
-                        <xsl:attribute name="PartName" select="concat('/word/header', $num, '.xml')"/>
-                    </Override>
-                </xsl:for-each>
+		<xsl:choose>
+		  <xsl:when test="count(key('ALLHEADERS',1))=0">
+		    <xsl:for-each select="document($defaultHeaderFooterFile)">
+		      <xsl:call-template name="headerrefs"/>
+		    </xsl:for-each>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:call-template name="headerrefs"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+
                 
                 <!-- footers -->
-                <xsl:for-each select="key('ALLFOOTERS',1)">
-                    <xsl:variable name="num" select="position()"/>
-                    <Override 
-                        ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml">
-                        <xsl:attribute name="PartName" select="concat('/word/footer', $num, '.xml')"/>
-                    </Override>            
-                </xsl:for-each>
+		<xsl:choose>
+		  <xsl:when test="count(key('ALLFOOTERS',1))=0">
+		    <xsl:for-each select="document($defaultHeaderFooterFile)">
+		      <xsl:call-template name="footerrefs"/>
+		    </xsl:for-each>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:call-template name="footerrefs"/>
+		  </xsl:otherwise>
+		</xsl:choose>
             </Types>
             
         </xsl:result-document>
+    </xsl:template>
+
+    <xsl:template name="footerrefs">
+      <xsl:for-each select="key('ALLFOOTERS',1)">
+	<xsl:variable name="num" select="position()"/>
+	<Override xmlns="http://schemas.openxmlformats.org/package/2006/content-types"
+	    ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml">
+	  <xsl:attribute name="PartName" select="concat('/word/footer', $num, '.xml')"/>
+	</Override>            
+      </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template name="headerrefs">
+      <xsl:for-each select="key('ALLHEADERS',1)">
+	<xsl:variable name="num" select="position()"/>
+	<Override xmlns="http://schemas.openxmlformats.org/package/2006/content-types"
+	    ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml">
+	  <xsl:attribute name="PartName" select="concat('/word/header', $num, '.xml')"/>
+	</Override>
+      </xsl:for-each>
     </xsl:template>
 
     <!-- 
@@ -3139,39 +2713,17 @@ under new name -->
 
 
                 <!-- our headers and footers -->
-                <xsl:for-each select="key('ALLFOOTERS',1)">
-                    <xsl:variable name="num" select="position()"/>
-                    <Relationship
-                        Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer">
-                        <xsl:attribute name="Target">
-                            <xsl:text>footer</xsl:text>
-                            <xsl:value-of select="$num"/>
-                            <xsl:text>.xml</xsl:text>
-                        </xsl:attribute>
-                        <xsl:attribute name="Id">
-                            <xsl:text>rId</xsl:text>
-                            <xsl:value-of select="100+$num"/>
-                        </xsl:attribute>
-                    </Relationship>
-                </xsl:for-each>
+		<xsl:choose>
+		  <xsl:when test="count(key('ALLHEADERS',1))=0 and count(key('ALLFOOTERS',1))=0">
+		    <xsl:for-each select="document($defaultHeaderFooterFile)">
+		      <xsl:call-template name="headfootrels"/>
+		    </xsl:for-each>
+		  </xsl:when>
+		  <xsl:otherwise>
+		      <xsl:call-template name="headfootrels"/>
+		  </xsl:otherwise>
+		</xsl:choose>
 
-                <!-- count all footers -->
-                <xsl:variable name="numberOfFooters" select="count(key('ALLFOOTERS',1))"/>
-                <xsl:for-each select="key('ALLHEADERS',1)">
-                    <xsl:variable name="num" select="position()"/>
-                    <Relationship
-                        Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/header">
-                        <xsl:attribute name="Target">
-                            <xsl:text>header</xsl:text>
-                            <xsl:value-of select="$num"/>
-                            <xsl:text>.xml</xsl:text>
-                        </xsl:attribute>
-                        <xsl:attribute name="Id">
-                            <xsl:text>rId</xsl:text>
-                            <xsl:value-of select="100+$num+$numberOfFooters"/>
-                        </xsl:attribute>
-                    </Relationship>
-                </xsl:for-each>
 
 
             </Relationships>
@@ -3179,6 +2731,42 @@ under new name -->
 
     </xsl:template>
     
+    
+    <xsl:template name="headfootrels">
+      <xsl:for-each select="key('ALLFOOTERS',1)">
+	<xsl:variable name="num" select="position()"/>
+	<Relationship xmlns="http://schemas.openxmlformats.org/package/2006/relationships"
+	    Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer">
+	  <xsl:attribute name="Target">
+	    <xsl:text>footer</xsl:text>
+	    <xsl:value-of select="$num"/>
+	    <xsl:text>.xml</xsl:text>
+	  </xsl:attribute>
+	  <xsl:attribute name="Id">
+	    <xsl:text>rId</xsl:text>
+	    <xsl:value-of select="100+$num"/>
+	  </xsl:attribute>
+	</Relationship>
+      </xsl:for-each>
+      
+      <!-- count all footers -->
+      <xsl:variable name="numberOfFooters" select="count(key('ALLFOOTERS',1))"/>
+      <xsl:for-each select="key('ALLHEADERS',1)">
+	<xsl:variable name="num" select="position()"/>
+	<Relationship xmlns="http://schemas.openxmlformats.org/package/2006/relationships"
+	    Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/header">
+	  <xsl:attribute name="Target">
+	    <xsl:text>header</xsl:text>
+	    <xsl:value-of select="$num"/>
+	    <xsl:text>.xml</xsl:text>
+	  </xsl:attribute>
+	  <xsl:attribute name="Id">
+	    <xsl:text>rId</xsl:text>
+	    <xsl:value-of select="100+$num+$numberOfFooters"/>
+	  </xsl:attribute>
+	</Relationship>
+      </xsl:for-each>
+    </xsl:template>
     <!-- 
         write: word/settings.xml 
     -->

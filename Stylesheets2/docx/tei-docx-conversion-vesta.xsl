@@ -86,6 +86,29 @@
         </w:r>
     </xsl:template>
 
+    <xsl:template match="tei:label[following-sibling::tei:*[1]/self::tei:item]">
+        <xsl:param name="nop"/>
+        
+       <w:p>
+           <w:pPr>
+               <w:pStyle w:val="dl"/>
+               <w:ind w:left="567" w:hanging="567"/>
+           </w:pPr>
+           <xsl:apply-templates>
+               <xsl:with-param name="nop">true</xsl:with-param>
+           </xsl:apply-templates>
+           <w:r>
+               <w:br/>
+           </w:r>
+           <xsl:apply-templates select="following-sibling::tei:*[1]/*|
+                                        following-sibling::tei:*[1]/processing-instruction()|
+                                        following-sibling::tei:*[1]/comment()|
+                                        following-sibling::tei:*[1]/text()">
+               <xsl:with-param name="nop">true</xsl:with-param>
+           </xsl:apply-templates>
+           
+       </w:p>
+    </xsl:template>
     
     
     <xsl:template match="tei:pb">
@@ -242,5 +265,125 @@
     </w:r>   
      <xsl:apply-templates/>
   </xsl:template>
+
+
+    <xsl:template name="defineOrderedLists">
+      <w:abstractNum w:abstractNumId="3">
+                    <w:multiLevelType w:val="multilevel"/>
+                    <w:lvl w:ilvl="0">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="decimal"/>
+                        <w:pStyle w:val="ListNumber"/>
+                        <w:lvlText w:val="%1."/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="360" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="1">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="lowerLetter"/>
+                        <w:pStyle w:val="ListNumber2"/>
+                        <w:lvlText w:val="%2)"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="720" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="2">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="lowerRoman"/>
+                        <w:pStyle w:val="ListNumber3"/>
+                        <w:lvlText w:val="%3)"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="1080" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="3">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="upperRoman"/>
+                        <w:pStyle w:val="ListNumber4"/>
+                        <w:lvlText w:val="%4)"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="1440" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="4">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="lowerLetter"/>
+                        <w:lvlText w:val="(%5)"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="1800" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="5">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="lowerRoman"/>
+                        <w:lvlText w:val="(%6)"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="2160" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="6">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="decimal"/>
+                        <w:lvlText w:val="%7."/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="2520" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="7">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="lowerLetter"/>
+                        <w:lvlText w:val="%8."/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="2880" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="8">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="lowerRoman"/>
+                        <w:lvlText w:val="%9."/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="3240" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:hint="default"/>
+                        </w:rPr>
+                    </w:lvl>
+                </w:abstractNum>
+
+    </xsl:template>
 
 </xsl:stylesheet>

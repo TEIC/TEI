@@ -80,4 +80,6 @@
 	<xsl:variable name="TermNum">TermNum</xsl:variable>
 	<xsl:variable name="Terms">Term(s)</xsl:variable>
 	<xsl:variable name="ExtXref">ExtXref</xsl:variable>
+
+
 </xsl:stylesheet>
