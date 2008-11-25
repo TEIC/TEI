@@ -188,7 +188,7 @@ Divide by 100 to avoid overflow.
         <xsl:param name="bookmark-name"/>
 
         <xsl:for-each select="$select">
-            <xsl:for-each-group select="*|processing-instruction()|comment()|text()" group-adjacent="1">
+            <xsl:for-each-group select="*|processing-instruction()|text()" group-adjacent="1">
                 <xsl:call-template name="_process-blockelement">
                     <xsl:with-param name="style" select="$style"/>
                     <xsl:with-param name="pPr" select="$pPr"/>
@@ -781,6 +781,7 @@ Divide by 100 to avoid overflow.
     <xsl:template match="tei:item[preceding-sibling::tei:*[1]/self::tei:label]"/>
     
 
+    <xsl:template match="comment()"/>
     <!-- 
         Handle list items
     -->
