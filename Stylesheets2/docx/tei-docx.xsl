@@ -2132,7 +2132,7 @@ is there a number present?
 
     <xsl:template name="defineUnorderedLists">
                 <w:abstractNum w:abstractNumId="2">
-                    <w:multiLevelType w:val="singleLevel"/>
+                    <w:multiLevelType w:val="multilevel"/>
                     <w:lvl w:ilvl="0">
                         <w:start w:val="1"/>
                         <w:numFmt w:val="bullet"/>
@@ -2141,6 +2141,118 @@ is there a number present?
                         <w:lvlJc w:val="left"/>
                         <w:pPr>
                             <w:ind w:left="720" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
+                            <w:color w:val="auto"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="1">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="bullet"/>
+                        <w:pStyle w:val="ListBullet"/>
+                        <w:lvlText w:val="&#8226;"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="1080" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
+                            <w:color w:val="auto"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="2">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="bullet"/>
+                        <w:pStyle w:val="ListBullet"/>
+                        <w:lvlText w:val="&#8259;"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="1440" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
+                            <w:color w:val="auto"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="3">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="bullet"/>
+                        <w:pStyle w:val="ListBullet"/>
+                        <w:lvlText w:val="&#8727;"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="1800" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
+                            <w:color w:val="auto"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="4">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="bullet"/>
+                        <w:pStyle w:val="ListBullet"/>
+                        <w:lvlText w:val="&#8226;"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="2160" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
+                            <w:color w:val="auto"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="5">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="bullet"/>
+                        <w:pStyle w:val="ListBullet"/>
+                        <w:lvlText w:val="&#8226;"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="2520" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
+                            <w:color w:val="auto"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="6">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="bullet"/>
+                        <w:pStyle w:val="ListBullet"/>
+                        <w:lvlText w:val="&#8226;"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="2880" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
+                            <w:color w:val="auto"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="7">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="bullet"/>
+                        <w:pStyle w:val="ListBullet"/>
+                        <w:lvlText w:val="&#8226;"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="3240" w:hanging="360"/>
+                        </w:pPr>
+                        <w:rPr>
+                            <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
+                            <w:color w:val="auto"/>
+                        </w:rPr>
+                    </w:lvl>
+                    <w:lvl w:ilvl="8">
+                        <w:start w:val="1"/>
+                        <w:numFmt w:val="bullet"/>
+                        <w:pStyle w:val="ListBullet"/>
+                        <w:lvlText w:val="&#8226;"/>
+                        <w:lvlJc w:val="left"/>
+                        <w:pPr>
+                            <w:ind w:left="4000" w:hanging="360"/>
                         </w:pPr>
                         <w:rPr>
                             <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
