@@ -902,7 +902,9 @@
 
 
 
-  <xsl:template name="navInterSep"> </xsl:template>
+  <xsl:template name="navInterSep">
+	<xsl:text> </xsl:text>
+</xsl:template>
 
 
   <xsl:template name="javascriptHook">
