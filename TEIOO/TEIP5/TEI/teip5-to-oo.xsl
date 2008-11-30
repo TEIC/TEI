@@ -370,15 +370,33 @@
   </xsl:template>
 
   <xsl:template name="startHook">
-    <xsl:if test="parent::tei:p">
+    <xsl:choose>
+      <xsl:when test="self::tei:list and parent::tei:item">
+	<xsl:text disable-output-escaping="yes">&lt;/text:p&gt;</xsl:text>
+	<xsl:text disable-output-escaping="yes">&lt;/text:list&gt;</xsl:text>
+      </xsl:when>
+      <xsl:when test="parent::tei:p">
       <xsl:text disable-output-escaping="yes">&lt;/text:p&gt;</xsl:text>
-    </xsl:if>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="endHook">
-    <xsl:if test="parent::tei:p">
+    <xsl:choose>
+      <xsl:when test="self::tei:list and parent::tei:item">
+	<xsl:text disable-output-escaping="yes">&lt;text:list
+	</xsl:text>
+	<xsl:choose>
+	  <xsl:when test="parent::tei:list[@type='ordered']">
+	  </xsl:when>
+	</xsl:choose>
+	<xsl:text>&gt;</xsl:text>
+	<xsl:text disable-output-escaping="yes">&lt;text:p  text:style-name="List Contents&gt;</xsl:text>
+      </xsl:when>
+      <xsl:when test="parent::tei:p">
       <xsl:text disable-output-escaping="yes">&lt;text:p&gt;</xsl:text>
-    </xsl:if>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
 
