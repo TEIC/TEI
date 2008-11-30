@@ -1138,13 +1138,24 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
                 <xsl:with-param name="word">Elements defined</xsl:with-param>
               </xsl:call-template>
               <xsl:text>: </xsl:text>
-              <xsl:for-each select="key('ElementModule',@ident)">
-                <xsl:sort select="@ident"/>
-                <xsl:call-template name="linkTogether">
-                  <xsl:with-param name="name" select="@ident"/>
-                </xsl:call-template>
-		<xsl:call-template name="showSpace"/>
-              </xsl:for-each>
+	      <xsl:variable name="list">
+		<List>
+		<xsl:for-each select="key('ElementModule',@ident)">
+		  <xsl:sort select="@ident"/>
+		  <Item>
+		    <xsl:call-template name="linkTogether">
+		      <xsl:with-param name="name" select="@ident"/>
+		    </xsl:call-template>
+		  </Item>
+		</xsl:for-each>
+		</List>
+	      </xsl:variable>
+	      <xsl:for-each select="$list/List/Item">
+		<xsl:copy-of select="*|text()"/>
+		<xsl:if test="following-sibling::Item">
+		  <xsl:call-template name="showSpace"/>
+		</xsl:if>
+	      </xsl:for-each>
             </xsl:element>
           </xsl:if>
           <xsl:if test="key('ClassModule',@ident)">
@@ -1153,29 +1164,51 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
                 <xsl:with-param name="word">Classes defined</xsl:with-param>
               </xsl:call-template>
               <xsl:text>: </xsl:text>
-              <xsl:for-each select="key('ClassModule',@ident)">
-                <xsl:sort select="@ident"/>
-                <xsl:call-template name="linkTogether">
-                  <xsl:with-param name="name" select="@ident"/>
-                </xsl:call-template>
-		<xsl:call-template name="showSpace"/>
-              </xsl:for-each>
+	      <xsl:variable name="list">
+		<List>
+  		  <xsl:for-each select="key('ClassModule',@ident)">
+		    <xsl:sort select="@ident"/>
+		    <Item>
+		      <xsl:call-template name="linkTogether">
+			<xsl:with-param name="name" select="@ident"/>
+		      </xsl:call-template>
+		    </Item>
+		  </xsl:for-each>
+		</List>
+	      </xsl:variable>
+	      <xsl:for-each select="$list/List/Item">
+		<xsl:copy-of select="*|text()"/>
+		<xsl:if test="following-sibling::Item">
+		  <xsl:call-template name="showSpace"/>
+		</xsl:if>
+	      </xsl:for-each>
             </xsl:element>
           </xsl:if>
           <xsl:if test="key('MacroModule',@ident)">
             <xsl:element namespace="{$outputNS}" name="{$itemName}">
               <xsl:call-template name="i18n">
                 <xsl:with-param name="word">Macros defined</xsl:with-param>
-              </xsl:call-template>
-              <xsl:text>: </xsl:text>
-              <xsl:for-each select="key('MacroModule',@ident)">
-                <xsl:sort select="@ident"/>
-                <xsl:call-template name="linkTogether">
-                  <xsl:with-param name="name" select="@ident"/>
-                </xsl:call-template>
-		<xsl:call-template name="showSpace"/>
-              </xsl:for-each>
-            </xsl:element>
+	      </xsl:call-template>
+	      <xsl:text>: </xsl:text>
+	      <xsl:variable name="list">
+		<List>
+		  <xsl:for-each select="key('MacroModule',@ident)">
+		    <xsl:sort select="@ident"/>
+		    <Item>
+		      <xsl:call-template name="linkTogether">
+			<xsl:with-param name="name" select="@ident"/>
+		      </xsl:call-template>
+		    </Item>
+		  </xsl:for-each>
+		</List>
+	      </xsl:variable>
+	      <xsl:for-each select="$list/List/Item">
+		<xsl:copy-of select="*|text()"/>
+		<xsl:if test="following-sibling::Item">
+		  <xsl:call-template name="showSpace"/>
+		</xsl:if>
+	      </xsl:for-each>
+	    </xsl:element>
           </xsl:if>
         </xsl:element>
       </xsl:element>
@@ -1461,32 +1494,43 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
             <xsl:value-of select="$depth"/>
           </xsl:attribute>
           <xsl:if test="$depth &gt; 1"> [</xsl:if>
-          <xsl:for-each select="key('CLASSMEMBERS',$this)">
-            <xsl:sort select="local-name()"/>
-            <xsl:sort select="@ident"/>
-            <xsl:call-template name="showSpace"/>
-            <xsl:variable name="cl">
-              <xsl:choose>
-                <xsl:when test="self::tei:elementSpec">
-                  <xsl:text>link_odd_element</xsl:text>
-                </xsl:when>
-                <xsl:when test="self::tei:classSpec">
-                  <xsl:text>link_odd_class</xsl:text>
-                </xsl:when>
-              </xsl:choose>
-            </xsl:variable>
-            <xsl:call-template name="linkTogether">
-              <xsl:with-param name="name" select="@ident"/>
-              <xsl:with-param name="class">
-                <xsl:value-of select="$cl"/>
-              </xsl:with-param>
-            </xsl:call-template>
-            <xsl:call-template name="generateMembers">
-              <xsl:with-param name="depth">
-                <xsl:value-of select="$depth + 1"/>
-              </xsl:with-param>
-            </xsl:call-template>
-          </xsl:for-each>
+	  <xsl:variable name="list">
+	    <List>
+	      <xsl:for-each select="key('CLASSMEMBERS',$this)">
+		<xsl:sort select="local-name()"/>
+		<xsl:sort select="@ident"/>
+		<Item>
+		  <xsl:variable name="cl">
+		    <xsl:choose>
+		      <xsl:when test="self::tei:elementSpec">
+			<xsl:text>link_odd_element</xsl:text>
+		      </xsl:when>
+		      <xsl:when test="self::tei:classSpec">
+			<xsl:text>link_odd_class</xsl:text>
+		      </xsl:when>
+		    </xsl:choose>
+		  </xsl:variable>
+		  <xsl:call-template name="linkTogether">
+		    <xsl:with-param name="name" select="@ident"/>
+		    <xsl:with-param name="class">
+		      <xsl:value-of select="$cl"/>
+		    </xsl:with-param>
+		  </xsl:call-template>
+		  <xsl:call-template name="generateMembers">
+		    <xsl:with-param name="depth">
+		      <xsl:value-of select="$depth + 1"/>
+		    </xsl:with-param>
+		  </xsl:call-template>
+		</Item>
+	      </xsl:for-each>
+	    </List>
+	  </xsl:variable>
+	  <xsl:for-each select="$list/List/Item">
+	    <xsl:copy-of select="*|text()"/>
+	    <xsl:if test="following-sibling::Item">
+	      <xsl:call-template name="showSpace"/>
+	    </xsl:if>
+	  </xsl:for-each>
           <xsl:if test="$depth &gt; 1">] </xsl:if>
         </xsl:element>
       </xsl:when>
@@ -1494,12 +1538,25 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
         <xsl:choose>
           <xsl:when test="not($localsource='')">
             <xsl:for-each select="document($localsource)/tei:TEI">
-              <xsl:for-each select="tei:elementSpec[tei:classes/tei:memberOf[@key=$this]]">
-                <xsl:call-template name="showElement">
-                  <xsl:with-param name="name" select="@ident"/>
-                </xsl:call-template>
-		<xsl:call-template name="showSpace"/>
-              </xsl:for-each>
+	      <xsl:variable name="list">
+		<List>
+		  
+		  <xsl:for-each
+		      select="tei:elementSpec[tei:classes/tei:memberOf[@key=$this]]">
+		    <Item>
+		      <xsl:call-template name="showElement">
+			<xsl:with-param name="name" select="@ident"/>
+		      </xsl:call-template>
+		    </Item>
+		  </xsl:for-each>
+		</List>
+	      </xsl:variable>
+	      <xsl:for-each select="$list/List/Item">
+		<xsl:copy-of select="*|text()"/>
+		<xsl:if test="following-sibling::Item">
+		  <xsl:call-template name="showSpace"/>
+		</xsl:if>
+	      </xsl:for-each>
             </xsl:for-each>
           </xsl:when>
           <xsl:otherwise>
@@ -1528,13 +1585,24 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 
   <xsl:template name="generateParentsByElement">
     <xsl:variable name="this" select="@ident"/>
-    <xsl:for-each select="key('REFS',$this)/ancestor::tei:elementSpec">
-      <xsl:sort select="@ident"/>
-      <xsl:call-template name="linkTogether">
-        <xsl:with-param name="name" select="@ident"/>
-        <xsl:with-param name="class">link_odd_element</xsl:with-param>
-      </xsl:call-template>
-      <xsl:call-template name="showSpace"/>
+    <xsl:variable name="list">
+      <List>
+	<xsl:for-each select="key('REFS',$this)/ancestor::tei:elementSpec">
+	  <xsl:sort select="@ident"/>
+	  <Item>
+	    <xsl:call-template name="linkTogether">
+	      <xsl:with-param name="name" select="@ident"/>
+	      <xsl:with-param name="class">link_odd_element</xsl:with-param>
+	    </xsl:call-template>
+	  </Item>
+	</xsl:for-each>
+      </List>
+    </xsl:variable>
+    <xsl:for-each select="$list/List/Item">
+      <xsl:copy-of select="*|text()"/>
+      <xsl:if test="following-sibling::Item">
+	<xsl:call-template name="showSpace"/>
+      </xsl:if>
     </xsl:for-each>
   </xsl:template>
 
@@ -1548,54 +1616,76 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
       </xsl:call-template>
       <xsl:text>: </xsl:text>
       <xsl:element namespace="{$outputNS}" name="{$ulName}">
-	<xsl:for-each select="key('ATTREFS-CLASS',$this)">
-	  <xsl:sort select="ancestor::tei:classSpec/@ident"/>
-	  <xsl:sort select="@ident"/>
-	  <xsl:element namespace="{$outputNS}" name="{$itemName}">
-	    <xsl:for-each select="ancestor::tei:classSpec">
-	      <xsl:call-template name="linkTogether">
-		<xsl:with-param name="name">
-		  <xsl:value-of select="@ident"/>
-		</xsl:with-param>
-		<xsl:with-param name="class">
-		  <xsl:text>link_odd_class</xsl:text>
-		</xsl:with-param>
-	      </xsl:call-template>
+	<xsl:variable name="list">
+	  <List>
+	    <xsl:for-each select="key('ATTREFS-CLASS',$this)">
+	      <xsl:sort select="ancestor::tei:classSpec/@ident"/>
+	      <xsl:sort select="@ident"/>
+	      <xsl:element namespace="{$outputNS}" name="{$itemName}">
+		<xsl:for-each select="ancestor::tei:classSpec">
+		  <Item>
+		    <xsl:call-template name="linkTogether">
+		      <xsl:with-param name="name">
+			<xsl:value-of select="@ident"/>
+		      </xsl:with-param>
+		      <xsl:with-param name="class">
+			<xsl:text>link_odd_class</xsl:text>
+		      </xsl:with-param>
+		    </xsl:call-template>
+		  </Item>
+		</xsl:for-each>
+		<xsl:text>/@</xsl:text>
+		<xsl:value-of select="ancestor::tei:attDef/@ident"/>
+	      </xsl:element>
 	    </xsl:for-each>
-	    <xsl:text>/@</xsl:text>
-	    <xsl:value-of select="ancestor::tei:attDef/@ident"/>
+	  </List>
+	</xsl:variable>
+	<xsl:for-each select="$list/List/Item">
+	  <xsl:copy-of select="*|text()"/>
+	  <xsl:if test="following-sibling::Item">
 	    <xsl:call-template name="showSpace"/>
-	  </xsl:element>
+	  </xsl:if>
 	</xsl:for-each>
       </xsl:element>
     </xsl:if>
 
     <xsl:if test="count(key('ATTREFS-ELEMENT',$this))&gt;0">
-	<xsl:call-template name="i18n">
-	  <xsl:with-param name="word">
-	    <xsl:text>Element</xsl:text>
-	  </xsl:with-param>
-	</xsl:call-template>
-	<xsl:text>: </xsl:text>
+      <xsl:call-template name="i18n">
+	<xsl:with-param name="word">
+	  <xsl:text>Element</xsl:text>
+	</xsl:with-param>
+      </xsl:call-template>
+      <xsl:text>: </xsl:text>
       <xsl:element namespace="{$outputNS}" name="{$ulName}">
-	<xsl:for-each select="key('ATTREFS-ELEMENT',$this)">
-	  <xsl:sort select="ancestor::tei:elementSpec/@ident"/>
-	  <xsl:sort select="@ident"/>
-	  <xsl:element namespace="{$outputNS}" name="{$itemName}">
-	    <xsl:for-each select="ancestor::tei:elementSpec">
-	      <xsl:call-template name="linkTogether">
-		<xsl:with-param name="name">
-		  <xsl:value-of select="@ident"/>
-		</xsl:with-param>
-		<xsl:with-param name="class">
-		  <xsl:text>link_odd_element</xsl:text>
-		</xsl:with-param>
-	      </xsl:call-template>
-	    </xsl:for-each>
-	    <xsl:text>/@</xsl:text>
+	<xsl:variable name="list">
+	  <List>
+	    <xsl:for-each select="key('ATTREFS-ELEMENT',$this)">
+	      <xsl:sort select="ancestor::tei:elementSpec/@ident"/>
+	      <xsl:sort select="@ident"/>
+	      <Item>
+		<xsl:element namespace="{$outputNS}" name="{$itemName}">
+		  <xsl:for-each select="ancestor::tei:elementSpec">
+		    <xsl:call-template name="linkTogether">
+		      <xsl:with-param name="name">
+			<xsl:value-of select="@ident"/>
+		      </xsl:with-param>
+		      <xsl:with-param name="class">
+			<xsl:text>link_odd_element</xsl:text>
+		      </xsl:with-param>
+		    </xsl:call-template>
+		  </xsl:for-each>
+		  <xsl:text>/@</xsl:text>
 	    <xsl:value-of select="ancestor::tei:attDef/@ident"/>
+		</xsl:element>
+	      </Item>
+	    </xsl:for-each>
+	  </List>
+	</xsl:variable>
+	<xsl:for-each select="$list/List/Item">
+	  <xsl:copy-of select="*|text()"/>
+	  <xsl:if test="following-sibling::Item">
 	    <xsl:call-template name="showSpace"/>
-	  </xsl:element>
+	  </xsl:if>
 	</xsl:for-each>
       </xsl:element>
     </xsl:if>
@@ -1604,14 +1694,24 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
   <xsl:template name="generateParentsByMacro">
     <xsl:variable name="this" select="@ident"/>
     <xsl:if test="key('MACROREFS',$this)">
-      <xsl:for-each select="key('MACROREFS',$this)/ancestor::tei:macroSpec">
-        <xsl:sort select="@ident"/>
-	<xsl:call-template name="showSpace"/>
-        <xsl:call-template name="linkTogether">
-          <xsl:with-param name="name" select="@ident"/>
-          <xsl:with-param name="class">link_odd_macro</xsl:with-param>
-        </xsl:call-template>
-	<xsl:call-template name="showSpace"/>
+      <xsl:variable name="list">
+	<List>
+	  <xsl:for-each select="key('MACROREFS',$this)/ancestor::tei:macroSpec">
+	    <xsl:sort select="@ident"/>
+	    <Item>
+	      <xsl:call-template name="linkTogether">
+		<xsl:with-param name="name" select="@ident"/>
+		<xsl:with-param name="class">link_odd_macro</xsl:with-param>
+	      </xsl:call-template>
+	    </Item>
+	  </xsl:for-each>
+	</List>
+      </xsl:variable>
+      <xsl:for-each select="$list/List/Item">
+	<xsl:copy-of select="*|text()"/>
+	<xsl:if test="following-sibling::Item">
+	  <xsl:call-template name="showSpace"/>
+	</xsl:if>
       </xsl:for-each>
     </xsl:if>
     <!--
@@ -1626,27 +1726,39 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 
   <xsl:template name="generateParentsByClass">
     <xsl:variable name="this" select="@ident"/>
-    <xsl:for-each select="tei:classes/tei:memberOf">
-      <xsl:for-each select="key('CLASSES',@key)">
-        <xsl:sort select="@ident"/>
-        <xsl:if test="@type='model'">
-	  <xsl:call-template name="showSpace"/>
-          <xsl:call-template name="linkTogether">
-            <xsl:with-param name="name" select="@ident"/>
-            <xsl:with-param name="class">link_odd_class</xsl:with-param>
-          </xsl:call-template>
-        </xsl:if>
-        <!--
-	  <xsl:for-each select="key('REFS',@ident)/ancestor::tei:elementSpec">
-	    <xsl:call-template name="linkTogether">
-	      <xsl:with-param name="name" select="@ident"/>
-	    </xsl:call-template>
+    <xsl:variable name="list">
+      <List>
+	<xsl:for-each select="tei:classes/tei:memberOf">
+	  <xsl:for-each select="key('CLASSES',@key)">
+	    <xsl:sort select="@ident"/>
+	    <Item>
+	      <xsl:if test="@type='model'">
+		<xsl:call-template name="linkTogether">
+		  <xsl:with-param name="name" select="@ident"/>
+		  <xsl:with-param name="class">link_odd_class</xsl:with-param>
+		</xsl:call-template>
+	      </xsl:if>
+	      <!--
+		  <xsl:for-each select="key('REFS',@ident)/ancestor::tei:elementSpec">
+		  <xsl:call-template name="linkTogether">
+		  <xsl:with-param name="name" select="@ident"/>
+		  </xsl:call-template>
+		  </xsl:for-each>
+		  <xsl:call-template name="generateParentsByClass"/>
+		  <xsl:call-template name="generateParentsByMacro"/>
+	      -->
+	    </Item>
 	  </xsl:for-each>
-	    <xsl:call-template name="generateParentsByClass"/>
-	    <xsl:call-template name="generateParentsByMacro"/>
-	-->
+	</xsl:for-each>
+      </List>
+      </xsl:variable>
+      <xsl:for-each select="$list/List/Item">
+	<xsl:copy-of select="*|text()"/>
+	<xsl:if test="following-sibling::Item">
+	  <xsl:call-template name="showSpace"/>
+	</xsl:if>
       </xsl:for-each>
-    </xsl:for-each>
+
   </xsl:template>
 
 

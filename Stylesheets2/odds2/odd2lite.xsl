@@ -92,8 +92,7 @@
   </xsl:template>
 
   <xsl:template name="showSpace">
-    <xsl:text> </xsl:text>
-    <xsl:processing-instruction name="tex">\ </xsl:processing-instruction>
+    <c xml:space="preserve"> </c>
   </xsl:template>
 
   <xsl:template name="makeInternalLink">
