@@ -45,6 +45,15 @@ Divide by 100 to avoid overflow.
    <xsl:param name="defaultHeaderFooterFile">default.xml</xsl:param>
    <xsl:param name="postQuote">’</xsl:param>
    <xsl:param name="preQuote">‘</xsl:param>
+   <xsl:param name="bulletOne">&#xF0BE;</xsl:param>
+   <xsl:param name="bulletTwo">•</xsl:param>
+   <xsl:param name="bulletThree">*</xsl:param>
+   <xsl:param name="bulletFour">+</xsl:param>
+   <xsl:param name="bulletFive">•</xsl:param>
+   <xsl:param name="bulletSix">•</xsl:param>
+   <xsl:param name="bulletSeven">•</xsl:param>
+   <xsl:param name="bulletEight">•</xsl:param>
+
 
     <xd:doc type="stylesheet">
         <xd:short> TEI stylesheet for making Word docx files from TEI XML </xd:short>
@@ -78,6 +87,9 @@ Divide by 100 to avoid overflow.
 
     <xsl:key name='ENDNOTES' match="tei:note[@place='end']" use="1"/>
     <xsl:key name='FOOTNOTES' match="tei:note[@place='foot']" use="1"/>
+
+    <xsl:key name='OL' match="tei:list[@type='ordered']" use="1"/>
+    <xsl:key name='BLIP' match="a:blip" use="1"/>
 
     <xsl:param name="word-directory">..</xsl:param>
     <xsl:param name="debug">false</xsl:param>
@@ -497,7 +509,7 @@ Divide by 100 to avoid overflow.
     <xsl:template name="Text">
         <xsl:choose>
             <xsl:when test="parent::w:body">
-                <xsl:message>CDATA found in body! [<xsl:value-of select="."/>]</xsl:message>
+                <xsl:message terminate="yes">CDATA found in body! [<xsl:value-of select="."/>]</xsl:message>
             </xsl:when>
             <xsl:otherwise>
 	      <w:t>
@@ -756,7 +768,7 @@ Divide by 100 to avoid overflow.
     -->
     <xsl:template match="tei:label[following-sibling::tei:*[1]/self::tei:item]">
         <xsl:param name="nop"/>
-        
+       
        <w:p>
            <w:pPr>
                <w:pStyle w:val="dl"/>
@@ -768,16 +780,21 @@ Divide by 100 to avoid overflow.
            <w:r>
                <w:tab/>
            </w:r>
-           <xsl:apply-templates select="following-sibling::tei:*[1]/*|
-                                        following-sibling::tei:*[1]/processing-instruction()|
-                                        following-sibling::tei:*[1]/comment()|
-                                        following-sibling::tei:*[1]/text()">
+           <xsl:for-each select="following-sibling::tei:item[1]">
+	     <xsl:apply-templates>
                <xsl:with-param name="nop">true</xsl:with-param>
            </xsl:apply-templates>
-           
+	   </xsl:for-each>           
        </w:p>
     </xsl:template>
     
+    <xsl:template match="tei:item/tei:list">
+      <xsl:param name="nop"/>
+      <xsl:apply-templates>
+               <xsl:with-param name="nop">false</xsl:with-param>
+      </xsl:apply-templates>
+    </xsl:template>
+
     <xsl:template match="tei:item[preceding-sibling::tei:*[1]/self::tei:label]"/>
     
 
@@ -788,27 +805,22 @@ Divide by 100 to avoid overflow.
     <xsl:template match="tei:item">
         <xsl:param name="nop"/>
 
+
         <xsl:variable name="listStyle">
             <xsl:choose>
-                <xsl:when test="../@type='unordered'">
+                <xsl:when test="../@type='unordered' or not(../@type)">
                     <xsl:call-template name="getStyleName">
                         <xsl:with-param name="in">
                             <xsl:text>List Continue</xsl:text>
-                            <xsl:if test="parent::tei:list/ancestor::tei:list">
-                                <xsl:text> </xsl:text>
-                                <xsl:value-of select="count(ancestor::tei:list)"/>
-                            </xsl:if>
-                        </xsl:with-param>
-                    </xsl:call-template>
-                </xsl:when>
+			    <xsl:call-template name="listNumberDepth"/>
+			</xsl:with-param>
+		    </xsl:call-template>
+		</xsl:when>
                 <xsl:when test="../@type='ordered'">
                     <xsl:call-template name="getStyleName">
                         <xsl:with-param name="in">
                             <xsl:text>List Number</xsl:text>
-                            <xsl:if test="parent::tei:list/ancestor::tei:list">
-                                <xsl:text> </xsl:text>
-                                <xsl:value-of select="count(ancestor::tei:list)"/>
-                            </xsl:if>
+			    <xsl:call-template name="listNumberDepth"/>
                         </xsl:with-param>
                     </xsl:call-template>
                 </xsl:when>
@@ -824,7 +836,7 @@ Divide by 100 to avoid overflow.
                     <w:pStyle w:val="{$listStyle}"/>
                 </xsl:if>
                 <xsl:choose>
-                    <xsl:when test="../@type='unordered'">
+                    <xsl:when test="../@type='unordered' or not(../@type)">
                         <w:numPr>
                             <w:ilvl>
                                 <xsl:attribute name="w:val">
@@ -847,7 +859,7 @@ Divide by 100 to avoid overflow.
                                     <xsl:value-of select="generate-id(..)"/>
                                 </xsl:variable>
                                 <xsl:attribute name="w:val">
-                                    <xsl:for-each select="//tei:list[@type='ordered']">
+                                    <xsl:for-each select="key('OL',1)">
                                         <xsl:if test="$CurrentList=generate-id(.)">
                                             <xsl:value-of select="position()+100"/>
                                         </xsl:if>
@@ -859,6 +871,10 @@ Divide by 100 to avoid overflow.
                 </xsl:choose>
             </w:pPr>
         </xsl:variable>
+<!--
+<xsl:message>List item <xsl:value-of select="."/>, <xsl:value-of
+select="$nop"/>, <xsl:value-of select="$listStyle"/></xsl:message>
+-->
 
         <xsl:call-template name="block-element">
             <xsl:with-param name="pPr" select="$pPr"/>
@@ -866,17 +882,31 @@ Divide by 100 to avoid overflow.
         </xsl:call-template>
     </xsl:template>
 
+    <xsl:template name="listNumberDepth">
+      <xsl:choose>
+	<xsl:when
+	    test="ancestor::tei:glossListEntry">
+	  <xsl:value-of
+	      select="count(ancestor::tei:list)
+		      + ancestor::tei:glossListEntry/@count"/>
+	</xsl:when>
+	<xsl:when test="parent::tei:list/ancestor::tei:list">
+	  <xsl:text> </xsl:text>
+	  <xsl:value-of select="count(ancestor::tei:list)"/>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:template>
 
-    <!-- 
-        Handle figures 
-    -->
+      <!-- 
+	   Handle figures 
+      -->
     
     <xsl:template match="tei:figure[not(@rend)]">
       <xsl:call-template name="block-element">
 	<xsl:with-param name="pPr">
 	  <w:pPr>
 	    <w:spacing w:before="240"/>
-	    <w:jc w:val="center"/>
+	    <w:jc w:val="left"/>
 	  </w:pPr>
 	</xsl:with-param>
       </xsl:call-template>
@@ -2089,7 +2119,7 @@ is there a number present?
                     We have to generate an instance for each list present in the
                     document.
                 -->
-                <xsl:for-each select="//tei:list[@type='ordered']">
+                <xsl:for-each select="key('OL',1)">
                     <w:num>
                         <xsl:attribute name="w:numId">
                             <xsl:value-of select="position()+100"/>
@@ -2137,10 +2167,10 @@ is there a number present?
                         <w:start w:val="1"/>
                         <w:numFmt w:val="bullet"/>
                         <w:pStyle w:val="ListBullet"/>
-                        <w:lvlText w:val=""/>
+                        <w:lvlText w:val="{$bulletOne}"/>
                         <w:lvlJc w:val="left"/>
                         <w:pPr>
-                            <w:ind w:left="720" w:hanging="360"/>
+                            <w:ind w:left="360" w:hanging="0"/>
                         </w:pPr>
                         <w:rPr>
                             <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
@@ -2151,10 +2181,10 @@ is there a number present?
                         <w:start w:val="1"/>
                         <w:numFmt w:val="bullet"/>
                         <w:pStyle w:val="ListBullet"/>
-                        <w:lvlText w:val="&#8226;"/>
+                        <w:lvlText w:val="{$bulletTwo}"/>
                         <w:lvlJc w:val="left"/>
                         <w:pPr>
-                            <w:ind w:left="1080" w:hanging="360"/>
+                            <w:ind w:left="720" w:hanging="360"/>
                         </w:pPr>
                         <w:rPr>
                             <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
@@ -2165,10 +2195,10 @@ is there a number present?
                         <w:start w:val="1"/>
                         <w:numFmt w:val="bullet"/>
                         <w:pStyle w:val="ListBullet"/>
-                        <w:lvlText w:val="&#8259;"/>
+                        <w:lvlText w:val="{$bulletThree}"/>
                         <w:lvlJc w:val="left"/>
                         <w:pPr>
-                            <w:ind w:left="1440" w:hanging="360"/>
+                            <w:ind w:left="1080" w:hanging="360"/>
                         </w:pPr>
                         <w:rPr>
                             <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
@@ -2179,10 +2209,10 @@ is there a number present?
                         <w:start w:val="1"/>
                         <w:numFmt w:val="bullet"/>
                         <w:pStyle w:val="ListBullet"/>
-                        <w:lvlText w:val="&#8727;"/>
+                        <w:lvlText w:val="{$bulletFour}"/>
                         <w:lvlJc w:val="left"/>
                         <w:pPr>
-                            <w:ind w:left="1800" w:hanging="360"/>
+                            <w:ind w:left="1440" w:hanging="360"/>
                         </w:pPr>
                         <w:rPr>
                             <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
@@ -2193,10 +2223,10 @@ is there a number present?
                         <w:start w:val="1"/>
                         <w:numFmt w:val="bullet"/>
                         <w:pStyle w:val="ListBullet"/>
-                        <w:lvlText w:val="&#8226;"/>
+                        <w:lvlText w:val="{$bulletFive}"/>
                         <w:lvlJc w:val="left"/>
                         <w:pPr>
-                            <w:ind w:left="2160" w:hanging="360"/>
+                            <w:ind w:left="1800" w:hanging="360"/>
                         </w:pPr>
                         <w:rPr>
                             <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
@@ -2207,10 +2237,10 @@ is there a number present?
                         <w:start w:val="1"/>
                         <w:numFmt w:val="bullet"/>
                         <w:pStyle w:val="ListBullet"/>
-                        <w:lvlText w:val="&#8226;"/>
+                        <w:lvlText w:val="{$bulletSix}"/>
                         <w:lvlJc w:val="left"/>
                         <w:pPr>
-                            <w:ind w:left="2520" w:hanging="360"/>
+                            <w:ind w:left="2160" w:hanging="360"/>
                         </w:pPr>
                         <w:rPr>
                             <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
@@ -2221,10 +2251,10 @@ is there a number present?
                         <w:start w:val="1"/>
                         <w:numFmt w:val="bullet"/>
                         <w:pStyle w:val="ListBullet"/>
-                        <w:lvlText w:val="&#8226;"/>
+                        <w:lvlText w:val="{$bulletSeven}"/>
                         <w:lvlJc w:val="left"/>
                         <w:pPr>
-                            <w:ind w:left="2880" w:hanging="360"/>
+                            <w:ind w:left="2520" w:hanging="360"/>
                         </w:pPr>
                         <w:rPr>
                             <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
@@ -2235,30 +2265,17 @@ is there a number present?
                         <w:start w:val="1"/>
                         <w:numFmt w:val="bullet"/>
                         <w:pStyle w:val="ListBullet"/>
-                        <w:lvlText w:val="&#8226;"/>
+                        <w:lvlText w:val="{$bulletEight}"/>
                         <w:lvlJc w:val="left"/>
                         <w:pPr>
-                            <w:ind w:left="3240" w:hanging="360"/>
+                            <w:ind w:left="2880" w:hanging="360"/>
                         </w:pPr>
                         <w:rPr>
                             <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
                             <w:color w:val="auto"/>
                         </w:rPr>
                     </w:lvl>
-                    <w:lvl w:ilvl="8">
-                        <w:start w:val="1"/>
-                        <w:numFmt w:val="bullet"/>
-                        <w:pStyle w:val="ListBullet"/>
-                        <w:lvlText w:val="&#8226;"/>
-                        <w:lvlJc w:val="left"/>
-                        <w:pPr>
-                            <w:ind w:left="4000" w:hanging="360"/>
-                        </w:pPr>
-                        <w:rPr>
-                            <w:rFonts w:ascii="Symbol" w:hAnsi="Symbol" w:hint="default"/>
-                            <w:color w:val="auto"/>
-                        </w:rPr>
-                    </w:lvl>
+
                 </w:abstractNum>
     </xsl:template>
     
@@ -2495,7 +2512,7 @@ under new name -->
                     <w:p/>
                 </w:endnote>
                 
-                <xsl:for-each select="//tei:note[@place='end']">
+                <xsl:for-each select="key('ENDNOTES',1)">
                     <xsl:variable name="id" select="position()+1"/>
                     <w:endnote w:id="{$id}">
                         <xsl:call-template name="block-element">
@@ -2555,7 +2572,7 @@ under new name -->
                     <w:p/>
                 </w:footnote>
                 
-                <xsl:for-each select="//tei:note[@place='foot']">
+                <xsl:for-each select="key('FOOTNOTES',1)">
                     <xsl:variable name="id" select="position()+1"/>
                     <w:footnote w:id="{$id}">
                         <xsl:call-template name="block-element">
@@ -2771,7 +2788,7 @@ under new name -->
                 
                 <!-- Images -->
 
-                <xsl:for-each select="//a:blip">
+                <xsl:for-each select="key('BLIP',1)">
                     <xsl:choose>
                         <xsl:when test="@r:embed">
                             <Relationship Id="rId{position() + 200}"
@@ -2950,7 +2967,7 @@ under new name -->
         <xsl:variable name="me" select="generate-id()"/>
         <a:blip>
             <xsl:variable name="rId">
-                <xsl:for-each select="//a:blip">
+                <xsl:for-each select="key('BLIP',1)">
                     <xsl:if test="generate-id()=$me">
                         <xsl:value-of select="concat('rId', string(200 + position()))"/>
                     </xsl:if>

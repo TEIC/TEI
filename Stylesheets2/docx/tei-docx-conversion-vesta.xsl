@@ -42,7 +42,9 @@
         <xd:copyright>2008, TEI Consortium</xd:copyright>
     </xd:doc>
     
-    
+    <xsl:param name="bulletOne">•</xsl:param>
+    <xsl:param name="bulletTwo">&#xF0BE;</xsl:param>
+
     <xsl:param name="word-directory">..</xsl:param>
     <xsl:param name="debug">false</xsl:param>
     <xsl:param name="styleDoc">
@@ -87,30 +89,35 @@
     </xsl:template>
 
     <xsl:template match="tei:label[following-sibling::tei:*[1]/self::tei:item]">
-        <xsl:param name="nop"/>
-        
-       <w:p>
-           <w:pPr>
-               <w:pStyle w:val="dl"/>
-               <w:ind w:left="567" w:hanging="567"/>
-           </w:pPr>
-           <xsl:apply-templates>
-               <xsl:with-param name="nop">true</xsl:with-param>
-           </xsl:apply-templates>
-           <w:r>
-               <w:br/>
-           </w:r>
-           <xsl:apply-templates select="following-sibling::tei:*[1]/*|
-                                        following-sibling::tei:*[1]/processing-instruction()|
-                                        following-sibling::tei:*[1]/comment()|
-                                        following-sibling::tei:*[1]/text()">
-               <xsl:with-param name="nop">true</xsl:with-param>
-           </xsl:apply-templates>
-           
-       </w:p>
+        <xsl:param name="nop"/>   
+	<xsl:variable name="pair">
+	  <tei:list>
+	    <tei:glossListEntry count="{count(ancestor::tei:list)}">
+	      <tei:hi rend="bold">
+		<xsl:apply-templates mode="iden"/>
+	      </tei:hi>
+	      <tei:lb/>
+	      <xsl:for-each select="following-sibling::tei:item[1]">
+		<xsl:apply-templates mode="iden"/>
+	      </xsl:for-each>
+	    </tei:glossListEntry>
+	  </tei:list>
+	</xsl:variable>
+	<xsl:apply-templates select="$pair/tei:list/tei:glossListEntry"/>
     </xsl:template>
-    
-    
+
+    <xsl:template match="tei:glossListEntry">
+        <xsl:call-template name="block-element">
+	  <xsl:with-param name="style" select="dl"/>
+	  <xsl:with-param name="pPr">
+	    <w:pPr>
+	      <w:pStyle w:val="dl"/>
+	      <w:ind w:left="360" w:hanging="360"/>
+	    </w:pPr>
+	  </xsl:with-param>
+	</xsl:call-template>
+    </xsl:template>
+
     <xsl:template match="tei:pb">
         <w:r>
             <w:br w:type="page"/>
@@ -384,6 +391,17 @@
                     </w:lvl>
                 </w:abstractNum>
 
+    </xsl:template>
+
+    <xsl:template match="@*|text()|comment()|processing-instruction()" mode="iden">
+      <xsl:copy-of select="."/>
+    </xsl:template>
+    
+    <xsl:template match="*" mode="iden">
+      <xsl:copy>
+	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="iden"
+			     />
+      </xsl:copy>
     </xsl:template>
 
 </xsl:stylesheet>
