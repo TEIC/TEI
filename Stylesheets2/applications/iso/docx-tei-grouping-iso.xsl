@@ -19,7 +19,7 @@
     exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso edate">
     
     <!-- import conversion style -->
-    <xsl:import href="docx-tei-grouping.xsl"/>
+    <xsl:import href="../../docx/docx-tei-grouping.xsl"/>
     
     <!-- import special iso functions -->
     <xsl:include href="iso-functions.xsl"/>

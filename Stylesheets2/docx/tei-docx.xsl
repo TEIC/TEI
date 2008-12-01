@@ -940,7 +940,7 @@ is there a number present?
             <xsl:variable name="imageWidth">
 	      <xsl:choose>
 		<xsl:when test="contains(@width,'%')">
-		  <xsl:value-of select="($pageWidth * (number(substring-before(@width,'%')) div 100)) cast as xs:integer"/>
+		  <xsl:value-of select="number($pageWidth * number(substring-before(@width,'%'))) cast as xs:integer"/>
 		</xsl:when>
 		<xsl:when test="@width">
 		  <xsl:value-of select="teidocx:convert-dim-emu(@width)"/>
@@ -962,7 +962,7 @@ is there a number present?
             <xsl:variable name="imageHeight">
 	      <xsl:choose>
 		<xsl:when test="contains(@height,'%')">
-		  <xsl:value-of select="($pageHeight * (number(substring-before(@height,'%')) div 100)) cast as xs:integer"/>
+		  <xsl:value-of select="number($pageHeight * (number(substring-before(@height,'%')))) cast as xs:integer"/>
 		</xsl:when>
 		<xsl:when test="@height">
 		  <xsl:value-of select="teidocx:convert-dim-emu(@height)"/>
@@ -1022,8 +1022,8 @@ is there a number present?
                             <pic:spPr>
                                 <a:xfrm>
                                     <a:off x="0" y="0"/>
-                                    <a:ext cx="{$imageWidth}00"
-					   cy="{$imageHeight}00"/>
+                                    <a:ext cx="{$imageWidth}"
+					   cy="{$imageHeight}"/>
                                 </a:xfrm>
                                 <a:prstGeom prst="rect">
                                     <a:avLst/>
@@ -1050,8 +1050,8 @@ is there a number present?
                                 <wp:positionV relativeFrom="paragraph">
                                     <wp:align>center</wp:align>
                                 </wp:positionV>
-                                <wp:extent cx="{$imageWidth}00"
-					   cy="{$imageHeight}00"/>
+                                <wp:extent cx="{$imageWidth}"
+					   cy="{$imageHeight}"/>
                                 <wp:wrapTopAndBottom/>
                                 <wp:docPr name="Some Image">
                                     <xsl:attribute name="id">
@@ -1064,8 +1064,8 @@ is there a number present?
 		      </xsl:when>
 		      <xsl:otherwise>
                             <wp:inline>
-                                <wp:extent cx="{$imageWidth}00"
-					   cy="{$imageHeight}00"/>
+                                <wp:extent cx="{$imageWidth}"
+					   cy="{$imageHeight}"/>
                                 <wp:docPr name="{tokenize(@url, '/')[last()]}">
                                     <xsl:attribute name="id">
                                         <xsl:number level="any"/>
