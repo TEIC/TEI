@@ -106,7 +106,7 @@ public class TEI {
 		if(null != properties.getErrorListener() )
 			comp.setErrorListener(properties.getErrorListener());
 		
-		XsltExecutable odd2oddExec = comp.compile(new StreamSource(propertiesProvider.tei_pp_getStylesheetsDir() + File.separator + "odd2odd.xsl"));
+		XsltExecutable odd2oddExec = comp.compile(new StreamSource(propertiesProvider.tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2odd.xsl"));
 		XsltTransformer odd2oddTransformer = odd2oddExec.load();
 		
 		odd2oddTransformer.setParameter(new QName("selectedSchema"), new XdmAtomicValue(properties.getSchemaName()));
@@ -148,7 +148,7 @@ public class TEI {
 		if(null != properties.getErrorListener() )
 			comp.setErrorListener(properties.getErrorListener());
 		
-		XsltExecutable odd2relaxExec = comp.compile(new StreamSource(propertiesProvider.tei_pp_getStylesheetsDir() + File.separator + "odd2relax.xsl"));
+		XsltExecutable odd2relaxExec = comp.compile(new StreamSource(propertiesProvider.tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2relax.xsl"));
 		XsltTransformer odd2relaxTransformer = odd2relaxExec.load();
 		
 		if(properties.isVerbose())
@@ -183,7 +183,7 @@ public class TEI {
 		if(null != properties.getErrorListener() )
 			comp.setErrorListener(properties.getErrorListener());
 		
-		XsltExecutable odd2dtdExec = comp.compile(new StreamSource(propertiesProvider.tei_pp_getStylesheetsDir() + File.separator + "odd2dtd.xsl"));
+		XsltExecutable odd2dtdExec = comp.compile(new StreamSource(propertiesProvider.tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2dtd.xsl"));
 		XsltTransformer odd2dtdTransformer = odd2dtdExec.load();
 		
 		if(properties.isVerbose())
@@ -219,7 +219,7 @@ public class TEI {
 		if(null != properties.getErrorListener() )
 			comp.setErrorListener(properties.getErrorListener());
 		
-		XsltExecutable odd2teiDocExec = comp.compile(new StreamSource(propertiesProvider.tei_pp_getStylesheetsDir() + File.separator + "odd2lite.xsl"));
+		XsltExecutable odd2teiDocExec = comp.compile(new StreamSource(propertiesProvider.tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2lite.xsl"));
 		XsltTransformer odd2teiDocTransformer = odd2teiDocExec.load();
 		
 		
@@ -256,7 +256,7 @@ public class TEI {
 		if(null != properties.getErrorListener() )
 			comp.setErrorListener(properties.getErrorListener());
 	
-		XsltExecutable odd2HTMLDocExec = comp.compile(new StreamSource(propertiesProvider.tei_pp_getStylesheetsDir() + File.separator + "odd2html.xsl"));
+		XsltExecutable odd2HTMLDocExec = comp.compile(new StreamSource(propertiesProvider.tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2html.xsl"));
 		XsltTransformer odd2HTMLDocTransformer = odd2HTMLDocExec.load();
 		
 		odd2HTMLDocTransformer.setParameter(new QName("STDOUT"), new XdmAtomicValue("true") );

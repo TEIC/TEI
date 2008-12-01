@@ -170,11 +170,8 @@ public class DocX {
 			normalizer.setParameter(new QName("word-directory"), new XdmAtomicValue(directoryName));
 			docx2tei.setParameter(new QName("word-directory"), new XdmAtomicValue(directoryName));
 
-			// set whether to use the metadata document or not
-			/*if(null != metadata){
-				docx2tei.setParameter(new QName("metadata-file"), new XdmAtomicValue(metadata.getAbsolutePath()));
-			}*/
-			
+			// is there someone interested in adding parameters?
+			doAddXslParamsForDocX2TEI(docx2tei);
 			
 			// transform part1
 			normalizer.setInitialContextNode(doc);
@@ -198,7 +195,15 @@ public class DocX {
 		
 		return teiDocumentNode;
 	}
-	
+
+	/**
+	 * might be overwritten by inheriting class
+	 * @param docx2tei
+	 */
+	protected void doAddXslParamsForDocX2TEI(XsltTransformer docx2tei) {
+		// TODO Auto-generated method stub
+	}
+
 	public File getTEIArchive(){
 		if(null != teiArchive)
 			return teiArchive;
@@ -287,6 +292,8 @@ public class DocX {
 			
 			toDocX.setParameter(new QName("word-directory"), new XdmAtomicValue(directoryName));
 			
+			// add parameters
+			doAddXslParamsForTEI2DocX(toDocX);
 			
 			// transform and write back to document.xml
 			File wordDotXMLFile = new File(directoryName + File.separator + "word" + File.separator + "document.xml");
@@ -312,6 +319,13 @@ public class DocX {
 		} catch (SaxonApiException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * allow for subclasses to add parameters to stylesheets
+	 */
+	protected void doAddXslParamsForTEI2DocX(XsltTransformer tei2docx){
+		
 	}
 
 
