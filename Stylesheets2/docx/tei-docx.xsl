@@ -1462,7 +1462,9 @@ is there a number present?
 
     <xsl:template name="the-header-files">
       <xsl:for-each select="key('ALLHEADERS',1)">
-	<xsl:variable name="num" select="position()"/>
+	<xsl:variable name="num">
+	  <xsl:number/>
+	</xsl:variable>
 	<xsl:result-document href="{concat($word-directory,'/word/header',$num,'.xml')}">
 	  <w:hdr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
 		 xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
@@ -1497,7 +1499,9 @@ is there a number present?
     
     <xsl:template name="the-footer-files">
       <xsl:for-each select="key('ALLFOOTERS',1)">
-	<xsl:variable name="num" select="position()"/>
+	<xsl:variable name="num">
+	  <xsl:number/>
+	</xsl:variable>
 	<xsl:result-document href="{concat($word-directory,'/word/footer',$num,'.xml')}">
 	  <w:ftr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
 		 xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
@@ -2719,7 +2723,9 @@ under new name -->
 
     <xsl:template name="footerrefs">
       <xsl:for-each select="key('ALLFOOTERS',1)">
-	<xsl:variable name="num" select="position()"/>
+	<xsl:variable name="num">
+	  <xsl:number/>
+	</xsl:variable>
 	<Override xmlns="http://schemas.openxmlformats.org/package/2006/content-types"
 	    ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml">
 	  <xsl:attribute name="PartName" select="concat('/word/footer', $num, '.xml')"/>
@@ -2729,7 +2735,9 @@ under new name -->
 
     <xsl:template name="headerrefs">
       <xsl:for-each select="key('ALLHEADERS',1)">
-	<xsl:variable name="num" select="position()"/>
+	<xsl:variable name="num">
+	  <xsl:number/>
+	</xsl:variable>
 	<Override xmlns="http://schemas.openxmlformats.org/package/2006/content-types"
 	    ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml">
 	  <xsl:attribute name="PartName" select="concat('/word/header', $num, '.xml')"/>
@@ -2864,7 +2872,9 @@ under new name -->
     
     <xsl:template name="headfootrels">
       <xsl:for-each select="key('ALLFOOTERS',1)">
-	<xsl:variable name="num" select="position()"/>
+	<xsl:variable name="num">
+	  <xsl:number/>
+	</xsl:variable>
 	<Relationship xmlns="http://schemas.openxmlformats.org/package/2006/relationships"
 	    Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer">
 	  <xsl:attribute name="Target">
@@ -2882,7 +2892,9 @@ under new name -->
       <!-- count all footers -->
       <xsl:variable name="numberOfFooters" select="count(key('ALLFOOTERS',1))"/>
       <xsl:for-each select="key('ALLHEADERS',1)">
-	<xsl:variable name="num" select="position()"/>
+	<xsl:variable name="num">
+	  <xsl:number/>
+	</xsl:variable>
 	<Relationship xmlns="http://schemas.openxmlformats.org/package/2006/relationships"
 	    Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/header">
 	  <xsl:attribute name="Target">
