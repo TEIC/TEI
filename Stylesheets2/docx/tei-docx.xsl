@@ -2598,62 +2598,20 @@ under new name -->
         Write word/_rels/document.xml.rels 
     -->
     <xsl:template name="write-content-types">
-        <xsl:result-document href="{concat($word-directory,'/newContent_Types.xml')}">
+        <xsl:result-document href="{concat($word-directory,'/%5BContent_Types%5D.xml')}">
            
             <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
 
-                
-                <!-- copy every default from the original, that we do -->
-                <xsl:for-each select="document(concat($word-directory,'/%5BContent_Types%5D.xml'))//contypes:Default">
-                    <xsl:choose>
-                        <xsl:when test="@Extension='jpeg'"/>
-                        <xsl:when test="@Extension='jpg'"/>
-                        <xsl:when test="@Extension='png'"/>
-                        <xsl:when test="@Extension='tiff'"/>
-                        <xsl:when test="@Extension='rels'"/>
-                        <xsl:when test="@Extension='xml'"/>
-                        <xsl:otherwise>
-                            <xsl:copy-of select="."/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:for-each>
-                
                 <Default Extension="jpeg" ContentType="image/jpeg"/>
                 <Default Extension="jpg" ContentType="image/jpeg"/>
                 <Default Extension="png" ContentType="image/png"/>
                 <Default Extension="tiff" ContentType="image/tiff"/>
                 <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
                 <Default Extension="xml" ContentType="application/xml"/>
-                
-                
-                
-                <!-- copy every override from the original, that we do -->
-                <xsl:for-each select="document(concat($word-directory,'/%5BContent_Types%5D.xml'))//contypes:Override">
-                    <xsl:choose>
-                        <xsl:when test="@PartName='/docProps/core.xml'"/>
-                        <xsl:when test="@PartName='/docProps/app.xml'"/>
-                        
-                        <xsl:when test="@PartName='/word/document.xml'"/>
-                        <xsl:when test="@PartName='/word/styles.xml'"/>
-                        <xsl:when test="@PartName='/word/numbering.xml'"/>
-                        <xsl:when test="@PartName='/word/webSettings.xml'"/>
-                        <xsl:when test="@PartName='/word/endnotes.xml'"/>
-                        <xsl:when test="@PartName='/word/fontTable.xml'"/>
-                        <xsl:when test="@PartName='/word/footnotes.xml'"/>
-                        <xsl:when test="@PartName='/word/settings.xml'"/>
-                        
-                        <xsl:when test="starts-with(@PartName,'/word/header')"/>
-                        <xsl:when test="starts-with(@PartName,'/word/footer')"/>
-                        
-                        <xsl:when test="@PartName='/word/theme/theme1.xml'"/>
-                        
-                        <!-- if we do not know about it .. better copy it -->
-                        <xsl:otherwise>
-                            <xsl:copy-of select="."/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:for-each>
-                
+                <Default Extension="bin" ContentType="application/vnd.openxmlformats-officedocument.oleObject"/>
+                <Default Extension="wmf" ContentType="image/x-wmf"/>
+                <Default Extension="emf" ContentType="image/x-emf"/>
+               
                 
                 <!-- docprops -->
                 <Override PartName="/docProps/core.xml"
