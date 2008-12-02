@@ -409,6 +409,7 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 			Display.setAppName("Vesta");
 			Display display = Display.getDefault();
 			Shell shell = new Shell(display,SWT.DIALOG_TRIM);
+			shell.setText("TEI Vesta");
 			Vesta inst = new Vesta(shell, SWT.NULL);
 			Point size = inst.getSize();
 			shell.setLayout(new FillLayout());
