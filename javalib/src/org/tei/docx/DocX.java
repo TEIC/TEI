@@ -311,11 +311,6 @@ public class DocX {
 			// move new core.xml
 			File newCoreFile = new File(directoryName + File.separator + "docProps" + File.separator + "newcore.xml");
 			newCoreFile.renameTo(orgCoreFile);
-			
-			// move new ContentTypes 
-			File orgConTypesFile = new File(directoryName + File.separator + "[Content_Types].xml");
-			File newConTypesFile = new File(directoryName + File.separator + "newContent_Types.xml");
-			newConTypesFile.renameTo(orgConTypesFile);
 		} catch (SaxonApiException e) {
 			e.printStackTrace();
 		}
