@@ -628,23 +628,21 @@ Divide by 100 to avoid overflow.
                 <xsl:for-each select="teidocx:footer">
                     <xsl:variable name="ref" select="@ref"/>
                     <xsl:variable name="footernum">
-		      <xsl:for-each select="key('FOOTERS',$ref)">
-			<xsl:number level="any"/>
-		      </xsl:for-each>
-		    </xsl:variable>
-                    <xsl:variable name="rid" select="concat('rId',100+$footernum)"/>
-                    <w:footerReference w:type="{@type}" r:id="{$rid}"/>
+		              <xsl:for-each select="key('FOOTERS',$ref)">
+			            <xsl:number level="any"/>
+		              </xsl:for-each>
+		            </xsl:variable>
+                    <w:footerReference w:type="{@type}" r:id="{concat('rId',100+$footernum)}"/>
                 </xsl:for-each>
 
                 <xsl:for-each select="teidocx:header">
                     <xsl:variable name="ref" select="@ref"/>
                     <xsl:variable name="headernum">
-                        <xsl:for-each select="key('HEADERS',$ref)">
-			  <xsl:number level="any"/>
-			</xsl:for-each>
+                    <xsl:for-each select="key('HEADERS',$ref)">
+			            <xsl:number level="any"/>
+			        </xsl:for-each>
                     </xsl:variable>
-                    <xsl:variable name="rid" select="concat('rId',100+$headernum)"/>
-                    <w:headerReference w:type="{@type}" r:id="{$rid}"/>
+                    <w:headerReference w:type="{@type}" r:id="{concat('rId',100+$headernum)}"/>
                 </xsl:for-each>
 
                 <w:pgSz>
@@ -1462,61 +1460,55 @@ is there a number present?
 
     <xsl:template name="the-header-files">
       <xsl:for-each select="key('ALLHEADERS',1)">
-	<xsl:variable name="num">
-	  <xsl:number/>
-	</xsl:variable>
-	<xsl:result-document href="{concat($word-directory,'/word/header',$num,'.xml')}">
-	  <w:hdr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
-		 xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
-		 xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		 xmlns:o="urn:schemas-microsoft-com:office:office"
-		 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-		 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-		 xmlns:v="urn:schemas-microsoft-com:vml"
-		 xmlns:w10="urn:schemas-microsoft-com:office:word"
-		 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-		 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
-		 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">
-		  <xsl:apply-templates select="."/>
-	  </w:hdr>
-	</xsl:result-document>
+	      <xsl:result-document href="{concat($word-directory,'/word/header',position(),'.xml')}">
+        	  <w:hdr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
+        		 xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
+        		 xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        		 xmlns:o="urn:schemas-microsoft-com:office:office"
+        		 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+        		 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
+        		 xmlns:v="urn:schemas-microsoft-com:vml"
+        		 xmlns:w10="urn:schemas-microsoft-com:office:word"
+        		 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+        		 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
+        		 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">
+        		  <xsl:apply-templates select="."/>
+        	  </w:hdr>
+	    </xsl:result-document>
       </xsl:for-each>
     </xsl:template>
 
     <xsl:template name="write-footer-files">
       <xsl:choose>
-	<xsl:when test="count(key('ALLFOOTERS',1))=0">
-	  <xsl:for-each select="document($defaultHeaderFooterFile)">
-	    <xsl:call-template name="the-footer-files"/>
-	  </xsl:for-each>
-	</xsl:when>
-	<xsl:otherwise>
-	    <xsl:call-template name="the-footer-files"/>
-	</xsl:otherwise>
+    	<xsl:when test="count(key('ALLFOOTERS',1))=0">
+    	  <xsl:for-each select="document($defaultHeaderFooterFile)">
+    	    <xsl:call-template name="the-footer-files"/>
+    	  </xsl:for-each>
+    	</xsl:when>
+    	<xsl:otherwise>
+    	    <xsl:call-template name="the-footer-files"/>
+    	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
 
     
     <xsl:template name="the-footer-files">
       <xsl:for-each select="key('ALLFOOTERS',1)">
-	<xsl:variable name="num">
-	  <xsl:number/>
-	</xsl:variable>
-	<xsl:result-document href="{concat($word-directory,'/word/footer',$num,'.xml')}">
-	  <w:ftr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
-		 xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
-		 xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		 xmlns:o="urn:schemas-microsoft-com:office:office"
-		 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-		 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-		 xmlns:v="urn:schemas-microsoft-com:vml"
-		 xmlns:w10="urn:schemas-microsoft-com:office:word"
-		 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-		 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
-		 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">
-	    <xsl:apply-templates select="."/>
-	  </w:ftr>
-	</xsl:result-document>
+    	<xsl:result-document href="{concat($word-directory,'/word/footer',position(),'.xml')}">
+    	  <w:ftr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
+    		 xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
+    		 xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    		 xmlns:o="urn:schemas-microsoft-com:office:office"
+    		 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+    		 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
+    		 xmlns:v="urn:schemas-microsoft-com:vml"
+    		 xmlns:w10="urn:schemas-microsoft-com:office:word"
+    		 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+    		 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
+    		 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">
+    	    <xsl:apply-templates select="."/>
+    	  </w:ftr>
+    	</xsl:result-document>
       </xsl:for-each>
     </xsl:template>
 
@@ -2693,29 +2685,29 @@ under new name -->
                     ContentType="application/vnd.openxmlformats-officedocument.theme+xml"/>
                 
                 <!-- headers -->
-		<xsl:choose>
-		  <xsl:when test="count(key('ALLHEADERS',1))=0">
-		    <xsl:for-each select="document($defaultHeaderFooterFile)">
-		      <xsl:call-template name="headerrefs"/>
-		    </xsl:for-each>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <xsl:call-template name="headerrefs"/>
-		  </xsl:otherwise>
-		</xsl:choose>
+        		<xsl:choose>
+        		  <xsl:when test="count(key('ALLHEADERS',1))=0">
+        		    <xsl:for-each select="document($defaultHeaderFooterFile)">
+        		      <xsl:call-template name="headerrefs"/>
+        		    </xsl:for-each>
+        		  </xsl:when>
+        		  <xsl:otherwise>
+        		    <xsl:call-template name="headerrefs"/>
+        		  </xsl:otherwise>
+        		</xsl:choose>
 
                 
                 <!-- footers -->
-		<xsl:choose>
-		  <xsl:when test="count(key('ALLFOOTERS',1))=0">
-		    <xsl:for-each select="document($defaultHeaderFooterFile)">
-		      <xsl:call-template name="footerrefs"/>
-		    </xsl:for-each>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <xsl:call-template name="footerrefs"/>
-		  </xsl:otherwise>
-		</xsl:choose>
+        		<xsl:choose>
+        		  <xsl:when test="count(key('ALLFOOTERS',1))=0">
+        		    <xsl:for-each select="document($defaultHeaderFooterFile)">
+        		      <xsl:call-template name="footerrefs"/>
+        		    </xsl:for-each>
+        		  </xsl:when>
+        		  <xsl:otherwise>
+        		    <xsl:call-template name="footerrefs"/>
+        		  </xsl:otherwise>
+        		</xsl:choose>
             </Types>
             
         </xsl:result-document>
@@ -2723,25 +2715,19 @@ under new name -->
 
     <xsl:template name="footerrefs">
       <xsl:for-each select="key('ALLFOOTERS',1)">
-	<xsl:variable name="num">
-	  <xsl:number/>
-	</xsl:variable>
-	<Override xmlns="http://schemas.openxmlformats.org/package/2006/content-types"
-	    ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml">
-	  <xsl:attribute name="PartName" select="concat('/word/footer', $num, '.xml')"/>
-	</Override>            
+    	<Override xmlns="http://schemas.openxmlformats.org/package/2006/content-types"
+    	    ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml">
+    	  <xsl:attribute name="PartName" select="concat('/word/footer', position(), '.xml')"/>
+    	</Override>            
       </xsl:for-each>
     </xsl:template>
 
     <xsl:template name="headerrefs">
       <xsl:for-each select="key('ALLHEADERS',1)">
-	<xsl:variable name="num">
-	  <xsl:number/>
-	</xsl:variable>
-	<Override xmlns="http://schemas.openxmlformats.org/package/2006/content-types"
-	    ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml">
-	  <xsl:attribute name="PartName" select="concat('/word/header', $num, '.xml')"/>
-	</Override>
+	    <Override xmlns="http://schemas.openxmlformats.org/package/2006/content-types"
+	        ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml">
+	      <xsl:attribute name="PartName" select="concat('/word/header', position(), '.xml')"/>
+	    </Override>
       </xsl:for-each>
     </xsl:template>
 
@@ -2872,41 +2858,25 @@ under new name -->
     
     <xsl:template name="headfootrels">
       <xsl:for-each select="key('ALLFOOTERS',1)">
-	<xsl:variable name="num">
-	  <xsl:number/>
-	</xsl:variable>
-	<Relationship xmlns="http://schemas.openxmlformats.org/package/2006/relationships"
-	    Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer">
-	  <xsl:attribute name="Target">
-	    <xsl:text>footer</xsl:text>
-	    <xsl:value-of select="$num"/>
-	    <xsl:text>.xml</xsl:text>
-	  </xsl:attribute>
-	  <xsl:attribute name="Id">
-	    <xsl:text>rId</xsl:text>
-	    <xsl:value-of select="100+$num"/>
-	  </xsl:attribute>
-	</Relationship>
-      </xsl:for-each>
+          <xsl:variable name="num">
+              <xsl:number/>
+          </xsl:variable>
+          <Relationship xmlns="http://schemas.openxmlformats.org/package/2006/relationships"
+	        Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer"
+	        Target="{concat('footer',position(),'.xml')}"
+	        Id="{concat('rId',100+$num)}"/>
+	    </xsl:for-each>
       
       <!-- count all footers -->
-      <xsl:variable name="numberOfFooters" select="count(key('ALLFOOTERS',1))"/>
       <xsl:for-each select="key('ALLHEADERS',1)">
-	<xsl:variable name="num">
-	  <xsl:number/>
-	</xsl:variable>
-	<Relationship xmlns="http://schemas.openxmlformats.org/package/2006/relationships"
-	    Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/header">
-	  <xsl:attribute name="Target">
-	    <xsl:text>header</xsl:text>
-	    <xsl:value-of select="$num"/>
-	    <xsl:text>.xml</xsl:text>
-	  </xsl:attribute>
-	  <xsl:attribute name="Id">
-	    <xsl:text>rId</xsl:text>
-	    <xsl:value-of select="100+$num+$numberOfFooters"/>
-	  </xsl:attribute>
-	</Relationship>
+	    <xsl:variable name="num">
+	        <xsl:number/>
+	    </xsl:variable>
+        <Relationship xmlns="http://schemas.openxmlformats.org/package/2006/relationships"
+	        Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/header"
+	        Target="{concat('header',position(),'.xml')}"
+	        Id="{concat('rId',100+$num)}"
+	        />
       </xsl:for-each>
     </xsl:template>
     <!-- 
