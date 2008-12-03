@@ -313,7 +313,7 @@
       <xsl:otherwise>
         <xsl:variable name="Remote">
           <xsl:value-of select="$TEISERVER"/>
-          <xsl:text>allbymod.xq?module=</xsl:text>
+          <xsl:text>allbymod.xql?module=</xsl:text>
           <xsl:value-of select="$moduleName"/>
         </xsl:variable>
         <xsl:for-each select="document($Remote)/List">
@@ -1045,7 +1045,7 @@ so that is only put back in if there is some content
         <xsl:otherwise>
           <xsl:variable name="ATTCLASSDOC">
             <xsl:value-of select="$TEISERVER"/>
-            <xsl:text>classspecs.xq</xsl:text>
+            <xsl:text>classspecs.xql</xsl:text>
           </xsl:variable>
           <xsl:for-each select="document($ATTCLASSDOC)/List">
             <xsl:for-each select="key('ATTCLASSES',$className)">
@@ -1175,7 +1175,7 @@ select="$M"/></xsl:message>
             <xsl:otherwise>
               <xsl:variable name="ATTCLASSDOC">
                 <xsl:value-of select="$TEISERVER"/>
-                <xsl:text>classspecs.xq</xsl:text>
+                <xsl:text>classspecs.xql</xsl:text>
               </xsl:variable>
               <xsl:for-each select="document($ATTCLASSDOC)/List">
                 <xsl:for-each select="key('ATTCLASSES',$className)">
@@ -1267,7 +1267,7 @@ select="$M"/></xsl:message>
             <xsl:otherwise>
               <xsl:variable name="ATTCLASSDOC">
                 <xsl:value-of select="$TEISERVER"/>
-                <xsl:text>classspecs.xq</xsl:text>
+                <xsl:text>classspecs.xql</xsl:text>
               </xsl:variable>
               <xsl:for-each select="document($ATTCLASSDOC)/List">
                 <xsl:for-each select="key('ATTCLASSES',$className)">
@@ -1878,7 +1878,7 @@ every attribute and see whether the attribute has changed-->
       <xsl:otherwise>
         <xsl:variable name="Remote">
           <xsl:value-of select="$TEISERVER"/>
-          <xsl:text>getversion.xq</xsl:text>
+          <xsl:text>getversion.xql</xsl:text>
         </xsl:variable>
         <xsl:for-each select="document($Remote)/tei:edition">
 	  <xsl:value-of select="."/>
