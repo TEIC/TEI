@@ -82,8 +82,8 @@ makePDFDOC()
     echo "7. make PDF documentation $schema.doc.pdf and $schema.doc.tex "
     xsltproc $DEBUG $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
 	-o $RESULTS/$schema.doc.tex \
-	$TEIXSLDIR/latex/tei.xsl $schema.doc.xml
-    pdflatex $schema.doc.tex
+	$TEIXSLDIR/latex/tei.xsl $RESULTS/$schema.doc.xml
+    (cd $RESULTS; pdflatex $schema.doc.tex)
 }
 
 makeXMLDOC() 
