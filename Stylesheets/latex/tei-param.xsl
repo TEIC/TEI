@@ -174,6 +174,8 @@ capable of dealing with UTF-8 directly.
 \uc@dclc{8421}{default}{\textbackslash }
 \uc@dclc{10100}{default}{\{}
 \uc@dclc{10101}{default}{\}}
+\uc@dclc{8491}{default}{\AA{}}
+\uc@dclc{8239}{default}{\,}
 </xsl:when>
 <xsl:otherwise>
 \usepackage{fontspec}
