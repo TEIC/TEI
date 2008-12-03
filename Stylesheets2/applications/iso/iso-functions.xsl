@@ -168,9 +168,10 @@
         </xsl:for-each>
     </xsl:function>
     
+    
+    
     <xsl:function name="teidocx:is-inline" as="xs:boolean">
         <xsl:param name="element"/>
-        
         <xsl:for-each select="$element">
             <xsl:choose>
                 <xsl:when test="self::m:oMath or
@@ -183,26 +184,38 @@
                     self::iso:wordObject[w:object] or
                     
                     self::tei:abbr or
+                    self::tei:affiliation or
                     self::tei:author or
+                    self::tei:br or
                     self::tei:c or
+                    self::tei:code or
                     self::tei:editionStmt or
                     self::tei:date or
                     self::tei:emph or
+                    
                     self::tei:foreign or
+                    self::tei:forename or
                     self::tei:graphic or
+                    self::tei:gi or
                     self::tei:hi[not(w:*)] or
                     self::tei:idno or
                     self::tei:lb or
+                    self::tei:name or
                     self::tei:note[@place='foot'] or
                     self::tei:note[@place='end'] or
                     self::tei:num or
                     self::tei:mentioned or
                     self::tei:orgName or
+                    self::tei:placeName or
+                    self::tei:persName or
                     self::tei:publisher or
                     self::tei:pb or
+                    self::tei:ptr or
                     self::tei:q or
                     self::tei:ref or
                     self::tei:seg or
+                    self::tei:surname or 
+                    self::tei:soCalled or
                     self::tei:term[not(ancestor-or-self::*/@type='termsAndDefinitions')] or
                     self::tei:title">
                     true
