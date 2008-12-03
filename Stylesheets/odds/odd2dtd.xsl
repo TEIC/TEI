@@ -1573,7 +1573,7 @@
           <xsl:otherwise>
             <xsl:variable name="Remote">
               <xsl:value-of select="$TEISERVER"/>
-              <xsl:text>copytag.xq?name=</xsl:text>
+              <xsl:text>copytag.xql?name=</xsl:text>
               <xsl:value-of select="$K"/>
             </xsl:variable>
             <xsl:if test="$verbose">

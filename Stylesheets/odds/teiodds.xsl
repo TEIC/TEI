@@ -1614,7 +1614,7 @@ select="$makeDecls"/></xsl:message>
             <tei:ref>
               <xsl:attribute name="target">
 		<xsl:value-of select="$TEISERVER"/>
-	        <xsl:text>tag.xq?name=</xsl:text>
+	        <xsl:text>tag.xql?name=</xsl:text>
 		<xsl:value-of select="$partialname"/>
 		<xsl:text>&amp;documentationLanguage=</xsl:text>
 		<xsl:value-of select="$documentationLanguage"/>
@@ -1626,7 +1626,7 @@ select="$makeDecls"/></xsl:message>
             <a xmlns="http://www.w3.org/1999/xhtml">
               <xsl:attribute name="href">
 		<xsl:value-of select="$TEISERVER"/>
-	        <xsl:text>tag.xq?name=</xsl:text>
+	        <xsl:text>tag.xql?name=</xsl:text>
 		<xsl:value-of select="$partialname"/>
 		<xsl:text>&amp;documentationLanguage=</xsl:text>
 		<xsl:value-of select="$documentationLanguage"/>

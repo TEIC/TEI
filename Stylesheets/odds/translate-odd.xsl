@@ -20,7 +20,7 @@ XSL stylesheet to process TEI documents using ODD markup
     <xsl:choose>
       <xsl:when test="$I18N=''">
         <xsl:value-of select="$TEISERVER"/>
-        <xsl:text>i18n.xq</xsl:text>
+        <xsl:text>i18n.xql</xsl:text>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="$I18N"/>

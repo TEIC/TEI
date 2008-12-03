@@ -1502,7 +1502,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
           <xsl:otherwise>
             <xsl:variable name="address">
               <xsl:value-of select="$TEISERVER"/>
-              <xsl:text>classmembers.xq?class=</xsl:text>
+              <xsl:text>classmembers.xql?class=</xsl:text>
               <xsl:value-of select="@ident"/>
             </xsl:variable>
             <xsl:if test="$verbose='true'">
@@ -2105,7 +2105,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	    <a xmlns="http://www.w3.org/1999/xhtml">
 	      <xsl:attribute name="href">
 		<xsl:value-of select="$TEISERVER"/>
-		<xsl:text>tag.xq?name=</xsl:text>
+		<xsl:text>tag.xql?name=</xsl:text>
 		<xsl:value-of select="$name"/>
 		<xsl:text>&amp;documentationLanguage=</xsl:text>
 		<xsl:value-of select="$documentationLanguage"/>
@@ -2160,7 +2160,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
       <xsl:otherwise>
         <xsl:variable name="loc">
           <xsl:value-of select="$TEISERVER"/>
-          <xsl:text>copytag.xq?name=</xsl:text>
+          <xsl:text>copytag.xql?name=</xsl:text>
           <xsl:value-of select="$name"/>
         </xsl:variable>
         <xsl:if test="$verbose='true'">

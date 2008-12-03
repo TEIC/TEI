@@ -101,7 +101,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
       <xsl:otherwise>
         <xsl:variable name="Remote">
           <xsl:value-of select="$TEISERVER"/>
-          <xsl:text>allbymod.xq?module=</xsl:text>
+          <xsl:text>allbymod.xql?module=</xsl:text>
           <xsl:value-of select="$modname"/>
         </xsl:variable>
         <xsl:for-each select="document($Remote)/List">
