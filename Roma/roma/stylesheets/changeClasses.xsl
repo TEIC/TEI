@@ -47,6 +47,7 @@ Description
     <xsl:for-each select="//attClassList/attClass">
       <tr>
         <td>
+<!--
           <a>
             <xsl:attribute name="href">
               <xsl:value-of select="$host"/>
@@ -55,6 +56,9 @@ Description
             </xsl:attribute>
             <xsl:value-of select="className"/>
           </a>
+-->
+            <xsl:value-of select="className"/>
+
         </td>
         <td>
           <a target="_new">
