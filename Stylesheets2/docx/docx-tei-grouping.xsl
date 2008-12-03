@@ -470,25 +470,39 @@
 	<xsl:template match="w:drawing">
 		<xsl:choose>
 			<xsl:when test="$convert-graphics='true'">
-				<graphic>
-					<xsl:attribute name="width" select="concat(number(descendant::wp:extent[1]/@cx) div 360000,'cm')"/>
-					<xsl:attribute name="height" select="concat(number(descendant::wp:extent[1]/@cy) div 360000,'cm')"/>
-					<xsl:attribute name="url">
-						<xsl:variable name="rid" select="descendant::a:blip[1]/@r:embed"/>
-						<xsl:value-of
-							select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"
-						/>
-					</xsl:attribute>
-					
-					<!-- inline or block -->
-					<xsl:attribute name="rend">
-						<xsl:choose>
-							<xsl:when test="wp:anchor">block</xsl:when>
-							<xsl:otherwise>inline</xsl:otherwise>
-						</xsl:choose>
-					</xsl:attribute>
-					
-				</graphic>				
+				<xsl:choose>
+					<xsl:when test="descendant::a:blip[1]/@r:embed">
+						<graphic>
+							<xsl:attribute name="width" select="concat(number(descendant::wp:extent[1]/@cx) div 360000,'cm')"/>
+							<xsl:attribute name="height" select="concat(number(descendant::wp:extent[1]/@cy) div 360000,'cm')"/>
+							<xsl:attribute name="url">
+								<xsl:variable name="rid" select="descendant::a:blip[1]/@r:embed"/>
+								<xsl:value-of
+									select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"
+								/>
+							</xsl:attribute>
+							
+							<!-- inline or block -->
+							<xsl:attribute name="rend">
+								<xsl:choose>
+									<xsl:when test="wp:anchor">block</xsl:when>
+									<xsl:otherwise>inline</xsl:otherwise>
+								</xsl:choose>
+							</xsl:attribute>
+							
+						</graphic>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:message>Linked Image</xsl:message>
+						<graphic>
+							Linked Graphic: 
+							<xsl:variable name="rid" select="@r:link"/>
+							<xsl:value-of
+								select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"
+							/>
+						</graphic>
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:when>
 			<xsl:otherwise>
 				<w:drawing>
