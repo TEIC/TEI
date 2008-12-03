@@ -251,7 +251,7 @@ Description
             </xsl:if>
           </input>
           <span onMouseover="descriptionPopup_Show( 'modelClass_{className}')" onMouseout="descriptionPopup_Hide( 'modelClass_{className}')" id="descSpan_modelClass_{className}">
-            <a href="{$host}class.xq?name={className}" target="blank">
+            <a href="{$host}class.xql?name={className}" target="blank">
               <xsl:value-of select="className"/>
             </a>
           </span>
@@ -289,7 +289,7 @@ Description
             <a>
               <xsl:attribute name="href">
                 <xsl:value-of select="$host"/>
-                <xsl:text>/class.xq?name=</xsl:text>
+                <xsl:text>/class.xql?name=</xsl:text>
                 <xsl:value-of select="className"/>
                 <xsl:text>&amp;lang=</xsl:text>
                 <xsl:value-of select="$lang"/>

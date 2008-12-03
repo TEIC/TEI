@@ -205,7 +205,7 @@ class romaDom extends domDocument
       {
 	$oListDom = new domDocument();
 	$this->getDocLanguage( $szDocLanguage );
-	$oListDom->loadXML( join( '', file( roma_xquery_server  . 'elemsbymod.xq?module=' . $szModule . '&lang=' . $szDocLanguage )));
+	$oListDom->loadXML( join( '', file( roma_xquery_server  . 'elemsbymod.xql?module=' . $szModule . '&lang=' . $szDocLanguage )));
 	$aoElements = $oListDom->getElementsByTagname( 'elementName' );
 	$this->getExcludedElementsInModule( $szModule, $aszExcluded );
 
@@ -403,7 +403,7 @@ class romaDom extends domDocument
 	  {
 	    $oElementDom = new domDocument();
 	    $oElementDom->loadXML( join( '', file( roma_xquery_server
-	  . 'element.xq?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
+	  . 'element.xql?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $aoClasses = $oXPath->query( "/Element/elementClasses/class" );
@@ -437,7 +437,7 @@ class romaDom extends domDocument
       {
 	$oElementDom = new domDocument();
 	$this->getDocLanguage( $szDocLanguage );
-	$oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?lang=' . $szDocLanguage .'&name=' . $szElement ) ) );
+	$oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xql?lang=' . $szDocLanguage .'&name=' . $szElement ) ) );
 	
 	$oXPath = new domxpath( $oElementDom );
 	$oDesc = $oXPath->query( "/Element/elementDesc" )->item(0);
@@ -466,7 +466,7 @@ class romaDom extends domDocument
 	  {
 	    $oElementDom = new domDocument();
 	    $oElementDom->loadXML( join( '', file( roma_xquery_server
-          . 'element.xq?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
+          . 'element.xql?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $oXPath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );
@@ -502,7 +502,7 @@ class romaDom extends domDocument
 	else
 	  {
 	    $oElementDom = new domDocument();
-	    $oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
+	    $oElementDom->loadXML( join( '', file( roma_xquery_server . 'element.xql?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
 	    
 	    $oXPath = new domxpath( $oElementDom );
 	    $oXPath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );
@@ -528,7 +528,7 @@ class romaDom extends domDocument
 	$this->getDocLanguage( $szDocLanguage );
 	$oAttributesDom = new domDocument();
 	$oAttributesDom->loadXML( join( '', file( roma_xquery_server
-	. 'attsbyelem.xq?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
+	. 'attsbyelem.xql?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
 	
 	$oElement = $oAttributesDom->documentElement;
 	foreach( $oElement->childNodes as $oChild )
@@ -548,7 +548,7 @@ class romaDom extends domDocument
 	  {
 // I get here if I edit an attribute for the first time on an existing element
 	    @$oAttDom->loadXML( join( '', file( roma_xquery_server
-	  . 'attsbyelem.xq?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
+	  . 'attsbyelem.xql?lang=' . $szDocLanguage . '&name=' . $szElement ) ) );
 	    $oElement = $oAttDom->documentElement;
 		
 	    if ( is_object( $oElement ) )
@@ -583,7 +583,7 @@ class romaDom extends domDocument
 	    $oElement = $oAttDom->documentElement;
 
 	    $oAttClassDom = new domDocument;
-	    $oAttClassDom->loadXML( join( '', file( roma_xquery_server . 'attclassbyname.xq?lang=' . $szDocLanguage . '&class=' . $szClass ) ) );
+	    $oAttClassDom->loadXML( join( '', file( roma_xquery_server . 'attclassbyname.xql?lang=' . $szDocLanguage . '&class=' . $szClass ) ) );
 	    $oRoot = $oAttClassDom->documentElement;
 	    $oAttributes = $oAttClassDom->getElementsByTagName( 'attributes' )->item(0);
 
@@ -1006,7 +1006,7 @@ class romaDom extends domDocument
 	$oTmpDom = new domDocument();
 	$this->getDocLanguage( $szDocLanguage );
 	if ($aszConfig['namespace' ] == 'http://www.tei-c.org/ns/1.0' &&
-	    @$oTmpDom->loadXML( join( '', file( roma_xquery_server . 'element.xq?lang=' . $szDocLanguage . '&name=' . $aszConfig[ 'name' ] ) ) ) )
+	    @$oTmpDom->loadXML( join( '', file( roma_xquery_server . 'element.xql?lang=' . $szDocLanguage . '&name=' . $aszConfig[ 'name' ] ) ) ) )
 	  {
 	    throw new elementExistsException( $aszConfig[ 'name' ] );
 	  }

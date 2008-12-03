@@ -50,7 +50,7 @@ Description
           <a>
             <xsl:attribute name="href">
               <xsl:value-of select="$host"/>
-              <xsl:text>class.xq?name=</xsl:text>
+              <xsl:text>class.xql?name=</xsl:text>
               <xsl:value-of select="className"/>
             </xsl:attribute>
             <xsl:value-of select="className"/>
@@ -60,7 +60,7 @@ Description
           <a target="_new">
             <xsl:attribute name="href">
               <xsl:value-of select="$host"/>
-              <xsl:text>tag.xq?documentationLanguage=</xsl:text>
+              <xsl:text>tag.xql?documentationLanguage=</xsl:text>
               <xsl:value-of select="$doclang"/>
               <xsl:text>&amp;doclang=</xsl:text>
               <xsl:value-of select="$doclang"/>

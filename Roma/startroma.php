@@ -24,7 +24,7 @@ switch( $_REQUEST[ 'option' ] )
       break;
   }
 
-$Version = file_get_contents( roma_xquery_server . 'getversion.xq');
+$Version = file_get_contents( roma_xquery_server . 'getversion.xql');
 $_SESSION[ 'Version' ]  = $Version;
 $oRoma->run();
 </script>

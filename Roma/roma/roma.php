@@ -635,7 +635,7 @@ class roma
 	$this->getParser( $oParser );
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
 	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );	
-	$this->getListDom( roma_xquery_server . 'modules.xq?lang='
+	$this->getListDom( roma_xquery_server . 'modules.xql?lang='
 	. $szDocLanguage , $oListDom );
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 
@@ -701,7 +701,7 @@ class roma
 	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );	
         $szTemplate = join( '', file(  roma_templateDir . '/main.tem' ) );
 	$this->getParser( $oParser );
-	$this->getListDom( roma_xquery_server . 'elemsbymod.xq?lang='
+	$this->getListDom( roma_xquery_server . 'elemsbymod.xql?lang='
 	. $szDocLanguage . '&module=' . $_REQUEST[ 'module' ], $oListDom );
 	notamHandler::getError( 'moduleChanged', $aoErrors );
 	notamHandler::deleteError( 'moduleChanged' );
@@ -745,22 +745,22 @@ class roma
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
 	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );	
 	$oModelClassDom = new domDocument();
-	$oModelClassDom->loadXML( join( '', file( roma_xquery_server  . 'classes.xq?lang=' . $szDocLanguage ) ) );
+	$oModelClassDom->loadXML( join( '', file( roma_xquery_server  . 'classes.xql?lang=' . $szDocLanguage ) ) );
 	$oRootClass = $oModelClassDom->documentElement;
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 
 	$oAttributeDom = new domDocument();
 	$oAttributeDom->loadXML( join( '', 
-	file( roma_xquery_server . 'attclasses.xq?lang=' . $szDocLanguage) 
+	file( roma_xquery_server . 'attclasses.xql?lang=' . $szDocLanguage) 
 	) );
 	$oRootAtt = $oAttributeDom->documentElement;
 
 	$oDatatypeDom = new domDocument();
-	$oDatatypeDom->loadXML( join( '', file( roma_xquery_server . 'datatypes.xq' ) ) ) ;
+	$oDatatypeDom->loadXML( join( '', file( roma_xquery_server . 'datatypes.xql' ) ) ) ;
 	$oRootDat = $oDatatypeDom->documentElement;
 
 	$oMacroDom = new domDocument();
-	$oMacroDom->loadXML( join( '', file( roma_xquery_server . 'macros.xq' ) ) );
+	$oMacroDom->loadXML( join( '', file( roma_xquery_server . 'macros.xql' ) ) );
 	$oRootMac = $oMacroDom->documentElement;
 
         //Get created Elements
@@ -934,19 +934,19 @@ class roma
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 
 	$oModelClassDom = new domDocument();
-	$oModelClassDom->loadXML( join( '', file( roma_xquery_server . 'classes.xq?lang=' . $szDocLanguage ) ) );
+	$oModelClassDom->loadXML( join( '', file( roma_xquery_server . 'classes.xql?lang=' . $szDocLanguage ) ) );
 	$oRootClass = $oModelClassDom->documentElement;
 
 	$oAttributeDom = new domDocument();
-	$oAttributeDom->loadXML( join( '', file( roma_xquery_server . 'attclasses.xq?lang=' . $szDocLanguage ) ) );
+	$oAttributeDom->loadXML( join( '', file( roma_xquery_server . 'attclasses.xql?lang=' . $szDocLanguage ) ) );
 	$oRootAtt = $oAttributeDom->documentElement;
 
 	$oDatatypeDom = new domDocument();
-	$oDatatypeDom->loadXML( join( '', file(  roma_xquery_server . 'datatypes.xq' ) ) ) ;
+	$oDatatypeDom->loadXML( join( '', file(  roma_xquery_server . 'datatypes.xql' ) ) ) ;
 	$oRootDat = $oDatatypeDom->documentElement;
 
 	$oMacroDom = new domDocument();
-	$oMacroDom->loadXML( join( '', file( roma_xquery_server . 'macros.xq' ) ) );
+	$oMacroDom->loadXML( join( '', file( roma_xquery_server . 'macros.xql' ) ) );
 	$oRootMac = $oMacroDom->documentElement;
 
 	$oListDom = new domDocument();
@@ -1015,7 +1015,7 @@ class roma
 	$oAddAttribute = $oListDom->appendChild ( new domElement( 'addAttribute' ) );
 	
 	$oDatatypeDom = new domDocument();
-	$oDatatypeDom->loadXML( join( '', file( roma_xquery_server . 'datatypes.xq' ) ) ) ;
+	$oDatatypeDom->loadXML( join( '', file( roma_xquery_server . 'datatypes.xql' ) ) ) ;
 	$oRootDat = $oDatatypeDom->documentElement;
 	$oRootDat = $oListDom->importNode( $oRootDat, true );
 	$oAddAttribute->appendChild( $oRootDat );
@@ -1177,7 +1177,7 @@ class roma
 	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 	$oListDom = new domDocument();
-	$oListDom->loadXML( join ( '', file( roma_xquery_server . 'attclasses.xq?lang=' . $szDocLanguage ) ) );
+	$oListDom->loadXML( join ( '', file( roma_xquery_server . 'attclasses.xql?lang=' . $szDocLanguage ) ) );
 
 	$this->applyStylesheet( $oListDom, 'changeClasses.xsl',
 	$oNewDom, array( 'host' => roma_xquery_server,  'doclang' => $szDocLanguage,
