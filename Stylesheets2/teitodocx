@@ -13,14 +13,14 @@ mkdir -p $TEMPDIR/word/media
 saxon $THERE/$F.xml $XSL/listgraphics.xsl DIR=$TEMPDIR/word/media > $TEMPDIR/fetch
 sh $TEMPDIR/fetch
 rm $TEMPDIR/fetch
-(cd $TEMPDIR/word/media; for i in *"; do  exiftool -q -o $i.xmp $i; done)
+(cd $TEMPDIR/word/media; for i in *; do  exiftool -q -o $i.xmp $i; done)
 cd $TEMPDIR
 saxon -o $TEMPDIR/tmp.xml  $THERE/$F.xml $XSL/fixgraphics.xsl DIR=`pwd`/word
 unzip -o -q $TEMPLATES/template.docx
 saxon -o word/document.xml tmp.xml $XSL/tei-docx-conversion-vesta.xsl  \
     debug=true styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR
 rm -f tmp.xml word/media/*.xmp
-mv newContent_Types.xml \[Content_Types\].xml
+test -f newContent_Types.xml && mv newContent_Types.xml \[Content_Types\].xml
 mv docProps/newcore.xml docProps/core.xml 
 rm -f $THERE/$F.docx
 zip -q -r $THERE/$F.docx word _rels docProps customXml \[Content_Types\].xml
