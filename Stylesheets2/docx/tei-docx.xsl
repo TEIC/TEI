@@ -519,11 +519,14 @@ Divide by 100 to avoid overflow.
 		    <xsl:value-of select="."/>
 		  </xsl:when>
 		  <xsl:otherwise>
-		    <xsl:if test="starts-with(.,' ')">
+		    <xsl:if test="starts-with(.,' ') or starts-with(.,'&#10;')">
 		      <xsl:text> </xsl:text>
 		    </xsl:if>
 		    <xsl:value-of select="normalize-space(.)"/>
 		    <xsl:if test="substring(.,string-length(.),1)=' '">
+		      <xsl:text> </xsl:text>
+		    </xsl:if>
+		    <xsl:if test="substring(.,string-length(.),1)='&#10;'">
 		      <xsl:text> </xsl:text>
 		    </xsl:if>
 		  </xsl:otherwise>
