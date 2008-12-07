@@ -5,7 +5,7 @@ declare namespace html="http://www.w3.org/1999/xhtml";
 declare namespace request="http://exist-db.org/xquery/request";
 declare namespace util="http://exist-db.org/xquery/util";
 
-$Page :=
+let $Page :=
 <tei:TEI xmlns="http://www.tei-c.org/ns/1.0" 
      xmlns:xi="http://www.w3.org/2001/XInclude"> 
 <tei:teiHeader>
@@ -47,5 +47,5 @@ request:get-parameter("documentationLanguage", "")
 </tei:body>
 </tei:text>
 </tei:TEI> 
-return  transform:transform($Page, "http://www.tei-c.org/release/xml/tei/stylesheet/teic/odd2htmlfragment.xsl",<parameters/>)
+return  transform:transform($Page, "http://www.tei-c.org/release/xml/tei/stylesheet/teic/odd2html.xsl",<parameters/>)
        
