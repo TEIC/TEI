@@ -167,8 +167,8 @@ public class DocX {
 			XsltTransformer docx2tei = docx2teiExec.load();
 			
 			// set directory
-			normalizer.setParameter(new QName("word-directory"), new XdmAtomicValue(directoryName));
-			docx2tei.setParameter(new QName("word-directory"), new XdmAtomicValue(directoryName));
+			normalizer.setParameter(new QName("word-directory"), new XdmAtomicValue("file://" + directoryName));
+			docx2tei.setParameter(new QName("word-directory"), new XdmAtomicValue("file://" + directoryName));
 
 			// is there someone interested in adding parameters?
 			doAddXslParamsForDocX2TEI(docx2tei);
@@ -290,7 +290,7 @@ public class DocX {
 			XsltExecutable toDocXExec = comp.compile(new StreamSource(new File(propertiesProvider.docx_pp_getStylesheetTEI2Docx())));
 			XsltTransformer toDocX = toDocXExec.load();
 			
-			toDocX.setParameter(new QName("word-directory"), new XdmAtomicValue(directoryName));
+			toDocX.setParameter(new QName("word-directory"), new XdmAtomicValue("file://" + directoryName));
 			
 			// add parameters
 			doAddXslParamsForTEI2DocX(toDocX);
@@ -341,8 +341,8 @@ public class DocX {
 			XsltTransformer toDocX = toDocXExec.load();
 			XsltTransformer normalizer = normalizerExec.load();
 			
-			toDocX.setParameter(new QName("word-directory"), new XdmAtomicValue(directoryName));
-			normalizer.setParameter(new QName("word-directory"), new XdmAtomicValue(directoryName));
+			toDocX.setParameter(new QName("word-directory"), new XdmAtomicValue("file://" + directoryName));
+			normalizer.setParameter(new QName("word-directory"), new XdmAtomicValue("file://" + directoryName));
 			
 			// load doc
 			File orgFile = new File(directoryName + File.separator + "word" + File.separator + "document.xml");
