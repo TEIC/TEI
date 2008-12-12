@@ -58,6 +58,8 @@ public class DocX {
 	 * provides all the properties that we might need.
 	 */
 	private DocXPropertiesProvider propertiesProvider;
+
+	private String directoryNameURI;
 	
 	/**
 	 * Constructs a docx object from the empty template
@@ -140,7 +142,9 @@ public class DocX {
 		// where should we unzip the file to
 		String tmpDir = propertiesProvider.docx_pp_getTempDir();
 		// name of the directory
-		directoryName = tmpDir + File.separator + UUID.randomUUID().toString();
+		String uid = UUID.randomUUID().toString();
+		directoryName = tmpDir + File.separator + uid;
+		this.directoryNameURI = tmpDir + "/" + uid;
 		
 		FileUtils.unzipFile(in, new File(directoryName));
 	}
@@ -167,8 +171,8 @@ public class DocX {
 			XsltTransformer docx2tei = docx2teiExec.load();
 			
 			// set directory
-			normalizer.setParameter(new QName("word-directory"), new XdmAtomicValue("file://" + directoryName));
-			docx2tei.setParameter(new QName("word-directory"), new XdmAtomicValue("file://" + directoryName));
+			normalizer.setParameter(new QName("word-directory"), new XdmAtomicValue("file://" + directoryNameURI));
+			docx2tei.setParameter(new QName("word-directory"), new XdmAtomicValue("file://" + directoryNameURI));
 
 			// is there someone interested in adding parameters?
 			doAddXslParamsForDocX2TEI(docx2tei);
@@ -290,7 +294,7 @@ public class DocX {
 			XsltExecutable toDocXExec = comp.compile(new StreamSource(new File(propertiesProvider.docx_pp_getStylesheetTEI2Docx())));
 			XsltTransformer toDocX = toDocXExec.load();
 			
-			toDocX.setParameter(new QName("word-directory"), new XdmAtomicValue("file://" + directoryName));
+			toDocX.setParameter(new QName("word-directory"), new XdmAtomicValue("file://" + directoryNameURI));
 			
 			// add parameters
 			doAddXslParamsForTEI2DocX(toDocX);
@@ -341,8 +345,8 @@ public class DocX {
 			XsltTransformer toDocX = toDocXExec.load();
 			XsltTransformer normalizer = normalizerExec.load();
 			
-			toDocX.setParameter(new QName("word-directory"), new XdmAtomicValue("file://" + directoryName));
-			normalizer.setParameter(new QName("word-directory"), new XdmAtomicValue("file://" + directoryName));
+			toDocX.setParameter(new QName("word-directory"), new XdmAtomicValue("file://" + directoryNameURI));
+			normalizer.setParameter(new QName("word-directory"), new XdmAtomicValue("file://" + directoryNameURI));
 			
 			// load doc
 			File orgFile = new File(directoryName + File.separator + "word" + File.separator + "document.xml");
