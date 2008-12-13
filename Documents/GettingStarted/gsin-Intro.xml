@@ -7,11 +7,78 @@
     conventions that we'll use here (<ptr target="#incon"/>).</p>
     <div xml:id="inovr">
         <head>TEI: a very high-level overview</head>
-        <p>TEI: a set of guidelines, but also a community. 4p</p>
-        <p>Why you would want to use TEI; explain the term 'encoding'; XML; what
-            encoding entails; using an editor; validation; what you can then do with
-            your document (transform it into other representations, have it searched;
-            create selections). Possibilities for interchange and interoperability. 10p.</p>
+        <p>If you are reading this document you have probably decided, or are considering, to use the TEI to create a digital version of one or more texts. 
+            Someone may have told you you should do so, or you may have read about other projects that used the TEI. So what is TEI, and why is 
+            it important? </p>
+        <p>The simplest answer to that question is that the TEI is a set of guidelines for the encoding of text. Text encoding is the addition 
+            of codes to text in order to make it possible for a computer to process that text. Text encoding assumes, usually, that 
+            you already have a text, either by manually copying it, or by using an <ref target="#glocr">OCR</ref> program. The codes that you add to the 
+            text will describe some aspect of the text: either by adding information such as author or place of publication (metadata), or 
+            by characterizing the role or meaning or other properties of pieces of text. The title of this chapter, to give a very simple example, might be encoded as:</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <head> TEI: A very high-level overview </head>
+         </egXML>
+        <p>You might ask why we do this. Word processing software, like Microsoft Word, can after all handle text very well without 
+            us having to type codes in pointing brackets. The long answer is given <ref target="#dm">here</ref>, but a shorter answer is that 
+            explicit codes are probably simple and easy to recognize, especially if there is some agreement about 
+            them (that is, if there is a public standard).  And it is true that other programs can compute wordlists and 
+            complex concordances, without any need for these codes, but it is only true for a single text where all text 
+            should be treated the same way. Once you have multiple texts you need way to associate texts with titles, 
+            and if your text consists of poetry with a prose commentary, you may want to have word counts by type 
+            of text. That is to say: you need a structured representation of text properties, and that is what text encoding 
+            provides.</p>
+        <p>If you know something about web pages, you may think by now that text encoding is like using 
+            <ref target="#glhtml">HTML</ref>, the language of the web. Isn’t the <gi>head</gi> that we saw just now very much like the 
+            various <gi>h1</gi>, <gi>h2</gi>, … elements that HTML uses to encode headers at various levels? And indeed, the encodings 
+            that the TEI uses, make use of the same formalism that HTML uses (so-called tags between angle brackets), and some of these 
+            tags it shares with HTML, such as <gi>p</gi> for paragraph and <gi>div</gi> for textual division. The formalism 
+            is called <ref target="#glxml">XML</ref> (more about it <ref target="#tbxml">here</ref>). But what makes TEI 
+            different from HTML is that the TEI provides tags for many different text types (e.g. poetry, drama, dictionaries) and 
+            many different sorts of properties (to document e.g. metrical properties, or textual genesis), and that each of 
+            these tags has an explicit, well-documented meaning. To give an example: you can represent a play in HTML, but 
+            HTML has no tags to indicate a clause, or a scene direction. TEI does have these, and a computer 
+            program that reads a TEI representation of a play can use that knowledge, e.g. to create 
+            an index of clauses by character. It couldn’t do so from an HTML representation.</p>
+        <p>Your next question might be: so, once I have a TEI-encoded version of my text (i.e. an XML file 
+            that uses TEI tags), can I put that text on the web? The answer is: yes you can, but not without 
+            one other step. You need some sort of program that can turn your encoded text into a (collection of) web page(s). 
+            Remember, during the encoding process you explicitly describe the structure of your text: the verse lines, the 
+            headings, the notes, etc. But you say nothing about how you want these to be represented on the web, or how 
+            you want them to be printed. There is a very good reason for this. For most texts, there is not a single best way to 
+            represent their content. One of the reasons why we do text encoding is that we want to do multiple things with 
+            the texts (e.g. show on the web, present a search facility that can search by chapter, index personal names, etc.); 
+            for that very reason, presentation functionality is kept outside of the text. The idea is that the encoding should not be 
+            created for a single application program. Programs come and go; the encoding remains.</p>
+        <p>There are many programming languages that can be used to create a web page out of an XML file, but by far the 
+            most common is <ref target="#glxslt">XSLT</ref>. We apply what is called an XSLT stylesheet to an XML file to 
+            transform it into one or more web pages. The TEI provides a set of sample stylesheets that can handle many types of 
+            text, but usually some stylesheet programming is necessary to create a suitable set of web pages for a project. The 
+            amount of programming depends very much on the ambition level and the properties of the text. 
+            More about XSLT <ref target="#st">here</ref> 
+            (By the way, there is also another type of stylesheet, viz. <ref target="#glcss">CSS</ref> stylesheets. 
+            CSS stylesheets define styles for HTML (web) pages: margins, colours, font sizes, etc.)</p>
+        <p>Two more questions that often come up when discussing TEI are (1) must I create this encoding by hand? 
+            And (2) can I modify the TEI encodings and add my own tags? As to the first question, the answer is: to some extent. 
+            Usually, people create XML files with a program called an XML editor (more <ref target="#ed">here</ref>). Most modern XML 
+            editors can help you create the encoding, based on a <ref target="#glsch">schema</ref>. The schema defines what tags 
+            are allowed and where they are allowed, and the XML editor can prompt the user with a list of the allowed tags. 
+            The program can also check whether the tags that are used are actually allowed, in a process called 
+            validation. Some XML editors can show the definitions of these tags during editing, or adjust the layout 
+            and formatting of the text based on the tags that are used. All of these help very much in making XML editing a fairly 
+            straightforward process, depending on your background. </p>
+        <p>As to the second question: yes, you can modify the TEI encoding when your text has properties that the existing 
+            encodings really do not handle adequately. You can describe the extra tags that you need, or the ones that you 
+            need to change, in a special document called <ref target="#glodd">ODD</ref>. The TEI provides a web application 
+            called <ref target="#glroma">Roma</ref> which helps create such a document. Roma can also generate a schema 
+            from the ODD document. That schema, as we just saw, helps you create and validate your TEI document. 
+            Much more about this <ref target="#sc">here</ref>.</p>
+        <p>The technologies that we have mentioned in this subsection (TEI, XML, HTML, XSLT, Schema’s, and XML editors) are 
+            more or less what we will discuss in the remainder of this document. But TEI is not just a set of encodings and 
+            guidelines for using them. The TEI is also an organization that maintains these guidelines, and a community of 
+            users that applies the guidelines. In fact the users are the organization: the TEI is a consortium of universities, 
+            libraries and research organizations, and the TEI board and council are elected by the member organizations. Using 
+            TEI is taking part in the community of TEI users that meet on the TEI mailing list, in Special Interest 
+            Groups, on the yearly TEI member meeting and on other occasions. </p>
     </div>
     <div xml:id="indoc">
         <head>What this document does, and what it doesn't</head>
