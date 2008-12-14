@@ -33,6 +33,88 @@
         <p>Various markup languages have been developed in the past to accomplish this kind of
             identification, but the Text Encoding Initiative and the wider computing world have
             settled on a single standard: XML, the Extensible Markup Language.</p>
+        <div xml:id="tbxml.what">
+            <head>What Is XML?</head>
+            <p>XML is popularly known as an <soCalled>angle-bracket language</soCalled>. If you have
+                ever looked at or edited HTML source code, you have worked with a near cousin of
+                XML—or with pure XML, if you the code was in the HTML version known as XHTML
+                (Extensible HyperText Markup Language).</p>
+            <p>The most basic fact about XML is that XML is not a single markup standard, but rather
+            a specification for creating markup languages, each with its own vocabulary and rules.
+            Moreover, XML can be used to encode nearly any sort of material, from literary
+            works
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                <NurseryRhyme>
+                    <title>Mary Had a Little Lamb</title>
+                    <stanza>
+                        <verse>Mary had a little lamb,</verse>
+                        <verse>its fleece was white as snow;</verse>
+                        <verse>and everywhere that Mary went</verse>
+                        <verse>the lamb was sure to go</verse>
+                    </stanza>
+                </NurseryRhyme>
+            </egXML>
+            to regular <soCalled>data</soCalled> of the sort that could be stored in a formal
+                database:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                <place>
+                    <name>London</name>
+                    <latitude hemisphere="N">51.507778</latitude>
+                    <longitude hemisphere="W">0.128056</longitude>
+                </place>
+            </egXML>
+            Nearly anything can be encoded and expressed in XML, within the constraints of its
+            syntax. There are XML languages for musical notation [ref
+            http://xml.coverpages.org/xmlMusic.html], for mathematical equations (MathML), for
+            representing vector graphics (SVG), for library catalog records (MARCXML)
+            .&#160;.&#160;. [ref to Wikipedia
+            http://en.wikipedia.org/wiki/List_of_XML_markup_languages?]</p>
+        </div>
+        <div xml:id="tbxml.nutshell">
+            <head>XML Syntax in a Nutshell</head>
+            <p>The basic grammar of XML is simple enough that it can be expressed in four brief
+            rules. (They are oversimplifications, strictly, but the exceptions are not important
+            enough to matter at this stage.)</p>
+            <list type="ordered">
+                <item>An XML file must have a single outermost <term rend="italic">root element</term> that
+                contains everything else.
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                    <document>
+                        . . . contents . . .
+                    </document>
+                </egXML>
+                </item>
+                <item>An XML element must always have a <term rend="italic">start tag</term> and an <term rend="italic">end tag</term>.
+                    Both start and end tags are denoted by angle brackets preceding the name of the
+                    element; the end tag must have a solidus (/) preceding the name: <eg>&lt;tag&gt; … &lt;/tag&gt;</eg> 
+                    The two main things that an element can contain are text and other
+                    elements.
+                    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <document>
+                            <para>This is a paragraph with text only.</para>
+                            <para>This is <emph>another</emph> paragraph with a child element.</para>
+                        </document>
+                        
+                    </egXML>
+                </item>
+                <item>An XML element may qualified by <term rend="italic">attributes</term>,
+                    contained within the start tag. The value of each attribute is contained within
+                    quotation marks (single or double):
+                    <egXML xmlns="http://www.tei-c.org/ns/Examples"><document type="legal"
+                        xml:id="DOC-2008-07-11-0003"> … </document></egXML>
+                    Within running text, attributes are referred to by prefixing an at-sign (@) to
+                    their name: <att>type</att>, <att>xml:id</att>.
+                </item>
+                <item>XML elements must be nested; they cannot overlap. This syntax is illegal:
+                    <eg><![CDATA[<line><clause>April is the cruelest month</clause>, <clause>breeding</line>
+<line>Lilacs out of the dead land</clause>, <clause>mixing</line>
+<line>Memory and desire</clause>, <clause>stirring</line>
+<line>Dull roots with spring rain</clause>.</line>]]></eg>
+                    (The inability to capture "overlapping hierarchies" in this way is a fundamental
+                    limitation of XML.)
+                </item>
+            </list>
+        </div>
     </div>
     <div xml:id="tbweb">
         <p>The web, web servers, html, browsers. One very simple HTML example, then point to other
