@@ -13,23 +13,24 @@
                 lather on which a mirror and a razor lay crossed. A yellow dressinggown,
                 ungirdled, was sustained gently behind him on the mild morning air. He
                 held the bowl aloft and intoned:</p>
-            <p>--_Introibo ad altare Dei_.</p>
+            <p>—Introibo ad altare Dei.</p>
             <p>[etc.]</p>
         </quote>
         <p>You can do a reasonably good job of breaking the text into its component paragraphs,
             sentences, and words based on line breaks, punctuation, and spacing. So you can produce
-        word counts and concordances, calculate the average length of sentences, find interesting
-        patterns of word collocation, or even generate a Joyce pastiche by stringing together random
-        sentences from the text. But with only the bare text itself as data, there are many more
-        things you can't easily do: search for references to people, places, or
-        titles; distinguish reliably between primary text and quoted text, or direct and indirect
-        speech; search for passages in a particular language, such as Latin; find text that is in verse
-        rather than prose. For these tasks it is necessary to add something to the bare text, to
-        mark it up: hence the need for a <soCalled>markup language</soCalled>. Using a markup
-            language you can identify "Buck Mulligan" as a personal name, and perhaps associate it
-            with a standard identifier. You can indicate that the second paragraph represents a
-            quotation, spoken by Buck Mulligan, in the Latin language, quoted from the Tridentine Mass, and
-        typographically rendered in italics in the source text.</p>
+            word counts and concordances, calculate the average length of sentences, find
+            interesting patterns of word collocation, or even generate a Joyce pastiche by stringing
+            together random sentences from the text. But with only the bare text itself as data,
+            there are many more things you can't easily do: search for references to people, places,
+            or titles; distinguish reliably between primary text and quoted text, or direct and
+            indirect speech; search for passages in a particular language, such as Latin; find text
+            that is in verse rather than prose; indicate that text is in italics or boldface. For
+            these tasks it is necessary to add something to the bare text, to mark it up: hence the
+            need for a <soCalled>markup language</soCalled>. Using a markup language you can
+            identify "Buck Mulligan" as a personal name, and perhaps associate it with a standard
+            identifier. You can indicate that the second paragraph represents a quotation, spoken by
+            Buck Mulligan, in the Latin language, quoted from the Tridentine Mass, and
+            typographically rendered in italics in the source text.</p>
         <p>Various markup languages have been developed in the past to accomplish this kind of
             identification, but the Text Encoding Initiative and the wider computing world have
             settled on a single standard: XML, the Extensible Markup Language.</p>
@@ -41,16 +42,15 @@
                 (Extensible HyperText Markup Language).</p>
             <p>The most basic fact about XML is that XML is not a single markup standard, but rather
             a specification for creating markup languages, each with its own vocabulary and rules.
-            Moreover, XML can be used to encode nearly any sort of material, from literary
-            works
+            Moreover, XML can be used to encode nearly any sort of material, from poems
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <NurseryRhyme>
+                <NurseryRhyme ID="mary_lamb">
                     <title>Mary Had a Little Lamb</title>
                     <stanza>
                         <verse>Mary had a little lamb,</verse>
                         <verse>its fleece was white as snow;</verse>
                         <verse>and everywhere that Mary went</verse>
-                        <verse>the lamb was sure to go</verse>
+                        <verse>the lamb was sure to go.</verse>
                     </stanza>
                 </NurseryRhyme>
             </egXML>
@@ -114,6 +114,143 @@
                     limitation of XML.)
                 </item>
             </list>
+            <p>Any XML document that correctly follows these syntax rules is said to be
+                <soCalled>well formed</soCalled>. So long as XML is well formed, it can be parsed,
+                edited, transformed, or otherwise processed by software tools. (Conversely, an
+                ill-formed XML document will usually generate one or more error messages when opened
+                by such tools, prompting the user to correct its syntax.)</p>
+            <p>Well-formedness by itself is not usually enough to make XML particularly useful to
+            humans, however. For example, the following XML document is well-formed:</p>
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                <NurseryRhyme>
+                    <verse>
+                        <stanza>Mary had a little lamb,</stanza>
+                        its fleece was white as snow;
+                        <stanza>and everywhere that Mary went</stanza>
+                        <stanza>the lamb was sure to go.</stanza>
+                    </verse>                    
+                </NurseryRhyme>
+            </egXML>
+            <p>This attempts to encode a nursery rhyme, but it is lacking a title and
+            switches the <gi>stanza</gi> and <gi>verse</gi> elements—we want the former to contain the
+                latter, not vice-versa. And it has a verse line that lacks a tag entirely.</p>
+        </div>
+        <div xml:id="tbxml.valid">
+            <head>Rules for Structuring an XML Vocabulary</head>
+            <p>Fortunately, there are several ways of specifying rules for XML that allow one to
+                create a structured XML vocabulary—a markup language that uses a defined set of
+                elements and attributes that must be arranged in specified ways. When an XML
+                document is compared against such a rule set and meets all of its requirements, it
+                is said to be <term rend="italic">valid XML</term> (in addition to being well
+                formed). Most software that processes XML can check for both well-formedness and
+                validity.</p>
+            <p>There are two basic technologies for writing XML rule sets: <term>Document Type Definitions</term>
+            (DTDs) and <term>XML schemas</term>. DTDs were the earliest (in fact they go back all the way to the
+            1970s, when they were used with GML, the Generalized Markup Language, which is more or
+            less the grandparent of XML); in loose usage, people sometimes use the term <term
+                rend="italic">DTD</term> to mean any rule set associated with an XML language:
+                <q>Have you figured out what DTD to use for encoding your recipes?</q>. XML schemas
+                were developed in conjunction with XML itself, in the 1990s. Schemas are more
+                powerful and more complex; their use in connection with TEI will be discussed below
+                in [REFERENCE]. Here we will provide a simple example of how a DTD could be used to
+                define the rules of NRML, our Nursery Rhyme Markup Language.</p>
+            <p>The rules for NRML are simple: an XML document encodes a single nursery rhyme in a
+                root element called <gi>NurseryRhyme</gi>, which must have an identifier
+                in an <att>ID</att> attribute. Under the root element there must be a title,
+                contained in a <gi>title</gi> element, and one or more
+                <gi>stanza</gi> elements; each <gi>stanza</gi> contains one or more verses in a
+                <gi>verse</gi> element. A <gi>verse</gi> may contain only text.</p>
+            <p>Here is the DTD which specifies those rules:</p>
+            <eg><![CDATA[<!ELEMENT NurseryRhyme (title, stanza+)>
+<!ATTLIST NurseryRhyme ID CDATA #REQUIRED >
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT stanza (verse+)>
+<!ELEMENT verse (#PCDATA)>]]></eg>
+            <p>With the explanation that "CDATA" means "character data" and "#PCDATA" means "parsed
+                character data" (text that may contain special constructs handled by the XML parser),
+                the syntax of this DTD should be fairly intuitive. The <term rend="italic">content
+                model</term> of an element is given in parentheses. Required elements are separated
+                by a comma and must appear in the order given. A plus sign means "one or more".</p>
+            <p>Once a DTD or schema has been written for a particular XML markup vocabulary, it can
+                be applied to an XML file by an <term rend="italic">XML validator</term> to
+                determine whether the file is valid or not. (The way this is done for TEI files will
+            be discussed below [REF].) </p>
+        </div>
+        <div xml:id="tbxml.semantics">
+            <head>XML Semantics</head>
+            <p>If you have followed the discussion of XML well-formedness and validity, it may occur
+            to you that nothing in the rules for NRML that we have described prevents someone from
+            tagging "Mary Had a Little Lamb" like this:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                <stanza>
+                    <verse>Mary had a little</verse>
+                    <verse>lamb, its</verse>
+                    <verse>fleece was white as</verse>
+                    <verse>snow;</verse>
+                    <!-- etc. -->
+                    <!-- Incidentally, this structure and the previous are 'XML comments':
+ they are not part of the formal document content and can be
+ placed anywhere within an XML file. -->
+                </stanza>
+            </egXML>
+            This markup is both well-formed and valid; no automated parser will ever complain about
+            it. But a human reader is justified in calling it "bad markup", because the encoder has
+            not correctly identifed the boundaries of metrical verses. From a human point of view,
+            the most important rule governing the <gi>verse</gi> element is that it should encode a
+                single line of verse. The <emph>semantics</emph> of <gi>verse</gi> cannot be
+                expressed in XML or an XML technology; they depend on the conventions of poetics. If
+            one is writing a guide to the NRML language, it is not enough to assume the basic syntax
+            of XML and to present the rule set (DTD or schema) governing its structure: the
+            appropriate use of the <gi>verse</gi> tag must be explained in terms of the rules for
+            recognizing poetic verse.</p>
+            <p>The same thing is true on a much larger scale with the TEI Guidelines. The TEI
+                vocabulary extends to hundreds of elements, and the rules governing which elements
+                may appear where are quite complex. But the largest part of the Guidelines consists
+                of explanation, illustrated by examples, of which TEI elements should be used to
+                encode various features of texts and their associated metadata. Often one needs to
+                be an expert in a particular subject—bibliography, linguistics, manuscript
+                editing—in order to use TEI encoding in a way that is meaningful as well as
+                technically valid.</p>
+        </div>
+        <div xml:id="tbxml.namespaces">
+            <head>Namespaces: Avoiding XML Vocabulary Collisions</head>
+            <p>As the use of XML expanded and many different XML markup languages began to be
+                developed, people realized that it would often be useful to permit one XML
+                vocabulary to incorporate another one. For example, there is a formal XML language,
+                MathML, that can be used to encode mathematical equations. If one were using TEI to
+                encode the correspondence of a mathematician, rather than trying to extend the TEI
+                tagset to include equations it would be much simpler to use MathML directly within
+                one's TEI document.</p>
+            <p>The first problem that arises when attempting to integrate differing XML languages is
+                differentiating among the vocabularies, and in particular, avoiding name collisions.
+                For example, suppose that we are encoding in TEI XML a scholarly work that has
+                footnotes, which are tagged using <gi>note</gi>. And suppose that one footnote contains
+                the opening bars of the song "Twinkle Twinkle Little Star". Let's say there is a
+                widely used simple XML language called TuneML for encoding musical passages that
+                also uses a <gi>note</gi> element, and we want to use it in our footnote. We might
+                end up with something like this:
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                    <note type="footnote" n="1">In the margin, the author has inscribed the opening
+                        bars of <title>Twinkle, Twinkle, Little Star</title>:
+                        <tune clef="G"><note>C</note><note>C</note><note>G</note><note>G</note></tune>
+                    [etc.].</note>
+                </egXML>
+                We have an obvious problem. It's impossible to distinguish between the elements from
+            TEI and from TuneML, and the <gi>note</gi> element is therefore used for two entirely
+            different purposes.</p>
+            <p>The solution adopted to resolve this problem was <term rend="italic">XML
+            Namespaces</term>, a way of identifying the elements of a single XML
+                vocabulary so that they occupy their own unique <soCalled>name space</soCalled>.
+                Namespaces are optional in XML; an XML document does not have to use them. None of
+                the preceding examples of XML do, so they would be said to be in "no namespace".
+                Namespaces give great flexibility and power to XML, but unfortunately they are one
+                of the more confusing parts of XML for beginners.</p>
+            <p>A namespace is distinguished using a unique identifier... </p>
+                <p><hi rend="bold"><hi rend="italic">to be completed...</hi></hi></p>
+        </div>
+        <div xml:id="tbxml.further">
+            <head>Further Reading</head>
+            <p>to come</p>
         </div>
     </div>
     <div xml:id="tbweb">
