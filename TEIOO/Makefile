@@ -6,7 +6,7 @@ u:
 	xsltproc unicode.xsl ../unicode.xml > chars.xml
 	xmllint --format --noent test11.xml | grep -v chars.xml > test12.xml
 
-changelog:
+log:
 	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \
 	svn log -v -r 'HEAD:{'$$LastDate'}' | perl ../gnuify-changelog.pl | grep -v "^;" > newchanges)
 	mv ChangeLog oldchanges
