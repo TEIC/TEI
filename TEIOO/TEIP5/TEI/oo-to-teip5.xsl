@@ -986,12 +986,13 @@
   </xsl:template>
 
   <xsl:template match="text:reference-ref">
-    <ptr target="{@text:ref-name}"/>
+    <ptr target="#id_{@text:ref-name}"/>
   </xsl:template>
 
   <xsl:template name="id.attribute.literal">
     <xsl:if test="child::text:reference-mark-start">
       <xsl:text> xml:id=&quot;</xsl:text>
+	<xsl:text>id_</xsl:text>
         <xsl:value-of select="child::text:reference-mark-start/@text:style-name"
         />
 	<xsl:text>&quot;</xsl:text>
@@ -1001,6 +1002,7 @@
   <xsl:template name="id.attribute">
     <xsl:if test="child::text:reference-mark-start">
       <xsl:attribute name="xml:id">
+	<xsl:text>id_</xsl:text>
         <xsl:value-of select="child::text:reference-mark-start/@text:style-name"
         />
       </xsl:attribute>
@@ -1076,7 +1078,7 @@
   </xsl:template>
 
   <xsl:template match="text:bookmark-ref">
-    <ref target="#{@text:ref-name}" type="{@text:reference-format}">
+    <ref target="#id_{@text:ref-name}" type="{@text:reference-format}">
       <xsl:apply-templates/>
     </ref>
   </xsl:template>
@@ -1084,6 +1086,7 @@
   <xsl:template match="text:bookmark-start">
     <anchor type="bookmark-start">
       <xsl:attribute name="xml:id">
+	<xsl:text>id_</xsl:text>
 	<xsl:value-of select="@text:name"/>
       </xsl:attribute>
     </anchor>
@@ -1092,7 +1095,7 @@
   <xsl:template match="text:bookmark-end">
     <anchor type="bookmark-end">
       <xsl:attribute name="corresp">
-	<xsl:text>#</xsl:text>
+	<xsl:text>#id_</xsl:text>
 	<xsl:value-of select="@text:name"/>
       </xsl:attribute>
     </anchor>
@@ -1101,6 +1104,7 @@
   <xsl:template match="text:bookmark">
     <anchor>
       <xsl:attribute name="xml:id">
+	<xsl:text>id_</xsl:text>
 	<xsl:value-of select="@text:name"/>
       </xsl:attribute>
     </anchor>
