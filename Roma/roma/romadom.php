@@ -745,6 +745,9 @@ class romaDom extends domDocument
 	  {
 	    switch( $oChild->nodeName )
 	      {
+		// allow for whitespace, should be no text nodes
+	      case '#text':
+		break;
 	      case 'name':
 		$oName = $oRoot->appendChild( new domElement( 'attName' ) );
 		$oName->appendChild( new domText( $oChild->nodeValue ) );
