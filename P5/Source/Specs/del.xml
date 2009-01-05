@@ -9,6 +9,7 @@ $Id$
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="DEL" usage="opt" ident="del">
   <equiv/>
   <gloss>deletion</gloss>
+  <gloss version="2009-01-05" xml:lang="fr">suppression</gloss>
   <gloss version="2007-12-20" xml:lang="kr">삭제</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw">刪除</gloss>
   <gloss version="2008-04-05" xml:lang="ja"/>
@@ -18,6 +19,9 @@ $Id$
   <desc>contains a letter, word, or passage deleted, marked as deleted,
 or otherwise indicated as superfluous or spurious in the copy text by an
 author, scribe, annotator, or corrector.</desc>
+  <desc version="2009-01-05" xml:lang="fr">contient une lettre, un mot ou un passage supprimé,
+    marqué comme supprimé ou autrement indiqué comme superflu ou erroné dans le texte par un auteur,
+    un copiste, un annotateur ou un correcteur</desc>
   <desc version="2007-12-20" xml:lang="kr">삭제된 것으로 표시되었거나, 저자, 전사자, 부호화자 또는 수정작업자에 의해 사본 텍스트에서 불필요하거나 위조된 것으로 표시되어 삭제된 문자, 단어, 단락을 포함한다.</desc>
   <desc version="2007-05-02" xml:lang="zh-tw">標記在文本中，由作者、抄寫者、註解者、或更正者刪除、標上刪除記號、或者標明為多餘或偽造的字母或單字。</desc>
   <desc version="2008-04-05" xml:lang="ja">
@@ -31,7 +35,7 @@ author, scribe, annotator, or corrector.</desc>
   <desc version="2007-01-21" xml:lang="it">contiene un carattere, parola o brano cancellati, codificati come cancellati, o altrimenti indicati come superflui o spuri, nella copia originale da parte di un autore, copista, commentatore o correttore.</desc>
   <classes>
     <memberOf key="model.pPart.transcriptional"/>
-    <!--    <memberOf key="att.editLike"/> -->
+<!--    <memberOf key="att.editLike"/> -->
     <memberOf key="att.transcriptional"/>
     <memberOf key="att.typed"/>
   </classes>
@@ -71,6 +75,28 @@ transcription of primary sources), <ptr target="#PHCOMB"/>.</p>
     <p>The <gi>del</gi> tag should not be used for deletions made by
 editors or encoders.  In these cases, either the <gi>corr</gi> tag or
 the <gi>gap</gi> tag should be used.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>Cf. <gi>gap</gi>.</p>
+    <p>Les degrés d'incertitude sur ce qui est encore lisible peuvent être indiqués au moyen de
+      l'élément <gi>certainty</gi> (voir <ptr target="#CE"/>).</p>
+    <p>Cet élément doit être utilisé pour la suppression de courtes séquences de texte, généralement
+      des mots ou des expressions isolés. Il faut utiliser l'élément <gi>delSpan</gi> pour les
+      séquences de texte plus longues, celles qui contiennent des divisions structurelles, et celles
+      qui contiennent un chevauchement d'ajouts et de suppressions.</p>
+    <p>La partie illisible du texte à l'intérieur d'une supression peut être marquée au moyen de la
+      balise <gi>gap</gi> pour signaler la présence de texte non transcrit. La quantité du texte
+      omis, la raison de l'omission, etc., peuvent être indiqués au moyen des attribut de l'élément
+        <gi>gap</gi>. Si le texte n'est pas entièrement lisible, l'élément <gi>unclear</gi>
+      (disponible avec le jeu additionnel de balises pour la transcription des sources primaires)
+      doit être utilisé pour signaler les zones de texte ne pouvant pas être lues de manière fiable.
+      Voir les sections suivantes <ptr target="#PHOM"/> et, pour l'association étroite entre les
+      balises <gi>del</gi> et <gi>gap</gi>, <gi>damage</gi>, <gi>unclear</gi> et <gi>supplied</gi>
+      (ces trois dernières balises étant disponibles avec le jeu additionnel de balises pour la
+      transcription de sources primaires), voir la section <ptr target="#PHCOMB"/>.</p>
+    <p>La balise <gi>del</gi> ne doit pas être utilisée pour les suppressions par des éditeurs
+      scientifiques ou des encodeurs. Dans ce cas, il faut utiliser soit la balise <gi>corr</gi>,
+      soit la balise <gi>gap</gi>. </p>
   </remarks>
   <remarks xml:lang="fr">
     <p>Cf. <gi>gap</gi>.</p>
