@@ -63,13 +63,11 @@ Description
         <td>
           <a target="_new">
             <xsl:attribute name="href">
-              <xsl:value-of select="$host"/>
-              <xsl:text>tag.xql?documentationLanguage=</xsl:text>
-              <xsl:value-of select="$doclang"/>
-              <xsl:text>&amp;doclang=</xsl:text>
-              <xsl:value-of select="$doclang"/>
-              <xsl:text>&amp;name=</xsl:text>
-              <xsl:value-of select="className"/>
+	      <xsl:text>http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:text>
+	      <xsl:value-of select="$doclang"/>
+	      <xsl:text>/html/ref-</xsl:text>
+	      <xsl:value-of select="className"/>
+	      <xsl:text>.html</xsl:text>
             </xsl:attribute>
             <span class="helpMe">?</span>
           </a>
