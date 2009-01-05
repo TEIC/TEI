@@ -9,6 +9,9 @@ $Id$
 <classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" xml:id="DATABLEISO" type="atts" predeclare="true" ident="att.datable.iso">
   <desc>provides attributes for normalization of elements that contain
   datable events using the ISO 8601 standard.</desc>
+  <desc version="2009-01-05" xml:lang="fr">fournit des attributs pour la
+        normalisation, selon la norme ISO 8601, d'éléments contenant des
+        évènements datables</desc>
   <desc version="2007-12-20" xml:lang="kr">ISO 8601 표준을 사용해서 날짜를 추정할 수 있는 사건을 포함하는 요소의 규격화를 위한 속성을 제공한다.</desc>
   <desc version="2007-05-02" xml:lang="zh-tw">用於元素規格化的屬性，這些元素包含日期明確的事件，以ISO 8601標準所定義。</desc>
   <desc version="2007-05-02" xml:lang="zh-tw">用於紀錄規格化時間的屬性，該規格使用ISO 8601標準</desc>
@@ -21,9 +24,12 @@ $Id$
   <desc version="2007-05-04" xml:lang="es">proporciona atributos para la normalización de elementos que contienen eventos datables usando el estándard ISO 8601.</desc>
   <desc version="2007-05-04" xml:lang="es">atributos para codificar expresiones temporales normalizadas usando el estándard ISO 8601.</desc>
   <attList>
-    <!-- org="choice">-->
+<!-- org="choice">-->
     <attDef ident="when-iso" usage="opt">
       <desc>supplies the value of a date or time in a standard form.</desc>
+      <desc version="2009-01-05" xml:lang="fr">précise une date exacte
+                pour l'évènement selon la forme normalisée ISO 8601,
+                c'est-à-dire aaaa-mm-jj.</desc>
       <desc version="2007-12-20" xml:lang="kr">표준형의 날짜 또는 시간 값을 제시한다.</desc>
       <desc version="2008-04-06" xml:lang="es">proporciona el valor de fecha o de tiempo en una forma estándar.</desc>
       <desc version="2008-04-05" xml:lang="ja">
@@ -72,6 +78,17 @@ on the dot.</egXML>
         by ISO 8601, using the Gregorian calendar. </p>
       </remarks>
       <remarks xml:lang="fr">
+        <p>La valeur de <att>when-iso</att> doit être une représentation
+                    normalisée de la date, de la durée ou d'une combinaison de
+                    date et de durée, dans l'un des formats spécifiés dans ISO
+                    8601. S'il est présent, l'attribut <att>calendar</att>
+                    décrit le calendrier correspondant au contenu de l'élément
+                    et non le calendrier utilisé pour l'attribut <att>when</att>
+                    ou l'attribut <att>when-iso</att>, lesquels sont toujours
+                    donnés selon le calendrier grégorien ou grégorien
+                    proleptique.</p>
+      </remarks>
+      <remarks xml:lang="fr">
         <p>La valeur de <att>when-iso</att> doit être une représentation normalisée de
                         la date, de la durée ou d'une combinaison de date et de durée, dans l'un des
                         formats spécifiés dans ISO 8601. S'il est présent, l'attribut
@@ -90,11 +107,14 @@ on the dot.</egXML>
 	</p>
       </remarks>
     </attDef>
-    <!--     <attList>org="group">-->
+<!--     <attList>org="group">-->
     <attDef ident="notBefore-iso" usage="opt">
       <equiv/>
       <desc>specifies the earliest possible date for the event in
 	standard form, e.g. yyyy-mm-dd.</desc>
+      <desc version="2009-01-05" xml:lang="fr">précise la première date
+                possible pour l'évènement selon la forme normalisée,
+                c'est-à-dire aaaa-mm-jj.</desc>
       <desc version="2007-12-20" xml:lang="kr">yyyy-mm-dd 같은 표준형으로 사건의 시작 날짜를 명시한다.</desc>
       <desc version="2007-05-02" xml:lang="zh-tw">以標準格式標明該事件可能發生的最早日期，例如年-月-日。</desc>
       <desc version="2008-04-05" xml:lang="ja">
@@ -113,6 +133,9 @@ on the dot.</egXML>
       <equiv/>
       <desc>specifies the latest possible date for the event in
 	standard form, e.g. yyyy-mm-dd.</desc>
+      <desc version="2009-01-05" xml:lang="fr">précise la dernière date
+                possible pour l'évènement selon la forme normalisée,
+                c'est-à-dire aaaa-mm-jj.</desc>
       <desc version="2007-12-20" xml:lang="kr">yyyy-mm-dd 같은 표준형으로 사건의 종료 날짜를 명시한다.</desc>
       <desc version="2007-05-02" xml:lang="zh-tw">以標準格式標明該事件可能發生的最晚日期，例如年-月-日。</desc>
       <desc version="2008-04-05" xml:lang="ja">
@@ -129,6 +152,8 @@ on the dot.</egXML>
     <attDef ident="from-iso" usage="opt">
       <equiv/>
       <desc>indicates the starting point of the period in standard form.</desc>
+      <desc version="2009-01-05" xml:lang="fr">Indique le point de départ
+                de la période sous une forme normalisée</desc>
       <desc version="2007-12-20" xml:lang="kr">표준형으로 기간의 시작 지점을 나타낸다.</desc>
       <desc version="2007-05-02" xml:lang="zh-tw">以標準格式表示該段時間的起始點。</desc>
       <desc version="2008-04-05" xml:lang="ja">
@@ -145,6 +170,8 @@ on the dot.</egXML>
     <attDef ident="to-iso" usage="opt">
       <equiv/>
       <desc>indicates the ending point of the period in standard form.</desc>
+      <desc version="2009-01-05" xml:lang="fr">Indique le point final de
+                la période sous une forme normalisée</desc>
       <desc version="2007-12-20" xml:lang="kr">표준형으로 기간의 종료 지점을 나타낸다.</desc>
       <desc version="2007-05-02" xml:lang="zh-tw">以標準格式表示該段時間的結束點。</desc>
       <desc version="2008-04-06" xml:lang="es">indica en forma estándard el punto de conclusión de un período.</desc>
@@ -158,7 +185,7 @@ on the dot.</egXML>
       </datatype>
       <valDesc>A normalized form of temporal expression conforming ISO 8601.</valDesc>
     </attDef>
-    <!--    </attList>-->
+<!--    </attList>-->
   </attList>
   <remarks>
     <p>If both <att>when-iso</att> and <att>dur-iso</att> are
@@ -172,6 +199,18 @@ on the dot.</egXML>
     is made that the form in the source text is incorrect; the
     regularized form is simply that chosen as the main form for
     purposes of unifying variant forms under a single heading.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>Si les attributs <att>when-iso</att> et <att>dur-iso</att> sont tous
+            les deux spécifiés, les valeurs doivent être interprétées comme
+            indiquant un intervalle de temps au moyen de son point de départ (ou
+            date) et de sa durée. C'est à dire, <egXML xmlns="http://www.tei-c.org/ns/Examples"><date when-iso="2007-06-01" dur-iso="P8D"/></egXML> indique la même période
+            temporelle que <egXML xmlns="http://www.tei-c.org/ns/Examples"><date when-iso="2007-06-01/P8D"/></egXML></p>
+    <p>En fournissant une forme <soCalled>regularized</soCalled>, il n'est
+            rien affirmé sur la correction ou l'incorrection de la forme dans le
+            texte source ; la forme régularisée est simplement celle qui est
+            choisie comme forme principale afin d'unifier les variantes de forme
+            sous une seule rubrique.</p>
   </remarks>
   <remarks xml:lang="fr">
     <p>Si les attributs <att>when-iso</att> et <att>dur-iso</att> sont tous les deux
