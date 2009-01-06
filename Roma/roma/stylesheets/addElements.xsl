@@ -20,12 +20,13 @@ Description
   <xsl:param name="elementFullContents"/>
   <xsl:param name="elementsModule"/>
   <xsl:param name="MESSAGE"/>
-  <xsl:param name="host">http://localhost:8080/cocoon/Query</xsl:param>
   <xsl:param name="selectedMode">addElement</xsl:param>
   <xsl:param name="elementChangedName"/>
   <xsl:param name="elementNamespace"/>
   <xsl:param name="module"/>
   <xsl:param name="lang"/>
+  <xsl:param name="doclang"/>
+  <xsl:param name="TEIWEB">http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:param>
   <xsl:param name="changeNameERROR"/>
   <xsl:template match="/">
     <p class="roma">
@@ -251,8 +252,14 @@ Description
             </xsl:if>
           </input>
           <span onMouseover="descriptionPopup_Show( 'modelClass_{className}')" onMouseout="descriptionPopup_Hide( 'modelClass_{className}')" id="descSpan_modelClass_{className}">
-            <a href="{$host}class.xql?name={className}" target="blank">
-              <xsl:value-of select="className"/>
+            <a  target="_new">
+	      <xsl:attribute name="href">
+		<xsl:value-of select="$TEIWEB"/>
+		<xsl:value-of select="$doclang"/>
+		<xsl:text>/html/ref-</xsl:text>
+		<xsl:value-of select="className"/>
+		<xsl:text>.html</xsl:text>
+	      </xsl:attribute>
             </a>
           </span>
         </span>
@@ -286,17 +293,13 @@ Description
               <xsl:value-of select="className"/>
               <xsl:text>' )</xsl:text>
             </xsl:attribute>
-            <a>
-              <xsl:attribute name="href">
-                <xsl:value-of select="$host"/>
-                <xsl:text>/class.xql?name=</xsl:text>
-                <xsl:value-of select="className"/>
-                <xsl:text>&amp;lang=</xsl:text>
-                <xsl:value-of select="$lang"/>
-              </xsl:attribute>
-              <xsl:attribute name="target">
-                <xsl:text>_blank</xsl:text>
-              </xsl:attribute>
+            <a target="_new">
+	      <xsl:attribute name="href">
+		<xsl:value-of select="$doclang"/>
+		<xsl:text>/html/ref-</xsl:text>
+		<xsl:value-of select="className"/>
+		<xsl:text>.html</xsl:text>
+	      </xsl:attribute>
               <xsl:value-of select="className"/>
             </a>
           </span>

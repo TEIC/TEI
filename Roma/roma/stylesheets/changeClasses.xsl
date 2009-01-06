@@ -16,7 +16,7 @@ Description
   <xsl:param name="module"/>
   <xsl:param name="class"/>
   <xsl:param name="doclang"/>
-  <xsl:param name="host">http://localhost:8080/cocoon/Query</xsl:param>
+  <xsl:param name="TEIWEB">http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:param>
   <xsl:template match="/">
     <p class="roma">
       <form method="POST">
@@ -47,23 +47,12 @@ Description
     <xsl:for-each select="//attClassList/attClass">
       <tr>
         <td>
-<!--
-          <a>
-            <xsl:attribute name="href">
-              <xsl:value-of select="$host"/>
-              <xsl:text>class.xql?name=</xsl:text>
-              <xsl:value-of select="className"/>
-            </xsl:attribute>
             <xsl:value-of select="className"/>
-          </a>
--->
-            <xsl:value-of select="className"/>
-
         </td>
         <td>
           <a target="_new">
             <xsl:attribute name="href">
-	      <xsl:text>http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:text>
+	      <xsl:value-of select="$TEIWEB"/>
 	      <xsl:value-of select="$doclang"/>
 	      <xsl:text>/html/ref-</xsl:text>
 	      <xsl:value-of select="className"/>

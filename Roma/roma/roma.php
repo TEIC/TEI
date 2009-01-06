@@ -820,8 +820,8 @@ class roma
 	$aszParam[ 'elementDesc' ] = $szDesc;
 	if (is_array( $aszClasses) )
 	  $aszParam[ 'elementClasses' ] = join( ';', $aszClasses );
+	$aszParam[ 'TEIWEB'] =roma_teiweb_server;
 	$aszParam[ 'elementContents' ] = $szContents;
-	$aszParam[ 'host' ] = roma_xquery_server;
 	$aszParam[ 'elementFullContents' ] = $szFullContents;
 	$aszParam[ 'elementNamespace' ] = $szNamespace;
 
@@ -981,7 +981,7 @@ class roma
         $aszParam[ 'elementClasses' ] = join( ';', $aszClasses );  
         $aszParam[ 'elementContent' ] = $szContent;
         $aszParam[ 'elementDesc' ] = $szDesc;
-	$aszParam[ 'host' ] = roma_xquery_server;
+	$aszParam[ 'TEIWEB'] =roma_teiweb_server;
         $aszParam[ 'elementsModule' ] = $_REQUEST[ 'module' ];
 	$aszParam[ 'elementChangedName' ] = $szChangedName;
 	$aszParam[ 'module' ] = $_REQUEST[ 'module' ];
@@ -1180,9 +1180,10 @@ class roma
 	$oListDom->loadXML( join ( '', file( roma_xquery_server . 'attclasses.xql?lang=' . $szDocLanguage ) ) );
 
 	$this->applyStylesheet( $oListDom, 'changeClasses.xsl',
-	$oNewDom, array( 'host' => roma_xquery_server,  'doclang' => $szDocLanguage,
-'class' => $_REQUEST[ 'class' ], 'module' => $_REQUEST[ 'module' ] ), 'changeClasses' );
-
+				$oNewDom, array( 'TEIWEB' => roma_teiweb_server,
+						 'doclang' => $szDocLanguage,
+						 'class' => $_REQUEST[ 'class' ], 
+						 'module' => $_REQUEST[ 'module' ] ), 'changeClasses' );
 	$oParser->addReplacement( 'lang', $szLanguage );
 	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oParser->addReplacement( 'mode', 'changeClasses' );
