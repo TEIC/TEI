@@ -1,12 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright TEI Consortium. 
-Licensed under the GNU General Public License. 
-See the file COPYING.txt for details
-$Date$
-$Id$
+    Copyright TEI Consortium.
+    Licensed under the GNU General Public License.
+    See the file COPYING.txt for details
+    $Date$
+    $Id$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="PAGEBR" usage="opt" ident="pb">
+<<<<<<< .mine
+    <equiv/>
+    <gloss>page break</gloss>
+    <gloss version="2007-12-20" xml:lang="kr">페이지 바꿈</gloss>
+    <gloss version="2007-05-02" xml:lang="zh-tw">分頁</gloss>
+    <gloss version="2008-04-05" xml:lang="ja"/>
+    <gloss version="2009-01-06" xml:lang="fr">saut de page</gloss>
+    
+    <gloss version="2007-05-04" xml:lang="es">cambio de página</gloss>
+    <gloss version="2007-01-21" xml:lang="it">interruzione di pagina</gloss>
+    <desc>marks the boundary between one page of a text and the next
+        in a standard reference system.</desc>
+    <desc version="2007-12-20" xml:lang="kr">표준 참조 시스템에서 텍스트 페이지와 다음 페이지 사이의 경계를 표지한다.</desc>
+    <desc version="2007-05-02" xml:lang="zh-tw">以標準參照系統來標記頁與頁之間的分界線。</desc>
+    <desc version="2008-04-05" xml:lang="ja">
+        
+        テキストのページ境界を，標準的な参照システム示す．
+    </desc>
+    <desc version="2009-01-06" xml:lang="fr">marque la limite entre une page d'un texte et
+        la page suivante dans un système de référence normalisée</desc>
+    <desc version="2007-05-04" xml:lang="es">marca la frontera entre una página de un texto y la siguiente en un sistema de referencia estándard.</desc>
+    <desc version="2007-01-21" xml:lang="it">indica il limite tra una pagina di un testo e la successiva in un sistema di riferimento standard</desc>
+    <classes>
+        <memberOf key="model.milestoneLike"/>
+        <memberOf key="att.typed"/>
+        
+    </classes>
+    <content>
+        <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    </content>
+    <attList>
+        <attDef ident="ed" usage="rec">
+            <gloss>edition</gloss>
+            <gloss version="2007-12-20" xml:lang="kr">판</gloss>
+            
+            <gloss version="2008-04-06" xml:lang="es">edición</gloss>
+            <gloss version="2008-03-30" xml:lang="fr">édition</gloss>
+            <gloss version="2007-11-06" xml:lang="it">edizione</gloss>
+            <desc>indicates the edition or version in which the page break is located
+                at this point</desc>
+            <desc version="2007-12-20" xml:lang="kr">페이지 바꿈 위치가 존재하는 판 또는 버전을 나타낸다.</desc>
+            <desc version="2007-05-02" xml:lang="zh-tw">指出該分頁位於哪一版本</desc>
+            
+            <desc version="2008-04-05" xml:lang="ja">
+                当該改ページがある版を示す．
+            </desc>
+            <desc version="2009-01-06" xml:lang="fr">indique l'édition ou la version
+                dans laquelle le saut de page est localisé à ce point précis</desc>
+            <desc version="2007-05-04" xml:lang="es">indica la edición o versión del texto en la cual en ese punto se produce el cambio de página</desc>
+            <desc version="2007-01-21" xml:lang="it">indica l'edizione o la versione in cui l'interruzione di pagina è situata in questo punto</desc>
+            <datatype>
+                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/>
+                
+            </datatype>
+            <valDesc>Any string of characters; usually a siglum conventionally used
+                for the edition.</valDesc>
+        </attDef>
+    </attList>
+    <exemplum>
+        <p>Page numbers may vary in different editions of a text.</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <p>
+                
+                ...
+                <pb n="145" ed="ed2"/>
+                <!-- Page 145 in edition "ed2" starts here -->
+                ...
+                <pb n="283" ed="ed1"/>
+                <!-- Page 283 in edition "ed1" starts here-->
+                ...
+            </p>
+        </egXML>
+    </exemplum>
+    <exemplum>
+        
+        <p>A page break may be associated with a facsimile image of the page
+            it introduces by means of the <att>facs</att> attribute</p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <TEI>
+                <teiHeader>
+                    <!--...-->
+                </teiHeader>
+                <text>
+                    
+                    <pb n="1" facs="page1.png"/>
+                    <!-- page1.png contains an image of the page;
+                        the text it contains is encoded here -->
+                    <pb n="2" facs="page2.png"/>
+                    <!-- similarly, for page 2 -->
+                </text>
+            </TEI>
+        </egXML>
+    </exemplum>
+    <remarks>
+        
+        <p>By convention, <gi>pb</gi> elements should appear at the start
+            of the page to which they refer. The global <att>n</att> attribute
+            indicates the number or other value associated with the page which
+            follows. This will normally be the page number or
+            signature printed on it, since the physical sequence number is
+            implicit in the presence of the <gi>pb</gi> element itself.  </p>
+        <p>The <att>type</att> attribute may be used to characterize the
+            page break in any respect, for example as word-breaking or not. </p>
+        
+    </remarks>
+    <remarks xml:lang="fr">
+        <p>L'attribut global <att>n</att> affecte un nouveau numéro ou une autre valeur à la
+            page qui suit l'élément <gi>pb</gi>. Les encodeurs doivent faire un choix clair, et
+            s'y tenir, entre l'option consistant à se fonder sur la séquence physique des pages,
+            et celle consistant à se fonder sur le numéro de page ou la signature tels qu'ils
+            sont imprimés. Par convention, l'élément <gi>pb</gi> apparaît au début de la page à
+            laquelle il se rapporte.</p>
+    </remarks>
+    
+    <remarks xml:lang="ja">
+        <p>
+            当該要素にあるグローバル属性<att>n</att>は，当該要素<gi>pb</gi>があ
+            る場所に続いてあるページと関連する数値を示す．符号化する人は，改ペー
+            ジと関連する数値が，物理的な一連の番号になるのか，または印刷されてい
+            る番号になるのかについて，明確で一貫した方針を採るべきである．
+            一般には，要素<gi>pb</gi>は，参照するページの始めに置かれるべきである．
+        </p>
+    </remarks>
+    <listRef>
+        
+        <ptr target="#CORS5" type="div3"/>
+    </listRef>
+</elementSpec>=======
   <equiv/>
   <gloss>page break</gloss>
   <gloss version="2009-01-05" xml:lang="fr">saut de page</gloss>
@@ -121,3 +249,4 @@ it introduces by means of the <att>facs</att> attribute</p>
     <ptr target="#CORS5" type="div3"/>
   </listRef>
 </elementSpec>
+>>>>>>> .r5240
