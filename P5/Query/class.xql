@@ -26,7 +26,7 @@ let $Page:=
 <text>
 <body>
 <p>Search again:
-<html:form action="class.xq" method="GET">
+<html:form action="class.xql" method="GET">
   <html:input name="name" width="15"/>       	       <html:input type="submit" />
 
 </html:form>
