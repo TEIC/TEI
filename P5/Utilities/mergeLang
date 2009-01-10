@@ -10,11 +10,13 @@ else
 fi
 overwrite=false
 verbose=false
+sourcedir=../I18N/results
 while test $# -gt 0; do
   case $1 in
     --overwrite)  overwrite=true;;
     --verbose)  verbose=true;;
     --lang=*)  language=`echo $1 | sed 's/.*=//'`;;
+    --sourcedir=*) sourcedir=`echo $1 | sed 's/.*=//'`;;
      *) if test "$1" = "${1#--}" ; then 
 	   break
 	else
@@ -24,8 +26,9 @@ while test $# -gt 0; do
   esac
   shift
 done
+Source=$sourcedir-$language
 
-X=`(cd ../I18N/results-$language; pwd)`
+X=`(cd $Source; pwd)`
 for i in $X/*.xml
 do
  echo found $i source file for $language
