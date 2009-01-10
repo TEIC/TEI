@@ -300,7 +300,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
 	<xsl:for-each select="teix:egXML[@xml:lang=$newLang]">
 	  <exemplum xmlns="http://www.tei-c.org/ns/1.0"
 		    xml:lang="{$newLang}">
-	    <egXML xmln="http://www.tei-c.org/ns/Examples">
+	    <egXML xmlns="http://www.tei-c.org/ns/Examples">
 	      <xsl:apply-templates mode="iden"/>
 	    </egXML>
 	  </exemplum>
