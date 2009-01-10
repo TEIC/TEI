@@ -884,14 +884,12 @@
 select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xsl:message>-->
     <xsl:choose>
       <xsl:when test="@xml:lang and
-		      not(@xml:lang='$documentationLanguage')">
-<!--	<xsl:message>reject exemplum <xsl:value-of select="."/> cos 1</xsl:message>-->
+		      not(@xml:lang=$documentationLanguage)">
       </xsl:when>
       <xsl:when test="not(@xml:lang) and
 		      not($documentationLanguage='en') 
 		      and
-		      ../tei:exemplum[@xml:lang='$documentationLanguage']">
-<!--      	<xsl:message>reject exemplum <xsl:value-of select="."/> cos 2</xsl:message>-->
+		      ../tei:exemplum[@xml:lang=$documentationLanguage]">
       </xsl:when>
       <xsl:when test="parent::tei:attDef">
 	<xsl:element namespace="{$outputNS}" name="{$rowName}">
