@@ -147,19 +147,19 @@
 	<!-- how it is intended to work). So instead, we just define a macro-->
 	<!-- which will resolve the RELAX NG declarations we want-->
 	<macroSpec ident="anyAlien" mode="add">
-	  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+	  <content>
 	    <!-- macro defines a single element type, as it were, but -->
-	    <rng:element>
+	    <element  xmlns="http://relaxng.org/ns/structure/1.0">
 	      <!-- there is no restriction on the local name part, but-->
 	      <!-- it must be in the following namespace: -->
-	      <rng:nsName ns="http://www.example.org/ns/nonTEI"/>
+	      <nsName ns="http://www.example.org/ns/nonTEI"/>
 	      <!-- element can have any number of any attrs with any values: -->
-	      <rng:zeroOrMore>
-		<rng:attribute>
-		  <rng:anyName/>
-		  <rng:data type="token"/>
-		</rng:attribute>
-	      </rng:zeroOrMore>
+	      <zeroOrMore>
+		<attribute>
+		  <anyName/>
+		  <data type="token"/>
+		</attribute>
+	      </zeroOrMore>
 	      <zeroOrMore>
 		<choice>
 		  <text/>
@@ -167,8 +167,8 @@
 		  <ref name="anyAlien"/>
 		</choice>
 	      </zeroOrMore>
-	      <rng:empty/>
-	    </rng:element>
+	      <empty/>
+	    </element>
 	  </content>
 	</macroSpec>
 
