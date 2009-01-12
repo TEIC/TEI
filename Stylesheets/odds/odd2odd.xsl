@@ -1278,7 +1278,9 @@ select="$M"/></xsl:message>
       select="$fromODD"/></xsl:message>
 -->
       <xsl:choose>
-	<xsl:when test="not(contains($anyChanged,'true'))"/>
+	<xsl:when test="$fromODD='false' and
+			not(contains($anyChanged,'true'))"/>
+	<xsl:when test="$fromODD='true' and not(.//tei:attDef)"/>
 	<xsl:when test="$fromODD='true' and tei:classes[@mode='replace']">
 	  <xsl:for-each select="tei:classes/tei:memberOf">
 	    <xsl:call-template name="classAttributes">
