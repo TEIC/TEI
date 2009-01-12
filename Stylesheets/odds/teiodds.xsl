@@ -1596,6 +1596,9 @@ select="$makeDecls"/></xsl:message>
     </xsl:variable>
     <xsl:variable name="partialname">
       <xsl:choose>
+	<xsl:when test="starts-with(@name,$patternPrefixText)">
+	  <xsl:value-of select="substring-before(substring-after($name,$patternPrefixText),'_')"/>
+	</xsl:when>
 	<xsl:when test="contains($name,'_')">
 	  <xsl:value-of select="substring-before($name,'_')"/>
 	</xsl:when>
