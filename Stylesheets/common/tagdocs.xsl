@@ -1247,23 +1247,38 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:valDesc" mode="weave">
-    <xsl:element namespace="{$outputNS}" name="{$rowName}">
-      <xsl:element namespace="{$outputNS}" name="{$cellName}">
-        <xsl:attribute name="{$rendName}">
-          <xsl:text>odd_label</xsl:text>
-        </xsl:attribute>
-        <xsl:call-template name="i18n">
-          <xsl:with-param name="word">Values</xsl:with-param>
-        </xsl:call-template>
-        <xsl:text> </xsl:text>
-      </xsl:element>
-      <xsl:element namespace="{$outputNS}" name="{$cellName}">
-        <xsl:attribute name="{$rendName}">
-          <xsl:text>attribute</xsl:text>
-        </xsl:attribute>
-        <xsl:apply-templates/>
-      </xsl:element>
-    </xsl:element>
+    <xsl:variable name="documentationLanguage">
+      <xsl:call-template name="generateDoc"/>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="@xml:lang and
+		      not(@xml:lang=$documentationLanguage)">
+      </xsl:when>
+      <xsl:when test="not(@xml:lang) and
+		      not($documentationLanguage='en') 
+		      and
+		      ../tei:valDesc[@xml:lang=$documentationLanguage]">
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:element namespace="{$outputNS}" name="{$rowName}">
+	  <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	    <xsl:attribute name="{$rendName}">
+	      <xsl:text>odd_label</xsl:text>
+	    </xsl:attribute>
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Values</xsl:with-param>
+	    </xsl:call-template>
+	    <xsl:text> </xsl:text>
+	  </xsl:element>
+	  <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	    <xsl:attribute name="{$rendName}">
+	      <xsl:text>attribute</xsl:text>
+	    </xsl:attribute>
+	    <xsl:apply-templates/>
+	  </xsl:element>
+	</xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xd:doc>

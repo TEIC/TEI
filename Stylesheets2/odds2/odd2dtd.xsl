@@ -410,7 +410,7 @@
 	<xsl:choose>
 	  <xsl:when test="@type='atts'">
 	    <xsl:call-template name="classAtt">
-	      <xsl:with-param name="declare">false</xsl:with-param>
+	      <xsl:with-param name="declare">true</xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:when>
 	  <xsl:when test="@type='model' and $parameterize='false'">
