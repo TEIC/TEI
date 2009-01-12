@@ -204,6 +204,9 @@
 	  <xsl:when test="key('IDENTS',@name)">
 	    <xsl:value-of select="$patternPrefixText"/>
 	  </xsl:when>
+	  <xsl:when test="key('IDENTS',substring-before(@name,'.attribute'))">
+	    <xsl:value-of select="$patternPrefixText"/>
+	  </xsl:when>
 	  <xsl:when test="key('IDENTS',substring-before(@name,'_'))">
 	    <xsl:value-of select="$patternPrefixText"/>
 	  </xsl:when>
@@ -1744,34 +1747,23 @@ select="$makeDecls"/></xsl:message>
 
 
   <xsl:template match="rng:ref" mode="forceRNG">
-    <xsl:choose>
-      <xsl:when test="key('IDENTS',@name)">
-	<xsl:element name="ref"
-		     xmlns="http://relaxng.org/ns/structure/1.0">
-	  <xsl:attribute name="name">
+    <xsl:element name="ref"
+		 xmlns="http://relaxng.org/ns/structure/1.0">
+      <xsl:attribute name="name">
+	<xsl:choose>
+	  <xsl:when test="key('IDENTS',@name)">
 	    <xsl:value-of select="$patternPrefixText"/>
-	    <xsl:value-of select="@name"/>
-	  </xsl:attribute>
-	</xsl:element>
-      </xsl:when>
-      <xsl:when test="key('IDENTS',substring-before(@name,'_'))">
-	<xsl:element name="ref"
-		     xmlns="http://relaxng.org/ns/structure/1.0">
-	  <xsl:attribute name="name">
+	  </xsl:when>
+	  <xsl:when test="key('IDENTS',substring-before(@name,'.attribute.'))">
 	    <xsl:value-of select="$patternPrefixText"/>
-	    <xsl:value-of select="@name"/>
-	  </xsl:attribute>
-	</xsl:element>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:element name="ref"
-		     xmlns="http://relaxng.org/ns/structure/1.0">
-	  <xsl:attribute name="name">
-	    <xsl:value-of select="@name"/>
-	  </xsl:attribute>
-	</xsl:element>
-      </xsl:otherwise>
-    </xsl:choose>
+	  </xsl:when>
+	  <xsl:when test="key('IDENTS',substring-before(@name,'_'))">
+	    <xsl:value-of select="$patternPrefixText"/>
+	  </xsl:when>
+	</xsl:choose>
+	<xsl:value-of select="@name"/>
+      </xsl:attribute>
+    </xsl:element>
   </xsl:template>
 
   <xd:doc>
