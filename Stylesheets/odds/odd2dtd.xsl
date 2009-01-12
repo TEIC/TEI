@@ -1231,6 +1231,7 @@
             <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
             <xsl:value-of select="$thisclass"/>
             <xsl:text>.attributes '</xsl:text>
+            <xsl:call-template name="attclasses"/>
             <xsl:call-template name="attributeList"/>
             <xsl:text>'&gt; </xsl:text>
             <xsl:for-each select="tei:attList/tei:attDef">

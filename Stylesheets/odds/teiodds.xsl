@@ -204,7 +204,7 @@
 	  <xsl:when test="key('IDENTS',@name)">
 	    <xsl:value-of select="$patternPrefixText"/>
 	  </xsl:when>
-	  <xsl:when test="key('IDENTS',substring-before(@name,'.attribute'))">
+	  <xsl:when test="starts-with(@name,'att.') and key('IDENTS',substring-before(@name,'.attribute.'))">
 	    <xsl:value-of select="$patternPrefixText"/>
 	  </xsl:when>
 	  <xsl:when test="key('IDENTS',substring-before(@name,'_'))">
@@ -305,7 +305,16 @@
   <xsl:template match="tei:*" mode="tangle"/>
 
   <xsl:template match="tei:attRef" mode="tangle">
-    <ref name="{$patternPrefixText}{@name}" xmlns="http://relaxng.org/ns/structure/1.0"/>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0">
+      <xsl:attribute name="name">
+	<xsl:choose>
+	  <xsl:when test="not(contains(@name,'_'))">
+	    <xsl:value-of select="$patternPrefixText"/>	    
+	  </xsl:when>
+	</xsl:choose>
+	<xsl:value-of select="@name"/>
+      </xsl:attribute>
+    </ref>
   </xsl:template>
 
   <xsl:template match="tei:attDef" mode="tangle">
@@ -1754,7 +1763,7 @@ select="$makeDecls"/></xsl:message>
 	  <xsl:when test="key('IDENTS',@name)">
 	    <xsl:value-of select="$patternPrefixText"/>
 	  </xsl:when>
-	  <xsl:when test="key('IDENTS',substring-before(@name,'.attribute.'))">
+	  <xsl:when test="starts-with(@name,'att.') and key('IDENTS',substring-before(@name,'.attribute.'))">
 	    <xsl:value-of select="$patternPrefixText"/>
 	  </xsl:when>
 	  <xsl:when test="key('IDENTS',substring-before(@name,'_'))">
