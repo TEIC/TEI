@@ -1509,6 +1509,9 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:choose>
+      <xsl:when test="(tei:datatype/@maxOccurs &gt; 1) and tei:datatype/rng:ref[@name='data.enumerated']">
+	<xsl:text> NMTOKENS </xsl:text>
+      </xsl:when>
       <xsl:when test="tei:valList[@type='closed']">
         <xsl:text> (</xsl:text>
         <xsl:for-each select="tei:valList/tei:valItem">
@@ -1518,7 +1521,7 @@
         <xsl:text>)</xsl:text>
       </xsl:when>
       <xsl:when test="tei:datatype/@minOccurs or tei:datatype/@maxOccurs">
-        <xsl:text> CDATA </xsl:text>
+	<xsl:text> CDATA </xsl:text>
       </xsl:when>
       <xsl:when test="tei:datatype/rng:*">
         <xsl:apply-templates select="tei:datatype"/>
