@@ -205,7 +205,6 @@
 	    <xsl:value-of select="$patternPrefixText"/>
 	  </xsl:when>
 	  <xsl:when test="starts-with(@name,'att.') and key('IDENTS',substring-before(@name,'.attribute.'))">
-	    <xsl:value-of select="$patternPrefixText"/>
 	  </xsl:when>
 	  <xsl:when test="key('IDENTS',substring-before(@name,'_'))">
 	    <xsl:value-of select="$patternPrefixText"/>
@@ -309,7 +308,6 @@
       <xsl:attribute name="name">
 	<xsl:choose>
 	  <xsl:when test="not(contains(@name,'_'))">
-	    <xsl:value-of select="$patternPrefixText"/>	    
 	  </xsl:when>
 	</xsl:choose>
 	<xsl:value-of select="@name"/>
@@ -328,7 +326,7 @@
           <xsl:call-template name="makeAnAttribute"/>
         </xsl:when>
         <xsl:when test="ancestor::tei:classSpec">
-          <define name="{$patternPrefixText}{$element}.attribute.{translate(@ident,':','')}"
+          <define name="{$element}.attribute.{translate(@ident,':','')}"
             xmlns="http://relaxng.org/ns/structure/1.0">
             <xsl:call-template name="makeAnAttribute"/>
           </define>
@@ -396,12 +394,12 @@
           <xsl:with-param name="grammar">true</xsl:with-param>
           <xsl:with-param name="content">
             <Wrapper>
-              <define name="{$patternPrefixText}{@ident}.attributes"
+              <define name="{@ident}.attributes"
                 xmlns="http://relaxng.org/ns/structure/1.0">
                   <xsl:for-each select="tei:classes/tei:memberOf">
                     <xsl:for-each select="key('IDENTS',@key)[1]">
                       <xsl:if test="@type='atts'">
-                        <ref name="{$patternPrefixText}{@ident}.attributes"
+                        <ref name="{@ident}.attributes"
                           xmlns="http://relaxng.org/ns/structure/1.0"/>
                       </xsl:if>
                     </xsl:for-each>
@@ -410,7 +408,7 @@
                   <xsl:when test="tei:attList//tei:attDef">
                     <xsl:for-each select="tei:attList//tei:attDef">
                       <xsl:if test="not(starts-with(@ident,'xmlns'))">
-                        <ref name="{$patternPrefixText}{$c}.attribute.{translate(@ident,':','')}"
+                        <ref name="{$c}.attribute.{translate(@ident,':','')}"
                           xmlns="http://relaxng.org/ns/structure/1.0"/>
                       </xsl:if>
                     </xsl:for-each>
@@ -804,12 +802,12 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="name" select="@ident"/>
     <xsl:if test="$parameterize='true'">
       <xsl:if test="$TEIC='true'">
-        <rng:ref name="{$patternPrefixText}att.global.attributes"/>
+        <rng:ref name="att.global.attributes"/>
       </xsl:if>
       <xsl:for-each select="tei:classes/tei:memberOf">
         <xsl:for-each select="key('CLASSES',@key)">
           <xsl:if test="@type='atts'">
-            <ref name="{$patternPrefixText}{@ident}.attributes"
+            <ref name="{@ident}.attributes"
               xmlns="http://relaxng.org/ns/structure/1.0"/>
           </xsl:if>
         </xsl:for-each>
@@ -1596,9 +1594,6 @@ select="$makeDecls"/></xsl:message>
     </xsl:variable>
     <xsl:variable name="partialname">
       <xsl:choose>
-	<xsl:when test="starts-with(@name,$patternPrefixText)">
-	  <xsl:value-of select="substring-before(substring-after($name,$patternPrefixText),'_')"/>
-	</xsl:when>
 	<xsl:when test="contains($name,'_')">
 	  <xsl:value-of select="substring-before($name,'_')"/>
 	</xsl:when>
@@ -1619,35 +1614,7 @@ select="$makeDecls"/></xsl:message>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="not(key('IDENTS',$partialname))">
-        <xsl:choose>
-	  <xsl:when test="$TEIC='false'">
 	    <xsl:value-of select="$link"/>
-	  </xsl:when>
-          <xsl:when test="$oddmode='tei'">
-            <tei:ref>
-              <xsl:attribute name="target">
-		<xsl:value-of select="$TEISERVER"/>
-	        <xsl:text>tag.xql?name=</xsl:text>
-		<xsl:value-of select="$partialname"/>
-		<xsl:text>&amp;documentationLanguage=</xsl:text>
-		<xsl:value-of select="$documentationLanguage"/>
-	      </xsl:attribute>
-              <xsl:value-of select="$link"/>
-            </tei:ref>
-          </xsl:when>
-          <xsl:otherwise>
-            <a xmlns="http://www.w3.org/1999/xhtml">
-              <xsl:attribute name="href">
-		<xsl:value-of select="$TEISERVER"/>
-	        <xsl:text>tag.xql?name=</xsl:text>
-		<xsl:value-of select="$partialname"/>
-		<xsl:text>&amp;documentationLanguage=</xsl:text>
-		<xsl:value-of select="$documentationLanguage"/>
-	      </xsl:attribute>
-              <xsl:value-of select="$link"/>
-            </a>
-          </xsl:otherwise>
-        </xsl:choose>
       </xsl:when>
       <xsl:when test="$oddmode='html' and $splitLevel=-1">
         <a class="{$class}" href="#{$partialname}" xmlns="http://www.w3.org/1999/xhtml">
@@ -1737,7 +1704,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:with-param name="content">
         <Wrapper>
           <rng:define combine="choice"
-            name="{$patternPrefixText}{@ident}.attributes">
+            name="{@ident}.attributes">
             <rng:empty/>
           </rng:define>
         </Wrapper>
@@ -1767,7 +1734,6 @@ select="$makeDecls"/></xsl:message>
 	    <xsl:value-of select="$patternPrefixText"/>
 	  </xsl:when>
 	  <xsl:when test="starts-with(@name,'att.') and key('IDENTS',substring-before(@name,'.attribute.'))">
-	    <xsl:value-of select="$patternPrefixText"/>
 	  </xsl:when>
 	  <xsl:when test="key('IDENTS',substring-before(@name,'_'))">
 	    <xsl:value-of select="$patternPrefixText"/>
