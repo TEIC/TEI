@@ -1178,10 +1178,18 @@ classifications.</p>
 location of an addition. For example, consider the following passage
 from a draft letter by Robert Graves:
 <figure><graphic url="Images/PHgraves2.png" width="500px"/></figure>
-
 At the end of this extract, the writer
 inserts the word <q>cant,</q> above the line, with a stroke to
-indicate insertion: this might be encoded as follows:
+indicate insertion. Assuming that we have previously defined the identifier
+<code>RG</code> somewhere:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<listPerson>
+<person xml:id="RG">
+<!-- information about Robert Graves here -->
+</person>
+</listPerson>
+</egXML>,
+ this extract might now be encoded as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-07">
 The O.E.D.  is not a dictionary so much as a corpus of
 precedents <del hand="#RG">in the</del>: current, 
@@ -1514,7 +1522,7 @@ If another (imaginary) copy of the letter above preserved the
 signature as reading <q>I am dear Sir your very humble Servt Sydney
 Smith</q>, the text illegible in the autograph might be supplied in
 the transcription: <egXML xmlns="http://www.tei-c.org/ns/Examples">I
-am dr Sr yr <supplied reason="illegible" resp="#msm" source="#AmCo">very humble Servt</supplied> Sydney Smith</egXML> Here
+am dr Sr yr <supplied reason="illegible" resp="#msm" source="#Ry2">very humble Servt</supplied> Sydney Smith</egXML> Here
 the <att>source</att> and <att>resp</att> attributes are used, as
 elsewhere, to indicate respectively the sigil of a manuscript from
 which the supplied reading has been taken, and the identifier of the
@@ -1886,10 +1894,10 @@ the <gi>damage</gi> element:
 three letters of <mentioned>daga</mentioned> but may wish to supply them by
 conjecture. Note the use of the <att>resp</att> attribute to assign
 the conjecture to Finnur Jónsson:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">um aldr d<supplied reason="rubbing" resp="#FJ">aga</supplied> yndisniota</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">um aldr d<supplied reason="rubbing" resp="#msm">aga</supplied> yndisniota</egXML>
 The <gi>supplied</gi> element may if desired be enclosed within a
 <gi>damage</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">um aldr d<damage agent="rubbing"><supplied source="#FJ">aga</supplied></damage> yndisniota</egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">um aldr d<damage agent="rubbing"><supplied source="#msm">aga</supplied></damage> yndisniota</egXML></p>
 <p>Contrast the use of <gi>gap</gi> in the next line, where the
 transcriber believes that four letters cannot be read at all because
 of the damage:
@@ -2033,7 +2041,7 @@ As <space quantity="7" unit="char"/> han within her oratoryes</egXML>
 The <gi>supplied</gi> element discussed in the previous section may be
 used to supply the text presumed missing:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">By god if wommen had writen storyes
-As <supplied reason="space" resp="#ES" source="#Hg">preestes</supplied>
+As <supplied reason="space" resp="#ETD" source="#Hg">preestes</supplied>
 han within her oratoryes</egXML>
 Here, the fact of the space within the manuscript is indicated by the
 value of the <att>reason</att> attribute.  The source of the supplied
