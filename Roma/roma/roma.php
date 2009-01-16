@@ -1543,7 +1543,7 @@ class roma
       }
 
     public function elementChanged() {
-	print_r($_REQUEST);
+      //print_r($_REQUEST);
 		$errResult = false;
 		// element name
         if ( $_REQUEST[ 'name' ] != $_REQUEST[ 'newName' ] )
@@ -1599,7 +1599,7 @@ class roma
 		$aszClasses[$oclass] = "delete";
 	     }
          }
-		 print_r($aszClasses);
+	//print_r($aszClasses);
 	$this->m_oRomaDom->replaceElementsClassesInModule( 
 	$_REQUEST['name' ], 
 	$_REQUEST[ 'module' ], 
