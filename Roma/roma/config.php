@@ -25,7 +25,7 @@ define('DEBUG', false);
 ini_set("max_execution_time", 60);
 
 //#########################
-
+define ( 'roma_customization_validator','roma/oddschema.rng');
 define ( 'roma_temporaryFilesDir',   '/tmp' );
 //define ( 'roma_xquery_server',       'http://tei.oucs.ox.ac.uk/Query/' );
 define ( 'roma_xquery_server',       'http://localhost:8080/exist/Query/' );

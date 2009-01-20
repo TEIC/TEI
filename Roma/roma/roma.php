@@ -93,7 +93,7 @@ define( 'roma_startupOption_other', 'other' );
 define( 'roma_startupOption_upload', 'upload' );
 
 
-define( 'roma_validate_schema', false );
+define( 'roma_validate_schema', true );
 
 
 //#########################

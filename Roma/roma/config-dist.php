@@ -25,7 +25,7 @@ ini_set("max_execution_time", 60);
 
 
 //#########################
-
+define ( 'roma_customization_validator','roma/oddschema.rng');
 define ( 'roma_temporaryFilesDir',   '/tmp' );
 define ( 'roma_xquery_server',       'http://tei.oucs.ox.ac.uk/Query/' );
 define ( 'roma_teiweb_server',       'http://www.tei-c.org/release/doc/tei-p5-doc/' );
