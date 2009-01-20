@@ -261,7 +261,7 @@ Description
 		<xsl:text>.html</xsl:text>
 	      </xsl:attribute>
             </a>
-		<xsl:value-of select="className"/>
+	    <xsl:value-of select="className"/>
           </span>
         </span>
       </xsl:for-each>
