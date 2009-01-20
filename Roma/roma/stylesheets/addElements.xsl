@@ -128,7 +128,7 @@ Description
             </xsl:if>
             <td class="formlabel">Namespace</td>
             <td class="formfield">
-              <input type="text" size="53" name="elementNamespace">
+              <input type="text" size="53" name="elementNamespace" onChange="setChanged(this,'changedNamespace')">
                 <xsl:if test="//errorList/error/location[node()='elementNamespace']">
                   <xsl:attribute name="value">
                     <xsl:value-of select="//errorList/error[child::location[node()='name']]/oldValue"/>
@@ -148,7 +148,7 @@ Description
             </td>
             <td>
               <span>
-                <textarea rows="5" cols="70" name="description" onChange="setChangedDesc(this)">
+		<textarea rows="5" cols="70" name="description" onChange="setChanged(this,'changedDesc')">
                   <xsl:if test="not($elementDesc='')">
                     <xsl:value-of select="$elementDesc"/>
                   </xsl:if>
@@ -184,7 +184,7 @@ Description
               <xsl:if test="$selectedMode='addElement'">
                 <br/>
                 <span>
-                  <textarea name="contentmodel" rows="5" cols="70" onChange="setChangedContent(this)">
+                  <textarea name="contentmodel" rows="5" cols="70" onChange="setChanged(this,'changedContent')">
                     <xsl:choose>
                       <xsl:when test="$elementFullContents=''">
                         <xsl:text>&lt;content xmlns:rng="http://relaxng.org/ns/structure/1.0"&gt;
@@ -348,7 +348,7 @@ Description
     </xsl:if>
     <xsl:if test="$selectedMode='changeElement'">
       <span>
-        <textarea rows="8" cols="80" name="content" onChange="setChangedContent(this)">
+        <textarea rows="8" cols="80" name="content" onChange="setChanged(this,'changedContent')">
           <xsl:choose>
             <xsl:when test="//errorList/error/location[node()='contents']">
               <xsl:value-of select="//errorList/error[child::location[node()='contents']]/oldValue"/>
