@@ -30,7 +30,7 @@
    
       </xd:detail>
     <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id: tei.xsl 4801 2008-09-13 10:05:32Z rahtz $</xd:cvsId>
+    <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2008, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:include href="core.xsl"/>

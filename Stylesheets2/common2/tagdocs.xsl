@@ -29,7 +29,7 @@ version="2.0">
     Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
     02111-1307 USA </xd:detail>
     <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id: tagdocs.xsl 4845 2008-10-22 21:53:52Z rahtz $</xd:cvsId>
+    <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2008, TEI Consortium</xd:copyright>
   </xd:doc>
 

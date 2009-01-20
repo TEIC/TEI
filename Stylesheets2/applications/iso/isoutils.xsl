@@ -5,7 +5,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     exclude-result-prefixes="edate tei" 
     version="2.0">
-  <!-- $Id: isoutils.xsl 4029 2008-10-17 12:09:36Z rahtz $ -->
+  <!-- $Id$ -->
 
   <xsl:variable name="processor">
     <xsl:value-of select="system-property('xsl:vendor')"/>

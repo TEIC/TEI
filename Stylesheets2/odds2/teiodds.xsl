@@ -27,7 +27,7 @@
       License along with this library; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
     <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id: teiodds.xsl 4821 2008-10-01 22:52:09Z rahtz $</xd:cvsId>
+    <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2008, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:include href="RngToRnc.xsl"/>

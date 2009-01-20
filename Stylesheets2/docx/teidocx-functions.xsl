@@ -35,7 +35,7 @@
             License along with this library; if not, write to the Free Software
             Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
         <xd:author>See AUTHORS</xd:author>
-        <xd:cvsId>$Id: odd2html.xsl 4802 2008-09-15 10:55:05Z rahtz $</xd:cvsId>
+        <xd:cvsId>$Id$</xd:cvsId>
         <xd:copyright>2008, TEI Consortium</xd:copyright>
     </xd:doc>
     
