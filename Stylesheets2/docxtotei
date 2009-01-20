@@ -1,0 +1,17 @@
+#!/bin/sh
+D=`dirname $1`
+THERE=`(cd $D; pwd)`
+H=`dirname $0`
+HERE=`(cd $H; pwd)`
+N=`basename $1 .docx`
+echo read $1 from $THERE
+echo app is in $HERE
+mkdir -p orig
+cd orig
+unzip -q $THERE/$N.docx
+saxon word/document.xml $HERE/docx/normalize-word-style.xsl debug=false |
+saxon - $HERE/docx/docx-tei.xsl word-directory=`pwd` \
+| xmllint --format - > ../$N.xml
+echo wrote $N.xml
+cd ..
+echo rm -rf orig

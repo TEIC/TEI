@@ -53,7 +53,7 @@ clean:
 	-rm stylebear style.xml customize.xml teixsl.html
 	-rm -rf release
 	-rm -rf doc/xsltdoc
-	(cd Test; make clean)
+	-(cd Test2; make clean)
 
 install: release
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
