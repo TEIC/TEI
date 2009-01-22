@@ -268,13 +268,9 @@ Overwrite: <xsl:value-of select="$overwrite"/>
     <xsl:when test="not(@xml:lang)">
       <xsl:copy-of select="."/>
     </xsl:when>
-    <xsl:when test="$overwrite='false'">
-       <xsl:copy-of select="."/>
-    </xsl:when>
     <xsl:when test="not(@xml:lang=$newLang)">
       <xsl:copy-of select="."/>
     </xsl:when>
-    <xsl:when test="$overwrite='true' and @xml:lang=$newLang"/>
   </xsl:choose>
     <xsl:variable name="What">
       <xsl:choose>
@@ -301,6 +297,14 @@ Overwrite: <xsl:value-of select="$overwrite"/>
 	  <exemplum xmlns="http://www.tei-c.org/ns/1.0"
 		    xml:lang="{$newLang}">
 	    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <xsl:if test="@n">
+	      <xsl:attribute name="corresp">
+		<xsl:text>#bibl</xsl:text>
+		<xsl:value-of select="$newLang"/>
+		<xsl:text>_</xsl:text>
+		<xsl:value-of select="@n"/>
+	      </xsl:attribute>
+	    </xsl:if>
 	      <xsl:apply-templates mode="iden"/>
 	    </egXML>
 	  </exemplum>
