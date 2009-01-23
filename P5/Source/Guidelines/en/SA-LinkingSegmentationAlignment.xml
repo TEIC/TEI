@@ -443,18 +443,18 @@ the preceding example thus:
 linking an annotation and a single verse line. However, the
 example cited in fact requires us to encode an association
 between the note and a <emph>pair</emph> of verse lines (lines
-284 and 285).</p>
-<p>There are a number of possible ways of correcting this error:
-one could use the <att>target</att> and <att>targetEnd</att>
-attributes of the <gi>note</gi> element to delimit the span to
-which the note applies (see further section <ptr target="#CONO"/>). Alternatively one could create an element to
-encode the couplet itself and assign it an <att>xml:id</att>
-attribute, which can then be linked to the <gi>note</gi> and
-<gi>ref</gi> elements. This could be done either explicitly by
-means of an <gi>lg</gi> element, as defined in section <ptr target="#COVE"/> <!--, or a <gi>seg</gi> element, as defined in
-section <ptr target="#SASE"/>,--> or implicitly, by means of the
-<gi>join</gi> element discussed in section <ptr target="#SAAG"/>.</p>
-<p>A third possibility however, is to use an
+284 and 285); we call these two lines a <term>span</term>.</p>
+<p>There are a number of possible ways of correcting this error: one
+could use the <att>target</att> attribute to indicate one end of the
+span and the special purpose <att>targetEnd</att> attribute on the
+<gi>note</gi> element to point to the other. Another possibility might
+be to create an element which represents the whole span itself and
+assign that an <att>xml:id</att> attribute, which can then be linked
+to the <gi>note</gi> and <gi>ref</gi> elements. This could be done
+using for example the <gi>lg</gi> element defined in section <ptr
+target="#COVE"/> or the <soCalled>virtual</soCalled> <gi>join</gi>
+element discussed in section <ptr target="#SAAG"/>.</p>
+<p>A third possibility would be to use an
 <soCalled>intermediate pointer</soCalled> as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <ptr xml:id="l3.283-284" target="#l3.283 #l3.284"/></egXML>
@@ -464,7 +464,7 @@ indicated elements are intended to be combined or aggregated in
 some way to produce the object of the pointer. (Such aggregation
 is however the task of a processing application, and cannot be
 defined simply by the markup). The <att>xml:id</att> attribute
-provides an identifier which can then be linked to the
+of the <gi>ptr</gi> then provides an identifier which can be linked to the
 <gi>note</gi> and <gi>ref</gi> elements:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SAPTIP-eg-17"><link evaluate="all" targets="#n3.284 #r3.284 #l3.283-284"/></egXML>
 <!-- Pope, Dunciad (1729) III.284 --></p>
