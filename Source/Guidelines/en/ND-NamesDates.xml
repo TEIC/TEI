@@ -882,11 +882,13 @@ for the most part, all be regarded as specialisations of one or other
 of the above three classes. Generic elements for state, trait, and
 event are also defined:
 <specList>
-<specDesc key="event" atts="where"/>
 <specDesc key="state"/>
 <specDesc key="trait"/>
+<specDesc key="event" atts="where"/>
+<specDesc key="listEvent"/>
 </specList>
 </p>
+
 </div>
  <div type="div3" xml:id="NDPERSE">
 <head>The Person Element</head>
@@ -911,7 +913,8 @@ describes relationships amongst the people listed.
 
 <p>One or more <gi>listPerson</gi> elements may be supplied within the
 <gi>particDesc</gi> (participant description) element in the
-<gi>profileDesc</gi> element of a TEI Header (see <ptr target="#HD4"/>).  Like other forms of list, however, the
+<gi>profileDesc</gi> element of a TEI Header (see <ptr
+target="#HD4"/>).  Like other forms of list, however, the
 <gi>listPerson</gi> can also appear within the body of a text when the
 module defined by this chapter is included in a schema.</p>
 
@@ -2030,6 +2033,48 @@ populations, and within that into male and female:
       </event>
     </egXML>
   </p>
+
+<p>An <gi>event</gi> element is usually used to record information
+about a place, or a person; for this reason the element usually
+appears as content of a <gi>place</gi> or <gi>person</gi>. However, it
+is also possible to describe events independently of either a person
+or a place. This may be useful in such applications as chronologies,
+lists of significant events such as battles, legislation, etc. </p>
+
+<p>The <gi>listEvent</gi> element is a member of the <ident
+type="class">model.listLike</ident> class, and may therefore appear
+wherever lists are permitted, in the same way as the
+<gi>listPerson</gi>, <gi>listPlace</gi> etc. elements described
+elsewhere in this chapter.</p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><listEvent>
+<event when="1713" ref="http://www.canadiana.org/ECO/ItemRecord/9_01832">
+<label>Treaty of Utrecht</label>
+<desc>France ceded to Great Britain its claims to the <orgName>Hudson's Bay
+Company</orgName> territories in <placeName>Rupert's Land</placeName>, 
+<placeName>Newfoundland</placeName>, and
+<placeName>Acadia</placeName> and  recognized British suzerainty over <orgName
+type="tribe">the Iroquois</orgName> but retained its other pre-war
+North American possessions, including
+<placeName key="PEI">Île-Saint-Jean</placeName> (now <placeName key="PEI">Prince Edward
+Island</placeName>)...</desc>
+</event>
+<event when="1774" key="14-GeoIII-c83">
+<label>Quebec Act</label>
+<desc>This act of the British Parliament guaranteed free practice of
+the Catholic faith and restored use of the French Civil Code for
+private matters throughout the Province of Quebec, which had been
+expanded in territory following the <ref>Treaty of Paris</ref>.</desc>
+</event>
+<event when="1778" ref="http://avalon.law.yale.edu/18th_century/del1778.asp">
+<label>Treaty of Fort Pitt</label>
+<desc>Also known as the <name type="event">Treaty with the
+Delawares</name>, this was the first written treaty between the newly
+formed <orgName>United States</orgName> and any Native American people, in this
+case, the <orgName type="tribe">Lenape</orgName> or Delawares.</desc>
+</event>
+</listEvent>
+</egXML>
+
 </div>
 <div xml:id="place-rel"><head>Relations Between Places</head>
   
@@ -2166,6 +2211,7 @@ occupation and residence.</p>
 &langKnown;
 
 &listOrg;
+&listEvent;
 
 &listPerson;
 
