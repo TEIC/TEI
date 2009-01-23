@@ -24,24 +24,12 @@
     <memberOf key="model.emphLike"/>
     <memberOf key="att.declaring"/>
     <memberOf key="att.typed"/>
+    <memberOf key="att.canonical"/>
   </classes>
   <content>
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
   </content>
   <attList>
-<!--
-            <attDef ident="type" usage="opt">
-            <equiv/>
-            <desc>classifies the term using some typology.</desc>
-            <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="datatype.Key"/></datatype>
-            <valDesc>any string of characters; for serious terminological
-            work, values should be taken from the dictionary of data element
-            types specified in ISO WD 12 620.</valDesc>
-            <exemplum>
-            <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
-            </exemplum>
-            </attDef>
-        -->
     <attList org="choice">
       <attDef ident="target" usage="opt">
         <equiv/>
@@ -157,46 +145,61 @@
         </egXML>
   </exemplum>
   <remarks>
-    <p>This element is used to supply the form under which an index entry is to be made for the
-            location of a parent <gi>index</gi> element. </p>
-    <p>In formal terminological work, there is frequently discussion over whether terms must be
-            atomic or may include multi-word lexical items, symbolic designations, or phraseological
-            units. The <gi>term</gi> element may be used to mark any of these. No position is taken
-            on the philosophical issue of what a term can be; the looser definition simply allows
-            the <gi>term</gi> element to be used by practitioners of any persuasion.</p>
-    <p>The <att>target</att> and <att>cRef</att> attributes are mutually exclusive.</p>
+    <p>This element is used to supply the form under which an index
+    entry is to be made for the location of a parent <gi>index</gi>
+    element. </p>
+    <p>In formal terminological work, there is frequently discussion
+    over whether terms must be atomic or may include multi-word
+    lexical items, symbolic designations, or phraseological units. The
+    <gi>term</gi> element may be used to mark any of these. No
+    position is taken on the philosophical issue of what a term can
+    be; the looser definition simply allows the <gi>term</gi> element
+    to be used by practitioners of any persuasion.</p>
+    <p>As with other members of the <ident
+    type="class">att.canonical</ident> class, instances of this
+    element occuring in a text may be associated with a canonical
+    definition, either by means of a URI (using the <att>ref</att>
+    attribute), or by means of some system-specific code value (using
+    the <att>key</att> attribute).  Because the mutually exclusive
+    <att>target</att> and <att>cRef</att> attributes overlap with the
+    function of the <att>ref</att> attribute, they are deprecated and
+    may be removed at a subsequent release. </p>
   </remarks>
-  <remarks xml:lang="fr">
-    <p>Cet élément est utilisé pour fournir la forme sous laquelle une entrée d'index doit être
-            faite pour la localisation d'un élément <gi>index</gi> parent. </p>
-    <p>Dans les travaux de terminologie formelle, il y a des controverses fréquentes sur la
-            nécessité pour les termes d'être des unités atomiques ou sur la possibilité d'inclure
-            des éléments lexicaux composés de plusieurs mots, des désignations symboliques, ou des
-            unités phraséologiques. L'élément <gi>term</gi> est utilisable dans tous ces cas. Aucune
-            position n'est prise sur la question philosophique de ce que peut être un terme ; la
-            définition la plus large permet simplement à l'élément <gi>term</gi> d'être utilisé par
-            tous les praticiens, quelle que soit leur position sur ce point.</p>
-    <p>Les attributs <att>target</att> et <att>cRef</att> sont exclusifs l'un de l'autre.</p>
-  </remarks>
-  <remarks xml:lang="es">
-    <p>Este elemento se utiliza para suministrar la forma bajo la cual una entrada de índice se
-            debe hacer para la localización de un elemento <gi>índice</gi> padre. </p>
-    <p>En el trabajo terminológico formal, hay con frecuencia discusión sobre si los términos
-            deben ser atómicos o pueden incluir los items léxicos de varias palabras, las
-            designaciones simbólicas, o las unidades fraseológicas. El elemento <gi>término</gi> se
-            puede utilizar para marcar ninguno de estos. No se toma ninguna posición en la
-            aplicación filosófica sobre qué término puede ser; la definición más superficial permite
-            simplemente observar el elemento <gi>término</gi> que se utilizará por los usuarios.</p>
-    <p> Los atributos <att>blanco</att> y <att>cRef</att> son mutuamente - exclusivos.</p>
-  </remarks>
-  <remarks xml:lang="ja">
-    <p> 当該要素は，索引項目が，親要素<gi>index</gi>中でどのような形である かを示すために使われる． </p>
-    <p> 当該要素は原子的なものか，または語彙項目や記号表示，語法上の単位を 複数とるものか，という論議はある．当該要素<gi>term</gi>は，これら
-            を示すために使われるかもしれない． 当該要素がどのようなものに使われるものかという，哲学的な決まりはな
-            い．定義が緩やかになれば，それだけ要素<gi>term</gi>はより使われる ことになる． </p>
-    <p> 属性<att>target</att>と<att>cRef</att>は，排他的に使用される． </p>
-  </remarks>
-  <listRef>
-    <ptr target="#COHQU"/>
-  </listRef>
-</elementSpec>
+<!-- commented out the following because the foregoing has been
+     changed --> <!-- <remarks xml:lang="fr"> <p>Cet élément est
+     utilisé pour fournir la forme sous laquelle une entrée d'index
+     doit être faite pour la localisation d'un élément <gi>index</gi>
+     parent. </p> <p>Dans les travaux de terminologie formelle, il y a
+     des controverses fréquentes sur la nécessité pour les termes
+     d'être des unités atomiques ou sur la possibilité d'inclure des
+     éléments lexicaux composés de plusieurs mots, des désignations
+     symboliques, ou des unités phraséologiques. L'élément
+     <gi>term</gi> est utilisable dans tous ces cas. Aucune position
+     n'est prise sur la question philosophique de ce que peut être un
+     terme ; la définition la plus large permet simplement à l'élément
+     <gi>term</gi> d'être utilisé par tous les praticiens, quelle que
+     soit leur position sur ce point.</p> <p>Les attributs
+     <att>target</att> et <att>cRef</att> sont exclusifs l'un de
+     l'autre.</p> </remarks> <remarks xml:lang="es"> <p>Este elemento
+     se utiliza para suministrar la forma bajo la cual una entrada de
+     índice se debe hacer para la localización de un elemento
+     <gi>índice</gi> padre. </p> <p>En el trabajo terminológico
+     formal, hay con frecuencia discusión sobre si los términos deben
+     ser atómicos o pueden incluir los items léxicos de varias
+     palabras, las designaciones simbólicas, o las unidades
+     fraseológicas. El elemento <gi>término</gi> se puede utilizar
+     para marcar ninguno de estos. No se toma ninguna posición en la
+     aplicación filosófica sobre qué término puede ser; la definición
+     más superficial permite simplemente observar el elemento
+     <gi>término</gi> que se utilizará por los usuarios.</p> <p> Los
+     atributos <att>blanco</att> y <att>cRef</att> son mutuamente -
+     exclusivos.</p> </remarks> <remarks xml:lang="ja"> <p> 当該要素は，
+     索引項目が，親要素<gi>index</gi>中でどのような形である かを示すた
+     めに使われる． </p> <p> 当該要素は原子的なものか，または語彙項目や
+     記号表示，語法上の単位を 複数とるものか，という論議はある．当該要
+     素<gi>term</gi>は，これらを示すために使われるかもしれない． 当該要
+     素がどのようなものに使われるものかという，哲学的な決まりはない．定
+     義が緩やかになれば，それだけ要素<gi>term</gi>はより使われる ことに
+     なる． </p> <p> 属性<att>target</att>と<att>cRef</att>は，排他的に
+     使用される． </p> </remarks> --> <listRef> <ptr target="#COHQU"/>
+     </listRef> </elementSpec>
