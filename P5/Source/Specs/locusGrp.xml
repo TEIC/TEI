@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date: 2009-01-10 15:03:31 +0000 (Sat, 10 Jan 2009) $
+$Id: locus.xml 5299 2009-01-10 15:03:31Z rahtz $
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription"  ident="locusGrp">
+  <equiv/>
+  <desc>groups a number of locations which together form a
+  distinct but discontinuous item within a manuscript or manuscript
+  part, according to a specific foliation.
+</desc>
+  <classes>
+    <memberOf key="model.pPart.msdesc"/>
+  </classes>
+  <content>
+    <rng:oneOrMore  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:ref name="locus"/>
+    </rng:oneOrMore>
+  </content>
+  <attList>
+    <attDef ident="scheme">
+      <equiv/>
+      <gloss version="2007-06-12" xml:lang="fr">système</gloss>
+      <desc>identifies the foliation scheme in terms of which all the
+      locations contained by the group are specified.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>A pointer to some  <gi>foliation</gi> element which
+      defines the foliation scheme used, or an external link to some
+      equivalent resource. </valDesc>
+    </attDef>
+  </attList>
+  <exemplum>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" >            <msItem>
+<locusGrp>
+<locus from="13" to="26">Bl. 13--26</locus>
+<locus from="37" to="58">37--58</locus>
+<locus from="82" to="96">82--96</locus>
+</locusGrp>
+<desc>Stücke von Daniel Ecklin’s Reise ins h. Land</desc>
+</msItem>
+    </egXML>  </exemplum>
+  <remarks>
+    <p/>
+  </remarks>
+  <listRef>
+    <ptr target="#msloc"/>
+  </listRef>
+</elementSpec>
