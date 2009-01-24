@@ -21,9 +21,18 @@
 <xsl:template name="exemplum">
   <xsl:choose>
     <xsl:when test="teix:egXML[not(node())]"/>
+    <xsl:when test="@xml:lang and not(@xml:lang = $lang)"/>
+    <xsl:otherwise>
+      <xsl:call-template name="dome"/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
 
+<xsl:template name="dome">
+  <xsl:choose>
     <xsl:when test="parent::tei:classSpec">
       <classSpec ident="{../@ident}"
+		 moduke="{../@module}"
 		 xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:call-template name="show"/>
       </classSpec>
@@ -31,6 +40,7 @@
     
     <xsl:when test="parent::tei:valItem and ancestor::tei:classSpec">
       <classSpec ident="{ancestor::tei:classSpec/@ident}"
+		 module="{ancestor::tei:classSpec/@module}"
 		 xmlns="http://www.tei-c.org/ns/1.0">
 	<attList>
 	  <attDef ident="{ancestor::tei:attDef/@ident}">
@@ -46,7 +56,8 @@
 
     <xsl:when test="ancestor::tei:attDef and ancestor::tei:classSpec">
 	<classSpec ident="{ancestor::tei:classSpec/@ident}"
-		     xmlns="http://www.tei-c.org/ns/1.0">
+		   module="{ancestor::tei:classSpec/@module}"
+		   xmlns="http://www.tei-c.org/ns/1.0">
 	  <attList>
 	    <attDef ident="{ancestor::tei:attDef/@ident}">
 		<xsl:call-template name="show"/>
@@ -57,6 +68,7 @@
 
     <xsl:when test="parent::tei:elementSpec">
       <elementSpec ident="{../@ident}"
+		 module="{../@module}"
 		 xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:call-template name="show"/>
       </elementSpec>
@@ -64,6 +76,7 @@
     
     <xsl:when test="parent::tei:valItem and ancestor::tei:elementSpec">
       <elementSpec ident="{ancestor::tei:elementSpec/@ident}"
+		 module="{ancestor::tei:elementSpec/@module}"
 		 xmlns="http://www.tei-c.org/ns/1.0">
 	<attList>
 	  <attDef ident="{ancestor::tei:attDef/@ident}">
@@ -79,6 +92,7 @@
 
     <xsl:when test="ancestor::tei:attDef and ancestor::tei:elementSpec">
 	<elementSpec ident="{ancestor::tei:elementSpec/@ident}"
+		     module="{ancestor::tei:elementSpec/@module}"
 		     xmlns="http://www.tei-c.org/ns/1.0">
 	  <attList>
 	    <attDef ident="{ancestor::tei:attDef/@ident}">
@@ -92,13 +106,8 @@
 
 <xsl:template name="show">
   <xsl:element name="{local-name(.)}" xmlns="http://www.tei-c.org/ns/1.0">
-    <xsl:attribute name="version">
-      <xsl:value-of select="$date"/>
-    </xsl:attribute>
-    <xsl:attribute name="xml:lang">
-      <xsl:value-of select="$lang"/>
-    </xsl:attribute>
-      <xsl:apply-templates/>
+    <xsl:copy-of select="@corresp"/>
+    <xsl:apply-templates/>
   </xsl:element>
 </xsl:template>
 

@@ -657,6 +657,17 @@
     </xsl:choose>
   </xsl:template>
 
+<!-- only use listBibl if its in right language-->
+<xsl:template match="tei:listBibl">
+  <xsl:choose>
+    <xsl:when test="@xml:lang and not($documentationLanguage=@xml:lang)">
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-imports/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
 <!-- link from bibl back to egXML -->
 <xsl:template match="tei:listBibl/tei:biblStruct|tei:listBibl/tei:bibl">
   <xsl:apply-templates/>
