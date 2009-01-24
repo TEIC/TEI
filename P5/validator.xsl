@@ -177,6 +177,11 @@
       <xsl:value-of select="name(.)"/>
       <xsl:text>[</xsl:text>
       <xsl:choose>
+	<xsl:when test="@ident">
+	  <xsl:text>"</xsl:text>
+	  <xsl:value-of select="@ident"/>
+	  <xsl:text>"</xsl:text>
+	</xsl:when>
 	<xsl:when test="@xml:id">
 	  <xsl:text>"</xsl:text>
 	  <xsl:value-of select="@xml:id"/>
