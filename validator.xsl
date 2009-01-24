@@ -73,6 +73,15 @@
      </xsl:if>
 </xsl:template>
 
+<!-- corresp on egXML must point to something -->
+<xsl:template match="teix:egXML[@corresp]">
+     <xsl:if test="not(key('IDS',substring-after(@corresp,'#')))">
+       <xsl:call-template name="Error">
+	 <xsl:with-param name="value" select="@corresp"/>
+       </xsl:call-template>
+     </xsl:if>
+</xsl:template>
+
 <!-- specDesc must point to something -->
 <xsl:template match="tei:specDesc">
     <xsl:choose>
