@@ -25,7 +25,6 @@ XSL=$APPHOME/docx
 mkdir -p $TEMPDIR/word/media
 echo read $THERE/$F.xml
 saxon $THERE/$F.xml $XSL/listgraphics.xsl DIR=$TEMPDIR/word/media > $TEMPDIR/fetch
-cat $TEMPDIR/fetch
 sh $TEMPDIR/fetch
 rm $TEMPDIR/fetch
 (cd $TEMPDIR/word/media; for i in *; do  exiftool -q -o $i.xmp $i; done)

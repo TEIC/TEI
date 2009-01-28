@@ -19,7 +19,7 @@
                 xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
                 exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn tei teidocx">
     <!-- import conversion style -->
-    <xsl:import href="tei-docx.xsl"/>
+    <xsl:import href="../../docx/tei-docx.xsl"/>
     
     <!-- import functions -->
     <xsl:include href="vesta-functions.xsl"/>

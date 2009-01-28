@@ -938,6 +938,7 @@ is there a number present?
                   not(number(substring(@height,0,string-length(@height)-1))=NAN)">
 
 -->
+
             <xsl:variable name="imageWidth">
 	      <xsl:choose>
 		<xsl:when test="contains(@width,'%')">
@@ -986,8 +987,8 @@ is there a number present?
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:variable>
-<!--
 
+<!--
 	    <xsl:message> arrived at <xsl:value-of
 	    select="$imageWidth"/> x <xsl:value-of
 	    select="$imageHeight"/> from <xsl:value-of select="@teidocx:width"/>x<xsl:value-of select="@teidocx:height"/>
@@ -1023,8 +1024,8 @@ is there a number present?
                             <pic:spPr>
                                 <a:xfrm>
                                     <a:off x="0" y="0"/>
-                                    <a:ext cx="{$imageWidth}"
-					   cy="{$imageHeight}"/>
+                                    <a:ext cx="{$imageWidth}00"
+					   cy="{$imageHeight}00"/>
                                 </a:xfrm>
                                 <a:prstGeom prst="rect">
                                     <a:avLst/>
@@ -1051,8 +1052,8 @@ is there a number present?
                                 <wp:positionV relativeFrom="paragraph">
                                     <wp:align>center</wp:align>
                                 </wp:positionV>
-                                <wp:extent cx="{$imageWidth}"
-					   cy="{$imageHeight}"/>
+                                <wp:extent cx="{$imageWidth}00"
+					   cy="{$imageHeight}00"/>
                                 <wp:wrapTopAndBottom/>
                                 <wp:docPr name="Some Image">
                                     <xsl:attribute name="id">
@@ -1065,8 +1066,8 @@ is there a number present?
 		      </xsl:when>
 		      <xsl:otherwise>
                             <wp:inline>
-                                <wp:extent cx="{$imageWidth}"
-					   cy="{$imageHeight}"/>
+                                <wp:extent cx="{$imageWidth}00"
+					   cy="{$imageHeight}00"/>
                                 <wp:docPr name="{tokenize(@url, '/')[last()]}">
                                     <xsl:attribute name="id">
                                         <xsl:number level="any"/>

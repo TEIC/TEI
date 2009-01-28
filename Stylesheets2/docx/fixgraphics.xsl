@@ -49,7 +49,6 @@
 	    <xsl:value-of select="(number(key('H',1)) div 72) * 9144"/>
 	  </xsl:for-each>
 	</xsl:attribute>
-
     </xsl:copy>
   </xsl:template>
 </xsl:stylesheet>
