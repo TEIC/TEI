@@ -1,8 +1,10 @@
 #!/bin/sh
 profile=iso
+odd=false
 while test $# -gt 0; do
   case $1 in
     --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
+    --odd)       odd=true;;
      *) if test "$1" = "${1#--}" ; then 
 	   break
 	else
@@ -12,7 +14,7 @@ while test $# -gt 0; do
   esac
   shift
 done
-
+test -f $1 || exit 1
 HERE=`pwd`
 D=`dirname $1`
 F=`basename $1 .xml`
@@ -21,16 +23,22 @@ X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
 TEMPDIR=/tmp/docx$$
 TEMPLATES=$APPHOME/applications/$profile/docx-templates
-XSL=$APPHOME/docx
+XSL=$APPHOME
 mkdir -p $TEMPDIR/word/media
 echo read $THERE/$F.xml
-saxon $THERE/$F.xml $XSL/listgraphics.xsl DIR=$TEMPDIR/word/media > $TEMPDIR/fetch
+saxon $THERE/$F.xml $XSL/docx/listgraphics.xsl DIR=$TEMPDIR/word/media > $TEMPDIR/fetch
 sh $TEMPDIR/fetch
 rm $TEMPDIR/fetch
 (cd $TEMPDIR/word/media; for i in *; do  exiftool -q -o $i.xmp $i; done)
 cd $TEMPDIR
-saxon -o $TEMPDIR/tmp.xml  $THERE/$F.xml $XSL/fixgraphics.xsl DIR=`pwd`/word
 unzip -o -q $TEMPLATES/template.docx
+if $odd
+then
+    saxon $THERE/$F.xml $XSL/docx/fixgraphics.xsl DIR=`pwd`/word \
+    | saxon  -o $TEMPDIR/tmp.xml  $THERE/$F.xml  $XSL/odds2/odd2lite.xsl displayMode=rnc
+else
+    saxon -o $TEMPDIR/tmp.xml  $THERE/$F.xml $XSL/docx/fixgraphics.xsl DIR=`pwd`/word
+fi
 saxon -o word/document.xml tmp.xml $APPHOME/applications/$profile/tei-docx.xsl  \
     debug=true styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR
 rm -f tmp.xml word/media/*.xmp
