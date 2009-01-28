@@ -104,7 +104,9 @@
 		     generate sections
 			-->
 			<body>
-				<xsl:for-each-group select="w:p|w:tbl"
+			  <xsl:choose>
+			    <xsl:when test="w:p[w:pPr/w:pStyle/@w:val='heading 1']">
+			      <xsl:for-each-group select="w:p|w:tbl"
 					group-starting-with="w:p[teidocx:is-firstlevel-heading(.)]">
 					<xsl:choose>
 						<xsl:when test="teidocx:is-heading(.)">
@@ -115,7 +117,12 @@
 						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:for-each-group>
-				
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <fred/>
+			      <xsl:apply-templates select="w:p|w:tbl"/>
+			    </xsl:otherwise>
+			  </xsl:choose>
 				<xsl:apply-templates select="w:sectPr" mode="paragraph"/>
 			</body>
 		</text>

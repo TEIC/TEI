@@ -1,10 +1,25 @@
 #!/bin/sh
+profile=oucs
+while test $# -gt 0; do
+  case $1 in
+    --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
+     *) if test "$1" = "${1#--}" ; then 
+	   break
+	else
+	   echo "WARNING: Unrecognized option '$1' ignored"
+	   echo "For usage syntax issue $0 --help"
+	fi ;;
+  esac
+  shift
+done
+
 HERE=`pwd`
 D=`dirname $1`
 F=`basename $1 .xml`
 THERE=`(cd $D; pwd)`
 X=`dirname $0`
 APP=`(cd $X; pwd)`
+
 echo read $THERE/$F.xml
 TEMPDIR=/tmp/docx$$
 TEMPLATES=$APP/docx-templates
@@ -16,8 +31,8 @@ rm $TEMPDIR/fetch
 (cd $TEMPDIR/word/media; for i in *; do  exiftool -q -o $i.xmp $i; done)
 cd $TEMPDIR
 saxon -o $TEMPDIR/tmp.xml  $THERE/$F.xml $XSL/fixgraphics.xsl DIR=`pwd`/word
-unzip -o -q $TEMPLATES/template.docx
-saxon -o word/document.xml tmp.xml $XSL/tei-docx-conversion-vesta.xsl  \
+unzip -o -q $TEMPLATES/template-$template.docx
+saxon -o word/document.xml tmp.xml $XSL/tei-docx-$style.xsl  \
     debug=true styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR
 rm -f tmp.xml word/media/*.xmp
 test -f newContent_Types.xml && mv newContent_Types.xml \[Content_Types\].xml
