@@ -256,18 +256,7 @@ matters.</p>
 
 
 <specGrp xml:id="msdesc.def">
-
-
-
-
-
-
-
-
 &msDesc;
-
-
-
 </specGrp>
 
 </div>
@@ -282,6 +271,7 @@ alphabetical order:
 <specDesc key="dimensions"/>
 <specDesc key="heraldry"/>
 <specDesc key="locus"/>
+<specDesc key="locusGrp"/>
 <specDesc key="material"/>
 <specDesc key="watermark"/>
 <specDesc key="origDate"/>
@@ -471,17 +461,25 @@ are between 157 and 160 mm in height and 105 mm in width.</p>
 
 </div>
 <div type="div3" xml:id="msloc"><head>References to Locations within a Manuscript</head>
-<p>The <gi>locus</gi> element is a specialized form of the <gi>ref</gi> element.
+<p>The <gi>locus</gi> and its grouping element <gi>locusGrp</gi>
+element are specialized forms of the
+<gi>ref</gi> element, used to indicate a location, or sequence of
+locations, within a manuscript.
 <specList>
 <specDesc key="locus" atts="from to scheme"/>
+<specDesc key="locusGrp" atts="scheme"/>
 </specList></p>
-<p>The <gi>locus</gi> element is used to specify the location in the
-manuscript occupied by the element within which it appears. If, for
-example, it is used as the first component of a <gi>msItem</gi> or <gi>msItemStruct</gi>
+
+<p>The <gi>locus</gi> element is used to reference a single location
+within a manuscription, typically to specify the location occupied by
+the element within which it appears. If, for example, it is used as
+the first component of a <gi>msItem</gi> or <gi>msItemStruct</gi>
 element, or of any of the more specific elements appearing within one
-(see further section <ptr target="#msco"/> below) then it is understood
-to specify the location of that item within the manuscript being
-described.</p>
+(see further section <ptr target="#msco"/> below) then it is
+understood to specify the location (or locations) of that item within
+the manuscript being described.</p>
+
+<div><head>Identifying a location</head>
 <p>A <gi>locus</gi> element can be used to identify any reference to
 one or more folios within a manuscript, wherever such a reference is
 appropriate. Locations are conventionally specified as a sequence of
@@ -503,30 +501,84 @@ element, as in the following revision of the above example:
 <title>Apocalypsis beati Ioannis Apostoli</title>
 </msItem>
 </egXML></p>
-<p>When the <ident type="module">transcr</ident> module described in
-chapter <ptr target="#PH"/> is included in a schema, an additional
-attribute <att>facs</att> is available, which may be used to  associate a
-<gi>locus</gi> element with a digitized image, as in the following example:
+<p>When the item concerned occupies a discontinuous sequence of pages,
+this may simply be indicated in the body of the <gi>locus</gi>
+element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<msItem n="1"><locus>ff. 1-12v, 18-24r</locus>
+<title>Apocalypsis beati Ioannis Apostoli</title>
+</msItem>
+</egXML>
+Alternatively, if it is desired to indicate
+normalised values for each part of the sequence, a sequence of
+<gi>locus</gi> elements can be supplied, grouped within the
+<gi>locusGrp</gi> element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<msItem n="1"><locusGrp>
+<locus from="1r" to="12v">ff. 1-12v</locus>
+<locus from="18" to="24r">ff. 18-24r</locus>
+</locusGrp>
+<title>Apocalypsis beati Ioannis Apostoli</title>
+</msItem>
+</egXML>
+Finally, the content of the <gi>locus</gi> element may  be
+omitted if a formatting application can construct it automatically
+from the values of the <att>from</att> and <att>to</att> attributes:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<msItem n="1"><locusGrp>
+<locus from="1r" to="12v"/>
+<locus from="18" to="24r"/>
+</locusGrp>
+<title>Apocalypsis beati Ioannis Apostoli</title>
+</msItem>
+</egXML>
+ </p>
+</div>
+<div><head>Linking a location to a transcription or an image</head>
+<p>The <gi>locus</gi> attribute can also be used to associate a
+location within a manuscript with facsimile images of that location,
+using the <att>facs</att> attribute, or with a transcription of the
+text occurring at that location. The former association is effected by
+means of the <att>facs</att> attribute; the latter by means of the
+<att>target</att> attribute.</p>
+
+<p>The <att>facs</att> is available only when the <ident
+type="module">transcr</ident> module described in chapter <ptr
+target="#PH"/> is included in a schema. It associates a <gi>locus</gi>
+element with one or more digitized images, as in the following
+example:
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <msItem>
+        <locus facs="images/08v.jpg images/09r.jpg images/09v.jpg images/10r.jpg images/10v.jpg">fols. 8v-10v</locus>
+        <title>Birds Praise of Love</title>
+        <bibl>
+          <title>IMEV</title>
+          <biblScope>1506</biblScope>
+        </bibl>
+      </msItem>
+    </egXML>
+Here, the <att>facs</att> attribute uses a URI reference to point
+directly to images of the relevant pages. This method may be found
+cumbersome when many images are to be associated with a single
+location. It is of most use when specific pages are referenced within
+a description, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <decoDesc>
-<p>Several of the miniatures in this section have been damaged and 
-overpainted at a later date (e.g. the figure of Christ on 
-<locus facs="http://www.example.com/images.fr#F33R">fol. 33r</locus>; the face of the 
-Shepherdess on <locus facs="http://www.example.com/images.fr#F59V">fol. 59v</locus>, 
+<p>Several of the miniatures in this section have been damaged and
+overpainted at a later date (e.g. the figure of Christ on <locus
+facs="http://www.example.com/images.fr#F33R">fol. 33r</locus>; the
+face of the Shepherdess on <locus
+facs="http://www.example.com/images.fr#F59V">fol. 59v</locus>,
 etc.).</p>
 </decoDesc>
 </egXML>
-Here, the <att>facs</att> attribute uses a URI reference to point directly to images of the
-relevant pages, held presumably in an image archive not forming part
-of the resource containing the manuscript description in question. In
-the case where such images do form part of a single virtual document,
-along with transcriptions and metadata, the methods described in <ptr target="#PHFAX"/> should be used in preference.</p>
-<p>Where a transcription of the relevant pages is also available, this
-may be pointed to using the <att>target</att> attribute, as in the
-following example:
+For further discussion of the <att>facs</att> attribute, see section <ptr
+target="#PHFAX"/>. </p>
 
+<p>Where a transcription of the relevant pages is available, this may
+be associated with the <gi>locus</gi> element using its
+<att>target</att> attribute, as in the following example:
 	<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<!-- within ms description -->
             <msItem n="1">
               <locus target="#f1r #f1v #f2r">ff. 1r-2r</locus>
               <author>Ben Jonson</author>
@@ -547,8 +599,20 @@ following example:
 	    <!-- ... -->
 	</egXML>
 </p>
+<p>When (as in this example) a sequence of elements is to be supplied
+as target value, it may be given explicitly as above, or using the
+xPointer range() syntax defined at <ptr target="#SATSRN"/>. Note
+however that support for this pointer mechanism is not widespread in
+current XML processing systems.</p>
+    
+<p>The <att>target</att> attribute should only be used to point to
+elements that contain or indicate a transcription of the locus being
+described. To associate a <gi>locus</gi> element with a page image or
+other comparable representation, the global <att>facs</att> attribute
+should be used instead. </p>
 
-
+</div>
+<div><head>Using multiple location schemes</head>
 <p>Where a manuscript contains more than one foliation, the
 <att>scheme</att> attribute may be used to distinguish them. For
 example, MS 65 Corpus Christi College, Cambridge contains two fly
@@ -561,7 +625,20 @@ may be preserved in an encoding such as the following:
 </egXML> Here the <att>scheme</att> attribute points to a
 <gi>foliation</gi> element providing more details about the scheme
 used, as further discussed in <ptr target="#msphfo"/> below.</p>
-</div>
+<p>Where discontinuous sequences are identified within two different
+foliations, the <att>scheme</att> attribute should be supplied on the
+<gi>locusGrp</gi> element in preference, as in the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<locusGrp scheme="#original">
+<locus>XCIII</locus>
+<locus>CC-CCII</locus>
+</locusGrp>
+<locusGrp scheme="#modern">
+<locus>135</locus>
+<locus>197-204</locus>
+</locusGrp>
+</egXML>
+</p></div></div>
 <div type="div3" xml:id="msnames">
 <head>Names of Persons, Places, and Organizations</head>
 <p>The standard TEI element <gi>name</gi> may be used to identify
@@ -706,232 +783,21 @@ racchiudono l'inizio dell'epistolario di Paolino.</p>
 </egXML></p>
 
 <specGrp xml:id="xphrase.def">
-
-
-
-
-
-
-
-
-
-
 &catchwords;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &dimensions;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &height;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &depth;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &width;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&heraldry;
-
-
-
-
-<!-- should this be better to rename as armsDesc? -->
-
-
-
-
-
-
-
-
-
-
-
+&heraldry;<!-- should this be better to rename as armsDesc? -->
 &locus;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+&locusGrp;
 &material;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &origDate;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &origPlace;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &secFol;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &signatures;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &stamp;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &watermark;
-
-
-
-
-
 </specGrp>
 </div></div>
 <div type="div2" xml:id="msid">
