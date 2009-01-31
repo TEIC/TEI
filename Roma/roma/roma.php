@@ -92,7 +92,6 @@ define( 'roma_startupOption_minimum', 'minimum' );
 define( 'roma_startupOption_other', 'other' );
 define( 'roma_startupOption_upload', 'upload' );
 
-
 define( 'roma_validate_schema', true );
 
 
@@ -1246,13 +1245,14 @@ class roma
 	$oSchemaParser->addReplacement( 'lang', $szLanguage );
 	$oSchemaParser->addReplacement( 'doclang', $szDocLanguage );
 	$oSchemaParser->addReplacement( 'oddlang', $szOddLanguage );
-	$oSchemaParser->AddReplacement( 'title', $szTitle );
-	$oSchemaParser->AddReplacement( 'author', $szAuthor );
-	$oSchemaParser->AddReplacement( 'filename', $szFilename );
-	$oSchemaParser->AddReplacement( 'prefix', $szPrefix );
-	$oSchemaParser->AddReplacement( 'language', $szLanguage );
-	$oSchemaParser->AddReplacement( 'description', $szDesc );
-	$oSchemaParser->AddReplacement( 'namespace', $szNamespace );
+	$oSchemaParser->addReplacement( 'title', $szTitle );
+	$oSchemaParser->addReplacement( 'author', $szAuthor );
+	$oSchemaParser->addReplacement( 'filename', $szFilename );
+	$oSchemaParser->addReplacement( 'prefix', $szPrefix );
+	$oSchemaParser->addReplacement( 'language', $szLanguage );
+	$oSchemaParser->addReplacement( 'description', $szDesc );
+	$oSchemaParser->addReplacement( 'namespace', $szNamespace );
+	$oSchemaParser->addReplacement( 'validate', $szNamespace );
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
 	$oParser->addReplacement ('Version', $_SESSION['Version']);
 	$oParser->addReplacement( 'lang', $szLanguage );
