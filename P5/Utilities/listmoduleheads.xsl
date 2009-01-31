@@ -8,6 +8,8 @@
  xmlns:exsl="http://exslt.org/common"
  version="1.0">
 
+<xsl:param name="lang"/>
+
 <xsl:key name="MODS" match="tei:moduleSpec" use="1"/>
 
 
@@ -15,7 +17,7 @@
   <head>
   <xsl:for-each select="key('MODS',1)">
     <xsl:sort select="@ident"/>
-    <head xml:lang="zh-tw" corresp="{ancestor::tei:div[last()]/@xml:id}">
+    <head xml:lang="{$lang}" corresp="{ancestor::tei:div[last()]/@xml:id}">
       <xsl:value-of select="tei:desc"/>
     </head>
   </xsl:for-each>
