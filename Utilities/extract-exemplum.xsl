@@ -106,20 +106,19 @@
 
 <xsl:template name="show">
   <xsl:element name="{local-name(.)}" xmlns="http://www.tei-c.org/ns/1.0">
-    <xsl:copy-of select="@corresp"/>
-    <xsl:apply-templates/>
+    <xsl:apply-templates
+	select="@*|*|text()|comment()|processing-instruction()"/>
   </xsl:element>
 </xsl:template>
 
-<xsl:template match="@*|text()">
+<xsl:template match="@*|text()|comment()|processing-instruction()">
   <xsl:copy/>
 </xsl:template>
 
 <xsl:template match="*">
  <xsl:copy>
-  <xsl:apply-templates select="@*"/>
   <xsl:apply-templates       
-      select="*|text()"/>
+      select="@*|*|text()|comment()|processing-instruction()"/>
  </xsl:copy>
 </xsl:template>
 
