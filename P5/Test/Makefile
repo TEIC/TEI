@@ -66,6 +66,7 @@ schemas:
 	../Utilities/makenames.xsl \
 	../Source/Guidelines/en/guidelines-en.xml > names.xml
 	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTBADFILES); do \
+		echo Try  to validate $$i.odd; \
 		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK stage; \
 		xsltproc --stringparam TEIC true --xinclude ../Utilities/odd2exodd.xsl $$i.odd > $$i-ex.odd; \
 		roma $(ROMAOPTS) --nodtd --noxsd  --xsl=$(XSL)	$$i-ex.odd . ; \
