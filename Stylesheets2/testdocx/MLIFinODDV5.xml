@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?oxygen RNGSchema="tei_odds_names.rnc" type="compact"?>
-<TEI xmlns="http://www.tei-c.org/ns/1.0">
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its" xmlns:iso="http://www.iso.org/ns">
     <teiHeader>
         <fileDesc>
             <titleStmt>
@@ -819,10 +819,12 @@
                     </div>
                     <div>
                         <head>Using generic SMIL attributes in MLIF</head>
-                        <p>General timing mechinisms from the SMIL <ref>REF!!</ref> recommendation
-                            may be used in MLIF compliant content to provide synchronisation
-                            mechanisms of textual content. The following attributes are thus
-                            integrated in the overal MLIF specification:</p>
+                        <p>General timing mechinisms from the SMIL (<ref
+                                target="http://www.w3.org/TR/2008/REC-SMIL3-20081201/">Synchronized
+                                Multimedia Integration Language</ref>) recommendation may be used in
+                            MLIF compliant content to provide synchronisation mechanisms of textual
+                            content. The following attributes are thus integrated in the overal MLIF
+                            specification:</p>
                         <list>
                             <item>
                                 <att>begin</att>
@@ -845,8 +847,34 @@
                             or several <gi>smilText</gi> containers (for instance embedded in a
                                 <gi>seq</gi> construct). When applicable the existing timing
                             information are propagated into the SMIL representation.</p>
-                        <p>...Mapping (MonoC/SegC => smilText, relevant elements <gi>tev</gi>,
-                                <gi>clear</gi>, attributes)... example</p>
+                        <p>In this context, the core mappings between MLIF and the SMIL Text
+                            specification would be the following ones:</p>
+                        <list>
+                            <item><gi>MonoC</gi> components should map onto <gi>smilText</gi>
+                                elements, together with the corresponding attributes (in particular,
+                                language)</item>
+                            <item><gi>SegC</gi> components should map univoquely onto <gi>tev</gi>
+                                elements, together with the corresponding decriptors (in particular
+                                temporal ones)</item>
+                        </list>
+                        <p>The actual embeeding of multilingual content within a single SMIL
+                            representation should be based on the a <gi>switch</gi> constructs
+                            inkeeping with the following skeleton:</p>
+                        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                            <switch>
+                                <par systemLanguage="en">
+                                    <smilText xml:id="TE30" region="Contents" dur="12s"
+                                        its:dir="ltr" xml:lang="en" its:translate="yes"> ...
+                                    </smilText>
+                                </par>
+                                <par systemLanguage="fr">
+                                    <smilText xml:id="TF30" region="Contents" dur="12s"
+                                        its:dir="ltr" xml:lang="fr" its:translate="yes"> ...
+                                    </smilText>
+                                </par>
+                            </switch>
+
+                        </egXML>
                         <p>Other non temporal attributes such as, e.g. <att>region</att> are not
                             covered by MLIF specifications and should thus be created independantly
                             of the information present in the MLIF compliant instructure.</p>
@@ -929,13 +957,13 @@
                     </MLDC>
                 </egXML>
             </div>
-            <div type="annex">
+            <div type="annex" iso:status="informative">
                 <head>MLIF instance example</head>
                 <p>...</p>
             </div>
-            <div type="annex">
-                <head>Annex (Normative) - Using MLIF for dealing with video and multilingual
-                    subtitles (captioning).</head>
+            <div type="annex" iso:status="normative">
+                <head>Using MLIF for dealing with video and multilingual subtitles
+                    (captioning).</head>
                 <div>
                     <head>Introduction<note place="foot">Source : Wikipedia
                             (http://en.wikipedia.org/wiki/Subtitle_(captioning)).</note></head>

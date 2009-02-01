@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:tei="http://www.tei-c.org/ns/1.0" version="2.0" xmlns:iso="http://www.iso.org/ns/1.0"
+                xmlns:tei="http://www.tei-c.org/ns/1.0" version="2.0" 
+		xmlns:iso="http://www.iso.org/ns/1.0"
+		xmlns:its="http://www.w3.org/2005/11/its"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -16,7 +18,7 @@
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
                 xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-                exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
+                exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn its">
     <!-- import conversion style -->
     <xsl:import href="../../docx/tei-docx.xsl"/>
     <xsl:import href="isoutils.xsl"/>
@@ -28,8 +30,9 @@
 
     <xsl:variable name="align">
       <xsl:choose>
-	<xsl:when test="$template='sdo'">left</xsl:when>
-	<xsl:otherwise>right</xsl:otherwise>
+	<xsl:when test="$template='ISO'">left</xsl:when>
+	<xsl:otherwise>right
+</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     

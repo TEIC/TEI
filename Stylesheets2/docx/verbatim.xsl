@@ -58,6 +58,7 @@
   <xsl:template name="verbatim-getNamespacePrefix">
     <xsl:variable name="ns" select="namespace-uri()"/>
     <xsl:choose>
+      <xsl:when test="$ns='http://www.tei-c.org/ns/1.0'">tei</xsl:when>
       <xsl:when test="$ns='http://docbook.org/ns/docbook'">dbk</xsl:when>
       <xsl:when test="$ns='http://www.w3.org/2001/XMLSchema'">xsd</xsl:when>
       <xsl:when test="$ns='http://www.ascc.net/xml/schematron'">sch</xsl:when>
@@ -387,7 +388,18 @@
 
 
     <xsl:apply-templates select="@*" mode="verbatim"/>
+
     <xsl:if test="$showNamespaceDecls='true' or parent::teix:egXML[@rend='full']">
+      <!--
+	  <xsl:variable name="me" select="."/>
+	  <xsl:message><xsl:value-of select="name()"/>: </xsl:message>
+	  <xsl:for-each select="in-scope-prefixes(.)">
+	  <xsl:message>  .. <xsl:value-of select="."/>: <xsl:value-of select="namespace-uri-for-prefix(.,$me)"/> </xsl:message>
+	  </xsl:for-each>
+      -->
+
+      <!-- 2009-02-01 stop emitting xmlns at all -->
+      <!--
       <xsl:choose>
         <xsl:when test="not(parent::*)">
           <xsl:apply-templates select="." mode="ns"/>
@@ -396,6 +408,7 @@
           <xsl:apply-templates select="." mode="ns"/>
         </xsl:when>
       </xsl:choose>
+      -->
     </xsl:if>
 
     <xsl:choose>
@@ -463,6 +476,14 @@
     <xsl:variable name="ns-prefix">
       <xsl:call-template name="verbatim-getNamespacePrefix"/>
     </xsl:variable>
+    <xsl:variable name="ns-parent">
+      <xsl:for-each select="parent::*">
+	<xsl:value-of select="namespace-uri()"/>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:variable name="ns">
+	<xsl:value-of select="namespace-uri()"/>
+    </xsl:variable>
 
     <xsl:choose>
       <xsl:when test="namespace-uri()='http://www.tei-c.org/ns/Examples'">
@@ -478,7 +499,13 @@
         </xsl:call-template>
       </xsl:when>
 
-      <xsl:when test="not(namespace-uri()='')">
+     <xsl:when test="$ns-parent=$ns">
+        <xsl:call-template name="verbatim-createElement">
+          <xsl:with-param name="name" select="local-name(.)"/>
+        </xsl:call-template>
+      </xsl:when>
+
+      <xsl:when test="not($ns='')">
         <xsl:call-template name="verbatim-createElement">
           <xsl:with-param name="name" select="local-name(.)"/>
         </xsl:call-template>
@@ -596,43 +623,34 @@
 
   <xsl:template match="text()|comment()|processing-instruction()" mode="ns"/>
 
-  <xsl:template match="*" mode="ns">
-    <xsl:param name="list"/>
-    <xsl:variable name="used">
-      <xsl:for-each select="namespace::*">
-        <xsl:variable name="ns" select="."/>
-        <xsl:choose>
-          <xsl:when test="contains($list,$ns)"/>
-          <xsl:when test=".='http://relaxng.org/ns/structure/1.0'"/>
-          <xsl:when test=".='http://www.w3.org/2001/XInclude'"/>
-          <xsl:when test=".='http://www.tei-c.org/ns/Examples'"/>
-          <xsl:when test=".='http://www.ascc.net/xml/schematron'"/>
-          <xsl:when test=".='http://relaxng.org/ns/compatibility/annotations/1.0'"/>
-          <xsl:when test="name(.)=''"/>
-          <xsl:when test=".='http://www.w3.org/XML/1998/namespace'"/>
-          <xsl:otherwise>
-            <xsl:call-template name="verbatim-lineBreak">
-              <xsl:with-param name="id">22</xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&#160;&#160;&#160;</xsl:text>
-            <xsl:text>xmlns:</xsl:text>
-            <xsl:value-of select="name(.)"/>
-            <xsl:text>="</xsl:text>
-            <xsl:value-of select="."/>
-            <xsl:text>"</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:for-each>
-    </xsl:variable>
-    <xsl:copy-of select="$used"/>
-    <xsl:apply-templates mode="ns">
-      <xsl:with-param name="list">
-        <xsl:value-of select="$list"/>
-        <xsl:value-of select="$used"/>
-      </xsl:with-param>
-    </xsl:apply-templates>
+  <xsl:template match="@*|*" mode="ns">
+    <xsl:variable name="ns" select="namespace-uri()"/>
+    <xsl:choose>
+      <xsl:when test="$ns=''"/>
+      <xsl:when test="$ns='http://relaxng.org/ns/structure/1.0'"/>
+      <xsl:when test="$ns='http://www.w3.org/2001/XInclude'"/>
+      <xsl:when test="$ns='http://www.tei-c.org/ns/Examples'"/>
+      <xsl:when test="$ns='http://www.ascc.net/xml/schematron'"/>
+      <xsl:when test="$ns='http://relaxng.org/ns/compatibility/annotations/1.0'"/>
+      <xsl:when test="$ns='http://www.w3.org/XML/1998/namespace'"/>
+      <xsl:otherwise>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:apply-templates mode="ns" select="@*|*"/>
   </xsl:template>
 
 
+  <xsl:template name="ns">
+    <xsl:param name="nsname"/>
+    <xsl:call-template name="verbatim-lineBreak">
+      <xsl:with-param name="id">22</xsl:with-param>
+    </xsl:call-template>
+    <xsl:text>&#160;&#160;&#160;</xsl:text>
+    <xsl:text>xmlns:</xsl:text>
+    <xsl:value-of select="name(.)"/>
+    <xsl:text>="</xsl:text>
+    <xsl:value-of select="."/>
+    <xsl:text>"</xsl:text>
+  </xsl:template>
 
 </xsl:stylesheet>

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+<xsl:stylesheet 		
+    version="2.0" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:its="http://www.w3.org/2005/11/its"
+    xmlns:iso="http://www.iso.org/ns/1.0"
     xmlns:dc="http://purl.org/dc/elements/1.1/" 
     xmlns:dcterms="http://purl.org/dc/terms/"
     xmlns:dcmitype="http://purl.org/dc/dcmitype/"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xmlns:tei="http://www.tei-c.org/ns/1.0"
-    version="2.0" xmlns:iso="http://www.iso.org/ns/1.0"
-    
     xmlns:teix="http://www.tei-c.org/ns/Examples"
     xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -27,11 +29,11 @@
     xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
     xmlns:contypes="http://schemas.openxmlformats.org/package/2006/content-types"
     xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-    exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso
+    exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso its
 			     tei a xs pic fn xsi dc dcterms dcmitype
 			     contypes teidocx teix html">
 
-  <xsl:import href="teidocx-functions.xsl"/>
+  <xsl:import href="tei-docx-functions.xsl"/>
   <xsl:import href="tei-docx-verbatim.xsl"/>
   <xsl:import href="variables.xsl"/>
 <!--
@@ -447,6 +449,9 @@ Divide by 100 to avoid overflow.
 
             <!-- bold? -->
             <xsl:choose>
+                <xsl:when test="parent::tei:hi[starts-with(@rend,'specList-')]">
+                    <w:b/>
+		</xsl:when>
                 <xsl:when test="@rend='bold'">
                     <w:b/>
                 </xsl:when>
@@ -1313,8 +1318,11 @@ is there a number present?
 						  or @role='label'">
 				    <w:jc w:val="left"/>
 				  </xsl:when>
-				  <xsl:otherwise>
+				  <xsl:when test="starts-with(.,'[0-9]')">
 				    <w:jc w:val="right"/>
+				  </xsl:when>
+				  <xsl:otherwise>
+				    <w:jc w:val="left"/>
 				  </xsl:otherwise>
 				</xsl:choose>
 			    </w:pPr>
@@ -2979,4 +2987,7 @@ under new name -->
     <xsl:template name="generateTitle"/>
     <xsl:template name="created-by"/>
 
+    <!-- no handling of index terms -->
+
+    <xsl:template match="tei:index"/>
 </xsl:stylesheet>

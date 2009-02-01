@@ -537,24 +537,8 @@ version="2.0">
 	    <xsl:call-template name="moduleInfo"/>
 	  </xsl:if>
 	    
-	  <xsl:element namespace="{$outputNS}" name="{$rowName}">
-	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
-	      <xsl:attribute name="{$rendName}">
-		<xsl:text>wovenodd-col1</xsl:text>
-	      </xsl:attribute>
-	      <xsl:element namespace="{$outputNS}" name="{$hiName}">
-		<xsl:attribute name="{$rendName}">
-		  <xsl:text>label</xsl:text>
-		</xsl:attribute>
-		<xsl:call-template name="i18n">
-		  <xsl:with-param name="word">Attributes</xsl:with-param>
-		</xsl:call-template>
-	      </xsl:element>
-	    </xsl:element>
-	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
-	      <xsl:attribute name="{$rendName}">
-		<xsl:text>wovenodd-col2</xsl:text>
-	      </xsl:attribute>
+	  <xsl:variable name="myatts">
+	    <a>
 	      <xsl:choose>
 		<xsl:when test="not(tei:attList)">
 		  <xsl:call-template name="showAttClasses"/>
@@ -567,9 +551,31 @@ version="2.0">
 		  </xsl:for-each>
 		</xsl:otherwise>
 	      </xsl:choose>
+	    </a>
+	  </xsl:variable>
+	  <xsl:if test="count($myatts/a/*)&gt;0">
+	    <xsl:element namespace="{$outputNS}" name="{$rowName}">
+	      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+		<xsl:attribute name="{$rendName}">
+		  <xsl:text>wovenodd-col1</xsl:text>
+		</xsl:attribute>
+		<xsl:element namespace="{$outputNS}" name="{$hiName}">
+		  <xsl:attribute name="{$rendName}">
+		    <xsl:text>label</xsl:text>
+		  </xsl:attribute>
+		  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">Attributes</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:element>
+	      </xsl:element>
+	      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>wovenodd-col2</xsl:text>
+	      </xsl:attribute>
+	      <xsl:copy-of select="$myatts/a/*"/>
+	      </xsl:element>
 	    </xsl:element>
-	  </xsl:element>
-	  
+	  </xsl:if>
 	  <xsl:element  namespace="{$outputNS}" name="{$rowName}">
 	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
 	      <xsl:attribute name="{$rendName}">

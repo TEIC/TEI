@@ -1,10 +1,12 @@
 #!/bin/sh
 profile=iso
 odd=false
+debug=false
 while test $# -gt 0; do
   case $1 in
     --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
     --odd)       odd=true;;
+    --debug)     debug=true;;
      *) if test "$1" = "${1#--}" ; then 
 	   break
 	else
@@ -34,19 +36,31 @@ cd $TEMPDIR
 unzip -o -q $TEMPLATES/template.docx
 if $odd
 then
-    saxon $THERE/$F.xml $XSL/docx/fixgraphics.xsl DIR=`pwd`/word \
-    | saxon  -o $TEMPDIR/tmp.xml  $THERE/$F.xml  $XSL/odds2/odd2lite.xsl displayMode=rnc
+    saxon -o $TEMPDIR/tmp1.xml $THERE/$F.xml  $XSL/odds2/odd2lite.xsl displayMode=rnc 
+    saxon -o $TEMPDIR/tmp.xml  $TEMPDIR/tmp1.xml $XSL/docx/fixgraphics.xsl DIR=`pwd`/word
+    rm tmp1.xml
 else
     saxon -o $TEMPDIR/tmp.xml  $THERE/$F.xml $XSL/docx/fixgraphics.xsl DIR=`pwd`/word
 fi
 saxon -o word/document.xml tmp.xml $APPHOME/applications/$profile/tei-docx.xsl  \
     debug=true styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR
-rm -f tmp.xml word/media/*.xmp
+if $debug 
+then
+    echo leaving tmp.xml alone
+else
+    rm -f tmp.xml
+fi
+rm -f word/media/*.xmp
 test -f newContent_Types.xml && mv newContent_Types.xml \[Content_Types\].xml
 mv docProps/newcore.xml docProps/core.xml 
 rm -f $THERE/$F.docx
 zip -q -r $THERE/$F.docx word _rels docProps customXml \[Content_Types\].xml
 cd $HERE
-rm -rf $TEMPDIR
+if $debug 
+then
+    echo Working files in $TEMPDIR
+else
+    rm -rf $TEMPDIR
+fi
 echo wrote $F.docx in $THERE
 

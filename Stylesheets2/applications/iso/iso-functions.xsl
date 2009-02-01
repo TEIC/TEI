@@ -148,6 +148,9 @@
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
             <xsl:choose>
+                <xsl:when test="@rend='specList-elementSpec'">
+		   true
+		</xsl:when>
                 <xsl:when test="self::tei:term">
                     true
                 </xsl:when>
