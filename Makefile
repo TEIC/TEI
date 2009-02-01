@@ -333,7 +333,7 @@ dist-doc:
 	for i in ReleaseNotes/readme*xml; do  \
 	xsltproc \
 	--stringparam cssFile html/guidelines.css \
-	${XSL}//html/tei.xsl $$i \
+	${XSL}/html/tei.xsl $$i \
 	> release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
 	-make pdf
