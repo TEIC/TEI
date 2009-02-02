@@ -188,5 +188,17 @@
         <w:sz w:val="20"/>
       </w:rPr>
     </w:style>
+    <w:style w:type="paragraph" w:customStyle="1" w:styleId="egXMLTable">
+      <w:name w:val="egXMLTable"/>
+      <w:basedOn w:val="Normal"/>
+      <w:qFormat/>
+      <w:pPr>
+	<w:spacing w:before="80" w:after="0"/>
+      </w:pPr>
+      <w:rPr>
+        <w:sz w:val="18"/>
+        <w:rFonts w:ascii="Courier" w:hAnsi="Courier"/>
+      </w:rPr>
+    </w:style>
   </xsl:template>
 </xsl:stylesheet>

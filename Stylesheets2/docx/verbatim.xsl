@@ -58,6 +58,7 @@
   <xsl:template name="verbatim-getNamespacePrefix">
     <xsl:variable name="ns" select="namespace-uri()"/>
     <xsl:choose>
+      <xsl:when test="$ns='http://www.w3.org/XML/1998/namespace'">xml</xsl:when>
       <xsl:when test="$ns='http://www.tei-c.org/ns/1.0'">tei</xsl:when>
       <xsl:when test="$ns='http://docbook.org/ns/docbook'">dbk</xsl:when>
       <xsl:when test="$ns='http://www.w3.org/2001/XMLSchema'">xsd</xsl:when>

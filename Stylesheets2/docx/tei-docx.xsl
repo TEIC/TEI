@@ -248,7 +248,6 @@ Divide by 100 to avoid overflow.
                      and then take call this function recursively was all the other
                      elements -->
                 <xsl:when test="self::*[not(teidocx:is-inline(.))]">
-
                     <!-- process block element -->
                     <xsl:apply-templates select=".">
                         <xsl:with-param name="style" select="$style"/>
@@ -269,7 +268,6 @@ Divide by 100 to avoid overflow.
                 <!-- we encountered an inline element. This means that the current group only
                      contains inline elements -->
                 <xsl:otherwise>
-                    
                     <!-- create all text runs for each item in the current group. we will later
                          on decide whether we are grouping them together in a w:p or not. -->
                     <xsl:variable name="innerRuns">
@@ -442,6 +440,7 @@ Divide by 100 to avoid overflow.
 
     <xsl:template name="applyRend">
         <xsl:for-each select="..">
+
             <!-- use a custom font -->
             <xsl:if test="@iso:font">
                 <w:rFonts w:ascii="{@iso:font}" w:hAnsi="{@iso:font}"/>
@@ -449,24 +448,12 @@ Divide by 100 to avoid overflow.
 
             <!-- bold? -->
             <xsl:choose>
-                <xsl:when test="parent::tei:hi[starts-with(@rend,'specList-')]">
-                    <w:b/>
-		</xsl:when>
-                <xsl:when test="@rend='bold'">
-                    <w:b/>
-                </xsl:when>
                 <xsl:when test="teidocx:render-bold(.)">
                     <w:b/>
                 </xsl:when>
                 <xsl:when test="self::tei:hi[not(@rend)]">
                     <w:b/>
                 </xsl:when>
-		<xsl:when test="self::tei:cell[@role='label']">
-                    <w:b/>
-		</xsl:when>
-		<xsl:when test="self::tei:cell and parent::tei:row[@role='label']">
-                    <w:b/>
-		</xsl:when>
             </xsl:choose>
 
             <!-- italic -->
@@ -1175,7 +1162,12 @@ is there a number present?
     -->
     <xsl:template match="teix:egXML">
         <xsl:call-template name="block-element">
-            <xsl:with-param name="style">egXML</xsl:with-param>
+            <xsl:with-param name="style">
+	    <xsl:choose>
+	      <xsl:when test="ancestor::tei:cell">egXMLTable</xsl:when>
+	      <xsl:otherwise>egXML</xsl:otherwise>
+	    </xsl:choose>
+	    </xsl:with-param>
             <xsl:with-param name="select">
                 <tei:p>
                     <xsl:call-template name="create-egXML-section"/>
@@ -1186,14 +1178,27 @@ is there a number present?
     
     <xsl:template match="tei:eg">
         <xsl:call-template name="block-element">
-            <xsl:with-param name="style">egXML</xsl:with-param>
+	  <xsl:with-param name="style">
+	    <xsl:choose>
+	      <xsl:when test="ancestor::tei:cell">egXMLTable</xsl:when>
+	      <xsl:otherwise>egXML</xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:with-param>
             <xsl:with-param name="select">
                 <tei:p>
                     <xsl:attribute name="xml:space">preserve</xsl:attribute>
                     <xsl:for-each select="tokenize(.,'\n')">
-                        <xsl:value-of select="."/>
-                        <tei:lb/>
-                    </xsl:for-each>                    
+		      <xsl:choose>
+			<xsl:when test="position()=last()">
+			  <xsl:value-of select="."/>
+			</xsl:when>
+			<xsl:when test=".='' and position()=1"/>
+			<xsl:otherwise>
+			  <xsl:value-of select="."/>
+			  <tei:lb/>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:for-each>                    
                 </tei:p>
             </xsl:with-param>
         </xsl:call-template>
@@ -1299,36 +1304,47 @@ is there a number present?
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:call-template name="block-element">
-                        <xsl:with-param name="pPr">
-                            <w:pPr>
-                                <xsl:if test="@rend">
-                                    <w:pStyle>
-                                        <xsl:attribute name="w:val">
-                                            <xsl:call-template name="getStyleName">
-                                                <xsl:with-param name="in" select="@rend"/>
-                                            </xsl:call-template>
-                                        </xsl:attribute>
-                                    </w:pStyle>
-                                </xsl:if>
-				<xsl:choose>
-				  <xsl:when test="@align">
-				    <w:jc w:val="{@align}"/>
-				  </xsl:when>
-				  <xsl:when test="parent::tei:row[@role='label']
-						  or @role='label'">
-				    <w:jc w:val="left"/>
-				  </xsl:when>
-				  <xsl:when test="starts-with(.,'[0-9]')">
-				    <w:jc w:val="right"/>
-				  </xsl:when>
-				  <xsl:otherwise>
-				    <w:jc w:val="left"/>
-				  </xsl:otherwise>
-				</xsl:choose>
-			    </w:pPr>
-                        </xsl:with-param>
-                    </xsl:call-template>
-                </xsl:otherwise>
+		      <xsl:with-param name="pPr">
+			<w:pPr>
+			  <xsl:choose>
+			    <xsl:when test="@rend">
+			      <xsl:variable name="sName">
+				<xsl:call-template name="getStyleName">
+				  <xsl:with-param name="in" select="@rend"/>
+				</xsl:call-template>
+			      </xsl:variable>
+			      <xsl:choose>
+				<xsl:when test="$sName=''">
+				  <w:pStyle w:val="{$TableText}"/>
+				</xsl:when>
+				<xsl:otherwise>
+				  <w:pStyle w:val="{$sName}"/>
+				</xsl:otherwise>
+			      </xsl:choose>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <w:pStyle w:val="{$TableText}"/>
+			    </xsl:otherwise>
+			  </xsl:choose>
+			  <xsl:choose>
+			    <xsl:when test="@align">
+			      <w:jc w:val="{@align}"/>
+			    </xsl:when>
+			    <xsl:when test="parent::tei:row[@role='label']
+					    or @role='label'">
+			      <w:jc w:val="left"/>
+			    </xsl:when>
+			    <xsl:when test="starts-with(.,'[0-9]')">
+			      <w:jc w:val="right"/>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <w:jc w:val="left"/>
+			    </xsl:otherwise>
+			  </xsl:choose>
+			</w:pPr>
+		      </xsl:with-param>
+		    </xsl:call-template>
+		</xsl:otherwise>
             </xsl:choose>
             <!-- If we have no children, put an empty p here -->
             <xsl:if test="not(descendant::text())">
@@ -1670,7 +1686,7 @@ is there a number present?
                         <w:numFmt w:val="upperLetter"/>
                         <w:pStyle w:val="ANNEX"/>
                         <w:suff w:val="nothing"/>
-                        <w:lvlText w:val="Annex %1"/>
+                        <w:lvlText w:val="Annex %1: "/>
                         <w:lvlJc w:val="left"/>
                         <w:pPr>
                             <w:ind w:left="0" w:firstLine="0"/>

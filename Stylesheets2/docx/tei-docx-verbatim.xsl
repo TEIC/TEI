@@ -14,7 +14,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-    exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom w estr" >
+    exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom w estr xd" >
     
     <xsl:import href="verbatim.xsl"/>
     

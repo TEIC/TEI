@@ -57,7 +57,10 @@
             <xsl:when test="$element/../@type='annex'">
                 <xsl:value-of select="$ANNEX"/>
             </xsl:when>
-            <xsl:when test="$element/../@type='annexSection'">
+            <xsl:when test="$element/parent::tei:div/@type='annexSection'">
+                <xsl:value-of select="concat('a',$level)"/>
+            </xsl:when>
+            <xsl:when test="$element/parent::tei:div/parent::tei:div/@type='annex'">
                 <xsl:value-of select="concat('a',$level)"/>
             </xsl:when>
             <xsl:when test="$element/../@type='bibliography'">
@@ -148,12 +151,11 @@
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
             <xsl:choose>
-                <xsl:when test="@rend='specList-elementSpec'">
-		   true
-		</xsl:when>
-                <xsl:when test="self::tei:term">
-                    true
-                </xsl:when>
+                <xsl:when test="starts-with(@rend,'specList-')">true</xsl:when>
+                <xsl:when test="starts-with(parent::tei:hi/@rend,'specList-')">true</xsl:when>
+                <xsl:when test="@rend='label'">true</xsl:when>
+                <xsl:when test="@rend='bold'">true</xsl:when>
+                <xsl:when test="self::tei:term">true</xsl:when>
                 <xsl:otherwise>false</xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
