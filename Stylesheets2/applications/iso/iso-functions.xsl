@@ -60,7 +60,7 @@
             <xsl:when test="$element/parent::tei:div/@type='annexSection'">
                 <xsl:value-of select="concat('a',$level)"/>
             </xsl:when>
-            <xsl:when test="$element/parent::tei:div/parent::tei:div/@type='annex'">
+            <xsl:when test="$element/ancestor::tei:div/@type='annex'">
                 <xsl:value-of select="concat('a',$level)"/>
             </xsl:when>
             <xsl:when test="$element/../@type='bibliography'">
