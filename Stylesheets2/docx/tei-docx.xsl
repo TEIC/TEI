@@ -288,8 +288,8 @@ Divide by 100 to avoid overflow.
                                 <xsl:otherwise/>
                             </xsl:choose>
                         </xsl:if>
-                        
-                        <!-- create text runs -->
+                        	
+                        <!-- Create text runs -->
                         <xsl:for-each select="current-group()">
                             <xsl:apply-templates select=".">
                                 <xsl:with-param name="style" select="$style"/>
@@ -393,6 +393,17 @@ Divide by 100 to avoid overflow.
 
     <xsl:template match="text()">
         <xsl:param name="character-style"/>
+	<xsl:if test="parent::tei:head/parent::tei:div[@iso:status]">
+	  <w:r>
+	    <w:t>
+	      <xsl:attribute name="xml:space">preserve</xsl:attribute>
+	      <xsl:text> (</xsl:text>
+	      <xsl:value-of select="../../@iso:status"/>
+	      <xsl:text>) </xsl:text>
+	    </w:t>
+	  </w:r>
+	</xsl:if>
+
         <w:r>
             <!-- if no specific style is assigned we might check for any other indication to assign 
                 some style ... -->
