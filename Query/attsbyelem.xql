@@ -7,6 +7,12 @@ declare function tei:atts($a as element(),$lang as xs:string) as element() {
     <name>
     {$a/@usage}
     {data($a/@ident)}</name>
+    <desc>{
+    if ($a/tei:desc[@xml:lang=$lang]) then
+        data($a/tei:desc[@xml:lang=$lang])
+    else
+        data($a/tei:desc[not(@xml:lang)])
+	}</desc>
     <defaultVal>{data($a/tei:defaultVal)}</defaultVal>
      { for $d in  $a/tei:datatype return
 	 <datatype>
@@ -25,12 +31,6 @@ declare function tei:atts($a as element(),$lang as xs:string) as element() {
              }
        </valList>
       }
-    <desc>{
-    if ($a/tei:desc[@xml:lang=$lang]) then
-        data($a/tei:desc[@xml:lang=$lang])
-    else
-        data($a/tei:desc[not(@xml:lang)])
-	}</desc>
   </att>
 };
 

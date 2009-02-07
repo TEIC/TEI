@@ -16,6 +16,12 @@ return
     <name>
     {$a/@usage}
     {data($a/@ident)}</name>
+    <desc>{
+        if ($t/tei:desc[@xml:lang=$lang]) then
+	   data($t/tei:desc[@xml:lang=$lang])
+	else
+	   data($t/tei:desc[not(@xml:lang)])
+	}</desc>
     <defaultVal>{data($a/tei:defaultVal)}</default>
      { for $d in  $a/tei:datatype return
 	 <datatype>
@@ -34,12 +40,6 @@ return
              }
        </valList>
       }
-    <desc>{
-        if ($t/tei:desc[@xml:lang=$lang]) then
-	   data($t/tei:desc[@xml:lang=$lang])
-	else
-	   data($t/tei:desc[not(@xml:lang)])
-	}</desc>
   </att>
 }
 </Class>
