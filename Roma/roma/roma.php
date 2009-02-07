@@ -849,7 +849,7 @@ class roma
 	$this->getParser( $oParser );
 	
 	$oSchemaParser = new parser();
-	$this->m_oRomaDom->CustomizationFilename( $szFilename )
+	$this->m_oRomaDom->getCustomizationFilename( $szFilename );
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
 	$this->m_oRomaDom->getDocLanguage( $szDocLanguage );	
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
