@@ -645,6 +645,13 @@ class romaDom extends domDocument
 		      {
 			$oAtt->removeChild( $oDesc );
 		      }
+		    $oChildAlt = $oChild->getElementsByTagName( 'altIdent' )->item(0);
+		    if ( is_object( $oChildAlt ) )
+		      {
+			$oAttDef = $oAtt->appendChild( new domElement( 'altName' ) );
+			$oAttDef->appendChild( new domText( $oChildAlt->nodeValue ) );
+		      }
+
 		    if ( is_object( $oChildDesc ) )
 		      {
 			$oAttDesc = $oAtt->appendChild( new domElement( 'desc' ) );
@@ -661,13 +668,6 @@ class romaDom extends domDocument
 		      {
 			$oAttDef = $oAtt->appendChild( new domElement( 'defaultVal' ) );
 			$oAttDef->appendChild( new domText( $oChildDefault->nodeValue ) );
-		      }
-
-		    $oChildAlt = $oChild->getElementsByTagName( 'altIdent' )->item(0);
-		    if ( is_object( $oChildAlt ) )
-		      {
-			$oAttDef = $oAtt->appendChild( new domElement( 'altName' ) );
-			$oAttDef->appendChild( new domText( $oChildAlt->nodeValue ) );
 		      }
 
 		    $oChildDat = $oChild->getElementsByTagName( 'datatype' )->item(0);
@@ -1501,11 +1501,14 @@ class romaDom extends domDocument
  	     $oDesc = $oAttDef->getElementsByTagname( 'desc' )->item(0);
 	     if ( is_object( $oDesc ) )
 	      {
-		$oAttDef->removeChild( $oDesc );
+		$oDesc->nodeValue=new domText( stripslashes($aszConfig[ 'description' ]));
 	      }
-	     $theDesc = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'desc' );
-	     $oDesc = $oAttDef->appendChild( $theDesc );
-	     $oDesc->appendChild( new domText( stripslashes($aszConfig[ 'description' ]) ) );
+	     else 
+	       {
+		 $theDesc = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'desc' );
+		 $oDesc = $oAttDef->appendChild( $theDesc );
+		 $oDesc->appendChild( new domText( stripslashes($aszConfig[ 'description' ]) ) );
+	       }
 	    }
 
 	    //	    echo "<p>name = " .  $aszConfig[ 'name' ];
@@ -1541,28 +1544,28 @@ class romaDom extends domDocument
 
 	    //content
 	    if ($aszConfig[ 'changedContent'] == 'true' ) {
-	    $oContent = $oAttDef->getElementsByTagname( 'datatype' )->item(0);
-	    if ( is_object( $oContent ) )
-	      {
-		$oAttDef->removeChild( $oContent );
-	      }
-	    $theContent = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'datatype' );
-	    $oContent = $oAttDef->appendChild( $theContent );
-
-	    $oContent->setAttribute('minOccurs', $aszConfig['minOccurs']);
-	    $oContent->setAttribute('maxOccurs', $aszConfig['maxOccurs']);
-	    switch ( $aszConfig[ 'content' ] )
-	      {
-	      case 'text':
-		$oRNG = $this->createElementNS( 'http://relaxng.org/ns/structure/1.0', 'rng:' . $aszConfig[ 'content' ] );
-		$oContent->appendChild( $oRNG );
-		break; 
-	      default:
-		    $oRNG = $this->createElementNS( 'http://relaxng.org/ns/structure/1.0', 'rng:ref' );
-		    $oRef = $oContent->appendChild( $oRNG );
-		    $oRef->setAttribute( 'name', $aszConfig[ 'content' ] );
-		    break;
-	      }
+	      $oContent = $oAttDef->getElementsByTagname( 'datatype' )->item(0);
+	      if ( is_object( $oContent ) )
+		{
+		  $oAttDef->removeChild( $oContent );
+		}
+	      $theContent = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'datatype' );
+	      $oContent = $oAttDef->appendChild( $theContent );
+	      
+	      $oContent->setAttribute('minOccurs', $aszConfig['minOccurs']);
+	      $oContent->setAttribute('maxOccurs', $aszConfig['maxOccurs']);
+	      switch ( $aszConfig[ 'content' ] )
+		{
+		case 'text':
+		  $oRNG = $this->createElementNS( 'http://relaxng.org/ns/structure/1.0', 'rng:' . $aszConfig[ 'content' ] );
+		  $oContent->appendChild( $oRNG );
+		  break; 
+		default:
+		  $oRNG = $this->createElementNS( 'http://relaxng.org/ns/structure/1.0', 'rng:ref' );
+		  $oRef = $oContent->appendChild( $oRNG );
+		  $oRef->setAttribute( 'name', $aszConfig[ 'content' ] );
+		  break;
+		}
 	    }
 	      	    
 	    //default
