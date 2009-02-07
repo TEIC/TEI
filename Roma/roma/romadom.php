@@ -1043,12 +1043,14 @@ class romaDom extends domDocument
 
 	    if ( is_object( $oDesc ) )
 	      {
-		$oElementSpec->removeChild( $oDesc );
+		$oDesc->nodeValue = stripslashes( $aszConfig[ 'description' ] );
 	      }
-            $theDesc = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'desc' );
-            $oDesc = $oElementSpec->appendChild( $theDesc );
-	    $oDesc->appendChild( new domText( stripslashes( $aszConfig[ 'description' ] ) ) );
-
+	    else
+	      {
+		$theDesc = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'desc' );
+		$oDesc = $oElementSpec->appendChild( $theDesc );
+		$oDesc->appendChild( new domText( stripslashes( $aszConfig[ 'description' ] ) ) );
+	      }
 // namespace
 
    	   $oElementSpec->setAttribute( 'ns', $aszConfig[ 'namespace'] );
