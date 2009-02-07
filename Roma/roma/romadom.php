@@ -1501,7 +1501,7 @@ class romaDom extends domDocument
  	     $oDesc = $oAttDef->getElementsByTagname( 'desc' )->item(0);
 	     if ( is_object( $oDesc ) )
 	      {
-		$oDesc->nodeValue=new domText( stripslashes($aszConfig[ 'description' ]));
+		$oDesc->nodeValue= stripslashes($aszConfig[ 'description' ]);
 	      }
 	     else 
 	       {
