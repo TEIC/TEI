@@ -21,7 +21,7 @@
 	exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso edate">
 	
 	<!--xsl:import href="omml2mml.xsl"/-->
-	<xsl:import href="teidocx-functions.xsl"/>
+	<xsl:import href="tei-docx-functions.xsl"/>
 	
 	<xd:doc type="stylesheet">
 		<xd:short> TEI stylesheet for converting Word docx files to TEI </xd:short>

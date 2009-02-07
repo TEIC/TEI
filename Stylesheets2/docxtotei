@@ -7,11 +7,12 @@ N=`basename $1 .docx`
 echo read $1 from $THERE
 echo app is in $HERE
 TEMPDIR=/tmp/docx$$
+mkdir $TEMPDIR
 cd $TEMPDIR
 unzip -q $THERE/$N.docx
 saxon word/document.xml $HERE/docx/normalize-word-style.xsl debug=false |
 saxon - $HERE/docx/docx-tei.xsl word-directory=`pwd` \
-| xmllint --format - > ../$N.xml
-echo wrote $N.xml
-cd $HERE
+| xmllint --format - > $THERE/$N.xml
+echo wrote $N.xml in $THERE
+cd $THERE
 rm -rf $TEMPDIR
