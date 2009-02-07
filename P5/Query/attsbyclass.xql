@@ -17,6 +17,7 @@ return
     <name>
     {$a/@usage}
     {data($a/@ident)}</name>
+    <desc>{data($Desc)}</desc>
     <defaultVal>{data($a/tei:defaultVal)}</defaultVal>
      { for $d in  $a/tei:datatype 
         return
@@ -35,7 +36,6 @@ return
              </valItem>
        </valList>
       }
-    <desc>{data($Desc)}</desc>
 </att>
 }
 </Element>
