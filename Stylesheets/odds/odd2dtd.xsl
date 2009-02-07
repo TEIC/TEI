@@ -1577,6 +1577,12 @@
       <xsl:when test="(tei:datatype/@maxOccurs &gt; 1) and tei:datatype/rng:ref[@name='data.enumerated']">
 	<xsl:text> NMTOKENS </xsl:text>
       </xsl:when>
+      <xsl:when test="(tei:datatype/@maxOccurs &gt; 1) and tei:datatype/rng:data[@type='Name']">
+	<xsl:text> NMTOKENS </xsl:text>
+      </xsl:when>
+      <xsl:when test="tei:datatype/rng:data[@type='Name']">
+	<xsl:text> NMTOKEN </xsl:text>
+      </xsl:when>
       <xsl:when test="tei:valList[@type='closed']">
 	<xsl:text> (</xsl:text>
 	<xsl:for-each select="tei:valList/tei:valItem">
