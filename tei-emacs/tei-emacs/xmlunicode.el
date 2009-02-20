@@ -8,8 +8,8 @@
 
 ;; Author: Norman Walsh <ndw@nwalsh.com>
 ;; Maintainer: Norman Walsh <ndw@nwalsh.com>
-;; Created: 2003-09-29
-;; Version: 1.0
+;; Created: 2004-07-21
+;; Version: 1.6
 ;; CVS ID: $Id$
 ;; Keywords: utf-8 unicode xml characters
 
@@ -93,6 +93,28 @@
 
 ;;; Changes
 
+;; v1.7
+;;   Require "cl" because, well, because it's required. Also fiddled with
+;;   the way single quotes are handled; the apostrophe is now part of the
+;;   cycle
+;; v1.6
+;;   Remove debugging code. Embarrassed again. :-(
+;; v1.5
+;;   Fixed bug in unicode-smart-single-quote. It wasn't cycling through all
+;;   three quotes correctly because of a typo in the function definition.
+;;   Make sure smart semicolon insertion only happens if we're right at the
+;;   end of a numeric character reference.
+;; v1.4
+;;   Fixed bug in insert-smart-semicolon. It wasn't careful to tie the search
+;;   to the most recent preceding ampersand.
+;; v1.3
+;;   Fixed bug in (in-comment)
+;;   Added unicode-smart-semicolon as another convenience for entering Unicode chars
+;;   Added show-unicode-character-list
+;; v1.2
+;;   Added unicode-smart-hyphen for easy insert of mdash and ndash
+;;   Added unicode-smart-period for easy insert of hellip
+;;   Fixed a bug in unicode-smart-single-quote
 ;; v1.1
 ;;   Fixed a few bugs with respect to how numeric character references are entered.
 ;;   Added xml-tag-search-limit and unicode-charref-format
@@ -101,12 +123,18 @@
 
 ;;; Code:
 
-(defvar unicode-ldquo (decode-char 'ucs #x00201c))
-(defvar unicode-rdquo (decode-char 'ucs #x00201d))
-(defvar unicode-lsquo (decode-char 'ucs #x002018))
-(defvar unicode-rsquo (decode-char 'ucs #x002019))
-(defvar unicode-quot  (decode-char 'ucs #x000022))
-(defvar unicode-apos  (decode-char 'ucs #x000027))
+(require 'cl)
+
+(defvar unicode-ldquo  (decode-char 'ucs #x00201c))
+(defvar unicode-rdquo  (decode-char 'ucs #x00201d))
+(defvar unicode-lsquo  (decode-char 'ucs #x002018))
+(defvar unicode-rsquo  (decode-char 'ucs #x002019))
+(defvar unicode-quot   (decode-char 'ucs #x000022))
+(defvar unicode-apos   (decode-char 'ucs #x000027))
+(defvar unicode-capos  (decode-char 'ucs #x0002bc))
+(defvar unicode-ndash  (decode-char 'ucs #x002013))
+(defvar unicode-mdash  (decode-char 'ucs #x002014))
+(defvar unicode-hellip (decode-char 'ucs #x002026))
 
 (defvar unicode-charref-format "&#x%x;"
   "The format for numeric character references")
@@ -269,7 +297,6 @@
 	     nil t isoname)))
 	 codepoint glyph)
     (setq codepoint (cdr (assoc charname iso8879-character-alist)))
-    (setq glyph (memq codepoint unicode-glyph-list))
     (xml-unicode-insert arg codepoint)))
 
 (defun xml-unicode-insert (arg codepoint)
@@ -314,6 +341,7 @@
     ("mdash"     . #x2014)
     ("micro"     . #x00B5)
     ("middot"    . #x00B7)
+    ("nbsp"      . #x00A0)
     ("ndash"     . #x2013)
     ("not"       . #x00AC)
     ("numsp"     . #x2007)
@@ -356,7 +384,7 @@
 
 (make-unicode-character-menu-bar)
 
-;; Smart quotes
+;; Simple XML tests
 
 (defun in-start-tag ()
   "Crude test to see if point is inside an open start tag."
@@ -391,6 +419,37 @@
 	(goto-char here)
 	(or (and plt (not psl))
 	    (and plt psl (< psl plt))))))
+
+(defun in-comment ()
+  "Crude test to see if point is inside a comment."
+  (interactive)
+  (let (slim here pgt pcmt)
+    (setq here (point))
+    (setq slim
+	  (if (> here xml-tag-search-limit)
+	      (- here xml-tag-search-limit)
+	    0))
+    (setq pgt (search-backward "-->" slim t))
+    (goto-char here)
+    (setq pcmt (search-backward "<!" slim t))
+    (goto-char here)
+    (if (and pgt pcmt)
+	(> pcmt pgt)
+      pcmt)))
+
+;;stolen from hen.el which in turn claims to have stolen it from cxref
+(defun unicode-looking-backward-at (regexp)
+  "Return t if text before point matches regular expression REGEXP.
+This function modifies the match data that `match-beginning',
+`match-end' and `match-data' access; save and restore the match
+data if you want to preserve them."
+  (save-excursion
+    (let ((here (point)))
+      (if (re-search-backward regexp (point-min) t)
+          (if (re-search-forward regexp here t)
+              (= (point) here))))))
+
+;; Smart quotes
 
 (defun unicode-smart-double-quote ()
   "Insert a left or right double quote as appropriate. Left quotes are inserted after a space, newline, or start tag. Right quotes are inserted after any other character, except if the preceding character is a quote, in which case we cycle through the three quote styles."
@@ -437,7 +496,7 @@
     (insert unicode-ldquo)))
 
 (defun unicode-smart-single-quote ()
-  "Insert a left or right single quote as appropriate. Left quotes are inserted after a space, newline, or start tag. Right quotes are inserted after any other character, except if the preceding character is a quote, in which case we cycle through the three quote styles."
+  "Insert a left or right single quote, or an apostrophe, as appropriate. Left quotes are inserted after a space, newline, or start tag. An apostrophe is inserted after any other character, except if the preceding character is a quote or apostrophe, in which case we cycle through the styles."
   (interactive)
   (if (char-before)
       (let ((ch (char-before)))
@@ -459,26 +518,106 @@
 	 ((or (char-equal ch 32)
 	      (char-equal ch 10))
 	  (insert unicode-lsquo))
-	 ((char-equal ch unicode-lsquo)
-	  (progn
-	    (delete-backward-char 1)
-	    (insert "\"")))
-	 ((char-equal ch unicode-quot)
+	 ((char-equal ch unicode-apos)  ; ' -> rsquo
 	  (progn
 	    (delete-backward-char 1)
 	    (insert unicode-rsquo)))
-	 ((char-equal ch unicode-rsquo)
+	 ((char-equal ch unicode-rsquo) ; rsquo -> lsquo
 	  (progn
 	    (delete-backward-char 1)
 	    (insert unicode-lsquo)))
-	 ((char-equal ch unicode-lsquo)
+	 ((char-equal ch unicode-lsquo) ; lsquo -> '
 	  (progn
 	    (delete-backward-char 1)
-	    (insert unicode-rsquo)))
-	 ((char-equal ch unicode-lsquo)
-	  (insert unicode-lsquo))
-	 (t (insert unicode-rsquo))))
+	    (insert unicode-apos)))
+	 (t (insert unicode-apos))))
     (insert unicode-lsquo)))
+
+(defun unicode-smart-hyphen ()
+  "Insert a hyphen, mdash, or ndash as appropriate. A hyphen, an mdash, and then an ndash is inserted."
+  (interactive)
+  (if (char-before)
+      (let ((ch (char-before)))
+	(cond
+	 ((in-comment)
+	  (insert "-"))
+	 ((char-equal ch ?-)
+	  (progn
+	    (delete-backward-char 1)
+	    (insert unicode-mdash)))
+	 ((char-equal ch unicode-mdash)
+	  (progn
+	    (delete-backward-char 1)
+	    (insert unicode-ndash)))
+	 ((char-equal ch unicode-ndash)
+	  (progn
+	    (delete-backward-char 1)
+	    (insert "-")))
+	 (t (insert "-"))))
+    (insert "-")))
+
+(defun unicode-smart-period ()
+  "Insert an hellipsis for three dots."
+  (interactive)
+  (if (> (point) 2)
+      (let ((ch1 (char-before))
+	    (ch2 (char-before (- (point) 1)))
+	    (ch3 (char-before (- (point) 2))))
+	(cond
+	 ((in-comment)
+	  (insert "."))
+	 ((char-equal ch1 unicode-hellip)
+	  (progn
+	    (delete-backward-char 1)
+	    (insert "....")))
+	 ((and ch3 (char-equal ch1 ?.) (char-equal ch2 ?.) (char-equal ch3 ?.))
+	  (insert "."))
+	 ((and (char-equal ch1 ?.) (char-equal ch2 ?.))
+	  (progn
+	    (delete-backward-char 2)
+	    (insert unicode-hellip)))
+	 (t (insert "."))))
+    (insert ".")))
+
+(defun unicode-smart-semicolon ()
+  "Detect numeric character references and replace them with the appropriate char."
+  (interactive)
+  (let ((pos (point))
+	amppos codept)
+    (search-backward "&" nil t nil)
+    (setq amppos (point))
+    (goto-char pos)
+    (cond
+     ((unicode-looking-backward-at "&#[xX][0-9a-fA-F]+")
+      (progn
+	(re-search-backward "&#[xX]\\([0-9a-fA-F]+\\)" nil t nil)
+	(if (= amppos (point))
+	    (progn
+	      (setq codept (string-to-number (match-string 1) 16))
+	      (if (memq codept unicode-glyph-list)
+		  (replace-match (format "%c" (decode-char 'ucs codept)))
+		(progn
+		  (goto-char pos)
+		  (insert ";"))))
+	  (progn
+	    (goto-char pos)
+	    (insert ";")))))
+     ((unicode-looking-backward-at "&#[0-9]+")
+      (progn
+	(re-search-backward "&#\\([0-9]+\\)" nil t nil)
+	(if (= amppos (point))
+	    (progn
+	      (setq codept (string-to-number (match-string 1) 10))
+	      (if (memq codept unicode-glyph-list)
+		  (replace-match (format "%c" (decode-char 'ucs codept)))
+		(progn
+		  (goto-char pos)
+		  (insert ";"))))
+	  (progn
+	    (goto-char pos)
+	    (insert ";")))))
+     (t
+      (insert ";")))))
 
 ;; Setup quail for XML mode
 
@@ -627,5 +766,21 @@
       (xml-unicode-insert nil
 			  (cdr (assoc str unicode-character-shortcut-alist))))
      (t (beep)))))
+
+(defun show-unicode-character-list ()
+  "Insert each Unicode character into a buffer. Let's you see which characters are available for literal display in your emacs font."
+  (let ((chars unicode-character-list)
+	char codept name)
+    (while chars
+      (setq char (car chars))
+      (setq chars (cdr chars))
+      (setq codept (car char))
+      (setq name (cadr char))
+
+      (if (< codept #xffff)
+	  (progn
+	    (insert (format "#x%06x " codept))
+	    (ucs-insert codept)
+	    (insert (format " %s\n" name)))))))
 
 ;; EOF
