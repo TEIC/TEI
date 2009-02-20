@@ -384,7 +384,7 @@ encoding attribute
 	"../../../../schemas.xml"
 	"../../../../../schemas.xml"
 	(abbreviate-file-name
-        (expand-file-name "schemas.xml" (concat teiemacsdir "") ))))
+        (expand-file-name "schemas.xml" (concat teiemacslispdir "") ))))
 
 ;; overload nxml-mode a little
 (add-hook 'nxml-mode-hook (lambda () 
