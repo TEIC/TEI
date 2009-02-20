@@ -19,7 +19,6 @@
     xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
     exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
 
-    <xsl:import href="variables.xsl"/>
     
     <xd:doc type="stylesheet">
         <xd:short> Specialized TEI stylesheet for transforming tei into Word docx files for Vesta </xd:short>
