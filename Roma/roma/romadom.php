@@ -52,6 +52,11 @@ class romaDom extends domDocument
 	$oP = $oPublicationStmt->appendChild( new domElement( 'p' ) );
 	$oP->appendChild( new domText( 'for use by whoever wants it' ) );
 
+	$oNotes = $oFileDesc->appendChild( new domElement( 'notesStmt' ) );
+	$oNote = $oNotes->appendChild( new domElement( 'note' ) );
+	$oNote->setAttribute( 'type', 'ns' );
+	$oNote->appendChild( new domText( 'http://www.example.org/ns/nonTEI' ) );
+
 	$oSourceDesc = $oFileDesc->appendChild( new domElement( 'sourceDesc' ) );
 	$oP = $oSourceDesc->appendChild( new domElement( 'p' ) );
 //Tuesday 13th 2006f June 2006 10:57:23 PM
@@ -908,8 +913,7 @@ class romaDom extends domDocument
     public function getCustomizationNamespace( &$szNamespace )
       {
 	$this->getXPath( $oXPath );
-	$szNamespace = $oXPath->query("//tei:schemaSpec/tei:elementSpec[@mode='add']/@ns"
-      )->item(0)->nodeValue;
+	$szNamespace = $oXPath->query("/tei:TEI/tei:teiHeader/tei:fileDesc/tei:notesStmt/tei:note[@type='ns']")->item(0)->nodeValue;
          if ($szNamespace == '' ){
 	    $szNamespace = 'http://www.example.org/ns/nonTEI';
 	 }
@@ -1993,6 +1997,25 @@ class romaDom extends domDocument
 	if ( $oTitle->hasChildNodes() )
 	  $oTitle->removeChild( $oTitle->firstChild );
 	$oTitle->appendChild( new domText ( $szTitle ) );
+      }
+
+    public function setCustomizationNamespace( $szNamespace )
+      {
+	$this->getXPath( $oXPath );
+	$oNamespace = $oXPath->query("/tei:TEI/tei:teiHeader/tei:fileDesc/tei:notesStmt/tei:note[@type='ns']")->item(0);
+	if ( is_object( $oNamespace ) ) {
+   	 if ( $oNamespace->hasChildNodes() )
+	   $oNamespace->removeChild( $oNamespace->firstChild );
+	   $oNamespace->appendChild( new domText ( $szNamespace ) );
+	 }
+	else
+	{
+ 	 $oFileDesc = $oXPath->query("/tei:TEI/tei:teiHeader/tei:fileDesc")->item(0);
+	 $oNotes = $oFileDesc->appendChild( new domElement( 'notesStmt' ) );
+	 $oNote = $oNotes->appendChild( new domElement( 'note' ) );
+	 $oNote->setAttribute( 'type', 'ns' );
+	 $oNote->appendChild( new domText( $szNamespace) );
+	}
       }
 
     public function setCustomizationDescription( $szDescription )

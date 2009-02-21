@@ -1253,7 +1253,6 @@ class roma
 	$oSchemaParser->addReplacement( 'language', $szLanguage );
 	$oSchemaParser->addReplacement( 'description', $szDesc );
 	$oSchemaParser->addReplacement( 'namespace', $szNamespace );
-	$oSchemaParser->addReplacement( 'validate', $szNamespace );
 	$oSchemaParser->Parse( $szSchemTem, $szSchema );
 	$oParser->addReplacement ('Version', $_SESSION['Version']);
 	$oParser->addReplacement( 'lang', $szLanguage );
@@ -1729,6 +1728,7 @@ class roma
     private function customizedCustomization()
       {
 	$this->m_oRomaDom->setCustomizationTitle( $_REQUEST[ 'title' ] );
+	$this->m_oRomaDom->setCustomizationNamespace( $_REQUEST[ 'namespace' ] );
 	$this->m_oRomaDom->setCustomizationFilename( $_REQUEST[ 'filename' ] );
 	$this->m_oRomaDom->setCustomizationPrefix( $_REQUEST[ 'prefix' ] );
 	$this->m_oRomaDom->setCustomizationLanguage( $_REQUEST[ 'lang' ] );
