@@ -90,6 +90,8 @@ Divide by 100 to avoid overflow.
     <xsl:key name='ENDNOTES' match="tei:note[@place='end']" use="1"/>
     <xsl:key name='FOOTNOTES' match="tei:note[@place='foot']" use="1"/>
 
+    <xsl:key name="IDS" match="tei:*[@xml:id]" use="@xml:id"/>
+
     <xsl:key name='OL' match="tei:list[@type='ordered']" use="1"/>
     <xsl:key name='BLIP' match="a:blip" use="1"/>
 
@@ -1406,7 +1408,17 @@ is there a number present?
 	  <w:rStyle w:val="Hyperlink"/>
 	  <w:u w:val="none"/>
 	</w:rPr>
-	<w:t><xsl:value-of select="@target"/></w:t>
+	<w:t>
+	  <xsl:choose>
+	    <xsl:when test="starts-with(@target,'#')">
+	      <xsl:apply-templates
+		  select="key('IDS',substring-after(@target,'#'))" mode="xref"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="@target"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</w:t>
       </w:r>
       <w:r>
 	<w:fldChar w:fldCharType="end"/>
@@ -1441,6 +1453,16 @@ is there a number present?
 -->
     </xsl:template>
 
+    <xsl:template match="tei:note|tei:figure|tei:table|tei:item" mode="xref">
+      <xsl:number/>
+    </xsl:template>
+
+    <xsl:template match="tei:div" mode="xref">
+      <xsl:number
+	    count="tei:div"
+	    from="tei:body|tei:front|tei:back" 
+	    level="multiple"/>
+    </xsl:template>
 
     <!-- 
         Handle elements from different namespaces, such as wordML, wordMathML, MathML ...
