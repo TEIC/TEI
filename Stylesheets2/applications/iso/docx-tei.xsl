@@ -709,18 +709,6 @@
     
     
     <!--  UTILITIES -->
-    <xsl:template name="today">
-        <xsl:choose>
-            <xsl:when test="function-available('edate:date-time')">
-                <xsl:value-of select="edate:date-time()"/>
-            </xsl:when>
-            <xsl:when test="contains($processor,'SAXON')">
-                <xsl:value-of select="Date:toString(Date:new())" xmlns:Date="/java.util.Date"/>
-            </xsl:when>
-            <xsl:otherwise> (unknown date) </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
-    
     <xsl:template name="getSdt">
         <xsl:param name="tag"/>
         <xsl:param name="oldtag"/>
@@ -754,3 +742,32 @@
     </xsl:template>
     
 </xsl:stylesheet>
+<!-- 
+
+for future ref , word styles which change when looked up by name:
+
+! Bibliography0 ... CHANGED ...  Bibliography
+! DefaultParagraphFont ... CHANGED ...  Default Paragraph Font
+! ExampleHeadingChar ... CHANGED ...  Example Heading Char
+! FigureHeadingChar ... CHANGED ...  Figure Heading Char
+! FigureTitle0 ... CHANGED ...  Figure Title
+! FootnoteReference ... CHANGED ...  footnote reference
+! Heading1 ... CHANGED ...  heading 1
+! Heading2 ... CHANGED ...  heading 2
+! Heading3 ... CHANGED ...  heading 3
+! Heading4 ... CHANGED ...  heading 4
+! List2 ... CHANGED ...  List 2
+! ListBullet ... CHANGED ...  List Bullet
+! ListNumber ... CHANGED ...  List Number
+! ListNumber3 ... CHANGED ...  List Number 3
+! NoteHeadingChar ... CHANGED ...  Note Heading Char
+! PlaceholderText ... CHANGED ...  Placeholder Text
+! TableHeadingChar ... CHANGED ...  Table Heading Char
+! TableNoteHeadingChar ... CHANGED ...  TableNoteHeading Char
+! TableTitle0 ... CHANGED ...  TableTitle
+! Terms ... CHANGED ...  Term(s)
+! committeeid ... CHANGED ...  committee_id
+! copyrightdetails ... CHANGED ...  copyright_details
+! docdetails ... CHANGED ...  doc_details
+! refnumworking ... CHANGED ...  working_reference_number
+-->

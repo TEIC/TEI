@@ -1,28 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:edate="http://exslt.org/dates-and-times" xmlns="http://www.tei-c.org/ns/1.0"
-	xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:iso="http://www.iso.org/ns/1.0"
-	xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:o="urn:schemas-microsoft-com:office:office"
-	xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-	xmlns:rel="http://schemas.openxmlformats.org/package/2006/relationships"
-	xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-	xmlns:v="urn:schemas-microsoft-com:vml"
-	xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
-	xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
-	xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
-	xmlns:w10="urn:schemas-microsoft-com:office:word"
-	xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-	xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
-	xmlns:mml="http://www.w3.org/1998/Math/MathML"
-	xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
-	xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-	xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-	exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso edate">
+		xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
+		xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" 
+		xmlns:dc="http://purl.org/dc/elements/1.1/" 
+		xmlns:dcterms="http://purl.org/dc/terms/" 
+		xmlns:dcmitype="http://purl.org/dc/dcmitype/"	
+		xmlns:iso="http://www.iso.org/ns/1.0"
+		xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
+		xmlns:mml="http://www.w3.org/1998/Math/MathML"
+		xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main" 
+		xmlns:mv="urn:schemas-microsoft-com:mac:vml" 
+		xmlns:o="urn:schemas-microsoft-com:office:office"
+		xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
+		xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+		xmlns:rel="http://schemas.openxmlformats.org/package/2006/relationships"
+		xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
+		xmlns:tei="http://www.tei-c.org/ns/1.0" 
+		xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
+		xmlns:v="urn:schemas-microsoft-com:vml"
+		xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:w10="urn:schemas-microsoft-com:office:word"
+		xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+		xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
+		xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+		xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+		xmlns:edate="http://exslt.org/dates-and-times" 
+		xmlns="http://www.tei-c.org/ns/1.0"
+	exclude-result-prefixes="a cp dc dcterms dcmitype edate iso m mml mo mv o pic r rel tbx tei teidocx v ve w10 w wne wp xd">
 	
 	<!--xsl:import href="omml2mml.xsl"/-->
 	<xsl:import href="tei-docx-functions.xsl"/>
 	
+
 	<xd:doc type="stylesheet">
 		<xd:short> TEI stylesheet for converting Word docx files to TEI </xd:short>
 		<xd:detail> This library is free software; you can redistribute it and/or
@@ -71,7 +80,9 @@
 			<xsl:apply-templates/>
 		</xsl:variable>
 		
-		<!--<xsl:copy-of select="$part1"/>-->
+		<!--
+		<xsl:copy-of select="$part1"/>
+		-->
 		<xsl:apply-templates select="$part1" mode="part2"/>
 	</xsl:template>
 
@@ -86,19 +97,54 @@
 		</TEI>
 	</xsl:template>
 	
-	<!-- dummy teiHeader. For a more sophisticated header, think about overwriting
+	<!-- simple teiHeader. For a more sophisticated header, think about overwriting
 		 this template -->
 	<xsl:template name="create-tei-header">
-		<teiHeader>
-			
-		</teiHeader>
+	  <teiHeader>
+	    <fileDesc>
+	      <titleStmt>
+		<title>
+		  <xsl:call-template name="getDocTitle"/>
+		</title>
+		<author>
+		  <xsl:call-template name="getDocAuthor"/>
+		</author>
+	      </titleStmt>
+	      <editionStmt>
+		<edition>
+		  <date>
+		    <xsl:call-template name="getDocDate"/>
+		  </date>
+		</edition>
+	      </editionStmt>
+	      <publicationStmt>
+		<p></p>
+	      </publicationStmt>
+	      <sourceDesc>
+		<p>Converted from a Word document </p>
+	      </sourceDesc>
+	    </fileDesc>
+	    <revisionDesc>
+	      <change>
+		<date>
+		  <xsl:text>$LastChangedDate: </xsl:text>
+		  <xsl:call-template name="today"/>
+		  <xsl:text>$</xsl:text>
+		</date>
+		<respStmt>
+		  <name>$LastChangedBy$</name>
+		</respStmt>
+		<item>$LastChangedRevision$</item>
+	      </change>
+	    </revisionDesc>
+	  </teiHeader>
 	</xsl:template>
 
 	<!-- create the basic text; worry later about dividing it up -->
 	<xsl:template match="w:body">
 		<text>
-			<xsl:call-template name="extract-headers-and-footers"/>
-			
+		  <xsl:call-template name="extract-headers-and-footers"/>
+		  
 		<!-- 
 		     look for headings of various kinds, from which to
 		     generate sections
@@ -119,11 +165,10 @@
 				</xsl:for-each-group>
 			    </xsl:when>
 			    <xsl:otherwise>
-			      <fred/>
-			      <xsl:apply-templates select="w:p|w:tbl"/>
+			      <xsl:apply-templates select="w:p|w:tbl" mode="paragraph"/>
 			    </xsl:otherwise>
 			  </xsl:choose>
-				<xsl:apply-templates select="w:sectPr" mode="paragraph"/>
+			  <xsl:apply-templates select="w:sectPr" mode="paragraph"/>
 			</body>
 		</text>
 	</xsl:template>
@@ -448,12 +493,13 @@
 		about.
 		-->
 	<xsl:template match="w:p" mode="paragraph" name="real-paragraph-template">
+
 		<p>
 			<!-- put style in rend, if there is a style -->
 			<xsl:if test="w:pPr/w:pStyle/@w:val">
-				<xsl:attribute name="rend">
-					<xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
-				</xsl:attribute>
+			  <xsl:attribute name="rend">
+			    <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
+			  </xsl:attribute>
 			</xsl:if>
 			
 			<!-- Store information about spacing  -->
@@ -837,10 +883,9 @@
 	</xsl:template>
 
 	<xsl:template match="*" mode="iden">
-		<xsl:copy>
-			<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="iden"
-			/>
-		</xsl:copy>
+	  <xsl:element name="{name()}">
+	    <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="iden"/>
+	  </xsl:element>
 	</xsl:template>
 
 
@@ -987,17 +1032,16 @@
 	<!-- look at the sections we have generated, and put
 	them in <front> or <body> as appropriate-->
 	<xsl:template match="tei:text" mode="part2">
-		<text>
-		  <xsl:for-each select="tei:fw">
-			<xsl:copy-of select="."/>
+	  <text>
+	    <xsl:for-each select="tei:fw">
+	      <xsl:copy-of select="."/>
+	    </xsl:for-each>
+	    <body>
+	      <xsl:for-each select="tei:body/tei:*">
+		<xsl:apply-templates select="." mode="part2"/>
 	      </xsl:for-each>
-		
-		  <body>
-		    <xsl:for-each select="tei:body/tei:div">
-			  <xsl:apply-templates select="." mode="part2"/>
-		    </xsl:for-each>
-		  </body>
-		</text>
+	    </body>
+	  </text>
 	</xsl:template>
 
 	<!-- a <p> inside a listBibl is moved out-->
@@ -1063,34 +1107,34 @@
 	<xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2">
 	</xsl:template>
 
+    <xsl:template name="today">
+        <xsl:choose>
+            <xsl:when test="function-available('edate:date-time')">
+                <xsl:value-of select="edate:date-time()"/>
+            </xsl:when>
+            <xsl:when test="contains($processor,'SAXON')">
+                <xsl:value-of select="Date:toString(Date:new())" xmlns:Date="/java.util.Date"/>
+            </xsl:when>
+            <xsl:otherwise> (unknown date) </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="getDocTitle">
+      <xsl:for-each select="document('docProps/core.xml',/)">
+	<xsl:value-of select="cp:coreProperties/dc:title"/>
+      </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template name="getDocAuthor">
+      <xsl:for-each select="document('docProps/core.xml',/)">
+	<xsl:value-of select="cp:coreProperties/dc:creator"/>
+      </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template name="getDocDate">
+      <xsl:for-each select="document('docProps/core.xml',/)">
+	<xsl:value-of select="substring-before(cp:coreProperties/dcterms:created,'T')"/>
+      </xsl:for-each>
+    </xsl:template>
 
 </xsl:stylesheet>
-<!-- 
-
-for future ref , word styles which change when looked up by name:
-
-! Bibliography0 ... CHANGED ...  Bibliography
-! DefaultParagraphFont ... CHANGED ...  Default Paragraph Font
-! ExampleHeadingChar ... CHANGED ...  Example Heading Char
-! FigureHeadingChar ... CHANGED ...  Figure Heading Char
-! FigureTitle0 ... CHANGED ...  Figure Title
-! FootnoteReference ... CHANGED ...  footnote reference
-! Heading1 ... CHANGED ...  heading 1
-! Heading2 ... CHANGED ...  heading 2
-! Heading3 ... CHANGED ...  heading 3
-! Heading4 ... CHANGED ...  heading 4
-! List2 ... CHANGED ...  List 2
-! ListBullet ... CHANGED ...  List Bullet
-! ListNumber ... CHANGED ...  List Number
-! ListNumber3 ... CHANGED ...  List Number 3
-! NoteHeadingChar ... CHANGED ...  Note Heading Char
-! PlaceholderText ... CHANGED ...  Placeholder Text
-! TableHeadingChar ... CHANGED ...  Table Heading Char
-! TableNoteHeadingChar ... CHANGED ...  TableNoteHeading Char
-! TableTitle0 ... CHANGED ...  TableTitle
-! Terms ... CHANGED ...  Term(s)
-! committeeid ... CHANGED ...  committee_id
-! copyrightdetails ... CHANGED ...  copyright_details
-! docdetails ... CHANGED ...  doc_details
-! refnumworking ... CHANGED ...  working_reference_number
--->
