@@ -39,6 +39,7 @@ XSL LaTeX stylesheet to make slides
   <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
   <xsl:param name="classParameters"/>
   <xsl:param name="beamerClass">PaloAlto</xsl:param>
+  <xsl:param name="pause">true</xsl:param>
 
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
@@ -216,7 +217,7 @@ XSL LaTeX stylesheet to make slides
 <xsl:template match="tei:item[@rend='pause' or parent::tei:list/@rend='pause']">
   <xsl:text>\item </xsl:text>
   <xsl:apply-templates/>
-  <xsl:if test="following-sibling::tei:item">
+  <xsl:if test="following-sibling::tei:item and $pause='true'">
     <xsl:text>\pause </xsl:text>
   </xsl:if>
 </xsl:template>
@@ -227,8 +228,43 @@ XSL LaTeX stylesheet to make slides
   <xsl:text>\end{Verbatim}&#10;</xsl:text>
 </xsl:template>
 
+  <xsl:template match="text()" mode="eg">
+    <xsl:choose>
+      <xsl:when test="starts-with(.,'&#10;')">
+        <xsl:value-of select="substring-after(.,'&#10;')"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="teix:egXML">
 \bgroup\ttfamily\fontsize{9pt}{9pt}\selectfont\par
+\begin{exampleblock}{}
+\noindent\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
+\end{exampleblock}
+\par\egroup
+  </xsl:template>
+
+  <xsl:template match="teix:egXML[@rend='small']">
+\bgroup\ttfamily\fontsize{7.5pt}{8pt}\selectfont\par
+\begin{exampleblock}{}
+\noindent\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
+\end{exampleblock}
+\par\egroup
+  </xsl:template>
+
+  <xsl:template match="teix:egXML[@rend='teeny']">
+\bgroup\ttfamily\fontsize{5pt}{5.5pt}\selectfont\par
+\begin{exampleblock}{}
+\noindent\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
+\end{exampleblock}
+\par\egroup
+  </xsl:template>
+
+  <xsl:template match="teix:egXML[@rend='tiny']">
+\bgroup\ttfamily\fontsize{6.5pt}{7pt}\selectfont\par
 \begin{exampleblock}{}
 \noindent\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
 \end{exampleblock}
