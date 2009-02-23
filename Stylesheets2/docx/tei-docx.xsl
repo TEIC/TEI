@@ -991,12 +991,12 @@ is there a number present?
 	      </xsl:choose>
 	    </xsl:variable>
 
-<!--
+
 	    <xsl:message> arrived at <xsl:value-of
 	    select="$imageWidth"/> x <xsl:value-of
 	    select="$imageHeight"/> from <xsl:value-of select="@teidocx:width"/>x<xsl:value-of select="@teidocx:height"/>
 	    </xsl:message>
--->
+
             <!-- prepare actual graphic -->
             <xsl:variable name="graphic-element">
                 <a:graphic>

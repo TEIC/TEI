@@ -75,18 +75,18 @@
 	<xsl:variable name="result">
         <xsl:choose>
             <xsl:when test="ends-with($dim,'cm')">
-                <xsl:value-of select="number(number(substring($dim,0,string-length($dim)-1))*360000) cast as xs:integer"/>
+                <xsl:value-of select="number(number(substring($dim,0,string-length($dim)-1))*3600) cast as xs:integer"/>
             </xsl:when>
             <xsl:when test="ends-with($dim,'in')">
-                <xsl:value-of select="number(number(substring($dim,0,string-length($dim)-1))*914400) cast as xs:integer"/>
+                <xsl:value-of select="number(number(substring($dim,0,string-length($dim)-1))*9144) cast as xs:integer"/>
             </xsl:when>
             
             <xsl:when test="ends-with($dim,'mm')">
-                <xsl:value-of select="number(number(substring($dim,0,string-length($dim)-1))*36000) cast as xs:integer"/>
+                <xsl:value-of select="number(number(substring($dim,0,string-length($dim)-1))*360) cast as xs:integer"/>
             </xsl:when>
             <xsl:when test="ends-with($dim,'pt')">
                 <xsl:value-of
-                    select="number(number(number(substring($dim,0,string-length($dim)-1)) div 72) * 914400) cast as xs:integer"/>
+                    select="number(number(number(substring($dim,0,string-length($dim)-1)) div 72) * 9144) cast as xs:integer"/>
             </xsl:when>
             
             <xsl:otherwise>
