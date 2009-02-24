@@ -2152,8 +2152,17 @@
 	</xsl:when>
       </xsl:choose>
     </xsl:if>
+   
+    <xsl:call-template name="rendToClassHook"/>
   </xsl:template>
 
+  <xd:doc>
+    <xd:short>[html] allow for local extensions to rendToClass</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="rendToClassHook"/>
+
+ 
   <xd:doc>
     <xd:short>[html] Create a point to which we can link in the HTML</xd:short>
     <xd:param name="name">value for identifier</xd:param>

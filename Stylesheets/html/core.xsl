@@ -2133,21 +2133,23 @@
         </xsl:attribute>
       </xsl:when>
 
-
       <xsl:when test="@rend">
         <xsl:attribute name="class">
           <xsl:value-of select="@rend"/>
         </xsl:attribute>
       </xsl:when>
+
       <xsl:when test="@rendition">
 	<xsl:call-template name="applyRendition"/>
       </xsl:when>
+
       <xsl:when test="not($default='')">
         <xsl:attribute name="class">
 	  <xsl:value-of select="$default"/>
         </xsl:attribute>
       </xsl:when>
     </xsl:choose>
+
     <xsl:if test="$id='true'">
       <xsl:choose>
 	<xsl:when test="@id">
@@ -2160,7 +2162,15 @@
 	</xsl:when>
       </xsl:choose>
     </xsl:if>
+    
+    <xsl:call-template name="rendToClassHook"/>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>[html] allow for local extensions to rendToClass</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="rendToClassHook"/>
 
   <xd:doc>
     <xd:short>[html] Create a point to which we can link in the HTML</xd:short>
