@@ -99,10 +99,14 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="numberBackDiv">
+    <xsl:param name="minimal"/>
     <xsl:if test="not($numberBackHeadings='')">
       <xsl:number
         count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
         format="A.1.1.1.1.1" level="multiple"/>
+      <xsl:if test="$minimal='false'">
+	<xsl:value-of select="$numberSpacer"/>
+      </xsl:if>
     </xsl:if>
   </xsl:template>
   <xd:doc class="numbering" type="boolean"> Automatically number figures in back
@@ -119,10 +123,14 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="numberBodyDiv">
+    <xsl:param name="minimal"/>
     <xsl:if test="$numberHeadings='true'">
       <xsl:number
         count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
         level="multiple"/>
+      <xsl:if test="$minimal='false'">
+	<xsl:value-of select="$headingNumberSuffix"/>
+      </xsl:if>
     </xsl:if>
   </xsl:template>
   <xd:doc class="numbering" type="string"> How to construct heading numbering in

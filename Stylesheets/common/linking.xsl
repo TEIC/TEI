@@ -118,10 +118,11 @@
             <xsl:with-param name="word">appendixWords</xsl:with-param>
           </xsl:call-template>
           <xsl:text> </xsl:text>
-          <xsl:call-template name="numberBackDiv"/>
-          <xsl:if test="$minimal='false'">
-            <xsl:value-of select="$numberSpacer"/>
-          </xsl:if>
+          <xsl:call-template name="numberBackDiv">
+	    <xsl:with-param name="minimal">
+	      <xsl:value-of select="$minimal"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
         </xsl:if>
       </xsl:when>
       <xsl:when test="ancestor::tei:front">
@@ -137,14 +138,18 @@
         <xsl:choose>
           <xsl:when test="$prenumberedHeadings='true'">
             <xsl:value-of select="@n"/>
+	    <xsl:if test="$minimal='false'">
+	      <xsl:value-of select="$headingNumberSuffix"/>
+	    </xsl:if>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:call-template name="numberBodyDiv"/>
+            <xsl:call-template name="numberBodyDiv">
+	      <xsl:with-param name="minimal">
+		<xsl:value-of select="$minimal"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
           </xsl:otherwise>
         </xsl:choose>
-        <xsl:if test="$minimal='false'">
-          <xsl:value-of select="$headingNumberSuffix"/>
-        </xsl:if>
       </xsl:when>
     </xsl:choose>
       </xsl:with-param>
