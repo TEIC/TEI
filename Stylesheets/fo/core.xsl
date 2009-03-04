@@ -603,7 +603,7 @@
   <xsl:template match="tei:note" mode="real">
     <xsl:choose>
       <xsl:when test="@place='end'">
-        <fo:simple-link>
+        <fo:basic-link>
           <xsl:attribute name="internal-destination">
             <xsl:value-of select="generate-id()"/>
           </xsl:attribute>
@@ -617,7 +617,7 @@
               </xsl:otherwise>
             </xsl:choose>
           </fo:inline>
-        </fo:simple-link>
+        </fo:basic-link>
       </xsl:when>
       <xsl:when test="@place='inline'">
         <fo:inline>
