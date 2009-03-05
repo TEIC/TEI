@@ -39,7 +39,8 @@ public class TEI {
 	/**
 	 * 
 	 */
-	private static TEIPropertiesProvider propertiesProvider;
+	private static TEIPropertiesProvider generalPropertiesProvider;
+	private TEIPropertiesProvider customPropertyProvider = null;
 
 	/**
 	 * Constructs a new TEI object from a file
@@ -51,6 +52,11 @@ public class TEI {
 		this.tei = XMLUtils.readFileIntoSaxonDoc(inputFile);
 	}
 	
+	public TEI(File inputFile, TEIPropertiesProvider pProvider) throws SaxonApiException{
+		this.tei = XMLUtils.readFileIntoSaxonDoc(inputFile);
+		this.customPropertyProvider = pProvider;
+	}
+	
 	/**
 	 * Constructs a new TEI object from a DOM tree
 	 * 
@@ -60,13 +66,24 @@ public class TEI {
 		this.tei = doc;
 	}
 	
+	public TEI(XdmNode doc, TEIPropertiesProvider pProvider){
+		this.tei = doc;
+		this.customPropertyProvider = pProvider;
+	}
+	
 	/**
 	 * Provide a properties provider 
 	 * 
 	 * @param provider
 	 */
 	public static void setPropertiesProvider(TEIPropertiesProvider provider){
-		propertiesProvider = provider;
+		generalPropertiesProvider = provider;
+	}
+	
+	public TEIPropertiesProvider getPropertiesProvider(){
+		if(null != customPropertyProvider)
+			return customPropertyProvider;
+		return generalPropertiesProvider;
 	}
 	
 	/**
@@ -106,7 +123,7 @@ public class TEI {
 		if(null != properties.getErrorListener() )
 			comp.setErrorListener(properties.getErrorListener());
 		
-		XsltExecutable odd2oddExec = comp.compile(new StreamSource(propertiesProvider.tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2odd.xsl"));
+		XsltExecutable odd2oddExec = comp.compile(new StreamSource(getPropertiesProvider().tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2odd.xsl"));
 		XsltTransformer odd2oddTransformer = odd2oddExec.load();
 		
 		odd2oddTransformer.setParameter(new QName("selectedSchema"), new XdmAtomicValue(properties.getSchemaName()));
@@ -116,7 +133,7 @@ public class TEI {
 		if(properties.isStripped())
 			odd2oddTransformer.setParameter(new QName("stripped"), new XdmAtomicValue("true"));
 		
-		odd2oddTransformer.setParameter(new QName("localsource"), new XdmAtomicValue(propertiesProvider.tei_pp_getP5Subset()));
+		odd2oddTransformer.setParameter(new QName("localsource"), new XdmAtomicValue(getPropertiesProvider().tei_pp_getP5Subset()));
 		odd2oddTransformer.setParameter(new QName("TEIC"), new XdmAtomicValue("true") );
 		odd2oddTransformer.setParameter(new QName("lang"), new XdmAtomicValue(properties.getLanguage()));
 		odd2oddTransformer.setParameter(new QName("doclang"), new XdmAtomicValue(properties.getLanguage()));
@@ -148,7 +165,7 @@ public class TEI {
 		if(null != properties.getErrorListener() )
 			comp.setErrorListener(properties.getErrorListener());
 		
-		XsltExecutable odd2relaxExec = comp.compile(new StreamSource(propertiesProvider.tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2relax.xsl"));
+		XsltExecutable odd2relaxExec = comp.compile(new StreamSource(getPropertiesProvider().tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2relax.xsl"));
 		XsltTransformer odd2relaxTransformer = odd2relaxExec.load();
 		
 		if(properties.isVerbose())
@@ -183,7 +200,7 @@ public class TEI {
 		if(null != properties.getErrorListener() )
 			comp.setErrorListener(properties.getErrorListener());
 		
-		XsltExecutable odd2dtdExec = comp.compile(new StreamSource(propertiesProvider.tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2dtd.xsl"));
+		XsltExecutable odd2dtdExec = comp.compile(new StreamSource(getPropertiesProvider().tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2dtd.xsl"));
 		XsltTransformer odd2dtdTransformer = odd2dtdExec.load();
 		
 		if(properties.isVerbose())
@@ -219,12 +236,12 @@ public class TEI {
 		if(null != properties.getErrorListener() )
 			comp.setErrorListener(properties.getErrorListener());
 		
-		XsltExecutable odd2teiDocExec = comp.compile(new StreamSource(propertiesProvider.tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2lite.xsl"));
+		XsltExecutable odd2teiDocExec = comp.compile(new StreamSource(getPropertiesProvider().tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2lite.xsl"));
 		XsltTransformer odd2teiDocTransformer = odd2teiDocExec.load();
 		
 		
 		odd2teiDocTransformer.setParameter(new QName("TEIC"), new XdmAtomicValue("true") );
-		odd2teiDocTransformer.setParameter(new QName("localsource"), new XdmAtomicValue(propertiesProvider.tei_pp_getP5Subset()));
+		odd2teiDocTransformer.setParameter(new QName("localsource"), new XdmAtomicValue(getPropertiesProvider().tei_pp_getP5Subset()));
 		odd2teiDocTransformer.setParameter(new QName("lang"), new XdmAtomicValue(properties.getLanguage()));
 		odd2teiDocTransformer.setParameter(new QName("doclang"), new XdmAtomicValue(properties.getLanguage()));
 		
@@ -256,7 +273,7 @@ public class TEI {
 		if(null != properties.getErrorListener() )
 			comp.setErrorListener(properties.getErrorListener());
 	
-		XsltExecutable odd2HTMLDocExec = comp.compile(new StreamSource(propertiesProvider.tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2html.xsl"));
+		XsltExecutable odd2HTMLDocExec = comp.compile(new StreamSource(getPropertiesProvider().tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2html.xsl"));
 		XsltTransformer odd2HTMLDocTransformer = odd2HTMLDocExec.load();
 		
 		odd2HTMLDocTransformer.setParameter(new QName("STDOUT"), new XdmAtomicValue("true") );
