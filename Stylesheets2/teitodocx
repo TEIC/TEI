@@ -24,7 +24,7 @@ THERE=`(cd $D; pwd)`
 X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
 TEMPDIR=/tmp/docx$$
-TEMPLATES=$APPHOME/applications/$profile/docx-templates
+TEMPLATES=$APPHOME/profiles/$profile/docx-templates
 XSL=$APPHOME
 mkdir -p $TEMPDIR/word/media
 echo read $THERE/$F.xml
@@ -33,7 +33,7 @@ sh $TEMPDIR/fetch
 rm $TEMPDIR/fetch
 (cd $TEMPDIR/word/media; for i in *; do  exiftool -q -o $i.xmp $i; done)
 cd $TEMPDIR
-unzip -o -q $TEMPLATES/template.docx
+unzip -o $TEMPLATES/template.docx
 if $odd
 then
     saxon -o $TEMPDIR/tmp1.xml $THERE/$F.xml  $XSL/odds2/odd2lite.xsl displayMode=rnc 
@@ -42,7 +42,7 @@ then
 else
     saxon -o $TEMPDIR/tmp.xml  $THERE/$F.xml $XSL/docx/fixgraphics.xsl DIR=`pwd`/word
 fi
-saxon -o word/document.xml tmp.xml $APPHOME/applications/$profile/tei-docx.xsl  \
+saxon -o word/document.xml tmp.xml $APPHOME/profiles/$profile/docx/from.xsl  \
     debug=true styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR
 if $debug 
 then

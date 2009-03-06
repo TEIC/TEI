@@ -24,13 +24,13 @@ APPHOME=`(cd $X; pwd)`
 N=`basename $1 .docx`
 echo read $1 from $THERE
 echo app is in $HERE
-TEMPLATES=$APPHOME/applications/$profile
+TEMPLATES=$APPHOME/profiles/$profile
 TEMPDIR=/tmp/docx$$
 mkdir $TEMPDIR
 cd $TEMPDIR
 unzip -q $THERE/$N.docx
 saxon word/document.xml $APPHOME/docx/normalize-word-style.xsl debug=false |
-saxon - $TEMPLATES/docx-tei.xsl word-directory=`pwd` \
+saxon - $TEMPLATES/docx/to.xsl word-directory=`pwd` \
 | xmllint --format - > $THERE/$N.xml
 cd $HERE
 if $debug 
