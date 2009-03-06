@@ -19,7 +19,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   
 <xsl:import href="/usr/share/xml/tei/stylesheet/latex/tei.xsl"/>
-<xsl:import href="isoutils.xsl"/>
+<xsl:import href="../isoutils.xsl"/>
 
 <xsl:param name="reencode">false</xsl:param>
 <xsl:param name="numberBackHeadings">true</xsl:param>

@@ -19,10 +19,10 @@
     exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso edate">
     
     <!-- import conversion style -->
-    <xsl:import href="../../docx/docx-tei.xsl"/>
+    <xsl:import href="../../../docx/docx-tei.xsl"/>
     
     <!-- import special iso functions -->
-    <xsl:include href="iso-functions.xsl"/>
+    <xsl:include href="../iso-functions.xsl"/>
     
     <!-- param defining whether to use a custom metadata file or to extract
     the metadata from the document -->

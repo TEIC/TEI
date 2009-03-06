@@ -18,7 +18,7 @@
     version="1.0">
   
 <xsl:import href="/usr/share/xml/tei/stylesheet/xhtml/tei.xsl"/>
-<xsl:import href="isoutils.xsl"/>
+<xsl:import href="../isoutils.xsl"/>
 <xsl:param name="numberFormat">uk</xsl:param>
 <xsl:output encoding="utf-8" 
  omit-xml-declaration="yes" 
