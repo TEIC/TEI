@@ -2492,7 +2492,9 @@ is there a number present?
         </xsl:variable>
 
 
-
+<xsl:if test="$debug='true'">
+	  <xsl:message>write to <xsl:value-of select="concat($word-directory,'/docProps/newcore.xml')"/></xsl:message>
+</xsl:if>
         <!-- having opening core.xml, we cannot write back to it; so save
 under new name -->
         <xsl:result-document href="{concat($word-directory,'/docProps/newcore.xml')}"
