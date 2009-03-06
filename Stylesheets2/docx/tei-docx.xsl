@@ -108,7 +108,7 @@ Divide by 100 to avoid overflow.
 
     <xsl:template match="/tei:TEI">
 
-        <!--  Write out header files -->
+
         <xsl:call-template name="write-header-files"/>
 
         <!--  Write out footer files -->
@@ -136,6 +136,7 @@ Divide by 100 to avoid overflow.
         <xsl:call-template name="write-settings"/>
 
         <!-- app files -->
+
         <xsl:call-template name="write-appFiles"/>
 
         <w:document xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -2491,10 +2492,6 @@ is there a number present?
             </xsl:choose>
         </xsl:variable>
 
-
-<xsl:if test="$debug='true'">
-	  <xsl:message>write to <xsl:value-of select="concat($word-directory,'/docProps/newcore.xml')"/></xsl:message>
-</xsl:if>
         <!-- having opening core.xml, we cannot write back to it; so save
 under new name -->
         <xsl:result-document href="{concat($word-directory,'/docProps/newcore.xml')}"

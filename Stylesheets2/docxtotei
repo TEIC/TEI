@@ -30,7 +30,7 @@ mkdir $TEMPDIR
 cd $TEMPDIR
 unzip -q $THERE/$N.docx
 saxon word/document.xml $APPHOME/docx/normalize-word-style.xsl debug=false |
-saxon - $TEMPLATES/docx/to.xsl word-directory=`pwd` \
+saxon - $TEMPLATES/docx/from.xsl word-directory=`pwd` \
 | xmllint --format - > $THERE/$N.xml
 cd $HERE
 if $debug 
