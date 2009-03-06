@@ -9,6 +9,6 @@
   
     <!-- import base conversion style -->
 
-    <xsl:import href="../../xhtml2/tei.xsl"/>
+    <xsl:import href="../../../latex/tei.xsl"/>
     
 </xsl:stylesheet>

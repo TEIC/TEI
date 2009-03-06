@@ -22,7 +22,7 @@
     <xsl:import href="../../../docx/docx-tei.xsl"/>
     
     <!-- import special iso functions -->
-    <xsl:include href="../iso-functions.xsl"/>
+    <xsl:include href="iso-functions.xsl"/>
     
     <!-- param defining whether to use a custom metadata file or to extract
     the metadata from the document -->
