@@ -55,9 +55,9 @@ version="2.0">
       </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="total">
-      <xsl:value-of select="sum(exsl:node-set($tds)/cell)"/>
+      <xsl:value-of select="sum($tds/cell)"/>
     </xsl:variable>
-    <xsl:for-each select="exsl:node-set($tds)/cell">
+    <xsl:for-each select="$tds/cell">
       <xsl:sort select="@col" data-type="number"/>
       <xsl:variable name="c" select="@col"/>
       <xsl:if test="not(preceding-sibling::cell[$c=@col])">
@@ -85,11 +85,11 @@ version="2.0">
     <xsl:choose>
       <xsl:when test="$readColSpecFile">
         <xsl:variable name="specs">
-          <xsl:value-of select="count(exsl:node-set($tableSpecs)/Info/TableSpec[$no=@xml:id])"/>
+          <xsl:value-of select="count($tableSpecs/Info/TableSpec[$no=@xml:id])"/>
         </xsl:variable>
         <xsl:choose>
           <xsl:when test="$specs &gt; 0">
-            <xsl:for-each select="exsl:node-set($tableSpecs)/Info/TableSpec[$no=@xml:id]/fo:table-column">
+            <xsl:for-each select="$tableSpecs/Info/TableSpec[$no=@xml:id]/fo:table-column">
               <xsl:copy-of select="."/>
             </xsl:for-each>
           </xsl:when>

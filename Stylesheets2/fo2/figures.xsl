@@ -384,7 +384,7 @@ version="2.0">
           <xsl:value-of select="ancestor::tei:table/@xml:id"/>
         </xsl:variable>
         <xsl:variable name="align">
-          <xsl:value-of select="exsl:node-set($tableSpecs)/Info/TableSpec[@xml:id=$tid]/fo:table-column[@column-number=$thiscol]/@fotex:column-align"/>
+          <xsl:value-of select="$tableSpecs/Info/TableSpec[@xml:id=$tid]/fo:table-column[@column-number=$thiscol]/@fotex:column-align"/>
         </xsl:variable>
 <!--
     <xsl:message>    Cell: whats my position: <xsl:value-of select="$thiscol"/>, <xsl:value-of select="$align"/>, <xsl:value-of select="$tid"/>
