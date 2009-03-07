@@ -234,15 +234,6 @@
     </xsl:choose>
   </xsl:template>
   <xd:doc>
-    <xd:short>[common] </xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="whatsTheDate">
-    <xsl:value-of
-	select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[M02]:[s02]Z')"/>
-  </xsl:template>
-
-  <xd:doc>
     <xd:short>Process elements  tei:div/tei:docAuthor</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>

@@ -1,4 +1,4 @@
-DIRS=odds2 xhtml2 common2
+DIRS=odds2 xhtml2 common2 slides2 latex2 fo2
 PREFIX=/usr
 .PHONY: doc release
 

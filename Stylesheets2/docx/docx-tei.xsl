@@ -24,9 +24,8 @@
 		xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
 		xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
 		xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-		xmlns:edate="http://exslt.org/dates-and-times" 
 		xmlns="http://www.tei-c.org/ns/1.0"
-	exclude-result-prefixes="a cp dc dcterms dcmitype edate iso m mml mo mv o pic r rel tbx tei teidocx v ve w10 w wne wp xd">
+	exclude-result-prefixes="a cp dc dcterms dcmitype  iso m mml mo mv o pic r rel tbx tei teidocx v ve w10 w wne wp xd">
 	
 	<!--xsl:import href="omml2mml.xsl"/-->
 	<xsl:import href="tei-docx-functions.xsl"/>
@@ -128,7 +127,7 @@
 	      <change>
 		<date>
 		  <xsl:text>$LastChangedDate: </xsl:text>
-		  <xsl:call-template name="today"/>
+		  <xsl:call-template name="whatsTheDate"/>
 		  <xsl:text>$</xsl:text>
 		</date>
 		<respStmt>
@@ -1107,18 +1106,6 @@
 	<xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2">
 	</xsl:template>
 
-    <xsl:template name="today">
-        <xsl:choose>
-            <xsl:when test="function-available('edate:date-time')">
-                <xsl:value-of select="edate:date-time()"/>
-            </xsl:when>
-            <xsl:when test="contains($processor,'SAXON')">
-                <xsl:value-of select="Date:toString(Date:new())" xmlns:Date="/java.util.Date"/>
-            </xsl:when>
-            <xsl:otherwise> (unknown date) </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
-    
     <xsl:template name="getDocTitle">
       <xsl:for-each select="document('docProps/core.xml',/)">
 	<xsl:value-of select="cp:coreProperties/dc:title"/>
@@ -1135,6 +1122,11 @@
       <xsl:for-each select="document('docProps/core.xml',/)">
 	<xsl:value-of select="substring-before(cp:coreProperties/dcterms:created,'T')"/>
       </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template name="whatsTheDate">
+      <xsl:value-of
+	  select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[M02]:[s02]Z')"/>
     </xsl:template>
 
 </xsl:stylesheet>

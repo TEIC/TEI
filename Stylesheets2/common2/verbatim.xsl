@@ -4,7 +4,6 @@
     xmlns:sch="http://www.ascc.net/xml/schematron"
     xmlns:m="http://www.w3.org/1998/Math/MathML" 
     xmlns:atom="http://www.w3.org/2005/Atom"
-    xmlns:estr="http://exslt.org/strings" 
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xhtml="http://www.w3.org/1999/xhtml" 
     xmlns:dbk="http://docbook.org/ns/docbook"

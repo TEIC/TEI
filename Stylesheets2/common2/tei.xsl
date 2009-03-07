@@ -62,4 +62,10 @@
       <xsl:otherwise>?</xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  
+  <xsl:template name="whatsTheDate">
+    <xsl:value-of
+	select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[M02]:[s02]Z')"/>
+  </xsl:template>
+  
 </xsl:stylesheet>
