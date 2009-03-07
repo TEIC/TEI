@@ -1,12 +1,17 @@
 <?xml version="1.0"?>
-<xsl:stylesheet version="2.0" xmlns:sch="http://www.ascc.net/xml/schematron"
-  xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:atom="http://www.w3.org/2005/Atom"
-  xmlns:estr="http://exslt.org/strings" xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:dbk="http://docbook.org/ns/docbook"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom">
+<xsl:stylesheet version="2.0" 
+		xmlns:sch="http://www.ascc.net/xml/schematron"
+		xmlns:m="http://www.w3.org/1998/Math/MathML" 
+		xmlns:atom="http://www.w3.org/2005/Atom"
+		xmlns:xlink="http://www.w3.org/1999/xlink"
+		xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+		xmlns:dbk="http://docbook.org/ns/docbook"
+		xmlns:rng="http://relaxng.org/ns/structure/1.0" 
+		xmlns:tei="http://www.tei-c.org/ns/1.0"
+		xmlns:teix="http://www.tei-c.org/ns/Examples" 
+		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+		exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom">
   
   <xd:doc type="stylesheet">
     <xd:short> TEI stylesheet for creating verbatim XML </xd:short>
