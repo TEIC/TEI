@@ -2,28 +2,23 @@
 <xsl:stylesheet exclude-result-prefixes="exsl edate estr tei t a rng s xd xs"
   extension-element-prefixes="exsl estr edate" version="1.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:edate="http://exslt.org/dates-and-times"
-  xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+  xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings"
+  xmlns:exsl="http://exslt.org/common" xmlns:rng="http://relaxng.org/ns/structure/1.0"
   xmlns:s="http://www.ascc.net/xml/schematron"
-  xmlns:t="http://www.thaiopensource.com/ns/annotations"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:t="http://www.thaiopensource.com/ns/annotations" xmlns:tei="http://www.tei-c.org/ns/1.0"
+  xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:import href="teiodds.xsl"/>
   <xd:doc type="stylesheet">
     <xd:short> TEI stylesheet for making Relax NG schema from ODD </xd:short>
-    <xd:detail> This library is free software; you can redistribute it and/or
-      modify it under the terms of the GNU Lesser General Public License as
-      published by the Free Software Foundation; either version 2.1 of the
-      License, or (at your option) any later version. This library is
-      distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-      without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-      PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
-      details. You should have received a copy of the GNU Lesser General Public
-      License along with this library; if not, write to the Free Software
-      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
+    <xd:detail> This library is free software; you can redistribute it and/or modify it under the
+      terms of the GNU Lesser General Public License as published by the Free Software Foundation;
+      either version 2.1 of the License, or (at your option) any later version. This library is
+      distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+      implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser
+      General Public License for more details. You should have received a copy of the GNU Lesser
+      General Public License along with this library; if not, write to the Free Software Foundation,
+      Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
     <xd:author>See AUTHORS</xd:author>
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2008, TEI Consortium</xd:copyright>
@@ -58,29 +53,24 @@
     </xsl:variable>
 
     <xsl:if test="$verbose='true'">
-      <xsl:message>
-	I18N setup:
-	Pattern prefix: <xsl:value-of select="$patternPrefixText"/>
-	Target language: <xsl:value-of select="$targetLanguage"/>
-	Documentation language: <xsl:value-of select="$documentationLanguage"/>
+      <xsl:message> I18N setup: Pattern prefix: <xsl:value-of select="$patternPrefixText"/> Target
+        language: <xsl:value-of select="$targetLanguage"/> Documentation language: <xsl:value-of
+          select="$documentationLanguage"/>
       </xsl:message>
     </xsl:if>
     <xsl:variable name="filename" select="@ident"/>
     <xsl:if test="$verbose='true'">
-      <xsl:message> process schemaSpec [<xsl:value-of select="@ident"/>]
-      </xsl:message>
+      <xsl:message> process schemaSpec [<xsl:value-of select="@ident"/>] </xsl:message>
     </xsl:if>
     <xsl:call-template name="generateOutput">
       <xsl:with-param name="method">xml</xsl:with-param>
       <xsl:with-param name="suffix">.rng</xsl:with-param>
       <xsl:with-param name="body">
-        <rng:grammar
-          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+        <rng:grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
           xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
           xmlns:rng="http://relaxng.org/ns/structure/1.0"
           xmlns:t="http://www.thaiopensource.com/ns/annotations"
-	  xmlns:xlink="http://www.w3.org/1999/xlink"
-          xmlns:teix="http://www.tei-c.org/ns/Examples">
+          xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:teix="http://www.tei-c.org/ns/Examples">
           <xsl:attribute name="ns">
             <xsl:choose>
               <xsl:when test="@ns">
@@ -93,35 +83,35 @@
             </xsl:choose>
           </xsl:attribute>
           <xsl:comment>
-	    <xsl:text>&#10;Schema generated from ODD source </xsl:text>
-	    <xsl:call-template name="showDate"/>
-	    <xsl:text>. </xsl:text>
-	    <xsl:call-template name="makeTEIVersion"/>
-	    <xsl:call-template name="makeDescription"/>
-	    <xsl:text>&#10;</xsl:text>
-	  </xsl:comment>
-	  <xsl:if test="$TEIC='true'">
-	    <xsl:comment>
-	      <xsl:call-template name="copyright"/>
-	    </xsl:comment>
+            <xsl:text>&#10;Schema generated from ODD source </xsl:text>
+            <xsl:call-template name="showDate"/>
+            <xsl:text>. </xsl:text>
+            <xsl:call-template name="makeTEIVersion"/>
+            <xsl:call-template name="makeDescription"/>
+            <xsl:text>&#10;</xsl:text>
+          </xsl:comment>
+          <xsl:if test="$TEIC='true'">
+            <xsl:comment>
+              <xsl:call-template name="copyright"/>
+            </xsl:comment>
           </xsl:if>
-	  <xsl:choose>
-	    <xsl:when test="tei:specGrpRef">
-	      <xsl:variable name="SPECS">
-		<tei:schemaSpec>
-		  <xsl:copy-of select="@*"/>
-		  <xsl:apply-templates mode="expandSpecs"/>
-		</tei:schemaSpec>
-	      </xsl:variable>
-	      <xsl:for-each select="exsl:node-set($SPECS)/tei:schemaSpec">
-		<xsl:call-template name="schemaSpecBody"/>
-	      </xsl:for-each>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:call-template name="schemaSpecBody"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</rng:grammar>
+          <xsl:choose>
+            <xsl:when test="tei:specGrpRef">
+              <xsl:variable name="SPECS">
+                <tei:schemaSpec>
+                  <xsl:copy-of select="@*"/>
+                  <xsl:apply-templates mode="expandSpecs"/>
+                </tei:schemaSpec>
+              </xsl:variable>
+              <xsl:for-each select="exsl:node-set($SPECS)/tei:schemaSpec">
+                <xsl:call-template name="schemaSpecBody"/>
+              </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:call-template name="schemaSpecBody"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </rng:grammar>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
@@ -131,37 +121,36 @@
     <xsl:for-each select="tei:macroSpec">
       <xsl:apply-templates mode="tangle" select="."/>
     </xsl:for-each>
-    <xsl:apply-templates mode="tangle"
-			 select="tei:elementSpec|tei:classSpec"/>
-    
+    <xsl:apply-templates mode="tangle" select="tei:elementSpec|tei:classSpec"/>
+
     <xsl:choose>
       <xsl:when test="@start and @start=''"/>
       <xsl:when test="@start and contains(@start,' ')">
-	<rng:start>
-	  <rng:choice>
-	    <xsl:call-template name="startNames">
-	      <xsl:with-param name="toks" select="@start"/>
-	    </xsl:call-template>
-	  </rng:choice>
-	</rng:start>
+        <rng:start>
+          <rng:choice>
+            <xsl:call-template name="startNames">
+              <xsl:with-param name="toks" select="@start"/>
+            </xsl:call-template>
+          </rng:choice>
+        </rng:start>
       </xsl:when>
       <xsl:when test="@start">
-	<rng:start>
-	  <rng:ref name="{$patternPrefixText}{@start}"/>
-	</rng:start>
+        <rng:start>
+          <rng:ref name="{$patternPrefixText}{@start}"/>
+        </rng:start>
       </xsl:when>
       <xsl:when test="key('IDENTS','teiCorpus')">
-	<rng:start>
-	  <rng:choice>
-	    <rng:ref name="{$patternPrefixText}TEI"/>
-	    <rng:ref name="{$patternPrefixText}teiCorpus"/>
-	  </rng:choice>
-	</rng:start>
+        <rng:start>
+          <rng:choice>
+            <rng:ref name="{$patternPrefixText}TEI"/>
+            <rng:ref name="{$patternPrefixText}teiCorpus"/>
+          </rng:choice>
+        </rng:start>
       </xsl:when>
       <xsl:otherwise>
-	<rng:start>
-	  <rng:ref name="{$patternPrefixText}TEI"/>
-	</rng:start>
+        <rng:start>
+          <rng:ref name="{$patternPrefixText}TEI"/>
+        </rng:start>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -178,15 +167,13 @@
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
-          <ref name="{$patternPrefixText}{$toks}"
-            xmlns="http://relaxng.org/ns/structure/1.0"/>
+          <ref name="{$patternPrefixText}{$toks}" xmlns="http://relaxng.org/ns/structure/1.0"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
   </xsl:template>
   <xsl:template match="tei:moduleSpec">
-    <xsl:if
-      test="@ident and not(@mode='change' or @mode='replace' or   @mode='delete')">
+    <xsl:if test="@ident and not(@mode='change' or @mode='replace' or   @mode='delete')">
       <xsl:choose>
         <xsl:when test="parent::tei:schemaSpec">
           <xsl:call-template name="moduleSpec-body"/>
@@ -196,20 +183,19 @@
             <xsl:with-param name="method">xml</xsl:with-param>
             <xsl:with-param name="suffix">.rng</xsl:with-param>
             <xsl:with-param name="body">
-              <rng:grammar
-                datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+              <rng:grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:t="http://www.thaiopensource.com/ns/annotations">
                 <xsl:comment>
-		  <xsl:text>Schema generated </xsl:text>
-		  <xsl:call-template name="showDate"/>
-		  <xsl:call-template name="makeTEIVersion"/>
-		  <xsl:if test="$TEIC='true'">
+                  <xsl:text>Schema generated </xsl:text>
+                  <xsl:call-template name="showDate"/>
+                  <xsl:call-template name="makeTEIVersion"/>
+                  <xsl:if test="$TEIC='true'">
                     <xsl:call-template name="copyright"/>
                   </xsl:if>
-		  <xsl:call-template name="makeDescription"/>
-		</xsl:comment>
+                  <xsl:call-template name="makeDescription"/>
+                </xsl:comment>
                 <xsl:call-template name="moduleSpec-body"/>
               </rng:grammar>
             </xsl:with-param>
@@ -275,7 +261,7 @@
     <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:sort select="@ident"/>
       <rng:define combine="choice" name="{@ident}">
-	<rng:notAllowed/>
+        <rng:notAllowed/>
       </rng:define>
     </xsl:for-each>
   </xsl:template>
@@ -298,8 +284,7 @@
   <xsl:template match="tei:specGrpRef" mode="tangle">
     <xsl:param name="filename"/>
     <xsl:if test="$verbose='true'">
-      <xsl:message> specGrpRef to <xsl:value-of select="@target"
-      /></xsl:message>
+      <xsl:message> specGrpRef to <xsl:value-of select="@target"/></xsl:message>
     </xsl:if>
     <xsl:choose>
       <xsl:when test="starts-with(@target,'#')">

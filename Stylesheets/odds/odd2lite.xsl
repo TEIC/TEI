@@ -16,18 +16,14 @@
 
   <xd:doc type="stylesheet">
     <xd:short> TEI stylesheet for making TEI Lite XML from ODD </xd:short>
-    <xd:detail> This library is free software; you can redistribute it
-    and/or modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later
-    version. This library is distributed in the hope that it will be
-    useful, but WITHOUT ANY WARRANTY; without even the implied
-    warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-    PURPOSE. See the GNU Lesser General Public License for more
-    details. You should have received a copy of the GNU Lesser General
-    Public License along with this library; if not, write to the Free
-    Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-    02111-1307 USA </xd:detail>
+    <xd:detail> This library is free software; you can redistribute it and/or modify it under the
+      terms of the GNU Lesser General Public License as published by the Free Software Foundation;
+      either version 2.1 of the License, or (at your option) any later version. This library is
+      distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+      implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser
+      General Public License for more details. You should have received a copy of the GNU Lesser
+      General Public License along with this library; if not, write to the Free Software Foundation,
+      Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
     <xd:author>See AUTHORS</xd:author>
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2008, TEI Consortium</xd:copyright>
@@ -278,7 +274,7 @@
       <xsl:text>refdoc</xsl:text>
     </xsl:attribute>
     <xsl:attribute name="xml:id">
-     <xsl:value-of select="$id"/>
+      <xsl:value-of select="$id"/>
     </xsl:attribute>
     <head>
       <xsl:value-of select="$name"/>
@@ -321,15 +317,15 @@
     <xsl:param name="class"/>
     <xsl:variable name="partialname">
       <xsl:choose>
-	<xsl:when test="contains($name,'_')">
-	  <xsl:value-of select="substring-before($name,'_')"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of select="$name"/>
-	</xsl:otherwise>
+        <xsl:when test="contains($name,'_')">
+          <xsl:value-of select="substring-before($name,'_')"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$name"/>
+        </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <ref target="#{$partialname}">    
+    <ref target="#{$partialname}">
       <xsl:choose>
         <xsl:when test="$reftext=''">
           <xsl:value-of select="$name"/>
@@ -358,39 +354,39 @@
   <xsl:template match="tei:gi">
     <xsl:choose>
       <xsl:when test="not(@scheme='') or parent::tei:ref or parent::tei:head">
-	<xsl:text>&lt;</xsl:text>
-	  <xsl:apply-templates/>
-	<xsl:text>&gt;</xsl:text>
+        <xsl:text>&lt;</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:text>&gt;</xsl:text>
       </xsl:when>
       <xsl:when test="key('ELEMENTS',.)">
-	<xsl:for-each select="key('ELEMENTS',.)">
-	  <ref target="#{@ident}">
-	    <xsl:text>&lt;</xsl:text>
-	      <xsl:choose>
-		<xsl:when test="tei:content/rng:empty">
-		  <xsl:call-template name="emptySlash">
-		    <xsl:with-param name="name">
-		      <xsl:value-of select="@ident"/>
-		    </xsl:with-param>
-		  </xsl:call-template>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:value-of select="@ident"/>
-		</xsl:otherwise>
-	      </xsl:choose>
-	      <xsl:text>&gt;</xsl:text>
-	  </ref>
-	</xsl:for-each>
+        <xsl:for-each select="key('ELEMENTS',.)">
+          <ref target="#{@ident}">
+            <xsl:text>&lt;</xsl:text>
+            <xsl:choose>
+              <xsl:when test="tei:content/rng:empty">
+                <xsl:call-template name="emptySlash">
+                  <xsl:with-param name="name">
+                    <xsl:value-of select="@ident"/>
+                  </xsl:with-param>
+                </xsl:call-template>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="@ident"/>
+              </xsl:otherwise>
+            </xsl:choose>
+            <xsl:text>&gt;</xsl:text>
+          </ref>
+        </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:text>&lt;</xsl:text>
-	  <xsl:apply-templates/>
-	<xsl:text>&gt;</xsl:text>
+        <xsl:text>&lt;</xsl:text>
+        <xsl:apply-templates/>
+        <xsl:text>&gt;</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
-<!-- debugging
+  <!-- debugging
 <xsl:template name="SHOW">
  &lt;<xsl:value-of select="name()"/>
 <xsl:for-each select="@*">
@@ -406,67 +402,67 @@
 
 -->
 
-<xsl:template name="emphasize">
-  <xsl:param name="class"/>
-  <xsl:param name="content"/>
-  <hi rend="{$class}">
-	<xsl:copy-of select="$content"/>
-  </hi>
-</xsl:template>
+  <xsl:template name="emphasize">
+    <xsl:param name="class"/>
+    <xsl:param name="content"/>
+    <hi rend="{$class}">
+      <xsl:copy-of select="$content"/>
+    </hi>
+  </xsl:template>
 
   <xsl:template name="specHook">
-      <xsl:param name="name"/>
-      <index indexName="ODDS">
-	  <xsl:choose>
-	    <xsl:when test="local-name()='macroSpec'">
-	      <term>
-		<xsl:value-of select="$name"/>
-		<xsl:text> (macro)</xsl:text>
-	      </term>
-	    </xsl:when>
-	    <xsl:when test="local-name()='classSpec' and
+    <xsl:param name="name"/>
+    <index indexName="ODDS">
+      <xsl:choose>
+        <xsl:when test="local-name()='macroSpec'">
+          <term>
+            <xsl:value-of select="$name"/>
+            <xsl:text> (macro)</xsl:text>
+          </term>
+        </xsl:when>
+        <xsl:when test="local-name()='classSpec' and
 			    @type='model'">
-	      <term>
-		<xsl:value-of select="$name"/>
-		<xsl:text> (model class)</xsl:text>
-	      </term>
-	    </xsl:when>
-	    <xsl:when test="local-name()='classSpec' and
+          <term>
+            <xsl:value-of select="$name"/>
+            <xsl:text> (model class)</xsl:text>
+          </term>
+        </xsl:when>
+        <xsl:when test="local-name()='classSpec' and
 			    @type='atts'">
-	      <term>
-		<xsl:value-of select="$name"/>
-		<xsl:text> (attribute class)</xsl:text>
-	      </term>
-	      <xsl:for-each select=".//tei:attDef">
-		<index indexName="ODDS">
-		  <term sortBy="{@ident}">
-		    <xsl:text>@</xsl:text>
-		    <xsl:value-of select="@ident"/>
-		  </term>
-		</index>
-	      </xsl:for-each>
-	    </xsl:when>
-	    <xsl:when test="local-name()='elementSpec'">
-	      <term sortBy="{$name}">
-		<xsl:text>&lt;</xsl:text>
-		<xsl:value-of select="$name"/>
-		<xsl:text>&gt;</xsl:text>
-	      </term>
-	      <xsl:for-each select=".//tei:attDef">
-		<index indexName="ODDS">
-		  <term sortBy="{@ident}">
-		    <xsl:text>@</xsl:text>
-		    <xsl:value-of select="@ident"/>
-		  </term>
-		</index>
-	      </xsl:for-each>
-	    </xsl:when>
-	  </xsl:choose>
-      </index>
+          <term>
+            <xsl:value-of select="$name"/>
+            <xsl:text> (attribute class)</xsl:text>
+          </term>
+          <xsl:for-each select=".//tei:attDef">
+            <index indexName="ODDS">
+              <term sortBy="{@ident}">
+                <xsl:text>@</xsl:text>
+                <xsl:value-of select="@ident"/>
+              </term>
+            </index>
+          </xsl:for-each>
+        </xsl:when>
+        <xsl:when test="local-name()='elementSpec'">
+          <term sortBy="{$name}">
+            <xsl:text>&lt;</xsl:text>
+            <xsl:value-of select="$name"/>
+            <xsl:text>&gt;</xsl:text>
+          </term>
+          <xsl:for-each select=".//tei:attDef">
+            <index indexName="ODDS">
+              <term sortBy="{@ident}">
+                <xsl:text>@</xsl:text>
+                <xsl:value-of select="@ident"/>
+              </term>
+            </index>
+          </xsl:for-each>
+        </xsl:when>
+      </xsl:choose>
+    </index>
   </xsl:template>
 
   <xsl:template match="tei:specGrpRef">
-<!--    <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
+    <!--    <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
       <xsl:apply-templates mode="weave"/>
     </xsl:for-each>-->
   </xsl:template>
@@ -475,28 +471,28 @@
     <div>
       <head>Macros</head>
       <xsl:apply-templates mode="weave" select="tei:macroSpec">
-	<xsl:sort select="@ident"/>
+        <xsl:sort select="@ident"/>
       </xsl:apply-templates>
     </div>
 
     <div>
       <head>Model classes</head>
       <xsl:apply-templates mode="weave" select="tei:classSpec[@type='model']">
-	<xsl:sort select="@ident"/>
+        <xsl:sort select="@ident"/>
       </xsl:apply-templates>
     </div>
 
     <div>
       <head>Attribute classes</head>
       <xsl:apply-templates mode="weave" select="tei:classSpec[@type='atts']">
-	<xsl:sort select="@ident"/>
+        <xsl:sort select="@ident"/>
       </xsl:apply-templates>
     </div>
 
     <div>
       <head>Elements</head>
       <xsl:apply-templates mode="weave" select="tei:elementSpec">
-	<xsl:sort select="@ident"/>
+        <xsl:sort select="@ident"/>
       </xsl:apply-templates>
     </div>
   </xsl:template>
@@ -504,6 +500,3 @@
   <xsl:template name="applyRendition"/>
 
 </xsl:stylesheet>
-
-
-

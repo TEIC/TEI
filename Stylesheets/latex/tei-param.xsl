@@ -289,12 +289,20 @@ capable of dealing with UTF-8 directly.
 </xsl:template>
 
 <xd:doc class="layout">
+    <xd:short>LaTeX paper size</xd:short>
+    <xd:detail>All the LaTeX setup which affects paper size</xd:detail>
+</xd:doc>
+<xsl:template name="latexPaperSize">
+\paperwidth211mm
+\paperheight297mm
+</xsl:template>
+
+<xd:doc class="layout">
     <xd:short>LaTeX layout preamble</xd:short>
     <xd:detail>All the LaTeX setup which affects page layout</xd:detail>
 </xd:doc>
 <xsl:template name="latexLayout">
-\paperwidth211mm
-\paperheight297mm
+<xsl:call-template name="latexPaperSize"/>
 \def\@pnumwidth{1.55em}
 \def\@tocrmarg {2.55em}
 \def\@dotsep{4.5}

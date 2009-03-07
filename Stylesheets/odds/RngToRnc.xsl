@@ -63,32 +63,28 @@
      transformation, see RngToRncXml.xsl.
 
      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<xsl:transform 
-    xmlns:rng="http://relaxng.org/ns/structure/1.0" 
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    xmlns:exsl="http://exslt.org/common" 
-    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
-    version="1.0" 
-    extension-element-prefixes="exsl" 
-    exclude-result-prefixes="rng a">
+<xsl:transform xmlns:rng="http://relaxng.org/ns/structure/1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common"
+  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" version="1.0"
+  extension-element-prefixes="exsl" exclude-result-prefixes="rng a">
   <xsl:param name="top"/>
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- Parameters -->
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- collapse-lines:
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- Parameters -->
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- collapse-lines:
      If true, output constructs spanning multiple lines will be
      groupd into a single line unless it exceeds $line-width chars. -->
   <xsl:param name="collapse-lines" select="true ()"/>
-<!-- indent-width:
+  <!-- indent-width:
      The number of characters to indent at each indentation level -->
   <xsl:param name="indent-width" select="3"/>
-<!-- line-width:
+  <!-- line-width:
      see the group-lines parameter. -->
   <xsl:param name="line-width" select="80"/>
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- $Id$ -->
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- $Id$ -->
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
      Copyright (c) 2002, Pantor Engineering AB
      All rights reserved.
@@ -124,10 +120,10 @@
      POSSIBILITY OF SUCH DAMAGE.
 
      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
      Created by David.Rosenborg@pantor.com
      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
      RngToRncXml.xsl converts a RELAX NG schema in XML syntax to an
      XML representation of the compact syntax.
@@ -154,22 +150,23 @@
        occurrences.
 
      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- Parameters -->
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- rewrite-suffix:
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- Parameters -->
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- rewrite-suffix:
      If true and the value of an href attribute ends with '.rng', the
      suffix will be replace by the string '.rnc'. -->
   <xsl:param name="rewrite-suffix" select="true ()"/>
-<!-- retain-prefixes:
+  <!-- retain-prefixes:
      If true, namespace declarations will use prefixes from the source
      document if possible. (Doesn't work with MSXML 4.0 or Xalan-J 2.4.0) -->
-  <xsl:param name="retain-prefixes" select="system-property ('xsl:vendor') != 'Microsoft' and     not (starts-with (system-property ('xsl:vendor'), 'Apache'))"/>
-<!-- default-ns:
+  <xsl:param name="retain-prefixes"
+    select="system-property ('xsl:vendor') != 'Microsoft' and     not (starts-with (system-property ('xsl:vendor'), 'Apache'))"/>
+  <!-- default-ns:
      The uri of the default namespace. There must be at least one
      ns attribute in the schema containing this uri. -->
   <xsl:param name="default-ns" select="string (/descendant::rng:*[@ns][1]/@ns)"/>
-<!-- prefixes:
+  <!-- prefixes:
     A space separated list of prefix mappings: prefix '=' namespace-uri.
     Note: Since space is used as a delimiter, no space is allowed 
     immediately before or after the equal sign. Example: 
@@ -182,7 +179,7 @@
     in the prefix-map parameter and those found in the schema.
   -->
   <xsl:param name="prefixes"/>
-<!-- prefix-map:
+  <!-- prefix-map:
      A node set containing element nodes like:
 
      <ns prefix="x">http://example.org/x</ns>
@@ -193,7 +190,7 @@
      must not conflict with any other prefixes in the map or in the
      schema. -->
   <xsl:param name="prefix-map" select="/.."/>
-<!-- recursive:
+  <!-- recursive:
      If true, recursively process includes and external
      references. Note: no include logic is applied. The external
      schemas are simply structurally included, wrapped in an <external>
@@ -218,8 +215,10 @@
     </xsl:attribute>
     <xsl:value-of select="$text"/>
   </xsl:template>
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xsl:key name="prefix" match="     rng:element/@name [contains (., ':')] |      rng:attribute/@name [contains (., ':')]" use="substring-before (., ':')"/>
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <xsl:key name="prefix"
+    match="     rng:element/@name [contains (., ':')] |      rng:attribute/@name [contains (., ':')]"
+    use="substring-before (., ':')"/>
   <xsl:key name="ns" match="*" use="namespace::*"/>
   <xsl:key name="annot-ns" match="*[not (self::rng:*)]" use="namespace-uri (.)"/>
   <xsl:key name="annot-ns" match="@*[namespace-uri (.) != '']" use="namespace-uri (.)"/>
@@ -238,7 +237,7 @@
   <xsl:variable name="has-local" select="not (key ('prefix', 'local'))"/>
   <xsl:template name="make-compact-schema">
     <compact-schema>
-<!-- Declarations -->
+      <!-- Declarations -->
       <xsl:if test="$has-default-ns">
         <xsl:call-template name="make-ns-declaration">
           <xsl:with-param name="is-default" select="true ()"/>
@@ -253,7 +252,7 @@
         </xsl:call-template>
       </xsl:if>
       <xsl:call-template name="inhnamespace"/>
-<!--
+      <!--
       <xsl:choose>
 	<xsl:when test="$retain-prefixes">
 	  <xsl:for-each select="//*">
@@ -370,7 +369,7 @@
       </xsl:for-each>
 -->
       <nl size="1"/>
-<!-- Pattern -->
+      <!-- Pattern -->
       <xsl:apply-templates mode="RNC"/>
     </compact-schema>
   </xsl:template>
@@ -658,8 +657,8 @@
           <xsl:otherwise>
             <xsl:call-template name="make-block">
               <xsl:with-param name="head">
-		<xsl:copy-of select="$head"/>
-	      </xsl:with-param>
+                <xsl:copy-of select="$head"/>
+              </xsl:with-param>
               <xsl:with-param name="body">
                 <xsl:choose>
                   <xsl:when test="@name">
@@ -838,7 +837,8 @@
   </xsl:template>
   <xsl:template name="make-string-literal">
     <xsl:choose>
-      <xsl:when test="not (contains (., '&quot;') or   contains (., &quot;'&quot;) or   contains (., '&#10;') or contains (., '&#13;'))">
+      <xsl:when
+        test="not (contains (., '&quot;') or   contains (., &quot;'&quot;) or   contains (., '&#10;') or contains (., '&#13;'))">
         <xsl:call-template name="str">
           <xsl:with-param name="text" select="."/>
         </xsl:call-template>
@@ -905,7 +905,9 @@
         <xsl:if test="count (../rng:*) &gt; 2">true</xsl:if>
       </xsl:when>
       <xsl:when test="count (../rng:*) &gt; 1">true</xsl:when>
-      <xsl:when test="count (rng:*) &gt; 1 and (parent::rng:optional or   parent::rng:zeroOrMore or parent::rng:oneOrMore)">true</xsl:when>
+      <xsl:when
+        test="count (rng:*) &gt; 1 and (parent::rng:optional or   parent::rng:zeroOrMore or parent::rng:oneOrMore)"
+        >true</xsl:when>
     </xsl:choose>
   </xsl:template>
   <xsl:template name="expression-body">
@@ -946,9 +948,9 @@
       <xsl:with-param name="operator" select="','"/>
     </xsl:call-template>
   </xsl:template>
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- Name class -->
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- Name class -->
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <xsl:template name="name-class">
     <xsl:param name="is-attr" select="false ()"/>
     <nc>
@@ -963,12 +965,12 @@
                     <xsl:with-param name="is-attr" select="false ()"/>
                   </xsl:call-template>
                 </xsl:when>
-		<xsl:when test="@ns">
-		  <xsl:text>[</xsl:text>
-		  <xsl:value-of select="@ns"/>
-		  <xsl:text>]</xsl:text>
+                <xsl:when test="@ns">
+                  <xsl:text>[</xsl:text>
+                  <xsl:value-of select="@ns"/>
+                  <xsl:text>]</xsl:text>
                   <xsl:value-of select="@name"/>
-		</xsl:when>
+                </xsl:when>
                 <xsl:otherwise>
                   <xsl:value-of select="@name"/>
                 </xsl:otherwise>
@@ -1040,7 +1042,8 @@
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
-  <xsl:template match="rng:attribute/rng:choice | rng:element/rng:choice" mode="name-class" name="make-nc-choice">
+  <xsl:template match="rng:attribute/rng:choice | rng:element/rng:choice" mode="name-class"
+    name="make-nc-choice">
     <xsl:param name="is-attr"/>
     <xsl:for-each select="rng:*">
       <xsl:if test="position () != 1">
@@ -1076,7 +1079,7 @@
         </xsl:call-template>
         <xsl:text>:</xsl:text>
       </xsl:when>
-<!--
+      <!--
       <xsl:when test="$is-attr or $has-default-ns">
         <xsl:text>inh:</xsl:text>
       </xsl:when>
@@ -1084,9 +1087,9 @@
     </xsl:choose>
     <xsl:value-of select="$name"/>
   </xsl:template>
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- Util -->
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- Util -->
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <xsl:template name="last-token">
     <xsl:param name="str"/>
     <xsl:param name="pos" select="string-length ($str)"/>
@@ -1108,7 +1111,8 @@
   <xsl:variable name="simple-prefix-map" select="concat (' ', $prefixes, ' ')"/>
   <xsl:template name="mapped-prefix">
     <xsl:param name="ns"/>
-    <xsl:variable name="simple-mapped" select="substring-before ($simple-prefix-map, concat ('=', $ns, ' '))"/>
+    <xsl:variable name="simple-mapped"
+      select="substring-before ($simple-prefix-map, concat ('=', $ns, ' '))"/>
     <xsl:choose>
       <xsl:when test="$simple-mapped">
         <xsl:call-template name="last-token">
@@ -1157,7 +1161,8 @@
   <xsl:template name="spacer">
     <xsl:if test="following-sibling::*">
       <nl size="1"/>
-      <xsl:if test="not (parent::rng:include) and  not (parent::rng:grammar/../..) and   not (self::rng:include and   following-sibling::*[1][self::rng:include])">
+      <xsl:if
+        test="not (parent::rng:include) and  not (parent::rng:grammar/../..) and   not (self::rng:include and   following-sibling::*[1][self::rng:include])">
         <nl size="1"/>
       </xsl:if>
     </xsl:if>
@@ -1183,18 +1188,19 @@
     <kw>text</kw>
     <kw>token</kw>
   </local:keywords>
-  <xsl:variable xmlns:local="http://www.pantor.com/ns/local" name="keywords" select="document ('')/*/local:keywords/*"/>
+  <xsl:variable xmlns:local="http://www.pantor.com/ns/local" name="keywords"
+    select="document ('')/*/local:keywords/*"/>
   <xsl:template name="quote-keyword">
     <xsl:param name="name"/>
     <xsl:if test="$name = $keywords">\</xsl:if>
     <xsl:value-of select="$name"/>
   </xsl:template>
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<!-- Annotations -->
-<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+  <!-- Annotations -->
+  <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
   <xsl:template name="leading-documentation">
     <xsl:param name="nd"/>
-<!--
+    <!--
     <xsl:choose>
       <xsl:when test="not ($nd) or $nd/self::rng:*"/>
 
@@ -1238,7 +1244,7 @@
     </xsl:if>
   </xsl:template>
   <xsl:template name="annotations">
-<!--
+    <!--
     <xsl:choose>
       <xsl:when test="(self::rng:value or self::rng:param) and
 	following-sibling::*[1][not (self::rng:*)]">
@@ -1267,7 +1273,7 @@
   </xsl:template>
   <xsl:template name="doc-comment">
     <xsl:param name="comment"/>
-<!--
+    <!--
     <xsl:if test="$comment">
       <xsl:variable name="head" select="substring-before ($comment, '&#10;')"/>
       <xsl:variable name="line">
@@ -1295,7 +1301,9 @@
     </xsl:if>
 -->
   </xsl:template>
-  <xsl:template match="rng:grammar/a:documentation | rng:div/a:documentation |     rng:include/a:documentation" priority="-15">
+  <xsl:template
+    match="rng:grammar/a:documentation | rng:div/a:documentation |     rng:include/a:documentation"
+    priority="-15">
     <xsl:if test="not (../../..) or        preceding-sibling::*[not (self::a:documentation)]">
       <xsl:call-template name="annotation-element"/>
     </xsl:if>
@@ -1304,7 +1312,8 @@
     <xsl:call-template name="annotation-element"/>
   </xsl:template>
   <xsl:template name="follow-annotations">
-    <xsl:param name="nd" select="self::*[not (self::rng:value or self::rng:param)]       /following-sibling::*[1][not (self::rng:*)]"/>
+    <xsl:param name="nd"
+      select="self::*[not (self::rng:value or self::rng:param)]       /following-sibling::*[1][not (self::rng:*)]"/>
     <xsl:if test="$nd">
       <xsl:for-each select="$nd">
         <nl size="1"/>
@@ -1335,7 +1344,8 @@
                 <xsl:value-of select="$mapped"/>
               </xsl:when>
               <xsl:when test="$retain-prefixes">
-                <xsl:variable name="pfx" select="name (key ('ns', $ns)[1]     /namespace::*[. = $ns])"/>
+                <xsl:variable name="pfx"
+                  select="name (key ('ns', $ns)[1]     /namespace::*[. = $ns])"/>
                 <xsl:choose>
                   <xsl:when test="$pfx">
                     <xsl:value-of select="$pfx"/>
@@ -1397,14 +1407,14 @@
   </xsl:template>
   <xsl:template name="make-body-from-r-t-f">
     <xsl:param name="schema"/>
-<!--
+    <!--
 <xsl:message>
 <xsl:for-each select="exsl:node-set($schema)/*">
   <xsl:call-template name="SHOW"/>
 </xsl:for-each>
 </xsl:message>
 -->
-<!--
+    <!--
 <xsl:comment>
 Schema:
 	    <xsl:apply-templates mode="verbatim"
@@ -1421,7 +1431,8 @@ Schema:
   </xsl:template>
   <xsl:template match="group" mode="keep">
     <xsl:choose>
-      <xsl:when test="  not ($collapse-lines) or   @collapse = 'no' or  .//doc or   .//group [@collapse = 'no']">
+      <xsl:when
+        test="  not ($collapse-lines) or   @collapse = 'no' or  .//doc or   .//group [@collapse = 'no']">
         <xsl:apply-templates mode="keep"/>
       </xsl:when>
       <xsl:otherwise>
@@ -1441,14 +1452,16 @@ Schema:
   <xsl:template match="sp" mode="keep">
     <xsl:text> </xsl:text>
   </xsl:template>
-  <xsl:variable name="spaces" select="concat (     '                                        ',     '                                        '     )"/>
+  <xsl:variable name="spaces"
+    select="concat (     '                                        ',     '                                        '     )"/>
   <xsl:template match="nl" mode="keep">
     <xsl:text>&#10;</xsl:text>
     <xsl:variable name="level" select="count (ancestor::indent)"/>
     <xsl:variable name="following-op" select="following-sibling::*[1][self::op]"/>
     <xsl:choose>
       <xsl:when test="$following-op">
-        <xsl:value-of select="substring ($spaces, 1,     $level * $indent-width - $following-op/@size)"/>
+        <xsl:value-of
+          select="substring ($spaces, 1,     $level * $indent-width - $following-op/@size)"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="substring ($spaces, 1, $level * $indent-width)"/>
@@ -1475,7 +1488,7 @@ Schema:
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-<!--
+    <!--
 <xsl:message>FROM <xsl:value-of select="@name"/> to <xsl:value-of
     select="$me"/>, <xsl:for-each select="$top"><xsl:value-of 
 select="count(key('IDENTS',$me))"/></xsl:for-each></xsl:message>
@@ -1483,22 +1496,22 @@ select="count(key('IDENTS',$me))"/></xsl:for-each></xsl:message>
     <xsl:variable name="n" select="@name"/>
     <xsl:choose>
       <xsl:when test="contains(.,'.localattributes')">
-	<xsl:value-of select="$n"/>
+        <xsl:value-of select="$n"/>
       </xsl:when>
       <xsl:when test="contains(@name,'.content')">
-	<xsl:value-of select="$n"/>
+        <xsl:value-of select="$n"/>
       </xsl:when>
       <xsl:otherwise>
-      <xsl:for-each select="$top">
-	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="name">
-	    <xsl:value-of select="$me"/>
-	  </xsl:with-param>
-	  <xsl:with-param name="reftext">
-	    <xsl:value-of select="$n"/>
-	  </xsl:with-param>
-	</xsl:call-template>
-      </xsl:for-each>
+        <xsl:for-each select="$top">
+          <xsl:call-template name="linkTogether">
+            <xsl:with-param name="name">
+              <xsl:value-of select="$me"/>
+            </xsl:with-param>
+            <xsl:with-param name="reftext">
+              <xsl:value-of select="$n"/>
+            </xsl:with-param>
+          </xsl:call-template>
+        </xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

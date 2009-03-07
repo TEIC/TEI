@@ -8,7 +8,11 @@ XSL stylesheet to format TEI XML documents using ODD markup
  
 ##LICENSE
 -->
-<xsl:stylesheet xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:eg="http://www.tei-c.org/ns/Examples" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common" xmlns:estr="http://exslt.org/strings" extension-element-prefixes="exsl estr" exclude-result-prefixes="tei exsl estr" version="1.0">
+<xsl:stylesheet xmlns:rng="http://relaxng.org/ns/structure/1.0"
+  xmlns:eg="http://www.tei-c.org/ns/Examples" xmlns:tei="http://www.tei-c.org/ns/1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common"
+  xmlns:estr="http://exslt.org/strings" extension-element-prefixes="exsl estr"
+  exclude-result-prefixes="tei exsl estr" version="1.0">
   <xsl:import href="../common/tei.xsl"/>
   <xsl:import href="teiodds.xsl"/>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
@@ -240,7 +244,7 @@ XSL stylesheet to format TEI XML documents using ODD markup
     <xsl:param name="autowrap">true</xsl:param>
     <div class="pre_eg">
       <xsl:if test="$startnewline='true'">
-       <xsl:call-template name="lineBreak"/>
+        <xsl:call-template name="lineBreak"/>
       </xsl:if>
       <xsl:choose>
         <xsl:when test="$autowrap='false'">
