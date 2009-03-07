@@ -81,6 +81,7 @@
   </xd:doc>
   <xsl:template name="makeInternalLink">
     <xsl:param name="ptr"/>
+    <xsl:param name="class"/>
     <xsl:param name="target"/>
     <xsl:param name="dest"/>
     <xsl:param name="body"/>

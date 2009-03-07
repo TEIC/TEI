@@ -8,7 +8,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
 exclude-result-prefixes="xd tei fotex fo m" 
 version="2.0">
-  <xsl:import href="../common/tei.xsl"/>
+  <xsl:import href="../common2/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
   <xd:doc type="stylesheet">
     <xd:short>

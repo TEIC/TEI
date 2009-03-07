@@ -20,11 +20,11 @@
                 xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
                 exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn its">
     <!-- import conversion style -->
-    <xsl:import href="../.././docx/tei-docx.xsl"/>
+    <xsl:import href="../../../docx/tei-docx.xsl"/>
     <xsl:import href="../isoutils.xsl"/>
     
     <!-- import functions -->
-    <xsl:include href="../iso-functions.xsl"/>
+    <xsl:include href="iso-functions.xsl"/>
     
     <xsl:param name="template">ISO</xsl:param>
 

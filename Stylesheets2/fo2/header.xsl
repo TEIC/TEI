@@ -93,6 +93,7 @@ version="2.0">
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="textTitle">
+    <xsl:param name="N"/>
     <xsl:apply-templates select="tei:front"/>
   </xsl:template>
 </xsl:stylesheet>

@@ -13,7 +13,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-    exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom wxd" >
+    exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom" >
     
     <xsl:import href="verbatim.xsl"/>
     
