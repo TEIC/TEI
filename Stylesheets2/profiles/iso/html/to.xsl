@@ -15,7 +15,7 @@
     exclude-result-prefixes="tei html t a rng s iso teix" 
     version="2.0">
   
-<xsl:import href="../../..//xhtml/tei.xsl"/>
+<xsl:import href="../../..//xhtml2/tei.xsl"/>
 <xsl:import href="../isoutils.xsl"/>
 <xsl:param name="numberFormat">uk</xsl:param>
 <xsl:output encoding="utf-8" 

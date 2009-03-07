@@ -15,7 +15,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   
-<xsl:import href="../../../latex/tei.xsl"/>
+<xsl:import href="../../../latex2/tei.xsl"/>
 <xsl:import href="../isoutils.xsl"/>
 
 <xsl:param name="reencode">false</xsl:param>
@@ -214,14 +214,8 @@
     <xsl:when test="@preamble">
       <xsl:value-of select="@preamble"/>
     </xsl:when>
-    <xsl:when test="function-available('exsl:node-set')">
-      <xsl:call-template name="makePreamble-complex">
-	<xsl:with-param name="r" select="$r"/>
-      </xsl:call-template>
-    </xsl:when>
     <xsl:otherwise>
-      <xsl:call-template name="makePreamble-simple">
-	<xsl:with-param name="r" select="$r"/>
+      <xsl:call-template name="makePreamble-complex">
       </xsl:call-template>
     </xsl:otherwise>
   </xsl:choose>
