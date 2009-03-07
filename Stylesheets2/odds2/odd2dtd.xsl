@@ -1486,7 +1486,7 @@
     </xsl:choose>
     <xsl:choose>
       <xsl:when
-        test="(tei:datatype/@maxOccurs &gt; 1) and tei:datatype/rng:ref[@name='data.enumerated']">
+        test="(number(tei:datatype/@maxOccurs) &gt; 1) and tei:datatype/rng:ref[@name='data.enumerated']">
         <xsl:text> NMTOKENS </xsl:text>
       </xsl:when>
       <xsl:when test="tei:valList[@type='closed']">

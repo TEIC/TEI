@@ -21,10 +21,10 @@ xsl:
 	done
 
 log:
-	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \
+	(LastDate=`head -1 ChangeLog2 | awk '{print $$1}'`; \
 	svn log -v -r 'HEAD:{'$$LastDate'}' | perl ../gnuify-changelog.pl | grep -v "^;" > newchanges)
-	mv ChangeLog oldchanges
-	cat newchanges oldchanges > ChangeLog
+	mv ChangeLog2 oldchanges
+	cat newchanges oldchanges > ChangeLog2
 	rm newchanges oldchanges
 
 release: xsl 
