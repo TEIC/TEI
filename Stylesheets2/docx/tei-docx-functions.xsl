@@ -161,6 +161,7 @@
         <xsl:for-each select="$element">
             <xsl:choose>
                 <xsl:when test="self::tei:code">true</xsl:when>
+                <xsl:when test="self::tei:title">true</xsl:when>
                 <xsl:when test="self::tei:name">true</xsl:when>
                 <xsl:when test="self::tei:soCalled">true</xsl:when>
                 <xsl:otherwise>false</xsl:otherwise>

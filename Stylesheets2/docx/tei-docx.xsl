@@ -1466,7 +1466,7 @@ is there a number present?
     </xsl:template>
 
     <!-- 
-        Handle elements from different namespaces, such as wordML, wordMathML, MathML ...
+       §< Handle elements from different namespaces, such as wordML, wordMathML, MathML ...
         -->
 
     <xsl:template match="m:oMath">

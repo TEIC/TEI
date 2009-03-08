@@ -492,29 +492,16 @@
 		about.
 		-->
 	<xsl:template match="w:p" mode="paragraph" name="real-paragraph-template">
-
-		<p>
-			<!-- put style in rend, if there is a style -->
-			<xsl:if test="w:pPr/w:pStyle/@w:val">
-			  <xsl:attribute name="rend">
-			    <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
-			  </xsl:attribute>
-			</xsl:if>
-			
-			<!-- Store information about spacing  -->
-			<xsl:if test="w:pPr/w:spacing/@w:before">
-				<xsl:attribute name="iso:spaceBefore">
-					<xsl:value-of select="w:pPr/w:spacing/@w:before"/>
-				</xsl:attribute>
-			</xsl:if>
-			<xsl:if test="w:pPr/w:spacing/@w:after">
-				<xsl:attribute name="iso:spaceAfter">
-					<xsl:value-of select="w:pPr/w:spacing/@w:after"/>
-				</xsl:attribute>
-			</xsl:if>
-
-			<xsl:apply-templates select="."/>
-		</p>
+	  <p>
+	    <!-- put style in rend, if there is a style -->
+	    <xsl:if test="w:pPr/w:pStyle/@w:val">
+	      <xsl:attribute name="rend">
+		<xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
+	      </xsl:attribute>
+	    </xsl:if>
+	    
+	    <xsl:apply-templates select="."/>
+	  </p>
 	</xsl:template>
 
 
