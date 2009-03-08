@@ -22,7 +22,7 @@ CHAPTER=$(shell find ${LANGTREE} -iname ${CHAP}*.xml)
 JING=jing
 ONVDL=onvdl
 SAXON=saxon
-.PHONY: convert dtds schemas html validate valid test split oddschema exampleschema fascicule clean dist exemplars
+.PHONY: convert dtds schemas html validate valid test oddschema exampleschema fascicule clean dist exemplars
 
 default: dtds schemas exemplars html-web validate-html
 
@@ -45,18 +45,9 @@ schemas:check
 	${SAXON} ${DRIVER}  ${XSL}/odds2/odd2relax.xsl outputDir=Schema \
 	lang=${LANGUAGE}  \
 	TEIC=true 
-	# do the indentation better 
-	for i in Schema/* ; \
-	do echo clean $$i; \
-	   xmllint --format $$i \
-	     | sed -e '/^ *$$/d' \
-	     > x.tmp ; \
-	     mv x.tmp $$i;\
-	   done
 	# convert RelaxNG XML syntax to compact syntax with trang
 	(cd Schema; for i in *rng; do trang $$i `basename $$i .rng`.rnc;done)
-	# improve the positioning of blank lines in the RelaxNG compact syntax output for human readability
-	(for i in Schema/*.rnc; do t=`basename $$i .rnc`.tmp; mv $$i $$t; ./Utilities/fix_rnc_whitespace.perl < $$t > $$i; rm $$t; done)
+	# extract Schematron rules
 	${SAXON} ${DRIVER} Utilities2/extract-sch.xsl > p5.sch
 
 html-web: check
@@ -204,9 +195,6 @@ test:
 exemplars:
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
 
-split:
-	(mkdir Split; cd Split; xmllint --noent --xinclude  ../${DRIVER} | xsltproc ../Utilities2/divsplit.xsl -)
-
 oddschema: 
 	(cd Exemplars;make names)
 	roma ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds.odd .
@@ -221,38 +209,6 @@ exampleschema:
 
 subset:
 	${SAXON} -o p5subset.xml  ${DRIVER} Utilities2/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
-
-fascicule: subset
-	find ${LANGTREE} -iname ${CHAP}*.xml
-#	fail if we can't find the chapter
-	test -n "${CHAPTER}"
-#	create fascicule file by appending head- and tail- boilerplate text to chapter
-	cp fasc-head.xml ${FASCFILE}
-	cat ${CHAPTER} >> ${FASCFILE}
-	cat fasc-tail.xml  >> ${FASCFILE}
-	xmllint --noent --xinclude ${FASCFILE} | xsltproc \
-	-o FASC-${CHAP}-Guidelines/index.html ${VERBOSE} \
-	localsource=`pwd`/p5subset.xml \
-	cssFile=guidelines.css \
-	displayMode=rnc \
-	lang=${LANGUAGE} \
-	outputDir=. \
-	Utilities2/guidelines.xsl -
-	(cd FASC-${CHAP}-Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
-	-cp *.gif guidelines.css FASC-${CHAP}-Guidelines
-	-jing p5odds.rng ${FASCFILE}
-	xsltproc -o FASC-${CHAP}-lite.xml  \
-	  localsource=`pwd`/p5subset.xml \
-	  displayMode=rnc \
-	  lang=${LANGUAGE} \
-	  ${XSL}/odds2/odd2lite.xsl ${FASCFILE}
-	-perl Utilities/cleanrnc.pl FASC-${CHAP}-lite.xml \
-	  | xsltproc ${XSL}/teic/teilatex-teic.xsl - > FASC-${CHAP}.tex
-	ln -s Source/Images Images
-	-TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-${CHAP} 
-	-TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-${CHAP}
-	mv ${FASCFILE} ./
-	rm Images
 
 dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exemplars
 	rm -f release/tei-`cat VERSION`.zip
