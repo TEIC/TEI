@@ -31,7 +31,12 @@ echo read $THERE/$F.xml
 saxon $THERE/$F.xml $XSL/docx/listgraphics.xsl DIR=$TEMPDIR/word/media > $TEMPDIR/fetch
 sh $TEMPDIR/fetch
 rm $TEMPDIR/fetch
-(cd $TEMPDIR/word/media; for i in *; do  exiftool -q -o $i.xmp $i; done)
+(cd $TEMPDIR/word/media
+if test -f *.xml
+then
+   for i in *; do  exiftool -q -o $i.xmp $i; done
+fi
+)
 cd $TEMPDIR
 unzip -o -q $TEMPLATES/template.docx
 if $odd
