@@ -1678,15 +1678,29 @@
 	    <xsl:value-of select="$masterFile"/>
             <xsl:call-template name="addCorpusID"/>
           </xsl:variable>
-          <xsl:call-template name="outputChunk">
-            <xsl:with-param name="ident">
-              <xsl:value-of select="concat($BaseFile,'-notes')"/>
-            </xsl:with-param>
-            <xsl:with-param name="content">
-              <xsl:call-template name="writeNotes"/>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:when>
+
+
+	  <xsl:variable name="outName">
+	    <xsl:call-template name="outputChunkName">
+	      <xsl:with-param name="ident">
+		<xsl:value-of select="concat($BaseFile,'-notes')"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:variable>
+	  
+	  <xsl:if test="$verbose='true'">
+	    <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+	  </xsl:if>
+	  <xsl:result-document doctype-public="{$doctypePublic}"
+			       doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+			       href="{$outName}" method="{$outputMethod}">
+	    <xsl:call-template name="writeNotes"/>
+	  </xsl:result-document>
+	  <xsl:if test="$verbose='true'">
+	    <xsl:message>Closing file <xsl:value-of select="$outName"
+	    /></xsl:message>
+	  </xsl:if>
+	</xsl:when>
 	<xsl:when test="self::tei:div">
 	  <xsl:variable name="depth">
 	    <xsl:apply-templates mode="depth" select="."/>

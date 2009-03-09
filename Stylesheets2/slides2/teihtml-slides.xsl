@@ -98,15 +98,29 @@
   </xsl:template>
 
   <xsl:template match="/tei:TEI">
-    <xsl:param name="slidenum"><xsl:value-of select="$masterFile"/>0</xsl:param>
-    <xsl:call-template name="outputChunk">
-      <xsl:with-param name="ident">
-        <xsl:value-of select="$slidenum"/>
-      </xsl:with-param>
-      <xsl:with-param name="content">
-        <xsl:call-template name="mainslide"/>
-      </xsl:with-param>
-    </xsl:call-template>
+    <xsl:param name="slidenum"><xsl:value-of  select="$masterFile"/>0</xsl:param>
+
+    <xsl:variable name="outName">
+      <xsl:call-template name="outputChunkName">
+	<xsl:with-param name="ident">
+	  <xsl:value-of select="$slidenum"/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+    </xsl:if>
+    <xsl:result-document doctype-public="{$doctypePublic}"
+			     doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+			     href="{$outName}" method="{$outputMethod}">
+      <xsl:call-template name="mainslide"/>
+    </xsl:result-document>
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Closing file <xsl:value-of select="$outName"
+      /></xsl:message>
+    </xsl:if>
+
     <xsl:for-each select="tei:text/tei:body">
       <xsl:apply-templates select="tei:div|tei:div0|tei:div1"/>
     </xsl:for-each>
@@ -310,11 +324,20 @@
       <xsl:value-of select="$masterFile"/>
       <xsl:number/>
     </xsl:variable>
-    <xsl:call-template name="outputChunk">
-      <xsl:with-param name="ident">
-        <xsl:value-of select="$slidenum"/>
-      </xsl:with-param>
-      <xsl:with-param name="content">
+    <xsl:variable name="outName">
+      <xsl:call-template name="outputChunkName">
+	<xsl:with-param name="ident">
+	  <xsl:value-of select="$slidenum"/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:variable>
+
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+    </xsl:if>
+    <xsl:result-document doctype-public="{$doctypePublic}"
+			     doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+			     href="{$outName}" method="{$outputMethod}">
         <html>
           <xsl:call-template name="addLangAtt"/>
           <head>
@@ -332,28 +355,46 @@
             </h1>
           </body>
         </html>
-      </xsl:with-param>
-    </xsl:call-template>
+    </xsl:result-document>
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Closing file <xsl:value-of select="$outName"
+      /></xsl:message>
+    </xsl:if>
+
     <xsl:apply-templates select="tei:div"/>
   </xsl:template>
+
 
   <xsl:template match="tei:body/tei:div|tei:div">
     <xsl:choose>
       <xsl:when test="$splitLevel&gt;-1">
-        <xsl:variable name="slidenum">
-          <xsl:apply-templates select="." mode="genid"/>
-        </xsl:variable>
-        <xsl:call-template name="outputChunk">
-          <xsl:with-param name="ident">
-            <xsl:value-of select="$slidenum"/>
-          </xsl:with-param>
-          <xsl:with-param name="content">
-            <xsl:call-template name="slideout"/>
-          </xsl:with-param>
-        </xsl:call-template>
+	<xsl:variable name="slidenum">
+	  <xsl:apply-templates select="." mode="genid"/>
+	</xsl:variable>
+	
+	<xsl:variable name="outName">
+	  <xsl:call-template name="outputChunkName">
+	    <xsl:with-param name="ident">
+	      <xsl:value-of select="$slidenum"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:variable>
+	
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+	</xsl:if>
+	<xsl:result-document doctype-public="{$doctypePublic}"
+			     doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+			     href="{$outName}" method="{$outputMethod}">
+	  <xsl:call-template name="slideout"/>
+	</xsl:result-document>
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Closing file <xsl:value-of select="$outName"
+	  /></xsl:message>
+	</xsl:if>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="slidebody"/>
+	<xsl:call-template name="slidebody"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

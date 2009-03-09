@@ -122,12 +122,23 @@
             </xsl:choose>
           </xsl:if>
         </xsl:variable>
-        <xsl:call-template name="outputChunk">
-          <xsl:with-param name="ident">
+
+
+    <xsl:variable name="outName">
+      <xsl:call-template name="outputChunkName">
+	<xsl:with-param name="ident">
             <xsl:text>ref-</xsl:text>
             <xsl:value-of select="@ident"/>
-          </xsl:with-param>
-          <xsl:with-param name="content">
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:variable>
+    
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+    </xsl:if>
+    <xsl:result-document doctype-public="{$doctypePublic}"
+			 doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+			 href="{$outName}" method="{$outputMethod}">
             <html>
 	      <xsl:call-template name="addLangAtt"/>
               <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (7) </xsl:comment>
@@ -174,8 +185,10 @@
 		<xsl:call-template name="bodyEndHook"/>
               </body>
             </html>
-          </xsl:with-param>
-        </xsl:call-template>
+    </xsl:result-document>
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
+    </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

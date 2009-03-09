@@ -97,50 +97,61 @@
           select="$BaseFile"/>
       </xsl:message>
     </xsl:if>
-    <xsl:call-template name="outputChunk">
-      <xsl:with-param name="ident">
-        <xsl:value-of select="$BaseFile"/>
-      </xsl:with-param>
-      <xsl:with-param name="content">
-    <html>
-      <xsl:call-template name="addLangAtt"/>
-      <xsl:call-template name="includeCSS"/>
-      <head>
-        <title>
-          <xsl:apply-templates
-            select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text()"/>
-        </title>
-        <xsl:call-template name="includeCSS"/>
-        <xsl:call-template name="cssHook"/>
-      </head>
-      <body class="simple">
-        <xsl:attribute name="onload">
-          <xsl:text>startUp()</xsl:text>
-        </xsl:attribute>
-        <xsl:call-template name="bodyHook"/>
-        <xsl:call-template name="bodyJavascriptHook"/>
-	<div class="stdheader">
-        <xsl:call-template name="stdheader">
-          <xsl:with-param name="title">
-            <xsl:apply-templates
-              select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]"/>
-          </xsl:with-param>
-        </xsl:call-template>
-	</div>
-        <xsl:call-template name="corpusBody"/>
-        <xsl:call-template name="stdfooter"/>
-        <xsl:call-template name="bodyEndHook"/>
-      </body>
-    </html>
-
-      </xsl:with-param>
-    </xsl:call-template>
+    <xsl:variable name="outName">
+      <xsl:call-template name="outputChunkName">
+	<xsl:with-param name="ident">
+	  <xsl:value-of select="$BaseFile"/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:variable>
+    
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+    </xsl:if>
+    <xsl:result-document doctype-public="{$doctypePublic}"
+			 doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+			 href="{$outName}" method="{$outputMethod}">
+      
+      <html>
+	<xsl:call-template name="addLangAtt"/>
+	<xsl:call-template name="includeCSS"/>
+	<head>
+	  <title>
+	    <xsl:apply-templates
+		select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text()"/>
+	  </title>
+	  <xsl:call-template name="includeCSS"/>
+	  <xsl:call-template name="cssHook"/>
+	</head>
+	<body class="simple">
+	  <xsl:attribute name="onload">
+	    <xsl:text>startUp()</xsl:text>
+	  </xsl:attribute>
+	  <xsl:call-template name="bodyHook"/>
+	  <xsl:call-template name="bodyJavascriptHook"/>
+	  <div class="stdheader">
+	    <xsl:call-template name="stdheader">
+	      <xsl:with-param name="title">
+		<xsl:apply-templates
+		    select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </div>
+	  <xsl:call-template name="corpusBody"/>
+	  <xsl:call-template name="stdfooter"/>
+	  <xsl:call-template name="bodyEndHook"/>
+	</body>
+      </html>
+    </xsl:result-document>
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Closing file <xsl:value-of select="$outName"
+      /></xsl:message>
+    </xsl:if>
     <xsl:if test="$verbose='true'">
       <xsl:message>TEI HTML: run end hook template teiEndHook</xsl:message>
     </xsl:if>
     <xsl:call-template name="teiEndHook"/>
     <xsl:apply-templates select="tei:TEI" mode="split"/>
-
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>

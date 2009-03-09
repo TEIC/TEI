@@ -1737,7 +1737,7 @@ select="$makeDecls"/></xsl:message>
         <xsl:copy-of select="$body"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:result-document href="{$outputDir}/{@ident}{$suffix}" indent="yes" method="xml">
+        <xsl:result-document href="{$outputDir}/{@ident}{$suffix}" indent="yes" method="{$method}">
           <xsl:copy-of select="$body"/>
         </xsl:result-document>
       </xsl:otherwise>

@@ -189,14 +189,28 @@ $requestedID: requests a particular page
             <xsl:apply-templates/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:call-template name="outputChunk">
-              <xsl:with-param name="ident">
-                <xsl:value-of select="$masterFile"/>
-              </xsl:with-param>
-              <xsl:with-param name="content">
+
+	    <xsl:variable name="outName">
+	      <xsl:call-template name="outputChunkName">
+		<xsl:with-param name="ident">
+		  <xsl:value-of select="$masterFile"/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:variable>
+	    
+	    <xsl:if test="$verbose='true'">
+	      <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+	    </xsl:if>
+	    <xsl:result-document doctype-public="{$doctypePublic}"
+				 doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+				 href="{$outName}" method="{$outputMethod}">
                 <xsl:apply-templates/>
-              </xsl:with-param>
-            </xsl:call-template>
+	    </xsl:result-document>
+
+	    <xsl:if test="$verbose='true'">
+	      <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
+	    </xsl:if>
+
           </xsl:otherwise>
         </xsl:choose>
       </xsl:otherwise>
@@ -450,21 +464,36 @@ $requestedID: requests a particular page
           select="$BaseFile"/>
       </xsl:message>
     </xsl:if>
-    <xsl:call-template name="outputChunk">
-      <xsl:with-param name="ident">
-	<xsl:choose>
-	  <xsl:when test="parent::tei:teiCorpus">
-	    <xsl:apply-templates select="." mode="ident"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:value-of select="$BaseFile"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:with-param>
-      <xsl:with-param name="content">
+
+    <xsl:variable name="outName">
+      <xsl:call-template name="outputChunkName">
+	<xsl:with-param name="ident">
+	  <xsl:choose>
+	    <xsl:when test="parent::tei:teiCorpus">
+	      <xsl:apply-templates select="." mode="ident"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="$BaseFile"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:variable>
+    
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+    </xsl:if>
+    <xsl:result-document doctype-public="{$doctypePublic}"
+			 doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+			 href="{$outName}" method="{$outputMethod}">
+    
         <xsl:call-template name="pageLayoutSimple"/>
-      </xsl:with-param>
-    </xsl:call-template>
+    </xsl:result-document>
+    
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
+    </xsl:if>
+
     <xsl:if test="$verbose='true'">
       <xsl:message>TEI HTML: run end hook template teiEndHook</xsl:message>
     </xsl:if>
@@ -724,32 +753,48 @@ $requestedID: requests a particular page
         </div>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="outputChunk">
-          <xsl:with-param name="ident">
-            <xsl:apply-templates mode="ident" select="."/>
-          </xsl:with-param>
-          <xsl:with-param name="content">
-            <xsl:choose>
-              <xsl:when test="$pageLayout='CSS'">
-                <xsl:call-template name="pageLayoutCSS">
-                  <xsl:with-param name="currentID">
-                    <xsl:apply-templates mode="ident" select="."/>
-                  </xsl:with-param>
-                </xsl:call-template>
-              </xsl:when>
-              <xsl:when test="$pageLayout='Table'">
-                <xsl:call-template name="pageLayoutTable">
-                  <xsl:with-param name="currentID">
-                    <xsl:apply-templates mode="ident" select="."/>
-                  </xsl:with-param>
-                </xsl:call-template>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:call-template name="writeDiv"/>
-              </xsl:otherwise>
+
+	
+	<xsl:variable name="outName">
+	  <xsl:call-template name="outputChunkName">
+	    <xsl:with-param name="ident">
+	      <xsl:apply-templates mode="ident" select="."/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:variable>
+	
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+	</xsl:if>
+	<xsl:result-document doctype-public="{$doctypePublic}"
+			     doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+			     href="{$outName}" method="{$outputMethod}">
+	  
+	  <xsl:choose>
+	    <xsl:when test="$pageLayout='CSS'">
+	      <xsl:call-template name="pageLayoutCSS">
+		<xsl:with-param name="currentID">
+		  <xsl:apply-templates mode="ident" select="."/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:when>
+	    <xsl:when test="$pageLayout='Table'">
+	      <xsl:call-template name="pageLayoutTable">
+		<xsl:with-param name="currentID">
+		  <xsl:apply-templates mode="ident" select="."/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:call-template name="writeDiv"/>
+	    </xsl:otherwise>
             </xsl:choose>
-          </xsl:with-param>
-        </xsl:call-template>
+	    
+	</xsl:result-document>
+	
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
+	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -1073,22 +1118,51 @@ $requestedID: requests a particular page
         <xsl:call-template name="pageLayoutSimple"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="outputChunk">
-          <xsl:with-param name="ident">
-            <xsl:value-of select="concat($BaseFile,'-menubar')"/>
-          </xsl:with-param>
-          <xsl:with-param name="content">
+
+	
+	<xsl:variable name="outName">
+	  <xsl:call-template name="outputChunkName">
+	    <xsl:with-param name="ident">
+	      <xsl:value-of select="concat($BaseFile,'-menubar')"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:variable>
+	
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+	</xsl:if>
+	<xsl:result-document doctype-public="{$doctypePublic}"
+			     doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+			     href="{$outName}" method="{$outputMethod}">
+	  
             <xsl:call-template name="writeFrameToc"/>
-          </xsl:with-param>
-        </xsl:call-template>
-        <xsl:call-template name="outputChunk">
-          <xsl:with-param name="ident">
+	</xsl:result-document>
+	
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
+	</xsl:if>
+
+	<xsl:variable name="outName2">
+	  <xsl:call-template name="outputChunkName">
+	    <xsl:with-param name="ident">
             <xsl:value-of select="concat($BaseFile,'-frames')"/>
-          </xsl:with-param>
-          <xsl:with-param name="content">
-            <xsl:call-template name="pageLayoutSimple"/>
-          </xsl:with-param>
-        </xsl:call-template>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:variable>
+	
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Opening file <xsl:value-of select="$outName2"/></xsl:message>
+	</xsl:if>
+	<xsl:result-document doctype-public="{$doctypePublic}"
+			     doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+			     href="{$outName2}" method="{$outputMethod}">
+            <xsl:call-template name="pageLayoutSimple"/>	  
+	</xsl:result-document>
+	
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
+	</xsl:if>
+
         <xsl:apply-templates mode="split" select="tei:TEI"/>
       </xsl:otherwise>
     </xsl:choose>
@@ -1120,18 +1194,29 @@ $requestedID: requests a particular page
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:call-template name="outputChunk">
-	  <xsl:with-param name="ident">
-	    <xsl:choose>
-	      <xsl:when test="not($currentID='')">
-		<xsl:value-of select="$currentID"/>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:value-of select="$BaseFile"/>
+
+
+	<xsl:variable name="outName">
+	  <xsl:call-template name="outputChunkName">
+	    <xsl:with-param name="ident">
+	      <xsl:choose>
+		<xsl:when test="not($currentID='')">
+		  <xsl:value-of select="$currentID"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="$BaseFile"/>
 	      </xsl:otherwise>
-	    </xsl:choose>
-	  </xsl:with-param>
-	  <xsl:with-param name="content">
+	      </xsl:choose>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:variable>
+	
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+	</xsl:if>
+	<xsl:result-document doctype-public="{$doctypePublic}"
+			     doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+			     href="{$outName}" method="{$outputMethod}">
 	    <xsl:choose>
 	      <xsl:when test="$pageLayout='CSS'">
 		<xsl:call-template name="pageLayoutCSS">
@@ -1144,8 +1229,11 @@ $requestedID: requests a particular page
 		</xsl:call-template>
 	      </xsl:when>
 	    </xsl:choose>
-	  </xsl:with-param>
-	</xsl:call-template>
+	</xsl:result-document>
+	
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
+	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -1774,15 +1862,12 @@ $requestedID: requests a particular page
     </xsl:choose>
   </xsl:template>
   <xd:doc>
-    <xd:short>[html] Generate a chunk of output</xd:short>
+    <xd:short>[html] Generate name for a chunk of output</xd:short>
     <xd:param name="ident">ident</xd:param>
-    <xd:param name="content">content</xd:param>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template name="outputChunk">
+  <xsl:template name="outputChunkName">
     <xsl:param name="ident"/>
-    <xsl:param name="content"/>
-    <xsl:variable name="outName">
       <xsl:choose>
         <xsl:when test="not($outputDir ='')">
           <xsl:value-of select="$outputDir"/>
@@ -1794,23 +1879,6 @@ $requestedID: requests a particular page
       </xsl:choose>
       <xsl:value-of select="$ident"/>
       <xsl:value-of select="$outputSuffix"/>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="$ident=''">
-        <xsl:copy-of select="$content"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:result-document doctype-public="{$doctypePublic}"
-            doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
-            href="{$outName}" method="{$outputMethod}">
-            <xsl:copy-of select="$content"/>
-	</xsl:result-document>
-	<xsl:if test="$verbose='true'">
-	  <xsl:message>Closing file <xsl:value-of select="$outName"
-	  /></xsl:message>
-	</xsl:if>
-      </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>
   <xd:doc>
     <xd:short>[html] Make a new page using CSS layout </xd:short>v

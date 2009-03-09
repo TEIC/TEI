@@ -28,7 +28,7 @@
   </xd:doc>
   <xsl:output method="text"/>
   <xsl:param name="verbose"/>
-  <xsl:param name="outputDir">DTD</xsl:param>
+  <xsl:param name="outputDir"/>
   <xsl:param name="appendixWords"> </xsl:param>
   <xsl:param name="filesuffix"/>
   <xsl:param name="headingNumberSuffix"> </xsl:param>
