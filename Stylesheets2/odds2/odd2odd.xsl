@@ -553,7 +553,7 @@ for change individually.
                       <xsl:value-of select="@key"/>
                     </xsl:variable>
                     <xsl:for-each select="$ODD">
-                      <xsl:if test="not(key('DELETE',@key))">
+                      <xsl:if test="not(key('DELETE',$me))">
                         <tei:memberOf key="{$me}"/>
                       </xsl:if>
                     </xsl:for-each>
@@ -813,7 +813,7 @@ If so, use them as is.
                       <xsl:value-of select="@key"/>
                     </xsl:variable>
                     <xsl:for-each select="$ODD">
-                      <xsl:if test="not(key('DELETE',@key))">
+                      <xsl:if test="not(key('DELETE',$me))">
                         <tei:memberOf key="{$me}"/>
                       </xsl:if>
                     </xsl:for-each>
@@ -1822,7 +1822,6 @@ select="$M"/></xsl:message>
           <xsl:with-param name="source">9</xsl:with-param>
           <xsl:with-param name="element" select="$elementName"/>
           <xsl:with-param name="class" select="$className"/>
-          <xsl:with-param name="att" select="@ident"/>
         </xsl:call-template>
       </xsl:for-each>
       <xsl:if test="tei:classes/tei:memberOf">
