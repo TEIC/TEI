@@ -299,11 +299,21 @@
 
 
         <xsl:variable name="name">TEI Guidelines TOC </xsl:variable>
-        <xsl:call-template name="outputChunk">
-          <xsl:with-param name="ident">
-            <xsl:text>index-toc</xsl:text>
-          </xsl:with-param>
-          <xsl:with-param name="content">
+
+	    <xsl:variable name="outName">
+	      <xsl:call-template name="outputChunkName">
+		<xsl:with-param name="ident">
+		  <xsl:text>index-toc</xsl:text>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:variable>
+	    
+	    <xsl:if test="$verbose='true'">
+	      <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+	    </xsl:if>
+	    <xsl:result-document doctype-public="{$doctypePublic}"
+				 doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+				 href="{$outName}" method="{$outputMethod}">
             <html>
               <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (99) </xsl:comment>
               <head>
@@ -347,8 +357,11 @@
                 <xsl:call-template name="stdfooter"/>
               </body>
             </html>
-          </xsl:with-param>
-        </xsl:call-template>
+	    </xsl:result-document>
+
+	    <xsl:if test="$verbose='true'">
+	      <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
+	    </xsl:if>
       </xsl:if>
       <xsl:call-template name="stdfooter"/>
 
