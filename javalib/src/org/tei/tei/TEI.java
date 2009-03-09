@@ -123,7 +123,8 @@ public class TEI {
 		if(null != properties.getErrorListener() )
 			comp.setErrorListener(properties.getErrorListener());
 		
-		XsltExecutable odd2oddExec = comp.compile(new StreamSource(getPropertiesProvider().tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2odd.xsl"));
+		String path = getPropertiesProvider().tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2odd.xsl";
+		XsltExecutable odd2oddExec = comp.compile(new StreamSource(path));
 		XsltTransformer odd2oddTransformer = odd2oddExec.load();
 		
 		odd2oddTransformer.setParameter(new QName("selectedSchema"), new XdmAtomicValue(properties.getSchemaName()));
@@ -264,7 +265,7 @@ public class TEI {
 		docx.cleanUp();
 	}	
 	
-	public void transformToHTML(HTMLTransformationProperties properties) throws SaxonApiException, IOException{
+	public void transformTo(TransformationProperties properties) throws SaxonApiException, IOException{
 		// load stylesheets
 		Processor proc = SaxonProcFactory.getProcessor();
 		
@@ -273,27 +274,18 @@ public class TEI {
 		if(null != properties.getErrorListener() )
 			comp.setErrorListener(properties.getErrorListener());
 	
-		XsltExecutable odd2HTMLDocExec = comp.compile(new StreamSource(getPropertiesProvider().tei_pp_getStylesheetsDir() + File.separator + "odds2" + File.separator + "odd2html.xsl"));
-		XsltTransformer odd2HTMLDocTransformer = odd2HTMLDocExec.load();
+		XsltExecutable exec = comp.compile(new StreamSource(getPropertiesProvider().tei_pp_getStylesheetsDir() + File.separator + "profiles" + File.separator + properties.getProfile() + File.separator + properties.getFormat() + File.separator + "to.xsl"));
+		XsltTransformer transformer = exec.load();
 		
-		odd2HTMLDocTransformer.setParameter(new QName("STDOUT"), new XdmAtomicValue("true") );
-		odd2HTMLDocTransformer.setParameter(new QName("splitLevel"), new XdmAtomicValue("-1"));
-		odd2HTMLDocTransformer.setParameter(new QName("lang"), new XdmAtomicValue(properties.getLanguage()));
-		odd2HTMLDocTransformer.setParameter(new QName("doclang"), new XdmAtomicValue(properties.getLanguage()));
-		odd2HTMLDocTransformer.setParameter(new QName("documentationLanguage"), new XdmAtomicValue(properties.getLanguage()));
-		
-		if(null != properties.getCSSFile())
-			odd2HTMLDocTransformer.setParameter(new QName("cssFile"), new XdmAtomicValue(properties.getCSSFile()));
-		if(null != properties.getCSSSecondaryFile())
-			odd2HTMLDocTransformer.setParameter(new QName("cssSecondaryFile"), new XdmAtomicValue(properties.getCSSSecondaryFile()));
+		properties.setStylesheetParameters(transformer);
 		
 		if(null != properties.getMessageListener())
-			odd2HTMLDocTransformer.setMessageListener(properties.getMessageListener());
-		odd2HTMLDocTransformer.setInitialContextNode(tei);
+			transformer.setMessageListener(properties.getMessageListener());
+		transformer.setInitialContextNode(tei);
 		Serializer result = new Serializer();
 		result.setOutputFile( properties.getOutputFile() );
-		odd2HTMLDocTransformer.setDestination(result);
-		odd2HTMLDocTransformer.transform();
+		transformer.setDestination(result);
+		transformer.transform();
 	}
 	
 	
