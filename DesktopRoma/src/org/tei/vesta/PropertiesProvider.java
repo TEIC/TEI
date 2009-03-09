@@ -14,7 +14,6 @@ import org.tei.tei.TEIPropertiesProvider;
 
 public class PropertiesProvider 
 	implements 
-		DocXPropertiesProvider,
 		TEIArchivePropertiesProvider,
 		TEIPropertiesProvider{
 
@@ -65,7 +64,6 @@ public class PropertiesProvider
 	}
 	
 	public String getStylesheetDir(){
-		System.out.println(baseDir + properties.getProperty("stylesheets.dir"));
 		return baseDir + properties.getProperty("stylesheets.dir");
 	}
 	
@@ -73,26 +71,6 @@ public class PropertiesProvider
 		return baseDir + properties.getProperty("css.dir");
 	}
 	
-	public String docx_pp_getDocXTemplateFile() {
-		return baseDir + properties.getProperty("stylesheets.dir") + "/docx-templates/template.docx";
-	}
-
-	public String docx_pp_getStylesheetCheckDocx() {
-		return baseDir + properties.getProperty("stylesheets.dir") + "/docx/tei-docx-conversion-vesta.xsl";
-	}
-
-	public String docx_pp_getStylesheetDocx2TEI() {
-		return null;
-	}
-
-	public String docx_pp_getStylesheetNormalizeWordStyles() {
-		return baseDir + properties.getProperty("stylesheets.dir") + "/docx/normalize-word-style.xsl";
-	}
-
-	public String docx_pp_getStylesheetTEI2Docx() {
-		return baseDir + properties.getProperty("stylesheets.dir") + "/docx/tei-docx-conversion-vesta.xsl";
-	}
-
 	public String docx_pp_getTempDir() {
 		return baseDir + "resources/tmp";
 	}
@@ -108,5 +86,10 @@ public class PropertiesProvider
 	public String tei_pp_getP5Subset() {
 		return baseDir + properties.getProperty("p5subset");
 	}
+	
+	public boolean isOddEnabled(){
+		return properties.getProperty("odd.enabled").equals("true");
+	}
+	
 
 }

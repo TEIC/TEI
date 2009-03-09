@@ -4,51 +4,32 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.xml.transform.ErrorListener;
 import javax.xml.transform.SourceLocator;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.stream.StreamSource;
 
-import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.s9api.MessageListener;
-import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
-import net.sf.saxon.s9api.Serializer;
 import net.sf.saxon.s9api.XdmAtomicValue;
-import net.sf.saxon.s9api.XdmDestination;
 import net.sf.saxon.s9api.XdmNode;
-import net.sf.saxon.s9api.XsltCompiler;
-import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
-import net.sf.saxon.sxpath.XPathEvaluator;
-import net.sf.saxon.sxpath.XPathExpression;
 import net.sf.saxon.trans.XPathException;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ShellEvent;
-import org.eclipse.swt.events.ShellListener;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
-import org.tei.docx.DocX;
-import org.tei.exceptions.ConfigurationException;
 import org.tei.tei.DTDGenerationProperties;
 import org.tei.tei.DocXTransformationProperties;
 import org.tei.tei.DocumentationGenerationProperties;
-import org.tei.tei.HTMLTransformationProperties;
 import org.tei.tei.ODDGenerationProperties;
 import org.tei.tei.RelaxGenerationProperties;
 import org.tei.tei.TEI;
+import org.tei.tei.TransformationProperties;
 import org.tei.utils.FileUtils;
-import org.tei.utils.SaxonProcFactory;
 import org.tei.utils.XMLUtils;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -75,13 +56,14 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 	private String schemaName = "default";
 	private String language = "en";
 	
+	private String profile;
+	private Collection<String> formats;
+	
 	private boolean generateXSD = true;
 	private boolean generateDTD = true;
 	private boolean generateRNG = true;
 	
 	private boolean documentationTEI = false;
-	private boolean documentationHTML = false;
-	private boolean documentationDocX = false;
 	
 	private boolean compile = false;
 	private boolean debug = false;
@@ -363,7 +345,6 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 			try {
 				// generate compact relax
 				if(generateRNG){
-					System.out.println(relaxFile);
 					appendInfo("Create Compact Relax NG");
 					generateRelaxCompact(relaxFile);
 				}
@@ -388,8 +369,8 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		}
 		
 		// documentation
-		if(documentationDocX || documentationHTML || documentationTEI){
-			appendInfo("Generate Documentation");
+		if(useCompiledODD && (documentationTEI || null != formats && ! formats.isEmpty())){
+			appendInfo("Generate Output");
 			File docDir = new File(outputDocDir);
 			if(! docDir.isDirectory() && docDir.exists())
 				throw new IllegalArgumentException("Could not create directory: " + docDir.getAbsolutePath());
@@ -401,7 +382,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		TEI teiDocumentation = null;
 		if(useCompiledODD){
 			// create the TEI documentation if it we are supposed to create it or the docx documentation
-			if(documentationTEI || documentationDocX){
+			if(documentationTEI || null != formats && ! formats.isEmpty()){
 				try {
 					teiDocumentation = oddDocument.generateDocumentation(new DocumentationGenerationProperties(){
 						public ErrorListener getErrorListener() {
@@ -431,23 +412,34 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 				}
 			}
 			
-			if(documentationHTML){
-				appendInfo("Generate Documentation (HTML)");
-				transformToHTML(oddDocument);
+			for(String format : formats){
+				if(! format.toLowerCase().equals("docx")){
+					appendInfo("Generate Documentation (" + format + ")");
+					transformTo(oddDocument, format);
+				}
 			}
-		} else if(documentationHTML){
-			appendInfo("Generate HTML file");
-			transformToHTML(tei);
+		} else{
+			for(String format : formats){
+				if(! format.toLowerCase().equals("docx")){
+					appendInfo("Generate " + format + " file");
+					transformTo(tei, format);
+				}
+			}
 		}
 		
 		
 		
-		if(documentationDocX && useCompiledODD){
-			appendInfo("Generate Documentation (docx)");
-			transformToDocX(teiDocumentation);
-		} else if(documentationDocX){
-			appendInfo("Generate docx file from: " + inputFile);
-			transformToDocX(tei);
+		for(String format : formats){
+			if(format.toLowerCase().equals("docx")){
+				if(useCompiledODD){
+					appendInfo("Generate Documentation (docx)");
+					transformToDocX(teiDocumentation);
+				} else {
+					appendInfo("Generate docx file from: " + inputFile);
+					transformToDocX(tei);
+				}
+				break;
+			}
 		}
 		
 		
@@ -467,9 +459,9 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 	}
 	
 	
-	private void transformToHTML(TEI doc){
+	private void transformTo(TEI doc, final String format){
 		try{
-			doc.transformToHTML(new HTMLTransformationProperties(){
+			doc.transformTo(new TransformationProperties(){
 				@Override
 				public ErrorListener getErrorListener() {
 					return VestaProcessor.this;
@@ -482,25 +474,57 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 				
 				@Override
 				public File getOutputFile() {
-					return new File(outputDocDir + File.separator + schemaName + ".html");
+					if(useCompiledODD)
+						return new File(outputDocDir + File.separator + schemaName + "." + format);
+					return new File(outputDir + File.separator + schemaName + "." + format);
 				}
 				
 				@Override
+				public void setStylesheetParameters(XsltTransformer transformer){
+					if(format.equals("html")){
+						transformer.setParameter(new QName("STDOUT"), new XdmAtomicValue("true") );
+						transformer.setParameter(new QName("splitLevel"), new XdmAtomicValue("-1"));
+						transformer.setParameter(new QName("lang"), new XdmAtomicValue(getLanguage()));
+						transformer.setParameter(new QName("doclang"), new XdmAtomicValue(getLanguage()));
+						transformer.setParameter(new QName("documentationLanguage"), new XdmAtomicValue(getLanguage()));
+						
+						if(null != getCSSFile())
+							transformer.setParameter(new QName("cssFile"), new XdmAtomicValue(getCSSFile()));
+						if(null != getCSSSecondaryFile())
+							transformer.setParameter(new QName("cssSecondaryFile"), new XdmAtomicValue(getCSSSecondaryFile()));
+					}
+				}
+				
+				@Override
+				public String getProfile(){
+					return VestaProcessor.this.getProfile();
+				}
+
+				@Override
+				public String getFormat() {
+					return format;
+				}
+				
 				public String getCSSFile(){
 					return "tei.css";
 				}
 				
-				@Override
 				public String getCSSSecondaryFile(){
 					return "odd.css";
 				}
+
 			});
 
 			// copy css
-			FileUtils.copyFile(new File(PropertiesProvider.getInstance().getCSSDir() + File.separator + "tei.css"), new File( outputDocDir + File.separator + "tei.css") );
-			FileUtils.copyFile(new File(PropertiesProvider.getInstance().getCSSDir() + File.separator + "odd.css"), new File( outputDocDir + File.separator + "odd.css") );
+			if(useCompiledODD){
+				FileUtils.copyFile(new File(PropertiesProvider.getInstance().getCSSDir() + File.separator + "tei.css"), new File( outputDocDir + File.separator + "tei.css") );
+				FileUtils.copyFile(new File(PropertiesProvider.getInstance().getCSSDir() + File.separator + "odd.css"), new File( outputDocDir + File.separator + "odd.css") );
+			} else {
+				FileUtils.copyFile(new File(PropertiesProvider.getInstance().getCSSDir() + File.separator + "tei.css"), new File( outputDir + File.separator + "tei.css") );
+				FileUtils.copyFile(new File(PropertiesProvider.getInstance().getCSSDir() + File.separator + "odd.css"), new File( outputDir + File.separator + "odd.css") );
+			}
 		} catch (Exception e) {
-			appendInfo("Error: Could not create HTML file : " + e.getMessage());
+			appendInfo("Error: Could not create " + format + " file : " + e.getMessage());
 		}
 	}
 	
@@ -510,27 +534,30 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 
 				@Override
 				public File getOutputFile() {
-					return new File(outputDocDir + File.separator + schemaName + ".docx");
+					if(useCompiledODD)
+						return new File(outputDocDir + File.separator + schemaName + ".docx");
+					return new File(outputDir + File.separator + schemaName + ".docx");
+
 				}
 
 				public String docx_pp_getDocXTemplateFile() {
-					return properties.docx_pp_getDocXTemplateFile();
+					return properties.getStylesheetDir() + File.separator + "profiles" + File.separator +  VestaProcessor.this.getProfile() + File.separator + "docx" + File.separator +  "template.docx";
 				}
 
 				public String docx_pp_getStylesheetCheckDocx() {
-					return properties.docx_pp_getStylesheetCheckDocx();
+					return null;
 				}
 
 				public String docx_pp_getStylesheetDocx2TEI() {
-					return properties.docx_pp_getStylesheetDocx2TEI();
+					return null;
 				}
 
 				public String docx_pp_getStylesheetNormalizeWordStyles() {
-					return properties.docx_pp_getStylesheetNormalizeWordStyles();
+					return null;
 				}
 
 				public String docx_pp_getStylesheetTEI2Docx() {
-					return properties.docx_pp_getStylesheetTEI2Docx();
+					return properties.getStylesheetDir() + File.separator + "profiles" + File.separator +  VestaProcessor.this.getProfile() + File.separator + "docx" + File.separator +  "to.xsl";
 				}
 
 				public String docx_pp_getTempDir() {
@@ -666,27 +693,6 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 		this.documentationTEI = documentationTEI;
 	}
 
-
-	public boolean isDocumentationHTML() {
-		return documentationHTML;
-	}
-
-
-	public void setDocumentationHTML(boolean documentationHTML) {
-		this.documentationHTML = documentationHTML;
-	}
-
-
-	public boolean isDocumentationDocX() {
-		return documentationDocX;
-	}
-
-
-	public void setDocumentationDocX(boolean documentationDocX) {
-		this.documentationDocX = documentationDocX;
-	}
-
-
 	public boolean isCompile() {
 		return compile;
 	}
@@ -781,6 +787,38 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 	public void message(XdmNode content, boolean terminate, SourceLocator locator) {
 		appendInfo("Message: " + content.getStringValue());
 		
+	}
+
+
+	/**
+	 * @param application the application to set
+	 */
+	public void setProfile(String application) {
+		this.profile = application;
+	}
+
+
+	/**
+	 * @return the application
+	 */
+	public String getProfile() {
+		return profile;
+	}
+
+
+	/**
+	 * @param formats the formats to set
+	 */
+	public void setFormats(Collection<String> formats) {
+		this.formats = formats;
+	}
+
+
+	/**
+	 * @return the formats
+	 */
+	public Collection<String> getFormats() {
+		return formats;
 	}
 	
 
