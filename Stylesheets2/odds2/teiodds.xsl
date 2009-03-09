@@ -289,7 +289,7 @@
   <xsl:template match="tei:*" mode="tangle"/>
 
   <xsl:template match="tei:attRef" mode="tangle">
-    <ref name="{$patternPrefixText}{@name}" xmlns="http://relaxng.org/ns/structure/1.0"/>
+    <ref name="{@name}" xmlns="http://relaxng.org/ns/structure/1.0"/>
   </xsl:template>
 
   <xsl:template match="tei:attDef" mode="tangle">
