@@ -2344,10 +2344,6 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	  </xsl:with-param>
         </xsl:call-template>
     </xsl:for-each>
-    <xsl:if test="$verbose='true'">
-      <xsl:message> tagset <xsl:value-of select="@xml:id"/>: <xsl:value-of
-          select="@module"/></xsl:message>
-    </xsl:if>
   </xsl:template>
 
 

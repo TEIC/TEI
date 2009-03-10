@@ -102,12 +102,6 @@
 	<xsl:apply-templates mode="weavebody" select="."/>
       </xsl:when>
       <xsl:otherwise> 
-	<span class="refDocLink">
-	  <a href="ref-{@ident}{$outputSuffix}">
-          <xsl:value-of select="$name"/>
-        </a>
-	<xsl:text> </xsl:text>
-	</span>
 	<xsl:variable name="BaseFile">
           <xsl:value-of select="$masterFile"/>
           <xsl:if test="ancestor::tei:teiCorpus">
@@ -123,72 +117,70 @@
           </xsl:if>
         </xsl:variable>
 
-
-    <xsl:variable name="outName">
-      <xsl:call-template name="outputChunkName">
-	<xsl:with-param name="ident">
-            <xsl:text>ref-</xsl:text>
-            <xsl:value-of select="@ident"/>
-	</xsl:with-param>
-      </xsl:call-template>
-    </xsl:variable>
-    
-    <xsl:if test="$verbose='true'">
-      <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
-    </xsl:if>
-    <xsl:result-document doctype-public="{$doctypePublic}"
-			 doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
-			 href="{$outName}" method="{$outputMethod}">
-            <html>
-	      <xsl:call-template name="addLangAtt"/>
-              <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (7) </xsl:comment>
-              <head>
-                <title>
-                  <xsl:value-of select="$name"/>
-                </title>
-		<xsl:choose>
-		  <xsl:when test="$cssFile = ''"/>
-		  <xsl:otherwise>
-		    <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
-		  </xsl:otherwise>
-		</xsl:choose>
-                <xsl:if test="not($cssSecondaryFile = '')">
-                  <link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
-                </xsl:if>
-		<xsl:call-template name="generateLocalCSS"/>
-		<xsl:call-template name="metaHTML"/>
-		<meta http-equiv="Content-Type" 
-		      content="application/xhtml+xml; charset=utf-8"/>
-                <xsl:call-template name="includeJavascript"/>
-                <xsl:call-template name="javascriptHook"/>
-              </head>
-              <body id="TOP">
-                <xsl:attribute name="onload">
-                  <xsl:text>startUp()</xsl:text>
-                </xsl:attribute>
-                <xsl:call-template name="bodyHook"/>
-		<xsl:call-template name="teiTOP">
-		  <xsl:with-param name="name">
-		    <xsl:value-of select="$name"/>
-		  </xsl:with-param>
-		</xsl:call-template>
-                <div class="main-content">
-		  <xsl:call-template name="startDivHook"/>
-		  <xsl:apply-templates mode="weavebody" select="."/>
-                </div>
-		<xsl:call-template name="stdfooter">
-		  <xsl:with-param name="file">
-		    <xsl:text>ref-</xsl:text>
-		    <xsl:value-of select="@ident"/>
-		  </xsl:with-param>
-		</xsl:call-template>
-		<xsl:call-template name="bodyEndHook"/>
-              </body>
-            </html>
-    </xsl:result-document>
-    <xsl:if test="$verbose='true'">
-      <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
-    </xsl:if>
+	
+	<xsl:variable name="outName">
+	  <xsl:call-template name="outputChunkName">
+	    <xsl:with-param name="ident">
+	      <xsl:text>ref-</xsl:text>
+	      <xsl:value-of select="@ident"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:variable>
+	
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+	</xsl:if>
+	<xsl:result-document doctype-public="{$doctypePublic}"
+			     doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+			     href="{$outName}" method="{$outputMethod}">
+	  <html>
+	    <xsl:call-template name="addLangAtt"/>
+	    <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (7) </xsl:comment>
+	    <head>
+	      <title>
+		<xsl:value-of select="$name"/>
+	      </title>
+	      <xsl:choose>
+		<xsl:when test="$cssFile = ''"/>
+		<xsl:otherwise>
+		  <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	      <xsl:if test="not($cssSecondaryFile = '')">
+		<link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
+	      </xsl:if>
+	      <xsl:call-template name="generateLocalCSS"/>
+	      <xsl:call-template name="metaHTML"/>
+	      <xsl:call-template name="includeJavascript"/>
+	      <xsl:call-template name="javascriptHook"/>
+	    </head>
+	    <body id="TOP">
+	      <xsl:attribute name="onload">
+		<xsl:text>startUp()</xsl:text>
+	      </xsl:attribute>
+	      <xsl:call-template name="bodyHook"/>
+	      <xsl:call-template name="teiTOP">
+		<xsl:with-param name="name">
+		  <xsl:value-of select="$name"/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	      <div class="main-content">
+		<xsl:call-template name="startDivHook"/>
+		<xsl:apply-templates mode="weavebody" select="."/>
+	      </div>
+	      <xsl:call-template name="stdfooter">
+		<xsl:with-param name="file">
+		  <xsl:text>ref-</xsl:text>
+		  <xsl:value-of select="@ident"/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	      <xsl:call-template name="bodyEndHook"/>
+	    </body>
+	  </html>
+	</xsl:result-document>
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
+	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

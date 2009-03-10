@@ -433,11 +433,9 @@
       </xsl:choose>
     </xsl:if>
   </xsl:template>
+
   <xsl:template match="tei:divGen[@type='macrocat']">
     <h3>Alphabetical list</h3>
-    <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
     <xsl:for-each select="key('MACRODOCS',1)">
       <xsl:sort select="@module"/>
       <xsl:if test="generate-id(.)=generate-id(key('MACRO-MODULE',@module)[1])">
@@ -450,13 +448,25 @@
               <xsl:value-of select="tei:desc"/>
             </xsl:for-each>
           </h3>
-          <xsl:apply-templates mode="weave" select="key('MACRO-MODULE',@module)">
+          <xsl:for-each select="key('MACRO-MODULE',@module)">
             <xsl:sort select="@ident"/>
-          </xsl:apply-templates>
+	    <span class="refDocLink">
+	      <a href="ref-{@ident}{$outputSuffix}">
+		<xsl:value-of select="@ident"/>
+	      </a>
+	      <xsl:text> </xsl:text>
+	    </span>	    
+	  </xsl:for-each>
         </div>
       </xsl:if>
     </xsl:for-each>
+
+    <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
+
   </xsl:template>
+
   <xsl:template match="tei:divGen[@type='elementcat']">
     <div class="atozwrapper">
       <xsl:call-template name="atozHeader">
@@ -476,7 +486,12 @@
               <xsl:for-each select="key('ELEMENT-ALPHA',$letter)">
                 <xsl:sort select="@ident"/>
                 <li>
-                  <xsl:apply-templates select="." mode="weave"/>
+		  <span class="refDocLink">
+		    <a href="ref-{@ident}{$outputSuffix}">
+		      <xsl:value-of select="@ident"/>
+		    </a>
+		    <xsl:text> </xsl:text>
+		  </span>
                 </li>
               </xsl:for-each>
             </ul>
@@ -497,14 +512,24 @@
                 <xsl:value-of select="tei:desc"/>
               </xsl:for-each>
             </h3>
-            <xsl:apply-templates mode="weave" select="key('ELEMENT-MODULE',@module)">
-              <xsl:sort select="@ident"/>
-            </xsl:apply-templates>
+	    <xsl:for-each select="key('ELEMENT-MODULE',@module)">
+	      <xsl:sort select="@ident"/>
+	      <span class="refDocLink">
+		<a href="ref-{@ident}{$outputSuffix}">
+		  <xsl:value-of select="@ident"/>
+		</a>
+		<xsl:text> </xsl:text>
+	      </span>
+	    </xsl:for-each>
           </div>
         </xsl:if>
       </xsl:for-each>
     </div>
+    <xsl:for-each select="key('ELEMENTDOCS',1)">
+      <xsl:apply-templates mode="weave" select="."/>
+    </xsl:for-each>
   </xsl:template>
+
   <xsl:template match="tei:divGen[@type='modelclasscat']">
     <div class="atozwrapper">
       <xsl:call-template name="atozHeader">
@@ -524,7 +549,12 @@
               <xsl:for-each select="key('MODEL-CLASS-ALPHA',$letter)">
                 <xsl:sort select="translate(substring-after(@ident,'model.'),$lc,$uc)"/>
                 <li>
-                  <xsl:apply-templates select="." mode="weave"/>
+		  <span class="refDocLink">
+		    <a href="ref-{@ident}{$outputSuffix}">
+		      <xsl:value-of select="@ident"/>
+		    </a>
+		    <xsl:text> </xsl:text>
+		  </span>
                 </li>
               </xsl:for-each>
             </ul>
@@ -545,14 +575,26 @@
                 <xsl:value-of select="tei:desc"/>
               </xsl:for-each>
             </h3>
-            <xsl:apply-templates mode="weave" select="key('MODEL-CLASS-MODULE',@module)">
-              <xsl:sort select="@ident"/>
-            </xsl:apply-templates>
+            <xsl:for-each select="key('MODEL-CLASS-MODULE',@module)">
+	      <xsl:sort select="@ident"/>
+	      <span class="refDocLink">
+		<a href="ref-{@ident}{$outputSuffix}">
+		  <xsl:value-of select="@ident"/>
+		</a>
+		<xsl:text> </xsl:text>
+	      </span>
+	    </xsl:for-each>
           </div>
         </xsl:if>
       </xsl:for-each>
     </div>
+
+    <xsl:for-each select="key('MODELCLASSDOCS',1)">
+      <xsl:apply-templates select="." mode="weave"/>
+    </xsl:for-each>
+
   </xsl:template>
+
   <xsl:template match="tei:divGen[@type='attclasscat']">
     <div class="atozwrapper">
       <xsl:call-template name="atozHeader">
@@ -572,7 +614,12 @@
               <xsl:for-each select="key('ATT-CLASS-ALPHA',$letter)">
                 <xsl:sort select="translate(substring-after(@ident,'att.'),$lc,$uc)"/>
                 <li>
-                  <xsl:apply-templates select="." mode="weave"/>
+		  <span class="refDocLink">
+		    <a href="ref-{@ident}{$outputSuffix}">
+		      <xsl:value-of select="@ident"/>
+		    </a>
+		    <xsl:text> </xsl:text>
+		  </span>
                 </li>
               </xsl:for-each>
             </ul>
@@ -593,14 +640,23 @@
                 <xsl:value-of select="tei:desc"/>
               </xsl:for-each>
             </h3>
-            <xsl:apply-templates mode="weave" select="key('ATT-CLASS-MODULE',@module)">
-              <xsl:sort select="@ident"/>
-            </xsl:apply-templates>
+	    <xsl:for-each select="key('ATT-CLASS-MODULE',@module)">
+	      <span class="refDocLink">
+		<a href="ref-{@ident}{$outputSuffix}">
+		  <xsl:value-of select="@ident"/>
+		</a>
+		<xsl:text> </xsl:text>
+	      </span>
+	    </xsl:for-each>
           </div>
         </xsl:if>
       </xsl:for-each>
     </div>
+    <xsl:apply-templates mode="weave" select="key('ATTCLASSDOCS',1)">
+      <xsl:sort select="@ident"/>
+    </xsl:apply-templates>
   </xsl:template>
+
   <xsl:template name="atozHeader">
     <xsl:param name="Key"/>
     <div id="azindex">
