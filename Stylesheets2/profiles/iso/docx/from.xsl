@@ -189,7 +189,7 @@
                     
                 </publicationStmt>
                 <sourceDesc>
-                    <p>Processed by ISOTEI on <xsl:call-template name="today"/>
+                    <p>Processed by ISOTEI on <xsl:call-template name="whatsTheDate"/>
                     </p>
                 </sourceDesc>
             </fileDesc>
