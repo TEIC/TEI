@@ -94,6 +94,37 @@
 	</content>
       </macroSpec>
       
+      <macroSpec ident="anyThing" mode="add">
+	<content>
+	  <element xmlns="http://relaxng.org/ns/structure/1.0"
+		   ns="http://www.tei-c.org/ns/Examples">
+	    <anyName/>
+	    <zeroOrMore>
+	      <attribute>
+		<anyName/>
+	      </attribute>
+	    </zeroOrMore>
+	    <zeroOrMore>
+	      <choice>
+		<text/>
+		<ref name="anyThing"/>
+	      </choice>
+	    </zeroOrMore>
+	  </element>
+	</content>
+      </macroSpec>
+
+      <elementSpec ident="egXML" mode="change" module="tagdocs"
+		   ns="http://www.tei-c.org/ns/Examples">
+	<content>
+	  <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	    <choice>
+	      <text/>
+		<ref name="anyThing"/>
+	    </choice>
+	  </oneOrMore>
+	</content>
+      </elementSpec>
  
    </schemaSpec>
   </body>
