@@ -30,9 +30,8 @@
 
     <xsl:variable name="align">
       <xsl:choose>
-	<xsl:when test="$template='ISO'">left</xsl:when>
-	<xsl:otherwise>right
-</xsl:otherwise>
+    	<xsl:when test="$template='ISO'">left</xsl:when>
+	    <xsl:otherwise>right</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     
