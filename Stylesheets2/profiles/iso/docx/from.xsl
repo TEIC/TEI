@@ -707,9 +707,9 @@
         </item>
     </xsl:template>
     
-	<xsl:template match="w:p" mode="paragraph">
-
-		<p>
+    
+    <xsl:template name="paragraph-wp">
+    	<p>
 			<!-- put style in rend, if there is a style -->
 			<xsl:if test="w:pPr/w:pStyle/@w:val">
 			  <xsl:attribute name="rend">
