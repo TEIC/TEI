@@ -28,8 +28,7 @@
 	exclude-result-prefixes="a cp dc dcterms dcmitype  iso m mml mo mv o pic r rel tbx tei teidocx v ve w10 w wne wp xd">
 	
 	<!--xsl:import href="omml2mml.xsl"/-->
-	<xsl:import href="tei-docx-functions.xsl"/>
-	
+	<xsl:import href="docx-tei-named.xsl"/>
 
 	<xd:doc type="stylesheet">
 		<xd:short> TEI stylesheet for converting Word docx files to TEI </xd:short>
@@ -48,25 +47,27 @@
 		<xd:copyright>2008, TEI Consortium</xd:copyright>
 	</xd:doc>
 	
-	<xsl:variable name="convert-graphics">true</xsl:variable>
-	<xsl:variable name="convert-headers">true</xsl:variable>
-
-	<xsl:variable name="processor">
-		<xsl:value-of select="system-property('xsl:vendor')"/>
-	</xsl:variable>
+	
+	<!-- 
+		IMPORTING STYLESHEETS AND OVERRIDING MATCHED TEMPLATES:
+		
+		When importing a stylesheet (xsl:import) all the templates in the imported stylesheet
+		get a lower import-precedence than the ones in the importing stylesheet. If the importing
+		stylesheet now wants to override, let's say a general template to match all <w:p> elements
+		where no more specialized rule applies it can't since it will automatically override
+		all w:p[someprediceat] template in the imported stylesheet as well. 
+		In this case we have outsourced the processing of the general template into a named template
+		and all the imported stylesheet does is to call the named template. Now, the importing
+		stylesheet can simply override the named template, and everything works out fine.
+		
+		See templates:
+			- w:p (mode: paragraph)
+	
+	-->
+	
+	
 	<xsl:key name="Sdt" match="w:sdt" use="w:sdtPr/w:tag/@w:val"/>
 	<xsl:key name="AllSdt" match="w:sdt" use="1"/>
-
-	<xsl:variable name="lowercase">abcdefghijklmnopqrstuvwxyz</xsl:variable>
-	<xsl:variable name="uppercase">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
-	<xsl:variable name="digits">1234567890</xsl:variable>
-	<xsl:variable name="characters">~!@#$%^&amp;*()&lt;&gt;{}[]|:;,.?`'"=+-_</xsl:variable>
-
-	<xsl:param name="mathMethod">omml</xsl:param>
-	<xsl:param name="termMethod">tei</xsl:param>
-	<xsl:param name="tableMethod">tei</xsl:param>
-
-	<xsl:param name="word-directory">.</xsl:param>
 
 	<xsl:strip-space elements="*"/>
 	<xsl:preserve-space elements="w:t"/>
@@ -96,48 +97,6 @@
 		</TEI>
 	</xsl:template>
 	
-	<!-- simple teiHeader. For a more sophisticated header, think about overwriting
-		 this template -->
-	<xsl:template name="create-tei-header">
-	  <teiHeader>
-	    <fileDesc>
-	      <titleStmt>
-		<title>
-		  <xsl:call-template name="getDocTitle"/>
-		</title>
-		<author>
-		  <xsl:call-template name="getDocAuthor"/>
-		</author>
-	      </titleStmt>
-	      <editionStmt>
-		<edition>
-		  <date>
-		    <xsl:call-template name="getDocDate"/>
-		  </date>
-		</edition>
-	      </editionStmt>
-	      <publicationStmt>
-		<p></p>
-	      </publicationStmt>
-	      <sourceDesc>
-		<p>Converted from a Word document </p>
-	      </sourceDesc>
-	    </fileDesc>
-	    <revisionDesc>
-	      <change>
-		<date>
-		  <xsl:text>$LastChangedDate: </xsl:text>
-		  <xsl:call-template name="whatsTheDate"/>
-		  <xsl:text>$</xsl:text>
-		</date>
-		<respStmt>
-		  <name>$LastChangedBy$</name>
-		</respStmt>
-		<item>$LastChangedRevision$</item>
-	      </change>
-	    </revisionDesc>
-	  </teiHeader>
-	</xsl:template>
 
 	<!-- create the basic text; worry later about dividing it up -->
 	<xsl:template match="w:body">
@@ -170,72 +129,6 @@
 			  <xsl:apply-templates select="w:sectPr" mode="paragraph"/>
 			</body>
 		</text>
-	</xsl:template>
-
-	<!--
-		Groups the document by headings and thereby creating the document structure. 
-		-->
-	<xsl:template name="group-headings">
-		<xsl:variable name="Style" select="w:pPr/w:pStyle/@w:val"/>
-		<xsl:variable name="NextHeader" select="teidocx:get-nextlevel-header($Style)"/>
-		<div>
-			<!-- generate the head -->
-			<xsl:call-template name="generate-section-heading">
-				<xsl:with-param name="Style" select="$Style"/>
-			</xsl:call-template>
-
-		    <!-- Process subheadings -->
-		    <xsl:for-each-group select="current-group() except ."
-					  group-starting-with="w:p[w:pPr/w:pStyle/@w:val=$NextHeader]">
-				<xsl:choose>
-					<xsl:when test="teidocx:is-heading(.)">
-						<xsl:call-template name="group-headings"/>		
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:apply-templates select="." mode="headings"/>
-					</xsl:otherwise>
-				</xsl:choose>
-		    </xsl:for-each-group>
-		</div>
-	</xsl:template>
-	
-	<!-- generates a section heading. If you need something specific, feel free
-	to overwrite this template -->
-	<xsl:template name="generate-section-heading">
-		<xsl:param name="Style"/>
-		
-		<head>
-			<xsl:apply-templates/>
-		</head>
-	</xsl:template>
-	
-	<xsl:template name="extract-headers-and-footers">
-		<xsl:for-each-group select="//w:headerReference|//w:footerReference" group-by="@r:id">
-			<fw xml:id="{@r:id}">
-				<xsl:attribute name="type">
-					<xsl:choose>
-						<xsl:when test="self::w:headerReference">header</xsl:when>
-						<xsl:otherwise>footer</xsl:otherwise>
-					</xsl:choose>
-				</xsl:attribute>
-				
-				<xsl:variable name="rid" select="@r:id"/>
-				<xsl:variable name="h-file">
-					<xsl:value-of
-						select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"
-					/>
-				</xsl:variable>
-				
-				<!-- for the moment, just copy content -->
-				<xsl:if test="doc-available(concat($word-directory,'/word/', $h-file))">
-					<xsl:for-each-group select="document(concat($word-directory,'/word/', $h-file))/*[1]/w:*" group-adjacent="1">
-						<xsl:apply-templates select="." mode="headings"/>					
-					</xsl:for-each-group>
-				</xsl:if>
-
-			</fw>
-		</xsl:for-each-group>
-		
 	</xsl:template>
 
 	<!-- 
@@ -285,118 +178,6 @@
 		</xsl:for-each-group>
 	</xsl:template>
 
-
-	<!-- 
-		This template handles lists and takes care of nested lists.
-	-->
-	<xsl:template name="lists">
-		<xsl:variable name="level">
-			<xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
-		</xsl:variable>
-		<list>
-			<xsl:call-template name="listType"/>
-
-			<!-- Notes should be handled by a specific ISO handler -->
-			<xsl:for-each-group select="current-group()"
-				group-adjacent="if(w:pPr/w:pStyle/@w:val=$level) then 0 else
-								if(w:pPr/w:pStyle/@w:val='Note') then 0
-								else 1">
-				<xsl:choose>
-					<!-- we are still on the same level -->
-					<xsl:when test="current-grouping-key()=0">
-						<xsl:for-each select="current-group()">
-							<!-- put items and notes as siblings  for now -->
-							<xsl:choose>
-								<xsl:when test="contains(w:pPr/w:pStyle/@w:val,'List')">
-									<item>
-										<xsl:apply-templates/>
-									</item>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:apply-templates select="." mode="paragraph"/>
-								</xsl:otherwise>
-							</xsl:choose>
-						</xsl:for-each>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:call-template name="lists"/>
-					</xsl:otherwise>
-				</xsl:choose>
-
-			</xsl:for-each-group>
-		</list>
-	</xsl:template>
-
-	<!--
-		Trying to figure out the style of a list.
-	-->
-	<xsl:template name="listType">
-		<xsl:variable name="style">
-			<xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
-		</xsl:variable>
-		<xsl:variable name="type" select="teidocx:get-listtype($style)"/>
-
-		<xsl:attribute name="type">
-			<xsl:choose>
-				<xsl:when test="string-length($type) &gt; 0">
-					<xsl:value-of select="$type"/>
-				</xsl:when>
-				
-				<!-- try to figure it out by looking at the corresponding numbering file -->
-				<xsl:otherwise>
-					
-					<!-- look up the numbering definition .. either in document.xml or in styles.xml  -->
-					<xsl:variable name="numbering-def">
-						<xsl:choose>
-							<xsl:when test="w:pPr/w:numPr/w:numId/@w:val">
-								<xsl:value-of select="w:pPr/w:numPr/w:numId/@w:val"/>
-							</xsl:when>
-							<xsl:otherwise>
-								<!-- we might want to follow the basedOn reference, but not at the moment -->
-								<xsl:value-of select="document(concat($word-directory,'/word/styles.xml'))//w:style[w:name/@w:val=$style]/w:pPr/w:numPr/w:numId/@w:val"/>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:variable>
-					
-					<!-- look up the level .. either in document.xml or in styles.xml  -->
-					<xsl:variable name="numbering-level">
-						<xsl:choose>
-							<xsl:when test="w:pPr/w:numPr/w:ilvl/@w:val">
-								<xsl:value-of select="w:pPr/w:numPr/w:ilvl/@w:val"/>
-							</xsl:when>
-							<xsl:otherwise>
-								<!-- we might want to follow the basedOn reference, but not at the moment -->
-								<xsl:value-of select="document(concat($word-directory,'/word/styles.xml'))//w:style[w:name/@w:val=$style]/w:pPr/w:numPr/w:ilvl/@w:val"/>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:variable>
-	
-					<!-- find the abstract numbering definition and then the corresponding numfmt -->
-					<xsl:variable name="abstract-def" select="document(concat($word-directory,'/word/numbering.xml'))//w:num[@w:numId=$numbering-def]/w:abstractNumId/@w:val"/>
-					<xsl:variable name="numfmt">
-						<xsl:value-of select="document(concat($word-directory,'/word/numbering.xml'))//w:abstractNum[@w:abstractNumId=$abstract-def]/w:lvl[@w:ilvl=$numbering-level]/w:numFmt/@w:val"/>
-					</xsl:variable>
-					
-								
-					<!-- figure out what numbering scheme to use -->
-					<xsl:choose>
-						<xsl:when test="string-length($numfmt)=0">unordered</xsl:when>
-						<xsl:when test="$numfmt='bullet'">unordered</xsl:when>
-						<xsl:otherwise>ordered</xsl:otherwise>
-					</xsl:choose>
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:attribute>
-	</xsl:template>
-
-
-	<!-- 
-		Handle TOC
-	-->
-	<xsl:template name="toc">
-		<divGen type="toc"/>
-	</xsl:template>
-
 	<!--
 		Footnotes
 		-->
@@ -443,67 +224,27 @@
 	</xsl:template>
 
 
-	<!-- match strange word sections -->
+	<!-- 
+		See comment at begin of document to understand why this template is calling
+		a named template.
+		
+		match strange word sections 
+	-->
 	<xsl:template match="w:p[w:pPr/w:sectPr]|w:sectPr" mode="paragraph">
-		<xsl:for-each select="descendant-or-self::w:sectPr">
-			<milestone unit="section">
-				<xsl:for-each select="w:headerReference">
-					<teidocx:header type="{@w:type}" ref="{@r:id}"/> 
-				</xsl:for-each>
-				<xsl:for-each select="w:footerReference">
-					<teidocx:footer type="{@w:type}" ref="{@r:id}"/> 
-				</xsl:for-each>
-				<xsl:if test="w:pgSz/@w:orient='landscape'">
-					<teidocx:orientation type="landscape"/>
-				</xsl:if>
-				<xsl:if test="w:pgNumType">
-					<teidocx:pageNumbering>
-						<xsl:if test="w:pgNumType/@w:start">
-							<xsl:attribute name="start" select="w:pgNumType/@w:start"/>
-						</xsl:if>
-						<xsl:if test="w:pgNumType/@w:fmt">
-							<xsl:attribute name="type" select="w:pgNumType/@w:fmt"/>
-						</xsl:if>
-					</teidocx:pageNumbering>
-				</xsl:if>
-			</milestone>
-		</xsl:for-each>
-		
-		<!-- test if it is not the first -->
-		<!--<xsl:variable name="myPosition">
-			<xsl:number select="w:pPr/w:sectPr" level="any"/>
-		</xsl:variable>
-		
-		<xsl:if test="$myPosition!=1">
-			<iso:wordObject>
-				<w:sectPr>
-					<xsl:copy-of select="w:pPr/w:sectPr/w:pgSz"/>
-					<xsl:copy-of select="w:pPr/w:sectPr/w:pgMar"/>
-				</w:sectPr>
-			</iso:wordObject>
-		</xsl:if>
-		-->
-		<!-- call actual paragraph template -->
-		<xsl:next-match/>
+		<xsl:call-template name="paragraph-sectpr"/>
 	</xsl:template>
 
 	<!-- 
+		See comment at begin of document to understand why this template is calling
+		a named template.
+		
 		This stylesheet is handling simple paragraphs that we know nothing else
 		about.
 		-->
 	<xsl:template match="w:p" mode="paragraph">
-	  <p>
-	    <!-- put style in rend, if there is a style -->
-	    <xsl:if test="w:pPr/w:pStyle/@w:val">
-	      <xsl:attribute name="rend">
-		<xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
-	      </xsl:attribute>
-	    </xsl:if>
-	    
-	    <xsl:apply-templates select="."/>
-	  </p>
+		<xsl:call-template name="paragraph-wp"/>
 	</xsl:template>
-
+	
 
 	<!-- handle graphics -->
 	<xsl:template match="w:drawing">
@@ -829,19 +570,9 @@
 		</xsl:choose>
 	</xsl:template>
 
-	<xsl:template name="table-header">
-		<xsl:variable name="preceedingTableTitle" select="preceding-sibling::w:p[w:pPr/w:pStyle/@w:val='TableTitle'
-			or w:pPr/w:pStyle/@w:val=$Tabletitle][1]"/>
-		<xsl:if test="$preceedingTableTitle and $preceedingTableTitle/following-sibling::w:tbl[1] and generate-id()=generate-id($preceedingTableTitle/following-sibling::w:tbl[1])">
-			<head>
-		    <xsl:apply-templates select="$preceedingTableTitle"/>
-			</head>
-	  </xsl:if>
-	</xsl:template>
-
 	<!-- table titles.. we deal with them inside the table -->
 
-	<xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$Tabletitle]"    mode="paragraph"/>
+	<xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$Tabletitle]" mode="paragraph"/>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='TableTitle']" mode="paragraph"/>
 
 	<!-- getting the basic table structure -->
@@ -878,17 +609,7 @@
 	<!-- Work with maths -->
 
 	<xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Formula']" mode="paragraph">
-		<p>
-			<formula>
-				<xsl:if test="w:r/w:rPr/w:rStyle/@w:val='FormulaReference'">
-					<xsl:attribute name="n">
-						<xsl:value-of
-							select="w:r[w:rPr/w:rStyle/@w:val='FormulaReference']/w:t" />
-					</xsl:attribute>
-				</xsl:if>
-				<xsl:apply-templates/>
-			</formula>
-		</p>
+		<xsl:call-template name="paragraph-formula"/>
 	</xsl:template>
 
 	<xsl:template match="w:object">
@@ -1093,27 +814,5 @@
 	<xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2">
 	</xsl:template>
 
-    <xsl:template name="getDocTitle">
-      <xsl:for-each select="document('docProps/core.xml',/)">
-	<xsl:value-of select="cp:coreProperties/dc:title"/>
-      </xsl:for-each>
-    </xsl:template>
-
-    <xsl:template name="getDocAuthor">
-      <xsl:for-each select="document('docProps/core.xml',/)">
-	<xsl:value-of select="cp:coreProperties/dc:creator"/>
-      </xsl:for-each>
-    </xsl:template>
-
-    <xsl:template name="getDocDate">
-      <xsl:for-each select="document('docProps/core.xml',/)">
-	<xsl:value-of select="substring-before(cp:coreProperties/dcterms:created,'T')"/>
-      </xsl:for-each>
-    </xsl:template>
-
-    <xsl:template name="whatsTheDate">
-      <xsl:value-of
-	  select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[M02]:[s02]Z')"/>
-    </xsl:template>
 
 </xsl:stylesheet>
