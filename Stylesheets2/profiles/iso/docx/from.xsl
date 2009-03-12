@@ -707,7 +707,7 @@
         </item>
     </xsl:template>
     
-	<xsl:template match="w:p" mode="paragraph" name="real-paragraph-template">
+	<xsl:template match="w:p" mode="paragraph">
 
 		<p>
 			<!-- put style in rend, if there is a style -->

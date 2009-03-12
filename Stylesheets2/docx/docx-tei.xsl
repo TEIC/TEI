@@ -491,7 +491,7 @@
 		This stylesheet is handling simple paragraphs that we know nothing else
 		about.
 		-->
-	<xsl:template match="w:p" mode="paragraph" name="real-paragraph-template">
+	<xsl:template match="w:p" mode="paragraph">
 	  <p>
 	    <!-- put style in rend, if there is a style -->
 	    <xsl:if test="w:pPr/w:pStyle/@w:val">
