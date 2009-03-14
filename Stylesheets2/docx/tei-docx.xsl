@@ -480,6 +480,13 @@ Divide by 100 to avoid overflow.
                 </xsl:when>
             </xsl:choose>
 
+	    <!-- typewriter -->
+            <xsl:choose>
+                <xsl:when test="@rend='typewriter' or teidocx:render-typewriter(.)">
+		  <w:rFonts w:ascii="Courier" w:hAnsi="Courier"/>
+		</xsl:when>
+	    </xsl:choose>
+
             <xsl:if test="@rend='subscript'">
                 <w:vertAlign w:val="subscript"/>
             </xsl:if>
@@ -815,7 +822,7 @@ Divide by 100 to avoid overflow.
 
         <xsl:variable name="listStyle">
             <xsl:choose>
-                <xsl:when test="../@type='unordered' or not(../@type)">
+                <xsl:when test="../@type='unordered' or ../@type='simple' or not(../@type)">
                     <xsl:call-template name="getStyleName">
                         <xsl:with-param name="in">
                             <xsl:text>List Continue</xsl:text>
@@ -3017,17 +3024,34 @@ under new name -->
 
     <!-- Document title -->
     <xsl:template name="document-title">
-        <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
-            <xsl:call-template name="block-element">
-                <xsl:with-param name="style">Title</xsl:with-param>
-            </xsl:call-template>
-        </xsl:for-each>
-        <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='sub']">
-            <xsl:call-template name="block-element">
-                <xsl:with-param name="style">Subtitle</xsl:with-param>
-            </xsl:call-template>
-        </xsl:for-each>
-        
+      <xsl:choose>
+	<xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage">
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
+	    <xsl:call-template name="block-element">
+	      <xsl:with-param name="style">Title</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:for-each>
+	  <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='sub']">
+	    <xsl:call-template name="block-element">
+	      <xsl:with-param name="style">Subtitle</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:for-each>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="tei:titlePage/tei:docTitle/tei:titlePart[@type='main']">
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="style">Title</xsl:with-param>
+      </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template match="tei:titlePage/tei:docTitle/tei:titlePart[@type='sub']">
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="style">Subtitle</xsl:with-param>
+      </xsl:call-template>
     </xsl:template>
 
     <!-- place holder -->

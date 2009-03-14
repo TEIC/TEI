@@ -19,7 +19,7 @@ done
 test -f $1 || exit 1
 HERE=`pwd`
 D=`dirname $1`
-F=`basename $1 .xml`
+F=`basename $1`
 THERE=`(cd $D; pwd)`
 X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
@@ -27,8 +27,8 @@ TEMPDIR=/tmp/docx$$
 TEMPLATES=$APPHOME/profiles/$profile/docx
 XSL=$APPHOME
 mkdir -p $TEMPDIR/word/media
-echo read $THERE/$F.xml
-saxon $THERE/$F.xml $XSL/docx/listgraphics.xsl DIR=$TEMPDIR/word/media > $TEMPDIR/fetch
+echo read $THERE/$F
+saxon $THERE/$F $XSL/docx/listgraphics.xsl DIR=$TEMPDIR/word/media > $TEMPDIR/fetch
 sh $TEMPDIR/fetch
 rm $TEMPDIR/fetch
 (cd $TEMPDIR/word/media
@@ -41,19 +41,19 @@ cd $TEMPDIR
 unzip -o -q $TEMPLATES/template.docx
 if $odd
 then
-    saxon -o $TEMPDIR/tmp1.xml $THERE/$F.xml  $XSL/odds2/odd2lite.xsl displayMode=rnc 
-    saxon -o $TEMPDIR/tmp.xml  $TEMPDIR/tmp1.xml $XSL/docx/fixgraphics.xsl DIR=`pwd`/word
-    rm tmp1.xml
+    saxon -o $TEMPDIR/tmp1.xml $THERE/$F $XSL/odds2/odd2odd.xsl localsource=/usr/share/xml/tei/odd/p5subset.xml
+    saxon -o $TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
+    saxon -o $TEMPDIR/tmp3.xml  $TEMPDIR/tmp2.xml $XSL/docx/fixgraphics.xsl DIR=`pwd`/word
 else
-    saxon -o $TEMPDIR/tmp.xml  $THERE/$F.xml $XSL/docx/fixgraphics.xsl DIR=`pwd`/word
+    saxon -o $TEMPDIR/tmp3.xml  $THERE/$F $XSL/docx/fixgraphics.xsl DIR=`pwd`/word
 fi
-saxon -o word/document.xml tmp.xml $APPHOME/profiles/$profile/docx/to.xsl  \
+saxon -o word/document.xml tmp3.xml $APPHOME/profiles/$profile/docx/to.xsl  \
     debug=$debug styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR
 if $debug 
 then
-    echo leaving tmp.xml alone
+    echo leaving tmp[123].xml alone
 else
-    rm -f tmp.xml
+    rm -f tmp3.xml tmp1.xml tmp2.xml
 fi
 rm -f word/media/*.xmp
 test -f newContent_Types.xml && mv newContent_Types.xml \[Content_Types\].xml

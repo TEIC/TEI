@@ -160,10 +160,23 @@
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
             <xsl:choose>
-                <xsl:when test="self::tei:code">true</xsl:when>
+                <xsl:when test="@rend='italics'">true</xsl:when>
+                <xsl:when test="@rend='ital'">true</xsl:when>
                 <xsl:when test="self::tei:title">true</xsl:when>
                 <xsl:when test="self::tei:name">true</xsl:when>
                 <xsl:when test="self::tei:soCalled">true</xsl:when>
+                <xsl:otherwise>false</xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
+    </xsl:function>
+    
+    <xsl:function name="teidocx:render-typewriter" as="xs:boolean">
+        <xsl:param name="element"/>
+        <xsl:for-each select="$element">
+            <xsl:choose>
+                <xsl:when test="self::tei:val">true</xsl:when>
+                <xsl:when test="self::tei:code">true</xsl:when>
+                <xsl:when test="self::tei:ident">true</xsl:when>
                 <xsl:otherwise>false</xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
@@ -184,6 +197,7 @@
                     self::iso:wordObject[w:object] or
                     
                     self::tei:abbr or
+                    self::tei:att or
                     self::tei:affiliation or
                     self::tei:author or
                     self::tei:br or
@@ -199,6 +213,7 @@
                     self::tei:gi or
                     self::tei:hi[not(w:*)] or
                     self::tei:idno or
+                    self::tei:ident or
                     self::tei:lb or
                     self::tei:name or
                     self::tei:note[@place='foot'] or
@@ -217,7 +232,8 @@
                     self::tei:surname or 
                     self::tei:soCalled or
                     self::tei:term[not(ancestor-or-self::*/@type='termsAndDefinitions')] or
-                    self::tei:title">
+                    self::tei:title or
+                    self::tei:val">
                     true
                 </xsl:when>
                 <xsl:otherwise>

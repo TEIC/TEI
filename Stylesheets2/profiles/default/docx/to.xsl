@@ -22,7 +22,7 @@
     <xsl:import href="../../../docx/tei-docx.xsl"/>
     
     <!-- import functions -->
-    <xsl:include href="vesta-functions.xsl"/>
+    <xsl:include href="default-functions.xsl"/>
     
     
     <xd:doc type="stylesheet">
