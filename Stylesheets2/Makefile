@@ -1,3 +1,7 @@
+
+
+
+
 DIRS=odds2 xhtml2 common2 slides2 latex2 fo2
 PREFIX=/usr
 .PHONY: doc release
@@ -28,7 +32,6 @@ log:
 	rm newchanges oldchanges
 
 release: xsl 
-	cp i18n.xml release/tei-xsl2
 	mkdir -p release/tei-xsl2/doc
 	cp ChangeLog2 release/tei-xsl2/doc
 
