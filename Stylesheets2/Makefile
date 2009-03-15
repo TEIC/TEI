@@ -12,8 +12,8 @@ default:
 
 dist: clean xsl release 
 	(cd release; 	\
-	ln -s tei-xsl2 tei-xsl2-`cat ../VERSION` ; \
-	zip -r tei-xsl2-`cat ../VERSION`.zip tei-xsl2-`cat ../VERSION` )
+	ln -s tei-xsl2 tei-xsl2-`cat ../VERSION2` ; \
+	zip -r tei-xsl2-`cat ../VERSION2`.zip tei-xsl2-`cat ../VERSION2` )
 
 xsl:
 	for i in  ${DIRS} ; do \
