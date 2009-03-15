@@ -20,6 +20,7 @@ dist: clean xsl release
 	zip -r tei-xsl2-`cat ../VERSION2`.zip tei-xsl2-`cat ../VERSION2` )
 
 xsl:
+	-mkdir -p release
 	for i in  ${DIRS} ; do \
 	tar cf - --exclude .svn $$i | (cd release; tar xf - ); \
 	done
