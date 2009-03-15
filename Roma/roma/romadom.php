@@ -2490,7 +2490,7 @@ class romaDom extends domDocument
 	    $this->updateProgressBar( '100' );
       }
 
-    public function createSchematron( &$szSCH, $bBar = false )
+    public function createSchemaSCH( &$szSCH, $bBar = false )
       {
 	if ( $bBar )
 	  {
