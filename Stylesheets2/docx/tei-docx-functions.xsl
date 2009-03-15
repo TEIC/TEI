@@ -162,6 +162,8 @@
             <xsl:choose>
                 <xsl:when test="@rend='italics'">true</xsl:when>
                 <xsl:when test="@rend='ital'">true</xsl:when>
+                <xsl:when test="@rend='att'">true</xsl:when>
+                <xsl:when test="self::tei:att">true</xsl:when>
                 <xsl:when test="self::tei:title">true</xsl:when>
                 <xsl:when test="self::tei:name">true</xsl:when>
                 <xsl:when test="self::tei:soCalled">true</xsl:when>
@@ -174,6 +176,7 @@
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
             <xsl:choose>
+                <xsl:when test="self::tei:gi">true</xsl:when>
                 <xsl:when test="self::tei:val">true</xsl:when>
                 <xsl:when test="self::tei:code">true</xsl:when>
                 <xsl:when test="self::tei:ident">true</xsl:when>

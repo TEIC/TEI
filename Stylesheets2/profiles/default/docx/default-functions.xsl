@@ -69,7 +69,8 @@
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
             <xsl:choose>
-                <xsl:when test="@rend='specList-elementSpec'">true</xsl:when>
+                <xsl:when test="starts-with(@rend,'specList-')">true</xsl:when>
+                <xsl:when test="starts-with(parent::tei:hi/@rend,'specList-')">true</xsl:when>
                 <xsl:when test="@rend='odd_label'">true</xsl:when>
                 <xsl:when test="self::tei:hi[@rend='label']">true</xsl:when>
                 <xsl:when test="self::tei:docAuthor">true</xsl:when>

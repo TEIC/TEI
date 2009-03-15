@@ -1167,6 +1167,17 @@ is there a number present?
     <!-- 
         GI
     -->
+
+    <xsl:template match="tei:hi[@rend='specList-elementSpec']">
+        <w:r>
+            <w:t>&lt;</w:t>
+        </w:r>
+        <xsl:apply-templates/>
+        <w:r>
+            <w:t>&gt;</w:t>
+        </w:r>
+    </xsl:template>
+
     <xsl:template match="tei:gi">
         <w:r>
             <w:t>&lt;</w:t>
