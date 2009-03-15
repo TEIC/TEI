@@ -2,7 +2,7 @@
 
 
 
-DIRS=odds2 xhtml2 common2 slides2 latex2 fo2
+DIRS=odds2 xhtml2 common2 slides2 latex2 fo2 docx profiles
 PREFIX=/usr
 .PHONY: doc release
 
@@ -21,7 +21,7 @@ dist: clean xsl release
 
 xsl:
 	for i in  ${DIRS} ; do \
-	mkdir -p release/tei-xsl2/$$i; cp $$i/*.xsl release/tei-xsl2/$$i; \
+	tar cf - --exclude .svn $$i | (cd release; tar xf - ); \
 	done
 
 log:
