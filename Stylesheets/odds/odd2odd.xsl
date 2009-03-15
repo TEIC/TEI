@@ -27,8 +27,12 @@
   <xsl:key name="MACROS" use="@ident" match="tei:macroSpec"/>
   <xsl:key name="REFED" use="@name" match="rng:ref"/>
   <xsl:key name="REFED" use="substring-before(@name,'_')" match="rng:ref[contains(@name,'_')]"/>
-  <xsl:key name="REFED" use="@key" match="tei:memberOf"/>
-  <xsl:key name="REFED" use="substring-before(@name,'.attribute')" match="tei:attRef"/>
+  <xsl:key name="REFED" use="substring-before(@name,'.attribute')"
+	   match="tei:attRef"/>
+  <xsl:key name="ELEMENT_MEMBERED" use="tei:classes/tei:memberOf/@key"
+	   match="tei:elementSpec"/>
+  <xsl:key name="CLASS_MEMBERED" use="tei:classes/tei:memberOf/@key"
+	   match="tei:classSpec"/>
   <xsl:key match="tei:schemaSpec" name="SCHEMASPECS" use="@ident"/>
   <xsl:key match="tei:schemaSpec" name="ALLSCHEMASPECS" use="1"/>
   <xsl:key match="tei:*[@xml:id]" name="IDS" use="@xml:id"/>
@@ -47,7 +51,8 @@
   <xsl:key match="tei:macroSpec[@mode='replace']" name="REPLACE" use="@ident"/>
   <xsl:key match="tei:macroSpec[@mode='change']" name="CHANGE" use="@ident"/>
   <xsl:key match="tei:moduleRef" name="MODULES" use="@key"/>
-  <xsl:key match="tei:attRef" name="ATTREFS" use="concat(@name,'_',../../@ident)"/>
+  <xsl:key match="tei:attRef" name="ATTREFS"
+	   use="concat(@name,'_',../../@ident)"/>
   <xsl:variable name="AnonymousModule">
     <xsl:text>derived-module-</xsl:text>
     <xsl:value-of select="$selectedSchema"/>
@@ -176,23 +181,48 @@
       <xsl:apply-templates mode="final"/>
     </xsl:copy>
   </xsl:template>
+
   <xsl:template match="tei:classSpec" mode="final">
-    <xsl:variable name="k" select="@ident"/>
+    <xsl:variable name="used">
+      <xsl:call-template name="amINeeded"/>
+    </xsl:variable>
     <xsl:choose>
-      <xsl:when test="key('REFED',$k) or $stripped='true'">
-        <xsl:copy>
-          <xsl:copy-of select="@*"/>
-          <xsl:apply-templates mode="final"/>
-        </xsl:copy>
+      <xsl:when test="$used=''">
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>reject <xsl:value-of select="@ident"/></xsl:message>
+	</xsl:if>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:if test="$verbose='true'">
-          <xsl:message>reject <xsl:value-of select="$k"/>
-          </xsl:message>
-        </xsl:if>
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates mode="final"/>
+	</xsl:copy>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template name="amINeeded">
+<!--
+How can a class be ok?
+  a) if an element is a member of it
+  b) if its referred to in a content model
+  c) if has member classes, and thoses classes are OK
+-->
+    <xsl:variable name="k" select="@ident"/>
+    <xsl:choose>
+      <xsl:when test="self::tei:classSpec and
+		      $stripped='true'">y</xsl:when>
+      <xsl:when test="starts-with(@ident,'att.global')">y</xsl:when>
+      <xsl:when test="key('ELEMENT_MEMBERED',$k)">y</xsl:when>
+      <xsl:when test="key('REFED',$k)">y</xsl:when>
+      <xsl:when test="key('CLASS_MEMBERED',$k)">
+	<xsl:for-each select="key('CLASS_MEMBERED',$k)">
+	    <xsl:call-template name="amINeeded"/>
+	</xsl:for-each>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="tei:macroSpec" mode="final">
     <xsl:variable name="k" select="@ident"/>
     <xsl:choose>
