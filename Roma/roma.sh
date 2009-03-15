@@ -67,9 +67,16 @@ makeDTD()
             $TEIXSLDIR/odds/odd2dtd.xsl $RESULTS/$ODD.compiled
 }
 
+makeSCH()
+{
+    echo "8. extract Schematron from compiled ODD"
+    xsltproc  $DEBUG $LANGUAGE $DOCLANG   $SELECTEDSCHEMA \
+            $TEIXSLDIR/odds/extract-sch.xsl $RESULTS/$ODD.compiled > $RESULTS/$schema.sch
+}
+
 makeHTMLDOC() 
 {
-    echo "8. make HTML documentation $schema.doc.html "
+    echo "9. make HTML documentation $schema.doc.html "
     xsltproc 	-o $RESULTS/$schema.doc.html \
 	$DEBUG  $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
 	--stringparam STDOUT true \
@@ -131,6 +138,7 @@ echo "  --nodtd            # suppress DTD creation"
 echo "  --norelax          # suppress RELAX NG creation"
 echo "  --noteic           # suppress TEI-specific features"
 echo "  --noxsd            # suppress W3C XML Schema creation"
+echo "  --schematron       # extract Schematron rules"
 echo "  --useteiversion    # use version data from TEI P5"
 echo "  --parameterize     # create parameterized DTD"
 echo "  --patternprefix=STRING # prefix RELAX NG patterns with STRING"
@@ -151,6 +159,7 @@ lang=
 compile=false
 debug=false
 dtd=true
+schematron=false
 relax=true
 xsd=true
 doc=false
@@ -175,6 +184,7 @@ while test $# -gt 0; do
     --norelax)     relax=false;;
     --noteic)      TEIC=false;;
     --noxsd)       xsd=false;;
+    --schematron)      schematron=true;;
     --useteiversion=*) useVersionFromTEI=`echo $1 | sed 's/.*=//'`;;
     --parameterize)       parameterize=true;;
     --schema=*)    schema=`echo $1 | sed 's/.*=//'`;;
@@ -285,6 +295,7 @@ then
    makeXSD
 fi
 $dtd && makeDTD
+$schematron && makeSCH
 $dochtml && doc=true
 $docpdf && doc=true
 if $doc
