@@ -231,7 +231,7 @@ public class VestaProcessor implements Runnable, ErrorListener, ErrorHandler, Me
 			// store file
 			if(compile || debug){
 				try {
-					oddDocument.storeFile(new File(outputDir + File.separator + schemaName + ".odd"));
+					oddDocument.storeFile(new File(outputDir + File.separator + schemaName + ".compiled.odd"));
 				} catch (IOException e) {
 					appendInfo("Error: Could not store compiled ODD file: " + e.getMessage());
 				}
