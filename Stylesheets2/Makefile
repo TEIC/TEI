@@ -20,9 +20,9 @@ dist: clean xsl release
 	zip -r tei-xsl2-`cat ../VERSION2`.zip tei-xsl2-`cat ../VERSION2` )
 
 xsl:
-	-mkdir -p release
+	-mkdir -p release/tei-xsl2/xml
 	for i in  ${DIRS} ; do \
-	tar cf - --exclude .svn $$i | (cd release; tar xf - ); \
+	tar cf - --exclude .svn $$i | (cd release/tei-xsl2/xml; tar xf - ); \
 	done
 
 log:
@@ -61,10 +61,11 @@ clean:
 
 install: release
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
-	(cd release/tei-xsl2; tar cf - .) | \
+	(cd release/tei-xsl2/xml; tar cf - .) | \
 	(cd ${PREFIX}/share/xml/tei/stylesheet; tar xf -)
 	mkdir -p ${PREFIX}/share/doc/tei-xsl2
-	(cd release/tei-xsl2/doc; tar cf - .) | (cd ${PREFIX}/share/doc/tei-xsl2; tar xf -)
+	(cd release/tei-xsl2/doc; tar cf - .) | \
+	(cd ${PREFIX}/share/doc/tei-xsl2; tar xf -)
 
 installdoc:
 	mkdir -p ${PREFIX}/lib/cgi-bin
