@@ -1340,6 +1340,9 @@ class roma
 	  case 'dtd':
 	    $szError = $this->m_oRomaDom->createSchemaDTD( $szSchema, true );
 	    break;
+	  case 'sch':
+	    $szError = $this->m_oRomaDom->createSchemaSCH( $szSchema, true );
+	    break;
 	  case 'rng':
 	    $szError = $this->m_oRomaDom->createSchemaRNG( $szSchema, true );
 	    break;

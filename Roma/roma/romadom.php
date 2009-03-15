@@ -2158,6 +2158,17 @@ class romaDom extends domDocument
 	$oRNG = $oProc->transformToDoc( $oDOC );
       } 
 
+    protected function getSchemaSchematronDom( &$oSCH )
+      {
+	$this->getDocDom( $oDOC );
+	$this->getDocLanguage( $szDocLanguage );
+        $oXSL = new domDocument();
+ 	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/odds/extract-sch.xsl'  );
+	$oProc = new XsltProcessor();
+	$oProc->importStylesheet( $oXSL );
+	$oSCH = $oProc->transformToDoc( $oDOC );
+      } 
+
     public function loadProgressBar()
       {
 	echo '<script>';
@@ -2475,6 +2486,21 @@ class romaDom extends domDocument
 //	$oTidy->cleanRepair();
 //	$szRNG = $oTidy->value;
 	$szRNG = $oRNG->SaveXML();
+	if ( $bBar )
+	    $this->updateProgressBar( '100' );
+      }
+
+    public function createSchematron( &$szSCH, $bBar = false )
+      {
+	if ( $bBar )
+	  {
+	    $this->loadProgressBar();
+	    $this->updateProgressBar( '30' );
+	  }
+	$this->getSchemaSchematronDom( $oSCH );
+	if ( $bBar )
+	    $this->updateProgressBar( '80' );
+	$szSCH = $oSCH->SaveXML();
 	if ( $bBar )
 	    $this->updateProgressBar( '100' );
       }
