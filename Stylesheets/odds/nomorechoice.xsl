@@ -9,9 +9,7 @@ XSL stylesheet to process TEI documents using ODD markup
 ##LICENSE
 -->
 <!-- $Id$ -->
-<xsl:transform version="1.0" xmlns="http://relaxng.org/ns/structure/1.0"
-  xmlns:exsl="http://exslt.org/common" xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:transform xmlns="http://relaxng.org/ns/structure/1.0" xmlns:exsl="http://exslt.org/common" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:key match="rng:define[@combine='choice']" name="Choices" use="@name"/>
   <xsl:key match="rng:define" name="Defs" use="@name"/>
   <xsl:template match="rng:define">

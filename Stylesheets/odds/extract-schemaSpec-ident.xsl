@@ -16,13 +16,13 @@
 <!-- Copyright 2005 Brown University & TEI Consortium                        -->
 <!-- Licence: GPL                                                                       -->
 <!-- ********************************************************************** -->
-<xsl:stylesheet version="1.0" xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:output encoding="utf8" method="text"/>
   <xsl:template match="/">
     <xsl:for-each select=".//tei:schemaSpec">
       <xsl:value-of select="@ident"/>
-      <xsl:text>&#10;</xsl:text>
+      <xsl:text>
+</xsl:text>
     </xsl:for-each>
   </xsl:template>
 </xsl:stylesheet>

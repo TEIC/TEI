@@ -8,10 +8,7 @@ XSL stylesheet to process TEI documents using ODD markup
  
 ##LICENSE
 -->
-<xsl:stylesheet xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common"
-  extension-element-prefixes="exsl" exclude-result-prefixes="tei exsl" version="1.0">
+<xsl:stylesheet xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl" exclude-result-prefixes="tei exsl" version="1.0">
   <xsl:output method="xml" indent="yes" encoding="utf-8"/>
   <xsl:param name="verbose"/>
   <xsl:param name="lang">es</xsl:param>
@@ -53,8 +50,7 @@ XSL stylesheet to process TEI documents using ODD markup
         <xsl:for-each select="document($i18n)">
           <xsl:for-each select="key('ELEMENTS',$me)/equiv[@xml:lang=$lang][not(@value='')]">
             <xsl:if test="$verbose='true'">
-              <xsl:message><xsl:value-of select="$me"/> ... <xsl:value-of select="@value"
-                /></xsl:message>
+              <xsl:message><xsl:value-of select="$me"/> ... <xsl:value-of select="@value"/></xsl:message>
             </xsl:if>
             <altIdent xmlns="http://www.tei-c.org/ns/1.0" type="lang">
               <xsl:value-of select="@value"/>
@@ -65,8 +61,7 @@ XSL stylesheet to process TEI documents using ODD markup
       <xsl:apply-templates select="*|text()|comment()|processing-instruction()"/>
     </xsl:copy>
   </xsl:template>
-
-  <!--
+<!--
   <xsl:template match="tei:elementSpec/tei:desc">
     <xsl:variable name="me" select="../@ident"/>
     <xsl:variable name="trans">
@@ -93,7 +88,6 @@ XSL stylesheet to process TEI documents using ODD markup
     </xsl:choose>
   </xsl:template>
 -->
-
   <xsl:template match="tei:attDef">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
@@ -102,8 +96,7 @@ XSL stylesheet to process TEI documents using ODD markup
         <xsl:for-each select="document($i18n)">
           <xsl:for-each select="key('ATTRIBUTES',$me)/equiv[@xml:lang=$lang][not(@value='')]">
             <xsl:if test="$verbose='true'">
-              <xsl:message><xsl:value-of select="$me"/> ... <xsl:value-of select="@value"
-                /></xsl:message>
+              <xsl:message><xsl:value-of select="$me"/> ... <xsl:value-of select="@value"/></xsl:message>
             </xsl:if>
             <altIdent xmlns="http://www.tei-c.org/ns/1.0" type="lang">
               <xsl:value-of select="@value"/>

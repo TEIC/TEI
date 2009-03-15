@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet version="1.0" xmlns:s="http://www.ascc.net/xml/schematron"
-  xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:dbk="http://docbook.org/ns/docbook" xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings"
-  xmlns:exsl="http://exslt.org/common" xmlns:html="http://www.w3.org/1999/xhtml"
-  xmlns:pantor="http://www.pantor.com/ns/local" xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  exclude-result-prefixes="xlink dbk rng tei teix s xhtml a edate estr html pantor xd xs xsl"
-  extension-element-prefixes="exsl estr edate">
+<xsl:stylesheet xmlns:s="http://www.ascc.net/xml/schematron" xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dbk="http://docbook.org/ns/docbook" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:pantor="http://www.pantor.com/ns/local" xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" exclude-result-prefixes="xlink dbk rng tei teix s xhtml a edate estr html pantor xd xs xsl" extension-element-prefixes="exsl estr edate">
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="../xhtml/tei.xsl"/>
   <xsl:import href="../xhtml/tagdocs.xsl"/>
@@ -31,10 +20,7 @@
     <xd:copyright>2008, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:key match="tei:*" name="NameToID" use="@ident"/>
-
   <xsl:output method="xml" encoding="utf-8"/>
-
-
   <xsl:param name="BITS">Bits</xsl:param>
   <xsl:param name="STDOUT">false</xsl:param>
   <xsl:param name="TAG"/>
@@ -43,8 +29,7 @@
   <xsl:param name="autoToc">true</xsl:param>
   <xsl:param name="bottomNavigationPanel">true</xsl:param>
   <xsl:param name="cssFile">http://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
-  <xsl:param name="cssSecondaryFile"
-    >http://www.tei-c.org/release/xml/tei/stylesheet/odd.css</xsl:param>
+  <xsl:param name="cssSecondaryFile">http://www.tei-c.org/release/xml/tei/stylesheet/odd.css</xsl:param>
   <xsl:param name="dateWord"/>
   <xsl:param name="displayMode">rnc</xsl:param>
   <xsl:param name="feedbackWords">Contact</xsl:param>
@@ -71,8 +56,7 @@
   <xsl:param name="topNavigationPanel"/>
   <xsl:param name="useHeaderFrontMatter">true</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
-
-  <!-- these are ones to override -->
+<!-- these are ones to override -->
   <xsl:param name="feedbackURL">#</xsl:param>
   <xsl:param name="homeLabel">Home</xsl:param>
   <xsl:param name="homeWords">Home</xsl:param>
@@ -80,32 +64,19 @@
   <xsl:param name="outputDir">html</xsl:param>
   <xsl:param name="parentURL">http://www.example.com/</xsl:param>
   <xsl:param name="parentWords"/>
-
   <xsl:key name="MODEL-CLASS-MODULE" match="tei:classSpec[@type='model']" use="@module"/>
   <xsl:key name="ATT-CLASS-MODULE" match="tei:classSpec[@type='atts']" use="@module"/>
   <xsl:key name="ELEMENT-MODULE" match="tei:elementSpec" use="@module"/>
   <xsl:key name="MACRO-MODULE" match="tei:macroSpec" use="@module"/>
-
-  <xsl:key name="ELEMENT-ALPHA" match="tei:elementSpec"
-    use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),1,1)"/>
-
-  <xsl:key name="MODEL-CLASS-ALPHA" match="tei:classSpec[@type='model']"
-    use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),7,1)"/>
-
-  <xsl:key name="ATT-CLASS-ALPHA" match="tei:classSpec[@type='atts']"
-    use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),5,1)"/>
-
-
+  <xsl:key name="ELEMENT-ALPHA" match="tei:elementSpec" use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),1,1)"/>
+  <xsl:key name="MODEL-CLASS-ALPHA" match="tei:classSpec[@type='model']" use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),7,1)"/>
+  <xsl:key name="ATT-CLASS-ALPHA" match="tei:classSpec[@type='atts']" use="substring(translate(@ident,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),5,1)"/>
   <xsl:template name="copyrightStatement"/>
-
   <xsl:variable name="top" select="/"/>
-
   <xsl:template match="processing-instruction()"/>
-
   <xsl:variable name="headingNumberSuffix">
     <xsl:text> </xsl:text>
   </xsl:variable>
-
   <xsl:template name="processSchemaFragment">
     <xsl:param name="filename"/>
     <div class="schemaFragment">
@@ -142,7 +113,6 @@
       <xsl:apply-templates select="tei:specGrpRef"/>
     </div>
   </xsl:template>
-
   <xsl:template name="listSpecs">
     <xsl:for-each select="..//tei:schemaSpec">
       <hr/>
@@ -201,18 +171,15 @@
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
-
   <xsl:template match="tei:elementSpec[@mode='delete']">
     <dt>Element <xsl:value-of select="@ident"/></dt>
     <dd>
       <b>DELETED</b>
     </dd>
   </xsl:template>
-
   <xsl:template match="tei:divGen[@type='toc']">
     <xsl:call-template name="mainTOC"/>
   </xsl:template>
-
   <xsl:template name="oddTocEntry">
     <xsl:variable name="loc">
       <xsl:choose>
@@ -233,12 +200,10 @@
       </a>
     </div>
   </xsl:template>
-
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
     <xsl:text disable-output-escaping="yes">&lt;br/&gt;</xsl:text>
   </xsl:template>
-
   <xsl:template match="rng:ref/@name" mode="attributetext">
     <xsl:variable name="me">
       <xsl:choose>
@@ -281,9 +246,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
   <xsl:template match="tei:divGen[@type='index']"/>
-
   <xsl:template match="rng:*">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
@@ -303,9 +266,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
   <xsl:template match="tei:listRef" mode="weave"/>
-
   <xsl:template match="tei:ptr" mode="weave">
     <xsl:choose>
       <xsl:when test="parent::tei:listRef">
@@ -328,33 +289,7 @@
               <xsl:value-of select="substring(@target,2,2)"/>
             </xsl:variable>
             <xsl:choose>
-              <xsl:when
-                test="$Chapter='AB' or
-			    $Chapter='AI' or
-			    $Chapter='CC' or
-			    $Chapter='CE' or
-			    $Chapter='CH' or
-			    $Chapter='CO' or
-			    $Chapter='DI' or
-			    $Chapter='DR' or
-			    $Chapter='DS' or
-			    $Chapter='FS' or
-			    $Chapter='FT' or
-			    $Chapter='GD' or
-			    $Chapter='HD' or
-			    $Chapter='MS' or
-			    $Chapter='ND' or
-			    $Chapter='NH' or
-			    $Chapter='PH' or
-			    $Chapter='SA' or
-			    $Chapter='SG' or
-			    $Chapter='ST' or
-			    $Chapter='TC' or
-			    $Chapter='TD' or
-			    $Chapter='TS' or
-			    $Chapter='USE' or
-			    $Chapter='VE' or
-			    $Chapter='WD'">
+              <xsl:when test="$Chapter='AB' or        $Chapter='AI' or        $Chapter='CC' or        $Chapter='CE' or        $Chapter='CH' or        $Chapter='CO' or        $Chapter='DI' or        $Chapter='DR' or        $Chapter='DS' or        $Chapter='FS' or        $Chapter='FT' or        $Chapter='GD' or        $Chapter='HD' or        $Chapter='MS' or        $Chapter='ND' or        $Chapter='NH' or        $Chapter='PH' or        $Chapter='SA' or        $Chapter='SG' or        $Chapter='ST' or        $Chapter='TC' or        $Chapter='TD' or        $Chapter='TS' or        $Chapter='USE' or        $Chapter='VE' or        $Chapter='WD'">
                 <xsl:call-template name="makeExternalLink">
                   <xsl:with-param name="ptr">true</xsl:with-param>
                   <xsl:with-param name="dest">
@@ -384,21 +319,13 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
   <xsl:template match="tei:elementSpec[@mode='delete']" mode="weave"/>
-
   <xsl:template name="logoPicture">
     <img src="jaco001d.gif" alt="" width="180"/>
   </xsl:template>
-
-
-
   <xsl:template name="hdr2">
     <xsl:comment>no nav </xsl:comment>
   </xsl:template>
-
-
-
   <xsl:template match="tei:ident">
     <xsl:choose>
       <xsl:when test="@type='class' and key('CLASSES',.)">
@@ -423,7 +350,6 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
   <xsl:template match="tei:gi">
     <xsl:choose>
       <xsl:when test="parent::tei:ref or  string-length(@scheme)&gt;0">
@@ -464,17 +390,12 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
-
   <xsl:template match="a:documentation" mode="verbatim"/>
-
   <xsl:template match="tei:hi[@rend='math']">
     <span class="math">
       <xsl:apply-templates/>
     </span>
   </xsl:template>
-
-
   <xsl:template match="tei:ptr[@type='cit']">
     <a class="citlink">
       <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
@@ -485,10 +406,6 @@
       </xsl:for-each>
     </a>
   </xsl:template>
-
-
-
-
   <xsl:template name="makeHTMLHeading">
     <xsl:param name="text"/>
     <xsl:param name="class">title</xsl:param>
@@ -516,16 +433,11 @@
       </xsl:choose>
     </xsl:if>
   </xsl:template>
-
-
-
   <xsl:template match="tei:divGen[@type='macrocat']">
-
     <h3>Alphabetical list</h3>
     <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
       <xsl:sort select="@ident"/>
     </xsl:apply-templates>
-
     <xsl:for-each select="key('MACRODOCS',1)">
       <xsl:sort select="@module"/>
       <xsl:if test="generate-id(.)=generate-id(key('MACRO-MODULE',@module)[1])">
@@ -545,8 +457,6 @@
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
-
-
   <xsl:template match="tei:divGen[@type='elementcat']">
     <div class="atozwrapper">
       <xsl:call-template name="atozHeader">
@@ -572,7 +482,6 @@
             </ul>
           </div>
         </xsl:if>
-
       </xsl:for-each>
     </div>
     <div id="byMod">
@@ -596,13 +505,11 @@
       </xsl:for-each>
     </div>
   </xsl:template>
-
   <xsl:template match="tei:divGen[@type='modelclasscat']">
     <div class="atozwrapper">
       <xsl:call-template name="atozHeader">
         <xsl:with-param name="Key">MODEL-CLASS-ALPHA</xsl:with-param>
       </xsl:call-template>
-
       <xsl:for-each select="key('MODELCLASSDOCS',1)">
         <xsl:sort select="translate(substring-after(@ident,'model.'),$uc,$lc)"/>
         <xsl:variable name="letter">
@@ -645,15 +552,12 @@
         </xsl:if>
       </xsl:for-each>
     </div>
-
   </xsl:template>
-
   <xsl:template match="tei:divGen[@type='attclasscat']">
     <div class="atozwrapper">
       <xsl:call-template name="atozHeader">
         <xsl:with-param name="Key">ATT-CLASS-ALPHA</xsl:with-param>
       </xsl:call-template>
-
       <xsl:for-each select="key('ATTCLASSDOCS',1)">
         <xsl:sort select="translate(substring-after(@ident,'att.'),$uc,$lc)"/>
         <xsl:variable name="letter">
@@ -696,9 +600,7 @@
         </xsl:if>
       </xsl:for-each>
     </div>
-
   </xsl:template>
-
   <xsl:template name="atozHeader">
     <xsl:param name="Key"/>
     <div id="azindex">
@@ -855,7 +757,6 @@
       </ul>
     </div>
   </xsl:template>
-
   <xsl:template name="formatHeadingNumber">
     <xsl:param name="text"/>
     <xsl:param name="toc"/>
@@ -865,7 +766,7 @@
           <xsl:copy-of select="$text"/>
         </xsl:when>
         <xsl:when test="number(normalize-space($text))&lt;10">
-          <xsl:text>&#8194;</xsl:text>
+          <xsl:text> </xsl:text>
           <xsl:copy-of select="$text"/>
         </xsl:when>
         <xsl:otherwise>
@@ -874,20 +775,13 @@
       </xsl:choose>
     </span>
   </xsl:template>
-
-
-
   <xsl:template name="navInterSep">
     <xsl:text> </xsl:text>
   </xsl:template>
-
-
   <xsl:template name="javascriptHook">
     <xsl:call-template name="jsForOdds"/>
   </xsl:template>
-
   <xsl:template name="jsForOdds">
-
     <script type="text/javascript">
       <xsl:comment>
         <xsl:text disable-output-escaping="yes">
@@ -962,20 +856,12 @@ function showByMod() {
 	</xsl:text>
       </xsl:comment>
     </script>
-
   </xsl:template>
-
-
   <xsl:template name="generateSubTitle">
     <xsl:value-of select="tei:head"/>
   </xsl:template>
-
   <xsl:template name="printLink"/>
-
   <xsl:template match="tei:titlePage" mode="paging">
     <xsl:apply-templates select="."/>
   </xsl:template>
-
-
-
 </xsl:stylesheet>

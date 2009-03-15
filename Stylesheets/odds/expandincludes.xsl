@@ -17,23 +17,14 @@ Take a Relax NG spec and simplify it to remove
 rng:includes
 
 -->
-<xsl:stylesheet exclude-result-prefixes="exsl rng a f tei s cc dc rdf xs"
-  extension-element-prefixes="exsl" version="1.0"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:cc="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/"
-  xmlns:exsl="http://exslt.org/common" xmlns:f="http://axkit.org/NS/xsp/perform/v1"
-  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:s="http://www.ascc.net/xml/schematron"
-  xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:xsp="http://apache.org/xsp/core/v1">
+<xsl:stylesheet xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:cc="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:exsl="http://exslt.org/common" xmlns:f="http://axkit.org/NS/xsp/perform/v1" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:s="http://www.ascc.net/xml/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsp="http://apache.org/xsp/core/v1" exclude-result-prefixes="exsl rng a f tei s cc dc rdf xs" extension-element-prefixes="exsl" version="1.0">
   <xsl:param name="namespace"/>
   <xsl:output indent="yes"/>
   <xsl:template match="/">
     <xsl:variable name="step1">
       <xsl:apply-templates/>
     </xsl:variable>
-    <!--
+<!--
     <exsl:document href="temp.rng" method="xml" indent="yes">
     <xsl:copy-of select="$step1"/>
     </exsl:document>
@@ -42,9 +33,11 @@ rng:includes
   </xsl:template>
   <xsl:template match="rng:include">
     <rng:div>
-      <xsl:text>&#10;</xsl:text>
+      <xsl:text>
+</xsl:text>
       <xsl:comment>include "<xsl:value-of select="@href"/>"</xsl:comment>
-      <xsl:text>&#10;</xsl:text>
+      <xsl:text>
+</xsl:text>
       <xsl:apply-templates select="*|@*[name()!='href']|text()|comment()"/>
       <rng:include>
         <xsl:for-each select="document(@href,.)/rng:grammar">
@@ -66,8 +59,8 @@ rng:includes
     </rng:div>
   </xsl:template>
   <xsl:template match="rng:define[not(@combine='choice')]" mode="stage2">
-    <!-- can be overriden -->
-    <!-- find if there is an overriding definition:
+<!-- can be overriden -->
+<!-- find if there is an overriding definition:
        two dimensional recursion - by ancestor::incelim,
        then by children of incelim, starting with 2 -->
     <xsl:call-template name="cp-unless-ovr">
@@ -79,10 +72,8 @@ rng:includes
     <xsl:param name="incelim"/>
     <xsl:param name="define"/>
     <xsl:choose>
-      <xsl:when
-        test="$incelim        and generate-id($define/ancestor::rng:grammar[1])        = generate-id($incelim/ancestor::rng:grammar[1])">
-        <xsl:if
-          test="not(        $incelim/preceding-sibling::*/descendant-or-self::rng:define[        @name=$define/@name        and generate-id(ancestor::rng:grammar[1])        = generate-id($incelim/ancestor::rng:grammar[1])])">
+      <xsl:when test="$incelim        and generate-id($define/ancestor::rng:grammar[1])        = generate-id($incelim/ancestor::rng:grammar[1])">
+        <xsl:if test="not(        $incelim/preceding-sibling::*/descendant-or-self::rng:define[        @name=$define/@name        and generate-id(ancestor::rng:grammar[1])        = generate-id($incelim/ancestor::rng:grammar[1])])">
           <xsl:call-template name="cp-unless-ovr">
             <xsl:with-param name="incelim" select="$incelim/ancestor::rng:include[1]"/>
             <xsl:with-param name="define" select="$define"/>
@@ -98,7 +89,7 @@ rng:includes
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <!-- dull stuff, just copying -->
+<!-- dull stuff, just copying -->
   <xsl:template match="*|@*|text()|comment()">
     <xsl:copy>
       <xsl:apply-templates select="*|@*|text()|comment()"/>
@@ -110,9 +101,7 @@ rng:includes
     </xsl:copy>
   </xsl:template>
   <xsl:template match="rng:grammar">
-    <rng:grammar xmlns:xi="http://www.w3.org/2001/XInclude"
-      xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-      xmlns:xsp="http://apache.org/xsp/core/v1">
+    <rng:grammar xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsp="http://apache.org/xsp/core/v1">
       <xsl:if test="not($namespace='')">
         <xsl:attribute name="ns">
           <xsl:value-of select="ancestor::tei:schemaSpec/@namespace"/>

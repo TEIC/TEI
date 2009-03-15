@@ -1,13 +1,6 @@
-<xsl:stylesheet version="1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:html="http://www.w3.org/1999/xhtml" xmlns:teix="http://www.tei-c.org/ns/Examples"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:estr="http://exslt.org/strings"
-  xmlns:pantor="http://www.pantor.com/ns/local" xmlns:exsl="http://exslt.org/common"
-  xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:edate="http://exslt.org/dates-and-times"
-  extension-element-prefixes="exsl estr edate"
-  exclude-result-prefixes="exsl rng edate estr tei a pantor teix html"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-
-  <!--
+<?xml version="1.0"?>
+<xsl:stylesheet xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:estr="http://exslt.org/strings" xmlns:pantor="http://www.pantor.com/ns/local" xmlns:exsl="http://exslt.org/common" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" extension-element-prefixes="exsl estr edate" exclude-result-prefixes="exsl rng edate estr tei a pantor teix html">
+<!--
      Copyright 2008 Sebastian Rahtz/Oxford University/TEI Consortium  
       <sebastian.rahtz@oucs.ox.ac.uk>
 
@@ -22,18 +15,11 @@
  The above copyright notice and this permission notice shall be included
  in all copies or substantial portions of the Software.
 -->
-
-
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="../xhtml/tei.xsl"/>
   <xsl:import href="../xhtml/tagdocs.xsl"/>
   <xsl:import href="RngToRnc.xsl"/>
-
-
-
   <xsl:key name="SPECS" match="tei:classSpec|tei:elementSpec|tei:macroSpec" use="'yes'"/>
-
-
   <xsl:param name="xhtml">true</xsl:param>
   <xsl:param name="STDOUT">true</xsl:param>
   <xsl:param name="oddmode">html</xsl:param>
@@ -46,33 +32,23 @@
   <xsl:param name="institution">Text Encoding Initiative</xsl:param>
   <xsl:param name="searchURL"/>
   <xsl:param name="searchWords"/>
-
   <xsl:param name="cssFile">http://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
-  <xsl:param name="cssSecondaryFile"
-    >http://www.tei-c.org/release/xml/tei/stylesheet/odd.css</xsl:param>
-
+  <xsl:param name="cssSecondaryFile">http://www.tei-c.org/release/xml/tei/stylesheet/odd.css</xsl:param>
   <xsl:variable name="top" select="/"/>
-
-
   <xsl:template name="bodyHook"> </xsl:template>
-
-
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
     <xsl:text disable-output-escaping="yes">&lt;br/&gt;</xsl:text>
   </xsl:template>
-
   <xsl:template name="makeSectionHead">
     <xsl:param name="name"/>
     <xsl:param name="id"/>
   </xsl:template>
-
   <xsl:template match="tei:classSpec|tei:elementSpec|tei:macroSpec">
     <table class="wovenodd" border="1">
       <xsl:apply-templates select="." mode="weavebody"/>
     </table>
   </xsl:template>
-
   <xsl:template match="/">
     <html>
       <xsl:call-template name="addLangAtt"/>
@@ -138,12 +114,8 @@
       </body>
     </html>
   </xsl:template>
-
   <xsl:template match="tei:TEI">
     <xsl:apply-templates select=".//tei:classSpec|.//tei:elementSpec|.//tei:macroSpec"/>
   </xsl:template>
-
   <xsl:template name="copyrightStatement"/>
-
-
 </xsl:stylesheet>

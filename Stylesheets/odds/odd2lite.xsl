@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns="http://www.tei-c.org/ns/1.0"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings"
-  xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format"
-  xmlns:html="http://www.w3.org/1999/xhtml" xmlns:local="http://www.pantor.com/ns/local"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  exclude-result-prefixes="exsl estr edate fo a xd tei html rng local teix xs"
-  extension-element-prefixes="edate exsl estr" version="1.0">
+<xsl:stylesheet xmlns="http://www.tei-c.org/ns/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:local="http://www.pantor.com/ns/local" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="exsl estr edate fo a xd tei html rng local teix xs" extension-element-prefixes="edate exsl estr" version="1.0">
   <xsl:import href="../common/verbatim.xsl"/>
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="../common/tei.xsl"/>
   <xsl:include href="../common/tagdocs.xsl"/>
-
   <xd:doc type="stylesheet">
     <xd:short> TEI stylesheet for making TEI Lite XML from ODD </xd:short>
     <xd:detail> This library is free software; you can redistribute it and/or modify it under the
@@ -63,31 +53,25 @@
   <xsl:param name="oddmode">tei</xsl:param>
   <xsl:param name="displayMode">rnc</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>
-
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
-    <xsl:text>&#10;</xsl:text>
+    <xsl:text>
+</xsl:text>
   </xsl:template>
-
   <xsl:key match="tei:moduleSpec[@ident]" name="FILES" use="@ident"/>
-
   <xsl:variable name="top" select="/"/>
-
   <xsl:template match="@*|comment()|processing-instruction()">
     <xsl:copy-of select="."/>
   </xsl:template>
-
   <xsl:template match="*|teix:egXML|tei:author|tei:title">
     <xsl:copy>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </xsl:copy>
   </xsl:template>
-
   <xsl:template name="showSpace">
     <xsl:text> </xsl:text>
     <xsl:processing-instruction name="tex">\ </xsl:processing-instruction>
   </xsl:template>
-
   <xsl:template name="makeInternalLink">
     <xsl:param name="ptr"/>
     <xsl:param name="target"/>
@@ -131,12 +115,10 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
   <xsl:template name="generateEndLink">
     <xsl:param name="where"/>
     <xsl:value-of select="$where"/>
   </xsl:template>
-
   <xd:doc>
     <xd:short>[odds] Document an element, macro, or class</xd:short>
     <xd:detail> </xd:detail>
@@ -160,8 +142,7 @@
       <xsl:value-of select="$objectname"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when
-        test="self::tei:classSpec and not(@ident='att.global') and         count(key('CLASSMEMBERS',@ident))=0">
+      <xsl:when test="self::tei:classSpec and not(@ident='att.global') and         count(key('CLASSMEMBERS',@ident))=0">
         <xsl:if test="$verbose='true'">
           <xsl:message> class <xsl:value-of select="@ident"/> omitted as it has no members
           </xsl:message>
@@ -173,7 +154,6 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template name="makeAnchor"/>
-
   <xd:doc>
     <xd:short>[odds] </xd:short>
     <xd:param name="text">text</xd:param>
@@ -187,7 +167,6 @@
       </code>
     </hi>
   </xsl:template>
-
   <xd:doc>
     <xd:short>[odds] </xd:short>
     <xd:param name="text">text</xd:param>
@@ -199,7 +178,6 @@
       <xsl:copy-of select="$text"/>
     </code>
   </xsl:template>
-
   <xd:doc>
     <xd:short>[odds] </xd:short>
     <xd:param name="text">text</xd:param>
@@ -211,7 +189,6 @@
       <xsl:copy-of select="$text"/>
     </hi>
   </xsl:template>
-
   <xd:doc>
     <xd:short>[odds] </xd:short>
     <xd:param name="text">text</xd:param>
@@ -223,7 +200,6 @@
       <xsl:copy-of select="$text"/>
     </emph>
   </xsl:template>
-
   <xd:doc>
     <xd:short>[odds] make a link</xd:short>
     <xd:param name="class">class</xd:param>
@@ -232,7 +208,6 @@
     <xd:param name="text">text</xd:param>
     <xd:detail> </xd:detail>
   </xd:doc>
-
   <xsl:template name="makeLink">
     <xsl:param name="class"/>
     <xsl:param name="name"/>
@@ -266,7 +241,6 @@
       <xsl:copy-of select="$text"/>
     </ref>
   </xsl:template>
-
   <xsl:template name="makeSectionHead">
     <xsl:param name="name"/>
     <xsl:param name="id"/>
@@ -280,7 +254,6 @@
       <xsl:value-of select="$name"/>
     </head>
   </xsl:template>
-
   <xd:doc>
     <xd:short>[odds] </xd:short>
     <xd:param name="grammar">grammar</xd:param>
@@ -302,15 +275,12 @@
       </xsl:call-template>
     </eg>
   </xsl:template>
-
   <xsl:template match="tei:remarks/tei:p">
     <xsl:apply-templates/>
   </xsl:template>
-
   <xsl:template match="tei:exemplum/tei:p">
     <xsl:apply-templates/>
   </xsl:template>
-
   <xsl:template name="linkTogether">
     <xsl:param name="name"/>
     <xsl:param name="reftext"/>
@@ -335,22 +305,17 @@
         </xsl:otherwise>
       </xsl:choose>
     </ref>
-
   </xsl:template>
-
   <xsl:template name="showRNC">
     <xsl:param name="style"/>
     <xsl:param name="contents"/>
     <xsl:value-of select="$contents"/>
   </xsl:template>
-
-
   <xsl:template name="emptySlash">
     <xsl:param name="name"/>
     <xsl:value-of select="$name"/>
     <xsl:text>/</xsl:text>
   </xsl:template>
-
   <xsl:template match="tei:gi">
     <xsl:choose>
       <xsl:when test="not(@scheme='') or parent::tei:ref or parent::tei:head">
@@ -385,8 +350,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
-  <!-- debugging
+<!-- debugging
 <xsl:template name="SHOW">
  &lt;<xsl:value-of select="name()"/>
 <xsl:for-each select="@*">
@@ -401,7 +365,6 @@
 </xsl:template>
 
 -->
-
   <xsl:template name="emphasize">
     <xsl:param name="class"/>
     <xsl:param name="content"/>
@@ -409,7 +372,6 @@
       <xsl:copy-of select="$content"/>
     </hi>
   </xsl:template>
-
   <xsl:template name="specHook">
     <xsl:param name="name"/>
     <index indexName="ODDS">
@@ -420,15 +382,13 @@
             <xsl:text> (macro)</xsl:text>
           </term>
         </xsl:when>
-        <xsl:when test="local-name()='classSpec' and
-			    @type='model'">
+        <xsl:when test="local-name()='classSpec' and        @type='model'">
           <term>
             <xsl:value-of select="$name"/>
             <xsl:text> (model class)</xsl:text>
           </term>
         </xsl:when>
-        <xsl:when test="local-name()='classSpec' and
-			    @type='atts'">
+        <xsl:when test="local-name()='classSpec' and        @type='atts'">
           <term>
             <xsl:value-of select="$name"/>
             <xsl:text> (attribute class)</xsl:text>
@@ -460,13 +420,11 @@
       </xsl:choose>
     </index>
   </xsl:template>
-
   <xsl:template match="tei:specGrpRef">
-    <!--    <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
+<!--    <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
       <xsl:apply-templates mode="weave"/>
     </xsl:for-each>-->
   </xsl:template>
-
   <xsl:template match="tei:schemaSpec">
     <div>
       <head>Macros</head>
@@ -474,21 +432,18 @@
         <xsl:sort select="@ident"/>
       </xsl:apply-templates>
     </div>
-
     <div>
       <head>Model classes</head>
       <xsl:apply-templates mode="weave" select="tei:classSpec[@type='model']">
         <xsl:sort select="@ident"/>
       </xsl:apply-templates>
     </div>
-
     <div>
       <head>Attribute classes</head>
       <xsl:apply-templates mode="weave" select="tei:classSpec[@type='atts']">
         <xsl:sort select="@ident"/>
       </xsl:apply-templates>
     </div>
-
     <div>
       <head>Elements</head>
       <xsl:apply-templates mode="weave" select="tei:elementSpec">
@@ -496,7 +451,5 @@
       </xsl:apply-templates>
     </div>
   </xsl:template>
-
   <xsl:template name="applyRendition"/>
-
 </xsl:stylesheet>

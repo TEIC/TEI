@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet exclude-result-prefixes="exsl edate estr tei t a rng s xd xs"
-  extension-element-prefixes="exsl estr edate" version="1.0"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings"
-  xmlns:exsl="http://exslt.org/common" xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:s="http://www.ascc.net/xml/schematron"
-  xmlns:t="http://www.thaiopensource.com/ns/annotations" xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:s="http://www.ascc.net/xml/schematron" xmlns:t="http://www.thaiopensource.com/ns/annotations" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="exsl edate estr tei t a rng s xd xs" extension-element-prefixes="exsl estr edate" version="1.0">
   <xsl:import href="teiodds.xsl"/>
   <xd:doc type="stylesheet">
     <xd:short> TEI stylesheet for making Relax NG schema from ODD </xd:short>
@@ -34,7 +26,7 @@
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:variable name="oddmode">dtd</xsl:variable>
   <xsl:variable name="filesuffix"/>
-  <!-- get list of output files -->
+<!-- get list of output files -->
   <xsl:variable name="linkColor"/>
   <xsl:template match="tei:moduleSpec[@type='decls']"/>
   <xsl:template match="/">
@@ -51,11 +43,9 @@
     <xsl:variable name="documentationLanguage">
       <xsl:call-template name="generateDoc"/>
     </xsl:variable>
-
     <xsl:if test="$verbose='true'">
       <xsl:message> I18N setup: Pattern prefix: <xsl:value-of select="$patternPrefixText"/> Target
-        language: <xsl:value-of select="$targetLanguage"/> Documentation language: <xsl:value-of
-          select="$documentationLanguage"/>
+        language: <xsl:value-of select="$targetLanguage"/> Documentation language: <xsl:value-of select="$documentationLanguage"/>
       </xsl:message>
     </xsl:if>
     <xsl:variable name="filename" select="@ident"/>
@@ -66,11 +56,7 @@
       <xsl:with-param name="method">xml</xsl:with-param>
       <xsl:with-param name="suffix">.rng</xsl:with-param>
       <xsl:with-param name="body">
-        <rng:grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
-          xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-          xmlns:rng="http://relaxng.org/ns/structure/1.0"
-          xmlns:t="http://www.thaiopensource.com/ns/annotations"
-          xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:teix="http://www.tei-c.org/ns/Examples">
+        <rng:grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:t="http://www.thaiopensource.com/ns/annotations" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:teix="http://www.tei-c.org/ns/Examples" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
           <xsl:attribute name="ns">
             <xsl:choose>
               <xsl:when test="@ns">
@@ -83,12 +69,14 @@
             </xsl:choose>
           </xsl:attribute>
           <xsl:comment>
-            <xsl:text>&#10;Schema generated from ODD source </xsl:text>
+            <xsl:text>
+Schema generated from ODD source </xsl:text>
             <xsl:call-template name="showDate"/>
             <xsl:text>. </xsl:text>
             <xsl:call-template name="makeTEIVersion"/>
             <xsl:call-template name="makeDescription"/>
-            <xsl:text>&#10;</xsl:text>
+            <xsl:text>
+</xsl:text>
           </xsl:comment>
           <xsl:if test="$TEIC='true'">
             <xsl:comment>
@@ -115,14 +103,12 @@
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-
   <xsl:template name="schemaSpecBody">
     <xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
     <xsl:for-each select="tei:macroSpec">
       <xsl:apply-templates mode="tangle" select="."/>
     </xsl:for-each>
     <xsl:apply-templates mode="tangle" select="tei:elementSpec|tei:classSpec"/>
-
     <xsl:choose>
       <xsl:when test="@start and @start=''"/>
       <xsl:when test="@start and contains(@start,' ')">
@@ -154,20 +140,18 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
   <xsl:template name="startNames">
     <xsl:param name="toks"/>
     <xsl:if test="not($toks='')">
       <xsl:choose>
         <xsl:when test="contains($toks,' ')">
-          <ref name="{$patternPrefixText}{substring-before($toks, ' ')}"
-            xmlns="http://relaxng.org/ns/structure/1.0"/>
+          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$patternPrefixText}{substring-before($toks, ' ')}"/>
           <xsl:call-template name="startNames">
             <xsl:with-param name="toks" select="substring-after($toks, ' ')"/>
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
-          <ref name="{$patternPrefixText}{$toks}" xmlns="http://relaxng.org/ns/structure/1.0"/>
+          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$patternPrefixText}{$toks}"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
@@ -183,10 +167,7 @@
             <xsl:with-param name="method">xml</xsl:with-param>
             <xsl:with-param name="suffix">.rng</xsl:with-param>
             <xsl:with-param name="body">
-              <rng:grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
-                xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-                xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                xmlns:t="http://www.thaiopensource.com/ns/annotations">
+              <rng:grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:t="http://www.thaiopensource.com/ns/annotations" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
                 <xsl:comment>
                   <xsl:text>Schema generated </xsl:text>
                   <xsl:call-template name="showDate"/>
@@ -212,7 +193,7 @@
     <xsl:if test="@type='core'">
       <xsl:call-template name="NameList"/>
       <xsl:for-each select="key('PredeclareAllMacros','1')">
-        <define name="{@ident}" xmlns="http://relaxng.org/ns/structure/1.0">
+        <define xmlns="http://relaxng.org/ns/structure/1.0" name="{@ident}">
           <choice>
             <notAllowed/>
           </choice>
@@ -247,16 +228,15 @@
     <xsl:for-each select="key('MacroModule',@ident)">
       <xsl:choose>
         <xsl:when test="@predeclare='true'"/>
-        <!--	<xsl:when test="key('PredeclareMacros',@ident)"/>-->
+<!--	<xsl:when test="key('PredeclareMacros',@ident)"/>-->
         <xsl:otherwise>
           <xsl:apply-templates mode="tangle" select="."/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
-
   <xsl:template name="NameList">
-    <!-- walk over all the elementSpec elements and make list of 
+<!-- walk over all the elementSpec elements and make list of 
        elements -->
     <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:sort select="@ident"/>
@@ -265,7 +245,6 @@
       </rng:define>
     </xsl:for-each>
   </xsl:template>
-
   <xsl:template name="predeclare-classes">
     <xsl:comment>0. predeclared classes</xsl:comment>
     <xsl:for-each select="key('predeclaredClasses',1)">
@@ -316,7 +295,6 @@
   <xsl:template name="ttembolden"/>
   <xsl:template match="processing-instruction()"/>
   <xsl:template match="processing-instruction()" mode="tangle"/>
-
   <xsl:template match="s:*">
     <xsl:copy-of select="."/>
   </xsl:template>
