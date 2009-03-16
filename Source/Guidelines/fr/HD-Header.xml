@@ -19,7 +19,7 @@ d’introduction qui accompagnent généralement les jeux de données électroni
 balisé conformément aux principes directeurs figurant dans ce chapitre. Cet ensemble
 de données est appelé En-tête TE <term>TEI header</term>, balisé <gi>teiHeader</gi> et
 comporte quatre parties principales :
-<list type="bullets">
+<list >
 <item>une description bibliographique du fichier <term>file description</term>, balisée 
 <gi>fileDesc</gi>, qui contient une description bibliographique complète du fichier
 informatique lui-même, dont un utilisateur du texte pourra extraire une citation
@@ -163,12 +163,12 @@ isolé. Un corpus peut ainsi se présenter sous la forme :
 <desc>The TEI Header</desc>
 </moduleSpec>
 <!--publicID:  -//TEI P5//ELEMENTS TEI Header//EN-->
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/model.headerPart.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/model.headerPart.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>model.headerPart.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/teiHeader.xml">
+</xi:include-->&model.headerPart;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/teiHeader.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>teiHeader.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&teiHeader;
 <specGrpRef target="#D221B"/>
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">La DTD définit ensuite le reste des éléments de l’En-tête, en incluant les fragments de
@@ -307,9 +307,9 @@ Plusieurs éléments pouvant être omis, une description minimale de fichier pr�
 <p xmlns="http://www.tei-c.org/ns/1.0">L’élément Description bibliographique du fichier <gi>fileDesc</gi> a comme définition
  formelle :
 <specGrp xml:id="D222" n="The file description">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/fileDesc.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/fileDesc.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>fileDesc.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&fileDesc;
 <specGrpRef target="#D2221"/>
 <specGrpRef target="#D2222"/>
 <specGrpRef target="#D2223"/>
@@ -351,7 +351,7 @@ Lexicons</q> mais plutôt <q>Sanskrit-English Dictionary, based upon the St.
 Petersburg Lexicons : transcription électronique</q>. Si l’on souhaite conserver une
 partie ou l’intégralité du texte source dans le titre du fichier informatique, on peut utiliser
 l’une des propositions suivantes :
-<list type="bullets">
+<list >
 <item>[titre du texte source] : transcription électronique.</item>
 <item>[titre du texte source] :  édition électronique.</item>
 <item>Version électronique de :  [titre du texte source].</item>
@@ -441,23 +441,21 @@ personne.</note></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">L’élément Mention de titre <gi>titleStmt</gi> et ses sous-éléments ont comme
  définition formelle :
 <specGrp xml:id="D2221" n="Mention de titre = The title statement">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/titleStmt.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/titleStmt.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>titleStmt.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/sponsor.xml">
+</xi:include-->&titleStmt;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/sponsor.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>sponsor.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/funder.xml">
+</xi:include-->&sponsor;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/funder.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>funder.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/principal.xml">
+</xi:include-->&funder;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/principal.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>principal.xml</ident>.</p></xi:fallback>
-</xi:include>
-<p>Les éléments TITLE, AUTHOR, RESPSTMT et RESP ne sont pas déclarés ici, mais
- dans le fichier teicore2.dtd.</p>
-</specGrp>
-</p>
-</div>
+</xi:include-->&principal;
+</specGrp><!--p>Les éléments TITLE, AUTHOR, RESPSTMT et RESP ne sont pas déclarés ici, mais
+ dans le fichier teicore2.dtd.</p-->
+</p></div>
 <div type="div3" xml:id="HD22">
 <head xmlns="http://www.tei-c.org/ns/1.0">Mention d’édition</head>
 <!-- 5.2.2 -->
@@ -542,13 +540,13 @@ d’annexes, etc. dans la nouvelle édition. Pour de plus amples détails sur l�
 ]]></egXML>
 L’élément <gi>editionStmt</gi> a comme définition formelle :
 <!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
-<specGrp xml:id="D2222" n="Mention d'édition = The edition statement">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/editionStmt.xml">
+<specGrp xml:id="D2222" >
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/editionStmt.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>editionStmt.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/edition.xml">
+</xi:include-->&editionStmt;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/edition.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>edition.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&edition;
 </specGrp>
 </p>
 </div>
@@ -581,11 +579,11 @@ pratiques. Comme la mesure et l’expression de la taille du fichier sont très 
 seules des recommandations très générales sont possibles ; l’élément <gi>extent</gi>
 est proposé à cet effet. Il contient une expression indiquant la taille exacte ou
 approximative du fichier informatique exprimée sous une des formes suivantes :
-<list type="bullets">
+<list >
 <item>en multiplets d’une longueur spécifiée (e.g. <q>4 000 multiplets de 16 bits</q>)
 </item>
 <item>- selon une échelle de valeurs, par exemple :
-<list type="bullets">
+<list >
 <item>moins de 1 Mo</item>
 <item>entre 1 et 5 Mo</item>
 <item>entre 6 et 10 Mo</item>
@@ -615,9 +613,9 @@ cassettes).</item>
 	<!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
 L’élément <gi>extent</gi> a comme définition formelle :
 <specGrp xml:id="D2223" n="Importance matérielle = The extent statement">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/extent.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/extent.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>extent.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&extent;
 </specGrp>
 </p>
 </div>
@@ -711,21 +709,21 @@ et dates <ptr target="#ND"/>.
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">La mention de publication et ses composants ont pour définition formelle :
 <specGrp xml:id="D2224" n="Mention de publication = The publication statement">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/publicationStmt.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/publicationStmt.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>publicationStmt.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/distributor.xml">
+</xi:include-->&publicationStmt;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/distributor.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>distributor.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/authority.xml">
+</xi:include-->&distributor;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/authority.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>authority.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/idno.xml">
+</xi:include-->&authority;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/idno.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>idno.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/availability.xml">
+</xi:include-->&idno;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/availability.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>availability.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&availability;
 </specGrp>
 </p>
 </div>
@@ -740,7 +738,7 @@ l’élément Description bibliographique du fichier <gi>fileDesc</gi>. Il est f
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">En termes de bibliographie, une <term>collection</term> peut être définie selon l’une
 ou l’autre des acceptions suivantes :
-<list type="bullets">
+<list >
 <item>ensemble de documents distincts portant chacun son titre propre, reliés entre
 eux par un titre collectif s’appliquant à l’ensemble. Chaque document distinct peut être
 numéroté ou non.</item>
@@ -780,9 +778,9 @@ valeur <val>ISSN</val> pour un ISSN.
 La mention de collection a comme définition formelle :
 <!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
 <specGrp xml:id="D2225" n="Mention de collection = The series statement">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/seriesStmt.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/seriesStmt.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>seriesStmt.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&seriesStmt;
 </specGrp>
 Ses composants sont tous définis ailleurs.
 </p>
@@ -804,7 +802,7 @@ générales</soCalled> dans les descriptions bibliographiques traditionnelles.
 conventionnelle se sont vu attribuer des éléments spécifiques dans ces Principes
 directeurs ; en particulier, les éléments suivants devraient être balisés comme
 ci-dessous, plutôt que comme des notes générales :
-<list type="bullets">
+<list >
 <item>la nature, l’étendue, la forme artistique ou l’objet du fichier ; ainsi que le genre ou
 toute autre catégorie intellectuelle à laquelle il peut appartenir : par exemple <q>types de
 textes : éditoriaux et reportages journalistiques, science fiction et romans policiers</q>.
@@ -842,7 +840,7 @@ notes bibliographiques spécialisées.</item>
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Néanmoins l’élément <gi>notesStmt</gi> peut être utilisé pour recenser des détails
 potentiellement utiles sur le fichier et ses caractéristiques, par exemple :
-<list type="bullets">
+<list >
 <item>des dates, quand elles sont pertinentes pour le contenu ou l’histoire du fichier
 informatique : par exemple <q>manuel daté de 1983</q>, <q>Première campagne
 d’interviews ; avril 1989 ; 2e campagne : janvier 1990</q>
@@ -879,9 +877,9 @@ comme dans l’exemple suivant :
 La mention de notes a comme définition formelle :
 <!-- removed file attrib since it was confusing dtdGen LB, 20 may 01 -->
 <specGrp xml:id="D2226" n="Mention  de notes = The notes statement">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/notesStmt.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/notesStmt.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>notesStmt.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&notesStmt;
 </specGrp>
 </p>
 </div>
@@ -956,12 +954,12 @@ La description complète de ces éléments et leur contenu sont donnés dans la 
  </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">La description de la source a comme définition formelle :
 <specGrp xml:id="D223" n="Description de la source = The source description">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/model.sourceDescPart.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/model.sourceDescPart.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>model.sourceDescPart.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/sourceDesc.xml">
+</xi:include-->&model.sourceDescPart;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/sourceDesc.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>sourceDesc.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&sourceDesc;
 <specGrpRef target="#D2231"/>
 </specGrp>
  </p>
@@ -1144,21 +1142,21 @@ dans l’élément <gi>broadcast</gi>.
  </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Ces éléments ont comme définition formelle :
 <specGrp xml:id="D2231" n="Script statement and recording statement">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/scriptStmt.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/scriptStmt.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>scriptStmt.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/recordingStmt.xml">
+</xi:include-->&scriptStmt;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/recordingStmt.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>recordingStmt.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/recording.xml">
+</xi:include-->&recordingStmt;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/recording.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>recording.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/equipment.xml">
+</xi:include-->&recording;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/equipment.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>equipment.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/broadcast.xml">
+</xi:include-->&equipment;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/broadcast.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>broadcast.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&broadcast;
 </specGrp></p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Ceci termine la description de l’élément Description bibliographique du fichier <gi>
 fileDesc</gi> et de son contenu.</p>
@@ -1192,12 +1190,12 @@ suivie, ou peut contenir des éléments issus de la liste ci-dessous :
 Chacun de ces éléments est expliqué davantage et défini formellement dans la section
 appropriée ci-dessous. La description de l’encodage elle-même est définie comme suit :
 <specGrp xml:id="D225" n="The encoding description">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/model.encodingPart.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/model.encodingPart.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>model.encodingPart.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/encodingDesc.xml">
+</xi:include-->&model.encodingPart;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/encodingDesc.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>encodingDesc.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&encodingDesc;
 <specGrpRef target="#D2251"/>
 <specGrpRef target="#D2252"/>
 <specGrpRef target="#D2253"/>
@@ -1233,9 +1231,9 @@ expliquer pourquoi on a suivi telle pratique d’encodage plutôt que telle autr
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Cet élément a comme déclaration formelle :
 <specGrp xml:id="D2251" n="The project description">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/projectDesc.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/projectDesc.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>projectDesc.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&projectDesc;
 </specGrp>
 </p>
 </div>
@@ -1250,7 +1248,7 @@ pour l’échantillonnage des textes, par exemple pour créer un corpus représe
 <specDesc key="samplingDecl"/>
 </specList>
 Il devrait comprendre des informations telles que :
-<list type="bullets">
+<list >
 <item>la taille de chaque échantillon</item>
 <item>la ou les méthode(s) de sélection des échantillons</item>
 <item>la population sous-jacente à l’échantillonnage</item>
@@ -1283,9 +1281,9 @@ d’échantillonnage peut être utilisé pour y faire référence, comme il est 
 Association d’informations contextuelles à un texte <ptr target="#CCAS"/>.	
 Cet élément a comme déclaration formelle :
 <specGrp xml:id="D2252" n="The sampling declaration">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/samplingDecl.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/samplingDecl.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>samplingDecl.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&samplingDecl;
 </specGrp>
 </p>
 </div>
@@ -1399,33 +1397,33 @@ le projet à l’origine du texte. Voir l’exemple simple à la suite :
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Ces éléments ont comme définition formelle :
 <specGrp xml:id="D2253" n="The editorial practices declaration">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/model.editorialDeclPart.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/model.editorialDeclPart.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>model.editorialDeclPart.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/editorialDecl.xml">
+</xi:include-->&model.editorialDeclPart;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/editorialDecl.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>editorialDecl.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/correction.xml">
+</xi:include-->&editorialDecl;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/correction.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>correction.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/normalization.xml">
+</xi:include-->&correction;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/normalization.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>normalization.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/quotation.xml">
+</xi:include-->&normalization;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/quotation.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>quotation.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/hyphenation.xml">
+</xi:include-->&quotation;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/hyphenation.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>hyphenation.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/segmentation.xml">
+</xi:include-->&hyphenation;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/segmentation.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>segmentation.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/stdVals.xml">
+</xi:include-->&segmentation;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/stdVals.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>stdVals.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/interpretation.xml">
+</xi:include-->&stdVals;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/interpretation.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>interpretation.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&interpretation;
 </specGrp>
 Une déclaration des pratiques éditoriales qui s’applique à plusieurs textes ou divisions
  d’un texte n’a pas besoin d’être répétée dans l’en-tête de chaque texte. À la place,
@@ -1536,18 +1534,18 @@ le texte associé ; les comptages, précisés par leurs attributs <att>occurs</a
 correspondre au nombre de ces éléments présents dans le document, comme identifiés
 par des parseurs.
 <specGrp xml:id="DHD57" n="Tag usage and rendition declarations">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/tagsDecl.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/tagsDecl.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>tagsDecl.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/tagUsage.xml">
+</xi:include-->&tagsDecl;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/tagUsage.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>tagUsage.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/namespace.xml">
+</xi:include-->&tagUsage;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/namespace.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>namespace.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/rendition.xml">
+</xi:include-->&namespace;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/rendition.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>rendition.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&rendition;
 </specGrp>
 </p>
 </div>
@@ -1573,7 +1571,7 @@ section 6.10 Systèmes de références <ptr target="#CORS"/>.
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Un schéma de référencement peut être décrit de trois manières différentes, en
 utilisant un des éléments suivants :
-<list type="bullets">
+<list >
 <item>sous la forme d’un texte en prose suivie</item>
 <item>sous la forme de paires associées d’expressions régulières et d’expressions
 Xpath</item>
@@ -1652,8 +1650,8 @@ les composants individuels de la référence canonique comme une séquence d’�
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Par exemple, la référence <q>Matthieu 12:34</q> pourrait être pensée comme
 représentant l’état de trois variables : la variable <q>livre</q>  est dans l’état <q>Matthieu
-</q> ; la variable <ident type="var">chapitre</ident> est dans l’état <q>12</q>, et la
-variable <ident type="var">verset</ident> est dans l’état <q>34</q>. Si le balisage de
+</q> ; la variable <ident >chapitre</ident> est dans l’état <q>12</q>, et la
+variable <ident >verset</ident> est dans l’état <q>34</q>. Si le balisage de
 bornage a été utilisé, il y aura une balise pour cibler dans le texte le point de
 changement d’état de chacune des <soCalled>variables ci-dessus</soCalled><note place="foot">En ce qui concerne la balise de bornage elle-même, ce qui est qualifé de
 <soCalled>variables</soCalled> est identifié par une combinaison d’attributs <att>ed</att> et <att>unit</att>.</note>. Ainsi, pour trouver <q>Matthieu 12:34</q>, une application
@@ -1698,15 +1696,15 @@ pas supporté par un SGML générique ou un parseur XML. Son usage suppose un gr
 travail de vérification et de précision de la part de l’encodeur.</p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Les éléments traités dans cette section ont la définition formelle suivante :
  <specGrp xml:id="D2254" n="The reference scheme declaration">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/refsDecl.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/refsDecl.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>refsDecl.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/cRefPattern.xml">
+</xi:include-->&refsDecl;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/cRefPattern.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>cRefPattern.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/refState.xml">
+</xi:include-->&cRefPattern;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/refState.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>state.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&refState;
 </specGrp>
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Une déclaration de système de référence qui s’applique à plus d’un texte ou division
@@ -1799,18 +1797,18 @@ et <q>Political</q>, dans la catégorie <q>Press Reportage</q> définie ci-dessu
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Les éléments présentés dans cette section ont pour définition formelle :
 <specGrp xml:id="D2255" n="The classification declaration">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/classDecl.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/classDecl.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>classDecl.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/taxonomy.xml">
+</xi:include-->&classDecl;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/taxonomy.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>taxonomy.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/category.xml">
+</xi:include-->&taxonomy;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/category.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>category.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/catDesc.xml">
+</xi:include-->&category;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/catDesc.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>catDesc.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&catDesc;
 </specGrp>
 </p>
 </div>
@@ -1883,9 +1881,9 @@ profils et de structures de profils dans les chapitres 16 Structure de profils <
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">L’élément  <gi>fsdDecl</gi> est déclaré comme suit :
 <specGrp xml:id="D2256" n="The FSD declaration">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/fsdDecl.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/fsdDecl.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>fsdDecl.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&fsdDecl;
 </specGrp>
 </p>
 </div>
@@ -1979,12 +1977,12 @@ de la poésie versifiée, voir la section 8.4 Rime et analyse métrique <ptr tar
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Les éléments discutés dans cette section sont définis comme suit :
 <specGrp xml:id="D2258" n="Metrical Notation Declaration">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/metDecl.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/metDecl.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>metDecl.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/metSym.xml">
+</xi:include-->&metDecl;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/metSym.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>metSym.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&metSym;
 </specGrp>
 </p>
 </div>
@@ -2000,10 +1998,10 @@ textuelles dans le texte (Voir section 19.2 Lier l’apparat critique au texte <
 </specList>
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Il a pour définition formelle :
-<specGrp xml:id="DHDVAR" n="Variant-Encoding Declaration">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/variantEncoding.xml">
+<specGrp xml:id="DHDVAR" >
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/variantEncoding.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>variantEncoding.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&variantEncoding;
 </specGrp>
 </p>
 </div>
@@ -2053,12 +2051,12 @@ Pour une description de cet élément, voir la section 18.2.1 Copistes d’un do
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">La description de profil elle-même a comme définition formelle :
 <specGrp xml:id="D224" n="The profile description">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/model.profileDescPart.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/model.profileDescPart.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>model.profileDescPart.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/profileDesc.xml">
+</xi:include-->&model.profileDescPart;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/profileDesc.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>profileDesc.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&profileDesc;
 <specGrpRef target="#D224C"/>
 <specGrpRef target="#D2241"/>
 <specGrpRef target="#D2243"/>
@@ -2083,9 +2081,9 @@ avec certitude de la description bibliographique de l’exemplaire, l’élémen
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">L’élément <gi>creation</gi> a comme déclaration formelle :
 <specGrp xml:id="D224C" n="Creation">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/creation.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/creation.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>creation.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&creation;
 </specGrp>
 </p>
 </div>
@@ -2153,12 +2151,12 @@ l’anglais canadien des affaires et l’anglais britannique.</p>
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Les éléments <gi>langUsage</gi> et <gi>language</gi> ont comme définition formelle :
 <specGrp xml:id="D2241" n="Language usage">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/langUsage.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/langUsage.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>langUsage.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/language.xml">
+</xi:include-->&langUsage;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/language.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>language.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&language;
 </specGrp>
 </p>
 </div>
@@ -2168,7 +2166,7 @@ l’anglais canadien des affaires et l’anglais britannique.</p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Le second composant de l’élément Profil de texte <gi>profileDesc</gi> de base est
 l’élément Classification du texte <gi>textClass</gi>. Cet élément est utilisé pour classer
 un texte à l’aide d’une ou plusieurs des méthodes suivantes :
-<list type="bullets">
+<list >
 <item>par référence à une classification internationale reconnue comme la
 Classification décimale de Dewey, la Classification décimale Universelle, la
 classification Colon, la classification de la Bibliothèque du Congrès, ou tout autre
@@ -2278,18 +2276,18 @@ suivante : dans le premier cas, les valeurs utilisées comme identifiants doiven
 le deuxième cas.</p>
 <p xmlns="http://www.tei-c.org/ns/1.0">Les éléments décrits dans cette section ont comme définition formelle :
 <specGrp xml:id="D2243" n="Text Classification">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/textClass.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/textClass.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>textClass.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/keywords.xml">
+</xi:include-->&textClass;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/keywords.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>keywords.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/classCode.xml">
+</xi:include-->&keywords;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/classCode.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>classCode.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/catRef.xml">
+</xi:include-->&classCode;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/catRef.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>catRef.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&catRef;
 </specGrp>
 </p>
 </div>
@@ -2417,12 +2415,12 @@ la plus récente en premier.</p>
 </p>
 <p xmlns="http://www.tei-c.org/ns/1.0">L’élément <gi>revisionDesc</gi> a comme définition formelle :
 <specGrp xml:id="D226" n="The Revision Description">
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/revisionDesc.xml">
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/revisionDesc.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>revisionDesc.xml</ident>.</p></xi:fallback>
-</xi:include>
-<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/change.xml">
+</xi:include-->&revisionDesc;
+<!--xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="../../Specs/change.xml">
   <xi:fallback><p><label>Warning:</label> unable to find &amp; load file <ident>change.xml</ident>.</p></xi:fallback>
-</xi:include>
+</xi:include-->&change;
 </specGrp>
 </p>
 </div>
