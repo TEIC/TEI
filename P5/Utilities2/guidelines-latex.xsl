@@ -16,6 +16,8 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   
 <xsl:import href="/usr/share/xml/tei/stylesheet/latex2/tei.xsl"/>
+<xsl:output method="text"/>
+
 <xsl:param name="reencode">false</xsl:param>
 <xsl:param name="numberBackHeadings">true</xsl:param>
 <xsl:param name="numberFrontHeadings">true</xsl:param>
