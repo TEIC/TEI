@@ -84,7 +84,7 @@
     <xsl:value-of select="."/>
   </xsl:template>
 
-  <xsl:template name="lineBreak">
+  <xsl:template name="verbatim-lineBreak">
     <xsl:param name="id"/>
     <xsl:text>\mbox{}\newline &#10;</xsl:text>
   </xsl:template>
