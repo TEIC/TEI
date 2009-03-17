@@ -422,11 +422,7 @@
       </xsl:choose>
     </index>
   </xsl:template>
-  <xsl:template match="tei:specGrpRef">
-<!--    <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
-      <xsl:apply-templates mode="weave"/>
-    </xsl:for-each>-->
-  </xsl:template>
+
   <xsl:template match="tei:schemaSpec">
     <div>
       <head>Macros</head>

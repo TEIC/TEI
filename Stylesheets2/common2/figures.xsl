@@ -96,7 +96,7 @@
             </xsl:when>
             <xsl:when test="$mode='latex'">
               <xsl:text>width=</xsl:text>
-              <xsl:value-of select="substring-before(@width,'%') div 100"/>
+              <xsl:value-of select="number(substring-before(@width,'%')) div 100"/>
               <xsl:text>\textwidth,</xsl:text>
             </xsl:when>
             <xsl:otherwise>
@@ -157,7 +157,7 @@
             </xsl:when>
             <xsl:when test="$mode='latex'">
               <xsl:text>height=</xsl:text>
-              <xsl:value-of select="substring-before(@height,'%') div 100"/>
+              <xsl:value-of select="number(substring-before(@height,'%')) div 100"/>
               <xsl:text>\textheight,</xsl:text>
             </xsl:when>
             <xsl:otherwise>
@@ -210,7 +210,7 @@
     <xsl:variable name="s">
       <xsl:choose>
         <xsl:when test="@scale and contains(@scale,'%')">
-          <xsl:value-of select="substring-before(@scale,'%') div 100"/>
+          <xsl:value-of select="number(substring-before(@scale,'%')) div 100"/>
         </xsl:when>
         <xsl:when test="@scale">
           <xsl:value-of select="@scale"/>

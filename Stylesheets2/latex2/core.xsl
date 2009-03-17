@@ -420,7 +420,13 @@
       <xsl:when test="tei:biblStruct">
 	<xsl:text>\begin{bibitemlist}{1}&#10;</xsl:text>
 	  <xsl:for-each select="tei:biblStruct">
-	    <xsl:sort select="translate(tei:*/tei:author/tei:surname|tei:*[1]/tei:author/tei:orgName|tei:*[1]/tei:author/tei:name|tei:*[1]/tei:editor/tei:surname|tei:*[1]/tei:editor/tei:name|tei:*[1]/tei:title,$uc,$lc)"/>
+	    <xsl:sort
+		select="translate(string(tei:*[1]/tei:author/tei:surname or
+	tei:*[1]/tei:author/tei:orgName or
+	tei:*[1]/tei:author/tei:name or
+	tei:*[1]/tei:editor/tei:surname or
+	tei:*[1]/tei:editor/tei:name or
+	tei:*[1]/tei:title),$uc,$lc)"/>
 	    <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
 	    <xsl:text>\bibitem[</xsl:text>
 	      <xsl:apply-templates select="." mode="xref"/>
@@ -448,7 +454,7 @@
   </xd:doc>
   <xsl:template match="tei:listBibl/tei:bibl"> \bibitem {<xsl:choose>
       <xsl:when test="@xml:id">
-        <xsl:value-of select="@xml:id"/>
+	<xsl:value-of select="@xml:id"/>
       </xsl:when>
       <xsl:otherwise>bibitem-<xsl:number level="any"/></xsl:otherwise>
     </xsl:choose>}<xsl:apply-templates/>
