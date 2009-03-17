@@ -123,6 +123,9 @@ html:check subset
 
 xml: check  
 	xsltproc  --xinclude --stringparam displayMode rnc  \
+	    --stringparam lang ${LANGUAGE} \
+	    --stringparam doclang ${LANGUAGE} \
+	    --stringparam documentationLanguage ${LANGUAGE} \
 	${XSL}/odds/odd2lite.xsl ${DRIVER} \
 	 | xmllint --format - > Guidelines.xml
 	@echo Success. Created Guidelines.xml. now attempt to validate

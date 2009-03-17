@@ -216,13 +216,8 @@
     <xsl:when test="@preamble">
       <xsl:value-of select="@preamble"/>
     </xsl:when>
-    <xsl:when test="function-available('exsl:node-set')">
-      <xsl:call-template name="makePreamble-complex">
-	<xsl:with-param name="r" select="$r"/>
-      </xsl:call-template>
-    </xsl:when>
     <xsl:otherwise>
-      <xsl:call-template name="makePreamble-simple">
+      <xsl:call-template name="makePreamble-complex">
 	<xsl:with-param name="r" select="$r"/>
       </xsl:call-template>
     </xsl:otherwise>
@@ -361,12 +356,12 @@
 <xsl:template name="latexEnd">
 <xsl:text>\include{Guidelines-index}
 </xsl:text>
-<exsl:document href="Guidelines-index.tex" method="text" encoding="utf8">
+<xsl:result-document href="Guidelines-index.tex" method="text" encoding="utf8">
 \cleardoublepage
 \pdfbookmark[0]{Index}{INDEX}
 \hypertarget{INDEX}{}
 \printindex
-</exsl:document>
+</xsl:result-document>
 </xsl:template>
 
   <xsl:template name="numberFrontDiv">
@@ -383,31 +378,31 @@
     <xsl:text>\include{Guidelines-</xsl:text>
     <xsl:value-of select="@xml:id"/>
     <xsl:text>}&#10;</xsl:text>
-    <exsl:document 
+    <xsl:result-document 
 	href="Guidelines-{@xml:id}.tex" 
 	method="text" 
 	encoding="utf8">
     <xsl:apply-templates/>
-    </exsl:document>
+    </xsl:result-document>
   </xsl:template>
 
   <xsl:template match="tei:divGen[@type='toc']">
 <xsl:text>
 \include{Guidelines-toc} 
 </xsl:text>
-    <exsl:document 
+    <xsl:result-document 
 	href="Guidelines-toc.tex" 
 	method="text" 
 	encoding="utf8">
       \tableofcontents
-    </exsl:document>
+    </xsl:result-document>
   </xsl:template>
 
   <xsl:template match="tei:titlePage">
 <xsl:text>
 \include{Guidelines-titlepage} 
 </xsl:text>
-    <exsl:document 
+    <xsl:result-document 
 	href="Guidelines-titlepage.tex" 
 	method="text" 
 	encoding="utf8">
@@ -456,7 +451,7 @@
   \egroup
   \end{titlepage}
   \cleardoublepage
-    </exsl:document>
+    </xsl:result-document>
   </xsl:template>
 
 </xsl:stylesheet>
