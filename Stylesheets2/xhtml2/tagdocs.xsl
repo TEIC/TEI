@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
   xmlns:s="http://www.ascc.net/xml/schematron"
-  exclude-result-prefixes="s html a fo local rng tei teix xd"
+  exclude-result-prefixes="#default s html a fo local rng tei teix xd"
   version="2.0"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"

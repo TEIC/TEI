@@ -4,7 +4,7 @@
     xmlns:xd="http://www.pnp-software.com/XSLTdoc" 
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    exclude-result-prefixes="tei xd" 
+    exclude-result-prefixes="#default tei xd" 
      version="2.0">
   <xd:doc type="stylesheet">
     <xd:short>

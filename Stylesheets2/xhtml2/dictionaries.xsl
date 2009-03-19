@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
   xmlns="http://www.w3.org/1999/xhtml"
-  exclude-result-prefixes="a fo local rng tei teix xd m"
+  exclude-result-prefixes="#default a fo local rng tei teix xd m"
   version="2.0"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"

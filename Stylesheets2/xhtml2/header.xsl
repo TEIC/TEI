@@ -2,7 +2,7 @@
 <xsl:stylesheet
   xmlns="http://www.w3.org/1999/xhtml"
   version="2.0"
-  exclude-result-prefixes="a fo local rng tei teix xd"
+  exclude-result-prefixes="#default a fo local rng tei teix xd"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:html="http://www.w3.org/1999/xhtml"
