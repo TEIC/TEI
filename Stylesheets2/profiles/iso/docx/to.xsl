@@ -202,7 +202,7 @@
            
         <xsl:variable name="pPr">
             <xsl:choose>
-                <xsl:when test="@place='foot' and parent::tei:cell">
+                <xsl:when test="(@place='foot'  or @place='bottom') and parent::tei:cell">
                     <w:pPr>
                         <w:pStyle w:val="TableFootnoteText"/>
                     </w:pPr>
@@ -262,7 +262,7 @@
     -->
     <xsl:template match="tei:note[@place]">
         <xsl:choose>
-            <xsl:when test="@place='foot'">
+            <xsl:when test="@place='foot'  or @place='bottom' ">
                 <xsl:call-template name="create-footnote"/>
             </xsl:when>
             <xsl:when test="@place='end'">

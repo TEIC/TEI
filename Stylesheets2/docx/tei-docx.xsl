@@ -88,7 +88,7 @@ Divide by 100 to avoid overflow.
     <xsl:key name="ALLHEADERS" match="tei:fw[@type='header']" use="1"/>
 
     <xsl:key name='ENDNOTES' match="tei:note[@place='end']" use="1"/>
-    <xsl:key name='FOOTNOTES' match="tei:note[@place='foot']" use="1"/>
+    <xsl:key name='FOOTNOTES' match="tei:note[@place='foot' or @place='bottom' ]" use="1"/>
 
     <xsl:key name="IDS" match="tei:*[@xml:id]" use="@xml:id"/>
 
@@ -597,7 +597,7 @@ Divide by 100 to avoid overflow.
     -->
     <xsl:template name="create-footnote">
         <xsl:variable name="num">
-            <xsl:number count="tei:note[@place='foot']" level="any"/>
+            <xsl:number count="tei:note[@place='foot' or @place='bottom' ]" level="any"/>
         </xsl:variable>
         <xsl:variable name="id" select="$num+1"/>
         <w:r>
