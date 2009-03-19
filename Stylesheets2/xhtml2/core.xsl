@@ -2197,12 +2197,7 @@
     <xsl:param name="name"/>
     <xsl:choose>
       <xsl:when test="$name and $xhtml='true'">
-	<span>
-	  <xsl:attribute name="id">
-	    <xsl:value-of select="$name"/>
-	  </xsl:attribute>
-	  <xsl:comment>anchor</xsl:comment>
-	</span>	
+	<span id="{$name}"><xsl:comment>anchor</xsl:comment></span>
       </xsl:when>
       <xsl:when test="$name">
 	<a name="{$name}">
@@ -2210,10 +2205,7 @@
 	</a>
       </xsl:when>
       <xsl:when test="@xml:id and $xhtml='true'">
-	<span>
-	  <xsl:attribute name="id">
-	    <xsl:value-of select="@xml:id"/>
-	  </xsl:attribute>
+	<span id="{@xml:id}">
 	  <xsl:comment>anchor</xsl:comment>
 	</span>	
       </xsl:when>
