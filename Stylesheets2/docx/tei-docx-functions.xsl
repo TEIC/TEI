@@ -199,41 +199,51 @@
                     
                     self::iso:wordObject[w:object] or
                     
+		    self::tei:am or
+		    self::tei:gap or
+		    self::tei:choice or
+		    self::tei:damage or
+		    self::tei:ex or
+		    self::tei:expan or
+		    self::tei:genName or
+		    self::tei:geogName or
+		    self::tei:orig or
+		    self::tei:roleName or
+		    self::tei:supplied or
                     self::tei:abbr or
-                    self::tei:att or
                     self::tei:affiliation or
+                    self::tei:att or
                     self::tei:author or
                     self::tei:br or
                     self::tei:c or
                     self::tei:code or
-                    self::tei:editionStmt or
                     self::tei:date or
+                    self::tei:editionStmt or
                     self::tei:emph or
-                    
                     self::tei:foreign or
                     self::tei:forename or
-                    self::tei:graphic or
                     self::tei:gi or
+                    self::tei:graphic or
                     self::tei:hi[not(w:*)] or
-                    self::tei:idno or
                     self::tei:ident or
+                    self::tei:idno or
                     self::tei:lb or
-                    self::tei:name or
-                    self::tei:note[@place='foot' or @place='bottom' ] or
-                    self::tei:note[@place='end' or @place='bottom' ] or
-                    self::tei:num or
                     self::tei:mentioned or
+                    self::tei:name or
+                    self::tei:note[@place='end' or @place='bottom' ] or
+                    self::tei:note[@place='foot' or @place='bottom' ] or
+                    self::tei:num or
                     self::tei:orgName or
-                    self::tei:placeName or
-                    self::tei:persName or
-                    self::tei:publisher or
                     self::tei:pb or
+                    self::tei:persName or
+                    self::tei:placeName or
                     self::tei:ptr or
+                    self::tei:publisher or
                     self::tei:q or
                     self::tei:ref or
                     self::tei:seg or
-                    self::tei:surname or 
                     self::tei:soCalled or
+                    self::tei:surname or 
                     self::tei:term[not(ancestor-or-self::*/@type='termsAndDefinitions')] or
                     self::tei:title or
                     self::tei:val">

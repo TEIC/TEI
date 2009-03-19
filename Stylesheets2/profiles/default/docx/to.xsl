@@ -53,6 +53,91 @@
     
     <!-- Styles -->
     
+    <xsl:template match="tei:choice/tei:abbr"/>
+
+    <xsl:template match="tei:expan/tei:ex">
+        <w:r>
+            <w:rPr>
+                <w:rStyle w:val="ex"/>
+            </w:rPr>
+            <w:t>
+	         <xsl:text>(</xsl:text>
+                <xsl:value-of select="."/>
+	         <xsl:text>)</xsl:text>
+            </w:t>
+        </w:r>
+    </xsl:template>
+
+    <xsl:template match="tei:supplied[@reason='damage']">
+        <w:r>
+            <w:rPr>
+                <w:rStyle w:val="tei_supplied"/>
+            </w:rPr>
+            <w:t>
+	         <xsl:text>&lt;</xsl:text>
+		 <xsl:value-of select="."/>
+	         <xsl:text>&gt;</xsl:text>
+            </w:t>
+        </w:r>
+    </xsl:template>
+    <xsl:template match="tei:supplied[@reason='illegible']">
+        <w:r>
+            <w:rPr>
+                <w:rStyle w:val="tei_supplied"/>
+            </w:rPr>
+            <w:t>
+	         <xsl:text>[</xsl:text>
+		 <xsl:value-of select="."/>
+	         <xsl:text>]</xsl:text>
+            </w:t>
+        </w:r>
+    </xsl:template>
+
+    <xsl:template match="tei:gap">
+        <w:r>
+            <w:rPr>
+                <w:rStyle w:val="tei_gap"/>
+            </w:rPr>
+
+            <w:t>
+	          <xsl:text>[...]</xsl:text>
+            </w:t>
+        </w:r>
+
+    </xsl:template>
+
+<!--
+    <xsl:template match="tei:am">
+    </xsl:template>
+
+    <xsl:template match="tei:choice">
+    </xsl:template>
+
+    <xsl:template match="tei:damage">
+    </xsl:template>
+
+    <xsl:template match="tei:ex">
+    </xsl:template>
+
+    <xsl:template match="tei:genName">
+    </xsl:template>
+
+    <xsl:template match="tei:geogName">
+    </xsl:template>
+
+    <xsl:template match="tei:orig">
+    </xsl:template>
+
+    <xsl:template match="tei:roleName">
+    </xsl:template>
+
+    <xsl:template match="tei:supplied">
+    </xsl:template>
+-->
+
+    <xsl:template match="tei:foreign"
+		  mode="get-style">tei_foreign</xsl:template>
+
     <xsl:template match="tei:abbr" mode="get-style">abbr</xsl:template>
     <xsl:template match="tei:cit" mode="get-style">Quote</xsl:template>
     <xsl:template match="tei:date" mode="get-style">date</xsl:template>
@@ -67,9 +152,6 @@
     </xsl:template>
     <xsl:template match="tei:quote" mode="get-style">Quote</xsl:template>
     <xsl:template match="tei:ref" mode="get-style">ExtXref</xsl:template>
-    <xsl:template match="tei:seg[@rend='FormulaReference']">FormulaReference</xsl:template>
-    <xsl:template match="tei:seg[@iso:provision]" mode="get-style"><xsl:value-of select="@iso:provision"/></xsl:template>
-    <xsl:template match="tei:seg[@rend]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
     
     <!-- 
         Inline Templates:
