@@ -913,9 +913,11 @@ $requestedID: requests a particular page
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
-    <xd:detail> </xd:detail>
+    <xd:param name="crumbRoot">/</xd:param>
+    <xd:detail>where to start the path from</xd:detail>
   </xd:doc>
   <xsl:template name="crumbPath">
+    <xsl:param name="crumbRoot">/</xsl:param>
     <div class="breadcrumb">
       <xsl:call-template name="preBreadCrumbPath"/>
       <ul class="breadcrumb">
@@ -931,7 +933,7 @@ $requestedID: requests a particular page
         </li>
         <xsl:call-template name="walkTree">
           <xsl:with-param name="path">
-            <xsl:value-of select="substring-after($REQUEST,'/')"/>
+            <xsl:value-of select="substring-after($REQUEST,$crumbRoot)"/>
           </xsl:with-param>
           <xsl:with-param name="class">breadcrumb</xsl:with-param>
         </xsl:call-template>
