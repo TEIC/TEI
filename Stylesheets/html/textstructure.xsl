@@ -935,7 +935,7 @@ $requestedID: requests a particular page
           <xsl:with-param name="path">
             <xsl:value-of select="substring-after($REQUEST,$crumbRoot)"/>
           </xsl:with-param>
-          <xsl:with-param name="root">
+          <xsl:with-param name="whole">
             <xsl:value-of select="$crumbRoot"/>
           </xsl:with-param>
           <xsl:with-param name="class">breadcrumb</xsl:with-param>
@@ -2806,8 +2806,7 @@ $requestedID: requests a particular page
   <xsl:template name="walkTree">
     <xsl:param name="path"/>
     <xsl:param name="class"/>
-    <xsl:param name="root"/>
-    <xsl:param name="whole" select="''"/>
+    <xsl:param name="whole"/>
     <xsl:choose>
       <xsl:when test="contains($path,'/')">
         <xsl:variable name="current">
@@ -2849,11 +2848,10 @@ $requestedID: requests a particular page
             <xsl:value-of select="$class"/>
           </xsl:with-param>
           <xsl:with-param name="path" select="$rest"/>
-          <xsl:with-param name="root" select="$root"/>
           <xsl:with-param name="whole">
 	    <xsl:value-of select="$whole"/>
-	    <xsl:value-of select="$root"/>
 	    <xsl:value-of select="$current"/>
+	    <xsl:text>/</xsl:text>
 	  </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
@@ -2869,7 +2867,6 @@ $requestedID: requests a particular page
 		</xsl:if>
 		<xsl:attribute name="href">
 		  <xsl:value-of select="$whole"/>
-		  <xsl:value-of select="$root"/>
 		  <xsl:value-of select="$path"/>
 		</xsl:attribute>
                 <xsl:value-of select="$path"/>
