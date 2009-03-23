@@ -142,7 +142,7 @@ public class Vesta extends org.eclipse.swt.widgets.Composite {
 						teiConvertOptions.setControl(teiConvertOptionsComposite);
 						{
 							selectProfileLabel_xmlTrans = new Label(teiConvertOptionsComposite, SWT.NONE);
-							selectProfileLabel_xmlTrans.setText("select application:");
+							selectProfileLabel_xmlTrans.setText("select profile:");
 							selectProfileLabel_xmlTrans.setBounds(5, 10, 117, 19);
 						}
 						{
