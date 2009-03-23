@@ -63,12 +63,38 @@
     <graphic url="images/lm-editor-authormode.png"/>
     </figure>
     <p>The user can choose the amount of XML tagging that is made visible in author mode. Buttons on the toolbar can be used to switch 
-    between several options.</p> 
+    between several options. More information, including a video demonstration,
+    is available on the <ref target="http://www.oxygenxml.com/tei_editor.html">oXygen site</ref>. </p> 
     <figure>
     <head>Choosing the amount of tag information to be displayed in author mode</head>
     <graphic url="images/lm-editor-author-tagdisp.png"/>
     </figure>
     </div>
+    <div>
+    <head>The schema</head>
+    <p>In the previous section we envountered a number of extra views next to the edited document, including overviews of the 
+    attributes and elements that are available in a specific location. The information in these views does not come from the 
+    document, but from the <ref target="#glsch">schema</ref> that describes the document. How does the editor know which schema to apply? After all, the 
+    XML file does not refer to this schema. </p>
+    <p>The answer is that the editor uses certain rules to guess what type of file it is dealing with. In this case, it decides 
+    this is a TEI document, based on the TEI <ref target="#glns">namespace</ref> http://www.tei-c.org/ns/1.0.</p>
+    <figure>
+    <head>Choosing the TEI namespace </head>
+    <graphic url="images/lm-editor-namespace.png"/>
+    </figure>
+    <p>We could have explicitly chosen to use a certain schema. Unfortunately, for the type of schema that we use in this 
+    document, <ref target="#glsch">Relax NG schema's</ref>,
+    there is no standard way to set the connection between document and schema. oXygen uses an <ref target="#glxmlpi">XML 
+    processing instruction</ref>. The next figure shows how to create such an instruction, and the resulting but of XML code.</p>
+    <figure>
+    <head>Associating a document with a schema</head>
+    <graphic url="images/lm-editor-schema.png"/>
+    </figure>
+    <p>The schema will be used for three things: to present allowed elements, attributes, and values to the user when he/she is 
+    editing the file, to validate the contents of the file, and to provide information about the definition of the element or attribute that 
+    the mouse hovers over.</p>      
+    </div>
+    
     <!-- 
     <p>This will be a document that we provide, together with a schema. Instructions for download. 2p</p>
     <p>Show number of functions of editor: 18 p (because of multiple editors)</p>
