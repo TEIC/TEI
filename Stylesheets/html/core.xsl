@@ -951,7 +951,7 @@
           </p>
         </blockquote>
       </xsl:when>
-      <xsl:when test="@place='foot' or @place='end' or $autoEndNotes='true'">
+      <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
 	<xsl:call-template name="makeAnchor">
 	  <xsl:with-param name="name" select="concat($identifier,'_return')"/>
 	</xsl:call-template>
@@ -1609,21 +1609,21 @@
         <xsl:choose>
           <xsl:when test="$consecutiveFootnoteNumbers = 'true'">
             <xsl:number 
-		count="tei:note[./@place='foot']" 
+		count="tei:note[@place='foot' and @place='bottom']" 
 		level="any"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:choose>
               <xsl:when test="ancestor::tei:front">
-                <xsl:number count="tei:note[./@place='foot']" from="tei:front"
+                <xsl:number count="tei:note[@place='foot' and @place='bottom']" from="tei:front"
                   level="any"/>
               </xsl:when>
               <xsl:when test="ancestor::tei:back">
-                <xsl:number count="tei:note[./@place='foot']" from="tei:back"
+                <xsl:number count="tei:note[@place='foot' and @place='bottom']" from="tei:back"
                   level="any"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:number count="tei:note[./@place='foot']" from="tei:body"
+                <xsl:number count="tei:note[@place='foot' and @place='bottom']" from="tei:body"
                   level="any"/>
               </xsl:otherwise>
             </xsl:choose>
@@ -1674,7 +1674,10 @@
 
   <xsl:template name="printNotes">
       <xsl:choose>
-	<xsl:when test="$footnoteFile='true' and ancestor-or-self::tei:TEI/tei:text/descendant::tei:note[@place='foot' or @place='end']">
+	<xsl:when test="$footnoteFile='true' and
+			ancestor-or-self::tei:TEI/tei:text/descendant::tei:note[@place='foot'
+			or @place='bottom'
+			or @place='end']">
 ">
 	  <xsl:variable name="BaseFile">
 	    <xsl:value-of select="$masterFile"/>
@@ -1695,7 +1698,9 @@
 	  </xsl:variable>
 	  <xsl:choose>
 	    <xsl:when test="$depth &lt; $splitLevel ">
-	  <xsl:if test="child::*[not(self::tei:div)]/descendant::tei:note[@place='foot' or @place='end']">
+	  <xsl:if
+	      test="child::*[not(self::tei:div)]/descendant::tei:note[@place='foot'
+		    or @place='bottom' or @place='end']">
 	    <div class="notes">
 	      <div class="noteHeading">
 		<xsl:call-template name="i18n">
@@ -1704,12 +1709,13 @@
 	      </div>
 	      <xsl:apply-templates 
 		  mode="printnotes"
-		  select="child::*[not(self::tei:div)]/descendant::tei:note[@place='foot' or @place='end']"/>
+		  select="child::*[not(self::tei:div)]/descendant::tei:note[@place='foot'
+			  or @place='bottom' or @place='end']"/>
 	    </div>
 	  </xsl:if>
 	    </xsl:when>
 	    <xsl:otherwise>
-	  <xsl:if test="descendant::tei:note[@place='foot' or @place='end']">
+	  <xsl:if test="descendant::tei:note[@place='foot' or @place='bottom' or @place='end']">
 	    <div class="notes">
 	      <div class="noteHeading">
 		<xsl:call-template name="i18n">
@@ -1718,7 +1724,7 @@
 	      </div>
 	      <xsl:apply-templates 
 		  mode="printnotes"
-		  select="descendant::tei:note[@place='foot' or @place='end']"/>
+		  select="descendant::tei:note[@place='foot' or @place='bottom' or @place='end']"/>
 	    </div>
 	  </xsl:if>
 	    </xsl:otherwise>
@@ -1750,7 +1756,7 @@
 	-->
 	
         <xsl:otherwise>
-	  <xsl:if test="descendant::tei:note[@place='foot' or @place='end']">
+	  <xsl:if test="descendant::tei:note[@place='foot' or @place='bottom' or @place='end']">
 	    <div class="notes">
 	      <div class="noteHeading">
 		<xsl:call-template name="i18n">
@@ -1759,7 +1765,7 @@
 	      </div>
 	      <xsl:apply-templates 
 		  mode="printnotes"
-		  select="descendant::tei:note[@place='foot' or @place='end']"/>
+		  select="descendant::tei:note[@place='foot' or @place='bottom'  or @place='end']"/>
 	    </div>
 	  </xsl:if>
 	</xsl:otherwise>

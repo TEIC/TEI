@@ -1038,7 +1038,7 @@ simple, bullets, ordered, gloss, unordered, or bibliography
 -->
     <xsl:variable name="listdepth" select="count(ancestor::tei:list)"/>
     <fo:list-item>
-      <xsl:if test="not(parent::tei:note[@place='foot'])">
+      <xsl:if test="not(parent::tei:note[@place='foot' or @place='bottom'])">
         <xsl:attribute name="space-before.optimum">
           <xsl:value-of select="$listItemsep"/>
         </xsl:attribute>
