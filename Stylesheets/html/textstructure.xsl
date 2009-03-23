@@ -2833,7 +2833,6 @@ $requestedID: requests a particular page
 		  </xsl:if>
                   <xsl:attribute name="href">
 		    <xsl:value-of select="$whole"/>
-		    <xsl:value-of select="$root"/>
 		    <xsl:value-of select="$current"/>
 		    <xsl:text>/</xsl:text>
 		  </xsl:attribute>
