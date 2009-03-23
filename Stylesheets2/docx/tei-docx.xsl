@@ -7,7 +7,7 @@
     xmlns:dc="http://purl.org/dc/elements/1.1/" 
     xmlns:dcterms="http://purl.org/dc/terms/"
     xmlns:dcmitype="http://purl.org/dc/dcmitype/"
-
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:teix="http://www.tei-c.org/ns/Examples"
     xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"
@@ -153,6 +153,10 @@ Divide by 100 to avoid overflow.
 
                 <!-- are there specific titlepages -->
                 <xsl:call-template name="titlepages"/>
+
+		<!-- header components -->
+
+		<xsl:call-template name="headerParts"/>
 
                 <!-- The front matter -->
                 <xsl:apply-templates select="tei:text/tei:front"/>
@@ -3069,6 +3073,7 @@ under new name -->
     <xsl:template name="titlepages"/>
     <xsl:template name="generateTitle"/>
     <xsl:template name="created-by"/>
+    <xsl:template name="headerParts"/>
 
     <!-- no handling of index terms -->
 

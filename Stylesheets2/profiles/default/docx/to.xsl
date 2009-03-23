@@ -20,6 +20,7 @@
                 exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn tei teidocx">
     <!-- import conversion style -->
     <xsl:import href="../../../docx/tei-docx.xsl"/>
+    <xsl:import href="../../../common2/msdescription.xsl"/>
     
     <!-- import functions -->
     <xsl:include href="default-functions.xsl"/>
@@ -53,97 +54,14 @@
     
     <!-- Styles -->
     
-    <xsl:template match="tei:choice/tei:abbr"/>
-
-    <xsl:template match="tei:expan/tei:ex">
-        <w:r>
-            <w:rPr>
-                <w:rStyle w:val="ex"/>
-            </w:rPr>
-            <w:t>
-	         <xsl:text>(</xsl:text>
-                <xsl:value-of select="."/>
-	         <xsl:text>)</xsl:text>
-            </w:t>
-        </w:r>
-    </xsl:template>
-
-    <xsl:template match="tei:supplied[@reason='damage']">
-        <w:r>
-            <w:rPr>
-                <w:rStyle w:val="tei_supplied"/>
-            </w:rPr>
-            <w:t>
-	         <xsl:text>&lt;</xsl:text>
-		 <xsl:value-of select="."/>
-	         <xsl:text>&gt;</xsl:text>
-            </w:t>
-        </w:r>
-    </xsl:template>
-    <xsl:template match="tei:supplied[@reason='illegible']">
-        <w:r>
-            <w:rPr>
-                <w:rStyle w:val="tei_supplied"/>
-            </w:rPr>
-            <w:t>
-	         <xsl:text>[</xsl:text>
-		 <xsl:value-of select="."/>
-	         <xsl:text>]</xsl:text>
-            </w:t>
-        </w:r>
-    </xsl:template>
-
-    <xsl:template match="tei:gap">
-        <w:r>
-            <w:rPr>
-                <w:rStyle w:val="tei_gap"/>
-            </w:rPr>
-
-            <w:t>
-	          <xsl:text>[...]</xsl:text>
-            </w:t>
-        </w:r>
-
-    </xsl:template>
-
-<!--
-    <xsl:template match="tei:am">
-    </xsl:template>
-
-    <xsl:template match="tei:choice">
-    </xsl:template>
-
-    <xsl:template match="tei:damage">
-    </xsl:template>
-
-    <xsl:template match="tei:ex">
-    </xsl:template>
-
-    <xsl:template match="tei:genName">
-    </xsl:template>
-
-    <xsl:template match="tei:geogName">
-    </xsl:template>
-
-    <xsl:template match="tei:orig">
-    </xsl:template>
-
-    <xsl:template match="tei:roleName">
-    </xsl:template>
-
-    <xsl:template match="tei:supplied">
-    </xsl:template>
--->
-
     <xsl:template match="tei:foreign"
-		  mode="get-style">tei_foreign</xsl:template>
+		  mode="get-style">teiforeign</xsl:template>
 
-    <xsl:template match="tei:abbr" mode="get-style">abbr</xsl:template>
     <xsl:template match="tei:cit" mode="get-style">Quote</xsl:template>
-    <xsl:template match="tei:date" mode="get-style">date</xsl:template>
+    <xsl:template match="tei:date" mode="get-style">teidate</xsl:template>
     <xsl:template match="tei:formula" mode="get-style">Formula</xsl:template>
     <xsl:template match="tei:list[@type='termlist' and ancestor-or-self::*/@type='termsAndDefinitions']/tei:item/tei:abbr" mode="get-style">ExtRef</xsl:template>
-    <xsl:template match="tei:mentioned" mode="get-style">mentioned</xsl:template>
+    <xsl:template match="tei:mentioned" mode="get-style">teimentioned</xsl:template>
     <xsl:template match="tei:orgName" mode="get-style">orgName</xsl:template>
     <xsl:template match="tei:p[@rend]" mode="get-style">
         <xsl:call-template name="getStyleName">
@@ -484,6 +402,42 @@
 	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="iden"
 			     />
       </xsl:copy>
+    </xsl:template>
+
+  
+    <xsl:template name="msSection">
+      <xsl:param name="level"/>
+      <xsl:param name="heading"/>
+      <w:p>
+	<w:pPr>
+	  <w:pStyle w:val="tei{local-name()}"/>
+	</w:pPr>
+	<w:r>
+	  <w:t>
+	    <xsl:value-of select="$heading"/>
+	  </w:t>
+	</w:r>
+      </w:p>
+      <xsl:call-template name="block-element"/>
+    </xsl:template>
+    
+    <xsl:template name="msInline">
+      <xsl:param name="before"/>
+      <xsl:param name="after"/>
+      <w:r>
+	<w:rPr>
+	  <w:rStyle w:val="tei{local-name()}"/>
+	</w:rPr>
+	<w:t>
+	  <xsl:value-of select="$before"/>
+	  <xsl:value-of select="."/>
+	  <xsl:value-of select="$after"/>
+	</w:t>
+      </w:r>
+    </xsl:template>
+
+    <xsl:template name="headerParts">
+      <xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc"/>
     </xsl:template>
 
 </xsl:stylesheet>

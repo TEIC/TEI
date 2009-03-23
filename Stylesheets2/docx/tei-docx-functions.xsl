@@ -228,12 +228,14 @@
                     self::tei:ident or
                     self::tei:idno or
                     self::tei:lb or
+                    self::tei:locus or
                     self::tei:mentioned or
                     self::tei:name or
                     self::tei:note[@place='end' or @place='bottom' ] or
                     self::tei:note[@place='foot' or @place='bottom' ] or
                     self::tei:num or
                     self::tei:orgName or
+		    self::tei:origPlace or
                     self::tei:pb or
                     self::tei:persName or
                     self::tei:placeName or
