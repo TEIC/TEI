@@ -83,12 +83,12 @@
 <xsl:template match="tei:seg[@xml:lang]">
   <xsl:choose>
     <xsl:when test="@xml:lang='zh-tw'">
-      <xsl:text>{\fontspec{HAN NOM A}</xsl:text>
+      <xsl:text>{\textChinese </xsl:text>
       <xsl:apply-templates/>
       <xsl:text>}</xsl:text>
     </xsl:when>
     <xsl:when test="@xml:lang='ja'">
-      <xsl:text>{\fontspec{Kochi Mincho}</xsl:text>
+      <xsl:text>{\textJapanese </xsl:text>
       <xsl:apply-templates/>
       <xsl:text>}</xsl:text>
     </xsl:when>
@@ -229,11 +229,11 @@
  <xsl:text>{</xsl:text>
   <xsl:choose>
     <xsl:when test="@xml:lang='zh-tw'">
-      <xsl:text>\fontspec{HAN NOM A}</xsl:text>
+      <xsl:text>\textChinese </xsl:text>
       <xsl:apply-templates/>
     </xsl:when>
     <xsl:when test="@xml:lang='ja'">
-      <xsl:text>\fontspec{Kochi Mincho}</xsl:text>
+      <xsl:text>\textJapanese </xsl:text>
       <xsl:apply-templates/>
     </xsl:when>
     <xsl:otherwise>
