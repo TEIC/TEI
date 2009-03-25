@@ -124,10 +124,10 @@ html:check subset
 xml: check  
 	xsltproc  --xinclude --stringparam displayMode rnc  \
 	    --stringparam lang ${LANGUAGE} \
-	    --stringparam doclang ${LANGUAGE} \
-	    --stringparam documentationLanguage ${LANGUAGE} \
+	    --stringparam doclang ${DOCUMENTATIONLANGUAGE} \
+	    --stringparam documentationLanguage ${DOCUMENTATIONLANGUAGE} \
 	${XSL}/odds/odd2lite.xsl ${DRIVER} \
-	 | xmllint --format - > Guidelines.xml
+	 | xmllint --format --encode utf8 - > Guidelines.xml
 	@echo Success. Created Guidelines.xml. now attempt to validate
 	#-rnv Exemplars/teilite.rnc Guidelines.xml
 
