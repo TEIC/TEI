@@ -153,7 +153,9 @@
       </xsl:when>
       <xsl:when test="ancestor::tei:list[@type='gloss']">
 	<xsl:text>\hspace{1em}\hfill\linebreak</xsl:text>
-<xsl:text>\bgroup\exampleFontSet\vskip 10pt
+<xsl:text>\bgroup</xsl:text>
+<xsl:call-template name="exampleFontSet"/>
+<xsl:text>\vskip 10pt
 \begin{shaded}
 \noindent\obeylines\obeyspaces </xsl:text>
 <xsl:apply-templates mode="eg"/>
@@ -161,7 +163,9 @@
 \egroup </xsl:text>
       </xsl:when>
       <xsl:otherwise>
-<xsl:text>\par\bgroup\exampleFontSet\vskip 10pt
+<xsl:text>\par\bgroup</xsl:text>
+<xsl:call-template name="exampleFontSet"/>
+<xsl:text>\vskip 10pt
 \begin{shaded}
 \obeylines\obeyspaces </xsl:text>
 <xsl:apply-templates mode="eg"/>

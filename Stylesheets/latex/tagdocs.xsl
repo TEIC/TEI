@@ -38,7 +38,8 @@
       <xsl:when test="parent::tei:cell">
 	<xsl:text>\mbox{}\\\bgroup</xsl:text>
 	<xsl:call-template name="egXMLStartHook"/>
-	<xsl:text>\exampleFontSet\begin{shaded}</xsl:text>
+	<xsl:call-template name="exampleFontSet"/>
+	<xsl:text>\begin{shaded}</xsl:text>
 	<xsl:apply-templates mode="verbatim"/>
 	<xsl:text>\end{shaded}</xsl:text>
 	<xsl:call-template name="egXMLEndHook"/>
@@ -47,7 +48,8 @@
       <xsl:otherwise>
       <xsl:text>\par\bgroup</xsl:text>
       <xsl:call-template name="egXMLStartHook"/>
-      <xsl:text>\exampleFontSet\begin{shaded}\noindent\mbox{}</xsl:text>
+      <xsl:call-template name="exampleFontSet"/>
+      <xsl:text>\begin{shaded}\noindent\mbox{}</xsl:text>
       <xsl:apply-templates mode="verbatim"/>
       <xsl:text>\end{shaded}</xsl:text>
       <xsl:call-template name="egXMLEndHook"/>

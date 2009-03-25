@@ -279,9 +279,26 @@ capable of dealing with UTF-8 directly.
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\Div[#1]#2{\section*{#2}}
 \catcode`\_=12\relax
-\def\exampleFontSet{\ttfamily\small\selectfont}
 </xsl:text>
+</xsl:template>
 
+<xsl:template name="exampleFontSet">
+  <xsl:choose>
+    <xsl:when test="$reencode='true'">
+      <xsl:text>\ttfamily\small\selectfont </xsl:text>
+    </xsl:when>
+    <xsl:when test="parent::tei:exemplum/@xml:lang='zh-tw' or
+		    @xml:lang='zh-tw'">
+      <xsl:text>\fontspec{Arial Unicode MS}\small\selectfont </xsl:text>
+    </xsl:when>
+    <xsl:when test="parent::tei:exemplum/@xml:lang='ja' or
+		    @xml:lang='ja'">
+      <xsl:text>\fontspec{Arial Unicode MS}\small\selectfont </xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:text>\ttfamily\small\selectfont </xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xd:doc class="layout">
