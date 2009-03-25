@@ -1621,13 +1621,13 @@ select="$makeDecls"/></xsl:message>
       <xsl:when test="string-length(tei:gloss)=0"/>
       <xsl:when test="count(tei:gloss)=1 and not(tei:gloss[@xml:lang])">
         <xsl:text> (</xsl:text>
-        <xsl:value-of select="tei:gloss"/>
+	<xsl:apply-templates select="tei:gloss" mode="inLanguage"/>
         <xsl:text>) </xsl:text>
       </xsl:when>
       <xsl:when test="tei:gloss[@xml:lang=$firstLang]">
         <xsl:if test="not(tei:gloss[@xml:lang=$firstLang]='')">
           <xsl:text> (</xsl:text>
-          <xsl:value-of select="tei:gloss[@xml:lang=$firstLang]"/>
+	  <xsl:apply-templates select="tei:gloss[@xml:lang=$firstLang]" mode="inLanguage"/>
           <xsl:text>) </xsl:text>
         </xsl:if>
       </xsl:when>
@@ -1639,7 +1639,7 @@ select="$makeDecls"/></xsl:message>
             </xsl:variable>
             <xsl:if test="contains($langs,concat($currentLang,' '))">
               <xsl:text>(</xsl:text>
-              <xsl:value-of select="."/>
+          	<xsl:apply-templates select="." mode="inLanguage"/>
               <xsl:text>) </xsl:text>
             </xsl:if>
           </xsl:for-each>
@@ -1647,7 +1647,7 @@ select="$makeDecls"/></xsl:message>
         <xsl:choose>
           <xsl:when test="$G='' and tei:gloss[not(@xml:lang)]">
             <xsl:text> (</xsl:text>
-            <xsl:value-of select="tei:gloss[not(@xml:lang)]"/>
+	    <xsl:apply-templates select="tei:gloss[not(@xml:lang)]" mode="inLanguage"/>
             <xsl:text>) </xsl:text>
           </xsl:when>
           <xsl:otherwise>
@@ -1661,12 +1661,12 @@ select="$makeDecls"/></xsl:message>
       <xsl:when test="not(tei:desc)"> </xsl:when>
       <xsl:when test="count(tei:desc)=1">
         <xsl:for-each select="tei:desc">
-          <xsl:apply-templates/>
+          <xsl:apply-templates select="." mode="inLanguage"/>
         </xsl:for-each>
       </xsl:when>
       <xsl:when test="tei:desc[@xml:lang=$firstLang]">
         <xsl:for-each select="tei:desc[@xml:lang=$firstLang]">
-          <xsl:apply-templates/>
+          <xsl:apply-templates select="." mode="inLanguage"/>
         </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
@@ -1676,14 +1676,14 @@ select="$makeDecls"/></xsl:message>
               <xsl:call-template name="findLanguage"/>
             </xsl:variable>
             <xsl:if test="contains($langs,concat($currentLang,' '))">
-              <xsl:apply-templates/>
+	      <xsl:apply-templates select="." mode="inLanguage"/>
             </xsl:if>
           </xsl:for-each>
         </xsl:variable>
         <xsl:choose>
           <xsl:when test="$D='' and tei:desc[not(@xml:lang)]">
             <xsl:for-each select="tei:desc[not(@xml:lang)]">
-              <xsl:apply-templates/>
+	      <xsl:apply-templates select="." mode="inLanguage"/>
             </xsl:for-each>
           </xsl:when>
           <xsl:when test="$coded='false'">
@@ -1695,20 +1695,10 @@ select="$makeDecls"/></xsl:message>
         </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
-<!--    <xsl:choose>
-      <xsl:when test="$coded='true'">
-	<xsl:copy-of select="$Desc"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:value-of select="$Desc"/>
-      </xsl:otherwise>
-    </xsl:choose>
--->
     <xsl:choose>
       <xsl:when test="$includeValList='false'"/>
       <xsl:when test="tei:valList[@type='open']">
-        <xsl:text>
-</xsl:text>
+        <xsl:text>&#10;</xsl:text>
         <xsl:call-template name="i18n">
           <xsl:with-param name="word">
             <xsl:text>Sample values include</xsl:text>
@@ -1731,7 +1721,7 @@ select="$makeDecls"/></xsl:message>
           </xsl:choose>
           <xsl:if test="tei:gloss">
             <xsl:text> (</xsl:text>
-            <xsl:value-of select="tei:gloss"/>
+	    <xsl:apply-templates select="tei:gloss" mode="inLanguage"/>
             <xsl:text>)</xsl:text>
           </xsl:if>
           <xsl:if test="following-sibling::tei:valItem">
@@ -1740,8 +1730,7 @@ select="$makeDecls"/></xsl:message>
         </xsl:for-each>
       </xsl:when>
       <xsl:when test="tei:valList[@type='semi']">
-        <xsl:text>
-</xsl:text>
+        <xsl:text>&#10;</xsl:text>
         <xsl:call-template name="i18n">
           <xsl:with-param name="word">
             <xsl:text>Suggested values include</xsl:text>
@@ -1764,7 +1753,7 @@ select="$makeDecls"/></xsl:message>
           </xsl:choose>
           <xsl:if test="tei:gloss">
             <xsl:text> (</xsl:text>
-            <xsl:value-of select="tei:gloss"/>
+	    <xsl:apply-templates select="tei:gloss" mode="inLanguage"/>
             <xsl:text>)</xsl:text>
           </xsl:if>
           <xsl:if test="following-sibling::tei:valItem">
@@ -1774,6 +1763,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="findLanguage">
     <xsl:choose>
       <xsl:when test="@xml:lang">
@@ -1836,4 +1826,12 @@ Edition: </xsl:text>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template match="tei:gloss" mode="inLanguage">
+    <xsl:value-of select="."/>
+  </xsl:template>
+  <xsl:template match="tei:desc" mode="inLanguage">
+    <xsl:apply-templates/>
+  </xsl:template>
+
 </xsl:stylesheet>

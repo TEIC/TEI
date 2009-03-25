@@ -452,4 +452,20 @@
     </div>
   </xsl:template>
   <xsl:template name="applyRendition"/>
+
+
+  <xsl:template match="tei:gloss" mode="inLanguage">
+    <seg>
+      <xsl:copy-of select="@xml:lang"/>
+      <xsl:value-of select="."/>
+    </seg>
+  </xsl:template>
+
+  <xsl:template match="tei:desc" mode="inLanguage">
+    <seg>
+      <xsl:copy-of select="@xml:lang"/>
+      <xsl:apply-templates/>
+    </seg>
+  </xsl:template>
+
 </xsl:stylesheet>

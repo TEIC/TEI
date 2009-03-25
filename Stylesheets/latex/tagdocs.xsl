@@ -61,6 +61,19 @@
 <xsl:template name="egXMLStartHook"/>
 <xsl:template name="egXMLEndHook"/>
 
+<xsl:template match="tei:seg[@xml:lang]">
+  <xsl:choose>
+    <xsl:when test="@xml:lang='zh-tw'">
+      <xsl:text>{\fontspec{HAN NOM A}</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
 <xsl:template match="tei:seg[@rend='specChildren']">
   <xsl:choose>
     <xsl:when test=".//tei:seg[@rend='specChildModule']">
@@ -209,9 +222,17 @@
  <xsl:text>}]</xsl:text>
 </xsl:template>
 
-<xsl:template match="tei:hi[@rend='label']">
+<xsl:template match="tei:hi[@rend='label' or @rend='defaultVal']">
  <xsl:text>{</xsl:text>
- <xsl:value-of select="."/>
+  <xsl:choose>
+    <xsl:when test="@xml:lang='zh-tw'">
+      <xsl:text>\fontspec{HAN NOM A}</xsl:text>
+      <xsl:apply-templates/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates/>
+    </xsl:otherwise>
+  </xsl:choose>
  <xsl:text>}</xsl:text>
 </xsl:template>
 

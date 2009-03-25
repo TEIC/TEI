@@ -710,8 +710,5 @@
 
   <xsl:template name="applyRendition"/>
 
-<xsl:template match="tei:seg">
-  <xsl:apply-templates/>
-</xsl:template>
 
 </xsl:stylesheet>
