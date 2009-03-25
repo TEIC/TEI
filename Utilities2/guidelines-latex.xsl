@@ -34,8 +34,7 @@
 \defaultfontfeatures{Scale=MatchLowercase}
 %\setromanfont{DejaVu Serif}
 %\setsansfont{DejaVu Sans}
-\setmonofont{Arial Unicode MS}
-%\setmonofont{DejaVu Sans Mono}
+\setmonofont{DejaVu Sans Mono}
 %\setmonofont[Scale=0.9]{Lucida Sans Typewriter}
 %\setsansfont[Scale=0.85]{Lucida Sans}
 %\setromanfont{Times New Roman}
