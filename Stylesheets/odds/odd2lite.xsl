@@ -63,7 +63,17 @@
   <xsl:template match="@*|comment()|processing-instruction()">
     <xsl:copy-of select="."/>
   </xsl:template>
-  <xsl:template match="*|teix:egXML|tei:author|tei:title">
+
+  <xsl:template match="teix:egXML">
+    <xsl:copy>
+      <xsl:if test="not(@xml:lang)">
+	<xsl:copy-of select="../@xml:lang"/>
+      </xsl:if>
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="*|tei:author|tei:title">
     <xsl:copy>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </xsl:copy>
