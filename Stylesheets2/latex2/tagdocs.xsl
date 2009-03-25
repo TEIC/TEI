@@ -87,6 +87,11 @@
       <xsl:apply-templates/>
       <xsl:text>}</xsl:text>
     </xsl:when>
+    <xsl:when test="@xml:lang='ja'">
+      <xsl:text>{\fontspec{Kochi Mincho}</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}</xsl:text>
+    </xsl:when>
     <xsl:otherwise>
       <xsl:apply-templates/>
     </xsl:otherwise>
@@ -225,6 +230,10 @@
   <xsl:choose>
     <xsl:when test="@xml:lang='zh-tw'">
       <xsl:text>\fontspec{HAN NOM A}</xsl:text>
+      <xsl:apply-templates/>
+    </xsl:when>
+    <xsl:when test="@xml:lang='ja'">
+      <xsl:text>\fontspec{Kochi Mincho}</xsl:text>
       <xsl:apply-templates/>
     </xsl:when>
     <xsl:otherwise>
