@@ -283,11 +283,11 @@ capable of dealing with UTF-8 directly.
     <xsl:when test="$reencode='true'">
       <xsl:text>\ttfamily\small\selectfont </xsl:text>
     </xsl:when>
-    <xsl:when test="parent::tei:exemplum/@xml:lang='zh-tw' or
+    <xsl:when test="../@xml:lang='zh-tw' or
 		    @xml:lang='zh-tw'">
       <xsl:text>\fontspec{Arial Unicode MS}\small\selectfont </xsl:text>
     </xsl:when>
-    <xsl:when test="parent::tei:exemplum/@xml:lang='ja' or
+    <xsl:when test="../@xml:lang='ja' or
 		    @xml:lang='ja'">
       <xsl:text>\fontspec{Arial Unicode MS}\small\selectfont </xsl:text>
     </xsl:when>
