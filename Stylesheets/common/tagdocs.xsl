@@ -225,9 +225,17 @@
           <xsl:text>–</xsl:text>
           <xsl:value-of select="$maxOccurs"/>
 	  <xsl:text> </xsl:text>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">occurrences of</xsl:with-param>
-          </xsl:call-template>
+	  <xsl:element namespace="{$outputNS}" name="{$hiName}">
+	    <xsl:attribute name="{$rendName}">
+	      <xsl:text>label</xsl:text>
+	    </xsl:attribute>	  
+	    <xsl:attribute name="xml:lang">
+	      <xsl:value-of select="$documentationLanguage"/>
+	    </xsl:attribute>
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">occurrences of</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:element>
           <xsl:text>  </xsl:text>
         </xsl:if>
         <xsl:call-template name="bitOut">
@@ -240,9 +248,17 @@
           <xsl:with-param name="element">code</xsl:with-param>
         </xsl:call-template>
         <xsl:if test="$minOccurs != 1  or  $maxOccurs != 1">
+	<xsl:element namespace="{$outputNS}" name="{$hiName}">
+	  <xsl:attribute name="{$rendName}">
+	    <xsl:text>label</xsl:text>
+	  </xsl:attribute>	  
+	  <xsl:attribute name="xml:lang">
+	    <xsl:value-of select="$documentationLanguage"/>
+	  </xsl:attribute>
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">separated by whitespace</xsl:with-param>
           </xsl:call-template>
+	</xsl:element>
         </xsl:if>
       </xsl:element>
     </xsl:element>
