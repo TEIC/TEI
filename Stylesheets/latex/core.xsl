@@ -453,7 +453,23 @@
         <xsl:value-of select="@xml:id"/>
       </xsl:when>
       <xsl:otherwise>bibitem-<xsl:number level="any"/></xsl:otherwise>
-    </xsl:choose>}<xsl:apply-templates/>
+    </xsl:choose>
+    <xsl:text>}</xsl:text>
+    <xsl:choose>
+      <xsl:when test="parent::tei:listBibl/@xml:lang='zh-tw' or @xml:lang='zh-tw'">
+	<xsl:text>{\textChinese </xsl:text>
+	<xsl:apply-templates/>
+	<xsl:text>}</xsl:text>
+      </xsl:when>
+      <xsl:when test="parent::tei:listBibl/@xml:lang='ja' or @xml:lang='ja'">
+	<xsl:text>{\textJapanese </xsl:text>
+	<xsl:apply-templates/>
+	<xsl:text>}</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
     <xsl:text>&#10;</xsl:text>
   </xsl:template>
   <xd:doc>

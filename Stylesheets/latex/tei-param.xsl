@@ -178,10 +178,14 @@ capable of dealing with UTF-8 directly.
 \uc@dclc{8239}{default}{\,}
 \uc@dclc{20154}{default}{ }
 \def\textschwa{\rotatebox{-90}{e}}
+\def\textJapanese{}
+\def\textChinese{}
 </xsl:when>
 <xsl:otherwise>
 \usepackage{fontspec}
 \usepackage{xunicode}
+\def\textJapanese{\fontspec{Kochi Mincho}}
+\def\textChinese{\fontspec{HAN NOM A}}
 \catcode`⃥=\active \def⃥{\textbackslash}
 \catcode`❴=\active \def❴{\{}
 \catcode`❵=\active \def❵{\}}
