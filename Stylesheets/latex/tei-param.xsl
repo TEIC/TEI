@@ -185,7 +185,7 @@ capable of dealing with UTF-8 directly.
 \usepackage{fontspec}
 \usepackage{xunicode}
 \def\textJapanese{\fontspec{Kochi Mincho}}
-\def\textChinese{\fontspec{HAN NOM A}}
+\def\textChinese{\fontspec{HAN NOM A}\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip = 0pt plus 1pt }
 \catcode`⃥=\active \def⃥{\textbackslash}
 \catcode`❴=\active \def❴{\{}
 \catcode`❵=\active \def❵{\}}

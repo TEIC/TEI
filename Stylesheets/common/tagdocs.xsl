@@ -102,10 +102,7 @@
               <xsl:attribute name="{$rendName}">
                 <xsl:text>odd_label</xsl:text>
               </xsl:attribute>
-	      <xsl:element namespace="{$outputNS}" name="{$hiName}">
-		<xsl:attribute name="{$rendName}">
-		  <xsl:text>label</xsl:text>
-		</xsl:attribute>
+	      <xsl:element namespace="{$outputNS}" name="{$segName}">
 		<xsl:attribute name="xml:lang">
 		  <xsl:value-of select="$documentationLanguage"/>
 		</xsl:attribute>
@@ -119,10 +116,7 @@
               <xsl:attribute name="{$rendName}">
                 <xsl:text>odd_value</xsl:text>
               </xsl:attribute>
-	      <xsl:element namespace="{$outputNS}" name="{$hiName}">
-		<xsl:attribute name="{$rendName}">
-		  <xsl:text>label</xsl:text>
-		</xsl:attribute>
+	      <xsl:element namespace="{$outputNS}" name="{$segName}">
 		<xsl:attribute name="xml:lang">
 		  <xsl:value-of select="$documentationLanguage"/>
 		</xsl:attribute>
@@ -183,10 +177,7 @@
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_label</xsl:text>
         </xsl:attribute>
-        <xsl:element namespace="{$outputNS}" name="{$hiName}">
-          <xsl:attribute name="{$rendName}">
-            <xsl:text>label</xsl:text>
-          </xsl:attribute>
+        <xsl:element namespace="{$outputNS}" name="{$segName}">
 	  <xsl:attribute name="xml:lang">
 	    <xsl:value-of select="$documentationLanguage"/>
 	  </xsl:attribute>
@@ -225,10 +216,7 @@
           <xsl:text>–</xsl:text>
           <xsl:value-of select="$maxOccurs"/>
 	  <xsl:text> </xsl:text>
-	  <xsl:element namespace="{$outputNS}" name="{$hiName}">
-	    <xsl:attribute name="{$rendName}">
-	      <xsl:text>label</xsl:text>
-	    </xsl:attribute>	  
+	  <xsl:element namespace="{$outputNS}" name="{$segName}">
 	    <xsl:attribute name="xml:lang">
 	      <xsl:value-of select="$documentationLanguage"/>
 	    </xsl:attribute>
@@ -248,10 +236,7 @@
           <xsl:with-param name="element">code</xsl:with-param>
         </xsl:call-template>
         <xsl:if test="$minOccurs != 1  or  $maxOccurs != 1">
-	<xsl:element namespace="{$outputNS}" name="{$hiName}">
-	  <xsl:attribute name="{$rendName}">
-	    <xsl:text>label</xsl:text>
-	  </xsl:attribute>	  
+	<xsl:element namespace="{$outputNS}" name="{$segName}">
 	  <xsl:attribute name="xml:lang">
 	    <xsl:value-of select="$documentationLanguage"/>
 	  </xsl:attribute>
@@ -295,10 +280,15 @@
       <xsl:element namespace="{$outputNS}" name="{$ddName}">
         <xsl:apply-templates mode="tangle" select="."/>
         <xsl:text>(</xsl:text>
-        <xsl:call-template name="i18n">
-          <xsl:with-param name="word">Members</xsl:with-param>
-        </xsl:call-template>
-        <xsl:text>: </xsl:text>
+	<xsl:element namespace="{$outputNS}" name="{$segName}">
+	  <xsl:attribute name="xml:lang">
+	    <xsl:value-of select="$documentationLanguage"/>
+	  </xsl:attribute>		
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Members</xsl:with-param>
+	  </xsl:call-template>
+	</xsl:element>
+	  <xsl:text>: </xsl:text>
         <xsl:call-template name="generateMembers"/>
         <xsl:text>)</xsl:text>
       </xsl:element>
@@ -365,12 +355,17 @@
               <xsl:element namespace="{$outputNS}" name="{$cellName}">
                 <xsl:attribute name="{$rendName}">
                   <xsl:text>wovenodd-col1</xsl:text>
-                </xsl:attribute>
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">
-                    <xsl:text>Classes defined</xsl:text>
-                  </xsl:with-param>
-                </xsl:call-template>
+		</xsl:attribute>
+		<xsl:element namespace="{$outputNS}" name="{$segName}">
+		  <xsl:attribute name="xml:lang">
+		    <xsl:value-of select="$documentationLanguage"/>
+		  </xsl:attribute>
+		  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">
+		      <xsl:text>Classes defined</xsl:text>
+		    </xsl:with-param>
+		  </xsl:call-template>
+		</xsl:element>
               </xsl:element>
               <xsl:element namespace="{$outputNS}" name="{$cellName}">
                 <xsl:attribute name="{$rendName}">
@@ -488,10 +483,15 @@
   <xsl:template match="tei:elementSpec">
     <xsl:if test="parent::tei:specGrp">
       <xsl:element namespace="{$outputNS}" name="{$dtName}">
-        <xsl:call-template name="i18n">
-          <xsl:with-param name="word">Element</xsl:with-param>
-        </xsl:call-template>
-        <xsl:text> </xsl:text>
+	<xsl:element namespace="{$outputNS}" name="{$segName}">
+	  <xsl:attribute name="xml:lang">
+	    <xsl:value-of select="$documentationLanguage"/>
+	  </xsl:attribute>		
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Element</xsl:with-param>
+	  </xsl:call-template>
+	</xsl:element>
+	<xsl:text> </xsl:text>
         <xsl:value-of select="@ident"/>
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$ddName}">
@@ -1190,10 +1190,15 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
         <xsl:attribute name="{$rendName}">
           <xsl:text>moduleSpecHead</xsl:text>
         </xsl:attribute>
-        <xsl:call-template name="i18n">
+	<xsl:element namespace="{$outputNS}" name="{$segName}">
+	  <xsl:attribute name="xml:lang">
+	    <xsl:value-of select="$documentationLanguage"/>
+	  </xsl:attribute>
+	  <xsl:call-template name="i18n">
           <xsl:with-param name="word">Module</xsl:with-param>
-        </xsl:call-template>
-        <xsl:text> </xsl:text>
+	  </xsl:call-template>
+	</xsl:element>
+	<xsl:text>&#160; </xsl:text>
         <xsl:value-of select="@ident"/>
         <xsl:text>: </xsl:text>
         <xsl:call-template name="makeDescription"/>
@@ -1202,9 +1207,14 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
         <xsl:element namespace="{$outputNS}" name="{$ulName}">
           <xsl:if test="key('ElementModule',@ident)">
             <xsl:element namespace="{$outputNS}" name="{$itemName}">
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Elements defined</xsl:with-param>
-              </xsl:call-template>
+	      <xsl:element namespace="{$outputNS}" name="{$segName}">
+		<xsl:attribute name="xml:lang">
+		  <xsl:value-of select="$documentationLanguage"/>
+		</xsl:attribute>
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">Elements defined</xsl:with-param>
+		</xsl:call-template>
+	      </xsl:element>
               <xsl:text>: </xsl:text>
               <xsl:for-each select="key('ElementModule',@ident)">
                 <xsl:sort select="@ident"/>
@@ -1217,9 +1227,14 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
           </xsl:if>
           <xsl:if test="key('ClassModule',@ident)">
             <xsl:element namespace="{$outputNS}" name="{$itemName}">
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Classes defined</xsl:with-param>
-              </xsl:call-template>
+	      <xsl:element namespace="{$outputNS}" name="{$segName}">
+		<xsl:attribute name="xml:lang">
+		  <xsl:value-of select="$documentationLanguage"/>
+		</xsl:attribute>		
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">Classes defined</xsl:with-param>
+		</xsl:call-template>
+	      </xsl:element>
               <xsl:text>: </xsl:text>
               <xsl:for-each select="key('ClassModule',@ident)">
                 <xsl:sort select="@ident"/>
@@ -1231,10 +1246,15 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
             </xsl:element>
           </xsl:if>
           <xsl:if test="key('MacroModule',@ident)">
-            <xsl:element namespace="{$outputNS}" name="{$itemName}">
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Macros defined</xsl:with-param>
-              </xsl:call-template>
+            <xsl:element namespace="{$outputNS}" name="{$itemName}"> 
+	      <xsl:element namespace="{$outputNS}" name="{$segName}">
+		<xsl:attribute name="xml:lang">
+		  <xsl:value-of select="$documentationLanguage"/>
+		</xsl:attribute>
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">Macros defined</xsl:with-param>
+		</xsl:call-template>
+	      </xsl:element>
               <xsl:text>: </xsl:text>
               <xsl:for-each select="key('MacroModule',@ident)">
                 <xsl:sort select="@ident"/>
@@ -1416,10 +1436,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_label</xsl:text>
         </xsl:attribute>
-        <xsl:element namespace="{$outputNS}" name="{$hiName}">
-          <xsl:attribute name="{$rendName}">
-            <xsl:text>label</xsl:text>
-          </xsl:attribute>
+        <xsl:element namespace="{$outputNS}" name="{$segName}">
 	  <xsl:attribute name="xml:lang">
 	    <xsl:value-of select="$documentationLanguage"/>
 	  </xsl:attribute>
@@ -2069,6 +2086,10 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
       <xsl:when test="not($clatts='')">
 	<xsl:if test="ancestor::tei:schemaSpec and key('CLASSES','att.global')">
 	  
+        <xsl:element namespace="{$outputNS}" name="{$segName}">
+	  <xsl:attribute name="xml:lang">
+	    <xsl:value-of select="$documentationLanguage"/>
+	  </xsl:attribute>
 	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">
 	      <xsl:choose>
@@ -2082,7 +2103,8 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:with-param>
-        </xsl:call-template>
+	  </xsl:call-template>
+	</xsl:element>
 	</xsl:if>
 	<xsl:text> </xsl:text>
 	<xsl:copy-of select="$clatts"/>
