@@ -48,7 +48,7 @@ doc:
 	saxon -o customize.xml param.xml param.xsl 
 	saxon -o style.xml param.xml  paramform.xsl 
 
-test: xsl release
+test: 
 	(cd Test2; make )
 
 clean:
