@@ -38,7 +38,9 @@ dtds: check
 	TEIC=true  ${VERBOSE}
 	#for i in DTD/* ; do perl -i Utilities/cleandtd.pl $$i; done	
 
-schemas:check
+schemas:check schema-relaxng schema-sch
+
+schema-relaxng:
 	-mkdir Schema
 	-rm Schema/*
 	# generate the relaxNG schemas
@@ -47,6 +49,8 @@ schemas:check
 	TEIC=true  ${VERBOSE}
 	# convert RelaxNG XML syntax to compact syntax with trang
 	(cd Schema; for i in *rng; do trang $$i `basename $$i .rng`.rnc;done)
+
+schema-sch:
 	# extract Schematron rules
 	${SAXON} ${DRIVER} Utilities2/extract-sch.xsl > p5.sch
 
@@ -184,9 +188,9 @@ valid: check
 	@echo --------- Schematron
 	-${JING} p5.sch ${DRIVER} 
 	@echo --------- XSLT validator
-	${SAXON} ${DRIVER} Utilities2/prevalidator.xsl > pointerattributes.xsl
+	${SAXON} ${DRIVER} Utilities2/prevalidator.xsl > Utilities2/pointerattributes.xsl
 	${SAXON} ${DRIVER} Utilities2/validator.xsl
-	rm pointerattributes.xsl
+	rm Utilities2/pointerattributes.xsl
 	@echo --------- xmllint RelaxNG test REMOVED
 #	@xmllint --version
 #	-xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
