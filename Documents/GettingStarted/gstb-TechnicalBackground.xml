@@ -214,13 +214,12 @@
         </div>
         <div xml:id="tbxml.namespaces">
             <head>Namespaces: Avoiding XML Vocabulary Collisions</head>
-            <p>As the use of XML expanded and many different XML markup languages began to be
-                developed, people realized that it would often be useful to permit one XML
-                vocabulary to incorporate another one. For example, there is a formal XML language,
-                MathML, that can be used to encode mathematical equations. If one were using TEI to
-                encode the correspondence of a mathematician, rather than trying to extend the TEI
-                tagset to include equations it would be much simpler to use MathML directly within
-                one's TEI document.</p>
+            <p>As the use of XML expanded and many different XML markup languages emerged, people
+                realized that it would often be useful to permit one XML vocabulary to incorporate
+                another one. For example, there is a formal XML language, MathML, that can be used
+                to encode mathematical equations. If one were using TEI to encode the correspondence
+                of a mathematician, rather than trying to extend the TEI tagset to include equations
+                it would be much simpler to use MathML directly within one's TEI document.</p>
             <p>The first problem that arises when attempting to integrate differing XML languages is
                 differentiating among the vocabularies, and in particular, avoiding name collisions.
                 For example, suppose that we are encoding in TEI XML a scholarly work that has
@@ -233,7 +232,8 @@
                     <note type="footnote" n="1">In the margin, the author has inscribed the opening
                         bars of <title>Twinkle, Twinkle, Little Star</title>:
                         <tune clef="G"><note>C</note><note>C</note><note>G</note><note>G</note></tune>
-                    [etc.].</note>
+                    [etc.].
+                    </note>
                 </egXML>
                 We have an obvious problem. It's impossible to distinguish between the elements from
             TEI and from TuneML, and the <gi>note</gi> element is therefore used for two entirely
@@ -245,8 +245,80 @@
                 the preceding examples of XML do, so they would be said to be in "no namespace".
                 Namespaces give great flexibility and power to XML, but unfortunately they are one
                 of the more confusing parts of XML for beginners.</p>
-            <p>A namespace is distinguished using a unique identifier... </p>
-                <p><hi rend="bold"><hi rend="italic">to be completed...</hi></hi></p>
+            <p>A namespace is distinguished within an XML document using a unique identifier. And
+                here is where the first confusion arises: namespace values share the same legal
+                syntax as the Uniform Resource Identifiers (URI) used in the World Wide Web, and
+                by convention they begin with <hi rend="code">http://</hi>. But a namespace
+                identifier is <emph>not</emph> the name of a Web page, for all that it looks like
+                one. For example, the namespace identifier of the TEI language is <hi
+                    rend="italic">http://www.tei-c.org/ns/1.0</hi>. If you go to the Web address
+                <ref target="http://www.tei-c.org/ns/1.0"
+                    type="url">http://www.tei-c.org/ns/1.0</ref>, you will in fact find a short
+                paragraph about the TEI namespace, but that is an optional courtesy on the part of
+                the TEI. On the other hand, one of the namespaces used in Microsoft's XML format for
+                its Office software is <hi
+                    rend="italic">http://schemas.microsoft.com/office/word/2006/wordml</hi>, but
+                there is nothing at the Web page <ref type="url"
+                    target="http://schemas.microsoft.com/office/word/2006/wordml">http://schemas.microsoft.com/office/word/2006/wordml</ref>.</p>
+            <p>A namespace must be <emph>declared</emph> in an XML document to take effect. It
+                applies to the node it is declared in, and to all nodes below that unless they are
+                declared to be in a different namespace. Thus, every TEI document begins
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                <TEI xmlns="http://www.tei-c.org/ns/1.0">
+                    ... content of TEI file
+                </TEI>
+            </egXML>
+            where <code>xmlns=</code> can be read as <q>the XML Namespace is...</q>.</p>
+            <p>Let's return to our hypothetical footnote above about <title>Twinkle, Twinkle Little
+            Star</title>. Suppose we know that the namespace of the TuneML language is
+                <code>http://tuneml.org/schema/2009</code>. We could then rewrite our XML footnote
+                like so:
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                    <note xmlns="http://www.tei-c.org/ns/1.0" type="footnote" n="1">In the margin,
+                        the author has inscribed the opening
+                        bars of <title>Twinkle, Twinkle, Little Star</title>:
+                        <tune clef="G" xmlns="http://tuneml.org/schema/2009"><note>C</note><note>C</note><note>G</note><note>G</note></tune>
+                        [etc.].</note>
+                </egXML>
+                Now we genuine have two different <gi>note</gi> elements. The first one is declared
+                to be in the TEI namespace. The others, describing musical notes, inherit the TuneML
+                namespace that is declared on their parent element <gi>tune</gi>.
+            </p>
+            <div xml:id="namespace.prefixes">
+                <head>Namespace Prefixes</head>
+                <p>If you have followed the preceding description of namespaces and their
+                    identifiers, it may occur to you that they are useful to computers but not very
+                    friendly to human readers and editors of XML documents. If you are looking at XML
+                nodes deep within a file using multiple namespaces, how can you easily figure out
+                which namespace is in control of the current node? And isn't it cumbersome to attach
+                long namespace identifers every time you refer to a namespace in a file?</p>
+               <p>The solution adopted in the XML world is <term>namespace prefixes</term>. When
+                   declaring a namespace, you may optionally associate it with a prefix. Then for
+                   the current XML node and any nodes below it, adding the prefix to an element name
+               is the same as declaring its full identifier. The simplest strategy is to declare all
+               namespaces with prefixes at the top of the document (i.e., on the root element):</p>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                    <TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:tn="http://tuneml.org/schema/2009">
+                        <!-- lots of content, then: -->
+                        <note type="footnote" n="1">In the margin,
+                          the author has inscribed the opening
+                          bars of <title>Twinkle, Twinkle, Little Star</title>: 
+                          <tn:tune
+                              clef="G"><tn:note>C</tn:note><tn:note>C</tn:note><tn:note>G</tn:note><tn:note>G</tn:note></tn:tune>
+                        [etc.].</note>
+                    </TEI>
+                </egXML>
+                <p>Compare this example with the preceding one. Note that the TEI namespace is
+                    declared on the root element <gi>TEI</gi>, so it does not have to be repeated in
+                descendant nodes; the footnote <gi>note</gi> inherits the TEI namespace. Also in the
+                root element, the TuneML namespace is declared and associated with the prefix
+                    <code>tn</code>. Thus, within the file when elements from the TuneML language
+                    are used, they can simply be named with their prefix: <gi>tn:tune</gi>,
+                    <gi>tn:note</gi>. When using prefixes in this way, you must prefix <emph>every
+                    element you use</emph>, as there is no namespace inheritance—that is why
+                    every TuneML note is written as <gi>tn:note</gi>. But most people find XML
+                    documents with multiple namespaces more comprehensible when prefixes are used.</p>
+            </div>
         </div>
         <div xml:id="tbxml.further">
             <head>Further Reading</head>
@@ -254,10 +326,158 @@
         </div>
     </div>
     <div xml:id="tbweb">
-        <p>The web, web servers, html, browsers. One very simple HTML example, then point to other
-            resources: 5p</p>
+        <head>XML on the Web</head>
+        <p>The <soCalled>angle-bracket language</soCalled> that people are most familiar with is
+            HTML, the Hypertext Markup Language that has powered the World Wide Web (WWW) since 1991. Its
+            earliest format (still used today) was based not on XML but on the ancestor of XML, the
+            Standard Generalized Markup Language or SGML. But since 2000 it has also existed as a
+            pure XML language known as XHTML, which obeys all of the rules of syntax outlined above.
+        For the purposes of this section, we are going to ignore the older format and use
+            <term>HTML</term> to mean the XML form of the language.</p>
+        <div xml:id="client-server">
+            <head>Web Servers, Web Clients</head>
+            <p>The WWW is based on a client-server model. That is, a Web <term>server</term> on the
+                Internet hosts content and delivers it over the network to <term>clients</term>—to
+                individual computers, intelligent phones, or other network appliances.
+                Oversimplifying some (but not much), every Web page view is the successful result of
+                the delivery and interpretation of an HTML file with a structure like this:</p>
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                <![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">]]>
+                <html xmlns="http://www.w3.org/1999/xhtml">
+                    <head>
+                        <title>A Web Page</title>
+                    </head>
+                    <body>
+                        <h1>A Sample Web Page</h1>
+                        <p>This is a <em>minimal</em> HTML Web page.</p>
+                    </body>
+                </html>
+            </egXML>
+            <p>Chances are you're familiar with the syntax. Information about the document
+                (<term>metadata</term>) goes inside the <gi>head</gi>, while the <gi>body</gi>
+                contains the document text (plus references to graphics, multimedia, programs, etc.,
+            that display within the page). Heading levels are designated by <gi>h1</gi>,
+                <gi>h2</gi>, etc., paragraphs by <gi>p</gi>, emphasized text by <gi>em</gi>, and so
+                on.</p>
+            <p>The Web began its meteoric rise once people started writing client software that
+                could interpret and display the HTML language in a standard way: the <term>Web
+                browser</term>, or just <soCalled>browser</soCalled> for short. From Mosaic
+                through Netscape to MS Internet Explorer, Firefox, Safari, and all the other
+                contemporary ones, a browser has had the function of interpreting HTML code (and
+                bits of programming languages and other data embedded with it) and
+                <emph>displaying</emph> it to a user in a standard way. So, by convention, the
+                <gi>title</gi> of an HTML file is shown at the very top of the browser window; an
+                <gi>h1</gi> head is usually in boldface type much larger than the regular text font;
+            text inside an <gi>i</gi> tag is of course rendered in <hi rend="italics">italics</hi>,
+                and so on. The existence of a fairly limited set of uniform tags meant that Web
+                designers could predict with some reliability how their HTML documents would appear
+                at the recipients' end.</p>
+            <figure>
+                <graphic url="images/tb-webpage1.png"/>
+                <head>Typical browser view of sample HTML</head>
+            </figure>
+        </div>
+        <div xml:id="styling">
+            <head>Styling the Web</head>
+            <p>A piece of technology that has given the Web much of its presentational flexibility
+                is Cascading Style Sheets, or CSS. As CSS is an indispensable tool for most projects
+                using the TEI to present material on the Web, it is worth a brief detour here.</p>
+            <p>CSS is a <term>style sheet language</term> that can be used to precisely define the
+                appearance of XML documents (not just HTML ones, note!) on screen, in print, or even
+            for audio or Braille devices. It allows Web designers to go well beyond the default
+            renderings given to HTML elements by Web browsers. Consider the sample HTML file given
+            above. Typically, a browser will render the <gi>h1</gi> in boldface font at around
+                150–200% of the body font size, and will render the <gi>em</gi> as italics. But
+                suppose I want my headings to be at 130%, in small capitals, colored green; and I
+                want my emphasized text to be bold and red, not italicized. I can accomplish this by
+            adding a <gi>style</gi> element to my HTML <gi>head</gi>, containing the relevant CSS
+            instructions:</p>
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                <style type="text/css">
+                    h1 { font-size:130%; font-variant:small-caps; color:green; }
+                    em { font-weight:bold; color:red; font-variant:normal; }
+                </style>
+            </egXML>
+            <figure>
+                <graphic url="images/tb-webpage2.png"/>
+                <head>Typical browser view of sample HTML with CSS styling</head>
+            </figure>
+        </div>
+        <div>
+            <head>Limitations of HTML</head>
+            <p>In its origins, HTML was designed for the sharing of technical documents and other
+                information generating by researchers. It has been expanded greatly since the
+                beginning, but its legacy explains two key features of HTML: (1) a relatively
+                impoverished semantic vocabulary for describing text structures, and (2) an emphasis
+            on appearance over structure. Together with CSS, it has an extraordinarily rich array of
+            mechanisms for sizing, coloring, and positioning text and graphics, but it has no native
+            way of distinguishing between, for example, prose and poetry. Most of its structural or
+            semantic tags describe features typical of technical documentation or memo-like prose
+            (<gi>table</gi>, <gi>ol</gi> [ordered list], <gi>dl</gi> [definition list]), or exist
+            to enable hyperlinking, form submission, etc. (<gi>a</gi>,
+                <gi>form</gi>/<gi>input</gi>). It is a superb vehicle for <emph>presenting</emph>
+                text, graphics, and multimedia, but an inadequate one for <emph>representing</emph>
+                the underlying structure and meaning of the universe of human textual production.</p>
+        </div>
+        <div>
+            <head>So... Why not Just Put XML on the Web?</head>
+            <p>Let's return to our invented Nursery Rhyme Markup Language. Suppose I have used NMRL
+            to mark up hundreds of nursery rhymes; can I just copy my files to the Web? Let's recall
+            what an NRML file looks like; let's call it <hi rend="italic">MaryLamb.xml</hi>:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                <NurseryRhyme ID="mary_lamb">
+                    <title>Mary Had a Little Lamb</title>
+                    <stanza>
+                        <verse><name>Mary</name> had a little lamb,</verse>
+                        <verse>its fleece was white as snow;</verse>
+                        <verse>and everywhere that <name>Mary</name> went</verse>
+                        <verse>the lamb was sure to go.</verse>
+                    </stanza>
+                </NurseryRhyme>
+            </egXML>
+             (we've added a new <gi>name</gi> element for reasons that will be apparent below).</p> 
+            <p>The answer is <q>yes and no</q>. I can certainly copy <hi
+                rend="italic">MaryLamb.xml</hi> to a directory on a Web server, and invite people to
+                look at it. But what they will see will be something like this:
+            <figure>
+                <graphic url="images/tb-webpage3.png"/>
+                <head>MaryLamb.xml viewed in Firefox</head>
+            </figure>
+            This is a <soCalled>raw XML</soCalled> view of the file. Web browsers know how to
+                display HTML because it has a known set of tags and styling commands. But without
+                some hints, they cannot make any assumptions about how an unknown XML language
+                should be displayed.</p>
+        </div>
+        <div>
+            <head>CSS to the Rescue?</head>
+            <p>CSS can define the appearance of <emph>any</emph> XML elements, not just ones from
+                the HTML vocabulary. So it is entirely possible to take a newly invented XML
+                language like our NRML and use CSS to display it on the Web. We do this by putting
+                our CSS instructions into a separate file, and then referencing the CSS file from
+                our XML file using an XML <term>processing instruction</term>. Let's say we create a
+            file <hi rend="italic">NRML.css</hi> with the following contents:</p>
+            <eg>NurseryRhyme { display:block; margin:1cm; font-size: 14pt; font-family: "Bookman Old Style"}
+                
+title        { display:block; font-size:larger; font-weight:bold; margin-bottom:1em;}
+
+stanza       { display:block; margin-bottom:1em;}
+                
+verse        { display:block; line-height: 1.3;}
+                
+name         { display:inline; font-variant:small-caps; }</eg>
+            <p>We then add the following code to the top of <hi
+                rend="italic">MaryLamb.xml</hi>:
+                <eg><![CDATA[<?xml-stylesheet href="NRML.css" type="text/css"?>]]></eg>
+                The result, viewed in a modern Web brower, looks like this:</p>
+            <figure>
+                <graphic url="images/tb-webpage4.png"/>
+                <head>MaryLamb.xml plus CSS, viewed in Firefox</head>
+            </figure>
+        </div>
     </div>
     <div xml:id="tbgen">
+        <head>Transforming XML</head>
         <p>Even gentler intro into creating html from xml using xslt (mention but not discuss: pdf
             creation and other output formats): 5 p's</p>
     </div>
