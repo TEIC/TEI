@@ -130,6 +130,13 @@
 	<xsl:if test="$verbose='true'">
 	  <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
 	</xsl:if>
+	<xsl:variable name="documentationLanguage">
+	  <xsl:call-template name="generateDoc"/>
+	</xsl:variable>
+	<xsl:variable name="langs">
+	  <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>
+	</xsl:variable>
+
 	<xsl:result-document doctype-public="{$doctypePublic}"
 			     doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
 			     href="{$outName}" method="{$outputMethod}">
@@ -138,7 +145,14 @@
 	    <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (7) </xsl:comment>
 	    <head>
 	      <title>
+		<xsl:text>TEI </xsl:text>
+		<xsl:value-of select="substring-before(local-name(),'Spec')"/>
+		<xsl:text> </xsl:text>
 		<xsl:value-of select="$name"/>
+		<xsl:call-template name="makeGloss">
+		    <xsl:with-param name="langs"
+				    select="$langs"/>
+		</xsl:call-template>
 	      </title>
 	      <xsl:choose>
 		<xsl:when test="$cssFile = ''"/>
@@ -152,9 +166,15 @@
 	      <xsl:call-template name="generateLocalCSS"/>
 	      <xsl:call-template name="metaHTML">
 		  <xsl:with-param name="title">
-		    <xsl:value-of select="local-name()"/>
+		    <xsl:value-of select="substring-before(local-name(),'Spec')"/>
 		    <xsl:text> </xsl:text>
 		    <xsl:value-of select="@ident"/>
+		    <xsl:call-template name="makeGloss">
+		      <xsl:with-param name="langs"
+				      select="$langs"/>
+		    </xsl:call-template>
+		    <xsl:text> - </xsl:text>
+		    <xsl:call-template name="generateTitle"/>
 		  </xsl:with-param>
 	      </xsl:call-template>
 	      <xsl:call-template name="includeJavascript"/>

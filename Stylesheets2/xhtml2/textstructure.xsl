@@ -1902,10 +1902,11 @@ $requestedID: requests a particular page
             <xsl:when test="$currentID=''">
               <xsl:call-template name="generateTitle"/>
             </xsl:when>
-            <xsl:otherwise><xsl:call-template name="generateTitle"/>: <xsl:choose>
-                <xsl:when test="$currentID='current'">
-                  <xsl:apply-templates mode="xref" select="."/>
-                </xsl:when>
+            <xsl:otherwise>
+	      <xsl:choose>
+		<xsl:when test="$currentID='current'">
+		  <xsl:apply-templates mode="xref" select="."/>
+		</xsl:when>
                 <xsl:when test="count(key('IDS',$currentID))&gt;0">
                   <xsl:for-each select="key('IDS',$currentID)">
                     <xsl:apply-templates mode="xref" select="."/>
@@ -1917,7 +1918,10 @@ $requestedID: requests a particular page
                     <xsl:with-param name="action" select="'header'"/>
                   </xsl:apply-templates>
                 </xsl:otherwise>
-              </xsl:choose></xsl:otherwise>
+              </xsl:choose>
+	      <xsl:text> - </xsl:text>
+	      <xsl:call-template name="generateTitle"/>
+	    </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
         <title>
