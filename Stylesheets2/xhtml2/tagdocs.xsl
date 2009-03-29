@@ -150,7 +150,13 @@
 		<link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
 	      </xsl:if>
 	      <xsl:call-template name="generateLocalCSS"/>
-	      <xsl:call-template name="metaHTML"/>
+	      <xsl:call-template name="metaHTML">
+		  <xsl:with-param name="title">
+		    <xsl:value-of select="local-name()"/>
+		    <xsl:text> </xsl:text>
+		    <xsl:value-of select="@ident"/>
+		  </xsl:with-param>
+	      </xsl:call-template>
 	      <xsl:call-template name="includeJavascript"/>
 	      <xsl:call-template name="javascriptHook"/>
 	    </head>
