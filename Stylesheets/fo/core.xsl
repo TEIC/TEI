@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:fotex="http://www.tug.org/fotex" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" extension-element-prefixes="exsl estr edate" exclude-result-prefixes="xd exsl estr edate a fotex fo rng tei teix" version="1.0">
+<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+		xmlns:fotex="http://www.tug.org/fotex"
+		xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+		xmlns="http://www.w3.org/1999/XSL/Format"
+		xmlns:fo="http://www.w3.org/1999/XSL/Format"
+		xmlns:rng="http://relaxng.org/ns/structure/1.0"
+		xmlns:tei="http://www.tei-c.org/ns/1.0"
+		xmlns:teix="http://www.tei-c.org/ns/Examples"
+		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		exclude-result-prefixes="xd a fotex fo rng tei teix" 
+		version="1.0">
   <xd:doc type="stylesheet">
     <xd:short>
     TEI stylesheet
@@ -41,9 +51,9 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:ab">
-    <fo:block>
+    <block>
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:abbr</xd:short>
@@ -59,14 +69,14 @@
   <xsl:template match="tei:add">
     <xsl:choose>
       <xsl:when test="@place='sup'">
-        <fo:inline vertical-align="super">
+        <inline vertical-align="super">
           <xsl:apply-templates/>
-        </fo:inline>
+        </inline>
       </xsl:when>
       <xsl:when test="@place='sub'">
-        <fo:inline vertical-align="sub">
+        <inline vertical-align="sub">
           <xsl:apply-templates/>
-        </fo:inline>
+        </inline>
       </xsl:when>
       <xsl:otherwise>
         <xsl:apply-templates/>
@@ -78,9 +88,9 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:byline">
-    <fo:block text-align="center">
+    <block text-align="center">
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:cell//tei:lb</xd:short>
@@ -90,9 +100,9 @@
     <xsl:choose>
       <xsl:when test="$foEngine='passivetex'"> </xsl:when>
       <xsl:otherwise>
-        <fo:inline linefeed-treatment="preserve">
+        <inline linefeed-treatment="preserve">
           <xsl:text>&#10;</xsl:text>
-        </fo:inline>
+        </inline>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -101,9 +111,9 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:code">
-    <fo:inline font-family="{$typewriterFont}">
+    <inline font-family="{$typewriterFont}">
       <xsl:apply-templates/>
-    </fo:inline>
+    </inline>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:corr</xd:short>
@@ -115,35 +125,35 @@
     <xsl:text>]</xsl:text>
     <xsl:choose>
       <xsl:when test="@sic">
-        <fo:footnote>
-          <fo:footnote-citation>
-            <fo:inline font-size="8pt" vertical-align="super">
+        <footnote>
+          <footnote-citation>
+            <inline font-size="8pt" vertical-align="super">
               <xsl:number format="a" level="any" count="tei:corr"/>
-            </fo:inline>
-          </fo:footnote-citation>
-          <fo:list-block>
+            </inline>
+          </footnote-citation>
+          <list-block>
             <xsl:attribute name="provisional-distance-between-starts">
               <xsl:value-of select="$distanceBetweenStarts"/>
             </xsl:attribute>
             <xsl:attribute name="provisional-label-separation">
               <xsl:value-of select="$labelSeparation"/>
             </xsl:attribute>
-            <fo:list-item>
-              <fo:list-item-label end-indent="label-end()">
-                <fo:block>
-                  <fo:inline font-size="{$footnoteSize}" vertical-align="super">
+            <list-item>
+              <list-item-label end-indent="label-end()">
+                <block>
+                  <inline font-size="{$footnoteSize}" vertical-align="super">
                     <xsl:number format="a" level="any" count="tei:corr"/>
-                  </fo:inline>
-                </fo:block>
-              </fo:list-item-label>
-              <fo:list-item-body start-indent="body-start()">
-                <fo:block font-size="{$footnoteSize}">
+                  </inline>
+                </block>
+              </list-item-label>
+              <list-item-body start-indent="body-start()">
+                <block font-size="{$footnoteSize}">
                   <xsl:value-of select="@sic"/>
-                </fo:block>
-              </fo:list-item-body>
-            </fo:list-item>
-          </fo:list-block>
-        </fo:footnote>
+                </block>
+              </list-item-body>
+            </list-item>
+          </list-block>
+        </footnote>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -152,16 +162,16 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:del">
-    <fo:inline text-decoration="line-through">
+    <inline text-decoration="line-through">
       <xsl:apply-templates/>
-    </fo:inline>
+    </inline>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:eg</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:eg">
-    <fo:block font-family="{$typewriterFont}" background-color="{$exampleBackgroundColor}" color="{$exampleColor}" white-space-treatment="preserve" linefeed-treatment="preserve" white-space-collapse="false" wrap-option="no-wrap" text-indent="0em" hyphenate="false" start-indent="{$exampleMargin}" text-align="start" font-size="{$exampleSize}" space-before.optimum="4pt" space-after.optimum="4pt">
+    <block font-family="{$typewriterFont}" background-color="{$exampleBackgroundColor}" color="{$exampleColor}" white-space-treatment="preserve" linefeed-treatment="preserve" white-space-collapse="false" wrap-option="no-wrap" text-indent="0em" hyphenate="false" start-indent="{$exampleMargin}" text-align="start" font-size="{$exampleSize}" space-before.optimum="4pt" space-after.optimum="4pt">
       <xsl:if test="not($flowMarginLeft='')">
         <xsl:attribute name="padding-start">
           <xsl:value-of select="$exampleMargin"/>
@@ -171,7 +181,7 @@
         <xsl:text>&#10;</xsl:text>
       </xsl:if>
       <xsl:value-of select="translate(.,' ',' ')"/>
-    </fo:block>
+    </block>
   </xsl:template>
 
   <xd:doc>
@@ -179,14 +189,14 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="teix:egXML">
-    <fo:block font-family="{$typewriterFont}" background-color="{$exampleBackgroundColor}" color="{$exampleColor}" white-space-treatment="preserve" linefeed-treatment="preserve" white-space-collapse="false" wrap-option="no-wrap" text-indent="0em" hyphenate="false" start-indent="{$exampleMargin}" text-align="start" font-size="{$exampleSize}" space-before.optimum="4pt" space-after.optimum="4pt">
+    <block font-family="{$typewriterFont}" background-color="{$exampleBackgroundColor}" color="{$exampleColor}" white-space-treatment="preserve" linefeed-treatment="preserve" white-space-collapse="false" wrap-option="no-wrap" text-indent="0em" hyphenate="false" start-indent="{$exampleMargin}" text-align="start" font-size="{$exampleSize}" space-before.optimum="4pt" space-after.optimum="4pt">
       <xsl:if test="not($flowMarginLeft='')">
         <xsl:attribute name="padding-start">
           <xsl:value-of select="$exampleMargin"/>
         </xsl:attribute>
       </xsl:if>
       <xsl:apply-templates mode="verbatim"/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:eg[@rend='kwic']/lb</xd:short>
@@ -198,77 +208,77 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:emph">
-    <fo:inline font-style="italic">
+    <inline font-style="italic">
       <xsl:apply-templates/>
-    </fo:inline>
+    </inline>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:epigraph</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:epigraph">
-    <fo:block text-align="center" space-before.optimum="4pt" space-after.optimum="4pt" start-indent="{$exampleMargin}">
+    <block text-align="center" space-before.optimum="4pt" space-after.optimum="4pt" start-indent="{$exampleMargin}">
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:epigraph/tei:lg</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:epigraph/tei:lg">
-    <fo:block text-align="center" space-before.optimum="4pt" space-after.optimum="4pt">
+    <block text-align="center" space-before.optimum="4pt" space-after.optimum="4pt">
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:epigraph/tei:q</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:epigraph/tei:q">
-    <fo:block space-before.optimum="4pt" space-after.optimum="4pt" start-indent="{$exampleMargin}">
+    <block space-before.optimum="4pt" space-after.optimum="4pt" start-indent="{$exampleMargin}">
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:foreign</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:foreign">
-    <fo:inline font-style="italic">
+    <inline font-style="italic">
       <xsl:apply-templates/>
-    </fo:inline>
+    </inline>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:gap</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:gap">
-    <fo:inline border-style="solid">
+    <inline border-style="solid">
       <xsl:text>[</xsl:text>
       <xsl:value-of select="@reason"/>
       <xsl:text>]</xsl:text>
-    </fo:inline>
+    </inline>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:gi</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:gi">
-    <fo:inline hyphenate="false" color="{$giColor}" font-family="{$typewriterFont}">
+    <inline hyphenate="false" color="{$giColor}" font-family="{$typewriterFont}">
       <xsl:text>&lt;</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>&gt;</xsl:text>
-    </fo:inline>
+    </inline>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:att</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:att">
-    <fo:inline hyphenate="false" color="{$giColor}" font-family="{$typewriterFont}" font-weight="bold">
+    <inline hyphenate="false" color="{$giColor}" font-family="{$typewriterFont}" font-weight="bold">
       <xsl:text>@</xsl:text>
       <xsl:apply-templates/>
-    </fo:inline>
+    </inline>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:gloss</xd:short>
@@ -282,23 +292,23 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:hi">
-    <fo:inline>
+    <inline>
       <xsl:call-template name="rend">
         <xsl:with-param name="defaultvalue" select="string('bold')"/>
         <xsl:with-param name="defaultstyle" select="string('font-weight')"/>
         <xsl:with-param name="rend" select="@rend"/>
       </xsl:call-template>
       <xsl:apply-templates/>
-    </fo:inline>
+    </inline>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:ident</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:ident">
-    <fo:inline color="{$identColor}" font-family="{$sansFont}">
+    <inline color="{$identColor}" font-family="{$sansFont}">
       <xsl:apply-templates/>
-    </fo:inline>
+    </inline>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:index</xd:short>
@@ -326,27 +336,27 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:item" mode="catalogue">
-    <fo:table-cell>
-      <fo:block>
+    <table-cell>
+      <block>
         <xsl:choose>
           <xsl:when test="tei:label">
-            <fo:inline font-weight="bold">
+            <inline font-weight="bold">
               <xsl:apply-templates select="tei:label" mode="print"/>
-            </fo:inline>
+            </inline>
           </xsl:when>
           <xsl:otherwise>
-            <fo:inline font-weight="bold">
+            <inline font-weight="bold">
               <xsl:apply-templates mode="print" select="preceding-sibling::tei:*[1]"/>
-            </fo:inline>
+            </inline>
           </xsl:otherwise>
         </xsl:choose>
-      </fo:block>
-    </fo:table-cell>
-    <fo:table-cell>
-      <fo:block>
+      </block>
+    </table-cell>
+    <table-cell>
+      <block>
         <xsl:apply-templates/>
-      </fo:block>
-    </fo:table-cell>
+      </block>
+    </table-cell>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:item</xd:short>
@@ -386,16 +396,16 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:kw">
-    <fo:inline font-style="italic">
+    <inline font-style="italic">
       <xsl:apply-templates/>
-    </fo:inline>
+    </inline>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:l</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:l">
-    <fo:block space-before.optimum="0pt" space-after.optimum="0pt">
+    <block space-before.optimum="0pt" space-after.optimum="0pt">
       <xsl:choose>
         <xsl:when test="starts-with(@rend,'indent(')">
           <xsl:attribute name="text-indent">
@@ -407,7 +417,7 @@
         </xsl:when>
       </xsl:choose>
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:label</xd:short>
@@ -434,37 +444,37 @@
 	  -->
           <xsl:when test="$foEngine='passivetex'"> </xsl:when>
 	  <xsl:when test="parent::tei:list">
-	    <fo:list-item>
-	      <fo:list-item-label>
-		<fo:block/>
-	      </fo:list-item-label>
-	      <fo:list-item-body>
-		<fo:block/>
-	      </fo:list-item-body>
-	    </fo:list-item>
+	    <list-item>
+	      <list-item-label>
+		<block/>
+	      </list-item-label>
+	      <list-item-body>
+		<block/>
+	      </list-item-body>
+	    </list-item>
 	  </xsl:when>
           <xsl:otherwise>
-	    <fo:block/>
+	    <block/>
 	    <!--
-	    <fo:inline  linefeed-treatment="preserve"
+	    <inline  linefeed-treatment="preserve"
 			white-space-treatment="preserve" 
 			white-space-collapse="false">
 	      <xsl:text>&#xA;</xsl:text>
-	    </fo:inline>
+	    </inline>
 	    -->
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
-        <fo:inline font-size="8pt">
+        <inline font-size="8pt">
           <xsl:text>❡</xsl:text>
-        </fo:inline>
+        </inline>
       </xsl:otherwise>
     </xsl:choose>
 <!-- JT's suggestion:
-<fo:inline
+<inline
  xml:space="preserve"
- white-space-collapse="false">&#xA;</fo:inline>
+ white-space-collapse="false">&#xA;</inline>
 -->
   </xsl:template>
   <xd:doc>
@@ -473,23 +483,23 @@
   </xd:doc>
   <xsl:template match="tei:list|tei:listBibl">
     <xsl:if test="child::tei:head">
-      <fo:block font-style="italic" text-align="start" space-before.optimum="4pt">
+      <block font-style="italic" text-align="start" space-before.optimum="4pt">
         <xsl:for-each select="tei:head">
           <xsl:apply-templates/>
         </xsl:for-each>
-      </fo:block>
+      </block>
     </xsl:if>
     <xsl:choose>
       <xsl:when test="@type='runin'">
-        <fo:block>
+        <block>
           <xsl:apply-templates mode="runin"/>
-        </fo:block>
+        </block>
       </xsl:when>
       <xsl:otherwise>
-        <fo:list-block>
+        <list-block>
           <xsl:call-template name="setListIndents"/>
           <xsl:apply-templates/>
-        </fo:list-block>
+        </list-block>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -505,62 +515,62 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:list[@type='catalogue']">
-    <fo:block space-before="{$spaceAroundTable}" space-after="{$spaceAroundTable}">
-      <fo:table>
-        <fo:table-column column-number="1" column-width="20%">
+    <block space-before="{$spaceAroundTable}" space-after="{$spaceAroundTable}">
+      <table>
+        <table-column column-number="1" column-width="20%">
           <xsl:if test="$foEngine='passivetex'">
             <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">p</xsl:attribute>
           </xsl:if>
-        </fo:table-column>
-        <fo:table-column column-number="2" column-width="80%">
+        </table-column>
+        <table-column column-number="2" column-width="80%">
         <xsl:if test="$foEngine='passivetex'">
           <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">p</xsl:attribute>
         </xsl:if>
-        </fo:table-column>
-        <fo:table-body>
+        </table-column>
+        <table-body>
           <xsl:for-each select="tei:item">
-            <fo:table-row>
+            <table-row>
               <xsl:apply-templates select="." mode="catalogue"/>
-            </fo:table-row>
+            </table-row>
           </xsl:for-each>
-        </fo:table-body>
-      </fo:table>
-    </fo:block>
+        </table-body>
+      </table>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:lg</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:lg">
-    <fo:block start-indent="{$exampleMargin}" text-align="start" space-before.optimum="4pt" space-after.optimum="4pt">
+    <block start-indent="{$exampleMargin}" text-align="start" space-before.optimum="4pt" space-after.optimum="4pt">
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:mentioned</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:mentioned">
-    <fo:inline>
+    <inline>
       <xsl:call-template name="rend">
         <xsl:with-param name="defaultvalue" select="string('italic')"/>
         <xsl:with-param name="defaultstyle" select="string('font-style')"/>
       </xsl:call-template>
       <xsl:apply-templates/>
-    </fo:inline>
+    </inline>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:milestone</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:milestone">
-    <fo:block>
+    <block>
       <xsl:text>******************</xsl:text>
       <xsl:value-of select="@unit"/>
       <xsl:text> </xsl:text>
       <xsl:value-of select="@n"/>
       <xsl:text>******************</xsl:text>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:name</xd:short>
@@ -574,11 +584,11 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:note" mode="endnote">
-    <fo:block id="{generate-id()}">
+    <block id="{generate-id()}">
       <xsl:call-template name="calculateEndNoteNumber"/>
       <xsl:text>. </xsl:text>
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:note</xd:short>
@@ -590,9 +600,9 @@
         <xsl:apply-templates select="." mode="real"/>
       </xsl:when>
       <xsl:otherwise>
-        <fo:block>
+        <block>
           <xsl:apply-templates select="." mode="real"/>
-        </fo:block>
+        </block>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -603,11 +613,11 @@
   <xsl:template match="tei:note" mode="real">
     <xsl:choose>
       <xsl:when test="@place='end'">
-        <fo:basic-link>
+        <simple-link>
           <xsl:attribute name="internal-destination">
             <xsl:value-of select="generate-id()"/>
           </xsl:attribute>
-          <fo:inline font-size="{$footnotenumSize}" vertical-align="super">
+          <inline font-size="{$footnotenumSize}" vertical-align="super">
             <xsl:choose>
               <xsl:when test="@n">
                 <xsl:value-of select="@n"/>
@@ -616,32 +626,32 @@
                 <xsl:call-template name="calculateEndNoteNumber"/>
               </xsl:otherwise>
             </xsl:choose>
-          </fo:inline>
-        </fo:basic-link>
+          </inline>
+        </simple-link>
       </xsl:when>
       <xsl:when test="@place='inline'">
-        <fo:inline>
+        <inline>
           <xsl:text> (</xsl:text>
           <xsl:apply-templates/>
           <xsl:text>)</xsl:text>
-        </fo:inline>
+        </inline>
       </xsl:when>
       <xsl:when test="@place='display'">
-        <fo:block text-indent="0pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}" font-size="{$exampleSize}" space-before.optimum="{$exampleBefore}" space-after.optimum="{$exampleAfter}">
+        <block text-indent="0pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}" font-size="{$exampleSize}" space-before.optimum="{$exampleBefore}" space-after.optimum="{$exampleAfter}">
           <xsl:apply-templates/>
-        </fo:block>
+        </block>
       </xsl:when>
       <xsl:when test="@place='divtop'">
-        <fo:block text-indent="0pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}" font-style="italic" font-size="{$exampleSize}" space-before.optimum="{$exampleBefore}" space-after.optimum="{$exampleAfter}">
+        <block text-indent="0pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}" font-style="italic" font-size="{$exampleSize}" space-before.optimum="{$exampleBefore}" space-after.optimum="{$exampleAfter}">
           <xsl:apply-templates/>
-        </fo:block>
+        </block>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:choose>
 	  <xsl:when test="parent::tei:item">
-	    <fo:block>
+	    <block>
 	      <xsl:call-template name="makeFootnote"/>
-	    </fo:block>
+	    </block>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:call-template name="makeFootnote"/>
@@ -667,8 +677,8 @@
             </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
-        <fo:footnote>
-          <fo:inline>
+        <footnote>
+          <inline>
             <xsl:if test="not(@target)">
               <xsl:attribute name="font-size">
                 <xsl:value-of select="$footnotenumSize"/>
@@ -676,24 +686,24 @@
               <xsl:attribute name="vertical-align">super</xsl:attribute>
               <xsl:value-of select="$FootID"/>
             </xsl:if>
-          </fo:inline>
-          <fo:footnote-body>
-            <fo:block end-indent="0pt" start-indent="0pt" text-align="start" font-style="normal" text-indent="{$parIndent}" font-size="{$footnoteSize}">
+          </inline>
+          <footnote-body>
+            <block end-indent="0pt" start-indent="0pt" text-align="start" font-style="normal" text-indent="{$parIndent}" font-size="{$footnoteSize}">
               <xsl:if test="@xml:id">
                 <xsl:attribute name="id">
                   <xsl:value-of select="@xml:id"/>
                 </xsl:attribute>
               </xsl:if>
               <xsl:if test="not(@target)">
-                <fo:inline font-size="{$footnotenumSize}" vertical-align="super">
+                <inline font-size="{$footnotenumSize}" vertical-align="super">
                   <xsl:value-of select="$FootID"/>
-                </fo:inline>
+                </inline>
                 <xsl:text> </xsl:text>
               </xsl:if>
               <xsl:apply-templates/>
-            </fo:block>
-          </fo:footnote-body>
-        </fo:footnote>
+            </block>
+          </footnote-body>
+        </footnote>
 </xsl:template>
 
 
@@ -703,7 +713,7 @@
   </xd:doc>
 
   <xsl:template match="tei:p">
-    <fo:block>
+    <block>
       <xsl:if test="preceding-sibling::tei:p">
         <xsl:attribute name="text-indent">
           <xsl:value-of select="$parIndent"/>
@@ -724,52 +734,64 @@
         </xsl:attribute>
       </xsl:if>
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:pb</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:pb">
+    <xsl:variable name="e">
+      <xsl:choose>
+	<xsl:when test="parent::tei:body or parent::tei:front or
+			parent::tei:back or parent::tei:div">
+	  <xsl:text>block</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>inline</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="parent::tei:list"/>
       <xsl:when test="$pagebreakStyle='active'">
-        <fo:block break-before="page">
-          <xsl:if test="@xml:id">
-            <xsl:attribute name="id">
-              <xsl:value-of select="@xml:id"/>
-            </xsl:attribute>
-          </xsl:if>
-        </fo:block>
+	<xsl:element name="{$e}" xmlns="http://www.w3.org/1999/XSL/Format">
+	  <xsl:attribute name="break-before">page</xsl:attribute>
+	  <xsl:if test="@xml:id">
+	    <xsl:attribute name="id">
+	      <xsl:value-of select="@xml:id"/>
+	    </xsl:attribute>
+	  </xsl:if>
+	</xsl:element>
       </xsl:when>
       <xsl:when test="$pagebreakStyle='visible'">
-        <fo:inline>
-          <xsl:if test="@xml:id">
-            <xsl:attribute name="id">
-              <xsl:value-of select="@xml:id"/>
-            </xsl:attribute>
-          </xsl:if>
-          <xsl:text>✁[</xsl:text>
-          <xsl:value-of select="@unit"/>
-          <xsl:text> Page </xsl:text>
-          <xsl:value-of select="@n"/>
-          <xsl:text>]✁</xsl:text>
-        </fo:inline>
+	<xsl:element name="{$e}" xmlns="http://www.w3.org/1999/XSL/Format">
+	  <xsl:if test="@xml:id">
+	    <xsl:attribute name="id">
+	      <xsl:value-of select="@xml:id"/>
+	    </xsl:attribute>
+	  </xsl:if>
+	  <xsl:text>✁[</xsl:text>
+	  <xsl:value-of select="@unit"/>
+	  <xsl:text> Page </xsl:text>
+	  <xsl:value-of select="@n"/>
+	  <xsl:text>]✁</xsl:text>
+	</xsl:element>
       </xsl:when>
-      <xsl:otherwise>
-        <xsl:if test="@xml:id">
-          <xsl:choose>
-            <xsl:when test="parent::tei:p or parent::tei:item">
-              <fo:inline id="{@xml:id}"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <fo:block id="{@xml:id}"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:if>
-      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements  tei:quote</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:quote">
+    <block text-align="start" text-indent="0pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}" font-size="{$exampleSize}" space-before.optimum="{$exampleBefore}" space-after.optimum="{$exampleAfter}">
+      <xsl:apply-templates/>
+    </block>
+  </xsl:template>
+
+
   <xd:doc>
     <xd:short>Process elements  tei:q</xd:short>
     <xd:detail> </xd:detail>
@@ -780,91 +802,91 @@
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="@rend='display' or tei:p or tei:lg">
-        <fo:block text-align="start" text-indent="0pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}" font-size="{$exampleSize}" space-before.optimum="{$exampleBefore}" space-after.optimum="{$exampleAfter}">
+        <block text-align="start" text-indent="0pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}" font-size="{$exampleSize}" space-before.optimum="{$exampleBefore}" space-after.optimum="{$exampleAfter}">
           <xsl:apply-templates/>
-        </fo:block>
+        </block>
       </xsl:when>
       <xsl:when test="@rend='eg'">
-        <fo:block text-align="start" font-size="{$exampleSize}" space-before.optimum="4pt" text-indent="0pt" space-after.optimum="4pt" start-indent="{$exampleMargin}" font-family="{$typewriterFont}">
+        <block text-align="start" font-size="{$exampleSize}" space-before.optimum="4pt" text-indent="0pt" space-after.optimum="4pt" start-indent="{$exampleMargin}" font-family="{$typewriterFont}">
           <xsl:apply-templates/>
-        </fo:block>
+        </block>
       </xsl:when>
       <xsl:when test="@rend = 'qwic'">
-        <fo:block space-before="{$spaceAroundTable}" space-after="{$spaceAroundTable}">
-          <fo:inline-container>
-            <fo:table font-size="{$exampleSize}" font-family="{$typewriterFont}" start-indent="{$exampleMargin}">
-              <fo:table-column column-number="1" column-width="">
+        <block space-before="{$spaceAroundTable}" space-after="{$spaceAroundTable}">
+          <inline-container>
+            <table font-size="{$exampleSize}" font-family="{$typewriterFont}" start-indent="{$exampleMargin}">
+              <table-column column-number="1" column-width="">
                 <xsl:if test="$foEngine='passivetex'">
                   <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">p</xsl:attribute>
                 </xsl:if>
-              </fo:table-column>
-              <fo:table-column column-number="2" column-width="">
+              </table-column>
+              <table-column column-number="2" column-width="">
                 <xsl:if test="$foEngine='passivetex'">
                   <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">l</xsl:attribute>
                 </xsl:if>
-              </fo:table-column>
-              <fo:table-body>
+              </table-column>
+              <table-body>
                 <xsl:for-each select="tei:q">
                   <xsl:for-each select="tei:term">
-                    <fo:table-row>
-                      <fo:table-cell>
-                        <fo:block>
+                    <table-row>
+                      <table-cell>
+                        <block>
                           <xsl:apply-templates select="preceding-sibling::node()"/>
-                        </fo:block>
-                      </fo:table-cell>
-                      <fo:table-cell>
-                        <fo:block>
+                        </block>
+                      </table-cell>
+                      <table-cell>
+                        <block>
                           <xsl:apply-templates/>
                           <xsl:apply-templates select="following-sibling::node()"/>
-                        </fo:block>
-                      </fo:table-cell>
-                    </fo:table-row>
+                        </block>
+                      </table-cell>
+                    </table-row>
                   </xsl:for-each>
                 </xsl:for-each>
-              </fo:table-body>
-            </fo:table>
-          </fo:inline-container>
-        </fo:block>
+              </table-body>
+            </table>
+          </inline-container>
+        </block>
       </xsl:when>
       <xsl:when test="starts-with(@rend,'kwic')">
-        <fo:block space-before="{$spaceAroundTable}" space-after="{$spaceAroundTable}">
-          <fo:inline-container>
-            <fo:table font-size="{$exampleSize}" start-indent="{$exampleMargin}" font-family="{$typewriterFont}">
-              <fo:table-column column-number="1" column-width="">
+        <block space-before="{$spaceAroundTable}" space-after="{$spaceAroundTable}">
+          <inline-container>
+            <table font-size="{$exampleSize}" start-indent="{$exampleMargin}" font-family="{$typewriterFont}">
+              <table-column column-number="1" column-width="">
                 <xsl:if test="$foEngine='passivetex'">
                   <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">r</xsl:attribute>
                 </xsl:if>
-              </fo:table-column>
-              <fo:table-column column-number="2" column-width="">
+              </table-column>
+              <table-column column-number="2" column-width="">
                 <xsl:if test="$foEngine='passivetex'">
                   <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">l</xsl:attribute>
                 </xsl:if>
-              </fo:table-column>
-              <fo:table-body>
+              </table-column>
+              <table-body>
                 <xsl:for-each select="tei:term">
-                  <fo:table-row>
-                    <fo:table-cell>
-                      <fo:block>
+                  <table-row>
+                    <table-cell>
+                      <block>
                         <xsl:value-of select="preceding-sibling::node()[1]"/>
-                      </fo:block>
-                    </fo:table-cell>
-                    <fo:table-cell>
-                      <fo:block>
+                      </block>
+                    </table-cell>
+                    <table-cell>
+                      <block>
                         <xsl:apply-templates/>
                         <xsl:value-of select="following-sibling::node()[1]"/>
-                      </fo:block>
-                    </fo:table-cell>
-                  </fo:table-row>
+                      </block>
+                    </table-cell>
+                  </table-row>
                 </xsl:for-each>
-              </fo:table-body>
-            </fo:table>
-          </fo:inline-container>
-        </fo:block>
+              </table-body>
+            </table>
+          </inline-container>
+        </block>
       </xsl:when>
       <xsl:when test="@rend='literal'">
-        <fo:block white-space-collapse="false" wrap-option="no-wrap" font-size="{$exampleSize}" space-before.optimum="4pt" space-after.optimum="4pt" start-indent="{$exampleMargin}" font-family="{$typewriterFont}">
+        <block white-space-collapse="false" wrap-option="no-wrap" font-size="{$exampleSize}" space-before.optimum="4pt" space-after.optimum="4pt" start-indent="{$exampleMargin}" font-family="{$typewriterFont}">
           <xsl:apply-templates/>
-        </fo:block>
+        </block>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>“</xsl:text>
@@ -878,9 +900,9 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:reg">
-    <fo:inline font-family="{$sansFont}">
+    <inline font-family="{$sansFont}">
       <xsl:apply-templates/>
-    </fo:inline>
+    </inline>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:rs</xd:short>
@@ -901,18 +923,18 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:salute">
-    <fo:block text-align="left">
+    <block text-align="left">
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:seg</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:seg">
-    <fo:block font-family="{$typewriterFont}" background-color="yellow" white-space-collapse="false" wrap-option="no-wrap" text-indent="0em" start-indent="{$exampleMargin}" text-align="start" font-size="{$exampleSize}" padding-before="8pt" padding-after="8pt" space-before.optimum="4pt" space-after.optimum="4pt">
+    <block font-family="{$typewriterFont}" background-color="yellow" white-space-collapse="false" wrap-option="no-wrap" text-indent="0em" start-indent="{$exampleMargin}" text-align="start" font-size="{$exampleSize}" padding-before="8pt" padding-after="8pt" space-before.optimum="4pt" space-after.optimum="4pt">
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:sic</xd:short>
@@ -927,27 +949,27 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:signed">
-    <fo:block text-align="left">
+    <block text-align="left">
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:term</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:term">
-    <fo:inline font-style="italic">
+    <inline font-style="italic">
       <xsl:apply-templates/>
-    </fo:inline>
+    </inline>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:unclear</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:unclear">
-    <fo:inline text-decoration="blink">
+    <inline text-decoration="blink">
       <xsl:apply-templates/>
-    </fo:inline>
+    </inline>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>
@@ -1037,20 +1059,20 @@
 simple, bullets, ordered, gloss, unordered, or bibliography
 -->
     <xsl:variable name="listdepth" select="count(ancestor::tei:list)"/>
-    <fo:list-item>
-      <xsl:if test="not(parent::tei:note[@place='foot' or @place='bottom'])">
+    <list-item>
+      <xsl:if test="not(parent::tei:note[@place='foot' or @place='bottom' ])">
         <xsl:attribute name="space-before.optimum">
           <xsl:value-of select="$listItemsep"/>
         </xsl:attribute>
       </xsl:if>
-      <fo:list-item-label end-indent="label-end()">
+      <list-item-label end-indent="label-end()">
         <xsl:if test="@xml:id">
           <xsl:attribute name="id">
             <xsl:value-of select="@xml:id"/>
           </xsl:attribute>
         </xsl:if>
         <xsl:text>&#10;</xsl:text>
-        <fo:block>
+        <block>
           <xsl:choose>
             <xsl:when test="@n">
               <xsl:attribute name="text-align">end</xsl:attribute>
@@ -1113,9 +1135,9 @@ simple, bullets, ordered, gloss, unordered, or bibliography
               </xsl:choose>
             </xsl:otherwise>
           </xsl:choose>
-        </fo:block>
-      </fo:list-item-label>
-      <fo:list-item-body start-indent="body-start()">
+        </block>
+      </list-item-label>
+      <list-item-body start-indent="body-start()">
 	<xsl:choose>
 	  <xsl:when test="*">
 	    <xsl:for-each select="*">
@@ -1124,21 +1146,21 @@ simple, bullets, ordered, gloss, unordered, or bibliography
 		  <xsl:apply-templates select="."/>
 		</xsl:when>
 		<xsl:otherwise>
-		  <fo:block font-weight="normal">
+		  <block font-weight="normal">
 		    <xsl:apply-templates/>
-		  </fo:block>
+		  </block>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:for-each>
 	  </xsl:when>
         <xsl:otherwise>
-          <fo:block font-weight="normal">
+          <block font-weight="normal">
             <xsl:apply-templates/>
-          </fo:block>
+          </block>
         </xsl:otherwise>
       </xsl:choose>
-      </fo:list-item-body>
-    </fo:list-item>
+      </list-item-body>
+    </list-item>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>
@@ -1249,10 +1271,10 @@ simple, bullets, ordered, gloss, unordered, or bibliography
   <xsl:param name="content"/>
   <xsl:choose>
     <xsl:when test="$class='titlem'">
-      <fo:inline>
+      <inline>
 	<xsl:attribute name="font-style">italic</xsl:attribute>
 	<xsl:copy-of select="$content"/>
-      </fo:inline>
+      </inline>
     </xsl:when>
     <xsl:when test="$class='titlea'">
       <xsl:text>‘</xsl:text>
