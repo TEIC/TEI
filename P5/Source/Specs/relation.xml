@@ -6,7 +6,10 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="relation">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates"
+	     ident="relation"
+    xmlns:s="http://www.ascc.net/xml/schematron" 
+>
     <equiv/>
     <gloss>relationship</gloss>
     <gloss version="2007-12-20" xml:lang="kr">관련성</gloss>
@@ -34,6 +37,13 @@ $Id$
             <rng:ref name="desc"/>
         </rng:optional>
     </content>
+    <constraint> 
+      <s:report test="@active and @mutual">Only one of the attributes
+      'active' and 'mutual' may be supplied</s:report>
+      <s:report test="@passive and not(@active)">the attribute 'passive'
+      may be supplied only if the attribute 'active' is
+      supplied</s:report>
+    </constraint>
     <attList>
         <attDef ident="type">
             <equiv/>

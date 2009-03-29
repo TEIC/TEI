@@ -149,6 +149,7 @@
 		<xsl:value-of select="substring-before(local-name(),'Spec')"/>
 		<xsl:text> </xsl:text>
 		<xsl:value-of select="$name"/>
+		<xsl:text> </xsl:text>
 		<xsl:call-template name="makeGloss">
 		    <xsl:with-param name="langs"
 				    select="$langs"/>
@@ -169,6 +170,7 @@
 		    <xsl:value-of select="substring-before(local-name(),'Spec')"/>
 		    <xsl:text> </xsl:text>
 		    <xsl:value-of select="@ident"/>
+		    <xsl:text> </xsl:text>
 		    <xsl:call-template name="makeGloss">
 		      <xsl:with-param name="langs"
 				      select="$langs"/>

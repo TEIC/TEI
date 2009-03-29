@@ -91,6 +91,7 @@
 		  <ref name="anyTEI"/>
 		  <ref name="macro.schemaPattern"/>
 		  <ref name="mathml.math"/>
+		  <ref name="anySchematron"/>
 		</choice>
 	      </zeroOrMore>
 	    </element>
@@ -124,12 +125,18 @@
 		  <ref name="pattern"/>
 		</oneOrMore>
 	      </choice>
-	      <zeroOrMore>
-		<ref name="anySchematron"/>
-	      </zeroOrMore>
 	    </group>
 	  </content>
 	</macroSpec>
+
+      <elementSpec ident="constraint" mode="change" module="tagdocs">
+	<content>
+	  <rng:ref name="model.headLike"/>
+	  <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	    <ref name="anySchematron"/>
+	  </zeroOrMore>
+	</content>
+      </elementSpec>
 
 	<elementSpec ident="fallback" ns="http://www.example.org/cannot/really/use/XInclude" mode="add">
 	  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">

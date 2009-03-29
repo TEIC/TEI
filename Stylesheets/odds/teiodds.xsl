@@ -1615,47 +1615,9 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="firstLang">
       <xsl:value-of select="substring-before($langs,' ')"/>
     </xsl:variable>
-<!-- first the gloss -->
-    <xsl:choose>
-      <xsl:when test="not(tei:gloss)"/>
-      <xsl:when test="string-length(tei:gloss)=0"/>
-      <xsl:when test="count(tei:gloss)=1 and not(tei:gloss[@xml:lang])">
-        <xsl:text> (</xsl:text>
-	<xsl:apply-templates select="tei:gloss" mode="inLanguage"/>
-        <xsl:text>) </xsl:text>
-      </xsl:when>
-      <xsl:when test="tei:gloss[@xml:lang=$firstLang]">
-        <xsl:if test="not(tei:gloss[@xml:lang=$firstLang]='')">
-          <xsl:text> (</xsl:text>
-	  <xsl:apply-templates select="tei:gloss[@xml:lang=$firstLang]" mode="inLanguage"/>
-          <xsl:text>) </xsl:text>
-        </xsl:if>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:variable name="G">
-          <xsl:for-each select="tei:gloss">
-            <xsl:variable name="currentLang">
-              <xsl:call-template name="findLanguage"/>
-            </xsl:variable>
-            <xsl:if test="contains($langs,concat($currentLang,' '))">
-              <xsl:text>(</xsl:text>
-          	<xsl:apply-templates select="." mode="inLanguage"/>
-              <xsl:text>) </xsl:text>
-            </xsl:if>
-          </xsl:for-each>
-        </xsl:variable>
-        <xsl:choose>
-          <xsl:when test="$G='' and tei:gloss[not(@xml:lang)]">
-            <xsl:text> (</xsl:text>
-	    <xsl:apply-templates select="tei:gloss[not(@xml:lang)]" mode="inLanguage"/>
-            <xsl:text>) </xsl:text>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:copy-of select="$G"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:call-template name="makeGloss">
+      <xsl:with-param name="langs" select="$langs"/>
+    </xsl:call-template>
 <!-- now the description -->
     <xsl:choose>
       <xsl:when test="not(tei:desc)"> </xsl:when>
@@ -1761,6 +1723,55 @@ select="$makeDecls"/></xsl:message>
           </xsl:if>
         </xsl:for-each>
       </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="makeGloss">
+    <xsl:param name="langs"/>
+    <xsl:variable name="firstLang">
+      <xsl:value-of select="substring-before($langs,' ')"/>
+    </xsl:variable>
+
+<!-- first the gloss -->
+    <xsl:choose>
+      <xsl:when test="not(tei:gloss)"/>
+      <xsl:when test="string-length(tei:gloss)=0"/>
+      <xsl:when test="count(tei:gloss)=1 and not(tei:gloss[@xml:lang])">
+        <xsl:text> (</xsl:text>
+	<xsl:apply-templates select="tei:gloss" mode="inLanguage"/>
+        <xsl:text>) </xsl:text>
+      </xsl:when>
+      <xsl:when test="tei:gloss[@xml:lang=$firstLang]">
+        <xsl:if test="not(tei:gloss[@xml:lang=$firstLang]='')">
+          <xsl:text> (</xsl:text>
+	  <xsl:apply-templates select="tei:gloss[@xml:lang=$firstLang]" mode="inLanguage"/>
+          <xsl:text>) </xsl:text>
+        </xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="G">
+          <xsl:for-each select="tei:gloss">
+            <xsl:variable name="currentLang">
+              <xsl:call-template name="findLanguage"/>
+            </xsl:variable>
+            <xsl:if test="contains($langs,concat($currentLang,' '))">
+              <xsl:text>(</xsl:text>
+          	<xsl:apply-templates select="." mode="inLanguage"/>
+              <xsl:text>) </xsl:text>
+            </xsl:if>
+          </xsl:for-each>
+        </xsl:variable>
+        <xsl:choose>
+          <xsl:when test="$G='' and tei:gloss[not(@xml:lang)]">
+            <xsl:text> (</xsl:text>
+	    <xsl:apply-templates select="tei:gloss[not(@xml:lang)]" mode="inLanguage"/>
+            <xsl:text>) </xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy-of select="$G"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
