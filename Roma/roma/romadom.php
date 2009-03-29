@@ -2010,11 +2010,12 @@ class romaDom extends domDocument
 	 }
 	else
 	{
- 	 $oFileDesc = $oXPath->query("/tei:TEI/tei:teiHeader/tei:fileDesc")->item(0);
-	 $oNotes = $oFileDesc->appendChild( new domElement( 'notesStmt' ) );
-	 $oNote = $oNotes->appendChild( new domElement( 'note' ) );
-	 $oNote->setAttribute( 'type', 'ns' );
-	 $oNote->appendChild( new domText( $szNamespace) );
+	  $oFileDesc = $oXPath->query("/tei:TEI/tei:teiHeader/tei:fileDesc")->item(0);
+	  $oSourceDesc = $oXPath->query("/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc")->item(0);
+	  $oNotes = $oFileDesc->insertBefore( new domElement( 'notesStmt' ) ,$oSourceDesc);
+	  $oNote = $oNotes->appendChild( new domElement( 'note' ) );
+	  $oNote->setAttribute( 'type', 'ns' );
+	  $oNote->appendChild( new domText( $szNamespace) );
 	}
       }
 
