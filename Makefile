@@ -183,7 +183,7 @@ valid: check
 #	with grep -v. Note that we discard *all* such messages, even
 #	though fewer than 500 of the 17,576 possible combinations
 #	(i.e. < 3%) are valid codes.
-	 $(JING) -t p5odds.rng ${DRIVER} 
+	$(JING) -t p5odds.rng ${DRIVER} 
 #\
 #	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$"
 	@echo --------- rnv

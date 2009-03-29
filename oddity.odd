@@ -38,6 +38,7 @@
 	      <ref name="pattern"/>
 	      <ref name="include"/>
 	      <ref name="anyAlien"/>
+	      <ref name="anySchematron"/>
 	    </choice>
 	  </oneOrMore>
 	</content>
@@ -86,6 +87,7 @@
 		<ref name="macro.schemaPattern"/>
 		<ref name="mathml.math"/>
 		<ref name="anyAlien"/>
+		<ref name="anySchematron"/>
 		<ref name="include"/>
 	      </choice>
 	    </zeroOrMore>
@@ -105,12 +107,18 @@
 		</choice>
 	      </oneOrMore>
 	    </choice>
-	    <zeroOrMore>
-	      <ref name="anySchematron"/>
-	    </zeroOrMore>
 	  </group>
 	</content>
       </macroSpec>
+
+      <elementSpec ident="constraint" mode="change" module="tagdocs">
+	<content>
+	  <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	    <ref name="anySchematron"/>
+	  </zeroOrMore>
+	</content>
+      </elementSpec>
+
       
       <!-- The goal here is to permit *any* element from the extension
 	   namespace The problem is that we can't do this via

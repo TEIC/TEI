@@ -6,7 +6,10 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TD" n="27">
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TD"
+     n="27"
+    xmlns:s="http://www.ascc.net/xml/schematron" 
+>
 <head>Documentation Elements</head>
 <p>This chapter describes a module which may be used for the
 documentation of the XML elements and element classes which make up
@@ -739,8 +742,106 @@ names. In DTD language, classes are represented by parameter entities
 (<code>%model.headerPart;</code> in the above example); see further
 <ptr target="#ST"/>.</p>
 <!-- more examples needed -->
+
+<p>In addition to the <gi>content</gi> element, a second
+container, <gi>constraint</gi>, is provided where rules about the validity of an element can
+be expressed. This follows the <gi>content</gi> element, and is also
+permitted as a sibling of <gi>datatype</gi> in <gi>attDef</gi>,
+and as a child of <gi>schemaSpec</gi>.  The constraints can be
+expressed in any XML notation may be found useful. The TEI recommends,
+however, the use of ISO Schematron for this purpose.</p>
+
+<p>A complete Schematron document consists of a <gi
+scheme="Schematron">schema</gi> element containing <gi
+scheme="Schematron">ns</gi> and <gi>scheme="Schematron">pattern</gi>
+elements; each pattern specifies a rule and a context. In a normal a
+TEI specification it is expected that <gi scheme="Schematron">ns</gi>
+and <gi scheme="Schematron">pattern</gi> elements will be placed
+wherever suitable for documentation, and extracted into a single
+Schematron schema, or embedded in another schema language. As a
+convenience for readers, however, TEI processors should also support
+the direct placement of Schematron <gi scheme="Schematron">report</gi>
+and <gi scheme="Schematron">assert</gi> elements inside the
+<gi>constraint</gi> component of an <gi>elementSpec</gi>; the <gi
+scheme="Schematron">pattern</gi> and <gi scheme="Schematron">rule</gi>
+containers should then be generated automatically.
+</p>
+
+<p>Constraints are generally used to model local rules which are outside  the scope of
+conventional schema languages. For example, the TEI element
+<gi>relation</gi>
+has a note that
+<q>Only one of the attributes <att>active</att> and
+<att>mutual</att> may be supplied; the attribute <att>passive</att>
+may be supplied only if the attribute <att>active</att> is
+supplied.</q>, which can be written in Schematron as
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<constraint> 
+<s:report test="@active and @mutual">Only one of the attributes
+'active' and 'mutual' may be supplied</s:report>
+<s:report test="@passive and not(@active)">the attribute 'passive'
+may be supplied only if the attribute 'active' is
+supplied</s:report>
+</constraint>
+</egXML>
+</p>
+<p>We may also look at rules to apply to 
+a TEI document which must be rendered into accessible HTML. We can check
+that some sort of content is available from which the <att>alt</att>
+attribute of an HTML <gi scheme="HTML">img</gi> can be created:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<constraint> 
+  <s:pattern name="Alt tags">
+    <s:rule context="tei:figure">
+      <s:report test="not(tei:figDesc or tei:head)"> You should
+      provide information in a figure from which
+      we can construct an alt attribute in HTML </s:report>
+    </s:rule>
+  </s:pattern>
+</constraint>
+</egXML>
+or we might enforce other HTML accessibility rules about tables; note
+here the use of two rules within one pattern:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<constraint>
+  <s:pattern name="Tables">		
+    <s:rule context="tei:table">
+      <s:report test="not(tei:head)">A table should have a
+      caption, using a head element</s:report>
+      <s:assert test="not(parent::tei:body)">Do not use tables to lay out the document body</s:assert>
+    </s:rule>
+  </s:pattern>	
+</constraint>
+</egXML>
+We can also model contextual constraints in Schematron:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<constraint>
+  <s:rule context="tei:div">
+    <s:assert
+	test="not(tei:div) or count(tei:div)&gt;1">a clause must contain
+    at least two subclauses</s:assert>
+  </s:rule>
+</constraint>
+</egXML>
+and base requirements on attribute values:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<constraint>
+  <s:rule context="tei:teiHeader">
+    <s:assert
+	test="tei:fileDesc/tei:titleStmt/tei:title[@type='introductory']">
+      An introductory component of the title is expected
+    </s:assert>
+    <s:assert
+	test="tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
+      An main component of the title is expected
+    </s:assert>
+  </s:rule>
+</constraint>
+</egXML>
+</p>
 </div>
-<div type="div3" xml:id="TDATT"><head>Attribute List Specification</head>
+<div type="div3" xml:id="TDATT">
+<head>Attribute List Specification</head>
 <p>The <gi>attList</gi> element is used to document information about a
 collection of attributes, either within an <gi>elementSpec</gi>, or within a
 <gi>classSpec</gi>.  An attribute list can be organized either as a
@@ -1067,6 +1168,7 @@ see section <ptr target="STEC"/>.-->
 
 <specGrp xml:id="TDSG5" n="Element specification elements">
 &content;
+&constraint;
 &macro.anyXML;
 &macro.schemaPattern;
 &attList;
