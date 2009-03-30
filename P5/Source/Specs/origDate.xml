@@ -6,7 +6,8 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="ORIGDATE" ident="origDate">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+ module="msdescription" xml:id="ORIGDATE" ident="origDate">
   <gloss>origin date</gloss>
   <gloss version="2007-12-20" xml:lang="kr">생성 날짜</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw"/>
@@ -32,7 +33,13 @@ $Id$
     <memberOf key="model.pPart.msdesc"/>
   </classes>
   <content>
-    <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+<rng:zeroOrMore>
+ <rng:choice>
+   <rng:text />
+<rng:ref name="model.gLike"/>
+<rng:ref name="model.hiLike"/>
+</rng:choice>
+  </rng:zeroOrMore>
   </content>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
