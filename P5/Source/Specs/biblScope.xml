@@ -102,6 +102,10 @@
                         ou l'étendue de sélection des pages.</desc>
           <desc version="2007-01-21" xml:lang="it">l'elemento contiene l'indicazione di pagina o pagine</desc>
         </valItem>
+        <valItem ident="ll">
+          <gloss>lines</gloss>
+          <desc>the element contains a line number or line range.</desc>
+        </valItem>
         <valItem ident="chap">
           <gloss>chapter</gloss>
           <gloss version="2007-12-20" xml:lang="kr">장</gloss>
@@ -139,10 +143,29 @@
         <egXML xmlns="http://www.tei-c.org/ns/Examples"/>
       </exemplum>
     </attDef>
+
+    <attDef ident="from">
+      <equiv/>
+      <desc>specifies the starting point of the range of units indicated by the <att>type</att> attribute.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+    </attDef>
+    <attDef ident="to">
+      <equiv/>
+      <desc>specifies the end-point of the range of units indicated by the <att>type</att> attribute.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+    </attDef>
+
+
+
   </attList>
   <exemplum>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <biblScope>pp 12–34</biblScope>
+      <biblScope type="pp" from="12" to="34"/>
       <biblScope type="vol">II</biblScope>
       <biblScope type="pp">12</biblScope>
     </egXML>
