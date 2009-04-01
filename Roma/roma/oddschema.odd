@@ -99,9 +99,16 @@
 	  <element xmlns="http://relaxng.org/ns/structure/1.0"
 		   ns="http://www.tei-c.org/ns/Examples">
 	    <anyName/>
+	    <ref name="att.global.attribute.xmlid"/>
+	    <ref name="att.global.attribute.xmllang"/>
 	    <zeroOrMore>
 	      <attribute>
-		<anyName/>
+		<anyName>
+		  <except>
+		    <name>xml:id</name>
+		    <name>xml:lang</name>
+		  </except>
+		</anyName>
 	      </attribute>
 	    </zeroOrMore>
 	    <zeroOrMore>
@@ -125,7 +132,21 @@
 	  </oneOrMore>
 	</content>
       </elementSpec>
- 
+
+      <classSpec type="atts" ident="att.global" mode="change">
+	<attList>
+	  <attDef ident="xml:id" mode="change">
+	    <datatype>
+	      <rng:data type="string"/>
+	    </datatype>
+	  </attDef>
+	  <attDef ident="xml:lang" mode="change">
+	    <datatype>
+	      <rng:data type="string"/>
+	    </datatype>
+	  </attDef>
+	</attList>
+      </classSpec>
    </schemaSpec>
   </body>
  </text>
