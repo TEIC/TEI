@@ -38,7 +38,7 @@ dtds: check
 	--stringparam documentationLanguage ${DOCUMENTATIONLANGUAGE} \
 	--stringparam TEIC true \
 	${XSL}/odds/odd2dtd.xsl -
-	#for i in DTD/* ; do perl -i Utilities/cleandtd.pl $$i; done	
+	#for i in DTD/* ; do perl -i Utilities-1/cleandtd.pl $$i; done	
 
 schemas:check
 	-mkdir Schema
@@ -60,14 +60,14 @@ schemas:check
 	# convert RelaxNG XML syntax to compact syntax with trang
 	(cd Schema; for i in *rng; do trang $$i `basename $$i .rng`.rnc;done)
 	# improve the positioning of blank lines in the RelaxNG compact syntax output for human readability
-	(for i in Schema/*.rnc; do t=`basename $$i .rnc`.tmp; mv $$i $$t; ./Utilities/fix_rnc_whitespace.perl < $$t > $$i; rm $$t; done)
-	xmllint --noent --xinclude ${DRIVER} | xsltproc Utilities/extract-sch.xsl - > p5.sch
+	(for i in Schema/*.rnc; do t=`basename $$i .rnc`.tmp; mv $$i $$t; ./Utilities-1/fix_rnc_whitespace.perl < $$t > $$i; rm $$t; done)
+	xmllint --noent --xinclude ${DRIVER} | xsltproc Utilities-2/extract-sch.xsl - > p5.sch
 
 html-web: check
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
-		Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
+		Utitilies-1/guidelines.xsl.model > Utilities-1/guidelines.xsl
 	-rm -rf Guidelines-web-tmp
 	-mkdir Guidelines-web-tmp
 	-mkdir Guidelines-web
@@ -83,10 +83,10 @@ html-web: check
 	        --stringparam doclang ${LANGUAGE} \
 		--stringparam googleAnalytics ${GOOGLEANALYTICS} \
 	        --stringparam documentationLanguage ${DOCUMENTATIONLANGUAGE} \
-	    Utilities/guidelines.xsl -
+	    Utitilies-1/guidelines.xsl -
 	mkdir Guidelines-web-tmp/${LANGUAGE}/html/Images
 	cp  ${SOURCETREE}/Images/*.* Guidelines-web-tmp/${LANGUAGE}/html/Images
-	(cd Guidelines-web-tmp/${LANGUAGE}/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done)
+	(cd Guidelines-web-tmp/${LANGUAGE}/html; for i in *.html; do perl -i ../../../Utitilies-1/cleanrnc.pl $$i;done)
 	(cd Guidelines-web-tmp/${LANGUAGE}/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines.css)
 	-rm -rf Guidelines-web/${LANGUAGE}
 	-mv Guidelines-web-tmp/${LANGUAGE} Guidelines-web/${LANGUAGE}
@@ -104,7 +104,7 @@ validate-html:
 html:check subset
 	-rm -rf Guidelines
 	-mkdir Guidelines
-	perl -p -e "s+/usr/share/xml/tei/stylesheet+${XSL}+" Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
+	perl -p -e "s+/usr/share/xml/tei/stylesheet+${XSL}+" Utitilies-1/guidelines.xsl.model > Utilities/guidelines.xsl
 	xsltproc \
 	    --stringparam outputDir Guidelines \
 	    --stringparam localsource `pwd`/p5subset.xml \
@@ -113,11 +113,11 @@ html:check subset
 	    --stringparam lang ${LANGUAGE} \
 	    --stringparam doclang ${LANGUAGE} \
 	    --stringparam documentationLanguage ${LANGUAGE} \
-	    Utilities/guidelines-print.xsl \
+	    Utitilies-1/guidelines-print.xsl \
 	    ${DRIVER} 
 	-cp guidelines.css COPYING.txt  Guidelines
 	-cp -r ${SOURCETREE}/Images Guidelines/
-	(cd Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
+	(cd Guidelines; for i in *.html; do perl -i ../Utitilies-1/cleanrnc.pl $$i;done)
 	(cd Guidelines; perl -p -i -e 's+ xmlns:html="http://www.w3.org/1999/xhtml"++' index.html)
 	-xmllint --noout --valid Guidelines/index.html
 
@@ -132,11 +132,11 @@ xml: check
 	#-rnv Exemplars/teilite.rnc Guidelines.xml
 
 tex: xml
-	xsltproc Utilities/guidelines-latex.xsl Guidelines.xml \
+	xsltproc Utitilies-1/guidelines-latex.xsl Guidelines.xml \
 	> Guidelines.tex
 	for i in Guidelines-REF*tex; \
 	  do \
-	     perl Utilities/rewrapRNC-in-TeX.pl <$$i>$$i.new; \
+	     perl Utitilies-1/rewrapRNC-in-TeX.pl <$$i>$$i.new; \
 		echo NOTE: diff $$i.new $$i; \
 		diff $$i.new $$i; \
 		mv $$i.new $$i; \
@@ -220,7 +220,7 @@ exemplars:
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
 
 split:
-	(mkdir Split; cd Split; xmllint --noent --xinclude  ../${DRIVER} | xsltproc ../Utilities/divsplit.xsl -)
+	(mkdir Split; cd Split; xmllint --noent --xinclude  ../${DRIVER} | xsltproc ../Utitilies-1/divsplit.xsl -)
 
 oddschema: 
 	(cd Exemplars;make names)
@@ -236,7 +236,7 @@ exampleschema:
 
 subset:
 	-xmllint --noent --xinclude ${DRIVER} \
-	 | xsltproc -o p5subset.xml Utilities/subset.xsl - || echo "failed to extract subset from ${DRIVER}." 
+	 | xsltproc -o p5subset.xml Utitilies-1/subset.xsl - || echo "failed to extract subset from ${DRIVER}." 
 
 fascicule: subset
 	find ${LANGTREE} -iname ${CHAP}*.xml
@@ -253,8 +253,8 @@ fascicule: subset
 	--stringparam displayMode rnc \
 	--stringparam lang ${LANGUAGE} \
 	--stringparam outputDir . \
-	Utilities/guidelines.xsl -
-	(cd FASC-${CHAP}-Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
+	Utitilies-1/guidelines.xsl -
+	(cd FASC-${CHAP}-Guidelines; for i in *.html; do perl -i ../Utitilies-1/cleanrnc.pl $$i;done)
 	-cp *.gif guidelines.css FASC-${CHAP}-Guidelines
 	-jing p5odds.rng ${FASCFILE}
 	xsltproc -o FASC-${CHAP}-lite.xml  \
@@ -262,7 +262,7 @@ fascicule: subset
 	  --stringparam displayMode rnc \
 	  --stringparam lang ${LANGUAGE} \
 	  ${XSL}/odds/odd2lite.xsl ${FASCFILE}
-	-perl Utilities/cleanrnc.pl FASC-${CHAP}-lite.xml \
+	-perl Utitilies-1/cleanrnc.pl FASC-${CHAP}-lite.xml \
 	  | xsltproc ${XSL}/teic/teilatex-teic.xsl - > FASC-${CHAP}.tex
 	ln -s Source/Images Images
 	-TEXINPUTS=/TEI/Talks/texconfig: pdflatex FASC-${CHAP} 
@@ -419,13 +419,13 @@ changelog:
 
 catalogue:
 	xsltproc -o catalogue.xml --stringparam DOCUMENTATIONLANG ${DOCUMENTATIONLANGUAGE} \
-	Utilities/catalogue.xsl ${DRIVER}
+	Utitilies-1/catalogue.xsl ${DRIVER}
 	xsltproc --xinclude ${XSL}/html/tei.xsl  catalogue.xml > catalogue.html
 	echo Made catalogue.html
 
 catalogue-print:
 	xsltproc -o catalogue-print.xml --stringparam DOCUMENTATIONLANG ${DOCUMENTATIONLANGUAGE} \
-	Utilities/catalogue-print.xsl ${DRIVER}
+	Utitilies-1/catalogue-print.xsl ${DRIVER}
 
 clean:
 	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~ 

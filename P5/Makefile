@@ -52,20 +52,20 @@ schema-relaxng:
 
 schema-sch:
 	# extract Schematron rules
-	${SAXON} ${DRIVER} Utilities2/extract-sch.xsl > p5.sch
+	${SAXON} ${DRIVER} Utilities/extract-sch.xsl > p5.sch
 
 html-web: check
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
-		Utilities2/guidelines.xsl.model > Utilities2/guidelines.xsl
+		Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
 	-rm -rf Guidelines-web-tmp
 	-mkdir Guidelines-web-tmp
 	-mkdir Guidelines-web
 	echo making HTML Guidelines for language ${LANGUAGE}
 	mkdir -p Guidelines-web-tmp/${LANGUAGE}/html
 	cp -r webnav/* odd.css guidelines.css COPYING.txt guidelines-print.css Guidelines-web-tmp/${LANGUAGE}/html/ 
-	${SAXON} ${DRIVER}  Utilities2/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
+	${SAXON} ${DRIVER}  Utilities/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
 		displayMode=both \
 		pageLayout=CSS \
 	        lang=${LANGUAGE} \
@@ -92,8 +92,8 @@ validate-html:
 html:check subset
 	-rm -rf Guidelines
 	-mkdir Guidelines
-	perl -p -e "s+/usr/share/xml/tei/stylesheet+${XSL}+" Utilities2/guidelines.xsl.model > Utilities2/guidelines.xsl
-	${SAXON} ${DRIVER}  Utilities2/guidelines-print.xsl \
+	perl -p -e "s+/usr/share/xml/tei/stylesheet+${XSL}+" Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
+	${SAXON} ${DRIVER}  Utilities/guidelines-print.xsl \
 	    outputDir=Guidelines \
 	    localsource=`pwd`/p5subset.xml \
 	    STDOUT=false \
@@ -115,7 +115,7 @@ xml: check
 	#-rnv Exemplars/teilite.rnc Guidelines.xml
 
 tex: xml
-	${SAXON} Guidelines.xml Utilities2/guidelines-latex.xsl > Guidelines.tex
+	${SAXON} Guidelines.xml Utilities/guidelines-latex.xsl > Guidelines.tex
 	for i in Guidelines-REF*tex; \
 	  do \
 	     perl Utilities/rewrapRNC-in-TeX.pl <$$i>$$i.new; \
@@ -188,9 +188,9 @@ valid: check
 	@echo --------- Schematron
 	-${JING} p5.sch ${DRIVER} 
 	@echo --------- XSLT validator
-	${SAXON} ${DRIVER} Utilities2/prevalidator.xsl > Utilities2/pointerattributes.xsl
-	${SAXON} ${DRIVER} Utilities2/validator.xsl
-	rm Utilities2/pointerattributes.xsl
+	${SAXON} ${DRIVER} Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
+	${SAXON} ${DRIVER} Utilities/validator.xsl
+	rm Utilities/pointerattributes.xsl
 	@echo --------- xmllint RelaxNG test REMOVED
 #	@xmllint --version
 #	-xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
@@ -214,7 +214,7 @@ exampleschema:
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rng
 
 subset:
-	${SAXON} -o p5subset.xml  ${DRIVER} Utilities2/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
+	${SAXON} -o p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
 
 dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exemplars
 	rm -f release/tei-`cat VERSION`.zip
@@ -234,7 +234,7 @@ dist-source: subset
 	Source/Specs  \
 	Source/Guidelines/en  \
 	Source/Images  \
-	Utilities2   \
+	Utilities   \
 	VERSION  \
 	fasc-head.xml \
 	fasc-tail.xml \
@@ -364,12 +364,12 @@ changelog:
 
 
 catalogue:
-	${SAXON} -o catalogue.xml ${DRIVER}  Utilities2/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} 
+	${SAXON} -o catalogue.xml ${DRIVER}  Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} 
 	${SAXON} catalogue.xml ${XSL}/xhtml2/tei.xsl > catalogue.html
 	echo Made catalogue.html
 
 catalogue-print:
-	${SAXON} -o catalogue.xml ${DRIVER}  Utilities2/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} 
+	${SAXON} -o catalogue.xml ${DRIVER}  Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} 
 
 clean:
 	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~ 
