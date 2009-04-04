@@ -8,7 +8,9 @@ $Id: content.xml 5474 2009-01-23 08:18:40Z ge8 $
 -->
 <elementSpec 
     xmlns:s="http://www.ascc.net/xml/schematron" 
-    xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="constraint">
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+    xmlns="http://www.tei-c.org/ns/1.0" 
+    xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="constraint">
   <gloss>constraint on schema</gloss>
   <desc>contains  a constraint, expressed in an XML syntax,
   which cannot be expressed in the structural content model</desc>
@@ -20,15 +22,31 @@ $Id: content.xml 5474 2009-01-23 08:18:40Z ge8 $
        <rng:ref name="macro.anyXML"/>
      </rng:zeroOrMore>
   </content>
+  <constraintList scheme="isoschematron">
+    <constraint ident="sch">
+      <sch:report test="s:* and
+		      not(parent::tei:constraintList/@scheme='schematron')">
+	Rules in the schematron language must be inside
+	a constraintList with a value of 'schematron' on the scheme attribute
+      </sch:report>
+    </constraint>
+    <constraint ident="isosch">
+      <sch:report test="isosch:* and
+		      not(parent::tei:constraintList/@scheme='isoschematron')">
+	Rules in the ISO Schematron language must be inside
+	a constraintList with a value of 'isoschematron' on the scheme attribute
+      </sch:report>
+    </constraint>
+  </constraintList>
   <exemplum>
     <p>This constraint uses Schematron to enforce the presence of the
     <att>spanTo</att> attribute (which comes from an attribute class)
     on the <gi>addSpan</gi> element: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <constraintList scheme="schematron">
+      <constraintList scheme="isoschematron">
 	<constraint ident="demo-c1">
-	  <s:assert test="@spanTo">The spanTo= attribute of <s:name/>
-	  is required.</s:assert>
+	  <sch:assert test="@spanTo">The spanTo= attribute of <sch:name/>
+	  is required.</sch:assert>
 	</constraint>
       </constraintList>
     </egXML>
@@ -39,11 +57,11 @@ $Id: content.xml 5474 2009-01-23 08:18:40Z ge8 $
     implementing an accessibility rule which says that pictures should
     have textual explanations: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <constraintList scheme="schematron">
+      <constraintList scheme="isoschematron">
 	<constraint ident="demo-c2">
-	  <s:report test="not(tei:figDesc or tei:head)"> You should
+	  <sch:report test="not(tei:figDesc or tei:head)"> You should
 	  provide information in a figure from which
-	  we can construct an alt attribute in HTML </s:report>
+	  we can construct an alt attribute in HTML </sch:report>
 	</constraint>
       </constraintList>
     </egXML>
