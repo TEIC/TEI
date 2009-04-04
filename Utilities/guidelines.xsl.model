@@ -16,7 +16,11 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-  <xsl:import href="http://www.tei-c.org/release/xml/tei/stylesheet/odds2/odd2html.xsl"/>
+  <xsl:import
+      href="http://www.tei-c.org/release/xml/tei/stylesheet/odds2/odd2html.xsl"/>
+
+  <xsl:key name="EXAMPLES" match="teix:*" use="local-name()"/>
+
   <xsl:key name="HEADS" match="tei:head"
 	   use="concat(@xml:lang,@corresp)"/>
 
@@ -45,8 +49,129 @@
   <xsl:key name="BACKLINKS" match="tei:ptr[@type='cit']"
 	 use="substring-after(@target,'#')"/>
 
-
   <xsl:template name="copyrightStatement">Copyright TEI Consortium 2007</xsl:template>
+
+  <xsl:template match="/">
+    <xsl:apply-imports/>
+    <xsl:for-each select="key('ELEMENTDOCS',1)">
+      <xsl:variable name="me" select="@ident"/>
+      <xsl:variable name="documentationLanguage">
+	<xsl:call-template name="generateDoc"/>
+      </xsl:variable>
+      <xsl:variable name="langs">
+	<xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>
+      </xsl:variable>
+      <xsl:message>Examples for <xsl:value-of select="$me"/></xsl:message>
+      <xsl:result-document doctype-public="{$doctypePublic}"
+			   doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+			   href="{$outputDir}/examples-{$me}.html" method="{$outputMethod}">
+	<html>
+	  <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (98) </xsl:comment>
+	  <head>
+	    <title>
+	      <xsl:text>Examples for use of </xsl:text>
+	      <xsl:value-of select="$me"/>
+	      <xsl:text> </xsl:text>
+	      <xsl:call-template name="makeGloss">
+		<xsl:with-param name="langs"
+				select="$langs"/>
+	      </xsl:call-template>
+	    </title>
+	    <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
+	    <xsl:if test="not($cssSecondaryFile = '')">
+	      <link href="{$cssSecondaryFile}" rel="stylesheet"
+		    type="text/css"/>
+	    </xsl:if>
+	    <meta
+	    content="Text Encoding Initiative Consortium XSLT stylesheets"
+	    name="generator"/>
+	<meta name="DC.Title">
+	  <xsl:attribute name="content">
+	  <xsl:text>Examples for use of </xsl:text>
+	  <xsl:value-of select="@ident"/>
+	  <xsl:text> </xsl:text>
+	  <xsl:call-template name="makeGloss">
+	    <xsl:with-param name="langs"
+			    select="$langs"/>
+	  </xsl:call-template>
+	  </xsl:attribute>
+	</meta>
+	<meta content="application/xhtml+xml; charset=utf-8"
+	      http-equiv="Content-Type"/>
+	<script type="text/javascript">
+	</script>
+      </head>
+      <body id="TOP">
+	<xsl:call-template name="teiTOP">
+	  <xsl:with-param name="name">
+	    <xsl:text>Examples for use of </xsl:text>
+	    <xsl:value-of select="$me"/>
+	    <xsl:text> </xsl:text>
+	    <xsl:call-template name="makeGloss">
+	      <xsl:with-param name="langs"
+			      select="$langs"/>
+	    </xsl:call-template>
+	  </xsl:with-param>
+	</xsl:call-template>
+	<div class="main-content">
+	  <xsl:call-template name="startDivHook"/>
+	  <h3>
+	    <xsl:text>Examples for use of </xsl:text>
+	    <xsl:value-of select="@ident"/>
+	    <xsl:text> </xsl:text>
+	    <xsl:call-template name="makeGloss">
+	      <xsl:with-param name="langs"
+			      select="$langs"/>
+	    </xsl:call-template>
+	  </h3>
+	  <xsl:for-each select="key('EXAMPLES',$me)">
+	    <xsl:sort
+		select="local-name(ancestor::teix:egXML[1]/*[1])"/>
+	    <hr/>
+	    <p>
+	      <xsl:choose>
+		<xsl:when test="ancestor::tei:elementSpec">
+		  <a
+		      href="ref-{ancestor::tei:elementSpec/@ident}.html">
+		    <xsl:value-of
+			select="ancestor::tei:elementSpec/@ident"/>
+		  </a>
+		</xsl:when>
+		<xsl:when test="ancestor::tei:classSpec">
+		  <a
+		      href="ref-{ancestor::tei:classSpec/@ident}.html">
+		    <xsl:value-of
+			select="ancestor::tei:classSpec/@ident"/>
+		  </a>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:for-each select="ancestor::tei:div[@xml:id and tei:head][1]">
+		    <a>
+		      <xsl:attribute name="href">
+			<xsl:apply-templates select="." mode="generateLink"/>
+		      </xsl:attribute>
+		      <xsl:value-of select="tei:head"/>
+		    </a>
+		  </xsl:for-each>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </p>
+	    <xsl:apply-templates select="ancestor::teix:egXML">
+	      <xsl:with-param name="simple">true</xsl:with-param>
+	    </xsl:apply-templates>
+	  </xsl:for-each>
+	</div>
+	<xsl:call-template name="stdfooter">
+	  <xsl:with-param name="file">
+	    <xsl:text>ref-</xsl:text>
+	    <xsl:value-of select="$me"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </body>
+    </html>
+  </xsl:result-document>
+  </xsl:for-each>
+  </xsl:template>
 
   <xsl:template name="metaHTML">
     <xsl:param name="title"/>
@@ -711,6 +836,9 @@
 	</a>
     </div>
   </xsl:if>
+  <xsl:for-each select="ancestor::tei:elementSpec">
+    <p><a href="examples-{@ident}.html">Catalogue of examples</a></p>
+  </xsl:for-each>
 </xsl:template>
 
 

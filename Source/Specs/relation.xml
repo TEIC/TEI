@@ -37,13 +37,17 @@ $Id$
             <rng:ref name="desc"/>
         </rng:optional>
     </content>
-    <constraint> 
-      <s:report test="@active and @mutual">Only one of the attributes
-      'active' and 'mutual' may be supplied</s:report>
-      <s:report test="@passive and not(@active)">the attribute 'passive'
-      may be supplied only if the attribute 'active' is
-      supplied</s:report>
-    </constraint>
+    <constraintList scheme="schematron">
+      <constraint ident="activemutual">
+	<s:report test="@active and @mutual">Only one of the attributes
+	'active' and 'mutual' may be supplied</s:report>
+      </constraint>
+      <constraint ident="activepassive">
+	<s:report test="@passive and not(@active)">the attribute 'passive'
+	may be supplied only if the attribute 'active' is
+	supplied</s:report>
+      </constraint>
+    </constraintList>
     <attList>
         <attDef ident="type">
             <equiv/>
