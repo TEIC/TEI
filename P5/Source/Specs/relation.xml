@@ -8,7 +8,7 @@ $Id$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates"
 	     ident="relation"
-    xmlns:s="http://www.ascc.net/xml/schematron" 
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
 >
     <equiv/>
     <gloss>relationship</gloss>
@@ -37,15 +37,15 @@ $Id$
             <rng:ref name="desc"/>
         </rng:optional>
     </content>
-    <constraintList scheme="schematron">
+    <constraintList scheme="isoschematron">
       <constraint ident="activemutual">
-	<s:report test="@active and @mutual">Only one of the attributes
-	'active' and 'mutual' may be supplied</s:report>
+	<sch:report test="@active and @mutual">Only one of the attributes
+	'active' and 'mutual' may be supplied</sch:report>
       </constraint>
       <constraint ident="activepassive">
-	<s:report test="@passive and not(@active)">the attribute 'passive'
+	<sch:report test="@passive and not(@active)">the attribute 'passive'
 	may be supplied only if the attribute 'active' is
-	supplied</s:report>
+	supplied</sch:report>
       </constraint>
     </constraintList>
     <attList>

@@ -8,7 +8,8 @@ $Id$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr"
 	     ident="addSpan"
- xmlns:s="http://www.ascc.net/xml/schematron" >
+    xmlns:s="http://www.ascc.net/xml/schematron" 
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <gloss>added span of text</gloss>
   <gloss version="2007-12-20" xml:lang="kr">텍스트 추가 구간</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw">加入的文字段</gloss>
@@ -40,9 +41,9 @@ $Id$
   <content>
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
   </content>
-  <constraintList scheme="schematron">
+  <constraintList scheme="isoschematron">
     <constraint ident="spanTo">
-      <s:assert test="@spanTo">The spanTo= attribute of <s:name/> is required.</s:assert>
+      <sch:assert test="@spanTo">The spanTo= attribute of <sch:name/> is required.</sch:assert>
     </constraint>
   </constraintList>
   <exemplum>

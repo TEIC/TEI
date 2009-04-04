@@ -10,7 +10,7 @@ XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--dochtml --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER} --xsl=${XSL}
 
 schemas: names
-	for i in $(ODDS); do echo Process $$i; ${BIN}/roma ${ROMAOPTS} $$i.odd .; done
+	for i in $(ODDS); do echo Process $$i; ${BIN}/roma2 ${ROMAOPTS} $$i.odd .; done
 	-rm tei_odds.dtd tei_odds.xsd
 	-rm tei_allPlus.dtd tei_allPlus.xsd
 	-rm tei_svg.dtd tei_svg.xsd
@@ -19,8 +19,8 @@ schemas: names
 	-rm tei_xinclude.dtd tei_xinclude.xsd
 
 names:
-	xsltproc ../Utilities/makenames.xsl  ../Source/Guidelines/${LANGUAGE}/${DRIVER} > names.xml
-	xsltproc ../Utilities/makeexnames.xsl  ../Source/Guidelines/${LANGUAGE}/${DRIVER} > exnames.xml
+	saxon -o names.xml ../Source/Guidelines/${LANGUAGE}/${DRIVER} ../Utilities/makenames.xsl  
+	saxon -o exnames.xml ../Source/Guidelines/${LANGUAGE}/${DRIVER} ../Utilities/makeexnames.xsl  
 	xmllint --xinclude tei_odds.odd.pre > tei_odds.odd
 	xmllint --xinclude tei_allPlus.odd.pre > tei_allPlus.odd
 

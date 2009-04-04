@@ -2,7 +2,7 @@
 <TEI xml:lang="en"  
      xmlns="http://www.tei-c.org/ns/1.0"
      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-     xmlns:s="http://www.ascc.net/xml/schematron" 
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
      n="testconstraint"
      xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
@@ -51,22 +51,22 @@
 	  </constraint>
 	</constraintList>
 
-	<constraintList  scheme="schematron">
+	<constraintList  scheme="isoschematron">
 	  <constraint mode="add" ident="c1">
-	    <s:report test="tei:list"> 
-	    lists inside paragraphs not supported </s:report>
+	    <sch:report test="tei:list"> 
+	    lists inside paragraphs not supported </sch:report>
 	  </constraint>
 	  <constraint mode="add" ident="c2">
-	    <s:rule context="tei:p|tei:q">
-	      <s:report test="contains(@rend,' ')"> 
-	      multi-valued rend is not supported </s:report>
-	    </s:rule>
+	    <sch:rule context="tei:p|tei:q">
+	      <sch:report test="contains(@rend,' ')"> 
+	      multi-valued rend is not supported </sch:report>
+	    </sch:rule>
 	  </constraint>
 	</constraintList>
       </elementSpec>
 
       <elementSpec ident="relation" mode="change">
-	<constraintList  scheme="schematron">
+	<constraintList  scheme="isoschematron">
 	 <constraint ident="activepassive" mode="delete"/> 
 	</constraintList>
       </elementSpec>
