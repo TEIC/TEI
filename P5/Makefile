@@ -53,6 +53,7 @@ schema-relaxng:
 schema-sch:
 	# extract Schematron rules
 	${SAXON} ${DRIVER} Utilities/extract-sch.xsl > p5.sch
+	${SAXON} ${DRIVER} Utilities/extract-isosch.xsl > p5.isosch
 
 html-web: check
 	perl -p -e \
