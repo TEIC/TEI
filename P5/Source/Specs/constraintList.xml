@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date: 2009-01-23 08:18:40 +0000 (Fri, 23 Jan 2009) $
+$Id: content.xml 5474 2009-01-23 08:18:40Z ge8 $
+-->
+<elementSpec 
+    xmlns:s="http://www.ascc.net/xml/schematron" 
+    xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="constraintList">
+  <desc>contains a collection of constraints on use of the schema</desc>
+  <content>
+    <rng:group>
+     <rng:oneOrMore>
+       <rng:ref name="constraint"/>
+     </rng:oneOrMore>
+    </rng:group>
+  </content>
+  <attList>
+    <attDef ident="scheme">
+      <equiv/>
+      <desc>supplies the name of the language in which the constraints
+      are defined</desc>
+      <valList type="closed">
+        <valItem ident="schematron">
+          <gloss>Schematron</gloss>
+	</valItem>
+        <valItem ident="xsl">
+          <gloss>XSLT</gloss>
+	</valItem>
+        <valItem ident="private">
+          <gloss>private constraint language</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <listRef>
+    <ptr target="#TDTAG"/>
+  </listRef>
+</elementSpec>

@@ -9,43 +9,43 @@ $Id: content.xml 5474 2009-01-23 08:18:40Z ge8 $
 <elementSpec 
     xmlns:s="http://www.ascc.net/xml/schematron" 
     xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="constraint">
-  <gloss>constraints on schema</gloss>
-  <desc>contains constraints, expressed in an XML syntax,
+  <gloss>constraint on schema</gloss>
+  <desc>contains  a constraint, expressed in an XML syntax,
   which cannot be expressed in the structural content model</desc>
+  <classes>
+    <memberOf key="att.identified"/>
+  </classes>
   <content>
-       <rng:ref name="macro.anyXML"/>
-  </content>
-<!--
-    <rng:group>
-     <rng:ref name="model.headLike"/>
      <rng:zeroOrMore>
        <rng:ref name="macro.anyXML"/>
      </rng:zeroOrMore>
-    </rng:group>
-  </content>-->
+  </content>
   <exemplum>
     <p>This constraint uses Schematron to enforce the presence of the
     <att>spanTo</att> attribute (which comes from an attribute class)
     on the <gi>addSpan</gi> element: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <constraint>
+      <constraintList scheme="schematron">
+	<constraint ident="demo-c1">
 	  <s:assert test="@spanTo">The spanTo= attribute of <s:name/>
 	  is required.</s:assert>
-      </constraint>
+	</constraint>
+      </constraintList>
     </egXML>
   </exemplum>
-<exemplum>
+  <exemplum>
     <p>This constraint uses Schematron to check whether a
     <gi>figure</gi> element has either a title or a description, 
     implementing an accessibility rule which says that pictures should
     have textual explanations: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <constraint>
-	<head>Alt tags for figures</head>
-	<s:report test="not(tei:figDesc or tei:head)"> You should
+      <constraintList scheme="schematron">
+	<constraint ident="demo-c2">
+	  <s:report test="not(tei:figDesc or tei:head)"> You should
 	  provide information in a figure from which
 	  we can construct an alt attribute in HTML </s:report>
-      </constraint>
+	</constraint>
+      </constraintList>
     </egXML>
   </exemplum>
   <listRef>
