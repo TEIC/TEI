@@ -349,6 +349,7 @@
   </xd:doc>
   <xsl:template match="teix:egXML">
     <xsl:param name="simple">false</xsl:param>
+    <xsl:param name="highlight"></xsl:param>
     <div id="{generate-id()}">
       <xsl:attribute name="class">
 	<xsl:text>pre</xsl:text>
@@ -358,10 +359,19 @@
       </xsl:attribute>
       <xsl:choose>
 	<xsl:when test="$simple='true'">
-	  <xsl:apply-templates mode="verbatim"/>
+	  <xsl:apply-templates mode="verbatim">
+	    <xsl:with-param name="highlight">
+	      <xsl:value-of select="$highlight"/>
+	    </xsl:with-param>
+	  </xsl:apply-templates>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:call-template name="egXMLStartHook"/>
+	  <xsl:apply-templates mode="verbatim">
+	    <xsl:with-param name="highlight">
+	      <xsl:value-of select="$highlight"/>
+	    </xsl:with-param>
+	  </xsl:apply-templates>
 	  <xsl:call-template name="egXMLEndHook"/>
 	</xsl:otherwise>
       </xsl:choose>

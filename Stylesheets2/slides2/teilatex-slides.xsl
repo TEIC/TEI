@@ -254,33 +254,32 @@ XSL LaTeX stylesheet to make slides
   </xsl:template>
 
   <xsl:template match="teix:egXML">
-\bgroup\ttfamily\fontsize{9pt}{9pt}\selectfont\par
+    <xsl:param name="simple">false</xsl:param>
+    <xsl:param name="highlight"></xsl:param>
+    <xsl:variable name="fontsize">
+    <xsl:choose>
+      <xsl:when test="@rend='teeny'">
+	<xsl:text>{5.5pt}{6pt}</xsl:text>
+      </xsl:when>
+      <xsl:when test="@rend='tiny'">
+	<xsl:text>{6.5pt}{7pt}</xsl:text>
+      </xsl:when>
+      <xsl:when test="@rend='small'">
+	<xsl:text>{7.5pt}{8pt}</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>{8.5pt}{9pt}</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+    </xsl:variable>
+\bgroup\ttfamily\fontsize<xsl:value-of select="$fontsize"/>\selectfont\par
 \begin{exampleblock}{}
-\noindent\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
-\end{exampleblock}
-\par\egroup
-  </xsl:template>
-
-  <xsl:template match="teix:egXML[@rend='small']">
-\bgroup\ttfamily\fontsize{7.5pt}{8pt}\selectfont\par
-\begin{exampleblock}{}
-\noindent\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
-\end{exampleblock}
-\par\egroup
-  </xsl:template>
-
-  <xsl:template match="teix:egXML[@rend='teeny']">
-\bgroup\ttfamily\fontsize{5pt}{5.5pt}\selectfont\par
-\begin{exampleblock}{}
-\noindent\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
-\end{exampleblock}
-\par\egroup
-  </xsl:template>
-
-  <xsl:template match="teix:egXML[@rend='tiny']">
-\bgroup\ttfamily\fontsize{6.5pt}{7pt}\selectfont\par
-\begin{exampleblock}{}
-\noindent\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
+<xsl:text>\noindent\ttfamily\mbox{}</xsl:text>
+<xsl:apply-templates mode="verbatim">
+  <xsl:with-param name="highlight">
+    <xsl:value-of select="$highlight"/>
+  </xsl:with-param>
+</xsl:apply-templates>
 \end{exampleblock}
 \par\egroup
   </xsl:template>

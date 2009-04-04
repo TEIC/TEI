@@ -1197,6 +1197,8 @@ is there a number present?
         Handle examples
     -->
     <xsl:template match="teix:egXML">
+    <xsl:param name="simple">false</xsl:param>
+    <xsl:param name="highlight"></xsl:param>
         <xsl:call-template name="block-element">
             <xsl:with-param name="style">
 	    <xsl:choose>

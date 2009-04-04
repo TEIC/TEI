@@ -840,7 +840,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
 
-    <xsl:apply-templates select="tei:constraint"/>
+    <xsl:apply-templates select="tei:constraintList"/>
 
   </xsl:template>
 
@@ -1659,7 +1659,7 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template name="inhnamespace"/>
 
-  <xsl:template match="tei:constraint">
+  <xsl:template match="tei:constraintList">
   </xsl:template>
 
   <xsl:template match="tei:altIdent"/>
@@ -2000,36 +2000,31 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
   <xsl:template name="processSchematron">
-	<xsl:choose>
-	  <xsl:when test="ancestor::teix:egXML"/>
-	  <xsl:when test="self::s:ns">
+    <xsl:choose>
+      <xsl:when test="ancestor::teix:egXML"/>
+      <xsl:when test="self::s:ns">
+	<xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="self::s:pattern">
+	<xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="self::s:rule">
+	<s:pattern  name="{ancestor::tei:elementSpec/@ident}-constraint-{parent::tei:constraint/@ident}">
+	  <xsl:copy-of select="."/>
+	</s:pattern>
+      </xsl:when>
+      <xsl:when test="(self::s:report or self::s:assert) and ancestor::tei:elementSpec">
+	<s:pattern name="{ancestor::tei:elementSpec/@ident}-constraint-{parent::tei:constraint/@ident}">
+	  <rule xmlns="http://www.ascc.net/xml/schematron">
+	    <xsl:attribute name="context">
+	      <xsl:text>tei:</xsl:text>
+	      <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+	    </xsl:attribute>
 	    <xsl:copy-of select="."/>
-	  </xsl:when>
-	  <xsl:when test="self::s:pattern">
-	    <xsl:copy-of select="."/>
-	  </xsl:when>
-	  <xsl:when test="(self::s:report or self::s:assert) and ancestor::tei:elementSpec">
-	    <pattern xmlns="http://www.ascc.net/xml/schematron">
-	      <xsl:attribute name="name">
-		<xsl:choose>
-		  <xsl:when test="tei:head">
-		    <xsl:value-of select="tei:head"/>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <xsl:value-of select="generate-id()"/>
-		  </xsl:otherwise>
-		</xsl:choose>
-	      </xsl:attribute>
-	      <rule xmlns="http://www.ascc.net/xml/schematron">
-		<xsl:attribute name="context">
-		  <xsl:text>tei:</xsl:text>
-		  <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
-		</xsl:attribute>
-		<xsl:copy-of select="."/>
-	      </rule>
-	    </pattern>
-	  </xsl:when>
-	</xsl:choose>
+	  </rule>
+	</s:pattern>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="bitOut">

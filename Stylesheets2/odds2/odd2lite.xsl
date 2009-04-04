@@ -65,6 +65,8 @@
   </xsl:template>
 
   <xsl:template match="teix:egXML">
+    <xsl:param name="simple">false</xsl:param>
+    <xsl:param name="highlight"></xsl:param>
     <xsl:copy>
       <xsl:if test="not(@xml:lang)">
 	<xsl:copy-of select="parent::tei:*/@xml:lang"/>

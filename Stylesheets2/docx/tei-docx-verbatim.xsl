@@ -74,6 +74,7 @@
     
     <xsl:template name="verbatim-createElement">
         <xsl:param name="name"/>
+        <xsl:param name="special"/>
         <tei:hi rend="bold">
             <xsl:value-of select="$name"/>
         </tei:hi>

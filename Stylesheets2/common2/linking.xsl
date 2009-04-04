@@ -110,7 +110,6 @@
       <xsl:with-param name="text">
     <xsl:choose>
       <xsl:when test="local-name(.) = 'TEI'"/>
-      <xsl:when test="local-name(.) = 'TEI.2'"/>
       <xsl:when test="$depth &gt; $numberHeadingsDepth"> </xsl:when>
       <xsl:when test="ancestor::tei:back">
         <xsl:if test="not($numberBackHeadings='')">
@@ -151,7 +150,7 @@
     </xsl:call-template>
     <xsl:if test="$minimal='false'">
       <xsl:choose>
-        <xsl:when test="local-name(.) = 'TEI' or local-name(.)='TEI.2'">
+        <xsl:when test="local-name(.) = 'TEI'">
           <xsl:apply-templates
             select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]"/>
         </xsl:when>

@@ -109,7 +109,7 @@ $splitLevel: -1 to 3
 
 $requestedID: requests a particular page
 -->
-      <!-- we are making a composite layout and there is a TEI(2) element -->
+      <!-- we are making a composite layout and there is a TEI or teiCorpus element -->
       <xsl:when
         test="($pageLayout = 'CSS' or $pageLayout = 'Table') and (tei:TEI or tei:teiCorpus)">
         <xsl:if test="$verbose='true'">

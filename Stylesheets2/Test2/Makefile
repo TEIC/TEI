@@ -1,5 +1,5 @@
 VERSION=`cat ../VERSION`
-default: test test4 test3 test5
+default: test test3 test4 test5 test6
 
 test:
 	saxon -o dummy  test.xml ../xhtml2/tei.xsl verbose=true 
@@ -27,9 +27,13 @@ test5:
 	saxon -o test5.fo test5.xml ../fo2/tei.xsl
 	-diff test5.fo ok/test5.fo
 
+test6:
+	saxon -o test6.tex test6.xml ../slides2/teilatex-slides.xsl 
+	saxon  test6.xml ../slides2/teihtml-slides.xsl 
+
 odd:
 	saxon testdrama.odd ../odds2/odd2odd.xsl \
 	TEIC=true localsource=`pwd`/p5subset.xml > testdrama.compiled.xml
 
 clean:
-	-rm test5.tex test5.fo *.html *.xhtml *~ dummy*
+	-rm test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy*

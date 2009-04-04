@@ -127,6 +127,8 @@
   </xsl:template>
 
   <xsl:template name="xrefpanel">
+    <xsl:param name="homepage"/>
+    <xsl:param name="mode"/>
     <xsl:variable name="first"><xsl:value-of select="$masterFile"/>0</xsl:variable>
     <xsl:variable name="prev">
       <xsl:choose>
@@ -473,9 +475,16 @@
 	</tr>
   </xsl:template>
 
-    <xsl:template match="teix:egXML">
+  <xsl:template match="teix:egXML">
+    <xsl:param name="simple">false</xsl:param>
+    <xsl:param name="highlight"></xsl:param>
+    
       <div class="pre">
-	<xsl:apply-templates mode="verbatim"/>
+	<xsl:apply-templates mode="verbatim">
+	  <xsl:with-param name="highlight">
+	    <xsl:value-of select="$highlight"/>
+	  </xsl:with-param>
+	</xsl:apply-templates>
       </div>
   </xsl:template>
 

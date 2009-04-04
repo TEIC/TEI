@@ -466,6 +466,7 @@
   </xsl:template>
 
   <xsl:template name="verbatim-createElement">
+    <xsl:param name="special"/>
     <xsl:param name="name"/>
     <xsl:value-of select="$name"/>
   </xsl:template>
@@ -495,25 +496,30 @@
       <xsl:when test="namespace-uri()='http://www.tei-c.org/ns/Examples'">
         <xsl:call-template name="verbatim-createElement">
           <xsl:with-param name="name" select="local-name(.)"/>
+          <xsl:with-param name="special"/>
         </xsl:call-template>
       </xsl:when>
 
 
       <xsl:when test="string-length($ns-prefix) &gt; 0">
         <xsl:call-template name="verbatim-createElement">
-          <xsl:with-param name="name" select="concat($ns-prefix,':',local-name(.))"/>
+          <xsl:with-param name="name"
+			  select="concat($ns-prefix,':',local-name(.))"/>
+          <xsl:with-param name="special"/>
         </xsl:call-template>
       </xsl:when>
 
      <xsl:when test="$ns-parent=$ns">
         <xsl:call-template name="verbatim-createElement">
           <xsl:with-param name="name" select="local-name(.)"/>
+          <xsl:with-param name="special"/>
         </xsl:call-template>
       </xsl:when>
 
       <xsl:when test="not($ns='')">
         <xsl:call-template name="verbatim-createElement">
           <xsl:with-param name="name" select="local-name(.)"/>
+          <xsl:with-param name="special"/>
         </xsl:call-template>
         <xsl:if test="$start='true'">
           <xsl:text> xmlns="</xsl:text>

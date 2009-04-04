@@ -21,6 +21,8 @@
   <xsl:param name="endElement">&lt;/span&gt;</xsl:param>
   <xsl:param name="startElementName">&lt;span class="elementname"&gt;</xsl:param>
   <xsl:param name="endElementName">&lt;/span&gt;</xsl:param>
+  <xsl:param name="highlightStartElementName">&lt;span class="highlightelementname"&gt;</xsl:param>
+  <xsl:param name="highlightEndElementName">&lt;/span&gt;</xsl:param>
   <xsl:param name="startAttribute">&lt;span class="attribute"&gt;</xsl:param>
   <xsl:param name="endAttribute">&lt;/span&gt;</xsl:param>
   <xsl:param name="startAttributeValue">&lt;span class="attributevalue"&gt;</xsl:param>
@@ -46,19 +48,20 @@
     <xsl:variable name="ns" select="namespace-uri()"/>
     <xsl:choose>
       <xsl:when test="$ns='http://docbook.org/ns/docbook'">dbk</xsl:when>
-      <xsl:when test="$ns='http://www.w3.org/2001/XMLSchema'">xsd</xsl:when>
+      <xsl:when test="$ns='http://earth.google.com/kml/2.1'">kml</xsl:when>
+      <xsl:when test="$ns='http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0'">nvdl</xsl:when>
+      <xsl:when test="$ns='http://purl.org/rss/1.0/modules/event/'">ev</xsl:when>
+      <xsl:when test="$ns='http://relaxng.org/ns/compatibility/annotations/1.0'">a</xsl:when>
+      <xsl:when test="$ns='http://relaxng.org/ns/structure/1.0'">rng</xsl:when>
       <xsl:when test="$ns='http://www.ascc.net/xml/schematron'">sch</xsl:when>
       <xsl:when test="$ns='http://www.w3.org/1998/Math/MathML'">m</xsl:when>
-      <xsl:when test="$ns='http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0'">nvdl</xsl:when>
-      <xsl:when test="$ns='http://relaxng.org/ns/compatibility/annotations/1.0'">a</xsl:when>
+      <xsl:when test="$ns='http://www.w3.org/1999/XSL/Transform'">xsl</xsl:when>
       <xsl:when test="$ns='http://www.w3.org/1999/xhtml'">xhtml</xsl:when>
       <xsl:when test="$ns='http://www.w3.org/1999/xlink'">xlink</xsl:when>
-      <xsl:when test="$ns='http://relaxng.org/ns/structure/1.0'">rng</xsl:when>
-      <xsl:when test="$ns='http://earth.google.com/kml/2.1'">kml</xsl:when>
+      <xsl:when test="$ns='http://www.w3.org/2001/XMLSchema'">xsd</xsl:when>
       <xsl:when test="$ns='http://www.w3.org/2005/11/its'">its</xsl:when>
-      <xsl:when test="$ns='http://www.w3.org/1999/XSL/Transform'">xsl</xsl:when>
       <xsl:when test="$ns='http://www.w3.org/2005/Atom'">atom</xsl:when>
-      <xsl:when test="$ns='http://purl.org/rss/1.0/modules/event/'">ev</xsl:when>
+      <xsl:when test="$ns='http://www.w3.org/XML/1998/namespace'">xml</xsl:when>
     </xsl:choose>
 
   </xsl:template>
@@ -323,6 +326,7 @@
   </xsl:template>
 
   <xsl:template match="*" mode="verbatim">
+    <xsl:param name="highlight"/>
     <xsl:choose>
       <xsl:when test="parent::xhtml:Wrapper"/>
       <!--      <xsl:when test="child::node()[last()]/self::text()[not(.='')] and child::node()[1]/self::text()[not(.='')]"/>-->
@@ -370,6 +374,9 @@
 
     <xsl:call-template name="verbatim-makeElementName">
       <xsl:with-param name="start">true</xsl:with-param>
+      <xsl:with-param name="highlight">
+	<xsl:value-of select="$highlight"/>
+      </xsl:with-param>
     </xsl:call-template>
 
 
@@ -389,7 +396,11 @@
       <xsl:when test="child::node()">
         <xsl:text>&gt;</xsl:text>
         <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
-        <xsl:apply-templates mode="verbatim"/>
+	<xsl:apply-templates mode="verbatim">
+	  <xsl:with-param name="highlight">
+	    <xsl:value-of select="$highlight"/>
+	  </xsl:with-param>
+	</xsl:apply-templates>
         <xsl:choose>
           <xsl:when test="child::node()[last()]/self::text() and child::node()[1]/self::text()"/>
 
@@ -421,6 +432,9 @@
         <xsl:text>&lt;/</xsl:text>
         <xsl:call-template name="verbatim-makeElementName">
           <xsl:with-param name="start">false</xsl:with-param>
+	  <xsl:with-param name="highlight">
+	    <xsl:value-of select="$highlight"/>
+	  </xsl:with-param>
         </xsl:call-template>
         <xsl:text>&gt;</xsl:text>
         <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
@@ -435,7 +449,17 @@
 
   <xsl:template name="verbatim-createElement">
     <xsl:param name="name"/>
-    <xsl:value-of select="$name"/>
+    <xsl:param name="special"/>
+    <xsl:choose>
+      <xsl:when test="$special='true'">
+	<xsl:value-of disable-output-escaping="yes" select="$highlightStartElementName"/>
+	<xsl:value-of select="$name"/>
+	<xsl:value-of disable-output-escaping="yes" select="$highlightEndElementName"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$name"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template name="verbatim-createAttribute">
@@ -445,29 +469,46 @@
 
   <xsl:template name="verbatim-makeElementName">
     <xsl:param name="start"/>
-
+    <xsl:param name="highlight"/>
     <!-- get namespace prefix -->
     <xsl:variable name="ns-prefix">
       <xsl:call-template name="verbatim-getNamespacePrefix"/>
+    </xsl:variable>
+
+    <xsl:variable name="highlightMe">
+      <xsl:choose>
+	<xsl:when test="$highlight=local-name()">true</xsl:when>
+	<xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
     </xsl:variable>
 
     <xsl:choose>
       <xsl:when test="namespace-uri()='http://www.tei-c.org/ns/Examples'">
         <xsl:call-template name="verbatim-createElement">
           <xsl:with-param name="name" select="local-name(.)"/>
+	  <xsl:with-param name="special">
+	    <xsl:value-of select="$highlightMe"/>
+	  </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
 
 
       <xsl:when test="string-length($ns-prefix) &gt; 0">
         <xsl:call-template name="verbatim-createElement">
-          <xsl:with-param name="name" select="concat($ns-prefix,':',local-name(.))"/>
+          <xsl:with-param name="name"
+			  select="concat($ns-prefix,':',local-name(.))"/>
+	  <xsl:with-param name="special">
+	    <xsl:value-of select="$highlightMe"/>
+	  </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
 
       <xsl:when test="not(namespace-uri()='')">
         <xsl:call-template name="verbatim-createElement">
           <xsl:with-param name="name" select="local-name(.)"/>
+	  <xsl:with-param name="special">
+	    <xsl:value-of select="$highlightMe"/>
+	  </xsl:with-param>
         </xsl:call-template>
         <xsl:if test="$start='true'">
           <xsl:text> xmlns="</xsl:text>
@@ -482,7 +523,12 @@
 
       <xsl:otherwise>
         <xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
-        <xsl:value-of select="local-name(.)"/>
+        <xsl:call-template name="verbatim-createElement">
+          <xsl:with-param name="name" select="local-name(.)"/>
+	  <xsl:with-param name="special">
+	    <xsl:value-of select="$highlightMe"/>
+	  </xsl:with-param>
+        </xsl:call-template>
         <xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
       </xsl:otherwise>
     </xsl:choose>

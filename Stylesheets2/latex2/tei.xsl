@@ -52,6 +52,8 @@
 
   <xsl:param name="startNamespace">\color{red}</xsl:param>
   <xsl:param name="startElement">{</xsl:param>
+  <xsl:param name="highlightStartElementName">\textcolor{red}{</xsl:param>
+  <xsl:param name="highlightEndElementName">}</xsl:param>
   <xsl:param name="startElementName">\textbf{</xsl:param>
   <xsl:param name="startAttribute">{</xsl:param>
   <xsl:param name="startAttributeValue">{</xsl:param>
@@ -91,6 +93,7 @@
 
   <xsl:template name="verbatim-createElement">
     <xsl:param name="name"/>
+    <xsl:param name="special"/>
     <xsl:text>\textbf{</xsl:text>
     <xsl:value-of select="$name"/>
     <xsl:text>}</xsl:text>

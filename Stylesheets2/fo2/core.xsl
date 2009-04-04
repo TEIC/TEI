@@ -189,13 +189,19 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="teix:egXML">
+    <xsl:param name="simple">false</xsl:param>
+    <xsl:param name="highlight"></xsl:param>
     <block font-family="{$typewriterFont}" background-color="{$exampleBackgroundColor}" color="{$exampleColor}" white-space-treatment="preserve" linefeed-treatment="preserve" white-space-collapse="false" wrap-option="no-wrap" text-indent="0em" hyphenate="false" start-indent="{$exampleMargin}" text-align="start" font-size="{$exampleSize}" space-before.optimum="4pt" space-after.optimum="4pt">
       <xsl:if test="not($flowMarginLeft='')">
         <xsl:attribute name="padding-start">
           <xsl:value-of select="$exampleMargin"/>
         </xsl:attribute>
       </xsl:if>
-      <xsl:apply-templates mode="verbatim"/>
+      <xsl:apply-templates mode="verbatim">
+	<xsl:with-param name="highlight">
+	  <xsl:value-of select="$highlight"/>
+	</xsl:with-param>
+      </xsl:apply-templates>
     </block>
   </xsl:template>
   <xd:doc>
