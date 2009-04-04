@@ -348,17 +348,23 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="teix:egXML">
-    <div>
+    <xsl:param name="simple">false</xsl:param>
+    <div id="{generate-id()}">
       <xsl:attribute name="class">
 	<xsl:text>pre</xsl:text>
 	<xsl:if test="not(*)">
 	  <xsl:text> cdata</xsl:text>
 	</xsl:if>
       </xsl:attribute>
-      <xsl:call-template name="egXMLStartHook"/>
-      <xsl:call-template name="makeAnchor"/>
-      <xsl:apply-templates mode="verbatim"/>
-      <xsl:call-template name="egXMLEndHook"/>
+      <xsl:choose>
+	<xsl:when test="$simple='true'">
+	  <xsl:apply-templates mode="verbatim"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="egXMLStartHook"/>
+	  <xsl:call-template name="egXMLEndHook"/>
+	</xsl:otherwise>
+      </xsl:choose>
     </div>
   </xsl:template>
 

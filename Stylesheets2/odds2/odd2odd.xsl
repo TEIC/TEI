@@ -146,7 +146,10 @@
     <xsl:for-each select="$compiled">
       <xsl:apply-templates mode="final"/>
     </xsl:for-each>
+    <!-- constraint -->
+    <xsl:apply-templates mode="copy" select="tei:constraint"/>
   </xsl:template>
+
   <xsl:template match="rng:ref" mode="final">
     <xsl:variable name="N">
       <xsl:value-of select="@name"/>
@@ -390,6 +393,7 @@ How can a class be ok?
       </xsl:if>
       <xsl:copy-of select="tei:classes"/>
       <xsl:apply-templates mode="copy" select="tei:content"/>
+      <xsl:apply-templates mode="copy" select="tei:constraint"/>
       <attList xmlns="http://www.tei-c.org/ns/1.0">
         <xsl:call-template name="addClassAttsToCopy"/>
         <xsl:choose>
@@ -547,13 +551,25 @@ for change individually.
                 <xsl:apply-templates mode="copy" select="tei:content/*"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:copy-of select="tei:content/s:*"/>
                 <xsl:for-each select="$ORIGINAL">
                   <xsl:apply-templates mode="copy" select="tei:content/*"/>
                 </xsl:for-each>
               </xsl:otherwise>
             </xsl:choose>
           </tei:content>
+	  <!-- element constraint -->
+
+	  <xsl:choose>
+	    <xsl:when test="tei:constraint">
+	      <xsl:apply-templates mode="copy" select="tei:constraint"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:for-each select="$ORIGINAL">
+		<xsl:apply-templates mode="copy" select="tei:constraint"/>
+	      </xsl:for-each>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  
 <!-- attList -->
           <tei:attList>
             <xsl:copy-of select="tei:attList/@org"/>
@@ -592,16 +608,6 @@ for change individually.
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
                 <xsl:copy-of select="tei:listRef"/>
-              </xsl:for-each>
-            </xsl:otherwise>
-          </xsl:choose>
-          <xsl:choose>
-            <xsl:when test="s:pattern">
-              <xsl:copy-of select="s:pattern"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:for-each select="$ORIGINAL">
-                <xsl:copy-of select="s:pattern"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
@@ -1703,6 +1709,7 @@ select="$M"/></xsl:message>
         </xsl:if>
         <xsl:copy-of select="tei:classes"/>
         <xsl:apply-templates mode="copy" select="tei:content"/>
+        <xsl:apply-templates mode="copy" select="tei:constraint"/>
         <tei:attList>
           <xsl:comment>1.</xsl:comment>
           <xsl:call-template name="classAttributesSimple">

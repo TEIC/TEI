@@ -3,6 +3,7 @@
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:s="http://www.ascc.net/xml/schematron"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:include href="teiodds.xsl"/>
   <xsl:key name="SCHEMATRON" match="s:*[parent::tei:constraint]" use="1"/>
   <xsl:template match="/">
     <s:schema xmlns:s="http://www.ascc.net/xml/schematron" >

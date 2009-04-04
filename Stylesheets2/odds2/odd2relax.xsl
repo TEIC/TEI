@@ -77,14 +77,12 @@
             </xsl:choose>
           </xsl:attribute>
           <xsl:comment>
-            <xsl:text>
-Schema generated from ODD source </xsl:text>
+            <xsl:text>&#10;Schema generated from ODD source </xsl:text>
             <xsl:call-template name="showDate"/>
             <xsl:text>. </xsl:text>
             <xsl:call-template name="makeTEIVersion"/>
             <xsl:call-template name="makeDescription"/>
-            <xsl:text>
-</xsl:text>
+            <xsl:text>&#10;</xsl:text>
           </xsl:comment>
           <xsl:if test="$TEIC='true'">
             <xsl:comment>
@@ -107,6 +105,7 @@ Schema generated from ODD source </xsl:text>
               <xsl:call-template name="schemaSpecBody"/>
             </xsl:otherwise>
           </xsl:choose>
+	  <xsl:apply-templates select="tei:constraint"/>
         </rng:grammar>
       </xsl:with-param>
     </xsl:call-template>
@@ -304,10 +303,19 @@ Schema generated from ODD source </xsl:text>
   <xsl:template name="typewriter">
     <xsl:param name="text"/>
   </xsl:template>
+
   <xsl:template name="ttembolden"/>
+
   <xsl:template match="processing-instruction()"/>
+
   <xsl:template match="processing-instruction()" mode="tangle"/>
-  <xsl:template match="s:*">
-    <xsl:copy-of select="."/>
+
+  <xsl:template match="tei:constraint">
+    <xsl:apply-templates/>
   </xsl:template>
+
+  <xsl:template match="s:*">
+    <xsl:call-template name="processSchematron"/>
+  </xsl:template>
+
 </xsl:stylesheet>

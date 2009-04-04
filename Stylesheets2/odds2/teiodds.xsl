@@ -29,6 +29,7 @@
   <xd:doc type="string" class="output"> Public Doctype of output file(s). </xd:doc>
   <xsl:param name="selectedSchema"/>
   <xsl:param name="outputDir"/>
+  <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:param name="localsource"/>
   <xsl:param name="lang"/>
   <xsl:param name="doclang"/>
@@ -838,6 +839,9 @@ select="$makeDecls"/></xsl:message>
         </xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
+
+    <xsl:apply-templates select="tei:constraint"/>
+
   </xsl:template>
 
 
@@ -1653,12 +1657,10 @@ select="$makeDecls"/></xsl:message>
     <xsl:param name="uri"/>
   </xsl:template>
 
-
   <xsl:template name="inhnamespace"/>
 
-
-  <xsl:template match="s:*"/>
-
+  <xsl:template match="tei:constraint">
+  </xsl:template>
 
   <xsl:template match="tei:altIdent"/>
 
@@ -1995,5 +1997,54 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
   <xsl:template match="tei:desc" mode="inLanguage">
     <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template name="processSchematron">
+	<xsl:choose>
+	  <xsl:when test="ancestor::teix:egXML"/>
+	  <xsl:when test="self::s:ns">
+	    <xsl:copy-of select="."/>
+	  </xsl:when>
+	  <xsl:when test="self::s:pattern">
+	    <xsl:copy-of select="."/>
+	  </xsl:when>
+	  <xsl:when test="(self::s:report or self::s:assert) and ancestor::tei:elementSpec">
+	    <pattern xmlns="http://www.ascc.net/xml/schematron">
+	      <xsl:attribute name="name">
+		<xsl:choose>
+		  <xsl:when test="tei:head">
+		    <xsl:value-of select="tei:head"/>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:value-of select="generate-id()"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+	      </xsl:attribute>
+	      <rule xmlns="http://www.ascc.net/xml/schematron">
+		<xsl:attribute name="context">
+		  <xsl:text>tei:</xsl:text>
+		  <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+		</xsl:attribute>
+		<xsl:copy-of select="."/>
+	      </rule>
+	    </pattern>
+	  </xsl:when>
+	</xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="bitOut">
+    <xsl:param name="grammar"/>
+    <xsl:param name="TAG"/>
+    <xsl:param name="content"/>
+  </xsl:template>
+
+  <xsl:template name="makeAnchor">
+    <xsl:param name="name"/>
+  </xsl:template>
+
+  <xsl:template name="makeLink">
+    <xsl:param name="class"/>
+    <xsl:param name="name"/>
+    <xsl:param name="text"/>
   </xsl:template>
 </xsl:stylesheet>
