@@ -37,11 +37,12 @@
       <elementSpec ident="p" mode="change">
 	<attList>
 	  <attDef ident="type" mode="change">
+		<datatype><rng:data type="float"/></datatype>
 	  </attDef>
 	</attList>
 
 	<constraintList  scheme="xsl">
-	  <constraint>
+	  <constraint ident="p-xsl-1">
 	    <xsl:template match="tei:p">
 	      <xsl:if test="count(foo)=4">
 		<xsl:message>rubbish</xsl:message>
@@ -51,11 +52,11 @@
 	</constraintList>
 
 	<constraintList  scheme="schematron">
-	  <constraint mode="change" ident="c1">
+	  <constraint mode="add" ident="c1">
 	    <s:report test="tei:list"> 
 	    lists inside paragraphs not supported </s:report>
 	  </constraint>
-	  <constraint ident="c2">
+	  <constraint mode="add" ident="c2">
 	    <s:rule context="tei:p|tei:q">
 	      <s:report test="contains(@rend,' ')"> 
 	      multi-valued rend is not supported </s:report>
@@ -65,7 +66,9 @@
       </elementSpec>
 
       <elementSpec ident="relation" mode="change">
-	<constraint ident="activepassive" mode="delete"/> 
+	<constraintList  scheme="schematron">
+	 <constraint ident="activepassive" mode="delete"/> 
+	</constraintList>
       </elementSpec>
 
     </schemaSpec>
