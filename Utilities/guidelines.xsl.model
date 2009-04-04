@@ -68,7 +68,10 @@
 	  <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (98) </xsl:comment>
 	  <head>
 	    <title>
-	      <xsl:text>Examples for use of &lt;</xsl:text>
+              <xsl:call-template name="i18n">
+                <xsl:with-param name="word">Example</xsl:with-param>
+              </xsl:call-template>
+	      <xsl:text>: &lt;</xsl:text>
 	      <xsl:value-of select="$me"/>
 	      <xsl:text>&gt; </xsl:text>
 	      <xsl:call-template name="makeGloss">
@@ -86,7 +89,10 @@
 		name="generator"/>
 	    <meta name="DC.Title">
 	      <xsl:attribute name="content">
-		<xsl:text>Examples for use of &lt;</xsl:text>
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">Example</xsl:with-param>
+		</xsl:call-template>
+		<xsl:text>: &lt;</xsl:text>
 		<xsl:value-of select="@ident"/>
 		<xsl:text>&gt; </xsl:text>
 		<xsl:call-template name="makeGloss">
@@ -103,7 +109,10 @@
 	  <body id="TOP">
 	    <xsl:call-template name="teiTOP">
 	      <xsl:with-param name="name">
-		<xsl:text>Examples for use of &lt;</xsl:text>
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">Example</xsl:with-param>
+		</xsl:call-template>
+		<xsl:text>: &lt;</xsl:text>
 		<xsl:value-of select="$me"/>
 		<xsl:text>&gt; </xsl:text>
 		<xsl:call-template name="makeGloss">
@@ -115,9 +124,12 @@
 	    <div class="main-content">
 	      <xsl:call-template name="startDivHook"/>
 	      <h3>
-		<xsl:text>Examples for use of </xsl:text>
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">Example</xsl:with-param>
+		</xsl:call-template>
+		<xsl:text>: &lt;</xsl:text>
 		<xsl:value-of select="@ident"/>
-		<xsl:text> </xsl:text>
+		<xsl:text>&gt; </xsl:text>
 		<xsl:call-template name="makeGloss">
 		  <xsl:with-param name="langs"
 				  select="$langs"/>
@@ -846,7 +858,9 @@
   <xsl:for-each select="ancestor::tei:elementSpec">
     <div  style="float: right;">
       <a href="examples-{@ident}.html">
-	<xsl:text>Catalogue of examples</xsl:text>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Show All</xsl:with-param>
+	</xsl:call-template>
       </a>
     </div>
   </xsl:for-each>
