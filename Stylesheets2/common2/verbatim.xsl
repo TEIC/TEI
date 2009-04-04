@@ -51,6 +51,7 @@
       <xsl:when test="$ns='http://earth.google.com/kml/2.1'">kml</xsl:when>
       <xsl:when test="$ns='http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0'">nvdl</xsl:when>
       <xsl:when test="$ns='http://purl.org/rss/1.0/modules/event/'">ev</xsl:when>
+      <xsl:when test="$ns='http://purl.oclc.org/dsdl/schematron'">s</xsl:when>
       <xsl:when test="$ns='http://relaxng.org/ns/compatibility/annotations/1.0'">a</xsl:when>
       <xsl:when test="$ns='http://relaxng.org/ns/structure/1.0'">rng</xsl:when>
       <xsl:when test="$ns='http://www.ascc.net/xml/schematron'">sch</xsl:when>
