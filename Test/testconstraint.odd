@@ -3,7 +3,9 @@
      xmlns="http://www.tei-c.org/ns/1.0"
      xmlns:rng="http://relaxng.org/ns/structure/1.0"
      xmlns:s="http://www.ascc.net/xml/schematron" 
-     n="testconstraint">
+     n="testconstraint"
+     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
   <teiHeader>
       <fileDesc>
          <titleStmt>
@@ -53,23 +55,17 @@
 	    <s:report test="tei:list"> 
 	    lists inside paragraphs not supported </s:report>
 	  </constraint>
+	  <constraint ident="c2">
+	    <s:rule context="tei:p|tei:q">
+	      <s:report test="contains(@rend,' ')"> 
+	      multi-valued rend is not supported </s:report>
+	    </s:rule>
+	  </constraint>
 	</constraintList>
       </elementSpec>
 
-      <constraint ident="c1">
-	  <s:rule context="tei:p|tei:q">
-	    <s:report test="contains(@rend,' ')"> 
-	    multi-valued rend is not supported </s:report>
-	  </s:rule>
-      </constraint>
-
-      <constraint ident="c2" mimeType="text/schematron">
-	<s:report test="contains(@rend,' ')"> 
-	    multi-valued rend is not supported </s:report>
-      </constraint>
-
       <elementSpec ident="relation" mode="change">
-	<constraint ident="c1" mode="delete"/> 
+	<constraint ident="activepassive" mode="delete"/> 
       </elementSpec>
 
     </schemaSpec>

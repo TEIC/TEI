@@ -10,6 +10,7 @@ TESTFILES= \
 	testbare \
 	testchinese \
 	testcorpus \
+	testconstraint \
 	testdictionaries \
 	testdrama \
 	testfand \
@@ -61,19 +62,19 @@ test: test-schema test-dtd test-dtd-xmllint test-extns test-xsd test-xsd-valid t
 
 schemas:
 	echo SETUP IS $(ROMAOPTS)
-	xsltproc --xinclude --stringparam Modules \
-	"tei core textstructure figures header linking" \
+	saxon -o  names.xml \
+	../Source/Guidelines/en/guidelines-en.xml \
 	../Utilities/makenames.xsl \
-	../Source/Guidelines/en/guidelines-en.xml > names.xml
+	Modules="tei core textstructure figures header linking" 
 	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTBADFILES); do \
 		echo Try  to validate $$i.odd; \
 		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK stage; \
-		xsltproc --stringparam TEIC true --xinclude ../Utilities/odd2exodd.xsl $$i.odd > $$i-ex.odd; \
-		roma $(ROMAOPTS) --nodtd --noxsd  --xsl=$(XSL)	$$i-ex.odd . ; \
+		saxon -o $$i-ex.odd $$i.odd ../Utilities/odd2exodd.xsl TEIC=true ;\
+		roma2 $(ROMAOPTS) --nodtd --noxsd  --xsl=$(XSL)	$$i-ex.odd . ; \
 		echo check egXML in $$i.odd; \
 		perl -p -e "s/testlite-examples/$$i-examples/" ex.nvdl > $$i.nvdl; \
 		onvdl $$i.nvdl $$i.odd | grep -v ": error: unfinished element$$" | grep -v "unknown element .egXML" ; \
-		roma $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
+		roma2 $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
 		cp xml.xsd.w3c xml.xsd ; \
 		test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
 		test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd; \
@@ -81,7 +82,7 @@ schemas:
 		test -f $$i.teix.xsd && perl -p -i -e "s/teix.xsd/$$i.teix.xsd/" $$i.xsd; \
 	done
 	-for i in $(TESTSPECIALFILES) ; do \
-		roma --patternprefix=tei_ $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
+		roma2 --patternprefix=tei_ $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
 		cp xml.xsd.w3c xml.xsd ; \
 		test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
 		test -f teix.xsd && mv teix.xsd $$i.teix.xsd ; \
