@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
-    exclude-result-prefixes="rng teix fo a tei s xd xs html" 
+    exclude-result-prefixes="rng teix fo a tei s sch xd xs html" 
     version="2.0"
     xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"

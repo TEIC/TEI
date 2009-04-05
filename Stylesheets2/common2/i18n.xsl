@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
-    exclude-result-prefixes="xd tei fotex fo"  
+    exclude-result-prefixes="xd tei fotex sch fo"  
     version="2.0"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
     xmlns:fo="http://www.w3.org/1999/XSL/Format"
     xmlns:fotex="http://www.tug.org/fotex" 
     xmlns:tei="http://www.tei-c.org/ns/1.0"

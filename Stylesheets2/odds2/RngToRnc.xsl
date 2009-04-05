@@ -63,7 +63,12 @@
      transformation, see RngToRncXml.xsl.
 
      +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-<xsl:transform xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" version="2.0" extension-element-prefixes="exsl" exclude-result-prefixes="rng a">
+<xsl:transform xmlns:rng="http://relaxng.org/ns/structure/1.0" 
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
+    version="2.0" 
+    exclude-result-prefixes="rng sch a">
   <xsl:param name="top"/>
 <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- Parameters -->
