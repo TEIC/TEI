@@ -19,7 +19,7 @@
   <xsl:import
       href="http://www.tei-c.org/release/xml/tei/stylesheet/odds2/odd2html.xsl"/>
 
-  <xsl:key name="EXAMPLES" match="teix:*" use="local-name()"/>
+  <xsl:key name="EXAMPLES" match="teix:*" use="concat(ancestor::tei:div[last()]/@xml:id,local-name())"/>
 
   <xsl:key name="HEADS" match="tei:head"
 	   use="concat(@xml:lang,@corresp)"/>
@@ -135,49 +135,70 @@
 				  select="$langs"/>
 		</xsl:call-template>
 	      </h3>
-	      <xsl:for-each select="key('EXAMPLES',$me)">
-		<xsl:sort
-		    select="local-name(ancestor::teix:egXML[1]/*[1])"/>
-		<xsl:variable name="pos">
-		  <xsl:number level="any" from="teix:egXML"/>
-		</xsl:variable>
-		<xsl:if test="number($pos)=1">
-		  <hr/>
-		  <p>
-		    <xsl:choose>
-		      <xsl:when test="ancestor::tei:elementSpec">
-			<a
-			    href="ref-{ancestor::tei:elementSpec/@ident}.html">
-			  <xsl:text>&lt;</xsl:text>
-			  <xsl:value-of
-			      select="ancestor::tei:elementSpec/@ident"/>
-			  <xsl:text>&gt;</xsl:text>
-			</a>
-		      </xsl:when>
-		      <xsl:when test="ancestor::tei:classSpec">
-			<a
-			    href="ref-{ancestor::tei:classSpec/@ident}.html">
-			  <xsl:value-of
-			      select="ancestor::tei:classSpec/@ident"/>
-			</a>
-		      </xsl:when>
-		      <xsl:otherwise>
-			<xsl:for-each select="ancestor::tei:div[@xml:id and tei:head][1]">
-			  <a>
-			    <xsl:attribute name="href">
-			      <xsl:apply-templates select="." mode="generateLink"/>
-			    </xsl:attribute>
-			    <xsl:call-template name="header"/>
-			  </a>
-			</xsl:for-each>
-		      </xsl:otherwise>
-		    </xsl:choose>
-		  </p>
-		  <xsl:apply-templates select="ancestor::teix:egXML">
-		    <xsl:with-param name="simple">true</xsl:with-param>
-		    <xsl:with-param name="highlight"><xsl:value-of select="$me"/></xsl:with-param>
-		  </xsl:apply-templates>
-		</xsl:if>
+
+	      <ul>
+		<xsl:for-each
+		    select="/tei:TEI/tei:text/tei:body/tei:div">
+		  <xsl:message><xsl:call-template name="header"/></xsl:message>
+		  <xsl:if test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
+		    <li>
+		      <a href="#{@xml:id}">
+			<xsl:call-template name="header"/>
+		      </a>
+		    </li>
+		  </xsl:if>
+		</xsl:for-each>
+	      </ul>
+
+	      <xsl:for-each
+		  select="/tei:TEI/tei:text/tei:body/tei:div">
+		  <xsl:if test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
+		    <h4 id="{@xml:id}">
+		      <xsl:call-template name="header"/>
+		    </h4>
+		    <xsl:for-each select="key('EXAMPLES',concat(@xml:id,$me))">
+		      <xsl:variable name="pos">
+			<xsl:number level="any" from="teix:egXML"/>
+		      </xsl:variable>
+		      <xsl:if test="number($pos)=1">
+			<hr/>
+			<p>
+			  <xsl:choose>
+			    <xsl:when test="ancestor::tei:elementSpec">
+			      <a
+				  href="ref-{ancestor::tei:elementSpec/@ident}.html">
+				<xsl:text>&lt;</xsl:text>
+				<xsl:value-of
+				    select="ancestor::tei:elementSpec/@ident"/>
+				<xsl:text>&gt;</xsl:text>
+			      </a>
+			    </xsl:when>
+			    <xsl:when test="ancestor::tei:classSpec">
+			      <a
+				  href="ref-{ancestor::tei:classSpec/@ident}.html">
+				<xsl:value-of
+				    select="ancestor::tei:classSpec/@ident"/>
+			      </a>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <xsl:for-each select="ancestor::tei:div[@xml:id and tei:head][1]">
+				<a>
+				  <xsl:attribute name="href">
+				    <xsl:apply-templates select="." mode="generateLink"/>
+				  </xsl:attribute>
+				  <xsl:call-template name="header"/>
+				</a>
+			      </xsl:for-each>
+			    </xsl:otherwise>
+			  </xsl:choose>
+			</p>
+			<xsl:apply-templates select="ancestor::teix:egXML">
+			  <xsl:with-param name="simple">true</xsl:with-param>
+			  <xsl:with-param name="highlight"><xsl:value-of select="$me"/></xsl:with-param>
+			</xsl:apply-templates>
+		      </xsl:if>
+		    </xsl:for-each>
+		  </xsl:if>
 	      </xsl:for-each>
 	    </div>
 	    <xsl:call-template name="stdfooter">
