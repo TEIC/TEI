@@ -1,0 +1,196 @@
+#        (c) International Organization for Standardization 2005. 
+#       Permission to copy in any form is granted for use with conforming 
+#       SGML systems and applications as defined in ISO 8879, 
+#       provided this notice is included in all copies.
+
+default namespace sch = "http://purl.oclc.org/dsdl/schematron"
+
+namespace local = ""
+
+start = schema
+
+# Element declarations
+schema = element schema {
+    attribute id { xsd:ID }?, 
+    rich, 
+    attribute schemaVersion { non-empty-string }?,
+    attribute defaultPhase { xsd:IDREF }?,  
+    attribute queryBinding { non-empty-string }?,
+    (foreign
+     & inclusion*
+     &  (title?,
+       ns*,
+       p*,
+       let*,
+       phase*,
+       pattern+,
+       p*,
+       diagnostics?))
+}
+
+active = element active {
+    attribute pattern { xsd:IDREF },
+    (foreign & (text | dir | emph | span)*)
+}
+
+assert = element assert {
+    attribute test { exprValue }, 
+    attribute flag { flagValue }?,
+    attribute id { xsd:ID }?,
+    attribute diagnostics { xsd:IDREFS }?, 
+    rich,
+    linkable,
+    (foreign & (text | name | value-of | emph | dir | span)*)
+}
+
+diagnostic = element diagnostic {
+    attribute id { xsd:ID },
+    rich, 
+    (foreign & (text | value-of | emph | dir | span)*)
+}
+  
+diagnostics = element diagnostics { 
+    foreign & inclusion* & diagnostic* 
+}
+    
+dir = element dir {
+    attribute value { "ltr" | "rtl" }?,
+    (foreign & text)
+}
+
+emph = element emph { text }
+
+extends = element extends {
+    attribute rule { xsd:IDREF },
+    foreign-empty
+}
+  
+let = element let {
+    attribute name { nameValue },
+    attribute value { string }
+}
+
+name = element name {
+    attribute path { pathValue }?,
+    foreign-empty
+}
+
+ns = element ns {
+    attribute uri { uriValue },
+    attribute prefix { nameValue },
+    foreign-empty
+}
+
+p = element p {
+    attribute id { xsd:ID }?,
+    attribute class { classValue }?,
+    attribute icon { uriValue }?,
+    (foreign & (text | dir | emph | span)*)
+}
+
+param = element param {
+    attribute name { nameValue },
+    attribute value { non-empty-string }
+}  
+
+pattern = element pattern {     
+    rich,
+    (foreign & inclusion* & 
+     ( (attribute abstract { "true" }, attribute id { xsd:ID }, 
+             title?, (p*, let*, rule*))
+     |  (attribute abstract { "false" }?, attribute id { xsd:ID }?, 
+             title?, (p*, let*, rule*))
+     | (attribute abstract { "false" }?, attribute is-a { xsd:IDREF }, 
+             attribute id { xsd:ID }?, title?, (p*, param*))
+     )
+    )
+}
+
+phase = element phase {
+    attribute id { xsd:ID },
+    rich, 
+    (foreign & inclusion* & (p*, let*, active*))
+}
+
+report = element report {
+    attribute test { exprValue }, 
+    attribute flag { flagValue }?,
+    attribute id { xsd:ID }?,
+    attribute diagnostics { xsd:IDREFS }?, 
+    rich,
+    linkable,
+    (foreign &  (text | name | value-of | emph | dir | span)*)
+} 
+
+rule = element rule { 
+    attribute flag { flagValue }?,
+    rich,
+    linkable,
+    (foreign & inclusion* 
+     & ((attribute abstract { "true" }, 
+            attribute id { xsd:ID }, let*, (assert | report | extends)+)
+        | (attribute context { pathValue },
+            attribute id { xsd:ID }?, 
+           attribute abstract { "false" }?,
+           let*, (assert | report | extends)+)))
+}
+
+span = element span {
+    attribute class { classValue },
+    (foreign & text)
+}
+
+title = element title { 
+    (text | dir)* 
+}
+
+value-of = element value-of {
+    attribute select { pathValue },
+    foreign-empty
+}
+
+# common declarations
+inclusion = element include {
+    attribute href { uriValue }
+}
+
+rich = 
+    attribute icon { uriValue }?,
+    attribute see { uriValue }?,
+    attribute fpi { fpiValue }?,
+    attribute xml:lang { langValue }?,
+    attribute xml:space { "preserve" | "default" }?
+
+linkable = 
+    attribute role { roleValue }?,
+    attribute subject { pathValue }?
+
+foreign = 
+    foreign-attributes, foreign-element*
+
+foreign-empty = 
+    foreign-attributes
+
+foreign-attributes = 
+    attribute * - (local:* | xml:*) { text }*
+
+foreign-element =  element * - sch:*  {
+    (attribute * { text }
+     | foreign-element
+     | schema
+     | text)*
+}
+
+# Data types
+
+uriValue = xsd:anyURI
+pathValue = string
+exprValue = string
+fpiValue = string
+langValue = xsd:language
+roleValue = string  
+flagValue = string
+nameValue = string  # In the default query language binding, xsd:NCNAME
+classValue = string
+
+non-empty-string = xsd:token { minLength = "1" }
