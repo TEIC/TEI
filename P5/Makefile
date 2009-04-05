@@ -209,7 +209,9 @@ oddschema:
 
 exampleschema:
 	(cd Exemplars;make names)
-	roma2  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds-ex.odd . 
+	xmllint --xinclude p5odds-ex.odd > p5odds-ex.expanded.odd
+	roma2  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds-ex.expanded.odd . 
+	rm p5odds-ex.expanded.odd 
 
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rnc && \
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rng
