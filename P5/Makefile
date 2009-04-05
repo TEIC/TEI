@@ -189,8 +189,8 @@ valid: check
 	${SAXON} p5.isosch Utilities/iso_schematron_message_xslt2.xsl > p5.isosch.xsl
 	${SAXON} ${DRIVER} p5.isosch.xsl
 	@echo --------- XSLT validator
-	${SAXON} ${DRIVER} Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
-	${SAXON} ${DRIVER} Utilities/validator.xsl
+	${SAXON} -xi:on ${DRIVER} Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
+	${SAXON} -xi:on ${DRIVER} Utilities/validator.xsl
 	rm Utilities/pointerattributes.xsl
 	@echo --------- xmllint RelaxNG test REMOVED
 #	@xmllint --version
