@@ -1838,11 +1838,7 @@ select="$makeDecls"/></xsl:message>
               <xsl:value-of select="@ident"/>
             </xsl:otherwise>
           </xsl:choose>
-          <xsl:if test="tei:gloss">
-            <xsl:text> (</xsl:text>
-	    <xsl:apply-templates select="tei:gloss" mode="inLanguage"/>
-            <xsl:text>)</xsl:text>
-          </xsl:if>
+	  <xsl:call-template name="makeGloss"/>
           <xsl:if test="following-sibling::tei:valItem">
             <xsl:text>; </xsl:text>
           </xsl:if>
@@ -1870,11 +1866,7 @@ select="$makeDecls"/></xsl:message>
               <xsl:value-of select="@ident"/>
             </xsl:otherwise>
           </xsl:choose>
-          <xsl:if test="tei:gloss">
-            <xsl:text> (</xsl:text>
-	    <xsl:apply-templates select="tei:gloss" mode="inLanguage"/>
-            <xsl:text>)</xsl:text>
-          </xsl:if>
+	  <xsl:call-template name="makeGloss"/>
           <xsl:if test="following-sibling::tei:valItem">
             <xsl:text>; </xsl:text>
           </xsl:if>

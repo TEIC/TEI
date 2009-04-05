@@ -332,6 +332,7 @@
   <xsl:template match="s:*">
     <xsl:call-template name="processSchematron"/>
   </xsl:template>
+
   <xsl:template match="sch:*">
     <xsl:call-template name="processSchematron"/>
   </xsl:template>
