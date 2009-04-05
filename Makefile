@@ -204,8 +204,9 @@ exemplars:
 
 oddschema: 
 	(cd Exemplars;make names)
-	roma2 ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds.odd .
-
+	xmllint --xinclude p5odds.odd > p5odds.expanded.odd
+	roma2 ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds.expanded.odd .
+	rm p5odds.expanded.odd
 
 exampleschema:
 	(cd Exemplars;make names)
