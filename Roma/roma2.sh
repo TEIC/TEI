@@ -13,7 +13,7 @@ makeODD()
     echo "1. expand and simplify ODD "
     if test "x$lang" = "x"
     then
-	saxon -o $RESULTS/$ODD.compiled $ODD \
+	xmllint --xinclude $ODD | saxon  -o $RESULTS/$ODD.compiled - \
 	    $TEIXSLDIR/odds2/odd2odd.xsl \
 	    $SELECTEDSCHEMA  \
 	    $LANGUAGE\
@@ -25,7 +25,7 @@ makeODD()
 	    $DEBUG  
     else
 	echo  [names translated to language $lang]
-	saxon $ODD $TEIXSLDIR/odds2/odd2odd.xsl \
+	xmllint --xinclude $ODD | saxon - $TEIXSLDIR/odds2/odd2odd.xsl \
 	    TEIC=$TEIC \
 	    useVersionFromTEI=$useVersionFromTEI \
 	    TEISERVER=$TEISERVER  \
