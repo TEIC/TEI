@@ -9,6 +9,7 @@ FILES=ChangeLog \
 	resource \
 	roma \
 	roma.sh \
+	roma2.sh \
 	roma.1 \
 	roma.css \
 	TEI-glow.png \
@@ -33,6 +34,8 @@ install: release
 	mkdir -p ${PREFIX}/usr/bin
 	cp -p roma.sh ${PREFIX}/usr/bin/roma
 	chmod 755 ${PREFIX}/usr/bin/roma
+	cp -p roma2.sh ${PREFIX}/usr/bin/roma2
+	chmod 755 ${PREFIX}/usr/bin/roma2
 
 dist:  release
 	(cd release; 	\
