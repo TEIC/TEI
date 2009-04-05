@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet exclude-result-prefixes="rng teix fo a tei s xd xs html" version="2.0"
-  xmlns:html="http://www.w3.org/1999/xhtml"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:s="http://www.ascc.net/xml/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet 
+    exclude-result-prefixes="rng teix fo a tei s xd xs html" 
+    version="2.0"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    xmlns:fo="http://www.w3.org/1999/XSL/Format" 
+    xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xmlns:s="http://www.ascc.net/xml/schematron" 
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:teix="http://www.tei-c.org/ns/Examples"
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:import href="../common2/verbatim.xsl"/>
   <xsl:import href="../common2/i18n.xsl"/>
   <xd:doc type="stylesheet">
@@ -2023,6 +2030,32 @@ select="$makeDecls"/></xsl:message>
 	    <xsl:copy-of select="."/>
 	  </rule>
 	</s:pattern>
+      </xsl:when>
+      <xsl:when test="self::sch:ns">
+	<xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="self::sch:pattern">
+	<xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="self::sch:rule">
+	<pattern
+	    xmlns="http://purl.oclc.org/dsdl/schematron"
+	    name="{ancestor::tei:elementSpec/@ident}-constraint-{parent::tei:constraint/@ident}">
+	  <xsl:copy-of select="."/>
+	</pattern>
+      </xsl:when>
+      <xsl:when test="(self::sch:report or self::sch:assert) and ancestor::tei:elementSpec">
+	<pattern
+	    name="{ancestor::tei:elementSpec/@ident}-constraint-{parent::tei:constraint/@ident}"
+	    xmlns="http://purl.oclc.org/dsdl/schematron">
+	  <rule>
+	    <xsl:attribute name="context">
+	      <xsl:text>tei:</xsl:text>
+	      <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+	    </xsl:attribute>
+	    <xsl:copy-of select="."/>
+	  </rule>
+	</pattern>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
