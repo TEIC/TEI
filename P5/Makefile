@@ -52,8 +52,7 @@ schema-relaxng:
 
 schema-sch:
 	# extract Schematron rules
-	${SAXON} ${DRIVER} Utilities/extract-sch.xsl > p5.sch
-	${SAXON} ${DRIVER} Utilities/extract-isosch.xsl > p5.isosch
+	${SAXON} ${DRIVER} ${XSL}/odds2/extract-isosch.xsl > p5.isosch
 
 html-web: check
 	perl -p -e \
@@ -187,7 +186,8 @@ valid: check
 	 | grep -v ': error: unfinished element$$' \
 	 | grep -v ': error: unfinished element .* required to finish the element$$'
 	@echo --------- Schematron
-	-${JING} p5.sch ${DRIVER} 
+	${SAXON} p5.isosch Utilities/iso_schematron_message_xslt2.xsl > p5.isosch.xsl
+	${SAXON} ${DRIVER} p5.isosch.xsl
 	@echo --------- XSLT validator
 	${SAXON} ${DRIVER} Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
 	${SAXON} ${DRIVER} Utilities/validator.xsl
@@ -204,12 +204,12 @@ exemplars:
 
 oddschema: 
 	(cd Exemplars;make names)
-	roma ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds.odd .
+	roma2 ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds.odd .
 
 
 exampleschema:
 	(cd Exemplars;make names)
-	roma  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds-ex.odd . 
+	roma2  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds-ex.odd . 
 
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rnc && \
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rng
@@ -244,7 +244,9 @@ dist-source: subset
 	p5odds.odd \
 	relax.rng \
 	schematron.rng \
+	iso-schematron.rng \
 	p5sch.xsl \
+	p5.isosch.xsl \
 	schematron1-5.rnc \
 	*.css \
 	webnav \

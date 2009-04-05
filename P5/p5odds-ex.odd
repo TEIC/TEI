@@ -92,11 +92,30 @@
 		  <ref name="macro.schemaPattern"/>
 		  <ref name="mathml.math"/>
 		  <ref name="anySchematron"/>
+		  <ref name="anyISOSchematron"/>
 		</choice>
 	      </zeroOrMore>
 	    </element>
 	  </content>
 	</macroSpec>
+	
+	<macroSpec ident="anyISOSchematron" mode="add">
+	  <content>
+	    <element xmlns="http://relaxng.org/ns/structure/1.0">
+	      <nsName ns="http://purl.oclc.org/dsdl/schematron"/>
+	      <zeroOrMore>
+		<choice>
+		  <attribute>
+		    <anyName/>
+		  </attribute>
+		  <ref name="anyISOSchematron"/>
+		  <text/>
+	      </choice>
+	      </zeroOrMore>
+	    </element>
+	  </content>
+	</macroSpec>
+	
 	
 	<macroSpec ident="anySchematron" mode="add">
 	  <content>
@@ -133,7 +152,10 @@
 	<content>
 	  <rng:ref name="model.headLike"/>
 	  <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-	    <ref name="anySchematron"/>
+	    <choice>
+	      <ref name="anySchematron"/>
+	      <ref name="anyISOSchematron"/>
+	    </choice>
 	  </zeroOrMore>
 	</content>
       </elementSpec>
@@ -240,6 +262,7 @@
 		  <ref name="mathml.math"/>
 		  <ref name="svg"/>
 		  <ref name="anySchematron"/>
+		  <ref name="anyISOSchematron"/>
 		  <ref name="include"/>
 		  <ref name="anyAlien"/>
 		  <text/>
