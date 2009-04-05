@@ -371,14 +371,15 @@ of the <gi>physDesc</gi> element discussed in <ptr target="#msph1"/>),
 while the dimensions of other specific parts of a manuscript, such as
 accompanying materials, binding, etc., would be given in other parts
 of the description, as appropriate. </p>
-<p>The following three elements are available within the <gi>dimensions</gi> element:
+<p>The following elements are available within the <gi>dimensions</gi> element:
 <specList>
 <specDesc key="height"/>
 <specDesc key="width"/>
 <specDesc key="depth"/>
+<specDesc key="dim"/>
 </specList>
 </p>
-<p>These three elements, as well as <gi>dimensions</gi> itself, are
+<p>These elements, as well as <gi>dimensions</gi> itself, are
 all members of the <ident type="class">att.dimensions</ident> class,
 and thus all carry the following attributes: <specList><specDesc
 key="att.dimensions" atts="scope extent unit quantity atLeast atMost min max
@@ -456,8 +457,17 @@ specified:
 This indicates that for most leaves of the manuscript being described
 the ruled space is 90 mm high and 48 mm wide, while the leaves throughout 
 are between 157 and 160 mm in height and 105 mm in width.</p>
-
-
+<p>The <gi>dim</gi> element is provided for cases where some
+measurement other than height, width, or depth is required. Its
+<att>type</att> attribute is used to indicate the type of measurement
+involved:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<dimensions unit="cm">
+ <height   quantity="900" unit="mm"/>
+ <dim type="circumference"  quantity="48" unit="mm"/>
+</dimensions>
+</egXML>
+</p>
 
 </div>
 <div type="div3" xml:id="msloc"><head>References to Locations within a Manuscript</head>
@@ -785,6 +795,7 @@ racchiudono l'inizio dell'epistolario di Paolino.</p>
 <specGrp xml:id="xphrase.def">
 &catchwords;
 &dimensions;
+&dim;
 &height;
 &depth;
 &width;
