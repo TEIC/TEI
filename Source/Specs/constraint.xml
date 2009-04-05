@@ -24,14 +24,16 @@ $Id: content.xml 5474 2009-01-23 08:18:40Z ge8 $
   </content>
   <constraintList scheme="isoschematron">
     <constraint ident="sch">
+      <sch:ns prefix="s" uri="http://www.ascc.net/xml/schematron"/>
       <sch:report test="s:* and
 		      not(parent::tei:constraintList/@scheme='schematron')">
-	Rules in the schematron language must be inside
+	Rules in the Schematron 1.5 language must be inside
 	a constraintList with a value of 'schematron' on the scheme attribute
       </sch:report>
     </constraint>
     <constraint ident="isosch">
-      <sch:report test="isosch:* and
+      <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
+      <sch:report test="sch:* and
 		      not(parent::tei:constraintList/@scheme='isoschematron')">
 	Rules in the ISO Schematron language must be inside
 	a constraintList with a value of 'isoschematron' on the scheme attribute
