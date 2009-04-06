@@ -382,6 +382,9 @@
       <xsl:when test="count(parent::text:note-body/text:p)=1">
           <xsl:apply-templates/>
       </xsl:when>
+      <xsl:when test="count(parent::text:list-item/text:p)=1">
+          <xsl:apply-templates/>
+      </xsl:when>
       <xsl:when test="@text:style-name='Document Title'">
         <title>
           <xsl:apply-templates/>
@@ -486,7 +489,7 @@
           <xsl:apply-templates/>
         </list>
       </xsl:when>
-      <xsl:when test="starts-with(@text:style-name,'P')">
+      <xsl:when test="starts-with(@text:style-name,'P') or starts-with(text:list-item[1]/@text:style-name,'P')">
         <list type="ordered">
           <xsl:apply-templates/>
         </list>

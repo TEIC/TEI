@@ -198,16 +198,20 @@
     <revisionDesc>
       <change>
         <date>
+	  <xsl:text>$LastChangedDate: </xsl:text>
 	    <xsl:apply-templates
 		select="/office:document/office:meta/dc:date"/>
+	  <xsl:text>$</xsl:text>
 	</date>
         <respStmt>
           <name>
+	    <xsl:text>$LastChangedBy: </xsl:text>
 	    <xsl:apply-templates
 		select="/office:document/office:meta/dc:creator"/>
+	    <xsl:text>$</xsl:text>
 	  </name>
         </respStmt>
-        <item></item>
+        <item>$LastChangedRevision$</item>
       </change>
     </revisionDesc>
 
@@ -388,6 +392,9 @@
       <xsl:when test="count(parent::text:note-body/text:p)=1">
           <xsl:apply-templates/>
       </xsl:when>
+      <xsl:when test="count(parent::text:list-item/text:p)=1">
+          <xsl:apply-templates/>
+      </xsl:when>
       <xsl:when test="@text:style-name='Document Title'">
         <title>
           <xsl:apply-templates/>
@@ -492,7 +499,7 @@
           <xsl:apply-templates/>
         </list>
       </xsl:when>
-      <xsl:when test="starts-with(@text:style-name,'P')">
+      <xsl:when test="starts-with(@text:style-name,'P') or starts-with(text:list-item[1]/@text:style-name,'P')">
         <list type="ordered">
           <xsl:apply-templates/>
         </list>
@@ -837,6 +844,11 @@
       <xsl:if test="text:h">
         <xsl:attribute name="role">label</xsl:attribute>
       </xsl:if>
+      <xsl:choose>
+	<xsl:when test="@office:value-type='float'">
+	  <xsl:attribute name="align">right</xsl:attribute>
+	</xsl:when>
+      </xsl:choose>
       <xsl:apply-templates/>
     </cell>
   </xsl:template>
