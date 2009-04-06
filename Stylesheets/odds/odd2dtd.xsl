@@ -1512,10 +1512,13 @@
       </xsl:otherwise>
     </xsl:choose>
     <xsl:choose>
-      <xsl:when test="(tei:datatype/@maxOccurs &gt; 1) and tei:datatype/rng:ref[@name='data.enumerated']">
+      <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1 or tei:datatype/@maxOccurs='unbounded') and tei:datatype/rng:ref[@name='data.enumerated']">
         <xsl:text> NMTOKENS </xsl:text>
       </xsl:when>
-      <xsl:when test="(tei:datatype/@maxOccurs &gt; 1) and tei:datatype/rng:data[@type='Name']">
+      <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1 or  tei:datatype/@maxOccurs='unbounded') and tei:datatype/rng:ref[@name='data.name']">
+        <xsl:text> NMTOKENS </xsl:text>
+      </xsl:when>
+      <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1 or  tei:datatype/@maxOccurs='unbounded') and tei:datatype/rng:data[@type='Name']">
         <xsl:text> NMTOKENS </xsl:text>
       </xsl:when>
       <xsl:when test="tei:datatype/rng:data[@type='Name']">
