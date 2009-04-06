@@ -138,7 +138,8 @@
 	</xsl:variable>
 
 	<xsl:result-document doctype-public="{$doctypePublic}"
-			     doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
+			     doctype-system="{$doctypeSystem}" 
+			     encoding="{$outputEncoding}"
 			     href="{$outName}" method="{$outputMethod}">
 	  <html>
 	    <xsl:call-template name="addLangAtt"/>

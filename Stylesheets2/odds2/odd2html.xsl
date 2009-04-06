@@ -56,6 +56,9 @@
   <xsl:param name="topNavigationPanel"/>
   <xsl:param name="useHeaderFrontMatter">true</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
+  <xsl:param name="doctypePublic">-//W3C//DTD XHTML 1.1//EN</xsl:param>
+  <xsl:param name="doctypeSystem">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</xsl:param>
+
 <!-- these are ones to override -->
   <xsl:param name="feedbackURL">#</xsl:param>
   <xsl:param name="homeLabel">Home</xsl:param>

@@ -33,7 +33,6 @@
   <xsl:param name="oddmode">tei</xsl:param>
   <xsl:param name="STDOUT">true</xsl:param>
   <xsl:param name="outputSuffix">.html</xsl:param>
-  <xd:doc type="string" class="output"> Public Doctype of output file(s). </xd:doc>
   <xsl:param name="selectedSchema"/>
   <xsl:param name="outputDir"/>
   <xsl:param name="splitLevel">-1</xsl:param>
