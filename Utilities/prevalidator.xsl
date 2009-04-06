@@ -5,7 +5,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:XSL="http://www.w3.org/1999/xsl/TransformAlias" >
 
-<!-- make list  of attributes of which refer to data.pointer,
+<!-- make list  of attributes which refer to data.pointer,
 so that we can check them -->
 <xsl:namespace-alias stylesheet-prefix="XSL" result-prefix="xsl"/>
 <xsl:output indent="yes"/>
@@ -17,10 +17,10 @@ so that we can check them -->
 	 use="'1'"/>
 <xsl:template match="tei:TEI">
   <XSL:stylesheet 
-      version="1.0"
+      version="2.0"
       xmlns:teix="http://www.tei-c.org/ns/Examples"
       xmlns:tei="http://www.tei-c.org/ns/1.0">
-    <xsl:for-each select="key('POINTERLIST',1)">
+    <xsl:for-each select="key('POINTERLIST','1')">
       <xsl:variable name="a" select="ancestor::tei:attDef/@ident"/>
       <xsl:variable name="e"
 		      select="ancestor::tei:elementSpec/@ident"/>
