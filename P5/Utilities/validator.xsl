@@ -159,7 +159,7 @@
     <xsl:when test="starts-with($What,'mailto:')"/>
     <xsl:when test="starts-with($What,'http:')"/>
       <xsl:when test="not(contains($What,'/')) and
-		      not(key('@IDS',$What))">
+		      not(key('IDS',$What))">
 	<xsl:call-template name="Error">
 	  <xsl:with-param name="value" select="$What"/>
        </xsl:call-template>
