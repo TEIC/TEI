@@ -1526,6 +1526,9 @@
       <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1) and tei:datatype/rng:ref[@name='data.enumerated']">
         <xsl:text> NMTOKENS </xsl:text>
       </xsl:when>
+      <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1) and tei:datatype/rng:ref[@name='data.name']">
+        <xsl:text> NMTOKENS </xsl:text>
+      </xsl:when>
       <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1) and tei:datatype/rng:data[@type='Name']">
         <xsl:text> NMTOKENS </xsl:text>
       </xsl:when>
