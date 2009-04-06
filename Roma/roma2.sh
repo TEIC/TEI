@@ -106,11 +106,12 @@ makePDFDOC()
 makeXMLDOC() 
 {
     echo "6. make expanded documented ODD $schema.doc.xml "
-    saxon $RESULTS/$ODD.compiled $TEIXSLDIR/odds2/odd2lite.xsl \
+    saxon -o $RESULTS/$schema.doc.xml  \
+    $RESULTS/$ODD.compiled $TEIXSLDIR/odds2/odd2lite.xsl \
     $DEBUG $LANGUAGE $DOCLANG TEISERVER=$TEISERVER  \
 	localsource="$LOCAL"  \
-	TEIC=$TEIC \
-	-o $RESULTS/$schema.doc.xml 
+	TEIC=$TEIC 
+	
 }
 
 
