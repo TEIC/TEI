@@ -355,7 +355,7 @@
   </xsl:template>
   <xsl:template match="tei:gi">
     <xsl:choose>
-      <xsl:when test="parent::tei:ref or  string-length(@scheme)&gt;0">
+      <xsl:when test="parent::tei:ref or parent::tei:head or string-length(@scheme)&gt;0">
         <span class="gi">
           <xsl:text>&lt;</xsl:text>
           <xsl:apply-templates/>

@@ -210,7 +210,11 @@
     <xd:short>Process elements tei:gi</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:gi">\texttt{&lt;<xsl:apply-templates/>&gt;}</xsl:template>
+  <xsl:template match="tei:gi">
+    <xsl:text>\texttt{&lt;</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>&gt;}</xsl:text>
+  </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:head</xd:short>
     <xd:detail> </xd:detail>
