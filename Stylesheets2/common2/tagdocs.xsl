@@ -187,6 +187,9 @@ version="2.0">
 	  <xsl:attribute name="xml:lang">
 	    <xsl:value-of select="$documentationLanguage"/>
 	  </xsl:attribute>
+	  <xsl:attribute name="{$rendName}">
+	    <xsl:text>label</xsl:text>
+	  </xsl:attribute>
 	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">Datatype</xsl:with-param>
 	  </xsl:call-template>
