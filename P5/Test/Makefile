@@ -5,6 +5,10 @@ DRIVER=guidelines-${INPUTLANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--doclang=${DOCUMENTATIONLANGUAGE} --localsource=../Source/Guidelines/${INPUTLANGUAGE}/${DRIVER}
 
+TESTFILESDTD= \
+	testns \
+	testtite 
+
 TESTFILES= \
 	testClasses \
 	testbare \
@@ -27,14 +31,12 @@ TESTFILES= \
 	testminimal \
 	testms \
 	testnames \
-	testns \
 	testoucs \
 	testp4compat \
 	testplace \
 	testrendition \
 	testspoken \
 	testtagdocs \
-	testtite \
 	testtranscr \
 	tripReport \
 	testall 
@@ -66,7 +68,7 @@ schemas:
 	../Source/Guidelines/en/guidelines-en.xml \
 	../Utilities/makenames.xsl \
 	Modules="tei core textstructure figures header linking" 
-	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTBADFILES); do \
+	-for i in $(TESTFILES) $(TESTFILESDTD) $(TESTDOCBOOKFILES) $(TESTBADFILES); do \
 		echo Try  to validate $$i.odd; \
 		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK stage; \
 		saxon -o $$i-ex.odd $$i.odd ../Utilities/odd2exodd.xsl TEIC=true ;\
@@ -94,7 +96,7 @@ test-schema: test-rnv test-jing
 
 test-jing:
 	echo JING RelaxNG...
-	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do echo $$i: ; jing -t $$i.rng $$i.xml; done
+	for i in $(TESTFILES) $(TESTFILESDTD) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do echo $$i: ; jing -t $$i.rng $$i.xml; done
 	jing -t -c testfrag.rnc testlite.xml
 
 test-rnv:
@@ -104,29 +106,29 @@ test-rnv:
 
 test-xmllint:
 	echo XMLLINT ... for RELAXNG ....
-	for i in $(TESTFILES); do xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; done
+	for i in $(TESTFILES) $(TESTFILESDTD); do xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; done
 
 test-xsd:
 	echo JING .. for XSD....
-	-for i in $(TESTFILES);do echo $$i: ; jing $$i.xsd $$i.xml; done
+	-for i in $(TESTFILES) $(TESTFILESDTD);do echo $$i: ; jing $$i.xsd $$i.xml; done
 
 test-xsd-valid:
 	echo XSDVALID
-	- which xsdvalid && for i in $(TESTFILES);do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
+	- which xsdvalid && for i in $(TESTFILES) $(TESTFILESDTD);do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
 
 test-xerces:
-	-for i in $(TESTFILES) ;do echo $$i: ; java -cp ~/jar/xercesSamples.jar jaxp.SourceValidator -HS -VA -GA -a $$i.xsd -i $$i.xml; done
+	-for i in $(TESTFILES) $(TESTFILESDTD) ;do echo $$i: ; java -cp ~/jar/xercesSamples.jar jaxp.SourceValidator -HS -VA -GA -a $$i.xsd -i $$i.xml; done
 
 
 test-dtd:
 	echo xmllint DTD 
-	-for i in `echo $(TESTFILES)`; do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
+	-for i in `echo $(TESTFILES) $(TESTFILESDTD)`; do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
 
 
 # testall, testp4compat, testodds have no DOCTYPE
 test-dtd-xmllint:
 	echo xmllint DTD using DTD fragments....
-	-for i in  $(TESTFILES); do grep DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml; \
+	-for i in  $(TESTFILES) $(TESTFILESDTD); do grep DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml; \
 	done
 
 test-extns:
@@ -148,7 +150,7 @@ test-bad:
 
 
 clean:
-	-for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.teix.xsd $$i.xsd $$i.rnc $$i.rng;done
+	-for i in $(TESTFILES) $(TESTFILESDTD) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.teix.xsd $$i.xsd $$i.rnc $$i.rng;done
 	-rm -rf LOG *~ *.xsd Schema RomaResults DTD
 	-rm -rf *.doc.*
 	-rm *-examples.rng *-examples.rnc test*.nvdl *-ex.odd
