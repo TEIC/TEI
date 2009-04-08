@@ -177,9 +177,12 @@
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_label</xsl:text>
         </xsl:attribute>
-        <xsl:element namespace="{$outputNS}" name="{$segName}">
+        <xsl:element namespace="{$outputNS}" name="{$hiName}">
 	  <xsl:attribute name="xml:lang">
 	    <xsl:value-of select="$documentationLanguage"/>
+	  </xsl:attribute>
+	  <xsl:attribute name="{$rendName}">
+	    <xsl:text>label</xsl:text>
 	  </xsl:attribute>
 	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">Datatype</xsl:with-param>
@@ -745,6 +748,39 @@
       </xsl:element>
     </xsl:element>
   </xsl:template>
+
+
+  <xsl:template match="tei:elementSpec/tei:constraintList" mode="weave">
+    <xsl:element namespace="{$outputNS}" name="{$rowName}">
+      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	<xsl:attribute name="{$rendName}">
+	  <xsl:text>wovenodd-col1</xsl:text>
+	</xsl:attribute>
+	<xsl:element namespace="{$outputNS}" name="{$hiName}">
+	  <xsl:attribute name="{$rendName}">
+	    <xsl:text>label</xsl:text>
+	  </xsl:attribute>
+	  <xsl:attribute name="xml:lang">
+	    <xsl:value-of select="$documentationLanguage"/>
+	  </xsl:attribute>
+	</xsl:element>
+      </xsl:element>
+      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	<xsl:attribute name="{$rendName}">
+	  <xsl:text>wovenodd-col2</xsl:text>
+	</xsl:attribute>
+	<xsl:for-each select="tei:constraint">
+	  <xsl:element namespace="{$outputNS}" name="{$divName}">
+	    <xsl:attribute name="{$rendName}">
+	      <xsl:text>pre</xsl:text>
+	    </xsl:attribute>
+	    <xsl:apply-templates mode="verbatim"/>
+	  </xsl:element>
+	</xsl:for-each>
+      </xsl:element>
+    </xsl:element>
+  </xsl:template>
+
   <xsl:template name="showClassAtts">
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:for-each select="key('IDENTS',@key)">
@@ -1207,7 +1243,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
         <xsl:element namespace="{$outputNS}" name="{$ulName}">
           <xsl:if test="key('ElementModule',@ident)">
             <xsl:element namespace="{$outputNS}" name="{$itemName}">
-	      <xsl:element namespace="{$outputNS}" name="{$segName}">
+	      <xsl:element namespace="{$outputNS}" name="{$hiName}">
 		<xsl:attribute name="xml:lang">
 		  <xsl:value-of select="$documentationLanguage"/>
 		</xsl:attribute>
@@ -1227,7 +1263,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
           </xsl:if>
           <xsl:if test="key('ClassModule',@ident)">
             <xsl:element namespace="{$outputNS}" name="{$itemName}">
-	      <xsl:element namespace="{$outputNS}" name="{$segName}">
+	      <xsl:element namespace="{$outputNS}" name="{$hiName}">
 		<xsl:attribute name="xml:lang">
 		  <xsl:value-of select="$documentationLanguage"/>
 		</xsl:attribute>		

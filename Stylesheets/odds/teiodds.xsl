@@ -746,6 +746,10 @@ select="$makeDecls"/></xsl:message>
         </xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
+
+    <xsl:apply-templates select="tei:constraintList"/>
+
+
   </xsl:template>
   <xsl:template name="valListChildren">
     <rng:choice>
@@ -1497,6 +1501,8 @@ select="$makeDecls"/></xsl:message>
     <xsl:param name="uri"/>
   </xsl:template>
   <xsl:template name="inhnamespace"/>
+  <xsl:template match="tei:constraintList">
+  </xsl:template>
   <xsl:template match="s:*"/>
   <xsl:template match="tei:altIdent"/>
   <xsl:template match="a:*">
@@ -1843,6 +1849,59 @@ Edition: </xsl:text>
   </xsl:template>
   <xsl:template match="tei:desc" mode="inLanguage">
     <xsl:apply-templates/>
+  </xsl:template>
+  <xsl:template name="processSchematron">
+    <xsl:choose>
+      <xsl:when test="ancestor::teix:egXML"/>
+      <xsl:when test="self::s:ns">
+	<xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="self::s:pattern">
+	<xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="self::s:rule">
+	<s:pattern  name="{ancestor::tei:elementSpec/@ident}-constraint-{parent::tei:constraint/@ident}">
+	  <xsl:copy-of select="."/>
+	</s:pattern>
+      </xsl:when>
+      <xsl:when test="(self::s:report or self::s:assert) and ancestor::tei:elementSpec">
+	<s:pattern name="{ancestor::tei:elementSpec/@ident}-constraint-{parent::tei:constraint/@ident}">
+	  <rule xmlns="http://www.ascc.net/xml/schematron">
+	    <xsl:attribute name="context">
+	      <xsl:text>tei:</xsl:text>
+	      <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+	    </xsl:attribute>
+	    <xsl:copy-of select="."/>
+	  </rule>
+	</s:pattern>
+      </xsl:when>
+      <xsl:when test="self::sch:ns">
+	<xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="self::sch:pattern">
+	<xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="self::sch:rule">
+	<pattern
+	    xmlns="http://purl.oclc.org/dsdl/schematron"
+	    name="{ancestor::tei:elementSpec/@ident}-constraint-{parent::tei:constraint/@ident}">
+	  <xsl:copy-of select="."/>
+	</pattern>
+      </xsl:when>
+      <xsl:when test="(self::sch:report or self::sch:assert) and ancestor::tei:elementSpec">
+	<pattern
+	    name="{ancestor::tei:elementSpec/@ident}-constraint-{parent::tei:constraint/@ident}"
+	    xmlns="http://purl.oclc.org/dsdl/schematron">
+	  <rule>
+	    <xsl:attribute name="context">
+	      <xsl:text>tei:</xsl:text>
+	      <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+	    </xsl:attribute>
+	    <xsl:copy-of select="."/>
+	  </rule>
+	</pattern>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>

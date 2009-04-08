@@ -258,6 +258,7 @@
       <xsl:text>refdoc</xsl:text>
     </xsl:attribute>
     <xsl:attribute name="xml:id">
+      <xsl:text>teispec_</xsl:text>
       <xsl:value-of select="$id"/>
     </xsl:attribute>
     <head>
