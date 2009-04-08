@@ -84,7 +84,7 @@ validate-html:
 	(cd Guidelines-web/${LANGUAGE}/html; \
 	for i in *.html; do \
 	echo validate $$i; \
-	xmllint --dropdtd $$i > z_$$i; \
+	xmllint --noent --dropdtd $$i > z_$$i; \
 	$(JING) -c ../../../xhtml.rnc z_$$i; \
 	 rm z_$$i;\
 	 done)
