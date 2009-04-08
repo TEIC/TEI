@@ -1831,7 +1831,7 @@ select="$M"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
-+
+
   <xsl:template name="processConstraints">
     <xsl:param name="ORIGINAL"/>
     <xsl:param name="elementName"/>
