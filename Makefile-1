@@ -61,7 +61,7 @@ schemas:check
 	(cd Schema; for i in *rng; do trang $$i `basename $$i .rng`.rnc;done)
 	# improve the positioning of blank lines in the RelaxNG compact syntax output for human readability
 	(for i in Schema/*.rnc; do t=`basename $$i .rnc`.tmp; mv $$i $$t; ./Utilities-1/fix_rnc_whitespace.perl < $$t > $$i; rm $$t; done)
-	xmllint --noent --xinclude ${DRIVER} | xsltproc Utilities-2/extract-sch.xsl - > p5.sch
+	xmllint --noent --xinclude ${DRIVER} | xsltproc Utilities-1/extract-sch.xsl - > p5.sch
 
 html-web: check
 	perl -p -e \
