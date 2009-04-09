@@ -117,7 +117,7 @@
               <xsl:call-template name="schemaSpecBody"/>
             </xsl:otherwise>
           </xsl:choose>
-	  <xsl:apply-templates select="tei:constraintList"/>
+	  <xsl:apply-templates select="tei:constraintGrp"/>
         </rng:grammar>
       </xsl:with-param>
     </xsl:call-template>
@@ -322,10 +322,10 @@
 
   <xsl:template match="processing-instruction()" mode="tangle"/>
 
-  <xsl:template match="tei:constraintList[@scheme='schematron']">
+  <xsl:template match="tei:constraintGrp[@scheme='schematron']">
   </xsl:template>
 
-  <xsl:template match="tei:constraintList[@scheme='isoschematron']">
+  <xsl:template match="tei:constraintGrp[@scheme='isoschematron']">
     <xsl:apply-templates/>
   </xsl:template>
 

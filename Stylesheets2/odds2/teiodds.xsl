@@ -846,7 +846,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
 
-    <xsl:apply-templates select="tei:constraintList"/>
+    <xsl:apply-templates select="tei:constraintGrp"/>
 
   </xsl:template>
 
@@ -1665,7 +1665,7 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template name="inhnamespace"/>
 
-  <xsl:template match="tei:constraintList">
+  <xsl:template match="tei:constraintGrp">
   </xsl:template>
 
   <xsl:template match="tei:altIdent"/>
