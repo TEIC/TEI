@@ -20,35 +20,35 @@ $Id: content.xml 5474 2009-01-23 08:18:40Z ge8 $
   <content>
        <rng:ref name="macro.anyXML"/>
   </content>
-  <constraintList scheme="isoschematron">
+  <constraintGrp scheme="isoschematron">
     <constraint ident="sch">
       <sch:ns prefix="s" uri="http://www.ascc.net/xml/schematron"/>
       <sch:report test="s:* and
-		      not(parent::tei:constraintList/@scheme='schematron')">
+		      not(parent::tei:constraintGrp/@scheme='schematron')">
 	Rules in the Schematron 1.5 language must be inside
-	a constraintList with a value of 'schematron' on the scheme attribute
+	a constraintGrp with a value of 'schematron' on the scheme attribute
       </sch:report>
     </constraint>
     <constraint ident="isosch">
       <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
       <sch:report test="sch:* and
-		      not(parent::tei:constraintList/@scheme='isoschematron')">
+		      not(parent::tei:constraintGrp/@scheme='isoschematron')">
 	Rules in the ISO Schematron language must be inside
-	a constraintList with a value of 'isoschematron' on the scheme attribute
+	a constraintGrp with a value of 'isoschematron' on the scheme attribute
       </sch:report>
     </constraint>
-  </constraintList>
+  </constraintGrp>
   <exemplum>
     <p>This constraint uses Schematron to enforce the presence of the
     <att>spanTo</att> attribute (which comes from an attribute class)
     on the <gi>addSpan</gi> element: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <constraintList scheme="isoschematron">
+      <constraintGrp scheme="isoschematron">
 	<constraint ident="demo-c1">
 	  <sch:assert test="@spanTo">The spanTo= attribute of <sch:name/>
 	  is required.</sch:assert>
 	</constraint>
-      </constraintList>
+      </constraintGrp>
     </egXML>
   </exemplum>
   <exemplum>
@@ -57,13 +57,13 @@ $Id: content.xml 5474 2009-01-23 08:18:40Z ge8 $
     implementing an accessibility rule which says that pictures should
     have textual explanations: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <constraintList scheme="isoschematron">
+      <constraintGrp scheme="isoschematron">
 	<constraint ident="demo-c2">
 	  <sch:report test="not(tei:figDesc or tei:head)"> You should
 	  provide information in a figure from which
 	  we can construct an alt attribute in HTML </sch:report>
 	</constraint>
-      </constraintList>
+      </constraintGrp>
     </egXML>
   </exemplum>
   <listRef>
