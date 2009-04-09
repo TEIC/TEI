@@ -152,7 +152,7 @@
       <xsl:apply-templates mode="final"/>
     </xsl:for-each>
     <!-- constraints -->
-    <xsl:apply-templates mode="copy" select="tei:constraintList"/>
+    <xsl:apply-templates mode="copy" select="tei:constraintGrp"/>
 
   </xsl:template>
   <xsl:template match="rng:ref" mode="final">
@@ -398,7 +398,7 @@ How can a class be ok?
       </xsl:if>
       <xsl:copy-of select="tei:classes"/>
       <xsl:apply-templates mode="copy" select="tei:content"/>
-      <xsl:apply-templates mode="copy" select="tei:constraintList"/>
+      <xsl:apply-templates mode="copy" select="tei:constraintGrp"/>
       <attList xmlns="http://www.tei-c.org/ns/1.0">
         <xsl:call-template name="addClassAttsToCopy"/>
         <xsl:choose>
@@ -1836,7 +1836,7 @@ select="$M"/></xsl:message>
     <xsl:param name="ORIGINAL"/>
     <xsl:param name="elementName"/>
     <!-- first put in the ones we know take precedence -->
-    <xsl:for-each select="tei:constraintList">
+    <xsl:for-each select="tei:constraintGrp">
       <xsl:copy>
 	<xsl:copy-of select="@*"/>
 	<xsl:copy-of select="tei:constraint[@mode='add' or not(@mode)]"/>
@@ -1844,7 +1844,7 @@ select="$M"/></xsl:message>
 	<xsl:copy-of select="tei:constraint[@mode='change']"/>
       </xsl:copy>
     </xsl:for-each>
-    <xsl:for-each select="$ORIGINAL/tei:constraintList">
+    <xsl:for-each select="$ORIGINAL/tei:constraintGrp">
       <xsl:copy>
 	<xsl:copy-of select="@*"/>
 	<!-- original source  context -->
