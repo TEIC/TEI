@@ -31,7 +31,7 @@ of the TEI you need to validate that corpus
 <!-- the source of the TEI (just needs *Spec)-->
 <xsl:param name="tei">/usr/share/xml/tei/odd/p5subset.xml</xsl:param>
 
-
+<xsl:key name="ELEMENTS" use="1" match="tei:elementSpec"/>
 <!--
 1) start a variable and copy in all of the TEI 
 2) read the corpus and get a list of all the elements and their
@@ -41,6 +41,17 @@ attributes that it uses
  customization
 -->
 <xsl:template match="/">
+ <xsl:for-each select="key('ELEMENTS',1)">
+   <element>
+     <xsl:copy-of select="@ident"/>
+     <xsl:copy-of select="@module"/>
+     <xsl:for-each select=".//tei:attDef">
+       <attribute>
+	 <xsl:copy-of select="@ident"/>
+       </attribute>
+     </xsl:for-each>
+   </element>
+ </xsl:for-each>
 </xsl:template>
 
 </xsl:stylesheet>
