@@ -812,15 +812,14 @@ attribute of an HTML <gi scheme="HTML">img</gi> can be created:
 </constraint>
 </egXML>
 or we might enforce other HTML accessibility rules about tables; note
-here the use of two rules within one pattern:
+here the use of a report and an assertion within one pattern:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <constraint ident="tables">
   <s:pattern name="Tables">		
     <s:rule context="tei:table">
-      <s:report test="not(tei:head)">A table should have a
-      caption, using a head element</s:report>
-      <s:assert test="not(parent::tei:body)">Do not use tables to lay out the document body</s:assert>
-    </s:rule>
+       <s:assert test="tei:head">A &lt;table> should have a caption, using a &lt;head> element</s:assert>
+       <s:report test="parent::tei:body">Do not use tables to lay out the document body</s:report>
+     </s:rule>
   </s:pattern>	
 </constraint>
 </egXML>
