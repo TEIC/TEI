@@ -1988,15 +1988,20 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
       </xsl:attribute>
       <xsl:for-each select="key('ATTDOCS',1)">
 	<xsl:sort select="@ident"/>
-	<xsl:variable name="this">
-	  <xsl:value-of select="@ident"/>
-	</xsl:variable>
+	<xsl:variable name="this" select="@ident"/>
+        <xsl:variable name="this_ones_id" select="concat('att_',$this)"/>
 	<xsl:if test="generate-id()=generate-id(key('ATTRIBUTES',$this)[1])">
 	  <xsl:element namespace="{$outputNS}" name="{$rowName}">
+	    <xsl:attribute name="xml:id" select="$this_ones_id"/>
 	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
 	      <xsl:attribute name="{$rendName}">
-		<xsl:text>attcat-col1</xsl:text>
+	        <xsl:text>attcat-col1</xsl:text>
 	      </xsl:attribute>
+	      <xsl:element namespace="{$outputNS}" name="a">
+	        <xsl:attribute name="name">
+	          <xsl:value-of select="$this_ones_id"/>
+	        </xsl:attribute>
+	      </xsl:element>
 	      <xsl:value-of select="$this"/>
 	    </xsl:element>
 	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
