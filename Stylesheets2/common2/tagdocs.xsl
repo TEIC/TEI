@@ -1997,11 +1997,6 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	      <xsl:attribute name="{$rendName}">
 	        <xsl:text>attcat-col1</xsl:text>
 	      </xsl:attribute>
-	      <xsl:element namespace="{$outputNS}" name="a">
-	        <xsl:attribute name="name">
-	          <xsl:value-of select="$this_ones_id"/>
-	        </xsl:attribute>
-	      </xsl:element>
 	      <xsl:value-of select="$this"/>
 	    </xsl:element>
 	    <xsl:element namespace="{$outputNS}" name="{$cellName}">
