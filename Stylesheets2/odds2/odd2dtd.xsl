@@ -1098,8 +1098,8 @@
       <xsl:with-param name="includeValList">true</xsl:with-param>
       <xsl:with-param name="coded">false</xsl:with-param>
     </xsl:call-template>
-    <xsl:text> --&gt;
-    &lt;!ELEMENT </xsl:text>
+    <xsl:text> --&gt;&#10;</xsl:text>
+    <xsl:text>&lt;!ELEMENT </xsl:text>
     <xsl:value-of select="$ename"/>
     <xsl:if test="$parameterize='true' and $TEIC='true'">
       <xsl:text> %om.RR;</xsl:text>
