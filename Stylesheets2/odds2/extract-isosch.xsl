@@ -10,7 +10,7 @@
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
   <xsl:key name="SCHEMATRON" match="sch:*[parent::tei:constraint or parent::rng:*]" use="1"/>
   <xsl:template match="/">
-    <schema>
+    <schema queryBinding="xslt2">
       <title>ISO Schematron rules</title>
       <xsl:for-each select="key('SCHEMATRON',1)">
 	<xsl:choose>
