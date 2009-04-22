@@ -53,6 +53,12 @@
   <xsl:param name="oddmode">tei</xsl:param>
   <xsl:param name="displayMode">rnc</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>
+  <xsl:template name="identifyElement">
+    <xsl:param name="id"/>
+    <xsl:attribute name="xml:id">
+      <xsl:value-of select="$id"/>
+    </xsl:attribute>
+  </xsl:template>
   <xsl:template name="verbatim-lineBreak">
     <xsl:param name="id"/>
     <xsl:text>
