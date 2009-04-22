@@ -722,7 +722,11 @@
         <xsl:choose>
           <xsl:when test="$contentbody=''"/>
           <xsl:when test="$contentbody='()'"/>
+	  <!-- some special cases of known evil -->
           <xsl:when test="$contentbody='(#PCDATA |  #PCDATA)'">
+            <xsl:text>(#PCDATA)</xsl:text>
+          </xsl:when>
+          <xsl:when test="contains($contentbody,'#PCDATA') and contains($contentbody,'%macro.anyXML;')">
             <xsl:text>(#PCDATA)</xsl:text>
           </xsl:when>
           <xsl:when test="contains($contentbody, '| ()')">
