@@ -275,6 +275,13 @@
 </xsl:template>
 
 <!-- title  -->
+<xsl:template match="tei:titlePart">
+   <xsl:if test="preceding-sibling::tei:titlePart">
+      <xsl:text> &#8212; </xsl:text>
+    </xsl:if>
+    <xsl:apply-templates/>
+</xsl:template>
+
 <xsl:template match="tei:title">
    <xsl:if test="preceding-sibling::tei:title">
       <xsl:text> &#8212; </xsl:text>
