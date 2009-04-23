@@ -6,7 +6,11 @@
     $Date$
     $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="ptr">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" 
+	     module="core"
+	     ident="ptr"
+	     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+>
   <gloss>pointer</gloss>
   <gloss version="2007-12-20" xml:lang="kr">포인터</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw"/>
@@ -28,6 +32,12 @@
   <content>
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
   </content>
+  <constraint scheme="isoschematron" ident="ptrAtts">
+    <data>
+      	<sch:report test="@target and @cRef">the target and cRef
+	attributes are mutually exclusive.</sch:report>
+    </data>
+  </constraint>
   <attList org="choice">
     <attDef ident="target" usage="req">
       <equiv/>
