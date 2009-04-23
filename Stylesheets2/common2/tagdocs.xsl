@@ -783,6 +783,7 @@ version="2.0">
 	<xsl:attribute name="{$rendName}">
 	  <xsl:text>wovenodd-col2</xsl:text>
 	</xsl:attribute>
+	<xsl:call-template name="makeDescription"/>
 	<xsl:for-each select="tei:data">
 	  <xsl:element namespace="{$outputNS}" name="{$divName}">
 	    <xsl:attribute name="{$rendName}">
