@@ -35,30 +35,21 @@
       <moduleRef key="textstructure"/>
       <elementSpec ident="p" mode="change">
 
-<!--
-	<constraintGrp  scheme="xsl">
-	  <constraint mode="add" ident="p-xsl-1">
-	    <xsl:template match="tei:p">
-	      <xsl:if test="count(foo)=4">
-		<xsl:message>rubbish</xsl:message>
-	      </xsl:if>
-	    </xsl:template>
-	  </constraint>
-	</constraintGrp>
--->
-
-	<constraintGrp  scheme="isoschematron">
-	  <constraint mode="add" ident="c1">
+	  <constraint mode="add" ident="c1" scheme="isoschematron">
+	    <data>
 	    <sch:report test="tei:list"> 
 	    lists inside paragraphs not supported </sch:report>
+	    </data>
 	  </constraint>
-	  <constraint mode="add" ident="c2">
-	    <sch:rule context="tei:p|tei:q">
-	      <sch:report test="contains(@rend,' ')"> 
-	      multi-valued rend is not supported </sch:report>
-	    </sch:rule>
+	  <constraint mode="add" ident="c2"  scheme="isoschematron">
+	    <data>
+	      <sch:rule context="tei:p|tei:q">
+		<sch:report test="contains(@rend,' ')"> 
+		multi-valued rend is not supported </sch:report>
+	      </sch:rule>
+	    </data>
 	  </constraint>
-	</constraintGrp>
+
 
 	<attList>
 	  <attDef ident="type" mode="change">
@@ -69,10 +60,8 @@
 
       </elementSpec>
 
-      <elementSpec ident="relation" mode="change">
-	<constraintGrp  scheme="isoschematron">
-	 <constraint ident="activepassive" mode="delete"/> 
-	</constraintGrp>
+      <elementSpec ident="relation" mode="change" >
+	 <constraint ident="activepassive" mode="delete" scheme="isoschematron"/>
       </elementSpec>
 
     </schemaSpec>
