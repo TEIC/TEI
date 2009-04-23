@@ -37,17 +37,20 @@ $Id$
             <rng:ref name="desc"/>
         </rng:optional>
     </content>
-    <constraintGrp scheme="isoschematron">
-      <constraint ident="activemutual">
+      <constraint ident="activemutual" scheme="isoschematron">
+	<data>
 	<sch:report test="@active and @mutual">Only one of the attributes
 	'active' and 'mutual' may be supplied</sch:report>
+	</data>
       </constraint>
-      <constraint ident="activepassive">
+      <constraint ident="activepassive" scheme="isoschematron">
+	<data>
 	<sch:report test="@passive and not(@active)">the attribute 'passive'
 	may be supplied only if the attribute 'active' is
 	supplied</sch:report>
+	</data>
       </constraint>
-    </constraintGrp>
+
     <attList>
         <attDef ident="type">
             <equiv/>

@@ -738,28 +738,31 @@ the TEI scheme, however, different naming conventions are used to
 distinguish amongst the objects being named. Unqualified names
 (<code>fileDesc</code>, <code>revisionDesc</code>) are always element
 names. Names prefixed with <code>model.</code> or <code>att.</code>
-(e.g. <ident type="class">model.headerPart</ident> are always class
+(e.g. <ident type="class">model.headerPart</ident> and <ident
+type="class">att.typed</ident>)
+are always class
 names. In DTD language, classes are represented by parameter entities
 (<code>%model.headerPart;</code> in the above example); see further
 <ptr target="#ST"/>.</p>
 <!-- more examples needed -->
 
-<p>In addition to the <gi>content</gi> element, a second container,
-<gi>constraintGrp</gi>, is provided where rules about the validity of
-an element can be expressed, as a series of identified
-<gi>constraint</gi> elements. They are identifiable in order
+<p>In addition to the <gi>content</gi> element, a set of identified general
+<gi>constraint</gi> elements can be provided where rules about the validity of
+an element can be expressed. They are identifiable in order
 that a TEI customization may override, delete or change them individually.
-The container follows the <gi>content</gi>
-element, and is also permitted as a sibling of <gi>datatype</gi> in
-<gi>attDef</gi>, and as a child of <gi>schemaSpec</gi>.  The
-constraints can be expressed in any notation may be found useful;
+These elements follow the <gi>content</gi>
+element, are permitted as siblings of <gi>datatype</gi> in
+<gi>attDef</gi>, and as children of <gi>schemaSpec</gi>.  The
+constraints can be expressed in any notation which is found useful;
 the scheme must be recorded using the <att>scheme</att> attribute
-of <gi>constraintGrp</gi>.</p>
+of <gi>constraint</gi>.</p>
 
 <p>The TEI Guidelines themselves provide constraints using the
 ISO Schematron language. These are normative, and
 changes to them may affect conformance, just as for
-<gi>content</gi>.</p>
+<gi>content</gi>. Although not all processors will be
+able to process all constraints, they should follow as many
+as they can. </p>
 
 <p>A complete Schematron document consists of a <gi
 scheme="Schematron">schema</gi> element containing <gi
@@ -785,67 +788,79 @@ has a note that
 may be supplied only if the attribute <att>active</att> is
 supplied.</q>, which can be written in Schematron as
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<constraintGrp scheme="schematron">
-  <constraint ident="activemutual"> 
-    <s:report test="@active and @mutual">Only one of the attributes
-    'active' and 'mutual' may be supplied</s:report>
-    <s:report test="@passive and not(@active)">the attribute 'passive'
-    may be supplied only if the attribute 'active' is
-    supplied</s:report>
+  <constraint ident="activemutual" scheme="isoschematron"> 
+    <desc>Check mutually incompatible attributes</desc>
+    <data>
+      <s:report test="@active and @mutual">Only one of the attributes
+      'active' and 'mutual' may be supplied</s:report>
+      <s:report test="@passive and not(@active)">the attribute 'passive'
+      may be supplied only if the attribute 'active' is
+      supplied</s:report>
+    </data>
   </constraint>
-</constraintGrp>
+
 </egXML>
 </p>
 <p>We may also look at rules to apply to 
-a TEI document which must be rendered into accessible HTML. We can check
+a TEI document which is going to be rendered into accessible HTML. We can check
 that some sort of content is available from which the <att>alt</att>
 attribute of an HTML <gi scheme="HTML">img</gi> can be created:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<constraint ident="alt"> 
-  <s:pattern name="Alt tags">
-    <s:rule context="tei:figure">
-      <s:report test="not(tei:figDesc or tei:head)"> You should
-      provide information in a figure from which
-      we can construct an alt attribute in HTML </s:report>
-    </s:rule>
-  </s:pattern>
+<constraint ident="alt" scheme="isoschematron">
+  <data> 
+    <s:pattern name="Alt tags">
+      <s:rule context="tei:figure">
+	<s:report test="not(tei:figDesc or tei:head)"> You should
+	provide information in a figure from which
+	we can construct an alt attribute in HTML </s:report>
+      </s:rule>
+    </s:pattern>
+  </data>
 </constraint>
 </egXML>
 or we might enforce other HTML accessibility rules about tables; note
 here the use of a report and an assertion within one pattern:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<constraint ident="tables">
+<constraint ident="tables" scheme="isoschematron">
+<data>
   <s:pattern name="Tables">		
     <s:rule context="tei:table">
        <s:assert test="tei:head">A &lt;table> should have a caption, using a &lt;head> element</s:assert>
        <s:report test="parent::tei:body">Do not use tables to lay out the document body</s:report>
      </s:rule>
   </s:pattern>	
+</data>
 </constraint>
 </egXML>
 We can also model contextual constraints in Schematron:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<constraint ident="subclauses">
+<constraint ident="subclauses"  scheme="isoschematron">
+  <data>
   <s:rule context="tei:div">
     <s:assert
 	test="not(tei:div) or count(tei:div)&gt;1">a clause must contain
     at least two subclauses</s:assert>
   </s:rule>
+  </data>
 </constraint>
 </egXML>
 and base requirements on attribute values:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<constraint ident="introtitle">
+<constraint ident="introtitle"  scheme="isoschematron">
+  <data>
   <s:assert
       test="tei:fileDesc/tei:titleStmt/tei:title[@type='introductory']">
     An introductory component of the title is expected
   </s:assert>
+  </data>
 </constraint>
-<constraint ident="maintitle">
-  <s:assert
-      test="tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
-    An main component of the title is expected
-  </s:assert>
+<constraint ident="maintitle" scheme="isoschematron">
+  <data>
+    <s:assert
+	test="tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
+      An main component of the title is expected
+    </s:assert>
+  </data>
 </constraint>
 </egXML>
 </p>
@@ -1178,8 +1193,8 @@ see section <ptr target="STEC"/>.-->
 
 <specGrp xml:id="TDSG5" n="Element specification elements">
 &content;
-&constraintGrp;
 &constraint;
+&data;
 &macro.anyXML;
 &macro.schemaPattern;
 &attList;

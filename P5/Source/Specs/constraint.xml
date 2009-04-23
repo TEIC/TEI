@@ -16,65 +16,97 @@ $Id: content.xml 5474 2009-01-23 08:18:40Z ge8 $
   which cannot be expressed in the structural content model</desc>
   <classes>
     <memberOf key="att.identified"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>
-      <rng:choice>
-        <rng:text/>
-	<rng:ref name="macro.anyXML"/>
-      </rng:choice>
+      <rng:zeroOrMore>
+        <rng:ref name="model.glossLike"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+	<rng:ref name="data"/>
+      </rng:optional>
   </content>
- 
-  <constraintGrp scheme="private">
-   <constraint ident="local">
-(output = (ident(title) ident(author) "You must supply a title or an author"))
-(output = leq(title,author)  "title and author cannot be the same")
-    </constraint>
-  </constraintGrp>
-
-  <constraintGrp scheme="isoschematron">
-    <constraint ident="sch">
+  
+  <constraint ident="sch" scheme="isoschematron">
+    <data>
       <sch:ns prefix="s" uri="http://www.ascc.net/xml/schematron"/>
-      <sch:report test="s:* and
-		      not(parent::tei:constraintGrp/@scheme='schematron')">
-	Rules in the Schematron 1.5 language must be inside
-	a constraintGrp with a value of 'schematron' on the scheme attribute
+      <sch:report test="tei:data/s:* and
+			not(@scheme='schematron')">
+	Rules in the Schematron 1.* language must be inside
+	a constraint with a value of 'schematron' on the scheme attribute
       </sch:report>
-    </constraint>
-    <constraint ident="isosch">
+    </data>
+  </constraint>
+
+  <constraint ident="isosch" scheme="isoschematron">
+    <data>
       <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
-      <sch:report test="sch:* and
-		      not(parent::tei:constraintGrp/@scheme='isoschematron')">
+      <sch:report test="tei:data/sch:* and
+			not(@scheme='isoschematron')">
 	Rules in the ISO Schematron language must be inside
-	a constraintGrp with a value of 'isoschematron' on the scheme attribute
+	a constraint with a value of 'isoschematron' on the scheme attribute
       </sch:report>
-    </constraint>
-  </constraintGrp>
+    </data>
+  </constraint>
+
+  <attList>
+    <attDef ident="scheme" usage="req">
+      <equiv/>
+      <desc>supplies the name of the language in which the constraints
+      are defined</desc>
+      <valList type="closed">
+        <valItem ident="schematron">
+          <gloss>Schematron</gloss>
+	</valItem>
+        <valItem ident="isoschematron">
+          <gloss>ISO Schematron</gloss>
+	</valItem>
+        <valItem ident="xsl">
+          <gloss>XSLT</gloss>
+	</valItem>
+        <valItem ident="private">
+          <gloss>private constraint language</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
   <exemplum>
     <p>This constraint uses Schematron to enforce the presence of the
     <att>spanTo</att> attribute (which comes from an attribute class)
     on the <gi>addSpan</gi> element: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <constraintGrp scheme="isoschematron">
-	<constraint ident="demo-c1">
+      <constraint ident="demo-c1" scheme="isoschematron">
+	<desc>Enforce the presence of the <att>spanTo</att> attribute</desc>
+	<data>
 	  <sch:assert test="@spanTo">The spanTo= attribute of <sch:name/>
 	  is required.</sch:assert>
-	</constraint>
-      </constraintGrp>
+	</data>
+      </constraint>
     </egXML>
   </exemplum>
   <exemplum>
-    <p>This constraint uses Schematron to check whether a
-    <gi>figure</gi> element has either a title or a description, 
-    implementing an accessibility rule which says that pictures should
-    have textual explanations: </p>
+    
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <constraintGrp scheme="isoschematron">
-	<constraint ident="demo-c2">
+      <constraint ident="demo-c2" scheme="isoschematron">
+	<desc>Implement an accessibility rule which says that pictures should
+    have textual explanations</desc>
+	<data>
 	  <sch:report test="not(tei:figDesc or tei:head)"> You should
 	  provide information in a figure from which
 	  we can construct an alt attribute in HTML </sch:report>
-	</constraint>
-      </constraintGrp>
+	</data>
+      </constraint>
+    </egXML>
+  </exemplum>
+  <exemplum>
+    <p>This constraint uses a language which is not
+    expressed in XML to check whether the title and author are identical: </p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <constraint ident="local" scheme="private">
+	<data>
+(output = leq(title,author)  "title and author cannot be the same")
+	</data>
+  </constraint>
     </egXML>
   </exemplum>
   <listRef>
