@@ -79,7 +79,7 @@ XSL LaTeX stylesheet to make slides
 
   <xsl:template name="latexLayout">
 \date{<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition/tei:date"/>}
-\institute{<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>}
+\institute{<xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>}
 <xsl:if test="not($latexLogo='')">
 <xsl:text>\pgfdeclareimage[height=1cm]{logo}{</xsl:text>
 <xsl:choose>
@@ -94,6 +94,10 @@ XSL LaTeX stylesheet to make slides
 \logo{\pgfuseimage{logo}}
 </xsl:if>
 </xsl:template>
+
+<xsl:template match="tei:authority/tei:address/tei:addrLine">
+ \newline <xsl:apply-templates/>
+</xsl:template> 
 
 <xsl:template name="latexBegin">
 \frame{\maketitle}
