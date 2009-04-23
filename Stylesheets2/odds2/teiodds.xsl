@@ -846,7 +846,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
 
-    <xsl:apply-templates select="tei:constraintGrp"/>
+    <xsl:apply-templates select="tei:constraint"/>
 
   </xsl:template>
 
@@ -1665,7 +1665,7 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template name="inhnamespace"/>
 
-  <xsl:template match="tei:constraintGrp">
+  <xsl:template match="tei:constraint">
   </xsl:template>
 
   <xsl:template match="tei:altIdent"/>
@@ -2007,12 +2007,12 @@ select="$makeDecls"/></xsl:message>
 	<xsl:copy-of select="."/>
       </xsl:when>
       <xsl:when test="self::s:rule">
-	<s:pattern  name="{ancestor::tei:elementSpec/@ident}-constraint-{parent::tei:constraint/@ident}">
+	<s:pattern  name="{ancestor::tei:elementSpec/@ident}-constraint-{ancestor::tei:constraint/@ident}">
 	  <xsl:copy-of select="."/>
 	</s:pattern>
       </xsl:when>
       <xsl:when test="(self::s:report or self::s:assert) and ancestor::tei:elementSpec">
-	<s:pattern name="{ancestor::tei:elementSpec/@ident}-constraint-{parent::tei:constraint/@ident}">
+	<s:pattern name="{ancestor::tei:elementSpec/@ident}-constraint-{ancestor::tei:constraint/@ident}">
 	  <rule xmlns="http://www.ascc.net/xml/schematron">
 	    <xsl:attribute name="context">
 	      <xsl:text>tei:</xsl:text>
@@ -2031,13 +2031,13 @@ select="$makeDecls"/></xsl:message>
       <xsl:when test="self::sch:rule">
 	<pattern
 	    xmlns="http://purl.oclc.org/dsdl/schematron"
-	    name="{ancestor::tei:elementSpec/@ident}-constraint-{parent::tei:constraint/@ident}">
+	    name="{ancestor::tei:elementSpec/@ident}-constraint-{ancestor::tei:constraint/@ident}">
 	  <xsl:copy-of select="."/>
 	</pattern>
       </xsl:when>
       <xsl:when test="(self::sch:report or self::sch:assert) and ancestor::tei:elementSpec">
 	<pattern
-	    name="{ancestor::tei:elementSpec/@ident}-constraint-{parent::tei:constraint/@ident}"
+	    name="{ancestor::tei:elementSpec/@ident}-constraint-{ancestor::tei:constraint/@ident}"
 	    xmlns="http://purl.oclc.org/dsdl/schematron">
 	  <rule>
 	    <xsl:attribute name="context">

@@ -764,7 +764,7 @@ version="2.0">
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="tei:elementSpec/tei:constraintGrp" mode="weave">
+  <xsl:template match="tei:elementSpec/tei:constraint" mode="weave">
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
 	<xsl:attribute name="{$rendName}">
@@ -783,7 +783,7 @@ version="2.0">
 	<xsl:attribute name="{$rendName}">
 	  <xsl:text>wovenodd-col2</xsl:text>
 	</xsl:attribute>
-	<xsl:for-each select="tei:constraint">
+	<xsl:for-each select="tei:constraint/tei:data">
 	  <xsl:element namespace="{$outputNS}" name="{$divName}">
 	    <xsl:attribute name="{$rendName}">
 	      <xsl:text>pre</xsl:text>
