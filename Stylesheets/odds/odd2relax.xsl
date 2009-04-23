@@ -99,7 +99,7 @@ Schema generated from ODD source </xsl:text>
               <xsl:call-template name="schemaSpecBody"/>
             </xsl:otherwise>
           </xsl:choose>
-	  <xsl:apply-templates select="tei:constraintGrp"/>
+	  <xsl:apply-templates select="tei:constraint"/>
         </rng:grammar>
       </xsl:with-param>
     </xsl:call-template>
