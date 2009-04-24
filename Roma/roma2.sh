@@ -152,7 +152,7 @@ echo "  --isoschematron       # extract ISO Schematron rules"
 echo "  --useteiversion    # use version data from TEI P5"
 echo "  --parameterize     # create parameterized DTD"
 echo "  --patternprefix=STRING # prefix RELAX NG patterns with STRING"
-echo "  --schema=NAME      # select name schema spec"
+echo "  --schema=NAME      # select named schema spec"
 exit 1
 }
 
