@@ -117,9 +117,7 @@ usageMsg()
 {
 echo "Roma -- reads in a TEI ODD file that specifies a schema, and tangles it"
 echo "into RelaxNG schema, DTD, and W3C XML Schema, and can weave it into an"
-echo "expanded, self-documented single ODD file. Note that only the first"
-echo "<schemaSpec> encountered in the input ODD file is processed; all others"
-echo "are ignored."
+echo "expanded, self-documented single ODD file. "
 echo "  Usage: roma [options] schemaspec [output_directory]"
 echo "  options, shown with defaults:"
 
