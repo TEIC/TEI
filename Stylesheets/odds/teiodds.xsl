@@ -1501,6 +1501,11 @@ select="$makeDecls"/></xsl:message>
     <xsl:param name="uri"/>
   </xsl:template>
   <xsl:template name="inhnamespace"/>
+
+  <xsl:template match="tei:constraint/tei:desc"/>
+  <xsl:template match="tei:constraint/tei:gloss"/>
+  <xsl:template match="tei:constraint/tei:equiv"/>
+
   <xsl:template match="tei:constraint">
   </xsl:template>
   <xsl:template match="s:*"/>
