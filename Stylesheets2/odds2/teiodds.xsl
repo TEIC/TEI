@@ -1665,8 +1665,12 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template name="inhnamespace"/>
 
-  <xsl:template match="tei:constraint">
-  </xsl:template>
+  <xsl:template match="tei:constraint/tei:desc"/>
+  <xsl:template match="tei:constraint/tei:gloss"/>
+  <xsl:template match="tei:constraint/tei:equiv"/>
+
+
+  <xsl:template match="tei:constraint"/>
 
   <xsl:template match="tei:altIdent"/>
 
