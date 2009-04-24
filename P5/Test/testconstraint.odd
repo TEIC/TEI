@@ -33,8 +33,24 @@
       <moduleRef key="tei"/>
       <moduleRef key="namesdates"/>
       <moduleRef key="textstructure"/>
+      <elementSpec ident="div" mode="change">
+	<constraint mode="add" ident="canondiv"
+		    scheme="isoschematron">
+	  <sch:report test="@type='canon' and
+			    parent::tei:div/@type='canon'">
+	    divs of type 'canon' may not be nested
+	  </sch:report>
+	  <sch:report test="@type='canon' and
+			    parent::tei:div/@type='register'">
+	    divs of type 'canon' may not be nested within 'register'
+	  </sch:report>
+	  <sch:report test="@type='canon' and count
+			    (tei:div[@type='canonText']) &gt;1">
+	    divs of type 'canon' may contain only one 'canonText'
+	  </sch:report>
+	</constraint>
+      </elementSpec>
       <elementSpec ident="p" mode="change">
-
 	  <constraint mode="add" ident="c1" scheme="isoschematron">
 	    <data>
 	    <sch:report test="tei:list"> 
