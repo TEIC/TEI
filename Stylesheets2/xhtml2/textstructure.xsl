@@ -1367,7 +1367,7 @@ $requestedID: requests a particular page
       </xsl:otherwise>
     </xsl:choose>
     <xsl:if test="not($cssSecondaryFile='')">
-      <link href="{$cssSecondaryFile}" media="screen" rel="stylesheet"
+      <link href="{$cssSecondaryFile}" rel="stylesheet"
         type="text/css"/>
     </xsl:if>
     <xsl:if test="not($cssPrintFile='')">
