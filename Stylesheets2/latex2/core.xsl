@@ -290,6 +290,7 @@
   <xsl:template name="rendering">
     <xsl:variable name="cmd">
       <xsl:choose>
+        <xsl:when test="starts-with(@rend,'color')">textcolor</xsl:when>
         <xsl:when test="@rend='bold'">textbf</xsl:when>
         <xsl:when test="@rend='center'">centerline</xsl:when>
         <xsl:when test="@rend='code'">texttt</xsl:when>
@@ -320,6 +321,12 @@
     </xsl:variable>
     <xsl:text>\</xsl:text>
     <xsl:value-of select="$cmd"/>
+    <xsl:if
+	    test="starts-with(@rend,'color')">
+	    <xsl:text>{</xsl:text>
+	    <xsl:value-of select="substring-after(@rend,'color')"/>
+	    <xsl:text>}</xsl:text>
+    </xsl:if>
     <xsl:text>{</xsl:text>
     <xsl:apply-templates/>
     <xsl:text>}</xsl:text>
