@@ -24,9 +24,8 @@
       <xsl:text>/image</xsl:text>
       <xsl:number level="any"/>
       <xsl:text>.</xsl:text>
-      <xsl:value-of select="substring-after(@url,'.')"/>
-<xsl:text>
-</xsl:text>
+      <xsl:value-of select="tokenize(@url,'\.')[last()]"/>
+      <xsl:text>&#10;</xsl:text>
     </xsl:for-each>
   </xsl:template>
 </xsl:stylesheet>

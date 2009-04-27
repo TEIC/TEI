@@ -27,7 +27,7 @@
 	  <xsl:text>media/image</xsl:text>
 	  <xsl:number level="any"/>
 	  <xsl:text>.</xsl:text>
-	  <xsl:value-of select="substring-after(@url,'.')"/>
+	  <xsl:value-of select="tokenize(@url,'\.')[last()]"/>
 	</xsl:variable>
 	<xsl:attribute name="url">
 	  <xsl:value-of select="$newName"/>

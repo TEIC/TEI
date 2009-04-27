@@ -32,10 +32,7 @@ saxon $THERE/$F $XSL/docx/listgraphics.xsl DIR=$TEMPDIR/word/media > $TEMPDIR/fe
 sh $TEMPDIR/fetch
 rm $TEMPDIR/fetch
 (cd $TEMPDIR/word/media
-if test -f *.xml
-then
-   for i in *; do  exiftool -q -o $i.xmp $i; done
-fi
+for i in *; do  exiftool -q -o $i.xmp $i; done
 )
 cd $TEMPDIR
 unzip -o -q $TEMPLATES/template.docx
