@@ -967,6 +967,15 @@ is there a number present?
 		<xsl:when test="@scale and @teidocx:width">
 		  <xsl:value-of select="(@teidocx:width *  number(@scale)) cast as xs:integer"/>
 		</xsl:when>
+		<xsl:when test="@height and @teidocx:height">
+		  <xsl:variable name="h">
+		    <xsl:value-of
+			select="teidocx:convert-dim-emu(@height)"/>
+		  </xsl:variable>
+		  <xsl:value-of select="(@teidocx:width *
+					($h div number(@teidocx:height)))
+					cast as xs:integer"/>
+		</xsl:when>
 		<xsl:when test="@teidocx:width">
 		  <xsl:value-of select="@teidocx:width"/>
 		</xsl:when>
