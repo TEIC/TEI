@@ -1588,15 +1588,15 @@
           <xsl:otherwise>
             <xsl:choose>
               <xsl:when test="ancestor::tei:front">
-                <xsl:number count="tei:note[./@place='end']" from="tei:front"
+                <xsl:number count="tei:note[./@place='end' or @place='bottom']" from="tei:front"
                   level="any"/>
               </xsl:when>
               <xsl:when test="ancestor::tei:back">
-                <xsl:number count="tei:note[./@place='end']" from="tei:back"
+                <xsl:number count="tei:note[./@place='end' or @place='bottom']" from="tei:back"
                   level="any"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:number count="tei:note[./@place='end']" from="tei:body"
+                <xsl:number count="tei:note[./@place='end' or @place='bottom']" from="tei:body"
                   level="any"/>
               </xsl:otherwise>
             </xsl:choose>
