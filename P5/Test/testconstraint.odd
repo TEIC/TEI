@@ -48,6 +48,10 @@
 			    (tei:div[@type='canonText']) &gt;1">
 	    divs of type 'canon' may contain only one 'canonText'
 	  </sch:report>
+	  <sch:report test="@type='canonText' and 
+			    not(parent::tei:div[@type='canon'])">
+	    divs of type 'canonText' can only occur inside 'canon'
+	  </sch:report>
 	</constraint>
       </elementSpec>
       <elementSpec ident="p" mode="change">
