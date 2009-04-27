@@ -633,9 +633,23 @@ version="2.0">
 	      <xsl:attribute name="{$rendName}">
 		<xsl:text>wovenodd-col2</xsl:text>
 	      </xsl:attribute>
+	      <xsl:choose>
+		<xsl:when test="not(tei:attList)">
+		  <xsl:call-template name="showAttClasses"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:for-each select="tei:attList">
+		    <xsl:call-template name="displayAttList">
+		      <xsl:with-param name="mode">all</xsl:with-param>
+		    </xsl:call-template>
+		  </xsl:for-each>
+		</xsl:otherwise>
+	      </xsl:choose>
+<!--
 	      <xsl:for-each select="$myatts/a">
 		<xsl:copy-of select="*|text()"/>
 	      </xsl:for-each>
+-->
 	      </xsl:element>
 	    </xsl:element>
 	  </xsl:if>
