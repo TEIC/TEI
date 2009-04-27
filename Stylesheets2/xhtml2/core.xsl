@@ -1582,7 +1582,7 @@
         <xsl:choose>
           <xsl:when test="$consecutiveFootnoteNumbers = 'true'">
             <xsl:number 
-		count="tei:note[./@place='end']" 
+		count="tei:note[./@place='end' or @place='bottom']" 
 		level="any"/>
           </xsl:when>
           <xsl:otherwise>
