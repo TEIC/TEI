@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <xsl:stylesheet version="2.0"
       exclude-result-prefixes="saxon tei webaudit xs"
+      xpath-default-namespace="http://www.tei-c.org/ns/1.0"
       xmlns:saxon="http://saxon.sf.net/"
       xmlns:tei="http://www.tei-c.org/ns/1.0"
       xmlns:webaudit="http://www.oucs.ox.ac.uk/namespaces/isteam/WebAudit"
@@ -10,8 +11,8 @@
   <xsl:param name="corpus"/>
   <xsl:param name="base"/>
 
-  <xsl:key name="All" match="tei:*" use="1"/>
-  <xsl:key name="E" match="tei:*" use="local-name()"/>
+  <xsl:key name="All" match="*" use="1"/>
+  <xsl:key name="E" match="*" use="local-name()"/>
 
   <xsl:template match="/">
     <xsl:variable name="pathlist">
@@ -21,13 +22,13 @@
     </xsl:variable>
     <xsl:variable name="docs" select="collection($pathlist)"/> 
     <xsl:variable name="all">
-      <tei:teiCorpus>
-	<xsl:for-each select="$docs/tei:TEI">
-	  <tei:TEI n="{base-uri(.)}">
+      <teiCorpus>
+	<xsl:for-each select="$docs/TEI">
+	  <TEI xn="{base-uri(.)}">
 	    <xsl:copy-of select="@*|*"/>
-	  </tei:TEI>
+	  </TEI>
 	</xsl:for-each>
-      </tei:teiCorpus>
+      </teiCorpus>
     </xsl:variable>
     <xsl:for-each select="$all">
       <xsl:call-template name="processAll"/>
