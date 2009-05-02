@@ -1,6 +1,7 @@
 <xsl:stylesheet 
-    exclude-result-prefixes="rng tei"
+    exclude-result-prefixes="rng tei n"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:n="www.example.com"
     xmlns:rng="http://relaxng.org/ns/structure/1.0" 
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns="http://www.tei-c.org/ns/1.0"
@@ -57,7 +58,9 @@ attributes that it uses
 -->
 
 <xsl:template name="processAll">
-
+<xsl:variable name="count">
+  <xsl:value-of select="count(/n:ROOT/*)"/>
+</xsl:variable>
 <!-- assemble together all the TEI elements and attributes, 
      followed by all the
      elements and attributes used in the corpus -->
@@ -183,7 +186,9 @@ attributes that it uses
    <teiHeader>
       <fileDesc>
          <titleStmt>
-            <title>TEI customization based on <xsl:value-of select="$corpus"/></title>
+            <title>TEI customization based on analyzing 
+	    <xsl:value-of select="$count"/> files from
+	    <xsl:value-of select="$corpus"/></title>
          </titleStmt>
          <publicationStmt>
 	   <p> </p>
