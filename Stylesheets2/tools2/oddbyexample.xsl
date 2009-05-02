@@ -46,15 +46,18 @@ of the TEI you need to validate that corpus
 <xsl:key name="IDENTS" use="@ident" match="*[@ident]"/>
 <xsl:key name="MEMBERS" use="@key" match="elementSpec/classes/memberOf"/>
 <xsl:key name="CLASSMEMBERS" use="@key" match="classSpec/classes/memberOf"/>
-<xsl:key name="Used" use="@ident" match="docs/element"/>
-<xsl:key name="UsedAtt" use="concat(../@ident,@ident)" match="docs/element/attribute"/>
+<xsl:key name="Used" use="@ident" match="docs/elementSpec"/>
+<xsl:key name="UsedAtt" use="concat(../@ident,@ident)" match="docs/elementSpec/attDef"/>
 <!--
 1) start a variable and copy in all of the TEI 
 2) read the corpus and get a list of all the elements and their
-attributes that it uses
+attributes that it uses, put that in the same variable
 3) process the variable and read the TEI section. if an element or
  attribute is not present in the corpus section, put out a delete
  customization
+4) for every attribute which is of type "enumerated", construct a
+valList
+
 -->
 
 <xsl:template name="processAll">
@@ -69,38 +72,38 @@ attributes that it uses
      <tei>
        <xsl:for-each select="document($tei)">
 	 <xsl:for-each select="key('CLASSES',1)">
-	   <class>
+	   <classSpec>
 	     <xsl:copy-of select="@ident"/>
 	     <xsl:copy-of select="@module"/>
 	     <xsl:for-each select=".//attDef">
-	       <attribute>
+	       <attDef>
 		 <xsl:copy-of select="@ident"/>
 		 <xsl:call-template name="checktype"/>
-	       </attribute>
+	       </attDef>
 	     </xsl:for-each>
 	     <xsl:call-template name="classmembers"/>
-	   </class>
+	   </classSpec>
 	 </xsl:for-each>
 	 <xsl:for-each select="key('ELEMENTS',1)">
-	   <element>
+	   <elementSpec>
 	     <xsl:copy-of select="@ident"/>
 	     <xsl:copy-of select="@module"/>
 	     <xsl:for-each select=".//tei:attDef">
-	       <attribute>
+	       <attDef>
 		 <xsl:copy-of select="@ident"/>
 		 <xsl:call-template name="checktype"/>
-	       </attribute>
+	       </attDef>
 	     </xsl:for-each>
 	     <xsl:for-each select="key('IDENTS','att.global')">
 	       <xsl:for-each select=".//tei:attDef">
-		 <attribute class="att.global">
+		 <attDef class="att.global">
 		   <xsl:copy-of select="@ident"/>
 		   <xsl:call-template name="checktype"/>
-		 </attribute>
+		 </attDef>
 	       </xsl:for-each>
 	     </xsl:for-each>
 	     <xsl:call-template name="classatts"/>
-	   </element>
+	   </elementSpec>
 	 </xsl:for-each>
        </xsl:for-each>
      </tei>
@@ -108,14 +111,14 @@ attributes that it uses
        <xsl:for-each-group select="key('All',1)" group-by="local-name()">
 	 <xsl:sort select="current-grouping-key()"/>
 	 <xsl:variable name="ident" select="current-grouping-key()"/>
-	 <element>
+	 <elementSpec>
 	   <xsl:attribute name="ident">
 	     <xsl:copy-of select="current-grouping-key()"/>
 	   </xsl:attribute>
 	   <xsl:for-each-group
 	       select="key('Atts',$ident)"
 	       group-by="local-name()">
-	     <attribute ident="{name()}">
+	     <attDef ident="{name()}">
 	       <valList type="closed">
 		 <xsl:for-each-group
 		     select="key('attVals',concat($ident,local-name()))"
@@ -134,9 +137,9 @@ attributes that it uses
 		   </xsl:choose>
 		 </xsl:for-each-group>
 	       </valList>
-	     </attribute>
+	     </attDef>
 	   </xsl:for-each-group>
-	 </element>
+	 </elementSpec>
        </xsl:for-each-group>
      </docs>
    </stage1>
@@ -146,10 +149,10 @@ attributes that it uses
    <stage2>
      <!-- for every attribute class, see if its members should be
      deleted, by seeing if they are used anywhere-->
-     <xsl:for-each select="$stage1/stage1/tei/class">
+     <xsl:for-each select="$stage1/stage1/tei/classSpec">
        <classSpec ident="{@ident}" module="{@module}" type="atts" mode="change">
 	 <attList>
-	   <xsl:for-each select="attribute">
+	   <xsl:for-each select="attDef">
 	     <xsl:variable name="this" select="@ident"/>
 	     <xsl:variable name="used">
 	       <xsl:for-each select="../member">
@@ -165,12 +168,12 @@ attributes that it uses
        </classSpec>
      </xsl:for-each>
      <!-- for every TEI element, say if it is actually used or is to be deleted -->
-     <xsl:for-each select="$stage1/stage1/tei/element">
+     <xsl:for-each select="$stage1/stage1/tei/elementSpec">
        <xsl:choose>
 	 <xsl:when test="key('Used',@ident)">
 	   <elementSpec ident="{@ident}" module="{@module}"
 			mode="keep">
-	     <xsl:copy-of select="attribute"/>
+	     <xsl:copy-of select="attDef"/>
 	   </elementSpec>
 	 </xsl:when>
 	 <xsl:otherwise>
@@ -220,7 +223,7 @@ attributes that it uses
 	       its already deleted. if its a local attribute, see if its used. -->
 	     <xsl:variable name="a">
 	       <attList>
-		 <xsl:for-each select="attribute">
+		 <xsl:for-each select="attDef">
 		   <xsl:variable name="class" select="@class"/>
 		   <xsl:variable name="ident" select="@ident"/>
 		   <xsl:variable name="enumerated" select="@enumerated"/>
@@ -284,9 +287,9 @@ attributes that it uses
   <xsl:for-each select="classes/memberOf">
     <xsl:for-each select="key('IDENTS',@key)">
       <xsl:for-each select=".//tei:attDef">
-	<attribute class="{ancestor::classSpec/@ident}">
+	<attDef class="{ancestor::classSpec/@ident}">
 	  <xsl:copy-of select="@ident"/>
-	</attribute>
+	</attDef>
       </xsl:for-each>
       <xsl:call-template name="classatts"/>
     </xsl:for-each>
