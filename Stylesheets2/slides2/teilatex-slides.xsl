@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- 
 TEI XSLT stylesheet family
-$Date: 2009-02-23 10:09:49 +0000 (Mon, 23 Feb 2009) $, $Revision: 5686 $, $Author: rahtz $
+$Date$, $Revision$, $Author$
 
 XSL LaTeX stylesheet to make slides
 

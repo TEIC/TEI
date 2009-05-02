@@ -158,7 +158,7 @@
       <xsl:value-of select="@name"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="starts-with($N,'macro.') and       $stripped='true'">
+      <xsl:when test="starts-with($N,'macro.') and $stripped='true'">
         <xsl:for-each select="key('MACROS',$N)/tei:content/*">
           <xsl:call-template name="simplifyRelax"/>
         </xsl:for-each>
@@ -184,6 +184,58 @@
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates mode="final"/>
     </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="tei:content" mode="final">
+      <xsl:variable name="content">
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates mode="final"/>
+	</xsl:copy>
+      </xsl:variable>
+      <!-- <xsl:copy-of select="$content"/>-->
+      <xsl:apply-templates select="$content" mode="postfinal"/>
+  </xsl:template>
+
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="postfinal">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="*" mode="postfinal">
+    <xsl:choose>
+        <xsl:when test="self::rng:optional 
+			and count(rng:zeroOrMore)=2
+			and count(*)=2">
+	  <xsl:apply-templates  select="*|@*|text()|comment()|processing-instruction()" mode="postfinal"/>
+	</xsl:when>
+	<xsl:when test="count(*)=1">
+	  <xsl:variable name="element" select="local-name()"/>
+	  <xsl:choose>
+	    <xsl:when test="*[local-name()=$element]">
+	      <xsl:apply-templates  select="*|@*|text()|comment()|processing-instruction()" mode="postfinal"/>
+	    </xsl:when>
+	    <xsl:when test="$element='optional' 
+			    and rng:zeroOrMore">
+	      <xsl:apply-templates select="*|@*|text()|comment()|processing-instruction()"  mode="postfinal"/>
+	    </xsl:when>
+	    <xsl:when test="$element='optional' 
+			    and rng:oneOrMore">
+	      <xsl:apply-templates select="*|@*|text()|comment()|processing-instruction()"  mode="postfinal"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:copy>
+		<xsl:apply-templates select="*|@*|text()|comment()|processing-instruction()"
+				     mode="postfinal"/>
+	      </xsl:copy>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:when>
+      <xsl:otherwise>
+	<xsl:copy>
+	  <xsl:apply-templates select="*|@*|text()|comment()|processing-instruction()" mode="postfinal"/>
+	</xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tei:classSpec" mode="final">
@@ -892,28 +944,39 @@ so that is only put back in if there is some content
         <xsl:value-of select="count(*)"/>
       </xsl:for-each>
     </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="$entCount=1 and local-name($contents/WHAT/*)=$element">
-        <xsl:copy-of select="$contents/WHAT/node()"/>
-      </xsl:when>
-      <xsl:when test="$element='optional' and $entCount=1 and         local-name($contents/WHAT/*)='zeroOrMore'">
-        <xsl:copy-of select="$contents/WHAT/node()"/>
-      </xsl:when>
-      <xsl:when test="$element='optional' and $entCount=1 and         local-name($contents/WHAT/*)='oneOrMore'">
-        <xsl:copy-of select="$contents/WHAT/node()"/>
-      </xsl:when>
-      <xsl:when test="$element='oneOrMore' and $entCount=1 and         local-name($contents/WHAT/*)='zeroOrMore'">
-        <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-          <xsl:copy-of select="$contents/WHAT/rng:zeroOrMore/*"/>
-        </oneOrMore>
-      </xsl:when>
-      <xsl:when test="self::rng:zeroOrMore/rng:ref/@name='model.global'   and preceding-sibling::rng:*[1][self::rng:zeroOrMore/rng:ref/@name='model.global']"/>
-      <xsl:when test="$entCount&gt;0 or $stripped='true'">
-        <xsl:element xmlns="http://relaxng.org/ns/structure/1.0" name="{$element}">
-          <xsl:copy-of select="$contents/WHAT/node()"/>
-        </xsl:element>
-      </xsl:when>
-    </xsl:choose>
+    <xsl:for-each select="$contents/WHAT">
+      <xsl:choose>
+	<xsl:when test="$entCount=1 
+			and local-name(*)=$element">
+	  <xsl:copy-of select="*|@*|text()|comment()|processing-instruction()"/>
+	</xsl:when>
+	<xsl:when test="$element='optional' 
+			and $entCount=1 
+			and rng:zeroOrMore">
+	  <xsl:copy-of select="*|@*|text()|comment()|processing-instruction()"/>
+	</xsl:when>
+	<xsl:when test="$element='optional' 
+			and $entCount=1 
+			and rng:oneOrMore">
+	  <xsl:copy-of select="*|@*|text()|comment()|processing-instruction()"/>
+	</xsl:when>
+	<xsl:when test="$element='oneOrMore' 
+			and $entCount=1 
+			and rng:zeroOrMore">
+	  <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	    <xsl:copy-of select="rng:zeroOrMore/*"/>
+	  </oneOrMore>
+	</xsl:when>
+	<xsl:when
+	    test="self::rng:zeroOrMore/rng:ref/@name='model.global'   
+		  and preceding-sibling::rng:*[1][self::rng:zeroOrMore/rng:ref/@name='model.global']"/>
+	<xsl:when test="$entCount&gt;0 or $stripped='true'">
+	  <xsl:element xmlns="http://relaxng.org/ns/structure/1.0" name="{$element}">
+	    <xsl:copy-of select="*|@*|text()|comment()|processing-instruction()"/>
+	  </xsl:element>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:for-each>
   </xsl:template>
   <xsl:template name="classAttributes">
     <xsl:param name="elementName"/>

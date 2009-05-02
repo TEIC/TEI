@@ -151,9 +151,9 @@
                         <xsl:text>$</xsl:text>
                     </date>
                     <respStmt>
-                        <name>$LastChangedBy: rahtz $</name>
+                        <name>$LastChangedBy$</name>
                     </respStmt>
-                    <item>$LastChangedRevision: 5757 $</item>
+                    <item>$LastChangedRevision$</item>
                 </change>
             </revisionDesc>
         </teiHeader>

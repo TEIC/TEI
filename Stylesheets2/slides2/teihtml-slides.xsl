@@ -36,7 +36,7 @@
    
       </xd:detail>
     <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id: teihtml-slides.xsl 4801 2008-09-13 10:05:32Z rahtz $</xd:cvsId>
+    <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2008, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:output encoding="utf-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN"/>

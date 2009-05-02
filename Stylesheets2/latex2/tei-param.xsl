@@ -30,7 +30,7 @@ exclude-result-prefixes="xd s a rng tei teix xd" version="2.0">
    
       </xd:detail>
     <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id: tei-param.xsl 5025 2008-12-03 12:25:40Z rahtz $</xd:cvsId>
+    <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2008, TEI Consortium</xd:copyright>
 </xd:doc>
 
