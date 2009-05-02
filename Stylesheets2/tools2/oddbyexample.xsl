@@ -43,7 +43,8 @@ of the TEI you need to validate that corpus
 <xsl:key name="ELEMENTS" use="1" match="elementSpec"/>
 <xsl:key name="CLASSES" use="1" match="classSpec[@type='atts']"/>
 <xsl:key name="IDENTS" use="@ident" match="*[@ident]"/>
-<xsl:key name="MEMBERS" use="@key" match="memberOf"/>
+<xsl:key name="MEMBERS" use="@key" match="elementSpec/classes/memberOf"/>
+<xsl:key name="CLASSMEMBERS" use="@key" match="classSpec/classes/memberOf"/>
 <xsl:key name="Used" use="@ident" match="docs/element"/>
 <xsl:key name="UsedAtt" use="concat(../@ident,@ident)" match="docs/element/attribute"/>
 <!--
@@ -149,6 +150,7 @@ attributes that it uses
 	     <xsl:variable name="this" select="@ident"/>
 	     <xsl:variable name="used">
 	       <xsl:for-each select="../member">
+<!--		 <xsl:message>check for <xsl:value-of select="concat(@ident,$this)"/></xsl:message>-->
 		 <xsl:if test="key('UsedAtt',concat(@ident,$this))">true</xsl:if>
 	       </xsl:for-each>
 	     </xsl:variable>
@@ -193,7 +195,7 @@ attributes that it uses
    </teiHeader>
    <text>
      <body>
-       <!--<xsl:copy-of select="$stage2"/>-->
+       <!--<xsl:copy-of select="$stage1"/>-->
        <schemaSpec ident="{$schema}">
 	 <moduleRef key="tei"/>
 	 <xsl:apply-templates select="$stage2/stage2/classSpec[@module='tei']"/>
@@ -255,26 +257,22 @@ attributes that it uses
 </xsl:template>
 
 <xsl:template name="classmembers">
-<xsl:choose>
-  <xsl:when test="@ident='att.global'">
-    <xsl:for-each select="key('ELEMENTS',1)">
-      <xsl:sort select="@ident"/>
-      <member ident="{@ident}"/>
-    </xsl:for-each>    
-  </xsl:when>
-  <xsl:otherwise>
-    <xsl:for-each select="key('MEMBERS',@ident)">
-      <xsl:choose>
-	<xsl:when test="ancestor::elementSpec">
-	  <member ident="{ancestor::elementSpec/@ident}"/>
-	</xsl:when>
-	<xsl:when test="ancestor::classSpec">
-	<xsl:call-template name="classmembers"/>
-	</xsl:when>
-      </xsl:choose>
-    </xsl:for-each>
-  </xsl:otherwise>
-</xsl:choose>
+  <xsl:choose>
+    <xsl:when test="@ident='att.global'">
+      <xsl:for-each select="key('ELEMENTS',1)">
+	<xsl:sort select="@ident"/>
+	<member ident="{@ident}"/>
+      </xsl:for-each>    
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:for-each select="key('MEMBERS',@ident)">
+	<member ident="{ancestor::elementSpec/@ident}"/>
+      </xsl:for-each>
+      <xsl:for-each select="key('CLASSMEMBERS',@ident)/ancestor::classSpec">
+	  <xsl:call-template name="classmembers"/>
+	</xsl:for-each>
+      </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="classatts">
@@ -311,7 +309,7 @@ attributes that it uses
 </xsl:template>
 
 <xsl:template match="valList">
-  <valList>
+  <valList mode="add" type="closed">
     <xsl:for-each-group select="valItem" group-by="@ident">
       <xsl:sort select="@ident"/>
       <valItem ident="{current-grouping-key()}"/>
