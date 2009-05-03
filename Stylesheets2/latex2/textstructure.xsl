@@ -347,4 +347,10 @@ version="2.0">
   \cleardoublepage
 </xsl:template>
 
+  <xsl:template match="tei:trailer">
+ <xsl:text>\begin{raggedleft}</xsl:text>
+<xsl:apply-templates/>
+ <xsl:text>\end{raggedleft}</xsl:text>
+</xsl:template>
+
 </xsl:stylesheet>
