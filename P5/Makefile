@@ -375,14 +375,16 @@ catalogue-print:
 clean:
 	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~ 
 	-rm Guidelines.??? Guidelines-* \
-	p5examples.rng \
-	p5odds.rng \
+	p5examples.rng  p5examples.rnc \
+	p5odds.rng p5odds.rnc \
 	*.xsd \
-	p5.sch
+	p5.sch p5.isosch \
+	*.isosch.xsl \
+	p5subset.xml \
+	Utilities/guidelines.xsl Utilities-1/guidelines.xsl
 	find . -name "semantic.cache" | xargs rm -f
 	(cd Test; make clean)
 	(cd Exemplars; make clean)
 	rm -rf FASC-*
 	rm -rf catalogue.* modList
-
 
