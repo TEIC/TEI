@@ -8,7 +8,7 @@
 
   <xsl:param name="corpus"/>
   <xsl:param name="processP4">false</xsl:param>
-
+  <xsl:param name="verbose">false</xsl:param>
   <xsl:key name="All" match="*" use="1"/>
   <xsl:key name="E" match="*" use="local-name()"/>
 
@@ -24,6 +24,9 @@
 	<xsl:choose>
 	<xsl:when test="$processP4='true'">
 	  <xsl:for-each select="$docs/TEI.2">
+	    <xsl:if test="$verbose='true'">
+	      <xsl:message>processing <xsl:value-of select="base-uri(.)"/></xsl:message>
+	    </xsl:if>
 	    <TEI.2 xn="{base-uri(.)}">
 	      <xsl:apply-templates select="*|@*" mode="copy"/>
 	    </TEI.2>
@@ -31,11 +34,17 @@
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:for-each select="$docs/tei:TEI">
+	    <xsl:if test="$verbose='true'">
+	      <xsl:message>processing <xsl:value-of select="base-uri(.)"/></xsl:message>
+	    </xsl:if>
 	    <tei:TEI xn="{base-uri(.)}">
 	      <xsl:apply-templates select="*|@*" mode="copy"/>
 	    </tei:TEI>
 	  </xsl:for-each>
 	  <xsl:for-each select="$docs/tei:teiCorpus">
+	    <xsl:if test="$verbose='true'">
+	      <xsl:message>processing <xsl:value-of select="base-uri(.)"/></xsl:message>
+	    </xsl:if>
 	    <tei:teiCorpus xn="{base-uri(.)}">
 	      <xsl:copy-of select="@*|*"/>
 	    </tei:teiCorpus>
