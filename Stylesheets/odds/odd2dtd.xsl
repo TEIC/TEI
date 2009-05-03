@@ -713,6 +713,12 @@
             <xsl:value-of select="substring-before($contentbody,'| ()')"/>
             <xsl:value-of select="substring-after($contentbody,'| ()')"/>
           </xsl:when>
+          <xsl:when test="contains($contentbody, ',)')">
+            <xsl:value-of
+		select="substring-before($contentbody,',)')"/>
+	    <xsl:text>)</xsl:text>
+            <xsl:value-of select="substring-after($contentbody,',)')"/>
+          </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="$contentbody"/>
           </xsl:otherwise>
