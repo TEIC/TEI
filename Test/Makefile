@@ -38,7 +38,7 @@ TESTFILES= \
 	testspoken \
 	testtagdocs \
 	testtranscr \
-	tripReport \
+	testTripReport \
 	testall 
 
 TESTBADFILES= \
@@ -151,8 +151,8 @@ test-bad:
 
 clean:
 	-for i in $(TESTFILES) $(TESTFILESDTD) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.teix.xsd $$i.xsd $$i.rnc $$i.rng;done
-	-rm -rf LOG *~ *.xsd Schema RomaResults DTD
+	-rm -rf LOG *~ *.xsd Schema RomaResults DTD names.xml
 	-rm -rf *.doc.*
-	-rm *-examples.rng *-examples.rnc test*.nvdl *-ex.odd
+	-rm *-examples.rng *-examples.rnc *test*.nvdl *-ex.odd
 
 
