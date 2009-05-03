@@ -25,7 +25,9 @@
   <xsl:key name="MEMBEROFDELETE" match="tei:memberOf[@mode='delete']" use="concat(../../@ident,@key)"/>
   <xsl:key name="MEMBEROFADD" match="tei:memberOf[not(@mode='delete')]" use="concat(../../@ident,@key)"/>
   <xsl:key name="MACROS" use="@ident" match="tei:macroSpec"/>
-  <xsl:key name="REFED" use="@name" match="rng:ref"/>
+  <xsl:key name="REFED" use="@name"
+	   match="rng:ref[ancestor::tei:macroSpec and not(@name=ancestor::tei:macroSpec/@ident)]"/>
+  <xsl:key name="REFED" use="@name" match="rng:ref[ancestor::tei:elementSpec]"/>
   <xsl:key name="REFED" use="substring-before(@name,'_')" match="rng:ref[contains(@name,'_')]"/>
   <xsl:key name="REFED" use="substring-before(@name,'.attribute')"
 	   match="tei:attRef"/>
@@ -146,7 +148,14 @@
         <xsl:call-template name="phase2"/>
       </xsl:copy>
     </xsl:variable>
-    <xsl:for-each select="$compiled">
+    <xsl:variable name="pass1">
+      <root>
+	<xsl:for-each select="$compiled">
+	  <xsl:apply-templates mode="final"/>
+	</xsl:for-each>
+      </root>
+    </xsl:variable>
+    <xsl:for-each select="$pass1/root">
       <xsl:apply-templates mode="final"/>
     </xsl:for-each>
     <!-- constraints -->
@@ -193,7 +202,6 @@
 	  <xsl:apply-templates mode="final"/>
 	</xsl:copy>
       </xsl:variable>
-      <!-- <xsl:copy-of select="$content"/>-->
       <xsl:apply-templates select="$content" mode="postfinal"/>
   </xsl:template>
 
@@ -281,22 +289,22 @@ How can a class be ok?
 
   <xsl:template match="tei:macroSpec" mode="final">
     <xsl:variable name="k" select="@ident"/>
-    <xsl:choose>
-      <xsl:when test="$stripped='true' and         starts-with(@ident,'macro.')"/>
-      <xsl:when test="starts-with(@ident,'data.')"/>
-      <xsl:when test="key('REFED',$k)">
-        <xsl:copy>
-          <xsl:copy-of select="@*"/>
-          <xsl:apply-templates mode="final"/>
-        </xsl:copy>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:if test="$verbose='true'">
-          <xsl:message>reject <xsl:value-of select="$k"/>
-          </xsl:message>
-        </xsl:if>
-      </xsl:otherwise>
-    </xsl:choose>
+      <xsl:choose>
+	<xsl:when test="$stripped='true' and starts-with($k,'macro.')"/>
+	<xsl:when test="starts-with($k,'data.')"/>
+	<xsl:when test="key('REFED',$k)">
+	  <xsl:copy>
+	    <xsl:copy-of select="@*"/>
+	    <xsl:apply-templates mode="final"/>
+	  </xsl:copy>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:if test="$verbose='true'">
+	    <xsl:message>reject <xsl:value-of select="$k"/>
+	    </xsl:message>
+	  </xsl:if>
+	</xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
   <xsl:template name="phase1">
 <!--for every module:
