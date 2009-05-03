@@ -51,14 +51,6 @@ doc:
 test: 
 	(cd Test2; make )
 
-clean:
-	-rm `find . -name semantic.cache`
-	-rm `find . -name "*~" `
-	-rm stylebear style.xml customize.xml teixsl.html
-	-rm -rf release
-	-rm -rf doc/xsltdoc
-	-(cd Test2; make clean)
-
 install: release
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
 	(cd release/tei-xsl2/xml; tar cf - .) | \
@@ -72,3 +64,11 @@ installdoc:
 	cp stylebear ${PREFIX}/lib/cgi-bin/stylebear
 	chmod 755 ${PREFIX}/lib/cgi-bin/stylebear
 
+
+clean:
+	-rm `find . -name semantic.cache`
+	-rm `find . -name "*~" `
+	-rm stylebear style.xml customize.xml teixsl.html
+	-rm -rf release
+	-rm -rf doc/xsltdoc
+	-(cd Test2; make clean)
