@@ -21,23 +21,27 @@
     <xsl:variable name="docs" select="collection($pathlist)"/> 
     <xsl:variable name="all">
       <n:ROOT>
-	<xsl:for-each select="$docs/tei:TEI">
-	  <tei:TEI xn="{base-uri(.)}">
-	    <xsl:copy-of select="@*|*"/>
-	  </tei:TEI>
-	</xsl:for-each>
-	<xsl:for-each select="$docs/tei:teiCorpus">
-	  <tei:teiCorpus xn="{base-uri(.)}">
-	    <xsl:copy-of select="@*|*"/>
-	  </tei:teiCorpus>
-	</xsl:for-each>
-	<xsl:if test="$processP4='true'">
+	<xsl:choose>
+	<xsl:when test="$processP4='true'">
 	  <xsl:for-each select="$docs/TEI.2">
 	    <TEI.2 xn="{base-uri(.)}">
-	      <xsl:copy-of select="@*|*"/>
+	      <xsl:apply-templates select="*|@*" mode="copy"/>
 	    </TEI.2>
 	  </xsl:for-each>
-	</xsl:if>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:for-each select="$docs/tei:TEI">
+	    <tei:TEI xn="{base-uri(.)}">
+	      <xsl:apply-templates select="*|@*" mode="copy"/>
+	    </tei:TEI>
+	  </xsl:for-each>
+	  <xsl:for-each select="$docs/tei:teiCorpus">
+	    <tei:teiCorpus xn="{base-uri(.)}">
+	      <xsl:copy-of select="@*|*"/>
+	    </tei:teiCorpus>
+	  </xsl:for-each>
+	</xsl:otherwise>
+	</xsl:choose>
       </n:ROOT>
     </xsl:variable>
     <xsl:for-each select="$all">
@@ -64,6 +68,19 @@
       </body>
     </html>
   </xsl:template>
+
+  <xsl:template match="@*" mode="copy">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+
+<xsl:template match="*">
+  <xsl:copy>
+    <xsl:apply-templates 
+	select="*|@*" mode="copy"/>
+  </xsl:copy>
+</xsl:template>
+
 </xsl:stylesheet>
 
 
