@@ -348,9 +348,9 @@ version="2.0">
 </xsl:template>
 
   <xsl:template match="tei:trailer">
- <xsl:text>\begin{raggedleft}</xsl:text>
+ <xsl:text>&#10;&#10;\begin{raggedleft}</xsl:text>
 <xsl:apply-templates/>
- <xsl:text>\end{raggedleft}</xsl:text>
+ <xsl:text>\end{raggedleft}&#10;&#10;</xsl:text>
 </xsl:template>
 
 </xsl:stylesheet>
