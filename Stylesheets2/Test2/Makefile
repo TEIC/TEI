@@ -1,5 +1,5 @@
 VERSION=`cat ../VERSION`
-default: test test3 test4 test5 test6
+default: test test3 test4 test5 test6 oddbyexample
 
 test:
 	saxon -o dummy  test.xml ../xhtml2/tei.xsl verbose=true 
@@ -35,5 +35,13 @@ odd:
 	saxon testdrama.odd ../odds2/odd2odd.xsl \
 	TEIC=true localsource=`pwd`/p5subset.xml > testdrama.compiled.xml
 
+oddbyexample:
+	saxon -o oddbyexample.odd ../tools2/oddbyexample.xsl ../tools2/oddbyexample.xsl corpus=`pwd`/bare
+	roma2 oddbyexample.odd .
+	jing -c oddbyexample.rnc bare/test.xml
+	jing oddbyexample.xsd bare/test.xml
+	xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
+
 clean:
 	-rm test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy*
+	-rm oddbyexample.* xml.xsd
