@@ -623,13 +623,6 @@
   <xsl:template match="tei:q[@rend='display']"> \begin{quote}
     <xsl:apply-templates/> \end{quote}</xsl:template>
   <xd:doc>
-    <xd:short>Process elements tei:titlePart</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:titlePart">
-    <xsl:if test="ancestor::tei:group"> \part{<xsl:apply-templates/>} </xsl:if>
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements tei:xref[@type='cite']</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
