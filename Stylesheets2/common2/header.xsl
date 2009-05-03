@@ -28,7 +28,7 @@
       <xsl:when
         test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
         <xsl:apply-templates mode="author"
-          select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor[1]"/>
+          select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor"/>
       </xsl:when>
       <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
         <xsl:for-each select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
@@ -47,7 +47,7 @@
       </xsl:when>
       <xsl:when test="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
         <xsl:apply-templates mode="author"
-          select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor[1]"/>
+          select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor"/>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
