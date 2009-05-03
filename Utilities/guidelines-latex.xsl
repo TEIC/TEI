@@ -26,6 +26,7 @@
 <xsl:param name="startNamespace"></xsl:param>
 <xsl:param name="tocNumberSuffix">.\ </xsl:param>
 <xsl:param name="numberSpacer">\ </xsl:param>
+<xsl:param name="specLinkDepth">1</xsl:param>
 
   <xsl:variable name="docClass">book</xsl:variable>
 <xsl:template name="latexPreambleHook">
