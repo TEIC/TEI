@@ -74,13 +74,13 @@
   </xsl:template>
 
 
-<xsl:template match="*">
-  <xsl:copy>
-    <xsl:apply-templates 
-	select="*|@*" mode="copy"/>
-  </xsl:copy>
-</xsl:template>
-
+  <xsl:template match="*" mode="copy">
+    <xsl:copy>
+      <xsl:apply-templates 
+	  select="*|@*" mode="copy"/>
+    </xsl:copy>
+  </xsl:template>
+  
 </xsl:stylesheet>
 
 
