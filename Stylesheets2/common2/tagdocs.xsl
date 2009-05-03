@@ -34,8 +34,7 @@ version="2.0">
   </xd:doc>
 
  <xsl:key name="CHILDMOD" match="Element" use="@module"/>
-
-  <xsl:template match="tei:attDef" mode="summary">
+ <xsl:template match="tei:attDef" mode="summary">
     <xsl:variable name="name">
       <xsl:choose>
         <xsl:when test="tei:altIdent">
@@ -2290,17 +2289,19 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 		<xsl:when test=".//tei:attDef">
 		  <xsl:call-template name="i18n">
 	  <xsl:with-param name="word">In addition to global attributes and those inherited from</xsl:with-param></xsl:call-template>
+	  <xsl:value-of select="$spaceCharacter"/>
 		</xsl:when>
 		<xsl:otherwise>
 		  <xsl:call-template name="i18n">
 	  <xsl:with-param name="word">Global attributes and those inherited from</xsl:with-param></xsl:call-template>
-		</xsl:otherwise>
+	  <xsl:value-of select="$spaceCharacter"/>
+	  		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:with-param>
 	  </xsl:call-template>
 	</xsl:element>
 	</xsl:if>
-	<xsl:text> </xsl:text>
+	<xsl:value-of select="$spaceCharacter"/>
 	<xsl:copy-of select="$clatts"/>
       </xsl:when>
       <xsl:when test="ancestor::tei:schemaSpec and
@@ -2333,14 +2334,8 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	    <xsl:for-each select="key('CLASSES',@key)">
 	      <xsl:if test="@type='atts'">
 		<xsl:if test="$depth > 1"> (</xsl:if>
-		<xsl:call-template name="makeLink">
-		  <xsl:with-param name="class">classlink</xsl:with-param>
-		  <xsl:with-param name="name">
-		    <xsl:value-of select="@ident"/>
-		  </xsl:with-param>
-		  <xsl:with-param name="text">
-		    <xsl:value-of select="@ident"/>
-		  </xsl:with-param>
+		<xsl:call-template name="linkTogether">
+		  <xsl:with-param name="name" select="@ident"/>
 		</xsl:call-template>
 		<xsl:if test=".//tei:attDef">
 		  <xsl:text> (</xsl:text>

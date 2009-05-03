@@ -92,6 +92,11 @@
 <xsl:text>\end{description}</xsl:text>
 </xsl:template>
 -->
+<xsl:template match="tei:term">
+  <xsl:text>\emph{</xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>}</xsl:text>
+</xsl:template>
 
 <xsl:template match="tei:seg[@xml:lang]">
   <xsl:choose>
@@ -121,6 +126,17 @@
 
 <xsl:template match="tei:seg[@rend='specChildElements']">
   <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="tei:seg[@rend='parent']">
+  <xsl:choose>
+    <xsl:when test="*">
+      <xsl:apply-templates/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:text>&#8212;</xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="tei:hi[@rend='parent']">

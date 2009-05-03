@@ -1518,15 +1518,9 @@ select="$makeDecls"/></xsl:message>
           <xsl:choose>
             <xsl:when test="key('CLASSES',@key)">
               <xsl:for-each select="key('CLASSES',@key)">
-                <xsl:call-template name="makeLink">
-                  <xsl:with-param name="class">classlink</xsl:with-param>
-                  <xsl:with-param name="name">
-                    <xsl:value-of select="@ident"/>
-                  </xsl:with-param>
-                  <xsl:with-param name="text">
-                    <xsl:value-of select="@ident"/>
-                  </xsl:with-param>
-                </xsl:call-template>
+		<xsl:call-template name="linkTogether">
+		  <xsl:with-param name="name" select="@ident"/>
+		</xsl:call-template>
               </xsl:for-each>
             </xsl:when>
             <xsl:otherwise>

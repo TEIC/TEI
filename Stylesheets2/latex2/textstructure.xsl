@@ -332,6 +332,13 @@ version="2.0">
     <xd:short>Process elements  tei:titlePage</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
+
+  <xsl:template match="tei:titlePage/tei:docTitle">
+    <xsl:text>\title{</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
   <xsl:template match="tei:titlePage">
   \begin{titlepage}
 <xsl:apply-templates/>
@@ -339,19 +346,5 @@ version="2.0">
   \end{titlepage}
   \cleardoublepage
 </xsl:template>
-  <xd:doc>
-    <xd:short>[latex] </xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="generateSimpleTitle">
-    <xsl:choose>
-      <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
-        <xsl:value-of select="normalize-space(ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle)"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="normalize-space(ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1])"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
 
 </xsl:stylesheet>

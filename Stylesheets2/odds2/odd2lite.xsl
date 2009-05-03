@@ -53,6 +53,7 @@
   <xsl:param name="oddmode">tei</xsl:param>
   <xsl:param name="displayMode">rnc</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>
+  <xsl:param name="idPrefix">teispec_</xsl:param>
   <xsl:template name="identifyElement">
     <xsl:param name="id"/>
     <xsl:attribute name="xml:id">
@@ -269,7 +270,7 @@
       <xsl:text>refdoc</xsl:text>
     </xsl:attribute>
     <xsl:attribute name="xml:id">
-      <xsl:text>teispec_</xsl:text>
+      <xsl:value-of select="$idPrefix"/>
       <xsl:value-of select="$id"/>
     </xsl:attribute>
     <head>
@@ -308,6 +309,7 @@
     <xsl:param name="reftext"/>
     <xsl:param name="class"/>
     <xsl:variable name="partialname">
+      <xsl:value-of select="$idPrefix"/>
       <xsl:choose>
         <xsl:when test="contains($name,'_')">
           <xsl:value-of select="substring-before($name,'_')"/>

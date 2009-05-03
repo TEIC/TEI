@@ -51,7 +51,7 @@ the beginning of the document</xd:short>
 <xd:doc type="string" class="layout">
 Optional parameters for documentclass
 </xd:doc>
-<xsl:param name="classParameters">11pt</xsl:param>
+<xsl:param name="classParameters">11pt,twoside</xsl:param>
 
 <xd:doc type="string" class="layout">
 Logo graphics file
@@ -146,6 +146,11 @@ Options to pass to the geometry package to set margins etc
 </xd:doc>
 <xsl:param name="latexGeometryOptions">twoside,a4paper,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in</xsl:param>
 
+<xd:doc type="string" class="userpackage">
+Depth of nesting of reference documentation when processing ODD
+</xd:doc>
+<xsl:param name="specLinkDepth">3</xsl:param>
+
 <xd:doc class="layout">
     <xd:short>LaTeX setup</xd:short>
     <xd:detail>The basic LaTeX setup which you should not 
@@ -185,6 +190,7 @@ capable of dealing with UTF-8 directly.
 \catcode`❵=\active \def❵{\}}
 \def\textJapanese{\fontspec{Kochi Mincho}}
 \def\textChinese{\fontspec{HAN NOM A}\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip = 0pt plus 1pt }
+\setmonofont{DejaVu Sans Mono}
 </xsl:otherwise>
 </xsl:choose>
 \DeclareTextSymbol{\textpi}{OML}{25}
@@ -267,8 +273,10 @@ capable of dealing with UTF-8 directly.
 \newenvironment{specHead}[2]%
  {\vspace{20pt}\hrule\vspace{10pt}%
   \hypertarget{#1}{}%
-  \markright{#1}%
-  \pdfbookmark[1]{#2}{#1}%
+  \markright{#2}%
+  \pdfbookmark[</xsl:text>
+  <xsl:value-of select="$specLinkDepth"/>
+  <xsl:text>]{#2}{#1}%
   \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
   }{}
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
@@ -429,13 +437,24 @@ capable of dealing with UTF-8 directly.
     the document</xd:detail>
 </xd:doc>
 <xsl:template name="latexBegin">
-<xsl:text>\makeatletter
+<xsl:text>
+\makeatletter
 \thispagestyle{plain}</xsl:text>
 <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
   <xsl:call-template name="printTitleAndLogo"/>
 </xsl:if>
 <xsl:text>\markright{\@title}%
 \markboth{\@title}{\@author}%
+\renewcommand\small{\@setfontsize\small{9pt}{11pt}%
+   \abovedisplayskip 8.5\p@ plus3\p@ minus4\p@
+   \belowdisplayskip \abovedisplayskip
+   \abovedisplayshortskip \z@ plus2\p@
+   \belowdisplayshortskip 4\p@ plus2\p@ minus2\p@
+   \def\@listi{\leftmargin\leftmargini
+               \topsep 2\p@ plus1\p@ minus1\p@
+               \parsep 2\p@ plus\p@ minus\p@
+               \itemsep 1pt}
+}
 \makeatother
 \fvset{frame=single,numberblanklines=false,xleftmargin=5mm,xrightmargin=5mm}
 \fancyhf{} 
@@ -448,6 +467,7 @@ capable of dealing with UTF-8 directly.
 \fancyfoot[LE]{\TheFullDate}
 \fancyfoot[CE]{\thepage}
 \fancyfoot[RE]{\TheID}
+\hypersetup{linkbordercolor=0.75 0.75 0.75,urlbordercolor=0.75 0.75 0.75,bookmarksnumbered=true}
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}</xsl:text>
 <xsl:call-template name="beginDocumentHook"/>
 </xsl:template>
