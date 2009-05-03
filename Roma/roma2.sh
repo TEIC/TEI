@@ -97,10 +97,44 @@ makeHTMLDOC()
 makePDFDOC() 
 {
     echo "7. make PDF documentation $schema.doc.pdf and $schema.doc.tex "
-    saxon  $RESULTS/$schema.doc.xml $TEIXSLDIR/latex/tei.xsl \
-	$DEBUG $LANGUAGE $DOCLANG TEIC=$TEIC \
-	-o $RESULTS/$schema.doc.tex 
-    (cd $RESULTS; pdflatex $schema.doc.tex)
+    saxon  -o $RESULTS/$schema.doc.tex $RESULTS/$schema.doc.xml $TEIXSLDIR/latex2/tei.xsl \
+	$DEBUG $LANGUAGE $DOCLANG TEIC=$TEIC useHeaderFrontMatter=true reencode=false
+    cat > $RESULTS/perl$$.pl<<EOF
+#!/usr/bin/perl
+while (<>) {
+      if ( / \| /) {
+	  chop;
+	  \$line = \$_;
+	  \$N=length(\$line);
+	  if (\$N > 60) {
+	      \$_=substr(\$line,1,45);
+	      my (\$indent,\$first) = /([ ]*)(.*)/;
+	      print \$indent, \$first;
+	      \$_=substr(\$line,46);
+	      my (\$bef,\$after) = /([^\|]*)(\|?.*)/;
+	      print "\$bef\n\$indent\$after\n";
+	  }
+	  else
+	  {
+	      print "\$_\n";
+	  }
+
+      }
+else 
+     {
+	 print;
+     }
+}
+
+EOF
+    perl $RESULTS/perl$$.pl < $RESULTS/$schema.doc.tex > $RESULTS/perl$$.tex
+    if $debug
+	then
+	diff $RESULTS/perl$$.tex $RESULTS/$schema.doc.tex
+    fi
+    rm perl$$.pl
+    mv $RESULTS/perl$$.tex $RESULTS/$schema.doc.tex
+    (cd $RESULTS; xelatex $schema.doc.tex; xelatex $schema.doc.tex)
 }
 
 makeXMLDOC() 
