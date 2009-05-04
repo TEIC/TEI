@@ -98,7 +98,8 @@ makePDFDOC()
 {
     echo "7. make PDF documentation $schema.doc.pdf and $schema.doc.tex "
     saxon  -o $RESULTS/$schema.doc.tex $RESULTS/$schema.doc.xml $TEIXSLDIR/latex2/tei.xsl \
-	$DEBUG $LANGUAGE $DOCLANG TEIC=$TEIC useHeaderFrontMatter=true reencode=false
+	$DEBUG $LANGUAGE $DOCLANG TEIC=$TEIC useHeaderFrontMatter=true reencode=false \
+	preQuote=“ postQuote=”
     cat > $RESULTS/perl$$.pl<<EOF
 #!/usr/bin/perl
 while (<>) {
