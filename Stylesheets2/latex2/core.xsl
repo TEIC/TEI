@@ -134,41 +134,28 @@
 	</xsl:variable>
 	<xsl:text>\fbox{\ttfamily </xsl:text>
 	<xsl:value-of select="translate($stuff,
-	  '\{}','&#8421;&#10100;&#10101;')"/>
+			      '\{}','&#8421;&#10100;&#10101;')"/>
 	<xsl:text>} </xsl:text>
       </xsl:when>
-      <xsl:when test="ancestor::tei:cell">
-<xsl:text>\mbox{}\hfill\\[-10pt]\begin{Verbatim}[fontsize=\small]&#10;</xsl:text>
+      <xsl:when test="ancestor::tei:cell or @rend='pre'">
+	<xsl:text>\mbox{}\hfill\\[-10pt]\begin{Verbatim}[fontsize=\small]&#10;</xsl:text>
 	<xsl:apply-templates mode="eg"/>
 	<xsl:text>&#10;\end{Verbatim}&#10;</xsl:text>
-<!--
-<xsl:text>\mbox{}\newline
-\bgroup\exampleFontSet
-\noindent\obeylines\obeyspaces </xsl:text>
-<xsl:apply-templates mode="eg"/>
-<xsl:text>\egroup </xsl:text>
--->
       </xsl:when>
       <xsl:when test="ancestor::tei:list[@type='gloss']">
 	<xsl:text>\hspace{1em}\hfill\linebreak</xsl:text>
-<xsl:text>\bgroup</xsl:text>
-<xsl:call-template name="exampleFontSet"/>
-<xsl:text>\vskip 10pt
-\begin{shaded}
-\noindent\obeylines\obeyspaces </xsl:text>
-<xsl:apply-templates mode="eg"/>
-<xsl:text>\end{shaded}
-\egroup </xsl:text>
+	<xsl:text>\bgroup</xsl:text>
+	<xsl:call-template name="exampleFontSet"/>
+	<xsl:text>\vskip 10pt\begin{shaded}&#10;\noindent\obeylines\obeyspaces </xsl:text>
+	<xsl:apply-templates mode="eg"/>
+	<xsl:text>\end{shaded}&#10;\egroup </xsl:text>
       </xsl:when>
       <xsl:otherwise>
-<xsl:text>\par\bgroup</xsl:text>
-<xsl:call-template name="exampleFontSet"/>
-<xsl:text>\vskip 10pt
-\begin{shaded}
-\obeylines\obeyspaces </xsl:text>
-<xsl:apply-templates mode="eg"/>
-<xsl:text>\end{shaded}
-\par\egroup </xsl:text>
+	<xsl:text>\par\bgroup</xsl:text>
+	<xsl:call-template name="exampleFontSet"/>
+	<xsl:text>\vskip 10pt\begin{shaded}&#10;\obeylines\obeyspaces </xsl:text>
+	<xsl:apply-templates mode="eg"/>
+	<xsl:text>\end{shaded}&#10;\par\egroup </xsl:text>
       </xsl:otherwise>
     </xsl:choose>
 <!--
