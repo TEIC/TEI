@@ -863,6 +863,7 @@ If so, use them as is.
               <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
               <xsl:with-param name="elementName" select="''"/>
             </xsl:call-template>
+	    <xsl:copy-of select="tei:attList/tei:attRef"/>
           </tei:attList>
         </xsl:for-each>
       </xsl:for-each>

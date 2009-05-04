@@ -393,6 +393,10 @@
 			     xmlns="http://relaxng.org/ns/structure/1.0"/>
 		      </xsl:if>
 		    </xsl:for-each>
+		    <xsl:for-each select="tei:attList//tei:attRef">
+			<ref name="{@name}"
+			     xmlns="http://relaxng.org/ns/structure/1.0"/>
+		    </xsl:for-each>
 		  </ROOT>
 		</xsl:variable>
 		<define name="{@ident}.attributes"
@@ -403,7 +407,7 @@
 			 xmlns="http://relaxng.org/ns/structure/1.0"/>
 		   </xsl:if>
 		</define>
-		<xsl:apply-templates mode="tangle" select="tei:attList">
+		<xsl:apply-templates mode="tangle" select="tei:attList//tei:attDef">
                 <xsl:with-param name="element" select="@ident"/>
 		</xsl:apply-templates>
 	    </Wrapper>
