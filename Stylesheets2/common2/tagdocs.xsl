@@ -232,7 +232,7 @@ version="2.0">
 	      <xsl:with-param name="word">occurrences of</xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:element>
-          <xsl:text>  </xsl:text>
+	  <xsl:value-of select="$spaceCharacter"/>
         </xsl:if>
         <xsl:call-template name="bitOut">
           <xsl:with-param name="grammar"/>
@@ -498,7 +498,7 @@ version="2.0">
 	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">Element</xsl:with-param>
 	  </xsl:call-template>
-	  <xsl:text> </xsl:text>
+	  <xsl:value-of select="$spaceCharacter"/>
 	  <xsl:value-of select="@ident"/>
 	</xsl:element>
       </xsl:element>
@@ -1263,7 +1263,7 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	    <xsl:with-param name="word">Module</xsl:with-param>
 	  </xsl:call-template>
 	</xsl:element>
-	<xsl:text>&#160;</xsl:text>
+	<xsl:value-of select="$spaceCharacter"/>
         <xsl:value-of select="@ident"/>
         <xsl:text>: </xsl:text>
         <xsl:call-template name="makeDescription"/>
@@ -2301,7 +2301,6 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	  </xsl:call-template>
 	</xsl:element>
 	</xsl:if>
-	<xsl:value-of select="$spaceCharacter"/>
 	<xsl:copy-of select="$clatts"/>
       </xsl:when>
       <xsl:when test="ancestor::tei:schemaSpec and
