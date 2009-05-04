@@ -1,13 +1,13 @@
 PREFIX=/usr
 BIN=${PREFIX}/bin
 ODDS=tei_all tei_allPlus tei_bare tei_corpus tei_dictionaries	\
-	tei_drama tei_its teilite tei_math tei_minimal tei_ms tei_odds	\
-	tei_speech tei_svg tei_tite tei_xinclude
+	tei_drama tei_its tei_math tei_minimal tei_ms tei_odds	\
+	tei_speech tei_svg tei_xinclude teilite tei_tite 
 DOCODDS=tei_tite teilite
 LANGUAGE=en
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
-ROMAOPTS=--dochtml --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER} --xsl=${XSL}
+ROMAOPTS=--dochtml --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER} --xsl=${XSL} --docpdf 
 
 schemas: names
 	for i in $(ODDS); do echo Process $$i; ${BIN}/roma2 ${ROMAOPTS} $$i.odd .; done
@@ -34,6 +34,7 @@ dist: schemas
 	mkdir -p ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/xml
+	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf
 	cp `ls *.xml | grep -v '\.doc\.'` ../release/tei-p5-exemplars/share/xml/tei/custom/templates
 	cp *.xsd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/xsd
 	cp *.dtd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
@@ -44,6 +45,7 @@ dist: schemas
 	for i in ${DOCODDS}; do  \
 	cp $$i.doc.html ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html ; \
 	cp $$i.doc.xml  ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/xml ; \
+	cp $$i.doc.pdf  ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf ; \
 	done
 	cp ../catalog.p5.custom ../release/tei-p5-exemplars/share/xml/tei/custom/schema/catalog.xml
 	(cd ../release; 	\
