@@ -432,14 +432,14 @@
      <p> Each line of verse should be encoded with the <gi>l</gi> element, and care
       should be taken to distinguish these logical lines of verse from lines
       motivated by page layout. The latter should be encoded as <gi>lb</gi>s.
-      Thus <eg>
+      Thus <eg rend="pre">
        <![CDATA[
 AS virtuous men pass mildly away,  
-  And whisper to their souls to 
+   And whisper to their souls to 
 go,  
 Whilst some of their sad friends 
 do say, 
-  "Now his breath goes," and 
+   "Now his breath goes," and 
 some say, "No."  
 ]]>
       </eg> should be encoded as <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -451,11 +451,11 @@ some say, "No."
        </lg>
       </egXML> Also, as in the example above, use the <att>rend</att> attribute
       to mark when a line is indented more than its siblings. Use
-       <soCalled>numbered</soCalled> indent values (e.g. "indent(1)", "indent(2)",
+       <soCalled>numbered</soCalled> indent values (e.g. <q>indent(1)</q>, <q>indent(2)</q>,
       etc.) to make clear levels of indentation.</p>
 
     </div>
-    <div type="subseciton" xml:id="drama">
+    <div type="subsection" xml:id="drama">
      <head>Drama</head>
      <p>The standard TEI elements for drama should be used: <gi>sp</gi>,
        <gi>stage</gi>, <gi>speaker</gi>. If the <att>who</att> attribute is used
@@ -653,8 +653,8 @@ some say, "No."
       However, when semantic already accounts for its cause, description 
       of alignment is not necessary. Headings, for instance, do not need 
       to be marked as being centered.</p>
-      <p>To indicate level of indentation (often in verse), use numerical "arguments"
-         to "indent", as in <val>indent(1)</val>, <val>indent(-1)</val>, and so on.
+      <p>To indicate level of indentation (often in verse), use numerical <q>arguments</q>
+         to <q>indent</q>, as in <val>indent(1)</val>, <val>indent(-1)</val>, and so on.
       </p>
     </div>
     <!-- Seems unnecessary to me now. April 2009, PJT
@@ -691,7 +691,7 @@ some say, "No."
      and encode breaks even for blank pages. If the page is numbered, include
      the page number as the value of the <att>n</att> attribute and, again, no 
      matter where the page number is printed on the page, place the <gi>pb</gi> 
-     element at the "top."</p>
+     element at the <q>top.</q></p>
     <p>If marking column breaks, follow the same rules as for page breaks.
      Column breaks are imagined to appear at the <emph>top</emph> of the column,
      at the beginning of the column's text. The <gi>cols</gi> element exists to
@@ -710,7 +710,7 @@ some say, "No."
             Special Interest Group (SIG) on Libraries</ref> is in the process 
          of revising its <title>TEI Text Encoding in Libraries: Guidelines 
             for Best Encoding Practices</title> (GBP) document, which creates 
-         common definitions of "levels of encoding" based on depth of markup 
+         common definitions of <q>levels of encoding</q> based on depth of markup 
          applied. A <ref 
             target="http://wiki.tei-c.org/index.php/TEI_in_Libraries:_Guidelines_for_Best_Practices"
             >draft</ref> of this document is available at the Libraries SIG's 
@@ -721,7 +721,7 @@ some say, "No."
       <p>Mapped to GBP levels, TEI Tite would sit between three and four: it 
          requires use of all the elements from level three plus additional ones, 
          but requires fewer elements than level four. Relative to level three,
-         "Simple Analysis," Tite
+         <q>Simple Analysis,</q> Tite
          <list>
             <item>encourages the use of the <att>rend</att> attribute on 
                typographically distinct text (marked with <gi>hi</gi>), 
@@ -995,7 +995,7 @@ some say, "No."
           </elementSpec>
           <elementSpec ident="cols" mode="add" ns="http://www.tei-c.org/ns/tite/1.0">
             <equiv filter="tite-acdc.xsl" mimeType="text/xsl" name="cols"/>
-            <desc>(columns) with the "n" attribute (denoting new number of columns) is
+            <desc>(columns) with the <q>n</q> attribute (denoting new number of columns) is
                used to mark where a document changes columnar layout.</desc>
             <classes>
               <memberOf key="model.milestoneLike"/>
@@ -1074,13 +1074,9 @@ some say, "No."
               <attDef ident="default" mode="delete"/>
             </attList>
           </classSpec>
-          <classSpec ident="att.divLike" mode="change" module="tei" type="atts">
-            <attList>
-              <attDef ident="org" mode="delete"/>
-              <attDef ident="sample" mode="delete"/>
-              <attDef ident="part" mode="delete"/>
-            </attList>
-          </classSpec>
+          <classSpec ident="att.divLike" mode="delete" module="tei"
+		     type="atts"/>
+
           <classSpec ident="att.editLike" mode="change" module="tei" type="atts">
             <attList>
               <attDef ident="cert" mode="delete"/>
@@ -1095,25 +1091,12 @@ some say, "No."
               <attDef ident="rendition" mode="delete"/>
             </attList>
           </classSpec>
-          <classSpec ident="att.global.linking" mode="change" module="linking" type="atts">
-            <attList>
-              <attDef ident="corresp" mode="delete"/>
-              <attDef ident="synch" mode="delete"/>
-              <attDef ident="sameAs" mode="delete"/>
-              <attDef ident="copyOf" mode="delete"/>
-              <attDef ident="next" mode="delete"/>
-              <attDef ident="prev" mode="delete"/>
-              <attDef ident="exclude" mode="delete"/>
-              <attDef ident="select" mode="delete"/>
-            </attList>
-          </classSpec>
-          <classSpec ident="att.segLike" mode="change" module="tei" type="atts">
-            <attList>
-              <attDef ident="type" mode="delete"/>
-              <attDef ident="function" mode="delete"/>
-              <attDef ident="part" mode="delete"/>
-            </attList>
-          </classSpec>
+          <classSpec ident="att.global.linking" mode="delete"
+		     module="linking" type="atts"/>
+
+          <classSpec ident="att.segLike" mode="delete" module="tei"
+		     type="atts"/>
+
           <classSpec ident="att.typed" mode="change" module="tei" type="atts">
             <attList>
               <attDef ident="subtype" mode="delete"/>
@@ -1125,7 +1108,6 @@ some say, "No."
             <attList>
               <attDef ident="hand" mode="delete"/>
               <attDef ident="agent" mode="delete"/>
-              <attDef ident="extent" mode="delete"/>
               <attDef ident="cert" mode="delete"/>
               <attDef ident="resp" mode="delete"/>
               <attDef ident="evidence" mode="delete"/>
