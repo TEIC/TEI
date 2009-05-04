@@ -50,20 +50,19 @@
 	<xsl:text>\egroup </xsl:text>
       </xsl:when>
       <xsl:otherwise>
-      <xsl:text>\par\bgroup</xsl:text>
-      <xsl:call-template name="egXMLStartHook"/>
-      <xsl:call-template name="exampleFontSet"/>
-      <xsl:text>\begin{shaded}\noindent\mbox{}</xsl:text>
-      <xsl:apply-templates mode="verbatim">
-	<xsl:with-param name="highlight">
-	  <xsl:value-of select="$highlight"/>
-	</xsl:with-param>
-      </xsl:apply-templates>
-      <xsl:apply-templates mode="verbatim"/>
-      <xsl:text>\end{shaded}</xsl:text>
-      <xsl:call-template name="egXMLEndHook"/>
-      <xsl:text>\egroup\par </xsl:text>
-      <xsl:if test="parent::tei:p and following-sibling::node()">\noindent </xsl:if>
+	<xsl:text>\par\bgroup</xsl:text>
+	<xsl:call-template name="egXMLStartHook"/>
+	<xsl:call-template name="exampleFontSet"/>
+	<xsl:text>\begin{shaded}\noindent\mbox{}</xsl:text>
+	<xsl:apply-templates mode="verbatim">
+	  <xsl:with-param name="highlight">
+	    <xsl:value-of select="$highlight"/>
+	  </xsl:with-param>
+	</xsl:apply-templates>
+	<xsl:text>\end{shaded}</xsl:text>
+	<xsl:call-template name="egXMLEndHook"/>
+	<xsl:text>\egroup\par </xsl:text>
+	<xsl:if test="parent::tei:p and following-sibling::node()">\noindent </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
