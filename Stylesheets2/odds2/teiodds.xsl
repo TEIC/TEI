@@ -378,37 +378,36 @@
           <xsl:with-param name="grammar">true</xsl:with-param>
           <xsl:with-param name="content">
             <Wrapper>
-              <define name="{@ident}.attributes" xmlns="http://relaxng.org/ns/structure/1.0">
-                <xsl:for-each select="tei:classes/tei:memberOf">
-                  <xsl:for-each select="key('IDENTS',@key)[1]">
-                    <xsl:if test="@type='atts'">
-                      <ref name="{@ident}.attributes" xmlns="http://relaxng.org/ns/structure/1.0"/>
-                    </xsl:if>
-                  </xsl:for-each>
-                </xsl:for-each>
-                <xsl:choose>
-                  <xsl:when test="tei:attList//tei:attDef">
-                    <xsl:for-each select="tei:attList//tei:attDef">
-                      <xsl:if test="not(starts-with(@ident,'xmlns'))">
-                        <ref name="{$c}.attribute.{translate(@ident,':','')}"
-                          xmlns="http://relaxng.org/ns/structure/1.0"/>
-                      </xsl:if>
-                    </xsl:for-each>
-                  </xsl:when>
-                  <xsl:when test="tei:classes/tei:memberOf"/>
-                  <xsl:otherwise>
-                    <notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
-                  </xsl:otherwise>
-                </xsl:choose>
-                <xsl:if test="$TEIC='true'">
-                  <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
-                </xsl:if>
-              </define>
-              <xsl:apply-templates mode="tangle" select="tei:attList">
+		<xsl:variable name="contents">
+		  <ROOT>
+		    <xsl:for-each select="tei:classes/tei:memberOf">
+		      <xsl:for-each select="key('IDENTS',@key)[1]">
+			<xsl:if test="@type='atts'">
+			<ref name="{@ident}.attributes" xmlns="http://relaxng.org/ns/structure/1.0"/>
+			</xsl:if>
+		    </xsl:for-each>
+		    </xsl:for-each>
+		    <xsl:for-each select="tei:attList//tei:attDef">
+		      <xsl:if test="not(starts-with(@ident,'xmlns'))">
+			<ref name="{$c}.attribute.{translate(@ident,':','')}"
+			     xmlns="http://relaxng.org/ns/structure/1.0"/>
+		      </xsl:if>
+		    </xsl:for-each>
+		  </ROOT>
+		</xsl:variable>
+		<define name="{@ident}.attributes"
+			xmlns="http://relaxng.org/ns/structure/1.0">
+		   <xsl:copy-of select="$contents/ROOT/*"/>
+		   <xsl:if test="not($contents/ROOT/*)">
+		     <empty
+			 xmlns="http://relaxng.org/ns/structure/1.0"/>
+		   </xsl:if>
+		</define>
+		<xsl:apply-templates mode="tangle" select="tei:attList">
                 <xsl:with-param name="element" select="@ident"/>
-              </xsl:apply-templates>
-            </Wrapper>
-          </xsl:with-param>
+		</xsl:apply-templates>
+	    </Wrapper>
+	  </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
     </xsl:choose>
