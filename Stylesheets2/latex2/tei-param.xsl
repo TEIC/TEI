@@ -191,6 +191,8 @@ capable of dealing with UTF-8 directly.
 \def\textJapanese{\fontspec{Kochi Mincho}}
 \def\textChinese{\fontspec{HAN NOM A}\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip = 0pt plus 1pt }
 \setmonofont{DejaVu Sans Mono}
+\setsansfont{Arial}
+\setromanfont{Times New Roman}
 </xsl:otherwise>
 </xsl:choose>
 \DeclareTextSymbol{\textpi}{OML}{25}
