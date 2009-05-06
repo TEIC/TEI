@@ -7,6 +7,7 @@
       xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:param name="corpus"/>
+  <xsl:param name="corpusList"/>
   <xsl:param name="processP4">false</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
   <xsl:key name="All" match="*" use="1"/>
@@ -14,9 +15,16 @@
 
   <xsl:template match="/">
     <xsl:variable name="pathlist">
-      <xsl:value-of 
-	  select="concat($corpus,
-		  '?select=*.xml;recurse=yes;on-error=warning')"/>
+      <xsl:choose>
+	<xsl:when test="corpusList=''">
+	  <xsl:value-of 
+	      select="concat($corpus,
+		      '?select=*.xml;recurse=yes;on-error=warning')"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$corpusList"/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:variable>
     <xsl:variable name="docs" select="collection($pathlist)"/> 
     <xsl:variable name="all">
