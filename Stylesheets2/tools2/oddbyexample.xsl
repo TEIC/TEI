@@ -38,6 +38,8 @@ of the TEI you need to validate that corpus
 <xsl:param name="corpus">./</xsl:param>
 <!-- the source of the TEI (just needs *Spec)-->
 <xsl:param name="tei">/usr/share/xml/tei/odd/p5subset.xml</xsl:param>
+<!-- should we make valList for @rend -->
+<xsl:param name="enumerateRend">false</xsl:param>
 
 <xsl:key name="Atts" match="@*" use="local-name(parent::*)"/>  
 <xsl:key name="attVals" match="@*" use="concat(local-name(parent::*),local-name())"/>
@@ -316,7 +318,7 @@ valList
       <xsl:when
 	  test="@ident='n'">false</xsl:when>
       <xsl:when
-	  test="@ident='rend'">true</xsl:when>
+	  test="@ident='rend' and $enumerateRend='true'">true</xsl:when>
       <xsl:when
 	  test="valList[@type='closed']">true</xsl:when>
       <xsl:when
