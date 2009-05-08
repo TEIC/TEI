@@ -11,6 +11,7 @@
   <xsl:param name="processP4">false</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
   <xsl:key name="All" match="*" use="1"/>
+  <xsl:key name="AllTEI" match="tei:*" use="1"/>
   <xsl:key name="E" match="*" use="local-name()"/>
 
   <xsl:template match="/">

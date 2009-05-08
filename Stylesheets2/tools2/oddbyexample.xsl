@@ -40,6 +40,8 @@ of the TEI you need to validate that corpus
 <xsl:param name="tei">/usr/share/xml/tei/odd/p5subset.xml</xsl:param>
 <!-- should we make valList for @rend -->
 <xsl:param name="enumerateRend">false</xsl:param>
+<!-- should we deal with non-TEI namespaces -->
+<xsl:param name="processNonTEI">false</xsl:param>
 
 <xsl:key name="Atts" match="@*" use="local-name(parent::*)"/>  
 <xsl:key name="attVals" match="@*" use="concat(local-name(parent::*),local-name())"/>
@@ -110,7 +112,7 @@ valList
        </xsl:for-each>
      </tei>
      <docs>
-       <xsl:for-each-group select="key('All',1)" group-by="local-name()">
+       <xsl:for-each-group select="key('AllTEI',1)" group-by="local-name()">
 	 <xsl:sort select="current-grouping-key()"/>
 	 <xsl:variable name="ident" select="current-grouping-key()"/>
 	 <elementSpec>
@@ -183,9 +185,55 @@ valList
 	 </xsl:otherwise>
        </xsl:choose>
      </xsl:for-each>
+     <xsl:if test="$processNonTEI='true'">
+       <xsl:for-each-group select="key('All',1)" group-by="local-name()">
+	 <xsl:sort/>
+	 <xsl:choose>
+	   <xsl:when test="self::n:ROOT"/>       
+	   <xsl:when test="namespace-uri()='http://www.tei-c.org/ns/1.0'"/>
+	 <xsl:otherwise>
+	   <!-- build new 'add' elementSpec -->
+	   <elementSpec ident="{current-grouping-key()}" mode="add">
+	     <xsl:text>&#xA;</xsl:text>
+	     <xsl:comment>add an &lt;equiv/&gt; to point to an named  template
+in an XSLT file which will transform this to pure TEI</xsl:comment>
+              <xsl:text>&#xA;</xsl:text>
+	      <equiv filter="somefile.xsl" mimeType="text/xsl" name="{current-grouping-key()}"/>
+	      <desc>
+		<xsl:text>&#xA;</xsl:text>
+		<xsl:comment> Describe the <xsl:value-of
+		select="current-grouping-key()"/> element  here</xsl:comment>
+		<xsl:text>&#xA;</xsl:text>
+	      </desc>
+	      <classes>
+	       <xsl:text>&#xA;</xsl:text>
+	       <xsl:comment> Add a 'memberOf key="model.className"' stanza for whatever classes it belongs to  here</xsl:comment>
+	       <xsl:text>&#xA;</xsl:text>
+	     </classes>
+	     <content>
+	       <xsl:text>&#xA;</xsl:text>
+	       <xsl:comment>Add RNG content model here</xsl:comment>
+	       <xsl:text>&#xA;</xsl:text>
+	     </content>
+	     <xsl:if test="key('Atts',local-name())">
+	       <attList>
+		 <xsl:comment>Add attDefs:</xsl:comment>
+		 <xsl:text>&#xA;</xsl:text>
+		 <xsl:for-each-group select="key('Atts',local-name())"
+				     group-by="local-name()">
+		   <xsl:sort/>
+		   <attDef ident="{local-name()}" mode="add"/>
+		 </xsl:for-each-group>
+	       </attList>
+	     </xsl:if>
+	   </elementSpec>
+	 </xsl:otherwise>
+       </xsl:choose>
+     </xsl:for-each-group>    
+     </xsl:if>
    </stage2>
  </xsl:variable>
-
+ 
 <!-- start writing the final ODD document -->
  <TEI xml:lang="en">
    <teiHeader>
@@ -274,6 +322,18 @@ valList
 		       and @module=current-grouping-key()]"/>
 	   <xsl:apply-templates select="$stage2/stage2/classSpec[@module=current-grouping-key()]"/>
 	 </xsl:for-each-group>
+
+	 <xsl:for-each
+	     select="$stage2/stage2/elementSpec[@mode='add']">
+	   <xsl:text>&#xA;&#xA;&#xA;</xsl:text>
+	   <xsl:comment>You've added an element '<xsl:value-of select="@ident"/>'
+	   which does not seem to be a proper TEI element. This will make your TEI
+	   documents non-conformant, but if you really want to do this you should
+	   add an elementSpec for it if you want your document to validate. It
+	   would be better to use a separate namespace. </xsl:comment>
+	   <xsl:text>&#xA;&#xA;</xsl:text>
+	   <xsl:copy-of select="."/>
+	 </xsl:for-each>        
        </schemaSpec>
      </body>
    </text>
