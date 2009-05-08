@@ -16,7 +16,7 @@
   <xsl:template match="/">
     <xsl:variable name="pathlist">
       <xsl:choose>
-	<xsl:when test="corpusList=''">
+	<xsl:when test="$corpusList=''">
 	  <xsl:value-of 
 	      select="concat($corpus,
 		      '?select=*.xml;recurse=yes;on-error=warning')"/>
