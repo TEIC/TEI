@@ -193,7 +193,7 @@ valList
 	   <xsl:when test="namespace-uri()='http://www.tei-c.org/ns/1.0'"/>
 	 <xsl:otherwise>
 	   <!-- build new 'add' elementSpec -->
-	   <elementSpec ident="{current-grouping-key()}" mode="add">
+	   <elementSpec ident="{current-grouping-key()}" mode="add" ns="{namespace-uri()}">
 	     <xsl:text>&#xA;</xsl:text>
 	     <xsl:comment>add an &lt;equiv/&gt; to point to an named  template
 in an XSLT file which will transform this to pure TEI</xsl:comment>
