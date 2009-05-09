@@ -526,6 +526,10 @@
   </xd:doc>
   <xsl:template match="tei:p">
   <xsl:text>\par </xsl:text>
+  <xsl:if test="$numberParagraphs='true'">
+    <xsl:number/>
+    <xsl:text> </xsl:text>
+  </xsl:if>
   <xsl:apply-templates/>
   </xsl:template>
   <xd:doc>
