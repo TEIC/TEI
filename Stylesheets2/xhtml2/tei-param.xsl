@@ -465,11 +465,6 @@ Be talkative while working.
 </xd:doc>
 
   <xsl:param name="verbose">false</xsl:param>
-  <xd:doc type="boolean" class="numbering">
-Automatically number paragraphs.
-</xd:doc>
-
-  <xsl:param name="numberParagraphs">false</xsl:param>
 
   <xd:doc type="boolean" class="layout">
     Make all notes into endnotes

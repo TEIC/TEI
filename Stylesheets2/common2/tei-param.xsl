@@ -160,6 +160,10 @@
   <xsl:param name="numberTables">true</xsl:param>
   <xd:doc class="numbering" type="boolean"> Use value of "n" attribute to number
     sections</xd:doc>
+  <xd:doc type="boolean" class="numbering">
+    Automatically number paragraphs.
+  </xd:doc>
+  <xsl:param name="numberParagraphs">false</xsl:param>
   <xsl:param name="prenumberedHeadings">false</xsl:param>
   <xd:doc class="output" type="string"> The complete URL when the document is
     being delivered from a web server (normally set by Apache or Cocoon)</xd:doc>
