@@ -39,6 +39,10 @@ odd:
 oddbyexample:
 	saxon -o oddbyexample.odd ../tools2/oddbyexample.xsl ../tools2/oddbyexample.xsl corpus=`pwd`/bare 
 	roma2 oddbyexample.odd .
+	jing -c oddbyexample.rnc bare/test2.xml
+	jing oddbyexample.xsd bare/test2.xml
+	xmllint --noout --dtdvalid oddbyexample.dtd bare/test2.xml
+	@echo NOTE: expect errors now about "wicked"
 	-jing -c oddbyexample.rnc bare/test.xml
 	-jing oddbyexample.xsd bare/test.xml
 	-xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
