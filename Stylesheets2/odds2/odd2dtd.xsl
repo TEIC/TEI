@@ -522,9 +522,6 @@
 </xsl:text>
     </xsl:if>
   </xsl:template>
-  <xsl:template name="italicize">
-    <xsl:param name="text"/>
-  </xsl:template>
   <xsl:template name="linkStyle"/>
   <xsl:template name="makeAnchor">
     <xsl:param name="name"/>

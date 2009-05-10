@@ -1112,8 +1112,9 @@
 	</xsl:when>
       </xsl:choose>
       <xsl:if test="$numberParagraphs='true'">
+	<xsl:text>[</xsl:text>
         <xsl:number/>
-        <xsl:text> </xsl:text>
+        <xsl:text>] </xsl:text>
       </xsl:if>
       <xsl:apply-templates/>
     </xsl:element>

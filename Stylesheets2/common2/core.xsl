@@ -295,12 +295,12 @@
 </xsl:template>
 
 <xsl:template match="tei:title">
-   <xsl:if test="preceding-sibling::tei:title">
-      <xsl:text> &#8212; </xsl:text>
-    </xsl:if>
 
   <xsl:choose>
     <xsl:when test="parent::tei:titleStmt">
+      <xsl:if test="preceding-sibling::tei:title">
+	<xsl:text> &#8212; </xsl:text>
+      </xsl:if>
       <xsl:apply-templates/>
     </xsl:when>
     <xsl:when test="@level='m' or not(@level)">
@@ -366,8 +366,18 @@
 	<xsl:text>. </xsl:text>
       </xsl:if>
     </xsl:when>
-    <xsl:otherwise>
+    <xsl:when test="ancestor::tei:bibl">
       <xsl:apply-templates/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="emphasize">
+	<xsl:with-param name="class">
+	  <xsl:text>titlem</xsl:text>
+	</xsl:with-param>
+	<xsl:with-param name="content">
+	  <xsl:apply-templates/>
+	</xsl:with-param>
+      </xsl:call-template>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>

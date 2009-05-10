@@ -40,25 +40,6 @@
     <xsl:apply-templates select="text()[1]"/>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements tei:bibl/tei:title</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:bibl/tei:title">
-    <xsl:if test="preceding-sibling::tei:title"> </xsl:if>
-    <xsl:choose>
-      <xsl:when test="@level='a'">
-        <xsl:text>`</xsl:text>
-        <xsl:apply-templates/>
-        <xsl:text>'</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>\textit{</xsl:text>
-        <xsl:apply-templates/>
-        <xsl:text>}</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements tei:code</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
@@ -527,11 +508,21 @@
   <xsl:template match="tei:p">
   <xsl:text>\par </xsl:text>
   <xsl:if test="$numberParagraphs='true'">
-    <xsl:number/>
-    <xsl:text> </xsl:text>
+    <xsl:call-template name="numberParagraph"/>
   </xsl:if>
   <xsl:apply-templates/>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>How to number a paragraph</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="numberParagraph">
+    <xsl:text>\textit{\footnotesize[</xsl:text>
+    <xsl:number/>
+    <xsl:text>]} </xsl:text>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>Process element tei:pb</xd:short>
     <xd:detail>Indication of a page break. We make it an anchor if it has an

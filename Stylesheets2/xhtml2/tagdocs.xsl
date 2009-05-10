@@ -220,30 +220,6 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
-
-  <xd:doc>
-    <xd:short>[html] </xd:short>
-    <xd:param name="text">text</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="embolden">
-    <xsl:param name="text"/>
-    <b>
-      <xsl:copy-of select="$text"/>
-    </b>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>[html] </xd:short>
-    <xd:param name="text">text</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="italicize">
-    <xsl:param name="text"/>
-    <em>
-      <xsl:copy-of select="$text"/>
-    </em>
-  </xsl:template>
   <xd:doc>
     <xd:short>[html] make a link</xd:short>
     <xd:param name="class">class</xd:param>
@@ -310,19 +286,6 @@
     </div>
   </xsl:template>
 
-  <xd:doc>
-    <xd:short>[html] </xd:short>
-    <xd:param name="text">text</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="ttembolden">
-    <xsl:param name="text"/>
-    <b>
-      <tt>
-        <xsl:copy-of select="$text"/>
-      </tt>
-    </b>
-  </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
     <xd:param name="text">text</xd:param>

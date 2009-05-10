@@ -180,46 +180,11 @@
     <xd:param name="text">text</xd:param>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template name="ttembolden">
-    <xsl:param name="text"/>
-    <hi>
-      <code>
-        <xsl:copy-of select="$text"/>
-      </code>
-    </hi>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>[odds] </xd:short>
-    <xd:param name="text">text</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
   <xsl:template name="typewriter">
     <xsl:param name="text"/>
     <code>
       <xsl:copy-of select="$text"/>
     </code>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>[odds] </xd:short>
-    <xd:param name="text">text</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="embolden">
-    <xsl:param name="text"/>
-    <hi>
-      <xsl:copy-of select="$text"/>
-    </hi>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>[odds] </xd:short>
-    <xd:param name="text">text</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="italicize">
-    <xsl:param name="text"/>
-    <emph>
-      <xsl:copy-of select="$text"/>
-    </emph>
   </xsl:template>
   <xd:doc>
     <xd:short>[odds] make a link</xd:short>

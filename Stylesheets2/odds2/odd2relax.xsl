@@ -32,9 +32,6 @@
   <xsl:param name="verbose"/>
   <xsl:param name="outputDir"/>
   <xsl:param name="appendixWords"/>
-  <xsl:template name="italicize">
-    <xsl:param name="text"/>
-  </xsl:template>
   <xsl:template name="makeAnchor">
     <xsl:param name="name"/>
   </xsl:template>
@@ -336,8 +333,6 @@
   <xsl:template name="typewriter">
     <xsl:param name="text"/>
   </xsl:template>
-
-  <xsl:template name="ttembolden"/>
 
   <xsl:template match="processing-instruction()"/>
 
