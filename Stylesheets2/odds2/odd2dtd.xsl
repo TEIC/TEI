@@ -146,13 +146,16 @@
           <xsl:with-param name="method">text</xsl:with-param>
           <xsl:with-param name="body">
             <xsl:call-template name="dtdComment">
-              <xsl:with-param name="text"> TEI P5 entity declaration module for
-									<xsl:value-of select="@ident"/>. Generated <xsl:call-template name="showDate"/>. <xsl:text>
-</xsl:text>
-								<xsl:if test="$TEIC='true'"><xsl:call-template name="copyright"/></xsl:if>
-								<xsl:call-template name="makeTEIVersion"/>
-								<xsl:call-template name="makeDescription"/>
-							</xsl:with-param>
+              <xsl:with-param name="text">
+		<xsl:text>TEI P5 entity declaration module for </xsl:text>
+		<xsl:value-of select="@ident"/>
+		<xsl:text>. Generated </xsl:text>
+		<xsl:call-template name="showDate"/>
+		<xsl:text>.&#10;</xsl:text>
+		<xsl:if test="$TEIC='true'"><xsl:call-template name="copyright"/></xsl:if>
+		<xsl:call-template name="makeTEIVersion"/>
+		<xsl:call-template name="makeDescription"/>
+	      </xsl:with-param>
             </xsl:call-template>
             <xsl:call-template name="datatypeMacros"/>
             <xsl:call-template name="normalClasses"/>
@@ -1508,8 +1511,7 @@
     <xsl:apply-templates mode="tangle" select="tei:attList/tei:*"/>
   </xsl:template>
   <xsl:template match="tei:attDef" mode="tangle">
-    <xsl:text>
-</xsl:text>
+    <xsl:text>&#10;</xsl:text>
     <xsl:choose>
       <xsl:when test="@ns='http://www.w3.org/XML/1998/namespace'">
         <xsl:text>xml:</xsl:text>
@@ -1588,8 +1590,7 @@
     <xsl:copy-of select="$content"/>
   </xsl:template>
   <xsl:template name="CR">
-    <xsl:text>
-</xsl:text>
+    <xsl:text>&#10;</xsl:text>
   </xsl:template>
   <xsl:template match="tei:memberOf" mode="tangleAtts">
     <xsl:variable name="ident">
