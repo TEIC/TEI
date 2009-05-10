@@ -55,8 +55,7 @@
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
-    <xsl:text>
-</xsl:text>
+    <xsl:text>&#10;</xsl:text>
   </xsl:template>
   <xsl:key match="tei:moduleSpec[@ident]" name="FILES" use="@ident"/>
   <xsl:variable name="top" select="/"/>

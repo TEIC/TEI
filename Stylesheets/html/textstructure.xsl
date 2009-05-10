@@ -1316,8 +1316,7 @@ $requestedID: requests a particular page
           thisDiv.style.display = "block"; } 
 	  </xsl:text>
 	  </xsl:if> 
-	  <xsl:text>
-	    function startUp() {
+	  <xsl:text>&#10;	    function startUp() {
 	  </xsl:text>
           <xsl:if test="$virtualPages='true'"> thisDiv =
           document.getElementById(curID); thisDiv.style.display = "block";
@@ -2376,8 +2375,7 @@ $requestedID: requests a particular page
         <xsl:value-of select="$date"/>
         <br/>
         <xsl:call-template name="copyrightStatement"/>
-        <xsl:comment><xsl:text>
-	  Generated </xsl:text><xsl:if test="not($masterFile='index')"><xsl:text>from </xsl:text><xsl:value-of select="$masterFile"/></xsl:if><xsl:text> using an XSLT version </xsl:text><xsl:value-of select="system-property('xsl:version')"/> stylesheet
+        <xsl:comment>Generated <xsl:if test="not($masterFile='index')"><xsl:text>from </xsl:text><xsl:value-of select="$masterFile"/></xsl:if><xsl:text> using an XSLT version </xsl:text><xsl:value-of select="system-property('xsl:version')"/> stylesheet
 	  based on <xsl:value-of select="$teixslHome"/>tei.xsl
 	  processed using <xsl:value-of select="system-property('xsl:vendor')"/>
 	  on <xsl:call-template name="whatsTheDate"/></xsl:comment>
@@ -2441,8 +2439,7 @@ $requestedID: requests a particular page
     </xsl:if>
     <xsl:call-template name="preAddressHook"/>
     <address>
-      <xsl:comment><xsl:text>
-	Generated using an XSLT version </xsl:text><xsl:value-of select="system-property('xsl:version')"/> stylesheet
+      <xsl:comment><xsl:text>&#10;	Generated using an XSLT version </xsl:text><xsl:value-of select="system-property('xsl:version')"/> stylesheet
 	based on <xsl:value-of select="$teixslHome"/>tei.xsl
 	processed using: <xsl:value-of select="system-property('xsl:vendor')"/></xsl:comment>
     </address>

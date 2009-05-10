@@ -251,8 +251,7 @@
   </xsl:variable>
     <xsl:call-template name="writeJavascript">
       <xsl:with-param name="content">
-  <xsl:text>
-    var isOp = navigator.userAgent.indexOf('Opera') &gt; -1 ? 1 : 0;
+  <xsl:text>&#10;    var isOp = navigator.userAgent.indexOf('Opera') &gt; -1 ? 1 : 0;
     function keys(key) {
     if (!key) {
     key = event;

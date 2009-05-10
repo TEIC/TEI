@@ -90,8 +90,7 @@
     <xsl:call-template name="latexSetup"/>
     <xsl:call-template name="latexPackages"/>
     <xsl:call-template name="latexLayout"/>
-    <xsl:text>
-\@ifundefined{chapter}{%
+    <xsl:text>&#10;\@ifundefined{chapter}{%
     \def\DivI{\section}
     \def\DivII{\subsection}
     \def\DivIII{\subsubsection}
@@ -150,8 +149,7 @@
 \author{</xsl:text>
 <xsl:call-template name="generateAuthor"/>
 <xsl:text>}
-\begin{document}
-</xsl:text>
+\begin{document}&#10;</xsl:text>
 <xsl:call-template name="latexBegin"/>
 <!-- certainly don't touch the next few lines -->
 <xsl:text disable-output-escaping="yes">
@@ -164,9 +162,7 @@
 \catcode`\&amp;=12\relax </xsl:text>
 <xsl:apply-templates select="tei:text"/>
 <xsl:call-template name="latexEnd"/>
-<xsl:text>
-\end{document}
-</xsl:text>
+<xsl:text>&#10;\end{document}&#10;</xsl:text>
 </xsl:template>
 
   <xd:doc>
@@ -320,6 +316,13 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template match="tei:titlePage/tei:docTitle">
+    <xsl:text>\title{</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements  tei:titlePage</xd:short>
     <xd:detail> </xd:detail>
@@ -331,19 +334,10 @@
   \end{titlepage}
   \cleardoublepage
 </xsl:template>
-  <xd:doc>
-    <xd:short>[latex] </xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="generateSimpleTitle">
-    <xsl:choose>
-      <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
-        <xsl:value-of select="normalize-space(ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle)"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="normalize-space(ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title)"/>
-      </xsl:otherwise>
-    </xsl:choose>
+  <xsl:template match="tei:trailer">
+    <xsl:text>&#10;&#10;\begin{raggedleft}</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>\end{raggedleft}&#10;&#10;</xsl:text>
   </xsl:template>
 
 </xsl:stylesheet>

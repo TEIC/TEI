@@ -17,16 +17,6 @@
   </xd:doc>
 
   <xd:doc>
-    <xd:short>Process elements tei:title</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:title" mode="htmlheader">
-    <xsl:apply-templates/>
-    <xsl:if test="following-sibling::tei:title">
-	<xsl:text> &#8212; </xsl:text>
-    </xsl:if>
-  </xsl:template>
-  <xd:doc>
     <xd:short>[common] Find a plausible main author name</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
@@ -35,7 +25,7 @@
       <xsl:when
         test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
         <xsl:apply-templates mode="author"
-          select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor[1]"/>
+          select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor"/>
       </xsl:when>
       <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
         <xsl:for-each select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
@@ -54,7 +44,7 @@
       </xsl:when>
       <xsl:when test="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
         <xsl:apply-templates mode="author"
-          select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor[1]"/>
+          select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor"/>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -189,25 +179,46 @@
     <xsl:choose>
       <xsl:when
         test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
-        <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle"/>
+        <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle/tei:titlePart"/>
       </xsl:when>
+
       <xsl:when
         test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle">
-        <xsl:apply-templates select="ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle[1]"/>
+        <xsl:apply-templates select="ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle/tei:titlePart"/>
       </xsl:when>
+
       <xsl:when test="self::tei:teiCorpus">	
-          <xsl:apply-templates mode="htmlheader"
+          <xsl:apply-templates 
             select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type='subordinate')]"/>
       </xsl:when>
 
       <xsl:otherwise>
         <xsl:for-each select="ancestor-or-self::tei:TEI">
-          <xsl:apply-templates mode="htmlheader"
-            select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type='subordinate')][1]"/>
+          <xsl:apply-templates 
+            select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type='subordinate')]"/>
         </xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  <xd:doc>
+    <xd:short>[common] </xd:short>
+    <xd:detail>Generate simple title with no markup</xd:detail>
+  </xd:doc>
+  <xsl:template name="generateSimpleTitle">
+    <xsl:choose>
+      <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
+        <xsl:apply-templates 
+	    select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle"
+	    mode="simple"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"
+	    mode="simple"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>[common] Generate sub title </xd:short>
     <xd:detail> </xd:detail>
@@ -224,28 +235,12 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:for-each select="ancestor-or-self::tei:TEI|ancestor-or-self::tei:teiCorpus">
-          <xsl:apply-templates mode="htmlheader"
+          <xsl:apply-templates
             select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='subordinate']"/>
         </xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xd:doc>
-    <xd:short>[common] </xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="whatsTheDate">
-    <xsl:choose>
-      <xsl:when test="function-available('edate:date-time')">
-        <xsl:value-of select="edate:date-time()"/>
-      </xsl:when>
-      <xsl:when test="contains($processor,'SAXON')">
-        <xsl:value-of select="Date:toString(Date:new())" xmlns:Date="/java.util.Date"/>
-      </xsl:when>
-      <xsl:otherwise> (unknown date) </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
   <xd:doc>
     <xd:short>Process elements  tei:div/tei:docAuthor</xd:short>
     <xd:detail> </xd:detail>
@@ -286,5 +281,22 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:docImprint"/>
+
+  <xd:doc>
+    <xd:short>[common] </xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="whatsTheDate">
+    <xsl:choose>
+      <xsl:when test="function-available('edate:date-time')">
+        <xsl:value-of select="edate:date-time()"/>
+      </xsl:when>
+      <xsl:when test="contains($processor,'SAXON')">
+        <xsl:value-of select="Date:toString(Date:new())" xmlns:Date="/java.util.Date"/>
+      </xsl:when>
+      <xsl:otherwise> (unknown date) </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 
 </xsl:stylesheet>

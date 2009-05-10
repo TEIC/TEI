@@ -135,11 +135,9 @@
 </xsl:template>
 
 <xsl:template match="tei:table[@rend='wovenodd' or @rend='attDef']" >
-  <xsl:text>
-\begin{reflist}</xsl:text>
+  <xsl:text>&#10;\begin{reflist}</xsl:text>
 <xsl:apply-templates/>
-  <xsl:text>
-\end{reflist}  </xsl:text>
+  <xsl:text>&#10;\end{reflist}  </xsl:text>
 </xsl:template>
 
 <xsl:template match="tei:table[@rend='valList' 
@@ -147,8 +145,7 @@
      or @rend='specDesc']">
 <xsl:text>\hfil\\[-10pt]\begin{sansreflist}</xsl:text>
 <xsl:apply-templates/>
-  <xsl:text>
-\end{sansreflist}  </xsl:text>
+  <xsl:text>&#10;\end{sansreflist}  </xsl:text>
 </xsl:template>
 
 <xsl:template match="tei:table[@rend='wovenodd' 
@@ -295,5 +292,21 @@
 
 </xsl:template>
 
+<xsl:template match="tei:term">
+  <xsl:text>\emph{</xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>}</xsl:text>
+</xsl:template>
+
+<xsl:template match="tei:seg[@rend='parent']">
+  <xsl:choose>
+    <xsl:when test="*">
+      <xsl:apply-templates/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:text>&#8212;</xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
 
 </xsl:stylesheet>

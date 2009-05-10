@@ -21,8 +21,7 @@
   <xsl:template match="/">
     <xsl:for-each select=".//tei:schemaSpec">
       <xsl:value-of select="@ident"/>
-      <xsl:text>
-</xsl:text>
+      <xsl:text>&#10;</xsl:text>
     </xsl:for-each>
   </xsl:template>
 </xsl:stylesheet>

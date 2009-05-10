@@ -275,6 +275,19 @@
 </xsl:template>
 
 <!-- title  -->
+<xsl:template match="tei:titlePart" mode="simple">
+   <xsl:if test="preceding-sibling::tei:titlePart">
+      <xsl:text> &#8212; </xsl:text>
+    </xsl:if>
+    <xsl:value-of select="."/>
+</xsl:template>
+<xsl:template match="tei:title" mode="simple">
+   <xsl:if test="preceding-sibling::tei:title">
+      <xsl:text> &#8212; </xsl:text>
+    </xsl:if>
+    <xsl:value-of select="."/>
+</xsl:template>
+
 <xsl:template match="tei:titlePart">
    <xsl:if test="preceding-sibling::tei:titlePart">
       <xsl:text> &#8212; </xsl:text>
@@ -283,11 +296,13 @@
 </xsl:template>
 
 <xsl:template match="tei:title">
-   <xsl:if test="preceding-sibling::tei:title">
-      <xsl:text> &#8212; </xsl:text>
-    </xsl:if>
-
   <xsl:choose>
+    <xsl:when test="parent::tei:titleStmt">
+      <xsl:if test="preceding-sibling::tei:title">
+	<xsl:text> &#8212; </xsl:text>
+      </xsl:if>
+      <xsl:apply-templates/>
+    </xsl:when>
     <xsl:when test="@level='m' or not(@level)">
       <xsl:call-template name="emphasize">
 	<xsl:with-param name="class">
@@ -352,14 +367,7 @@
       </xsl:if>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:call-template name="emphasize">
-	<xsl:with-param name="class">
-	  <xsl:text>titleu</xsl:text>
-	</xsl:with-param>
-	<xsl:with-param name="content">
-	  <xsl:apply-templates/>
-	</xsl:with-param>
-      </xsl:call-template>
+      <xsl:apply-templates/>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>

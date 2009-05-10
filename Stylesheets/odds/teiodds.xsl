@@ -130,8 +130,7 @@
     </xsl:if>
   </xsl:template>
   <xsl:template match="*" mode="literal">
-    <xsl:text>
-</xsl:text>
+    <xsl:text>&#10;</xsl:text>
     <xsl:for-each select="ancestor::rng:*">
       <xsl:text> </xsl:text>
     </xsl:for-each>
@@ -143,8 +142,7 @@
         <xsl:text>&gt;</xsl:text>
         <xsl:apply-templates mode="literal"/>
         <xsl:if test="node()[last()]/self::rng:*">
-          <xsl:text>
-</xsl:text>
+          <xsl:text>&#10;</xsl:text>
         </xsl:if>
         <xsl:for-each select="ancestor::rng:*">
           <xsl:text> </xsl:text>
@@ -156,8 +154,7 @@
       <xsl:otherwise>
         <xsl:text>/&gt;</xsl:text>
         <xsl:if test="node()[last()]/self::rng:*">
-          <xsl:text>
-	  </xsl:text>
+          <xsl:text>&#10;	  </xsl:text>
         </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
@@ -1001,18 +998,15 @@ select="$makeDecls"/></xsl:message>
     <xsl:apply-templates mode="copyrighttext" select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability"/>
   </xsl:template>
   <xsl:template match="tei:p" mode="copyrighttext">
-    <xsl:text>
-</xsl:text>
+    <xsl:text>&#10;</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
   <xsl:template match="tei:list" mode="copyrighttext">
-    <xsl:text>
-</xsl:text>
+    <xsl:text>&#10;</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
   <xsl:template match="tei:item" mode="copyrighttext">
-    <xsl:text>
- *</xsl:text>
+    <xsl:text>&#10; *</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
   <xsl:template name="attributeData">
@@ -1833,18 +1827,14 @@ select="$makeDecls"/></xsl:message>
   <xsl:template name="makeTEIVersion">
     <xsl:choose>
       <xsl:when test="ancestor-or-self::tei:TEI/processing-instruction()[name()='TEIVERSION']">
-        <xsl:text>
-TEI Edition: </xsl:text>
+        <xsl:text>&#10;TEI Edition: </xsl:text>
         <xsl:value-of select="ancestor-or-self::tei:TEI/processing-instruction()[name()='TEIVERSION']"/>
-        <xsl:text>
-</xsl:text>
+        <xsl:text>&#10;</xsl:text>
       </xsl:when>
       <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
-        <xsl:text>
-Edition: </xsl:text>
+        <xsl:text>&#10;Edition: </xsl:text>
         <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
-        <xsl:text>
-</xsl:text>
+        <xsl:text>&#10;</xsl:text>
       </xsl:when>
     </xsl:choose>
   </xsl:template>

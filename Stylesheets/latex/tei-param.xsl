@@ -55,7 +55,7 @@ the beginning of the document</xd:short>
 <xd:doc type="string" class="layout">
 Optional parameters for documentclass
 </xd:doc>
-<xsl:param name="classParameters">11pt</xsl:param>
+<xsl:param name="classParameters">11pt,twoside</xsl:param>
 
 <xd:doc type="string" class="layout">
 Logo graphics file
@@ -102,20 +102,15 @@ Use real name of graphics files rather than pointers
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage{endnotes}
-\def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
-</xsl:text>
+\def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}&#10;</xsl:text>
 <xsl:if test="$reencode='true'">
-<xsl:text>
-\IfFileExists{tipa.sty}{\usepackage{tipa}}{}
-\usepackage{times}
-</xsl:text>
+<xsl:text>&#10;\IfFileExists{tipa.sty}{\usepackage{tipa}}{}
+\usepackage{times}&#10;</xsl:text>
 </xsl:if>
 <xsl:if test="not($userpackage='')">
   \usepackage{<xsl:value-of select="$userpackage"/>}
 </xsl:if>
-<xsl:text>
-  \pagestyle{fancy} 
-</xsl:text>
+<xsl:text>&#10;  \pagestyle{fancy} &#10;</xsl:text>
 </xsl:template>
 
 <xd:doc type="float" class="layout">
@@ -149,6 +144,12 @@ this must be the name of a TEI element
 Options to pass to the geometry package to set margins etc
 </xd:doc>
 <xsl:param name="latexGeometryOptions">twoside,a4paper,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in</xsl:param>
+
+<xd:doc type="string" class="userpackage">
+Depth of nesting of reference documentation when processing ODD
+</xd:doc>
+<xsl:param name="specLinkDepth">3</xsl:param>
+
 
 <xd:doc class="layout">
     <xd:short>LaTeX setup</xd:short>
@@ -186,6 +187,9 @@ capable of dealing with UTF-8 directly.
 \usepackage{xunicode}
 \def\textJapanese{\fontspec{Kochi Mincho}}
 \def\textChinese{\fontspec{HAN NOM A}\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip = 0pt plus 1pt }
+\setmonofont{DejaVu Sans Mono}
+\setsansfont{Arial}
+\setromanfont{Times New Roman}
 \catcode`⃥=\active \def⃥{\textbackslash}
 \catcode`❴=\active \def❴{\{}
 \catcode`❵=\active \def❵{\}}
@@ -272,14 +276,15 @@ capable of dealing with UTF-8 directly.
  {\vspace{20pt}\hrule\vspace{10pt}%
   \hypertarget{#1}{}%
   \markright{#1}%
-  \pdfbookmark[1]{#2}{#1}%
+  \pdfbookmark[</xsl:text>
+  <xsl:value-of select="$specLinkDepth"/>
+  <xsl:text>]{#2}{#1}%
   \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
   }{}
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\Div[#1]#2{\section*{#2}}
-\catcode`\_=12\relax
-</xsl:text>
+\catcode`\_=12\relax&#10;</xsl:text>
 </xsl:template>
 
 <xsl:template name="exampleFontSet">
@@ -451,6 +456,7 @@ capable of dealing with UTF-8 directly.
 \fancyfoot[LE]{\TheFullDate}
 \fancyfoot[CE]{\thepage}
 \fancyfoot[RE]{\TheID}
+\hypersetup{linkbordercolor=0.75 0.75 0.75,urlbordercolor=0.75 0.75 0.75,bookmarksnumbered=true}
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}</xsl:text>
 <xsl:call-template name="beginDocumentHook"/>
 </xsl:template>

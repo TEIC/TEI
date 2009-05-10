@@ -33,11 +33,9 @@ rng:includes
   </xsl:template>
   <xsl:template match="rng:include">
     <rng:div>
-      <xsl:text>
-</xsl:text>
+      <xsl:text>&#10;</xsl:text>
       <xsl:comment>include "<xsl:value-of select="@href"/>"</xsl:comment>
-      <xsl:text>
-</xsl:text>
+      <xsl:text>&#10;</xsl:text>
       <xsl:apply-templates select="*|@*[name()!='href']|text()|comment()"/>
       <rng:include>
         <xsl:for-each select="document(@href,.)/rng:grammar">

@@ -165,6 +165,13 @@
   <xd:doc class="numbering" type="integer"> Depth to which sections should be
     numbered</xd:doc>
   <xsl:param name="numberHeadingsDepth">9</xsl:param>
+
+  <xd:doc type="boolean" class="numbering">
+Automatically number paragraphs.
+</xd:doc>
+
+  <xsl:param name="numberParagraphs">false</xsl:param>
+
   <xd:doc class="numbering" type="boolean"> Automatically number tables</xd:doc>
   <xsl:param name="numberTables">true</xsl:param>
   <xd:doc class="numbering" type="boolean"> Use value of "n" attribute to number

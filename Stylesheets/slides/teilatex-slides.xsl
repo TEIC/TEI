@@ -5,7 +5,21 @@ $Date$, $Revision$, $Author$
 
 XSL LaTeX stylesheet to make slides
 
-##LICENSE
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+   
 -->
 <xsl:stylesheet 		
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
@@ -65,7 +79,7 @@ XSL LaTeX stylesheet to make slides
 
   <xsl:template name="latexLayout">
 \date{<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition/tei:date"/>}
-\institute{<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>}
+\institute{<xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>}
 <xsl:if test="not($latexLogo='')">
 <xsl:text>\pgfdeclareimage[height=1cm]{logo}{</xsl:text>
 <xsl:choose>
@@ -80,6 +94,10 @@ XSL LaTeX stylesheet to make slides
 \logo{\pgfuseimage{logo}}
 </xsl:if>
 </xsl:template>
+
+<xsl:template match="tei:authority/tei:address/tei:addrLine">
+ \newline <xsl:apply-templates/>
+</xsl:template> 
 
 <xsl:template name="latexBegin">
 \frame{\maketitle}
@@ -240,33 +258,32 @@ XSL LaTeX stylesheet to make slides
   </xsl:template>
 
   <xsl:template match="teix:egXML">
-\bgroup\ttfamily\fontsize{9pt}{9pt}\selectfont\par
+    <xsl:param name="simple">false</xsl:param>
+    <xsl:param name="highlight"></xsl:param>
+    <xsl:variable name="fontsize">
+    <xsl:choose>
+      <xsl:when test="@rend='teeny'">
+	<xsl:text>{5.5pt}{6pt}</xsl:text>
+      </xsl:when>
+      <xsl:when test="@rend='tiny'">
+	<xsl:text>{6.5pt}{7pt}</xsl:text>
+      </xsl:when>
+      <xsl:when test="@rend='small'">
+	<xsl:text>{7.5pt}{8pt}</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>{8.5pt}{9pt}</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+    </xsl:variable>
+\bgroup\ttfamily\fontsize<xsl:value-of select="$fontsize"/>\selectfont\par
 \begin{exampleblock}{}
-\noindent\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
-\end{exampleblock}
-\par\egroup
-  </xsl:template>
-
-  <xsl:template match="teix:egXML[@rend='small']">
-\bgroup\ttfamily\fontsize{7.5pt}{8pt}\selectfont\par
-\begin{exampleblock}{}
-\noindent\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
-\end{exampleblock}
-\par\egroup
-  </xsl:template>
-
-  <xsl:template match="teix:egXML[@rend='teeny']">
-\bgroup\ttfamily\fontsize{5pt}{5.5pt}\selectfont\par
-\begin{exampleblock}{}
-\noindent\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
-\end{exampleblock}
-\par\egroup
-  </xsl:template>
-
-  <xsl:template match="teix:egXML[@rend='tiny']">
-\bgroup\ttfamily\fontsize{6.5pt}{7pt}\selectfont\par
-\begin{exampleblock}{}
-\noindent\ttfamily\mbox{}<xsl:apply-templates mode="verbatim"/>
+<xsl:text>\noindent\ttfamily\mbox{}</xsl:text>
+<xsl:apply-templates mode="verbatim">
+  <xsl:with-param name="highlight">
+    <xsl:value-of select="$highlight"/>
+  </xsl:with-param>
+</xsl:apply-templates>
 \end{exampleblock}
 \par\egroup
   </xsl:template>
