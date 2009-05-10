@@ -30,17 +30,18 @@ test5:
 test6:
 	saxon -o test6.tex test6.xml ../slides2/teilatex-slides.xsl 
 	saxon  test6.xml ../slides2/teihtml-slides.xsl 
+	-diff test6.tex ok/test6.tex
 
 odd:
 	saxon testdrama.odd ../odds2/odd2odd.xsl \
 	TEIC=true localsource=`pwd`/p5subset.xml > testdrama.compiled.xml
 
 oddbyexample:
-	saxon -o oddbyexample.odd ../tools2/oddbyexample.xsl ../tools2/oddbyexample.xsl corpus=`pwd`/bare
+	saxon -o oddbyexample.odd ../tools2/oddbyexample.xsl ../tools2/oddbyexample.xsl corpus=`pwd`/bare 
 	roma2 oddbyexample.odd .
-	jing -c oddbyexample.rnc bare/test.xml
-	jing oddbyexample.xsd bare/test.xml
-	xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
+	-jing -c oddbyexample.rnc bare/test.xml
+	-jing oddbyexample.xsd bare/test.xml
+	-xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
 
 clean:
 	-rm test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy*

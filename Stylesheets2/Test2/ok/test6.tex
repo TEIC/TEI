@@ -1,0 +1,176 @@
+\documentclass[]{beamer}\makeatletter
+
+\IfFileExists{utf8x.def}%
+ {\usepackage[utf8x]{inputenc}}%
+ {\usepackage[utf8]{inputenc}}
+
+\usepackage[english]{babel}
+
+\usepackage[T1]{fontenc}
+\usepackage[]{ucs}
+\uc@dclc{8421}{default}{\textbackslash }
+\uc@dclc{10100}{default}{\{}
+\uc@dclc{10101}{default}{\}}
+\uc@dclc{8491}{default}{\AA{}}
+\uc@dclc{8239}{default}{\,}
+\uc@dclc{20154}{default}{ }
+\def\textschwa{\rotatebox{-90}{e}}
+\def\textJapanese{}
+\def\textChinese{}
+
+\DeclareTextSymbol{\textpi}{OML}{25}
+\usepackage{relsize}
+\def\textsubscript#1{%
+  \@textsubscript{\selectfont#1}}
+\def\@textsubscript#1{%
+  {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
+\def\textquoted#1{‘#1’}
+\def\textcal#1{\ensuremath{\mathcal{#1}}}
+\def\textsmall#1{{\small #1}}
+\def\textlarge#1{{\large #1}}
+\def\textoverbar#1{\ensuremath{\overline{#1}}}
+\def\textgothic#1{\ensuremath{\mathscr{#1}}}
+\RequirePackage{array}
+\def\@testpach{\@chclass
+ \ifnum \@lastchclass=6 \@ne \@chnum \@ne \else
+  \ifnum \@lastchclass=7 5 \else
+   \ifnum \@lastchclass=8 \tw@ \else
+    \ifnum \@lastchclass=9 \thr@@
+   \else \z@
+   \ifnum \@lastchclass = 10 \else
+   \edef\@nextchar{\expandafter\string\@nextchar}%
+   \@chnum
+   \if \@nextchar c\z@ \else
+    \if \@nextchar l\@ne \else
+     \if \@nextchar r\tw@ \else
+   \z@ \@chclass
+   \if\@nextchar |\@ne \else
+    \if \@nextchar !6 \else
+     \if \@nextchar @7 \else
+      \if \@nextchar (8 \else
+       \if \@nextchar )9 \else
+  10
+  \@chnum
+  \if \@nextchar m\thr@@\else
+   \if \@nextchar p4 \else
+    \if \@nextchar b5 \else
+   \z@ \@chclass \z@ \@preamerr \z@ \fi \fi \fi \fi
+   \fi \fi  \fi  \fi  \fi  \fi  \fi \fi \fi \fi \fi \fi}
+
+\gdef\arraybackslash{\let\\=\@arraycr}
+\def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
+\gdef\arraybackslash{\let\\=\@arraycr}
+
+\newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{){\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{P}[1]{){\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{){\arraybackslash}b{#1}}
+\newcolumntype{M}[1]{){\arraybackslash}m{#1}}
+\IfFileExists{xcolor.sty}%
+  {\RequirePackage{xcolor}}%
+  {\RequirePackage{color}}
+\definecolor{label}{gray}{0.75}
+\newenvironment{reflist}{%
+  \begin{raggedright}\begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\rightmargin}{0.25in}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\itshape ##1}}%
+  }
+  {\end{list}\end{raggedright}}
+\newenvironment{sansreflist}{%
+  \begin{raggedright}\begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\rightmargin}{0.25in}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\upshape\sffamily ##1}}%
+  }
+  {\end{list}\end{raggedright}}
+\newenvironment{specHead}[2]%
+ {\vspace{20pt}\hrule\vspace{10pt}%
+  \hypertarget{#1}{}%
+  \markright{#2}%
+  \pdfbookmark[3]{#2}{#1}%
+  \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
+  }{}
+\DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
+\def\xref@#1#2{\hyper@linkurl{#2}{#1}}
+\def\Div[#1]#2{\section*{#2}}
+\catcode`\_=12\relax
+
+\usepackage{framed}
+\definecolor{shadecolor}{gray}{0.95}
+\usepackage{colortbl}
+\usepackage{longtable}
+\usetheme{PaloAlto}
+\usepackage{times}
+\usepackage{fancyvrb}
+\def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
+\setbeamercovered{transparent}
+\let\mainmatter\relax
+\let\frontmatter\relax
+\let\backmatter\relax
+\let\endfoot\relax
+\let\endlastfoot\relax
+
+\date{}
+\institute{}
+
+\@ifundefined{chapter}{%
+    \def\DivI{\section}
+    \def\DivII{\subsection}
+    \def\DivIII{\subsubsection}
+    \def\DivIV{\paragraph}
+    \def\DivV{\subparagraph}
+    \def\DivIStar[#1]#2{\section*{#2}}
+    \def\DivIIStar[#1]#2{\subsection*{#2}}
+    \def\DivIIIStar[#1]#2{\subsubsection*{#2}}
+    \def\DivIVStar[#1]#2{\paragraph*{#2}}
+    \def\DivVStar[#1]#2{\subparagraph*{#2}}
+}{%
+    \def\DivI{\chapter}
+    \def\DivII{\section}
+    \def\DivIII{\subsection}
+    \def\DivIV{\subsubsection}
+    \def\DivV{\paragraph}
+    \def\DivIStar[#1]#2{\chapter*{#2}}
+    \def\DivIIStar[#1]#2{\section*{#2}}
+    \def\DivIIIStar[#1]#2{\subsection*{#2}}
+    \def\DivIVStar[#1]#2{\subsubsection*{#2}}
+    \def\DivVStar[#1]#2{\paragraph*{#2}}
+}
+\makeatother
+\def\TheFullDate{}
+\def\TheID{}
+\def\TheDate{}
+\title{Test 6}
+\author{}
+\begin{document}
+
+\frame{\maketitle}
+
+\catcode`\$=12\relax
+\catcode`\^=12\relax
+\catcode`\~=12\relax
+\catcode`\#=12\relax
+\catcode`\%=12\relax
+\let\tabcellsep&
+\catcode`\&=12\relax 
+\begin{frame}
+\frametitle{Part 1}\par Cats
+\end{frame}
+
+\begin{frame}
+\frametitle{Part 2}\par Dogs
+\end{frame}
+
+\end{document}
