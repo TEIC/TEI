@@ -664,6 +664,9 @@ version="2.0">
         <xsl:when test="$level=5">
           <xsl:call-template name="setupDiv5"/>
         </xsl:when>
+        <xsl:when test="$level=6">
+          <xsl:call-template name="setupDiv6"/>
+        </xsl:when>
       </xsl:choose>
       <xsl:call-template name="blockStartHook"/>
       <xsl:variable name="Number">
@@ -1381,4 +1384,47 @@ xmlns="http://www.renderx.com/XSL/Extensions">
     </xsl:if>
     <xsl:call-template name="divXRefHeading"/>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>[fo] Work out the number of a section </xd:short>
+    <xd:param name="numbersuffix">suffix to add after number (typically ". ")</xd:param>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="calculateNumber">
+    <xsl:param name="numbersuffix"/>
+    <xsl:choose>
+      <xsl:when test="$prenumberedHeadings='true' and @n">
+        <xsl:value-of select="@n"/>
+        <xsl:value-of select="$numbersuffix"/>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:front">
+        <xsl:if test="not($numberFrontHeadings='')">
+          <xsl:number
+            count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4"
+            format="{$numberFrontHeadings}" from="tei:front" level="multiple"/>
+          <xsl:value-of select="$numbersuffix"/>
+        </xsl:if>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:back">
+        <xsl:if test="not($numberBackHeadings='')">
+          <xsl:call-template name="i18n">
+            <xsl:with-param name="word">appendixWords</xsl:with-param>
+          </xsl:call-template>
+          <xsl:text> </xsl:text>
+          <xsl:number
+            count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4"
+            format="{$numberBackHeadings}" from="tei:back" level="multiple"/>
+          <xsl:value-of select="$numbersuffix"/>
+        </xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:number 
+	    count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4"
+	    from="tei:body" 
+	    level="multiple"/>
+	<xsl:value-of select="$numbersuffix"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>

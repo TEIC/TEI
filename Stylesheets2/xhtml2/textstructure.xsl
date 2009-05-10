@@ -2343,7 +2343,9 @@ $requestedID: requests a particular page
 		<xsl:text>_top</xsl:text>
 	      </xsl:attribute>
 	    </xsl:if>
-              <xsl:call-template name="searchWords"/>
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">searchWords</xsl:with-param>
+	    </xsl:call-template>            
             </a>
           </xsl:if>
           <xsl:if test="$feedbackURL"> | <a class="{$style}" href="{$feedbackURL}">
@@ -2352,7 +2354,9 @@ $requestedID: requests a particular page
 		<xsl:text>_top</xsl:text>
 	      </xsl:attribute>
 	    </xsl:if>
-              <xsl:call-template name="feedbackWords"/>
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">feedbackWords</xsl:with-param>
+	    </xsl:call-template>
             </a>
           </xsl:if>
         </div>
@@ -2413,7 +2417,9 @@ $requestedID: requests a particular page
 		<xsl:text>_top</xsl:text>
 	      </xsl:attribute>
 	    </xsl:if>
-            <xsl:call-template name="searchWords"/>
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">searchWords</xsl:with-param>
+	    </xsl:call-template>
           </a>
         </xsl:if>
         <xsl:if test="$feedbackURL">

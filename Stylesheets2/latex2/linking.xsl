@@ -44,17 +44,6 @@
   </xsl:template>
   <xd:doc>
     <xd:short>[latex] </xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="labelme">
-    <xsl:if test="../@xml:id">
-      <xsl:text>\hypertarget{</xsl:text>
-      <xsl:value-of select="../@xml:id"/>
-      <xsl:text>}{}</xsl:text>
-    </xsl:if>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>[latex] </xd:short>
     <xd:param name="ptr">ptr</xd:param>
     <xd:param name="dest">dest</xd:param>
     <xd:detail> </xd:detail>
