@@ -532,7 +532,7 @@
     <xd:short>Process elements tei:item/label</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:item/label">
+  <xsl:template match="tei:item/tei:label">
     <xsl:choose>
       <xsl:when test="@rend">
         <xsl:call-template name="rendering"/>
