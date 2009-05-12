@@ -430,6 +430,8 @@ capable of dealing with UTF-8 directly.
 \usepackage[pdftitle={<xsl:call-template name="generateSimpleTitle"/>},
  pdfauthor={<xsl:call-template name="generateAuthor"/>}]{hyperref}
 \hyperbaseurl{<xsl:value-of select="$baseURL"/>}
+\parskip<xsl:value-of select="$parSkip"/>
+\parindent<xsl:value-of select="$parIndent"/>
 <xsl:call-template name="latexPreambleHook"/>
 </xsl:template>
 

@@ -254,14 +254,6 @@ Paper width
 </xd:doc>
   <xsl:param name="pageWidth">211mm</xsl:param>
   <xd:doc type="string" class="layout">
-Paragraph indentation
-</xd:doc>
-  <xsl:param name="parIndent">1em</xsl:param>
-  <xd:doc type="string" class="layout">
-Default spacing between paragraphs
-</xd:doc>
-  <xsl:param name="parSkip">0pt</xsl:param>
-  <xd:doc type="string" class="layout">
 Maximum space allowed between paragraphs
 </xd:doc>
   <xsl:param name="parSkipmax">12pt</xsl:param>

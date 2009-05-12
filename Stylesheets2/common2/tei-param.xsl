@@ -187,6 +187,15 @@
   <xd:doc class="tables" type="string"> Default alignment of tables</xd:doc>
   <xsl:param name="tableAlign">left</xsl:param>
 
+  <xd:doc type="string" class="layout">
+Paragraph indentation
+</xd:doc>
+  <xsl:param name="parIndent">1em</xsl:param>
+  <xd:doc type="string" class="layout">
+Default spacing between paragraphs
+</xd:doc>
+  <xsl:param name="parSkip">0pt</xsl:param>
+
   <xd:doc class="hook">
     <xd:short>[common] Hook where actions can be inserted when making
      a heading</xd:short>
