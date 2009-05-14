@@ -15,6 +15,10 @@
   <xsl:key name="E" match="*" use="local-name()"/>
 
   <xsl:template match="/">
+    <xsl:call-template name="main"/>
+  </xsl:template>
+
+  <xsl:template name="main">
     <xsl:variable name="pathlist">
       <xsl:choose>
 	<xsl:when test="$corpusList=''">
