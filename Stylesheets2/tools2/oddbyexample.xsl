@@ -42,6 +42,14 @@ of the TEI you need to validate that corpus
 <xsl:param name="enumerateRend">false</xsl:param>
 <!-- should we deal with non-TEI namespaces -->
 <xsl:param name="processNonTEI">false</xsl:param>
+<!-- which attributes should be make valLists for, regardless -->
+<xsl:param name="attributeList"/>
+
+<xsl:variable name="checkAtts">
+  <xsl:text>,</xsl:text>
+  <xsl:value-of select="$attributeList"/>
+  <xsl:text>,</xsl:text>
+</xsl:variable>
 
 <xsl:key name="Atts" match="@*" use="local-name(parent::*)"/>  
 <xsl:key name="attVals" match="@*" use="concat(local-name(parent::*),local-name())"/>
@@ -375,6 +383,7 @@ in an XSLT file which will transform this to pure TEI</xsl:comment>
 <xsl:template name="checktype">
   <xsl:attribute name="enumerated">
     <xsl:choose>
+      <xsl:when test="contains($checkAtts,concat(',',@ident,',')">true</xsl:when>
       <xsl:when
 	  test="@ident='n'">false</xsl:when>
       <xsl:when

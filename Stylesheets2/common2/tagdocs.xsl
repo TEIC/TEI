@@ -1544,13 +1544,19 @@ select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xs
 	  <xsl:choose>
 	    <xsl:when test="@type='semi'"><xsl:call-template name="i18n">
 	      <xsl:with-param name="word">Suggested values include</xsl:with-param>
-	    </xsl:call-template>:</xsl:when>
+	    </xsl:call-template>
+	    <xsl:text>:</xsl:text>
+	    </xsl:when>
 	    <xsl:when test="@type='open'"><xsl:call-template name="i18n">
 	      <xsl:with-param name="word">Sample values include</xsl:with-param>
-	    </xsl:call-template>:</xsl:when>
+	    </xsl:call-template>
+	    <xsl:text>:</xsl:text>
+	    </xsl:when>
 	    <xsl:when test="@type='closed'"><xsl:call-template name="i18n">
 	      <xsl:with-param name="word">Legal values are</xsl:with-param>
-	    </xsl:call-template>:</xsl:when>
+	    </xsl:call-template>
+	    <xsl:text>:</xsl:text>
+	    </xsl:when>
 	    <xsl:otherwise>Values are:</xsl:otherwise>
 	  </xsl:choose>
 	</xsl:element>

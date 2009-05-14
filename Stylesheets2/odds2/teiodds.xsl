@@ -1838,7 +1838,18 @@ select="$makeDecls"/></xsl:message>
               <xsl:value-of select="@ident"/>
             </xsl:otherwise>
           </xsl:choose>
-	  <xsl:call-template name="makeGloss"/>
+	  <xsl:variable name="documentationLanguage">
+	    <xsl:call-template name="generateDoc"/>
+	  </xsl:variable>
+	  <xsl:variable name="langs">
+	    <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>
+	  </xsl:variable>
+	  <xsl:variable name="firstLang">
+	    <xsl:value-of select="substring-before($langs,' ')"/>
+	  </xsl:variable>
+	  <xsl:call-template name="makeGloss">
+	    <xsl:with-param name="langs" select="$langs"/>
+	  </xsl:call-template>
           <xsl:if test="following-sibling::tei:valItem">
             <xsl:text>; </xsl:text>
           </xsl:if>
@@ -1866,7 +1877,18 @@ select="$makeDecls"/></xsl:message>
               <xsl:value-of select="@ident"/>
             </xsl:otherwise>
           </xsl:choose>
-	  <xsl:call-template name="makeGloss"/>
+	  <xsl:variable name="documentationLanguage">
+	    <xsl:call-template name="generateDoc"/>
+	  </xsl:variable>
+	  <xsl:variable name="langs">
+	    <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>
+	  </xsl:variable>
+	  <xsl:variable name="firstLang">
+	    <xsl:value-of select="substring-before($langs,' ')"/>
+	  </xsl:variable>
+	  <xsl:call-template name="makeGloss">
+	    <xsl:with-param name="langs" select="$langs"/>
+	  </xsl:call-template>
           <xsl:if test="following-sibling::tei:valItem">
             <xsl:text>; </xsl:text>
           </xsl:if>
