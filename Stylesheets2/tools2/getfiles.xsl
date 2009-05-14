@@ -9,6 +9,7 @@
   <xsl:param name="corpus"/>
   <xsl:param name="corpusList"/>
   <xsl:param name="processP4">false</xsl:param>
+  <xsl:param name="processP5">true</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
   <xsl:key name="All" match="*" use="1"/>
   <xsl:key name="AllTEI" match="tei:*" use="1"/>
@@ -34,8 +35,7 @@
     <xsl:variable name="docs" select="collection($pathlist)"/> 
     <xsl:variable name="all">
       <n:ROOT>
-	<xsl:choose>
-	<xsl:when test="$processP4='true'">
+	<xsl:if test="$processP4='true'">
 	  <xsl:for-each select="$docs/TEI.2">
 	    <xsl:if test="$verbose='true'">
 	      <xsl:message>processing <xsl:value-of select="base-uri(.)"/></xsl:message>
@@ -44,8 +44,8 @@
 	      <xsl:apply-templates select="*|@*" mode="copy"/>
 	    </TEI.2>
 	  </xsl:for-each>
-	</xsl:when>
-	<xsl:otherwise>
+	</xsl:if>
+	<xsl:if test="$processP5='true'">
 	  <xsl:for-each select="$docs/tei:TEI">
 	    <xsl:if test="$verbose='true'">
 	      <xsl:message>processing <xsl:value-of select="base-uri(.)"/></xsl:message>
@@ -62,8 +62,7 @@
 	      <xsl:copy-of select="@*|*"/>
 	    </tei:teiCorpus>
 	  </xsl:for-each>
-	</xsl:otherwise>
-	</xsl:choose>
+	</xsl:if>
       </n:ROOT>
     </xsl:variable>
     <xsl:for-each select="$all">
