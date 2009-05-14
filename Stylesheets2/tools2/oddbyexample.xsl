@@ -383,7 +383,7 @@ in an XSLT file which will transform this to pure TEI</xsl:comment>
 <xsl:template name="checktype">
   <xsl:attribute name="enumerated">
     <xsl:choose>
-      <xsl:when test="contains($checkAtts,concat(',',@ident,',')">true</xsl:when>
+      <xsl:when test="contains($checkAtts,concat(',',@ident,','))">true</xsl:when>
       <xsl:when
 	  test="@ident='n'">false</xsl:when>
       <xsl:when
