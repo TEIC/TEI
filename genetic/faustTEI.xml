@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>Faust TEI Extension</title>
+                <author>Moritz Wissenbach</author>
+            </titleStmt>
+            <publicationStmt>
+                <p>for use by whoever wants it</p>
+            </publicationStmt>
+            <notesStmt>
+                <note type="ns">http://www.tei-c.org/ns/1.0</note>
+            </notesStmt>
+            <sourceDesc>
+                <p>created on Friday 27th March 2009 09:30:30 AM</p>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <text>
+        <front>
+            <divGen type="toc"/>
+        </front>
+        <body>
+            <p>TEI Extension for Faust&#xD; &#xD; preliminary version</p>
+            <schemaSpec ident="faustTEI" docLang="en" prefix="tei_" start="TEI" xml:lang="en"
+                targetLang="en">
+                <moduleRef key="core"/>
+                <moduleRef key="tei"/>
+                <moduleRef key="header"/>
+                <moduleRef key="textstructure"/>
+                <moduleRef key="certainty"/>
+                <moduleRef key="analysis"/>
+                <moduleRef key="drama"/>
+                <moduleRef key="iso-fs"/>
+                <moduleRef key="linking"/>
+                <moduleRef key="msdescription"/>
+                <moduleRef key="nets"/>
+                <moduleRef key="textcrit"/>
+                <moduleRef key="transcr"/>
+                <moduleRef key="verse"/>
+                <elementSpec ident="edJust" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc>(editorial justification) An editorial justification of any part of
+                        the&#xD; edited text.</desc>
+                    <classes>
+                        <memberOf key="model.global"/>
+                        <memberOf key="model.global.meta"/>
+                        <memberOf key="model.headerPart"/>
+                    </classes>
+                    <content>
+                        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="model.pLike"
+                        />
+                    </content>
+                    <attList>
+                        <attDef ident="target" mode="add">
+                            <desc>Points to the element to be justified.</desc>
+                            <datatype minOccurs="1" maxOccurs="1">
+                                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                                    name="data.pointer"/>
+                            </datatype>
+                        </attDef>
+                        <attDef ident="locus" mode="add">
+                            <desc>The location of the content to be justified.</desc>
+                            <datatype minOccurs="1" maxOccurs="1">
+                                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                                    name="data.name"/>
+                            </datatype>
+                        </attDef>
+                    </attList>
+                </elementSpec>
+                <elementSpec ident="stageDesc" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc>(stage description) A description of the various stages in the
+                        text&#xD; genesis.</desc>
+                    <classes>
+                        <memberOf key="model.headerPart"/>
+                    </classes>
+                    <content xmlns:default="http://relaxng.org/ns/structure/1.0">
+                        <default:choice xmlns="http://relaxng.org/ns/structure/1.0">
+                            <default:oneOrMore>
+                                <default:ref name="tei_model.pLike"/>
+                            </default:oneOrMore>
+                            <default:group>
+                                <default:optional>
+                                    <default:ref name="tei_summary"/>
+                                </default:optional>
+                                <default:oneOrMore>
+                                    <default:ref name="tei_stageNote"/>
+                                </default:oneOrMore>
+                            </default:group>
+                        </default:choice>
+                    </content>
+                </elementSpec>
+                <elementSpec ident="stageNote" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc>Describes a stage in the text genesis.</desc>
+                    <classes/>
+                    <content>
+                        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                            name="macro.specialPara"/>
+                    </content>
+                </elementSpec>
+                <elementSpec ident="fm" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc>(functional mark) A textual or graphical element in a manuscript that is
+                        functional but not part of the text. Could transform the text, like a
+                        strikethrough, or provide meta-information, like a date.</desc>
+                    <classes>
+                        <memberOf key="model.global"/>
+                        <memberOf key="att.typed"/>
+                    </classes>
+                    <content>
+                        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.specialPara"/>
+                    </content>
+                    <attList>
+                        <attDef ident="function" mode="add">
+                            <desc>Points to the function (e.g. add, delete) of the mark.</desc>
+                            <datatype minOccurs="1" maxOccurs="1">
+                                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                                    name="data.pointer"/>
+                            </datatype>
+                        </attDef>
+                    </attList>
+                </elementSpec>
+                <classSpec ident="att.global" type="atts" mode="change" module="tei">
+                    <attList>
+                        <attDef ident="stage" mode="add">
+                            <datatype minOccurs="1" maxOccurs="1">
+                                <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.name"/>
+                            </datatype>
+                        </attDef>
+                    </attList>
+                </classSpec>
+                <elementSpec ident="undo" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc>Marks up an action represented by an element to be undone.</desc>
+                    <classes>
+                        <memberOf key="model.global"/>
+                    </classes>
+                    <content>
+                        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                            name="macro.specialPara"/>
+                    </content>
+                    <attList>
+                        <attDef ident="target" mode="add">
+                            <desc>The element representing the action to be undone.</desc>
+                            <datatype minOccurs="1" maxOccurs="1">
+                                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                                    name="data.pointer"/>
+                            </datatype>
+                        </attDef>
+                    </attList>
+                </elementSpec>
+                <elementSpec ident="subst" module="transcr" mode="change">
+                    <attList>
+                        <attDef ident="type" mode="add">
+                            <desc>The type of substitution.</desc>
+                            <datatype minOccurs="1" maxOccurs="1">
+                                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                                    name="data.name"/>
+                            </datatype>
+                        </attDef>
+                    </attList>
+                </elementSpec>
+                <elementSpec ident="repetition" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc>A clarification of already written text.</desc>
+                    <classes>
+                        <memberOf key="model.global"/>
+                        <memberOf key="att.transcriptional"/>
+                        <memberOf key="att.typed"/>
+                    </classes>
+                    <content>
+                        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                            name="macro.specialPara"/>
+                    </content>
+                </elementSpec>
+                <classSpec ident="att.transcriptional" type="atts" mode="change" module="tei">
+                    <attList>
+                        <attDef ident="change" mode="add">
+                            <desc>Groups changes via a common name.</desc>
+                            <datatype minOccurs="1" maxOccurs="1">
+                                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                                    name="data.name"/>
+                            </datatype>
+                        </attDef>
+                    </attList>
+                </classSpec>
+                <elementSpec ident="unclear" module="core" mode="change">
+                    <classes mode="replace">
+                        <memberOf key="model.choicePart" mode="add"/>
+                        <memberOf key="model.pPart.transcriptional" mode="add"/>
+                        <memberOf key="att.editLike" mode="add"/>
+                        <memberOf key="att.typed" mode="add"/>
+                    </classes>
+                    <attList>
+                        <attDef ident="length" mode="add">
+                            <desc>The number or estimated number of unreadable characters.</desc>
+                            <datatype minOccurs="1" maxOccurs="1">
+                                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                                    name="data.numeric"/>
+                            </datatype>
+                            <defaultVal>1</defaultVal>
+                        </attDef>
+                    </attList>
+                </elementSpec>
+            </schemaSpec>
+        </body>
+    </text>
+</TEI>
