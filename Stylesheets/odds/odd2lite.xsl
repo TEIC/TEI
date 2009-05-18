@@ -478,4 +478,11 @@
     </seg>
   </xsl:template>
 
+  <xsl:template name="identifyElement">
+    <xsl:param name="id"/>
+    <xsl:attribute name="xml:id">
+      <xsl:value-of select="$id"/>
+    </xsl:attribute>
+  </xsl:template>
+
 </xsl:stylesheet>

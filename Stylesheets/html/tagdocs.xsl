@@ -518,5 +518,12 @@
     <xsl:param name="name"/>
   </xsl:template>
 
+  <xsl:template name="identifyElement">
+    <xsl:param name="id"/>
+    <xsl:attribute name="id">
+      <xsl:value-of select="$id"/>
+    </xsl:attribute>
+  </xsl:template>
+
 
 </xsl:stylesheet>
