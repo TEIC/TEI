@@ -552,10 +552,10 @@
     </fo:block>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements  tei:titlePage/tei:titlePart[@type='sub']</xd:short>
+    <xd:short>Process elements  tei:titlePage//tei:titlePart[@type='sub']</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-  <xsl:template match="tei:titlePage/tei:titlePart[@type='sub']">
+  <xsl:template match="tei:titlePage//tei:titlePart[@type='sub']">
     <fo:block>
       <fo:block font-size="{$authorSize}" space-after="8pt" text-align="center">
         <xsl:apply-templates/>
