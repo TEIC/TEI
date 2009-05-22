@@ -55,7 +55,7 @@ XSL LaTeX stylesheet to make slides
   <xsl:param name="beamerClass">PaloAlto</xsl:param>
   <xsl:param name="pause">true</xsl:param>
 
-  <xsl:template name="lineBreak">
+  <xsl:template name="verbatim-lineBreak">
     <xsl:param name="id"/>
     <xsl:text>\mbox{}\newline &#10;</xsl:text>
   </xsl:template>
