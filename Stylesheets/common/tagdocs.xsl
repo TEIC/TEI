@@ -1011,7 +1011,7 @@
       <xsl:when test="@xml:lang='und'">
 	<xsl:call-template name="showExample"/>
       </xsl:when>
-      <xsl:when test="@xml:lang='mul'">
+      <xsl:when test="@xml:lang='mul' and not($documentationLanguage='zh-tw')">
 	<xsl:call-template name="showExample"/>
       </xsl:when>
       <xsl:when test="@xml:lang=$documentationLanguage">
