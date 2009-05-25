@@ -621,7 +621,7 @@
 		    <xsl:value-of select="$documentationLanguage"/>
 		  </xsl:attribute>
 		  <xsl:call-template name="i18n">
-		    <xsl:with-param name="word">Attributes</xsl:with-param>
+		    <xsl:with-param name="word">In addition to global attributes</xsl:with-param>
 		  </xsl:call-template>
 		</xsl:element>
 	      </xsl:element>
@@ -999,63 +999,76 @@
     <xd:short>Process elements tei:exemplum</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
+
   <xsl:template match="tei:exemplum" mode="doc">
     <xsl:variable name="documentationLanguage">
       <xsl:call-template name="generateDoc"/>
     </xsl:variable>
-<!--
-<xsl:message>check example <xsl:value-of select="."/> with lang <xsl:value-of
-select="@xml:lang"/> against <xsl:value-of select="$documentationLanguage"/></xsl:message>-->
     <xsl:choose>
-      <xsl:when test="@xml:lang and
-		      not(@xml:lang=$documentationLanguage)">
-<!--	<xsl:message>reject exemplum <xsl:value-of select="."/> cos 1</xsl:message>-->
+      <xsl:when test="parent::tei:exemplum">
+	<xsl:call-template name="showExample"/>
       </xsl:when>
-      <xsl:when test="not(@xml:lang) and
-		      not($documentationLanguage='en') 
-		      and
-		      ../tei:exemplum[@xml:lang=$documentationLanguage]">
-<!--      	<xsl:message>reject exemplum <xsl:value-of select="."/> cos 2</xsl:message>-->
+      <xsl:when test="@xml:lang='und'">
+	<xsl:call-template name="showExample"/>
       </xsl:when>
-      <xsl:when test="parent::tei:attDef">
-	<xsl:element namespace="{$outputNS}" name="{$rowName}">
-	  <xsl:element namespace="{$outputNS}" name="{$cellName}">
-	    <xsl:attribute name="{$colspan}">
-	      <xsl:text>2</xsl:text>
-	    </xsl:attribute>
-            <xsl:apply-templates/>
-          </xsl:element>
-        </xsl:element>
+      <xsl:when test="@xml:lang='mul'">
+	<xsl:call-template name="showExample"/>
       </xsl:when>
-      <xsl:otherwise>
-        <xsl:element namespace="{$outputNS}" name="{$rowName}">
-          <xsl:element namespace="{$outputNS}" name="{$cellName}">
-            <xsl:attribute name="{$rendName}">
-              <xsl:text>wovenodd-col1</xsl:text>
-            </xsl:attribute>
-            <xsl:element namespace="{$outputNS}" name="{$hiName}">
-              <xsl:attribute name="{$rendName}">
-                <xsl:text>label</xsl:text>
-	      </xsl:attribute>
-	      <xsl:attribute name="xml:lang">
-		<xsl:value-of select="$documentationLanguage"/>
-	      </xsl:attribute>
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Example</xsl:with-param>
-              </xsl:call-template>
-            </xsl:element>
-          </xsl:element>
-	  <xsl:element namespace="{$outputNS}" name="{$cellName}">
-	    <xsl:attribute name="{$rendName}">
-	      <xsl:text>wovenodd-col2</xsl:text>
-	    </xsl:attribute>
-	    <xsl:apply-templates/>
-	  </xsl:element>
-	</xsl:element>
-      </xsl:otherwise>
+      <xsl:when test="@xml:lang=$documentationLanguage">
+	<xsl:call-template name="showExample"/>
+      </xsl:when>
+      <xsl:when
+	  test="not(../tei:exemplum[@xml:lang=$documentationLanguage
+		or @xml:lang='und' or @xml:lang='mul'])">
+	<xsl:call-template name="showExample"/>
+      </xsl:when>
     </xsl:choose>
   </xsl:template>
 
+  <xd:doc>
+    <xd:short>Process an example</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+<xsl:template name="showExample">
+  <xsl:choose>
+    <xsl:when test="parent::tei:attDef">
+      <xsl:element namespace="{$outputNS}" name="{$rowName}">
+	<xsl:element namespace="{$outputNS}" name="{$cellName}">
+	  <xsl:attribute name="{$colspan}">
+	    <xsl:text>2</xsl:text>
+	  </xsl:attribute>
+	  <xsl:apply-templates/>
+	</xsl:element>
+      </xsl:element>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:element namespace="{$outputNS}" name="{$rowName}">
+	<xsl:element namespace="{$outputNS}" name="{$cellName}">
+	  <xsl:attribute name="{$rendName}">
+	    <xsl:text>wovenodd-col1</xsl:text>
+	  </xsl:attribute>
+	  <xsl:element namespace="{$outputNS}" name="{$hiName}">
+	    <xsl:attribute name="{$rendName}">
+	      <xsl:text>label</xsl:text>
+	    </xsl:attribute>
+	    <xsl:attribute name="xml:lang">
+	      <xsl:value-of select="$documentationLanguage"/>
+	    </xsl:attribute>
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Example</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:element>
+	</xsl:element>
+	<xsl:element namespace="{$outputNS}" name="{$cellName}">
+	  <xsl:attribute name="{$rendName}">
+	    <xsl:text>wovenodd-col2</xsl:text>
+	  </xsl:attribute>
+	  <xsl:apply-templates/>
+	</xsl:element>
+      </xsl:element>
+      </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:item</xd:short>
     <xd:detail> </xd:detail>
