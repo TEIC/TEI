@@ -15,6 +15,7 @@ TESTFILES= \
 	testchinese \
 	testcorpus \
 	testconstraint \
+	testconstraint2 \
 	testdictionaries \
 	testdrama \
 	testfand \
