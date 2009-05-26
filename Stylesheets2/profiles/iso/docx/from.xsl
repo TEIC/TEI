@@ -557,9 +557,9 @@
     <!-- 
         Table of contents
     -->
-    <!-- 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='zzContents']"
         mode="paragraph" priority="100"/>
+    <!-- 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='toc 9']"
         mode="paragraph"/>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='toc 1']"
