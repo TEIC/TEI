@@ -339,6 +339,7 @@
   <xsl:template match="processing-instruction()" mode="tangle"/>
 
   <xsl:template match="tei:constraint[@scheme='schematron']">
+    <xsl:apply-templates/>
   </xsl:template>
 
   <xsl:template match="tei:constraint[@scheme='isoschematron']">
