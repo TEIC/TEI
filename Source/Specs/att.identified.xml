@@ -13,8 +13,8 @@ $Id$
   <desc version="2008-04-05" xml:lang="ja">
   属性<att>key</att>で参照されている要素に付与する属性を示す．
   </desc>
-  <desc version="2007-06-12" xml:lang="fr">éléments référençables au moyen d'un
-				attribut<att>key</att></desc>
+  <desc version="2007-06-12" xml:lang="fr">fournit les attributs pour des éléments référençables au moyen d'un
+				attribut <att>key</att>.</desc>
   <desc version="2007-05-04" xml:lang="es">elementos a los que se puede hacer referencia a través del atributo <att>key</att>.</desc>
   <desc version="2007-01-21" xml:lang="it">elementi ai quali si può fare riferimento tramite l'attributo <att>key</att></desc>
   <attList xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -27,7 +27,7 @@ $Id$
       当該要素を参照する識別子を示す．
       </desc>
       <desc version="2007-06-12" xml:lang="fr">fournit l'identifiant qui référence cet
-					élément</desc>
+					élément.</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona el identificador utilizado para indicar un elemento.</desc>
       <desc version="2007-01-21" xml:lang="it">specifica l'identificatore utilizzato per indicare l'elemento</desc>
       <datatype>
@@ -56,8 +56,7 @@ $Id$
       当該オブジェクトが，<ident type="module">TEI</ident>基盤モジュー
       ルで事前に宣言されるべきかどうかを示す．
       </desc>
-      <desc version="2007-06-12" xml:lang="fr">précise si la classe doit être traitée
-					comme globale et nécessite donc une prédéfinition dans le module "core" </desc>
+      <desc version="2009-05-27" xml:lang="fr">précise si cet objet nécessite une prédéfinition dans le module d'infrastructure <ident type="module">tei</ident>.</desc>
       <desc version="2007-05-04" xml:lang="es">declara si la clase debe ser considerada global y por tanto definida en el módulo core</desc>
       <desc version="2007-01-21" xml:lang="it">dichiara se la classe debba essere considerata globale e quindi definita nel modulo core</desc>
       <datatype>
@@ -75,13 +74,14 @@ $Id$
       当該オブジェクトが定義されているモジュール名を示す．      
       </desc>
       <desc version="2007-06-12" xml:lang="fr">fournit le nom du module dans lequel doit
-					être défini cet objet</desc>
+					être défini cet objet.</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona el nombre del módulo en que el objeto debe ser definido.</desc>
       <desc version="2007-01-21" xml:lang="it">indica il nome del modulo nel quale l'oggetto deve essere definito</desc>
       <datatype>
         <rng:data type="NCName"/>
       </datatype>
       <valDesc>a name of module</valDesc>
+      <valDesc xml:lang="fr">un nom de module</valDesc>
     </attDef>
     <attDef ident="mode" usage="opt">
       <equiv/>
@@ -93,7 +93,7 @@ $Id$
       当該宣言が親要素に与える影響を示す．
       </desc>
       <desc version="2007-06-12" xml:lang="fr">précise l'effet de cette déclaration sur
-					son module parent</desc>
+					son module parent.</desc>
       <desc version="2007-05-04" xml:lang="es">especifica el efecto de esta declaración en el módulo del que obtiene el orígen (módulo padre)</desc>
       <desc version="2007-01-21" xml:lang="it">indica l'effetto della dichiarazione sul modulo da cui trae origine</desc>
       <defaultVal>add</defaultVal>
@@ -168,14 +168,19 @@ mode</item></list>
   </remarks>
   <remarks xml:lang="fr">
     <p>La signification informelle des valeurs de l'attribut <att>mode</att> est la suivante
-                    :<list type="gloss"><label>add</label><item>l'objet doit être créé (traitement de tout enfant dans le mode
-                        <val>add</val>); générer une erreur si un objet avec le même identifiant
-                        existe déjà</item><label>replace</label><item>Utiliser cet objet de préférence à tout autre portant le même identifiant
+                    :<list type="gloss">
+                      <label>add</label>
+                      <item>l'objet doit être créé (traitement de tout enfant dans le mode
+                        <val>add</val>) ; générer une erreur si un objet avec le même identifiant
+                        existe déjà.</item>
+                      <label>replace</label><item>utiliser cet objet de préférence à tout autre portant le même identifiant
                         et ignorer tout enfant de cet objet ; traiter tout nouvel enfant dans le
-                        mode <val>replace</val>
-                    </item><label>delete</label><item>ne pas traiter cet objet ou aucun autre portant le même identifiant ;
-                        générer une erreur si de nouveaux enfants sont fournis</item><label>change</label><item>traiter cet objet, et ses enfants, et ceux de n'importe quel objet portant
-                        le même identifiant, dans le mode <val>change</val>
+                        mode <val>replace</val>.
+                      </item>
+                      <label>delete</label><item>ne pas traiter cet objet ou aucun autre portant le même identifiant ;
+                      générer une erreur si de nouveaux enfants sont fournis.</item>
+                      <label>change</label><item>traiter cet objet, et ses enfants, et ceux de n'importe quel objet portant
+                        le même identifiant, dans le mode <val>change</val>.
                     </item></list>
             </p>
   </remarks>
