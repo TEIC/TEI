@@ -174,18 +174,22 @@
                             <xsl:with-param name="oldtag">docstage</xsl:with-param>
                         </xsl:call-template>
                     </idno>
+                    <xsl:for-each select="w:body/w:p[w:pPr/w:pStyle/@w:val='zzCopyright']">
+		      <availability>
+			<xsl:apply-templates
+			    select="." mode="teiHeader"/>
+		      </availability>
+		    </xsl:for-each>
                     
-                    <availability>
-                        <xsl:apply-templates
-                            select="w:body/w:p[w:pPr/w:pStyle/@w:val='zzCopyright']" mode="teiHeader"/>
-                    </availability>
-                    
-                    <availability>
-                        <xsl:apply-templates
-                            select="w:body/w:p[w:pPr/w:pStyle/@w:val='cover_warning'
-                            or w:pPr/w:pStyle/@w:val='coverWarning']"
-                            mode="teiHeader"/>
-                    </availability>
+		    <xsl:if test="w:body/w:p[w:pPr/w:pStyle/@w:val='cover_warning'
+                            or w:pPr/w:pStyle/@w:val='coverWarning']">
+		      <availability>
+			<xsl:apply-templates
+			    select="w:body/w:p[w:pPr/w:pStyle/@w:val='cover_warning'
+				    or w:pPr/w:pStyle/@w:val='coverWarning']"
+			    mode="teiHeader"/>
+		      </availability>
+		    </xsl:if>
                     
                 </publicationStmt>
                 <sourceDesc>
