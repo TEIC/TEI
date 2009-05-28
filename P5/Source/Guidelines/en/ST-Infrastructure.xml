@@ -528,48 +528,92 @@ the following
 </div>
 <div xml:id="STGAla"><head>Language Indicators</head>
 
-<p>The <att>xml:lang</att> attribute indicates the natural language and
-writing system applicable to the content of  a given element.
-If it is not specified, the value is inherited from that of the
+<p>The <att>xml:lang</att> attribute indicates the natural language
+and writing system applicable to the content of a given element.  If
+it is not specified, the value is inherited from that of the
 immediately enclosing element. As a rule, therefore, it is simplest to
 specify the base language of the text on the <gi>TEI</gi> element, and
 allow most elements to take the default value for <att>xml:lang</att>;
 the language of an element then need be explicitly specified only for
-elements in languages other than the base language. It is strongly
-recommended that all language shifts in the source be explicitly
-identified by use of the <att>xml:lang</att> attribute, as further
-described in chapter <ptr target="#CH"/>.</p>
+elements in languages other than the base language. For this reason,
+it is recommended practice to supply a default value for the xml:lang
+attribute, either on the <gi>TEI</gi> root element, or on both the
+<gi>teiHeader</gi> and the <gi>text</gi> element. The latter is
+appropriate in the not uncommon case where the text element in a TEI
+document uses a different default language from that of the TEI Header
+attached to it. Other language shifts in the source should be explicitly
+identified by use of the <att>xml:lang</att> attribute on an element
+at an appropriate level wherever possible. </p>
+<p>In the following example schematic, an English language TEI header is
+attached to an English language text:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<TEI xml:lang="eng">
+<teiHeader >
+  <!-- ... -->
+</teiHeader>
+<text>
+<!-- ... -->
+</text></TEI></egXML>
+</p>
+<p>The same effect would be obtained by specifying the default
+language for both header and text:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<TEI>
+<teiHeader  xml:lang="eng">
+  <!-- ... -->
+</teiHeader>
+<text  xml:lang="eng">
+<!-- ... -->
+</text></TEI></egXML>
+</p>
+<p>The latter approach is necessary in the case where the two differ:
+for example, where an English language header is applied to a French
+text:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<TEI>
+<teiHeader  xml:lang="eng">
+  <!-- ... -->
+</teiHeader>
+<text  xml:lang="fra">
+<!-- ... -->
+</text></TEI></egXML>
+</p>
+<p>The same principle applies at any hierarchic level. In the
+following example, the default language of the text is
+French, but one section of it is in German:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<TEI>
+<teiHeader  xml:lang="eng">
+  <!-- ... -->
+</teiHeader>
+<text  xml:lang="fra">
+<div>
+ <!-- chapter one is in French -->
+</div>
+<div xml:lang="deu">
+ <!-- chapter two is in German -->
+</div>
+<div>
+ <!-- chapter three is French -->
+</div>
+<!-- ... -->
+</text></TEI></egXML>
+</p>
+
+<p>Similarly, in the following example the <att>xml:lang</att>
+attribute on the <gi>term</gi> element allows us to record the fact
+that the technical terms used are Latin rather than English; no
+<att>xml:lang</att> attribute is needed on the <gi>q</gi> element, by
+contrast, because it is in the same language as its parent.  <egXML
+xmlns="http://www.tei-c.org/ns/Examples" corresp="#STGA-eg-10"><p
+xml:lang="en">The constitution declares <q>that no bill of attainder
+or <term xml:lang="la">ex post facto</term> law shall be passed.</q>
+...</p></egXML>
+</p>
 <p>The values used for the <att>xml:lang</att> attribute must be
 constructed in a particular way, using values from standard lists. See
 further <ptr target="#CHSH"/>.</p>
-<p>The following two encodings convey the same information about the
-language of the text. In the first, the <att>xml:lang</att> attributes
-on the <gi>emph</gi> elements specify the same value as that on the
-parent <gi>p</gi> element, while in the second they inherit that value
-without specifying it.
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#STGA-eg-9"><p xml:lang="en"> ... Both parties deprecated war, but one of
- them would <emph xml:lang="en">make</emph> war rather than let
- the nation survive, and the other would <emph xml:lang="en">accept
- </emph> war rather than let it perish, and the war came.</p></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<p xml:lang="en"> ... Both parties deprecated war, but one of
- them would <emph>make</emph> war rather than let
- the nation survive, and the other would <emph>accept</emph>
- war rather than let it perish, and the war came.</p></egXML>
- </p>
-<p>In the following example, by contrast, the <att>xml:lang</att> attribute
-on the <gi>term</gi> element must be given if we wish to record the fact
-that the technical terms used are Latin rather than English; no
-<att>xml:lang</att> attribute is needed on the <gi>q</gi> element, by
-contrast, because it is in the same language as its parent.  
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#STGA-eg-10"><p xml:lang="en">The constitution declares <q>that no bill of attainder
-or <term xml:lang="la">ex post facto</term> law shall be passed.</q> ...</p></egXML>
-<!-- Marbury v. Madison, 1 Cranch, 137 (1803), rpt. in H. S.  -->
-	<!-- Commager, ed., Documents of American History, 5th ed.    -->
-	<!-- (New York:  Appleton-Century-Crofts, 1949), p. 192.      -->
-</p>
-<p>Note that additional
-information  about a particular language
+<p>Additional information  about a particular language
 may be supplied in the <gi>language</gi> element within the header (see
 section <ptr target="#HD41"/>).</p>
 </div>
@@ -630,18 +674,19 @@ documents. For example, both CSS and XSL-FO provide mechanisms for
 describing typefaces, weight, and styles; character
 and line spacing; and so on.</p>
 <p>If both <att>rendition</att> and <att>rend</att> attributes are
-provided for a given element, the latter always takes precedence.  <!--The
-combination of the global <att>rendition</att> and <att>rend</att>
-attributes provide a robust system for describing rendition
-information for source documents. --> The <att>rendition</att>
-attribute is analogous to the X/HTML <att>class</att> attribute, which
-references style declarations in a Cascading Style Sheet. The
-<att>rend</att> attribute is analogous to the XHTML or HTML <att scheme="XHTML">style</att>
-attribute, which provides a mechanism for embedding inline rendition
-information at the point of use within a document. Note that, in either
-case, the TEI attributes describe the rendition or appearance of
-the source document, <emph>not</emph> intended output renditions,
-although often the two may be closely related.  </p>
+provided for a given element, the latter always takes precedence.
+<!--The combination of the global <att>rendition</att> and
+<att>rend</att> attributes provide a robust system for describing
+rendition information for source documents. --> The
+<att>rendition</att> attribute is analogous to the X/HTML
+<att>class</att> attribute, which references style declarations in a
+Cascading Style Sheet. The <att>rend</att> attribute is analogous to
+the XHTML or HTML <att scheme="XHTML">style</att> attribute, which
+provides a mechanism for embedding inline rendition information at the
+point of use within a document. Note that, in either case, the TEI
+attributes describe the rendition or appearance of the source
+document, <emph>not</emph> intended output renditions, although often
+the two may be closely related.  </p>
 
 <specGrp xml:id="DSTECAT" n="Attribute classes">
 
