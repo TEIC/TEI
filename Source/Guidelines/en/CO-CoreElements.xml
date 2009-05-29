@@ -3068,47 +3068,97 @@ editorial, and may have been added later.  Attributes may be used to
 specify these and other characteristics of notes, as detailed below.
  </p>
 <p>Where possible, the body of a note should be inserted in the text
-at the point at which its identifier or mark first appears. This may
-not be possible for example with marginal notes, which may not be
-anchored to an exact location. For simplicity, it may be adequate to
+at the point at which its identifier or mark first appears; we term
+this the note's <term>point of attachment</term>. This may not always be
+possible for example with marginal notes, which may not be anchored to
+an exact location. For ease of processing, it may be adequate to
 position marginal notes before the relevant paragraph or other
-element. In some cases, however, it may be desirable to transcribe
-notes not at their point of attachment to the text but at their point
-of appearance, typically at the end of the volume, or the end of the chapter —
-though not, in general, when the notes appear at the foot of the page. In
-such cases, 
-this case the <att>target</att> attribute of the <gi>note</gi> can  be
-used to indicate
-the point of attachment. In some cases, the note is explicitly
-attached not to a point but to a span of text; in which case the
-<att>target</att> attribute   should use an appropriate pointer
+element. In printed texts, it is sometimes conventional to group notes
+together at the foot of the page on which their points of attachment
+appear. This practice is not generally recommended for TEI-encoded
+texts, since the pagination of a particular printed text is unlikely
+to be of structural significance.  In some cases, however, it may be
+desirable to transcribe notes not at their point of attachment to the
+text but at their point of appearance, typically at the end of the
+volume, or the end of the chapter.  In such cases, the
+<att>target</att> attribute of the <gi>note</gi> should be used to
+indicate the point of attachment. </p>
+<p>In cases where the note is
+attached not to a point but to a span of text,  the
+<att>target</att> attribute should use an appropriate pointer
 expression, for example using the <ident>range()</ident> function
 to specify the span of attachment. For further discussion of pointing
 to points and spans in the text, see section <ptr target="#COXR"/>.</p>
-<p>Examples:
+<p>In the following example, the <att>type</att> attribute is used to
+categorise the note as a gloss:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#CONONO-eg-189"><l>The self-same moment I could pray</l>
 <l>And from my neck so free</l>
 <l>The albatross fell off, and sank</l>
 <l>Like lead into the sea.
-<note type="auth" place="margin">The spell begins to break</note>
+<note type="gloss" place="margin">The spell begins to break</note>
 </l></egXML>
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Collections are ensembles of distinct entities or objects
-of any sort.<note n="1" place="bottom">We explain below why we use
-the uncommon term <mentioned>collection</mentioned>
-instead of the expected <mentioned>set</mentioned>.
-Our usage corresponds to the <mentioned>aggregate</mentioned> of many
-mathematical writings and to the sense of <mentioned>class</mentioned>
-found in older logical writings.</note> The elements ...</egXML>
+As the <gi>note</gi> appears within an <gi>l</gi> element, we may
+infer that its point of attachment is in the margin adjacent to the
+line in question. In the following version of the same text, however, it may be
+inferred that the note applies to the whole of the stanza:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#CONONO-eg-189"><lg><l>The self-same moment I could pray</l>
+<l>And from my neck so free</l>
+<l>The albatross fell off, and sank</l>
+<l>Like lead into the sea.</l>
+<note type="gloss" place="margin">The spell begins to break</note>
+</lg></egXML>
+</p>
+<p>In the following example, a note which appears at the foot of the
+page in the printed source is given at its point of attachment within
+the text. The global <att>n</att> attribute is used to indicate the
+note number: <egXML
+xmlns="http://www.tei-c.org/ns/Examples">Collections are ensembles of
+distinct entities or objects of any sort.<note n="1" place="bottom">We
+explain below why we use the uncommon term
+<mentioned>collection</mentioned> instead of the expected
+<mentioned>set</mentioned>.  Our usage corresponds to the
+<mentioned>aggregate</mentioned> of many mathematical writings and to
+the sense of <mentioned>class</mentioned> found in older logical
+writings.</note> The elements ...</egXML>
  </p>
 <p>In addition to transcribing notes already present in the copy text,
 researchers may wish to add their own notes or comments to it. The
 <gi>note</gi> element may be used for either purpose, but it will
-usually be advisable to distinguish the two categories, for example by
-means of the <att>type</att> or <att>resp</att> attributes. When annotating the electronic
-text by means of analytic notes in some structured vocabulary, e.g. to
-specify the topics or themes of a text, the <gi>span</gi> and
-<gi>interp</gi> elements may be preferable; these elements are
+usually be advisable to distinguish the two categories. One way might
+be to use the <att>type</att> attribute shown above, categorizing notes as <mentioned>authorial</mentioned>,
+<mentioned>editorial</mentioned>, etc. Where notes
+derive from many sources, or where a more precise attribution is
+required, the <att>resp</att> attribute may be used to point to a
+definition of the person or other agency responsible for the content
+of the note.</p>
+<p>As a simple example, an edition of the <title>Ancient
+Mariner</title> might include both Coleridge's original glosses and
+those of a modern commentator:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"
+       corresp="#CONONO-eg-189"><lg>
+<!-- ... -->
+<note place="margin" resp="#STC" type="gloss">
+The spell begins to break</note>
+<note place="foot" resp="#JLL">The turning point of the poem...</note>
+</lg></egXML>
+For this to be valid, the codes <code>#JLL</code> and
+<code>#STC</code> must point to some more information identifying the
+agency concerned. The syntax used is identical to that used for other
+cross-references, as discussed in <ptr target="#COXR"/>; thus in this
+case,  the TEI Header for this text might contain a 
+title statement like the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<titleStmt>
+<title>The Rime of the Ancient Mariner: an annotated edition</title>
+<author xml:id="STC">Samuel Taylor Coleridge</author>
+<editor xml:id="JLL">John Livingston Lowes</editor>
+</titleStmt>
+</egXML></p>
+
+<p>When annotating the electronic text by means of analytic notes in
+some structured vocabulary, e.g. to specify the topics or themes of a
+text, the <gi>span</gi> and <gi>interp</gi> elements may be more
+effective than the free form <gi>note</gi> element; these elements are
 available when the module for simple analysis is selected (see section
 <ptr target="#AISP"/>).
  </p>
