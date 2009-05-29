@@ -1211,20 +1211,24 @@ following values:
 <label>xslfo</label><item>Extensible  Stylesheet Language Formatting Objects</item>
 <label>other</label><item>A user-defined formal description language</item>
 </list>
-</p> <p>In the following extended example we consider how best to capture the
+</p> 
+
+<p>In the following extended example we consider how to capture the
 appearance of a typical early 20th century titlepage, such as that in the
 following figure: <figure corresp="#HD-eg-swinb"><graphic url="Images/HDswinburne.png" height="400px"/></figure> Elements for the encoding of
 the information on a titlepage are presented in <ptr target="#DSTITL"/>; here we consider how we might go about encoding
 some of the visual information as well, using the <gi>rendition</gi>
-element and its corresponding attribute. </p>
+element and its corresponding attributes.</p>
 <p>First we define a rendition element for each aspect of the source
 page rendition that we wish to retain. Details of CSS are given in <ptr target="#CSS1"/>; we use it here simply to  provide a vocabulary with
 which to describe such aspects
-as font size and style, letter and line spacing, and colour. 
+as font size and style, letter and line spacing, colour, etc. Note
+that the purpose of this encoding is to describe the original, rather
+than specify how it should be reproduced, although the two are
+obviously closely linked.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><tagsDecl>
   <rendition xml:id="center" scheme="css">text-align: center;</rendition>
-  <rendition xml:id="small" scheme="css">font-size:
-  small;</rendition>
+  <rendition xml:id="small" scheme="css">font-size: small;</rendition>
   <rendition xml:id="large" scheme="css">font-size: large;</rendition>
   <rendition xml:id="x-large" scheme="css">font-size: x-large;</rendition>
   <rendition xml:id="xx-large" scheme="css">font-size: xx-large</rendition>
@@ -1257,7 +1261,37 @@ follows:
         <lb/><docDate when="1904" rendition="#small">1904</docDate>
     </docImprint>
     </titlePage>
-    </egXML></p></div>
+    </egXML></p>
+<p>When CSS is used as the underlying language, the <att>scope</att>
+attribute may be used to specify CSS pseudo-elements. These
+pseudo-elements are used to target styling for only a portion of the
+given text. For example, there is a <code>first-letter</code>
+pseudo-element to target styling of the first letter in the targeted
+element, while there are the useful <code>before</code> and
+<code>after</code> pseudo-elements, used often in conjunction with the
+"content" property to add some styling characters (Unicode provides
+quite a few) before or after the element content, where these are
+useful to document the appearance of the source.</p>
+<p>For example, assuming that a text has been encoded using the <gi>q</gi>
+element to enclose passages in quotation marks, but the quotation
+marks themselves have been routinely omitted from the encoding, a set of
+renditions such as the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<rendition xml:id="quoteBefore" scheme="css" scope="before">content:
+'“';</rendition>
+<rendition xml:id="quoteAfter" scheme="css" scope="after">content:
+'”';</rendition>
+</egXML>
+might be used to predefine pseudo-elements <code>quoteBefore</code>
+and <code>quoteAfter</code>. Where a <gi>q</gi> element is actually
+rendered in the source with initial and final quotation marks, it may
+then be encoded as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<q rendition="#quoteBefore #quoteAfter">Four score and seven years
+ago...</q>
+</egXML>
+</p>
+</div>
 <div xml:id="HD57-2"><head>Tag usage</head><!--
 <p>A <gi>tagsDecl</gi> need not specify any <gi>rendition</gi>
 elements, but if there are any, they must precede any
