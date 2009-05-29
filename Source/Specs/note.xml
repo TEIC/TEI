@@ -15,10 +15,6 @@
   <desc version="2006-10-28" xml:lang="ja">注釈・コメント．</desc>
   <classes>
     <memberOf key="model.noteLike"/>
-    <!--    <memberOf key="model.biblPart"/>
-            <memberOf key="model.entryPart.top"/>
-            <memberOf key="model.msItemPart"/>
-            <memberOf key="model.personPart"/>-->
     <memberOf key="att.placement"/>
   </classes>
   <content>
@@ -41,6 +37,15 @@
       <valDesc xml:lang="fr">Des valeurs peuvent être empruntées à toute typologie d'annotation
         appropriée et relative au travail en cours ; par exemple annotation, glose, citation,
         digression, préparatoire, provisoire.</valDesc>
+      <remarks>
+        <p>For specialized types of editorial annotation (e.g. for marking corrections,
+          normalizations, cruxes, etc.), see chapter <ptr target="#TC" type="div1"/>.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>Pour des types spécialisés d'annotation éditoriale (par exemple pour des marques de
+          corrections, de normalisations, de difficultés, etc.), voir au chapitre <ptr target="#TC"
+            type="div1"/>.</p>
+      </remarks>
     </attDef>
     <attDef ident="resp" usage="rwa">
       <gloss>responsible party</gloss>
@@ -63,15 +68,6 @@
       <valDesc xml:lang="fr">un pointeur vers l’un des identifiants déclarés dans le header du
         document et qui concerne une personne identifiée comme responsable d'un aspect quelconque
         dans la création, la transcription, l’édition, l’encodage ou l’annotation du texte. </valDesc>
-      <remarks>
-        <p>For specialized types of editorial annotation (e.g. for marking corrections,
-          normalizations, cruxes, etc.), see chapter <ptr target="#TC" type="div1"/>.</p>
-      </remarks>
-      <remarks xml:lang="fr">
-        <p>Pour des types spécialisés d'annotation éditoriale (par exemple pour des marques de
-          corrections, de normalisations, de difficultés, etc.), voir au chapitre <ptr target="#TC"
-            type="div1"/>.</p>
-      </remarks>
     </attDef>
     <attDef ident="anchored" usage="opt">
       <equiv/>
@@ -175,16 +171,29 @@
       </remarks>
     </attDef>
   </attList>
-  <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">And yet it is not only in the great line of
-      Italian renaissance art, but even in the painterly <note type="gloss"><term xml:lang="de"
-          >Malerisch</term>. This word has, in the German, two distinct meanings, one objective, a
-        quality residing in the object, the other subjective, a mode of apprehension and creation.
-        To avoid confusion, they have been distinguished in English as
-        <mentioned>picturesque</mentioned> and <mentioned>painterly</mentioned> respectively.
-      (Tr.)</note> style of the Dutch genre painters of the seventeenth century that drapery has
-      this psychological significance. </egXML>
-  </exemplum>
+  <exemplum xml:lang="en" corresp="#NOTE-eg">
+<p>In the following example, the translator has supplied a footnote
+containing an explanation of the term translated as "painterly":
+<egXML xmlns="http://www.tei-c.org/ns/Examples">And yet it is not only
+in the great line of Italian renaissance art, but even in the
+painterly <note place="foot" type="gloss" resp="#MDMH"><term
+xml:lang="de" >Malerisch</term>. This word has, in the German, two
+distinct meanings, one objective, a quality residing in the object,
+the other subjective, a mode of apprehension and creation.  To avoid
+confusion, they have been distinguished in English as
+<mentioned>picturesque</mentioned> and
+<mentioned>painterly</mentioned> respectively.</note> style of the
+Dutch genre painters of the seventeenth century that drapery has this
+psychological significance. </egXML></p>
+<p> For this example to be valid, the
+code <ident>MDMH</ident> must be defined elsewhere, for example by
+means of a responsibility statement in the associated TEI Header:</p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<respStmt xml:id="MDMH">
+<resp>translation from German to English</resp>
+<name>Marie Donald Mackie Hottinger</name>
+</respStmt></egXML>
+</exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples"> 爾時王園精舍有比丘尼，名曰毘梨<note type="gloss"
       >毘梨，秦言雄也。</note>時彼國人一切共為俱蜜頭星會 </egXML>
@@ -195,38 +204,35 @@
         此時電影很少有完整的腳本，多是類似早期新劇的「幕表」
     ，也就是大綱，因為是默片，台詞也很簡單，主要依靠導演指示，演員臨場作戲。</note>從她的文字風格語主題特色裡，...</egXML>
   </exemplum>
-  <remarks>
-    <p>The global <att>n</att> attribute may be used to supply the
-    symbol or number used to mark the note's point of attachment in
-    the source text, as in the following example: 
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Mevorakh b. Saadya's
-mother, the matriarch of the family during the second half of the
-eleventh century, <note n="126" anchored="true"> The alleged mention
-of Judah Nagid's mother in a letter from 1071 is, in fact, a reference
-to Judah's children; cf. above, nn. 111 and 54. </note> is well known
-from Geniza documents published by Jacob Mann.</egXML>
-
-However, if notes are numbered in sequence and their
-    numbering can be reconstructed automatically by processing
-    software, it may well be considered unnecessary to record the note
-    numbers.</p>
-  </remarks>
+  <exemplum xml:lang="en">
+    <p>The global <att>n</att> attribute may be used to supply the symbol or number used to mark the
+      note's point of attachment in the source text, as in the
+    following example: </p>
+<egXML
+        xmlns="http://www.tei-c.org/ns/Examples">Mevorakh b. Saadya's mother, the matriarch of the
+        family during the second half of the eleventh century, <note n="126" anchored="true"> The
+          alleged mention of Judah Nagid's mother in a letter from 1071 is, in fact, a reference to
+          Judah's children; cf. above, nn. 111 and 54. </note> is well known from Geniza documents
+        published by Jacob Mann.</egXML> 
+<p>However, if notes are numbered in sequence and their
+      numbering can be reconstructed automatically by processing software, it may well be considered
+      unnecessary to record the note numbers.</p>
+  </exemplum>
   <remarks xml:lang="fr">
     <p>L'attribut global<att>n</att> sera employé pour donner le
     symbole ou le nombre utilisé pour marquer le point d'insertion
-    dans le texte source, comme dans l'exemple suivant : 
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Mevorakh b. Saadya's
-mother, the matriarch of the family during the second half of the
-eleventh century, <note n="126" anchored="true"> The alleged mention
-of Judah Nagid's mother in a letter from 1071 is, in fact, a reference
-to Judah's children; cf. above, nn. 111 and 54. </note> is well known
-from Geniza documents published by Jacob Mann.</egXML>
-
-Cependant, si les notes sont ordonnées et numérotées et
-      qu’on veuille reconstruire automatiquement leur numérotation par un traitement informatique,
-      il est inutile d’enregistrer le numéro des notes.</p>
+    dans le texte source, comme dans l'exemple suivant :
+<egXML
+    xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">Mevorakh b. Saadya's
+    mother, the matriarch of the family during the second half of the
+    eleventh century, <note n="126" anchored="true"> The alleged
+    mention of Judah Nagid's mother in a letter from 1071 is, in fact,
+    a reference to Judah's children; cf. above, nn. 111 and
+    54. </note> is well known from Geniza documents published by Jacob
+    Mann.</egXML> Cependant, si les notes sont ordonnées et numérotées
+    et qu’on veuille reconstruire automatiquement leur numérotation
+    par un traitement informatique, il est inutile d’enregistrer le
+    numéro des notes.</p>
   </remarks>
   <listRef>
     <ptr target="#CONONO" type="div2"/>
