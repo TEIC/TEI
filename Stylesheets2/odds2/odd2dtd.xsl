@@ -1582,7 +1582,7 @@
   </xsl:template>
   <xsl:template name="bitOut">
     <xsl:param name="grammar"/>
-    <xsl:param name="TAG"/>
+    <xsl:param name="element"/>
     <xsl:param name="content"/>
     <xsl:copy-of select="$content"/>
   </xsl:template>

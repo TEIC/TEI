@@ -824,7 +824,7 @@
         <xsl:when test="$toc =''">
           <xsl:copy-of select="$text"/>
         </xsl:when>
-        <xsl:when test="number(normalize-space($text))&lt;10">
+        <xsl:when test="number(normalize-space($textxtags))&lt;10">
           <xsl:text> </xsl:text>
           <xsl:copy-of select="$text"/>
         </xsl:when>

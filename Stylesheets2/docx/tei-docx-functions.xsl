@@ -199,15 +199,17 @@
                     
                     self::iso:wordObject[w:object] or
                     
-		    self::tei:am or
-		    self::tei:gap or
+		    self::tei:am or	
+		    self::tei:att or	
 		    self::tei:choice or
 		    self::tei:damage or
 		    self::tei:ex or
 		    self::tei:expan or
+		    self::tei:gap or
 		    self::tei:genName or
 		    self::tei:geogName or
 		    self::tei:orig or
+		    self::tei:origPlace or
 		    self::tei:roleName or
 		    self::tei:supplied or
                     self::tei:abbr or
@@ -235,7 +237,6 @@
                     self::tei:note[@place='foot' or @place='bottom' ] or
                     self::tei:num or
                     self::tei:orgName or
-		    self::tei:origPlace or
                     self::tei:pb or
                     self::tei:persName or
                     self::tei:placeName or

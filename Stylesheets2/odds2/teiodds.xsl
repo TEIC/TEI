@@ -2093,7 +2093,7 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template name="bitOut">
     <xsl:param name="grammar"/>
-    <xsl:param name="TAG"/>
+    <xsl:param name="element"/>
     <xsl:param name="content"/>
   </xsl:template>
 

@@ -236,12 +236,12 @@ version="2.0">
         </xsl:if>
         <xsl:call-template name="bitOut">
           <xsl:with-param name="grammar"/>
+          <xsl:with-param name="element">code</xsl:with-param>
           <xsl:with-param name="content">
             <Wrapper>
               <xsl:copy-of select="rng:*"/>
             </Wrapper>
           </xsl:with-param>
-          <xsl:with-param name="element">code</xsl:with-param>
         </xsl:call-template>
 	<xsl:if test="$minOccurs != '1'  or  $maxOccurs != '1'">
 	  <xsl:element namespace="{$outputNS}" name="{$segName}">

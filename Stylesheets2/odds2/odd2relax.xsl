@@ -324,6 +324,7 @@
   </xsl:template>
   <xsl:template name="bitOut">
     <xsl:param name="grammar"/>
+    <xsl:param name="element"/>
     <xsl:param name="content"/>
     <xsl:for-each select="$content/Wrapper">
       <xsl:copy-of select="*"/>
