@@ -22,7 +22,7 @@
 <xsl:param name="numberFormat">uk</xsl:param>
 <xsl:output encoding="utf-8" 
  omit-xml-declaration="yes" 
- method="xml" 
+ method="xhtml" 
  doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" 
  doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" 
  indent="yes"/>
@@ -165,6 +165,10 @@
     </xsl:element>
     </xsl:when>
   </xsl:choose>
+</xsl:template>
+<xsl:template name="verbatim-lineBreak">
+  <xsl:param name="id"/>
+  <br/>
 </xsl:template>
  
 
