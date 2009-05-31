@@ -1012,14 +1012,17 @@
 	<xsl:call-template name="showExample"/>
       </xsl:when>
       <xsl:when test="@xml:lang='mul' and not($documentationLanguage='zh-tw')">
+	<!-- will need to generalize this if other langs come along like
+	     chinese -->
 	<xsl:call-template name="showExample"/>
       </xsl:when>
       <xsl:when test="@xml:lang=$documentationLanguage">
 	<xsl:call-template name="showExample"/>
       </xsl:when>
-      <xsl:when
-	  test="not(../tei:exemplum[@xml:lang=$documentationLanguage
-		or @xml:lang='und' or @xml:lang='mul'])">
+      <xsl:when test="not(../tei:exemplum[@xml:lang=$documentationLanguage])
+                   and (@xml:lang='en'
+		   or @xml:lang='und'
+		   or @xml:lang='mul')">
 	<xsl:call-template name="showExample"/>
       </xsl:when>
     </xsl:choose>
