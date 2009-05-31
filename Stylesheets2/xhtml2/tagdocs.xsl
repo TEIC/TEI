@@ -321,7 +321,10 @@
   <xsl:template match="teix:egXML">
     <xsl:param name="simple">false</xsl:param>
     <xsl:param name="highlight"></xsl:param>
-    <div id="{generate-id()}">
+    <div>
+      <xsl:attribute name="id">
+	<xsl:apply-templates mode="ident" select="."/>
+      </xsl:attribute>
       <xsl:attribute name="class">
 	<xsl:text>pre</xsl:text>
 	<xsl:if test="not(*)">

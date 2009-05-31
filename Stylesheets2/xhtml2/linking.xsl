@@ -57,9 +57,13 @@
 	<xsl:text>-</xsl:text>
         <xsl:value-of select="substring-after(substring-after($xpath,'_text.'),'_')"/>
       </xsl:when>
-      <xsl:otherwise><xsl:value-of select="$BaseFile"/>-<xsl:value-of
-          select="local-name(.)"/>-<xsl:value-of select="generate-id()"
-      /></xsl:otherwise>
+      <xsl:otherwise>
+	<xsl:value-of select="$BaseFile"/>
+	<xsl:text>-</xsl:text>
+	<xsl:value-of select="local-name(.)"/>
+	<xsl:text>-</xsl:text>
+	<xsl:value-of select="generate-id()"/>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   <xd:doc>
@@ -87,6 +91,20 @@
         <xsl:value-of select="$standardSuffix"/>
         <xsl:value-of select="$urlChunkPrefix"/>
         <xsl:value-of select="$ident"/>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:elementSpec and
+		      not($STDOUT='true')">
+	<xsl:text>ref-</xsl:text>
+	<xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+        <xsl:value-of select="$standardSuffix"/>
+	<xsl:value-of select="concat($Hash,$ident)"/>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:classSpec and
+		      not($STDOUT='true')">
+	<xsl:text>ref-</xsl:text>
+	<xsl:value-of select="ancestor::tei:classSpec/@ident"/>
+        <xsl:value-of select="$standardSuffix"/>
+	<xsl:value-of select="concat($Hash,$ident)"/>
       </xsl:when>
       <xsl:when test="ancestor::tei:back and not($splitBackmatter)">
         <xsl:value-of select="concat($Hash,$ident)"/>

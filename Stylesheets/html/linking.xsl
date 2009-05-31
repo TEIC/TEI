@@ -91,6 +91,20 @@
         <xsl:value-of select="$urlChunkPrefix"/>
         <xsl:value-of select="$ident"/>
       </xsl:when>
+      <xsl:when test="ancestor::tei:elementSpec and
+		      not($STDOUT='true')">
+	<xsl:text>ref-</xsl:text>
+	<xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+        <xsl:value-of select="$standardSuffix"/>
+	<xsl:value-of select="concat($Hash,$ident)"/>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:classSpec and
+		      not($STDOUT='true')">
+	<xsl:text>ref-</xsl:text>
+	<xsl:value-of select="ancestor::tei:classSpec/@ident"/>
+        <xsl:value-of select="$standardSuffix"/>
+	<xsl:value-of select="concat($Hash,$ident)"/>
+      </xsl:when>
       <xsl:when test="ancestor::tei:back and not($splitBackmatter)">
         <xsl:value-of select="concat($Hash,$ident)"/>
       </xsl:when>

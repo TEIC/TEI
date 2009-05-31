@@ -2718,7 +2718,4 @@ version="2.0">
     </xsl:for-each>
   </xsl:template>
 
-
-
-
 </xsl:stylesheet>

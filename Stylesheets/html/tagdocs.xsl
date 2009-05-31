@@ -347,6 +347,9 @@
   </xd:doc>
   <xsl:template match="teix:egXML">
     <div>
+      <xsl:attribute name="id">
+	<xsl:apply-templates mode="ident" select="."/>
+      </xsl:attribute>
       <xsl:attribute name="class">
 	<xsl:text>pre</xsl:text>
 	<xsl:if test="not(*)">
