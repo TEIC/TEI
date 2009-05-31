@@ -47,4 +47,8 @@ test4:
 	diff dummy dummy4
 
 clean:
-	-rm test.tex test.fo *.html *~ dummy*
+	-rm test.tex test.fo *.html *~ dummy* *.aux *.out *.log
+	-rm      test.tex.xsltproc
+	-rm      test.fo.xsltproc
+	-rm      test.tex.saxon
+	-rm      test.fo.saxon
