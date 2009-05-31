@@ -5,7 +5,7 @@ test:
 	saxon -o dummy  test.xml ../xhtml2/tei.xsl verbose=true 
 
 testsplit:
-	-saxon test6.xml ../xhtml2/tei.xsl STDOUT=false
+	-saxon test6.xml ../xhtml2/tei.xsl STDOUT=false verbose=true splitLevel=1
 
 test3:
 	saxon -o dummy -novw  test3.xml ../xhtml2/tei.xsl verbose=true 
