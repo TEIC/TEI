@@ -16,6 +16,8 @@
     version="2.0">
   
 <xsl:import href="../../../xhtml2/tei.xsl"/>
+<xsl:import href="../../../xhtml2/tagdocs.xsl"/>
+<xsl:import href="../../../odds2/teiodds.xsl"/>
 <xsl:import href="../isoutils.xsl"/>
 <xsl:param name="numberFormat">uk</xsl:param>
 <xsl:output encoding="utf-8" 
@@ -29,8 +31,8 @@
 <xsl:param name="xhtml">true</xsl:param>
 <xsl:param name="splitLevel">-1</xsl:param>
 <xsl:param name="autoToc">true</xsl:param>
-<xsl:param name="institution">ITSIG</xsl:param>
-<xsl:param name="department">XML Project</xsl:param>
+<xsl:param name="institution">ISO</xsl:param>
+<xsl:param name="department"></xsl:param>
 <xsl:param name="cssFile">iso.css</xsl:param>
 <xsl:param name="cssSecondaryFile">odd.css</xsl:param>
 <xsl:param name="TEIC">false</xsl:param>
