@@ -21,41 +21,29 @@ $Id$
   <content>
     <rng:choice>
       <rng:data type="double"/>
-      <rng:data type="decimal"/>
+      <rng:data type="token">
+       <rng:param name="pattern">([\d\-]/[\d\-])</rng:param>
+     </rng:data>
+     <rng:data type="decimal"/>
     </rng:choice>
   </content>
   <remarks>
-    <p>Any numeric value that can be represented as a decimal number.</p>
-    <p>In addition, the range of values that can be represented in an
-    IEEE double precision (i.e., 64-bit) floating point number may be
-    represented using scientific notation. Roughly that range is
-    ±10⁻³²³ to
-    ±10³⁰⁸.</p>
-    <p>To represent a number expressed in scientific notation,
+    <p>Any numeric value,  represented as a decimal number, in
+    floating point format, or as a ratio.</p>
+    <p>To represent a floating point number,  expressed in scientific notation,
     <soCalled>E notation</soCalled>, a variant of
-    <soCalled>exponential notation</soCalled>, is used in the
-    attribute value. A number is represented in exponential notation
-    as a value between 1 and 10 (or -1 and -10) which is multiplied by
-    ten raised to some integral power. When reading E notation, the
-    letter <mentioned>E</mentioned> is read as <q>times 10 to the
-    power</q>.</p>
-    <p>That is, the significand (sometimes called the mantissa) is
-    written as a decimal number, followed by the letter
-    <mentioned>E</mentioned>, followed by an integer exponent. The
-    multiplication sign and the base itself
-    (<mentioned>10</mentioned>) are implied. Either the significand or
-    the exponent (or both) may be a negative number, in which case it
-    should be preceded by a minus sign. There should be no whitespace
-    separating the significand from the <mentioned>E</mentioned> from
-    the exponent. E.g., 3×10⁸ can be expressed as <val>3E8</val>.</p>
-    <p>Other examples of scientific notation include:
-    <list><item><val>3E10</val> (the speed of light in centimetres per second)</item><item><val>9.12E-31</val> (the mass of an electron in Kg)</item><item><val>4E11</val> (estimated number of stars in our galaxy)</item><item><val>-1.76E11</val> (electron charge to mass quotient in coulombs per Kg)</item></list>
-    </p>
-    <p>Either <mentioned>e</mentioned> or <mentioned>E</mentioned> may
-    be used to separate the significand from the exponent, however
-    these Guidelines recommend <mentioned>E</mentioned> be used both
-    for consistency with other standards bodies and to avoid confusion
-    with the mathematical constant <code>e</code>.</p>
+    <soCalled>exponential notation</soCalled>, may be used. 
+In this format, the value is expressed as two numbers separated by the
+letter E. The first number, the significand (sometimes called the
+mantissa) is given in decimal format, while the second is an
+integer. The value is obtained by multiplying the mantissa by 10 the
+number of times indicated by the integer. Thus the value represented
+in decimal notation as 1000.0 might be represented in scientific
+notation as 10E3.</p>
+<p>A value expressed as a ratio is represented by two integer values
+separated by a solidus (/) character. Thus, the value represented in
+decimal notation as 0.5 might be represented as a ratio by the string
+1/2.</p>
   </remarks>
   <remarks xml:lang="ja">
     <p>
