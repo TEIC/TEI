@@ -2164,7 +2164,7 @@ class romaDom extends domDocument
 	$this->getDocDom( $oDOC );
 	$this->getDocLanguage( $szDocLanguage );
         $oXSL = new domDocument();
- 	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/odds/extract-sch.xsl'  );
+ 	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/odds/extract-isosch.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
 	$oSCH = $oProc->transformToDoc( $oDOC );
