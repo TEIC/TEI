@@ -40,7 +40,8 @@ TESTFILES= \
 	testtagdocs \
 	testtranscr \
 	testTripReport \
-	testall 
+	testall \
+	testjustfs
 
 TESTBADFILES= \
 	detest \
