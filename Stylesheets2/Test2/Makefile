@@ -49,4 +49,4 @@ oddbyexample:
 
 clean:
 	-rm test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy*
-	-rm oddbyexample.* xml.xsd
+	-rm oddbyexample.* xml.xsd index*div*html
