@@ -6,7 +6,11 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="MSIDENTIFIER" ident="msIdentifier">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	     module="msdescription" xml:id="MSIDENTIFIER"
+	     ident="msIdentifier"
+	     xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <gloss>manuscript identifier</gloss>
   <gloss version="2007-12-20" xml:lang="kr">원고 확인소</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw"/>
@@ -30,28 +34,20 @@ the  manuscript being described. </desc>
   <content>
     <rng:group>
       <rng:choice>
-        <rng:group>
-<!--    <rng:optional>
-      <rng:ref name="country"/>
-    </rng:optional>
-    <rng:optional>
-      <rng:ref name="region"/>
-    </rng:optional>
-    <rng:ref name="settlement"/>
--->
-          <rng:ref name="model.placeNamePart_sequenceOptional"/>
-          <rng:optional>
-            <rng:ref name="institution"/>
-          </rng:optional>
-          <rng:ref name="repository"/>
-          <rng:optional>
-            <rng:ref name="collection"/>
-          </rng:optional>
-          <rng:optional>
-            <rng:ref name="idno"/>
-          </rng:optional>
-        </rng:group>
-        <rng:ref name="msName"/>
+	<rng:group>
+	  <rng:ref name="model.placeNamePart_sequenceOptional"/>
+	  <rng:optional>
+	    <rng:ref name="institution"/>
+	  </rng:optional>
+	  <rng:ref name="repository"/>
+	  <rng:optional>
+	    <rng:ref name="collection"/>
+	  </rng:optional>
+	  <rng:optional>
+	    <rng:ref name="idno"/>
+	  </rng:optional>
+	</rng:group>
+	<rng:ref name="msName"/>
       </rng:choice>
       <rng:zeroOrMore>
         <rng:choice>
@@ -61,6 +57,12 @@ the  manuscript being described. </desc>
       </rng:zeroOrMore>
     </rng:group>
   </content>
+  <constraint scheme="isoschematron" ident="msId_minimal"> 
+    <data>
+	  <sch:report test="local-name(*[1]='idno) or local-name(*[1]='msName')">
+	    You must supply a place name of some type</sch:report>
+    </data>
+  </constraint>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <msIdentifier>
