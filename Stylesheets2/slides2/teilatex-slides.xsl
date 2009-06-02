@@ -207,6 +207,9 @@ XSL LaTeX stylesheet to make slides
     <xsl:value-of select="@xml:id"/>
     <xsl:text>}{}</xsl:text>
   </xsl:if>
+  <xsl:if test="@rend='centre'">
+    <xsl:text>\centerline{</xsl:text>
+  </xsl:if>
   <xsl:text>\includegraphics[</xsl:text>
   <xsl:call-template name="graphicsAttributes">
     <xsl:with-param name="mode">latex</xsl:with-param>
@@ -224,6 +227,9 @@ XSL LaTeX stylesheet to make slides
     </xsl:when>
   </xsl:choose>
   <xsl:text>}</xsl:text>
+    <xsl:if test="@rend='centre'">
+      <xsl:text>}</xsl:text>
+    </xsl:if>
 </xsl:template>
 
 <xsl:template match="tei:hi[not(@rend)]">
