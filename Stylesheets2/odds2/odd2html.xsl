@@ -872,7 +872,7 @@ states[24]="element-y"
 states[25]="element-z"
 
 function startUp() {
- hideallExcept('');
+
 }
 
 function hideallExcept(elm) {
