@@ -104,14 +104,14 @@ components:
 <p>Of these, only the <gi>fileDesc</gi> element is required in all TEI
 headers; the others are optional.  The top level elements in the full form of a TEI header are
 thus:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
     <fileDesc> <!-- ... --></fileDesc>
     <encodingDesc> <!-- ... --></encodingDesc>
     <profileDesc> <!-- ... --></profileDesc>
     <revisionDesc> <!-- ... --></revisionDesc>
 </teiHeader></egXML>
 while a minimal header takes the form:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
     <fileDesc> <!-- ... --></fileDesc>
 </teiHeader></egXML>
 </p>
@@ -122,7 +122,7 @@ applies, and not necessarily English. As elsewhere, the
 to specify the language. 
 For example, in the following (incomplete) example, an
 English text has been given a French header:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
 <TEI >
 <teiHeader xml:lang="fra">
   <!-- ... -->
@@ -270,7 +270,7 @@ are listed below in the order in which they must be given within the
 </p>
 <p>A file description containing all possible sub-elements has the
 following structure:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
     <fileDesc>
          <titleStmt> <!-- ... --></titleStmt>
          <editionStmt> <!-- ... --></editionStmt>
@@ -806,7 +806,7 @@ Using them, a source might be described in very simple terms:
    Charlton Hinman (The Norton Facsimile, 1968)</bibl>
 </sourceDesc></egXML>
 or with more elaboration:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><sourceDesc>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="fr"><sourceDesc>
   <biblStruct xml:lang="fr">
     <monogr>
       <author>Eugène Sue</author>
@@ -1226,7 +1226,7 @@ as font size and style, letter and line spacing, colour, etc. Note
 that the purpose of this encoding is to describe the original, rather
 than specify how it should be reproduced, although the two are
 obviously closely linked.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><tagsDecl>
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><tagsDecl>
   <rendition xml:id="center" scheme="css">text-align: center;</rendition>
   <rendition xml:id="small" scheme="css">font-size: small;</rendition>
   <rendition xml:id="large" scheme="css">font-size: large;</rendition>
@@ -1276,7 +1276,7 @@ useful to document the appearance of the source.</p>
 element to enclose passages in quotation marks, but the quotation
 marks themselves have been routinely omitted from the encoding, a set of
 renditions such as the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
 <rendition xml:id="quoteBefore" scheme="css" scope="before">content:
 '“';</rendition>
 <rendition xml:id="quoteAfter" scheme="css" scope="after">content:
@@ -1553,7 +1553,7 @@ particular <gi>catRef</gi>, as in the following example, which
 identifies a text with the sub-categories <q>Daily</q>, <q>National</q>,
 and <q>Political</q> within the category <q>Press Reportage</q> as
 defined above.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><catRef target="#b.a1 #b.a3 #b.a5"/></egXML></p><specGrp xml:id="D2255" n="The classification declaration">&classDecl;&taxonomy;&category;&catDesc;
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><catRef target="#b.a1 #b.a3 #b.a5"/></egXML></p><specGrp xml:id="D2255" n="The classification declaration">&classDecl;&taxonomy;&category;&catDesc;
 </specGrp>
 </div>
 <div type="div3" xml:id="HDAPP">
@@ -1746,7 +1746,7 @@ element, only one of the <gi>language</gi> elements should bear the
 	<!-- elements don't have IDs, and these must be ignored or    -->
 	<!-- 'merged' somehow with LANGUAGE elements which do have    -->
 	<!-- IDs and which use the same wsd.  -msm                    -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><langUsage>
+<egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples"><langUsage>
    <language ident="fr-CA" usage="60">Québecois</language>
    <language ident="en-CA" usage="20">Canadian business English</language>
    <language ident="en-GB" usage="20">British English</language>
@@ -1824,9 +1824,9 @@ indicate the source of the classification scheme: this may be a
 pointer of any kind, either to a TEI element, likely in the current document, as
 in the <gi>keywords</gi> examples above, or to some canonical source
 for the scheme, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><classCode scheme="http://www.example.com/udc">005.756</classCode> <classCode scheme="#lc">QA76.9</classCode></egXML>
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><classCode scheme="http://www.example.com/udc">005.756</classCode> <classCode scheme="#lc">QA76.9</classCode></egXML>
 <!-- subject classifications from Date, Guide to SQL Std  corresp="#HD43-eg-124"     -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><classCode scheme="http://www.example.com/udc">820.285</classCode>
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><classCode scheme="http://www.example.com/udc">820.285</classCode>
 </egXML>
 <!-- subject classifications from Potter, Lit Comp & Lit Crit corresp="#HD43-eg-125"--></p>
 <!-- do we actually know where the canonical source to UDC is?-->
@@ -1842,11 +1842,11 @@ within the category indicated.</p>
 case more than one identifier will be supplied as the value for
 the <att>target</att> attribute on the <gi>catRef</gi> element, as
 in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><catRef target="#b.a4 #b.d2"/></egXML></p><p>The <att>scheme</att> attribute
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><catRef target="#b.a4 #b.d2"/></egXML></p><p>The <att>scheme</att> attribute
 may be supplied to specify the taxonomy to which the categories
 identified by the target attribute belong, if this is not adequately
 conveyed by the  resource pointed to. For example,
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><catRef target="#b.a4 #b.d2" scheme="http://www.example.com/browncorpus"/>
+    <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><catRef target="#b.a4 #b.d2" scheme="http://www.example.com/browncorpus"/>
 <catRef target="http://www.example.com/SUC/#A45"/></egXML>
 Here the same text has been classified as of categories <val>b.a4</val> and
 <val>b.d2</val> within the Brown classification scheme (presumed to be

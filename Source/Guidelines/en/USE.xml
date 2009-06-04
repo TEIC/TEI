@@ -232,7 +232,7 @@ or more of the supplied elements.  This is simply done by setting the
 <p>For example, if the <gi>note</gi>
 element is not to be used in a particular application, the schema
 specification concerned will contain a declaration like the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="note" module="core" mode="delete"/></egXML>
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="note" module="core" mode="delete"/></egXML>
 
 The <att>ident</att> attribute here supplies the canonical name of the
 element to be deleted, the <att>module</att> attribute identifies the
@@ -303,7 +303,7 @@ means of an <gi>altIdent</gi> element within the specification element
 concerned.</p>
 <p>For example, the following declaration converts <gi>note</gi> to
 <gi scheme="imaginary">annotation</gi>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="note" module="core" mode="change">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="note" module="core" mode="change">
 <altIdent>annotation</altIdent></elementSpec></egXML>
 Note that the <att>mode</att> attribute on the <gi>elementSpec</gi>
 now takes the value <val>change</val> to indicate that those parts of
@@ -349,7 +349,7 @@ language. </p>
 provided by the Guidelines contains a <gi>content</gi> element like
 the following:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <rng:ref name="macro.phraseSeq"/>
   </content>
@@ -366,7 +366,7 @@ contain plain text, excluding these other possibilities.<note place="foot">Exclu
 generally inadvisable however, since without it the resulting schema
 has no way of referencing non-Unicode characters.</note> This could be
 achieved simply by supplying a specification for <gi>term</gi> like
-the following: <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="term" module="core" mode="change"> <content xmlns:rng="http://relaxng.org/ns/structure/1.0"><rng:text/></content></elementSpec></egXML>
+the following: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="term" module="core" mode="change"> <content xmlns:rng="http://relaxng.org/ns/structure/1.0"><rng:text/></content></elementSpec></egXML>
 </p>
 
 <p>This is a clean modification which does not change the meaning of a
@@ -557,7 +557,7 @@ all that is needed is to supply a  new <gi>memberOf</gi> element
 within the <gi>classes</gi> element for the element concerned.
 For example, to add an element to the <ident type="class">att.typed</ident> class, we include a declaration like
 the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="eg" module="tagdocs" mode="change" ns="http://example.com/ns">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="eg" module="tagdocs" mode="change" ns="http://example.com/ns">
   <classes mode="change">
     <memberOf key="att.typed"/>
   </classes>
@@ -579,7 +579,7 @@ attribute classes, <ident type="class">att.typed</ident> and <ident type="class"
 <att>type</att> and <att>subtype</att> from the former, and the
 attribute <att>decls</att> from the latter. To remove the last of these
 attributes from this element, we need to remove it from that class:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="term" module="core" mode="change" ns="http://example.com/ns">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="term" module="core" mode="change" ns="http://example.com/ns">
   <classes mode="change">
     <memberOf key="att.declaring" mode="delete"/>
   </classes>
@@ -594,7 +594,7 @@ indicating that the memberships indicated by
 its child <gi>memberOf</gi> elements are the only ones
 applicable. 
 Thus the following
-declaration: <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="term" module="core" mode="change" ns="http://example.com/ns">
+declaration: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="term" module="core" mode="change" ns="http://example.com/ns">
   <classes mode="replace">
     <memberOf key="att.interpLike"/>
   </classes>
@@ -616,7 +616,7 @@ several attributes which are available for all elements, notably
 and <att>rendition</att> among others. If we decide
 that we  never wish to use the <att>rend</att> attribute, the simplest
 way of removing it is to supply a modified class specification for
-<ident type="class">att.global</ident> as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><classSpec ident="att.global" type="atts" mode="change">
+<ident type="class">att.global</ident> as follows: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><classSpec ident="att.global" type="atts" mode="change">
 <attList>
 <attDef ident="rend" mode="delete"/>
 </attList>
@@ -755,7 +755,7 @@ avoid namespace processing. For example, the following schema
 specification results in a schema called <ident>noName</ident> which
 has no namespace, even though it comprises declarations from the TEI
 <ident type="module">header</ident> module:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ns="" ident="noName">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ns="" ident="noName">
 <moduleRef key="header"/><!-- ... -->
 </schemaSpec></egXML>
 </p>
@@ -1558,7 +1558,7 @@ included in the output.</item>
 <p>A special problem arises with elements which are members of
 attribute classes, as they are permitted to override attributes
 inherited from a class. For example, consider this simple modification:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="p">
   <classes>
     <memberOf key="att.typed"/>
@@ -1572,7 +1572,7 @@ The effect of its membership in the <ident type="class">att.typed</ident> class 
 <att>type</att> attribute and a <att>subtype</att> attribute. If we
 wish <gi>p</gi> to <emph>not</emph> have <att>subtype</att>, we could
 extend the customization in our schema as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="p">
   <classes>
     <memberOf key="att.typed"/>
@@ -1606,7 +1606,7 @@ be considered carefully. An original may have
 </elementSpec>
 </egXML>
 which would usefully be extended with this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="es" xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="p" mode="change">
   <desc xml:lang="es">marca párrafos en prosa.</desc>
   <!--…-->
@@ -1631,7 +1631,7 @@ great efforts to get this right. The XSLT transformations used by the
 P5 Roma application are not as sophisticated, partly because the RELAX
 NG language is more forgiving than DTDs.</note> A content model like
 this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="person">
   <!--…-->
   <content>
@@ -1663,7 +1663,7 @@ for example the <gi>rng:choice</gi> is itself inside an <gi>rng:zeroOrMore</gi> 
 more successful in carrying out such simplification as a distinct
 stage during processing of ODD sources.</p>
 <p>If an element refers directly to an element child, like this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="figure">
   <!--…-->
   <content>
@@ -1757,7 +1757,7 @@ which many of the parameterization features have been removed.</p>
 
 <p>The difference between the schema styles may be illustrated by
 considering this ODD specification:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec module="drama" ident="performance">
   <!-- ... -->
   <classes>
@@ -1845,7 +1845,7 @@ preferable for most applications.</p>
 <p>Thirdly, the problem of missing
 components must be resolved. For example, consider this (fictitious) model
 for <gi>sp</gi>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="sp">
   <!--…-->
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -1865,7 +1865,7 @@ for <gi>sp</gi>:
 This proposes anything from the global model class, followed by some
 <gi>speaker</gi> elements, followed by anything from the <ident type="class">model.global</ident> class. What happens if
 <gi>speaker</gi> is removed? The following would result:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec ident="sp">
   <!--…-->
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -1940,7 +1940,7 @@ elements from an external schema to be mixed in without risk of name
 clashes, since all TEI  elements can be given a distinctive prefix
 such as <val>tei_</val>. 
 Thus
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
 <schemaSpec ident="test" prefix="tei_">
   <elementSpec ident="sp">
     <!--...-->
@@ -1968,7 +1968,7 @@ used regardless, but if there are several, local processing rules will
 need to be applied. For example, if there are several with different
 values of <att>xml:lang</att>, a locale indication in the processing
 environment might be used to decide which to use. For example,
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples">
 <elementSpec module="core" ident="head">
   <equiv/>
   <gloss>heading</gloss>
@@ -2036,7 +2036,7 @@ the <gi>rng:start</gi>.</p>
 <p>An ODD macro
 generates a corresponding RELAX NG pattern simply by copying the body
 of the <gi>content</gi> element. Thus
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
 <macroSpec module="tei" type="pe" ident="macro.phraseSeq">
   <content>
     <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -2051,7 +2051,7 @@ of the <gi>content</gi> element. Thus
 </macroSpec>
 </egXML>
 produces
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
   <define xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq">
     <zeroOrMore>
       <choice>
@@ -2075,13 +2075,13 @@ However, the two formats are interchangeable.</p>
 <p>An ODD model class reference generates a RELAX NG pattern
 definition listing all the members of the class present in the ODD in
 alternation. So this example
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
 <classSpec module="tei" type="model" ident="model.measureLike">
 <!-- ... -->
 </classSpec>
 </egXML>
 may produce, for a given customization:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
   <define xmlns="http://relaxng.org/ns/structure/1.0" name="model.measureLike">
     <choice>
       <ref name="num"/>
@@ -2098,7 +2098,7 @@ generate the <ident>sequence</ident>,
 <ident>sequenceOptional</ident>,  
 <ident>sequenceRepeatable</ident>,  and 
 <ident>sequenceOptionalRepeatable</ident> patterns:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
   <define xmlns="http://relaxng.org/ns/structure/1.0" name="model.measureLike_sequence">
     <ref name="num"/>
     <ref name="measure"/>

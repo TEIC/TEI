@@ -152,7 +152,7 @@ in the same way as described in sections <ptr target="#DSFRONT"/> and
 <p>In the simplest case, a facsimile just contains a series of
 <gi>graphic</gi> elements, each of which identifies an image file:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
 <facsimile>
   <graphic url="page1.png"/>
   <graphic url="page2.png"/>
@@ -173,7 +173,7 @@ or in two different resolutions. The <gi>surface</gi> element may be
 used to indicate that there are two image files corresponding with the
 same area of the work:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML  xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
 <facsimile>
   <graphic url="page1.png"/>
   <surface>
@@ -272,7 +272,7 @@ pixels in the image.  The left corner of the two page spread appears
 50 units from the left of the image and 20 units from the top, while
 the bottom right corner of the spread appears 400 units from the left
 of the image, and 280 units from the top. We therefore define the
-written surface within this image as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+written surface within this image as follows: <egXML  xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface ulx="50" uly="20" lrx="400" lry="280">
 	<!-- ... -->
 </surface>
@@ -281,7 +281,7 @@ define a zone of interest which represents an area larger than this
 surface. Using the same coordinate system as that defined for the
 surface, its coordinates are <val>0,0,500,321</val>. This zone of
 interest can be defined by a <gi>zone</gi> element, within which we can
-place the uncropped <gi>graphic</gi>: <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+  place the uncropped <gi>graphic</gi>: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface ulx="50" uly="20" lrx="400" lry="280">
 <zone ulx="0" uly="0" lrx="500" lry="321">
 <graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
@@ -349,7 +349,7 @@ define a <gi>surface</gi> element for this page, which we situate within a
 coordinate scale running from 0 to 200 in the x (horizontal) axis,
 and 0 to 300 in the y (vertical) axis.  The <gi>surface</gi> element
 contains a <gi>graphic</gi> 
-element which represents the whole of this surface: <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+  element which represents the whole of this surface: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface ulx="0" uly="0" lrx="200" lry="300">
   <graphic url="Bovelles-49r.png"/>
 </surface>
@@ -398,7 +398,7 @@ example, supposing that we have an additional image called
 <ident type="file">Bovelles49r-detail.png</ident> containing an additional image
 of the figure in the third zone above, we might encode that zone as
 follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
   <zone ulx="105" uly="76" lrx="175" lry="160"> 
     <graphic url="Bovelles49r-detail.png"/>
   </zone>
@@ -427,7 +427,7 @@ relevant part of the facsimile an identifier:
 </facsimile></egXML> 
 The alignment between transcription and image is made, as usual, by
 means of the <att>facs</att> attribute:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="fr">
 <pb facs="#B49r"/>
 <fw>De Geometrie 49</fw>
 <head facs="#B49rHead">
@@ -460,7 +460,7 @@ of this chapter. </p>
 the function of the <att>start</att> attribute, which supplies the
 identifier of the element containing the transcribed text found within
 the surface or zone concerned. Thus, another way of linking this page
-with its transcription would be simply <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+with its transcription would be simply <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface start="#PB49R">
 <graphic url="Bovelles-49r.png"/>
 </surface>
@@ -877,7 +877,7 @@ as a choice: <egXML xmlns="http://www.tei-c.org/ns/Examples">But
 <p>Similarly, in this example from Albertus Magnus,
 both a manuscript error <mentioned>angues</mentioned> and its correction
 <mentioned>augens</mentioned> are registered within a  <gi>choice</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-02">Nos autem iam ostendimus quod nutrimentum
+<egXML xml:lang="la" xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-02">Nos autem iam ostendimus quod nutrimentum
 et <choice><sic>angues</sic><corr>augens</corr></choice>.</egXML>
 </p> 
 <p>Note that the <gi>corr</gi> element is used to provide a corrected
@@ -962,7 +962,7 @@ ywroght?
 corrections, this may be represented by supplying multiple pointers on
 the note. Consider for example such corrections as the following, in
 Dudo of S. Quentin. Parkes cites two cases in this manuscript of the
-same phenomenon: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-04">quamuis <choice xml:id="sic-1"><sic>mens</sic><corr>iners</corr></choice> que nutu dei
+same phenomenon: <egXML xml:lang="la" xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-04">quamuis <choice xml:id="sic-1"><sic>mens</sic><corr>iners</corr></choice> que nutu dei
 gesta sunt ... unde esset uiriliter <choice xml:id="sic-2"><corr>uegetata</corr><sic>negata</sic></choice></egXML>
 which may be described as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><note target="#sic-1 #sic-2">Substitution of a more familiar word which resembles
 graphically what the scribe should be copying but which does not make
@@ -983,12 +983,12 @@ attribute on the <gi>corr</gi> element can be used to specify an
 arbitrary code for the particular kind of correction (or other
 editorial intervention) identified within it. This code can be chosen
 freely and is not treated as a pointer. 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">quamuis
+<egXML xml:lang="la" xmlns="http://www.tei-c.org/ns/Examples">quamuis
 <choice><sic>mens</sic><corr type="graphSubs">iners</corr></choice> que nutu dei
 gesta sunt ... unde esset uiriliter <choice><corr type="graphSubs">uegetata</corr><sic>negata</sic></choice></egXML>
 Note that this encoding might be extended to include a range of
 possible corrections:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">quamuis
+<egXML xml:lang="la" xmlns="http://www.tei-c.org/ns/Examples">quamuis
 <choice><sic>mens</sic><corr type="graphSubs">iners</corr><corr type="reversal">inres</corr></choice> que nutu dei
 gesta sunt ...</egXML>
 In addition, the conscientious encoder will provide documentation
@@ -1835,7 +1835,7 @@ and in some cases cannot be read at all.
 <p>In the first line of this leaf, the transcriber may believe that the
 last three letters of <mentioned>daga</mentioned> can be read clearly despite
 the damage:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">um aldr
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13" xml:lang="non">um aldr
 d<damage>aga</damage> yndisniota</egXML>
 </p>
 <p>If, as is often the case,  the damage crosses structural divisions, so
@@ -1885,23 +1885,23 @@ phenomenon. </p>
 only imperfectly legible, the <gi>unclear</gi> element should be used
 to mark the fact. Returning to the Eddic example above, an encoder
 less confident in the <mentioned>daga</mentioned> reading, may
-indicate this as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">um aldr d<unclear reason="damage">aga</unclear> yndisniota</egXML></p>
+indicate this as follows: <egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples">um aldr d<unclear reason="damage">aga</unclear> yndisniota</egXML></p>
 <p>If it is desired to supply more information about the kind of
 damage, it is also possible to nest an <gi>unclear</gi> element within
 the <gi>damage</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">um aldr d<damage agent="rubbing"><unclear>aga</unclear></damage> yndisniota</egXML></p>
+<egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples">um aldr d<damage agent="rubbing"><unclear>aga</unclear></damage> yndisniota</egXML></p>
 <p>Alternatively, the transcriber may not feel able to read the last
 three letters of <mentioned>daga</mentioned> but may wish to supply them by
 conjecture. Note the use of the <att>resp</att> attribute to assign
 the conjecture to Finnur Jónsson:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">um aldr d<supplied reason="rubbing" resp="#msm">aga</supplied> yndisniota</egXML>
+<egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">um aldr d<supplied reason="rubbing" resp="#msm">aga</supplied> yndisniota</egXML>
 The <gi>supplied</gi> element may if desired be enclosed within a
 <gi>damage</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">um aldr d<damage agent="rubbing"><supplied source="#msm">aga</supplied></damage> yndisniota</egXML></p>
+<egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">um aldr d<damage agent="rubbing"><supplied source="#msm">aga</supplied></damage> yndisniota</egXML></p>
 <p>Contrast the use of <gi>gap</gi> in the next line, where the
 transcriber believes that four letters cannot be read at all because
 of the damage:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">þar komr inn dimmi dreki fliugandi naþr frann
+<egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">þar komr inn dimmi dreki fliugandi naþr frann
 neþan <gap reason="illegible" agent="rubbing" quantity="4" unit="letter"/></egXML>
 As with <gi>supplied</gi>, this <gi>gap</gi> might be enclosed by a
 <gi>damage</gi> element.</p>

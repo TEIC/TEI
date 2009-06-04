@@ -558,7 +558,7 @@ be used
 to provide a brief characterization of the intended function of the
 element, class, value etc. being documented, as in the following
 example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="ja"><elementSpec module="drama" ident="actor">
+<egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples" xml:lang="ja"><elementSpec module="drama" ident="actor">
   <desc>Name of an actor appearing within a cast list.</desc>
   <desc xml:lang="ja"> 登場人物リスト中にある役者名を示す．</desc>
   <desc xml:lang="it">nome di un attore che appare nella lista dei personaggi.</desc>
@@ -588,7 +588,7 @@ languages.</p>
 references, each tagged using the standard <gi>ptr</gi> element, and
 grouped together into a <gi>listRef</gi> element: in the case of the
 <gi>foreign</gi> element discussed above, the list is as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"> <listRef>
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"> <listRef>
     <ptr target="#COHQHF"/>
   </listRef>
 </egXML> where the value <val>COHQF</val> is the identifier of the
@@ -668,7 +668,7 @@ section <ptr target="#TDCLA"/> below.</p>
 <p>For example, to show that the element <gi>gi</gi> is a member of the class
 <ident type="class">model.phrase.xml</ident>, the  <gi>elementSpec</gi> which documents this
 element contains the following <gi>classes</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><classes>
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><classes>
   <memberOf key="model.phrase.xml"/>
 </classes>
 </egXML></p>
@@ -704,7 +704,7 @@ Guidelines, element content models are defined using RELAX NG
 patterns, but the user may over-ride this by redefining this
 pattern.</p>
 <p>Here is a very simple example
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><content>
     <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
   </content>
 </egXML>
@@ -713,7 +713,7 @@ unchanged to the output when RELAX NG schemas are being generated. When
 an XML DTD is being generated, an equivalent declaration (in this
 case <code>(#PCDATA)</code>) will be output.</p>
 <p>Here is a more complex example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:ref name="fileDesc"/>
       <rng:zeroOrMore>
@@ -899,7 +899,7 @@ are specified by an <gi>attList</gi> contained within a
 an attribute may have, using whatever facilities are provided by the
 underlying  schema language. For the TEI scheme, expressed in
 RELAX NG, elements from the RELAX NG namespace may be used, for example
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><datatype>
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><datatype>
   <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
 </datatype></egXML>
 permits any string of Unicode characters not containing markup, and is
@@ -908,7 +908,7 @@ thus the equivalent of <code>CDATA</code> in DTD language.
 <p>The RELAX NG language also provides support for a number of
 primitive datatypes which may be specified here, using the
 <gi>rng:data</gi> element: thus one may write
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><datatype>
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><datatype>
   <rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="boolean"/>
 </datatype></egXML>
 to specify that an element or attribute's contents should conform to
@@ -916,7 +916,7 @@ the W3C definition for <code>boolean</code>.</p>
 <p>Although only one child element may be given, this might be a
 selector such as <val>rng:choice</val> to indicate multiple
 possibilities:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><datatype>
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><datatype>
 <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
   <rng:data type="Date"/>
   <rng:data type="Float"/>
@@ -1023,7 +1023,7 @@ the reference material in these Guidelines.
 indicate that instances of the element concerned may bear either a
 <att scheme="imaginary">bar</att> attribute or a <att
 scheme="imaginary">baz</att> attribute, but not both. The <att
-scheme="imaginary">bax</att> attribute is always available: <egXML
+scheme="imaginary">bax</att> attribute is always available: <egXML xml:lang="und"
 xmlns="http://www.tei-c.org/ns/Examples"><attList>
 <attDef ident="bax">
   <!-- ... -->
@@ -1058,7 +1058,7 @@ its members declare that they belong to it by means of a
 <gi>elementSpec</gi>. This will contain a <gi>memberOf</gi> element
 for each class of which the relevant element is a member, supplying
 the name of the relevant class. For example, the <gi>elementSpec</gi>
-for the element <gi>hi</gi> contains the following: <egXML xmlns="http://www.tei-c.org/ns/Examples"><classes>
+for the element <gi>hi</gi> contains the following: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><classes>
   <memberOf key="model.hiLike"/>
 </classes>
 </egXML>
@@ -1094,12 +1094,12 @@ will depend on the name used to reference the class. </p>
 <p>If the reference simply takes the form of the class name, it is
 interpreted to mean an alternated list of all the current members of
 the class. For example, suppose that the members of the class <ident type="class">model.hiLike</ident> are elements <gi>hi</gi>,
-<gi scheme="imaginary">it</gi>, and <gi scheme="imaginary">bo</gi>. Then a content model such as <egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+<gi scheme="imaginary">it</gi>, and <gi scheme="imaginary">bo</gi>. Then a content model such as <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><content>
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
    <rng:ref name="model.hiLike"/>
 </rng:zeroOrMore></content></egXML>
 would be equivalent to the explicit content model:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><content>
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
    <rng:choice>
      <rng:ref name="hi"/>
@@ -1109,7 +1109,7 @@ would be equivalent to the explicit content model:
 </rng:zeroOrMore></content></egXML> (or, to use RELAX NG compact
 syntax, <code>(hi|it|bo)*</code>). However, a content model
 referencing the class as <ident type="class">model.hiLike_sequence</ident> would be
-equivalent to the following explicit content model: <egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+equivalent to the following explicit content model: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><content>
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:ref name="hi"/>
      <rng:ref name="it"/>
@@ -1135,20 +1135,20 @@ referenced in a content model:
 </p>
 <p>Thus a reference to
 <ident type="class">model.hiLike_sequenceOptional</ident> in a content model would be equivalent to:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:optional><rng:ref name="hi"/></rng:optional>
      <rng:optional><rng:ref name="it"/></rng:optional>
      <rng:optional><rng:ref name="bo"/></rng:optional>
 </rng:zeroOrMore></egXML>
 A reference to  <ident type="class">model.hiLike_sequenceRepeatable</ident>  would however be equivalent to:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:oneOrMore><rng:ref name="hi"/></rng:oneOrMore>
      <rng:oneOrMore><rng:ref name="it"/></rng:oneOrMore>
      <rng:oneOrMore><rng:ref name="bo"/></rng:oneOrMore>
 </rng:zeroOrMore></egXML> and a reference to <ident type="class">model.hiLike_sequenceOptionalRepeatable</ident> would be equivalent to:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
   <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:zeroOrMore><rng:ref name="hi"/></rng:zeroOrMore>
      <rng:zeroOrMore><rng:ref name="it"/></rng:zeroOrMore>
@@ -1261,7 +1261,7 @@ new declarations with existing ones, or to modify particular parts of
 existing declarations.</p>
 <p>In the simplest case, a user-defined schema might simply combine
 all the declarations from two nominated modules:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
 <moduleRef key="teistructure"/>
 <moduleRef key="linking"/>
 </schemaSpec></egXML>
@@ -1271,7 +1271,7 @@ as a schema of the requested type. It might also generate documentation for
 all and only the elements declared by those modules.</p>
 <p>A schema might also include declarations for new elements, as in
 the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
 <moduleRef key="teiheader"/>
 <moduleRef key="verse"/>
 <elementSpec ident="soundClip">
@@ -1284,7 +1284,7 @@ existing TEI class <ident type="class">model.pPart.data</ident>, and
 will thus be available in TEI conformant documents.</p>
 <p>A schema might also include re-declarations of existing elements, as
 in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
 <moduleRef key="teiheader"/>
 <moduleRef key="teistructure"/>
 <elementSpec ident="head" mode="change">
@@ -1376,7 +1376,7 @@ from the non-TEI module <ident type="file">svg11.rng</ident> (defining Standard
 Vector Graphics) are included. To avoid any risk of name clashes, the
 schema specifies that all TEI patterns generated should be prefixed by
 the string "TEI_".
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
     <schemaSpec prefix="TEI_" ident="testsvg" start="TEI svg">
       <moduleRef key="header"/>
       <moduleRef key="core"/>
@@ -1395,7 +1395,7 @@ or other elements from the SVG language. For that to be possible, the
 (<ptr target="#STEC"/>), so that it may be referenced by other TEI
 elements. To achieve this, we modify the last <gi>moduleRef</gi> in
 the above example as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
     <moduleRef url="svg11.rng">
 	<content xmlns:rng="http://relaxng.org/ns/structure/1.0">
 	  <rng:define name="TEI_model.graphicLike" combine="choice">
