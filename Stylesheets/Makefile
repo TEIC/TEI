@@ -17,9 +17,9 @@ dist: clean p4 p5 p5-2 release
 
 
 p5-2:
-	-mkdir -p release/tei-xsl2/xml
+	-mkdir -p release/tei-xsl2/p5-2
 	for i in  ${DIRS} ; do \
-	tar cf - --exclude .svn $$i | (cd release/tei-xsl2/xml; tar xf - ); \
+	tar cf - --exclude .svn $$i | (cd release/tei-xsl2; tar xf - ); \
 	done
 
 p4:
@@ -54,20 +54,21 @@ log:
 	cat newchanges oldchanges > ChangeLog
 	rm newchanges oldchanges
 
-release: doc p4 p5 p5-2
-	cp i18n.xml release/tei-xsl/p4
-	cp *.css release/tei-xsl/p4
-	mkdir -p release/tei-xsl/doc
+common:
+	cp i18n.xml release/tei-xsl/common
+	cp *.css release/tei-xsl/common
+
+doc:
+	-test -d xsltdoc && (cd doc; saxon configdoc.xsl xsltdoc.xsl)
+	saxon -o customize.xml param.xml doc/param.xsl 
+	saxon -o style.xml param.xml  doc/paramform.xsl 
 	mkdir -p release/tei-xsl/doc/xsltdoc
 	-test -d xsltdoc && cp -r doc/xsltdoc doc/*.png release/tei-xsl/doc
 	-test -d xsltdoc && cp doc/*.css release/tei-xsl/doc/xsltdoc
 	cp ChangeLog style.xml customize.xml LICENSE release/tei-xsl/doc
 	cp teixsl.xml release/tei-xsl/doc/index.xml
 
-doc:
-	-test -d xsltdoc && (cd doc; saxon configdoc.xsl xsltdoc.xsl)
-	xsltproc -o customize.xml param.xsl param.xml
-	xsltproc -o style.xml paramform.xsl param.xml 
+release: doc common p4 p5 p5-2
 
 test: p4 p5 p5-2
 	(cd Test; make )
@@ -98,7 +99,7 @@ installp5: release
 
 installp5-2: release
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
-	(cd release/tei-xsl/p5-2; tar cf - .) | \
+	(cd release/tei-xsl2; tar cf - .) | \
 	(cd ${PREFIX}/share/xml/tei/stylesheet; tar xf -)
 
 installcommon: release

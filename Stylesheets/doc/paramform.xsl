@@ -1,13 +1,11 @@
 <xsl:stylesheet 
-    extension-element-prefixes="exsl" 
     xmlns:xd="http://www.pnp-software.com/XSLTdoc" 
-     exclude-result-prefixes="exsl XSL" 
-     xmlns:exsl="http://exslt.org/common" 
+     exclude-result-prefixes="XSL" 
      xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
      xmlns:XSL="http://www.w3.org/1999/XSL/Transform" 
-     version="1.0">
+     version="2.0">
 
-<xsl:import href="html/tei.xsl"/>
+<xsl:import href="../xhtml2/tei.xsl"/>
 
 <xd:doc type="stylesheet">
     <xd:short>
@@ -47,7 +45,7 @@
     method="xml"/>
 
 <xsl:template name="cgi">
-<exsl:document href="stylebear" method="text" encoding="utf-8">
+<document href="stylebear" method="text" encoding="utf-8">
 <xsl:text>#!/usr/bin/perl&#10;</xsl:text>
 
 <xsl:for-each select="TEI.2/text/body/div[@id]">
@@ -108,7 +106,7 @@ print "&lt;/xsl:stylesheet>\n";
 return "";
 }
 </xsl:text>
-</exsl:document>
+</document>
 </xsl:template>
 
 <xsl:template match="/">

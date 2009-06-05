@@ -5,7 +5,7 @@
     xmlns:XSL="http://www.w3.org/1999/XSL/Transform" 
     xmlns="http://www.tei-c.org/ns/1.0"
     exclude-result-prefixes="tei xd"
-    version="1.0">
+    version="2.0">
 
 <xd:doc type="stylesheet">
     <xd:short>
@@ -39,7 +39,7 @@
 
 <xsl:output indent="yes" encoding="utf-8" omit-xml-declaration="yes"/>
 
-<xsl:include href="common/verbatim.xsl"/>
+<xsl:include href="../common2/verbatim.xsl"/>
 
 <xsl:template match="tei:div">
 <xsl:copy>
@@ -61,7 +61,7 @@
       <xsl:with-param name="Type">common</xsl:with-param>
     </xsl:call-template>
     <xsl:call-template name="listparams">
-      <xsl:with-param name="Type">html</xsl:with-param>
+      <xsl:with-param name="Type">xhtml</xsl:with-param>
     </xsl:call-template>
     <xsl:call-template name="listparams">
       <xsl:with-param name="Type">fo</xsl:with-param>
@@ -78,7 +78,7 @@
       <xsl:with-param name="Type">common</xsl:with-param>
     </xsl:call-template>
     <xsl:call-template name="listtemplates">
-      <xsl:with-param name="Type">html</xsl:with-param>
+      <xsl:with-param name="Type">xhtml</xsl:with-param>
     </xsl:call-template>
     <xsl:call-template name="listtemplates">
       <xsl:with-param name="Type">fo</xsl:with-param>
@@ -94,7 +94,12 @@
 <xsl:template name="listtemplates">
   <xsl:param name="Type"/>
   <xsl:variable name="I" select="@xml:id"/>
-    <xsl:for-each select="document(concat($Type,'/tei-param.xsl'))">
+  <xsl:variable name="Path">
+	<xsl:text>../</xsl:text>
+	<xsl:value-of select="$Type"/>
+	<xsl:text>2</xsl:text>
+	</xsl:variable>
+    <xsl:for-each select="document(concat($Path,'/tei-param.xsl'))">
       <xsl:if test="count(key('XDS',$I))&gt;0">
 	<list type="gloss">
       <xsl:for-each select="key('XDS',$I)">
@@ -146,7 +151,13 @@
 <xsl:template name="listparams">
   <xsl:param name="Type"/>
   <xsl:variable name="I" select="@xml:id"/>
-    <xsl:for-each select="document(concat($Type,'/tei-param.xsl'))">
+  <xsl:variable name="Path">
+	<xsl:text>../</xsl:text>
+	<xsl:value-of select="$Type"/>
+	<xsl:text>2</xsl:text>
+	</xsl:variable>
+
+    <xsl:for-each select="document(concat($Path,'/tei-param.xsl'))">
       <xsl:for-each select="key('XDS',$I)">
 	<xsl:if test="not(following-sibling::xsl:*[1]/self::xsl:template)">
       <row>
