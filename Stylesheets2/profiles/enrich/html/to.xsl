@@ -13,7 +13,7 @@
     <xsl:import href="../../../xhtml2/tei.xsl"/>
     <xsl:import href="../../../common2/msdescription.xsl"/>
 
-    <xsl:param name="cssSecondaryFile">msdescription.css</xsl:param>
+    <xsl:param name="cssSecondaryFile">http://tei.oucs.ox.ac.uk/ENRICH/msdescription.css</xsl:param>
 
     <xsl:template name="msSection">
       <xsl:param name="level"/>
