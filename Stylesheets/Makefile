@@ -9,11 +9,10 @@ default:
 	@echo There is no default action
 	@echo
 
-dist: clean p4 p5 release
+dist: clean p4 p5 p5-1 common release
 	(cd release; 	\
 	ln -s tei-xsl tei-xsl-`cat ../VERSION` ; \
 	zip -r tei-xsl-`cat ../VERSION`.zip tei-xsl-`cat ../VERSION` )
-
 
 
 p4:
@@ -48,11 +47,9 @@ log:
 	cat newchanges oldchanges > ChangeLog
 	rm newchanges oldchanges
 
-release: doc p4 p5
+release: doc p4 p5 p5-2
 	cp i18n.xml release/tei-xsl/p4
-	cp i18n.xml release/tei-xsl/p5
 	cp *.css release/tei-xsl/p4
-	cp *.css release/tei-xsl/p5
 	mkdir -p release/tei-xsl/doc
 	mkdir -p release/tei-xsl/doc/xsltdoc
 	-test -d xsltdoc && cp -r doc/xsltdoc doc/*.png release/tei-xsl/doc
@@ -65,8 +62,9 @@ doc:
 	xsltproc -o customize.xml param.xsl param.xml
 	xsltproc -o style.xml paramform.xsl param.xml 
 
-test: p4 p5
+test: p4 p5 p5-2
 	(cd Test; make )
+	(cd Test2; make )
 
 clean:
 	-rm `find . -name "*~" `
@@ -75,8 +73,9 @@ clean:
 	-rm -rf xhtml
 	-rm -rf doc/xsltdoc
 	(cd Test; make clean)
+	(cd Test2; make clean)
 
-install: installp4 installp5
+install: installp4 installp5 install p5-2
 
 installp4: p4 release
 	mkdir -p ${PREFIX}/share/xml/teip4/stylesheet
