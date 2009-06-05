@@ -1,3 +1,4 @@
+DIRS=odds2 xhtml2 common2 slides2 latex2 fo2 docx profiles tools2
 PREFIX=/usr
 .PHONY: doc release
 
@@ -9,11 +10,17 @@ default:
 	@echo There is no default action
 	@echo
 
-dist: clean p4 p5 p5-1 common release
+dist: clean p4 p5 p5-2 release
 	(cd release; 	\
 	ln -s tei-xsl tei-xsl-`cat ../VERSION` ; \
 	zip -r tei-xsl-`cat ../VERSION`.zip tei-xsl-`cat ../VERSION` )
 
+
+p5-2:
+	-mkdir -p release/tei-xsl2/xml
+	for i in  ${DIRS} ; do \
+	tar cf - --exclude .svn $$i | (cd release/tei-xsl2/xml; tar xf - ); \
+	done
 
 p4:
 	for i in slides fo html common latex ; do \
@@ -75,7 +82,9 @@ clean:
 	(cd Test; make clean)
 	(cd Test2; make clean)
 
-install: installp4 installp5 install p5-2
+install: installp4 installp5 installp5-2 installcommon
+
+installp5-2: p5-2 release
 
 installp4: p4 release
 	mkdir -p ${PREFIX}/share/xml/teip4/stylesheet
@@ -86,6 +95,13 @@ installp5: release
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
 	(cd release/tei-xsl/p5; tar cf - .) | \
 	(cd ${PREFIX}/share/xml/tei/stylesheet; tar xf -)
+
+installp5-2: release
+	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
+	(cd release/tei-xsl/p5-2; tar cf - .) | \
+	(cd ${PREFIX}/share/xml/tei/stylesheet; tar xf -)
+
+installcommon: release
 	mkdir -p ${PREFIX}/share/doc/tei-p5-xsl
 	(cd release/tei-xsl/doc; tar cf - .) | (cd ${PREFIX}/share/doc/tei-p5-xsl; tar xf -)
 	mkdir -p ${PREFIX}/lib/cgi-bin
