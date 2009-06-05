@@ -154,7 +154,7 @@ version="2.0">
 		  </xsl:when>
 		  <xsl:when test="@usage='rwa'">
 		    <xsl:call-template name="i18n">
-		      <xsl:with-param name="word">Required when applicable</xsl:with-param>
+		      <xsl:with-param name="word">Recommended when applicable</xsl:with-param>
 		    </xsl:call-template>
                 </xsl:when>
 		<xsl:otherwise>
