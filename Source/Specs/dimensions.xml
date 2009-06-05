@@ -6,7 +6,10 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="DIMENSIONS" ident="dimensions">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     module="msdescription" xml:id="DIMENSIONS"
+	     ident="dimensions"
+	     xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <gloss xml:lang="fr" version="2009-04-17">dimensions</gloss>
   <desc xml:id="dimensions.desc">contains a dimensional specification.</desc>
   <desc version="2007-12-20" xml:lang="kr">어떤 차원의 명세를 포함한다.</desc>
@@ -25,11 +28,26 @@ $Id$
     <rng:group>
 <!--this group is only needed for DTDs-->
       <rng:zeroOrMore>
-        <rng:ref name="dim"/>
+	<rng:choice>
+	  <rng:ref name="dim"/>
+	  <rng:ref name="model.dimLike"/>
+	</rng:choice>
       </rng:zeroOrMore>
-      <rng:ref name="model.dimLike_sequenceOptional"/>
     </rng:group>
   </content>
+  <constraint scheme="isoschematron" ident="duplicateDim">
+    <data>
+      <sch:assert test="count(tei:width)&gt; 1">
+	Width element may appear once only
+      </sch:assert>
+      <sch:assert test="count(tei:height)&gt; 1">
+	Height element may appear once only
+      </sch:assert>
+      <sch:assert test="count(tei:depth)&gt; 1">
+	Depth element may appear once only
+      </sch:assert>
+    </data>
+  </constraint>
   <attList>
     <attDef ident="type">
       <equiv/>
