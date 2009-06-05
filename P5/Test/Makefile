@@ -3,7 +3,7 @@ INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
 DRIVER=guidelines-${INPUTLANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
-ROMAOPTS=--doclang=${DOCUMENTATIONLANGUAGE} --localsource=../Source/Guidelines/${INPUTLANGUAGE}/${DRIVER}
+ROMAOPTS=--isoschematron --doclang=${DOCUMENTATIONLANGUAGE} --localsource=../Source/Guidelines/${INPUTLANGUAGE}/${DRIVER}
 
 TESTFILESDTD= \
 	testns \
