@@ -1,0 +1,67 @@
+#!/bin/sh
+profile=default
+odd=false
+debug=false
+while test $# -gt 0; do
+  case $1 in
+    --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
+    --odd)       odd=true;;
+    --debug)     debug=true;;
+     *) if test "$1" = "${1#--}" ; then 
+	   break
+	else
+	   echo "WARNING: Unrecognized option '$1' ignored"
+	   echo "For usage syntax issue $0 --help"
+	fi ;;
+  esac
+  shift
+done
+test -f $1 || exit 1
+HERE=`pwd`
+D=`dirname $1`
+F=`basename $1`
+THERE=`(cd $D; pwd)`
+X=`dirname $0`
+APPHOME=`(cd $X; pwd)`
+TEMPDIR=/tmp/docx$$
+TEMPLATES=$APPHOME/profiles/$profile/docx
+XSL=$APPHOME
+mkdir -p $TEMPDIR/word/media
+echo read $THERE/$F
+saxon $THERE/$F $XSL/docx/listgraphics.xsl DIR=$TEMPDIR/word/media > $TEMPDIR/fetch
+sh $TEMPDIR/fetch
+rm $TEMPDIR/fetch
+(cd $TEMPDIR/word/media
+for i in *; do  exiftool -q -o $i.xmp $i; done
+)
+cd $TEMPDIR
+unzip -o -q $TEMPLATES/template.docx
+if $odd
+then
+    saxon -o $TEMPDIR/tmp1.xml $THERE/$F $XSL/odds2/odd2odd.xsl localsource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
+    saxon -o $TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
+    saxon -o $TEMPDIR/tmp3.xml  $TEMPDIR/tmp2.xml $XSL/docx/fixgraphics.xsl DIR=`pwd`/word
+else
+    saxon -o $TEMPDIR/tmp3.xml  $THERE/$F $XSL/docx/fixgraphics.xsl DIR=`pwd`/word
+fi
+saxon -o word/document.xml tmp3.xml $APPHOME/profiles/$profile/docx/to.xsl  \
+    debug=$debug styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR
+if $debug 
+then
+    echo leaving tmp[123].xml alone
+else
+    rm -f tmp3.xml tmp1.xml tmp2.xml
+fi
+rm -f word/media/*.xmp
+test -f newContent_Types.xml && mv newContent_Types.xml \[Content_Types\].xml
+mv docProps/newcore.xml docProps/core.xml 
+rm -f $THERE/$F.docx
+zip -q -r $THERE/$F.docx word _rels docProps customXml \[Content_Types\].xml
+cd $HERE
+if $debug 
+then
+    echo Working files in $TEMPDIR
+else
+    rm -rf $TEMPDIR
+fi
+echo wrote $F.docx in $THERE
