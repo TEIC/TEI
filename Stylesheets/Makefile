@@ -17,7 +17,7 @@ dist: clean p4 p5 p5-2 release
 
 
 p5-2:
-	-mkdir -p release/tei-xsl2/p5-2
+	-mkdir -p release/tei-xsl2
 	for i in  ${DIRS} ; do \
 	tar cf - --exclude .svn $$i | (cd release/tei-xsl2; tar xf - ); \
 	done
