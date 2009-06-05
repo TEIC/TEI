@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="certainty" ident="precision">
+  <desc>indicates the numerical accuracy or precision  associated
+  with some aspect of the text markup. </desc>
+  <classes>
+    <memberOf key="model.global.meta"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore>
+      <rng:ref name="model.glossLike"/>
+    </rng:zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="target" usage="opt">
+      <equiv/>
+      <desc>points at the element or elements the precision of which is being specified.</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref name="data.pointer"/>
+      </datatype>
+      <remarks>
+        <p>If more than one identifier is given, the
+        <gi>precision</gi> element is interpreted as applying to all.</p>
+      </remarks>
+    </attDef>
+
+    <attDef ident="path" usage="opt">
+      <equiv/>
+      <desc>supplies a location path to identify the portions of a
+      document whose precision is being expressed.</desc>
+      <datatype>
+        <rng:text/>
+      </datatype>
+<valDesc>The path should be expressed using the syntax defined by
+XPath2 (<ptr target="#XPATH2"/>). </valDesc>
+      <remarks>
+        <p>The path specified is interpreted relative to the location
+	specified by the value of the <att>target</att> attribute. If
+	no value is given for <att>target</att>, the context within
+	which the path is evaluated should be the document root.</p>
+      </remarks>
+    </attDef>
+
+    <attDef ident="stdDeviation" usage="opt">
+      <equiv/>
+      <desc>supplies a standard deviation associated with the value in
+      question</desc>
+      <datatype>
+        <rng:ref name="data.numeric"/>
+      </datatype>
+    </attDef>
+  </attList>
+
+</elementSpec>
