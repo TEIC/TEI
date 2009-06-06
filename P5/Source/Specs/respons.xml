@@ -56,6 +56,32 @@ assigned.</desc>
       <valDesc>one or more valid
 identifiers, separated by whitespace.</valDesc>
     </attDef>
+
+
+    <attDef ident="pattern" usage="opt">
+      <equiv/>
+      <desc>supplies an XSLT 2.0 pattern which may be used to select
+      those portions of the
+      document responsibility for which is to be specified.</desc>
+      <datatype>
+        <rng:text/>
+      </datatype>
+<valDesc>The pattern should be expressed using the pattern syntax
+defined in <ptr target="#XSLT2"/>. </valDesc>
+      <remarks>
+        <p>The context for the pattern is the nodeset identified by
+        the value of the <att>target</att> attribute. If no value is
+        given for <att>target</att>, the context is the document
+        root.</p>
+<p>Note that the value of the <att>target</att> attribute may include
+an Xpointer expression which may include an Xpath expression (see <ptr
+target="#SATS"/>). Either method may be used to identify the parts of
+a document responsibility for which is to be documented by this element.</p>
+      </remarks>
+    </attDef>
+
+
+
     <attDef ident="locus" usage="req">
       <equiv/>
       <desc>indicates the specific aspect of the markup for which
@@ -72,125 +98,32 @@ responsibility is being assigned.</desc>
       <datatype minOccurs="1" maxOccurs="unbounded">
         <rng:ref name="data.enumerated"/>
       </datatype>
-      <valList type="semi">
-        <valItem ident="gi">
-          <gloss>element name</gloss>
-          <gloss version="2007-12-20" xml:lang="kr">요소명</gloss>
-          <gloss version="2007-06-12" xml:lang="fr">Responsabilité de l'assertion selon laquelle
-              l'information encodée est du type indiqué par le balisage.</gloss>
-          <gloss version="2007-11-06" xml:lang="it">nome di elemento</gloss>
-          <gloss version="2007-05-04" xml:lang="es">responsabilidad por la necesidad que un elemento sea del tipo indicado por el marcaje</gloss>
-          <desc>responsibility for the claim that the element is of the
-type indicated by the markup</desc>
-          <desc version="2007-12-20" xml:lang="kr">요소가 마크업으로 표시된 유형에 속한다는 주장에 대한 책임성</desc>
-          <desc version="2007-05-02" xml:lang="zh-tw">負責聲明元素屬於標記所指示的類型</desc>
-          <desc version="2008-04-06" xml:lang="es">la responsabilidad para la declaración que el elemento es del tipo indicado en la codificación</desc>
-          <desc version="2008-04-05" xml:lang="ja">
-          責任は，当該マークアップによる示された属性の種類にある．
-          </desc>
-          <desc version="2008-03-30" xml:lang="fr">responsabilité de l'assertion pour que
-l'élément soit du type indiqué par le balisage.</desc>
-          <desc version="2007-01-21" xml:lang="it">responsabilità per l'affermazione che un elemento sia del tipo indicato dalla codifica</desc>
+
+      <valList type="closed">
+        <valItem ident="name">
+          <desc>responsibility is being assigned concerning the name of the element
+	  or attribute used.</desc>
+        </valItem>
+        <valItem ident="start">
+          <desc>responsibility is being assigned concerning the start of the element
+	  concerned.</desc>
+        </valItem>
+        <valItem ident="end">
+          <desc>responsibility is being assigned concerning the end of the element
+	  concerned.</desc>
         </valItem>
         <valItem ident="location">
           <equiv/>
-          <desc>responsibility for the claim that the element
-begins and ends where indicated</desc>
-          <desc version="2007-12-20" xml:lang="kr">요소가 표시된 위치에서 시작하고 종료한다는 주장에 대한 책임성</desc>
-          <desc version="2007-05-02" xml:lang="zh-tw">負責聲明元素依照所指示的位置開始與結束</desc>
-          <desc version="2008-04-06" xml:lang="es">responsabilidad de la declaración que el elemento comienza y termina donde indicado</desc>
-          <desc version="2008-04-05" xml:lang="ja">
-          責任は，当該要素の始点や終点にある．
-          </desc>
-          <desc version="2008-03-30" xml:lang="fr">responsabilité de l'assertion pour que
-l'élément commence et se termine à l'endroit indiqué.</desc>
-          <desc version="2007-01-21" xml:lang="it">responsabilità per l'affermazione che un elemento inizi e finisca dove indicato</desc>
-        </valItem>
-        <valItem ident="startLoc">
-          <gloss>start location</gloss>
-          <gloss version="2007-12-20" xml:lang="kr">시작 위치</gloss>
-          <gloss version="2008-04-06" xml:lang="es">inicio de la localización</gloss>
-          <gloss version="2008-03-30" xml:lang="fr">emplacement de début</gloss>
-          <gloss version="2007-11-06" xml:lang="it">posizione iniziale</gloss>
-          <desc>responsibility for the claim that the element begins
-          where indicated</desc>
-          <desc version="2007-12-20" xml:lang="kr">요소가 표시된 위치에서 시작한다는 주장에 대한 책임성</desc>
-          <desc version="2008-04-06" xml:lang="es">responsabilidad de la demanda que el elemento comienza donde indicado</desc>
-          <desc version="2008-04-05" xml:lang="ja">
-         責任は，当該要素の始点にある．
-         </desc>
-          <desc version="2008-03-30" xml:lang="fr">responsabilité de l'assertion pour que
-l'élément commence à l'endroit indiqué.</desc>
-          <desc version="2007-11-06" xml:lang="it">responsabilità per l'asserzione dell'inizio dell'elemento nel punto indicato</desc>
-        </valItem>
-        <valItem ident="endLoc">
-          <gloss>end location</gloss>
-          <gloss version="2007-12-20" xml:lang="kr">종료 위치</gloss>
-          <gloss version="2008-04-06" xml:lang="es">final de la localización</gloss>
-          <gloss version="2008-03-30" xml:lang="fr">emplacement de fin</gloss>
-          <gloss version="2007-11-06" xml:lang="it">posizione finale</gloss>
-          <desc>responsibility for the claim that the element ends
-          where indicated</desc>
-          <desc version="2007-12-20" xml:lang="kr">요소가 표시된 위치에서 종료한다는 주장에 대한 책임성</desc>
-          <desc version="2008-04-06" xml:lang="es">responsabilidad de la declaración de que los extremos del elemento se situan donde indicado</desc>
-          <desc version="2008-04-05" xml:lang="ja">
-          責任は，当該要素の終点にある．
-          </desc>
-          <desc version="2008-03-30" xml:lang="fr">responsabilité de l'assertion pour que
-l'élément se termine à l'endroit indiqué.</desc>
-          <desc version="2007-11-06" xml:lang="it">responsabilità per l'asserzione della fine dell'elemento nel punto indicato</desc>
-        </valItem>
-        <valItem ident="attrName">
-          <gloss>attribute name</gloss>
-          <gloss version="2007-12-20" xml:lang="kr">속성명</gloss>
-          <gloss version="2007-06-12" xml:lang="fr">Responsabilité de l'assertion selon laquelle
-              le nom de l'attribut utilisé correspond bien à l'information que l'on veut
-            donner</gloss>
-          <gloss version="2007-11-06" xml:lang="it">nome di attributo</gloss>
-          <gloss version="2007-05-04" xml:lang="es">responsabilidad por la necesidad que el nombre del atributo tenga el valor dado en el marcaje.</gloss>
-          <desc>responsibility for the claim that the
-name attribute has the value given in the markup</desc>
-          <desc version="2007-12-20" xml:lang="kr">속성명이 마크업에서 주어진 값을 갖는다는 주장에 대한 책임성</desc>
-          <desc version="2007-05-02" xml:lang="zh-tw">負責聲明名稱屬性擁有標記中提供的屬性值</desc>
-          <desc version="2008-04-06" xml:lang="es">responsabilidad de la declaración que el atributo referido tiene el valor dado en la codificación</desc>
-          <desc version="2008-04-05" xml:lang="ja">
-          責任は，当該マークアップにある属性名にある．
-          </desc>
-          <desc version="2008-03-30" xml:lang="fr">responsabilité de l'assertion pour que
-l'attribut name ait la valeur indiquée dans le balisage.</desc>
-          <desc version="2007-11-06" xml:lang="it">responsabilità per l'asserzione del valore del nome di attributo come stabilito dall'annotazione</desc>
-        </valItem>
-        <valItem ident="transcribedContent">
-          <equiv/>
-          <desc>responsibility for the transcription of
-the element content</desc>
-          <desc version="2007-12-20" xml:lang="kr">요소 내용의 전사에 대한 책임성</desc>
-          <desc version="2007-05-02" xml:lang="zh-tw">負責元素內容的轉錄</desc>
-          <desc version="2008-04-06" xml:lang="es">responsabilidad de la transcripción del contenido del elemento</desc>
-          <desc version="2008-04-05" xml:lang="ja">
-          責任は，当該要素の，転記された内容にある．
-          </desc>
-          <desc version="2008-03-30" xml:lang="fr">responsabilité de la transcription du
-contenu de l'élément.</desc>
-          <desc version="2007-01-21" xml:lang="it">responsabilità per la trascrizione del contenuto dell'elemento</desc>
-        </valItem>
-        <valItem ident="suppliedContent">
-          <equiv/>
-          <desc>responsibility for the contents supplied by
-the encoder (corrections, expansions of abbreviations, etc.)</desc>
-          <desc version="2007-12-20" xml:lang="kr">부호화 작업자로부터 제공되는 내용(약어의 수정 및 확장 등)의 확실성에 대한 책임성.</desc>
-          <desc version="2007-05-02" xml:lang="zh-tw">負責標記者所提供的內容 (更正、縮寫還原等。) </desc>
-          <desc version="2008-04-06" xml:lang="es">responsabilidad para el contenido proporcionado por el codificador (correcciones, expansión de las abreviaturas, etc.)</desc>
-          <desc version="2008-04-05" xml:lang="ja">
-          責任は，符号化する人が付加した内容(校正，略語の展開など)にあ
-          る．
-          </desc>
-          <desc version="2008-03-30" xml:lang="fr">responsabilité des contenus fournis
-par l'encodeur (corrections, développements d'abréviations, etc.)</desc>
-          <desc version="2007-01-21" xml:lang="it">responsabilità per i contenuti inseriti dal codificatore (correzioni, espansione di abbreviazioni, ecc.)</desc>
+          <desc>responsibility is being assigned concerning the location of the element
+	  concerned.</desc>
+	</valItem>
+        <valItem ident="value">
+	  <desc>responsibility is being assigned concerning the content (for an element) or
+	  the value (for an attribute)</desc>
         </valItem>
       </valList>
     </attDef>
+
     <attDef ident="resp" usage="req">
       <gloss>responsible party</gloss>
       <gloss version="2007-12-20" xml:lang="kr">책임 당사자</gloss>
@@ -219,8 +152,8 @@ aspect of the electronic text.</desc>
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <respons target="#p1" locus="gi location" resp="#encoder1"/>
-      <respons target="#p2" locus="rend" resp="#encoder2"/>
+      <respons target="#p1" locus="name location" resp="#encoder1"/>
+      <respons target="#p2" pattern="@rend" resp="#encoder2"/>
       <list type="encoders">
         <item xml:id="encoder1"/>
         <item xml:id="encoder2"/>
@@ -229,8 +162,8 @@ aspect of the electronic text.</desc>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <respons target="#zh-tw_p1" locus="gi location" resp="#zh-tw_encoder1"/>
-      <respons target="#zh-tw_p2" locus="rend" resp="#zh-tw_encoder2"/>
+      <respons target="#zh-tw_p1" locus="name location" resp="#zh-tw_encoder1"/>
+      <respons target="#zh-tw_p2" pattern="@rend" resp="#zh-tw_encoder2"/>
       <list type="編碼員">
         <item xml:id="zh-tw_編碼員1"/>
         <item xml:id="zh-tw_編碼員2"/>

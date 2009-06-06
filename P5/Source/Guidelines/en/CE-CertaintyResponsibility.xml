@@ -384,20 +384,21 @@ proper noun.  Where such fine-grained attribution of responsibility is
 required, the <gi>respons</gi> element can be used:
 <specList><specDesc key="respons"/></specList></p>
 <p>This element allows one or more aspects of the markup to be
-attributed to a given individual.  The <att>target</att> and
+attributed to a given individual.  The <att>target</att>, <att>pattern</att>, and
 <att>locus</att> attributes function as they do on the
 <gi>certainty</gi> element described in section <ptr target="#CECERT"/>:
 the <att>target</att> attribute points at a particular element (or
-set of elements), and <att>locus</att> indicates the particular aspect
+set of elements), the <att>pattern</att> attribute specifies a subset,
+and the <att>locus</att> attribute indicates the particular aspect
 of the encoding of those elements for which responsibility is to be
 assigned.  The suggested values may be combined as appropriate. For example,  to
 indicate that RC is responsible for transcribing an
 illegible word, and that PMWR is responsible for identifying that word
 as a proper noun, the text might be encoded thus:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Earnest went to old <persName xml:id="CE-p5">Saybrook</persName>.
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Ernest went to old <persName xml:id="CE-p5">Saybrook</persName>.
 <!-- ... -->
-<respons target="#CE-p5" locus="transcribedContent" resp="#RC"/>
-<respons target="#CE-p5" locus="gi location" resp="#PMWR"/>
+<respons target="#CE-p5" locus="value" resp="#RC"/>
+<respons target="#CE-p5" locus="name location" resp="#PMWR"/>
 <list type="encoders">
 <item xml:id="PMWR"/>
 <item xml:id="RC"/>
@@ -409,19 +410,7 @@ aspects of responsibility common to all text transcription and
 markup, and should not be confused with the more specific attributes on
 individual elements.</p>
 <specGrp xml:id="DCERESP" n="Responsibility for markup">
-
-
-
-
-
-
-
 &respons;
-
-
-
-
-
 </specGrp></div>
 
 <div><head>The Certainty Module</head>
