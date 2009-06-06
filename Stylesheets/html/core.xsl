@@ -187,21 +187,7 @@
     <xsl:choose>
       <xsl:when test="@rend='display'">
         <blockquote>
-	  <xsl:choose>
-	    <xsl:when test="@rend">
-	      <xsl:attribute name="class">
-		<xsl:value-of select="@rend"/>
-	      </xsl:attribute>
-	    </xsl:when>
-	    <xsl:when test="@rendition">
-	      <xsl:call-template name="applyRendition"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:attribute name="class">
-		<xsl:text>cit</xsl:text>
-	      </xsl:attribute>
-	    </xsl:otherwise>
-	  </xsl:choose>
+	  <xsl:call-template name="generateClass"/>
           <p>
             <xsl:apply-templates select="tei:q|tei:quote"/>
             <xsl:apply-templates select="tei:bibl"/>
@@ -628,7 +614,8 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:l">
-    <div class="l">
+    <div>
+      <xsl:call-template name="generateClass"/>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
@@ -637,7 +624,8 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:lg">
-    <div class="lg">
+    <div>
+      <xsl:call-template name="generateClass"/>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
@@ -664,10 +652,20 @@
           <xsl:when test="@rend='indent'">
             <xsl:text>indent1</xsl:text>
           </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>l</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
+	  <xsl:when test="@rend">
+	    <xsl:attribute name="class">
+	      <xsl:value-of select="@rend"/>
+	    </xsl:attribute>
+	  </xsl:when>
+	  <xsl:when test="@rendition">
+	    <xsl:call-template name="applyRendition"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:attribute name="class">
+	      <xsl:text>l</xsl:text>
+	    </xsl:attribute>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:attribute>
       <xsl:apply-templates/>
     </div>
@@ -931,21 +929,7 @@
 	  <xsl:with-param name="name" select="$identifier"/>
 	</xsl:call-template>
         <blockquote>
-	  <xsl:choose>
-	    <xsl:when test="@rend">
-	      <xsl:attribute name="class">		
-		<xsl:value-of select="@rend"/>
-	      </xsl:attribute>
-	    </xsl:when>
-	    <xsl:when test="@rendition">
-	      <xsl:call-template name="applyRendition"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:attribute name="class">
-	      <xsl:text>note</xsl:text>
-	      </xsl:attribute>
-	    </xsl:otherwise>
-	  </xsl:choose>
+	  <xsl:call-template name="generateClass"/>
 	  <p>
             <xsl:apply-templates/>
           </p>
@@ -1137,21 +1121,7 @@
     <xsl:choose>
       <xsl:when test="tei:p|tei:l">
         <blockquote>
-	  <xsl:choose>
-	    <xsl:when test="@rend">
-	      <xsl:attribute name="class">
-		<xsl:value-of select="@rend"/>
-	      </xsl:attribute>
-	    </xsl:when>
-	    <xsl:when test="@rendition">
-	      <xsl:call-template name="applyRendition"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:attribute name="class">
-		<xsl:text>q</xsl:text>
-	      </xsl:attribute>
-	    </xsl:otherwise>
-	  </xsl:choose>
+	  <xsl:call-template name="generateClass"/>
           <xsl:apply-templates/>
         </blockquote>
       </xsl:when>
@@ -1177,21 +1147,7 @@
   </xd:doc>
   <xsl:template match="tei:q[@rend='display']">
     <blockquote>
-	  <xsl:choose>
-	    <xsl:when test="@rend">
-	      <xsl:attribute name="class">
-		<xsl:value-of select="@rend"/>
-	      </xsl:attribute>
-	    </xsl:when>
-	    <xsl:when test="@rendition">
-	      <xsl:call-template name="applyRendition"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:attribute name="class">
-		<xsl:text>q</xsl:text>
-	      </xsl:attribute>
-	    </xsl:otherwise>
-	  </xsl:choose>
+      <xsl:call-template name="generateClass"/>
       <xsl:choose>
         <xsl:when test="tei:p">
           <xsl:apply-templates/>
@@ -1246,22 +1202,7 @@
       </xsl:when>
       <xsl:otherwise>
         <blockquote>
-	  <xsl:choose>
-	    <xsl:when test="@rend">
-	      <xsl:attribute name="class">
-		<xsl:value-of select="@rend"/>
-	      </xsl:attribute>
-	    </xsl:when>
-	    <xsl:when test="@rendition">
-	      <xsl:call-template name="applyRendition"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:attribute name="class">
-		<xsl:text>quote</xsl:text>
-	      </xsl:attribute>
-	    </xsl:otherwise>
-	  </xsl:choose>
-
+	  <xsl:call-template name="generateClass"/>
           <xsl:choose>
             <xsl:when test="tei:p">
               <xsl:apply-templates/>
@@ -2277,5 +2218,22 @@
   </xsl:template>
 
 
+  <xsl:template name="generateClass">
+    <xsl:choose>
+      <xsl:when test="@rend">
+	<xsl:attribute name="class">
+	  <xsl:value-of select="@rend"/>
+	</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="@rendition">
+	<xsl:call-template name="applyRendition"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:attribute name="class">
+	  <xsl:value-of select="local-name()"/>
+	</xsl:attribute>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
 </xsl:stylesheet>
