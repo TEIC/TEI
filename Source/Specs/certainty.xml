@@ -29,7 +29,7 @@ $Id$
   <attList>
     <attDef ident="target" usage="req">
       <equiv/>
-      <desc>points at the elements whose markup is
+      <desc>points at the element or elements whose markup is
       uncertain.</desc>
       <desc version="2007-12-20" xml:lang="kr">불확실한 마크업의 요소를 지시한다.</desc>
       <desc version="2007-05-02" xml:lang="zh-tw">指出不確定標記的元素。</desc>
@@ -51,19 +51,11 @@ $Id$
       </exemplum>
       <remarks>
         <p>If more than one identifier is given, the
-        <gi>certainty</gi> element is interpreted as applying to all.
-        If no identifier is present on the element being annotated,
-        the attribute should give the identifier of a <gi>ptr</gi>
-        element which points at the element being annotated; for
-        further discussion of this indirect pointing mechanism, see
-        chapter <ptr target="#SA"/>.</p>
+        <gi>certainty</gi> element is interpreted as applying to all.</p>
       </remarks>
       <remarks xml:lang="fr">
         <p>Si plusieurs identifiants sont fournis, l'élément <gi>certainty</gi> est
-                        considéré comme s'appliquant à tous. S'il n'y a pas d'identifiant présent
-                        sur l'élément annoté, l'attribut doit donner l'identifiant d'un élément
-                            <gi>ptr</gi> pointant vers l'élément annoté ; pour plus de détails sur
-          ce mécanisme de pointage indirect, voir le chapitre <ptr target="#SA"/>.</p>
+                        considéré comme s'appliquant à tous. </p>
       </remarks>
       <remarks xml:lang="ja">
         <p>
@@ -77,9 +69,11 @@ $Id$
     </attDef>
     <attDef ident="locus" usage="req">
       <equiv/>
-      <desc>indicates the precise location of the uncertainty in the
-	markup: applicability of the element, precise position of the
-	start- or end-tag, value of a specific attribute,
+      <desc>indicates more exactly the aspect concerning which
+      uncertainty is being expressed: for example, whether the markup
+      is correctly located, whether the right element or attribute
+      name has been used, whether the content of the element or
+      attribute is correct,
 	etc.</desc>
       <desc version="2007-12-20" xml:lang="kr">요소의 적용가능성, 시작 및 종료 태그의 정확한 위치, 명시적 속성 값 등과 같이 마크업에서 불확실성을 유발하는 정확한 위치를 가리킨다.</desc>
       <desc version="2007-05-02" xml:lang="zh-tw">指出不確定標記的確切位置：元素的應用性、開始標籤或結束標籤的確切位置、特定屬性的屬性值等。</desc>
@@ -95,16 +89,10 @@ $Id$
       <datatype>
         <rng:ref name="data.enumerated"/>
       </datatype>
-      <valList type="semi">
-        <valItem ident="gi">
-          <gloss>element name</gloss>
-          <gloss version="2007-12-20" xml:lang="kr">요소명</gloss>
-          <gloss version="2009-01-06" xml:lang="fr">Il n'est pas certain que l'élément utilisé
-              s'applique vraiment au passage</gloss>
-          <gloss version="2007-11-06" xml:lang="it">nome di elemento</gloss>
-          <gloss version="2007-05-04" xml:lang="es">es incierto si el elemento usado realmente se aplica al pasaje...</gloss>
-          <desc>uncertain whether the element used actually applies
-	    to the passage.</desc>
+      <valList type="closed">
+        <valItem ident="name">
+          <desc>uncertainty concerns whether the name of the element
+	  or attribute  used is correctly applied.</desc>
           <desc version="2007-12-20" xml:lang="kr">사용된 요소를 단락에 실제로 적용할 수 있을지가 불확실할 때</desc>
           <desc version="2007-05-02" xml:lang="zh-tw">不確定所使用的元素是否適用在該段落。</desc>
           <desc version="2008-04-06" xml:lang="es">se desconoce si el elemento usado se aplica realmente al pasaje.</desc>
@@ -115,42 +103,19 @@ $Id$
 utilisé s'applique réellement au passage.</desc>
           <desc version="2007-01-21" xml:lang="it">è incerto se l'elemento usato sia applicabile al brano in questione</desc>
         </valItem>
-        <valItem ident="startLoc">
-          <gloss>start location</gloss>
-          <gloss version="2007-12-20" xml:lang="kr">시작 위치</gloss>
-          <gloss version="2008-04-06" xml:lang="es">inicio de la localización</gloss>
-          <gloss version="2008-03-30" xml:lang="fr">Emplacement de début </gloss>
-          <gloss version="2007-11-06" xml:lang="it">posizione iniziale</gloss>
-          <desc>start-tag may not be correctly located.</desc>
-          <desc version="2007-12-20" xml:lang="kr">시작 태그의 위치가 정확하지 않을 수 있다.</desc>
-          <desc version="2008-04-06" xml:lang="es">la etiqueta-inicio no puede ser localizada correctamente.</desc>
-          <desc version="2008-04-05" xml:lang="ja">
-	  開始タグに対する不確かさ．
-	  </desc>
-          <desc version="2008-03-30" xml:lang="fr">la marque de début n'est peut-être pas
-correctement placée.</desc>
-          <desc version="2007-11-06" xml:lang="it">il marcatore iniziale potrebbe non essere posizionato correttamente</desc>
+        <valItem ident="start">
+          <desc>uncertainty concerns whether the start of the element
+	  is correctly identified.</desc>
         </valItem>
-        <valItem ident="endLoc">
-          <gloss>end location</gloss>
-          <gloss version="2007-12-20" xml:lang="kr">종료 위치</gloss>
-          <gloss version="2008-04-06" xml:lang="es">final de la localización</gloss>
-          <gloss version="2008-03-30" xml:lang="fr">emplacement de fin</gloss>
-          <gloss version="2007-11-06" xml:lang="it">posizione finale</gloss>
+        <valItem ident="end">
+          <gloss>uncertainty concerns whether the end of the element
+	  is correctly identified.</gloss>
           <desc>end-tag may not be correctly located.</desc>
-          <desc version="2007-12-20" xml:lang="kr">종료 태그의 위치가 정확하지 않을 수 있다.</desc>
-          <desc version="2008-04-06" xml:lang="es">la etiqueta-fin no puede ser localizada correctamente.</desc>
-          <desc version="2008-04-05" xml:lang="ja">
-	  終了タグに対する不確かさ．
-	  </desc>
-          <desc version="2008-03-30" xml:lang="fr">la marque de fin n'est peut-être pas
-correctement placée.</desc>
-          <desc version="2007-11-06" xml:lang="it">il marcatore finale potrebbe non essere posizionato correttamente</desc>
         </valItem>
         <valItem ident="location">
           <equiv/>
-          <desc>both the start-tag and the end-tag may not be
-	    correctly located.</desc>
+          <desc>uncertainty concerns both the start and the end of the
+	  element.</desc>
           <desc version="2007-12-20" xml:lang="kr">시작 및 종료 태그 위치가 모두 정확하지 않을 수 있다.</desc>
           <desc version="2007-05-02" xml:lang="zh-tw">起始標籤與結束標籤也許都被錯置。</desc>
           <desc version="2008-04-06" xml:lang="es">la etiqueta-inicio y la etiqueta-fin no pueden ser localizadas correctamente.</desc>
@@ -161,72 +126,11 @@ correctement placée.</desc>
 peut-être pas correctement placées.</desc>
           <desc version="2007-01-21" xml:lang="it">sia il marcatore iniziale che quello finale potrebbero non essere posizionati correttamente</desc>
         </valItem>
-        <valItem ident="attrName">
-          <gloss>attribute name</gloss>
-          <gloss version="2007-12-20" xml:lang="kr">속성명</gloss>
-          <gloss version="2009-01-06" xml:lang="fr">nom de
-            l'attribut.</gloss>
-          <gloss version="2007-11-06" xml:lang="it">nome di attributo</gloss>
-          <gloss version="2007-05-04" xml:lang="es">el valor dado para el nombre del atributo es incierto.</gloss>
-          <desc>the value given for the attribute name is
-	    uncertain.</desc>
-          <desc version="2007-12-20" xml:lang="kr">속성명에 대한 값이 불확실하다.</desc>
-          <desc version="2007-05-02" xml:lang="zh-tw">不確定該屬性名稱所使用的屬性值。</desc>
-          <desc version="2008-04-06" xml:lang="es">se desconoce el valor dado para el atributo citado.</desc>
-          <desc version="2008-04-05" xml:lang="ja">
-	   当該属性の値に対する不確かさ．
-	  </desc>
-          <desc version="2008-03-30" xml:lang="fr">la valeur donnée pour l'attribut n'est
-pas sûre.</desc>
-          <desc version="2007-11-06" xml:lang="it">il valore assegnato al nome di attributo è incerto</desc>
-        </valItem>
-        <valItem ident="transcribedContent">
-          <equiv/>
-          <desc>the content of the element may not be a correct
-	    transcription of the source text.</desc>
-          <desc version="2007-12-20" xml:lang="kr">요소의 내용이 원본 텍스트의 올바른 전사가 아닐 수 있다.</desc>
-          <desc version="2007-05-02" xml:lang="zh-tw">轉錄在元素裡的內容也許和來源文本不相符合。</desc>
-          <desc version="2008-04-06" xml:lang="es">el contenido del elemento puede no ser una transcripción correcta del texto original.</desc>
-          <desc version="2008-04-05" xml:lang="ja">
-	  当該要素の内容は，元テキストからの正しい転記ではないかもしれ
-	  ない．
-	  </desc>
-          <desc version="2008-03-30" xml:lang="fr">le contenu de l'élément n'est
-peut-être pas une transcription correcte du texte source.</desc>
-          <desc version="2007-01-21" xml:lang="it">il contenuto dell'elemento potrebbe non essere una trascrizione corretta del testo originario</desc>
-        </valItem>
-        <valItem ident="suppliedContent">
-          <equiv/>
-          <desc>the content of the element may not have been
-	    correctly supplied by the reader, e.g. as in the cases of
-	    corr and abbrev elements.</desc>
-          <desc version="2007-12-20" xml:lang="kr">corr와 abbrev 요소의 경우에서처럼 요소의 내용이 정확하게 전달되지 않을 수 있다.</desc>
-          <desc version="2007-05-02" xml:lang="zh-tw">標記者所提供的元素內容也許有誤，例如在元素<gi>corr</gi>和元素<gi>abbrev</gi>出現的情況。</desc>
-          <desc version="2008-04-06" xml:lang="es">el contenido del elemento pudo no haber sido proporcionado correctamente por el lector, p.ej. como cuando se trata de los elementos corr y  abbrev.</desc>
-          <desc version="2008-04-05" xml:lang="ja">
-	  当該要素の内容は，利用者から正しく付与されていないかもしれな
-	  い．例えば，要素corrやabbrevが付与されている場合．
-	  </desc>
-          <desc version="2008-03-30" xml:lang="fr">le contenu de l'élément n'a peut-être
-pas été fourni correctement par le lecteur, comme par exemple dans le
-cas des éléments corr et abbrev.</desc>
-          <desc version="2007-01-21" xml:lang="it">il contenuto dell'elemento potrebbe non essere stato indicato dal lettore, ad esempio con gli elementi corr e abbrev</desc>
+        <valItem ident="value">
+	  <desc>uncertainty concerns the content (for an element) or
+	  the value (for an attribute)</desc>
         </valItem>
       </valList>
-      <remarks>
-        <p>If the name of an attribute is supplied, it must be
-	  prefixed by <code>att.</code>.</p>
-      </remarks>
-      <remarks xml:lang="fr">
-        <p>Si le nom d'un attribut est donné, il doit être préfixé par
-                        <code>att.</code>.</p>
-      </remarks>
-      <remarks xml:lang="ja">
-        <p>
-	当該属性が付与される場合，名前には必ず接頭辞<code>att.</code>
-	が付く．
-	</p>
-      </remarks>
     </attDef>
     <attDef ident="assertedValue" usage="rec">
       <equiv/>
@@ -306,28 +210,6 @@ element.</p>
 	</p>
       </remarks>
     </attDef>
-<!--    <attDef ident="desc" usage="rec">
-	<equiv/>
-	<desc>further describes the uncertainty in prose, perhaps
-indicating its nature, cause, or the justification for the
-degree of confidence asserted.</desc>
-      <datatype><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/></datatype>
-      <valDesc>a prose description of how and why the markup is
-uncertain.</valDesc>
-      <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
- <certainty target="#ESX" locus="gi" degree="0.2"
-  desc="Time of writing indicates the Earl rather than the town" /></egXML>
-      </exemplum>
-      <remarks>
-        <p>In a given project, it may be possible to enumerate
-a finite list of recognized types and causes of uncertainty; in
-such cases, it will be useful to control the vocabulary used in
-this attribute, to aid later mechanical manipulation.  It is
-not possible to suggest such a controlled vocabulary for
-general use.</p>
-      </remarks>
-    </attDef> -->
     <attDef ident="given" usage="rec">
       <equiv/>
       <desc>indicates conditions assumed in the assignment of a degree
@@ -381,32 +263,38 @@ ambiguity-free system for indicating certainty.</p>
       </remarks>
       <remarks xml:lang="fr">
         <p> Un projet peut souhaiter utiliser un vocabulaire contrôlé pour cet attribut.</p>
-        <p>La valeur typique à laquelle on pense pour cet attribut serait l'identifiant
-                        d'un autre élément <gi>certainty</gi> ou une liste comportant de tels
-                        identifiants. Il serait ainsi possible de construire des réseaux de
-                        probabilité en chaînant ensemble des éléments <gi>certainty</gi>. Ces
-                        réseaux seraient en définitive fondés sur des éléments <gi>certainty</gi>
-                        inconditionnels (sans attribut <att>given</att>). La sémantique de ce
-                        chaînage est à comprendre ainsi : si un élément <gi>certainty</gi> est
-                        spécifié comme postulat au moyen d'une référence (présence d'un attribut
-                            <att>given</att>), alors l'assertion même constitue le postulat, et non
-                        pas l'attribution d'un caractère d'incertitude. Ainsi, dans l'exemple
-                        ci-dessus, le premier élément <gi>certainty</gi> formule l'hypothèse que le
-                        nouveau scripteur est <mentioned>msm</mentioned>. Le second indique le degré
-                        de confiance dans le fait que <mentioned>Essex</mentioned> est un nom de
-                        personne, étant donné que le nouveau scripteur est
-                        <mentioned>msm</mentioned>. Notons que le postulat dans le deuxième élément
-                            <gi>certainty</gi> n'est pas que le degré de probabilité que msm soit le
-                        nouveau scripteur est de 0.6, mais simplement que msm est le nouveau
-                        scripteur ; il est recommandé d'utiliser cette convention pour faciliter la
-                        construction de réseaux.</p>
-        <p>Les encodeurs ambitieux peuvent souhaiter construire des réseaux ou des
-                        assertions de probabilité complexes, en faisant référence à d'autres
-                        éléments ou à des assertions en texte libre, et en établissant des relations
-                        entre structures de traits, telles que <gi>alt</gi>, <gi>join</gi> et
-                            <gi>note</gi>. Toutefois nous ne pensons pas que l'élément
-                        <gi>certainty</gi> procure actuellement un système complet et sans ambiguïté
-                        pour indiquer le degré de certitude.</p>
+        <p>La valeur typique à laquelle on pense pour cet attribut
+        serait l'identifiant d'un autre élément <gi>certainty</gi> ou
+        une liste comportant de tels identifiants. Il serait ainsi
+        possible de construire des réseaux de probabilité en chaînant
+        ensemble des éléments <gi>certainty</gi>. Ces réseaux seraient
+        en définitive fondés sur des éléments <gi>certainty</gi>
+        inconditionnels (sans attribut <att>given</att>). La
+        sémantique de ce chaînage est à comprendre ainsi : si un
+        élément <gi>certainty</gi> est spécifié comme postulat au
+        moyen d'une référence (présence d'un attribut
+        <att>given</att>), alors l'assertion même constitue le
+        postulat, et non pas l'attribution d'un caractère
+        d'incertitude. Ainsi, dans l'exemple ci-dessus, le premier
+        élément <gi>certainty</gi> formule l'hypothèse que le nouveau
+        scripteur est <mentioned>msm</mentioned>. Le second indique le
+        degré de confiance dans le fait que
+        <mentioned>Essex</mentioned> est un nom de personne, étant
+        donné que le nouveau scripteur est
+        <mentioned>msm</mentioned>. Notons que le postulat dans le
+        deuxième élément <gi>certainty</gi> n'est pas que le degré de
+        probabilité que msm soit le nouveau scripteur est de 0.6, mais
+        simplement que msm est le nouveau scripteur ; il est
+        recommandé d'utiliser cette convention pour faciliter la
+        construction de réseaux.</p>
+        <p>Les encodeurs ambitieux peuvent souhaiter construire des
+        réseaux ou des assertions de probabilité complexes, en faisant
+        référence à d'autres éléments ou à des assertions en texte
+        libre, et en établissant des relations entre structures de
+        traits, telles que <gi>alt</gi>, <gi>join</gi> et
+        <gi>note</gi>. Toutefois nous ne pensons pas que l'élément
+        <gi>certainty</gi> procure actuellement un système complet et
+        sans ambiguïté pour indiquer le degré de certitude.</p>
       </remarks>
       <remarks xml:lang="ja">
         <p>
