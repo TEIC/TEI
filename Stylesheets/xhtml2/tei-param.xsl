@@ -589,7 +589,7 @@ pages or server requests.
   <xd:doc type="boolean" class="output">
 Make XHTML-compatible markup
 </xd:doc>
-  <xsl:param name="xhtml">false</xsl:param>
+  <xsl:param name="xhtml">true</xsl:param>
   <xd:doc type="boolean" class="toc">
 Make an automatic table of contents
 </xd:doc>

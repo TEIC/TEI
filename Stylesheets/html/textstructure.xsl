@@ -518,9 +518,9 @@ $requestedID: requests a particular page
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:dateline">
-    <div class="dateline">
+    <span class="dateline">
       <xsl:apply-templates/>
-    </div>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:divGen[@type='actions']</xd:short>
@@ -923,7 +923,7 @@ $requestedID: requests a particular page
       <ul class="breadcrumb">
         <li class="breadcrumb-first">
           <a class="breadcrumb" href="{$homeURL}">
-	    <xsl:if test="not($xhtml='true')">
+	    <xsl:if test="$xhtml='false'">
 	      <xsl:attribute name="target">
 		<xsl:text>_top</xsl:text>
 	      </xsl:attribute>
@@ -2327,7 +2327,7 @@ $requestedID: requests a particular page
         <div class="footer">
           <xsl:if test="not($parentURL='')"><a class="{$style}"
               href="{$parentURL}">
-	    <xsl:if test="not($xhtml='true')">
+	    <xsl:if test="$xhtml='false'">
 	      <xsl:attribute name="target">
 		<xsl:text>_top</xsl:text>
 	      </xsl:attribute>
@@ -2335,7 +2335,7 @@ $requestedID: requests a particular page
               <xsl:value-of select="$parentWords"/>
             </a> | </xsl:if>
           <a class="{$style}" href="{$homeURL}">
-	    <xsl:if test="not($xhtml='true')">
+	    <xsl:if test="$xhtml='false'">
 	      <xsl:attribute name="target">
 		<xsl:text>_top</xsl:text>
 	      </xsl:attribute>
@@ -2344,7 +2344,7 @@ $requestedID: requests a particular page
           </a>
           <xsl:if test="$searchURL"> | <a class="{$style}"
 	  href="{$searchURL}">
-	    <xsl:if test="not($xhtml='true')">
+	    <xsl:if test="$xhtml='false'">
 	      <xsl:attribute name="target">
 		<xsl:text>_top</xsl:text>
 	      </xsl:attribute>
@@ -2353,7 +2353,7 @@ $requestedID: requests a particular page
             </a>
           </xsl:if>
           <xsl:if test="$feedbackURL"> | <a class="{$style}" href="{$feedbackURL}">
-	    <xsl:if test="not($xhtml='true')">
+	    <xsl:if test="$xhtml='false'">
 	      <xsl:attribute name="target">
 		<xsl:text>_top</xsl:text>
 	      </xsl:attribute>
@@ -2397,7 +2397,7 @@ $requestedID: requests a particular page
     <xsl:if test="$linkPanel='true'">
       <div class="footer">
         <a class="{$style}">
-	    <xsl:if test="not($xhtml='true')">
+	    <xsl:if test="$xhtml='false'">
 	      <xsl:attribute name="target">
 		<xsl:text>_top</xsl:text>
 	      </xsl:attribute>
@@ -2413,7 +2413,7 @@ $requestedID: requests a particular page
       <div class="footer">
         <xsl:if test="$searchURL">
           <a class="{$style}" href="{$searchURL}">
-	    <xsl:if test="not($xhtml='true')">
+	    <xsl:if test="$xhtml='false'">
 	      <xsl:attribute name="target">
 		<xsl:text>_top</xsl:text>
 	      </xsl:attribute>
@@ -2427,7 +2427,7 @@ $requestedID: requests a particular page
           <br/>
           <xsl:text>&#10;</xsl:text>
           <a class="{$style}" href="{$feedbackURL}">
-	    <xsl:if test="not($xhtml='true')">
+	    <xsl:if test="$xhtml='false'">
 	      <xsl:attribute name="target">
 		<xsl:text>_top</xsl:text>
 	      </xsl:attribute>
@@ -2590,7 +2590,7 @@ $requestedID: requests a particular page
             <td align="right" class="summarycell" valign="top">
               <b>
                 <a class="nolink">
-		  <xsl:if test="not($xhtml='true')">
+		  <xsl:if test="$xhtml='false'">
 		    <xsl:attribute name="target">
 		      <xsl:text>_top</xsl:text>
 		    </xsl:attribute>
@@ -2827,7 +2827,7 @@ $requestedID: requests a particular page
               </xsl:when>
               <xsl:otherwise>
                 <a class="{$class}">
-		  <xsl:if test="not($xhtml='true')">
+		  <xsl:if test="$xhtml='false'">
 		    <xsl:attribute name="target">
 		      <xsl:text>_top</xsl:text>
 		    </xsl:attribute>
@@ -2860,7 +2860,7 @@ $requestedID: requests a particular page
           <xsl:call-template name="aCrumb">
             <xsl:with-param name="crumbBody">
               <a class="{$class}">
-		<xsl:if test="not($xhtml='true')">
+		<xsl:if test="$xhtml='false'">
 		  <xsl:attribute name="target">
 		    <xsl:text>_top</xsl:text>
 		  </xsl:attribute>

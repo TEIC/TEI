@@ -367,9 +367,16 @@
   </xd:doc>
   <xsl:template match="tei:head">
     <xsl:variable name="parent" select="local-name(..)"/>
-    <xsl:if test="not(starts-with($parent,'div'))">
-      <xsl:apply-templates/>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="parent::tei:body">
+	<h1>
+	  <xsl:apply-templates/>
+	</h1>
+      </xsl:when>
+      <xsl:when test="not(starts-with($parent,'div'))">
+	<xsl:apply-templates/>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
   <xd:doc>
     <xd:short>Process element tei:head in plain mode</xd:short>

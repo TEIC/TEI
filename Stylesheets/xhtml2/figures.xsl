@@ -223,7 +223,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:graphic">
-    <xsl:if test="@xml:id and not($xhtml='true')">
+    <xsl:if test="@xml:id and $xhtml='false'">
 	<a class="g" name="{@xml:id}">
 	  <xsl:comment> </xsl:comment>
 	</a>
