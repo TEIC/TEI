@@ -11,11 +11,13 @@ TESTFILESDTD= \
 
 TESTFILES= \
 	testClasses \
+	testTripReport \
+	testall \
 	testbare \
 	testchinese \
-	testcorpus \
 	testconstraint \
 	testconstraint2 \
+	testcorpus \
 	testdictionaries \
 	testdrama \
 	testfand \
@@ -26,6 +28,7 @@ TESTFILES= \
 	testfs \
 	testglobals \
 	testi18n \
+	testjustfs \
 	testlangs \
 	testlite \
 	testmav \
@@ -38,10 +41,7 @@ TESTFILES= \
 	testrendition \
 	testspoken \
 	testtagdocs \
-	testtranscr \
-	testTripReport \
-	testall \
-	testjustfs
+	testtranscr 
 
 TESTBADFILES= \
 	detest \
@@ -52,17 +52,17 @@ TESTDOCBOOKFILES=
 
 TESTSPECIALFILES= \
 	testallplus \
-	testsvg  \
 	testits  \
+	testmathml \
 	testodds \
 	testplace-gml \
 	testplace-kml \
 	testrend \
-	testmathml 
+	testsvg  
 
 default: schemas test
 
-test: test-schema test-dtd test-dtd-xmllint test-extns test-xsd test-xsd-valid test-bad
+test: test-schema test-dtd test-dtd-xmllint test-extns test-xsd test-xsd-valid test-schematron test-bad
 
 schemas:
 	echo SETUP IS $(ROMAOPTS)
@@ -136,6 +136,7 @@ test-dtd-xmllint:
 test-extns:
 	echo check whether user extensions work ....
 	xmllint --noout --valid testextns.xml
+
 test-sgml:
 	echo Check SGML extension mechanism
 	onsgmls -e -g -s  sgmldecl.tei testextns.sgm 
@@ -150,9 +151,17 @@ test-bad:
 	echo JING XSD; \
 	jing $$i.xsd $$i.xml; done
 
+test-schematron:
+	echo Run Schematron tests - these may produce warnings
+	for i in $(TESTFILES) $(TESTFILESDTD) $(TESTSPECIALFILES); do \
+	 echo Schematron on $$i: ; \
+	 saxon $$i.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $$i.xsl; \
+	 saxon $$i.xml $$i.xsl ; \
+	done
+
 
 clean:
-	-for i in $(TESTFILES) $(TESTFILESDTD) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.teix.xsd $$i.xsd $$i.rnc $$i.rng;done
+	-for i in $(TESTFILES) $(TESTFILESDTD) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.teix.xsd $$i.xsd $$i.rnc $$i.rng $$i.xsl; done
 	-rm -rf LOG *~ *.xsd Schema RomaResults DTD names.xml
 	-rm -rf *.doc.*
 	-rm *-examples.rng *-examples.rnc *test*.nvdl *-ex.odd
