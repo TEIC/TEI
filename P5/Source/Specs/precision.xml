@@ -13,7 +13,8 @@
   <attList>
     <attDef ident="target" usage="opt">
       <equiv/>
-      <desc>points at the element or elements the precision of which is being specified.</desc>
+      <desc>points at the element or elements the precision of which
+      is to be specified.</desc>
       <datatype maxOccurs="unbounded">
         <rng:ref name="data.pointer"/>
       </datatype>
@@ -23,20 +24,25 @@
       </remarks>
     </attDef>
 
-    <attDef ident="path" usage="opt">
+    <attDef ident="pattern" usage="opt">
       <equiv/>
-      <desc>supplies a location path to identify the portions of a
-      document whose precision is being expressed.</desc>
+      <desc>supplies an XSLT 2.0 pattern which may be used to select
+      those portions of the
+      document the precision of which is to be specified.</desc>
       <datatype>
         <rng:text/>
       </datatype>
-<valDesc>The path should be expressed using the syntax defined by
-XPath2 (<ptr target="#XPATH2"/>). </valDesc>
+<valDesc>The pattern should be expressed using the pattern syntax
+defined in <ptr target="#XSLT2"/>. </valDesc>
       <remarks>
-        <p>The path specified is interpreted relative to the location
-	specified by the value of the <att>target</att> attribute. If
-	no value is given for <att>target</att>, the context within
-	which the path is evaluated should be the document root.</p>
+        <p>The context for the pattern is the nodeset identified by
+        the value of the <att>target</att> attribute. If no value is
+        given for <att>target</att>, the context is the document
+        root.</p>
+<p>Note that the value of the <att>target</att> attribute may include
+an Xpointer expression which may include an Xpath expression (see <ptr
+target="#SATS"/>). Either method may be used to identify the parts of
+a document whose precision is to be documented by this element.</p>
       </remarks>
     </attDef>
 
