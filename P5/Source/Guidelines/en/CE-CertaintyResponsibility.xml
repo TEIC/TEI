@@ -42,7 +42,7 @@ individual tags in the text.</item></list>
 No special steps are needed to use the <gi>note</gi> and <gi>respStmt</gi> elements, since they are defined in the core module and header
 respectively.  The <gi>alt</gi> element is only available when the
 module for linking has been selected, as described in
-chapter <ptr target="#SA"/>. To use the <gi>certainty</gi> and
+chapter <ptr target="#SA"/>. To use the <gi>certainty</gi>, <gi>precision</gi> or
 <gi>respons</gi> elements, the module for certainty and
 responsibility must be selected. 
 </p>
@@ -54,14 +54,9 @@ responsibility must be selected.
 be a personal name, or perhaps not)</item>
 <item>the precise point at which an element begins or ends is
 uncertain</item>
-<item>the value to be given for an attribute is uncertain</item>
-<item>content supplied by the encoder (such as the expansion of
-an abbreviation marked by the <gi>abbr</gi> tag) is
-uncertain</item>
-<item>the transcription of a source text is uncertain, perhaps
-because it is hard to read or hard to hear; this sort of
-uncertainty is also handled by the <gi>unclear</gi> element in
-section <ptr target="#PHDA"/></item></list></p>
+<item>the value given for an attribute is uncertain</item>
+<item>the content of an element is uncertain, perhaps
+because it is hard to read or hard to hear, or for some other reason.</item></list></p>
 <p>The following types of uncertainty are <emph>not</emph> indicated
 with the <gi>certainty</gi> element:
 <list type="simple">
@@ -71,7 +66,7 @@ interpretations</item>
 <item>a transcriber, editor, or author wishes to indicate a level of
 confidence in a factual assertion made in the text</item>
 <item>an author is not sure if the sentence chosen to start a
-paragraph is really the one to be  retained in the final version</item></list>
+paragraph is really the one to be  retained in the final version. </item></list>
 Precision of numbers and dates is discussed in the following section, <ptr target="#CEPREC"/>, and (for simple cases) in <ptr target="#CONA"/>.
 Well-defined ambiguity is handled with
 alternations in feature-structure values in chapter <ptr target="#FS"/>.
@@ -112,42 +107,43 @@ precision.  To record merely that we are not certain that <q>Essex</q>
 is in fact a place name, as it is tagged, we use the <att>target</att>
 attribute to identify the element in question, and the <att>locus</att>
 attribute to indicate what aspect of the markup we are uncertain about
-(in this case, whether we have used the correct <q>gi</q>, that is,
-element type, to mark it):
+(in this case, whether we have used the correct <q>name</q> for the
+element used to mark it):
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to 
 <placeName xml:id="CE-pl1">Essex</placeName>.
 <!-- ... elsewhere in the document ... -->
-<certainty target="#CE-pl1" locus="gi"><desc>possibly not a placename</desc></certainty></egXML>
-Because it is linked to the location of the uncertainty by a reference, the
-<gi>certainty</gi> element will typically be included in the same
-document as its target.  It may be placed adjacent to the target
-element, or elsewhere in the document.</p>
-<p>To record the further information that we estimate, subjectively,
-that there is a 60 percent chance of <q>Essex</q> being a place name here, we
-can add a value for our <att>degree</att> of confidence (usually a
-number between 0 and 1, representing the estimated probability):
+<certainty target="#CE-pl1" locus="name"><desc>possibly not a placename</desc></certainty></egXML>
+There are no particular constraints as to where the 
+<gi>certainty</gi> element is placed in a document; it may be placed adjacent to the target
+element, or elsewhere in the same or another document.</p>
+<p>We may wish to record the probability, assessed in some subjective
+way, that <q>Essex</q> really is  a place name here. The
+<att>degree</att> attribute is used to indicate the degree of
+confidence associated with the <gi>certainty</gi> element, expressed as a
+number between 0 and 1:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <!-- ... -->
-<certainty target="#CE-pl1" locus="gi" degree="0.6"/></egXML>
+<certainty target="#CE-pl1" locus="name" degree="0.6"/></egXML>
 According to one expert, there is a 60 percent chance of <q>Essex</q>
-being a place name here, and a 40 percent chance of its being a
+being a place name here, and hence a 40 percent chance of its being a
 personal name. We can use two <gi>certainty</gi> elements to indicate the
 two probabilities independently. Both elements indicate the same location in the
-text, but the second provides an alternative choice of generic
+text, but the second provides an alternative choice of name
 identifier (in this case <gi>persName</gi>), which is given as the
 value of the <att>assertedValue</att> attribute:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <!-- ... -->
-<certainty target="#CE-pl1" locus="gi" degree="0.6">
+<certainty target="#CE-pl1" locus="name" degree="0.6">
    <desc>probably a placename, but possibly not</desc></certainty>
-<certainty target="#CE-pl1" locus="gi" degree="0.4" assertedValue="persName">
+<certainty target="#CE-pl1" locus="name" degree="0.4" assertedValue="persName">
    <desc>may refer to the Earl of Essex</desc></certainty></egXML></p>
 <p>Finally, we may wish to make our probability estimates contingent
 on some condition.  In the passage <q>Elizabeth went to Essex; she had
 always liked Essex,</q> for example, we may feel there is a 60 percent chance
 that the county is meant, and a 40 percent chance that the earl is meant.  But
 the two occurrences of the word are not independent:  there is (we may
-feel) no chance at all that one occurrence refers to the county and one
+feel) no chance at all that the first occurrence refers to the county
+and the second
 to the earl.  We can express this by using the <att>given</att>
 attribute to list the identifiers of <gi>certainty</gi> elements.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to <placeName xml:id="CE-PL1">Essex</placeName>.
@@ -155,23 +151,24 @@ She had always liked <placeName xml:id="CE-PL2">Essex</placeName>.
 <!-- ... -->
 <!-- 60% chance that P1 is a placename,
      40% chance a personal name. -->
-<certainty xml:id="cert-1" target="#CE-PL1" locus="gi" degree="0.6">
+<certainty xml:id="cert-1" target="#CE-PL1" locus="name" degree="0.6">
   <desc>probably a placename, but possibly not"</desc></certainty>
-<certainty xml:id="cert-2" target="#CE-PL1" locus="gi" assertedValue="persName" degree="0.4">
+<certainty xml:id="cert-2" target="#CE-PL1" locus="name" assertedValue="persName" degree="0.4">
    <desc>may refer to the Earl of Essex"</desc></certainty>
 <!-- 60% chance that P2 is a placename,
      40% chance a personal name.
     100% chance that it agrees with P1. -->
-<certainty target="#CE-PL2" locus="gi" given="#cert-1" degree="1.0">
-   <desc>if P1 is a placename, P2 certainly is"</desc></certainty>
-<certainty target="#CE-PL2" locus="gi" assertedValue="persName" degree="1.0" given="#cert-2">
-   <desc>if p1 refers to the Earl of Essex, so does P2</desc></certainty></egXML>
+<certainty target="#CE-PL2" locus="name" given="#cert-1" degree="1.0">
+   <desc>if CE-PL1 is a placename, CE-PL2 certainly is"</desc></certainty>
+<certainty target="#CE-PL2" locus="name" assertedValue="persName" degree="1.0" given="#cert-2">
+   <desc>if CE-PL1 is a personal name, then so is CE-PL2</desc></certainty></egXML>
 When <att>given</att> conditions are listed, the <gi>certainty</gi>
 element is interpreted as claiming a given degree of confidence in a
 particular markup given the assertional content of the
-<gi>certainty</gi> elements indicated—that is, <emph>if the markup
-described in the indicated <gi>certainty</gi> elements is
-correct.</emph></p>
+<gi>certainty</gi> elements indicated. That is, a conjectural
+assertion is being made solely on the assumption that the
+interpretation indicated by the element named by the <att>given</att>
+attribute is actually correct.</p>
 
 <p>Conditional confidence may be less that 100 percent:  given the sentence
 <q>Ernest went to old Saybrook</q>, we may interpret <q>Saybrook</q> as
@@ -183,13 +180,13 @@ is much more likely (say, 90 percent certain) that the name is <q>Saybrook</q>.
 Hence there is uncertainty about the correct location for the markup
 as well as about which markup to use.  This state of affairs can be expressed using the <gi>certainty</gi> element thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Ernest went to <anchor xml:id="CE-a1"/> old <persName xml:id="CE-p2">Saybrook</persName>.
-<certainty xml:id="cert1" target="#CE-p2" locus="gi" degree="0.6"/>
-<certainty target="#CE-p2" locus="startLoc" given="#cert1" degree="0.9"/>
-<certainty xml:id="cert2" target="#CE-p2" locus="gi" assertedValue="placeName" degree="0.4"/>
-<certainty target="#CE-p2" locus="startLoc" given="#cert2" degree="0.5"/>
-<certainty xml:id="cert3" target="#CE-p2" locus="startLoc"
-	   assertedValue="CE-a1" given="#cert1" degree="0.1"/>
-<certainty xml:id="cert4" target="#CE-p2" locus="startLoc" assertedValue="CE-a1" given="#cert2" degree="0.5"/></egXML>
+<certainty xml:id="cert1" target="#CE-p2" locus="name" degree="0.6"/>
+<certainty target="#CE-p2" locus="start" given="#cert1" degree="0.9"/>
+<certainty xml:id="cert2" target="#CE-p2" locus="name" assertedValue="placeName" degree="0.4"/>
+<certainty target="#CE-p2" locus="start" given="#cert2" degree="0.5"/>
+<certainty xml:id="cert3" target="#CE-p2" locus="start"
+	   assertedValue="#CE-a1" given="#cert1" degree="0.1"/>
+<certainty xml:id="cert4" target="#CE-p2" locus="start" assertedValue="#CE-a1" given="#cert2" degree="0.5"/></egXML>
 
 Note the use of the <att>assertedValue</att> on <gi>certainty</gi>
 elements <val>cert3</val> and <val>cert4</val> to reference
@@ -209,49 +206,63 @@ place indicated, without however giving an alternative location; there
 is thus a 6 percent chance (0.1 × 0.6) that none of the alternatives given is
 correct.</p>
 <p>If an attribute value is uncertain, the <att>locus</att> attribute
-takes as its value the name of the attribute in question.  In this
+takes the value <val>value</val>. The attribute concerned is specified
+using the <att>pattern</att> attribute. In this
 example, there is only a 50 percent chance that the question was spoken by
 participant A:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="CE-u1" who="#A">Have you heard the election results?</u>
-<certainty target="#CE-u1" locus="att.who" degree="0.5"/></egXML></p>
-<p>Doubts about whether the transcription is correct may be expressed
+<certainty target="#CE-u1" pattern="@who" locus="value" degree="0.5"/></egXML></p>
+<p>Doubts about whether the content of an element is correct may also be expressed
 by assigning to <att>locus</att> the value
-<mentioned>transcribedContent</mentioned>.  For example, if the source is
+<mentioned>value</mentioned>.  For example, if the source is
 hard to read and so the transcription is uncertain:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">I have a <emph xml:id="CE-p3">gub</emph>.
-<certainty target="#CE-p3" locus="transcribedContent" degree="0.5"/></egXML></p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">I have a <emph xml:id="CE-p3">bun</emph>.
+<certainty target="#CE-p3" locus="value" degree="0.5"/></egXML></p>
 <p>Degrees of confidence in the proper expansion of abbreviations may
-also be expressed, by using the value <mentioned>suppliedContent</mentioned>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">You will want to use
+also be expressed, as in the following example:<egXML xmlns="http://www.tei-c.org/ns/Examples">You will want to use
 <choice><expan xml:id="CE-e1">Standard
 Generalized Markup Language</expan>
 <expan xml:id="CE-e40">Some Grandiose Methodology for Losers</expan>
 <abbr>SGML</abbr></choice> ...
 <!-- ... -->
-<certainty target="#CE-e1" locus="suppliedContent" degree="0.9"/>
-<certainty target="#CE-e40" locus="suppliedContent" degree="0.5"/></egXML></p>
+<certainty target="#CE-e1" locus="value" degree="0.9"/>
+<certainty target="#CE-e40" locus="value" degree="0.5"/></egXML></p>
 <p>The <att>assertedValue</att> attribute should be used to provide an
 alternative value for whatever aspect of the markup is in doubt:  an
-alternative generic identifier, or the identifier of an alternative starting or
+alternative name, or the identifier of an alternative starting or
 ending point, as already shown, an alternative attribute value, or
 alternative element content, as in this example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I have a <emph xml:id="CE-P3">bun</emph>.
-<certainty target="#CE-P3" locus="transcribedContent" assertedValue="gun" degree="0.8"> 
+<certainty target="#CE-P3" locus="content" assertedValue="gun" degree="0.8"> 
   <desc>a gun makes more sense in a holdup</desc></certainty></egXML>
-Since attribute values have no internal substructure, the
-<att>assertedValue</att> attribute is not generally useful for specifying alternative
-transcriptions;it cannot for example be used if the alternative
-reading contains markup of any kind.  More robust methods of handling uncertainties of transcription are
-the <gi>unclear</gi> element and the <gi>app</gi> and <gi>rdg</gi>
-elements described in chapter <ptr target="#TC"/>.
- The
-<gi>certainty</gi> element allows for indications of uncertainty to
-be structured with at least as much detail and clarity as appears to be
-currently required in most ongoing text projects.  
-It is expected that in the future more adequate systems for expressing
-uncertainty will be developed.  These may extend the <gi>certainty</gi>
-element or they may make use of the feature-structure encoding
-mechanisms described in chapter <ptr target="#FS"/>.</p>
+  Since attribute values have no internal substructure, the
+  <att>assertedValue</att> attribute is not generally useful for
+  specifying alternative transcriptions;it cannot for example be used
+  if the alternative reading contains markup of any kind.  More robust
+  methods of handling uncertainties of transcription are the
+  <gi>unclear</gi> element and the <gi>app</gi> and <gi>rdg</gi>
+  elements described in chapter <ptr target="#TC"/>.  The
+  <gi>certainty</gi> element allows for indications of uncertainty to
+  be structured with at least as much detail and clarity as appears to
+  be currently required in most ongoing text projects.</p>
+
+
+<p>The <att>pattern</att> attribute used in these and other examples
+is a powerful mechanism which can be used to indicate precision for a
+large number of assertions throughout an encoded document in an
+economical way. For example:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<certainty pattern="*/@resp='#LB'" scope="value" degree="0.2"/>
+</egXML>
+
+This encoding indicates that the content of any element in the
+document whose <att>resp</att> attribute carries the value
+<val>#LB</val> should be assigned a certainty-value of only 0.2.
+
+</p>
+
+
 <p>The <gi>certainty</gi> element and the other TEI mechanisms for
 indicating uncertainty provide a range of methods of graduated
 complexity.  Simple expressions of uncertainty may be made by using the
@@ -280,41 +291,69 @@ vocabulary and document it in the <gi>encodingDesc</gi> or
 <specGrpRef target="#DCERESP"/></div>
 </div>
 <div type="div2" xml:id="CEPREC"><head>Indications of Precision</head>
-<p>
-<!--
+<p>As noted above, certainty about the accuracy of an encoding or its
+content is not the same thing as the <term>precision</term> with which
+a value is specified. In the case of a date or a quantity, for example, we might be
+certain that the value given is imprecise, or  uncertain
+about whether or not the value given is correct. The latter
+possibility would be represented by the <gi>certainty</gi> element
+discussed in the previous section; the former by the
+<gi>precision</gi> element discussed in this section.</p>
+<p>In <ptr target="#CONANU"/> several ways of indicating ranges of
+values were introduced. For example, if we know that a date falls between
+1930 and 1935, without being certain exactly where, this fact may be
+encoded using attributes <att>notBefore</att> and
+<att>notAfter</att>, as in the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<date notBefore="1930" notAfter="1935">Early in the 1930s</date>...</egXML>
+Equally, if we know that every page of a
+manuscript has a width of at least 10 cm but no more than 30, we can
+use the attributes <att>atLeast</att> and <att>atMost</att>, as in the
+following examples:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<width atLeast="10" atMost="30" unit="cm" scope="all"/></egXML>
+</p>
+<p>Suppose however that the precision with which the value
+of such an attribute can be specified is variable. For example,
+suppose an event is dated <q>about fifty years after the death of
+Augustus</q>. In this case, the precision of one end of the range (the
+death of Augustus) is higher than the other, assuming we know when
+Augustus died. We can say that the latest possible date is probably 50
+years after than, but with less confidence than we can attach to the
+earliest possible date. </p>
+<p>The <gi>precision</gi> element allows us to indicate the two
+attributes concerned and attach different degrees of precision to
+them, using the same mechanism as that provided for the
+<gi>certainty</gi> element:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<date xml:id="d00001" notBefore="0014" notAfter="0064">About 50
+years after the death of Augustus</date>
+<precision target="#d001" pattern="@notAfter" degree="0.3"/>
+<precision target="#d001" pattern="@notBefore" degree="0.9"/>
+</egXML></p>
+<p>In much the same way, we may wish to indicate different degrees of
+precision about the dating of either end of a historical period. For example,
+ the elements defined for encoding personal data all bear a similar
+ set of attributes to indicate normalized values for earliest or
+ latest dates, etc. (see section
+ <ptr target="#NDATTSda"/>); the prevision of these attribute values
+ may be indicated in exactly the same way. For example, 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<residence from="1857-03-01" notAfter="1857-04-30">From the 1st of March to
+some time in April of 1857.</residence>
+<precision target="#d001" pattern="@notAfter" degree="0.5"/>
+</egXML>
+</p>
+<p>It may also be useful to indicate that the precisions given for a
+minimum and maximum quanta differ. For example, to indicate that all
+pages measure at least 10 cm wide, and at most <emph>about</emph> 30:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<width xml:id="w002" atLeast="10" atMost="30" unit="cm" scope="all"/>
+<precision target="#w002" pattern="@max" degree="0.2"/>
+</egXML>
+</p>
 
-(1) Creation of a new element, <precision/> (empty element);
-
-(2) element inherits global attributes and those from att.dimensions
-(@min, @max, @atLeast, @atMost are the essential ones);
-
-(3) Create a new attribute class (“att.qualifier” vel sim.) with the
-attributes @degree, @locus, @target (currently defined ad hoc for
-<certainty/>;
-
-(4) define new attribute @stdDeviation for <precision/>, with datatype
-numeric.
-
-(A)
-<date xml:id=”d00001” notBefore=”0014” notAfter=”0064”>Within
-approx 50
-years of the death of Augustus</date>
-<precision target=”#d001” locus=”notAfter” degree=”low”/>
-<precision target=”#d001” locus=”notBefore” degree=”high”/>
-
-(B)
-John Smith (bishop <date xml:id=”d002” from=”1753”
-to=”1795”>1753-c.1795</date>)
-<precision target=”#d002” locus=”to” degree=”low”/>
-
-(C)
-Each column has a minimum of 10 characters width and a maximum of c.25
-(I know this is clumsy, but people do say this sort of thing):
-<measure type=”count” min=”10” max=”25”
-xml:id=”m001”>10-c.25</measure>
-<precision target=”#m001” locus=”max” degree=”low”/>
--->
-</p></div>
+</div>
 
 <div type="div2" xml:id="CERESP"><head>Attribution of Responsibility</head>
 <p>In general, attribution of responsibility for the transcription and

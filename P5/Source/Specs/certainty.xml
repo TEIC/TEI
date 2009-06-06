@@ -46,7 +46,7 @@ $Id$
       <valDesc>a series of one or more identifiers (URIs), separated by whitespace</valDesc>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to <persName xml:id="ESX">Essex</persName>
-					<certainty target="#ESX" locus="gi" degree="0.6"/>
+					<certainty target="#ESX" locus="name" degree="0.6"/>
 				</egXML>
       </exemplum>
       <remarks>
@@ -67,6 +67,29 @@ $Id$
 	</p>
       </remarks>
     </attDef>
+
+    <attDef ident="pattern" usage="opt">
+      <equiv/>
+      <desc>supplies an XSLT 2.0 pattern which may be used to select
+      those portions of the
+      document the precision of which is to be specified.</desc>
+      <datatype>
+        <rng:text/>
+      </datatype>
+<valDesc>The pattern should be expressed using the pattern syntax
+defined in <ptr target="#XSLT2"/>. </valDesc>
+      <remarks>
+        <p>The context for the pattern is the nodeset identified by
+        the value of the <att>target</att> attribute. If no value is
+        given for <att>target</att>, the context is the document
+        root.</p>
+<p>Note that the value of the <att>target</att> attribute may include
+an Xpointer expression which may include an Xpath expression (see <ptr
+target="#SATS"/>). Either method may be used to identify the parts of
+a document whose precision is to be documented by this element.</p>
+      </remarks>
+    </attDef>
+
     <attDef ident="locus" usage="req">
       <equiv/>
       <desc>indicates more exactly the aspect concerning which
@@ -183,7 +206,10 @@ indicated by a reference to an <gi>anchor</gi> element or to an
 value.</valDesc>
       <exemplum xml:lang="und">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <certainty target="#ESX" locus="gi" assertedValue="place" degree="0.2"/>
+          <certainty target="#ESX" locus="name"
+		     assertedValue="placeName" degree="0.2">
+<desc>It is unlikely, but possible, that this refers to the place
+rather than the person.</desc></certainty>
         </egXML>
       </exemplum>
       <remarks>
@@ -191,14 +217,14 @@ value.</valDesc>
 degree of confidence in a specific alternative to some aspect
 of the markup. In the example above the encoder is expressing
 the likelihood (.2) that the generic identifier should be
-<gi>place</gi> rather than <gi>persName</gi>, which is the coded
+<gi>placeName</gi> rather than <gi>persName</gi>, which is the coded
 element.</p>
       </remarks>
       <remarks xml:lang="fr">
         <p>Cet attribut permet
                         d'indiquer le degré de confiance dans une alternative spécifique à un aspect
                         du balisage. Dans l'exemple qui précède l'encodeur exprime la probabilité
-                        qu'il faille un identifiant générique <gi>place</gi> plutôt que
+                        qu'il faille un identifiant générique <gi>placeName</gi> plutôt que
                         <gi>persName</gi>, qui est l'élément encodé.</p>
       </remarks>
       <remarks xml:lang="ja">
@@ -206,7 +232,7 @@ element.</p>
 	当該属性は，当該要素に対する代替値の確信度を示している．
 	上の例では，符号化する人が当該可能性(.2)を示している．これは当
 	該要素に使用される共通識別子は，<gi>persName</gi>ではなく
-	<gi>place</gi>であるべき可能性の度合いを示している．
+	<gi>placeName</gi>であるべき可能性の度合いを示している．
 	</p>
       </remarks>
     </attDef>
@@ -351,30 +377,30 @@ of the markup named by the <att>locus</att> attribute.</desc>
   </attList>
   <exemplum xml:lang="en">
     <p>(For discussion of this example, see section <ptr target="#CECECE"/>)</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">Earnest went to <anchor xml:id="A1"/> old
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">Ernest went to <anchor xml:id="A1"/> old
 <persName xml:id="SYB">Saybrook</persName>.
-<certainty xml:id="c1" target="#SYB" locus="gi" degree="0.6"/>
-			<certainty target="#SYB" locus="startLoc" given="#c1" degree="0.9"/>
-			<certainty xml:id="C-c2" target="#SYB" locus="gi" assertedValue="persName" degree="0.4"/>
-			<certainty target="#SYB" locus="startLoc" given="#C-c2" degree="0.5"/>
-			<certainty target="#SYB" locus="startLoc" assertedValue="#a1" given="#c1" degree="0.5"/>
+<certainty xml:id="c1" target="#SYB" locus="name" degree="0.6"/>
+			<certainty target="#SYB" locus="start" given="#c1" degree="0.9"/>
+			<certainty xml:id="C-c2" target="#SYB" locus="name" assertedValue="persName" degree="0.4"/>
+			<certainty target="#SYB" locus="start" given="#C-c2" degree="0.5"/>
+			<certainty target="#SYB" locus="start" assertedValue="#a1" given="#c1" degree="0.5"/>
 		</egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       張先生去看<persName xml:id="zh-tw_JZZ">江子翠</persName>那邊有什麼活動。
-      <certainty target="#zh-tw_JZZ" locus="gi" degree="0.6"/>
-      <certainty target="#zh-tw_JZZ" locus="gi" assertedValue="placeName" degree="0.4"/>
+      <certainty target="#zh-tw_JZZ" locus="name" degree="0.6"/>
+      <certainty target="#zh-tw_JZZ" locus="name" assertedValue="placeName" degree="0.4"/>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
     王先生找到<anchor xml:id="zh-tw_A1"/>小<persName xml:id="zh-tw_lin">林</persName>，感動極了。
-      <certainty xml:id="zh-tw_c1" target="#zh-tw_lin" locus="gi" degree="0.8"/>
-      <certainty target="#zh-tw_lin" given="#c1" locus="startLoc" degree="0.9"/>      
-    <certainty xml:id="zh-tw_c2" target="#zh-tw_lin" locus="gi" assertedValue="placeName" degree="0.2"/>
-      <certainty target="#zh-tw_lin" given="#c2" locus="startLoc" degree="0.1"/>
-      <certainty target="#zh-tw_lin" given="#c2" locus="startLoc" assertedValue="#a1" degree="0.9"/>
+      <certainty xml:id="zh-tw_c1" target="#zh-tw_lin" locus="name" degree="0.8"/>
+      <certainty target="#zh-tw_lin" given="#c1" locus="start" degree="0.9"/>      
+    <certainty xml:id="zh-tw_c2" target="#zh-tw_lin" locus="name" assertedValue="placeName" degree="0.2"/>
+      <certainty target="#zh-tw_lin" given="#c2" locus="start" degree="0.1"/>
+      <certainty target="#zh-tw_lin" given="#c2" locus="start" assertedValue="#a1" degree="0.9"/>
     </egXML>
   </exemplum>
   <listRef>
