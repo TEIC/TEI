@@ -45,7 +45,7 @@
     method="xml"/>
 
 <xsl:template name="cgi">
-<document href="stylebear" method="text" encoding="utf-8">
+<xsl:result-document href="stylebear" method="text" encoding="utf-8">
 <xsl:text>#!/usr/bin/perl&#10;</xsl:text>
 
 <xsl:for-each select="TEI.2/text/body/div[@id]">
@@ -85,7 +85,7 @@ print "Created on $today-->\n";
 #              @values = $query->param($key);
 #              print join(", ",@values),"]\n";
 #          }
-print "&lt;xsl:import href=\"",$HOME,"/",$VERSION,"/stylesheet/html/tei.xsl\"/>\n";
+print "&lt;xsl:import href=\"",$HOME,"/",$VERSION,"/stylesheet/xhtml2/tei.xsl\"/>\n";
 foreach $key (keys %Default) {
 my $Passed=$query->param($key);
 my $D=$Default{$key};
@@ -106,7 +106,7 @@ print "&lt;/xsl:stylesheet>\n";
 return "";
 }
 </xsl:text>
-</document>
+</xsl:result-document>
 </xsl:template>
 
 <xsl:template match="/">

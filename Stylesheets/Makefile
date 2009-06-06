@@ -16,7 +16,7 @@ dist: clean release
 	ln -s tei-xsl tei-xsl-`cat ../VERSION` ; \
 	zip -r tei-xsl-`cat ../VERSION`.zip tei-xsl-`cat ../VERSION` )
 
-release: doc common p4 p5 p5-2
+release: common p4 p5 p5-2
 
 p5-2:
 	-mkdir -p release/tei-xsl/p5-2
@@ -53,8 +53,6 @@ common:
 	mkdir -p release/tei-xsl/common
 	cp i18n.xml release/tei-xsl/common
 	cp *.css release/tei-xsl/common
-
-doc:
 	mkdir -p release/tei-xsl/doc/xsltdoc
 	-test -d xsltdoc && (cd doc; saxon configdoc.xsl xsltdoc.xsl)
 	saxon -o customize.xml param.xml doc/param.xsl 
@@ -90,12 +88,10 @@ installcommon: common
 	mkdir -p ${PREFIX}/lib/cgi-bin
 	cp stylebear ${PREFIX}/lib/cgi-bin/stylebear
 	chmod 755 ${PREFIX}/lib/cgi-bin/stylebear
-
-installdoc: doc
 	mkdir -p ${PREFIX}/share/doc/tei-p5-xsl
 	(cd release/tei-xsl/doc; tar cf - .) | (cd ${PREFIX}/share/doc/tei-p5-xsl; tar xf -)
 
-install: installp4 installp5 installp5-2 installcommon installdoc
+install: installp4 installp5 installp5-2 installcommon
 
 log:
 	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \
