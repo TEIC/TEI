@@ -250,7 +250,11 @@ alternative element content, as in this example:
 <p>The <att>pattern</att> attribute used in these and other examples
 is a powerful mechanism which can be used to indicate precision for a
 large number of assertions throughout an encoded document in an
-economical way. For example:
+economical way. Its scope is defined by the value of the
+<att>target</att> attribute, which defines the context within which
+the pattern is evaluated. If no value is supplied for the
+<att>target</att> attribute, the context assumed is the root of the
+document. For example:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <certainty pattern="*/@resp='#LB'" scope="value" degree="0.2"/>
@@ -258,8 +262,7 @@ economical way. For example:
 
 This encoding indicates that the content of any element in the
 document whose <att>resp</att> attribute carries the value
-<val>#LB</val> should be assigned a certainty-value of only 0.2.
-
+<val>#LB</val> has an 80% chance of being erroneous in some respect. 
 </p>
 
 
@@ -275,8 +278,9 @@ element does not provide as much expressive power as the
 certainty information must be given, it is recommended that the
 <gi>certainty</gi> element be used.</p>
 <p>The <gi>certainty</gi> element may be used for simple unqualified
-indications of uncertainty, in which case only the <att>locus</att>
-and <att>target</att> attributes might be specified.  
+indications of uncertainty, in which case only the <att>locus</att>,
+<att>pattern</att> and
+<att>target</att> attributes might be specified.  
 In more complex cases, the
 other attributes may be used to provide fuller information.  While
 these attributes may take any string of characters as value, the recommended
@@ -319,7 +323,7 @@ suppose an event is dated <q>about fifty years after the death of
 Augustus</q>. In this case, the precision of one end of the range (the
 death of Augustus) is higher than the other, assuming we know when
 Augustus died. We can say that the latest possible date is probably 50
-years after than, but with less confidence than we can attach to the
+years after that, but with less confidence than we can attach to the
 earliest possible date. </p>
 <p>The <gi>precision</gi> element allows us to indicate the two
 attributes concerned and attach different degrees of precision to
@@ -344,7 +348,7 @@ some time in April of 1857.</residence>
 <precision target="#d001" pattern="@notAfter" degree="0.5"/>
 </egXML>
 </p>
-<p>It may also be useful to indicate that the precisions given for a
+<p>It may also be useful to indicate that the precisions given for 
 minimum and maximum quanta differ. For example, to indicate that all
 pages measure at least 10 cm wide, and at most <emph>about</emph> 30:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -352,7 +356,19 @@ pages measure at least 10 cm wide, and at most <emph>about</emph> 30:
 <precision target="#w00t" pattern="@max" degree="0.2"/>
 </egXML>
 </p>
-
+<p>The <gi>precision</gi> element also carries a
+<att>stdDeviation</att> attribute, which may be used to indicate the
+standard deviation for a range of values. The generic <gi>dim</gi>
+element introduced in <ptr target="#msdim"/> may be used to record the average
+number of characters per line in a typescript. If in addition we wish
+to record the standard deviation for the values summarised by that
+average, this would require an additional <gi>precision</gi> element,
+as in the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<dim xml:id="dim1" type="avgLineLength" unit="chars" quantity="62.4"/>
+<precision target="#dim1" stdDeviation="#dim1"/>
+</egXML>
+</p>
 </div>
 
 <div type="div2" xml:id="CERESP"><head>Attribution of Responsibility</head>
