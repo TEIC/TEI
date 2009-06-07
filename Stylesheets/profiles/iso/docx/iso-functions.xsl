@@ -165,9 +165,8 @@
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
             <xsl:choose>
-                <xsl:when test="self::tei:term">
-                    true
-                </xsl:when>
+                <xsl:when test="self::tei:gloss">true</xsl:when>
+                <xsl:when test="self::tei:term">true</xsl:when>
                 <xsl:otherwise>false</xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
@@ -190,6 +189,7 @@
                     
                     self::tei:abbr or
                     self::tei:affiliation or
+                    self::tei:att or
                     self::tei:author or
                     self::tei:br or
                     self::tei:c or
@@ -202,6 +202,7 @@
                     self::tei:forename or
                     self::tei:graphic or
                     self::tei:gi or
+                    self::tei:gloss or
                     self::tei:hi[not(w:*)] or
                     self::tei:idno or
                     self::tei:ident or
@@ -223,6 +224,7 @@
                     self::tei:surname or 
                     self::tei:soCalled or
                     self::tei:term[not(ancestor-or-self::*/@type='termsAndDefinitions')] or
+                    self::tei:val or
                     self::tei:title">
                     true
                 </xsl:when>

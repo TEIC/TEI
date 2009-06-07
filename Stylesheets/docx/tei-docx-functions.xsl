@@ -164,6 +164,7 @@
                 <xsl:when test="@rend='ital'">true</xsl:when>
                 <xsl:when test="@rend='att'">true</xsl:when>
                 <xsl:when test="self::tei:att">true</xsl:when>
+                <xsl:when test="self::tei:gloss">true</xsl:when>
                 <xsl:when test="self::tei:title">true</xsl:when>
                 <xsl:when test="self::tei:name">true</xsl:when>
                 <xsl:when test="self::tei:soCalled">true</xsl:when>
@@ -214,7 +215,6 @@
 		    self::tei:supplied or
                     self::tei:abbr or
                     self::tei:affiliation or
-                    self::tei:att or
                     self::tei:author or
                     self::tei:br or
                     self::tei:c or
@@ -225,6 +225,7 @@
                     self::tei:foreign or
                     self::tei:forename or
                     self::tei:gi or
+                    self::tei:gloss or
                     self::tei:graphic or
                     self::tei:hi[not(w:*)] or
                     self::tei:ident or
