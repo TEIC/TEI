@@ -93,43 +93,78 @@ schemas:
 		test -f $$i.teix.xsd && perl -p -i -e "s/teix.xsd/$$i.teix.xsd/" $$i.xsd; \
 	done
 
-test-schema: test-rnv test-jing 
-#test-xmllint
+test-schema: test-jing test-rnv 
 
 test-jing:
-	echo JING RelaxNG...
+	@echo JING RelaxNG...
+	@echo =======================================
+	@echo = Expect to see "no start" error from justfs, and errors
+	@echo = about schemaLocation on testminimal
+	@echo = 
+	@echo = testallplus has error abour ref and MathML
+	@echo =======================================
 	for i in $(TESTFILES) $(TESTFILESDTD) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do echo $$i: ; jing -t $$i.rng $$i.xml; done
 	jing -t -c testfrag.rnc testlite.xml
 
 test-rnv:
-	echo RNV....
-	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do echo $$i: ; xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc ; done
+	@echo RNV....
+	@echo =======================================
+	@echo = Expect to see "no start" error from justfs, and errors
+	@echo = about schemaLocation on testminimal
+	@echo =======================================
+	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); \
+	  do echo $$i: ; \
+	    xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc ; \
+	done
 	xmllint --dropdtd testlite.xml | 	rnv testfrag.rnc 
 
 test-xmllint:
-	echo XMLLINT ... for RELAXNG ....
-	for i in $(TESTFILES) $(TESTFILESDTD); do xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; done
+	@echo XMLLINT .. for RELAXNG
+	@echo =======================================
+	@echo = 
+	@echo = 
+	@echo = 
+	@echo =======================================
+	for i  in $(TESTFILES) $(TESTFILESDTD); do xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; done
 
 test-xsd:
-	echo JING .. for XSD....
+	@echo JING .. for XSD....
+	@echo =======================================
+	@echo = Should be no errors from JING tests
+	@echo =======================================
 	-for i in $(TESTFILES) $(TESTFILESDTD);do echo $$i: ; jing $$i.xsd $$i.xml; done
 
 test-xsd-valid:
-	echo XSDVALID
+	@echo XSDVALID
+	@echo =======================================
+	@echo = 
+	@echo =======================================
 	- which xsdvalid && for i in $(TESTFILES) $(TESTFILESDTD);do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
 
 test-xerces:
-	-for i in $(TESTFILES) $(TESTFILESDTD) ;do echo $$i: ; java -cp ~/jar/xercesSamples.jar jaxp.SourceValidator -HS -VA -GA -a $$i.xsd -i $$i.xml; done
+	@echo xerces XSD
+	@echo =======================================
+	@echo = Should be no errors from Jing/xerces XSD tests
+	@echo =======================================
+	-for i  in $(TESTFILES) $(TESTFILESDTD) ;do echo $$i: ; java -cp ~/jar/xercesSamples.jar jaxp.SourceValidator -HS -VA -GA -a $$i.xsd -i $$i.xml; done
 
 
 test-dtd:
-	echo xmllint DTD 
+	@echo xmllint DTD 
+	@echo =======================================
+	@echo = 
+	@echo = expect error in tagdocs about ref, and testtite about xmlns:t
+	@echo = 
+	@echo =======================================
 	-for i in `echo $(TESTFILES) $(TESTFILESDTD)`; do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
 
 
 # testall, testp4compat, testodds have no DOCTYPE
 test-dtd-xmllint:
-	echo xmllint DTD using DTD fragments....
+	@echo xmllint DTD using DTD fragments....
+	@echo =======================================
+	@echo Should be no errors from xmllint/dtd tests
+	@echo =======================================
 	-for i in  $(TESTFILES) $(TESTFILESDTD); do grep DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml; \
 	done
 
@@ -141,16 +176,6 @@ test-sgml:
 	echo Check SGML extension mechanism
 	onsgmls -e -g -s  sgmldecl.tei testextns.sgm 
 
-test-bad:
-	echo Now test file with deliberate errors
-	echo JING RelaxNG...
-	-for i in $(TESTBADFILES); do \
-	jing -t $$i.rng $$i.xml ; \
-	echo RNV.... ; \
-	xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc ; \
-	echo JING XSD; \
-	jing $$i.xsd $$i.xml; done
-
 test-schematron:
 	echo Run Schematron tests - these may produce warnings
 	for i in $(TESTFILES) $(TESTFILESDTD) $(TESTSPECIALFILES); do \
@@ -158,6 +183,19 @@ test-schematron:
 	 saxon $$i.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $$i.xsl; \
 	 saxon $$i.xml $$i.xsl ; \
 	done
+
+test-bad:
+	@echo Now test file with deliberate errors
+	@echo =======================================
+	@echo Many errors will occur here
+	@echo =======================================
+	@echo JING RelaxNG...
+	-for i in $(TESTBADFILES); do \
+	jing -t $$i.rng $$i.xml ; \
+	@echo RNV.... ; \
+	xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc ; \
+	@echo JING XSD; \
+	jing $$i.xsd $$i.xml; done
 
 
 clean:
