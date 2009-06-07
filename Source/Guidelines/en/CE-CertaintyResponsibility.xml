@@ -250,20 +250,45 @@ alternative element content, as in this example:
 <p>The <att>pattern</att> attribute used in these and other examples
 is a powerful mechanism which can be used to indicate precision for a
 large number of assertions throughout an encoded document in an
-economical way. Its scope is defined by the value of the
-<att>target</att> attribute, which defines the context within which
+economical way. If <att>target</att> is defined in addition, then it
+defines the value of the
+<att>target</att> attribute defines the context within which
 the pattern is evaluated. If no value is supplied for the
 <att>target</att> attribute, the context assumed is the root of the
-document. For example:
+document. </p>
+
+<p>The value of the <att>pattern</att> attribute is an XSLT2 pattern,
+using the syntax defined in <ptr target="#XSLT2"/>. Some simple
+examples follow:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<certainty pattern="*/@resp='#LB'" locus="value" degree="0.2"/>
+<certainty pattern="@resp" locus="value" degree="0.2"/>
 </egXML>
+This element indicates that there is only a 0.2 certainty that any
+value for the <att>resp</att> attribute is correct, wherever it
+appears in the document.</p>
 
-This encoding indicates that the content of any element in the
-document whose <att>resp</att> attribute carries the value
-<val>#LB</val> has an 80% chance of being erroneous in some respect. 
-</p>
+<p><egXML xmlns="http://www.tei-c.org/ns/Examples">
+<certainty target="#d001" pattern="@resp" locus="value" degree="0.2"/>
+</egXML>
+This element indicates that there is only a 0.2 certainty that any
+value for the <att>resp</att> attribute of the element indicated by
+the pointer <val>#d001</val> is correct</p>
+
+<p><egXML xmlns="http://www.tei-c.org/ns/Examples">
+<certainty pattern="@resp='#LB'" locus="value" degree="0.2"/>
+</egXML>
+This element indicates that there is only a 0.2 certainty that the
+value <val>#LB</val> for the <att>resp</att> attribute is correct, wherever it
+appears in the document.</p>
+
+<p><egXML xmlns="http://www.tei-c.org/ns/Examples">
+<certainty pattern="*[@resp='#LB']" locus="value" degree="0.2"/>
+</egXML>
+This element indicates that there is only a 0.2 certainty that the
+content of any element the <att>resp</att> attribute of which has the
+value <val>#LB</val> is correct, wherever it
+appears in the document.</p>
 
 
 <p>The <gi>certainty</gi> element and the other TEI mechanisms for
@@ -359,14 +384,14 @@ pages measure at least 10 cm wide, and at most <emph>about</emph> 30:
 <p>The <gi>precision</gi> element also carries a
 <att>stdDeviation</att> attribute, which may be used to indicate the
 standard deviation for a range of values. The generic <gi>dim</gi>
-element introduced in <ptr target="#msdim"/> may be used to record the average
+element introduced in <ptr target="#msdim"/> might be used to record the average
 number of characters per line in a typescript. If in addition we wish
 to record the standard deviation for the values summarised by that
 average, this would require an additional <gi>precision</gi> element,
 as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <dim xml:id="dim1" type="avgLineLength" unit="chars" quantity="62.4"/>
-<precision target="#dim1" stdDeviation="#dim1"/>
+<precision target="#dim1" stdDeviation="4"/>
 </egXML>
 </p>
 </div>
