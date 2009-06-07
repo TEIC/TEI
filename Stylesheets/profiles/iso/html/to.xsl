@@ -33,8 +33,8 @@
 <xsl:param name="autoToc">true</xsl:param>
 <xsl:param name="institution">ISO</xsl:param>
 <xsl:param name="department"></xsl:param>
-<xsl:param name="cssFile">iso.css</xsl:param>
-<xsl:param name="cssSecondaryFile">odd.css</xsl:param>
+<xsl:param name="cssFile">http://tei.oucs.ox.ac.uk/TEIISO/iso.css</xsl:param>
+<xsl:param name="cssSecondaryFile">http://www.tei-c.org/release/xml/tei/stylesheet/odd.css</xsl:param>
 <xsl:param name="TEIC">false</xsl:param>
 <xsl:param name="wrapLength">65</xsl:param>
 <xsl:param name="attLength">60</xsl:param>
