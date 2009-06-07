@@ -22,6 +22,7 @@
   <xsl:template name="msSection">
     <xsl:param name="heading"/>
     <xsl:param name="level"/>
+    <xsl:param name="implicitBlock"/>
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -29,6 +30,11 @@
     <xsl:param name="before"/>
     <xsl:param name="after"/>
     <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template name="msLiteral">
+    <xsl:param name="text"/>
+    <xsl:value-of select="$text"/>
   </xsl:template>
 
 <!-- headings -->
@@ -218,6 +224,25 @@
     </xsl:call-template>
     
   </xsl:template>
+
+  <xsl:template match="tei:collation">
+    <xsl:call-template name="msSection">
+      <xsl:with-param name="level">4</xsl:with-param>
+      <xsl:with-param name="heading">
+	<xsl:text>Collation</xsl:text>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+  
+  <xsl:template match="tei:extent">
+    <xsl:call-template name="msSection">
+      <xsl:with-param name="level">4</xsl:with-param>
+      <xsl:with-param name="implicitBlock">true</xsl:with-param>
+      <xsl:with-param name="heading">
+	<xsl:text>Extent</xsl:text>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
   
   <xsl:template match="tei:summary">
     <xsl:call-template name="msSection">
@@ -331,6 +356,27 @@
 	  <xsl:call-template name="msInline"/>
 	</xsl:otherwise>
       </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="tei:xdimensions">
+	<xsl:for-each select="*">
+	    <xsl:apply-templates select="."/>
+	    <xsl:call-template name="msLiteral">
+	      <xsl:with-param name="text">
+		<xsl:choose>
+		  <xsl:when test="@unit">
+		    <xsl:value-of select="@unit"/>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:text>cm</xsl:text>
+		  </xsl:otherwise>
+		</xsl:choose>
+		<xsl:if test="following-sibling::*">
+		  <xsl:text> x </xsl:text>
+		</xsl:if>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	</xsl:for-each>
     </xsl:template>
 
     

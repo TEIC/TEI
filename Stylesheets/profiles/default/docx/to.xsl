@@ -407,6 +407,7 @@
   
     <xsl:template name="msSection">
       <xsl:param name="level"/>
+      <xsl:param name="implicitBlock"/>
       <xsl:param name="heading"/>
       <w:p>
 	<w:pPr>

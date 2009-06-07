@@ -199,20 +199,24 @@
                     self::w:object or
                     
                     self::iso:wordObject[w:object] or
-                    
+                    	
 		    self::tei:am or	
 		    self::tei:att or	
 		    self::tei:choice or
 		    self::tei:damage or
+		    self::tei:depth or
+		    self::tei:dim or
 		    self::tei:ex or
 		    self::tei:expan or
 		    self::tei:gap or
 		    self::tei:genName or
 		    self::tei:geogName or
+		    self::tei:height or
 		    self::tei:orig or
 		    self::tei:origPlace or
 		    self::tei:roleName or
 		    self::tei:supplied or
+		    self::tei:width or
                     self::tei:abbr or
                     self::tei:affiliation or
                     self::tei:author or
@@ -250,7 +254,8 @@
                     self::tei:surname or 
                     self::tei:term[not(ancestor-or-self::*/@type='termsAndDefinitions')] or
                     self::tei:title or
-                    self::tei:val">
+                    self::tei:val
+	    ">
                     true
                 </xsl:when>
                 <xsl:otherwise>

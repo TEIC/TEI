@@ -18,10 +18,16 @@
     <xsl:template name="msSection">
       <xsl:param name="level"/>
       <xsl:param name="heading"/>
+      <xsl:param name="implicitBlock">false</xsl:param>
       <xsl:element name="h{$level}" xmlns="http://www.w3.org/1999/xhtml">
 	<xsl:value-of select="$heading"/>
       </xsl:element>
       <xsl:choose>
+	<xsl:when test="$implicitBlock='true'">
+	  <p>
+	    <xsl:apply-templates/>
+	  </p>
+	</xsl:when>
 	<xsl:when test="*">
 	  <xsl:apply-templates/>
 	</xsl:when>
@@ -48,7 +54,6 @@
     </xsl:template>
     
     <xsl:template name="bodyHook">
-      <xsl:message>look for msDesc</xsl:message>
       <xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc"/>
     </xsl:template>
 

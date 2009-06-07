@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh 
 profile=default
 odd=false
 debug=false
@@ -32,7 +32,7 @@ saxon $THERE/$F $XSL/docx/listgraphics.xsl DIR=$TEMPDIR/word/media > $TEMPDIR/fe
 sh $TEMPDIR/fetch
 rm $TEMPDIR/fetch
 (cd $TEMPDIR/word/media
-for i in *; do  exiftool -q -o $i.xmp $i; done
+ls * >& /dev/null && for i in *; do  exiftool -q -o $i.xmp $i; done
 )
 cd $TEMPDIR
 unzip -o -q $TEMPLATES/template.docx
