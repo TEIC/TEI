@@ -233,7 +233,7 @@ alternative name, or the identifier of an alternative starting or
 ending point, as already shown, an alternative attribute value, or
 alternative element content, as in this example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">I have a <emph xml:id="CE-P3">bun</emph>.
-<certainty target="#CE-P3" locus="content" assertedValue="gun" degree="0.8"> 
+<certainty target="#CE-P3" locus="value" assertedValue="gun" degree="0.8"> 
   <desc>a gun makes more sense in a holdup</desc></certainty></egXML>
   Since attribute values have no internal substructure, the
   <att>assertedValue</att> attribute is not generally useful for
@@ -257,7 +257,7 @@ the pattern is evaluated. If no value is supplied for the
 document. For example:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<certainty pattern="*/@resp='#LB'" scope="value" degree="0.2"/>
+<certainty pattern="*/@resp='#LB'" locus="value" degree="0.2"/>
 </egXML>
 
 This encoding indicates that the content of any element in the
@@ -343,9 +343,9 @@ precision about the dating of either end of a historical period. For example,
  <ptr target="#NDATTSda"/>); the prevision of these attribute values
  may be indicated in exactly the same way. For example, 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<residence from="1857-03-01" notAfter="1857-04-30">From the 1st of March to
+<residence xml:id="res01" from="1857-03-01" notAfter="1857-04-30">From the 1st of March to
 some time in April of 1857.</residence>
-<precision target="#d001" pattern="@notAfter" degree="0.5"/>
+<precision target="#res01" pattern="@notAfter" degree="0.5"/>
 </egXML>
 </p>
 <p>It may also be useful to indicate that the precisions given for 
@@ -353,7 +353,7 @@ minimum and maximum quanta differ. For example, to indicate that all
 pages measure at least 10 cm wide, and at most <emph>about</emph> 30:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <width xml:id="w00t" atLeast="10" atMost="30" unit="cm" scope="all"/>
-<precision target="#w00t" pattern="@max" degree="0.2"/>
+<precision target="#w00t" pattern="@atMost" degree="0.3"/>
 </egXML>
 </p>
 <p>The <gi>precision</gi> element also carries a
