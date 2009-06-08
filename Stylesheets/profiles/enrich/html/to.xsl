@@ -53,8 +53,13 @@
       <xsl:apply-templates/>
     </xsl:template>
     
+    <xsl:template match="tei:teiHeader">
+      <xsl:call-template name="pageLayoutSimple"/>
+    </xsl:template>
+
     <xsl:template name="bodyHook">
-      <xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc"/>
+
+      <xsl:apply-templates select="//tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc"/>
     </xsl:template>
 
     <xsl:template match="tei:choice">
