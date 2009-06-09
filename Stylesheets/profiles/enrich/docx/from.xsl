@@ -17,7 +17,7 @@
     xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
     xmlns:mml="http://www.w3.org/1998/Math/MathML"
     xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
-    exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso edate">
+    exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx pic rel a tei teidocx iso edate">
     
     <!-- import base conversion style -->
 
@@ -25,9 +25,6 @@
     
 	<xsl:template match="w:body">
 		<text>
-		  <xsl:call-template name="extract-headers-and-footers"/>
-		  
-		<!-- 
 		     look for headings of various kinds, from which to
 		     generate sections
 			-->
@@ -51,8 +48,6 @@
 			      <xsl:apply-templates select="w:p|w:tbl" mode="paragraph"/>
 			    </xsl:otherwise>
 			  </xsl:choose>
-			  <xsl:apply-templates select="w:sectPr"
-					       mode="paragraph"/>
 			  </msDesc>
 			</body>
 		</text>
