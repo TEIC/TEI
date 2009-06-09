@@ -448,7 +448,7 @@
               <xsl:text>[</xsl:text>
               <xsl:value-of select="@ident"/>
               <xsl:text>] </xsl:text>
-              <xsl:value-of select="tei:desc"/>
+	      <xsl:call-template name="makeDescription"/>
             </xsl:for-each>
           </h3>
           <xsl:for-each select="key('MACRO-MODULE',@module)">
@@ -512,7 +512,7 @@
                 <xsl:text>[</xsl:text>
                 <xsl:value-of select="@ident"/>
                 <xsl:text>] </xsl:text>
-                <xsl:value-of select="tei:desc"/>
+	      <xsl:call-template name="makeDescription"/>
               </xsl:for-each>
             </h3>
 	    <xsl:for-each select="key('ELEMENT-MODULE',@module)">
@@ -575,7 +575,7 @@
                 <xsl:text>[</xsl:text>
                 <xsl:value-of select="@ident"/>
                 <xsl:text>] </xsl:text>
-                <xsl:value-of select="tei:desc"/>
+		<xsl:call-template name="makeDescription"/>
               </xsl:for-each>
             </h3>
             <xsl:for-each select="key('MODEL-CLASS-MODULE',@module)">
@@ -640,7 +640,7 @@
                 <xsl:text>[</xsl:text>
                 <xsl:value-of select="@ident"/>
                 <xsl:text>] </xsl:text>
-                <xsl:value-of select="tei:desc"/>
+		<xsl:call-template name="makeDescription"/>
               </xsl:for-each>
             </h3>
 	    <xsl:for-each select="key('ATT-CLASS-MODULE',@module)">

@@ -447,7 +447,7 @@
               <xsl:text>[</xsl:text>
               <xsl:value-of select="@ident"/>
               <xsl:text>] </xsl:text>
-              <xsl:value-of select="tei:desc"/>
+	      <xsl:call-template name="makeDescription"/>
             </xsl:for-each>
           </h3>
           <xsl:apply-templates mode="weave" select="key('MACRO-MODULE',@module)">
@@ -494,7 +494,7 @@
                 <xsl:text>[</xsl:text>
                 <xsl:value-of select="@ident"/>
                 <xsl:text>] </xsl:text>
-                <xsl:value-of select="tei:desc"/>
+                <xsl:call-template name="makeDescription"/>
               </xsl:for-each>
             </h3>
             <xsl:apply-templates mode="weave" select="key('ELEMENT-MODULE',@module)">
@@ -542,7 +542,7 @@
                 <xsl:text>[</xsl:text>
                 <xsl:value-of select="@ident"/>
                 <xsl:text>] </xsl:text>
-                <xsl:value-of select="tei:desc"/>
+                <xsl:call-template name="makeDescription"/>
               </xsl:for-each>
             </h3>
             <xsl:apply-templates mode="weave" select="key('MODEL-CLASS-MODULE',@module)">
@@ -590,7 +590,7 @@
                 <xsl:text>[</xsl:text>
                 <xsl:value-of select="@ident"/>
                 <xsl:text>] </xsl:text>
-                <xsl:value-of select="tei:desc"/>
+                <xsl:call-template name="makeDescription"/>
               </xsl:for-each>
             </h3>
             <xsl:apply-templates mode="weave" select="key('ATT-CLASS-MODULE',@module)">
