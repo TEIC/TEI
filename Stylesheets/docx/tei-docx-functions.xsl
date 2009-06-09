@@ -200,11 +200,15 @@
                     
                     self::iso:wordObject[w:object] or
                     	
+		    self::tei:altIdentifier or	
 		    self::tei:am or	
 		    self::tei:att or	
+		    self::tei:biblScope or	
+		    self::tei:bibl or	
 		    self::tei:choice or
 		    self::tei:damage or
 		    self::tei:depth or
+		    self::tei:dimensions or
 		    self::tei:dim or
 		    self::tei:ex or
 		    self::tei:expan or
@@ -223,6 +227,7 @@
                     self::tei:br or
                     self::tei:c or
                     self::tei:code or
+                    self::tei:country or
                     self::tei:date or
                     self::tei:editionStmt or
                     self::tei:emph or
@@ -234,25 +239,35 @@
                     self::tei:hi[not(w:*)] or
                     self::tei:ident or
                     self::tei:idno or
+                    self::tei:institution or
                     self::tei:lb or
                     self::tei:locus or
                     self::tei:mentioned or
                     self::tei:name or
+		    self::tei:msName or
                     self::tei:note[@place='end' or @place='bottom' ] or
                     self::tei:note[@place='foot' or @place='bottom' ] or
                     self::tei:num or
                     self::tei:orgName or
+                    self::tei:origDate or
+                    self::tei:origPlace or
                     self::tei:pb or
                     self::tei:persName or
                     self::tei:placeName or
                     self::tei:ptr or
                     self::tei:publisher or
                     self::tei:q or
+		    self::tei:region or
+		    self::tei:repository or
+		    self::tei:rubric or
+		    self::tei:settlement or
                     self::tei:ref or
                     self::tei:seg or
                     self::tei:soCalled or
+                    self::tei:summary or 
                     self::tei:surname or 
                     self::tei:term[not(ancestor-or-self::*/@type='termsAndDefinitions')] or
+                    self::tei:textLang or 
                     self::tei:title or
                     self::tei:val
 	    ">

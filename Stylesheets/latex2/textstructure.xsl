@@ -49,7 +49,10 @@ version="2.0">
 
 
   <xsl:template match="tei:TEI">
-    
+    <xsl:call-template name="mainDocument"/>
+  </xsl:template>
+
+  <xsl:template name="mainDocument">
     <xsl:if test="not($realFigures='true')">
       <xsl:text>%BEGINFIGMAP</xsl:text>
       <xsl:if test="not($latexLogo='')">
@@ -170,12 +173,18 @@ version="2.0">
 \catcode`\%=12\relax&#10;</xsl:text>
 <xsl:text disable-output-escaping="yes">\let\tabcellsep&amp;
 \catcode`\&amp;=12\relax </xsl:text>
-<xsl:apply-templates select="tei:text"/>
+<xsl:apply-templates/>
 <xsl:call-template name="latexEnd"/>
 <xsl:text>
 \end{document}
 </xsl:text>
 </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process elements  tei:teiHeader</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+<xsl:template match="tei:teiHeader"/>
 
   <xd:doc>
     <xd:short>Process elements  tei:back</xd:short>
@@ -242,6 +251,7 @@ version="2.0">
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements  tei:divGen[@type='toc']</xd:short>
     <xd:detail> </xd:detail>

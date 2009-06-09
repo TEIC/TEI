@@ -13,8 +13,8 @@
     <xsl:import href="../../../xhtml2/tei.xsl"/>
     <xsl:import href="../../../common2/msdescription.xsl"/>
 
-    <xsl:param name="cssSecondaryFile">http://tei.oucs.ox.ac.uk/ENRICH/msdescription.css</xsl:param>
-
+    <xsl:output indent="no"/>
+    <!--  -->
     <xsl:template name="msSection">
       <xsl:param name="level"/>
       <xsl:param name="heading"/>
@@ -39,14 +39,45 @@
       </xsl:choose>
     </xsl:template>
     
+    <xsl:template name="msLabelled">
+      <xsl:param name="before"/>
+      <i>
+      <xsl:value-of select="$before"/>
+      </i>
+      <xsl:text>: </xsl:text>
+      <xsl:value-of select="normalize-space(.)"/>
+    </xsl:template>
+
     <xsl:template name="msInline">
       <xsl:param name="before"/>
       <xsl:param name="after"/>
+      <xsl:param name="style"/>
       <span class="{local-name()}">
 	<xsl:value-of select="$before"/>
-	<xsl:value-of select="."/>
+	<xsl:choose>
+	  <xsl:when test="$style='italic'">
+	    <i>
+	      <xsl:value-of select="normalize-space(.)"/>
+	    </i>
+	  </xsl:when>
+	  <xsl:when test="$style='bold'">
+	    <b>
+	      <xsl:value-of select="normalize-space(.)"/>
+	    </b>
+	  </xsl:when>
+	  <xsl:otherwise>
+	      <xsl:value-of select="normalize-space(.)"/>
+	  </xsl:otherwise>
+	</xsl:choose>
 	<xsl:value-of select="$after"/>
       </span>
+    </xsl:template>
+
+    <xsl:template name="msBlock">
+      <xsl:param name="style"/>
+      <div class="{$style}">
+	<xsl:apply-templates/>
+      </div>
     </xsl:template>
 
     <xsl:template match="tei:body">
@@ -58,9 +89,11 @@
     </xsl:template>
 
     <xsl:template name="bodyHook">
-
       <xsl:apply-templates select="//tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc"/>
     </xsl:template>
+    <xsl:param name="cssSecondaryFile">http://tei.oucs.ox.ac.uk/ENRICH/msdescription.css</xsl:param>
+    <!-- <xsl:param name="cssFile">tei.css</xsl:param>-->
+
 
     <xsl:template match="tei:choice">
       <xsl:apply-templates/>

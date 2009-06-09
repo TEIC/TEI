@@ -16,6 +16,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   
 <xsl:import href="../../../latex2/tei.xsl"/>
+<xsl:import href="../../../common2/msdescription.xsl"/>
 
 <xsl:param name="reencode">false</xsl:param>
 <xsl:param name="numberBackHeadings">true</xsl:param>
@@ -25,6 +26,8 @@
 <xsl:param name="startNamespace"></xsl:param>
 <xsl:param name="tocNumberSuffix">.\ </xsl:param>
 <xsl:param name="numberSpacer">\ </xsl:param>
+<xsl:param name="parSkip">3pt</xsl:param>
+<xsl:param name="parIndent">3pt</xsl:param>
 <xsl:variable name="docClass">article</xsl:variable>
 <xsl:template name="latexPreambleHook">
 \usepackage{makeidx}
@@ -179,6 +182,92 @@
   <xsl:param name="id"/>
   <xsl:text>\mbox{}\newline &#10;</xsl:text>
 </xsl:template>
+
+    <xsl:template name="msSection">
+      <xsl:param name="level"/>
+      <xsl:param name="heading"/>
+      <xsl:param name="implicitBlock">false</xsl:param>
+      <xsl:text>&#10;</xsl:text>
+      <xsl:choose>
+	<xsl:when test="$level=1">\section</xsl:when>
+	<xsl:when test="$level=2">\subsection</xsl:when>
+	<xsl:when test="$level=3">\subsubsection</xsl:when>
+	<xsl:when test="$level=4">\paragraph</xsl:when>
+      </xsl:choose>
+	<xsl:text>{</xsl:text>
+	<xsl:value-of select="$heading"/>
+	<xsl:text>}&#10;</xsl:text>
+      <xsl:choose>
+	<xsl:when test="$implicitBlock='true'">
+\par
+	    <xsl:apply-templates/>
+\par
+	</xsl:when>
+	<xsl:when test="*">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+\par
+	    <xsl:apply-templates/>
+\par
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="msInline">
+      <xsl:param name="before"/>
+      <xsl:param name="style"/>
+      <xsl:param name="after"/>
+      <xsl:value-of select="$before"/>
+	<xsl:choose>
+	  <xsl:when test="$style='italic'">
+	    <xsl:text>\textit{</xsl:text>
+	      <xsl:value-of select="normalize-space(.)"/>
+	    <xsl:text>}</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="$style='bold'">
+	    <xsl:text>\textbf{</xsl:text>
+	      <xsl:value-of select="normalize-space(.)"/>
+	    <xsl:text>}</xsl:text>	    
+	  </xsl:when>
+	  <xsl:otherwise>
+	      <xsl:value-of select="normalize-space(.)"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      <xsl:value-of select="$after"/>
+    </xsl:template>
+
+
+    <xsl:template name="msBlock">
+      <xsl:param name="style"/>
+      <xsl:text>\par </xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>\par </xsl:text>
+    </xsl:template>
+
+
+    <xsl:template name="msLabelled">
+      <xsl:param name="before"/>
+      <xsl:text>\textit{</xsl:text>
+      <xsl:value-of select="$before"/>
+      <xsl:text>}: </xsl:text>
+      <xsl:value-of select="."/>
+    </xsl:template>
+
+    <xsl:template match="tei:teiHeader">
+      <xsl:choose>
+	<xsl:when test="not(parent::tei:*)">
+	  <xsl:call-template name="mainDocument"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates select="tei:fileDesc"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="tei:fileDesc">
+      <xsl:apply-templates select="tei:sourceDesc/tei:msDesc"/>
+    </xsl:template>
 
 </xsl:stylesheet>
 

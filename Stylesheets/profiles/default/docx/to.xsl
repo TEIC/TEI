@@ -405,40 +405,5 @@
     </xsl:template>
 
   
-    <xsl:template name="msSection">
-      <xsl:param name="level"/>
-      <xsl:param name="implicitBlock"/>
-      <xsl:param name="heading"/>
-      <w:p>
-	<w:pPr>
-	  <w:pStyle w:val="tei{local-name()}"/>
-	</w:pPr>
-	<w:r>
-	  <w:t>
-	    <xsl:value-of select="$heading"/>
-	  </w:t>
-	</w:r>
-      </w:p>
-      <xsl:call-template name="block-element"/>
-    </xsl:template>
-    
-    <xsl:template name="msInline">
-      <xsl:param name="before"/>
-      <xsl:param name="after"/>
-      <w:r>
-	<w:rPr>
-	  <w:rStyle w:val="tei{local-name()}"/>
-	</w:rPr>
-	<w:t>
-	  <xsl:value-of select="$before"/>
-	  <xsl:value-of select="."/>
-	  <xsl:value-of select="$after"/>
-	</w:t>
-      </w:r>
-    </xsl:template>
-
-    <xsl:template name="headerParts">
-      <xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc"/>
-    </xsl:template>
 
 </xsl:stylesheet>
