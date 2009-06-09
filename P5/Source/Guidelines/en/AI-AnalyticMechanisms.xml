@@ -19,11 +19,12 @@ structure (such as <q>theme</q>, <q>reconciliation</q> etc.). The
 mechanisms presented in this chapter are simpler but less powerful
 than those described in chapter <ptr target="#FS"/>.
 	</p>
-<p>Section <ptr target="#AILC"/> introduces a module for characterizing
+<p>Section <ptr target="#AILC"/> introduces elements which can be used
+to  characterize
 text segments according to the familiar linguistic categories of
 <term>sentence</term> or <term>s-unit</term>, <term>clause</term>,
-<term>phrase</term>, <term>word</term>, <term>morpheme</term>, and
-<term>character</term>. These elements represent special cases of the
+<term>phrase</term>, <term>word</term>, <term>morpheme</term>,
+<term>character</term>, and <term>punctuation mark</term>. These elements represent special cases of the
 generic <gi>seg</gi> element described in section <ptr target="#SASE"/>.</p>
 <p>Section <ptr target="#AIATTS"/> introduces an additional global
 attribute which allows passages of text to be associated with
@@ -46,10 +47,17 @@ used to associate simple linguistic analysis with text segments.</p>
 category</term> elements which may be used to represent the segmentation of
 a text into the traditional linguistic categories of
 <term>sentence</term>, <term>clause</term>, <term>phrase</term>,
-<term>word</term>, <term>morpheme</term>, and
-<term>characters</term>. 
+<term>word</term>, <term>morpheme</term>, 
+<term>characters</term>, and <term>punctuation marks</term>.
+</p>
+<div type="div3" xml:id="AILCW"><head>Words and above</head>
+<p>Although different languages have very different rules about what
+constitutes a <soCalled>word</soCalled> or a
+<soCalled>sentence</soCalled>, these remain generally useful concepts.
+In this section we discuss elements provided for marking up linguistic
+units down to the word level, however defined. 
 <specList><specDesc key="s"/><specDesc key="cl"/><specDesc key="phr"/><specDesc key="w" atts="lemma"/>
-<specDesc key="m" atts="baseForm"/><specDesc key="c"/></specList>
+</specList>
  </p>
 <p>As members of the <ident type="class">att.segLike</ident> class, these
 elements all share the following attribute:
@@ -140,7 +148,7 @@ with the <att>part</att> attribute:
 
 Another approach is to use the <att>next</att> and <att>prev</att>
 attributes defined in the additional module for linking (chapter <ptr target="#SA"/>):
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l><cl next="#c5" xml:id="c3" part="I">For Tweedledum said
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#AI-BIBL-3"><l><cl next="#c5" xml:id="c3" part="I">For Tweedledum said
    <cl next="#c6" xml:id="c4" part="I">Tweedledee</cl></cl></l>
 <l><cl prev="#c3" xml:id="c5" part="F">  
    <cl prev="#c4" xml:id="c6" part="F">Had spoiled his nice new rattle.</cl></cl></l></egXML>
@@ -265,7 +273,7 @@ The first encoding describes the citing of a phrase. The second
 describes a phrase which consists of something mentioned.
 <!-- added following brief plug for otherwise  unsung attributes -->
 </p>
-<p>The <gi>w</gi> and <gi>m</gi> elements carry additional attributes
+<p>The <gi>w</gi> <!-- and <gi>m</gi> elements carry --> carries an additional attribute
 which may be of use in many indexing or analytic applications. The 
 <att>lemma</att> attribute may be used to specify  the
 <term>lemma</term>, that is the head- or base- form of an
@@ -277,8 +285,20 @@ inflected verb or noun, for example:
    <w lemma="donum">dona</w>
    <w lemma="fero">ferentes</w>
 </s></egXML>
-Similarly, the <att>baseForm</att> attribute may be specified for the
-<gi>m</gi> element, to indicate the <soCalled>base form</soCalled> of
+</p></div>
+
+<div xml:id="AIPC"><head>Below the word level</head>
+<p>It is sometimes helpful to markup explicitly sub-word components
+such as morphemes, characters, or punctuation.
+<specList><specDesc key="m"/><specDesc key="c"/><specDesc key="pc"/>
+</specList>
+ </p>
+
+<p>The <gi>m</gi> element is used to mark up morphologically
+identified segmentation below the word level. Analogous to the
+<att>lemma</att> attribute for <gi>w</gi>, there is a
+<att>baseForm</att> attribute for the <gi>m</gi> element, 
+which may be used to indicate the <soCalled>base form</soCalled> of
 a transformed morpheme:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><w type="adjective">  
    <m type="prefix" baseForm="con">com</m>
@@ -286,18 +306,42 @@ a transformed morpheme:
    <m type="suffix">able</m>
 </w></egXML>
 </p>
-<p>The <gi>w</gi>, <gi>m</gi>, and <gi>c</gi> elements can be used
+
+<p>The <gi>c</gi> (character) element may be used to mark up any non-lexical
+character, whether this appears within a word, or outside it. In the
+following example, the encoder wishes to indicate that the letters are
+not regarded as words:
+
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#TwN">
+      <phr>
+	<c>M</c>
+	<c>O</c>
+	<c>A</c>
+	<c>I</c>
+	<w>doth</w>
+	<w>sway</w>
+	<w>my</w>
+	<w>life</w>
+      </phr>
+    </egXML>
+</p>
+
+<p>The <gi>pc</gi> (punctuation character) element may be used to mark up
+characters which are specifically regarded as providing punctuation,
+rather than constituting parts of a word. </p>
+
+<p>The <gi>w</gi>, <gi>m</gi>, <gi>c</gi>, and <gi>pc</gi> elements can be used
 together to give a fairly detailed low-level grammatical analysis of
 text. For example, consider the following segmentation of the English
 S-unit <mentioned>I didn't do it</mentioned>.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><w>I</w>
 <w> 
    <w>did</w>
-   <m>n't</m>
+   <m>n<pc>'</pc>t</m>
 </w>
 <w>do</w>
 <w>it</w>
-<c>.</c></egXML>
+<pc>.</pc></egXML>
 <!-- shouldn't we attribute this to Bart Simpson? :-) -->
  </p>
 <p>This segmentation, crude as it is, succeeds in representing the idea
@@ -307,69 +351,18 @@ to this level is that it becomes relatively simple to associate each
 such segment with a more detailed formal analysis. 
 This matter is taken up in detail in section <ptr target="#AILA"/>. 
  </p>
+
+
 <specGrp xml:id="DAILC" n="Linguistic Segment Categories">
-
-
-
-
-
 &s;
-
-
-
-
-
-
-
-
-
 &cl;
-
-
-
-
-
-
-
-
-
 &phr;
-
-
-
-
-
-
-
-
-
 &w;
-
-
-
-
-
-
-
-
-
 &m;
-
-
-
-
-
-
-
-
-
 &c;
-
-
-
-
+&pc;
 </specGrp>
-
+</div>
 </div>
 <div type="div2" xml:id="AIATTS"><head>Global Attributes for Simple Analyses</head>
 <p>When the module described by this chapter is selected, an
@@ -384,22 +377,7 @@ see section <ptr target="#CONO"/> or <gi>fs</gi>,
 on which see chapter <ptr target="#FS"/>.
  </p>
 <specGrp xml:id="DAIGA" n="Global attribute for analysis">
-
-
-
-
-
-
-
-
-
 &att.global.analytic;
-
-
-
-
-
-
     </specGrp>
 </div>
 <div type="div2" xml:id="AISP"><head>Spans and Interpretations</head>
@@ -472,8 +450,8 @@ structure implied by the element structure. Consider the following narrative:
 <p>Sigmund, the son of Volsung, was a king in Frankish country.
 Sinfiotli was the eldest of his sons, the second was Helgi, the
 third Hamund.
-Borghild, Sigmund's wife, had a brother named —
-But Sinfiotli, her stepson, and — both wooed the same woman
+Borghild, Sigmund's wife, had a brother named <pc>—</pc>
+But Sinfiotli, her stepson, and <pc>—</pc> both wooed the same woman
 and Sinfiotli killed him over it.<note place="foot">The rule marks spaces
 left for the missing name in the manuscript.</note>
 And when he came home, Borghild asked him to go away,
@@ -641,70 +619,10 @@ creation of special text elements not otherwise needed (e.g. the
 whereas the use of <gi>span</gi> elements does not.
  </p>
 <specGrp xml:id="DAISP" n="Spans">
-
-
-
-
-
-
-
-
-
 &span;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &spanGrp;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &interp;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &interpGrp;
-
-
-
-
-
-
 </specGrp>
 </div>
 <div type="div2" xml:id="AILA"><head>Linguistic Annotation</head>

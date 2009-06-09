@@ -169,42 +169,36 @@ thou?</q><q>I'm the Mischievous Mosquito.</q>
  </p>
 
 <specGrp xml:id="DCOPA" n="Paragraph">
-
-
-
-
-
-
-
-
-
 &p;
-
-
-
-
-
-
 </specGrp>
 
 </div>
 <div type="div2" xml:id="COPU"><head>Treatment of Punctuation</head>
 
-<p>Punctuation marks cause problems for text markup when they are not
-available in the character set used and when they are significantly
-ambiguous. To a large extent, the availability of the Unicode
-character set addresses most such problems, since it provides specific
-code points for most punctuation marks, and also distinguishes glyphs
-(such as stop, comma, and hyphen) which are used with different
-functions. Thus, for example,  different Unicode code points
-are available for the hyphen used as a minus sign, as a word breaking
-hyphen, as a soft hyphen, or as a  <soCalled>non-breaking</soCalled>
-hyphen. The facilities described in chapter <ptr target="#WD"/> may
-also be used to define markup for non-standard punctuation
-characters. </p>
+<p>Punctuation marks have historically caused problems for text markup
+when they are not available in the character set used and when they
+are significantly ambiguous. To a large extent, the availability of
+the Unicode character set addresses the first of these problems, since
+it provides specific code points for most punctuation marks, and also
+the second to the extent that it distinguishes glyphs (such as stop,
+comma, and hyphen) which are used with different functions. Thus, for
+example, different Unicode code points are available for the hyphen
+used as a minus sign, as a word breaking hyphen, as a soft hyphen, or
+as a <soCalled>non-breaking</soCalled> hyphen. Where punctuation
+itself is the subject of study, the element <gi>pc</gi> (punctuation
+character) may be used to mark it explicitly, as further discussed in
+<ptr target="#AIPC"/>. The <gi>g</gi> element and other facilities described in
+chapter <ptr target="#WD"/> may also be used to define markup for
+non-standard punctuation characters. </p>
 
-<p><term rend="noindex">Full stop (period)</term><index><term>full
-stop</term><index><term>functions</term></index></index><index><term>period</term><index><term>functions</term></index></index>
+
+<p>Punctuation is itself a form of markup, historically introduced to
+provide the reader with an indication about how the text should be
+read. As such, it is unsurprising that encoders will often wish to
+encode directly the purpose for which punctuation was provided, as
+well as or even instead of, the punctuation itself. We discuss some
+typical cases below.</p>
+<p>The <term rend="noindex">Full stop (period)</term>
 may mark (orthographic) sentence boundaries, abbreviations, decimal
 points, or serve as a visual aid in printing numbers. These usages can
 be distinguished by tagging S-units, abbreviations, and numbers, as
@@ -213,94 +207,55 @@ and <ptr target="#CONANU"/>. However, there are independent reasons
 for tagging these, whether or not they are marked by full
 stops, and the polysemy of the full stop itself is perhaps no different from
 that of any character in the writing system. </p>
-
-<!--
-
-. Alternatively, entity names like the following might be used to
-distinguish stops (and other characters) used for these purposes:
-<list type="gloss"><label>stop.abbr </label>
-<item>a stop used to end an abbreviation</item><label>stop.sent </label>
-<item>a stop used to end a sentence</item><label>stop.abse </label>
-<item>a stop used both to end an abbreviation
-                        and to end a sentence</item><label>stop.dec  </label>
-<item>a stop used as a decimal point</item><label>comma.dec </label>
-<item>a comma used as a decimal point</item><label>middot.dec </label>
-<item>a midline dot used as a decimal point</item><label>stop.space </label>
-<item>a stop used as a numeric space character</item><label>comma.space </label>
-<item>a comma used as a numeric space character</item></list>
- </p>-->
-<p><term rend="noindex">Question mark</term><index><term>question mark</term><index><term>functions</term></index></index>
-and <term rend="noindex">exclamation mark</term><index><term>exclamation mark</term><index><term>functions</term></index></index>
+<p>The <term rend="noindex">Question mark</term>
+and <term rend="noindex">exclamation mark</term>
 typically mark the end of orthographic sentences, but may also be used
 as a mid-sentence comment by the author (<mentioned>!</mentioned> to express
 surprise or some other strong feeling, <mentioned>?</mentioned> to query a word
 or expression or mark a sentence as dubious in linguistic discussion).
-These uses may be distinguished by marking S-units, in which case the
+Such usages may be distinguished by marking S-units, in which case the
 mid-sentence uses of these punctuation marks may be left unmarked, or
 tagged using the <gi>c</gi> element discussed in <ptr target="#AILC"/>.
  </p>
-<!--
-<p><term rend="noindex">Hyphens</term><index><term>hyphen</term><index><term>functions</term></index></index><index><term>hyphen</term><index><term>soft and hard</term></index></index>
- at line-end may or may not indicate permanent
- (<soCalled>hard</soCalled>) hyphens in the word. Where the lineation
- of the machine-readable text differs from the original, the editor
- may either eliminate non-significant line-end hyphens or replace them by a reference
- to an appropriate character entity.<note place="foot"><ident type="ge">shy</ident> (<soCalled>soft
- hyphen</soCalled>) is defined in the standard public entity
- set <ident type="entset">ISOnum</ident>; Unicode reserves code point
- 2010 for the
- hyphen, and 2011 for the <soCalled>non-breaking</soCalled> hyphen.</note>
- Whichever method is adopted, it should be
- reported using the <gi>hyphenation</gi> element within the encoding
- declarations in the TEI header. See chapter <ptr target="#HD" type="div1"/> for discussion of the TEI header and encoding
- declarations.</p> 
-<p>When creating a machine-readable text from scratch, it is best not
- to introduce hyphenation simply to make lines of a predefined
- length, since  one cannot then easily tell whether the
- hyphens are soft or hard. When compounds or prefixed words
- are  hyphenated in mid-sentence, it may be impossible to tell whether the
- hyphenation is due to formatting or to linguistic concerns. </p>-->
- <p><term rend="noindex">Dashes</term><index><term>dash</term><index><term>functions</term></index></index>
- <!-- are best distinguished in form by using the entity names
- provided in the public entity set <ident
- type="entset">ISOpub</ident>, defined in ISO 8879: <ident
- type="ge">mdash</ident>, <ident type="ge">ndash</ident>, and <ident
- type="ge">dash</ident> (the <soCalled>true</soCalled>
- hyphen). Alternatively, in a standalone XML context, these entities
- may be represented as Unicode characters <code>&amp;#x2014;</code>,
- <code>&amp;#x2013;</code>, or <code>&amp;#x2010;</code> respectively.
- Dashes--> are used for a variety of purposes: insertion,
- interruption, new speaker (in dialogue), list item. In the latter two
- cases it is preferable to mark the underlying feature using the
- elements <gi>q</gi> or <gi>item</gi>, on which see section <ptr target="#COHQQ"/>, and section <ptr target="#COLI"/>, respectively.</p>
-<p><term rend="noindex">Quotation marks</term><index><term>quotation
-marks</term><index><term>functions</term></index></index> may be
-removed from text contained by 
-  <gi>q</gi> or <gi>quote</gi> elements, especially as quotations are not
-  always marked by quotation marks (notably long quotations) or may be
-  marked in a variety of ways; see the discussion of quotation and
-  related features in section <ptr target="#COHQQ"/>.</p>
-<p><term rend="noindex">Apostrophes</term><index><term>apostrophe</term><index><term>functions</term></index></index> must be distinguished from single quote marks. As with hyphens, this disambiguation may be performed by selecting an appropriate Unicode character, but it may also be represented by using explicit XML tags for quotations as suggested above. <!--
- This is best done by tagging quotations or other uses of quotation
- marks (see above). --> However, apostrophes have a variety of uses. In
- English they mark contractions, genitive forms, and (occasionally)
- plural forms. Full disambiguation of these uses belongs to the level
- of linguistic analysis and interpretation.</p>
-<p><term rend="noindex">Parentheses</term><index><term>parentheses</term><index><term>functions</term></index></index>
+ <p><term rend="noindex">Dashes</term> are used for a variety of
+ purposes: as a mark of ommission or insertion, as an interruption or
+ to show where a new speaker takes over (in dialogue), or to introduce
+ a list item. In the latter two cases particularly, it is clearly
+ preferable to mark the function as well as its rendition using the
+ elements <gi>q</gi> or <gi>item</gi>, on which see section <ptr
+ target="#COHQQ"/>, and section <ptr target="#COLI"/>,
+ respectively.</p>
+
+<p><term rend="noindex">Quotation marks</term> may be removed from
+text contained by <gi>q</gi> or <gi>quote</gi> elements, on the
+grounds that 
+quotations are not always marked by quotation marks (notably long
+quotations) or may be marked in a variety of ways; see the discussion
+of quotation and related features in section <ptr
+target="#COHQQ"/>.</p>
+<p><term rend="noindex">Apostrophes</term> must be distinguished from
+single quote marks. As with hyphens, this disambiguation is best
+performed by selecting the appropriate Unicode character, though  it may
+also be represented by using appropriate XML markup for quotations as
+suggested above. However, apostrophes have a variety of uses. In
+English they mark contractions, genitive forms, and (occasionally)
+plural forms. Full disambiguation of these uses belongs to the level of
+linguistic analysis and interpretation.</p>
+<p><term rend="noindex">Parentheses</term>
 and other marks of suspension such as dashes or ellipses are often
 used to signal information about the syntactic structure of a text
 fragment. Full disambiguation of their uses also belongs to the level
-of linguistic analysis and interpretation, and is therefore discussed
-in chapter <ptr target="#AI"/>.
+of linguistic analysis and interpretation, and will therefore need to
+use the mechanisms discussed in chapter <ptr target="#AI"/>.
 </p>
-<p>Where punctuation marks are disambiguated by tagging the underlying
-feature they signal, it may be debated whether they should be excluded
-or left as part of the text. In the case of quotation marks, it may
-be more convenient to distinguish opening from closing marks
-simply by using the appropriate Unicode character than to use the
-<gi>q</gi> element, with or without a <att>rend</att> attribute. The
-solution chosen will vary depending upon the feature and depending upon
-the purpose of the project.
+<p>Where punctuation marks are disambiguated by tagging their assumed
+function in the text (for example, quotation), it may be debated
+whether they should be excluded or left as part of the text. In the
+case of quotation marks, it may be more convenient to distinguish
+opening from closing marks simply by using the appropriate Unicode
+character than to use the <gi>q</gi> element, with or without a
+<att>rend</att> attribute. The solution chosen will vary depending
+upon the feature and depending upon the purpose of the project.
 </p> 
 </div>
 <div type="div2" xml:id="COHQ"><head>Highlighting and Quotation</head>
@@ -457,8 +412,8 @@ and often labelled <label>P'</label>); a QRS
 which are mentioned or glossed within the text: for these use the
 appropriate element from section <ptr target="#COHQU"/> below. Compare the
 following example sentences:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">John eats a <foreign xml:lang="fr">croissant</foreign> every morning.</egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><mentioned xml:lang="fr">Croissant</mentioned> is difficult to
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NONE">John eats a <foreign xml:lang="fr">croissant</foreign> every morning.</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NONE"><mentioned xml:lang="fr">Croissant</mentioned> is difficult to
 pronounce with your mouth full.</egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQHF-eg-8">A <term xml:lang="fr">croissant</term> is a crescent-shaped
 piece of light, buttery, pastry that is usually eaten for
@@ -558,38 +513,8 @@ In a second pass, the element <gi>soCalled</gi> might be preferred.
 <!-- WWP proofer asks why. (msm)                              -->
  </p>
 <specGrp xml:id="DCOHQ1">
-
-
-
-
-
-
-
-
-
 &emph;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &hi;
-
-
-
-
-
-
 </specGrp>
 </div>
 <div type="div4" xml:id="COHQHD"><head>Other Linguistically Distinct Material</head>
@@ -644,22 +569,7 @@ element <gi>note</gi> described in section <ptr target="#CONO"/>, or the
 <gi>span</gi> element described in section <ptr target="#AISP"/>.
  </p>
 <specGrp xml:id="DCOHQ3">
-
-
-
-
-
-
-
-
-
 &distinct;
-
-
-
-
-
-
 </specGrp>
 </div></div>
  <div type="div3" xml:id="COHQQ"><head>Quotation</head>
@@ -771,7 +681,8 @@ Some examples are shown below:
  the lighted tomahawk began flourishing
  about me in the dark.</egXML>
  <!-- Melville, Moby Dick (but where?) -->
- <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="fr">Adolphe se tourna vers lui :
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"
+	corresp="#COHQQ-eg-23" xml:lang="fr">Adolphe se tourna vers lui :
  <said>— Alors, Albert, quoi de neuf?</said>
  <said>— Pas grand-chose.</said>
  <said>— Il fait beau,</said> dit Robert.</egXML>
@@ -787,7 +698,8 @@ Some examples are shown below:
  elements <gi>said</gi> and <gi>q</gi>  share the following attribute:
 <specList><specDesc key="att.ascribed" atts="who"/></specList>
 This may be used to make explicit who is speaking:
- <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="fr">Adolphe se tourna vers lui :
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"
+	corresp="#COHQQ-eg-23" xml:lang="fr">Adolphe se tourna vers lui :
  <said who="#Adolphe">— Alors, Albert,
  quoi de neuf?</said>
  <said who="#Albert">— Pas grand-chose.</said>
@@ -908,8 +820,8 @@ This may be used to make explicit who is speaking:
  <!-- The Guardian, p2, 26 Oct 1992  --></p>
  <p>The same element should be used to mark a variety of special ironic
  usages. Some further examples follow:
- <egXML xmlns="http://www.tei-c.org/ns/Examples">He hated <soCalled>good</soCalled> books.</egXML>
- <egXML xmlns="http://www.tei-c.org/ns/Examples"><soCalled>Croissants</soCalled> indeed! toast not good enough for you?</egXML>
+ <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NONE">He hated <soCalled>good</soCalled> books.</egXML>
+ <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NONE"><soCalled>Croissants</soCalled> indeed! toast not good enough for you?</egXML>
  <!-- some "real" examples would be better -->
  <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQQ-eg-33">Although Chomsky's decision that all NL
  sentences are finite objects was never justified by arguments from
@@ -922,84 +834,12 @@ This may be used to make explicit who is speaking:
  </p>
  <specGrp xml:id="DCOHQQ" n="Quotation">
 
-
-
-
-
-
-
 &said;
-
-
-
-
-
-
-
-
-
-
-
-
 &quote;
-
-
-
-
-
-
-
-
-
-
-
-
 &q;
-
-
-
-
-
-
-
-
-
-
-
-
 &cit;
-
-
-
-
-
-
-
-
-
-
-
-
 &mentioned;
-
-
-
-
-
-
-
-
-
-
-
-
-&soCalled;
-
-
-
-
-
- </specGrp>
+&soCalled; </specGrp>
 </div>
 <div type="div3" xml:id="COHQU"><head>Terms, Glosses, Equivalents, and Descriptions</head>
 <p>This section describes a set of textual elements which are
@@ -1186,46 +1026,10 @@ clause. </p>
 <specGrp xml:id="DCOHQU">
 <!-- &altIdent;-->
 
-
-
-
-
-
-
-&desc;
-
-
-
-
-
-<!-- &equiv;-->
-
-
-
-
-
-
+&desc;<!-- &equiv;-->
 
 &gloss;
-
-
-
-
-
-
-
-
-
-
-
-
-&term;
-
-
-
-
-
-</specGrp>
+&term;</specGrp>
 </div>
 <div type="div3" xml:id="COHQHEG"><head>Some Further Examples</head>
 <p>As a simple example of the elements discussed here, consider the
@@ -1251,7 +1055,7 @@ be able to produce reliable results by simply looking for italicized
 words.  Where economic and intellectual constraints permit, therefore,
 it would be preferable to encode both the function of the
 highlighted phrases and their appearance, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">On the one hand the <title rend="italic">Nibelungenlied</title>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#CONADA-eg-144">On the one hand the <title rend="italic">Nibelungenlied</title>
 is associated with the new rise of romance of twelfth-century France,
 the <foreign rend="italic">romans d'antiquité</foreign>, the
 romances of Chrétien de Troyes, ...</egXML></p>
@@ -1394,17 +1198,17 @@ main body of the text are incorrect.</q></p>
 <p>An encoder may choose to correct the typographic error, either
 silently or with an indication that a correction has been made, as
 follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">… marginal comments which indicate that the <corr>dates</corr>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NONE">… marginal comments which indicate that the <corr>dates</corr>
 mentioned in the main body of the text are incorrect.</egXML></p><p>Alternatively, the encoder may simply record the typographic
 error without correcting it, either without comment or with a
 <gi>sic</gi> element to indicate the error is not a transcription error
 in the encoding:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">… marginal comments which indicate that the <sic>date's</sic>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NONE">… marginal comments which indicate that the <sic>date's</sic>
 mentioned in the main body of the text are incorrect.</egXML></p><p>If the encoder elects both to record the original source text
 and to provide a correction for the sake of word-search
 and other programs, both <gi>sic</gi> and <gi>corr</gi> are used,
 wrapped in a <gi>choice</gi>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">… marginal comments which indicate that the
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NONE">… marginal comments which indicate that the
   <choice>
     <corr>dates</corr>
     <sic>date's</sic>
@@ -1413,7 +1217,7 @@ wrapped in a <gi>choice</gi>:
   appear in either order.</p>
 <p>If  it is desired to indicate the person or edition responsible for
 the emendation, this might be done as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">… marginal comments which indicate that the
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NONE">… marginal comments which indicate that the
   <choice>
     <corr resp="#msm">dates</corr>
     <sic>date's</sic>
@@ -1456,54 +1260,9 @@ interventions of this kind are all provided by the module described in
 chapter <ptr target="#PH"/>. 
 </p>
 <specGrp xml:id="DCOEDC" n="Editorial tags for correction">
-
-
-
-
-
-
-
-
-
 &sic;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &corr;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &choice;
-
-
-
-
-
-
 </specGrp>
 </div><div type="div3" xml:id="COEDREG"><head>Regularization and
 Normalization</head> <p>When the source text makes extensive use of
@@ -1532,13 +1291,14 @@ the world may judge: for my part I thinke there canot
 be a greater sacryfice to God.</q></p><p>An encoder may choose to preserve the original spelling of this
 text, but simply flag it as nonstandard by using the <gi>orig</gi>
 element with no attributes specified, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>...how godly a <orig>dede</orig> it is to
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COEDREG-eg-74"><p>...how godly a <orig>dede</orig> it is to
 <orig>overthrowe</orig> so wicked a race the
 world may judge: for my part I <orig>thinke</orig>
 there <orig>canot</orig> be a greater
 <orig>sacryfice</orig> to God</p></egXML></p><p>Alternatively, the encoder may simply indicate that certain words
 have been modernized by using the <gi>reg</gi> element with no
-attributes specified, as follows:<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>...how godly a
+attributes specified, as follows:<egXML
+xmlns="http://www.tei-c.org/ns/Examples" corresp="#COEDREG-eg-74"><p>...how godly a
 <reg>deed</reg> it is to <reg>overthrow</reg> so wicked a race the
 world may judge: for my part I <reg>think</reg>
 there <reg>cannot</reg> be a greater
@@ -1582,38 +1342,8 @@ regularization in two ways, as follows:
 -->
 </p>
 <specGrp xml:id="DCOEDR" n="Editorial tags for regularization">
-
-
-
-
-
-
-
-
-
 &reg;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &orig;
-
-
-
-
-
-
 </specGrp>
 </div>
 <div type="div3" xml:id="COEDADD"><head>Additions, Deletions, and Omissions</head>
@@ -1627,9 +1357,6 @@ editorial practices:
   <specDesc key="add"/>
   <specDesc key="del"/>
 </specList></p>
-
-
-
 <p>Encoders may choose to omit parts of the copy text for reasons
 ranging from illegibility of the source or impossibility of transcribing
 it, to editorial policy, e.g. a systematic exclusion of poetry or prose
@@ -1718,10 +1445,7 @@ to assist the silence. Who—what had <choice>
 <note type="cit">Ambrose Bierce, <title>The Boarded
 Window</title>; p. 370 of my wife's 1927 First Modern Library edition
 of <title>In the Midst of Life</title>.</note>
--->
-
-
-<p>Where the material affected is entirely illegible or inaudible, the
+--><p>Where the material affected is entirely illegible or inaudible, the
 <gi>gap</gi> element discussed above should be used in preference.</p>
 <p>The <gi>del</gi> element is used to mark material which is deleted in
 the source but which can still be read with some degree of confidence,
@@ -1739,7 +1463,7 @@ humorous purposes:
 </p><p>The <att>rend</att> attribute may be used to distinguish different
 methods of deletion in manuscript or typescript material, as in this
 line from the typescript of Eliot's <title>Waste Land</title>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en"><l><del rend="overtyped">Mein</del> Frisch
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" corresp="#COEDADD-eg-89"><l><del rend="overtyped">Mein</del> Frisch
 <del type="overstrike">schwebt</del> weht der Wind</l></egXML></p>
 <p>Deletion in manuscript or typescript is often associated with
 addition:
@@ -1796,58 +1520,10 @@ chapter <ptr target="#TC"/>, and chapter <ptr target="#PH"/>.</p>
 </p>
 <specGrp xml:id="DCOEDA" n="Other editorial tags">
 
-
-
-
-
-
-
 &gap;
-
-
-
-
-
-
-
-
-
-
-
-
 &add;
-
-
-
-
-
-
-
-
-
-
-
-
 &del;
-
-
-
-
-
-
-
-
-
-
-
-
-&unclear;
-
-
-
-
-
-</specGrp>
+&unclear;</specGrp>
 </div></div>
 <div type="div2" xml:id="CONA"><head>Names, Numbers, Dates, Abbreviations, and Addresses</head>
 
@@ -1898,7 +1574,7 @@ account whatsoever, to give a straightforward answer,
 </p><p>As the following example shows, the <gi>rs</gi> element may be used
 for any reference to a person, place, etc., not only to references in
 the form of a proper noun or noun phrase.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p><q>My dear <rs type="person">Mr. Bennet</rs></q>, said
+<egXML xmlns="http://www.tei-c.org/ns/Examples"  corresp="#CONARS-eg-101"><p><q>My dear <rs type="person">Mr. Bennet</rs></q>, said
 <rs type="person">his lady</rs> to him one day ... </p></egXML>
 </p><p>The <gi>name</gi> element by contrast is provided for the special
 case of referencing strings which consist only of proper nouns; it may
@@ -1906,7 +1582,7 @@ be used synonymously with the <gi>rs</gi> element, or nested within it
 if a referring string contains a mixture of common and proper nouns.
 The following example shows an alternative way of encoding the short
 sentence from <title>Pride and Prejudice</title> quoted above:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p><q>My dear <name type="person">Mr. Bennet</name>,</q> said <rs type="person">his lady</rs> to him one day,  
+<egXML xmlns="http://www.tei-c.org/ns/Examples"  corresp="#CONARS-eg-101"><p><q>My dear <name type="person">Mr. Bennet</name>,</q> said <rs type="person">his lady</rs> to him one day,  
 <q>have you heard that <name type="place">Netherfield Park</name> is let at last?</q></p></egXML>
 As the following example shows,  a proper name may be nested within a
 referring string:
@@ -1940,7 +1616,7 @@ ref"/></specList>
 <p>A very useful application for them is as a means of gathering
 together all references to the same individual or location scattered
 throughout a document: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><p><q>My dear <rs key="BENM1"
+xmlns="http://www.tei-c.org/ns/Examples"  corresp="#CONARS-eg-101"><p><q>My dear <rs key="BENM1"
 type="person"> Mr. Bennet</rs>,</q> said <rs key="BENM2"
 type="person">his lady</rs> to him one day, <q>have you heard that <rs
 key="NETP1" type="place">Netherfield Park</rs> is let at
@@ -1957,7 +1633,7 @@ code, as in the examples above, with no particular significance. More
 usually however, it will be an externally defined code of some kind,
 as provided by a standard reference source.
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples" >
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NONE" >
 <p><name key="LHR" type="airport">Heathrow</name> </p></egXML>
 </p>
 <p>The <att>ref</att> attribute can be used to point directly
@@ -1966,7 +1642,7 @@ entity named by the element, such as an authority record in a
 database, an encylopaedia entry, another element in the same
 or a different document etc. 
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples" >
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NONE">
 <p><name ref="http://en.wikipedia.org/wiki/Heathrow_airport" type="airport">Heathrow</name> </p></egXML>
 </p>
 <p>This use should be distinguished from the use of a nested
@@ -2012,38 +1688,8 @@ tools described in chapter <ptr target="#FS"/> should be used.
  </p>
 
 <specGrp xml:id="DCONA" n="Proper Names">
-
-
-
-
-
-
-
-
-
 &name;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &rs;
-
-
-
-
-
-
 </specGrp>
 </div>
 <div type="div3" xml:id="CONAAD"><head>Addresses</head>
@@ -2137,90 +1783,12 @@ example might then be encoded as follows:
    <postCode>OX2 6RB</postCode>
    <country>United Kingdom</country>
 </address></egXML>
-</p>
-
-
-<specGrp xml:id="DCOAD" n="Addresses and their components">
-
-
-
-
-
-
-
-
-&email;
-
-
-
-
-
-
-
-
-
-
-
-
+</p><specGrp xml:id="DCOAD" n="Addresses and their components">&email;
 &address;
-
-
-
-
-
-
-
-
-
-
-
-
 &addrLine;
-
-
-
-
-
-
-
-
-
-
-
-
 &street;
-
-
-
-
-
-
-
-
-
-
-
-
 &postCode;
-
-
-
-
-
-
-
-
-
-
-
-
 &postBox;
-
-
-
-
-
-
 </specGrp>
 
 </div>
@@ -2336,52 +1904,10 @@ avoid the need to repeat all the normalizing attributes:
 </p>
 
 <specGrp xml:id="DCONU" n="Numbers and measures">
-
-
-
-
-
-
-
-
-
 &num;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &measure;
 
-
-
-
-
-
-
-
-
-
-
-
-
 &measureGrp;
-
-
-
-
-
-
 </specGrp>
 </div>
 <div type="div3" xml:id="CONADA"><head>Dates and Times</head>
@@ -2488,38 +2014,8 @@ it should specify the equivalent date in the Gregorian calendar. </p>
 <!-- example needed -->
 
 <specGrp xml:id="DCODA" n="Dates and times">
-
-
-
-
-
-
-
-
-
 &date;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &time;
-
-
-
-
-
-
 </specGrp>
 </div>
 <div type="div3" xml:id="CONAAB"><head>Abbreviations and Their Expansions</head>
@@ -2576,32 +2072,8 @@ additional elements made available for the purpose by the <ident type="module">t
 
 <specGrp xml:id="DCOAB" n="Abbreviations">
 
-
-
-
-
-
-
 &abbr;
-
-
-
-
-
-
-
-
-
-
-
-
-&expan;
-
-
-
-
-
-</specGrp>
+&expan;</specGrp>
 </div></div>
 <div type="div2" xml:id="COXR"><head>Simple Links and Cross-References</head>
 <p>Cross-references or links between one location in a document and one or more
@@ -2729,42 +2201,9 @@ section. In conjunction with the analytic tools discussed
 in chapters <ptr target="#SA"/>, <ptr target="#AI"/>, and <ptr target="#FS"/>, they may be
 used to link analyses of a text to their object, to combine
 corresponding segments of a text, or to align segments of a text with a
-temporal or other axis or with each other.</p>
-
-
-<specGrp xml:id="DCOXR" n="Simple cross-references">
-
-
-
-
-
-
-
-
-
+temporal or other axis or with each other.</p><specGrp xml:id="DCOXR" n="Simple cross-references">
 &ptr;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &ref;
-
-
-
-
-
-
 </specGrp>
 
 </div>
@@ -2790,7 +2229,7 @@ enumerator is retained in the encoded text, it may be supplied either by
 using the <att>n</att> attribute on the <gi>item</gi> element, or by
 using a <gi>label</gi> element.  The following examples are thus
 equivalent:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">I will add two facts, which have seldom occurred in
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#GibAut">I will add two facts, which have seldom occurred in
 the composition of six, or at least of five quartos.
 <list rend="runon" type="ordered">
       <label>(1)</label>
@@ -2801,7 +2240,7 @@ intermediate copy, has been sent to the press.</item>
 eyes, excepting those of the author and the printer:
 the faults and the merits are exclusively my own.</item>
    </list></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">I will add two facts, which have seldom occurred in
+<egXML xmlns="http://www.tei-c.org/ns/Examples"  corresp="#GibAut">I will add two facts, which have seldom occurred in
 the composition of six, or at least of five quartos.
 <list rend="runon" type="ordered">
       <item n="1">My first rough manuscript, without any
@@ -2875,7 +2314,7 @@ it is a semantic error for a list tagged with <code>type="gloss"</code> not to h
 Additionally, the  <gi>term</gi> and <gi>gloss</gi> elements discussed
 in section <ptr target="#COHQU"/> might be used to make explicit the role
 that each column in the glossary list has, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><list type="gloss">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"  corresp="#CO-eg-04"><list type="gloss">
   <head>Unit Three — Vocabulary</head>
   <label><term xml:lang="la">acerbus, -a, -um</term> </label>
   <item><gloss>bitter, harsh</gloss> </item>
@@ -2954,102 +2393,12 @@ way.
  </p>
 
 <specGrp xml:id="DCOLI" n="Lists and List Items">
-
-
-
-
-
-
-
-
-
 &list;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &item;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &label;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &head;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &headLabel;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &headItem;
-
-
-
-
-
-
 </specGrp>
 </div>
 <div type="div2" xml:id="CONO"><head>Notes, Annotation, and Indexing</head>
@@ -3203,7 +2552,7 @@ apparell taxed, <ref>527</ref>; their counterfeit tears
 <p>Note that this simple representation does not capture the nested
 structure of the first of these index entries. A more accurate representation might
 entail the use of nested lists like the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><item>Women, 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"  corresp="#COXR-eg-164"><item>Women, 
    <list><item>how cause of mel. <ref>193</ref>;</item> 
       <item>their vanity in apparell taxed, <ref>527</ref>;</item>
       <item>their counterfeit tears <ref>547</ref>;</item>
@@ -3449,38 +2798,8 @@ containing some text such as <q>see Text Encoding Initiative</q>. Such
 internal cross-references must be added as part of the post-editing
 phase for an auto-generated index.</p>
 <specGrp xml:id="DCONO" n="Annotation">
-
-
-
-
-
-
-
-
-
 &note;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &index;
-
-
-
-
-
-
 </specGrp>	
 </div>
 </div>
@@ -3567,35 +2886,8 @@ capabilities, for example the ability to combine a number of images
 into a hierarchically organized structure or a block of images. It
 also provides the ability to associate an image with additional information
 such as a heading or a description.</p>
-<specGrp xml:id="DCOGR" n="Graphic containers">
-
-
-
-
-
-
-
-
-&graphic;
-
-
-
-
-
-
-
-
-
-
-
-
-&binaryObject;
-
-
-
-
-
-</specGrp>
+<specGrp xml:id="DCOGR" n="Graphic containers">&graphic;
+&binaryObject;</specGrp>
 </div>	
 <div type="div2" xml:id="CORS"><head>Reference Systems</head>
 <p>By <mentioned>reference system</mentioned> we mean the system by which names
@@ -4444,36 +3736,9 @@ inter-element punctuation:  this facilitates use of the
 <gi>biblStruct</gi> element in systems which can render bibliographic
 references in any of several styles.
  </p>
-<specGrp xml:id="DCOBILV" n="Levels of bibliographic information">
-
-
-
-
-
-&analytic;
-
-
-
-
-
-
-
-
-
+<specGrp xml:id="DCOBILV" n="Levels of bibliographic information">&analytic;
 &monogr;
-
-
-
-
-
-
-
-
-
 &series;
-
-
-
 
 </specGrp>
 </div>
@@ -4685,102 +3950,12 @@ this information, as in the following example:
 </p>
 
 <specGrp xml:id="DCOBICOR" n="Author, title, etc.">
-
-
-
-
-
-
-
-
-
 &author;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &editor;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &respStmt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &resp;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &title;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &meeting;
-
-
-
-
-
-
 </specGrp>
 </div>
 <div type="div4" xml:id="COBICOI"><head>Imprint, Pagination, and Other Details</head>
@@ -4960,70 +4135,10 @@ both the following are legal examples:
 	<!-- no sense) (msm)                                          -->
  </p>
 <specGrp xml:id="DCOPUB" n="Bibliographic sub-elements">
-
-
-
-
-
-
-
-
-
 &imprint;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &publisher;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &biblScope;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &pubPlace;
-
-
-
-
-
-
 </specGrp>
 </div>
 <div type="div4" xml:id="COBICOS"><head>Series Information</head>
@@ -5127,75 +4242,15 @@ encoded as follows:
 <!-- enumerate type attribute values? -->
 
 <specGrp xml:id="DCOBI" n="Tags for Bibliographic References">
-
-
-
-
-
-
-
-
-
 &bibl;
-
-
-
-
-
-
 <!--&biblItem;-->
-
-
-
-
-
-
-
-
-
 &biblStruct;
-
-
-
-
-
-
 <!-- &biblFull; -->
-
-
-
-
-
-
-
-
-
 &listBibl;
-
-
-
-
-
-
 <specGrpRef target="#DCOBILV"/>
 <specGrpRef target="#DCOBICOR"/>
 <specGrpRef target="#DCOPUB"/>
-
-
-
-
-
-
-
-
-
 &relatedItem;
-
-
-
-
-
-
 </specGrp>
 </div>
 <div type="div4" xml:id="COBICON"><head>Notes and Other Additional Information</head>
@@ -5218,9 +4273,6 @@ Text Processing.</title>
          markup in scholarly work.</note>
 </bibl></egXML>
  </p></div>
-
-
-
 <div type="div4" xml:id="COBICOO"><head>Order of Components within References</head>
 <p>The order of elements in <gi>bibl</gi> elements is not constrained.
  </p>
@@ -5436,10 +4488,7 @@ two typographic lines, with a break at the point indicated. Note that
 this encoding makes no attempt to preserve information about the
 whitespace or indentation associated with either kind of line; if regarded
 as essential, this information would be recorded using the
-<att>rend</att> or <att>rendition</att> attributes discussed in <ptr target="#STGA"/>. </p>
-
-
-<p>The <gi>l</gi> element should not be used to represent typographic
+<att>rend</att> or <att>rendition</att> attributes discussed in <ptr target="#STGA"/>. </p><p>The <gi>l</gi> element should not be used to represent typographic
 lines in non-verse materials: if the line-breaking points in a prose
 text are considered important for analysis, they should be marked with
 the <gi>lb</gi> element. Alternatively, a neutral segmentation element
@@ -5582,32 +4631,8 @@ chapter <ptr target="#VE"/>.
 
 <specGrp xml:id="DCOVE" n="Verse">
 
-
-
-
-
-
-
 &l;
-
-
-
-
-
-
-
-
-
-
-
-
-&lg;
-
-
-
-
-
-</specGrp>
+&lg;</specGrp>
 </div>
 <div type="div3" xml:id="CODR"><head>Core Tags for Drama</head><p>Like other written texts, dramatic and other <term>performance
 texts</term> such as cinema or TV scripts are often hierarchically
@@ -5767,54 +4792,9 @@ were dialogue in a play.  The following example is taken  from a 19th century
  </p>
 
 <specGrp xml:id="DCODR" n="Drama">
-
-
-
-
-
-
-
-
-
 &sp;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &speaker;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &stage;
-
-
-
-
-
-
 </specGrp>
 </div></div>
  <div type="div2" xml:id="COOV"><head>Overview of the Core Module </head>
