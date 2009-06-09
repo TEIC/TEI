@@ -809,10 +809,5 @@
 	<xsl:template match="tei:head/tei:c[@rend='tab']"
 		      mode="part2"/>
 
-	<!-- div with head only -->
-
-	<xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2">
-	</xsl:template>
-
 
 </xsl:stylesheet>

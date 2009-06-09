@@ -769,6 +769,13 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+ 
+    <!-- override for part 2 -->
+
+	<!-- div with head only -->
+
+	<xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2">
+	</xsl:template>
     
 </xsl:stylesheet>
 <!-- 
