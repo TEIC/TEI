@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
      xmlns:rng="http://relaxng.org/ns/structure/1.0"
      xmlns:xi="http://www.w3.org/2001/XInclude"
      xmlns:s="http://www.ascc.net/xml/schematron"
@@ -2666,7 +2667,8 @@ pointer to the <gi>surface</gi> element corresponding with the part of
 the manuscript at which the transcribed text begins.
 </p>
 </div>
-
+<div>
+<head>Schema</head>
 <schemaSpec ident="enrich" start="TEI msDesc teiHeader">
 	<moduleRef key="header"/>
 	<moduleRef key="core"/>
@@ -3089,16 +3091,13 @@ item</desc></valItem>
 <!-- constrain date attributes -->
 
 <elementSpec ident="date" mode="change" module="core">
-<content>
-<s:pattern name="date_values">
-  <s:rule context="tei:date">
-    <s:assert test="@when or (@notAfter and @notBefore) or
-(@from and @to)">
-    You must provide either @when or @to/@from, or @notAfter/@notBefore.</s:assert>
-  </s:rule>
-</s:pattern>
-
-</content>
+  <constraint scheme="isoschematron" ident="dates">
+    <data>
+      <sch:assert test="@when or (@notAfter and @notBefore) or
+			(@from and @to)">
+      You must provide either @when or @to/@from, or @notAfter/@notBefore.</sch:assert>
+    </data>
+  </constraint>
 </elementSpec>
 
 <!-- remove optional global attribute we don't want to use -->
@@ -3177,7 +3176,7 @@ item</desc></valItem>
 
 </schemaSpec>
 
-
+</div>
    </body>
   </text>
 </TEI>
