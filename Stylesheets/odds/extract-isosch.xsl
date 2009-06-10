@@ -8,14 +8,14 @@
 		exclude-result-prefixes="tei rng teix sch xi #default"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
-  <xsl:key name="SCHEMATRONNS" match="sch:ns[parent::tei:data or parent::rng:*]" use="1"/>
-  <xsl:key name="SCHEMATRON" match="sch:pattern[parent::tei:data or
+  <xsl:key name="SCHEMATRONNS" match="sch:ns[parent::tei:constraint or parent::rng:*]" use="1"/>
+  <xsl:key name="SCHEMATRON" match="sch:pattern[parent::tei:constraint or
 				    parent::rng:*]" use="1"/>
-  <xsl:key name="SCHEMATRON" match="sch:rule[parent::tei:data or
+  <xsl:key name="SCHEMATRON" match="sch:rule[parent::tei:constraint or
 				    parent::rng:*]" use="1"/>
-  <xsl:key name="SCHEMATRON" match="sch:assert[parent::tei:data or
+  <xsl:key name="SCHEMATRON" match="sch:assert[parent::tei:constraint or
 				    parent::rng:*]" use="1"/>
-  <xsl:key name="SCHEMATRON" match="sch:report[parent::tei:data or parent::rng:*]" use="1"/>
+  <xsl:key name="SCHEMATRON" match="sch:report[parent::tei:constraint or parent::rng:*]" use="1"/>
   <xsl:template match="/">
     <schema>
       <title>ISO Schematron rules</title>
@@ -34,7 +34,7 @@
 	    <xsl:apply-templates select="."/>
 	  </xsl:when>
 	  <xsl:when test="(self::sch:report or self::sch:assert) and ancestor::tei:elementSpec">
-	    <pattern id="{ancestor::tei:elementSpec/@ident}-constraint-{ancestor::tei:constraint/@ident}">
+	    <pattern id="{ancestor::tei:elementSpec/@ident}-constraint-{ancestor::tei:constraintSpec/@ident}">
 	      <rule>
 		<xsl:attribute name="context">
 		  <xsl:text>tei:</xsl:text>

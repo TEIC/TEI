@@ -848,7 +848,7 @@ select="$makeDecls"/></xsl:message>
         </xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates select="tei:constraint"/>
+    <xsl:apply-templates select="tei:constraintSpec"/>
 
   </xsl:template>
 
@@ -1661,12 +1661,12 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template name="inhnamespace"/>
 
-  <xsl:template match="tei:constraint/tei:desc"/>
-  <xsl:template match="tei:constraint/tei:gloss"/>
-  <xsl:template match="tei:constraint/tei:equiv"/>
+  <xsl:template match="tei:constraintSpec/tei:desc"/>
+  <xsl:template match="tei:constraintSpec/tei:gloss"/>
+  <xsl:template match="tei:constraintSpec/tei:equiv"/>
 
 
- <xsl:template match="tei:constraint"/>
+ <xsl:template match="tei:constraintSpec"/>
 
   <xsl:template match="tei:altIdent"/>
 
@@ -2029,7 +2029,7 @@ select="$makeDecls"/></xsl:message>
 	<xsl:copy-of select="."/>
       </xsl:when>
       <xsl:when test="self::s:rule">
-	<s:pattern name="{ancestor::tei:elementSpec/@ident}-constraint-{ancestor::tei:constraint/@ident}">
+	<s:pattern name="{ancestor::tei:elementSpec/@ident}-constraint-{ancestor::tei:constraintSpec/@ident}">
 	  <xsl:copy-of select="."/>
 	</s:pattern>
       </xsl:when>
@@ -2040,7 +2040,7 @@ select="$makeDecls"/></xsl:message>
 		  select="ancestor::tei:elementSpec/@ident"/>
 	      <xsl:text>-constraint-</xsl:text>
 	      <xsl:value-of
-		  select="ancestor::tei:constraint/@ident"/>
+		  select="ancestor::tei:constraintSpec/@ident"/>
 	      <xsl:if test="count(../s:report|s:assert) &gt;1">
 		<xsl:number/>
 	      </xsl:if>

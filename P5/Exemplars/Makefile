@@ -58,5 +58,6 @@ clean:
 	-rm *.xsd *.dtd *.doc.* *.rnc tei*.rng *.compiled.* *~
 	-rm tei_allPlus.odd
 	-rm exnames.xml
+	-rm enrich.rng isofs.rng
 	-rm tei_odds.odd
 	-rm names.xml

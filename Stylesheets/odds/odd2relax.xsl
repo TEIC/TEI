@@ -98,7 +98,7 @@ xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/stri
               <xsl:call-template name="schemaSpecBody"/>
             </xsl:otherwise>
           </xsl:choose>
-	  <xsl:apply-templates select="tei:constraint"/>
+	  <xsl:apply-templates select="tei:constraintSpec"/>
         </rng:grammar>
       </xsl:with-param>
     </xsl:call-template>
@@ -296,11 +296,11 @@ xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/stri
   <xsl:template match="processing-instruction()"/>
   <xsl:template match="processing-instruction()" mode="tangle"/>
 
-  <xsl:template match="tei:constraint[@scheme='schematron']">
+  <xsl:template match="tei:constraintSpec[@scheme='schematron']">
     <xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="tei:constraint[@scheme='isoschematron']">
+  <xsl:template match="tei:constraintSpec[@scheme='isoschematron']">
     <xsl:apply-templates/>
   </xsl:template>
 

@@ -35,9 +35,9 @@
       <moduleRef key="namesdates"/>
       <moduleRef key="textstructure"/>
       <elementSpec ident="div" mode="change">
-	<constraint mode="add" ident="canondiv"
+	<constraintSpec mode="add" ident="canondiv"
 		    scheme="isoschematron">
-	  <data>
+	  <constraint>
 	    <s:report test="@type='canon' and
 			      parent::tei:div/@type='canon'">
 	      divs of type 'canon' may not be nested
@@ -54,24 +54,24 @@
 			      not(parent::tei:div[@type='canon'])">
 	      divs of type 'canonText' can only occur inside 'canon'
 	    </s:report>
-	  </data>
-	</constraint>
+	  </constraint>
+	</constraintSpec>
       </elementSpec>
       <elementSpec ident="p" mode="change">
-	  <constraint mode="add" ident="c1" scheme="isoschematron">
-	    <data>
+	  <constraintSpec mode="add" ident="c1" scheme="isoschematron">
+	    <constraint>
 	    <s:report test="tei:list"> 
 	    lists inside paragraphs not supported </s:report>
-	    </data>
-	  </constraint>
-	  <constraint mode="add" ident="c2"  scheme="isoschematron">
-	    <data>
+	    </constraint>
+	  </constraintSpec>
+	  <constraintSpec mode="add" ident="c2"  scheme="isoschematron">
+	    <constraint>
 	      <sch:rule context="tei:p|tei:q">
 		<sch:report test="contains(@rend,' ')"> 
 		multi-valued rend is not supported </sch:report>
 	      </sch:rule>
-	    </data>
-	  </constraint>
+	    </constraint>
+	  </constraintSpec>
 
 
 	<attList>
@@ -84,7 +84,7 @@
       </elementSpec>
 
       <elementSpec ident="relation" mode="change" >
-	 <constraint ident="activepassive" mode="delete" scheme="isoschematron"/>
+	 <constraintSpec ident="activepassive" mode="delete" scheme="isoschematron"/>
       </elementSpec>
 
     </schemaSpec>

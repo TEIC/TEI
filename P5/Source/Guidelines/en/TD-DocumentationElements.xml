@@ -788,16 +788,16 @@ has a note that
 may be supplied only if the attribute <att>active</att> is
 supplied.</q>, which can be written in Schematron as
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-  <constraint ident="activemutual" scheme="isoschematron"> 
+  <constraintSpec ident="activemutual" scheme="isoschematron"> 
     <desc>Check mutually incompatible attributes</desc>
-    <data>
+    <constraint>
       <s:report test="@active and @mutual">Only one of the attributes
       'active' and 'mutual' may be supplied</s:report>
       <s:report test="@passive and not(@active)">the attribute 'passive'
       may be supplied only if the attribute 'active' is
       supplied</s:report>
-    </data>
-  </constraint>
+    </constraint>
+  </constraintSpec>
 
 </egXML>
 </p>
@@ -806,8 +806,8 @@ a TEI document which is going to be rendered into accessible HTML. We can check
 that some sort of content is available from which the <att>alt</att>
 attribute of an HTML <gi scheme="HTML">img</gi> can be created:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<constraint ident="alt" scheme="isoschematron">
-  <data> 
+<constraintSpec ident="alt" scheme="isoschematron">
+  <constraint> 
     <s:pattern name="Alt tags">
       <s:rule context="tei:figure">
 	<s:report test="not(tei:figDesc or tei:head)"> You should
@@ -815,53 +815,53 @@ attribute of an HTML <gi scheme="HTML">img</gi> can be created:
 	we can construct an alt attribute in HTML </s:report>
       </s:rule>
     </s:pattern>
-  </data>
-</constraint>
+  </constraint>
+</constraintSpec>
 </egXML>
 or we might enforce other HTML accessibility rules about tables; note
 here the use of a report and an assertion within one pattern:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<constraint ident="tables" scheme="isoschematron">
-<data>
+<constraintSpec ident="tables" scheme="isoschematron">
+<constraint>
   <s:pattern name="Tables">		
     <s:rule context="tei:table">
        <s:assert test="tei:head">A &lt;table> should have a caption, using a &lt;head> element</s:assert>
        <s:report test="parent::tei:body">Do not use tables to lay out the document body</s:report>
      </s:rule>
   </s:pattern>	
-</data>
 </constraint>
+</constraintSpec>
 </egXML>
 We can also model contextual constraints in Schematron:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<constraint ident="subclauses"  scheme="isoschematron">
-  <data>
+<constraintSpec ident="subclauses"  scheme="isoschematron">
+  <constraint>
   <s:rule context="tei:div">
     <s:assert
 	test="not(tei:div) or count(tei:div)&gt;1">a clause must contain
     at least two subclauses</s:assert>
   </s:rule>
-  </data>
-</constraint>
+  </constraint>
+</constraintSpec>
 </egXML>
 and base requirements on attribute values:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<constraint ident="introtitle"  scheme="isoschematron">
-  <data>
+<constraintSpec ident="introtitle"  scheme="isoschematron">
+  <constraint>
   <s:assert
       test="tei:fileDesc/tei:titleStmt/tei:title[@type='introductory']">
     An introductory component of the title is expected
   </s:assert>
-  </data>
-</constraint>
-<constraint ident="maintitle" scheme="isoschematron">
-  <data>
+  </constraint>
+</constraintSpec>
+<constraintSpec ident="maintitle" scheme="isoschematron">
+  <constraint>
     <s:assert
 	test="tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
       An main component of the title is expected
     </s:assert>
-  </data>
-</constraint>
+  </constraint>
+</constraintSpec>
 </egXML>
 </p>
 </div>
@@ -1194,7 +1194,7 @@ see section <ptr target="STEC"/>.-->
 <specGrp xml:id="TDSG5" n="Element specification elements">
 &content;
 &constraint;
-&data;
+&constraintSpec;
 &macro.anyXML;
 &macro.schemaPattern;
 &attList;

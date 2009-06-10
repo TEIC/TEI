@@ -29,14 +29,14 @@
   <xsl:key name="CHANGE" match="tei:elementSpec[@mode='change']" use="@ident"/>
   <xsl:key name="CHANGE" match="tei:macroSpec[@mode='change']" use="@ident"/>
   <xsl:key name="CHANGEATT" match="tei:attDef[@mode='change']" use="concat(../../@ident,'_',@ident)"/>
-  <xsl:key name="CHANGECONSTRAINT" match="tei:constraint[@mode='change']" use="concat(../@ident,'_',@ident)"/>
+  <xsl:key name="CHANGECONSTRAINT" match="tei:constraintSpec[@mode='change']" use="concat(../@ident,'_',@ident)"/>
   <xsl:key name="CLASS_MEMBERED" use="tei:classes/tei:memberOf/@key" match="tei:classSpec"/>
   <xsl:key name="DELETE" match="tei:classSpec[@mode='delete']" use="@ident"/>
   <xsl:key name="DELETE" match="tei:elementSpec[@mode='delete']" use="@ident"/>
   <xsl:key name="DELETE" match="tei:macroSpec[@mode='delete']" use="@ident"/>
   <xsl:key name="DELETEATT" match="tei:attDef[@mode='delete']" use="concat(ancestor::tei:elementSpec/@ident,'_',@ident)"/>
   <xsl:key name="DELETEATT" match="tei:attDef[@mode='delete']" use="concat(ancestor::tei:classSpec/@ident,'_',@ident)"/>
-  <xsl:key name="DELETECONSTRAINT" match="tei:constraint[@mode='delete']" use="concat(../@ident,'_',@ident)"/>
+  <xsl:key name="DELETECONSTRAINT" match="tei:constraintSpec[@mode='delete']" use="concat(../@ident,'_',@ident)"/>
   <xsl:key name="ELEMENT_MEMBERED" use="tei:classes/tei:memberOf/@key" match="tei:elementSpec"/>
   <xsl:key name="IDS" match="tei:*[@xml:id]" use="@xml:id"/>
   <xsl:key name="MACROS" use="@ident" match="tei:macroSpec"/>
@@ -52,7 +52,7 @@
   <xsl:key name="REPLACE" match="tei:elementSpec[@mode='replace']" use="@ident"/>
   <xsl:key name="REPLACE" match="tei:macroSpec[@mode='replace']" use="@ident"/>
   <xsl:key name="REPLACEATT" match="tei:attDef[@mode='replace']" use="concat(../../@ident,'_',@ident)"/>
-  <xsl:key name="REPLACECONSTRAINT" match="tei:constraint[@mode='replace']" use="concat(../@ident,'_',@ident)"/>
+  <xsl:key name="REPLACECONSTRAINT" match="tei:constraintSpec[@mode='replace']" use="concat(../@ident,'_',@ident)"/>
   <xsl:key name="SCHEMASPECS" match="tei:schemaSpec" use="@ident"/>
   <xsl:variable name="AnonymousModule">
     <xsl:text>derived-module-</xsl:text>
@@ -157,7 +157,7 @@
       <xsl:apply-templates mode="final"/>
     </xsl:for-each>
     <!-- constraints -->
-    <xsl:apply-templates mode="copy" select="tei:constraint"/>
+    <xsl:apply-templates mode="copy" select="tei:constraintSpec"/>
   </xsl:template>
 
   <xsl:template match="rng:ref" mode="final">
@@ -454,7 +454,7 @@ How can a class be ok?
       </xsl:if>
       <xsl:copy-of select="tei:classes"/>
       <xsl:apply-templates mode="copy" select="tei:content"/>
-      <xsl:apply-templates mode="copy" select="tei:constraint"/>
+      <xsl:apply-templates mode="copy" select="tei:constraintSpec"/>
       <attList xmlns="http://www.tei-c.org/ns/1.0">
         <xsl:call-template name="addClassAttsToCopy"/>
         <xsl:choose>
@@ -1822,7 +1822,7 @@ select="$M"/></xsl:message>
         </xsl:if>
         <xsl:copy-of select="tei:classes"/>
         <xsl:apply-templates mode="copy" select="tei:content"/>
-        <xsl:apply-templates mode="copy" select="tei:constraint"/>
+        <xsl:apply-templates mode="copy" select="tei:constraintSpec"/>
         <tei:attList>
           <xsl:comment>1.</xsl:comment>
           <xsl:call-template name="classAttributesSimple">
@@ -1939,12 +1939,12 @@ select="$M"/></xsl:message>
     <xsl:param name="ORIGINAL"/>
     <xsl:param name="elementName"/>
     <!-- first put in the ones we know take precedence -->
-    <xsl:copy-of select="tei:constraint[@mode='add' or not(@mode)]"/>
-    <xsl:copy-of select="tei:constraint[@mode='replace']"/>
-    <xsl:copy-of select="tei:constraint[@mode='change']"/>
+    <xsl:copy-of select="tei:constraintSpec[@mode='add' or not(@mode)]"/>
+    <xsl:copy-of select="tei:constraintSpec[@mode='replace']"/>
+    <xsl:copy-of select="tei:constraintSpec[@mode='change']"/>
     <xsl:for-each select="$ORIGINAL">
 	<!-- original source  context -->
-	<xsl:for-each select="tei:constraint">
+	<xsl:for-each select="tei:constraintSpec">
 	  <xsl:variable name="CONSTRAINT" select="."/>
 	  <xsl:variable name="lookingAt">
 	    <xsl:value-of select="concat(../@ident,'_',@ident)"/>

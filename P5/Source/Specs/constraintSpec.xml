@@ -10,7 +10,7 @@ $Id$
     xmlns:s="http://www.ascc.net/xml/schematron" 
     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
     xmlns="http://www.tei-c.org/ns/1.0" 
-    xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="constraint">
+    xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="constraintSpec">
   <gloss>constraint on schema</gloss>
   <desc>contains  a constraint, expressed in some formal syntax,
   which cannot be expressed in the structural content model</desc>
@@ -23,32 +23,32 @@ $Id$
         <rng:ref name="model.glossLike"/>
       </rng:zeroOrMore>
       <rng:optional>
-	<rng:ref name="data"/>
+	<rng:ref name="constraint"/>
       </rng:optional>
   </content>
   
-  <constraint ident="sch" scheme="isoschematron">
+  <constraintSpec ident="sch" scheme="isoschematron">
     <desc>Relationship between scheme attribute and contents</desc>
-    <data>
+    <constraint> 
       <sch:ns prefix="s" uri="http://www.ascc.net/xml/schematron"/>
-      <sch:report test="tei:data/s:* and
+      <sch:report test="tei:constraint/s:* and
 			not(@scheme='schematron')">
 	Rules in the Schematron 1.* language must be inside
 	a constraint with a value of 'schematron' on the scheme attribute
       </sch:report>
-    </data>
-  </constraint>
+    </constraint> 
+  </constraintSpec>
 
-  <constraint ident="isosch" scheme="isoschematron">
-    <data>
+  <constraintSpec ident="isosch" scheme="isoschematron">
+    <constraint> 
       <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
-      <sch:report test="tei:data/sch:* and
+      <sch:report test="tei:constraint/sch:* and
 			not(@scheme='isoschematron')">
 	Rules in the ISO Schematron language must be inside
 	a constraint with a value of 'isoschematron' on the scheme attribute
       </sch:report>
-    </data>
-  </constraint>
+    </constraint> 
+  </constraintSpec>
 
   <attList>
     <attDef ident="scheme" usage="req">
@@ -76,38 +76,38 @@ $Id$
     <att>spanTo</att> attribute (which comes from an attribute class)
     on the <gi>addSpan</gi> element: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <constraint ident="demo-c1" scheme="isoschematron">
+      <constraintSpec ident="demo-c1" scheme="isoschematron">
 	<desc>Enforce the presence of the <att>spanTo</att> attribute</desc>
-	<data>
+	<constraint> 
 	  <sch:assert test="@spanTo">The spanTo= attribute of <sch:name/>
 	  is required.</sch:assert>
-	</data>
-      </constraint>
+	</constraint> 
+      </constraintSpec>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
     
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <constraint ident="demo-c2" scheme="isoschematron">
+      <constraintSpec ident="demo-c2" scheme="isoschematron">
 	<desc>Implement an accessibility rule which says that pictures should
     have textual explanations</desc>
-	<data>
+	<constraint> 
 	  <sch:report test="not(tei:figDesc or tei:head)"> You should
 	  provide information in a figure from which
 	  we can construct an alt attribute in HTML </sch:report>
-	</data>
-      </constraint>
+	</constraint> 
+      </constraintSpec>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
     <p>This constraint uses a language which is not
     expressed in XML to check whether the title and author are identical: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <constraint ident="local" scheme="private">
-	<data>
+      <constraintSpec ident="local" scheme="private">
+	<constraint> 
 (output = leq(title,author)  "title and author cannot be the same")
-	</data>
-  </constraint>
+	</constraint> 
+  </constraintSpec>
     </egXML>
   </exemplum>
   <listRef>

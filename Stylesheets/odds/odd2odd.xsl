@@ -41,9 +41,9 @@
   <xsl:key match="tei:attDef[@mode='delete']" name="DELETEATT" use="concat(../../@ident,'_',@ident)"/>
   <xsl:key match="tei:attDef[@mode='replace']" name="REPLACEATT" use="concat(../../@ident,'_',@ident)"/>
   <xsl:key match="tei:attDef[@mode='change']" name="CHANGEATT" use="concat(../../@ident,'_',@ident)"/>
-  <xsl:key match="tei:constraint[@mode='delete']" name="DELETECONSTRAINT" use="concat(../@ident,'_',@ident)"/>
-  <xsl:key match="tei:constraint[@mode='replace']" name="REPLACECONSTRAINT" use="concat(../@ident,'_',@ident)"/>
-  <xsl:key match="tei:constraint[@mode='change']" name="CHANGECONSTRAINT" use="concat(../@ident,'_',@ident)"/>
+  <xsl:key match="tei:constraintSpec[@mode='delete']" name="DELETECONSTRAINT" use="concat(../@ident,'_',@ident)"/>
+  <xsl:key match="tei:constraintSpec[@mode='replace']" name="REPLACECONSTRAINT" use="concat(../@ident,'_',@ident)"/>
+  <xsl:key match="tei:constraintSpec[@mode='change']" name="CHANGECONSTRAINT" use="concat(../@ident,'_',@ident)"/>
   <xsl:key match="tei:elementSpec[@mode='delete']" name="DELETE" use="@ident"/>
   <xsl:key match="tei:elementSpec[@mode='replace']" name="REPLACE" use="@ident"/>
   <xsl:key match="tei:elementSpec[@mode='change']" name="CHANGE" use="@ident"/>
@@ -152,7 +152,7 @@
       <xsl:apply-templates mode="final"/>
     </xsl:for-each>
     <!-- constraints -->
-    <xsl:apply-templates mode="copy" select="tei:constraint"/>
+    <xsl:apply-templates mode="copy" select="tei:constraintSpec"/>
 
   </xsl:template>
   <xsl:template match="rng:ref" mode="final">
@@ -398,7 +398,7 @@ How can a class be ok?
       </xsl:if>
       <xsl:copy-of select="tei:classes"/>
       <xsl:apply-templates mode="copy" select="tei:content"/>
-      <xsl:apply-templates mode="copy" select="tei:constraint"/>
+      <xsl:apply-templates mode="copy" select="tei:constraintSpec"/>
       <attList xmlns="http://www.tei-c.org/ns/1.0">
         <xsl:call-template name="addClassAttsToCopy"/>
         <xsl:choose>
@@ -1837,11 +1837,11 @@ select="$M"/></xsl:message>
     <xsl:param name="elementName"/>
     <!-- first put in the ones we know take precedence -->
     
-    <xsl:copy-of select="tei:constraint[@mode='add' or not(@mode)]"/>
-    <xsl:copy-of select="tei:constraint[@mode='replace']"/>
-    <xsl:copy-of select="tei:constraint[@mode='change']"/>
+    <xsl:copy-of select="tei:constraintSpec[@mode='add' or not(@mode)]"/>
+    <xsl:copy-of select="tei:constraintSpec[@mode='replace']"/>
+    <xsl:copy-of select="tei:constraintSpec[@mode='change']"/>
 
-    <xsl:for-each select="$ORIGINAL/tei:constraint">
+    <xsl:for-each select="$ORIGINAL/tei:constraintSpec">
 	<!-- original source  context -->
 	  <xsl:variable name="CONSTRAINT" select="."/>
 	  <xsl:variable name="lookingAt">
