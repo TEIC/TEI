@@ -24,7 +24,7 @@ ONVDL=onvdl
 SAXON=saxon
 .PHONY: convert dtds schemas html validate valid test oddschema exampleschema fascicule clean dist exemplars
 
-default: dtds schemas exemplars html-web validate-html
+default: dtds schemas exemplars validate test pdf html-web validate-html
 
 convert: dtds schemas
 
