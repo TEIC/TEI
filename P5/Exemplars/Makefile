@@ -7,10 +7,11 @@ DOCODDS=tei_tite teilite
 LANGUAGE=en
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
-ROMAOPTS=--dochtml --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER} --xsl=${XSL} --docpdf 
+ROMAOPTS= --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER} --xsl=${XSL} 
 
 schemas: names
 	for i in $(ODDS); do echo Process $$i; ${BIN}/roma2 ${ROMAOPTS} $$i.odd .; done
+	for i in $(DOCODDS); do echo Process $$i; ${BIN}/roma2 ${ROMAOPTS} --noxsd --nodtd --norelax --docpdf --dochtml $$i.odd .; done
 	-rm tei_odds.dtd tei_odds.xsd
 	-rm tei_allPlus.dtd tei_allPlus.xsd
 	-rm tei_svg.dtd tei_svg.xsd
