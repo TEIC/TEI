@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <xsl:stylesheet 
     version="1.0" 
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     xmlns:sch="http://www.ascc.net/xml/schematron"
     xmlns:m="http://www.w3.org/1998/Math/MathML"
     xmlns:atom="http://www.w3.org/2005/Atom"  
@@ -12,7 +13,7 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
     xmlns:teix="http://www.tei-c.org/ns/Examples"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom" >
+    exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix xd atom" >
 
 
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
@@ -40,15 +41,21 @@
   <xsl:key name="Namespaces" match="*[ancestor::teix:egXML]" use="namespace-uri()"/>
 
   <xsl:key name="Namespaces" match="*[not(ancestor::*)]" use="namespace-uri()"/>
-
-
-  <xsl:template name="newLine"/>
-
+  <xd:doc>
+    <xd:short>Make newline</xd:short>
+    <xd:detail>[common] generate a new line; this template will be
+    overridden by different output formats</xd:detail>
+    <xd:param name="id">identifier (used for debugging only)</xd:param>
+  </xd:doc>
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
     <xsl:text>&#10;</xsl:text>
   </xsl:template>
 
+  <xd:doc>
+    <xd:short>Process comments in verbatim mode</xd:short>
+    <xd:detail>[common] </xd:detail>
+  </xd:doc>
   <xsl:template match="comment()" mode="verbatim">
     <xsl:choose>
       <xsl:when test="ancestor::Wrapper"/>
@@ -82,6 +89,9 @@
     </xsl:choose>
   </xsl:template>
 
+  <xd:doc>
+    <xd:short>Process text nodes in verbatim mode</xd:short>
+    <xd:detail>[common] 
   <xsl:template match="text()" mode="verbatim">
     <xsl:choose>
       <xsl:when test="$forceWrap='true'">
@@ -159,6 +169,13 @@
     </xsl:choose>
   </xsl:template>
 
+  <xd:doc>
+    <xd:short>Reflow text</xd:short>
+    <xd:detail>[common] </xd:detail>
+    <xd:param name="indent">indentation to insert at start of line</xd:param>
+    <xd:param name="text">text to manage</xd:param>.
+    <xd:param name="sofar">text already processed</xd:param>
+  </xd:doc>
   <xsl:template name="reformatText">
     <xsl:param name="indent"/>
     <xsl:param name="text"/>
@@ -234,10 +251,6 @@
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-<!--
-<xsl:message>my text is [<xsl:value-of select="$text"/>]</xsl:message>
-<xsl:message>my space is [<xsl:value-of select="$finalSpace"/>]</xsl:message>
--->
     <xsl:choose>
       <xsl:when test="normalize-space($text)=''"/>
       <xsl:when test="contains($text,'&#x2324;')">
@@ -254,7 +267,6 @@
 		select="normalize-space(substring-before($text,'&#x2324;'))"/>
 	  </xsl:with-param>
 	</xsl:call-template>
-	<!--	<xsl:if test="not(substring-after($text,'&#10;')='')">-->
 	<xsl:call-template name="lineBreak">
 	  <xsl:with-param name="id">6</xsl:with-param>
 	</xsl:call-template>
@@ -310,6 +322,10 @@
     </xsl:choose>
   </xsl:template>
 
+  <xd:doc>
+    <xd:short>Process default elements in verbatim mode</xd:short>
+    <xd:detail>[common] </xd:detail>
+  </xd:doc>
   <xsl:template match="*" mode="verbatim">
     <xsl:choose>
       <xsl:when test="parent::xhtml:Wrapper"/>
@@ -323,10 +339,6 @@
 	      <xsl:with-param name="id">-1</xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:call-template name="newLine"/>
-        <!-- <xsl:call-template name="makeIndent"/>-->
-	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:when>
       <xsl:when test="not(preceding-sibling::node())">

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <xsl:stylesheet 
     version="2.0" 
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     xmlns:sch="http://www.ascc.net/xml/schematron"
     xmlns:m="http://www.w3.org/1998/Math/MathML" 
     xmlns:atom="http://www.w3.org/2005/Atom"
@@ -11,7 +12,7 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:teix="http://www.tei-c.org/ns/Examples" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom">
+    exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom xd">
 
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
 
@@ -41,9 +42,10 @@
 
   <xsl:key name="Namespaces" match="*[not(ancestor::*)]" use="namespace-uri()"/>
 
-
-  <xsl:template name="verbatim-newLine"/>
-
+  <xd:doc>
+    <xd:short>Work out a namespace prefix for verbatim elements</xd:short>
+    <xd:detail>[common] </xd:detail>
+  </xd:doc>
   <xsl:template name="verbatim-getNamespacePrefix">
     <xsl:variable name="ns" select="namespace-uri()"/>
     <xsl:choose>
@@ -67,11 +69,20 @@
 
   </xsl:template>
 
+  <xd:doc>
+    <xd:short>Make newline</xd:short>
+    <xd:detail>[common] </xd:detail>
+    <xd:param name="id">identifier for debugging only</xd:param>
+  </xd:doc>
   <xsl:template name="verbatim-lineBreak">
     <xsl:param name="id"/>
     <xsl:text>&#10;</xsl:text>
   </xsl:template>
 
+  <xd:doc>
+    <xd:short>Process comments in verbatim mode</xd:short>
+    <xd:detail>[common] </xd:detail>
+  </xd:doc>
   <xsl:template match="comment()" mode="verbatim">
     <xsl:choose>
       <xsl:when test="ancestor::Wrapper"/>
@@ -104,6 +115,10 @@
     </xsl:choose>
   </xsl:template>
 
+  <xd:doc>
+    <xd:short>Process text nodes in verbatim mode</xd:short>
+    <xd:detail>[common] </xd:detail>
+  </xd:doc>
   <xsl:template match="text()" mode="verbatim">
     <xsl:choose>
       <xsl:when test="$forceWrap='true'">
@@ -308,6 +323,10 @@
     </xsl:choose>
   </xsl:template>
 
+  <xd:doc>
+    <xd:short>Process text and process ampersands</xd:short>
+    <xd:detail>[common] </xd:detail>
+  </xd:doc>
   <xsl:template name="verbatim-Text">
     <xsl:param name="words"/>
     <xsl:choose>
@@ -326,6 +345,10 @@
     </xsl:choose>
   </xsl:template>
 
+  <xd:doc>
+    <xd:short>Process default elements in verbatim mode</xd:short>
+    <xd:detail>[common] </xd:detail>
+  </xd:doc>
   <xsl:template match="*" mode="verbatim">
     <xsl:param name="highlight"/>
     <xsl:choose>
