@@ -63,9 +63,16 @@ common:
 	cp teixsl.xml release/tei-xsl/doc/index.xml
 
 
-test: p4 p5 p5-2
+test: p4 p5 p5-2 common
+	(cd release/tei-xsl/p4; ln -s ../common/i18n.xml .)
+	(cd release/tei-xsl/p5; ln -s ../common/i18n.xml .)
+	(cd release/tei-xsl/p5-2; ln -s ../common/i18n.xml .)
 	(cd Test; make)
 	(cd Test2; make)
+	rm release/tei-xsl/p4/i18n.xml
+	rm release/tei-xsl/p5/i18n.xml
+	rm release/tei-xsl/p5-2/i18n.xml
+
 
 installp5-2: p5-2
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet

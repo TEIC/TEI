@@ -29,22 +29,22 @@ test3:
 	xsltproc -o dummy --stringparam verbose true ../release/tei-xsl/p5/html/tei.xsl test3.xml
 	xsltproc -o dummy4 --stringparam verbose true ../release/tei-xsl/p5/html/tei.xsl test4.xml
 	echo differences:
-	diff dummy dummy4
+	-diff dummy dummy4
 	saxon -o dummy -novw  test3.xml ../release/tei-xsl/p5/html/tei.xsl verbose=true 
 	saxon -o dummy4 -novw  test4.xml ../release/tei-xsl/p5/html/tei.xsl verbose=true 
 	echo differences:
-	diff dummy dummy4
+	-diff dummy dummy4
 
 
 test4:
 	xsltproc -o dummy --stringparam verbose true ../release/tei-xsl/p5/xhtml/tei.xsl test3.xml
 	xsltproc -o dummy4 --stringparam verbose true ../release/tei-xsl/p5/xhtml/tei.xsl test4.xml
 	echo differences:
-	diff dummy dummy4
+	-diff dummy dummy4
 	saxon -o dummy -novw  test3.xml ../release/tei-xsl/p5/xhtml/tei.xsl verbose=true 
 	saxon -o dummy4 -novw  test4.xml ../release/tei-xsl/p5/xhtml/tei.xsl verbose=true 
 	echo differences:
-	diff dummy dummy4
+	-diff dummy dummy4
 
 clean:
 	-rm test.tex test.fo *.html *~ dummy* *.aux *.out *.log
