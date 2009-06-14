@@ -69,6 +69,8 @@
 
   </xsl:template>
 
+  <xsl:template name="verbatim-newLine"/>
+
   <xd:doc>
     <xd:short>Make newline</xd:short>
     <xd:detail>[common] </xd:detail>
