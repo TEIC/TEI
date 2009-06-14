@@ -84,6 +84,11 @@
 
 <xsl:template match="tei:list[@type='termlist']/tei:item/tei:term">
   <dt>
+    <xsl:if test="@xml:id">
+      <xsl:attribute name="id">
+	<xsl:value-of select="@xml:id"/>
+      </xsl:attribute>
+    </xsl:if>
     (<xsl:value-of select="parent::tei:item/@n"/>)
     <xsl:apply-templates/>
   </dt>
