@@ -24,7 +24,7 @@ ONVDL=onvdl
 SAXON=saxon
 .PHONY: convert dtds schemas html validate valid test oddschema exampleschema fascicule clean dist exemplars
 
-default: dtds schemas exemplars validate test pdf html-web validate-html
+default: dtds schemas validate exemplars test pdf html-web validate-html
 
 convert: dtds schemas
 
@@ -203,10 +203,14 @@ exemplars:
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
 
 oddschema: 
+	@echo Checking you have a running roma2 before trying to make oddschema ...
+	which roma2 || exit 1
 	(cd Exemplars;make names)
 	roma2 ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds.odd .
 
 exampleschema:
+	@echo Checking you have a running roma2 before trying to make exampleschema ...
+	which roma2 || exit 1
 	(cd Exemplars;make names)
 	roma2  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds-ex.odd . 
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rnc && \
