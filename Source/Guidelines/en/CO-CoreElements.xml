@@ -175,64 +175,66 @@ thou?</q><q>I'm the Mischievous Mosquito.</q>
 </div>
 <div type="div2" xml:id="COPU"><head>Treatment of Punctuation</head>
 
-<p>Punctuation marks have historically caused problems for text markup
-when they are not available in the character set used and when they
-are significantly ambiguous. To a large extent, the availability of
+<p>Punctuation marks cause two distinct classes of problem for text
+markup: the marks  may not
+be available in the character set used,  and they
+may be significantly ambiguous. To some extent, the availability of
 the Unicode character set addresses the first of these problems, since
 it provides specific code points for most punctuation marks, and also
 the second to the extent that it distinguishes glyphs (such as stop,
 comma, and hyphen) which are used with different functions. Thus, for
 example, different Unicode code points are available for the hyphen
-used as a minus sign, as a word breaking hyphen, as a soft hyphen, or
-as a <soCalled>non-breaking</soCalled> hyphen. Where punctuation
+used as a minus sign (<val>x2212</val>), as a word breaking hyphen
+(<val>x2010</val>), and as a soft or
+<soCalled>non-breaking</soCalled> hyphen (<val>x00AD</val>); such
+distinctions are not however made in all possible cases, particularly
+where older writing systems are concerned. Where punctuation
 itself is the subject of study, the element <gi>pc</gi> (punctuation
 character) may be used to mark it explicitly, as further discussed in
 <ptr target="#AIPC"/>. The <gi>g</gi> element and other facilities described in
 chapter <ptr target="#WD"/> may also be used to define markup for
 non-standard punctuation characters. </p>
 
-
 <p>Punctuation is itself a form of markup, historically introduced to
 provide the reader with an indication about how the text should be
 read. As such, it is unsurprising that encoders will often wish to
 encode directly the purpose for which punctuation was provided, as
-well as or even instead of, the punctuation itself. We discuss some
+well as, or even instead of, the punctuation itself. We discuss some
 typical cases below.</p>
 <p>The <term rend="noindex">Full stop (period)</term>
 may mark (orthographic) sentence boundaries, abbreviations, decimal
 points, or serve as a visual aid in printing numbers. These usages can
 be distinguished by tagging S-units, abbreviations, and numbers, as
 described in sections <ptr target="#SASE"/>, <ptr target="#CONAAB"/>,
-and <ptr target="#CONANU"/>. However, there are independent reasons
+and <ptr target="#CONANU"/> respectively. However, there are independent reasons
 for tagging these, whether or not they are marked by full
 stops, and the polysemy of the full stop itself is perhaps no different from
-that of any character in the writing system. </p>
+that of any other character in the writing system. </p>
 <p>The <term rend="noindex">Question mark</term>
 and <term rend="noindex">exclamation mark</term>
-typically mark the end of orthographic sentences, but may also be used
+usually mark the end of orthographic sentences, but may also be used
 as a mid-sentence comment by the author (<mentioned>!</mentioned> to express
 surprise or some other strong feeling, <mentioned>?</mentioned> to query a word
 or expression or mark a sentence as dubious in linguistic discussion).
 Such usages may be distinguished by marking S-units, in which case the
 mid-sentence uses of these punctuation marks may be left unmarked, or
-tagged using the <gi>c</gi> element discussed in <ptr target="#AILC"/>.
+tagged using the <gi>pc</gi> element discussed in <ptr target="#AILC"/>.
  </p>
  <p><term rend="noindex">Dashes</term> are used for a variety of
- purposes: as a mark of ommission or insertion, as an interruption or
- to show where a new speaker takes over (in dialogue), or to introduce
+ purposes: as a mark of omission, insertion, or interruption;
+ to show where a new speaker takes over (in dialogue); or to introduce
  a list item. In the latter two cases particularly, it is clearly
- preferable to mark the function as well as its rendition using the
+desirable to mark the function as well as its rendition using the
  elements <gi>q</gi> or <gi>item</gi>, on which see section <ptr
  target="#COHQQ"/>, and section <ptr target="#COLI"/>,
  respectively.</p>
 
 <p><term rend="noindex">Quotation marks</term> may be removed from
-text contained by <gi>q</gi> or <gi>quote</gi> elements, on the
-grounds that 
-quotations are not always marked by quotation marks (notably long
-quotations) or may be marked in a variety of ways; see the discussion
-of quotation and related features in section <ptr
+text contained by <gi>q</gi> or <gi>quote</gi> elements, on editorial
+grounds or may be marked in a variety of ways; see
+the discussion of quotation and related features in section <ptr
 target="#COHQQ"/>.</p>
+
 <p><term rend="noindex">Apostrophes</term> must be distinguished from
 single quote marks. As with hyphens, this disambiguation is best
 performed by selecting the appropriate Unicode character, though  it may
@@ -254,9 +256,25 @@ whether they should be excluded or left as part of the text. In the
 case of quotation marks, it may be more convenient to distinguish
 opening from closing marks simply by using the appropriate Unicode
 character than to use the <gi>q</gi> element, with or without a
-<att>rend</att> attribute. The solution chosen will vary depending
-upon the feature and depending upon the purpose of the project.
+<att>rend</att> attribute. </p>
+
+<p>Where segmentation of a text is performed automatically, the
+accuracy of the result may be considerably enhanced by a first pass in
+which the function of different punctuation characters is explicitly
+marked.  This need not be done for all cases, but only where the
+structural function of the punctuation markup (for example as a word
+or phrase delimiter) is ambiguous. Thus, dots indicating abbreviation
+might be distinguished from dots indicating sentence end, and
+exclamation or question marks internal to a sentence distinguished
+from those which terminate one. Furthermore,
+when encoding historical materials, it may be considered essential to
+retain the original punctuation, whether by using an appropriate
+character code, if this is available (or using the <gi>g</gi> element
+where it is not) or by an explicit encoding using <gi>pc</gi>. The
+particular method adopted will vary depending upon the feature
+concerned and upon the purpose of the project.
 </p> 
+
 </div>
 <div type="div2" xml:id="COHQ"><head>Highlighting and Quotation</head>
 <p>This section deals with a variety of textual features, all of
@@ -2718,7 +2736,7 @@ Melancholy</title> quoted above might be generated in a similar way.
 their counterfeit tears 547; their vices 601, commended, 624.</q> -->
 To generate such an entry, the body of the text might include, at page
 193, an <gi>index</gi> element such as
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"   corresp="#COXR-eg-164">
 <index>
     <term>Women</term>
     <index>
@@ -4781,7 +4799,7 @@ were dialogue in a play.  The following example is taken  from a 19th century
      hour: but for the present I will forbear ...</p>
 </sp></egXML>
 <!-- Peacock, Gryll Grange, p 778 -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><sp>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#CODR-eg-296"><sp>
    <speaker>Lord Curryfin</speaker>
    <stage>(after a pause).</stage>
    <p><q>Mass</q> as the second grave-digger says
