@@ -299,18 +299,44 @@ identified segmentation below the word level. Analogous to the
 <att>lemma</att> attribute for <gi>w</gi>, there is a
 <att>baseForm</att> attribute for the <gi>m</gi> element, 
 which may be used to indicate the <soCalled>base form</soCalled> of
-a transformed morpheme:
+an inflected morpheme; where appropriate, <gi>m</gi> elements may also
+be organized hierarchically:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><w type="adjective">  
-   <m type="prefix" baseForm="con">com</m>
-   <m type="root">fort</m>
+   <m type="base">
+     <m type="prefix" baseForm="con">com</m>
+     <m type="root">fort</m>
+   </m>
    <m type="suffix">able</m>
 </w></egXML>
 </p>
+<p>The distinction between <gi>m</gi> and <gi>w</gi> is provided as a
+convenience only; it may not be appropriate for all linguistic
+theories, nor is it meaningful in all languages. The intention is to
+provide a means for those cases where it is considered helpful to distinguish
+lexical from sub-lexical tokens, to complement the more general
+mechanism already provided by the <gi>seg</gi> element, using which
+the above example could alternatively be marked up as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><seg type="adjective">  
+   <seg type="base">
+     <seg type="prefix" baseForm="con">com</seg>
+     <seg type="morph">fort</seg>
+   </seg>
+   <seg type="suffix">able</seg>
+</seg></egXML>
 
-<p>The <gi>c</gi> (character) element may be used to mark up any non-lexical
+<p>There is a substantial
+linguistic difference between characters like letters or diacritics
+and punctuation marks. The former are used to
+construct meaningful units like morphemes or words. The latter are
+functionally independent units acting at the level of syntactic
+units. A word may consist of a single letter (for example <soCalled>I</soCalled> in English),
+but this  does not mean that we should use <gi>c</gi> instead of <gi>w</gi>
+to mark it up. </p>
+
+<p>The <gi>c</gi> (character) element should be used to mark up any non-lexical
 character, whether this appears within a word, or outside it. In the
 following example, the encoder wishes to indicate that the letters are
-not regarded as words:
+not to be regarded as words:
 
     <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#TwN">
       <phr>
@@ -325,10 +351,48 @@ not regarded as words:
       </phr>
     </egXML>
 </p>
+<p>The <gi>c</gi> element may be used for
+individual characters occurring within a <gi>w</gi> or <gi>m</gi>
+element which it is desired to distinguish for some reason, as in the
+following examples:
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#">
+      <m baseform="not"><c>n</c>
+      <c type="punct">'</c>
+      <c>t</c>
+      </m>
+    </egXML>
+This encoding represents the constituents of a common abbreviation,
+but does not indicate that it is in fact an abbreviation; the
+<gi>am</gi> element (<ptr target="#PHAB"/>) may be preferred for the
+latter purpose.  Generally speaking, the use of <gi>c</gi> use to mark
+non-lexical punctuation marks is deprecated, since the <gi>pc</gi>
+element is provided specifically to distinguish these.
+</p>
 
-<p>The <gi>pc</gi> (punctuation character) element may be used to mark up
+<p>The <gi>pc</gi> (punctuation character) element should be used to mark up
 characters which are specifically regarded as providing punctuation,
-rather than constituting parts of a word. </p>
+rather than constituting parts of a word. It may be particularly
+useful when transcribing older written materials, in which an encoding
+of the original punctuation may be useful for interpretive or analytic
+purposes, in much the same way as an encoding of the original
+orthography may be. To assist in this, the <gi>pc</gi> element carries
+special attributes to distinguish ambiguous uses of the same
+mark. The <att>force</att> attribute may be used to distinguish (for
+example) the medieval <term>punctus firmus</term> from its weaker
+form the <term>punctus mobilis</term>. The <att>unit</att> attribute
+may be used, as on the <gi>milestone</gi> element to name the kind of
+unit which the punctuation mark delimits, for example a paragraph or
+section. The <att>pre</att> attribute may be used to indicate whether
+the punctuation precedes or follows the unit it delimits. </p>
+<p>In the following example, the paragraph marker (¶) has been tagged
+as a punctuation mark:
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="">
+      <p><pc unit="para" force="strong"
+	     pre="true">¶</pc>Incipit...</p>
+    </egXML>
+</p>
+
+
 
 <p>The <gi>w</gi>, <gi>m</gi>, <gi>c</gi>, and <gi>pc</gi> elements can be used
 together to give a fairly detailed low-level grammatical analysis of
@@ -336,19 +400,21 @@ text. For example, consider the following segmentation of the English
 S-unit <mentioned>I didn't do it</mentioned>.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><w>I</w>
 <w> 
-   <w>did</w>
+   <m baseform="do">did</m>
    <m>n't</m>
 </w>
-<w>do</w>
+<w lemma="do">do</w>
 <w>it</w>
 <pc>.</pc></egXML>
 <!-- shouldn't we attribute this to Bart Simpson? :-) -->
  </p>
 <p>This segmentation, crude as it is, succeeds in representing the idea
-that <mentioned>did</mentioned> occurs as a word inside the word
-<mentioned>didn't</mentioned>. A further advantage of segmenting the text down
+that <mentioned>did</mentioned> occurring  as a morphological
+component of  the word
+<mentioned>didn't</mentioned> has something in common with the word <gi>do</gi>. A further advantage of segmenting the text down
 to this level is that it becomes relatively simple to associate each
-such segment with a more detailed formal analysis. 
+such segment with a more detailed formal analysis, for example by
+providing a baseform, or morphological analysis at whichever level is appropriate. 
 This matter is taken up in detail in section <ptr target="#AILA"/>. 
  </p>
 
