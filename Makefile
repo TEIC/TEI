@@ -392,6 +392,7 @@ clean:
 	*.xsd \
 	p5.sch p5.isosch \
 	*.isosch.xsl \
+	Test/*.isosch \
 	p5subset.xml \
 	Utilities/guidelines.xsl Utilities-1/guidelines.xsl
 	find . -name "semantic.cache" | xargs rm -f
