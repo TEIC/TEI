@@ -115,7 +115,19 @@ xml: check
 	#-rnv Exemplars/teilite.rnc Guidelines.xml
 
 tex: xml
-	${SAXON} Guidelines.xml Utilities/guidelines-latex.xsl > Guidelines.tex
+	@echo Checking you have a running ${XELATEX} before trying to make TeX...
+	which ${XELATEX} || exit 1
+	cp Utilities/guidelines-latex.xsl Utilities/Guidelines.xsl
+	xelatex --interaction=batchmode Utilities/fonttest 
+	if [ -f "missfont.log" ]  ; then  \
+	  perl -p -i -e 's/(.*Minion)/%\1/;s/(.*Myriad)/%\1/' Utilities/Guidelines.xsl ;\
+	  echo "========================="; \
+	  echo "WARNING: you do not have Minion or Myriad fonts installed, reverting to Computer Modern " ;\
+	  echo "========================="; \
+	fi
+	-rm missfont.log fonttest.*
+	${SAXON} Guidelines.xml Utilities/Guidelines.xsl > Guidelines.tex
+	rm Utilities/Guidelines.xsl
 	for i in Guidelines-REF*tex; \
 	  do \
 	     perl Utilities/rewrapRNC-in-TeX.pl <$$i>$$i.new; \
@@ -125,8 +137,6 @@ tex: xml
 	done
 
 pdf: tex
-	@echo Checking you have a running ${XELATEX} before trying to make PDF...
-	which ${XELATEX} || exit 1
 	mkdir -p Images
 	cp -r Source/Images/*.* Images
 	-echo '*' | ${XELATEX} Guidelines
@@ -234,9 +244,7 @@ dist-source: subset
 	COPYING.txt \
 	Makefile \
 	ReleaseNotes  \
-	Source/Specs  \
-	Source/Guidelines/en  \
-	Source/Images  \
+	Source \
 	Utilities   \
 	VERSION  \
 	fasc-head.xml \
@@ -248,7 +256,6 @@ dist-source: subset
 	schematron.rng \
 	iso-schematron.rng \
 	p5sch.xsl \
-	p5.isosch.xsl \
 	schematron1-5.rnc \
 	*.css \
 	webnav \
