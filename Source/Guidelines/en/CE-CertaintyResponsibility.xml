@@ -229,7 +229,17 @@ attributes which have a <att>type</att> value of <code>checked</code>:
 <certainty locus="name" degree="0.7" match="//div[type='checked']//persName"/>
 </egXML>
 
-As noted in <ptr target="#SA"/>, the <att>target</att> attribute may
+If an element in a document is matched by more than one match
+expression, then the most specific pattern applies. Specificity of
+pattern matching is defined further in the XSLT2 reference cited above
+(see <ptr target="http://www.w3.org/TR/xslt20/#conflict"/>). As a
+simple case, if both the preceding <gi>certainty</gi> elements were
+present in the same document, a <gi>persName</gi> occurring within a <gi>div
+type="checked"</gi> element would potentially match both pattern
+expressions. However because the second pattern is more specific than
+the former, in fact this is the only one that would apply. </p>
+
+<p>As noted in <ptr target="#SA"/>, the <att>target</att> attribute may
 also provide an xpath expression. This is not however supported by all
 processors, and it is not recommended TEI practice. There are however
 some simple cases in which the more general <val>data.pointer</val>
@@ -238,7 +248,7 @@ preferred, notably those in which the <att>xml:id</att> attribute is
 used to identify a single element occurrence. The usage <val>#A</val>
 (to indicate the element whose <att>xml:id</att> attribute has the
 value <val>A</val>) is syntactically much simpler than the equivalent
-xpath2 expression <val>//*[xml:id='A']</val> and is hence preferred
+xpath2 expression <val>//*[@xml:id='A']</val> and is hence preferred
 throughout these guidelines. 
 </p>
 <p>For similar reasons, the <gi>certainty</gi> element may specify
@@ -351,7 +361,7 @@ might be used to indicate a high degree of certainty about the content
 of any elements taken the namespace associated with the prefix
 <code>my</code>. This namespace prefix must be associated with an
 appropriate namespace definition, either on the <gi>certainty</gi>
-element itself, or elsewhere in the document containing it.</p>
+element itself, or on one of its ancestor elements.</p>
 
 
 <p>The <gi>certainty</gi> element and the other TEI mechanisms for
