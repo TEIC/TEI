@@ -1626,7 +1626,6 @@
 			ancestor-or-self::tei:TEI/tei:text/descendant::tei:note[@place='foot'
 			or @place='bottom'
 			or @place='end']">
-">
 	  <xsl:variable name="BaseFile">
 	    <xsl:value-of select="$masterFile"/>
             <xsl:call-template name="addCorpusID"/>
@@ -1678,32 +1677,8 @@
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:when>
-	<xsl:when test="$splitLevel &gt;-1 and $requestedID='' and
-			$STDOUT='true'">
-	  <xsl:for-each
-	      select="descendant-or-self::text/*[1]/*[1]">
-	    <xsl:call-template name="printNotes"/>
-	  </xsl:for-each>
-	</xsl:when>
-
-	<xsl:when test="$splitLevel &gt;-1 and self::tei:text"/>
-	<!--
-	    <div class="notes text">
-	    <div class="noteHeading">
-	    <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">noteHeading</xsl:with-param>
-	    </xsl:call-template>
-	    </div>
-	    <xsl:for-each
-	    select="descendant::tei:note[(@place='foot' or @place='end') and
-	    not(ancestor::tei:div)]">
-	    <xsl:apply-templates mode="printnotes" select="."/>
-	    </xsl:for-each>
-	    </div>
-	    </xsl:when>
-	-->
 	
-        <xsl:otherwise>
+	<xsl:otherwise>
 	  <xsl:if test="descendant::tei:note[@place='foot' or @place='bottom' or @place='end']">
 	    <div class="notes">
 	      <div class="noteHeading">
@@ -1718,20 +1693,20 @@
 	  </xsl:if>
 	</xsl:otherwise>
       </xsl:choose>
-    <xsl:if
-	test="ancestor-or-self::tei:TEI/tei:text/descendant::tei:app">
-
-      <div class="notes">
-	<div class="noteHeading">
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">noteHeading</xsl:with-param>
-	  </xsl:call-template>
+      <xsl:if
+	  test="ancestor-or-self::tei:TEI/tei:text/descendant::tei:app">
+	
+	<div class="notes">
+	  <div class="noteHeading">
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">noteHeading</xsl:with-param>
+	    </xsl:call-template>
+	  </div>
+	  <xsl:apply-templates mode="printnotes"
+			       select="descendant::tei:app"/>
 	</div>
-	<xsl:apply-templates mode="printnotes"
-		 select="descendant::tei:app"/>
-      </div>
-    </xsl:if>
-
+      </xsl:if>
+      
   </xsl:template>
   <xd:doc>
     <xd:short>[html] </xd:short>
