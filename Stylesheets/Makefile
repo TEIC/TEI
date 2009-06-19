@@ -89,14 +89,14 @@ installp4: p4
 	(cd release/tei-xsl/p4; tar cf - .) | \
 	(cd ${PREFIX}/share/xml/teip4/stylesheet; tar xf -)
 
-installcommon: common
+installcommon: common 
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
 	(cd release/tei-xsl/common; tar cf - .) | (cd ${PREFIX}/share/xml/tei/stylesheet; tar xf -)
 	mkdir -p ${PREFIX}/lib/cgi-bin
 	cp stylebear ${PREFIX}/lib/cgi-bin/stylebear
 	chmod 755 ${PREFIX}/lib/cgi-bin/stylebear
-	mkdir -p ${PREFIX}/share/doc/tei-p5-xsl
-	(cd release/tei-xsl/doc; tar cf - .) | (cd ${PREFIX}/share/doc/tei-p5-xsl; tar xf -)
+	mkdir -p ${PREFIX}/share/doc/tei-xsl-common
+	(cd release/tei-xsl/doc; tar cf - .) | (cd ${PREFIX}/share/doc/tei-xsl-common; tar xf -)
 
 install: installp4 installp5 installp5-2 installcommon
 
