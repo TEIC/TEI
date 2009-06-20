@@ -88,7 +88,10 @@
     
     <xsl:template name="extract-headers-and-footers">
         <xsl:for-each-group select="//w:headerReference|//w:footerReference" group-by="@r:id">
-            <fw xml:id="{@r:id}">
+            <fw>
+                <xsl:attribute name="xml:id">
+		  <xsl:value-of select="@r:id"/>
+		</xsl:attribute>
                 <xsl:attribute name="type">
                     <xsl:choose>
                         <xsl:when test="self::w:headerReference">header</xsl:when>

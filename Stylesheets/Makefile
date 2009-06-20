@@ -64,9 +64,9 @@ common:
 
 
 test: p4 p5 p5-2 common
-	(cd release/tei-xsl/p4; ln -s ../common/i18n.xml .)
-	(cd release/tei-xsl/p5; ln -s ../common/i18n.xml .)
-	(cd release/tei-xsl/p5-2; ln -s ../common/i18n.xml .)
+	(cd release/tei-xsl/p4; rm i18n.xml; ln -s ../common/i18n.xml .)
+	(cd release/tei-xsl/p5; rm i18n.xml; ln -s ../common/i18n.xml .)
+	(cd release/tei-xsl/p5-2; rm i18n.xml; ln -s ../common/i18n.xml .)
 	(cd Test; make)
 	(cd Test2; make)
 	rm release/tei-xsl/p4/i18n.xml

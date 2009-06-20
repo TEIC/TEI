@@ -91,7 +91,8 @@
 
   <xd:doc>
     <xd:short>Process text nodes in verbatim mode</xd:short>
-    <xd:detail>[common] 
+    <xd:detail>[common] </xd:detail>
+  </xd:doc>
   <xsl:template match="text()" mode="verbatim">
     <xsl:choose>
       <xsl:when test="$forceWrap='true'">
