@@ -293,9 +293,9 @@ dist-doc:
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
 	for i in ReleaseNotes/readme*xml; do  \
-	xsltproc \
+	saxon \
+	$$i ${XSL}/xhtml2/tei.xsl  \
 	cssFile=html/guidelines.css \
-	${XSL}/xhtml2/tei.xsl $$i \
 	> release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
 	-make pdf
