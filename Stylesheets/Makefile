@@ -1,5 +1,5 @@
 DIRS=odds2 xhtml2 common2 slides2 latex2 fo2 docx profiles tools2
-OLDDIRS=slides fo html common latex
+OLDDIRS=slides fo html common latex odds
 PREFIX=/usr
 .PHONY: doc release common
 
