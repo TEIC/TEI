@@ -1621,6 +1621,7 @@
 
   <xsl:template name="printNotes">
     <xsl:choose>
+
       <xsl:when test="$footnoteFile='true' and
 		      ancestor-or-self::tei:TEI/tei:text/descendant::tei:note[@place='foot'
 		      or @place='bottom' or @place='end']">
@@ -1650,6 +1651,8 @@
 	    <xsl:message>Closing file <xsl:value-of select="$outName"
 	    /></xsl:message>
 	  </xsl:if>
+      </xsl:when>
+      <xsl:when test="number($splitLevel) &gt;-1 and self::tei:text">
       </xsl:when>
       <xsl:when test="self::tei:div">
 	<xsl:variable name="depth">
