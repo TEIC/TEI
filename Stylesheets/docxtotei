@@ -31,7 +31,17 @@ cd $TEMPDIR
 unzip -q $THERE/$N.docx
 saxon word/document.xml $APPHOME/docx/normalize-word-style.xsl debug=false |
 saxon - $TEMPLATES/docx/from.xsl word-directory=`pwd` \
-| xmllint --format - > $THERE/$N.xml
+| xmllint --format - > $N.xml
+if [ -d word/media ]
+then
+ echo found graphics files
+ echo writing $N.zip
+ mv word/media .
+ zip -q -r $THERE/$N.zip $N.xml media
+else
+ echo writing $N.xml
+ mv $N.xml $THERE
+fi
 cd $HERE
 if $debug 
 then
@@ -39,5 +49,5 @@ then
 else
     rm -rf $TEMPDIR
 fi
-echo wrote $N.xml in $THERE
+echo wrote $N.xml or $N.zip in $THERE
 
