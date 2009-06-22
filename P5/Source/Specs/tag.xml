@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="tag">
+  <equiv/>
+  <gloss version="2007-06-12" xml:lang="fr">balise</gloss>
+  <desc>contains text of a complete start- or end-tag, possibly including attribute specifications,
+    but excluding the opening and closing markup delimiter characters.</desc>
+  <desc version="2007-12-20" xml:lang="kr">속성 명시를 포함하나 시작 및 종료 마크업 구분 문자를 제외한, 완전한 시작 또는 종료 태그의 텍스트를
+    포함한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含具有完整開始標籤與結束標籤的文字，可能包括屬性說明，但不包含開頭及結尾標記定義符號。</desc>
+  <desc version="2008-04-06" xml:lang="ja"> 完全な開始タグ，終了タグのテキストを示す．属性規定はとることも可能だ
+    が，タグ開始区切子，タグ終了区切子は含まない． </desc>
+  <desc version="2007-06-12" xml:lang="fr">le contenu d'une balise ouvrante ou fermante, avec
+    éventuellement des spécifications d'attributs, mais à l'exclusion des caractères marquant
+    l'ouverture et la fermeture de la balise.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene el texto completo de un marcador inicial o
+    final, posiblemente incluyendo eventuales descripciones de atributos, pero nunca los caracteres
+    de delimitación de inicio y fin del marcador.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene il testo completo di un marcatore iniziale o
+    finale, ivi comprese eventuali descrizioni di attributi ma esclusi i caratteri di delimitazione
+    di inizio e fine del marcatore</desc>
+  <classes>
+    <memberOf key="model.phrase.xml"/>
+  </classes>
+  <content>
+    <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+      <desc>indicates the type of XML tag intended</desc>
+      <desc version="2009-01-23" xml:lang="fr">indique quel type de balise XML est prévu.</desc>
+      <desc version="2008-04-08" xml:lang="it">indica di quale tipo di marcatore XML si tratta</desc>
+      <valList type="closed">
+        <valItem ident="start">
+          <desc>a start-tag, with delimiters &lt; and &gt; is intended</desc>
+          <desc version="2009-01-23" xml:lang="fr">une balise de début, délimitée par les signes
+            &lt;et &gt; est prévue.</desc>
+          <desc version="2008-04-08" xml:lang="it">indica uno start-tag delimitato dai segni
+            &lt; e &gt;</desc>
+        </valItem>
+        <valItem ident="end">
+          <desc>an end-tag, with delimiters &lt;/ and &gt; is intended</desc>
+          <desc version="2009-01-23" xml:lang="fr">une balise de fin, délimitée par les signes
+            &lt;/ and &gt; est prévue.</desc>
+          <desc version="2008-04-08" xml:lang="it">indica un end-tag delimitato dai segni &lt;/
+            e &gt;</desc>
+        </valItem>
+        <valItem ident="empty">
+          <desc>a empty tag, with delimiters &lt; and /&gt; is intended</desc>
+          <desc version="2009-01-23" xml:lang="fr">une balise vide, délimitée par les signes
+            &lt; and /&gt; est prévue.</desc>
+          <desc version="2008-04-08" xml:lang="it">indica un marcatore vuoto delimitato dai segni
+            &lt; e /&gt;</desc>
+        </valItem>
+        <valItem ident="pi">
+          <desc>a pi (processing instruction), with delimiters &lt;? and ?&gt; is intended</desc>
+          <desc version="2009-01-23" xml:lang="fr">un PI (Processing Instruction), délimité par les
+            signes &lt;? and ?&gt; est prévu.</desc>
+          <desc version="2008-04-08" xml:lang="it">indica una pi (istruzione di processing)
+            delimitata dai segni &lt;? e ?&gt;</desc>
+        </valItem>
+        <valItem ident="comment">
+          <desc>a comment, with delimiters &lt;!-- and --&gt; is intended</desc>
+          <desc version="2009-01-23" xml:lang="fr">Un commentaire délimité par les signes
+            &lt;!-- et --&gt; est prévu.</desc>
+          <desc version="2008-04-08" xml:lang="it">indica un commento delimitato dai segni
+            &lt;!-- e --&gt;</desc>
+        </valItem>
+        <valItem ident="ms">
+          <desc>a marked-section, with delimiters &lt;[CDATA[ and ]]&gt; is intended</desc>
+          <desc version="2009-01-23" xml:lang="fr">une section marquée, délimitée par les signes
+            &lt;[CDATA[ et ]]&gt; est prévue.</desc>
+          <desc version="2008-04-08" xml:lang="it">indica una sezione marcata, delimitata dai segni
+            &lt;[CDATA[ e ]]&gt;</desc>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="scheme" usage="opt">
+      <equiv/>
+      <desc>supplies the name of the schema in which this tag is defined.</desc>
+      <desc version="2007-12-20" xml:lang="kr">이 이름이 정의된 스키마의 이름을 제공한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">提供該標準之識別符碼，此名稱定義於該標準中。</desc>
+      <desc version="2008-04-06" xml:lang="ja"> 当該タグ名が定義されているスキームの名前を示す． </desc>
+      <desc version="2007-06-12" xml:lang="fr">fournit le nom du modèle dans lequel ce nom est
+        défini</desc>
+      <desc version="2007-05-04" xml:lang="es">proporciona el nombre del esquema en que tal nombre
+        es definido.</desc>
+      <desc version="2007-01-21" xml:lang="it">fornisce il nome dello schema in cui è definito il
+        nome</desc>
+      <defaultVal>TEI</defaultVal>
+      <valList type="closed">
+        <valItem ident="TEI">
+          <gloss>text encoding initiative</gloss>
+          <gloss version="2007-12-20" xml:lang="kr">텍스트 부호화 표준</gloss>
+          <desc>This tag is defined as part of the TEI scheme.</desc>
+          <desc version="2007-12-20" xml:lang="kr">이 태그는 TEI 스키마의 부분이다.</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">此標籤為TEI標準的一部份。</desc>
+          <desc version="2008-04-06" xml:lang="es">esta etiqueta es parte del esquema de TEI.</desc>
+          <desc version="2008-04-06" xml:lang="ja"> 当該タグは，TEIスキームに属する． </desc>
+          <desc version="2008-03-30" xml:lang="fr">cette balise fait partie d'un modèle TEI.</desc>
+          <desc version="2007-01-21" xml:lang="it">il marcatore è parte dello schema TEI</desc>
+        </valItem>
+        <valItem ident="DBK">
+          <gloss>docbook</gloss>
+          <gloss version="2007-12-20" xml:lang="kr">도크북</gloss>
+          <desc>this tag is part of the Docbook scheme.</desc>
+          <desc version="2007-12-20" xml:lang="kr">이 태그는 Docbook 스키마의 부분이다.</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">此標籤為Dockbook標準的一部份。</desc>
+          <desc version="2008-04-06" xml:lang="es">esta etiqueta es parte del esquema de Docbook.</desc>
+          <desc version="2008-04-06" xml:lang="ja"> 当該タグは，DOcbookスキームに属する． </desc>
+          <desc version="2008-03-30" xml:lang="fr">cette balise fait partie d'un modèle Docbook.</desc>
+          <desc version="2007-01-21" xml:lang="it">il marcatore è parte dello schema Docbook.</desc>
+        </valItem>
+        <valItem ident="XX">
+          <gloss>unknown</gloss>
+          <gloss version="2007-12-20" xml:lang="kr">미지의</gloss>
+          <gloss version="2008-04-06" xml:lang="es">desconocido</gloss>
+          <gloss version="2008-03-30" xml:lang="fr">inconnu</gloss>
+          <gloss version="2007-11-06" xml:lang="it">sconosciuto</gloss>
+          <desc>this tag is part of an unknown scheme.</desc>
+          <desc version="2007-12-20" xml:lang="kr">이 태그는 미지의 스키마의 부분이다.</desc>
+          <desc version="2008-04-06" xml:lang="es">esta etiqueta es parte de un esquema desconocido.</desc>
+          <desc version="2008-04-06" xml:lang="ja"> 当該タグは，不明スキームに属する． </desc>
+          <desc version="2008-03-30" xml:lang="fr">cette balise fait partie d'un modèle inconnu.</desc>
+          <desc version="2007-11-06" xml:lang="it">il marcatore è parte di uno schema
+          sconosciuto</desc>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">Mark the start of each italicised phrase with a
+        <tag>hi rend="it"</tag> tag, and its end with a <tag type="end">hi</tag> tag.<tag
+        type="comment">Example updated on 2008-04-05</tag>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"> 於所有斜體字的前頭以<tag>hi rend="it"</tag>
+      標籤，並以<tag>/hi</tag>標籤結尾。</egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#TD"/>
+  </listRef>
+</elementSpec>

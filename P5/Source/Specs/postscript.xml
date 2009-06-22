@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="postscript">
+  <desc>contains a postscript, e.g. to a letter.</desc>
+  <desc version="2007-12-20" xml:lang="kr">예를 들어 편지의, 추신.</desc>
+  <desc version="2008-04-06" xml:lang="es">contiene una posdata, p.ej. en una carta.</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  追伸を示す．例えば，手紙の場合など．
+  </desc>
+  <desc version="2008-03-30" xml:lang="fr">contient un de post-scriptum,  par exemple au bas d' une
+lettre.</desc>
+  <desc version="2007-11-06" xml:lang="it">contiene un post scriptum, come nel caso di una lettera</desc>
+  <classes>
+    <memberOf key="model.divBottomPart"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:group>
+          <rng:ref name="model.common"/>
+        </rng:group>
+        <rng:group>
+          <rng:ref name="model.global"/>
+        </rng:group>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <div type="letter">
+        <opener>
+          <dateline>
+            <placeName>Rimaone</placeName>
+            <date when="2006-11-21">21 Nov 06</date>
+          </dateline>
+          <salute>Dear Susan,</salute>
+        </opener>
+        <p>Thank you very much for the assistance splitting those
+	logs. I'm sorry about the misunderstanding as to the size of
+	the task. I really was not asking for help, only to borrow the
+	axe. Hope you had fun in any case.</p>
+        <closer>
+          <salute>Sincerely yours,</salute>
+          <signed>Seymour</signed>
+        </closer>
+        <postscript>
+          <label>P.S.</label>
+          <p>The collision occured on <date when="2001-07-06">06 Jul 01</date>.</p>
+        </postscript>
+      </div>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n58">
+      <div type="letter">
+        <opener>
+          <dateline>
+            <date when="1911-03-26">辛亥三月二十六</date>
+          </dateline>
+          <salute>意映卿卿如晤：</salute>
+        </opener>
+        <p>吾今以此書與汝永別矣！吾作此書，淚珠和筆墨齊下，不能竟書，而欲擱筆！又恐汝不察吾衷，謂吾忍舍汝而死，謂吾不知汝之不欲吾死也，故遂忍悲為汝言之。...</p>
+        <closer>
+          <signed>夜四鼓<name>意洞</name>手書</signed>
+        </closer>
+      </div>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#DSDTB"/>
+  </listRef>
+</elementSpec>

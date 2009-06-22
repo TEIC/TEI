@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="teiHeader">
+  <equiv/>
+  <gloss>TEI Header</gloss>
+  <gloss version="2009-01-05" xml:lang="fr">en-tête TEI</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">TEI 헤더</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">TEI標頭</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2006-10-18" xml:lang="de">TEI-Header (elektronische Titelseite)</gloss>
+  <gloss version="2007-05-04" xml:lang="es">Encabezado TEI</gloss>
+  <gloss version="2007-01-21" xml:lang="it">intestazione</gloss>
+  <desc>supplies the descriptive and declarative information making up an electronic title page
+    prefixed to every TEI-conformant text.</desc>
+  <desc version="2009-01-05" xml:lang="fr"> donne des informations descriptives et déclaratives qui
+    constituent une page de titre électronique au début de tout texte conforme à la TEI.</desc>
+  <desc version="2007-12-20" xml:lang="kr">모든 TEI 구조의 텍스트 서두에 위치하는 전자 제목 페이지를 구성하는 기술적이고 선언적인 정보를
+    제공한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">在所有符合TEI標準的文本起始的電子題名頁當中提供敘述性以及宣告性的資訊。</desc>
+  <desc version="2008-04-05" xml:lang="ja"> 全てのTEI準拠テキストが伴う，電子版のタイトルページを構成する，記述 的・宣言的情報を示す． </desc>
+  <desc version="2006-10-18" xml:lang="de">Beschreibungen und Erklärungen, die eine elektronische
+    Titelseite ergeben, die jedem TEI-konformen Text vorangestellt ist. </desc>
+  <desc version="2007-05-04" xml:lang="es">proporciona información descriptiva y declarativa de una
+    página de título electrónico prefijada como un texto conforme a TEI.</desc>
+  <desc version="2007-01-21" xml:lang="it">fornisce informazioni descrittive e dichiarative che
+    costituiscono un frontespizio elettronico che precede qualsiasi testo TEI-conforme.</desc>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="fileDesc"/>
+      <rng:zeroOrMore>
+        <rng:ref name="model.headerPart"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="revisionDesc"/>
+      </rng:optional>
+    </rng:group>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+      <equiv/>
+      <desc>specifies the kind of document to which the header is attached, for example whether it
+        is a corpus or individual text.</desc>
+      <desc version="2009-01-05" xml:lang="fr">spécifie le type de document auquel l'en-tête TEI se
+        rapporte.</desc>
+      <desc version="2007-12-20" xml:lang="kr">헤더가 부착된 문서의 종류를 명시한다. 예를 들어 코퍼스 또는 개별 텍스트.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">標明標頭所附屬於的文件類型，例如文集或單一文本。</desc>
+      <desc version="2008-04-05" xml:lang="ja"> 当該ヘダーが付与される文書の種類を特定する．例えば，コーパス，ま たは独立テキスト． </desc>
+      <desc version="2006-10-18" xml:lang="de">beschreibt die Art des Dokuments, zu dem der Header
+        gehört </desc>
+      <desc version="2007-05-04" xml:lang="es">especifica el tipo de documento al cual el encabezado
+        se refiere, por ejemplo si este es un corpus o un texto individual. </desc>
+      <desc version="2007-01-21" xml:lang="it">specifica il tipo di documento al quale è legata
+        l'intestazione.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <defaultVal>text</defaultVal>
+      <valList type="open">
+        <valItem ident="text">
+          <equiv/>
+          <desc>the header is attached to a single text.</desc>
+          <desc version="2009-01-05" xml:lang="fr">L'en-tête se rapporte à un texte unique.</desc>
+          <desc version="2007-12-20" xml:lang="kr">헤더가 단일 텍스트에 부착된다.</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">標頭附屬於單一文本中。</desc>
+          <desc version="2008-04-06" xml:lang="es">la cabecera se asocia a un solo texto.</desc>
+          <desc version="2008-04-05" xml:lang="ja"> 当該ヘダーは，独立テキストに付与される． </desc>
+          <desc version="2007-01-21" xml:lang="it">l'intestazione è allegata ad un singolo
+          testo.</desc>
+        </valItem>
+        <valItem ident="corpus">
+          <equiv/>
+          <desc>the header is attached to a corpus.</desc>
+          <desc version="2009-01-05" xml:lang="fr">L'en-tête se rapporte à un corpus.</desc>
+          <desc version="2007-12-20" xml:lang="kr">헤더가 코퍼스에 부착된다.</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">標頭附屬於文集中。</desc>
+          <desc version="2008-04-06" xml:lang="es">la cabecera se asocia a un corpus de textos.</desc>
+          <desc version="2008-04-05" xml:lang="ja"> 当該ヘダーは，コーパスに付与される． </desc>
+          <desc version="2007-01-21" xml:lang="it">l'intestazione è allegata ad un corpus.</desc>
+        </valItem>
+      </valList>
+    </attDef>
+    <!--    <attDef ident="creator" usage="opt">
+	<equiv/>
+	<desc>identifies the creator of the TEI Header.</desc>
+      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+      <valDesc>The name or initials of the person or institution
+     responsible for creating this TEI header.</valDesc>
+    </attDef>
+    <attDef ident="status" usage="opt">
+	<equiv/>
+	<desc>indicates whether the header is new or has been substantially
+        revised.</desc>
+      <valList type="closed">
+        <valItem ident="new">
+          <equiv/>
+          <gloss>the header is a new header.</gloss>
+        </valItem>
+        <valItem ident="update">
+          <equiv/>
+          <gloss>the header is an update (has been revised).</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="dateCreated" usage="opt">
+	<equiv/>
+	<desc>indicates when the first version of the header was created.</desc>
+      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="date"/></datatype>
+      <valDesc>A date in ISO 8601 format, generally yyyy-mm-dd.</valDesc>
+    </attDef>
+    <attDef ident="dateUpdated" usage="opt">
+	<equiv/>
+	<desc>indicates when the current version of the header was created.</desc>
+      <datatype><rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="date"/></datatype>
+      <valDesc>A date in ISO 8601 format, generally yyyy-mm-dd.</valDesc>
+    </attDef>
+-->
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <teiHeader>
+        <fileDesc>
+          <titleStmt>
+            <title>Shakespeare: the first folio (1623) in electronic form</title>
+            <author>Shakespeare, William (1564–1616)</author>
+            <respStmt>
+              <resp>Originally prepared by</resp>
+              <name>Trevor Howard-Hill</name>
+            </respStmt>
+            <respStmt>
+              <resp>Revised and edited by</resp>
+              <name>Christine Avern-Carr</name>
+            </respStmt>
+          </titleStmt>
+          <publicationStmt>
+            <distributor>Oxford Text Archive</distributor>
+            <address>
+              <addrLine>13 Banbury Road, Oxford OX2 6NN, UK</addrLine>
+            </address>
+            <idno type="OTA">119</idno>
+            <availability>
+              <p>Freely available on a non-commercial basis.</p>
+            </availability>
+            <date when="1968">1968</date>
+          </publicationStmt>
+          <sourceDesc>
+            <bibl>The first folio of Shakespeare, prepared by Charlton Hinman (The Norton Facsimile,
+              1968)</bibl>
+          </sourceDesc>
+        </fileDesc>
+        <encodingDesc>
+          <projectDesc>
+            <p>Originally prepared for use in the production of a series of old-spelling
+              concordances in 1968, this text was extensively checked and revised for use during the
+              editing of the new Oxford Shakespeare (Wells and Taylor, 1989).</p>
+          </projectDesc>
+          <editorialDecl>
+            <correction>
+              <p>Turned letters are silently corrected.</p>
+            </correction>
+            <normalization>
+              <p>Original spelling and typography is retained, except that long s and ligatured
+                forms are not encoded.</p>
+            </normalization>
+          </editorialDecl>
+          <refsDecl xml:id="ASLREF">
+            <cRefPattern matchPattern="(\S+) ([^.]+)\.(.*)"
+              replacementPattern="#xpath(//div1[@n='$1']/div2/[@n='$2']//lb[@n='$3'])">
+              <p>A reference is created by assembling the following, in the reverse order as that
+                listed here: <list>
+                  <item>the <att>n</att> value of the preceding <gi>lb</gi></item>
+                  <item>a period</item>
+                  <item>the <att>n</att> value of the ancestor <gi>div2</gi></item>
+                  <item>a space</item>
+                  <item>the <att>n</att> value of the parent <gi>div1</gi></item>
+                </list></p>
+            </cRefPattern>
+          </refsDecl>
+        </encodingDesc>
+        <revisionDesc>
+          <list>
+            <item><date when="1989-04-12">12 Apr 89</date> Last checked by CAC</item>
+            <item><date when="1989-03-01">1 Mar 89</date> LB made new file</item>
+          </list>
+        </revisionDesc>
+      </teiHeader>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <teiHeader>
+        <fileDesc>
+          <titleStmt>
+            <title>Taisho Tripitaka, Electronic version, No. 251 般若波羅蜜多心經</title>
+            <respStmt>
+              <resp>底本來源</resp>
+              <name>大藏出版株式會社</name>
+            </respStmt>
+            <respStmt>
+              <resp>電子版本製作</resp>
+              <name>中華電子佛典協會</name>
+            </respStmt>
+          </titleStmt>
+          <publicationStmt>
+            <distributor>中華電子佛典協會</distributor>
+            <address>
+              <addrLine>11246 台北市北投區光明路276號4樓</addrLine>
+            </address>
+            <availability>
+              <p>本資料使用限定於非營利性用途，並需附上本標頭資訊。</p>
+            </availability>
+            <date>1998年12月</date>
+          </publicationStmt>
+          <sourceDesc>
+            <bibl>Taisho Tripitaka Vol. 08, Nr. 251 般若波羅蜜多心經</bibl>
+          </sourceDesc>
+        </fileDesc>
+        <encodingDesc>
+          <projectDesc>
+            <p>預備格式轉換</p>
+          </projectDesc>
+        </encodingDesc>
+        <revisionDesc>
+          <list>
+            <item><date>19990721/18:35:54</date>CW以CBXML.BAT (99/6/30)轉換成XML</item>
+          </list>
+        </revisionDesc>
+      </teiHeader>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>One of the few elements unconditionally required in any TEI
+      document.<!--; the header may also be exchanged as an independent
+document.--></p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>Un des seuls éléments obligatoires dans tout document TEI.
+      <!--; l'en-tête peut aussi être échangé comme document isolé.--></p>
+  </remarks>
+  <remarks xml:lang="es">
+    <p>Uno de los pocos elementos incondicionalmente requeridos en cualquier documento de TEI.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p> 当該要素は，TEI文書中で無条件に必要となる要素の1つである．
+      <!--; the header may also be exchanged as an independent
+document.--></p>
+  </remarks>
+  <listRef>
+    <ptr target="#HD11"/>
+    <ptr target="#CCDEF"/>
+  </listRef>
+</elementSpec>

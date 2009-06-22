@@ -1,0 +1,61 @@
+# feed this the source of testall.rnc to get a table of
+# content models in desc order of frequency
+# LB 5 oct 07
+
+$verbose = 1;
+
+while (<>) {
+ if (/element\s+([a-zA-Z0-9]+)\s+\{/) {
+  $content = "$1\=";
+ } elsif ($content) {
+     if (/att\./) {
+	 flush()   
+      } else {
+         $content .=  $_;
+      }
+   }
+}
+
+
+
+print "$modelCount models found\n";
+
+foreach $key (sort by_value keys %models) {
+	$freq = $models{$key};
+	$cumTot += $freq;
+	$cumFreq = $cumTot/$modelCount;
+	if ($freq > 3) {
+             print "$key  \[$freq \] $cumTot ($cumFreq)\n"    ;
+	     print "   $modelkey{$key}\n" if ($verbose); 
+	} else {
+	   $specialModels{$key} ++;
+	   $countRare ++;
+	}   
+  }
+print "\nRare models (<3) $countRare \n";
+      
+foreach $key (sort keys %specialModels) {
+	print "$key  $modelkey{$key} \n"; 
+}	
+
+
+
+
+sub by_value { $models{$b} <=> $models{$a}; }
+
+
+
+sub flush {
+my $model; my $gi;
+    $content =~ s/\,\s*\n//; 
+  $content =~ s/\n//g; 
+   $content =~ s/ //g;
+   $content =~ /([^=]+)\=\(*(.+)/;
+   $model = $2; $gi = $1;
+   $modelkey {$model} .= "<$gi> ";
+   $models{$model} ++;
+   $modelCount ++;
+   $content="";
+}
+
+

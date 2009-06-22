@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0" ident="surface" module="transcr">
+  <desc>defines a written surface in terms of a rectangular
+coordinate space, optionally  grouping one or more graphic representations of
+that space, and rectangular zones of interest
+within it.</desc>
+  <desc version="2007-12-20" xml:lang="kr">직사각형의 좌표 공간과 그 내부에서 기록 표면부를 정의한다. 수의적으로 그 공간의 하나 이상의 그림 표상과 관심 있는 직사각형 공간을 모아놓는다. </desc>
+  <desc version="2008-04-06" xml:lang="es">define una superficie escrita en coordinadas rectangulares, agrupando opcionalmente una o más representaciones gráficas de ese espacio, y las zonas rectangulares de interés dentro de él.</desc>
+  <desc version="2008-04-06" xml:lang="ja">
+矩形の座標により，書記の表面を定義する．選択的に，空間や矩形範囲中のひ
+とつ以上の図表表現をまとめる．
+</desc>
+  <desc version="2008-03-30" xml:lang="fr">définit une surface écrite en termes de coordonnées
+spatiales rectangulaires, regroupant éventuellement une ou plusieurs représentations
+graphiques de cet espace et des zones rectangulaires intéressantes à l'intérieur de
+celui-ci</desc>
+  <desc version="2007-11-06" xml:lang="it">definisce una superficie scritta in termini di uno spazio rettangolare di coordinate, eventualmente che raggruppi una o più rappresentazioni grafiche di tale spazio, e delle zone rettangolari di interesse all'interno di questo</desc>
+  <classes>
+    <memberOf key="att.coordinated"/>
+    <memberOf key="att.declaring"/>
+  </classes>
+  <content>
+    <rng:group>
+      <rng:zeroOrMore>
+        <rng:ref name="model.glossLike"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="model.graphicLike"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="zone"/>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+  <attList>
+<!--attDef ident="xMax">
+<desc>specifies the upper value for the horizontal dimension of the coordinate
+space</desc>
+<datatype><rng:ref name="data.count"/></datatype>
+</attDef>
+<attDef ident="yMax">
+<desc>specifies the upper value for the vertical dimension of the coordinate
+space</desc>
+<datatype><rng:ref name="data.count"/></datatype>
+</attDef-->
+    <attDef ident="start">
+      <desc>points to an element which encodes the starting position of the text corresponding to the
+inscribed part of the surface.</desc>
+      <desc version="2007-12-20" xml:lang="kr">표면부에 기재된 부분에 대응하는 텍스트의 시작 위치를 부호화하는 요소를 가리킨다.</desc>
+      <desc version="2008-04-06" xml:lang="es">indica un elemento que codifica el punto de inicio del texto correspondiente a la parte inscrita de la superficie.</desc>
+      <desc version="2008-04-06" xml:lang="ja">
+刻字されたテキストの始点を表す要素を指示する．
+</desc>
+      <desc version="2008-03-30" xml:lang="fr">pointe vers un élément qui encode la position
+de départ du texte correspondant à la partie de la surface portant une
+inscription</desc>
+      <desc version="2007-11-06" xml:lang="it">indica un elemento che codifica la posizione di partenza del testo corrispondente alla parte iscritta sulla superficie</desc>
+      <datatype>
+        <rng:ref name="data.pointer"/>
+      </datatype>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="und">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <facsimile>
+        <surface ulx="0" uly="0" lrx="200" lry="300">
+          <graphic url="Bovelles-49r.png"/>
+        </surface>
+      </facsimile>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>The <gi>surface</gi> element  represents a rectangular  area of
+any physical surface forming part of the source material. This may be a sheet of
+paper, one face of a monument, a billboard, a papyrus scroll, or
+indeed any 2-dimensional surface.</p>
+    <p>The coordinate space defined by this element may be thought of as
+a grid <att>lrx</att> - <att>ulx</att> units wide and <att>uly</att> - <att>lry</att> units high. This
+grid is superimposed on the whole of any image directly contained by
+the <gi>surface</gi> element. The coordinate values used by every
+<gi>zone</gi> element contained by this surface are to be understood
+with reference to the same grid.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>L'élément <gi>surface</gi> représente un secteur rectangulaire d’une surface physique
+                faisant partie du matériau source. Ce peut être une feuille du papier, la façade
+                d'un monument, un panneau publicitaire, un rouleau de papyrus, ou naturellement
+                toute surface à deux dimensions.</p>
+    <p> L'espace de coordonnées défini par cet élément peut être considéré comme une grille
+                d'unités horizontales<att>lrx</att> - <att>ulx</att> et verticales <att>lry</att> -
+                    <att>ury</att>. Cette grille se superpose à la totalité de toute image
+                directement contenue par l'élément <gi>surface</gi>. Les coordonnées employées par
+                chaque élément <gi>zone</gi>contenu par cette surface doivent être interprétées en
+                référence à la même grille.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p>
+当該要素<gi>surface</gi>は，素材表面にある矩形範囲を示す．
+例えば，紙，碑，掲示板，パピルスの巻子など，2次元の面を持つもの．
+</p>
+    <p>
+当該要素で定義される座標空間は，幅が属性<att>lrx - ulx</att>，高さが属
+性<att>lry - ury</att>によるグリッド単位で示される．このグリッドは，要
+素<gi>surface</gi>を含む画面全体に重ね合わされる．この表面に含まれてい
+る要素<gi>zone</gi>で使われる座標値は，同じグリッドに対する参照と解釈
+される．
+</p>
+  </remarks>
+</elementSpec>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="RECORDHIST" ident="recordHist">
+  <gloss>recorded history</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">기록 이력</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw"/>
+  <gloss version="2008-04-06" xml:lang="es">historia registrada</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">histoire de la description</gloss>
+  <gloss version="2007-11-06" xml:lang="it">storia registrata</gloss>
+  <desc xml:id="rechist.desc">provides information about the source and
+revision status of the parent manuscript description itself. </desc>
+  <desc version="2007-12-20" xml:lang="kr">그 원전에 관한 정보 그리고 원고의 기술 자체의 수정 이력에 관한 정보를 제공한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">提供父手稿本身說明的出處與修訂狀態相關資訊。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  元になった手書き資料の，元や改訂に関する情報を示す．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">donne des informations sur la source de la
+      description et sur les modifications apportées à la description précédente.</desc>
+  <desc version="2007-05-04" xml:lang="es">proporciona información relativa a la fuente y sobre el estatus de revisión de la descripción  del manuscrito del que deriva.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene informazioni relative alla fonte e alla revisione della descrizione stessa del manoscritto genitore</desc>
+  <classes/>
+  <content>
+    <rng:choice>
+      <rng:oneOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:group>
+        <rng:ref name="source"/>
+        <rng:zeroOrMore>
+          <rng:ref name="change"/>
+        </rng:zeroOrMore>
+      </rng:group>
+    </rng:choice>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <recordHist>
+        <source>
+          <p>Derived from <ref target="#IMEV">IMEV 123</ref> with additional research
+	by P.M.W.Robinson</p>
+        </source>
+        <change when="1999-06-23"><name>LDB</name> (editor)
+	  checked examples against DTD version 3.6
+	</change>
+      </recordHist>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <recordHist>
+        <source>
+          <p>源自<ref target="#IMEV">IMEV 123</ref>及P.M.W.羅賓森的附加研究。</p>
+        </source>
+        <change when="1999-06-23"><name>LDB</name> (編輯) 檢查不符DTD 3.6版本的範例</change>
+      </recordHist>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#msadad"/>
+  </listRef>
+</elementSpec>

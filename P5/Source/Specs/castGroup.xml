@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="drama" ident="castGroup">
+  <equiv/>
+  <gloss>cast list grouping</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">배역 목록 모아 놓기</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">角色群組</gloss>
+  <gloss version="2008-04-06" xml:lang="es">grupo de reparto</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">liste de personnages </gloss>
+  <gloss version="2007-01-21" xml:lang="it">raggruppamento della lista dei personaggi</gloss>
+  <desc>groups one or more individual castItem
+elements within a cast list.</desc>
+  <desc version="2007-12-20" xml:lang="kr">배역 목록 내의 몇 개의 개별 castItem 요소를 모아 놓는다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">匯集角色清單中一個或多個角色項目元素。</desc>
+  <desc version="2008-04-06" xml:lang="es">agrupa uno o más elementos individuales del reparto (castItem).</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  配役リストにある，ひとつ以上の要素castItemをまとめるもの．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">dans une distribution, catégorie qui rassemble un ou
+      plusieurs personnages.</desc>
+  <desc version="2007-01-21" xml:lang="it">raggruppa uno o più elementi individuali castItem in una lista dei personaggi.</desc>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.global"/>
+          <rng:ref name="model.headLike"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+      <rng:oneOrMore>
+        <rng:choice>
+          <rng:ref name="castItem"/>
+          <rng:ref name="castGroup"/>
+          <rng:ref name="roleDesc"/>
+        </rng:choice>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:oneOrMore>
+      <rng:optional>
+        <rng:ref name="trailer"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+    </rng:group>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <castGroup rend="braced">
+        <castItem>
+          <role>Walter</role>
+          <actor>Mr Frank Hall</actor>
+        </castItem>
+        <castItem>
+          <role>Hans</role>
+          <actor>Mr F.W. Irish</actor>
+        </castItem>
+        <roleDesc>friends of Mathias</roleDesc>
+      </castGroup>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n30">
+      <castGroup rend="braced">
+        <castItem>
+          <role>程蝶衣</role>
+          <actor>張國榮</actor>
+        </castItem>
+        <castItem>
+          <role>菊仙</role>
+          <actor>鞏俐</actor>
+        </castItem>
+        <roleDesc>原是妓女，後嫁段小樓為妻</roleDesc>
+      </castGroup>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>The <att>rend</att> attribute may be used, as here, to indicate
+whether the grouping is indicated by a brace, whitespace, font change,
+etc. </p>
+    <p>Note that in this example the role description <q>friends of
+Mathias</q> is understood to apply to both roles equally. </p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>L'attribut <att>rend</att> peut être utilisé comme ici pour indiquer si le
+                regroupement est indiqué par une parenthèse, un espace, un changement de police de caractère,
+                etc. </p>
+    <p>À noter que dans cet exemple il est entendu que la description du rôle <q>friends of
+                    Mathias</q> (amis de Mathias) s'applique de la même façon aux deux rôles.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p>
+    属性<att>rend</att>は，当該グループが括弧，空白，字形の違いなどで
+    示されていることを示す．
+    </p>
+    <p>
+    この例では，役に関する情報<q>friends of Mathias</q>は，2つの役に同
+    じく当てはまると理解される．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#DRCAST" type="div3"/>
+  </listRef>
+</elementSpec>

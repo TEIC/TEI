@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" ident="dictScrap">
+  <equiv/>
+  <gloss>dictionary scrap</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">사전 발췌부</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw"/>
+  <gloss version="2008-04-06" xml:lang="es">fragmento de diccionario</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">bloc d'informations</gloss>
+  <gloss version="2007-11-06" xml:lang="it">frammento di dizionario</gloss>
+  <desc>encloses a part of a dictionary entry in which other phrase-level dictionary elements are
+        freely combined.</desc>
+  <desc version="2007-12-20" xml:lang="kr">다른 구-층위 사전 요소들이 자유롭게 결합된 사전 표제 항목의 부분을 포함한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">字典辭條的片段，包含自由組合的詞組層次字典元素。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  句レベルの辞書要素をとる辞書項目を示す．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">contient la partie d'une entrée de dictionnaire
+			dans laquelle d'autres éléments de niveau "expression" sont librement associés.</desc>
+  <desc version="2007-05-04" xml:lang="es">engloba una parte de la entrada del diccionario en la que otros elementos de nivel sintagmático del diccionario se combinan de forma libre.</desc>
+  <desc version="2007-01-21" xml:lang="it">include una parte di una voce di dizionario in cui sono combinati liberamente altri elementi di dizionario a livello sintagmatico</desc>
+  <classes>
+    <memberOf key="model.entryPart.top"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="model.entryPart"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="model.inter"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <entry>
+        <dictScrap><orth>biryani</orth> or <orth>biriani</orth><pron>(%bIrI"A:nI)</pron><def>any of a variety of Indian dishes ...</def><etym>[from <lang>Urdu</lang>]</etym></dictScrap>
+      </entry>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <entry>
+        <dictScrap><orth>折羅</orth> 或 <orth>遮羅</orth><pron>zhe2 luo2</pron><def>Cālā (人名)</def><etym>音譯自 <lang>梵文</lang></etym></dictScrap>
+      </entry>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain any dictionary elements in any combination.</p>
+    <p>This element is used to mark part of a dictionary entry in which lower level dictionary
+            elements appear, but which does not itself form an identifiable structural unit.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p rend="dataDesc">peut contenir n'importe quels éléments de dictionnaire dans n'importe
+                quelle combinaison.</p>
+    <p>Cet élément est utilisé pour marquer la partie d'une entrée de dictionnaire dans
+                laquelle les éléments de dictionnaire de niveau inférieur apparaissent sans former
+                toutefois d'unité structurelle identifiable.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p rend="dataDesc">
+    あらゆる辞書要素をとる．
+    </p>
+    <p>
+    当該要素は，下位レベルの辞書要素から成る辞書項目を示す際に使われる．
+    当該要素自体は参照可能な単位には成らない．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#DIBO"/>
+    <ptr target="#DIEN"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,1 @@
+for $s in //foreign order by $s/@lang return $s

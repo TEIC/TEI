@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="drama" ident="castItem">
+  <gloss>cast list item</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">배역 목록 항목</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">角色項目</gloss>
+  <gloss version="2008-04-06" xml:lang="es">elemento del reparto</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">personnage</gloss>
+  <gloss version="2007-01-21" xml:lang="it">oggetto della lista dei personaggi</gloss>
+  <desc>contains a single entry within a cast list, describing
+either a single role or a list of non-speaking roles.</desc>
+  <desc version="2007-12-20" xml:lang="kr">배역 목록에서 하나의 배역, 또는 대사가 없는 배역 목록을 기술하는 하나의 항목을 포함한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含角色清單中的一個項目，描述單一角色或無台詞角色的列表。</desc>
+  <desc version="2008-04-06" xml:lang="es">contiene una sola entrada dentro de la lista del reparto, describiendo un solo papel o una lista de papeles sin diálogo.</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  配役リスト中の各項目を示す．ひとつの役，または台詞のない役のリスト
+  になる．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">dans une liste de personnages, entrée décrivant un
+      rôle en particulier ou une liste de rôles muets.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene una singola voce all'interno della lista dei personaggi, descrive o un ruolo o una lista di ruoli privi di battute.</desc>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="model.castItemPart"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+      <equiv/>
+      <desc>characterizes the cast item.
+   </desc>
+      <desc version="2007-12-20" xml:lang="kr">배역 항목의 특성 기술</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">說明角色項目的特性。</desc>
+      <desc version="2008-04-06" xml:lang="es">caracteriza el elemento del reparto.
+   </desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      当該項目の種類を示す．
+      </desc>
+      <desc version="2007-06-12" xml:lang="fr">caractérise le personnage.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica la voce della lista dei personaggi</desc>
+      <defaultVal>role</defaultVal>
+      <valList type="closed">
+        <valItem ident="role">
+          <equiv/>
+          <desc>the item describes a single role.
+       </desc>
+          <desc version="2007-12-20" xml:lang="kr">항목이 하나의 배역을 기술한다.</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">該項目為單一角色</desc>
+          <desc version="2008-04-06" xml:lang="es">el elemeto describe un único papel.
+       </desc>
+          <desc version="2008-04-05" xml:lang="ja">
+	  ひとつ役を示す．
+	  </desc>
+          <desc version="2008-03-30" xml:lang="fr">l'item décrit un simple rôle.</desc>
+          <desc version="2007-01-21" xml:lang="it">l'oggetto descrive un solo ruolo.</desc>
+        </valItem>
+        <valItem ident="list">
+          <equiv/>
+          <desc>the item describes a list of non-speaking roles.
+   </desc>
+          <desc version="2007-12-20" xml:lang="kr">항목이 대사 없는 배역 목록을 기술한다.</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">該項目為無台詞角色的列表</desc>
+          <desc version="2008-04-06" xml:lang="es">el item describe una lista de papeles sin diálogo.
+   </desc>
+          <desc version="2008-04-05" xml:lang="ja">
+	  科白がない役のリストを示す．
+	  </desc>
+          <desc version="2008-03-30" xml:lang="fr">l'item décrit une liste de rôles muets</desc>
+          <desc version="2007-01-21" xml:lang="it">l'oggetto descrive una lista di ruoli privi di battute.</desc>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <castItem>
+        <role>Player</role>
+        <actor>Mr Milward</actor>
+      </castItem>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <castItem>
+        <role>段小樓</role>
+        <actor>張豐毅</actor>
+      </castItem>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n31">
+      <castItem type="list">張國榮、張豐毅、鞏俐…等等</castItem>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <castItem type="list">Constables, Drawer, Turnkey, etc.</castItem>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#DRCAST" type="div3"/>
+  </listRef>
+</elementSpec>

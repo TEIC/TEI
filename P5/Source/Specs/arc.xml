@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" ident="arc">
+  <equiv/>
+  <gloss version="2007-06-12" xml:lang="fr">arc</gloss>
+  <desc>encodes an arc, the connection from one node to another in a graph.</desc>
+  <desc version="2007-12-20" xml:lang="kr">그래프에서 노드 사이를 연결하는 호를 부호화한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">標記一條弧線，即為圖形中節點與節點之間的連線。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  グラフを構成するノード間の辺を示す．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">encode un arc, la connexion entre deux noeuds
+			dans un graphe.</desc>
+  <desc version="2007-05-04" xml:lang="es">codifica un arco, es decir, la conexión entre un nodo y otro al interno de un gráfico</desc>
+  <desc version="2007-01-21" xml:lang="it">codifica un arco, cioè il collegamento tra un nodo e l'altro all'interno di un grafo</desc>
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:optional>
+      <rng:ref name="label"/>
+      <rng:optional>
+        <rng:ref name="label"/>
+      </rng:optional>
+    </rng:optional>
+  </content>
+  <attList>
+    <attDef ident="from" usage="req">
+      <equiv/>
+      <desc>gives the identifier of the node which is adjacent from this arc.</desc>
+      <desc version="2007-12-20" xml:lang="kr">이 호로부터 인접한 노드의 확인소를 제시한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">相鄰自該線邊的節點的識別符碼。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      当該辺が有向である場合，起点となるノードを示す．
+      </desc>
+      <desc version="2007-06-12" xml:lang="fr">donne l'identifiant du noeud qui précède
+					immédiatement cet arc.</desc>
+      <desc version="2007-05-04" xml:lang="es">proporciona el identificador al nodo adyacente al nodo corriente.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un identificatore al nodo non adiacente all'arco</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>The identifier of a node.</valDesc>
+    </attDef>
+    <attDef ident="to" usage="req">
+      <equiv/>
+      <desc>gives the identifier of the node which is adjacent to this arc.</desc>
+      <desc version="2007-12-20" xml:lang="kr">이 호에 인접한 노드의 확인소를 제시한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">相鄰至該線邊的節點的識別符碼。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      当該辺が有効である場合，終点となるノードを示す．
+      </desc>
+      <desc version="2007-06-12" xml:lang="fr">donne l'identifiant du noeud qui suit
+					immédiatement cet arc.</desc>
+      <desc version="2007-05-04" xml:lang="es">proporciona el identificador al nodo adyacente al nodo corriente.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un identificatore al nodo adiacente all'arco</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>The identifier of a node.</valDesc>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="mul">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <arc from="#T3" to="#T3">
+        <label>OLD</label>
+        <label>VIEUX</label>
+      </arc>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <arc from="#zh-tw_T3" to="#zh-tw_T3">
+        <label>OLD</label>
+        <label>年老</label>
+      </arc>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>The <gi>arc</gi> element must be used if the arcs are labeled.
+    Otherwise, arcs can be encoded using the <att>adj</att>,
+    <att>adjTo</att> and <att>adjFrom</att> attributes on the
+    <gi>node</gi> tags in the graph. Both <gi>arc</gi> tags and
+    adjacency attributes can be used, but the resulting encoding would
+    be highly redundant.</p>
+    <p>Zero, one, or two children <gi>label</gi> elements may be
+    present. The first occurence of <gi>label</gi> provides a label
+    for the arc; the second provides a second label for the arc, and
+    should be used if a transducer is being encoded.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>L'élément <gi>arc</gi> doit être utilisé si les arcs sont étiquettés. Sinon les arcs
+                peuvent être encodés en utilisant les attributs <att>adj</att>, <att>adjTo</att> et
+                    <att>adjFrom</att> dans les balises <gi>node</gi> du graphe. Les balises
+                <gi>arc</gi> et les attributs d'adjacence peuvent être utilisés en même temps mais
+                l'encodage qui en résulte serait extrêmement redondant.</p>
+    <p>Peuvent être présents aucun, un ou deux éléments enfants <gi>label</gi>. La première
+                occurrence de l'élément <gi>label</gi> fournit une étiquette pour l'arc ; la seconde
+                occurrence fournit une deuxième étiquette pour l'arc et doit être utilisée si l'on
+                encode un transducteur.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p>
+    要素<gi>arc</gi>は，ラベル付き辺の場合には必ず使用される．
+    そうでない場合，辺は，要素<gi>node</gi>の属性<att>adj</att>,
+    <att>adjTo</att>, <att>adjFrom</att>として示すことも可能である．
+    しかし，この方法は記述が冗長になるかもしれない．
+    </p>
+    <p>
+    要素<gi>label</gi>の数は，0,1,2の場合がある．最初に出現する要素
+    <gi>label</gi>には，当該辺のラベルが付与される．2番目に来る要素
+    <gi>label</gi>には，当該辺の2番目のラベルが付与される．変換グラフ
+    をマークアップする場合には，2番目のラベルが使用されるべきである．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#GDGR"/>
+  </listRef>
+</elementSpec>

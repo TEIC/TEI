@@ -1,0 +1,134 @@
+# +//IDN sinica.edu.tw//DTD Schematron 1.5//EN
+
+# http://www.ascc.net/xml/schematron/schematron1-5.dtd
+
+# version of 2002/08/16
+
+# This version has the 1.6 feature that sch:key element with @match 
+# is allowed under sch:schema. This is not part of 1.5 proper.
+
+# All names are given indirectly, to allow explicit use of a namespace prefix
+# if desired.  In that case, in the internal subset of the doctype declaration,
+# define <!ENTITY % sp "sch:" >
+
+# Data types
+
+default namespace = "http://www.ascc.net/xml/schematron"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace xsi = "http://www.w3.org/2000/10/XMLSchema-instance"
+
+URI = string
+PATH = string
+EXPR = string
+FPI = string
+# Element declarations
+schema =
+  element schema {
+    attlist.schema,
+    title?,
+    ns*,
+    p*,
+    (phase | key)*,
+    pattern+,
+    p*,
+    diagnostics?
+  }
+active = element active { attlist.active, (text | dir | emph | span)* }
+assert =
+  element assert { attlist.assert, (text | name | emph | dir | span)* }
+dir = element dir { attlist.dir, text }
+emph = element emph { attlist.emph, text }
+attlist.emph &= empty
+extends = element extends { attlist.extends, empty }
+diagnostic =
+  element diagnostic {
+    attlist.diagnostic, (text | value-of | emph | dir | span)*
+  }
+diagnostics = element diagnostics { attlist.diagnostics, diagnostic* }
+attlist.diagnostics &= empty
+key = element key { attlist.key, empty }
+name = element name { attlist.name, empty }
+ns = element ns { attlist.ns, empty }
+p = element p { attlist.p, (text | dir | emph | span)* }
+pattern = element pattern { attlist.pattern, p*, rule* }
+phase = element phase { attlist.phase, p*, active* }
+report =
+  element report { attlist.report, (text | name | emph | dir | span)* }
+rule = element rule { attlist.rule, (assert | report | key | extends)+ }
+span = element span { attlist.span, text }
+title = element title { attlist.title, (text | dir)* }
+attlist.title &= empty
+value-of = element value-of { attlist.value-of, empty }
+# Attribute declarations
+attlist.schema &=
+  [
+    a:defaultValue =
+      "http://www.ascc.net/xml/schematron   http://www.ascc.net/xml/schematron/schematron.xsd"
+  ]
+  attribute xsi:schemaLocation { URI }?,
+  attribute id { xsd:ID }?,
+  attribute fpi { FPI }?,
+  attribute ns { FPI }?,
+  attribute schemaVersion { text }?,
+  attribute defaultPhase { xsd:IDREF }?,
+  attribute icon { URI }?,
+  [ a:defaultValue = "1.5" ] attribute version { text }?,
+  attribute xml:lang { xsd:NMTOKEN }?
+attlist.active &= attribute pattern { xsd:IDREF }
+attlist.assert &=
+  attribute test { EXPR },
+  attribute role { xsd:NMTOKEN }?,
+  attribute id { xsd:ID }?,
+  attribute diagnostics { xsd:IDREFS }?,
+  attribute icon { URI }?,
+  attribute subject { PATH }?,
+  attribute xml:lang { xsd:NMTOKEN }?
+attlist.dir &= attribute value { "ltr" | "rtl" }?
+attlist.extends &= attribute rule { xsd:IDREF }
+attlist.diagnostic &=
+  attribute id { xsd:ID },
+  attribute icon { URI }?,
+  attribute xml:lang { xsd:NMTOKEN }?
+attlist.key &=
+  attribute match { text }?,
+  attribute name { xsd:NMTOKEN },
+  attribute path { PATH },
+  attribute icon { URI }?
+attlist.name &= [ a:defaultValue = "." ] attribute path { PATH }?
+# Schematrons should implement '.' 
+# as the default value for path in sch:name
+attlist.p &=
+  attribute xml:lang { text }?,
+  attribute id { xsd:ID }?,
+  attribute class { text }?,
+  attribute icon { URI }?
+attlist.pattern &=
+  attribute name { text },
+  attribute see { URI }?,
+  attribute id { xsd:ID }?,
+  attribute icon { URI }?
+attlist.ns &=
+  attribute uri { URI },
+  attribute prefix { xsd:NMTOKEN }?
+attlist.phase &=
+  attribute id { xsd:ID },
+  attribute fpi { FPI }?,
+  attribute icon { URI }?
+attlist.span &= attribute class { text }?
+attlist.report &=
+  attribute test { EXPR },
+  attribute role { xsd:NMTOKEN }?,
+  attribute id { xsd:ID }?,
+  attribute diagnostics { xsd:IDREFS }?,
+  attribute icon { URI }?,
+  attribute subject { PATH }?,
+  attribute xml:lang { text }?
+attlist.rule &=
+  attribute context { PATH }?,
+  [ a:defaultValue = "false" ] attribute abstract { "true" | "false" }?,
+  attribute role { xsd:NMTOKEN }?,
+  attribute id { xsd:ID }?
+# Schematrons should implement 'false' as the default
+# value of abstract
+attlist.value-of &= attribute select { PATH }
+start = schema

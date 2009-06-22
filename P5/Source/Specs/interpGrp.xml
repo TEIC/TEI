@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" ident="interpGrp">
+  <equiv/>
+  <gloss>interpretation group</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">해석 집단</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">解釋群組</gloss>
+  <gloss version="2008-04-06" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">groupe d'interprétations</gloss>
+  <gloss version="2007-05-04" xml:lang="es">grupo de interpretación</gloss>
+  <gloss version="2007-01-21" xml:lang="it">gruppo di interpretazioni</gloss>
+  <desc>collects together a set of related interpretations which share responsibility or type.</desc>
+  <desc version="2007-12-20" xml:lang="kr">책임성 혹은 유형을 공유하고 있는, 관련된 해석들을 모아놓는다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">匯集一系列具有共同任務或類型的相關解釋。</desc>
+  <desc version="2008-04-06" xml:lang="ja"> 責任者や分類を共にする，関連し合う解釈をまとめる． </desc>
+  <desc version="2009-02-13" xml:lang="fr">regroupe un ensemble d'interprétations ayant en commun
+    une mention de responsabilité ou un type</desc>
+  <desc version="2007-05-04" xml:lang="es">Agrupa un conjunto de interpretaciones relacionadas en
+    base a la responsabilidad o al tipo. </desc>
+  <desc version="2007-01-21" xml:lang="it">raggruppa un insieme di interpretazioni accomunate per
+    responsabilità o tipo</desc>
+  <classes>
+    <memberOf key="att.interpLike"/>
+    <memberOf key="model.global.meta"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="model.glossLike"/>
+      </rng:zeroOrMore>
+      <rng:oneOrMore>
+        <rng:ref name="interp"/>
+      </rng:oneOrMore>
+    </rng:group>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <interpGrp resp="#TMA" type="structuralunit">
+        <desc>basic structural organization</desc>
+        <interp xml:id="I1">introduction</interp>
+        <interp xml:id="I2">conflict</interp>
+        <interp xml:id="I3">climax</interp>
+        <interp xml:id="I4">revenge</interp>
+        <interp xml:id="I5">reconciliation</interp>
+        <interp xml:id="I6">aftermath</interp>
+      </interpGrp>
+      <bibl xml:id="TMA">
+        <!-- bibliographic citation for source of this
+interpretive framework -->
+      </bibl>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <interpGrp resp="#zh-tw_TMA" type="段落架構">
+        <interp xml:id="zh-tw_註11">序</interp>
+        <interp xml:id="zh-tw_註I2">衝突</interp>
+        <interp xml:id="zh-tw_註I3">高潮</interp>
+        <interp xml:id="zh-tw_註I4">復仇</interp>
+        <interp xml:id="zh-tw_註I5">調和</interp>
+        <interp xml:id="zh-tw_註I6">結局</interp>
+      </interpGrp>
+      <bibl xml:id="zh-tw_TMA">
+        <!--  註明資料來源-->
+      </bibl>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">Any number of <gi>interp</gi> elements.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p rend="dataDesc">Un nombre quelconque d'éléments <gi>interp</gi>.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p rend="dataDesc"> 任意数の要素<gi>interp</gi>． </p>
+  </remarks>
+  <listRef>
+    <ptr target="#AISP"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" ident="oVar">
+  <equiv/>
+  <gloss>orthographic-variant reference</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">철자-변이 참조</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">拼字變化參照</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">référence de variante orthographique</gloss>
+  <gloss version="2007-05-04" xml:lang="es">referencia de variante ortográfica</gloss>
+  <gloss version="2007-01-21" xml:lang="it">riferimento alla variante ortografica</gloss>
+  <desc>in a dictionary example, indicates a reference to variant orthographic form(s) of the
+    headword.</desc>
+  <desc version="2007-12-20" xml:lang="kr">사전 예제에서 표제어의 변이 철자 형식에 대한 참조를 표시한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">在字典範例中，參照出標題字的拼字變化形式。</desc>
+  <desc version="2008-04-05" xml:lang="ja"> 辞書の用例で，見出し語の複数ある正書形式への参照を示す． </desc>
+  <desc version="2009-04-08" xml:lang="fr">dans un exemple de dictionnaire, indique une référence à
+    une/des variante(s) orthographique(s) du mot-vedette.</desc>
+  <desc version="2007-05-04" xml:lang="es">en un diccionario, indica una referencia a una forma/s de
+    variante ortográfica del lema.</desc>
+  <desc version="2007-01-21" xml:lang="it">nell'esempio in un dizionario, indica un riferimento alla
+    variante (varianti) ortografica del lemma.</desc>
+  <classes>
+    <memberOf key="model.ptrLike.form"/>
+    <memberOf key="att.ptrLike.form"/>
+    <memberOf key="att.lexicographic"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="oRef"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+      <equiv/>
+      <desc>indicates the kind of variant involved.</desc>
+      <desc version="2007-12-20" xml:lang="kr">관련된 변이 종류를 표시한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">指出變化種類。</desc>
+      <desc version="2008-04-05" xml:lang="ja"> 示された変化形の種類を示す． </desc>
+      <desc version="2007-06-12" xml:lang="fr">indique le type de variante impliquée</desc>
+      <desc version="2007-05-04" xml:lang="es">indica el tipo de variante implicada</desc>
+      <desc version="2007-01-21" xml:lang="it">indica il tipo di variante.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="open">
+        <valItem ident="pt">
+          <equiv/>
+          <gloss>past tense</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">passé</gloss>
+          <gloss version="2007-05-04" xml:lang="es">pasado</gloss>
+        </valItem>
+        <valItem ident="pp">
+          <equiv/>
+          <gloss>past participle</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">participe passé</gloss>
+          <gloss version="2007-11-06" xml:lang="it">participio passato</gloss>
+          <gloss version="2007-05-04" xml:lang="es">participio pasado</gloss>
+        </valItem>
+        <valItem ident="prp">
+          <equiv/>
+          <gloss>present participle</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">participe présent</gloss>
+          <gloss version="2007-11-06" xml:lang="it">participio presente</gloss>
+          <gloss version="2007-05-04" xml:lang="es">participio presente</gloss>
+        </valItem>
+        <valItem ident="f">
+          <equiv/>
+          <gloss>feminine</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">féminin</gloss>
+          <gloss version="2007-11-06" xml:lang="it">femminile</gloss>
+          <gloss version="2007-05-04" xml:lang="es">femenino</gloss>
+        </valItem>
+        <valItem ident="pl">
+          <equiv/>
+          <gloss>plural</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">pluriel</gloss>
+          <gloss version="2007-11-06" xml:lang="it">plurale</gloss>
+        </valItem>
+      </valList>
+          </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <entry>
+        <form>
+          <orth>take</orth>
+        </form>
+        <cit type="example">
+          <quote>Mr Burton <oVar type="pt">took</oVar> us for French</quote>
+        </cit>
+      </entry>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n27">
+      <entry>
+        <form>
+          <orth>卻</orth>
+        </form>
+        <cit type="example">
+          <quote>感我此言良久立，<oVar type="異體字">却</oVar> 坐促弦弦轉急</quote>
+        </cit>
+      </entry>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">Character data or <gi>oRef</gi>.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p rend="dataDesc">Caractères ou<gi>oRef</gi>.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p rend="dataDesc"> 文字データまたは要素<gi>oRef</gi>． </p>
+  </remarks>
+  <listRef>
+    <ptr target="#DI"/>
+  </listRef>
+</elementSpec>

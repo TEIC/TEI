@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" ident="sense">
+  <equiv/>
+  <desc>groups together all information relating to one word sense in a dictionary entry, for
+    example definitions, examples, and translation equivalents.</desc>
+  <desc version="2007-12-20" xml:lang="kr">하나의 사전 표제 항목에서 하나의 단어 의미와 관련된 모든 정보를 모아 놓는다. 예를 들어 정의,
+    예문, 번역어</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">匯集辭條中一個字義的所有相關資訊(定義、範例、翻譯等)。</desc>
+  <desc version="2008-04-05" xml:lang="ja"> 辞書項目にある単語の意味と関連する情報をまとめる．例えば，定義，用例， 翻訳など． </desc>
+  <desc version="2009-04-08" xml:lang="fr">regroupe toutes les informations relatives à un des sens
+    d’un mot dans une entrée de dictionnaire (définitions, exemples, équivalents linguistiques,
+    etc.).</desc>
+  <desc version="2007-05-04" xml:lang="es">agrupa toda la información relativa al significado de una
+    palabra en una entrada de diccionario (definiciones, ejemplos, sinónimos, etc.)</desc>
+  <desc version="2007-01-21" xml:lang="it">raggruppa tutte le informazioni attinenti al senso di una
+    parola in una voce di dizionario (definizioni, esempi, equivalente traduttivo, ecc.)</desc>
+  <classes>
+    <memberOf key="model.entryPart"/>
+    <memberOf key="att.lexicographic"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="sense"/>
+        <rng:ref name="model.entryPart.top"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="level" usage="opt">
+      <equiv/>
+      <desc>gives the nesting depth of this sense.</desc>
+      <desc version="2007-12-20" xml:lang="kr">의미의 층위를 제시한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">說明該字義在辭條中的層次。</desc>
+      <desc version="2008-04-05" xml:lang="ja"> 当該意味情報の構造の深さを示す． </desc>
+      <desc version="2007-06-12" xml:lang="fr">indique le niveau de ce sens dans la hiérarchie.</desc>
+      <desc version="2007-05-04" xml:lang="es">la profundidad de anidamiente</desc>
+      <desc version="2007-01-21" xml:lang="it">fornisce il grado di nidificazione del senso</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
+      </datatype>
+      <valDesc>a positive integer</valDesc>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="mul">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <sense n="2">
+        <usg type="time">Vx.</usg>
+        <def>Vaillance, bravoure (spécial., au combat)</def>
+        <cit type="example">
+          <quote>La valeur n'attend pas le nombre des années</quote>
+          <bibl>
+            <author>Corneille</author>
+          </bibl>
+        </cit>
+      </sense>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n28">
+      <sense n="2">
+        <usg type="time">現代</usg>
+        <def>胭脂和香粉，舊時借指婦女</def>
+        <cit type="example">
+          <quote>那一年頌蓮留著齊耳的短髮，用一條天藍色的緞帶箍住，她的臉是圓圓的，不施脂粉，但顯得有點蒼白。</quote>
+          <bibl>
+            <author>蘇童</author>
+          </bibl>
+        </cit>
+      </sense>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain character data mixed with any other elements defined in the
+      dictionary tag set.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p rend="dataDesc">Peut contenir des caractères combinés avec tout autre élément défini dans le
+      jeu de balises du dictionnaire.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p rend="dataDesc"> 辞書向けタグ集合で定義されている他の要素と文字データが混在するかも しれない． </p>
+  </remarks>
+  <listRef>
+    <ptr target="#DIEN" type="div2"/>
+  </listRef>
+</elementSpec>

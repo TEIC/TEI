@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="titlePart">
+  <desc>contains a subsection or division of the title of a work, as
+indicated on a title page.</desc>
+  <desc version="2007-12-20" xml:lang="kr">제목 페이지에 제시되는 작품 제목의 소절 또는 구역을 포함한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含作品題名的部分或區段，同於題名頁上所標示的題名。
+  </desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  タイトルページに示されている，作品タイトルの下位部分を示す．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">contient une section ou division du titre d’un
+            ouvrage telle qu’elle est indiquée sur la page de titre.</desc>
+  <desc version="2006-10-18" xml:lang="de">enthält einen Untertitel oder einen Teil eines Titels, wie er auf der Titelseite angegeben ist. </desc>
+  <desc version="2007-05-04" xml:lang="es">contiene una subsección o división del título de una obra, como se indica en el frontispicio. </desc>
+  <desc version="2007-01-21" xml:lang="it">contiene una sezione o partizione del titolo di un'opera, come specificato nel frontespizio</desc>
+  <classes>
+    <memberOf key="model.titlepagePart"/>
+    <memberOf key="model.pLike.front"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+      <equiv/>
+      <desc>specifies the role of this subdivision of the title.</desc>
+      <desc version="2007-12-20" xml:lang="kr">제목의 하위 구역에 대한 역할을 명시한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">說明該題名部分的作用。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      当該タイトルにおける，当該下位部分の役割を示す．
+      </desc>
+      <desc version="2007-06-12" xml:lang="fr">précise le rôle de cette subdivision du
+                    titre.</desc>
+      <desc version="2006-10-18" xml:lang="de">beschreibt die Funktion dieses Titelteils näher.</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica la función de tal subdivisión del título.</desc>
+      <desc version="2007-01-21" xml:lang="it">specifica il ruolo di tale sezione o partizione all'interno del titolo</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <defaultVal>main</defaultVal>
+      <valList type="semi">
+        <valItem ident="main">
+          <equiv/>
+          <desc>main title of the work
+        </desc>
+          <desc version="2007-12-20" xml:lang="kr">작품의 주요 제목</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">作品主要題名</desc>
+          <desc version="2008-04-06" xml:lang="es">título principal del trabajo
+        </desc>
+          <desc version="2008-04-05" xml:lang="ja">
+          主タイトル．
+          </desc>
+          <desc version="2008-03-30" xml:lang="fr">titre principal de l'oeuvre.</desc>
+          <desc version="2007-01-21" xml:lang="it">titolo principale dell'opera</desc>
+        </valItem>
+        <valItem ident="sub">
+          <gloss>subordinate</gloss>
+          <gloss version="2007-12-20" xml:lang="kr">부수적</gloss>
+          <gloss version="2007-11-06" xml:lang="it">subordinato</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">sous-titre de l’ouvrage.</gloss>
+          <gloss version="2006-10-18" xml:lang="de">Untertitel des Werks</gloss>
+          <gloss version="2007-05-04" xml:lang="es">subtítulo de una obra</gloss>
+          <desc>subtitle  of the work
+        </desc>
+          <desc version="2007-12-20" xml:lang="kr">작품의 부제</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">作品次要題名</desc>
+          <desc version="2008-04-06" xml:lang="es">subtítulo del trabajo
+        </desc>
+          <desc version="2008-04-05" xml:lang="ja">
+          副タイトル．
+          </desc>
+          <desc version="2008-03-30" xml:lang="fr">sous-titre de l'oeuvre.</desc>
+          <desc version="2007-01-21" xml:lang="it">sottotitolo dell'opera</desc>
+        </valItem>
+        <valItem ident="alt">
+          <gloss>alternate</gloss>
+          <gloss version="2007-12-20" xml:lang="kr">이명</gloss>
+          <gloss version="2007-11-06" xml:lang="it">alternativo</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">titre alternatif de
+                        l’ouvrage.</gloss>
+          <gloss version="2006-10-18" xml:lang="de">Alternativer Titel des Werks</gloss>
+          <gloss version="2007-05-04" xml:lang="es">título alternativo de una obra</gloss>
+          <desc>alternative title  of the work
+        </desc>
+          <desc version="2007-12-20" xml:lang="kr">작품의 다른 제목</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">作品代換題名</desc>
+          <desc version="2008-04-06" xml:lang="es">título alternativo del trabajo
+        </desc>
+          <desc version="2008-04-05" xml:lang="ja">
+          別タイトル．
+          </desc>
+          <desc version="2008-03-30" xml:lang="fr">autre titre de l'oeuvre.</desc>
+          <desc version="2007-01-21" xml:lang="it">titolo alternativo dell'opera</desc>
+        </valItem>
+        <valItem ident="short">
+          <equiv/>
+          <desc>abbreviated form of title</desc>
+          <desc version="2007-12-20" xml:lang="kr">제목의 축약형</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">題名的縮寫形式</desc>
+          <desc version="2008-04-06" xml:lang="es">forma abreviada del título</desc>
+          <desc version="2008-04-05" xml:lang="ja">
+          タイトルの省略形．
+          </desc>
+          <desc version="2008-03-30" xml:lang="fr">forme abrégée du titre.</desc>
+          <desc version="2007-01-21" xml:lang="it">forma abbreviata del titolo</desc>
+        </valItem>
+        <valItem ident="desc">
+          <gloss>descriptive</gloss>
+          <gloss version="2007-12-20" xml:lang="kr">기술적</gloss>
+          <gloss version="2007-11-06" xml:lang="it">descrittivo</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">description paraphrastique de
+                            l’ouvrage.</gloss>
+          <gloss version="2006-10-18" xml:lang="de">Kurzbeschreibung des Werks</gloss>
+          <gloss version="2007-05-04" xml:lang="es">paráfrasis descriptiva de la obra</gloss>
+          <desc>descriptive paraphrase of the work 
+   </desc>
+          <desc version="2007-12-20" xml:lang="kr">작품의 기술적 설명적 환문</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">作品的描述性改述</desc>
+          <desc version="2008-04-06" xml:lang="es">paráfrasis descriptiva del trabajo 
+   </desc>
+          <desc version="2008-04-05" xml:lang="ja">
+          説明的な言い換え．
+          </desc>
+          <desc version="2008-03-30" xml:lang="fr">texte qui paraphrase l'oeuvre.</desc>
+          <desc version="2007-01-21" xml:lang="it">parafrasi descrittiva dell'opera</desc>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <docTitle>
+        <titlePart type="main">THE FORTUNES
+  AND MISFORTUNES Of the FAMOUS
+  Moll Flanders, &amp;c.
+  </titlePart>
+        <titlePart type="desc">Who was BORN in NEWGATE,
+  And during a Life of continu'd Variety for
+  Threescore Years, besides her Childhood, was
+  Twelve Year a <hi>Whore</hi>, five times a <hi>Wife</hi> (wherof
+  once to her own Brother) Twelve Year a <hi>Thief,</hi>
+  Eight Year a Transported <hi>Felon</hi> in <hi>Virginia</hi>,
+  at last grew <hi>Rich</hi>, liv'd <hi>Honest</hi>, and died a
+  <hi>Penitent</hi>.</titlePart>
+      </docTitle>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n60">
+      <docTitle>
+        <titlePart type="main">千年一嘆 </titlePart>
+        <titlePart type="desc">這是一份真實的考察日記，記錄余秋雨在 20 世紀最後幾個月的數萬里行程。余秋雨與鳳凰電視台一行於 1999 年 9 月 27 日啟程，尋訪世界的古老文明。旅程開始時，5 輛吉普車從香港海運至埃及亞歷山大港，人員乘坐飛機至希臘雅典，考察完希臘本土和克利特島後至開羅，與吉普車會合，然後由吉普車走完全程，直至返回香港。</titlePart>
+      </docTitle>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#DSTITL"/>
+  </listRef>
+</elementSpec>

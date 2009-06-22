@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details.
+$Date$
+$Id$
+-->
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="AB" n="1">
+<head>About These Guidelines</head>
+
+<p>These Guidelines have been developed and are maintained by the Text
+Encoding Initiative Consortium (TEI); see <ptr target="#ABTEI"/>.  They
+are addressed to anyone who works with any kind of textual resource in
+digital form.</p>
+
+<p>They make recommendations about suitable ways of representing those
+features of textual resources which need to be identified explicitly
+in order to facilitate processing by computer programs.  In
+particular, they specify a set of markers (or <term>tags</term>) which
+may be inserted in the electronic representation of the text, in order
+to mark the text structure and other features of interest.  Many, or
+most, computer programs depend on the presence of such explicit
+markers for their functionality, since without them a digitized text
+appears to be nothing but a sequence of undifferentiated bits.  The
+success of the World Wide Web, for example, is partly a consequence of
+its use of such markup to indicate such features as headings and lists
+on individual pages, and to indicate links between pages. The process
+of inserting such explicit markers for implicit textual features is
+often called <soCalled>markup</soCalled>, or equivalently within this
+work <soCalled>encoding</soCalled>; the term
+<soCalled>tagging</soCalled> is also used informally. We use the term
+<term>encoding scheme</term> or <term>markup language</term> to denote
+the complete set of rules associated with the use of markup in a given
+context; we use the term <term>markup vocabulary</term> for the
+specific set of markers or named distinctions employed by a given
+encoding scheme. Thus, this work both describes the TEI encoding
+scheme, and documents the TEI markup vocabulary.</p>
+
+<p>The TEI encoding scheme is of particular usefulness in facilitating
+the loss-free interchange of data amongst individuals and research
+groups using different programs, computer systems, or application
+software. Since they contain an inventory of the features most often
+deployed for computer-based text processing, the Guidelines are also
+useful as a starting point for those designing new systems and
+creating new materials, even where interchange of information is not a
+primary objective. </p>
+
+<p>These Guidelines apply to texts in any natural language, of any
+date, in any literary genre or text type, without restriction on form
+or content.  They treat both continuous materials (<soCalled>running
+text</soCalled>) and discontinuous materials such as dictionaries and
+linguistic corpora.  Though principally directed to the needs of the
+scholarly research community, the Guidelines are not restricted to
+esoteric academic applications.  They are also useful for librarians
+maintaining and documenting electronic materials, and for publishers
+and others creating or distributing electronic texts.  Although they
+focus on problems of representing in electronic form texts which
+already exist in traditional media, these Guidelines are also
+applicable to textual material which is <soCalled>born
+digital</soCalled>.  We believe them to be adequate to 
+the widest variety of currently existing practices in using
+digital textual data, but by no means limited to them.</p>
+
+<p>The rules and recommendations made in these Guidelines are
+expressed in terms of what is currently the most widely-used markup
+language for digital resources of all kinds: the Extensible Markup
+Language (XML), as defined by the World Wide Web Consortium's XML
+Recommendation. However, the TEI encoding scheme itself does not
+depend on this language; it was originally formulated in terms of SGML
+(the ISO Standard Generalized Markup Language), a
+predecessor of XML, and
+may in future years be re-expressed in other ways as the
+field of markup develops and matures. For more information on markup
+languages see chapter <ptr target="#SG"/>; for more
+information on the associated character encoding issues see chapter
+<ptr target="#CH"/>.
+</p>
+
+<p>This document provides the authoritative and complete statement of
+the requirements and usage of the TEI encoding scheme.  As such,
+although it includes numerous small examples, it must be stressed that
+this work is intended to be a reference manual rather than a tutorial
+guide. </p>
+
+<p>The remainder of this chapter comprises three sections.  The first
+gives an overview of the structure and notational conventions used
+throughout these Guidelines.  The second enumerates the design principles
+underlying the TEI scheme and the application environments in which it
+may be found useful.  Finally, the third section gives a brief account
+of the origins and development of the Text Encoding Initiative itself.</p>
+
+<div type="div2" xml:id="ABSTRUNC"><head>Structure and Notational
+Conventions of this Document</head>
+
+<p>The remaining two sections of the front matter to the Guidelines
+provide background tutorial material for those unfamiliar with basic
+markup technologies. Following the present introductory section, we
+present a detailed introduction to XML itself, intended to cover in a
+relatively painless manner as much as the novice user of the TEI
+scheme needs to know about markup languages in general and XML in
+particular. This is followed by a discussion of the general principles
+underlying current practice in the representation of different
+languages and writing systems in digital form. This chapter is largely
+intended for the user unfamiliar with the Unicode encoding systems,
+though the expert may also find its historical overview of
+interest.</p>
+
+<p>The body of this edition of the Guidelines proper contains 23
+chapters arranged in increasing order of specialist interest. The
+first five chapters discuss in depth matters likely to be of
+importance to anyone intending to apply the TEI scheme to virtually
+any kind of text. The next seven focus on particular kinds of text:
+verse, drama, spoken text, dictionaries, and manuscript
+materials. The next nine chapters deal with a wide range of topics,
+one or more of which are likely to be of interest in specialist
+applications of various kinds. The last two chapters deal with the XML
+encoding used to represent the TEI scheme itself, and provide
+technical information about its implementation. The last chapter also
+defines the notion of TEI conformance and its implications for
+interchange of materials produced according to these Guidelines.</p>
+
+<p>As noted above, this is a reference work, and is not intended to be
+read through from beginning to end. However, the reader wishing to
+understand the full potential of the TEI scheme will need a thorough
+grasp of the material covered by the first four chapters and the last
+two. Beyond that, the reader is recommended to select according to
+their specific interests: one of the strengths of the TEI architecture
+is its modular nature. </p>
+
+<p>As far as possible, extensive cross referencing is provided
+wherever related topics are dealt with; these are particularly
+effective in the online version of the Guidelines. In addition, a
+series of technical appendixes provide detailed formal definitions for
+every element, every class, and every macro discussed in the body of
+the work; these are also cross linked as appropriate. Finally, a
+detailed bibliography is provided, which identifies the source of many
+examples cited in the text as well as documenting works referred to,
+and listing other relevant publications.</p>
+
+
+<p>As an aid to the reader, most chapters of these Guidelines follow
+the same basic organization. The chapter begins with an overview of
+the subjects treated within it, linked to the following
+subsections. Within each section where new elements are described, a
+summary table is first given, which provides their names and a brief
+description of their intended usage. This is then followed where
+appropriate by further discussion of each element, including wherever
+possible usage examples taken somewhat eclectically from a variety of
+real sources. These examples are not intended to be exhaustive, but
+rather to suggest typical ways in which the elements concerned may
+usefully be applied. Where appropriate, a link to a statement of the
+source for most examples is provided in the online version. Within the
+examples, use of whitespace such as newlines or indentation is simply
+intended to aid legibility, and is not prescriptive or normative. </p>
+
+<p>Wherever TEI elements or classes are mentioned in the text, they
+are linked in the online version to the relevant reference
+specification for the element or class concerned. Element names are
+always given in the form <gi>name</gi>, where <q>name</q> is the
+<term>generic identifier</term> of the element; empty elements such as
+<gi>pb</gi> or <gi>anchor</gi> include a closing slash to distinguish
+them wherever they are discussed. References to attributes take the
+form <att scheme="meta">attname</att>, where <q>attname</q> is the name of the
+attribute.  References to classes are also presented as links, for
+example <ident type="class">model.divLike</ident> for a model class,
+and <ident type="class">att.global</ident> for an attribute class.
+</p>
+
+
+<div type="div3" xml:id="ABTEI2"><head>Design Principles</head>
+	
+<p>Because of its roots in the humanities research community, the TEI
+scheme is driven by its original goal of serving the needs of research,
+and is therefore committed to providing a maximum of comprehensibility,
+flexibility, and extensibility.  More specific design goals of the TEI
+have been that the Guidelines should:
+<list type="simple">
+<item>provide a standard format for data interchange</item>
+<item>provide guidance for the encoding of texts in this format</item>
+<item>support the encoding of all kinds of features of all
+kinds of texts studied by researchers</item>
+<item>be application independent</item></list>
+This has led to a number of important design decisions, such as:
+<list type="simple">
+<item>the choice of XML and Unicode</item>
+<item>the provision of a large predefined tag set</item>
+<item>encodings for different views of text</item>
+<item>alternative encodings for the same textual features</item>
+<item>mechanisms for user-defined modification of the scheme</item></list>
+We discuss some of these goals in more detail below.</p>
+
+<p>The goal of creating a common interchange format which is
+application independent requires the definition of a specific markup
+syntax as well as the definition of a large set of elements or
+concepts.  The syntax of the recommendations made in this document
+conforms to the World Wide Web Consortium's XML Recommendation (<ptr target="#XMLREC"/>)
+but their definition is as far
+as possible independent of any particular schema language. </p>
+<p>The goal of providing guidance for text encoding suggests that
+recommendations be made as to what textual features should be recorded
+in various situations. However, when selecting certain features for
+encoding in preference to others, these Guidelines have tended to
+prefer generic solutions to specific ones, and to avoid areas where no
+consensus exists, while attempting to accommodate as many diverse views
+as feasible.  Consequently, the TEI Guidelines make (with relatively
+rare exceptions) no suggestions or restrictions as to the relative
+importance of textual features.  The philosophy of the Guidelines is
+<q>if you want to encode this feature, do it this way</q> — but very
+few features are mandatory. In the same spirit, while the Guidelines
+very rarely require you to encode any particular feature, they do
+require you to be honest about which features you have encoded, that
+is, to respect the meanings and usage rules they recommend for
+specific elements and attributes proposed. </p>
+<p>The requirement to support all kinds of materials likely to be of
+interest in research has largely conditioned the development of the
+TEI into a very flexible and modular system. The development of other
+XML vocabularies or standards is typically motivated by the desire to
+create a single fully specified encoding scheme for use in a
+well-defined application domain. By contrast, the TEI is intended for
+use in a large number of rather ill-defined and often overlapping
+domains. It achieves its generality by means of the modular
+architecture described in <ptr target="#ST"/> which enables each user
+to create a schema appropriate to their needs without compromising the
+interoperability of their data.</p>
+<p>The Guidelines have been written largely with a focus on text capture
+(i.e. the representation in electronic form of an already existing copy
+text in another medium) rather than text creation (where no such copy
+text exists).  Hence the frequent use of terms like
+<soCalled>transcription</soCalled>, <soCalled>original</soCalled>,
+<soCalled>copy text</soCalled>, etc.  However, the Guidelines are
+equally applicable to text creation. </p>
+<p>Concerning text capture the TEI Guidelines do not specify a
+particular approach to the problem of fidelity to the source text and
+recoverability of the original; such a choice is the responsibility of
+the text encoder.  The current version of these Guidelines, however,
+provides a more fully elaborated set of tags for markup of rhetorical,
+linguistic, and simple typographic characteristics of the text than for
+detailed markup of page layout or for fine distinctions among type fonts
+or manuscript hands. It should be noted also that, with the present
+version of the Guidelines, it is no longer necessarily the case that
+an unmediated version of the source text can be recovered from an
+encoded text simply by removing the markup.
+	</p>
+<p>In these Guidelines, no hard and fast distinction is drawn between
+<soCalled>objective</soCalled> and <soCalled>subjective</soCalled>
+information or between <soCalled>representation</soCalled> and
+<soCalled>interpretation</soCalled>.  These distinctions, though
+widely made and often useful in narrow, well-defined contexts, are
+perhaps best interpreted as distinctions between issues on which there
+is a scholarly consensus and issues where no such consensus exists.
+Such consensus has been, and no doubt will be, subject to change.  The
+TEI Guidelines do not make suggestions or restrictions as to which of
+these features should be encoded.  The use of the terms
+<term>descriptive</term> and <term>interpretive</term> about different
+types of encoding in the Guidelines is not intended to support any
+particular view on these theoretical issues. Historically, it reflects
+a purely practical division of responsibility amongst the original
+working committees (see further <ptr target="#ABTEI"/>).  </p>
+<p>In general, the accuracy and the reliability of the encoding and the
+appropriateness of the interpretation is for the individual user of the
+text to determine.  The Guidelines provide a means of documenting the
+encoding in such a way that a user of the text can know the reasoning
+behind that encoding, and the general interpretive decisions on which it
+is based.  The TEI header may be used to document and justify many
+such aspects of the encoding, but the choice of TEI elements for a
+particular feature is in itself a statement about the interpretation
+reached by the encoder.</p>
+
+<p>In many situations more than one view of a text is needed since no
+absolute recommendation to embody one specific view of text can apply
+to all texts and all approaches to them.  Within limits, the syntax of
+XML ensures that some encodings can be ignored for some purposes.  To
+enable encoding multiple views, these Guidelines not only treat a
+variety of textual features, but sometimes provide several alternative
+encodings for what appear to be identical textual phenomena.  These
+Guidelines offer the possibility of encoding many different
+views of the text, simultaneously if necessary. Where different views
+of the formal structure of a text are required, as opposed to
+different annotations on a single structural view, however, the formal
+syntax of XML (which requires a single hierarchical view of text
+structure) poses some problems; recommendations concerning ways of
+overcoming or circumventing that restriction are discussed in chapter
+<ptr target="#NH"/>. </p>
+
+<p>In brief, the TEI Guidelines define a general-purpose encoding
+scheme which makes it possible to encode different views of text,
+possibly intended for different applications, serving the majority of
+scholarly purposes of text studies in the humanities.  Because no
+predefined encoding scheme can possibly serve all research purposes,
+the TEI scheme is designed to facilitate both selection from a wide
+range of predefined markup choices, and the addition of new (non-TEI)
+markup options. By providing a formally verifiable means of extending
+the TEI recommendations, the TEI makes it simple for such
+user-identified modifications to be incorporated into future releases
+of the Guidelines as they evolve. The underlying mechanisms which
+support these aspects of the scheme are introduced in chapter <ptr target="#ST"/>, and detailed discussions of their use provided in
+chapter <ptr target="#USE"/>. </p></div>
+
+<div type="div3" xml:id="ABAPP"><head>Intended Use</head>
+<p>We envisage three primary functions for these Guidelines:
+<list type="simple">
+<item>guidance for individual or local practice in text
+creation and data capture;</item>
+<item>support of data interchange;</item>
+<item>support of application-independent local processing.</item></list>
+These three functions are so thoroughly interwoven in practice that it
+is hardly possible to address any one without addressing the others.
+However, the distinction provides a useful framework for discussing the
+possible role of the Guidelines in work with electronic texts.</p>
+<div type="div4" xml:id="ABAPP1"><head>Use in Text Capture and Text Creation</head>
+<p>The description of textual features found in the chapters which
+follow should provide a useful checklist from which scholars planning to
+create electronic texts should select the subset of features suitable
+for their project.  </p>
+<p>Problems specific to text creation or text
+<soCalled>capture</soCalled> have not been considered explicitly in
+this document.  These Guidelines are not concerned with the process by
+which a digital text comes into being: it can be typed by hand,
+scanned from a printed book or typescript, read from a typesetter's
+tape, or acquired from another researcher who may have used another
+markup scheme (or no explicit markup at all).</p>
+<p>We include here only some general points which are often raised about
+markup and the process of data capture.</p>
+<p>XML can appear distressingly verbose, particularly when (as in these
+Guidelines) the names of tags and attributes are chosen for clarity and
+not for brevity.  Editor macros and keyboard shortcuts can allow a
+typist to enter frequently used tags with single keystrokes.
+It is often possible to transform word-processed or
+scanned text automatically.  Markup-aware software can help with
+maintaining the hierarchical structure of the document, and display the
+document with visual formatting rather than raw tags.</p>
+<p>The techniques described in chapter <ptr target="#MD"/>
+may be used to develop simpler data capture TEI-conformant schemas,
+for example with limited numbers of elements, or with shorter names
+for the tags being used most often.  Documents created with such
+schemas may then be automatically converted to a more elaborated TEI
+form. </p>
+</div>
+<div type="div4" xml:id="ABAPP2"><head>Use for Interchange</head>
+
+<p>The TEI format may simply be used as an interchange format,
+permitting projects to share resources even when their local encoding
+schemes differ. If there are <formula>n</formula> different encoding
+formats, to provide mappings between each possible pair of formats
+requires <formula>n&#x00D7;(n-1)</formula> translations; with an
+interchange format, only <formula>2&#x00D7;n</formula> such mappings
+are needed. However, for such translations to be carried out without
+loss of information, the interchange format chosen must be as
+expressive (in a formal sense) as any of the target formats; this is a
+further reason for the TEI's provision of both highly abstract or
+generic encodings and highly specific ones.</p>
+<p>To translate between any pair of encoding schemes implies:
+<list type="ordered">
+<item>identifying the sets of textual features distinguished
+by the two schemes;</item>
+<item>determining where the two sets of features correspond;</item>
+<item>creating a suitable set of mappings.</item></list> </p>
+<p>For example, to translate from encoding scheme X into the TEI
+scheme:
+<list type="ordered">
+<item>Make a list of all the textual features distinguished in
+X. </item>
+<item>Identify the corresponding feature in the TEI scheme.
+There are three possibilities for each feature:
+<list type="ordered">
+<item>the feature exists in both X and the TEI scheme;</item>
+<item>X has a feature which is absent from the TEI scheme;</item>
+<item>X has a feature which corresponds with more than one
+feature in the TEI scheme.</item></list>
+The first case is a trivial renaming.  The second will require an extension to
+the TEI scheme, as described in chapter <ptr target="#MD"/>.  The third
+is more problematic, but not impossible, provided that a consistent
+choice can be made (and documented) amongst the alternatives.  </item>
+</list></p>
+<p>The ease with which this translation can be defined will of
+course depend on the clarity with which scheme X
+represents the features it encodes.</p>
+<p>Translating from the TEI into scheme X follows the same pattern,
+except that if a TEI feature has no equivalent in X, and X cannot be
+extended, information must be lost in translation.</p>
+<p>The rules defining conformance to the Guidelines are
+given in some detail in chapter <ptr target="#CF"/>.
+The basic principles informing those rules may be summarized as
+follows:
+<list type="ordered">
+<item>The TEI <term>abstract model</term> (that is, the set of
+categorical distinctions which it defines) must be respected. The
+correspondence between a tag X and the semantic function assigned to
+it by these Guidelines may not be changed; such changes are known
+as <term>tag abuse</term> and strongly deprecated.</item>
+<item>A TEI document must be expressed as a valid XML-conformant
+document which uses the TEI namespace appropriately. If, for example,
+the document encodes features not provided by the Guidelines, such
+extensions may not be associated with the TEI namespace.  </item>
+<item>It must be possible to validate a TEI document against a schema
+derived from these Guidelines, possibly with extensions provided in
+the recommended manner.</item>
+ </list> 
+
+</p></div>
+
+
+<div type="div4" xml:id="ABAPP3"><head>Use for Local Processing</head>
+<p>Machine-readable text can be manipulated in many ways; some users:
+<list type="simple">
+<item>edit texts (e.g. word processors, syntax-directed
+editors) </item>
+<item>edit, display, and link texts in hypertext systems</item>
+<item>format and print texts using desktop publishing systems,
+or batch-oriented formatting programs </item>
+<item>load texts into free-text retrieval databases or
+conventional databases </item>
+<item>unload texts from databases as search results or for
+export to other software </item>
+<item>search texts for words or phrases </item>
+<item>perform content analysis on texts </item>
+<item>collate texts for critical editions </item>
+<item>scan texts for automatic indexing or similar purposes</item>
+<item>parse texts linguistically </item>
+<item>analyze texts stylistically </item>
+<item>scan verse texts metrically </item>
+<item>link text and images </item></list> </p>
+<p>These applications cover a wide range of likely uses but are by no
+means exhaustive.  The aim has been to make the TEI Guidelines useful
+for encoding the same texts for different purposes.  We have avoided
+anything which would restrict the use of the text for other
+applications.  We have also tried not to omit anything essential to any
+single application.</p>
+<p>Because the TEI format is expressed using XML, 
+almost any modern text processing system is able to process it, and
+new TEI-aware software systems are able to build on a solid base
+of existing software libraries. </p> </div></div></div>
+
+<div type="div2" xml:id="ABTEI"><head>Historical Background</head>
+
+<p>The Text Encoding Initiative grew out of a planning conference
+sponsored by the Association for Computers and the Humanities (ACH) and
+funded by the U.S.  National Endowment for the Humanities (NEH), which
+was held at Vassar College in November 1987.  At this conference some
+thirty representatives of text archives, scholarly societies, and
+research projects met to discuss the feasibility of a standard encoding
+scheme and to make recommendations for its scope, structure, content,
+and drafting.  During the conference, the Association for Computational
+Linguistics and the Association for Literary and Linguistic Computing
+agreed to join ACH as sponsors of a project to develop the Guidelines.
+The outcome of the conference was a set of principles (the
+<soCalled>Poughkeepsie Principles</soCalled>, <ptr target="#AB-eg-01"/>), which
+determined the further course of the project.</p>
+<!--
+<list type="ordered">
+<item>The guidelines are intended to provide a standard format
+for data interchange in humanities research. </item>
+<item>The guidelines are also intended to suggest principles
+for the encoding of texts in the same format. </item>
+<item>The guidelines should
+<list type="ordered">
+<item>define a recommended syntax for the format, </item>
+<item>define a metalanguage for the description of
+text-encoding schemes, </item>
+<item>describe the new format and representative existing
+schemes both in that metalanguage and in prose. </item></list></item>
+<item>The guidelines should propose sets of coding conventions
+suited for various applications. </item>
+<item>The guidelines should include a minimal set of
+conventions for encoding new texts in the format. </item>
+<item>The guidelines are to be drafted by committees on
+<list type="ordered">
+<item>text documentation </item>
+<item>text representation </item>
+<item>text interpretation and analysis </item>
+<item>metalanguage definition and description of existing and
+proposed schemes, </item></list>
+coordinated by a steering committee of representatives of the principal
+sponsoring organizations.  </item>
+<item>Compatibility with existing standards will be maintained
+as far as possible. </item>
+<item>A number of large text archives have agreed in principle
+to support the guidelines in their function as an interchange
+format, and have (since the publication of the prior edition), actually
+done so. We continue to encourage funding agencies to support development
+of tools to facilitate this interchange. </item>
+<item>Conversion of existing machine-readable texts to the new
+format involves the translation of their conventions into the
+syntax of the new format. No requirements will be made for the
+addition of information not already coded in the texts.</item></list>
+<p>In the course of the work, some of these goals assumed greater, some
+lesser importance; some proved easier, some harder to achieve.  The
+document in hand does define a standard form for the interchange of
+textual material, and adumbrate principles for the creation of new
+electronic texts.  The only metalanguage used, however, is that common to
+XML and SGML,
+and no formal definitions are given for other encoding schemes.
+These Guidelines do define a minimal set of conventions for text
+encoding (i.e. those elements classed as recommended or required),
+though few researchers will be satisfied to encode <emph>only</emph>
+what is required or recommended here, since the set of required and
+recommended elements is rather small.  This document does not,
+however, define — at least not explicitly — <q>sets of coding
+conventions suited for various applications</q>, since consensus on
+suitable conventions for different applications proved elusive; this
+remains a goal for future work.</p>-->
+<!-- <div type="div3" xml:id="ABTEI1"><head>Origin and Development of the TEI</head>-->
+<p>The Text Encoding Initiative project began in June 1988 with funding
+from the NEH, soon followed by further funding from the Commission of
+the European Communities, the Andrew W. Mellon Foundation, and the
+Social Science and Humanities Research Council of Canada.  Four working
+committees, composed of distinguished scholars and researchers from both
+Europe and North America, were named to deal with problems of text
+documentation, <!-- (resulting largely in chapter <ptr target="#HD" type="div1"/>),-->
+text representation, text analysis and interpretation, <!-- (together
+responsible for most of what has become parts II, III, and IV),--> and
+metalanguage and syntax issues. <!-- (largely responsible for part
+VI)--> Each committee was charged with the task of identifying
+<soCalled>significant particularities</soCalled> in a range of texts,
+and two editors appointed to harmonise the resulting recommendations. </p>
+<p>A first draft version (P1, with the <q>P</q> here and subsequently
+standing for <q>Proposal</q>) of the Guidelines was distributed in July
+1990 under the title <title>Guidelines for the Encoding and Interchange
+of Machine-Readable Texts</title>. <!-- with the TEI document number TEI
+P1.  With minor changes and corrections, this version was reprinted as
+version 1.1 in November 1990.</p>-->
+Extensive public comment and further work on areas not covered in
+this version resulted in the drafting of a revised version, TEI P2,
+distribution of which began in April 1992.  This version included
+substantial amounts of new material, resulting from work carried out by
+several specialist working groups, set up in 1990 and 1991 to propose
+extensions and revisions to the text of P1.  The overall organization,
+both of the draft itself and of the scheme it describes, was entirely
+revised and reorganized in response to public comment on the first
+draft.</p>
+<p>In June 1993 an Advisory Board met to review the current state of
+the TEI Guidelines, and recommended the formal publication of the work
+done to that time.  That version of the TEI Guidelines, TEI P3,
+consolidated the work published as parts of TEI P2, along with some
+additional new material and was finally published in May of 1994
+without the label <mentioned>draft</mentioned>, thus marking the
+conclusion of the initial development work.
+</p>
+<p>In February of 1998 the World Wide Web Consortium issued a final
+Recommendation for the Extensible Markup Language, XML.<note place="foot">XML was originally developed as a way of publishing on
+the World Wide Web richly encoded documents such as those for which
+the TEI was designed.  Several TEI participants contributed heavily to
+the development of XML, most notably XML's senior co-editor
+C. M. Sperberg-McQueen, who served as the North American editor for
+the TEI Guidelines from their inception until 1999. </note>
+Following the rapid take-up of this new standard metalanguage, it
+became evident that the TEI Guidelines (which had been published
+originally as an SGML application) needed to be re-expressed in this
+new formalism if they were to survive. The TEI editors, with
+abundant assistance from others who had developed and used TEI,
+developed an update plan, and made tentative decisions on relevant
+syntactic issues. </p>
+
+<p>In January of 1999, the University of Virginia and the University
+of Bergen formally proposed the creation of an international
+membership organization, to be known as the TEI Consortium, which
+would maintain, develop, and promote the TEI. Shortly thereafter, two
+further institutions with longstanding ties to the TEI (Brown
+University and Oxford University) joined them in formulating an
+Agreement to Establish a Consortium for the Maintenance of the Text
+Encoding Initiative (<ptr target="#AB-eg-02"/>), on which basis the TEI
+Consortium was eventually established and incorporated as a
+not-for-profit legal entity at the end of the year 2000. The first
+members of the new TEI Board took office during January of 2001. </p>
+				
+<p>The TEI Consortium was established in order to maintain a permanent
+home for the TEI as a democratically constituted, academically and
+economically independent, self-sustaining, non-profit organization. In
+addition, the TEI Consortium was intended to foster a broad-based user
+community with sustained involvement in the future development and
+widespread use of the TEI Guidelines (<ptr target="#AB-eg-03"/>). </p>
+
+<p>To oversee and manage the revision process in collaboration with
+the TEI Editors, the TEI Board formed a Technical Council, with a
+membership elected from the TEI user community. The Council met for
+the first time in January 2002 at King's College London. Its first
+task was to oversee production of an XML version
+of the TEI Guidelines, updating P3 to enable users to
+work with the emerging XML toolset. This, the P4 version of the Guidelines,
+was published in June 2002. It was essentially an XML version of P3,
+making no substantive changes to the constraints expressed in the
+schemas apart from those necessitated by the shift to XML, and
+changing only corrigible errors identified in the prose of the P3
+Guidelines. However, given that P3 had by this time been in steady use
+since 1994, it was clear that a substantial revision of its content
+was necessary, and work began immediately on the P5 version of the
+Guidelines. This was planned as a thorough overhaul, involving a
+public call for features and new development in a number of important
+areas not previously addressed including character encoding, graphics,
+manuscript description, biographical and geographical data, and the
+encoding language in which the TEI Guidelines themselves are written. </p>
+
+<p>The members of the TEI Council and its associated workgroups are
+listed in <ptr target="#FM1"/>. In preparing this edition, they have
+been attentive to the requirements and practice of the widest possible
+range of TEI users, who are now to be found in many different research
+communities across the world, and have been largely instrumental in
+transforming the TEI from a grant-supported international research
+project into a self-sustaining community-based effort. One effect
+of the incorporation of the TEI has been the legal requirement to hold
+an annual meeting of the Consortium members; these meetings have
+emerged as an invaluable opportunity to sustain and reinforce that
+sense of community. </p>
+<p>The present
+work is therefore the result of a sustained period of consultation,
+drafting, and revision, with input from many different
+experts. Whatever merits it may have are to be attributed to them; the
+Editors accept responsibility only for the errors remaining. </p>
+
+
+</div>
+
+<div type="div3" xml:id="ABTEI4"><head>Future Developments</head>
+
+<p>The encoding recommended by this document may be used without fear
+that future versions of the TEI scheme will be inconsistent with it in
+fundamental ways.  The TEI will be sensitive, in revising these
+Guidelines, to the possible problems which revision might pose for those
+who are already using this version of the Guidelines.  
+</p>
+<p>With TEI P5, a version numbering system is introduced: the version
+number has two parts, a major number and a minor, for example
+<val>1.0</val>. The TEI undertakes that no change will be made to the
+formal expression of these Guidelines (that is, a TEI schema, as
+defined in <ptr target="#CF"/>) such that documents conformant to a
+given major numbered release cease to be compatible with a subsequent
+release of the same major number. Moreover, as far as possible, new
+minor releases will be made only for the purpose of adding new
+compatible features, or of correcting errors in existing features.</p>
+<p>The Guidelines are currently maintained as an open source (GNU General 
+Public License) project,
+on the Sourceforge site <ptr target="http://tei.sf.net/"/> from which released
+and development versions may be freely downloaded; notice of errors
+detected and enhancements requested may also be submitted at this
+site.</p>
+</div></div>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="facsimile" module="transcr">
+  <desc>contains a representation of some written source in the form of
+a set of images rather than as transcribed or encoded text.</desc>
+  <desc version="2007-12-20" xml:lang="kr">전사 또는 부호화된 텍스트 형태보다는 이미지 집합의 형태로 기록 원본의 표상을 포함한다.</desc>
+  <desc version="2008-04-06" xml:lang="es">contiene una representación de una cierta fuente escrita bajo la forma de conjunto de las imágenes algo que como texto transcrito o codificado.</desc>
+  <desc version="2008-04-06" xml:lang="ja">
+転記または符号化されたテキストではなく，画像データ中にある，書記資料の
+表現を示す．
+</desc>
+  <desc version="2008-03-30" xml:lang="fr">contient une représentation d'une source écrite
+quelconque sous forme d'un ensemble d'images plutôt que sous forme d'un texte transcrit
+ou encodé</desc>
+  <desc version="2007-11-06" xml:lang="it">contiene una rappresentazione di una qualche fonte scritta sotto forma di una serie di immagini piuttosto che di testo trascritto o codificato</desc>
+  <classes>
+    <memberOf key="model.resourceLike"/>
+    <memberOf key="att.declaring"/>
+  </classes>
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:group>
+      <rng:optional>
+        <rng:ref name="front"/>
+      </rng:optional>
+      <rng:oneOrMore>
+        <rng:choice>
+          <rng:ref name="model.graphicLike"/>
+          <rng:ref name="surface"/>
+        </rng:choice>
+      </rng:oneOrMore>
+      <rng:optional>
+        <rng:ref name="back"/>
+      </rng:optional>
+    </rng:group>
+  </content>
+  <exemplum xml:lang="und">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <facsimile>
+        <graphic url="page1.png"/>
+        <surface>
+          <graphic url="page2-highRes.png"/>
+          <graphic url="page2-lowRes.png"/>
+        </surface>
+        <graphic url="page3.png"/>
+        <graphic url="page4.png"/>
+      </facsimile>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="und">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <facsimile>
+        <surface ulx="0" uly="0" lrx="200" lry="300">
+          <graphic url="Bovelles-49r.png"/>
+        </surface>
+      </facsimile>
+    </egXML>
+  </exemplum>
+</elementSpec>

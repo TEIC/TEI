@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="text">
+  <equiv/>
+  <gloss version="2007-06-12" xml:lang="fr">texte</gloss>
+  <desc>contains a single text of any kind, whether unitary or composite, for example a poem or
+    drama, a collection of essays, a novel, a dictionary, or a corpus sample.</desc>
+  <desc version="2007-12-20" xml:lang="kr">어떤 종류의 단일 텍스트를 포함한다. 예를 들어, 시 또는 드라마, 수필선, 소설, 사전 또는 코퍼스
+    표본과 같은 단일 텍스트 또는 혼합 텍스트. </desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含一份任何種類的文本，無論是單一或複合的，例如詩詞或戲劇、散文集、小說、字典、或是文集範例。</desc>
+  <desc version="2008-04-05" xml:lang="ja"> ひとつのテキストを示す．単体でも複合体でもよい．例えば，詩，舞台芸術， 随筆，小説，辞書，コーパスなど． </desc>
+  <desc version="2007-06-12" xml:lang="fr">contient un seul texte quelconque, simple ou composite,
+    par exemple un poème ou une pièce de théâtre, un recueil d’essais, un roman, un dictionnaire ou
+    un échantillon de corpus.</desc>
+  <desc version="2006-10-18" xml:lang="de">enthält eigenständigen oder aus mehreren Teilen
+    bestehenden Text, zum Beispiel ein Gedicht oder Drama, eine Sammlung von Aufsätzen, einen Roman,
+    ein Wörterbuch oder eine Auswahl aus einem Korpus</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene un único texto de cualquier tipo, sea este
+    unitario o combinado, p.ej. un texto en verso o teatral, una recopilación de ensayos, una
+    novela, un diccionario, o una fragmento de corpus.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene un unico testo di qualsiasi tipo, sia esso
+    unitario o composito, per esempio un testo in versi o teatrale, una raccolta di saggi, un
+    romanzo, un dizionario, o una porzione di corpus</desc>
+  <classes>
+    <!--    <memberOf key="model.inter"/>-->
+    <memberOf key="att.declaring"/>
+    <memberOf key="att.typed"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="front"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+      <rng:choice>
+        <rng:ref name="body"/>
+        <rng:ref name="group"/>
+      </rng:choice>
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="back"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+    </rng:group>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <text>
+        <front>
+          <docTitle>
+            <titlePart>Autumn Haze</titlePart>
+          </docTitle>
+        </front>
+        <body>
+          <l>Is it a dragonfly or a maple leaf</l>
+          <l>That settles softly down upon the water?</l>
+        </body>
+      </text>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n59">
+      <text>
+        <front>
+          <docTitle>
+            <titlePart>憶江南</titlePart>
+          </docTitle>
+        </front>
+        <body>
+          <l>江南好，</l>
+          <l>風景舊曾諳。</l>
+          <l>日出江花紅胜火，</l>
+          <l>春來江水綠如藍，</l>
+          <l>能不憶江南。</l>
+        </body>
+      </text>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <text>
+        <front/>
+        <group>
+          <text>
+            <front/>
+            <body/>
+            <back/>
+          </text>
+          <text/>
+        </group>
+      </text>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>The body of a text may be replaced by a group of nested texts, as in the following schematic:</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <text>
+        <front/>
+        <group>
+          <text>
+            <front/>
+            <body/>
+            <back/>
+          </text>
+          <text/>
+        </group>
+      </text>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>This element should not be used to represent a text which is inserted at an arbitrary point
+      within the structure of another, for example as in an embedded or quoted narrative; the
+        <gi>floatingText</gi> is provided for this purpose.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>Cet élément ne devrait pas être utilisé pour encoder un texte inséré à un endroit non
+      prévisible à l'intérieur de la structure d'un autre texte, comme par exemple dans un récit qui est enchâssé 
+    ou cité dans un autre ; c'est l'élément <gi>floatingText</gi> qui doit être utilisé à
+      cet effet.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p> 当該要素は，別の構造中，例えば引用された語りの任意の場所に挿入され るテキストを示すためには使うべきではない．この場合は，要素 <gi>floatingText</gi>が使われる．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#DS"/>
+    <ptr target="#CCDEF"/>
+  </listRef>
+</elementSpec>

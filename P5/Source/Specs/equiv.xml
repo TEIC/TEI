@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="equiv">
+  <gloss>equivalent</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">동치</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw"/>
+  <gloss version="2008-04-06" xml:lang="es">equivalente</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">équivalent</gloss>
+  <gloss version="2007-11-06" xml:lang="it">equivalente</gloss>
+  <desc>specifies a component which is considered equivalent to the parent element, either by
+    co-reference, or by external link.</desc>
+  <desc version="2007-12-20" xml:lang="kr">부모 요소와 동치로 고려되는 성분을 공지시 또는 외부 연결을 통해 명시한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">具體指出一個與父元素同等的名稱，無論是藉由交互參照或是外部連結。</desc>
+  <desc version="2008-04-05" xml:lang="ja"> 親要素と同等とされる構成要素を，相互参照または外部リンクで示す． </desc>
+  <desc version="2007-06-12" xml:lang="fr">précise un composant considéré comme un équivalent de
+    l'élément parent, soit par une référence commune, soit par un lien externe.</desc>
+  <desc version="2007-05-04" xml:lang="es">especifica un componente que se considera equivalente al
+    elemento padre, o por co-referencias o por algún enlace externo.</desc>
+  <desc version="2007-01-21" xml:lang="it">indica un componente considerato equivalente ad un
+    elemento genitore sia per co-referenza che tramite link esterno.</desc>
+  <classes>
+    <memberOf key="model.glossLike"/>
+    <memberOf key="att.internetMedia"/>
+  </classes>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="name" usage="opt">
+      <desc>names the underlying concept of which the parent is a representation</desc>
+      <desc version="2007-12-20" xml:lang="kr">부모가 표상하는 기저 개념에 대한 이름을 부여한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">說明父元素所標記的基本概念。</desc>
+      <desc version="2008-04-05" xml:lang="ja"> 親要素の意義を表す． </desc>
+      <desc version="2007-06-12" xml:lang="fr">nomme le concept sous-jacent dont le parent est une
+        représentation.</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica el concepto subyacente cuyo padre es una
+        representación.</desc>
+      <desc version="2007-01-21" xml:lang="it">specifica un concetto sottostante di cui il genitore
+        è una rappesentazione</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/>
+      </datatype>
+      <valDesc>any name</valDesc>
+    </attDef>
+    <attDef ident="uri" usage="opt">
+      <gloss>uniform resource identifier</gloss>
+      <gloss version="2007-12-20" xml:lang="kr">표준 자원 확인소(URL)</gloss>
+      <gloss version="2008-04-06" xml:lang="es">identificador de recurso uniforme</gloss>
+      <gloss version="2008-03-30" xml:lang="fr">Identifiant de ressource uniforme.</gloss>
+      <gloss version="2007-11-06" xml:lang="it">URI (identificatore universale di risorse)</gloss>
+      <desc>references the underlying concept of which the parent is a representation by means of
+        some external identifier</desc>
+      <desc version="2007-12-20" xml:lang="kr">부모가 외부 확인소를 통해서 표상하는 기저 개념을 지시한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">以外部識別符來說明父元素所標記的基本概念</desc>
+      <desc version="2008-04-05" xml:lang="ja"> 外部識別子によって親要素の意義を表す． </desc>
+      <desc version="2007-06-12" xml:lang="fr">référence le concept sous-jacent dont le parent est
+        une représentation au moyen d'un identifiant externe quelconque.</desc>
+      <desc version="2007-05-04" xml:lang="es">referencia el concepto subyacente del cual padre es
+        una representación mediante algún identificador externo</desc>
+      <desc version="2007-01-21" xml:lang="it">indica il concetto sottostante di cui il genitore è
+        una rappesentazione attraverso un identificatore esterno</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>a URI</valDesc>
+    </attDef>
+    <attDef ident="filter" usage="opt">
+      <desc>references an external script which contains a method to transform instances of this
+        element to canonical TEI </desc>
+      <desc version="2007-12-20" xml:lang="kr">이 요소의 실례를 표준 TEI로 변환하는 방법을 포함하는 외부 스크립트를 참조한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">參照能把該元素實例轉變成標準TEI的外部程式</desc>
+      <desc version="2008-04-05" xml:lang="ja"> 当該要素を標準的XMLデータに変形する外部スクリプトへの参照を示す． </desc>
+      <desc version="2007-06-12" xml:lang="fr">référence un script externe qui contient une méthode
+        pour transformer les instances de cet élément en TEI canonique.</desc>
+      <desc version="2007-05-04" xml:lang="es">referencia un guión externo que contiene un método
+        para transformar ejemplos de este elemento a TEI canónico.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica uno script esterno contenente un metodo per
+        trasformare le occorrenze dell'elemento in TEI canonico</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>a URI</valDesc>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <p>The following example declares that the <gi scheme="imaginary">bo</gi> element is
+      conceptually equivalent to the markup construct <tag>hi rend='bold'</tag>, and that an
+      external definition of this concept is available from the URI indicated</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <elementSpec ident="hi" mode="change">
+        <equiv name="BOLD"/>
+        <desc>bold typography</desc>
+        <attList>
+          <attDef ident="rend">
+            <valList>
+              <valItem ident="bold"/>
+            </valList>
+          </attDef>
+        </attList>
+      </elementSpec>
+      <elementSpec ident="bo" mode="add">
+        <equiv name="BOLD" uri="http://www.typesrus.com/bold"/>
+      </elementSpec>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <elementSpec ident="hi" mode="change">
+        <equiv name="BOLD"/>
+        <desc>粗體印刷</desc>
+        <attList>
+          <attDef ident="rend">
+            <valList>
+              <valItem ident="bold"/>
+            </valList>
+          </attDef>
+        </attList>
+      </elementSpec>
+      <elementSpec ident="bo" mode="add">
+        <equiv name="BOLD" uri="http://www.typesrus.com/bold"/>
+      </elementSpec>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>The <att>mimeType</att> attribute should be used to supply the MIME media type of the filter
+      script specified by the <att>filter</att> attribute.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>L'attribut <att>mimeType</att> doit être utilisé pour fournir le type de media MIME du script
+      de filtre spécifié par l'attribut <att>filter</att>.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p> 属性<att>mimeType</att>は，属性<att>filter</att>で示されたスクリプ トファイルのMIMEタイプを示すために使われるべきである． </p>
+  </remarks>
+  <listRef>
+    <ptr target="#TDTAG"/>
+    <ptr target="#TDATT"/>
+    <ptr target="#TDCLA"/>
+    <ptr target="#TDENT"/>
+  </listRef>
+</elementSpec>

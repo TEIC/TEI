@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="SPECGRP" ident="specGrp">
+  <equiv/>
+  <gloss>specification group</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">명시 그룹</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">說明群組</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">groupe de spécifications</gloss>
+  <gloss version="2007-05-04" xml:lang="es">grupo de instrucciones</gloss>
+  <gloss version="2007-01-21" xml:lang="it">gruppo di istruzioni</gloss>
+  <desc>contains any convenient grouping of specifications for use within
+  the current module.</desc>
+  <desc version="2007-12-20" xml:lang="kr">현 모듈 내에서 사용에 대한 명시를 다양한 방법의 그룹화를 포함한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含在現有模組中的細節使用說明群組。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  当該モジュール中にある規定をまとめる．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">contient tout regroupement approprié de
+			spécifications pour une utilisation dans le module en question.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene cualquier agrupación funcional de instrucciones para el uso al interno del módulo corriente</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene un qualsiasi raggruppamento funzionale di istruzioni per l'uso all'interno del modulo corrente</desc>
+  <classes>
+    <memberOf key="model.oddDecl"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:ref name="model.oddDecl"/>
+        <rng:ref name="model.oddRef"/>
+        <rng:ref name="model.divPart"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum xml:lang="und">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <specGrp xml:id="xDAILC">
+        <elementSpec ident="s">
+<!-- ... -->
+        </elementSpec>
+        <elementSpec ident="cl">
+<!-- ... -->
+        </elementSpec>
+        <elementSpec ident="w">
+<!-- ... -->
+        </elementSpec>
+        <elementSpec ident="m">
+<!-- ... -->
+        </elementSpec>
+        <elementSpec ident="c">
+<!-- ... -->
+        </elementSpec>
+      </specGrp>
+    </egXML>
+    <p>This specification group with identifier <ident>xDAILC</ident>
+contains specifications for the elements
+<gi>s</gi>,<gi>cl</gi>,<gi>w</gi>, etc.</p>
+  </exemplum>
+  <remarks>
+    <p>A specification group is referenced by means of its
+    <att>xml:id</att> attribute. The declarations it contains may be
+    included in a <gi>schemaSpec</gi> or <gi>moduleSpec</gi> element
+    only by reference (using a <gi>specGrpRef</gi> element): it may
+    not be nested within a <gi>moduleSpec</gi> element. </p>
+    <p>Different ODD processors may generate 
+  representations of the specifications contained by a
+  <gi>specGrp</gi> in different concrete syntaxes. For P5 the intention
+  is to generate modules using both XML and RELAX NG, and to use only
+  the compressed RELAX NG syntax to represent them.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>Un groupe de spécifications est référencé au moyen de son attribut <att>xml:id</att>.
+                Les déclarations qu'il contient ne peuvent être incluses dans un élément
+                <gi>module</gi> que par référence (en utilisant un élément <gi>specGrpRef</gi>) : il
+                ne peut être imbriqué dans un élément <gi>module</gi>.</p>
+    <p>Différents processeurs ODD peuvent générer des représentations des spécifications
+                contenues par un élément<gi>specGrp</gi> dans différentes syntaxes concrètes. Pour
+                la P5 on a l'intention de générer des modules en utilisant à la fois XML et RELAX NG
+                et d'utiliser uniquement la syntaxe RELAX NG compacte pour les représenter.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p>
+    規定のグループは，属性<att>xml:id</att>で参照される．その宣言は，
+    (要素<gi>specGrpRef</gi>による)参照にのみ示される要素
+    <gi>module</gi>の中にある．
+    </p>
+    <p>
+    ODDソフトが異なれば，要素<gi>specGrp</gi>中に，異なる文法による規
+    定が生成される．TEI P5では，XMLとRELAX NGの両方によるモジュールを
+    生成する．簡易RELAX NG文法は，表示にのみ使用する．
+    </p>
+  </remarks>
+</elementSpec>

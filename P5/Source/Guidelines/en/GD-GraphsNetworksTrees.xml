@@ -1,0 +1,1502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details.
+$Date$
+$Id$
+-->
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="GD" n="21"><head>Graphs, Networks, and Trees</head>
+		<p>Graphical representations are widely used for displaying relations
+among informational units because they help readers to visualize those
+relations and hence to understand them better.  Two general types of
+graphical representations may be distinguished.
+<list type="simple">
+  <item><term>Graphs</term>, in the strictly mathematical sense, consist
+of points, often called <term>nodes</term> or
+<term>vertices</term>, and connections among them, called
+<term>arcs</term>, or under certain conditions,
+<term>edges</term>.  Among the various types of graphs are
+<term>networks</term> and <term>trees</term>.  Graphs
+generally and networks in particular are dealt with
+directly below.  Trees are dealt with separately in
+sections <ptr target="#GDTR"/> and
+<ptr target="#GDAT"/>.<note place="foot">The treatment here is largely based on the
+characterizations of graph types in <ptr type="cit" target="#GD-BIBL-1"/></note></item>
+<item><term>Charts</term>, which typically plot data in two or more
+dimensions, including plots with orthogonal or radial axes, bar charts,
+pie charts, and the like.  These can be described using the elements
+defined in the module for figures and graphics; see
+chapter <ptr target="#FT"/>.</item></list>
+</p>
+
+<p>Among the types of qualitative relations often represented by graphs
+are organizational hierarchies, flow charts, genealogies, semantic
+networks, transition networks, grammatical relations, tournament
+schedules, seating plans, and directions to people's houses.  In
+developing recommendations for the encoding of graphs of various types,
+we have relied on their formal mathematical definitions and on the most
+common conventions for representing them visually.  However, it must be
+emphasized that these recommendations do not provide for the full range
+of possible graphical representations, and deal only partially with
+questions of design, layout, and placement.</p>
+<div type="div2" xml:id="GDGR"><head>Graphs and Digraphs</head>
+<p>Broadly speaking, graphs can be divided into two types:
+<term>undirected</term> and <term>directed</term>.  An undirected graph
+is a set of <term>nodes</term> (or <term>vertices</term>) together with
+a set of pairs of those vertices, called <term>arcs</term> or
+<term>edges</term>.  Each node in an arc of an undirected graph is said
+to be <term>incident</term> with that arc, and the two vertices (nodes) which
+make up an arc are said to be <term>adjacent</term>.  An directed graph
+is like an undirected graph except that the arcs are <term>ordered
+pairs</term> of nodes.  In the case of directed graphs, the term
+<term>edge</term> is not used; moreover, each arc in a directed graph
+is said to be <term>adjacent from</term> the node from which the arc
+emanates, and <term>adjacent to </term> the node to which the arc is
+directed.  We use the element <gi>graph</gi> to encode graphs as a
+whole, <gi>node</gi> to encode nodes or vertices, and <gi>arc</gi> to
+encode arcs or edges; arcs can also be encoded by attributes on the
+<gi>node</gi> element.  These elements have the following descriptions
+and attributes:
+<specList>
+<specDesc key="graph"/>
+<specDesc key="node"/>
+<specDesc key="arc"/></specList></p>
+<p>Before proceeding, some additional terminology may be helpful.  We
+define a <term>path</term> in a graph as a sequence of nodes n1, ..., nk
+such that there is an arc from each ni to ni+1 in the sequence.  A
+<term>cyclic path</term>, or <term>cycle</term> is a path leading from a
+particular node back to itself.  A graph that contains at least one
+cycle is said to be <term>cyclic</term>; otherwise it is
+<term>acyclic</term>.  We say, finally, that a graph is
+<term>connected</term> if there is a path from some node to every other
+node in the graph; any graph that is not connected is said to be
+<term>disconnected</term>.</p>
+<p>Here is an example of an undirected, cyclic disconnected graph, in
+which the nodes are annotated with three-letter codes for airports, and
+the arcs connecting the nodes are represented by horizontal and vertical
+lines, with 90 degree bends used simply to avoid having to draw diagonal
+lines.</p>
+<!--      LAX: Los Angeles                                    -->
+	<!--      LVG: Las Vegas                                      -->
+	<!--      PHX: Phoenix                                        -->
+	<!--      TUS: Tucson                                         -->
+	<!--      CIB: Seven Cities of Cibola                         -->
+<p><graphic url="Images/graph1.jpg" width="70%"/></p>
+
+<p>Next is a markup of the graph, using <gi>arc</gi> elements to encode
+the arcs.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="undirected" xml:id="CUG1" order="5" size="4">
+  <label>Airline Connections in Southwestern USA</label>
+  <node xml:id="LAX" degree="2">
+    <label>LAX</label>
+  </node>
+  <node xml:id="LVG" degree="2">
+    <label>LVG</label>
+  </node>
+  <node xml:id="PHX" degree="3">
+    <label>PHX</label>
+  </node>
+  <node xml:id="TUS" degree="1">
+    <label>TUS</label>
+  </node>
+  <node xml:id="CIB" degree="0">
+    <label>CIB</label>
+  </node>
+  <arc from="#LAX" to="#LVG"/>
+  <arc from="#LAX" to="#PHX"/>
+  <arc from="#LVG" to="#PHX"/>
+  <arc from="#PHX" to="#TUS"/>
+</graph></egXML></p>
+<p>
+The first child element of <gi>graph</gi> may be a <gi>label</gi> to record a
+label for the graph; similarly, the <gi>label</gi> child of each
+<gi>node</gi> element records the labels of that node. The
+<att>order</att> and <att>size</att> attributes on the <gi>graph</gi>
+element record the number of nodes and number of arcs in the graph
+respectively; these values are optional (since they can be computed
+from the rest of the graph), but if they are supplied, they must be
+consistent with the rest of the encoding. They can thus be used to
+help check that the graph has been encoded and transmitted correctly.
+The <att>degree</att> attribute on the <gi>node</gi> elements record
+the number of arcs that are incident with that node. It is optional
+(because redundant), but can be used to help in validity checking: if
+a value is given, it must be consistent with the rest of the
+information in the graph. Finally, the <att>from</att> and
+<att>to</att> attributes on the <gi>arc</gi> elements provide pointers
+to the nodes connected by those arcs. Since the graph is undirected,
+no directionality is implied by the use of the <att>from</att> and
+<att>to</att> attributes; the values of these attributes could be
+interchanged in each arc without changing the graph.</p>
+<p>The <att>adj</att>, <att>adjFrom</att>, and <att>adjTo</att>
+attributes of the <gi>node</gi> element provide an alternative method of
+representing unlabeled arcs, their values being pointers to the nodes
+which are adjacent to or from that node.  The <att>adj</att> attribute
+is to be used for undirected graphs, and the <att>adjFrom</att> and
+<att>adjTo</att> attributes for directed graphs.  It is a semantic error
+for the directed adjacency attributes to be used in an undirected graph,
+and vice versa.  Here is a markup of the preceding graph, using the
+<att>adj</att> attribute to represent the arcs.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="undirected" xml:id="CUG2" order="5" size="4">
+  <label>Airline Connections in Southwestern USA</label>
+  <node xml:id="LAX2" degree="2" adj="#LVG2 #PHX2">
+    <label>LAX2</label>
+  </node>
+  <node xml:id="LVG2" degree="2" adj="#LAX2 #PHX2">
+    <label>LVG2</label>
+  </node>
+  <node xml:id="PHX2" degree="3" adj="#LAX2 #LVG2 #TUS2">
+    <label>PHX2</label>
+  </node>
+  <node xml:id="TUS2" degree="1" adj="#PHX2">
+    <label>TUS2</label>
+  </node>
+  <node xml:id="CIB2" degree="0">
+    <label>CIB2</label>
+  </node>
+</graph></egXML></p>
+<p>Note that each arc is represented twice in this encoding of the
+graph.  For example, the existence of the arc from LAX to LVG can be
+inferred from each of the first two <gi>node</gi> elements in the graph.
+This redundancy, however, is not required:  it suffices to describe an
+arc in any one of the three places it can be described (either adjacent
+node, or in a separate <gi>arc</gi> element).  Here is a less redundant
+representation of the same graph.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="undirected" xml:id="CUG3" order="5" size="4">
+  <label>Airline Connections in Southwestern USA</label>
+  <node xml:id="LAX3" degree="2" adj="#LVG3 #PHX3">
+    <label>LAX3</label>
+  </node>
+  <node xml:id="LVG3" degree="2" adj="#PHX3">
+    <label>LVG3</label>
+  </node>
+  <node xml:id="PHX3" degree="3" adj="#TUS3">
+    <label>PHX3</label>
+  </node>
+  <node xml:id="TUS3" degree="1">
+    <label>TUS3</label>
+  </node>
+  <node xml:id="CIB3" degree="0">
+    <label>CIB3</label>
+  </node>
+</graph></egXML></p>
+<p>Although in many cases the <gi>arc</gi> element is redundant (since
+arcs can be described using the adjacency attributes of their adjacent
+nodes), it has nevertheless been included in this module, in order to
+allow the convenient specification of identifiers, display or
+rendition information, and labels for each arc (using the attributes
+<att>xml:id</att>, <att>rend</att>, and a child <gi>label</gi> element).</p>
+<p>Next, let us modify the preceding graph by adding directionality to
+the arcs. Specifically, we now think of the arcs as specifying selected
+routes from one airport to another, as indicated by the direction of the
+arrowheads in the following diagram.</p>
+<p><graphic url="Images/graph2.jpg" width="70%"/></p>
+<p>Here is an encoding of this graph, using the <gi>arc</gi> element to
+designate the arcs.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="directed" xml:id="RDG1" order="5" size="5">
+  <label>Selected Airline Routes in Southwestern USA</label>
+  <node xml:id="LAX4" inDegree="1" outDegree="1">
+    <label>LAX4</label>
+  </node>
+  <node xml:id="LVG4" inDegree="1" outDegree="1">
+    <label>LVG4</label>
+  </node>
+  <node xml:id="PHX4" inDegree="2" outDegree="2">
+    <label>PHX4</label>
+  </node>
+  <node xml:id="TUS4" inDegree="1" outDegree="1">
+    <label>TUS4</label>
+  </node>
+  <node xml:id="CIB4" inDegree="0" outDegree="0">
+    <label>CIB4</label>
+  </node>
+  <arc from="#LAX4" to="#LVG4"/>
+  <arc from="#LVG4" to="#PHX4"/>
+  <arc from="#PHX4" to="#LAX4"/>
+  <arc from="#PHX4" to="#TUS4"/>
+  <arc from="#TUS4" to="#PHX4"/>
+</graph></egXML>
+The attributes <att>inDegree</att> and <att>outDegree</att> indicate
+the number of nodes which are adjacent to and from the node concerned
+respectively. </p>
+
+<p>Here is another encoding of the graph, using the <att>adjTo</att> and
+<att>adjFrom</att> attributes on nodes to designate the arcs.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="directed" xml:id="RDG2" order="5" size="5">
+  <label>Selected Airline Routes in Southwestern USA</label>
+  <node xml:id="LAX5" inDegree="1" outDegree="1" adjTo="#LVG5" adjFrom="#PHX5">
+    <label>LAX5</label>
+  </node>
+  <node xml:id="LVG5" inDegree="1" outDegree="1" adjFrom="#LAX5" adjTo="#PHX5">
+    <label>LVG5</label>
+  </node>
+  <node xml:id="PHX5" inDegree="2" outDegree="2" adjTo="#LAX5 #TUS" adjFrom="#LVG5 #TUS5">
+    <label>PHX5</label>
+  </node>
+  <node xml:id="TUS5" inDegree="1" outDegree="1" adjTo="#PHX5" adjFrom="#PHX5">
+    <label>TUS5</label>
+  </node>
+  <node xml:id="CIB5" inDegree="0" outDegree="0">
+    <label>CIB5</label>
+  </node>
+</graph></egXML></p>
+<p>If we wish to label the arcs, say with flight numbers, then
+<gi>arc</gi> elements must be used to hold the <gi>label</gi>
+elements, as in the following example.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="directed" xml:id="RDG3" order="5" size="5">
+  <label>Selected Airline Routes in Southwestern USA</label>
+  <node xml:id="LAX6">
+    <label>LAX6</label>
+  </node>
+  <node xml:id="LVG6">
+    <label>LVG6</label>
+  </node>
+  <node xml:id="PHX6">
+    <label>PHX6</label>
+  </node>
+  <node xml:id="TUS6">
+    <label>TUS6</label>
+  </node>
+  <node xml:id="CIB6">
+    <label>CIB6</label>
+  </node>
+  <arc from="#LAX6" to="#LVG6">
+    <label>SW117</label>
+  </arc>
+  <arc from="#LVG6" to="#PHX6">
+    <label>SW711</label>
+  </arc>
+  <arc from="#PHX6" to="#LAX6">
+    <label>AA218</label>
+  </arc>
+  <arc from="#PHX6" to="#TUS6">
+    <label>AW229</label>
+  </arc>
+  <arc from="#TUS6" to="#PHX6">
+    <label>AW225</label>
+  </arc>
+</graph></egXML>
+<!-- indegree/outdegree removed at DD's suggestion --></p>
+<specGrp xml:id="DGDGR" n="Graphs">
+
+
+
+
+
+
+
+
+
+&graph;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&node;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&arc;
+
+
+
+
+
+
+</specGrp>
+<div type="div3" xml:id="GDTN"><head>Transition Networks</head>
+<p>For encoding transition networks and other kinds of directed graphs
+in which distinctions among types of nodes must be made, the
+<att>type</att> attribute is provided for <gi>node</gi> elements.  In
+the following example, the <term>initial</term> and <term>final</term>
+nodes (or <term>states</term>) of the network are distinguished.  It can
+be understood as accepting the set of strings obtained by traversing it
+from its initial node to its final node, and concatenating the labels.
+<!-- Noam Chomsky, Syntactic Structures, 1957, p19, ex8 --></p>
+<p><graphic url="Images/graph3.jpg" width="60%"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<graph type="network-transition" xml:id="SS8" order="5" size="6">
+<label>(8)</label>
+   <node xml:id="Q0" inDegree="0" outDegree="1" type="initial"/>
+   <node xml:id="Q1" inDegree="2" outDegree="3"/>
+   <node xml:id="Q2" inDegree="1" outDegree="1"/>
+   <node xml:id="Q3" inDegree="1" outDegree="1"/>
+   <node xml:id="Q4" inDegree="2" outDegree="0" type="final"/>
+   <arc from="#Q0" to="#Q1">
+     <label>THE</label>
+   </arc>
+   <arc from="#Q1" to="#Q1">
+     <label>OLD</label>
+   </arc>
+   <arc from="#Q1" to="#Q2">
+     <label>MAN</label>
+   </arc>
+   <arc from="#Q1" to="#Q3">
+     <label>MEN</label>
+   </arc>
+   <arc from="#Q2" to="#Q4">
+     <label>COMES</label>
+   </arc>
+   <arc from="#Q3" to="#Q4">
+     <label>COME</label>
+   </arc>
+</graph></egXML></p>
+<p>A finite state transducer has two labels on each arc, and can be
+thought of as representing a mapping from one sequence of labels to
+the other.  The following example represents a transducer for
+translating the English strings accepted by the network in the
+preceding example into French.  The nodes have been annotated with
+numbers, for convenience.</p>
+<p><graphic url="Images/graph4.jpg" width="60%"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul"><graph type="transducer" order="7" size="10">
+  <node xml:id="T0" inDegree="0" outDegree="3" type="initial">
+    <label>0</label>
+  </node>
+  <node xml:id="T1" inDegree="2" outDegree="1">
+    <label>1</label>
+  </node>
+  <node xml:id="T2" inDegree="2" outDegree="2">
+    <label>2</label>
+  </node>
+  <node xml:id="T3" inDegree="2" outDegree="2">
+    <label>3</label>
+  </node>
+  <node xml:id="T4" inDegree="1" outDegree="1">
+    <label>4</label>
+  </node>
+  <node xml:id="T5" inDegree="1" outDegree="1">
+    <label>5</label>
+  </node>
+  <node xml:id="T6" inDegree="2" outDegree="0" type="final">
+    <label>6</label>
+  </node>
+  <arc from="#T0" to="#T1">
+    <label>THE</label>
+    <label>L'</label>
+  </arc>
+  <arc from="#T0" to="#T2">
+    <label>THE</label>
+    <label>LE</label>
+  </arc>
+  <arc from="#T0" to="#T3">
+    <label>THE</label>
+    <label>LES</label>
+  </arc>
+  <arc from="#T1" to="#T4">
+    <label>MAN</label>
+    <label>HOMME</label>
+  </arc>
+  <arc from="#T2" to="#T1">
+    <label>OLD</label>
+    <label>VIEIL</label>
+  </arc>
+  <arc from="#T2" to="#T2">
+    <label>OLD</label>
+    <label>VIEIL</label>
+  </arc>
+  <arc from="#T3" to="#T3">
+    <label>OLD</label>
+    <label>VIEUX</label>
+  </arc>
+  <arc from="#T3" to="#T5">
+    <label>MEN</label>
+    <label>HOMMES</label>
+  </arc>
+  <arc from="#T4" to="#T6">
+    <label>COMES</label>
+    <label>VIENT</label>
+  </arc>
+  <arc from="#T5" to="#T6">
+    <label>COME</label>
+    <label>VIENNENT</label>
+  </arc>
+</graph></egXML></p></div>
+<div type="div3" xml:id="GDFT"><head>Family Trees</head>
+<p>The next example provides an encoding a portion of a
+family tree, in which nodes are used to represent
+individuals and parents of individuals, and arcs are used to
+represent common parentage and descent links.  Let us suppose,
+further, that information about individuals is contained in feature
+structures, which are contained in feature-structure libraries
+elsewhere (see <ptr target="#FSFL"/>).  We can use the
+<att>value</att> attribute on <gi>node</gi> elements to point to those
+feature structures.  In this particular representation of
+the graph, nodes representing females are framed by ovals, nodes
+representing males are framed by boxes, and nodes representing parents
+are framed by diamonds.
+</p>
+<p><graphic url="Images/graph5.jpg" width="70%"/>
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" corresp="#GDFT-eg-12"><graph type="family_tree" order="13" size="12">
+  <node xml:id="KATHR" value="http://example.com/russell-fs/tei/kr1" inDegree="0" outDegree="1">
+    <label>Katherine</label>
+  </node>
+  <node xml:id="AMBER" value="http://example.com/russell-fs/tei/ar1" inDegree="0" outDegree="1">
+    <label>Amberley</label>
+  </node>
+  <node xml:id="KAR" inDegree="2" outDegree="3">
+    <label>K+A</label>
+  </node>
+  <node xml:id="BERTR" value="http://example.com/russell-fs/tei/br1" inDegree="1" outDegree="2">
+    <label>Bertrand</label>
+  </node>
+  <node xml:id="PETER" value="http://example.com/russell-fs/tei/pr1" inDegree="0" outDegree="1">
+    <label>Peter</label>
+  </node>
+  <node xml:id="DORAR" value="http://example.com/russell-fs/tei/dr1" inDegree="0" outDegree="1">
+    <label>Dora</label>
+  </node>
+  <node xml:id="PBR" inDegree="2" outDegree="1">
+    <label>P+B</label>
+  </node>
+  <node xml:id="DBR" inDegree="2" outDegree="2">
+    <label>D+B</label>
+  </node>
+  <node xml:id="FRANR" value="http://example.com/russell-fs/tei/fr1" inDegree="1" outDegree="0">
+    <label>Frank</label>
+  </node>
+  <node xml:id="RACHR" value="http://example.com/russell-fs/tei/rr1" inDegree="1" outDegree="0">
+    <label>Rachel</label>
+  </node>
+  <node xml:id="CONRR" value="http://example.com/russell-fs/tei/cr1" inDegree="1" outDegree="0">
+    <label>Conrad</label>
+  </node>
+  <node xml:id="KATER" value="http://example.com/russell-fs/tei/kr2" inDegree="1" outDegree="0">
+    <label>Kate</label>
+  </node>
+  <node xml:id="JOHNR" value="http://example.com/russell-fs/tei/jr1" inDegree="1" outDegree="0">
+    <label>John</label>
+  </node>
+  <arc from="#KATHR" to="#KAR">
+    <label>Mo</label>
+  </arc>
+  <arc from="#AMBER" to="#KAR">
+    <label>Fa</label>
+  </arc>
+  <arc from="#KAR" to="#BERTR">
+    <label>So</label>
+  </arc>
+  <arc from="#KAR" to="#FRANR">
+    <label>So</label>
+  </arc>
+  <arc from="#KAR" to="#RACHR">
+    <label>Da</label>
+  </arc>
+  <arc from="#PETER" to="#PBR">
+    <label>Mo</label>
+  </arc>
+  <arc from="#BERTR" to="#PBR">
+    <label>Fa</label>
+  </arc>
+  <arc from="#PBR" to="#CONRR">
+    <label>So</label>
+  </arc>
+  <arc from="#DORAR" to="#DBR">
+    <label>Mo</label>
+  </arc>
+  <arc from="#BERTR" to="#DBR">
+    <label>Fa</label>
+  </arc>
+  <arc from="#DBR" to="#KATER">
+    <label>Da</label>
+  </arc>
+  <arc from="#DBR" to="#JOHNR">
+    <label>So</label>
+  </arc>
+</graph></egXML>
+<!-- Partial family tree for Bertrand Russell, based on       -->
+	<!-- Pereira and Shieber, Prolog and Natural Language         -->
+	<!-- Analysis, 1987, p22                                      --></p></div>
+<div type="div3" xml:id="GDHI"><head>Historical Interpretation</head>
+<p>For our final example, we represent graphically the relationships
+among various geographic areas mentioned in a
+seventeenth-century Scottish document.  The document itself is
+a <soCalled>sasine</soCalled>, which records a grant of land
+from the earl of Argyll to one Donald McNeill, and reads in part
+as follows (abbreviations have been expanded silently,
+and <q>[...]</q> marks illegible passages):
+<q rend="display">
+<p>Item instrument of Sasine given the said Hector
+Mcneil confirmed and dated 28 May 1632
+[...] at Edinburgh upon the 15 June 1632</p>
+<p>Item ane charter granted by Archibald late earl
+of Argyle and Donald McNeill of Gallachalzie wh
+makes mention that ...
+the said late Earl yields and grants
+to the said Donald MacNeill ...</p>
+<p>All and hail the two merk land of old extent
+of Gallachalzie with the pertinents by and in
+the lordship of Knapdale within the sherrifdome
+of Argyll</p>
+<p>[description of other lands granted follows ...]</p>
+<p>This Charter is dated at Inverary the 15th May 1669</p></q></p>
+<p>In this example, we are concerned with the land and pertinents (i.e.
+accompanying sources of revenue) described as <q>the two merk land of
+old extent of Gallachalzie with the pertinents by and in the lordship of
+Knapdale within the sherrifdom of Argyll</q>.</p>
+<p>The passage concerns the following pieces of land:
+<list type="simple">
+<item>the Earl of Argyll's land (i.e. the lands granted by this clause
+of the sasine)</item>
+<item>two mark of land in Gallachalzie</item>
+<item>the pertinents for this land</item>
+<item>the Lordship of Knapdale</item>
+<item>the sherrifdom of Argyll</item></list>
+We will represent these geographic entities as nodes in a graph.
+Arcs in the graph will represent the following relationships among
+them:
+<list type="simple">
+<item>containment (INCLUDE)</item>
+<item>location within (IN)</item>
+<item>contiguity (BY)</item>
+<item>constituency (PART OF)</item></list>
+Note that these relationships are logically related: <q>include</q>
+and <q>in</q>, for example, are inverses of each other: the Earl of
+Argyll's land includes the parcel in Gallachalzie, and the parcel is
+therefore in the Earl of Argyll's land.  Given an explicit set of
+inference rules, an appropriate application could use the graph we are
+constructing to infer the logical consequences of the relationships we
+identify.</p>
+<p>Let us assume that feature-structure analyses are available which
+describe Gallachalzie, Knapdale, and Argyll.  We will link to those
+feature structures using the <att>value</att> attribute on the nodes
+representing those places.  However, there may be some uncertainty as to
+which noun phrase is modified by the phrase <q>within the sheriffdome of
+Argyll</q>:  perhaps the entire lands (land and pertinents) are in
+Argyll, perhaps just the pertinents are, or perhaps only Knapdale is
+(together with the portion of the pertinents which is in Knapdale).  We
+will represent all three of these interpretations in the graph; they
+are, however, mutually exclusive, which we represent using the
+<att>exclude</att> attribute defined in
+chapter <ptr target="#SA"/>.<note place="foot">That is, the three syntactic
+interpretations of the clause are mutually exclusive.  The notion that
+the pertinents are in Argyll is clearly not inconsistent with the notion
+that both the land in Gallachalzie and the pertinents are in Argyll.
+The graph given here describes the possible interpretations of the
+clause itself, not the sets of inferences derivable from each syntactic
+interpretation, for which it would be convenient to use the facilities
+described in chapter <ptr target="#FS"/>.</note></p>
+<p>We represent the graph and its encoding as follows, where
+the dotted lines in the graph indicate the mutually exclusive arcs; in
+the encoding, we use the <att>exclude</att> attribute to indicate those
+arcs.
+</p>
+<p><graphic url="Images/graph6.jpg" width="80%"/></p>
+<p>The graph formalizes the following relationships:
+<list type="simple">
+<item>the Earl of Argyll's land <mentioned>includes</mentioned> (the parcel of
+land in) Gallachalzie</item>
+<item>the Earl of Argyll's land <mentioned>includes</mentioned> the pertinents of that parcel</item>
+<item>the pertinents are (in part) <mentioned>by</mentioned> the Lordship of Knapdale</item>
+<item>the pertinents are (in part) <mentioned>part of</mentioned> the Lordship of Knapdale</item>
+<item>the Earl of Argyll's land, or the pertinents, or
+the Lordship of Knapdale, is <mentioned>in</mentioned> the Sherrifdom of Argyll</item></list>
+We encode the graph thus:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><graph type="directed" order="7" size="9">
+  <node xml:id="EARL">
+    <label>Earl of Argyll's land</label>
+  </node>
+  <node xml:id="GALL" value="http://example.com/people/scots#gall">
+    <label>Gallachalzie</label>
+  </node>
+  <node xml:id="PERT">
+    <label>Pertinents</label>
+  </node>
+  <node xml:id="PER1">
+    <label>Pertinents part</label>
+  </node>
+  <node xml:id="PER2">
+    <label>Pertinents part</label>
+  </node>
+  <node xml:id="KNAP" value="http://example.com/people/scots#knapfs">
+    <label>Lordship of Knapdale</label>
+  </node>
+  <node xml:id="ARGY" value="http://example.com/people/scots#argyfs">
+    <label>Sherrifdome of Argyll</label>
+  </node>
+  <arc xml:id="EARLGALL" from="#EARL" to="#GALL">
+    <label>INCLUDE</label>
+  </arc>
+  <arc xml:id="EARLARGY" from="#EARL" to="#ARGY" exclude="#PERTARGY #KNAPARGY">
+    <label>IN</label>
+  </arc>
+  <arc xml:id="EARLPERT" from="#EARL" to="#PERT">
+    <label>INCLUDE</label>
+  </arc>
+  <arc xml:id="PERTPER1" from="#PERT" to="#PER1">
+    <label>INCLUDE</label>
+  </arc>
+  <arc xml:id="PERTPER2" from="#PERT" to="#PER2">
+    <label>INCLUDE</label>
+  </arc>
+  <arc xml:id="PERTARGY" from="#PERT" to="#ARGY" exclude="#EARLARGY #KNAPARGY">
+    <label>IN</label>
+  </arc>
+  <arc xml:id="PER1KNAP" from="#PER1" to="#KNAP">
+    <label>BY</label>
+  </arc>
+  <arc xml:id="PER2KNAP" from="#PER2" to="#KNAP">
+    <label>PART OF</label>
+  </arc>
+  <arc xml:id="KNAPARGY" from="#KNAP" to="#ARGY" exclude="#EARLARGY #PERTARGY">
+    <label>IN</label>
+  </arc>
+</graph></egXML></p></div></div>
+<div type="div2" xml:id="GDTR"><head>Trees</head>
+<p>A <term>tree</term> is a connected acyclic graph.  That is, it is
+possible in a tree graph to follow a path from any vertex to any other
+vertex, but there are no paths that lead from any vertex to itself.  A
+rooted tree is a directed graph based on a tree; that is, the arcs in
+the graph correspond to the arcs of a tree such that there is exactly
+one node, called the <term>root</term>, for which there is a path from
+that node to all other nodes in the graph.  For our purposes, we may
+ignore all trees except for rooted trees, and hence we shall use the
+<gi>tree</gi> element for rooted trees, and the <gi>root</gi> element
+for its root.  The nodes adjacent to a given node are called its
+<term>children</term>, and the node adjacent from a given node is called
+its <term>parent</term>.  Nodes with both a parent and children are
+called <term>internal nodes</term>, for which we use the <gi>iNode</gi>
+element.  A node with no children is tagged as a <gi>leaf</gi>.  If the
+children of a node are ordered from left to right, then we say that that
+node is <term>ordered</term>.  If all the nodes of a tree are ordered,
+then we say that the tree is an <term>ordered tree</term>.  If some of
+the nodes of a tree are ordered and others are not, then the tree is a
+<term>partially ordered tree</term>.  The ordering of nodes and trees
+may be specified by an attribute; we take the default ordering for trees
+to be ordered, that roots inherit their ordering from the trees in which
+they occur, and internal nodes inherit their ordering from their
+parents.  Finally, we permit a node to be specified as following other
+nodes, which (when its parent is ordered) it would be assumed to
+precede, giving rise to crossing arcs.  
+The elements used for the
+encoding of trees have the following descriptions and attributes.
+<specList>
+<specDesc key="tree" atts="arity ord order"/>
+<specDesc key="root" atts="value children ord outDegree"/>
+<specDesc key="iNode" atts="value children parent ord follow outDegree"/>
+<specDesc key="leaf" atts="value parent follow"/></specList></p>
+<p>Here is an example of a tree.  It represents the order in which the
+operators of addition (symbolized by <code>+</code>), exponentiation
+(symbolized by <code>**</code>) and division (symbolized by <code>/</code>) are
+applied in evaluating the arithmetic formula 
+<code>((a**2)+(b**2))/((a+b)**2)</code>.
+In drawing the graph, the root is placed on the far right, and
+directionality is presumed to be to the left.
+</p>
+<p><graphic url="Images/graph7.jpg" width="50%"/>
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
+  <tree n="ex1" arity="2" ord="true" order="12">
+    <root xml:id="G-DIV1" children="#PLU1 #EXP1">
+      <label>/</label>
+    </root>
+    <iNode xml:id="PLU1" parent="#G-DIV1" children="#EXP2 #EXP3">
+      <label>+</label>
+    </iNode>
+    <iNode xml:id="EXP1" parent="#G-DIV1" children="#PLU2 #NUM2.3">
+      <label>**</label>
+    </iNode>
+    <iNode xml:id="EXP2" parent="#PLU1" children="#VARA1 #NUM2.1">
+      <label>**</label>
+    </iNode>
+    <iNode xml:id="EXP3" parent="#PLU1" children="#VARB1 #NUM2.2">
+      <label>**</label>
+    </iNode>
+    <iNode xml:id="PLU2" parent="#EXP1" children="#VARA2 #VARB2">
+      <label>+</label>
+    </iNode>
+    <leaf xml:id="VARA1" parent="#EXP2">
+      <label>a</label>
+    </leaf>
+    <leaf xml:id="NUM2.1" parent="#EXP2">
+      <label>2</label>
+    </leaf>
+    <leaf xml:id="VARB1" parent="#EXP3">
+      <label>b</label>
+    </leaf>
+    <leaf xml:id="NUM2.2" parent="#EXP3">
+      <label>2</label>
+    </leaf>
+    <leaf xml:id="VARA2" parent="#PLU2">
+      <label>a</label>
+    </leaf>
+    <leaf xml:id="VARB2" parent="#PLU2">
+      <label>b</label>
+    </leaf>
+    <leaf xml:id="NUM2.3" parent="#EXP1">
+      <label>2</label>
+    </leaf>
+</tree></egXML></p>
+<p>In this encoding, the <att>arity</att> attribute represents the
+<term>arity</term> of the tree, which is the greatest value of the
+<att>outDegree</att> attribute for any of the nodes in the tree.  If, as
+in this case, <att>arity</att> is <val>2</val>, we say that the tree is a
+<term>binary</term> tree.</p>
+<p>Since the left-to-right (or top-to-bottom!) order of the children of
+the two <code>+</code> nodes does not affect the arithmetic result in this
+case, we could represent in this tree all of the arithmetically
+equivalent formulas involving its leaves, by specifying the attribute
+<att>ord</att> as <val>false</val> on those two <gi>iNode</gi> elements, the attribute
+<att>ord</att> as <val>true</val> on the <gi>root</gi> and other <gi>iNode</gi>
+elements, and the attribute <att>ord</att> as <val>partial</val> on the <gi>tree</gi>
+element, as follows.
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><tree n="ex2" ord="partial" arity="2" order="13">
+  <root xml:id="divi1" ord="true" children="#plu1 #exp1">
+    <label>/</label>
+  </root>
+  <iNode xml:id="plu1" ord="false" parent="#divi1" children="#exp2 #exp3">
+    <label>+</label>
+  </iNode>
+  <iNode xml:id="exp1" ord="true" parent="#divi1" children="#plu2 #num2.3">
+    <label>**</label>
+  </iNode>
+  <iNode xml:id="exp2" ord="true" parent="#plu1" children="#vara1 #num2.1">
+    <label>**</label>
+  </iNode>
+  <iNode xml:id="exp3" ord="true" parent="#plu1" children="#varb1 #num2.2">
+    <label>**</label>
+  </iNode>
+  <iNode xml:id="plu2" ord="false" parent="#exp1" children="#vara2 #varb2">
+    <label>+</label>
+  </iNode>
+  <leaf xml:id="vara1" parent="#exp2">
+    <label>a</label>
+  </leaf>
+  <leaf xml:id="num2.1" parent="#exp2">
+    <label>2</label>
+  </leaf>
+  <leaf xml:id="varb1" parent="#exp3">
+    <label>b</label>
+  </leaf>
+  <leaf xml:id="num2.2" parent="#exp3">
+    <label>2</label>
+  </leaf>
+  <leaf xml:id="vara2" parent="#plu2">
+    <label>a</label>
+  </leaf>
+  <leaf xml:id="varb2" parent="#plu2">
+    <label>b</label>
+  </leaf>
+  <leaf xml:id="num2.3" parent="#exp1">
+    <label>2</label>
+  </leaf>
+</tree></egXML></p>
+<p>This encoding represents all of the following:
+<list type="simple">
+  <item><code>((a**2)+(b**2))/((a+b)**2)</code></item>
+  <item><code>((b**2)+(a**2))/((a+b)**2)</code></item>
+  <item><code>((a**2)+(b**2))/((b+a)**2)</code></item>
+  <item><code>((b**2)+(a**2))/((a+b)**2)</code></item>
+</list>
+</p>
+<p>Linguistic phrase structure is very commonly represented by trees.
+Here is an example of phrase structure represented by an ordered tree
+with its root at the top, and a possible encoding.
+</p>
+<p><graphic url="Images/graph8.jpg" width="30%"/>
+	  <egXML xmlns="http://www.tei-c.org/ns/Examples"><tree n="ex3" ord="true" arity="2" order="8">
+	    <root xml:id="GD-PP1" children="#GD-P1 #GD-NP1">
+	      <label>PP</label>
+	    </root>
+	    <iNode xml:id="GD-P1" parent="#GD-PP1" children="#GD-WITH1">
+	      <label>P</label>
+	    </iNode>
+	    <leaf xml:id="GD-WITH1" parent="#GD-P1">
+	      <label>with</label>
+	    </leaf>
+	    <iNode xml:id="GD-NP1" parent="#GD-PP1" children="#GD-THE1 #GD-PERI1">
+	      <label>NP</label>
+	    </iNode>
+	    <iNode xml:id="GD-ART1" parent="#GD-NP1" children="#GD-THE1">
+	      <label>Art</label>
+	    </iNode>
+	    <leaf xml:id="GD-THE1" parent="#GD-ART1">
+	      <label>the</label>
+	    </leaf>
+	    <iNode xml:id="GD-N1" parent="#GD-NP1" children="#GD-PERI1">
+	      <label>N</label>
+	    </iNode>
+	    <leaf xml:id="GD-PERI1" parent="#GD-N1">
+	      <label>periscope</label>
+	    </leaf>
+	  </tree>
+</egXML></p>
+<p>Finally, here is an example of an ordered tree, in which a particular
+node which ordinarily would precede another is specified as following
+it.  In the drawing, the <code>xxx</code> symbol indicates that the arc from
+VB to PT crosses the arc from VP to PN.
+</p>
+<p><graphic url="Images/graph9.jpg" width="30%"/>
+  <egXML xmlns="http://www.tei-c.org/ns/Examples"><tree n="ex4" arity="2" order="8" ord="true">
+    <leaf xml:id="GD-LOOK1" parent="#GD-VB2">
+      <label>look</label>
+    </leaf>
+    <leaf xml:id="GD-THEM1" parent="#GD-PN1">
+      <label>them</label>
+    </leaf>
+    <leaf xml:id="GD-UP1" parent="#GD-PT1">
+      <label>up</label>
+    </leaf>
+    <iNode xml:id="GD-VB2" parent="#GD-VB1" children="#GD-LOOK1">
+      <label>VB</label>
+    </iNode>
+    <iNode xml:id="GD-PN1" parent="#GD-VP1" children="#GD-THEM1">
+      <label>PN</label>
+    </iNode>
+    <iNode xml:id="GD-PT1" parent="#GD-VB1" children="#GD-UP1" follow="#GD-PN1">
+      <label>PT</label>
+    </iNode>
+    <iNode xml:id="GD-VB1" parent="#GD-VP1" children="#GD-VB2 #GD-PT1">
+      <label>VB</label>
+    </iNode>
+    <root xml:id="GD-VP1" children="#GD-VB1 #GD-PN1">
+      <label>VP</label>
+    </root>
+</tree></egXML></p>
+<specGrp xml:id="DGDTR" n="Trees (basic method)">
+  
+
+
+
+
+
+
+
+
+&tree;
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+&root;
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+&iNode;
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+&leaf;
+
+
+
+
+
+
+</specGrp>
+</div>
+<div type="div2" xml:id="GDAT"><head>Another Tree Notation</head>
+<p>In this section, we present an alternative to the method of
+representing the structure of ordered rooted trees given in
+section <ptr target="#GDTR" type="div3"/>, which is based on the observation
+that any node of such a tree can be thought of as the root of the
+subtree that it dominates.  Thus subtrees can be thought of as the same
+type as the trees they are embedded in, hence the designation
+<gi>eTree</gi>, for <term>embedding tree</term>.  Whereas in a
+<gi>tree</gi> the relationship among the parts is indicated by the
+<att>children</att> attribute, and by the names of the elements
+<gi>root</gi>, <gi>iNode</gi>, and <gi>leaf</gi>, the relationship among
+the parts of an <gi>eTree</gi> is indicated simply by the arrangement of
+their content.  However, we have chosen to enable encoders to
+distinguish the terminal elements of an <gi>eTree</gi> by means of the
+empty <gi>eLeaf</gi> element, though its use is not required; the
+<gi>eTree</gi> element can also be used to identify the terminal nodes
+of <gi>eTree</gi> elements.  We also provide a <gi>triangle</gi>
+element, which can be thought of as an underspecified
+<gi>eTree</gi>, i.e. an <gi>eTree</gi> in which certain information
+has been left out.  In addition, we provide a <gi>forest</gi> element,
+which consists of one or more <gi>tree</gi>, <gi>eTree</gi>, or
+<gi>triangle</gi> elements, and a <gi>forestGrp</gi> element, which
+consists of one or more <gi>forest</gi> elements.  The elements used for
+the encoding of embedding trees and the units containing them have the
+following descriptions and attributes.
+<specList>
+<specDesc key="eTree" atts="value"/>
+<specDesc key="triangle" atts="value"/>
+<specDesc key="eLeaf" atts="value"/>
+<specDesc key="forest" atts="type"/>
+<specDesc key="forestGrp" atts="type"/>
+</specList></p>
+<p>Like the <gi>root</gi>, <gi>iNode</gi>, and <gi>leaf</gi> of a
+<gi>tree</gi>, the <gi>eTree</gi>, <gi>triangle</gi> and
+<gi>eLeaf</gi> elements may also have 
+<att>value</att> attributes and <gi>label</gi> children.</p>
+<p>To illustrate the use of the <gi>eTree</gi> and <gi>eLeaf</gi>
+elements, here is an encoding of the second example in section <ptr target="#GDTR" type="div3"/>, repeated here for convenience.
+</p>
+<p><graphic url="Images/graph10.jpg" width="30%"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex1">
+  <label>PP</label>
+  <eTree>
+    <label>P</label>
+    <eLeaf>
+      <label>with</label>
+    </eLeaf>
+  </eTree>
+  <eTree>
+    <label>NP</label>
+    <eTree>
+      <label>Art</label>
+      <eLeaf>
+	<label>the</label>
+    </eLeaf>
+    </eTree>
+    <eTree>
+      <label>N</label>
+      <eLeaf>
+	<label>periscope</label>
+      </eLeaf>
+    </eTree>
+  </eTree>
+</eTree></egXML></p>
+<p>Next, we provide an encoding, using the <gi>triangle</gi> element, in
+which the internal structure of the <gi>eTree</gi> labeled <code>NP</code> is
+omitted.
+</p>
+<p><graphic url="Images/graph11.jpg" width="30%"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex2">
+  <label>PP</label>
+   <eTree>
+     <label>P</label>
+   <eLeaf>
+     <label>with</label>
+   </eLeaf>
+   </eTree>
+   <triangle>
+     <label>NP</label>
+     <eLeaf>
+       <label>the periscope</label>
+     </eLeaf>
+   </triangle>
+</eTree></egXML>
+</p>
+<p>Ambiguity involving alternative tree structures associated with the
+same terminal sequence can be encoded relatively conveniently using a
+combination of the <att>exclude</att> and <att>copyOf</att> attributes
+described in sections <ptr target="#SAAT"/> and <ptr target="#SAIE"/>.  In
+the simplest case, an <gi>eTree</gi> may be part of the content of
+exactly one of two different <gi>eTree</gi> elements.  To mark it up,
+the embedded <gi>eTree</gi> may be fully specified within one of the
+embedding <gi>eTree</gi> elements to which it may belong, and a
+virtual copy, specified by the <att>copyOf</att> attribute, may appear
+on the other.  In addition, each of the embedded elements in question
+is specified as excluding the other, using the <att>exclude</att>
+attribute.  To illustrate, consider the English phrase <mentioned>see the
+vessel with the periscope</mentioned>, which may be considered to be
+structurally ambiguous, depending on whether the phrase <mentioned>with
+the periscope</mentioned> is a modifier of the phrase <mentioned>the
+vessel</mentioned> or a modifier of the phrase <mentioned>see the
+vessel</mentioned>.  This ambiguity is indicated in the sketch of the
+ambiguous tree by means of the dotted-line arcs.  The markup using the
+<att>copyOf</att> and <att>exclude</att> attributes follows the
+sketch.
+</p>
+<p><graphic url="Images/graph12.jpg" width="80%"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex3">
+  <label>VP</label>
+  <eTree>
+    <label>V</label>
+    <eLeaf>
+      <label>see</label>
+    </eLeaf>
+  </eTree>
+  <eTree>
+    <label>NP</label>
+    <eTree>
+      <label>Art</label>
+      <eLeaf>
+	<label>the</label>
+      </eLeaf>
+    </eTree>
+    <eTree>
+      <label>N</label>
+      <eLeaf>
+	<label>vessel</label>
+      </eLeaf>
+    </eTree>
+    <eTree xml:id="GD-PPA" exclude="#GD-PPB">
+      <label>PP</label>
+      <eTree>
+	<label>P</label>
+	<eLeaf>
+	  <label>with</label>
+	</eLeaf>
+      </eTree>
+      <eTree>
+	<label>NP</label>
+	<eTree>
+	  <label>Art</label>
+	  <eLeaf>
+	    <label>the</label>
+	  </eLeaf>
+	</eTree>
+	<eTree>
+	  <label>N</label>
+	  <eLeaf>
+	    <label>periscope</label>
+	  </eLeaf>
+	</eTree>
+      </eTree>
+    </eTree>
+  </eTree>
+  <eTree xml:id="GD-PPB" copyOf="#GD-PPA" exclude="#GD-PPA">
+    <label>PP</label>
+  </eTree>
+</eTree></egXML></p>
+<p>To indicate that one of the alternatives is selected, one may specify
+the <att>select</att> attribute on the highest <gi>eTree</gi> as
+either <val>#GD-PPA</val> or <val>#GD-PPB</val>; see section
+<ptr target="#SAAT"/>.</p> 
+<p>Depending on the grammar one uses to associate structures with
+examples like <mentioned>see the man with the periscope</mentioned>, the
+representations may be more complicated than this.  For example,
+adopting a version of the <term>X-bar</term> theory of phrase structure
+originated by Jackendoff,<note place="foot"><ptr type="cit" target="#GD-BIBL-2"/></note> the
+attachment of a modifier may require the creation of an intermediate
+node which is not required when the attachment is not made, as shown in
+the following diagram.  A possible encoding of this ambiguous structure
+immediately follows the diagram.
+</p>
+<p><graphic url="Images/graph13.jpg" width="80%"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><eTree n="ex4">
+  <label>VP</label>
+  <eTree xml:id="VBARA" exclude="#VBARB">
+    <label>V'</label>
+    <eTree xml:id="VA">
+      <label>V</label><eLeaf>
+      <label>see</label>
+    </eLeaf></eTree>
+    <eTree>
+      <label>NP</label>
+      <eTree xml:id="SPEC1A">
+	<label>Spec</label><eLeaf>
+	<label>the</label>
+      </eLeaf></eTree>
+      <eTree>
+	<label>N'</label>
+	<eTree xml:id="NBAR2A">
+	  <label>N'</label>
+	  <eTree>
+	    <label>N</label><eLeaf>
+	    <label>vessel</label>
+	  </eLeaf></eTree>
+	</eTree>
+	<eTree xml:id="PPA1">
+	  <label>PP</label>
+	  <eTree>
+	    <label>P</label><eLeaf>
+	    <label>with</label>
+	  </eLeaf></eTree>
+	  <eTree>
+	    <label>NP</label>
+	    <eTree>
+	      <label>Spec</label><eLeaf>
+	      <label>the</label>
+	    </eLeaf></eTree>
+	    <eTree>
+	      <label>N'</label>
+	      <eTree>
+		<label>N</label><eLeaf>
+		<label>periscope</label>
+	      </eLeaf></eTree>
+	    </eTree>
+  </eTree> </eTree> </eTree> </eTree> </eTree>
+  <eTree xml:id="VBARB" exclude="#VBARA">
+    <label>V'</label>
+    <eTree>
+      <label>V'</label>
+      <eTree xml:id="VB" copyOf="#VA">
+	<label>V</label>
+      </eTree>
+      <eTree>
+	<label>NP</label>
+	<eTree xml:id="SPEC1B" copyOf="#SPEC1A">
+	  <label>Spec</label>
+	</eTree>
+	<eTree xml:id="NBAR2B" copyOf="#NBAR2A">
+	  <label>N'</label>
+	</eTree>
+      </eTree>
+    </eTree>
+    <eTree xml:id="PPB" copyOf="#PPA1">
+      <label>PP</label>
+    </eTree>
+  </eTree>
+</eTree></egXML></p>
+<!--
+** changed id= of second first-generation child <eTree> from VBARA to
+** VBARB, and exclude= of same from 'vbarb' to 'vbara'. 2001-12-23, Syd
+-->
+<p>A <term>derivation</term> in a generative grammar is often thought
+of as a set of trees.  To encode such a derivation, one may use the
+<gi>forest</gi> element, in which the trees may be marked up using the
+<gi>tree</gi>, the <gi>eTree</gi>, or the <gi>triangle</gi> element.
+The <att>type</att> attribute may be used to specify what kind of
+derivation it is.  Here is an example of a two-tree forest, involving
+application of the <soCalled>wh-movement</soCalled> transformation in
+the derivation of <mentioned>what you do</mentioned> (as in <mentioned>this is
+what you do</mentioned>) from the underlying <mentioned>you do
+what</mentioned>.<note place="foot">The symbols
+<code>e</code> and <code>t</code> denote
+special theoretical constructs (<term>empty category</term> and
+<term>trace</term> respectively), which need not concern us here.</note>
+</p>
+<p><graphic url="Images/graph14.jpg" width="80%"/>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><forest n="ex5" type="derivation-syntactic">
+  <eTree n="Stage 1" xml:id="S1SBAR">
+    <label>S'</label>
+    <eTree xml:id="S1COMP">
+      <label>COMP</label><eLeaf xml:id="S1E">
+      <label>e</label>
+    </eLeaf></eTree>
+    <eTree xml:id="S1S">
+      <label>S</label>
+      <eTree xml:id="S1NP1">
+	<label>NP</label><eLeaf>
+	<label>you</label>
+      </eLeaf></eTree>
+      <eTree xml:id="S1VP">
+	<label>VP</label>
+	<eTree xml:id="S1V">
+	  <label>V</label><eLeaf>
+	  <label>do</label>
+	</eLeaf></eTree>
+	<eTree xml:id="S1NP2">
+	  <label>NP</label>
+	  <eLeaf xml:id="S1WH">
+	    <label>what</label>
+	  </eLeaf>
+	</eTree>
+      </eTree>
+    </eTree>
+  </eTree>
+  <eTree n="Stage 2" xml:id="S2SBAR" corresp="#S1SBAR">
+    <label>S'</label>
+    <eTree xml:id="S2COMP" corresp="#S1COMP">
+      <label>COMP</label>
+      <eTree copyOf="#S1NP2" corresp="#S1E">
+	<label>NP</label>
+      </eTree>
+    </eTree>
+    <eTree xml:id="S2S" corresp="#S1S">
+      <label>S</label>
+      <eTree xml:id="S2NP1" copyOf="#S1NP1">
+	<label>NP</label>
+      </eTree>
+      <eTree xml:id="S2VP" corresp="#S1VP">
+	<label>VP</label>
+	<eTree xml:id="S2V" copyOf="#S1V">
+	  <label>V</label>
+	</eTree>
+	<eTree xml:id="S2NP2" corresp="#S1NP2">
+	  <label>NP</label>
+	  <eLeaf corresp="#S1WH">
+	    <label>t</label>
+	  </eLeaf>
+	</eTree>
+      </eTree>
+    </eTree>
+  </eTree>
+</forest></egXML></p>
+<p>In this markup, we have used <att>copyOf</att> attributes to provide
+virtual copies of elements in the tree representing the second stage of
+the derivation that also occur in the first stage, and the
+<att>corresp</att> attribute (see section <ptr target="#SACS"/>) to link
+those elements in the second stage with corresponding elements in the
+first stage that are not copies of them.</p>
+<p>If a group of forests (e.g. a full grammatical derivation including
+syntactic, semantic, and phonological subderivations) is to be
+articulated, the grouping element <gi>forestGrp</gi> may be used.</p>
+<specGrp xml:id="DGDAL" n="Trees (alternate method)">
+
+
+
+
+
+
+
+
+
+&eTree;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&triangle;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&eLeaf;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&forest;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&forestGrp;
+
+
+
+
+
+
+</specGrp></div>
+
+<div xml:id="GDstem"><head>Representing Textual Transmission</head>
+
+<p>A <term>stemma codicum</term> (sometimes called just
+<term>stemma</term>) is a tree-like graphic structure that has become
+traditional in manuscript studies for representing textual
+transmission. Consider the following hypothetical stemma:
+<figure><head>Example stemma</head>
+<graphic url="Images/stemma.png" width="80%"/></figure>
+</p>
+            
+<p>The nodes in this stemma represent manuscripts; each has a label (a
+letter) which identifies it and also distinguishes whether the
+manuscript is extant, lost, or hypothetical.  Extant manuscripts are
+identified by uppercase Latin letters or words beginning with
+uppercase Latin letters, e.g., <val>L</val>, shown as aqua in this example;
+manuscripts no longer existing, but providing readings which are
+attested e.g. by note or copy made before their disappearance, are
+identified by lowercase Latin letters, e.g., <val>t</val>, shown as magenta in
+this example; hypothetical stages in the textual transmission, which
+do not necessarily correspond to real manuscripts, are given
+lowercase Greek letters, e.g., <val>α</val> and shown as gold in this example.
+The stemma shown above thus suggests that (on the basis of
+similarities in the readings of the extant and lost manuscripts) <val>L</val>
+and <val>t</val> share textual material that is not shared with other
+manuscripts (represented in this case by <val>δ</val>) even though no physical
+manuscript attesting this stage in the textual transmission has ever
+been identified.</p>
+
+<p>Manuscripts are copied from other manuscripts. The preceding
+stemma represents the hypothesis that all manuscripts go back to a common
+ancestor (<val>α</val>), that the tradition split after that stage into two
+(<val>β</val> and <val>γ</val>), etc. Descent by copying is indicated with a solid line.
+According to this model, <val>α</val> is the earliest common hypothetical stage
+that can be reconstructed, and all nodes below <val>α</val> have a single
+parent, that is, were copied from a single other stage in the
+tradition.</p>
+
+<p>This familiar tree model is complicated because manuscripts
+sometimes show the influence of more than one ancestor. They may have
+been produced by a scribe who checked the text in one
+manuscript of the same work whilst copying from another, or perhaps
+made changes from his memory of a slightly different version of the
+text that he had read elsewhere. Alternatively, perhaps scribe A
+copied a manuscript from one source, scribe B made changes in it in
+the margins or between the lines (either by consulting another source
+directly or from memory), and another scribe then copied that
+manuscript, incorporating the changes into the body.  Whatever the
+specific scenario, it is not uncommon for a
+manuscript to be based primarily on one source, but to incorporate
+features of another branch of the tradition. This mixed result is
+called <term>contamination</term>, and it is reflected in a stemma by a
+dotted line. Thus, the example above asserts that <val>A</val> is copied within
+the <val>ε</val> tradition, but is also contaminated from the <val>γ</val>
+tradition.</p>
+            
+<p>The utility of a stemma as a visualization tool is inversely
+proportional to the degree of contamination in the manuscript
+tradition. A tradition completely without contamination (called a
+<term>closed tradition</term>) yields a classic tree,  easily
+represented graphically by a stemma. An <term>open tradition</term>, with
+substantial contamination, yields a spaghetti-like stemma
+characterized by crossing dotted lines, which is both difficult to
+read and not very informative.</p>
+
+<p>The <gi>eTree</gi> element introduced in this chapter can be used
+to represent a closed tradition in a straightforward manner. Each
+non-terminal node is represented by a typed <gi>eTree</gi> element and
+each terminal node by an <gi>eLeaf</gi>. A <gi>label</gi> element
+provides a way of identifying each node, complementary to the global
+attributes <att>n</att> and <att>xml:id</att> attributes. For example,
+the closed part of the tradition headed by the label δ may be encoded
+as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <eTree type="hypothetical">
+	  <label>δ</label>
+            <eLeaf type="extant">
+	      <label>L</label>
+	    </eLeaf>
+            <eLeaf type="lost">
+	      <label>t</label>
+	    </eLeaf>
+        </eTree>
+</egXML>
+To complete this representation, we need to show that the node
+labelled A is not derived solely from its parent node (labelled ε)
+but also demonstrates contamination from the node labelled γ. The
+easiest way to accomplish this is to include an appropriately-typed
+<gi>ptr</gi> element within the node in question, the
+<att>target</att> of which points to the node labelled γ. This
+requires that this latter node be supplied with a value for its
+<att>xml:id</att> attribute. The complete representation is thus:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<eTree type="hypothetical">
+  <label>α</label>
+   <eTree type="hypothetical">
+    <label>β</label>
+        <eTree type="hypothetical">
+	  <label>δ</label>
+            <eLeaf type="extant">
+	      <label>L</label>
+	    </eLeaf>
+            <eLeaf type="lost">
+	      <label>t</label>
+	    </eLeaf>
+        </eTree>
+        <eTree type="hypothetical">
+	  <label>ε</label>
+            <eLeaf type="extant">
+	      <label>R</label>
+	    </eLeaf>
+            <eLeaf type="extant">
+	      <label>A</label>
+	      <ptr type="contamination" target="#gamma"/>
+	    </eLeaf>
+        </eTree>
+    </eTree>
+    <eTree xml:id="gamma" type="hypothetical">
+      <label>γ</label>
+        <eLeaf type="extant">
+	  <label>I</label>
+	</eLeaf>
+        <eLeaf type="extant">
+	  <label>X</label>
+	</eLeaf>
+    </eTree>
+</eTree>
+</egXML>
+</p>
+<p>In any substantial codicological project, it is likely that
+significantly more data will be required about the individual
+witnesses than indicated in the simple structures above. These
+Guidelines provide a rich variety of additional elements for
+representing such information: see in particular chapters <ptr target="#MS"/>, <ptr target="#PH"/>, and <ptr target="#TC"/>.</p>
+
+</div>
+
+<div><head>Module for Graphs, Networks, and Trees</head>
+<p>The module described in this chapter makes available the following components:
+<moduleSpec xml:id="DGD" ident="nets">
+<altIdent type="FPI">Graphs, networks, and trees</altIdent>
+<desc>Graphs, networks, and trees</desc>
+<desc xml:lang="fr">Graphes, réseaux et arbres</desc>
+<desc xml:lang="zh-tw">圖形、網絡與樹狀結構</desc>
+<desc xml:lang="it">Grafici, reti e alberi</desc><desc xml:lang="pt">Grafos, redes, e árvores</desc><desc xml:lang="ja">グラフモジュール</desc></moduleSpec>
+
+The selection and combination of modules to form a TEI schema is described in
+<ptr target="#STIN"/>.
+
+
+<specGrpRef target="#DGDGR"/>
+<specGrpRef target="#DGDTR"/>
+<specGrpRef target="#DGDAL"/></p>
+</div>
+</div>

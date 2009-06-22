@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" ident="fw">
+  <gloss>forme work</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">조판 작업</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">印版文字</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">élément de mise en forme</gloss>
+  <gloss version="2007-05-04" xml:lang="es">convenciones gráficas.</gloss>
+  <gloss version="2007-01-21" xml:lang="it">convenzioni grafiche</gloss>
+  <desc>contains a running head (e.g. a header, footer), catchword, or
+  similar material appearing on the current page.</desc>
+  <desc version="2007-12-20" xml:lang="kr">현 페이지에 나타나는 현 표제부(예, 머리말, 꼬리말), 색인어, 또는 유사 자료를 포함한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含一個欄外標題 (例如頁眉、頁腳) 、標語、或出現在所標記頁面的類似文字。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  版面の周りにある柱やノンブルを示す．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">permet d'encoder un titre courant (en haut ou en bas de la page), une réclame, ou une autre information de ce genre qui apparaît sur la page courante.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene un encabezamiento, pie de página, reclamo o similar relativo a la página corriente</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene intestazione, piè di pagina, reclamo o simili relativi alla pagina corrente</desc>
+  <classes>
+    <memberOf key="model.milestoneLike"/>
+    <memberOf key="att.placement"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="type" usage="rec">
+      <desc>classifies the material encoded according to some useful typology.</desc>
+      <desc version="2007-12-20" xml:lang="kr">유용한 유형에 따라 부호화된 자료를 분류한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">用合適的分類方法將所標記的內容分類。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      符号化された当該部分を分類する．
+      </desc>
+      <desc version="2007-06-12" xml:lang="fr">caractérise l'information encodée conformément à une typologie appropriée</desc>
+      <desc version="2007-05-04" xml:lang="es">clasifica las convenciones usadas según una tipología funcional.</desc>
+      <desc version="2007-01-21" xml:lang="it">classifica le convenzioni usate secondo una tipologia funzionale</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="open">
+        <valItem ident="header">
+          <desc>a running title at the top of the page</desc>
+          <desc version="2007-12-20" xml:lang="kr">페이지 상단의 현 제목</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">頁面頂端的欄外標題</desc>
+          <desc version="2008-04-05" xml:lang="ja">
+	  天にタイトル．
+	  </desc>
+          <desc version="2007-06-12" xml:lang="fr">un titre courant en haut de la page</desc>
+          <desc version="2007-05-04" xml:lang="es">título o asunto en el encabezamiento de la página</desc>
+          <desc version="2007-01-21" xml:lang="it">titolo nell'intestazione di pagina</desc>
+        </valItem>
+        <valItem ident="footer">
+          <desc>a running title at the bottom of the page</desc>
+          <desc version="2007-12-20" xml:lang="kr">페이지 하단의 제목</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">頁面底端的欄外標題</desc>
+          <desc version="2008-04-05" xml:lang="ja">
+	  地にあるタイトル．
+	  </desc>
+          <desc version="2007-06-12" xml:lang="fr">un titre courant en bas de la page</desc>
+          <desc version="2007-05-04" xml:lang="es">título o asunto a pie de página</desc>
+          <desc version="2007-01-21" xml:lang="it">titolo nel piè di pagina</desc>
+        </valItem>
+        <valItem ident="pageNum">
+          <gloss>page number</gloss>
+          <gloss version="2007-12-20" xml:lang="kr">페이지 숫자</gloss>
+          <gloss version="2008-04-06" xml:lang="es">página</gloss>
+          <gloss version="2008-03-30" xml:lang="fr">numéro de page</gloss>
+          <gloss version="2007-11-06" xml:lang="it">numero di pagina</gloss>
+          <desc>a page number or foliation symbol</desc>
+          <desc version="2007-12-20" xml:lang="kr">페이지 숫자 또는 페이지 기호</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">編頁數號或是編張符號</desc>
+          <desc version="2008-04-05" xml:lang="ja">
+	  ノンブル．
+	  </desc>
+          <desc version="2007-06-12" xml:lang="fr">un numéro de page ou un symbole de foliotation</desc>
+          <desc version="2007-11-06" xml:lang="it">numero di pagina o simbolo di foliazione</desc>
+          <desc version="2007-05-04" xml:lang="es">número de página o símbolo de la foliación</desc>
+        </valItem>
+        <valItem ident="lineNum">
+          <gloss>line number</gloss>
+          <gloss version="2007-12-20" xml:lang="kr">행 수</gloss>
+          <gloss version="2008-04-06" xml:lang="es">número de línea</gloss>
+          <gloss version="2008-03-30" xml:lang="fr"> numéro de ligne</gloss>
+          <gloss version="2007-11-06" xml:lang="it">numero di riga</gloss>
+          <desc>a line number, either of prose or poetry</desc>
+          <desc version="2007-12-20" xml:lang="kr">산문 또는 시에서 행 번호</desc>
+          <desc version="2008-04-06" xml:lang="es">un número de línea, en prosa o verso</desc>
+          <desc version="2008-04-05" xml:lang="ja">
+	  韻文・散文における行番号．
+	  </desc>
+          <desc version="2008-03-30" xml:lang="fr">numéro d'une ligne en prose ou en vers</desc>
+          <desc version="2007-11-06" xml:lang="it">numero di riga di testo in prosa o componimento poetico</desc>
+        </valItem>
+        <valItem ident="sig">
+          <gloss>signature</gloss>
+          <gloss version="2007-12-20" xml:lang="kr">서명</gloss>
+          <gloss version="2008-04-06" xml:lang="es">signatura</gloss>
+          <gloss version="2007-11-06" xml:lang="it">firma</gloss>
+          <desc>a signature or gathering symbol</desc>
+          <desc version="2007-12-20" xml:lang="kr">서명 혹은 서명 기호</desc>
+          <desc version="2008-10-02" xml:lang="fr"> signature</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">簽名或是聚集符號</desc>
+          <desc version="2008-04-05" xml:lang="ja">
+	  折丁記号．
+	  </desc>
+          <desc version="2007-05-04" xml:lang="es">firma o símbolo común</desc>
+          <desc version="2007-01-21" xml:lang="it">firma o simbolo comune</desc>
+        </valItem>
+        <valItem ident="catch">
+          <gloss>catchword</gloss>
+          <gloss version="2007-12-20" xml:lang="kr">색인어</gloss>
+          <gloss version="2008-04-06" xml:lang="es">lema</gloss>
+          <gloss version="2008-03-30" xml:lang="fr">mot-clé</gloss>
+          <gloss version="2007-11-06" xml:lang="it">reclamo</gloss>
+          <desc>a catch-word</desc>
+          <desc version="2007-12-20" xml:lang="kr">색인어</desc>
+          <desc version="2007-05-02" xml:lang="zh-tw">標語</desc>
+          <desc version="2008-04-05" xml:lang="ja">
+	  柱．
+	  </desc>
+          <desc version="2007-06-12" xml:lang="fr">une réclame</desc>
+          <desc version="2007-05-04" xml:lang="es">reclamo</desc>
+          <desc version="2007-01-21" xml:lang="it">reclamo</desc>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <fw type="sig" place="bottom">C3</fw>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <fw type="sig" place="bot">徐閱</fw>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>Where running heads are consistent throughout a chapter or
+    section, it is usually more convenient to relate them to the
+    chapter or section, e.g. by use of the <att>rend</att> attribute.
+    The <gi>fw</gi> element is intended for cases where the running
+    head changes from page to page, or where details of page layout
+    and the internal structure of the running heads are of paramount
+    importance.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p> Quand le titre courant s'applique à tout un chapitre ou une section, il est
+                habituellement plus commode de le relier au chapitre ou à la section, par exemple en
+                utilisant l'attribut <att>rend</att>. L'élément <gi>fw</gi> est utilisé pour des cas
+                où le titre courant change de page en page ou quand des détails de mise en page et
+                la structure interne des titres courants sont d'une importance primordiale.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p>
+    柱に章や節が常に書かれている場合，属性<att>rend</att>を使い，
+    章や節と対応した方が便利である．
+    柱の内容がページごとに異なる場合，またはページのレイアウト
+    や柱の内部構造が重要である場合に，当該要素<gi>fw</gi>が使用される．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#PHSK"/>
+  </listRef>
+</elementSpec>

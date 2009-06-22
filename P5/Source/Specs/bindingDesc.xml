@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="BINDINGDESC" ident="bindingDesc">
+  <gloss>binding description</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">제본 기술</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw"/>
+  <gloss version="2008-04-06" xml:lang="es">descripción obligatoria</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">description de la reliure</gloss>
+  <gloss version="2007-11-06" xml:lang="it">descrizione della rilegatura</gloss>
+  <desc xml:id="bindingdesc.desc">describes the present and former bindings of a manuscript, either
+as a series of paragraphs or as a series of distinct <gi>binding</gi> elements,
+one for each binding of the manuscript. </desc>
+  <desc version="2007-12-20" xml:lang="kr">원고의 각 제본에 대해 일련의 문단 또는 일련의 <gi>binding</gi> 요소로 원고의 현재 그리고 이전 제본 상태에 대해 기술한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">描述手稿現在與之前的裝訂，可以是連續性的文字段落、或是一連串專用的<gi>binding</gi>元素，每個手稿裝訂使用一個元素。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  手書き資料の現行または以前の装訂に関する情報を示す．一連の段落または
+  一連の要素<gi>binding</gi>で示される．各単位が当該手書き資料の各装訂
+  に対応する．
+</desc>
+  <desc version="2007-06-12" xml:lang="fr">décrit les reliures actuelles et anciennes d'un
+      manuscrit, soit en une série de paragraphes <term>p</term>, soit sous la forme d'une série
+      d'éléments <gi>binding</gi>, un pour chaque reliure</desc>
+  <desc version="2007-05-04" xml:lang="es">describe la encuadernación actual y precedente de un manuscrito en forma de una serie de párrafos o de una serie de diversos elementos <gi>binding</gi> (encuadernación), uno para cada encuadernación del manuscrito.</desc>
+  <desc version="2007-01-21" xml:lang="it">descrive la legatura attuale e precedente di un manoscritto sotto forma di una serie di paragrafi o di una serie di diversi elementi <gi>binding</gi>,
+uno per ogni legatura del manoscritto</desc>
+  <classes>
+    <memberOf key="model.physDescPart"/>
+  </classes>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:choice>
+          <rng:ref name="model.pLike"/>
+          <rng:ref name="decoNote"/>
+          <rng:ref name="condition"/>
+        </rng:choice>
+      </rng:oneOrMore>
+      <rng:oneOrMore>
+        <rng:ref name="binding"/>
+      </rng:oneOrMore>
+    </rng:choice>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <bindingDesc>
+        <p>Sewing not visible; tightly rebound over
+19th-cent. pasteboards, reusing panels of 16th-cent. brown leather with
+gilt tooling à la fanfare, Paris c. 1580-90, the centre of each
+cover inlaid with a 17th-cent. oval medallion of red morocco tooled in
+gilt (perhaps replacing the identifying mark of a previous owner); the
+spine similarly tooled, without raised bands or title-piece; coloured
+endbands; the edges of the leaves and boards gilt.Boxed.</p>
+      </bindingDesc>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <bindingDesc>
+        <p>內外兩層經板將經葉含夾以後，以絲質經索綑紮，並附上白色哈達，然後以黃綾經衣包裹，就成了完整一函的經篋。</p>
+      </bindingDesc>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#msphbi"/>
+  </listRef>
+</elementSpec>

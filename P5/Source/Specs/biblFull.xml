@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="biblFull">
+  <equiv/>
+  <gloss>fully-structured bibliographic citation</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">완전히 구조화된 서지 인용 정보</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw"/>
+  <gloss version="2008-04-06" xml:lang="es">citación bibliográfica estructurada completa</gloss>
+  <gloss version="2008-03-30" xml:lang="fr">référence bibliographique totalement structurée</gloss>
+  <gloss version="2007-11-06" xml:lang="it">citazione bibliografica strutturata</gloss>
+  <desc>contains a fully-structured bibliographic citation, in which all components of the TEI file
+    description are present.</desc>
+  <desc version="2007-12-20" xml:lang="kr">완전히 구조화된 서지 정보를 포함하며, 그 안에 TEI 파일 기술의 모든 성분이 제시된다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含結構完整的書目資料，其中呈現出TEI檔案描述內的所有元件。</desc>
+  <desc version="2008-04-05" xml:lang="ja"> 厳密な構造を持つ書誌情報を示す．．TEIのファイル記述の全要素は，ここ に記述される． </desc>
+  <desc version="2007-06-12" xml:lang="fr">contient une référence bibliographique totalement
+    structurée : tous les composants de la description du fichier TEI  y sont présents.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene una cita bibliográfica completamente
+    estructurada, en la cual están presentes todos los componentes de la descripción del archivo
+    TEI.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene una citazione bibliografica interamente
+    strutturata nella quale sono presenti tutti i componenti di descrizione di un file TEI.</desc>
+  <classes>
+    <memberOf key="model.biblLike"/>
+    <memberOf key="att.declarable"/>
+  </classes>
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:group>
+      <!--      <rng:ref name="macro.fileDescPart"/>-->
+      <rng:group>
+        <rng:ref name="titleStmt"/>
+        <rng:optional>
+          <rng:ref name="editionStmt"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:ref name="extent"/>
+        </rng:optional>
+        <rng:ref name="publicationStmt"/>
+        <rng:optional>
+          <rng:ref name="seriesStmt"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:ref name="notesStmt"/>
+        </rng:optional>
+      </rng:group>
+      <rng:zeroOrMore>
+        <rng:ref name="sourceDesc"/>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <biblFull>
+        <titleStmt>
+          <title>The Feminist Companion to Literature in English: women writers from the middle ages
+            to the present</title>
+          <author>Blain, Virginia</author>
+          <author>Clements, Patricia</author>
+          <author>Grundy, Isobel</author>
+        </titleStmt>
+        <editionStmt>
+          <edition>UK edition</edition>
+        </editionStmt>
+        <extent>1231 pp</extent>
+        <publicationStmt>
+          <publisher>Yale University Press</publisher>
+          <pubPlace>New Haven and London</pubPlace>
+          <date>1990</date>
+        </publicationStmt>
+        <sourceDesc>
+          <p>No source: this is an original work</p>
+        </sourceDesc>
+      </biblFull>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <biblFull>
+        <titleStmt>
+          <title>勘誤表：審視後的生命</title>
+          <author>喬治．史坦納。</author>
+        </titleStmt>
+        <editionStmt>
+          <edition>台灣地區繁中版本</edition>
+        </editionStmt>
+        <extent>208面</extent>
+        <publicationStmt>
+          <publisher>行人出版社</publisher>
+          <pubPlace>台北</pubPlace>
+          <date>2007</date>
+        </publicationStmt>
+        <sourceDesc>
+          <p>譯自 Errata: An Examined Life (1997)</p>
+        </sourceDesc>
+      </biblFull>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#COBITY"/>
+    <ptr target="#HD3"/>
+    <ptr target="#CCAS2"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" ident="restore">
+  <equiv/>
+  <gloss version="2007-06-12" xml:lang="fr">restitution</gloss>
+  <desc>indicates restoration of text to an earlier state by
+cancellation of an editorial or authorial marking or instruction.</desc>
+  <desc version="2007-12-20" xml:lang="kr">편집 또는 저작 표지 또는 지시의 취소를 통해서 초기 상태로 텍스트 복구를 나타낸다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">經由取消編輯或作者所做的記號或指示，復原文件到之前的狀況。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  編集者や著者による指示を覆し，以前の状態のテキストを復元することを示
+  す．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">indique le rétablissement d'un état antérieur du texte par suppression d'une marque ou d'une instruction de l'éditeur ou de l'auteur.</desc>
+  <desc version="2007-05-04" xml:lang="es">indica la reconstrucción del texto a un estado precedente por la cancelación de una anotación o instrucción del autor o el editor.</desc>
+  <desc version="2007-01-21" xml:lang="it">segnala il ripristino del testo a uno stato precedente in virtù della rimozione di un'annotazione o istruzione a opera dell'autore o curatore</desc>
+  <classes>
+    <memberOf key="model.pPart.transcriptional"/>
+    <memberOf key="att.transcriptional"/>
+    <memberOf key="att.typed"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+For I hate this
+<restore hand="#dhl" type="marginalStetNote"><del>my</del></restore> body                        
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>On this element, the <att>type</att> attribute indicates the action
+cancelled by the restoration. Its value should be the name of the tag contained
+within the <gi>restore</gi> element which is cancelled by the
+restoration.  Most often, this will be <gi>del</gi>, but might also
+be <gi>hi</gi>, etc.  In cases of simple nesting of a single
+cancelled action within the <gi>restore</gi> element this attribute
+will not be necessary.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>Avec cet élément, l'attribut<att>type</att> indique l'action annulée par la
+                restitution. Sa valeur devrait être le nom de la balise contenue dans l'élément
+                    <gi>restore</gi> qui est annulé par la restitution. Le plus souvent, ce sera
+                    <gi>del</gi> mais ce pourrait être aussi<gi>hi</gi>, etc. Dans les cas
+                d'emboîtement simple d'une unique action annulée dans l'élément <gi>restore</gi>,
+                cet attribut ne sera pas nécessaire.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p>
+    当該要素の属性<att>type</att>は，当該復元により取り消される行為を
+    示す．この属性値は，要素<gi>restore</gi>内にあり，取り消しの対象と
+    なるタグの名前であるべきである．多くは，要素<gi>del</gi>であるが，
+    他にも<gi>hi</gi>などを取るかもしれない．要素<gi>restore</gi>内で，
+    取り消される行為が入れ子化されている場合には，当該属性は必ずしも必
+    要ではない．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#PHCD"/>
+  </listRef>
+</elementSpec>

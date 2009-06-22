@@ -1,0 +1,1359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details.
+$Date$
+$Id$
+-->
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="ST" n="3">
+
+<head>The TEI Infrastructure</head>
+
+<p>This chapter describes the infrastructure for the encoding scheme
+defined by these Guidelines. It introduces the conceptual framework
+within which the following chapters are to be understood, and the
+means by which that conceptual framework is implemented. It assumes
+some familiarity with XML and XML schemas (see chapter <ptr
+target="#SG"/>) but is intended to be accessible to any user of these
+Guidelines. Other chapters supply further technical details, in
+particular chapter <ptr target="#TD"/> which describes the XML schema
+used to express the Guidelines themselves, and chapter <ptr
+target="#USE"/> which combines a discussion of modification and
+conformance issues with a description of the intended behaviour of an
+ODD processor; these chapters should be read by anyone intending to
+implement a new TEI-based system.</p>
+
+<p>The TEI encoding scheme consists of a number of
+<term>modules</term>, each of which declares particular XML elements
+and their attributes. Part of an element's declaration includes its
+assignment to one or more element <term>classes</term>. Another part
+defines its possible content and atttributes with reference to these
+classes.  This indirection gives the TEI system much of its strength
+and its flexibility. Elements may be combined more or less freely to
+form a <term>schema</term> appropriate to a particular set of
+requirements. It is also easy to add new elements which reference
+existing classes or elements to a schema, as it is to exclude some of
+the elements provided by any module included in a schema.</p>
+
+<p>In principle, a TEI schema may be constructed using any combination
+of modules. However, certain TEI modules are of particular importance,
+and should always be included in all but exceptional circumstances:
+the module <ident type="module">tei</ident> described in the present
+chapter is of this kind because it defines classes, macros, and
+datatypes which are used by all other modules. The <ident type="module">core</ident> module, defined in chapter <ptr target="#CO"/> contains declarations for elements and attributes which
+are likely to be needed in almost any kind of document, and is
+therefore recommended for global use. The <ident type="module">header</ident> module defined in chapter <ptr target="#HD"/> provides declarations for the metadata elements and
+attributes constituting the TEI Header, a component which is required
+for TEI conformance, while the <ident type="module">textstructure</ident> module defined in chapter <ptr target="#DS"/> declares basic structural elements needed for the
+encoding of most book-like objects. Most schemas will therefore need
+to include these four modules.<!--, but are free to mix and match them
+with others.--></p>
+
+<p>The specification for a TEI schema is itself a TEI document, using
+elements from the module described in chapter <ptr target="#TD"/>: we
+refer to such a document informally as an <term>ODD</term> document,
+from the design goal originally formulated for the system: <q>One
+Document Does it all</q>. Stylesheets for maintaining and processing
+ODD documents are maintained by the TEI, and these Guidelines are also
+maintained as such a document. As further discussed in <ptr target="#IM"/>, an ODD document can be processed to generate a schema
+expressed using any of the three schema languages currently in wide
+use: the XML DTD language, the ISO RELAX NG language, or the W3C
+Schema language, as well as to generate documentation such as the
+<title>Guidelines</title> and their associated web site.</p>
+
+<p>The bulk of this chapter describes the TEI infrastructure module
+itself. Although it may be skipped at a first reading, an
+understanding of the topics addressed here is essential for anyone
+planning to take full advantage of the TEI customization techniques
+described in chapter <ptr target="#MD"/>.</p>
+
+<p>The chapter begins by briefly characterizing each of the modules
+available in the TEI scheme. Section <ptr target="#STIN"/>
+describes in general terms the method of constructing  a TEI schema
+in a specific schema language such as XML DTD language, RELAX NG, or
+W3C Schema.</p>
+
+<p>The next and largest part of the chapter introduces the attribute
+and element classes used to define groups of elements and
+their characteristics (section <ptr target="#STEC"/>).</p>
+
+<p>Finally, section <ptr target="#STmacros"/> introduces the concept
+of <term>macros</term>, which are used to express some
+commonly used content models, and lists the <term>datatypes</term>
+used to constrain the range of legal values for TEI attributes (section <ptr target="#DTYPES"/>).
+</p>
+
+
+<div type="div2" xml:id="STMA"><head>TEI Modules</head>
+
+<p>These Guidelines define several hundred elements and attributes for
+marking up documents of any kind. Each definition has the following
+components:
+<list type="simple">
+<item>a prose description</item>
+<item>a formal declaration, expressed using a special-purpose XML
+vocabulary defined by these Guidelines in combination with elements
+taken from the ISO schema language RELAX NG</item>
+<item>usage examples</item>
+</list></p>
+<p>Each chapter of the Guidelines presents a group of related
+elements, and also defines a corresponding set of declarations, which
+we call a <term>module</term>. All the definitions are collected
+together in the reference sections provided as an appendix. Formal
+declarations for a given chapter are collected together within the
+corresponding module. For convenience, each element is assigned to a
+single module, typically for use in some specific application area, or
+to support a particular kind of usage.  A module is thus simply a
+convenient way of grouping together a number of associated element
+declarations. In the simple case, a TEI schema is made by combining
+together a small number of modules, as further described in section
+<ptr target="#STIN"/> below.</p>
+
+
+<p>The following table lists the modules defined by the current
+release of the Guidelines:
+
+<!-- table can be re-autogenerated from modules.xsl LB 20-xii-05 -->
+
+<table xml:id="tab-mods">
+<row role="label">
+<cell>Module name</cell>
+<cell>Formal public identifier</cell>
+<cell>Where defined</cell>
+</row>
+<row><cell>analysis</cell><cell>Analysis and Interpretation</cell><cell><ptr target="#AI"/></cell></row>
+<row><cell>certainty</cell><cell>Certainty and Uncertainty</cell><cell><ptr target="#CE"/></cell></row>
+<row><cell>core</cell><cell>Common Core</cell><cell><ptr target="#CO"/></cell></row>
+<row><cell>corpus</cell><cell>Metadata for Language Corpora</cell><cell><ptr target="#CC"/></cell></row>
+<!--<row><cell>declarefs</cell><cell>Feature System Declaration</cell><cell><ptr target="#FD"/></cell></row>-->
+<row><cell>dictionaries</cell><cell>Print Dictionaries</cell><cell><ptr target="#DI"/></cell></row>
+<row><cell>drama</cell><cell>Performance Texts</cell><cell><ptr target="#DR"/></cell></row>
+<row><cell>figures</cell><cell>Tables, Formulae, Figures</cell><cell><ptr target="#FT"/></cell></row>
+<row><cell>gaiji</cell><cell>Character and Glyph Documentation</cell><cell><ptr target="#WD"/></cell></row>
+<row><cell>header</cell><cell>Common Metadata</cell><cell><ptr target="#HD"/></cell></row>
+<row><cell>iso-fs</cell><cell>Feature Structures</cell><cell><ptr target="#FS"/></cell></row>
+<row><cell>linking</cell><cell>Linking, Segmentation, and Alignment</cell><cell><ptr target="#SA"/></cell></row>
+<row><cell>msdescription</cell><cell>Manuscript Description</cell><cell><ptr target="#MS"/></cell></row>
+<row><cell>namesdates</cell><cell>Names, Dates, People, and Places</cell><cell><ptr target="#ND"/></cell></row>
+<row><cell>nets</cell><cell>Graphs, Networks, and Trees</cell><cell><ptr target="#GD"/></cell></row>
+<row><cell>spoken</cell><cell>Transcribed Speech</cell><cell><ptr target="#TS"/></cell></row>
+<row><cell>tagdocs</cell><cell>Documentation Elements</cell><cell><ptr target="#TD"/></cell></row>
+<row><cell>tei</cell><cell>TEI Infrastructure</cell><cell><ptr target="#ST"/></cell></row>
+<!--row><cell>terminology</cell><cell>terminology</cell><cell><ptr target="#TE"/></cell></row-->
+<row><cell>textcrit</cell><cell>Text Criticism</cell><cell><ptr target="#TC"/></cell></row>
+<row><cell>textstructure</cell><cell>Default Text Structure</cell><cell><ptr target="#DS"/></cell></row>
+<row><cell>transcr</cell><cell>Transcription of Primary Sources</cell><cell><ptr target="#PH"/></cell></row>
+<row><cell>verse</cell><cell>Verse</cell><cell><ptr target="#VE"/></cell></row>
+</table>
+
+</p>
+
+<p>For each module listed above, the corresponding chapter gives a
+full description of the classes, elements, and macros
+which it makes available when it is included in a schema. Other
+chapters of these Guidelines explore other aspects of using the TEI
+scheme.</p>
+</div>
+
+
+<div type="div2" xml:id="STIN"><head>Defining a TEI Schema</head>
+
+<p>To determine that an XML document is valid (as opposed to merely
+well-formed), its structure must be checked against a schema, as
+discussed in chapter <ptr target="#SG"/>. For a valid TEI document,
+this schema must be a conformant TEI schema, as further defined in
+chapter <ptr target="#CF"/>.  Local systems may allow their schema to
+be implicit, but for interchange purposes the schema associated with a
+document  <emph>must</emph> be made explicit. The method of doing this
+recommended by these Guidelines is to provide explicitly or by
+reference a TEI schema specification against which the document may be
+validated.</p>
+
+<p>A TEI-conformant schema is a specific combination of TEI modules,
+possibly also including additional declarations that modify the
+element and attribute declarations contained by each module, for
+example to suppress or rename some elements. The TEI provides an
+application-independent way of specifying a TEI schema by means of the
+<gi>schemaSpec</gi> element defined in chapter <ptr target="#TD"/>. The same system may also be used to specify a schema
+which extends the TEI by adding new elements explicitly, or by
+reference to other XML vocabularies. In either case, the specification
+may be processed to generate a formal schema, expressed in a variety
+of specific schema languages, such as XML DTD language, RELAX NG, or
+W3C Schema. These output schemas can then be used by an XML processor
+such as a validator or editor to validate or otherwise process
+documents. Further information about the processing of a TEI formal
+specification is given in chapter <ptr target="#USE"/>.</p>
+
+<div type="div3" xml:id="STINsimpleExample"><head>A Simple Customization</head>
+<p>The simplest customization of the TEI scheme combines just the
+four recommended modules mentioned above. In ODD format, this schema
+specification takes this form:
+ <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
+<schemaSpec ident="TEI-minimal" start="TEI">
+  <moduleRef key="tei"/>
+  <moduleRef key="header"/>
+  <moduleRef key="core"/>
+  <moduleRef key="textstructure"/>
+</schemaSpec>
+</egXML></p>
+<p>This schema specification contains references to each of four
+modules, identified by the <att>key</att> attribute on the
+<gi>moduleRef</gi> element. The schema specification itself is also
+given an identifier (<ident>TEI-minimal</ident>).  An ODD processor
+will generate an appropriate schema from this set of declarations,
+expressed using the XML DTD language, the ISO RELAX NG language, the
+W3C Schema language, or in principle any other adequately powerful
+schema language. The resulting schema may then be associated with the
+document instance by one of a number of different mechanisms, as
+further described in chapter <ptr target="#SG"/>.<!-- somewhere -->
+The start point (or root element) of document instances to be
+validated against the schema is specified by means of the
+<att>start</att> attribute.  Further information about the processing
+of an ODD specification is given in <ptr target="#IM"/>.
+</p>
+<!--
+<p>The same effect might be obtained by means of a RELAX NG
+schema like the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+include "tei.rnc" 
+include "core.rnc"
+include "header.rnc"
+include "textstructure.rnc"
+start = TEI 
+</egXML>
+which combines the declarations from the filenames specified to form a
+schema with the given start point.</p>
+<p>The same effect might be obtained in a DTD processing environment
+by prefixing the document with a <term>DOCTYPE declaration</term> like the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI
+PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei.dtd" [
+      <!ENTITY % TEI.header 'INCLUDE' >
+      <!ENTITY % TEI.core 'INCLUDE' >
+      <!ENTITY % TEI.textstructure 'INCLUDE' >
+]>]]></egXML>
+This uses an indirect method of nominating the DTD schema fragments
+from which the DTD is to be constructed, based on the use of parameter
+entities, as further discussed in section <ptr target="#STPE"/>.
+</p> -->
+</div>
+
+<div type="div3" xml:id="STINlargerExample"><head>A Larger Customization</head>
+
+<p>These Guidelines introduce each of the modules making up the TEI
+scheme one by one, and therefore, for clarity of exposition, each
+chapter focusses on elements drawn from a single module. In reality,
+of course, the markup of a text will draw on elements taken from many
+different modules, partly because texts are heterogenous objects, and
+partly because encoders have different goals. Some examples of this
+heterogeneity include:
+<list type="simple">
+<item>a text may be a collection of other texts of different types:
+for example,
+an anthology of prose, verse, and drama;</item>
+<item>a text may contain other smaller, embedded texts: for example, a poem
+or song included in a prose narrative;</item>
+<item>some sections of a text may be written in one form, and others
+in a different form: for example, a novel where some chapters are in prose,
+others take the form of dictionary entries, and still others the form of
+scenes in a play; </item>
+<item>an encoded text may include detailed analytic annotation, for
+example of rhetorical or linguistic features; </item>
+<item>an encoded text may combine a literal transcription with a
+diplomatic edition of the same or different sources; </item>
+<item>the description of a text may require additional specialised metadata
+elements, for example when describing manuscript material in detail.</item> 
+</list></p>
+
+<p>The TEI provides mechanisms to support all of these and many other
+use cases. The architecture permits elements and attributes from any
+combination of modules to co-exist within a single schema. Within
+particular modules, elements and attributes are provided to support
+differing views of the <soCalled>granularity</soCalled> of a text, for
+example:
+<list type="simple">
+<item>a definition of a corpus or collection as a series of
+<gi>TEI</gi>
+documents, sharing a common TEI header (see chapter <ptr target="#CC"/>)</item>
+<item>a definition of composite texts which combine optional front-
+and back-matter with a group of collected texts, themselves possibly
+composite (see section <ptr target="#DSGRP"/>)</item>
+<item>an element for the representation of  <term>embedded
+texts</term>, where one narrative appears to
+<soCalled>float</soCalled> within another (see section <ptr target="#DSFLT"/>)</item></list></p>
+<p>Subsequent chapters of these Guidelines describe in detail markup
+constructs appropriate for these and many other possible features of
+interest. The markup constructs can be combined as needed for any
+given set of applications or project.</p> 
+
+<p>For example, a project aiming to produce an ambitious digital
+edition of a collection of manuscript materials, to include detailed
+metadata about each source, digital images of the content, along with
+a detailed transcription of each source, and a supporting biographical
+and geographical database might need a schema combining several
+modules, as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="TEI-PROJECT" start="TEI">
+  <moduleRef key="tei"/>
+  <moduleRef key="header"/>
+  <moduleRef key="core"/>
+  <moduleRef key="textstructure"/>
+  <moduleRef key="msdescription"/> <!-- manuscript description -->
+  <moduleRef key="transcr"/> <!-- transcription of primary sources -->
+  <moduleRef key="figures"/> <!-- figures and tables -->
+  <moduleRef key="namesdates"/> <!-- names, dates, people, and places -->
+</schemaSpec></egXML></p>
+
+<p>Alternatively, a simpler schema might be used for a part of such a
+project: those preparing the transcriptions, for example, might need
+only elements from the <ident type="module">core</ident>, <ident type="module">textstructure</ident>, and <ident type="module">transcr</ident> modules, and might therefore  prefer to
+use a simpler schema such as that
+generated by the following:
+ <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="TEI-TRANSCR" start="TEI">
+  <moduleRef key="tei"/>
+  <moduleRef key="core"/>
+  <moduleRef key="textstructure"/>
+  <moduleRef key="transcr"/>
+</schemaSpec></egXML>
+</p>
+
+<p>The TEI architecture also supports more detailed customization
+beyond the simple selection of modules. A schema may suppress elements
+from a module, suppress some of their attributes, change their names, 
+or even add new elements and attributes. Detailed discussion of the
+kind of modification possible in this way is provided in <ptr target="#MD"/> and conformance rules relating to their application are
+discussed in <ptr target="#CF"/>. These facilities are available for
+any schema language (though some features may not be available in all
+languages). The ODD language also makes it possible to combine TEI and
+non-TEI modules into a single schema, provided that the non-TEI module
+is expressed using the RELAX NG schema language (see further <ptr target="#ST-aliens"/>).</p>
+</div>
+</div>
+
+
+<div type="div2" xml:id="STEC"><head>The TEI Class System</head>
+
+<p>The TEI scheme distinguishes about five hundred different elements.
+To aid comprehension, modularity, and modification, the majority of
+these elements are formally classified in some way.  Classes are used
+to express two distinct kinds of commonality among elements.  The
+elements of a class may share some set of attributes, or they may
+appear in the same locations in a content model.  A class is known as
+an <term>attribute class</term> if its members share attributes, and
+as a <term>model class</term> if its members appear in the same
+locations. In either case, an element is said to <term>inherit</term>
+properties from any classes of which it is a member.  </p>
+
+<p>Classes (and therefore elements which are members of those classes)
+may also inherit properties from other classes. For example, supposing
+that class A is a member (or a <term>subclass</term>) of class B, any
+element which is a member of class A will inherit not only the
+properties defined by class A, but also those defined by class B. In
+such a situation, we also say that class B is a
+<term>superclass</term> of class A. The properties of a 
+superclass are inherited by all members of its subclasses.
+ </p>
+
+<!--
+<p>In the RELAX NG fragments which express the TEI scheme, attribute
+and model classes are represented by patterns whose names begin with
+<ident>att.</ident> or <ident>model.</ident> respectively. The same
+names are used in the XML DTD fragments for the parameter entities
+used to implement the class system.
+ </p>
+
+<p>In both cases, the <ident type="module">tei</ident> module provides
+an appropriate initial declaration for the class, so that it can
+subsequently be referenced, either by a subclass, or by someone
+wishing to extend the class with a new element. In the TEI DTD
+fragments, each class is fully defined by its associated parameter
+entity declaration; in the RELAX NG schema fragment, each class is
+incrementally defined as each element declaration modifies the initial
+pattern provided by the TEI infrastructure module.</p>
+-->
+
+<p>A basic understanding of the classes into which the TEI scheme is
+organized is strongly recommended and is essential for any successful
+customization of the system.</p>
+
+
+
+<div type="div2" xml:id="STECAT"><head>Attribute Classes</head>
+
+<p>An attribute class groups together elements which share some set of
+common attributes.  Attribute classes are given names beginning
+<code>att.</code> and are usually adjectival. For example, the members
+of the class <ident type="class">att.canonical</ident> have in common a
+<att>key</att> and a <att>ref</att> attribute, both of which are
+inherited from their membership in the class rather than individually
+defined for each element.  These attributes are said to be defined by
+(or inherited from) the <ident type="class">att.canonical</ident>
+class. If another element were to be added to the TEI scheme for which
+these attributes were considered useful, the simplest way to provide
+them would be to make the new element a member of the <ident
+type="class">att.canonical</ident> class. Note also that this method
+ensures that the attributes in question are always defined in the same
+way, taking the same default values etc., no matter which element they
+are attached to.</p>
+
+<p>Some attribute classes are defined within the <ident type="module">tei</ident> infrastructural module and are thus globally
+available. Other attribute classes are specific to particular modules
+and thus defined in other chapters. Attributes defined by such classes
+will not be available unless the module concerned is included in a
+schema.</p>
+
+<p>The attributes provided by an attribute class are those specified
+by the class itself, either directly, or by inheritance from another
+class. For example, the attribute class <ident type="class">att.pointing.group</ident> provides attributes
+<att>domains</att> and <att>targFunc</att> to all of its members. This
+class is however a subclass of the <ident type="class">att.pointing</ident> class, from which its members also
+inherit the attributes <att>type</att> and <att>evaluate</att>.
+Members of the class <ident type="class">att.pointing</ident> will
+thus have these two attributes, while members of the class <ident type="class">att.pointing.group</ident> will have all four.</p>
+
+
+<p>Note that some modules define superclasses of an existing
+infrastructural class.  For example, the global attribute class <ident type="class">att.divLike</ident> makes attributes <att>org</att>,
+<att>part</att>, and <att>sample</att> available, while the <ident type="class">att.metrical</ident> class, which is specific to the
+<ident type="module">verse</ident> module, provides attributes
+<att>met</att>, <att>real</att>, and <att>rhyme</att>. Because <ident type="class">att.metrical</ident> is defined as a superclass of <ident type="class">att.divLike</ident>, all six of these attributes are
+available to elements; the declaration for <ident type="class">att.metrical</ident> adds its three attributes to the
+three already defined by <ident type="class">att.divLike</ident> when
+the <ident type="module">verse</ident> module is included in a
+schema. If, however, this module is not included in a schema, then the
+<ident type="class">att.divLike</ident> elements supplies only the
+three attributes first mentioned.</p>
+
+
+<p>Attributes specific to particular modules are documented along with
+the relevant module rather than in the present chapter. One particular
+attribute class, known as <ident type="class">att.global</ident>, is
+common to all modules, and is therefore described in some detail in
+the next section. A full list of all attribute classes is given in
+<ptr target="#REF-CLASSES-ATTS"/> below.
+</p>
+
+<div type="div2" xml:id="STGA"><head>Global Attributes</head>
+
+<p>The following attributes are defined for every TEI element.
+
+<specList><specDesc key="att.global" atts="xml:id n xml:lang rend rendition xml:base"/></specList>
+ </p>
+
+<p>These attributes are optionally available for any TEI element; none
+of them is required.<!--may be given values for <att>xml:id</att>, <att>n</att>,
+<att>xml:lang</att>, <att>rend</att>, or <att>rendition</att>, simply by
+specifying values for these attributes.
+The following two examples convey the same information about the text:
+that the material transcribed occurs within a <gi>p</gi> element
+(paragraph).  They differ only in that the second provides an identifier
+for the paragraph, to which other elements (e.g. notes or hypertext
+links) can conveniently refer.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>If to do were as easy as to know what were
+good to do, chapels had been churches and poor men's cottages
+princes' palaces.  It is a good divine that follows his own
+instructions ...</p></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><p xml:id="mv1.2.5">If to do were as easy as to know what were
+good to do, chapels had been churches and poor men's cottages
+princes' palaces.  It is a good divine that follows his own
+instructions ...</p></egXML>-->
+<!-- Merchant of Venice, I.ii, speech 5 (Portia)              -->
+</p>
+
+<div xml:id="STGAid"><head>Element Identifiers and Labels</head>
+
+  <p>The value supplied for the <att>xml:id</att> attribute must be a
+  legal <term>name</term>, as defined in the World Wide
+  Web Consortium's <ref target="http://www.w3.org/TR/REC-xml">XML
+  Recommendation</ref>. This means that it must begin with a letter,
+  or the underscore character (<q>_</q>), and contain no characters
+  other than letters, digits, hyphens, underscores, full stops, and
+  certain combining and extension characters.<note place="foot">The
+  colon is also by default a valid name character; however, it has a
+  specific purpose in XML (to indicate namespace prefixes), and may
+  not therefore be used in any other way within a name.</note></p>
+  <p>In XML names (and thus the values of <att>xml:id</att> in an XML TEI
+	document) uppercase and lowercase letters are distinguished, and
+	thus <mentioned>partTime</mentioned> and
+	<mentioned>parttime</mentioned> are two distinctly different
+	names, and could (though perhaps unwisely) be used to denote two
+	different element occurrences.</p>
+  <p>If two elements are given the same identifier, a validating XML
+  parser will signal a syntax error. The following example, therefore,
+  is <emph>not</emph> valid: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#STGA-eg-4">&lt;p
+  xml:id="PAGE1"&gt;&lt;q&gt;What's it going to be then, eh?&lt;/q&gt;&lt;/p&gt;
+  &lt;p xml:id="PAGE1"&gt;There was me, that is Alex, and my three droogs,
+  that is Pete, Georgie, and Dim, ... &lt;/p&gt;</egXML>
+
+</p>
+<p>For a discussion of methods of providing unique identifiers for
+elements, see section <ptr target="#CORS2"/>.</p>
+<p>The <att>n</att> attribute also provides an identifying name or number for an
+element, but in this case the information need not be a legal
+<att>xml:id</att> value.  Its value may be any string of characters;
+typically it is a number or other similar enumerator or label.  For
+example, the numbers given to the items of a numbered list may be
+recorded with the <att>n</att> attribute; this would make it possible to
+record errors in the numeration of the original, as in this list of
+chapters, transcribed from a faulty original in which the number 10 is
+used twice, and 11 is omitted:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><list type="ordered">
+  <item n="1">About These Guidelines</item>
+  <item n="2">A Gentle Introduction to SGML</item>
+  <item n="9">Verse</item>
+  <item n="10">Drama</item>
+  <item n="10">Spoken Materials </item>
+  <item n="12">Print Dictionaries</item>
+</list></egXML>
+The <att>n</att> attribute may also be used to record non-unique names
+associated with elements in a text, possibly together with a unique
+identifier as in the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#STGA-eg-6"><div type="Book" n="One" xml:id="TXT0101"><!-- ... -->
+<div type="stanza" n="xlii">
+<!-- ... -->
+</div>
+</div></egXML>
+ </p>
+<p>As noted above there is no requirement to record a value for either
+the <att>xml:id</att> or the <att>n</att> attribute. Any XML processor
+can identify the sequential position of one element within another in
+an XML  document without any additional tagging. An encoding in
+which each line of a long poem is explicitly labelled with its numerical
+sequence such as
+the following
+ <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><l n="1"><!-- ... --></l>
+<l n="2"><!-- ... --></l>
+<l n="3"><!-- ... --></l>
+<!-- ... -->
+<l n="100"><!-- ... --></l>
+</egXML> is therefore probably redundant.</p>
+</div>
+<div xml:id="STGAla"><head>Language Indicators</head>
+
+<p>The <att>xml:lang</att> attribute indicates the natural language
+and writing system applicable to the content of a given element.  If
+it is not specified, the value is inherited from that of the
+immediately enclosing element. As a rule, therefore, it is simplest to
+specify the base language of the text on the <gi>TEI</gi> element, and
+allow most elements to take the default value for <att>xml:lang</att>;
+the language of an element then need be explicitly specified only for
+elements in languages other than the base language. For this reason,
+it is recommended practice to supply a default value for the xml:lang
+attribute, either on the <gi>TEI</gi> root element, or on both the
+<gi>teiHeader</gi> and the <gi>text</gi> element. The latter is
+appropriate in the not uncommon case where the text element in a TEI
+document uses a different default language from that of the TEI Header
+attached to it. Other language shifts in the source should be explicitly
+identified by use of the <att>xml:lang</att> attribute on an element
+at an appropriate level wherever possible. </p>
+<p>In the following example schematic, an English language TEI header is
+attached to an English language text:
+ <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
+<TEI xml:lang="eng">
+<teiHeader >
+  <!-- ... -->
+</teiHeader>
+<text>
+<!-- ... -->
+</text></TEI></egXML>
+</p>
+<p>The same effect would be obtained by specifying the default
+language for both header and text:
+ <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
+<TEI>
+<teiHeader  xml:lang="eng">
+  <!-- ... -->
+</teiHeader>
+<text  xml:lang="eng">
+<!-- ... -->
+</text></TEI></egXML>
+</p>
+<p>The latter approach is necessary in the case where the two differ:
+for example, where an English language header is applied to a French
+text:
+ <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
+<TEI>
+<teiHeader  xml:lang="eng">
+  <!-- ... -->
+</teiHeader>
+<text  xml:lang="fra">
+<!-- ... -->
+</text></TEI></egXML>
+</p>
+<p>The same principle applies at any hierarchic level. In the
+following example, the default language of the text is
+French, but one section of it is in German:
+ <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
+<TEI>
+<teiHeader  xml:lang="eng">
+  <!-- ... -->
+</teiHeader>
+<text  xml:lang="fra">
+<body>
+<div>
+ <!-- chapter one is in French -->
+</div>
+<div xml:lang="deu">
+ <!-- chapter two is in German -->
+</div>
+<div>
+ <!-- chapter three is French -->
+</div>
+<!-- ... -->
+</body>
+</text></TEI></egXML>
+</p>
+
+<p>Similarly, in the following example the <att>xml:lang</att>
+attribute on the <gi>term</gi> element allows us to record the fact
+that the technical terms used are Latin rather than English; no
+<att>xml:lang</att> attribute is needed on the <gi>q</gi> element, by
+contrast, because it is in the same language as its parent.  <egXML
+xmlns="http://www.tei-c.org/ns/Examples" corresp="#STGA-eg-10"><p
+xml:lang="en">The constitution declares <q>that no bill of attainder
+or <term xml:lang="la">ex post facto</term> law shall be passed.</q>
+...</p></egXML>
+</p>
+<p>The values used for the <att>xml:lang</att> attribute must be
+constructed in a particular way, using values from standard lists. See
+further <ptr target="#CHSH"/>.</p>
+<p>Additional information  about a particular language
+may be supplied in the <gi>language</gi> element within the header (see
+section <ptr target="#HD41"/>).</p>
+</div>
+<div xml:id="STGAre"><head>Rendition Indicators</head>
+<p>The <att>rend</att> attribute is used to give information about the
+physical presentation of the text in the source.  In the following
+example, it is used to indicate that both the emphasized word and the
+proper name are printed in italics:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#STGA-eg-11"><p> ... Their motives <emph rend="italics">might</emph> be
+ pure and pious; but he was equally alarmed by his knowledge
+ of the ambitious <name rend="italics">Bohemond</name>, and
+ his ignorance of the Transalpine chiefs: ...</p></egXML>
+<!-- Gibbon, Decline and Fall, chapter 58, para beginning     -->
+	<!-- 'In some Oriental tale I have read ...', p. 391 of       -->
+	<!-- Britannica edition.                                      -->
+	<!--  ... played fast and loose with by LB for pedagogic purposes -->
+	<!-- Shame, shame.                                            -->
+If all or most <gi>emph</gi> and <gi>name</gi> elements are rendered in
+the text by italics, it will be more convenient to register that fact in
+the TEI header once and for all (using the <gi>rendition</gi> element
+discussed below) and specify a <att>rend</att> value
+only for any elements which deviate from the stated rendition.
+ </p>
+<p>Although the contents of the <att>rend</att> attribute are free
+text, in any given project, encoders are advised to adopt a
+standard vocabulary with which to describe typographic or manuscript
+rendition of the text.</p>
+<p>The  <gi>rendition</gi>
+element defined in <ptr target="#HD57"/> may be used to hold such
+descriptions, expressed in free text, or using a formal language. A
+<gi>rendition</gi> element can then be associated with any element,
+either by default, or by means of the global <att>rendition</att>
+attribute. For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"> 
+<!-- define italic style using CSS -->
+
+<rendition xml:id="IT" scheme="css">font-style: italic</rendition>
+<!-- set italic style as default for the emph and hi elements -->
+   <tagUsage gi="emph" render="#IT"/>
+   <tagUsage gi="hi" render="#IT"/>
+<!-- indicate that a specific p element is also in italic style -->
+   <p rendition="#IT"/>
+</egXML>
+</p>
+<p>The <att>rendition</att> attribute always points to one or more
+<gi>rendition</gi> elements, each of which defines some aspect of the
+rendering or appearance of the text in its original form. These
+details may be described using a formal language, such as CSS (<ptr target="#CSS1"/>) or XSL-FO (<ptr target="#XSL11"/>); <!--ref
+target="http://www.w3.org/Style/CSS">Cascading Style Sheets</ref>
+(CSS) or <ref target="http://www.w3.org/TR/xsl/">Extensible Stylesheet
+Language</ref> (XSL-FO);--> in some other formal language developed for a
+specific project; or informally in running prose. Although languages
+such as CSS and XSL-FO are generally used to describe document output
+to screen or print, they nonetheless provide formal and precise
+mechanisms for describing the appearance of many source documents,
+especially print documents, but also many aspects of manuscript
+documents. For example, both CSS and XSL-FO provide mechanisms for
+describing typefaces, weight, and styles; character
+and line spacing; and so on.</p>
+<p>If both <att>rendition</att> and <att>rend</att> attributes are
+provided for a given element, the latter always takes precedence.
+<!--The combination of the global <att>rendition</att> and
+<att>rend</att> attributes provide a robust system for describing
+rendition information for source documents. --> The
+<att>rendition</att> attribute is analogous to the X/HTML
+<att>class</att> attribute, which references style declarations in a
+Cascading Style Sheet. The <att>rend</att> attribute is analogous to
+the XHTML or HTML <att scheme="XHTML">style</att> attribute, which
+provides a mechanism for embedding inline rendition information at the
+point of use within a document. Note that, in either case, the TEI
+attributes describe the rendition or appearance of the source
+document, <emph>not</emph> intended output renditions, although often
+the two may be closely related.  </p>
+
+<specGrp xml:id="DSTECAT" n="Attribute classes">
+
+
+&att.ascribed;
+&att.canonical;
+&att.ranging; <!-- must come before att.dimensions -->
+&att.dimensions; <!-- must come before att.damaged -->
+&att.damaged;
+&att.datable.w3c;
+&att.datable;
+&att.declarable;
+&att.declaring;
+&att.divLike;
+&att.duration.w3c;
+&att.duration;
+&att.editLike;
+&att.global;
+&att.handFeatures;
+&att.internetMedia;
+&att.interpLike;
+&att.measurement;
+&att.naming;
+&att.placement;
+&att.segLike;
+&att.sourced;
+&att.spanning;
+&att.tableDecoration;
+&att.timed;
+&att.transcriptional;
+&att.translatable;
+&att.typed;
+&att.xmlspace;
+
+
+
+</specGrp>
+</div>
+</div>
+</div>
+
+<div type="div2" xml:id="STECCM"><head>Model Classes</head>
+
+<p>As noted above, the members of a given TEI model class share the
+property that they can all appear in the same location within a
+document. Wherever possible, the content model of a TEI element is
+expressed not directly in terms of specific elements, but indirectly
+in terms of particular model classes. This makes content models
+simpler and more consistent; it also makes them much easier to
+understand and to modify.</p>
+
+<p>Like attribute classes, model classes may have subclasses or
+superclasses.  Just as elements inherit from a class the ability to
+appear in certain locations of a document (wherever the class can
+appear), so all members of a subclass inherit the ability to appear
+wherever any superclass can appear. To some extent, the class system
+thus provides a way of reducing the whole TEI galaxy of elements
+into a tidy hierarchy. This is however not entirely the case.</p>
+
+<p>In fact, the nature of a given class of elements can be considered
+along two dimensions: as noted, it defines a set of places where the
+class members are permitted within the document hierarchy; it also
+implies a semantic grouping of some kind. For example, the very large
+class of elements which can appear within a paragraph comprises a
+number of other classes, all of which have the same structural
+property, but which differ in their field of application. Some are
+related to highlighting, while others relate to names or places, and so
+on. In some cases, the <soCalled>set of places where class members
+are permitted</soCalled> is very constrained: it may just be within
+one specific element, or one class of element, for example. In other
+cases, elements may be permitted to appear in very many places, or in
+more than one such set of places.</p>
+
+<p>These factors are reflected in the way that model classes are
+named. If a model class has a name containing <val>part</val>, such as
+<ident type="class">model.divPart</ident> or <ident type="class">model.biblPart</ident> then it is primarily defined in
+terms of its structural location. For example, those elements (or
+classes of element) which appear as content of a <gi>div</gi>
+constitute the <ident type="class">model.divPart</ident> class; those
+which appear as content of a <gi>bibl</gi> constitute the <ident type="class">model.biblPart</ident> class. If, however, a model class
+has a name containing <val>like</val>, such as <ident type="class">model.biblLike</ident> or <ident type="class">model.nameLike</ident>, the implication is that its
+members all have some additional semantic property in common, for
+example containing a bibliographic description, or containing some
+form of name, respectively. These semantically-motivated classes often
+provide a useful way of dividing up large structurally-motivated
+classes: for example, the very general structural class <ident type="class">model.pPart.data</ident> (<soCalled>data elements that
+form part of a paragraph</soCalled>) has four semantically-motivated
+member classes (<ident type="class">model.addressLike</ident>, <ident type="class">model.dateLike</ident>, <ident type="class">model.measureLike</ident>, and <ident type="class">model.nameLike</ident>), the last of these being itself a
+superclass with three members.</p>
+
+<p>Although most classes are defined by the <ident type="module">tei</ident> infrastructure module, a class cannot be
+populated unless some other specific module is included in a schema,
+since element declarations are contained by modules. Classes are not
+declared <soCalled>top down</soCalled>, but instead gain their members
+as a consequence of individual elements' declaration of their
+membership. The same class may therefore contain different members,
+depending on which modules are active. Consequently, the content
+model of a given element (being expressed in terms of model classes)
+may differ depending on which modules are active.
+</p>
+
+<p>Some classes contain only a single member, even when all modules
+are loaded. One reason for declaring such a class is to make it easier
+for a customization to add new member elements in a specific place,
+particularly in areas where the TEI does not make fully elaborated
+proposals. For example, the TEI class <ident type="class">model.rdgLike</ident>, initially empty, is expanded by
+the <ident type="module">textcrit</ident> module to include just the
+TEI <gi>rdg</gi> element. A project wishing to add an alternative way
+of structuring text-critical information could do so by defining their
+own elements and adding it to this class.</p>
+
+<p>Another reason for declaring single-member classes is where the
+class members are not needed in all documents, but appear in the same
+place as elements which are very frequently required. For example, the
+specialised element <gi>g</gi> used to represent a non-Unicode
+character or glyph is provided as the only member of the <ident type="class">model.gLike</ident> class when the <ident type="module">gaiji</ident> module is added to a schema.  References
+to this class are included in almost every content model, since if it
+is used at all the <gi>g</gi> must be available wherever text is
+available; however these references  have no effect unless the gaiji
+module is loaded.</p>
+
+<p>At the other end of the scale, a few of the classes predefined by
+the tei module are subsequently populated with very many members. For
+example, the class <ident type="class">model.pPart</ident> groups all
+the classes of element which can appear within a <gi>p</gi> or
+paragraph element. The <ident type="module">core</ident> module alone adds more than fifty elements
+to this class; the <ident type="module">namesdates</ident> module adds another twenty, as does the
+<ident type="module">tagdocs</ident> module. Since the <gi>p</gi> element is one of the basic
+building blocks of a TEI document it is not surprising that each
+module will need to add elements to it. The class system here provides
+a very convenient way of controlling the resulting
+complexity. Typically, elements are not added directly to these very
+general classes, but via some intermediate semantically-motivated
+class.
+</p>
+
+<p>Just as there are a few classes which have a single member, so
+there are some classes which are used only once in the TEI
+architecture. These classes, which have no superclass and therefore do
+not fit into the class hierarchy defined here, are a convenient way of
+maintaining elements which are highly structured internally, but which
+appear from the outside to be uniform objects like others at the same
+level.<note place="foot">In former editions of these Guidelines, such
+elements were known metaphorically as
+<soCalled>crystals</soCalled>.</note> Members of such classes can only
+ever appear within one element, or one class of elements. For example,
+the class <ident type="class">model.addrPart</ident> is used only to
+express the content model for the element <gi>address</gi>; it
+references some other classes of elements, which can appear elsewhere,
+and also some elements which can only appear inside an address.</p>
+
+<div xml:id="STBTC"><head>Basic Model Classes</head>
+
+<p>The TEI class system makes the following threefold
+division of elements:
+<list type="gloss">
+<label><term>divisions</term></label>
+
+<item>high level, possibly self-nesting, major divisions of
+texts. These elements populate the classes <ident type="class">model.divLike</ident>, <ident type="class">model.div1Like</ident>, etc.</item>
+
+<label><term>chunks</term> </label>
+<item>elements such as paragraphs and other paragraph-level elements,
+which can appear directly within texts or within such divisions, but
+not within other chunks. These elements populate the class
+<ident type="class">model.divPart</ident>,  either directly or by
+means of other classes such as <ident type="class">model.pLike</ident>
+(paragraph-like elements), <ident type="class">model.entryLike</ident>, etc.</item>
+
+<label><term>phrase-level elements</term> </label>
+<item>elements such as highlighted phrases, book titles, or editorial
+corrections which can occur only within chunks (paragraphs or
+paragraph-level elements), but not between them (and thus cannot
+appear directly within a division). These elements populate the class
+<ident type="class">model.phrase</ident>.<note place="foot">Note that in this
+context, <term>phrase</term> means any string of characters, and can
+apply to individual words, parts of words, and groups of words
+indifferently; it does not refer only to linguistically-motivated
+phrasal units.  This may cause confusion for readers accustomed to
+applying the word in a more restrictive sense.</note></item>
+</list>
+</p>
+<p>The TEI identifies the following fundamental groupings
+derived from these three:
+<list type="gloss">
+<label><term>inter-level elements</term></label>
+<item>elements such as lists, notes, quotations, etc. which can appear
+either between chunks (as children of a <gi>div</gi>) or within them;
+these elements populate the class <ident type="class">model.inter</ident>. Note that this class is
+not a superset of the <ident type="class">model.phrase</ident> and
+<ident type="class">model.chunk</ident> classes but rather
+the group of elements which are both chunk-like and phrase-like; the
+classes <ident type="class">model.phrase</ident>, <ident type="class">model.pLike</ident>, and <ident type="class">model.inter</ident> are all
+disjoint.</item>
+
+<label><term>components</term>
+</label>
+<item>elements which can appear directly within texts or text
+divisions; this is a combination of the inter- and chunk- level
+elements defined above. These elements populate the class <ident type="class">model.common</ident>, which is defined as a superset
+of the classes <ident type="class">model.divPart</ident>, <ident type="class">model.inter</ident>, and (when the dictionary module is
+included in a schema) <ident type="class">model.entryLike</ident>.</item></list> Broadly speaking,
+the front, body, and back of a text each comprises a series of
+components, optionally grouped into divisions.
+ </p>
+
+<p>As noted above, some elements and element classes belong to none of
+these groupings; however, over two-thirds of the 500+ elements defined
+in the present edition of these Guidelines are classified in this
+way. Future editions of these recommendations will extend and develop
+this classification scheme.</p>
+
+<p>A complete alphabetical list of all model classes is provided 
+in <ptr target="#REF-CLASSES-MODEL"/>.</p>
+
+
+<!-- all model class declarations: nb order is critical -->
+<!-- inline things -->
+
+&model.nameLike.agent;
+
+
+&model.segLike;
+
+
+&model.hiLike;
+
+
+&model.emphLike;
+
+
+&model.highlighted;
+
+
+&model.dateLike;
+
+&model.dimLike;
+&model.measureLike;
+
+
+&model.egLike;
+
+
+&model.graphicLike;
+
+&model.offsetLike;
+
+
+&model.pPart.msdesc;
+  
+&model.pPart.editorial;
+ 
+&model.pPart.transcriptional;
+&model.pPart.edit;
+ 
+&model.ptrLike;
+  
+&model.lPart;
+&model.global.meta;
+ 
+&model.milestoneLike;
+ 
+&model.gLike;
+&model.oddDecl;
+&model.oddRef;
+&model.phrase.xml;
+&model.specDescLike;
+<!-- inter level -->&model.biblLike;
+&model.handDescPart;
+&model.headLike;
+&model.labelLike;
+&model.listLike;
+&model.noteLike;
+&model.lLike;
+&model.pLike;
+  <!-- used by model.divPart -->
+&model.stageLike;
+&model.featureVal.complex;
+&model.featureVal.single;
+&model.entryPart;
+&model.entryPart.top;
+&model.global.edit;
+&model.global.spoken;
+&model.divPart;
+&model.persTraitLike;
+&model.persStateLike;
+&model.persEventLike;
+&model.personLike;
+&model.personPart;
+&model.placeTraitLike;&model.placeNamePart;
+    
+&model.placeStateLike;
+ &model.placeEventLike;
+&model.publicationStmtPart;
+&model.glossLike;
+&model.quoteLike;
+&model.qLike;
+&model.rdgLike;
+&model.respLike;
+&model.divWrapper;
+&model.divTopPart;&model.divTop;
+&model.frontPart.drama;
+&model.pLike.front;
+&model.divBottomPart;
+&model.divBottom;
+&model.titlepagePart;&model.msQuoteLike;
+&model.msItemPart;
+&model.choicePart;
+&model.recordingPart;
+ <!-- in TS-->
+&model.imprintPart;
+&model.catDescPart;
+&model.settingPart;
+&model.textDescPart;
+&model.castItemPart;
+&model.physDescPart;&model.addressLike;
+&model.nameLike;
+&model.global;
+&model.featureVal;
+&model.biblPart;
+&model.frontPart;
+<!--<p>These classes refer only to level 1 or to primitive lowlevel
+classes or to elements</p>-->&model.addrPart;
+ 
+&model.pPart.data;
+&model.inter;
+  
+&model.common;
+ <!-- needs model.inter -->&model.phrase;
+&model.limitedPhrase;&model.divLike;
+&model.divGenLike;
+&model.div1Like;
+&model.div2Like;
+&model.div3Like;
+&model.div4Like;
+&model.div5Like;
+&model.div6Like;
+&model.div7Like;
+</div>
+</div>
+</div>
+<div type="div2" xml:id="STmacros"><head>Macros</head><p>The infrastructure module defined by this chapter also declares a
+number of <term>macros</term>, or shortcut names for frequently
+occurring parts of other declarations. Macros are used in two ways in
+the TEI scheme: to stand for frequently-encountered content models, or
+parts of content models (<ptr target="#STECST"/>); and to stand for
+attribute datatypes (<ptr target="#DTYPES"/>).<!--Macros are implemented
+as patterns in the RELAX NG schema fragments, and as parameter
+entities in the XML DTD fragments.--></p>
+<div type="div3" xml:id="STECST"><head>Standard Content Models</head>
+<p>As far as possible, the TEI schemas use the following set of
+frequently-encountered content models to help achieve consistency among
+different elements.
+<specList>
+<specDesc key="macro.paraContent"/>
+<specDesc key="macro.limitedContent"/>
+<specDesc key="macro.phraseSeq"/>
+<specDesc key="macro.phraseSeq.limited"/>
+<specDesc key="macro.schemaPattern"/>
+<specDesc key="macro.specialPara"/>
+<specDesc key="macro.xtext"/>
+</specList>
+</p>
+<p>The present version of the TEI Guidelines includes some 500
+different elements.<ptr target="#tab-content-models"/> shows, in
+descending order of frequency, the seven most commonly used content
+models.<table xml:id="tab-content-models" rend="display">
+<row role="label"><cell>Content model</cell><cell>Number of elements using
+this</cell><cell>Description</cell></row>
+<row><cell>macro.phraseSeq</cell><cell>83</cell><cell>any combination
+of text with elements from the <ident type="class">model.gLike</ident>, <ident type="class">model.global</ident>, or
+<ident type="class">model.phrase</ident> classes</cell></row>
+<row><cell>macro.paraContent</cell><cell>49</cell><cell>macro.phraseSeq
+with the addition of <ident type="class">model.inter</ident></cell></row>
+<row><cell>empty</cell><cell>39</cell><cell> elements that have no content</cell></row>
+<row><cell>macro.specialPara</cell><cell>24</cell><cell>macro.paraContent
+with the addition of <ident type="class">model.divPart</ident></cell></row>
+<row><cell>macro.phraseSeq.limited</cell><cell>24</cell><cell>a subset
+of <ident type="class">model.phraseSeq</ident> appropriate for use in non-transcriptional
+contexts</cell></row>
+<row><cell>text</cell><cell>21</cell><cell>plain untagged text</cell></row>
+<row><cell>macro.xtext</cell><cell>19</cell><cell>any combination of
+text with elements from the <ident type="class">model.gLike</ident> class </cell></row></table></p><specGrp>
+&macro.paraContent;&macro.limitedContent;&macro.phraseSeq;&macro.phraseSeq.limited;&macro.specialPara;&macro.xtext;
+</specGrp>
+ </div>
+<div type="div3" xml:id="DTYPES"><head>Datatype Macros</head>
+<p>The values which attributes may take in a TEI schema are defined,
+for the most part, by reference to a TEI <term>datatype</term>. Each
+such datatype is defined in terms of other primitive datatypes,
+derived mostly from <ref target="http://www.w3.org/TR/xmlschema-2/">W3C Schema Datatypes</ref>, literal values, or other datatypes. This indirection
+makes it possible for a TEI application to set constraints either
+globally or in individual cases, by redefining the datatype definition
+or the reference to it respectively. In some cases, the TEI datatype
+includes additional usage constraints which cannot be enforced by
+existing schema languages, although a TEI-compliant processor should
+attempt to validate them (see further discussion in chapter <ptr target="#CF"/>).</p>
+<p>Where literal values or name tokens are used in a datatype
+definition, an associated value list supplies definitions for the
+significance of suggested or (in the case of closed lists) all
+possible values.</p>
+<!-- but can we put a valList in a macroSpec ? -->
+<p>TEI-defined datatypes may be grouped into those which define
+normalised values for numeric quantities, probabilities, or temporal
+expressions,   those which
+define various kinds of shorthand codes or keys, and those which
+define pointers or links.</p><p>The following datatypes are used for attributes which are intended
+to hold normalized values of various kinds. First, expressions of
+quantity or probability:
+<specList>
+<specDesc key="data.certainty"/> 
+<specDesc key="data.probability"/>
+<specDesc key="data.numeric"/>
+<specDesc key="data.count"/>
+</specList>
+</p><p>Examples of attributes using the <ident type="datatype">data.probability</ident> datatype include
+<att>degree</att> on <gi>damage</gi> or <gi>certainty</gi>; examples
+of <ident type="datatype">data.numeric</ident> include
+<att>quantity</att> on members of the <ident type="class">att.measurement</ident> class or <att>value</att> on
+<gi>numeric</gi>; examples of <ident type="datatype">data.count</ident> include <att>cols</att> on
+<gi>cell</gi> and <gi>table</gi>.</p><specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DTYPES-1" n="Numeric Datatypes"><!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.certainty;
+ <!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.probability;
+<!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.numeric;
+<!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.count;</specGrp><p>Next, the datatypes used for attributes which are intended to hold
+normalized dates or times, durations, or truth values:
+<specList>
+<specDesc key="data.duration.w3c"/>
+<specDesc key="data.duration.iso"/>
+<specDesc key="data.temporal.w3c"/>
+<specDesc key="data.temporal.iso"/>
+<specDesc key="data.truthValue"/>
+<specDesc key="data.xTruthValue"/>
+<specDesc key="data.language"/>
+<specDesc key="data.sex"/>
+</specList>
+</p><p>Note that in each of these cases the values used are those
+recommended by existing international standards: ISO 8601 as profiled
+by <title>XML Schema Part 2: Datatypes Second Edition</title> in the
+case of durations, times, and date; W3C Schema datatypes in the case
+of truth values; BCP 47 in the case of language; and ISO 5218 in the
+case of sex.</p><specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DTYPES-2" n="Normalised Datatypes"><!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.temporal.w3c;
+<!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.duration.w3c;
+<!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.truthValue;
+<!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.xTruthValue;
+<!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.language;
+<!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.sex;</specGrp><p>The following datatypes have more specialised uses:
+<specList>
+<specDesc key="data.outputMeasurement"/>
+<specDesc key="data.namespace"/>
+<specDesc key="data.pattern"/> <!-- only one usage -->
+<specDesc key="data.pointer"/>
+</specList>
+</p>
+<specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DTYPES-3" n="Notation and pointer datatypes"><!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.namespace;
+<!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.outputMeasurement;
+<!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.pattern;
+<!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.pointer;</specGrp><p>By far the largest number of TEI attributes take values which are
+coded values or names of some kind. These values may be constrained or
+defined in a number of different ways, each of which is given a
+different name, as follows:
+<specList>
+<specDesc key="data.key"/> 
+<specDesc key="data.word"/>
+<specDesc key="data.name"/>
+<specDesc key="data.enumerated"/>
+<specDesc key="data.code"/>
+</specList>
+</p><p>The attribute <att>key</att> provided by the <ident type="class">att.canonical</ident> class is currently the only attribute
+of type <ident type="datatype">data.key</ident>. It is used to supply
+an externally-defined identifier, such as a database key or
+filename. Because such identifiers are externally-defined, no
+constraints are placed on their possible values: any string of Unicode
+characters may be used. Any constraints on their values, such as the
+rules for constructing a valid database key in a particular system,
+may be documented by a <gi>tagUsage</gi> element in the TEI Header,
+but are not enforced by the datatype as defined here. Such
+system-specific constraints may however be added to a TEI schema by
+using the customisation techniques methods described in <ptr target="#MD"/>.</p><p>Attributes of type <ident type="datatype">data.word</ident>, such
+as <att>age</att> on <gi>person</gi>, are used to supply an identifier
+expressed as any kind of single token or word. The TEI places a few
+constraints on the characters which may be used for this purpose: only
+Unicode characters classified as letters, digits, punctuation
+characters, or symbols can appear in an attribute value of this
+kind. Note in particular that such values cannot include whitespace
+characters. Legal values include <val>cholmondeley</val>,
+<val>été</val>, <val>1234</val>, <val>_content</val>, or
+<val>xml:id</val>, but not <val>grand wazoo</val>. Attributes of this
+kind are sometimes used to associate (by co-reference) elements of
+different types.</p><p>Attributes of type <ident type="datatype">data.name</ident> are
+also words in this sense, but they have the additional constraint that
+they must be legal XML identifiers, as defined by the XML 1.0
+specification, or successors. As such, they may not begin with digits
+or punctuation characters. Legal identifiers include
+<val>cholmondeley</val>, <val>été</val>, <val>e_content</val>, or
+<val>xml:id</val>, but not <val>grand wazoo</val> or
+<val>1234</val>. Attributes of this kind are typically used to
+represent XML element or attribute names.</p><p>Attributes of type <ident type="datatype">data.enumerated</ident>,
+such as <att>new</att> on <gi>shift</gi> or <att>evidence</att>
+supplied by <ident type="class">att.editLike</ident>, have the same
+definition as <ident type="datatype">data.word</ident> above, with the
+added constraint that the word supplied is taken from a specific list
+of possibilities. In each case, the element or class specification
+which includes the definition for the attribute will also contain a
+list of possible values, together with a prose description of their
+intended significance.  This list may be open (in which case the list
+is advisory), or closed (in which case it determines the range of
+legal values). In this latter case, the datatype will not be
+<ident type="datatype">data.enumerated</ident>, but an explicit list of the possible values.</p>
+<p>Attributes of type <ident type="datatype">data.code</ident> are
+similar in function, in that they also supply encoded names for values
+which are defined in more detail elsewhere.  In this case, however,
+the full definition is supplied as content of another XML element,
+typically but not necessarily in the same document, and it is
+referenced by means of a pointer.</p><specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DTYPES-4" n="Coded value datatypes">
+&data.key;
+<!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.word;
+<!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.code;
+<!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.name;
+<!--Copyright 2005 TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$$Id$
+-->
+&data.enumerated;</specGrp>
+<p>An attribute may, of course, take more than one value of a given type,
+for example a list of pointer values, or a list of words. In the TEI
+scheme, this information is regarded as a property of the
+<gi>datatype</gi> element used to document the attribute in question
+rather than as a distinct <soCalled>datatype</soCalled>. See further
+<ptr target="#TD-datatypes"/>.</p>
+</div>
+</div><div type="div2" xml:id="STOV"><head>The TEI Infrastructure Module</head><p>The <ident type="module">tei</ident> module defined by this chapter
+is a required component of any TEI schema. It provides declarations
+for all datatypes, and initial declarations for the attribute classes,
+model classes, and macros used by other modules in the TEI scheme. Its
+components are listed below in alphabetical order:<moduleSpec xml:id="DSTTEI2" ident="tei" type="core">
+<altIdent type="FPI">TEI Infrastructure</altIdent>
+<desc>Declarations for classes, datatypes, and macros available to all
+TEI modules</desc>
+<desc xml:lang="fr">Infrastructure de la TEI</desc>
+<desc xml:lang="zh-tw">所有TEI模組可用的元素集、資料類型、巨集指令之宣告</desc>
+<desc xml:lang="it">Dichiarazione di classi, tipi di dati (datatype)e macro
+disponibili in tutti i moduli TEI</desc><desc xml:lang="pt">Declaraçoes de classes, tipos de dados, e macros disponíveis em todos os módulos  TEI </desc><desc xml:lang="ja">全TEIモジュールで使用可能なデータ型，クラス，マクロ．</desc></moduleSpec>
+</p><p>The order in which declarations are made within the
+infrastructure module is critical, since several class declarations
+refer to others, which must therefore precede them. Other constraints
+on the order of declarations derive from the way in which the
+modularity of the TEI scheme is implemented in different schema
+languages. The XML DTD fragment implementing this TEI module makes
+extensive use of <term>parameter entities</term> and <term>marked
+sections</term> to effect a kind of conditional construction; the
+RELAX NG schema fragment similarly predeclares a number of patterns
+with null (<soCalled>notAllowed</soCalled>) values. These issues
+are further discussed in chapter <ptr target="#IM"/>.</p><!--
+<p>The RELAX NG schema fragment corresponding to this module  is
+organized as follows:<list>
+<item>Declare default values for predeclared classes</item>
+<item>Declare initial values for all classes</item>
+<item>Declare all macros</item>
+</list>
+</p>
+<p>The XML DTD schema fragment corresponding to this module is
+organized as follows:
+<list>
+<item>Declare naming entities for all elements to permit renaming (see
+ <ptr target="#STPEGI"/>).</item>
+<item>Declare any user-supplied entity declarations (see
+ <ptr target="#STOVLO"/>).</item>
+<item>Declare all available datatype macro declarations (see <ptr target="#DTYPES"/>)</item>
+<item>Declare all <soCalled>pre-declared</soCalled> classes and macros
+</item>
+<item>Declare conditionally available module-specific classes (see
+<ptr target="#STPED"/>).</item>
+<item>Embed any user-supplied element declarations (see
+further <ptr target="#STOVLO"/>).  </item>
+<item>Embed conditionally available module-specific declarations (see
+further <ptr target="#STPED"/>).</item>
+</list>
+Note that several of these components are automatically generated by the
+ODD processor, as further discussed in chapter <ptr target="#IM"/>.
+</p>
+-->
+</div></div>

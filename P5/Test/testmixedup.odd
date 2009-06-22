@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+     n="testmixedup">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>TEI with mixedup setup</title>
+            <author>Sebastian Rahtz</author>
+         </titleStmt>
+         <publicationStmt>
+	   <p> </p>
+	 </publicationStmt>
+         <sourceDesc>
+            <p>authored from scratch</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+<text>
+<body>
+<divGen type="toc"/>
+<div>
+<head>My Mixedup Schema</head>
+<p>Here is the introduction to your document</p>
+  <p>Here is the schema:</p>
+    <schemaSpec ident="testmixedup" start="TEI" ns="">
+      <moduleRef key="header"/>
+      <moduleRef key="core"/>
+      <moduleRef key="tei"/>
+      <moduleRef key="textstructure"/>
+      <elementSpec ident="p" mode="change">
+	<classes>
+	  <memberOf key="model.encodingPart"/>
+	</classes>
+	<attList>
+	  <attDef ident="design">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	</attList>
+      </elementSpec> 
+      <elementSpec mode="change" ident="TEI" module="textstructure">
+	<altIdent>bncDoc</altIdent> 
+      </elementSpec>
+      <elementSpec ident="specification"
+		   ns="http://www.xaira.org/ns/1.0/spec">
+	<classes>
+	  <memberOf key="model.encodingPart"/>
+	</classes> 
+	<content>
+	  <rng:text/>
+	</content>
+	<attList>
+	  <attDef ident="xml:id" mode="add" usage="req"> 
+	    <datatype>
+	      <rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="ID"/>
+	    </datatype>
+	  </attDef>
+	</attList>
+      </elementSpec>
+    </schemaSpec>
+</div>
+</body>
+</text>
+</TEI>
+
+
+

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="linking" xml:id="PTRGROUP" type="atts" ident="att.pointing.group">
+  <desc>defines a set of attributes common to all elements which
+  enclose groups of pointer elements.</desc>
+  <desc version="2007-12-20" xml:lang="kr">포인터 요소군을 포함하는 모든 요소에 공통적인 속성 집합을 정의한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">定義一組屬性，通用於所有包含指標元素群組的元素。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  ポインタとなる要素に共通の属性を示す．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">définit un ensemble d'attributs communs à tous les éléments qui contiennent des groupes d'éléments pointeurs.</desc>
+  <desc version="2007-05-04" xml:lang="es">define un conjunto de atributos comunes a todos los elementos que incluyen grupos de indicadores.</desc>
+  <desc version="2007-01-21" xml:lang="it">definisce un insieme di attributi comuni a tutti gli elementi che includono gruppi di puntatori</desc>
+  <classes>
+    <memberOf key="att.pointing"/>
+  </classes>
+  <attList>
+    <attDef ident="domains" usage="opt">
+      <equiv/>
+      <desc>optionally specifies the identifiers of the elements
+      within which all elements indicated by the contents of this
+      element lie.</desc>
+      <desc version="2007-12-20" xml:lang="kr">이 요소 내용에 의해 지시된 모든 요소에 대한 확인소를 수의적으로 명시한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">標明元素的識別符碼 (但非必備) ，此元素內容所指明的元素皆包含於這些元素當中。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      当該要素の中にある全要素を対象とした識別子を選択的に指定する．
+      </desc>
+      <desc version="2007-06-12" xml:lang="fr">spécifie, facultativement, les identifiants des éléments englobant tous les éléments indiqués par le contenu de cet élément.</desc>
+      <desc version="2007-05-04" xml:lang="es">establece facultativamente los identificadores de elementos al interno de los cuales se encuentran todos los elementos indicados de los contenidos del elemento en cuestión.</desc>
+      <desc version="2007-01-21" xml:lang="it">stabilisce facoltativamente gli identificatori di elementi all'interno dei quali si trovano tutti gli elementi indicati dai contenuti dell'elemento in questione</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <rng:ref name="data.name"/>
+      </datatype>
+      <valDesc>a list of at least two generic identifier names,
+      separated by whitespace.</valDesc>
+      <valDesc xml:lang="fr">une liste d'au moins deux noms génériques d'identifiant, séparés par un espace.</valDesc>
+      <remarks>
+        <p>If this attribute is supplied every element specified as a
+	target must be contained within the element or elements
+	named by it. An application may choose whether or not to
+	report failures to satisfy this constraint as errors, but may
+	not access an element of the right identifier but in the wrong
+	context. If this attribute is not supplied, then target
+	elements may appear anywhere within the target document.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>Si cet attribut est utilisé, tout élément spécifié comme étant une cible doit
+                        être contenu dans l'élément ou les éléments qu'il nomme. Une application
+                        peut choisir de faire apparaître en erreur, ou non, les entorses à cette
+                        contrainte mais ne peut pas accéder à un élément qui aurait le bon
+                        identifiant mais se trouverait dans le mauvais contexte. Si cet attribut
+                        n'est pas utilisé, les éléments cibles peuvent apparaître n'importe où dans
+                        le document cible.</p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p>
+	当該属性が付与されている場合，参照先の要素は全て，当該要素また
+	は参照先の要素中になければならない．
+	ソフトウェアは，この制約に違反した場合にエラーを返すかどうかを
+	選択できるかもしれないが，識別子は正しくとも間違った文脈乳にあ
+	る要素にはアクセスできないかもしれない．
+	当該属性が付与されていない場合，参照先の要素は，参照された文書
+	中のどこにあってもよい．
+	</p>
+      </remarks>
+    </attDef>
+    <attDef ident="targFunc" usage="opt">
+      <gloss>target function</gloss>
+      <gloss version="2007-12-20" xml:lang="kr">대상 기능</gloss>
+      <gloss version="2008-04-06" xml:lang="es">función meta</gloss>
+      <gloss version="2008-03-30" xml:lang="fr">fonction cible</gloss>
+      <gloss version="2007-11-06" xml:lang="it">funzione obiettivo</gloss>
+      <desc>describes the function of each of the values of the
+      <att>targets</att> attribute of the enclosed <gi>link</gi>,
+      <gi>join</gi>, or <gi>alt</gi> tags.</desc>
+      <desc version="2007-12-20" xml:lang="kr"><gi>link</gi>, <gi>join</gi> 또는 <gi>alt</gi> 태그의 <att>link</att> 속성 값 각각에 대한 기능을 기술한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">描述每個元素標籤<gi>link</gi>、<gi>join</gi>、或<gi>alt</gi>當中的屬性<att>targets</att>的屬性值功能。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      要素<gi>link</gi>, <gi>join</gi>, <gi>alt</gi>に付与された属性
+    <att>targets</att>の値の機能を示す．
+    </desc>
+      <desc version="2007-06-12" xml:lang="fr">décrit la fonction de chacune des valeurs de
+          l'attribut <att>targets</att> pour les balises incluses <gi>link</gi>, <gi>join</gi>, ou
+          <gi>alt</gi>.</desc>
+      <desc version="2007-05-04" xml:lang="es">describe la función de cada uno de los valores del atributo <att>targets</att> (metas) de los marcadores correspondientes <gi>link</gi>, <gi>join</gi>, o <gi>alt</gi>.</desc>
+      <desc version="2007-01-21" xml:lang="it">descrive la funzione di ognuno dei valori dell'attributo <att>targets</att> dei marcatori corrispondenti <gi>link</gi>,
+      <gi>join</gi>, o <gi>alt</gi></desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <rng:ref name="data.word"/>
+      </datatype>
+      <valDesc>a list of at least two valid names, separated by whitespace.</valDesc>
+      <valDesc xml:lang="fr">une liste d'aumoins deux noms valides, séparés par un espace.</valDesc>
+      <remarks>
+        <p>The number of separate values must match the number of
+        values in the <att>targets</att> attribute in the enclosed
+        <gi>link</gi>, <gi>join</gi>, or <gi>alt</gi> tags (an
+        intermediate <gi>ptr</gi> element may be needed to accomplish
+        this). It should also match the number of values in the
+        <att>domains</att> attribute, of the current element, if one
+        has been specified.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>Le nombre de valeurs distinctes doit correspondre au nombre de valeurs dans
+                        l'attribut <att>targets</att> des balises incluses <gi>link</gi>,
+                        <gi>join</gi> ou <gi>alt</gi> (un élément intermédiaire <gi>ptr</gi> peut
+                        être nécessaire dans ce cas). Il devrait également correspondre au nombre de
+                        valeurs se trouvant dans l'attribut <att>domains</att> de l'élément en
+                        question, si un tel attribut a été spécifié.</p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p>
+	当該値は，要素<gi>link</gi>, <gi>join</gi>, <gi>alt</gi>に付与
+    されている属性<att>targets</att>の値と一致しなければならない
+    (属性<gi>ptr</gi>は，中間的な存在で，ここでの手法を補うために必要
+    になるかもしれない)．また，当該要素に属性<att>targType</att>,
+    <att>domains</att>が付与されている場合には，その値とも一致する必要
+    がある．
+    </p>
+      </remarks>
+    </attDef>
+  </attList>
+  <listRef>
+    <ptr target="#SA"/>
+  </listRef>
+</classSpec>

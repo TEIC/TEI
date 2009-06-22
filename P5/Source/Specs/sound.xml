@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="drama" ident="sound">
+  <equiv/>
+  <gloss version="2007-06-12" xml:lang="fr">son</gloss>
+  <desc>describes a sound effect or musical sequence specified within a screen play or radio script.</desc>
+  <desc version="2007-12-20" xml:lang="kr">시나리오 또는 라디오 스크립트에서 지정된 효과음 또는 음악을 기술한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">描述電影或廣播劇本中的音效或配樂。</desc>
+  <desc version="2008-04-06" xml:lang="es">describe un efecto sonoro o una secuencia musical
+    especificada dentro de una obra teatral o de un programa radiofónico.</desc>
+  <desc version="2008-04-05" xml:lang="ja"> 音響効果，すなわち脚本や台本で指定されている一連の音を示す． </desc>
+  <desc version="2007-06-12" xml:lang="fr">décrit un effet sonore ou un morceau de musique indiqué
+    dans un scénario pour le cinéma ou la radio.</desc>
+  <desc version="2007-01-21" xml:lang="it">descrive un effetto sonoro o una sequenza musicale
+    descritti in una sceneggiatura o di un copione radiofonico.</desc>
+  <classes>
+    <memberOf key="model.stageLike"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+      <equiv/>
+      <desc>categorizes the sound in some respect, e.g. as music, special effect, etc.</desc>
+      <desc version="2007-12-20" xml:lang="kr">어떤 측면에서 음향을 분류한다. 예, 음악, 특수 효과음 등.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">將聲音從某方面來分類，例如音樂，特殊音效等。</desc>
+      <desc version="2008-04-06" xml:lang="es">categoriza el sonido en algún aspecto, p.ej. como
+        música, efecto especial, etc.</desc>
+      <desc version="2008-04-05" xml:lang="ja"> 当該音を分類する．例えば，音楽，特殊効果など． </desc>
+      <desc version="2007-06-12" xml:lang="fr">caractérise le son, par exemple : musique, effets
+        spéciaux, etc.</desc>
+      <desc version="2007-01-21" xml:lang="it">classifica il tipo di suono, ad esempio musica,
+        effetto speciale, ecc.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+    </attDef>
+    <attDef ident="discrete" usage="opt">
+      <equiv/>
+      <desc>indicates whether the sound overlaps the surrounding speeches or interrupts them.</desc>
+      <desc version="2007-12-20" xml:lang="kr">음향이 주변 대사와 겹치거나 이를 방해하는지를 표시한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">指出該聲音是否和週遭說話聲音重疊或單獨穿插於其間。</desc>
+      <desc version="2008-04-06" xml:lang="es">indica si el sonido solapa los discursos circundantes
+        o los interrumpe.</desc>
+      <desc version="2008-04-05" xml:lang="ja"> 当該音が周囲の発話にかぶっているか，または会話を遮っているかを示 す． </desc>
+      <desc version="2007-06-12" xml:lang="fr">indique si le son couvre les dialogues ou les
+        interrompt.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica se il suono si accavalla con le battute o se
+        le interrompe</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
+      </datatype>
+      <defaultVal>unknown</defaultVal>
+      <remarks>
+        <p>The value <val>true</val> indicates that the sound is heard between the surrounding
+          speeches; the value <val>false</val> indicates that the sound overlaps one or more of the
+          surrounding speeches.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>La valeur <val>true</val> indique que le son est entendu entre les dialogues ; la valeur
+            <val>false</val> indique que le son se superpose à un ou à plusieurs de ces
+        dialogues.</p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p> 属性値<val>true</val>は，当該音が会話の合間に聞こえることを示 す．属性値<val>false</val>は，当該音が，周囲の会話中にも聞こえ ていることを示す．
+        </p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <sp>
+        <speaker>Benjy</speaker>
+        <p>Now to business.</p>
+      </sp>
+      <sp>
+        <speaker>Ford and Zaphod</speaker>
+        <p>To business.</p>
+      </sp>
+      <sound discrete="true">Glasses clink.</sound>
+      <sp>
+        <speaker>Benjy</speaker>
+        <p>I beg your pardon?</p>
+      </sp>
+      <sp>
+        <speaker>Ford</speaker>
+        <p>I'm sorry, I thought you were proposing a toast.</p>
+      </sp>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <sp>
+        <speaker>班吉</speaker>
+        <p>現在，說到我們的事業。</p>
+      </sp>
+      <sp>
+        <speaker>福特和薩豐</speaker>
+        <p>敬我們的事業。</p>
+      </sp>
+      <sound discrete="true">玻璃杯敲擊聲</sound>
+      <sp>
+        <speaker>班吉</speaker>
+        <p>抱歉，您說什麼？</p>
+      </sp>
+      <sp>
+        <speaker>福特</speaker>
+        <p>不好意思，我以為你說乾杯。</p>
+      </sp>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>A specialized form of stage direction.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>Une forme particulière d'indication scénique.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p> ト書きにある専門形． </p>
+  </remarks>
+  <listRef>
+    <ptr target="#DRTEC"/>
+    <ptr target="#DROTH"/>
+  </listRef>
+</elementSpec>

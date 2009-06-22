@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="HISTORY" ident="history">
+  <equiv/>
+  <gloss version="2007-06-12" xml:lang="fr">histoire</gloss>
+  <desc xml:id="history.desc"> groups elements
+describing the full history of a manuscript or manuscript part.</desc>
+  <desc version="2007-12-20" xml:lang="kr">원고 또는 원고 일부의 전체 이력을 기술하는 요소를 모아 놓는다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">匯集描述手稿或手稿部分完整歷史的元素。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  手書き資料の歴史を表す要素をまとめる．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">rassemble les éléments servant à donner un historique
+      complet du manuscrit ou d'une partie du manuscrit.</desc>
+  <desc version="2007-05-04" xml:lang="es">agrupa elementos que describen la historia completa de un manuscrito o de una de sus partes.</desc>
+  <desc version="2007-01-21" xml:lang="it">raggruppa gli elementi che descrivono la storia completa di un manoscritto o di una sua parte</desc>
+  <content>
+<!--<!ELEMENT history  - -  (p+ | (origin?, provenance*, acquisition?))>-->
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:group>
+        <rng:optional>
+          <rng:ref name="summary"/>
+        </rng:optional>
+        <rng:optional>
+          <rng:ref name="origin"/>
+        </rng:optional>
+        <rng:zeroOrMore>
+          <rng:ref name="provenance"/>
+        </rng:zeroOrMore>
+        <rng:optional>
+          <rng:ref name="acquisition"/>
+        </rng:optional>
+      </rng:group>
+    </rng:choice>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <history>
+        <origin>
+          <p>Written in Durham during the mid twelfth
+century.</p>
+        </origin>
+        <provenance>
+          <p>Recorded in two medieval
+catalogues of the books belonging to Durham Priory, made in 1391 and
+1405.</p>
+          <p>Given to W. Olleyf by William Ebchester, Prior (1446-56)
+and later belonged to Henry Dalton, Prior of Holy Island (Lindisfarne)
+according to inscriptions on ff. 4v and 5.</p>
+        </provenance>
+        <acquisition>
+          <p>Presented to Trinity College in 1738 by
+Thomas Gale and his son Roger.</p>
+        </acquisition>
+      </history>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n45">
+      <history>
+        <origin>
+          <p>最早由迦葉尊者以梵文手寫。</p>
+        </origin>
+        <provenance>
+          <p>後由菩提達摩傳給慧思禪師，再經由小野妹子於推古天皇十七年（西元609年）傳入日本。</p>
+          <p>淨嚴和尚於1694年以梵文悉曇體手寫抄錄。</p>
+          <p>穆勒（Max Muller）於1884年轉寫成天城體及羅馬拼音，傳至歐美國家。</p>
+        </provenance>
+        <acquisition>
+          <p>現收藏於東京博物館。</p>
+        </acquisition>
+      </history>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#mshy"/>
+  </listRef>
+</elementSpec>

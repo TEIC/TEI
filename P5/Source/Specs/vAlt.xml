@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="vAlt">
+  <gloss>value alternation</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">값 교체</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">替換值</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">valeur alternative</gloss>
+  <gloss version="2007-05-04" xml:lang="es">alternancia de valor</gloss>
+  <gloss version="2007-01-21" xml:lang="it">un'alterazione del valore</gloss>
+  <desc>represents the value part of a feature-value specification
+  which contains a set of values, only one of which can be valid.</desc>
+  <desc version="2007-12-20" xml:lang="kr">자질-값 명세의 값 부분으로 값은 집합이다. 그 중 단 하나만 유효한 값이다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">表示功能值細節的值部分資訊，包含一組值，僅其中一個得為有效值。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  素性値規定において，妥当なひとつの値を表す，値の部分を示す．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">représente la partie valeur d'une spécification
+      trait-valeur qui contient un jeu de valeurs, dont une seule peut être valide</desc>
+  <desc version="2007-05-04" xml:lang="es">representa la parte del valor de una especificación de valor de rasgo que contiene un conjunto de valores, de los cuales sólo uno puede ser válido.</desc>
+  <desc version="2007-01-21" xml:lang="it">rappresenta la parte di valore di una specifica del valore dei tratti che contiene un insieme di valori, dei quali uno solo può essere valido.</desc>
+  <classes>
+    <memberOf key="model.featureVal.single"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:group>
+        <rng:ref name="model.featureVal"/>
+      </rng:group>
+      <rng:oneOrMore>
+        <rng:ref name="model.featureVal"/>
+      </rng:oneOrMore>
+    </rng:group>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <f name="gender">
+        <vAlt>
+          <symbol value="masculine"/>
+          <symbol value="neuter"/>
+          <symbol value="feminine"/>
+        </vAlt>
+      </f>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#FVALT" type="div3"/>
+  </listRef>
+</elementSpec>

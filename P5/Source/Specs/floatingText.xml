@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="floatingText">
+  <equiv/>
+  <gloss version="2007-06-12" xml:lang="fr">texte mobile</gloss>
+  <desc>contains a single text of any kind, whether unitary or composite, which interrupts the text
+    containing it at any point and after which the surrounding text resumes.</desc>
+  <desc version="2007-12-20" xml:lang="kr">단일 또는 혼합이든지 간에, 어떤 지점에서 그것을 포함한 텍스트를 중단시키고 그 이후 주변 텍스트가
+    다시 시작하는 텍스트.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含一份任何種類的文本，無論是單一或複合的，該份文本任意穿插於整體文本中，而週遭文字則接續其後。</desc>
+  <desc version="2008-04-05" xml:lang="ja"> ひとつのテキストを示す．下位構造はあってもよい．当該部分はテキスト中 のどこにでも出現できる．自在テキスト． </desc>
+  <desc version="2007-11-06" xml:lang="it">contiene un unico testo di qualsiasi tipo, sia esso
+    unitario o composito, che interrompe il testo che lo contiene in un qualsiasi punto e dopo il
+    quale il testo circostante riprende</desc>
+  <desc version="2007-06-12" xml:lang="fr">contient un texte quelconque, homogène ou composite, qui
+    interrompt le texte le contenant à n’importe quel endroit et après lequel le texte environnant
+    reprend.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene un texto de cualquier tipo, unitario o
+    compuesto, que se insiere en algún punto en un texto que lo contiene interrumpiéndolo.</desc>
+  <classes>
+    <memberOf key="model.divPart"/>
+    <memberOf key="att.declaring"/>
+    <memberOf key="att.typed"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="front"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+      <rng:choice>
+        <rng:ref name="body"/>
+        <rng:ref name="group"/>
+      </rng:choice>
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="back"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:optional>
+    </rng:group>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <TEI>
+        <teiHeader> </teiHeader>
+        <text>
+          <body>
+            <div type="scene">
+              <sp>
+                <p>Hush, the players begin...</p>
+              </sp>
+              <floatingText type="pwp">
+                <body>
+                  <div type="act">
+                    <sp>
+                      <l>In Athens our tale takes place ....</l>
+                    </sp>
+                    <!-- ... rest of nested act here -->
+                  </div>
+                </body>
+              </floatingText>
+              <sp>
+                <p>Now that the play is finished ...</p>
+              </sp>
+            </div>
+          </body>
+        </text>
+      </TEI>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <TEI>
+        <teiHeader> </teiHeader>
+        <text>
+          <body>
+            <div type="scene">
+              <sp>
+                <p>快點，演員開始了...</p>
+              </sp>
+              <floatingText type="pwp">
+                <body>
+                  <div type="act">
+                    <sp>
+                      <l>故事開始於雅典...</l>
+                    </sp>
+                    <!-- ... 這裡是其他動作 -->
+                  </div>
+                </body>
+              </floatingText>
+              <sp>
+                <p>戲劇結束...</p>
+              </sp>
+            </div>
+          </body>
+        </text>
+      </TEI>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>A floating text has the same content as any other and may thus be interrupted by another
+      floating text, or contain a group of tesselated texts </p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>Un texte "flottant" a le même contenu que tout autre texte : il peut donc être interrompu par
+      un autre texte "flottant"  ou contenir un groupe de textes composites.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p> 自在テキストは，他の自在テキストと同じ内容をとったり，定まった構造 の部分としてあるテキスト(充填テキスト)をとる． </p>
+  </remarks>
+  <listRef>
+    <ptr target="#DSFLT"/>
+  </listRef>
+</elementSpec>

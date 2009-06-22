@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+  xmlns:teix="http://www.tei-c.org/ns/Examples">
+ <teiHeader>
+  <fileDesc>
+   <titleStmt>
+    <title>TEI with ODD elements</title>
+    <author>Sebastian Rahtz</author>
+   </titleStmt>
+   <publicationStmt>
+    <p> </p>
+   </publicationStmt>
+   <sourceDesc>
+    <p>authored from scratch</p>
+   </sourceDesc>
+  </fileDesc>
+ </teiHeader>
+ <text>
+  <body>
+   <schemaSpec 
+       ident="p5odds" prefix="TEI_"
+       start="TEI schemaSpec elementSpec classSpec macroSpec div">
+    <moduleRef key="header"/>
+    <moduleRef key="core"/>
+    <moduleRef key="tei"/>
+    <moduleRef key="gaiji"/>
+    <moduleRef key="namesdates"/>
+    <moduleRef key="textstructure"/>
+    <moduleRef key="tagdocs"/>
+    <moduleRef key="dictionaries"/>
+    <moduleRef key="linking"/>
+    <moduleRef key="figures"/>
+
+    <elementSpec ident="div1" module="textstructure" mode="delete"/>
+    <elementSpec ident="div2" module="textstructure" mode="delete"/>
+    <elementSpec ident="div3" module="textstructure" mode="delete"/>
+    <elementSpec ident="div4" module="textstructure" mode="delete"/>
+    <elementSpec ident="div5" module="textstructure" mode="delete"/>
+    <elementSpec ident="div6" module="textstructure" mode="delete"/>
+    <elementSpec ident="div7" module="textstructure" mode="delete"/>
+
+    <xi:include href="oddity.odd"
+		xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:body/*)">
+      <xi:fallback> ERROR: cannot locate XInclude ODD elements </xi:fallback>
+    </xi:include>
+
+
+    <elementSpec ident="gi" mode="change">
+      <attList>
+	<attDef mode="replace" ident="scheme">
+	  <valList type="closed">
+	    <valItem ident="imaginary"/>
+	    <valItem ident="extreme"><gloss>Extreme conference
+	    proceedings markup</gloss></valItem>
+	    <valItem ident="DBK"><gloss>Docbook</gloss></valItem>
+	    <valItem ident="SMIL"></valItem>
+	    <valItem ident="Schematron"></valItem>
+	    <valItem ident="HTML"></valItem>
+	    <valItem ident="SVG"></valItem>
+	  </valList>
+	</attDef>
+      </attList>
+    </elementSpec>
+
+    <elementSpec ident="biblScope" mode="change">
+      <attList>
+	<attDef mode="replace" ident="type">
+	  <valList type="closed">
+	    <valItem ident="chap"><gloss>Chapter</gloss></valItem>
+	    <valItem ident="issue"><gloss>Issue</gloss></valItem>
+	    <valItem ident="note"><gloss>Note</gloss></valItem>
+	    <valItem ident="part"><gloss>Part</gloss></valItem>
+	    <valItem ident="pp"><gloss>Pages</gloss></valItem>
+	    <valItem ident="vol"><gloss>Volume</gloss></valItem>
+	  </valList>
+	</attDef>
+      </attList>
+    </elementSpec>
+
+
+    <elementSpec ident="divGen" mode="change">
+      <attList>
+	<attDef mode="replace" ident="type">
+	  <valList type="closed">
+	    <valItem ident="attcat"><gloss>Catalogue of Attributes</gloss></valItem>
+	    <valItem ident="attclasscat"><gloss>Catalogue of Attribute Classes</gloss></valItem>
+	    <valItem ident="elementcat"><gloss> Catalogue of Elements</gloss></valItem>
+	    <valItem ident="macrocat"><gloss> Catalogue of Macros</gloss></valItem>
+	    <valItem ident="modelclasscat"><gloss>Catalogue of Model Classes</gloss></valItem>
+	    <valItem ident="toc"><gloss>Table of Contents</gloss></valItem>
+	  </valList>
+	</attDef>
+      </attList>
+    </elementSpec>
+
+    <elementSpec ident="div" mode="change">
+      <attList>
+	<attDef mode="replace" ident="type">
+	  <valList type="closed">
+	    <valItem ident="div1"/>
+	    <valItem ident="div2"/>
+	    <valItem ident="div3"/>
+	    <valItem ident="div4"/>
+	    <valItem ident="titlePageVerso"/>
+	    <valItem ident="Dedication"/>
+	    <valItem ident="section"/>
+	    <valItem ident="subsection"/>
+	    <valItem ident="subsubsection"/>
+	  </valList>
+	</attDef>
+      </attList>
+    </elementSpec>
+
+    <elementSpec ident="list" mode="change">
+      <attList>
+	<attDef mode="replace" ident="type">
+	  <valList type="closed">
+	    <valItem ident="ordered">
+	      <gloss>Numbered list</gloss>
+	    </valItem>
+	    <valItem ident="simple">
+	      <gloss>Plain list</gloss>
+	    </valItem>
+	    <valItem ident="gloss">
+	      <gloss>Glossary list</gloss>
+	    </valItem>
+	    <valItem ident="inline">
+	      <gloss>Inline list</gloss>
+	    </valItem>
+	  </valList>
+	</attDef>
+      </attList>
+    </elementSpec>
+
+    <elementSpec ident="ident" mode="change">
+      <attList>
+	<attDef mode="replace" ident="type">
+	  <valList type="closed">
+	    <valItem ident="ge">
+	      <gloss>general entity name</gloss>
+	    </valItem>
+	    
+	    <valItem ident="rng">
+	      <gloss>RELAX NG identifier</gloss>
+	    </valItem>
+	    
+	    <valItem ident="frag">
+	      <gloss>DTD fragment identifier</gloss>
+	    </valItem>
+	    
+	    <valItem ident="macro"/>
+	    <valItem ident="ns">
+	      <gloss>namespace</gloss>
+	    </valItem>
+	    
+	    <valItem ident="schema"/>
+	    
+	    <valItem ident="pe">
+	      <gloss>parameter entity name</gloss>
+	    </valItem>
+	    
+	    <valItem ident="datatype"/>
+	    
+	    <valItem ident="file"/>
+	    
+	    <valItem ident="module"/>
+	    
+	    <valItem ident="class"/>
+	    
+	  </valList>
+	</attDef>
+      </attList>
+    </elementSpec>
+
+    <elementSpec ident="exemplum" mode="change">
+      <attList>
+	<attDef mode="change" ident="xml:lang" usage="req"/>
+      </attList>
+    </elementSpec>
+
+    <elementSpec ident="idno" mode="change">
+      <attList>
+	<attDef mode="replace" ident="type">
+	  <valList type="closed">
+	    <valItem ident="doi"><gloss>Digital Object Identifier</gloss></valItem>
+	    <valItem ident="isbn"><gloss>International Standard Book Number</gloss></valItem>
+	    <valItem ident="url"><gloss>any form of web address</gloss></valItem>
+	  </valList>
+	</attDef>
+      </attList>
+    </elementSpec>
+
+   </schemaSpec>
+  </body>
+ </text>
+</TEI>

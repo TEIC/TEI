@@ -1,0 +1,25 @@
+#!/bin/sh
+lastP=1
+lastID=dummy
+texexec --pdfcopy --silent --pdfselect --selection "1:18" driver.pdf
+mv texexec.pdf prelims.pdf
+texexec --pdfcopy --silent --pdfselect --selection "19:99999" driver.pdf
+mv texexec.pdf temp.pdf
+for i in `xsltproc getdiv1s.xsl driver.fo | grep -v dedication | grep -v FM`
+do
+ P=`grep "newlabel{$i}" driver.aux \
+ | sed "s/.*$i}{{}{\([0-9]*\)}.*/\1/"`
+ endP=`expr \( $P - 1  \)`
+ startP=`expr \( $lastP   \)`
+ echo CHUNK $lastID: $startP-$endP
+ texexec --pdfcopy --silent --pdfselect --selection $startP:$endP temp.pdf
+ mv texexec.pdf $lastID.pdf
+ lastP=$P
+ lastID=$i
+done
+ endP=`expr \( $P - 1  \)`
+ startP=`expr \( $lastP   \)`
+ echo CHUNK $lastID: $startP-$endP
+ texexec --pdfcopy --silent --pdfselect --selection $startP:$endP temp.pdf
+ mv texexec.pdf $lastID.pdf
+

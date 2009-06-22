@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" ident="setting">
+  <desc>describes one particular setting in which a language
+  interaction takes place.</desc>
+  <desc version="2007-12-20" xml:lang="kr">언어 상호작용이 발생하는 특정 무대를 기술한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">描述語言互動發生的一個特定背景。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  言語交流が行われたひとつの状況設定を示す．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">précise un contexte particulier dans lequel a lieu
+      une interaction linguistique.</desc>
+  <desc version="2007-05-04" xml:lang="es">describe una realización particular en la que una interacción lingüística tiene lugar.</desc>
+  <desc version="2007-01-21" xml:lang="it">descrive la particolare ambientazione di una interazione linguistica.</desc>
+  <classes>
+    <memberOf key="att.ascribed"/>
+  </classes>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.nameLike.agent"/>
+          <rng:ref name="model.dateLike"/>
+          <rng:ref name="model.settingPart"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+    </rng:choice>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <setting>
+        <name>New York City, US</name>
+        <date>1989</date>
+        <locale>on a park bench</locale>
+        <activity>feeding birds</activity>
+      </setting>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n26">
+      <setting>
+        <name>台灣，台北</name>
+        <date>1970</date>
+        <locale>-新公園的長凳上</locale>
+        <activity>躺臥</activity>
+      </setting>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>If the <att>who</att> attribute is not supplied, the setting is
+    assumed to be that of all participants in the language
+    interaction.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>Si l'attribut <att>who</att> n'est pas fourni, le cadre est celui construit par
+                l’échange entre les interlocuteurs en présence.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p>
+    属性<att>who</att>がない場合，当該状況設定は，当該言語交流には，参
+    加者全てが関わっているとされる．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#CCAHSE"/>
+  </listRef>
+</elementSpec>

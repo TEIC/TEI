@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="keywords">
+  <equiv/>
+  <!--gloss>Keywords</gloss-->
+  <gloss version="2009-04-28" xml:lang="fr">mot-clé</gloss>
+  <desc>contains a list of keywords or phrases identifying the topic or nature of a text.</desc>
+  <desc version="2009-01-05" xml:lang="fr">contient une liste de mots-clés ou d’expressions
+    décrivant la nature ou le sujet d’un texte.</desc>
+  <desc version="2007-12-20" xml:lang="kr">텍스트의 주제 또는 특성을 식별하는 주제어 또는 구의 목록을 포함한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含標明文件主題或性質的關鍵詞或字詞列表。</desc>
+  <desc version="2008-04-05" xml:lang="ja"> テキストの話題や性格を特定するキーワードや句のリストを示す． </desc>
+  <desc version="2006-10-18" xml:lang="de">enthält Zusammenstellung von Schlüsselwörtern oder
+    –phrasen zu Art und Thematik des Textes.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene una lista de palabras clave o sintagmas que
+    identifican la temática o la naturaleza del texto.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene una lista delle parole chiave o frasi che
+    identificano l'argomento o la natura di un testo.</desc>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="term"/>
+      </rng:oneOrMore>
+      <rng:ref name="list"/>
+    </rng:choice>
+  </content>
+  <attList>
+    <attDef ident="scheme" usage="req">
+      <equiv/>
+      <desc>identifies the controlled vocabulary within which the set of keywords concerned is
+        defined. </desc>
+      <desc version="2009-01-05" xml:lang="fr">désigne la liste close de mots dans lequel l'ensemble
+        des mots-clés concernés est défini. </desc>
+      <desc version="2007-12-20" xml:lang="kr">관련 키워드 집합이 정의된 통제 어휘를 식별하며, 이 정의는 통제 어휘 내에서 수행된다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">標明相關關鍵詞所使用到的詞彙範圍。</desc>
+      <desc version="2008-04-05" xml:lang="ja"> 当該キーワードリストが定義されている統制語彙を示す． </desc>
+      <desc version="2006-10-18" xml:lang="de">gibt das festgesetzte Vokabular an, mit dem die
+        zusammengestellten Schlüsselwörter definiert sind.</desc>
+      <desc version="2007-05-04" xml:lang="es">identifican el vocabulario con el que se define el
+        conjunto de palabras clave referidas.</desc>
+      <desc version="2007-01-21" xml:lang="it">identifica il vocabolario controllato all'interno del
+        quale sono definite le parole chiave.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>Usually this will indicate an external website or other location where the scheme is
+        documented. </valDesc>
+      <valDesc xml:lang="fr">Habituellement, cela indiquera un site Web externe ou un autre
+        emplacement où le shéma est documenté. </valDesc>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <keywords scheme="http://classificationweb.net">
+        <list>
+          <item>Babbage, Charles</item>
+          <item>Mathematicians - Great Britain - Biography</item>
+        </list>
+      </keywords>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <keywords scheme="http://classificationweb.net">
+        <list>
+          <item>李白</item>
+          <item>詩人 - 唐代 - 傳記</item>
+        </list>
+      </keywords>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#HD43"/>
+  </listRef>
+</elementSpec>

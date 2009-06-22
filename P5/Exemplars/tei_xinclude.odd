@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0"
+ n="tei_xinclude">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>TEI with XInclude (experimental)</title>
+            <author>Sebastian Rahtz</author>
+         </titleStmt>
+	   <publicationStmt>
+	     <availability status="free">
+	       <p>This template file is freely available and you are
+	       hereby authorised to copy, modify, and redistribute it in
+	       any way without further reference or permissions.</p>
+	       <p>When making such modifications, you are strongly
+	       recommended to change the present text to include an
+	       accurate statement of the licencing conditions applicable
+	       to your modified text.</p>
+	     </availability>
+	   </publicationStmt>
+         <sourceDesc>
+            <p>authored from scratch</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+<text>
+<body>
+  <p>This customization loads the normal four modules, and adds the
+  <gi>include</gi> element from XInclude (see <ptr
+  target="http://www.w3.org/TR/xinclude/"/> for details on this
+  scheme). This allows you to validate TEI documents
+<emph>before</emph> XInclude processing. In general, this is not
+the right way to work, since you would normally validate after
+any inclusions have been resolved. <gi>include</gi> is set up here to
+  be allowed in the <gi>teiHeader</gi> and instead of or between
+  paragraph-like objects.</p>
+
+    <schemaSpec ident="tei_xinclude" start="TEI teiCorpus">
+      <moduleRef key="header"/>
+      <moduleRef key="core"/>
+      <moduleRef key="tei"/>
+      <moduleRef key="textstructure"/>
+      <!-- required to avoid Sanity Checker complaint -->
+      <elementSpec ident="handNote" mode="delete" module="header"/>
+      <elementSpec 
+	  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	  ident="include" 
+	  ns="http://www.w3.org/2001/XInclude" 
+	  mode="add">
+	<desc>The W3C XInclude element</desc>
+	<classes>
+	  <memberOf key="model.common"/>
+	  <memberOf key="model.headerPart"/>
+	</classes>
+	<content>
+	  <rng:optional>
+	    <rng:ref name="fallback"/>
+	  </rng:optional>
+	</content>
+	<attList>
+	  <attDef ident="href">
+	    <desc>pointer to the resource being included</desc>
+	    <datatype>
+	      <rng:ref name="data.pointer"/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="parse"  usage="opt">
+	    <defaultVal>xml</defaultVal>
+	    <valList type="closed">
+	      <valItem ident="xml"/>
+	      <valItem ident="text"/>
+	    </valList>
+	  </attDef>
+	  
+	  <attDef ident="xpointer" usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="encoding"  usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="accept" usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="accept-charset"  usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="accept-language"  usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	</attList>
+      </elementSpec>
+      
+      <elementSpec 
+	  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	  ident="fallback" 
+	  ns="http://www.w3.org/2001/XInclude" 
+	  mode="add">
+	<desc>Wrapper for fallback elements if an XInclude fails</desc>
+	<content>
+	  <rng:ref name="AnyThing"/>
+	</content>
+      </elementSpec>
+      
+      
+      
+      <macroSpec     
+	  type="pe"
+	  ident="AnyThing"
+	  mode="add">
+	<desc>Matches any element</desc>
+	<content>
+	  <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	    <choice>
+	      <element>
+		<anyName/>
+		<zeroOrMore>
+		  <attribute>
+		    <anyName>
+		      <except>
+			<name>xml:id</name>
+			<name>xml:lang</name>
+		      </except>
+		    </anyName>
+		  </attribute>
+		</zeroOrMore>
+		<ref name="AnyThing"/>
+	      </element>
+	      <text/>
+	    </choice>
+	  </zeroOrMore>
+	</content>
+      </macroSpec>
+    </schemaSpec>
+</body>
+</text>
+</TEI>
+
+
+

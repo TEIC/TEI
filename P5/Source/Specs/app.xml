@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textcrit" ident="app">
+  <equiv/>
+  <gloss>apparatus entry</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">참조 도구 표제 항목</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">學術編輯註解項目</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">entrée d'apparat critique</gloss>
+  <gloss version="2007-05-04" xml:lang="es">entrada de aparato crítico</gloss>
+  <gloss version="2007-01-21" xml:lang="it">voce dell'apparato</gloss>
+  <desc>contains one entry in a critical apparatus, with an optional
+lemma and at least one reading.</desc>
+  <desc version="2007-12-20" xml:lang="kr">수의적 레마와 적어도 하나의 독법을 포함하여 비평적 참조 도구에서 하나의 표제 항목을 포함한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">一項學術編輯註解，內含一個不必備主題以及至少一個對應本。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  校勘資料中のいち対象で，内容として少なくとも1つの読みと，選択的に見
+  出し(lemma)をとる．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">contient une entrée dans un apparat critique,
+			constituée d'un lemme facultatif et d'au moins une leçon.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene una entrada en el aparato crítico, con un lema opcional y, al menos, una lectura.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene una singola voce in un apparato critico, con un lemma facoltativo e almeno una lettura</desc>
+  <classes>
+    <memberOf key="model.pPart.transcriptional"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="lem"/>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+        <rng:optional>
+          <rng:ref name="wit"/>
+          <rng:zeroOrMore>
+            <rng:ref name="model.global"/>
+          </rng:zeroOrMore>
+        </rng:optional>
+      </rng:optional>
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:group>
+            <rng:ref name="model.rdgLike"/>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+            <rng:optional>
+              <rng:ref name="wit"/>
+              <rng:zeroOrMore>
+                <rng:ref name="model.global"/>
+              </rng:zeroOrMore>
+            </rng:optional>
+          </rng:group>
+          <rng:group>
+            <rng:ref name="rdgGrp"/>
+            <rng:zeroOrMore>
+              <rng:ref name="model.global"/>
+            </rng:zeroOrMore>
+            <rng:optional>
+              <rng:ref name="wit"/>
+              <rng:zeroOrMore>
+                <rng:ref name="model.global"/>
+              </rng:zeroOrMore>
+            </rng:optional>
+          </rng:group>
+        </rng:choice>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+      <equiv/>
+      <desc>classifies the variation contained in this element according to
+some convenient typology.</desc>
+      <desc version="2007-12-20" xml:lang="kr">다양한 유형에 따라 이 요소에 포함된 변이형을 분류한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">利用合適的分類法將此元素所標記的變異分類。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      当該要素で示される対象を分類する．
+      </desc>
+      <desc version="2007-06-12" xml:lang="fr">classifie la variation contenue dans cet
+					élément selon toute typologie adéquate.</desc>
+      <desc version="2007-05-04" xml:lang="es">clasifica la variación contenida en tal elemento según una tipología funcional</desc>
+      <desc version="2007-01-21" xml:lang="it">classifica la variazione contenuta in tale elemento secondo una tipologia funzionale</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valDesc>Any convenient descriptive word or phrase, describing the
+extent of the variation (e.g.  <mentioned>word</mentioned>, <mentioned>phrase</mentioned>,
+<mentioned>punctuation</mentioned>, etc.) its text-critical significance (e.g.
+<mentioned>significant</mentioned>, <mentioned>accidental</mentioned>, <mentioned>unclear</mentioned>), or the nature
+of the variation or the principles required to understand it (e.g.
+<mentioned>lectio difficilior</mentioned>, <mentioned>usus auctoris</mentioned>, etc.)</valDesc>
+      <valDesc xml:lang="fr">tout mot ou expression descriptif pertinent, décrivant l'étendue de la variation (par exemple  <mentioned>mot</mentioned>, <mentioned>expression</mentioned>,
+        <mentioned>ponctuation</mentioned>, etc.), son importance pour la critique textuelle (par exemple
+        <mentioned>significatif</mentioned>, <mentioned>fortuit</mentioned>, <mentioned>peu clair</mentioned>) ou la nature de la variation ou des principes nécessaires à sa compréhension
+        (par exemple <mentioned>lectio difficilior</mentioned>, <mentioned>usus auctoris</mentioned>, etc.).</valDesc>
+          </attDef>
+    <attDef ident="from" usage="opt">
+      <equiv/>
+      <desc>identifies the beginning of the lemma in the base text, if
+necessary.</desc>
+      <desc version="2007-12-20" xml:lang="kr">필요하다면 기본 텍스트에서 레마의 시작을 식별한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">必要情況下，指出基礎文件中該主題的開端。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      必要であれば，元テキストにおける対象語(lemma)の開始点を示す．
+      </desc>
+      <desc version="2007-06-12" xml:lang="fr">identifie, si nécessaire, le début du
+					lemme dans le texte de base.</desc>
+      <desc version="2007-05-04" xml:lang="es">identifica, si es necesario, el inicio del lema en el texto base</desc>
+      <desc version="2007-01-21" xml:lang="it">identifica, se necessario, l'inizio del lemma nel testo base</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>any valid identifier</valDesc>
+      <valDesc xml:lang="fr">tout identifiant valide</valDesc>
+            <remarks>
+        <p>This attribute is only used when the double-end point
+method of apparatus markup is used.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>Cet attribut n'est utilisé que si l'on emploie la méthode de balisage de
+                        l'apparat critique dite "double-end point", c'est-à-dire que l'on indique le
+                        début et la fin du bloc de texte balisé. </p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p>
+	当該属性は，校勘資料中で，両端ポイントの手法が使用されてい
+      る場合に使われる．
+       </p>
+      </remarks>
+    </attDef>
+    <attDef ident="to" usage="opt">
+      <equiv/>
+      <desc>identifies the endpoint of the lemma in the base text, if
+necessary.</desc>
+      <desc version="2007-12-20" xml:lang="kr">필요하다면 기본 텍스트에서 레마의 종료지점을 식별한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">必要情況下，指出基礎文件中該主題的結尾。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      必要であれば，元テキストにおける対象語(lemma)語の終点を示す．
+      </desc>
+      <desc version="2007-06-12" xml:lang="fr">identifie, si nécessaire, la fin du lemme
+					dans le texte de base.</desc>
+      <desc version="2007-05-04" xml:lang="es">identifica, si es necesario, el final del lema en el texto base</desc>
+      <desc version="2007-01-21" xml:lang="it">identifica, se necessario, la fine del lemma nel testo base</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>any valid identifier</valDesc>
+      <valDesc xml:lang="fr">tout identifiant valide</valDesc>
+            <remarks>
+        <p>This attribute is only used when the double-end point
+method of apparatus markup is used, with the encoded apparatus held
+in a separate file rather than being embedded <term>in-line</term> in
+the base-text file.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>Cet attribut n'est utilisé que si l'on emploie la méthode de balisage de
+                        l'apparat critique dite "double-end point", avec l'apparat encodé enregistré
+                        dans un fichier séparé plutôt qu'incorporé au fil du texte
+                        (<term>in-line</term>) dans le fichier du texte de base.</p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p>
+	当該属性は，校勘資料中で，両端ポイントの手法が使用されている場
+    合に使われる．これは，元テキストファイルの<term>テキスト列中
+    </term>に埋め込まれているのではなく，別のファイル中にある校勘
+    資料中のものである．
+    </p>
+      </remarks>
+    </attDef>
+    <attDef ident="loc" usage="mwa">
+      <gloss>location</gloss>
+      <gloss version="2007-12-20" xml:lang="kr">위치</gloss>
+      <gloss version="2008-04-06" xml:lang="es">localización</gloss>
+      <gloss version="2008-03-30" xml:lang="fr">emplacement</gloss>
+      <gloss version="2007-11-06" xml:lang="it">posizione</gloss>
+      <desc>indicates the location of the variation, when the
+location-referenced method of apparatus markup is used.</desc>
+      <desc version="2007-12-20" xml:lang="kr">참조 도구 마크업의 위치 참조 방법이 사용될 때 변이형 위치를 나타낸다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">使用學術編輯註解標記的位置參照辦法時，指出變異的位置。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      校勘資料で場所参照の手法が採られている場合，該当する異なりの場所
+    を示す．
+      </desc>
+      <desc version="2007-06-12" xml:lang="fr">indique la localisation de la variante
+					lorsqu'on utilise dans l'encodage de l'apparat critique une méthode de
+					référencement des localisations.</desc>
+      <desc version="2007-05-04" xml:lang="es">indica la posición de la variante en caso de usar el método de señalización de la posición de la variante en la codificación del aparato.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica la posizione della variante in caso di utilizzo del metodo di indicazione della posizione della variante nella codifica dell'apparato</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+      <valDesc>Any string containing a canonical reference for the passage
+      to which the variation applies.</valDesc>
+      <valDesc xml:lang="fr">Toute chaîne contenant une référence canonique du passage auquel la variation s'applique.</valDesc>
+            <remarks>
+        <p>This attribute is used only when the location-referenced
+encoding method is used.<!-- [Suppress it and use <att>from</att> instead?  -MSM]     --></p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>Cet attribut n'est utilisé que si l'on emploie la méthode de codage par
+                        référence à un emplacement ("location-referenced").</p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p>
+	当該属性は，場所参照手法が採られている場合にのみ使用される．
+	 <!-- [Suppress it and use <att>from</att> instead?  -MSM]
+    -->
+    </p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <app>
+        <lem wit="#El #Hg">Experience</lem>
+        <rdg wit="#La" type="substantive">Experiment</rdg>
+        <rdg wit="#Ra2" type="substantive">Eryment</rdg>
+      </app>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <app type="substantive">
+        <rdgGrp type="subvariants">
+          <lem wit="#El #Hg">Experience</lem>
+          <rdg wit="#Ha4">Experiens</rdg>
+        </rdgGrp>
+        <rdgGrp type="subvariants">
+          <lem wit="#Cp #Ld1">Experiment</lem>
+          <rdg wit="#La">Ex<g ref="#per"/>iment</rdg>
+        </rdgGrp>
+        <rdgGrp type="subvariants">
+          <lem>Eriment<wit>[unattested]</wit>
+  </lem>
+          <rdg wit="#Ra2">Eryment</rdg>
+        </rdgGrp>
+      </app>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain an optional lemma and one or more readings or
+reading groups, each associated with witness specifications.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p rend="dataDesc">Peut contenir un lemme facultatif et une ou plusieurs leçons ou
+                groupe de leçons, chacune associée à des spécifications de témoin.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p rend="dataDesc">
+    複数の読み，読みのまとまり，ひとつの選択的な対象語(lemma)をとる．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#TCAPEN"/>
+  </listRef>
+</elementSpec>

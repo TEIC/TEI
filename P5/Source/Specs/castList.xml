@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="drama" ident="castList">
+  <equiv/>
+  <gloss>cast list</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">배역 목록</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">角色清單</gloss>
+  <gloss version="2008-04-06" xml:lang="es">reparto</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">distribution </gloss>
+  <gloss version="2007-01-21" xml:lang="it">elenco dei personaggi</gloss>
+  <desc>contains a single cast list or dramatis personae.</desc>
+  <desc version="2007-12-20" xml:lang="kr">하나의 배역 목록 또는 드라마 등장인물을 포함한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含單一角色名單或出場人物列表。</desc>
+  <desc version="2008-04-06" xml:lang="es">contiene una única lista con los personajes del reparto.</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  ひとつの配役リストまたは配役表を示す．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">contient la distribution ou la liste des
+    personnages.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene un unico elenco dei personaggio le dramatis personae.</desc>
+  <classes>
+<!--    <memberOf key="model.divPart.stage"/>-->
+    <memberOf key="model.inter"/>
+    <memberOf key="model.frontPart.drama"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.divTop"/>
+          <rng:ref name="model.global"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:group>
+          <rng:ref name="model.common"/>
+        </rng:group>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:zeroOrMore>
+      <rng:oneOrMore>
+        <rng:choice>
+          <rng:ref name="castItem"/>
+          <rng:ref name="castGroup"/>
+        </rng:choice>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:oneOrMore>
+      <rng:zeroOrMore>
+        <rng:group>
+          <rng:ref name="model.common"/>
+        </rng:group>
+        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <castList>
+        <castGroup>
+          <head rend="braced">Mendicants</head>
+          <castItem>
+            <role>Aafaa</role>
+            <actor>Femi Johnson</actor>
+          </castItem>
+          <castItem>
+            <role>Blindman</role>
+            <actor>Femi Osofisan</actor>
+          </castItem>
+          <castItem>
+            <role>Goyi</role>
+            <actor>Wale Ogunyemi</actor>
+          </castItem>
+          <castItem>
+            <role>Cripple</role>
+            <actor>Tunji Oyelana</actor>
+          </castItem>
+        </castGroup>
+        <castItem>
+          <role>Si Bero</role>
+          <roleDesc>Sister to Dr Bero</roleDesc>
+          <actor>Deolo Adedoyin</actor>
+        </castItem>
+        <castGroup>
+          <head rend="braced">Two old women</head>
+          <castItem>
+            <role>Iya Agba</role>
+            <actor>Nguba Agolia</actor>
+          </castItem>
+          <castItem>
+            <role>Iya Mate</role>
+            <actor>Bopo George</actor>
+          </castItem>
+        </castGroup>
+        <castItem>
+          <role>Dr Bero</role>
+          <roleDesc>Specialist</roleDesc>
+          <actor>Nat Okoro</actor>
+        </castItem>
+        <castItem>
+          <role>Priest</role>
+          <actor>Gbenga Sonuga</actor>
+        </castItem>
+        <castItem>
+          <role>The old man</role>
+          <roleDesc>Bero's father</roleDesc>
+          <actor>Dapo Adelugba</actor>
+        </castItem>
+      </castList>
+      <stage type="mix">The action takes place in and around the home surgery of
+Dr Bero, lately returned from the wars.</stage>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n32">
+      <castList>
+        <castGroup>
+          <head rend="braced">楊延輝</head>
+          <castItem>
+            <role>少年楊延輝</role>
+            <actor>李少春</actor>
+          </castItem>
+          <castItem>
+            <role>中年楊延輝</role>
+            <actor>周信芳</actor>
+          </castItem>
+          <castItem>
+            <role>中年楊延輝</role>
+            <actor>譚富英</actor>
+          </castItem>
+          <castItem>
+            <role>老年楊延輝</role>
+            <actor>馬連良</actor>
+          </castItem>
+        </castGroup>
+        <castItem>
+          <role>鐵鏡公主</role>
+          <roleDesc>遼國公主，嫁楊延輝為妻</roleDesc>
+          <actor>梅蘭芳</actor>
+        </castItem>
+        <castGroup>
+          <head rend="braced">楊家兄弟</head>
+          <castItem>
+            <role>楊延昭</role>
+            <actor>馬盛龍</actor>
+          </castItem>
+          <castItem>
+            <role>楊宗保</role>
+            <actor>姜妙香</actor>
+          </castItem>
+        </castGroup>
+        <castItem>
+          <role>蕭太后</role>
+          <roleDesc>遼景宗耶律賢的皇后</roleDesc>
+          <actor>芙蓉草</actor>
+        </castItem>
+        <castItem>
+          <role>四夫人</role>
+          <actor>高玉倩</actor>
+        </castItem>
+        <castItem>
+          <role>佘太君</role>
+          <roleDesc>楊延輝的母親</roleDesc>
+          <actor>馬富祿</actor>
+        </castItem>
+      </castList>
+      <stage type="mix">場景交換於遼國廷內與飛虎峽宋營之間。</stage>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#DRCAST" type="div3"/>
+    <ptr target="#DRFAB" type="div3"/>
+  </listRef>
+</elementSpec>

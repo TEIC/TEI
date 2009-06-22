@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="MSPART" ident="msPart">
+  <gloss>manuscript part</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">원고 부분</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw"/>
+  <gloss version="2008-04-06" xml:lang="es">fragmento del manuscrito</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">partie d'un manuscrit</gloss>
+  <gloss version="2007-11-06" xml:lang="it">porzione di manoscritto</gloss>
+  <desc xml:id="mspart.desc">contains information about an originally
+distinct manuscript or part of a manuscript, now forming part of a composite manuscript.</desc>
+  <desc version="2007-12-20" xml:lang="kr">원고 원본 또는 혼합 원고의 부분을 형성하는 원고의 부분에 관한 정보를 포함한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含原為單一、現為複合手稿一部份的手稿或手稿部分的相關資訊。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  元々は別のものであったものを，新しくひとつにまとめ直された手書き資料
+  の情報を示す．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">contient des informations sur un manuscrit distinct à
+      l'origine, ou sur une partie d'un manuscrit, qui constitue actuellement une section d'un
+      manuscrit composite.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene información relativas a un manuscrito o a parte de un manuscrito originariamente distintas pero actualmente parte de un manuscrito compuesto.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene informazioni relative a un manoscritto o parte di manoscritto originariamente distinti ma attualmente parte di un manoscritto composito</desc>
+  <content>
+<!--<!ELEMENT msPart  - -  (idno?, msHeading?, msContents?, 
+                 physDesc?, history?,  additional?, 
+                 msPart*)> -->
+    <rng:group>
+      <rng:ref name="altIdentifier"/>
+      <rng:zeroOrMore>
+        <rng:ref name="model.headLike"/>
+      </rng:zeroOrMore>
+      <rng:choice>
+        <rng:oneOrMore>
+          <rng:ref name="model.pLike"/>
+        </rng:oneOrMore>
+        <rng:group>
+          <rng:optional>
+            <rng:ref name="msContents"/>
+          </rng:optional>
+          <rng:optional>
+            <rng:ref name="physDesc"/>
+          </rng:optional>
+          <rng:optional>
+            <rng:ref name="history"/>
+          </rng:optional>
+          <rng:optional>
+            <rng:ref name="additional"/>
+          </rng:optional>
+          <rng:zeroOrMore>
+            <rng:ref name="msPart"/>
+          </rng:zeroOrMore>
+        </rng:group>
+      </rng:choice>
+    </rng:group>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <msDesc>
+        <msIdentifier>
+          <settlement>Amiens</settlement>
+          <repository>Bibliothèque Municipale</repository>
+          <idno>MS 3</idno>
+          <msName>Maurdramnus Bible</msName>
+        </msIdentifier>
+<!-- other elements here -->
+        <msPart>
+          <altIdentifier>
+            <idno>MS 6</idno>
+          </altIdentifier>
+<!-- other information specific to this part here -->
+        </msPart>
+<!-- more parts here -->
+      </msDesc>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#mspt"/>
+  </listRef>
+</elementSpec>

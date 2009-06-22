@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="attDef">
+  <equiv/>
+  <gloss>attribute definition</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">속성 정의</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">屬性定義</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">définition d'attribut</gloss>
+  <gloss version="2007-05-04" xml:lang="es">definición de atributo</gloss>
+  <gloss version="2007-01-21" xml:lang="it">definizione di attributo</gloss>
+  <desc>contains the definition of a single attribute.</desc>
+  <desc version="2007-12-20" xml:lang="kr">단일 속성 정의를 포함한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含單一屬性的定義。</desc>
+  <desc version="2008-04-05" xml:lang="ja"> 1つの属性の定義を示す． </desc>
+  <desc version="2007-06-12" xml:lang="fr">contient la définition d'un attribut.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene la definición de un único atributo.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene la definizione di un unico attributo</desc>
+  <classes>
+    <memberOf key="att.identified"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="model.glossLike"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="datatype"/>
+      </rng:optional>
+      <rng:zeroOrMore>
+        <rng:ref name="constraintSpec"/>
+      </rng:zeroOrMore>
+      <rng:optional>
+        <rng:ref name="defaultVal"/>
+      </rng:optional>
+      <rng:optional>
+        <rng:choice>
+          <rng:ref name="valList"/>
+          <rng:oneOrMore>
+            <rng:ref name="valDesc"/>
+          </rng:oneOrMore>
+        </rng:choice>
+      </rng:optional>
+      <rng:zeroOrMore>
+        <rng:ref name="exemplum"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="remarks"/>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content>
+  <attList>
+    <attDef ident="usage" usage="opt">
+      <equiv/>
+      <desc>specifies the optionality of an attribute or element. </desc>
+      <desc version="2007-12-20" xml:lang="kr">속성 또는 요소의 수의성을 명시한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">說明屬性或元素的必備性。</desc>
+      <desc version="2008-04-05" xml:lang="ja"> 属性または要素の選択性を示す． </desc>
+      <desc version="2007-06-12" xml:lang="fr">précise qu'un attribut ou un élément sont
+        facultatifs.</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica el caracter opcional de un atributo o un
+        elemento</desc>
+      <desc version="2007-01-21" xml:lang="it">indica il carattere facoltativo di un attributo o
+        elemento</desc>
+      <defaultVal>opt</defaultVal>
+      <valList type="closed">
+        <valItem ident="req">
+          <equiv/>
+          <gloss>required</gloss>
+          <gloss version="2008-04-05" xml:lang="ja">必須．</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">requis</gloss>
+          <gloss version="2007-11-06" xml:lang="it">richiesto</gloss>
+          <gloss version="2007-05-04" xml:lang="es">requerido</gloss>
+	  <gloss xml:lang="zh-tw">必備的</gloss>
+        </valItem>
+        <valItem ident="mwa">
+          <equiv/>
+          <gloss>mandatory when applicable </gloss>
+          <gloss version="2008-04-05" xml:lang="ja">可能であれば，必須．</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">obligatoire si c'est applicable</gloss>
+          <gloss version="2007-11-06" xml:lang="it">obbligatorio se rilevante</gloss>
+          <gloss version="2007-05-04" xml:lang="es">obligatorio cuando es pertinente</gloss>
+        </valItem>
+        <valItem ident="rec">
+          <equiv/>
+          <gloss>recommended </gloss>
+	  <gloss xml:lang="zh-tw">推薦的</gloss>
+          <gloss version="2008-04-05" xml:lang="ja">推奨．</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">recommandé</gloss>
+          <gloss version="2007-11-06" xml:lang="it">consigliato</gloss>
+          <gloss version="2007-05-04" xml:lang="es">recomendado</gloss>
+        </valItem>
+        <valItem ident="rwa">
+          <equiv/>
+          <gloss>recommended when applicable </gloss>
+          <gloss version="2008-04-05" xml:lang="ja">可能であれば，推奨．</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">recommandé si c'est applicable</gloss>
+          <gloss version="2007-11-06" xml:lang="it">consigliato se rilevante</gloss>
+          <gloss version="2007-05-04" xml:lang="es">recomendado cuando es pertinente</gloss>
+	  <gloss xml:lang="zh-tw">可應用時必備的</gloss>
+	</valItem>
+        <valItem ident="opt">
+          <equiv/>
+          <gloss>optional </gloss>
+          <gloss version="2008-04-05" xml:lang="ja">選択的．</gloss>
+          <gloss version="2007-06-12" xml:lang="fr">facultatif</gloss>
+          <gloss version="2007-11-06" xml:lang="it">facoltativo</gloss>
+	  <gloss version="2007-05-04" xml:lang="es">opcional</gloss>
+	  <gloss xml:lang="zh-tw">非必備的</gloss>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="ns" usage="opt">
+      <equiv/>
+      <gloss>namespace</gloss>
+      <gloss version="2007-12-20" xml:lang="kr">이름 공간</gloss>
+      <gloss version="2007-05-02" xml:lang="zh-tw">名稱空間</gloss>
+      <gloss version="2007-06-12" xml:lang="fr">espace de noms</gloss>
+      <gloss version="2007-05-04" xml:lang="es">espacio de nombre</gloss>
+      <gloss version="2007-01-21" xml:lang="it">spazio del nome</gloss>
+      <desc>specifies the namespace to which this attribute belongs</desc>
+      <desc version="2007-12-20" xml:lang="kr">이 속성이 소속된 이름 공간을 명시한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">指明該屬性所屬的名稱空間。</desc>
+      <desc version="2008-04-05" xml:lang="ja"> 当該属性が属する名前空間を示す． </desc>
+      <desc version="2007-06-12" xml:lang="fr">précise l'espace de noms auquel appartient cet
+        attribut.</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica el espacio del nombre al que pertenece el
+        atributo.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica lo spazio del nome al quale appartiene
+        l'attributo</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.namespace"/>
+      </datatype>
+      <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <attDef usage="rec" ident="type">
+        <desc>specifies a name conventionally used for this level of subdivision, e.g.
+          <val>act</val>, <val>volume</val>, <val>book</val>, <val>section</val>, <val>canto</val>,
+          etc.</desc>
+      </attDef>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <attDef usage="rec" ident="type">
+        <desc>具體指定慣例上使用的分部名稱，例如：
+          <val>幕</val>, <val>卷</val>, <val>冊</val>, <val>節</val>, <val>篇章</val>,
+          等。</desc>
+      </attDef>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#TDATT"/>
+  </listRef>
+</elementSpec>

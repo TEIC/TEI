@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en" xmlns="http://www.tei-c.org/ns/1.0"
+  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI with minimal setup</title>
+        <author>Sebastian Rahtz</author>
+      </titleStmt>
+      <publicationStmt>
+        <availability status="free">
+          <p>This template file is freely available and you are hereby
+            authorised to copy, modify, and redistribute it in any way without
+            further reference or permissions.</p>
+          <p>When making such modifications, you are strongly recommended to
+            change the present text to include an accurate statement of the
+            licencing conditions applicable to your modified text.</p>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Written from scratch.</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <head>A Minimal TEI Customization</head>
+      <p>This is as minimal a TEI customization as is possible. That is, this
+        ODD file is just about as simple as can be. It does not create a minimal
+        TEI schema, of course. Adding various <gi>elementSpec</gi>,
+          <gi>classSpec</gi>, and <gi>macroSpec</gi> elements to this
+        customization file could make the resulting schema more minimal, but
+        would make this customization more complicated. E.g., the customization
+          <name>tei_bare</name> produces a much more minimal schema than the one
+        created here.</p>
+      <schemaSpec ident="tei_minimal" start="TEI">
+        <moduleRef key="header"/>
+        <moduleRef key="core"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="textstructure"/>
+        <elementSpec ident="teiCorpus" mode="delete" module="core"/>
+        <!-- required to avoid Sanity Checker complaint -->
+        <elementSpec ident="handNote" mode="delete" module="header"/>
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>

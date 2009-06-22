@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" ident="leaf">
+  <equiv/>
+  <gloss version="2007-06-12" xml:lang="fr">feuille</gloss>
+  <desc>encodes the leaves (terminal nodes) of a tree.</desc>
+  <desc version="2007-12-20" xml:lang="kr">수형도의 단말 노드를 부호화한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">標記樹狀結構的葉節點 (終端節點) 。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  木(構造)における葉(終端ノード)を示す．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">encode les feuilles (noeuds terminaux) d'un
+			arbre.</desc>
+  <desc version="2007-05-04" xml:lang="es">codifica las hojas (nodos terminales) de un árbol.</desc>
+  <desc version="2007-01-21" xml:lang="it">codifica le foglie (nodi terminali) di un albero</desc>
+  <content>
+    <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="label"/>
+    </rng:optional>
+  </content>
+  <attList>
+    <attDef ident="value" usage="rwa">
+      <equiv/>
+      <desc>provides a pointer to a feature
+structure or other analytic element.</desc>
+      <desc version="2007-12-20" xml:lang="kr">자질 구조 또는 기타 분석적 요소에 대한 포인터를 제공한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">提供一個連結到功能結構或其他分析元素的指標。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      素性構造または他の分析要素へのポインタを示す．
+      </desc>
+      <desc version="2007-06-12" xml:lang="fr">fournit l'identifiant de l'objet
+					représenté par la feuille ; cet objet peut être une paire nom-valeur ou tout
+					autre élément analytique.</desc>
+      <desc version="2007-05-04" xml:lang="es">proporciona un identificador de una estructura de rasgos u otro elemento de análisis.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna alla foglia un valore, che può essere una struttura di tratti o altro elemento di analisi</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>A valid identifier of a feature structure or other analytic
+element.</valDesc>
+    </attDef>
+    <attDef ident="parent" usage="opt">
+      <equiv/>
+      <desc>provides the identifier of parent of a leaf.</desc>
+      <desc version="2007-12-20" xml:lang="kr">단말 노드의 부모의 확인소를 제공한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">提供葉節點的父節點識別符碼。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      葉の親要素の識別子を示す．
+      </desc>
+      <desc version="2007-06-12" xml:lang="fr">fournit l'identifiant du parent de la
+					feuille.</desc>
+      <desc version="2007-05-04" xml:lang="es">proporciona el identificador que es padre de una hoja.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un identificatore al genitore della foglia</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>The identifier of the parent node.</valDesc>
+    </attDef>
+    <attDef ident="follow" usage="rwa">
+      <equiv/>
+      <desc>provides an identifier of an element which this leaf follows.</desc>
+      <desc version="2007-12-20" xml:lang="kr">이 단말 노드가 따르는 요소의 확인소를 제공한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">提供此葉節點所尾隨的元素識別符碼。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      当該葉の姉要素の識別子を示す．
+      </desc>
+      <desc version="2007-06-12" xml:lang="fr">fournit un identifiant d'un élément que
+					cette feuille suit.</desc>
+      <desc version="2007-05-04" xml:lang="es">proporciona un identificador al elemento que precede a la hoja.</desc>
+      <desc version="2007-01-21" xml:lang="it">assegna un identificatore all'elemento che precede la foglia</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>The identifier of another intermediate node or leaf of the tree.</valDesc>
+      <remarks>
+        <p>If the tree is unordered or partially ordered, this
+attribute has the property of fixing the relative order of the leaf and
+the element which is the value of the attribute.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>Si l'arbre n'est pas ordonné ou l'est partiellement, cet attribut a la
+                        propriété de fixer l'ordre relatif de la feuille et de l'élément indiqué
+                        comme valeur de l'attribut.</p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p>
+        当該木が順序付きでない，または部分的順序付きである場合，当該属
+      性は，当該葉または属性値が示す要素の相対的順序を示す．
+      </p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <leaf xml:id="peri1" parent="#n1">
+        <label>periscope</label>
+      </leaf>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>The in degree of a leaf is always 1, its out degree always
+0.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>Le degré entrant d'une feuille est toujours 1, son degré sortant toujours 0.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p>
+    葉の入り次数は常に1であり，出の次数は常に0となる．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#GDTR" type="div2"/>
+  </listRef>
+</elementSpec>

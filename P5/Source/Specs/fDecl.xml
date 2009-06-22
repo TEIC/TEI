@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="fDecl">
+  <equiv/>
+  <gloss>feature declaration</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">자질 선언</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">자질 선언</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">功能宣告</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">déclaration de trait</gloss>
+  <gloss version="2007-05-04" xml:lang="es">declaración de rasgo</gloss>
+  <gloss version="2007-01-21" xml:lang="it">dichiarazione di tratti</gloss>
+  <desc>declares a single feature, specifying its name, organization,
+range of allowed values, and optionally its default value.</desc>
+  <desc version="2007-12-20" xml:lang="kr">단일 자질, 자질 이름 명시, 조직, 허용 값의 범위, 그리고 수의적으로 기본 값을 선언한다.</desc>
+  <desc version="2007-12-20" xml:lang="kr">자질명, 구성, 허용값 범위, 그리고 수의적 기본값을 지정함으로써 하나의 자질을 선언한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">宣告一項功能，指明名稱、機構、有效值範圍、以及依情況提供預設值。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  ひとつの素性を宣言する．名前，構造，定義域，デフォルト値など．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">déclare un trait unique, en en précisant le nom,
+      l'organisation, la liste de valeurs autorisées et, éventuellement, la valeur par défaut.</desc>
+  <desc version="2007-05-04" xml:lang="es">declara un único rasgo, indicando su nombre, organización, gama de valores posibles y, opcionalmente, su valor predeterminado.</desc>
+  <desc version="2007-01-21" xml:lang="it">dichiara un singolo tratto, specificandone il nome, l'organizzazione, la gamma di valori permessi, e opzionale il suo valore predefinito.</desc>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:optional>
+        <rng:ref name="fDescr"/>
+      </rng:optional>
+      <rng:ref name="vRange"/>
+      <rng:optional>
+        <rng:ref name="vDefault"/>
+      </rng:optional>
+    </rng:group>
+  </content>
+  <attList>
+    <attDef ident="name" usage="req">
+      <equiv/>
+      <desc>indicates the name of the feature being declared; matches the
+<att>name</att> attribute of <gi>f</gi> elements in the text.</desc>
+      <desc version="2007-12-20" xml:lang="kr">선언되고 있는 자질 이름을 제시한다; 텍스트 내 <gi>f</gi> 요소의 <att>name</att> 속성과 일치한다.</desc>
+      <desc version="2007-12-20" xml:lang="kr">선언된 자질명을 표시한다. 텍스트에서 <gi>f</gi> 요소의 <att>name</att></desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">指出所宣告的功能名稱；並符合文件中元素<gi>f</gi>的屬性<att>name</att>。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      素性の名前を示す．要素<gi>f</gi>の属性<att>name</att>と一致する
+      もの．
+      </desc>
+      <desc version="2009-04-16" xml:lang="fr">indique le nom du trait déclaré ; correspond à
+          l'attribut <att>name</att> des éléments <gi>f</gi> du texte.</desc>
+      <desc version="2007-05-04" xml:lang="es">indica el nombre del rasgo que está siendo declarado; combina el atributo <att>name</att> de elementos <gi>f</gi> en el texto.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica il nome del tratto che si sta dichiarando; corrisponde all'attributo <att>name</att> dell'elemento <gi>f</gi> nel testo.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/>
+      </datatype>
+      <valDesc>any string of characters</valDesc>
+      <valDesc xml:lang="fr">toute chaîne de caractères</valDesc>
+          </attDef>
+    <attDef usage="opt" ident="optional">
+      <equiv/>
+      <desc>indicates whether or not the value of this feature may
+	be present.</desc>
+      <desc version="2007-12-20" xml:lang="kr">이 자질 값의 제시 여부를 표시한다.</desc>
+      <desc version="2007-12-20" xml:lang="kr">속성 값의 제시 가능 여부를 표시한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">指出該功能值是否存在。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      当該素性値があるかどうかを示す．
+      </desc>
+      <desc version="2007-06-12" xml:lang="fr">indique si la valeur de ce trait peut ou non
+          exister</desc>
+      <desc version="2007-05-04" xml:lang="es">indica si el valor del rasgo debe estar presente o no.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica se il valore del tratto possa o meno essere presente</desc>
+      <datatype>
+        <rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="boolean"/>
+      </datatype>
+      <defaultVal>true</defaultVal>
+            <remarks>
+        <p>If a feature is marked as optional, it is possible
+	for it to be omitted from a feature structure. If an
+	obligatory feature is omitted, then it is understood to have a
+	default value, either explicitly declared, or, if no default
+	is supplied, the special value  
+<val>any</val>. If an optional feature is omitted, then it is
+	understood to be missing and any possible value (including
+	the default) is ignored. </p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>Si un trait est indiqué comme facultatif, il est possible de l'omettre d'une
+                        structure de traits. Si un trait obligatoire est omis, il est alors réputé
+                        avoir une valeur par défaut, déclarée explicitement, ou, si aucune valeur
+                        par défaut n'est fournie, la valeur spéciale <val>any</val>. Si un trait
+                        facultatif est omis, il est réputé manquant et aucune valeur possible n'est
+                        prise en compte (y compris celle par défaut). </p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p>
+	素性が選択的とされる場合，素性構造から外してもよい．
+	必須の素性がない場合，その値は，明示的に宣言されているデフォル
+      ト値をとるとされる．デフォルト値が宣言されていない場合，特別な値
+      <val>any</val>をとるとされる．
+      選択的な素性がない場合，値はないか，または(デフォルト値を含む)あ
+      らゆる値が無視されるとされる．
+       </p>
+      </remarks>
+    </attDef>
+<!--    <attDef ident="org" usage="opt">
+      <gloss>organization</gloss>
+      <desc>specifies the organizing discipline of the feature value.</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica la disciplina organizativa del valor de rasgo.</desc>
+      <desc version="2006-10-28" xml:lang="ja">当該素性値をデータ構造を示す．</desc>
+      <defaultVal>unit</defaultVal>
+      <valList type="closed">
+        <valItem ident="unit">
+          <equiv/>
+          <desc>unitary atomic value</desc>
+          <desc version="2007-05-04" xml:lang="es">valor aislado unitario</desc>
+          <desc version="2006-10-28" xml:lang="ja">(単独)</desc>
+        </valItem>
+        <valItem ident="set">
+          <equiv/>
+          <desc>set value (unordered, no duplicates)</desc>
+          <desc version="2007-05-04" xml:lang="es">valor de conjunto (desordenado, no duplicado)</desc>
+          <desc version="2006-10-28" xml:lang="ja">(集合，すなわち順序・重複が無い．)</desc>
+        </valItem>
+        <valItem ident="bag">
+          <equiv/>
+          <desc>bag value (unordered, may have duplicates)</desc>
+          <desc version="2007-05-04" xml:lang="es">valor de multiconjunto (desordenado, puede ser duplicado)</desc>
+          <desc version="2006-10-28" xml:lang="ja">(バック，すなわち順序が無く，重複有り．)</desc>
+        </valItem>
+        <valItem ident="list">
+          <equiv/>
+          <desc>list value (ordered, may have duplicates)</desc>
+          <desc version="2007-05-04" xml:lang="es">valor de lista (ordenado, puede ser duplicado)</desc>
+          <desc version="2006-10-28" xml:lang="ja">(リスト，すなわち順序が有り，重複も有る．)</desc>
+        </valItem>
+      </valList>
+      
+    </attDef>-->
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <fDecl name="INV">
+        <fDescr>inverted sentence</fDescr>
+        <vRange>
+          <vAlt>
+            <binary value="true"/>
+            <binary value="false"/>
+          </vAlt>
+        </vRange>
+        <vDefault>
+          <binary value="false"/>
+        </vDefault>
+      </fDecl>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#FD"/>
+  </listRef>
+</elementSpec>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="ADMININFO" ident="adminInfo">
+  <equiv/>
+  <gloss>administrative information</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">관리 정보</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw">行政資訊</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">informations administratives</gloss>
+  <gloss version="2007-05-04" xml:lang="es">información administrativa.</gloss>
+  <gloss version="2007-01-21" xml:lang="it">informazioni amministrative</gloss>
+  <desc xml:id="adminfo.desc">contains information about the present
+custody and availability of the manuscript, and also about the record
+description itself. </desc>
+  <desc version="2007-12-20" xml:lang="kr">원고의 현재 보관과 이용가능성, 그리고 기록 기술에 관한 정보를 포함한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含手稿現在的保管與可利用性資訊，也包含本身的紀錄描述。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+ 当該手書き資料，またはその記録文書そのものの管理・利用形態についての情
+ 報を示す．
+ </desc>
+  <desc version="2009-04-17" xml:lang="fr">contient, pour le manuscrit en cours de description, les informations sur son détenteur actuel, sur ses conditions d'accès et sur les modalités de sa description.</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene información relativa a la gestión y a la disponibilidad del manuscrito y a la descripción misma de la documentación.</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene informazioni relative alla gestione e disponibilità del manoscritto e alla descrizione stessa della documentazione</desc>
+  <classes/>
+  <content>
+<!--<rng:choice >
+    <rng:ref name="macro.specialPara"/>-->
+    <rng:group>
+      <rng:optional>
+        <rng:ref name="recordHist"/>
+      </rng:optional>
+      <rng:optional>
+        <rng:ref name="availability"/>
+      </rng:optional>
+      <rng:optional>
+        <rng:ref name="custodialHist"/>
+      </rng:optional>
+      <rng:optional>
+        <rng:ref name="model.noteLike"/>
+<!-- was remarks -->
+      </rng:optional>
+    </rng:group>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <adminInfo>
+        <recordHist>
+          <source>Record created <date>1 Aug 2004</date></source>
+        </recordHist>
+        <availability>
+          <p>Until 2015 permission to photocopy some materials from this
+collection has been limited at the request of the donor. Please ask repository staff for details
+if you are interested in obtaining photocopies from Series 1:
+Correspondence.</p>
+        </availability>
+        <custodialHist>
+          <p>Collection donated to the Manuscript Library by the Estate of
+Edgar Holden in 1993. Donor number: 1993-034.</p>
+        </custodialHist>
+      </adminInfo>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <adminInfo>
+        <recordHist>
+          <source>紀錄建立於<date>2004年8月1日</date></source>
+        </recordHist>
+        <availability>
+          <p>2015年以前，非經贈與此書者同意，不得翻印。若對內容有興趣，請洽藏書單位。</p>
+        </availability>
+        <custodialHist>
+          <p>此收藏1993年捐贈於故宮博物院。贈與編號：1993-034。</p>
+        </custodialHist>
+      </adminInfo>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#msadad"/>
+  </listRef>
+</elementSpec>
