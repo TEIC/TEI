@@ -248,11 +248,15 @@ dist-source: subset
 	Utilities   \
 	VERSION  \
 	Exemplars/Makefile  \
+	Exemplars/relax*  \
+	Exemplars/math*  \
+	Exemplars/svg*  \
 	fasc-head.xml \
 	fasc-tail.xml \
 	p5.nvdl \
 	p5odds-ex.odd \
 	p5odds.odd \
+	oddity.odd \
 	relax.rng \
 	schematron.rng \
 	iso-schematron.rng \
