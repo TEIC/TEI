@@ -247,6 +247,7 @@ dist-source: subset
 	Source \
 	Utilities   \
 	VERSION  \
+	Exemplars/Makefile  \
 	fasc-head.xml \
 	fasc-tail.xml \
 	p5.nvdl \
