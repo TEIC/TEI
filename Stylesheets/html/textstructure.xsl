@@ -2953,19 +2953,21 @@ $requestedID: requests a particular page
   </xd:doc>
   <xsl:template name="divClassAttribute">
     <xsl:param name="depth"/>
-    <xsl:choose>
-      <xsl:when test="@type">
-        <xsl:attribute name="class">
-          <xsl:value-of select="@type"/>
-        </xsl:attribute>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:attribute name="class">
-          <xsl:text>teidiv</xsl:text>
-          <xsl:value-of select="$depth"/>
-        </xsl:attribute>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:attribute name="class">
+      <xsl:choose>
+	<xsl:when test="@type">
+	  <xsl:value-of select="@type"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>teidiv</xsl:text>
+	  <xsl:value-of select="$depth"/>
+	</xsl:otherwise>
+      </xsl:choose>
+      <xsl:if test="@rend">
+	<xsl:text> </xsl:text>
+	<xsl:value-of select="@rend"/>
+      </xsl:if>
+    </xsl:attribute>
     <xsl:variable name="ident">
       <xsl:apply-templates mode="ident" select="."/>
     </xsl:variable>
