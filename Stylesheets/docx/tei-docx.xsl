@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 		
     version="2.0" 
+    xmlns:cals="http://http://www.oasis-open.org/specs/tm9901"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:its="http://www.w3.org/2005/11/its"
     xmlns:iso="http://www.iso.org/ns/1.0"
@@ -36,6 +37,7 @@
   <xsl:import href="tei-docx-functions.xsl"/>
   <xsl:import href="tei-docx-verbatim.xsl"/>
   <xsl:import href="variables.xsl"/>
+  <xsl:import href="mml2omml.xsl"/>
 <!--
 A4 is 210mm x 297mm; leaving 1in margin (25mm),
 gives 160 x 247 approx useable area.  In Microsoft speak, 
@@ -1253,7 +1255,7 @@ is there a number present?
 
 
     <!-- 
-        Handle tables 
+        Handle TEI tables 
     -->
     <xsl:template match="tei:table">
         <xsl:call-template name="table-header"/>
@@ -1313,7 +1315,6 @@ is there a number present?
             </xsl:for-each>
         </xsl:if>
     </xsl:template>
-
     <xsl:template match="tei:row">
         <w:tr>
             <xsl:choose>
@@ -1404,8 +1405,140 @@ is there a number present?
         </w:tc>
     </xsl:template>
 
+    <!-- Handle CALS tables -->
+    <xsl:template match="cals:table">
+        <xsl:call-template name="cals-table-header"/>
+        <w:tbl>
+	  <w:tblPr>
+	    <w:tblW w:w="0" w:type="auto"/>
+	    <w:jc w:val="center"/>
+	    <w:tblBorders>
+	      <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+	      <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+	      <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+	      <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+	      <w:insideH w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+	      <w:insideV w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+	    </w:tblBorders>
+	  </w:tblPr>
+	  <xsl:choose>
+	    <xsl:when test="cals:colgroup">
+	      <w:tblGrid>
+		<xsl:for-each select="cals:colgroup/cals:col">
+		  <w:gridCol>
+		    <xsl:attribute name="w:w" select="teidocx:convert-dim-pt20(@width)"/>
+		  </w:gridCol>
+		</xsl:for-each>
+	      </w:tblGrid>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <w:tblGrid>
+		<xsl:for-each select="cals:row[1]/cals:cell">
+		  <w:gridCol w:w="500"/> <!-- notional amount -->
+		</xsl:for-each>
+	      </w:tblGrid>		  
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  <xsl:apply-templates select="cals:tgroup"/>
+	</w:tbl>
+	<w:p/>
+    </xsl:template>
+
+    <xsl:template match="cals:tgroup">
+      <xsl:apply-templates/>
+    </xsl:template>
+
+    <xsl:template match="cals:tbody">
+      <xsl:apply-templates/>
+    </xsl:template>
+
+    <xsl:template name="cals-table-header">
+        <xsl:if test="cals:title">
+            <xsl:for-each select="cals:title[1]">
+                <xsl:call-template name="block-element">
+                    <xsl:with-param name="style">Tabletitle</xsl:with-param>
+                </xsl:call-template>
+            </xsl:for-each>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="cals:row">
+        <w:tr>
+            <w:tblPrEx>
+                <w:tblLayout w:type="autofit"/> 
+            </w:tblPrEx>
+            <xsl:apply-templates select="cals:entry"/>
+        </w:tr>
+    </xsl:template>
+
+    <xsl:template match="cals:entry">
+        <w:tc>
+	  <w:tcPr>
+	    <!--w:tcW w:w="1915" w:type="dxa"/-->
+	    <xsl:if test="@cols">
+	      <w:gridSpan w:val="{@cols}"/>
+	    </xsl:if>
+	  </w:tcPr>
+	  <xsl:choose>
+	    <xsl:when test="tei:note">
+	      <xsl:call-template name="block-element"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:call-template name="block-element">
+		<xsl:with-param name="pPr">
+		  <w:pPr>
+		    <xsl:choose>
+		      <xsl:when test="@rend">
+			<xsl:variable name="sName">
+			  <xsl:call-template name="getStyleName">
+			    <xsl:with-param name="in" select="@rend"/>
+			  </xsl:call-template>
+			</xsl:variable>
+			<xsl:choose>
+			  <xsl:when test="$sName=''">
+			    <w:pStyle w:val="{$TableText}"/>
+			  </xsl:when>
+			  <xsl:otherwise>
+			    <w:pStyle w:val="{$sName}"/>
+			  </xsl:otherwise>
+			</xsl:choose>
+		      </xsl:when>
+		      <xsl:otherwise>
+			<w:pStyle w:val="{$TableText}"/>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		    <xsl:choose>
+		      <xsl:when test="@align">
+			<w:jc w:val="{@align}"/>
+		      </xsl:when>
+		      <xsl:when test="parent::tei:row[@role='label']
+				      or @role='label'">
+			<w:jc w:val="left"/>
+		      </xsl:when>
+		      <xsl:when test="starts-with(.,'[0-9]')">
+			<w:jc w:val="right"/>
+		      </xsl:when>
+		      <xsl:otherwise>
+			<w:jc w:val="left"/>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		  </w:pPr>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  <!-- If we have no children, put an empty p here -->
+	  <xsl:if test="not(descendant::text())">
+	    <w:p>
+	      <w:r>
+		<w:t/>
+	      </w:r>
+	    </w:p>
+	  </xsl:if>
+	</w:tc>
+    </xsl:template>
+    
     <!-- 
-        Inline Templates:
+	 Inline Templates:
     -->
     <xsl:template match="tei:c[@rend='tab']">
         <w:r>
@@ -1532,9 +1665,9 @@ is there a number present?
     </xsl:template>
 
     <xsl:template match="mml:math">
-        <m:oMath>
-            <xsl:apply-templates/>
-        </m:oMath>
+      <m:oMath>
+	<xsl:apply-templates mode="mml"/>
+      </m:oMath>
     </xsl:template>
 
 

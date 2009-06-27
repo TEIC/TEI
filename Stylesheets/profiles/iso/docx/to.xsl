@@ -25,7 +25,9 @@
     
     <!-- import functions -->
     <xsl:include href="iso-functions.xsl"/>
-    
+
+    <xsl:param name="tableMethod">cals</xsl:param>    
+
     <xsl:param name="template">ISO</xsl:param>
 
     <xsl:variable name="align">
