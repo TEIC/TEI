@@ -149,7 +149,7 @@ Options to pass to the geometry package to set margins etc
 <xd:doc type="string" class="userpackage">
 Depth of nesting of reference documentation when processing ODD
 </xd:doc>
-<xsl:param name="specLinkDepth">3</xsl:param>
+<xsl:param name="specLinkDepth">2</xsl:param>
 
 <xd:doc class="layout">
     <xd:short>LaTeX setup</xd:short>

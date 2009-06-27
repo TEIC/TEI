@@ -765,6 +765,13 @@ version="2.0">
 	    </Wrapper>
 	  </xsl:with-param>
 	</xsl:call-template>
+	<xsl:for-each select="tei:valList[@type='closed']">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Legal values are</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text>:</xsl:text>
+	  <xsl:call-template name="valListChildren"/>
+	</xsl:for-each>
 	<xsl:if test="s:*">
 	  <xsl:element namespace="{$outputNS}" name="{$divName}">
 	    <xsl:attribute name="{$rendName}">
@@ -1580,55 +1587,64 @@ version="2.0">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
-        </xsl:attribute>
-        <xsl:element namespace="{$outputNS}" name="{$dlName}">
-          <xsl:attribute name="{$rendName}">
-            <xsl:text>valList</xsl:text>
-          </xsl:attribute>
-          <xsl:for-each select="tei:valItem">
-            <xsl:variable name="name">
-              <xsl:choose>
-                <xsl:when test="tei:altIdent">
-                  <xsl:value-of select="tei:altIdent"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="@ident"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:variable>
-	    <xsl:element namespace="{$outputNS}" name="{$dtName}">
-                <xsl:attribute name="{$rendName}">
-                  <xsl:text>odd_label</xsl:text>
-                </xsl:attribute>
-                <xsl:value-of select="$name"/>
-              </xsl:element>
-              <xsl:element namespace="{$outputNS}" name="{$ddName}">
-                <xsl:attribute name="{$rendName}">
-                  <xsl:text>odd_value</xsl:text>
-                </xsl:attribute>
-                <xsl:call-template name="makeDescription"/>
-                <xsl:if test="@ident=../../tei:defaultVal">
-                  <xsl:element namespace="{$outputNS}" name="{$hiName}">
-                    <xsl:attribute name="{$rendName}">
-                      <xsl:text>defaultVal</xsl:text>
-                    </xsl:attribute>
-		    <xsl:attribute name="xml:lang">
-		      <xsl:value-of select="$documentationLanguage"/>
-		    </xsl:attribute>
-                    <xsl:text> [</xsl:text>
-                    <xsl:call-template name="i18n">
-                      <xsl:with-param name="word">Default</xsl:with-param>
-                    </xsl:call-template>
-                    <xsl:text>]</xsl:text>
-                  </xsl:element>
-                </xsl:if>
-              </xsl:element>
-          </xsl:for-each>
-        </xsl:element>
+	</xsl:attribute>
+	<xsl:call-template name="valListChildren"/>
       </xsl:element>
     </xsl:element>
   </xsl:template>
 
+
+  <xd:doc>
+    <xd:short>[odds] all the values in a valList</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="valListChildren">
+    <xsl:element namespace="{$outputNS}" name="{$dlName}">
+      <xsl:attribute name="{$rendName}">
+	<xsl:text>valList</xsl:text>
+      </xsl:attribute>
+      <xsl:for-each select="tei:valItem">
+            <xsl:variable name="name">
+	      <xsl:choose>
+		<xsl:when test="tei:altIdent">
+		  <xsl:value-of select="tei:altIdent"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="@ident"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:variable>
+	    <xsl:element namespace="{$outputNS}" name="{$dtName}">
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>odd_label</xsl:text>
+	      </xsl:attribute>
+	      <xsl:value-of select="$name"/>
+	    </xsl:element>
+	    <xsl:element namespace="{$outputNS}" name="{$ddName}">
+	      <xsl:attribute name="{$rendName}">
+		<xsl:text>odd_value</xsl:text>
+	      </xsl:attribute>
+	      <xsl:call-template name="makeDescription"/>
+	      <xsl:if test="@ident=../../tei:defaultVal">
+		<xsl:element namespace="{$outputNS}" name="{$hiName}">
+		  <xsl:attribute name="{$rendName}">
+		    <xsl:text>defaultVal</xsl:text>
+		  </xsl:attribute>
+		  <xsl:attribute name="xml:lang">
+		    <xsl:value-of select="$documentationLanguage"/>
+		  </xsl:attribute>
+		  <xsl:text> [</xsl:text>
+		  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">Default</xsl:with-param>
+		  </xsl:call-template>
+		  <xsl:text>]</xsl:text>
+		</xsl:element>
+	      </xsl:if>
+              </xsl:element>
+      </xsl:for-each>
+    </xsl:element>
+  </xsl:template>
+  
   <xd:doc>
     <xd:short>[odds] </xd:short>
     <xd:detail> </xd:detail>
@@ -2300,28 +2316,29 @@ version="2.0">
       </xsl:when>
       <xsl:when test="not($clatts='')">
 	<xsl:if test="ancestor::tei:schemaSpec and key('CLASSES','att.global')">
-	  
-        <xsl:element namespace="{$outputNS}" name="{$segName}">
-	  <xsl:attribute name="xml:lang">
-	    <xsl:value-of select="$documentationLanguage"/>
-	  </xsl:attribute>
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">
-	      <xsl:choose>
-		<xsl:when test=".//tei:attDef">
-		  <xsl:call-template name="i18n">
-	  <xsl:with-param name="word">In addition to global attributes and those inherited from</xsl:with-param></xsl:call-template>
-	  <xsl:value-of select="$spaceCharacter"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:call-template name="i18n">
-	  <xsl:with-param name="word">Global attributes and those inherited from</xsl:with-param></xsl:call-template>
-	  <xsl:value-of select="$spaceCharacter"/>
-	  		</xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:element>
+	  <xsl:element namespace="{$outputNS}" name="{$segName}">
+	    <xsl:attribute name="xml:lang">
+	      <xsl:value-of select="$documentationLanguage"/>
+	    </xsl:attribute>
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">
+		<xsl:choose>
+		  <xsl:when test=".//tei:attDef">
+		    <xsl:call-template name="i18n">
+		      <xsl:with-param name="word">In addition to global attributes and those inherited from</xsl:with-param>
+		    </xsl:call-template>
+		    <xsl:value-of select="$spaceCharacter"/>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:call-template name="i18n">
+		      <xsl:with-param name="word">Global attributes and those inherited from</xsl:with-param>
+		    </xsl:call-template>
+		    <xsl:value-of select="$spaceCharacter"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:element>
 	</xsl:if>
 	<xsl:copy-of select="$clatts"/>
       </xsl:when>
@@ -2333,12 +2350,14 @@ version="2.0">
 	  <xsl:with-param name="word">
 	    <xsl:choose>
 	      <xsl:when test=".//tei:attDef">
-				  <xsl:call-template name="i18n">
-	  <xsl:with-param name="word">In addition to global attributes</xsl:with-param></xsl:call-template>
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">In addition to global attributes</xsl:with-param>
+		</xsl:call-template>
 	      </xsl:when>
 	      <xsl:otherwise>
 		<xsl:call-template name="i18n">
-	  <xsl:with-param name="word">Global attributes only</xsl:with-param></xsl:call-template>
+		  <xsl:with-param name="word">Global attributes only</xsl:with-param>
+		</xsl:call-template>
               </xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:with-param>
