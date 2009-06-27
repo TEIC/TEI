@@ -951,6 +951,13 @@
                     <p>Converted from a Word document </p>
                 </sourceDesc>
             </fileDesc>
+	    <encodingDesc>
+	      <appInfo>
+		<application ident="docxtotei">
+		  <label>$Id$</label>
+		</application>
+	      </appInfo> 
+	    </encodingDesc>
             <revisionDesc>
                 <change>
                     <date>

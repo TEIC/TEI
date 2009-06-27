@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:edate="http://exslt.org/dates-and-times" xmlns="http://www.tei-c.org/ns/1.0"
+    xmlns="http://www.tei-c.org/ns/1.0"
     xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:iso="http://www.iso.org/ns/1.0"
     xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -16,7 +16,8 @@
     xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
     xmlns:mml="http://www.w3.org/1998/Math/MathML"
     xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
-    exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso edate">
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+    exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso xd">
     
     <!-- import conversion style -->
     <xsl:import href="../../../docx/docx-tei.xsl"/>
@@ -24,6 +25,28 @@
     <!-- import special iso functions -->
     <xsl:include href="iso-functions.xsl"/>
     
+<doc type="stylesheet" xmlns="http://www.pnp-software.com/XSLTdoc">
+    <short>TEI stylesheet to convert Word DOCX XML to TEI XML.</short>
+    <detail>
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License as published by the Free Software Foundation; either
+    version 2.1 of the License, or (at your option) any later version.
+
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  
+      </detail>
+    <author>See AUTHORS</author>
+    <cvsId>$Id$</cvsId>
+    <copyright>2008, TEI Consortium</copyright>
+</doc>
     <!-- param defining whether to use a custom metadata file or to extract
     the metadata from the document -->
     <xsl:param name="metadata-file"/>
@@ -218,16 +241,25 @@
                 </textClass>
             </profileDesc>
             <encodingDesc>
-                <classDecl>
-                    <taxonomy>
-                        <category>
-                            <xsl:attribute name="xml:id">TYPE</xsl:attribute>
-                        </category>
-                        <category>
-                            <xsl:attribute name="xml:id">SUPPLTYPE</xsl:attribute>
-                        </category>
-                    </taxonomy>
-                </classDecl>
+	      <appInfo>
+		<application ident="docxtotei">
+		  <label>
+		    <xsl:for-each select="document('')//xd:doc">
+		      <xsl:value-of select="translate(xd:cvsId,'$','')"/>
+		    </xsl:for-each>
+		  </label>
+		</application>
+	      </appInfo> 
+	      <classDecl>
+		<taxonomy>
+		  <category>
+		    <xsl:attribute name="xml:id">TYPE</xsl:attribute>
+		  </category>
+		  <category>
+		    <xsl:attribute name="xml:id">SUPPLTYPE</xsl:attribute>
+		  </category>
+		</taxonomy>
+	      </classDecl>
             </encodingDesc>
             <revisionDesc>
                 <change/>
