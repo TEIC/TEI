@@ -377,17 +377,38 @@ rather than constituting parts of a word. It may be particularly
 useful when transcribing older written materials, in which an encoding
 of the original punctuation may be useful for interpretive or analytic
 purposes, in much the same way as an encoding of the original
-orthography may be. To assist in this, the <gi>pc</gi> element carries
-special attributes to distinguish ambiguous uses of the same
-mark. The <att>force</att> attribute may be used to distinguish (for
-example) the medieval <term>punctus firmus</term> from its weaker
-form the <term>punctus mobilis</term>. The <att>unit</att> attribute
-may be used, as on the <gi>milestone</gi> element to name the kind of
-unit which the punctuation mark delimits, for example a paragraph or
+orthography may be. For example, in the following extract from
+a Bodleian Library musical manuscript
+<figure>
+<graphic url="../../Graphics/punctus.png"/>
+</figure>
+two different punctuation marks are used to distinguish kinds of pause
+in the text. The <term>punctus elevatus</term> (which resembles an inverted
+semicolon) is not a Unicode character, but may still be encoded using
+the <gi>g</gi> element. As further described in chapter <ptr
+target="#WD"/>, this element points to a definition for the intended
+character which may be stored either locally or elsewhere.
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"  corresp="#punctuseg">deus qui regis omnia
+<pc><g ref="#pelev">;</g></pc> natus est in bethlehem
+<pc>.</pc>o <pc>.</pc> mira gratia...
+<!-- elsewhere -->
+<char xml:id="pelev">
+<!-- definition of the punctus elevatus character -->
+</char>
+</egXML>
+</p>
+<p>The <gi>pc</gi> element carries special attributes to record
+analyses of the functional behaviour or classification of the
+punctuation mark it contains. The <att>unit</att> attribute may be
+used, as on the <gi>milestone</gi> element to name the kind of unit
+which the punctuation mark delimits, for example a paragraph or
 section. The <att>pre</att> attribute may be used to indicate whether
-the punctuation precedes or follows the unit it delimits. </p>
+the punctuation precedes or follows the unit it delimits. The
+<att>force</att> attribute indicates the strength of the association
+between the punctuation mark and its adjacent word. </p>
 <p>In the following example, the paragraph marker (¶) has been tagged
-as a punctuation mark:
+as a strong punctuation mark, preceding the unit it marks, which is
+named <soCalled>para</soCalled>:
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <p><pc unit="para" force="strong"
 	     pre="true">¶</pc>Incipit...</p>

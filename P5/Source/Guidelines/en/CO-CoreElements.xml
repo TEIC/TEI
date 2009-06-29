@@ -1818,12 +1818,15 @@ which this may usefully be done.  The following phrase level elements
 are provided for this purpose:
 <specList><specDesc key="num" atts="type value"/><specDesc key="measure" atts="type"/><specDesc key="measureGrp"/></specList>
  </p>
-<p>Like names or abbreviations, numbers can occur virtually anywhere in
-a text.  Numbers are special in that they can be written with either
-letters or digits (<mentioned>twenty-one</mentioned>, <mentioned>xxi</mentioned>, and
-<mentioned>21</mentioned>) and their presentation is language-dependent (e.g.
-English <mentioned>5th</mentioned> becomes Greek <mentioned>5.</mentioned>; English
-<mentioned>123,456.78</mentioned> equals French <mentioned>123.456,78</mentioned>).
+
+<p>Like names or abbreviations, numbers can occur virtually anywhere
+in a text.  Numbers are special in that they can be written with
+either letters or digits (<mentioned>twenty-one</mentioned>,
+<mentioned>xxi</mentioned>, and <mentioned>21</mentioned>) and their
+presentation is language-dependent (e.g.  English
+<mentioned>5th</mentioned> becomes Greek <mentioned>5.</mentioned>;
+English <mentioned>123,456.78</mentioned> equals French
+<mentioned>123.456,78</mentioned>).
  </p>
 <p>For many kinds of application, e.g. natural-language processing or
 machine translation, numbers are not regarded as
@@ -1844,7 +1847,19 @@ standardized way of representing a numerical value.
 <num type="fraction" value="0.5">1/2</num></egXML>
  </p>
 
-<p>In its fullest form, a measure consists of a number, a phrase
+<p>Sometimes it may be desired to mark something as numerical
+which cannot be accurately  normalized, for example an expression
+such as <mentioned>dozens</mentioned>; less frequently the number may
+be recognisable linguistically as such but may use a notation with which
+the encoder is unfamiliar. To help in these situations, the
+<gi>num</gi> element may also bear either or both of the following
+attributes from the <ident type="class">att.ranging</ident> class:
+<specList>
+<specDesc key="att.ranging" atts="atLeast atMost"/>
+</specList>
+</p>
+
+<p>In its fullest form, a <term>measure</term> consists of a number, a phrase
 expressing units of measure and a phrase expressing the commodity
 being measured, though not all of these components need be present in
 every case. It may be helpful to distinguish measures from surrounding
@@ -1920,7 +1935,6 @@ avoid the need to repeat all the normalizing attributes:
 </egXML>
 <!-- better example needed -->
 </p>
-
 <specGrp xml:id="DCONU" n="Numbers and measures">
 &num;
 &measure;
@@ -2069,7 +2083,7 @@ the Director of the <abbr>CTI</abbr> Centre for Textual Studies.</egXML>
 <p>The <gi>expan</gi> element may be used simply to record that an
 abbreviation has been silently expanded by the encoder, perhaps for
 reasons of house style or editorial policy. It should
-always include the whole of an abbreviated phrase or word. More
+always include the whole of an abbreviated phrase or word.  More
 usually however this will be combined with the <gi>abbr</gi> element
 inside a <gi>choice</gi> element to record both the abbreviation and
 its expansion: 
