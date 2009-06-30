@@ -33,14 +33,13 @@ the  manuscript being described. </desc>
   </classes>
   <content>
     <rng:group>
-      <rng:choice>
 	<rng:group>
 	  <rng:ref name="model.placeNamePart_sequenceOptional"/>
 	  <rng:optional>
 	    <rng:ref name="institution"/>
 	  </rng:optional>
 	  <rng:optional>
-	  <rng:ref name="repository"/>
+	    <rng:ref name="repository"/>
 	  </rng:optional>
 	  <rng:optional>
 	    <rng:ref name="collection"/>
@@ -49,19 +48,20 @@ the  manuscript being described. </desc>
 	    <rng:ref name="idno"/>
 	  </rng:optional>
 	</rng:group>
-      <rng:oneOrMore>
-          <rng:ref name="msName"/>
-      </rng:oneOrMore>
-        </rng:choice>
-        <rng:zeroOrMore>
-          <rng:ref name="altIdentifier"/>
-	</rng:zeroOrMore>
+      <rng:zeroOrMore>
+	  <rng:choice>
+	    <rng:ref name="msName"/>
+	    <rng:ref name="altIdentifier"/>
+	  </rng:choice>
+      </rng:zeroOrMore>
     </rng:group>
   </content>
   <constraintSpec scheme="isoschematron" ident="msId_minimal"> 
     <constraint>
-	  <sch:report test="local-name(*[1])='idno'">
-	    You must supply a locator of some type</sch:report>
+	  <sch:report test="local-name(*[1])='idno' or 
+                            local-name(*[1])='altIdentifier' ">
+	    You must supply either a locator of some type or a
+	    name</sch:report>
     </constraint>
   </constraintSpec> 
   <exemplum xml:lang="en">
