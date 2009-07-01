@@ -1625,6 +1625,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="moduleInfo">
+    <xsl:if test="not($oddWeaveLite='true')">
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
@@ -1649,6 +1650,7 @@
         <xsl:call-template name="makeTagsetInfo"/>
       </xsl:element>
     </xsl:element>
+    </xsl:if>
   </xsl:template>
 
 

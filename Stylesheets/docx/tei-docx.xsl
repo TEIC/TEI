@@ -2658,7 +2658,7 @@ is there a number present?
             </xsl:choose>
         </xsl:variable>
 
-        <!-- having opening core.xml, we cannot write back to it; so save
+        <!-- after opening core.xml, we cannot write back to it; so save
 under new name -->
         <xsl:result-document href="{concat($word-directory,'/docProps/newcore.xml')}"
             standalone="yes">
@@ -2692,6 +2692,26 @@ under new name -->
                 <SharedDoc>true</SharedDoc>
                 <AppVersion>1.0</AppVersion>
             </Properties>
+        </xsl:result-document>
+
+        <xsl:result-document
+	    href="{concat($word-directory,'/docProps/custom.xml')}"
+	    standalone="yes">
+	  <Properties
+	      xmlns="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties" 
+	      xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
+	    <property pid="2" name="teitodocx_version">
+	      <vt:lpwstr>1.0</vt:lpwstr>
+	    </property>
+	    <property pid="3" name="docxtotei_version">
+	      <vt:lpwstr>2.1</vt:lpwstr>
+	    </property>
+	    <property pid="4" name="xsl_version">
+	      <vt:lpwstr>
+		<xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:encodingDesc/tei:appInfo/tei:application[@ident='docxtotei']/tei:label"/>
+	      </vt:lpwstr>
+	    </property>
+	  </Properties>
         </xsl:result-document>
     </xsl:template>
 

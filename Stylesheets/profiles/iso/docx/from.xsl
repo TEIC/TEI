@@ -242,7 +242,7 @@
             </profileDesc>
             <encodingDesc>
 	      <appInfo>
-		<application ident="docxtotei">
+		<application version="1.0.0" ident="docxtotei">
 		  <label>
 		    <xsl:for-each select="document('')//xd:doc">
 		      <xsl:value-of select="translate(xd:cvsId,'$','')"/>
