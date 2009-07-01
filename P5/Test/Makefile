@@ -96,22 +96,22 @@ schemas:
 test-schema: test-jing test-rnv 
 
 test-jing:
-	@echo JING RelaxNG...
-	@echo =======================================
-	@echo = Expect to see "no start" error from justfs, and errors
-	@echo = about schemaLocation on testminimal
-	@echo = 
-	@echo = testallplus has error abour ref and MathML
-	@echo =======================================
+	echo JING RelaxNG...
+	echo =======================================
+	echo = Expect to see "no start" error from justfs, and errors
+	echo = about schemaLocation on testminimal
+	echo = 
+	echo = testallplus has error abour ref and MathML
+	echo =======================================
 	for i in $(TESTFILES) $(TESTFILESDTD) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do echo $$i: ; jing -t $$i.rng $$i.xml; done
 	jing -t -c testfrag.rnc testlite.xml
 
 test-rnv:
-	@echo RNV....
-	@echo =======================================
-	@echo = Expect to see "no start" error from justfs, and errors
-	@echo = about schemaLocation on testminimal
-	@echo =======================================
+	echo RNV....
+	echo =======================================
+	echo = Expect to see "no start" error from justfs, and errors
+	echo = about schemaLocation on testminimal
+	echo =======================================
 	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); \
 	  do echo $$i: ; \
 	    xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc ; \
@@ -119,52 +119,53 @@ test-rnv:
 	xmllint --dropdtd testlite.xml | 	rnv testfrag.rnc 
 
 test-xmllint:
-	@echo XMLLINT .. for RELAXNG
-	@echo =======================================
-	@echo = 
-	@echo = 
-	@echo = 
-	@echo =======================================
+	echo XMLLINT .. for RELAXNG
+	echo =======================================
+	echo = 
+	echo = 
+	echo = 
+	echo =======================================
 	for i  in $(TESTFILES) $(TESTFILESDTD); do xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; done
 
 test-xsd:
-	@echo JING .. for XSD....
-	@echo =======================================
-	@echo = Should be no errors from JING tests
-	@echo =======================================
+	echo JING .. for XSD....
+	echo =======================================
+	echo = JING .xsd tests will show errors
+	echo = testtagdocs and testns
+	echo =======================================
 	-for i in $(TESTFILES) $(TESTFILESDTD);do echo $$i: ; jing $$i.xsd $$i.xml; done
 
 test-xsd-valid:
-	@echo XSDVALID
-	@echo =======================================
-	@echo = 
-	@echo =======================================
+	echo XSDVALID
+	echo =======================================
+	echo = 
+	echo =======================================
 	- which xsdvalid && for i in $(TESTFILES) $(TESTFILESDTD);do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
 
 test-xerces:
-	@echo xerces XSD
-	@echo =======================================
-	@echo = Should be no errors from Jing/xerces XSD tests
-	@echo =======================================
+	echo xerces XSD
+	echo =======================================
+	echo = Should be no errors from Jing/xerces XSD tests
+	echo =======================================
 	-for i  in $(TESTFILES) $(TESTFILESDTD) ;do echo $$i: ; java -cp ~/jar/xercesSamples.jar jaxp.SourceValidator -HS -VA -GA -a $$i.xsd -i $$i.xml; done
 
 
 test-dtd:
-	@echo xmllint DTD 
-	@echo =======================================
-	@echo = 
-	@echo = expect error in tagdocs about ref, and testtite about xmlns:t
-	@echo = 
-	@echo =======================================
+	echo xmllint DTD 
+	echo =======================================
+	echo = 
+	echo = expect error in tagdocs about ref, and testtite about xmlns:t
+	echo = 
+	echo =======================================
 	-for i in `echo $(TESTFILES) $(TESTFILESDTD)`; do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
 
 
 # testall, testp4compat, testodds have no DOCTYPE
 test-dtd-xmllint:
-	@echo xmllint DTD using DTD fragments....
-	@echo =======================================
-	@echo Should be no errors from xmllint/dtd tests
-	@echo =======================================
+	echo xmllint DTD using DTD fragments....
+	echo =======================================
+	echo Should be no errors from xmllint/dtd tests
+	echo =======================================
 	-for i in  $(TESTFILES) $(TESTFILESDTD); do grep DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml; \
 	done
 
@@ -185,16 +186,16 @@ test-schematron:
 	done
 
 test-bad:
-	@echo Now test file with deliberate errors
-	@echo =======================================
-	@echo Many errors will occur here
-	@echo =======================================
-	@echo JING RelaxNG...
+	echo Now test file with deliberate errors
+	echo =======================================
+	echo Many errors will occur here
+	echo =======================================
+	echo JING RelaxNG...
 	-for i in $(TESTBADFILES); do \
 	jing -t $$i.rng $$i.xml ; \
-	@echo RNV.... ; \
+	echo RNV.... ; \
 	xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc ; \
-	@echo JING XSD; \
+	echo JING XSD; \
 	jing $$i.xsd $$i.xml; done
 
 
