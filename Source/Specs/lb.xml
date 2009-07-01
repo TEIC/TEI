@@ -35,7 +35,7 @@
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <exemplum xml:lang="en">
-    <p>Indicating typographical line breaks within metrical lines, where they occur at different
+    <p>This example shows typographical line breaks within metrical lines, where they occur at different
       places in different editions:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <l>Of Mans First Disobedience,<lb ed="1674"/> and<lb ed="1667"/> the Fruit</l>
@@ -43,15 +43,18 @@
       <l>Brought Death into the World,<lb ed="1667"/> and all<lb ed="1674"/> our woe,</l>
     </egXML>
   </exemplum>
-  <exemplum xml:lang="en">
-    <p>Indicating line structure of title page, display text, etc.:</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <docTitle>
-        <titlePart type="main"><lb/>THE <lb/>Pilgrim's Progress <lb/>FROM <lb/>THIS WORLD, <lb/>TO
-          <lb/>That which is to come: </titlePart>
-        <!-- etc. -->
-      </docTitle>
-    </egXML>
+  <exemplum xml:lang="fr">
+<p>This example encodes typographical line breaks as a means of
+preserving the visual appearance of a title page. The <att>type</att>
+attribute is used to show that the line break does not (as elsewhere)
+mark the start of a new word.  </p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="fr" corresp="#rab3">
+<titlePart rend="italic">
+<lb/>L'auteur susdict supplie les Lecteurs
+<lb/>benevoles, soy reserver à rire au 
+soi-<lb type="nobreak"/>xante &amp; dixhuytiesme livre.
+</titlePart>
+</egXML>
   </exemplum>
   <remarks>
     <p>By convention, <gi>lb</gi> elements should appear at the point in the text where a new line
@@ -62,8 +65,12 @@
       occur; it should not be used to tag structural units such as lines of verse (for which the
         <gi>l</gi> element is available) except in circumstances where structural units cannot
       otherwise be marked. </p>
-    <p>The <att>type</att> attribute may be used to characterize the linebreak in any respect, for
-      example as word-breaking or not. </p>
+    <p>The <att>type</att> attribute may be used to characterize the
+    line break in any respect, but its most common use is to specify
+    that the presence of the line break does not imply the end of the
+    word in which it is embedded. The value <val>nobreak</val> is
+    recommended for this purpose, but encoders are free to choose
+    whichever values are appropriate. </p>
   </remarks>
   <remarks xml:lang="fr">
 

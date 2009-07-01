@@ -3186,11 +3186,14 @@ types of milestone, marking page, column, and line boundaries.  The
 global <att>n</att> attribute is used in each case to provide a value
 for the particular unit associated with this milestone (for example,
 the page or line number).  Since it is not structural, validation of a
-reference system based on <gi>milestone</gi>s cannot be checked by an
+reference system based on <gi>milestone</gi>s cannot readily be checked by an
 XML parser, so it will be the responsibility of the encoder or the
 application software to ensure that they are given in the correct
 order.</p>
-<p>Milestones are useful where a text has two competing
+<p>Milestone elements are often used as a simple means of capturing
+the original appearance of an early printed text, which will rarely
+coincide exactly with structural units, but they are generally useful
+wherever a text has two or more competing
 structures. For example, many English novels were first published as
 serial works, individual parts of which do not always contain a whole
 number of chapters. An encoder might decide to represent the
@@ -3306,14 +3309,32 @@ attribute must specify one of a predefined set of values.
 declarations for the reference systems just shown.
  </p>
 <p>Milestone elements may be used to mark any kind of shift in the
-properties associated with a piece of text, even if this would not
+properties associated with a piece of text, whether or not would
 normally be considered a reference system. For example, they may be
 used to mark changes in narrative voice in a prose text, or 
 changes of speaker in a dramatic text, where these are not marked
 using structural elements such as <gi>sp</gi>, perhaps in order to
 avoid a clash of hierarchies.</p>
 <!-- example to be supplied by DS -->
-
+<p>The <att>type</att> attribute may be used on milestone elements
+such as <gi>lb</gi> and <gi>pb</gi> to categorize them in any way. One
+particularly useful way is to indicate whether or not these milestone
+tags are word-breaking. By default it is reasonable to assume that
+words are not broken across page or line boundaries, and that
+therefore a sequence such as 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+...sed imp<lb/>erator dixit...
+</egXML>
+should be tokenized as four words (sed, imp, erator, and dixit). To
+make explicit that this is not the case, a tagging such as the
+following is recommended:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+...sed imp<lb type="nobreak"/>erator dixit...
+</egXML>
+Where hyphenation appears before a line or page break, the encoder may
+or may not choose to include it, either explicitly using an
+appropriate Unicode character, or descriptively for example by means
+of the <att>rend</att> attribute; see further <ptr target="#COPU"/>.</p>
 <specGrp xml:id="DCORSM" n="Milestone tags">
 &milestone;
 &pb;
