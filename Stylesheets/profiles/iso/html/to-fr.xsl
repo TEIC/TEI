@@ -17,7 +17,7 @@
     exclude-result-prefixes="exsl edate estr tei html t a rng s iso teix" 
     version="1.0">
   
-<xsl:import href="iso.xsl"/>
+<xsl:import href="to.xsl"/>
 <xsl:param name="numberFormat">fr</xsl:param>
 
 </xsl:stylesheet>
