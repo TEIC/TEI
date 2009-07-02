@@ -187,6 +187,11 @@
   <xd:doc class="tables" type="string"> Default alignment of tables</xd:doc>
   <xsl:param name="tableAlign">left</xsl:param>
 
+  <xd:doc type="boolean" class="layout">
+Whether to make simplified display of ODD
+</xd:doc>
+  <xsl:param name="oddWeaveLite">false</xsl:param>
+
   <xd:doc type="string" class="layout">
 Paragraph indentation
 </xd:doc>
