@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:s="http://www.ascc.net/xml/schematron" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" exclude-result-prefixes="teix a s tei rng xd">
+<xsl:stylesheet
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+    xmlns:s="http://www.ascc.net/xml/schematron"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:teix="http://www.tei-c.org/ns/Examples"
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    version="2.0" 
+    exclude-result-prefixes="teix a s tei rng xd sch xsi">
   <xd:doc type="stylesheet">
     <xd:short> TEI stylesheet for simplifying TEI ODD markup </xd:short>
     <xd:detail> This library is free software; you can redistribute it and/or modify it under the
@@ -448,7 +459,7 @@ How can a class be ok?
       <xsl:apply-templates mode="copy" select="@*"/>
       <xsl:copy-of select="tei:altIdent"/>
       <xsl:if test="$stripped='false'">
-        <xsl:copy-of select="tei:equiv"/>
+        <xsl:apply-templates mode="copy" select="tei:equiv"/>
         <xsl:copy-of select="tei:gloss"/>
         <xsl:copy-of select="tei:desc"/>
       </xsl:if>
@@ -519,11 +530,11 @@ for change individually.
 <!-- equiv, gloss, desc trio -->
           <xsl:choose>
             <xsl:when test="tei:equiv">
-              <xsl:copy-of select="tei:equiv"/>
+              <xsl:apply-templates mode="copy" select="tei:equiv"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
-                <xsl:copy-of select="tei:equiv"/>
+                <xsl:apply-templates mode="copy" select="tei:equiv"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
@@ -691,11 +702,11 @@ If so, use them as is.
           <xsl:choose>
             <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:equiv">
-              <xsl:copy-of select="tei:equiv"/>
+              <xsl:apply-templates mode="copy" select="tei:equiv"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
-                <xsl:copy-of select="tei:equiv"/>
+                <xsl:apply-templates mode="copy" select="tei:equiv"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
@@ -1648,11 +1659,11 @@ select="$M"/></xsl:message>
         <xsl:choose>
           <xsl:when test="$stripped='true'"/>
           <xsl:when test="tei:equiv">
-            <xsl:copy-of select="tei:equiv"/>
+            <xsl:apply-templates mode="copy" select="tei:equiv"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:for-each select="$Old">
-              <xsl:copy-of select="tei:equiv"/>
+              <xsl:apply-templates mode="copy" select="tei:equiv"/>
             </xsl:for-each>
           </xsl:otherwise>
         </xsl:choose>
@@ -1723,11 +1734,11 @@ select="$M"/></xsl:message>
                       <xsl:for-each select="$New/tei:valList/tei:valItem[@ident=$thisme]">
                         <xsl:choose>
                           <xsl:when test="tei:equiv">
-                            <xsl:copy-of select="tei:equiv"/>
+                            <xsl:apply-templates mode="copy" select="tei:equiv"/>
                           </xsl:when>
                           <xsl:otherwise>
                             <xsl:for-each select="$Old/tei:valList/tei:valItem[@ident=$thisme]">
-                              <xsl:copy-of select="tei:equiv"/>
+                              <xsl:apply-templates mode="copy" select="tei:equiv"/>
                             </xsl:for-each>
                           </xsl:otherwise>
                         </xsl:choose>
@@ -1816,7 +1827,7 @@ select="$M"/></xsl:message>
         <xsl:apply-templates mode="copy" select="@*"/>
         <xsl:copy-of select="tei:altIdent"/>
         <xsl:if test="$stripped='false'">
-          <xsl:copy-of select="tei:equiv"/>
+          <xsl:apply-templates mode="copy" select="tei:equiv"/>
           <xsl:copy-of select="tei:gloss"/>
           <xsl:copy-of select="tei:desc"/>
         </xsl:if>
