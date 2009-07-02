@@ -12,7 +12,7 @@
   <xsl:key name="ALL" use="1" 
     match="tei:elementSpec|tei:macroSpec|tei:classSpec|tei:moduleSpec"/>
   <xsl:template match="/">
-    <TEI xmlns:tei="http://www.tei-c.org/ns/1.0">
+    <TEI xmlns="http://www.tei-c.org/ns/1.0">
       <xsl:apply-templates select="tei:TEI/tei:teiHeader"/>
       <xsl:apply-templates select="key('ALL',1)"/>
     </TEI>
