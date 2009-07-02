@@ -2700,15 +2700,19 @@ under new name -->
 	  <Properties
 	      xmlns="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties" 
 	      xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
-	    <property pid="2" name="teitodocx_version">
-	      <vt:lpwstr>1.0</vt:lpwstr>
+	    <property pid="2" name="tei_todocx">
+	      <vt:lpwstr>2.0.0</vt:lpwstr>
 	    </property>
-	    <property pid="3" name="docxtotei_version">
-	      <vt:lpwstr>2.1</vt:lpwstr>
-	    </property>
-	    <property pid="4" name="xsl_version">
+	    <property pid="3" name="tei_fromdocx">
 	      <vt:lpwstr>
-		<xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:encodingDesc/tei:appInfo/tei:application[@ident='docxtotei']/tei:label"/>
+		<xsl:value-of
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:encodingDesc/tei:appInfo/tei:application[@ident='tei_fromdocx']/@ident"/>
+	      </vt:lpwstr>
+	    </property>
+	    <property pid="4" name="iso_template">
+	      <vt:lpwstr>
+		<xsl:value-of
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:encodingDesc/tei:appInfo/tei:application[@ident='iso_template']/@ident"/>
 	      </vt:lpwstr>
 	    </property>
 	  </Properties>

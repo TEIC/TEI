@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+<xsl:stylesheet version="2.0"
+		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		xmlns:prop="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
 		xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
 		xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" 
 		xmlns:dc="http://purl.org/dc/elements/1.1/" 
@@ -25,7 +27,7 @@
 		xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
 		xmlns:xd="http://www.pnp-software.com/XSLTdoc"
 		xmlns="http://www.tei-c.org/ns/1.0"
-		exclude-result-prefixes="a cp dc dcterms dcmitype  iso m mml mo mv o pic r rel tbx tei teidocx v ve w10 w wne wp xd">
+		exclude-result-prefixes="a cp dc dcterms dcmitype prop iso m mml mo mv o pic r rel tbx tei teidocx v ve w10 w wne wp xd">
   
   <xsl:import href="omml2mml.xsl"/>
   <xsl:import href="tei-docx-functions.xsl"/>
@@ -953,10 +955,22 @@
             </fileDesc>
 	    <encodingDesc>
 	      <appInfo>
-		<application ident="docxtotei">
-		  <label>$Id$</label>
+		<application ident="tei_fromdocx" version="2.0.0">
+		  <label>DOCX to TEI</label>
 		</application>
 	      </appInfo> 
+	      <xsl:for-each select="document('docProps/custom.xml',/)/prop:Properties">
+		<appInfo>
+		  <application ident="tei_todocx" version="{prop:property[@name='tei_todocx']}">
+		    <label>TEI to DOCX</label>
+		  </application>
+		</appInfo> 
+		<appInfo>
+		  <application ident="iso_template" version="{prop:property[@name='iso_template']}">
+		    <label>ISO Template</label>
+		  </application>
+		</appInfo> 
+	      </xsl:for-each>
 	    </encodingDesc>
             <revisionDesc>
                 <change>
