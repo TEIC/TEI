@@ -241,15 +241,7 @@
                 </textClass>
             </profileDesc>
             <encodingDesc>
-	      <appInfo>
-		<application version="1.0.0" ident="docxtotei">
-		  <label>
-		    <xsl:for-each select="document('')//xd:doc">
-		      <xsl:value-of select="translate(xd:cvsId,'$','')"/>
-		    </xsl:for-each>
-		  </label>
-		</application>
-	      </appInfo> 
+	      <xsl:call-template name="generateAppInfo"/>
 	      <classDecl>
 		<taxonomy>
 		  <category>

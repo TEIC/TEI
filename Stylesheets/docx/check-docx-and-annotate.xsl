@@ -220,7 +220,7 @@
             <Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"
                 xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
                 <Template>Iso_Template.dotx</Template>
-                <Application>TEIISO tei-docx.xsl 1.0</Application>
+                <Application>TEIISO tei-docx.xsl</Application>
                 <DocSecurity>8</DocSecurity>
                 <SharedDoc>true</SharedDoc>
                 <AppVersion>1.0</AppVersion>

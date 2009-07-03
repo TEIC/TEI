@@ -2687,7 +2687,7 @@ under new name -->
                 xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"
                 xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
                 <Template>Iso_Template.dotx</Template>
-                <Application>TEIISO tei-docx.xsl 1.0</Application>
+                <Application>TEIISO tei-docx.xsl</Application>
                 <DocSecurity>0</DocSecurity>
                 <SharedDoc>true</SharedDoc>
                 <AppVersion>1.0</AppVersion>
@@ -2700,30 +2700,28 @@ under new name -->
 	  <Properties
 	      xmlns="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties" 
 	      xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
-	    <property pid="2" name="tei_todocx">
+	    <property pid="1" name="TEI_toDOCX">
 	      <xsl:attribute name="fmtid">
 		<xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
 	      </xsl:attribute>
 	      <vt:lpwstr>2.0.0</vt:lpwstr>
 	    </property>
-	    <property pid="3" name="tei_fromdocx">
-	      <xsl:attribute name="fmtid">
-		<xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
-	      </xsl:attribute>
-	      <vt:lpwstr>
-		<xsl:value-of
-	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:encodingDesc/tei:appInfo/tei:application[@ident='tei_fromdocx']/@ident"/>
-	      </vt:lpwstr>
-	    </property>
-	    <property pid="4" name="iso_template">
-	      <xsl:attribute name="fmtid">
-		<xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
-	      </xsl:attribute>
-	      <vt:lpwstr>
-		<xsl:value-of
-	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:encodingDesc/tei:appInfo/tei:application[@ident='iso_template']/@ident"/>
-	      </vt:lpwstr>
-	    </property>
+	    <xsl:for-each
+		select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:encodingDesc/tei:appInfo/tei:application">
+	      <xsl:if test="not(@ident='TEI_toDOCX')">
+		<property name="{@ident}">
+		  <xsl:attribute name="pid">
+		    <xsl:value-of select="position()+1"/>
+		  </xsl:attribute>
+		  <xsl:attribute name="fmtid">
+		    <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
+		  </xsl:attribute>
+		  <vt:lpwstr>
+		    <xsl:value-of select="@version"/>
+		  </vt:lpwstr>
+		</property>
+	      </xsl:if>
+	    </xsl:for-each>
 	  </Properties>
         </xsl:result-document>
     </xsl:template>

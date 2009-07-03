@@ -954,23 +954,7 @@
                 </sourceDesc>
             </fileDesc>
 	    <encodingDesc>
-	      <appInfo>
-		<application ident="tei_fromdocx" version="2.0.0">
-		  <label>DOCX to TEI</label>
-		</application>
-	      </appInfo> 
-	      <xsl:for-each select="document('docProps/custom.xml',/)/prop:Properties">
-		<appInfo>
-		  <application ident="tei_todocx" version="{prop:property[@name='tei_todocx']}">
-		    <label>TEI to DOCX</label>
-		  </application>
-		</appInfo> 
-		<appInfo>
-		  <application ident="iso_template" version="{prop:property[@name='iso_template']}">
-		    <label>ISO Template</label>
-		  </application>
-		</appInfo> 
-	      </xsl:for-each>
+	      <xsl:call-template name="generateAppInfo"/>
 	    </encodingDesc>
             <revisionDesc>
                 <change>
@@ -989,7 +973,22 @@
     </xsl:template>
     
     
-    
+    <xsl:template name="generateAppInfo">    
+      <appInfo>
+	<application ident="TEI_fromDOCX" version="2.0.0">
+	  <label>DOCX to TEI</label>
+	</application>
+	<xsl:for-each
+	    select="document(concat($word-directory,'/docProps/custom.xml'))/prop:Properties/prop:property">
+	  <xsl:if test="not(@name='TEI_fromDOCX')">
+	    <application ident="{@name}" version="{.}">
+	      <label><xsl:value-of select="@name"/></label>
+	    </application>
+	  </xsl:if>
+	</xsl:for-each>
+      </appInfo>
+    </xsl:template>
+
     <!-- 
         This template handles lists and takes care of nested lists.
     -->
