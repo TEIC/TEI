@@ -2700,7 +2700,7 @@ under new name -->
 	  <Properties
 	      xmlns="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties" 
 	      xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
-	    <property pid="1" name="TEI_toDOCX">
+	    <property pid="2" name="TEI_toDOCX">
 	      <xsl:attribute name="fmtid">
 		<xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
 	      </xsl:attribute>
@@ -2711,7 +2711,7 @@ under new name -->
 	      <xsl:if test="not(@ident='TEI_toDOCX')">
 		<property name="{@ident}">
 		  <xsl:attribute name="pid">
-		    <xsl:value-of select="position()+1"/>
+		    <xsl:value-of select="position()+2"/>
 		  </xsl:attribute>
 		  <xsl:attribute name="fmtid">
 		    <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
