@@ -966,7 +966,7 @@
   </xd:doc>
   <xsl:template name="mainAction">
     <xsl:choose>
-      <xsl:when test="text/tei:group">
+      <xsl:when test="tei:text/tei:group">
         <xsl:apply-templates select="tei:text/tei:front"/>
         <xsl:apply-templates select="tei:text/tei:group"/>
       </xsl:when>
