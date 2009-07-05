@@ -1323,10 +1323,6 @@ $requestedID: requests a particular page
         </xsl:if> 
 	<xsl:text>} 
 
-	function openpopup(location){ 
-	var newwin =
-        window.open(location,"OUCSPopup","status=no,menu=no,toolbar=no,width=350,height=400,resizable=yes,scrollbars=yes")
-          }
 	</xsl:text>
 	<!--	function clearsearch(){
 	document.searchform.q.value = "";
@@ -1510,18 +1506,20 @@ $requestedID: requests a particular page
       </xsl:for-each>
       <!-- back matter -->
       <xsl:for-each select="tei:back">
-        <div class="tocBack">
-          <xsl:element name="{$tocContainerElement}">
-            <xsl:attribute name="class">
-              <xsl:text>tocContainer</xsl:text>
-            </xsl:attribute>
-            <xsl:call-template name="tocSection">
-              <xsl:with-param name="id" select="$thisOne"/>
+	<xsl:if test="tei:div1|tei:div">
+	  <div class="tocBack">
+	    <xsl:element name="{$tocContainerElement}">
+	      <xsl:attribute name="class">
+		<xsl:text>tocContainer</xsl:text>
+	      </xsl:attribute>
+	      <xsl:call-template name="tocSection">
+		<xsl:with-param name="id" select="$thisOne"/>
               <xsl:with-param name="style" select="$style"/>
-              <xsl:with-param name="force" select="$virtualPages"/>
-            </xsl:call-template>
-          </xsl:element>
-        </div>
+	      <xsl:with-param name="force" select="$virtualPages"/>
+	      </xsl:call-template>
+	    </xsl:element>
+	  </div>
+	</xsl:if>
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
