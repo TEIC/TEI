@@ -857,7 +857,7 @@ class roma
 	$oParser->addReplacement( 'doclang', $szDocLanguage );
 	$oSchemaParser->addReplacement( 'output', $_REQUEST[ 'output' ] );
 	//validate file
-	if ( roma_validate_schema && $szFilename !='teilite' )
+	if ( roma_validate_schema && $szFilename !='teilite' && $szFilename != 'tei_tite' )
 	  {
 	    set_error_handler( array($this, 'schemaValidatorErrorHandler' ) );
 	    if ( $this->m_oRomaDom->relaxNGValidate( roma_customization_validator ) )
