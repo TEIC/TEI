@@ -846,8 +846,19 @@
     <xsl:apply-templates/>
   </xsl:template>
 
+  <xsl:template match="text:note-ref">
+    <ref target="#{@text:ref-name}">
+      <xsl:apply-templates/>
+    </ref>
+  </xsl:template>
+
   <xsl:template match="text:note">
     <note>
+      <xsl:if test="@text:id">
+	<xsl:attribute name="xml:id">
+	  <xsl:value-of select="@text:id"/>
+	</xsl:attribute>
+      </xsl:if>
       <xsl:choose>
         <xsl:when test="@text:note-class='endnote'">
           <xsl:attribute name="place">end</xsl:attribute>
