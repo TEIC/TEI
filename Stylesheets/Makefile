@@ -105,8 +105,8 @@ installcommon: common
 	mkdir -p ${PREFIX}/lib/cgi-bin
 	cp stylebear ${PREFIX}/lib/cgi-bin/stylebear
 	chmod 755 ${PREFIX}/lib/cgi-bin/stylebear
-	mkdir -p ${PREFIX}/share/doc-teixsl/common
-	(cd release/doc; tar cf - .) | (cd ${PREFIX}/share/doc-teixsl/common; tar xvf  -)
+	mkdir -p ${PREFIX}/share/doc/tei-xsl-common
+	(cd release/doc; tar cf - .) | (cd ${PREFIX}/share/doc/tei-xsl-common; tar xvf  -)
 
 install: installp4 installp5 installp5-2 installcommon
 
@@ -118,6 +118,7 @@ log:
 	rm newchanges oldchanges
 
 clean:
+	echo "" > test~
 	find . -name "*~"  | xargs rm
 	-rm stylebear style.xml customize.xml teixsl.html
 	-rm -rf release
