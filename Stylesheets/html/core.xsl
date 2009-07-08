@@ -1503,7 +1503,7 @@
       <xsl:when test="@n">
         <xsl:value-of select="@n"/>
       </xsl:when>
-      <xsl:when test="not(@place) and $consecutiveFootnoteNumbers='true'">
+      <xsl:when test="not(@place) and $consecutiveFNs='true'">
             <xsl:number 
 		count="tei:note[not(@place)]" 
 		level="any"/>
@@ -1530,7 +1530,7 @@
       </xsl:when>
       <xsl:when test="@place='end'">
         <xsl:choose>
-          <xsl:when test="$consecutiveFootnoteNumbers = 'true'">
+          <xsl:when test="$consecutiveFNs = 'true'">
             <xsl:number 
 		count="tei:note[./@place='end']" 
 		level="any"/>
@@ -1555,7 +1555,7 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:choose>
-          <xsl:when test="$consecutiveFootnoteNumbers = 'true'">
+          <xsl:when test="$consecutiveFNs = 'true'">
             <xsl:number 
 		count="tei:note[@place='foot' or @place='bottom']" 
 		level="any"/>

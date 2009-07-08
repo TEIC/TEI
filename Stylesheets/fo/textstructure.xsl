@@ -659,7 +659,9 @@
       <xsl:variable name="Number">
         <xsl:if test="$numberHeadings='true' and $numberHeadingsDepth &gt; $level">
           <xsl:call-template name="calculateNumber">
-            <xsl:with-param name="numbersuffix" select="$headingNumberSuffix"/>
+            <xsl:with-param name="numbersuffix">
+	      <xsl:call-template name="headingNumberSuffix"/>
+	    </xsl:with-param>
           </xsl:call-template>
         </xsl:if>
       </xsl:variable>
@@ -701,7 +703,7 @@
         <fo:marker marker-class-name="section{$level}">
           <xsl:if test="$numberHeadings='true'">
             <xsl:value-of select="$Number"/>
-            <xsl:value-of select="$headingNumberSuffix"/>
+            <xsl:call-template name="headingNumberSuffix"/>
           </xsl:if>
           <xsl:value-of select="tei:head"/>
         </fo:marker>
@@ -1192,7 +1194,9 @@
         <bookmark-label xmlns="http://www.renderx.com/XSL/Extensions">
           <xsl:if test="$numberHeadings='true' and $numberHeadingsDepth &gt; $depth">
             <xsl:call-template name="calculateNumber">
-              <xsl:with-param name="numbersuffix" select="$headingNumberSuffix"/>
+              <xsl:with-param name="numbersuffix">
+		<xsl:call-template name="headingNumberSuffix"/>
+	      </xsl:with-param>
             </xsl:call-template>
             <xsl:text> </xsl:text>
           </xsl:if>
@@ -1225,7 +1229,9 @@
         <bookmark-label xmlns="http://www.renderx.com/XSL/Extensions">
           <xsl:if test="$numberHeadings='true' and $numberHeadingsDepth &gt; $depth">
             <xsl:call-template name="calculateNumber">
-              <xsl:with-param name="numbersuffix" select="$headingNumberSuffix"/>
+              <xsl:with-param name="numbersuffix">
+		<xsl:call-template name="headingNumberSuffix"/>
+	      </xsl:with-param>
             </xsl:call-template>
             <xsl:text> </xsl:text>
           </xsl:if>

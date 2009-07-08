@@ -133,7 +133,7 @@
           </footnote-citation>
           <list-block>
             <xsl:attribute name="provisional-distance-between-starts">
-              <xsl:value-of select="$distanceBetweenStarts"/>
+              <xsl:value-of select="$betweenStarts"/>
             </xsl:attribute>
             <xsl:attribute name="provisional-label-separation">
               <xsl:value-of select="$labelSeparation"/>
@@ -1202,13 +1202,13 @@ simple, bullets, ordered, gloss, unordered, or bibliography
     <xsl:attribute name="provisional-distance-between-starts">
       <xsl:choose>
         <xsl:when test="self::tei:listBibl[tei:biblStruct]">
-          <xsl:value-of select="$distanceBetweenBiblStarts"/>
+          <xsl:value-of select="$betweenBiblStarts"/>
         </xsl:when>
         <xsl:when test="@type='gloss'">
-          <xsl:value-of select="$distanceBetweenGlossStarts"/>
+          <xsl:value-of select="$betweenGlossStarts"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="$distanceBetweenStarts"/>
+          <xsl:value-of select="$betweenStarts"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:attribute>

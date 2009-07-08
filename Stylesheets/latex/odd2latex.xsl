@@ -57,11 +57,13 @@
     </xsl:variable>
     <xsl:if test="$numberHeadingsDepth &gt;= $depth">
       <xsl:call-template name="calculateNumber">
-        <xsl:with-param name="numbersuffix" select="$headingNumberSuffix"/>
+        <xsl:with-param name="numbersuffix">
+	  <xsl:call-template name="headingNumberSuffix"/>
+	</xsl:with-param>
       </xsl:call-template>
     </xsl:if>
     <xsl:if test="$minimal='false'">
-      <xsl:value-of select="$headingNumberSuffix"/>
+      <xsl:call-template name="headingNumberSuffix"/>
       <xsl:choose>
         <xsl:when test="contains(name(.),'Spec')">
           <xsl:call-template name="makeLink">
@@ -89,9 +91,9 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:variable name="headingNumberSuffix">
+  <xsl:template name="headingNumberSuffix">
     <xsl:text> </xsl:text>
-  </xsl:variable>
+  </xsl:template>
 
   <xsl:template name="processSchemaFragment">
     <xsl:param name="filename"/>

@@ -139,7 +139,7 @@
           <xsl:when test="$prenumberedHeadings='true'">
             <xsl:value-of select="@n"/>
 	    <xsl:if test="$minimal='false'">
-	      <xsl:value-of select="$headingNumberSuffix"/>
+	      <xsl:call-template name="headingNumberSuffix"/>
 	    </xsl:if>
           </xsl:when>
           <xsl:otherwise>

@@ -36,7 +36,7 @@
   <xsl:template match="teix:egXML">
     <xsl:choose>
       <xsl:when test="parent::tei:cell">
-	<xsl:text>\mbox{}\\\bgroup</xsl:text>
+	<xsl:text>\bgroup</xsl:text>
 	<xsl:call-template name="egXMLStartHook"/>
 	<xsl:call-template name="exampleFontSet"/>
 	<xsl:text>\begin{shaded}</xsl:text>

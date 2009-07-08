@@ -51,7 +51,7 @@ CSS class for links derived from &lt;xref&gt;
   <xd:doc type="boolean" class="layout">
 Number footnotes consecutively
 </xd:doc>
-  <xsl:param name="consecutiveFootnoteNumbers">false</xsl:param>
+  <xsl:param name="consecutiveFNs">false</xsl:param>
 
   <xd:doc type="boolean" class="layout">
 Link back from footnotes to reference

@@ -124,15 +124,15 @@ Number of columns, when multiple-column work is requested
   <xd:doc type="string" class="layout">
 XSL FO "provisional-distance-between starts"
 </xd:doc>
-  <xsl:param name="distanceBetweenStarts">18pt</xsl:param>
+  <xsl:param name="betweenStarts">18pt</xsl:param>
   <xd:doc type="string" class="layout">
 XSL FO "provisional-distance-between starts" for gloss lists
 </xd:doc>
-  <xsl:param name="distanceBetweenGlossStarts">42pt</xsl:param>
+  <xsl:param name="betweenGlossStarts">42pt</xsl:param>
   <xd:doc type="string" class="layout">
 XSL FO "provisional-distance-between starts" for bibliographies
 </xd:doc>
-  <xsl:param name="distanceBetweenBiblStarts">50pt</xsl:param>
+  <xsl:param name="betweenBiblStarts">50pt</xsl:param>
   <xd:doc type="boolean" class="layout">
 Display section headings in running heads
 </xd:doc>

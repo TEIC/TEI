@@ -21,7 +21,7 @@
   <xsl:param name="outputDir">DTD</xsl:param>
   <xsl:param name="appendixWords"> </xsl:param>
   <xsl:param name="filesuffix"/>
-  <xsl:param name="headingNumberSuffix"> </xsl:param>
+  <xsl:template name="headingNumberSuffix"><xsl:text> </xsl:text></xsl:template>
   <xsl:param name="numberBackHeadings"> </xsl:param>
   <xsl:param name="numberFrontHeadings"> </xsl:param>
   <xsl:param name="numberHeadings"> </xsl:param>

@@ -61,10 +61,10 @@
   </xsl:template>
   <xd:doc class="headings" type="string"> Punctuation to insert after a section
     number</xd:doc>
-  <xsl:param name="headingNumberSuffix">
+  <xsl:template name="headingNumberSuffix">
     <xsl:text>.</xsl:text>
     <xsl:value-of select="$numberSpacer"/>
-  </xsl:param>
+  </xsl:template>
   <xd:doc class="headings" type="string"> Character to put after number of
     section header</xd:doc>
   <xsl:param name="numberSpacer">
@@ -129,7 +129,7 @@
         count="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
         level="multiple"/>
       <xsl:if test="$minimal='false'">
-	<xsl:value-of select="$headingNumberSuffix"/>
+	<xsl:call-template name="headingNumberSuffix"/>
       </xsl:if>
     </xsl:if>
   </xsl:template>

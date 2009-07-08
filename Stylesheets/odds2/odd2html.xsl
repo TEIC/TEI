@@ -77,9 +77,9 @@
   <xsl:template name="copyrightStatement"/>
   <xsl:variable name="top" select="/"/>
   <xsl:template match="processing-instruction()"/>
-  <xsl:variable name="headingNumberSuffix">
+  <xsl:template name="headingNumberSuffix">
     <xsl:text> </xsl:text>
-  </xsl:variable>
+  </xsl:template>
   <xsl:template name="processSchemaFragment">
     <xsl:param name="filename"/>
     <div class="schemaFragment">

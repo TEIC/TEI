@@ -160,7 +160,7 @@
     <xsl:for-each select="document(concat($Path,'/tei-param.xsl'))">
       <xsl:for-each select="key('XDS',$I)">
 	<xsl:if test="not(following-sibling::xsl:*[1]/self::xsl:template)">
-      <row>
+<xsl:variable name="row">
 	<cell>
 	<xsl:choose>
 	  <xsl:when test="$Type='common'"></xsl:when>
@@ -195,21 +195,33 @@
 	  <xsl:text> [</xsl:text>
 	  <code><xsl:value-of select="@type"/></code>]
 	</cell>
-	<cell>
+</xsl:variable>
+
 	  <xsl:for-each select="following-sibling::xsl:*[1]">
 	    <xsl:choose>
 	      <xsl:when test="*">
-		<egXML xmlns="http://www.tei-c.org/ns/Examples">
-		<xsl:copy-of select="*|text()"/>
-		</egXML>
+		<row>
+		  <xsl:copy-of select="$row"/>
+		  <cell></cell>
+		</row>
+		<row>
+		  <cell cols="4">
+		    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+		      <xsl:copy-of select="*|text()"/>
+		    </egXML>
+		  </cell>
+		</row>
 	      </xsl:when>
 	      <xsl:otherwise>
-		<xsl:value-of select="."/>
+		<row>
+		  <xsl:copy-of select="$row"/>
+		  <cell>
+		  <xsl:value-of select="."/>
+		  </cell>
+		</row>
 	      </xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:for-each>
-	</cell>
-      </row>
 	</xsl:if>
       </xsl:for-each>
     </xsl:for-each>
