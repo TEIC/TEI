@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
+<?oxygen RNGSchema="../tei_odds.rnc" type="compact"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en">
     <teiHeader>
         <fileDesc>
             <titleStmt>
-                <title>Faust TEI Extension</title>
+                <title>TEI Extension for Genetic Editions</title>
                 <author>Moritz Wissenbach</author>
             </titleStmt>
             <publicationStmt>
-                <p>for use by whoever wants it</p>
+                <p>for internal use</p>
             </publicationStmt>
             <notesStmt>
                 <note type="ns">http://www.tei-c.org/ns/1.0</note>
@@ -22,8 +23,8 @@
             <divGen type="toc"/>
         </front>
         <body>
-            <p>TEI Extension for Faust&#xD; &#xD; preliminary version</p>
-            <schemaSpec ident="faustTEI" docLang="en" prefix="tei_" start="TEI" xml:lang="en"
+            <p>TEI Extension for Genetic Editions&#xD; &#xD; preliminary version</p>
+            <schemaSpec ident="geneticTEI" docLang="en" prefix="tei_" start="TEI" xml:lang="en"
                 targetLang="en">
                 <moduleRef key="core"/>
                 <moduleRef key="tei"/>
@@ -39,6 +40,159 @@
                 <moduleRef key="textcrit"/>
                 <moduleRef key="transcr"/>
                 <moduleRef key="verse"/>
+                <moduleRef key="gaiji"/>
+
+
+                <!-- topographical document structure -->
+
+                <elementSpec ident="document" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc>Document-centric description of a primary source, containing topographical
+                        information as well as a transcriptions</desc>
+                    <classes>
+                        <memberOf key="model.resourceLike"/>
+                    </classes>
+                    <content>
+                        <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                            <rng:ref name="writingSurface"/>
+                        </rng:oneOrMore>
+                    </content>
+                </elementSpec>
+
+                <elementSpec ident="writingSurface" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc> A surface on which text is written. </desc>
+                    <classes>
+                        <memberOf key="att.typed"/>
+                    </classes>
+                    <content>
+                        <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                            <rng:ref name="docZone"/>
+                        </rng:oneOrMore>
+                    </content>
+                </elementSpec>
+
+                <classSpec ident="att.coordinated" type="atts" mode="change" module="tei">
+                    <attList>
+                        <attDef ident="orient" mode="add">
+                            <desc>(orientation) The orientation of the coordinate system in which
+                                the parameters ulx, uly, lrx, lry are given. In arc degrees. The
+                                rotation is clockwise.</desc>
+                            <datatype minOccurs="1" maxOccurs="1">
+                                <ref xmlns="http://relaxng.org/ns/structure/1.0"
+                                    name="data.numerical"/>
+                            </datatype>
+                        </attDef>
+                    </attList>
+                </classSpec>
+
+                <elementSpec ident="docZone" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc> A zone or block of text that is constituted by its graphical shape or by
+                        any other criterion.</desc>
+                    <classes>
+                        <memberOf key="att.typed"/>
+                        <memberOf key="att.coordinated"/>
+                    </classes>
+                    <content>
+
+                        <!-- is such a model possible in ODD?
+                        
+                        <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                            <rng:choice>
+                                <rng:group>
+                                    <rng:attribute name="x"> </rng:attribute>
+                                    <rng:attribute name="y"/>
+                                    <rng:attribute name="width"/>
+                                    <rng:attribute name="height"/>
+                                    <rng:attribute name="coordSys"/>
+                                </rng:group>
+                                <rng:attribute name="ref"/>
+                            </rng:choice>
+                        </rng:optional>
+                        <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                            <rng:attribute name="depth"/>
+                        </rng:optional>
+                        -->
+                        <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                            <rng:choice>
+                                <rng:ref name="macro.paraContent"/>
+                                <rng:ref name="line"/>
+                                <rng:ref name="docZone"/>
+                            </rng:choice>
+                        </rng:zeroOrMore>
+                    </content>
+                    <attList>
+
+                        <!-- using existing att.coordinated instead
+                            
+                       <attDef ident="x">
+                            <desc> The x coordinate of the upper left corner of the rectangular
+                                zone, expressed in the specified coordinate system</desc>
+                            <datatype minOccurs="1" maxOccurs="1">
+                                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                                    name="data.numeric"/>
+                            </datatype>
+                        </attDef>
+
+                        <attDef ident="y">
+                            <desc> The y coordinate of the upper left corner of the rectangular
+                                zone, expressed in the specified coordinate system</desc>
+                            <datatype minOccurs="1" maxOccurs="1">
+                                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                                    name="data.numeric"/>
+                            </datatype>
+                        </attDef>
+
+                        <attDef ident="width">
+                            <desc> The width of the rectangular zone, expressed in the specified
+                                coordinate system</desc>
+                            <datatype minOccurs="1" maxOccurs="1">
+                                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                                    name="data.numeric"/>
+                            </datatype>
+                        </attDef>
+
+                        <attDef ident="height">
+                            <desc> The height of the rectangular zone, expressed in the specified
+                                coordinate system</desc>
+                            <datatype minOccurs="1" maxOccurs="1">
+                                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                                    name="data.numeric"/>
+                            </datatype>
+                        </attDef>
+                        -->
+
+                        <attDef ident="ref">
+                            <desc> A reference to an arbitrary object that describes the placement
+                                and extent of the zone (such as an SVG element in an external file).
+                                The use of this attribute is exclusive of giving x/y-coordinates
+                                directly. </desc>
+                            <datatype minOccurs="1" maxOccurs="1">
+                                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                                    name="data.pointer"/>
+                            </datatype>
+                        </attDef>
+
+                        <attDef ident="depth">
+                            <desc> Establishes an order on sets of zones in respect to their
+                                overlay. Greater depth signifies that a zone lies under another zone
+                                with lesser depth, i.e. was brought to paper earlier.</desc>
+                            <datatype minOccurs="1" maxOccurs="1">
+                                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                                    name="data.pointer"/>
+                            </datatype>
+                        </attDef>
+                    </attList>
+                </elementSpec>
+
+                <elementSpec ident="line">
+                    <desc>Marks a topographic line in the source document</desc>
+                    <content>
+                        <rng:ref name="macro.paraContent"
+                            xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+                    </content>
+                </elementSpec>
+
+                <!-- editorial justification -->
+
                 <elementSpec ident="edJust" ns="http://www.tei-c.org/ns/1.0" mode="add">
                     <desc>(editorial justification) An editorial justification of any part of
                         the&#xD; edited text.</desc>
@@ -68,9 +222,12 @@
                         </attDef>
                     </attList>
                 </elementSpec>
-                <elementSpec ident="stageDesc" ns="http://www.tei-c.org/ns/1.0" mode="add">
-                    <desc>(stage description) A description of the various stages in the
-                        text&#xD; genesis.</desc>
+
+                <!-- authorial changes -->
+
+                <elementSpec ident="revDesc" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc>(revision description) A description of the various revisions that
+                        occurred in the text&#xD; genesis.</desc>
                     <classes>
                         <memberOf key="model.headerPart"/>
                     </classes>
@@ -84,26 +241,48 @@
                                     <default:ref name="tei_summary"/>
                                 </default:optional>
                                 <default:oneOrMore>
-                                    <default:ref name="tei_stageNote"/>
+                                    <default:ref name="tei_revNote"/>
                                 </default:oneOrMore>
                             </default:group>
                         </default:choice>
                     </content>
                 </elementSpec>
-                <elementSpec ident="stageNote" ns="http://www.tei-c.org/ns/1.0" mode="add">
-                    <desc>Describes a stage in the text genesis.</desc>
+
+                <elementSpec ident="revNote" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc>Describes a revision in the text genesis.</desc>
                     <classes/>
                     <content>
                         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
                             name="macro.specialPara"/>
                     </content>
                 </elementSpec>
-                <elementSpec ident="fm" ns="http://www.tei-c.org/ns/1.0" mode="add">
-                    <desc>(functional mark) A textual or graphical element in a manuscript that is
+
+                <elementSpec ident="revision">
+                    <desc>Groups contained changes in the document to one revision. Changes are
+                        those indicated by add, del and other elements of
+                        model.pPart.transcriptional, as well as the undo, repetition and
+                        transposition elements.The rev attribute points to a description of the
+                        revision.</desc>
+                    <classes>
+                        <memberOf key="model.pPart.transcriptional"/>
+                    </classes>
+                    <content>
+                        <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                            <rng:choice>
+                                <rng:ref name="macro.paraContent"/>
+                                <rng:ref name="line"/>
+                                <rng:ref name="docZone"/>
+                            </rng:choice>
+                        </rng:zeroOrMore>
+                    </content>
+                </elementSpec>
+
+                <elementSpec ident="metaMark" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc>(meta mark) A textual or graphical element in a manuscript that is
                         functional but not part of the text. Could transform the text, like a
                         strikethrough, or provide meta-information, like a date.</desc>
                     <classes>
-                        <memberOf key="model.global"/>
+                        <memberOf key="model.pPart.transcriptional"/>
                         <memberOf key="att.typed"/>
                     </classes>
                     <content>
@@ -119,19 +298,41 @@
                         </attDef>
                     </attList>
                 </elementSpec>
+
                 <classSpec ident="att.global" type="atts" mode="change" module="tei">
                     <attList>
-                        <attDef ident="stage" mode="add">
+                        <attDef ident="rev" mode="add">
                             <datatype minOccurs="1" maxOccurs="1">
-                                <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.name"/>
+                                <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"
+                                />
                             </datatype>
                         </attDef>
                     </attList>
                 </classSpec>
+
+                <elementSpec ident="used" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc>In many cases, authors mark portions of text as having been used, usually
+                        meaning the text has been transcribed to a fair copy. The mark is often a
+                        strikethrough, but can be any author-specific mark.</desc>
+                    <classes>
+                        <memberOf key="model.pPart.transcriptional"/>
+                    </classes>
+                    <content>
+                        <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                            <rng:choice>
+                                <rng:ref name="macro.paraContent"/>
+                                <rng:ref name="line"/>
+                                <rng:ref name="docZone"/>
+                            </rng:choice>
+                        </rng:zeroOrMore>
+                    </content>
+                </elementSpec>
+
+
                 <elementSpec ident="undo" ns="http://www.tei-c.org/ns/1.0" mode="add">
                     <desc>Marks up an action represented by an element to be undone.</desc>
                     <classes>
-                        <memberOf key="model.global"/>
+                        <memberOf key="model.pPart.transcriptional"/>
                     </classes>
                     <content>
                         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -147,6 +348,7 @@
                         </attDef>
                     </attList>
                 </elementSpec>
+
                 <elementSpec ident="subst" module="transcr" mode="change">
                     <attList>
                         <attDef ident="type" mode="add">
@@ -158,6 +360,7 @@
                         </attDef>
                     </attList>
                 </elementSpec>
+
                 <elementSpec ident="repetition" ns="http://www.tei-c.org/ns/1.0" mode="add">
                     <desc>A clarification of already written text.</desc>
                     <classes>
@@ -170,6 +373,7 @@
                             name="macro.specialPara"/>
                     </content>
                 </elementSpec>
+
                 <classSpec ident="att.transcriptional" type="atts" mode="change" module="tei">
                     <attList>
                         <attDef ident="change" mode="add">
@@ -181,6 +385,7 @@
                         </attDef>
                     </attList>
                 </classSpec>
+
                 <elementSpec ident="unclear" module="core" mode="change">
                     <classes mode="replace">
                         <memberOf key="model.choicePart" mode="add"/>
@@ -199,6 +404,122 @@
                         </attDef>
                     </attList>
                 </elementSpec>
+
+                
+
+                <elementSpec ident="transpositions" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc> Describes the textual transpositions.</desc>
+                    <classes>
+                        <memberOf key="model.profileDescPart"/>
+                    </classes>
+                    <content>
+                        <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                            <rng:ref name="transposition"/>
+                        </rng:oneOrMore>
+                    </content>
+                </elementSpec>
+
+                <elementSpec ident="transposition" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc> Describes a textual transposition. Contains a list of pointers that
+                        specifies the new order of the text fragments. </desc>
+                    <content>
+                        <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                            <rng:ref name="ptr"/>
+                        </rng:oneOrMore>
+                    </content>
+                </elementSpec>
+
+
+
+                <!-- authorial changes: spanning -->
+
+                <elementSpec ident="revisionSpan">
+                    <desc>Groups contained changes in the document to one revision. Changes are
+                        those indicated by add, del and other elements of
+                        model.pPart.transcriptional, as well as the undo, repetition and
+                        transposition elements.The rev attribute points to a description of the
+                        revision.</desc>
+                    <classes>
+                        <memberOf key="model.pPart.transcriptional"/>
+                        <memberOf key="att.spanning"/>
+                    </classes>
+                    <content> </content>
+                </elementSpec>
+
+                <elementSpec ident="usedSpan" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc>In many cases, authors mark portions of text as having been used, usually
+                        meaning the text has been transcribed to a fair copy. The mark is often a
+                        strikethrough, but can be any author-specific mark.</desc>
+                    <classes>
+                        <memberOf key="model.pPart.transcriptional"/>
+                        <memberOf key="att.spanning"/>
+                    </classes>
+                    <content>
+                        <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+                    </content>
+                </elementSpec>
+
+
+                <elementSpec ident="trSpan" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                    <desc>(transposition) A part of the text that has been moved to a different
+                        location.</desc>
+                    <classes>
+                        <memberOf key="att.spanning"/>
+                        <memberOf key="model.global"/>
+                    </classes>
+                    <content>
+                        <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+                    </content>
+                </elementSpec>
+                
+                
+                <!-- genetic relations -->
+
+                <elementSpec ident="node" module="nets" mode="change">
+                    <classes mode="change">
+                        <memberOf mode="add" key="attribute.pointing"/>
+                    </classes>
+                    <attList>
+                        <attDef ident="target" mode="add">
+                            <desc> A link to the element or passage represented by the node.</desc>
+                            <datatype>
+                                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                                    name="data.pointing"/>
+                            </datatype>
+                        </attDef>
+                    </attList>
+                </elementSpec>
+
+                <elementSpec ident="arc" module="nets" mode="change">
+                    <classes mode="change">
+                        <memberOf mode="add" key="att.typed"/>
+                    </classes>
+                </elementSpec>
+
+                <!-- spanning text structure -->
+                <elementSpec ident="divSpan" module="textstructure" mode="add">
+                    <desc>(text division) contains a subdivision of the front, body, or back of a
+                        text.</desc>
+                    <classes>
+                        <memberOf mode="add" key="model.divLike"/>
+                        <memberOf mode="add" key="att.spanning"/>
+                    </classes>
+                    <content>
+                        <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+                    </content>
+                </elementSpec>
+
+                <elementSpec ident="pSpan" module="core" mode="add">
+                    <desc>(paragraph) marks paragraphs in prose.</desc>
+                    <classes>
+                        <memberOf mode="add" key="model.pLike"/>
+                        <memberOf mode="add" key="att.spanning"/>
+                    </classes>
+                    <content>
+                        <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+                    </content>
+                </elementSpec>
+
             </schemaSpec>
         </body>
     </text>
