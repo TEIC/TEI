@@ -12,7 +12,7 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:teix="http://www.tei-c.org/ns/Examples" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom xd">
+    exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix xsl atom xd">
 
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
 
@@ -38,6 +38,11 @@
   <xsl:param name="wrapLength">65</xsl:param>
   <xsl:param name="attLength">40</xsl:param>
   <xsl:param name="attsOnSameLine">3</xsl:param>
+
+  <xsl:param name="omitNSDecls">
+    http://www.tei-c.org/ns/1.0
+  </xsl:param>
+
   <xsl:key name="Namespaces" match="*[ancestor::teix:egXML]" use="namespace-uri()"/>
 
   <xsl:key name="Namespaces" match="*[not(ancestor::*)]" use="namespace-uri()"/>
@@ -518,6 +523,14 @@
         </xsl:call-template>
       </xsl:when>
 
+      <xsl:when test="contains($omitNSDecls,namespace-uri())">
+        <xsl:call-template name="verbatim-createElement">
+          <xsl:with-param name="name" select="local-name(.)"/>
+	  <xsl:with-param name="special">
+	    <xsl:value-of select="$highlightMe"/>
+	  </xsl:with-param>
+        </xsl:call-template>
+      </xsl:when>
 
       <xsl:when test="string-length($ns-prefix) &gt; 0">
         <xsl:call-template name="verbatim-createElement">
@@ -582,6 +595,7 @@
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
+
 
   <xsl:template match="@*" mode="verbatim">
     <xsl:variable name="L">

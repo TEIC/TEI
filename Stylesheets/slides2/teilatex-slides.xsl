@@ -31,7 +31,7 @@ XSL LaTeX stylesheet to make slides
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
     xmlns:s="http://www.ascc.net/xml/schematron" 
     xmlns:map="http://apache.org/cocoon/sitemap/1.0"
-    exclude-result-prefixes="a s map atom xhtml teix tei rng"
+    exclude-result-prefixes="a s map atom xhtml teix tei xsl rng"
     version="2.0">
   <xsl:import href="../latex2/tei.xsl"/>
   <xsl:import href="../common2/verbatim.xsl"/>
@@ -348,5 +348,24 @@ XSL LaTeX stylesheet to make slides
     </xsl:choose>
   </xsl:template>
 
+
+<xsl:template match="@*" mode="attributetext">
+  <xsl:choose>
+    <xsl:when test="string-length(.)&gt;$attLength and contains(.,' ')">
+      <xsl:call-template name="verbatim-reformatText">
+	<xsl:with-param name="sofar">0</xsl:with-param>
+	<xsl:with-param name="indent">
+	  <xsl:text> </xsl:text>
+	</xsl:with-param>
+	<xsl:with-param name="text">
+	  <xsl:value-of select="normalize-space(translate(.,'\{}','&#8421;&#10100;&#10101;'))"/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+	<xsl:value-of select="translate(.,'\{}','&#8421;&#10100;&#10101;')"/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
 
 </xsl:stylesheet>
