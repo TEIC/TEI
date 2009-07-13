@@ -49,6 +49,10 @@ Description
       </a>
       <br/>
       <form method="POST" action="?mode=attributeAdded">
+	<xsl:attribute name="onsubmit">
+	  <xsl:text>javascript:return ValidateFormDesc(this)</xsl:text>
+	</xsl:attribute>
+
         <input type="hidden" name="element" value="{$element}"/>
         <input type="hidden" name="module" value="{$module}"/>
         <input type="hidden" name="class" value="{$class}"/>

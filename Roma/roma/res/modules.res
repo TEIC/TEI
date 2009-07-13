@@ -59,7 +59,7 @@ form_changes=Modifiche
 form_changed=Modificato
 form_add=Aggiungi
 form_remove=Rimuovi
-helpmessage=Clicca su "Aggiungi" per inserire il modulo nello schema, oppure clicca sul nome del modulo per modificarne il contenuto
+selectedModules_headline=List of selected Modules
 
 
 [ja]

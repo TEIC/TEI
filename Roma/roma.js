@@ -263,3 +263,26 @@ function setChanged(obj,target) {
    box.value='true';
 }
 
+function ValidateFormDesc(form)
+{
+
+   if(IsEmpty(form.description)) 
+   { 
+      alert('You have not entered an description') 
+      form.description.focus(); 
+      return false; 
+   } 
+ 
+   return true;
+ 
+} 
+
+function IsEmpty(aTextField) {
+   if ((aTextField.value.length==0) ||
+   (aTextField.value==null)) {
+      return true;
+   }
+   else { return false; }
+}	
+
+
