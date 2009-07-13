@@ -16,7 +16,7 @@ Description
   <xsl:param name="elementName"/>
   <xsl:param name="elementDesc"/>
   <xsl:param name="elementClasses"/>
-  <xsl:param name="elementContents"/>
+  <xsl:param name="elementContent"/>
   <xsl:param name="elementFullContents"/>
   <xsl:param name="elementsModule"/>
   <xsl:param name="MESSAGE"/>
@@ -28,6 +28,25 @@ Description
   <xsl:param name="doclang"/>
   <xsl:param name="TEIWEB">http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:param>
   <xsl:param name="changeNameERROR"/>
+
+
+
+  <xsl:variable name="empty">
+    <xsl:text>&lt;content&gt;&lt;rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/&gt;&lt;/content&gt;</xsl:text>
+  </xsl:variable>
+  <xsl:variable name="text">
+    <xsl:text>&lt;content&gt;&lt;rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/&gt;&lt;/content&gt;</xsl:text>
+  </xsl:variable>
+  <xsl:variable name="before">
+    <xsl:text>name="</xsl:text>
+  </xsl:variable>
+  <xsl:variable name="start">
+    <xsl:text>&lt;content&gt;&lt;rng:ref xmlns:rng</xsl:text>
+  </xsl:variable>
+  <xsl:variable name="after">
+    <xsl:text>"/&gt;&lt;/content&gt;</xsl:text>
+  </xsl:variable>
+    
   <xsl:template match="/">
     <p class="roma">
       <xsl:if test="$selectedMode='addElement'">
@@ -311,19 +330,32 @@ Description
   <xsl:template name="contentTypes">
     <xsl:if test="$selectedMode='addElement'">
       <div class="HideItem">
+	<xsl:variable name="currentContent">
+	  <xsl:if  test="starts-with($elementFullContents,$start)">
+	    <xsl:value-of select="substring-before(substring-after($elementFullContents,$before),$after)"/>
+	  </xsl:if>
+	</xsl:variable>
+
         <select name="content" size="1">
-          <option value="text"><xsl:if test="$elementContents='text'"><xsl:attribute name="selected">1</xsl:attribute></xsl:if> Text </option>
-          <option value="userContent"><xsl:if test="$elementContents='userContent'"><xsl:attribute name="selected">1</xsl:attribute></xsl:if> User content </option>
-          <option value="empty"><xsl:if test="$elementContents='empty'"><xsl:attribute name="selected">1</xsl:attribute></xsl:if> Empty </option>
+	  <option value="text">
+	    <xsl:if  test="$elementFullContents=$text">
+	      <xsl:attribute name="selected">
+		<xsl:text>1</xsl:text>
+	      </xsl:attribute>
+	    </xsl:if>
+	    <xsl:text>Text </xsl:text>
+	  </option>
+	  <option value="empty">
+	    <xsl:if  test="$elementFullContents=$empty">
+	      <xsl:attribute name="selected">
+		<xsl:text>1</xsl:text>
+	      </xsl:attribute>
+	    </xsl:if>
+	    <xsl:text>Empty </xsl:text>
+	  </option>
           <xsl:for-each select="/addElement/dataList/*">
             <option>
-              <xsl:attribute name="value">
-                <xsl:value-of select="dataName"/>
-              </xsl:attribute>
-              <xsl:variable name="currentDataName">
-                <xsl:value-of select="dataName"/>
-              </xsl:variable>
-              <xsl:if test="$currentDataName=$elementContents">
+              <xsl:if test="dataName=$currentContent">
                 <xsl:attribute name="selected">1</xsl:attribute>
               </xsl:if>
               <xsl:value-of select="dataName"/>
@@ -331,13 +363,7 @@ Description
           </xsl:for-each>
           <xsl:for-each select="/addElement/macroList/*">
             <option>
-              <xsl:attribute name="value">
-                <xsl:value-of select="macroName"/>
-              </xsl:attribute>
-              <xsl:variable name="currentDataName">
-                <xsl:value-of select="macroName"/>
-              </xsl:variable>
-              <xsl:if test="$currentDataName=$elementContents">
+              <xsl:if test="macroName=$currentContent">
                 <xsl:attribute name="selected">1</xsl:attribute>
               </xsl:if>
               <xsl:value-of select="macroName"/>
@@ -346,8 +372,8 @@ Description
         </select>
       </div>
     </xsl:if>
-    <xsl:if test="$selectedMode='changeElement'">
-      <span>
+    <xsl:if test="$selectedMode='changeElement'"> 
+     <span>
         <textarea rows="8" cols="80" name="content" onChange="setChanged(this,'changedContent')">
           <xsl:choose>
             <xsl:when test="//errorList/error/location[node()='contents']">
