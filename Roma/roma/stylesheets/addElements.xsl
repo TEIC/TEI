@@ -337,6 +337,12 @@ Description
 	</xsl:variable>
 
         <select name="content" size="1">
+	  <option value="userContent">
+	    <xsl:if test="$elementContents='userContent'">
+	      <xsl:attribute name="selected">1</xsl:attribute>
+	    </xsl:if>
+	    <xsl:text>User content </xsl:text>
+	  </option>
 	  <option value="text">
 	    <xsl:if  test="$elementFullContents=$text">
 	      <xsl:attribute name="selected">
