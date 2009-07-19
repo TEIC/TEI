@@ -48,7 +48,6 @@
     <cvsId>$Id$</cvsId>
     <copyright>2008, TEI Consortium</copyright>
 </doc>
-    <xsl:param name="tableMethod">cals</xsl:param>    
 
     <xsl:param name="template">ISO</xsl:param>
 

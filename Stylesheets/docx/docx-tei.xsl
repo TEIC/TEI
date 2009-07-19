@@ -565,16 +565,20 @@
 				<xsl:value-of select="w:p[1]/w:pPr/w:jc/@w:val"/>
 			      </xsl:attribute>
 			    </xsl:if>
+			    <!-- cannot implement style yet
 			    <xsl:if test="w:p[1]/w:pPr/w:pStyle">
 			      <xsl:attribute name="rend">
 				<xsl:value-of select="w:p[1]/w:pPr/w:pStyle/@w:val"/>
 			      </xsl:attribute>
 			    </xsl:if>
+			    -->
+			    <!-- cannot impement cols yet 
 			    <xsl:if test="w:tcPr/w:gridSpan">
 			      <xsl:attribute name="cols">
 				<xsl:value-of select="w:tcPr/w:gridSpan/@w:val"/>
 			      </xsl:attribute>
 			    </xsl:if>
+			    -->
 			    <xsl:apply-templates/>
 			  </entry>
 			</xsl:for-each>
@@ -980,11 +984,14 @@
 	</application>
 	<xsl:for-each
 	    select="document(concat($word-directory,'/docProps/custom.xml'))/prop:Properties/prop:property">
-	  <xsl:if test="not(@name='TEI_fromDOCX')">
-	    <application ident="{@name}" version="{.}">
-	      <label><xsl:value-of select="@name"/></label>
-	    </application>
-	  </xsl:if>
+	  <xsl:choose>
+	    <xsl:when test="@name='TEI_fromDOCX'"/>
+	    <xsl:when test="contains(@name,'TEI')">
+	      <application ident="{@name}" version="{.}">
+		<label><xsl:value-of select="@name"/></label>
+	      </application>
+	    </xsl:when>
+	  </xsl:choose>
 	</xsl:for-each>
       </appInfo>
     </xsl:template>
@@ -1108,7 +1115,7 @@
         <xsl:variable name="precedingTableTitle" select="preceding-sibling::w:p[w:pPr/w:pStyle/@w:val='TableTitle'
             or w:pPr/w:pStyle/@w:val=$Tabletitle][1]"/>
         <xsl:if test="$precedingTableTitle and $precedingTableTitle/following-sibling::w:tbl[1] and generate-id()=generate-id($precedingTableTitle/following-sibling::w:tbl[1])">
-            <title>
+            <title xmlns="http://http://www.oasis-open.org/specs/tm9901">
                 <xsl:apply-templates select="$precedingTableTitle"/>
             </title>
         </xsl:if>

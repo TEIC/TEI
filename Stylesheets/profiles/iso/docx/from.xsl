@@ -50,6 +50,7 @@
     <!-- param defining whether to use a custom metadata file or to extract
     the metadata from the document -->
     <xsl:param name="metadata-file"/>
+    <xsl:param name="tableMethod">cals</xsl:param>    
     
     <!-- Overwriting the creation of the teiHeader -->
     <xsl:template name="create-tei-header">
@@ -652,6 +653,9 @@
             </xsl:when>
             <!-- do not search for numbers inside math -->
             <xsl:when test="ancestor-or-self::m:t">
+                <xsl:value-of select="."/>
+            </xsl:when>
+            <xsl:when test="ancestor::mml:math">
                 <xsl:value-of select="."/>
             </xsl:when>
             
