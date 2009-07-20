@@ -231,20 +231,20 @@
                     <classes>
                         <memberOf key="model.headerPart"/>
                     </classes>
-                    <content xmlns:default="http://relaxng.org/ns/structure/1.0">
-                        <default:choice xmlns="http://relaxng.org/ns/structure/1.0">
-                            <default:oneOrMore>
-                                <default:ref name="tei_model.pLike"/>
-                            </default:oneOrMore>
-                            <default:group>
-                                <default:optional>
-                                    <default:ref name="tei_summary"/>
-                                </default:optional>
-                                <default:oneOrMore>
-                                    <default:ref name="tei_revNote"/>
-                                </default:oneOrMore>
-                            </default:group>
-                        </default:choice>
+                    <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                        <rng:choice xmlns="http://relaxng.org/ns/structure/1.0">
+                            <rng:oneOrMore>
+                                <rng:ref name="tei_model.pLike"/>
+                            </rng:oneOrMore>
+                            <rng:group>
+                                <rng:optional>
+                                    <rng:ref name="tei_summary"/>
+                                </rng:optional>
+                                <rng:oneOrMore>
+                                    <rng:ref name="tei_revNote"/>
+                                </rng:oneOrMore>
+                            </rng:group>
+                        </rng:choice>
                     </content>
                 </elementSpec>
 
@@ -381,16 +381,6 @@
                         <memberOf key="att.editLike" mode="add"/>
                         <memberOf key="att.typed" mode="add"/>
                     </classes>
-                    <attList>
-                        <attDef ident="length" mode="add">
-                            <desc>The number or estimated number of unreadable characters.</desc>
-                            <datatype minOccurs="1" maxOccurs="1">
-                                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                                    name="data.numeric"/>
-                            </datatype>
-                            <defaultVal>1</defaultVal>
-                        </attDef>
-                    </attList>
                 </elementSpec>
 
                 
