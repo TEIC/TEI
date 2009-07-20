@@ -4,7 +4,7 @@ namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace teix = "http://www.tei-c.org/ns/Examples"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
-# Schema generated from ODD source 2009-07-11T20:13:28+02:00. 
+# Schema generated from ODD source 2009-07-20T14:15:57+02:00. 
 # TEI Edition: 1.4.1. Last updated on July 1st 2009.
 #
 
@@ -709,15 +709,10 @@ att.spanning.attribute.spanTo =
   attribute spanTo { xsd:anyURI }?
 att.transcriptional.attributes =
   att.editLike.attributes,
-  att.transcriptional.attribute.change,
   att.transcriptional.attribute.hand,
   att.transcriptional.attribute.status,
   att.transcriptional.attribute.seq,
   empty
-att.transcriptional.attribute.change =
-  
-  ## Groups changes via a common name.
-  attribute change { xsd:Name }?
 att.transcriptional.attribute.hand =
   
   ## signifies the hand of the agent which made the intervention.
@@ -1545,11 +1540,7 @@ tei_add =
     att.global.linking.attributes,
     att.global.analytic.attributes,
     att.global.facs.attributes,
-    att.transcriptional.attribute.change,
-    att.transcriptional.attribute.hand,
-    att.transcriptional.attribute.status,
-    att.transcriptional.attribute.seq,
-    att.editLike.attributes,
+    att.transcriptional.attributes,
     att.placement.attributes,
     att.typed.attributes,
     empty
@@ -1570,11 +1561,7 @@ tei_del =
     att.global.linking.attributes,
     att.global.analytic.attributes,
     att.global.facs.attributes,
-    att.transcriptional.attribute.change,
-    att.transcriptional.attribute.hand,
-    att.transcriptional.attribute.status,
-    att.transcriptional.attribute.seq,
-    att.editLike.attributes,
+    att.transcriptional.attributes,
     att.typed.attributes,
     empty
   }
@@ -9413,11 +9400,7 @@ tei_addSpan =
     att.global.linking.attributes,
     att.global.analytic.attributes,
     att.global.facs.attributes,
-    att.transcriptional.attribute.change,
-    att.transcriptional.attribute.hand,
-    att.transcriptional.attribute.status,
-    att.transcriptional.attribute.seq,
-    att.editLike.attributes,
+    att.transcriptional.attributes,
     att.placement.attributes,
     att.typed.attributes,
     att.spanning.attributes,
@@ -9480,11 +9463,7 @@ tei_delSpan =
     att.global.linking.attributes,
     att.global.analytic.attributes,
     att.global.facs.attributes,
-    att.transcriptional.attribute.change,
-    att.transcriptional.attribute.hand,
-    att.transcriptional.attribute.status,
-    att.transcriptional.attribute.seq,
-    att.editLike.attributes,
+    att.transcriptional.attributes,
     att.typed.attributes,
     att.spanning.attributes,
     empty
@@ -9611,11 +9590,7 @@ tei_restore =
     att.global.linking.attributes,
     att.global.analytic.attributes,
     att.global.facs.attributes,
-    att.transcriptional.attribute.change,
-    att.transcriptional.attribute.hand,
-    att.transcriptional.attribute.status,
-    att.transcriptional.attribute.seq,
-    att.editLike.attributes,
+    att.transcriptional.attributes,
     att.typed.attributes,
     empty
   }
@@ -9670,11 +9645,7 @@ tei_subst =
     att.global.linking.attributes,
     att.global.analytic.attributes,
     att.global.facs.attributes,
-    att.transcriptional.attribute.change,
-    att.transcriptional.attribute.hand,
-    att.transcriptional.attribute.status,
-    att.transcriptional.attribute.seq,
-    att.editLike.attributes,
+    att.transcriptional.attributes,
     empty
   }
 tei_supplied =
@@ -10324,31 +10295,8 @@ tei_repetition =
     att.global.linking.attributes,
     att.global.analytic.attributes,
     att.global.facs.attributes,
-    att.transcriptional.attribute.change,
-    att.transcriptional.attribute.hand,
-    att.transcriptional.attribute.status,
-    att.transcriptional.attribute.seq,
-    att.editLike.attributes,
+    att.transcriptional.attributes,
     att.typed.attributes,
-    empty
-  }
-tei_trSpan =
-  
-  ## (transposition) A part of the text that has been moved to a different
-  ##                         location.
-  element trSpan {
-    empty,
-    att.global.attribute.rev,
-    att.global.attribute.xmlid,
-    att.global.attribute.n,
-    att.global.attribute.xmllang,
-    att.global.attribute.rend,
-    att.global.attribute.rendition,
-    att.global.attribute.xmlbase,
-    att.global.linking.attributes,
-    att.global.analytic.attributes,
-    att.global.facs.attributes,
-    att.spanning.attributes,
     empty
   }
 tei_transpositions =
@@ -10414,6 +10362,25 @@ tei_usedSpan =
   ##                         meaning the text has been transcribed to a fair copy. The mark is often a
   ##                         strikethrough, but can be any author-specific mark.
   element usedSpan {
+    empty,
+    att.global.attribute.rev,
+    att.global.attribute.xmlid,
+    att.global.attribute.n,
+    att.global.attribute.xmllang,
+    att.global.attribute.rend,
+    att.global.attribute.rendition,
+    att.global.attribute.xmlbase,
+    att.global.linking.attributes,
+    att.global.analytic.attributes,
+    att.global.facs.attributes,
+    att.spanning.attributes,
+    empty
+  }
+tei_trSpan =
+  
+  ## (transposition) A part of the text that has been moved to a different
+  ##                         location.
+  element trSpan {
     empty,
     att.global.attribute.rev,
     att.global.attribute.xmlid,
