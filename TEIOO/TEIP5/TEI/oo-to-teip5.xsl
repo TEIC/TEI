@@ -655,19 +655,23 @@
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="$Style='SubScript'">
-        <hi rend="sub">
-          <xsl:apply-templates/>
+	<hi rend="sub">
+	  <xsl:apply-templates/>
         </hi>
       </xsl:when>
       <xsl:when test="$Style='SuperScript'">
         <hi rend="sup">
-          <xsl:apply-templates/>
+	  <xsl:apply-templates/>
         </hi>
+      </xsl:when>
+      <xsl:when test="style:text-properties[@fo:text-transform='small-caps']">
+	<hi rend="sc">
+	  <xsl:apply-templates/>
+	</hi>
       </xsl:when>
       <xsl:when test="../text:h">
         <xsl:apply-templates/>
       </xsl:when>
-<!--      <xsl:when test="normalize-space(.)=''"/>-->
       <xsl:otherwise>
         <xsl:call-template name="applyStyle"/>
       </xsl:otherwise>
