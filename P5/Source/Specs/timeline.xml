@@ -36,7 +36,7 @@ elements of a spoken text to create a temporal alignment of that text.</desc>
     </rng:oneOrMore>
   </content>
   <attList>
-    <attDef ident="origin" usage="req">
+    <attDef ident="origin" usage="rwa">
       <equiv/>
       <desc>designates the origin of the timeline, i.e. the time at which it
 begins.</desc>
@@ -52,27 +52,12 @@ begins.</desc>
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>must point either to one of the <gi>when</gi> elements in
+      <valDesc>if suppplied, must point either to one of the <gi>when</gi> elements in
       its content, or to another <gi>timeline</gi> element.</valDesc>
       <valDesc xml:lang="fr" version="2009-04-17">doit pointer, soit vers l'un des éléments <gi>when</gi> qu'il contient, soit vers un autre élément <gi>timeline</gi>.</valDesc>
       <remarks>
-        <p>If the absolute value for the time of origin is not known,
-	an arbitrary time (such as 00:00) should be used.
-	<!-- . it may be
-given in descriptive terms, e.g. <mentioned>sometime on the
-night of the murder</mentioned> or <mentioned>unknown</mentioned>.--></p>
-      </remarks>
-      <remarks xml:lang="fr" version="2009-04-17">
-        <p>Si la valeur absolue du point de départ temporel n'est pas connue, il faut
-                        indiquer une valeur arbitraire (telle que 00:00). </p>
-      </remarks>
-      <remarks xml:lang="ja">
-        <p>
-        起点時間の絶対値が判らない場合，任意の時間(例えば00:00)を使う
-        べきである．
-	<!-- . it may be
-given in descriptive terms, e.g. <mentioned>sometime on the
-night of the murder</mentioned> or <mentioned>unknown</mentioned>.--></p>
+        <p>If this attribute is not supplied, the implication is that
+	the time of origin is not known. </p>
       </remarks>
     </attDef>
     <attDef ident="unit" usage="rwa">
@@ -183,7 +168,7 @@ night of the murder</mentioned> or <mentioned>unknown</mentioned>.--></p>
   </attList>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <timeline xml:id="TL01" origin="#TL-w0" unit="ms">
+      <timeline xml:id="TL01" unit="ms">
         <when xml:id="TL-w0" absolute="11:30:00"/>
         <when xml:id="TL-w1" interval="unknown" since="#TL-w0"/>
         <when xml:id="TL-w2" interval="100" since="#TL-w1"/>
@@ -194,19 +179,6 @@ night of the murder</mentioned> or <mentioned>unknown</mentioned>.--></p>
       </timeline>
     </egXML>
   </exemplum>
-  <remarks>
-    <p rend="dataDesc">one or more points in time, one of which is its origin</p>
-    <p/>
-  </remarks>
-  <remarks xml:lang="fr">
-    <p rend="dataDesc">Un ou plusieurs points temporels, dont l'un est le point
-            d'origine</p>
-  </remarks>
-  <remarks xml:lang="ja">
-    <p rend="dataDesc">
-    ひとつ以上の時間点．うちひとつは，起点である．
-    </p>
-  </remarks>
   <listRef>
     <ptr target="#SASYMP" type="div3"/>
   </listRef>
