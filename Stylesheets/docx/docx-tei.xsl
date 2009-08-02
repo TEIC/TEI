@@ -600,9 +600,16 @@
 			    <xsl:value-of select="w:p[1]/w:pPr/w:jc/@w:val"/>
 			  </xsl:attribute>
 			</xsl:if>
-			<xsl:if test="w:p[1]/w:pPr/w:pStyle">
+			<xsl:if test="w:p[1]/w:pPr/w:pStyle[not(@w:val='[No Paragraph Style]')]">
 			  <xsl:attribute name="rend">
-			    <xsl:value-of select="w:p[1]/w:pPr/w:pStyle/@w:val"/>
+			    <xsl:value-of
+				select="w:p[1]/w:pPr/w:pStyle/@w:val"/>
+			    <xsl:if test="w:tcPr/w:shd/@w:fill">
+			      <xsl:text> background-color(</xsl:text>
+			      <xsl:value-of
+				  select="w:tcPr/w:shd/@w:fill"/>
+			      <xsl:text>)</xsl:text>
+			    </xsl:if>
 			  </xsl:attribute>
 			</xsl:if>
 			<xsl:if test="w:tcPr/w:gridSpan">
