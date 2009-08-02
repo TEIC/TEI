@@ -1707,10 +1707,20 @@ version="2.0">
   <xsl:template name="generateParents">
     <xsl:element  namespace="{$outputNS}" name="{$divName}">
       <xsl:attribute name="{$rendName}">parent</xsl:attribute>
-      <xsl:call-template name="generateParentsByElement"/>
+      <xsl:variable name="list">
+	<List>
+	  <xsl:call-template name="generateParentsByElement"/>
+	  <xsl:call-template name="generateParentsByMacro"/>
+	  <xsl:call-template name="generateParentsByClass"/>
+	</List>
+      </xsl:variable>
+      <xsl:for-each select="$list/List/Item">
+	<xsl:copy-of select="*|text()"/>
+	<xsl:if test="following-sibling::Item">
+	  <xsl:call-template name="showSpace"/>
+	</xsl:if>
+      </xsl:for-each>
       <xsl:call-template name="generateParentsByAttribute"/>
-      <xsl:call-template name="generateParentsByMacro"/>
-      <xsl:call-template name="generateParentsByClass"/>
     </xsl:element>
   </xsl:template>
 
@@ -1818,40 +1828,31 @@ version="2.0">
 
   <xsl:template name="generateParentsByElement">
     <xsl:variable name="this" select="@ident"/>
-    <xsl:variable name="list">
-      <List>
-	<xsl:for-each select="key('REFS',$this)/ancestor::tei:elementSpec">
-	  <xsl:sort select="@ident"/>
-	  <Item>
-	    <xsl:call-template name="linkTogether">
-	      <xsl:with-param name="name" select="@ident"/>
-	      <xsl:with-param name="class">link_odd_element</xsl:with-param>
-	    </xsl:call-template>
-	  </Item>
-	</xsl:for-each>
-      </List>
-    </xsl:variable>
-    <xsl:for-each select="$list/List/Item">
-      <xsl:copy-of select="*|text()"/>
-      <xsl:if test="following-sibling::Item">
-	<xsl:call-template name="showSpace"/>
-      </xsl:if>
+    <xsl:for-each select="key('REFS',$this)/ancestor::tei:elementSpec">
+      <xsl:sort select="@ident"/>
+      <Item>
+	<xsl:call-template name="linkTogether">
+	  <xsl:with-param name="name" select="@ident"/>
+	  <xsl:with-param name="class">link_odd_element</xsl:with-param>
+	</xsl:call-template>
+      </Item>
     </xsl:for-each>
   </xsl:template>
 
   <xsl:template name="generateParentsByAttribute">
     <xsl:variable name="this" select="@ident"/>
     <xsl:if test="count(key('ATTREFS-CLASS',$this))&gt;0">
-        <xsl:element namespace="{$outputNS}" name="{$segName}">
-	  <xsl:attribute name="xml:lang">
-	    <xsl:value-of select="$documentationLanguage"/>
-	  </xsl:attribute>
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">
-	      <xsl:text> Class</xsl:text>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:element>
+<xsl:message>example in <xsl:value-of select="$this"/></xsl:message>
+      <xsl:element namespace="{$outputNS}" name="{$segName}">
+	<xsl:attribute name="xml:lang">
+	  <xsl:value-of select="$documentationLanguage"/>
+	</xsl:attribute>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">
+	    <xsl:text> Class</xsl:text>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:element>
       <xsl:text>: </xsl:text>
       <xsl:element namespace="{$outputNS}" name="{$ulName}">
 	<xsl:variable name="list">
@@ -1937,24 +1938,14 @@ version="2.0">
   <xsl:template name="generateParentsByMacro">
     <xsl:variable name="this" select="@ident"/>
     <xsl:if test="key('MACROREFS',$this)">
-      <xsl:variable name="list">
-	<List>
-	  <xsl:for-each select="key('MACROREFS',$this)/ancestor::tei:macroSpec">
-	    <xsl:sort select="@ident"/>
-	    <Item>
-	      <xsl:call-template name="linkTogether">
-		<xsl:with-param name="name" select="@ident"/>
-		<xsl:with-param name="class">link_odd_macro</xsl:with-param>
-	      </xsl:call-template>
-	    </Item>
-	  </xsl:for-each>
-	</List>
-      </xsl:variable>
-      <xsl:for-each select="$list/List/Item">
-	<xsl:copy-of select="*|text()"/>
-	<xsl:if test="following-sibling::Item">
-	  <xsl:call-template name="showSpace"/>
-	</xsl:if>
+      <xsl:for-each select="key('MACROREFS',$this)/ancestor::tei:macroSpec">
+	<xsl:sort select="@ident"/>
+	<Item>
+	  <xsl:call-template name="linkTogether">
+	    <xsl:with-param name="name" select="@ident"/>
+	    <xsl:with-param name="class">link_odd_macro</xsl:with-param>
+	  </xsl:call-template>
+	</Item>
       </xsl:for-each>
     </xsl:if>
     <!--
@@ -1969,39 +1960,28 @@ version="2.0">
 
   <xsl:template name="generateParentsByClass">
     <xsl:variable name="this" select="@ident"/>
-    <xsl:variable name="list">
-      <List>
-	<xsl:for-each select="tei:classes/tei:memberOf">
-	  <xsl:for-each select="key('CLASSES',@key)">
-	    <xsl:sort select="@ident"/>
-	    <Item>
-	      <xsl:if test="@type='model'">
-		<xsl:call-template name="linkTogether">
-		  <xsl:with-param name="name" select="@ident"/>
-		  <xsl:with-param name="class">link_odd_class</xsl:with-param>
-		</xsl:call-template>
-	      </xsl:if>
-	      <!--
-		  <xsl:for-each select="key('REFS',@ident)/ancestor::tei:elementSpec">
-		  <xsl:call-template name="linkTogether">
-		  <xsl:with-param name="name" select="@ident"/>
-		  </xsl:call-template>
-		  </xsl:for-each>
-		  <xsl:call-template name="generateParentsByClass"/>
-		  <xsl:call-template name="generateParentsByMacro"/>
-	      -->
-	    </Item>
-	  </xsl:for-each>
-	</xsl:for-each>
-      </List>
-      </xsl:variable>
-      <xsl:for-each select="$list/List/Item">
-	<xsl:copy-of select="*|text()"/>
-	<xsl:if test="following-sibling::Item">
-	  <xsl:call-template name="showSpace"/>
-	</xsl:if>
+    <xsl:for-each select="tei:classes/tei:memberOf">
+      <xsl:for-each select="key('CLASSES',@key)">
+	<xsl:sort select="@ident"/>
+	<Item>
+	  <xsl:if test="@type='model'">
+	    <xsl:call-template name="linkTogether">
+	      <xsl:with-param name="name" select="@ident"/>
+	      <xsl:with-param name="class">link_odd_class</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:if>
+	  <!--
+	      <xsl:for-each select="key('REFS',@ident)/ancestor::tei:elementSpec">
+	      <xsl:call-template name="linkTogether">
+	      <xsl:with-param name="name" select="@ident"/>
+	      </xsl:call-template>
+	      </xsl:for-each>
+	      <xsl:call-template name="generateParentsByClass"/>
+	      <xsl:call-template name="generateParentsByMacro"/>
+	  -->
+	</Item>
       </xsl:for-each>
-
+    </xsl:for-each>
   </xsl:template>
 
 
