@@ -305,11 +305,10 @@ version="2.0">
            </xsl:otherwise>
          </xsl:choose>
       </xsl:when>
-      <xsl:when test="ancestor::tei:quote">
+      <xsl:when test="ancestor::tei:quote and following-sibling::tei:l">
           <xsl:apply-templates/>\\
       </xsl:when>
-      <xsl:otherwise>
-          \leftline{<xsl:apply-templates/>}
+      <xsl:otherwise>\leftline{<xsl:apply-templates/>}
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
