@@ -18,6 +18,8 @@ xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/stri
   </xd:doc>
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
   <xsl:key name="SCHEMATRON" match="s:ns|s:pattern" use="1"/>
+  <xsl:key name="REFED" match="rng:ref" use="@name"/>
+  <xsl:key name="DEFED" match="rng:define" use="@name"/>
   <xsl:param name="verbose"/>
   <xsl:param name="outputDir">Schema</xsl:param>
   <xsl:param name="appendixWords"/>
@@ -104,42 +106,93 @@ xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/stri
     </xsl:call-template>
   </xsl:template>
   <xsl:template name="schemaSpecBody">
-    <xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
-    <xsl:for-each select="tei:macroSpec">
-      <xsl:apply-templates mode="tangle" select="."/>
+    <xsl:variable name="schema">
+      <root>
+	<xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
+	<xsl:for-each select="tei:macroSpec">
+	  <xsl:apply-templates mode="tangle" select="."/>
+	</xsl:for-each>
+	<xsl:apply-templates mode="tangle" select="tei:elementSpec|tei:classSpec"/>
+	<xsl:choose>
+	  <xsl:when test="@start and @start=''"/>
+	  <xsl:when test="@start and contains(@start,' ')">
+	    <rng:start>
+	      <rng:choice>
+		<xsl:call-template name="startNames">
+		  <xsl:with-param name="toks" select="@start"/>
+		</xsl:call-template>
+	      </rng:choice>
+	    </rng:start>
+	  </xsl:when>
+	  <xsl:when test="@start">
+	    <rng:start>
+	      <rng:ref name="{$patternPrefixText}{@start}"/>
+	    </rng:start>
+	  </xsl:when>
+	  <xsl:when test="key('IDENTS','teiCorpus')">
+	    <rng:start>
+	      <rng:choice>
+		<rng:ref name="{$patternPrefixText}TEI"/>
+		<rng:ref name="{$patternPrefixText}teiCorpus"/>
+	      </rng:choice>
+	    </rng:start>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <rng:start>
+	      <rng:ref name="{$patternPrefixText}TEI"/>
+	    </rng:start>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </root>
+    </xsl:variable>
+    <!-- in a final pass, throw away any RNG <define> elements
+    which do not have a <ref>, any <ref> which has no <define>
+    to point to -->
+    <xsl:for-each select="exsl:node-set($schema)/root">
+      <xsl:apply-templates mode="cleanup"/>
     </xsl:for-each>
-    <xsl:apply-templates mode="tangle" select="tei:elementSpec|tei:classSpec"/>
+  </xsl:template>
+
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="cleanup">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+    
+  <xsl:template match="*" mode="cleanup">
+    <xsl:copy>
+      <xsl:apply-templates 
+	  select="*|@*|processing-instruction()|comment()|text()" mode="cleanup"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="rng:define" mode="cleanup">
     <xsl:choose>
-      <xsl:when test="@start and @start=''"/>
-      <xsl:when test="@start and contains(@start,' ')">
-        <rng:start>
-          <rng:choice>
-            <xsl:call-template name="startNames">
-              <xsl:with-param name="toks" select="@start"/>
-            </xsl:call-template>
-          </rng:choice>
-        </rng:start>
-      </xsl:when>
-      <xsl:when test="@start">
-        <rng:start>
-          <rng:ref name="{$patternPrefixText}{@start}"/>
-        </rng:start>
-      </xsl:when>
-      <xsl:when test="key('IDENTS','teiCorpus')">
-        <rng:start>
-          <rng:choice>
-            <rng:ref name="{$patternPrefixText}TEI"/>
-            <rng:ref name="{$patternPrefixText}teiCorpus"/>
-          </rng:choice>
-        </rng:start>
+      <xsl:when test="key('REFED',@name)">
+	<xsl:copy>
+	  <xsl:apply-templates 
+	      select="*|@*|processing-instruction()|comment()|text()" mode="cleanup"/>
+	</xsl:copy>
       </xsl:when>
       <xsl:otherwise>
-        <rng:start>
-          <rng:ref name="{$patternPrefixText}TEI"/>
-        </rng:start>
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>ZAP reference to unused pattern <xsl:value-of select="@name"/></xsl:message>
+	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  
+  <xsl:template match="rng:ref" mode="cleanup">
+    <xsl:choose>
+      <xsl:when test="key('DEFED',@name)">
+	<rng:ref name="{@name}"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>ZAP reference to undefined <xsl:value-of select="@name"/></xsl:message>
+	</xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template name="startNames">
     <xsl:param name="toks"/>
     <xsl:if test="not($toks='')">

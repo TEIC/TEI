@@ -44,7 +44,8 @@
   <xsl:param name="lookupDatabase">false</xsl:param>
   <xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk/Query/</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
-  <xsl:param name="schemaBaseURL">http://localhost/schema/relaxng/</xsl:param>
+  <xsl:param
+      name="schemaBaseURL">http://localhost/schema/relaxng/</xsl:param>
   <xsl:key match="tei:*" name="LOCALIDENTS" use="@ident"/>
   <xsl:key match="tei:macroSpec" name="MACROS" use="@ident"/>
   <xsl:key match="tei:elementSpec" name="ELEMENTS" use="@ident"/>
@@ -191,21 +192,22 @@
   </xsl:template>
 
   <xsl:template match="rng:ref">
-    <xsl:copy>
-      <xsl:attribute name="name">
-        <xsl:choose>
-          <xsl:when test="key('IDENTS',@name)">
-            <xsl:value-of select="$patternPrefixText"/>
-          </xsl:when>
-          <xsl:when
-            test="starts-with(@name,'att.') and key('IDENTS',substring-before(@name,'.attribute.'))"> </xsl:when>
-          <xsl:when test="key('IDENTS',substring-before(@name,'_'))">
-            <xsl:value-of select="$patternPrefixText"/>
-          </xsl:when>
-        </xsl:choose>
-        <xsl:value-of select="@name"/>
-      </xsl:attribute>
-    </xsl:copy>
+    <xsl:choose>
+      <xsl:when test="key('IDENTS',@name)">
+	<rng:ref name="{$patternPrefixText}{@name}"/>
+      </xsl:when>
+      <xsl:when
+	  test="starts-with(@name,'att.') and
+		key('IDENTS',substring-before(@name,'.attribute.'))"> 
+	<rng:ref name="{@name}"/>
+      </xsl:when>
+      <xsl:when test="key('IDENTS',substring-before(@name,'_'))">
+	<rng:ref name="{$patternPrefixText}{@name}"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<rng:ref name="{@name}"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 
