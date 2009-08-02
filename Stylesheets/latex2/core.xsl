@@ -506,13 +506,19 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:p">
-  <xsl:text>\par </xsl:text>
-  <xsl:if test="$numberParagraphs='true'">
+    <xsl:choose>
+      <xsl:when test="parent::tei:note and not(preceding-sibling::tei:p)">
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>\par </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:if test="$numberParagraphs='true'">
     <xsl:call-template name="numberParagraph"/>
-  </xsl:if>
-  <xsl:apply-templates/>
+    </xsl:if>
+    <xsl:apply-templates/>
   </xsl:template>
-
+  
   <xd:doc>
     <xd:short>How to number a paragraph</xd:short>
     <xd:detail> </xd:detail>
