@@ -135,31 +135,31 @@
 	<xsl:choose>
 	  <xsl:when test="@start and @start=''"/>
 	  <xsl:when test="@start and contains(@start,' ')">
-	    <rng:start>
-	      <rng:choice>
+	    <start  xmlns="http://relaxng.org/ns/structure/1.0">
+	      <choice>
 		<xsl:call-template name="startNames">
 		  <xsl:with-param name="toks" select="@start"/>
 		</xsl:call-template>
-	      </rng:choice>
-	    </rng:start>
+	      </choice>
+	    </start>
 	  </xsl:when>
 	  <xsl:when test="@start">
-	    <rng:start>
-	      <rng:ref name="{$patternPrefixText}{@start}"/>
-	    </rng:start>
+	    <start  xmlns="http://relaxng.org/ns/structure/1.0">
+	      <ref name="{$patternPrefixText}{@start}" />
+	    </start>
 	  </xsl:when>
 	  <xsl:when test="key('IDENTS','teiCorpus')">
-	    <rng:start>
-	      <rng:choice>
-		<rng:ref name="{$patternPrefixText}TEI"/>
-		<rng:ref name="{$patternPrefixText}teiCorpus"/>
-	      </rng:choice>
-	    </rng:start>
+	    <start  xmlns="http://relaxng.org/ns/structure/1.0">
+	      <choice>
+		<ref name="{$patternPrefixText}TEI"/>
+		<ref name="{$patternPrefixText}teiCorpus"/>
+	      </choice>
+	    </start>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <rng:start>
-	      <rng:ref name="{$patternPrefixText}TEI"/>
-	    </rng:start>
+	    <start  xmlns="http://relaxng.org/ns/structure/1.0">
+	      <ref name="{$patternPrefixText}TEI"/>
+	    </start>
 	  </xsl:otherwise>
 	</xsl:choose>
       </root>
@@ -202,7 +202,7 @@
   <xsl:template match="rng:ref" mode="cleanup">
     <xsl:choose>
       <xsl:when test="key('DEFED',@name)">
-	<rng:ref name="{@name}"/>
+	<ref name="{@name}" xmlns="http://relaxng.org/ns/structure/1.0"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:if test="$verbose='true'">
@@ -215,10 +215,10 @@
   <xsl:template match="rng:attribute[@name='xml:id']/rng:data[@type='ID']" mode="cleanup">
     <xsl:choose>
       <xsl:when test="key('DEFED','macro.anyXML')/rng:element/rng:anyName">
-	<rng:text/>
+	<text xmlns="http://relaxng.org/ns/structure/1.0"/>
       </xsl:when>
       <xsl:otherwise>
-        <rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="ID"/>
+        <data xmlns="http://relaxng.org/ns/structure/1.0" type="ID"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

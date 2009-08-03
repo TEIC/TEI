@@ -443,11 +443,23 @@ How can a class be ok?
       <xsl:apply-templates mode="copy" select="*|@*|processing-instruction()|comment()|text()"/>
     </xsl:copy>
   </xsl:template>
+
+  <xsl:template match="tei:elementSpec/@mode" mode="change">
+    <xsl:copy/>
+  </xsl:template>
+
   <xsl:template match="tei:listRef" mode="copy"/>
-  <xsl:template match="tei:elementSpec/@mode" mode="copy"/>
-  <xsl:template match="tei:macroSpec/@mode" mode="copy"/>
-  <xsl:template match="tei:classSpec/@mode" mode="copy"/>
-  <xsl:template match="tei:elementSpec/@mode" mode="change"/>
+
+  <xsl:template match="tei:elementSpec/@mode" mode="copy">
+    <xsl:copy/>
+  </xsl:template>
+  <xsl:template match="tei:macroSpec/@mode" mode="copy">
+    <xsl:copy/>
+  </xsl:template>
+  <xsl:template match="tei:classSpec/@mode" mode="copy">
+    <xsl:copy/>
+  </xsl:template>
+
   <xsl:template match="tei:elementSpec" mode="copy">
     <xsl:variable name="orig" select="."/>
     <xsl:copy>

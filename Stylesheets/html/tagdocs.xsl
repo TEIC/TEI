@@ -55,7 +55,7 @@
   <xsl:param name="sectionName">div</xsl:param>
   <xsl:param name="segName">span</xsl:param>
   <xsl:param name="outputNS">http://www.w3.org/1999/xhtml</xsl:param>
-
+  <xsl:param name="sawedOffDoc">false</xsl:param>
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
     <xsl:text>&#10;</xsl:text>
@@ -465,37 +465,51 @@
   <xsl:template name="schemaSpecWeave">
     <xsl:if test="$verbose='true'">
       <xsl:message>Processing schemaSpec <xsl:value-of
-      select="@ident"/></xsl:message>
+      select="@ident"/>, sawedOffDoc=<xsl:value-of select="$sawedOffDoc"/></xsl:message>
     </xsl:if>
-    <xsl:if test="tei:classSpec[@type='model']">
-      <h2>Schema <xsl:value-of select="@ident"/>: Model classes</h2>
-      <xsl:apply-templates mode="weave" select="tei:classSpec[@type='model']">
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-    </xsl:if>
-    
-    
-    <xsl:if test="tei:classSpec[@type='atts']">
-      <h2>Schema <xsl:value-of select="@ident"/>: Attribute classes</h2>
-      <xsl:apply-templates mode="weave" select="tei:classSpec[@type='atts']">
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-    </xsl:if>
-    
-    <xsl:if test="tei:macroSpec">
-      <h2>Schema <xsl:value-of select="@ident"/>: Macros</h2>
-      <xsl:apply-templates mode="weave" select="tei:macroSpec">
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-      
-    </xsl:if>
-    <h2>Schema <xsl:value-of select="@ident"/>: Elements</h2>
-    <xsl:apply-templates mode="weave" select="tei:elementSpec">
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
-    
-  </xsl:template>
 
+    <xsl:choose>
+      <xsl:when test="$sawedOffDoc='true'">
+	  <h2>Schema <xsl:value-of select="@ident"/>: changed components</h2>
+	<xsl:for-each select="tei:classSpec[@type='model' and @mode]
+	or tei:classSpec[@type='atts' and @mode]
+	or tei:macroSpec[@mode]
+	or tei:elementSpec[@mode]">
+	    <xsl:sort select="@ident"/>
+	  <xsl:apply-templates mode="weave" select="."/>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:if test="tei:classSpec[@type='model']">
+	  <h2>Schema <xsl:value-of select="@ident"/>: Model classes</h2>
+	  <xsl:apply-templates mode="weave" select="tei:classSpec[@type='model']">
+	    <xsl:sort select="@ident"/>
+	  </xsl:apply-templates>
+	</xsl:if>
+	
+	
+	<xsl:if test="tei:classSpec[@type='atts']">
+	  <h2>Schema <xsl:value-of select="@ident"/>: Attribute classes</h2>
+	  <xsl:apply-templates mode="weave" select="tei:classSpec[@type='atts']">
+	    <xsl:sort select="@ident"/>
+	  </xsl:apply-templates>
+	</xsl:if>
+	
+	<xsl:if test="tei:macroSpec">
+	  <h2>Schema <xsl:value-of select="@ident"/>: Macros</h2>
+	  <xsl:apply-templates mode="weave" select="tei:macroSpec">
+	    <xsl:sort select="@ident"/>
+	  </xsl:apply-templates>
+	  
+	</xsl:if>
+	<h2>Schema <xsl:value-of select="@ident"/>: Elements</h2>
+	<xsl:apply-templates mode="weave" select="tei:elementSpec">
+	  <xsl:sort select="@ident"/>
+	</xsl:apply-templates>
+      </xsl:otherwise>
+    </xsl:choose>	
+  </xsl:template>
+      
 
   <xd:doc>
     <xd:short>[odds] make a link</xd:short>

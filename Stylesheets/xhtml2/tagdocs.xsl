@@ -16,6 +16,7 @@
 
   <xsl:param name="cssFile"/>
   <xsl:param name="cssSecondaryFile"/>
+  <xsl:param name="sawedOffDoc">false</xsl:param>
   <xsl:include href="../common2/tagdocs.xsl"/>
 
   <xd:doc type="stylesheet">
@@ -454,35 +455,67 @@
   <xsl:template name="schemaSpecWeave">
     <xsl:if test="$verbose='true'">
       <xsl:message>Processing schemaSpec <xsl:value-of
-      select="@ident"/></xsl:message>
+      select="@ident"/>, sawedOffDoc=<xsl:value-of select="$sawedOffDoc"/></xsl:message>
     </xsl:if>
-    <xsl:if test="tei:classSpec[@type='model']">
-      <h2>Schema <xsl:value-of select="@ident"/>: Model classes</h2>
-      <xsl:apply-templates mode="weave" select="tei:classSpec[@type='model']">
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-    </xsl:if>
-    
-    
-    <xsl:if test="tei:classSpec[@type='atts']">
-      <h2>Schema <xsl:value-of select="@ident"/>: Attribute classes</h2>
-      <xsl:apply-templates mode="weave" select="tei:classSpec[@type='atts']">
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-    </xsl:if>
-    
-    <xsl:if test="tei:macroSpec">
-      <h2>Schema <xsl:value-of select="@ident"/>: Macros</h2>
-      <xsl:apply-templates mode="weave" select="tei:macroSpec">
-	<xsl:sort select="@ident"/>
-      </xsl:apply-templates>
-      
-    </xsl:if>
-    <h2>Schema <xsl:value-of select="@ident"/>: Elements</h2>
-    <xsl:apply-templates mode="weave" select="tei:elementSpec">
-      <xsl:sort select="@ident"/>
-    </xsl:apply-templates>
-    
+
+    <xsl:choose>
+      <xsl:when test="$sawedOffDoc='true'">
+	  <h2>Schema <xsl:value-of select="@ident"/>: changed components</h2>
+	<xsl:for-each select="tei:classSpec[@type='model' and @mode]
+	| tei:classSpec[@type='atts' and @mode]
+	| tei:macroSpec[@mode]
+	| tei:elementSpec[@mode]">
+	    <xsl:sort select="@ident"/>
+	  <xsl:apply-templates mode="weave" select="."/>
+	</xsl:for-each>
+	  <h2>Schema <xsl:value-of select="@ident"/>: unchanged
+	  components</h2>
+	  <table>
+	  <xsl:for-each select="tei:classSpec[@type='model' and not(@mode)]
+	| tei:classSpec[@type='atts' and not(@mode)]
+	| tei:macroSpec[not(@mode)]
+	| tei:elementSpec[not(@mode)]">
+	    <xsl:sort select="@ident"/>
+	    <tr>
+	      <td id="{@ident}">
+	      <a
+		  href="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-{@ident}.html">
+		<xsl:value-of select="@ident"/>: <xsl:value-of select="tei:desc"/>
+	      </a>
+	      </td>
+	    </tr>
+	  </xsl:for-each>
+	  </table>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:if test="tei:classSpec[@type='model']">
+	  <h2>Schema <xsl:value-of select="@ident"/>: Model classes</h2>
+	  <xsl:apply-templates mode="weave" select="tei:classSpec[@type='model']">
+	    <xsl:sort select="@ident"/>
+	  </xsl:apply-templates>
+	</xsl:if>
+	
+	
+	<xsl:if test="tei:classSpec[@type='atts']">
+	  <h2>Schema <xsl:value-of select="@ident"/>: Attribute classes</h2>
+	  <xsl:apply-templates mode="weave" select="tei:classSpec[@type='atts']">
+	    <xsl:sort select="@ident"/>
+	  </xsl:apply-templates>
+	</xsl:if>
+	
+	<xsl:if test="tei:macroSpec">
+	  <h2>Schema <xsl:value-of select="@ident"/>: Macros</h2>
+	  <xsl:apply-templates mode="weave" select="tei:macroSpec">
+	    <xsl:sort select="@ident"/>
+	  </xsl:apply-templates>
+	  
+	</xsl:if>
+	<h2>Schema <xsl:value-of select="@ident"/>: Elements</h2>
+	<xsl:apply-templates mode="weave" select="tei:elementSpec">
+	  <xsl:sort select="@ident"/>
+	</xsl:apply-templates>
+      </xsl:otherwise>
+    </xsl:choose>	
   </xsl:template>
 
 
