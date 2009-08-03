@@ -220,7 +220,7 @@ while test $# -gt 0; do
     --compile)     compile=true;dtd=false;xsd=false;doc=false;relax=false;;
     --debug)       debug=true;;
     --doc)         doc=true;;
-    --docflags=*)  DOCFLAGS=`echo $1 | sed 's/.*=//'`;;
+    --docflags=*)  DOCFLAGS=`echo $1 | sed 's/.*docflags=//'`;;
     --dochtml)     dochtml=true;;
     --doclang=*)   doclang=`echo $1 | sed 's/.*=//'`;;
     --docpdf)      docpdf=true;;
