@@ -193,6 +193,17 @@ xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/stri
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="rng:attribute[@name='xml:id']/rng:data[@type='ID']" mode="cleanup">
+    <xsl:choose>
+      <xsl:when test="key('DEFED','macro.anyXML')/rng:element/rng:anyName">
+	<rng:text/>
+      </xsl:when>
+      <xsl:otherwise>
+        <rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="ID"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template name="startNames">
     <xsl:param name="toks"/>
     <xsl:if test="not($toks='')">
