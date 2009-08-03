@@ -83,12 +83,13 @@
                            the TEI</item>
                         <item>If the TEI Council approves it, we will then possibly rework it into a
                            separate chapter for the TEI <title>Guidelines</title> or as integrations
-                           to existing Chapters.<note place="foot">LB: Formally speaking, that is up to the
-                              Council to decide. If the council approves it, the council will also
-                              decide how it should be integrated into the current
-                           Guidelines.</note></item>
+                           to existing Chapters.</item>
                      </list></item>
                </list>
+<note place="foot">LB: Formally speaking, that is up to the
+                              Council to decide. If the council approves it, the council will also
+                              decide how it should be integrated into the current
+                           Guidelines.</note>
                <p>All versions of the draft will be publicly available for discussions and feedback
                   from the community. Versions will be hosted on the TEI Wiki as PDF documents,
                   while the XML source will be stored in the TEI SVN repository.</p>
@@ -130,13 +131,14 @@
                   particular in the realm of genetic criticism.<note place="foot">See also the TEI’s
                      (implicit) position on this point: <q>we define markup, or (synonymously)
                      encoding, as any means of making explicit an <hi rend="italic"
-                        >interpretation</hi> of a text</q> (TEI Guidelines: <emph>v. A Gentle
-                        Introduction to XML</emph>, <ptr
-                        target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SG.html"/>). See
-                     also reference to Robinson and Solopova 1993/1997: 21: “Any primary textual
+                        >interpretation</hi> of a text</q> (TEI Guidelines: <ref
+                        target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SG.html">v. A
+		     Gentle
+                        Introduction to XML</ref>). See
+                     also reference to Robinson and Solopova 1993/1997: 21: <q>Any primary textual
                      source… has its own semiotic system within it.[…] The two semiotic system are
                      materially distinct, in that text written by hand is not the same as the text
-                     on the computer screen” (quoted in Robinson 2009:44-45).</note> On the other
+                     on the computer screen</q> (quoted in Robinson 2009:44-45).</note> On the other
                   hand this truism cannot conceal the fact that there is an obvious difference
                   between the interpretation that some trace of ink is indeed a specific letter and
                   the assumption that a change in a manuscript at the first line has been made at
@@ -316,12 +318,11 @@
                   <div>
                      <head>Additions</head>
                      <p>Beside “normal” additions (see for instance the TEI definition of the
-                           <gi>tei:add</gi> element: “contains letters, words, or phrases inserted
-                        in the text by an author, scribe, annotator, or corrector.”), we have
+                           <gi>tei:add</gi> element: <q>contains letters, words, or phrases inserted
+                        in the text by an author, scribe, annotator, or corrector.</q>), we have
                         outlined some other special kinds of addition:</p>
                      <list type="bulleted">
-                        <item><label>Repetitions</label> for which we have introduced a <gi
-                              xml:id="repe">ge:repetition type=""</gi> element. Repetitions can be
+                        <item><label>Repetitions</label> for which we have introduced a <gi>repetition</gi> element. Repetitions can be
                            of two main types:<list type="bulleted">
                               <item>
                                  <label>Fixation</label> which results from authors fixing a text
@@ -366,8 +367,9 @@
                            location/another manuscript. We have created two elements
                               <gi>ge:used</gi> and <gi>ge:usedSpan/</gi> for this purpose.</item>
                         <item><label>Overwriting</label> is a particular case of a deletion, unless
-                           it is a case of repetition (<ref target="#repe">see</ref>) or a false
-                           start (<ref target="#false-start">see</ref>).</item>
+                           it is a case of repetition
+			   (<gi>repetion</gi>) or a false
+                           start (see <ref target="#false-start">below</ref>).</item>
                      </list>
                   </div>
                   <div>
@@ -675,7 +677,7 @@
                         distinguish alterations that happen within them and between witnesses. For
                         instance, using the existing tag set we could possibly encode as follows:
                            <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                           <app xmlns="http://www.tei-c.org/ns/1.0">
+<![CDATA[                           <app xmlns="http://www.tei-c.org/ns/1.0">
                               <rdg wit="#A" xml:id="rdg1">here is a passage in A</rdg>
                               <rdg wit="#B">
                                  <del>
@@ -683,7 +685,7 @@
                                  </del>
                               </rdg>
                            </app>
-                        </egXML></p>
+                        ]]></egXML></p>
                      <p>Nevertheless, this might force the intended usage of <gi>tei:del</gi> and
                         might imply that there is a deletion on B, which is not the case. This might
                         be solved perhaps using the <att xmlns="http://www.tei-c.org/ns/1.0"
@@ -698,11 +700,11 @@
                         only need to point to passages within the separate files  and classify the
                         types of readings resulting from the collation: <egXML
                            xmlns="http://www.tei-c.org/ns/Examples">
-                           <app xmlns="http://www.tei-c.org/ns/1.0">
+<![CDATA[                           <app xmlns="http://www.tei-c.org/ns/1.0">
                               <rdg wit="#A" from="#v34" to="#v36"/>
                               <rdg wit="#B" from="#v33" type="suppressed"/>
                            </app>
-                        </egXML>
+         ]]></egXML>
                      </p>
                      <p>The example encoding implies that attributes <att>from</att> and
                            <att>to</att> are added to the <gi>tei:rdg</gi> element. </p>
