@@ -16,7 +16,7 @@
 
   <xsl:param name="cssFile"/>
   <xsl:param name="cssSecondaryFile"/>
-  <xsl:param name="sawedOffDoc">false</xsl:param>
+  <xsl:param name="summaryDoc">false</xsl:param>
   <xsl:include href="../common2/tagdocs.xsl"/>
 
   <xd:doc type="stylesheet">
@@ -455,11 +455,11 @@
   <xsl:template name="schemaSpecWeave">
     <xsl:if test="$verbose='true'">
       <xsl:message>Processing schemaSpec <xsl:value-of
-      select="@ident"/>, sawedOffDoc=<xsl:value-of select="$sawedOffDoc"/></xsl:message>
+      select="@ident"/>, summaryDoc=<xsl:value-of select="$summaryDoc"/></xsl:message>
     </xsl:if>
 
     <xsl:choose>
-      <xsl:when test="$sawedOffDoc='true'">
+      <xsl:when test="$summaryDoc='true'">
 	  <h2>Schema <xsl:value-of select="@ident"/>: changed components</h2>
 	<xsl:for-each select="tei:classSpec[@type='model' and @mode]
 	| tei:classSpec[@type='atts' and @mode]
@@ -479,9 +479,9 @@
 	    <tr>
 	      <td id="{@ident}">
 	      <a
-		  href="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-{@ident}.html">
+		  href="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html">
 		<xsl:value-of select="@ident"/></a>:
-		<xsl:value-of select="tei:desc[not(@xml:lang)]"/>
+		<xsl:call-template name="makeDescription"/>
 	      </td>
 	    </tr>
 	  </xsl:for-each>
@@ -536,6 +536,9 @@
        </xsl:with-param>
       </xsl:call-template>
       <xsl:value-of select="$name"/>
+      <xsl:if test="@ns">
+	[<xsl:value-of select="@ns"/>]
+      </xsl:if>
     </h3>
   </xsl:template>
 

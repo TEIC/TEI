@@ -55,7 +55,7 @@
   <xsl:param name="sectionName">div</xsl:param>
   <xsl:param name="segName">span</xsl:param>
   <xsl:param name="outputNS">http://www.w3.org/1999/xhtml</xsl:param>
-  <xsl:param name="sawedOffDoc">false</xsl:param>
+  <xsl:param name="summaryDoc">false</xsl:param>
   <xsl:template name="lineBreak">
     <xsl:param name="id"/>
     <xsl:text>&#10;</xsl:text>
@@ -465,19 +465,37 @@
   <xsl:template name="schemaSpecWeave">
     <xsl:if test="$verbose='true'">
       <xsl:message>Processing schemaSpec <xsl:value-of
-      select="@ident"/>, sawedOffDoc=<xsl:value-of select="$sawedOffDoc"/></xsl:message>
+      select="@ident"/>, summaryDoc=<xsl:value-of select="$summaryDoc"/></xsl:message>
     </xsl:if>
 
     <xsl:choose>
-      <xsl:when test="$sawedOffDoc='true'">
+      <xsl:when test="$summaryDoc='true'">
 	  <h2>Schema <xsl:value-of select="@ident"/>: changed components</h2>
 	<xsl:for-each select="tei:classSpec[@type='model' and @mode]
-	or tei:classSpec[@type='atts' and @mode]
-	or tei:macroSpec[@mode]
-	or tei:elementSpec[@mode]">
+	| tei:classSpec[@type='atts' and @mode]
+	| tei:macroSpec[@mode]
+	| tei:elementSpec[@mode]">
 	    <xsl:sort select="@ident"/>
 	  <xsl:apply-templates mode="weave" select="."/>
 	</xsl:for-each>
+	  <h2>Schema <xsl:value-of select="@ident"/>: unchanged
+	  components</h2>
+	  <table>
+	  <xsl:for-each select="tei:classSpec[@type='model' and not(@mode)]
+	| tei:classSpec[@type='atts' and not(@mode)]
+	| tei:macroSpec[not(@mode)]
+	| tei:elementSpec[not(@mode)]">
+	    <xsl:sort select="@ident"/>
+	    <tr>
+	      <td id="{@ident}">
+	      <a
+		  href="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html">
+		<xsl:value-of select="@ident"/></a>:
+		<xsl:call-template name="makeDescription"/>
+	      </td>
+	    </tr>
+	  </xsl:for-each>
+	  </table>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:if test="tei:classSpec[@type='model']">
@@ -509,6 +527,7 @@
       </xsl:otherwise>
     </xsl:choose>	
   </xsl:template>
+
       
 
   <xd:doc>
