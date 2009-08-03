@@ -480,8 +480,8 @@
 	      <td id="{@ident}">
 	      <a
 		  href="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-{@ident}.html">
-		<xsl:value-of select="@ident"/>: <xsl:value-of select="tei:desc[not(@xml:lang)]"/>
-	      </a>
+		<xsl:value-of select="@ident"/></a>:
+		<xsl:value-of select="tei:desc[not(@xml:lang)]"/>
 	      </td>
 	    </tr>
 	  </xsl:for-each>
