@@ -9,14 +9,11 @@
          </titleStmt>
          <editionStmt>
             <edition n="2">Draft</edition>
-         </editionStmt>
-         <publicationStmt>
+         </editionStmt><publicationStmt>
             <authority>TEI MS SIG, Genetic Edition Workgroup</authority>
-         </publicationStmt>
-         <sourceDesc>
+         </publicationStmt><sourceDesc>
             <p>Born Digital</p>
-         </sourceDesc>
-      </fileDesc>
+         </sourceDesc></fileDesc>
       <revisionDesc>
          <change>
             <name>Elena Pierazzo</name>
@@ -35,835 +32,1097 @@
          <divGen type="toc"/>
          <pb/>
          <div>
-<head>About this Document</head>
-<p>This document contains the <hi rend="bold">draft</hi> of an
-encoding model for Genetic Editions and Genetic Editing. The Document
-is the product of a Workgroup on Genetic Editions (chair: Fotis
-Jannidis), which is part of the TEI MS SIG (chairs: Elena Pierazzo,
-Malte Rehbein, Amanda Galley). </p>
-<p>The purpose of this workgroup is to try to elaborate an <hi rend="bold">Application
-      Profile</hi> able to encode genetic editions and, in general, genetic phenomena.
-   The application profile will discuss how to use existing TEI elements in a genetic
-   framework, presenting, where necessary, new elements and will take the form of a TEI
-   extension. </p>
-<p>Respect the <hi rend="italic">TEI P5 Guidelines</hi>, the present document aims to
-   integrate Chapter 11. <hi rend="italic">Representation of Primary Sources</hi> and
-   Chapter 12. <hi rend="italic">Critical Apparatus</hi>. It might be the case that it
-   will, at the end of the process described in the following section, constitute a self
-   standing new <title>Guidelines</title> chapter, but this decision will be taken later
-   on.</p>
-<p>The current state of this document reflects the discussion held in three different
-   meetings:</p>
-<list type="bulleted">
-   <item>MS SIG meeting held in London during the annual members’ TEI meeting (November
-      2008); the minutes of the meeting can be found here: <ptr
-         target="http://wiki.tei-c.org/index.php/Minutes_London_2008"/>.</item>
-   <item>Genetic Edition workgroup held in London (March 2009); minutes can be found
-      here: <ptr target="http://wiki.tei-c.org/index.php/Minutes_London_03-2009"/>. </item>
-   <item>Workshop "Genetic Editions in a Digital Framework", held in Paris, 14/15 May
-      2009, and following discussion; programme of the workshop can be found here: <ptr
-         target="http://wiki.tei-c.org/index.php/GeneticEditionsWorkshopParis"/></item>
-</list>
-<p>The working group has made a large use of the <title>HNML. HyperNietzsche Markup
-      Language</title> and following versions (<title>GML Genetic Markup
-   Language</title>) written by Paolo D'Iorio and collaborators for the HyperNietzsche
-   project. We would like to thank Paolo D'Iorio for his invaluable contribution in the
-   early stages of the work. </p>
-<div>
-   <head>Methodology</head>
-   <p>Te stages we will follow to complete the present encoding model are the following:</p>
-   <list type="bulleted">
-      <item>In the beginning we will work on a pseudo-encoding which is tightly bound to
-         our own terminology <hi rend="italic">[Stage completed on July 2009]</hi>.</item>
-      <item>In a second step we will try to map this pseudo-encoding to the actual TEI
-         encoding framework, in cooperation with Lou Burnard. The result will be
-         presented at TEI' Members Meeting 2009.</item>
-      <item>The same step-by-step approach shall be taken for the standardisation
-         process: <list type="bulleted">
- <item>First we develop an application profile a.k.a. a well-documented TEI
-    customisation.</item>
- <item>This will be presented to te TEI Council as a global proposal for
-    modify the TEI</item>
- <item>If the TEI Council approves it, we will then possibly rework it into a
-    separate chapter for the TEI <title>Guidelines</title> or as integrations
-    to existing Chapters.</item>
-         </list></item>
-   </list>
-   <p>All versions of the draft will be publicly available for discussions and feedback
-      from the community. Versions will be hosted on the TEI Wiki as PDF documents,
-      while the XML source will be stored in the TEI SVN repository.</p>
-</div>
-<div>
-   <head>Conventions used</head>
-   <p>Although the entire document is a draft and therefore susceptible of changes, some
-      sections are less stable than others. In particular, when a section or a
-      particular element requires further discussion or is considered an open problem,
-      such a section or element is marked by a * mark.</p>
-   <p>All newly introduced elements are marked by the namespace prefix <hi rend="bold"
-         >ge:</hi>, while TEI elements are marked by a <hi rend="bold">tei:</hi>
-      namespace prefix.</p>
-</div>
+            <head>About this Document</head>
+            <p>This document contains the <hi rend="bold">draft</hi> of an encoding model for
+               Genetic Editions and Genetic Editing. The document is the product of a Workgroup on
+               Genetic Editions (chair: Fotis Jannidis), which is part of the TEI MS SIG (chairs:
+               Elena Pierazzo, Malte Rehbein, Amanda Galley). </p>
+            <p>The purpose of this workgroup is to try to elaborate an <hi rend="bold">Application
+                  Profile</hi> able to encode genetic editions and, in general, genetic phenomena.
+               The application profile will discuss how to use existing TEI elements in a genetic
+               framework, presenting, where necessary, new elements and will take the form of a TEI
+               extension. </p>
+            <p>With respect to the <hi rend="italic">TEI P5 Guidelines</hi>, the present document
+               aims to integrate Chapter 11. <hi rend="italic">Representation of Primary
+                  Sources</hi> and Chapter 12. <hi rend="italic">Critical Apparatus</hi>. It might
+               be the case that it will, at the end of the process described in the following
+               section, constitute a self standing new <title>Guidelines</title> chapter, but this
+               decision will be taken later on.</p>
+            <p>The current state of this document reflects the discussion held in three different
+               meetings:</p>
+            <list type="bulleted">
+               <item>MS SIG meeting held in London during the annual members’ TEI meeting (November
+                  2008); the minutes of the meeting can be found here: <ptr
+                     target="http://wiki.tei-c.org/index.php/Minutes_London_2008"/>.</item>
+               <item>Genetic Edition workgroup held in London (March 2009); minutes can be found
+                  here: <ptr target="http://wiki.tei-c.org/index.php/Minutes_London_03-2009"/>. </item>
+               <item>Workshop "Genetic Editions in a Digital Framework", held in Paris, 14/15 May
+                  2009, and following discussion; programme of the workshop can be found here: <ptr
+                     target="http://wiki.tei-c.org/index.php/GeneticEditionsWorkshopParis"/></item>
+            </list>
+            <p>The working group has made a large use of the <title>HNML. HyperNietzsche Markup
+                  Language</title> and following versions (<title>GML Genetic Markup
+                  Language</title>) written by Paolo D'Iorio and collaborators for the
+               HyperNietzsche project. We would like to thank Paolo D'Iorio for his invaluable
+               contribution in the early stages of the work. </p>
+            <div>
+               <head>Methodology</head>
+               <p>T<?oxy_insert_start author="lou" timestamp="20090803T151234+0100"?>h<?oxy_insert_end?>e
+                  stages we will follow to complete the present encoding model are the
+                  following:</p>
+               <list type="bulleted">
+                  <item>In<?oxy_delete author="lou" timestamp="20090803T151248+0100" content=" the beginning"?><?oxy_insert_start author="lou" timestamp="20090803T151248+0100"?>itially,
+                     <?oxy_insert_end?> we will work on a pseudo-encoding which is tightly bound to
+                     our own terminology <hi rend="italic">[Stage completed on July
+                     2009]</hi>.</item>
+                  <item>In a second step we will try to map this pseudo-encoding to the actual TEI
+                     encoding framework, in cooperation with Lou Burnard. The result will be
+                     presented at TEI' Members Meeting 2009.</item>
+                  <item>The same step-by-step approach
+                     <?oxy_delete author="lou" timestamp="20090803T151305+0100" content="sha"?><?oxy_insert_start author="lou" timestamp="20090803T151305+0100"?>wi<?oxy_insert_end?>ll
+                     be taken for the standardisation process: <list type="bulleted">
+                        <item>First we develop an application
+                           profile<?oxy_insert_start author="lou" timestamp="20090803T151314+0100"?>,
+                           that is,
+                           <?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T151313+0100" content=" a.k.a."?>
+                           a well-documented TEI customisation.</item>
+                        <item>This will be presented to te TEI Council as a
+                           <?oxy_delete author="lou" timestamp="20090803T151324+0100" content="global "?>propos<?oxy_delete author="lou" timestamp="20090803T151329+0100" content="al for modify"?><?oxy_insert_start author="lou" timestamp="20090803T151329+0100"?>ed
+                           modification of <?oxy_insert_end?> the TEI</item>
+                        <item>If the TEI Council approves it, we will then possibly rework it into a
+                           separate chapter for the TEI <title>Guidelines</title> or as integrations
+                           to existing
+                              Chapters.<?oxy_insert_start author="lou" timestamp="20090803T151406+0100"?><note>LB:
+                              Formally speaking, that is up to the Council to decide. If the council
+                              approves it, the council will also decide how it should be integrated
+                              into the current Guidelines.</note><?oxy_insert_end?></item>
+                     </list></item>
+               </list>
+               <p>All versions of the draft will be publicly available for discussions and feedback
+                  from the community. Versions will be hosted on the TEI Wiki as PDF documents,
+                  while the XML source will be stored in the TEI SVN repository.</p>
+            </div>
+            <div>
+               <head>Conventions used</head>
+               <p>Although the entire document is a draft and therefore susceptible of changes, some
+                  sections are less stable than others. In particular, when a section or a
+                  particular element requires further discussion or is considered an open problem,
+                  such a section or element is marked by a * mark.</p>
+               <p>All newly introduced elements are marked by the namespace prefix <hi rend="bold"
+                     >ge:</hi>, while TEI elements are marked by a <hi rend="bold">tei:</hi>
+                  namespace prefix.</p>
+            </div>
          </div>
       </front>
       <body>
          <div>
-<head>Theoretical Framework</head>
-<p>The encoding model will present how to handle both <hi rend="bold">Genetic
-      Transcription</hi> (a transcription of a single document), how to reconstruct a
-      <hi rend="bold">Genetic Dossier</hi>, meaning how to describe genetic relations
-   amongst multiple witnesses, and how to prepare a <hi rend="bold">Genetic Edition</hi>
-   based on a single or multiple witnesses . In this latter case the model can be used
-   both in the case of a full transcription of all extant witnesses, and in the case of
-   the full transcription of only one base-text, with the others witnesses
-   reconstructible via collation. </p>
-<p>The model aims to be independent of presuppositions made by any particular
-   theoretical framework; therefore a couple of typical dichotomies in editorial theory
-   have to be recognised and discussed.</p>
-<div>
-   <head>Fact (or record) vs. Interpretation</head>
-   <p>In German editorial theory there is a well known opposition between what is there
-      on the source document, the record, and the interpretation of this phenomenon
-         (<emph>Befund und Deutung</emph>). This seems to imply that there is a way to
-      talk about the record without any interpretation, but this is certainly not
-      entirely correct, because everything we say about a text is based on
-      interpretation (using a not very strict meaning of the word), in particular in the
-      realm of genetic criticism.<note place="foot">See also the TEI’s (implicit)
-         position on this point: “we define markup, or (synonymously) encoding, as any
-         means of making explicit an <hi rend="italic">interpretation</hi> of a text”
-         (TEI Guidelines: <emph>v. A Gentle Introduction to XML</emph>, <ptr
- target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SG.html"/>). See
-         also reference to Robinson and Solopova 1993/1997: 21: “Any primary textual
-         source… has its own semiotic system within it.[…] The two semiotic system are
-         materially distinct, in that text written by hand is not the same as the text
-         on the computer screen” (quoted in Robinson 2009:44-45).</note> On the other
-      hand this truism cannot conceal the fact that there is an obvious difference
-      between the interpretation that some trace of ink is indeed a specific letter and
-      the assumption that a change in a manuscript at the first line has been made at
-      the same time as the change in the next line because it adjusts the text to the
-      new rhyme word introduced by the first change. Therefore we propose to talk about
-      differing levels of interpretation as we might not be able to clearly
-      differentiate between “what’s there” (document/fact) and “how does it relate”
-      (text/interpretation).</p>
-</div>
-<div>
-   <head>Document vs. Text</head>
-   <p>In any branch of Manuscript Studies (Editing, Codicology, Palaeography, Art
-      History, History) the first level of enquiry is always the document, the physical
-      support that lies in front of the scholar’s eyes. </p>
-   <p>To understand the text that is contained in the manuscript, a deep study of the
-      manuscript itself is fundamental: the layout, the type of script, the type of
-      writing support, the binding and many other aspects are able to tell us about
-      when, where and why this particular text was composed. The text therefore
-      represents the second level of enquiry, not the first. In the case of modern draft
-      manuscripts scholars must give detailed consideration to the layout, the different
-      stratifications of writing and the disposition of these in the physical space; all
-      of these, together with the understanding of the text, are required to gain
-      insight about the composition, time of revisions, and flow of the text.
-      Furthermore, for some kind of texts we know that the kind of physical support used
-      to record them is not only influencing but also determining the text itself. For
-      instance, the content and the length of letters are often determined from the size
-      and quantity of paper available to the writer. </p>
-   <p>Despite all of this, the TEI’s approach forces scholars to consider the text
-      first. Of the two main hierarchies (text and document), the TEI privileges the
-      text (hence <hi rend="italic">Text</hi> Encoding Initiative) and relegates
-      topological description to empty elements (<gi>tei:pb/</gi>, <gi>tei:lb/</gi>,
-         <gi>tei:cb/</gi>) or attributes (<gi>tei:add place=""</gi>, <gi>tei:note
-         place=""</gi>). The TEI does not say that documents are not relevant, but that
-      they are less relevant than texts; to use a bibliographical metaphor, texts are
-         <soCalled>substantial</soCalled> while documents are
-      <soCalled>accidental</soCalled>. </p>
-   <p>The TEI does not handle the document level very well but for genetic editions this
-      level is crucial. We should therefore offer two possible encoding: Document and
-      Text.</p>
-   <p>We should then clarify the way we will use the following words:</p>
-   <list type="bulleted">
-      <item><label>Document</label> the physical object, the manuscript or other primary
-         source</item>
-      <item><label>Text</label> the content of the document, the words written in their
-         logical (non physical) sequence</item>
-      <item><label>Facsimile</label> a surrogate representation (non necessarily
-         digital) of the document (a photograph, a microfilm, a digital image)</item>
-      <item><label>Document level</label> transcription of the content of a document
-         according to its physical layout</item>
-      <item><label>Text level</label> transcription of the content of a document
-         according to its logical, semantic meaning </item>
-      <item><label>Text stage</label> a reconstructible and possible timed stage of
-         evolution of a text, represented by a document or by a revision campaign within
-         one or more documents. </item>
-   </list>
-</div>
+            <head>Theoretical Framework</head>
+            <p>The encoding model will present how to
+               handle<?oxy_delete author="lou" timestamp="20090803T151707+0100" content=" both"?>
+               <hi rend="bold">Genetic Transcription</hi> (a transcription of a single document),
+               how to reconstruct a <hi rend="bold">Genetic Dossier</hi>, meaning how to describe
+               genetic relations amongst multiple witnesses, and how to prepare a <hi rend="bold"
+                  >Genetic Edition</hi> based on a single or multiple witnesses . In this latter
+               case the model can be used both in the case of a full transcription of all extant
+               witnesses, and in the case of the full transcription of only one base-text, with the
+               others witnesses
+               reconstruct<?oxy_insert_start author="lou" timestamp="20090803T151731+0100"?>a<?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T151731+0100" content="i"?>ble
+               via collation. </p>
+            <p>The model aims to be independent of presuppositions made by any particular
+               theoretical framework; therefore a couple of typical dichotomies in editorial theory
+               have to be recognised and discussed.</p>
+            <div>
+               <head>Fact (or record) vs. Interpretation</head>
+               <p>In German editorial theory there is a well known opposition between what is there
+                  on the source document, the record (<foreign>Befund</foreign>), and the
+                  interpretation of this phenomenon ( <foreign>Deutung</foreign>). This seems to
+                  imply that there is a way to talk about the record without any interpretation, but
+                  this is certainly not entirely correct, because everything we say about a text is
+                  based on interpretation (using a not very strict meaning of the word), in
+                  particular in the realm of genetic criticism.<note place="foot">See also the TEI’s
+                     (implicit) position on this point: “we define markup, or (synonymously)
+                     encoding, as any means of making explicit an <hi rend="italic"
+                        >interpretation</hi> of a text” (TEI Guidelines: <emph>v. A Gentle
+                        Introduction to XML</emph>, <ptr
+                        target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SG.html"/>). See
+                     also reference to Robinson and Solopova 1993/1997: 21: “Any primary textual
+                     source… has its own semiotic system within it.[…] The two semiotic system are
+                     materially distinct, in that text written by hand is not the same as the text
+                     on the computer screen” (quoted in Robinson 2009:44-45).</note> On the other
+                  hand this truism cannot conceal the fact that there is an obvious difference
+                  between the interpretation that some trace of ink is indeed a specific letter and
+                  the assumption that a change in a manuscript at the first line has been made at
+                  the same time as the change in the next line because it adjusts the text to the
+                  new rhyme word introduced by the first change. Therefore we propose to talk about
+                  differing levels of interpretation as we might not be able to clearly
+                  differentiate between “what’s there” (document/fact) and “how does it relate”
+                  (text/interpretation).</p>
+            </div>
+            <div>
+               <head>Document vs. Text</head>
+               <p>In any branch of Manuscript Studies (Editing, Codicology, Palaeography, Art
+                  History, History) the first level of enquiry is always the document, the physical
+                  support that lies in front of the scholar’s eyes. </p>
+               <p>To understand the text that is contained in the manuscript, a deep study of the
+                  manuscript itself is fundamental: the layout, the type of script, the type of
+                  writing support, the binding and many other aspects are able to tell us about
+                  when, where and why this particular text was composed. The text therefore
+                  represents the second level of enquiry, not the first. In the case of modern draft
+                  manuscripts scholars must give detailed consideration to the layout, the different
+                  stratifications of writing and the disposition of these in the physical space; all
+                  of these, together with the understanding of the text, are required to gain
+                  insight about the composition, time of revisions, and flow of the text.
+                  Furthermore, for some kind of texts we know that the kind of physical support used
+                  to record
+                  them<?oxy_delete author="lou" timestamp="20090803T152107+0100" content=" is"?> not
+                  only
+                  influen<?oxy_delete author="lou" timestamp="20090803T152112+0100" content="cing"?><?oxy_insert_start author="lou" timestamp="20090803T152112+0100"?>ces<?oxy_insert_end?>
+                  but
+                  <?oxy_delete author="lou" timestamp="20090803T152116+0100" content="also"?><?oxy_insert_start author="lou" timestamp="20090803T152116+0100"?>may
+                  actually<?oxy_insert_end?>
+                  determin<?oxy_delete author="lou" timestamp="20090803T152121+0100" content="ing"?><?oxy_insert_start author="lou" timestamp="20090803T152121+0100"?>e<?oxy_insert_end?>
+                  the text itself. For instance, the content and the length of letters are often
+                  determined
+                  <?oxy_delete author="lou" timestamp="20090803T152132+0100" content="from"?><?oxy_insert_start author="lou" timestamp="20090803T152132+0100"?>by<?oxy_insert_end?>
+                  the size and quantity of paper available to the writer. </p>
+               <p>Despite all of this, the TEI’s approach forces scholars to consider the text
+                  first. Of the two main hierarchies (text and document), the TEI privileges the
+                  text (hence <hi rend="italic">Text</hi> Encoding Initiative) and relegates
+                  topological description to empty elements (<gi>tei:pb/</gi>, <gi>tei:lb/</gi>,
+                     <gi>tei:cb/</gi>) or attributes (<gi>tei:add place=""</gi>, <gi>tei:note
+                     place=""</gi>). The TEI does not say that documents are not relevant, but that
+                  they are less relevant than texts; to use a bibliographical metaphor, texts are
+                     <soCalled>substantial</soCalled> while documents are
+                     <soCalled>accidental</soCalled>.
+                     <?oxy_insert_start author="lou" timestamp="20090803T152207+0100"?><note>LB: I
+                     protest. The TEI does offer the ability to record the physical level too. There
+                     is a whole chapter on the topic! But I agree that it doesn't prioritize it --
+                     any more than it prioritizes any other specialised
+                  approach.</note><?oxy_insert_end?></p>
+               <p>The TEI does not handle the document level very well but for genetic editions this
+                  level is crucial. We should therefore offer two possible
+                  encoding<?oxy_insert_start author="lou" timestamp="20090803T152328+0100"?>s<?oxy_insert_end?>:
+                  Document and Text.</p>
+               <p>We should then clarify the way we will use the following words:</p>
+               <list type="bulleted">
+                  <item><label>Document</label> the physical object, the manuscript or other primary
+                     source</item>
+                  <item><label>Text</label> the content of the document, the words written in their
+                     logical (non physical) sequence</item>
+                  <item><label>Facsimile</label> a surrogate representation (non necessarily
+                     digital) of the document (a photograph, a microfilm, a digital image)</item>
+                  <item><label>Document level</label> transcription of the content of a document
+                     according to its physical layout</item>
+                  <item><label>Text level</label> transcription of the content of a document
+                     according to its logical, semantic meaning </item>
+                  <item><label>Text stage</label> a reconstructible and possible timed stage of
+                     evolution of a text, represented by a document or by a revision campaign within
+                     one or more documents. </item>
+               </list>
+            </div>
          </div>
          <div>
-<head>Aspects of Genetic Editions</head>
-<p>Modern genetic editions encode the genetic process within one manuscript and over the
-   course of two or more manuscripts; in this latter case quite often they also offer a
-   view on each of the manuscripts as an integral and self-contained object. This is
-   because the manuscript view provides the material basis for the relationships
-   established by the inter-manuscript relationship. Therefore we propose to
-   differentiate between the following aspects of a genetic edition:</p>
-<list type="bulleted">
-   <item>
-      <label>Document level</label>
-      <list type="bulleted">
-         <item>
- <label>The topological description</label> description of the layout of the
- text and the basis for a rendition of a text as a diplomatic transcription.</item>
-         <item>
- <label>Alterations</label> like additions, deletions, substitutions.</item>
-         <item>
- <label>Grouping Revisions</label> allows to group changes at different
- locations of one document, in order to create sets which express the
- editorial assumption that these changes have been undertaken in one
-         stage.</item>
-      </list>
-   </item>
-   <item>
-      <label>Dossier level</label>
-      <list type="bulleted">
-         <item>
- <label>Genetic Grouping</label> allows to group phenomena in more than one
- document, in order to describe editorial assumption that these phenomena are
- related in some way.</item>
-         <item>
- <label>Genetic Relations</label> allows to express the genetic relation
- between different parts of a text, and/or across several documents, as a
- series of steps on a path.</item>
-         <item>
- <label>Collation and Critical Apparatus</label> allows to express the
- differences between texts as the result of a comparison between
-         documents.</item>
-      </list>
-   </item>
-   <item>
-      <label>Manuscript and Dossier levels</label>
-      <list type="bulleted">
-         <item>
- <label>Chronology, Date and Time</label> the encoding of the chronology of
- the text or parts of it in absolute or relative time.</item>
-         <item>
- <label>Documenting Editorial Decisions</label> allows to document the
- arguments which are the basis for editorial decisions to encode the text in
- a specific way including ways to express uncertainty and
-         alternatives.</item>
-      </list>
-   </item>
-</list>
-<div>
-   <head>Document level</head>
-   <div>
-      <head>Topological Description: the Document</head>
-      <p>The topological description includes 4 hierarchically organised levels: <list
- type="bulleted">
- <item>Document<list type="bulleted">
-       <item>Writing Surface (page, double page, folium, etc.) <list
- type="bulleted">
- <item>Zone <list type="bulleted">
-       <item>Line (or <gi>tei:p</gi> or other block
-       elements)</item>
-    </list></item>
-          </list></item>
-    </list></item>
-         </list>
-         <egXML xmlns="http://www.tei-c.org/ns/Examples">
- <document xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">
-    <writingSurface type="page">
-       <docZone type="top-border" lrx="150" lry="228" ulx="0" uly="265">
-          <line>here a line</line>
-       </docZone>
-       <docZone type="main-body" lrx="150" lry="0" ulx="0" uly="292">
-          <p xmlns="http://www.tei-c.org/ns/1.0">here a paragraph</p>
-       </docZone>
-    </writingSurface>
- </document>
-         </egXML>
-      </p>
-      <p><gi>ge:docZone</gi>s can be nest and grouped, can overlap and have a depth
-         level (i.e belong to a <ref target="#text-stage">text stage</ref>). Their
-         positioning respect the <gi>ge:docZone</gi> element is defined by cartesian
-         coordinates, similar to the one used by the <gi>tei:zone</gi> element, with the
-         difference that such coordinates should refer to the document and not to the
-         facsimile. The element carries an <att>orientation</att> attribute which
-         describes (in degrees) the orientation of the writing respect the main
-         orientation of the writing surface as defined by the <gi>tei:msDesc</gi>.</p>
-      <p>Zones are arbitrarily defined by the editors according to the layout of the
-         writing surface (<gi>ge:writingSurface</gi>) and can make use of a standardised
-         vocabulary (e.g. the top margin); zaones can also be defined according to
-         semantic aspects (e.g. a semantically coherent group of text, a datable
-         revision or addition). Their content can be: <list>
- <item><gi>ge:line</gi>: a sequence of lines of text</item>
- <item><gi>tei:p</gi> and other block paragraph-like elements</item>
- <item>a graphic/image </item>
-         </list></p>
-   </div>
-   <div>
-      <head xml:id="altrations">*Alterations</head>
-      <p>Alterations occurs within a single manuscript, but it is an open question
-         whether we can consider a sort of <soCalled>alteration</soCalled> also
-         discrepancies amongst versions preserved by different manuscripts (dossier
-         level). For instance, if by comparing (collating) two versions preserved by two
-         witnesses we note a word has been added or deleted, shell we encode it with
- <gi>tei:add</gi> and <gi>tei:del</gi> as we would do when transcribing a
-         single manuscript? Or do we need a complete new set of elements to do it? True
-         is that in a genetic process it is totally arbitrary when an author stops
-         revising the text within a given document and decides to move to a new document
-         (i.e. copy it anew), so the two are indeed closely related. On the other hand
-         we need to be able to differentiate somehow the two phenomena as the one within
-         a single document are explicitly marked by the author, while the one detected
-         by comparison are only implicitly so (and it may also happen that those
-         implicit alteration were perhaps marked in a lost intermediate version). This
-         remains an open problem (see <ref target="#collation">also</ref>).</p>
-      <p>The following discussion relates to the alterations occurred at document level:
-         for a discussion later whether to use them at dossier level also <ref
- target="#collation">see</ref>.</p>
-      <div>
-         <head>Additions</head>
-         <p>Beside “normal” additions (see for instance the TEI definition of the
-    <gi>tei:add</gi> element: “contains letters, words, or phrases inserted
- in the text by an author, scribe, annotator, or corrector.”), we have
- outlined some other special set of additions:</p>
-         <list type="bulleted">
- <item><label>Repetitions</label> for which we have introduced a <gi
-       xml:id="repe">ge:repetition type=""</gi> element. Repetitions can be
-    of two main types:<list type="bulleted">
-       <item>
-          <label>Fixation</label> which results from authors fixing a text
-          passage by overwriting it (e.g. a pencilled passage fixed with
-          ink).</item>
-       <item>
-          <label>Clarification</label> a word is badly written and the author
-          rewrites it to clarify. </item>
-    </list></item>
- <item><label>*Alternatives</label> when an author proposes more alternative
-    readings for a segment without deciding which is the best. For those
-    cases the TEI already offers a system (<gi>tei:alt/</gi>) that might be
-    adapted (i.e. semantically broadened or have attributes added). </item>
- <item xml:id="mm">
-    <label>Meta-marks</label> (<gi>ge:metaMark</gi>): marginal notes and
-    other additions to the text have to be differentiated from meta-marks
-    commanding an alteration (e.g. “move this passage over there”) or the
-    date of the beginning of a manuscript or a revision, which represent a
-    sort of processing instruction of the document.</item>
-         </list>
-         <p>
- <egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <add xmlns="http://www.tei-c.org/ns/1.0">
-       <metaMark xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"
-       >add</metaMark> is <metaMark
-          xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"
-       >here</metaMark>
-    </add>
- </egXML>
-         </p>
-      </div>
-      <div>
-         <head>Deletions</head>
-         <p>Beside “normal” deletions (see for instance the TEI definition for
-    <gi>tei:del</gi>: “contains a letter, word, or passage deleted, marked as
- deleted, or otherwise indicated as superfluous or spurious in the copy text
- by an author, scribe, annotator, or corrector.”), we have outlined some
- other special set of deletions: </p>
-         <list type="bulleted">
- <item><label>Marked as used </label>passages that happen to be stroked
-    through, where the strike marks the passage as used/copied at another
-    location/another manuscript. We have created two elements
-    <gi>ge:used</gi> and <gi>ge:usedSpan/</gi> for that purpose.</item>
- <item><label>Overwriting</label> is a particular case of a deletion, unless
-    it is a case of repetition (<ref target="#repe">see</ref>) or a false
-    start (<ref target="#false-start">see</ref>).</item>
-         </list>
-      </div>
-      <div>
-         <head>Transpositions</head>
-         <p>By transposition we mean words of blocks that are moved by the author in a
- different position by using arrows, asterisks or numbers. A possible
- approach (used, for instance by the <title>HNML</title>) would be to encode
- it as a substitution (i.e. considering the segment previous the
- transposition as deleted, substituted by the one after the transposition)
- but this will not work for transposition of blocks. </p>
-         <list type="unordered">
- <item>A new encoding should be envisaged: <list type="bulleted">
-       <item>First: make the segment to be transposed addressable, either via
-          an identifiable empty element (<gi>ge:trSpan/</gi>) or via a
-          “cross-cutting” <gi>tei:seg</gi> or similar.</item>
-       <item>Secondly: markup meta-marks which might be in the text (e.g. a
-          super linear “add <emph>is</emph> here” or numbers “3 2 4 1” or
-          asterisks), with an element <gi>ge:metaMark</gi>.</item>
-       <item>Relate the functional mark to the identified passages, either by
-          referring to the passage added via attributes or implicitly because
-          the <gi>ge:metaMark</gi> is contained in an <gi>tei:add</gi> or
- <gi>tei:del</gi>, as in the following example:</item>
-    </list></item>
-         </list>
-         <p>
- <egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <metaMark type="callout" function="#transp1"
-       xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">2.</metaMark>
-    <trSpan xml:id="thisbird"
-       xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"/>
-    <line xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">This <del
-          type="immediate" xmlns="http://www.tei-c.org/ns/1.0">animal</del>
-       bird is a species found in <undo target="#del2"
-          xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">
-          <del xml:id="del2" xmlns="http://www.tei-c.org/ns/1.0"> dense </del>
-       </undo> vegetation such as</line>
-    <line xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"> reeds,
-       bushes and thick undergrowth.</line>
-    <trSpan spanTo="#thisbird"
-       xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"/>
-    <metaMark type="callout" function="#transp1"
-       xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">1.</metaMark>
-    <trSpan xml:id="fivetosixeggs"
-       xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"/>
-    <line xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">5-6 eggs
-       are laid in a nest in a low tree.</line>
-    <trSpan spanTo="#fivetosixeggs"
-       xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"/>
- </egXML>
-         </p>
-         <p>The re-alignment of the transposed blocks or segments can be supplied via a
- stand-off mechanism, to be used, for instance, within the
-    <gi>tei:teiHeader</gi>:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <profileDesc xmlns="http://www.tei-c.org/ns/1.0">
-       <transpositions
-          xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">
-          <transposition xml:id="transp1">
- <ptr target="#fivetosixeggs" xmlns="http://www.tei-c.org/ns/1.0"/>
- <ptr target="#thisbird" xmlns="http://www.tei-c.org/ns/1.0"/>
-          </transposition>
-       </transpositions>
-    </profileDesc>
- </egXML>
-         </p>
-      </div>
-      <div>
-         <head>*Substitution</head>
-         <p>The current TEI encoding consider a substitution as a mere couple of
- deletion/addition. Nevertheless there are cases in which the substitution
- include more material. The current <gi>tei:subst</gi> might therefore need a
- revision to allow more loose substitution like to following: <egXML
-    xmlns="http://www.tei-c.org/ns/Examples">
-    <p xmlns="http://www.tei-c.org/ns/1.0">indisputably <subst><del>&amp;
- evidently</del> become
-       <del>much</del><add>considerably</add></subst> worse</p>
- </egXML></p>
-      </div>
-      <div>
-         <head>*Instant corrections and *false starts</head>
-         <p>To distinguish instant correction from other kind of alterations is
- important for establishing the timing of a specific revisions and the whole
- genetic process. The information might be supplied as a specific attribute
- of <gi>tei:add/</gi>, <gi>tei:del/</gi>, <gi>tei:subst</gi> etc., called
-    <att>*timing</att> (or <att>*instant</att> or similar).</p>
-         <p>A specific subset of instant correction is represented by <hi rend="bold"
-    xml:id="false-start">false starts</hi>, which are parts of a word that
- are overwritten by another (or stroked through), meaning that the author
- started to write a word, then changed his/her mind and overwrote all o part
- of what already written to fit the new word. This is an open problem: how to
- encode the partial word? Which is the scope of the correction? just the
- parts of the word that have been altered or all of it, even the one not
- actually written? In case it is possible to understand the word partially
- written how to encode it? Will <gi>tei:supplied</gi> a good candidate for
- that?</p>
-         <p>Probably, in this latter case a new element should be added, called, perhaps
-    <gi>ge:fStart</gi>, provided by a <att>scope</att>
-    (<val>part</val>|<val>full</val>) and <att>method</att>
-    (<val>overwrite</val>|<val>stroked</val> et simil.) attribute.<note
-    place="foot"><hi rend="bold">EP</hi>: I think we should suggest a
-       <att>method</att> attribute for <gi>tei:del</gi> as well, more
-    specific than <att>rend</att>.</note></p>
-      </div>
-      <div>
-         <head>Undoing alterations</head>
-         <p>In some case authors take back alterations, e.g. a stroked through passage
- being restored via a dotted underlining, or a text that is firstly
- underlined, then the underline is deleted by a waving line. </p>
-         <p>An element <gi>tei:restore</gi> already exists in TEI for undoing a
- deletion, but we need a more general approach, for instance to delete
- underling or a transposition. We have introduced an element <gi>ge:undo</gi>
- for that purpose provided by at attribute <att>target</att> pointing at the
- element to be undone: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <undo target="#und1"
-       xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">
-       <hi rend="underline" xml:id="und1" xmlns="http://www.tei-c.org/ns/1.0"
-          >underline</hi>
-    </undo>
- </egXML>
-         </p>
-         <p>Normally the element <gi>ge:undo</gi> would contain the element to be
- undone, a part in the cases of partial undoing as in the following example:
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <del xml:id="del1" xmlns="http://www.tei-c.org/ns/1.0"><ge:undo
-          target="#del1" rev="#thirdRev"
-          xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"
-       >is</ge:undo> nomadic</del>
- </egXML></p>
-      </div>
-   </div>
-   <div>
-      <head xml:id="text-stage">Grouping Revisions </head>
-      <p>In some cases revisions can be attributed to a single campaign of revision (or
- <soCalled>text-stage</soCalled>), meaning we can say that a set of
-         alterations (deletion, addition, substitution, transposition, etc.) are
-         interrelated (i.e. one is a consequence of the other, they happened at the same
-         time, etc.). To document this we need:<list type="bulleted">
- <item>A system to attribute an alteration or any other phenomena occurring
-    at document level to a particular revision campaign/text-stage</item>
- <item>A way to describe a revision campaign/text-stage</item>
-         </list></p>
-      <p>For the former purpose ('attribute an alteration to a revision campaign') we
-         have introduced a global attribute <att>ge:rev</att> that points to an
- <att>xml:id</att> attribute within an element describing a specific
-         text-stage; the element provided for that purpose is <gi>ge:revDesc</gi> which
-         can occur within the <gi>tei:teiHeader</gi> and groups the editorial reasons
-         for stating that some alteration belong to a text-stage. Element
-         <gi>ge:revDesc</gi> contains a sequence of <gi xml:id="revNote"
-         >ge:revNote</gi>, each of them describing a single text-stage. Typically, a
- <gi>ge:revNote</gi> will contain several references to <gi>ge:edJust</gi>
-         elements (see <ref target="#edjust">below</ref>) and to other annotations
-         contained within the <gi>tei:Header</gi>.</p>
-      <p>In many cases it is necessary to scope a portion of text in which one or more
-         alteration occurs, in order to give the necessary context for any editorial
-         discussion. For that purpose we have introduced an element
-         <gi>ge:revision</gi>, which occurs within a <gi>ge:line</gi> or a
-         <gi>tei:p</gi> or any block and phrasal level elements. As the element is
-         likely to overlap with other hierarchies (in particular it is very likely to
-         overlap with <gi>ge:line</gi> in case the editor has chosen to encode the
-         document level), we also provide a <gi>ge:revSpan/</gi> empty element.</p>
-   </div>
-</div>
-<div>
-   <head>Dossier Level</head>
-   <div>
-      <head>*Genetic Grouping </head>
-      <!--<p>Forming change-sets is necessary to group alterations of different text
+            <head>Aspects of Genetic Editions</head>
+            <p>Modern genetic editions encode the genetic process within one manuscript and over the
+               course of two or more manuscripts; in this latter case quite often they also offer a
+               view
+               o<?oxy_delete author="lou" timestamp="20090803T152421+0100" content="n"?><?oxy_insert_start author="lou" timestamp="20090803T152421+0100"?>f<?oxy_insert_end?>
+               each of the manuscripts as
+               a<?oxy_delete author="lou" timestamp="20090803T152432+0100" content="n integral an"?><?oxy_insert_start author="lou" timestamp="20090803T152432+0100"?>
+               single<?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T152434+0100" content="d"?>
+               self-contained object. This is because the manuscript view provides the material
+               basis for the relationships established by the inter-manuscript relationship.
+               Therefore we propose to differentiate between the following aspects of a genetic
+               edition:</p>
+            <list type="bulleted">
+               <item>
+                  <label>Document level</label>
+                  <list type="bulleted">
+                     <item>
+                        <label>The topological description</label> description of the layout of the
+                        text and the basis for a rendition of a text as a diplomatic
+                        transcription.</item>
+                     <item>
+                        <label>Alterations</label> like additions, deletions, substitutions.</item>
+                     <item>
+                        <label>Grouping
+                        Revisions</label><?oxy_delete author="lou" timestamp="20090803T152459+0100" content=" allows to "?>group<?oxy_insert_start author="lou" timestamp="20090803T152503+0100"?>s
+                        of<?oxy_insert_end?> changes at different locations of one
+                        document,<?oxy_insert_start author="lou" timestamp="20090803T152518+0100"?>
+                        used to
+                        <?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T152517+0100" content=" in order to "?>create
+                        sets which express the editorial assumption that these changes have been
+                        undertaken in one stage.</item>
+                  </list></item>
+               <item>
+                  <label>Dossier level</label>
+                  <list type="bulleted">
+                     <item>
+                        <label>Genetic Grouping</label>
+                        <?oxy_delete author="lou" timestamp="20090803T152544+0100" content="allows to"?>
+                        group<?oxy_insert_start author="lou" timestamp="20090803T152557+0100"?>s<?oxy_insert_end?>
+                        phenomena in more than one document, in order to describe editorial
+                        assumption that these phenomena are related in some way.</item>
+                     <item>
+                        <label>Genetic Relations</label>
+                        <?oxy_delete author="lou" timestamp="20090803T152603+0100" content="allows to"?>
+                        express the genetic relation between different parts of a text, and/or
+                        across several documents, as a series of steps on a path.</item>
+                     <item>
+                        <label>Collation and Critical Apparatus</label>
+                        <?oxy_delete author="lou" timestamp="20090803T152609+0100" content="allows to"?>
+                        express<?oxy_insert_start author="lou" timestamp="20090803T152612+0100"?>es<?oxy_insert_end?>
+                        the differences between texts as the result of a comparison between
+                        documents.</item>
+                  </list></item>
+               <item>
+                  <label>Manuscript and Dossier levels</label>
+                  <list type="bulleted">
+                     <item>
+                        <label>Chronology, Date and Time</label> the encoding of the chronology of
+                        the text or parts of it in absolute or relative time.</item>
+                     <item>
+                        <label>Documenting Editorial
+                        Decisions</label><?oxy_delete author="lou" timestamp="20090803T152622+0100" content=" allows to"?>
+                        document<?oxy_insert_start author="lou" timestamp="20090803T152626+0100"?>s<?oxy_insert_end?>
+                        the arguments which are the basis for editorial decisions to encode the text
+                        in a specific way including ways to express uncertainty and
+                        alternatives.</item>
+                  </list></item>
+            </list>
+            <div>
+               <head>Document level</head>
+               <div>
+                  <head>Topological Description: the Document</head>
+                  <p>The topological description includes 4 hierarchically organised levels: <list
+                        type="bulleted">
+                        <item>Document<list type="bulleted">
+                              <item>Writing Surface (page, double page, folium, etc.) <list
+                                    type="bulleted">
+                                    <item>Zone <list type="bulleted">
+                                          <item>Line (or <gi>tei:p</gi> or other block
+                                             elements)</item>
+                                       </list></item>
+                                 </list></item>
+                           </list></item>
+                     </list>
+                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <document xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">
+                           <writingSurface type="page">
+                              <docZone type="top-border" lrx="150" lry="228" ulx="0" uly="265">
+                                 <line>here a line</line>
+                              </docZone>
+                              <docZone type="main-body" lrx="150" lry="0" ulx="0" uly="292">
+                                 <p xmlns="http://www.tei-c.org/ns/1.0">here a paragraph</p>
+                              </docZone>
+                           </writingSurface>
+                        </document>
+                     </egXML>
+                  </p>
+                  <p><gi>ge:docZone</gi>s can be
+                     nest<?oxy_insert_start author="lou" timestamp="20090803T152645+0100"?>ed<?oxy_insert_end?>
+                     and grouped, can overlap and have a depth level (i.e belong to a <ref
+                        target="#text-stage">text stage</ref>). Their positioning
+                     <?oxy_insert_start author="lou" timestamp="20090803T152655+0100"?>with
+                     <?oxy_insert_end?>respect
+                     <?oxy_insert_start author="lou" timestamp="20090803T152658+0100"?>to
+                     <?oxy_insert_end?>the <gi>ge:docZone</gi> element is defined by cartesian
+                     coordinates, similar to
+                     th<?oxy_delete author="lou" timestamp="20090803T152706+0100" content="e one"?><?oxy_insert_start author="lou" timestamp="20090803T152706+0100"?>ose<?oxy_insert_end?>
+                     used by the <gi>tei:zone</gi> element, with the difference that such
+                     coordinates should refer to the document and not to the facsimile. The element
+                     carries an <att>orientation</att> attribute which describes (in degrees) the
+                     orientation of the
+                     writing<?oxy_insert_start author="lou" timestamp="20090803T152726+0100"?> with
+                     <?oxy_insert_end?>
+                     respect<?oxy_insert_start author="lou" timestamp="20090803T152731+0100"?> to
+                     <?oxy_insert_end?> the main orientation of the writing surface as defined by
+                     the <gi>tei:msDesc</gi>.</p>
+                  <p>Zones are arbitrarily defined by the editors according to the layout of the
+                     writing surface (<gi>ge:writingSurface</gi>) and can make use of a standardised
+                     vocabulary (e.g. the top margin);
+                     z<?oxy_delete author="lou" timestamp="20090803T152746+0100" content="a"?>ones
+                     can also be defined according to
+                     semantic<?oxy_delete author="lou" timestamp="20090803T152759+0100" content=" aspects"?><?oxy_insert_start author="lou" timestamp="20090803T152759+0100"?>
+                     criteria<?oxy_insert_end?> (e.g. a semantically coherent group of text, a
+                     datable revision or addition). Their content can be: <list>
+                        <item><gi>ge:line</gi>: a sequence of lines of text</item>
+                        <item><gi>tei:p</gi> and other block paragraph-like elements</item>
+                        <item>a graphic/image </item>
+                     </list></p>
+               </div>
+               <div><head xml:id="altrations">*Alterations</head><p>Alterations occurs within a
+                     single manuscript, but it is an open question whether we can consider
+                     <?oxy_delete author="lou" timestamp="20090803T154111+0100" content="a sort of &lt;soCalled&gt;alteration&lt;/soCalled&gt; also"?>
+                     discrepancies amongst versions preserved by different manuscripts (dossier
+                     level)<?oxy_insert_start author="lou" timestamp="20090803T154116+0100"?> also
+                     as a sort of
+                     <soCalled>alteration</soCalled><?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T154127+0100" content="."?>
+                     For instance, if by comparing (collating) two versions preserved by two
+                     witnesses we note a word has been added or deleted,
+                     sh<?oxy_delete author="lou" timestamp="20090803T154144+0100" content="ell"?><?oxy_insert_start author="lou" timestamp="20090803T154144+0100"?>ould<?oxy_insert_end?>
+                     we encode it with <gi>tei:add</gi>
+                     <?oxy_delete author="lou" timestamp="20090803T154201+0100" content="and"?><?oxy_insert_start author="lou" timestamp="20090803T154201+0100"?>or<?oxy_insert_end?>
+                     <gi>tei:del</gi> as we would
+                     <?oxy_delete author="lou" timestamp="20090803T154207+0100" content="do"?> when
+                     transcribing a single manuscript? Or do we need a
+                     complete<?oxy_insert_start author="lou" timestamp="20090803T154223+0100"?>ly<?oxy_insert_end?>
+                     new set of elements to do it?
+                     <?oxy_insert_start author="lou" timestamp="20090803T154238+0100"?>I<?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T154237+0100" content="True is that i"?>n
+                     a genetic
+                     process<?oxy_insert_start author="lou" timestamp="20090803T154257+0100"?>,<?oxy_insert_end?>
+                     it is totally arbitrary when an author stops revising the text within a given
+                     document and decides to move to a new document (i.e. copy it anew), so the two
+                     are indeed closely related. On the other hand we need to
+                     <?oxy_delete author="lou" timestamp="20090803T154320+0100" content="be able to "?>differentiate
+                     somehow the two
+                     phenomena<?oxy_delete author="lou" timestamp="20090803T154328+0100" content=" as "?><?oxy_insert_start author="lou" timestamp="20090803T154328+0100"?>
+                     because <?oxy_insert_end?>the one within a single
+                     document<?oxy_delete author="lou" timestamp="20090803T154336+0100" content=" are"?><?oxy_insert_start author="lou" timestamp="20090803T154336+0100"?>
+                     is <?oxy_insert_end?> explicitly marked by the author, while the one detected
+                     by comparison
+                     <?oxy_delete author="lou" timestamp="20090803T154341+0100" content="are"?><?oxy_insert_start author="lou" timestamp="20090803T154341+0100"?>is<?oxy_insert_end?>
+                     only
+                     implici<?oxy_insert_start author="lou" timestamp="20090803T154349+0100"?>t.
+                     <?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T154347+0100" content="tly so"?>
+                     <?oxy_delete author="lou" timestamp="20090803T154356+0100" content="(and i"?><?oxy_insert_start author="lou" timestamp="20090803T154356+0100"?>I<?oxy_insert_end?>t
+                     may also happen that
+                     <?oxy_delete author="lou" timestamp="20090803T154409+0100" content="those"?>
+                     implicit
+                     alteration<?oxy_insert_start author="lou" timestamp="20090803T154412+0100"?>s<?oxy_insert_end?>
+                     were perhaps marked in a lost intermediate
+                     version<?oxy_delete author="lou" timestamp="20090803T154418+0100" content=")"?>.
+                     This remains an open problem (see <ref target="#collation"
+                     >also</ref>).</p><p>The following discussion relates to the alterations
+                     <?oxy_delete author="lou" timestamp="20090803T154438+0100" content="occurred "?>at
+                     document level: for a
+                     discussion<?oxy_delete author="lou" timestamp="20090803T154452+0100" content=" later whether to use them "?><?oxy_insert_start author="lou" timestamp="20090803T154456+0100"?>of
+                     their use <?oxy_insert_end?>at dossier level also <ref target="#collation"
+                        >see</ref><?oxy_insert_start author="lou" timestamp="20090803T154501+0100"?>
+                     below<?oxy_insert_end?>.</p>
+                  <div>
+                     <head>Additions</head>
+                     <p>Beside “normal” additions (see for instance the TEI definition of the
+                           <gi>tei:add</gi> element: “contains letters, words, or phrases inserted
+                        in the text by an author, scribe, annotator, or corrector.”), we have
+                        outlined some other
+                        special<?oxy_delete author="lou" timestamp="20090803T154517+0100" content=" set"?><?oxy_insert_start author="lou" timestamp="20090803T154517+0100"?>
+                        kinds<?oxy_insert_end?> of
+                        addition<?oxy_delete author="lou" timestamp="20090803T154538+0100" content="s"?>:</p>
+                     <list type="bulleted">
+                        <item><label>Repetitions</label> for which we have introduced a <gi
+                              xml:id="repe">ge:repetition type=""</gi> element. Repetitions can be
+                           of two main types:<list type="bulleted">
+                              <item>
+                                 <label>Fixation</label> which results from authors fixing a text
+                                 passage by overwriting it (e.g. a pencilled passage fixed with
+                                 ink).</item>
+                              <item>
+                                 <label>Clarification</label> a word is badly written and the author
+                                 rewrites it to clarify. </item>
+                           </list></item>
+                        <item><label>*Alternatives</label> when an author proposes
+                           <?oxy_delete author="lou" timestamp="20090803T154555+0100" content="more"?><?oxy_insert_start author="lou" timestamp="20090803T154555+0100"?>several<?oxy_insert_end?>
+                           alternative readings for a segment without deciding which is the best.
+                           For those cases the TEI already offers a system (<gi>tei:alt/</gi>) that
+                           might be adapted (i.e. semantically broadened or have attributes added). </item>
+                        <item xml:id="mm">
+                           <label>Meta-marks</label> (<gi>ge:metaMark</gi>): marginal notes and
+                           other additions to the
+                           text<?oxy_insert_start author="lou" timestamp="20090803T154638+0100"?>
+                           should be
+                           <?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T154649+0100" content=" have to be "?>differentiated
+                           from meta-marks commanding an alteration (e.g. “move this passage over
+                           there”) or the date of the beginning of a manuscript or a revision, which
+                           represent a sort of processing instruction
+                           <?oxy_delete author="lou" timestamp="20090803T154704+0100" content="of"?><?oxy_insert_start author="lou" timestamp="20090803T154704+0100"?>
+                           in<?oxy_insert_end?> the document.</item>
+                     </list>
+                     <p>
+                        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <add xmlns="http://www.tei-c.org/ns/1.0">
+                              <metaMark xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"
+                                 >add</metaMark> is <metaMark
+                                 xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"
+                                 >here</metaMark>
+                           </add>
+                        </egXML>
+                     </p>
+                  </div>
+                  <div>
+                     <head>Deletions</head>
+                     <p>Beside “normal” deletions (see for instance the TEI definition for
+                           <gi>tei:del</gi>: “contains a letter, word, or passage deleted, marked as
+                        deleted, or otherwise indicated as superfluous or spurious in the copy text
+                        by an author, scribe, annotator, or corrector.”), we have outlined some
+                        other special
+                        <?oxy_delete author="lou" timestamp="20090803T154721+0100" content="set"?><?oxy_insert_start author="lou" timestamp="20090803T154721+0100"?>kinds<?oxy_insert_end?>
+                        of
+                        deletion<?oxy_delete author="lou" timestamp="20090803T154725+0100" content="s"?>: </p>
+                     <list type="bulleted">
+                        <item><label>Marked as used </label>passages that happen to be
+                           str<?oxy_delete author="lou" timestamp="20090803T154733+0100" content="oked"?><?oxy_insert_start author="lou" timestamp="20090803T154733+0100"?>uck<?oxy_insert_end?>
+                           through, where the strike marks the passage as used/copied at another
+                           location/another manuscript. We have created two elements
+                              <gi>ge:used</gi> and <gi>ge:usedSpan/</gi> for
+                           th<?oxy_delete author="lou" timestamp="20090803T154747+0100" content="at "?><?oxy_insert_start author="lou" timestamp="20090803T154747+0100"?>is
+                           <?oxy_insert_end?>purpose.</item>
+                        <item><label>Overwriting</label> is a particular case of a deletion, unless
+                           it is a case of repetition (<ref target="#repe">see</ref>) or a false
+                           start (<ref target="#false-start">see</ref>).</item>
+                     </list>
+                  </div>
+                  <div>
+                     <head>Transpositions</head>
+                     <p>By transposition we mean words
+                        o<?oxy_delete author="lou" timestamp="20090803T154757+0100" content="f"?><?oxy_insert_start author="lou" timestamp="20090803T154757+0100"?>r<?oxy_insert_end?>
+                        blocks that are moved by the author
+                        <?oxy_delete author="lou" timestamp="20090803T154804+0100" content="in"?><?oxy_insert_start author="lou" timestamp="20090803T154804+0100"?>to<?oxy_insert_end?>
+                        a different position
+                        <?oxy_delete author="lou" timestamp="20090803T154808+0100" content="by "?><?oxy_insert_start author="lou" timestamp="20090803T154808+0100"?>
+                        <?oxy_insert_end?>using arrows, asterisks or numbers. A possible approach
+                        (used, for instance
+                        <?oxy_delete author="lou" timestamp="20090803T154817+0100" content="by the"?><?oxy_insert_start author="lou" timestamp="20090803T154814+0100"?>
+                        in  <?oxy_insert_end?>
+                        <title>HNML</title>) would be to
+                        encode<?oxy_delete author="lou" timestamp="20090803T154822+0100" content=" it"?><?oxy_insert_start author="lou" timestamp="20090803T154822+0100"?>
+                        this<?oxy_insert_end?> as a substitution (i.e.
+                        <?oxy_insert_start author="lou" timestamp="20090803T154840+0100"?>to
+                        <?oxy_insert_end?>consider<?oxy_delete author="lou" timestamp="20090803T154843+0100" content="ing"?>
+                        the segment previous
+                        <?oxy_insert_start author="lou" timestamp="20090803T154849+0100"?>to
+                        <?oxy_insert_end?>the transposition as deleted,
+                        <?oxy_insert_start author="lou" timestamp="20090803T154831+0100"?>and
+                        <?oxy_insert_end?>substituted by the one after the transposition) but this
+                        will not work for transposition of blocks. </p>
+                     <list type="unordered">
+                        <item>A new encoding should be envisaged: <list type="bulleted">
+                              <item>First: make the segment to be transposed addressable, either via
+                                 an identifiable empty element (<gi>ge:trSpan/</gi>) or via a
+                                 “cross-cutting” <gi>tei:seg</gi> or similar.</item>
+                              <item>Secondly: markup meta-marks which might be in the text (e.g. a
+                                 super linear “add <emph>is</emph> here” or numbers “3 2 4 1” or
+                                 asterisks), with an element <gi>ge:metaMark</gi>.</item>
+                              <item>Relate the functional mark to the identified passages, either by
+                                 referring to the passage added via attributes or implicitly because
+                                 the <gi>ge:metaMark</gi> is contained in an <gi>tei:add</gi> or
+                                    <gi>tei:del</gi>, as in the following example:</item>
+                           </list></item>
+                     </list>
+                     <p>
+                        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <metaMark type="callout" function="#transp1"
+                              xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">2.</metaMark>
+                           <trSpan xml:id="thisbird"
+                              xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"/>
+                           <line xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">This <del
+                                 type="immediate" xmlns="http://www.tei-c.org/ns/1.0">animal</del>
+                              bird is a species found in <undo target="#del2"
+                                 xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">
+                                 <del xml:id="del2" xmlns="http://www.tei-c.org/ns/1.0"> dense
+                                 </del>
+                              </undo> vegetation such as</line>
+                           <line xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"> reeds,
+                              bushes and thick undergrowth.</line>
+                           <trSpan spanTo="#thisbird"
+                              xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"/>
+                           <metaMark type="callout" function="#transp1"
+                              xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">1.</metaMark>
+                           <trSpan xml:id="fivetosixeggs"
+                              xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"/>
+                           <line xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">5-6 eggs
+                              are laid in a nest in a low tree.</line>
+                           <trSpan spanTo="#fivetosixeggs"
+                              xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"/>
+                        </egXML>
+                     </p>
+                     <p>The re-alignment of the transposed blocks or segments can be supplied via a
+                        stand-off mechanism, to be used, for instance, within the
+                           <gi>tei:teiHeader</gi>:<egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <profileDesc xmlns="http://www.tei-c.org/ns/1.0">
+                              <transpositions
+                                 xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">
+                                 <transposition xml:id="transp1">
+                                    <ptr target="#fivetosixeggs" xmlns="http://www.tei-c.org/ns/1.0"
+                                    />
+                                    <ptr target="#thisbird" xmlns="http://www.tei-c.org/ns/1.0"/>
+                                 </transposition>
+                              </transpositions>
+                           </profileDesc>
+                        </egXML>
+                     </p>
+                  </div>
+                  <div>
+                     <head>*Substitution</head>
+                     <p>The current TEI encoding
+                        consider<?oxy_insert_start author="lou" timestamp="20090803T155120+0100"?>s<?oxy_insert_end?>
+                        a substitution as
+                        a<?oxy_delete author="lou" timestamp="20090803T155125+0100" content=" mere"?><?oxy_insert_start author="lou" timestamp="20090803T155125+0100"?>
+                        <?oxy_insert_end?>
+                        c<?oxy_delete author="lou" timestamp="20090803T155132+0100" content="oupl"?><?oxy_insert_start author="lou" timestamp="20090803T155132+0100"?>ombination
+                        of<?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T155136+0100" content="e of"?>
+                        deletion/addition. Nevertheless there are cases in which
+                        <?oxy_delete author="lou" timestamp="20090803T155147+0100" content="the"?><?oxy_insert_start author="lou" timestamp="20090803T155147+0100"?>a
+                        <?oxy_insert_end?> substitution
+                        include<?oxy_insert_start author="lou" timestamp="20090803T155149+0100"?>s<?oxy_insert_end?>
+                        more material. The current <gi>tei:subst</gi> might therefore need a
+                        revision to allow more loose substitution like
+                        <?oxy_delete author="lou" timestamp="20090803T155159+0100" content="to"?><?oxy_insert_start author="lou" timestamp="20090803T155159+0100"?>the<?oxy_insert_end?>
+                        following: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <p xmlns="http://www.tei-c.org/ns/1.0">indisputably <subst><del>&amp;
+                                    evidently</del> become
+                                 <del>much</del><add>considerably</add></subst> worse</p>
+                        </egXML></p>
+                  </div>
+                  <div>
+                     <head>*Instant corrections and *false starts</head>
+                     <p><?oxy_delete author="lou" timestamp="20090803T155339+0100" content="To d"?><?oxy_insert_start author="lou" timestamp="20090803T155339+0100"?>D<?oxy_insert_end?>istinguish<?oxy_insert_start author="lou" timestamp="20090803T155342+0100"?>ing<?oxy_insert_end?>
+                        instant correction from other
+                        kind<?oxy_insert_start author="lou" timestamp="20090803T155325+0100"?>s<?oxy_insert_end?>
+                        of
+                        alteration<?oxy_delete author="lou" timestamp="20090803T155328+0100" content="s"?>
+                        is important
+                        <?oxy_delete author="lou" timestamp="20090803T155351+0100" content="for"?><?oxy_insert_start author="lou" timestamp="20090803T155351+0100"?>
+                        when<?oxy_insert_end?> establishing the timing of a specific revisions
+                        and<?oxy_insert_start author="lou" timestamp="20090803T155359+0100"?>
+                        in<?oxy_insert_end?> the whole genetic process. The information might be
+                        supplied as a specific attribute of <gi>tei:add/</gi>, <gi>tei:del/</gi>,
+                           <gi>tei:subst</gi> etc., called <att>*timing</att> (or
+                           <att>*instant</att> or similar).</p>
+                     <p>A specific subset of instant correction is represented by <hi rend="bold"
+                           xml:id="false-start">false starts</hi>, which are parts of a word that
+                        are overwritten by another (or
+                        str<?oxy_delete author="lou" timestamp="20090803T155417+0100" content="oked"?><?oxy_insert_start author="lou" timestamp="20090803T155417+0100"?>uck<?oxy_insert_end?>
+                        through), meaning that the author started to write a word, then changed
+                        his/her mind and overwrote all
+                        o<?oxy_insert_start author="lou" timestamp="20090803T155424+0100"?>r<?oxy_insert_end?>
+                        part of
+                        what<?oxy_insert_start author="lou" timestamp="20090803T155426+0100"?>
+                        was<?oxy_insert_end?> already written to fit the new word. This is an open
+                        problem: how to encode the partial word? Which is the scope of the
+                        correction? just the parts of the word that have been altered or all of it,
+                        even
+                        <?oxy_delete author="lou" timestamp="20090803T155447+0100" content="the one"?><?oxy_insert_start author="lou" timestamp="20090803T155447+0100"?>if
+                        this was<?oxy_insert_end?> not actually written?
+                        I<?oxy_delete author="lou" timestamp="20090803T155457+0100" content="n case"?><?oxy_insert_start author="lou" timestamp="20090803T155457+0100"?>f<?oxy_insert_end?>
+                        it is possible to understand the word partially
+                        written<?oxy_insert_start author="lou" timestamp="20090803T155503+0100"?>,<?oxy_insert_end?>
+                        how
+                        <?oxy_delete author="lou" timestamp="20090803T155506+0100" content="to "?><?oxy_insert_start author="lou" timestamp="20090803T155506+0100"?>should
+                        it be
+                        <?oxy_insert_end?>encod<?oxy_delete author="lou" timestamp="20090803T155512+0100" content="e i"?><?oxy_insert_start author="lou" timestamp="20090803T155512+0100"?>d<?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T155514+0100" content="t"?>?
+                        Will <gi>tei:supplied</gi> a good candidate for that?</p>
+                     <p>Probably, in this latter case a new element should be added, called, perhaps
+                           <gi>ge:fStart</gi>, provided by a <att>scope</att>
+                           (<val>part</val>|<val>full</val>) and <att>method</att>
+                           (<val>overwrite</val>|<val>stroked</val> et simil.) attribute.<note
+                           place="foot"><hi rend="bold">EP</hi>: I think we should suggest a
+                              <att>method</att> attribute for <gi>tei:del</gi> as well, more
+                           specific than <att>rend</att>.</note></p>
+                  </div>
+                  <div>
+                     <head>Undoing alterations</head>
+                     <p>In some case authors
+                        <?oxy_delete author="lou" timestamp="20090803T155603+0100" content="take back"?><?oxy_insert_start author="lou" timestamp="20090803T155603+0100"?>undo<?oxy_insert_end?>
+                        alterations, e.g. a
+                        str<?oxy_delete author="lou" timestamp="20090803T155609+0100" content="oked"?><?oxy_insert_start author="lou" timestamp="20090803T155609+0100"?>uck<?oxy_insert_end?>
+                        through passage
+                        <?oxy_delete author="lou" timestamp="20090803T155615+0100" content="being"?><?oxy_insert_start author="lou" timestamp="20090803T155615+0100"?>may
+                        be<?oxy_insert_end?> restored via a dotted underlining, or
+                        <?oxy_insert_start author="lou" timestamp="20090803T155655+0100"?>the
+                        underlining of a passage may be
+                        <?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T155711+0100" content="a text that is firstly underlined, then the underline is "?>deleted
+                        by a
+                        wav<?oxy_delete author="lou" timestamp="20090803T155715+0100" content="ing"?><?oxy_insert_start author="lou" timestamp="20090803T155715+0100"?>y<?oxy_insert_end?>
+                        line. </p>
+                     <p>An element <gi>tei:restore</gi> already exists in TEI for undoing a
+                        deletion, but we need a more general approach, for instance to delete
+                        underlin<?oxy_insert_start author="lou" timestamp="20090803T155723+0100"?>in<?oxy_insert_end?>g
+                        or<?oxy_delete author="lou" timestamp="20090803T155727+0100" content=" a "?>transposition.
+                        We have introduced an element <gi>ge:undo</gi> for that purpose provided
+                        <?oxy_delete author="lou" timestamp="20090803T155734+0100" content="by"?><?oxy_insert_start author="lou" timestamp="20090803T155734+0100"?>with<?oxy_insert_end?>
+                        at attribute <att>target</att> pointing at the element to be undone: <egXML
+                           xmlns="http://www.tei-c.org/ns/Examples">
+                           <undo target="#und1"
+                              xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">
+                              <hi rend="underline" xml:id="und1" xmlns="http://www.tei-c.org/ns/1.0"
+                                 >underline</hi>
+                           </undo>
+                        </egXML>
+                     </p>
+                     <p>Normally the element <gi>ge:undo</gi> would contain the element to be
+                        undone,<?oxy_delete author="lou" timestamp="20090803T155750+0100" content=" a part i"?><?oxy_insert_start author="lou" timestamp="20090803T155750+0100"?>
+                        except i<?oxy_insert_end?>n the
+                        case<?oxy_delete author="lou" timestamp="20090803T155758+0100" content="s"?>
+                        of partial undoing as in the following example: <egXML
+                           xmlns="http://www.tei-c.org/ns/Examples">
+                           <del xml:id="del1" xmlns="http://www.tei-c.org/ns/1.0"><ge:undo
+                                 target="#del1" rev="#thirdRev"
+                                 xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"
+                                 >is</ge:undo> nomadic</del>
+                        </egXML></p>
+                  </div>
+               </div>
+               <div>
+                  <head xml:id="text-stage">Grouping Revisions </head>
+                  <p>In some cases revisions can be attributed to a single campaign of revision (or
+                        <soCalled>text-stage</soCalled>), meaning we can say that a set of
+                     alterations (deletion, addition, substitution, transposition, etc.) are
+                     interrelated (i.e. one is a consequence of the other, they happened at the same
+                     time, etc.). To document this we need:<list type="bulleted">
+                        <item>A system to attribute an alteration or any other phenomena occurring
+                           at document level to a particular revision campaign/text-stage</item>
+                        <item>A way to describe a revision campaign/text-stage</item>
+                     </list></p>
+                  <p>For the former purpose ('attribute an alteration to a revision campaign') we
+                     have introduced a global attribute <att>ge:rev</att> that points to an
+                        <att>xml:id</att> attribute within an element describing a specific
+                     text-stage; the element provided for that purpose is <gi>ge:revDesc</gi> which
+                     can occur within the <gi>tei:teiHeader</gi> and groups the editorial reasons
+                     for stating that some alteration belong to a text-stage. Element
+                        <gi>ge:revDesc</gi> contains a sequence of <gi xml:id="revNote"
+                        >ge:revNote</gi>, each of them describing a single text-stage. Typically, a
+                        <gi>ge:revNote</gi> will contain several references to <gi>ge:edJust</gi>
+                     elements (see <ref target="#edjust">below</ref>) and to other annotations
+                     contained within the <gi>tei:Header</gi>.</p>
+                  <p>In many cases it is necessary to scope a portion of text in which one or more
+                     alteration occurs, in order to give the necessary context for any editorial
+                     discussion. For that purpose we have introduced an element
+                     <gi>ge:revision</gi>, which occurs within a <gi>ge:line</gi> or a
+                        <gi>tei:p</gi> or any block and phrasal level elements. As the element is
+                     likely to overlap with other hierarchies (in particular it is very likely to
+                     overlap with <gi>ge:line</gi> in case the editor has chosen to encode the
+                     document level), we also provide a <gi>ge:revSpan/</gi> empty element.</p>
+               </div>
+            </div>
+            <div>
+               <head>Dossier Level</head>
+               <div>
+                  <head>*Genetic Grouping </head>
+                  <!--<p>Forming change-sets is necessary to group alterations of different text
          passages, all of which form one revision. This can be implemented either via a
          wrapping element (e.g. &lt;revision/&gt;) or via a stand-off mechanism for
          spatially disparate changes. </p>-->
-      <p>Alterations, revisions and other compositional phenomena may need to be grouped
-         at dossier level: it might in fact occur that authors correct two versions at a
- time,<note place="foot">Several examples available: Manzoni, for instance,
- was used to modify an old draft to see how a new variant fit with the
- context before coping it into a new draft.</note>or we might need to express
-         that two or more documents are related in other ways; for instance, one can be
-         the sequel of the other, they might have been drafted at the same time, or one
-         might contain some other kind of analogy, like a newspaper article that inspire
-         some kind of reflection contained in a given work. </p>
-      <p>In those cases such a grouping can be encoded within a <gi>gi:geneticGrp</gi>
- element.<note place="foot"><hi rend="bold">EP</hi>: Sorry, but I don't like
- the name <gi>ge:textGroup</gi>, it is not clear enough. I appreciate we need
- a generic name, but we are not grouping texts, we are grouping: a)
- revisions; b) blocks (for instance when we want reorder chapters, as for
- Fotis' Kafka example; c) ???. I think <gi>ge:geneticGrp</gi> is
-         clearer.</note> As the element <gi>ge:geneticGrp</gi> can be used more
-         generally for any kind of genetic grouping, a <att>type</att> attribute is also
-         provided. <gi>ge:geneticGrp</gi> contains a sequence of <gi
- xml:id="geneticNote">ge:geneticNote</gi> which <att>targets</att> attribute
-         can refer to several <gi>ge:revNote</gi> of specific documents or to other
-         annotations and editorial statements.</p>
-   </div>
-   <div>
-      <head>Genetic Relations</head>
-      <p>With <soCalled>genetic relations</soCalled> we intend the possibility of
-         ordering different text-stages contained within a single document, or more
-         probably, across different document into an ideal line of development, going,
-         for instance from a version <hi rend="bold">A</hi> to a version <hi rend="bold"
- >B</hi> (that can be represented by a different document or by an
-         editorially reconstructed text-stage), to a version <hi rend="bold">C</hi>,
-         etc.</p>
-      <p>To do so, we have introduced the concepts of <soCalled>steps</soCalled> and
- <soCalled>paths</soCalled> fro which we took inspiration from
-         <title>HNML</title>.</p>
-      <div>
-         <head>Steps and Paths </head>
-         <p>A <soCalled>step</soCalled> connects two versions (represented by two
- documents or by two reconstructed text-stages within the same document),
- while a <soCalled>path</soCalled> connects two or more steps.</p>
-         <list type="bulleted">
- <item>
-    <gi>ge:step</gi> embeds a <att>relation</att> attribute which points to
-    description of a specific type of relation as defined by
-       <gi>ge:geneticRel</gi> element (<ref target="#genRel">see</ref>); an
-    attribute <att>cert</att> signifies the degree of certainty associated
-    with the interpretation. Each <gi>ge:step</gi> element contains:<note
-       place="foot"><hi rend="bold">EP</hi>: we need to clarify well the
-       difference between a <gi>ge:step</gi> and a <gi>ge:geneticGrp</gi>, I
-       am still not clear if we need both or only one
-       (<gi>ge:geneticGrp</gi>, that is).</note><list type="bulleted">
-       <item><gi xml:id="stepNote">ge:stepNote</gi>: an editorial declaration
-          which describes the arguments to asses such a step.</item>
-       <item><gi>ge:stepLink targets=""/</gi>: a pointer to the two textual
-          versions that compose a step.</item>
-       <item>
-          <gi>ge:stepAlteration</gi>
-          <note place="foot"><hi rend="bold">EP</hi>: guys I forgot why we
- need this!</note>
-       </item>
-    </list></item>
- <item>
-    <gi>ge:path</gi> in the same way as <gi>ge:step</gi>, it embeds a
-       <att>relation</att> attribute which points to description of a
-    specific type of relation as defined by <gi>ge:geneticRel</gi> element
-       (<ref target="#genRel">see</ref>); an attribute <att>cert</att>
-    signifies the degree of certainty associated with the interpretation. A
-       <gi>ge:path</gi> contains:<list type="bulleted">
-       <item><gi xml:id="pathNote">ge:pathNote</gi>: an editorial declaration
-          which presents the arguments for the assessment of such a path.</item>
-       <item><gi>ge:pathLink targets=""</gi>: a pointer to the
-          <gi>ge:step</gi> that compose the path.</item>
-       <item><gi>ge:pathAlt</gi>: in some cases path can include alternatives
-          routes, for instance when a specific connection is not sure, or
-          when from a specific witness two or more (authorial) copies are
-          derived. In this case the <gi>ge:pathAlt</gi> will include two or
-          more <gi>ge:path</gi> elements and a <gi>gi:pathNote</gi>
-          explaining the reasons for the bifurcation.</item>
-    </list></item>
-         </list>
-      </div>
-      <div>
-         <head>*Relationships</head>
-         <p>The type of connections existing between two or more textual variants (a
- step) or two or more steps (a path) need to be declared and described in
- order to be used. We have therefore introduced the element <gi
-    xml:id="genRel">ge:geneticRel</gi> to be used within the
-    <gi>tei:profileDesc</gi>. A relation is defined in two ways: by a label
- (within a <gi>tei:label</gi>) and via attributes defining different
- properties, such as:</p>
-         <list type="bulleted">
- <item><att>*transitivity</att>: the relation is transferable to all
-    components of the group </item>
- <item><att>*symmetry</att>: the relation between A and B is equal to the
-    relation there is between B and A<note place="foot"><hi rend="bold"
-       >EP:</hi> In how much depth shall we define a relationship? How many
-       characteristics should we include? Can relationships be defined within
-       the TEI or, for instance, by advising the use of other graph-oriented
-       markup languages like RDF/XML?</note></item>
-         </list>
-         <p>Examples of relations are:<list type="bulleted">
-    <item><label>Time</label> one document or textual version follows or
-       precede another</item>
-    <item><label>Evolutionary</label> one document or textual version
-       represent the evolution or the development of another</item>
-    <item><label>Thematic</label> two or more documents concern the same
-       topic </item>
-    <item><label>Conceptual</label> two or more documents are connected in
-       some logical way</item>
- </list></p>
-      </div>
-   </div>
-   <div>
-      <head xml:id="collation">*Collation and Critical Apparatus</head>
-      <p>AS we already discussed (<ref target="#altrations">see</ref>), the moment in
-         which the author decides to stop editing a draft and move to another draft is
-         arbitrary, therefore alterations within a given document and alterations which
-         results from the collation of different drafts of the same text are more
-         conceptually connected than readings characterising different witnesses as a
-         result of a scribal copy.</p>
-      <p>For instance, if we have two draft documents of the same text, A and B, if a
-         deletion occurs within A or B we would probably mark it with a <gi>tei:del</gi>
-         element. On the other hand, when by comparing A and B we see a passage has been
-         suppressed, we would also probably mark is as such. Whether we need another set
-         of editorial elements or we should use the same set that are used for
-         transcription is still an open problem. </p>
-      <p>We can imagine at least two different scenarios:<list type="bulleted">
- <item>Only one document has been entirely transcribed (perhaps the first or
-    the last version), while the others are only reconstructible via
-    collation, which can be stored within the same document or in a separate
-    one.</item>
- <item>All documents composing a dossier have been transcribed and the
-    collation is stored in a separate document</item>
-         </list></p>
-      <div>
-         <head>One document is transcribed</head>
-         <p>If, beside the base-text which is fully transcribed, all extant witnesses
- have to be reconstruct via collation, it is mandatory to be able to
- distinguish alterations that happen within them and between witnesses. For
- instance, using the existing tag set we could possibly encode as follows:
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <app xmlns="http://www.tei-c.org/ns/1.0">
-       <rdg wit="#A" xml:id="rdg1">here is a passage in A</rdg>
-       <rdg wit="#B">
-          <del>
- <ptr target="#A #rdg1"/>
-          </del>
-       </rdg>
-    </app>
- </egXML></p>
-         <p>Nevertheless, this might force the intended usage of <gi>tei:del</gi> and
- might imply that there is a deletion on B, which is not the case. This might
- be solved perhaps using the <att xmlns="http://www.tei-c.org/ns/1.0"
- >type</att> attribute or another attribute or creating a new element (say
-    <gi>ge:interDel</gi>) for deletions deducted via collation, reserving
-    <gi>tei:del</gi> for deletions that happen at document level.</p>
-      </div>
-      <div>
-         <head>All documents are transcribed</head>
-         <p>In this case we can assume that all alterations occurring at document level
- are already encoded within each transcription, therefore the collation will
- only need to point to passages within the separate files classifying the
- types of readings resulting from the collation: <egXML
-    xmlns="http://www.tei-c.org/ns/Examples">
-    <app xmlns="http://www.tei-c.org/ns/1.0">
-       <rdg wit="#A" from="#v34" to="#v36"/>
-       <rdg wit="#B" from="#v33" type="suppressed"/>
-    </app>
- </egXML>
-         </p>
-         <p>The exemplified encoding implies that attributes <att>from</att> and
- <att>to</att> are added for the <gi>tei:rdg</gi> element. </p>
-      </div>
-   </div>
-</div>
-<div>
-   <head>Manuscript and Dossier Levels</head>
-   <div>
-      <head>Chronology, Date and Time</head>
-      <p>We want to express chronology as <hi rend="bold">absolute</hi> and <hi
- rend="bold">relative</hi> measures. Absolute time is the unambiguous
-         reference to a calendar and time schema, while relative timing is express
-         events as happened <hi rend="italic">before</hi> and/or <hi rend="italic"
-         >after</hi> another event. Relative time can also be expressed by the relation
-         to the (known or unknown) creation of another document or text. Dating can be
-         justified by prose and/or by reference to a characteristic of a manuscript
-         (e.g. hand, ink, etc.). The outlining of a chronology for a document or dossier
-         can then be used as an argument to determine the existence of a text-stage.</p>
-      <p>We might be able to express <hi rend="bold">absolute time</hi> by adapting
-         existing element/attributes (<gi>tei:timeline/</gi> is a likely candidate), but
-         more probably we need to create another element.</p>
-      <p>For absolute timing we envisage two cases that can occur separately or in
-         combination:</p>
-      <list type="bulleted">
-         <item>The dating of a witness (a manuscript part of a dossier) or of a zone may
- not be directly documented within its content, i.e. it can be deduced from
- external facts and documents. The editorial date attribution should be
- included in the <gi>tei:teiHeader</gi>. </item>
-         <item>Dates can be found in the document as added by the author as sort of
- metadata (for instance the date of the beginning/ending of writing on aa
- specific document, or the date of a revision campaign); those should be
- encoded without necessarily adding them in the <gi>tei:teiHeader</gi> (they
- can be considered a type of <hi rend="bold">meta-mark</hi>: see <ref
-    target="#mm">below</ref>)</item>
-      </list>
-      <p>We might express <hi rend="bold">relative time</hi> as
-         predecessor/successor-relationships</p>
-      <list type="bulleted">
-         <item>It might be a direct relationship: <att>next</att>, <att>previous</att>,
-    <att>sync</att>.</item>
-         <item>It might be a “sorting” relationship: <att>before</att>,
- <att>after</att>.</item>
-         <item>Temporal relative relationships may also be expressed via a numbering
- scheme (<val>0</val>, <val>1</val>, <val>2</val>, …) within a
- <att>*relTime</att> ('relative time') attribute. In this case we assume a
-    <hi rend="bold">default</hi> timeline (the time of writing and of the
-    <ref target="#instCor">instant corrections</ref>) which is represented by
-    <val>0</val>, and successive revision-times (<val>1</val>, <val>2</val>,
- etc.)</item>
-      </list>
-      <p>Information about absolute or relative time can be given on all levels of a
-         text or document. </p>
-   </div>
-   <div>
-      <head>Documenting Editorial Decisions</head>
-      <p>As genetic editions and genetic editing are essentially interpretative,
-         documenting editorial decisions has a fundamental and central role. </p>
-      <p>Different forms of documentation have been discussed before on several of the
-         previous sections: <list type="bulleted">
- <item><gi>ge:revNote</gi>: documents the constitution of a text-stage (<ref
-       target="#revNote">see</ref>) </item>
- <item><gi>ge:geneticNote</gi>: documents the constitution of a genetic group
-       (<ref target="#geneticNote">see</ref>)</item>
- <item><gi>ge:stepNote</gi>: arguments the assessment of a connection between
-    to text-stages (a step, <ref target="#stepNote">see</ref>)</item>
- <item><gi>ge:pathNote</gi>: discuss the arguments for the creation of a
-    connection between two or more steps (<ref target="#pathNote"
- >see</ref>)</item>
-         </list>All these elements embed a <att>cert</att> attribute to declare the
-         level of certainty; all of them should make a large use of <att>xml:id</att> to
-         be pointed from many somewhere in the text.</p>
-      <p>But annotations can also occurs in-line (i.e. close to a textual fragment they
-         relate to) and for that reasons we created the <gi xml:id="edjust"
-         >ge:edJust</gi> global element which should always be used with an
-         <att>xml:id</att> attribute as the other types of annotations seen above are
-         very likely to refer to specific points in the text within a more complex
-         argumentation. The <att>target</att> attribute points to the element to be
-         annotated, while the <att>locus</att> attribute points to the concept to be
-         justified. <egXML xmlns="http://www.tei-c.org/ns/Examples">
- <edJust target="#origDate" locus="suppliedContent"  xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">
-    <p  xmlns="http://www.tei-c.org/ns/1.0">The diary entry <ref target="#apr1date"> is dated</ref>. The entry
-       precedes the <ref type="edjust" target="#samaria"> other text on the
-          witness</ref> by 22 years, as the <ref type="edjust"
-          target="#inkanalysis"> ink analysis </ref> shows. </p>
- </edJust>
-         </egXML></p>
-   </div>
-</div>
+                  <p>Alterations, revisions and other compositional phenomena may need to be grouped
+                     at dossier level: it might in fact occur that authors correct two versions at a
+                        time,<note place="foot"
+                        ><?oxy_delete author="lou" timestamp="20090803T155908+0100" content="Several examples available: "?>Manzoni,
+                        for
+                        instance,<?oxy_delete author="lou" timestamp="20090803T155917+0100" content=" was "?>used
+                        to modify an old draft to see how a new variant
+                        fit<?oxy_insert_start author="lou" timestamp="20090803T155928+0100"?>ted<?oxy_insert_end?>
+                        with the context before
+                        cop<?oxy_insert_start author="lou" timestamp="20090803T155936+0100"?>y<?oxy_insert_end?>ing
+                        it into a new draft.</note>or we might need to express that two or more
+                     documents are related in other ways; for instance, one can be the sequel of the
+                     other, they might have been drafted at the same time, or one might contain some
+                     other kind of analogy, like a newspaper article that
+                     inspire<?oxy_insert_start author="lou" timestamp="20090803T155953+0100"?>d<?oxy_insert_end?>
+                     some kind of reflection contained in a given work. </p>
+                  <p><?oxy_delete author="lou" timestamp="20090803T155959+0100" content="In those cases "?><?oxy_insert_start author="lou" timestamp="20090803T155959+0100"?>S<?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T160002+0100" content="s"?>uch
+                     <?oxy_delete author="lou" timestamp="20090803T160005+0100" content="a "?>grouping<?oxy_insert_start author="lou" timestamp="20090803T160008+0100"?>s<?oxy_insert_end?>
+                     can be encoded within a <gi>gi:geneticGrp</gi> element.<note place="foot"><hi
+                           rend="bold">EP</hi>: Sorry, but I don't like the name
+                           <gi>ge:textGroup</gi>, it is not clear enough. I appreciate we need a
+                        generic name, but we are not grouping texts, we are grouping: a) revisions;
+                        b) blocks (for instance when we want reorder chapters, as for Fotis' Kafka
+                        example; c) ???. I think <gi>ge:geneticGrp</gi> is clearer.</note> As the
+                     element <gi>ge:geneticGrp</gi> can be used more generally for any kind of
+                     genetic grouping, a <att>type</att> attribute is also provided.
+                        <gi>ge:geneticGrp</gi> contains a sequence of <gi xml:id="geneticNote"
+                        >ge:geneticNote</gi>
+                     wh<?oxy_delete author="lou" timestamp="20090803T160039+0100" content="ich"?><?oxy_insert_start author="lou" timestamp="20090803T160039+0100"?>ose<?oxy_insert_end?>
+                     <att>targets</att> attribute can refer to several <gi>ge:revNote</gi> of
+                     specific documents or to other annotations and editorial statements.</p>
+               </div>
+               <div><head>Genetic
+                     Relations</head><p><?oxy_delete author="lou" timestamp="20090803T160049+0100" content="With"?><?oxy_insert_start author="lou" timestamp="20090803T160049+0100"?>By
+                     <?oxy_insert_end?>
+                     <soCalled>genetic relations</soCalled> we
+                     <?oxy_delete author="lou" timestamp="20090803T160057+0100" content="intend"?><?oxy_insert_start author="lou" timestamp="20090803T160057+0100"?>mean
+                     <?oxy_insert_end?> the possibility of ordering different text-stages contained
+                     within a single document, or more probably, across different document into an
+                     ideal line of development, going, for instance from a version <hi rend="bold"
+                        >A</hi> to a version <hi rend="bold">B</hi> (that can be represented by a
+                     different document or by an editorially reconstructed text-stage), to a version
+                        <hi rend="bold">C</hi>, etc.</p><p>To do so, we have introduced the concepts
+                     of <soCalled>steps</soCalled> and <soCalled>paths</soCalled>
+                     f<?oxy_insert_start author="lou" timestamp="20090803T160116+0100"?>or<?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T160116+0100" content="ro"?>
+                     which we took inspiration from <title>HNML</title>.</p>
+                  <div>
+                     <head>Steps and Paths </head>
+                     <p>A <soCalled>step</soCalled> connects two versions (represented by two
+                        documents or by two reconstructed text-stages within the same document),
+                        while a <soCalled>path</soCalled> connects two or more steps.</p>
+                     <list type="bulleted">
+                        <item>
+                           <gi>ge:step</gi> embeds a <att>relation</att> attribute which points to
+                           description of a specific type of relation as defined by
+                              <gi>ge:geneticRel</gi> element (<ref target="#genRel">see</ref>); an
+                           attribute <att>cert</att> signifies the degree of certainty associated
+                           with the interpretation. Each <gi>ge:step</gi> element contains:<note
+                              place="foot"><hi rend="bold">EP</hi>: we need to clarify well the
+                              difference between a <gi>ge:step</gi> and a <gi>ge:geneticGrp</gi>, I
+                              am still not clear if we need both or only one
+                              (<gi>ge:geneticGrp</gi>, that is).</note><list type="bulleted">
+                              <item><gi xml:id="stepNote">ge:stepNote</gi>: an editorial declaration
+                                 which describes the arguments to
+                                 asses<?oxy_insert_start author="lou" timestamp="20090803T160151+0100"?>s<?oxy_insert_end?>
+                                 such a step.</item>
+                              <item><gi>ge:stepLink targets=""/</gi>: a pointer to the two textual
+                                 versions that compose a step.</item>
+                              <item>
+                                 <gi>ge:stepAlteration</gi>
+                                 <note place="foot"><hi rend="bold">EP</hi>: guys I forgot why we
+                                    need this!</note></item>
+                           </list></item>
+                        <item>
+                           <gi>ge:path</gi> in the same way as
+                           <gi>ge:step</gi>,<?oxy_delete author="lou" timestamp="20090803T160208+0100" content=" it "?>embeds
+                           a <att>relation</att> attribute which points to description of a specific
+                           type of relation as defined by <gi>ge:geneticRel</gi> element (<ref
+                              target="#genRel">see</ref>); an attribute <att>cert</att> signifies
+                           the degree of certainty associated with the interpretation. A
+                              <gi>ge:path</gi> contains:<list type="bulleted">
+                              <item><gi xml:id="pathNote">ge:pathNote</gi>: an editorial declaration
+                                 which presents the arguments for the assessment of such a
+                                 path.</item>
+                              <item><gi>ge:pathLink targets=""</gi>: a pointer to the
+                                    <gi>ge:step</gi> that compose the path.</item>
+                              <item><gi>ge:pathAlt</gi>: in some cases path can include
+                                 alternative<?oxy_delete author="lou" timestamp="20090803T160231+0100" content="s"?><?oxy_insert_start author="lou" timestamp="20090803T160231+0100"?>
+                                 <?oxy_insert_end?> routes, for instance when a specific connection
+                                 is<?oxy_delete author="lou" timestamp="20090803T160239+0100" content=" not sure"?><?oxy_insert_start author="lou" timestamp="20090803T160239+0100"?>uncertain<?oxy_insert_end?>,
+                                 or when
+                                 <?oxy_delete author="lou" timestamp="20090803T160249+0100" content="from a specific witness"?>
+                                 two or more (authorial) copies are
+                                 derived<?oxy_insert_start author="lou" timestamp="20090803T160253+0100"?>
+                                 from a specific witness<?oxy_insert_end?>. In this case the
+                                    <gi>ge:pathAlt</gi> will include two or more <gi>ge:path</gi>
+                                 elements and a <gi>gi:pathNote</gi> explaining the reasons for the
+                                 bifurcation.</item>
+                           </list></item>
+                     </list>
+                  </div>
+                  <div>
+                     <head>*Relationships</head>
+                     <p>The type of connections existing between two or more textual variants (a
+                        step) or two or more steps (a path) need to be declared and described in
+                        order to be used. We have therefore introduced the element <gi
+                           xml:id="genRel">ge:geneticRel</gi> to be used within the
+                           <gi>tei:profileDesc</gi>. A relation is defined in two ways: by a label
+                        (within a <gi>tei:label</gi>) and via attributes defining different
+                        properties, such as:</p>
+                     <list type="bulleted">
+                        <item><att>*transitivity</att>: the relation is transferable to all
+                           components of the group </item>
+                        <item><att>*symmetry</att>: the relation between A and B is equal to the
+                           relation there is between B and A<note place="foot"><hi rend="bold"
+                                 >EP:</hi> In how much depth shall we define a relationship? How
+                              many characteristics should we include? Can relationships be defined
+                              within the TEI or, for instance, by advising the use of other
+                              graph-oriented markup languages like RDF/XML?</note></item>
+                     </list>
+                     <p>Examples of relations are:<list type="bulleted">
+                           <item><label>Time</label> one document or textual version follows or
+                              precede another</item>
+                           <item><label>Evolutionary</label> one document or textual version
+                              represent the evolution or the development of another</item>
+                           <item><label>Thematic</label> two or more documents concern the same
+                              topic </item>
+                           <item><label>Conceptual</label> two or more documents are connected in
+                              some logical way</item>
+                        </list></p>
+                  </div>
+               </div>
+               <div><head xml:id="collation">*Collation and Critical
+                     Apparatus</head><p>A<?oxy_delete author="lou" timestamp="20090803T160332+0100" content="S we already "?><?oxy_insert_start author="lou" timestamp="20090803T160332+0100"?>s
+                     previously<?oxy_insert_end?>discussed (<ref target="#altrations">see</ref>),
+                     the moment
+                     <?oxy_delete author="lou" timestamp="20090803T160352+0100" content="in"?><?oxy_insert_start author="lou" timestamp="20090803T160352+0100"?>at<?oxy_insert_end?>
+                     which the author decides to stop editing a draft and
+                     move<?oxy_insert_start author="lou" timestamp="20090803T160346+0100"?>s<?oxy_insert_end?>
+                     to another draft is
+                     arbitrary<?oxy_insert_start author="lou" timestamp="20090803T160408+0100"?>.
+                     T<?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T160411+0100" content=", t"?>herefore
+                     alterations within a given document and alterations which
+                     result<?oxy_delete author="lou" timestamp="20090803T160419+0100" content="s"?>
+                     from the collation of different drafts of the same text are more conceptually
+                     connected than readings characterising different witnesses as a result of a
+                     scribal copy.</p><p>For instance, if we have two draft documents of the same
+                     text, A and B, if a deletion occurs within A or B we would probably mark it
+                     with a <gi>tei:del</gi> element. On the other
+                     hand,<?oxy_insert_start author="lou" timestamp="20090803T160442+0100"?> if
+                     <?oxy_insert_end?>
+                     when<?oxy_delete author="lou" timestamp="20090803T160445+0100" content=" by"?>
+                     comparing A and
+                     B<?oxy_insert_start author="lou" timestamp="20090803T160450+0100"?>,<?oxy_insert_end?>
+                     we see a passage has been suppressed, we would also probably mark
+                     i<?oxy_delete author="lou" timestamp="20090803T160455+0100" content="s"?><?oxy_insert_start author="lou" timestamp="20090803T160455+0100"?>t<?oxy_insert_end?>
+                     as such. Whether we need another set of editorial elements or we should use the
+                     same set that are used for transcription is still an open problem. </p><p>We
+                     can imagine at least two different scenarios:<list type="bulleted">
+                        <item>Only one document has been entirely transcribed (perhaps the first or
+                           the last version), while the others are only
+                           reconstruct<?oxy_insert_start author="lou" timestamp="20090803T160509+0100"?>a<?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T160509+0100" content="i"?>ble
+                           via collation, which can be stored within the same document or in a
+                           separate one.</item>
+                        <item>All documents composing a dossier have been transcribed and the
+                           collation is stored in a separate document</item>
+                     </list></p>
+                  <div>
+                     <head>One document is transcribed</head>
+                     <p>If, beside the base-text which is fully transcribed, all extant witnesses
+                        have to be
+                        reconstruct<?oxy_insert_start author="lou" timestamp="20090803T160520+0100"?>ed<?oxy_insert_end?>
+                        via collation, it is mandatory to be able to distinguish alterations that
+                        happen within them and between witnesses. For instance, using the existing
+                        tag set we could possibly encode as follows: <egXML
+                           xmlns="http://www.tei-c.org/ns/Examples">
+                           <app xmlns="http://www.tei-c.org/ns/1.0">
+                              <rdg wit="#A" xml:id="rdg1">here is a passage in A</rdg>
+                              <rdg wit="#B">
+                                 <del>
+                                    <ptr target="#A #rdg1"/>
+                                 </del>
+                              </rdg>
+                           </app>
+                        </egXML></p>
+                     <p>Nevertheless, this might force the intended usage of <gi>tei:del</gi> and
+                        might imply that there is a deletion on B, which is not the case. This might
+                        be solved perhaps using the <att xmlns="http://www.tei-c.org/ns/1.0"
+                           >type</att> attribute or another attribute or creating a new element (say
+                           <gi>ge:interDel</gi>) for deletions
+                        <?oxy_delete author="lou" timestamp="20090803T160558+0100" content="deducted via"?><?oxy_insert_start author="lou" timestamp="20090803T160558+0100"?>implied
+                        by <?oxy_insert_end?> collation, reserving <gi>tei:del</gi> for deletions
+                        that happen
+                        at<?oxy_insert_start author="lou" timestamp="20090803T160554+0100"?>
+                        the<?oxy_insert_end?> document level.</p>
+                  </div>
+                  <div>
+                     <head>All documents are transcribed</head>
+                     <p>In this case we can assume that all alterations occurring at document level
+                        are already encoded within each transcription, therefore the collation will
+                        only need to point to passages within the separate files
+                        <?oxy_insert_start author="lou" timestamp="20090803T160617+0100"?>
+                        and<?oxy_insert_end?>classify<?oxy_delete author="lou" timestamp="20090803T160622+0100" content="ing "?><?oxy_insert_start author="lou" timestamp="20090803T160622+0100"?>
+                        <?oxy_insert_end?>the types of readings resulting from the collation: <egXML
+                           xmlns="http://www.tei-c.org/ns/Examples">
+                           <app xmlns="http://www.tei-c.org/ns/1.0">
+                              <rdg wit="#A" from="#v34" to="#v36"/>
+                              <rdg wit="#B" from="#v33" type="suppressed"/>
+                           </app>
+                        </egXML>
+                     </p>
+                     <p>The
+                        ex<?oxy_delete author="lou" timestamp="20090803T160630+0100" content="emplified"?><?oxy_insert_start author="lou" timestamp="20090803T160630+0100"?>ample<?oxy_insert_end?>
+                        encoding implies that attributes <att>from</att> and <att>to</att> are
+                        added<?oxy_delete author="lou" timestamp="20090803T160637+0100" content=" for"?><?oxy_insert_start author="lou" timestamp="20090803T160637+0100"?>
+                        to<?oxy_insert_end?> the <gi>tei:rdg</gi> element. </p>
+                  </div>
+               </div>
+            </div>
+            <div>
+               <head>Manuscript and Dossier Levels</head>
+               <div>
+                  <head>Chronology, Date and Time</head>
+                  <p>We want to express chronology as <hi rend="bold">absolute</hi> and <hi
+                        rend="bold">relative</hi> measures. Absolute time is the unambiguous
+                     reference to a calendar and time schema, while relative
+                     timing<?oxy_delete author="lou" timestamp="20090803T160907+0100" content=" is "?><?oxy_insert_start author="lou" timestamp="20090803T160907+0100"?>
+                     <?oxy_insert_end?>express<?oxy_insert_start author="lou" timestamp="20090803T160909+0100"?>es<?oxy_insert_end?>
+                     events as
+                     happen<?oxy_delete author="lou" timestamp="20090803T160913+0100" content="ed"?><?oxy_insert_start author="lou" timestamp="20090803T160913+0100"?>ing<?oxy_insert_end?>
+                     <hi rend="italic">before</hi> and/or <hi rend="italic">after</hi>
+                     <?oxy_delete author="lou" timestamp="20090803T160918+0100" content="an"?><?oxy_insert_start author="lou" timestamp="20090803T160918+0100"?>
+                     <?oxy_insert_end?>other
+                     event<?oxy_insert_start author="lou" timestamp="20090803T160922+0100"?>s<?oxy_insert_end?>.
+                     Relative time can also be expressed by the relation to the (known or unknown)
+                     creation of another document or text. Dating can be justified by prose and/or
+                     by reference to a characteristic of a manuscript (e.g. hand, ink, etc.). The
+                     outlining of a chronology for a document or dossier can then be used as an
+                     argument to determine the existence of a text-stage.</p>
+                  <p>We might be able to express <hi rend="bold">absolute time</hi> by adapting
+                     existing element/attributes (<gi>tei:timeline/</gi> is a likely candidate), but
+                     more probably we need to create another
+                        element.<?oxy_insert_start author="lou" timestamp="20090803T160956+0100"?><note>LB:
+                        why?</note><?oxy_insert_end?></p>
+                  <p>For absolute timing we envisage two cases that can occur separately or in
+                     combination:</p>
+                  <list type="bulleted">
+                     <item>The dating of a witness (a manuscript part of a dossier) or of a zone may
+                        not be directly documented within its content, i.e. it can be deduced from
+                        external facts and documents. The editorial date attribution should be
+                        included in the <gi>tei:teiHeader</gi>. </item>
+                     <item>Dates can be found in the
+                        document<?oxy_delete author="lou" timestamp="20090803T161028+0100" content=" as "?><?oxy_insert_start author="lou" timestamp="20090803T161028+0100"?>
+                        <?oxy_insert_end?>added by the author
+                        as<?oxy_insert_start author="lou" timestamp="20090803T161031+0100"?> a
+                        kind<?oxy_insert_end?>
+                        <?oxy_delete author="lou" timestamp="20090803T161036+0100" content="sort "?><?oxy_insert_start author="lou" timestamp="20090803T161036+0100"?>
+                        <?oxy_insert_end?>of metadata (for instance the date of the beginning/ending
+                        of writing on
+                        <?oxy_delete author="lou" timestamp="20090803T161042+0100" content="a"?>a
+                        specific document, or the date of a revision campaign); those should be
+                        encoded without necessarily adding them in the <gi>tei:teiHeader</gi> (they
+                        can be considered a type of <hi rend="bold">meta-mark</hi>: see <ref
+                           target="#mm"
+                           >below</ref>)<?oxy_insert_start author="lou" timestamp="20090803T161052+0100"?><note>LB
+                           They might not always be true too; or at least, you might want to
+                           indicate who's responsible for the dating</note><?oxy_insert_end?></item>
+                  </list>
+                  <p>We might express <hi rend="bold">relative time</hi> as
+                     predecessor/successor-relationships</p>
+                  <list type="bulleted">
+                     <item>It might be a direct relationship: <att>next</att>, <att>previous</att>,
+                           <att>sync</att>.</item>
+                     <item>It might be a “sorting” relationship: <att>before</att>,
+                        <att>after</att>.</item>
+                     <item>Temporal relative relationships may also be expressed via a numbering
+                        scheme (<val>0</val>, <val>1</val>, <val>2</val>, …) within a
+                           <att>*relTime</att> ('relative time') attribute. In this case we assume a
+                           <hi rend="bold">default</hi> timeline (the time of writing and of the
+                           <ref target="#instCor">instant corrections</ref>) which is represented by
+                           <val>0</val>, and successive revision-times (<val>1</val>, <val>2</val>,
+                        etc.)</item>
+                  </list>
+                  <p>Information about absolute or relative time can be given on all levels of a
+                     text or document. </p>
+               </div>
+               <div>
+                  <head>Documenting Editorial Decisions</head>
+                  <p>As genetic editions and genetic editing are essentially interpretative,
+                     documenting editorial decisions has a fundamental
+                     <?oxy_delete author="lou" timestamp="20090803T161200+0100" content="and central "?><?oxy_insert_start author="lou" timestamp="20090803T161200+0100"?>
+                     <?oxy_insert_end?>role. </p>
+                  <p>Different forms of documentation have been discussed before
+                     <?oxy_delete author="lou" timestamp="20090803T161208+0100" content="o"?><?oxy_insert_start author="lou" timestamp="20090803T161208+0100"?>i<?oxy_insert_end?>n
+                     several
+                     <?oxy_delete author="lou" timestamp="20090803T161212+0100" content="of the "?><?oxy_insert_start author="lou" timestamp="20090803T161212+0100"?>
+                     <?oxy_insert_end?>previous sections: <list type="bulleted">
+                        <item><gi>ge:revNote</gi>: documents the constitution of a text-stage (<ref
+                              target="#revNote">see</ref>) </item>
+                        <item><gi>ge:geneticNote</gi>: documents the constitution of a genetic group
+                              (<ref target="#geneticNote">see</ref>)</item>
+                        <item><gi>ge:stepNote</gi>:
+                           <?oxy_delete author="lou" timestamp="20090803T161228+0100" content="arguments"?><?oxy_insert_start author="lou" timestamp="20090803T161228+0100"?>documents<?oxy_insert_end?>
+                           the assessment of a connection between to text-stages (a step, <ref
+                              target="#stepNote">see</ref>)</item>
+                        <item><gi>ge:pathNote</gi>:
+                           discuss<?oxy_insert_start author="lou" timestamp="20090803T161236+0100"?>es<?oxy_insert_end?>
+                           the arguments for the creation of a connection between two or more steps
+                              (<ref target="#pathNote">see</ref>)</item>
+                     </list>All these
+                     elements<?oxy_delete author="lou" timestamp="20090803T161252+0100" content=" embed"?><?oxy_insert_start author="lou" timestamp="20090803T161252+0100"?>
+                     carry<?oxy_insert_end?> a <att>cert</att> attribute to declare the level of
+                     certainty; all of them
+                     should<?oxy_delete author="lou" timestamp="20090803T161304+0100" content=" make a large "?>use
+                     <?oxy_delete author="lou" timestamp="20090803T161325+0100" content="of "?><?oxy_insert_start author="lou" timestamp="20090803T161325+0100"?>
+                     <?oxy_insert_end?><att>xml:id</att> to be pointed
+                     <?oxy_insert_start author="lou" timestamp="20090803T161314+0100"?>at
+                     <?oxy_insert_end?>from many
+                     <?oxy_delete author="lou" timestamp="20090803T161319+0100" content="somewhere"?><?oxy_insert_start author="lou" timestamp="20090803T161319+0100"?>places<?oxy_insert_end?>
+                     in the
+                        text.<?oxy_insert_start author="lou" timestamp="20090803T161342+0100"?><note>LB:
+                        They should also perhaps always have a @resp
+                     attribute</note><?oxy_insert_end?></p>
+                  <p>But annotations can also
+                     occur<?oxy_delete author="lou" timestamp="20090803T161401+0100" content="s"?>
+                     in-line (i.e. close to a textual fragment they relate to) and for that reasons
+                     we created the <gi xml:id="edjust">ge:edJust</gi> global
+                     element<?oxy_insert_start author="lou" timestamp="20090803T161419+0100"?>.
+                     This<?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T161424+0100" content=" which "?><?oxy_insert_start author="lou" timestamp="20090803T161424+0100"?>
+                     <?oxy_insert_end?>should always be used with an <att>xml:id</att>
+                     attribute<?oxy_insert_start author="lou" timestamp="20090803T161453+0100"?>
+                     <?oxy_insert_end?><?oxy_delete author="lou" timestamp="20090803T161450+0100" content=" "?>as
+                     the other types of annotations seen above are very likely to refer to specific
+                     points in the text within a more complex
+                     argument<?oxy_delete author="lou" timestamp="20090803T161504+0100" content="atio"?><?oxy_insert_start author="lou" timestamp="20090803T161504+0100"?>
+                     <?oxy_insert_end?>n. The <att>target</att> attribute points to the element to
+                     be annotated, while the <att>locus</att> attribute points to the concept to be
+                     justified.
+                        <?oxy_insert_start author="lou" timestamp="20090803T161510+0100"?><note>LB:
+                        ?????</note><?oxy_insert_end?><egXML
+                        xmlns="http://www.tei-c.org/ns/Examples">
+                        <edJust target="#origDate" locus="suppliedContent"
+                           xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">
+                           <p xmlns="http://www.tei-c.org/ns/1.0">The diary entry <ref
+                                 target="#apr1date"> is dated</ref>. The entry precedes the <ref
+                                 type="edjust" target="#samaria"> other text on the witness</ref> by
+                              22 years, as the <ref type="edjust" target="#inkanalysis"> ink
+                                 analysis </ref> shows. </p>
+                        </edJust>
+                     </egXML></p>
+               </div>
+            </div>
          </div>
       </body>
       <back>
          <div>
-<head>ODD</head>
-<p>TEI Extension for Genetic Editions&#xD;&#xD; preliminary version</p>
-<schemaSpec ident="geneticTEI" docLang="en" prefix="tei_" start="TEI" xml:lang="en"
-   targetLang="en">
-   <moduleRef key="core"/>
-   <moduleRef key="tei"/>
-   <moduleRef key="header"/>
-   <moduleRef key="textstructure"/>
-   <moduleRef key="certainty"/>
-   <moduleRef key="analysis"/>
-   <moduleRef key="drama"/>
-   <moduleRef key="iso-fs"/>
-   <moduleRef key="linking"/>
-   <moduleRef key="msdescription"/>
-   <moduleRef key="nets"/>
-   <moduleRef key="textcrit"/>
-   <moduleRef key="transcr"/>
-   <moduleRef key="verse"/>
-   <moduleRef key="gaiji"/>
-   <!-- topographical document structure -->
-   <elementSpec ident="document" ns="http://www.tei-c.org/ns/1.0" mode="add">
-      <desc>Document-centric description of a primary source, containing topographical
-         information as well as a transcriptions</desc>
-      <classes>
-         <memberOf key="model.resourceLike"/>
-      </classes>
-      <content>
-         <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
- <rng:ref name="writingSurface"/>
-         </rng:oneOrMore>
-      </content>
-   </elementSpec>
-   <elementSpec ident="writingSurface" ns="http://www.tei-c.org/ns/1.0" mode="add">
-      <desc> A surface on which text is written. </desc>
-      <classes>
-         <memberOf key="att.typed"/>
-      </classes>
-      <content>
-         <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
- <rng:ref name="docZone"/>
-         </rng:oneOrMore>
-      </content>
-   </elementSpec>
-   <classSpec ident="att.coordinated" type="atts" mode="change" module="tei">
-      <attList>
-         <attDef ident="orient" mode="add">
- <desc>(orientation) The orientation of the coordinate system in which the
-    parameters ulx, uly, lrx, lry are given. In arc degrees. The rotation is
-    clockwise.</desc>
- <datatype minOccurs="1" maxOccurs="1">
-    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numerical"/>
- </datatype>
-         </attDef>
-      </attList>
-   </classSpec>
-   <elementSpec ident="docZone" ns="http://www.tei-c.org/ns/1.0" mode="add">
-      <desc> A zone or block of text that is constituted by its graphical shape or by
-         any other criterion.</desc>
-      <classes>
-         <memberOf key="att.typed"/>
-         <memberOf key="att.coordinated"/>
-      </classes>
-      <content>
-         <!-- is such a model possible in ODD?
+            <head>ODD</head>
+            <p>TEI Extension for Genetic Editions&#xD;&#xD; preliminary version</p>
+            <schemaSpec ident="geneticTEI" docLang="en" prefix="tei_" start="TEI" xml:lang="en"
+               targetLang="en">
+               <moduleRef key="core"/>
+               <moduleRef key="tei"/>
+               <moduleRef key="header"/>
+               <moduleRef key="textstructure"/>
+               <moduleRef key="certainty"/>
+               <moduleRef key="analysis"/>
+               <moduleRef key="drama"/>
+               <moduleRef key="iso-fs"/>
+               <moduleRef key="linking"/>
+               <moduleRef key="msdescription"/>
+               <moduleRef key="nets"/>
+               <moduleRef key="textcrit"/>
+               <moduleRef key="transcr"/>
+               <moduleRef key="verse"/>
+               <moduleRef key="gaiji"/>
+               <!-- topographical document structure -->
+               <elementSpec ident="document" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                  <desc>Document-centric description of a primary source, containing topographical
+                     information as well as a transcriptions</desc>
+                  <classes>
+                     <memberOf key="model.resourceLike"/>
+                  </classes>
+                  <content>
+                     <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                        <rng:ref name="writingSurface"/>
+                     </rng:oneOrMore>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="writingSurface" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                  <desc> A surface on which text is written. </desc>
+                  <classes>
+                     <memberOf key="att.typed"/>
+                  </classes>
+                  <content>
+                     <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                        <rng:ref name="docZone"/>
+                     </rng:oneOrMore>
+                  </content>
+               </elementSpec>
+               <classSpec ident="att.coordinated" type="atts" mode="change" module="tei">
+                  <attList>
+                     <attDef ident="orient" mode="add">
+                        <desc>(orientation) The orientation of the coordinate system in which the
+                           parameters ulx, uly, lrx, lry are given. In arc degrees. The rotation is
+                           clockwise.</desc>
+                        <datatype minOccurs="1" maxOccurs="1">
+                           <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numerical"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </classSpec>
+               <elementSpec ident="docZone" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                  <desc> A zone or block of text that is constituted by its graphical shape or by
+                     any other criterion.</desc>
+                  <classes>
+                     <memberOf key="att.typed"/>
+                     <memberOf key="att.coordinated"/>
+                  </classes>
+                  <content>
+                     <!-- is such a model possible in ODD?
  
  <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
      <rng:choice>
@@ -881,16 +1140,16 @@ Malte Rehbein, Amanda Galley). </p>
      <rng:attribute name="depth"/>
  </rng:optional>
  -->
-         <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
- <rng:choice>
-    <rng:ref name="macro.paraContent"/>
-    <rng:ref name="line"/>
-    <rng:ref name="docZone"/>
- </rng:choice>
-         </rng:zeroOrMore>
-      </content>
-      <attList>
-         <!-- using existing att.coordinated instead
+                     <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                        <rng:choice>
+                           <rng:ref name="macro.paraContent"/>
+                           <rng:ref name="line"/>
+                           <rng:ref name="docZone"/>
+                        </rng:choice>
+                     </rng:zeroOrMore>
+                  </content>
+                  <attList>
+                     <!-- using existing att.coordinated instead
      
            <attDef ident="x">
      <desc> The x coordinate of the upper left corner of the rectangular
@@ -928,306 +1187,308 @@ Malte Rehbein, Amanda Galley). </p>
      </datatype>
  </attDef>
  -->
-         <attDef ident="ref">
- <desc> A reference to an arbitrary object that describes the placement and
-    extent of the zone (such as an SVG element in an external file). The use
-    of this attribute is exclusive of giving x/y-coordinates directly. </desc>
- <datatype minOccurs="1" maxOccurs="1">
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
-       name="data.pointer"/>
- </datatype>
-         </attDef>
-         <attDef ident="depth">
- <desc> Establishes an order on sets of zones in respect to their overlay.
-    Greater depth signifies that a zone lies under another zone with lesser
-    depth, i.e. was brought to paper earlier.</desc>
- <datatype minOccurs="1" maxOccurs="1">
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
-       name="data.pointer"/>
- </datatype>
-         </attDef>
-      </attList>
-   </elementSpec>
-   <elementSpec ident="line">
-      <desc>Marks a topographic line in the source document</desc>
-      <content>
-         <rng:ref name="macro.paraContent"
- xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
-      </content>
-   </elementSpec>
-   <!-- editorial justification -->
-   <elementSpec ident="edJust" ns="http://www.tei-c.org/ns/1.0" mode="add">
-      <desc>(editorial justification) An editorial justification of any part of
-         the&#xD; edited text.</desc>
-      <classes>
-         <memberOf key="model.global"/>
-         <memberOf key="model.global.meta"/>
-         <memberOf key="model.headerPart"/>
-      </classes>
-      <content>
-         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="model.pLike"/>
-      </content>
-      <attList>
-         <attDef ident="target" mode="add">
- <desc>Points to the element to be justified.</desc>
- <datatype minOccurs="1" maxOccurs="1">
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
-       name="data.pointer"/>
- </datatype>
-         </attDef>
-         <attDef ident="locus" mode="add">
- <desc>The location of the content to be justified.</desc>
- <datatype minOccurs="1" maxOccurs="1">
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"
-    />
- </datatype>
-         </attDef>
-      </attList>
-   </elementSpec>
-   <!-- authorial changes -->
-   <elementSpec ident="revDesc" ns="http://www.tei-c.org/ns/1.0" mode="add">
-      <desc>(revision description) A description of the various revisions that occurred
-         in the text&#xD; genesis.</desc>
-      <classes>
-         <memberOf key="model.headerPart"/>
-      </classes>
-      <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-         <rng:choice xmlns="http://relaxng.org/ns/structure/1.0">
- <rng:oneOrMore>
-    <rng:ref name="tei_model.pLike"/>
- </rng:oneOrMore>
- <rng:group>
-    <rng:optional>
-       <rng:ref name="tei_summary"/>
-    </rng:optional>
-    <rng:oneOrMore>
-       <rng:ref name="tei_revNote"/>
-    </rng:oneOrMore>
- </rng:group>
-         </rng:choice>
-      </content>
-   </elementSpec>
-   <elementSpec ident="revNote" ns="http://www.tei-c.org/ns/1.0" mode="add">
-      <desc>Describes a revision in the text genesis.</desc>
-      <classes/>
-      <content>
-         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
- name="macro.specialPara"/>
-      </content>
-   </elementSpec>
-   <elementSpec ident="revision">
-      <desc>Groups contained changes in the document to one revision. Changes are those
-         indicated by add, del and other elements of model.pPart.transcriptional, as
-         well as the undo, repetition and transposition elements.The rev attribute
-         points to a description of the revision.</desc>
-      <classes>
-         <memberOf key="model.pPart.transcriptional"/>
-      </classes>
-      <content>
-         <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
- <rng:choice>
-    <rng:ref name="macro.paraContent"/>
-    <rng:ref name="line"/>
-    <rng:ref name="docZone"/>
- </rng:choice>
-         </rng:zeroOrMore>
-      </content>
-   </elementSpec>
-   <elementSpec ident="metaMark" ns="http://www.tei-c.org/ns/1.0" mode="add">
-      <desc>(meta mark) A textual or graphical element in a manuscript that is
-         functional but not part of the text. Could transform the text, like a
-         strikethrough, or provide meta-information, like a date.</desc>
-      <classes>
-         <memberOf key="model.pPart.transcriptional"/>
-         <memberOf key="att.typed"/>
-      </classes>
-      <content>
-         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.specialPara"/>
-      </content>
-      <attList>
-         <attDef ident="function" mode="add">
- <desc>Points to the function (e.g. add, delete) of the mark.</desc>
- <datatype minOccurs="1" maxOccurs="1">
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
-       name="data.pointer"/>
- </datatype>
-         </attDef>
-      </attList>
-   </elementSpec>
-   <classSpec ident="att.global" type="atts" mode="change" module="tei">
-      <attList>
-         <attDef ident="rev" mode="add">
- <datatype minOccurs="1" maxOccurs="1">
-    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
- </datatype>
-         </attDef>
-      </attList>
-   </classSpec>
-   <elementSpec ident="used" ns="http://www.tei-c.org/ns/1.0" mode="add">
-      <desc>In many cases, authors mark portions of text as having been used, usually
-         meaning the text has been transcribed to a fair copy. The mark is often a
-         strikethrough, but can be any author-specific mark.</desc>
-      <classes>
-         <memberOf key="model.pPart.transcriptional"/>
-      </classes>
-      <content>
-         <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
- <rng:choice>
-    <rng:ref name="macro.paraContent"/>
-    <rng:ref name="line"/>
-    <rng:ref name="docZone"/>
- </rng:choice>
-         </rng:zeroOrMore>
-      </content>
-   </elementSpec>
-   <elementSpec ident="undo" ns="http://www.tei-c.org/ns/1.0" mode="add">
-      <desc>Marks up an action represented by an element to be undone.</desc>
-      <classes>
-         <memberOf key="model.pPart.transcriptional"/>
-      </classes>
-      <content>
-         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
- name="macro.specialPara"/>
-      </content>
-      <attList>
-         <attDef ident="target" mode="add">
- <desc>The element representing the action to be undone.</desc>
- <datatype minOccurs="1" maxOccurs="1">
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
-       name="data.pointer"/>
- </datatype>
-         </attDef>
-      </attList>
-   </elementSpec>
-   <elementSpec ident="subst" module="transcr" mode="change">
-      <attList>
-         <attDef ident="type" mode="add">
- <desc>The type of substitution.</desc>
- <datatype minOccurs="1" maxOccurs="1">
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"
-    />
- </datatype>
-         </attDef>
-      </attList>
-   </elementSpec>
-   <elementSpec ident="repetition" ns="http://www.tei-c.org/ns/1.0" mode="add">
-      <desc>A clarification of already written text.</desc>
-      <classes>
-         <memberOf key="model.global"/>
-         <memberOf key="att.transcriptional"/>
-         <memberOf key="att.typed"/>
-      </classes>
-      <content>
-         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
- name="macro.specialPara"/>
-      </content>
-   </elementSpec>
-   <elementSpec ident="unclear" module="core" mode="change">
-      <classes mode="replace">
-         <memberOf key="model.choicePart" mode="add"/>
-         <memberOf key="model.pPart.transcriptional" mode="add"/>
-         <memberOf key="att.editLike" mode="add"/>
-         <memberOf key="att.typed" mode="add"/>
-      </classes>
-   </elementSpec>
-   <elementSpec ident="transpositions" ns="http://www.tei-c.org/ns/1.0" mode="add">
-      <desc> Describes the textual transpositions.</desc>
-      <classes>
-         <memberOf key="model.profileDescPart"/>
-      </classes>
-      <content>
-         <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
- <rng:ref name="transposition"/>
-         </rng:oneOrMore>
-      </content>
-   </elementSpec>
-   <elementSpec ident="transposition" ns="http://www.tei-c.org/ns/1.0" mode="add">
-      <desc> Describes a textual transposition. Contains a list of pointers that
-         specifies the new order of the text fragments. </desc>
-      <content>
-         <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
- <rng:ref name="ptr"/>
-         </rng:oneOrMore>
-      </content>
-   </elementSpec>
-   <!-- authorial changes: spanning -->
-   <elementSpec ident="revisionSpan">
-      <desc>Groups contained changes in the document to one revision. Changes are those
-         indicated by add, del and other elements of model.pPart.transcriptional, as
-         well as the undo, repetition and transposition elements.The rev attribute
-         points to a description of the revision.</desc>
-      <classes>
-         <memberOf key="model.pPart.transcriptional"/>
-         <memberOf key="att.spanning"/>
-      </classes>
-      <content> </content>
-   </elementSpec>
-   <elementSpec ident="usedSpan" ns="http://www.tei-c.org/ns/1.0" mode="add">
-      <desc>In many cases, authors mark portions of text as having been used, usually
-         meaning the text has been transcribed to a fair copy. The mark is often a
-         strikethrough, but can be any author-specific mark.</desc>
-      <classes>
-         <memberOf key="model.pPart.transcriptional"/>
-         <memberOf key="att.spanning"/>
-      </classes>
-      <content>
-         <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
-      </content>
-   </elementSpec>
-   <elementSpec ident="trSpan" ns="http://www.tei-c.org/ns/1.0" mode="add">
-      <desc>(transposition) A part of the text that has been moved to a different
-         location.</desc>
-      <classes>
-         <memberOf key="att.spanning"/>
-         <memberOf key="model.global"/>
-      </classes>
-      <content>
-         <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
-      </content>
-   </elementSpec>
-   <!-- genetic relations -->
-   <elementSpec ident="node" module="nets" mode="change">
-      <classes mode="change">
-         <memberOf mode="add" key="attribute.pointing"/>
-      </classes>
-      <attList>
-         <attDef ident="target" mode="add">
- <desc> A link to the element or passage represented by the node.</desc>
- <datatype>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
-       name="data.pointing"/>
- </datatype>
- </attDef>
-      </attList>
-   </elementSpec>
-   <elementSpec ident="arc" module="nets" mode="change">
-      <classes mode="change">
- <memberOf mode="add" key="att.typed"/>
-      </classes>
-   </elementSpec>
-   <!-- spanning text structure -->
-   <elementSpec ident="divSpan" module="textstructure" mode="add">
-      <desc>(text division) contains a subdivision of the front, body, or back of a
- text.</desc>
-      <classes>
- <memberOf mode="add" key="model.divLike"/>
- <memberOf mode="add" key="att.spanning"/>
-      </classes>
-      <content>
- <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
-      </content>
-   </elementSpec>
-   <elementSpec ident="pSpan" module="core" mode="add">
-      <desc>(paragraph) marks paragraphs in prose.</desc>
-      <classes>
- <memberOf mode="add" key="model.pLike"/>
- <memberOf mode="add" key="att.spanning"/>
-      </classes>
-      <content>
- <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
-      </content>
-   </elementSpec>
-</schemaSpec>
+                     <attDef ident="ref">
+                        <desc> A reference to an arbitrary object that describes the placement and
+                           extent of the zone (such as an SVG element in an external file). The use
+                           of this attribute is exclusive of giving x/y-coordinates directly.
+                        </desc>
+                        <datatype minOccurs="1" maxOccurs="1">
+                           <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                              name="data.pointer"/>
+                        </datatype>
+                     </attDef>
+                     <attDef ident="depth">
+                        <desc> Establishes an order on sets of zones in respect to their overlay.
+                           Greater depth signifies that a zone lies under another zone with lesser
+                           depth, i.e. was brought to paper earlier.</desc>
+                        <datatype minOccurs="1" maxOccurs="1">
+                           <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                              name="data.pointer"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <elementSpec ident="line">
+                  <desc>Marks a topographic line in the source document</desc>
+                  <content>
+                     <rng:ref name="macro.paraContent"
+                        xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+                  </content>
+               </elementSpec>
+               <!-- editorial justification -->
+               <elementSpec ident="edJust" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                  <desc>(editorial justification) An editorial justification of any part of the&#xD;
+                     edited text.</desc>
+                  <classes>
+                     <memberOf key="model.global"/>
+                     <memberOf key="model.global.meta"/>
+                     <memberOf key="model.headerPart"/>
+                  </classes>
+                  <content>
+                     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="model.pLike"/>
+                  </content>
+                  <attList>
+                     <attDef ident="target" mode="add">
+                        <desc>Points to the element to be justified.</desc>
+                        <datatype minOccurs="1" maxOccurs="1">
+                           <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                              name="data.pointer"/>
+                        </datatype>
+                     </attDef>
+                     <attDef ident="locus" mode="add">
+                        <desc>The location of the content to be justified.</desc>
+                        <datatype minOccurs="1" maxOccurs="1">
+                           <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"
+                           />
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <!-- authorial changes -->
+               <elementSpec ident="revDesc" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                  <desc>(revision description) A description of the various revisions that occurred
+                     in the text&#xD; genesis.</desc>
+                  <classes>
+                     <memberOf key="model.headerPart"/>
+                  </classes>
+                  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                     <rng:choice xmlns="http://relaxng.org/ns/structure/1.0">
+                        <rng:oneOrMore>
+                           <rng:ref name="tei_model.pLike"/>
+                        </rng:oneOrMore>
+                        <rng:group>
+                           <rng:optional>
+                              <rng:ref name="tei_summary"/>
+                           </rng:optional>
+                           <rng:oneOrMore>
+                              <rng:ref name="tei_revNote"/>
+                           </rng:oneOrMore>
+                        </rng:group>
+                     </rng:choice>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="revNote" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                  <desc>Describes a revision in the text genesis.</desc>
+                  <classes/>
+                  <content>
+                     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                        name="macro.specialPara"/>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="revision">
+                  <desc>Groups contained changes in the document to one revision. Changes are those
+                     indicated by add, del and other elements of model.pPart.transcriptional, as
+                     well as the undo, repetition and transposition elements.The rev attribute
+                     points to a description of the revision.</desc>
+                  <classes>
+                     <memberOf key="model.pPart.transcriptional"/>
+                  </classes>
+                  <content>
+                     <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                        <rng:choice>
+                           <rng:ref name="macro.paraContent"/>
+                           <rng:ref name="line"/>
+                           <rng:ref name="docZone"/>
+                        </rng:choice>
+                     </rng:zeroOrMore>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="metaMark" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                  <desc>(meta mark) A textual or graphical element in a manuscript that is
+                     functional but not part of the text. Could transform the text, like a
+                     strikethrough, or provide meta-information, like a date.</desc>
+                  <classes>
+                     <memberOf key="model.pPart.transcriptional"/>
+                     <memberOf key="att.typed"/>
+                  </classes>
+                  <content>
+                     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.specialPara"/>
+                  </content>
+                  <attList>
+                     <attDef ident="function" mode="add">
+                        <desc>Points to the function (e.g. add, delete) of the mark.</desc>
+                        <datatype minOccurs="1" maxOccurs="1">
+                           <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                              name="data.pointer"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <classSpec ident="att.global" type="atts" mode="change" module="tei">
+                  <attList>
+                     <attDef ident="rev" mode="add">
+                        <datatype minOccurs="1" maxOccurs="1">
+                           <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </classSpec>
+               <elementSpec ident="used" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                  <desc>In many cases, authors mark portions of text as having been used, usually
+                     meaning the text has been transcribed to a fair copy. The mark is often a
+                     strikethrough, but can be any author-specific mark.</desc>
+                  <classes>
+                     <memberOf key="model.pPart.transcriptional"/>
+                  </classes>
+                  <content>
+                     <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                        <rng:choice>
+                           <rng:ref name="macro.paraContent"/>
+                           <rng:ref name="line"/>
+                           <rng:ref name="docZone"/>
+                        </rng:choice>
+                     </rng:zeroOrMore>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="undo" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                  <desc>Marks up an action represented by an element to be undone.</desc>
+                  <classes>
+                     <memberOf key="model.pPart.transcriptional"/>
+                  </classes>
+                  <content>
+                     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                        name="macro.specialPara"/>
+                  </content>
+                  <attList>
+                     <attDef ident="target" mode="add">
+                        <desc>The element representing the action to be undone.</desc>
+                        <datatype minOccurs="1" maxOccurs="1">
+                           <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                              name="data.pointer"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <elementSpec ident="subst" module="transcr" mode="change">
+                  <attList>
+                     <attDef ident="type" mode="add">
+                        <desc>The type of substitution.</desc>
+                        <datatype minOccurs="1" maxOccurs="1">
+                           <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"
+                           />
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <elementSpec ident="repetition" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                  <desc>A clarification of already written text.</desc>
+                  <classes>
+                     <memberOf key="model.global"/>
+                     <memberOf key="att.transcriptional"/>
+                     <memberOf key="att.typed"/>
+                  </classes>
+                  <content>
+                     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                        name="macro.specialPara"/>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="unclear" module="core" mode="change">
+                  <classes mode="replace">
+                     <memberOf key="model.choicePart" mode="add"/>
+                     <memberOf key="model.pPart.transcriptional" mode="add"/>
+                     <memberOf key="att.editLike" mode="add"/>
+                     <memberOf key="att.typed" mode="add"/>
+                  </classes>
+               </elementSpec>
+               <elementSpec ident="transpositions" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                  <desc> Describes the textual transpositions.</desc>
+                  <classes>
+                     <memberOf key="model.profileDescPart"/>
+                  </classes>
+                  <content>
+                     <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                        <rng:ref name="transposition"/>
+                     </rng:oneOrMore>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="transposition" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                  <desc> Describes a textual transposition. Contains a list of pointers that
+                     specifies the new order of the text fragments. </desc>
+                  <content>
+                     <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                        <rng:ref name="ptr"/>
+                     </rng:oneOrMore>
+                  </content>
+               </elementSpec>
+               <!-- authorial changes: spanning -->
+               <elementSpec ident="revisionSpan">
+                  <desc>Groups contained changes in the document to one revision. Changes are those
+                     indicated by add, del and other elements of model.pPart.transcriptional, as
+                     well as the undo, repetition and transposition elements.The rev attribute
+                     points to a description of the revision.</desc>
+                  <classes>
+                     <memberOf key="model.pPart.transcriptional"/>
+                     <memberOf key="att.spanning"/>
+                  </classes>
+                  <content>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="usedSpan" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                  <desc>In many cases, authors mark portions of text as having been used, usually
+                     meaning the text has been transcribed to a fair copy. The mark is often a
+                     strikethrough, but can be any author-specific mark.</desc>
+                  <classes>
+                     <memberOf key="model.pPart.transcriptional"/>
+                     <memberOf key="att.spanning"/>
+                  </classes>
+                  <content>
+                     <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="trSpan" ns="http://www.tei-c.org/ns/1.0" mode="add">
+                  <desc>(transposition) A part of the text that has been moved to a different
+                     location.</desc>
+                  <classes>
+                     <memberOf key="att.spanning"/>
+                     <memberOf key="model.global"/>
+                  </classes>
+                  <content>
+                     <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+                  </content>
+               </elementSpec>
+               <!-- genetic relations -->
+               <elementSpec ident="node" module="nets" mode="change">
+                  <classes mode="change">
+                     <memberOf mode="add" key="attribute.pointing"/>
+                  </classes>
+                  <attList>
+                     <attDef ident="target" mode="add">
+                        <desc> A link to the element or passage represented by the node.</desc>
+                        <datatype>
+                           <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                              name="data.pointing"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <elementSpec ident="arc" module="nets" mode="change">
+                  <classes mode="change">
+                     <memberOf mode="add" key="att.typed"/>
+                  </classes>
+               </elementSpec>
+               <!-- spanning text structure -->
+               <elementSpec ident="divSpan" module="textstructure" mode="add">
+                  <desc>(text division) contains a subdivision of the front, body, or back of a
+                     text.</desc>
+                  <classes>
+                     <memberOf mode="add" key="model.divLike"/>
+                     <memberOf mode="add" key="att.spanning"/>
+                  </classes>
+                  <content>
+                     <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="pSpan" module="core" mode="add">
+                  <desc>(paragraph) marks paragraphs in prose.</desc>
+                  <classes>
+                     <memberOf mode="add" key="model.pLike"/>
+                     <memberOf mode="add" key="att.spanning"/>
+                  </classes>
+                  <content>
+                     <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+                  </content>
+               </elementSpec>
+            </schemaSpec>
          </div>
       </back>
    </text>
