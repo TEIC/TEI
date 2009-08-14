@@ -9,11 +9,14 @@
          </titleStmt>
          <editionStmt>
             <edition n="2">Draft</edition>
-         </editionStmt><publicationStmt>
+         </editionStmt>
+         <publicationStmt>
             <authority>TEI MS SIG, Genetic Edition Workgroup</authority>
-         </publicationStmt><sourceDesc>
+         </publicationStmt>
+         <sourceDesc>
             <p>Born Digital</p>
-         </sourceDesc></fileDesc>
+         </sourceDesc>
+      </fileDesc>
       <revisionDesc>
          <change>
             <name>Elena Pierazzo</name>
@@ -212,7 +215,8 @@
                         <label>Grouping Revisions</label> groups of changes at different locations
                         of one document, used to create sets which express the editorial assumption
                         that these changes have been undertaken in one stage.</item>
-                  </list></item>
+                  </list>
+               </item>
                <item>
                   <label>Dossier level</label>
                   <list type="bulleted">
@@ -232,7 +236,8 @@
                            subsequently shuffled and reshuffled by the means of sequences of letters
                            and numbers contained in a number of documents.</note> and/or across
                         several documents, as a series of steps on a path.</item>
-                  </list></item>
+                  </list>
+               </item>
                <item>
                   <label>Document and Dossier levels</label>
                   <list type="bulleted">
@@ -243,12 +248,15 @@
                         <label>Documenting Editorial Decisions</label> documents the arguments which
                         are the basis for editorial decisions to encode the text in a specific way
                         including ways to express uncertainty and alternatives.</item>
-                  </list></item>
+                  </list>
+               </item>
             </list>
             <div>
                <head>Document level</head>
-               <div><head>The Document-based Transcription </head><p>The document-based
-                     transcription includes 4 hierarchically organised levels: <list type="bulleted">
+               <div>
+                  <head>The Document-based Transcription </head>
+                  <p>The document-based transcription includes 4 hierarchically organised levels:
+                        <list type="bulleted">
                         <item>Document<list type="bulleted">
                               <item>Writing Surface (page, double page, folium, etc.) <list
                                     type="bulleted">
@@ -257,36 +265,38 @@
                                        </list></item>
                                  </list></item>
                            </list></item>
-                     </list></p><p>We propose to use introduce a new element, <gi>ge:document</gi>
-                     to encode a document-based transcription, as an alternative to <gi>text</gi>,
-                     and to use a modified version of <gi>surface</gi> and <gi>zone</gi>.</p><p>A
-                        <gi>ge:document</gi> contains a sequence of <gi>surface</gi> elements. The
+                     </list></p>
+                  <p>We propose to use introduce a new element, <gi>ge:document</gi> to encode a
+                     document-based transcription, as an alternative to <gi>text</gi>, and to use a
+                     modified version of <gi>surface</gi> and <gi>zone</gi>.</p>
+                  <p>A <gi>ge:document</gi> contains a sequence of <gi>surface</gi> elements. The
                         <gi>surface</gi> element has been added a <att>type</att> attribute which
                      suggested values are <val>page</val>, <val>leaf</val>, and similar. The
                      orientation of the writing surface is defined either by a set of cartesian
                      coordinates (measured from the top left corner) or implicitly stated by width
                      and height of the page recorded within <gi>msDesc</gi> (namely within
-                        <gi>dimension</gi> or <gi>measure</gi> within <gi>objectDesc</gi>).
-                     </p><p>The <gi>surface</gi> element contains a sequence of <gi>zone</gi>s.
-                        <gi>zone</gi>s can be nested and grouped, can overlap and have a sequence
-                     level (i.e belong to a <ref target="#text-stage">text stage</ref>), expressed
-                     by the <att>seq</att> attribute. Their positioning with respect to the
-                        <gi>surface</gi> element is defined by cartesian coordinates, measured from
-                     the top left corner. The element carries an <att>sOrientation</att> attribute
-                     which describes (in degrees) the orientation that the surface has taken to
-                     enable the content (writing, images) in that <gi>zone</gi>, with respect to the
-                     normal orientation of the <gi>surface</gi>. Note that the mechanism aims to
-                     describes the process by which the content of a specific <gi>zone</gi> has been
-                     supplied (i.e. the author has physically rotate the writing surface) more that
-                     the orientation of the writing.</p><p>Zones are arbitrarily defined by the
-                     editors according to the layout of the writing surface and can make use of a
-                     standardised vocabulary (e.g. the top margin). Their content can be: <list>
+                        <gi>dimension</gi> or <gi>measure</gi> within <gi>objectDesc</gi>). </p>
+                  <p>The <gi>surface</gi> element contains a sequence of <gi>zone</gi>s.
+                     <gi>zone</gi>s can be nested and grouped, can overlap and have a sequence level
+                     (i.e belong to a <ref target="#text-stage">text stage</ref>), expressed by the
+                        <att>seq</att> attribute. Their positioning with respect to the
+                     <gi>surface</gi> element is defined by cartesian coordinates, measured from the
+                     top left corner. The element carries an <att>sOrientation</att> attribute which
+                     describes (in degrees) the orientation that the surface has taken to enable the
+                     content (writing, images) in that <gi>zone</gi>, with respect to the normal
+                     orientation of the <gi>surface</gi>. Note that the mechanism aims to describes
+                     the process by which the content of a specific <gi>zone</gi> has been supplied
+                     (i.e. the author has physically rotate the writing surface) more that the
+                     orientation of the writing.</p>
+                  <p>Zones are arbitrarily defined by the editors according to the layout of the
+                     writing surface and can make use of a standardised vocabulary (e.g. the top
+                     margin). Their content can be: <list>
                         <item><gi>ge:line</gi>: a sequence of lines of text</item>
                         <item>a <gi>p</gi> or other block paragraph-like elements</item>
                         <item>a graphic/image </item>
-                     </list></p><p>In the following we can easily detect two main areas of writing,
-                     the diary entry (black ink) and another (supposedly later) annotation in blue
-                     ink. <figure>
+                     </list></p>
+                  <p>In the following we can easily detect two main areas of writing, the diary
+                     entry (black ink) and another (supposedly later) annotation in blue ink. <figure>
                         <graphic url="constr_example/D1-thumb.png"/>
                      </figure>In order to add the annotation in the blue ink, the diary page has
                      been rotated 90° clockwise by the author. The page can be transcribed as
@@ -337,48 +347,51 @@
                      pages and lines. All those elements have been provided with an
                      <att>spanTo</att> attribute: when such an attribute is in use, the element must
                      be empty. See the previous example encoded with spanned elements:</p>
-               <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                  <surface ulx="0" uly="0" lrx="200" lry="300">
-                     <zone seq="0" ulx="10" uly="43" lrx="185" lry="84" sOrient="0" unit="mm">
-                        <div spanTo="#end"/>
-                        <dateline>
-                           <date rend="right"> 1 April 2009 </date>
-                        </dateline>
-                        <p xml:id="p1" spanTo="#p2"/> Fed Birds in the park today.<lb/> Might write an article about <lb/> the
-                        Thick-billed Warbler.
-                     </zone>
-                     <zone seq="1" ulx="9" uly="20" lrx="70" lry="60" sOrient="90" unit="mm">
-                        <p xml:id="p2" spanTo="end"/> Samaria is a Greek <lb/> brand of water that <lb/> comes from the natural <lb/>
-                        springs of Stilos, in <lb/> Crete 
-                        <anchor xml:id="end"/>
-                     </zone>
-                  </surface>
-               </egXML>
+                  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                     <surface ulx="0" uly="0" lrx="200" lry="300">
+                        <zone seq="0" ulx="10" uly="43" lrx="185" lry="84" sOrient="0" unit="mm">
+                           <div spanTo="#end"/>
+                           <dateline>
+                              <date rend="right"> 1 April 2009 </date>
+                           </dateline>
+                           <p xml:id="p1" spanTo="#p2"/> Fed Birds in the park today.<lb/> Might
+                           write an article about <lb/> the Thick-billed Warbler. </zone>
+                        <zone seq="1" ulx="9" uly="20" lrx="70" lry="60" sOrient="90" unit="mm">
+                           <p xml:id="p2" spanTo="end"/> Samaria is a Greek <lb/> brand of water
+                           that <lb/> comes from the natural <lb/> springs of Stilos, in <lb/> Crete
+                              <anchor xml:id="end"/>
+                        </zone>
+                     </surface>
+                  </egXML>
                </div>
-               <div xml:id="altrations"><head>*Alterations</head><p>Alterations occurs within a
-                     single manuscript, but it is an open question whether we can consider
-                     discrepancies amongst versions preserved by different manuscripts (dossier
-                     level) also as a sort of <soCalled>alteration</soCalled> For instance, if by
-                     comparing (collating) two versions preserved by two witnesses we note a word
-                     has been added or deleted, should we encode it with <gi>add</gi> or
-                     <gi>del</gi> as we would when transcribing a single manuscript? Or do we need a
-                     completely new set of elements to do it? In a genetic process, it is totally
-                     arbitrary when an author stops revising the text within a given document and
-                     decides to move to a new document (i.e. copy it anew), so the two are indeed
-                     closely related. On the other hand we need to differentiate somehow the two
-                     phenomena because the one within a single document is explicitly marked by the
-                     author, while the one detected by comparison is only implicit. It may also
-                     happen that implicit alterations were perhaps marked in a lost intermediate
-                     version. This remains an open problem (see <ref target="#collation"
-                     >also</ref>).</p><p>The following discussion relates to the alterations at
-                     document level: for a discussion of their use at dossier level also <ref
-                        target="#collation">see</ref> below.</p>
+               <div xml:id="altrations">
+                  <head>*Alterations</head>
+                  <p>Alterations occurs within a single manuscript, but it is an open question
+                     whether we can consider discrepancies amongst versions preserved by different
+                     manuscripts (dossier level) also as a sort of <soCalled>alteration</soCalled>.
+                     For instance, if by comparing (collating) two versions preserved by two
+                     witnesses we note a word has been added or deleted, should we encode it, within
+                     a collation, with <gi>add</gi> or <gi>del</gi> as we would when transcribing a
+                     single manuscript? Or do we need a completely new set of elements to do it? In
+                     a genetic process, at any point the author can decide to stop revising the text
+                     within a given document and decide to move to a new document (i.e. copy it
+                     anew), so the two phenomena (alterations at document level and alterations at
+                     dossier level) are indeed closely related. On the other hand we need to
+                     differentiate them because the one within a single document is explicitly
+                     marked by the author, while the one detected by comparison is only implicit. It
+                     may also happen that implicit alterations were perhaps marked in a lost
+                     intermediate version. This remains an open problem (see <ref
+                        target="#collation">also</ref>).</p>
+                  <p>The following discussion relates to the alterations at document level: for a
+                     discussion of their use at dossier level also <ref target="#collation"
+                     >see</ref> below.</p>
                   <div>
                      <head>Additions</head>
                      <p>Beside “normal” additions (see for instance the TEI definition of the
                            <gi>add</gi> element: <q>contains letters, words, or phrases inserted in
                            the text by an author, scribe, annotator, or corrector.</q>), we have
-                        outlined some other special kinds of addition:</p>
+                        outlined some other special kinds of additions, where text is added to the
+                        document but not to the text:</p>
                      <list type="bulleted">
                         <item><label>Repetitions</label> for which we have introduced a
                               <gi>ge:repetition</gi> element. Repetitions can be of two main
@@ -386,32 +399,91 @@
                               <item>
                                  <label>Fixation</label> which results from authors fixing a text
                                  passage by overwriting it (e.g. a pencilled passage fixed with
-                                 ink).</item>
+                                 ink). <egXML xmlns="http://www.tei-c.org/ns/Examples"
+                                    ><!-- provide example from Austen --></egXML>
+                              </item>
                               <item>
                                  <label>Clarification</label> a word is badly written and the author
-                                 rewrites it to clarify. </item>
+                                 rewrites it to clarify. An example of that can be see at <ptr
+                                    target="http://www.emunch.no/tei-mm-2008/ms.html"/>, where the
+                                 first example, where we have two lost chars overwritten by 'er',
+                                 then overwritten again, could be encoded as follows: <egXML
+                                    xmlns="http://www.tei-c.org/ns/Examples">
+                                    <ge:line>Bæg<del>
+                                          <gap extent="2" unit="chars"/>
+                                       </del><add rend="overwritten" place="inline">er</add>
+                                       <ge:repetition type="clarification" place="inline"
+                                       >er</ge:repetition>klang</ge:line>
+                                 </egXML></item>
                            </list></item>
                         <item><label>*Alternatives</label> when an author proposes several
                            alternative readings for a segment without deciding which is the best.
-                           For those cases the TEI already offers a system (<gi>alt/</gi>) that
-                           might be adapted (i.e. semantically broadened or have attributes added). </item>
+                           For those cases the TEI already offers a system (<gi>alt/</gi>) can be
+                           adapted. An example of that can be found in Vetter and McDonald
+                              2003,<note place="foot">
+                              <bibl>
+                                 <author>Lara Vetter and Jarom McDonald</author>
+                                 <title level="a">Witnessing Dickinson's Witnesses</title>
+                                 <title level="j">Literary Linguistic Computing</title>
+                                 <biblScope type="vol">18</biblScope>
+                                 <biblScope type="issue">2</biblScope>
+                                 <biblScope type="pp">151-165</biblScope>
+                                 <date>2003</date>
+                                 <ptr
+                                    target="http://llc.oxfordjournals.org/cgi/reprint/18/2/151?maxtoshow=&amp;HITS=10&amp;hits=10&amp;RESULTFORMAT=&amp;fulltext=vetter&amp;searchid=1&amp;FIRSTINDEX=0&amp;resourcetype=HWCIT"
+                                 />
+                              </bibl>
+                           </note> where in the poem <title>The inundation of the Spring</title> by
+                           Emily Dickinson we found, amongst other, that the word
+                              <mentioned>estranged</mentioned> can be alternated with
+                              <mentioned>alarmed</mentioned> (written in-line, aster
+                              <mentioned>estranged</mentioned>) and <mentioned>submerged</mentioned>
+                           written at the bottom of the page; as <mentioned>estranged</mentioned> is
+                           underlined, the editors assume that this is the selected alternative (see
+                           pp. 155-162). Such case can be encoded as follows: <egXML
+                              xmlns="http://www.tei-c.org/ns/Examples">
+                              <zone type="body">
+                                 <l> + <hi rend="underlined" xml:id="alt1">estranged<alt
+                                          targets="#alt1 #alt2
+                                          #alt3" mode="excl" weights="1 0 0"/></hi> - + <add
+                                       type="alternative" xml:id="alt2" place="inline">alarmed</add>
+                                 </l>
+                              </zone>
+                              <zone type="margin-bottom"> + <add type="alternative" xml:id="alt3"
+                                    >submerged</add> - </zone>
+                           </egXML></item>
                         <item xml:id="mm">
-                           <label>Meta-marks</label> (<gi>metaMark</gi>): marginal notes and other
-                           additions to the text should be differentiated from meta-marks commanding
-                           an alteration (e.g. “move this passage over there”) or the date of the
-                           beginning of a manuscript or a revision, which represent a sort of
-                           processing instruction in the document.</item>
+                           <label>Meta-marks</label> (<gi>ge:metaMark</gi>): marginal notes and
+                           other additions to the text should be differentiated from meta-marks
+                           commanding an alteration (e.g. “move this passage over there”) or the
+                           date of the beginning of a manuscript or a revision, which represent a
+                           sort of processing instruction in the document. The element carries a
+                              <att>function</att> attribute which specify which is the function of
+                           the meta-mark and a <att>target</att> attribute which points to the
+                           element which the function refers. An example can be seen in the Emily
+                           Dickinson poem just shown, where the <mentioned>+</mentioned> sign marks
+                           that the word that follows is or has alternatives, so the example above
+                           could be re-encoded as follows: <egXML
+                              xmlns="http://www.tei-c.org/ns/Examples">
+                              <zone>
+                                 <l>
+                                    <ge:metaMark function="alternative" targets="#alt1">+<alt
+                                          targets="#alt1 #alt2 #alt3" mode="excl" weights="1 0 0"/></ge:metaMark>
+                                    <hi rend="underlined" xml:id="alt1">estranged</hi> -
+                                       <ge:metaMark function="alternative" targets="#alt2">+</ge:metaMark>
+                                    <add type="alternative" xml:id="alt2" place="inline"
+                                    >alarmed</add>
+                                 </l>
+                              </zone>
+                              <zone>
+                                 <ge:metaMark function="alternative" targets="#alt3">+</ge:metaMark>
+                                 <add type="alternative" xml:id="alt3">submerged</add> - </zone>
+                           </egXML> Other examples of <gi>ge:metaMark</gi> can be represented by
+                           proofs' markup, like the ones that can be seen in several pages of Walt
+                           Whitman (see, for instance: <ptr
+                              target="http://www.whitmanarchive.org/resources/sleepers/loc.00295.jpg"
+                           />).</item>
                      </list>
-                     <p>
-                        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                           <add xmlns="http://www.tei-c.org/ns/1.0">
-                              <metaMark xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"
-                              >add</metaMark> is <metaMark
-                                 xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"
-                              >here</metaMark>
-                           </add>
-                        </egXML>
-                     </p>
                   </div>
                   <div>
                      <head>Deletions</head>
@@ -421,10 +493,28 @@
                         by an author, scribe, annotator, or corrector.”), we have outlined some
                         other special kinds of deletion: </p>
                      <list type="bulleted">
-                        <item><label>Marked as used </label>passages that happen to be struck
+                        <item><label>Marked as used</label> passages that happen to be struck
                            through, where the strike marks the passage as used/copied at another
-                           location/another manuscript. We have created two elements
-                           <gi>ge:used</gi> and <gi>ge:usedSpan/</gi> for this purpose.</item>
+                           location/another manuscript. In this case the author does not intend to
+                           suppress the content, but only to mark that it has been transferred or
+                           reused. We have created the <gi>ge:used</gi> element for this purpose. As
+                           the portions that are marked as used are normally full pages or large
+                           portions of pages, <gi>ge:used</gi> can contains <gi>zones</gi> or can be used within them.
+                           See an example of this in Walt Whitman (<ptr target="http://www.whitmanarchive.org/resources/sleepers/20051105_0650.jpg"/>)
+                           <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                              <surface>
+                                 <ge:used rend="cross">
+                                    <zone>
+                                       <lg>
+                                          <head rend="underline">The Poet</head>
+                                          <l><del rend="striketrhough">I think</del> His sight is the</l>
+                                          [...]
+                                       </lg>
+                                    </zone>
+                                 </ge:used>
+                              </surface>
+                           </egXML>
+                        </item>
                         <item><label>Overwriting</label> is a particular case of a deletion, unless
                            it is a case of repetition (<gi>repetion</gi>) or a false start (see <ref
                               target="#false-start">below</ref>).</item>
@@ -439,13 +529,13 @@
                         deleted, and substituted by the one after the transposition) but this will
                         not work for transposition of blocks. </p>
                      <list type="unordered">
-                        <item>A new encoding should be envisaged: <list type="bulleted">
+                        <item>A new encoding should be envisaged: [hilde]<list type="bulleted">
                               <item>First: make the segment to be transposed addressable, either via
                                  an identifiable empty element (<gi>ge:trSpan/</gi>) or via a
                                  “cross-cutting” <gi>seg</gi> or similar.</item>
                               <item>Secondly: markup meta-marks which might be in the text (e.g. a
                                  super linear “add <emph>is</emph> here” or numbers “3 2 4 1” or
-                                 asterisks), with an element <gi>ge:metaMark</gi>.</item>
+                                 asterisks), with an element <gi>ge:metaMark</gi>. </item>
                               <item>Relate the functional mark to the identified passages, either by
                                  referring to the passage added via attributes or implicitly because
                                  the <gi>ge:metaMark</gi> is contained in an <gi>add</gi> or
@@ -499,7 +589,7 @@
                      <p>The current TEI encoding considers a substitution as a combination of
                         deletion/addition. Nevertheless there are cases in which a substitution
                         includes more material. The current <gi>subst</gi> might therefore need a
-                        revision to allow more loose substitution like the following: <egXML
+                        revision to allow more loose substitution like the following: [Justin]<egXML
                            xmlns="http://www.tei-c.org/ns/Examples">
                            <p xmlns="http://www.tei-c.org/ns/1.0">indisputably <subst><del>&amp;
                                     evidently</del> become
@@ -521,7 +611,8 @@
                         the partial word? Which is the scope of the correction? just the parts of
                         the word that have been altered or all of it, even if this was not actually
                         written? If it is possible to understand the word partially written, how
-                        should it be encoded? Will <gi>supplied</gi> a good candidate for that?</p>
+                        should it be encoded? Will <gi>supplied</gi> a good candidate for that?
+                        [http://www.whitmanarchive.org/resources/sleepers/uva.00256.001.jpg]</p>
                      <p>Probably, in this latter case a new element should be added, called, perhaps
                            <gi>ge:fStart</gi>, provided by a <att>scope</att>
                            (<val>part</val>|<val>full</val>) and <att>method</att>
@@ -545,8 +636,7 @@
                               <hi rend="underline" xml:id="und1" xmlns="http://www.tei-c.org/ns/1.0"
                                  >underline</hi>
                            </undo>
-                        </egXML>
-                     </p>
+                        </egXML> [Leopardi]</p>
                      <p>Normally the element <gi>ge:undo</gi> would contain the element to be
                         undone, except in the case of partial undoing as in the following example:
                            <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -618,15 +708,17 @@
                         <gi>ge:revNote</gi> of specific documents or to other annotations and
                      editorial statements.</p>
                </div>
-               <div><head>Genetic Relations</head><p>By <soCalled>genetic relations</soCalled> we
-                     mean the possibility of ordering different text-stages contained within a
-                     single document, or more probably, across different document into an ideal line
-                     of development, going, for instance from a version <hi rend="bold">A</hi> to a
-                     version <hi rend="bold">B</hi> (that can be represented by a different document
-                     or by an editorially reconstructed text-stage), to a version <hi rend="bold"
-                     >C</hi>, etc.</p><p>To do so, we have introduced the concepts of
-                        <soCalled>steps</soCalled> and <soCalled>paths</soCalled> for which we took
-                     inspiration from <title>HNML</title>.</p>
+               <div>
+                  <head>Genetic Relations</head>
+                  <p>By <soCalled>genetic relations</soCalled> we mean the possibility of ordering
+                     different text-stages contained within a single document, or more probably,
+                     across different document into an ideal line of development, going, for
+                     instance from a version <hi rend="bold">A</hi> to a version <hi rend="bold"
+                     >B</hi> (that can be represented by a different document or by an editorially
+                     reconstructed text-stage), to a version <hi rend="bold">C</hi>, etc.</p>
+                  <p>To do so, we have introduced the concepts of <soCalled>steps</soCalled> and
+                        <soCalled>paths</soCalled> for which we took inspiration from
+                     <title>HNML</title>.</p>
                   <div>
                      <head>Steps and Paths </head>
                      <p>A <soCalled>step</soCalled> connects two versions (represented by two
@@ -650,7 +742,8 @@
                               <item>
                                  <gi>ge:stepAlteration</gi>
                                  <note place="foot"><hi rend="bold">EP</hi>: guys I forgot why we
-                                    need this!</note></item>
+                                    need this!</note>
+                              </item>
                            </list></item>
                         <item>
                            <gi>ge:path</gi> in the same way as <gi>ge:step</gi>,embeds a
@@ -702,19 +795,21 @@
                         </list></p>
                   </div>
                </div>
-               <div xml:id="collation"><head>*Collation and Critical Apparatus</head><p>As
-                     previously discussed (<ref target="#altrations">see</ref>), the moment at which
-                     the author decides to stop editing a draft and moves to another draft is
+               <div xml:id="collation">
+                  <head>*Collation and Critical Apparatus</head>
+                  <p>As previously discussed (<ref target="#altrations">see</ref>), the moment at
+                     which the author decides to stop editing a draft and moves to another draft is
                      arbitrary. Therefore alterations within a given document and alterations which
                      result from the collation of different drafts of the same text are more
                      conceptually connected than readings characterising different witnesses as a
-                     result of a scribal copy.</p><p>For instance, if we have two draft documents of
-                     the same text, A and B, if a deletion occurs within A or B we would probably
-                     mark it with a <gi>del</gi> element. On the other hand, if when comparing A and
-                     B, we see a passage has been suppressed, we would also probably mark it as
-                     such. Whether we need another set of editorial elements or we should use the
-                     same set that are used for transcription is still an open problem. </p><p>We
-                     can imagine at least two different scenarios:<list type="bulleted">
+                     result of a scribal copy.</p>
+                  <p>For instance, if we have two draft documents of the same text, A and B, if a
+                     deletion occurs within A or B we would probably mark it with a <gi>del</gi>
+                     element. On the other hand, if when comparing A and B, we see a passage has
+                     been suppressed, we would also probably mark it as such. Whether we need
+                     another set of editorial elements or we should use the same set that are used
+                     for transcription is still an open problem. </p>
+                  <p>We can imagine at least two different scenarios:<list type="bulleted">
                         <item>Only one document has been entirely transcribed (perhaps the first or
                            the last version), while the others are only reconstructable via
                            collation, which can be stored within the same document or in a separate
@@ -964,6 +1059,24 @@
                   <classes mode="change">
                      <memberOf key="att.typed" mode="add"/>
                   </classes>
+                  <content>
+                     <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                        <rng:zeroOrMore>
+                           <rng:ref name="model.global"/>
+                        </rng:zeroOrMore>
+                        <rng:group>
+                           <rng:zeroOrMore>
+                              <rng:ref name="model.glossLike"/>
+                           </rng:zeroOrMore>
+                           <rng:zeroOrMore>
+                              <rng:ref name="model.graphicLike"/>
+                           </rng:zeroOrMore>
+                           <rng:zeroOrMore>
+                              <rng:ref name="zone"/>
+                           </rng:zeroOrMore>
+                        </rng:group>
+                     </rng:choice>
+                  </content>
                </elementSpec>
                <elementSpec ident="zone" mode="change">
                   <classes>
@@ -991,7 +1104,7 @@
                               </rng:zeroOrMore>
                               <rng:zeroOrMore>
                                  <rng:choice>
-                                    <rng:ref name="model.pLike"/>
+                                    <rng:ref name="model.divPart"/>
                                     <rng:ref name="macro.paraContent"/>
                                  </rng:choice>
                               </rng:zeroOrMore>
@@ -1038,8 +1151,8 @@
                <!-- editorial justification -->
                <elementSpec ident="edJust" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
                   mode="add">
-                  <desc>(editorial justification) An editorial justification of any part of the&#xD;
-                     edited text.</desc>
+                  <desc>(editorial justification) An editorial justification of any part of
+                     the&#xD; edited text.</desc>
                   <classes>
                      <memberOf key="model.global"/>
                      <memberOf key="model.global.meta"/>
@@ -1127,7 +1240,6 @@
                      strikethrough, or provide meta-information, like a date.</desc>
                   <classes>
                      <memberOf key="model.pPart.transcriptional"/>
-                     <memberOf key="att.typed"/>
                      <memberOf key="model.spanning"/>
                      <memberOf key="att.spanning"/>
                      <memberOf key="att.global"/>
@@ -1137,10 +1249,17 @@
                   </content>
                   <attList>
                      <attDef ident="function" mode="add">
-                        <desc>Points to the function (e.g. add, delete) of the mark.</desc>
-                        <datatype minOccurs="1" maxOccurs="1">
-                           <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                              name="data.pointer"/>
+                        <desc>Describe to the function (e.g. add, delete, alternate) of the mark.</desc>
+                        <datatype minOccurs="1">
+                           <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"
+                           />
+                        </datatype>
+                     </attDef>
+                     <attDef ident="targets">
+                        <desc>Points to the element(s) to which the function of the meta-mark
+                           refers. Pointers are separated by a white space</desc>
+                        <datatype minOccurs="1">
+                           <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
                         </datatype>
                      </attDef>
                   </attList>
@@ -1162,6 +1281,7 @@
                   <classes>
                      <memberOf key="model.pPart.transcriptional"/>
                      <memberOf key="model.spanning"/>
+                     <memberOf key="model.global"/>
                      <memberOf key="att.global"/>
                      <memberOf key="att.spanning"/>
                   </classes>
@@ -1218,11 +1338,20 @@
                      <memberOf key="att.typed"/>
                      <memberOf key="model.spanning"/>
                      <memberOf key="att.spanning"/>
+                     <memberOf key="att.placement"/>
                   </classes>
                   <content>
                      <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
                         name="macro.specialPara"/>
                   </content>
+                  <attList>
+                     <attDef ident="reason">
+                        <datatype minOccurs="1" maxOccurs="unbounded">
+                           <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"
+                           />
+                        </datatype>
+                     </attDef>
+                  </attList>
                </elementSpec>
                <elementSpec ident="unclear" module="core" mode="change">
                   <classes mode="replace">
