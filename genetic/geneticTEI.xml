@@ -364,7 +364,7 @@
                      </surface>
                   </egXML>
                </div>
-               <div xml:id="altrations">
+               <div xml:id="alterations">
                   <head>*Alterations</head>
                   <p>Alterations occurs within a single manuscript, but it is an open question
                      whether we can consider discrepancies amongst versions preserved by different
@@ -399,9 +399,23 @@
                               <item>
                                  <label>Fixation</label> which results from authors fixing a text
                                  passage by overwriting it (e.g. a pencilled passage fixed with
-                                 ink). <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                                    ><!-- provide example from Austen --></egXML>
-                              </item>
+                                 ink). See, for instance the following example of such a practise
+                                 taken from page 70 of Jane austen's <title>Sanditon</title>:<figure>
+                                    <graphic url="constr_example/AusSand70.png"/>
+                                 </figure>
+                                 <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                                    <ge:repetition type="fixation" hand="ja2" seq="1">Now, if we
+                                       could get <subst seq="1">
+                                          <del>but</del>
+                                          <add status="duplicate">get</add>
+                                       </subst>
+                                       <del seq="1">get</del> a young Heiress</ge:repetition>
+                                 </egXML> In the example, some corrections belong to the fixation
+                                 stage, as Austen see in the fixation an opportunity to manipulate
+                                 the text previously written. This fact has been marked via the
+                                    <att>seq</att> attribute, assigning to all the alteration
+                                 belonging to the repetition phase the same value (for the
+                                 <att>seq</att> attribute, se <ref target="#seq">below</ref>).</item>
                               <item>
                                  <label>Clarification</label> a word is badly written and the author
                                  rewrites it to clarify. An example of that can be see at <ptr
@@ -499,17 +513,16 @@
                            suppress the content, but only to mark that it has been transferred or
                            reused. We have created the <gi>ge:used</gi> element for this purpose. As
                            the portions that are marked as used are normally full pages or large
-                           portions of pages, <gi>ge:used</gi> can contains <gi>zones</gi> or can be used within them.
-                           See an example of this in Walt Whitman (<ptr target="http://www.whitmanarchive.org/resources/sleepers/20051105_0650.jpg"/>)
-                           <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           portions of pages, <gi>ge:used</gi> can contains <gi>zones</gi> or can be
+                           used within them. See an example of this in Walt Whitman (<ptr
+                              target="http://www.whitmanarchive.org/resources/sleepers/20051105_0650.jpg"
+                           />) <egXML xmlns="http://www.tei-c.org/ns/Examples">
                               <surface>
                                  <ge:used rend="cross">
                                     <zone>
-                                       <lg>
-                                          <head rend="underline">The Poet</head>
-                                          <l><del rend="striketrhough">I think</del> His sight is the</l>
-                                          [...]
-                                       </lg>
+                                       <lg><head rend="underline">The Poet</head><l><del
+                                                rend="striketrhough">I think</del> His sight is
+                                          the</l> [...] </lg>
                                     </zone>
                                  </ge:used>
                               </surface>
@@ -527,60 +540,69 @@
                         (used, for instance in <title>HNML</title>) would be to encode this as a
                         substitution (i.e. to consider the segment previous to the transposition as
                         deleted, and substituted by the one after the transposition) but this will
-                        not work for transposition of blocks. </p>
-                     <list type="unordered">
-                        <item>A new encoding should be envisaged: [hilde]<list type="bulleted">
-                              <item>First: make the segment to be transposed addressable, either via
-                                 an identifiable empty element (<gi>ge:trSpan/</gi>) or via a
-                                 “cross-cutting” <gi>seg</gi> or similar.</item>
-                              <item>Secondly: markup meta-marks which might be in the text (e.g. a
-                                 super linear “add <emph>is</emph> here” or numbers “3 2 4 1” or
-                                 asterisks), with an element <gi>ge:metaMark</gi>. </item>
-                              <item>Relate the functional mark to the identified passages, either by
-                                 referring to the passage added via attributes or implicitly because
-                                 the <gi>ge:metaMark</gi> is contained in an <gi>add</gi> or
-                                 <gi>del</gi>, as in the following example:</item>
-                           </list></item>
+                        not work for transposition of blocks. The encoding of such passages should
+                        take into account several steps:</p>
+                     <list type="ordered">
+                        <item>Make the segment to be transposed addressable, via a “cross-cutting”
+                           element (<gi>ge:tr</gi>) which could also be used as an empty element.</item>
+                        <item>Markup meta-marks which might be in the text (e.g. a super linear or
+                           marginal list of numbers “3 2 4 1” or asterisks), with an element
+                              <gi>ge:metaMark</gi>. </item>
+                        <item>Relate the <gi>ge:metaMark</gi> to the passages to be transposed,
+                           either via attributes or implicitly because the <gi>ge:metaMark</gi> is
+                           contained in an <gi>add</gi> or <gi>del</gi>.</item>
+                        <item>Reorder the passages according to the instructions contained by the
+                              <gi>ge:metaMark</gi> elements.</item>
                      </list>
-                     <p>
-                        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                           <metaMark type="callout" function="#transp1"
-                              xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">2.</metaMark>
-                           <trSpan xml:id="thisbird"
-                              xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"/>
-                           <line xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">This <del
-                                 type="immediate" xmlns="http://www.tei-c.org/ns/1.0">animal</del>
-                              bird is a species found in <undo target="#del2"
-                                 xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">
-                                 <del xml:id="del2" xmlns="http://www.tei-c.org/ns/1.0"> dense
-                                 </del>
-                              </undo> vegetation such as</line>
-                           <line xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"> reeds,
-                              bushes and thick undergrowth.</line>
-                           <trSpan spanTo="#thisbird"
-                              xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"/>
-                           <metaMark type="callout" function="#transp1"
-                              xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">1.</metaMark>
-                           <trSpan xml:id="fivetosixeggs"
-                              xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"/>
-                           <line xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">5-6 eggs
-                              are laid in a nest in a low tree.</line>
-                           <trSpan spanTo="#fivetosixeggs"
-                              xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"/>
-                        </egXML>
-                     </p>
+                     <p>For instance, if we consider the first example from Ibsen manuscripts
+                        retrievable at <ptr target="http://www.emunch.no/tei-mm-2008/ms.html"/> we
+                        could encode as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <zone>
+                              <ge:line><ge:tr xml:id="ib1">bör</ge:tr><ge:metaMark rend="underline"
+                                    function="transposition" targets="#ib1" place="above"
+                                 >2.</ge:metaMark> og <ge:tr xml:id="ib2">hör</ge:tr><ge:metaMark
+                                    rend="underline" function="transposition" targets="#ib2"
+                                    place="above">1.</ge:metaMark></ge:line>
+                           </zone>
+                        </egXML> In Example 1 at <ptr
+                           target="http://www.emunch.no/tei-mm-2008/ms3.html"/>, Ibsen transposes a
+                        full block, in this cases it might be more convenient to use <gi>ge:tr</gi>
+                        as an empty element: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <l><ge:metaMark function="transposition" place="margin-left"
+                                 targets="#ib3">2.)</ge:metaMark><ge:tr spanTo="#ib3"/>thi da er du
+                              med Himmelen i Pagt; –<anchor xml:id="ib3"/></l>
+                           <l><ge:metaMark function="transposition" place="margin-left"
+                                 targets="#ib4"/><ge:tr spanTo="#ib4"/>da kan du Folkets
+                              Jøkelhjerter tine;<anchor xml:id="ib4"/></l>
+                        </egXML></p>
                      <p>The re-alignment of the transposed blocks or segments can be supplied via a
-                        stand-off mechanism, to be used, for instance, within the
-                           <gi>teiHeader</gi>:<egXML xmlns="http://www.tei-c.org/ns/Examples">
-                           <profileDesc xmlns="http://www.tei-c.org/ns/1.0">
-                              <transpositions
-                                 xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">
-                                 <transposition xml:id="transp1">
-                                    <ptr target="#fivetosixeggs" xmlns="http://www.tei-c.org/ns/1.0"/>
-                                    <ptr target="#thisbird" xmlns="http://www.tei-c.org/ns/1.0"/>
-                                 </transposition>
-                              </transpositions>
+                        stand-off mechanism, to be used, for instance, within <gi>profileDesc</gi>,
+                        or elsewhere in the document:<egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <profileDesc>
+                              <ge:transpositions>
+                                 <ge:transposition xml:id="transp1">
+                                    <ptr target="#ib2"/>
+                                    <ptr target="#ib1"/>
+                                 </ge:transposition>
+                                 <ge:transposition xml:id="transp2">
+                                    <ptr target="#ib4"/>
+                                    <ptr target="#ib3"/>
+                                 </ge:transposition>
+                              </ge:transpositions>
                            </profileDesc>
+                        </egXML>
+                        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <ge:line><ge:tr xml:id="ib1">bör</ge:tr><ge:metaMark rend="underline"
+                                 function="transposition" targets="#ib1" place="above"
+                              >2.</ge:metaMark> og <ge:tr xml:id="ib2">hör</ge:tr><ge:metaMark
+                                 rend="underline" function="transposition" targets="#ib2"
+                                 place="above">1.</ge:metaMark>
+                              <ge:transpositions>
+                                 <ge:transposition>
+                                    <ptr target="#ib2"/>
+                                    <ptr target="#ib1"/>
+                                 </ge:transposition>
+                              </ge:transpositions></ge:line>
                         </egXML>
                      </p>
                   </div>
@@ -589,11 +611,14 @@
                      <p>The current TEI encoding considers a substitution as a combination of
                         deletion/addition. Nevertheless there are cases in which a substitution
                         includes more material. The current <gi>subst</gi> might therefore need a
-                        revision to allow more loose substitution like the following: [Justin]<egXML
+                        revision to allow more loose substitutions. An example of this can be seen
+                        in The following example taken from Thomas More's <title>Lalla Rooke</title>
+                        <figure>
+                           <graphic url="constr_example/MooreRooke.png"/>
+                        </figure> which encoding could be: <egXML
                            xmlns="http://www.tei-c.org/ns/Examples">
-                           <p xmlns="http://www.tei-c.org/ns/1.0">indisputably <subst><del>&amp;
-                                    evidently</del> become
-                              <del>much</del><add>considerably</add></subst> worse</p>
+                           <ge:line>While <subst><del>pondering</del> thus <add>she
+                              mus'd</add></subst>, her pinions fann'd</ge:line>
                         </egXML></p>
                   </div>
                   <div xml:id="false-start">
@@ -602,7 +627,10 @@
                         important when establishing the timing of a specific revisions and in the
                         whole genetic process. The information might be supplied as a specific
                         attribute of <gi>add/</gi>, <gi>del/</gi>, <gi>subst</gi> etc., called
-                           <att>*timing</att> (or <att>*instant</att> or similar).</p>
+                           <att>*timing</att> (or <att>*instant</att> or similar).<note place="foot"
+                              ><hi rend="bold">EP</hi>: I would avoid to use <att>type</att> as it
+                           my be useful for other things and I would rather prefer to have an
+                           attribute that express a temporal semantics.</note></p>
                      <p>A specific subset of instant correction is represented by <hi rend="bold"
                            >false starts</hi>, which are parts of a word that are overwritten by
                         another (or struck through), meaning that the author started to write a
@@ -611,15 +639,27 @@
                         the partial word? Which is the scope of the correction? just the parts of
                         the word that have been altered or all of it, even if this was not actually
                         written? If it is possible to understand the word partially written, how
-                        should it be encoded? Will <gi>supplied</gi> a good candidate for that?
-                        [http://www.whitmanarchive.org/resources/sleepers/uva.00256.001.jpg]</p>
-                     <p>Probably, in this latter case a new element should be added, called, perhaps
-                           <gi>ge:fStart</gi>, provided by a <att>scope</att>
-                           (<val>part</val>|<val>full</val>) and <att>method</att>
-                           (<val>overwrite</val>|<val>stroked</val> et simil.) attribute.<note
-                           place="foot"><hi rend="bold">EP</hi>: I think we should suggest a
-                              <att>method</att> attribute for <gi>tei:del</gi> as well, more
-                           specific than <att>rend</att>.</note></p>
+                        should it be encoded? Will <gi>supplied</gi> a good candidate for that? </p>
+                     <p> An example of false start can be seen in one of the many version of Walt
+                        Whitman's <title>The Sleepers</title> (available at <ptr
+                           target="http://www.whitmanarchive.org/resources/sleepers/uva.00256.001.jpg"
+                        />) where the beginning of the third block could be encoded as follows:
+                           <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <ge:line><del type="fstart" rend="overstrike" scope="part">T</del>
+                              <subst>
+                                 <del rend="overstrike">The</del>
+                                 <add place="above">
+                                    <del rend="overstrike">His</del>
+                                 </add>
+                              </subst>
+                              <subst>
+                                 <del rend="overwritten">i</del>
+                                 <add place="superimposed">I</add>
+                              </subst>ron necklace</ge:line>
+                        </egXML>
+                        <note place="foot"><hi rend="bold">EP</hi>: I think we should suggest a
+                              <att>method</att> attribute for <gi>del</gi>, more specific than
+                              <att>rend</att>.</note></p>
                   </div>
                   <div>
                      <head>Undoing alterations</head>
@@ -630,20 +670,17 @@
                         but we need a more general approach, for instance to delete underlining or
                         transposition. We have introduced an element <gi>ge:undo</gi> for that
                         purpose provided with at attribute <att>target</att> pointing at the element
-                        to be undone: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                           <undo target="#und1"
-                              xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">
-                              <hi rend="underline" xml:id="und1" xmlns="http://www.tei-c.org/ns/1.0"
-                                 >underline</hi>
-                           </undo>
-                        </egXML> [Leopardi]</p>
-                     <p>Normally the element <gi>ge:undo</gi> would contain the element to be
-                        undone, except in the case of partial undoing as in the following example:
-                           <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                           <del xml:id="del1" xmlns="http://www.tei-c.org/ns/1.0"><ge:undo
-                                 target="#del1" rev="#thirdRev"
-                                 xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions"
-                              >is</ge:undo> nomadic</del>
+                        to be undone. Normally the element <gi>ge:undo</gi> would contain the
+                        element to be undone, except in the case of partial undoing as in the
+                        following example taken from Giacomo Leopardi's <title>Zibaldone</title> (p.
+                        3595) <figure>
+                           <graphic url="constr_example/LeoZib.png"/>
+                        </figure>Which could be encoded as follows:<egXML
+                           xmlns="http://www.tei-c.org/ns/Examples">
+                           <ge:line> che e’ <hi rend="underline" xml:id="uline1"><ge:undo
+                                    target="#uline1">si</ge:undo> rechi a’</hi>
+                              <del rend="overstrike">dotti</del>
+                              <hi rend="underline">denti</hi> l’un d’essi cibi</ge:line>
                         </egXML></p>
                   </div>
                </div>
@@ -659,15 +696,16 @@
                         <item>A way to describe a revision campaign/text-stage</item>
                      </list></p>
                   <p>For the former purpose ('attribute an alteration to a revision campaign') we
-                     have introduced a global attribute <att>rev</att> that points to an
-                     <att>xml:id</att> attribute within an element describing a specific text-stage;
-                     the element provided for that purpose is <gi>ge:revDesc</gi> which can occur
-                     within the <gi>teiHeader</gi> and groups the editorial reasons for stating that
-                     some alteration belong to a text-stage. Element <gi>ge:revDesc</gi> contains a
-                     sequence of <gi xml:id="revNote">ge:revNote</gi>, each of them describing a
-                     single text-stage. Typically, a <gi>ge:revNote</gi> will contain several
-                     references to <gi>ge:edJust</gi> elements (see <ref target="#edjust"
-                     >below</ref>) and to other annotations contained within the <gi>teiHeader</gi>.</p>
+                     have introduced a global attribute <att xml:id="seq">seq</att> that points to
+                     an <att>xml:id</att> attribute within an element describing a specific
+                     text-stage; the element provided for that purpose is <gi>ge:revDesc</gi> which
+                     can occur within the <gi>teiHeader</gi> and groups the editorial reasons for
+                     stating that some alteration belong to a text-stage. Element
+                     <gi>ge:revDesc</gi> contains a sequence of <gi xml:id="revNote"
+                     >ge:revNote</gi>, each of them describing a single text-stage. Typically, a
+                        <gi>ge:revNote</gi> will contain several references to <gi>ge:edJust</gi>
+                     elements (see <ref target="#edjust">below</ref>) and to other annotations
+                     contained within the <gi>teiHeader</gi>.</p>
                   <p>In many cases it is necessary to scope a portion of text in which one or more
                      alteration occurs, in order to give the necessary context for any editorial
                      discussion. For that purpose we have introduced an element
@@ -1064,17 +1102,15 @@
                         <rng:zeroOrMore>
                            <rng:ref name="model.global"/>
                         </rng:zeroOrMore>
-                        <rng:group>
-                           <rng:zeroOrMore>
-                              <rng:ref name="model.glossLike"/>
-                           </rng:zeroOrMore>
-                           <rng:zeroOrMore>
-                              <rng:ref name="model.graphicLike"/>
-                           </rng:zeroOrMore>
-                           <rng:zeroOrMore>
-                              <rng:ref name="zone"/>
-                           </rng:zeroOrMore>
-                        </rng:group>
+                        <rng:zeroOrMore>
+                           <rng:ref name="model.glossLike"/>
+                        </rng:zeroOrMore>
+                        <rng:zeroOrMore>
+                           <rng:ref name="model.graphicLike"/>
+                        </rng:zeroOrMore>
+                        <rng:zeroOrMore>
+                           <rng:ref name="zone"/>
+                        </rng:zeroOrMore>
                      </rng:choice>
                   </content>
                </elementSpec>
@@ -1243,6 +1279,7 @@
                      <memberOf key="model.spanning"/>
                      <memberOf key="att.spanning"/>
                      <memberOf key="att.global"/>
+                     <memberOf key="att.placement"/>
                   </classes>
                   <content>
                      <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.specialPara"/>
@@ -1319,6 +1356,19 @@
                   </attList>
                </elementSpec>
                <elementSpec ident="subst" module="transcr" mode="change">
+                  <content>
+                     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                        <rng:group>
+                           <rng:ref name="model.pPart.transcriptional"/>
+                        </rng:group>
+                        <rng:oneOrMore>
+                           <rng:choice>
+                              <rng:text/>
+                              <rng:ref name="model.pPart.transcriptional"/>
+                           </rng:choice>
+                        </rng:oneOrMore>
+                     </rng:group>
+                  </content>
                   <attList>
                      <attDef ident="type" mode="add">
                         <desc>The type of substitution.</desc>
@@ -1331,9 +1381,10 @@
                </elementSpec>
                <elementSpec ident="repetition" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
                   mode="add">
-                  <desc>A clarification of already written text.</desc>
+                  <desc>A repetition of already written text.</desc>
                   <classes>
-                     <memberOf key="model.global"/>
+                     <memberOf key="model.pPart.transcriptional"/>
+                     <memberOf key="att.global"/>
                      <memberOf key="att.transcriptional"/>
                      <memberOf key="att.typed"/>
                      <memberOf key="model.spanning"/>
@@ -1366,6 +1417,7 @@
                   <desc> Describes the textual transpositions.</desc>
                   <classes>
                      <memberOf key="model.profileDescPart"/>
+                     <memberOf key="model.global.meta"/>
                   </classes>
                   <content>
                      <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -1377,35 +1429,42 @@
                   ns="http://wiki.tei-c.org/index.php/Genetic_Editions" mode="add">
                   <desc> Describes a textual transposition. Contains a list of pointers that
                      specifies the new order of the text fragments. </desc>
+                  <classes>
+                     <memberOf key="att.global"/>
+                  </classes>
                   <content>
                      <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
                         <rng:ref name="ptr"/>
                      </rng:oneOrMore>
                   </content>
                </elementSpec>
+               <elementSpec ident="tr" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
+                  mode="add">
+                  <desc>Mark a section to be transposed</desc>
+                  <classes>
+                     <memberOf key="model.pPart.transcriptional"/>
+                     <memberOf key="att.transcriptional"/>
+                     <memberOf key="att.typed"/>
+                     <memberOf key="att.global"/>
+                     <memberOf key="model.spanning"/>
+                     <memberOf key="att.spanning"/>
+                  </classes>
+                  <content>
+                     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                        name="macro.specialPara"/>
+                  </content>
+               </elementSpec>
                <!-- authorial changes: spanning -->
                <elementSpec ident="revisionSpan">
                   <desc>Groups contained changes in the document to one revision. Changes are those
                      indicated by add, del and other elements of model.pPart.transcriptional, as
-                     well as the undo, repetition and transposition elements.The rev attribute
+                     well as the undo, repetition and transposition elements. The rev attribute
                      points to a description of the revision.</desc>
                   <classes>
                      <memberOf key="model.pPart.transcriptional"/>
                      <memberOf key="att.spanning"/>
                   </classes>
                   <content> </content>
-               </elementSpec>
-               <elementSpec ident="trSpan" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
-                  mode="add">
-                  <desc>(transposition) A part of the text that has been moved to a different
-                     location.</desc>
-                  <classes>
-                     <memberOf key="att.spanning"/>
-                     <memberOf key="model.global"/>
-                  </classes>
-                  <content>
-                     <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
-                  </content>
                </elementSpec>
                <!-- genetic relations -->
                <elementSpec ident="node" module="nets" mode="change">
