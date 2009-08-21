@@ -5,7 +5,7 @@ namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace s = "http://www.ascc.net/xml/schematron"
 namespace tei = "http://www.tei-c.org/ns/1.0"
 
-# Schema generated from ODD source 2009-08-20T18:08:57Z. 
+# Schema generated from ODD source 2009-08-21T15:08:53Z. 
 # TEI Edition: 1.3.0. Last updated on February 1st 2009.
 #
 
@@ -245,7 +245,8 @@ att.datable.w3c.attribute.to =
     | xsd:time
     | xsd:dateTime
   }?
-att.datable.attributes = att.datable.w3c.attributes
+att.datable.attributes =
+  att.datable.w3c.attributes, att.datable.iso.attributes
 att.declarable.attributes = att.declarable.attribute.default
 att.declarable.attribute.default =
   
@@ -720,7 +721,7 @@ att.typed.attribute.subtype =
   
   ## provides a sub-categorization of the element, if needed
   attribute subtype { xsd:Name }?
-tei_model.nameLike.agent = tei_name
+tei_model.nameLike.agent = tei_name | tei_persName
 tei_model.segLike = tei_s | tei_phr | tei_m | tei_seg
 tei_model.hiLike = tei_hi
 tei_model.emphLike =
@@ -802,7 +803,8 @@ tei_model.gLike = tei_g
 tei_model.biblLike = tei_bibl | tei_biblFull | tei_msDesc
 tei_model.headLike = tei_head
 tei_model.labelLike = tei_desc | tei_label
-tei_model.listLike = tei_list | tei_listBibl | tei_listWit
+tei_model.listLike =
+  tei_list | tei_listBibl | tei_listWit | tei_listEvent | tei_listNym
 tei_model.noteLike = tei_note | tei_witDetail
 tei_model.lLike = tei_l
 tei_model.pLike = tei_p | tei_ab
@@ -829,8 +831,9 @@ tei_model.divPart =
   | tei_forest
   | tei_forestGrp
   | tei_line
-tei_model.placeNamePart = notAllowed
-tei_model.placeNamePart_sequenceOptional = empty
+tei_model.placeNamePart = tei_placeName | tei_country | tei_settlement
+tei_model.placeNamePart_sequenceOptional =
+  tei_placeName?, tei_country?, tei_settlement?
 tei_model.placeStateLike = tei_model.placeNamePart
 tei_model.publicationStmtPart =
   tei_address
@@ -928,7 +931,7 @@ tei_model.physDescPart_sequenceOptional =
   tei_bindingDesc?,
   tei_sealDesc?,
   tei_accMat?
-tei_model.addressLike = tei_email | tei_address
+tei_model.addressLike = tei_email | tei_address | tei_affiliation
 tei_model.nameLike =
   tei_model.nameLike.agent | tei_model.placeStateLike | tei_rs
 tei_model.global =
@@ -982,6 +985,33 @@ tei_model.divLike = tei_div
 tei_model.divGenLike = tei_divGen
 tei_model.div1Like = notAllowed
 tei_model.resourceLike = tei_facsimile | tei_document
+att.personal.attributes =
+  att.naming.attributes,
+  att.personal.attribute.full,
+  att.personal.attribute.sort
+att.personal.attribute.full =
+  
+  ## indicates whether the name component is given in full, as an
+  ## abbreviation or simply as an initial.
+  [ a:defaultValue = "yes" ]
+  attribute full {
+    
+    ## the name component is spelled out in full.
+    "yes"
+    | 
+      ## (abbreviated) the name component is given in an
+      ## abbreviated form.
+      "abb"
+    | 
+      ## (initial letter) the name component is indicated only by
+      ## one initial.
+      "init"
+  }?
+att.personal.attribute.sort =
+  
+  ## specifies the sort order of the name component in relation
+  ## to others within the personal name.
+  attribute sort { xsd:nonNegativeInteger }?
 tei_p =
   
   ## (paragraph) marks paragraphs in prose.
@@ -2656,6 +2686,7 @@ tei_model.profileDescPart =
   tei_langUsage
   | tei_textClass
   | tei_handNotes
+  | tei_relation
   | tei_transpositions
   | tei_geneticGrp
 tei_profileDesc =
@@ -2947,7 +2978,8 @@ tei_div =
     
     ##  A reference to an arbitrary object that describes the placement and
     ##                            extent of the division (such as an SVG element in an external file). The
-    ##                            use of this attribute is exclusive of giving x/y-coordinates directly. 
+    ##                            use of this attribute is exclusive of giving x/y-coordinates directly.
+    ##                         
     attribute ref { xsd:anyURI }?,
     
     ## (surface orientation) The orientation that the surface has taken to
@@ -2963,7 +2995,8 @@ tei_div =
       xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
     
-    ## Describe the method by which a patch is connected to the main surface
+    ## Describe the method by which a patch is connected to the main
+    ##                            surface
     attribute binder {
       xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
@@ -5725,6 +5758,243 @@ tei_value =
   ## (value) contains a single value for some property, attribute, or other
   ##   analysis.
   element tei:value { tei_macro.xtext, att.global.attributes, empty }
+tei_persName =
+  
+  ## (personal name) contains a proper noun or proper-noun phrase referring to a person, possibly including any
+  ##     or all of the person's forenames, surnames, honorifics, added names, etc.
+  element tei:persName {
+    tei_macro.phraseSeq,
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.personal.attributes,
+    att.typed.attributes,
+    empty
+  }
+tei_placeName =
+  
+  ## contains an absolute or relative place name. 
+  element tei:placeName {
+    tei_macro.phraseSeq,
+    att.global.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    empty
+  }
+tei_country =
+  
+  ## (country) contains the name of a geo-political unit, such as a nation, country, colony, or
+  ##     commonwealth, larger than or administratively superior to a region and smaller than a bloc.
+  element tei:country {
+    tei_macro.phraseSeq,
+    att.global.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    att.datable.attributes,
+    empty
+  }
+tei_settlement =
+  
+  ## contains the name of a settlement such as a city, town, or village identified as a single
+  ##     geo-political or administrative unit.
+  element tei:settlement {
+    tei_macro.phraseSeq,
+    att.global.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    att.datable.attributes,
+    empty
+  }
+tei_affiliation =
+  
+  ## (affiliation) contains an informal description of a person's present or past affiliation with some
+  ##         organization, for example an employer or sponsor.
+  element tei:affiliation {
+    tei_macro.phraseSeq,
+    att.global.attributes,
+    att.editLike.attributes,
+    att.datable.attributes,
+    att.naming.attributes,
+    empty
+  }
+tei_climate =
+  
+  ## (climate) contains information about the physical climate of a place.
+  element tei:climate {
+    (tei_model.headLike*,
+     (tei_model.pLike+ | tei_model.labelLike+),
+     (tei_model.noteLike | tei_model.biblLike)*,
+     tei_climate*),
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    empty
+  }
+tei_listEvent =
+  
+  ##  (list of events) contains a list of descriptions, each of which provides
+  ##   information about an identifiable event. 
+  element tei:listEvent {
+    (tei_model.headLike*,
+     tei_listEvent+,
+     (tei_relation | tei_relationGrp)*),
+    att.global.attributes,
+    att.typed.attributes,
+    att.declarable.attributes,
+    empty
+  }
+tei_relationGrp =
+  
+  ## (relation group) provides information about relationships identified amongst people, places, and
+  ##     organizations, either informally as prose or as formally expressed relation links. 
+  element tei:relationGrp {
+    (tei_model.pLike+ | tei_relation+),
+    att.global.attributes,
+    att.typed.attributes,
+    empty
+  }
+tei_relation =
+  
+  ## (relationship) describes any kind of relationship or linkage amongst a specified
+  ## group of participants.
+  element tei:relation {
+    tei_desc?,
+    (
+     ## identifies the active participants in a non-mutual
+     ## relationship, or all the participants in a mutual one.
+     attribute active {
+       list { xsd:anyURI+ }
+     }?
+     | 
+       ## supplies a list of participants amongst all of whom the relationship holds equally.
+       attribute mutual {
+         list { xsd:anyURI+ }
+       }?),
+    
+    ## categorizes the relationship in some respect, e.g.
+    ## as social, personal or other.
+    ## : 1] social; 2] personal; 3] other
+    [ a:defaultValue = "personal" ]
+    attribute type {
+      
+      ## relationship concerned with social roles
+      "social"
+      | 
+        ## relationship concerned with personal roles, e.g.
+        ## kinship, marriage, etc.
+        "personal"
+      | 
+        ## other kinds of relationship
+        "other"
+      | xsd:Name
+    }?,
+    
+    ## supplies a name for the kind of  relationship of which
+    ##	this is an instance.
+    attribute name { xsd:Name },
+    
+    ## identifies the passive participants in a non-mutual
+    ## relationship.
+    attribute passive {
+      list { xsd:anyURI+ }
+    }?,
+    att.global.attributes,
+    empty
+  }
+tei_listNym =
+  
+  ## (list of canonical names) contains a list of nyms, that is, standardized names for any thing. 
+  element tei:listNym {
+    (tei_model.headLike*,
+     tei_listNym+,
+     (tei_relationGrp | tei_relation)*),
+    att.global.attributes,
+    att.typed.attributes,
+    att.declarable.attributes,
+    empty
+  }
+att.datable.iso.attributes =
+  att.datable.iso.attribute.when-iso,
+  att.datable.iso.attribute.notBefore-iso,
+  att.datable.iso.attribute.notAfter-iso,
+  att.datable.iso.attribute.from-iso,
+  att.datable.iso.attribute.to-iso
+att.datable.iso.attribute.when-iso =
+  
+  ## supplies the value of a date or time in a standard form.
+  attribute when-iso {
+    xsd:date
+    | xsd:gYear
+    | xsd:gMonth
+    | xsd:gDay
+    | xsd:gYearMonth
+    | xsd:gMonthDay
+    | xsd:time
+    | xsd:dateTime
+    | xsd:token { pattern = "[0-9.,DHMPRSTWYZ/:+\-]+" }
+  }?
+att.datable.iso.attribute.notBefore-iso =
+  
+  ## specifies the earliest possible date for the event in standard form, e.g.
+  ##                 yyyy-mm-dd.
+  attribute notBefore-iso {
+    xsd:date
+    | xsd:gYear
+    | xsd:gMonth
+    | xsd:gDay
+    | xsd:gYearMonth
+    | xsd:gMonthDay
+    | xsd:time
+    | xsd:dateTime
+    | xsd:token { pattern = "[0-9.,DHMPRSTWYZ/:+\-]+" }
+  }?
+att.datable.iso.attribute.notAfter-iso =
+  
+  ## specifies the latest possible date for the event in standard form, e.g.
+  ##                 yyyy-mm-dd.
+  attribute notAfter-iso {
+    xsd:date
+    | xsd:gYear
+    | xsd:gMonth
+    | xsd:gDay
+    | xsd:gYearMonth
+    | xsd:gMonthDay
+    | xsd:time
+    | xsd:dateTime
+    | xsd:token { pattern = "[0-9.,DHMPRSTWYZ/:+\-]+" }
+  }?
+att.datable.iso.attribute.from-iso =
+  
+  ## indicates the starting point of the period in standard form.
+  attribute from-iso {
+    xsd:date
+    | xsd:gYear
+    | xsd:gMonth
+    | xsd:gDay
+    | xsd:gYearMonth
+    | xsd:gMonthDay
+    | xsd:time
+    | xsd:dateTime
+    | xsd:token { pattern = "[0-9.,DHMPRSTWYZ/:+\-]+" }
+  }?
+att.datable.iso.attribute.to-iso =
+  
+  ## indicates the ending point of the period in standard form.
+  attribute to-iso {
+    xsd:date
+    | xsd:gYear
+    | xsd:gMonth
+    | xsd:gDay
+    | xsd:gYearMonth
+    | xsd:gMonthDay
+    | xsd:time
+    | xsd:dateTime
+    | xsd:token { pattern = "[0-9.,DHMPRSTWYZ/:+\-]+" }
+  }?
 tei_document =
   
   ## Document-centric container of a transcription of a primary source,
@@ -5732,14 +6002,15 @@ tei_document =
   element ge:document { tei_surface+, empty }
 tei_line =
   
-  ## Contains the transcription of a topographic line in the source document
+  ## Contains the transcription of a topographic line in the source
+  ##                      document
   element ge:line {
     tei_macro.paraContent, att.global.attributes, empty
   }
 tei_edJust =
   
-  ## (editorial justification) An editorial justification of any part of
-  ##                      the\x{d} edited text.
+  ## (editorial justification) An editorial justification of any part of the\x{d}
+  ##                      edited text.
   element ge:edJust {
     tei_model.pLike,
     
@@ -5787,7 +6058,8 @@ tei_metaMark =
     att.global.attributes,
     att.placement.attributes,
     
-    ## Describe to the function (e.g. add, delete, alternate) of the mark.
+    ## Describe to the function (e.g. add, delete, alternate) of the
+    ##                            mark.
     attribute function {
       xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
@@ -5861,7 +6133,8 @@ tei_tr =
   }
 tei_geneticGrp =
   
-  ## Group texts and document which are somehow related in a genetic process
+  ## Group texts and document which are somehow related in a genetic
+  ##                      process
   element ge:geneticGrp {
     tei_geneticNote+, att.global.attributes, empty
   }
