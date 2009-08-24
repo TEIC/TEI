@@ -1122,8 +1122,8 @@
                      </p>
                      <p>The example encoding implies that attributes <att>from</att> and
                            <att>to</att> are added to the <gi>rdg</gi> element.<note place="foot">I
-                           have not added those attributes as I think we have to discuss this further.</note>
-                     </p>
+                           have not added those attributes as I think we have to discuss this
+                           further.</note></p>
                   </div>
                </div>
             </div>
@@ -1131,52 +1131,113 @@
                <head>Manuscript and Dossier Levels</head>
                <div>
                   <head>Chronology, Date and Time</head>
-                  <p>We want to express chronology as <hi rend="bold">absolute</hi> and <hi
-                        rend="bold">relative</hi> measures. Absolute time is the unambiguous
-                     reference to a calendar and time schema, while relative timing expresses events
-                     as happening <hi rend="italic">before</hi> and/or <hi rend="italic">after</hi>
-                     other events. Relative time can also be expressed by the relation to the (known
-                     or unknown) creation of another document or text. Dating can be justified by
-                     prose and/or by reference to a characteristic of a manuscript (e.g. hand, ink,
-                     etc.). The outlining of a chronology for a document or dossier can then be used
-                     as an argument to determine the existence of a text-stage.</p>
-                  <p>We might be able to express <hi rend="bold">absolute time</hi> by adapting
-                     existing element/attributes (<gi>timeline/</gi> is a likely candidate), but
-                     more probably we need to create another element.<note place="foot">LB:
-                        why?</note></p>
-                  <p>For absolute timing we envisage two cases that can occur separately or in
-                     combination:</p>
-                  <list type="bulleted">
-                     <item>The dating of a witness (a manuscript part of a dossier) or of a division
-                        may not be directly documented within its content, i.e. it can be deduced
-                        from external facts and documents. The editorial date attribution should be
-                        included in the <gi>teiHeader</gi>. </item>
-                     <item>Dates can be found in the document added by the author as a kind of
-                        metadata (for instance the date of the beginning/ending of writing on a
-                        specific document, or the date of a revision campaign); those should be
-                        encoded without necessarily adding them in the <gi>teiHeader</gi> (they can
-                        be considered a type of <hi rend="bold">meta-mark</hi>: see <ref
-                           target="#mm">below</ref>)<note place="foot">LB They might not always be
-                           true too; or at least, you might want to indicate who's responsible for
-                           the dating</note></item>
-                  </list>
-                  <p>We might express <hi rend="bold">relative time</hi> as
-                     predecessor/successor-relationships</p>
-                  <list type="bulleted">
-                     <item>It might be a direct relationship: <att>next</att>, <att>previous</att>,
-                           <att>sync</att>.</item>
-                     <item>It might be a “sorting” relationship: <att>before</att>,
-                        <att>after</att>.</item>
-                     <item>Temporal relative relationships may also be expressed via a numbering
-                        scheme (<val>0</val>, <val>1</val>, <val>2</val>, …) within a
-                           <att>*relTime</att> ('relative time') attribute. In this case we assume a
-                           <hi rend="bold">default</hi> timeline (the time of writing and of the
-                           <ref target="#instCor">instant corrections</ref>) which is represented by
-                           <val>0</val>, and successive revision-times (<val>1</val>, <val>2</val>,
-                        etc.)</item>
-                  </list>
-                  <p>Information about absolute or relative time can be given on all levels of a
-                     text or document. </p>
+                  <p>Absolute time is the unambiguous reference to a calendar and time schema, while
+                     relative timing expresses events as happening <hi rend="italic">before</hi>
+                     and/or <hi rend="italic">after</hi> other events. Relative time can also be
+                     expressed by the relation to the (known or unknown) creation of another
+                     document or text. Dating can be justified by prose and/or by reference to a
+                     characteristic of a manuscript (e.g. hand, ink, etc.). The outlining of a
+                     chronology for a document or dossier can then be used as an argument to
+                     determine the existence of a text-stage.</p>
+                  <div>
+                     <head>Absolute Time</head>
+                     <p>For absolute timing we envisage two cases that can occur separately or in
+                        combination:</p>
+                     <list type="bulleted">
+                        <item>The dating of a witness (a manuscript part of a dossier) or of a
+                           division is not be directly documented within its content, i.e. it can be
+                           deduced from external facts and documents. The editorial date attribution
+                           should be included in the <gi>teiHeader</gi>, within the
+                              <gi>creation</gi> element. </item>
+                        <item>Dates can be found in the document added by the author as a kind of
+                           metadata (for instance the date of the beginning/ending of writing on a
+                           specific document, or the date of a revision campaign); those should be
+                           encoded without necessarily adding them in the <gi>teiHeader</gi> (they
+                           can be considered a type of <hi rend="bold">meta-mark</hi>: see <ref
+                              target="#mm">below</ref>)</item>
+                     </list>
+                     <p>For expressing both cases we can use a slightly revised version of the
+                           <gi>timeline</gi> element. As we need to be able to express alternatives
+                        and uncertainty, the content model of <gi>timeline</gi> has been enlarged to
+                        accept a <gi>choice</gi> element; <gi>timelene</gi> can then also be used
+                        within <gi>choice</gi>. The <gi>when</gi> element has been modified to
+                        include editorial attributes like <att>cert</att>, <att>resp</att>,
+                           <att>evidence</att> and <att>source</att>, therefore in case of a date
+                        written in the manuscript by the author, like for Austen's
+                           <title>Persuasion</title>, we will have: <egXML
+                           xmlns="http://www.tei-c.org/ns/Examples">
+                           <when target="#pers-1" absolute="1816-07-08" evidence="internal"
+                              cert="high" source="#date-1"/>
+                        </egXML> Otherwise, in case of a conjectural date discussed in several parts
+                        of the <gi>teiHeader</gi>, we will have: <egXML
+                           xmlns="http://www.tei-c.org/ns/Examples">
+                           <when target="#t2" absolute="1922" precision="low" evidence="conjecture"
+                              cert="medium" source="#inkanalysis"/>
+                        </egXML>
+                     </p>
+                     <p>As an example, let's consider again the analysis provided by Kenneth Price
+                        and Brett Barney on Whitman's <title>The Sleepers</title> (<ptr
+                           target="http://www.whitmanarchive.org/resources/sleepers/sleepers.html"
+                        />), and let's assume that the order in which the witnesses are presented in
+                        the website is a chronological order; let's also assume that the chronology
+                        of two witnesses (the one titled <title>[become a shroud]</title> and the
+                        one titled <title>[I am a curse]</title>) is uncertain, the encoding could
+                        be as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <timeline origin="#poem" desc="dossier timeline">
+                              <when target="#poem"/>
+                              <when target="#sweet_flag"/>
+                              <when target="#curse1"/>
+                              <when target="#efflux"/>
+                              <choice>
+                                 <timeline origin="#shroud" weights="0.8">
+                                    <when target="#shroud"/>
+                                    <when target="#curse2"/>
+                                 </timeline>
+                                 <timeline origin="#curse2" weights="0.8">
+                                    <when target="#shroud"/>
+                                    <when target="#curse2"/>
+                                 </timeline>
+                              </choice>
+                              <when target="#topple_down"/>
+                              <when target="#black_lucifer"/>
+                              <!-- more -->
+                              <when target="#Leaves81-82" absolute="1881" evidence="internal"/>
+                           </timeline>
+                        </egXML>
+                     </p>
+                     <p>The example show how to order witnesses within a dossier, but the same model
+                        can be used to order text stages or variants within a section.</p>
+                  </div>
+                  <div>
+                     <head>Relative Time</head>
+                     <p>Relative time can be expressed in various ways: </p>
+                     <list type="bulleted">
+                        <item>In the easies case it might be a direct relationship: <att>next</att>,
+                              <att>previous</att>, <att>sync</att>, or as a “sorting” relationship:
+                              <att>before</att>, <att>after</att>.</item>
+                        <item>In some cases one may be able to express the relative timing of a
+                           section or a passage marked by the <gi>ge:mod</gi> element. This can be
+                           expressed via a numbering scheme (<val>0</val>, <val>1</val>,
+                              <val>2</val>, …) within a <att>seq</att> attribute. In this case we
+                           assume a <hi rend="bold">default</hi> time-line (the time of writing and
+                           of the <ref target="#instCor">instant corrections</ref>) which is
+                           represented by <val>0</val>, and successive revision-times (<val>1</val>,
+                              <val>2</val>, etc.)</item>
+                        <item>More complex situation could be expressed via the <gi>timeline</gi>
+                           element, as seen before. In this cases, when the attribute
+                              <att>absolute</att> is present, an absolute time is assumed, when
+                           absent, a relative time is assumed; in this way absolute and relative
+                           time can be used together. In case it is necessary to express
+                           simultaneity, the attributes <att>interval</att> and <gi>since</gi> could
+                           be used as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                              <when xml:id="t1" target="#poem"/>
+                              <when xml:id="t2" interval="0" since="#t1" target="#sweet_flag"/>
+                           </egXML>
+                        </item>
+                     </list>
+                     <p>Information about absolute or relative time can be given on all levels of a
+                        text or document. </p>
+                  </div>
                </div>
                <div>
                   <head>Documenting Editorial Decisions</head>
@@ -1184,36 +1245,31 @@
                      documenting editorial decisions has a fundamental role. </p>
                   <p>Different forms of documentation have been discussed before in several previous
                      sections: <list type="bulleted">
-                        <item><gi>ge:revNote</gi>: documents the constitution of a text-stage (<ref
-                              target="#revNote">see</ref>) </item>
+                        <item><gi>ge:modNote</gi>: documents the constitution of a text-stage (<ref
+                              target="#modNote">see</ref>) </item>
                         <item><gi>ge:geneticNote</gi>: documents the constitution of a genetic group
                               (<ref target="#geneticNote">see</ref>)</item>
-                        <item><gi>ge:stepNote</gi>: documents the assessment of a connection between
-                           to text-stages (a step, <ref target="#stepNote">see</ref>)</item>
-                        <item><gi>ge:pathNote</gi>: discusses the arguments for the creation of a
-                           connection between two or more steps (<ref target="#pathNote"
-                           >see</ref>)</item>
                      </list>All these elements carry a <att>cert</att> attribute to declare the
-                     level of certainty; all of them shoulduse <att>xml:id</att> to be pointed at
-                     from many places in the text.<note place="foot">LB: They should also perhaps
-                        always have a @resp attribute</note></p>
+                     level of certainty, and a <att>resp</att> attribute to declare the editorial
+                     responsibility of an annotation; all of them should use <att>xml:id</att> to be
+                     pointed at from many places in the text.</p>
                   <p>But annotations can also occur in-line (i.e. close to a textual fragment they
                      relate to) and for that reasons we created the <gi xml:id="edjust"
                         >ge:edJust</gi> global element. This should always be used with an
                         <att>xml:id</att> attribute as the other types of annotations seen above are
                      very likely to refer to specific points in the text within a more complex
-                     argument n. The <att>target</att> attribute points to the element to be
-                     annotated, while the <att>locus</att> attribute points to the concept to be
-                     justified. <note place="foot">LB: ?????</note><egXML
+                     argument. The <att>target</att> attribute points to the element to be
+                     annotated, while a <att>cert</att> attribute indicates the level of confidence
+                     assigned to a specific editorial argument. <egXML
                         xmlns="http://www.tei-c.org/ns/Examples">
-                        <edJust target="#origDate" locus="suppliedContent"
-                           xmlns="http://wiki.tei-c.org/index.php/Genetic_Editions">
-                           <p xmlns="http://www.tei-c.org/ns/1.0">The diary entry <ref
-                                 target="#apr1date"> is dated</ref>. The entry precedes the <ref
-                                 type="edjust" target="#samaria"> other text on the witness</ref> by
-                              22 years, as the <ref type="edjust" target="#inkanalysis"> ink
-                                 analysis </ref> shows. </p>
-                        </edJust>
+                        <arc xml:id="a-1" from="#A" to="#C" rel="#thematic" cert="low">
+                           <label>Night Visions</label>
+                           <ge:edJust target="#a-1" cert="medium" evidence="conjecture">
+                              <p>Notes for a poem about night "visions," possibly related to the
+                                 untitled 1855 poem that Whitman eventually titled "The
+                                 Sleepers."</p>
+                           </ge:edJust>
+                        </arc>
                      </egXML></p>
                </div>
             </div>
@@ -1240,22 +1296,12 @@
                <moduleRef key="gaiji"/>
                <moduleRef key="namesdates"/>
                <elementSpec module="core" ident="analytic" mode="delete"/>
-               <elementSpec module="tagdocs" ident="attDef" mode="delete"/>
-               <elementSpec module="tagdocs" ident="attList" mode="delete"/>
-               <elementSpec module="tagdocs" ident="attRef" mode="delete"/>
                <elementSpec module="core" ident="biblItem" mode="delete"/>
                <elementSpec module="core" ident="biblStruct" mode="delete"/>
                <elementSpec module="core" ident="binaryObject" mode="delete"/>
                <elementSpec module="header" ident="broadcast" mode="delete"/>
-               <elementSpec module="tagdocs" ident="classes" mode="delete"/>
-               <elementSpec module="tagdocs" ident="classSpec" mode="delete"/>
                <elementSpec module="analysis" ident="cl" mode="delete"/>
                <elementSpec module="analysis" ident="c" mode="delete"/>
-               <elementSpec module="tagdocs" ident="content" mode="delete"/>
-               <elementSpec ident="constraint" mode="delete" module="tagdocs"/>
-               <elementSpec ident="constraintSpec" mode="delete" module="tagdocs"/>
-               <elementSpec module="tagdocs" ident="datatype" mode="delete"/>
-               <elementSpec module="tagdocs" ident="defaultVal" mode="delete"/>
                <elementSpec module="textstructure" mode="delete" ident="div1"/>
                <elementSpec module="textstructure" mode="delete" ident="div2"/>
                <elementSpec module="textstructure" mode="delete" ident="div3"/>
@@ -1263,42 +1309,23 @@
                <elementSpec module="textstructure" mode="delete" ident="div5"/>
                <elementSpec module="textstructure" mode="delete" ident="div6"/>
                <elementSpec module="textstructure" mode="delete" ident="div7"/>
-               <elementSpec module="tagdocs" ident="egXML" mode="delete"/>
-               <elementSpec module="tagdocs" ident="elementSpec" mode="delete"/>
                <elementSpec module="header" ident="equipment" mode="delete"/>
                <elementSpec module="core" ident="equiv" mode="delete"/>
-               <elementSpec module="tagdocs" ident="exemplum" mode="delete"/>
                <elementSpec module="header" ident="fsdDecl" mode="delete"/>
                <elementSpec module="core" ident="headItem" mode="delete"/>
                <elementSpec module="core" ident="headLabel" mode="delete"/>
-               <elementSpec module="tagdocs" ident="listRef" mode="delete"/>
-               <elementSpec module="tagdocs" ident="macroSpec" mode="delete"/>
                <elementSpec module="core" ident="meeting" mode="delete"/>
-               <elementSpec module="tagdocs" ident="memberOf" mode="delete"/>
                <elementSpec module="header" ident="metDecl" mode="delete"/>
                <elementSpec module="header" ident="metSym" mode="delete"/>
-               <elementSpec ident="moduleRef" mode="delete" module="tagdocs"/>
-               <elementSpec ident="moduleSpec" mode="delete" module="tagdocs"/>
                <elementSpec module="core" ident="monogr" mode="delete"/>
                <elementSpec module="core" ident="postBox" mode="delete"/>
                <elementSpec module="core" ident="postCode" mode="delete"/>
                <elementSpec module="header" ident="recording" mode="delete"/>
                <elementSpec module="header" ident="recordingStmt" mode="delete"/>
-               <elementSpec module="tagdocs" ident="remarks" mode="delete"/>
-               <elementSpec module="tagdocs" ident="schemaSpec" mode="delete"/>
-               <elementSpec module="tagdocs" ident="specDesc" mode="delete"/>
-               <elementSpec module="tagdocs" ident="specGrp" mode="delete"/>
-               <elementSpec module="tagdocs" ident="specGrpRef" mode="delete"/>
-               <elementSpec module="tagdocs" ident="specList" mode="delete"/>
                <elementSpec module="header" ident="state" mode="delete"/>
                <elementSpec module="header" ident="stdVals" mode="delete"/>
                <elementSpec module="core" ident="street" mode="delete"/>
-               <elementSpec module="tagdocs" ident="stringVal" mode="delete"/>
-               <elementSpec module="tagdocs" ident="tag" mode="delete"/>
                <elementSpec module="header" ident="tagsDecl" mode="delete"/>
-               <elementSpec module="tagdocs" ident="valDesc" mode="delete"/>
-               <elementSpec module="tagdocs" ident="valItem" mode="delete"/>
-               <elementSpec module="tagdocs" ident="valList" mode="delete"/>
                <elementSpec module="analysis" ident="w" mode="delete"/>
                <elementSpec module="header" ident="tagUsage" mode="delete"/>
                <elementSpec module="core" ident="imprint" mode="delete"/>
@@ -1353,10 +1380,21 @@
                      <p> When <att>spanTo</att> is used, the element must be empty. </p>
                   </remarks>
                </classSpec>
-               <classSpec type="model" ident="model.TEIstruct" mode="add">
-                  <desc>Contains possible root elements to be used by XInclude</desc>
+               <classSpec ident="att.global" type="atts" mode="change" module="tei">
+                  <attList>
+                     <attDef ident="mod" mode="add">
+                        <desc>Points to a <gi>modNote</gi> which contains a description of a
+                           text-stage to which the editors think the alteration marked by the
+                              <att>mod</att> attribute belongs.</desc>
+                        <datatype minOccurs="1" maxOccurs="1">
+                           <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
                </classSpec>
+
                <!-- topographical document structure -->
+
                <elementSpec ident="document" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
                   mode="add">
                   <desc>Document-centric container of a transcription of a primary source,
@@ -1520,6 +1558,7 @@
                      <memberOf key="model.global"/>
                      <memberOf key="model.global.meta"/>
                      <memberOf key="model.headerPart"/>
+                     <memberOf key="att.editLike"/>
                   </classes>
                   <content>
                      <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="model.pLike"/>
@@ -1532,16 +1571,8 @@
                               name="data.pointer"/>
                         </datatype>
                      </attDef>
-                     <attDef ident="locus" mode="add">
-                        <desc>The location of the content to be justified.</desc>
-                        <datatype minOccurs="1" maxOccurs="1">
-                           <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"
-                           />
-                        </datatype>
-                     </attDef>
                   </attList>
                </elementSpec>
-               <!-- authorial changes -->
                <elementSpec ident="creation" mode="change">
                   <content>
                      <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -1580,6 +1611,7 @@
                   <desc>Describes a revision in the text genesis.</desc>
                   <classes>
                      <memberOf key="att.global"/>
+                     <memberOf key="att.editLike"/>
                   </classes>
                   <content>
                      <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -1606,6 +1638,7 @@
                      </rng:zeroOrMore>
                   </content>
                </elementSpec>
+               <!-- authorial changes -->
                <elementSpec ident="metaMark" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
                   mode="add">
                   <desc>(meta mark) A textual or graphical element in a manuscript that is
@@ -1639,18 +1672,6 @@
                      </attDef>
                   </attList>
                </elementSpec>
-               <classSpec ident="att.global" type="atts" mode="change" module="tei">
-                  <attList>
-                     <attDef ident="mod" mode="add">
-                        <desc>Points to a <gi>modNote</gi> which contains a description of a
-                           text-stage to which the editors think the alteration marked by the
-                              <att>mod</att> attribute belongs.</desc>
-                        <datatype minOccurs="1" maxOccurs="1">
-                           <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-                        </datatype>
-                     </attDef>
-                  </attList>
-               </classSpec>
                <elementSpec ident="used" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
                   mode="add">
                   <desc>In many cases, authors mark portions of text as having been used, usually
@@ -1817,6 +1838,7 @@
                   <classes>
                      <memberOf key="att.global"/>
                      <memberOf key="att.typed"/>
+                     <memberOf key="att.editLike"/>
                   </classes>
                   <content>
                      <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
@@ -1873,6 +1895,50 @@
                      <memberOf mode="add" key="model.profileDescPart"/>
                   </classes>
                </elementSpec>
+               <!-- timeline -->
+               <elementSpec ident="timeline" mode="change">
+                  <classes mode="change">
+                     <memberOf key="model.choicePart" mode="add"/>
+                  </classes>
+                  <content>
+                     <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                        <rng:ref name="when"/>
+                        <rng:zeroOrMore>
+                           <rng:ref name="choice"/>
+                        </rng:zeroOrMore>
+                     </rng:oneOrMore>
+                  </content>
+                  <attList>
+                     <attDef ident="weights">
+                        <datatype>
+                           <rng:ref name="data.probability"
+                              xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               <elementSpec ident="when" mode="change">
+                  <classes>
+                     <memberOf key="att.editLike"/>
+                  </classes>
+                  <attList>
+                     <attDef ident="target" mode="add">
+                        <datatype>
+                           <rng:ref name="data.pointer"
+                              xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+                        </datatype>
+                     </attDef>
+                     <attDef ident="unit" mode="delete"/>
+                     <attDef ident="interval" mode="replace">
+                        <datatype>
+                           <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                              <rng:ref name="data.numeric"/>
+                              <rng:value>unknown</rng:value>
+                           </rng:choice>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </elementSpec>
                <!-- spanning text structure -->
                <elementSpec ident="p" mode="change">
                   <classes mode="change">
@@ -1881,6 +1947,7 @@
                      <memberOf mode="add" key="model.global"/>
                   </classes>
                </elementSpec>
+               <!-- XInclude -->
                <elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="include"
                   ns="http://www.w3.org/2001/XInclude" mode="add">
                   <desc>The W3C XInclude element</desc>

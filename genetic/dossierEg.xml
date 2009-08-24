@@ -69,9 +69,9 @@
                     <node xml:id="G" target="#topple_down"/>
                     <node xml:id="H" target="#black_lucifer"/>
                     <node xml:id="Z" target="#Leaves81-82"/>
-                    <arc from="#A" to="#C" rel="#thematic" cert="low">
+                    <arc xml:id="a-1" from="#A" to="#C" rel="#thematic" cert="low">
                         <label>Night Visions</label>
-                        <ge:edJust>
+                        <ge:edJust target="#a-1" cert="low" evidence="conjecture">
                             <p>Notes for a poem about night "visions," possibly related to the
                                 untitled 1855 poem that Whitman eventually titled "The
                                 Sleepers."</p>
@@ -91,7 +91,7 @@
                                 likely lead to the 1855 printed version. </p>
                         </ge:edJust>
                     </arc>
-                    <arc from="#F" to="#G" rel="#evolution">
+                    <arc from="#F" to="#G" rel="#evolution" xml:id="a-3">
                         <label>Black Lucifer</label>
                         <ge:edJust>
                             <p>The second notebook, "No doubt the efflux of the soul," is a longer
@@ -124,6 +124,32 @@
                         <label>Lucifer</label>
                     </arc>
                 </graph>
+                <!--   -->
+                <timeline origin="#poem">
+                    <when target="#poem" absolute="1852" evidence="conjecture"/>
+                    <when target="#sweet_flag"/>
+                    <when xml:id="t1" target="#poem"/>
+                    <when xml:id="t2" interval="0" since="#t1" target="#sweet_flag"/>
+                    <when target="#curse1"/>
+                    <when target="#efflux"/>
+                    <when target="#pers-1" absolute="1816-07-08" evidence="internal" cert="high" source="#date-1"/>
+                    <when target="#t2" absolute="1922" precision="low" evidence="conjecture"
+                        cert="medium" source="#inkanalysis"/>
+                    <choice>
+                        <timeline origin="#shroud" weights="0.8">
+                            <when target="#shroud"/>
+                            <when target="#curse2"/>
+                        </timeline>
+                        <timeline origin="#curse2" weights="0.8">
+                            <when target="#shroud"/>
+                            <when target="#curse2"/>
+                        </timeline>
+                    </choice>
+                    <when target="#topple_down"/>
+                    <when target="#black_lucifer"/>
+                    <!-- more -->
+                    <when target="#Leaves81-82" absolute="1881"/>
+                </timeline>
             </body>
         </text>
     </TEI>
