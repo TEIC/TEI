@@ -21,11 +21,6 @@
       </fileDesc>
       <revisionDesc>
          <change>
-            <name>Lou Burnard</name>
-            <date>27 Aug 09</date>
-            <desc>Revisions after discussion with Elena</desc>
-         </change>
-         <change>
             <name>Elena Pierazzo</name>
             <date>08 May 2009</date>
             <desc>Conversion from MS Word</desc>
@@ -43,26 +38,21 @@
          <pb/>
          <div>
             <head>About this Document</head>
-            <p>This document contains a <hi rend="bold">draft</hi>  encoding model for
+            <p>This document contains the <hi rend="bold">draft</hi> of an encoding model for
                Genetic Editions and Genetic Editing. The document is the product of a Workgroup on
                Genetic Editions (chair: Fotis Jannidis), which is part of the TEI MS SIG (chairs:
                Elena Pierazzo, Malte Rehbein, Amanda Galley). </p>
-            <p>The workgroup's goal was  develop an <hi rend="bold">Application
-                  Profile</hi> for the  encoding of genetic editions and, in general, genetic phenomena.
-               Such a profile would customize and possibly extend the
-	       existing TEI elements for the purpose of encoding  genetic
-               editions and genetic phenomena. It would be expressed initially
-	    as a TEI P5 conformant ODD, integrating material from the
-	    existing TEI Guidelines, chiefly
-Chapter 11. <title>Representation of Primary Sources</title> and Chapter
-               12. <title>Critical Apparatus</title>. It might
-	       eventually, at the end
+            <p>The purpose of this workgroup is to try to elaborate an <hi rend="bold">Application
+                  Profile</hi> able to encode genetic editions and, in general, genetic phenomena.
+               The application profile will discuss how to use existing TEI elements in a genetic
+               framework, presenting, where necessary, new elements and will take the form of a TEI
+               extension. </p>
+            <p>With respect to the <title>TEI P5 Guidelines</title>, the present document aims to
+               integrate Chapter 11. <title>Representation of Primary Sources</title> and Chapter
+               12. <title>Critical Apparatus</title>. It might be the case that it will, at the end
                of the process described in the following section, constitute a self standing new
-                  <title>Guidelines</title> chapter, or remain a set
-		  of recommendations for how to customize the
-		  Guidelines, but that is a
-	    decision for the TEI Council.</p>
-            <p>The document reflects  discussions held at a number of different
+                  <title>Guidelines</title> chapter, but this decision will be taken later on.</p>
+            <p>The current state of this document reflects the discussion held in three different
                meetings:</p>
             <list >
                <item>MS SIG meeting held in London during the annual members’ TEI meeting (November
@@ -79,44 +69,29 @@ Chapter 11. <title>Representation of Primary Sources</title> and Chapter
                   Language</title>) written by Paolo D'Iorio and collaborators for the
                HyperNietzsche project. We would like to thank Paolo D'Iorio for his invaluable
                contribution in the early stages of the work. </p>
-
-	       <p>This latest draft of the document has been
-	       extensively revised by Elena Pierazzo and Lou
-	       Burnard, for discussion at the Genetic Editions
-	       Workshop to be held in Wuerzburg in September 2009.</p>
-
             <div>
-               <head>Work Plan</head>
-               <p>The planned evolution of this document and the
-	       encoding model it describes may be summarized as follows:</p>
+               <head>Methodology</head>
+               <p>The stages we will follow to complete the present encoding model are the
+                  following:</p>
                <list >
-                  <item>Initially, we  worked on a pseudo-encoding
-		  model, expressed using to our
-                     own terminology. This stage was completed by July
-		  2009. <!-- reference ? --></item>
-                  <item>Subsequently, this pseudo-encoding model was
-		  re-expressed using the TEI P5
-                     encoding framework. 
-		     The present document,
-		     resulting from that work, once approved by the
-		     working group, will be
-                     presented at the TEI Members' Meeting 2009.</item>
+                  <item>Initially, we will work on a pseudo-encoding which is tightly bound to our
+                     own terminology <hi rend="italic">[Stage completed on July 2009]</hi>.</item>
+                  <item>In a second step we will try to map this pseudo-encoding to the actual TEI
+                     encoding framework, in cooperation with Lou Burnard. The result will be
+                     presented at TEI' Members Meeting 2009.</item>
                   <item>The same step-by-step approach will be taken for the standardisation
                      process: <list >
                         <item>First we develop an application profile, that is, a well-documented
                            TEI customisation.</item>
                         <item>This will be presented to te TEI Council as a proposed modification of
                            the TEI</item>
-                        <item>If the TEI Council approves it, the Council will  decide how it
+                        <item>If the TEI Council approves it, the Council will also decide how it
                            should be integrated into the current <title>Guidelines</title>.</item>
                      </list></item>
                </list>
-<p>All versions of this draft document are publicly available for discussion and feedback
-    from the community. The document source is maintained in the TEI
-    subversion repository; versions are also  hosted on the TEI Wiki
-    in PDF format.
-<!-- add links -->
-</p>
+<p>All versions of the draft will be publicly available for discussions and feedback
+    from the community. Versions will be hosted on the TEI Wiki as PDF documents,
+    while the XML source will be stored in the TEI SVN repository.</p>
             </div>
             <div>
  <head>Conventions used</head>
@@ -124,9 +99,7 @@ Chapter 11. <title>Representation of Primary Sources</title> and Chapter
     sections are less stable than others. In particular, when a section or a
     particular element requires further discussion or is considered an open problem,
     such a section or element is marked by a * mark.</p>
- <p>As required for TEI conformance, non-TEI elements are defined in a
- distinct non-TEI namespace. In the usage examples and throughout this document that namespace is mapped
- to the prefix <hi rend="bold"
+ <p>All newly introduced elements are marked by the namespace prefix <hi rend="bold"
        >ge:</hi>, while TEI elements are not marked by any namespace prefix.</p>
             </div>
          </div>
@@ -134,22 +107,14 @@ Chapter 11. <title>Representation of Primary Sources</title> and Chapter
       <body>
          <div>
             <head>Theoretical Framework</head>
-            <p>The genetic approach differs from other 
-	    approaches to the study of texts
- because it aims not only to identify 'what is on the page', but also to reconstruct
+            <p>The genetic approach differentiates from a more traditional text study approach
+ because it is not only interested on 'what is on the page', but also to reconstruct
  the <hi rend="bold">process</hi> necessary to produce 'what is on the page'.</p>
-            <p>The encoding model for Genetic Editing must therefore
-	    handle:-<list>
-<item>Genetic <term>transcription</term> of a single document in such a
-way as to trace its evolution; </item>
-<item>Genetic <term>reconstruction</term>:  that is creation of a  
-    <term>Genetic Dossier</term> assembling multiple related
-    documents, and description of the  genetic relations
- amongst them</item>
-<item>Genetic <term>editing</term>, aiming to prepare a <hi rend="bold">Genetic Edition</hi>
- based on a single or multiple witnesses.</item>
-</list>
-In this latter case the model can be used
+            <p>The encoding model will present how to handle <hi rend="bold">Genetic
+    Transcription</hi> (a transcription of a single document), how to reconstruct a
+    <hi rend="bold">Genetic Dossier</hi>, meaning how to describe genetic relations
+ amongst multiple witnesses, and how to prepare a <hi rend="bold">Genetic Edition</hi>
+ based on a single or multiple witnesses. In this latter case the model can be used
  both in the case of a full transcription of all extant witnesses, and in the case of
  the full transcription of only one base-text, with the others witnesses
  reconstructable via collation. </p>
@@ -317,7 +282,7 @@ In this latter case the model can be used
        coordinates (measured from the top left corner) or implicitly stated by width
        and height of the page recorded within <gi>msDesc</gi> (namely within
           <gi>dimension</gi> or <gi>measure</gi> within <gi>objectDesc</gi>). </p>
-    <p>The <gi>surface</gi> element contains a sequence of12222
+    <p>The <gi>surface</gi> element contains a sequence of
     <gi>zone</gi> elements.
        <gi>zone</gi>s can be nested and grouped, can overlap and have a sequence level
        (i.e belong to a <ref target="#text-stage">text stage</ref>), expressed by the
