@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0"
  xmlns:rng="http://relaxng.org/ns/structure/1.0"
- xmlns:ge="http://wiki.tei-c.org/index.php/Genetic_Editions">
+ xmlns:ge="http://geneticEdition.org/ns">
    <teiHeader>
       <fileDesc>
          <titleStmt>
@@ -182,8 +182,8 @@ from other witnesses by means of collation. </p>
     first change was to a rhyming word, which necessitated the second change).
     Therefore we propose to talk about differing <term>levels</term>
     of interpretation, rather than insisting on a differentiation
-between “what’s there” (document/fact) and
-    “how does it relate” (text/interpretation).</p>
+between <soCalled>what’s there</soCalled> (document/fact) and
+    <soCalled>how does it relate</soCalled> (text/interpretation).</p>
             </div>
             <div>
  <head>Document vs. Text</head>
@@ -336,66 +336,96 @@ the text constructed from the document.</item>
     or <gi>text</gi> elements here. </p>
 
 
+<p>In the simplest case, a document contains
+one or more written surfaces, of various types (pages, for example).
+Each surface may contain one or more
+distinct written zones of writing, each comprising one or more
+identifiable topographic lines. The
+following elements are used to represent these basic components:
+<specList>
+<specDesc key="document"/>
+<specDesc key="surface" atts="type"/>
+<specDesc key="zone" atts="rotate stage"/>
+<specDesc key="line"/>
+</specList></p>
+
+
 <p>Like a <gi>facsimile</gi>, a <gi>ge:document</gi> contains
 information about the written surfaces constituting a
 document. Because of this similarity, we propose using the same
 elements (<gi>surface</gi> and <gi>zone</gi>) as proposed in the
 existing TEI scheme, but with a small number of additional attributes
 to support the specific needs of genetic editing. </p>
-<p><specList>
-<specDesc key="document"/>
-<specDesc key="surface" atts="type"/>
-<specDesc key="zone" atts="rot"/>
-<specDesc key="line"/>
-</specList></p>
 
-<p>
-a number of may contains a sequence of <gi>surface</gi> elements. The
-          <gi>surface</gi> element has been added a <att>type</att> attribute which
-       suggested values are <val>page</val>, <val>leaf</val>, and similar. The
-       orientation of the writing surface is defined either by a set of cartesian
-       coordinates (measured from the top left corner) or implicitly stated by width
-       and height of the page recorded within <gi>msDesc</gi> (namely within
-          <gi>dimension</gi> or <gi>measure</gi> within <gi>objectDesc</gi>). </p>
-    <p>The <gi>surface</gi> element contains a sequence of12222
-    <gi>zone</gi> elements.
-       <gi>zone</gi>s can be nested and grouped, can overlap and have a sequence level
-       (i.e belong to a <ref target="#text-stage">text stage</ref>), expressed by the
-          <att>seq</att> attribute. Their positioning with respect to the
-          <gi>surface</gi> element is defined by cartesian coordinates, measured from
-       the top left corner. The element carries an <att>sOrient</att> attribute which
-       describes (in degrees) the orientation that the surface has taken to enable the
-       content (writing, images) in that <gi>div</gi>, with respect to the normal
-       orientation of the <gi>surface</gi>. Note that the mechanism aims to describes
-       the process by which the content of a specific <gi>div</gi> has been supplied
-       (i.e. the author has physically rotate the writing surface) more that the
+
+<p> The size of the writing surface is defined by a set of cartesian
+       coordinates measured from the top left corner. The
+       dimensions of all zones defined within the surface element are
+       given in terms of the same co-ordinates, as further discussed
+       in the TEI proposals for <gi>facsimile</gi>. It will often be
+       the case that explicit dimensions for a manuscript page
+       (expressed in mm for example) are also supplied in a
+       <gi>msDesc</gi> element in the TEI Header, but this is not a
+       requirement.   </p>
+
+    <p>A <gi>surface</gi> element may contain any number of
+    <gi>zone</gi> <gi>graphic</gi> or <gi>line</gi> elements.
+The <gi>graphic</gi> element is used to point to any graphic (non
+textual) component included on the page, in the usual TEI manner. The
+<gi>zone</gi> element is used to delimit any contiguous section of
+writing identified by the encoder. </p>
+
+<p>Zones can be nested and grouped, and can also overlap.Their positioning with respect to the
+          <gi>surface</gi> element is defined by coordinate values
+	  taken from the same co-ordinate system as the surface itself, measured from
+       the top left corner. The element carries a <att>rotate</att> attribute which
+       describes (in degrees) the orientation of the surface with
+       respect to  the
+       content (writing, images) in that <gi>zone</gi>, with respect
+       to its normal
+       orientation. Note that the mechanism aims to describes
+       the process by which the content of a specific <gi>zone</gi> has been supplied
+       (i.e. the author has physically rotated the writing surface)
+       rather than  the
        orientation of the writing.</p>
-    <p>Zones are arbitrarily defined by the editors according to the layout of the
+    <p>Zones are arbitrarily defined by the encoder according to the layout of the
        writing surface and can make use of a standardised vocabulary (e.g. the top
-       margin). In some cases they represents physical divisions, like when patches
-       are pinned or glued to the main surface. Their content can be: <list>
+       margin). <!-- means what? --></p>
+<p>The attribute <att>stage</att> is used to indicate the
+<term>stage</term> in a writing campaign to which this zone has been
+assigned by the 
+ editor, as further discussed in <ptr target="#text-stage"/> below. 
+</p>
+<p>Within a zone, individual lines of writing are usually
+distinguished using the <gi>ge:line</gi> element.  <list>
           <item><gi>ge:line</gi>: a sequence of lines of text</item>
           <item>a <gi>p</gi> or other block paragraph-like elements</item>
           <item>a graphic/image </item>
        </list></p>
-    <p>In the following we can easily detect two main areas of writing, the diary
+    <p>In the following imaginary example, there are two main areas of writing, the diary
        entry (black ink) and another (supposedly later) annotation in blue ink. <figure>
-          <graphic url="constr_example/D1-thumb.png"/>
-       </figure>In order to add the annotation in the blue ink, the diary page has
-       been rotated 90° clockwise by the author. The page can be transcribed as
-       follows (transcription line by line):</p>
+          <graphic url="examples/H3.png"/>
+       </figure> 
+Note that the diary entry forms a zone which itself contains two zones: one containing
+the date, and the other containing three lines about birds.  The
+five lines of annotation in  blue ink form another zone, to record which the diary page has
+       been rotated 90° clockwise by the author. Using the elements
+       discussed so far, the page might be transcribed as
+       follows:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
        <ge:document>
           <surface ulx="0" uly="0" lrx="200" lry="300">
-             <zone seq="0" ulx="10" uly="43" lrx="185" lry="84" sOrient="0" unit="mm">
+             <zone ulx="10" uly="43" lrx="185" lry="84" rotate="0">
+<zone>
   <ge:line>
      <date xml:id="apr1date" rend="right">1 April 2009 </date>
   </ge:line>
+</zone>
   <ge:line>Fed Birds in the park today.</ge:line>
   <ge:line>Might write an article about </ge:line>
   <ge:line>the Thick-billed Warbler. </ge:line>
              </zone>
-             <zone seq="1" ulx="9" uly="20" lrx="70" lry="60" sOrient="90" unit="mm">
+             <zone seq="1" ulx="9" uly="20" lrx="70" lry="60" rotate="90" >
   <ge:line>Samaria is a Greek </ge:line>
   <ge:line>brand of water that</ge:line>
   <ge:line>comes from the natural</ge:line>
@@ -405,49 +435,84 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
           </surface>
        </ge:document>
     </egXML>
-    <p>Second option (textual transcription within a document-based transcription)</p>
+<p>For comparison, here is a typical TEI transcription of the same
+page, focussing on its textual structure
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-       <ge:document>
-          <surface ulx="0" uly="0" lrx="200" lry="300">
-             <zone seq="0" ulx="10" uly="43" lrx="185" lry="84" sOrient="0" unit="mm">
+<div type="diary-entry">
   <dateline>
      <date rend="right"> 1 April 2009 </date>
   </dateline>
-  <p>Fed Birds in the park today.<lb/> Might write an article about
+  <p><lb/>Fed Birds in the park today.<lb/> Might write an article about
      <lb/> the Thick-billed Warbler. </p>
-             </zone>
-             <zone seq="1" ulx="9" uly="20" lrx="70" lry="60" sOrient="90" unit="mm">
-  <p>Samaria is a Greek <lb/> brand of water that <lb/> comes from the
+</div>
+<div type="note" rend="rotated">
+  <p><lb/>Samaria is a Greek <lb/> brand of water that <lb/> comes from the
      natural <lb/> springs of Stilos, in <lb/> Crete</p>
-             </zone>
-          </surface>
-       </ge:document>
+</div>
     </egXML>
-    <p>A document-based transcription, which is done page-by-page and possibly
-       line-by-line, is very likely to generate overlapping with all block level
-       elements. We have therefore introduced a new class of elements called
-       model.spanning which groups all elements that can be eventually spanned across
-       pages and lines. All those elements have been provided with an
-          <att>spanTo</att> attribute: when such an attribute is in use, the element
-       must be empty. See the previous example encoded with spanned elements:</p>
+</p>
+<p>Is it possible to combine both perspectives within a single
+encoding? In general a document-based transcription, which is done page-by-page and possibly
+       line-by-line, is almost certain to overlap with some part of a
+the text-based structure. The cleanest solution may be to encode both
+structures separately, providing both a <gi>document</gi> and a
+distinct <gi>text</gi> solution, perhaps using some form of external
+pointing to link the two, and minimizing redundancy of encoding by
+using XInclude. This option is further discussed below and also in the
+TEI Guidelines. </p>
+<p>A further, and possibly simpler, approach is to apply to the
+textual elements such as <gi>p</gi> exactly the same kind of
+<soCalled>flattening</soCalled> approach as has been applied to the
+<gi>line</gi> elements in the preceding example. Instead of marking
+the textual paragraphs as full elements, we mark only their frontiers,
+as follows:
+
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
        <surface ulx="0" uly="0" lrx="200" lry="300">
-          <zone seq="0" ulx="10" uly="43" lrx="185" lry="84" sOrient="0" unit="mm">
-             <zone spanTo="#end"/>
+          <zone seq="0" ulx="10" uly="43" lrx="185" lry="84">
+             <zone >
              <dateline>
   <date rend="right"> 1 April 2009 </date>
-             </dateline>
-             <p xml:id="p1" spanTo="#p2"/> Fed Birds in the park today.<lb/> Might
-             write an article about <lb/> the Thick-billed Warbler. </zone>
-          <zone seq="1" ulx="9" uly="20" lrx="70" lry="60" sOrient="90" unit="mm">
-             <p xml:id="p2" spanTo="end"/> Samaria is a Greek <lb/> brand of water
-             that <lb/> comes from the natural <lb/> springs of Stilos, in <lb/> Crete
+             </dateline></zone>
+             <p spanTo="#p2"/> 
+	     <ge:line>Fed Birds in the park today.</ge:line>
+	     <ge:line> Might write an article about </ge:line>
+	  <ge:line>the Thick-billed Warbler.</ge:line>
+	  </zone>
+          <zone stage="10" ulx="9" uly="20" lrx="70" lry="60" rotate="90" >
+             <p xml:id="p2" spanTo="end"/> 
+	     <ge:line>Samaria is a Greek</ge:line>
+	     <ge:line>brand of water that</ge:line>
+	     <ge:line>comes from the natural</ge:line>
+	     <ge:line> springs of Stilos, in</ge:line> 
+	     <ge:line> Crete</ge:line>
   <anchor xml:id="end"/>
           </zone>
        </surface>
     </egXML>
+<!-- need to discuss spanning zones -->
 <!-- treat patches as something else not zones -->
-    <p>In case of glued/pinned patches, the <gi>zone</gi> can make use of the attribute
+</p>
+
+<p>The written surfaces of which a document is composed are not always
+homogenous. In the following example, taken from the Walt Whitman
+archive, two pieces of newsprint have been glued to a piece of blue paper on which
+a poem is being drafted:
+<figure><graphic url="examples/whitman01.jpg"/>
+<head>http://www.whitmanarchive.org/resources/sleepers/duk.00258.001.jpg"</head></figure>
+The two pieces of newsprint might perhaps be regarded as special kinds
+of zone, but they are effectively new surfaces, since they might
+contain additional written zones themselves (such as the numbers in
+this case). We therefore propose a distinct element, <gi>patch</gi>,
+which can appear within a <gi>surface</gi>, and behaves effectively
+like one, except that it contains specialized attributes to provide
+additional information.
+<specList>
+<specDesc key="patch" atts="binder type height width"/>
+</specList>
+<!--
+
+additional In case of glued/pinned patches, the <gi>zone</gi> can make use of the attribute
           <att>patch</att> which value will be a description of the kind of patch
        (e.g.: <val>flipping</val>, <val>attached</val>, <val>detached</val>, etc.) and
        by the attribute <att>binder</att> describe the method by which it is connected
@@ -456,22 +521,45 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
           <att>height</att> and <att>width</att> (please notice that they have to be
        expressed in the same unit given by <att>unit</att> attribute).</p>
     <p>An example of patches can be seen in one of the first draft of the poem
-       eventually titled <title>The Sleeper</title> by Walt Whitman (see <ptr
-          target="http://www.whitmanarchive.org/resources/sleepers/duk.00258.001.jpg"
+       eventually titled <title>The Sleeper</title> by Walt Whitman (see 
        />), which could be encoded as follows:</p>
+-->
+Using this element, the Whitman draft above might be encoded as follows:
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
        <surface>
-          <div>
+          <zone>
              <head>Poem</head>
-             <l>As in Visions...</l>
-          </div>
+             <line>As in Visions of — at</line>
+	     <line>night —</line>
+<line>All sorts of fancies running through</line>
+<line>the head</line>
+	  </zone>
+<patch type="newsprint" binder="glue" height="40" width="90">
+Spring has just set in here, and the weather....
+a steamer
+<zone>
+<metaMark>2</metaMark>
+</zone>
+</patch>
+<patch type="newsprint" binder="glue" height="35" width="90">
+"The shores on either side of the Sound are...
+The In-
+<zone>
+<metaMark>3</metaMark>
+</zone>
+</patch>
+       </surface>
+<!--
           <div seq="0" patch="attached" binder="glue" heigth="40" width="90" unit="mm"
              ulx="23" uly="62" lrx="113" lry="102"> [first patch] </div>
           <div seq="0" patch="attached" binder="glue" heigth="35" width="90" unit="mm"
              ulx="25" uly="64" lrx="115" lry="99"> [second patch] </div>
        </surface>
-    </egXML>
+-->
+    </egXML> The <gi>metsMark</gi> element used in this example is
+further discussed below (<ptr target="#somewhere"/>)</p>
  </div>
+
  <div xml:id="alterations">
     <head>*Textual Alterations</head>
     <p>Alterations occurs within a single manuscript, but it is an open question
@@ -896,7 +984,7 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
  <egXML xmlns="http://www.tei-c.org/ns/Examples">
     <teiCorpus xmlns="http://www.tei-c.org/ns/1.0"
        xmlns:xi="http://www.w3.org/2001/XInclude"
-       xmlns:ge="http://wiki.tei-c.org/index.php/Genetic_Editions">
+       xmlns:ge="http://geneticEdition.org/ns">
        <teiHeader> [..] </teiHeader>
        <![CDATA[<xi:include href="document1.xml"/>
        <xi:include href="document2.xml"/>
@@ -1455,12 +1543,6 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
  <elementSpec module="namesdates" ident="terrain" mode="delete"/>
  <elementSpec module="namesdates" ident="trait" mode="delete"/>
  <!-- classes -->
- <classSpec type="model" ident="model.spanning" mode="add">
-    <desc>Contains elements that can be spanned across hierarchies. </desc>
-    <remarks>
-       <p> When <att>spanTo</att> is used, the element must be empty. </p>
-    </remarks>
- </classSpec>
 
  <classSpec ident="att.global" type="atts" mode="change" module="tei">
     <attList>
@@ -1475,9 +1557,19 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
     </attList>
  </classSpec>
 
+
+<classSpec ident="model.zonePart" type="model" mode="add">
+<desc>elements which can form part of a zone</desc>
+</classSpec>
+
+<classSpec ident="model.linePart" type="model" mode="add">
+<desc>elements which can form part of a line</desc>
+</classSpec>
+
+
  <!-- topographical document structure -->
 
- <elementSpec ident="document" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
+ <elementSpec ident="document" ns="http://geneticEdition.org/ns"
     mode="add">
     <desc>contains a document-centric transcription of a primary source,
        providing topographical information as well as  transcription</desc>
@@ -1485,7 +1577,7 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        <memberOf key="model.resourceLike"/>
     </classes>
     <content>
-       <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:oneOrMore>
           <rng:ref name="surface"/>
        </rng:oneOrMore>
     </content>
@@ -1496,56 +1588,53 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        <memberOf key="att.typed" mode="add"/>
     </classes>
     <content>
+          <rng:zeroOrMore>
        <rng:choice>
-          <rng:zeroOrMore>
              <rng:ref name="model.global"/>
-          </rng:zeroOrMore>
-          <rng:zeroOrMore>
              <rng:ref name="model.glossLike"/>
-          </rng:zeroOrMore>
-          <rng:zeroOrMore>
              <rng:ref name="model.graphicLike"/>
-          </rng:zeroOrMore>
-          <rng:zeroOrMore>
              <rng:ref name="zone"/>
-          </rng:zeroOrMore>
        </rng:choice>
+          </rng:zeroOrMore>
     </content>
  </elementSpec>
 
  <elementSpec ident="zone" module="physdesc" mode="change">
     <classes mode="change">
-       <memberOf key="att.spanning" mode="add"/>
+       <!--memberOf key="att.spanning" mode="add"/-->
        <memberOf key="att.coordinated" mode="add"/>
-       <memberOf key="att.transcriptional" mode="add"/>
+       <!--memberOf key="att.transcriptional" mode="add"/-->
     </classes>
     <content>
   <rng:zeroOrMore>
+       <rng:choice>
      <rng:text/>
-     <rng:ref name="macro.paraContent"/>
+     <rng:ref name="model.zonePart"/>
+       </rng:choice>
   </rng:zeroOrMore>
     </content>
     <attList>
-       <attDef ident="ref" mode="add">
+<!--       <attDef ident="ref" mode="add">
           <desc> A reference to an arbitrary object that describes the placement and
              extent of the zone (such as an SVG element in an external file). The
              use of this attribute is exclusive of giving x/y-coordinates directly. </desc>
           <datatype minOccurs="1" maxOccurs="1">
-             <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             <rng:ref
   name="data.pointer"/>
           </datatype>
-       </attDef>
+       </attDef>-->
        <attDef ident="rotate" mode="add">
-          <desc>(surface orientation) The orientation that the surface has taken to
-             enable the content (writing, images) in that division, with respect to
-             the normal orientation of the <gi>surface</gi> as assumed by the
+          <desc>indicates the amount by which this zone has been
+	  rotated clockwise, with respect to the  normal orientation of the
+	  parent <gi>surface</gi> element as implied by the
              dimensions given in the <gi>msDesc</gi> section or by the coordinates of
-             the <gi>surface</gi> itself. The orientation is expressed in arc degrees.
-             The rotation is clockwise.</desc>
+             the <gi>surface</gi> itself. The orientation is expressed in arc degrees.</desc>
           <datatype minOccurs="1" maxOccurs="1">
-             <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numerical"/>
+             <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
           </datatype>
+	  <defaultVal>0</defaultVal>
        </attDef>
+<!--
        <attDef ident="patch" mode="add">
           <desc>Describe the type of patch</desc>
           <datatype>
@@ -1570,22 +1659,61 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
           <datatype>
              <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numerical"/>
           </datatype>
-       </attDef>
+       </attDef>-->
     </attList>
  </elementSpec>
 
 
+ <elementSpec ident="patch"
+	      ns="http://geneticEdition.org/ns" mode="add">
+<desc>contains a part of a written surface which was originally physically 
+distinct but became attached to it at the time that one or more written zones
+were  created on it.</desc>
+
+<classes>
+<memberOf key="att.coordinated"/>
+</classes>
+    <content>
+  <rng:zeroOrMore>
+     <rng:text/>
+     <rng:ref name="zone"/>
+  </rng:zeroOrMore>
+    </content>
+<attList>
+       <attDef ident="binder" mode="add">
+          <desc>Describe the method by which a patch is connected to the main
+             surface</desc>
+          <datatype>
+             <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+          </datatype>
+       </attDef>
+       <attDef ident="height">
+          <desc>The height of the patch</desc>
+          <datatype>
+             <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
+          </datatype>
+       </attDef>
+       <attDef ident="width">
+          <desc>The width of the patch</desc>
+          <datatype>
+             <ref xmlns="http://relaxng.org/ns/structure/1.0"
+		  name="data.numeric"/>
+          </datatype>
+       </attDef>
+
+</attList>
+ </elementSpec>
  <elementSpec ident="line"
-	      ns="http://wiki.tei-c.org/index.php/Genetic_Editions" mode="add">
-    <desc>Contains the transcription of a topographic line in the source
+	      ns="http://geneticEdition.org/ns" mode="add">
+    <desc>contains the transcription of a topographic line in the source
        document</desc>
     <classes>
+       <memberOf key="model.zonePart"/>
        <memberOf key="att.global"/>
-       <memberOf key="model.divPart"/>
     </classes>
     <content>
        <rng:ref name="macro.paraContent"
-          xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+         />
     </content>
  </elementSpec>
 
@@ -1593,10 +1721,10 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
 
 
  <!-- editorial justification -->
- <elementSpec ident="edJust" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
+ <elementSpec ident="edJust" ns="http://geneticEdition.org/ns"
     mode="add">
     <desc>(editorial justification) An editorial justification of any part of
-       the&#xD; edited text.</desc>
+       the edited text.</desc>
     <classes>
        <memberOf key="model.global"/>
        <memberOf key="model.global.meta"/>
@@ -1604,13 +1732,13 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        <memberOf key="att.editLike"/>
     </classes>
     <content>
-       <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="model.pLike"/>
+       <rng:ref name="model.pLike"/>
     </content>
     <attList>
        <attDef ident="target" mode="add">
           <desc>Points to the element to be justified.</desc>
           <datatype minOccurs="1" maxOccurs="1">
-             <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             <rng:ref
   name="data.pointer"/>
           </datatype>
        </attDef>
@@ -1618,22 +1746,22 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
  </elementSpec>
  <elementSpec ident="creation" mode="change">
     <content>
-       <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:zeroOrMore>
           <rng:ref name="macro.phraseSeq.limited"/>
        </rng:zeroOrMore>
-       <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:zeroOrMore>
           <rng:ref name="modGroup"/>
        </rng:zeroOrMore>
     </content>
  </elementSpec>
- <elementSpec ident="modGroup" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
+ <elementSpec ident="modGroup" ns="http://geneticEdition.org/ns"
     mode="add">
     <desc>(modification group) groups and describes the various modifications that
        occurred in the text's genesis within a document.</desc>
     <classes>
        <memberOf key="att.global"/>
     </classes>
-    <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <content>
        <rng:choice xmlns="http://relaxng.org/ns/structure/1.0">
           <rng:oneOrMore>
              <rng:ref name="model.pLike"/>
@@ -1649,7 +1777,7 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        </rng:choice>
     </content>
  </elementSpec>
- <elementSpec ident="modNote" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
+ <elementSpec ident="modNote" ns="http://geneticEdition.org/ns"
     mode="add">
     <desc>Describes a revision in the text genesis.</desc>
     <classes>
@@ -1657,23 +1785,22 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        <memberOf key="att.editLike"/>
     </classes>
     <content>
-       <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+       <rng:ref
           name="macro.specialPara"/>
     </content>
  </elementSpec>
- <elementSpec ident="mod" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
+ <elementSpec ident="mod" ns="http://geneticEdition.org/ns"
     mode="add">
     <desc>Scope an area in the document containing several alteration which are
        interrelated to each others; Can also be used to segment the text in order to
        give a meaningful semantic context to an alteration. </desc>
     <classes>
        <memberOf key="model.pPart.transcriptional"/>
-       <memberOf key="model.spanning"/>
        <memberOf key="att.spanning"/>
        <memberOf key="att.global"/>
     </classes>
     <content>
-       <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:zeroOrMore>
           <rng:choice>
              <rng:ref name="macro.paraContent"/>
              <rng:ref name="line"/>
@@ -1682,14 +1809,13 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
     </content>
  </elementSpec>
  <!-- authorial changes -->
- <elementSpec ident="metaMark" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
+ <elementSpec ident="metaMark" ns="http://geneticEdition.org/ns"
     mode="add">
     <desc>(meta mark) A textual or graphical element in a manuscript that is
        functional but not part of the text. Could transform the text, like a
        strikethrough, or provide meta-information, like a date.</desc>
     <classes>
        <memberOf key="model.pPart.transcriptional"/>
-       <memberOf key="model.spanning"/>
        <memberOf key="att.spanning"/>
        <memberOf key="att.global"/>
        <memberOf key="att.placement"/>
@@ -1702,7 +1828,7 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
           <desc>Describe to the function (e.g. add, delete, alternate) of the
              mark.</desc>
           <datatype minOccurs="1">
-             <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"
+             <rng:ref name="data.word"
              />
           </datatype>
        </attDef>
@@ -1715,20 +1841,19 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        </attDef>
     </attList>
  </elementSpec>
- <elementSpec ident="used" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
+ <elementSpec ident="used" ns="http://geneticEdition.org/ns"
     mode="add">
     <desc>In many cases, authors mark portions of text as having been used, usually
        meaning the text has been transcribed to a fair copy. The mark is often a
        strikethrough, but can be any author-specific mark.</desc>
     <classes>
        <memberOf key="model.pPart.transcriptional"/>
-       <memberOf key="model.spanning"/>
        <memberOf key="model.global"/>
        <memberOf key="att.global"/>
        <memberOf key="att.spanning"/>
     </classes>
     <content>
-       <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:zeroOrMore>
           <rng:choice>
              <rng:ref name="macro.paraContent"/>
              <rng:ref name="line"/>
@@ -1737,24 +1862,23 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        </rng:zeroOrMore>
     </content>
  </elementSpec>
- <elementSpec ident="undo" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
+ <elementSpec ident="undo" ns="http://geneticEdition.org/ns"
     mode="add">
     <desc>Marks up an action represented by an element to be undone.</desc>
     <classes>
        <memberOf key="model.pPart.transcriptional"/>
-       <memberOf key="model.spanning"/>
        <memberOf key="att.global"/>
        <memberOf key="att.spanning"/>
     </classes>
     <content>
-       <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+       <rng:ref
           name="macro.specialPara"/>
     </content>
     <attList>
        <attDef ident="target" mode="add">
           <desc>The element representing the action to be undone.</desc>
           <datatype minOccurs="1" maxOccurs="1">
-             <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             <rng:ref
   name="data.pointer"/>
           </datatype>
        </attDef>
@@ -1762,7 +1886,7 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
  </elementSpec>
  <elementSpec ident="subst" module="transcr" mode="change">
     <content>
-       <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:group>
           <rng:group>
              <rng:ref name="model.pPart.transcriptional"/>
           </rng:group>
@@ -1778,13 +1902,13 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        <attDef ident="type" mode="add">
           <desc>The type of substitution.</desc>
           <datatype minOccurs="1" maxOccurs="1">
-             <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"
+             <rng:ref name="data.name"
              />
           </datatype>
        </attDef>
     </attList>
  </elementSpec>
- <elementSpec ident="repetition" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
+ <elementSpec ident="repetition" ns="http://geneticEdition.org/ns"
     mode="add">
     <desc>A repetition of already written text.</desc>
     <classes>
@@ -1792,18 +1916,17 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        <memberOf key="att.global"/>
        <memberOf key="att.transcriptional"/>
        <memberOf key="att.typed"/>
-       <memberOf key="model.spanning"/>
        <memberOf key="att.spanning"/>
        <memberOf key="att.placement"/>
     </classes>
     <content>
-       <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+       <rng:ref
           name="macro.specialPara"/>
     </content>
     <attList>
        <attDef ident="reason">
           <datatype minOccurs="1" maxOccurs="unbounded">
-             <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"
+             <rng:ref name="data.word"
              />
           </datatype>
        </attDef>
@@ -1818,32 +1941,32 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
     </classes>
  </elementSpec>
  <elementSpec ident="transpositions"
-    ns="http://wiki.tei-c.org/index.php/Genetic_Editions" mode="add">
+    ns="http://geneticEdition.org/ns" mode="add">
     <desc> Describes the textual transpositions.</desc>
     <classes>
        <memberOf key="model.profileDescPart"/>
        <memberOf key="model.global.meta"/>
     </classes>
     <content>
-       <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:oneOrMore>
           <rng:ref name="transposition"/>
        </rng:oneOrMore>
     </content>
  </elementSpec>
  <elementSpec ident="transposition"
-    ns="http://wiki.tei-c.org/index.php/Genetic_Editions" mode="add">
+    ns="http://geneticEdition.org/ns" mode="add">
     <desc> Describes a textual transposition. Contains a list of pointers that
        specifies the new order of the text fragments. </desc>
     <classes>
        <memberOf key="att.global"/>
     </classes>
     <content>
-       <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:oneOrMore>
           <rng:ref name="ptr"/>
        </rng:oneOrMore>
-    </content>
+    </content> 
  </elementSpec>
- <elementSpec ident="tr" ns="http://wiki.tei-c.org/index.php/Genetic_Editions"
+ <elementSpec ident="tr" ns="http://geneticEdition.org/ns"
     mode="add">
     <desc>Mark a section to be transposed</desc>
     <classes>
@@ -1851,17 +1974,16 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        <memberOf key="att.transcriptional"/>
        <memberOf key="att.typed"/>
        <memberOf key="att.global"/>
-       <memberOf key="model.spanning"/>
        <memberOf key="att.spanning"/>
     </classes>
     <content>
-       <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+       <rng:ref
           name="macro.specialPara"/>
     </content>
  </elementSpec>
  <!-- genetic groups -->
  <elementSpec ident="geneticGrp" mode="add"
-    ns="http://wiki.tei-c.org/index.php/Genetic_Editions">
+    ns="http://geneticEdition.org/ns">
     <desc>Group texts and document which are somehow related in a genetic
        process</desc>
     <classes>
@@ -1869,13 +1991,13 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        <memberOf key="model.profileDescPart"/>
     </classes>
     <content>
-       <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:oneOrMore>
           <rng:ref name="geneticNote"/>
        </rng:oneOrMore>
     </content>
  </elementSpec>
  <elementSpec ident="geneticNote" mode="add"
-    ns="http://wiki.tei-c.org/index.php/Genetic_Editions">
+    ns="http://geneticEdition.org/ns">
     <desc>Contains the links to the text or documents that are connected within a
        genetic group as well as the description of single genetic group</desc>
     <classes>
@@ -1884,10 +2006,10 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        <memberOf key="att.editLike"/>
     </classes>
     <content>
-       <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:oneOrMore>
           <rng:ref name="linkGrp"/>
        </rng:oneOrMore>
-       <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:zeroOrMore>
           <rng:ref name="model.pLike"/>
        </rng:zeroOrMore>
     </content>
@@ -1901,7 +2023,7 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        <attDef ident="target" mode="add">
           <desc> A link to the element or passage represented by the node.</desc>
           <datatype>
-             <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             <rng:ref
   name="data.pointing"/>
           </datatype>
        </attDef>
@@ -1913,13 +2035,13 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        <memberOf mode="add" key="att.editLike"/>
     </classes>
     <content>
-       <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:optional>
           <rng:ref name="label"/>
           <rng:optional>
              <rng:ref name="label"/>
           </rng:optional>
        </rng:optional>
-       <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:optional>
           <rng:ref name="edJust"/>
        </rng:optional>
     </content>
@@ -1927,7 +2049,7 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        <attDef ident="rel" mode="add">
           <desc>Points to a <gi>relation</gi></desc>
           <datatype>
-             <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             <rng:ref
   name="data.pointing"/>
           </datatype>
        </attDef>
@@ -1944,7 +2066,7 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        <memberOf key="model.choicePart" mode="add"/>
     </classes>
     <content>
-       <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+       <rng:oneOrMore>
           <rng:ref name="when"/>
           <rng:zeroOrMore>
              <rng:ref name="choice"/>
@@ -1955,7 +2077,7 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        <attDef ident="weights">
           <datatype>
              <rng:ref name="data.probability"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+ />
           </datatype>
        </attDef>
     </attList>
@@ -1968,13 +2090,13 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        <attDef ident="target" mode="add">
           <datatype>
              <rng:ref name="data.pointer"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+ />
           </datatype>
        </attDef>
        <attDef ident="unit" mode="delete"/>
        <attDef ident="interval" mode="replace">
           <datatype>
-             <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+             <rng:choice>
   <rng:ref name="data.numeric"/>
   <rng:value>unknown</rng:value>
              </rng:choice>
@@ -1983,15 +2105,16 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
     </attList>
  </elementSpec>
  <!-- spanning text structure -->
+
  <elementSpec ident="p" mode="change">
     <classes mode="change">
        <memberOf mode="add" key="att.spanning"/>
-       <memberOf mode="add" key="model.spanning"/>
        <memberOf mode="add" key="model.global"/>
     </classes>
  </elementSpec>
+
  <!-- XInclude -->
- <elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="include"
+ <elementSpec ident="include"
     ns="http://www.w3.org/2001/XInclude" mode="add">
     <desc>The W3C XInclude element</desc>
     <classes>
@@ -2044,13 +2167,15 @@ a number of may contains a sequence of <gi>surface</gi> elements. The
        </attDef>
     </attList>
  </elementSpec>
- <elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="fallback"
+
+ <elementSpec ident="fallback"
     ns="http://www.w3.org/2001/XInclude" mode="add">
     <desc>Wrapper for fallback elements if an XInclude fails</desc>
     <content>
        <rng:ref name="AnyThing"/>
     </content>
  </elementSpec>
+
  <macroSpec type="pe" ident="AnyThing" mode="add">
     <desc>Matches any element</desc>
     <content>
