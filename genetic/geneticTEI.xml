@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0"
  xmlns:rng="http://relaxng.org/ns/structure/1.0"
- xmlns:ge="http://geneticEdition.org/ns">
+ xmlns:ge="http://www.tei-c.org/ns/geneticEditions">
    <teiHeader>
       <fileDesc>
          <titleStmt>
             <title type="main">An Encoding Model for Genetic Editions</title>
-            <author>Fotis Jannidis, Elena Pierazzo, Malte Rehbein</author>
+            <author>Lou Burnard, Fotis Jannidis, Elena Pierazzo, Malte Rehbein</author>
          </titleStmt>
          <editionStmt>
-            <edition n="2">Draft</edition>
+            <edition n="3">Revised Draft</edition>
          </editionStmt>
          <publicationStmt>
             <authority>TEI MS SIG, Genetic Edition Workgroup</authority>
@@ -19,10 +19,10 @@
          </sourceDesc>
       </fileDesc>
       <revisionDesc>
-         <change>
+         <change when="2009-08-28">
             <name>Lou Burnard</name>
-            <date>27 Aug 09</date>
-            <desc>Revisions after discussion with Elena</desc>
+            <date>27-28 Aug 09</date>
+            <desc>Major revisions after discussion with Elena</desc>
          </change>
          <change>
             <name>Elena Pierazzo</name>
@@ -104,7 +104,7 @@ Chapter 11. <title>Representation of Primary Sources</title> and Chapter
                      process: <list >
                         <item>First we develop an application profile, that is, a well-documented
                            TEI customisation.</item>
-                        <item>This will be presented to te TEI Council as a proposed modification of
+                        <item>This will be presented to the TEI Council as a proposed modification of
                            the TEI</item>
                         <item>If the TEI Council approves it, the Council will  decide how it
                            should be integrated into the current <title>Guidelines</title>.</item>
@@ -319,7 +319,7 @@ relevant than the texts they embody; to use a bibliographical
      </list></item>
              </list></item>
        </list></p>
-    <p>We propose to use introduce a new element, <gi>ge:document</gi> to encode a
+    <p>We propose to introduce a new element, <gi>ge:document</gi> to encode a
        document-based transcription, at the same level  as  the existing
        TEI <gi>text</gi> element. A full TEI document may thus
        comprise:
@@ -360,7 +360,7 @@ to support the specific needs of genetic editing. </p>
 
 <p> The size of the writing surface is defined by a set of cartesian
        coordinates measured from the top left corner. The
-       dimensions of all zones defined within the surface element are
+       co-ordinates of all zones identified within the writing surface are
        given in terms of the same co-ordinates, as further discussed
        in the TEI proposals for <gi>facsimile</gi>. It will often be
        the case that explicit dimensions for a manuscript page
@@ -373,7 +373,7 @@ to support the specific needs of genetic editing. </p>
 The <gi>graphic</gi> element is used to point to any graphic (non
 textual) component included on the page, in the usual TEI manner. The
 <gi>zone</gi> element is used to delimit any contiguous section of
-writing identified by the encoder. </p>
+writing which the encoder wishes to identify for some purpose. </p>
 
 <p>Zones can be nested and grouped, and can also overlap.Their positioning with respect to the
           <gi>surface</gi> element is defined by coordinate values
@@ -394,17 +394,13 @@ writing identified by the encoder. </p>
 <p>The attribute <att>stage</att> is used to indicate the
 <term>stage</term> in a writing campaign to which this zone has been
 assigned by the 
- editor, as further discussed in <ptr target="#text-stage"/> below. 
+encoder, as further discussed in <ptr target="#text-stage"/> below. 
 </p>
 <p>Within a zone, individual lines of writing are usually
-distinguished using the <gi>ge:line</gi> element.  <list>
-          <item><gi>ge:line</gi>: a sequence of lines of text</item>
-          <item>a <gi>p</gi> or other block paragraph-like elements</item>
-          <item>a graphic/image </item>
-       </list></p>
+distinguished using the <gi>ge:line</gi> element. </p>
     <p>In the following imaginary example, there are two main areas of writing, the diary
        entry (black ink) and another (supposedly later) annotation in blue ink. <figure>
-          <graphic url="examples/H3.png"/>
+          <graphic url="examples/D1.png"/>
        </figure> 
 Note that the diary entry forms a zone which itself contains two zones: one containing
 the date, and the other containing three lines about birds.  The
@@ -417,8 +413,8 @@ five lines of annotation in  blue ink form another zone, to record which the dia
           <surface ulx="0" uly="0" lrx="200" lry="300">
              <zone ulx="10" uly="43" lrx="185" lry="84" rotate="0">
 <zone>
-  <ge:line>
-     <date xml:id="apr1date" rend="right">1 April 2009 </date>
+  <ge:line rend="right">
+1 April 2009 
   </ge:line>
 </zone>
   <ge:line>Fed Birds in the park today.</ge:line>
@@ -440,7 +436,7 @@ page, focussing on its textual structure
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <div type="diary-entry">
   <dateline>
-     <date rend="right"> 1 April 2009 </date>
+     <date value="2009-04-01"> 1 April 2009 </date>
   </dateline>
   <p><lb/>Fed Birds in the park today.<lb/> Might write an article about
      <lb/> the Thick-billed Warbler. </p>
@@ -491,7 +487,7 @@ as follows:
        </surface>
     </egXML>
 <!-- need to discuss spanning zones -->
-<!-- treat patches as something else not zones -->
+
 </p>
 
 <p>The written surfaces of which a document is composed are not always
@@ -499,7 +495,7 @@ homogenous. In the following example, taken from the Walt Whitman
 archive, two pieces of newsprint have been glued to a piece of blue paper on which
 a poem is being drafted:
 <figure><graphic url="examples/whitman01.jpg"/>
-<head>http://www.whitmanarchive.org/resources/sleepers/duk.00258.001.jpg"</head></figure>
+<head rend="it">Image from http://www.whitmanarchive.org/resources/sleepers/duk.00258.001.jpg</head></figure>
 The two pieces of newsprint might perhaps be regarded as special kinds
 of zone, but they are effectively new surfaces, since they might
 contain additional written zones themselves (such as the numbers in
@@ -512,14 +508,6 @@ additional information.
 </specList>
 <!--
 
-additional In case of glued/pinned patches, the <gi>zone</gi> can make use of the attribute
-          <att>patch</att> which value will be a description of the kind of patch
-       (e.g.: <val>flipping</val>, <val>attached</val>, <val>detached</val>, etc.) and
-       by the attribute <att>binder</att> describe the method by which it is connected
-       to the main surface (e.g.: <val>glue</val>, <val>pins</val>,
-       <val>staples</val>, etc.); dimensions can also be provided using
-          <att>height</att> and <att>width</att> (please notice that they have to be
-       expressed in the same unit given by <att>unit</att> attribute).</p>
     <p>An example of patches can be seen in one of the first draft of the poem
        eventually titled <title>The Sleeper</title> by Walt Whitman (see 
        />), which could be encoded as follows:</p>
@@ -556,19 +544,26 @@ The In-
              ulx="25" uly="64" lrx="115" lry="99"> [second patch] </div>
        </surface>
 -->
-    </egXML> The <gi>metsMark</gi> element used in this example is
+    </egXML> The <gi>ge:metaMark</gi> element used in this example is
 further discussed below (<ptr target="#somewhere"/>)</p>
  </div>
 
  <div xml:id="alterations">
+
     <head>*Textual Alterations</head>
-    <p>Alterations occurs within a single manuscript, but it is an open question
-       whether we can consider discrepancies amongst versions preserved by different
-       manuscripts (dossier level) also as a sort of <soCalled>alteration</soCalled>.
-       For instance, if by comparing (collating) two versions preserved by two
-       witnesses we note a word has been added or deleted, should we encode it, within
-       a collation, with <gi>add</gi> or <gi>del</gi> as we would when transcribing a
-       single manuscript? Or do we need a completely new set of elements to do it? In
+    <p>Traces of authorial alteration (correction, addition, deletion,
+    etc.) are frequently found  within a single document, and may
+    also be inferred when different documents are compared. It is
+    however an open question
+       as to whether inter-document  discrepancies at the dossier
+       level should be regarded
+       in the same way as intra-document alterations. If two 
+       witnesses are collated, we may observe that a word present in
+       one is missing from the other: does it necessarily follow that
+       this is an addition or a deletion, which we would not hesitate
+       to mark with an <gi>add</gi> or <gi>del</gi> tag if we are transcribing a
+       single manuscript? We return to this question <ref
+          target="#collation">below</ref>. <!--  Or do we need a completely new set of elements to do it? In
        a genetic process, at any point the author can decide to stop revising the text
        within a given document and decide to move to a new document (i.e. copy it
        anew), so the two phenomena (alterations at document level and alterations at
@@ -576,11 +571,26 @@ further discussed below (<ptr target="#somewhere"/>)</p>
        differentiate them because the one within a single document is explicitly
        marked by the author, while the one detected by comparison is only implicit. It
        may also happen that implicit alterations were perhaps marked in a lost
-       intermediate version. This remains an open problem (see <ref
-          target="#collation">also</ref>).</p>
-    <p>The following discussion relates to the alterations at document level: for a
-       discussion of their use at dossier level also <ref target="#collation"
-          >see</ref> below.</p>
+       intermediate version. This remains an open problem (see .</p>
+    <p>The following discussion-->
+    </p>
+<p>In this section we discuss elements introduced for the markup of
+alterations at the document level, within a single document,
+complementary to the elements already provided for this purpose by
+the TEI scheme. We discuss specifically:
+<list>
+<item><soCalled>meta-marks</soCalled>, that is a kind of markup in the source
+indicating how it should be read; </item>
+<item>additions, where a passage has been rewritten to fix or clarify
+it; </item>
+<item>deletions, where a passage had been struck through to indicate
+that it has been, or where a deletion has itself been cancelled</item>
+<item>transpositions, where passages have been reorganized or
+resequenced; </item>
+<item>sequencing of alterations. </item>
+</list>
+
+</p>
     <div>
        <head>Additions</head>
        <p>Beside “normal” additions (see for instance the TEI definition of the
@@ -903,6 +913,8 @@ further discussed below (<ptr target="#somewhere"/>)</p>
           </egXML></p>
     </div>
  </div>
+
+
  <div xml:id="text-stage">
     <head>Grouping Modifications (Document level)</head>
     <p>In some cases modifications can be attributed to a single campaign of revision
@@ -984,7 +996,7 @@ further discussed below (<ptr target="#somewhere"/>)</p>
  <egXML xmlns="http://www.tei-c.org/ns/Examples">
     <teiCorpus xmlns="http://www.tei-c.org/ns/1.0"
        xmlns:xi="http://www.w3.org/2001/XInclude"
-       xmlns:ge="http://geneticEdition.org/ns">
+       xmlns:ge="http://www.tei-c.org/ns/geneticEditions">
        <teiHeader> [..] </teiHeader>
        <![CDATA[<xi:include href="document1.xml"/>
        <xi:include href="document2.xml"/>
@@ -1569,7 +1581,7 @@ further discussed below (<ptr target="#somewhere"/>)</p>
 
  <!-- topographical document structure -->
 
- <elementSpec ident="document" ns="http://geneticEdition.org/ns"
+ <elementSpec ident="document" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
     <desc>contains a document-centric transcription of a primary source,
        providing topographical information as well as  transcription</desc>
@@ -1603,6 +1615,8 @@ further discussed below (<ptr target="#somewhere"/>)</p>
     <classes mode="change">
        <!--memberOf key="att.spanning" mode="add"/-->
        <memberOf key="att.coordinated" mode="add"/>
+       <memberOf key="model.zonePart" mode="add"/>
+
        <!--memberOf key="att.transcriptional" mode="add"/-->
     </classes>
     <content>
@@ -1665,7 +1679,7 @@ further discussed below (<ptr target="#somewhere"/>)</p>
 
 
  <elementSpec ident="patch"
-	      ns="http://geneticEdition.org/ns" mode="add">
+	      ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
 <desc>contains a part of a written surface which was originally physically 
 distinct but became attached to it at the time that one or more written zones
 were  created on it.</desc>
@@ -1679,22 +1693,46 @@ were  created on it.</desc>
      <rng:ref name="zone"/>
   </rng:zeroOrMore>
     </content>
+
+<!--additional In case of glued/pinned patches, the <gi>zone</gi> can make use of the attribute
+          <att>patch</att> which value will be a description of the kind of patch
+       (e.g.: <val>flipping</val>, <val>attached</val>, <val>detached</val>, etc.) and
+       by the attribute <att>binder</att> describe the method by which it is connected
+       to the main surface (e.g.: <val>glue</val>, <val>pins</val>,
+       <val>staples</val>, etc.); dimensions can also be provided using
+          <att>height</att> and <att>width</att> (please notice that they have to be
+       expressed in the same unit given by <att>unit</att> attribute).</p>
+-->
 <attList>
        <attDef ident="binder" mode="add">
-          <desc>Describe the method by which a patch is connected to the main
+          <desc>Describe the method by which a patch is or was connected to the main
              surface</desc>
           <datatype>
-             <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+             <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
           </datatype>
+
+	  <valList type="open">
+<valItem ident="glue"><desc>patch is glued in place</desc></valItem>
+<valItem ident="pin"><desc>patch is pinned or stapled in place</desc></valItem>
+<valItem ident="sewn"><desc>patch is sewn in place</desc></valItem>
+	  </valList>       </attDef>
+
+       <attDef ident="flipping" mode="add">
+<desc>indicates whether the patch is attached and folded in such a way as to
+provide two writing surfaces</desc>
+          <datatype>
+             <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
+          </datatype>
+
        </attDef>
        <attDef ident="height">
-          <desc>The height of the patch</desc>
+          <desc>height of the patch in mm</desc>
           <datatype>
              <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
           </datatype>
        </attDef>
        <attDef ident="width">
-          <desc>The width of the patch</desc>
+          <desc>width of the patch in mm</desc>
           <datatype>
              <ref xmlns="http://relaxng.org/ns/structure/1.0"
 		  name="data.numeric"/>
@@ -1704,7 +1742,7 @@ were  created on it.</desc>
 </attList>
  </elementSpec>
  <elementSpec ident="line"
-	      ns="http://geneticEdition.org/ns" mode="add">
+	      ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
     <desc>contains the transcription of a topographic line in the source
        document</desc>
     <classes>
@@ -1712,8 +1750,13 @@ were  created on it.</desc>
        <memberOf key="att.global"/>
     </classes>
     <content>
-       <rng:ref name="macro.paraContent"
-         />
+      <rng:zeroOrMore>
+      <rng:choice>
+	<rng:text/>
+       <rng:ref name="model.global"/>
+       <rng:ref name="model.pPart.transcriptional"/>
+       <rng:ref name="model.gLike"/>
+      </rng:choice></rng:zeroOrMore>
     </content>
  </elementSpec>
 
@@ -1721,7 +1764,7 @@ were  created on it.</desc>
 
 
  <!-- editorial justification -->
- <elementSpec ident="edJust" ns="http://geneticEdition.org/ns"
+ <elementSpec ident="edJust" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
     <desc>(editorial justification) An editorial justification of any part of
        the edited text.</desc>
@@ -1754,7 +1797,7 @@ were  created on it.</desc>
        </rng:zeroOrMore>
     </content>
  </elementSpec>
- <elementSpec ident="modGroup" ns="http://geneticEdition.org/ns"
+ <elementSpec ident="modGroup" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
     <desc>(modification group) groups and describes the various modifications that
        occurred in the text's genesis within a document.</desc>
@@ -1777,7 +1820,7 @@ were  created on it.</desc>
        </rng:choice>
     </content>
  </elementSpec>
- <elementSpec ident="modNote" ns="http://geneticEdition.org/ns"
+ <elementSpec ident="modNote" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
     <desc>Describes a revision in the text genesis.</desc>
     <classes>
@@ -1789,7 +1832,7 @@ were  created on it.</desc>
           name="macro.specialPara"/>
     </content>
  </elementSpec>
- <elementSpec ident="mod" ns="http://geneticEdition.org/ns"
+ <elementSpec ident="mod" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
     <desc>Scope an area in the document containing several alteration which are
        interrelated to each others; Can also be used to segment the text in order to
@@ -1809,7 +1852,7 @@ were  created on it.</desc>
     </content>
  </elementSpec>
  <!-- authorial changes -->
- <elementSpec ident="metaMark" ns="http://geneticEdition.org/ns"
+ <elementSpec ident="metaMark" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
     <desc>(meta mark) A textual or graphical element in a manuscript that is
        functional but not part of the text. Could transform the text, like a
@@ -1825,7 +1868,7 @@ were  created on it.</desc>
     </content>
     <attList>
        <attDef ident="function" mode="add">
-          <desc>Describe to the function (e.g. add, delete, alternate) of the
+          <desc>describes the function (e.g. add, delete, alternate) of the
              mark.</desc>
           <datatype minOccurs="1">
              <rng:ref name="data.word"
@@ -1833,7 +1876,7 @@ were  created on it.</desc>
           </datatype>
        </attDef>
        <attDef ident="targets">
-          <desc>Points to the element(s) to which the function of the meta-mark
+          <desc>indicates the element(s) to which the function of the meta-mark
              refers. Pointers are separated by a white space</desc>
           <datatype minOccurs="1">
              <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
@@ -1841,7 +1884,8 @@ were  created on it.</desc>
        </attDef>
     </attList>
  </elementSpec>
- <elementSpec ident="used" ns="http://geneticEdition.org/ns"
+
+ <elementSpec ident="used" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
     <desc>In many cases, authors mark portions of text as having been used, usually
        meaning the text has been transcribed to a fair copy. The mark is often a
@@ -1853,16 +1897,18 @@ were  created on it.</desc>
        <memberOf key="att.spanning"/>
     </classes>
     <content>
-       <rng:zeroOrMore>
+      <rng:empty/>
+<!--       <rng:zeroOrMore>
           <rng:choice>
              <rng:ref name="macro.paraContent"/>
              <rng:ref name="line"/>
              <rng:ref name="model.divLike"/>
           </rng:choice>
        </rng:zeroOrMore>
-    </content>
+    -->
+</content>
  </elementSpec>
- <elementSpec ident="undo" ns="http://geneticEdition.org/ns"
+ <elementSpec ident="undo" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
     <desc>Marks up an action represented by an element to be undone.</desc>
     <classes>
@@ -1871,10 +1917,12 @@ were  created on it.</desc>
        <memberOf key="att.spanning"/>
     </classes>
     <content>
-       <rng:ref
+          <rng:empty/>
+<!--   <rng:ref
           name="macro.specialPara"/>
-    </content>
-    <attList>
+-->    </content>
+   
+<attList>
        <attDef ident="target" mode="add">
           <desc>The element representing the action to be undone.</desc>
           <datatype minOccurs="1" maxOccurs="1">
@@ -1884,6 +1932,7 @@ were  created on it.</desc>
        </attDef>
     </attList>
  </elementSpec>
+
  <elementSpec ident="subst" module="transcr" mode="change">
     <content>
        <rng:group>
@@ -1908,7 +1957,8 @@ were  created on it.</desc>
        </attDef>
     </attList>
  </elementSpec>
- <elementSpec ident="repetition" ns="http://geneticEdition.org/ns"
+
+ <elementSpec ident="repetition" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
     <desc>A repetition of already written text.</desc>
     <classes>
@@ -1941,7 +1991,7 @@ were  created on it.</desc>
     </classes>
  </elementSpec>
  <elementSpec ident="transpositions"
-    ns="http://geneticEdition.org/ns" mode="add">
+    ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
     <desc> Describes the textual transpositions.</desc>
     <classes>
        <memberOf key="model.profileDescPart"/>
@@ -1954,7 +2004,7 @@ were  created on it.</desc>
     </content>
  </elementSpec>
  <elementSpec ident="transposition"
-    ns="http://geneticEdition.org/ns" mode="add">
+    ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
     <desc> Describes a textual transposition. Contains a list of pointers that
        specifies the new order of the text fragments. </desc>
     <classes>
@@ -1966,7 +2016,7 @@ were  created on it.</desc>
        </rng:oneOrMore>
     </content> 
  </elementSpec>
- <elementSpec ident="tr" ns="http://geneticEdition.org/ns"
+ <elementSpec ident="tr" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
     <desc>Mark a section to be transposed</desc>
     <classes>
@@ -1983,7 +2033,7 @@ were  created on it.</desc>
  </elementSpec>
  <!-- genetic groups -->
  <elementSpec ident="geneticGrp" mode="add"
-    ns="http://geneticEdition.org/ns">
+    ns="http://www.tei-c.org/ns/geneticEditions">
     <desc>Group texts and document which are somehow related in a genetic
        process</desc>
     <classes>
@@ -1997,7 +2047,7 @@ were  created on it.</desc>
     </content>
  </elementSpec>
  <elementSpec ident="geneticNote" mode="add"
-    ns="http://geneticEdition.org/ns">
+    ns="http://www.tei-c.org/ns/geneticEditions">
     <desc>Contains the links to the text or documents that are connected within a
        genetic group as well as the description of single genetic group</desc>
     <classes>

@@ -6,7 +6,7 @@ namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace s = "http://www.ascc.net/xml/schematron"
 namespace sch = "http://purl.oclc.org/dsdl/schematron"
 
-# Schema generated from ODD source 2009-08-28T00:08:55Z. 
+# Schema generated from ODD source 2009-08-28T12:08:42Z. 
 # TEI Edition: 1.4.1. Last updated on July 1st 2009.
 #
 
@@ -6111,7 +6111,7 @@ att.datable.iso.attribute.to-iso =
     | xsd:dateTime
     | xsd:token { pattern = "[0-9.,DHMPRSTWYZ/:+\-]+" }
   }?
-tei_model.zonePart = tei_line
+tei_model.zonePart = tei_zone | tei_line
 tei_document =
   
   ## contains a document-centric transcription of a primary source,
@@ -6122,7 +6122,12 @@ tei_line =
   ## contains the transcription of a topographic line in the source
   ##        document
   element ge:line {
-    tei_macro.paraContent, att.global.attributes, empty
+    (text
+     | tei_model.global
+     | tei_model.pPart.transcriptional
+     | tei_model.gLike)*,
+    att.global.attributes,
+    empty
   }
 tei_edJust =
   
@@ -6176,13 +6181,13 @@ tei_metaMark =
     att.global.attributes,
     att.placement.attributes,
     
-    ## Describe to the function (e.g. add, delete, alternate) of the
+    ## describes the function (e.g. add, delete, alternate) of the
     ##              mark.
     attribute function {
       xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
     }?,
     
-    ## Points to the element(s) to which the function of the meta-mark
+    ## indicates the element(s) to which the function of the meta-mark
     ##              refers. Pointers are separated by a white space
     attribute targets { xsd:anyURI }?,
     empty
@@ -6193,16 +6198,13 @@ tei_used =
   ##        meaning the text has been transcribed to a fair copy. The mark is often a
   ##        strikethrough, but can be any author-specific mark.
   element ge:used {
-    (tei_macro.paraContent | tei_line | tei_model.divLike)*,
-    att.global.attributes,
-    att.spanning.attributes,
-    empty
+    empty, att.global.attributes, att.spanning.attributes, empty
   }
 tei_undo =
   
   ## Marks up an action represented by an element to be undone.
   element ge:undo {
-    tei_macro.specialPara,
+    empty,
     att.global.attributes,
     att.spanning.attributes,
     
