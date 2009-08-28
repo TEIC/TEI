@@ -69,7 +69,8 @@
       <xsl:when test="$ns='http://www.w3.org/2001/XMLSchema'">xsd</xsl:when>
       <xsl:when test="$ns='http://www.w3.org/2005/11/its'">its</xsl:when>
       <xsl:when test="$ns='http://www.w3.org/2005/Atom'">atom</xsl:when>
-      <xsl:when test="$ns='http://www.w3.org/XML/1998/namespace'">xml</xsl:when>
+      <xsl:when	  test="$ns='http://www.w3.org/XML/1998/namespace'">xml</xsl:when>
+      <xsl:when test="$ns='http://www.tei-c.org/ns/geneticEditions'">ge</xsl:when>
     </xsl:choose>
 
   </xsl:template>
