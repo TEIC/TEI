@@ -89,8 +89,8 @@
   <xsl:key match="tei:macroSpec[@predeclare='true']" name="PredeclareAllMacros" use="1"/>
   <xsl:variable name="parameterize">
     <xsl:choose>
-      <xsl:when test="$TEIC='false'">true</xsl:when>
       <xsl:when test="key('SCHEMASPECS',1)">false</xsl:when>
+      <xsl:when test="$TEIC='false'">true</xsl:when>
       <xsl:otherwise>true</xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -2010,7 +2010,7 @@ select="$makeDecls"/></xsl:message>
   <xsl:template name="makeTEIVersion">
     <xsl:choose>
       <xsl:when test="ancestor-or-self::tei:TEI/processing-instruction()[name()='TEIVERSION']">
-        <xsl:text>&#10;TEI Edition: </xsl:text>
+        <xsl:text>&#10;Edition: </xsl:text>
         <xsl:value-of
           select="ancestor-or-self::tei:TEI/processing-instruction()[name()='TEIVERSION']"/>
         <xsl:text>&#10;</xsl:text>

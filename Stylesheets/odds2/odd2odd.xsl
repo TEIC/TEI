@@ -331,7 +331,6 @@ How can a class be ok?
     <xsl:variable name="moduleName" select="@key"/>
     <xsl:variable name="KD" select="concat(@key,'-decl')"/>
     <xsl:choose>
-      <xsl:when test="$TEIC='false'"/>
       <xsl:when test="not($localsource='')">
         <xsl:variable name="Local">
           <List>
@@ -1020,7 +1019,6 @@ so that is only put back in if there is some content
     -->
     <xsl:for-each select="$ODD">
       <xsl:choose>
-        <xsl:when test="$TEIC='false'"/>
         <xsl:when test="key('MEMBEROFDELETE',concat($elementName,$className))"> </xsl:when>
 <!-- the class is referenced in the ODD and has redefined <classes>-->
         <xsl:when test="key('ATTCLASSES',$className)/tei:classes">
@@ -1938,9 +1936,6 @@ select="$M"/></xsl:message>
   </xsl:template>
   <xsl:template name="getversion">
     <xsl:choose>
-      <xsl:when test="$TEIC='false'">
-        <xsl:text>unknown</xsl:text>
-      </xsl:when>
       <xsl:when test="not($localsource='')">
         <xsl:for-each select="document($localsource)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
           <xsl:value-of select="."/>

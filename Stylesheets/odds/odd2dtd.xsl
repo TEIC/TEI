@@ -70,14 +70,18 @@
         <xsl:with-param name="method">text</xsl:with-param>
         <xsl:with-param name="body">
           <xsl:call-template name="dtdComment">
-            <xsl:with-param name="text"> TEI P5 DTD module <xsl:value-of select="@ident"/>
-							<xsl:text>. Generated </xsl:text>
-							<xsl:call-template name="showDate"/>
-							<xsl:text>. </xsl:text>
-							<xsl:if test="$TEIC='true'"><xsl:call-template name="copyright"/></xsl:if>
-							<xsl:call-template name="makeTEIVersion"/>
-							<xsl:call-template name="makeDescription"/>
-						</xsl:with-param>
+            <xsl:with-param name="text"> 
+	      <xsl:text>TEI P5 DTD module </xsl:text>
+	      <xsl:value-of select="@ident"/>
+	      <xsl:text>. Generated </xsl:text>
+	      <xsl:call-template name="showDate"/>
+	      <xsl:text>. </xsl:text>
+	      <xsl:if test="$TEIC='true'">
+		<xsl:call-template name="copyright"/>
+	      </xsl:if>
+	      <xsl:call-template name="makeTEIVersion"/>
+	      <xsl:call-template name="makeDescription"/>
+	    </xsl:with-param>
           </xsl:call-template>
           <xsl:choose>
             <xsl:when test="@type='core'">
@@ -386,22 +390,20 @@
     <xsl:if test="$TEIC='true'">
       <xsl:text>&#10;&lt;!--predeclared classes --&gt;&#10;</xsl:text>
       <xsl:for-each select="tei:classSpec[@predeclare='true']">
-        <xsl:choose>
-          <xsl:when test="@type='atts'">
-            <xsl:call-template name="classAtt">
-              <xsl:with-param name="declare">true</xsl:with-param>
-            </xsl:call-template>
-          </xsl:when>
-          <xsl:when test="@type='model' and $parameterize='false'">
-            <xsl:call-template name="classModel">
-              <xsl:with-param name="declare">true</xsl:with-param>
-            </xsl:call-template>
-          </xsl:when>
-        </xsl:choose>
+	<xsl:choose>
+	  <xsl:when test="@type='atts'">
+	    <xsl:call-template name="classAtt">
+	      <xsl:with-param name="declare">true</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:when>
+	  <xsl:when test="@type='model' and $parameterize='false'">
+	    <xsl:call-template name="classModel">
+	    <xsl:with-param name="declare">true</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:when>
+	</xsl:choose>
       </xsl:for-each>
       <xsl:text>&#10;&lt;!--end of predeclared classes --&gt;&#10;</xsl:text>
-    </xsl:if>
-    <xsl:if test="$TEIC='true'">
       <xsl:apply-templates mode="tangle" select="tei:classSpec"/>
     </xsl:if>
     <xsl:text>&#10;&lt;!-- start predeclared patterns --&gt;&#10;</xsl:text>
