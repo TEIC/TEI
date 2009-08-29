@@ -1847,7 +1847,7 @@ select="$M"/></xsl:message>
 	  <xsl:variable name="lookingAt">
 	    <xsl:value-of select="concat(../@ident,'_',@ident)"/>
 	  </xsl:variable>
-	  <xsl:for-each select="$ODD">
+	  <xsl:for-each select="exsl:node-set($ODD)">
 	    <xsl:choose>
 	      <xsl:when test="key('DELETECONSTRAINT',$lookingAt)"/>
 	      <xsl:when test="key('REPLACECONSTRAINT',$lookingAt)"/>
