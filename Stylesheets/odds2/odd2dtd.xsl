@@ -1615,7 +1615,7 @@
               <xsl:text>copytag.xql?name=</xsl:text>
               <xsl:value-of select="$K"/>
             </xsl:variable>
-            <xsl:if test="$verbose">
+            <xsl:if test="$verbose='true'">
               <xsl:if test="$verbose='true'">
                 <xsl:message>Accessing TEISERVER: <xsl:value-of select="$Remote"/></xsl:message>
               </xsl:if>

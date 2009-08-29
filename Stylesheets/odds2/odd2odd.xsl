@@ -1207,7 +1207,7 @@ select="$M"/></xsl:message>
 	<!-- d) there are changes to attributes in the class spec itself,
 	but the element makes no override -->
         <xsl:when test="@mode='change' and tei:attList and not (contains($anyChanged,':element-'))">
-	  <xsl:if test="$verbose">
+	  <xsl:if test="$verbose='true'">
 	    <xsl:message>d) Class <xsl:value-of select="$className"/> for <xsl:value-of 
 	       select="$elementName"/> has no changes in element, refer by name</xsl:message>
 	  </xsl:if>
@@ -1258,13 +1258,13 @@ select="$M"/></xsl:message>
         </xsl:when>
 	<!-- there are no changes to the attributes in the odd-->
 	<xsl:when test="$anyChanged=''">
-	  <xsl:if test="$verbose">
+	  <xsl:if test="$verbose='true'">
 	    <xsl:message>f) Class <xsl:value-of select="$className"/> for <xsl:value-of select="$elementName"/> has no changes, refer by name</xsl:message>
 	  </xsl:if>
 	  <tei:attRef n="4" name="{$className}.attributes"/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:if test="$verbose">
+	  <xsl:if test="$verbose='true'">
 	    <xsl:message>g) Class <xsl:value-of select="$className"/> for <xsl:value-of 
 	    select="$elementName"/> has changes in odd, refer by values</xsl:message>
 	  </xsl:if>

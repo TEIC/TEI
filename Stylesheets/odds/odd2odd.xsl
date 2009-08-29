@@ -1142,7 +1142,7 @@ select="$M"/></xsl:message>
 	  -->
           <xsl:choose>
             <xsl:when test="contains($anyChanged,'true')">
-              <xsl:if test="$verbose">
+              <xsl:if test="$verbose='true'">
                 <xsl:message>Class <xsl:value-of select="$className"/> for <xsl:value-of select="$elementName"/> has changes in odd, refer by values</xsl:message>
               </xsl:if>
 <!-- attributes here -->
@@ -1174,7 +1174,7 @@ select="$M"/></xsl:message>
               </xsl:for-each>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:if test="$verbose">
+              <xsl:if test="$verbose='true'">
                 <xsl:message>Class <xsl:value-of select="$className"/> for <xsl:value-of select="$elementName"/> has no changes, refer by name</xsl:message>
               </xsl:if>
               <tei:attRef n="4" name="{$className}.attributes"/>
