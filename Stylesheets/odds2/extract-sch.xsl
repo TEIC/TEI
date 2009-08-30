@@ -4,7 +4,7 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
   xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns="http://purl.oclc.org/dsdl/schematron"
+  xmlns="http://www.ascc.net/xml/schematron"
   exclude-result-prefixes="tei rng teix s xi #default"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
@@ -17,8 +17,8 @@
 				    parent::rng:*]" use="1"/>
   <xsl:key name="SCHEMATRON" match="s:report[parent::tei:constraint or parent::rng:*]" use="1"/>
   <xsl:template match="/">
-    <schema queryBinding="xslt2">
-      <title>ISO Schematron rules</title>
+    <schema xmlns="http://www.ascc.net/xml/schematron">
+      <title>Schematron 1.5 rules</title>
       <xsl:for-each select="key('SCHEMATRONNS',1)">
 	<xsl:choose>
 	  <xsl:when test="ancestor::teix:egXML"/>
