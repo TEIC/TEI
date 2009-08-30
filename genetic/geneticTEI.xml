@@ -112,9 +112,11 @@ Chapter 11. <title>Representation of Primary Sources</title> and Chapter
                </list>
 <p>All versions of this draft document are publicly available for discussion and feedback
     from the community. The document source is maintained in the TEI
-    subversion repository; versions are also  hosted on the TEI Wiki
-    in PDF format.
-<!-- add links -->
+    subversion repository at <ptr
+    target="http://tei.svn.sourceforge.net/viewvc/tei/trunk/genetic/"/>; 
+information about the development of the proposals and associated
+materials, including complete drafts of this document, are hosted on the TEI Wiki at <ptr target="http://wiki.tei-c.org/index.php/Category:Genetic_Editions"/>.
+
 </p>
             </div>
             <div>
@@ -506,21 +508,15 @@ additional information.
 <specList>
 <specDesc key="patch" atts="binder type height width"/>
 </specList>
-<!--
-
-    <p>An example of patches can be seen in one of the first draft of the poem
-       eventually titled <title>The Sleeper</title> by Walt Whitman (see 
-       />), which could be encoded as follows:</p>
--->
 Using this element, the Whitman draft above might be encoded as follows:
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
        <surface>
           <zone>
              <head>Poem</head>
-             <line>As in Visions of — at</line>
-	     <line>night —</line>
-<line>All sorts of fancies running through</line>
-<line>the head</line>
+             <ge:line>As in Visions of — at</ge:line>
+	     <ge:line>night —</ge:line>
+<ge:line>All sorts of fancies running through</ge:line>
+<ge:line>the head</ge:line>
 	  </zone>
 <patch type="newsprint" binder="glue" height="40" width="90">
 Spring has just set in here, and the weather....
@@ -589,22 +585,78 @@ that it has been, or where a deletion has itself been cancelled</item>
 resequenced; </item>
 <item>sequencing of alterations. </item>
 </list>
+</p>
+<p>The TEI already provides the following basic elements for
+transcription, which constitute the
+<ident>model.pPart.transcriptional</ident> class:
+<specList>
+<specDesc key="add"/>
+<specDesc key="app"/>
+<specDesc key="corr"/>
+<specDesc key="damage"/>
+<specDesc key="del"/>
+<specDesc key="orig"/>
+<specDesc key="reg"/>
+<specDesc key="restore"/>
+<specDesc key="sic"/>
+<specDesc key="supplied"/>
+<specDesc key="unclear"/>
+</specList>
+<!--The present proposals extend this list by adding the following
+elements to the same class:-->
 
 </p>
     <div>
-       <head>Additions</head>
-       <p>Beside “normal” additions (see for instance the TEI definition of the
-             <gi>add</gi> element: <q>contains letters, words, or phrases inserted in
-             the text by an author, scribe, annotator, or corrector.</q>), we have
-          outlined some other special kinds of additions, where text is added to the
-          document but not to the text:</p>
-       <list >
-          <item><label>Repetitions</label> which can be of two main types:<list
-  >
-  <item>
-     <label>Fixation</label> which results from authors fixing a text
-     passage by overwriting it (e.g. a pencilled passage fixed with
-     ink). Fixation can affect large potions of text, therefore it seems
+       <head>Additions and rewritings</head>
+       <p>A writer may sometimes rewrite material a second time
+       without significant change and in the same place. We
+       consider this
+ a distinct activity from addition as usually defined
+       because no new textual material results but the status of existing
+       material changes. We distinguish two variants of this: <term>fixation</term>
+where the first version was a tentative draft which
+       is subsequently fixed, for example by inking it over; and
+       <term>clarification</term>, where the first version was
+       badly written and has been rewritten for clarity.
+The element <gi>ge:rewrite</gi> is provided to cover both cases.
+
+<specList>
+<specDesc key="rewrite"  atts="cause"/>
+</specList>
+       </p>
+
+<p>In this simple example, taken from the papers of Henrik Ibsen, the
+writer wrote the word  <mentioned>skuldren</mentioned> hastily,
+and then returned to it to make  the letter <mentioned>l</mentioned> 
+larger and clearer:
+<figure><graphic url="examples/skuldren.jpg"/>
+<head rend="it">Image from a ms of Peer Gynt, Collin 2869, 4°, I.1.1,
+the Royal Library of Copenhagen</head>
+</figure>
+We might transcribe this word as follows:
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+Sku<ge:rewrite cause="unclear">l</ge:rewrite>dren
+    </egXML>
+</p>
+<p>The following example, taken a manuscript of Jane Austen's
+<title>Sanditon</title>, shows a rewriting where a pencilled passage
+has been fixed with ink, with some modification: 
+<figure><graphic url="examples/AusSand70.png"/>
+<head rend="it">Image from page 70 of the Sanditon manuscript</head>
+</figure>
+In this example, Austen sees in the fixation an opportunity to manipulate
+     the text previously written, and thus changes the pencilled <mentioned>
+could but get</mentioned> to the inked <mentioned>could
+get</mentioned>. A simple  way of encoding this  might be
+as follows:
+     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <ge:rewrite cause="fixation" hand="ja2" seq="1">Now, if we
+           could get 
+           <del seq="1">but</del> a young Heiress</ge:del>
+     </egXML> 
+<!-- this doesnt seem right though -->
+
+<!-- Fixation can affect large potions of text, therefore it seems
      unpractical to transcribe the same text twice (as we would do in
      case we used <gi>add</gi>); furthermore it often happens that
      authors, while fixating a text, the decide to apply some
@@ -625,13 +677,12 @@ resequenced; </item>
            </subst>
            <del seq="1">get</del> a young Heiress</ge:repetition>
      </egXML> In the example, some corrections belong to the fixation
-     stage, as Austen see in the fixation an opportunity to manipulate
-     the text previously written. This fact has been marked via the
+     stage, as. This fact has been marked via the
         <att>seq</att> attribute, assigning to all the alteration
      belonging to the repetition phase the same value (for the
         <att>seq</att> attribute, se <ref target="#seq"
      >below</ref>).</item>
-  <item>
+
      <label>Clarification</label> a word is badly written and the author
      rewrites it to clarify. In this case the TEI <gi>add
         status="duplicate"</gi> element could be used. An example of
@@ -646,7 +697,29 @@ resequenced; </item>
            <add status="duplicate" type="clarification" place="inline"
               >er</add>klang</ge:line>
      </egXML></item>
-             </list></item>
+             </list></item>-->
+
+<p>A single rewrite may not be sufficient, and it may  be that
+the text becomes almost unreadable as a result of repeated
+clarification. In the following example, for example, we can distinguish at
+least two attempts to write the letters <mentioned>er</mentioned> in
+the word <mentioned>bægerklang</mentioned>:
+
+<figure><graphic url="examples/bagerklang.png"/>
+<head rend="it">Image from http://www.emunch.no/tei-mm-2008/ms.html </head>
+</figure>
+
+We might encode this by nesting the <gi>rewrite</gi> element as follows:
+
+     <egXML xmlns="http://www.tei-c.org/ns/Examples">ved
+        Bæg<ge:rewrite cause="clarify" seq="2">
+	<ge:rewrite cause="clarify" seq="1">er</ge:rewrite></ge:rewrite>
+     </egXML> 
+
+<!-- maybe! -->
+
+</p>
+<list>
           <item><label>*Alternatives</label> when an author proposes several
              alternative readings for a segment without deciding which is the best.
              For those cases the TEI already offers a system (<gi>alt/</gi>) can be
@@ -717,7 +790,10 @@ resequenced; </item>
              Whitman (see, for instance: <ptr
   target="http://www.whitmanarchive.org/resources/sleepers/loc.00295.jpg"
              />).</item>
+
        </list>
+
+
     </div>
     <div>
        <head>Deletions</head>
