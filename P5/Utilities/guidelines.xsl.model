@@ -19,7 +19,7 @@
   <xsl:import
       href="http://www.tei-c.org/release/xml/tei/stylesheet/odds2/odd2html.xsl"/>
 
-  <xsl:key name="EXAMPLES" match="teix:*" use="concat(ancestor::tei:div[last()]/@xml:id,local-name())"/>
+  <xsl:key name="EXAMPLES" match="teix:*[ancestor::teix:egXML]" use="concat(ancestor::tei:div[last()]/@xml:id,local-name())"/>
 
   <xsl:key name="HEADS" match="tei:head"
 	   use="concat(@xml:lang,@corresp)"/>
@@ -176,7 +176,8 @@ their encoding.</p>
 		      <xsl:variable name="pos">
 			<xsl:number level="any" from="teix:egXML"/>
 		      </xsl:variable>
-		      <xsl:if test="number($pos)=1">
+		      <xsl:if test="number($pos)=1 or ($me='egXML' and
+				    number($pos)=2)">
 			<hr/>
 			<p>
 			  <xsl:choose>
