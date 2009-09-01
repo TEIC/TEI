@@ -634,9 +634,9 @@ larger and clearer:
 the Royal Library of Copenhagen</head>
 </figure>
 We might transcribe this word as follows:
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><ge:line>...
 Sku<ge:rewrite cause="unclear">l</ge:rewrite>dren
-    </egXML>
+</ge:line>    </egXML>
 </p>
 <p>The following example, taken a manuscript of Jane Austen's
 <title>Sanditon</title>, shows a rewriting where a pencilled passage
@@ -1960,6 +1960,40 @@ provide two writing surfaces</desc>
        </attDef>
     </attList>
  </elementSpec>
+
+ <elementSpec ident="rewrite" ns="http://www.tei-c.org/ns/geneticEditions"
+    mode="add">
+    <desc>contains a sequence of text which has been rewritten by the
+    author, for example by over-inking, to clarify or fix it.</desc>
+    <classes>
+       <memberOf key="model.pPart.transcriptional"/>
+       <memberOf key="model.global"/>
+       <memberOf key="att.global"/>
+       <memberOf key="att.spanning"/>
+    </classes>
+    <content>
+             <rng:ref name="macro.paraContent"/>
+</content>
+<attList>
+<attDef ident="cause">
+<desc>documents the presumed cause of the rewriting.</desc>
+<datatype><rng:ref name="data.enumerated"/></datatype>
+<valList type="closed">
+<valItem ident="fix"><desc>rewriting for the purpose of
+fixation</desc>
+</valItem>
+<valItem ident="unclear"><desc>rewriting to clarify a previously
+illegible or badly written sequence</desc></valItem>
+</valList></attDef></attList>
+<remarks><p>Multiple rewritings are indicated by nesting one
+<gi>rewrite</gi> within another. In principle, a rewriting differs
+from a substitution in that second and subsequent rewrites do not
+in general materially alter the content of an element. Where there are
+minor changes made during the rewriting however these may be marked up
+using <gi>del</gi>, <gi>add</gi>, etc. with an appropriate value for the <att>stage</att>
+attribute.</p></remarks> </elementSpec>
+
+
 
  <elementSpec ident="used" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
