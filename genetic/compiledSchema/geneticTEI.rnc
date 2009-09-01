@@ -6,7 +6,7 @@ namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace s = "http://www.ascc.net/xml/schematron"
 namespace sch = "http://purl.oclc.org/dsdl/schematron"
 
-# Schema generated from ODD source 2009-08-28T17:08:55Z. 
+# Schema generated from ODD source 2009-09-01T15:09:36Z. 
 # TEI Edition: 1.4.1. Last updated on July 1st 2009.
 #
 
@@ -793,6 +793,7 @@ tei_model.pPart.transcriptional =
   | tei_supplied
   | tei_mod
   | tei_metaMark
+  | tei_rewrite
   | tei_used
   | tei_undo
   | tei_repetition
@@ -964,6 +965,7 @@ tei_model.global =
   | tei_model.global.edit
   | tei_p
   | tei_edJust
+  | tei_rewrite
   | tei_used
 tei_model.biblPart =
   tei_model.respLike
@@ -6190,6 +6192,28 @@ tei_metaMark =
     ## indicates the element(s) to which the function of the meta-mark
     ##              refers. Pointers are separated by a white space
     attribute targets { xsd:anyURI }?,
+    empty
+  }
+tei_rewrite =
+  
+  ## contains a sequence of text which has been rewritten by the
+  ##     author, for example by over-inking, to clarify or fix it.
+  element ge:rewrite {
+    tei_macro.paraContent,
+    att.global.attributes,
+    att.spanning.attributes,
+    
+    ## documents the presumed cause of the rewriting.
+    attribute cause {
+      
+      ## rewriting for the purpose of
+      ## fixation
+      "fix"
+      | 
+        ## rewriting to clarify a previously
+        ## illegible or badly written sequence
+        "unclear"
+    }?,
     empty
   }
 tei_used =

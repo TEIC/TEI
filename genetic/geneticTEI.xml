@@ -652,9 +652,9 @@ as follows:
      <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <ge:rewrite cause="fixation" hand="ja2" seq="1">Now, if we
            could get 
-           <del seq="1">but</del> a young Heiress</ge:del>
+           <del seq="1">but</del> a young Heiress</ge:rewrite>
      </egXML> 
-<!-- this doesnt seem right though -->
+</p><!-- this doesnt seem right though -->
 
 <!-- Fixation can affect large potions of text, therefore it seems
      unpractical to transcribe the same text twice (as we would do in
@@ -711,14 +711,63 @@ the word <mentioned>bægerklang</mentioned>:
 
 We might encode this by nesting the <gi>rewrite</gi> element as follows:
 
-     <egXML xmlns="http://www.tei-c.org/ns/Examples">ved
+     <egXML xmlns="http://www.tei-c.org/ns/Examples"><ge:line>ved
         Bæg<ge:rewrite cause="clarify" seq="2">
 	<ge:rewrite cause="clarify" seq="1">er</ge:rewrite></ge:rewrite>
-     </egXML> 
+...</ge:line>     </egXML> 
 
 <!-- maybe! -->
 
 </p>
+
+    </div>
+
+
+    <div>
+       <head>Deletions</head>
+       <p>In general deletion in a source is marked using the
+       <gi>del</gi> or <gi>delSpan</gi> element. However, it is useful
+       to distinguish cases where a passage has been <q>indicated as
+       superfluous or spurious in the copy text by an author, scribe,
+       annotator, or corrector</q> (TEI P5, s.v. <gi>del</gi>) from cases
+       where a passage has been struck through or otherwise marked as
+       having been used or copied to another location. In this latter
+       case, the author does not intend to suppress the content, but
+       only to mark that it has been transferred or reused. The
+       element <gi>ge:used</gi> is provided to mark this kind of
+       <soCalled>deletion</soCalled>.</p>
+<p>The following page from the Walt Whitman archive has been crossed
+through to indicate used material:
+<figure><graphic url="examples/whitman02.jpg"/><head>Page from 
+http://www.whitmanarchive.org/resources/sleepers/20051105_0650.jpg</head></figure>. This
+page contains many deletions, which should be
+distinguished from the deletion signalled by the large cross. Material
+to be marked as reused generally spans more than one zone or
+line. For that reason, the <gi>used</gi> element is a spanning
+element, indicating the end of the used area by means of a
+<att>spanTo</att> attribute. One way of encoding this page might thus
+be:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <surface>
+     <ge:used rend="cross" spanTo="#X2"/>
+        <zone>
+           <line rend="underline">The Poet</line>
+	   <line><del   rend="strikethrough">I think</del> His sight is
+   the</line><line> sight of the ? and</line> 
+<line>has sent the instinct of the</line>
+<line>? dog</line></zone>
+<zone><line>I think <rewrite>ten</rewrite> million</line>
+ <!-- ... -->
+<line>well; those <subst><del rend="strikethrough">supple-fingered
+gods</del><add>journeymen divine</add></subst>.</line>
+<anchor xml:id="X2"/>
+	</zone>  </surface>
+             </egXML>
+</p></div>
+
+
+<div><head>Metamarks</head>
+
 <list>
           <item><label>*Alternatives</label> when an author proposes several
              alternative readings for a segment without deciding which is the best.
@@ -794,40 +843,6 @@ We might encode this by nesting the <gi>rewrite</gi> element as follows:
        </list>
 
 
-    </div>
-    <div>
-       <head>Deletions</head>
-       <p>Beside “normal” deletions (see for instance the TEI definition for
-             <gi>del</gi>: “contains a letter, word, or passage deleted, marked as
-          deleted, or otherwise indicated as superfluous or spurious in the copy text
-          by an author, scribe, annotator, or corrector.”), we have outlined some
-          other special kinds of deletion: </p>
-       <list >
-          <item><label>Marked as used</label> passages that happen to be struck
-             through, where the strike marks the passage as used/copied at another
-             location/another manuscript. In this case the author does not intend to
-             suppress the content, but only to mark that it has been transferred or
-             reused. We have created the <gi>ge:used</gi> element for this purpose. As
-             the portions that are marked as used are normally full pages or large
-             portions of pages, <gi>ge:used</gi> can contains <gi>div</gi>s or can be
-             used within them. See an example of this in Walt Whitman (<ptr
-  target="http://www.whitmanarchive.org/resources/sleepers/20051105_0650.jpg"
-             />) <egXML xmlns="http://www.tei-c.org/ns/Examples">
-  <surface>
-     <ge:used rend="cross">
-        <div>
-           <lg><head rend="underline">The Poet</head><l><del
-      rend="striketrhough">I think</del> His sight is
-   the</l> [...] </lg>
-        </div>
-     </ge:used>
-  </surface>
-             </egXML>
-          </item>
-          <item><label>Overwriting</label> is a particular case of a deletion, unless
-             it is a case of repetition (<gi>ge:repetition</gi>) or a false start (see
-  <ref target="#false-start">below</ref>).</item>
-       </list>
     </div>
     <div>
        <head>Transpositions</head>
