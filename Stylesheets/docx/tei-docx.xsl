@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet 		
     version="2.0" 
-    xmlns:cals="http://http://www.oasis-open.org/specs/tm9901"
+    xmlns:cals="http://www.oasis-open.org/specs/tm9901"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:its="http://www.w3.org/2005/11/its"
     xmlns:iso="http://www.iso.org/ns/1.0"
@@ -2704,7 +2704,7 @@ under new name -->
 	      <xsl:attribute name="fmtid">
 		<xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
 	      </xsl:attribute>
-	      <vt:lpwstr>2.0.0</vt:lpwstr>
+	      <vt:lpwstr>2.0.1</vt:lpwstr>
 	    </property>
 	    <xsl:for-each
 		select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:encodingDesc/tei:appInfo/tei:application">

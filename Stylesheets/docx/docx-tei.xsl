@@ -552,14 +552,14 @@
 	      </xsl:copy>
 	    </xsl:when>
 	    <xsl:when test="$tableMethod='cals'">
-	      <table xmlns="http://http://www.oasis-open.org/specs/tm9901">
+	      <table xmlns="http://www.oasis-open.org/specs/tm9901">
 		<xsl:call-template name="cals-table-header"/>
 		<tgroup>
 		  <tbody>
 		    <xsl:for-each select="w:tr">
-		      <row xmlns="http://http://www.oasis-open.org/specs/tm9901">
+		      <row xmlns="http://www.oasis-open.org/specs/tm9901">
 			<xsl:for-each select="w:tc">
-			  <entry xmlns="http://http://www.oasis-open.org/specs/tm9901">
+			  <entry xmlns="http://www.oasis-open.org/specs/tm9901">
 			    <xsl:if test="w:p/w:pPr/w:jc">
 			      <xsl:attribute name="align">
 				<xsl:value-of select="w:p[1]/w:pPr/w:jc/@w:val"/>
@@ -1122,7 +1122,7 @@
         <xsl:variable name="precedingTableTitle" select="preceding-sibling::w:p[w:pPr/w:pStyle/@w:val='TableTitle'
             or w:pPr/w:pStyle/@w:val=$Tabletitle][1]"/>
         <xsl:if test="$precedingTableTitle and $precedingTableTitle/following-sibling::w:tbl[1] and generate-id()=generate-id($precedingTableTitle/following-sibling::w:tbl[1])">
-            <title xmlns="http://http://www.oasis-open.org/specs/tm9901">
+            <title xmlns="http://www.oasis-open.org/specs/tm9901">
                 <xsl:apply-templates select="$precedingTableTitle"/>
             </title>
         </xsl:if>
