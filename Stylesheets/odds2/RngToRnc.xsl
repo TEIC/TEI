@@ -217,12 +217,12 @@
     <xsl:value-of select="$text"/>
   </xsl:template>
 <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-  <xsl:key name="prefix" match="     rng:element/@name [contains (., ':')] |      rng:attribute/@name [contains (., ':')]" use="substring-before (., ':')"/>
+  <xsl:key name="prefix" match="rng:element/@name [contains (., ':')] | rng:attribute/@name [contains (., ':')]" use="substring-before (., ':')"/>
   <xsl:key name="ns" match="*" use="namespace::*"/>
   <xsl:key name="annot-ns" match="*[not (self::rng:*)]" use="namespace-uri (.)"/>
   <xsl:key name="annot-ns" match="@*[namespace-uri (.) != '']" use="namespace-uri (.)"/>
   <xsl:output method="xml" indent="yes"/>
-  <xsl:strip-space elements="*"/>
+  <xsl:strip-space elements="rng:*"/>
   <xsl:preserve-space elements="rng:value rng:param"/>
   <xsl:variable name="xsd" select="'http://www.w3.org/2001/XMLSchema-datatypes'"/>
   <xsl:variable name="default-ns-nd" select="/descendant::rng:*[@ns = $default-ns][1]/@ns"/>
