@@ -310,7 +310,7 @@ if test "x$LOCALSOURCE" = "x"
 then
     echo using $TEISERVER to access TEI database
 else
-    echo using $LOCALSOURCE to gather information about TEI 
+    echo using $LOCALSOURCE to gather information about the source
 cat > subset.xsl <<EOF
 <xsl:stylesheet version="2.0"
   xmlns:tei="http://www.tei-c.org/ns/1.0"
