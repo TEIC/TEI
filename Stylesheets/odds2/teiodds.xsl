@@ -815,7 +815,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="Contents">
       <BLAH>
         <xsl:choose>
-          <xsl:when test="tei:content/tei:valList[@type='closed' and @repeatable='true']">
+          <xsl:when test="tei:valList[@type='closed' and @repeatable='true']">
             <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
               <rng:oneOrMore>
                 <rng:choice>
@@ -826,18 +826,7 @@ select="$makeDecls"/></xsl:message>
               </rng:oneOrMore>
             </rng:list>
           </xsl:when>
-          <xsl:when test="tei:content/tei:valList[@type='closed'] and tei:content/tei:datatype[@maxOccurs='unbounded']">
-            <rng:list xmlns:rng="http://relaxng.org/ns/structure/1.0">
-              <rng:oneOrMore>
-                <rng:choice>
-                  <xsl:for-each select="tei:content">
-                    <xsl:call-template name="valListChildren"/>
-                  </xsl:for-each>
-                </rng:choice>
-              </rng:oneOrMore>
-            </rng:list>
-          </xsl:when>
-          <xsl:when test="tei:content/tei:valList[@type='closed']">
+          <xsl:when test="tei:valList[@type='closed']">
             <xsl:for-each select="tei:content">
               <xsl:call-template name="valListChildren"/>
             </xsl:for-each>

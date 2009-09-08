@@ -1066,7 +1066,7 @@
           <xsl:when test="tei:content/rng:element">
             <xsl:text> ANY</xsl:text>
           </xsl:when>
-          <xsl:when test="tei:content/tei:valList[@type='closed']">
+          <xsl:when test="tei:valList[@type='closed']">
             <xsl:text> (#PCDATA)</xsl:text>
           </xsl:when>
           <xsl:when test="tei:content">

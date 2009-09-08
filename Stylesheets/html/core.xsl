@@ -706,7 +706,7 @@
           <dd>A simple unordered list</dd>
           <dt>ordered</dt>
           <dd>A simple ordered list</dd>
-          <dt>vallist</dt>
+          <dt>valList</dt>
           <dd>(Identical to glosstable)</dd>
         </dl>
       </p>
@@ -760,7 +760,7 @@
           <xsl:apply-templates mode="gloss" select="tei:item"/>
         </dl>
       </xsl:when>
-      <xsl:when test="@type='glosstable' or @type='vallist'">
+      <xsl:when test="@type='glosstable' or @type='valList'">
         <table>
           <xsl:call-template name="rendToClass"/>
           <xsl:apply-templates mode="glosstable" select="tei:item"/>
