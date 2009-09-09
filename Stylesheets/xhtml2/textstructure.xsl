@@ -1000,8 +1000,11 @@ $requestedID: requests a particular page
       <xsl:when test="parent::tei:div/@rend='multicol'">
         <td valign="top">
           <xsl:if test="not($Head = '')">
-            <xsl:element name="h{$Head + $divOffset}">
-              <xsl:if test="$xhtml='false'">
+	    <xsl:element name="h{$Head + $divOffset}">
+	      <xsl:for-each select="tei:head[1]">
+		<xsl:call-template name="rendToClass"/>
+	      </xsl:for-each>
+	      <xsl:if test="$xhtml='false'">
                 <a name="{$ident}"/>
               </xsl:if>
               <xsl:call-template name="header">
@@ -1023,6 +1026,9 @@ $requestedID: requests a particular page
       <xsl:otherwise>
         <xsl:if test="not($Head = '')">
           <xsl:element name="h{$Head + $divOffset}">
+	    <xsl:for-each select="tei:head[1]">
+	      <xsl:call-template name="rendToClass"/>
+	    </xsl:for-each>
             <xsl:if test="$xhtml='false'">
               <a name="{$ident}"/>
             </xsl:if>
@@ -1052,6 +1058,9 @@ $requestedID: requests a particular page
         <td valign="top">
           <xsl:if test="not($Type = '')">
             <xsl:element name="h{$Type + $divOffset}">
+	      <xsl:for-each select="tei:head[1]">		
+		<xsl:call-template name="rendToClass"/>
+	      </xsl:for-each>
               <xsl:if test="$xhtml='false'">
                 <a name="{$ident}"/>
               </xsl:if>
@@ -1075,6 +1084,9 @@ $requestedID: requests a particular page
       <xsl:otherwise>
         <xsl:if test="not($Type = '')">
           <xsl:element name="h{$Type + $divOffset}">
+	    <xsl:for-each select="tei:head[1]">
+	      <xsl:call-template name="rendToClass"/>
+	    </xsl:for-each>
             <xsl:if test="$xhtml='false'">
               <a name="{$ident}"/>
             </xsl:if>
@@ -1281,12 +1293,6 @@ $requestedID: requests a particular page
         <xsl:call-template name="upLink">
           <xsl:with-param name="up" select="ancestor::tei:div[1]"/>
         </xsl:call-template>
-      </xsl:when>
-      <xsl:when test="$myName='div0'">
-	<xsl:call-template name="upLink">
-	  <xsl:with-param name="up" select="$BaseFile"/>
-	  <xsl:with-param name="title" select="$homeLabel"/>
-	</xsl:call-template>
       </xsl:when>
       <xsl:when test="$myName='div1'">
 	<xsl:call-template name="upLink">

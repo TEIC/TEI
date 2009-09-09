@@ -324,8 +324,10 @@
   <xsl:template name="makeExternalLink">
     <xsl:param name="ptr"/>
     <xsl:param name="dest"/>
-    <xsl:param name="class">link_<xsl:value-of
-    select="local-name(.)"/></xsl:param>
+    <xsl:param name="class">
+      <xsl:text>link_</xsl:text>
+      <xsl:value-of select="local-name(.)"/>
+    </xsl:param>
     <a>
         <xsl:choose>
           <xsl:when test="@rend">

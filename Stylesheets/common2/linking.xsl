@@ -195,9 +195,7 @@
 	  </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:for-each select="tei:head">
-	    <xsl:apply-templates/>
-	  </xsl:for-each>
+          <xsl:apply-templates select="tei:head" mode="makeheading"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>

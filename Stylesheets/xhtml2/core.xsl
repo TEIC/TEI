@@ -134,7 +134,10 @@
     </xd:detail>
   </xd:doc>
   <xsl:template match="tei:byline">
-    <div class="byline">
+    <div>
+      <xsl:call-template name="rendToClass">
+	<xsl:with-param name="default">byline</xsl:with-param>
+      </xsl:call-template>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
@@ -266,7 +269,10 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:epigraph">
-    <div class="epigraph">
+    <div>
+      <xsl:call-template name="rendToClass">
+	<xsl:with-param name="default">epigraph</xsl:with-param>
+      </xsl:call-template>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
@@ -370,6 +376,7 @@
     <xsl:choose>
       <xsl:when test="parent::tei:body">
 	<h1>
+	  <xsl:call-template name="rendToClass"/>
 	  <xsl:apply-templates/>
 	</h1>
       </xsl:when>
@@ -388,6 +395,28 @@
     </xsl:if>
     <xsl:apply-templates mode="plain"/>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process element tei:head in heading mode</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:head" mode="makeheading">
+    <xsl:choose>
+      <xsl:when test="preceding-sibling::tei:head">
+	<br/>
+	<span>
+	  <xsl:call-template name="rendToClass">
+	    <xsl:with-param name="default">secondaryHead</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:apply-templates/>
+	</span>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:hi</xd:short>
     <xd:detail> </xd:detail>
@@ -2069,6 +2098,18 @@
   <xsl:template name="rendToClass">
     <xsl:param name="id">true</xsl:param>
     <xsl:param name="default"/>
+    <xsl:if test="$id='true'">
+      <xsl:choose>
+	<xsl:when test="@id">
+	  <xsl:copy-of select="@id"/>
+	</xsl:when>
+	<xsl:when test="@xml:id">
+	  <xsl:attribute name="id">
+	    <xsl:value-of select="@xml:id"/>
+	  </xsl:attribute>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:if>
     <xsl:choose>
       <xsl:when test="@rend and starts-with(@rend,'class:')">
         <xsl:attribute name="class">
@@ -2089,19 +2130,6 @@
         </xsl:attribute>
       </xsl:when>
     </xsl:choose>
-    <xsl:if test="$id='true'">
-      <xsl:choose>
-	<xsl:when test="@id">
-	  <xsl:copy-of select="@id"/>
-	</xsl:when>
-	<xsl:when test="@xml:id">
-	  <xsl:attribute name="id">
-	    <xsl:value-of select="@xml:id"/>
-	  </xsl:attribute>
-	</xsl:when>
-      </xsl:choose>
-    </xsl:if>
-   
     <xsl:call-template name="rendToClassHook"/>
   </xsl:template>
 

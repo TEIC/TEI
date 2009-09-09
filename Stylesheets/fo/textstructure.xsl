@@ -425,6 +425,15 @@
       <xsl:apply-templates select=".//tei:note[@place='end']" mode="endnote"/>
     </xsl:if>
   </xsl:template>
+
+  <xd:doc>
+    <xd:short>Process element tei:head in heading mode</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template match="tei:head" mode="makeheading">
+    <xsl:apply-templates/>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements  tei:head (section mode)</xd:short>
     <xd:detail>
