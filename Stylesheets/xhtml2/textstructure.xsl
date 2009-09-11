@@ -1002,7 +1002,9 @@ $requestedID: requests a particular page
           <xsl:if test="not($Head = '')">
 	    <xsl:element name="h{$Head + $divOffset}">
 	      <xsl:for-each select="tei:head[1]">
-		<xsl:call-template name="rendToClass"/>
+		<xsl:call-template name="rendToClass">
+		  <xsl:with-param name="default"></xsl:with-param>
+		</xsl:call-template>
 	      </xsl:for-each>
 	      <xsl:if test="$xhtml='false'">
                 <a name="{$ident}"/>
@@ -1027,7 +1029,9 @@ $requestedID: requests a particular page
         <xsl:if test="not($Head = '')">
           <xsl:element name="h{$Head + $divOffset}">
 	    <xsl:for-each select="tei:head[1]">
-	      <xsl:call-template name="rendToClass"/>
+	      <xsl:call-template name="rendToClass">
+		  <xsl:with-param name="default"></xsl:with-param>
+	      </xsl:call-template>
 	    </xsl:for-each>
             <xsl:if test="$xhtml='false'">
               <a name="{$ident}"/>
@@ -1059,7 +1063,9 @@ $requestedID: requests a particular page
           <xsl:if test="not($Type = '')">
             <xsl:element name="h{$Type + $divOffset}">
 	      <xsl:for-each select="tei:head[1]">		
-		<xsl:call-template name="rendToClass"/>
+		<xsl:call-template name="rendToClass">
+		  <xsl:with-param name="default"></xsl:with-param>
+		</xsl:call-template>
 	      </xsl:for-each>
               <xsl:if test="$xhtml='false'">
                 <a name="{$ident}"/>
@@ -1085,7 +1091,9 @@ $requestedID: requests a particular page
         <xsl:if test="not($Type = '')">
           <xsl:element name="h{$Type + $divOffset}">
 	    <xsl:for-each select="tei:head[1]">
-	      <xsl:call-template name="rendToClass"/>
+	      <xsl:call-template name="rendToClass">
+		<xsl:with-param name="default"></xsl:with-param>
+	      </xsl:call-template>
 	    </xsl:for-each>
             <xsl:if test="$xhtml='false'">
               <a name="{$ident}"/>

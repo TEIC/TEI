@@ -236,7 +236,9 @@
   </xd:doc>
   <xsl:template match="tei:row">
     <tr>
-      <xsl:call-template name="rendToClass"/>
+      <xsl:call-template name="rendToClass">
+	<xsl:with-param name="default"></xsl:with-param>
+      </xsl:call-template>
       <xsl:if test="@role">
         <xsl:attribute name="class">
           <xsl:value-of select="@role"/>

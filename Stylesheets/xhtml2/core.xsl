@@ -84,9 +84,7 @@
   </xd:doc>
   <xsl:template match="tei:ab">
     <div>
-      <xsl:call-template name="rendToClass">
-	<xsl:with-param name="default">ab</xsl:with-param>
-      </xsl:call-template>
+      <xsl:call-template name="rendToClass"/>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
@@ -135,9 +133,7 @@
   </xd:doc>
   <xsl:template match="tei:byline">
     <div>
-      <xsl:call-template name="rendToClass">
-	<xsl:with-param name="default">byline</xsl:with-param>
-      </xsl:call-template>
+      <xsl:call-template name="rendToClass"/>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
@@ -182,7 +178,7 @@
     <xsl:choose>
       <xsl:when test="@rend='display'">
         <blockquote>
-	  <xsl:call-template name="generateClass"/>
+	  <xsl:call-template name="rendToClass"/>
           <p>
             <xsl:apply-templates select="tei:q|tei:quote"/>
             <xsl:apply-templates select="tei:bibl"/>
@@ -270,9 +266,7 @@
   </xd:doc>
   <xsl:template match="tei:epigraph">
     <div>
-      <xsl:call-template name="rendToClass">
-	<xsl:with-param name="default">epigraph</xsl:with-param>
-      </xsl:call-template>
+      <xsl:call-template name="rendToClass"/>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
@@ -643,7 +637,7 @@
   </xd:doc>
   <xsl:template match="tei:l">
     <div>
-      <xsl:call-template name="generateClass"/>
+      <xsl:call-template name="rendToClass"/>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
@@ -653,7 +647,7 @@
   </xd:doc>
   <xsl:template match="tei:lg">
     <div>
-      <xsl:call-template name="generateClass"/>
+      <xsl:call-template name="rendToClass"/>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
@@ -690,6 +684,7 @@
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:attribute name="class">
+	      <xsl:text>TEI_</xsl:text>
 	      <xsl:value-of select="local-name()"/>
 	    </xsl:attribute>
 	  </xsl:otherwise>
@@ -743,7 +738,7 @@
       <xsl:when test="@type='catalogue'">
         <p>
           <dl>
-            <xsl:call-template name="rendToClass"/>
+            <xsl:call-template name="rendToClass"><xsl:with-param name="default"></xsl:with-param></xsl:call-template>
             <xsl:for-each select="tei:item">
               <p/>
               <xsl:apply-templates mode="gloss" select="."/>
@@ -757,7 +752,7 @@
         </xsl:variable>
         <p>
           <table>
-            <xsl:call-template name="rendToClass"/>
+            <xsl:call-template name="rendToClass"><xsl:with-param name="default"></xsl:with-param></xsl:call-template>
             <tr>
               <td valign="top">
                 <dl>
@@ -777,13 +772,13 @@
       </xsl:when>
       <xsl:when test="@type='gloss' or  tei:label">
         <dl>
-          <xsl:call-template name="rendToClass"/>
+          <xsl:call-template name="rendToClass"><xsl:with-param name="default"></xsl:with-param></xsl:call-template>
           <xsl:apply-templates mode="gloss" select="tei:item"/>
         </dl>
       </xsl:when>
       <xsl:when test="@type='glosstable' or @type='valList'">
         <table>
-          <xsl:call-template name="rendToClass"/>
+          <xsl:call-template name="rendToClass"><xsl:with-param name="default"></xsl:with-param></xsl:call-template>
           <xsl:apply-templates mode="glosstable" select="tei:item"/>
         </table>
       </xsl:when>
@@ -798,7 +793,7 @@
       </xsl:when>
       <xsl:when test="@type='unordered' or @type='simple'">
         <ul>
-          <xsl:call-template name="rendToClass"/>
+          <xsl:call-template name="rendToClass"><xsl:with-param name="default"></xsl:with-param></xsl:call-template>
           <xsl:apply-templates select="tei:item"/>
         </ul>
       </xsl:when>
@@ -807,7 +802,7 @@
       </xsl:when>
       <xsl:when test="starts-with(@type,'ordered')">
         <ol>
-          <xsl:call-template name="rendToClass"/>
+          <xsl:call-template name="rendToClass"><xsl:with-param name="default"></xsl:with-param></xsl:call-template>
           <xsl:if test="starts-with(@type,'ordered:')">
             <xsl:attribute name="start">
               <xsl:value-of select="substring-after(@type,':')"/>
@@ -818,7 +813,7 @@
       </xsl:when>
       <xsl:otherwise>
         <ul>
-          <xsl:call-template name="rendToClass"/>
+          <xsl:call-template name="rendToClass"><xsl:with-param name="default"></xsl:with-param></xsl:call-template>
           <xsl:apply-templates select="tei:item"/>
         </ul>
       </xsl:otherwise>
@@ -963,7 +958,7 @@
 	  <xsl:with-param name="name" select="$identifier"/>
 	</xsl:call-template>
         <blockquote>
-	  <xsl:call-template name="generateClass"/>
+	  <xsl:call-template name="rendToClass"/>
 	  <p>
             <xsl:apply-templates/>
           </p>
@@ -1156,7 +1151,7 @@
     <xsl:choose>
       <xsl:when test="tei:p|tei:l">
         <blockquote>
-	  <xsl:call-template name="generateClass"/>
+	  <xsl:call-template name="rendToClass"/>
           <xsl:apply-templates/>
         </blockquote>
       </xsl:when>
@@ -1182,7 +1177,7 @@
   </xd:doc>
   <xsl:template match="tei:q[@rend='display']">
     <blockquote>
-      <xsl:call-template name="generateClass"/>
+      <xsl:call-template name="rendToClass"/>
       <xsl:choose>
         <xsl:when test="tei:p">
           <xsl:apply-templates/>
@@ -1237,7 +1232,7 @@
       </xsl:when>
       <xsl:otherwise>
         <blockquote>
-	  <xsl:call-template name="generateClass"/>
+	  <xsl:call-template name="rendToClass"/>
           <xsl:choose>
             <xsl:when test="tei:p">
               <xsl:apply-templates/>
@@ -2092,55 +2087,6 @@
   </xsl:template>
 
   <xd:doc>
-    <xd:short>[html] convert rend attribute to HTML class</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="rendToClass">
-    <xsl:param name="id">true</xsl:param>
-    <xsl:param name="default"/>
-    <xsl:if test="$id='true'">
-      <xsl:choose>
-	<xsl:when test="@id">
-	  <xsl:copy-of select="@id"/>
-	</xsl:when>
-	<xsl:when test="@xml:id">
-	  <xsl:attribute name="id">
-	    <xsl:value-of select="@xml:id"/>
-	  </xsl:attribute>
-	</xsl:when>
-      </xsl:choose>
-    </xsl:if>
-    <xsl:choose>
-      <xsl:when test="@rend and starts-with(@rend,'class:')">
-        <xsl:attribute name="class">
-          <xsl:value-of select="substring-after(@rend,'class:')"/>
-        </xsl:attribute>
-      </xsl:when>
-      <xsl:when test="@rend">
-        <xsl:attribute name="class">
-          <xsl:value-of select="@rend"/>
-        </xsl:attribute>
-      </xsl:when>
-      <xsl:when test="@rendition">
-	<xsl:call-template name="applyRendition"/>
-      </xsl:when>
-      <xsl:when test="not($default='')">
-        <xsl:attribute name="class">
-	  <xsl:value-of select="$default"/>
-        </xsl:attribute>
-      </xsl:when>
-    </xsl:choose>
-    <xsl:call-template name="rendToClassHook"/>
-  </xsl:template>
-
-  <xd:doc>
-    <xd:short>[html] allow for local extensions to rendToClass</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="rendToClassHook"/>
-
- 
-  <xd:doc>
     <xd:short>[html] Create a point to which we can link in the HTML</xd:short>
     <xd:param name="name">value for identifier</xd:param>
     <xd:detail> </xd:detail>
@@ -2223,24 +2169,64 @@
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template name="generateClass">
-    <xsl:choose>
-      <xsl:when test="@rend">
-	<xsl:attribute name="class">
-	  <xsl:value-of select="@rend"/>
-	</xsl:attribute>
-      </xsl:when>
-      <xsl:when test="@rendition">
-	<xsl:call-template name="applyRendition"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:attribute name="class">
+  <xd:doc>
+    <xd:short>[html] convert rend attribute to HTML class</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="rendToClass">
+    <xsl:param name="id">true</xsl:param>
+    <xsl:param name="default">.</xsl:param>
+    <xsl:if test="$id='true'">
+      <xsl:choose>
+	<xsl:when test="@id">
+	  <xsl:copy-of select="@id"/>
+	</xsl:when>
+	<xsl:when test="@xml:id">
+	  <xsl:attribute name="id">
+	    <xsl:value-of select="@xml:id"/>
+	  </xsl:attribute>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:if>
+
+
+    <xsl:variable name="class">
+      <xsl:choose>
+	<xsl:when test="$default=''"/>
+	<xsl:when test="not($default='.')">
+	  <xsl:value-of select="$default"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>TEI_</xsl:text>
 	  <xsl:value-of select="local-name()"/>
-	</xsl:attribute>
-      </xsl:otherwise>
-    </xsl:choose>
+	</xsl:otherwise>
+      </xsl:choose>
+      <xsl:choose>
+	<xsl:when test="@rend">
+	  <xsl:text> </xsl:text>
+	  <xsl:value-of select="@rend"/>
+	</xsl:when>
+	<xsl:when test="@rendition">
+	  <xsl:text> </xsl:text>
+	  <xsl:call-template name="applyRendition"/>
+	</xsl:when>
+      </xsl:choose>
+      <xsl:call-template name="rendToClassHook"/>
+    </xsl:variable>
+    <xsl:if test="not($class='')">
+      <xsl:attribute name="class">
+	<xsl:value-of select="$class"/>
+      </xsl:attribute>
+    </xsl:if>
   </xsl:template>
 
+  <xd:doc>
+    <xd:short>[html] allow for local extensions to rendToClass</xd:short>
+    <xd:detail> </xd:detail>
+  </xd:doc>
+  <xsl:template name="rendToClassHook"/>
+
+ 
 
 
 </xsl:stylesheet>
