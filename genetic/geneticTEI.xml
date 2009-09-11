@@ -19,6 +19,11 @@
          </sourceDesc>
       </fileDesc>
       <revisionDesc>
+         <change when="2009-09-10">
+            <name>Lou Burnard</name>
+            <date>9-11 Sept 09</date>
+            <desc>Further revision campaign</desc>
+         </change>
          <change when="2009-08-28">
             <name>Lou Burnard</name>
             <date>27-28 Aug 09</date>
@@ -46,21 +51,21 @@
                Genetic Editions and Genetic Editing. The document is the product of a Workgroup on
                Genetic Editions (chair: Fotis Jannidis), which is part of the TEI MS SIG (chairs:
                Elena Pierazzo, Malte Rehbein, Amanda Galley). </p>
-            <p>The workgroup's goal was  develop an <hi rend="bold">Application
-                  Profile</hi> for the  encoding of genetic editions and, in general, genetic phenomena.
-               Such a profile would customize and possibly extend the
-	       existing TEI elements for the purpose of encoding  genetic
-               editions and genetic phenomena. It would be expressed initially
-	    as a TEI P5 conformant ODD, integrating material from the
-	    existing TEI Guidelines, chiefly
-Chapter 11. <title>Representation of Primary Sources</title> and Chapter
-               12. <title>Critical Apparatus</title>. It might
-	       eventually, at the end
-               of the process described in the following section, constitute a self standing new
-                  <title>Guidelines</title> chapter, or remain a set
-		  of recommendations for how to customize the
-		  Guidelines, but that is a
-	    decision for the TEI Council.</p>
+            <p>The workgroup's goal was develop an <hi
+            rend="bold">Application Profile</hi> for the encoding of
+            genetic editions and, in general, genetic phenomena.  Such
+            a profile would customize and possibly extend the existing
+            TEI elements for the purpose of encoding genetic editions
+            and genetic phenomena. It would be expressed initially as
+            a TEI P5 conformant ODD, integrating material from the
+            existing TEI Guidelines, chiefly Chapter
+            11. <title>Representation of Primary Sources</title> and
+            Chapter 12. <title>Critical Apparatus</title>. It might
+            eventually, at the end of the process described in the
+            following section, constitute a self standing new
+            <title>Guidelines</title> chapter, or remain a set of
+            recommendations for how to customize the Guidelines, but
+            that is a decision for the TEI Council.</p>
             <p>The document reflects  discussions held at a number of different
                meetings:</p>
             <list >
@@ -329,7 +334,7 @@ relevant than the texts they embody; to use a bibliographical
 <item>a TEI Header, containing metadata</item>
 <item>a TEI <gi>facsimile</gi> element, containing and describing visual
 representations of a document</item>
-<item>a <gi>gi:document</gi> element, containing a genetic
+<item>a <gi>ge:document</gi> element, containing a genetic
 transcription of a document</item>
 <item>a TEI <gi>text</gi> element, containing an encoded version of
 the text constructed from the document.</item>
@@ -541,7 +546,7 @@ The In-
        </surface>
 -->
     </egXML> The <gi>ge:metaMark</gi> element used in this example is
-further discussed below (<ptr target="#somewhere"/>)</p>
+further discussed below (<ptr target="#mm"/>)</p>
  </div>
 
  <div xml:id="alterations">
@@ -705,17 +710,18 @@ clarification. In the following example, for example, we can distinguish at
 least two attempts to write the letters <mentioned>er</mentioned> in
 the word <mentioned>bægerklang</mentioned>:
 
-<figure><graphic url="examples/bagerklang.png"/>
+<figure><graphic url="examples/munch01.jpg"/>
 <head rend="it">Image from http://www.emunch.no/tei-mm-2008/ms.html </head>
 </figure>
 
 We might encode this by nesting the <gi>rewrite</gi> element as follows:
 
      <egXML xmlns="http://www.tei-c.org/ns/Examples"><ge:line>ved
-        Bæg<ge:rewrite cause="clarify" seq="2">
-	<ge:rewrite cause="clarify" seq="1">er</ge:rewrite></ge:rewrite>
+        Bæg<ge:rewrite cause="clarify" stage="2">
+	<ge:rewrite cause="clarify" stage="1">er</ge:rewrite></ge:rewrite>
 ...</ge:line>     </egXML> 
 
+The <att>stage</att> attribute used here is discussed further below (<ptr target="#stages"/>).
 <!-- maybe! -->
 
 </p>
@@ -867,7 +873,8 @@ where feasible.</p>
        </list>
 -->
        <p>In the following simple example, taken from an Ibsen
-       manuscript (<ptr target="http://www.emunch.no/tei-mm-2008/ms.html"/>), the underlined numbers 1 and 2 indicate that,
+       manuscript <figure><graphic url="ibsen01.png"/>
+<head>Extracted from <ptr target="http://www.emunch.no/tei-mm-2008/ms.html"/></head></figure>, the underlined numbers 1 and 2 indicate that,
        although the word <mentioned>bör</mentioned> precedes the word
        <mentioned>hör</mentioned> in the text, the order of the two words should be reversed. We
 may encode this as follows:        <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -879,16 +886,17 @@ may encode this as follows:        <egXML xmlns="http://www.tei-c.org/ns/Example
 <ge:metaMark rend="underline" function="transposition" 
         place="above">1.</ge:metaMark></ge:line>
 </egXML> </p>
-<p>In the following, more complex example, the whole of a block has
-been moved. Since <gi>tr</gi> is a spanning element, this is
+<p>In the following example from the same manuscript, two lines are to
+be interchanged. 
+<figure><graphic url="ibsen04.png"/>
+<head>Extracted from <ptr target="http://www.emunch.no/tei-mm-2008/ms3.html"/></head></figure>
+ Since <gi>tr</gi> is a spanning element, this is
 relatively easy to represent:
-In Example 1 at <ptr
-             target="http://www.emunch.no/tei-mm-2008/ms3.html"/>, Ibsen transposes a
-          full block, in this cases it might be more convenient to use <gi>ge:tr</gi>
-          as an empty element: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">
              <ge:line><ge:metaMark function="transposition"
 				place="margin-left">2.)</ge:metaMark>
-<ge:tr xml:id="ib3" spanTo="#ib3e" moveTo="#ib4"/>thi da er du  med Himmelen i Pagt; –<anchor xml:id="ib3e"/></ge:line>
+<ge:tr xml:id="ib3" spanTo="#ib3e" moveTo="#ib4"/>thi da er du  med
+	     Himmelen i Pagt;<anchor xml:id="ib3e"/> — </ge:line>
 <ge:line>
 <ge:metaMark function="transposition"
 	     place="margin-left">1.)</ge:metaMark>
@@ -924,7 +932,7 @@ Using these elements, the first example above might be encoded as follows:
        substitution. We propose that this model should be extended to
        include cases such as the following:  example taken from Thomas More's <title>Lalla Rooke</title>
           <figure>
-             <graphic url="constr_example/MooreRooke.png"/>
+             <graphic url="examples/moore01.png"/>
           </figure> 
 Here the word <mentioned>pondering</mentioned> is deleted, and the
 phrase <mentioned>she mus'd</mentioned> are added, while the word
@@ -938,8 +946,113 @@ type="class">model.pPart.transcriptional</ident>. This would then permit an  enc
      mus'd</add></ge:subst>, her pinions fann'd</ge:line>
           </egXML></p>
     </div>
+    <div>
+       <head>Undoing alterations</head>
+       <p>In some cases an author indicates that  an alteration is
+       itself to be altered: for example, a struck through passage may be
+          restored via a dotted underlining, or the underlining of a passage may be
+          deleted by a wavy line. </p>
+       <p>The TEI provides an  element <gi>restore</gi> for one
+       specific kind of alteration to an alteration, namely the
+       undoing of a deletion. We propose a more general element,
+       <gi>undo</gi>.
+<specList>
+<specDesc key="undo"/>
+</specList>
+The element <gi>ge:undo</gi> usually encloses the
+          element (e.g. the <gi>tr</gi>, <gi>add</gi>, <gi>del</gi>
+	  etc.) to be undone. If it appears within such an element, the
+	  implication is that only this part of the parent element has
+	  been cancelled. For example, in this passage 
+           taken from Giacomo Leopardi's <title>Zibaldone</title> (p.
+          3595), the phrase <mentioned>si rechi á</mentioned> was
+	  underlined word by word, and then the underlining of the
+	  word <mentioned>si</mentioned> was cancelled. <figure>
+             <graphic url="examples/leap01.png"/>
+          </figure>This could be encoded as follows:<egXML
+             xmlns="http://www.tei-c.org/ns/Examples">
+             <ge:line> che e’ <hi rend="underline"><ge:undo>si</ge:undo> rechi a’</hi>
+  <del rend="overstrike">dotti</del>
+  <hi rend="underline">denti</hi> l’un d’essi cibi</ge:line>
+          </egXML></p>
+    </div>
+ </div>
+
+
+ <div xml:id="text-stage">
+    <head>Stages</head>
+    <p>A major purpose of genetic editing is the identification of <soCalled>campaigns of revision</soCalled>
+       or <term>text-stages</term>). A genetic editor needs to be able
+       to assign  a set of
+       alterations (deletions, additions, substitutions,
+       transpositions, etc.) to a text stage, to indicate both that
+       one or more of such phenomena preceded or followed another and
+       also to indicate that they are related in some way, for
+       example that one is a consequence of the other. To document this we need:<list >
+          <item>A system to attribute an alteration or any other phenomena occurring
+             at document level to a particular revision campaign or text-stage</item>
+          <item>A way to describe a revision campaign text-stage</item>
+       </list></p>
+<p>The present TEI element <gi>seq</gi> provides some of this
+functionality, but not all. We propose the following mechanism. 
+<list>
+<item>a generally available attribute <att>stage</att> is provided
+which can be used to identify any textual alteration as belonging to
+some specific stage.</item>
+<item>a <gi>stageList</gi> element is provided in the header, to group
+together and document individual stages, each being defined by a
+<gi>stageNote</gi> element. Typically, each <gi>stageNote</gi>  contains several
+       references to <gi>ge:edJust</gi> elements (see <ref target="#edjust"
+          >below</ref>) and to other annotations contained within the
+          <gi>teiHeader</gi> or in the document. <egXML
+          xmlns="http://www.tei-c.org/ns/Examples">
+          <profileDesc>
+             <creation>
+  <date notAfter="1816-07-18"/>
+  <ge:stageList>
+     <ge:stageNote xml:id="mod1">The first draft of
+           <title>Persuasion</title> is completed by the <date>July 16
+           1816</date> written after the word <q>Finis</q> at <ref
+           target="#pers-30">page 30</ref>. </ge:stageNote>
+     <ge:stageNote xml:id="mod2"> After the <date>16th of July</date>
+        Austen starts revision of the two final chapters, by rewriting
+        the end and adding a new block (<ref target="#transp-1">pages
+           32-35</ref>) to be inserted at <ref target="#insertion-p1"
+           >page 19</ref>. This stage is documented by the deletion of
+        the date (<date>July 16 1816</date>) at <ref target="#pers-30"
+           >page 30</ref>, and the addition of more text and of a new
+        date (<date>July 18. 1816</date>) at <ref target="#pers-31">page
+           31</ref>
+     </ge:stageNote>
+     <ge:stageNote>Before publication, after <date>July 18th, 1816</date>
+        chapters 10-11 were broken into three chapters, 10, 11, 12, as
+        witnessed by the print</ge:stageNote>
+  </ge:modGroup>
+             </creation>
+          </profileDesc>
+       </egXML></p>
+    <p>In many cases it is necessary to scope a portion of text in which one or more
+       alteration occurs, in order to give the necessary context for any editorial
+       discussion. For that purpose we have introduced an element <gi>ge:mod</gi>,
+       which occurs within a <gi>ge:line</gi> or a <gi>p</gi> or any block and phrasal
+       level elements. As the element is likely to overlap with other hierarchies (in
+       particular it is very likely to overlap with <gi>ge:line</gi> in case the
+       editor has chosen to encode the document level), the element can also used as
+       empty (provided it carries a <att>spanTo</att> attribute). <egXML
+          xmlns="http://www.tei-c.org/ns/Examples">
+          <ge:line>her face) – <ge:mod spanTo="#ch10-06-23" mod="#mod1"/>But <subst>
+  <del rend="overstriked">I do not</del>
+  <add place="above">you have not</add>
+             </subst> see much</ge:line>
+          <ge:line>the Look of it <del rend="overstriked">in your
+             Countenance."</del></ge:line>
+          <ge:line><add place="above">as Grave as a little Judge."</add>,<anchor
+  xml:id="ch10-06-23"/> – Anne blushed. – Aye, aye, that</ge:line>
+       </egXML></p>
+ </div>
+
     <div xml:id="false-start">
-       <head>*Instant corrections and *false starts</head>
+       <head>Timing</head>
        <p>Distinguishing instant correction from other kinds of alteration is
           important when establishing the timing of a specific revisions and in the
           whole genetic process. The information might be supplied as a specific
@@ -985,100 +1098,7 @@ type="class">model.pPart.transcriptional</ident>. This would then permit an  enc
              >supplied</gi> element could be used, perhaps together with a
              <att>type</att> attribute (possibly redundant is already used for the
              <gi>del</gi> element).</p>
-    </div>
-    <div>
-       <head>Undoing alterations</head>
-       <p>In some case authors undo alterations, e.g. a struck through passage may be
-          restored via a dotted underlining, or the underlining of a passage may be
-          deleted by a wavy line. </p>
-       <p>An element <gi>restore</gi> already exists in TEI for undoing a deletion,
-          but we need a more general approach, for instance to delete underlining or
-          transposition. We have introduced an element <gi>ge:undo</gi> for that
-          purpose provided with at attribute <att>target</att> pointing at the element
-          to be undone. Normally the element <gi>ge:undo</gi> would contain the
-          element to be undone, except in the case of partial undoing as in the
-          following example taken from Giacomo Leopardi's <title>Zibaldone</title> (p.
-          3595) <figure>
-             <graphic url="constr_example/LeoZib.png"/>
-          </figure>Which could be encoded as follows:<egXML
-             xmlns="http://www.tei-c.org/ns/Examples">
-             <ge:line> che e’ <hi rend="underline" xml:id="uline1"><ge:undo
-        target="#uline1">si</ge:undo> rechi a’</hi>
-  <del rend="overstrike">dotti</del>
-  <hi rend="underline">denti</hi> l’un d’essi cibi</ge:line>
-          </egXML></p>
-    </div>
- </div>
 
-
- <div xml:id="text-stage">
-    <head>Grouping Modifications (Document level)</head>
-    <p>In some cases modifications can be attributed to a single campaign of revision
-       (or <soCalled>text-stage</soCalled>), meaning we can say that a set of
-       alterations (deletion, addition, substitution, transposition, etc.) are
-       interrelated (i.e. one is a consequence of the other, they happened at the same
-       time, etc.). To document this we need:<list >
-          <item>A system to attribute an alteration or any other phenomena occurring
-             at document level to a particular revision campaign/text-stage</item>
-          <item>A way to describe a revision campaign/text-stage</item>
-       </list></p>
-    <p>For the former purpose ('attribute an alteration to a revision campaign') we
-       have introduced a global attribute <att>mod</att> that points to an
-          <att>xml:id</att> attribute within an element describing a specific
-       text-stage; the element provided for that purpose is <gi>ge:modGrp</gi>
-       ('modification group') which can occur within <gi>creation</gi> in the
-          <gi>teiHeader</gi> and groups the editorial reasons for stating that some
-       alteration belong to a text-stage. Element <gi>ge:modGroup</gi> contains a
-       sequence of <gi xml:id="revNote">ge:modNote</gi>, each of them describing a
-       single text-stage. Typically, a <gi>ge:modNote</gi> will contain several
-       references to <gi>ge:edJust</gi> elements (see <ref target="#edjust"
-          >below</ref>) and to other annotations contained within the
-          <gi>teiHeader</gi> or in the document. <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">
-          <profileDesc>
-             <creation>
-  <date notAfter="1816-07-18"/>
-  <ge:modGroup>
-     <ge:modNote xml:id="mod1">The first draft of
-           <title>Persuasion</title> is completed by the <date>July 16
-           1816</date> written after the word <q>Finis</q> at <ref
-           target="#pers-30">page 30</ref>. </ge:modNote>
-     <ge:modNote xml:id="mod2"> After the <date>16th of July</date>
-        Austen starts revision of the two final chapters, by rewriting
-        the end and adding a new block (<ref target="#transp-1">pages
-           32-35</ref>) to be inserted at <ref target="#insertion-p1"
-           >page 19</ref>. This stage is documented by the deletion of
-        the date (<date>July 16 1816</date>) at <ref target="#pers-30"
-           >page 30</ref>, and the addition of more text and of a new
-        date (<date>July 18. 1816</date>) at <ref target="#pers-31">page
-           31</ref>
-     </ge:modNote>
-     <ge:modNote>Before publication, after <date>July 18th, 1816</date>
-        chapters 10-11 were broken into three chapters, 10, 11, 12, as
-        witnessed by the print</ge:modNote>
-  </ge:modGroup>
-             </creation>
-          </profileDesc>
-       </egXML></p>
-    <p>In many cases it is necessary to scope a portion of text in which one or more
-       alteration occurs, in order to give the necessary context for any editorial
-       discussion. For that purpose we have introduced an element <gi>ge:mod</gi>,
-       which occurs within a <gi>ge:line</gi> or a <gi>p</gi> or any block and phrasal
-       level elements. As the element is likely to overlap with other hierarchies (in
-       particular it is very likely to overlap with <gi>ge:line</gi> in case the
-       editor has chosen to encode the document level), the element can also used as
-       empty (provided it carries a <att>spanTo</att> attribute). <egXML
-          xmlns="http://www.tei-c.org/ns/Examples">
-          <ge:line>her face) – <ge:mod spanTo="#ch10-06-23" mod="#mod1"/>But <subst>
-  <del rend="overstriked">I do not</del>
-  <add place="above">you have not</add>
-             </subst> see much</ge:line>
-          <ge:line>the Look of it <del rend="overstriked">in your
-             Countenance."</del></ge:line>
-          <ge:line><add place="above">as Grave as a little Judge."</add>,<anchor
-  xml:id="ch10-06-23"/> – Anne blushed. – Aye, aye, that</ge:line>
-       </egXML></p>
- </div>
             </div>
             <div>
  <head>Dossier Level</head>
@@ -1120,7 +1140,7 @@ type="class">model.pPart.transcriptional</ident>. This would then permit an  enc
        genetic grouping, a <att>type</att> attribute is also provided.
           <gi>ge:geneticGrp</gi> contains a sequence of <gi xml:id="geneticNote"
           >ge:geneticNote</gi> whose <att>targets</att> attribute can refer to several
-          <gi>ge:modNote</gi> of specific documents or to other annotations and
+          <gi>ge:stageNote</gi> of specific documents or to other annotations and
        editorial statements.</p>
     <p>An example of Genetic Grouping can be considered the overview done by Kenneth
        Price and Brett Barney on the genesis of a Walt Whitman poem eventually titled
@@ -1178,7 +1198,7 @@ type="class">model.pPart.transcriptional</ident>. This would then permit an  enc
              <gi>node</gi> represent a version of a text, or a text stage, or any
              related document. The element need to carry an <att>xml:id</att>
              attribute (to be used by arcs) and a <att>target</att> attribute which
-             points to a file, in case of a document, or to a <gi>ge:modNote</gi>, in
+             points to a file, in case of a document, or to a <gi>ge:stageNote</gi>, in
              case of a text stage.</item>
           <item>
              <gi>arc</gi> embeds a <att>rel</att> attribute which points to
@@ -1522,8 +1542,8 @@ type="class">model.pPart.transcriptional</ident>. This would then permit an  enc
        documenting editorial decisions has a fundamental role. </p>
     <p>Different forms of documentation have been discussed before in several previous
        sections: <list >
-          <item><gi>ge:modNote</gi>: documents the constitution of a text-stage (<ref
-  target="#modNote">see</ref>) </item>
+          <item><gi>ge:stageNote</gi>: documents the constitution of a text-stage (<ref
+  target="#stageNote">see</ref>) </item>
           <item><gi>ge:geneticNote</gi>: documents the constitution of a genetic group
   (<ref target="#geneticNote">see</ref>)</item>
        </list>All these elements carry a <att>cert</att> attribute to declare the
@@ -1655,7 +1675,7 @@ type="class">model.pPart.transcriptional</ident>. This would then permit an  enc
  <classSpec ident="att.global" type="atts" mode="change" module="tei">
     <attList>
        <attDef ident="mod" mode="add">
-          <desc>Points to a <gi>modNote</gi> which contains a description of a
+          <desc>Points to a <gi>stageNote</gi> which contains a description of a
              text-stage to which the editors think the alteration marked by the
   <att>mod</att> attribute belongs.</desc>
           <datatype minOccurs="1" maxOccurs="1">
@@ -1893,10 +1913,11 @@ provide two writing surfaces</desc>
        </rng:zeroOrMore>
     </content>
  </elementSpec>
- <elementSpec ident="modGroup" ns="http://www.tei-c.org/ns/geneticEditions"
+
+ <elementSpec ident="stageList" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
-    <desc>(modification group) groups and describes the various modifications that
-       occurred in the text's genesis within a document.</desc>
+    <desc>contains one or more descriptions of the stages which have
+    been identified in the genesis of a text.</desc>
     <classes>
        <memberOf key="att.global"/>
     </classes>
@@ -1910,15 +1931,16 @@ provide two writing surfaces</desc>
   <rng:ref name="summary"/>
              </rng:optional>
              <rng:oneOrMore>
-  <rng:ref name="modNote"/>
+  <rng:ref name="stageNote"/>
              </rng:oneOrMore>
           </rng:group>
        </rng:choice>
     </content>
  </elementSpec>
- <elementSpec ident="modNote" ns="http://www.tei-c.org/ns/geneticEditions"
+
+ <elementSpec ident="stageNote" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
-    <desc>Describes a revision in the text genesis.</desc>
+    <desc>documents a particular stage in the genesis of a text.</desc>
     <classes>
        <memberOf key="att.global"/>
        <memberOf key="att.editLike"/>
@@ -1928,6 +1950,7 @@ provide two writing surfaces</desc>
           name="macro.specialPara"/>
     </content>
  </elementSpec>
+
  <elementSpec ident="mod" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
     <desc>Scope an area in the document containing several alteration which are
@@ -2088,7 +2111,7 @@ attribute.</p></remarks> </elementSpec>
     </attList>
  </elementSpec>
 
- <elementSpec ident="repetition" ns="http://www.tei-c.org/ns/geneticEditions"
+ <!--elementSpec ident="repetition" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
     <desc>A repetition of already written text.</desc>
     <classes>
@@ -2111,7 +2134,8 @@ attribute.</p></remarks> </elementSpec>
           </datatype>
        </attDef>
     </attList>
- </elementSpec>
+ </elementSpec--><!-- replaced by rewrite-->
+ 
  <elementSpec ident="unclear" module="core" mode="change">
     <classes mode="replace">
        <memberOf key="model.choicePart" mode="add"/>
@@ -2148,7 +2172,7 @@ attribute.</p></remarks> </elementSpec>
  </elementSpec>
  <elementSpec ident="tr" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
-    <desc>Mark a section to be transposed</desc>
+    <desc>marks a section of a document marked as to be transposed elsewhere</desc>
     <classes>
        <memberOf key="model.pPart.transcriptional"/>
        <memberOf key="att.transcriptional"/>
@@ -2160,6 +2184,13 @@ attribute.</p></remarks> </elementSpec>
        <rng:ref
           name="macro.specialPara"/>
     </content>
+<attList>
+<attDef ident="moveTo">
+<desc>points to the target location for the transposition.</desc>
+<datatype minOccurs="1" maxOccurs="1">
+             <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+          </datatype>
+</attDef></attList>
  </elementSpec>
  <!-- genetic groups -->
  <elementSpec ident="geneticGrp" mode="add"
