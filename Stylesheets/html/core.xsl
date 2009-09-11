@@ -693,7 +693,7 @@
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:attribute name="class">
-	      <xsl:text>TEI_l</xsl:text>
+	      <xsl:text>l</xsl:text>
 	    </xsl:attribute>
 	  </xsl:otherwise>
 	</xsl:choose>
@@ -2207,7 +2207,6 @@
 	  <xsl:value-of select="$default"/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:text>TEI_</xsl:text>
 	  <xsl:value-of select="local-name()"/>
 	</xsl:otherwise>
       </xsl:choose>

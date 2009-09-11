@@ -284,22 +284,10 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:foreign">
-    <xsl:choose>
-      <xsl:when test="@rend">
-        <xsl:call-template name="rendering"/>
-      </xsl:when>
-      <xsl:when test="@rendition">
-	<span>
-	<xsl:call-template name="applyRendition"/>
-	<xsl:apply-templates/>
-	</span>
-      </xsl:when>
-      <xsl:otherwise>
-	<span class="foreign">
-	      <xsl:apply-templates/>
-	</span>
-      </xsl:otherwise>
-    </xsl:choose>
+    <span>
+      <xsl:call-template name="rendToClass"/>
+      <xsl:apply-templates/>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:gap</xd:short>
@@ -684,7 +672,6 @@
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:attribute name="class">
-	      <xsl:text>TEI_</xsl:text>
 	      <xsl:value-of select="local-name()"/>
 	    </xsl:attribute>
 	  </xsl:otherwise>
@@ -875,22 +862,10 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:mentioned">
-    <xsl:choose>
-      <xsl:when test="@rend">
-        <xsl:call-template name="rendering"/>
-      </xsl:when>
-      <xsl:when test="@rendition">
-	<span>
-	<xsl:call-template name="applyRendition"/>
-        <xsl:apply-templates/>
-	</span>
-      </xsl:when>
-      <xsl:otherwise>
-	<span class="mentioned">
-	  <xsl:apply-templates/>
-	</span>
-      </xsl:otherwise>
-    </xsl:choose>
+    <span>
+      <xsl:call-template name="rendToClass"/>
+      <xsl:apply-templates/>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:name in mode "plain"</xd:short>
@@ -2197,7 +2172,6 @@
 	  <xsl:value-of select="$default"/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:text>TEI_</xsl:text>
 	  <xsl:value-of select="local-name()"/>
 	</xsl:otherwise>
       </xsl:choose>
