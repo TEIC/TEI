@@ -311,13 +311,16 @@ relevant than the texts they embody; to use a bibliographical
     </list>
  </item>
             </list>
-            <div>
- <head>Document level</head>
+	 </div>
+
+            <div><head>The document level</head>
+
  <div>
-    <head>The Document-based Transcription </head>
-    <p>The document-based transcription includes 4 hierarchically organised levels:
+    <head>Transcription of a document </head>
+    <p>A document-based transcription is  hierarchically organised in
+    the following way:
           <list >
-          <item>Document<list >
+          <item>document<list >
   <item>Writing Surface (page, double page, folium, etc.) <list
         >
         <item>zone <list >
@@ -580,15 +583,15 @@ alterations at the document level, within a single document,
 complementary to the elements already provided for this purpose by
 the TEI scheme. We discuss specifically:
 <list>
-<item><soCalled>meta-marks</soCalled>, that is a kind of markup in the source
+<item><soCalled>meta-marks</soCalled>, that is a kind of authorial
+markup present in the source and
 indicating how it should be read; </item>
 <item>additions, where a passage has been rewritten to fix or clarify
 it; </item>
 <item>deletions, where a passage had been struck through to indicate
-that it has been, or where a deletion has itself been cancelled</item>
+that it has been removed, or where a deletion has itself been cancelled</item>
 <item>transpositions, where passages have been reorganized or
-resequenced; </item>
-<item>sequencing of alterations. </item>
+resequenced. </item>
 </list>
 </p>
 <p>The TEI already provides the following basic elements for
@@ -705,7 +708,7 @@ as follows:
              </list></item>-->
 
 <p>A single rewrite may not be sufficient, and it may  be that
-the text becomes almost unreadable as a result of repeated
+the document becomes almost unreadable as a result of repeated
 clarification. In the following example, for example, we can distinguish at
 least two attempts to write the letters <mentioned>er</mentioned> in
 the word <mentioned>bægerklang</mentioned>:
@@ -772,7 +775,7 @@ gods</del><add>journeymen divine</add></subst>.</line>
 </p></div>
 
 
-<div><head>Metamarks</head>
+<div xml:id="mm"><head>Metamarks</head>
 <p>By <term>metamark</term> we mean marks such as numbers, arrows, crosses, or
 other symbols introduced by the writer into a document expressly for
 the purpose of indicating how the text is to be read. Such marks thus
@@ -976,10 +979,11 @@ The element <gi>ge:undo</gi> usually encloses the
   <hi rend="underline">denti</hi> l’un d’essi cibi</ge:line>
           </egXML></p>
     </div>
- </div>
+ 
+</div>
 
 
- <div xml:id="text-stage">
+ <div xml:id="stages">
     <head>Stages</head>
     <p>A major purpose of genetic editing is the identification of <soCalled>campaigns of revision</soCalled>
        or <term>text-stages</term>). A genetic editor needs to be able
@@ -989,22 +993,25 @@ The element <gi>ge:undo</gi> usually encloses the
        one or more of such phenomena preceded or followed another and
        also to indicate that they are related in some way, for
        example that one is a consequence of the other. To document this we need:<list >
-          <item>A system to attribute an alteration or any other phenomena occurring
+          <item>a system to attribute an alteration or any other phenomena occurring
              at document level to a particular revision campaign or text-stage</item>
-          <item>A way to describe a revision campaign text-stage</item>
+          <item>a way to describe a revision campaign text-stage</item>
        </list></p>
 <p>The present TEI element <gi>seq</gi> provides some of this
 functionality, but not all. We propose the following mechanism. 
 <list>
 <item>a generally available attribute <att>stage</att> is provided
 which can be used to identify any textual alteration as belonging to
-some specific stage.</item>
+some specific stage;</item>
 <item>a <gi>stageList</gi> element is provided in the header, to group
 together and document individual stages, each being defined by a
 <gi>stageNote</gi> element. Typically, each <gi>stageNote</gi>  contains several
        references to <gi>ge:edJust</gi> elements (see <ref target="#edjust"
           >below</ref>) and to other annotations contained within the
-          <gi>teiHeader</gi> or in the document. <egXML
+          <gi>teiHeader</gi> or in the document. </item>
+</list>
+
+<egXML
           xmlns="http://www.tei-c.org/ns/Examples">
           <profileDesc>
              <creation>
@@ -1027,31 +1034,78 @@ together and document individual stages, each being defined by a
      <ge:stageNote>Before publication, after <date>July 18th, 1816</date>
         chapters 10-11 were broken into three chapters, 10, 11, 12, as
         witnessed by the print</ge:stageNote>
-  </ge:modGroup>
+  </ge:stageList>
              </creation>
           </profileDesc>
        </egXML></p>
-    <p>In many cases it is necessary to scope a portion of text in which one or more
-       alteration occurs, in order to give the necessary context for any editorial
-       discussion. For that purpose we have introduced an element <gi>ge:mod</gi>,
-       which occurs within a <gi>ge:line</gi> or a <gi>p</gi> or any block and phrasal
-       level elements. As the element is likely to overlap with other hierarchies (in
-       particular it is very likely to overlap with <gi>ge:line</gi> in case the
-       editor has chosen to encode the document level), the element can also used as
-       empty (provided it carries a <att>spanTo</att> attribute). <egXML
+<p>The targets of the various pointers (<code>transp-1</code>,
+<code>transp-1</code> etc.) in the above example may be any part of
+the transcribed document which has been marked up and allocated an
+identifer, such as the pages mentioned or insertion points mentioned
+above. The former will presumably be marked as  <gi>ge:surface</gi>
+elements or <gi>zone</gi> elements, while the latter may be marked using the generic TEI
+<gi>anchor</gi> element.</p>
+    <p>The <att>state</att> attribute can be used to associate any
+    sequence of mark-up in a document with a <gi>stateNote</gi>, and
+    hence to allocate that particular writing event to a particular
+    revision campaign. There will often be many such elements
+    (several additions and deletions for example) for a single
+    revision, and for convenience therefore it an additional
+    <gi>mod</gi> (for modification) element is provided to delimit the
+    scope of any such modifications. 
+As this element is likely to overlap with other elements, it is itself
+empty, and sarries a <att>spanTo</att> attribute to indicate its
+endpoint.
+<egXML
           xmlns="http://www.tei-c.org/ns/Examples">
-          <ge:line>her face) – <ge:mod spanTo="#ch10-06-23" mod="#mod1"/>But <subst>
-  <del rend="overstriked">I do not</del>
+          <ge:line>her face) – <ge:mod spanTo="#ch10-06-23" stage="#mod1"/>But <subst>
+  <del rend="overstruck">I do not</del>
   <add place="above">you have not</add>
              </subst> see much</ge:line>
-          <ge:line>the Look of it <del rend="overstriked">in your
+          <ge:line>the Look of it <del rend="overstruck">in your
              Countenance."</del></ge:line>
           <ge:line><add place="above">as Grave as a little Judge."</add>,<anchor
   xml:id="ch10-06-23"/> – Anne blushed. – Aye, aye, that</ge:line>
-       </egXML></p>
- </div>
-
-    <div xml:id="false-start">
+       </egXML>
+In this example, the deletion of <mentioned>I do not</mentioned>, the addition of <mentioned>you have
+not</mentioned>, the deletion of <mentioned>in your Countenance</mentioned>, and the addition of <mentioned>as
+Grave as a little Judge</mentioned> are all considered part of a single
+text-stage, which is documented by the <gi>stageNote</gi> provided
+with identifier <code>mod1</code>.
+</p>
+<p>In a sequence of revisions like that cited above, there is an
+implicit assumption that the acts of deletion and addition are all
+assigned to the same writing stage, and that this is a stage
+subsequent to the original unrevised writing. If this is not the case,
+the <att>state</att> attribute may be used on any element to associate
+it with some other writing stage than that implied by the
+<gi>ge:mod</gi> which <q>surrounds</q> it. For example, if it were
+determined that in the previous example the substitution of "I do not'
+by "you have not' should actually be assigned to some different state
+(say <code>mod3</code>) the above example might be encoded:
+<egXML
+          xmlns="http://www.tei-c.org/ns/Examples">
+          <ge:line>her face) – <ge:mod spanTo="#ch10-06-23"
+	  stage="#mod1"/>But 
+<subst stage="#mod3">
+  <del rend="overstruck">I do not</del>
+  <add place="above">you have not</add>
+             </subst> see much</ge:line>
+</egXML>
+</p>
+<p>
+Even where stages are not explicitly marked in this way, there is an
+the use of tags such as <gi>del</gi> and <gi>add</gi> necessarily
+implies that the modification concerned was made at some time after the
+original writing. An exception to this is where a false start or
+<soCalled>instant</soCalled> correction has been identified: the
+author starts to write, and then immediately corrects what has been
+written. A special mechanism is provided for this case: rather than
+pointing to a specific <gi>stageNote</gi>, the <att>stage</att>
+attribute may take the value <code>0</code> to indicate that the
+addition or deletion is considered to belong to the same writing stage
+as the rest of the unmodified document. 
+<!--    <div xml:id="false-start">
        <head>Timing</head>
        <p>Distinguishing instant correction from other kinds of alteration is
           important when establishing the timing of a specific revisions and in the
@@ -1070,12 +1124,13 @@ together and document individual stages, each being defined by a
           the word that have been altered or all of it, even if this was not actually
           written? If it is possible to understand the word partially written, how
           should it be encoded? </p>
-       <p> An example of false start can be seen in one of the many version of Walt
+    -->
+</p>   <p> An example of false start can be seen in one of the many version of Walt
           Whitman's <title>The Sleepers</title> (available at <ptr
              target="http://www.whitmanarchive.org/resources/sleepers/uva.00256.001.jpg"
           />) where the beginning of the third block could be encoded as follows:
              <egXML xmlns="http://www.tei-c.org/ns/Examples">
-             <ge:line><del type="false-start" rend="overstrike" scope="part">T</del>
+             <ge:line><del stage="0" rend="overstrike">T</del>
   <subst>
      <del rend="overstrike">The</del>
      <add place="above">
@@ -1087,6 +1142,8 @@ together and document individual stages, each being defined by a
      <add place="superimposed">I</add>
   </subst>ron necklace</ge:line>
           </egXML>
+</p>
+<!--
           <note place="foot"><hi rend="bold">EP</hi>: I think we should suggest a
   <att>method</att> attribute for <gi>del</gi>, more specific than
   <att>rend</att>.</note> False starts are by nature constituted by word
@@ -1099,9 +1156,11 @@ together and document individual stages, each being defined by a
              <att>type</att> attribute (possibly redundant is already used for the
              <gi>del</gi> element).</p>
 
-            </div>
+            </div></div>-->
+ </div>
+	    </div>
             <div>
- <head>Dossier Level</head>
+ <head>The dossier Level</head>
  <p>In terms of encoding, a dossier will be represented by a <gi>teiCorpus</gi>, which
     will allow us to have a <gi>teiHeader</gi> at dossier level, where to describe all
     the phenomena that will be described below and a <gi>teiHeader</gi> for each of
@@ -1217,10 +1276,9 @@ together and document individual stages, each being defined by a
   <gi>ge:edJust</gi> element can be used to contain editorial statements
              about the constitution of a such path. </item>
        </list>
-       <p>The overview done by Kenneth Price and Brett Barney on the genesis of a Walt
-          Whitman poem eventually titled <title>The Sleepers</title> which can be seen
-          at <ptr
-             target="http://www.whitmanarchive.org/resources/sleepers/sleepers.html"/>
+       <p>The overview by Kenneth Price and Brett Barney of the genesis of a Walt
+          Whitman poem eventually titled <title>The Sleepers</title> (<ptr
+             target="http://www.whitmanarchive.org/resources/sleepers/sleepers.html"/>)
           can be used as a test case to demonstrate how the genetic relations can be
           build and documented.<note place="foot">All editorial statements are taken
              from the aforementioned website.</note></p>
@@ -1424,7 +1482,8 @@ together and document individual stages, each being defined by a
     </div>
  </div>
             </div>
-            <div>
+            
+<div>
  <head>Manuscript and Dossier Levels</head>
  <div>
     <head>Chronology, Date and Time</head>
@@ -1570,7 +1629,7 @@ together and document individual stages, each being defined by a
        </egXML></p>
  </div>
             </div>
-         </div>
+
       </body>
       <back>
          <div>
@@ -1674,13 +1733,18 @@ together and document individual stages, each being defined by a
 
  <classSpec ident="att.global" type="atts" mode="change" module="tei">
     <attList>
-       <attDef ident="mod" mode="add">
-          <desc>Points to a <gi>stageNote</gi> which contains a description of a
+       <attDef ident="stage" mode="add">
+          <desc>points to a <gi>stageNote</gi> which contains a description of a
              text-stage to which the editors think the alteration marked by the
-  <att>mod</att> attribute belongs.</desc>
+element bearing this attribute (and its children) belongs.</desc>
           <datatype minOccurs="1" maxOccurs="1">
-             <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+	    <rng:choice>
+             <rng:ref name="data.pointer"/>
+	     <rng:value>0</rng:value>
+	    </rng:choice>
           </datatype>
+<remarks><p>The value 0 indicates that the element concerned is 
+considered to belong to the same stage as its sibling elements.</p></remarks>
        </attDef>
     </attList>
  </classSpec>
@@ -1909,7 +1973,7 @@ provide two writing surfaces</desc>
           <rng:ref name="macro.phraseSeq.limited"/>
        </rng:zeroOrMore>
        <rng:zeroOrMore>
-          <rng:ref name="modGroup"/>
+          <rng:ref name="stageList"/>
        </rng:zeroOrMore>
     </content>
  </elementSpec>
@@ -2159,16 +2223,19 @@ attribute.</p></remarks> </elementSpec>
  </elementSpec>
  <elementSpec ident="transposition"
     ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
-    <desc> Describes a textual transposition. Contains a list of pointers that
-       specifies the new order of the text fragments. </desc>
+    <desc> describes a textual transposition as an ordered list of at
+    least two pointers specifying
+       the order in which the elements indicated should be re-combined. </desc>
     <classes>
        <memberOf key="att.global"/>
     </classes>
     <content>
+        <rng:group>
+	  <rng:ref name="ptr"/>
        <rng:oneOrMore>
           <rng:ref name="ptr"/>
        </rng:oneOrMore>
-    </content> 
+	</rng:group>    </content> 
  </elementSpec>
  <elementSpec ident="tr" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
