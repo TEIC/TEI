@@ -473,21 +473,22 @@ textual elements such as <gi>p</gi> exactly the same kind of
 <soCalled>flattening</soCalled> approach as has been applied to the
 <gi>line</gi> elements in the preceding example. Instead of marking
 the textual paragraphs as full elements, we mark only their frontiers,
-as follows:
+using the standard TEI <gi>milestone</gi> element, with the addition
+of a spanning attribute, as follows:
 
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
        <surface ulx="0" uly="0" lrx="200" lry="300">
           <zone stage="#stage1" seq="0" ulx="10" uly="43" lrx="185" lry="84">
              <zone >
-  <date rend="right"> 1 April 2009 </date>
+  <milestone unit="date" spanTo="#endDate"/>1 April 2009 <anchor xml:id="endDate"/>
 </zone>
-             <p spanTo="#p2"/> 
+             <milestone unit="p" spanTo="#p2"/> 
 	     <ge:line>Fed Birds in the park today.</ge:line>
 	     <ge:line> Might write an article about </ge:line>
 	  <ge:line>the Thick-billed Warbler.</ge:line>
 	  </zone>
           <zone stage="#stage2" ulx="9" uly="20" lrx="70" lry="60" rotate="90" >
-             <p xml:id="p2" spanTo="#end"/> 
+             <milestone unit="p" xml:id="p2" spanTo="#end"/> 
 	     <ge:line>Samaria is a Greek</ge:line>
 	     <ge:line>brand of water that</ge:line>
 	     <ge:line>comes from the natural</ge:line>
@@ -521,27 +522,28 @@ Using this element, the Whitman draft above might be encoded as follows:
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
        <surface>
           <zone>
-             <head>Poem</head>
+             <ge:line>Poem</ge:line>
              <ge:line>As in Visions of — at</ge:line>
 	     <ge:line>night —</ge:line>
 <ge:line>All sorts of fancies running through</ge:line>
 <ge:line>the head</ge:line>
 	  </zone>
-<patch type="newsprint" binder="glue" height="40" width="90">
+<ge:patch type="newsprint" binder="glue" height="40" width="90">
 Spring has just set in here, and the weather....
 a steamer
 <zone>
-<metaMark>2</metaMark>
+<ge:metaMark>2</ge:metaMark>
 </zone>
-</patch>
-<patch type="newsprint" binder="glue" height="35" width="90">
+</ge:patch>
+<ge:patch type="newsprint" binder="glue" height="35" width="90">
 "The shores on either side of the Sound are...
 The In-
 <zone>
 <metaMark>3</metaMark>
 </zone>
-</patch>
+</ge:patch>
        </surface>
+    </egXML>
 <!--
           <div seq="0" patch="attached" binder="glue" heigth="40" width="90" unit="mm"
              ulx="23" uly="62" lrx="113" lry="102"> [first patch] </div>
@@ -549,7 +551,7 @@ The In-
              ulx="25" uly="64" lrx="115" lry="99"> [second patch] </div>
        </surface>
 -->
-    </egXML> The <gi>ge:metaMark</gi> element used in this example is
+    The <gi>ge:metaMark</gi> element used in this example is
 further discussed below (<ptr target="#mm"/>)</p>
  </div>
 
@@ -659,7 +661,7 @@ could but get</mentioned> to the inked <mentioned>could
 get</mentioned>. A simple  way of encoding this  might be
 as follows:
      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <ge:rewrite cause="fixation" hand="ja2" seq="1">Now, if we
+        <ge:rewrite cause="fix" hand="ja2" seq="1">Now, if we
            could get 
            <del seq="1">but</del> a young Heiress</ge:rewrite>
      </egXML> 
@@ -721,8 +723,8 @@ the word <mentioned>bægerklang</mentioned>:
 We might encode this by nesting the <gi>rewrite</gi> element as follows:
 
      <egXML xmlns="http://www.tei-c.org/ns/Examples"><ge:line>ved
-        Bæg<ge:rewrite cause="clarify" stage="2">
-	<ge:rewrite cause="clarify" stage="1">er</ge:rewrite></ge:rewrite>
+        Bæg<ge:rewrite cause="unclear" stage="#stage2">
+	<ge:rewrite cause="unclear" stage="#stage1">er</ge:rewrite></ge:rewrite>
 ...</ge:line>     </egXML> 
 
 The <att>stage</att> attribute used here is discussed further below (<ptr target="#stages"/>).
@@ -761,15 +763,15 @@ be:
   <surface>
      <ge:used rend="cross" spanTo="#X2"/>
         <zone>
-           <line rend="underline">The Poet</line>
-	   <line><del   rend="strikethrough">I think</del> His sight is
-   the</line><line> sight of the ? and</line> 
-<line>has sent the instinct of the</line>
-<line>? dog</line></zone>
-<zone><line>I think <rewrite>ten</rewrite> million</line>
+           <ge:line rend="underline">The Poet</ge:line>
+	   <ge:line><del   rend="strikethrough">I think</del> His sight is
+   the</ge:line><ge:line> sight of the ? and</ge:line> 
+<ge:line>has sent the instinct of the</ge:line>
+<ge:line>? dog</ge:line></zone>
+<zone><ge:line>I think <ge:rewrite>ten</ge:rewrite> million</ge:line>
  <!-- ... -->
-<line>well; those <subst><del rend="strikethrough">supple-fingered
-gods</del><add>journeymen divine</add></subst>.</line>
+<ge:line>well; those <subst><del rend="strikethrough">supple-fingered
+gods</del><add>journeymen divine</add></subst>.</ge:line>
 <anchor xml:id="X2"/>
 	</zone>  </surface>
              </egXML>
@@ -947,8 +949,8 @@ content model of <gi>subst</gi> so as to permit text along with other
 members of <ident
 type="class">model.pPart.transcriptional</ident>. This would then permit an  encoding like the following: <egXML
              xmlns="http://www.tei-c.org/ns/Examples">
-             <ge:line>While <ge:subst><del>pondering</del> thus <add>she
-     mus'd</add></ge:subst>, her pinions fann'd</ge:line>
+             <ge:line>While <subst><del>pondering</del> thus <add>she
+     mus'd</add></subst>, her pinions fann'd</ge:line>
           </egXML></p>
     </div>
     <div>
@@ -976,7 +978,8 @@ The element <gi>ge:undo</gi> usually encloses the
              <graphic url="examples/leap01.png"/>
           </figure>This could be encoded as follows:<egXML
              xmlns="http://www.tei-c.org/ns/Examples">
-             <ge:line> che e’ <hi rend="underline"><ge:undo>si</ge:undo> rechi a’</hi>
+             <ge:line> che e’ <hi rend="underline"><ge:undo
+	     spanTo="#x2"/>si<anchor xml:id="x2"/> rechi a’</hi>
   <del rend="overstrike">dotti</del>
   <hi rend="underline">denti</hi> l’un d’essi cibi</ge:line>
           </egXML></p>
@@ -1802,6 +1805,8 @@ considered to belong to the same stage as its sibling elements.</p></remarks>
              <rng:ref name="model.glossLike"/>
              <rng:ref name="model.graphicLike"/>
              <rng:ref name="zone"/>
+             <rng:ref name="line"/>
+             <rng:ref name="patch"/>
        </rng:choice>
           </rng:zeroOrMore>
     </content>
@@ -1820,6 +1825,9 @@ considered to belong to the same stage as its sibling elements.</p></remarks>
        <rng:choice>
      <rng:text/>
      <rng:ref name="model.zonePart"/>
+       <rng:ref name="model.global"/>
+       <rng:ref name="model.pPart.transcriptional"/>
+       <rng:ref name="model.gLike"/>
        </rng:choice>
   </rng:zeroOrMore>
     </content>
@@ -1873,6 +1881,16 @@ considered to belong to the same stage as its sibling elements.</p></remarks>
     </attList>
  </elementSpec>
 
+<!-- add milestone to att.spanning (this should be done for all
+model.milestoneLike elements actually -->
+ <elementSpec ident="milestone" module="core" mode="change">
+<classes >
+<memberOf key="att.spanning"/>
+    <memberOf key="model.milestoneLike"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.sourced"/>
+</classes>
+ </elementSpec>
 
  <elementSpec ident="patch"
 	      ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
@@ -1882,12 +1900,16 @@ were  created on it.</desc>
 <classes>
 <memberOf key="att.coordinated"/>
 <memberOf key="att.global"/>
+<memberOf key="att.typed"/>
 <!-- should this be staged? -->
 </classes>
     <content>
   <rng:zeroOrMore>
+    <rng:choice>
      <rng:text/>
      <rng:ref name="zone"/>
+     <rng:ref name="model.global"/>
+    </rng:choice>
   </rng:zeroOrMore>
     </content>
 
@@ -1938,6 +1960,7 @@ provide two writing surfaces</desc>
 
 </attList>
  </elementSpec>
+
  <elementSpec ident="line"
 	      ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
     <desc>contains the transcription of a topographic line in the source
@@ -1953,10 +1976,15 @@ provide two writing surfaces</desc>
 	<rng:text/>
        <rng:ref name="model.global"/>
        <rng:ref name="model.pPart.transcriptional"/>
+       <rng:ref name="model.pPart.editorial"/><!-- not sure if thats
+       wise -->
        <rng:ref name="model.gLike"/>
+       <rng:ref name="model.hiLike"/>
       </rng:choice></rng:zeroOrMore>
     </content>
  </elementSpec>
+
+
 
 
  <!-- editorial justification -->
@@ -2100,6 +2128,7 @@ provide two writing surfaces</desc>
        <memberOf key="model.global"/>
        <memberOf key="att.spanning"/>
 <memberOf key="att.global"/>
+<memberOf key="att.transcriptional"/>
 
     </classes>
     <content>
@@ -2178,6 +2207,7 @@ attribute.</p></remarks> </elementSpec>
  </elementSpec>
 
  <elementSpec ident="subst" module="transcr" mode="change">
+<!-- shd be in diff namespace -->
     <content>
        <rng:group>
           <rng:group>
