@@ -990,20 +990,27 @@ The element <gi>ge:undo</gi> usually encloses the
 
  <div xml:id="stages">
     <head>Stages</head>
-    <p>A major purpose of genetic editing is the identification of <soCalled>campaigns of revision</soCalled>
-       or <term>text-stages</term>). A genetic editor needs to be able
-       to assign  a set of
-       alterations (deletions, additions, substitutions,
-       transpositions, etc.) to a text stage, to indicate both that
-       one or more of such phenomena preceded or followed another and
-       also to indicate that they are related in some way, for
-       example that one is a consequence of the other. To document this we need:<list >
-          <item>a system to attribute an alteration or any other phenomena occurring
-             at document level to a particular revision campaign or text-stage</item>
-          <item>a way to describe a revision campaign text-stage</item>
+    
+<p>A major purpose of genetic editing is the identification of
+<soCalled>campaigns of revision</soCalled> or
+<term>text-stages</term>). A genetic editor needs to be able to assign
+a set of alterations (deletions, additions, substitutions,
+transpositions, etc.) to a text stage, to indicate both that one or
+more of such phenomena preceded or followed another and also to
+indicate that they are related in some way, for example that one is a
+consequence of the other. To document this we need:
+<list >
+          
+<item>a system to attribute an alteration or any other phenomena
+occurring at document level to a particular revision campaign or
+text-stage</item>
+          
+<item>a way to describe a revision campaign text-stage</item>
        </list></p>
+
 <p>The present TEI attribute <att>seq</att> provides some of this
-functionality, but not all. We propose the following mechanism. 
+functionality, but not all. We propose the following mechanism:
+
 <list>
 <item>a generally available attribute <att>stage</att> is provided
 which can be used to identify any textual alteration as belonging to
@@ -1161,28 +1168,43 @@ as the rest of the unmodified document.
              <gi>del</gi> element).</p>
 
             </div></div>-->
- </div>
-	    </div>
-            <div>
- <head>The dossier Level</head>
- <p>In terms of encoding, a dossier will be represented by a <gi>teiCorpus</gi>, which
-    will allow us to have a <gi>teiHeader</gi> at dossier level, where to describe all
-    the phenomena that will be described below and a <gi>teiHeader</gi> for each of
-    the documents forming the dossier.</p>
- <p>It might be convenient to include documents within the dossier (corpus) via a
-    XInclude mechanism, in order to keep each document in a separate file and yet to
-    be included in the main dossier.</p>
- <egXML xmlns="http://www.tei-c.org/ns/Examples">
+ </div>	    
+</div>            
+
+
+<div> <head>The dossier level</head>
+
+ <p>The term <term>dossier</term> is used to refer to the set of
+ documents which a genetic editor considers as having contributed to the
+ evolution of a particular text. These may include drafts, revisions,
+ or documents related in other ways. Since each such document will
+ most probably be encoded
+ as a distinct TEI document with its own TEI Header, the natural way to encode a dossier would
+ be to use the existing <gi>teiCorpus</gi> element. This would provide
+ a TEI Header in which metadata regarding the organization of the
+ dossier itself can be recorded, independently of the metadata
+ regarding each particular document contained within it.
+ </p>
+ <p>The XInclude mechanism provides a  convenient means of managing
+the many  separate files which are likely to be needed to constitute a
+complete dossier. For example, supposing we have a dossier comprising three
+documents each of which has been encoded in its own file:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"> 
     <teiCorpus xmlns="http://www.tei-c.org/ns/1.0"
        xmlns:xi="http://www.w3.org/2001/XInclude"
        xmlns:ge="http://www.tei-c.org/ns/geneticEditions">
-       <teiHeader> [..] </teiHeader>
-       <![CDATA[<xi:include href="document1.xml"/>
-       <xi:include href="document2.xml"/>
-       <xi:include href="document3.xml"/>]]>
-    </teiCorpus>
+<![CDATA[<teiHeader>
+<!-- information about the dossier -->  
+</teiHeader>
+<xi:include href="document1.xml"/>
+<xi:include href="document2.xml"/>
+<xi:include href="document3.xml"/>
+]]>    </teiCorpus>
  </egXML>
- <div>
+Note that each of the files referenced (<ident>document1.xml</ident>
+etc) should contain a complete <gi>TEI</gi> element</p>
+ 
+<div>
     <head>*Genetic Grouping </head>
     <p>Alterations, revisions and other compositional phenomena may need to be grouped
        at dossier level: it might in fact occur that authors correct two versions at a
@@ -1201,25 +1223,30 @@ as the rest of the unmodified document.
           example; c) ???. I think <gi>ge:geneticGrp</gi> is clearer.</note> As the
        element <gi>ge:geneticGrp</gi> can be used more generally for any kind of
        genetic grouping, a <att>type</att> attribute is also provided.
-          <gi>ge:geneticGrp</gi> contains a sequence of <gi xml:id="geneticNote"
-          >ge:geneticNote</gi> whose <att>targets</att> attribute can refer to several
-          <gi>ge:stageNote</gi> of specific documents or to other annotations and
-       editorial statements.</p>
-    <p>An example of Genetic Grouping can be considered the overview done by Kenneth
+<specList>
+<specDesc key="geneticGrp" atts="type"/>
+<specDesc key="geneticNote"/>
+</specList>
+    </p>
+
+    <p>The  work of Kenneth
        Price and Brett Barney on the genesis of a Walt Whitman poem eventually titled
-          <title>The Sleepers</title> which can be seen at <ptr
-          target="http://www.whitmanarchive.org/resources/sleepers/sleepers.html"/>.
-       In this example we have 15 witnesses composed over 30 years, some of which
-       contains just vague thematic resemblances with the poem (see witnesses 1-2, for
-       instance), others are more strongly related.</p>
-    <p>In this case we could create several kind of grouping, for instance: <list
+          <title>The Sleepers</title><note place="foot"><ptr
+          target="http://www.whitmanarchive.org/resources/sleepers/sleepers.html"/></note> may be considered an example of
+	  genetic grouping. They consider fifteen different documents composed over 30 years, some of which
+       contains only vague thematic resemblances to the poem (see
+       witnesses 1-2, for
+       instance), while others are more strongly related. We can
+       identify different kinds of grouping, for instance: <list
           >
-          <item>thematic: group texts that speak about night visions which the editors
+          <item>thematic: documents referring to night visions which the editors
              think are related to the poem</item>
-          <item>evolutionary: group text for which the genetic connection is
-             stronger</item>
-          <item>type of document: group text that come form the same type of document
-             (printed, notebook, etc.)</item>
+          <item>evolutionary: documents which have a strong genetic
+	  connection with the final state of the poem</item>
+          <item>type of document: documents of particular  types
+             (printed, notebook, etc.)<note place="foot">This doesnt
+	     get mentioned again, and doesn't seem to be very
+	     relevant to me. Cut it? (LB)</note></item> 
        </list></p>
     <p>The first case could be encoded as follows: <egXML
           xmlns="http://www.tei-c.org/ns/Examples">
@@ -1238,12 +1265,12 @@ as the rest of the unmodified document.
  </div>
  <div>
     <head>Genetic Relations</head>
-    <p>By <soCalled>genetic relations</soCalled> we mean the possibility of ordering
-       different text-stages contained within a single document, or more probably,
-       across different document into an ideal line of development, going, for
-       instance from a version <hi rend="bold">A</hi> to a version <hi rend="bold"
-          >B</hi> (that can be represented by a different document or by an
-       editorially reconstructed text-stage), to a version <hi rend="bold">C</hi>,
+    <p>By <soCalled>genetic relations</soCalled> we mean the  ordering
+    of the
+       different text-stages represented, either  within a single document or more probably,
+       across different documents, into a hypothetical line of development, going, for
+       instance from a version A to a version B (that can be represented by a different document or by an
+       editorially reconstructed text-stage), and then to a version C,
        etc.</p>
     <p>While a <gi>ge:geneticNote</gi> would describe what a group of witnesses have
        in common, a genetic relation will try to align those witnesses in an ideal
@@ -1361,7 +1388,7 @@ as the rest of the unmodified document.
           </graph>
        </egXML>
        <p>The graph can them be represented as follows:<figure>
-             <graphic url="constr_example/geneticRel.png"/>
+             <graphic url="examples/geneticRel.png"/>
           </figure></p>
     </div>
     <div>
@@ -1605,10 +1632,8 @@ as the rest of the unmodified document.
        documenting editorial decisions has a fundamental role. </p>
     <p>Different forms of documentation have been discussed before in several previous
        sections: <list >
-          <item><gi>ge:stageNote</gi>: documents the constitution of a text-stage (<ref
-  target="#stageNote">see</ref>) </item>
-          <item><gi>ge:geneticNote</gi>: documents the constitution of a genetic group
-  (<ref target="#geneticNote">see</ref>)</item>
+          <item><gi>ge:stageNote</gi>: documents the constitution of a text-stage  </item>
+          <item><gi>ge:geneticNote</gi>: documents the constitution of a genetic group</item>
        </list>All these elements carry a <att>cert</att> attribute to declare the
        level of certainty, and a <att>resp</att> attribute to declare the editorial
        responsibility of an annotation; all of them should use <att>xml:id</att> to be
@@ -2332,10 +2357,12 @@ attribute.</p></remarks> </elementSpec>
        </rng:oneOrMore>
     </content>
  </elementSpec>
+
  <elementSpec ident="geneticNote" mode="add"
     ns="http://www.tei-c.org/ns/geneticEditions">
-    <desc>Contains the links to the text or documents that are connected within a
-       genetic group as well as the description of single genetic group</desc>
+    <desc>describes a particular set of documents or
+    document fragments 
+    which are considered to be mutually associated in some way.</desc>
     <classes>
        <memberOf key="att.typed"/>
        <memberOf key="att.editLike"/>
@@ -2345,12 +2372,14 @@ attribute.</p></remarks> </elementSpec>
        <rng:oneOrMore>
           <rng:ref name="linkGrp"/>
        </rng:oneOrMore>
-       <rng:zeroOrMore>
+       <rng:oneOrMore>
           <rng:ref name="model.pLike"/>
-       </rng:zeroOrMore>
+       </rng:oneOrMore>
     </content>
  </elementSpec>
+
  <!-- genetic relations -->
+
  <elementSpec ident="node" module="nets" mode="change">
     <classes mode="change">
        <memberOf mode="add" key="attribute.pointing"/>
