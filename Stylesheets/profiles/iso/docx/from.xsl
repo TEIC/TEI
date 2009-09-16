@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns="http://www.tei-c.org/ns/1.0"
+    xmlns:cals="http://www.oasis-open.org/specs/tm9901"
     xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:iso="http://www.iso.org/ns/1.0"
     xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -17,7 +18,7 @@
     xmlns:mml="http://www.w3.org/1998/Math/MathML"
     xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
     xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-    exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso xd">
+    exclude-result-prefixes="ve o r m v wp w10 w wne mml cals tbx iso xd">
     
     <!-- import conversion style -->
     <xsl:import href="../../../docx/docx-tei.xsl"/>
@@ -689,7 +690,8 @@
                     select="tei:body/tei:div[@type='introduction']" mode="part2"/>
             </front>
             <body>
-                <xsl:for-each select="tei:body/tei:div">
+                <xsl:for-each select="tei:body">
+		  <xsl:for-each select="tei:div|tei:p|tei:table|cals:table">
                     <xsl:choose>
                         <xsl:when test="self::tei:div[@type='foreword']"/>
                         <xsl:when test="self::tei:div[@type='introduction']"/>
@@ -699,7 +701,8 @@
                             <xsl:apply-templates select="." mode="part2"/>
                         </xsl:otherwise>
                     </xsl:choose>
-                </xsl:for-each>
+		  </xsl:for-each>
+		</xsl:for-each>
             </body>
             <back>
                 <xsl:apply-templates
