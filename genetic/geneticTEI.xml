@@ -41,6 +41,11 @@
          </change>
       </revisionDesc>
    </teiHeader>
+
+<!-- replace edJust by note -->
+
+
+
    <text>
       <front>
          <divGen type="toc"/>
@@ -115,21 +120,25 @@
                            should be integrated into the current <title>Guidelines</title>.</item>
                      </list></item>
                </list>
-<p>All versions of this draft document are publicly available for discussion and feedback
-    from the community. The document source is maintained in the TEI
-    subversion repository at <ptr
-    target="http://tei.svn.sourceforge.net/viewvc/tei/trunk/genetic/"/>; 
+<p>All versions of this draft document are publicly available for
+discussion and feedback from the community. The document source is
+maintained in the TEI subversion repository at <ptr
+target="http://tei.svn.sourceforge.net/viewvc/tei/trunk/genetic/"/>;
 information about the development of the proposals and associated
-materials, including complete drafts of this document, are hosted on the TEI Wiki at <ptr target="http://wiki.tei-c.org/index.php/Category:Genetic_Editions"/>.
+materials, including complete drafts of this document, are hosted on
+the TEI Wiki at <ptr
+target="http://wiki.tei-c.org/index.php/Category:Genetic_Editions"/>.
 
 </p>
             </div>
             <div>
  <head>Conventions used</head>
- <p>Although the entire document is a draft and therefore susceptible of changes, some
-    sections are less stable than others. In particular, when a section or a
-    particular element requires further discussion or is considered an open problem,
-    such a section or element is marked by a * mark.</p>
+
+ <p>Although the entire document is a draft and therefore susceptible
+ of changes, some sections are less stable than others. In particular,
+ when a section or a particular element requires further discussion or
+ is considered an open problem, such a section or element is marked by
+ a * mark.</p>
  <p>As required for TEI conformance, non-TEI elements are defined in a
  distinct non-TEI namespace. In the usage examples and throughout this
  document that namespace is mapped to the prefix <hi rend="bold"
@@ -143,94 +152,107 @@ materials, including complete drafts of this document, are hosted on the TEI Wik
             <head>Theoretical Framework</head>
             
 <p>The genetic approach differs from other approaches to the study of
-texts because it aims not only to identify 'what is on the page', but
+texts because it aims not only to identify <q>what is on the page</q>, but
 also to reconstruct the <emph rend="bold">process</emph> necessary to
-produce 'what is on the page'.</p>
-            <p>The encoding model for Genetic Editing must therefore
-	    handle:-<list>
+produce <q>what is on the page</q>.</p>
+            
+<p>The encoding model for Genetic Editing must therefore handle:-
+
+<list>
 <item>Genetic <term>transcription</term> of a single document in such a
 way as to trace its evolution; </item>
+
 <item>Genetic <term>reconstruction</term>:  that is, creation of a  
-    <term>Genetic Dossier</term> assembling multiple related
-    documents, and description of the  genetic relations
- amongst them</item>
-<item>Genetic <term>editing</term>, the goal of which is  preparation of a <term>Genetic Edition</term>
- whether derived from a single or multiple witnesses.</item>
+<term>Genetic Dossier</term> assembling multiple related
+documents, and description of the  genetic relations amongst them;</item>
+
+<item>Genetic <term>editing</term>, the goal of which is preparation
+of a <term>Genetic Edition</term> whether derived from a single or
+multiple witnesses.</item>
 </list>
-A Genetic edition may be prepared either by producing a full
-transcription of all extant witnesses, or by combining  a full
-transcription of only one document (a <term>base-text</term>.) with information derived
-from other witnesses by means of collation. </p>
-            <p>Because our model aims to be independent of
-	    presuppositions associated with  any particular
- theoretical framework, we begin by reviewing some typical dichotomies
- in editorial theory.</p>
-            <div>
- <head>Fact vs. Interpretation</head>
- <p>In German editorial theory there is a well known opposition between what is there
-    in the source document, the <term>record</term> (<foreign xml:lang="deu" rend="it">Befund</foreign>), and the
-    interpretation of this phenomenon (<foreign xml:lang="deu" rend="it">Deutung</foreign>). This opposition
-    implies that there is a way to talk about the record without any
-    interpretation. Yet at some possibly simplistic level, everything we say about a text is
-    based on interpretation, in the loosest sense of the word, in
-    particular in the realm of genetic criticism.<note place="foot">See also the TEI’s
-       (implicit) position on this point: <q>we define markup, or (synonymously)
-          encoding, as any means of making explicit an <hi rend="italic"
-             >interpretation</hi> of a text</q> (TEI Guidelines: <ref
-          target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SG.html">v. A
-          Gentle Introduction to XML</ref>). See also reference to Robinson and
-       Solopova 1993/1997: 21: <q>Any primary textual source… has its own semiotic
-          system within it.[…] The two semiotic system are materially distinct, in
-          that text written by hand is not the same as the text on the computer
-          screen</q>.</note> At the same time, 
-    there is an obvious difference between the interpretation that some trace of
-    ink is indeed a specific letter and the assumption that a change 
-    in one line of a manuscript must have been made at the same time
-    as a change in another line
-    because their effects are textually related (for example, the
-    first change was to a rhyming word, which necessitated the second change).
-    Therefore we propose to talk about differing <term>levels</term>
-    of interpretation, rather than insisting on a differentiation
-between <soCalled>what’s there</soCalled> (document/fact) and
-    <soCalled>how does it relate</soCalled> (text/interpretation).</p>
-            </div>
-            <div>
- <head>Document vs. Text</head>
- <p>In Manuscript Studies (Editing, Codicology, Palaeography, Art
-    History, History) the first level of enquiry is always the document, the physical
-    support that lies in front of the scholar’s eyes. </p>
- <p>To understand the text that is contained in the manuscript, a deep study of the
-    manuscript itself is fundamental: the layout, the type of script, the type of
-    writing support, the binding and many other aspects are able to tell us about
-    when, where, and why this particular text was composed. The text therefore
-    represents a second level of enquiry, not the first: it is a
-    construct, derived from the reading of the documents.</p>
-<p> In the case of modern draft
-    manuscripts scholars must give detailed consideration to the layout, the different
-    stratifications of writing and the disposition of these in the physical space; all
-    of these, together with an understanding of the text, are required to gain
-    insight about the composition, time of revisions, and flow
-    (<foreign xml:lang="fr">flux</foreign>) of the text.
-    Furthermore, in some cases,  we know that the kind of physical support used
-    to record it not only influences but may also actually determine the text itself. For
-    instance, the content and the length of letters  are often determined by the size
-    and quantity of the paper available to the writer; even more so
-for items such as postcards. </p>
- <p>The TEI has traditionally prioritised the text level. Of the two
- possible views
-available to someone transcribing a primary source (text and
-    document), the TEI privileges the text (hence <hi rend="italic">Text</hi> Encoding
-    Initiative). Such physical or topographical information as a
-    typical TEI encoding provides is subordinate to the main
-    structural encoding, whether because it is represented by empty elements
-       (<gi>pb/</gi>, <gi>lb/</gi>, <gi>cb/</gi>) or attributes (<gi>add
-    place=""</gi>, <gi>note place=""</gi>, or <att>rend</att>). The
-    TEI thus reflects the
-not uncommon  view that, while relevant, documents are somehow less
+
+A Genetic edition may be prepared by producing a full transcription of
+all extant witnesses, or by combining a full transcription of only one
+document (a <term>base-text</term>.) with information derived from
+other witnesses by means of an automatic collation.</p>
+            
+<p>Because our model aims to be independent of presuppositions
+associated with any particular theoretical framework, we begin by
+reviewing some typical dichotomies in editorial theory.</p>
+            
+<div><head>Fact vs. Interpretation</head>
+ 
+<p>In German editorial theory there is a well known opposition between
+what is there in the source document, the <term>record</term>
+(<foreign xml:lang="deu" rend="it">Befund</foreign>), and the
+interpretation of this phenomenon (<foreign xml:lang="deu"
+rend="it">Deutung</foreign>). This opposition implies that there is a
+way to talk about the record without any interpretation. Yet at some
+possibly simplistic level, everything we say about a text is based on
+interpretation, in the loosest sense of the word, in particular in the
+realm of genetic criticism.<note place="foot">See also the TEI’s
+(implicit) position on this point: <q>we define markup, or
+(synonymously) encoding, as any means of making explicit an <hi
+rend="italic" >interpretation</hi> of a text</q> (TEI Guidelines: <ref
+target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SG.html">v. A
+Gentle Introduction to XML</ref>). See also reference to Robinson and
+Solopova 1993/1997: 21: <q>Any primary textual source… has its own
+semiotic system within it.[…] The two semiotic system are materially
+distinct, in that text written by hand is not the same as the text on
+the computer screen</q>.</note> At the same time, there is an obvious
+difference between the interpretation that some trace of ink is indeed
+a specific letter and the assumption that a change in one line of a
+manuscript must have been made at the same time as a change in another
+line because their effects are textually related (for example, the
+first change was to a rhyming word, which necessitated the second
+change).  Therefore we propose to talk about differing
+<term>levels</term> of interpretation, thus 
+differentiating between <soCalled>what’s there</soCalled>
+(document/fact) and <soCalled>how does it relate</soCalled>
+(text/interpretation).</p>
+</div>
+            
+<div><head>Document vs. Text</head>
+
+<p>In Manuscript Studies (Editing, Codicology, Palaeography, Art
+History, History) the first level of enquiry is always the document,
+the physical support that lies in front of the scholar’s eyes. </p>
+ 
+<p>To understand the text that is contained in the manuscript, a deep
+study of the manuscript itself is fundamental: the layout, the type of
+script, the type of writing support, the binding and many other
+aspects are able to tell us about when, where, and why this particular
+text was composed. The text therefore represents a different level of
+enquiry: it is a construct, derived from the reading of
+the documents.</p>
+
+<p>In the case of modern draft manuscripts scholars must give detailed
+consideration to the layout, the different stratifications of writing
+and the disposition of these in the physical space; all of these,
+together with an understanding of the text, are required to gain
+insight about the composition, time of revisions, and flow (<foreign
+xml:lang="fr">flux</foreign>) of the text.  Furthermore, in some
+cases, we know that the kind of physical support used to record it not
+only influences but may also actually determine the text itself. For
+instance, the content and the length of letters are often determined
+by the size and quantity of the paper available to the writer; even
+more so for items such as postcards. </p>
+ 
+<p>The TEI has traditionally prioritised the text level. Of the two
+possible views available to someone transcribing a primary source
+(text and document), the TEI privileges the text (hence <hi
+rend="italic">Text</hi> Encoding Initiative). Such physical or
+topographical information as a typical TEI encoding provides is
+subordinate to the main structural encoding, whether because it is
+represented by empty elements (<gi>pb/</gi>, <gi>lb/</gi>,
+<gi>cb/</gi>) or attributes (<gi>add place=""</gi>, <gi>note
+place=""</gi>, or <att>rend</att>). The TEI thus reflects the not
+uncommon view that, while relevant, documents are somehow less
 relevant than the texts they embody; to use a bibliographical
-    metaphor, texts are <soCalled>substantial</soCalled> while documents are
-       <soCalled>accidental</soCalled>. </p>
- <p>However, for genetic editions a focus on the document is  crucial. In many cases, 
+metaphor, texts are <soCalled>substantial</soCalled> while documents
+are <soCalled>accidental</soCalled>. </p>
+ 
+<p>However, for genetic editions a focus on the document is  crucial. In many cases, 
     the only way to reconstruct the process of writing and re-writing
     which leads to a new text is to examine a
     specific document. We therefore propose to complement the existing
@@ -239,7 +261,7 @@ relevant than the texts they embody; to use a bibliographical
  <p>We should then clarify the way we will use the following words:</p>
  <list >
     <item><label>Document</label> the physical object, the manuscript or other primary
-       source</item>
+       source, comprising one or more written surfaces</item>
     <item><label>Text</label> the content of the document, the words written in their
        logical (non physical) sequence</item>
     <item><label>Facsimile</label> a surrogate representation (non necessarily
@@ -298,6 +320,7 @@ relevant than the texts they embody; to use a bibliographical
              subsequently shuffled and reshuffled by the means of sequences of letters
              and numbers contained in a number of documents.</note> and/or across
           several documents, as a series of steps on a path.</item>
+<!-- will need revision -->
     </list>
  </item>
  <item>
@@ -361,8 +384,19 @@ following elements are used to represent these basic components:
 <specDesc key="line"/>
 </specList></p>
 
+<!-- remove @rotate? add something to describe writing orientation,
+using SVG description of baseline; added to any zone, line 
+simple case writing orientation on zone, or line;
+or link to something in SVG for complex case
 
-<p>Like a <gi>facsimile</gi>, a <gi>ge:document</gi> contains
+distinguish  writing direction; svg for shape and for baseline
+
+moritz will write on wiki soon
+
+-->
+
+
+ <p>Like a <gi>facsimile</gi>, a <gi>ge:document</gi> contains
 information about the written surfaces constituting a
 document. Because of this similarity, we propose using the same
 elements (<gi>surface</gi> and <gi>zone</gi>) as proposed in the
@@ -371,14 +405,13 @@ to support the specific needs of genetic editing. </p>
 
 
 <p> The size of the writing surface is defined by a set of cartesian
-       coordinates measured from the top left corner. The
-       co-ordinates of all zones identified within the writing surface are
-       given in terms of the same co-ordinates, as further discussed
-       in the TEI proposals for <gi>facsimile</gi>. It will often be
-       the case that explicit dimensions for a manuscript page
-       (expressed in mm for example) are also supplied in a
-       <gi>msDesc</gi> element in the TEI Header, but this is not a
-       requirement.   </p>
+coordinates measured from the top left corner. The co-ordinates of all
+zones identified within the writing surface are given in terms of the
+same co-ordinates, as further discussed in the TEI proposals for
+<gi>facsimile</gi>. It will often be the case that explicit dimensions
+for a manuscript page (expressed in mm for example) are also supplied
+in a <gi>msDesc</gi> element in the TEI Header, but this is not a
+requirement.  </p>
 
     <p>A <gi>surface</gi> element may contain any number of
     <gi>zone</gi> <gi>graphic</gi> or <gi>line</gi> elements.
@@ -398,28 +431,38 @@ orientation. Note that the mechanism aims to describes the process by
 which the content of a specific <gi>zone</gi> has been supplied
 (i.e. the author has physically rotated the writing surface) rather
 than the orientation of the writing.</p>
+
+<!-- fotis wants to generalise rotation to things other than zones 
+actually he wants to kill it... -->
     
 <p>Zones are arbitrarily defined by the encoder according to the
 layout of the writing surface and can make use of a standardised
 vocabulary (e.g. the top margin). <!-- means what? --></p>
 
+<!-- needs polygon as well as rectangle; define mapping -->
+
+
 <p>The attribute <att>stage</att> is used to indicate the
 <term>stage</term> in a writing campaign to which this zone has been
 assigned by the encoder, as further discussed in <ptr
 target="#stages"/> below.
+
 </p>
+
 <p>Within a zone, individual lines of writing are usually
 distinguished using the <gi>ge:line</gi> element. </p>
-    <p>In the following imaginary example, there are two main areas of writing, the diary
-       entry (black ink) and another (supposedly later) annotation in blue ink. <figure>
+    
+<p>In the following imaginary example, there are two main areas of
+writing, the diary entry (black ink) and another (supposedly later)
+annotation in blue ink. <figure>
           <graphic url="examples/D1.png"/>
        </figure> 
-Note that the diary entry forms a zone which itself contains two zones: one containing
-the date, and the other containing three lines about birds.  The
-five lines of annotation in  blue ink form another zone, to record which the diary page has
-       been rotated 90° clockwise by the author. Using the elements
-      discussed so far, the page might be transcribed as
-       follows:</p>
+Note that the diary entry forms a zone which itself contains two
+zones: one containing the date, and the other containing three lines
+about birds.  The five lines of annotation in blue ink form another
+zone, to record which the diary page has been rotated 90° clockwise by
+the author. Using the elements discussed so far, the page might be
+transcribed as follows:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
        <ge:document>
           <surface ulx="0" uly="0" lrx="200" lry="300">
@@ -459,15 +502,16 @@ page, focussing on its textual structure
 </div>
     </egXML>
 </p>
+
 <p>Is it possible to combine both perspectives within a single
-encoding? In general a document-based transcription, which is done page-by-page and possibly
-       line-by-line, is almost certain to overlap with some part of a
-the text-based structure. The cleanest solution may be to encode both
-structures separately, providing both a <gi>document</gi> and a
-distinct <gi>text</gi> solution, perhaps using some form of external
-pointing to link the two, and minimizing redundancy of encoding by
-using XInclude. This option is further discussed below and also in the
-TEI Guidelines. </p>
+encoding? In general a document-based transcription, which is done
+page-by-page and possibly line-by-line, is almost certain to overlap
+with some part of a the text-based structure. The cleanest solution
+may be to encode both structures separately, providing both a
+<gi>document</gi> and a distinct <gi>text</gi> solution, perhaps using
+some form of external pointing to link the two, and minimizing
+redundancy of encoding by using XInclude. This option is further
+discussed below and also in the TEI Guidelines. </p>
 <p>A further, and possibly simpler, approach is to apply to the
 textual elements such as <gi>p</gi> exactly the same kind of
 <soCalled>flattening</soCalled> approach as has been applied to the
@@ -498,7 +542,8 @@ of a spanning attribute, as follows:
           </zone>
        </surface>
     </egXML>
-<!-- need to discuss spanning zones -->
+
+
 
 </p>
 
@@ -532,54 +577,50 @@ Using this element, the Whitman draft above might be encoded as follows:
 Spring has just set in here, and the weather....
 a steamer
 <zone>
-<ge:metaMark>2</ge:metaMark>
+<ge:metaMark function="sequence">2</ge:metaMark>
 </zone>
 </ge:patch>
 <ge:patch type="newsprint" binder="glue" height="35" width="90">
 "The shores on either side of the Sound are...
 The In-
 <zone>
-<metaMark>3</metaMark>
+<metaMark function="sequence">3</metaMark>
 </zone>
 </ge:patch>
        </surface>
     </egXML>
-<!--
-          <div seq="0" patch="attached" binder="glue" heigth="40" width="90" unit="mm"
-             ulx="23" uly="62" lrx="113" lry="102"> [first patch] </div>
-          <div seq="0" patch="attached" binder="glue" heigth="35" width="90" unit="mm"
-             ulx="25" uly="64" lrx="115" lry="99"> [second patch] </div>
-       </surface>
--->
     The <gi>ge:metaMark</gi> element used in this example is
 further discussed below (<ptr target="#mm"/>)</p>
+
+ <!-- need to add Lebrave's scarey example of virtual reconstructed document -->
+
  </div>
 
  <div xml:id="alterations">
 
     <head>*Textual Alterations</head>
-    <p>Traces of authorial alteration (correction, addition, deletion,
-    etc.) are frequently found  within a single document, and may
-    also be inferred when different documents are compared. It is
-    however an open question
-       as to whether inter-document  discrepancies at the dossier
-       level should be regarded
-       in the same way as intra-document alterations. If two 
-       witnesses are collated, we may observe that a word present in
-       one is missing from the other: does it necessarily follow that
-       this is an addition or a deletion, which we would not hesitate
-       to mark with an <gi>add</gi> or <gi>del</gi> tag if we are transcribing a
-       single manuscript? We return to this question <ref
-          target="#collation">below</ref>. <!--  Or do we need a completely new set of elements to do it? In
-       a genetic process, at any point the author can decide to stop revising the text
-       within a given document and decide to move to a new document (i.e. copy it
-       anew), so the two phenomena (alterations at document level and alterations at
-       dossier level) are indeed closely related. On the other hand we need to
-       differentiate them because the one within a single document is explicitly
-       marked by the author, while the one detected by comparison is only implicit. It
-       may also happen that implicit alterations were perhaps marked in a lost
-       intermediate version. This remains an open problem (see .</p>
-    <p>The following discussion-->
+    
+<p>Traces of authorial alteration (correction, addition, deletion,
+etc.) are frequently found within a single document, and may also be
+inferred when different documents are compared. It is however an open
+question as to whether inter-document discrepancies at the dossier
+level should be regarded in the same way as intra-document
+alterations. If two witnesses are collated, we may observe that a word
+present in one is missing from the other: does it necessarily follow
+that this is an addition or a deletion, which we would not hesitate to
+mark with an <gi>add</gi> or <gi>del</gi> tag if we are transcribing a
+single manuscript? We return to this question <ref
+target="#collation">below</ref>. <!-- Or do we need a completely new
+set of elements to do it? In a genetic process, at any point the
+author can decide to stop revising the text within a given document
+and decide to move to a new document (i.e. copy it anew), so the two
+phenomena (alterations at document level and alterations at dossier
+level) are indeed closely related. On the other hand we need to
+differentiate them because the one within a single document is
+explicitly marked by the author, while the one detected by comparison
+is only implicit. It may also happen that implicit alterations were
+perhaps marked in a lost intermediate version. This remains an open
+problem (see .</p> <p>The following discussion-->
     </p>
 <p>In this section we discuss elements introduced for the markup of
 alterations at the document level, within a single document,
@@ -619,16 +660,15 @@ elements to the same class:-->
 </p>
     <div>
        <head>Additions and rewritings</head>
-       <p>A writer may sometimes rewrite material a second time
-       without significant change and in the same place. We
-       consider this
- a distinct activity from addition as usually defined
-       because no new textual material results but the status of existing
-       material changes. We distinguish two variants of this: <term>fixation</term>
-where the first version was a tentative draft which
-       is subsequently fixed, for example by inking it over; and
-       <term>clarification</term>, where the first version was
-       badly written and has been rewritten for clarity.
+       
+<p>A writer may sometimes rewrite material a second time without
+significant change and in the same place. We consider this a distinct
+activity from addition as usually defined because no new textual
+material results but the status of existing material changes. We
+distinguish two variants of this: <term>fixation</term> where the
+first version was a tentative draft which is subsequently fixed, for
+example by inking it over; and <term>clarification</term>, where the
+first version was badly written and has been rewritten for clarity.
 The element <gi>ge:rewrite</gi> is provided to cover both cases.
 
 <specList>
@@ -661,55 +701,12 @@ could but get</mentioned> to the inked <mentioned>could
 get</mentioned>. A simple  way of encoding this  might be
 as follows:
      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <ge:rewrite cause="fix" hand="ja2" seq="1">Now, if we
+        <ge:rewrite cause="fix" hand="ja2" stage="#s1">Now, if we
            could get 
-           <del seq="1">but</del> a young Heiress</ge:rewrite>
+           <del stage="0">but</del> a young Heiress</ge:rewrite>
      </egXML> 
-</p><!-- this doesnt seem right though -->
-
-<!-- Fixation can affect large potions of text, therefore it seems
-     unpractical to transcribe the same text twice (as we would do in
-     case we used <gi>add</gi>); furthermore it often happens that
-     authors, while fixating a text, the decide to apply some
-     modification on the underlying text. Therefore we need an element
-     that imply a repetition (without providing it) and in the mean time
-     is distinguished by <soCalled>real</soCalled> additions and for
-     this reason we have introduced a <gi>ge:repetition</gi> element.
-     See, for instance the following example of such a practise taken
-     from page 70 of Jane austen's <title>Sanditon</title> (notice that
-     the scope of such a fixation is of a page and a half):<figure>
-        <graphic url="constr_example/AusSand70.png"/>
-     </figure>
-     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <ge:repetition type="fixation" hand="ja2" seq="1">Now, if we
-           could get <subst seq="1">
-              <del>but</del>
-              <add status="duplicate">get</add>
-           </subst>
-           <del seq="1">get</del> a young Heiress</ge:repetition>
-     </egXML> In the example, some corrections belong to the fixation
-     stage, as. This fact has been marked via the
-        <att>seq</att> attribute, assigning to all the alteration
-     belonging to the repetition phase the same value (for the
-        <att>seq</att> attribute, se <ref target="#seq"
-     >below</ref>).</item>
-
-     <label>Clarification</label> a word is badly written and the author
-     rewrites it to clarify. In this case the TEI <gi>add
-        status="duplicate"</gi> element could be used. An example of
-     that can be see at <ptr
-        target="http://www.emunch.no/tei-mm-2008/ms.html"/>, where the
-     first example, where we have two lost chars overwritten by 'er',
-     then overwritten again, could be encoded as follows: <egXML
-        xmlns="http://www.tei-c.org/ns/Examples">
-        <ge:line>Bæg<del>
-              <gap extent="2" unit="chars"/>
-           </del><add rend="overwritten" place="inline">er</add>
-           <add status="duplicate" type="clarification" place="inline"
-              >er</add>klang</ge:line>
-     </egXML></item>
-             </list></item>-->
-
+</p>
+<!-- note that the  hand specified for the rewrite is the second one -->
 <p>A single rewrite may not be sufficient, and it may  be that
 the document becomes almost unreadable as a result of repeated
 clarification. In the following example, for example, we can distinguish at
@@ -728,15 +725,12 @@ We might encode this by nesting the <gi>rewrite</gi> element as follows:
 ...</ge:line>     </egXML> 
 
 The <att>stage</att> attribute used here is discussed further below (<ptr target="#stages"/>).
-<!-- maybe! -->
-
-</p>
-
-    </div>
+</p>    
+</div>
 
 
     <div>
-       <head>Deletions</head>
+       <head>Deletions and marked as used</head>
        <p>In general deletion in a source is marked using the
        <gi>del</gi> or <gi>delSpan</gi> element. However, it is useful
        to distinguish cases where a passage has been <q>indicated as
@@ -779,22 +773,28 @@ gods</del><add>journeymen divine</add></subst>.</ge:line>
 
 
 <div xml:id="mm"><head>Metamarks</head>
+
 <p>By <term>metamark</term> we mean marks such as numbers, arrows, crosses, or
 other symbols introduced by the writer into a document expressly for
 the purpose of indicating how the text is to be read. Such marks thus
 constitute a kind of markup of the document, rather than forming part of
 the text. </p>
-<p>Unlike marginal notes or
-             other additions to the text, meta-marks
-             indicate a deliberate alteration of the writing
-	     (e.g. <q>move this passage over there</q>). We also
-	     consider as metamarks dates introduced  to mark the
-	     beginning of a manuscript or a revision, but not forming
-	     part of it.</p>
+
+<p>Unlike marginal notes or other additions to the text, meta-marks
+indicate a deliberate alteration of the writing (e.g. <q>move this
+passage over there</q>). We also consider as metamarks dates
+introduced to mark the beginning of a manuscript or a revision, but
+not forming part of it.</p>
+
 <p>The <gi>metaMark</gi> element carries a
   <att>function</att> attribute which specifies the function of
              the meta-mark and a <att>targets</att> attribute which points to the
              element or elements concerned. </p>
+
+<!-- another example needed for metamark: malte will look for one  -->
+
+<!-- also need something for alt : justin will provide one  -->
+
 <p>As an example, consider the manuscript of a poem by Emily Dickinson discussed by   Vetter and McDonald
 2003 <note place="foot">
   <bibl>
@@ -835,14 +835,12 @@ that the three elements indicated are mutually exclusive alternates:  the word
              underlined, the editors argue  (loc cit pp. 155-162)
 that  this possibility is to be preferred to the others and hence give it a
 weight of 1.</p>
-<p>Other examples of <gi>ge:metaMark</gi>
- can be
-	     seen in marked-up proofs such as the following, taken
-	     from the Walt
-             Whitman archive: <ptr
-  target="http://www.whitmanarchive.org/resources/sleepers/loc.00295.jpg"
-             />.
-</p>    </div>
+
+<p>Other examples of <gi>ge:metaMark</gi> can be seen in marked-up
+proofs such as the following, taken from the Walt Whitman archive:
+<ptr
+target="http://www.whitmanarchive.org/resources/sleepers/loc.00295.jpg"
+/>.  </p> </div>
     <div>
        <head>Transpositions</head>
        <p>Metamarks are commonly used in the context of
@@ -852,32 +850,28 @@ weight of 1.</p>
           (used, for instance in HNML) would be to regard such
 	  transpositions as a special kind of substitution, and
 	  actually to represent the result of the transposition
-	  indicated by the metamarksa in the encoding, for example by  consideribf the segment previous to the transposition as
+	  indicated by the metamarks in the encoding, for example by  considering the segment previous to the transposition as
           deleted, and substituted by the one after the transposition.
        </p>
 <p>Our recommendation is to record the actual state of the witness, but
 in such a way as to facilitate its reorganization as a distinct
-processing step. Thus, we provide an additional element <gi>ge:tr</gi>
+processing step. 
+
+<!-- decision is to just use stand off : what you move is the
+indicated element. so if you point to a line you move the line; if you
+point to a span, you move the content However it remains a problem 
+
+remove tr element as well; use generic
+
+-->
+
+Thus, we provide an additional element <gi>ge:tr</gi>
 the function of which is to mark explicitly the section of text which
 is to be transposed, and which carries an attribute <att>moveTo</att>
 to indicate the location in the document to which it is to be
 transposed. The presence and content of metamarks should  also be indicated,
 where feasible.</p>
-<!--
-       <list type="ordered">
-          <item>Make the segment to be transposed addressable, via a
-	  spanning element (<gi>ge:tr</gi>)</item>
-          <item>Indicate any meta-marks  in the text (e.g. a super linear or
-             marginal list of numbers “3 2 4 1” or asterisks) by means
-	     of the
-  <gi>ge:metaMark</gi> element. </item>
-          <item>Relate the <gi>ge:metaMark</gi> to the passages to be transposed,
-             either via attributes or implicitly because the <gi>ge:metaMark</gi> is
-             contained in an <gi>add</gi> or <gi>del</gi>.</item>
-          <item>Reorder the passages according to the instructions contained by the
-  <gi>ge:metaMark</gi> elements.</item>
-       </list>
--->
+
        <p>In the following simple example, taken from an Ibsen
        manuscript 
 <figure><graphic url="examples/ibsen01.jpg"/>
@@ -910,6 +904,9 @@ relatively easy to represent:
 <ge:tr xml:id="ib4" spanTo="#ib4e" moveTo="#ib3"/>da kan du Folkets Jøkelhjerter tine;<anchor xml:id="ib4e"/></ge:line>
           </egXML></p>
 
+<!-- problem of transposition: does it move just cdata or also markup?
+     what if result is ill formed?  metamarks are not precise enough -->
+
 <p>An alternative approach to the use of the <att>moveTo</att>
 attribute, is to represent the re-alignment of transposed blocks or
 segments by means of a
@@ -927,16 +924,26 @@ Using these elements, the first example above might be encoded as follows:
         <ptr target="#ib02"/>
         <ptr target="#ib01"/>
      </ge:transposition>
-  </ge:transpositions></ge:line>
+  </ge:transpositions></ge:line>  
           </egXML>
        </p>
+
+<!-- interpreting metamarks is not straightforward: does it affect th e
+mark up? does transposition include markup? -->
+
+
     </div>
     <div>
        <head>*Substitution</head>
        <p>In the current model for the TEI <gi>subst</gi> element,
         one or more additions and deletions may be combined if they are
        considered as representing a single editorial act, a
-       substitution. We propose that this model should be extended to
+       substitution. 
+
+<!-- not a useful concept for us; we need to group things more
+generally; we recommend not to use subst  -->
+
+We propose that this model should be extended to
        include cases such as the following:  example taken from Thomas More's <title>Lalla Rooke</title>
           <figure>
              <graphic url="examples/moore01.png"/>
@@ -953,6 +960,7 @@ type="class">model.pPart.transcriptional</ident>. This would then permit an  enc
      mus'd</add></subst>, her pinions fann'd</ge:line>
           </egXML></p>
     </div>
+
     <div>
        <head>Undoing alterations</head>
        <p>In some cases an author indicates that  an alteration is
@@ -979,7 +987,7 @@ The element <gi>ge:undo</gi> usually encloses the
           </figure>This could be encoded as follows:<egXML
              xmlns="http://www.tei-c.org/ns/Examples">
              <ge:line> che e’ <hi rend="underline"><ge:undo
-	     spanTo="#x2"/>si<anchor xml:id="x2"/> rechi a’</hi>
+	     spanTo="#x2"/>si <anchor xml:id="x2"/> rechi a’</hi>
   <del rend="overstrike">dotti</del>
   <hi rend="underline">denti</hi> l’un d’essi cibi</ge:line>
           </egXML></p>
@@ -989,13 +997,13 @@ The element <gi>ge:undo</gi> usually encloses the
 
 
  <div xml:id="stages">
-    <head>Stages</head>
+    <head>Revision campaigns</head>
     
 <p>A major purpose of genetic editing is the identification of
 <soCalled>campaigns of revision</soCalled> or
-<term>text-stages</term>). A genetic editor needs to be able to assign
+<term>stages</term>. A genetic editor needs to be able to assign
 a set of alterations (deletions, additions, substitutions,
-transpositions, etc.) to a text stage, to indicate both that one or
+transpositions, etc.) to a particular revision stage, to indicate both that one or
 more of such phenomena preceded or followed another and also to
 indicate that they are related in some way, for example that one is a
 consequence of the other. To document this we need:
@@ -1005,8 +1013,20 @@ consequence of the other. To document this we need:
 occurring at document level to a particular revision campaign or
 text-stage</item>
           
-<item>a way to describe a revision campaign text-stage</item>
+<item>a way to describe a revision campaign </item>
        </list></p>
+
+<p>This is identical to the <gi>revisionDesc</gi> element, but
+concerns the document itself rather than the TEI document representing
+it. We propose using something like the <gi>change</gi> element for
+this purpose, but the attributes who and when dont work. </p>
+
+<p>Change is a child of changeList. Ordering within changeList a separate problem. 
+</p>
+
+<!-- timeline abstracts from real time; we need to use notAfter
+notBefore to deal with uncertainties? -->
+ 
 
 <p>The present TEI attribute <att>seq</att> provides some of this
 functionality, but not all. We propose the following mechanism:
@@ -1057,17 +1077,20 @@ identifer, such as the pages mentioned or insertion points mentioned
 above. The former will presumably be marked as  <gi>ge:surface</gi>
 elements or <gi>zone</gi> elements, while the latter may be marked using the generic TEI
 <gi>anchor</gi> element.</p>
-    <p>The <att>state</att> attribute can be used to associate any
-    sequence of mark-up in a document with a <gi>stateNote</gi>, and
-    hence to allocate that particular writing event to a particular
-    revision campaign. There will often be many such elements
-    (several additions and deletions for example) for a single
-    revision, and for convenience therefore it an additional
-    <gi>mod</gi> (for modification) element is provided to delimit the
-    scope of any such modifications. 
-As this element is likely to overlap with other elements, it is itself
-empty, and carries a <att>spanTo</att> attribute to indicate its
-endpoint.
+    
+<p>The <att>state</att> attribute can be used to associate any
+sequence of mark-up in a document with a <gi>stateNote</gi>, and hence
+to allocate that particular writing event to a particular revision
+campaign. There will often be many such elements (several additions
+and deletions for example) for a single revision, and for convenience
+therefore  an additional <gi>mod</gi> (for modification) element is
+provided to delimit the scope of any such modifications.  As this
+element is likely to overlap with other elements, it is itself empty,
+and carries a <att>spanTo</att> attribute to indicate its endpoint.
+
+
+<!-- could use @seq for lower level sequencing -->
+
 <egXML
           xmlns="http://www.tei-c.org/ns/Examples">
           <ge:line>her face) – <ge:mod spanTo="#ch10-06-23" stage="#mod1"/>But <subst>
@@ -1116,6 +1139,9 @@ pointing to a specific <gi>stageNote</gi>, the <att>stage</att>
 attribute may take the value <code>0</code> to indicate that the
 addition or deletion is considered to belong to the same writing stage
 as the rest of the unmodified document. 
+
+<!-- this is @seq, not @stage -->
+
 <!--    <div xml:id="false-start">
        <head>Timing</head>
        <p>Distinguishing instant correction from other kinds of alteration is
@@ -1203,19 +1229,28 @@ documents each of which has been encoded in its own file:
  </egXML>
 Note that each of the files referenced (<ident>document1.xml</ident>
 etc) should contain a complete <gi>TEI</gi> element</p>
- 
+ <!-- what about doctype and xml PIs - are they processed correctly?
+ elena says yes they are -->
 <div>
     <head>*Genetic Grouping </head>
-    <p>Alterations, revisions and other compositional phenomena may need to be grouped
-       at dossier level: it might in fact occur that authors correct two versions at a
-          time,<note place="foot">Manzoni, for instance, used to modify an old draft
-          to see how a new variant fitted with the context before copying it into a
-          new draft.</note>or we might need to express that two or more documents are
-       related in other ways; for instance, one can be the sequel of the other, they
-       might have been drafted at the same time, or one might contain some other kind
-       of analogy, like a newspaper article that inspired some kind of reflection
-       contained in a given work. </p>
-    <p>Such groupings can be encoded within a <gi>gi:geneticGrp</gi> element.<note
+
+<!-- we decide everything can be done with graph, node, arc but the
+terminology needs revision -->
+
+
+    <p>Alterations, revisions and other compositional phenomena may
+    need to be grouped at dossier level: it might in fact occur that
+    authors correct two versions at a time,<note place="foot">Manzoni,
+    for instance, used to modify an old draft to see how a new variant
+    fitted with the context before copying it into a new
+    draft.</note>or we might need to express that two or more
+    documents are related in other ways; for instance, one can be the
+    sequel of the other, they might have been drafted at the same
+    time, or one might contain some other kind of analogy, like a
+    newspaper article that inspired some kind of reflection contained
+    in a given work. </p>
+    
+<p>Such groupings can be encoded within a <gi>gi:geneticGrp</gi> element.<note
           place="foot"><hi rend="bold">EP</hi>: Sorry, but I don't like the name
              <gi>ge:textGroup</gi>, it is not clear enough. I appreciate we need a
           generic name, but we are not grouping texts, we are grouping: a) revisions;
@@ -1307,6 +1342,16 @@ etc) should contain a complete <gi>TEI</gi> element</p>
   <gi>ge:edJust</gi> element can be used to contain editorial statements
              about the constitution of a such path. </item>
        </list>
+
+<!-- number of possible graphs is not defined : many possibilities 
+
+syntagmatic relns. 
+associations.
+
+
+-->
+
+
        <p>The overview by Kenneth Price and Brett Barney of the genesis of a Walt
           Whitman poem eventually titled <title>The Sleepers</title> (<ptr
              target="http://www.whitmanarchive.org/resources/sleepers/sleepers.html"/>)
@@ -1393,6 +1438,9 @@ etc) should contain a complete <gi>TEI</gi> element</p>
     </div>
     <div>
        <head>*Relationships</head>
+
+<!-- remove this para -->
+
        <p>The type of connections existing between two or more textual variants (an
           arc) or two or more steps (a graph) need to be declared and described in
           order to be used. For that purpose a slightly modified version of the
@@ -1427,8 +1475,16 @@ etc) should contain a complete <gi>TEI</gi> element</p>
        </p>
     </div>
  </div>
+
+
  <div xml:id="collation">
+
+<!--
+labelling via seq 
+
+-->
     <head>*Collation and Critical Apparatus</head>
+
     <p>As previously discussed (see <ref target="#alteration">above</ref>), at any
        time of the creation process the author can decide to stop editing a draft and
        move to another draft. Therefore alterations within a given document and
@@ -1454,6 +1510,22 @@ etc) should contain a complete <gi>TEI</gi> element</p>
              </app> sleep</l>
        </egXML>
     </p>
+<!--
+
+attach difference information to arcs; examples needed
+
+need to invent a null-reading element for app
+
+qualifications 
+
+standoff for readings
+
+transposition can also be included in apparatus
+
+
+-->
+
+
     <p>The usage of elements such <gi>add</gi> or <gi>del</gi> within a reading
        normally will mean that something has been added or deleted within that
        particular witness.</p>
@@ -2089,7 +2161,7 @@ provide two writing surfaces</desc>
 
  <elementSpec ident="mod" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
-    <desc>Scope an area in the document containing several alteration which are
+    <desc>Scope an area in the document containing several alterations which are
        interrelated to each others; Can also be used to segment the text in order to
        give a meaningful semantic context to an alteration. </desc>
     <classes>
@@ -2416,6 +2488,9 @@ attribute.</p></remarks> </elementSpec>
           <datatype>
              <rng:ref
   name="data.pointing"/>
+
+<!-- replace by vallist -->
+
           </datatype>
        </attDef>
     </attList>
@@ -2570,3 +2645,7 @@ attribute.</p></remarks> </elementSpec>
       </back>
    </text>
 </TEI>
+
+
+<!-- malte's example of 
+space between lines being deleted to get rid of para break -->
