@@ -412,8 +412,16 @@
 				</ref>
 			</xsl:when>
 
-			<xsl:when test="w:rPr/w:position[@w:val='-6']">
+			<xsl:when
+			    test="w:rPr/w:position[number(@w:val)&lt;-2]">
 				<hi rend="subscript">
+					<xsl:apply-templates/>
+				</hi>
+			</xsl:when>
+
+			<xsl:when
+			    test="w:rPr/w:position[number(@w:val)&gt;2]">
+				<hi rend="superscript">
 					<xsl:apply-templates/>
 				</hi>
 			</xsl:when>
@@ -555,6 +563,15 @@
 	      <table xmlns="http://www.oasis-open.org/specs/tm9901">
 		<xsl:call-template name="cals-table-header"/>
 		<tgroup>
+		  <xsl:for-each select="w:tblGrid/w:gridCol">
+		    <colspec colnum="{position()}"
+			     colname="c{position()}"
+			     xmlns="http://www.oasis-open.org/specs/tm9901">
+		      <xsl:attribute name="colwidth"
+				     select="concat(number(@w:w) div
+					   56.6929134,'mm')"/>
+		    </colspec>
+		  </xsl:for-each>
 		  <tbody>
 		    <xsl:for-each select="w:tr">
 		      <row xmlns="http://www.oasis-open.org/specs/tm9901">
@@ -572,13 +589,17 @@
 			      </xsl:attribute>
 			    </xsl:if>
 			    -->
-			    <!-- cannot impement cols yet 
 			    <xsl:if test="w:tcPr/w:gridSpan">
-			      <xsl:attribute name="cols">
-				<xsl:value-of select="w:tcPr/w:gridSpan/@w:val"/>
+			      <xsl:attribute name="namest">
+				<xsl:text>c</xsl:text>
+				<xsl:value-of select="position()"/>
+			      </xsl:attribute>
+			      <xsl:attribute name="nameend">
+				<xsl:text>c</xsl:text>
+				<xsl:value-of select="position()+number(w:tcPr/w:gridSpan/@w:val)-1"/>
 			      </xsl:attribute>
 			    </xsl:if>
-			    -->
+
 			    <xsl:apply-templates/>
 			  </entry>
 			</xsl:for-each>

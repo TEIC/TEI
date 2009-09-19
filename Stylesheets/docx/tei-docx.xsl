@@ -1422,18 +1422,18 @@ is there a number present?
 	    </w:tblBorders>
 	  </w:tblPr>
 	  <xsl:choose>
-	    <xsl:when test="cals:colgroup">
+	    <xsl:when test="cals:tgroup">
 	      <w:tblGrid>
-		<xsl:for-each select="cals:colgroup/cals:col">
+		<xsl:for-each select="cals:tgroup/cals:colspec">
 		  <w:gridCol>
-		    <xsl:attribute name="w:w" select="teidocx:convert-dim-pt20(@width)"/>
+		    <xsl:attribute name="w:w" select="teidocx:convert-dim-pt20(@colwidth)"/>
 		  </w:gridCol>
 		</xsl:for-each>
 	      </w:tblGrid>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <w:tblGrid>
-		<xsl:for-each select="cals:row[1]/cals:cell">
+		<xsl:for-each select="cals:row[1]/cals:entry">
 		  <w:gridCol w:w="500"/> <!-- notional amount -->
 		</xsl:for-each>
 	      </w:tblGrid>		  
@@ -1473,9 +1473,16 @@ is there a number present?
     <xsl:template match="cals:entry">
         <w:tc>
 	  <w:tcPr>
-	    <!--w:tcW w:w="1915" w:type="dxa"/-->
-	    <xsl:if test="@cols">
-	      <w:gridSpan w:val="{@cols}"/>
+	    <xsl:if test="@namest">
+	      <xsl:variable name="start">
+		<xsl:value-of
+		    select="ancestor::cals:table/cals:tgroup/cals:colspec[@colname=current()/@namest]/@colnum"/>
+	      </xsl:variable>
+	      <xsl:variable name="end">
+		<xsl:value-of
+		    select="ancestor::cals:table/cals:tgroup/cals:colspec[@colname=current()/@nameend]/@colnum"/>
+	      </xsl:variable>
+	      <w:gridSpan w:val="{number($end)-number($start)+1}"/>
 	    </xsl:if>
 	  </w:tcPr>
 	  <xsl:choose>
