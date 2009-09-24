@@ -44,7 +44,7 @@ then
 else
     saxon -o $TEMPDIR/tmp3.xml  $THERE/$F $XSL/docx/fixgraphics.xsl DIR=`pwd`/word
 fi
-saxon -o word/document.xml tmp3.xml $APPHOME/profiles/$profile/docx/to.xsl  \
+saxon -o word/newdocument.xml tmp3.xml $APPHOME/profiles/$profile/docx/to.xsl  \
     debug=$debug styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR
 if $debug 
 then
@@ -55,6 +55,7 @@ fi
 rm -f word/media/*.xmp
 test -f newContent_Types.xml && mv newContent_Types.xml \[Content_Types\].xml
 mv docProps/newcore.xml docProps/core.xml 
+mv word/newdocument.xml  word/document.xml
 rm -f $THERE/$F.docx
 zip -q -r $THERE/$F.docx word _rels docProps customXml \[Content_Types\].xml
 cd $HERE

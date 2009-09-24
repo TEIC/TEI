@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns="http://www.tei-c.org/ns/1.0"
+    xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
     xmlns:cals="http://www.oasis-open.org/specs/tm9901"
-    xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:iso="http://www.iso.org/ns/1.0"
-    xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:iso="http://www.iso.org/ns/1.0"
+    xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
+    xmlns:mml="http://www.w3.org/1998/Math/MathML"
     xmlns:o="urn:schemas-microsoft-com:office:office"
+    xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
     xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
     xmlns:rel="http://schemas.openxmlformats.org/package/2006/relationships"
-    xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
+    xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
+    xmlns:tei="http://www.tei-c.org/ns/1.0" 
     xmlns:v="urn:schemas-microsoft-com:vml"
-    xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
-    xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
-    xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
+    xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:w10="urn:schemas-microsoft-com:office:word"
     xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
     xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
-    xmlns:mml="http://www.w3.org/1998/Math/MathML"
-    xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
+    xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
     xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     exclude-result-prefixes="ve o r m v wp w10 w wne mml cals tbx iso xd">
     
@@ -26,7 +27,7 @@
     <!-- import special iso functions -->
     <xsl:include href="iso-functions.xsl"/>
     
-<doc type="stylesheet" xmlns="http://www.pnp-software.com/XSLTdoc">
+    <doc type="stylesheet" xmlns="http://www.pnp-software.com/XSLTdoc">
     <short>TEI stylesheet to convert Word DOCX XML to TEI XML.</short>
     <detail>
     This library is free software; you can redistribute it and/or
@@ -47,7 +48,11 @@
     <author>See AUTHORS</author>
     <cvsId>$Id$</cvsId>
     <copyright>2008, TEI Consortium</copyright>
-</doc>
+    </doc>
+    
+    <xsl:key name="Sdt" match="w:sdt" use="w:sdtPr/w:tag/@w:val"/>
+    <xsl:key name="AllSdt" match="w:sdtPr/w:tag/@w:val" use="1"/>
+
     <!-- param defining whether to use a custom metadata file or to extract
     the metadata from the document -->
     <xsl:param name="metadata-file"/>
@@ -88,41 +93,41 @@
     </xsl:template>
     
     <xsl:template name="teiHeader-extract-from-doc">
-        <teiHeader>
+        <teiHeader xmlns:iso="http://www.iso.org/ns/1.0">
             <fileDesc>
                 <titleStmt>
-                    <title type="introductory" xml:lang="en">
+                    <title iso:meta="introductory_title" xml:lang="en">
                         <xsl:call-template name="getSdt">
                             <xsl:with-param
                                 name="tag">introductory_title</xsl:with-param>
                         </xsl:call-template>
                     </title>
-                    <title type="main" xml:lang="en">
+                    <title iso:meta="main_title" xml:lang="en">
                         <xsl:call-template name="getSdt">
                             <xsl:with-param
                                 name="tag">main_title</xsl:with-param>
                         </xsl:call-template>
                     </title>
-                    <title type="complementary" xml:lang="en">
+                    <title iso:meta="complementary_title" xml:lang="en">
                         <xsl:call-template name="getSdt">
                             <xsl:with-param
                                 name="tag">complementary_title</xsl:with-param>
                         </xsl:call-template>
                     </title>
                     
-                    <title type="introductory" xml:lang="fr">
+                    <title iso:meta="introductory_title_fr" xml:lang="fr">
                         <xsl:call-template name="getSdt">
                             <xsl:with-param
                                 name="tag">introductory_title_fr</xsl:with-param>
                         </xsl:call-template>
                     </title>
-                    <title type="main" xml:lang="fr">
+                    <title iso:meta="main_title_fr" xml:lang="fr">
                         <xsl:call-template name="getSdt">
                             <xsl:with-param
                                 name="tag">main_title_fr</xsl:with-param>
                         </xsl:call-template>
                     </title>
-                    <title type="complementary" xml:lang="fr">
+                    <title iso:meta="complementary_title_fr" xml:lang="fr">
                         <xsl:call-template name="getSdt">
                             <xsl:with-param
                                 name="tag">complementary_title_fr</xsl:with-param>
@@ -132,73 +137,63 @@
                     <respStmt>
                         <resp>Committee</resp>
                         <name>
-                            <xsl:text>TC </xsl:text>
+			  <xsl:text>TC </xsl:text>
                             <xsl:call-template name="getSdt">
                                 <xsl:with-param name="tag">tcnum</xsl:with-param>
                             </xsl:call-template>
-                            <xsl:text>/SC </xsl:text>
+			  <xsl:text> /SC </xsl:text>
                             <xsl:call-template name="getSdt">
                                 <xsl:with-param name="tag">scnum</xsl:with-param>
                             </xsl:call-template>
-                        </name>
+			</name>
                     </respStmt>
                 </titleStmt>
                 <editionStmt>
                     <edition>
                         <xsl:attribute name="n">1</xsl:attribute>
                     </edition>
-                    <!-- where do we get the edition number from? 
-                        "w:body/w:p/w:sdt/w:sdtPr[w:tag/@w:val='docstage']/w:dropDownList/w:listItem[@w:displayText=$displayText]/@w:value"/>
-                        First <xsl:value-of select="substring-after(normalize-space(w:body/w:p/w:sdt[w:sdtPr/w:tag/@w:val='docstage']/w:sdtContent/w:r/w:t),' ')"/>-->
                 </editionStmt>
                 <publicationStmt>
-                    <date>
+                    <date iso:meta="docdate">
                         <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">documentdate</xsl:with-param>
-                            <xsl:with-param name="oldtag">docdate</xsl:with-param>
+                            <xsl:with-param name="tag">docdate</xsl:with-param>
                         </xsl:call-template>
                     </date>
-                    <publisher>
+                    <publisher iso:meta="organization">
                         <xsl:call-template name="getSdt">
                             <xsl:with-param name="tag">organization</xsl:with-param>
                         </xsl:call-template>
                     </publisher>
-                    <authority>
+                    <authority iso:meta="secretariat">
                         <xsl:call-template name="getSdt">
                             <xsl:with-param name="tag">secretariat</xsl:with-param>
                         </xsl:call-template>
                     </authority>
-                    <idno type="wgNumber">
-                        <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">wgNumber</xsl:with-param>
-                        </xsl:call-template>
-                    </idno>
-                    <idno type="serialNumber">
-                        <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">serialNumber</xsl:with-param>
-                        </xsl:call-template>
-                    </idno>
-                    <idno type="documentNumber">
-                        <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">documentNumber</xsl:with-param>
-                        </xsl:call-template>
-                    </idno>
-                    <idno type="partNumber">
-                        <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">partNumber</xsl:with-param>
-                        </xsl:call-template>
-                    </idno>
-                    <idno type="draftNumber">
-                        <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">draftNumber</xsl:with-param>
-                        </xsl:call-template>
-                    </idno>
-                    <idno type="stage">
-                        <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">documentstage</xsl:with-param>
-                            <xsl:with-param name="oldtag">docstage</xsl:with-param>
-                        </xsl:call-template>
-                    </idno>
+		    <xsl:for-each-group select="key('AllSdt',1)"
+					group-by=".">
+		      <xsl:sort select="."/>
+		      <xsl:variable name="thisSdt"
+				    select="current-grouping-key()"/>
+		      <xsl:choose>
+			<xsl:when test="$thisSdt='committee'"/>
+			<xsl:when test="$thisSdt='complementary_title'"/>
+			<xsl:when test="$thisSdt='complementary_title_fr'"/>
+			<xsl:when test="$thisSdt='introductory_title'"/>
+			<xsl:when test="$thisSdt='introductory_title_fr'"/>
+			<xsl:when test="$thisSdt='main_title'"/>
+			<xsl:when test="$thisSdt='main_title_fr'"/>
+			<xsl:when test="$thisSdt='docdate'"/>
+			<xsl:when test="$thisSdt='organization'"/>
+			<xsl:when test="$thisSdt='secretariat'"/>
+			<xsl:otherwise>
+			  <idno iso:meta="{$thisSdt}">
+			    <xsl:call-template name="getSdt">
+			      <xsl:with-param name="tag" select="$thisSdt"/>
+			    </xsl:call-template>
+			  </idno>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:for-each-group>
                     <xsl:if test="w:body/w:p[w:pPr/w:pStyle/@w:val='zzCopyright']">
 		      <availability>
 			<xsl:apply-templates
@@ -745,68 +740,70 @@
     
     <xsl:template name="paragraph-wp">
     	<p>
-			<!-- put style in rend, if there is a style -->
-			<xsl:if test="w:pPr/w:pStyle/@w:val">
-			  <xsl:attribute name="rend">
-			    <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
-			  </xsl:attribute>
-			</xsl:if>
-			
-			<!-- Store information about spacing  -->
-			<xsl:if test="w:pPr/w:spacing/@w:before">
-				<xsl:attribute name="iso:spaceBefore">
-					<xsl:value-of select="w:pPr/w:spacing/@w:before"/>
-				</xsl:attribute>
-			</xsl:if>
-			<xsl:if test="w:pPr/w:spacing/@w:after">
-				<xsl:attribute name="iso:spaceAfter">
-					<xsl:value-of select="w:pPr/w:spacing/@w:after"/>
-				</xsl:attribute>
-			</xsl:if>
-
-			<xsl:apply-templates select="."/>
-		</p>
-	</xsl:template>
+	  <!-- put style in rend, if there is a style -->
+	  <xsl:if test="w:pPr/w:pStyle/@w:val">
+	    <xsl:attribute name="rend">
+	      <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
+	    </xsl:attribute>
+	  </xsl:if>
+	  
+	  <!-- Store information about spacing  -->
+	  <xsl:if test="w:pPr/w:spacing/@w:before">
+	    <xsl:attribute name="iso:spaceBefore">
+	      <xsl:value-of select="w:pPr/w:spacing/@w:before"/>
+	    </xsl:attribute>
+	  </xsl:if>
+	  <xsl:if test="w:pPr/w:spacing/@w:after">
+	    <xsl:attribute name="iso:spaceAfter">
+	      <xsl:value-of select="w:pPr/w:spacing/@w:after"/>
+	    </xsl:attribute>
+	  </xsl:if>
+	  
+	  <xsl:apply-templates select="."/>
+	</p>
+    </xsl:template>
     
     <!--  UTILITIES -->
     <xsl:template name="getSdt">
-        <xsl:param name="tag"/>
-        <xsl:param name="oldtag"/>
-        <xsl:variable name="result1">
-            <xsl:for-each select="key('Sdt',$tag)[1]">
-                <xsl:value-of select="w:sdtContent/w:r/w:t"/>
-            </xsl:for-each>
-        </xsl:variable>
-        <xsl:variable name="result">
-            <xsl:choose>
-                <xsl:when test="string-length($result1)=0 and not($oldtag='')">
-                    <xsl:for-each select="key('Sdt',$oldtag)[1]">
-                        <xsl:value-of select="w:sdtContent/w:r/w:t"/>
-                    </xsl:for-each>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="$result1"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:choose>
-            <xsl:when test="$result='Click here to enter text.'"> </xsl:when>
-            <xsl:when test="$result='Choose an item.'"> </xsl:when>
-            <xsl:when test="$tag='documentstage'">
-                <xsl:value-of select="substring-before(substring-after($result,'('),')')"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="$result"/>
-            </xsl:otherwise>
-        </xsl:choose>
+      <xsl:param name="tag"/>
+      <xsl:param name="oldtag"/>
+      <xsl:variable name="result1">
+	<xsl:for-each select="key('Sdt',$tag)[1]">
+	  <xsl:value-of select="w:sdtContent/w:r/w:t"/>
+	</xsl:for-each>
+      </xsl:variable>
+      <xsl:variable name="result">
+	<xsl:choose>
+	  <xsl:when test="string-length($result1)=0 and not($oldtag='')">
+	    <xsl:for-each select="key('Sdt',$oldtag)[1]">
+	      <xsl:value-of select="w:sdtContent/w:r/w:t"/>
+	    </xsl:for-each>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="$result1"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:variable>
+      <xsl:choose>
+	<xsl:when test="$result='Click here to enter text.'"> </xsl:when>
+	<xsl:when test="$result='Choose an item.'"> </xsl:when>
+	<!--
+	    <xsl:when test="$tag='documentstage'">
+	    <xsl:value-of select="substring-before(substring-after($result,'('),')')"/>
+	    </xsl:when>
+	-->
+	<xsl:otherwise>
+	  <xsl:value-of select="$result"/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
  
     <!-- override for part 2 -->
 
-	<!-- div with head only -->
-
-	<xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2">
-	</xsl:template>
+    <!-- div with head only -->
+    
+    <xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2">
+    </xsl:template>
     
 </xsl:stylesheet>
 <!-- 

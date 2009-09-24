@@ -86,9 +86,6 @@
 	-->
 	
 	
-	<xsl:key name="Sdt" match="w:sdt" use="w:sdtPr/w:tag/@w:val"/>
-	<xsl:key name="AllSdt" match="w:sdt" use="1"/>
-
 	<xsl:strip-space elements="*"/>
 	<xsl:preserve-space elements="w:t"/>
 	

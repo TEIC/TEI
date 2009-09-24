@@ -1171,12 +1171,14 @@ select="$M"/></xsl:message>
                 </tei:attList>
               </xsl:for-each>
             </xsl:when>
+
             <xsl:otherwise>
-              <xsl:if test="$verbose='true'">
+	      <xsl:if test="$verbose='true'">
                 <xsl:message>Class <xsl:value-of select="$className"/> for <xsl:value-of select="$elementName"/> has no changes, refer by name</xsl:message>
               </xsl:if>
               <tei:attRef n="4" name="{$className}.attributes"/>
-            </xsl:otherwise>
+	      </xsl:otherwise>
+
           </xsl:choose>
         </xsl:otherwise>
       </xsl:choose>

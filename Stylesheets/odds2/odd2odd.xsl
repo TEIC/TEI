@@ -1255,12 +1255,14 @@ select="$M"/></xsl:message>
           </xsl:for-each>
         </xsl:when>
 	<!-- there are no changes to the attributes in the odd-->
+
 	<xsl:when test="$anyChanged=''">
 	  <xsl:if test="$verbose='true'">
 	    <xsl:message>f) Class <xsl:value-of select="$className"/> for <xsl:value-of select="$elementName"/> has no changes, refer by name</xsl:message>
 	  </xsl:if>
 	  <tei:attRef n="4" name="{$className}.attributes"/>
 	</xsl:when>
+
 	<xsl:otherwise>
 	  <xsl:if test="$verbose='true'">
 	    <xsl:message>g) Class <xsl:value-of select="$className"/> for <xsl:value-of 
