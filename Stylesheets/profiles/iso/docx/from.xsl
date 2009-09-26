@@ -58,6 +58,41 @@
     <xsl:param name="metadata-file"/>
     <xsl:param name="tableMethod">cals</xsl:param>    
     
+    <xsl:template match="/">
+      <xsl:variable name="part0">
+	<w:document>
+	  <w:body>
+	    <xsl:for-each select="w:document/w:body">
+	      <xsl:for-each-group select="*"
+				  group-starting-with="w:bookmarkStart|w:bookmarkEnd">
+		<xsl:choose>
+		  <xsl:when test="@w:name='ISOTitle'">
+		    <tei:titlePage>
+		      <xsl:copy-of select="current-group()"/>
+		    </tei:titlePage>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:copy-of select="current-group()"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+	      </xsl:for-each-group>
+	    </xsl:for-each>
+	  </w:body>
+	</w:document>
+      </xsl:variable>
+<!--
+     <xsl:copy-of select="$part0"/>
+-->
+
+      <xsl:variable name="part1">
+	<xsl:for-each select="$part0">
+	  <xsl:apply-templates/>
+	</xsl:for-each>
+      </xsl:variable>
+      <xsl:apply-templates select="$part1" mode="part2"/>
+
+    </xsl:template>
+
     <!-- Overwriting the creation of the teiHeader -->
     <xsl:template name="create-tei-header">
         <xsl:attribute name="xml:lang">

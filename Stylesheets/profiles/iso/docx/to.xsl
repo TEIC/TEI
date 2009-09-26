@@ -564,7 +564,7 @@
 <!-- identity transform -->
 
 <xsl:template match="@*|text()|comment()|processing-instruction()" mode="readOldDoc">
- <xsl:copy-of select="."/>
+  <xsl:copy-of select="."/>
 </xsl:template>
 
 
@@ -595,11 +595,11 @@
 <xsl:template match="w:sectPr" mode="readOldDoc"/>
 
 <xsl:template name="titlepages">
-  <xsl:processing-instruction name="iso">startTemplate</xsl:processing-instruction>
+  <w:bookmarkStart w:name="ISOTitle" w:id="0"/>
   <xsl:for-each select="document($docDoc)/w:document/w:body">
     <xsl:apply-templates mode="readOldDoc"/>
   </xsl:for-each>
-  <xsl:processing-instruction name="iso">endTemplate</xsl:processing-instruction>
+  <w:bookmarkEnd w:id="0"/>
 </xsl:template>
 
 </xsl:stylesheet>
