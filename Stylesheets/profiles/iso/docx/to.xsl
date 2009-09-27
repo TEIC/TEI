@@ -595,11 +595,9 @@
 <xsl:template match="w:sectPr" mode="readOldDoc"/>
 
 <xsl:template name="titlepages">
-  <w:bookmarkStart w:name="ISOTitle" w:id="0"/>
   <xsl:for-each select="document($docDoc)/w:document/w:body">
     <xsl:apply-templates mode="readOldDoc"/>
   </xsl:for-each>
-  <w:bookmarkEnd w:id="0"/>
 </xsl:template>
 
 </xsl:stylesheet>
