@@ -94,7 +94,7 @@
 	<!-- create root element -->
 	<xsl:template match="/">
 		<xsl:variable name="part1">
-			<xsl:apply-templates/>
+		  <xsl:apply-templates/>
 		</xsl:variable>
 		
 		<!--
@@ -290,7 +290,6 @@
 						</graphic>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:message>Linked Image</xsl:message>
 						<graphic>
 							Linked Graphic: 
 							<xsl:variable name="rid" select="@r:link"/>

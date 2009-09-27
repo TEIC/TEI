@@ -105,18 +105,17 @@
     </xsl:for-each>
   </xsl:template>
   
-  
+  -->
   <xsl:template name="generateTitle">
-    <xsl:call-template name="getiso_title_introductory_en"/>
+    <xsl:value-of select="key('ISOMETA','introductory_title')"/>
     <xsl:text> &#x2014; </xsl:text>
-    <xsl:call-template name="getiso_title_main_en"/>
-    <xsl:if test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@xml:lang='en'
-		and @type='complementary']">
+    <xsl:value-of select="key('ISOMETA','main_title')"/>
+    <xsl:if test="key('ISOMETA','complementary_title')">
       <xsl:text> &#x2014; </xsl:text>
-      <xsl:call-template name="getiso_title_complementary_en"/>
+      <xsl:value-of select="key('ISOMETA','complementary_title')"/>
     </xsl:if>
   </xsl:template>
--->  
+
   <xsl:template name="makeHTMLHeading">
     <xsl:param name="text"/>
     <xsl:param name="class">title</xsl:param>

@@ -59,6 +59,7 @@
     <xsl:param name="tableMethod">cals</xsl:param>    
     
     <xsl:template match="/">
+      <!--
       <xsl:variable name="part0">
 	<w:document>
 	  <w:body>
@@ -80,17 +81,31 @@
 	  </w:body>
 	</w:document>
       </xsl:variable>
-<!--
-     <xsl:copy-of select="$part0"/>
--->
+      -->
 
       <xsl:variable name="part1">
-	<xsl:for-each select="$part0">
 	  <xsl:apply-templates/>
-	</xsl:for-each>
       </xsl:variable>
       <xsl:apply-templates select="$part1" mode="part2"/>
 
+    </xsl:template>
+
+    <!-- ignore existing title pages -->
+    <xsl:template match="w:p[.//w:sdt and not (w:pPr/w:pStyle/@w:val='zzSTDTitle')]" priority="1001">
+      <xsl:message>fail 1: <xsl:value-of select="normalize-space(.)"/></xsl:message>
+    </xsl:template>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='cover_warning']" priority="1002">
+      <xsl:message>fail 3: <xsl:value-of select="normalize-space(.)"/></xsl:message>
+    </xsl:template>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='zzCopyright']" priority="1002">
+      <xsl:message>fail 4: <xsl:value-of select="normalize-space(.)"/></xsl:message>
+    </xsl:template>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='idno']" priority="1002">
+      <xsl:message>fail 5: <xsl:value-of select="normalize-space(.)"/></xsl:message>
+    </xsl:template>
+    <xsl:template
+	match="w:p[w:pPr/w:pStyle/@w:val='copyrightdetails']" priority="1002">
+      <xsl:message>fail 6: <xsl:value-of select="normalize-space(.)"/></xsl:message>
     </xsl:template>
 
     <!-- Overwriting the creation of the teiHeader -->
@@ -347,6 +362,7 @@
                         <xsl:when test="$divname='Symboles'">symbolsAndTerms</xsl:when>
                         <xsl:when test="$divname='Foreword'">foreword</xsl:when>
                         <xsl:when test="$divname='zzIntroduction'">introduction</xsl:when>
+                        <xsl:when test="$divname='Introduction'">introduction</xsl:when>
                         <xsl:when test="$divname='Scope'">scope</xsl:when>
                         <xsl:when test="$divname='Normative references'">normativeReferences</xsl:when>
                         <xsl:when test="$divname='Terms and definitions'">termsAndDefinitions</xsl:when>
@@ -386,6 +402,13 @@
                 </head>
             </xsl:when>
             <xsl:when test="$Style=$zzIntroductionHeading">
+                <xsl:attribute name="type">introduction</xsl:attribute>
+                <head>
+                    <xsl:apply-templates/>
+                </head>
+            </xsl:when>
+
+            <xsl:when test="$Style=$IntroductionHeading">
                 <xsl:attribute name="type">introduction</xsl:attribute>
                 <head>
                     <xsl:apply-templates/>
@@ -837,9 +860,11 @@
 
     <!-- div with head only -->
     
-    <xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2">
-    </xsl:template>
-    
+    <xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2"/>
+
+    <!-- spurious page break -->
+    <xsl:template match="tei:body/tei:p[count(*)=1 and tei:pb]" mode="part2"/>
+
 </xsl:stylesheet>
 <!-- 
 

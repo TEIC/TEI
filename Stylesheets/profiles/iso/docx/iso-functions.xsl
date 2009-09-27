@@ -18,7 +18,7 @@
     xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
     exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
 
-    <xsl:import href="../../../docx/variables.xsl"/>
+    <xsl:import href="variables.xsl"/>
     
     <!-- returns a listtype for a given stylename (return empty string to figure it out dynamically)-->
     <xsl:function name="teidocx:get-listtype" as="xs:string">
@@ -105,6 +105,7 @@
                 or w:pPr/w:pStyle/@w:val=$ANNEX
                 or w:pPr/w:pStyle/@w:val=$ForewordHeading
                 or w:pPr/w:pStyle/@w:val=$zzIntroductionHeading
+                or w:pPr/w:pStyle/@w:val=$IntroductionHeading
                 or w:pPr/w:pStyle/@w:val=$BibliographyHeading]">
                 true
             </xsl:when>
@@ -126,6 +127,7 @@
                                 or w:pPr/w:pStyle/@w:val=$a6
                                 or w:pPr/w:pStyle/@w:val=$BibliographyHeading 
                                 or w:pPr/w:pStyle/@w:val=$ForewordHeading  
+                                or w:pPr/w:pStyle/@w:val=$IntroductionHeading  
                                 or w:pPr/w:pStyle/@w:val=$zzIntroductionHeading]">
                 true
             </xsl:when>

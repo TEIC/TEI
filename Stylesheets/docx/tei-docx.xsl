@@ -36,7 +36,6 @@
 
   <xsl:import href="tei-docx-functions.xsl"/>
   <xsl:import href="tei-docx-verbatim.xsl"/>
-  <xsl:import href="variables.xsl"/>
   <xsl:import href="mml2omml.xsl"/>
 <!--
 A4 is 210mm x 297mm; leaving 1in margin (25mm),

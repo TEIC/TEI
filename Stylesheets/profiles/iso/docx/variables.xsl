@@ -46,8 +46,7 @@
 	<xsl:variable name="Heading6">heading 6</xsl:variable>
 	<xsl:variable name="HeadingChar">Heading Char</xsl:variable>
 	<xsl:variable name="HeadingCharFr">Titre de note Car</xsl:variable>
-	<xsl:variable
-	    name="zzIntroductionHeading">zzIntroduction</xsl:variable>
+	<xsl:variable name="zzIntroductionHeading">zzIntroduction</xsl:variable>
 	<xsl:variable name="IntroductionHeading">Introduction</xsl:variable>
 	<xsl:variable name="List">List</xsl:variable>
 	<xsl:variable name="List2">List 2</xsl:variable>

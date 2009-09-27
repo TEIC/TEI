@@ -19,9 +19,6 @@
     xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
     exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
     
-    <!-- import variables -->
-    <xsl:import href="variables.xsl"/>
-
     <xd:doc type="stylesheet">
         <xd:short> TEI Utility stylesheet for making Word docx files
         from TEI XML (see docx-tei.xsl)</xd:short>

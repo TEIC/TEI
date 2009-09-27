@@ -297,7 +297,7 @@
     
     
     <!-- Paragraphs in the front matter -->
-    <xsl:template match="tei:front/tei:div/tei:p">
+    <xsl:template match="tei:front/tei:div/tei:p[@type='foreword']">
         <xsl:call-template name="block-element">
             <xsl:with-param name="pPr">
                 <w:pPr>
