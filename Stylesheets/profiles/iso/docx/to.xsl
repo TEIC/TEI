@@ -345,7 +345,7 @@
             <xsl:for-each select="following-sibling::tei:item[1]">
                 <xsl:apply-templates>
                     <xsl:with-param name="nop">true</xsl:with-param>
-                </xsl:apply-templates>
+                </xsl:apply-templates> 
             </xsl:for-each>
         </w:p>
       </xsl:for-each>

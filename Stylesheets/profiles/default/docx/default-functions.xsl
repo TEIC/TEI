@@ -41,12 +41,6 @@
     <xsl:function name="teidocx:get-listtype" as="xs:string">
         <xsl:param name="style"/>
         <xsl:choose>
-            <xsl:when test="$style=$Terms">
-                <xsl:text>termlist</xsl:text>
-            </xsl:when>
-            <xsl:when test="$style=$TermNum">
-                <xsl:text>termlist</xsl:text>
-            </xsl:when>
             <xsl:when test="starts-with($style,$ListBullet)">
                 <xsl:text>unordered</xsl:text>
             </xsl:when>

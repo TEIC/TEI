@@ -167,6 +167,8 @@
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
             <xsl:choose>
+                <xsl:when test="parent::tei:item and self::tei:gloss">false</xsl:when>
+                <xsl:when test="parent::tei:item and self::tei:term">false</xsl:when>
                 <xsl:when test="self::tei:gloss">true</xsl:when>
                 <xsl:when test="self::tei:term">true</xsl:when>
                 <xsl:otherwise>false</xsl:otherwise>
