@@ -688,38 +688,44 @@
         Terms and definitions
     -->
     <xsl:template name="termsAndDefinitions">
-        <list type="termlist" rend="other">
+
             <xsl:for-each-group select="current-group()"
                 group-starting-with="w:p[w:pPr/w:pStyle/@w:val='TermNum']">
-                <!-- we have identified a term-->
-                <item>
-                    <xsl:attribute name="n">
-                        <xsl:apply-templates/>
-                    </xsl:attribute>
-                    
-                    <term>
-                        <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='Term(s)'] except .">
+
+	      <termEntry id="{.}">
+		<langSet xml:lang="en">
+		  <ntig>
+		    <termGrp>
+		      <term id="{.}-1">
+                        <xsl:for-each
+			    select="current-group()[w:pPr/w:pStyle/@w:val='Term(s)'
+				    or w:pPr/w:pStyle/@w:val='TermPreferred'] except .">
                             <xsl:if test="position()>1">
                                 <lb/>
                             </xsl:if>
                             <xsl:apply-templates/>
                         </xsl:for-each>
-                    </term>
-                    <gloss>
+		      </term>
+		      <termNote type="partOfSpeech">noun</termNote>
+		      <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
+		    </termGrp>
+		    <descripGrp>
+		      <descrip type="definition">
                         <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='GlossText'
                             or w:pPr/w:pStyle/@w:val='Definition'] except .">
                             <xsl:apply-templates/>
                         </xsl:for-each>
-                    </gloss>
-                    <!-- look out for notes -->
-                    <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='Note'] except .">
-                        <note>
-                            <xsl:apply-templates/>
-                        </note>
-                    </xsl:for-each>
-                </item>
+		      </descrip>
+		      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='Note'] except .">
+			<note>
+			  <xsl:apply-templates/>
+			</note>
+		      </xsl:for-each>
+		    </descripGrp>
+		  </ntig>
+		</langSet>
+	      </termEntry>
             </xsl:for-each-group>
-        </list>
     </xsl:template>
     
     <!-- 

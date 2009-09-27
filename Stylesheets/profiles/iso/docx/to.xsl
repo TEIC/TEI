@@ -600,4 +600,68 @@
   </xsl:for-each>
 </xsl:template>
 
+<!-- TBX -->
+
+<xsl:template match="tei:termEntry">
+    <w:p>
+      <w:pPr>
+	<w:pStyle>
+	  <xsl:attribute name="w:val">
+	    <xsl:call-template name="getStyleName">
+	      <xsl:with-param name="in">
+		<xsl:text>TermNum</xsl:text>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:attribute>
+	</w:pStyle>
+      </w:pPr>
+      <w:r>
+	<w:t>
+	  <xsl:value-of select="@id"/>
+	</w:t>
+      </w:r>
+    </w:p>
+  <xsl:for-each select="tei:langSet/tei:ntig">
+    <w:p>
+      <w:pPr>
+	<w:pStyle>
+	  <xsl:attribute name="w:val">
+	    <xsl:call-template name="getStyleName">
+	      <xsl:with-param name="in">
+		<xsl:text>Term(s)</xsl:text>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:attribute>
+	</w:pStyle>
+      </w:pPr>
+      <w:r>
+	<w:t>
+	  <xsl:value-of select="tei:termGrp/tei:term"/>
+	</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+	<w:pStyle>
+	  <xsl:attribute name="w:val">
+	    <xsl:call-template name="getStyleName">
+	      <xsl:with-param name="in">
+		<xsl:text>Definition</xsl:text>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:attribute>
+	</w:pStyle>
+      </w:pPr>
+      <w:r>
+	<w:t>
+	  <xsl:value-of select="tei:descripGrp/tei:descrip[@type='definition']"/>
+	</w:t>
+      </w:r>
+    </w:p>
+    <xsl:apply-templates select="descripGrp/note"/>
+  </xsl:for-each>
+
+</xsl:template>
+
+
 </xsl:stylesheet>
