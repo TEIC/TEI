@@ -92,20 +92,20 @@
 
     <!-- ignore existing title pages -->
     <xsl:template match="w:p[.//w:sdt and not (w:pPr/w:pStyle/@w:val='zzSTDTitle')]" priority="1001">
-      <xsl:message>fail 1: <xsl:value-of select="normalize-space(.)"/></xsl:message>
+      <!--<xsl:message>fail 1: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
     </xsl:template>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='cover_warning']" priority="1002">
-      <xsl:message>fail 3: <xsl:value-of select="normalize-space(.)"/></xsl:message>
+      <!--<xsl:message>fail 3: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
     </xsl:template>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='zzCopyright']" priority="1002">
-      <xsl:message>fail 4: <xsl:value-of select="normalize-space(.)"/></xsl:message>
+      <!--<xsl:message>fail 4: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
     </xsl:template>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='idno']" priority="1002">
-      <xsl:message>fail 5: <xsl:value-of select="normalize-space(.)"/></xsl:message>
+      <!--<xsl:message>fail 5: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
     </xsl:template>
     <xsl:template
 	match="w:p[w:pPr/w:pStyle/@w:val='copyrightdetails']" priority="1002">
-      <xsl:message>fail 6: <xsl:value-of select="normalize-space(.)"/></xsl:message>
+      <!--<xsl:message>fail 6: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
     </xsl:template>
 
     <!-- Overwriting the creation of the teiHeader -->
@@ -506,8 +506,150 @@
         </xsl:for-each-group>
     </xsl:template>
     
+    <!-- override handling of runs -->
+	<xsl:template match="w:r|w:ins">
+		<xsl:variable name="style">
+			<xsl:value-of select="w:rPr/w:rStyle/@w:val"/>
+		</xsl:variable>
+		<xsl:choose>
+			<!-- 
+				ignore some headingnotechars
+			-->
+			<!--
+			<xsl:when test="$style=$ExampleHeadingChar"/>
+			<xsl:when test="$style=$NoteHeadingChar"/>
+			<xsl:when
+			    test="$style=$TableNoteHeadingChar"/>
+			-->
+			<xsl:when test="$style=$HeadingChar"/>
+			<xsl:when test="$style=$HeadingCharFr"/>
+			<xsl:when test="$style=$BibliographyReference"/>
+			<xsl:when test="$style=$TableHeadingChar"/>
+			<xsl:when test="$style='mentioned'">
+				<mentioned>
+					<xsl:apply-templates/>
+				</mentioned>
+			</xsl:when>
+
+			<xsl:when test="$style='RefNorm' and starts-with(.,'ISO')">
+				<idno type="ISO">
+					<xsl:apply-templates/>
+				</idno>
+			</xsl:when>
+
+			<xsl:when test="$style='ref'">
+				<ref>
+					<xsl:apply-templates/>
+				</ref>
+			</xsl:when>
+
+			<xsl:when test="$style='date'">
+				<date>
+					<xsl:apply-templates/>
+				</date>
+			</xsl:when>
+
+			<xsl:when test="$style='orgName'">
+				<orgName>
+					<xsl:apply-templates/>
+				</orgName>
+			</xsl:when>
+			<xsl:when test="$style='isonumber'">
+				<num>
+					<xsl:apply-templates/>
+				</num>
+			</xsl:when>
+			
+			<xsl:when test="$style='isononumber'">
+				<seg rend='nonumber'>
+					<xsl:apply-templates/>
+				</seg>
+			</xsl:when>
+			
+			<xsl:when test="$style=$FormulaReference">
+				<!--<seg rend="FormulaReference">
+					<xsl:apply-templates/>
+				</seg>-->
+			</xsl:when>
+
+			<xsl:when test="$style=$ExtXref">
+				<ref>
+					<xsl:apply-templates/>
+				</ref>
+			</xsl:when>
+
+			<xsl:when
+			    test="w:rPr/w:position[number(@w:val)&lt;-2]">
+				<hi rend="subscript">
+					<xsl:apply-templates/>
+				</hi>
+			</xsl:when>
+
+			<xsl:when
+			    test="w:rPr/w:position[number(@w:val)&gt;2]">
+				<hi rend="superscript">
+					<xsl:apply-templates/>
+				</hi>
+			</xsl:when>
+
+			<xsl:when test="w:rPr/w:vertAlign">
+				<hi>
+					<xsl:attribute name="rend">
+						<xsl:value-of select="w:rPr/w:vertAlign/@w:val"/>
+					</xsl:attribute>
+					<xsl:apply-templates/>
+				</hi>
+			</xsl:when>
+
+			<xsl:when test="w:rPr/w:i">
+				<hi rend="italic">
+					<xsl:apply-templates/>
+				</hi>
+			</xsl:when>
+
+			<xsl:when test="w:rPr/w:b">
+				<hi rend="bold">
+					<xsl:apply-templates/>
+				</hi>
+			</xsl:when>
+			<xsl:when test="$style='requirement'">
+			  <seg iso:provision="requirement">
+			    <xsl:apply-templates/>
+			  </seg>
+			</xsl:when>
+
+			<xsl:when
+			    test="$style='possibility_and_capability'">
+			  <seg iso:provision="possibilityandcapability">
+			    <xsl:apply-templates/>
+			  </seg>
+			</xsl:when>
+
+			<xsl:when test="$style='statement'">
+			  <seg iso:provision="statement">
+			    <xsl:apply-templates/>
+			  </seg>
+			</xsl:when>
+
+			<xsl:when test="$style='recommendation'">
+			  <seg iso:provision="recommendation">
+			    <xsl:apply-templates/>
+			  </seg>
+			</xsl:when>
+
+			<xsl:otherwise>
+				<xsl:apply-templates/>
+			</xsl:otherwise>
+		</xsl:choose>
+
+	</xsl:template>
+	
     
-    
+	<!-- table titles.. we deal with them inside the table -->
+
+	<xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$Tabletitle]" mode="paragraph"/>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='TableTitle']" mode="paragraph"/>
+
     <!--
         Working with figures
     -->

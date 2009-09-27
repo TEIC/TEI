@@ -18,7 +18,7 @@
     xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
     exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
 
-    <xsl:import href="variables.xsl"/>
+    <xsl:import href="iso-variables.xsl"/>
     
     <!-- returns a listtype for a given stylename (return empty string to figure it out dynamically)-->
     <xsl:function name="teidocx:get-listtype" as="xs:string">

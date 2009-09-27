@@ -31,6 +31,7 @@
   
   <xsl:import href="omml2mml.xsl"/>
   <xsl:import href="tei-docx-functions.xsl"/>
+  <xsl:import href="variables.xsl"/>
   
   <xsl:variable name="convert-graphics">true</xsl:variable>
   <xsl:variable name="convert-headers">true</xsl:variable>
@@ -42,6 +43,7 @@
   <xsl:variable name="uppercase">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
   <xsl:variable name="digits">1234567890</xsl:variable>
   <xsl:variable name="characters">~!@#$%^&amp;*()&lt;&gt;{}[]|:;,.?`'"=+-_</xsl:variable>
+
   
   <xsl:param name="mathMethod">mml</xsl:param>
   <xsl:param name="termMethod">tei</xsl:param>
@@ -342,29 +344,10 @@
 			<xsl:value-of select="w:rPr/w:rStyle/@w:val"/>
 		</xsl:variable>
 		<xsl:choose>
-			<!-- 
-				ignore some headingnotechars
-			-->
-			<!--
-			<xsl:when test="$style=$ExampleHeadingChar"/>
-			<xsl:when test="$style=$NoteHeadingChar"/>
-			<xsl:when
-			    test="$style=$TableNoteHeadingChar"/>
-			-->
-			<xsl:when test="$style=$HeadingChar"/>
-			<xsl:when test="$style=$HeadingCharFr"/>
-			<xsl:when test="$style=$BibliographyReference"/>
-			<xsl:when test="$style=$TableHeadingChar"/>
 			<xsl:when test="$style='mentioned'">
 				<mentioned>
 					<xsl:apply-templates/>
 				</mentioned>
-			</xsl:when>
-
-			<xsl:when test="$style='RefNorm' and starts-with(.,'ISO')">
-				<idno type="ISO">
-					<xsl:apply-templates/>
-				</idno>
 			</xsl:when>
 
 			<xsl:when test="$style='ref'">
@@ -383,29 +366,6 @@
 				<orgName>
 					<xsl:apply-templates/>
 				</orgName>
-			</xsl:when>
-			<xsl:when test="$style='isonumber'">
-				<num>
-					<xsl:apply-templates/>
-				</num>
-			</xsl:when>
-			
-			<xsl:when test="$style='isononumber'">
-				<seg rend='nonumber'>
-					<xsl:apply-templates/>
-				</seg>
-			</xsl:when>
-			
-			<xsl:when test="$style=$FormulaReference">
-				<!--<seg rend="FormulaReference">
-					<xsl:apply-templates/>
-				</seg>-->
-			</xsl:when>
-
-			<xsl:when test="$style=$ExtXref">
-				<ref>
-					<xsl:apply-templates/>
-				</ref>
 			</xsl:when>
 
 			<xsl:when
@@ -441,30 +401,6 @@
 				<hi rend="bold">
 					<xsl:apply-templates/>
 				</hi>
-			</xsl:when>
-			<xsl:when test="$style='requirement'">
-			  <seg iso:provision="requirement">
-			    <xsl:apply-templates/>
-			  </seg>
-			</xsl:when>
-
-			<xsl:when
-			    test="$style='possibility_and_capability'">
-			  <seg iso:provision="possibilityandcapability">
-			    <xsl:apply-templates/>
-			  </seg>
-			</xsl:when>
-
-			<xsl:when test="$style='statement'">
-			  <seg iso:provision="statement">
-			    <xsl:apply-templates/>
-			  </seg>
-			</xsl:when>
-
-			<xsl:when test="$style='recommendation'">
-			  <seg iso:provision="recommendation">
-			    <xsl:apply-templates/>
-			  </seg>
 			</xsl:when>
 
 			<xsl:otherwise>
@@ -643,11 +579,6 @@
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:template>
-
-	<!-- table titles.. we deal with them inside the table -->
-
-	<xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$Tabletitle]" mode="paragraph"/>
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='TableTitle']" mode="paragraph"/>
 
 	<!-- getting the basic table structure -->
 
