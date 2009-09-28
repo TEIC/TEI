@@ -1487,6 +1487,14 @@ is there a number present?
 	      </xsl:variable>
 	      <w:gridSpan w:val="{number($end)-number($start)+1}"/>
 	    </xsl:if>
+	    <xsl:choose>
+	      <xsl:when test="rowsep='1'">
+		<w:bottom w:val="single" w:sz="12" w:space="0" w:color="auto"/>
+	      </xsl:when>
+	      <xsl:when test="rowsep='0'">
+		<w:bottom w:val="nil"/>
+	      </xsl:when>
+	    </xsl:choose>
 	  </w:tcPr>
 	  <xsl:choose>
 	    <xsl:when test="tei:note">

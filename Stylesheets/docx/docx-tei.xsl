@@ -521,6 +521,12 @@
 			      </xsl:attribute>
 			    </xsl:if>
 			    -->
+			    <xsl:choose>
+			      <xsl:when 
+				test="not(w:tcPr/w:tcBorders/w:bottom/@w:sz)">
+			      <xsl:attribute name="rowsep">0</xsl:attribute>
+			      </xsl:when>
+			    </xsl:choose>
 			    <xsl:if test="w:tcPr/w:gridSpan">
 			      <xsl:attribute name="namest">
 				<xsl:text>c</xsl:text>
