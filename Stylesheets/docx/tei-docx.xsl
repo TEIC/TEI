@@ -1474,6 +1474,7 @@ is there a number present?
     </xsl:template>
 
     <xsl:template match="cals:entry">
+      <xsl:variable name="colpos" select="position()"/>
         <w:tc>
 	  <w:tcPr>
 	    <xsl:if test="@namest">
@@ -1487,14 +1488,21 @@ is there a number present?
 	      </xsl:variable>
 	      <w:gridSpan w:val="{number($end)-number($start)+1}"/>
 	    </xsl:if>
+	    <xsl:variable name="borders">
 	    <xsl:choose>
-	      <xsl:when test="rowsep='1'">
-		<w:bottom w:val="single" w:sz="12" w:space="0" w:color="auto"/>
+	      <xsl:when test="@rowsep='0'">
+		  <w:bottom w:val="nil"/>
 	      </xsl:when>
-	      <xsl:when test="rowsep='0'">
-		<w:bottom w:val="nil"/>
+	      <xsl:when test="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[$colpos]/@rowsep=0">
+		  <w:top w:val="nil"/>
 	      </xsl:when>
 	    </xsl:choose>
+	    </xsl:variable>
+	    <xsl:if test="$borders/*">
+		<w:tcBorders>
+		  <xsl:copy-of select="$borders/*"/>
+		</w:tcBorders>
+	    </xsl:if>
 	  </w:tcPr>
 	  <xsl:choose>
 	    <xsl:when test="tei:note">
