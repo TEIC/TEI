@@ -672,7 +672,6 @@
 
   <xsl:template match="*" mode="ns">
     <xsl:param name="list"/>
-    <xsl:variable name="used">
       <xsl:for-each select="namespace::*">
         <xsl:variable name="ns" select="."/>
         <xsl:choose>
@@ -697,8 +696,6 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
-    </xsl:variable>
-    <xsl:copy-of select="$used"/>
     <xsl:apply-templates mode="ns">
       <xsl:with-param name="list">
         <xsl:value-of select="$list"/>
