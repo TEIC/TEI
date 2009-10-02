@@ -416,10 +416,10 @@
     <xsl:if test="$showNamespaceDecls='true' or parent::teix:egXML[@rend='full']">
       <xsl:choose>
         <xsl:when test="not(parent::*)">
-          <xsl:apply-templates select="." mode="ns"/>
+	  <xsl:call-template name="nsList"/>
         </xsl:when>
         <xsl:when test="parent::teix:egXML and not(preceding-sibling::*)">
-          <xsl:apply-templates select="." mode="ns"/>
+	  <xsl:call-template name="nsList"/>
         </xsl:when>
       </xsl:choose>
     </xsl:if>
@@ -671,11 +671,9 @@
   <xsl:template match="text()|comment()|processing-instruction()" mode="ns"/>
 
   <xsl:template match="*" mode="ns">
-    <xsl:param name="list"/>
       <xsl:for-each select="namespace::*">
         <xsl:variable name="ns" select="."/>
         <xsl:choose>
-          <xsl:when test="contains($list,$ns)"/>
           <xsl:when test=".='http://relaxng.org/ns/structure/1.0'"/>
           <xsl:when test=".='http://www.w3.org/2001/XInclude'"/>
           <xsl:when test=".='http://www.tei-c.org/ns/Examples'"/>
@@ -684,26 +682,34 @@
           <xsl:when test="name(.)=''"/>
           <xsl:when test=".='http://www.w3.org/XML/1998/namespace'"/>
           <xsl:otherwise>
-            <xsl:call-template name="verbatim-lineBreak">
-              <xsl:with-param name="id">22</xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>&#160;&#160;&#160;</xsl:text>
-            <xsl:text>xmlns:</xsl:text>
-            <xsl:value-of select="name(.)"/>
-            <xsl:text>="</xsl:text>
-            <xsl:value-of select="."/>
-            <xsl:text>"</xsl:text>
+	    <ns name="{name(.)}" value="{.}"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
-    <xsl:apply-templates mode="ns">
-      <xsl:with-param name="list">
-        <xsl:value-of select="$list"/>
-        <xsl:value-of select="$used"/>
-      </xsl:with-param>
-    </xsl:apply-templates>
+      <xsl:apply-templates mode="ns"/>
   </xsl:template>
 
+
+<xsl:template name="nsList">
+  <xsl:variable name="ns">
+    <n>
+      <xsl:apply-templates select="." mode="ns"/>
+    </n>
+  </xsl:variable>
+  <xsl:for-each select="$ns/n">
+    <xsl:for-each-group select="ns" group-by="@name">
+      <xsl:sort select="@name"/>
+      <xsl:call-template name="verbatim-lineBreak">
+	<xsl:with-param name="id">22</xsl:with-param>
+      </xsl:call-template>
+      <xsl:text>&#160;&#160;&#160;</xsl:text>
+      <xsl:text>xmlns:</xsl:text>
+      <xsl:value-of select="@name"/>
+      <xsl:text>=</xsl:text>
+      <xsl:value-of select="@value"/>
+    </xsl:for-each-group>
+  </xsl:for-each>
+</xsl:template>
 
 
 </xsl:stylesheet>

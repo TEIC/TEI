@@ -732,6 +732,7 @@
 
 <xsl:template match="*" mode="ns">
   <xsl:param name="list"/>
+    <xsl:variable name="used">
     <xsl:for-each select="namespace::*">
       <xsl:variable name="ns" select="."/>
       <xsl:choose>
@@ -744,10 +745,7 @@
 	<xsl:when test="name(.)=''"/>
 	<xsl:when test=".='http://www.w3.org/XML/1998/namespace'"/>
 	<xsl:otherwise>
-	  <xsl:call-template name="lineBreak">
-	    <xsl:with-param name="id">22</xsl:with-param>
-	  </xsl:call-template>
-	  <xsl:text>&#160;&#160;&#160;</xsl:text>
+	  <xsl:text>&#10;&#160;&#160;</xsl:text>
 	  <xsl:text>xmlns:</xsl:text>
 	  <xsl:value-of select="name(.)"/>
 	  <xsl:text>="</xsl:text>
@@ -756,6 +754,8 @@
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
+    </xsl:variable>
+    <xsl:copy-of select="$used"/>
   <xsl:apply-templates mode="ns">
     <xsl:with-param name="list">
       <xsl:value-of select="$list"/>
