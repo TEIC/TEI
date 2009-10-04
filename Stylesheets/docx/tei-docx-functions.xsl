@@ -40,7 +40,8 @@
     <!-- Converts a dimension into the 20th of a ps point -->
     <xsl:function name="teidocx:convert-dim-pt20" as="xs:integer">
         <xsl:param name="dim"/>
-        <xsl:value-of select="number(teidocx:convert-dim-pt($dim)*20)"/>
+	<xsl:value-of
+	    select="number(substring($dim,0,string-length($dim)-1)) * 20"/>
     </xsl:function>
     
     <xsl:function name="teidocx:convert-dim-pt" as="xs:integer">

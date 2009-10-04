@@ -493,6 +493,58 @@
 	    </xsl:when>
 	    <xsl:when test="$tableMethod='cals'">
 	      <table xmlns="http://www.oasis-open.org/specs/tm9901">
+		<xsl:attribute name="frame">
+		  <xsl:choose>
+		    <xsl:when
+			test="not(w:tblPr/w:tblBorders)">none</xsl:when>
+		    <xsl:otherwise>
+		      <xsl:for-each select="w:tblPr/w:tblBorders">
+			<xsl:choose>
+			  <xsl:when test="
+					  w:top/@w:val='single' and
+					  w:bottom/@w:val='single' and
+					  w:right/@w:val='single' and
+					  w:left/@w:val='single'">all</xsl:when>
+			  <xsl:when test="
+					  w:top/@w:val='single' and
+					  w:bottom/@w:val='single' and
+					  not(w:right/@w:val='single') and
+					  not(w:left/@w:val='single')">topbot</xsl:when>
+			  <xsl:when test="
+					  w:top/@w:val='single' and
+					  not(w:bottom/@w:val='single') and
+					  not(w:right/@w:val='single') and
+					  not(w:left/@w:val='single')">top</xsl:when>
+			  <xsl:when test="
+					  not(w:top/@w:val='single') and
+					  w:bottom/@w:val='single' and
+					  not(w:right/@w:val='single') and
+					  not(w:left/@w:val='single')">bottom</xsl:when>
+			  <xsl:when test="
+					  not(w:top/@w:val='single') and
+					  not(w:bottom/@w:val='single') and
+					  w:right/@w:val='single' and
+					  w:left/@w:val='single'">sides</xsl:when>
+			  <xsl:otherwise>none</xsl:otherwise>
+			</xsl:choose>
+		      </xsl:for-each>
+		    </xsl:otherwise>
+		  </xsl:choose>
+		</xsl:attribute>
+		<xsl:attribute name="colsep">
+		  <xsl:choose>
+		    <xsl:when
+			test="w:tblPr/w:tblBorders/w:insideV/@w:val='single'">1</xsl:when>
+		    <xsl:otherwise>0</xsl:otherwise>
+		  </xsl:choose>
+		</xsl:attribute>
+		<xsl:attribute name="rowsep">
+		  <xsl:choose>
+		    <xsl:when
+			test="w:tblPr/w:tblBorders/w:insideH/@w:val='single'">1</xsl:when>
+		    <xsl:otherwise>0</xsl:otherwise>
+		  </xsl:choose>
+		</xsl:attribute>
 		<xsl:call-template name="cals-table-header"/>
 		<tgroup>
 		  <xsl:for-each select="w:tblGrid/w:gridCol">
@@ -500,8 +552,7 @@
 			     colname="c{position()}"
 			     xmlns="http://www.oasis-open.org/specs/tm9901">
 		      <xsl:attribute name="colwidth"
-				     select="concat(number(@w:w) div
-					   56.6929134,'mm')"/>
+				     select="concat(number(@w:w) div 20,'pt')"/>
 		    </colspec>
 		  </xsl:for-each>
 		  <tbody>
@@ -514,19 +565,24 @@
 				<xsl:value-of select="w:p[1]/w:pPr/w:jc/@w:val"/>
 			      </xsl:attribute>
 			    </xsl:if>
-			    <!-- cannot implement style yet
-			    <xsl:if test="w:p[1]/w:pPr/w:pStyle">
-			      <xsl:attribute name="rend">
-				<xsl:value-of select="w:p[1]/w:pPr/w:pStyle/@w:val"/>
-			      </xsl:attribute>
-			    </xsl:if>
-			    -->
 			    <xsl:for-each select="w:tcPr/w:tcBorders/w:bottom">
 			      <xsl:choose>
-				<xsl:when 
-				    test="@w:sz=0 or @w:val='nil'">
+				<xsl:when  test="@w:sz=0 or @w:val='nil'">
 				  <xsl:attribute name="rowsep">0</xsl:attribute>
 				</xsl:when>
+				<xsl:otherwise>
+				  <xsl:attribute name="rowsep">1</xsl:attribute>
+				</xsl:otherwise>
+			      </xsl:choose>
+			    </xsl:for-each>
+			    <xsl:for-each select="w:tcPr/w:tcBorders/w:left">
+			      <xsl:choose>
+				<xsl:when  test="@w:sz=0 or @w:val='nil'">
+				  <xsl:attribute name="colsep">0</xsl:attribute>
+				</xsl:when>
+				<xsl:otherwise>
+				  <xsl:attribute name="colsep">1</xsl:attribute>
+				</xsl:otherwise>
 			      </xsl:choose>
 			    </xsl:for-each>
 			    <xsl:if test="w:tcPr/w:gridSpan">

@@ -1272,17 +1272,17 @@ is there a number present?
                         <w:tblW w:w="0" w:type="auto"/>
 			<w:jc w:val="center"/>
 			<w:tblBorders>
-			  <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-			  <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-			  <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-			  <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-			  <w:insideH w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-			  <w:insideV w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+			  <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			  <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			  <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			  <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			  <w:insideH w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			  <w:insideV w:val="single" w:sz="6" w:space="0" w:color="auto"/>
 			</w:tblBorders>
-                    </w:tblPr>
-                </xsl:otherwise>
-            </xsl:choose>
-            <xsl:choose>
+		    </w:tblPr>
+		</xsl:otherwise>
+	    </xsl:choose>
+	    <xsl:choose>
                 <xsl:when test="html:colgroup">
                     <w:tblGrid>
                         <xsl:for-each select="html:colgroup/html:col">
@@ -1416,12 +1416,60 @@ is there a number present?
 	    <w:tblW w:w="0" w:type="auto"/>
 	    <w:jc w:val="center"/>
 	    <w:tblBorders>
-	      <w:top w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-	      <w:left w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-	      <w:bottom w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-	      <w:right w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-	      <w:insideH w:val="single" w:sz="4" w:space="0" w:color="auto"/>
-	      <w:insideV w:val="single" w:sz="4" w:space="0" w:color="auto"/>
+	      <xsl:choose>
+		<xsl:when test="@frame='none'">
+		  <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+		  <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+		  <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+		  <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+		</xsl:when>
+		<xsl:when test="@frame='top'">
+		  <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+		  <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+		  <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+		  <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+		</xsl:when>
+		<xsl:when test="@frame='bottom'">
+		  <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+		  <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+		  <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+		  <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+		</xsl:when>
+		<xsl:when test="@frame='topbot'">
+		  <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+		  <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+		  <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+		  <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+		</xsl:when>
+		<xsl:when test="@frame='sides'">
+		  <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+		  <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+		  <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+		  <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+		</xsl:when>
+		<xsl:when test="@frame='all'">
+		  <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+		  <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+		  <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+		  <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+		</xsl:when>
+	      </xsl:choose>
+	      <xsl:choose>
+		<xsl:when test="@colsep=1">
+		  <w:insideV w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <w:insideV w:val="none" w:sz="6" w:space="0" w:color="auto"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	      <xsl:choose>
+		<xsl:when test="@rowsep=1">
+		  <w:insideH w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <w:insideH w:val="none" w:sz="6" w:space="0" w:color="auto"/>
+		</xsl:otherwise>
+	      </xsl:choose>
 	    </w:tblBorders>
 	  </w:tblPr>
 	  <xsl:choose>
@@ -1493,8 +1541,22 @@ is there a number present?
 	      <xsl:when test="@rowsep='0'">
 		  <w:bottom w:val="nil"/>
 	      </xsl:when>
+	      <xsl:when test="@rowsep='1'">
+		  <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+	      </xsl:when>
 	      <xsl:when test="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[$colpos]/@rowsep=0">
 		  <w:top w:val="nil"/>
+	      </xsl:when>
+	    </xsl:choose>
+	    <xsl:choose>
+	      <xsl:when test="@colsep='0'">
+		  <w:left w:val="nil"/>
+	      </xsl:when>
+	      <xsl:when test="@colsep='1'">
+		<w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+	      </xsl:when>
+	      <xsl:when test="following-sibling::cals:entry[1]/@colsep=0">
+		  <w:right w:val="nil"/>
 	      </xsl:when>
 	    </xsl:choose>
 	    </xsl:variable>
