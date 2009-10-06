@@ -499,7 +499,9 @@
 		<xsl:attribute name="frame">
 		  <xsl:choose>
 		    <xsl:when
-			test="not(w:tblPr/w:tblBorders)">none</xsl:when>
+			test="not(w:tblPr/w:tblBorders)">
+		      <xsl:text>none</xsl:text>
+		    </xsl:when>
 		    <xsl:otherwise>
 		      <xsl:for-each select="w:tblPr/w:tblBorders">
 			<xsl:choose>
@@ -528,6 +530,10 @@
 					  not(w:bottom/@w:val='single') and
 					  w:right/@w:val='single' and
 					  w:left/@w:val='single'">sides</xsl:when>
+			  <xsl:when
+			      test="../../w:tr/w:tc/w:tcPr/w:tcBorders/w:top/@w:val='single'
+				    and ../../w:tr/w:tc/w:tcPr/w:tcBorders/w:right/@w:val='single'">all</xsl:when>
+			  <xsl:when test="../../w:tr/w:tc/w:tcPr/w:tcBorders/w:top/@w:val='single'">top</xsl:when>
 			  <xsl:otherwise>none</xsl:otherwise>
 			</xsl:choose>
 		      </xsl:for-each>
@@ -604,13 +610,13 @@
 			</xsl:copy>
 		      </xsl:for-each>
 		    </xsl:variable>
-		    <!--
+<!--
 			<xsl:comment>START</xsl:comment>
 			<TABLE>
 			<xsl:copy-of select="$TABLE"/>
 			</TABLE>
 			<xsl:comment>END</xsl:comment>
-		    -->
+-->
 		    <xsl:for-each select="$TABLE">
 		      <xsl:for-each select="w:tr">
 			<row xmlns="http://www.oasis-open.org/specs/tm9901">
@@ -656,11 +662,11 @@
 				  <xsl:if test="w:tcPr/w:gridSpan">
 				    <xsl:attribute name="namest">
 				      <xsl:text>c</xsl:text>
-				      <xsl:value-of select="position()"/>
+				      <xsl:value-of select="$COLPOS"/>
 				    </xsl:attribute>
 				    <xsl:attribute name="nameend">
 				      <xsl:text>c</xsl:text>
-				      <xsl:value-of select="position()+number(w:tcPr/w:gridSpan/@w:val)-1"/>
+				      <xsl:value-of select="$COLPOS+number(w:tcPr/w:gridSpan/@w:val)-1"/>
 				    </xsl:attribute>
 				  </xsl:if>
 				  <xsl:if test="w:tcPr/w:vAlign">

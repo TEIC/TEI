@@ -1496,9 +1496,6 @@ is there a number present?
 	<w:p/>
     </xsl:template>
 
-    <xsl:template match="cals:tgroup">
-      <xsl:apply-templates/>
-    </xsl:template>
 
     <xsl:template name="cals-table-header">
         <xsl:if test="cals:title">
@@ -1510,40 +1507,58 @@ is there a number present?
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="cals:tbody">
-	<xsl:apply-templates/>
-    </xsl:template>
-
-    <xsl:template name="calsRow">
-      <xsl:param name="template"/>
-      <xsl:copy>
-	<xsl:copy-of select="@*"/>
-	<xsl:variable name="template">
-	<xsl:for-each select="cals:entry">
-	  <xsl:choose>
-	    <xsl:when test="@morerows">
-	    </xsl:when>
-	  </xsl:choose>
-	</xsl:for-each>
-	</xsl:variable>
-	<xsl:for-each select="cals:entry">
+    <xsl:template match="cals:tgroup">
+      <xsl:variable name="TABLE">
+	<xsl:copy>
+	  <xsl:copy-of select="cals:colspec"/>
+	  <cals:tbody>
+	  <xsl:for-each select="cals:tbody/cals:row">
 	  <xsl:copy>
 	    <xsl:copy-of select="@*"/>
+	    <xsl:for-each select="cals:entry">
+	      <xsl:copy>
+		<xsl:copy-of select="@*"/>
+		<xsl:copy-of select="*|text()"/>
+	      </xsl:copy>
+	      <xsl:variable name="rows" select="@rowsep"/>
+	      <xsl:if test="@namest">
+		<xsl:variable name="start">
+		  <xsl:value-of select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@namest]/@colnum"/>
+		</xsl:variable>
+		<xsl:variable name="end">
+		  <xsl:value-of select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@nameend]/@colnum"/>
+		</xsl:variable>
+		<xsl:for-each
+		    select="ancestor::cals:tgroup/cals:colspec[position()>$start
+			    and position()&lt;=$end]">
+		  <cals:entry DUMMY='true' colname="{@colname}" rowsep="{$rows}"/>
+		</xsl:for-each>
+	      </xsl:if>
+	    </xsl:for-each>
 	  </xsl:copy>
 	</xsl:for-each>
-      </xsl:copy>
-      <xsl:for-each select="following-sibling::cals:row[1]">
-	  <xsl:call-template name="calsRow">
-	    <xsl:with-param name="template" select="$template"/>
-	  </xsl:call-template>
+	  </cals:tbody>
+	</xsl:copy>
+      </xsl:variable>
+      <!--<xsl:variable name="count">
+	  <xsl:number level="any"/>
+	  </xsl:variable>
+	  <xsl:result-document indent="yes" href="/tmp/T{$count}.xml">
+	  <xsl:copy-of select="$TABLE"/>
+	  </xsl:result-document>
+      -->
+      <xsl:for-each select="$TABLE/cals:tgroup">
+	  <xsl:apply-templates/>
       </xsl:for-each>
     </xsl:template>
 
     <xsl:template match="cals:row">
+      <xsl:variable name="ROWPOS">
+	<xsl:number/>
+      </xsl:variable>
       <xsl:variable name="TEMPLATE">
 	<xsl:for-each select="ancestor::cals:tgroup/cals:colspec">
-	  <CELL name="{@colname}">
-	  </CELL>
+	  <CELL name="{@colname}" rowpos="{$ROWPOS}"/>
 	</xsl:for-each>
       </xsl:variable>
       <xsl:variable name="ME" select="."/>
@@ -1553,45 +1568,12 @@ is there a number present?
 	</w:tblPrEx>
 	<xsl:for-each select="$TEMPLATE/CELL">
 	  <xsl:variable name="N" select="@name"/>
-	  <xsl:apply-templates select="cals:entry"/>
 	  <xsl:choose>
+	    <xsl:when test="$ME/cals:entry[@colname=$N and @DUMMY='true']"/>
 	    <xsl:when test="$ME/cals:entry[@colname=$N]">
 	      <xsl:apply-templates select="$ME/cals:entry[@colname=$N]"/>
 	    </xsl:when>
-	    <xsl:when test="$ME/cals:entry[@nameeend=$N]"/>
-	<!--
-    <xsl:when test="$ME/cals:entry/@nameest">
-	      <xsl:for-each select="$ME">
-		<xsl:variable name="start">
-		  <xsl:value-of
-		      select="ancestor::cals:table/cals:tgroup/cals:colspec[@colname=current()/@namest]/@colnum
-			      cast as xs:integer"/>
-		</xsl:variable>
-		<xsl:variable name="end">
-		  <xsl:value-of
-		      select="ancestor::cals:table/cals:tgroup/cals:colspec[@colname=current()/@nameend]/@colnum
-			      cast as xs:integer"/>
-		</xsl:variable>
-		<xsl:variable name="found">
-		  <xsl:for-each select="$start to $end">
-		    <xsl:if test="ancestor::cals:table/cals:tgroup/cals:colspec[@colnum=.]/@colname=$N">yes</xsl:if>
-		  </xsl:for-each>
-		</xsl:variable>
-		<xsl:if test="$found=''">
-		  <xsl:message>DUMMY AT <xsl:value-of select="$N"/></xsl:message>
-		  <w:tc>
-		    <w:tcPr>
-		      <w:vMerge/>
-		    </w:tcPr>
-		    <w:p>
-		    </w:p>
-		  </w:tc>
-		</xsl:if>
-	      </xsl:for-each>
-	    </xsl:when>
--->
 	    <xsl:otherwise>
-	      <xsl:message>DUMMY AT <xsl:value-of select="$N"/></xsl:message>
 	      <w:tc>
 		<w:tcPr>
 		  <w:vMerge/>
@@ -1606,7 +1588,7 @@ is there a number present?
     </xsl:template>
 
     <xsl:template match="cals:entry">
-      <xsl:variable name="colpos" select="position()"/>
+      <xsl:variable name="colname" select="@colname"/>
         <w:tc>
 	  <w:tcPr>
 	    <xsl:if test="@morerows">
@@ -1614,36 +1596,39 @@ is there a number present?
 	    </xsl:if>
 	    <xsl:if test="@namest">
 	      <xsl:variable name="start">
-		<xsl:value-of select="ancestor::cals:table/cals:tgroup/cals:colspec[@colname=current()/@namest]/@colnum"/>
+		<xsl:value-of select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@namest]/@colnum"/>
 	      </xsl:variable>
 	      <xsl:variable name="end">
-		<xsl:value-of select="ancestor::cals:table/cals:tgroup/cals:colspec[@colname=current()/@nameend]/@colnum"/>
+		<xsl:value-of select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@nameend]/@colnum"/>
 	      </xsl:variable>
 	      <w:gridSpan w:val="{number($end)-number($start)+1}"/>
 	    </xsl:if>
+	    <xsl:message><xsl:value-of select="$colname"/> (<xsl:value-of select="."/>):    <xsl:value-of select="@rowsep"/> and <xsl:value-of select="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[@colname=$colname]/@rowsep"/></xsl:message>
 	    <xsl:variable name="borders">
-	    <xsl:choose>
-	      <xsl:when test="@rowsep='0'">
+	      <xsl:choose>
+		<xsl:when test="@rowsep='0'">
 		  <w:bottom w:val="nil"/>
-	      </xsl:when>
-	      <xsl:when test="@rowsep='1'">
+		</xsl:when>
+		<xsl:when test="@rowsep='1'">
 		  <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-	      </xsl:when>
-	      <xsl:when test="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[$colpos]/@rowsep=0">
+		</xsl:when>
+	      </xsl:choose>
+	      <xsl:choose>
+		<xsl:when test="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[@colname=$colname]/@rowsep=0">
 		  <w:top w:val="nil"/>
-	      </xsl:when>
-	    </xsl:choose>
-	    <xsl:choose>
-	      <xsl:when test="@colsep='0'">
+		</xsl:when>
+	      </xsl:choose>
+	      <xsl:choose>
+		<xsl:when test="@colsep='0'">
 		  <w:left w:val="nil"/>
-	      </xsl:when>
-	      <xsl:when test="@colsep='1'">
-		<w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-	      </xsl:when>
-	      <xsl:when test="following-sibling::cals:entry[1]/@colsep=0">
+		</xsl:when>
+		<xsl:when test="@colsep='1'">
+		  <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+		</xsl:when>
+		<xsl:when test="following-sibling::cals:entry[1]/@colsep=0">
 		  <w:right w:val="nil"/>
-	      </xsl:when>
-	    </xsl:choose>
+		</xsl:when>
+	      </xsl:choose>
 	    </xsl:variable>
 	    <xsl:if test="$borders/*">
 		<w:tcBorders>
