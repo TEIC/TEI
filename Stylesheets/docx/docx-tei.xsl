@@ -639,26 +639,28 @@
 				      <xsl:value-of select="w:p[1]/w:pPr/w:jc/@w:val"/>
 				    </xsl:attribute>
 				  </xsl:if>
-				  <xsl:for-each select="w:tcPr/w:tcBorders/w:bottom">
+				  <xsl:attribute name="rowsep">
 				    <xsl:choose>
-				      <xsl:when  test="@w:sz=0 or @w:val='nil'">
-					<xsl:attribute name="rowsep">0</xsl:attribute>
+				      <xsl:when
+					  test="w:tcPr/w:tcBorders/w:bottom[@w:sz=0
+						or @w:val='nil']">
+					<xsl:text>0</xsl:text>
 				      </xsl:when>
 				      <xsl:otherwise>
-					<xsl:attribute name="rowsep">1</xsl:attribute>
+					<xsl:text>1</xsl:text>
 				      </xsl:otherwise>
 				    </xsl:choose>
-				  </xsl:for-each>
-				  <xsl:for-each select="w:tcPr/w:tcBorders/w:left">
+				  </xsl:attribute>
+				  <xsl:attribute name="colsep">
 				    <xsl:choose>
-				      <xsl:when  test="@w:sz=0 or @w:val='nil'">
-					<xsl:attribute name="colsep">0</xsl:attribute>
+				      <xsl:when  test="w:tcPr/w:tcBorders/w:left[@w:sz=0 or @w:val='nil']">
+					<xsl:text>0</xsl:text>
 				      </xsl:when>
 				      <xsl:otherwise>
-					<xsl:attribute name="colsep">1</xsl:attribute>
+					<xsl:text>1</xsl:text>
 				      </xsl:otherwise>
 				    </xsl:choose>
-				  </xsl:for-each>
+				  </xsl:attribute>
 				  <xsl:if test="w:tcPr/w:gridSpan">
 				    <xsl:attribute name="namest">
 				      <xsl:text>c</xsl:text>

@@ -1603,7 +1603,12 @@ is there a number present?
 	      </xsl:variable>
 	      <w:gridSpan w:val="{number($end)-number($start)+1}"/>
 	    </xsl:if>
-	    <xsl:message><xsl:value-of select="$colname"/> (<xsl:value-of select="."/>):    <xsl:value-of select="@rowsep"/> and <xsl:value-of select="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[@colname=$colname]/@rowsep"/></xsl:message>
+	    <!--
+	    <xsl:message><xsl:value-of select="$colname"/>
+	    (<xsl:value-of select="."/>):    <xsl:value-of
+	    select="@rowsep"/> and <xsl:value-of
+	    select="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[@colname=$colname]/@rowsep"/></xsl:message>
+	    -->
 	    <xsl:variable name="borders">
 	      <xsl:choose>
 		<xsl:when test="@rowsep='0'">
