@@ -562,6 +562,11 @@ $requestedID: requests a particular page
   <xsl:template match="tei:div[@type='canto']">
     <xsl:variable name="divlevel" select="count(ancestor::tei:div)"/>
     <xsl:element name="h{$divlevel + $divOffset}">
+      <xsl:for-each select="tei:head[1]">	      
+	<xsl:call-template name="rendToClass">
+	  <xsl:with-param name="default"></xsl:with-param>
+	</xsl:call-template>
+      </xsl:for-each>
       <xsl:call-template name="makeAnchor"/>
       <xsl:call-template name="header">
 	<xsl:with-param name="display">full</xsl:with-param>
