@@ -192,6 +192,8 @@
             <xsl:choose>
                 <xsl:when test="self::m:oMath or
                     
+		    self::mml:math or
+
                     self::teidocx:dynamicContent or
                     
                     self::w:drawing or

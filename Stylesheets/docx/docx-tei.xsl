@@ -495,79 +495,82 @@
 	      </xsl:copy>
 	    </xsl:when>
 	    <xsl:when test="$tableMethod='cals'">
-	      <table xmlns="http://www.oasis-open.org/specs/tm9901">
-		<xsl:attribute name="frame">
-		  <xsl:choose>
-		    <xsl:when
-			test="not(w:tblPr/w:tblBorders)">
-		      <xsl:text>none</xsl:text>
-		    </xsl:when>
-		    <xsl:otherwise>
-		      <xsl:for-each select="w:tblPr/w:tblBorders">
-			<xsl:choose>
-			  <xsl:when test="
+	      <!-- preprocess the table to expand colspans, add row numbers, and
+		   simplify vertical merge info -->
+	      <xsl:variable name="TABLE">
+		<table xmlns="http://www.oasis-open.org/specs/tm9901">
+		  <xsl:attribute name="frame">
+		    <xsl:choose>
+		      <!-- lets face it, most tables do have
+			   borders, especially in ISO -->
+		      <xsl:when
+			  test="not(w:tblPr/w:tblBorders)">
+			<xsl:text>all</xsl:text>
+		      </xsl:when>
+		      <xsl:otherwise>
+			<xsl:for-each select="w:tblPr/w:tblBorders">
+			  <xsl:choose>
+			    <xsl:when test="
 					  w:top/@w:val='single' and
 					  w:bottom/@w:val='single' and
 					  w:right/@w:val='single' and
 					  w:left/@w:val='single'">all</xsl:when>
-			  <xsl:when test="
-					  w:top/@w:val='single' and
-					  w:bottom/@w:val='single' and
-					  not(w:right/@w:val='single') and
-					  not(w:left/@w:val='single')">topbot</xsl:when>
-			  <xsl:when test="
-					  w:top/@w:val='single' and
-					  not(w:bottom/@w:val='single') and
-					  not(w:right/@w:val='single') and
-					  not(w:left/@w:val='single')">top</xsl:when>
-			  <xsl:when test="
-					  not(w:top/@w:val='single') and
-					  w:bottom/@w:val='single' and
-					  not(w:right/@w:val='single') and
-					  not(w:left/@w:val='single')">bottom</xsl:when>
-			  <xsl:when test="
-					  not(w:top/@w:val='single') and
-					  not(w:bottom/@w:val='single') and
-					  w:right/@w:val='single' and
-					  w:left/@w:val='single'">sides</xsl:when>
-			  <xsl:when
-			      test="../../w:tr/w:tc/w:tcPr/w:tcBorders/w:top/@w:val='single'
-				    and ../../w:tr/w:tc/w:tcPr/w:tcBorders/w:right/@w:val='single'">all</xsl:when>
-			  <xsl:when test="../../w:tr/w:tc/w:tcPr/w:tcBorders/w:top/@w:val='single'">top</xsl:when>
-			  <xsl:otherwise>none</xsl:otherwise>
-			</xsl:choose>
-		      </xsl:for-each>
-		    </xsl:otherwise>
-		  </xsl:choose>
-		</xsl:attribute>
-		<xsl:attribute name="colsep">
-		  <xsl:choose>
-		    <xsl:when
-			test="w:tblPr/w:tblBorders/w:insideV/@w:val='single'">1</xsl:when>
-		    <xsl:otherwise>0</xsl:otherwise>
-		  </xsl:choose>
-		</xsl:attribute>
-		<xsl:attribute name="rowsep">
-		  <xsl:choose>
-		    <xsl:when
-			test="w:tblPr/w:tblBorders/w:insideH/@w:val='single'">1</xsl:when>
-		    <xsl:otherwise>0</xsl:otherwise>
-		  </xsl:choose>
-		</xsl:attribute>
-		<xsl:call-template name="cals-table-header"/>
-		<tgroup>
-		  <xsl:for-each select="w:tblGrid/w:gridCol">
-		    <colspec colnum="{position()}"
-			     colname="c{position()}"
-			     xmlns="http://www.oasis-open.org/specs/tm9901">
-		      <xsl:attribute name="colwidth"
-				     select="concat(number(@w:w) div 20,'pt')"/>
-		    </colspec>
-		  </xsl:for-each>
-		  <tbody>
-		    <!-- preprocess the table to expand colspans, add row numbers, and
-			 simplify vertical merge info -->
-		    <xsl:variable name="TABLE">
+			    <xsl:when test="
+					    w:top/@w:val='single' and
+					    w:bottom/@w:val='single' and
+					    not(w:right/@w:val='single') and
+					    not(w:left/@w:val='single')">topbot</xsl:when>
+			    <xsl:when test="
+					    w:top/@w:val='single' and
+					    not(w:bottom/@w:val='single') and
+					    not(w:right/@w:val='single') and
+					    not(w:left/@w:val='single')">top</xsl:when>
+			    <xsl:when test="
+					    not(w:top/@w:val='single') and
+					    w:bottom/@w:val='single' and
+					    not(w:right/@w:val='single') and
+					    not(w:left/@w:val='single')">bottom</xsl:when>
+			    <xsl:when test="
+					    not(w:top/@w:val='single') and
+					    not(w:bottom/@w:val='single') and
+					    w:right/@w:val='single' and
+					    w:left/@w:val='single'">sides</xsl:when>
+			    <xsl:when
+				test="../../w:tr/w:tc/w:tcPr/w:tcBorders/w:top/@w:val='single'
+				      and ../../w:tr/w:tc/w:tcPr/w:tcBorders/w:right/@w:val='single'">all</xsl:when>
+			    <xsl:when
+				test="../../w:tr/w:tc/w:tcPr/w:tcBorders/w:top/@w:val='single'">top</xsl:when>
+			    <xsl:otherwise>none</xsl:otherwise>
+			  </xsl:choose>
+			</xsl:for-each>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:attribute>
+		  <xsl:attribute name="colsep">
+		    <xsl:choose>
+		      <xsl:when
+			  test="w:tblPr/w:tblBorders/w:insideV/@w:val='single'">1</xsl:when>
+		      <xsl:otherwise>0</xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:attribute>
+		  <xsl:attribute name="rowsep">
+		    <xsl:choose>
+		      <xsl:when
+			  test="w:tblPr/w:tblBorders/w:insideH/@w:val='single'">1</xsl:when>
+		      <xsl:otherwise>0</xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:attribute>
+		  <xsl:call-template name="cals-table-header"/>
+		  <tgroup>
+		    <xsl:for-each select="w:tblGrid/w:gridCol">
+		      <colspec colnum="{position()}"
+			       colname="c{position()}"
+			       xmlns="http://www.oasis-open.org/specs/tm9901">
+			<xsl:attribute name="colwidth"
+				       select="concat(number(@w:w) div 20,'pt')"/>
+		      </colspec>
+		    </xsl:for-each>
+		    <tbody>
 		      <xsl:for-each select="w:tr">
 			<xsl:copy>
 			  <xsl:variable name="ROWPOS">
@@ -591,6 +594,58 @@
 			      <xsl:copy-of select="w:tcPr"/>
 			    </xsl:variable>
 			    <xsl:copy>
+			      <xsl:variable name="N" select="position()"/>
+			      <xsl:attribute name="rowsep">
+				<xsl:choose>
+				  <xsl:when
+				      test="w:tcPr/w:tcBorders/w:bottom[@w:sz=0 or @w:val='nil']">
+				    <xsl:text>0</xsl:text>
+				  </xsl:when>
+				  <xsl:when
+				      test="w:tcPr/w:tcBorders/w:bottom[@w:sz&gt;0]">
+				    <xsl:text>1</xsl:text>
+				  </xsl:when>
+				  <xsl:when
+				      test="parent::w:tr/following-sibling::w:tr[1]/w:tc[$N]/w:tcPr/w:tcBorders/w:top[@w:sz&gt;0]">
+				    <xsl:text>1</xsl:text>
+				  </xsl:when>
+				  <xsl:when
+				      test="ancestor::w:tbl/w:tblPr/w:tblBorders/w:insideH[@w:sz=0
+					    or @w:val='nil']">
+				    <xsl:text>0</xsl:text>
+				  </xsl:when>
+				  <xsl:when
+				      test="ancestor::w:tbl/w:tblPr/w:tblBorders/w:insideH">
+				    <xsl:text>1</xsl:text>
+				  </xsl:when>
+				  <xsl:when
+				      test="not(parent::w:tr/following-sibling::w:tr)">
+				    <xsl:text>1</xsl:text>
+				  </xsl:when>
+				  <xsl:otherwise>
+				    <xsl:text>0</xsl:text>
+				  </xsl:otherwise>
+				</xsl:choose>
+			      </xsl:attribute>
+			      <xsl:attribute name="colsep">
+				<xsl:choose>
+				  <xsl:when test="w:tcPr/w:tcBorders/w:right[@w:sz=0 or @w:val='nil']">
+				    <xsl:text>0</xsl:text>
+				  </xsl:when>
+				  <xsl:when
+				      test="w:tcPr/w:tcBorders/w:right[@w:sz&gt;0]">
+				    <xsl:text>1</xsl:text>
+				  </xsl:when>
+				  <xsl:when
+				      test="ancestor::w:tbl/w:tblPr/w:tblBorders/w:insideV[@w:sz=0
+					    or @w:val='nil']">
+				    <xsl:text>0</xsl:text>
+				  </xsl:when>
+				  <xsl:otherwise>
+				    <xsl:text>1</xsl:text>
+				  </xsl:otherwise>
+				</xsl:choose>
+			      </xsl:attribute>
 			      <xsl:attribute name="ROWPOS" select="$ROWPOS"/>
 			      <xsl:attribute name="VMERGE" select="$VMERGE"/>
 			      <xsl:copy-of select="@*"/>
@@ -609,112 +664,20 @@
 			  </xsl:for-each>
 			</xsl:copy>
 		      </xsl:for-each>
-		    </xsl:variable>
-<!--
-			<xsl:comment>START</xsl:comment>
-			<TABLE>
-			<xsl:copy-of select="$TABLE"/>
-			</TABLE>
-			<xsl:comment>END</xsl:comment>
--->
-		    <xsl:for-each select="$TABLE">
-		      <xsl:for-each select="w:tr">
-			<row xmlns="http://www.oasis-open.org/specs/tm9901">
-			  <xsl:for-each select="w:tc[not(@DUMMY='yes')]">
-			    <xsl:choose>
-			      <xsl:when
-				  test="w:tcPr/w:vMerge[not(@w:val='restart')]"/>
-			      <xsl:otherwise>
-				<entry xmlns="http://www.oasis-open.org/specs/tm9901">
-				  <xsl:variable name="ROWPOS" select="@ROWPOS"/>
-				  <xsl:variable name="COLPOS">
-				    <xsl:number/>
-				  </xsl:variable>
-				  <xsl:attribute name="colname">
-				    <xsl:text>c</xsl:text>
-				    <xsl:value-of select="$COLPOS"/>
-				  </xsl:attribute>
-				  <xsl:if test="w:p/w:pPr/w:jc">
-				    <xsl:attribute name="align">
-				      <xsl:value-of select="w:p[1]/w:pPr/w:jc/@w:val"/>
-				    </xsl:attribute>
-				  </xsl:if>
-				  <xsl:attribute name="rowsep">
-				    <xsl:choose>
-				      <xsl:when
-					  test="w:tcPr/w:tcBorders/w:bottom[@w:sz=0
-						or @w:val='nil']">
-					<xsl:text>0</xsl:text>
-				      </xsl:when>
-				      <xsl:otherwise>
-					<xsl:text>1</xsl:text>
-				      </xsl:otherwise>
-				    </xsl:choose>
-				  </xsl:attribute>
-				  <xsl:attribute name="colsep">
-				    <xsl:choose>
-				      <xsl:when  test="w:tcPr/w:tcBorders/w:left[@w:sz=0 or @w:val='nil']">
-					<xsl:text>0</xsl:text>
-				      </xsl:when>
-				      <xsl:otherwise>
-					<xsl:text>1</xsl:text>
-				      </xsl:otherwise>
-				    </xsl:choose>
-				  </xsl:attribute>
-				  <xsl:if test="w:tcPr/w:gridSpan">
-				    <xsl:attribute name="namest">
-				      <xsl:text>c</xsl:text>
-				      <xsl:value-of select="$COLPOS"/>
-				    </xsl:attribute>
-				    <xsl:attribute name="nameend">
-				      <xsl:text>c</xsl:text>
-				      <xsl:value-of select="$COLPOS+number(w:tcPr/w:gridSpan/@w:val)-1"/>
-				    </xsl:attribute>
-				  </xsl:if>
-				  <xsl:if test="w:tcPr/w:vAlign">
-				    <xsl:attribute name="valign">
-				      <xsl:value-of select="w:tcPr/w:vAlign/@w:val"/>
-				    </xsl:attribute>
-				  </xsl:if>
-				  <xsl:if
-				      test="w:tcPr/w:vMerge/@w:val='restart'">
-				    <xsl:variable name="MOREROWS">
-				      <xsl:choose>
-					<xsl:when test="parent::w:tr/following-sibling::w:tr/w:tc[position()=$COLPOS][@VMERGE='start']">
-					  <xsl:for-each select="(parent::w:tr/following-sibling::w:tr/w:tc[position()=$COLPOS][@VMERGE='start'])[1]">
-					    <xsl:value-of
-						select="@ROWPOS"/>
-					  </xsl:for-each>
-					</xsl:when>
-					<xsl:otherwise>
-					  <xsl:value-of select="parent::w:tr/following-sibling::w:tr[last()]/w:tc/@ROWPOS"/>
-					</xsl:otherwise>
-				      </xsl:choose>
-				    </xsl:variable>
-				    <!--
-					<xsl:message>start a merged cell at <xsl:value-of
-					select="$ROWPOS"/>/<xsl:value-of select="$COLPOS"/>
-					<xsl:text>: </xsl:text>
-					<xsl:value-of select="$MOREROWS"/>-<xsl:value-of
-					select="$ROWPOS"/> =<xsl:value-of select="."/>
-					</xsl:message>
-				    -->
-				    <xsl:attribute name="morerows">
-				      <xsl:value-of select="number($MOREROWS) -
-							    number($ROWPOS) -1"/>
-				    </xsl:attribute>
-				  </xsl:if>
-				  <xsl:apply-templates/>
-				</entry>
-			      </xsl:otherwise>
-			    </xsl:choose>
-			  </xsl:for-each>
-			</row>
-		      </xsl:for-each>
-		    </xsl:for-each>
-		  </tbody>
-		</tgroup>
-	      </table>
+		    </tbody>
+		  </tgroup>
+		</table>
+		<!--
+		    <xsl:comment>START</xsl:comment>
+		    <TABLE>
+		    <xsl:copy-of select="$TABLE"/>
+		    </TABLE>
+		    <xsl:comment>END</xsl:comment>
+		-->
+	      </xsl:variable>
+	      <xsl:for-each select="$TABLE">
+		<xsl:apply-templates mode="innerTable"/>
+	      </xsl:for-each>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <table rend="rules">
@@ -753,6 +716,93 @@
 	      </table>
 	    </xsl:otherwise>
 	  </xsl:choose>
+	</xsl:template>
+
+	<xsl:template match="*" mode="innerTable">
+	  <xsl:copy>
+	    <xsl:copy-of select="@*"/>
+	    <xsl:apply-templates mode="innerTable"/>	    
+	  </xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="w:tr" mode="innerTable">
+	  <row xmlns="http://www.oasis-open.org/specs/tm9901">
+	    <xsl:for-each select="w:tc[not(@DUMMY='yes')]">
+	      <xsl:choose>
+		<xsl:when
+		    test="w:tcPr/w:vMerge[not(@w:val='restart')]"/>
+		<xsl:otherwise>
+		  <entry xmlns="http://www.oasis-open.org/specs/tm9901">
+		    <xsl:variable name="ROWPOS" select="@ROWPOS"/>
+		    <xsl:variable name="COLPOS">
+		      <xsl:number/>
+		    </xsl:variable>
+		    <xsl:copy-of select="@rowsep"/>
+		    <xsl:copy-of select="@colsep"/>
+		    <xsl:attribute name="colname">
+		      <xsl:text>c</xsl:text>
+		      <xsl:value-of select="$COLPOS"/>
+		    </xsl:attribute>
+		    <xsl:if test="w:p/w:pPr/w:jc">
+		      <xsl:attribute name="align">
+			<xsl:value-of select="w:p[1]/w:pPr/w:jc/@w:val"/>
+		      </xsl:attribute>
+		    </xsl:if>
+		    <xsl:if test="w:tcPr/w:gridSpan">
+		      <xsl:attribute name="namest">
+			<xsl:text>c</xsl:text>
+			<xsl:value-of select="$COLPOS"/>
+		      </xsl:attribute>
+		      <xsl:attribute name="nameend">
+			<xsl:text>c</xsl:text>
+			<xsl:value-of select="$COLPOS+number(w:tcPr/w:gridSpan/@w:val)-1"/>
+		      </xsl:attribute>
+		    </xsl:if>
+		    <xsl:if test="w:tcPr/w:vAlign">
+		      <xsl:attribute name="valign">
+			<xsl:value-of select="w:tcPr/w:vAlign/@w:val"/>
+		      </xsl:attribute>
+		    </xsl:if>
+		    <xsl:if test="w:tcPr/w:textDirection[@w:val='btLr']">
+		      <xsl:attribute name="rotate">
+			<xsl:text>yes</xsl:text>
+		      </xsl:attribute>
+		    </xsl:if>
+		    <xsl:if
+			test="w:tcPr/w:vMerge/@w:val='restart'">
+		      <xsl:variable name="MOREROWS">
+			<xsl:choose>
+			  <xsl:when test="parent::w:tr/following-sibling::w:tr/w:tc[position()=$COLPOS][@VMERGE='start']">
+			    <xsl:for-each select="(parent::w:tr/following-sibling::w:tr/w:tc[position()=$COLPOS][@VMERGE='start'])[1]">
+			      <xsl:value-of
+				  select="@ROWPOS"/>
+			    </xsl:for-each>
+			  </xsl:when>
+			  <xsl:otherwise>
+			    <xsl:value-of select="parent::w:tr/following-sibling::w:tr[last()]/w:tc/@ROWPOS"/>
+			  </xsl:otherwise>
+			</xsl:choose>
+		      </xsl:variable>
+		      <!--
+			  <xsl:message>start a merged cell at <xsl:value-of
+			  select="$ROWPOS"/>/<xsl:value-of select="$COLPOS"/>
+			  <xsl:text>: </xsl:text>
+			  <xsl:value-of select="$MOREROWS"/>-<xsl:value-of
+			  select="$ROWPOS"/> =<xsl:value-of select="."/>
+			  </xsl:message>
+		      -->
+		      <xsl:attribute name="morerows">
+			<xsl:value-of select="number($MOREROWS) -
+					      number($ROWPOS) -1"/>
+		      </xsl:attribute>
+		    </xsl:if>
+		    <xsl:apply-templates/>
+		  </entry>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each>
+	  </row>
+
 	</xsl:template>
 
 	<!-- getting the basic table structure -->

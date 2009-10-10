@@ -1640,6 +1640,9 @@ is there a number present?
 		  <xsl:copy-of select="$borders/*"/>
 		</w:tcBorders>
 	    </xsl:if>
+	    <xsl:if test="@rotate='yes'">
+	      <w:textDirection w:val='btLr'/>
+	    </xsl:if>
 	    <xsl:if test="@valign">
 	      <w:vAlign w:val="{@valign}"/>
 	    </xsl:if>

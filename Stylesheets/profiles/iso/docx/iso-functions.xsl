@@ -183,9 +183,9 @@
         <xsl:for-each select="$element">
             <xsl:choose>
                 <xsl:when test="self::m:oMath or
-                    
-                    self::teidocx:dynamicContent or
-                    
+				self::mml:math or
+				self::teidocx:dynamicContent or
+				
                     self::w:drawing or
                     self::w:object or
                     
