@@ -22,7 +22,7 @@
     
     <!-- import base conversion style -->
 
-    <xsl:import href="../../../docx/docx-tei.xsl"/>
+    <xsl:import href="../../../docx/from/from.xsl"/>
     
 	<xsl:template match="w:body">
 		<text> <!--
