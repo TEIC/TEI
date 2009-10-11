@@ -894,9 +894,9 @@
 				<xsl:apply-templates select="." mode="iden"/>
 			</xsl:when>
 			<xsl:otherwise>
-			    <mml:math>
+			  <mml:math>
 			      <xsl:apply-templates/>
-			    </mml:math>
+			  </mml:math>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
@@ -1306,6 +1306,11 @@
             </head>
         </xsl:if>
     </xsl:template>
+
+
+    <xsl:template match="w:r[w:fldChar]"/>
+    <xsl:template match="w:r[w:instrText]"/>
+    <xsl:template match="w:fldSimple"/>
 
     <xsl:template name="cals-table-header">
         <xsl:variable name="precedingTableTitle" select="preceding-sibling::w:p[w:pPr/w:pStyle/@w:val='TableTitle'

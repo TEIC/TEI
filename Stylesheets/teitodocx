@@ -28,7 +28,7 @@ TEMPLATES=$APPHOME/profiles/$profile/docx
 XSL=$APPHOME
 mkdir -p $TEMPDIR/word/media
 echo read $THERE/$F
-saxon $THERE/$F $XSL/docx/listgraphics.xsl DIR=$TEMPDIR/word/media > $TEMPDIR/fetch
+saxon $THERE/$F $XSL/docx/utils/graphics/listgraphics.xsl DIR=$TEMPDIR/word/media > $TEMPDIR/fetch
 sh $TEMPDIR/fetch
 rm $TEMPDIR/fetch
 (cd $TEMPDIR/word/media
@@ -40,9 +40,9 @@ if $odd
 then
     saxon -o $TEMPDIR/tmp1.xml $THERE/$F $XSL/odds2/odd2odd.xsl localsource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
     saxon -o $TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
-    saxon -o $TEMPDIR/tmp3.xml  $TEMPDIR/tmp2.xml $XSL/docx/fixgraphics.xsl DIR=`pwd`/word
+    saxon -o $TEMPDIR/tmp3.xml  $TEMPDIR/tmp2.xml $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
 else
-    saxon -o $TEMPDIR/tmp3.xml  $THERE/$F $XSL/docx/fixgraphics.xsl DIR=`pwd`/word
+    saxon -o $TEMPDIR/tmp3.xml  $THERE/$F $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
 fi
 saxon -o word/newdocument.xml tmp3.xml $APPHOME/profiles/$profile/docx/to.xsl  \
     debug=$debug styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR

@@ -934,15 +934,12 @@
 				<xsl:apply-templates select="." mode="iden"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<mml:math>
-					<xsl:apply-templates/>
-				</mml:math>
+			    <mml:math>
+			      <xsl:apply-templates/>
+			    </mml:math>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-
-
-
 
 	<xd:doc>
 		<xd:short>Groups the document by headings and thereby creating the document structure.</xd:short> 

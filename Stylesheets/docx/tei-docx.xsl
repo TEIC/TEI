@@ -1314,6 +1314,45 @@ is there a number present?
                     <xsl:with-param name="style">Tabletitle</xsl:with-param>
                 </xsl:call-template>
             </xsl:for-each>
+<!-- how to do numbering. bad idea?
+
+      <w:r w:rsidR="00825795" w:rsidRPr="00717FD2">
+        <w:fldChar w:fldCharType="begin"/>
+      </w:r>
+      <w:r w:rsidRPr="00717FD2">
+        <w:instrText xml:space="preserve">\IF </w:instrText>
+      </w:r>
+      <w:fldSimple w:instr="SEQ aaa \c ">
+        <w:r w:rsidR="003F3CE5">
+          <w:rPr>
+            <w:noProof/>
+          </w:rPr>
+          <w:instrText>0</w:instrText>
+        </w:r>
+      </w:fldSimple>
+      <w:r w:rsidRPr="00717FD2">
+        <w:instrText>&gt;= 1 "</w:instrText>
+      </w:r>
+      <w:fldSimple w:instr="SEQ aaa \c \* ALPHABETIC ">
+        <w:r w:rsidRPr="00717FD2">
+          <w:instrText>A</w:instrText>
+        </w:r>
+      </w:fldSimple>
+      <w:r w:rsidRPr="00717FD2">
+        <w:instrText xml:space="preserve">." </w:instrText>
+      </w:r>
+      <w:r w:rsidR="00825795" w:rsidRPr="00717FD2">
+        <w:fldChar w:fldCharType="end"/>
+      </w:r>
+      <w:fldSimple w:instr="SEQ Table ">
+        <w:r w:rsidR="003F3CE5">
+          <w:rPr>
+            <w:noProof/>
+          </w:rPr>
+          <w:t>1</w:t>
+        </w:r>
+      </w:fldSimple>
+-->
         </xsl:if>
     </xsl:template>
     <xsl:template match="tei:row">

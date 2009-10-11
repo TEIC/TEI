@@ -20,7 +20,7 @@
     xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
     xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
     xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-    exclude-result-prefixes="a pic rel ve o r m v wp w10 w wne mml cals tbx iso xd">
+    exclude-result-prefixes="a pic rel ve o teidocx r m v wp w10 w wne mml cals tbx iso xd">
     
     <!-- import conversion style -->
     <xsl:import href="../../../docx/utils/functions.xsl"/>
@@ -447,7 +447,7 @@
         
         Be careful about the position(), since it might be 1,2,3
     -->
-    <xsl:template match="w:p" mode="headings" priority="-100">
+    <xsl:template match="w:p" mode="inSectionGroup" priority="-100">
         <xsl:for-each-group select="current-group()"
             group-adjacent="if (contains(w:pPr/w:pStyle/@w:val,'Figure')) then 0 else 
             
