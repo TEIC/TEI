@@ -30,7 +30,7 @@
       License along with this library; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
     <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id$</xd:cvsId>
+    <xd:cvsId>$Id: normalize-word-style.xsl 5451 2009-01-20 10:09:54Z rahtz $</xd:cvsId>
     <xd:copyright>2008, TEI Consortium</xd:copyright>
   </xd:doc>
 

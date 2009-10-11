@@ -23,7 +23,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     exclude-result-prefixes="teidocx cals xd ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn its">
     <!-- import conversion style -->
-    <xsl:import href="../../../docx/tei-docx.xsl"/>
+    <xsl:import href="../../../docx/to/to.xsl"/>
     <xsl:import href="../isoutils.xsl"/>
     
     <!-- import functions -->

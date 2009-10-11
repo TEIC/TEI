@@ -11,7 +11,8 @@
     xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
     xmlns:rel="http://schemas.openxmlformats.org/package/2006/relationships"
     xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
-    xmlns:tei="http://www.tei-c.org/ns/1.0" 
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
     xmlns:v="urn:schemas-microsoft-com:vml"
     xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:w10="urn:schemas-microsoft-com:office:word"
@@ -22,7 +23,8 @@
     exclude-result-prefixes="a pic rel ve o r m v wp w10 w wne mml cals tbx iso xd">
     
     <!-- import conversion style -->
-    <xsl:import href="../../../docx/docx-tei.xsl"/>
+    <xsl:import href="../../../docx/utils/functions.xsl"/>
+    <xsl:import href="../../../docx/from/from.xsl"/>
     
     <!-- import special iso functions -->
     <xsl:include href="iso-functions.xsl"/>
@@ -263,7 +265,7 @@
                     
                 </publicationStmt>
                 <sourceDesc>
-                    <p>Processed by ISOTEI on <xsl:call-template name="whatsTheDate"/>
+                    <p>Processed by ISOTEI on <xsl:value-of select="teidocx:whatsTheDate()"/>
                     </p>
                 </sourceDesc>
             </fileDesc>
