@@ -60,38 +60,6 @@
     <xsl:param name="metadata-file"/>
     <xsl:param name="tableMethod">cals</xsl:param>    
     
-    <xsl:template match="/">
-      <!--
-      <xsl:variable name="part0">
-	<w:document>
-	  <w:body>
-	    <xsl:for-each select="w:document/w:body">
-	      <xsl:for-each-group select="*"
-				  group-starting-with="w:bookmarkStart|w:bookmarkEnd">
-		<xsl:choose>
-		  <xsl:when test="@w:name='ISOTitle'">
-		    <tei:titlePage>
-		      <xsl:copy-of select="current-group()"/>
-		    </tei:titlePage>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <xsl:copy-of select="current-group()"/>
-		  </xsl:otherwise>
-		</xsl:choose>
-	      </xsl:for-each-group>
-	    </xsl:for-each>
-	  </w:body>
-	</w:document>
-      </xsl:variable>
-      -->
-
-      <xsl:variable name="part1">
-	  <xsl:apply-templates/>
-      </xsl:variable>
-      <xsl:apply-templates select="$part1" mode="part2"/>
-
-    </xsl:template>
-
     <!-- ignore existing title pages -->
     <xsl:template match="w:p[.//w:sdt and not (w:pPr/w:pStyle/@w:val='zzSTDTitle')]" priority="1001">
       <!--<xsl:message>fail 1: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->

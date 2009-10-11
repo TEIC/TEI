@@ -35,6 +35,7 @@
 	<xsl:include href="templates/tei-templates.xsl"/>
 	<xsl:include href="utils/utility-templates.xsl"/>
 	<xsl:include href="part2/part2.xsl"/>
+	<xsl:include href="part0/part0.xsl"/>
 
 	<xd:doc type="stylesheet">
 		<xd:short> TEI stylesheet for converting Word docx files to TEI </xd:short>
@@ -107,10 +108,16 @@
 	</xd:doc>
 	<xsl:template match="/">
 		<!-- Do the initial parse and store everything in the variable part1 -->
-		<xsl:variable name="part1">
-			<xsl:apply-templates/>
+		<xsl:variable name="part0">
+		  <xsl:apply-templates mode="part0"/>
 		</xsl:variable>
 
+		<xsl:variable name="part1">
+		  <xsl:for-each select="$part0">
+		    <xsl:apply-templates/>
+		  </xsl:for-each>
+		</xsl:variable>
+		  
 		<!-- uncomment the following line to get the output from Part 1 -->
 		<!--
 		<xsl:copy-of select="$part1"/>

@@ -29,9 +29,7 @@ TEMPDIR=/tmp/docx$$
 mkdir $TEMPDIR
 cd $TEMPDIR
 unzip -q $THERE/$N.docx
-saxon word/document.xml $APPHOME/docx/normalize-word-style.xsl debug=false |
-saxon - $TEMPLATES/docx/from.xsl word-directory=`pwd` \
-| xmllint --format - > $N.xml
+saxon word/document.xml $TEMPLATES/docx/from.xsl word-directory=`pwd` > $N.xml
 if [ "$(ls -A word/media)" ]; then
  echo found graphics files
  echo writing $N.zip
