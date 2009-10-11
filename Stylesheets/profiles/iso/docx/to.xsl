@@ -167,7 +167,7 @@
     <!-- formulas -->
     <xsl:template match="tei:formula">
       <xsl:choose>
-	<xsl:when test="parent::tei:p or parent::cals:entry or parent::tei:title">
+	<xsl:when test="parent::cals:entry or parent::tei:title">
 	  <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:otherwise>
