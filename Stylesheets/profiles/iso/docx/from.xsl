@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns="http://www.tei-c.org/ns/1.0"
+		xmlns="http://www.tei-c.org/ns/1.0"
     xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
     xmlns:cals="http://www.oasis-open.org/specs/tm9901"
     xmlns:iso="http://www.iso.org/ns/1.0"
@@ -19,7 +19,7 @@
     xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
     xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
     xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-    exclude-result-prefixes="ve o r m v wp w10 w wne mml cals tbx iso xd">
+    exclude-result-prefixes="a pic rel ve o r m v wp w10 w wne mml cals tbx iso xd">
     
     <!-- import conversion style -->
     <xsl:import href="../../../docx/docx-tei.xsl"/>
@@ -537,6 +537,12 @@
 				</idno>
 			</xsl:when>
 
+			<xsl:when test="$style='TableFootnoteXref'">
+				<ref rend="TableFootnoteXref">
+				  <xsl:apply-templates/>
+				</ref>
+			</xsl:when>
+
 			<xsl:when test="$style='ref'">
 				<ref>
 					<xsl:apply-templates/>
@@ -823,23 +829,31 @@
             <xsl:apply-templates/>
         </note>
     </xsl:template>
-    
+   
+   <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Example']">
+        <xsl:apply-templates select="." mode="paragraph"/>
+    </xsl:template>    
+    -->
+
+
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$TableFootnote]">
         <note place="foot">
             <xsl:attribute name="n">
                 <xsl:value-of
-                    select="w:r[w:rPr/w:rStyle[@w:val='FigureFootnoteXref' or @w:val='TableFootnoteXref']]/w:t"
+                    select="w:r[w:rPr/w:rStyle[@w:val='TableFootnoteXref']]/w:t"
                 />
             </xsl:attribute>
             <xsl:apply-templates
-                select="w:r[not(w:rPr/w:rStyle[@w:val='FigureFootnoteXref' or @w:val='TableFootnoteXref'])]"
+                select="w:r[not(w:rPr/w:rStyle[@w:val='TableFootnoteXref'])]"
             />
         </note>
     </xsl:template>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$TableNote]">
+        <note place="inline">
+            <xsl:apply-templates/>
+        </note>
+    </xsl:template>
     
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Example']">
-        <xsl:apply-templates select="." mode="paragraph"/>
-    </xsl:template>    -->
     
     <!-- ******************************************************************************************* -->
     <!-- second stage processing -->

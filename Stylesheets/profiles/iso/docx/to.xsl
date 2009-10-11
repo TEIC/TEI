@@ -83,6 +83,7 @@
     </xsl:template>
     <xsl:template match="tei:quote" mode="get-style">Quote</xsl:template>
     <xsl:template match="tei:ref" mode="get-style">ExtXref</xsl:template>
+    <xsl:template match="tei:ref[@rend]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
     <xsl:template match="tei:seg[@rend='FormulaReference']">FormulaReference</xsl:template>
     <xsl:template match="tei:seg[@iso:provision]" mode="get-style"><xsl:value-of select="@iso:provision"/></xsl:template>
     <xsl:template match="tei:seg[@rend]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
@@ -165,6 +166,11 @@
 
     <!-- formulas -->
     <xsl:template match="tei:formula">
+      <xsl:choose>
+	<xsl:when test="parent::tei:p or parent::cals:entry or parent::tei:title">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
         <w:p>    
             <w:pPr>
                 <w:pStyle w:val="Formula"/>
@@ -184,6 +190,8 @@
                 </w:r>
             </xsl:if>
         </w:p>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
     
     <!-- List Bibl -->
@@ -220,80 +228,90 @@
     
     
     <!-- Notes -->
-    <xsl:template match="tei:note">
-        <xsl:param name="nop"></xsl:param>
-           
-        <xsl:variable name="pPr">
-            <xsl:choose>
-                <xsl:when test="(@place='foot'  or @place='bottom') and parent::tei:cell">
-                    <w:pPr>
-                        <w:pStyle w:val="TableFootnoteText"/>
-                    </w:pPr>
-                    <w:r>
-                        <w:rPr>
-                            <w:rStyle w:val="TableFootnoteReference"/>
-                            <w:position w:val="6"/>
-                            <w:sz w:val="16"/>
-                        </w:rPr>
-                        <w:t>
-                            <xsl:value-of select="@n"/>
-                        </w:t>
-                    </w:r>
-                    <w:r>
-                        <w:t>
-                            <xsl:text> </xsl:text>
-                        </w:t>
-                    </w:r>
-                </xsl:when>
-                <xsl:when test="@type='Example'">
-                    <w:pPr>
-                        <w:pStyle w:val="Example"/>
-                    </w:pPr>
-                </xsl:when>
-                <xsl:when test="parent::tei:cell">
-                    
-                    <w:pPr>
-                        <xsl:variable name="Tablenote">
-                            <xsl:call-template name="getStyleName">
-                                <xsl:with-param name="in">
-                                    <xsl:value-of select="$Note"/>
-                                </xsl:with-param>
-                            </xsl:call-template>
-                        </xsl:variable>
-                        <w:pStyle w:val="{$Tablenote}"/>
-                    </w:pPr>
-                </xsl:when>
-                <xsl:otherwise>
-                    <w:pPr>
-                        <w:pStyle w:val="Note"/>
-                    </w:pPr>
-                    
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        
-        <xsl:call-template name="block-element">
-            <xsl:with-param name="pPr" select="$pPr"/>
-            <xsl:with-param name="nop" select="$nop"/>
-        </xsl:call-template>
-    </xsl:template>
-    
-    <!-- 
-        Special Notes (Footnotes) .. 
-        @TODO: Ideally this should go into the general template, but for some
-        reason xsl always calls the less specific tei:note template in here. 
-    -->
     <xsl:template match="tei:note[@place]">
-        <xsl:choose>
-            <xsl:when test="@place='foot'  or @place='bottom' ">
-                <xsl:call-template name="create-footnote"/>
-            </xsl:when>
-            <xsl:when test="@place='end'">
-                <xsl:call-template name="create-endnote"/>
-            </xsl:when>
-        </xsl:choose>
+      <xsl:choose>
+	<xsl:when test="@place='foot'  or @place='bottom' ">
+	  <xsl:call-template name="create-footnote"/>
+	</xsl:when>
+	<xsl:when test="@place='end'">
+	  <xsl:call-template name="create-endnote"/>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:cell or ancestor::cals:entry">
+	  <xsl:call-template name="create-inlinenote"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
     
+
+    <xsl:template name="create-footnote">           
+      <xsl:variable name="pPr">
+	<xsl:choose>
+	  <xsl:when test="(@place='foot'  or @place='bottom') and (parent::tei:cell or parent::cals:entry)">
+	    <w:pPr>
+	      <w:pStyle w:val="Table footnote"/>
+	    </w:pPr>
+	    <w:r>
+	      <w:rPr>
+		<w:rStyle w:val="TableFootnoteXref"/>
+		<w:position w:val="6"/>
+		<w:sz w:val="16"/>
+	      </w:rPr>
+	      <w:t>
+		<xsl:value-of select="@n"/>
+	      </w:t>
+	    </w:r>
+	    <w:r>
+	      <w:t>
+		<xsl:text> </xsl:text>
+	      </w:t>
+	    </w:r>
+	  </xsl:when>
+	  <xsl:when test="@type='Example'">
+	    <w:pPr>
+	      <w:pStyle w:val="Example"/>
+	    </w:pPr>
+	  </xsl:when>
+	  <xsl:when test="parent::tei:cell or parent::cals:entry">	    
+	    <w:pPr>
+	      <xsl:variable name="Tablenote">
+		<xsl:call-template name="getStyleName">
+		  <xsl:with-param name="in">
+		    <xsl:value-of select="$Note"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:variable>
+	      <w:pStyle w:val="{$TableNote}"/>
+	    </w:pPr>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <w:pPr>
+	      <w:pStyle w:val="Note"/>
+	    </w:pPr>	    
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:variable>
+      
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="pPr" select="$pPr"/>
+	<xsl:with-param name="nop">false</xsl:with-param>
+      </xsl:call-template>
+    </xsl:template>
+      
+    <xsl:template name="create-inlinenote">           
+      <xsl:variable name="pPr">
+	<w:pPr>
+	  <w:pStyle w:val="{$TableNote}"/>
+	</w:pPr>
+      </xsl:variable>
+      
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="pPr" select="$pPr"/>
+	<xsl:with-param name="nop">false</xsl:with-param>
+      </xsl:call-template>
+    </xsl:template>
     
     
     <!-- Paragraphs in the front matter -->

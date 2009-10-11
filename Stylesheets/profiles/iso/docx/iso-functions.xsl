@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:tei="http://www.tei-c.org/ns/1.0" version="2.0" xmlns:iso="http://www.iso.org/ns/1.0"
+    xmlns:cals="http://www.oasis-open.org/specs/tm9901"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -16,7 +17,7 @@
     xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
     xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
     xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-    exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
+    exclude-result-prefixes="cals ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
 
     <xsl:import href="iso-variables.xsl"/>
     
@@ -83,13 +84,103 @@
         -->
     <xsl:function name="teidocx:is-supported-style" as="xs:boolean">
         <xsl:param name="style"/>
-        <xsl:variable name="styles">|ANNEX|Bibliography|committee_id|copyright_details|cover_warning|document_details|heading 1|a2|Definition|Formula|dl|document_title|Example|Note|Figure title|FigureFootnoteXref|Figure footnote|Footnote Reference|Footnote Text|Foreword|zzForeword|id_no|Index 1|Index heading|zzIndex|isonumber|isononumber|Normal|Introduction|List Number|List Number 2|List Number 3|List Number 4|List Continue|List Continue 2|List Continue 3|List Continue 4|ExtXref|RefNorm|Note|Normal|a3|a4|a5|a6|heading 2|heading 3|heading 4|heading 5|heading 6|p2|p3|p4|p5|p6|Note|permission|possibility_and_capability|reference_number|requirement|recommendation|Special|statement|Table text (9)|Table text (8)|Table text (7)|Table text (10)|Table title|TableFootNoteXref|TableFootNoteXref|Table footnote|zzContents|toc 1|toc 2|toc 3|toc 4|toc 5|toc 6|toc 9|Defterms|Term(s)|TermNum|working_reference_number|zzBiblio|zzCopyright|zzCover|zzSTDTitle|</xsl:variable>
+        <xsl:variable name="styles">
+	  <names>
+	    <name>ANNEX</name>
+	    <name>Bibliography</name>
+	    <name>committee_id</name>
+	    <name>copyright_details</name>
+	    <name>cover_warning</name>
+	    <name>document_details</name>
+	    <name>heading 1</name>
+	    <name>a2</name>
+	    <name>Definition</name>
+	    <name>Formula</name>
+	    <name>dl</name>
+	    <name>document_title</name>
+	    <name>Example</name>
+	    <name>Note</name>
+	    <name>Figure title</name>
+	    <name>FigureFootnoteXref</name>
+	    <name>Figure footnote</name>
+	    <name>Footnote Reference</name>
+	    <name>Footnote Text</name>
+	    <name>Foreword</name>
+	    <name>zzForeword</name>
+	    <name>id_no</name>
+	    <name>Index 1</name>
+	    <name>Index heading</name>
+	    <name>zzIndex</name>
+	    <name>isonumber</name>
+	    <name>isononumber</name>
+	    <name>Normal</name>
+	    <name>Introduction</name>
+	    <name>List Number</name>
+	    <name>List Number 2</name>
+	    <name>List Number 3</name>
+	    <name>List Number 4</name>
+	    <name>List Continue</name>
+	    <name>List Continue 2</name>
+	    <name>List Continue 3</name>
+	    <name>List Continue 4</name>
+	    <name>ExtXref</name>
+	    <name>RefNorm</name>
+	    <name>Note</name>
+	    <name>Normal</name>
+	    <name>a3</name>
+	    <name>a4</name>
+	    <name>a5</name>
+	    <name>a6</name>
+	    <name>heading 2</name>
+	    <name>heading 3</name>
+	    <name>heading 4</name>
+	    <name>heading 5</name>
+	    <name>heading 6</name>
+	    <name>p2</name>
+	    <name>p3</name>
+	    <name>p4</name>
+	    <name>p5</name>
+	    <name>p6</name>
+	    <name>Note</name>
+	    <name>permission</name>
+	    <name>possibility_and_capability</name>
+	    <name>reference_number</name>
+	    <name>requirement</name>
+	    <name>recommendation</name>
+	    <name>Special</name>
+	    <name>statement</name>
+	    <name>Table text (9)</name>
+	    <name>Table text (8)</name>
+	    <name>Table text (7)</name>
+	    <name>Table text (10)</name>
+	    <name>Table title</name>
+	    <name>TableFootNoteXref</name>
+	    <name>Table footnote</name>
+	    <name>zzContents</name>
+	    <name>toc 1</name>
+	    <name>toc 2</name>
+	    <name>toc 3</name>
+	    <name>toc 4</name>
+	    <name>toc 5</name>
+	    <name>toc 6</name>
+	    <name>toc 9</name>
+	    <name>Defterms</name>
+	    <name>Term(s)</name>
+	    <name>TermNum</name>
+	    <name>working_reference_number</name>
+	    <name>zzBiblio</name>
+	    <name>zzCopyright</name>
+	    <name>zzCover</name>
+	    <name>zzSTDTitle</name>
+	  </names>
+	</xsl:variable>
+
         <xsl:variable name="realstyle">
             <xsl:value-of select="$style"/>
         </xsl:variable>
         
         <xsl:choose>
-            <xsl:when test="contains($styles,concat('|',$realstyle,'|'))">
+            <xsl:when test="$styles/names[name=$realstyle]">
                 true
             </xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
@@ -189,6 +280,10 @@
                     self::w:drawing or
                     self::w:object or
                     
+		    self::tei:formula[parent::cals:entry] or
+
+		    self::tei:formula[parent::tei:title] or
+
                     self::iso:wordObject[w:object] or
                     
                     self::tei:abbr or

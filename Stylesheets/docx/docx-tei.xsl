@@ -760,12 +760,17 @@
 		    </xsl:if>
 		    <xsl:if test="w:tcPr/w:vAlign">
 		      <xsl:attribute name="valign">
-			<xsl:value-of select="w:tcPr/w:vAlign/@w:val"/>
+			<xsl:choose>
+			  <xsl:when test="w:tcPr/w:vAlign/@w:val='center'">top</xsl:when>
+			  <xsl:otherwise>
+			    <xsl:value-of select="w:tcPr/w:vAlign/@w:val"/>
+			  </xsl:otherwise>
+			</xsl:choose>
 		      </xsl:attribute>
 		    </xsl:if>
 		    <xsl:if test="w:tcPr/w:textDirection[@w:val='btLr']">
 		      <xsl:attribute name="rotate">
-			<xsl:text>yes</xsl:text>
+			<xsl:text>1</xsl:text>
 		      </xsl:attribute>
 		    </xsl:if>
 		    <xsl:if
@@ -796,7 +801,18 @@
 					      number($ROWPOS) -1"/>
 		      </xsl:attribute>
 		    </xsl:if>
-		    <xsl:apply-templates/>
+		    <xsl:choose>
+		      <xsl:when test="count(w:p)&gt;1">
+			<xsl:for-each select="w:p">
+			  <p xmlns="http://www.tei-c.org/ns/1.0">
+			    <xsl:apply-templates/>
+			  </p>
+			</xsl:for-each>
+		      </xsl:when>
+		      <xsl:otherwise>
+			<xsl:apply-templates/>
+		      </xsl:otherwise>
+		    </xsl:choose>
 		  </entry>
 		</xsl:otherwise>
 	      </xsl:choose>
@@ -878,9 +894,9 @@
 				<xsl:apply-templates select="." mode="iden"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<mml:math>
-					<xsl:apply-templates/>
-				</mml:math>
+			    <mml:math>
+			      <xsl:apply-templates/>
+			    </mml:math>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>

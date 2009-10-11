@@ -245,7 +245,6 @@ Divide by 100 to avoid overflow.
         <xsl:param name="nop"/>
         <xsl:param name="bookmark-id"/>
         <xsl:param name="bookmark-name"/>
-
         <!-- bookmark -->
         <xsl:if
             test="string-length($bookmark-name) &gt; 0 and string-length($bookmark-id) &gt; 0">
@@ -283,7 +282,6 @@ Divide by 100 to avoid overflow.
                     <!-- create all text runs for each item in the current group. we will later
                          on decide whether we are grouping them together in a w:p or not. -->
                     <xsl:variable name="innerRuns">
-                        
                         <!-- add paragraph properties (if nobody else created a w:p ($nop)) -->
                         <xsl:if test="$nop!='true'">
                             <xsl:choose>
@@ -1351,7 +1349,7 @@ is there a number present?
             </xsl:choose>
             <xsl:choose>
                 <xsl:when test="tei:note">
-                    <xsl:call-template name="block-element"/>
+                    <xsl:apply-templates/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:call-template name="block-element">
@@ -1640,16 +1638,27 @@ is there a number present?
 		  <xsl:copy-of select="$borders/*"/>
 		</w:tcBorders>
 	    </xsl:if>
-	    <xsl:if test="@rotate='yes'">
+	    <xsl:if test="@rotate='1'">
 	      <w:textDirection w:val='btLr'/>
 	    </xsl:if>
 	    <xsl:if test="@valign">
-	      <w:vAlign w:val="{@valign}"/>
+	      <w:vAlign>
+		<xsl:attribute name="w:val">
+		  <xsl:attribute name="valign">
+		    <xsl:choose>
+		      <xsl:when test="@valign='middle'">center</xsl:when>
+		      <xsl:otherwise>
+			<xsl:value-of select="@valign"/>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:attribute>
+		</xsl:attribute>
+	      </w:vAlign>
 	    </xsl:if>
 	  </w:tcPr>
 	  <xsl:choose>
-	    <xsl:when test="tei:note">
-	      <xsl:call-template name="block-element"/>
+	    <xsl:when test="tei:note[@place='foot']">
+	      <xsl:apply-templates/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:call-template name="block-element">
