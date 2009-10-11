@@ -165,27 +165,18 @@ public class DocX {
 			Processor proc = SaxonProcFactory.getProcessor();
 			
 			XsltCompiler comp = proc.newXsltCompiler();
-			XsltExecutable normalizerExec = comp.compile(new StreamSource(new File(propertiesProvider.docx_pp_getStylesheetNormalizeWordStyles())));
 			XsltExecutable docx2teiExec = comp.compile(new StreamSource(new File(propertiesProvider.docx_pp_getStylesheetDocx2TEI())));
-			XsltTransformer normalizer = normalizerExec.load();
 			XsltTransformer docx2tei = docx2teiExec.load();
 			
 			// set directory
-			normalizer.setParameter(new QName("word-directory"), new XdmAtomicValue(directoryNameURI));
 			docx2tei.setParameter(new QName("word-directory"), new XdmAtomicValue(directoryNameURI));
 
 			// is there someone interested in adding parameters?
 			doAddXslParamsForDocX2TEI(docx2tei);
 			
-			// transform part1
-			normalizer.setInitialContextNode(doc);
-			XdmDestination tmpDest = new XdmDestination();
-			normalizer.setDestination(tmpDest);
-			normalizer.transform();
-			
-			// transform part2
+			// transform 
+			docx2tei.setInitialContextNode(doc);
 			XdmDestination result = new XdmDestination();
-			docx2tei.setInitialContextNode(tmpDest.getXdmNode());
 			docx2tei.setDestination(result);
 			docx2tei.transform();
 			
@@ -299,8 +290,8 @@ public class DocX {
 			// add parameters
 			doAddXslParamsForTEI2DocX(toDocX);
 			
-			// transform and write back to document.xml
-			File wordDotXMLFile = new File(directoryName + File.separator + "word" + File.separator + "document.xml");
+			// transform and write back to newdocument.xml
+			File wordDotXMLFile = new File(directoryName + File.separator + "word" + File.separator + "newdocument.xml");
 			Serializer result = new Serializer();
 			result.setOutputFile(wordDotXMLFile);
 			toDocX.setInitialContextNode(teiDoc);
@@ -315,6 +306,16 @@ public class DocX {
 			// move new core.xml
 			File newCoreFile = new File(directoryName + File.separator + "docProps" + File.separator + "newcore.xml");
 			newCoreFile.renameTo(orgCoreFile);
+		} catch (SaxonApiException e) {
+			e.printStackTrace();
+
+			// remove original document.xml file
+			File orgDocFile = new File(directoryName + File.separator + "word" + File.separator + "document.xml");
+			orgDocFile.delete();
+			
+			// move new document.xml
+			File newDocFile = new File(directoryName + File.separator + "word" + File.separator + "newdocument.xml");
+			newCoreFile.renameTo(orgDocFile);
 		} catch (SaxonApiException e) {
 			e.printStackTrace();
 		}
