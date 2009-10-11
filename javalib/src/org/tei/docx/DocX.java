@@ -306,8 +306,6 @@ public class DocX {
 			// move new core.xml
 			File newCoreFile = new File(directoryName + File.separator + "docProps" + File.separator + "newcore.xml");
 			newCoreFile.renameTo(orgCoreFile);
-		} catch (SaxonApiException e) {
-			e.printStackTrace();
 
 			// remove original document.xml file
 			File orgDocFile = new File(directoryName + File.separator + "word" + File.separator + "document.xml");
@@ -315,7 +313,7 @@ public class DocX {
 			
 			// move new document.xml
 			File newDocFile = new File(directoryName + File.separator + "word" + File.separator + "newdocument.xml");
-			newCoreFile.renameTo(orgDocFile);
+			newDocFile.renameTo(orgDocFile);
 		} catch (SaxonApiException e) {
 			e.printStackTrace();
 		}
