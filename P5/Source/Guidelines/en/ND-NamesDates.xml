@@ -65,16 +65,21 @@ which it
 inherits the following attributes:
 <specList><specDesc key="att.canonical" atts="key ref"/></specList>. 
 As discussed elsewhere, these attributes provide two 
-different ways of associating any sort of name with its referent. In
-addition, the <ident type="class">att.naming</ident> class provides an
+different ways of associating any sort of name with its referent. For
+cases where all that is required is to provide some minimal information about
+the person name, for example their occupation or status, the
+<ident>att.naming</ident> class also provides a simple
+<att>role</att>attribute. It also  provides an
 additional attribute, which allows the name itself  to be associated
 with a base or canonical form:
-<specList><specDesc key="att.naming" atts="nymRef"/></specList>
+<specList><specDesc key="att.naming" atts="role nymRef"/></specList>
 
-The encoder may use these attributes in combination as appropriate. The
-<att>ref</att> attribute should be used wherever it is possible to supply
+The encoder may use these attributes in combination as appropriate. For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man
+<name role="politician" type="person">David Paul Brown</name> has suffered ...</egXML>
+The <att>ref</att> attribute should be used wherever it is possible to supply
 a direct link such as a URI to indicate the location of canonical
-information about the referent. For example:
+information about the referent. 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man
 <name ref="#DPB1" type="person">David Paul Brown</name> has suffered ...</egXML>
 This encoding requires that there exist somewhere 
