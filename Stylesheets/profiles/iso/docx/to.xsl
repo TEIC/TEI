@@ -288,16 +288,35 @@
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <w:pPr>
-	      <w:pStyle w:val="Note"/>
+	      <w:pStyle w:val="Footnote"/>
 	    </w:pPr>	    
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:variable>
       
-      <xsl:call-template name="block-element">
-	<xsl:with-param name="pPr" select="$pPr"/>
-	<xsl:with-param name="nop">false</xsl:with-param>
-      </xsl:call-template>
+      <xsl:choose>
+	<xsl:when test="$pPr=''">
+	  <xsl:variable name="num">
+	    <xsl:number count="tei:note[@place='foot' or @place='bottom'][not(ancestor::cals:entry)]" level="any"/>
+	  </xsl:variable>
+	  <xsl:variable name="id" select="$num+1"/>
+	  <w:r>
+	    <w:rPr>
+	      <w:rStyle w:val="FootnoteReference"/>
+	    </w:rPr>
+	    <w:footnoteReference w:id="{$id}"/>
+	  </w:r>
+	  <w:r>
+	    <w:t xml:space="preserve"> </w:t>
+	  </w:r>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="block-element">
+	    <xsl:with-param name="pPr" select="$pPr"/>
+	    <xsl:with-param name="nop">false</xsl:with-param>
+	  </xsl:call-template>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
       
     <xsl:template name="create-inlinenote">           
@@ -397,7 +416,7 @@
                         <xsl:attribute name="w:val">
                             <xsl:call-template name="getStyleName">
                                 <xsl:with-param name="in">
-                                    <xsl:text>Term(s)</xsl:text>
+                                    <xsl:text>TermPreferred</xsl:text>
                                 </xsl:with-param>
                             </xsl:call-template>
                         </xsl:attribute>
@@ -646,7 +665,7 @@
 	  <xsl:attribute name="w:val">
 	    <xsl:call-template name="getStyleName">
 	      <xsl:with-param name="in">
-		<xsl:text>Term(s)</xsl:text>
+		<xsl:text>TermPreferred</xsl:text>
 	      </xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:attribute>

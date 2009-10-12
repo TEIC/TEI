@@ -165,8 +165,8 @@
 	    <name>toc 6</name>
 	    <name>toc 9</name>
 	    <name>Defterms</name>
-	    <name>Term(s)</name>
 	    <name>TermNum</name>
+	    <name>TermPreferred</name>
 	    <name>working_reference_number</name>
 	    <name>zzBiblio</name>
 	    <name>zzCopyright</name>

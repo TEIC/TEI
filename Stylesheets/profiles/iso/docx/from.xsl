@@ -98,11 +98,11 @@
         <!-- construct the TEI Header either by copying the passed metadata or extracting
             the metadata from the document -->
         <xsl:choose>
-            <xsl:when test="$metadata-file!=''">
-                <xsl:call-template name="teiHeader-copy-from-metadata-file"/>
+            <xsl:when test="$metadata-file=''">
+                <xsl:call-template name="teiHeader-extract-from-doc"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:call-template name="teiHeader-extract-from-doc"/>
+                <xsl:call-template name="teiHeader-copy-from-metadata-file"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -426,12 +426,12 @@
             if (w:pPr/w:pStyle/@w:val='RefNorm') then 2 else
             
             if (w:pPr/w:pStyle/@w:val='TermNum') then 3 else
-            if (w:pPr/w:pStyle/@w:val='Term(s)') then 3 else
+            if (w:pPr/w:pStyle[starts-with(@w:val,'AutoTermNum')]) then 3 else
             if (w:pPr/w:pStyle/@w:val='GlossText')	then 3 else
             if (w:pPr/w:pStyle/@w:val='Definition') then 3 else
             if ((w:pPr/w:pStyle/@w:val='Note') and 
             (preceding-sibling::w:p[w:pPr/w:pStyle/@w:val!='Note' or not(w:pPr/w:pStyle/@w:val)][1][w:pPr/w:pStyle/@w:val='TermNum'] or
-            preceding-sibling::w:p[w:pPr/w:pStyle/@w:val!='Note' or not(w:pPr/w:pStyle/@w:val)][1][w:pPr/w:pStyle/@w:val='Terms'] or
+            preceding-sibling::w:p[w:pPr/w:pStyle/@w:val!='Note' or not(w:pPr/w:pStyle/@w:val)][1][w:pPr/w:pStyle/@w:val='PreferredTerm'] or
             preceding-sibling::w:p[w:pPr/w:pStyle/@w:val!='Note' or not(w:pPr/w:pStyle/@w:val)][1][w:pPr/w:pStyle/@w:val='GlossText'] or
             preceding-sibling::w:p[w:pPr/w:pStyle/@w:val!='Note' or not(w:pPr/w:pStyle/@w:val)][1][w:pPr/w:pStyle/@w:val='Definition'])) then 3 else
             
@@ -666,7 +666,8 @@
     <xsl:template name="termsAndDefinitions">
 
             <xsl:for-each-group select="current-group()"
-                group-starting-with="w:p[w:pPr/w:pStyle/@w:val='TermNum']">
+                group-starting-with="w:p[w:pPr/w:pStyle/@w:val='TermNum'
+				     or w:pPr/w:pStyle[starts-with(@w:val,'AutoTermNum')]]">
 
 	      <termEntry id="{.}">
 		<langSet xml:lang="en">
@@ -674,8 +675,7 @@
 		    <termGrp>
 		      <term id="{.}-1">
                         <xsl:for-each
-			    select="current-group()[w:pPr/w:pStyle/@w:val='Term(s)'
-				    or w:pPr/w:pStyle/@w:val='TermPreferred'] except .">
+			    select="current-group()[w:pPr/w:pStyle/@w:val='TermPreferred'] except .">
                             <xsl:if test="position()>1">
                                 <lb/>
                             </xsl:if>
@@ -687,8 +687,7 @@
 		    </termGrp>
 		    <descripGrp>
 		      <descrip type="definition">
-                        <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='GlossText'
-                            or w:pPr/w:pStyle/@w:val='Definition'] except .">
+                        <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='Definition'] except .">
                             <xsl:apply-templates/>
                         </xsl:for-each>
 		      </descrip>
@@ -818,6 +817,7 @@
             />
         </note>
     </xsl:template>
+
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$TableNote]">
         <note place="inline">
             <xsl:apply-templates/>

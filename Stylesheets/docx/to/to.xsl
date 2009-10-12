@@ -46,7 +46,7 @@ Divide by 100 to avoid overflow.
 -->
    <xsl:param name="pageWidth">57596.80</xsl:param>
    <xsl:param name="pageHeight">88915.06</xsl:param>
-   <xsl:param name="defaultHeaderFooterFile">default.xml</xsl:param>
+   <xsl:param name="defaultHeaderFooterFile">templates/default.xml</xsl:param>
    <xsl:param name="postQuote">’</xsl:param>
    <xsl:param name="preQuote">‘</xsl:param>
    <xsl:param name="bulletOne">&#xF0BE;</xsl:param>
@@ -3024,7 +3024,6 @@ under new name -->
                         </xsl:call-template>
                     </w:footnote>
                 </xsl:for-each>
-                
             </w:footnotes>
         </xsl:result-document>
     </xsl:template>
