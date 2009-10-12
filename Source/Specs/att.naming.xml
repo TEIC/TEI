@@ -6,7 +6,8 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="NAMES" type="atts" ident="att.naming">
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" 
+  xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="NAMES" type="atts" ident="att.naming">
   <desc>provides attributes common to elements which refer to named persons, places, organizations etc.</desc>
   <desc version="2007-12-20" xml:lang="kr">사람, 장소, 조직 등의 이름을 지시하는 요소에 공통적 속성을 제공한다.</desc>
   <desc version="2007-05-02" xml:lang="zh-tw">提供屬性，通用於參照到人物、地點、組織等的元素。</desc>
@@ -20,6 +21,15 @@ $Id$
     <memberOf key="att.canonical"/>
   </classes>
   <attList>
+
+    <attDef ident="role" usage="opt">
+<desc>may be used to specify further information about the entity referenced by
+this name, for example the occupation of a person, or the status of a place. </desc>
+<datatype>
+<rng:ref name="data.enumerated"/>
+</datatype>
+    </attDef>
+
     <attDef ident="nymRef" usage="opt">
       <gloss>reference to the canonical name</gloss>
       <gloss version="2007-12-20" xml:lang="kr">표준 이름에 대한 참조</gloss>
@@ -40,7 +50,7 @@ $Id$
             (<term>nym</term>) des noms qui sont associés à l'objet nommé par l'élément qui le contient.</desc>
       <desc version="2007-11-06" xml:lang="it">indica un modo di localizzare la forma canonica (nym) dei nomi associati all'oggetto definito dall'elemento che lo contiene</desc>
       <datatype maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <rng:ref name="data.pointer"/>
       </datatype>
       <valDesc>One or more valid identifiers, separated by
       whitespace.</valDesc>
