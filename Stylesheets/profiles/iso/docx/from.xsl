@@ -447,25 +447,25 @@
                 grouping defined, apply templates with mode paragraph -->
             <xsl:choose>
                 <xsl:when test="current-grouping-key()=0">
-                    <xsl:call-template name="figures"/>
+                    <xsl:call-template name="figureSection"/>
                 </xsl:when>
                 <xsl:when test="current-grouping-key()=1">
-                    <xsl:call-template name="lists"/>
+                    <xsl:call-template name="listSection"/>
                 </xsl:when>
                 <xsl:when test="current-grouping-key()=2">
-                    <xsl:call-template name="normativeReferences"/>
+                    <xsl:call-template name="normativeReferencesSection"/>
                 </xsl:when>
                 <xsl:when test="current-grouping-key()=3">
-                    <xsl:call-template name="termsAndDefinitions"/>
+                    <xsl:call-template name="termsAndDefinitionsSection"/>
                 </xsl:when>
                 <xsl:when test="current-grouping-key()=4">
-                    <xsl:call-template name="bibliography"/>
+                    <xsl:call-template name="bibliographySection"/>
                 </xsl:when>
                 <xsl:when test="current-grouping-key()=5">
-                    <xsl:call-template name="definitionLists"/>
+                    <xsl:call-template name="definitionListSection"/>
                 </xsl:when>
                 <xsl:when test="current-grouping-key()=6">
-                    <xsl:call-template name="toc"/>
+                    <xsl:call-template name="tocSection"/>
                 </xsl:when>
                 
                 <!-- it is not a defined grouping .. apply templates -->
@@ -629,7 +629,7 @@
     <!--
         Working with figures
     -->
-    <xsl:template name="figures">
+    <xsl:template name="figureSection">
         <figure>
             <xsl:for-each select="current-group()">
                 <xsl:apply-templates select="." mode="paragraph"/>
@@ -640,7 +640,7 @@
     <!-- 
         Dealing with Normative References
     -->
-    <xsl:template name="normativeReferences">
+    <xsl:template name="normativeReferencesSection">
         <listBibl type="normativeReferences">
             <xsl:for-each select="current-group()">
                 <xsl:choose>
@@ -663,7 +663,7 @@
     <!-- 
         Terms and definitions
     -->
-    <xsl:template name="termsAndDefinitions">
+    <xsl:template name="termsAndDefinitionsSection">
 
             <xsl:for-each-group select="current-group()"
                 group-starting-with="w:p[w:pPr/w:pStyle/@w:val='TermNum'
@@ -706,7 +706,7 @@
     <!-- 
         Definition Lists
     -->
-    <xsl:template name="definitionLists">
+    <xsl:template name="definitionListSection">
         <list type="gloss">
             <xsl:for-each-group select="current-group()" group-starting-with="w:p">
                 <xsl:for-each-group
@@ -737,7 +737,7 @@
     <!-- 
         Dealing with Normative References
     -->
-    <xsl:template name="bibliography">
+    <xsl:template name="bibliographySection">
         <listBibl>
             <xsl:for-each select="current-group()">
                 <bibl>

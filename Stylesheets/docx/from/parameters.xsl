@@ -49,6 +49,10 @@
         <xd:copyright>2008, TEI Consortium</xd:copyright>
     </xd:doc>
     
+    <xsl:param name="convert-graphics">true</xsl:param>
+    
+    <xsl:param name="convert-headers">true</xsl:param>
+    
     <xsl:param name="mathMethod">mml</xsl:param>
     
     <xsl:param name="termMethod">tei</xsl:param>
