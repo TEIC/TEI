@@ -183,6 +183,9 @@
       <w:name w:val="egXML"/>
       <w:basedOn w:val="Normal"/>
       <w:qFormat/>
+      <w:pPr>
+	<w:jc w:val="left"/>
+      </w:pPr>
       <w:rPr>
         <w:rFonts w:ascii="Courier" w:hAnsi="Courier"/>
         <w:sz w:val="20"/>
@@ -194,10 +197,11 @@
       <w:qFormat/>
       <w:pPr>
 	<w:spacing w:before="80" w:after="0"/>
+	<w:jc w:val="left"/>
       </w:pPr>
       <w:rPr>
-        <w:sz w:val="18"/>
         <w:rFonts w:ascii="Courier" w:hAnsi="Courier"/>
+        <w:sz w:val="18"/>
       </w:rPr>
     </w:style>
   </xsl:template>
