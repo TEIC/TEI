@@ -622,7 +622,7 @@
 	
     
 	<!-- table titles.. we deal with them inside the table -->
-
+	
 	<xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$Tabletitle]" mode="paragraph"/>
 	
 	<xsl:template match="w:p[w:pPr/w:pStyle/@w:val='TableTitle']" mode="paragraph"/>
@@ -630,6 +630,12 @@
     <!--
         Working with figures
     -->
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$Figuretitle]"
+		  mode="paragraph">
+      <head>
+	<xsl:apply-templates/>
+      </head>
+    </xsl:template>
     <xsl:template name="figureSection">
         <figure>
             <xsl:for-each select="current-group()">

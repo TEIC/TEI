@@ -34,7 +34,7 @@
 	<xsl:variable name="DefinitionList">dl</xsl:variable>
 	<xsl:variable name="ExampleHeadingChar">Example Heading Char</xsl:variable>
 	<xsl:variable name="FigureHeadingChar">Figure Heading Char</xsl:variable>
-	<xsl:variable name="FigureTitle">Figure Title</xsl:variable>
+	<xsl:variable name="Figuretitle">Figure title</xsl:variable>
 	<xsl:variable name="ForewordHeading">zzForeword</xsl:variable>
 	<xsl:variable name="FormulaReference">FormulaReference</xsl:variable>
 	<xsl:variable name="HeadingChar">Heading Char</xsl:variable>

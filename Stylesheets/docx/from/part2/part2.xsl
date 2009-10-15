@@ -207,7 +207,15 @@
     <!-- the word "Table" starting a table title-->
     <xsl:template match="cals:table/cals:title[starts-with(.,'Table  —&#32;')]" mode="part2">
       <title xmlns="http://www.oasis-open.org/specs/tm9901">
-	<xsl:value-of select="substring-after(.,'Table  — ')"/>
+	<xsl:value-of select="substring-after(.,'Table  —&#32;')"/>
       </title>
     </xsl:template>
+
+    <!-- same for figure -->
+    <xsl:template match="tei:figure/tei:head[starts-with(.,'Figure  —&#32;')]" mode="part2">
+      <head xmlns="http://www.oasis-open.org/specs/tm9901">
+	<xsl:value-of select="substring-after(.,'Figure  —&#32;')"/>
+      </head>
+    </xsl:template>
+
 </xsl:stylesheet>

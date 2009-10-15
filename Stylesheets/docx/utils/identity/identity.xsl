@@ -29,10 +29,10 @@
     </xsl:template>
     
     <xsl:template match="*" mode="iden">
-        <xsl:element name="{name()}">
+        <xsl:copy>
             <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="iden"
             />
-        </xsl:element>
+	</xsl:copy>
     </xsl:template>
         
 </xsl:stylesheet>
