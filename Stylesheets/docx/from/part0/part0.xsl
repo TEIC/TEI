@@ -62,8 +62,7 @@
 	<xsl:when test="$new=''">
 	  <xsl:value-of select="$old"/>
 	  <xsl:if test="$debug='true'">
-	    <xsl:message>! <xsl:value-of select="$old"/> ... NOT FOUND
-	    </xsl:message>
+	    <xsl:message>! <xsl:value-of select="$old"/> ... NOT FOUND    </xsl:message>
 	  </xsl:if>
 	</xsl:when>
 	<xsl:when test="not($new=$old)">

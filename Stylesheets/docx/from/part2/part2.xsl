@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0"
+		xmlns:cals="http://www.oasis-open.org/specs/tm9901" 
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:prop="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
@@ -29,7 +30,7 @@
     xmlns:xd="http://www.pnp-software.com/XSLTdoc"
     xmlns="http://www.tei-c.org/ns/1.0"
     exclude-result-prefixes="a cp dc dcterms dcmitype prop
-    iso m mml mo mv o pic r rel
+    iso m mml mo mv o pic r rel cals
     tbx tei teidocx v xs ve w10 w wne wp xd">
     
     <xd:doc type="stylesheet">
@@ -202,4 +203,11 @@
     <xsl:template match="tei:head/tei:c[@rend='tab']"
         mode="part2"/>
     
+
+    <!-- the word "Table" starting a table title-->
+    <xsl:template match="cals:table/cals:title[starts-with(.,'Table  —&#32;')]" mode="part2">
+      <title xmlns="http://www.oasis-open.org/specs/tm9901">
+	<xsl:value-of select="substring-after(.,'Table  — ')"/>
+      </title>
+    </xsl:template>
 </xsl:stylesheet>
