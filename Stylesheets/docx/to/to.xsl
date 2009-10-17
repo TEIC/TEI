@@ -1,82 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet 		
-    version="2.0" 
-    xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
+<xsl:stylesheet version="2.0" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
     xmlns:cals="http://www.oasis-open.org/specs/tm9901"
     xmlns:contypes="http://schemas.openxmlformats.org/package/2006/content-types"
     xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"
-    xmlns:dc="http://purl.org/dc/elements/1.1/" 
-    xmlns:dcmitype="http://purl.org/dc/dcmitype/"
-    xmlns:dcterms="http://purl.org/dc/terms/"
-    xmlns:html="http://www.w3.org/1999/xhtml"
-    xmlns:iso="http://www.iso.org/ns/1.0"
-    xmlns:its="http://www.w3.org/2005/11/its"
+    xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+    xmlns:dcterms="http://purl.org/dc/terms/" xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:iso="http://www.iso.org/ns/1.0" xmlns:its="http://www.w3.org/2005/11/its"
     xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-    xmlns:mml="http://www.w3.org/1998/Math/MathML"
-    xmlns:o="urn:schemas-microsoft-com:office:office"
+    xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:o="urn:schemas-microsoft-com:office:office"
     xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
     xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
     xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
-    xmlns:tei="http://www.tei-c.org/ns/1.0"
-    xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-    xmlns:teix="http://www.tei-c.org/ns/Examples"
-    xmlns:v="urn:schemas-microsoft-com:vml" xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
+    xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
+    xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:v="urn:schemas-microsoft-com:vml"
+    xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
     xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:w10="urn:schemas-microsoft-com:office:word"
     xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
     xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
     xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
-    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso its
 			     tei a xs pic fn xsi dc dcterms dcmitype
 			     contypes teidocx teix html cals xd">
 
-  
-  <xsl:import href="../utils/functions.xsl"/>
-  <xsl:import href="../utils/variables.xsl"/>
-  
-  <xsl:import href="../utils/identity/identity.xsl"/>
-  <xsl:import href="../utils/verbatim/tei-docx-verbatim.xsl"/>
-  <xsl:import href="../utils/maths/mml2omml.xsl"/>
+
+    <xsl:import href="../utils/functions.xsl"/>
+    <xsl:import href="../utils/variables.xsl"/>
+
+    <xsl:import href="../utils/identity/identity.xsl"/>
+    <xsl:import href="../utils/verbatim/tei-docx-verbatim.xsl"/>
+    <xsl:import href="../utils/maths/mml2omml.xsl"/>
+
     
-  <xsl:import href="parameters.xsl"/>
-  <xsl:import href="placeholders.xsl"/>
+    <xsl:import href="parameters.xsl"/>
+    <xsl:import href="placeholders.xsl"/>
+
     
-  
-  <xsl:include href="docxfiles/application.xsl"/>
-  <xsl:include href="docxfiles/content-types.xsl"/>
-  <xsl:include href="docxfiles/endnotes.xsl"/>
-  <xsl:include href="docxfiles/footers.xsl"/>
-  <xsl:include href="docxfiles/footnotes.xsl"/>
-  <xsl:include href="docxfiles/headers.xsl"/>
-  <xsl:include href="docxfiles/numbering-definition.xsl"/>
-  <xsl:include href="docxfiles/relationships.xsl"/>
-  <xsl:include href="docxfiles/settings.xsl"/>
-  
-  
-  
-   
+    <xsl:import href="graphics/graphics.xsl"/>
+    <xsl:import href="maths/maths.xsl"/>
+
+    <!-- Load stylesheets helping with the creation of special files -->
+    <xsl:include href="docxfiles/application.xsl"/>
+    <xsl:include href="docxfiles/content-types.xsl"/>
+    <xsl:include href="docxfiles/endnotes.xsl"/>
+    <xsl:include href="docxfiles/footers.xsl"/>
+    <xsl:include href="docxfiles/footnotes.xsl"/>
+    <xsl:include href="docxfiles/headers.xsl"/>
+    <xsl:include href="docxfiles/numbering-definition.xsl"/>
+    <xsl:include href="docxfiles/relationships.xsl"/>
+    <xsl:include href="docxfiles/settings.xsl"/>
+
+
+
+
 
     <xd:doc type="stylesheet">
         <xd:short> TEI stylesheet for making Word docx files from TEI XML </xd:short>
-        <xd:detail> This library is free software; you can redistribute it and/or
-            modify it under the terms of the GNU Lesser General Public License as
-            published by the Free Software Foundation; either version 2.1 of the
-            License, or (at your option) any later version. This library is
-            distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-            without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-            PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
-            details. You should have received a copy of the GNU Lesser General Public
-            License along with this library; if not, write to the Free Software
-            Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
+        <xd:detail> 
+            <h1>Stylesheet documentation</h1>
+            
+            <h2>template modes</h2>
+            <h3>get-style</h3>
+            
+            <h1>License</h1>
+            This library is free software; you can redistribute it and/or modify it under
+            the terms of the GNU Lesser General Public License as published by the Free Software
+            Foundation; either version 2.1 of the License, or (at your option) any later version.
+            This library is distributed in the hope that it will be useful, but WITHOUT ANY
+            WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+            PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details. You
+            should have received a copy of the GNU Lesser General Public License along with this
+            library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite
+            330, Boston, MA 02111-1307 USA </xd:detail>
         <xd:author>See AUTHORS</xd:author>
         <xd:cvsId>$Id$</xd:cvsId>
         <xd:copyright>2008, TEI Consortium</xd:copyright>
     </xd:doc>
-    
+
 
     <xsl:strip-space elements="*"/>
     <xsl:preserve-space elements="tei:text"/>
@@ -88,19 +91,19 @@
     <xsl:key name="ALLFOOTERS" match="tei:fw[@type='footer']" use="1"/>
     <xsl:key name="ALLHEADERS" match="tei:fw[@type='header']" use="1"/>
 
-    <xsl:key name='ENDNOTES' match="tei:note[@place='end']" use="1"/>
-    <xsl:key name='FOOTNOTES' match="tei:note[@place='foot' or @place='bottom' ]" use="1"/>
+    <xsl:key name="ENDNOTES" match="tei:note[@place='end']" use="1"/>
+    <xsl:key name="FOOTNOTES" match="tei:note[@place='foot' or @place='bottom' ]" use="1"/>
 
     <xsl:key name="IDS" match="tei:*[@xml:id]" use="@xml:id"/>
 
-    <xsl:key name='OL' match="tei:list[@type='ordered']" use="1"/>
-    <xsl:key name='BLIP' match="a:blip" use="1"/>
+    <xsl:key name="OL" match="tei:list[@type='ordered']" use="1"/>
+    <xsl:key name="BLIP" match="a:blip" use="1"/>
     <xsl:key name="Styles" match="w:style/w:name" use="@w:val"/>
 
     <xsl:variable name="align">right</xsl:variable>
     <xsl:variable name="lowercase">abcdefghijklmnopqrstuvwxyz</xsl:variable>
     <xsl:variable name="uppercase">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
-    
+
 
     <xd:doc>
         <xd:short>The starting point in the conversion to docx.</xd:short>
@@ -108,7 +111,52 @@
     <xsl:template match="/tei:TEI">
         <xsl:call-template name="write-docxfiles"/>
 
+        <xsl:call-template name="write-document-dot-xml"/>
+    </xsl:template>
 
+    <xd:doc>
+        <xd:short>Calls templates that are responsible for creating all necessary files besides the
+            main document.xml</xd:short>
+    </xd:doc>
+    <xsl:template name="write-docxfiles">
+        <!-- header and footers -->
+        <xsl:call-template name="write-docxfile-header-files"/>
+
+        <!--  Write out footer files -->
+        <xsl:call-template name="write-docxfile-footer-files"/>
+
+        <!-- Write out numbering file -->
+        <xsl:call-template name="write-docxfile-numbering-definition"/>
+
+        <!-- Write out footnotes file -->
+        <xsl:call-template name="write-docxfile-footnotes-file"/>
+
+        <!-- Write out endnotes file -->
+        <xsl:call-template name="write-docxfile-endnotes-file"/>
+
+        <!-- main relationships -->
+        <xsl:call-template name="write-docxfile-main-relationships"/>
+
+        <!-- relationships -->
+        <xsl:call-template name="write-docxfile-relationships"/>
+
+        <!-- write Content Types -->
+        <xsl:call-template name="write-docxfile-content-types"/>
+
+        <!-- Write out settings -->
+        <xsl:call-template name="write-docxfile-settings"/>
+
+        <!-- app files -->
+        <xsl:call-template name="write-docxfile-docprops-core"/>
+        <xsl:call-template name="write-docxfile-docprops-app"/>
+        <xsl:call-template name="write-docxfile-docprops-custom"/>
+    </xsl:template>
+
+
+    <xd:doc>
+        <xd:short>Writes the main document.xml file, that contains all "real" content.</xd:short>
+    </xd:doc>
+    <xsl:template name="write-document-dot-xml">
         <w:document xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:o="urn:schemas-microsoft-com:office:office"
             xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
@@ -120,91 +168,83 @@
             xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml">
 
             <w:body>
+                <!-- Front -->
+                <xsl:call-template name="write-document-dot-xml-frontmatter"/>
 
-                <!-- are there specific titlepages -->
-                <xsl:call-template name="titlepages"/>
+                <!-- Main -->
+                <xsl:call-template name="write-document-dot-xml-maincontent"/>
 
-		        <!-- header components -->
-        		<xsl:call-template name="headerParts"/>
+                <!-- Back -->
+                <xsl:call-template name="write-document-dot-xml-backmatter"/>
 
-                <!-- The front matter -->
-                <xsl:apply-templates select="tei:text/tei:front"/>
-
-                <!-- document title -->
-                <xsl:call-template name="document-title"/>
-
-                <!-- Describes the main part of the document -->
-                <xsl:apply-templates select="tei:text/tei:body"/>
-
-                <!-- Describes the back matter of the document -->
-                <xsl:apply-templates select="tei:text/tei:back"/>
-
-                <!-- write out final sectPr .. if exists -->
-		<xsl:choose>
-		  <xsl:when test="tei:text/tei:milestone">
-		    <xsl:apply-templates select="tei:text/tei:milestone[1]">
-		      <xsl:with-param name="final-section">true</xsl:with-param>
-		    </xsl:apply-templates>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <xsl:apply-templates
-			select="document($defaultHeaderFooterFile)/tei:TEI/tei:text/tei:milestone">
-		      <xsl:with-param
-			  name="final-section">true</xsl:with-param>
-		    </xsl:apply-templates>
-		  </xsl:otherwise>
-		</xsl:choose>
+                <!-- Clearing up at the end -->
+                <xsl:call-template name="write-document-dot-xml-postclearing"/>
             </w:body>
         </w:document>
     </xsl:template>
 
     <xd:doc>
-        <xd:short>Calls templates that are responsible for creating all necessary files besides the main document.xml</xd:short>
+        <xd:short>Handles the front matter</xd:short>
     </xd:doc>
-    <xsl:template name="write-docxfiles">
-        <!-- header and footers -->
-        <xsl:call-template name="write-docxfile-header-files"/>
-        
-        <!--  Write out footer files -->
-        <xsl:call-template name="write-docxfile-footer-files"/>
-        
-        <!-- Write out numbering file -->
-        <xsl:call-template name="write-docxfile-numbering-definition"/>
-        
-        <!-- Write out footnotes file -->
-        <xsl:call-template name="write-docxfile-footnotes-file"/>
-        
-        <!-- Write out endnotes file -->
-        <xsl:call-template name="write-docxfile-endnotes-file"/>
-        
-        <!-- main relationships -->
-        <xsl:call-template name="write-docxfile-main-relationships"/>
-        
-        <!-- relationships -->
-        <xsl:call-template name="write-docxfile-relationships"/>
-        
-        <!-- write Content Types -->
-        <xsl:call-template name="write-docxfile-content-types"/>
-        
-        <!-- Write out settings -->
-        <xsl:call-template name="write-docxfile-settings"/>
-        
-        <!-- app files -->
-        <xsl:call-template name="write-docxfile-docprops-core"/>
-        <xsl:call-template name="write-docxfile-docprops-app"/>
-        <xsl:call-template name="write-docxfile-docprops-custom"/>
+    <xsl:template name="write-document-dot-xml-frontmatter">
+        <!-- are there specific titlepages -->
+        <xsl:call-template name="titlepages"/>
+
+        <!-- header components -->
+        <xsl:call-template name="headerParts"/>
+
+        <!-- The front matter -->
+        <xsl:apply-templates select="tei:text/tei:front"/>
+    </xsl:template>
+
+    <xd:doc>
+        <xd:short>Handles the main content</xd:short>
+    </xd:doc>
+    <xsl:template name="write-document-dot-xml-maincontent">
+        <!-- document title -->
+        <xsl:call-template name="document-title"/>
+
+        <!-- Describes the main part of the document -->
+        <xsl:apply-templates select="tei:text/tei:body"/>
+    </xsl:template>
+
+    <xd:doc>
+        <xd:short>Handles the back matter</xd:short>
+    </xd:doc>
+    <xsl:template name="write-document-dot-xml-backmatter">
+        <!-- Describes the back matter of the document -->
+        <xsl:apply-templates select="tei:text/tei:back"/>
+    </xsl:template>
+
+    <xd:doc>
+        <xd:short>Inserts final word specific sections</xd:short>
+        <xd:detail> Inserts a final sectPr section if we need one </xd:detail>
+    </xd:doc>
+    <xsl:template name="write-document-dot-xml-postclearing">
+
+        <!-- write out final sectPr .. if exists -->
+        <xsl:choose>
+            <xsl:when test="tei:text/tei:milestone">
+                <xsl:apply-templates select="tei:text/tei:milestone[1]">
+                    <xsl:with-param name="final-section">true</xsl:with-param>
+                </xsl:apply-templates>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates
+                    select="document($defaultHeaderFooterFile)/tei:TEI/tei:text/tei:milestone">
+                    <xsl:with-param name="final-section">true</xsl:with-param>
+                </xsl:apply-templates>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xd:doc>
         <xd:short>Template used to process block elements:</xd:short>
-        <xd:detail>
-            Template used to process block elements:
-            @param style          A style for all the w:ps
-            @param pPr            An entire pPr element to use
-            @param nop            a w:p has already been created and no new w:p is to be created
-            @param bookmark-id    if present in conjunction with bookmark-name, a bookmark is created around the current element
-            @param bookmark-name  @see bookmark-id
-        </xd:detail>
+        <xd:detail> Template used to process block elements: @param style A style for all the w:ps
+            @param pPr An entire pPr element to use @param nop a w:p has already been created and no
+            new w:p is to be created @param bookmark-id if present in conjunction with
+            bookmark-name, a bookmark is created around the current element @param bookmark-name
+            @see bookmark-id </xd:detail>
     </xd:doc>
     <xsl:template name="block-element">
         <xsl:param name="style"/>
@@ -229,17 +269,20 @@
     </xsl:template>
     <!-- end template block-element -->
 
-    <!-- 
-        This template processes block elements (or better to say the children of a block element)
-        and should never be called directly 
-        (call block-element instead). The function processes all children and puts
-        all inline elements into one w:p. If it encounters a nested block element
-        (e.g. a note inside a p) then it closes the previous w:p processes that block
-        element and then again starts putting all following inline elements into another
-        w:p element.
-        
-        @see block-element
-    -->
+    <xd:doc>
+        <xd:short></xd:short>
+        <xd:detail>
+            This template processes block elements (or better to say the children of a block element)
+            and should never be called directly 
+            (call block-element instead). The function processes all children and puts
+            all inline elements into one w:p. If it encounters a nested block element
+            (e.g. a note inside a p) then it closes the previous w:p processes that block
+            element and then again starts putting all following inline elements into another
+            w:p element.
+            
+            @see block-element
+        </xd:detail>
+    </xd:doc>
     <xsl:template name="_process-blockelement">
         <xsl:param name="style"/>
         <xsl:param name="pPr"/>
@@ -276,7 +319,7 @@
                         </xsl:call-template>
                     </xsl:for-each-group>
                 </xsl:when>
-                
+
                 <!-- we encountered an inline element. This means that the current group only
                      contains inline elements -->
                 <xsl:otherwise>
@@ -299,7 +342,7 @@
                                 <xsl:otherwise/>
                             </xsl:choose>
                         </xsl:if>
-                        	
+
                         <!-- Create text runs -->
                         <xsl:for-each select="current-group()">
                             <xsl:apply-templates select=".">
@@ -336,14 +379,16 @@
     <!-- end template _process-blockelement -->
 
 
-    <!-- 
+    <xd:doc>
+        <xd:detail>
         Template for all simple block elements.
         This template looks for a style definition template (mode="get-style") that
         matches the block element that is currently processed. If none is specified
         it copies the style definition from the parent element.
         
         If some special rendering is required you should overwrite this template.
-    -->
+        </xd:detail>
+    </xd:doc>
     <xsl:template match="*[not(teidocx:is-inline(.))]" priority="-10">
         <xsl:param name="style"/>
         <xsl:param name="pPr"/>
@@ -372,17 +417,19 @@
         </xsl:call-template>
     </xsl:template>
     <!-- end template simple block elements: *[not(teidocx:is-inline(.))] -->
-    
-    
-    
-    <!--
-        Template for all simple inline elements
-        This template looks for a character style definition template (mode="get-style")
-        for the currently processed element.
-        -->
+
+
+
+    <xd:doc>
+        <xd:detail>
+            Template for all simple inline elements
+            This template looks for a character style definition template (mode="get-style")
+            for the currently processed element.
+        </xd:detail>
+    </xd:doc>
     <xsl:template match="*[teidocx:is-inline(.)]" priority="-10">
         <xsl:param name="character-style"/>
-        
+
         <xsl:variable name="style">
             <xsl:apply-templates select="." mode="get-style"/>
         </xsl:variable>
@@ -402,18 +449,21 @@
         </xsl:apply-templates>
     </xsl:template>
 
+    <xd:doc>
+        <xd:short>Handles text sections</xd:short>
+    </xd:doc>
     <xsl:template match="text()">
         <xsl:param name="character-style"/>
-	<xsl:if test="parent::tei:head/parent::tei:div[@iso:status]">
-	  <w:r>
-	    <w:t>
-	      <xsl:attribute name="xml:space">preserve</xsl:attribute>
-	      <xsl:text> (</xsl:text>
-	      <xsl:value-of select="../../@iso:status"/>
-	      <xsl:text>) </xsl:text>
-	    </w:t>
-	  </w:r>
-	</xsl:if>
+        <xsl:if test="parent::tei:head/parent::tei:div[@iso:status]">
+            <w:r>
+                <w:t>
+                    <xsl:attribute name="xml:space">preserve</xsl:attribute>
+                    <xsl:text> (</xsl:text>
+                    <xsl:value-of select="../../@iso:status"/>
+                    <xsl:text>) </xsl:text>
+                </w:t>
+            </w:r>
+        </xsl:if>
 
         <w:r>
             <!-- if no specific style is assigned we might check for any other indication to assign 
@@ -421,24 +471,30 @@
             <xsl:variable name="renderingProperties">
                 <xsl:call-template name="applyRend"/>
             </xsl:variable>
-            
-            <xsl:if test="string-length($character-style) &gt; 0 or not(empty($renderingProperties))">
-            <w:rPr>
-                <xsl:if test="string-length($character-style) &gt; 0">
-                    <w:rStyle>
-                        <xsl:attribute name="w:val" select="$character-style"/>
-                    </w:rStyle>
-                </xsl:if>
-                <xsl:copy-of select="$renderingProperties"/>
-            </w:rPr>
+
+            <xsl:if
+                test="string-length($character-style) &gt; 0 or not(empty($renderingProperties))">
+                <w:rPr>
+                    <xsl:if test="string-length($character-style) &gt; 0">
+                        <w:rStyle>
+                            <xsl:attribute name="w:val" select="$character-style"/>
+                        </w:rStyle>
+                    </xsl:if>
+                    <xsl:copy-of select="$renderingProperties"/>
+                </w:rPr>
             </xsl:if>
 
             <xsl:call-template name="Text"/>
         </w:r>
     </xsl:template>
 
-    <!-- Style definition templates: 
-        No default Style for any block or inline element -->
+
+    <xd:doc>
+        <xd:detail>
+            Style definition templates: 
+            No default Style for any block or inline element
+        </xd:detail>
+    </xd:doc>
     <xsl:template match="*" mode="get-style"/>
 
 
@@ -446,7 +502,7 @@
         looking it up in styles.xml -->
     <xsl:template name="getStyleName">
         <xsl:param name="in"/>
-        
+
         <xsl:for-each select="document($styleDoc,/)">
             <xsl:for-each select="key('Styles',$in)">
                 <xsl:value-of select="parent::w:style/@w:styleId"/>
@@ -488,12 +544,12 @@
                 </xsl:when>
             </xsl:choose>
 
-	    <!-- typewriter -->
+            <!-- typewriter -->
             <xsl:choose>
                 <xsl:when test="@rend='typewriter' or teidocx:render-typewriter(.)">
-		  <w:rFonts w:ascii="Courier" w:hAnsi="Courier"/>
-		</xsl:when>
-	    </xsl:choose>
+                    <w:rFonts w:ascii="Courier" w:hAnsi="Courier"/>
+                </xsl:when>
+            </xsl:choose>
 
             <xsl:if test="@rend='subscript'">
                 <w:vertAlign w:val="subscript"/>
@@ -530,28 +586,29 @@
     <xsl:template name="Text">
         <xsl:choose>
             <xsl:when test="parent::w:body">
-                <xsl:message terminate="yes">CDATA found in body! [<xsl:value-of select="."/>]</xsl:message>
+                <xsl:message terminate="yes">CDATA found in body! [<xsl:value-of select="."
+                />]</xsl:message>
             </xsl:when>
             <xsl:otherwise>
-	      <w:t>
-		<xsl:attribute name="xml:space">preserve</xsl:attribute>
-		<xsl:choose>
-		  <xsl:when test=".=' ' or ../@xml:space='preserve'">
-		    <xsl:value-of select="."/>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <xsl:if test="starts-with(.,' ') or starts-with(.,'&#10;')">
-		      <xsl:text> </xsl:text>
-		    </xsl:if>
-		    <xsl:value-of select="normalize-space(.)"/>
-		    <xsl:if test="substring(.,string-length(.),1)=' '">
-		      <xsl:text> </xsl:text>
-		    </xsl:if>
-		    <xsl:if test="substring(.,string-length(.),1)='&#10;'">
-		      <xsl:text> </xsl:text>
-		    </xsl:if>
-		  </xsl:otherwise>
-		</xsl:choose>
+                <w:t>
+                    <xsl:attribute name="xml:space">preserve</xsl:attribute>
+                    <xsl:choose>
+                        <xsl:when test=".=' ' or ../@xml:space='preserve'">
+                            <xsl:value-of select="."/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:if test="starts-with(.,' ') or starts-with(.,'&#10;')">
+                                <xsl:text> </xsl:text>
+                            </xsl:if>
+                            <xsl:value-of select="normalize-space(.)"/>
+                            <xsl:if test="substring(.,string-length(.),1)=' '">
+                                <xsl:text> </xsl:text>
+                            </xsl:if>
+                            <xsl:if test="substring(.,string-length(.),1)='&#10;'">
+                                <xsl:text> </xsl:text>
+                            </xsl:if>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </w:t>
             </xsl:otherwise>
         </xsl:choose>
@@ -566,7 +623,7 @@
                 <xsl:call-template name="generate-toc"/>
             </xsl:when>
         </xsl:choose>
-        
+
     </xsl:template>
 
     <!-- 
@@ -598,7 +655,7 @@
             </w:r>
         </w:p>
     </xsl:template>
-    
+
 
     <!-- 
         Footnotes
@@ -618,7 +675,7 @@
             <w:t xml:space="preserve"> </w:t>
         </w:r>
     </xsl:template>
-    
+
     <!-- 
         Endnotes
     -->
@@ -644,7 +701,7 @@
     -->
     <xsl:template match="tei:milestone">
         <xsl:param name="final-section">false</xsl:param>
-	
+
 
         <!-- construct sectPr -->
         <xsl:variable name="sectPr">
@@ -652,19 +709,19 @@
                 <xsl:for-each select="teidocx:footer">
                     <xsl:variable name="ref" select="@ref"/>
                     <xsl:variable name="footernum">
-		              <xsl:for-each select="key('FOOTERS',$ref)">
-			            <xsl:number level="any"/>
-		              </xsl:for-each>
-		            </xsl:variable>
+                        <xsl:for-each select="key('FOOTERS',$ref)">
+                            <xsl:number level="any"/>
+                        </xsl:for-each>
+                    </xsl:variable>
                     <w:footerReference w:type="{@type}" r:id="{concat('rId',100+$footernum)}"/>
                 </xsl:for-each>
 
                 <xsl:for-each select="teidocx:header">
                     <xsl:variable name="ref" select="@ref"/>
                     <xsl:variable name="headernum">
-                    <xsl:for-each select="key('HEADERS',$ref)">
-			            <xsl:number level="any"/>
-			        </xsl:for-each>
+                        <xsl:for-each select="key('HEADERS',$ref)">
+                            <xsl:number level="any"/>
+                        </xsl:for-each>
                     </xsl:variable>
                     <w:headerReference w:type="{@type}" r:id="{concat('rId',100+$headernum)}"/>
                 </xsl:for-each>
@@ -790,35 +847,35 @@
     -->
     <xsl:template match="tei:label[following-sibling::tei:*[1]/self::tei:item]">
         <xsl:param name="nop"/>
-       
-       <w:p>
-           <w:pPr>
-               <w:pStyle w:val="dl"/>
-               <w:ind w:left="567" w:hanging="567"/>
-           </w:pPr>
-           <xsl:apply-templates>
-               <xsl:with-param name="nop">true</xsl:with-param>
-           </xsl:apply-templates>
-           <w:r>
-               <w:tab/>
-           </w:r>
-           <xsl:for-each select="following-sibling::tei:item[1]">
-	     <xsl:apply-templates>
-               <xsl:with-param name="nop">true</xsl:with-param>
-           </xsl:apply-templates>
-	   </xsl:for-each>           
-       </w:p>
+
+        <w:p>
+            <w:pPr>
+                <w:pStyle w:val="dl"/>
+                <w:ind w:left="567" w:hanging="567"/>
+            </w:pPr>
+            <xsl:apply-templates>
+                <xsl:with-param name="nop">true</xsl:with-param>
+            </xsl:apply-templates>
+            <w:r>
+                <w:tab/>
+            </w:r>
+            <xsl:for-each select="following-sibling::tei:item[1]">
+                <xsl:apply-templates>
+                    <xsl:with-param name="nop">true</xsl:with-param>
+                </xsl:apply-templates>
+            </xsl:for-each>
+        </w:p>
     </xsl:template>
-    
+
     <xsl:template match="tei:item/tei:list">
-      <xsl:param name="nop"/>
-      <xsl:apply-templates>
-               <xsl:with-param name="nop">false</xsl:with-param>
-      </xsl:apply-templates>
+        <xsl:param name="nop"/>
+        <xsl:apply-templates>
+            <xsl:with-param name="nop">false</xsl:with-param>
+        </xsl:apply-templates>
     </xsl:template>
 
     <xsl:template match="tei:item[preceding-sibling::tei:*[1]/self::tei:label]"/>
-    
+
 
     <xsl:template match="comment()"/>
     <!-- 
@@ -834,15 +891,15 @@
                     <xsl:call-template name="getStyleName">
                         <xsl:with-param name="in">
                             <xsl:text>List Continue</xsl:text>
-			    <xsl:call-template name="listNumberDepth"/>
-			</xsl:with-param>
-		    </xsl:call-template>
-		</xsl:when>
+                            <xsl:call-template name="listNumberDepth"/>
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:when>
                 <xsl:when test="../@type='ordered'">
                     <xsl:call-template name="getStyleName">
                         <xsl:with-param name="in">
                             <xsl:text>List Number</xsl:text>
-			    <xsl:call-template name="listNumberDepth"/>
+                            <xsl:call-template name="listNumberDepth"/>
                         </xsl:with-param>
                     </xsl:call-template>
                 </xsl:when>
@@ -893,7 +950,7 @@
                 </xsl:choose>
             </w:pPr>
         </xsl:variable>
-<!--
+        <!--
 <xsl:message>List item <xsl:value-of select="."/>, <xsl:value-of
 select="$nop"/>, <xsl:value-of select="$listStyle"/></xsl:message>
 -->
@@ -905,40 +962,40 @@ select="$nop"/>, <xsl:value-of select="$listStyle"/></xsl:message>
     </xsl:template>
 
     <xsl:template name="listNumberDepth">
-      <xsl:choose>
-	<xsl:when
-	    test="ancestor::tei:glossListEntry">
-	  <xsl:value-of
-	      select="count(ancestor::tei:list)
-		      + ancestor::tei:glossListEntry/@count"/>
-	</xsl:when>
-	<xsl:when test="parent::tei:list/ancestor::tei:list">
-	  <xsl:text> </xsl:text>
-	  <xsl:value-of select="count(ancestor::tei:list)"/>
-	</xsl:when>
-      </xsl:choose>
+        <xsl:choose>
+            <xsl:when test="ancestor::tei:glossListEntry">
+                <xsl:value-of
+                    select="count(ancestor::tei:list)
+		      + ancestor::tei:glossListEntry/@count"
+                />
+            </xsl:when>
+            <xsl:when test="parent::tei:list/ancestor::tei:list">
+                <xsl:text> </xsl:text>
+                <xsl:value-of select="count(ancestor::tei:list)"/>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
-      <!-- 
+    <!-- 
 	   Handle figures 
       -->
-    
+
     <xsl:template match="tei:figure[not(@rend)]">
-      <xsl:call-template name="block-element">
-	<xsl:with-param name="pPr">
-	  <w:pPr>
-	    <w:spacing w:before="240"/>
-	    <w:jc w:val="left"/>
-	  </w:pPr>
-	</xsl:with-param>
-      </xsl:call-template>
+        <xsl:call-template name="block-element">
+            <xsl:with-param name="pPr">
+                <w:pPr>
+                    <w:spacing w:before="240"/>
+                    <w:jc w:val="left"/>
+                </w:pPr>
+            </xsl:with-param>
+        </xsl:call-template>
     </xsl:template>
     <xsl:template match="tei:figure/tei:figDesc"/>
 
     <xsl:template match="tei:figure/tei:head">
-      <xsl:call-template name="block-element">
-	<xsl:with-param name="style">Figuretitle</xsl:with-param>
-      </xsl:call-template>
+        <xsl:call-template name="block-element">
+            <xsl:with-param name="style">Figuretitle</xsl:with-param>
+        </xsl:call-template>
     </xsl:template>
 
     <xsl:template match="tei:graphic">
@@ -950,8 +1007,8 @@ select="$nop"/>, <xsl:value-of select="$listStyle"/></xsl:message>
 		  (@teidocx:width and @teidocx:height)
 		  or
 		  (@width and @height))">
-	  
-<!--
+
+            <!--
 
 is there a number present?
 
@@ -961,64 +1018,73 @@ is there a number present?
 -->
 
             <xsl:variable name="imageWidth">
-	      <xsl:choose>
-		<xsl:when test="contains(@width,'%')">
-		  <xsl:value-of select="number($pageWidth * number(substring-before(@width,'%'))) cast as xs:integer"/>
-		</xsl:when>
-		<xsl:when test="@width">
-		  <xsl:value-of select="teidocx:convert-dim-emu(@width)"/>
-		</xsl:when>
-		<xsl:when test="@scale and @teidocx:width">
-		  <xsl:value-of select="(@teidocx:width *  number(@scale)) cast as xs:integer"/>
-		</xsl:when>
-		<xsl:when test="@height and @teidocx:height">
-		  <xsl:variable name="h">
-		    <xsl:value-of
-			select="teidocx:convert-dim-emu(@height)"/>
-		  </xsl:variable>
-		  <xsl:value-of select="(@teidocx:width *
+                <xsl:choose>
+                    <xsl:when test="contains(@width,'%')">
+                        <xsl:value-of
+                            select="number($pageWidth * number(substring-before(@width,'%'))) cast as xs:integer"
+                        />
+                    </xsl:when>
+                    <xsl:when test="@width">
+                        <xsl:value-of select="teidocx:convert-dim-emu(@width)"/>
+                    </xsl:when>
+                    <xsl:when test="@scale and @teidocx:width">
+                        <xsl:value-of select="(@teidocx:width *  number(@scale)) cast as xs:integer"
+                        />
+                    </xsl:when>
+                    <xsl:when test="@height and @teidocx:height">
+                        <xsl:variable name="h">
+                            <xsl:value-of select="teidocx:convert-dim-emu(@height)"/>
+                        </xsl:variable>
+                        <xsl:value-of
+                            select="(@teidocx:width *
 					($h div number(@teidocx:height)))
-					cast as xs:integer"/>
-		</xsl:when>
-		<xsl:when test="@teidocx:width">
-		  <xsl:value-of select="@teidocx:width"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:message terminate="yes">no way to work out
-		  image width for <xsl:value-of select="@url"/>
-		  </xsl:message>
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:variable>
+					cast as xs:integer"
+                        />
+                    </xsl:when>
+                    <xsl:when test="@teidocx:width">
+                        <xsl:value-of select="@teidocx:width"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:message terminate="yes">no way to work out image width for
+                                <xsl:value-of select="@url"/>
+                        </xsl:message>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
 
             <xsl:variable name="imageHeight">
-	      <xsl:choose>
-		<xsl:when test="contains(@height,'%')">
-		  <xsl:value-of select="number($pageHeight * (number(substring-before(@height,'%')))) cast as xs:integer"/>
-		</xsl:when>
-		<xsl:when test="@height">
-		  <xsl:value-of select="teidocx:convert-dim-emu(@height)"/>
-		</xsl:when>
-		<xsl:when test="@scale and @teidocx:height">
-		  <xsl:value-of select="(@teidocx:height *  number(@scale)) cast as xs:integer"/>
-		</xsl:when>
-		<xsl:when test="@width and @teidocx:height and
+                <xsl:choose>
+                    <xsl:when test="contains(@height,'%')">
+                        <xsl:value-of
+                            select="number($pageHeight * (number(substring-before(@height,'%')))) cast as xs:integer"
+                        />
+                    </xsl:when>
+                    <xsl:when test="@height">
+                        <xsl:value-of select="teidocx:convert-dim-emu(@height)"/>
+                    </xsl:when>
+                    <xsl:when test="@scale and @teidocx:height">
+                        <xsl:value-of
+                            select="(@teidocx:height *  number(@scale)) cast as xs:integer"/>
+                    </xsl:when>
+                    <xsl:when test="@width and @teidocx:height and
 				@teidocx:width">
-		  <xsl:value-of select="(($imageWidth *
-		    @teidocx:height) div @teidocx:width) cast as xs:integer"/>
-		</xsl:when>
-		<xsl:when test="@teidocx:height">
-		  <xsl:value-of select="@teidocx:height"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:message terminate="yes">no way to work out
-		  image height for <xsl:value-of select="@url"/>
-		  </xsl:message>
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:variable>
+                        <xsl:value-of
+                            select="(($imageWidth *
+		    @teidocx:height) div @teidocx:width) cast as xs:integer"
+                        />
+                    </xsl:when>
+                    <xsl:when test="@teidocx:height">
+                        <xsl:value-of select="@teidocx:height"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:message terminate="yes">no way to work out image height for
+                                <xsl:value-of select="@url"/>
+                        </xsl:message>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
 
-<!--
+            <!--
 	    <xsl:message> arrived at <xsl:value-of
 	    select="$imageWidth"/> x <xsl:value-of
 	    select="$imageHeight"/> from <xsl:value-of select="@teidocx:width"/>x<xsl:value-of select="@teidocx:height"/>
@@ -1054,8 +1120,7 @@ is there a number present?
                             <pic:spPr>
                                 <a:xfrm>
                                     <a:off x="0" y="0"/>
-                                    <a:ext cx="{$imageWidth}00"
-					   cy="{$imageHeight}00"/>
+                                    <a:ext cx="{$imageWidth}00" cy="{$imageHeight}00"/>
                                 </a:xfrm>
                                 <a:prstGeom prst="rect">
                                     <a:avLst/>
@@ -1071,8 +1136,8 @@ is there a number present?
                 <w:drawing>
                     <!-- choose between inline and block -->
                     <xsl:choose>
-		      <xsl:when test="parent::tei:figure[@rend='display']">
-                        <!-- render  as block -->
+                        <xsl:when test="parent::tei:figure[@rend='display']">
+                            <!-- render  as block -->
                             <wp:anchor simplePos="0" relativeHeight="10" behindDoc="0" locked="0"
                                 layoutInCell="1" allowOverlap="1">
                                 <wp:simplePos x="0" y="0"/>
@@ -1082,8 +1147,7 @@ is there a number present?
                                 <wp:positionV relativeFrom="paragraph">
                                     <wp:align>center</wp:align>
                                 </wp:positionV>
-                                <wp:extent cx="{$imageWidth}00"
-					   cy="{$imageHeight}00"/>
+                                <wp:extent cx="{$imageWidth}00" cy="{$imageHeight}00"/>
                                 <wp:wrapTopAndBottom/>
                                 <wp:docPr name="Some Image">
                                     <xsl:attribute name="id">
@@ -1093,11 +1157,10 @@ is there a number present?
 
                                 <xsl:copy-of select="$graphic-element"/>
                             </wp:anchor>
-		      </xsl:when>
-		      <xsl:otherwise>
+                        </xsl:when>
+                        <xsl:otherwise>
                             <wp:inline>
-                                <wp:extent cx="{$imageWidth}00"
-					   cy="{$imageHeight}00"/>
+                                <wp:extent cx="{$imageWidth}00" cy="{$imageHeight}00"/>
                                 <wp:docPr name="{tokenize(@url, '/')[last()]}">
                                     <xsl:attribute name="id">
                                         <xsl:number level="any"/>
@@ -1105,7 +1168,7 @@ is there a number present?
                                 </wp:docPr>
                                 <xsl:copy-of select="$graphic-element"/>
                             </wp:inline>
-		      </xsl:otherwise>
+                        </xsl:otherwise>
                     </xsl:choose>
                     <!-- end inline/block -->
 
@@ -1134,16 +1197,16 @@ is there a number present?
     <!-- quoted text -->
     <xsl:template match="tei:q">
         <w:r>
-	  <w:t>
-	    <xsl:value-of select="$preQuote"/>
-	  </w:t>
-	</w:r>
-	<xsl:apply-templates/>
+            <w:t>
+                <xsl:value-of select="$preQuote"/>
+            </w:t>
+        </w:r>
+        <xsl:apply-templates/>
         <w:r>
-	  <w:t>
-	    <xsl:value-of select="$postQuote"/>
-	  </w:t>
-	</w:r>
+            <w:t>
+                <xsl:value-of select="$postQuote"/>
+            </w:t>
+        </w:r>
     </xsl:template>
 
     <!-- TBX -->
@@ -1204,21 +1267,21 @@ is there a number present?
             <w:t>&gt;</w:t>
         </w:r>
     </xsl:template>
-    
+
 
     <!-- 
         Handle examples
     -->
     <xsl:template match="teix:egXML">
-    <xsl:param name="simple">false</xsl:param>
-    <xsl:param name="highlight"></xsl:param>
+        <xsl:param name="simple">false</xsl:param>
+        <xsl:param name="highlight"/>
         <xsl:call-template name="block-element">
             <xsl:with-param name="style">
-	    <xsl:choose>
-	      <xsl:when test="ancestor::tei:cell">egXMLTable</xsl:when>
-	      <xsl:otherwise>egXML</xsl:otherwise>
-	    </xsl:choose>
-	    </xsl:with-param>
+                <xsl:choose>
+                    <xsl:when test="ancestor::tei:cell">egXMLTable</xsl:when>
+                    <xsl:otherwise>egXML</xsl:otherwise>
+                </xsl:choose>
+            </xsl:with-param>
             <xsl:with-param name="select">
                 <tei:p>
                     <xsl:call-template name="create-egXML-section"/>
@@ -1226,30 +1289,30 @@ is there a number present?
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-    
+
     <xsl:template match="tei:eg">
         <xsl:call-template name="block-element">
-	  <xsl:with-param name="style">
-	    <xsl:choose>
-	      <xsl:when test="ancestor::tei:cell">egXMLTable</xsl:when>
-	      <xsl:otherwise>egXML</xsl:otherwise>
-	    </xsl:choose>
-	  </xsl:with-param>
+            <xsl:with-param name="style">
+                <xsl:choose>
+                    <xsl:when test="ancestor::tei:cell">egXMLTable</xsl:when>
+                    <xsl:otherwise>egXML</xsl:otherwise>
+                </xsl:choose>
+            </xsl:with-param>
             <xsl:with-param name="select">
                 <tei:p>
                     <xsl:attribute name="xml:space">preserve</xsl:attribute>
                     <xsl:for-each select="tokenize(.,'\n')">
-		      <xsl:choose>
-			<xsl:when test="position()=last()">
-			  <xsl:value-of select="."/>
-			</xsl:when>
-			<xsl:when test=".='' and position()=1"/>
-			<xsl:otherwise>
-			  <xsl:value-of select="."/>
-			  <tei:lb/>
-			</xsl:otherwise>
-		      </xsl:choose>
-		    </xsl:for-each>                    
+                        <xsl:choose>
+                            <xsl:when test="position()=last()">
+                                <xsl:value-of select="."/>
+                            </xsl:when>
+                            <xsl:when test=".='' and position()=1"/>
+                            <xsl:otherwise>
+                                <xsl:value-of select="."/>
+                                <tei:lb/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:for-each>
                 </tei:p>
             </xsl:with-param>
         </xsl:call-template>
@@ -1269,24 +1332,25 @@ is there a number present?
                 <xsl:otherwise>
                     <w:tblPr>
                         <w:tblW w:w="0" w:type="auto"/>
-			<w:jc w:val="center"/>
-			<w:tblBorders>
-			  <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-			  <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-			  <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-			  <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-			  <w:insideH w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-			  <w:insideV w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-			</w:tblBorders>
-		    </w:tblPr>
-		</xsl:otherwise>
-	    </xsl:choose>
-	    <xsl:choose>
+                        <w:jc w:val="center"/>
+                        <w:tblBorders>
+                            <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:insideH w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:insideV w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                        </w:tblBorders>
+                    </w:tblPr>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:choose>
                 <xsl:when test="html:colgroup">
                     <w:tblGrid>
                         <xsl:for-each select="html:colgroup/html:col">
                             <w:gridCol>
-                                <xsl:attribute name="w:w" select="teidocx:convert-dim-pt20(@width)"/>
+                                <xsl:attribute name="w:w" select="teidocx:convert-dim-pt20(@width)"
+                                />
                             </w:gridCol>
                         </xsl:for-each>
                     </w:tblGrid>
@@ -1295,13 +1359,14 @@ is there a number present?
                 <xsl:when test="w:tblGrid">
                     <xsl:copy-of select="w:tblGrid"/>
                 </xsl:when>
-		<xsl:otherwise>
+                <xsl:otherwise>
                     <w:tblGrid>
-		      <xsl:for-each select="tei:row[1]/tei:cell">
-			<w:gridCol w:w="500"/> <!-- notional amount -->
-		      </xsl:for-each>
-		    </w:tblGrid>		  
-		</xsl:otherwise>
+                        <xsl:for-each select="tei:row[1]/tei:cell">
+                            <w:gridCol w:w="500"/>
+                            <!-- notional amount -->
+                        </xsl:for-each>
+                    </w:tblGrid>
+                </xsl:otherwise>
             </xsl:choose>
             <xsl:apply-templates select="tei:row"/>
         </w:tbl>
@@ -1320,14 +1385,13 @@ is there a number present?
     <xsl:template match="tei:row">
         <w:tr>
             <xsl:choose>
-	      <xsl:when test="w:trPr">
-		<xsl:copy-of select="w:trPr"/>
-	      </xsl:when>
-	      <xsl:otherwise> 
-	      </xsl:otherwise>
+                <xsl:when test="w:trPr">
+                    <xsl:copy-of select="w:trPr"/>
+                </xsl:when>
+                <xsl:otherwise> </xsl:otherwise>
             </xsl:choose>
             <w:tblPrEx>
-                <w:tblLayout w:type="autofit"/> 
+                <w:tblLayout w:type="autofit"/>
             </w:tblPrEx>
             <xsl:apply-templates select="tei:cell"/>
         </w:tr>
@@ -1354,47 +1418,48 @@ is there a number present?
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:call-template name="block-element">
-		      <xsl:with-param name="pPr">
-			<w:pPr>
-			  <xsl:choose>
-			    <xsl:when test="@rend">
-			      <xsl:variable name="sName">
-				<xsl:call-template name="getStyleName">
-				  <xsl:with-param name="in" select="@rend"/>
-				</xsl:call-template>
-			      </xsl:variable>
-			      <xsl:choose>
-				<xsl:when test="$sName=''">
-				  <w:pStyle w:val="{$TableText}"/>
-				</xsl:when>
-				<xsl:otherwise>
-				  <w:pStyle w:val="{$sName}"/>
-				</xsl:otherwise>
-			      </xsl:choose>
-			    </xsl:when>
-			    <xsl:otherwise>
-			      <w:pStyle w:val="{$TableText}"/>
-			    </xsl:otherwise>
-			  </xsl:choose>
-			  <xsl:choose>
-			    <xsl:when test="@align">
-			      <w:jc w:val="{@align}"/>
-			    </xsl:when>
-			    <xsl:when test="parent::tei:row[@role='label']
+                        <xsl:with-param name="pPr">
+                            <w:pPr>
+                                <xsl:choose>
+                                    <xsl:when test="@rend">
+                                        <xsl:variable name="sName">
+                                            <xsl:call-template name="getStyleName">
+                                                <xsl:with-param name="in" select="@rend"/>
+                                            </xsl:call-template>
+                                        </xsl:variable>
+                                        <xsl:choose>
+                                            <xsl:when test="$sName=''">
+                                                <w:pStyle w:val="{$TableText}"/>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <w:pStyle w:val="{$sName}"/>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <w:pStyle w:val="{$TableText}"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                                <xsl:choose>
+                                    <xsl:when test="@align">
+                                        <w:jc w:val="{@align}"/>
+                                    </xsl:when>
+                                    <xsl:when
+                                        test="parent::tei:row[@role='label']
 					    or @role='label'">
-			      <w:jc w:val="left"/>
-			    </xsl:when>
-			    <xsl:when test="starts-with(.,'[0-9]')">
-			      <w:jc w:val="right"/>
-			    </xsl:when>
-			    <xsl:otherwise>
-			      <w:jc w:val="left"/>
-			    </xsl:otherwise>
-			  </xsl:choose>
-			</w:pPr>
-		      </xsl:with-param>
-		    </xsl:call-template>
-		</xsl:otherwise>
+                                        <w:jc w:val="left"/>
+                                    </xsl:when>
+                                    <xsl:when test="starts-with(.,'[0-9]')">
+                                        <w:jc w:val="right"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <w:jc w:val="left"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </w:pPr>
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:otherwise>
             </xsl:choose>
             <!-- If we have no children, put an empty p here -->
             <xsl:if test="not(descendant::text())">
@@ -1411,88 +1476,90 @@ is there a number present?
     <xsl:template match="cals:table">
         <xsl:call-template name="cals-table-header"/>
         <w:tbl>
-	  <w:tblPr>
-	    <w:tblW w:w="0" w:type="auto"/>
-	    <w:jc w:val="center"/>
-	    <w:tblBorders>
-	      <xsl:choose>
-		<xsl:when test="@frame='none'">
-		  <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-		  <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-		  <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-		  <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-		</xsl:when>
-		<xsl:when test="@frame='top'">
-		  <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-		  <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-		  <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-		  <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-		</xsl:when>
-		<xsl:when test="@frame='bottom'">
-		  <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-		  <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-		  <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-		  <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-		</xsl:when>
-		<xsl:when test="@frame='topbot'">
-		  <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-		  <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-		  <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-		  <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-		</xsl:when>
-		<xsl:when test="@frame='sides'">
-		  <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-		  <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-		  <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-		  <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-		</xsl:when>
-		<xsl:when test="@frame='all'">
-		  <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-		  <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-		  <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-		  <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-		</xsl:when>
-	      </xsl:choose>
-	      <xsl:choose>
-		<xsl:when test="@colsep=1">
-		  <w:insideV w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <w:insideV w:val="none" w:sz="6" w:space="0" w:color="auto"/>
-		</xsl:otherwise>
-	      </xsl:choose>
-	      <xsl:choose>
-		<xsl:when test="@rowsep=1">
-		  <w:insideH w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <w:insideH w:val="none" w:sz="6" w:space="0" w:color="auto"/>
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </w:tblBorders>
-	    <w:tblLayout w:type="fixed"/>
-	  </w:tblPr>
-	  <xsl:choose>
-	    <xsl:when test="cals:tgroup">
-	      <w:tblGrid>
-		<xsl:for-each select="cals:tgroup/cals:colspec">
-		  <w:gridCol>
-		    <xsl:attribute name="w:w" select="teidocx:convert-dim-pt20(@colwidth)"/>
-		  </w:gridCol>
-		</xsl:for-each>
-	      </w:tblGrid>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <w:tblGrid>
-		<xsl:for-each select="cals:row[1]/cals:entry">
-		  <w:gridCol w:w="500"/> <!-- notional amount -->
-		</xsl:for-each>
-	      </w:tblGrid>		  
-	    </xsl:otherwise>
-	  </xsl:choose>
-	  <xsl:apply-templates select="cals:tgroup"/>
-	</w:tbl>
-	<w:p/>
+            <w:tblPr>
+                <w:tblW w:w="0" w:type="auto"/>
+                <w:jc w:val="center"/>
+                <w:tblBorders>
+                    <xsl:choose>
+                        <xsl:when test="@frame='none'">
+                            <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+                            <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+                            <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+                        </xsl:when>
+                        <xsl:when test="@frame='top'">
+                            <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+                            <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+                        </xsl:when>
+                        <xsl:when test="@frame='bottom'">
+                            <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+                            <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+                        </xsl:when>
+                        <xsl:when test="@frame='topbot'">
+                            <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+                        </xsl:when>
+                        <xsl:when test="@frame='sides'">
+                            <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+                            <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+                            <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                        </xsl:when>
+                        <xsl:when test="@frame='all'">
+                            <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                        </xsl:when>
+                    </xsl:choose>
+                    <xsl:choose>
+                        <xsl:when test="@colsep=1">
+                            <w:insideV w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <w:insideV w:val="none" w:sz="6" w:space="0" w:color="auto"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:choose>
+                        <xsl:when test="@rowsep=1">
+                            <w:insideH w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <w:insideH w:val="none" w:sz="6" w:space="0" w:color="auto"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </w:tblBorders>
+                <w:tblLayout w:type="fixed"/>
+            </w:tblPr>
+            <xsl:choose>
+                <xsl:when test="cals:tgroup">
+                    <w:tblGrid>
+                        <xsl:for-each select="cals:tgroup/cals:colspec">
+                            <w:gridCol>
+                                <xsl:attribute name="w:w"
+                                    select="teidocx:convert-dim-pt20(@colwidth)"/>
+                            </w:gridCol>
+                        </xsl:for-each>
+                    </w:tblGrid>
+                </xsl:when>
+                <xsl:otherwise>
+                    <w:tblGrid>
+                        <xsl:for-each select="cals:row[1]/cals:entry">
+                            <w:gridCol w:w="500"/>
+                            <!-- notional amount -->
+                        </xsl:for-each>
+                    </w:tblGrid>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:apply-templates select="cals:tgroup"/>
+        </w:tbl>
+        <w:p/>
     </xsl:template>
 
 
@@ -1507,215 +1574,225 @@ is there a number present?
     </xsl:template>
 
     <xsl:template match="cals:tgroup">
-      <xsl:variable name="TABLE">
-	<xsl:copy>
-	  <xsl:copy-of select="cals:colspec"/>
-	  <cals:tbody>
-	  <xsl:for-each select="cals:tbody/cals:row">
-	  <xsl:copy>
-	    <xsl:copy-of select="@*"/>
-	    <xsl:for-each select="cals:entry">
-	      <xsl:copy>
-		<xsl:copy-of select="@*"/>
-		<xsl:copy-of select="*|text()"/>
-	      </xsl:copy>
-	      <xsl:variable name="rows" select="@rowsep"/>
-	      <xsl:if test="@namest">
-		<xsl:variable name="start">
-		  <xsl:value-of select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@namest]/@colnum"/>
-		</xsl:variable>
-		<xsl:variable name="end">
-		  <xsl:value-of select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@nameend]/@colnum"/>
-		</xsl:variable>
-		<xsl:for-each
-		    select="ancestor::cals:tgroup/cals:colspec[position()>$start
+        <xsl:variable name="TABLE">
+            <xsl:copy>
+                <xsl:copy-of select="cals:colspec"/>
+                <cals:tbody>
+                    <xsl:for-each select="cals:tbody/cals:row">
+                        <xsl:copy>
+                            <xsl:copy-of select="@*"/>
+                            <xsl:for-each select="cals:entry">
+                                <xsl:copy>
+                                    <xsl:copy-of select="@*"/>
+                                    <xsl:copy-of select="*|text()"/>
+                                </xsl:copy>
+                                <xsl:variable name="rows" select="@rowsep"/>
+                                <xsl:if test="@namest">
+                                    <xsl:variable name="start">
+                                        <xsl:value-of
+                                            select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@namest]/@colnum"
+                                        />
+                                    </xsl:variable>
+                                    <xsl:variable name="end">
+                                        <xsl:value-of
+                                            select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@nameend]/@colnum"
+                                        />
+                                    </xsl:variable>
+                                    <xsl:for-each
+                                        select="ancestor::cals:tgroup/cals:colspec[position()>$start
 			    and position()&lt;=$end]">
-		  <cals:entry DUMMY='true' colname="{@colname}" rowsep="{$rows}"/>
-		</xsl:for-each>
-	      </xsl:if>
-	    </xsl:for-each>
-	  </xsl:copy>
-	</xsl:for-each>
-	  </cals:tbody>
-	</xsl:copy>
-      </xsl:variable>
-      <!--<xsl:variable name="count">
+                                        <cals:entry DUMMY="true" colname="{@colname}"
+                                            rowsep="{$rows}"/>
+                                    </xsl:for-each>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </xsl:copy>
+                    </xsl:for-each>
+                </cals:tbody>
+            </xsl:copy>
+        </xsl:variable>
+        <!--<xsl:variable name="count">
 	  <xsl:number level="any"/>
 	  </xsl:variable>
 	  <xsl:result-document indent="yes" href="/tmp/T{$count}.xml">
 	  <xsl:copy-of select="$TABLE"/>
 	  </xsl:result-document>
       -->
-      <xsl:for-each select="$TABLE/cals:tgroup">
-	  <xsl:apply-templates/>
-      </xsl:for-each>
+        <xsl:for-each select="$TABLE/cals:tgroup">
+            <xsl:apply-templates/>
+        </xsl:for-each>
     </xsl:template>
 
     <xsl:template match="cals:row">
-      <xsl:variable name="ROWPOS">
-	<xsl:number/>
-      </xsl:variable>
-      <xsl:variable name="TEMPLATE">
-	<xsl:for-each select="ancestor::cals:tgroup/cals:colspec">
-	  <CELL name="{@colname}" rowpos="{$ROWPOS}"/>
-	</xsl:for-each>
-      </xsl:variable>
-      <xsl:variable name="ME" select="."/>
-      <w:tr>
-	<w:tblPrEx>
-	  <w:tblLayout w:type="autofit"/> 
-	</w:tblPrEx>
-	<xsl:for-each select="$TEMPLATE/CELL">
-	  <xsl:variable name="N" select="@name"/>
-	  <xsl:choose>
-	    <xsl:when test="$ME/cals:entry[@colname=$N and @DUMMY='true']"/>
-	    <xsl:when test="$ME/cals:entry[@colname=$N]">
-	      <xsl:apply-templates select="$ME/cals:entry[@colname=$N]"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <w:tc>
-		<w:tcPr>
-		  <w:vMerge/>
-		</w:tcPr>
-		<w:p>
-		</w:p>
-	      </w:tc>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:for-each>
-      </w:tr>
+        <xsl:variable name="ROWPOS">
+            <xsl:number/>
+        </xsl:variable>
+        <xsl:variable name="TEMPLATE">
+            <xsl:for-each select="ancestor::cals:tgroup/cals:colspec">
+                <CELL name="{@colname}" rowpos="{$ROWPOS}"/>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:variable name="ME" select="."/>
+        <w:tr>
+            <w:tblPrEx>
+                <w:tblLayout w:type="autofit"/>
+            </w:tblPrEx>
+            <xsl:for-each select="$TEMPLATE/CELL">
+                <xsl:variable name="N" select="@name"/>
+                <xsl:choose>
+                    <xsl:when test="$ME/cals:entry[@colname=$N and @DUMMY='true']"/>
+                    <xsl:when test="$ME/cals:entry[@colname=$N]">
+                        <xsl:apply-templates select="$ME/cals:entry[@colname=$N]"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <w:tc>
+                            <w:tcPr>
+                                <w:vMerge/>
+                            </w:tcPr>
+                            <w:p> </w:p>
+                        </w:tc>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:for-each>
+        </w:tr>
     </xsl:template>
 
     <xsl:template match="cals:entry">
-      <xsl:variable name="colname" select="@colname"/>
+        <xsl:variable name="colname" select="@colname"/>
         <w:tc>
-	  <w:tcPr>
-	    <xsl:if test="@morerows">
-	      <w:vMerge w:val="restart"/>
-	    </xsl:if>
-	    <xsl:if test="@namest">
-	      <xsl:variable name="start">
-		<xsl:value-of select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@namest]/@colnum"/>
-	      </xsl:variable>
-	      <xsl:variable name="end">
-		<xsl:value-of select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@nameend]/@colnum"/>
-	      </xsl:variable>
-	      <w:gridSpan w:val="{number($end)-number($start)+1}"/>
-	    </xsl:if>
-	    <!--
+            <w:tcPr>
+                <xsl:if test="@morerows">
+                    <w:vMerge w:val="restart"/>
+                </xsl:if>
+                <xsl:if test="@namest">
+                    <xsl:variable name="start">
+                        <xsl:value-of
+                            select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@namest]/@colnum"
+                        />
+                    </xsl:variable>
+                    <xsl:variable name="end">
+                        <xsl:value-of
+                            select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@nameend]/@colnum"
+                        />
+                    </xsl:variable>
+                    <w:gridSpan w:val="{number($end)-number($start)+1}"/>
+                </xsl:if>
+                <!--
 	    <xsl:message><xsl:value-of select="$colname"/>
 	    (<xsl:value-of select="."/>):    <xsl:value-of
 	    select="@rowsep"/> and <xsl:value-of
 	    select="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[@colname=$colname]/@rowsep"/></xsl:message>
 	    -->
-	    <xsl:variable name="borders">
-	      <xsl:choose>
-		<xsl:when test="@rowsep='0'">
-		  <w:bottom w:val="nil"/>
-		</xsl:when>
-		<xsl:when test="@rowsep='1'">
-		  <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-		</xsl:when>
-	      </xsl:choose>
-	      <xsl:choose>
-		<xsl:when test="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[@colname=$colname]/@rowsep=0">
-		  <w:top w:val="nil"/>
-		</xsl:when>
-	      </xsl:choose>
-	      <xsl:choose>
-		<xsl:when test="@colsep='0'">
-		  <w:left w:val="nil"/>
-		</xsl:when>
-		<xsl:when test="@colsep='1'">
-		  <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-		</xsl:when>
-		<xsl:when test="following-sibling::cals:entry[1]/@colsep=0">
-		  <w:right w:val="nil"/>
-		</xsl:when>
-	      </xsl:choose>
-	    </xsl:variable>
-	    <xsl:if test="$borders/*">
-		<w:tcBorders>
-		  <xsl:copy-of select="$borders/*"/>
-		</w:tcBorders>
-	    </xsl:if>
-	    <xsl:if test="@rotate='1'">
-	      <w:textDirection w:val='btLr'/>
-	    </xsl:if>
-	    <xsl:if test="@valign">
-	      <w:vAlign>
-		<xsl:attribute name="w:val">
-		  <xsl:attribute name="valign">
-		    <xsl:choose>
-		      <xsl:when test="@valign='middle'">center</xsl:when>
-		      <xsl:otherwise>
-			<xsl:value-of select="@valign"/>
-		      </xsl:otherwise>
-		    </xsl:choose>
-		  </xsl:attribute>
-		</xsl:attribute>
-	      </w:vAlign>
-	    </xsl:if>
-	  </w:tcPr>
-	  <xsl:choose>
-	    <xsl:when test="tei:note[@place='foot']">
-	      <xsl:apply-templates/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:call-template name="block-element">
-		<xsl:with-param name="pPr">
-		  <w:pPr>
-		    <xsl:choose>
-		      <xsl:when test="@rend">
-			<xsl:variable name="sName">
-			  <xsl:call-template name="getStyleName">
-			    <xsl:with-param name="in" select="@rend"/>
-			  </xsl:call-template>
-			</xsl:variable>
-			<xsl:choose>
-			  <xsl:when test="$sName=''">
-			    <w:pStyle w:val="{$TableText}"/>
-			  </xsl:when>
-			  <xsl:otherwise>
-			    <w:pStyle w:val="{$sName}"/>
-			  </xsl:otherwise>
-			</xsl:choose>
-		      </xsl:when>
-		      <xsl:otherwise>
-			<w:pStyle w:val="{$TableText}"/>
-		      </xsl:otherwise>
-		    </xsl:choose>
-		    <xsl:choose>
-		      <xsl:when test="@align">
-			<w:jc w:val="{@align}"/>
-		      </xsl:when>
-		      <xsl:when test="parent::tei:row[@role='label']
+                <xsl:variable name="borders">
+                    <xsl:choose>
+                        <xsl:when test="@rowsep='0'">
+                            <w:bottom w:val="nil"/>
+                        </xsl:when>
+                        <xsl:when test="@rowsep='1'">
+                            <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                        </xsl:when>
+                    </xsl:choose>
+                    <xsl:choose>
+                        <xsl:when
+                            test="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[@colname=$colname]/@rowsep=0">
+                            <w:top w:val="nil"/>
+                        </xsl:when>
+                    </xsl:choose>
+                    <xsl:choose>
+                        <xsl:when test="@colsep='0'">
+                            <w:left w:val="nil"/>
+                        </xsl:when>
+                        <xsl:when test="@colsep='1'">
+                            <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                        </xsl:when>
+                        <xsl:when test="following-sibling::cals:entry[1]/@colsep=0">
+                            <w:right w:val="nil"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:variable>
+                <xsl:if test="$borders/*">
+                    <w:tcBorders>
+                        <xsl:copy-of select="$borders/*"/>
+                    </w:tcBorders>
+                </xsl:if>
+                <xsl:if test="@rotate='1'">
+                    <w:textDirection w:val="btLr"/>
+                </xsl:if>
+                <xsl:if test="@valign">
+                    <w:vAlign>
+                        <xsl:attribute name="w:val">
+                            <xsl:attribute name="valign">
+                                <xsl:choose>
+                                    <xsl:when test="@valign='middle'">center</xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:value-of select="@valign"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:attribute>
+                        </xsl:attribute>
+                    </w:vAlign>
+                </xsl:if>
+            </w:tcPr>
+            <xsl:choose>
+                <xsl:when test="tei:note[@place='foot']">
+                    <xsl:apply-templates/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="block-element">
+                        <xsl:with-param name="pPr">
+                            <w:pPr>
+                                <xsl:choose>
+                                    <xsl:when test="@rend">
+                                        <xsl:variable name="sName">
+                                            <xsl:call-template name="getStyleName">
+                                                <xsl:with-param name="in" select="@rend"/>
+                                            </xsl:call-template>
+                                        </xsl:variable>
+                                        <xsl:choose>
+                                            <xsl:when test="$sName=''">
+                                                <w:pStyle w:val="{$TableText}"/>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <w:pStyle w:val="{$sName}"/>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <w:pStyle w:val="{$TableText}"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                                <xsl:choose>
+                                    <xsl:when test="@align">
+                                        <w:jc w:val="{@align}"/>
+                                    </xsl:when>
+                                    <xsl:when
+                                        test="parent::tei:row[@role='label']
 				      or @role='label'">
-			<w:jc w:val="left"/>
-		      </xsl:when>
-		      <xsl:when test="starts-with(.,'[0-9]')">
-			<w:jc w:val="right"/>
-		      </xsl:when>
-		      <xsl:otherwise>
-			<w:jc w:val="left"/>
-		      </xsl:otherwise>
-		    </xsl:choose>
-		  </w:pPr>
-		</xsl:with-param>
-	      </xsl:call-template>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	  <!-- If we have no children, put an empty p here -->
-	  <xsl:if test="not(descendant::text())">
-	    <w:p>
-	      <w:r>
-		<w:t/>
-	      </w:r>
-	    </w:p>
-	  </xsl:if>
-	</w:tc>
+                                        <w:jc w:val="left"/>
+                                    </xsl:when>
+                                    <xsl:when test="starts-with(.,'[0-9]')">
+                                        <w:jc w:val="right"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <w:jc w:val="left"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </w:pPr>
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
+            <!-- If we have no children, put an empty p here -->
+            <xsl:if test="not(descendant::text())">
+                <w:p>
+                    <w:r>
+                        <w:t/>
+                    </w:r>
+                </w:p>
+            </xsl:if>
+        </w:tc>
     </xsl:template>
-    
+
     <!-- 
 	 Inline Templates:
     -->
@@ -1740,36 +1817,36 @@ is there a number present?
 
     <!-- hyperlink -->
     <xsl:template match="tei:ptr">
-      <w:r>
-	<w:fldChar w:fldCharType="begin"/>
-      </w:r>
-      <w:r>
-	<w:instrText>HYPERLINK "<xsl:value-of select="@target"/>" \h</w:instrText>
-      </w:r>
-      <w:r>
-	<w:fldChar w:fldCharType="separate"/>
-      </w:r>
-      <w:r w:rsidR="00765EBE">
-	<w:rPr>
-	  <w:rStyle w:val="Hyperlink"/>
-	  <w:u w:val="none"/>
-	</w:rPr>
-	<w:t>
-	  <xsl:choose>
-	    <xsl:when test="starts-with(@target,'#')">
-	      <xsl:apply-templates
-		  select="key('IDS',substring-after(@target,'#'))" mode="xref"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:value-of select="@target"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</w:t>
-      </w:r>
-      <w:r>
-	<w:fldChar w:fldCharType="end"/>
-      </w:r>
-<!--
+        <w:r>
+            <w:fldChar w:fldCharType="begin"/>
+        </w:r>
+        <w:r>
+            <w:instrText>HYPERLINK "<xsl:value-of select="@target"/>" \h</w:instrText>
+        </w:r>
+        <w:r>
+            <w:fldChar w:fldCharType="separate"/>
+        </w:r>
+        <w:r w:rsidR="00765EBE">
+            <w:rPr>
+                <w:rStyle w:val="Hyperlink"/>
+                <w:u w:val="none"/>
+            </w:rPr>
+            <w:t>
+                <xsl:choose>
+                    <xsl:when test="starts-with(@target,'#')">
+                        <xsl:apply-templates select="key('IDS',substring-after(@target,'#'))"
+                            mode="xref"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="@target"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </w:t>
+        </w:r>
+        <w:r>
+            <w:fldChar w:fldCharType="end"/>
+        </w:r>
+        <!--
       <w:r>
           <w:rPr>
             <w:rStyle w:val="Hyperlink"/>
@@ -1778,7 +1855,7 @@ is there a number present?
 	<w:instrText>HYPERLINK "<xsl:value-of select="@target"/>"\h</w:instrText>
       </w:r>
 -->
-<!--
+        <!--
 	<xsl:variable name="rid">
 	  <xsl:text>rId</xsl:text>
 	  <xsl:variable name="n">
@@ -1800,23 +1877,17 @@ is there a number present?
     </xsl:template>
 
     <xsl:template match="tei:note|tei:figure|tei:table|tei:item" mode="xref">
-      <xsl:number/>
+        <xsl:number/>
     </xsl:template>
 
     <xsl:template match="tei:div" mode="xref">
-      <xsl:number
-	    count="tei:div"
-	    from="tei:body|tei:front|tei:back" 
-	    level="multiple"/>
+        <xsl:number count="tei:div" from="tei:body|tei:front|tei:back" level="multiple"/>
     </xsl:template>
 
     <!-- 
        §< Handle elements from different namespaces, such as wordML, wordMathML, MathML ...
         -->
 
-    <xsl:template match="m:oMath">
-        <xsl:apply-templates select="." mode="iden"/>
-    </xsl:template>
 
     <xsl:template match="w:drawing">
         <w:r>
@@ -1828,11 +1899,7 @@ is there a number present?
         <xsl:apply-templates/>
     </xsl:template>
 
-    <xsl:template match="w:object">
-        <w:r>
-            <xsl:apply-templates select="." mode="iden"/>
-        </w:r>
-    </xsl:template>
+
 
     <xsl:template match="w:*">
         <xsl:if test="ancestor::w:tbl">
@@ -1843,100 +1910,17 @@ is there a number present?
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="mml:math">
-      <m:oMath>
-	<xsl:apply-templates mode="mml"/>
-      </m:oMath>
-    </xsl:template>
-
-    
-
-
-
-
-    <!-- drawings -->
-    <xsl:template match="a:blip" mode="iden">
-        <xsl:variable name="me" select="generate-id()"/>
-        <a:blip>
-            <xsl:variable name="rId">
-                <xsl:for-each select="key('BLIP',1)">
-                    <xsl:if test="generate-id()=$me">
-                        <xsl:value-of select="concat('rId', string(200 + position()))"/>
-                    </xsl:if>
-                </xsl:for-each>
-            </xsl:variable>
-            <xsl:choose>
-                <xsl:when test="@r:embed">
-                    <xsl:attribute name="r:embed" select="$rId"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:attribute name="r:link" select="$rId"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </a:blip>
-    </xsl:template>
-
-    <!-- formulas -->
-    <xsl:template match="v:imagedata" mode="iden">
-        <xsl:variable name="me" select="generate-id()"/>
-        <v:imagedata>
-            <xsl:attribute name="r:id">
-                <xsl:for-each select="//v:imagedata">
-                    <xsl:if test="generate-id()=$me">
-                        <xsl:value-of select="concat('rId', string(1000 + position()))"/>
-                    </xsl:if>
-                </xsl:for-each>
-            </xsl:attribute>
-        </v:imagedata>
-    </xsl:template>
-
-    <xsl:template match="o:OLEObject" mode="iden">
-        <xsl:variable name="me" select="generate-id()"/>
-        <o:OLEObject>
-            <!-- copy all attributes -->
-            <xsl:copy-of select="@*"/>
-
-            <!-- set rId -->
-            <xsl:attribute name="r:id">
-                <xsl:for-each select="//o:OLEObject">
-                    <xsl:if test="generate-id()=$me">
-                        <xsl:value-of select="concat('rId', string(2000 + position()))"/>
-                    </xsl:if>
-                </xsl:for-each>
-            </xsl:attribute>
-        </o:OLEObject>
-    </xsl:template>
-
-    <!-- Document title -->
-    <xsl:template name="document-title">
-      <xsl:choose>
-	<xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage">
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
-	    <xsl:call-template name="block-element">
-	      <xsl:with-param name="style">Title</xsl:with-param>
-	    </xsl:call-template>
-	  </xsl:for-each>
-	  <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='sub']">
-	    <xsl:call-template name="block-element">
-	      <xsl:with-param name="style">Subtitle</xsl:with-param>
-	    </xsl:call-template>
-	  </xsl:for-each>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:template>
 
     <xsl:template match="tei:titlePage/tei:docTitle/tei:titlePart[@type='main']">
-      <xsl:call-template name="block-element">
-	<xsl:with-param name="style">Title</xsl:with-param>
-      </xsl:call-template>
+        <xsl:call-template name="block-element">
+            <xsl:with-param name="style">Title</xsl:with-param>
+        </xsl:call-template>
     </xsl:template>
 
     <xsl:template match="tei:titlePage/tei:docTitle/tei:titlePart[@type='sub']">
-      <xsl:call-template name="block-element">
-	<xsl:with-param name="style">Subtitle</xsl:with-param>
-      </xsl:call-template>
+        <xsl:call-template name="block-element">
+            <xsl:with-param name="style">Subtitle</xsl:with-param>
+        </xsl:call-template>
     </xsl:template>
 
     <!-- place holders, used by ISO profile -->
@@ -1945,4 +1929,4 @@ is there a number present?
     <!-- no handling of index terms -->
 
     <xsl:template match="tei:index"/>
-   </xsl:stylesheet>
+</xsl:stylesheet>

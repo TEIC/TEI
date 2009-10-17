@@ -53,54 +53,28 @@
     </xd:doc>
     
     <xd:doc>
-        <xd:short>Template used to process block elements</xd:short>
-        <xd:detail>
-            Template used to process block elements:
-            
-            Is implemented by the main stylesheet and should usually not be overridden.
-        </xd:detail>
+        <xd:short>Guides the identity transformation for graphics</xd:short>
     </xd:doc>
-    <xsl:template name="block-element">
-        <xsl:param name="style"/>
-    </xsl:template>
-    
-    <xd:doc>
-        <xd:short>A callback for any titlepages that belong to the front matter.</xd:short>
-    </xd:doc>
-    <xsl:template name="titlepages"/>
-    
-    <xd:doc>
-        <xd:short>"Returns" the document's title (as plain string).</xd:short>
-    </xd:doc>
-    <xsl:template name="generateTitle">
-        Undefined Document
-    </xsl:template>
-    
-    
-    <xd:doc>
-        <xd:short></xd:short>
-    </xd:doc>
-    <xsl:template name="document-title">
-        <xsl:choose>
-            <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage"> </xsl:when>
-            <xsl:otherwise>
-                <xsl:for-each
-                    select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
-                    <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">Title</xsl:with-param>
-                    </xsl:call-template>
+    <xsl:template match="a:blip" mode="iden">
+        <xsl:variable name="me" select="generate-id()"/>
+        <a:blip>
+            <xsl:variable name="rId">
+                <xsl:for-each select="key('BLIP',1)">
+                    <xsl:if test="generate-id()=$me">
+                        <xsl:value-of select="concat('rId', string(200 + position()))"/>
+                    </xsl:if>
                 </xsl:for-each>
-                <xsl:for-each
-                    select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='sub']">
-                    <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">Subtitle</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:for-each>
-            </xsl:otherwise>
-        </xsl:choose>
+            </xsl:variable>
+            <xsl:choose>
+                <xsl:when test="@r:embed">
+                    <xsl:attribute name="r:embed" select="$rId"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:attribute name="r:link" select="$rId"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </a:blip>
     </xsl:template>
     
     
-    <xsl:template name="created-by"/>
-    <xsl:template name="headerParts"/>
 </xsl:stylesheet>

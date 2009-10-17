@@ -52,55 +52,57 @@
         <xd:copyright>2008, TEI Consortium</xd:copyright>
     </xd:doc>
     
+    <xsl:template match="m:oMath">
+        <xsl:apply-templates select="." mode="iden"/>
+    </xsl:template>
+    
+    
+    <xsl:template match="mml:math">
+        <m:oMath>
+            <xsl:apply-templates mode="mml"/>
+        </m:oMath>
+    </xsl:template>
+    
+    <xsl:template match="w:object">
+        <w:r>
+            <xsl:apply-templates select="." mode="iden"/>
+        </w:r>
+    </xsl:template>
+    
     <xd:doc>
-        <xd:short>Template used to process block elements</xd:short>
-        <xd:detail>
-            Template used to process block elements:
+        <xd:short>Guides the identity transformation of math objects</xd:short>
+    </xd:doc>
+    <xsl:template match="v:imagedata" mode="iden">
+        <xsl:variable name="me" select="generate-id()"/>
+        <v:imagedata>
+            <xsl:attribute name="r:id">
+                <xsl:for-each select="//v:imagedata">
+                    <xsl:if test="generate-id()=$me">
+                        <xsl:value-of select="concat('rId', string(1000 + position()))"/>
+                    </xsl:if>
+                </xsl:for-each>
+            </xsl:attribute>
+        </v:imagedata>
+    </xsl:template>
+    
+    <xd:doc>
+        <xd:short>Guides the identity transformation of math objects</xd:short>
+    </xd:doc>
+    <xsl:template match="o:OLEObject" mode="iden">
+        <xsl:variable name="me" select="generate-id()"/>
+        <o:OLEObject>
+            <!-- copy all attributes -->
+            <xsl:copy-of select="@*"/>
             
-            Is implemented by the main stylesheet and should usually not be overridden.
-        </xd:detail>
-    </xd:doc>
-    <xsl:template name="block-element">
-        <xsl:param name="style"/>
-    </xsl:template>
-    
-    <xd:doc>
-        <xd:short>A callback for any titlepages that belong to the front matter.</xd:short>
-    </xd:doc>
-    <xsl:template name="titlepages"/>
-    
-    <xd:doc>
-        <xd:short>"Returns" the document's title (as plain string).</xd:short>
-    </xd:doc>
-    <xsl:template name="generateTitle">
-        Undefined Document
-    </xsl:template>
-    
-    
-    <xd:doc>
-        <xd:short></xd:short>
-    </xd:doc>
-    <xsl:template name="document-title">
-        <xsl:choose>
-            <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage"> </xsl:when>
-            <xsl:otherwise>
-                <xsl:for-each
-                    select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
-                    <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">Title</xsl:with-param>
-                    </xsl:call-template>
+            <!-- set rId -->
+            <xsl:attribute name="r:id">
+                <xsl:for-each select="//o:OLEObject">
+                    <xsl:if test="generate-id()=$me">
+                        <xsl:value-of select="concat('rId', string(2000 + position()))"/>
+                    </xsl:if>
                 </xsl:for-each>
-                <xsl:for-each
-                    select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='sub']">
-                    <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">Subtitle</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:for-each>
-            </xsl:otherwise>
-        </xsl:choose>
+            </xsl:attribute>
+        </o:OLEObject>
     </xsl:template>
     
-    
-    <xsl:template name="created-by"/>
-    <xsl:template name="headerParts"/>
 </xsl:stylesheet>
