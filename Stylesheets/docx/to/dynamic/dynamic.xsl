@@ -52,72 +52,65 @@
         <xd:copyright>2008, TEI Consortium</xd:copyright>
     </xd:doc>
     
-    <xd:doc>
-        <xd:short>Template used to process block elements</xd:short>
-        <xd:detail>
-            Template used to process block elements:
-            
-            Is implemented by the main stylesheet and should usually not be overridden.
-        </xd:detail>
-    </xd:doc>
-    <xsl:template name="block-element">
-        <xsl:param name="style"/>
-        <xsl:param name="select" select="."/>
-        <xsl:param name="pPr"/>
-        <xsl:param name="nop"/>
-        <xsl:param name="bookmark-id"/>
-        <xsl:param name="bookmark-name"/>
-    </xsl:template>
-    
     <xd:doc> 
-        <xd:short>to a given style name, this template returns the correct style id
-        looking it up in styles.xml</xd:short>
-        <xd:detail>
-            
-            The template is implemented by the main stylesheet.
-        </xd:detail>
-    </xd:doc>
-    <xsl:template name="getStyleName">
-        <xsl:param name="in"/>
-    </xsl:template>
-    
-    <xd:doc>
-        <xd:short>A callback for any titlepages that belong to the front matter.</xd:short>
-    </xd:doc>
-    <xsl:template name="titlepages"/>
-    
-    <xd:doc>
-        <xd:short>"Returns" the document's title (as plain string).</xd:short>
-    </xd:doc>
-    <xsl:template name="generateTitle">
-        Undefined Document
-    </xsl:template>
-    
-    
-    <xd:doc>
-        <xd:short></xd:short>
-    </xd:doc>
-    <xsl:template name="document-title">
+        dynamic content
+    </xd:doc>    
+    <xsl:template match="teidocx:dynamicContent">
         <xsl:choose>
-            <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage"> </xsl:when>
-            <xsl:otherwise>
-                <xsl:for-each
-                    select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
-                    <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">Title</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:for-each>
-                <xsl:for-each
-                    select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='sub']">
-                    <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">Subtitle</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:for-each>
-            </xsl:otherwise>
+            <xsl:when test="@type='pagenumber'">
+                <w:fldSimple w:instr=" PAGE \* MERGEFORMAT ">
+                    <w:r>
+                        <w:rPr>
+                            <w:noProof/>
+                        </w:rPr>
+                        <w:t>1</w:t>
+                    </w:r>
+                </w:fldSimple>
+            </xsl:when>
         </xsl:choose>
     </xsl:template>
     
     
-    <xsl:template name="created-by"/>
-    <xsl:template name="headerParts"/>
+    <xd:doc>
+        Dealing with divGens
+    </xd:doc>
+    <xsl:template match="tei:divGen">
+        <xsl:choose>
+            <xsl:when test="@type='toc'">
+                <xsl:call-template name="generate-toc"/>
+            </xsl:when>
+        </xsl:choose>
+        
+    </xsl:template>
+    
+    <xd:doc>
+        Table of Contents:
+        Feel free to overwrite this one.
+    </xd:doc>
+    <xsl:template name="generate-toc">
+        <w:p>
+            <w:pPr>
+                <w:pStyle w:val="TOC1"/>
+                <w:tabs>
+                    <w:tab w:val="right" w:leader="dot" w:pos="9350"/>
+                </w:tabs>
+            </w:pPr>
+            <w:r>
+                <w:fldChar w:fldCharType="begin"/>
+            </w:r>
+            <w:r>
+                <w:rPr>
+                    <w:noProof/>
+                </w:rPr>
+                <w:instrText xml:space="preserve"> TOC \o "1-6" \h \z </w:instrText>
+            </w:r>
+            <w:r>
+                <w:fldChar w:fldCharType="separate"/>
+            </w:r>
+            <w:r>
+                <w:fldChar w:fldCharType="end"/>
+            </w:r>
+        </w:p>
+    </xsl:template>
+    
 </xsl:stylesheet>

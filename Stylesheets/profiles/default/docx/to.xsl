@@ -206,8 +206,8 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
-    
+
+
     <!-- 
         Special Notes (Footnotes) .. 
         @TODO: Ideally this should go into the general template, but for some

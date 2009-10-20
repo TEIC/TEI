@@ -52,72 +52,85 @@
         <xd:copyright>2008, TEI Consortium</xd:copyright>
     </xd:doc>
     
-    <xd:doc>
-        <xd:short>Template used to process block elements</xd:short>
-        <xd:detail>
-            Template used to process block elements:
-            
-            Is implemented by the main stylesheet and should usually not be overridden.
-        </xd:detail>
-    </xd:doc>
-    <xsl:template name="block-element">
-        <xsl:param name="style"/>
-        <xsl:param name="select" select="."/>
-        <xsl:param name="pPr"/>
-        <xsl:param name="nop"/>
-        <xsl:param name="bookmark-id"/>
-        <xsl:param name="bookmark-name"/>
-    </xsl:template>
-    
-    <xd:doc> 
-        <xd:short>to a given style name, this template returns the correct style id
-        looking it up in styles.xml</xd:short>
-        <xd:detail>
-            
-            The template is implemented by the main stylesheet.
-        </xd:detail>
-    </xd:doc>
-    <xsl:template name="getStyleName">
-        <xsl:param name="in"/>
-    </xsl:template>
     
     <xd:doc>
-        <xd:short>A callback for any titlepages that belong to the front matter.</xd:short>
+        Dealing with sections
     </xd:doc>
-    <xsl:template name="titlepages"/>
-    
-    <xd:doc>
-        <xd:short>"Returns" the document's title (as plain string).</xd:short>
-    </xd:doc>
-    <xsl:template name="generateTitle">
-        Undefined Document
-    </xsl:template>
-    
-    
-    <xd:doc>
-        <xd:short></xd:short>
-    </xd:doc>
-    <xsl:template name="document-title">
+    <xsl:template match="tei:milestone">
+        <xsl:param name="final-section">false</xsl:param>
+        
+        
+        <!-- construct sectPr -->
+        <xsl:variable name="sectPr">
+            <w:sectPr>
+                <xsl:for-each select="teidocx:footer">
+                    <xsl:variable name="ref" select="@ref"/>
+                    <xsl:variable name="footernum">
+                        <xsl:for-each select="key('FOOTERS',$ref)">
+                            <xsl:number level="any"/>
+                        </xsl:for-each>
+                    </xsl:variable>
+                    <w:footerReference w:type="{@type}" r:id="{concat('rId',100+$footernum)}"/>
+                </xsl:for-each>
+                
+                <xsl:for-each select="teidocx:header">
+                    <xsl:variable name="ref" select="@ref"/>
+                    <xsl:variable name="headernum">
+                        <xsl:for-each select="key('HEADERS',$ref)">
+                            <xsl:number level="any"/>
+                        </xsl:for-each>
+                    </xsl:variable>
+                    <w:headerReference w:type="{@type}" r:id="{concat('rId',100+$headernum)}"/>
+                </xsl:for-each>
+                
+                <w:pgSz>
+                    <xsl:choose>
+                        <!-- landscape -->
+                        <xsl:when test="teidocx:orientation/@type='landscape'">
+                            <xsl:attribute name="w:orient">landscape</xsl:attribute>
+                            <xsl:attribute name="w:w">15840</xsl:attribute>
+                            <xsl:attribute name="w:h">12240</xsl:attribute>
+                        </xsl:when>
+                        <!-- portrait -->
+                        <xsl:otherwise>
+                            <xsl:attribute name="w:w">12240</xsl:attribute>
+                            <xsl:attribute name="w:h">15840</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </w:pgSz>
+                <w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:gutter="0"
+                    w:footer="720" w:header="720"/>
+                <xsl:if test="teidocx:pageNumbering">
+                    <w:pgNumType>
+                        <xsl:if test="teidocx:pageNumbering/@start">
+                            <xsl:attribute name="w:start" select="teidocx:pageNumbering/@start"/>
+                        </xsl:if>
+                        <xsl:if test="teidocx:pageNumbering/@type">
+                            <xsl:attribute name="w:fmt" select="teidocx:pageNumbering/@type"/>
+                        </xsl:if>
+                    </w:pgNumType>
+                </xsl:if>
+                <xsl:if test="teidocx:header/@type='first' or teidocx:footer/@type='first'">
+                    <w:titlePg/>
+                </xsl:if>
+                <w:docGrid w:linePitch="360"/>
+            </w:sectPr>
+        </xsl:variable>
+        
+        <!-- write out sectPr -->
         <xsl:choose>
-            <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage"> </xsl:when>
+            <xsl:when test="$final-section='false'">
+                <w:p>
+                    <w:pPr>
+                        <xsl:copy-of select="$sectPr"/>
+                    </w:pPr>
+                </w:p>
+            </xsl:when>
             <xsl:otherwise>
-                <xsl:for-each
-                    select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
-                    <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">Title</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:for-each>
-                <xsl:for-each
-                    select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='sub']">
-                    <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">Subtitle</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:for-each>
+                <xsl:copy-of select="$sectPr"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
     
     
-    <xsl:template name="created-by"/>
-    <xsl:template name="headerParts"/>
 </xsl:stylesheet>
