@@ -44,8 +44,16 @@ then
 else
     saxon -o $TEMPDIR/tmp3.xml  $THERE/$F $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
 fi
-saxon -o word/newdocument.xml tmp3.xml $APPHOME/profiles/$profile/docx/to.xsl  \
+saxon -o tmp4.xml tmp3.xml $APPHOME/profiles/$profile/docx/to.xsl  \
     debug=$debug styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR
+if test -f $APPHOME/profiles/$profile/docx/makecoverpages.xsl 
+then
+   echo rewrite cover page
+   saxon -o doctemp.xml word/document.xml $APPHOME/profiles/$profile/docx/makecoverpages.xsl header-file=$TEMPDIR/tmp3.xml document-file=$TEMPDIR/tmp4.xml
+   mv doctemp.xml word/document.xml
+else
+    mv tmp4.xml word/document.xml
+fi
 if $debug 
 then
     echo leaving tmp[123].xml alone
@@ -55,7 +63,6 @@ fi
 rm -f word/media/*.xmp
 test -f newContent_Types.xml && mv newContent_Types.xml \[Content_Types\].xml
 mv docProps/newcore.xml docProps/core.xml 
-mv word/newdocument.xml  word/document.xml
 rm -f $THERE/$F.docx
 zip -q -r $THERE/$F.docx word _rels docProps customXml \[Content_Types\].xml
 cd $HERE
