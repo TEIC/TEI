@@ -2210,23 +2210,44 @@
 	  <xsl:value-of select="local-name()"/>
 	</xsl:otherwise>
       </xsl:choose>
+    </xsl:variable>
+
+    <xsl:variable name="rend">
       <xsl:choose>
 	<xsl:when test="@rend">
-	  <xsl:text> </xsl:text>
 	  <xsl:value-of select="@rend"/>
 	</xsl:when>
 	<xsl:when test="@rendition">
-	  <xsl:text> </xsl:text>
 	  <xsl:call-template name="applyRendition"/>
 	</xsl:when>
       </xsl:choose>
-      <xsl:call-template name="rendToClassHook"/>
     </xsl:variable>
-    <xsl:if test="not($class='')">
-      <xsl:attribute name="class">
-	<xsl:value-of select="$class"/>
-      </xsl:attribute>
-    </xsl:if>
+
+
+    <xsl:choose>
+      <xsl:when test="concat($class,$rend)=''"/>
+      <xsl:when test="$class=''">
+	<xsl:attribute name="class">
+	  <xsl:value-of select="$rend"/>
+	</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="$rend=''">
+	<xsl:attribute name="class">
+	  <xsl:value-of select="$class"/>
+	</xsl:attribute>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:attribute name="class">
+	  <xsl:value-of select="$class"/>
+	  <xsl:text> </xsl:text>
+	  <xsl:value-of select="$rend"/>
+	</xsl:attribute>
+      </xsl:otherwise>
+    </xsl:choose>
+
+
+    <xsl:call-template name="rendToClassHook"/>
+
   </xsl:template>
 
   <xd:doc>

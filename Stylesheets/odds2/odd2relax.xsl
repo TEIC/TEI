@@ -212,13 +212,24 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="rng:attribute[@name='xml:id']/rng:data[@type='ID']" mode="cleanup">
+  <xsl:template match="rng:attribute/rng:data[@type='ID']" mode="cleanup">
     <xsl:choose>
       <xsl:when test="key('DEFED','macro.anyXML')/rng:element/rng:anyName">
 	<text xmlns="http://relaxng.org/ns/structure/1.0"/>
       </xsl:when>
       <xsl:otherwise>
         <data xmlns="http://relaxng.org/ns/structure/1.0" type="ID"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="rng:attribute/rng:data[@type='IDREF']" mode="cleanup">
+    <xsl:choose>
+      <xsl:when test="key('DEFED','macro.anyXML')/rng:element/rng:anyName">
+	<text xmlns="http://relaxng.org/ns/structure/1.0"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <data xmlns="http://relaxng.org/ns/structure/1.0" type="IDREF"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
