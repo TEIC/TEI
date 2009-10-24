@@ -598,44 +598,6 @@
 </xsl:template>
 
 
-<!-- identity transform -->
-
-<xsl:template match="@*|text()|comment()|processing-instruction()" mode="readOldDoc">
-  <xsl:copy-of select="."/>
-</xsl:template>
-
-
-<xsl:template match="*" mode="readOldDoc">
-  <xsl:copy>
-    <xsl:apply-templates 
-	select="*|@*|processing-instruction()|comment()|text()" mode="readOldDoc"/>
-  </xsl:copy>
-</xsl:template>
-
-<xsl:template match="w:sdtContent" mode="readOldDoc">
-  <xsl:variable name="alias" select="../w:sdtPr/w:tag/@w:val"/>
-  <xsl:copy>
-    <xsl:apply-templates select="@*" mode="readOldDoc"/>
-      <w:r>
-	<xsl:copy-of select="@w:rsidR"/>
-	<xsl:apply-templates select="w:rPr" mode="readOldDoc"/>
-	<w:t>
-	  <xsl:attribute name="xml:space">preserve</xsl:attribute>
-	  <xsl:for-each select="$orig">
-	    <xsl:value-of select="key('ISOMETA',$alias)"/>
-	  </xsl:for-each>
-	</w:t>
-      </w:r>
-  </xsl:copy>
-</xsl:template>
-
-<xsl:template match="w:sectPr" mode="readOldDoc"/>
-
-<xsl:template name="titlepages">
-  <xsl:for-each select="document($docDoc)/w:document/w:body">
-    <xsl:apply-templates mode="readOldDoc"/>
-  </xsl:for-each>
-</xsl:template>
 
 <!-- TBX -->
 
