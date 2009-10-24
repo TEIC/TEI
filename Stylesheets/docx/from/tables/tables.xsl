@@ -61,7 +61,11 @@
 		  <xsl:attribute name="frame">
 		    <xsl:choose>
 		      <!-- lets face it, most tables do have
-			   borders, especially in ISO -->
+			   borders, especially in ISO; but not in footers! -->
+		      <xsl:when
+			  test="not(w:tblPr/w:tblBorders and parent::w:ftr)">
+			<xsl:text>none</xsl:text>
+		      </xsl:when>
 		      <xsl:when
 			  test="not(w:tblPr/w:tblBorders)">
 			<xsl:text>all</xsl:text>

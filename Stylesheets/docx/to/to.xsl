@@ -1010,6 +1010,7 @@
                 <w:tblBorders>
                     <xsl:choose>
                         <xsl:when test="@frame='none'">
+<xsl:message>TABLE FRAME IS <xsl:value-of select="@frame"/></xsl:message>
                             <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
                             <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
                             <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
