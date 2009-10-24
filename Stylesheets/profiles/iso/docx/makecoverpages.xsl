@@ -70,13 +70,14 @@
   </xsl:copy>
 </xsl:template>
 
+
 <xsl:template match="w:sdtContent" >
   <xsl:variable name="alias" select="../w:sdtPr/w:tag/@w:val"/>
   <xsl:copy>
     <xsl:apply-templates select="@*" />
       <w:r>
 	<xsl:copy-of select="@w:rsidR"/>
-	<xsl:apply-templates select="w:rPr" />
+	<xsl:apply-templates select="w:r/w:rPr" />
 	<w:t>
 	  <xsl:attribute name="xml:space">preserve</xsl:attribute>
 	  <xsl:for-each select="document($header-file)">
