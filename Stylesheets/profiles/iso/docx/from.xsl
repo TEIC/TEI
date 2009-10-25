@@ -427,13 +427,13 @@
             
             if (w:pPr/w:pStyle/@w:val='TermNum') then 3 else
             if (w:pPr/w:pStyle[starts-with(@w:val,'AutoTermNum')]) then 3 else
-            if (w:pPr/w:pStyle/@w:val='GlossText')	then 3 else
+            if (w:pPr/w:pStyle/@w:val='symbol') then 3 else
+            if (w:pPr/w:pStyle/@w:val='termAdmitted') then 3 else
+            if (w:pPr/w:pStyle/@w:val='termDeprecated') then 3 else
+            if (w:pPr/w:pStyle/@w:val='termPreferred') then 3 else
+            if (w:pPr/w:pStyle/@w:val='termRef') then 3 else
             if (w:pPr/w:pStyle/@w:val='Definition') then 3 else
-            if ((w:pPr/w:pStyle/@w:val='Note') and 
-            (preceding-sibling::w:p[w:pPr/w:pStyle/@w:val!='Note' or not(w:pPr/w:pStyle/@w:val)][1][w:pPr/w:pStyle/@w:val='TermNum'] or
-            preceding-sibling::w:p[w:pPr/w:pStyle/@w:val!='Note' or not(w:pPr/w:pStyle/@w:val)][1][w:pPr/w:pStyle/@w:val='PreferredTerm'] or
-            preceding-sibling::w:p[w:pPr/w:pStyle/@w:val!='Note' or not(w:pPr/w:pStyle/@w:val)][1][w:pPr/w:pStyle/@w:val='GlossText'] or
-            preceding-sibling::w:p[w:pPr/w:pStyle/@w:val!='Note' or not(w:pPr/w:pStyle/@w:val)][1][w:pPr/w:pStyle/@w:val='Definition'])) then 3 else
+            if (w:pPr/w:pStyle/@w:val='noteTermEntry') then 3 else
             
             if (w:pPr/w:pStyle/@w:val=$BibliographyItem) then 4 else
             
@@ -671,24 +671,33 @@
         Terms and definitions
     -->
     <xsl:template name="termsAndDefinitionsSection">
-
             <xsl:for-each-group select="current-group()"
                 group-starting-with="w:p[w:pPr/w:pStyle/@w:val='TermNum'
 				     or w:pPr/w:pStyle[starts-with(@w:val,'AutoTermNum')]]">
-
+<!--
+symbol
+termAdmitted
+termDeprecated
+termPreferred
+termRef
+-->
 	      <termEntry id="{.}">
 		<langSet xml:lang="en">
 		  <ntig>
 		    <termGrp>
-		      <term id="{.}-1">
                         <xsl:for-each
-			    select="current-group()[w:pPr/w:pStyle/@w:val='TermPreferred'] except .">
-                            <xsl:if test="position()>1">
-                                <lb/>
-                            </xsl:if>
-                            <xsl:apply-templates/>
-                        </xsl:for-each>
-		      </term>
+			    select="current-group()">
+			  <xsl:choose>
+			    <xsl:when test="w:pPr/w:pStyle/@w:val='TermNum'"/>
+			    <xsl:when test="w:pPr/w:pStyle/@w:val='Definition'"/>
+			    <xsl:when test="w:pPr/w:pStyle/@w:val='noteTermEntry'"/>
+			    <xsl:otherwise>
+			      <term id="{.}-{position()}">
+				<xsl:apply-templates/>
+			      </term>
+			    </xsl:otherwise>
+			  </xsl:choose>
+			  </xsl:for-each>
 		      <termNote type="partOfSpeech">noun</termNote>
 		      <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
 		    </termGrp>
@@ -698,7 +707,7 @@
                             <xsl:apply-templates/>
                         </xsl:for-each>
 		      </descrip>
-		      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='Note'] except .">
+		      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteTermEntry'] except .">
 			<note>
 			  <xsl:apply-templates/>
 			</note>
@@ -1016,7 +1025,7 @@ for future ref , word styles which change when looked up by name:
 ! FigureTitle0 ... CHANGED ...  Figure Title
 ! FootnoteReference ... CHANGED ...  footnote reference
 ! Heading1 ... CHANGED ...  heading 1
-! Heading2 ... CHANGED ...  heading 2
+
 ! Heading3 ... CHANGED ...  heading 3
 ! Heading4 ... CHANGED ...  heading 4
 ! List2 ... CHANGED ...  List 2

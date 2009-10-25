@@ -308,7 +308,7 @@
 		    </xsl:attribute>
 		    <xsl:if test="w:p/w:pPr/w:jc">
 		      <xsl:attribute name="align">
-			<xsl:value-of select="w:p[1]/w:pPr/w:jc/@w:val"/>
+			<xsl:value-of select="w:p[w:pPr/w:jc/@w:val][1]/w:pPr/w:jc/@w:val"/>
 		      </xsl:attribute>
 		    </xsl:if>
 		    <xsl:if test="w:tcPr/w:gridSpan">
