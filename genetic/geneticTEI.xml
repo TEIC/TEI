@@ -934,27 +934,25 @@ mark up? does transposition include markup? -->
 
     </div>
     <div>
-       <head>*Substitution</head>
-       <p>In the current model for the TEI <gi>subst</gi> element,
-        one or more additions and deletions may be combined if they are
+       <head>Substitution</head>
+       <p>In the current model for the TEI <gi>subst</gi> element, one
+       or more additions and deletions may be combined if they are
        considered as representing a single editorial act, a
-       substitution. 
-
-<!-- not a useful concept for us; we need to group things more
-generally; we recommend not to use subst  -->
-
-We propose that this model should be extended to
-       include cases such as the following:  example taken from Thomas More's <title>Lalla Rooke</title>
+       substitution.  Without extension, this model could not
+       therefore include cases such as the following example taken
+       from Thomas Moore's <title>Lalla Rooke</title>
           <figure>
              <graphic url="examples/moore01.png"/>
           </figure> 
 Here the word <mentioned>pondering</mentioned> is deleted, and the
 phrase <mentioned>she mus'd</mentioned> are added, while the word
-<mentioned>thus</mentioned> remains unchanged. The most convenient way
-of treating this all as a single substitution would be to modify the
+<mentioned>thus</mentioned> remains unchanged. It seems appropriate to
+treat  all of this as a single substitution. This would require a
+modification to the
 content model of <gi>subst</gi> so as to permit text along with other
 members of <ident
-type="class">model.pPart.transcriptional</ident>. This would then permit an  encoding like the following: <egXML
+type="class">model.pPart.transcriptional</ident>, so that this example
+could be encoded as follows:<egXML
              xmlns="http://www.tei-c.org/ns/Examples">
              <ge:line>While <subst><del>pondering</del> thus <add>she
      mus'd</add></subst>, her pinions fann'd</ge:line>
@@ -1000,7 +998,7 @@ The element <gi>ge:undo</gi> usually encloses the
     <head>Revision campaigns</head>
     
 <p>A major purpose of genetic editing is the identification of
-<soCalled>campaigns of revision</soCalled> or
+<soCalled>revision campaigns</soCalled> or, more generally,
 <term>stages</term>. A genetic editor needs to be able to assign
 a set of alterations (deletions, additions, substitutions,
 transpositions, etc.) to a particular revision stage, to indicate both that one or
@@ -1009,51 +1007,61 @@ indicate that they are related in some way, for example that one is a
 consequence of the other. To document this we need:
 <list >
           
-<item>a system to attribute an alteration or any other phenomena
+<item>a system to attribute an alteration or  other phenomenon
 occurring at document level to a particular revision campaign or
 text-stage</item>
           
-<item>a way to describe a revision campaign </item>
+<item>a way to characterize or describe a revision campaign </item>
        </list></p>
 
-<p>This is identical to the <gi>revisionDesc</gi> element, but
-concerns the document itself rather than the TEI document representing
-it. We propose using something like the <gi>change</gi> element for
-this purpose, but the attributes who and when dont work. </p>
-
-<p>Change is a child of changeList. Ordering within changeList a separate problem. 
+<p>This has obvious similarities to the existing <gi>revisionDesc</gi>
+element, but concerns the source document or set of documents rather
+than the TEI document representing them. We might therefore consider
+using the existing <gi>change</gi> element for the purpose of
+documenting individual text stages, although its attributes
+<att>who</att> and <att>when</att> might not always be
+appropriate. The existing element <gi>creation</gi> (within the TEI
+Header profile description) is defined as the appropriate location for
+all information relating to the genesis or production of a text; we
+might therefore modify it slightly to permit a new <gi>stageHist</gi>
+element which contains a number of <gi>change</gi> elements, one for
+each identified stage. This would also be closely analogous to the
+existing <gi>recordHist</gi> element, which documents changes in the
+catalogue record related to an artefact, as well as the
+<gi>revisionDesc</gi> which documents changes in the digital artefact
+itself.
 </p>
+
+<p>The order of <gi>change</gi> elements within the <gi>stageHist</gi>
+will normally be given from the earliest to latest, where this is
+known. The existing <gi>change</gi> element carries only a
+<att>when</att> attribute; we propose instead to  add this
+element to the <ident>att.datable</ident> class, thus making it
+possible to supply the full range of dating attributes
+(<att>period</att>, <att>when</att>, <att>notBefore</att>,
+<att>notAfter</att>, <att>from</att>, and <att>to</att>) for any text
+stage, in the same was as is currently possible for the TEI
+<gi>date</gi> element. </p>
 
 <!-- timeline abstracts from real time; we need to use notAfter
 notBefore to deal with uncertainties? -->
  
-
-<p>The present TEI attribute <att>seq</att> provides some of this
-functionality, but not all. We propose the following mechanism:
-
-<list>
-<item>a generally available attribute <att>stage</att> is provided
-which can be used to identify any textual alteration as belonging to
-some specific stage;</item>
-<item>a <gi>stageList</gi> element is provided in the header, to group
-together and document individual stages, each being defined by a
-<gi>stageNote</gi> element. Typically, each <gi>stageNote</gi>  contains several
-       references to <gi>ge:edJust</gi> elements (see <ref target="#edjust"
-          >below</ref>) and to other annotations contained within the
-          <gi>teiHeader</gi> or in the document. </item>
-</list>
+<p>Typically, each <gi>change</gi>  will
+reference other annotations contained within the
+          <gi>teiHeader</gi> or in the document, but its contents are
+purely documentary. </p>
 
 <egXML
           xmlns="http://www.tei-c.org/ns/Examples">
           <profileDesc>
              <creation>
   <date notAfter="1816-07-18"/>
-  <ge:stageList>
-     <ge:stageNote xml:id="mod1">The first draft of
+  <ge:stageHist>
+     <change xml:id="mod1" when="1816-07-16">The first draft of
            <title>Persuasion</title> is completed by the <date>July 16
            1816</date> written after the word <q>Finis</q> at <ref
-           target="#pers-30">page 30</ref>. </ge:stageNote>
-     <ge:stageNote xml:id="mod2"> After the <date>16th of July</date>
+           target="#pers-30">page 30</ref>.</change>
+     <change xml:id="mod2" notBefore="1816-07-16"> After the <date>16th of July</date>
         Austen starts revision of the two final chapters, by rewriting
         the end and adding a new block (<ref target="#transp-1">pages
            32-35</ref>) to be inserted at <ref target="#insertion-p1"
@@ -1062,36 +1070,40 @@ together and document individual stages, each being defined by a
            >page 30</ref>, and the addition of more text and of a new
         date (<date>July 18. 1816</date>) at <ref target="#pers-31">page
            31</ref>
-     </ge:stageNote>
-     <ge:stageNote>Before publication, after <date>July 18th, 1816</date>
+     </change>
+     <change notBefore="1816-07-18">Before publication, after <date>July 18th, 1816</date>
         chapters 10-11 were broken into three chapters, 10, 11, 12, as
-        witnessed by the print</ge:stageNote>
-  </ge:stageList>
+        witnessed by the print.</change>
+  </ge:stageHist>
              </creation>
           </profileDesc>
-       </egXML></p>
+       </egXML>
+
 <p>The targets of the various pointers (<code>transp-1</code>,
-<code>transp-1</code> etc.) in the above example may be any part of
+<code>insertion-1</code> etc.) in the above example may be any part of
 the transcribed document which has been marked up and allocated an
-identifer, such as the pages mentioned or insertion points mentioned
+identifer, such as the pages or insertion points mentioned
 above. The former will presumably be marked as  <gi>ge:surface</gi>
 elements or <gi>zone</gi> elements, while the latter may be marked using the generic TEI
 <gi>anchor</gi> element.</p>
     
-<p>The <att>state</att> attribute can be used to associate any
-sequence of mark-up in a document with a <gi>stateNote</gi>, and hence
-to allocate that particular writing event to a particular revision
-campaign. There will often be many such elements (several additions
-and deletions for example) for a single revision, and for convenience
-therefore  an additional <gi>mod</gi> (for modification) element is
-provided to delimit the scope of any such modifications.  As this
-element is likely to overlap with other elements, it is itself empty,
-and carries a <att>spanTo</att> attribute to indicate its endpoint.
+<p>Alternatively, or in addition, we propose a generic
+<att>state</att> attribute which can point in the opposite direction,
+and  associate any
+sequence of mark-up in a document with a <gi>change</gi> element, thus
+allocating that particular writing event to a particular revision
+campaign. </p>
 
+<p>Because a typical revision campaign will comprise very many
+individual modifications (possibly hundreds) an  element
+called <gi>mod</gi> (for modification) is
+proposed as a means of delimiting the scope of all modifications to be
+assigned to a given <gi>change</gi>. This is a milestone-like
+(empty) element, placed at the start of the text
+affected, and indicating the end of that range by means of an
+<att>spanTo</att> attribute. </p>
 
-<!-- could use @seq for lower level sequencing -->
-
-<egXML
+<p><egXML
           xmlns="http://www.tei-c.org/ns/Examples">
           <ge:line>her face) – <ge:mod spanTo="#ch10-06-23" stage="#mod1"/>But <subst>
   <del rend="overstruck">I do not</del>
@@ -1105,14 +1117,67 @@ and carries a <att>spanTo</att> attribute to indicate its endpoint.
 In this example, the deletion of <mentioned>I do not</mentioned>, the addition of <mentioned>you have
 not</mentioned>, the deletion of <mentioned>in your Countenance</mentioned>, and the addition of <mentioned>as
 Grave as a little Judge</mentioned> are all considered part of a single
-text-stage, which is documented by the <gi>stageNote</gi> provided
-with identifier <code>mod1</code>.
+text-stage. The text stage itself is documented by a <gi>change</gi>
+element with identifier <code>mod1</code>, located in a
+<gi>stageHist</gi> element elsewhere.
 </p>
-<p>In a sequence of revisions like that cited above, there is an
-implicit assumption that the acts of deletion and addition are all
-assigned to the same writing stage, and that this is a stage
-subsequent to the original unrevised writing. If this is not the case,
-the <att>state</att> attribute may be used on any element to associate
+<p>In a case like this, there is no particular assertion about the
+order in which any of the various modifications making up this
+revision campaign were effected. If such detailed analysis is
+required, the existing <att>seq</att> attribute may be used to supply
+a sequence number. For example, if there are two additions within a
+given stage, and it is clear that one precedes the other, this could
+be indicated by giving the earlier one a <att>seq</att> attribute with
+the value <code>1</code> and the later one a <att>seq</att> attribute with
+the value <code>2</code>.</p>
+
+<p>The use of tags such as <gi>del</gi> and <gi>add</gi> necessarily
+implies that the modification concerned was made at some time after
+the original writing. An exception to this is where a false start or
+<soCalled>instant</soCalled> correction has been identified: the
+author starts to write, and then immediately corrects what has been
+written. A special mechanism is provided for this case: the
+<att>seq</att> attribute may take the value <code>0</code> to indicate
+that the addition or deletion is considered to belong to the same
+writing stage as the rest of the unmodified document. </p>
+
+   <p> An example of false start can be seen in the following line:
+<figure>
+<graphic url="examples/whitman03a.jpg"/>
+<head>http://www.whitmanarchive.org/resources/sleepers/uva.00256.001.jpg</head>
+</figure>
+in which we can detect the following sequence of events:
+<list type="ordered">
+<item>The letter T is written and then immediately deleted</item>
+<item>The word The is written, deleted, and replaced by the word
+His</item>
+<item>The added word His is then deleted</item>
+<item>The initial letter i of the words iron necklace is overwritten
+with a capital I</item>
+</list>
+To indicate that the first  of these acts must have taken place before
+the others, we might encode this revision
+campaign as follows:
+             <egXML xmlns="http://www.tei-c.org/ns/Examples">
+             <ge:line><del seq="0">T</del>
+  <subst seq="1">
+     <del>The</del>
+     <add place="above">
+        <del rend="overstrike">His</del>
+     </add>
+  </subst>
+  <subst seq="2">
+     <del rend="overwritten">i</del>
+     <add place="superimposed">I</add>
+  </subst>ron necklace</ge:line>
+          </egXML>
+</p>
+
+<p>In a set of revisions like the Austen example cited above, there is an
+implicit assumption that acts of deletion and addition are all
+assigned to the same writing stage, which is specified by the most
+recently stated <gi>mod</gi> element.  If this is not the case,
+the <att>stage</att> attribute may also be used on any element to associate
 it with some other writing stage than that implied by the
 <gi>ge:mod</gi> which <q>surrounds</q> it. For example, if it were
 determined that in the previous example the substitution of "I do not'
@@ -1127,73 +1192,12 @@ by "you have not' should actually be assigned to some different state
   <add place="above">you have not</add>
              </subst> see much</ge:line>
 </egXML>
-</p>
-<p>Even where stages are not explicitly marked in this way, 
-the use of tags such as <gi>del</gi> and <gi>add</gi> necessarily
-implies that the modification concerned was made at some time after the
-original writing. An exception to this is where a false start or
-<soCalled>instant</soCalled> correction has been identified: the
-author starts to write, and then immediately corrects what has been
-written. A special mechanism is provided for this case: rather than
-pointing to a specific <gi>stageNote</gi>, the <att>stage</att>
-attribute may take the value <code>0</code> to indicate that the
-addition or deletion is considered to belong to the same writing stage
-as the rest of the unmodified document. 
+Similarly, there is no reason (other than increased complexity) why <gi>mod</gi> spans should not be
+nested within each other, where for example several revision campaigns
+have been identified which are
+applicable to overlapping sequences of elements.
+ </p>
 
-<!-- this is @seq, not @stage -->
-
-<!--    <div xml:id="false-start">
-       <head>Timing</head>
-       <p>Distinguishing instant correction from other kinds of alteration is
-          important when establishing the timing of a specific revisions and in the
-          whole genetic process. The information might be supplied as a specific
-          attribute of <gi>add/</gi>, <gi>del/</gi>, <gi>subst</gi> etc., called
-             <att>*timing</att> (or <att>*instant</att> or similar).<note place="foot"
-  ><hi rend="bold">EP</hi>: I would avoid to use <att>type</att> as it
-             my be useful for other things and I would rather prefer to have an
-             attribute that express a temporal semantics.</note></p>
-       <p>A specific subset of instant correction is represented by <hi rend="bold"
-             >false starts</hi>, which are parts of a word that are overwritten by
-          another (or struck through), meaning that the author started to write a
-          word, then changed his/her mind and overwrote all or part of what was
-          already written to fit the new word. This is an open problem: how to encode
-          the partial word? Which is the scope of the correction? just the parts of
-          the word that have been altered or all of it, even if this was not actually
-          written? If it is possible to understand the word partially written, how
-          should it be encoded? </p>
-    -->
-</p>   <p> An example of false start can be seen in one of the many version of Walt
-          Whitman's <title>The Sleepers</title> (available at <ptr
-             target="http://www.whitmanarchive.org/resources/sleepers/uva.00256.001.jpg"
-          />) where the beginning of the third block could be encoded as follows:
-             <egXML xmlns="http://www.tei-c.org/ns/Examples">
-             <ge:line><del stage="0" rend="overstrike">T</del>
-  <subst>
-     <del rend="overstrike">The</del>
-     <add place="above">
-        <del rend="overstrike">His</del>
-     </add>
-  </subst>
-  <subst>
-     <del rend="overwritten">i</del>
-     <add place="superimposed">I</add>
-  </subst>ron necklace</ge:line>
-          </egXML>
-</p>
-<!--
-          <note place="foot"><hi rend="bold">EP</hi>: I think we should suggest a
-  <att>method</att> attribute for <gi>del</gi>, more specific than
-  <att>rend</att>.</note> False starts are by nature constituted by word
-          fragments, normally the beginning of a word (hence false <hi rend="italic"
-             >start</hi>), so no encoding is provided to mark that the deletion
-          affects a partial word. In case the editor is able and wishes to provide the
-          unwritten missing part of the word (for searching or any other analytical
-          purposes, for instance) the <gi xmlns="http://www.tei-c.org/ns/1.0"
-             >supplied</gi> element could be used, perhaps together with a
-             <att>type</att> attribute (possibly redundant is already used for the
-             <gi>del</gi> element).</p>
-
-            </div></div>-->
  </div>	    
 </div>            
 
@@ -2115,12 +2119,12 @@ provide two writing surfaces</desc>
           <rng:ref name="macro.phraseSeq.limited"/>
        </rng:zeroOrMore>
        <rng:zeroOrMore>
-          <rng:ref name="stageList"/>
+          <rng:ref name="stageHist"/>
        </rng:zeroOrMore>
     </content>
  </elementSpec>
 
- <elementSpec ident="stageList" ns="http://www.tei-c.org/ns/geneticEditions"
+ <elementSpec ident="stageHist" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
     <desc>contains one or more descriptions of the stages which have
     been identified in the genesis of a text.</desc>
@@ -2138,32 +2142,38 @@ provide two writing surfaces</desc>
   <rng:ref name="summary"/>
              </rng:optional>
              <rng:oneOrMore>
-  <rng:ref name="stageNote"/>
+  <rng:ref name="change"/>
              </rng:oneOrMore>
           </rng:group>
        </rng:choice>
     </content>
  </elementSpec>
 
- <elementSpec ident="stageNote" ns="http://www.tei-c.org/ns/geneticEditions"
-    mode="add">
-    <desc>documents a particular stage in the genesis of a text.</desc>
-    <classes>
-       <memberOf key="att.editLike"/>
-<memberOf key="att.global"/>
+ <elementSpec ident="change" module="header"  mode="change">
 
+    <desc>documents a particular stage in the genesis of a text.</desc>
+
+    <classes>
+       <memberOf key="att.datable"/>
+       <memberOf key="att.global"/>
     </classes>
+
     <content>
        <rng:ref
           name="macro.specialPara"/>
     </content>
+<!--
+<attList>
+<attDef ident="when" mode="delete"/>
+</attList>
+-->
+
  </elementSpec>
 
  <elementSpec ident="mod" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
-    <desc>Scope an area in the document containing several alterations which are
-       interrelated to each others; Can also be used to segment the text in order to
-       give a meaningful semantic context to an alteration. </desc>
+    <desc>defines the scope of an area in the document containing several alterations which are
+considered as belonging to the same revision campaign. </desc>
     <classes>
        <memberOf key="model.pPart.transcriptional"/>
        <memberOf key="att.spanning"/>
@@ -2172,14 +2182,19 @@ provide two writing surfaces</desc>
 
     </classes>
     <content>
-       <rng:zeroOrMore>
+      <rng:empty/>
+
+<!--       <rng:zeroOrMore>
           <rng:choice>
              <rng:ref name="macro.paraContent"/>
              <rng:ref name="line"/>
           </rng:choice>
-       </rng:zeroOrMore>
+       </rng:zeroOrMore>-->
+
     </content>
  </elementSpec>
+
+
  <!-- authorial changes -->
  <elementSpec ident="metaMark" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
