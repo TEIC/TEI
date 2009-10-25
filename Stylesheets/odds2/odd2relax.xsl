@@ -30,6 +30,7 @@
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
   <xsl:key name="REFED" match="rng:ref" use="@name"/>
   <xsl:key name="DEFED" match="rng:define" use="@name"/>
+  <xsl:key name="ANYDEF" match="rng:define[rng:element/rng:zeroOrMore/rng:attribute/rng:anyName]" use="1"/>
   <xsl:param name="verbose"/>
   <xsl:param name="outputDir"/>
   <xsl:param name="appendixWords"/>
@@ -212,24 +213,15 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="rng:attribute/rng:data[@type='ID']" mode="cleanup">
+  <xsl:template match="rng:attribute/rng:data[@type='ID' or
+		       @type='IDREF']" mode="cleanup">
     <xsl:choose>
-      <xsl:when test="key('DEFED','macro.anyXML')/rng:element/rng:anyName">
+      <xsl:when
+	  test="key('ANYDEF',1)">
 	<text xmlns="http://relaxng.org/ns/structure/1.0"/>
       </xsl:when>
       <xsl:otherwise>
-        <data xmlns="http://relaxng.org/ns/structure/1.0" type="ID"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template match="rng:attribute/rng:data[@type='IDREF']" mode="cleanup">
-    <xsl:choose>
-      <xsl:when test="key('DEFED','macro.anyXML')/rng:element/rng:anyName">
-	<text xmlns="http://relaxng.org/ns/structure/1.0"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <data xmlns="http://relaxng.org/ns/structure/1.0" type="IDREF"/>
+        <data xmlns="http://relaxng.org/ns/structure/1.0" type="{@type}"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
