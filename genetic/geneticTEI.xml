@@ -651,9 +651,18 @@ transcription, which constitute the
 <specDesc key="supplied"/>
 <specDesc key="unclear"/>
 </specList>
-<!--The present proposals extend this list by adding the following
-elements to the same class:-->
+The present proposals extend this list by adding the following
+elements to the same class:
 
+<specList>
+<specDesc key="rewrite"  atts="cause"/>
+<specDesc key="used" atts="spanTo"/>
+<specDesc key="metaMark" atts="function  targets"/>
+<specDesc key="subst"/>
+<specDesc key="transposeGrp"/>
+<specDesc key="undo" atts="spanTo"/>
+</specList>
+Each of these new elements is discussed in the remainder of this section.
 </p>
     <div>
        <head>Additions and rewritings</head>
@@ -668,9 +677,6 @@ example by inking it over; and <term>clarification</term>, where the
 first version was badly written and has been rewritten for clarity.
 The element <gi>ge:rewrite</gi> is provided to cover both cases.
 
-<specList>
-<specDesc key="rewrite"  atts="cause"/>
-</specList>
        </p>
 
 <p>In this simple example, taken from the papers of Henrik Ibsen, the
@@ -745,7 +751,7 @@ through to indicate used material:
 http://www.whitmanarchive.org/resources/sleepers/20051105_0650.jpg</head></figure>. This
 page contains many deletions, which should be
 distinguished from the deletion signalled by the large cross. Material
-to be marked as reused generally spans more than one zone or
+to be marked as re-used generally spans more than one zone or
 line. For that reason, the <gi>used</gi> element is a spanning
 element, indicating the end of the used area by means of a
 <att>spanTo</att> attribute. One way of encoding this page might thus
@@ -796,17 +802,17 @@ url="examples/ka04_1v.jpg"/></figure>
 
 <p>The paragraph of interest is the second one (the first complete). The
 transcription of the first part of this paragraph (the second was
-added later) reads: "Ock en schullen de bruwer bruwere des hilgen
-dages nicht over setten noch uppe den stillen fridach bruwen."
+added later) reads: <q>Ock en schullen de bruwer bruwere des hilgen
+dages nicht over setten noch uppe den stillen fridach bruwen</q>
 </p>
 <p>
-On the left margin you see the word "lege" (read!) which I would regard 
+On the left margin, the word <mentioned>lege</mentioned> functions 
 as a metamark. Whether the deletion of the paragraph had happened before 
-the insertion of "lege" or not, "lege" indicates that this paragraph has 
+the insertion of <mentioned>lege</mentioned> or not, the word indicates that this paragraph has 
 to be read, thus was part of the regulations. To make it more 
-complicated: "lege" itself was deleted afterwards.
+complicated: <mentioned>lege</mentioned>  itself was deleted afterwards.
 </p>
-<p>Here are some furtherexamples showing the use of this element,
+<p>Here are some further examples showing the use of this element,
 taken from the manuscript drafts of Thomas Moore's <title>Lalla
 Rookh</title> (1817), provided by Justin Tonra, NUIG. The first shows
 a simple use of a metamark used to take stock of the progress of
@@ -841,16 +847,13 @@ or subordinated. While the author apparently first composed the line
 the possibility of using the word "beside" instead of "before." In the 
 context of this manuscript, there is no indication of which word the 
 Moore favours, so the status of these words as possible alternative 
-readings needs to be encoded. The evidence of the first edition of Lalla 
-Rookh shows that the word "beside" was chosen, but for the purposes of 
+readings needs to be encoded. The evidence of the first edition of <title>Lalla 
+Rookh</title> shows that the word "beside" was chosen, but for the purposes of 
 encoding this manuscript, the facility to encode two equally-possible 
 alternative readings needs to be available.
 </p>
-<!-- another example needed for metamark: malte will look for one  -->
 
-<!-- also need something for alt : justin will provide one  -->
-
-<p>As an example, consider the manuscript of a poem by Emily Dickinson discussed by   Vetter and McDonald
+<p>As a further example, consider the manuscript of a poem by Emily Dickinson discussed by   Vetter and McDonald
 2003 <note place="foot">
   <bibl>
      <author>Lara Vetter and Jarom McDonald</author>
@@ -919,7 +922,7 @@ point to a span, you move the content However it remains a problem
 remove tr element as well; use generic
 
 -->
-
+<!--
 Thus, we provide an additional element <gi>ge:tr</gi>
 the function of which is to mark explicitly the section of text which
 is to be transposed, and which carries an attribute <att>moveTo</att>
@@ -942,51 +945,69 @@ may encode this as follows:        <egXML xmlns="http://www.tei-c.org/ns/Example
 <ge:metaMark rend="underline" function="transposition" 
         place="above">1.</ge:metaMark></ge:line>
 </egXML> </p>
-<p>In the following example from the same manuscript, two lines are to
-be interchanged. 
-<figure><graphic url="examples/ibsen04.jpg"/>
-<head>Extracted from <ptr target="http://www.emunch.no/tei-mm-2008/ms3.html"/></head></figure>
- Since <gi>tr</gi> is a spanning element, this is
-relatively easy to represent:
- <egXML xmlns="http://www.tei-c.org/ns/Examples">
-             <ge:line><ge:metaMark function="transposition"
-				place="margin-left">2.)</ge:metaMark>
-<ge:tr xml:id="ib3" spanTo="#ib3e" moveTo="#ib4"/>thi da er du  med
-	     Himmelen i Pagt;<anchor xml:id="ib3e"/> — </ge:line>
-<ge:line>
-<ge:metaMark function="transposition"
-	     place="margin-left">1.)</ge:metaMark>
-<ge:tr xml:id="ib4" spanTo="#ib4e" moveTo="#ib3"/>da kan du Folkets Jøkelhjerter tine;<anchor xml:id="ib4e"/></ge:line>
-          </egXML></p>
-
+-->
 <!-- problem of transposition: does it move just cdata or also markup?
      what if result is ill formed?  metamarks are not precise enough -->
 
-<p>An alternative approach to the use of the <att>moveTo</att>
-attribute, is to represent the re-alignment of transposed blocks or
-segments by means of a
-          stand-off mechanism. The elements <gi>ge:transpositions</gi>
-	  and <gi>ge:transposition</gi> are provided for this purpose.
-Using these elements, the first example above might be encoded as follows:
+<!-- An alternative approach to the use of the <att>moveTo</att>
+attribute, is to-->
+
+We propose to represent the re-alignment of transposed blocks or
+segments by means of a stand-off mechanism. The elements <gi>ge:transposeGrp</gi>
+and <gi>ge:transpose</gi> are provided for this purpose.
+For example, in the following extract from an Ibsen manuscript <figure><graphic url="examples/ibsen01.jpg"/>
+<head>Extracted from <ptr
+target="http://www.emunch.no/tei-mm-2008/ms.html"/></head></figure>,
+the underlined numbers 1 and 2 indicate that, although the word
+<mentioned>bör</mentioned> precedes the word
+<mentioned>hör</mentioned> in the text, the order of the two words
+should be reversed. We may encode this as follows:
           <egXML xmlns="http://www.tei-c.org/ns/Examples">
-             <ge:line><ge:tr xml:id="ib01">bör</ge:tr><ge:metaMark rend="underline"
+             <ge:line><seg xml:id="ib01">bör</seg><ge:metaMark rend="underline"
      function="transposition" targets="#ib1" place="above"
-     >2.</ge:metaMark> og <ge:tr xml:id="ib02">hör</ge:tr><ge:metaMark
+     >2.</ge:metaMark> og <seg xml:id="ib02">hör</seg><ge:metaMark
      rend="underline" function="transposition" targets="#ib02"
-     place="above">1.</ge:metaMark>
-  <ge:transpositions>
-     <ge:transposition>
+     place="above">1.</ge:metaMark></ge:line>
+  <ge:transposeGrp>
+     <ge:transpose>
         <ptr target="#ib02"/>
         <ptr target="#ib01"/>
-     </ge:transposition>
-  </ge:transpositions></ge:line>  
+     </ge:transpose>
+  </ge:transposeGrp>
           </egXML>
        </p>
+<p>Note the use of the generic <gi>seg</gi> element to identify the
+sections of text being transposed. When (as in the following example)
+the whole of line is to be transposed, there is no need to delimit the
+sections concerned: 
+Thus, in the following example from the same manuscript, two lines are to
+be interchanged:
+<figure><graphic url="examples/ibsen04.jpg"/>
+<head>Extracted from <ptr target="http://www.emunch.no/tei-mm-2008/ms3.html"/></head></figure>
 
-<!-- interpreting metamarks is not straightforward: does it affect th e
-mark up? does transposition include markup? -->
-
-
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">
+ <ge:line xml:id="ib3"><ge:metaMark function="transposition"
+				place="margin-left">2.)</ge:metaMark>
+thi da er du  med Himmelen i Pagt; — </ge:line>
+<ge:line xml:id="ib4">
+<ge:metaMark function="transposition"
+	     place="margin-left">1.)</ge:metaMark>
+da kan du Folkets Jøkelhjerter tine;</ge:line>
+  <ge:transposeGrp>
+     <ge:transpose>
+        <ptr target="#ib4"/>
+        <ptr target="#ib3"/>
+     </ge:transpose>
+  </ge:transposeGrp>
+          </egXML>
+When transposition is made, the whole element indicated is understood to
+be moved, not just its contents. In the above example, the metamarks
+are thus understood to be moved along with the lines to which they apply.
+</p>
+<p>One or more <gi>transposeGrp</gi> elements may be supplied either embedded within the
+text or in the <gi>profileDesc</gi> of the header, depending on local
+preference. Each <gi>transposeGrp</gi> can contain one or more
+<gi>transpose</gi> element, each of which defines a single transposition.</p>
     </div>
     <div>
        <head>Substitution</head>
@@ -1024,9 +1045,6 @@ could be encoded as follows:<egXML
        specific kind of alteration to an alteration, namely the
        undoing of a deletion. We propose a more general element,
        <gi>undo</gi>.
-<specList>
-<specDesc key="undo"/>
-</specList>
 The element <gi>ge:undo</gi> usually encloses the
           element (e.g. the <gi>tr</gi>, <gi>add</gi>, <gi>del</gi>
 	  etc.) to be undone. If it appears within such an element, the
@@ -2403,29 +2421,6 @@ attribute.</p></remarks> </elementSpec>
     </attList>
  </elementSpec>
 
- <!--elementSpec ident="repetition" ns="http://www.tei-c.org/ns/geneticEditions"
-    mode="add">
-    <desc>A repetition of already written text.</desc>
-    <classes>
-       <memberOf key="model.pPart.transcriptional"/>
-       <memberOf key="att.transcriptional"/>
-       <memberOf key="att.typed"/>
-       <memberOf key="att.spanning"/>
-       <memberOf key="att.placement"/>
-    </classes>
-    <content>
-       <rng:ref
-          name="macro.specialPara"/>
-    </content>
-    <attList>
-       <attDef ident="reason">
-          <datatype minOccurs="1" maxOccurs="unbounded">
-             <rng:ref name="data.word"
-             />
-          </datatype>
-       </attDef>
-    </attList>
- </elementSpec--><!-- replaced by rewrite-->
  
  <elementSpec ident="unclear" module="core" mode="change">
     <classes mode="replace">
@@ -2435,9 +2430,11 @@ attribute.</p></remarks> </elementSpec>
        <memberOf key="att.typed" mode="add"/>
     </classes>
  </elementSpec>
- <elementSpec ident="transpositions"
+
+ <elementSpec ident="transposeGrp"
     ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
-    <desc> Describes the textual transpositions.</desc>
+    <desc>supplies a list of transpositions indicated at some point in
+    the text, typically by means of metamarks.</desc>
     <classes>
        <memberOf key="model.profileDescPart"/>
        <memberOf key="model.global.meta"/>
@@ -2445,13 +2442,14 @@ attribute.</p></remarks> </elementSpec>
     </classes>
     <content>
        <rng:oneOrMore>
-          <rng:ref name="transposition"/>
+          <rng:ref name="transpose"/>
        </rng:oneOrMore>
     </content>
  </elementSpec>
- <elementSpec ident="transposition"
+
+ <elementSpec ident="transpose"
     ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
-    <desc> describes a textual transposition as an ordered list of at
+    <desc> describes a single textual transposition as an ordered list of at
     least two pointers specifying
        the order in which the elements indicated should be re-combined. </desc>
     <classes>
@@ -2465,29 +2463,9 @@ attribute.</p></remarks> </elementSpec>
        </rng:oneOrMore>
 	</rng:group>    </content> 
  </elementSpec>
- <elementSpec ident="tr" ns="http://www.tei-c.org/ns/geneticEditions"
-    mode="add">
-    <desc>marks a section of a document marked as to be transposed elsewhere</desc>
-    <classes>
-       <memberOf key="model.pPart.transcriptional"/>
-       <memberOf key="att.transcriptional"/>
-       <memberOf key="att.typed"/>
-       <memberOf key="att.spanning"/>
-<memberOf key="att.global"/>
 
-    </classes>
-    <content>
-       <rng:ref
-          name="macro.specialPara"/>
-    </content>
-<attList>
-<attDef ident="moveTo">
-<desc>points to the target location for the transposition.</desc>
-<datatype minOccurs="1" maxOccurs="1">
-             <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-          </datatype>
-</attDef></attList>
- </elementSpec>
+
+
  <!-- genetic groups -->
  <elementSpec ident="geneticGrp" mode="add"
     ns="http://www.tei-c.org/ns/geneticEditions">
