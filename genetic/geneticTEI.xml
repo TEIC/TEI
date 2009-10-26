@@ -42,9 +42,6 @@
       </revisionDesc>
    </teiHeader>
 
-<!-- replace edJust by note -->
-
-
 
    <text>
       <front>
@@ -791,6 +788,65 @@ not forming part of it.</p>
              the meta-mark and a <att>targets</att> attribute which points to the
              element or elements concerned. </p>
 
+<p>The following example is taken from <title>Kundige bok 2</title>, a
+15thC legal book from the city of Göttingen, containing regulations of
+everyday life, issued by the city council <figure><graphic
+url="ka04_1v.jpg"/></figure>
+</p>
+
+<p>
+The paragraph of interest is the second one (the first complete). The
+transcription of the first part of this paragraph (the second was
+added later) reads: "Ock en schullen de bruwer bruwere des hilgen
+dages nicht over setten noch uppe den stillen fridach bruwen."
+</p>
+<p>
+On the left margin you see the word "lege" (read!) which I would regard 
+as a metamark. Whether the deletion of the paragraph had happened before 
+the insertion of "lege" or not, "lege" indicates that this paragraph has 
+to be read, thus was part of the regulations. To make it more 
+complicated: "lege" itself was deleted afterwards.
+</p>
+<p>Here are some furtherexamples showing the use of this element,
+taken from the manuscript drafts of Thomas Moore's <title>Lalla
+Rookh</title> (1817), provided by Justin Tonra, NUIG. The first shows
+a simple use of a metamark used to take stock of the progress of
+composition:
+
+<figure><graphic url="moore02.jpg"/></figure>
+</p>
+<p>At
+regular points throughout the various drafts of the work, a number
+occurs, usually in the right margin (in this instance, "100"). These
+numbers result from the author counting the number of verse lines he
+has composed to the given point, and are not part of the text, but
+represent a stage at which Moore is taking stock of the progress of
+his composition.
+</p>
+<p><figure><graphic url="moore03.tif"/></figure> This example
+demonstrates the use of a common proof-correction mark: in the left
+margin of the page, adjacent to a group of three cancelled lines of
+verse, the word "stet" is written.  "Stet", a Latin word meaning "let
+it stand" is commonly used by authors, editors and proofreaders where
+a previous action should be disregarded.  In this instance, Moore is
+indicating that the three deleted verse lines should be let stand, as
+evidenced by their appearance in the first printed edition of <title>Lalla
+Rookh</title>. The word, "stet" does not form part of the text, but rather
+declares that a certain function be performed upon the text.
+</p>
+<p><figure><graphic url="moore04.tif"/></figure> In this example
+ two 
+alternative readings are provided, without either one being prioritised 
+or subordinated. While the author apparently first composed the line 
+"Alone before his native river -", at some later point, he entertained 
+the possibility of using the word "beside" instead of "before." In the 
+context of this manuscript, there is no indication of which word the 
+Moore favours, so the status of these words as possible alternative 
+readings needs to be encoded. The evidence of the first edition of Lalla 
+Rookh shows that the word "beside" was chosen, but for the purposes of 
+encoding this manuscript, the facility to encode two equally-possible 
+alternative readings needs to be available.
+</p>
 <!-- another example needed for metamark: malte will look for one  -->
 
 <!-- also need something for alt : justin will provide one  -->
@@ -1337,13 +1393,13 @@ terminology needs revision -->
              with the interpretation; attribute <att>from</att> and <att>to</att>
              point to nodes, respectively to the beginning end ending points of the
              arc. Each <gi>arc</gi> element contains a <gi>label</gi> which give a
-             title to the arc, and by an optional <gi>ge:edJust</gi>, which contains
+             title to the arc, and by an optional <gi>note</gi>, which contains
              some sort of editorial statement about the arc. </item>
           <item>
              <gi>graph</gi> contains the full path from the first to the last version
              of a given work, in terms of a sequence of <gi>node</gi> and <gi>arc</gi>
              elements. A <gi>label</gi> element gives the title to the graph, while a
-  <gi>ge:edJust</gi> element can be used to contain editorial statements
+  <gi>note</gi> element can be used to contain editorial statements
              about the constitution of a such path. </item>
        </list>
 
@@ -1365,11 +1421,11 @@ associations.
        <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <graph type="genetic">
              <label>The Sleepers</label>
-             <ge:edJust>
+             <note>
   <p>Tracing the development of the poem eventually titled "The
      Sleepers" involves over 100 images of both handwritten and printed
      material produced across a 30-year period.</p>
-             </ge:edJust>
+             </note>
              <node xml:id="A" target="#poem"/>
              <node xml:id="B" target="#sweet_flag"/>
              <node xml:id="C" target="#curse1"/>
@@ -1381,29 +1437,29 @@ associations.
              <node xml:id="Z" target="#Leaves81-82"/>
              <arc from="#A" to="#C" rel="#thematic" cert="low">
   <label>Night Visions</label>
-  <ge:edJust>
+  <note>
      <p>Notes for a poem about night "visions," possibly related to the
         untitled 1855 poem that Whitman eventually titled "The
         Sleepers."</p>
-  </ge:edJust>
+  </note>
              </arc>
              <arc from="#B" to="#C" rel="#thematic" cert="medium">
   <label>List of Ideas</label>
-  <ge:edJust>
+  <note>
      <p>In this early manuscript, Whitman's lists contain ideas related
         to both "Song of Myself" and "The Sleepers." </p>
-  </ge:edJust>
+  </note>
              </arc>
              <arc from="#C" to="#F" rel="#evolution">
   <label>I am a curse</label>
-  <ge:edJust>
+  <note>
      <p>An early manuscript draft of the "Lucifer" section of the poem
         that likely lead to the 1855 printed version. </p>
-  </ge:edJust>
+  </note>
              </arc>
              <arc from="#F" to="#G" rel="#evolution">
   <label>Black Lucifer</label>
-  <ge:edJust>
+  <note>
      <p>The second notebook, "No doubt the efflux of the soul," is a
         longer one (24 leaves) that lays out the philosophical ideas
         that generate the poem and produces some of the key images in
@@ -1416,7 +1472,7 @@ associations.
         different notebooks—working out in one notebook the imagery in
         trial poetic lines, and working out in the other two the main
         ideas in prose.</p>
-  </ge:edJust>
+  </note>
              </arc>
              <arc from="#G" to="#H" rel="#evolution">
   <label>Lucifer</label>
@@ -1426,10 +1482,10 @@ associations.
              </arc>
              <arc from="#E" to="#Z" rel="#evolution">
   <label>Central section</label>
-  <ge:edJust>
+  <note>
      <p>A manuscript containing approximately seven lines, lightly
         revised, of the poem eventually titled "The Sleepers."</p>
-  </ge:edJust>
+  </note>
              </arc>
              <arc from="#H" to="#Z" rel="#evolution">
   <label>Lucifer</label>
@@ -1716,7 +1772,7 @@ transposition can also be included in apparatus
        pointed at from many places in the text.</p>
     <p>But annotations can also occur in-line (i.e. close to a textual fragment they
        relate to) and for that reasons we created the <gi xml:id="edjust"
-          >ge:edJust</gi> global element. This should always be used with an
+          >note</gi> global element. This should always be used with an
           <att>xml:id</att> attribute as the other types of annotations seen above are
        very likely to refer to specific points in the text within a more complex
        argument. The <att>target</att> attribute points to the element to be
@@ -1725,11 +1781,11 @@ transposition can also be included in apparatus
           xmlns="http://www.tei-c.org/ns/Examples">
           <arc xml:id="a-1" from="#A" to="#C" rel="#thematic" cert="low">
              <label>Night Visions</label>
-             <ge:edJust target="#a-1" cert="medium" evidence="conjecture">
+             <note target="#a-1" cert="medium" evidence="conjecture">
   <p>Notes for a poem about night "visions," possibly related to the
      untitled 1855 poem that Whitman eventually titled "The
      Sleepers."</p>
-             </ge:edJust>
+             </note>
           </arc>
        </egXML></p>
  </div>
@@ -2089,7 +2145,9 @@ provide two writing surfaces</desc>
 
 
  <!-- editorial justification -->
- <elementSpec ident="edJust" ns="http://www.tei-c.org/ns/geneticEditions"
+
+<!-- in wburg, we agreed to replace this with note -->
+<!-- <elementSpec ident="edJust" ns="http://www.tei-c.org/ns/geneticEditions"
     mode="add">
     <desc>(editorial justification) An editorial justification of any part of
        the edited text.</desc>
@@ -2113,6 +2171,8 @@ provide two writing surfaces</desc>
        </attDef>
     </attList>
  </elementSpec>
+-->
+
  <elementSpec ident="creation" mode="change">
     <content>
        <rng:zeroOrMore>
@@ -2481,6 +2541,7 @@ attribute.</p></remarks> </elementSpec>
        </attDef>
     </attList>
  </elementSpec>
+
  <elementSpec ident="arc" module="nets" mode="change">
     <classes mode="change">
        <memberOf mode="add" key="att.typed"/>
@@ -2494,19 +2555,21 @@ attribute.</p></remarks> </elementSpec>
           </rng:optional>
        </rng:optional>
        <rng:optional>
-          <rng:ref name="edJust"/>
+          <rng:ref name="model.noteLike"/>
        </rng:optional>
     </content>
     <attList>
-       <attDef ident="rel" mode="add">
-          <desc>Points to a <gi>relation</gi></desc>
+       <attDef ident="type" mode="change">
+          <desc>Specifies the kind of relationship implied by the arc</desc>
           <datatype>
              <rng:ref
-  name="data.pointing"/>
-
-<!-- replace by vallist -->
-
+  name="data.enumerated"/>
           </datatype>
+<valList>
+<valItem ident="unknown"/>
+<valItem ident="unspecified"/>
+</valList>
+
        </attDef>
     </attList>
  </elementSpec>
