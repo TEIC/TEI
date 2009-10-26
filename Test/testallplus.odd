@@ -67,13 +67,13 @@
 <!-- required -->
         <moduleRef key="transcr"/>
         <moduleRef key="verse"/>
-        <xi:include href="http://www.tei-c.org/release/xml/tei/custom/odd/tei_xinclude.odd" xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:elementSpec)">
+        <xi:include href="../Exemplars/tei_xinclude.odd" xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:elementSpec)">
           <xi:fallback> ERROR: cannot locate XInclude ODD elements </xi:fallback>
         </xi:include>
-        <xi:include href="http://www.tei-c.org/release/xml/tei/custom/odd/tei_svg.odd" xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:moduleRef[@url])">
+        <xi:include href="../Exemplars/tei_svg.odd" xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:moduleRef[@url])">
           <xi:fallback> ERROR: cannot locate ODD changes for SVG </xi:fallback>
         </xi:include>
-        <xi:include href="http://www.tei-c.org/release/xml/tei/custom/odd/tei_math.odd" xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:moduleRef[@url]|//t:elementSpec[@ident='formula'])">
+        <xi:include href="../Exemplars/tei_math.odd" xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:moduleRef[@url]|//t:elementSpec[@ident='formula'])">
           <xi:fallback> ERROR: cannot locate ODD changes for MathML </xi:fallback>
         </xi:include>
         <macroSpec type="pe" ident="AnyThing" mode="add">
@@ -82,16 +82,12 @@
             <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
               <choice>
                 <element>
-                  <xi:include href="http://www.tei-c.org/release/xml/tei/custom/odd/names.xml">
+                  <xi:include href="../Exemplars/names.xml">
                     <xi:fallback> ERROR: cannot locate list of names</xi:fallback>
                   </xi:include>
                   <zeroOrMore>
                     <attribute>
                       <anyName>
-                        <except>
-                          <name>xml:id</name>
-                          <name>xml:lang</name>
-                        </except>
                       </anyName>
                     </attribute>
                   </zeroOrMore>
