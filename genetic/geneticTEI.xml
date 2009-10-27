@@ -821,7 +821,7 @@ over </line>
 </p>
 <p>Here are some further examples showing the use of this element,
 taken from the manuscript drafts of Thomas Moore's <title>Lalla
-Rookh</title> (1817), provided by Justin Tonra, NUIG. The first shows
+Rookh</title> (1817)<!--, provided by Justin Tonra, NUIG-->. The first shows
 a simple use of a metamark used to take stock of the progress of
 composition:
 
@@ -835,7 +835,7 @@ has composed to the given point, and are not part of the text, but
 represent a stage at which Moore is taking stock of the progress of
 his composition.
 </p>
-<p><figure><graphic url="examples/moore03.tif"/></figure> This example
+<p><figure><graphic url="examples/moore03.png"/></figure> This example
 demonstrates the use of a common proof-correction mark: in the left
 margin of the page, adjacent to a group of three cancelled lines of
 verse, the word "stet" is written.  "Stet", a Latin word meaning "let
@@ -846,7 +846,7 @@ evidenced by their appearance in the first printed edition of <title>Lalla
 Rookh</title>. The word, "stet" does not form part of the text, but rather
 declares that a certain function be performed upon the text.
 </p>
-<p><figure><graphic url="examples/moore04.tif"/></figure> In this example
+<p><figure><graphic url="examples/moore04.png"/></figure> In this example
  two 
 alternative readings are provided, without either one being prioritised 
 or subordinated. While the author apparently first composed the line 
@@ -920,51 +920,12 @@ target="http://www.whitmanarchive.org/resources/sleepers/loc.00295.jpg"
        </p>
 <p>Our recommendation is to record the actual state of the witness, but
 in such a way as to facilitate its reorganization as a distinct
-processing step. 
-
-<!-- decision is to just use stand off : what you move is the
-indicated element. so if you point to a line you move the line; if you
-point to a span, you move the content However it remains a problem 
-
-remove tr element as well; use generic
-
--->
-<!--
-Thus, we provide an additional element <gi>ge:tr</gi>
-the function of which is to mark explicitly the section of text which
-is to be transposed, and which carries an attribute <att>moveTo</att>
-to indicate the location in the document to which it is to be
-transposed. The presence and content of metamarks should  also be indicated,
-where feasible.</p>
-
-       <p>In the following simple example, taken from an Ibsen
-       manuscript 
-<figure><graphic url="examples/ibsen01.jpg"/>
-<head>Extracted from <ptr target="http://www.emunch.no/tei-mm-2008/ms.html"/></head></figure>, the underlined numbers 1 and 2 indicate that,
-       although the word <mentioned>bör</mentioned> precedes the word
-       <mentioned>hör</mentioned> in the text, the order of the two words should be reversed. We
-may encode this as follows:        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<ge:line>
-<ge:tr xml:id="ib1" moveTo="#ib2">bör</ge:tr>
-<ge:metaMark rend="underline" function="transposition" 
-	      place="above">2.</ge:metaMark> og 
-<ge:tr xml:id="ib2" moveTo="#ib1">hör</ge:tr>
-<ge:metaMark rend="underline" function="transposition" 
-        place="above">1.</ge:metaMark></ge:line>
-</egXML> </p>
--->
-<!-- problem of transposition: does it move just cdata or also markup?
-     what if result is ill formed?  metamarks are not precise enough -->
-
-<!-- An alternative approach to the use of the <att>moveTo</att>
-attribute, is to-->
-
-We propose to represent the re-alignment of transposed blocks or
-segments by means of a stand-off mechanism. The elements <gi>ge:transposeGrp</gi>
-and <gi>ge:transpose</gi> are provided for this purpose.
-For example, in the following extract from an Ibsen manuscript <figure><graphic url="examples/ibsen01.jpg"/>
-<head>Extracted from <ptr
-target="http://www.emunch.no/tei-mm-2008/ms.html"/></head></figure>,
+processing step.  We propose to represent the re-alignment of
+transposed blocks or segments by means of a stand-off mechanism. The
+elements <gi>ge:transposeGrp</gi> and <gi>ge:transpose</gi> are
+provided for this purpose. For example, in the following extract 
+from an Ibsen manuscript <figure><graphic url="examples/ibsen01.jpg"/>
+<head>Extracted from <ref>http://www.emunch.no/tei-mm-2008/ms.html</ref></head></figure>,
 the underlined numbers 1 and 2 indicate that, although the word
 <mentioned>bör</mentioned> precedes the word
 <mentioned>hör</mentioned> in the text, the order of the two words
@@ -987,10 +948,8 @@ should be reversed. We may encode this as follows:
 sections of text being transposed. When (as in the following example)
 the whole of line is to be transposed, there is no need to delimit the
 sections concerned: 
-Thus, in the following example from the same manuscript, two lines are to
-be interchanged:
 <figure><graphic url="examples/ibsen04.jpg"/>
-<head>Extracted from <ptr target="http://www.emunch.no/tei-mm-2008/ms3.html"/></head></figure>
+<head>Extracted from <ref>http://www.emunch.no/tei-mm-2008/ms3.html</ref></head></figure>
 
  <egXML xmlns="http://www.tei-c.org/ns/Examples">
  <ge:line xml:id="ib3"><ge:metaMark function="transposition"
@@ -1007,14 +966,16 @@ da kan du Folkets Jøkelhjerter tine;</ge:line>
      </ge:transpose>
   </ge:transposeGrp>
           </egXML>
-When transposition is made, the whole element indicated is understood to
-be moved, not just its contents. In the above example, the metamarks
-are thus understood to be moved along with the lines to which they apply.
+When transposition is made, the whole element indicated is understood
+to be moved, not just its contents. In the above example, the
+metamarks are thus understood to be moved along with the lines to
+which they apply.
 </p>
-<p>One or more <gi>transposeGrp</gi> elements may be supplied either embedded within the
-text or in the <gi>profileDesc</gi> of the header, depending on local
-preference. Each <gi>transposeGrp</gi> can contain one or more
-<gi>transpose</gi> element, each of which defines a single transposition.</p>
+<p>One or more <gi>transposeGrp</gi> elements may be supplied either
+embedded within the text or in the <gi>profileDesc</gi> of the header,
+depending on local preference. Each <gi>transposeGrp</gi> can contain
+one or more <gi>transpose</gi> element, each of which defines a single
+transposition.</p>
     </div>
     <div>
        <head>Substitution</head>
@@ -1044,23 +1005,22 @@ could be encoded as follows:<egXML
 
     <div>
        <head>Undoing alterations</head>
-       <p>In some cases an author indicates that  an alteration is
-       itself to be altered: for example, a struck through passage may be
-          restored via a dotted underlining, or the underlining of a passage may be
-          deleted by a wavy line. </p>
-       <p>The TEI provides an  element <gi>restore</gi> for one
+       <p>In some cases an author indicates that an alteration is
+       itself to be altered: for example, a struck through passage may
+       be restored via a dotted underlining, or the underlining of a
+       passage may be deleted by a wavy line. </p>
+       <p>The TEI provides an element <gi>restore</gi> for one
        specific kind of alteration to an alteration, namely the
        undoing of a deletion. We propose a more general element,
-       <gi>undo</gi>.
-The element <gi>ge:undo</gi> usually encloses the
-          element (e.g. the <gi>tr</gi>, <gi>add</gi>, <gi>del</gi>
-	  etc.) to be undone. If it appears within such an element, the
-	  implication is that only this part of the parent element has
-	  been cancelled. For example, in this passage 
-           taken from Giacomo Leopardi's <title>Zibaldone</title> (p.
-          3595), the phrase <mentioned>si rechi á</mentioned> was
-	  underlined word by word, and then the underlining of the
-	  word <mentioned>si</mentioned> was cancelled. <figure>
+       <gi>undo</gi>. The element <gi>ge:undo</gi> usually encloses
+       the element (e.g. the <gi>tr</gi>, <gi>add</gi>, <gi>del</gi>
+       etc.) to be undone. If it appears within such an element, the
+       implication is that only this part of the parent element has
+       been cancelled. For example, in this passage taken from Giacomo
+       Leopardi's <title>Zibaldone</title> (p.  3595), the phrase
+       <mentioned>si rechi á</mentioned> was underlined word by word,
+       and then the underlining of the word <mentioned>si</mentioned>
+       was cancelled. <figure>
              <graphic url="examples/leap01.png"/>
           </figure>This could be encoded as follows:<egXML
              xmlns="http://www.tei-c.org/ns/Examples">
