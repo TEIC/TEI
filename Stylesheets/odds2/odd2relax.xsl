@@ -202,12 +202,13 @@
   
   <xsl:template match="rng:ref" mode="cleanup">
     <xsl:choose>
-      <xsl:when test="ancestor::rng:define[@name='egXML'] and
+      <xsl:when test="ancestor::rng:define[@name='egXML' or @name='macro.schemaPattern'] and
 		      starts-with(@name, 'macro.any')">
 	<xsl:for-each select="key('DEFED', @name)">
 	  <xsl:copy-of select="*"/>
 	</xsl:for-each>
       </xsl:when>
+
       <xsl:when test="key('DEFED',@name)">
 	<ref name="{@name}" xmlns="http://relaxng.org/ns/structure/1.0"/>
       </xsl:when>
