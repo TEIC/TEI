@@ -209,11 +209,11 @@
                             <pic:blipFill>
                                 <a:blip>
                                     <xsl:attribute name="r:embed">
-                                        <xsl:variable name="newID">
-                                            <xsl:number level="any"/>
-                                        </xsl:variable>
-                                        <xsl:value-of
-                                            select="concat('rId', string(300 + number($newID)))"/>
+				      <xsl:variable name="newID">
+					<xsl:number level="any"/>
+				      </xsl:variable>
+				      <xsl:text>rId</xsl:text>
+				      <xsl:value-of select="300 + number($newID)"/>
                                     </xsl:attribute>
                                 </a:blip>
                                 <a:stretch>
