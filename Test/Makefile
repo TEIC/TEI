@@ -154,8 +154,9 @@ test-dtd:
 	echo xmllint DTD 
 	echo =======================================
 	echo = 
-	echo = expect error in tagdocs about ref, and testtite about xmlns:t
-	echo = 
+	echo = expect error in tagdocs about ref, testtite about xmlns:t
+	echo = and in tagdocs about non-text nodes
+	echo =
 	echo =======================================
 	-for i in `echo $(TESTFILES) $(TESTFILESDTD)`; do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
 
