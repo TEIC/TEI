@@ -969,7 +969,7 @@
                                     </xsl:otherwise>
                                 </xsl:choose>
                                 <xsl:choose>
-                                    <xsl:when test="@align">
+                                    <xsl:when test="@teidocx:align">
                                         <w:jc w:val="{@align}"/>
                                     </xsl:when>
                                     <xsl:when

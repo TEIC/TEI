@@ -250,7 +250,7 @@
 		    <xsl:for-each select="w:tc">
 		      <cell>
 			<xsl:if test="w:p/w:pPr/w:jc">
-			  <xsl:attribute name="align">
+			  <xsl:attribute name="teidocx:align">
 			    <xsl:value-of select="w:p[1]/w:pPr/w:jc/@w:val"/>
 			  </xsl:attribute>
 			</xsl:if>

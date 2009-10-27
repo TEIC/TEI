@@ -73,7 +73,7 @@
                     </edition>
                 </editionStmt>
                 <publicationStmt>
-                    <p></p>
+                    <p>&#10;</p>
                 </publicationStmt>
                 <sourceDesc>
                     <p>Converted from a Word document </p>
@@ -83,17 +83,18 @@
 	      <xsl:call-template name="generateAppInfo"/>
 	    </encodingDesc>
             <revisionDesc>
-                <change>
-                    <date>
-                        <xsl:text>$LastChangedDate: </xsl:text>
-                    	<xsl:value-of select="teidocx:whatsTheDate()"/>
-                        <xsl:text>$</xsl:text>
-                    </date>
-                    <respStmt>
-                        <name>$LastChangedBy: rahtz $</name>
-                    </respStmt>
-                    <item>$LastChangedRevision: 6820 $</item>
-                </change>
+	      <change>
+		<date>
+		  <xsl:text>$LastChangedDate: </xsl:text>
+		  <xsl:value-of select="teidocx:whatsTheDate()"/>
+		  <xsl:text>$</xsl:text>
+		</date>
+		<respStmt>
+		  <name>
+		    <xsl:call-template name="getDocAuthor"/>
+		  </name>
+		</respStmt>
+	      </change>
             </revisionDesc>
         </teiHeader>
     </xsl:template>
