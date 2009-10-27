@@ -746,16 +746,18 @@ The <att>stage</att> attribute used here is discussed further below (<ptr target
        element <gi>ge:used</gi> is provided to mark this kind of
        <soCalled>deletion</soCalled>.</p>
 <p>The following page from the Walt Whitman archive has been crossed
-through to indicate used material:
-<figure><graphic url="examples/whitman02.jpg"/><head>Page from 
-http://www.whitmanarchive.org/resources/sleepers/20051105_0650.jpg</head></figure>. This
-page contains many deletions, which should be
-distinguished from the deletion signalled by the large cross. Material
-to be marked as re-used generally spans more than one zone or
-line. For that reason, the <gi>used</gi> element is a spanning
-element, indicating the end of the used area by means of a
-<att>spanTo</att> attribute. One way of encoding this page might thus
-be:
+through to indicate used material: <figure><graphic
+url="examples/whitman02.jpg" width="50%"/><head>Page from
+http://www.whitmanarchive.org/resources/sleepers/20051105_0650.jpg</head></figure>
+This page contains many internal deletions, but these should be
+distinguished from the <soCalled>deletion</soCalled> signalled by the
+large cross, which actually shows that the page has been transferred
+or re-used, not deleted. </p>
+<p>Material marked as re-used in this way often
+spans more than one zone or line. For that reason, the <gi>used</gi>
+element is a spanning element, indicating the end of the used area by
+means of a <att>spanTo</att> attribute. We might encode the above page
+as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <surface>
      <ge:used rend="cross" spanTo="#X2"/>
@@ -789,28 +791,33 @@ passage over there</q>). We also consider as metamarks dates
 introduced to mark the beginning of a manuscript or a revision, but
 not forming part of it.</p>
 
-<p>The <gi>metaMark</gi> element carries a
-  <att>function</att> attribute which specifies the function of
-             the meta-mark and a <att>targets</att> attribute which points to the
-             element or elements concerned. </p>
+<p>The <gi>metaMark</gi> element carries a <att>function</att>
+attribute which specifies the function of the meta-mark and a
+<att>targets</att> attribute which points to the element or elements
+concerned. </p>
 
 <p>The following example is taken from <title>Kundige bok 2</title>, a
-15thC legal book from the city of Göttingen, containing regulations of
-everyday life, issued by the city council <figure><graphic
-url="examples/ka04_1v.jpg"/></figure>
+15th century legal book from the city of Göttingen, containing regulations of
+everyday life issued by the city council <figure><graphic
+url="examples/ka04_1v-dtl.jpg"/></figure>
 </p>
 
-<p>The paragraph of interest is the second one (the first complete). The
-transcription of the first part of this paragraph (the second was
-added later) reads: <q>Ock en schullen de bruwer bruwere des hilgen
-dages nicht over setten noch uppe den stillen fridach bruwen</q>
-</p>
-<p>
-On the left margin, the word <mentioned>lege</mentioned> functions 
-as a metamark. Whether the deletion of the paragraph had happened before 
-the insertion of <mentioned>lege</mentioned> or not, the word indicates that this paragraph has 
-to be read, thus was part of the regulations. To make it more 
-complicated: <mentioned>lege</mentioned>  itself was deleted afterwards.
+<p>In the second paragraph., the sentence beginning <q>Ock en schullen
+de bruwere...</q> was first written along with the word <mentioned
+xml:lang="lat">lege</mentioned> ("read") in the left hand margin,
+functioning as a metamark to indicate that this sentence forms part of
+the regulations. A further sentence was then added, while at some later
+stage or stages the text and also the metamark were deleted. We might
+encode this as follows:
+
+<egXML
+  xmlns="http://www.tei-c.org/ns/Examples">
+<ge:metaMark function="flag" targets="#s1">lege</ge:metaMark>
+<line xml:id="s1">Ock en schullen de bruwere des hilgen dages nicht 
+over </line>
+<line>setten noch uppe den stillen fridach bruwen. Noch blah blah</line>
+<line>I cant read this sorry </line>
+</egXML> 
 </p>
 <p>Here are some further examples showing the use of this element,
 taken from the manuscript drafts of Thomas Moore's <title>Lalla
