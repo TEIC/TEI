@@ -207,6 +207,7 @@ valid: check
 #	-xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
 
 test:
+	(cd Exemplars; make names) 
 	(cd Test; make XSL=${XSL})
 
 exemplars:
@@ -309,7 +310,7 @@ dist-doc:
 	ln -s tei-p5-doc tei-p5-doc-`cat ../VERSION` ; \
 	zip -q -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION` )
 
-dist-test: 
+dist-test:
 	rm -rf release/tei-p5-test*
 	mkdir -p release/tei-p5-test/share/tei
 	(cd Test; make clean)
