@@ -158,9 +158,7 @@
         <xd:short>handle tabs</xd:short>
     </xd:doc>
     <xsl:template match="w:r/w:tab">
-        <c rend="tab">
-            <xsl:text>&#009;</xsl:text>
-        </c>
+      <xsl:text>&#009;</xsl:text>
     </xsl:template>
     
     <xd:doc>

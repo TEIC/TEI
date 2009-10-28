@@ -477,6 +477,12 @@
     </xsl:template>
     
     <!-- override handling of runs -->
+    <xsl:template match="w:r/w:tab">
+        <c rend="tab">
+            <xsl:text>&#009;</xsl:text>
+        </c>
+    </xsl:template>
+
 	<xsl:template match="w:r|w:ins">
 		<xsl:variable name="style">
 			<xsl:value-of select="w:rPr/w:rStyle/@w:val"/>
