@@ -627,7 +627,13 @@
 	  <xsl:attribute name="w:val">
 	    <xsl:call-template name="getStyleName">
 	      <xsl:with-param name="in">
-		<xsl:text>TermPreferred</xsl:text>
+		<xsl:choose>
+		  <xsl:when
+		      test="tei:termGrp/tei:termNote[@type='administrativeStatus']='preferredTerm-admn-sts'">preferredTerm</xsl:when>
+		  <xsl:otherwise>
+		    <xsl:value-of select="tei:termGrp/tei:termNote[@type='administrativeStatus']"/>
+		  </xsl:otherwise>
+		</xsl:choose>
 	      </xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:attribute>
@@ -635,30 +641,30 @@
       </w:pPr>
       <w:r>
 	<w:t>
-	  <xsl:value-of select="tei:termGrp/tei:term"/>
+	  <xsl:apply-templates select="tei:termGrp/tei:term"/>
 	</w:t>
       </w:r>
     </w:p>
-    <w:p>
-      <w:pPr>
-	<w:pStyle>
-	  <xsl:attribute name="w:val">
-	    <xsl:call-template name="getStyleName">
-	      <xsl:with-param name="in">
-		<xsl:text>Definition</xsl:text>
-	      </xsl:with-param>
-	    </xsl:call-template>
-	  </xsl:attribute>
-	</w:pStyle>
-      </w:pPr>
-      <w:r>
-	<w:t>
-	  <xsl:value-of select="tei:descripGrp/tei:descrip[@type='definition']"/>
-	</w:t>
-      </w:r>
-    </w:p>
-    <xsl:apply-templates select="descripGrp/note"/>
   </xsl:for-each>
+  <w:p>
+    <w:pPr>
+      <w:pStyle>
+	<xsl:attribute name="w:val">
+	  <xsl:call-template name="getStyleName">
+	    <xsl:with-param name="in">
+	      <xsl:text>Definition</xsl:text>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:attribute>
+      </w:pStyle>
+    </w:pPr>
+    <w:r>
+      <w:t>
+	<xsl:value-of select="tei:descripGrp/tei:descrip[@type='definition']"/>
+      </w:t>
+    </w:r>
+  </w:p>
+  <xsl:apply-templates select="descripGrp/note"/>
 
 </xsl:template>
 

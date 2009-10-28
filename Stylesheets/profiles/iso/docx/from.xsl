@@ -688,38 +688,48 @@ termPreferred
 termRef
 -->
 	      <termEntry id="{.}">
+		<descripGrp>
+		  <descrip type="definition">
+		    <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='Definition'] except .">
+		      <xsl:apply-templates/>
+		    </xsl:for-each>
+		  </descrip>
+		  <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteTermEntry'] except .">
+		    <note>
+		      <xsl:apply-templates/>
+		    </note>
+		  </xsl:for-each>
+		</descripGrp>
 		<langSet xml:lang="en">
-		  <ntig>
-		    <termGrp>
-                        <xsl:for-each
-			    select="current-group()">
-			  <xsl:choose>
-			    <xsl:when test="w:pPr/w:pStyle/@w:val='TermNum'"/>
-			    <xsl:when test="w:pPr/w:pStyle/@w:val='Definition'"/>
-			    <xsl:when test="w:pPr/w:pStyle/@w:val='noteTermEntry'"/>
-			    <xsl:otherwise>
-			      <term id="{.}-{position()}">
-				<xsl:apply-templates/>
-			      </term>
-			    </xsl:otherwise>
-			  </xsl:choose>
-			  </xsl:for-each>
-		      <termNote type="partOfSpeech">noun</termNote>
-		      <termNote type="administrativeStatus">preferredTerm-admn-sts</termNote>
-		    </termGrp>
-		    <descripGrp>
-		      <descrip type="definition">
-                        <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='Definition'] except .">
-                            <xsl:apply-templates/>
-                        </xsl:for-each>
-		      </descrip>
-		      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteTermEntry'] except .">
-			<note>
-			  <xsl:apply-templates/>
-			</note>
-		      </xsl:for-each>
-		    </descripGrp>
-		  </ntig>
+		  <xsl:for-each  select="current-group()">
+		    <xsl:variable name="Thing">
+		      <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
+		    </xsl:variable>
+		    <xsl:choose>
+		      <xsl:when test="$Thing='TermNum'"/>
+		      <xsl:when test="w:pPr/w:pStyle/@w:val='Definition'"/>
+		      <xsl:when test="w:pPr/w:pStyle/@w:val='noteTermEntry'"/>
+		      <xsl:otherwise>
+			<ntig>
+			  <termGrp>
+			    <term id="{.}-{position()}">
+			      <xsl:apply-templates/>
+			    </term>
+			    <termNote type="partOfSpeech">noun</termNote>
+			    <termNote type="administrativeStatus">
+			    <xsl:choose>
+			      <xsl:when
+				  test="$Thing='preferredTerm'">preferredTerm-admn-sts</xsl:when>
+			      <xsl:otherwise>
+				<xsl:value-of select="$Thing"/>
+			      </xsl:otherwise>
+			    </xsl:choose>
+			    </termNote>
+			  </termGrp>
+			</ntig>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:for-each>
 		</langSet>
 	      </termEntry>
             </xsl:for-each-group>
