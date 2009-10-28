@@ -182,7 +182,8 @@ xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/stri
   
   <xsl:template match="rng:ref" mode="cleanup">
     <xsl:choose>
-      <xsl:when test="ancestor::rng:define[@name='egXML' or @name='macro.schemaPattern' or @name='constraint'] and
+      <xsl:when test="(ancestor::rng:element[@name='egXML' or @name='constraint']
+		      or ancestor::rng:define[contains(@name,'macro.schemaPattern')]) and
 		      starts-with(@name, 'macro.any')">
 	<xsl:for-each select="key('DEFED', @name)">
 	  <xsl:copy-of select="*"/>
