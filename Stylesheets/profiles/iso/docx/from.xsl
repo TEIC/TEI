@@ -687,7 +687,7 @@ termDeprecated
 termPreferred
 termRef
 -->
-	      <termEntry id="{.}">
+	      <termEntry id="{.}" xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
 		<descripGrp>
 		  <descrip type="definition">
 		    <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='Definition'] except .">
@@ -717,13 +717,8 @@ termRef
 			    </term>
 			    <termNote type="partOfSpeech">noun</termNote>
 			    <termNote type="administrativeStatus">
-			    <xsl:choose>
-			      <xsl:when
-				  test="$Thing='preferredTerm'">preferredTerm-admn-sts</xsl:when>
-			      <xsl:otherwise>
 				<xsl:value-of select="$Thing"/>
-			      </xsl:otherwise>
-			    </xsl:choose>
+				<xsl:text>-admn-sts</xsl:text>
 			    </termNote>
 			  </termGrp>
 			</ntig>

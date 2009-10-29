@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
-    exclude-result-prefixes="rng teix fo a tei s sch xd xs html" 
+    exclude-result-prefixes="rng teix fo xi i a tei s sch xd xs html" 
     version="2.0"
     xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:i="http://www.iso.org/ns/1.0"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
     xmlns:fo="http://www.w3.org/1999/XSL/Format" 
     xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -10,7 +13,6 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:teix="http://www.tei-c.org/ns/Examples"
     xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:import href="../common2/verbatim.xsl"/>
@@ -193,6 +195,9 @@
 
   <xsl:template match="rng:ref">
     <xsl:choose>
+      <xsl:when test="ancestor::tei:content[@preserveNames='true']">
+	<rng:ref name="{@name}"/>
+      </xsl:when>
       <xsl:when test="key('IDENTS',@name)">
 	<rng:ref name="{$patternPrefixText}{@name}"/>
       </xsl:when>
@@ -550,43 +555,38 @@ select="$makeDecls"/></xsl:message>
               <xsl:choose>
                 <xsl:when test="$type='sequence'">
                   <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
-                    <ref name="{$patternPrefixText}{@ident}"
-                      xmlns="http://relaxng.org/ns/structure/1.0"/>
-                  </xsl:for-each>
+		    <xsl:apply-templates select="." mode="classmember"/>
+		  </xsl:for-each>
                 </xsl:when>
                 <xsl:when test="$type='sequenceOptional'">
                   <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
                     <optional xmlns="http://relaxng.org/ns/structure/1.0">
-                      <ref name="{$patternPrefixText}{@ident}"
-                        xmlns="http://relaxng.org/ns/structure/1.0"/>
-                    </optional>
+		    <xsl:apply-templates select="." mode="classmember"/>
+		    </optional>
                   </xsl:for-each>
                 </xsl:when>
 
                 <xsl:when test="$type='sequenceRepeatable'">
                   <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
                     <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-                      <ref name="{$patternPrefixText}{@ident}"
-                        xmlns="http://relaxng.org/ns/structure/1.0"/>
-                    </oneOrMore>
+		      <xsl:apply-templates select="." mode="classmember"/>
+		    </oneOrMore>
                   </xsl:for-each>
                 </xsl:when>
 
                 <xsl:when test="$type='sequenceOptionalRepeatable'">
                   <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
                     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-                      <ref name="{$patternPrefixText}{@ident}"
-                        xmlns="http://relaxng.org/ns/structure/1.0"/>
-                    </zeroOrMore>
+		      <xsl:apply-templates select="." mode="classmember"/>
+		    </zeroOrMore>
                   </xsl:for-each>
                 </xsl:when>
 
                 <xsl:otherwise>
                   <rng:choice>
                     <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
-                      <ref name="{$patternPrefixText}{@ident}"
-                        xmlns="http://relaxng.org/ns/structure/1.0"/>
-                    </xsl:for-each>
+		      <xsl:apply-templates select="." mode="classmember"/>
+		    </xsl:for-each>
                   </rng:choice>
                 </xsl:otherwise>
               </xsl:choose>
@@ -661,10 +661,36 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template match="tei:desc" mode="tangle"/>
 
+  <xsl:template match="tei:classSpec" mode="classmember">
+    <ref name="{$patternPrefixText}{@ident}"
+	 xmlns="http://relaxng.org/ns/structure/1.0"/>
+  </xsl:template>
 
-
+  <xsl:template match="tei:elementSpec" mode="classmember">
+    <xsl:variable name="elementPrefix">
+      <xsl:choose>
+	<xsl:when test="@prefix">
+	  <xsl:value-of select="@prefix"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$patternPrefixText"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <ref name="{$elementPrefix}{@ident}"  xmlns="http://relaxng.org/ns/structure/1.0"/>
+  </xsl:template>
 
   <xsl:template match="tei:elementSpec" mode="tangle">
+    <xsl:variable name="elementPrefix">
+      <xsl:choose>
+	<xsl:when test="@prefix">
+	  <xsl:value-of select="@prefix"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$patternPrefixText"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:if test="$verbose='true'">
       <xsl:message> elementSpec <xsl:value-of select="@ident"/>
         <xsl:if test="@xml:id">: <xsl:value-of select="@xml:id"/></xsl:if>
@@ -689,7 +715,7 @@ select="$makeDecls"/></xsl:message>
           </xsl:variable>
           <xsl:choose>
             <xsl:when test="tei:content/rng:notAllowed">
-              <define name="{$patternPrefixText}{@ident}"
+              <define name="{$elementPrefix}{@ident}"
                 xmlns="http://relaxng.org/ns/structure/1.0">
                 <notAllowed xmlns="http://relaxng.org/ns/structure/1.0"/>
               </define>
@@ -698,7 +724,7 @@ select="$makeDecls"/></xsl:message>
               <xsl:variable name="Attributes">
                 <xsl:call-template name="summarizeAttributes"/>
               </xsl:variable>
-              <define name="{$patternPrefixText}{@ident}"
+              <define name="{$elementPrefix}{@ident}"
                 xmlns="http://relaxng.org/ns/structure/1.0">
                 <element name="{$name}" xmlns="http://relaxng.org/ns/structure/1.0">
                   <xsl:if test="@ns">
@@ -722,10 +748,10 @@ select="$makeDecls"/></xsl:message>
                       </xsl:if>
                     </xsl:when>
                     <xsl:otherwise>
-                      <ref name="{$patternPrefixText}{@ident}.content"
+                      <ref name="{$elementPrefix}{@ident}.content"
                         xmlns="http://relaxng.org/ns/structure/1.0"/>
                       <xsl:if test="not($Attributes='') or $TEIC='true'">
-                        <ref name="{$patternPrefixText}{@ident}.localattributes"
+                        <ref name="{$elementPrefix}{@ident}.localattributes"
                           xmlns="http://relaxng.org/ns/structure/1.0"/>
                       </xsl:if>
                     </xsl:otherwise>
@@ -743,12 +769,12 @@ select="$makeDecls"/></xsl:message>
                 </element>
               </define>
               <xsl:if test="$parameterize='true'">
-                <define name="{$patternPrefixText}{@ident}.content"
+                <define name="{$elementPrefix}{@ident}.content"
                   xmlns="http://relaxng.org/ns/structure/1.0">
                   <xsl:call-template name="defineContent"/>
                 </define>
                 <xsl:if test="not($Attributes='') or $TEIC='true'">
-                  <define name="{$patternPrefixText}{@ident}.localattributes"
+                  <define name="{$elementPrefix}{@ident}.localattributes"
                     xmlns="http://relaxng.org/ns/structure/1.0">
                     <xsl:call-template name="defineAttributes"/>
                   </define>
@@ -908,6 +934,17 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template match="tei:macroSpec" mode="tangle">
     <xsl:param name="filename"/>
+    <xsl:variable name="macroPrefix">
+      <xsl:choose>
+	<xsl:when test="@prefix">
+	  <xsl:value-of select="@prefix"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$patternPrefixText"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
     <xsl:variable name="entCont">
       <BLAH>
         <xsl:choose>
@@ -949,7 +986,7 @@ select="$makeDecls"/></xsl:message>
           <xsl:with-param name="grammar">true</xsl:with-param>
           <xsl:with-param name="content">
             <Wrapper>
-              <define name="{$patternPrefixText}{@ident}"
+              <define name="{$macroPrefix}{@ident}"
                 xmlns="http://relaxng.org/ns/structure/1.0">
                 <xsl:if test="$parameterize='true'">
                   <xsl:if test="starts-with(@ident,'macro.component')     or @predeclare='true'">

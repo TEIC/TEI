@@ -230,9 +230,11 @@ How can a class be ok?
   </xsl:template>
 
   <xsl:template match="tei:macroSpec" mode="final">
-    <xsl:variable name="k" select="@ident"/>
+    <xsl:variable name="k">
+      <xsl:value-of select="@ident"/>
+    </xsl:variable>
     <xsl:choose>
-      <xsl:when test="$stripped='true' and         starts-with(@ident,'macro.')"/>
+      <xsl:when test="$stripped='true' and starts-with(@ident,'macro.')"/>
       <xsl:when test="starts-with(@ident,'data.')"/>
       <xsl:when test="key('REFED',$k)">
         <xsl:copy>

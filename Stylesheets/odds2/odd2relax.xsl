@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xlink="http://www.w3.org/1999/xlink" 
+		xmlns:i="http://www.iso.org/ns/1.0"
 		xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+		xmlns:xi="http://www.w3.org/2001/XInclude"
 		xmlns:teix="http://www.tei-c.org/ns/Examples"
 		xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
 		xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -10,7 +12,7 @@
 		xmlns:xd="http://www.pnp-software.com/XSLTdoc"
 		xmlns:xs="http://www.w3.org/2001/XMLSchema"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-		exclude-result-prefixes="t tei a rng s xd xlink sch xs teix" 
+		exclude-result-prefixes="t tei a rng s xd xlink sch xs i xi teix" 
 		version="2.0">
   <xsl:import href="teiodds.xsl"/>
   <xd:doc type="stylesheet">
@@ -209,8 +211,10 @@
 	  <xsl:copy-of select="*"/>
 	</xsl:for-each>
       </xsl:when>
-
       <xsl:when test="key('DEFED',@name)">
+	<ref name="{@name}" xmlns="http://relaxng.org/ns/structure/1.0"/>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:content[@preserveNames='true']">
 	<ref name="{@name}" xmlns="http://relaxng.org/ns/structure/1.0"/>
       </xsl:when>
       <xsl:otherwise>

@@ -416,7 +416,7 @@
                         <xsl:attribute name="w:val">
                             <xsl:call-template name="getStyleName">
                                 <xsl:with-param name="in">
-                                    <xsl:text>TermPreferred</xsl:text>
+                                    <xsl:text>termPreferred</xsl:text>
                                 </xsl:with-param>
                             </xsl:call-template>
                         </xsl:attribute>
@@ -601,7 +601,7 @@
 
 <!-- TBX -->
 
-<xsl:template match="tei:termEntry">
+<xsl:template match="tbx:termEntry">
     <w:p>
       <w:pPr>
 	<w:pStyle>
@@ -620,20 +620,14 @@
 	</w:t>
       </w:r>
     </w:p>
-  <xsl:for-each select="tei:langSet/tei:ntig">
+  <xsl:for-each select="tbx:langSet/tbx:ntig">
     <w:p>
       <w:pPr>
 	<w:pStyle>
 	  <xsl:attribute name="w:val">
 	    <xsl:call-template name="getStyleName">
 	      <xsl:with-param name="in">
-		<xsl:choose>
-		  <xsl:when
-		      test="tei:termGrp/tei:termNote[@type='administrativeStatus']='preferredTerm-admn-sts'">preferredTerm</xsl:when>
-		  <xsl:otherwise>
-		    <xsl:value-of select="tei:termGrp/tei:termNote[@type='administrativeStatus']"/>
-		  </xsl:otherwise>
-		</xsl:choose>
+		<xsl:value-of select="substring-before(tbx:termGrp/tbx:termNote[@type='administrativeStatus'],'-adm-status')"/>
 	      </xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:attribute>
@@ -641,7 +635,7 @@
       </w:pPr>
       <w:r>
 	<w:t>
-	  <xsl:apply-templates select="tei:termGrp/tei:term"/>
+	  <xsl:apply-templates select="tbx:termGrp/tbx:term"/>
 	</w:t>
       </w:r>
     </w:p>
@@ -660,11 +654,11 @@
     </w:pPr>
     <w:r>
       <w:t>
-	<xsl:value-of select="tei:descripGrp/tei:descrip[@type='definition']"/>
+	<xsl:value-of select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
       </w:t>
     </w:r>
   </w:p>
-  <xsl:apply-templates select="descripGrp/note"/>
+  <xsl:apply-templates select="tbx:descripGrp/tbx:note"/>
 
 </xsl:template>
 
