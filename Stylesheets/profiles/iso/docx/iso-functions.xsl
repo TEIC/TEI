@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:tei="http://www.tei-c.org/ns/1.0" version="2.0" xmlns:iso="http://www.iso.org/ns/1.0"
     xmlns:cals="http://www.oasis-open.org/specs/tm9901"
+    xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -14,7 +15,6 @@
     xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
     xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
     xmlns:mml="http://www.w3.org/1998/Math/MathML"
-    xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
     xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
     xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
     exclude-result-prefixes="cals ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
@@ -166,7 +166,7 @@
 	    <name>toc 9</name>
 	    <name>Defterms</name>
 	    <name>TermNum</name>
-	    <name>TermPreferred</name>
+	    <name>termPreferred</name>
 	    <name>working_reference_number</name>
 	    <name>zzBiblio</name>
 	    <name>zzCopyright</name>
@@ -286,6 +286,9 @@
 
                     self::iso:wordObject[w:object] or
                     
+		    self::tbx:term or
+		    self::tbx:descrip or
+
                     self::tei:abbr or
                     self::tei:affiliation or
                     self::tei:att or

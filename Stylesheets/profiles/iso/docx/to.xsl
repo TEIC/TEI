@@ -627,17 +627,13 @@
 	  <xsl:attribute name="w:val">
 	    <xsl:call-template name="getStyleName">
 	      <xsl:with-param name="in">
-		<xsl:value-of select="substring-before(tbx:termGrp/tbx:termNote[@type='administrativeStatus'],'-adm-status')"/>
+		<xsl:value-of select="substring-before(tbx:termGrp/tbx:termNote[@type='administrativeStatus'],'-admn-sts')"/>
 	      </xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:attribute>
 	</w:pStyle>
       </w:pPr>
-      <w:r>
-	<w:t>
-	  <xsl:apply-templates select="tbx:termGrp/tbx:term"/>
-	</w:t>
-      </w:r>
+      <xsl:apply-templates select="tbx:termGrp/tbx:term"/>
     </w:p>
   </xsl:for-each>
   <w:p>
@@ -652,11 +648,7 @@
 	</xsl:attribute>
       </w:pStyle>
     </w:pPr>
-    <w:r>
-      <w:t>
-	<xsl:value-of select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
-      </w:t>
-    </w:r>
+    <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
   </w:p>
   <xsl:apply-templates select="tbx:descripGrp/tbx:note"/>
 
