@@ -623,10 +623,10 @@ which require a preprocess.
    for ZIP archives.
 	-->
     
-	<axsl:param name="archiveDirParameter"  tunnel="yes"/>
-	<axsl:param name="archiveNameParameter"  tunnel="yes"/>
-	<axsl:param name="fileNameParameter"  tunnel="yes"/>
-	<axsl:param name="fileDirParameter" tunnel="yes"/> 
+	<axsl:param name="archiveDirParameter"  tunnel="no"/>
+	<axsl:param name="archiveNameParameter"  tunnel="no"/>
+	<axsl:param name="fileNameParameter"  tunnel="no"/>
+	<axsl:param name="fileDirParameter" tunnel="no"/> 
     <xsl:call-template name="iso:exslt.add.imports" />
        
     <axsl:variable name="document-uri"><axsl:value-of select="document-uri(/)" /></axsl:variable>
