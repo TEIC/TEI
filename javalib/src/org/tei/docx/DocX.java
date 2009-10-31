@@ -291,13 +291,12 @@ public class DocX {
 			doAddXslParamsForTEI2DocX(toDocX);
 			
 			// transform and write back to newdocument.xml
-			File wordDotXMLFile = new File(directoryName + File.separator + "word" + File.separator + "newdocument.xml");
+			File wordDotXMLFile = new File(directoryName + File.separator + "word" + File.separator + "document.xml");
 			Serializer result = new Serializer();
 			result.setOutputFile(wordDotXMLFile);
 			toDocX.setInitialContextNode(teiDoc);
 			toDocX.setDestination(result);
 			toDocX.transform();
-			
 			
 			// remove original core.xml file
 			File orgCoreFile = new File(directoryName + File.separator + "docProps" + File.separator + "core.xml");
@@ -307,13 +306,7 @@ public class DocX {
 			File newCoreFile = new File(directoryName + File.separator + "docProps" + File.separator + "newcore.xml");
 			newCoreFile.renameTo(orgCoreFile);
 
-			// remove original document.xml file
-			File orgDocFile = new File(directoryName + File.separator + "word" + File.separator + "document.xml");
-			orgDocFile.delete();
-			
-			// move new document.xml
-			File newDocFile = new File(directoryName + File.separator + "word" + File.separator + "newdocument.xml");
-			newDocFile.renameTo(orgDocFile);
+	       
 		} catch (SaxonApiException e) {
 			e.printStackTrace();
 		}
