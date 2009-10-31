@@ -137,6 +137,7 @@ tex: xml
 	done
 
 pdf: tex
+	echo make sure you have Junicode, arphic and mincho fonts installed
 	mkdir -p Images
 	cp -r Source/Images/*.* Images
 	-echo '*' | ${XELATEX} Guidelines
