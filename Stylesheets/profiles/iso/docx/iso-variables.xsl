@@ -49,7 +49,7 @@
 	<xsl:variable name="TableNoteHeadingChar">TableNoteHeading Char</xsl:variable>
 	<xsl:variable name="Tabletitle">Table title</xsl:variable>
 	<xsl:variable name="TermNum">TermNum</xsl:variable>
-	<xsl:variable name="Terms">TermPreferred</xsl:variable>
+	<xsl:variable name="Terms">termPreferred</xsl:variable>
 	<xsl:variable name="ExtXref">ExtXref</xsl:variable>
 
 </xsl:stylesheet>

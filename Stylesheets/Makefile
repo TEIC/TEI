@@ -11,19 +11,6 @@ default:
 	@echo There is no default action
 	@echo
 
-dist: clean release
-	mkdir -p release/tei 
-	mkdir -p release/teip4
-	(cd release; ln -s tei-xsl tei-xsl-`cat ../VERSION`)
-	(cd release/p4; tar cf - .) | (cd release/teip4; tar xf - )
-	(cd release/p5; tar cf - .) | (cd release/tei; tar xf - )
-	(cd release/p5-2; tar cf - .) | (cd release/tei; tar xf - )
-	(cd release/common;tar cf - .) | (cd release/tei; tar xf - )
-	(cd release/common;tar cf - .) | (cd release/teip4; tar xf - )
-	(cd release; zip -r tei-xsl-`cat ../VERSION`.zip tei teip4 )
-
-release: common p4 p5 p5-2
-
 p5-2:
 	-mkdir -p release/p5-2
 	for i in  ${DIRS} ; do \
@@ -81,6 +68,19 @@ test: p4 p5 p5-2 common
 	rm release/p5/i18n.xml
 	rm release/p5-2/i18n.xml
 
+
+dist: clean release
+	mkdir -p release/tei 
+	mkdir -p release/teip4
+	(cd release/p4; tar cf - .) | (cd release/teip4; tar xf - )
+	(cd release/p5; tar cf - .) | (cd release/tei; tar xf - )
+	(cd release/p5-2; tar cf - .) | (cd release/tei; tar xf - )
+	(cd release/common;tar cf - .) | (cd release/tei; tar xf - )
+	(cd release/common;tar cf - .) | (cd release/teip4; tar xf - )
+	(cd release; zip -r tei-xsl-`cat ../VERSION`.zip tei teip4 )
+	rm -rf release/tei release/teip4
+
+release: common p4 p5 p5-2
 
 installp5-2: p5-2
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
