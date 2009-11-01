@@ -18,7 +18,11 @@
    </teiHeader>
 <text>
 <body>
-<div>
+  <p>Here is a simple <ptr target="#P1"/> <gi>ptr</gi> to the next section.</p>
+  <p>Here is a simple 
+  <ref target="#P1">reference to the next section</ref>.</p>
+
+<div xml:id="P1">
 <head>My Tagdocs Schema</head>
 <p>Here is the introduction to your document</p>
   <p>Here is the schema:</p>
@@ -29,7 +33,22 @@
       <moduleRef key="textstructure"/>
       <moduleRef key="linking"/>
       <moduleRef key="tagdocs"/>
-      <classSpec ident="att.global" mode="delete" module="tei" type="atts"/>
+        <!-- only change: add a silly attribute to <ptr> -->
+        <elementSpec ident="ptr" module="core" mode="change">
+          <attList>
+            <attDef ident="bill" mode="add">
+              <desc>silly, isn't it?</desc>
+              <datatype minOccurs="1" maxOccurs="1">
+                <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+              </datatype>
+              <valList type="open">
+                <valItem ident="congressional"/>
+                <valItem ident="duck"/>
+                <valItem ident="william"/>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
     </schemaSpec>
 </div>
 </body>
