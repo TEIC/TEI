@@ -801,7 +801,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="name" select="@ident"/>
     <xsl:if test="$parameterize='true'">
       <xsl:if test="$TEIC='true'">
-        <ref name="att.global.attributes"/>
+        <ref name="att.global.attributes"  xmlns="http://relaxng.org/ns/structure/1.0"/>
       </xsl:if>
       <xsl:for-each select="tei:classes/tei:memberOf">
         <xsl:for-each select="key('CLASSES',@key)">
@@ -861,14 +861,14 @@ select="$makeDecls"/></xsl:message>
             <xsl:apply-templates select="tei:content/*"/>
           </xsl:when>
           <xsl:otherwise>
-            <empty/>
+            <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
           </xsl:otherwise>
         </xsl:choose>
       </TEMPTREE>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="count($Contents/TEMPTREE/*)=0">
-        <empty/>
+        <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:for-each select="$Contents/TEMPTREE">
@@ -1721,7 +1721,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:with-param name="grammar">true</xsl:with-param>
       <xsl:with-param name="content">
         <Wrapper>
-          <define combine="choice" name="{@ident}.attributes">
+          <define combine="choice" name="{@ident}.attributes" xmlns="http://relaxng.org/ns/structure/1.0">
             <empty/>
           </define>
         </Wrapper>
