@@ -1065,7 +1065,7 @@ select="$makeDecls"/></xsl:message>
             </xsl:when>
             <xsl:when test="@url and $parameterize='false'">
               <xsl:comment>Start of import of <xsl:value-of select="@url"/></xsl:comment>
-              <div>
+              <div xmlns="http://relaxng.org/ns/structure/1.0">
                 <xsl:for-each select="document(@url)/rng:grammar">
                   <xsl:apply-templates mode="expandRNG"
                     select="*|@*|text()|comment()|processing-instruction()"/>
@@ -1112,7 +1112,7 @@ select="$makeDecls"/></xsl:message>
         </xsl:if>
         <xsl:comment>Start of import of <xsl:value-of select="@href"/>
         </xsl:comment>
-        <div>
+        <div xmlns="http://relaxng.org/ns/structure/1.0">
           <xsl:for-each select="document(@href)/rng:grammar">
             <xsl:apply-templates mode="expandRNG"
               select="*|@*|text()|comment()|processing-instruction()"/>
