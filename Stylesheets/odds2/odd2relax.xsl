@@ -77,7 +77,15 @@
       <xsl:with-param name="method">xml</xsl:with-param>
       <xsl:with-param name="suffix">.rng</xsl:with-param>
       <xsl:with-param name="body">
-        <rng:grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:t="http://www.thaiopensource.com/ns/annotations" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+        <grammar
+	    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+	    xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	    xmlns:t="http://www.thaiopensource.com/ns/annotations"
+	    xmlns:xlink="http://www.w3.org/1999/xlink"
+	    xmlns:tei="http://www.tei-c.org/ns/1.0"
+	    xmlns:teix="http://www.tei-c.org/ns/Examples"
+	    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+	    xmlns="http://relaxng.org/ns/structure/1.0">
           <xsl:attribute name="ns">
             <xsl:choose>
               <xsl:when test="@ns">
@@ -119,7 +127,7 @@
             </xsl:otherwise>
           </xsl:choose>
 	  <xsl:apply-templates select="tei:constraintSpec"/>
-        </rng:grammar>
+        </grammar>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
@@ -265,7 +273,13 @@
             <xsl:with-param name="method">xml</xsl:with-param>
             <xsl:with-param name="suffix">.rng</xsl:with-param>
             <xsl:with-param name="body">
-              <rng:grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:t="http://www.thaiopensource.com/ns/annotations" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+              <grammar
+		  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+		  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+		  xmlns:tei="http://www.tei-c.org/ns/1.0"
+		  xmlns:t="http://www.thaiopensource.com/ns/annotations"
+		  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+		  xmlns="http://relaxng.org/ns/structure/1.0">
                 <xsl:comment>
                   <xsl:text>Schema generated </xsl:text>
                   <xsl:call-template name="showDate"/>
@@ -276,7 +290,7 @@
                   <xsl:call-template name="makeDescription"/>
                 </xsl:comment>
                 <xsl:call-template name="moduleSpec-body"/>
-              </rng:grammar>
+              </grammar>
             </xsl:with-param>
           </xsl:call-template>
         </xsl:otherwise>
@@ -338,9 +352,9 @@
        elements -->
     <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:sort select="@ident"/>
-      <rng:define combine="choice" name="{@ident}">
-        <rng:notAllowed/>
-      </rng:define>
+      <define combine="choice" name="{@ident}" xmlns="http://relaxng.org/ns/structure/1.0">
+        <notAllowed/>
+      </define>
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="predeclare-classes">
