@@ -47,8 +47,13 @@ xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/stri
       <xsl:call-template name="generateDoc"/>
     </xsl:variable>
     <xsl:if test="$verbose='true'">
-      <xsl:message> I18N setup: Pattern prefix: <xsl:value-of select="$patternPrefixText"/> Target
-        language: <xsl:value-of select="$targetLanguage"/> Documentation language: <xsl:value-of select="$documentationLanguage"/>
+      <xsl:message> 
+	<xsl:text>I18N setup: Pattern prefix: </xsl:text>
+	<xsl:value-of  select="$patternPrefixText"/> 
+	<xsl:text>. Target  language: </xsl:text>
+	<xsl:value-of select="$targetLanguage"/>
+	<xsl:text>. Documentation language: </xsl:text>
+	<xsl:value-of select="$documentationLanguage"/>
       </xsl:message>
     </xsl:if>
     <xsl:variable name="filename" select="@ident"/>
