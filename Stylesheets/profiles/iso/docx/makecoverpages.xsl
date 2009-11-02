@@ -48,7 +48,7 @@
   
       </detail>
     <author>See AUTHORS</author>
-    <cvsId>$Id: to.xsl 6832 2009-10-12 22:42:59Z rahtz $</cvsId>
+    <cvsId>$Id$</cvsId>
     <copyright>2008, TEI Consortium</copyright>
 </doc>
 
