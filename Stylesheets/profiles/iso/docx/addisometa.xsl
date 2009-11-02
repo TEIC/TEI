@@ -43,21 +43,16 @@
 </xsl:template>
 
 
-<xsl:template match="tei:title[@type='introductory']">
+<xsl:template match="tei:titleStmt/tei:title[@type='introductory']">
   <xsl:call-template name="meta">
     <xsl:with-param name="tag">introductory_title</xsl:with-param>
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template match="tei:title[@type='main']">
+<xsl:template match="tei:titleStmt/tei:title[@type='main']">
   <xsl:call-template name="meta">
     <xsl:with-param name="tag">main_title</xsl:with-param>
   </xsl:call-template>
-  <xsl:copy>
-    <xsl:attribute name="iso:meta">main_title</xsl:attribute>
-    <xsl:apply-templates 
-	select="*|@*|processing-instruction()|comment()|text()" />
-  </xsl:copy>
 </xsl:template>
 
 <xsl:template match="tei:publicationStmt/tei:date">

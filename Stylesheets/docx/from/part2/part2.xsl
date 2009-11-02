@@ -213,7 +213,7 @@
 
     <!-- same for figure -->
     <xsl:template match="tei:figure/tei:head[starts-with(.,'Figure  —&#32;')]" mode="part2">
-      <head xmlns="http://www.oasis-open.org/specs/tm9901">
+      <head>
 	<xsl:value-of select="substring-after(.,'Figure  —&#32;')"/>
       </head>
     </xsl:template>
