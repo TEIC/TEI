@@ -845,17 +845,13 @@ select="$makeDecls"/></xsl:message>
             <list xmlns="http://relaxng.org/ns/structure/1.0">
               <oneOrMore>
                 <choice>
-                  <xsl:for-each select="tei:content">
                     <xsl:call-template name="valListChildren"/>
-                  </xsl:for-each>
                 </choice>
               </oneOrMore>
             </list>
           </xsl:when>
           <xsl:when test="tei:valList[@type='closed']">
-            <xsl:for-each select="tei:content">
               <xsl:call-template name="valListChildren"/>
-            </xsl:for-each>
           </xsl:when>
           <xsl:when test="tei:content">
             <xsl:apply-templates select="tei:content/*"/>
@@ -884,7 +880,7 @@ select="$makeDecls"/></xsl:message>
   <xsl:template name="valListChildren">
     <choice xmlns="http://relaxng.org/ns/structure/1.0">
       <xsl:for-each select="tei:valList/tei:valItem">
-        <value>
+        <value xmlns="http://relaxng.org/ns/structure/1.0">
           <xsl:choose>
             <xsl:when test="tei:altIdent=@ident">
               <xsl:value-of select="@ident"/>
@@ -1200,7 +1196,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:when test="tei:valList[@type='closed']">
         <choice xmlns="http://relaxng.org/ns/structure/1.0">
           <xsl:for-each select="tei:valList/tei:valItem">
-            <value>
+            <value xmlns="http://relaxng.org/ns/structure/1.0">
               <xsl:choose>
                 <xsl:when test="tei:altIdent=@ident">
                   <xsl:value-of select="@ident"/>
@@ -1227,7 +1223,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:when test="tei:valList[@type='semi']">
         <choice xmlns="http://relaxng.org/ns/structure/1.0">
           <xsl:for-each select="tei:valList/tei:valItem">
-            <value>
+            <value xmlns="http://relaxng.org/ns/structure/1.0">
               <xsl:choose>
                 <xsl:when test="tei:altIdent=@ident">
                   <xsl:value-of select="@ident"/>
