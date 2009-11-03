@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:edate="http://exslt.org/dates-and-times" xmlns="http://www.tei-c.org/ns/1.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:iso="http://www.iso.org/ns/1.0" 
     xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
@@ -18,7 +19,8 @@
     xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
     xmlns:mml="http://www.w3.org/1998/Math/MathML"
     xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
-    exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx pic rel a tei teidocx iso edate">
+    exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx pic rel a
+			     tei teidocx xs iso edate">
     
     <!-- import base conversion style -->
 
@@ -63,120 +65,71 @@
             </revisionDesc>
         </teiHeader>
     </xsl:template>
-    
-    <xsl:template match="w:body">
-      <text> 
-	<body>
-	  <msDesc>
-	    <xsl:attribute name="xml:lang">
-	      <xsl:text>en</xsl:text>
-	    </xsl:attribute>
-	    <xsl:attribute name="xml:id">
-	      <xsl:text>m1</xsl:text>
-	    </xsl:attribute>
-	    <xsl:choose>
-	      <xsl:when test="w:p[w:pPr/w:pStyle/@w:val='heading 1']">
-		<xsl:for-each-group select="w:p|w:tbl"
-				    group-starting-with="w:p[teidocx:is-firstlevel-heading(.)]">
-		  <xsl:choose>
-		    <xsl:when test="teidocx:is-heading(.)">
-			<xsl:call-template name="group-headings"/>		
-		    </xsl:when>
-		    <xsl:otherwise>
-		      <xsl:apply-templates select="." mode="headings"/>
-		    </xsl:otherwise>
-		  </xsl:choose>
-		</xsl:for-each-group>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:apply-templates select="w:p|w:tbl" mode="paragraph"/>
-	      </xsl:otherwise>
-	    </xsl:choose>
-	  </msDesc>
-	</body>
-      </text>
-    </xsl:template>
 
-    <xsl:template match="tei:msDesc" mode="part2">
-      <xsl:copy>
-	<xsl:copy-of select="@*"/>
-	<xsl:variable name="MS">
-	  <xsl:apply-templates mode="part2"/>
-      </xsl:variable>
-<xsl:message><xsl:copy-of select="$MS"/></xsl:message>
-      <xsl:for-each select="$MS">
-	<msIdentifier>
-	</msIdentifier>
-	<msContents>
-	</msContents>
-	<physDesc>
-	  <xsl:copy-of select="tei:physDesc/tei:p"/>
-	  <xsl:if test="tei:supportDesc or tei:layoutDesc">
-	    <objectDesc>
-	      <xsl:copy-of select="tei:supportDesc"/>
-	      <xsl:copy-of select="tei:layoutDesc"/>
-	    </objectDesc>
-	  </xsl:if>
-	  <xsl:copy-of select="tei:handDesc"/>
-	  <xsl:copy-of select="tei:decoDesc"/>
-	  <xsl:copy-of select="tei:bindingDesc"/>
-	</physDesc>
-	<history>
-	</history>
-      </xsl:for-each>
-      </xsl:copy>
+    <xsl:template match="tei:body" mode="part2">
+	<body>
+	  <xsl:variable name="MS">
+	    <xsl:apply-templates mode="part2"/>
+	  </xsl:variable>
+	  <xsl:for-each select="$MS">
+	    <msDesc>
+	      <xsl:attribute name="xml:lang">
+		<xsl:text>en</xsl:text>
+	      </xsl:attribute>
+	      <xsl:attribute name="xml:id">
+		<xsl:text>m1</xsl:text>
+	      </xsl:attribute>
+	      <msIdentifier>
+	      </msIdentifier>
+	      <xsl:copy-of select="tei:msContents"/>
+	      <physDesc>
+		<xsl:copy-of select="tei:physDesc/tei:p"/>
+		<xsl:if test="tei:supportDesc or tei:layoutDesc">
+		  <objectDesc>
+		    <xsl:copy-of select="tei:supportDesc"/>
+		    <xsl:copy-of select="tei:layoutDesc"/>
+		  </objectDesc>
+		</xsl:if>
+		<xsl:copy-of select="tei:handDesc"/>
+		<xsl:copy-of select="tei:decoDesc"/>
+		<xsl:copy-of select="tei:bindingDesc"/>
+	      </physDesc>
+	      <history>
+	      </history>
+	    </msDesc>
+	  </xsl:for-each>
+	  <xsl:copy-of select="tei:p|tei:div"/>
+	</body>
     </xsl:template>
       
-      <!-- some specific section headers -->
-    <xsl:template name="group-headings">
-        <xsl:variable name="Style" select="w:pPr/w:pStyle/@w:val"/>
-        <xsl:variable name="NextHeader"
-		      select="teidocx:get-nextlevel-header($Style)"/>
-        <div>
-            <!-- generate the head -->
-            <xsl:call-template name="generate-section-heading">
-                <xsl:with-param name="Style" select="$Style"/>
-            </xsl:call-template>
-            
-            <!-- Process subheadings -->
-            <xsl:for-each-group select="current-group() except ."
-                group-starting-with="w:p[w:pPr/w:pStyle/@w:val=$NextHeader]">
-                <xsl:choose>
-                    <xsl:when test="teidocx:is-heading(.)">
-                        <xsl:call-template name="group-headings"/>		
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:apply-templates select="." mode="headings"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:for-each-group>
-        </div>
+    <xsl:template match="tei:div[tei:head[string-length(.)=0] and
+			 count(*)=1]"  mode="part2">
     </xsl:template>
-
-    <xsl:template match="tei:div[tei:head[string-length(.)=0] and count(*)=1]"
-		  mode="part2"/>
 
     <xsl:template match="tei:div[tei:head='Decoration']"
 		  mode="part2">
       <decoDesc>
-	<p><xsl:apply-templates mode="part2"/></p>
+	<xsl:apply-templates mode="part2"/>
       </decoDesc>
+    </xsl:template>
+
+    <xsl:template match="tei:div[tei:head='Text']"
+		  mode="part2">
+      <msContents>
+	<xsl:apply-templates mode="part2"/>
+      </msContents>
     </xsl:template>
 
     <xsl:template match="tei:div[tei:head='Binding']"
 		  mode="part2">
       <bindingDesc>
-	<p>
 	<xsl:apply-templates mode="part2"/>
-	</p>
       </bindingDesc>
     </xsl:template>
 
     <xsl:template match="tei:div[tei:head='Physical Description']"  mode="part2">
       <physDesc>
-	<p>	
 	  <xsl:apply-templates mode="part2"/>
-	</p>
       </physDesc>
     </xsl:template>
 
@@ -217,4 +170,10 @@
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
+
+
+    <xsl:template match="tei:fw" mode="part2"/>
+    <xsl:template match="tei:milestone[@unit='section']"/>
+
+
 </xsl:stylesheet>
