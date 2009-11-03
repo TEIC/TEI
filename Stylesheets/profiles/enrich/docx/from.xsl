@@ -99,15 +99,11 @@
 		<history>
 		</history>
 	      </msDesc>
-	      <xsl:copy-of select="tei:p|tei:head"/>
+	      <xsl:copy-of select="tei:title|tei:p|tei:div|tei:head"/>
 	    </xsl:for-each>
 	  </xsl:for-each>
 	</body>
       </text>
-    </xsl:template>
-
-    <xsl:template match="tei:div[tei:head[string-length(.)=0] and
-			 count(*)=1]"  mode="part2">
     </xsl:template>
 
     <xsl:template match="tei:div[tei:head='Decoration']"
@@ -135,8 +131,16 @@
       </physDesc>
     </xsl:template>
 
-    <xsl:template match="tei:div" mode="part2">
-      <xsl:apply-templates mode="part2"/>
+    <xsl:template match="tei:body/tei:div" mode="part2">
+      <xsl:if test="not(tei:head[string-length(.)=0] and count(*)=1)">
+	<xsl:apply-templates mode="part2"/>
+      </xsl:if>
+    </xsl:template>
+
+    <xsl:template match="tei:body/tei:div/tei:head" mode="part2">
+      <title>
+	<xsl:apply-templates mode="part2"/>
+      </title>
     </xsl:template>
 
     <xsl:template match="tei:head[.='Decoration']" mode="part2"/>
