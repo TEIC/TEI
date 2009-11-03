@@ -24,37 +24,110 @@
 
     <xsl:import href="../../../docx/from/from.xsl"/>
     
-	<xsl:template match="w:body">
-		<text> <!--
-		     look for headings of various kinds, from which to
-		     generate sections
-			-->
-			<body>
-			  <msDesc>
-			  <xsl:choose>
-			    <xsl:when test="w:p[w:pPr/w:pStyle/@w:val='heading 1']">
-			      <xsl:for-each-group select="w:p|w:tbl"
-					group-starting-with="w:p[teidocx:is-firstlevel-heading(.)]">
-					<xsl:choose>
-						<xsl:when test="teidocx:is-heading(.)">
-							<xsl:call-template name="group-headings"/>		
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:apply-templates select="." mode="headings"/>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:for-each-group>
-			    </xsl:when>
-			    <xsl:otherwise>
-			      <xsl:apply-templates select="w:p|w:tbl" mode="paragraph"/>
-			    </xsl:otherwise>
-			  </xsl:choose>
-			  </msDesc>
-			</body>
-		</text>
-	</xsl:template>
+    <xsl:template name="create-tei-header">
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title>
+                        <xsl:call-template name="getDocTitle"/>
+                    </title>
+                    <author>
+                        <xsl:call-template name="getDocAuthor"/>
+                    </author>
+                </titleStmt>
+                <editionStmt>
+                    <edition>
+                        <date>
+                            <xsl:call-template name="getDocDate"/>
+                        </date>
+                    </edition>
+                </editionStmt>
+                <publicationStmt>
+                    <p>&#10;</p>
+                </publicationStmt>
+                <sourceDesc>
+                    <p>Converted from a Word document </p>
+                </sourceDesc>
+            </fileDesc>
+            <revisionDesc>
+	      <change>
+		<date>
+		  <xsl:text>$LastChangedDate: </xsl:text>
+		  <xsl:value-of select="teidocx:whatsTheDate()"/>
+		  <xsl:text>$</xsl:text>
+		</date>
+		  <name type="person">
+		    <xsl:call-template name="getDocAuthor"/>
+		  </name>
+	      </change>
+            </revisionDesc>
+        </teiHeader>
+    </xsl:template>
+    
+    <xsl:template match="w:body">
+      <text> 
+	<body>
+	  <msDesc>
+	    <xsl:attribute name="xml:lang">
+	      <xsl:text>en</xsl:text>
+	    </xsl:attribute>
+	    <xsl:attribute name="xml:id">
+	      <xsl:text>m1</xsl:text>
+	    </xsl:attribute>
+	    <xsl:choose>
+	      <xsl:when test="w:p[w:pPr/w:pStyle/@w:val='heading 1']">
+		<xsl:for-each-group select="w:p|w:tbl"
+				    group-starting-with="w:p[teidocx:is-firstlevel-heading(.)]">
+		  <xsl:choose>
+		    <xsl:when test="teidocx:is-heading(.)">
+			<xsl:call-template name="group-headings"/>		
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:apply-templates select="." mode="headings"/>
+		    </xsl:otherwise>
+		  </xsl:choose>
+		</xsl:for-each-group>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:apply-templates select="w:p|w:tbl" mode="paragraph"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </msDesc>
+	</body>
+      </text>
+    </xsl:template>
 
-    <!-- some specific section headers -->
+    <xsl:template match="tei:msDesc" mode="part2">
+      <xsl:copy>
+	<xsl:copy-of select="@*"/>
+	<xsl:variable name="MS">
+	  <xsl:apply-templates mode="part2"/>
+      </xsl:variable>
+<xsl:message><xsl:copy-of select="$MS"/></xsl:message>
+      <xsl:for-each select="$MS">
+	<msIdentifier>
+	</msIdentifier>
+	<msContents>
+	</msContents>
+	<physDesc>
+	  <xsl:copy-of select="tei:physDesc/tei:p"/>
+	  <xsl:if test="tei:supportDesc or tei:layoutDesc">
+	    <objectDesc>
+	      <xsl:copy-of select="tei:supportDesc"/>
+	      <xsl:copy-of select="tei:layoutDesc"/>
+	    </objectDesc>
+	  </xsl:if>
+	  <xsl:copy-of select="tei:handDesc"/>
+	  <xsl:copy-of select="tei:decoDesc"/>
+	  <xsl:copy-of select="tei:bindingDesc"/>
+	</physDesc>
+	<history>
+	</history>
+      </xsl:for-each>
+      </xsl:copy>
+    </xsl:template>
+      
+      <!-- some specific section headers -->
     <xsl:template name="group-headings">
         <xsl:variable name="Style" select="w:pPr/w:pStyle/@w:val"/>
         <xsl:variable name="NextHeader"
@@ -93,21 +166,27 @@
     <xsl:template match="tei:div[tei:head='Binding']"
 		  mode="part2">
       <bindingDesc>
-<p>	<xsl:apply-templates mode="part2"/></p>
+	<p>
+	<xsl:apply-templates mode="part2"/>
+	</p>
       </bindingDesc>
     </xsl:template>
 
-    <xsl:template match="tei:div[tei:head='Physical Description']"
-		  mode="part2">
+    <xsl:template match="tei:div[tei:head='Physical Description']"  mode="part2">
       <physDesc>
-<p>	<xsl:apply-templates mode="part2"/></p>
+	<p>	
+	  <xsl:apply-templates mode="part2"/>
+	</p>
       </physDesc>
+    </xsl:template>
+
+    <xsl:template match="tei:div" mode="part2">
+      <xsl:apply-templates mode="part2"/>
     </xsl:template>
 
     <xsl:template match="tei:head[.='Decoration']" mode="part2"/>
     <xsl:template match="tei:head[.='Binding']" mode="part2"/>
-    <xsl:template match="tei:head[.='Physical Description']"
-		  mode="part2"/>
+    <xsl:template match="tei:head[.='Physical Description']" mode="part2"/>
 
     <xsl:template match="@rend[.='Body Text']" mode="part2"/>
     <xsl:template match="@rend[.='Body Text Indent']" mode="part2"/>

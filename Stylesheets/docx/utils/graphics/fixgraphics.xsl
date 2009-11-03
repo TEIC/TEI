@@ -36,19 +36,21 @@
 	<xsl:copy-of select="@width"/>
 	<xsl:copy-of select="@scale"/>
 
-	<xsl:attribute name="teidocx:width">
-	  <xsl:for-each
-	      select="document(concat($DIR,'/',$newName,'.xmp'),/)">
-	    <xsl:value-of select="(number(key('W',1)) div 72) * 9144"/>
-	  </xsl:for-each>
-	</xsl:attribute>
-
-	<xsl:attribute name="teidocx:height">
-	  <xsl:for-each
-	      select="document(concat($DIR,'/',$newName,'.xmp'),/)">
-	    <xsl:value-of select="(number(key('H',1)) div 72) * 9144"/>
-	  </xsl:for-each>
-	</xsl:attribute>
+	<xsl:if test="doc-available(concat($DIR,'/',$newName,'.xmp'))">
+	  <xsl:attribute name="teidocx:width">
+	    <xsl:for-each
+		select="document(concat($DIR,'/',$newName,'.xmp'),/)">
+	      <xsl:value-of select="(number(key('W',1)) div 72) * 9144"/>
+	    </xsl:for-each>
+	  </xsl:attribute>
+	  
+	  <xsl:attribute name="teidocx:height">
+	    <xsl:for-each
+		select="document(concat($DIR,'/',$newName,'.xmp'),/)">
+	      <xsl:value-of select="(number(key('H',1)) div 72) * 9144"/>
+	    </xsl:for-each>
+	  </xsl:attribute>
+	</xsl:if>
     </xsl:copy>
   </xsl:template>
 </xsl:stylesheet>

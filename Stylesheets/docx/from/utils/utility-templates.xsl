@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0"
+		xmlns:xpath="http://www.w3.org/2005/xpath-functions"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:prop="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
@@ -30,7 +31,7 @@
     xmlns="http://www.tei-c.org/ns/1.0"
     exclude-result-prefixes="a cp dc dcterms dcmitype prop
     iso m mml mo mv o pic r rel
-    tbx tei teidocx v xs ve w10 w wne wp xd">
+    tbx tei teidocx v xs ve w10 w wne wp xd xpath">
     
     <xsl:import href="../parameters.xsl"/>
     
@@ -56,17 +57,19 @@
             <application ident="TEI_fromDOCX" version="2.4.0">
                 <label>DOCX to TEI</label>
             </application>
-            <xsl:for-each
-                select="document(concat($word-directory,'/docProps/custom.xml'))/prop:Properties/prop:property">
-                <xsl:choose>
-                    <xsl:when test="@name='TEI_fromDOCX'"/>
-                    <xsl:when test="contains(@name,'TEI')">
-                        <application ident="{@name}" version="{.}">
-                            <label><xsl:value-of select="@name"/></label>
-                        </application>
-                    </xsl:when>
-                </xsl:choose>
-            </xsl:for-each>
+	    <xsl:if test="xpath:doc-available(concat($word-directory,'/docProps/custom.xml'))">
+	      <xsl:for-each
+		  select="xpath:doc(concat($word-directory,'/docProps/custom.xml'))/prop:Properties/prop:property">
+		<xsl:choose>
+		  <xsl:when test="@name='TEI_fromDOCX'"/>
+		  <xsl:when test="contains(@name,'TEI')">
+		    <application ident="{@name}" version="{.}">
+		      <label><xsl:value-of select="@name"/></label>
+		    </application>
+		  </xsl:when>
+		</xsl:choose>
+	      </xsl:for-each>
+	    </xsl:if>
         </appInfo>
     </xsl:template>
     
