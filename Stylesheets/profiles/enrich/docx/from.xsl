@@ -66,42 +66,46 @@
         </teiHeader>
     </xsl:template>
 
-    <xsl:template match="tei:body" mode="part2">
+    <xsl:template match="tei:text" mode="part2">
+      <text>
 	<body>
-	  <xsl:variable name="MS">
-	    <xsl:apply-templates mode="part2"/>
-	  </xsl:variable>
-	  <xsl:for-each select="$MS">
-	    <msDesc>
-	      <xsl:attribute name="xml:lang">
-		<xsl:text>en</xsl:text>
-	      </xsl:attribute>
-	      <xsl:attribute name="xml:id">
-		<xsl:text>m1</xsl:text>
-	      </xsl:attribute>
-	      <msIdentifier>
-	      </msIdentifier>
-	      <xsl:copy-of select="tei:msContents"/>
-	      <physDesc>
-		<xsl:copy-of select="tei:physDesc/tei:p"/>
-		<xsl:if test="tei:supportDesc or tei:layoutDesc">
-		  <objectDesc>
-		    <xsl:copy-of select="tei:supportDesc"/>
-		    <xsl:copy-of select="tei:layoutDesc"/>
-		  </objectDesc>
-		</xsl:if>
-		<xsl:copy-of select="tei:handDesc"/>
-		<xsl:copy-of select="tei:decoDesc"/>
-		<xsl:copy-of select="tei:bindingDesc"/>
-	      </physDesc>
-	      <history>
-	      </history>
-	    </msDesc>
+	  <xsl:for-each select="tei:body">
+	    <xsl:variable name="MS">
+	      <xsl:apply-templates mode="part2"/>
+	    </xsl:variable>
+	    <xsl:for-each select="$MS">
+	      <msDesc>
+		<xsl:attribute name="xml:lang">
+		  <xsl:text>en</xsl:text>
+		</xsl:attribute>
+		<xsl:attribute name="xml:id">
+		  <xsl:text>m1</xsl:text>
+		</xsl:attribute>
+		<msIdentifier>
+		</msIdentifier>
+		<xsl:copy-of select="tei:msContents"/>
+		<physDesc>
+		  <xsl:copy-of select="tei:physDesc/tei:p"/>
+		  <xsl:if test="tei:supportDesc or tei:layoutDesc">
+		    <objectDesc>
+		      <xsl:copy-of select="tei:supportDesc"/>
+		      <xsl:copy-of select="tei:layoutDesc"/>
+		    </objectDesc>
+		  </xsl:if>
+		  <xsl:copy-of select="tei:handDesc"/>
+		  <xsl:copy-of select="tei:decoDesc"/>
+		  <xsl:copy-of select="tei:bindingDesc"/>
+		</physDesc>
+		<history>
+		</history>
+	      </msDesc>
+	      <xsl:copy-of select="tei:p|tei:head"/>
+	    </xsl:for-each>
 	  </xsl:for-each>
-	  <xsl:copy-of select="tei:p|tei:div"/>
 	</body>
+      </text>
     </xsl:template>
-      
+
     <xsl:template match="tei:div[tei:head[string-length(.)=0] and
 			 count(*)=1]"  mode="part2">
     </xsl:template>
@@ -115,9 +119,7 @@
 
     <xsl:template match="tei:div[tei:head='Text']"
 		  mode="part2">
-      <msContents>
 	<xsl:apply-templates mode="part2"/>
-      </msContents>
     </xsl:template>
 
     <xsl:template match="tei:div[tei:head='Binding']"
@@ -138,6 +140,7 @@
     </xsl:template>
 
     <xsl:template match="tei:head[.='Decoration']" mode="part2"/>
+    <xsl:template match="tei:head[.='Text']" mode="part2"/>
     <xsl:template match="tei:head[.='Binding']" mode="part2"/>
     <xsl:template match="tei:head[.='Physical Description']" mode="part2"/>
 
@@ -173,7 +176,8 @@
 
 
     <xsl:template match="tei:fw" mode="part2"/>
-    <xsl:template match="tei:milestone[@unit='section']"/>
+
+    <xsl:template match="tei:milestone[@unit='section']" mode="part2"/>
 
 
 </xsl:stylesheet>
