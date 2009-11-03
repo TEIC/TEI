@@ -86,21 +86,21 @@
     <xsl:template match="tei:div[tei:head='Decoration']"
 		  mode="part2">
       <decoDesc>
-	<xsl:apply-templates mode="part2"/>
+	<p><xsl:apply-templates mode="part2"/></p>
       </decoDesc>
     </xsl:template>
 
     <xsl:template match="tei:div[tei:head='Binding']"
 		  mode="part2">
       <bindingDesc>
-	<xsl:apply-templates mode="part2"/>
+<p>	<xsl:apply-templates mode="part2"/></p>
       </bindingDesc>
     </xsl:template>
 
     <xsl:template match="tei:div[tei:head='Physical Description']"
 		  mode="part2">
       <physDesc>
-	<xsl:apply-templates mode="part2"/>
+<p>	<xsl:apply-templates mode="part2"/></p>
       </physDesc>
     </xsl:template>
 
