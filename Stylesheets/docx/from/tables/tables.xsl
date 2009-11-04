@@ -63,7 +63,7 @@
 		      <!-- lets face it, most tables do have
 			   borders, especially in ISO; but not in footers! -->
 		      <xsl:when
-			  test="not(w:tblPr/w:tblBorders and parent::w:ftr)">
+			  test="not(w:tblPr/w:tblBorders) and parent::w:ftr">
 			<xsl:text>none</xsl:text>
 		      </xsl:when>
 		      <xsl:when
@@ -103,7 +103,9 @@
 				      and ../../w:tr/w:tc/w:tcPr/w:tcBorders/w:right/@w:val='single'">all</xsl:when>
 			    <xsl:when
 				test="../../w:tr/w:tc/w:tcPr/w:tcBorders/w:top/@w:val='single'">top</xsl:when>
-			    <xsl:otherwise>none</xsl:otherwise>
+			    <xsl:otherwise>
+			    <xsl:text>none</xsl:text>
+			    </xsl:otherwise>
 			  </xsl:choose>
 			</xsl:for-each>
 		      </xsl:otherwise>
@@ -182,7 +184,8 @@
 				    <xsl:text>1</xsl:text>
 				  </xsl:when>
 				  <xsl:when
-				      test="not(parent::w:tr/following-sibling::w:tr)">
+				      test="not(parent::w:tr/following-sibling::w:tr)
+					    and not(ancestor::w:ftr)">
 				    <xsl:text>1</xsl:text>
 				  </xsl:when>
 				  <xsl:otherwise>
@@ -202,6 +205,11 @@
 				  <xsl:when
 				      test="ancestor::w:tbl/w:tblPr/w:tblBorders/w:insideV[@w:sz=0
 					    or @w:val='nil']">
+				    <xsl:text>0</xsl:text>
+				  </xsl:when>
+				  <xsl:when
+				      test="not(ancestor::w:tbl/w:tblPr/w:tblBorders)
+					    and ancestor::w:ftr">
 				    <xsl:text>0</xsl:text>
 				  </xsl:when>
 				  <xsl:otherwise>
