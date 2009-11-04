@@ -21,6 +21,9 @@
     <!-- import conversion style -->
     <xsl:import href="../../../profiles/default/docx/to.xsl"/>
     
+    <xsl:import href="../../../common2/msdescription.xsl"/>
+
+ 
     
     <xd:doc type="stylesheet">
         <xd:short> TEI stylesheet for making Word docx files from TEI XML (see tei-docx.xsl) for Vesta </xd:short>

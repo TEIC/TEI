@@ -463,7 +463,7 @@
 
     <xsl:template match="tei:msIdentifier/tei:*">
       <xsl:apply-imports/>
-      <xsl:if test="following-sibling::tei:*">
+      <xsl:if test="following-sibling::tei:*/text()">
 	<xsl:call-template name="msLiteral">
 	  <xsl:with-param name="text">
 	    <xsl:text>, </xsl:text>

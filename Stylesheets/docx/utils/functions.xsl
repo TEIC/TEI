@@ -204,22 +204,27 @@
 		    self::tei:altIdentifier or	
 		    self::tei:am or	
 		    self::tei:att or	
-		    self::tei:biblScope or	
 		    self::tei:bibl or	
+		    self::tei:biblScope or	
 		    self::tei:choice or
 		    self::tei:damage or
 		    self::tei:depth or
-		    self::tei:dimensions or
 		    self::tei:dim or
+		    self::tei:dimensions or
 		    self::tei:ex or
 		    self::tei:expan or
 		    self::tei:gap or
 		    self::tei:genName or
 		    self::tei:geogName or
 		    self::tei:height or
+		    self::tei:msName or
 		    self::tei:orig or
 		    self::tei:origPlace or
+		    self::tei:region or
+		    self::tei:repository or
 		    self::tei:roleName or
+		    self::tei:rubric or
+		    self::tei:settlement or
 		    self::tei:supplied or
 		    self::tei:width or
                     self::tei:abbr or
@@ -229,6 +234,7 @@
                     self::tei:c or
                     self::tei:code or
                     self::tei:country or
+                    self::tei:collection or
                     self::tei:date or
                     self::tei:editionStmt or
                     self::tei:emph or
@@ -245,7 +251,6 @@
                     self::tei:locus or
                     self::tei:mentioned or
                     self::tei:name or
-		    self::tei:msName or
                     self::tei:note[@place='end' or @place='bottom' ] or
                     self::tei:note[@place='foot' or @place='bottom' ] or
                     self::tei:num or
@@ -258,10 +263,6 @@
                     self::tei:ptr or
                     self::tei:publisher or
                     self::tei:q or
-		    self::tei:region or
-		    self::tei:repository or
-		    self::tei:rubric or
-		    self::tei:settlement or
                     self::tei:ref or
                     self::tei:seg or
                     self::tei:soCalled or
