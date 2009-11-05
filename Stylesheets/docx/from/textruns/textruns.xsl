@@ -46,7 +46,11 @@
     <xd:doc>
         <xd:short></xd:short>
     </xd:doc>
-    <xsl:template match="w:r|w:ins">
+    <xsl:template match="w:r">
+      <xsl:call-template name="ins-or-del"/>
+    </xsl:template>
+
+    <xsl:template name="ins-or-del">
         <xsl:variable name="style">
             <xsl:value-of select="w:rPr/w:rStyle/@w:val"/>
         </xsl:variable>
@@ -186,8 +190,22 @@
     </xsl:template>
     
     <xd:doc>
-        <xd:short>Contains text that has been tracked as a revision. Will be discarded for the moment.</xd:short>
+        <xd:short>Contains text that has been tracked as a revision. </xd:short>
     </xd:doc>
-    <xsl:template match="w:del"/>
+    <xsl:template match="w:del">
+      <del when="{@w:date}" resp="#{@w:author}">
+	<xsl:apply-templates/>
+      </del>
+    </xsl:template>
+
+    <xsl:template match="w:delText">
+	<xsl:apply-templates/>
+    </xsl:template>
+
+    <xsl:template match="w:p/w:ins">
+      <add when="{@w:date}" resp="#{@w:author}">
+	<xsl:call-template name="ins-or-del"/>
+      </add>
+    </xsl:template>
     
 </xsl:stylesheet>

@@ -58,9 +58,9 @@
     
     
     <xsl:template match="mml:math">
-        <m:oMath>
-            <xsl:apply-templates mode="mml"/>
-        </m:oMath>
+      <m:oMath>
+	<xsl:apply-templates mode="mml"/>
+      </m:oMath>
     </xsl:template>
     
     <xsl:template match="w:object">

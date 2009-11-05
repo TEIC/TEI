@@ -1408,6 +1408,7 @@
 	</w:r>
       </w:hyperlink>
 -->
+
     </xsl:template>
 
     <xsl:template match="tei:note|tei:figure|tei:table|tei:item" mode="xref">

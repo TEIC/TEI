@@ -326,6 +326,17 @@
 
 	</xsl:template>
 
+<xsl:template match="w:hyperlink">
+  <ptr target="{w:r/w:t}"/>
+</xsl:template>
 
-
+<xsl:template match="w:instrText">
+<xsl:choose>
+  <xsl:when test="contains(.,'REF _Ref')">
+  </xsl:when>
+  <xsl:otherwise>
+    <xsl:value-of select="."/>
+  </xsl:otherwise>
+</xsl:choose>
+</xsl:template>
 </xsl:stylesheet>

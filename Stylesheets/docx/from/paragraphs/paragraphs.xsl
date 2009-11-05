@@ -66,14 +66,23 @@
     </xd:doc>
     <xsl:template name="paragraph-wp">
         <p>
-            <!-- put style in rend, if there is a style -->
-            <xsl:if test="w:pPr/w:pStyle/@w:val">
-                <xsl:attribute name="rend">
-                    <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
-                </xsl:attribute>
-            </xsl:if>
-            
-            <xsl:apply-templates select="."/>
+	  <!-- put style in rend, if there is a style -->
+	  <xsl:if test="w:pPr/w:pStyle/@w:val">
+	    <xsl:attribute name="rend">
+	      <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
+	    </xsl:attribute>
+	  </xsl:if>
+	  <xsl:choose>
+	    <xsl:when test="w:pPr/w:rPr/w:ins">
+	      <add when="{w:pPr/w:rPr/w:ins/@w:date}"
+		   resp="#{w:pPr/w:rPr/w:ins/@w:author}" type="para">
+  	       <xsl:apply-templates select="."/>
+              </add>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:apply-templates select="."/>
+	    </xsl:otherwise>
+	  </xsl:choose>
         </p>
     </xsl:template>
     
