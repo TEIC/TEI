@@ -2108,6 +2108,7 @@ additional elements made available for the purpose by the <ident type="module">t
 &expan;</specGrp>
 </div></div>
 <div type="div2" xml:id="COXR"><head>Simple Links and Cross-References</head>
+
 <p>Cross-references or links between one location in a document and one or more
 other locations, either in the same or different XML documents, may be encoded
 using the elements <gi>ptr</gi> and <gi>ref</gi>, as discussed in this
@@ -2204,7 +2205,15 @@ the body of the text, for example as page breaks
 ...
 </egXML>
 </p>
-
+<p>A similar method may be used to link annotations on a text with the
+sigla used to encode their points of attachment in a text. For
+example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
+annotated text <ref target="#a51" type="noteAnchor">&#x2075;&#x00B9;</ref>
+<!-- ... -->
+<note xml:id="a51" type="footnote">text of annotation</note>
+</egXML>
+</p>
 <p>The <att>type</att> attribute may be used,
 as elsewhere, to categorize the cross-reference according to any
 system of importance to the encoder. If bibliographic references
@@ -2233,7 +2242,7 @@ section. In conjunction with the analytic tools discussed
 in chapters <ptr target="#SA"/>, <ptr target="#AI"/>, and <ptr target="#FS"/>, they may be
 used to link analyses of a text to their object, to combine
 corresponding segments of a text, or to align segments of a text with a
-temporal or other axis or with each other.</p><specGrp xml:id="DCOXR" n="Simple cross-references">
+temporal or other axis or with each other.</p><specGrp xml:id="DCOXR" >
 &ptr;
 &ref;
 </specGrp>
@@ -2450,9 +2459,13 @@ in the margin, or in some other place.
 editorial, and may have been added later.  Attributes may be used to
 specify these and other characteristics of notes, as detailed below.
  </p>
-<p>Where possible, the body of a note should be inserted in the text
-at the point at which its identifier or mark first appears; we term
-this the note's <term>point of attachment</term>. This may not always be
+<p>A note is usually attached to a specific point or span within a text, which we
+term here its <term>point of attachment</term>. In conventional
+printed text, the point of attachment is represented by some siglum
+such as a star or cross, or a superscript digit. </p>
+<p>When encoding such a text, it is conventional to replace this
+siglum by the content of the annotation, duly marked up with a
+<gi>note</gi> element. This may not always be
 possible for example with marginal notes, which may not be anchored to
 an exact location. For ease of processing, it may be adequate to
 position marginal notes before the relevant paragraph or other
@@ -2464,11 +2477,15 @@ to be of structural significance.  In some cases, however, it may be
 desirable to transcribe notes not at their point of attachment to the
 text but at their point of appearance, typically at the end of the
 volume, or the end of the chapter.  In such cases, the
-<att>target</att> attribute of the <gi>note</gi> should be used to
-indicate the point of attachment. </p>
+<att>target</att> attribute of the <gi>note</gi> may be used to
+indicate the point of attachment.  It is also possible to encode the
+point of attachment itself, using the <gi>ptr</gi> or <gi>ref</gi>
+element, pointing from that to the body of the <gi>note</gi> placed
+elsewhere. </p>
 <p>In cases where the note is
-attached not to a point but to a span of text,  the
-<att>target</att> attribute should use an appropriate pointer
+applied not to a point but to a span of text,  not itself represented
+as a TEI element, the
+<att>target</att> attribute may use an appropriate pointer
 expression, for example using the <ident>range()</ident> function
 to specify the span of attachment. For further discussion of pointing
 to points and spans in the text, see section <ptr target="#COXR"/>.</p>
