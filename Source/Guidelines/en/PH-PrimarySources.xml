@@ -474,122 +474,12 @@ with its transcription would be simply <egXML xml:lang="und" xmlns="http://www.t
  </egXML></p>
 
 <specGrp xml:id="DPFACS">
-
-
-
-
-
-
-
-
-
-
-
-
 &facsimile;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &att.global.facs;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &surface;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &att.coordinated;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &zone;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &model.resourceLike;
-
-
-
-
-
-
 </specGrp>
 
 
@@ -1478,13 +1368,15 @@ point of encirclement or other marking. </p>
 <head>Text Omitted from or Supplied in the Transcription</head>
 <p>Where text is not transcribed, whether because of damage to the
 original, or because it is illegible, or for some other reason such as editorial policy,
-the <gi>gap</gi> core element should be used to register the omission;
-where text not present in the source is supplied (whether
+the <gi>gap</gi> core element may be used to register the omission;
+where such text is transcribed, but the editor wishes to indicate that
+they consider it to be superfluous, for example because it is an
+inadvertant scribal repetition, the <gi>surplus</gi> element may be
+used in preference. Where text not present in the source is supplied (whether
 conjecturally or from other witnesses) to fill an apparent gap in the
-text, it should be marked using the <gi>supplied</gi> element provided
-by the module defined in this chapter.
+text,  the <gi>supplied</gi> element may be used. 
 <specList><specDesc key="gap" atts="reason hand agent"/>
-<specDesc key="supplied" atts="reason"/></specList></p>
+<specDesc key="surplus" atts="reason"/><specDesc key="supplied" atts="reason"/></specList></p>
 <p>By its nature, the <gi>gap</gi> element has no content.  It
 marks a point in the text where nothing at all can be read, whether because
 of  authorial or scribal erasure, physical damage, or any other form
@@ -1506,10 +1398,49 @@ will vary with the purpose of the encoding and the nature of the
 material: no particular recommendation is made here.</p>
 
 <p>As noted above, the <gi>gap</gi> element should only be used where
-text has not been transcribed; if partially legible text has been
+text has not been transcribed. If partially legible text has been
 transcribed, one of the elements <gi>damage</gi> and <gi>unclear</gi>
-should be used instead. These elements 
-are described in section <ptr target="#PHDA"/>.</p>
+should be used instead (these elements 
+are described in section <ptr target="#PHDA"/>); if the text is
+legible and has been transcribed, but the editor wishes to indicate
+that they regard it is superfluous or redundant, then the element
+<gi>surplus</gi> may be used in preference to the core element <gi>sic</gi>
+used to indicate text regarded as erroneous. </p>
+
+<p>For example, when encountering the form
+<soCalled>dedikararunt</soCalled> on an inscription, the editor may
+choose any of the following three possibilities:
+<list>
+<item>mark this as an erroneous form
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PHegsurp">
+<sic>dedikararunt</sic>
+</egXML></item>
+<item>additionally supply a corrected form
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PHegsurp">
+<choice><sic>dedikararunt</sic>
+<corr>dedikarunt</corr>
+</choice>
+</egXML></item>
+<item>indicate that the erroneous form contains surplus characters
+which the editor wishes to suppress
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PHegsurp">
+dedika<surplus>ra</surplus>runt
+</egXML></item>
+</list>
+</p>
+<p>The <gi>surplus</gi> element may also be used to mark up
+interpolations, as in the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="PHegsurp2">
+<l n="4">a darmi morte, poi m'avete preso 
+<surplus reason="interpolated">a tradimento</surplus></l>
+<l n='5'>sì com' l'uccellator prende l'uccello</l>
+<gap/>
+<l n="43">e lettere dintorno che diriano 
+<surplus reason="interpolated">in questa guisa</surplus></l>
+<l n="44">Più v'amo, dëa, che non faccio Deo</l>
+</egXML>
+The words marked as <gi>surplus</gi> here are metrically inconsistent
+with the rest and have been marked by the editor as such. </p>
 
 <p>If the source text is completely illegible or missing, an encoder
 may sometimes wish to supply new (conjectural) material to replace it.
@@ -2400,6 +2331,7 @@ The selection and combination of modules to form a TEI schema is described in
 
 
 &supplied;
+&surplus;
 
 
 

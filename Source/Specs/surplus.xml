@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date: 2009-05-25 18:36:31 +0100 (Mon, 25 May 2009) $
+$Id: supplied.xml 6369 2009-05-25 17:36:31Z rahtz $
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" ident="surplus">
+  <equiv/>
+  <desc>marks text present in the source which the editor believes to
+  be superfluous or redundant.</desc>
+  <classes>
+    <memberOf key="model.pPart.transcriptional"/>
+    <memberOf key="att.editLike"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+  </content>
+  <attList>
+    <attDef ident="reason" usage="opt">
+      <equiv/>
+      <desc>indicates the grounds for believing this text to be superfluous.</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+      <valDesc>any word describing the difficulty, e.g.
+<mentioned>repeated</mentioned>,
+      <mentioned>interpolated</mentioned> etc.</valDesc>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">I am dr Sr yrs
+<surplus reason="repeated">>yrs</surplus>
+Sydney Smith</egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#PHDA"/>
+  </listRef>
+</elementSpec>
