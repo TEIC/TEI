@@ -167,6 +167,9 @@
     <!-- write out content-types -->
     <xsl:template name="write-out-content-types">
         <xsl:param name="types"></xsl:param>
+	<xsl:if test="$debug='true'">
+	  <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/Content_Types_new.xml')"/></xsl:message>
+	</xsl:if>
         <xsl:result-document href="{concat($word-directory,'/Content_Types_new.xml')}" standalone="yes">
             <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
                 <xsl:for-each select="$types/child::node()/*">
@@ -182,6 +185,9 @@
     <!-- write out relations -->
     <xsl:template name="write-out-relations">
         <xsl:param name="relations"></xsl:param>
+	<xsl:if test="$debug='true'">
+	  <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'word/_rels/document_new.xml.rels')"/></xsl:message>
+	</xsl:if>
         <xsl:result-document href="{concat($word-directory,'/word/_rels/document_new.xml.rels')}" standalone="yes">
             <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
                 <xsl:for-each select="$relations/child::node()/*">
@@ -197,6 +203,9 @@
     <!-- write out comments -->
     <xsl:template name="write-out-comments">
         <xsl:param name="comments"></xsl:param>
+	<xsl:if test="$debug='true'">
+	  <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'word/_rels/comments.xml')"/></xsl:message>
+	</xsl:if>
         <xsl:result-document href="{concat($word-directory,'/word/comments.xml')}" standalone="yes">
             <w:comments xmlns:mv="urn:schemas-microsoft-com:mac:vml"
                 xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"

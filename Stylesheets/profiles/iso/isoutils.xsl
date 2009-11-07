@@ -13,6 +13,7 @@
   </xsl:variable>
 
   <xsl:key name="ISOMETA" match="*[@iso:meta]" use="@iso:meta"/>
+  <xsl:key name="ALLMETA" match="*[@iso:meta]" use="1"/>
 
   <xsl:param name="doclang">en</xsl:param>
 
@@ -183,6 +184,17 @@
       </xsl:choose>
     </xsl:otherwise>
   </xsl:choose>
+</xsl:template>
+<xsl:template name="getiso_authority">
+    <xsl:value-of select="key('ISOMETA','secretariat')"/>
+</xsl:template>
+
+<xsl:template name="getiso_documentNumber">
+    <xsl:value-of select="key('ISOMETA','referenceNumber')"/>
+</xsl:template>
+
+<xsl:template name="getiso_partNumber">
+    <xsl:value-of select="key('ISOMETA','partNumber')"/>
 </xsl:template>
 
 </xsl:stylesheet>

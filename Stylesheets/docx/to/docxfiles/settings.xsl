@@ -61,6 +61,10 @@
         <xd:short>write: word/settings.xml</xd:short> 
     </xd:doc>
     <xsl:template name="write-docxfile-settings">
+	<xsl:if test="$debug='true'">
+	  <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/word/settings.xml')"/></xsl:message>
+	</xsl:if>
+
         <xsl:result-document href="{concat($word-directory,'/word/settings.xml')}"
             standalone="yes">
             

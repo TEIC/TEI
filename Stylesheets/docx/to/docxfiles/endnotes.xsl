@@ -58,6 +58,10 @@
         <xd:short></xd:short>
     </xd:doc>
     <xsl:template name="write-docxfile-endnotes-file">
+	<xsl:if test="$debug='true'">
+	  <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/word/endnotesxml')"/></xsl:message>
+	</xsl:if>
+
         <xsl:result-document href="{concat($word-directory,'/word/endnotes.xml')}">
             <w:endnotes xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:o="urn:schemas-microsoft-com:office:office"

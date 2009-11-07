@@ -132,16 +132,16 @@
         <!-- header and footers -->
         <xsl:call-template name="write-docxfile-header-files"/>
 
-        <!--  Write out footer files -->
+        <!-- footer files -->
         <xsl:call-template name="write-docxfile-footer-files"/>
 
-        <!-- Write out numbering file -->
+        <!-- numbering file -->
         <xsl:call-template name="write-docxfile-numbering-definition"/>
 
-        <!-- Write out footnotes file -->
+        <!-- footnotes file -->
         <xsl:call-template name="write-docxfile-footnotes-file"/>
 
-        <!-- Write out endnotes file -->
+        <!-- endnotes file -->
         <xsl:call-template name="write-docxfile-endnotes-file"/>
 
         <!-- main relationships -->
@@ -153,7 +153,7 @@
         <!-- write Content Types -->
         <xsl:call-template name="write-docxfile-content-types"/>
 
-        <!-- Write out settings -->
+        <!-- settings -->
         <xsl:call-template name="write-docxfile-settings"/>
 
         <!-- app files -->

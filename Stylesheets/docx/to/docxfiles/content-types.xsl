@@ -54,6 +54,10 @@
     </xd:doc>
     
     <xsl:template name="write-docxfile-content-types">
+	<xsl:if test="$debug='true'">
+	  <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/%5BContent_Types%5D.xml')"/></xsl:message>
+	</xsl:if>
+
         <xsl:result-document href="{concat($word-directory,'/%5BContent_Types%5D.xml')}">
             
             <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">

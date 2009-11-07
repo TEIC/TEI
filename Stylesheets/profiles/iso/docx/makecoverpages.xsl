@@ -71,7 +71,7 @@
 </xsl:template>
 
 
-<xsl:template match="w:sdtContent" >
+<xsl:template match="w:sdtContent[w:r]" >
   <xsl:variable name="alias" select="../w:sdtPr/w:tag/@w:val"/>
   <xsl:copy>
     <xsl:apply-templates select="@*" />

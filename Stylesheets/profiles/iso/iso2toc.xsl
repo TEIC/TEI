@@ -14,9 +14,6 @@
   <xsl:variable name="isotitle">
     <xsl:call-template name="generateTitle"/>
   </xsl:variable>
-  <xsl:variable name="isoauthority">
-    <xsl:call-template name="getiso_authority"/>
-  </xsl:variable>
   <xsl:variable name="isonumber">
     <xsl:call-template name="getiso_documentNumber"/>
   </xsl:variable>

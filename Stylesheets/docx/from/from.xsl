@@ -170,8 +170,9 @@
 				<!-- 
 					group all paragraphs that form a first level section.
 				-->
-				<xsl:for-each-group select="w:p|w:tbl"
+				<xsl:for-each-group select="w:sdt|w:p|w:tbl"
 					group-starting-with="w:p[teidocx:is-firstlevel-heading(.)]">
+
 					<xsl:choose>
 						
 						<!-- We are dealing with a first level section, we now have
@@ -190,7 +191,7 @@
 					</xsl:choose>
 				</xsl:for-each-group>
 				
-				<!-- I have no idea, why I need this, but I apparently do. 
+				<!-- I have no idea why I need this, but I apparently do. 
 				//TODO: find out what is going on-->
 				<xsl:apply-templates select="w:sectPr" mode="paragraph"/>
 			</body>
@@ -220,7 +221,8 @@
 		list etc. and into individual groups for simple paragraphs...
 		</xd:detail>
 	</xd:doc>
-	<xsl:template match="w:p|w:tbl" mode="inSectionGroup">
+	<xsl:template match="w:tbl|w:p" mode="inSectionGroup">
+
 		<!-- 
 			We are looking for:
 				- Lists -> 1

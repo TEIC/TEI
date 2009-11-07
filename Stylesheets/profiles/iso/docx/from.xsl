@@ -679,7 +679,8 @@ termDeprecated
 termPreferred
 termRef
 -->
-            <termEntry id="{.}" xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
+	    <xsl:variable name="ID" select="concat('T_',.)"/>
+            <termEntry id="{$ID}" xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
                 <descripGrp>
                     <descrip type="definition">
                         <xsl:for-each
@@ -706,7 +707,7 @@ termRef
                             <xsl:otherwise>
                                 <ntig>
                                     <termGrp>
-                                        <term id="{.}-{position()}">
+                                        <term id="{$ID}-{position()}">
                                             <xsl:apply-templates/>
                                         </term>
                                         <termNote type="partOfSpeech">noun</termNote>
@@ -1011,4 +1012,36 @@ termRef
     <!-- spurious page break -->
     <xsl:template match="tei:body/tei:p[count(*)=1 and tei:pb]" mode="part2"/>
 
+
+    <xsl:template name="extract-forme-work"/>
+
+    <xsl:template match="w:sdt" mode="paragraph">
+      <SDT iso:meta="{w:sdtPr/w:tag/@w:val}">
+	<xsl:for-each-group 
+	    select="w:sdtContent/w:p"
+	    group-adjacent="if (contains(w:pPr/w:pStyle/@w:val,'List')) then 1 else
+			    position() + 100">
+	  <xsl:choose>
+	    <xsl:when test="current-grouping-key()=1">
+	      <xsl:call-template name="listSection"/>
+	    </xsl:when>
+	    <!-- it is not a defined grouping .. apply templates -->
+	    <xsl:otherwise>
+	      <xsl:apply-templates select="." mode="paragraph"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each-group>
+      </SDT>
+    </xsl:template>
+
+    <xsl:template match="tei:SDT/tei:p|tei:SDT/tei:list" mode="part2">
+      <xsl:copy>
+	<xsl:attribute name="iso:meta" select="../@iso:meta"/>
+	<xsl:apply-templates mode="part2" select="@*|*|comment()"/>
+      </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="tei:SDT" mode="part2">
+      <xsl:apply-templates mode="part2"/>
+    </xsl:template>
 </xsl:stylesheet>

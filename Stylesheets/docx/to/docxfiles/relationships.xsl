@@ -58,6 +58,10 @@
         <xd:short>Write _rels/.rels</xd:short>
     </xd:doc>
     <xsl:template name="write-docxfile-main-relationships">
+	<xsl:if test="$debug='true'">
+	  <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/_rels/.rels')"/></xsl:message>
+	</xsl:if>
+
         <xsl:result-document href="{concat($word-directory,'/_rels/.rels')}"
             standalone="yes">
             <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
@@ -82,6 +86,10 @@
         <xd:short>Write word/_rels/document.xml.rels</xd:short>
     </xd:doc>
     <xsl:template name="write-docxfile-relationships">
+	<xsl:if test="$debug='true'">
+	  <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/word/_rels/document.xml/rels')"/></xsl:message>
+	</xsl:if>
+
         <xsl:result-document href="{concat($word-directory,'/word/_rels/document.xml.rels')}"
             standalone="yes">
             <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">

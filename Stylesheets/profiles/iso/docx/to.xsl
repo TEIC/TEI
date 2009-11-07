@@ -29,6 +29,7 @@
     <!-- import functions -->
     <xsl:include href="iso-functions.xsl"/>
 
+
 <doc type="stylesheet" xmlns="http://www.pnp-software.com/XSLTdoc">
     <short>TEI stylesheet to convert TEI XML to Word DOCX XML.</short>
     <detail>
@@ -53,6 +54,7 @@
 </doc>
 
     <xsl:param name="template">ISO</xsl:param>
+    <xsl:param name="isofreestanding">false</xsl:param>
 
     <xsl:variable name="align">
       <xsl:choose>
@@ -653,6 +655,93 @@
   <xsl:apply-templates select="tbx:descripGrp/tbx:note"/>
 
 </xsl:template>
+
+<!-- for ISO, don't write out most of the auxiliary files -->
+    <xsl:template name="write-docxfiles">
+      <xsl:if test="$isofreestanding='true'">
+        <!-- header and footers -->
+	<xsl:call-template name="write-docxfile-header-files"/>
+
+        <!-- footer files -->
+	<xsl:call-template name="write-docxfile-footer-files"/>
+
+        <!-- numbering file -->
+	<xsl:call-template name="write-docxfile-numbering-definition"/>
+
+        <!-- footnotes file -->
+	<xsl:call-template name="write-docxfile-footnotes-file"/>
+
+        <!-- endnotes file -->
+	<xsl:call-template name="write-docxfile-endnotes-file"/>
+
+        <!-- main relationships -->
+	<xsl:call-template name="write-docxfile-main-relationships"/>
+
+        <!-- relationships -->
+	 <xsl:call-template name="write-docxfile-relationships"/>
+
+        <!-- write Content Types -->
+	<xsl:call-template name="write-docxfile-content-types"/>
+
+        <!--  settings -->
+	<xsl:call-template name="write-docxfile-settings"/>
+
+        <!-- app files -->
+        <xsl:call-template name="write-docxfile-docprops-app"/>
+      </xsl:if>
+      <xsl:call-template name="write-docxfile-docprops-core"/>
+      <xsl:call-template name="write-docxfile-docprops-custom"/>
+    </xsl:template>
+
+    <xd:doc>
+        <xd:short>Writes the main document.xml file, that contains all "real" content.</xd:short>
+    </xd:doc>
+    <xsl:template name="write-document-dot-xml">
+        <w:document xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:o="urn:schemas-microsoft-com:office:office"
+            xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+            xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
+            xmlns:v="urn:schemas-microsoft-com:vml"
+            xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+            xmlns:w10="urn:schemas-microsoft-com:office:word"
+            xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+            xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml">
+
+            <w:body>
+
+	      <xsl:choose>
+		<xsl:when test="$isofreestanding='true'">
+		  <xsl:call-template name="write-document-dot-xml-frontmatter"/>
+		  <xsl:call-template name="write-document-dot-xml-maincontent"/>
+		  <xsl:call-template name="write-document-dot-xml-backmatter"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <!-- Front -->
+		  <front>
+		    <xsl:call-template name="write-document-dot-xml-frontmatter"/>
+		  </front>
+		  <!-- Main -->
+		  <main>
+		    <xsl:call-template name="write-document-dot-xml-maincontent"/>
+		  </main>
+		  <!-- Back -->
+		  <back>
+		    <xsl:call-template name="write-document-dot-xml-backmatter"/>
+		  </back>
+		</xsl:otherwise>
+	      </xsl:choose>
+            </w:body>
+        </w:document>
+    </xsl:template>
+
+    <xsl:template name="write-document-dot-xml-maincontent">
+        <!-- document title -->
+	<xsl:if test="$isofreestanding='true'">
+	  <xsl:call-template name="document-title"/>
+	</xsl:if>
+        <!-- Describes the main part of the document -->
+        <xsl:apply-templates select="tei:text/tei:body"/>
+    </xsl:template>
 
 
 </xsl:stylesheet>

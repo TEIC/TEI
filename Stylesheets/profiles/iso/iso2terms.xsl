@@ -1,9 +1,10 @@
 <xsl:stylesheet 
     exclude-result-prefixes="tei" 
     xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-  xmlns="http://www.w3.org/1999/xhtml"
-  version="2.0"
+    xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    version="2.0"
 >
 
 <xsl:import href="isoutils.xsl"/>
@@ -19,9 +20,6 @@
   </xsl:variable>
   <xsl:variable name="isotitle">
     <xsl:call-template name="generateTitle"/>
-  </xsl:variable>
-  <xsl:variable name="isoauthority">
-    <xsl:call-template name="getiso_authority"/>
   </xsl:variable>
   <xsl:variable name="isonumber">
     <xsl:call-template name="getiso_documentNumber"/>
@@ -90,6 +88,7 @@
     <xsl:apply-templates/>
   </dd>
 </xsl:template>
+
 <xsl:template match="tei:note">
   <xsl:text>[</xsl:text>
     <xsl:apply-templates/>
@@ -97,19 +96,24 @@
 </xsl:template>
 
 <xsl:template match="tei:p">
-<p>  <xsl:apply-templates/></p>
+  <p>  
+  <xsl:apply-templates/>
+  </p>
 </xsl:template>
 
 <xsl:template match="tei:bibl">
-<li>
-  <xsl:apply-templates/>
-</li>
+  <li>
+    <xsl:apply-templates/>
+  </li>
 </xsl:template>
 
 <xsl:template match="tei:listBibl">
-<ol>
-  <xsl:apply-templates/>
-</ol>
+  <ol>
+    <xsl:apply-templates/>
+  </ol>
+</xsl:template>
+
+<xsl:template match="tbx:termEntry">
 </xsl:template>
 
 </xsl:stylesheet>

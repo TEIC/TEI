@@ -71,6 +71,10 @@
     
     <xsl:template name="write-docxfile-specific-footer-file">
         <xsl:for-each select="key('ALLFOOTERS',1)">
+	<xsl:if test="$debug='true'">
+	  <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/word/footer',position(),'.xml')"/></xsl:message>
+	</xsl:if>
+
             <xsl:result-document href="{concat($word-directory,'/word/footer',position(),'.xml')}">
                 <w:ftr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
                     xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
