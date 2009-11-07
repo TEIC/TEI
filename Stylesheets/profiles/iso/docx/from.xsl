@@ -1034,6 +1034,8 @@ termRef
       </SDT>
     </xsl:template>
 
+    <xsl:template match="tei:list[string-length(.)=0]" mode="part2"/>
+
     <xsl:template match="tei:SDT/tei:p|tei:SDT/tei:list" mode="part2">
       <xsl:copy>
 	<xsl:attribute name="iso:meta" select="../@iso:meta"/>
