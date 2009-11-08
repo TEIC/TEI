@@ -6,7 +6,7 @@ namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace s = "http://www.ascc.net/xml/schematron"
 namespace sch = "http://purl.oclc.org/dsdl/schematron"
 
-# Schema generated from ODD source 2009-11-08T13:11:44Z. 
+# Schema generated from ODD source 2009-11-08T19:11:44Z. 
 # Edition: 1.4.1. Last updated on July 1st 2009.
 #
 
@@ -184,6 +184,7 @@ att.damaged.attribute.group =
   attribute group { xsd:nonNegativeInteger }?
 att.datable.w3c.attributes =
   att.datable.w3c.attribute.period,
+  att.datable.w3c.attribute.when,
   att.datable.w3c.attribute.notBefore,
   att.datable.w3c.attribute.notAfter,
   att.datable.w3c.attribute.from,
@@ -194,6 +195,20 @@ att.datable.w3c.attribute.period =
   ##       period of time within which the datable item is understood to
   ##       have occurred.
   attribute period { xsd:anyURI }?
+att.datable.w3c.attribute.when =
+  
+  ## supplies the value of the date or time in a standard form,
+  ##       e.g. yyyy-mm-dd.
+  attribute when {
+    xsd:date
+    | xsd:gYear
+    | xsd:gMonth
+    | xsd:gDay
+    | xsd:gYearMonth
+    | xsd:gMonthDay
+    | xsd:time
+    | xsd:dateTime
+  }?
 att.datable.w3c.attribute.notBefore =
   
   ## specifies the earliest possible date for the event in
@@ -249,6 +264,8 @@ att.datable.w3c.attribute.to =
     | xsd:time
     | xsd:dateTime
   }?
+att.datable.attributes =
+  att.datable.w3c.attributes, att.datable.iso.attributes
 att.declarable.attributes = att.declarable.attribute.default
 att.declarable.attribute.default =
   
@@ -1436,8 +1453,7 @@ tei_date =
   element date {
     (text | tei_model.gLike | tei_model.phrase | tei_model.global)*,
     att.global.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     att.editLike.attributes,
     att.typed.attributes,
     
@@ -1479,8 +1495,7 @@ tei_time =
   element time {
     (text | tei_model.gLike | tei_model.phrase | tei_model.global)*,
     att.global.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     att.editLike.attributes,
     att.typed.attributes,
     empty
@@ -2625,8 +2640,7 @@ tei_application =
     (tei_model.labelLike+, (tei_model.ptrLike* | tei_model.pLike*)),
     att.global.attributes,
     att.typed.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     
     ## Supplies an identifier for the application, independent of its version number or display
     ##         name.
@@ -2778,8 +2792,7 @@ tei_change =
       | xsd:dateTime
     }?,
     att.global.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.ascribed.attributes,
     empty
   }
 tei_typeNote =
@@ -4244,8 +4257,7 @@ tei_origDate =
   element origDate {
     (text | tei_model.gLike | tei_model.hiLike)*,
     att.global.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     att.editLike.attributes,
     att.typed.attributes,
     empty
@@ -4258,8 +4270,7 @@ tei_origPlace =
     tei_macro.xtext,
     att.global.attributes,
     att.naming.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     att.editLike.attributes,
     empty
   }
@@ -4286,8 +4297,7 @@ tei_stamp =
     tei_macro.phraseSeq,
     att.global.attributes,
     att.typed.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     empty
   }
 tei_watermark =
@@ -4695,8 +4705,7 @@ tei_binding =
   element binding {
     (tei_model.pLike | tei_condition | tei_decoNote)+,
     att.global.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     
     ## specifies whether or not the binding is contemporary with the majority of its
     ##         contents
@@ -4723,8 +4732,7 @@ tei_seal =
     (tei_model.pLike | tei_decoNote)+,
     att.global.attributes,
     att.typed.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     
     ## specifies whether or not the seal is contemporary with the
     ##       item to which it is affixed
@@ -4763,8 +4771,7 @@ tei_origin =
     tei_macro.specialPara,
     att.global.attributes,
     att.editLike.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     empty
   }
 tei_provenance =
@@ -4775,8 +4782,7 @@ tei_provenance =
   element provenance {
     tei_macro.specialPara,
     att.global.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     empty
   }
 tei_acquisition =
@@ -4787,8 +4793,7 @@ tei_acquisition =
   element acquisition {
     tei_macro.specialPara,
     att.global.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     empty
   }
 tei_additional =
@@ -4840,8 +4845,7 @@ tei_custEvent =
   element custEvent {
     tei_macro.specialPara,
     att.global.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     att.typed.attributes,
     empty
   }
@@ -5837,8 +5841,7 @@ tei_persName =
   element persName {
     tei_macro.phraseSeq,
     att.global.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     att.editLike.attributes,
     att.personal.attributes,
     att.typed.attributes,
@@ -5852,8 +5855,7 @@ tei_placeName =
     att.global.attributes,
     att.naming.attributes,
     att.typed.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     att.editLike.attributes,
     empty
   }
@@ -5866,8 +5868,7 @@ tei_country =
     att.global.attributes,
     att.naming.attributes,
     att.typed.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     empty
   }
 tei_settlement =
@@ -5878,8 +5879,7 @@ tei_settlement =
     att.global.attributes,
     att.naming.attributes,
     att.typed.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     empty
   }
 tei_affiliation =
@@ -5890,8 +5890,7 @@ tei_affiliation =
     tei_macro.phraseSeq,
     att.global.attributes,
     att.editLike.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     att.naming.attributes,
     empty
   }
@@ -5904,8 +5903,7 @@ tei_climate =
      (tei_model.noteLike | tei_model.biblLike)*,
      tei_climate*),
     att.global.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     att.editLike.attributes,
     att.naming.attributes,
     att.typed.attributes,
@@ -5979,8 +5977,7 @@ tei_relation =
          "         "
        ],
     att.global.attributes,
-    att.datable.w3c.attributes,
-    att.datable.iso.attributes,
+    att.datable.attributes,
     att.editLike.attributes,
     att.naming.attributes,
     
