@@ -6,8 +6,8 @@ namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace s = "http://www.ascc.net/xml/schematron"
 namespace sch = "http://purl.oclc.org/dsdl/schematron"
 
-# Schema generated from ODD source 2009-09-01T15:09:36Z. 
-# TEI Edition: 1.4.1. Last updated on July 1st 2009.
+# Schema generated from ODD source 2009-11-08T12:11:12Z. 
+# Edition: 1.4.1. Last updated on July 1st 2009.
 #
 
 #
@@ -401,19 +401,12 @@ att.global.attributes =
   att.global.linking.attributes,
   att.global.analytic.attributes,
   att.global.facs.attributes,
-  att.global.attribute.mod,
   att.global.attribute.xmlid,
   att.global.attribute.n,
   att.global.attribute.xmllang,
   att.global.attribute.rend,
   att.global.attribute.rendition,
   att.global.attribute.xmlbase
-att.global.attribute.mod =
-  
-  ## Points to a modNote which contains a description of a
-  ##              text-stage to which the editors think the alteration marked by the
-  ##   mod attribute belongs.
-  attribute mod { xsd:anyURI }?
 att.global.attribute.xmlid =
   
   ## (identifier) provides a unique identifier for the element bearing the attribute.
@@ -431,6 +424,7 @@ att.global.attribute.xmllang =
   
   ## (language) indicates the language of the element content using a tag generated
   ##         according to BCP 47
+  ##                         
   attribute xml:lang { xsd:language }?
 att.global.attribute.rend =
   
@@ -473,6 +467,7 @@ att.handFeatures.attribute.medium =
   
   ## describes the tint or type of ink, e.g. brown, or other
   ## writing medium, e.g. pencil
+  ##                         
   attribute medium { xsd:Name }?
 att.handFeatures.attribute.scope =
   
@@ -698,6 +693,7 @@ att.spanning.attribute.spanTo =
   ##	bearing this attribute.
   attribute spanTo { xsd:anyURI }?
 att.transcriptional.attributes =
+  att.staged.attributes,
   att.editLike.attributes,
   att.transcriptional.attribute.hand,
   att.transcriptional.attribute.status,
@@ -796,8 +792,6 @@ tei_model.pPart.transcriptional =
   | tei_rewrite
   | tei_used
   | tei_undo
-  | tei_repetition
-  | tei_tr
 tei_model.pPart.edit =
   tei_model.pPart.editorial | tei_model.pPart.transcriptional
 tei_model.ptrLike = tei_ptr | tei_ref
@@ -817,8 +811,7 @@ tei_model.global.meta =
   | tei_joinGrp
   | tei_alt
   | tei_altGrp
-  | tei_edJust
-  | tei_transpositions
+  | tei_transposeGrp
 tei_model.milestoneLike =
   tei_milestone | tei_pb | tei_lb | tei_cb | tei_anchor | tei_fw
 tei_model.gLike = tei_g
@@ -938,7 +931,6 @@ tei_model.choicePart =
   | tei_abbr
   | tei_expan
   | tei_seg
-  | tei_timeline
   | tei_ex
   | tei_am
 tei_model.imprintPart =
@@ -964,7 +956,6 @@ tei_model.global =
   | tei_model.noteLike
   | tei_model.global.edit
   | tei_p
-  | tei_edJust
   | tei_rewrite
   | tei_used
 tei_model.biblPart =
@@ -1243,7 +1234,8 @@ tei_term =
   }
 tei_sic =
   
-  ## (latin for thus or so) contains text reproduced although apparently incorrect or inaccurate.
+  ## (latin for thus or so
+  ##                   ) contains text reproduced although apparently incorrect or inaccurate.
   element sic { tei_macro.paraContent, att.global.attributes, empty }
 tei_corr =
   
@@ -1730,9 +1722,6 @@ tei_milestone =
   ##     the change is not represented by a structural element.
   element milestone {
     empty,
-    att.global.attributes,
-    att.typed.attributes,
-    att.sourced.attributes,
     
     ## provides a conventional name for the kind of section changing at this milestone.
     ## Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] canto; 7] speaker; 8] stanza; 9] act; 10] scene; 11] section; 12] absent; 13] unnumbered
@@ -1778,6 +1767,10 @@ tei_milestone =
         "unnumbered"
       | xsd:Name
     },
+    att.global.attributes,
+    att.spanning.attributes,
+    att.typed.attributes,
+    att.sourced.attributes,
     empty
   }
 tei_pb =
@@ -2144,8 +2137,7 @@ tei_divGen =
     attribute type { xsd:Name }?,
     empty
   }
-tei_model.headerPart =
-  tei_encodingDesc | tei_profileDesc | tei_edJust | tei_include
+tei_model.headerPart = tei_encodingDesc | tei_profileDesc | tei_include
 tei_teiHeader =
   
   ## (TEI Header) supplies the descriptive and declarative information making up an electronic title page
@@ -2668,8 +2660,7 @@ tei_model.profileDescPart =
   tei_langUsage
   | tei_textClass
   | tei_handNotes
-  | tei_relation
-  | tei_transpositions
+  | tei_transposeGrp
   | tei_geneticGrp
 tei_profileDesc =
   
@@ -2695,7 +2686,7 @@ tei_creation =
   ## contains information about the creation of a text.
   element creation {
     tei_macro.phraseSeq.limited*,
-    tei_modGroup*,
+    tei_stageHist*,
     att.global.attributes,
     empty
   }
@@ -2785,15 +2776,9 @@ tei_revisionDesc =
   }
 tei_change =
   
-  ## summarizes a particular change or correction made to a particular version of an electronic
-  ##     text which is shared between several researchers.
+  ## documents a particular stage in the genesis of a text.
   element change {
-    (text
-     | tei_model.limitedPhrase
-     | tei_model.inter
-     | tei_model.global)*,
-    att.global.attributes,
-    att.ascribed.attributes,
+    tei_macro.specialPara,
     
     ## supplies the date of the change in standard form, i.e. YYYY-MM-DD.
     attribute when {
@@ -2806,6 +2791,9 @@ tei_change =
       | xsd:time
       | xsd:dateTime
     }?,
+    att.global.attributes,
+    att.datable.attributes,
+    att.global.attributes,
     empty
   }
 tei_typeNote =
@@ -3752,17 +3740,7 @@ tei_when =
   ## same timeline tag, or absolutely.
   element when {
     empty,
-    
-    ##
-    attribute target { xsd:anyURI }?,
-    
-    ##
-    attribute interval {
-      (xsd:double
-       | xsd:token { pattern = "(\-?[\d]+/\-?[\d]+)" }
-       | xsd:decimal)
-      | "unknown"
-    }?,
+    att.global.attributes,
     
     ## supplies an absolute value for the time.
     attribute absolute {
@@ -3776,20 +3754,38 @@ tei_when =
       | xsd:dateTime
     }?,
     
+    ## specifies the unit of time in which the  interval
+    ## value is expressed, if this is not inherited from the parent timeline.
+    ## Suggested values include: 1] d(days) ; 2] h(hours) ; 3] min(minutes) ; 4] s(seconds) ; 5] ms(milliseconds) 
+    attribute unit {
+      
+      ## (days) 
+      "d"
+      | 
+        ## (hours) 
+        "h"
+      | 
+        ## (minutes) 
+        "min"
+      | 
+        ## (seconds) 
+        "s"
+      | 
+        ## (milliseconds) 
+        "ms"
+      | xsd:Name
+    }?,
+    
+    ## specifies the numeric portion of a time interval
+    attribute interval {
+      xsd:float { minExclusive = "0" }
+      | "unknown"
+    }?,
+    
     ## identifies the reference point for determining the time of the
     ## current when element, which is obtained by adding the interval to the
     ## time of the reference point.
     attribute since { xsd:anyURI }?,
-    att.global.attributes,
-    att.editLike.attribute.cert,
-    att.editLike.attribute.resp,
-    att.editLike.attribute.evidence,
-    att.editLike.attribute.source,
-    att.dimensions.attribute.quantity,
-    att.dimensions.attribute.extent,
-    att.dimensions.attribute.precision,
-    att.dimensions.attribute.scope,
-    att.ranging.attributes,
     empty
   }
 tei_timeline =
@@ -3797,12 +3793,8 @@ tei_timeline =
   ## (timeline) provides a set of ordered points in time which can be linked to
   ## elements of a spoken text to create a temporal alignment of that text.
   element timeline {
-    (tei_when, tei_choice*)+,
-    
-    ##
-    attribute weights {
-      xsd:double { minInclusive = "0" maxInclusive = "1" }
-    }?,
+    tei_when+,
+    att.global.attributes,
     
     ## designates the origin of the timeline, i.e. the time at which it
     ## begins.
@@ -3837,7 +3829,6 @@ tei_timeline =
       | "regular"
       | "irregular"
     }?,
-    att.global.attributes,
     empty
   }
 tei_join =
@@ -4290,7 +4281,8 @@ tei_secFol =
   ## in a codex (typically the beginning of the
   ## second leaf) in order
   ## to provide a unique identifier for it.
-  ##
+  ## 
+  ##         
   element secFol { tei_macro.phraseSeq, att.global.attributes, empty }
 tei_signatures =
   
@@ -4923,9 +4915,7 @@ tei_node =
   ## encodes a node, a possibly labeled point in a graph.
   element node {
     (tei_label, tei_label?)?,
-    
-    ##  A link to the element or passage represented by the node.
-    attribute target { text }?,
+    att.global.attributes,
     
     ## provides the value of a node, which is a feature structure or
     ## other analytic element.
@@ -4971,7 +4961,6 @@ tei_node =
     ## gives the degree of the node, the number of arcs with which
     ## the node is incident.
     attribute degree { xsd:nonNegativeInteger }?,
-    att.global.attributes,
     empty
   }
 tei_arc =
@@ -4979,19 +4968,13 @@ tei_arc =
   ## encodes an arc, the connection from one node to another in a graph.
   element arc {
     (tei_label, tei_label?)?,
-    tei_edJust?,
-    
-    ## Points to a relation
-    attribute rel { text }?,
+    att.global.attributes,
     
     ## gives the identifier of the node which is adjacent from this arc.
     attribute from { xsd:anyURI },
     
     ## gives the identifier of the node which is adjacent to this arc.
     attribute to { xsd:anyURI },
-    att.global.attributes,
-    att.typed.attributes,
-    att.editLike.attributes,
     empty
   }
 tei_tree =
@@ -5443,7 +5426,9 @@ tei_surface =
     (tei_model.global
      | tei_model.glossLike
      | tei_model.graphicLike
-     | tei_zone)*,
+     | tei_zone
+     | tei_line
+     | tei_patch)*,
     
     ## points to an element which encodes the starting position of the text corresponding to the
     ## inscribed part of the surface.
@@ -5500,7 +5485,11 @@ tei_zone =
   ## defines a rectangular area contained within a surface
   ## element. 
   element zone {
-    (text | tei_model.zonePart)*,
+    (text
+     | tei_model.zonePart
+     | tei_model.global
+     | tei_model.pPart.transcriptional
+     | tei_model.gLike)*,
     
     ## indicates the amount by which this zone has been
     ##	  rotated clockwise, with respect to the  normal orientation of the
@@ -5511,6 +5500,7 @@ tei_zone =
     attribute rotate { xsd:nonNegativeInteger }?,
     att.global.attributes,
     att.coordinated.attributes,
+    att.staged.attributes,
     empty
   }
 tei_addSpan =
@@ -5987,17 +5977,10 @@ tei_relation =
          "\x{a}" ~
          "         "
        ],
-    (
-     ## identifies the active participants in a non-mutual relationship, or all the participants in a mutual
-     ##                     one.
-     attribute active {
-       list { xsd:anyURI+ }
-     }?
-     | 
-       ## supplies a list of participants amongst all of whom the relationship holds equally.
-       attribute mutual {
-         list { xsd:anyURI+ }
-       }?),
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.naming.attributes,
     
     ## categorizes the relationship in some respect, e.g. as social, personal or other.
     ## Suggested values include: 1] social; 2] personal; 3] other
@@ -6022,7 +6005,17 @@ tei_relation =
     attribute passive {
       list { xsd:anyURI+ }
     }?,
-    att.global.attributes,
+    (
+     ## identifies the active participants in a non-mutual relationship, or all the participants in a mutual
+     ##                     one.
+     attribute active {
+       list { xsd:anyURI+ }
+     }?
+     | 
+       ## supplies a list of participants amongst all of whom the relationship holds equally.
+       attribute mutual {
+         list { xsd:anyURI+ }
+       }?),
     empty
   }
 tei_listNym =
@@ -6113,12 +6106,54 @@ att.datable.iso.attribute.to-iso =
     | xsd:dateTime
     | xsd:token { pattern = "[0-9.,DHMPRSTWYZ/:+\-]+" }
   }?
+att.staged.attributes = att.staged.attribute.stage
+att.staged.attribute.stage =
+  
+  ## points to a stageNote which contains a description of a
+  ##              text-stage to which the editors think the alteration marked by the
+  ## element bearing this attribute (and its children) belongs.
+  attribute stage { xsd:anyURI | "0" }?
 tei_model.zonePart = tei_zone | tei_line
 tei_document =
   
   ## contains a document-centric transcription of a primary source,
   ##        providing topographical information as well as  transcription
-  element ge:document { tei_surface+, empty }
+  element ge:document { tei_surface+, att.global.attributes, empty }
+tei_patch =
+  
+  ## contains a part of a written surface which was originally physically 
+  ## distinct but became attached to it at the time that one or more written zones
+  ## were  created on it.
+  element ge:patch {
+    (text | tei_zone | tei_model.global)*,
+    att.coordinated.attributes,
+    att.global.attributes,
+    att.typed.attributes,
+    
+    ## Describe the method by which a patch is or was connected to the main
+    ##              surface
+    ## Sample values include: 1] glue; 2] pin; 3] sewn
+    attribute binder { xsd:Name }?,
+    
+    ## indicates whether the patch is attached and folded in such a way as to
+    ## provide two writing surfaces
+    attribute flipping { xsd:boolean }?,
+    
+    ## height of the patch in mm
+    attribute height {
+      xsd:double
+      | xsd:token { pattern = "(\-?[\d]+/\-?[\d]+)" }
+      | xsd:decimal
+    }?,
+    
+    ## width of the patch in mm
+    attribute width {
+      xsd:double
+      | xsd:token { pattern = "(\-?[\d]+/\-?[\d]+)" }
+      | xsd:decimal
+    }?,
+    empty
+  }
 tei_line =
   
   ## contains the transcription of a topographic line in the source
@@ -6127,48 +6162,31 @@ tei_line =
     (text
      | tei_model.global
      | tei_model.pPart.transcriptional
-     | tei_model.gLike)*,
+     | tei_model.pPart.editorial
+     | tei_model.segLike
+     | tei_model.gLike
+     | tei_model.hiLike)*,
+    att.staged.attributes,
     att.global.attributes,
     empty
   }
-tei_edJust =
+tei_stageHist =
   
-  ## (editorial justification) An editorial justification of any part of
-  ##        the edited text.
-  element ge:edJust {
-    tei_model.pLike,
-    att.editLike.attributes,
-    
-    ## Points to the element to be justified.
-    attribute target { xsd:anyURI }?,
-    empty
-  }
-tei_modGroup =
-  
-  ## (modification group) groups and describes the various modifications that
-  ##        occurred in the text's genesis within a document.
-  element ge:modGroup {
-    (tei_model.pLike+ | (tei_summary?, tei_modNote+)),
+  ## contains one or more descriptions of the stages which have
+  ##     been identified in the genesis of a text.
+  element ge:stageHist {
+    (tei_model.pLike+ | (tei_summary?, tei_change+)),
     att.global.attributes,
-    empty
-  }
-tei_modNote =
-  
-  ## Describes a revision in the text genesis.
-  element ge:modNote {
-    tei_macro.specialPara,
-    att.global.attributes,
-    att.editLike.attributes,
     empty
   }
 tei_mod =
   
-  ## Scope an area in the document containing several alteration which are
-  ##        interrelated to each others; Can also be used to segment the text in order to
-  ##        give a meaningful semantic context to an alteration. 
+  ## defines the scope of an area in the document containing several alterations which are
+  ## considered as belonging to the same revision campaign. 
   element ge:mod {
-    (tei_macro.paraContent | tei_line)*,
+    empty,
     att.spanning.attributes,
+    att.staged.attributes,
     att.global.attributes,
     empty
   }
@@ -6180,8 +6198,9 @@ tei_metaMark =
   element ge:metaMark {
     tei_macro.specialPara,
     att.spanning.attributes,
-    att.global.attributes,
     att.placement.attributes,
+    att.staged.attributes,
+    att.global.attributes,
     
     ## describes the function (e.g. add, delete, alternate) of the
     ##              mark.
@@ -6191,7 +6210,9 @@ tei_metaMark =
     
     ## indicates the element(s) to which the function of the meta-mark
     ##              refers. Pointers are separated by a white space
-    attribute targets { xsd:anyURI }?,
+    attribute targets {
+      list { xsd:anyURI+ }
+    }?,
     empty
   }
 tei_rewrite =
@@ -6200,8 +6221,9 @@ tei_rewrite =
   ##     author, for example by over-inking, to clarify or fix it.
   element ge:rewrite {
     tei_macro.paraContent,
-    att.global.attributes,
     att.spanning.attributes,
+    att.global.attributes,
+    att.transcriptional.attributes,
     
     ## documents the presumed cause of the rewriting.
     attribute cause {
@@ -6222,58 +6244,39 @@ tei_used =
   ##        meaning the text has been transcribed to a fair copy. The mark is often a
   ##        strikethrough, but can be any author-specific mark.
   element ge:used {
-    empty, att.global.attributes, att.spanning.attributes, empty
+    empty,
+    att.spanning.attributes,
+    att.staged.attributes,
+    att.global.attributes,
+    empty
   }
 tei_undo =
   
   ## Marks up an action represented by an element to be undone.
   element ge:undo {
     empty,
-    att.global.attributes,
     att.spanning.attributes,
+    att.staged.attributes,
+    att.global.attributes,
     
     ## The element representing the action to be undone.
     attribute target { xsd:anyURI }?,
     empty
   }
-tei_repetition =
+tei_transposeGrp =
   
-  ## A repetition of already written text.
-  element ge:repetition {
-    tei_macro.specialPara,
-    att.global.attributes,
-    att.transcriptional.attributes,
-    att.typed.attributes,
-    att.spanning.attributes,
-    att.placement.attributes,
-    
-    ##
-    attribute reason {
-      list {
-        xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }+
-      }
-    }?,
-    empty
+  ## supplies a list of transpositions indicated at some point in
+  ##     the text, typically by means of metamarks.
+  element ge:transposeGrp {
+    tei_transpose+, att.global.attributes, empty
   }
-tei_transpositions =
+tei_transpose =
   
-  ##  Describes the textual transpositions.
-  element ge:transpositions { tei_transposition+, empty }
-tei_transposition =
-  
-  ##  Describes a textual transposition. Contains a list of pointers that
-  ##        specifies the new order of the text fragments. 
-  element ge:transposition { tei_ptr+, att.global.attributes, empty }
-tei_tr =
-  
-  ## Mark a section to be transposed
-  element ge:tr {
-    tei_macro.specialPara,
-    att.transcriptional.attributes,
-    att.typed.attributes,
-    att.global.attributes,
-    att.spanning.attributes,
-    empty
+  ##  describes a single textual transposition as an ordered list of at
+  ##     least two pointers specifying
+  ##        the order in which the elements indicated should be re-combined. 
+  element ge:transpose {
+    (tei_ptr, tei_ptr+), att.global.attributes, empty
   }
 tei_geneticGrp =
   
@@ -6284,14 +6287,15 @@ tei_geneticGrp =
   }
 tei_geneticNote =
   
-  ## Contains the links to the text or documents that are connected within a
-  ##        genetic group as well as the description of single genetic group
+  ## describes a particular set of documents or
+  ##     document fragments 
+  ##     which are considered to be mutually associated in some way.
   element ge:geneticNote {
     tei_linkGrp+,
-    tei_model.pLike*,
-    att.global.attributes,
+    tei_model.pLike+,
     att.typed.attributes,
     att.editLike.attributes,
+    att.global.attributes,
     empty
   }
 tei_include =
