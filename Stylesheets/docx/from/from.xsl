@@ -117,7 +117,7 @@
 
 	<xd:doc>
 		<xd:short>The main template that starts the conversion from docx to TEI</xd:short>
-		<xd:detail> The conversion process is split in two parts. Part one does the main conversion
+		<xd:detail> The conversion process is split in two parts. Part1 does the main conversion
 			but does not necessarily create correct TEI. Part2 cleans up the mess produced by Part1
 			and ensures the creation of valid TEI. </xd:detail>
 	</xd:doc>
@@ -132,15 +132,11 @@
 		  <xsl:for-each select="$part0">
 		    <xsl:apply-templates/>
 		  </xsl:for-each>
-		</xsl:variable>
-		  
-		<!-- uncomment the following line to get the output from Part 1 -->
-		<!--
-		<xsl:copy-of select="$part1"/>
-		-->
+		</xsl:variable>		  
 
 		<!-- Do the final parse and create valid TEI -->
 		<xsl:apply-templates select="$part1" mode="part2"/>
+
 	</xsl:template>
 
 	<xd:doc>
@@ -261,7 +257,8 @@
 		<xd:short>Groups the document by headings and thereby creating the document structure.</xd:short> 
 	</xd:doc>
 	<xsl:template name="group-by-section">
-		<xsl:variable name="Style" select="w:pPr/w:pStyle/@w:val"/>
+		<xsl:variable name="Style"
+			      select="w:pPr/w:pStyle/@w:val"/>
 		<xsl:variable name="NextHeader" select="teidocx:get-nextlevel-header($Style)"/>
 		<div>
 			<!-- generate the head -->

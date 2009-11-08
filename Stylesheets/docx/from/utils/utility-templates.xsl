@@ -50,22 +50,20 @@
 	  <label>DOCX to TEI</label>
 	</application>
 	<xsl:if test="xpath:doc-available(concat($word-directory,'/docProps/custom.xml'))">
-	  <xsl:variable name="customProps"
-			select="document(concat($word-directory,'/docProps/custom.xml'))"/>
 	  <xsl:for-each
-	      select="xpath:doc(concat($word-directory,'/docProps/custom.xml'))/prop:Properties/prop:property">
-	    <xsl:choose>
-	      <xsl:when test="@name='TEI_fromDOCX'"/>
-	      <xsl:when test="contains(@name,'TEI')">
-		<application ident="{@name}" version="{.}">
-		  <label>
-		    <xsl:value-of select="@name"/>
-		  </label>
-		</application>
-	      </xsl:when>
-	    </xsl:choose>
-	  </xsl:for-each>
-	  <xsl:for-each select="$customProps/prop:Properties">
+	      select="xpath:doc(concat($word-directory,'/docProps/custom.xml'))/prop:Properties">
+	    <xsl:for-each select="prop:property">
+	      <xsl:choose>
+		<xsl:when test="@name='TEI_fromDOCX'"/>
+		<xsl:when test="contains(@name,'TEI')">
+		  <application ident="{@name}" version="{.}">
+		    <label>
+		      <xsl:value-of select="@name"/>
+		    </label>
+		  </application>
+		</xsl:when>
+	      </xsl:choose>
+	    </xsl:for-each>
 	    <application ident="WordTemplate" version="{prop:property[@name='WordTemplate']}">
 	      <label>Word template file</label>
 	      <ptr target="{prop:property[@name='WordTemplateURI']}"/>

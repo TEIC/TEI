@@ -88,75 +88,75 @@
 	  <names>
 	    <name>ANNEX</name>
 	    <name>Bibliography</name>
-	    <name>committee_id</name>
-	    <name>copyright_details</name>
-	    <name>cover_warning</name>
-	    <name>document_details</name>
-	    <name>heading 1</name>
-	    <name>a2</name>
 	    <name>Definition</name>
-	    <name>Formula</name>
-	    <name>dl</name>
-	    <name>document_title</name>
+	    <name>Defterms</name>
 	    <name>Example</name>
-	    <name>Note</name>
+	    <name>ExtXref</name>
+	    <name>Figure footnote</name>
 	    <name>Figure title</name>
 	    <name>FigureFootnoteXref</name>
-	    <name>Figure footnote</name>
 	    <name>Footnote Reference</name>
 	    <name>Footnote Text</name>
 	    <name>Foreword</name>
-	    <name>zzForeword</name>
-	    <name>id_no</name>
+	    <name>Formula</name>
 	    <name>Index 1</name>
 	    <name>Index heading</name>
-	    <name>zzIndex</name>
-	    <name>isonumber</name>
-	    <name>isononumber</name>
-	    <name>Normal</name>
 	    <name>Introduction</name>
-	    <name>List Number</name>
-	    <name>List Number 2</name>
-	    <name>List Number 3</name>
-	    <name>List Number 4</name>
-	    <name>List Continue</name>
 	    <name>List Continue 2</name>
 	    <name>List Continue 3</name>
 	    <name>List Continue 4</name>
-	    <name>ExtXref</name>
-	    <name>RefNorm</name>
-	    <name>Note</name>
+	    <name>List Continue</name>
+	    <name>List Number 2</name>
+	    <name>List Number 3</name>
+	    <name>List Number 4</name>
+	    <name>List Number</name>
 	    <name>Normal</name>
+	    <name>Normal</name>
+	    <name>Note</name>
+	    <name>Note</name>
+	    <name>Note</name>
+	    <name>RefNorm</name>
+	    <name>Special</name>
+	    <name>Table footnote</name>
+	    <name>Table text (10)</name>
+	    <name>Table text (7)</name>
+	    <name>Table text (8)</name>
+	    <name>Table text (9)</name>
+	    <name>Table title</name>
+	    <name>TableFootNoteXref</name>
+	    <name>TermNum</name>
+	    <name>a2</name>
 	    <name>a3</name>
 	    <name>a4</name>
 	    <name>a5</name>
 	    <name>a6</name>
+	    <name>committee_id</name>
+	    <name>copyright_details</name>
+	    <name>cover_warning</name>
+	    <name>dl</name>
+	    <name>document_details</name>
+	    <name>document_title</name>
+	    <name>heading 1</name>
 	    <name>heading 2</name>
 	    <name>heading 3</name>
 	    <name>heading 4</name>
 	    <name>heading 5</name>
 	    <name>heading 6</name>
+	    <name>id_no</name>
+	    <name>isononumber</name>
+	    <name>isonumber</name>
 	    <name>p2</name>
 	    <name>p3</name>
 	    <name>p4</name>
 	    <name>p5</name>
 	    <name>p6</name>
-	    <name>Note</name>
 	    <name>permission</name>
 	    <name>possibility_and_capability</name>
+	    <name>recommendation</name>
 	    <name>reference_number</name>
 	    <name>requirement</name>
-	    <name>recommendation</name>
-	    <name>Special</name>
 	    <name>statement</name>
-	    <name>Table text (9)</name>
-	    <name>Table text (8)</name>
-	    <name>Table text (7)</name>
-	    <name>Table text (10)</name>
-	    <name>Table title</name>
-	    <name>TableFootNoteXref</name>
-	    <name>Table footnote</name>
-	    <name>zzContents</name>
+	    <name>termPreferred</name>
 	    <name>toc 1</name>
 	    <name>toc 2</name>
 	    <name>toc 3</name>
@@ -164,13 +164,13 @@
 	    <name>toc 5</name>
 	    <name>toc 6</name>
 	    <name>toc 9</name>
-	    <name>Defterms</name>
-	    <name>TermNum</name>
-	    <name>termPreferred</name>
 	    <name>working_reference_number</name>
 	    <name>zzBiblio</name>
+	    <name>zzContents</name>
 	    <name>zzCopyright</name>
 	    <name>zzCover</name>
+	    <name>zzForeword</name>
+	    <name>zzIndex</name>
 	    <name>zzSTDTitle</name>
 	  </names>
 	</xsl:variable>
@@ -207,9 +207,9 @@
     <!-- defines whether or not a word paragraph is a  heading -->
     <xsl:function name="teidocx:is-heading" as="xs:boolean">
         <xsl:param name="p"/>
-        
         <xsl:choose>
-            <xsl:when test="$p[starts-with(w:pPr/w:pStyle/@w:val,'heading') 
+            <xsl:when
+		test="$p[starts-with(w:pPr/w:pStyle/@w:val,'heading') 
                                 or w:pPr/w:pStyle/@w:val=$ANNEX 
                                 or w:pPr/w:pStyle/@w:val=$a2
                                 or w:pPr/w:pStyle/@w:val=$a3

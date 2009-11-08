@@ -299,7 +299,6 @@
     <!-- some specific section headers -->
     <xsl:template name="generate-section-heading">
         <xsl:param name="Style"/>
-
         <xsl:variable name="divname">
             <xsl:for-each select=".//w:t">
                 <xsl:if
@@ -422,8 +421,10 @@
             if (w:pPr/w:pStyle/@w:val='RefNorm') then 2 else
             
             if (w:pPr/w:pStyle/@w:val='TermNum') then 3 else
-            if (w:pPr/w:pStyle[starts-with(@w:val,'AutoTermNum')]) then 3 else
+            if (w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]) then 3 else
             if (w:pPr/w:pStyle/@w:val='symbol') then 3 else
+            if (w:pPr/w:pStyle/@w:val='source') then 3 else
+            if (w:pPr/w:pStyle/@w:val='Example') then 3 else
             if (w:pPr/w:pStyle/@w:val='termAdmitted') then 3 else
             if (w:pPr/w:pStyle/@w:val='termDeprecated') then 3 else
             if (w:pPr/w:pStyle/@w:val='termPreferred') then 3 else
@@ -669,18 +670,49 @@
         Terms and definitions
     -->
     <xsl:template name="termsAndDefinitionsSection">
+            <!--
+		TermNum
+		AutoTermNum
+
+		Example
+		source
+		symbol
+		termAdmitted
+		termDeprecated
+		termPreferred
+		termRef
+		abbreviatedForm
+	    -->
         <xsl:for-each-group select="current-group()"
             group-starting-with="w:p[w:pPr/w:pStyle/@w:val='TermNum'
-				     or w:pPr/w:pStyle[starts-with(@w:val,'AutoTermNum')]]">
-            <!--
-symbol
-termAdmitted
-termDeprecated
-termPreferred
-termRef
--->
-	    <xsl:variable name="ID" select="concat('T_',.)"/>
-            <termEntry id="{$ID}" xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
+				 or
+				 w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]]">
+	  <xsl:choose>
+	  <xsl:when test="not(self::w:p[w:pPr/w:pStyle/@w:val='TermNum'
+				 or
+				 w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]])">
+	    <xsl:message>ERROR: terminology entry does not have a
+	    number style, but starts with with  <xsl:value-of select="w:pPr/w:pStyle/@w:val"/></xsl:message>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:variable name="Style">
+	      <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
+	    </xsl:variable>
+	    <xsl:variable name="ID">
+	      <xsl:choose>
+		<xsl:when test="$Style='TermNum'">
+		  <xsl:text>Term_</xsl:text>
+		  <xsl:value-of select="."/>
+		</xsl:when>
+		<xsl:when test="starts-with($Style,'autoTermNum')">
+		  <xsl:value-of select="$Style"/>
+		  <xsl:text>_</xsl:text>
+		  <xsl:number level="any" count="w:p[w:pPr/w:pStyle/@w:val=$Style]"/>
+		</xsl:when>
+	      </xsl:choose>
+	    </xsl:variable>
+            <termEntry id="{$ID}"
+		       xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
                 <descripGrp>
                     <descrip type="definition">
                         <xsl:for-each
@@ -695,34 +727,64 @@ termRef
                         </note>
                     </xsl:for-each>
                 </descripGrp>
-                <langSet xml:lang="en">
-                    <xsl:for-each select="current-group()">
-                        <xsl:variable name="Thing">
-                            <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
-                        </xsl:variable>
-                        <xsl:choose>
-                            <xsl:when test="$Thing='TermNum'"/>
-                            <xsl:when test="w:pPr/w:pStyle/@w:val='Definition'"/>
-                            <xsl:when test="w:pPr/w:pStyle/@w:val='noteTermEntry'"/>
-                            <xsl:otherwise>
-                                <ntig>
-                                    <termGrp>
-                                        <term id="{$ID}-{position()}">
-                                            <xsl:apply-templates/>
-                                        </term>
-                                        <termNote type="partOfSpeech">noun</termNote>
-                                        <termNote type="administrativeStatus">
-                                            <xsl:value-of select="$Thing"/>
-                                            <xsl:text>-admn-sts</xsl:text>
-                                        </termNote>
-                                    </termGrp>
-                                </ntig>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:for-each>
-                </langSet>
-            </termEntry>
-        </xsl:for-each-group>
+                <langSet>
+		  <xsl:attribute name="xml:lang">
+		    <xsl:choose>
+		      <xsl:when test="w:pPr/w:rPr/w:lang">
+			<xsl:value-of select="w:pPr/w:rPr/w:lang/@w:val"/>
+		      </xsl:when>
+		      <xsl:otherwise>en</xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:attribute>
+		  <xsl:for-each select="current-group()">
+		    <xsl:variable name="Thing">
+		      <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
+		    </xsl:variable>
+		      <xsl:choose>
+			<xsl:when test="$Thing='autoTermNum1'"/>
+			<xsl:when test="$Thing='autoTermNum2'"/>
+			<xsl:when test="$Thing='autoTermNum3'"/>
+			<xsl:when test="$Thing='autoTermNum4'"/>
+			<xsl:when test="$Thing='autoTermNum5'"/>
+			<xsl:when test="$Thing='autoTermNum6'"/>
+			<xsl:when test="$Thing='autoTermNumA2'"/>
+			<xsl:when test="$Thing='autoTermNumA3'"/>
+			<xsl:when test="$Thing='autoTermNumA4'"/>
+			<xsl:when test="$Thing='autoTermNumA5'"/>
+			<xsl:when test="$Thing='autoTermNumA6'"/>
+			<xsl:when test="$Thing='TermNum'"/>
+			<xsl:when test="$Thing='Definition'"/>
+			<xsl:when test="$Thing='noteTermEntry'"/>
+			<xsl:otherwise>
+			  <ntig>
+			    <termGrp>
+			      <term id="{$ID}-{position()}">
+				<xsl:apply-templates/>
+			      </term>
+			      <termNote type="partOfSpeech">noun</termNote>
+			      <termNote
+				  type="administrativeStatus">
+				<xsl:choose>
+				  <xsl:when test="$Thing='termPreferred'">preferredTerm</xsl:when>
+                                            <xsl:when test="$Thing='termDeprecated'">deprecatedTerm</xsl:when>
+					    <xsl:when test="$Thing='termAdmitted'">admittedTerm</xsl:when>
+				</xsl:choose>
+				<xsl:text>-admn-sts</xsl:text>
+			      </termNote>
+			      <xsl:if
+				  test="w:r/w:rPr/w:rStyle/@w:val='abbreviatedForm'">
+				<termNote type="termType">abbreviation</termNote>
+			      </xsl:if>
+			    </termGrp>
+			  </ntig>
+			</xsl:otherwise>
+		      </xsl:choose>
+		  </xsl:for-each>
+		</langSet>
+	    </termEntry>
+	  </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each-group>
     </xsl:template>
 
     <!-- 
@@ -809,20 +871,6 @@ termRef
             <xsl:apply-templates/>
         </note>
     </xsl:template>
-
-    <!-- notes -->
-    <!--<xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$Note]">
-        <note>
-            <xsl:call-template name="noteRend"/>
-            <xsl:apply-templates/>
-        </note>
-    </xsl:template>
-   
-   <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Example']">
-        <xsl:apply-templates select="." mode="paragraph"/>
-    </xsl:template>    
-    -->
-
 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$TableFootnote]">
         <note place="foot">
@@ -1046,4 +1094,54 @@ termRef
     <xsl:template match="tei:SDT" mode="part2">
       <xsl:apply-templates mode="part2"/>
     </xsl:template>
+
+  <xsl:template match="w:bookmarkEnd" mode="part0"/>
+
+
+  <xsl:template match="tei:div[@type='termsAndDefinitions']"
+		mode="part2">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:variable name="name">
+	<xsl:text>termHeading2</xsl:text>
+      </xsl:variable>
+      <xsl:for-each-group select="*"
+			  group-starting-with="tei:p[@rend=$name]">
+	<xsl:choose>
+	  <xsl:when test="self::tei:p[@rend=$name]">
+	    <xsl:apply-templates select="." mode="group"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:apply-templates select="current-group()" mode="part2"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each-group>
+    </xsl:copy>
+  </xsl:template>
+
+ <xsl:template match="tei:p[starts-with(@rend,'termHeading')]" mode="group">
+    <xsl:variable name="next" select="translate(@rend, '23456', '34567')"/>
+    <div type="termHeading">
+      <head>
+	<xsl:apply-templates/>
+      </head>
+      <xsl:for-each-group select="current-group() except ." group-starting-with="tei:p[@rend = $next]">
+	<xsl:choose>
+	  <xsl:when test="self::tei:p[@rend=$next]">
+	    <xsl:apply-templates select="." mode="group"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:apply-templates select="current-group()" mode="part2"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each-group>
+    </div>
+  </xsl:template>
+
+
+  <xsl:template match="*" mode="group">
+    <xsl:apply-templates select="." mode="part2"/>
+  </xsl:template>
+  
+
 </xsl:stylesheet>
