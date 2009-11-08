@@ -187,6 +187,7 @@
                             <xsl:when test="$thisSdt='docdate'"/>
                             <xsl:when test="$thisSdt='organization'"/>
                             <xsl:when test="$thisSdt='secretariat'"/>
+                            <xsl:when test="$thisSdt='fw_parts'"/>
                             <xsl:otherwise>
                                 <idno iso:meta="{$thisSdt}">
                                     <xsl:call-template name="getSdt">
@@ -1064,7 +1065,7 @@
     <xsl:template name="extract-forme-work"/>
 
     <xsl:template match="w:sdt" mode="paragraph">
-      <SDT iso:meta="{w:sdtPr/w:tag/@w:val}">
+      <q type="sdt" iso:meta="{w:sdtPr/w:tag/@w:val}">
 	<xsl:for-each-group 
 	    select="w:sdtContent/w:p"
 	    group-adjacent="if (contains(w:pPr/w:pStyle/@w:val,'List')) then 1 else
@@ -1079,21 +1080,10 @@
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:for-each-group>
-      </SDT>
+      </q>
     </xsl:template>
 
     <xsl:template match="tei:list[string-length(.)=0]" mode="part2"/>
-
-    <xsl:template match="tei:SDT/tei:p|tei:SDT/tei:list" mode="part2">
-      <xsl:copy>
-	<xsl:attribute name="iso:meta" select="../@iso:meta"/>
-	<xsl:apply-templates mode="part2" select="@*|*|comment()"/>
-      </xsl:copy>
-    </xsl:template>
-
-    <xsl:template match="tei:SDT" mode="part2">
-      <xsl:apply-templates mode="part2"/>
-    </xsl:template>
 
   <xsl:template match="w:bookmarkEnd" mode="part0"/>
 
