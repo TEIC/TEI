@@ -125,9 +125,9 @@ place, or organization being named. See section <ptr target="#NDNYM"/>
 for further discussion.</p>
 
 <p>Some members of the <ident type="class">att.naming</ident> class
-are also members of the <ident type="class">att.editLike</ident>
+are also members of the <ident type="class">att.responsibility</ident>
 class, from which they inherit the following attributes:
-<specList><specDesc key="att.editLike" atts="resp cert"/></specList>
+<specList><specDesc key="att.responsibility" atts="resp cert"/></specList>
 This enables an encoder to record the agency responsible for a given
 assertion (for example, the name) and the confidence placed in that
 assertion by the encoder.
@@ -942,11 +942,15 @@ people of different kinds where this is considered convenient:
 </p>
 
 <p>The <gi>person</gi> element provides several useful attributes.
-First, as a member of <ident type="class">att.editLike</ident>, the
+First, as a member of <ident type="class">att.editLike</ident>, which
+is a subclass of the <ident type="class">att.responsible</ident>
+class, the
 <gi>person</gi> element may carry attributes useful for indicating
 details about the scholarly interpretations made about the information
-recorded for the person in question: <specList><specDesc
-key="att.editLike" atts="cert resp evidence source"/></specList>
+recorded for the person in question: <specList>
+<specDesc key="att.responsibility" atts="cert resp"/>
+<specDesc key="att.editLike" atts="evidence source"/>
+</specList>
 Second, attributes specific to <gi>person</gi> (and
 <gi>personGrp</gi>) allow specification of some particular information
 about the person (or group). <specList><specDesc key="person"
@@ -1312,10 +1316,10 @@ David Jones changed his name in 1966 to David Bowie:
 </person>
 </egXML>
 </p>
-<p>All the generic elements are also members of the <ident type="class">att.editLike</ident>
-class, which, as its name implies, was originally intended to provide
+<p>All the generic elements are also members of the <ident type="class">att.responsibility</ident>
+and <ident type="class">att.editLike</ident> classes. These classes, originally intended to provide
 attributes <q>describing the nature of an encoded scholarly intervention
-or interpretation of any kind</q> and which makes available the attributes
+or interpretation of any kind</q>  make available the attributes
 <att>cert</att>, to indicate the degree of certainty, <att>resp</att>, the agency responsible, and <att>evidence</att>,
 the nature of the evidence used. In this way it is possible, in the
 case of multiple and conflicting sources, to provide more than one view
