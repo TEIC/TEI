@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0">
   <!--
-Schema generated from ODD source 2009-11-08T12:11:12Z. 
+Schema generated from ODD source 2009-11-08T13:11:40Z. 
 Edition: 1.4.1. Last updated on July 1st 2009.
 
 -->
@@ -320,7 +320,6 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
   </define>
   <define name="att.datable.w3c.attributes">
     <ref name="att.datable.w3c.attribute.period"/>
-    <ref name="att.datable.w3c.attribute.when"/>
     <ref name="att.datable.w3c.attribute.notBefore"/>
     <ref name="att.datable.w3c.attribute.notAfter"/>
     <ref name="att.datable.w3c.attribute.from"/>
@@ -333,24 +332,6 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
       period of time within which the datable item is understood to
       have occurred.</a:documentation>
         <data type="anyURI"/>
-      </attribute>
-    </optional>
-  </define>
-  <define name="att.datable.w3c.attribute.when">
-    <optional>
-      <attribute name="when">
-        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">supplies the value of the date or time in a standard form,
-      e.g. yyyy-mm-dd.</a:documentation>
-        <choice>
-          <data type="date"/>
-          <data type="gYear"/>
-          <data type="gMonth"/>
-          <data type="gDay"/>
-          <data type="gYearMonth"/>
-          <data type="gMonthDay"/>
-          <data type="time"/>
-          <data type="dateTime"/>
-        </choice>
       </attribute>
     </optional>
   </define>
@@ -424,10 +405,6 @@ Sample values include: 1] rubbing; 2] mildew; 3] smoke</a:documentation>
         </choice>
       </attribute>
     </optional>
-  </define>
-  <define name="att.datable.attributes">
-    <ref name="att.datable.w3c.attributes"/>
-    <ref name="att.datable.iso.attributes"/>
   </define>
   <define name="att.declarable.attributes">
     <ref name="att.declarable.attribute.default"/>
@@ -2225,7 +2202,8 @@ Suggested values include: 1] cardinal; 2] ordinal; 3] fraction; 4] percentage</a
         </choice>
       </zeroOrMore>
       <ref name="att.global.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <ref name="att.editLike.attributes"/>
       <ref name="att.typed.attributes"/>
       <optional>
@@ -2269,7 +2247,8 @@ Suggested values include: 1] Gregorian; 2] Julian; 3] Islamic; 4] Hebrew; 5] Rev
         </choice>
       </zeroOrMore>
       <ref name="att.global.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <ref name="att.editLike.attributes"/>
       <ref name="att.typed.attributes"/>
       <empty/>
@@ -3809,7 +3788,8 @@ codes used elsewhere in the text.</a:documentation>
       </group>
       <ref name="att.global.attributes"/>
       <ref name="att.typed.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <attribute name="ident">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Supplies an identifier for the application, independent of its version number or display
         name.</a:documentation>
@@ -4014,7 +3994,8 @@ represented within a text.</a:documentation>
         </attribute>
       </optional>
       <ref name="att.global.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <ref name="att.global.attributes"/>
       <empty/>
     </element>
@@ -6293,7 +6274,8 @@ or phrase, typically found as part of a blazon, coat of arms, etc.
         </choice>
       </zeroOrMore>
       <ref name="att.global.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <ref name="att.editLike.attributes"/>
       <ref name="att.typed.attributes"/>
       <empty/>
@@ -6306,7 +6288,8 @@ place of origin for a manuscript or manuscript part. </a:documentation>
       <ref name="tei_macro.xtext"/>
       <ref name="att.global.attributes"/>
       <ref name="att.naming.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <ref name="att.editLike.attributes"/>
       <empty/>
     </element>
@@ -6339,7 +6322,8 @@ stamp or similar device.</a:documentation>
       <ref name="tei_macro.phraseSeq"/>
       <ref name="att.global.attributes"/>
       <ref name="att.typed.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <empty/>
     </element>
   </define>
@@ -7013,7 +6997,8 @@ one for each binding of the manuscript. </a:documentation>
         </choice>
       </oneOrMore>
       <ref name="att.global.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <optional>
         <attribute name="contemporary">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies whether or not the binding is contemporary with the majority of its
@@ -7061,7 +7046,8 @@ possibly with additional decoNotes. </a:documentation>
       </oneOrMore>
       <ref name="att.global.attributes"/>
       <ref name="att.typed.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <optional>
         <attribute name="contemporary">
           <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">specifies whether or not the seal is contemporary with the
@@ -7122,7 +7108,8 @@ concerning the origin of  a manuscript or manuscript part. </a:documentation>
       <ref name="tei_macro.specialPara"/>
       <ref name="att.global.attributes"/>
       <ref name="att.editLike.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <empty/>
     </element>
   </define>
@@ -7133,7 +7120,8 @@ concerning a single identifiable episode during the history of a manuscript
 or manuscript part, after its creation but before its acquisition. </a:documentation>
       <ref name="tei_macro.specialPara"/>
       <ref name="att.global.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <empty/>
     </element>
   </define>
@@ -7144,7 +7132,8 @@ concerning the process by which a manuscript or manuscript part entered the hold
 institution. </a:documentation>
       <ref name="tei_macro.specialPara"/>
       <ref name="att.global.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <empty/>
     </element>
   </define>
@@ -7239,7 +7228,8 @@ as running prose or as a series of dated custodial events. </a:documentation>
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(custodial event) describes a single event during the custodial history of a manuscript.</a:documentation>
       <ref name="tei_macro.specialPara"/>
       <ref name="att.global.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <ref name="att.typed.attributes"/>
       <empty/>
     </element>
@@ -8755,7 +8745,8 @@ the space.</a:documentation>
     or all of the person's forenames, surnames, honorifics, added names, etc.</a:documentation>
       <ref name="tei_macro.phraseSeq"/>
       <ref name="att.global.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <ref name="att.editLike.attributes"/>
       <ref name="att.personal.attributes"/>
       <ref name="att.typed.attributes"/>
@@ -8769,7 +8760,8 @@ the space.</a:documentation>
       <ref name="att.global.attributes"/>
       <ref name="att.naming.attributes"/>
       <ref name="att.typed.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <ref name="att.editLike.attributes"/>
       <empty/>
     </element>
@@ -8782,7 +8774,8 @@ the space.</a:documentation>
       <ref name="att.global.attributes"/>
       <ref name="att.naming.attributes"/>
       <ref name="att.typed.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <empty/>
     </element>
   </define>
@@ -8793,7 +8786,8 @@ the space.</a:documentation>
       <ref name="att.global.attributes"/>
       <ref name="att.naming.attributes"/>
       <ref name="att.typed.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <empty/>
     </element>
   </define>
@@ -8804,7 +8798,8 @@ the space.</a:documentation>
       <ref name="tei_macro.phraseSeq"/>
       <ref name="att.global.attributes"/>
       <ref name="att.editLike.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <ref name="att.naming.attributes"/>
       <empty/>
     </element>
@@ -8839,7 +8834,8 @@ the space.</a:documentation>
         </zeroOrMore>
       </group>
       <ref name="att.global.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <ref name="att.editLike.attributes"/>
       <ref name="att.naming.attributes"/>
       <ref name="att.typed.attributes"/>
@@ -8907,7 +8903,8 @@ the space.</a:documentation>
         </rule>
       </pattern>
       <ref name="att.global.attributes"/>
-      <ref name="att.datable.attributes"/>
+      <ref name="att.datable.w3c.attributes"/>
+      <ref name="att.datable.iso.attributes"/>
       <ref name="att.editLike.attributes"/>
       <ref name="att.naming.attributes"/>
       <optional>
