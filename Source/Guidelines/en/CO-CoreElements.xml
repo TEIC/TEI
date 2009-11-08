@@ -1153,10 +1153,16 @@ indicating the person or agency responsible for making the editorial
 intervention in question, and also an indication of the degree of
 <term>certainty</term> which the encoder wishes to associate with the
 intervention. Because these requirements are common to many of the
-elements discussed in this section, they are provided by an attribute
-class, called <ident type="class">att.editLike</ident>. All members of
-this class carry the following optional attributes:
-<specList><specDesc key="att.editLike" atts="cert resp evidence "/></specList>
+elements discussed in this section, they are provided by attribute
+classes, specifically  <ident type="class">att.editLike</ident>, which
+itself inherits attributes from two further classes called 
+<ident type="class">att.responsibility</ident> and <ident
+type="class">att.dimensions</ident> respectively. Any of the elements
+discussed here thus may potentially carry any of the following optional attributes:
+<specList>
+<specDesc key="att.responsibility" atts="cert resp"/>
+<specDesc key="att.editLike" atts="evidence "/>
+<specDesc key="att.dimensions" atts="unit quantity extent precision scope"/></specList>
 </p>
 
 <p>Many of the elements discussed here can be used in two ways. Their
@@ -1254,7 +1260,7 @@ has been used to indicate responsibility for the correction. Its value (<val>#ms
   element (if the module described in <ptr target="#ND"/> has been
   included), or one of the bibliographic elements described in <ptr target="#COBI"/>, if the correction has been taken from some other
   source. The <att>resp</att> attribute is
-  available for all elements which are part of the <ident type="class">att.editLike</ident> class. The same
+  available for all elements which are members of the <ident type="class">att.responsibility</ident> class. The same
   class makes available a  <att>cert</att> attribute,which may be used
   to indicate the degree of editorial
 confidence in a particular correction, as in the following example:
