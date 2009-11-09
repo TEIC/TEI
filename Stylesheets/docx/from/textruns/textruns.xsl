@@ -192,8 +192,8 @@
     <xd:doc>
         <xd:short>Contains text that has been tracked as a revision. </xd:short>
     </xd:doc>
-    <xsl:template match="w:del">
-      <del when="{@w:date}" resp="#{@w:author}">
+    <xsl:template match="w:p/w:del">
+      <del when="{@w:date}" resp="#{translate(@w:author,' ','_')}">
 	<xsl:apply-templates/>
       </del>
     </xsl:template>
@@ -203,9 +203,11 @@
     </xsl:template>
 
     <xsl:template match="w:p/w:ins">
-      <add when="{@w:date}" resp="#{@w:author}">
+      <add when="{@w:date}" resp="#{translate(@w:author,' ','_')}">
 	<xsl:call-template name="ins-or-del"/>
       </add>
     </xsl:template>
+
+ 
     
 </xsl:stylesheet>

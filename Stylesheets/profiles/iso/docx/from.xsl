@@ -1158,6 +1158,21 @@
   <xsl:template match="*" mode="group">
     <xsl:apply-templates select="." mode="part2"/>
   </xsl:template>
-  
+
+  <xsl:template match="w:p[w:pPr/w:rPr/w:ins]" mode="paragraph">
+      <addSpan spanTo="{generate-id()}"
+	       when="{w:pPr/w:rPr/w:ins/@w:date}"
+	       resp="#{translate(w:pPr/w:rPr/w:ins/@w:author,' ','_')}"/>
+      <xsl:apply-imports/>
+      <anchor xml:id="{generate-id()}"/>
+  </xsl:template>
+
+  <xsl:template match="w:p[w:pPr/w:rPr/w:del]" mode="paragraph">
+      <delSpan spanTo="{generate-id()}"
+	       when="{w:pPr/w:rPr/w:del/@w:date}" 
+	       resp="#{translate(w:pPr/w:rPr/w:ins/@w:author,' ','_')}"/>
+      <xsl:apply-imports/>
+      <anchor xml:id="{generate-id()}"/>
+  </xsl:template>
 
 </xsl:stylesheet>
