@@ -320,7 +320,7 @@
                     self::tei:publisher or
                     self::tei:pb or
                     self::tei:ptr or
-                    self::tei:q or
+                    self::tei:q[not(@type='sdt')] or
                     self::tei:ref or
                     self::tei:seg or
                     self::tei:surname or 
