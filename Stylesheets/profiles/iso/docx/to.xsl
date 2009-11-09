@@ -743,7 +743,7 @@
         <xsl:apply-templates select="tei:text/tei:body"/>
     </xsl:template>
 
-    <xsl:template match="tei:q[@type='sdt']">
+    <xsl:template match="tei:q[@type='sdt']" mode="paragraph">
     <w:sdt>
       <w:sdtPr>
         <w:rPr>

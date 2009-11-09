@@ -106,7 +106,7 @@
                 </hi>
             </xsl:when>
             
-            <xsl:when test="w:rPr/w:b">
+            <xsl:when test="w:rPr/w:b[not(@w:val='0')]">
                 <hi rend="bold">
                     <xsl:apply-templates/>
                 </hi>

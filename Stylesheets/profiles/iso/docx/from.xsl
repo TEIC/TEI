@@ -187,7 +187,7 @@
                             <xsl:when test="$thisSdt='docdate'"/>
                             <xsl:when test="$thisSdt='organization'"/>
                             <xsl:when test="$thisSdt='secretariat'"/>
-                            <xsl:when test="$thisSdt='fw_parts'"/>
+                            <xsl:when test="starts-with($thisSdt, 'fw_')"/>
                             <xsl:otherwise>
                                 <idno iso:meta="{$thisSdt}">
                                     <xsl:call-template name="getSdt">
@@ -421,17 +421,19 @@
             
             if (w:pPr/w:pStyle/@w:val='RefNorm') then 2 else
             
-            if (w:pPr/w:pStyle/@w:val='TermNum') then 3 else
-            if (w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]) then 3 else
-            if (w:pPr/w:pStyle/@w:val='symbol') then 3 else
-            if (w:pPr/w:pStyle/@w:val='source') then 3 else
+            if (w:pPr/w:pStyle/@w:val='Definition') then 3 else
             if (w:pPr/w:pStyle/@w:val='Example') then 3 else
+            if (w:pPr/w:pStyle/@w:val='TermNum') then 3 else
+            if (w:pPr/w:pStyle/@w:val='nonVerbalRepresentation') then 3 else
+            if (w:pPr/w:pStyle/@w:val='noteDefinition') then 3 else
+            if (w:pPr/w:pStyle/@w:val='noteNonVerbalRepresentation') then 3 else
+            if (w:pPr/w:pStyle/@w:val='noteTerm') then 3 else
+            if (w:pPr/w:pStyle/@w:val='noteTermEntry') then 3 else
+            if (w:pPr/w:pStyle/@w:val='symbol') then 3 else
             if (w:pPr/w:pStyle/@w:val='termAdmitted') then 3 else
             if (w:pPr/w:pStyle/@w:val='termDeprecated') then 3 else
             if (w:pPr/w:pStyle/@w:val='termPreferred') then 3 else
-            if (w:pPr/w:pStyle/@w:val='termRef') then 3 else
-            if (w:pPr/w:pStyle/@w:val='Definition') then 3 else
-            if (w:pPr/w:pStyle/@w:val='noteTermEntry') then 3 else
+            if (w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]) then 3 else
             
             if (w:pPr/w:pStyle/@w:val=$BibliographyItem) then 4 else
             
@@ -585,7 +587,7 @@
                 </hi>
             </xsl:when>
 
-            <xsl:when test="w:rPr/w:b">
+            <xsl:when test="w:rPr/w:b[not(@w:val='0')]">
                 <hi rend="bold">
                     <xsl:apply-templates/>
                 </hi>
@@ -613,6 +615,18 @@
                     <xsl:apply-templates/>
                 </seg>
             </xsl:when>
+	    <xsl:when test="$style = 'domain'
+			    or $style = 'gender'
+			    or $style = 'geographicalUse'
+			    or $style = 'language'
+			    or $style = 'partOfSpeech'
+			    or $style = 'pronunciation'
+			    or $style = 'source'
+			    or $style = 'termRef'">
+	      <hi rend="{$style}">
+		<xsl:apply-templates/>
+	      </hi>
+	    </xsl:when>
 
             <xsl:otherwise>
                 <xsl:apply-templates/>
@@ -676,12 +690,10 @@
 		AutoTermNum
 
 		Example
-		source
 		symbol
 		termAdmitted
 		termDeprecated
 		termPreferred
-		termRef
 		abbreviatedForm
 	    -->
         <xsl:for-each-group select="current-group()"
@@ -775,6 +787,20 @@
 			      <xsl:if
 				  test="w:r/w:rPr/w:rStyle/@w:val='abbreviatedForm'">
 				<termNote type="termType">abbreviation</termNote>
+			      </xsl:if>
+			      <xsl:if
+				  test="w:r/w:rPr/w:rStyle/@w:val='gender'">
+				<termNote type="grammaticalGender">
+				  <xsl:for-each
+				      select="w:r[w:rPr/w:rStyle/@w:val='gender']">
+				    <xsl:choose>
+				      <xsl:when test=".='m'">masculine</xsl:when>
+				      <xsl:when
+					  test=".='f'">feminine</xsl:when>
+				      <xsl:otherwise>otherGender</xsl:otherwise>
+				    </xsl:choose>
+				  </xsl:for-each>
+				</termNote>
 			      </xsl:if>
 			    </termGrp>
 			  </ntig>
