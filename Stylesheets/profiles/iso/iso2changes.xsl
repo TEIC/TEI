@@ -1,8 +1,11 @@
 <xsl:stylesheet 
-    exclude-result-prefixes="tei" 
+    exclude-result-prefixes="tei cals tbx" 
+    xmlns:cals="http://www.oasis-open.org/specs/tm9901" xmlns:iso="http://www.iso.org/ns/1.0"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://www.w3.org/1999/xhtml"
   version="2.0"
 >
 <xsl:import href="isoutils.xsl"/>
@@ -27,62 +30,94 @@
   <xsl:variable name="isoyear">
     <xsl:call-template name="getiso_year"/>
   </xsl:variable>
-<html>
-  <head><title>Report on 
-      <xsl:value-of select="$isotitle"/>:
-      <xsl:value-of select="$isoyear"/>:
-      <xsl:value-of select="$isonumber"/>:
-      <xsl:value-of select="$isopart"/>
-</title>
-      <link href="iso.css" rel="stylesheet" type="text/css"/>
-
-  </head>
-<body>
-  <h1 class="maintitle">
-    
+  <html>
+    <head><title>Report on 
+    <xsl:value-of select="$isotitle"/>:
+    <xsl:value-of select="$isoyear"/>:
+    <xsl:value-of select="$isonumber"/>:
+    <xsl:value-of select="$isopart"/>
+  </title>
+  <link href="iso.css" rel="stylesheet" type="text/css"/>
+  
+    </head>
+    <body>
+      <h1 class="maintitle">
+	
 	<xsl:value-of select="$isotitle"/>:
 	<xsl:value-of select="$isoyear"/>:
 	<xsl:value-of select="$isonumber"/>:
 	<xsl:value-of select="$isopart"/>
-  </h1>
-
-  <xsl:for-each select="tei:text/tei:front">
-    <xsl:apply-templates select="key('frontDiv',1)"/>
-    <hr/>
-  </xsl:for-each>
-  <xsl:for-each select="tei:text/tei:body">
-    <xsl:apply-templates select="key('bodyDiv',1)"/>
-    <hr/>
-  </xsl:for-each>
-  <xsl:for-each select="tei:text/tei:back">
-    <xsl:apply-templates select="key('backDiv',1)"/>
-  </xsl:for-each>
-</body>
-</html>
+      </h1>
+      
+      <xsl:for-each select="tei:text/tei:front">
+	<xsl:apply-templates/>
+	<hr/>
+      </xsl:for-each>
+      <xsl:for-each select="tei:text/tei:body">
+	<xsl:apply-templates/>
+	<hr/>
+      </xsl:for-each>
+      <xsl:for-each select="tei:text/tei:back">
+	<xsl:apply-templates/>
+      </xsl:for-each>
+    </body>
+  </html>
 </xsl:template>
 
 <xsl:template match="tei:div[not(@type='termHeading')]">
   <xsl:variable name="depth" select="count(ancestor::tei:div)+2"/>
-  <xsl:element name="h{$depth}">
-    <xsl:call-template name="head"/>
-  </xsl:element>
-  <table border="1">
-  <xsl:for-each select=".//tei:add|.//tei:del">
-    <tr class="change_{local-name()}">
-      <td>
-	<xsl:for-each select="parent::*">
-	  <xsl:value-of select="local-name()"/>
-	  <xsl:text> </xsl:text>
-	  <xsl:number/>
-	</xsl:for-each>
-      </td>
-      <td><xsl:value-of select="local-name()"/></td>
-      <td><xsl:value-of select="@when"/></td>
-      <td><xsl:value-of select="substring-after(@resp,'#')"/></td>
-      <td><xsl:value-of select="."/></td>
-    </tr>
+  <xsl:variable name="stuff">
+    <xsl:apply-templates/>
+  </xsl:variable>
+  <xsl:if test="$stuff/h:p">
+    <xsl:element name="h{$depth}">
+      <xsl:call-template name="head"/>
+    </xsl:element>
+    <xsl:copy-of select="$stuff"/>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template match="*">
+  <xsl:apply-templates select="*"/>
+</xsl:template>
+
+<xsl:template match="tei:add|tei:del">
+  <xsl:if test="not(preceding-sibling::tei:del|preceding-sibling::tei:add)">
+  <p>
+  <xsl:for-each select="parent::*">
+    <xsl:choose>
+      <xsl:when test="self::tei:p">Paragraph
+      <xsl:number/></xsl:when>
+      <xsl:when test="self::tei:item">List item </xsl:when>
+      <xsl:when test="self::tei:head">Heading </xsl:when>
+      <xsl:when test="self::cals:entry">Table row <xsl:for-each
+      select="parent::cals:row"><xsl:number/></xsl:for-each>, cell <xsl:number/> </xsl:when>
+      <xsl:when test="self::tei:term">Terminology entry <xsl:number/></xsl:when>
+      <xsl:when test="self::tei:bibl">Bibliographical entry <xsl:number/> </xsl:when>
+      <xsl:otherwise><xsl:value-of select="local-name()"/><xsl:text> </xsl:text><xsl:number/></xsl:otherwise>
+    </xsl:choose>
   </xsl:for-each>
-  </table>
+  [<xsl:value-of select="@when"/>, <xsl:value-of
+  select="substring-after(@resp,'#')"/>]
+  </p>
+  <blockquote>
+    <xsl:for-each select="parent::*">
+      <xsl:apply-templates mode="show"/>
+    </xsl:for-each>
+  </blockquote>
+  </xsl:if>
+</xsl:template>
+
+
+<xsl:template match="*" mode="show">
+  <xsl:apply-templates/>
+</xsl:template>
+
+
+<xsl:template match="tei:add|tei:del" mode="show">
+  <span class="{local-name()}">
+    <xsl:value-of select="."/>
+  </span>
 </xsl:template>
 
 <xsl:template name="head">
@@ -97,17 +132,17 @@
       <xsl:number count="tei:div" from="tei:back" format="A.1.1" level="multiple"/>
     </xsl:when>
   </xsl:choose>
-    <xsl:text> </xsl:text>
-	<xsl:choose>
-	  <xsl:when test="@type='other'">
-	    <xsl:value-of select="tei:head"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <span style="color:red">
-	      <xsl:value-of select="tei:head"/>
-	    </span>
-	  </xsl:otherwise>
-	</xsl:choose>
+  <xsl:text> </xsl:text>
+  <xsl:choose>
+    <xsl:when test="@type='other'">
+      <xsl:value-of select="tei:head"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <span style="color:red">
+	<xsl:value-of select="tei:head"/>
+      </span>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 </xsl:stylesheet>
 
