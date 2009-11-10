@@ -4,7 +4,7 @@
     exclude-result-prefixes="mml m"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:mml="http://www.w3.org/1998/Math/MathML"
-    xmlns="http://schemas.openxmlformats.org/officeDocument/2006/math"
+      xmlns="http://schemas.openxmlformats.org/officeDocument/2006/math"
     xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math">
   <xsl:output method="xml" encoding="UTF-8" />
 

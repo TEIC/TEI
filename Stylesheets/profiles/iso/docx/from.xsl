@@ -726,21 +726,21 @@
 	    </xsl:variable>
             <termEntry id="{$ID}"
 		       xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
-                <descripGrp>
-                    <descrip type="definition">
-                        <xsl:for-each
-                            select="current-group()[w:pPr/w:pStyle/@w:val='Definition'] except .">
-                            <xsl:apply-templates/>
-                        </xsl:for-each>
-                    </descrip>
-                    <xsl:for-each
-                        select="current-group()[w:pPr/w:pStyle/@w:val='noteTermEntry'] except .">
-                        <note>
-                            <xsl:apply-templates/>
-                        </note>
-                    </xsl:for-each>
-                </descripGrp>
-                <langSet>
+	      <xsl:for-each
+		  select="current-group()[w:pPr/w:pStyle/@w:val='noteTermEntry'] except .">
+		<note>
+		  <xsl:apply-templates/>
+		</note>
+	      </xsl:for-each>
+	      <descripGrp>
+		<descrip type="definition">
+		  <xsl:for-each
+		      select="current-group()[w:pPr/w:pStyle/@w:val='Definition'] except .">
+		    <xsl:apply-templates/>
+		  </xsl:for-each>
+		</descrip>
+	      </descripGrp>
+	      <langSet>
 		  <xsl:attribute name="xml:lang">
 		    <xsl:choose>
 		      <xsl:when test="w:pPr/w:rPr/w:lang">
@@ -1175,4 +1175,18 @@
       <anchor xml:id="{generate-id()}"/>
   </xsl:template>
 
+<!--
+  <xsl:template match="tbx:descripGrp" mode="part2">
+    <xsl:copy>
+      <xsl:apply-templates select="tbx:descrip"/>
+      <xsl:if test="tbx:descrip/tei:hi[@rend='source']">
+	<termNote type="source">
+	  <xsl:copy-of select="tbx:descrip/tei:hi[@rend='source']"/>
+	</termNote>
+      </xsl:if>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="tbx:descrip[@type='definition']/tei:source" mode="part2"/>
+-->
 </xsl:stylesheet>

@@ -58,9 +58,9 @@
     
     
     <xsl:template match="mml:math">
-      <m:oMath>
+      <oMath xmlns="http://schemas.openxmlformats.org/officeDocument/2006/math">
 	<xsl:apply-templates mode="mml"/>
-      </m:oMath>
+      </oMath>
     </xsl:template>
     
     <xsl:template match="w:object">
