@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- Beta Version 070708 -->
 <xsl:stylesheet version="2.0"
-    exclude-result-prefixes="mml m"
+    exclude-result-prefixes="mml m w"
+    xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:mml="http://www.w3.org/1998/Math/MathML"
       xmlns="http://schemas.openxmlformats.org/officeDocument/2006/math"
@@ -340,7 +341,7 @@
       </xsl:when>
       <xsl:otherwise>
         <!--Only one element will be part of run-->
-        <xsl:element name="m:r">
+        <r>
           <!--Create Run Properties based on current node's attributes-->
           <xsl:call-template name="CreateRunProp">
             <xsl:with-param name="mathvariant">
@@ -425,12 +426,12 @@
               </xsl:call-template>
             </xsl:with-param>
           </xsl:call-template>
-          <xsl:element name="m:t">
+          <t>
             <xsl:call-template name="OutputText">
               <xsl:with-param name="sInput" select="normalize-space(.)" />
             </xsl:call-template>
-          </xsl:element>
-        </xsl:element>
+          </t>
+        </r>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -700,7 +701,7 @@
 			tags with different properties.  nndBeforeLim is the number of nodes before the next tag which separates contiguous 
 			groups of like-property mi, mn, and mo's.  Knowing this delimiting tag allows for the aggregation of the correct 
 			number of mi, mn, and mo tags.-->
-    <xsl:element name="m:r">
+    <r>
 
       <!--The beginning and ending of the current run has been established. Now we should open a run element-->
       <xsl:choose>
@@ -729,7 +730,7 @@
               </xsl:call-template>
             </xsl:with-param>
           </xsl:call-template>
-          <xsl:element name="m:t">
+          <t>
             <xsl:call-template name="OutputText">
               <xsl:with-param name="sInput">
                 <xsl:choose>
@@ -757,7 +758,7 @@
                 </xsl:for-each>
               </xsl:with-param>
             </xsl:call-template>
-          </xsl:element>
+          </t>
         </xsl:when>
         <xsl:otherwise>
 
@@ -787,7 +788,7 @@
               </xsl:call-template>
             </xsl:with-param>
           </xsl:call-template>
-          <xsl:element name="m:t">
+          <t>
 
             <!--Create the Run, first output current, then in a 
 							for-each, because all the following siblings are
@@ -821,10 +822,10 @@
                 </xsl:for-each>
               </xsl:with-param>
             </xsl:call-template>
-          </xsl:element>
+          </t>
         </xsl:otherwise>
       </xsl:choose>
-    </xsl:element>
+    </r>
 
     <!--The run was terminated by an mi, mn, mo, ms, or mtext with different properties, 
 				therefore, call-template CreateRunWithSameProp, using cndRun+1 node as new start node-->
@@ -1024,7 +1025,7 @@
       </xsl:call-template>
     </xsl:variable>
     <xsl:if test="$fLit=1 or $fNor=1 or ($sFontCur!='italic' and $sFontCur!='')">
-      <xsl:element name="m:rPr">
+      <rPr>
         <xsl:if test="$fNor=1">
           <nor />
         </xsl:if>
@@ -1035,7 +1036,7 @@
           <xsl:with-param name="font" select="$sFontCur" />
           <xsl:with-param name="fNor" select="$fNor" />
         </xsl:call-template>
-      </xsl:element>
+      </rPr>
     </xsl:if>
   </xsl:template>
 
@@ -1103,94 +1104,94 @@
     <xsl:param name="fNor" select="0"/>
     <xsl:choose>
       <xsl:when test="$font='normal' and $fNor=0">
-        <xsl:element name="m:sty">
+        <sty>
           <xsl:attribute name="m:val">p</xsl:attribute>
-        </xsl:element>
+        </sty>
       </xsl:when>
       <xsl:when test="$font='bold'">
-        <xsl:element name="m:sty">
+        <sty>
           <xsl:attribute name="m:val">b</xsl:attribute>
-        </xsl:element>
+        </sty>
       </xsl:when>
       <xsl:when test="$font='italic'">
       </xsl:when>
       <xsl:when test="$font='script'">
-        <xsl:element name="m:scr">
+        <scr>
           <xsl:attribute name="m:val">script</xsl:attribute>
-        </xsl:element>
+        </scr>
       </xsl:when>
       <xsl:when test="$font='bold-script'">
-        <xsl:element name="m:scr">
+        <scr>
           <xsl:attribute name="m:val">script</xsl:attribute>
-        </xsl:element>
-        <xsl:element name="m:sty">
+        </scr>
+        <sty>
           <xsl:attribute name="m:val">b</xsl:attribute>
-        </xsl:element>
+        </sty>
       </xsl:when>
       <xsl:when test="$font='double-struck'">
-        <xsl:element name="m:scr">
+        <scr>
           <xsl:attribute name="m:val">double-struck</xsl:attribute>
-        </xsl:element>
-        <xsl:element name="m:sty">
+        </scr>
+        <sty>
           <xsl:attribute name="m:val">p</xsl:attribute>
-        </xsl:element>
+        </sty>
       </xsl:when>
       <xsl:when test="$font='fraktur'">
-        <xsl:element name="m:scr">
+        <scr>
           <xsl:attribute name="m:val">fraktur</xsl:attribute>
-        </xsl:element>
-        <xsl:element name="m:sty">
+        </scr>
+        <sty>
           <xsl:attribute name="m:val">p</xsl:attribute>
-        </xsl:element>
+        </sty>
       </xsl:when>
       <xsl:when test="$font='bold-fraktur'">
-        <xsl:element name="m:scr">
+        <scr>
           <xsl:attribute name="m:val">fraktur</xsl:attribute>
-        </xsl:element>
-        <xsl:element name="m:sty">
+        </scr>
+        <sty>
           <xsl:attribute name="m:val">b</xsl:attribute>
-        </xsl:element>
+        </sty>
       </xsl:when>
       <xsl:when test="$font='sans-serif'">
-        <xsl:element name="m:scr">
+        <scr>
           <xsl:attribute name="m:val">sans-serif</xsl:attribute>
-        </xsl:element>
-        <xsl:element name="m:sty">
+        </scr>
+        <sty>
           <xsl:attribute name="m:val">p</xsl:attribute>
-        </xsl:element>
+        </sty>
       </xsl:when>
       <xsl:when test="$font='bold-sans-serif'">
-        <xsl:element name="m:scr">
+        <scr>
           <xsl:attribute name="m:val">sans-serif</xsl:attribute>
-        </xsl:element>
-        <xsl:element name="m:sty">
+        </scr>
+        <sty>
           <xsl:attribute name="m:val">b</xsl:attribute>
-        </xsl:element>
+        </sty>
       </xsl:when>
       <xsl:when test="$font='sans-serif-italic'">
-        <xsl:element name="m:scr">
+        <scr>
           <xsl:attribute name="m:val">sans-serif</xsl:attribute>
-        </xsl:element>
+        </scr>
       </xsl:when>
       <xsl:when test="$font='sans-serif-bold-italic'">
-        <xsl:element name="m:scr">
+        <scr>
           <xsl:attribute name="m:val">sans-serif</xsl:attribute>
-        </xsl:element>
-        <xsl:element name="m:sty">
+        </scr>
+        <sty>
           <xsl:attribute name="m:val">bi</xsl:attribute>
-        </xsl:element>
+        </sty>
       </xsl:when>
       <xsl:when test="$font='monospace'" />
       <!-- We can't do monospace, so leave empty -->
       <xsl:when test="$font='bold'">
-        <xsl:element name="m:sty">
+        <sty>
           <xsl:attribute name="m:val">b</xsl:attribute>
-        </xsl:element>
+        </sty>
       </xsl:when>
       <xsl:when test="$font='bi' or $font='bold-italic'">
-        <xsl:element name="m:sty">
+        <sty>
           <xsl:attribute name="m:val">bi</xsl:attribute>
-        </xsl:element>
+        </sty>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -1236,9 +1237,9 @@
       </xsl:call-template>
     </xsl:variable>
 
-    <xsl:element name="m:f">
-      <xsl:element name="m:fPr">
-        <xsl:element name="m:type">
+    <f>
+      <fPr>
+        <type>
           <xsl:attribute name="m:val">
             <xsl:choose>
               <xsl:when test="$fBar=0">noBar</xsl:when>
@@ -1246,17 +1247,17 @@
               <xsl:otherwise>bar</xsl:otherwise>
             </xsl:choose>
           </xsl:attribute>
-        </xsl:element>
-      </xsl:element>
-      <xsl:element name="m:num">
+        </type>
+      </fPr>
+      <num>
         <xsl:call-template name="CreateArgProp" />
         <xsl:apply-templates mode="mml"  select="child::*[1]" />
-      </xsl:element>
-      <xsl:element name="m:den">
+      </num>
+      <den>
         <xsl:call-template name="CreateArgProp" />
         <xsl:apply-templates mode="mml"  select="child::*[2]" />
-      </xsl:element>
-    </xsl:element>
+      </den>
+    </f>
   </xsl:template>
 
   <!-- %%Template: match menclose msqrt
@@ -1278,26 +1279,26 @@
                       or not($sLowerCaseNotation) 
                       or $sLowerCaseNotation='' 
                       or self::mml:msqrt">
-        <xsl:element name="m:rad">
-          <xsl:element name="m:radPr">
-            <xsl:element name="m:degHide">
+        <rad>
+          <radPr>
+            <degHide>
               <xsl:attribute name="m:val">on</xsl:attribute>
-            </xsl:element>
-          </xsl:element>
-          <xsl:element name="m:deg">
+            </degHide>
+          </radPr>
+          <deg>
             <xsl:call-template name="CreateArgProp" />
-          </xsl:element>
-          <xsl:element name="m:e">
+          </deg>
+          <e>
             <xsl:call-template name="CreateArgProp" />
             <xsl:apply-templates mode="mml"  />
-          </xsl:element>
-        </xsl:element>
+          </e>
+        </rad>
       </xsl:when>
       <xsl:otherwise>
         <xsl:choose>
           <xsl:when test="$sLowerCaseNotation='actuarial' or $sLowerCaseNotation='longdiv'" />
           <xsl:otherwise>
-            <xsl:element name="m:borderBox">
+            <borderBox>
               <!-- Dealing with more complex notation attribute -->
               <xsl:variable name="fBox">
                 <xsl:choose>
@@ -1371,56 +1372,56 @@
                                       and $fLeft=1
                                       and $fRight=1)
                               )">
-                <xsl:element name="m:borderBoxPr">
+                <borderBoxPr>
                   <xsl:if test="$fBox=0">
                     <xsl:if test="$fTop=0">
-                      <xsl:element name="m:hideTop">
+                      <hideTop>
                         <xsl:attribute name="m:val">on</xsl:attribute>
-                      </xsl:element>
+                      </hideTop>
                     </xsl:if>
                     <xsl:if test="$fBot=0">
-                      <xsl:element name="m:hideBot">
+                      <hideBot>
                         <xsl:attribute name="m:val">on</xsl:attribute>
-                      </xsl:element>
+                      </hideBot>
                     </xsl:if>
                     <xsl:if test="$fLeft=0">
-                      <xsl:element name="m:hideLeft">
+                      <hideLeft>
                         <xsl:attribute name="m:val">on</xsl:attribute>
-                      </xsl:element>
+                      </hideLeft>
                     </xsl:if>
                     <xsl:if test="$fRight=0">
-                      <xsl:element name="m:hideRight">
+                      <hideRight>
                         <xsl:attribute name="m:val">on</xsl:attribute>
-                      </xsl:element>
+                      </hideRight>
                     </xsl:if>
                   </xsl:if>
                   <xsl:if test="$fStrikeH=1">
-                    <xsl:element name="m:strikeH">
+                    <strikeH>
                       <xsl:attribute name="m:val">on</xsl:attribute>
-                    </xsl:element>
+                    </strikeH>
                   </xsl:if>
                   <xsl:if test="$fStrikeV=1">
-                    <xsl:element name="m:strikeV">
+                    <strikeV>
                       <xsl:attribute name="m:val">on</xsl:attribute>
-                    </xsl:element>
+                    </strikeV>
                   </xsl:if>
                   <xsl:if test="$fStrikeBLTR=1">
-                    <xsl:element name="m:strikeBLTR">
+                    <strikeBLTR>
                       <xsl:attribute name="m:val">on</xsl:attribute>
-                    </xsl:element>
+                    </strikeBLTR>
                   </xsl:if>
                   <xsl:if test="$fStrikeTLBR=1">
-                    <xsl:element name="m:strikeTLBR">
+                    <strikeTLBR>
                       <xsl:attribute name="m:val">on</xsl:attribute>
-                    </xsl:element>
+                    </strikeTLBR>
                   </xsl:if>
-                </xsl:element>
+                </borderBoxPr>
               </xsl:if>
-              <xsl:element name="m:e">
+              <e>
                 <xsl:call-template name="CreateArgProp" />
                 <xsl:apply-templates mode="mml"  />
-              </xsl:element>
-            </xsl:element>
+              </e>
+            </borderBox>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:otherwise>
@@ -1432,8 +1433,8 @@
   <xsl:template name="CreateArgProp">
     <xsl:if test="not(count(ancestor-or-self::mml:mstyle[@scriptlevel='0' or @scriptlevel='1' or @scriptlevel='2'])=0)
                   or not(count(ancestor-or-self::mml:mstyle[@mml:scriptlevel='0' or @mml:scriptlevel='1' or @mml:scriptlevel='2'])=0)">
-      <xsl:element name="m:argPr">
-        <xsl:element name="m:scrLvl">
+      <argPr>
+        <scrLvl>
           <xsl:attribute name="m:val">
             <xsl:choose>
               <xsl:when test="ancestor-or-self::mml:mstyle[@scriptlevel][1]/@scriptlevel">
@@ -1444,29 +1445,29 @@
               </xsl:otherwise>
             </xsl:choose>
           </xsl:attribute>
-        </xsl:element>
-      </xsl:element>
+        </scrLvl>
+      </argPr>
     </xsl:if>
   </xsl:template>
 
   <!-- %%Template: match mroot
 	-->
   <xsl:template mode="mml" match="mml:mroot">
-    <xsl:element name="m:rad">
-      <xsl:element name="m:radPr">
-        <xsl:element name="m:degHide">
+    <rad>
+      <radPr>
+        <degHide>
           <xsl:attribute name="m:val">off</xsl:attribute>
-        </xsl:element>
-      </xsl:element>
-      <xsl:element name="m:deg">
+        </degHide>
+      </radPr>
+      <deg>
         <xsl:call-template name="CreateArgProp" />
         <xsl:apply-templates mode="mml"  select="child::*[2]" />
-      </xsl:element>
-      <xsl:element name="m:e">
+      </deg>
+      <e>
         <xsl:call-template name="CreateArgProp" />
         <xsl:apply-templates mode="mml"  select="child::*[1]" />
-      </xsl:element>
-    </xsl:element>
+      </e>
+    </rad>
   </xsl:template>
 
   <!-- MathML has no concept of a linear fraction.  When transforming a linear fraction
@@ -1551,21 +1552,21 @@
        make a linear fraction -->
   <xsl:template name="MakeLinearFraction">
     <xsl:param name="ndCur" select="." />
-    <xsl:element name="m:f">
-      <xsl:element name="m:fPr">
-        <xsl:element name="m:type">
+    <f>
+      <fPr>
+        <type>
           <xsl:attribute name="m:val">lin</xsl:attribute>
-        </xsl:element>
-      </xsl:element>
-      <xsl:element name="m:num">
+        </type>
+      </fPr>
+      <num>
         <xsl:call-template name="CreateArgProp" />
         <xsl:apply-templates mode="mml"  select="$ndCur/*[1]" />
-      </xsl:element>
-      <xsl:element name="m:den">
+      </num>
+      <den>
         <xsl:call-template name="CreateArgProp" />
         <xsl:apply-templates mode="mml"  select="$ndCur/*[3]" />
-      </xsl:element>
-    </xsl:element>
+      </den>
+    </f>
   </xsl:template>
 
 
@@ -1574,14 +1575,14 @@
   <xsl:template name="WriteFunc">
     <xsl:param name="ndCur" select="." />
 
-    <xsl:element name="m:func">
-      <xsl:element name="m:fName">
+    <func>
+      <fName>
         <xsl:apply-templates mode="mml"  select="$ndCur/child::*[1]" />
-      </xsl:element>
-      <xsl:element name="m:e">
+      </fName>
+      <e>
         <xsl:apply-templates mode="mml"  select="$ndCur/child::*[3]" />
-      </xsl:element>
-    </xsl:element>
+      </e>
+    </func>
   </xsl:template>
 
 
@@ -1904,7 +1905,7 @@
             </xsl:variable>
             <xsl:choose>
               <xsl:when test="$fGroupChr=1">
-                <xsl:element name="m:groupChr">
+                <groupChr>
                   <xsl:call-template name="CreateGroupChrPr">
                     <xsl:with-param name="chr">
                       <xsl:value-of select="mml:mo" />
@@ -1917,23 +1918,23 @@
                     </xsl:with-param>
                     <xsl:with-param name="vertJc">top</xsl:with-param>
                   </xsl:call-template>
-                  <xsl:element name="m:e">
+                  <e>
                     <xsl:apply-templates mode="mml"  select="mml:mrow" />
-                  </xsl:element>
-                </xsl:element>
+                  </e>
+                </groupChr>
               </xsl:when>
               <xsl:otherwise>
                 <!-- Generic munder -->
-                <xsl:element name="m:limLow">
-                  <xsl:element name="m:e">
+                <limLow>
+                  <e>
                     <xsl:call-template name="CreateArgProp" />
                     <xsl:apply-templates mode="mml"  select="child::*[1]" />
-                  </xsl:element>
-                  <xsl:element name="m:lim">
+                  </e>
+                  <lim>
                     <xsl:call-template name="CreateArgProp" />
                     <xsl:apply-templates mode="mml"  select="child::*[2]" />
-                  </xsl:element>
-                </xsl:element>
+                  </lim>
+                </limLow>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:otherwise>
@@ -1949,23 +1950,23 @@
     <xsl:param name="chr">&#x23df;</xsl:param>
     <xsl:param name="pos" select="bot" />
     <xsl:param name="vertJc" select="top" />
-    <xsl:element name="m:groupChrPr">
-      <xsl:element name="m:chr">
+    <groupChrPr>
+      <chr>
         <xsl:attribute name="m:val">
           <xsl:value-of select="$chr"/>
         </xsl:attribute>
-      </xsl:element>
-      <xsl:element name="m:pos">
+      </chr>
+      <pos>
         <xsl:attribute name="m:val">
           <xsl:value-of select="$pos"/>
         </xsl:attribute>
-      </xsl:element>
-      <xsl:element name="m:vertJc">
+      </pos>
+      <vertJc>
         <xsl:attribute name="m:val">
           <xsl:value-of select="$vertJc"/>
         </xsl:attribute>
-      </xsl:element>
-    </xsl:element>
+      </vertJc>
+    </groupChrPr>
   </xsl:template>
 
 
@@ -2055,7 +2056,7 @@
                 </xsl:variable>
                 <xsl:choose>
                   <xsl:when test="$fGroupChr=1">
-                    <xsl:element name="m:groupChr">
+                    <groupChr>
                       <xsl:call-template name="CreateGroupChrPr">
                         <xsl:with-param name="chr">
                           <xsl:value-of select="mml:mo" />
@@ -2068,23 +2069,23 @@
                         </xsl:with-param>
                         <xsl:with-param name="vertJc">bot</xsl:with-param>
                       </xsl:call-template>
-                      <xsl:element name="m:e">
+                      <e>
                         <xsl:apply-templates mode="mml"  select="mml:mrow" />
-                      </xsl:element>
-                    </xsl:element>
+                      </e>
+                    </groupChr>
                   </xsl:when>
                   <xsl:otherwise>
                     <!-- Generic mover -->
-                    <xsl:element name="m:limUpp">
-                      <xsl:element name="m:e">
+                    <limUpp>
+                      <e>
                         <xsl:call-template name="CreateArgProp" />
                         <xsl:apply-templates mode="mml"  select="child::*[1]" />
-                      </xsl:element>
-                      <xsl:element name="m:lim">
+                      </e>
+                      <lim>
                         <xsl:call-template name="CreateArgProp" />
                         <xsl:apply-templates mode="mml"  select="child::*[2]" />
-                      </xsl:element>
-                    </xsl:element>
+                      </lim>
+                    </limUpp>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:otherwise>
@@ -2130,25 +2131,25 @@
         </nary>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:element name="m:limUpp">
-          <xsl:element name="m:e">
+        <limUpp>
+          <e>
             <xsl:call-template name="CreateArgProp" />
-            <xsl:element name="m:limLow">
-              <xsl:element name="m:e">
+            <limLow>
+              <e>
                 <xsl:call-template name="CreateArgProp" />
                 <xsl:apply-templates mode="mml"  select="child::*[1]" />
-              </xsl:element>
-              <xsl:element name="m:lim">
+              </e>
+              <lim>
                 <xsl:call-template name="CreateArgProp" />
                 <xsl:apply-templates mode="mml"  select="child::*[2]" />
-              </xsl:element>
-            </xsl:element>
-          </xsl:element>
-          <xsl:element name="m:lim">
+              </lim>
+            </limLow>
+          </e>
+          <lim>
             <xsl:call-template name="CreateArgProp" />
             <xsl:apply-templates mode="mml"  select="child::*[3]" />
-          </xsl:element>
-        </xsl:element>
+          </lim>
+        </limUpp>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -2876,13 +2877,13 @@
                 <xsl:with-param name="strBuilding" select="''" />
               </xsl:call-template>
             </xsl:variable>
-            <xsl:element name="m:r">
-              <xsl:element name="m:t">
+            <r>
+              <t>
                 <xsl:call-template name="OutputText">
                   <xsl:with-param name="sInput" select="$str" />
                 </xsl:call-template>
-              </xsl:element>
-            </xsl:element>
+              </t>
+            </r>
           </xsl:if>
           <!-- Now that the '&' have been extracted, just apply-templates to this node.-->
           <xsl:apply-templates mode="mml"  select="." />
@@ -2924,15 +2925,15 @@
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$fEqArray=1">
-        <xsl:element name="m:eqArr">
+        <eqArr>
           <xsl:for-each select="mml:mtr">
-            <xsl:element name="m:e">
+            <e>
               <xsl:call-template name="ProcessEqArrayRow">
                 <xsl:with-param name="ndCur" select="mml:mtd" />
               </xsl:call-template>
-            </xsl:element>
+            </e>
           </xsl:for-each>
-        </xsl:element>
+        </eqArr>
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="cMaxElmtsInRow">
@@ -3073,7 +3074,7 @@
 	                     mml:ms[child::mml:mglyph] | 
 	                     mml:mtext[child::mml:mglyph]">
     <xsl:if test="string-length(normalize-space(.)) &gt; 0">
-      <xsl:element name="m:r">
+      <r>
         <xsl:call-template name="CreateRunProp">
           <xsl:with-param name="mathvariant">
             <xsl:choose>
@@ -3157,7 +3158,7 @@
           </xsl:with-param>
           <xsl:with-param name="ndCur" select="." />
         </xsl:call-template>
-        <xsl:element name="m:t">
+        <t>
           <xsl:call-template name="OutputText">
             <xsl:with-param name="sInput">
               <xsl:choose>
@@ -3172,8 +3173,8 @@
               </xsl:choose>
             </xsl:with-param>
           </xsl:call-template>
-        </xsl:element>
-      </xsl:element>
+        </t>
+      </r>
     </xsl:if>
     <xsl:for-each select="child::mml:mglyph">
       <xsl:call-template name="CreateMglyph">
@@ -3557,28 +3558,28 @@
                     or $fFullWidth=0 
                     or $fFullHeight=0
                     or $fFullDepth=0">
-      <xsl:element name="m:phantPr">
+      <phantPr>
         <xsl:if test="$fShow=0">
-          <xsl:element name="m:show">
+          <show>
             <xsl:attribute name="m:val">off</xsl:attribute>
-          </xsl:element>
+          </show>
         </xsl:if>
         <xsl:if test="$fFullWidth=0">
-          <xsl:element name="m:zeroWid">
+          <zeroWid>
             <xsl:attribute name="m:val">on</xsl:attribute>
-          </xsl:element>
+          </zeroWid>
         </xsl:if>
         <xsl:if test="$fFullHeight=0">
-          <xsl:element name="m:zeroAsc">
+          <zeroAsc>
             <xsl:attribute name="m:val">on</xsl:attribute>
-          </xsl:element>
+          </zeroAsc>
         </xsl:if>
         <xsl:if test="$fFullDepth=0">
-          <xsl:element name="m:zeroDesc">
+          <zeroDesc>
             <xsl:attribute name="m:val">on</xsl:attribute>
-          </xsl:element>
+          </zeroDesc>
         </xsl:if>
-      </xsl:element>
+      </phantPr>
     </xsl:if>
   </xsl:template>
 
@@ -3726,7 +3727,7 @@
           </xsl:call-template>
         </xsl:variable>
 
-        <xsl:element name="m:phant">
+        <phant>
           <xsl:call-template name="CreatePhantPropertiesCore">
             <xsl:with-param name="fShow" select="1"/>
             <xsl:with-param name="fFullWidth" select="$fFullWidth" />
@@ -3736,13 +3737,13 @@
           <e>
             <xsl:apply-templates mode="mml"  />
           </e>
-        </xsl:element>
+        </phant>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
   <xsl:template mode="mml" match="mml:mphantom">
-    <xsl:element name="m:phant">
+    <phant>
       <xsl:call-template name="CreatePhantProperties">
         <xsl:with-param name="ndCur" select="." />
         <xsl:with-param name="fShow" select="0" />
@@ -3750,7 +3751,7 @@
       <e>
         <xsl:apply-templates mode="mml"  />
       </e>
-    </xsl:element>
+    </phant>
   </xsl:template>
 
   <xsl:template name="isNaryOper">
