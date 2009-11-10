@@ -86,6 +86,16 @@
   <p>
   <xsl:for-each select="parent::*">
     <xsl:choose>
+      <xsl:when test="preceding-sibling::tei:*[1][self::tei:addSpan]">
+	<span class="add">ADD</span>
+	<xsl:text> </xsl:text>
+      </xsl:when>
+      <xsl:when test="preceding-sibling::tei:*[1][self::tei:delSpan]">
+	<span class="add">DELETE</span>
+	<xsl:text> </xsl:text>
+      </xsl:when>
+    </xsl:choose>
+    <xsl:choose>
       <xsl:when test="self::tei:p">Paragraph
       <xsl:number/></xsl:when>
       <xsl:when test="self::tei:item">List item </xsl:when>
@@ -133,16 +143,10 @@
     </xsl:when>
   </xsl:choose>
   <xsl:text> </xsl:text>
-  <xsl:choose>
-    <xsl:when test="@type='other'">
-      <xsl:value-of select="tei:head"/>
-    </xsl:when>
-    <xsl:otherwise>
-      <span style="color:red">
-	<xsl:value-of select="tei:head"/>
-      </span>
-    </xsl:otherwise>
-  </xsl:choose>
+  <xsl:apply-templates select="tei:head" mode="ok"/>
 </xsl:template>
+
+<xsl:template match="tei:del" mode="ok"/>
+
 </xsl:stylesheet>
 

@@ -1159,7 +1159,7 @@
     <xsl:apply-templates select="." mode="part2"/>
   </xsl:template>
 
-  <xsl:template match="w:p[w:pPr/w:rPr/w:ins]" mode="paragraph">
+  <xsl:template match="w:p[w:pPr/w:rPr/w:ins]" mode="paragraph" priority="42">
       <addSpan spanTo="{generate-id()}"
 	       when="{w:pPr/w:rPr/w:ins/@w:date}"
 	       resp="#{translate(w:pPr/w:rPr/w:ins/@w:author,' ','_')}"/>
@@ -1167,7 +1167,10 @@
       <anchor xml:id="{generate-id()}"/>
   </xsl:template>
 
-  <xsl:template match="w:p[w:pPr/w:rPr/w:del]" mode="paragraph">
+  <xsl:template match="w:instrText" mode="paragraph" priority="42"/>
+  <xsl:template match="w:instrText"  priority="42"/>
+
+  <xsl:template match="w:p[w:pPr/w:rPr/w:del]" mode="paragraph" priority="42">
       <delSpan spanTo="{generate-id()}"
 	       when="{w:pPr/w:rPr/w:del/@w:date}" 
 	       resp="#{translate(w:pPr/w:rPr/w:ins/@w:author,' ','_')}"/>
