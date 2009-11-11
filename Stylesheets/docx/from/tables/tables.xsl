@@ -195,6 +195,10 @@
 			      </xsl:attribute>
 			      <xsl:attribute name="colsep">
 				<xsl:choose>
+				  <xsl:when
+				      test="following-sibling::w:tc[1]/w:tcPr/w:tcBorders/w:left[@w:sz&gt;0]">
+				    <xsl:text>1</xsl:text>
+				  </xsl:when>
 				  <xsl:when test="w:tcPr/w:tcBorders/w:right[@w:sz=0 or @w:val='nil']">
 				    <xsl:text>0</xsl:text>
 				  </xsl:when>
