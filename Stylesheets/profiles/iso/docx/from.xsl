@@ -715,7 +715,7 @@
 	    <xsl:variable name="ID">
 	      <xsl:choose>
 		<xsl:when test="$Style='TermNum'">
-		  <xsl:text>Term_</xsl:text>
+		  <xsl:text>CDB_</xsl:text>
 		  <xsl:value-of select="."/>
 		</xsl:when>
 		<xsl:when test="starts-with($Style,'autoTermNum')">
@@ -772,7 +772,7 @@
 			<xsl:otherwise>
 			  <ntig>
 			    <termGrp>
-			      <term id="{$ID}-{position()}">
+			      <term>
 				<xsl:apply-templates/>
 			      </term>
 			      <termNote type="partOfSpeech">noun</termNote>
@@ -1079,18 +1079,10 @@
         </xsl:choose>
     </xsl:template>
 
-    <!-- override for part 2 -->
-
-    <!-- div with head only -->
-
-    <xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2"/>
-
-    <!-- spurious page break -->
-    <xsl:template match="tei:body/tei:p[count(*)=1 and tei:pb]" mode="part2"/>
-
 
     <xsl:template name="extract-forme-work"/>
 
+    <!-- deal with special case of text paragraphs in an SDT -->
     <xsl:template match="w:sdt" mode="paragraph">
       <q type="sdt" iso:meta="{w:sdtPr/w:tag/@w:val}">
 	<xsl:for-each-group 
@@ -1109,6 +1101,35 @@
 	</xsl:for-each-group>
       </q>
     </xsl:template>
+
+    <!-- para-level ins/del -->
+  <xsl:template match="w:p[w:pPr/w:rPr/w:ins]" mode="paragraph" priority="42">
+      <addSpan spanTo="{generate-id()}"
+	       when="{w:pPr/w:rPr/w:ins/@w:date}"
+	       resp="#{translate(w:pPr/w:rPr/w:ins/@w:author,' ','_')}"/>
+      <xsl:apply-imports/>
+      <anchor xml:id="{generate-id()}"/>
+  </xsl:template>
+
+  <xsl:template match="w:instrText" mode="paragraph" priority="42"/>
+  <xsl:template match="w:instrText"  priority="42"/>
+
+  <xsl:template match="w:p[w:pPr/w:rPr/w:del]" mode="paragraph" priority="42">
+      <delSpan spanTo="{generate-id()}"
+	       when="{w:pPr/w:rPr/w:del/@w:date}" 
+	       resp="#{translate(w:pPr/w:rPr/w:ins/@w:author,' ','_')}"/>
+      <xsl:apply-imports/>
+      <anchor xml:id="{generate-id()}"/>
+  </xsl:template>
+
+    <!-- overrides for part 2 -->
+
+    <!-- div with head only -->
+
+    <xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2"/>
+
+    <!-- spurious page break -->
+    <xsl:template match="tei:body/tei:p[count(*)=1 and tei:pb]" mode="part2"/>
 
     <xsl:template match="tei:list[string-length(.)=0]" mode="part2"/>
 
@@ -1160,26 +1181,7 @@
     <xsl:apply-templates select="." mode="part2"/>
   </xsl:template>
 
-  <xsl:template match="w:p[w:pPr/w:rPr/w:ins]" mode="paragraph" priority="42">
-      <addSpan spanTo="{generate-id()}"
-	       when="{w:pPr/w:rPr/w:ins/@w:date}"
-	       resp="#{translate(w:pPr/w:rPr/w:ins/@w:author,' ','_')}"/>
-      <xsl:apply-imports/>
-      <anchor xml:id="{generate-id()}"/>
-  </xsl:template>
-
-  <xsl:template match="w:instrText" mode="paragraph" priority="42"/>
-  <xsl:template match="w:instrText"  priority="42"/>
-
-  <xsl:template match="w:p[w:pPr/w:rPr/w:del]" mode="paragraph" priority="42">
-      <delSpan spanTo="{generate-id()}"
-	       when="{w:pPr/w:rPr/w:del/@w:date}" 
-	       resp="#{translate(w:pPr/w:rPr/w:ins/@w:author,' ','_')}"/>
-      <xsl:apply-imports/>
-      <anchor xml:id="{generate-id()}"/>
-  </xsl:template>
-
-<xsl:template match="tei:hi[@rend]"  mode="part2">
+  <xsl:template match="tei:hi[@rend]"  mode="part2">
   <xsl:variable name="r" select="@rend"/>
   <xsl:choose>
   <xsl:when
@@ -1208,6 +1210,44 @@
       </xsl:call-template>
     </xsl:if>
   </xsl:for-each>
+</xsl:template>
+
+<xsl:template match="tbx:descrip" mode="part2">
+  <xsl:copy>
+    <xsl:copy-of select="@*"/>
+    <xsl:apply-templates/>
+    <xsl:for-each
+	select="ancestor::tbx:termEntry/following-sibling::*[1][self::tei:list]">
+      <xsl:copy>
+	<xsl:copy-of select="@*"/>
+	<xsl:apply-templates mode="part2"/>
+      </xsl:copy>
+    </xsl:for-each>
+  </xsl:copy>
+</xsl:template>
+
+<xsl:template match="tei:list" mode="part2">
+  <xsl:choose>
+    <xsl:when test="preceding-sibling::*[1][self::tbx:termEntry]">
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:copy>
+	<xsl:copy-of select="@*"/>
+	<xsl:apply-templates mode="part2"/>
+      </xsl:copy>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template match="tbx:term" mode="part2">
+  <xsl:copy>
+    <xsl:attribute name="id">
+      <xsl:value-of select="ancestor::tbx:termEntry/@id"/>
+      <xsl:text>-</xsl:text>
+      <xsl:number level="any" from="tbx:termEntry"/>
+    </xsl:attribute>
+    <xsl:apply-templates mode="part2"/>
+  </xsl:copy>
 </xsl:template>
 
 <!--
