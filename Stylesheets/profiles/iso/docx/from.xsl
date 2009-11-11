@@ -46,11 +46,12 @@
     <xsl:key name="Sdt" match="w:sdt" use="w:sdtPr/w:tag/@w:val"/>
     <xsl:key name="AllSdt" match="w:sdtPr/w:tag/@w:val" use="1"/>
 
+    <xsl:output indent="no"/>
+
     <!-- param defining whether to use a custom metadata file or to extract
     the metadata from the document -->
     <xsl:param name="metadata-file"/>
     <xsl:param name="tableMethod">cals</xsl:param>
-
     <!-- ignore existing title pages -->
     <xsl:template match="w:p[.//w:sdt and not (w:pPr/w:pStyle/@w:val='zzSTDTitle')]" priority="1001">
         <!--<xsl:message>fail 1: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
@@ -1177,6 +1178,37 @@
       <xsl:apply-imports/>
       <anchor xml:id="{generate-id()}"/>
   </xsl:template>
+
+<xsl:template match="tei:hi[@rend]"  mode="part2">
+  <xsl:variable name="r" select="@rend"/>
+  <xsl:choose>
+  <xsl:when
+      test="preceding-sibling::node()[1][self::tei:hi[@rend=$r]]">
+  </xsl:when>
+  <xsl:otherwise>
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates mode="part2"/>
+      <xsl:call-template name="nextHi">
+	<xsl:with-param name="r" select="$r"/>
+      </xsl:call-template>
+    </xsl:copy>
+  </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template name="nextHi">
+  <xsl:param name="r"/>
+  <xsl:for-each
+      select="following-sibling::node()[1]">
+    <xsl:if test="self::tei:hi[@rend=$r]">
+      <xsl:apply-templates mode="part2"/>
+      <xsl:call-template name="nextHi">
+	<xsl:with-param name="r" select="$r"/>
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:for-each>
+</xsl:template>
 
 <!--
   <xsl:template match="tbx:descripGrp" mode="part2">
