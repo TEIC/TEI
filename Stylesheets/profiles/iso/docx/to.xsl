@@ -97,7 +97,16 @@
 
     <xsl:template match="tei:c[@iso:font and @n]">
         <w:r>
-            <w:sym w:font="{@iso:font}" w:char="{@n}"/>
+            <xsl:variable name="renderingProperties">
+                <xsl:call-template name="applyRend"/>
+            </xsl:variable>
+
+            <xsl:if test="not(empty($renderingProperties))">
+                <w:rPr>
+                    <xsl:copy-of select="$renderingProperties"/>
+                </w:rPr>
+            </xsl:if>
+	  <w:sym w:font="{@iso:font}" w:char="{@n}"/>
         </w:r>
     </xsl:template>
     
@@ -114,6 +123,9 @@
         <w:r>
             <w:rPr>
                 <w:rStyle w:val="isonumber"/>
+		<xsl:if test="teidocx:render-bold(.)">
+                    <w:b/>
+		</xsl:if>
             </w:rPr>
             <w:t>
                 <xsl:choose>

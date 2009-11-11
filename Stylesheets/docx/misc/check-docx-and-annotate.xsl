@@ -228,7 +228,7 @@
             standalone="yes">
             <Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"
                 xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
-                <Template>Iso_Template.dotx</Template>
+                <Template>Iso_Template_v4.dotx</Template>
                 <Application>TEIISO tei-docx.xsl</Application>
                 <DocSecurity>8</DocSecurity>
                 <SharedDoc>true</SharedDoc>

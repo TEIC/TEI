@@ -562,13 +562,32 @@
             </xsl:when>
 
             <xsl:when test="w:rPr/w:position[number(@w:val)&lt;-2]">
-                <hi rend="subscript">
+                <hi>
+		  <xsl:attribute name="rend">
+		    <xsl:text>subscript</xsl:text>
+		    <xsl:if test="w:rPr/w:i">
+		      <xsl:text> italic</xsl:text>
+		    </xsl:if>
+		    <xsl:if test="w:rPr/w:b[not(@w:val='0')]">
+		      <xsl:text> bold</xsl:text>
+		    </xsl:if>
+		  </xsl:attribute>
                     <xsl:apply-templates/>
                 </hi>
             </xsl:when>
 
             <xsl:when test="w:rPr/w:position[number(@w:val)&gt;2]">
-                <hi rend="superscript">
+                <hi>
+		  <xsl:attribute name="rend">
+		    <xsl:text>superscript</xsl:text>
+		    <xsl:if test="w:rPr/w:i">
+		      <xsl:text> italic</xsl:text>
+		    </xsl:if>
+		    <xsl:if test="w:rPr/w:b[not(@w:val='0')]">
+		      <xsl:text> bold</xsl:text>
+		    </xsl:if>
+		  </xsl:attribute>
+
                     <xsl:apply-templates/>
                 </hi>
             </xsl:when>

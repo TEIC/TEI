@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
+    xmlns:cals="http://www.oasis-open.org/specs/tm9901"
     xmlns:iso="http://www.iso.org/ns/1.0"
     xmlns:edate="http://exslt.org/dates-and-times"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="edate tei iso" 
+    exclude-result-prefixes="edate tei iso cals" 
     version="2.0">
   <!-- $Id$ -->
 

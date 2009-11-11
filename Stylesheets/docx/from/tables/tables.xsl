@@ -332,7 +332,7 @@
 		    <xsl:if test="w:tcPr/w:vAlign">
 		      <xsl:attribute name="valign">
 			<xsl:choose>
-			  <xsl:when test="w:tcPr/w:vAlign/@w:val='center'">top</xsl:when>
+			  <xsl:when test="w:tcPr/w:vAlign/@w:val='center'">middle</xsl:when>
 			  <xsl:otherwise>
 			    <xsl:value-of select="w:tcPr/w:vAlign/@w:val"/>
 			  </xsl:otherwise>

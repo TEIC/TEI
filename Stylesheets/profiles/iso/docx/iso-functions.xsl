@@ -247,7 +247,8 @@
                 <xsl:when test="starts-with(@rend,'specList-')">true</xsl:when>
                 <xsl:when test="starts-with(parent::tei:hi/@rend,'specList-')">true</xsl:when>
                 <xsl:when test="@rend='label'">true</xsl:when>
-                <xsl:when test="@rend='bold'">true</xsl:when>
+                <xsl:when test="contains(@rend,'bold')">true</xsl:when>
+                <xsl:when test="parent::tei:hi[contains(@rend,'bold')]">true</xsl:when>
                 <xsl:when test="self::tei:term">true</xsl:when>
                 <xsl:otherwise>false</xsl:otherwise>
             </xsl:choose>

@@ -579,7 +579,8 @@
 
             <!-- italic -->
             <xsl:choose>
-                <xsl:when test="@rend='italic' or teidocx:render-italic(.)">
+                <xsl:when test="contains(@rend,'italic') or
+				teidocx:render-italic(.)">
                     <w:i/>
                 </xsl:when>
                 <xsl:when test="self::tei:emph">
@@ -594,23 +595,15 @@
                 </xsl:when>
             </xsl:choose>
 
-            <xsl:if test="@rend='subscript'">
+            <xsl:if test="contains(@rend,'subscript')">
                 <w:vertAlign w:val="subscript"/>
             </xsl:if>
 
-            <xsl:if test="@rend='superscript'">
+            <xsl:if test="contains(@rend,'superscript')">
                 <w:vertAlign w:val="superscript"/>
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
-
-
-
-
-
- 
-    
-
 
     <!-- 
         Footnotes
@@ -991,12 +984,15 @@
             </xsl:choose>
             <!-- If we have no children, put an empty p here -->
             <xsl:if test="not(descendant::text())">
-                <w:p>
-                    <w:r>
-                        <w:t/>
-                    </w:r>
-                </w:p>
-            </xsl:if>
+	      <w:p>
+		<w:pPr>
+		  <w:pStyle w:val="Tabletext9"/>
+		</w:pPr>
+		<w:r>
+		  <w:t/>
+		</w:r>
+	      </w:p>
+	    </xsl:if>
         </w:tc>
     </xsl:template>
 
@@ -1318,13 +1314,20 @@
 	</xsl:otherwise>
       </xsl:choose>
       <!-- If we have no children, put an empty p here -->
-      <xsl:if test="not(descendant::text())">
-	<w:p>
-	  <w:r>
-	    <w:t/>
-	  </w:r>
-	</w:p>
-      </xsl:if>
+      <xsl:choose>
+	<xsl:when test="*"/>
+	<xsl:when test="text()"/>
+	<xsl:otherwise>
+	  <w:p>
+	    <w:pPr>
+	      <w:pStyle w:val="Tabletext9"/>
+	    </w:pPr>
+	    <w:r>
+	      <w:t/>
+	    </w:r>
+	  </w:p>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
 
     <!-- 

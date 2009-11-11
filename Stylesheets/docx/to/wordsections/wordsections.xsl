@@ -64,23 +64,29 @@
         <xsl:variable name="sectPr">
             <w:sectPr>
                 <xsl:for-each select="teidocx:footer">
-                    <xsl:variable name="ref" select="@ref"/>
-                    <xsl:variable name="footernum">
+		  <xsl:variable name="ref" select="@ref"/>
+		  <xsl:if test="count(key('FOOTERS',$ref))&gt;0">
+		    <xsl:variable name="footernum">
                         <xsl:for-each select="key('FOOTERS',$ref)">
-                            <xsl:number level="any"/>
-                        </xsl:for-each>
-                    </xsl:variable>
-                    <w:footerReference w:type="{@type}" r:id="{concat('rId',100+$footernum)}"/>
+			  <xsl:number level="any"/>
+			</xsl:for-each>
+		    </xsl:variable>
+		    <w:footerReference w:type="{@type}"
+				       r:id="{concat('rId',100+$footernum)}"/>
+		  </xsl:if>
                 </xsl:for-each>
                 
                 <xsl:for-each select="teidocx:header">
                     <xsl:variable name="ref" select="@ref"/>
+		    <xsl:if test="count(key('HEADERS',$ref))&gt;0">
                     <xsl:variable name="headernum">
                         <xsl:for-each select="key('HEADERS',$ref)">
                             <xsl:number level="any"/>
                         </xsl:for-each>
                     </xsl:variable>
-                    <w:headerReference w:type="{@type}" r:id="{concat('rId',100+$headernum)}"/>
+                    <w:headerReference w:type="{@type}"
+				       r:id="{concat('rId',100+$headernum)}"/>
+		    </xsl:if>
                 </xsl:for-each>
                 
                 <w:pgSz>

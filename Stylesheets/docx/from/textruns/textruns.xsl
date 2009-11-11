@@ -80,24 +80,50 @@
             </xsl:when>
             
             <xsl:when test="w:rPr/w:position[number(@w:val)&lt;-2]">
-                <hi rend="subscript">
-                    <xsl:apply-templates/>
+                <hi>
+<xsl:message>LOOK <xsl:value-of select="."/></xsl:message>
+		  <xsl:attribute name="rend">
+		    <xsl:text>subscript</xsl:text>
+		    <xsl:if test="w:rPr/w:i">
+<xsl:message>ITALIC</xsl:message>
+		      <xsl:text> italic</xsl:text>
+		    </xsl:if>
+		    <xsl:if test="w:rPr/w:b[not(@w:val='0')]">
+		      <xsl:text> bold</xsl:text>
+		    </xsl:if>
+		  </xsl:attribute>
+		  <xsl:apply-templates/>
                 </hi>
             </xsl:when>
             
             <xsl:when test="w:rPr/w:position[number(@w:val)&gt;2]">
-                <hi rend="superscript">
-                    <xsl:apply-templates/>
+                <hi>
+		  <xsl:attribute name="rend">
+		    <xsl:text>superscript</xsl:text>
+		    <xsl:if test="w:rPr/w:i">
+		      <xsl:text> italic</xsl:text>
+		    </xsl:if>
+		    <xsl:if test="w:rPr/w:b[not(@w:val='0')]">
+		      <xsl:text> bold</xsl:text>
+		    </xsl:if>
+		  </xsl:attribute>
+		  <xsl:apply-templates/>
                 </hi>
             </xsl:when>
             
             <xsl:when test="w:rPr/w:vertAlign">
                 <hi>
-                    <xsl:attribute name="rend">
-                        <xsl:value-of select="w:rPr/w:vertAlign/@w:val"/>
-                    </xsl:attribute>
-                    <xsl:apply-templates/>
-                </hi>
+		  <xsl:attribute name="rend">
+		    <xsl:value-of select="w:rPr/w:vertAlign/@w:val"/>
+		    <xsl:if test="w:rPr/w:i">
+		      <xsl:text> italic</xsl:text>
+		    </xsl:if>
+		    <xsl:if test="w:rPr/w:b[not(@w:val='0')]">
+		      <xsl:text> bold</xsl:text>
+		    </xsl:if>
+		  </xsl:attribute>
+		  <xsl:apply-templates/>
+		</hi>
             </xsl:when>
             
             <xsl:when test="w:rPr/w:i">
