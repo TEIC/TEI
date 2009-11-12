@@ -8,7 +8,7 @@ xmlns:rng="http://relaxng.org/ns/structure/1.0"
 xmlns:tei="http://www.tei-c.org/ns/1.0" 
 xmlns:teix="http://www.tei-c.org/ns/Examples" 
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-exclude-result-prefixes="xd  a fo rng tei teix" 
+exclude-result-prefixes="xd  a rng tei teix" 
 version="2.0">
   <xd:doc type="stylesheet">
     <xd:short>
@@ -65,11 +65,11 @@ version="2.0">
           <xsl:value-of select="sum(following-sibling::cell[$c=@col]) + current()"/>
         </xsl:variable>
         <xsl:text>&#10;</xsl:text>
-        <fo:table-column column-number="{@col}" column-width="{$len div $total * 100}%">
+        <table-column column-number="{@col}" column-width="{$len div $total * 100}%">
           <xsl:if test="$foEngine='passivetex'">
             <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">L</xsl:attribute>
           </xsl:if>
-        </fo:table-column>
+        </table-column>
       </xsl:if>
     </xsl:for-each>
     <xsl:text>&#10;</xsl:text>
@@ -89,7 +89,7 @@ version="2.0">
         </xsl:variable>
         <xsl:choose>
           <xsl:when test="$specs &gt; 0">
-            <xsl:for-each select="$tableSpecs/Info/TableSpec[$no=@xml:id]/fo:table-column">
+            <xsl:for-each select="$tableSpecs/Info/TableSpec[$no=@xml:id]/table-column">
               <xsl:copy-of select="."/>
             </xsl:for-each>
           </xsl:when>

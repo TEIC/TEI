@@ -2,12 +2,12 @@
 <xsl:stylesheet 
     xmlns:xd="http://www.pnp-software.com/XSLTdoc" 
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
-    xmlns:fo="http://www.w3.org/1999/XSL/Format" 
+    xmlns="http://www.w3.org/1999/XSL/Format" 
     xmlns:rng="http://relaxng.org/ns/structure/1.0" 
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
     xmlns:teix="http://www.tei-c.org/ns/Examples" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    exclude-result-prefixes="xd a fo rng tei teix" 
+    exclude-result-prefixes="xd a rng tei teix" 
     version="2.0">
   <xd:doc type="stylesheet">
     <xd:short>
@@ -56,7 +56,7 @@
   <xsl:template name="makeExternalLink">
     <xsl:param name="ptr"/>
     <xsl:param name="dest"/>
-    <fo:basic-link external-destination="url({$dest})">
+    <basic-link external-destination="url({$dest})">
       <xsl:choose>
         <xsl:when test="$ptr='true'">
           <xsl:call-template name="showXrefURL">
@@ -69,7 +69,7 @@
           <xsl:apply-templates/>
         </xsl:otherwise>
       </xsl:choose>
-    </fo:basic-link>
+    </basic-link>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>
@@ -98,7 +98,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <fo:basic-link internal-destination="{$W}">
+    <basic-link internal-destination="{$W}">
       <xsl:call-template name="linkStyle"/>
       <xsl:choose>
         <xsl:when test="not($body='')">
@@ -113,6 +113,6 @@
           <xsl:apply-templates/>
         </xsl:otherwise>
       </xsl:choose>
-    </fo:basic-link>
+    </basic-link>
   </xsl:template>
 </xsl:stylesheet>

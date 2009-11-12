@@ -3,12 +3,12 @@
 xmlns:xd="http://www.pnp-software.com/XSLTdoc" 
 xmlns:fotex="http://www.tug.org/fotex" 
 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
-xmlns:fo="http://www.w3.org/1999/XSL/Format" 
+xmlns="http://www.w3.org/1999/XSL/Format" 
 xmlns:rng="http://relaxng.org/ns/structure/1.0" 
 xmlns:tei="http://www.tei-c.org/ns/1.0" 
 xmlns:teix="http://www.tei-c.org/ns/Examples" 
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-exclude-result-prefixes="xd fotex a fo rng tei teix" 
+exclude-result-prefixes="xd fotex a rng tei teix" 
 version="2.0">
   <xd:doc type="stylesheet">
     <xd:short>
@@ -57,10 +57,10 @@ version="2.0">
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:TEI">
-    <fo:root>
+    <root>
       <xsl:call-template name="setupPagemasters"/>
       <xsl:call-template name="mainAction"/>
-    </fo:root>
+    </root>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:back</xd:short>
@@ -73,7 +73,7 @@ version="2.0">
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
-        <fo:page-sequence 
+        <page-sequence 
 	    format="{$formatBackpage}"
 	    text-align="{$alignment}"
 	    hyphenate="{$hyphenate}" 
@@ -93,11 +93,11 @@ version="2.0">
             </xsl:otherwise>
           </xsl:choose>
 <!-- now start the main flow -->
-          <fo:flow flow-name="xsl-region-body" font-family="{$bodyFont}" font-size="{$bodySize}">
+          <flow flow-name="xsl-region-body" font-family="{$bodyFont}" font-size="{$bodySize}">
             <xsl:apply-templates/>
             <xsl:call-template name="afterBodyHook"/>
-          </fo:flow>
-        </fo:page-sequence>
+          </flow>
+        </page-sequence>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -118,7 +118,7 @@ version="2.0">
       </xsl:when>
       <xsl:otherwise>
 <!-- start page sequence -->
-        <fo:page-sequence format="{$formatBodypage}" text-align="{$alignment}" hyphenate="{$hyphenate}" language="{$language}" initial-page-number="1">
+        <page-sequence format="{$formatBodypage}" text-align="{$alignment}" hyphenate="{$hyphenate}" language="{$language}" initial-page-number="1">
           <xsl:call-template name="choosePageMaster">
             <xsl:with-param name="where">
               <xsl:value-of select="$bodyMulticolumns"/>
@@ -134,7 +134,7 @@ version="2.0">
             </xsl:otherwise>
           </xsl:choose>
 <!-- now start the main  flow -->
-          <fo:flow flow-name="xsl-region-body" font-family="{$bodyFont}" font-size="{$bodySize}">
+          <flow flow-name="xsl-region-body" font-family="{$bodyFont}" font-size="{$bodySize}">
             <xsl:if test="not($flowMarginLeft='')">
               <xsl:attribute name="margin-left">
                 <xsl:value-of select="$flowMarginLeft"/>
@@ -146,14 +146,14 @@ version="2.0">
             </xsl:if>
             <xsl:apply-templates/>
             <xsl:if test=".//tei:note[@place='end']">
-              <fo:block>
+              <block>
                 <xsl:call-template name="setupDiv2"/>
                 <xsl:text>Notes</xsl:text>
-              </fo:block>
+              </block>
               <xsl:apply-templates select=".//tei:note[@place='end']" mode="endnote"/>
             </xsl:if>
-          </fo:flow>
-        </fo:page-sequence>
+          </flow>
+        </page-sequence>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -162,18 +162,18 @@ version="2.0">
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:closer">
-    <fo:block space-before.optimum="4pt" space-after.optimum="4pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}">
+    <block space-before.optimum="4pt" space-after.optimum="4pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}">
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:dateline</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:dateline">
-    <fo:block text-align="end">
+    <block text-align="end">
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:div</xd:short>
@@ -188,19 +188,19 @@ version="2.0">
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="@type='abstract'">
-        <fo:block keep-with-next.within-page="always" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}">
+        <block keep-with-next.within-page="always" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}">
           <xsl:attribute name="text-align">center</xsl:attribute>
           <xsl:call-template name="setupDiv2"/>
-          <fo:inline font-style="italic">Abstract</fo:inline>
-        </fo:block>
+          <inline font-style="italic">Abstract</inline>
+        </block>
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="@type='ack'">
-        <fo:block keep-with-next.within-page="always">
+        <block keep-with-next.within-page="always">
           <xsl:attribute name="text-align">start</xsl:attribute>
           <xsl:call-template name="setupDiv3"/>
-          <fo:inline font-style="italic">Acknowledgements</fo:inline>
-        </fo:block>
+          <inline font-style="italic">Acknowledgements</inline>
+        </block>
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
@@ -352,24 +352,24 @@ version="2.0">
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="$titlePage='true'">
-          <fo:page-sequence format="{$formatFrontpage}" force-page-count="end-on-even" hyphenate="{$hyphenate}" language="{$language}">
+          <page-sequence format="{$formatFrontpage}" force-page-count="end-on-even" hyphenate="{$hyphenate}" language="{$language}">
             <xsl:call-template name="choosePageMaster">
               <xsl:with-param name="where">
                 <xsl:value-of select="$frontMulticolumns"/>
               </xsl:with-param>
             </xsl:call-template>
-            <fo:static-content flow-name="xsl-region-before">
-              <fo:block/>
-            </fo:static-content>
-            <fo:static-content flow-name="xsl-region-after">
-              <fo:block/>
-            </fo:static-content>
-            <fo:flow flow-name="xsl-region-body"  font-family="{$bodyFont}">
+            <static-content flow-name="xsl-region-before">
+              <block/>
+            </static-content>
+            <static-content flow-name="xsl-region-after">
+              <block/>
+            </static-content>
+            <flow flow-name="xsl-region-body"  font-family="{$bodyFont}">
               <xsl:call-template name="Header"/>
-            </fo:flow>
-          </fo:page-sequence>
+            </flow>
+          </page-sequence>
         </xsl:if>
-        <fo:page-sequence format="{$formatFrontpage}" text-align="{$alignment}" hyphenate="{$hyphenate}" language="{$language}" initial-page-number="1">
+        <page-sequence format="{$formatFrontpage}" text-align="{$alignment}" hyphenate="{$hyphenate}" language="{$language}" initial-page-number="1">
           <xsl:call-template name="choosePageMaster">
             <xsl:with-param name="where">
               <xsl:value-of select="$frontMulticolumns"/>
@@ -385,14 +385,14 @@ version="2.0">
             </xsl:otherwise>
           </xsl:choose>
 <!-- now start the main flow -->
-          <fo:flow flow-name="xsl-region-body" font-family="{$bodyFont}" font-size="{$bodySize}">
+          <flow flow-name="xsl-region-body" font-family="{$bodyFont}" font-size="{$bodySize}">
             <xsl:for-each select="tei:*">
               <xsl:comment>Start <xsl:value-of select="name(.)"/></xsl:comment>
               <xsl:apply-templates select="."/>
               <xsl:comment>End <xsl:value-of select="name(.)"/></xsl:comment>
             </xsl:for-each>
-          </fo:flow>
-        </fo:page-sequence>
+          </flow>
+        </page-sequence>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -404,7 +404,7 @@ version="2.0">
     <xsl:variable name="N">
       <xsl:number/>
     </xsl:variable>
-    <fo:page-sequence format="1" text-align="{$alignment}" hyphenate="{$hyphenate}" language="{$language}" master-reference="twoside1">
+    <page-sequence format="1" text-align="{$alignment}" hyphenate="{$hyphenate}" language="{$language}" master-reference="twoside1">
       <xsl:attribute name="initial-page-number">
         <xsl:choose>
           <xsl:when test="$N = 1">1</xsl:when>
@@ -412,14 +412,14 @@ version="2.0">
         </xsl:choose>
       </xsl:attribute>
       <xsl:call-template name="grouptextStatic"/>
-      <fo:flow  flow-name="xsl-region-body" font-family="{$bodyFont}">
+      <flow  flow-name="xsl-region-body" font-family="{$bodyFont}">
         <xsl:call-template name="textTitle">
           <xsl:with-param name="N" select="$N"/>
         </xsl:call-template>
         <xsl:apply-templates select="tei:body"/>
         <xsl:apply-templates select="tei:back"/>
-      </fo:flow>
-    </fo:page-sequence>
+      </flow>
+    </page-sequence>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:group/tei:text/tei:body</xd:short>
@@ -428,10 +428,10 @@ version="2.0">
   <xsl:template match="tei:group/tei:text/tei:body">
     <xsl:apply-templates/>
     <xsl:if test=".//tei:note[@place='end']">
-      <fo:block>
+      <block>
         <xsl:call-template name="setupDiv2"/>
         <xsl:text>Notes</xsl:text>
-      </fo:block>
+      </block>
       <xsl:apply-templates select=".//tei:note[@place='end']" mode="endnote"/>
     </xsl:if>
   </xsl:template>
@@ -472,9 +472,9 @@ version="2.0">
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:opener">
-    <fo:block space-before.optimum="4pt" space-after.optimum="4pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}">
+    <block space-before.optimum="4pt" space-after.optimum="4pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}">
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:text (xref mode)</xd:short>
@@ -505,9 +505,9 @@ version="2.0">
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
-        <fo:block text-align="start" text-indent="0pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}" font-size="{$exampleSize}" border-top-style="solid" border-bottom-style="solid" space-before.optimum="{$exampleBefore}" space-after.optimum="{$exampleAfter}">
+        <block text-align="start" text-indent="0pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}" font-size="{$exampleSize}" border-top-style="solid" border-bottom-style="solid" space-before.optimum="{$exampleBefore}" space-after.optimum="{$exampleAfter}">
           <xsl:apply-templates mode="innertext"/>
-        </fo:block>
+        </block>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -516,11 +516,11 @@ version="2.0">
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:text" mode="toc">
-    <fo:block>
+    <block>
       <xsl:attribute name="font-weight">bold</xsl:attribute>
       <xsl:number/>
       <xsl:text> </xsl:text>
-      <fo:inline>
+      <inline>
         <xsl:choose>
           <xsl:when test="tei:front/tei:docTitle[@n]">
             <xsl:value-of select="tei:front/tei:docTitle/@n"/>
@@ -529,9 +529,9 @@ version="2.0">
             <xsl:value-of select="tei:front/tei:docTitle"/>
           </xsl:otherwise>
         </xsl:choose>
-      </fo:inline>
-      <fo:leader rule-thickness="0pt"/>
-      <fo:inline>
+      </inline>
+      <leader rule-thickness="0pt"/>
+      <inline>
         <xsl:call-template name="linkStyle"/>
         <xsl:variable name="pagref">
           <xsl:choose>
@@ -543,43 +543,43 @@ version="2.0">
             </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
-        <fo:basic-link internal-destination="{$pagref}">
-          <fo:page-number-citation ref-id="{$pagref}"/>
-        </fo:basic-link>
-      </fo:inline>
-    </fo:block>
-    <fo:block font-style="italic" space-after="10pt" space-before="6pt">
+        <basic-link internal-destination="{$pagref}">
+          <page-number-citation ref-id="{$pagref}"/>
+        </basic-link>
+      </inline>
+    </block>
+    <block font-style="italic" space-after="10pt" space-before="6pt">
       <xsl:apply-templates select="tei:front//tei:docAuthor" mode="heading"/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:titlePage</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:titlePage">
-    <fo:block text-align="center">
+    <block text-align="center">
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:titlePage//tei:titlePart[@type='main']</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:titlePage//tei:titlePart[@type='main']">
-    <fo:block font-size="{$titleSize}" space-after="8pt" text-align="center">
+    <block font-size="{$titleSize}" space-after="8pt" text-align="center">
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:titlePage//tei:titlePart[@type='sub']</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:titlePage//tei:titlePart[@type='sub']">
-    <fo:block>
-      <fo:block font-size="{$authorSize}" space-after="8pt" text-align="center">
+    <block>
+      <block font-size="{$authorSize}" space-after="8pt" text-align="center">
         <xsl:apply-templates/>
-      </fo:block>
-    </fo:block>
+      </block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:titlePart</xd:short>
@@ -598,9 +598,9 @@ version="2.0">
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:trailer">
-    <fo:block>
+    <block>
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  text()</xd:short>
@@ -611,23 +611,23 @@ version="2.0">
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="Header">
-    <fo:block font-size="12pt" padding-before="6pt">
-      <fo:inline>
+    <block font-size="12pt" padding-before="6pt">
+      <inline>
 	<xsl:value-of select="$institution"/>
-      </fo:inline>
-    </fo:block>
+      </inline>
+    </block>
     
-    <fo:block font-size="12pt" font-weight="bold">
+    <block font-size="12pt" font-weight="bold">
       <xsl:call-template name="generateTitle"/>
-    </fo:block>
+    </block>
     
-    <fo:block>
+    <block>
       <xsl:call-template name="generateAuthor"/>
-    </fo:block>
+    </block>
     
-    <fo:block padding-after="6pt">
+    <block padding-after="6pt">
       <xsl:call-template name="generateDate"/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>
@@ -636,7 +636,7 @@ version="2.0">
   </xd:doc>
   <xsl:template name="NumberedHeading">
     <xsl:param name="level"/>
-    <fo:block keep-with-next.within-page="always">
+    <block keep-with-next.within-page="always">
       <xsl:variable name="divid">
         <xsl:choose>
           <xsl:when test="@xml:id">
@@ -696,39 +696,39 @@ version="2.0">
 <!-- markers for use in running heads -->
         <xsl:choose>
           <xsl:when test="$level=0">
-            <fo:marker marker-class-name="section1"/>
-            <fo:marker marker-class-name="section2"/>
-            <fo:marker marker-class-name="section3"/>
-            <fo:marker marker-class-name="section4"/>
-            <fo:marker marker-class-name="section5"/>
+            <marker marker-class-name="section1"/>
+            <marker marker-class-name="section2"/>
+            <marker marker-class-name="section3"/>
+            <marker marker-class-name="section4"/>
+            <marker marker-class-name="section5"/>
           </xsl:when>
           <xsl:when test="$level=1">
-            <fo:marker marker-class-name="section2"/>
-            <fo:marker marker-class-name="section3"/>
-            <fo:marker marker-class-name="section4"/>
-            <fo:marker marker-class-name="section5"/>
+            <marker marker-class-name="section2"/>
+            <marker marker-class-name="section3"/>
+            <marker marker-class-name="section4"/>
+            <marker marker-class-name="section5"/>
           </xsl:when>
           <xsl:when test="$level=2">
-            <fo:marker marker-class-name="section3"/>
-            <fo:marker marker-class-name="section4"/>
-            <fo:marker marker-class-name="section5"/>
+            <marker marker-class-name="section3"/>
+            <marker marker-class-name="section4"/>
+            <marker marker-class-name="section5"/>
           </xsl:when>
           <xsl:when test="$level=3">
-            <fo:marker marker-class-name="section4"/>
-            <fo:marker marker-class-name="section5"/>
+            <marker marker-class-name="section4"/>
+            <marker marker-class-name="section5"/>
           </xsl:when>
           <xsl:when test="$level=4">
-          <fo:marker marker-class-name="section5"/>
+          <marker marker-class-name="section5"/>
           </xsl:when>
           <xsl:when test="$level=5"/>                     
         </xsl:choose>
-        <fo:marker marker-class-name="section{$level}">
+        <marker marker-class-name="section{$level}">
           <xsl:if test="$numberHeadings='true'">
             <xsl:value-of select="$Number"/>
             <xsl:call-template name="headingNumberSuffix"/>
           </xsl:if>
           <xsl:value-of select="tei:head"/>
-        </fo:marker>
+        </marker>
       </xsl:if>
       <xsl:choose>
         <xsl:when test="$foEngine='passivetex'">
@@ -741,20 +741,20 @@ version="2.0">
           </fotex:bookmark>
         </xsl:when>
       </xsl:choose>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="bookTOC">
-    <fo:page-sequence format="1" initial-page-number="{$tocStartPage}" master-reference="twoside1">
+    <page-sequence format="1" initial-page-number="{$tocStartPage}" master-reference="twoside1">
       <xsl:call-template name="headers-footers-twoside">
         <xsl:with-param name="runeven">even page running head</xsl:with-param>
         <xsl:with-param name="runodd"> odd page running head</xsl:with-param>
       </xsl:call-template>
-      <fo:flow  flow-name="xsl-region-body" font-family="{$bodyFont}">
-        <fo:block text-align="center">
+      <flow  flow-name="xsl-region-body" font-family="{$bodyFont}">
+        <block text-align="center">
           <xsl:attribute name="font-size">
             <xsl:value-of select="$tocSize"/>
           </xsl:attribute>
@@ -765,12 +765,12 @@ version="2.0">
           <xsl:attribute name="space-after">24pt</xsl:attribute>
           <xsl:attribute name="space-before.optimum">24pt</xsl:attribute>
           <xsl:text>Contents</xsl:text>
-        </fo:block>
+        </block>
         <xsl:for-each select="ancestor::tei:text/tei:group/tei:text">
           <xsl:apply-templates select="." mode="toc"/>
         </xsl:for-each>
-      </fo:flow>
-    </fo:page-sequence>
+      </flow>
+    </page-sequence>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>
@@ -809,23 +809,23 @@ version="2.0">
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="grouptextStatic">
-    <fo:static-content flow-name="xsl-region-after-right">
-      <fo:block text-align="end" font-size="{$bodySize}">
-        <fo:page-number/>
-      </fo:block>
-    </fo:static-content>
-    <fo:static-content flow-name="xsl-region-after-left">
-      <fo:block text-align="start" font-size="{$bodySize}">
-        <fo:page-number/>
-      </fo:block>
-    </fo:static-content>
-    <fo:static-content flow-name="xsl-region-before-left">
-      <fo:block text-indent="0em" background-color="blue" font-weight="bold" padding="3pt" color="white" font-family="{$runFont}" text-align="justify" font-size="{$runSize}">
-        <fo:inline>
+    <static-content flow-name="xsl-region-after-right">
+      <block text-align="end" font-size="{$bodySize}">
+        <page-number/>
+      </block>
+    </static-content>
+    <static-content flow-name="xsl-region-after-left">
+      <block text-align="start" font-size="{$bodySize}">
+        <page-number/>
+      </block>
+    </static-content>
+    <static-content flow-name="xsl-region-before-left">
+      <block text-indent="0em" background-color="blue" font-weight="bold" padding="3pt" color="white" font-family="{$runFont}" text-align="justify" font-size="{$runSize}">
+        <inline>
           <xsl:number/>
-        </fo:inline>
-        <fo:leader rule-thickness="0pt"/>
-        <fo:inline>
+        </inline>
+        <leader rule-thickness="0pt"/>
+        <inline>
           <xsl:choose>
             <xsl:when test="front/tei:docTitle[@n]">
               <xsl:value-of select="tei:front/tei:docTitle[@n]"/>
@@ -834,14 +834,14 @@ version="2.0">
               <xsl:value-of select="tei:front/tei:docTitle"/>
             </xsl:otherwise>
           </xsl:choose>
-        </fo:inline>
-      </fo:block>
-    </fo:static-content>
-    <fo:static-content flow-name="xsl-region-before-right">
-      <fo:block background-color="blue" text-indent="0em" font-weight="bold" padding="3pt" color="white" text-align="left" font-family="{$runFont}" font-size="{$runSize}">
+        </inline>
+      </block>
+    </static-content>
+    <static-content flow-name="xsl-region-before-right">
+      <block background-color="blue" text-indent="0em" font-weight="bold" padding="3pt" color="white" text-align="left" font-family="{$runFont}" font-size="{$runSize}">
         <xsl:value-of select="tei:front//tei:docAuthor"/>
-      </fo:block>
-    </fo:static-content>
+      </block>
+    </static-content>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>
@@ -850,8 +850,8 @@ version="2.0">
   </xd:doc>
   <xsl:template name="headers-footers-oneside">
     <xsl:param name="runhead"/>
-    <fo:static-content flow-name="xsl-region-before">
-      <fo:block font-size="{$bodySize}">
+    <static-content flow-name="xsl-region-before">
+      <block font-size="{$bodySize}">
         <xsl:choose>
           <xsl:when test="$runhead='true'">
             <xsl:value-of select="$runhead"/>
@@ -860,20 +860,20 @@ version="2.0">
             <xsl:call-template name="runninghead-author"/>
           </xsl:otherwise>
         </xsl:choose>
-      </fo:block>
-    </fo:static-content>
-    <fo:static-content flow-name="xsl-region-after">
-      <fo:block text-align="center" font-size="{$bodySize}">
-        <fo:page-number/>
-      </fo:block>
-    </fo:static-content>
-    <fo:static-content flow-name="xsl-region-before-first">
-        </fo:static-content>
-    <fo:static-content flow-name="xsl-region-after-first">
-      <fo:block text-align="center" font-size="{$bodySize}">
-        <fo:page-number/>
-      </fo:block>
-    </fo:static-content>
+      </block>
+    </static-content>
+    <static-content flow-name="xsl-region-after">
+      <block text-align="center" font-size="{$bodySize}">
+        <page-number/>
+      </block>
+    </static-content>
+    <static-content flow-name="xsl-region-before-first">
+        </static-content>
+    <static-content flow-name="xsl-region-after-first">
+      <block text-align="center" font-size="{$bodySize}">
+        <page-number/>
+      </block>
+    </static-content>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>
@@ -897,74 +897,74 @@ version="2.0">
   <xsl:template name="headers-footers-twoside">
     <xsl:param name="runodd"/>
     <xsl:param name="runeven"/>
-    <fo:static-content flow-name="xsl-region-before-right">
-      <fo:block text-align="justify" text-align-last="justify" font-size="{$bodySize}">
+    <static-content flow-name="xsl-region-before-right">
+      <block text-align="justify" text-align-last="justify" font-size="{$bodySize}">
         <xsl:choose>
           <xsl:when test="$runodd">
             <xsl:value-of select="$runodd"/>
           </xsl:when>
           <xsl:when test="$sectionHeaders='true'">
-            <fo:block>
+            <block>
               <xsl:if test="$divRunningheads='true'">
-                <fo:inline>
-                  <fo:retrieve-marker retrieve-class-name="section2"/>
-                </fo:inline>
+                <inline>
+                  <retrieve-marker retrieve-class-name="section2"/>
+                </inline>
               </xsl:if>
-              <fo:leader rule-thickness="0pt"/>
-              <fo:inline>
-                <fo:page-number/>
-              </fo:inline>
-            </fo:block>
+              <leader rule-thickness="0pt"/>
+              <inline>
+                <page-number/>
+              </inline>
+            </block>
           </xsl:when>
           <xsl:otherwise>
             <xsl:call-template name="runninghead-title"/>
           </xsl:otherwise>
         </xsl:choose>
-      </fo:block>
-    </fo:static-content>
-    <fo:static-content flow-name="xsl-region-before-left">
-      <fo:block text-align="justify" font-size="{$bodySize}">
+      </block>
+    </static-content>
+    <static-content flow-name="xsl-region-before-left">
+      <block text-align="justify" font-size="{$bodySize}">
         <xsl:choose>
           <xsl:when test="$runeven">
             <xsl:value-of select="$runeven"/>
           </xsl:when>
           <xsl:when test="$sectionHeaders='true'">
-            <fo:block>
-              <fo:inline>
-                <fo:page-number/>
-              </fo:inline>
-              <fo:leader rule-thickness="0pt"/>
+            <block>
+              <inline>
+                <page-number/>
+              </inline>
+              <leader rule-thickness="0pt"/>
               <xsl:if test="$divRunningheads='true'">
-                <fo:inline>
-                  <fo:retrieve-marker retrieve-class-name="section1"/>
-                </fo:inline>
+                <inline>
+                  <retrieve-marker retrieve-class-name="section1"/>
+                </inline>
               </xsl:if>
-            </fo:block>
+            </block>
           </xsl:when>
           <xsl:otherwise>
             <xsl:call-template name="runninghead-author"/>
           </xsl:otherwise>
         </xsl:choose>
-      </fo:block>
-    </fo:static-content>
-    <fo:static-content flow-name="xsl-region-before-first">
-      <fo:block/>
-    </fo:static-content>
-    <fo:static-content flow-name="xsl-region-after-right">
-      <fo:block text-align="end" font-size="{$bodySize}">
-        <fo:page-number/>
-      </fo:block>
-    </fo:static-content>
-    <fo:static-content flow-name="xsl-region-after-left">
-      <fo:block text-align="start" font-size="{$bodySize}">
-        <fo:page-number/>
-      </fo:block>
-    </fo:static-content>
-    <fo:static-content flow-name="xsl-region-after-first">
-      <fo:block font-size="{$bodySize}" text-align="end">
-        <fo:page-number/>
-      </fo:block>
-    </fo:static-content>
+      </block>
+    </static-content>
+    <static-content flow-name="xsl-region-before-first">
+      <block/>
+    </static-content>
+    <static-content flow-name="xsl-region-after-right">
+      <block text-align="end" font-size="{$bodySize}">
+        <page-number/>
+      </block>
+    </static-content>
+    <static-content flow-name="xsl-region-after-left">
+      <block text-align="start" font-size="{$bodySize}">
+        <page-number/>
+      </block>
+    </static-content>
+    <static-content flow-name="xsl-region-after-first">
+      <block font-size="{$bodySize}" text-align="end">
+        <page-number/>
+      </block>
+    </static-content>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>
@@ -1006,12 +1006,12 @@ version="2.0">
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="mainTOC">
-    <fo:block>
+    <block>
       <xsl:call-template name="setupDiv1"/>
       <xsl:call-template name="i18n">
         <xsl:with-param name="word">contentsWord</xsl:with-param>
       </xsl:call-template>
-    </fo:block>
+    </block>
     <xsl:choose>
       <xsl:when test="ancestor::tei:text/tei:group">
         <xsl:for-each select="ancestor::tei:text/tei:group">
@@ -1072,94 +1072,94 @@ version="2.0">
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="setupPagemasters">
-    <fo:layout-master-set>
+    <layout-master-set>
 <!-- one sided, single column -->
-      <fo:simple-page-master master-name="simple1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before extent="{$regionBeforeExtent}"/>
-        <fo:region-after extent="{$regionAfterExtent}"/>
-      </fo:simple-page-master>
+      <simple-page-master master-name="simple1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <region-before extent="{$regionBeforeExtent}"/>
+        <region-after extent="{$regionAfterExtent}"/>
+      </simple-page-master>
 <!-- for left-hand/tei:even pages in twosided mode, single column -->
-      <fo:simple-page-master master-name="left1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before region-name="xsl-region-before-left" extent="{$regionBeforeExtent}"/>
-        <fo:region-after region-name="xsl-region-after-left" extent="{$regionAfterExtent}"/>
-      </fo:simple-page-master>
+      <simple-page-master master-name="left1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <region-before region-name="xsl-region-before-left" extent="{$regionBeforeExtent}"/>
+        <region-after region-name="xsl-region-after-left" extent="{$regionAfterExtent}"/>
+      </simple-page-master>
 <!-- for right-hand/tei:odd pages in twosided mode, single column -->
-      <fo:simple-page-master master-name="right1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before region-name="xsl-region-before-right" extent="{$regionBeforeExtent}"/>
-        <fo:region-after region-name="xsl-region-after-right" extent="{$regionAfterExtent}"/>
-      </fo:simple-page-master>
+      <simple-page-master master-name="right1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <region-before region-name="xsl-region-before-right" extent="{$regionBeforeExtent}"/>
+        <region-after region-name="xsl-region-after-right" extent="{$regionAfterExtent}"/>
+      </simple-page-master>
 <!-- special case of first page in either mode, single column -->
-      <fo:simple-page-master master-name="first1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before region-name="xsl-region-before-first" extent="{$regionBeforeExtent}"/>
-        <fo:region-after region-name="xsl-region-after-first" extent="{$regionAfterExtent}"/>
-      </fo:simple-page-master>
+      <simple-page-master master-name="first1" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <region-body margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <region-before region-name="xsl-region-before-first" extent="{$regionBeforeExtent}"/>
+        <region-after region-name="xsl-region-after-first" extent="{$regionAfterExtent}"/>
+      </simple-page-master>
 <!-- for pages in one-side mode, 2 column -->
-      <fo:simple-page-master master-name="simple2" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before extent="{$regionBeforeExtent}"/>
-        <fo:region-after extent="{$regionAfterExtent}"/>
-      </fo:simple-page-master>
+      <simple-page-master master-name="simple2" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <region-before extent="{$regionBeforeExtent}"/>
+        <region-after extent="{$regionAfterExtent}"/>
+      </simple-page-master>
 <!-- for left-hand/tei:even pages in twosided mode, 2 column -->
-      <fo:simple-page-master master-name="left2" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before region-name="xsl-region-before-left" extent="{$regionBeforeExtent}"/>
-        <fo:region-after region-name="xsl-region-after-left" extent="{$regionAfterExtent}"/>
-      </fo:simple-page-master>
+      <simple-page-master master-name="left2" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <region-before region-name="xsl-region-before-left" extent="{$regionBeforeExtent}"/>
+        <region-after region-name="xsl-region-after-left" extent="{$regionAfterExtent}"/>
+      </simple-page-master>
 <!-- for right-hand/tei:odd pages in twosided mode, 2 column -->
-      <fo:simple-page-master master-name="right2" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before region-name="xsl-region-before-right" extent="{$regionBeforeExtent}"/>
-        <fo:region-after region-name="xsl-region-after-right" extent="{$regionAfterExtent}"/>
-      </fo:simple-page-master>
+      <simple-page-master master-name="right2" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <region-before region-name="xsl-region-before-right" extent="{$regionBeforeExtent}"/>
+        <region-after region-name="xsl-region-after-right" extent="{$regionAfterExtent}"/>
+      </simple-page-master>
 <!-- special case of first page in either mode -->
-      <fo:simple-page-master master-name="first2" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
-        <fo:region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
-        <fo:region-before region-name="xsl-region-before-first" extent="{$regionBeforeExtent}"/>
-        <fo:region-after region-name="xsl-region-after-first" extent="{$regionAfterExtent}"/>
-      </fo:simple-page-master>
+      <simple-page-master master-name="first2" page-width="{$pageWidth}" page-height="{$pageHeight}" margin-top="{$pageMarginTop}" margin-bottom="{$pageMarginBottom}" margin-left="{$pageMarginLeft}" margin-right="{$pageMarginRight}">
+        <region-body column-count="{$columnCount}" margin-bottom="{$bodyMarginBottom}" margin-top="{$bodyMarginTop}"/>
+        <region-before region-name="xsl-region-before-first" extent="{$regionBeforeExtent}"/>
+        <region-after region-name="xsl-region-after-first" extent="{$regionAfterExtent}"/>
+      </simple-page-master>
 <!-- setup for double-sided, 1 column, no first page -->
-      <fo:page-sequence-master master-name="twoside1nofirst">
-        <fo:repeatable-page-master-alternatives>
-          <fo:conditional-page-master-reference master-reference="right1" odd-or-even="odd"/>
-          <fo:conditional-page-master-reference master-reference="left1" odd-or-even="even"/>
-        </fo:repeatable-page-master-alternatives>
-      </fo:page-sequence-master>
+      <page-sequence-master master-name="twoside1nofirst">
+        <repeatable-page-master-alternatives>
+          <conditional-page-master-reference master-reference="right1" odd-or-even="odd"/>
+          <conditional-page-master-reference master-reference="left1" odd-or-even="even"/>
+        </repeatable-page-master-alternatives>
+      </page-sequence-master>
 <!-- setup for double-sided, 1 column -->
-      <fo:page-sequence-master master-name="twoside1">
-        <fo:repeatable-page-master-alternatives>
-          <fo:conditional-page-master-reference master-reference="first1" page-position="first"/>
-          <fo:conditional-page-master-reference master-reference="right1" odd-or-even="odd"/>
-          <fo:conditional-page-master-reference master-reference="left1" odd-or-even="even"/>
-        </fo:repeatable-page-master-alternatives>
-      </fo:page-sequence-master>
+      <page-sequence-master master-name="twoside1">
+        <repeatable-page-master-alternatives>
+          <conditional-page-master-reference master-reference="first1" page-position="first"/>
+          <conditional-page-master-reference master-reference="right1" odd-or-even="odd"/>
+          <conditional-page-master-reference master-reference="left1" odd-or-even="even"/>
+        </repeatable-page-master-alternatives>
+      </page-sequence-master>
 <!-- setup for single-sided, 1 column -->
-      <fo:page-sequence-master master-name="oneside1">
-        <fo:repeatable-page-master-alternatives>
-          <fo:conditional-page-master-reference master-reference="first1" page-position="first"/>
-          <fo:conditional-page-master-reference master-reference="simple1"/>
-        </fo:repeatable-page-master-alternatives>
-      </fo:page-sequence-master>
+      <page-sequence-master master-name="oneside1">
+        <repeatable-page-master-alternatives>
+          <conditional-page-master-reference master-reference="first1" page-position="first"/>
+          <conditional-page-master-reference master-reference="simple1"/>
+        </repeatable-page-master-alternatives>
+      </page-sequence-master>
 <!-- setup for double-sided, 2 column -->
-      <fo:page-sequence-master master-name="twoside2">
-        <fo:repeatable-page-master-alternatives>
-          <fo:conditional-page-master-reference master-reference="first2" page-position="first"/>
-          <fo:conditional-page-master-reference master-reference="right2" odd-or-even="odd"/>
-          <fo:conditional-page-master-reference master-reference="left2" odd-or-even="even"/>
-        </fo:repeatable-page-master-alternatives>
-      </fo:page-sequence-master>
+      <page-sequence-master master-name="twoside2">
+        <repeatable-page-master-alternatives>
+          <conditional-page-master-reference master-reference="first2" page-position="first"/>
+          <conditional-page-master-reference master-reference="right2" odd-or-even="odd"/>
+          <conditional-page-master-reference master-reference="left2" odd-or-even="even"/>
+        </repeatable-page-master-alternatives>
+      </page-sequence-master>
 <!-- setup for single-sided, 2 column -->
-      <fo:page-sequence-master master-name="oneside2">
-        <fo:repeatable-page-master-alternatives>
-          <fo:conditional-page-master-reference master-reference="first2" page-position="first"/>
-          <fo:conditional-page-master-reference master-reference="simple2"/>
-        </fo:repeatable-page-master-alternatives>
-      </fo:page-sequence-master>
+      <page-sequence-master master-name="oneside2">
+        <repeatable-page-master-alternatives>
+          <conditional-page-master-reference master-reference="first2" page-position="first"/>
+          <conditional-page-master-reference master-reference="simple2"/>
+        </repeatable-page-master-alternatives>
+      </page-sequence-master>
       <xsl:call-template name="pageMasterHook"/>
-    </fo:layout-master-set>
+    </layout-master-set>
     <xsl:if test="$foEngine='xep'">
 <!-- PDF bookmarks using XEP -->
       <outline 
@@ -1349,7 +1349,7 @@ xmlns="http://www.renderx.com/XSL/Extensions">
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <fo:block>
+    <block>
       <xsl:if test="$level='0'">
         <xsl:attribute name="font-weight">bold</xsl:attribute>
       </xsl:if>
@@ -1365,11 +1365,11 @@ xmlns="http://www.renderx.com/XSL/Extensions">
       </xsl:variable>
       <xsl:value-of select="$Number"/>
       <xsl:text> </xsl:text>
-      <fo:inline>
+      <inline>
         <xsl:apply-templates mode="section" select="tei:head"/>
-      </fo:inline>
-      <fo:leader rule-thickness="0pt"/>
-      <fo:inline>
+      </inline>
+      <leader rule-thickness="0pt"/>
+      <inline>
         <xsl:call-template name="linkStyle"/>
         <xsl:variable name="pagref">
           <xsl:choose>
@@ -1381,11 +1381,11 @@ xmlns="http://www.renderx.com/XSL/Extensions">
             </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
-        <fo:basic-link internal-destination="{$pagref}">
-          <fo:page-number-citation ref-id="{$pagref}"/>
-        </fo:basic-link>
-      </fo:inline>
-    </fo:block>
+        <basic-link internal-destination="{$pagref}">
+          <page-number-citation ref-id="{$pagref}"/>
+        </basic-link>
+      </inline>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>

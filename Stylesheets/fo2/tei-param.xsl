@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
 xmlns:xd="http://www.pnp-software.com/XSLTdoc" 
-xmlns:fo="http://www.w3.org/1999/XSL/Format" 
+xmlns="http://www.w3.org/1999/XSL/Format" 
 xmlns:tei="http://www.tei-c.org/ns/1.0" 
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-exclude-result-prefixes="fo tei xd" 
+exclude-result-prefixes="tei xd" 
 version="2.0">
   <xd:doc type="stylesheet">
     <xd:short>

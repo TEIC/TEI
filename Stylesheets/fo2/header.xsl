@@ -2,12 +2,12 @@
 <xsl:stylesheet 
 xmlns:xd="http://www.pnp-software.com/XSLTdoc" 
 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
-xmlns:fo="http://www.w3.org/1999/XSL/Format" 
+xmlns="http://www.w3.org/1999/XSL/Format" 
 xmlns:rng="http://relaxng.org/ns/structure/1.0" 
 xmlns:tei="http://www.tei-c.org/ns/1.0" 
 xmlns:teix="http://www.tei-c.org/ns/Examples" 
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-exclude-result-prefixes="a fo rng tei teix" 
+exclude-result-prefixes="a rng tei teix" 
 version="2.0">
   <xd:doc type="stylesheet">
     <xd:short>
@@ -42,20 +42,20 @@ version="2.0">
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:docAuthor">
-    <fo:block font-size="{$authorSize}">
-      <fo:inline font-style="italic">
+    <block font-size="{$authorSize}">
+      <inline font-style="italic">
         <xsl:apply-templates/>
-      </fo:inline>
-    </fo:block>
+      </inline>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:docDate</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:docDate">
-    <fo:block font-size="{$dateSize}">
+    <block font-size="{$dateSize}">
       <xsl:apply-templates/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:docTitle</xd:short>
@@ -64,7 +64,7 @@ version="2.0">
     </xd:detail>
   </xd:doc>
   <xsl:template match="tei:docTitle">
-    <fo:block text-align="left" font-size="{$titleSize}" >
+    <block text-align="left" font-size="{$titleSize}" >
       <xsl:if test="ancestor::tei:group/tei:text/tei:front">
         <xsl:attribute name="id">
           <xsl:choose>
@@ -78,7 +78,7 @@ version="2.0">
         </xsl:attribute>
       </xsl:if>
       <xsl:apply-templates select="tei:titlePart"/>
-    </fo:block>
+    </block>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:teiHeader</xd:short>

@@ -8,7 +8,7 @@
 		xmlns:tei="http://www.tei-c.org/ns/1.0"
 		xmlns:teix="http://www.tei-c.org/ns/Examples"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-		exclude-result-prefixes="xd a fotex fo rng tei teix" 
+		exclude-result-prefixes="xd a fotex rng tei teix" 
 		version="2.0">
   <xd:doc type="stylesheet">
     <xd:short>
