@@ -985,6 +985,10 @@
     <xsl:param name="fontfamily" />
     <xsl:param name="fNor" />
     <xsl:param name="fLit" />
+    <w:rPr>
+      <w:rFonts w:ascii="Cambria Math" w:eastAsia="Cambria Math"
+		w:hAnsi="Cambria Math" w:cs="Cambria Math"/>
+    </w:rPr>
     <xsl:variable name="mstyleColor">
       <xsl:if test="not(not($ndCur))">
         <xsl:choose>
