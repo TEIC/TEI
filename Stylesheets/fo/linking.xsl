@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" extension-element-prefixes="exsl estr edate" exclude-result-prefixes="xd exsl estr edate a fo rng tei teix" version="1.0">
+<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns="http://www.w3.org/1999/XSL/Format" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" extension-element-prefixes="exsl estr edate" exclude-result-prefixes="xd exsl estr edate a rng tei teix" version="1.0">
   <xd:doc type="stylesheet">
     <xd:short>
     TEI stylesheet
@@ -47,7 +47,7 @@
   <xsl:template name="makeExternalLink">
     <xsl:param name="ptr"/>
     <xsl:param name="dest"/>
-    <fo:basic-link external-destination="url({$dest})">
+    <basic-link external-destination="url({$dest})">
       <xsl:choose>
         <xsl:when test="$ptr='true'">
           <xsl:call-template name="showXrefURL">
@@ -60,7 +60,7 @@
           <xsl:apply-templates/>
         </xsl:otherwise>
       </xsl:choose>
-    </fo:basic-link>
+    </basic-link>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>
@@ -88,7 +88,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <fo:basic-link internal-destination="{$W}">
+    <basic-link internal-destination="{$W}">
       <xsl:call-template name="linkStyle"/>
       <xsl:choose>
         <xsl:when test="not($body='')">
@@ -103,6 +103,6 @@
           <xsl:apply-templates/>
         </xsl:otherwise>
       </xsl:choose>
-    </fo:basic-link>
+    </basic-link>
   </xsl:template>
 </xsl:stylesheet>

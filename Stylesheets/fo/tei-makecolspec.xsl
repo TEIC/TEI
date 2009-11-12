@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:fotex="http://www.tug.org/fotex" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" extension-element-prefixes="xd exsl estr edate" exclude-result-prefixes="xd exsl estr edate a fo rng tei teix" version="1.0">
+<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:fotex="http://www.tug.org/fotex" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns="http://www.w3.org/1999/XSL/Format" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" extension-element-prefixes="xd exsl estr edate" exclude-result-prefixes="xd exsl estr edate a rng tei teix" version="1.0">
   <xd:doc type="stylesheet">
     <xd:short>
     TEI stylesheet for making table specifications, making XSL-FO output.
@@ -55,11 +55,11 @@
           <xsl:value-of select="sum(following-sibling::cell[$c=@col]) + current()"/>
         </xsl:variable>
         <xsl:text>&#10;</xsl:text>
-        <fo:table-column column-number="{@col}" column-width="{$len div $total * 100}%">
+        <table-column column-number="{@col}" column-width="{$len div $total * 100}%">
           <xsl:if test="$foEngine='passivetex'">
             <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">L</xsl:attribute>
           </xsl:if>
-        </fo:table-column>
+        </table-column>
       </xsl:if>
     </xsl:for-each>
     <xsl:text>&#10;</xsl:text>
@@ -79,7 +79,7 @@
         </xsl:variable>
         <xsl:choose>
           <xsl:when test="$specs &gt; 0">
-            <xsl:for-each select="exsl:node-set($tableSpecs)/Info/TableSpec[$no=@xml:id]/fo:table-column">
+            <xsl:for-each select="exsl:node-set($tableSpecs)/Info/TableSpec[$no=@xml:id]/table-column">
               <xsl:copy-of select="."/>
             </xsl:for-each>
           </xsl:when>

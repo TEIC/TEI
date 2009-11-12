@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:fotex="http://www.tug.org/fotex" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" extension-element-prefixes="exsl estr edate" exclude-result-prefixes="xd exsl estr edate a fo fotex rng tei teix" version="1.0">
+<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc" xmlns:fotex="http://www.tug.org/fotex" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common" xmlns="http://www.w3.org/1999/XSL/Format" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" extension-element-prefixes="exsl estr edate" exclude-result-prefixes="xd exsl estr edate a fotex rng tei teix" version="1.0">
   <xd:doc type="stylesheet">
     <xd:short>
     TEI stylesheet
@@ -52,7 +52,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:cell">
-    <fo:table-cell>
+    <table-cell>
       <xsl:if test="@cols &gt; 1">
         <xsl:attribute name="number-columns-spanned">
           <xsl:value-of select="@cols"/>
@@ -64,15 +64,15 @@
         </xsl:attribute>
       </xsl:if>
       <xsl:call-template name="cellProperties"/>
-      <fo:block>
+      <block>
         <xsl:choose>
           <xsl:when test="@role='label' or parent::tei:row[@role='label' or parent::tei:row[@role='header']]">
             <xsl:attribute name="font-weight">bold</xsl:attribute>
           </xsl:when>
         </xsl:choose>
         <xsl:apply-templates/>
-      </fo:block>
-    </fo:table-cell>
+      </block>
+    </table-cell>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:figDesc</xd:short>
@@ -86,9 +86,9 @@
   <xsl:template match="tei:figure">
     <xsl:choose>
       <xsl:when test="@rend='display' or tei:head or tei:p">
-        <fo:float>
+        <float>
           <xsl:call-template name="addID"/>
-          <fo:block text-align="center">
+          <block text-align="center">
             <xsl:choose>
               <xsl:when test="@url or @entity">
                 <xsl:call-template name="makePic"/>
@@ -97,8 +97,8 @@
                 <xsl:apply-templates/>
               </xsl:otherwise>
             </xsl:choose>
-          </fo:block>
-          <fo:block>
+          </block>
+          <block>
             <xsl:call-template name="figureCaptionstyle"/>
             <xsl:call-template name="i18n">
               <xsl:with-param name="word">figureWord</xsl:with-param>
@@ -106,11 +106,11 @@
             <xsl:call-template name="calculateFigureNumber"/>
             <xsl:text>. </xsl:text>
             <xsl:apply-templates select="tei:head"/>
-          </fo:block>
-        </fo:float>
+          </block>
+        </float>
       </xsl:when>
       <xsl:otherwise>
-	<fo:block>
+	<block>
 	  <xsl:choose>
 	    <xsl:when test="@url or @entity">
 	      <xsl:call-template name="makePic"/>
@@ -119,22 +119,22 @@
 	      <xsl:apply-templates/>
 	    </xsl:otherwise>
 	  </xsl:choose>
-	</fo:block>
+	</block>
         <xsl:choose>
           <xsl:when test="$captionInlineFigures='true'">
-            <fo:block>
+            <block>
               <xsl:call-template name="figureCaptionstyle"/>
               <xsl:text>Figure </xsl:text>
               <xsl:call-template name="calculateFigureNumber"/>
               <xsl:text>. </xsl:text>
               <xsl:apply-templates select="tei:head"/>
-            </fo:block>
+            </block>
           </xsl:when>
           <xsl:otherwise>
             <xsl:if test="tei:head">
-              <fo:block text-align="center">
+              <block text-align="center">
                 <xsl:apply-templates select="tei:head"/>
-              </fo:block>
+              </block>
             </xsl:if>
           </xsl:otherwise>
         </xsl:choose>
@@ -160,7 +160,7 @@
     </xsl:if>
     <xsl:if test="$xrefShowPage='true'">
     on page
-    <fo:page-number-citation><xsl:attribute name="ref-id"><xsl:choose><xsl:when test="@xml:id"><xsl:value-of select="@xml:id"/></xsl:when><xsl:otherwise><xsl:value-of select="generate-id()"/></xsl:otherwise></xsl:choose></xsl:attribute></fo:page-number-citation> 
+    <page-number-citation><xsl:attribute name="ref-id"><xsl:choose><xsl:when test="@xml:id"><xsl:value-of select="@xml:id"/></xsl:when><xsl:otherwise><xsl:value-of select="generate-id()"/></xsl:otherwise></xsl:choose></xsl:attribute></page-number-citation> 
     </xsl:if>
   </xsl:template>
   <xd:doc>
@@ -168,14 +168,14 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:formula">
-    <fo:wrapper>
+    <wrapper>
       <xsl:if test="@xml:id">
         <xsl:attribute name="id">
           <xsl:value-of select="@xml:id"/>
         </xsl:attribute>
       </xsl:if>
       <xsl:apply-templates/>
-    </fo:wrapper>
+    </wrapper>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:formula</xd:short>
@@ -214,9 +214,9 @@
   </xd:doc>
   <xsl:template match="tei:row[@role='header']">
     <xsl:text>&#10;</xsl:text>
-    <fo:table-header>
+    <table-header>
       <xsl:apply-templates select="tei:cell"/>
-    </fo:table-header>
+    </table-header>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:table</xd:short>
@@ -254,7 +254,7 @@
       </xsl:when>
       <xsl:when test="$inlineTables or @rend='inline'">
         <xsl:if test="tei:head">
-          <fo:block>
+          <block>
             <xsl:call-template name="tableCaptionstyle"/>
             <xsl:call-template name="addID"/>
             <xsl:if test="$makeTableCaption='true'">
@@ -266,7 +266,7 @@
               <xsl:text>. </xsl:text>
             </xsl:if>
             <xsl:apply-templates select="tei:head"/>
-          </fo:block>
+          </block>
         </xsl:if>
         <xsl:call-template name="blockTable"/>
       </xsl:when>
@@ -286,7 +286,7 @@
           <xsl:for-each select="tei:row">
             <xsl:apply-templates select=".//tei:formula"/>
             <xsl:if test="following-sibling::tei:row">
-<!--        <fo:character character="&#x2028;"/>-->
+<!--        <character character="&#x2028;"/>-->
               <xsl:processing-instruction name="xmltex">\\</xsl:processing-instruction>
             </xsl:if>
           </xsl:for-each>
@@ -302,19 +302,19 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="blockTable">
-    <fo:table text-align="{$tableAlign}" font-size="{$tableSize}">
+    <table text-align="{$tableAlign}" font-size="{$tableSize}">
       <xsl:call-template name="addID"/>
       <xsl:call-template name="deriveColSpecs"/>
       <xsl:apply-templates select="tei:row[@role='header']"/>
-      <fo:table-body text-indent="0pt">
+      <table-body text-indent="0pt">
         <xsl:for-each select="tei:row[not(@role='header')]">
           <xsl:text>&#10;</xsl:text>
-          <fo:table-row>
+          <table-row>
             <xsl:apply-templates select="tei:cell"/>
-          </fo:table-row>
+          </table-row>
         </xsl:for-each>
-      </fo:table-body>
-    </fo:table>
+      </table-body>
+    </table>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] </xd:short>
@@ -373,7 +373,7 @@
           <xsl:value-of select="ancestor::tei:table/@xml:id"/>
         </xsl:variable>
         <xsl:variable name="align">
-          <xsl:value-of select="exsl:node-set($tableSpecs)/Info/TableSpec[@xml:id=$tid]/fo:table-column[@column-number=$thiscol]/@fotex:column-align"/>
+          <xsl:value-of select="exsl:node-set($tableSpecs)/Info/TableSpec[@xml:id=$tid]/table-column[@column-number=$thiscol]/@fotex:column-align"/>
         </xsl:variable>
 <!--
     <xsl:message>    Cell: whats my position: <xsl:value-of select="$thiscol"/>, <xsl:value-of select="$align"/>, <xsl:value-of select="$tid"/>
@@ -408,23 +408,23 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="floatTable">
-    <fo:table-and-caption>
+    <table-and-caption>
       <xsl:if test="rend='landscape'">
         <xsl:attribute name="reference-direction">-90</xsl:attribute>
       </xsl:if>
       <xsl:call-template name="addID"/>
-      <fo:table-caption>
-        <fo:block text-align="{$tableCaptionAlign}" space-after="{$spaceBelowCaption}">
+      <table-caption>
+        <block text-align="{$tableCaptionAlign}" space-after="{$spaceBelowCaption}">
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">tableWord</xsl:with-param>
           </xsl:call-template>
           <xsl:call-template name="calculateTableNumber"/>
           <xsl:text>. </xsl:text>
           <xsl:apply-templates select="tei:head"/>
-        </fo:block>
-      </fo:table-caption>
+        </block>
+      </table-caption>
       <xsl:call-template name="blockTable"/>
-    </fo:table-and-caption>
+    </table-and-caption>
   </xsl:template>
   <xd:doc>
     <xd:short>[fo] Insert reference to graphics file </xd:short>
@@ -441,7 +441,7 @@
         </xsl:when>
       </xsl:choose>
     </xsl:variable>
-    <fo:external-graphic>
+    <external-graphic>
       <xsl:call-template name="addID"/>
       <xsl:attribute name="src">
         <xsl:text>url(</xsl:text>
@@ -457,6 +457,6 @@
       <xsl:call-template name="graphicsAttributes">
         <xsl:with-param name="mode">fo</xsl:with-param>
       </xsl:call-template>
-    </fo:external-graphic>
+    </external-graphic>
   </xsl:template>
 </xsl:stylesheet>

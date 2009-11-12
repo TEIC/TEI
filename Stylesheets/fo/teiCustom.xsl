@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    xmlns:fotex="http://www.tug.org/fotex" xmlns:fo="http://www.w3.org/1999/XSL/Format" 
+    xmlns:fotex="http://www.tug.org/fotex" xmlns="http://www.w3.org/1999/XSL/Format" 
     xmlns:tei="http://www.tei-c.org/ns/1.0" version="1.0">
     <xsl:import href="tei.xsl"/>
     
@@ -28,7 +28,7 @@
             </xsl:when>
             <xsl:when test="$inlineTables or @rend='inline'">
                 <xsl:if test="tei:head">
-                    <fo:block>
+                    <block>
                         <xsl:call-template name="tableCaptionstyle"/>
                         <!-- oXygen begin change -->
                         <!-- 
@@ -48,7 +48,7 @@
                             <xsl:text>. </xsl:text>
                         </xsl:if>
                         <xsl:apply-templates select="tei:head"/>
-                    </fo:block>
+                    </block>
                 </xsl:if>
                 <xsl:call-template name="blockTable"/>
             </xsl:when>
