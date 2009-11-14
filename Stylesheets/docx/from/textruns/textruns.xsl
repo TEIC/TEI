@@ -81,11 +81,9 @@
             
             <xsl:when test="w:rPr/w:position[number(@w:val)&lt;-2]">
                 <hi>
-<xsl:message>LOOK <xsl:value-of select="."/></xsl:message>
 		  <xsl:attribute name="rend">
 		    <xsl:text>subscript</xsl:text>
 		    <xsl:if test="w:rPr/w:i">
-<xsl:message>ITALIC</xsl:message>
 		      <xsl:text> italic</xsl:text>
 		    </xsl:if>
 		    <xsl:if test="w:rPr/w:b[not(@w:val='0')]">
