@@ -186,7 +186,15 @@
         </blockquote>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:apply-templates/>
+	<span>
+	  <xsl:call-template name="rendToClass"/>
+	  <xsl:if test="@n">
+	    <xsl:text>(</xsl:text>
+	    <xsl:value-of select="@n"/>
+	    <xsl:text>)</xsl:text>
+	  </xsl:if>
+	  <xsl:apply-templates/>
+	</span>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
