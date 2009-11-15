@@ -180,6 +180,11 @@
         <blockquote>
 	  <xsl:call-template name="rendToClass"/>
           <p>
+	  <xsl:if test="@n">
+	    <xsl:text>(</xsl:text>
+	    <xsl:value-of select="@n"/>
+	    <xsl:text>) </xsl:text>
+	  </xsl:if>
             <xsl:apply-templates select="tei:q|tei:quote"/>
             <xsl:apply-templates select="tei:bibl"/>
           </p>
@@ -191,7 +196,7 @@
 	  <xsl:if test="@n">
 	    <xsl:text>(</xsl:text>
 	    <xsl:value-of select="@n"/>
-	    <xsl:text>)</xsl:text>
+	    <xsl:text>) </xsl:text>
 	  </xsl:if>
 	  <xsl:apply-templates/>
 	</span>

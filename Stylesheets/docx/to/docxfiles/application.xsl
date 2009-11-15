@@ -128,85 +128,17 @@
     <!-- after opening custom.xml, we cannot write back to it; so save
 	 under new name -->
     <xsl:template name="write-docxfile-docprops-custom">
-	<xsl:if test="$debug='true'">
-	  <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'docProps/newcustom.xml')"/></xsl:message>
-	</xsl:if>
-
-        <xsl:result-document href="{concat($word-directory,'/docProps/newcustom.xml')}"
+        <xsl:result-document
+            href="{concat($word-directory,'/docProps/newcustom.xml')}"
             standalone="yes">
             <Properties
-                xmlns="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
+                xmlns="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties" 
                 xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
-                <property pid="2" name="DocIdentSDO">
+                <property pid="1001" name="TEI_toDOCX">
                     <xsl:attribute name="fmtid">
                         <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
                     </xsl:attribute>
-                    <vt:lpwstr>
-                        <xsl:value-of select="key('ISOMETA','organization')"/>
-                    </vt:lpwstr>
-                </property>
-                <property pid="3" name="DocIdentProjectId">
-                    <xsl:attribute name="fmtid">
-                        <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
-                    </xsl:attribute>
-                    <vt:lpwstr>
-                        <xsl:value-of select="key('ISOMETA','projectId')"/>
-                    </vt:lpwstr>
-                </property>
-                <property pid="4" name="DocIdentLanguage">
-                    <xsl:attribute name="fmtid">
-                        <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
-                    </xsl:attribute>
-                    <vt:lpwstr>
-                        <xsl:value-of select="/tei:TEI/@xml:lang"/>
-                    </vt:lpwstr>
-                </property>
-                <property pid="5" name="DocIdentStage">
-                    <xsl:attribute name="fmtid">
-                        <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
-                    </xsl:attribute>
-                    <vt:lpwstr>
-                        <xsl:value-of select="key('ISOMETA','stage')"/>
-                    </vt:lpwstr>
-                </property>
-                <property pid="6" name="DocIdentDate">
-                    <xsl:attribute name="fmtid">
-                        <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
-                    </xsl:attribute>
-                    <vt:lpwstr>
-                        <xsl:value-of select="key('ISOMETA','docdate')"/>
-                    </vt:lpwstr>
-                </property>
-                <xsl:for-each select="key('ALLMETA',1)">
-                    <xsl:if test="@iso:meta != 'projectId'">
-                        <property name="{@iso:meta}">
-                            <xsl:attribute name="pid">
-                                <xsl:value-of select="position()+6"/>
-                            </xsl:attribute>
-                            <xsl:attribute name="fmtid">
-                                <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
-                            </xsl:attribute>
-                            <vt:lpwstr>
-                                <xsl:value-of select="."/>
-                            </vt:lpwstr>
-                        </property>
-                    </xsl:if>
-                </xsl:for-each>
-                <property pid="1000" name="TEI_toDOCX">
-                    <xsl:attribute name="fmtid">
-                        <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
-                    </xsl:attribute>
-                    <vt:lpwstr>2.7.0</vt:lpwstr>
-                </property>
-                <property pid="1001" name="WordTemplateURI">
-                    <xsl:attribute name="fmtid">
-                        <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
-                    </xsl:attribute>
-                    <vt:lpwstr>
-                        <xsl:value-of
-                            select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:encodingDesc/tei:appInfo/tei:application[@ident='WordTemplate']/tei:ptr/@target"
-                        />
-                    </vt:lpwstr>
+                    <vt:lpwstr>2.6.0</vt:lpwstr>
                 </property>
                 <xsl:for-each
                     select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:encodingDesc/tei:appInfo/tei:application">
