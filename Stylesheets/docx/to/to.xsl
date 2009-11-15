@@ -1352,6 +1352,24 @@
         </w:r>
     </xsl:template>
 
+    <xsl:template match="tei:cit">
+      <xsl:if test="@n">
+	<w:r>
+	  <w:t>
+	    <xsl:text>(</xsl:text>
+	    <xsl:value-of select="@n"/>
+	    <xsl:text>) </xsl:text>
+	  </w:t>
+	</w:r>
+      </xsl:if>
+      <w:r>
+	<w:rPr>
+	  <w:pStyle w:val="Quote"/>
+	</w:rPr>
+	<xsl:apply-templates/>
+      </w:r>
+    </xsl:template>
+
     <!-- hyperlink -->
     <xsl:template match="tei:ptr">
         <w:r>
