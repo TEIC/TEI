@@ -253,8 +253,18 @@
 	<xsl:when test="ancestor::tei:cell or ancestor::cals:entry">
 	  <xsl:call-template name="create-inlinenote"/>
 	</xsl:when>
-	<xsl:otherwise>
+	<xsl:when test="@place='inline'">
 	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="block-element">
+	    <xsl:with-param name="pPr">
+	      <w:pPr>
+		<w:pStyle w:val="Note"/>
+	      </w:pPr>
+	    </xsl:with-param>
+	    <xsl:with-param name="nop">false</xsl:with-param>
+	  </xsl:call-template>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
