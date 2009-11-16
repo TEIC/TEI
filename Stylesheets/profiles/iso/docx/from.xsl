@@ -923,7 +923,7 @@
         <note place="foot">
             <xsl:attribute name="n">
                 <xsl:value-of select="w:r[w:rPr/w:rStyle[@w:val='TableFootnoteXref']]/w:t"/>
-            </xsl:attribute>
+	    </xsl:attribute>
             <xsl:apply-templates select="w:r[not(w:rPr/w:rStyle[@w:val='TableFootnoteXref'])]"/>
         </note>
     </xsl:template>
@@ -934,6 +934,28 @@
         </note>
     </xsl:template>
 
+    <xsl:template match="w:p" mode="inTable">
+      <xsl:choose>
+	<xsl:when test="w:pPr/w:pStyle/@w:val=$TableFootnote">
+	  <note place="foot">
+	    <xsl:attribute name="n">
+	      <xsl:value-of select="w:r[w:rPr/w:rStyle[@w:val='TableFootnoteXref']]/w:t"/>
+	    </xsl:attribute>
+	    <xsl:apply-templates select="w:r[not(w:rPr/w:rStyle[@w:val='TableFootnoteXref'])]"/>
+	  </note>
+	</xsl:when>
+	<xsl:when test="w:pPr/w:pStyle/@w:val=$TableNote">
+	  <note place="inline">
+	    <xsl:apply-templates/>
+	  </note>
+	</xsl:when>
+	<xsl:otherwise>
+	  <p>
+	    <xsl:apply-templates/>
+	  </p>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
 
     <!-- ******************************************************************************************* -->
     <!-- second stage processing -->

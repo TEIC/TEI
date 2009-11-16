@@ -378,11 +378,7 @@
 		    </xsl:if>
 		    <xsl:choose>
 		      <xsl:when test="count(w:p)&gt;1">
-			<xsl:for-each select="w:p">
-			  <p xmlns="http://www.tei-c.org/ns/1.0">
-			    <xsl:apply-templates/>
-			  </p>
-			</xsl:for-each>
+			<xsl:apply-templates select="w:p" mode="inTable"/>
 		      </xsl:when>
 		      <xsl:otherwise>
 			<xsl:apply-templates/>
@@ -396,6 +392,11 @@
 
 	</xsl:template>
 
+	<xsl:template match="w:p" mode="inTable">
+	  <p xmlns="http://www.tei-c.org/ns/1.0" rend="{w:pPr/w:pStyle/@w:val}">
+	    <xsl:apply-templates/>
+	  </p>
+	</xsl:template>
 
 	<xd:doc>
 	    <xd:short>getting the basic table structure</xd:short>

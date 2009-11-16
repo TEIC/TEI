@@ -21,35 +21,34 @@
 	</xd:doc>
 	
 	
-	<xsl:variable name="frScope">Domaine d'application</xsl:variable>
 	<xsl:variable name="ANNEX">ANNEX</xsl:variable>
-	<xsl:variable name="a2">a2</xsl:variable>
-	<xsl:variable name="a3">a3</xsl:variable>
-	<xsl:variable name="a4">a4</xsl:variable>
-	<xsl:variable name="a5">a5</xsl:variable>
-	<xsl:variable name="a6">a6</xsl:variable>
 	<xsl:variable name="BibliographyHeading">zzBiblio</xsl:variable>
 	<xsl:variable name="BibliographyItem">Bibliography</xsl:variable>
 	<xsl:variable name="BibliographyReference">BibliographyReference</xsl:variable>
 	<xsl:variable name="DefinitionList">dl</xsl:variable>
 	<xsl:variable name="ExampleHeadingChar">Example Heading Char</xsl:variable>
+	<xsl:variable name="ExtXref">ExtXref</xsl:variable>
 	<xsl:variable name="FigureHeadingChar">Figure Heading Char</xsl:variable>
 	<xsl:variable name="Figuretitle">Figure title</xsl:variable>
 	<xsl:variable name="ForewordHeading">zzForeword</xsl:variable>
 	<xsl:variable name="FormulaReference">FormulaReference</xsl:variable>
 	<xsl:variable name="HeadingChar">Heading Char</xsl:variable>
 	<xsl:variable name="HeadingCharFr">Titre de note Car</xsl:variable>
-	<xsl:variable name="zzIntroductionHeading">zzIntroduction</xsl:variable>
 	<xsl:variable name="IntroductionHeading">Introduction</xsl:variable>
-	<xsl:variable name="TableNote">Table note</xsl:variable>
-	<xsl:variable name="OldTableNote">TableNote</xsl:variable>
-	<xsl:variable name="TableFootnote">Table footnote</xsl:variable>
 	<xsl:variable name="NoteHeadingChar">Note Heading Char</xsl:variable>
+	<xsl:variable name="TableFootnote">Table footnote</xsl:variable>
 	<xsl:variable name="TableHeadingChar">Table Heading Char</xsl:variable>
+	<xsl:variable name="TableNote">Table note</xsl:variable>
 	<xsl:variable name="TableNoteHeadingChar">TableNoteHeading Char</xsl:variable>
 	<xsl:variable name="Tabletitle">Table title</xsl:variable>
 	<xsl:variable name="TermNum">TermNum</xsl:variable>
 	<xsl:variable name="Terms">termPreferred</xsl:variable>
-	<xsl:variable name="ExtXref">ExtXref</xsl:variable>
+	<xsl:variable name="a2">a2</xsl:variable>
+	<xsl:variable name="a3">a3</xsl:variable>
+	<xsl:variable name="a4">a4</xsl:variable>
+	<xsl:variable name="a5">a5</xsl:variable>
+	<xsl:variable name="a6">a6</xsl:variable>
+	<xsl:variable name="frScope">Domaine d'application</xsl:variable>
+	<xsl:variable name="zzIntroductionHeading">zzIntroduction</xsl:variable>
 
 </xsl:stylesheet>

@@ -49,8 +49,6 @@
 	<xsl:variable name="ListNumber4">List Number 4</xsl:variable>
 	<xsl:variable name="ListNumber5">List Number 5</xsl:variable>
 	<xsl:variable name="Note">Note</xsl:variable>
-	<xsl:variable name="TableNote">Table note</xsl:variable>
-	<xsl:variable name="Tabletitle">Table title</xsl:variable>
 	<xsl:variable name="TableText">Tabletext9</xsl:variable>
 
 </xsl:stylesheet>

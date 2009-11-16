@@ -275,7 +275,7 @@
 	<xsl:choose>
 	  <xsl:when test="(@place='foot'  or @place='bottom') and (parent::tei:cell or parent::cals:entry)">
 	    <w:pPr>
-	      <w:pStyle w:val="Table footnote"/>
+	      <w:pStyle w:val="Tablefootnote"/>
 	    </w:pPr>
 	    <w:r>
 	      <w:rPr>
@@ -307,7 +307,7 @@
 		  </xsl:with-param>
 		</xsl:call-template>
 	      </xsl:variable>
-	      <w:pStyle w:val="{$TableNote}"/>
+	      <w:pStyle w:val="Tablenote"/>
 	    </w:pPr>
 	  </xsl:when>
 	  <xsl:otherwise>
@@ -346,7 +346,7 @@
     <xsl:template name="create-inlinenote">           
       <xsl:variable name="pPr">
 	<w:pPr>
-	  <w:pStyle w:val="{$TableNote}"/>
+	  <w:pStyle w:val="Tablenote"/>
 	</w:pPr>
       </xsl:variable>
       
