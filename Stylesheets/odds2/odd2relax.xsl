@@ -230,9 +230,16 @@
       <xsl:when test="ancestor::tei:content[@preserveNames='true']">
 	<ref name="{@name}" xmlns="http://relaxng.org/ns/structure/1.0"/>
       </xsl:when>
+      <xsl:when test="parent::*/count(*)=1">
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>ZAP reference to undefined [<xsl:value-of
+	  select="@name"/>] and leave empty behind</xsl:message>
+	</xsl:if>
+	<empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+      </xsl:when>
       <xsl:otherwise>
 	<xsl:if test="$verbose='true'">
-	  <xsl:message>ZAP reference to undefined <xsl:value-of select="@name"/></xsl:message>
+	  <xsl:message>ZAP reference to undefined [<xsl:value-of select="@name"/>]</xsl:message>
 	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>

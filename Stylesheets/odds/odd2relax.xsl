@@ -198,9 +198,16 @@ xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/stri
       <xsl:when test="key('DEFED',@name)">
 	<rng:ref name="{@name}"/>
       </xsl:when>
+      <xsl:when test="parent::*/count(*)=1">
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>ZAP reference to undefined [<xsl:value-of
+	  select="@name"/>] and leave empty behind</xsl:message>
+	</xsl:if>
+	<empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+      </xsl:when>
       <xsl:otherwise>
 	<xsl:if test="$verbose='true'">
-	  <xsl:message>ZAP reference to undefined <xsl:value-of select="@name"/></xsl:message>
+	  <xsl:message>ZAP reference to undefined [<xsl:value-of select="@name"/>]</xsl:message>
 	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
