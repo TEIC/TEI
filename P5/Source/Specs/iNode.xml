@@ -12,7 +12,7 @@ $Id$
   <gloss version="2007-12-20" xml:lang="kr">중간 (또는 내부) 노드</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw">中間 (或內部) 節點</gloss>
   <gloss version="2008-04-05" xml:lang="ja"/>
-  <gloss version="2007-06-12" xml:lang="fr">noeud intermédiaire (ou interne)</gloss>
+  <gloss version="2007-06-12" xml:lang="fr">nœud intermédiaire (ou interne)</gloss>
   <gloss version="2007-05-04" xml:lang="es">nodo intermedio (o interno)</gloss>
   <gloss version="2007-01-21" xml:lang="it">nodo intermedio (o interno)</gloss>
   <desc>represents an intermediate (or internal) node of a tree.</desc>
@@ -21,8 +21,7 @@ $Id$
   <desc version="2008-04-05" xml:lang="ja">
   木における内部ノードを示す．
   </desc>
-  <desc version="2007-06-12" xml:lang="fr">représente un noeud intermédiaire (ou interne)
-			dans un arbre.</desc>
+  <desc version="2007-06-12" xml:lang="fr">représente un nœud intermédiaire (ou interne) dans un arbre.</desc>
   <desc version="2007-05-04" xml:lang="es">representa un nodo intermedio (o interno) de un árbol.</desc>
   <desc version="2007-01-21" xml:lang="it">rappresenta un nodo intermedio (o interno) di un albero</desc>
   <content>
@@ -40,16 +39,15 @@ structure or other analytic element.</desc>
       <desc version="2008-04-05" xml:lang="ja">
       内部ノードの値を示す．素性構造向け要素または分析向け要素になる．
       </desc>
-      <desc version="2007-06-12" xml:lang="fr">fournit l'identifiant de l'objet
-					représenté par le noeud intermédiaire ; cet objet peut être une paire nom-valeur
-					ou tout autre élément analytique.</desc>
+      <desc version="2007-06-12" xml:lang="fr">fournit l'identifiant de l'objet représenté par le nœud intermédiaire ; cet objet peut être une paire nom-valeur ou tout autre élément analytique.</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona el valor de un nodo intermedio, que puede ser una estructura de rasgos u otro elemento de análisis.</desc>
       <desc version="2007-01-21" xml:lang="it">assegna a un nodo intermedio un valore, che può essere una struttura di tratti o altro elemento di analisi</desc>
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>A valid identifier of a feature structure or other analytic
-element.</valDesc>
+      element.</valDesc>
+      <valDesc xml:lang="fr" version="2009-11-17">Un identifiant valide pour une paire nom-valeur ou un autre élément analytique.</valDesc>
     </attDef>
     <attDef ident="children" usage="req">
       <equiv/>
@@ -61,13 +59,14 @@ the intermediate node.</desc>
       当該内部ノードの子要素の識別子をまとめたリストを示す．
       </desc>
       <desc version="2007-06-12" xml:lang="fr">fournit une liste des identifiants des
-					éléments qui sont les enfants du noeud intermédiaire.</desc>
+        éléments qui sont les enfants du nœud intermédiaire.</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona una lista de identificadores de elementos que son hijos de un nodo intermedio.</desc>
       <desc version="2007-01-21" xml:lang="it">fornisce una lista di identificatori degli elementi figli del nodo intermedio</desc>
       <datatype maxOccurs="unbounded">
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>A list of identifiers.</valDesc>
+      <valDesc version="2009-11-17" xml:lang="fr">une liste d'identifiants.</valDesc>
     </attDef>
     <attDef ident="parent" usage="opt">
       <equiv/>
@@ -78,13 +77,14 @@ the intermediate node.</desc>
       当該ノードの親要素の識別子を示す．
       </desc>
       <desc version="2007-06-12" xml:lang="fr">fournit l'identifiant de l'élément parent
-					de ce noeud.</desc>
+        de ce nœud.</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona el identificador del elemento padre de un nodo dado.</desc>
       <desc version="2007-01-21" xml:lang="it">assegna un identificatore all'elemento genitore del nodo</desc>
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>The identifier of the parent node.</valDesc>
+      <valDesc  version="2009-11-17" xml:lang="fr">L'identifiant du nœud parent.</valDesc>
     </attDef>
     <attDef ident="ord" usage="opt">
       <gloss>ordered</gloss>
@@ -98,8 +98,7 @@ the intermediate node.</desc>
       <desc version="2008-04-05" xml:lang="ja">
       当該内部ノードが順序付きかどうかを示す．
       </desc>
-      <desc version="2007-06-12" xml:lang="fr">indique si le noeud interne est ou non
-					ordonné.</desc>
+      <desc version="2007-06-12" xml:lang="fr">indique si le nœud interne est ou non ordonné.</desc>
       <desc version="2007-05-04" xml:lang="es">indica si el nodo interno está ordenado o no.</desc>
       <desc version="2007-01-21" xml:lang="it">indica se il nodo interno è ordinato o meno</desc>
       <datatype>
@@ -115,11 +114,9 @@ the intermediate node.</desc>
 <?tei winita Schematron rule?>
       </remarks>
       <remarks xml:lang="fr">
-        <p>La valeur <val>true</val> indique que les enfants du noeud intermédiaire sont
-                        ordonnés, alors que <val>false</val> indique qu'ils ne le sont pas.</p>
-        <p>Utiliser si et seulement si l'attribut <att>ord</att> est spécifié avec la
-                        valeur <val>partial</val> dans l'élément <gi>tree</gi> et que le noeud
-                        intermédiaire a plus d'un enfant.</p>
+        <p>La valeur <val>true</val> indique que les enfants du nœud intermédiaire sont
+ordonnés, alors que la valeur <val>false</val> indique qu'ils ne le sont pas.</p>
+        <p>Utiliser si, et seulement si, l'attribut <att>ord</att> de l'élément <gi>tree</gi>a la valeur <val>partial</val> et que le nœud intermédiaire a plus d'un enfant.</p>
       </remarks>
       <remarks xml:lang="ja">
         <p>
@@ -142,14 +139,14 @@ follows.</desc>
       <desc version="2008-04-05" xml:lang="ja">
       当該ノードの姉要素の識別子を示す．
       </desc>
-      <desc version="2007-06-12" xml:lang="fr">fournit un identifiant de l'élément que
-					ce noeud suit.</desc>
+      <desc version="2007-06-12" xml:lang="fr">fournit l'identifiant de l'élément que ce nœud suit.</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona un identificador al elemento que precede al nodo.</desc>
       <desc version="2007-01-21" xml:lang="it">assegna un identificatore all'elemento che precede il nodo</desc>
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>The identifier of another intermediate node or leaf of the tree.</valDesc>
+      <valDesc version="2009-11-17" xml:lang="fr">L'identifiant d'un autre nœud ou feuille intermédiaire de l'arbre.</valDesc>
       <remarks>
         <p>If the tree is unordered or partially ordered, this attribute
 has the property of fixing the relative order of the intermediate node
@@ -157,7 +154,7 @@ and the element which is the value of the attribute.</p>
       </remarks>
       <remarks xml:lang="fr">
         <p>Si l'arbre n'est pas ordonné ou l'est partiellement, cet attribut a la
-                        propriété de fixer l'ordre relatif du noeud intermédiaire et de l'élément
+                        propriété de fixer l'ordre relatif du nœud intermédiaire et de l'élément
                         indiqué comme valeur de l'attribut.</p>
       </remarks>
       <remarks xml:lang="ja">
@@ -177,19 +174,19 @@ children.</desc>
       <desc version="2008-04-05" xml:lang="ja">
       内部ノードの出の次数(子要素の数)を示す．
       </desc>
-      <desc version="2007-06-12" xml:lang="fr">donne le degré sortant d'un noeud
-					intermédiaire, c'est-à-dire le nombre de ses enfants.</desc>
+      <desc version="2007-06-12" xml:lang="fr">donne le degré sortant d'un nœud intermédiaire, c'est-à-dire le nombre de ses enfants.</desc>
       <desc version="2007-05-04" xml:lang="es">indica el grado de salida del nodo intermedio, es decir, el número de sus hijos.</desc>
       <desc version="2007-01-21" xml:lang="it">indica il grado in uscita di un nodo intermedio, cioè il numero dei suoi figli</desc>
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
       <valDesc>A nonnegative integer.</valDesc>
+      <valDesc version="2009-11-17" xml:lang="fr">Un entier non négatif.</valDesc>
       <remarks>
         <p>The in degree of an intermediate node is always 1.</p>
       </remarks>
       <remarks xml:lang="fr">
-        <p>Le degré entrant d'un noeud intermédiaire est toujours 1. </p>
+        <p>Le degré entrant d'un nœud intermédiaire est toujours 1. </p>
       </remarks>
       <remarks xml:lang="ja">
         <p>
