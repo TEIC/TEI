@@ -138,7 +138,7 @@
                     <xsl:attribute name="fmtid">
                         <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
                     </xsl:attribute>
-                    <vt:lpwstr>2.6.0</vt:lpwstr>
+                    <vt:lpwstr>2.7.0</vt:lpwstr>
                 </property>
                 <xsl:for-each
                     select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:encodingDesc/tei:appInfo/tei:application">
