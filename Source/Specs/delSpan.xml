@@ -27,7 +27,7 @@ author, scribe, annotator, or corrector.</desc>
   余分なものまたは間違いとして示されている，長めのテキスト部分の始点を
   示す．
   </desc>
-  <desc version="2007-06-12" xml:lang="fr">marque le début d'une partie de texte supprimée, signalée comme supprimée, ou bien signalée comme superflue ou fausse par un auteur, un copiste, un annotateur ou un correcteur.</desc>
+  <desc version="2009-11-16" xml:lang="fr">marque le début d'une longue partie de texte supprimée, signalée comme supprimée ou bien signalée comme superflue ou fausse par un auteur, un copiste, un annotateur ou un correcteur.</desc>
   <desc version="2007-05-04" xml:lang="es">señala el inicio de un fragmento largo de texto omitido, o marcado como cancelado o como supérfluo o espurio, por un autor, un transcriptor, un comentarista o un corrector.</desc>
   <desc version="2007-01-21" xml:lang="it">segnala l'inizio di una porzione di testo più lunga cancellata, indicata come cancellata, o indicata come superflua o spuria da un autore, un trascrittore, un annotatore o un correttore</desc>
   <classes>
@@ -46,7 +46,12 @@ author, scribe, annotator, or corrector.</desc>
       is required.</sch:assert>
       </constraint>
     </constraintSpec> 
-
+    <!-- FC j'ai traduit ici la contrainte schematron -->
+    <constraintSpec ident="spanTo" scheme="isoschematron" xml:lang="fr">
+        <constraint>
+            <sch:assert test="@spanTo">L'attribut spanTo est requis.</sch:assert>
+        </constraint>
+    </constraintSpec> 
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <p>Paragraph partially deleted.  This is the undeleted
@@ -87,22 +92,14 @@ the resumption <anchor xml:id="a23"/> of the text. ...</p>
     by editors or encoders. In these cases, either the <gi>corr</gi>
     tag or the <gi>gap</gi> tag should be used.</p>
   </remarks>
-  <remarks xml:lang="fr">
-    <p>Le début comme la fin du passage supprimé doivent être balisés : le commencement par
+  <remarks xml:lang="fr" version="2009-11-16">
+    <p>Le début et la fin de la partie de texte supprimée doivent être marqués : le début, par
                 l'élément <gi>delSpan</gi>, la fin par la cible de l'attribut <att>spanTo</att>.</p>
     <p>Le texte supprimé doit être au moins partiellement lisible, afin que l'encodeur soit
                 capable de le transcrire. S'il n'est pas lisible du tout, la balise<gi>delSpan</gi>
-                ne devrait pas être utilisée. Pour signaler qu'un texte ne peut être transcrit, il
-                vaut mieux utiliser la balise <gi>gap</gi> avec un attribut <att>reason</att> dont
-                la valeur indique la raison pour laquelle l'omission de la transcription est
-                interprétée comme un effacement. S'il n'est pas entièrement lisible, l'élément
-                    <gi>unclear</gi> devrait être utilisé pour signaler les parties du texte qui ne
-                peuvent pas être lues avec certitude. Voir plus loin les sections à propos de la
-                proximité entre la balise <gi>delSpan</gi> et les éléments <gi>gap</gi>,
-                <gi>damage</gi>, <gi>unclear</gi> et <gi>supplied</gi>, .</p>
-    <p>La balise <gi>delSpan</gi> ne devrait pas être utilisée pour des effacements faits
-                par des éditeurs scientifiques ou des encodeurs. Dans ces cas, on emploierait soit
-                la balise <gi>corr</gi>, soit la balise <gi>gap</gi>.</p>
+                ne doit pas être utilisée. Pour signaler qu'un texte ne peut être transcrit, il
+                vaut mieux utiliser la balise <gi>gap</gi> avec un attribut <att>reason</att> dont la valeur indique la raison pour laquelle la transcription du texte supprimé est impossible. S'il n'est pas entièrement lisible, l'élément <gi>unclear</gi> doit être utilisé pour signaler les parties du texte qui ne peuvent pas être lues avec certitude. Voir plus loin les sections <ptr target="#PHOM"/> et, à propos de l'association étroite qui existe entre  <gi>delSpan</gi> et les éléments <gi>gap</gi>, <gi>damage</gi>, <gi>unclear</gi> et <gi>supplied</gi>, la section <ptr target="#PHCOMB"/>.</p>
+    <p>La balise <gi>delSpan</gi> ne doit pas être utilisée pour des suppressions opérées par des éditeurs scientifiques ou des encodeurs. Dans ces cas, on emploiera soit la balise <gi>corr</gi>, soit la balise <gi>gap</gi>.</p>
   </remarks>
   <remarks xml:lang="ja">
     <p>
