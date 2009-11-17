@@ -22,8 +22,8 @@ $Id$
   <desc version="2008-04-05" xml:lang="ja">
   読める程度の損傷がある，一連のテキストの始点を示す．
   </desc>
-  <desc version="2008-03-30" xml:lang="fr">marque le début d'une séquence de texte plus longue,
-endommagée de quelque manière mais toujours lisible</desc>
+  <desc version="2009-11-16" xml:lang="fr">marque le début d'une longue partie de texte,
+endommagée d'une manière quelconque mais toujours lisible.</desc>
   <desc version="2007-11-06" xml:lang="it">segnala l'inizio di una sequenza più estesa di testo danneggiata ma ancora leggibile</desc>
   <classes>
     <memberOf key="model.global.edit"/>
@@ -41,7 +41,12 @@ endommagée de quelque manière mais toujours lisible</desc>
 	<sch:name/> is required.</sch:assert>
       </constraint>
     </constraintSpec> 
-
+    <!-- FC j'ai traduit ici la contrainte schematron -->
+    <constraintSpec ident="spanTo" scheme="isoschematron" xml:lang="fr">
+        <constraint>
+            <sch:assert test="@spanTo">L'attribut spanTo est requis.</sch:assert>
+        </constraint>    
+    </constraintSpec> 
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <p>Paragraph partially damaged.  This is the undamaged
@@ -73,16 +78,14 @@ the start of the  <anchor xml:id="a34"/> undamaged part of the text. ...</p>
     giving the cause. See further sections <ptr target="#PHDA"/> and
  <ptr target="#PHCOMB"/>.</p>
   </remarks>
-  <remarks xml:lang="fr">
-    <p>Le début et la fin de la séquence endommagée seront encodés : le début par l'élément
-                    <gi>damageSpan</gi>, la fin au moyen de la cible de l'attribut <att>spanTo</att> :
-                si aucun autre élément n'est disponible, l'élément <gi>anchor</gi> est utilisé à
-                cette fin.</p>
+  <remarks xml:lang="fr" version="2009-11-16">
+    <p>Le début et la fin de la partie de texte endommagée doivent être marqués : le début, par l'élément <gi>damageSpan</gi>, la fin au moyen de la cible de l'attribut <att>spanTo</att> :
+                si aucun autre élément n'est disponible, l'élément <gi>anchor</gi> est utilisé à cette fin.</p>
     <p>Le texte endommagé doit être au moins partiellement lisible, afin que l'encodeur soit
                 capable de le transcrire. S'il n'est pas lisible du tout, l'élément
                 <gi>damageSpan</gi> ne devrait pas être utilisé. L'élément <gi>gap</gi> ou
                     <gi>unclear</gi> devrait être plutôt employé, avec un attribut <att>reason</att>
-                dont la valeur donnerait la cause. Voir les autres sections et.</p>
+        dont la valeur donnerait la cause de cette lecture impossible. Voir les autres sections <ptr target="#PHDA"/> et <ptr target="#PHCOMB"/>.</p>
   </remarks>
   <remarks xml:lang="ja">
     <p>
