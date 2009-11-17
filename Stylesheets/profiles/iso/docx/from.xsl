@@ -109,35 +109,35 @@
         <teiHeader xmlns:iso="http://www.iso.org/ns/1.0">
             <fileDesc>
                 <titleStmt>
-                    <title iso:meta="introductory_title" xml:lang="en">
+                    <title iso:meta="introductoryTitle" xml:lang="en">
                         <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">introductory_title</xsl:with-param>
+                            <xsl:with-param name="tag">introductoryTitle</xsl:with-param>
                         </xsl:call-template>
                     </title>
-                    <title iso:meta="main_title" xml:lang="en">
+                    <title iso:meta="mainTitle" xml:lang="en">
                         <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">main_title</xsl:with-param>
+                            <xsl:with-param name="tag">mainTitle</xsl:with-param>
                         </xsl:call-template>
                     </title>
-                    <title iso:meta="complementary_title" xml:lang="en">
+                    <title iso:meta="complementaryTitle" xml:lang="en">
                         <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">complementary_title</xsl:with-param>
+                            <xsl:with-param name="tag">complementaryTitle</xsl:with-param>
                         </xsl:call-template>
                     </title>
 
-                    <title iso:meta="introductory_title_fr" xml:lang="fr">
+                    <title iso:meta="introductoryTitle_fr" xml:lang="fr">
                         <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">introductory_title_fr</xsl:with-param>
+                            <xsl:with-param name="tag">introductoryTitle_fr</xsl:with-param>
                         </xsl:call-template>
                     </title>
-                    <title iso:meta="main_title_fr" xml:lang="fr">
+                    <title iso:meta="mainTitle_fr" xml:lang="fr">
                         <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">main_title_fr</xsl:with-param>
+                            <xsl:with-param name="tag">mainTitle_fr</xsl:with-param>
                         </xsl:call-template>
                     </title>
-                    <title iso:meta="complementary_title_fr" xml:lang="fr">
+                    <title iso:meta="complementaryTitle_fr" xml:lang="fr">
                         <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">complementary_title_fr</xsl:with-param>
+                            <xsl:with-param name="tag">complementaryTitle_fr</xsl:with-param>
                         </xsl:call-template>
                     </title>
 
@@ -146,11 +146,11 @@
                         <name>
                             <xsl:text>TC </xsl:text>
                             <xsl:call-template name="getSdt">
-                                <xsl:with-param name="tag">tcnum</xsl:with-param>
+                                <xsl:with-param name="tag">tcNumber</xsl:with-param>
                             </xsl:call-template>
                             <xsl:text> /SC </xsl:text>
                             <xsl:call-template name="getSdt">
-                                <xsl:with-param name="tag">scnum</xsl:with-param>
+                                <xsl:with-param name="tag">scNumber</xsl:with-param>
                             </xsl:call-template>
                         </name>
                     </respStmt>
@@ -161,9 +161,9 @@
                     </edition>
                 </editionStmt>
                 <publicationStmt>
-                    <date iso:meta="docdate">
+                    <date iso:meta="docDate">
                         <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">docdate</xsl:with-param>
+                            <xsl:with-param name="tag">docDate</xsl:with-param>
                         </xsl:call-template>
                     </date>
                     <publisher iso:meta="organization">
@@ -179,13 +179,13 @@
                         <xsl:variable name="thisSdt" select="current-grouping-key()"/>
                         <xsl:choose>
                             <xsl:when test="$thisSdt='committee'"/>
-                            <xsl:when test="$thisSdt='complementary_title'"/>
-                            <xsl:when test="$thisSdt='complementary_title_fr'"/>
-                            <xsl:when test="$thisSdt='introductory_title'"/>
-                            <xsl:when test="$thisSdt='introductory_title_fr'"/>
-                            <xsl:when test="$thisSdt='main_title'"/>
-                            <xsl:when test="$thisSdt='main_title_fr'"/>
-                            <xsl:when test="$thisSdt='docdate'"/>
+                            <xsl:when test="$thisSdt='complementaryTitle'"/>
+                            <xsl:when test="$thisSdt='complementaryTitle_fr'"/>
+                            <xsl:when test="$thisSdt='introductoryTitle'"/>
+                            <xsl:when test="$thisSdt='introductoryTitle_fr'"/>
+                            <xsl:when test="$thisSdt='mainTitle'"/>
+                            <xsl:when test="$thisSdt='mainTitle_fr'"/>
+                            <xsl:when test="$thisSdt='docDate'"/>
                             <xsl:when test="$thisSdt='organization'"/>
                             <xsl:when test="$thisSdt='secretariat'"/>
                             <xsl:when test="starts-with($thisSdt, 'fw_')"/>
@@ -218,7 +218,7 @@
                         <availability>
                             <xsl:apply-templates
                                 select="w:body/w:p[w:pPr/w:pStyle/@w:val='cover_warning'
-				    or w:pPr/w:pStyle/@w:val='coverWarning']"
+            or w:pPr/w:pStyle/@w:val='coverWarning']"
                                 mode="teiHeader"/>
                         </availability>
                     </xsl:if>
@@ -234,15 +234,15 @@
                     <classCode>
                         <xsl:attribute name="scheme">#TYPE</xsl:attribute>
                         <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">documenttype</xsl:with-param>
-                            <xsl:with-param name="oldtag">doctype</xsl:with-param>
+                            <xsl:with-param name="tag">docType</xsl:with-param>
+                            <xsl:with-param name="oldtag">docType</xsl:with-param>
                         </xsl:call-template>
                     </classCode>
                     <classCode>
                         <xsl:attribute name="scheme">#SUPPLTYPE</xsl:attribute>
                         <xsl:call-template name="getSdt">
-                            <xsl:with-param name="tag">documentsubtype</xsl:with-param>
-                            <xsl:with-param name="oldtag">docsubtype</xsl:with-param>
+                            <xsl:with-param name="tag">docSubtype</xsl:with-param>
+                            <xsl:with-param name="oldtag">docSubtype</xsl:with-param>
                         </xsl:call-template>
                     </classCode>
                 </textClass>

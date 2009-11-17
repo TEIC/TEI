@@ -58,7 +58,7 @@
 
 	<xsl:param name="header-doc" as="item()+" required="yes"></xsl:param>
 	<xsl:param name="document-doc"></xsl:param>
-	<xsl:param name="debug">false</xsl:param>
+	<xsl:param name="debug">true</xsl:param>
 
 	<!-- identity transform -->
 
@@ -72,20 +72,30 @@
 		</xsl:copy>
 	</xsl:template>
 
-	<xsl:template match="w:sdtContent">
-		<xsl:variable name="alias" select="../w:sdtPr/w:tag/@w:val" />
-		<xsl:copy>
-			<xsl:apply-templates select="@*" />
-			<w:r>
-				<xsl:copy-of select="@w:rsidR" />
-				<xsl:apply-templates select="w:r/w:rPr" />
-				<w:t>
-					<xsl:attribute name="xml:space">preserve</xsl:attribute>
-					<xsl:for-each select="$header-doc/*">
-						<xsl:value-of select="key('ISOMETA',$alias)" />
-					</xsl:for-each>
-				</w:t>
-			</w:r>
+  <xsl:template match="w:placeholder|w:showingPlcHdr">
+    <!-- remove placeholder references -->
+  </xsl:template>
+  
+	<xsl:template match="w:sdtContent//w:t">
+		<xsl:variable name="alias" select="ancestor::w:sdt/w:sdtPr/w:tag/@w:val" />
+	  <xsl:copy>
+	    <xsl:apply-templates select="@*"/>
+	    <xsl:variable name="content">
+	      <xsl:for-each select="$header-doc/*">
+	        <xsl:value-of select="key('ISOMETA',$alias)" />
+	      </xsl:for-each>
+	    </xsl:variable>
+	    <xsl:if test="$debug='true'">
+	      <xsl:message select="concat('set sdtContent ',$alias,'=', $content)"/>
+	    </xsl:if> 
+	    <xsl:choose>
+	    <xsl:when test="ancestor::w:sdt/w:sdtPr/w:dropDownList">
+	       <xsl:value-of select="ancestor::w:sdt/w:sdtPr/w:dropDownList//w:listItem[@w:value=$content]/@w:displayText"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	       <xsl:value-of select="$content"/>
+	    </xsl:otherwise>
+			</xsl:choose>
 		</xsl:copy>
 	</xsl:template>
 
@@ -113,6 +123,11 @@
 		        </xsl:if>
 		        <xsl:copy-of select="$document-doc/w:document/w:body/back/*" />
 		      </xsl:when>
+          <xsl:when test="name(.) = 'w:p' and .//w:t/text() = '#remove'">
+            <xsl:if test="$debug = 'true'">
+              <xsl:message>remove empty placeholder paragraph</xsl:message>
+            </xsl:if>
+          </xsl:when>
 		      <xsl:otherwise>
 		        <xsl:apply-templates select="."/>
 		      </xsl:otherwise>

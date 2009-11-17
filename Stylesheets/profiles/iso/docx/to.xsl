@@ -478,7 +478,7 @@
         <xsl:param name="id_start" as="xs:integer"/>
         <xsl:for-each select="tei:title">
             <xsl:if test="@xml:lang=$language">
-                <xsl:variable name="title_type"><xsl:value-of select="@type"/>_title</xsl:variable>
+                <xsl:variable name="title_type"><xsl:value-of select="@type"/>Title</xsl:variable>
                 <xsl:variable name="id">
                     <xsl:value-of select="position()+$id_start"/>
                 </xsl:variable>
@@ -825,7 +825,7 @@
                     <xsl:attribute name="fmtid">
                         <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
                     </xsl:attribute>
-                    <vt:lpwstr>2.7.0</vt:lpwstr>
+                    <vt:lpwstr>2.8.0</vt:lpwstr>
                 </property>
                 <property pid="1001" name="WordTemplateURI">
                     <xsl:attribute name="fmtid">

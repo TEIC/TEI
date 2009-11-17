@@ -86,11 +86,11 @@
   </xsl:template>
 
 	<xsl:template match="tei:appInfo">
-		<xsl:variable name="ident" select="./tei:application/@ident" />		
+		<xsl:variable name="ident" select="tei:application/@ident" />		
 		<xsl:choose>
 			<xsl:when test="$header-doc//tei:appInfo[tei:application/@ident=$ident]">
 			   <xsl:if test="$debug = 'true'">
-		      <xsl:message select="concat('replace appInfo with ident: ',$ident)"/>
+		      <xsl:message select="concat('replace appInfo with ident: ',$ident[1])"/>
 		     </xsl:if>
 			</xsl:when>
 			<xsl:otherwise>
@@ -99,16 +99,34 @@
 		</xsl:choose>
 	</xsl:template>
 	
-	<xsl:template match="tei:front">
-	<xsl:choose>
-		<xsl:when test="$header-doc//tei:front">
-			<xsl:copy-of select="$header-doc//tei:front" />
-		</xsl:when>
-		<xsl:otherwise>
-			<xsl:copy-of select="." />
-		</xsl:otherwise>
-	</xsl:choose>
-</xsl:template>
+	<xsl:template match="tei:front/tei:div[@type='foreword']">
+		<xsl:variable name="currFront" select="."></xsl:variable>
+		<xsl:choose>
+			<xsl:when test="$header-doc//tei:front">
+			  <xsl:for-each select="$header-doc//tei:front/tei:div[@type='foreword']/*">
+			    <xsl:choose>
+			      <xsl:when test="name()='q'">
+			        <xsl:variable name="sdtName" select="@iso:meta"/>
+			        <xsl:message select="concat('found sdt element ', $sdtName)"/>
+			        <xsl:if test="$currFront//*[@iso:meta=$sdtName]">
+			          <xsl:variable name="existingSdt" select="$currFront//*[@iso:meta=$sdtName]"/>
+			          <xsl:message select="concat('reuse existing sdt section ', $sdtName)"/>
+			          <xsl:copy-of select="$existingSdt"/>
+			          <xsl:message select="$existingSdt"/>
+			        </xsl:if>
+			      </xsl:when>
+			      <xsl:otherwise>
+              <xsl:message select="concat('use from new front ', .)"/>
+			        <xsl:copy-of select="."/>
+			      </xsl:otherwise>
+			    </xsl:choose>
+			  </xsl:for-each>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:copy-of select="." />
+			</xsl:otherwise>
+		</xsl:choose>
+  </xsl:template>
 	
 
 </xsl:stylesheet>

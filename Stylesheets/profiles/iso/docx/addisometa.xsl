@@ -45,19 +45,19 @@
 
 <xsl:template match="tei:titleStmt/tei:title[@type='introductory']">
   <xsl:call-template name="meta">
-    <xsl:with-param name="tag">introductory_title</xsl:with-param>
+    <xsl:with-param name="tag">introductoryTitle</xsl:with-param>
   </xsl:call-template>
 </xsl:template>
 
 <xsl:template match="tei:titleStmt/tei:title[@type='main']">
   <xsl:call-template name="meta">
-    <xsl:with-param name="tag">main_title</xsl:with-param>
+    <xsl:with-param name="tag">mainTitle</xsl:with-param>
   </xsl:call-template>
 </xsl:template>
 
 <xsl:template match="tei:publicationStmt/tei:date">
   <xsl:call-template name="meta">
-    <xsl:with-param name="tag">docdate</xsl:with-param>
+    <xsl:with-param name="tag">docDate</xsl:with-param>
   </xsl:call-template>
 </xsl:template>
 
@@ -73,21 +73,21 @@
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template match="tei:publicationStmt/tei:idno[@type='partNumber']">
+<xsl:template match="tei:publicationStmt/tei:idno[@type='docPartNumber']">
   <xsl:call-template name="meta">
-    <xsl:with-param name="tag">partNumber</xsl:with-param>
+    <xsl:with-param name="tag">docPartNumber</xsl:with-param>
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template match="tei:publicationStmt/tei:idno[@type='documentNumber']">
+<xsl:template match="tei:publicationStmt/tei:idno[@type='docNumber']">
   <xsl:call-template name="meta">
-    <xsl:with-param name="tag">referenceNumber</xsl:with-param>
+    <xsl:with-param name="tag">docNumber</xsl:with-param>
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template match="tei:publicationStmt/tei:idno[@type='scnum']">
+<xsl:template match="tei:publicationStmt/tei:idno[@type='scNumber']">
   <xsl:call-template name="meta">
-    <xsl:with-param name="tag">scnum</xsl:with-param>
+    <xsl:with-param name="tag">scNumber</xsl:with-param>
   </xsl:call-template>
 </xsl:template>
 
@@ -97,9 +97,9 @@
   </xsl:call-template>
 </xsl:template>
 
-<xsl:template match="tei:publicationStmt/tei:idno[@type='tcnum']">
+<xsl:template match="tei:publicationStmt/tei:idno[@type='tcNumber']">
   <xsl:call-template name="meta">
-    <xsl:with-param name="tag">tcnum</xsl:with-param>
+    <xsl:with-param name="tag">tcNumber</xsl:with-param>
   </xsl:call-template>
 </xsl:template>
 
