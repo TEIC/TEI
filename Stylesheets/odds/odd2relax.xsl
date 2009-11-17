@@ -198,7 +198,7 @@ xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/stri
       <xsl:when test="key('DEFED',@name)">
 	<rng:ref name="{@name}"/>
       </xsl:when>
-      <xsl:when test="parent::*/count(*)=1">
+      <xsl:when test="count(parent::*/*)=1">
 	<xsl:if test="$verbose='true'">
 	  <xsl:message>ZAP reference to undefined [<xsl:value-of
 	  select="@name"/>] and leave empty behind</xsl:message>
