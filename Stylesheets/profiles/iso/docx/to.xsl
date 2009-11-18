@@ -875,7 +875,10 @@
         </w:rPr>
         <w:alias w:val="{@iso:meta}"/>
         <w:tag w:val="{@iso:meta}"/>
-        <w:id w:val="1586665067"/>
+	<xsl:variable name="stdId">
+	  <xsl:number level="any"/>
+	</xsl:variable>
+	<w:id w:val="158666506{$stdId}"/>
       </w:sdtPr>
       <w:sdtContent>
 	<xsl:apply-templates/>
