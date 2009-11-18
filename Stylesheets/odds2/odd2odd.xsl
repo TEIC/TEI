@@ -907,9 +907,11 @@ for change individually.
       </xsl:for-each>
     </xsl:copy>
   </xsl:template>
+
   <xsl:template match="rng:choice|rng:list|rng:group|rng:optional|rng:oneOrMore|rng:zeroOrMore" mode="copy">
     <xsl:call-template name="simplifyRelax"/>
   </xsl:template>
+
   <xsl:template name="simplifyRelax">
     <xsl:variable name="element">
       <xsl:value-of select="local-name(.)"/>
