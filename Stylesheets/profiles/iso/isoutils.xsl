@@ -109,12 +109,12 @@
   
   -->
   <xsl:template name="generateTitle">
-    <xsl:value-of select="key('ISOMETA','introductory_title')"/>
+    <xsl:value-of select="key('ISOMETA','introductoryTitle')"/>
     <xsl:text> &#x2014; </xsl:text>
-    <xsl:value-of select="key('ISOMETA','main_title')"/>
-    <xsl:if test="key('ISOMETA','complementary_title')">
+    <xsl:value-of select="key('ISOMETA','mainTitle')"/>
+    <xsl:if test="key('ISOMETA','complementaryTitle')">
       <xsl:text> &#x2014; </xsl:text>
-      <xsl:value-of select="key('ISOMETA','complementary_title')"/>
+      <xsl:value-of select="key('ISOMETA','complementaryTitle')"/>
     </xsl:if>
   </xsl:template>
 
@@ -152,7 +152,7 @@
 <xsl:template name="getiso_header">
   <xsl:value-of select="key('ISOMETA','secretariat')"/>
   <xsl:variable name="stage">
-    <xsl:value-of select="key('ISOMETA','docstage')"/>
+    <xsl:value-of select="key('ISOMETA','docStage')"/>
   </xsl:variable>
   <xsl:choose>
     <xsl:when test="$stage='40'">/DIS </xsl:when>
@@ -165,12 +165,12 @@
     <xsl:value-of select="ancestor-or-self::tei:TEI/@xml:lang"/>
   </xsl:variable>
   <xsl:variable name="stage">
-    <xsl:value-of select="key('ISOMETA','docstage')"/>
+    <xsl:value-of select="key('ISOMETA','docStage')"/>
   </xsl:variable>
   
-  <xsl:value-of select="key('ISOMETA','documentNumber')"/>
+  <xsl:value-of select="key('ISOMETA','docNumber')"/>
   <xsl:text>-</xsl:text>
-  <xsl:value-of select="key('ISOMETA','partNumber')"/>
+  <xsl:value-of select="key('ISOMETA','docPartNumber')"/>
   
   <xsl:choose>
     <xsl:when test="$stage='20'"></xsl:when>

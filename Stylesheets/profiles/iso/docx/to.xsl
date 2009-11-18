@@ -876,10 +876,6 @@
         <w:alias w:val="{@iso:meta}"/>
         <w:tag w:val="{@iso:meta}"/>
         <w:id w:val="1586665067"/>
-        <w:lock w:val="sdtLocked"/>
-        <w:placeholder>
-          <w:docPart w:val="72E04D43EE084EC9AAF92D2A303216E5"/>
-        </w:placeholder>
       </w:sdtPr>
       <w:sdtContent>
 	<xsl:apply-templates/>
