@@ -724,8 +724,7 @@
 	  <xsl:when test="not(self::w:p[w:pPr/w:pStyle/@w:val='TermNum'
 				 or
 				 w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]])">
-	    <xsl:message>ERROR: terminology entry does not have a
-	    number style, but starts with with  <xsl:value-of select="w:pPr/w:pStyle/@w:val"/></xsl:message>
+	    <xsl:message>ERROR: terminology entry does not have a number style, but starts with with  <xsl:value-of select="w:pPr/w:pStyle/@w:val"/></xsl:message>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:variable name="Style">
@@ -763,6 +762,10 @@
 	      <langSet>
 		  <xsl:attribute name="xml:lang">
 		    <xsl:choose>
+		      <xsl:when
+			  test="current-group()[w:r/w:rPr/w:lang]">
+			<xsl:value-of select="current-group()[w:r/w:rPr/w:lang][1]/w:r/w:rPr/w:lang/@w:val"/>
+		      </xsl:when>
 		      <xsl:when test="w:pPr/w:rPr/w:lang">
 			<xsl:value-of select="w:pPr/w:rPr/w:lang/@w:val"/>
 		      </xsl:when>
@@ -834,6 +837,23 @@
 	</xsl:for-each-group>
     </xsl:template>
 
+    <xsl:template name="cellContents">
+      <xsl:choose>
+	<xsl:when test="w:p/w:pPr/w:pStyle[@w:val='TermNum']">
+	  <xsl:for-each-group select="w:p" group-by="1">
+	    <xsl:call-template name="termsAndDefinitionsSection"/>
+	  </xsl:for-each-group>
+	</xsl:when>
+	<xsl:when test="w:p/w:pPr/w:pStyle[starts-with(@w:val,'AutoTermNum')]">
+	  <xsl:for-each-group select="w:p" group-by="1">
+	    <xsl:call-template name="termsAndDefinitionsSection"/>
+	  </xsl:for-each-group>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates select="w:p" mode="inTable"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
     <!-- 
         Definition Lists
     -->
@@ -1253,10 +1273,47 @@
   </xsl:for-each>
 </xsl:template>
 
+<xsl:template match="tbx:termEntry" mode="part2">
+  <xsl:variable name="ID" select="@id"/>
+  <xsl:choose>
+    <xsl:when test="$ID=preceding-sibling::tbx:termEntry/@id"/>
+    <xsl:when test="not(following-sibling::tbx:termEntry[@id=$ID])">
+      <xsl:copy>
+	<xsl:copy-of select="@*"/>
+	<xsl:apply-templates mode="part2"/>
+      </xsl:copy>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:copy>
+	<xsl:copy-of select="@*"/>
+	<xsl:apply-templates mode="part2" select="tbx:note"/>
+	<xsl:for-each
+	    select="tbx:langSet">
+	  <xsl:copy>
+	    <xsl:copy-of select="@*"/>
+	    <xsl:apply-templates mode="part2" select="../tbx:descripGrp"/>
+	    <xsl:apply-templates mode="part2"/>
+	  </xsl:copy>
+	</xsl:for-each>
+	
+	<xsl:for-each
+	    select="following-sibling::tbx:termEntry[@id=$ID]/tbx:langSet">
+	  <xsl:copy>
+	    <xsl:copy-of select="@*"/>
+	    <xsl:apply-templates mode="part2" select="tbx:note"/>
+	    <xsl:apply-templates mode="part2" select="../tbx:descripGrp"/>
+	    <xsl:apply-templates mode="part2"/>
+	  </xsl:copy>
+	</xsl:for-each>
+      </xsl:copy>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
 <xsl:template match="tbx:descrip" mode="part2">
   <xsl:copy>
     <xsl:copy-of select="@*"/>
-    <xsl:apply-templates/>
+    <xsl:apply-templates mode="part2"/>
     <xsl:for-each
 	select="ancestor::tbx:termEntry/following-sibling::*[1][self::tei:list]">
       <xsl:copy>

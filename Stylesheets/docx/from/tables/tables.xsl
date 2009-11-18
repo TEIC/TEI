@@ -378,7 +378,7 @@
 		    </xsl:if>
 		    <xsl:choose>
 		      <xsl:when test="count(w:p)&gt;1">
-			<xsl:apply-templates select="w:p" mode="inTable"/>
+			<xsl:call-template name="cellContents"/>
 		      </xsl:when>
 		      <xsl:otherwise>
 			<xsl:apply-templates/>
@@ -390,6 +390,10 @@
 	    </xsl:for-each>
 	  </row>
 
+	</xsl:template>
+
+	<xsl:template name="cellContents">
+	  <xsl:apply-templates select="w:p" mode="inTable"/>
 	</xsl:template>
 
 	<xsl:template match="w:p" mode="inTable">
