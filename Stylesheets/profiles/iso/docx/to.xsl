@@ -564,7 +564,7 @@
                                 <w:r>
                                     <w:t>
                                         <xsl:value-of
-                                            select="//tei:publicationStmt/tei:idno[@type='partNumber']"
+                                            select="//tei:publicationStmt/tei:idno[@iso:meta='partNumber']"
                                         />
                                     </w:t>
                                 </w:r>

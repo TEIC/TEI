@@ -174,6 +174,7 @@
                             <xsl:with-param name="tag">secretariat</xsl:with-param>
                         </xsl:call-template>
                     </authority>
+		    <!--
                     <xsl:for-each-group select="key('AllSdt',1)" group-by=".">
                         <xsl:sort select="."/>
                         <xsl:variable name="thisSdt" select="current-grouping-key()"/>
@@ -204,6 +205,7 @@
                     <idno iso:meta="stage">
                         <xsl:value-of select="$customProps//*[@name='DocIdentStage']/vt:lpwstr"/>
                     </idno>
+		    -->
                     <xsl:if test="w:body/w:p[w:pPr/w:pStyle/@w:val='zzCopyright']">
                         <availability>
                             <xsl:apply-templates
@@ -480,12 +482,9 @@
 
     <!-- override handling of runs -->
     <xsl:template match="w:r/w:tab">
-      <xsl:text>&#009;</xsl:text>
-      <!--
       <c rend="tab">
             <xsl:text>&#009;</xsl:text>
         </c>
-	-->
     </xsl:template>
 
     <xsl:template name="ins-or-del">
