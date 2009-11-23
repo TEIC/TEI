@@ -25,10 +25,10 @@
   <xsl:key name="MEMBEROFDELETE" match="tei:memberOf[@mode='delete']" use="concat(../../@ident,@key)"/>
   <xsl:key name="MEMBEROFADD" match="tei:memberOf[not(@mode='delete')]" use="concat(../../@ident,@key)"/>
   <xsl:key name="MACROS" use="@ident" match="tei:macroSpec"/>
-  <xsl:key name="REFED" use="@name" match="rng:ref"/>
+  <xsl:key name="REFED" use="@name" match="rng:ref[ancestor::tei:elementSpec]"/>
+  <xsl:key name="REFED" use="@name" match="rng:ref[ancestor::tei:macroSpec and not(@name=ancestor::tei:macroSpec/@ident)]"/>
+  <xsl:key name="REFED" use="substring-before(@name,'.attribute')" match="tei:attRef"/>
   <xsl:key name="REFED" use="substring-before(@name,'_')" match="rng:ref[contains(@name,'_')]"/>
-  <xsl:key name="REFED" use="substring-before(@name,'.attribute')"
-	   match="tei:attRef"/>
   <xsl:key name="ELEMENT_MEMBERED" use="tei:classes/tei:memberOf/@key"
 	   match="tei:elementSpec"/>
   <xsl:key name="CLASS_MEMBERED" use="tei:classes/tei:memberOf/@key"
@@ -148,9 +148,18 @@
         <xsl:call-template name="phase2"/>
       </xsl:copy>
     </xsl:variable>
-    <xsl:for-each select="exsl:node-set($compiled)">
+
+    <xsl:variable name="pass1">
+      <root>
+	<xsl:for-each select="exsl:node-set($compiled)">
+	  <xsl:apply-templates mode="final"/>
+	</xsl:for-each>
+      </root>
+    </xsl:variable>
+    <xsl:for-each select="exsl:node-set($pass1)/root">
       <xsl:apply-templates mode="final"/>
     </xsl:for-each>
+
     <!-- constraints -->
     <xsl:apply-templates mode="copy" select="tei:constraintSpec"/>
 
@@ -231,6 +240,7 @@ How can a class be ok?
 
   <xsl:template match="tei:macroSpec" mode="final">
     <xsl:variable name="k">
+      <xsl:value-of select="@prefix"/>
       <xsl:value-of select="@ident"/>
     </xsl:variable>
     <xsl:choose>
