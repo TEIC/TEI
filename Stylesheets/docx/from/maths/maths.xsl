@@ -127,9 +127,14 @@
         </xd:detail>
     </xd:doc>
     <xsl:template match="w:object">
-        <iso:wordObject>
+      <xsl:processing-instruction name="isoError">
+	Invalid Word object found here
+      </xsl:processing-instruction>
+      <!--
+	  <iso:wordObject>
             <xsl:apply-templates select="." mode="iden"/>
-        </iso:wordObject>
+	    </iso:wordObject>
+	-->
     </xsl:template>
     
     <xd:doc>

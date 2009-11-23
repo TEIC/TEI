@@ -136,6 +136,9 @@
 	    <name>dl</name>
 	    <name>document_details</name>
 	    <name>document_title</name>
+	    <name>domain</name>
+	    <name>gender</name>
+	    <name>geographicalUse</name>
 	    <name>heading 1</name>
 	    <name>heading 2</name>
 	    <name>heading 3</name>
@@ -145,18 +148,25 @@
 	    <name>id_no</name>
 	    <name>isononumber</name>
 	    <name>isonumber</name>
+	    <name>language</name>
 	    <name>p2</name>
 	    <name>p3</name>
 	    <name>p4</name>
 	    <name>p5</name>
 	    <name>p6</name>
+	    <name>partOfSpeech</name>
 	    <name>permission</name>
 	    <name>possibility_and_capability</name>
+	    <name>pronunciation</name>
 	    <name>recommendation</name>
 	    <name>reference_number</name>
 	    <name>requirement</name>
+	    <name>source</name>
 	    <name>statement</name>
-	    <name>termPreferred</name>
+	    <name>termAdmitted</name>	
+	    <name>termDeprecated</name>	
+	    <name>termPreferred</name>	
+	    <name>termRef</name>
 	    <name>toc 1</name>
 	    <name>toc 2</name>
 	    <name>toc 3</name>
@@ -287,9 +297,6 @@
 
                     self::iso:wordObject[w:object] or
                     
-		    self::tbx:term or
-		    self::tbx:descrip or
-
                     self::tei:abbr or
                     self::tei:affiliation or
                     self::tei:att or

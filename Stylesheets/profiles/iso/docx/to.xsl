@@ -89,6 +89,36 @@
     <xsl:template match="tei:seg[@rend='FormulaReference']">FormulaReference</xsl:template>
     <xsl:template match="tei:seg[@iso:provision]" mode="get-style"><xsl:value-of select="@iso:provision"/></xsl:template>
     <xsl:template match="tei:seg[@rend]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
+    <xsl:template match="tei:hi[@rend='domain']" mode="get-style">
+      <xsl:text>domain</xsl:text>
+    </xsl:template>
+    <xsl:template match="tbx:descrip"
+		  mode="get-style">Definition</xsl:template>
+    <xsl:template match="tbx:note" mode="get-style">noteTermEntry</xsl:template>
+    <xsl:template match="tei:hi[@rend='gender']" mode="get-style">
+      <xsl:text>gender</xsl:text>
+    </xsl:template>
+    <xsl:template match="tei:hi[@rend='geographicalUse']"
+		  mode="get-style">
+      <xsl:text>geographicalUse</xsl:text>
+    </xsl:template>
+    <xsl:template match="tei:hi[@rend='language']" mode="get-style">
+      <xsl:text>language</xsl:text>
+    </xsl:template>
+    <xsl:template match="tei:hi[@rend='partOfSpeech']"
+		  mode="get-style">
+      <xsl:text>partOfSpeech</xsl:text>
+    </xsl:template>
+    <xsl:template match="tei:hi[@rend='pronunciation']"
+		  mode="get-style">
+      <xsl:text>pronunciation</xsl:text>
+    </xsl:template>
+    <xsl:template match="tei:hi[@rend='source']" mode="get-style">
+      <xsl:text>source</xsl:text>
+    </xsl:template>
+    <xsl:template match="tei:hi[@rend='termRef']" mode="get-style">
+      <xsl:text>termRef</xsl:text>
+    </xsl:template>
     
     <!-- 
         Inline Templates:
@@ -434,19 +464,7 @@
         </w:p>
         
         <xsl:call-template name="block-element">
-            <xsl:with-param name="pPr">
-                <w:pPr>
-                    <w:pStyle>
-                        <xsl:attribute name="w:val">
-                            <xsl:call-template name="getStyleName">
-                                <xsl:with-param name="in">
-                                    <xsl:text>termPreferred</xsl:text>
-                                </xsl:with-param>
-                            </xsl:call-template>
-                        </xsl:attribute>
-                    </w:pStyle>
-                </w:pPr>
-            </xsl:with-param>
+            <xsl:with-param name="style">termPreferred</xsl:with-param>
         </xsl:call-template>
     </xsl:template>
     
@@ -613,12 +631,12 @@
 
 
   <xsl:template match="tei:availability" mode="titlepage">
-  <xsl:param name="style"/>
-  <xsl:for-each select="tei:p">
-    <xsl:call-template name="block-element">
-      <xsl:with-param name="style" select="$style"/>
-    </xsl:call-template>
-  </xsl:for-each>
+    <xsl:param name="style"/>
+    <xsl:for-each select="tei:p">
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="style" select="$style"/>
+      </xsl:call-template>
+    </xsl:for-each>
 </xsl:template>
 
 
@@ -626,56 +644,92 @@
 <!-- TBX -->
 
 <xsl:template match="tbx:termEntry">
-    <w:p>
-      <w:pPr>
-	<w:pStyle>
-	  <xsl:attribute name="w:val">
-	    <xsl:call-template name="getStyleName">
-	      <xsl:with-param name="in">
-		<xsl:text>TermNum</xsl:text>
-	      </xsl:with-param>
-	    </xsl:call-template>
-	  </xsl:attribute>
-	</w:pStyle>
-      </w:pPr>
-      <w:r>
-	<w:t>
-	  <xsl:value-of select="@id"/>
-	</w:t>
-      </w:r>
-    </w:p>
-  <xsl:for-each select="tbx:langSet/tbx:ntig">
-    <w:p>
-      <w:pPr>
-	<w:pStyle>
-	  <xsl:attribute name="w:val">
-	    <xsl:call-template name="getStyleName">
-	      <xsl:with-param name="in">
-		<xsl:value-of select="substring-before(tbx:termGrp/tbx:termNote[@type='administrativeStatus'],'-admn-sts')"/>
-	      </xsl:with-param>
-	    </xsl:call-template>
-	  </xsl:attribute>
-	</w:pStyle>
-      </w:pPr>
-      <xsl:apply-templates select="tbx:termGrp/tbx:term"/>
-    </w:p>
-  </xsl:for-each>
-  <w:p>
-    <w:pPr>
-      <w:pStyle>
-	<xsl:attribute name="w:val">
-	  <xsl:call-template name="getStyleName">
-	    <xsl:with-param name="in">
-	      <xsl:text>Definition</xsl:text>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:attribute>
-      </w:pStyle>
-    </w:pPr>
-    <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
-  </w:p>
-  <xsl:apply-templates select="tbx:descripGrp/tbx:note"/>
+  <xsl:for-each select="tbx:langSet">
+    <xsl:choose>
+      <xsl:when test="starts-with(../@id,'autoTermNum')">
+	<w:p>
+	  <w:pPr>
+	    <w:pStyle w:val="{substring-before(../@id,'_')}"/>
+	  </w:pPr>
+	  <w:bookmarkStart w:id="{substring-after(../@id,'_')}" w:name="_Ref244494009"/>
+	</w:p>
+	<w:bookmarkEnd w:id="{substring-after(../@id,'_')}"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<w:p>
+	  <w:pPr>
+	    <w:pStyle w:val="TermNum"/>
+	  </w:pPr>
+	  <w:r>
+	    <w:t>
+	      <xsl:value-of select="substring-after(../@id,'CDB_')"/>
+	    </w:t>
+	  </w:r>
+	</w:p>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:for-each select="tbx:ntig">
+	  <xsl:variable name="Thing">
+	    <xsl:value-of
+		select="substring-before(tbx:termGrp/tbx:termNote[@type='administrativeStatus'],'-admn-sts')"/>
+	  </xsl:variable>
+	  <xsl:variable name="style">
+	    <xsl:choose>
+	      <xsl:when test="$Thing='preferredTerm'">termPreferred</xsl:when>
+	      <xsl:when test="$Thing='deprecatedTerm'">termDeprecated</xsl:when>
+	      <xsl:when test="$Thing='admittedTerm'">termAdmitted</xsl:when>
+	      <xsl:when test="$Thing='symbol'">symbol</xsl:when>
+	    </xsl:choose>
+	  </xsl:variable>
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="pPr">
+	  <xsl:if test="not($style='')">
+	    <w:pPr>
+	      <w:pStyle w:val="{$style}"/>
+	    </w:pPr>
+	  </xsl:if>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:for-each>
 
+    <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
+    <xsl:apply-templates select="tbx:note"/>
+
+  </xsl:for-each>
+  <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
+  <xsl:apply-templates select="tbx:note"/>
+</xsl:template>
+
+<xsl:template match="tbx:termGrp/tbx:termNote"/>
+
+<xsl:template match="tbx:descrip">
+  <xsl:call-template name="block-element">
+    <xsl:with-param name="style">Definition</xsl:with-param>
+<!--    <xsl:with-param name="pPr">
+      <w:pPr>
+	<w:pStyle w:val="Definition"/>
+      </w:pPr>
+    </xsl:with-param>-->
+  </xsl:call-template>
+</xsl:template>
+
+<xsl:template match="tbx:note">
+  <xsl:call-template name="block-element">
+    <xsl:with-param name="style">
+      <xsl:choose>
+	<xsl:when test="@type='entrySource'">entrySource</xsl:when>
+	<xsl:otherwise>noteTermEntry</xsl:otherwise>
+      </xsl:choose>
+    </xsl:with-param>
+
+<!--    <xsl:with-param name="pPr">
+    <w:pPr>
+      <w:pStyle w:val="noteTermEntry"/>
+    </w:pPr>
+    </xsl:with-param>
+-->
+
+  </xsl:call-template>
 </xsl:template>
 
 <!-- for ISO, don't write out most of the auxiliary files -->
@@ -825,7 +879,7 @@
                     <xsl:attribute name="fmtid">
                         <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
                     </xsl:attribute>
-                    <vt:lpwstr>2.8.0</vt:lpwstr>
+		    <vt:lpwstr>2.8.0</vt:lpwstr>
                 </property>
                 <property pid="1001" name="WordTemplateURI">
                     <xsl:attribute name="fmtid">
@@ -875,10 +929,11 @@
         </w:rPr>
         <w:alias w:val="{@iso:meta}"/>
         <w:tag w:val="{@iso:meta}"/>
-	<xsl:variable name="stdId">
-	  <xsl:number level="any"/>
-	</xsl:variable>
-	<w:id w:val="158666506{$stdId}"/>
+        <w:id w:val="1586665067"/>
+        <w:lock w:val="sdtLocked"/>
+        <w:placeholder>
+          <w:docPart w:val="72E04D43EE084EC9AAF92D2A303216E5"/>
+        </w:placeholder>
       </w:sdtPr>
       <w:sdtContent>
 	<xsl:apply-templates/>

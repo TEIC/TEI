@@ -429,6 +429,7 @@
             if (w:pPr/w:pStyle/@w:val='noteDefinition') then 3 else
             if (w:pPr/w:pStyle/@w:val='noteNonVerbalRepresentation') then 3 else
             if (w:pPr/w:pStyle/@w:val='noteTerm') then 3 else
+            if (w:pPr/w:pStyle/@w:val='entrySource') then 3 else
             if (w:pPr/w:pStyle/@w:val='noteTermEntry') then 3 else
             if (w:pPr/w:pStyle/@w:val='symbol') then 3 else
             if (w:pPr/w:pStyle/@w:val='termAdmitted') then 3 else
@@ -479,9 +480,12 @@
 
     <!-- override handling of runs -->
     <xsl:template match="w:r/w:tab">
-        <c rend="tab">
+      <xsl:text>&#009;</xsl:text>
+      <!--
+      <c rend="tab">
             <xsl:text>&#009;</xsl:text>
         </c>
+	-->
     </xsl:template>
 
     <xsl:template name="ins-or-del">
@@ -751,6 +755,12 @@
 		  <xsl:apply-templates/>
 		</note>
 	      </xsl:for-each>
+	      <xsl:for-each
+		  select="current-group()[w:pPr/w:pStyle/@w:val='entrySource'] except .">
+		<note type="entrySource">
+		  <xsl:apply-templates/>
+		</note>
+	      </xsl:for-each>
 	      <descripGrp>
 		<descrip type="definition">
 		  <xsl:for-each
@@ -764,7 +774,8 @@
 		    <xsl:choose>
 		      <xsl:when
 			  test="current-group()[w:r/w:rPr/w:lang]">
-			<xsl:value-of select="current-group()[w:r/w:rPr/w:lang][1]/w:r/w:rPr/w:lang/@w:val"/>
+			<xsl:value-of
+			    select="subsequence(current-group()/w:r[w:rPr/w:lang][1]/w:rPr/w:lang/@w:val,1,1)"/>
 		      </xsl:when>
 		      <xsl:when test="w:pPr/w:rPr/w:lang">
 			<xsl:value-of select="w:pPr/w:rPr/w:lang/@w:val"/>
@@ -801,11 +812,12 @@
 			      <termNote
 				  type="administrativeStatus">
 				<xsl:choose>
-				  <xsl:when test="$Thing='termPreferred'">preferredTerm</xsl:when>
-                                            <xsl:when test="$Thing='termDeprecated'">deprecatedTerm</xsl:when>
-					    <xsl:when test="$Thing='termAdmitted'">admittedTerm</xsl:when>
+				  <xsl:when test="$Thing='termPreferred'">preferredTerm-admn-sts</xsl:when>
+				  <xsl:when test="$Thing='termDeprecated'">deprecatedTerm-admn-sts</xsl:when>
+				  <xsl:when test="$Thing='termAdmitted'">admittedTerm-admn-sts</xsl:when>
+				  <xsl:when test="$Thing='symbol'">symbol-admn-sts</xsl:when>
+				  <xsl:otherwise>UNKNOWN</xsl:otherwise>
 				</xsl:choose>
-				<xsl:text>-admn-sts</xsl:text>
 			      </termNote>
 			      <xsl:if
 				  test="w:r/w:rPr/w:rStyle/@w:val='abbreviatedForm'">
@@ -1286,11 +1298,11 @@
     <xsl:otherwise>
       <xsl:copy>
 	<xsl:copy-of select="@*"/>
-	<xsl:apply-templates mode="part2" select="tbx:note"/>
 	<xsl:for-each
 	    select="tbx:langSet">
 	  <xsl:copy>
 	    <xsl:copy-of select="@*"/>
+	    <xsl:apply-templates mode="part2" select="../tbx:note"/>
 	    <xsl:apply-templates mode="part2" select="../tbx:descripGrp"/>
 	    <xsl:apply-templates mode="part2"/>
 	  </xsl:copy>

@@ -444,7 +444,7 @@
             <xsl:apply-templates select="." mode="get-style"/>
         </xsl:variable>
 
-        <xsl:variable name="character-style">
+        <xsl:variable name="use-style">
             <xsl:choose>
                 <xsl:when test="(string-length($style) &gt; 0)">
                     <xsl:value-of select="$style"/>
@@ -455,7 +455,7 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:apply-templates>
-            <xsl:with-param name="character-style" select="$character-style"/>
+            <xsl:with-param name="character-style" select="$use-style"/>
         </xsl:apply-templates>
     </xsl:template>
 
@@ -490,6 +490,10 @@
                             <xsl:attribute name="w:val" select="$character-style"/>
                         </w:rStyle>
                     </xsl:if>
+		    <xsl:if test="ancestor::*[@xml:lang]">
+		      <w:lang
+			  w:val="{ancestor::*[@xml:lang][1]/@xml:lang}"/>
+		    </xsl:if>
                     <xsl:copy-of select="$renderingProperties"/>
                 </w:rPr>
             </xsl:if>
@@ -555,9 +559,9 @@
     </xsl:template>
 
     <xd:doc>
-        Tests whether to add rendering attributes to a run
+        Tests whether to add rendering attributes to a run.
         Styles may not be added in applyRend. If you want to add
-        a style go for a get-style template..
+        a style go for a get-style template.
      </xd:doc>
     <xsl:template name="applyRend">
         <xsl:for-each select="..">
@@ -859,8 +863,8 @@
                             <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
                             <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
                             <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-                            <w:insideH w:val="single" w:sz="6" w:space="0" w:color="auto"/>
                             <w:insideV w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:insideH w:val="single" w:sz="6" w:space="0" w:color="auto"/>
                         </w:tblBorders>
                     </w:tblPr>
                 </xsl:otherwise>
@@ -1043,19 +1047,19 @@
                         </xsl:when>
                     </xsl:choose>
                     <xsl:choose>
-                        <xsl:when test="@colsep=1">
-                            <w:insideV w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <w:insideV w:val="none" w:sz="6" w:space="0" w:color="auto"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                    <xsl:choose>
                         <xsl:when test="@rowsep=1">
                             <w:insideH w:val="single" w:sz="6" w:space="0" w:color="auto"/>
                         </xsl:when>
                         <xsl:otherwise>
                             <w:insideH w:val="none" w:sz="6" w:space="0" w:color="auto"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:choose>
+                        <xsl:when test="@colsep=1">
+                            <w:insideV w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <w:insideV w:val="none" w:sz="6" w:space="0" w:color="auto"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </w:tblBorders>
@@ -1186,9 +1190,6 @@
         <xsl:variable name="colname" select="@colname"/>
         <w:tc>
             <w:tcPr>
-                <xsl:if test="@morerows">
-                    <w:vMerge w:val="restart"/>
-                </xsl:if>
                 <xsl:if test="@namest">
                     <xsl:variable name="start">
                         <xsl:value-of
@@ -1202,6 +1203,9 @@
                     </xsl:variable>
                     <w:gridSpan w:val="{number($end)-number($start)+1}"/>
                 </xsl:if>
+                <xsl:if test="@morerows">
+                    <w:vMerge w:val="restart"/>
+                </xsl:if>
                 <!--
 	    <xsl:message><xsl:value-of select="$colname"/>
 	    (<xsl:value-of select="."/>):    <xsl:value-of
@@ -1209,14 +1213,6 @@
 	    select="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[@colname=$colname]/@rowsep"/></xsl:message>
 	    -->
                 <xsl:variable name="borders">
-                    <xsl:choose>
-                        <xsl:when test="@rowsep='0'">
-                            <w:bottom w:val="nil"/>
-                        </xsl:when>
-                        <xsl:when test="@rowsep='1'">
-                            <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-                        </xsl:when>
-                    </xsl:choose>
                     <xsl:choose>
                         <xsl:when
                             test="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[@colname=$colname]/@rowsep=0">
@@ -1234,10 +1230,21 @@
                             <w:right w:val="nil"/>
                         </xsl:when>
                     </xsl:choose>
+                    <xsl:choose>
+                        <xsl:when test="@rowsep='0'">
+                            <w:bottom w:val="nil"/>
+                        </xsl:when>
+                        <xsl:when test="@rowsep='1'">
+                            <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                        </xsl:when>
+                    </xsl:choose>
                 </xsl:variable>
                 <xsl:if test="$borders/*">
                     <w:tcBorders>
-                        <xsl:copy-of select="$borders/*"/>
+                        <xsl:copy-of select="$borders/w:top"/>
+                        <xsl:copy-of select="$borders/w:left"/>
+                        <xsl:copy-of select="$borders/w:bottom"/>
+                        <xsl:copy-of select="$borders/w:right"/>
                     </w:tcBorders>
                 </xsl:if>
                 <xsl:if test="@rotate='1'">
