@@ -728,7 +728,9 @@
 	  <xsl:when test="not(self::w:p[w:pPr/w:pStyle/@w:val='TermNum'
 				 or
 				 w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]])">
-	    <xsl:message>ERROR: terminology entry does not have a number style, but starts with with  <xsl:value-of select="w:pPr/w:pStyle/@w:val"/></xsl:message>
+	    <xsl:processing-instruction name="isoError">terminology
+	    entry here does not have a number style, 
+	    but starts with with  <xsl:value-of select="w:pPr/w:pStyle/@w:val"/></xsl:processing-instruction>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:variable name="Style">
