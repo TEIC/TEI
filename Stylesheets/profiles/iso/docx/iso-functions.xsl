@@ -318,7 +318,8 @@
                     self::tei:ident or
                     self::tei:lb or
                     self::tei:name or
-                    self::tei:note[@place='foot'  or @place='bottom' ] or
+                    self::tei:note[@place='foot'] or
+		    self::tei:note[@place='bottom' ] or
                     self::tei:note[@place='end'] or
                     self::tei:num or
                     self::tei:mentioned or

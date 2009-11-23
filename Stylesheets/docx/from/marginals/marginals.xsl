@@ -50,7 +50,7 @@
         <xd:short>Handle footnotes</xd:short>
     </xd:doc>
     <xsl:template match="w:footnoteReference">
-        <note place="foot">
+        <note>
             <xsl:variable name="referenced-id" select="@w:id"/>
             <xsl:for-each
                 select="document(concat($word-directory,'/word/footnotes.xml'))//w:footnote[@w:id=$referenced-id]">

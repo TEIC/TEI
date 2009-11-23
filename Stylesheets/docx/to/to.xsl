@@ -1271,55 +1271,55 @@
 
 
     <xsl:template match="cals:entry" mode="contents">
-      <xsl:choose>
-	<xsl:when test="tei:note[@place='foot']">
-	  <xsl:apply-templates/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:call-template name="block-element">
-	    <xsl:with-param name="pPr">
-	      <w:pPr>
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="pPr">
+	  <w:pPr>
+	    <xsl:choose>
+	      <xsl:when test="@rend">
+		<xsl:variable name="sName">
+		  <xsl:call-template name="getStyleName">
+		    <xsl:with-param name="in" select="@rend"/>
+		  </xsl:call-template>
+		</xsl:variable>
 		<xsl:choose>
-		  <xsl:when test="@rend">
-		    <xsl:variable name="sName">
-		      <xsl:call-template name="getStyleName">
-			<xsl:with-param name="in" select="@rend"/>
-		      </xsl:call-template>
-		    </xsl:variable>
-		    <xsl:choose>
-		      <xsl:when test="$sName=''">
-			<w:pStyle w:val="{$TableText}"/>
-		      </xsl:when>
-		      <xsl:otherwise>
-			<w:pStyle w:val="{$sName}"/>
-		      </xsl:otherwise>
-		    </xsl:choose>
-		  </xsl:when>
-		  <xsl:otherwise>
+		  <xsl:when test="$sName=''">
 		    <w:pStyle w:val="{$TableText}"/>
-		  </xsl:otherwise>
-		</xsl:choose>
-		<xsl:choose>
-		  <xsl:when test="@align">
-		    <w:jc w:val="{@align}"/>
-		  </xsl:when>
-		  <xsl:when
-		      test="parent::tei:row[@role='label']
-			    or @role='label'">
-		    <w:jc w:val="left"/>
-		  </xsl:when>
-		  <xsl:when test="starts-with(.,'[0-9]')">
-		    <w:jc w:val="right"/>
 		  </xsl:when>
 		  <xsl:otherwise>
-		    <w:jc w:val="left"/>
+		    <w:pStyle w:val="{$sName}"/>
 		  </xsl:otherwise>
 		</xsl:choose>
-	      </w:pPr>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:otherwise>
-      </xsl:choose>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<w:pStyle w:val="{$TableText}"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	    <xsl:choose>
+	      <xsl:when test="@align">
+		<w:jc w:val="{@align}"/>
+	      </xsl:when>
+	      <xsl:when
+		  test="parent::tei:row[@role='label']
+			or @role='label'">
+		<w:jc w:val="left"/>
+	      </xsl:when>
+	      <xsl:when test="starts-with(.,'[0-9]')">
+		<w:jc w:val="right"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<w:jc w:val="left"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </w:pPr>
+	</xsl:with-param>
+	<xsl:with-param name="nop">
+	  <xsl:choose>
+	    <xsl:when test="not(text()) and tei:note[@place='foot']">true</xsl:when>
+	    <xsl:otherwise>false</xsl:otherwise>
+	  </xsl:choose>
+	</xsl:with-param>
+      </xsl:call-template>
+
       <!-- If we have no children, put an empty p here -->
       <xsl:choose>
 	<xsl:when test="*"/>

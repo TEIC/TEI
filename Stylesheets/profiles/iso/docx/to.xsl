@@ -303,7 +303,8 @@
     <xsl:template name="create-footnote">           
       <xsl:variable name="pPr">
 	<xsl:choose>
-	  <xsl:when test="(@place='foot'  or @place='bottom') and (parent::tei:cell or parent::cals:entry)">
+	  <xsl:when test="(@place='foot'  or @place='bottom') and
+			  (parent::tei:cell or parent::cals:entry)">
 	    <w:pPr>
 	      <w:pStyle w:val="Tablefootnote"/>
 	    </w:pPr>
@@ -367,7 +368,6 @@
 	<xsl:otherwise>
 	  <xsl:call-template name="block-element">
 	    <xsl:with-param name="pPr" select="$pPr"/>
-	    <xsl:with-param name="nop">false</xsl:with-param>
 	  </xsl:call-template>
 	</xsl:otherwise>
       </xsl:choose>
@@ -637,7 +637,7 @@
 	<xsl:with-param name="style" select="$style"/>
       </xsl:call-template>
     </xsl:for-each>
-</xsl:template>
+  </xsl:template>
 
 
 
