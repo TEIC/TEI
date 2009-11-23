@@ -174,7 +174,7 @@
                             <xsl:with-param name="tag">secretariat</xsl:with-param>
                         </xsl:call-template>
                     </authority>
-		    <!--
+
                     <xsl:for-each-group select="key('AllSdt',1)" group-by=".">
                         <xsl:sort select="."/>
                         <xsl:variable name="thisSdt" select="current-grouping-key()"/>
@@ -187,6 +187,7 @@
                             <xsl:when test="$thisSdt='mainTitle'"/>
                             <xsl:when test="$thisSdt='mainTitle_fr'"/>
                             <xsl:when test="$thisSdt='docDate'"/>
+                            <xsl:when test="$thisSdt='docdate'"/>
                             <xsl:when test="$thisSdt='organization'"/>
                             <xsl:when test="$thisSdt='secretariat'"/>
                             <xsl:when test="starts-with($thisSdt, 'fw_')"/>
@@ -205,7 +206,7 @@
                     <idno iso:meta="stage">
                         <xsl:value-of select="$customProps//*[@name='DocIdentStage']/vt:lpwstr"/>
                     </idno>
-		    -->
+
                     <xsl:if test="w:body/w:p[w:pPr/w:pStyle/@w:val='zzCopyright']">
                         <availability>
                             <xsl:apply-templates
