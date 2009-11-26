@@ -208,6 +208,7 @@
           <xsl:when test="$depth=2">III</xsl:when>
           <xsl:when test="$depth=3">IV</xsl:when>
           <xsl:when test="$depth=4">V</xsl:when>
+	  <xsl:otherwise>I</xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
           <xsl:when test="ancestor::tei:floatingText">Star</xsl:when>
