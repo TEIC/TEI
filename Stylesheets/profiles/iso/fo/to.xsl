@@ -7,11 +7,11 @@
                 xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                xmlns:pantor="http://www.pantor.com/ns/local"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+
+                
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="xlink dbk rng tei teix xhtml a html pantor xd xs xsl"
+                exclude-result-prefixes="xlink dbk rng tei teix xhtml a html  xs xsl"
                 version="2.0">
   
    <xsl:import href="../../../fo2/tei.xsl"/>

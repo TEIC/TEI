@@ -3,16 +3,16 @@
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                xmlns:local="http://www.pantor.com/ns/local"
+
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                exclude-result-prefixes="fo a xd tei html rng sch xsi local teix xs"
+                exclude-result-prefixes="fo a tei html rng sch xsi teix xs"
                 version="2.0">
   <xsl:import href="../common2/verbatim.xsl"/>
   <xsl:import href="teiodds.xsl"/>

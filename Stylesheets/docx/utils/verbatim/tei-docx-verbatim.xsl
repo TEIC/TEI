@@ -9,7 +9,7 @@
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
                 version="2.0"
                 exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom">

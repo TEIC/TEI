@@ -8,10 +8,10 @@
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                xmlns:local="http://www.pantor.com/ns/local"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+
+                
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="#default a fo local dbk xlink xhtml rng tei teix xd"
+                exclude-result-prefixes="#default a fo dbk xlink xhtml rng tei teix"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>

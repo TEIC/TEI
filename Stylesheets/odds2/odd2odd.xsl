@@ -6,10 +6,10 @@
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
-                exclude-result-prefixes="teix a s tei rng xd sch xsi">
+                exclude-result-prefixes="teix a s tei rng sch xsi">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for simplifying TEI ODD markup </p>

@@ -3,9 +3,9 @@
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:m="http://www.w3.org/1998/Math/MathML"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="m tei xd xsi sch"
+                exclude-result-prefixes="m tei xsi sch"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>

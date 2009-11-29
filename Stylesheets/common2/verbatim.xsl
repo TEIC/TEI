@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+<xsl:stylesheet 
                 xmlns:sch="http://www.ascc.net/xml/schematron"
                 xmlns:m="http://www.w3.org/1998/Math/MathML"
                 xmlns:atom="http://www.w3.org/2005/Atom"
@@ -11,7 +11,7 @@
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
-                exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix xsl atom xd">
+                exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix xsl atom">
 
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
 

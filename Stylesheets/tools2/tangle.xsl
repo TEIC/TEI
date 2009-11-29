@@ -10,10 +10,10 @@
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:XSL="http://www.w3.org/1999/XSL/Transform"
                 extension-element-prefixes="exsl estr edate"
-                exclude-result-prefixes="exsl edate a fo rng tei teix xd fotex m html xd"
+                exclude-result-prefixes="exsl edate a fo rng tei teix fotex m html"
                 version="1.0">
    <xsl:output indent="yes" encoding="utf-8"/>
 

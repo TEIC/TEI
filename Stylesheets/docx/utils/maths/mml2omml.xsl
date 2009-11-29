@@ -57,7 +57,7 @@
   <xsl:template name="OutputText">
       <xsl:param name="sInput"/>
 
-      <!-- Add local variable as you add new post processing tasks -->
+      <!-- Add local Variable as you add new post processing tasks -->
 
     <!-- 1. Remove any unwanted characters -->
     <xsl:variable name="sCharStrip">

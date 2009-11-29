@@ -2,14 +2,14 @@
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:atom="http://www.w3.org/2005/Atom"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:dbk="http://docbook.org/ns/docbook"
                 xmlns:m="http://www.w3.org/1998/Math/MathML"
                 xmlns:xhtml="http://www.w3.org/1999/xhtml"
-                exclude-result-prefixes="tei xd xlink dbk xhtml m"
+                exclude-result-prefixes="tei xlink dbk xhtml m"
                 version="2.0">
   <xsl:import href="../xhtml2/tei.xsl"/>
   <xsl:import href="../common2/verbatim.xsl"/>

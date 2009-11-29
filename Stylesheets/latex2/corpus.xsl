@@ -3,7 +3,7 @@
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="a rng tei teix"
                 version="2.0">

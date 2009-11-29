@@ -3,14 +3,13 @@
                 xmlns:s="http://www.ascc.net/xml/schematron"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                xmlns:local="http://www.pantor.com/ns/local"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="fo s a xd tei html rng local teix xs"
+                exclude-result-prefixes="fo s a tei html rng teix xs"
                 version="2.0">
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">

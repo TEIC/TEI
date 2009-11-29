@@ -8,10 +8,10 @@
                 xmlns:s="http://www.ascc.net/xml/schematron"
                 xmlns:t="http://www.thaiopensource.com/ns/annotations"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="t tei a rng s xd xlink sch xs i xi teix"
+                exclude-result-prefixes="t tei a rng s xlink sch xs i xi teix"
                 version="2.0">
   <xsl:import href="teiodds.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">

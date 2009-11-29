@@ -19,10 +19,10 @@
                 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
                 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"
                 version="2.0"
-                exclude-result-prefixes="a pic rel ve o teidocx r m v wp w10 w wne mml vt cals tbx iso xd">
+                exclude-result-prefixes="a pic rel ve o teidocx r m v wp w10 w wne mml vt cals tbx iso">
 
     <!-- import conversion style -->
     <xsl:import href="../../../docx/utils/functions.xsl"/>

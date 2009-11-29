@@ -3,9 +3,9 @@
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:fotex="http://www.tug.org/fotex"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="xd tei fotex sch fo"
+                exclude-result-prefixes="tei fotex sch fo"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>

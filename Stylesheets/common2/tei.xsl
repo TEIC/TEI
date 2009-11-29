@@ -3,11 +3,11 @@
                 xmlns:s="http://www.ascc.net/xml/schematron"
                 xmlns:fotex="http://www.tug.org/fotex"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="xd s tei fotex xsi sch fo"
+                exclude-result-prefixes="s tei fotex xsi sch fo"
                 version="2.0">
   <xsl:import href="tei-param.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+<xsl:stylesheet 
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns="http://www.w3.org/1999/XSL/Format"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="xd a rng tei teix"
+                exclude-result-prefixes="a rng tei teix"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>

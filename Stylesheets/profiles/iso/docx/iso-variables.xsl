@@ -19,7 +19,7 @@
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
                 xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
                 xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 version="2.0"
                 exclude-result-prefixes="cals ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
 	

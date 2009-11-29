@@ -11,7 +11,7 @@
                 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
                 exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx">

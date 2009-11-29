@@ -3,14 +3,14 @@
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                xmlns:local="http://www.pantor.com/ns/local"
+
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
-                exclude-result-prefixes="#default a fo local rng tei teix xd">
+                exclude-result-prefixes="#default a fo rng tei teix">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet dealing with elements from the linking module,

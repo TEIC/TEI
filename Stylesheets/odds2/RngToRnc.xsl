@@ -1158,7 +1158,7 @@
          </xsl:if>
       </xsl:if>
   </xsl:template>
-  <local:keywords xmlns:local="http://www.pantor.com/ns/local">
+  <keywords>
       <kw>attribute</kw>
       <kw>default</kw>
       <kw>datatypes</kw>
@@ -1178,9 +1178,8 @@
       <kw>string</kw>
       <kw>text</kw>
       <kw>token</kw>
-  </local:keywords>
-  <xsl:variable xmlns:local="http://www.pantor.com/ns/local" name="keywords"
-                 select="document ('')/*/local:keywords/*"/>
+  </keywords>
+  <xsl:variable name="keywords"  select="document ('')/*/keywords/*"/>
   <xsl:template name="quote-keyword">
       <xsl:param name="name"/>
       <xsl:if test="$name = $keywords">\</xsl:if>

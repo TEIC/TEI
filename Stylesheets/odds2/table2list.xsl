@@ -5,10 +5,10 @@
                 xmlns:t="http://www.thaiopensource.com/ns/annotations"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns="http://www.tei-c.org/ns/1.0"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="a t xd tei fo rng xs"
+                exclude-result-prefixes="a t tei fo rng xs"
                 version="2.0">
   <xsl:template match="tei:table[@rend='valList'         or @rend='attDef'        or @rend='attList'         or @rend='specDesc']">
       <list type="termlist">

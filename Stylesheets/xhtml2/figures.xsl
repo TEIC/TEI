@@ -4,14 +4,14 @@
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:svg="http://www.w3.org/2000/svg"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                xmlns:local="http://www.pantor.com/ns/local"
+
                 xmlns:m="http://www.w3.org/1998/Math/MathML"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
-                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="#default svg a fo local rng tei teix xd m"
+                exclude-result-prefixes="#default svg a fo rng tei teix m"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
