@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet exclude-result-prefixes="xd a rng tei teix"
-  version="2.0"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples"
-  xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xd:doc type="stylesheet">
-    <xd:short> TEI stylesheet dealing with elements from the linking module,
-      making LaTeX output. </xd:short>
-    <xd:detail> This library is free software; you can redistribute it and/or
+<xsl:stylesheet xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:teix="http://www.tei-c.org/ns/Examples"
+                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="xd a rng tei teix"
+                version="2.0">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+      <desc>
+         <p> TEI stylesheet dealing with elements from the linking module,
+      making LaTeX output. </p>
+         <p> This library is free software; you can redistribute it and/or
       modify it under the terms of the GNU Lesser General Public License as
       published by the Free Software Foundation; either version 2.1 of the
       License, or (at your option) any later version. This library is
@@ -19,127 +20,124 @@
       PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
       details. You should have received a copy of the GNU Lesser General Public
       License along with this library; if not, write to the Free Software
-      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
-    <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2008, TEI Consortium</xd:copyright>
-  </xd:doc>
-  <xd:doc>
-    <xd:short>Process elements tei:anchor</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </p>
+         <p>Author: See AUTHORS</p>
+         <p>Id: $Id$</p>
+         <p>Copyright: 2008, TEI Consortium</p>
+      </desc>
+   </doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:anchor</desc>
+   </doc>
   <xsl:template match="tei:anchor">
-    <xsl:text>\hypertarget{</xsl:text>
-    <xsl:value-of select="@xml:id"/>
-    <xsl:text>}{}</xsl:text>
+      <xsl:text>\hypertarget{</xsl:text>
+      <xsl:value-of select="@xml:id"/>
+      <xsl:text>}{}</xsl:text>
   </xsl:template>
-  <xd:doc>
-    <xd:short>[latex] </xd:short>
-    <xd:param name="where">where</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[latex] <param name="where">where</param>
+      </desc>
+   </doc>
   <xsl:template name="generateEndLink">
-    <xsl:param name="where"/>
-    <xsl:value-of select="$where"/>
+      <xsl:param name="where"/>
+      <xsl:value-of select="$where"/>
   </xsl:template>
-  <xd:doc>
-    <xd:short>[latex] </xd:short>
-    <xd:param name="ptr">ptr</xd:param>
-    <xd:param name="dest">dest</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[latex] <param name="ptr">ptr</param>
+         <param name="dest">dest</param>
+      </desc>
+   </doc>
   <xsl:template name="makeExternalLink">
-    <xsl:param name="ptr"/>
-    <xsl:param name="dest"/>
-    <xsl:choose>
-      <xsl:when test="$ptr='true'">
-        <xsl:text>\url{</xsl:text>
-        <xsl:value-of select="$dest"/>
-        <xsl:text>}</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>\xref{</xsl:text>
-        <xsl:value-of select="$dest"/>
-        <xsl:text>}{</xsl:text>
-        <xsl:apply-templates/>
-        <xsl:text>}</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>[latex] </xd:short>
-    <xd:param name="target">target</xd:param>
-    <xd:param name="ptr">ptr</xd:param>
-    <xd:param name="dest">dest</xd:param>
-    <xd:param name="body">body</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template name="makeInternalLink">
-    <xsl:param name="target"/>
-    <xsl:param name="class"/>
-    <xsl:param name="ptr"/>
-    <xsl:param name="dest"/>
-    <xsl:param name="body"/>
-    <xsl:choose>
-      <xsl:when test="key('IDS',$dest)">
-        <xsl:choose>
-          <xsl:when test="not($body='')">
-	    <xsl:text>\hyperlink{</xsl:text>
-	    <xsl:value-of select="$dest"/>
-	    <xsl:text>}{</xsl:text>
-	    <xsl:value-of select="$body"/>
-	    <xsl:text>}</xsl:text>
-          </xsl:when>
-          <xsl:when test="$ptr='true'">
-	    <xsl:for-each select="key('IDS',$dest)">
-	      <xsl:choose>
-		<xsl:when test="starts-with(local-name(.),'div')">
-		  <xsl:text>\textit{\hyperref[</xsl:text>
-		  <xsl:value-of select="$dest"/>
-		  <xsl:text>]{</xsl:text>
-		  <xsl:apply-templates mode="xref" select=".">
-		    <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-		  </xsl:apply-templates>
-		  <xsl:text>}}</xsl:text>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:text>\hyperlink{</xsl:text>
-		  <xsl:value-of select="$dest"/>
-		  <xsl:text>}{</xsl:text>
-		  <xsl:value-of select="$body"/>
-		  <xsl:apply-templates mode="xref" select=".">
-		    <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-		  </xsl:apply-templates>
-		  <xsl:text>}</xsl:text>
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:for-each>
-          </xsl:when>
-          <xsl:otherwise>
-	    <xsl:text>\hyperlink{</xsl:text>
-	    <xsl:value-of select="$dest"/>
-	    <xsl:text>}{</xsl:text>
-	    <xsl:value-of select="$body"/>
-	    <xsl:apply-templates/>
-	    <xsl:text>}</xsl:text>
-	  </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>«</xsl:text>
-        <xsl:choose>
-          <xsl:when test="not($body='')">
-            <xsl:value-of select="$body"/>
-          </xsl:when>
-          <xsl:when test="$ptr='true'">
+      <xsl:param name="ptr"/>
+      <xsl:param name="dest"/>
+      <xsl:choose>
+         <xsl:when test="$ptr='true'">
+            <xsl:text>\url{</xsl:text>
             <xsl:value-of select="$dest"/>
-          </xsl:when>
-          <xsl:otherwise>
+            <xsl:text>}</xsl:text>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:text>\xref{</xsl:text>
+            <xsl:value-of select="$dest"/>
+            <xsl:text>}{</xsl:text>
             <xsl:apply-templates/>
-          </xsl:otherwise>
-        </xsl:choose>
-        <xsl:text>»</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
+            <xsl:text>}</xsl:text>
+         </xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[latex] <param name="target">target</param>
+         <param name="ptr">ptr</param>
+         <param name="dest">dest</param>
+         <param name="body">body</param>
+      </desc>
+   </doc>
+  <xsl:template name="makeInternalLink">
+      <xsl:param name="target"/>
+      <xsl:param name="class"/>
+      <xsl:param name="ptr"/>
+      <xsl:param name="dest"/>
+      <xsl:param name="body"/>
+      <xsl:choose>
+         <xsl:when test="key('IDS',$dest)">
+            <xsl:choose>
+               <xsl:when test="not($body='')">
+	                 <xsl:text>\hyperlink{</xsl:text>
+	                 <xsl:value-of select="$dest"/>
+	                 <xsl:text>}{</xsl:text>
+	                 <xsl:value-of select="$body"/>
+	                 <xsl:text>}</xsl:text>
+               </xsl:when>
+               <xsl:when test="$ptr='true'">
+	                 <xsl:for-each select="key('IDS',$dest)">
+	                    <xsl:choose>
+		                      <xsl:when test="starts-with(local-name(.),'div')">
+		                         <xsl:text>\textit{\hyperref[</xsl:text>
+		                         <xsl:value-of select="$dest"/>
+		                         <xsl:text>]{</xsl:text>
+		                         <xsl:apply-templates mode="xref" select=".">
+		                            <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+		                         </xsl:apply-templates>
+		                         <xsl:text>}}</xsl:text>
+		                      </xsl:when>
+		                      <xsl:otherwise>
+		                         <xsl:text>\hyperlink{</xsl:text>
+		                         <xsl:value-of select="$dest"/>
+		                         <xsl:text>}{</xsl:text>
+		                         <xsl:value-of select="$body"/>
+		                         <xsl:apply-templates mode="xref" select=".">
+		                            <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+		                         </xsl:apply-templates>
+		                         <xsl:text>}</xsl:text>
+		                      </xsl:otherwise>
+	                    </xsl:choose>
+	                 </xsl:for-each>
+               </xsl:when>
+               <xsl:otherwise>
+	                 <xsl:text>\hyperlink{</xsl:text>
+	                 <xsl:value-of select="$dest"/>
+	                 <xsl:text>}{</xsl:text>
+	                 <xsl:value-of select="$body"/>
+	                 <xsl:apply-templates/>
+	                 <xsl:text>}</xsl:text>
+	              </xsl:otherwise>
+            </xsl:choose>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:text>«</xsl:text>
+            <xsl:choose>
+               <xsl:when test="not($body='')">
+                  <xsl:value-of select="$body"/>
+               </xsl:when>
+               <xsl:when test="$ptr='true'">
+                  <xsl:value-of select="$dest"/>
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:apply-templates/>
+               </xsl:otherwise>
+            </xsl:choose>
+            <xsl:text>»</xsl:text>
+         </xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
 </xsl:stylesheet>

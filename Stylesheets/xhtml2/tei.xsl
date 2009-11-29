@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet
-  xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"  
-  xmlns:fo="http://www.w3.org/1999/XSL/Format" 
-  xmlns:local="http://www.pantor.com/ns/local" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="#default html xd a fo local rng tei teix"  version="2.0">
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                xmlns:fo="http://www.w3.org/1999/XSL/Format"
+                xmlns:local="http://www.pantor.com/ns/local"
+                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:teix="http://www.tei-c.org/ns/Examples"
+                xmlns:html="http://www.w3.org/1999/xhtml"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="#default html xd a fo local rng tei teix"
+                version="2.0">
   <xsl:import href="../common2/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
-  <xd:doc type="stylesheet">
-    <xd:short>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+      <desc>
+         <p>
     TEI stylesheet for making HTML output.
-      </xd:short>
-    <xd:detail>
+      </p>
+         <p>
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
     License as published by the Free Software Foundation; either
@@ -28,11 +35,12 @@
 
    
    
-      </xd:detail>
-    <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2008, TEI Consortium</xd:copyright>
-  </xd:doc>
+      </p>
+         <p>Author: See AUTHORS</p>
+         <p>Id: $Id$</p>
+         <p>Copyright: 2008, TEI Consortium</p>
+      </desc>
+   </doc>
   <xsl:include href="core.xsl"/>
   <xsl:include href="corpus.xsl"/>
   <xsl:include href="dictionaries.xsl"/>
@@ -45,75 +53,112 @@
   <xsl:include href="textcrit.xsl"/>
   <xsl:include href="transcr.xsl"/>
   <xsl:include href="verse.xsl"/>
-  <xd:doc type="string">
+  <xsl:include href="../common2/verbatim.xsl"/>
+
+  <xsl:template match="teix:egXML">
+      <xsl:param name="simple">false</xsl:param>
+      <xsl:param name="highlight"/>
+      <div>
+         <xsl:attribute name="id">
+	           <xsl:apply-templates mode="ident" select="."/>
+         </xsl:attribute>
+         <xsl:attribute name="class">
+	           <xsl:text>pre</xsl:text>
+	           <xsl:if test="not(*)">
+	              <xsl:text> cdata</xsl:text>
+	           </xsl:if>
+         </xsl:attribute>
+         <xsl:choose>
+	           <xsl:when test="$simple='true'">
+	              <xsl:apply-templates mode="verbatim">
+	                 <xsl:with-param name="highlight">
+	                    <xsl:value-of select="$highlight"/>
+	                 </xsl:with-param>
+	              </xsl:apply-templates>
+	           </xsl:when>
+	           <xsl:otherwise>
+	              <xsl:call-template name="egXMLStartHook"/>
+	              <xsl:apply-templates mode="verbatim">
+	                 <xsl:with-param name="highlight">
+	                    <xsl:value-of select="$highlight"/>
+	                 </xsl:with-param>
+	              </xsl:apply-templates>
+	              <xsl:call-template name="egXMLEndHook"/>
+	           </xsl:otherwise>
+         </xsl:choose>
+      </div>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
+      <desc>
 Stylesheet constant setting the name of the main output file.
-</xd:doc>
+</desc>
+   </doc>
   <xsl:variable name="top" select="/"/>
   <xsl:variable name="masterFile">
-    <xsl:choose>
-      <xsl:when test="not($outputName ='')">
-        <xsl:choose>
-          <xsl:when test="$STDOUT='true'">
-            <xsl:value-of select="$outputName"/>
-          </xsl:when>
-          <xsl:when test="contains($outputName,'.xml')">
-            <xsl:value-of select="substring-before($outputName,'.xml')"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$outputName"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:when test="contains($REQUEST,'.ID=')">
-        <xsl:call-template name="get-basename">
-          <xsl:with-param name="file">
-            <xsl:value-of select="substring-before($REQUEST,'.ID=')"/>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:when test="not($REQUEST='')">
-        <xsl:call-template name="get-basename">
-          <xsl:with-param name="file">
-            <xsl:value-of select="$REQUEST"/>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:when test="$STDOUT='true'">
-        <xsl:text>index.xml</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>index</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
+      <xsl:choose>
+         <xsl:when test="not($outputName ='')">
+            <xsl:choose>
+               <xsl:when test="$STDOUT='true'">
+                  <xsl:value-of select="$outputName"/>
+               </xsl:when>
+               <xsl:when test="contains($outputName,'.xml')">
+                  <xsl:value-of select="substring-before($outputName,'.xml')"/>
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:value-of select="$outputName"/>
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:when>
+         <xsl:when test="contains($REQUEST,'.ID=')">
+            <xsl:call-template name="get-basename">
+               <xsl:with-param name="file">
+                  <xsl:value-of select="substring-before($REQUEST,'.ID=')"/>
+               </xsl:with-param>
+            </xsl:call-template>
+         </xsl:when>
+         <xsl:when test="not($REQUEST='')">
+            <xsl:call-template name="get-basename">
+               <xsl:with-param name="file">
+                  <xsl:value-of select="$REQUEST"/>
+               </xsl:with-param>
+            </xsl:call-template>
+         </xsl:when>
+         <xsl:when test="$STDOUT='true'">
+            <xsl:text>index.xml</xsl:text>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:text>index</xsl:text>
+         </xsl:otherwise>
+      </xsl:choose>
   </xsl:variable>
-  <xd:doc>
-    <xd:short>[html] How to work out the filename component of a path</xd:short>
-    <xd:param name="file">filename</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[html] How to work out the filename component of a path<param name="file">filename</param>
+      </desc>
+   </doc>
   <xsl:template name="get-basename">
-    <xsl:param name="file"/>
-    <xsl:choose>
-      <xsl:when test="contains($file,'/')">
-        <xsl:call-template name="get-basename">
-          <xsl:with-param name="file">
-            <xsl:value-of select="substring-after($file,'/')"/>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:choose>
-          <xsl:when test="$STDOUT='true'">
-            <xsl:value-of select="$file"/>
-          </xsl:when>
-          <xsl:when test="contains($file,'.xml')">
-            <xsl:value-of select="substring-before($file,'.xml')"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$file"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
+      <xsl:param name="file"/>
+      <xsl:choose>
+         <xsl:when test="contains($file,'/')">
+            <xsl:call-template name="get-basename">
+               <xsl:with-param name="file">
+                  <xsl:value-of select="substring-after($file,'/')"/>
+               </xsl:with-param>
+            </xsl:call-template>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:choose>
+               <xsl:when test="$STDOUT='true'">
+                  <xsl:value-of select="$file"/>
+               </xsl:when>
+               <xsl:when test="contains($file,'.xml')">
+                  <xsl:value-of select="substring-before($file,'.xml')"/>
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:value-of select="$file"/>
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
 </xsl:stylesheet>

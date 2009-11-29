@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet
-  xmlns="http://www.w3.org/1999/xhtml"
-  exclude-result-prefixes="#default xd a fo local rng tei teix"
-  version="2.0"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:fo="http://www.w3.org/1999/XSL/Format"
-  xmlns:html="http://www.w3.org/1999/xhtml"
-  xmlns:local="http://www.pantor.com/ns/local"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples"
-  xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xd:doc type="stylesheet">
-    <xd:short> TEI stylesheet dealing with elements from the namesdates module,
-      making HTML output. </xd:short>
-    <xd:detail> This library is free software; you can redistribute it and/or
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                xmlns:fo="http://www.w3.org/1999/XSL/Format"
+                xmlns:html="http://www.w3.org/1999/xhtml"
+                xmlns:local="http://www.pantor.com/ns/local"
+                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:teix="http://www.tei-c.org/ns/Examples"
+                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="#default xd a fo local rng tei teix"
+                version="2.0">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+      <desc>
+         <p> TEI stylesheet dealing with elements from the namesdates module,
+      making HTML output. </p>
+         <p> This library is free software; you can redistribute it and/or
       modify it under the terms of the GNU Lesser General Public License as
       published by the Free Software Foundation; either version 2.1 of the
       License, or (at your option) any later version. This library is
@@ -24,27 +24,28 @@
       PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
       details. You should have received a copy of the GNU Lesser General Public
       License along with this library; if not, write to the Free Software
-      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
-    <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2008, TEI Consortium</xd:copyright>
-  </xd:doc>
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </p>
+         <p>Author: See AUTHORS</p>
+         <p>Id: $Id$</p>
+         <p>Copyright: 2008, TEI Consortium</p>
+      </desc>
+   </doc>
 
   <xsl:template match="tei:listPerson">
-    <ul>
-      <xsl:apply-templates/>
-    </ul>
+      <ul>
+         <xsl:apply-templates/>
+      </ul>
   </xsl:template>
 
   <xsl:template match="tei:person">
-    <li>
-      <xsl:apply-templates/>
-    </li>
+      <li>
+         <xsl:apply-templates/>
+      </li>
   </xsl:template>
 
   <xsl:template match="tei:affiliation">
-    <br/>
-    <xsl:apply-templates/>
+      <br/>
+      <xsl:apply-templates/>
   </xsl:template>
 
 </xsl:stylesheet>

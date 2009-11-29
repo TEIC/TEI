@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet exclude-result-prefixes="xd a rng tei teix"
-  version="2.0"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples"
-  xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xd:doc type="stylesheet">
-    <xd:short> TEI stylesheet dealing with elements from the drama module,
-      making LaTeX output. </xd:short>
-    <xd:detail> This library is free software; you can redistribute it and/or
+<xsl:stylesheet xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:teix="http://www.tei-c.org/ns/Examples"
+                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="xd a rng tei teix"
+                version="2.0">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+      <desc>
+         <p> TEI stylesheet dealing with elements from the drama module,
+      making LaTeX output. </p>
+         <p> This library is free software; you can redistribute it and/or
       modify it under the terms of the GNU Lesser General Public License as
       published by the Free Software Foundation; either version 2.1 of the
       License, or (at your option) any later version. This library is
@@ -19,162 +20,151 @@
       PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
       details. You should have received a copy of the GNU Lesser General Public
       License along with this library; if not, write to the Free Software
-      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
-    <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2008, TEI Consortium</xd:copyright>
-  </xd:doc>
-  <xd:doc>
-    <xd:short>Process elements tei:actor</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </p>
+         <p>Author: See AUTHORS</p>
+         <p>Id: $Id$</p>
+         <p>Copyright: 2008, TEI Consortium</p>
+      </desc>
+   </doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:actor</desc>
+   </doc>
   <xsl:template match="tei:actor">
-    <xsl:text>\textit{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>}</xsl:text>
+      <xsl:text>\textit{</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}</xsl:text>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:camera</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:camera</desc>
+   </doc>
   <xsl:template match="tei:camera">
-    <xsl:text>\textit{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>}</xsl:text>
+      <xsl:text>\textit{</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}</xsl:text>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:caption</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:caption</desc>
+   </doc>
   <xsl:template match="tei:caption">
-    <xsl:text>\textit{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>}</xsl:text>
+      <xsl:text>\textit{</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}</xsl:text>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:castGroup</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:castGroup</desc>
+   </doc>
   <xsl:template match="tei:castGroup"> 
-    <xsl:text>\begin{itemize} </xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>&#10; \end{itemize}</xsl:text>
+      <xsl:text>\begin{itemize} </xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>
+ \end{itemize}</xsl:text>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:castItem</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:castItem">&#10;\item 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:castItem</desc>
+   </doc>
+  <xsl:template match="tei:castItem">
+\item 
   <xsl:apply-templates/>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:castList</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:castList"><xsl:if test="tei:head">
-      <xsl:text> \par\textit{</xsl:text>
-      <xsl:for-each select="tei:head">
-        <xsl:apply-templates/>
-      </xsl:for-each>
-      <xsl:text>}&#10;</xsl:text>
-    </xsl:if> \begin{itemize} <xsl:apply-templates/> \end{itemize} </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:p/tei:stage</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:castList</desc>
+   </doc>
+  <xsl:template match="tei:castList">
+      <xsl:if test="tei:head">
+         <xsl:text> \par\textit{</xsl:text>
+         <xsl:for-each select="tei:head">
+            <xsl:apply-templates/>
+         </xsl:for-each>
+         <xsl:text>}
+</xsl:text>
+      </xsl:if> \begin{itemize} <xsl:apply-templates/> \end{itemize} </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:p/tei:stage</desc>
+   </doc>
   <xsl:template match="tei:p/tei:stage">
-    <xsl:text>\textit{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>}</xsl:text>
+      <xsl:text>\textit{</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}</xsl:text>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:role</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:role</desc>
+   </doc>
   <xsl:template match="tei:role">
-    <xsl:text>\textbf{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>}</xsl:text>
+      <xsl:text>\textbf{</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}</xsl:text>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:roleDesc</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:roleDesc</desc>
+   </doc>
   <xsl:template match="tei:roleDesc">
-    <xsl:text>\begin{quote}</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>\end{quote}</xsl:text>
+      <xsl:text>\begin{quote}</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>\end{quote}</xsl:text>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:set</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:set</desc>
+   </doc>
   <xsl:template match="tei:set">
-    <xsl:text>\textit{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>}</xsl:text>
+      <xsl:text>\textit{</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}</xsl:text>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:sound</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:sound</desc>
+   </doc>
   <xsl:template match="tei:sound">
-    <xsl:text>\textit{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>}</xsl:text>
+      <xsl:text>\textit{</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}</xsl:text>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:sp</xd:short>
-    <xd:detail/>
-  </xd:doc>
-  <xsl:template match="tei:sp"> \begin{description} \item[<xsl:apply-templates
-      select="tei:speaker"/>] <xsl:apply-templates
-      select="tei:p | tei:l | tei:lg | tei:seg |      tei:ab | tei:stage"/>
-    <xsl:text>\end{description}&#10;</xsl:text>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:sp</desc>
+   </doc>
+  <xsl:template match="tei:sp"> \begin{description} \item[<xsl:apply-templates select="tei:speaker"/>] <xsl:apply-templates select="tei:p | tei:l | tei:lg | tei:seg |      tei:ab | tei:stage"/>
+      <xsl:text>\end{description}
+</xsl:text>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:sp/tei:p</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:sp/tei:p</desc>
+   </doc>
   <xsl:template match="tei:sp/tei:p">
-    <xsl:apply-templates/>
+      <xsl:apply-templates/>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:stage</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:stage</desc>
+   </doc>
   <xsl:template match="tei:stage">
-    <xsl:text>&#10;\par&#10;</xsl:text>
-    <xsl:text>\textit{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>}\par </xsl:text>
+      <xsl:text>
+\par
+</xsl:text>
+      <xsl:text>\textit{</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}\par </xsl:text>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:sp/tei:stage</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:sp/tei:stage</desc>
+   </doc>
   <xsl:template match="tei:sp/tei:stage">
-    <xsl:text/>
-    <xsl:text>\textit{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>} </xsl:text>
+      <xsl:text/>
+      <xsl:text>\textit{</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>} </xsl:text>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:tech</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:tech</desc>
+   </doc>
   <xsl:template match="tei:tech">
-    <xsl:text>\textit{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>}</xsl:text>
+      <xsl:text>\textit{</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}</xsl:text>
   </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:view</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements tei:view</desc>
+   </doc>
   <xsl:template match="tei:view">
-    <xsl:text>\textit{</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>}</xsl:text>
+      <xsl:text>\textit{</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}</xsl:text>
   </xsl:template>
 </xsl:stylesheet>

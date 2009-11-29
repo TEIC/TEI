@@ -1,6 +1,32 @@
 DIRS=odds2 xhtml2 common2 slides2 latex2 fo2 docx profiles tools2
 OLDDIRS=slides fo html common latex odds
 PREFIX=/usr
+OXY=`locate stylesheetDocumentation.sh | head -1`
+TARGETS= \
+	latex2/tei.xsl \
+	xhtml2/tei.xsl \
+	fo2/tei.xsl \
+	odds2/odd2odd.xsl \
+	odds2/odd2relax.xsl \
+	odds2/odd2dtd.xsl \
+	slides2/teihtml-slides.xsl \
+	slides2/teilatex-slides.xsl \
+	profiles/default/docx/to.xsl \
+	profiles/default/fo/to.xsl \
+	profiles/default/html/to.xsl \
+	profiles/default/latex/to.xsl \
+	profiles/enrich/docx/to.xsl \
+	profiles/enrich/fo/to.xsl \
+	profiles/enrich/html/to.xsl \
+	profiles/enrich/latex/to.xsl \
+	profiles/iso/docx/to.xsl \
+	profiles/iso/fo/to.xsl \
+	profiles/iso/html/to.xsl \
+	profiles/iso/latex/to.xsl \
+	profiles/default/docx/from.xsl \
+	profiles/enrich/docx/from.xsl \
+	profiles/iso/docx/from.xsl 
+
 .PHONY: doc release common
 
 default:
@@ -54,19 +80,24 @@ p5: p4
 	 done)
 	perl -p -i -e 's/name="xhtml">false</name="xhtml">true</' release/p5/xml/tei/stylesheet/xhtml/tei-param.xsl
 
-common:
+common: doc
 	mkdir -p release/p4/xml/teip4/stylesheet
 	mkdir -p release/p5-2/xml/tei/stylesheet
 	cp *.css i18n.xml release/p4/xml/teip4/stylesheet
 	cp *.css i18n.xml release/p5-2/xml/tei/stylesheet
-	mkdir -p release/common/doc/tei-xsl-common/xsltdoc
-	-test -d xsltdoc && (cd doc; saxon configdoc.xsl xsltdoc.xsl)
+
+doc:
+	mkdir -p release/common/doc/tei-xsl-common
 	saxon -o customize.xml param.xml doc/param.xsl 
 	saxon -o style.xml param.xml  doc/paramform.xsl 
-	-test -d xsltdoc && cp -r doc/xsltdoc doc/*.png release/common/doc/tei-xsl-common
-	-test -d xsltdoc && cp doc/*.css release/common/doc/tei-xsl-common/xsltdoc
-	cp ChangeLog style.xml customize.xml LICENSE release/common/doc/tei-xsl-common
-	cp teixsl.xml release/common/doc/tei-xsl-common/index.xml
+	saxon -o  release/common/doc/tei-xsl-common/index.html teixsl.xml xhtml2/tei.xsl 
+	saxon -o  release/common/doc/tei-xsl-common/style.html style.xml xhtml2/tei.xsl 
+	saxon -o  release/common/doc/tei-xsl-common/customize.html customize.xml xhtml2/tei.xsl cssFile=tei.css 
+	cp teixsl.xml style.xml customize.xml release/common/doc/tei-xsl-common
+	cp tei.css ChangeLog LICENSE release/common/doc/tei-xsl-common
+	-${OXY} || exit 1
+	echo using oXygen stylesheet documentation generator
+	for i in ${TARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 
 test: p4 p5 p5-2 common
 	(cd release/p4/xml/teip4/stylesheet; rm i18n.xml; ln -s ../common/i18n.xml .)

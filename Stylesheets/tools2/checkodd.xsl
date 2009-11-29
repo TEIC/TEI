@@ -1,10 +1,9 @@
-<xsl:stylesheet 
-    xmlns:tei="http://www.tei-c.org/ns/1.0" 
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    xmlns:rng="http://relaxng.org/ns/structure/1.0"
-    exclude-result-prefixes="tei xsl rng"
-    version="2.0"
->
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                exclude-result-prefixes="tei xsl rng"
+                version="2.0">
 <!-- This library is free software; you can redistribute it and/or
       modify it under the terms of the GNU Lesser General Public License as
       published by the Free Software Foundation; either version 2.1 of the
@@ -23,14 +22,14 @@ $Id: checkxsl.xsl 6301 2009-05-10 21:09:26Z rahtz $
 -->
 
 <xsl:output method="text"/>
-<xsl:key name="SPECS" match="tei:*[@ident]" use="@ident"/>
+   <xsl:key name="SPECS" match="tei:*[@ident]" use="@ident"/>
 
-<xsl:template match="/">
-  <xsl:for-each select="//rng:ref">
-    <xsl:if test="not(key('SPECS',@name))">
-      <xsl:message>No *Spec defined for <xsl:value-of select="@name"/></xsl:message>
-    </xsl:if>
-  </xsl:for-each>
-</xsl:template>
+   <xsl:template match="/">
+      <xsl:for-each select="//rng:ref">
+         <xsl:if test="not(key('SPECS',@name))">
+            <xsl:message>No *Spec defined for <xsl:value-of select="@name"/>
+            </xsl:message>
+         </xsl:if>
+      </xsl:for-each>
+   </xsl:template>
 </xsl:stylesheet>
-

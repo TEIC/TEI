@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- 
 TEI XSLT stylesheet family
 $Date$, $Revision$, $Author$
@@ -20,19 +20,16 @@ XSL LaTeX stylesheet to make slides
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
    
--->
-<xsl:stylesheet 		
-    xmlns:xhtml="http://www.w3.org/1999/xhtml"
-    xmlns:atom="http://www.w3.org/2005/Atom"
-    xmlns:rng="http://relaxng.org/ns/structure/1.0" 
-    xmlns:teix="http://www.tei-c.org/ns/Examples" 
-    xmlns:tei="http://www.tei-c.org/ns/1.0" 
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-    xmlns:s="http://www.ascc.net/xml/schematron" 
-    xmlns:map="http://apache.org/cocoon/sitemap/1.0"
-    exclude-result-prefixes="a s map atom xhtml teix tei xsl rng"
-    version="2.0">
+--><xsl:stylesheet xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:atom="http://www.w3.org/2005/Atom"
+                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns:teix="http://www.tei-c.org/ns/Examples"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                xmlns:s="http://www.ascc.net/xml/schematron"
+                xmlns:map="http://apache.org/cocoon/sitemap/1.0"
+                exclude-result-prefixes="a s map atom xhtml teix tei xsl rng"
+                version="2.0">
   <xsl:import href="../latex2/tei.xsl"/>
   <xsl:import href="../common2/verbatim.xsl"/>
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:*"/>
@@ -56,8 +53,9 @@ XSL LaTeX stylesheet to make slides
   <xsl:param name="pause">true</xsl:param>
 
   <xsl:template name="verbatim-lineBreak">
-    <xsl:param name="id"/>
-    <xsl:text>\mbox{}\newline &#10;</xsl:text>
+      <xsl:param name="id"/>
+      <xsl:text>\mbox{}\newline 
+</xsl:text>
   </xsl:template>
 
   <xsl:template name="latexPackages">
@@ -81,234 +79,245 @@ XSL LaTeX stylesheet to make slides
 \date{<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition/tei:date"/>}
 \institute{<xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:authority"/>}
 <xsl:if test="not($latexLogo='')">
-<xsl:text>\pgfdeclareimage[height=1cm]{logo}{</xsl:text>
-<xsl:choose>
-  <xsl:when test="$realFigures='true'">
-    <xsl:value-of select="$latexLogo"/>
-  </xsl:when>
-  <xsl:otherwise>
-    <xsl:text>FIG0</xsl:text>
-  </xsl:otherwise>
-</xsl:choose>
-<xsl:text>}</xsl:text>
+         <xsl:text>\pgfdeclareimage[height=1cm]{logo}{</xsl:text>
+         <xsl:choose>
+            <xsl:when test="$realFigures='true'">
+               <xsl:value-of select="$latexLogo"/>
+            </xsl:when>
+            <xsl:otherwise>
+               <xsl:text>FIG0</xsl:text>
+            </xsl:otherwise>
+         </xsl:choose>
+         <xsl:text>}</xsl:text>
 \logo{\pgfuseimage{logo}}
 </xsl:if>
-</xsl:template>
+   </xsl:template>
 
-<xsl:template match="tei:authority/tei:address/tei:addrLine">
+   <xsl:template match="tei:authority/tei:address/tei:addrLine">
  \newline <xsl:apply-templates/>
-</xsl:template> 
+   </xsl:template> 
 
-<xsl:template name="latexBegin">
+   <xsl:template name="latexBegin">
 \frame{\maketitle}
 </xsl:template>
 
-<xsl:template match="tei:divGen[@type='toc']">
+   <xsl:template match="tei:divGen[@type='toc']">
   \begin{frame} 
   \frametitle{Outline} 
   \tableofcontents
   \end{frame}
 </xsl:template>
 
-<xsl:template match="tei:div/tei:head"/>
-<xsl:template match="tei:div0/tei:head"/>
-<xsl:template match="tei:div1/tei:head"/>
-<xsl:template match="tei:div2/tei:head"/>
+   <xsl:template match="tei:div/tei:head"/>
+   <xsl:template match="tei:div0/tei:head"/>
+   <xsl:template match="tei:div1/tei:head"/>
+   <xsl:template match="tei:div2/tei:head"/>
 
-<xsl:template match="tei:div0">
- <xsl:call-template name="makeOuterFrame"/>
-</xsl:template>
-
-<xsl:template match="tei:div1">
-  <xsl:choose>
-    <xsl:when test="parent::tei:div0">
-      <xsl:call-template name="makeFrame"/>
-    </xsl:when>
-    <xsl:when test="tei:div2">
+   <xsl:template match="tei:div0">
       <xsl:call-template name="makeOuterFrame"/>
-    </xsl:when>
-    <xsl:otherwise>
+   </xsl:template>
+
+   <xsl:template match="tei:div1">
+      <xsl:choose>
+         <xsl:when test="parent::tei:div0">
+            <xsl:call-template name="makeFrame"/>
+         </xsl:when>
+         <xsl:when test="tei:div2">
+            <xsl:call-template name="makeOuterFrame"/>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:call-template name="makeFrame"/>
+         </xsl:otherwise>
+      </xsl:choose>
+   </xsl:template>
+
+   <xsl:template match="tei:div2|tei:div3">
       <xsl:call-template name="makeFrame"/>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
+   </xsl:template>
 
-<xsl:template match="tei:div2|tei:div3">
-  <xsl:call-template name="makeFrame"/>
-</xsl:template>
+   <xsl:template match="tei:div">
+      <xsl:choose>
+         <xsl:when test="tei:div and parent::tei:body">
+            <xsl:call-template name="makeOuterFrame"/>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:call-template name="makeFrame"/>
+         </xsl:otherwise>
+      </xsl:choose>
+   </xsl:template>
 
-<xsl:template match="tei:div">
-  <xsl:choose>
-    <xsl:when test="tei:div and parent::tei:body">
-      <xsl:call-template name="makeOuterFrame"/>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:call-template name="makeFrame"/>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
-
-<xsl:template name="makeOuterFrame">
-  <xsl:text>&#10;\section{</xsl:text>
-  <xsl:for-each select="tei:head">
-    <xsl:apply-templates/>
-  </xsl:for-each>
-   <xsl:text>}</xsl:text>
-  <xsl:text>&#10;\begin{frame} 
+   <xsl:template name="makeOuterFrame">
+      <xsl:text>
+\section{</xsl:text>
+      <xsl:for-each select="tei:head">
+         <xsl:apply-templates/>
+      </xsl:for-each>
+      <xsl:text>}</xsl:text>
+      <xsl:text>
+\begin{frame} 
   \frametitle{</xsl:text>
-    <xsl:for-each select="tei:head">
-      <xsl:apply-templates/>
+      <xsl:for-each select="tei:head">
+         <xsl:apply-templates/>
       </xsl:for-each>
       <xsl:text>}</xsl:text>
       <xsl:choose>
-	<xsl:when test="tei:*[not(starts-with(local-name(.),'div'))]">
-	  <xsl:apply-templates
-	      select="tei:*[not(starts-with(local-name(.),'div'))]"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:text>{\Huge&#x2026;}</xsl:text>
-	</xsl:otherwise>
+	        <xsl:when test="tei:*[not(starts-with(local-name(.),'div'))]">
+	           <xsl:apply-templates select="tei:*[not(starts-with(local-name(.),'div'))]"/>
+	        </xsl:when>
+	        <xsl:otherwise>
+	           <xsl:text>{\Huge…}</xsl:text>
+	        </xsl:otherwise>
       </xsl:choose>
-      <xsl:text>&#10;\end{frame}&#10;</xsl:text>
+      <xsl:text>
+\end{frame}
+</xsl:text>
       <xsl:apply-templates select="tei:div1|tei:div2|tei:div"/>
   </xsl:template>
 
-<xsl:template name="makeFrame">
-  <xsl:text>&#10;\begin{frame}</xsl:text>
-  <xsl:choose>
-    <xsl:when test="@rend='fragile'">
-      <xsl:text>[fragile]</xsl:text>
-    </xsl:when>
-    <xsl:when test=".//tei:eg">
-      <xsl:text>[fragile]</xsl:text>
-    </xsl:when>
-    <xsl:when test=".//tei:Output">
-      <xsl:text>[fragile]</xsl:text>
-    </xsl:when>
-    <xsl:when test=".//tei:Screen">
-      <xsl:text>[fragile]</xsl:text>
-    </xsl:when>
-    <xsl:when test=".//teix:egXML">
-      <xsl:text>[fragile]</xsl:text>
-    </xsl:when>
-  </xsl:choose>
-  <xsl:text>&#10;\frametitle{</xsl:text>
-  <xsl:for-each select="tei:head">
-    <xsl:apply-templates/>
-  </xsl:for-each>
-  <xsl:text>}</xsl:text>
-  <xsl:apply-templates/>
-  <xsl:text>&#10;\end{frame}&#10;</xsl:text>
-</xsl:template>
-
-<xsl:template name="makePic">
-  <xsl:if test="@xml:id">
-    <xsl:text>\hypertarget{</xsl:text>
-    <xsl:value-of select="@xml:id"/>
-    <xsl:text>}{}</xsl:text>
-  </xsl:if>
-  <xsl:if test="@rend='centre'">
-    <xsl:text>\centerline{</xsl:text>
-  </xsl:if>
-  <xsl:text>\includegraphics[</xsl:text>
-  <xsl:call-template name="graphicsAttributes">
-    <xsl:with-param name="mode">latex</xsl:with-param>
-  </xsl:call-template>
-  <xsl:if test="not(@width) and not (@height) and not(@scale)">
-    <xsl:text>width=\textwidth</xsl:text>
-  </xsl:if>
-  <xsl:text>]{</xsl:text>
-  <xsl:choose>
-    <xsl:when test="@url">
-      <xsl:value-of select="@url"/>
-    </xsl:when>
-    <xsl:when test="@entity">
-      <xsl:value-of select="unparsed-entity-uri(@entity)"/>
-    </xsl:when>
-  </xsl:choose>
-  <xsl:text>}</xsl:text>
-    <xsl:if test="@rend='centre'">
+   <xsl:template name="makeFrame">
+      <xsl:text>
+\begin{frame}</xsl:text>
+      <xsl:choose>
+         <xsl:when test="@rend='fragile'">
+            <xsl:text>[fragile]</xsl:text>
+         </xsl:when>
+         <xsl:when test=".//tei:eg">
+            <xsl:text>[fragile]</xsl:text>
+         </xsl:when>
+         <xsl:when test=".//tei:Output">
+            <xsl:text>[fragile]</xsl:text>
+         </xsl:when>
+         <xsl:when test=".//tei:Screen">
+            <xsl:text>[fragile]</xsl:text>
+         </xsl:when>
+         <xsl:when test=".//teix:egXML">
+            <xsl:text>[fragile]</xsl:text>
+         </xsl:when>
+      </xsl:choose>
+      <xsl:text>
+\frametitle{</xsl:text>
+      <xsl:for-each select="tei:head">
+         <xsl:apply-templates/>
+      </xsl:for-each>
       <xsl:text>}</xsl:text>
-    </xsl:if>
-</xsl:template>
+      <xsl:apply-templates/>
+      <xsl:text>
+\end{frame}
+</xsl:text>
+   </xsl:template>
 
-<xsl:template match="tei:hi[not(@rend)]">
-  <xsl:text>\alert{</xsl:text>
-  <xsl:apply-templates/>
-  <xsl:text>}</xsl:text>
-</xsl:template>
+   <xsl:template name="makePic">
+      <xsl:if test="@xml:id">
+         <xsl:text>\hypertarget{</xsl:text>
+         <xsl:value-of select="@xml:id"/>
+         <xsl:text>}{}</xsl:text>
+      </xsl:if>
+      <xsl:if test="@rend='centre'">
+         <xsl:text>\centerline{</xsl:text>
+      </xsl:if>
+      <xsl:text>\includegraphics[</xsl:text>
+      <xsl:call-template name="graphicsAttributes">
+         <xsl:with-param name="mode">latex</xsl:with-param>
+      </xsl:call-template>
+      <xsl:if test="not(@width) and not (@height) and not(@scale)">
+         <xsl:text>width=\textwidth</xsl:text>
+      </xsl:if>
+      <xsl:text>]{</xsl:text>
+      <xsl:choose>
+         <xsl:when test="@url">
+            <xsl:value-of select="@url"/>
+         </xsl:when>
+         <xsl:when test="@entity">
+            <xsl:value-of select="unparsed-entity-uri(@entity)"/>
+         </xsl:when>
+      </xsl:choose>
+      <xsl:text>}</xsl:text>
+      <xsl:if test="@rend='centre'">
+         <xsl:text>}</xsl:text>
+      </xsl:if>
+   </xsl:template>
 
-<xsl:template match="tei:item[@rend='pause' or parent::tei:list/@rend='pause']">
-  <xsl:text>\item </xsl:text>
-  <xsl:apply-templates/>
-  <xsl:if test="following-sibling::tei:item and $pause='true'">
-    <xsl:text>\pause </xsl:text>
-  </xsl:if>
-</xsl:template>
+   <xsl:template match="tei:hi[not(@rend)]">
+      <xsl:text>\alert{</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}</xsl:text>
+   </xsl:template>
 
-<xsl:template match="tei:eg">
-  <xsl:text>\begin{Verbatim}[fontsize=\scriptsize,frame=single,fillcolor=\color{yellow}]&#10;</xsl:text>
-  <xsl:apply-templates mode="eg"/>
-  <xsl:text>\end{Verbatim}&#10;</xsl:text>
-</xsl:template>
+   <xsl:template match="tei:item[@rend='pause' or parent::tei:list/@rend='pause']">
+      <xsl:text>\item </xsl:text>
+      <xsl:apply-templates/>
+      <xsl:if test="following-sibling::tei:item and $pause='true'">
+         <xsl:text>\pause </xsl:text>
+      </xsl:if>
+   </xsl:template>
+
+   <xsl:template match="tei:eg">
+      <xsl:text>\begin{Verbatim}[fontsize=\scriptsize,frame=single,fillcolor=\color{yellow}]
+</xsl:text>
+      <xsl:apply-templates mode="eg"/>
+      <xsl:text>\end{Verbatim}
+</xsl:text>
+   </xsl:template>
 
   <xsl:template match="text()" mode="eg">
-    <xsl:choose>
-      <xsl:when test="starts-with(.,'&#10;')">
-        <xsl:value-of select="substring-after(.,'&#10;')"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="."/>
-      </xsl:otherwise>
-    </xsl:choose>
+      <xsl:choose>
+         <xsl:when test="starts-with(.,'&#xA;')">
+            <xsl:value-of select="substring-after(.,'&#xA;')"/>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:value-of select="."/>
+         </xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
 
   <xsl:template match="teix:egXML">
-    <xsl:param name="simple">false</xsl:param>
-    <xsl:param name="highlight"></xsl:param>
-    <xsl:variable name="fontsize">
-    <xsl:choose>
-      <xsl:when test="@rend='teeny'">
-	<xsl:text>{5.5pt}{6pt}</xsl:text>
-      </xsl:when>
-      <xsl:when test="@rend='tiny'">
-	<xsl:text>{6.5pt}{7pt}</xsl:text>
-      </xsl:when>
-      <xsl:when test="@rend='small'">
-	<xsl:text>{7.5pt}{8pt}</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:text>{8.5pt}{9pt}</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-    </xsl:variable>
+      <xsl:param name="simple">false</xsl:param>
+      <xsl:param name="highlight"/>
+      <xsl:variable name="fontsize">
+         <xsl:choose>
+            <xsl:when test="@rend='teeny'">
+	              <xsl:text>{5.5pt}{6pt}</xsl:text>
+            </xsl:when>
+            <xsl:when test="@rend='tiny'">
+	              <xsl:text>{6.5pt}{7pt}</xsl:text>
+            </xsl:when>
+            <xsl:when test="@rend='small'">
+	              <xsl:text>{7.5pt}{8pt}</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+	              <xsl:text>{8.5pt}{9pt}</xsl:text>
+            </xsl:otherwise>
+         </xsl:choose>
+      </xsl:variable>
 \bgroup\ttfamily\fontsize<xsl:value-of select="$fontsize"/>\selectfont\par
 \begin{exampleblock}{}
 <xsl:text>\noindent\ttfamily\mbox{}</xsl:text>
-<xsl:apply-templates mode="verbatim">
-  <xsl:with-param name="highlight">
-    <xsl:value-of select="$highlight"/>
-  </xsl:with-param>
-</xsl:apply-templates>
+      <xsl:apply-templates mode="verbatim">
+         <xsl:with-param name="highlight">
+            <xsl:value-of select="$highlight"/>
+         </xsl:with-param>
+      </xsl:apply-templates>
 \end{exampleblock}
 \par\egroup
   </xsl:template>
 
   <xsl:template match="tei:p[@rend='box']">
-    <xsl:text>\par\begin{exampleblock}{}&#10;</xsl:text>
-    <xsl:apply-templates/>
-    <xsl:text>\end{exampleblock}\par&#10;</xsl:text>
+      <xsl:text>\par\begin{exampleblock}{}
+</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>\end{exampleblock}\par
+</xsl:text>
   </xsl:template>
 
 
-<xsl:template match="tei:table">
-  <xsl:text>\par  
+   <xsl:template match="tei:table">
+      <xsl:text>\par  
   \begin{scriptsize}
   \begin{longtable}</xsl:text>
-  <xsl:call-template name="makeTable"/>
-  <xsl:text>\end{longtable}
+      <xsl:call-template name="makeTable"/>
+      <xsl:text>\end{longtable}
   \end{scriptsize}</xsl:text>
-</xsl:template>
+   </xsl:template>
 
   <xsl:template name="makeFigureStart">
     \noindent
@@ -317,55 +326,54 @@ XSL LaTeX stylesheet to make slides
   <xsl:template name="makeFigureEnd">
   </xsl:template>
 
-<xsl:template name="tableHline">
-<xsl:text> \hline </xsl:text>
-</xsl:template>
+   <xsl:template name="tableHline">
+      <xsl:text> \hline </xsl:text>
+   </xsl:template>
 
-<xsl:template match="tei:att">
-  <xsl:text>\emph{@</xsl:text>
-    <xsl:apply-templates/>
-  <xsl:text>}</xsl:text>
+   <xsl:template match="tei:att">
+      <xsl:text>\emph{@</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}</xsl:text>
 
-</xsl:template>
+   </xsl:template>
 
 
   <xsl:template name="Text">
-    <xsl:param name="words"/>
-    <xsl:choose>
-      <xsl:when test="contains($words,'&amp;')">
-	<xsl:value-of
-	    select="substring-before($words,'&amp;')"/>
-	<xsl:text>&amp;amp;</xsl:text>
-	<xsl:call-template name="Text">
-	  <xsl:with-param name="words">
-	<xsl:value-of select="translate(substring-after($words,'&amp;'),'\{}','&#8421;&#10100;&#10101;')"/>
-	  </xsl:with-param>
-	</xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:value-of select="translate($words,'\{}','&#8421;&#10100;&#10101;')"/>
-      </xsl:otherwise>
-    </xsl:choose>
+      <xsl:param name="words"/>
+      <xsl:choose>
+         <xsl:when test="contains($words,'&amp;')">
+	           <xsl:value-of select="substring-before($words,'&amp;')"/>
+	           <xsl:text>&amp;amp;</xsl:text>
+	           <xsl:call-template name="Text">
+	              <xsl:with-param name="words">
+	                 <xsl:value-of select="translate(substring-after($words,'&amp;'),'\{}','⃥❴❵')"/>
+	              </xsl:with-param>
+	           </xsl:call-template>
+         </xsl:when>
+         <xsl:otherwise>
+	           <xsl:value-of select="translate($words,'\{}','⃥❴❵')"/>
+         </xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
 
 
-<xsl:template match="@*" mode="attributetext">
-  <xsl:choose>
-    <xsl:when test="string-length(.)&gt;$attLength and contains(.,' ')">
-      <xsl:call-template name="verbatim-reformatText">
-	<xsl:with-param name="sofar">0</xsl:with-param>
-	<xsl:with-param name="indent">
-	  <xsl:text> </xsl:text>
-	</xsl:with-param>
-	<xsl:with-param name="text">
-	  <xsl:value-of select="normalize-space(translate(.,'\{}','&#8421;&#10100;&#10101;'))"/>
-	</xsl:with-param>
-      </xsl:call-template>
-    </xsl:when>
-    <xsl:otherwise>
-	<xsl:value-of select="translate(.,'\{}','&#8421;&#10100;&#10101;')"/>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
+   <xsl:template match="@*" mode="attributetext">
+      <xsl:choose>
+         <xsl:when test="string-length(.)&gt;$attLength and contains(.,' ')">
+            <xsl:call-template name="verbatim-reformatText">
+	              <xsl:with-param name="sofar">0</xsl:with-param>
+	              <xsl:with-param name="indent">
+	                 <xsl:text> </xsl:text>
+	              </xsl:with-param>
+	              <xsl:with-param name="text">
+	                 <xsl:value-of select="normalize-space(translate(.,'\{}','⃥❴❵'))"/>
+	              </xsl:with-param>
+            </xsl:call-template>
+         </xsl:when>
+         <xsl:otherwise>
+	           <xsl:value-of select="translate(.,'\{}','⃥❴❵')"/>
+         </xsl:otherwise>
+      </xsl:choose>
+   </xsl:template>
 
 </xsl:stylesheet>

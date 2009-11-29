@@ -1,12 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:tei="http://www.tei-c.org/ns/1.0" version="2.0" xmlns:iso="http://www.iso.org/ns/1.0"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:iso="http://www.iso.org/ns/1.0"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:o="urn:schemas-microsoft-com:office:office"
                 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
                 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-                xmlns:v="urn:schemas-microsoft-com:vml" xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
+                xmlns:v="urn:schemas-microsoft-com:vml"
+                xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
                 xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
                 xmlns:w10="urn:schemas-microsoft-com:office:word"
@@ -17,6 +19,7 @@
                 xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
                 xmlns:xd="http://www.pnp-software.com/XSLTdoc"
                 xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
+                version="2.0"
                 exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn tei teidocx">
     <!-- import conversion style -->
     <xsl:import href="../../../docx/to/to.xsl"/>
@@ -26,9 +29,10 @@
     <xsl:include href="default-functions.xsl"/>
     
     
-    <xd:doc type="stylesheet">
-        <xd:short> TEI stylesheet for making Word docx files from TEI XML (see tei-docx.xsl) for Vesta </xd:short>
-        <xd:detail> This library is free software; you can redistribute it and/or
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+      <desc>
+         <p> TEI stylesheet for making Word docx files from TEI XML (see tei-docx.xsl) for Vesta </p>
+         <p> This library is free software; you can redistribute it and/or
             modify it under the terms of the GNU Lesser General Public License as
             published by the Free Software Foundation; either version 2.1 of the
             License, or (at your option) any later version. This library is
@@ -37,14 +41,15 @@
             PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
             details. You should have received a copy of the GNU Lesser General Public
             License along with this library; if not, write to the Free Software
-            Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
-        <xd:author>See AUTHORS</xd:author>
-        <xd:cvsId>$Id$</xd:cvsId>
-        <xd:copyright>2008, TEI Consortium</xd:copyright>
-    </xd:doc>
+            Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </p>
+         <p>Author: See AUTHORS</p>
+         <p>Id: $Id$</p>
+         <p>Copyright: 2008, TEI Consortium</p>
+      </desc>
+   </doc>
     
     <xsl:param name="bulletOne">•</xsl:param>
-    <xsl:param name="bulletTwo">&#xF0BE;</xsl:param>
+    <xsl:param name="bulletTwo"></xsl:param>
 
     <xsl:param name="word-directory">..</xsl:param>
     <xsl:param name="debug">false</xsl:param>
@@ -54,13 +59,13 @@
     
     <!-- Styles -->
     
-    <xsl:template match="tei:foreign"
-		  mode="get-style">teiforeign</xsl:template>
+    <xsl:template match="tei:foreign" mode="get-style">teiforeign</xsl:template>
 
     <xsl:template match="tei:cit" mode="get-style">Quote</xsl:template>
     <xsl:template match="tei:date" mode="get-style">teidate</xsl:template>
     <xsl:template match="tei:formula" mode="get-style">Formula</xsl:template>
-    <xsl:template match="tei:list[@type='termlist' and ancestor-or-self::*/@type='termsAndDefinitions']/tei:item/tei:abbr" mode="get-style">ExtRef</xsl:template>
+    <xsl:template match="tei:list[@type='termlist' and ancestor-or-self::*/@type='termsAndDefinitions']/tei:item/tei:abbr"
+                 mode="get-style">ExtRef</xsl:template>
     <xsl:template match="tei:mentioned" mode="get-style">teimentioned</xsl:template>
     <xsl:template match="tei:orgName" mode="get-style">orgName</xsl:template>
     <xsl:template match="tei:p[@rend]" mode="get-style">
@@ -84,38 +89,39 @@
     
     <xsl:template match="tei:editionStmt">
         <w:r>
-            <w:t><xsl:value-of select="tei:edition"/> Edition</w:t>
+            <w:t>
+            <xsl:value-of select="tei:edition"/> Edition</w:t>
         </w:r>
     </xsl:template>
 
     <xsl:template match="tei:label[following-sibling::tei:*[1]/self::tei:item]">
         <xsl:param name="nop"/>   
-	<xsl:variable name="pair">
-	  <tei:list>
-	    <tei:glossListEntry count="{count(ancestor::tei:list)}">
-	      <tei:hi rend="bold">
-		<xsl:apply-templates mode="iden"/>
-	      </tei:hi>
-	      <tei:lb/>
-	      <xsl:for-each select="following-sibling::tei:item[1]">
-		<xsl:apply-templates mode="iden"/>
-	      </xsl:for-each>
-	    </tei:glossListEntry>
-	  </tei:list>
-	</xsl:variable>
-	<xsl:apply-templates select="$pair/tei:list/tei:glossListEntry"/>
+	     <xsl:variable name="pair">
+	        <tei:list>
+	           <tei:glossListEntry count="{count(ancestor::tei:list)}">
+	              <tei:hi rend="bold">
+		                <xsl:apply-templates mode="iden"/>
+	              </tei:hi>
+	              <tei:lb/>
+	              <xsl:for-each select="following-sibling::tei:item[1]">
+		                <xsl:apply-templates mode="iden"/>
+	              </xsl:for-each>
+	           </tei:glossListEntry>
+	        </tei:list>
+	     </xsl:variable>
+	     <xsl:apply-templates select="$pair/tei:list/tei:glossListEntry"/>
     </xsl:template>
 
     <xsl:template match="tei:glossListEntry">
         <xsl:call-template name="block-element">
-	  <xsl:with-param name="style" select="dl"/>
-	  <xsl:with-param name="pPr">
-	    <w:pPr>
-	      <w:pStyle w:val="dl"/>
-	      <w:ind w:left="360" w:hanging="360"/>
-	    </w:pPr>
-	  </xsl:with-param>
-	</xsl:call-template>
+	        <xsl:with-param name="style" select="dl"/>
+	        <xsl:with-param name="pPr">
+	           <w:pPr>
+	              <w:pStyle w:val="dl"/>
+	              <w:ind w:left="360" w:hanging="360"/>
+	           </w:pPr>
+	        </xsl:with-param>
+	     </xsl:call-template>
     </xsl:template>
 
     <xsl:template match="tei:pb">
@@ -233,8 +239,7 @@
                 <w:pPr>
                     <w:pStyle>
                         <xsl:attribute name="w:val">
-                            <xsl:value-of
-                                select="concat(translate(substring(parent::tei:div/@type,1,1),$lowercase,$uppercase),substring(parent::tei:div/@type,2))"/>
+                            <xsl:value-of select="concat(translate(substring(parent::tei:div/@type,1,1),$lowercase,$uppercase),substring(parent::tei:div/@type,2))"/>
                         </xsl:attribute>
                     </w:pStyle>
                 </w:pPr>
@@ -252,24 +257,24 @@
 
     <!-- fake listPerson into an unordered list -->
   <xsl:template match="tei:listPerson">
-    <xsl:variable name="mylist">
-      <tei:list type="unordered">
-	    <xsl:apply-templates/>
-      </tei:list>
-    </xsl:variable>
-    <xsl:apply-templates select="$mylist"/>
+      <xsl:variable name="mylist">
+         <tei:list type="unordered">
+	           <xsl:apply-templates/>
+         </tei:list>
+      </xsl:variable>
+      <xsl:apply-templates select="$mylist"/>
   </xsl:template>
 
   <xsl:template match="tei:person">
-    <tei:item>
-      <xsl:copy-of select="*|text()"/>
-    </tei:item>
+      <tei:item>
+         <xsl:copy-of select="*|text()"/>
+      </tei:item>
   </xsl:template>
 
   <xsl:template match="tei:affiliation">
-    <w:r>
+      <w:r>
         <w:br/>
-    </w:r>   
+      </w:r>   
      <xsl:apply-templates/>
   </xsl:template>
 
@@ -399,8 +404,7 @@
     
     <xsl:template match="*" mode="iden">
       <xsl:copy>
-	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="iden"
-			     />
+	        <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="iden"/>
       </xsl:copy>
     </xsl:template>
 

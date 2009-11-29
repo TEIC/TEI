@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet   
-    xmlns:s="http://www.ascc.net/xml/schematron"
-    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-    xmlns:tei="http://www.tei-c.org/ns/1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="s xd tei" 
-    version="2.0">
+<xsl:stylesheet xmlns:s="http://www.ascc.net/xml/schematron"
+                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="s xd tei"
+                version="2.0">
   <xsl:import href="../common2/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
   <xsl:import href="../common2/verbatim.xsl"/>
-  <xd:doc type="stylesheet">
-    <xd:short>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+      <desc>
+         <p>
     TEI stylesheet for making LaTeX output.
-      </xd:short>
-    <xd:detail>
+      </p>
+         <p>
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
     License as published by the Free Software Foundation; either
@@ -30,11 +30,12 @@
 
    
    
-      </xd:detail>
-    <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2008, TEI Consortium</xd:copyright>
-  </xd:doc>
+      </p>
+         <p>Author: See AUTHORS</p>
+         <p>Id: $Id$</p>
+         <p>Copyright: 2008, TEI Consortium</p>
+      </desc>
+   </doc>
   <xsl:output method="text" encoding="utf8"/>
   <xsl:strip-space elements="*"/>
   <xsl:include href="core.xsl"/>
@@ -66,49 +67,49 @@
   <xsl:param name="endNamespace"/>
   <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
   <xsl:variable name="docClass">
-    <xsl:choose>
-      <xsl:when test="/tei:TEI[@rend='letter']">
-        <xsl:text>letter</xsl:text>
-      </xsl:when>
-      <xsl:when test="/tei:TEI[@rend='book']">
-        <xsl:text>book</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>article</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
+      <xsl:choose>
+         <xsl:when test="/tei:TEI[@rend='letter']">
+            <xsl:text>letter</xsl:text>
+         </xsl:when>
+         <xsl:when test="/tei:TEI[@rend='book']">
+            <xsl:text>book</xsl:text>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:text>article</xsl:text>
+         </xsl:otherwise>
+      </xsl:choose>
   </xsl:variable>
-  <xd:doc>
-    <xd:short>Process elements  processing-instruction()[name(.)='tex']</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elements  processing-instruction()[name(.)='tex']</desc>
+   </doc>
   <xsl:template match="processing-instruction()[name(.)='tex']">
-    <xsl:value-of select="."/>
+      <xsl:value-of select="."/>
   </xsl:template>
 
   <xsl:template name="verbatim-lineBreak">
-    <xsl:param name="id"/>
-    <xsl:text>\mbox{}\newline &#10;</xsl:text>
+      <xsl:param name="id"/>
+      <xsl:text>\mbox{}\newline 
+</xsl:text>
   </xsl:template>
 
   <xsl:template name="verbatim-createElement">
-    <xsl:param name="name"/>
-    <xsl:param name="special"/>
-    <xsl:text>\textbf{</xsl:text>
-    <xsl:value-of select="$name"/>
-    <xsl:text>}</xsl:text>
+      <xsl:param name="name"/>
+      <xsl:param name="special"/>
+      <xsl:text>\textbf{</xsl:text>
+      <xsl:value-of select="$name"/>
+      <xsl:text>}</xsl:text>
   </xsl:template>
 
   <xsl:template name="verbatim-newLine"/>
 
   <xsl:template name="verbatim-createAttribute">
-    <xsl:param name="name"/>
-    <xsl:value-of select="$name"/>
+      <xsl:param name="name"/>
+      <xsl:value-of select="$name"/>
   </xsl:template>
 
   <xsl:template name="verbatim-Text">
-    <xsl:param name="words"/>
-    <xsl:value-of select="translate($words,'\{}','&#8421;&#10100;&#10101;')"/>
+      <xsl:param name="words"/>
+      <xsl:value-of select="translate($words,'\{}','⃥❴❵')"/>
   </xsl:template>
 
 

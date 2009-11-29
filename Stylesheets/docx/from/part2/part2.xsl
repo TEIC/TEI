@@ -1,41 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0"
-		xmlns:cals="http://www.oasis-open.org/specs/tm9901" 
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:prop="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
-    xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
-    xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" 
-    xmlns:dc="http://purl.org/dc/elements/1.1/" 
-    xmlns:dcterms="http://purl.org/dc/terms/" 
-    xmlns:dcmitype="http://purl.org/dc/dcmitype/"	
-    xmlns:iso="http://www.iso.org/ns/1.0"
-    xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-    xmlns:mml="http://www.w3.org/1998/Math/MathML"
-    xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main" 
-    xmlns:mv="urn:schemas-microsoft-com:mac:vml" 
-    xmlns:o="urn:schemas-microsoft-com:office:office"
-    xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
-    xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-    xmlns:rel="http://schemas.openxmlformats.org/package/2006/relationships"
-    xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
-    xmlns:tei="http://www.tei-c.org/ns/1.0" 
-    xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-    xmlns:v="urn:schemas-microsoft-com:vml"
-    xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:w10="urn:schemas-microsoft-com:office:word"
-    xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-    xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
-    xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
-    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-    xmlns="http://www.tei-c.org/ns/1.0"
-    exclude-result-prefixes="a cp dc dcterms dcmitype prop
-    iso m mml mo mv o pic r rel cals
-    tbx tei teidocx v xs ve w10 w wne wp xd">
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet xmlns:cals="http://www.oasis-open.org/specs/tm9901"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:prop="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
+                xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
+                xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"
+                xmlns:dc="http://purl.org/dc/elements/1.1/"
+                xmlns:dcterms="http://purl.org/dc/terms/"
+                xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+                xmlns:iso="http://www.iso.org/ns/1.0"
+                xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
+                xmlns:mml="http://www.w3.org/1998/Math/MathML"
+                xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
+                xmlns:mv="urn:schemas-microsoft-com:mac:vml"
+                xmlns:o="urn:schemas-microsoft-com:office:office"
+                xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
+                xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+                xmlns:rel="http://schemas.openxmlformats.org/package/2006/relationships"
+                xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
+                xmlns:v="urn:schemas-microsoft-com:vml"
+                xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:w10="urn:schemas-microsoft-com:office:word"
+                xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+                xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
+                xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                xmlns="http://www.tei-c.org/ns/1.0"
+                version="2.0"
+                exclude-result-prefixes="a cp dc dcterms dcmitype prop     iso m mml mo mv o pic r rel cals     tbx tei teidocx v xs ve w10 w wne wp xd">
     
-    <xd:doc type="stylesheet">
-        <xd:short> TEI stylesheet for converting Word docx files to TEI </xd:short>
-        <xd:detail> This library is free software; you can redistribute it and/or
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+      <desc>
+         <p> TEI stylesheet for converting Word docx files to TEI </p>
+         <p> This library is free software; you can redistribute it and/or
             modify it under the terms of the GNU Lesser General Public License as
             published by the Free Software Foundation; either version 2.1 of the
             License, or (at your option) any later version. This library is
@@ -44,11 +43,12 @@
             PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
             details. You should have received a copy of the GNU Lesser General Public
             License along with this library; if not, write to the Free Software
-            Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
-        <xd:author>See AUTHORS</xd:author>
-        <xd:cvsId>$Id: docx-tei.xsl 6820 2009-10-10 20:03:31Z rahtz $</xd:cvsId>
-        <xd:copyright>2008, TEI Consortium</xd:copyright>
-    </xd:doc>
+            Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </p>
+         <p>Author: See AUTHORS</p>
+         <p>Id: $Id: docx-tei.xsl 6820 2009-10-10 20:03:31Z rahtz $</p>
+         <p>Copyright: 2008, TEI Consortium</p>
+      </desc>
+   </doc>
     
     
     <xsl:template match="@*|comment()|processing-instruction()" mode="part2">
@@ -57,8 +57,7 @@
     
     <xsl:template match="*" mode="part2">
         <xsl:copy>
-            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"
-                mode="part2"/>
+            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part2"/>
         </xsl:copy>
     </xsl:template>
     
@@ -80,11 +79,9 @@
             <xsl:variable name="me" select="generate-id()"/>
             <xsl:apply-templates mode="part2"/>
             <!-- find following sibling lists and notes -->
-            <xsl:for-each
-                select="following-sibling::tei:list[preceding-sibling::tei:item[1][generate-id()=$me]]">
+            <xsl:for-each select="following-sibling::tei:list[preceding-sibling::tei:item[1][generate-id()=$me]]">
                 <list>
-                    <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"
-                        mode="part2"/>
+                    <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part2"/>
                 </list>
             </xsl:for-each>
         </item>
@@ -151,70 +148,58 @@
     <xsl:template match="tei:listBibl" mode="part2">
         <xsl:for-each select="tei:p">
             <p>
-                <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"
-                    mode="part2"/>
+                <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part2"/>
             </p>
         </xsl:for-each>
         <listBibl>
-            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"
-                mode="part2"/>
+            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part2"/>
         </listBibl>
     </xsl:template>
     
     <!-- a <tab> (in a hi)? in a gloss list -->
-    <xsl:template
-        match="tei:list[@type='gloss']/tei:item/tei:hi[tei:c[@rend='tab']]"
-        mode="part2"/>
-    <xsl:template
-        match="tei:list[@type='gloss']/tei:item/tei:c[@rend='tab']"
-        mode="part2"/>
+    <xsl:template match="tei:list[@type='gloss']/tei:item/tei:hi[tei:c[@rend='tab']]"
+                 mode="part2"/>
+    <xsl:template match="tei:list[@type='gloss']/tei:item/tei:c[@rend='tab']" mode="part2"/>
     
     <!-- top of a weird gloss list -->
-    <xsl:template
-        match="tei:list[@type='gloss']/tei:label[.='where']"
-        mode="part2">
+    <xsl:template match="tei:list[@type='gloss']/tei:label[.='where']" mode="part2">
         <head>
             <xsl:apply-templates/>
         </head>
     </xsl:template>
     
     <!-- a <tab> in a <bibl>? no. -->
-    <xsl:template match="tei:bibl/tei:c[@rend='tab']"
-        mode="part2"/>
+    <xsl:template match="tei:bibl/tei:c[@rend='tab']" mode="part2"/>
     
     <!-- a <tab> in a <gloss>? no. -->
-    <xsl:template match="tei:gloss//tei:c[@rend='tab']"
-        mode="part2"/>
+    <xsl:template match="tei:gloss//tei:c[@rend='tab']" mode="part2"/>
     
     
     <!-- a <tab> in a <formula>? no. -->
-    <xsl:template match="tei:formula//tei:c[@rend='tab']"
-        mode="part2"/>
+    <xsl:template match="tei:formula//tei:c[@rend='tab']" mode="part2"/>
     
     
     <!-- a bold line break??? -->
-    <xsl:template match="tei:hi[count(*)=1 and not(text()) and tei:lb]"
-        mode="part2">
+    <xsl:template match="tei:hi[count(*)=1 and not(text()) and tei:lb]" mode="part2">
         <tei:lb/>
     </xsl:template>
     
     
     <!-- a <tab> in a <head>? no. -->
-    <xsl:template match="tei:head/tei:c[@rend='tab']"
-        mode="part2"/>
+    <xsl:template match="tei:head/tei:c[@rend='tab']" mode="part2"/>
     
 
     <!-- the word "Table" starting a table title-->
-    <xsl:template match="cals:table/cals:title[starts-with(.,'Table  —&#32;')]" mode="part2">
+    <xsl:template match="cals:table/cals:title[starts-with(.,'Table  — ')]" mode="part2">
       <title xmlns="http://www.oasis-open.org/specs/tm9901">
-	<xsl:value-of select="substring-after(.,'Table  —&#32;')"/>
+	        <xsl:value-of select="substring-after(.,'Table  — ')"/>
       </title>
     </xsl:template>
 
     <!-- same for figure -->
-    <xsl:template match="tei:figure/tei:head[starts-with(.,'Figure  —&#32;')]" mode="part2">
+    <xsl:template match="tei:figure/tei:head[starts-with(.,'Figure  — ')]" mode="part2">
       <head>
-	<xsl:value-of select="substring-after(.,'Figure  —&#32;')"/>
+	        <xsl:value-of select="substring-after(.,'Figure  — ')"/>
       </head>
     </xsl:template>
 

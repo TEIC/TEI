@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-    xmlns:xd="http://www.pnp-software.com/XSLTdoc" 
-    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
-    xmlns="http://www.w3.org/1999/XSL/Format" 
-    xmlns:rng="http://relaxng.org/ns/structure/1.0" 
-    xmlns:tei="http://www.tei-c.org/ns/1.0" 
-    xmlns:teix="http://www.tei-c.org/ns/Examples" 
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    exclude-result-prefixes="xd a rng tei teix" 
-    version="2.0">
-  <xd:doc type="stylesheet">
-    <xd:short>
+<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                xmlns="http://www.w3.org/1999/XSL/Format"
+                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:teix="http://www.tei-c.org/ns/Examples"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="xd a rng tei teix"
+                version="2.0">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+      <desc>
+         <p>
     TEI stylesheet
     dealing  with elements from the
       linking module, making XSL-FO output.
-      </xd:short>
-    <xd:detail>
+      </p>
+         <p>
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
     License as published by the Free Software Foundation; either
@@ -32,87 +32,85 @@
 
    
    
-      </xd:detail>
-    <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2008, TEI Consortium</xd:copyright>
-  </xd:doc>
-  <xd:doc>
-    <xd:short>[fo] </xd:short>
-    <xd:param name="where">target of link</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+      </p>
+         <p>Author: See AUTHORS</p>
+         <p>Id: $Id$</p>
+         <p>Copyright: 2008, TEI Consortium</p>
+      </desc>
+   </doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[fo] <param name="where">target of link</param>
+      </desc>
+   </doc>
   <xsl:template name="generateEndLink">
-    <xsl:param name="where"/>
-    <xsl:value-of select="$where"/>
+      <xsl:param name="where"/>
+      <xsl:value-of select="$where"/>
   </xsl:template>
-  <xd:doc>
-    <xd:short>[fo] </xd:short>
-    <xd:param name="ptr">whether the destination URL is also the body
-    of the link</xd:param>
-    <xd:param name="dest">destination URL</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[fo] <param name="ptr">whether the destination URL is also the body
+    of the link</param>
+         <param name="dest">destination URL</param>
+      </desc>
+   </doc>
   <xsl:template name="makeExternalLink">
-    <xsl:param name="ptr"/>
-    <xsl:param name="dest"/>
-    <basic-link external-destination="url({$dest})">
-      <xsl:choose>
-        <xsl:when test="$ptr='true'">
-          <xsl:call-template name="showXrefURL">
-            <xsl:with-param name="dest">
-              <xsl:value-of select="$dest"/>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </basic-link>
+      <xsl:param name="ptr"/>
+      <xsl:param name="dest"/>
+      <basic-link external-destination="url({$dest})">
+         <xsl:choose>
+            <xsl:when test="$ptr='true'">
+               <xsl:call-template name="showXrefURL">
+                  <xsl:with-param name="dest">
+                     <xsl:value-of select="$dest"/>
+                  </xsl:with-param>
+               </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+               <xsl:apply-templates/>
+            </xsl:otherwise>
+         </xsl:choose>
+      </basic-link>
   </xsl:template>
-  <xd:doc>
-    <xd:short>[fo] </xd:short>
-    <xd:param name="ptr">ptr</xd:param>
-    <xd:param name="target">target</xd:param>
-    <xd:param name="dest">destination</xd:param>
-    <xd:param name="body">body</xd:param>
-    <xd:detail> </xd:detail>
-  </xd:doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[fo] <param name="ptr">ptr</param>
+         <param name="target">target</param>
+         <param name="dest">destination</param>
+         <param name="body">body</param>
+      </desc>
+   </doc>
   <xsl:template name="makeInternalLink">
-    <xsl:param name="ptr"/>
-    <xsl:param name="class"/>
-    <xsl:param name="target"/>
-    <xsl:param name="dest"/>
-    <xsl:param name="body"/>
-    <xsl:variable name="W">
-      <xsl:choose>
-        <xsl:when test="$target">
-          <xsl:value-of select="$target"/>
-        </xsl:when>
-        <xsl:when test="contains($dest,'#')">
-          <xsl:value-of select="substring-after($dest,'#')"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$dest"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <basic-link internal-destination="{$W}">
-      <xsl:call-template name="linkStyle"/>
-      <xsl:choose>
-        <xsl:when test="not($body='')">
-          <xsl:value-of select="$body"/>
-        </xsl:when>
-        <xsl:when test="$ptr='true'">
-          <xsl:apply-templates mode="xref" select="key('IDS',$W)">
-            <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-          </xsl:apply-templates>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </basic-link>
+      <xsl:param name="ptr"/>
+      <xsl:param name="class"/>
+      <xsl:param name="target"/>
+      <xsl:param name="dest"/>
+      <xsl:param name="body"/>
+      <xsl:variable name="W">
+         <xsl:choose>
+            <xsl:when test="$target">
+               <xsl:value-of select="$target"/>
+            </xsl:when>
+            <xsl:when test="contains($dest,'#')">
+               <xsl:value-of select="substring-after($dest,'#')"/>
+            </xsl:when>
+            <xsl:otherwise>
+               <xsl:value-of select="$dest"/>
+            </xsl:otherwise>
+         </xsl:choose>
+      </xsl:variable>
+      <basic-link internal-destination="{$W}">
+         <xsl:call-template name="linkStyle"/>
+         <xsl:choose>
+            <xsl:when test="not($body='')">
+               <xsl:value-of select="$body"/>
+            </xsl:when>
+            <xsl:when test="$ptr='true'">
+               <xsl:apply-templates mode="xref" select="key('IDS',$W)">
+                  <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+               </xsl:apply-templates>
+            </xsl:when>
+            <xsl:otherwise>
+               <xsl:apply-templates/>
+            </xsl:otherwise>
+         </xsl:choose>
+      </basic-link>
   </xsl:template>
 </xsl:stylesheet>

@@ -1,13 +1,11 @@
-<xsl:stylesheet 
-    exclude-result-prefixes="rng tei n"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    xmlns:n="www.example.com"
-    xmlns:rng="http://relaxng.org/ns/structure/1.0" 
-    xmlns:tei="http://www.tei-c.org/ns/1.0"
-    xmlns="http://www.tei-c.org/ns/1.0"
-    xpath-default-namespace="http://www.tei-c.org/ns/1.0"
-    version="2.0"
->
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:n="www.example.com"
+                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns="http://www.tei-c.org/ns/1.0"
+                exclude-result-prefixes="rng tei n"
+                xpath-default-namespace="http://www.tei-c.org/ns/1.0"
+                version="2.0">
 <!-- This library is free software; you can redistribute it and/or
       modify it under the terms of the GNU Lesser General Public License as
       published by the Free Software Foundation; either version 2.1 of the
@@ -26,41 +24,41 @@ $Id$
 -->
 
 <xsl:import href="getfiles.xsl"/>
-<!-- 
+   <!-- 
 read a corpus of TEI P5 documents and construct
 an ODD customization file which expresses the subset
 of the TEI you need to validate that corpus
 -->
 <xsl:output indent="yes"/>
-<!-- name of odd -->
+   <!-- name of odd -->
 <xsl:param name="schema">oddbyexample</xsl:param>
-<!-- the document corpus -->
+   <!-- the document corpus -->
 <xsl:param name="corpus">./</xsl:param>
-<!-- the source of the TEI (just needs *Spec)-->
+   <!-- the source of the TEI (just needs *Spec)-->
 <xsl:param name="tei">/usr/share/xml/tei/odd/p5subset.xml</xsl:param>
-<!-- should we make valList for @rend -->
+   <!-- should we make valList for @rend -->
 <xsl:param name="enumerateRend">false</xsl:param>
-<!-- should we deal with non-TEI namespaces -->
+   <!-- should we deal with non-TEI namespaces -->
 <xsl:param name="processNonTEI">false</xsl:param>
-<!-- which attributes should be make valLists for, regardless -->
+   <!-- which attributes should be make valLists for, regardless -->
 <xsl:param name="attributeList"/>
 
-<xsl:variable name="checkAtts">
-  <xsl:text>,</xsl:text>
-  <xsl:value-of select="$attributeList"/>
-  <xsl:text>,</xsl:text>
-</xsl:variable>
+   <xsl:variable name="checkAtts">
+      <xsl:text>,</xsl:text>
+      <xsl:value-of select="$attributeList"/>
+      <xsl:text>,</xsl:text>
+   </xsl:variable>
 
-<xsl:key name="Atts" match="@*" use="local-name(parent::*)"/>  
-<xsl:key name="attVals" match="@*" use="concat(local-name(parent::*),local-name())"/>
-<xsl:key name="ELEMENTS" use="1" match="elementSpec"/>
-<xsl:key name="CLASSES" use="1" match="classSpec[@type='atts']"/>
-<xsl:key name="IDENTS" use="@ident" match="*[@ident]"/>
-<xsl:key name="MEMBERS" use="@key" match="elementSpec/classes/memberOf"/>
-<xsl:key name="CLASSMEMBERS" use="@key" match="classSpec/classes/memberOf"/>
-<xsl:key name="Used" use="@ident" match="docs/elementSpec"/>
-<xsl:key name="UsedAtt" use="concat(../@ident,@ident)" match="docs/elementSpec/attDef"/>
-<!--
+   <xsl:key name="Atts" match="@*" use="local-name(parent::*)"/>  
+   <xsl:key name="attVals" match="@*" use="concat(local-name(parent::*),local-name())"/>
+   <xsl:key name="ELEMENTS" use="1" match="elementSpec"/>
+   <xsl:key name="CLASSES" use="1" match="classSpec[@type='atts']"/>
+   <xsl:key name="IDENTS" use="@ident" match="*[@ident]"/>
+   <xsl:key name="MEMBERS" use="@key" match="elementSpec/classes/memberOf"/>
+   <xsl:key name="CLASSMEMBERS" use="@key" match="classSpec/classes/memberOf"/>
+   <xsl:key name="Used" use="@ident" match="docs/elementSpec"/>
+   <xsl:key name="UsedAtt" use="concat(../@ident,@ident)" match="docs/elementSpec/attDef"/>
+   <!--
 1) start a variable and copy in all of the TEI 
 2) read the corpus and get a list of all the elements and their
 attributes that it uses, put that in the same variable
@@ -73,346 +71,343 @@ valList
 -->
 
 <xsl:template name="processAll">
-<xsl:variable name="count">
-  <xsl:value-of select="count(/n:ROOT/*)"/>
-</xsl:variable>
-<!-- assemble together all the TEI elements and attributes, 
+      <xsl:variable name="count">
+         <xsl:value-of select="count(/n:ROOT/*)"/>
+      </xsl:variable>
+      <!-- assemble together all the TEI elements and attributes, 
      followed by all the
      elements and attributes used in the corpus -->
  <xsl:variable name="stage1">
-   <stage1>
-     <tei>
-       <xsl:for-each select="document($tei)">
-	 <xsl:for-each select="key('CLASSES',1)">
-	   <classSpec>
-	     <xsl:copy-of select="@ident"/>
-	     <xsl:copy-of select="@module"/>
-	     <xsl:for-each select=".//attDef">
-	       <attDef>
-		 <xsl:copy-of select="@ident"/>
-		 <xsl:call-template name="checktype"/>
-	       </attDef>
-	     </xsl:for-each>
-	     <xsl:call-template name="classmembers"/>
-	   </classSpec>
-	 </xsl:for-each>
-	 <xsl:for-each select="key('ELEMENTS',1)">
-	   <elementSpec>
-	     <xsl:copy-of select="@ident"/>
-	     <xsl:copy-of select="@module"/>
-	     <xsl:for-each select=".//tei:attDef">
-	       <attDef>
-		 <xsl:copy-of select="@ident"/>
-		 <xsl:call-template name="checktype"/>
-	       </attDef>
-	     </xsl:for-each>
-	     <xsl:for-each select="key('IDENTS','att.global')">
-	       <xsl:for-each select=".//tei:attDef">
-		 <attDef class="att.global">
-		   <xsl:copy-of select="@ident"/>
-		   <xsl:call-template name="checktype"/>
-		 </attDef>
-	       </xsl:for-each>
-	     </xsl:for-each>
-	     <xsl:call-template name="classatts"/>
-	   </elementSpec>
-	 </xsl:for-each>
-       </xsl:for-each>
-     </tei>
-     <docs>
-       <xsl:for-each-group select="key('AllTEI',1)" group-by="local-name()">
-	 <xsl:sort select="current-grouping-key()"/>
-	 <xsl:variable name="ident" select="current-grouping-key()"/>
-	 <elementSpec>
-	   <xsl:attribute name="ident">
-	     <xsl:copy-of select="current-grouping-key()"/>
-	   </xsl:attribute>
-	   <xsl:for-each-group
-	       select="key('Atts',$ident)"
-	       group-by="local-name()">
-	     <attDef ident="{name()}">
-	       <valList type="closed">
-		 <xsl:for-each-group
-		     select="key('attVals',concat($ident,local-name()))"
-		     group-by=".">
-		   <xsl:sort select="."/>
-		   <xsl:choose>
-		     <xsl:when test="contains(current-grouping-key(),' ')">
-		       <xsl:for-each
-			   select="tokenize(current-grouping-key(),' ')">
-			 <valItem ident="{.}"/>
-		       </xsl:for-each>
-		     </xsl:when>
-		     <xsl:otherwise>
-		       <valItem ident="{current-grouping-key()}"/>
-		     </xsl:otherwise>
-		   </xsl:choose>
-		 </xsl:for-each-group>
-	       </valList>
-	     </attDef>
-	   </xsl:for-each-group>
-	 </elementSpec>
-       </xsl:for-each-group>
-     </docs>
-   </stage1>
- </xsl:variable>
+         <stage1>
+            <tei>
+               <xsl:for-each select="document($tei)">
+	                 <xsl:for-each select="key('CLASSES',1)">
+	                    <classSpec>
+	                       <xsl:copy-of select="@ident"/>
+	                       <xsl:copy-of select="@module"/>
+	                       <xsl:for-each select=".//attDef">
+	                          <attDef>
+		                            <xsl:copy-of select="@ident"/>
+		                            <xsl:call-template name="checktype"/>
+	                          </attDef>
+	                       </xsl:for-each>
+	                       <xsl:call-template name="classmembers"/>
+	                    </classSpec>
+	                 </xsl:for-each>
+	                 <xsl:for-each select="key('ELEMENTS',1)">
+	                    <elementSpec>
+	                       <xsl:copy-of select="@ident"/>
+	                       <xsl:copy-of select="@module"/>
+	                       <xsl:for-each select=".//tei:attDef">
+	                          <attDef>
+		                            <xsl:copy-of select="@ident"/>
+		                            <xsl:call-template name="checktype"/>
+	                          </attDef>
+	                       </xsl:for-each>
+	                       <xsl:for-each select="key('IDENTS','att.global')">
+	                          <xsl:for-each select=".//tei:attDef">
+		                            <attDef class="att.global">
+		                               <xsl:copy-of select="@ident"/>
+		                               <xsl:call-template name="checktype"/>
+		                            </attDef>
+	                          </xsl:for-each>
+	                       </xsl:for-each>
+	                       <xsl:call-template name="classatts"/>
+	                    </elementSpec>
+	                 </xsl:for-each>
+               </xsl:for-each>
+            </tei>
+            <docs>
+               <xsl:for-each-group select="key('AllTEI',1)" group-by="local-name()">
+	                 <xsl:sort select="current-grouping-key()"/>
+	                 <xsl:variable name="ident" select="current-grouping-key()"/>
+	                 <elementSpec>
+	                    <xsl:attribute name="ident">
+	                       <xsl:copy-of select="current-grouping-key()"/>
+	                    </xsl:attribute>
+	                    <xsl:for-each-group select="key('Atts',$ident)" group-by="local-name()">
+	                       <attDef ident="{name()}">
+	                          <valList type="closed">
+		                            <xsl:for-each-group select="key('attVals',concat($ident,local-name()))" group-by=".">
+		                               <xsl:sort select="."/>
+		                               <xsl:choose>
+		                                  <xsl:when test="contains(current-grouping-key(),' ')">
+		                                     <xsl:for-each select="tokenize(current-grouping-key(),' ')">
+			                                       <valItem ident="{.}"/>
+		                                     </xsl:for-each>
+		                                  </xsl:when>
+		                                  <xsl:otherwise>
+		                                     <valItem ident="{current-grouping-key()}"/>
+		                                  </xsl:otherwise>
+		                               </xsl:choose>
+		                            </xsl:for-each-group>
+	                          </valList>
+	                       </attDef>
+	                    </xsl:for-each-group>
+	                 </elementSpec>
+               </xsl:for-each-group>
+            </docs>
+         </stage1>
+      </xsl:variable>
 
- <xsl:variable name="stage2">
-   <stage2>
+      <xsl:variable name="stage2">
+         <stage2>
      <!-- for every attribute class, see if its members should be
      deleted, by seeing if they are used anywhere-->
      <xsl:for-each select="$stage1/stage1/tei/classSpec">
-       <classSpec ident="{@ident}" module="{@module}" type="atts" mode="change">
-	 <attList>
-	   <xsl:for-each select="attDef">
-	     <xsl:variable name="this" select="@ident"/>
-	     <xsl:variable name="used">
-	       <xsl:for-each select="../member">
+               <classSpec ident="{@ident}" module="{@module}" type="atts" mode="change">
+	                 <attList>
+	                    <xsl:for-each select="attDef">
+	                       <xsl:variable name="this" select="@ident"/>
+	                       <xsl:variable name="used">
+	                          <xsl:for-each select="../member">
 <!--		 <xsl:message>check for <xsl:value-of select="concat(@ident,$this)"/></xsl:message>-->
 		 <xsl:if test="key('UsedAtt',concat(@ident,$this))">true</xsl:if>
-	       </xsl:for-each>
-	     </xsl:variable>
-	     <xsl:if test="$used=''">
-	       <attDef ident="{@ident}" mode="delete"/>
-	     </xsl:if>
-	   </xsl:for-each>
-	 </attList>
-       </classSpec>
-     </xsl:for-each>
-     <!-- for every TEI element, say if it is actually used or is to be deleted -->
+	                          </xsl:for-each>
+	                       </xsl:variable>
+	                       <xsl:if test="$used=''">
+	                          <attDef ident="{@ident}" mode="delete"/>
+	                       </xsl:if>
+	                    </xsl:for-each>
+	                 </attList>
+               </classSpec>
+            </xsl:for-each>
+            <!-- for every TEI element, say if it is actually used or is to be deleted -->
      <xsl:for-each select="$stage1/stage1/tei/elementSpec">
-       <xsl:choose>
-	 <xsl:when test="key('Used',@ident)">
-	   <elementSpec ident="{@ident}" module="{@module}"
-			mode="keep">
-	     <xsl:copy-of select="attDef"/>
-	   </elementSpec>
-	 </xsl:when>
-	 <xsl:otherwise>
-	   <elementSpec ident="{@ident}" module="{@module}" mode="delete"/>
-	 </xsl:otherwise>
-       </xsl:choose>
-     </xsl:for-each>
-     <xsl:if test="$processNonTEI='true'">
-       <xsl:for-each-group select="key('All',1)" group-by="local-name()">
-	 <xsl:sort/>
-	 <xsl:choose>
-	   <xsl:when test="self::n:ROOT"/>       
-	   <xsl:when test="namespace-uri()='http://www.tei-c.org/ns/1.0'"/>
-	 <xsl:otherwise>
+               <xsl:choose>
+	                 <xsl:when test="key('Used',@ident)">
+	                    <elementSpec ident="{@ident}" module="{@module}" mode="keep">
+	                       <xsl:copy-of select="attDef"/>
+	                    </elementSpec>
+	                 </xsl:when>
+	                 <xsl:otherwise>
+	                    <elementSpec ident="{@ident}" module="{@module}" mode="delete"/>
+	                 </xsl:otherwise>
+               </xsl:choose>
+            </xsl:for-each>
+            <xsl:if test="$processNonTEI='true'">
+               <xsl:for-each-group select="key('All',1)" group-by="local-name()">
+	                 <xsl:sort/>
+	                 <xsl:choose>
+	                    <xsl:when test="self::n:ROOT"/>       
+	                    <xsl:when test="namespace-uri()='http://www.tei-c.org/ns/1.0'"/>
+	                    <xsl:otherwise>
 	   <!-- build new 'add' elementSpec -->
 	   <elementSpec ident="{current-grouping-key()}" mode="add" ns="{namespace-uri()}">
-	     <xsl:text>&#xA;</xsl:text>
-	     <xsl:comment>add an &lt;equiv/&gt; to point to an named  template
+	                          <xsl:text>
+</xsl:text>
+	                          <xsl:comment>add an &lt;equiv/&gt; to point to an named  template
 in an XSLT file which will transform this to pure TEI</xsl:comment>
-              <xsl:text>&#xA;</xsl:text>
-	      <equiv filter="somefile.xsl" mimeType="text/xsl" name="{current-grouping-key()}"/>
-	      <desc>
-		<xsl:text>&#xA;</xsl:text>
-		<xsl:comment> Describe the <xsl:value-of
-		select="current-grouping-key()"/> element  here</xsl:comment>
-		<xsl:text>&#xA;</xsl:text>
-	      </desc>
-	      <classes>
-	       <xsl:text>&#xA;</xsl:text>
-	       <xsl:comment> Add a 'memberOf key="model.className"' stanza for whatever classes it belongs to  here</xsl:comment>
-	       <xsl:text>&#xA;</xsl:text>
-	     </classes>
-	     <content>
-	       <xsl:text>&#xA;</xsl:text>
-	       <xsl:comment>Add RNG content model here</xsl:comment>
-	       <xsl:text>&#xA;</xsl:text>
-	     </content>
-	     <xsl:if test="key('Atts',local-name())">
-	       <attList>
-		 <xsl:comment>Add attDefs:</xsl:comment>
-		 <xsl:text>&#xA;</xsl:text>
-		 <xsl:for-each-group select="key('Atts',local-name())"
-				     group-by="local-name()">
-		   <xsl:sort/>
-		   <attDef ident="{local-name()}" mode="add"/>
-		 </xsl:for-each-group>
-	       </attList>
-	     </xsl:if>
-	   </elementSpec>
-	 </xsl:otherwise>
-       </xsl:choose>
-     </xsl:for-each-group>    
-     </xsl:if>
-   </stage2>
- </xsl:variable>
+                           <xsl:text>
+</xsl:text>
+	                          <equiv filter="somefile.xsl" mimeType="text/xsl" name="{current-grouping-key()}"/>
+	                          <desc>
+		                            <xsl:text>
+</xsl:text>
+		                            <xsl:comment> Describe the <xsl:value-of select="current-grouping-key()"/> element  here</xsl:comment>
+		                            <xsl:text>
+</xsl:text>
+	                          </desc>
+	                          <classes>
+	                             <xsl:text>
+</xsl:text>
+	                             <xsl:comment> Add a 'memberOf key="model.className"' stanza for whatever classes it belongs to  here</xsl:comment>
+	                             <xsl:text>
+</xsl:text>
+	                          </classes>
+	                          <content>
+	                             <xsl:text>
+</xsl:text>
+	                             <xsl:comment>Add RNG content model here</xsl:comment>
+	                             <xsl:text>
+</xsl:text>
+	                          </content>
+	                          <xsl:if test="key('Atts',local-name())">
+	                             <attList>
+		                               <xsl:comment>Add attDefs:</xsl:comment>
+		                               <xsl:text>
+</xsl:text>
+		                               <xsl:for-each-group select="key('Atts',local-name())" group-by="local-name()">
+		                                  <xsl:sort/>
+		                                  <attDef ident="{local-name()}" mode="add"/>
+		                               </xsl:for-each-group>
+	                             </attList>
+	                          </xsl:if>
+	                       </elementSpec>
+	                    </xsl:otherwise>
+                  </xsl:choose>
+               </xsl:for-each-group>    
+            </xsl:if>
+         </stage2>
+      </xsl:variable>
  
-<!-- start writing the final ODD document -->
+      <!-- start writing the final ODD document -->
  <TEI xml:lang="en">
-   <teiHeader>
-      <fileDesc>
-         <titleStmt>
-            <title>ODD by Example customization</title>
-         </titleStmt>
-	 <editionStmt>
-	   <edition>generated on     
+         <teiHeader>
+            <fileDesc>
+               <titleStmt>
+                  <title>ODD by Example customization</title>
+               </titleStmt>
+	              <editionStmt>
+	                 <edition>generated on     
 	   <date>
-	     <xsl:value-of
-		 select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[M02]:[s02]Z')"/>
-	   </date>
-	   </edition>
-	 </editionStmt>
-         <publicationStmt>
-	   <p> </p>
-	 </publicationStmt>
-         <sourceDesc>
-            <p>generated by oddbyexample.xsl, based on analyzing 
+	                       <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[M02]:[s02]Z')"/>
+	                    </date>
+	                 </edition>
+	              </editionStmt>
+               <publicationStmt>
+	                 <p> </p>
+	              </publicationStmt>
+               <sourceDesc>
+                  <p>generated by oddbyexample.xsl, based on analyzing 
 	    <xsl:value-of select="$count"/> files from
-	    <xsl:value-of select="$corpus"/></p>
-         </sourceDesc>
-      </fileDesc>
-   </teiHeader>
-   <text>
-     <body>
+	    <xsl:value-of select="$corpus"/>
+                  </p>
+               </sourceDesc>
+            </fileDesc>
+         </teiHeader>
+         <text>
+            <body>
        <!--<xsl:copy-of select="$stage1"/>-->
        <schemaSpec ident="{$schema}">
-	 <xsl:attribute name="start">
-	   <xsl:if test="$stage2/stage2/elementSpec[@mode='keep' and
-			 @ident='TEI']">TEI</xsl:if>
-	   <xsl:text> </xsl:text>
-	   <xsl:if test="$stage2/stage2/elementSpec[@mode='keep' and @ident='teiCorpus']">teiCorpus</xsl:if>
-	 </xsl:attribute>
-	 <moduleRef key="tei"/>
-	 <xsl:apply-templates select="$stage2/stage2/classSpec[@module='tei']"/>
-	 <moduleRef key="core"/>
-	 <!-- we need to list only modules from which elements have been used -->
+	                 <xsl:attribute name="start">
+	                    <xsl:if test="$stage2/stage2/elementSpec[@mode='keep' and     @ident='TEI']">TEI</xsl:if>
+	                    <xsl:text> </xsl:text>
+	                    <xsl:if test="$stage2/stage2/elementSpec[@mode='keep' and @ident='teiCorpus']">teiCorpus</xsl:if>
+	                 </xsl:attribute>
+	                 <moduleRef key="tei"/>
+	                 <xsl:apply-templates select="$stage2/stage2/classSpec[@module='tei']"/>
+	                 <moduleRef key="core"/>
+	                 <!-- we need to list only modules from which elements have been used -->
 	 <xsl:for-each-group select="$stage2/stage2/elementSpec[@mode='keep']" group-by="@module">
-	   <xsl:sort select="current-grouping-key()"/>
-	   <xsl:choose>
-	     <xsl:when test="@module='core'"/>
-	     <xsl:otherwise>
-	       <moduleRef key="{@module}"/>
-	     </xsl:otherwise>
-	   </xsl:choose>
-	   <xsl:for-each select="current-group()">
-	     <xsl:variable name="e" select="@ident"/>
-	       <!-- for every attribute, if its a class attribute, see if
+	                    <xsl:sort select="current-grouping-key()"/>
+	                    <xsl:choose>
+	                       <xsl:when test="@module='core'"/>
+	                       <xsl:otherwise>
+	                          <moduleRef key="{@module}"/>
+	                       </xsl:otherwise>
+	                    </xsl:choose>
+	                    <xsl:for-each select="current-group()">
+	                       <xsl:variable name="e" select="@ident"/>
+	                       <!-- for every attribute, if its a class attribute, see if
 	       its already deleted. if its a local attribute, see if its used. -->
 	     <xsl:variable name="a">
-	       <attList>
-		 <xsl:for-each select="attDef">
-		   <xsl:variable name="class" select="@class"/>
-		   <xsl:variable name="ident" select="@ident"/>
-		   <xsl:variable name="enumerated" select="@enumerated"/>
-		   <xsl:for-each select="$stage1">
-		     <xsl:choose>
-		       <xsl:when test="not($class='') and $stage2/stage2/classSpec[@ident=$class]/attList/attDef[@ident=$ident]">
+	                          <attList>
+		                            <xsl:for-each select="attDef">
+		                               <xsl:variable name="class" select="@class"/>
+		                               <xsl:variable name="ident" select="@ident"/>
+		                               <xsl:variable name="enumerated" select="@enumerated"/>
+		                               <xsl:for-each select="$stage1">
+		                                  <xsl:choose>
+		                                     <xsl:when test="not($class='') and $stage2/stage2/classSpec[@ident=$class]/attList/attDef[@ident=$ident]">
 		       </xsl:when>
-		       <xsl:when
-			   test="not(key('UsedAtt',concat($e,$ident)))">
-			 <attDef ident="{$ident}" mode="delete"/>
-		       </xsl:when>
-		       <xsl:when test="$enumerated='true'">
-			 <attDef ident="{$ident}" mode="change">
-			   <xsl:apply-templates select="key('UsedAtt',concat($e,$ident))/valList"/>
-			 </attDef>
-		       </xsl:when>
-		     </xsl:choose>
-		   </xsl:for-each>
-		 </xsl:for-each>
-	       </attList>
-	     </xsl:variable>
-	     <xsl:for-each select="$a">
-	       <xsl:if test="attList/attDef">
-		 <elementSpec ident="{$e}" mode="change">
-		   <xsl:copy-of select="attList"/>
-		 </elementSpec>
-	       </xsl:if>
-	     </xsl:for-each>
-	   </xsl:for-each>
-	   <xsl:copy-of
-	       select="$stage2/stage2/elementSpec[@mode='delete'
-		       and @module=current-grouping-key()]"/>
-	   <xsl:apply-templates select="$stage2/stage2/classSpec[@module=current-grouping-key()]"/>
-	 </xsl:for-each-group>
+		                                     <xsl:when test="not(key('UsedAtt',concat($e,$ident)))">
+			                                       <attDef ident="{$ident}" mode="delete"/>
+		                                     </xsl:when>
+		                                     <xsl:when test="$enumerated='true'">
+			                                       <attDef ident="{$ident}" mode="change">
+			                                          <xsl:apply-templates select="key('UsedAtt',concat($e,$ident))/valList"/>
+			                                       </attDef>
+		                                     </xsl:when>
+		                                  </xsl:choose>
+		                               </xsl:for-each>
+		                            </xsl:for-each>
+	                          </attList>
+	                       </xsl:variable>
+	                       <xsl:for-each select="$a">
+	                          <xsl:if test="attList/attDef">
+		                            <elementSpec ident="{$e}" mode="change">
+		                               <xsl:copy-of select="attList"/>
+		                            </elementSpec>
+	                          </xsl:if>
+	                       </xsl:for-each>
+	                    </xsl:for-each>
+	                    <xsl:copy-of select="$stage2/stage2/elementSpec[@mode='delete'          and @module=current-grouping-key()]"/>
+	                    <xsl:apply-templates select="$stage2/stage2/classSpec[@module=current-grouping-key()]"/>
+	                 </xsl:for-each-group>
 
-	 <xsl:for-each
-	     select="$stage2/stage2/elementSpec[@mode='add']">
-	   <xsl:text>&#xA;&#xA;&#xA;</xsl:text>
-	   <xsl:comment>You've added an element '<xsl:value-of select="@ident"/>'
+	                 <xsl:for-each select="$stage2/stage2/elementSpec[@mode='add']">
+	                    <xsl:text>
+
+
+</xsl:text>
+	                    <xsl:comment>You've added an element '<xsl:value-of select="@ident"/>'
 	   which does not seem to be a proper TEI element. This will make your TEI
 	   documents non-conformant, but if you really want to do this you should
 	   add an elementSpec for it if you want your document to validate. It
 	   would be better to use a separate namespace. </xsl:comment>
-	   <xsl:text>&#xA;&#xA;</xsl:text>
-	   <xsl:copy-of select="."/>
-	 </xsl:for-each>        
-       </schemaSpec>
-     </body>
-   </text>
- </TEI>
-</xsl:template>
+	                    <xsl:text>
 
-<xsl:template name="classmembers">
-  <xsl:choose>
-    <xsl:when test="@ident='att.global'">
-      <xsl:for-each select="key('ELEMENTS',1)">
-	<xsl:sort select="@ident"/>
-	<member ident="{@ident}"/>
-      </xsl:for-each>    
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:for-each select="key('MEMBERS',@ident)">
-	<member ident="{ancestor::elementSpec/@ident}"/>
+</xsl:text>
+	                    <xsl:copy-of select="."/>
+	                 </xsl:for-each>        
+               </schemaSpec>
+            </body>
+         </text>
+      </TEI>
+   </xsl:template>
+
+   <xsl:template name="classmembers">
+      <xsl:choose>
+         <xsl:when test="@ident='att.global'">
+            <xsl:for-each select="key('ELEMENTS',1)">
+	              <xsl:sort select="@ident"/>
+	              <member ident="{@ident}"/>
+            </xsl:for-each>    
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:for-each select="key('MEMBERS',@ident)">
+	              <member ident="{ancestor::elementSpec/@ident}"/>
+            </xsl:for-each>
+            <xsl:for-each select="key('CLASSMEMBERS',@ident)/ancestor::classSpec">
+	              <xsl:call-template name="classmembers"/>
+	           </xsl:for-each>
+         </xsl:otherwise>
+      </xsl:choose>
+   </xsl:template>
+
+   <xsl:template name="classatts">
+      <xsl:for-each select="classes/memberOf">
+         <xsl:for-each select="key('IDENTS',@key)">
+            <xsl:for-each select=".//tei:attDef">
+	              <attDef class="{ancestor::classSpec/@ident}">
+	                 <xsl:copy-of select="@ident"/>
+	              </attDef>
+            </xsl:for-each>
+            <xsl:call-template name="classatts"/>
+         </xsl:for-each>
       </xsl:for-each>
-      <xsl:for-each select="key('CLASSMEMBERS',@ident)/ancestor::classSpec">
-	  <xsl:call-template name="classmembers"/>
-	</xsl:for-each>
-      </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
+   </xsl:template>
 
-<xsl:template name="classatts">
-  <xsl:for-each select="classes/memberOf">
-    <xsl:for-each select="key('IDENTS',@key)">
-      <xsl:for-each select=".//tei:attDef">
-	<attDef class="{ancestor::classSpec/@ident}">
-	  <xsl:copy-of select="@ident"/>
-	</attDef>
-      </xsl:for-each>
-      <xsl:call-template name="classatts"/>
-    </xsl:for-each>
-  </xsl:for-each>
-</xsl:template>
-
-<xsl:template name="checktype">
-  <xsl:attribute name="enumerated">
-    <xsl:choose>
-      <xsl:when test="contains($checkAtts,concat(',',@ident,','))">true</xsl:when>
-      <xsl:when
-	  test="@ident='n'">false</xsl:when>
-      <xsl:when
-	  test="@ident='rend' and $enumerateRend='true'">true</xsl:when>
-      <xsl:when
-	  test="valList[@type='closed']">true</xsl:when>
-      <xsl:when
-	  test="datatype/rng:ref[@name='data.enumerated']">true</xsl:when>
-      <!--
+   <xsl:template name="checktype">
+      <xsl:attribute name="enumerated">
+         <xsl:choose>
+            <xsl:when test="contains($checkAtts,concat(',',@ident,','))">true</xsl:when>
+            <xsl:when test="@ident='n'">false</xsl:when>
+            <xsl:when test="@ident='rend' and $enumerateRend='true'">true</xsl:when>
+            <xsl:when test="valList[@type='closed']">true</xsl:when>
+            <xsl:when test="datatype/rng:ref[@name='data.enumerated']">true</xsl:when>
+            <!--
       <xsl:when
 	  test="datatype/rng:ref[@name='data.word']">true</xsl:when>
       -->
       <xsl:otherwise>false</xsl:otherwise>
-    </xsl:choose>
-  </xsl:attribute>
-</xsl:template>
+         </xsl:choose>
+      </xsl:attribute>
+   </xsl:template>
 
-<xsl:template match="valList">
-  <valList mode="add" type="closed">
-    <xsl:for-each-group select="valItem" group-by="@ident">
-      <xsl:sort select="@ident"/>
-      <valItem ident="{current-grouping-key()}"/>
-    </xsl:for-each-group>
-  </valList>
-</xsl:template>
+   <xsl:template match="valList">
+      <valList mode="add" type="closed">
+         <xsl:for-each-group select="valItem" group-by="@ident">
+            <xsl:sort select="@ident"/>
+            <valItem ident="{current-grouping-key()}"/>
+         </xsl:for-each-group>
+      </valList>
+   </xsl:template>
 
-<xsl:template match="classSpec">
-  <xsl:if test="attList/attDef">
-    <xsl:copy-of select="."/>
-  </xsl:if>
-</xsl:template>
+   <xsl:template match="classSpec">
+      <xsl:if test="attList/attDef">
+         <xsl:copy-of select="."/>
+      </xsl:if>
+   </xsl:template>
 </xsl:stylesheet>

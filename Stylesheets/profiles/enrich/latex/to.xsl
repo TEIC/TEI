@@ -1,35 +1,34 @@
-<xsl:stylesheet
-  exclude-result-prefixes="xlink dbk rng tei teix xhtml a html pantor xd xs xsl"
-  version="2.0"
-  xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:dbk="http://docbook.org/ns/docbook"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:html="http://www.w3.org/1999/xhtml"
-  xmlns:pantor="http://www.pantor.com/ns/local"
-  xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlns:dbk="http://docbook.org/ns/docbook"
+                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:teix="http://www.tei-c.org/ns/Examples"
+                xmlns:xhtml="http://www.w3.org/1999/xhtml"
+                xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                xmlns:html="http://www.w3.org/1999/xhtml"
+                xmlns:pantor="http://www.pantor.com/ns/local"
+                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="xlink dbk rng tei teix xhtml a html pantor xd xs xsl"
+                version="2.0">
   
-<xsl:import href="../../../latex2/tei.xsl"/>
-<xsl:import href="../../../common2/msdescription.xsl"/>
+   <xsl:import href="../../../latex2/tei.xsl"/>
+   <xsl:import href="../../../common2/msdescription.xsl"/>
 
-<xsl:param name="reencode">false</xsl:param>
-<xsl:param name="numberBackHeadings">true</xsl:param>
-<xsl:param name="numberFrontHeadings">true</xsl:param>
-<xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
-<xsl:param name="classParameters">11pt,twoside</xsl:param>
-<xsl:param name="startNamespace"></xsl:param>
-<xsl:param name="tocNumberSuffix">.\ </xsl:param>
-<xsl:param name="numberSpacer">\ </xsl:param>
-<xsl:param name="parSkip">3pt</xsl:param>
-<xsl:param name="parIndent">3pt</xsl:param>
-<xsl:variable name="docClass">article</xsl:variable>
-<xsl:template name="latexPreambleHook">
+   <xsl:param name="reencode">false</xsl:param>
+   <xsl:param name="numberBackHeadings">true</xsl:param>
+   <xsl:param name="numberFrontHeadings">true</xsl:param>
+   <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
+   <xsl:param name="classParameters">11pt,twoside</xsl:param>
+   <xsl:param name="startNamespace"/>
+   <xsl:param name="tocNumberSuffix">.\ </xsl:param>
+   <xsl:param name="numberSpacer">\ </xsl:param>
+   <xsl:param name="parSkip">3pt</xsl:param>
+   <xsl:param name="parIndent">3pt</xsl:param>
+   <xsl:variable name="docClass">article</xsl:variable>
+   <xsl:template name="latexPreambleHook">
 \usepackage{makeidx}
 \makeindex
 \defaultfontfeatures{Scale=MatchLowercase}
@@ -46,13 +45,13 @@
 </xsl:template>
 
 
-<xsl:template name="latexBegin">
-<xsl:text>\makeatletter
+   <xsl:template name="latexBegin">
+      <xsl:text>\makeatletter
 \thispagestyle{plain}</xsl:text>
-<xsl:if test="not(tei:text/tei:front/tei:titlePage)">
-  <xsl:call-template name="printTitleAndLogo"/>
-</xsl:if>
-<xsl:text>\markright{\@title}%
+      <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
+         <xsl:call-template name="printTitleAndLogo"/>
+      </xsl:if>
+      <xsl:text>\markright{\@title}%
 \markboth{\@title}{\@author}%
 \fvset{frame=single,numberblanklines=false,xleftmargin=5mm,xrightmargin=5mm}
 \fancyhf{} 
@@ -80,7 +79,7 @@
 \section*{\contentsname}\@starttoc{toc}}
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
 \def\chaptermark#1{\markboth {\thechapter. \ #1}{}}
-\def\sectionmark#1{\markright { \ifnum \c@secnumdepth >\z@
+\def\sectionmark#1{\markright { \ifnum \c@secnumdepth &gt;\z@
           \thesection. \ %
         \fi
 	#1}}
@@ -165,48 +164,51 @@
      {0.5ex \@plus .2ex}%
      {\reset@font\Large\sffamily}}
 \makeatother </xsl:text>
-<xsl:call-template name="beginDocumentHook"/>
-</xsl:template>
+      <xsl:call-template name="beginDocumentHook"/>
+   </xsl:template>
 
-<xsl:param name="latexGeometryOptions">twoside,letterpaper,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in</xsl:param>
+   <xsl:param name="latexGeometryOptions">twoside,letterpaper,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in</xsl:param>
 
-<xsl:template match="tei:byline"/>
-<xsl:template match="tei:titlePage/tei:note"/>
+   <xsl:template match="tei:byline"/>
+   <xsl:template match="tei:titlePage/tei:note"/>
 
-<xsl:template match="tei:list">
-  <xsl:if test="parent::tei:item">\mbox{}\\[-10pt] </xsl:if>
-  <xsl:apply-imports/>
-</xsl:template>
+   <xsl:template match="tei:list">
+      <xsl:if test="parent::tei:item">\mbox{}\\[-10pt] </xsl:if>
+      <xsl:apply-imports/>
+   </xsl:template>
 
-<xsl:template name="lineBreak">
-  <xsl:param name="id"/>
-  <xsl:text>\mbox{}\newline &#10;</xsl:text>
-</xsl:template>
+   <xsl:template name="lineBreak">
+      <xsl:param name="id"/>
+      <xsl:text>\mbox{}\newline 
+</xsl:text>
+   </xsl:template>
 
     <xsl:template name="msSection">
       <xsl:param name="level"/>
       <xsl:param name="heading"/>
       <xsl:param name="implicitBlock">false</xsl:param>
-      <xsl:text>&#10;</xsl:text>
+      <xsl:text>
+</xsl:text>
       <xsl:choose>
-	<xsl:when test="$level=1">\section</xsl:when>
-	<xsl:when test="$level=2">\subsection</xsl:when>
-	<xsl:when test="$level=3">\subsubsection</xsl:when>
-	<xsl:when test="$level=4">\paragraph</xsl:when>
+	        <xsl:when test="$level=1">\section</xsl:when>
+	        <xsl:when test="$level=2">\subsection</xsl:when>
+	        <xsl:when test="$level=3">\subsubsection</xsl:when>
+	        <xsl:when test="$level=4">\paragraph</xsl:when>
       </xsl:choose>
-	<xsl:text>{</xsl:text>
-	<xsl:value-of select="$heading"/>
-	<xsl:text>}&#10;</xsl:text>
+	     <xsl:text>{</xsl:text>
+	     <xsl:value-of select="$heading"/>
+	     <xsl:text>}
+</xsl:text>
       <xsl:choose>
-	<xsl:when test="$implicitBlock='true'">
+	        <xsl:when test="$implicitBlock='true'">
 \par
 	    <xsl:apply-templates/>
 \par
 	</xsl:when>
-	<xsl:when test="*">
-	  <xsl:apply-templates/>
-	</xsl:when>
-	<xsl:otherwise>
+	        <xsl:when test="*">
+	           <xsl:apply-templates/>
+	        </xsl:when>
+	        <xsl:otherwise>
 \par
 	    <xsl:apply-templates/>
 \par
@@ -219,21 +221,21 @@
       <xsl:param name="style"/>
       <xsl:param name="after"/>
       <xsl:value-of select="$before"/>
-	<xsl:choose>
-	  <xsl:when test="$style='italic'">
-	    <xsl:text>\textit{</xsl:text>
-	      <xsl:value-of select="normalize-space(.)"/>
-	    <xsl:text>}</xsl:text>
-	  </xsl:when>
-	  <xsl:when test="$style='bold'">
-	    <xsl:text>\textbf{</xsl:text>
-	      <xsl:value-of select="normalize-space(.)"/>
-	    <xsl:text>}</xsl:text>	    
-	  </xsl:when>
-	  <xsl:otherwise>
-	      <xsl:value-of select="normalize-space(.)"/>
-	  </xsl:otherwise>
-	</xsl:choose>
+	     <xsl:choose>
+	        <xsl:when test="$style='italic'">
+	           <xsl:text>\textit{</xsl:text>
+	           <xsl:value-of select="normalize-space(.)"/>
+	           <xsl:text>}</xsl:text>
+	        </xsl:when>
+	        <xsl:when test="$style='bold'">
+	           <xsl:text>\textbf{</xsl:text>
+	           <xsl:value-of select="normalize-space(.)"/>
+	           <xsl:text>}</xsl:text>	    
+	        </xsl:when>
+	        <xsl:otherwise>
+	           <xsl:value-of select="normalize-space(.)"/>
+	        </xsl:otherwise>
+	     </xsl:choose>
       <xsl:value-of select="$after"/>
     </xsl:template>
 
@@ -256,12 +258,12 @@
 
     <xsl:template match="tei:teiHeader">
       <xsl:choose>
-	<xsl:when test="not(parent::tei:*)">
-	  <xsl:call-template name="mainDocument"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:apply-templates select="tei:fileDesc"/>
-	</xsl:otherwise>
+	        <xsl:when test="not(parent::tei:*)">
+	           <xsl:call-template name="mainDocument"/>
+	        </xsl:when>
+	        <xsl:otherwise>
+	           <xsl:apply-templates select="tei:fileDesc"/>
+	        </xsl:otherwise>
       </xsl:choose>
     </xsl:template>
     
@@ -270,5 +272,3 @@
     </xsl:template>
 
 </xsl:stylesheet>
-
-

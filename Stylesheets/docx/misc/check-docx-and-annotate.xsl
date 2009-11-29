@@ -1,29 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet 
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:dc="http://purl.org/dc/elements/1.1/" 
-    xmlns:dcterms="http://purl.org/dc/terms/"
-    xmlns:dcmitype="http://purl.org/dc/dcmitype/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:tei="http://www.tei-c.org/ns/1.0" version="2.0" xmlns:iso="http://www.iso.org/ns/1.0"
-    xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:o="urn:schemas-microsoft-com:office:office"
-    xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-    xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-    xmlns:v="urn:schemas-microsoft-com:vml" xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
-    xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
-    xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
-    xmlns:w10="urn:schemas-microsoft-com:office:word"
-    xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-    xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
-    xmlns:mml="http://www.w3.org/1998/Math/MathML"
-    xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
-    xmlns:con="http://schemas.openxmlformats.org/package/2006/content-types"
-    xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
-    xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-    exclude-result-prefixes="cp con ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn xsi dc dcterms dcmitype">
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:dc="http://purl.org/dc/elements/1.1/"
+                xmlns:dcterms="http://purl.org/dc/terms/"
+                xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:iso="http://www.iso.org/ns/1.0"
+                xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:o="urn:schemas-microsoft-com:office:office"
+                xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+                xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
+                xmlns:v="urn:schemas-microsoft-com:vml"
+                xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
+                xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+                xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
+                xmlns:w10="urn:schemas-microsoft-com:office:word"
+                xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+                xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
+                xmlns:mml="http://www.w3.org/1998/Math/MathML"
+                xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
+                xmlns:con="http://schemas.openxmlformats.org/package/2006/content-types"
+                xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
+                xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
+                version="2.0"
+                exclude-result-prefixes="cp con ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn xsi dc dcterms dcmitype">
     
     <xsl:output method="xml" version="1.0" encoding="UTF-8"/>
     
@@ -39,7 +41,8 @@
             <xsl:apply-templates mode="comments"/>
         </xsl:variable>
         <xsl:variable name="relations">
-            <xsl:apply-templates select="doc(concat($word-directory,'/word/_rels/document.xml.rels'))" mode="relations"/>
+            <xsl:apply-templates select="doc(concat($word-directory,'/word/_rels/document.xml.rels'))"
+                              mode="relations"/>
         </xsl:variable>
         <xsl:variable name="content-types">
             <xsl:apply-templates mode="content-types" select="doc(concat($word-directory,'/Content_Types.xml'))"/>
@@ -69,47 +72,43 @@
     </xsl:template>
     
     <!-- identity transform  document-->
-    <xsl:template match="@*|text()|comment()|processing-instruction()"  mode="document">
+    <xsl:template match="@*|text()|comment()|processing-instruction()" mode="document">
         <xsl:copy-of select="."/>
     </xsl:template>
     
-    <xsl:template match="*"  mode="document">
+    <xsl:template match="*" mode="document">
         <xsl:copy>
-            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" 
-                mode="document"/>
+            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="document"/>
         </xsl:copy>
     </xsl:template>
     
     <!-- identity transform relations -->
-    <xsl:template match="@*|text()|comment()|processing-instruction()"  mode="relations">
+    <xsl:template match="@*|text()|comment()|processing-instruction()" mode="relations">
         <xsl:copy-of select="."/>
     </xsl:template>
     
-    <xsl:template match="*"  mode="relations">
+    <xsl:template match="*" mode="relations">
         <xsl:copy>
-            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" 
-                mode="document"/>
+            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="document"/>
         </xsl:copy>
     </xsl:template>
     
     <!-- copy nothing for comments -->
-    <xsl:template match="@*|text()|comment()|processing-instruction()"  mode="comments"/>
+    <xsl:template match="@*|text()|comment()|processing-instruction()" mode="comments"/>
         
     
-    <xsl:template match="*"  mode="comments">
-        <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" 
-                mode="comments"/>
+    <xsl:template match="*" mode="comments">
+        <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="comments"/>
     </xsl:template>
     
     <!-- identity transform content types -->
-    <xsl:template match="@*|text()|comment()|processing-instruction()"  mode="content-types">
+    <xsl:template match="@*|text()|comment()|processing-instruction()" mode="content-types">
         <xsl:copy-of select="."/>
     </xsl:template>
     
-    <xsl:template match="*"  mode="content-types">
+    <xsl:template match="*" mode="content-types">
         <xsl:copy>
-            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" 
-                mode="content-types"/>
+            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="content-types"/>
         </xsl:copy>
     </xsl:template>    
 
@@ -124,7 +123,9 @@
                 </w:pPr>
                 <w:r>
                     <w:annotationRef/>
-                    <w:t><xsl:value-of select="$text"/></w:t>
+                    <w:t>
+                  <xsl:value-of select="$text"/>
+               </w:t>
                 </w:r>
             </w:p>
         </w:comment>
@@ -166,17 +167,18 @@
     <xsl:template match="con:Override[@PartName='/word/comments.xml']"/>
     <!-- write out content-types -->
     <xsl:template name="write-out-content-types">
-        <xsl:param name="types"></xsl:param>
-	<xsl:if test="$debug='true'">
-	  <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/Content_Types_new.xml')"/></xsl:message>
-	</xsl:if>
+        <xsl:param name="types"/>
+	     <xsl:if test="$debug='true'">
+	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/Content_Types_new.xml')"/>
+         </xsl:message>
+	     </xsl:if>
         <xsl:result-document href="{concat($word-directory,'/Content_Types_new.xml')}" standalone="yes">
             <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
                 <xsl:for-each select="$types/child::node()/*">
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
                 <Override PartName="/word/comments.xml"
-                    ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml"/>
+                      ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml"/>
             </Types>
         </xsl:result-document>
     </xsl:template>
@@ -184,39 +186,34 @@
     
     <!-- write out relations -->
     <xsl:template name="write-out-relations">
-        <xsl:param name="relations"></xsl:param>
-	<xsl:if test="$debug='true'">
-	  <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'word/_rels/document_new.xml.rels')"/></xsl:message>
-	</xsl:if>
-        <xsl:result-document href="{concat($word-directory,'/word/_rels/document_new.xml.rels')}" standalone="yes">
+        <xsl:param name="relations"/>
+	     <xsl:if test="$debug='true'">
+	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'word/_rels/document_new.xml.rels')"/>
+         </xsl:message>
+	     </xsl:if>
+        <xsl:result-document href="{concat($word-directory,'/word/_rels/document_new.xml.rels')}"
+                           standalone="yes">
             <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
                 <xsl:for-each select="$relations/child::node()/*">
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
                 <Relationship Id="rId9999"
-                    Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments"
-                    Target="comments.xml"/>
+                          Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments"
+                          Target="comments.xml"/>
             </Relationships>
         </xsl:result-document>
     </xsl:template>
     
     <!-- write out comments -->
     <xsl:template name="write-out-comments">
-        <xsl:param name="comments"></xsl:param>
-	<xsl:if test="$debug='true'">
-	  <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'word/_rels/comments.xml')"/></xsl:message>
-	</xsl:if>
+        <xsl:param name="comments"/>
+	     <xsl:if test="$debug='true'">
+	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'word/_rels/comments.xml')"/>
+         </xsl:message>
+	     </xsl:if>
         <xsl:result-document href="{concat($word-directory,'/word/comments.xml')}" standalone="yes">
             <w:comments xmlns:mv="urn:schemas-microsoft-com:mac:vml"
-                xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
-                xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                xmlns:o="urn:schemas-microsoft-com:office:office"
-                xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-                xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-                xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w10="urn:schemas-microsoft-com:office:word"
-                xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-                xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
-                xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">
+                     xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main">
                 <xsl:copy-of select="$comments"/>
             </w:comments>
         </xsl:result-document>
@@ -224,10 +221,9 @@
     
     <!-- writes settings.xml and app.xml to lock down the document -->
     <xsl:template name="lock-down-document">
-        <xsl:result-document href="{concat($word-directory,'/docProps/app.xml')}"
-            standalone="yes">
+        <xsl:result-document href="{concat($word-directory,'/docProps/app.xml')}" standalone="yes">
             <Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"
-                xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
+                     xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
                 <Template>Iso_Template_v4.dotx</Template>
                 <Application>TEIISO tei-docx.xsl</Application>
                 <DocSecurity>8</DocSecurity>
@@ -237,12 +233,7 @@
         </xsl:result-document>
         
         <xsl:result-document href="{concat($word-directory,'/word/settings.xml')}" standalone="yes">
-            <w:settings xmlns:o="urn:schemas-microsoft-com:office:office"
-                xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-                xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-                xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w10="urn:schemas-microsoft-com:office:word"
-                xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-                xmlns:sl="http://schemas.openxmlformats.org/schemaLibrary/2006/main">
+            <w:settings xmlns:sl="http://schemas.openxmlformats.org/schemaLibrary/2006/main">
                 <w:zoom w:percent="100"/>
                 <w:attachedTemplate r:id="rId1"/>
                 <w:linkStyles/>
@@ -275,8 +266,13 @@
                 <w:attachedSchema w:val="ActionsPane3"/>
                 <w:themeFontLang w:val="en-GB"/>
                 <w:clrSchemeMapping w:bg1="light1" w:t1="dark1" w:bg2="light2" w:t2="dark2" w:accent1="accent1"
-                    w:accent2="accent2" w:accent3="accent3" w:accent4="accent4" w:accent5="accent5"
-                    w:accent6="accent6" w:hyperlink="hyperlink" w:followedHyperlink="followedHyperlink"/>
+                                w:accent2="accent2"
+                                w:accent3="accent3"
+                                w:accent4="accent4"
+                                w:accent5="accent5"
+                                w:accent6="accent6"
+                                w:hyperlink="hyperlink"
+                                w:followedHyperlink="followedHyperlink"/>
                 <w:shapeDefaults>
                     <o:shapedefaults v:ext="edit" spidmax="2050"/>
                     <o:shapelayout v:ext="edit">

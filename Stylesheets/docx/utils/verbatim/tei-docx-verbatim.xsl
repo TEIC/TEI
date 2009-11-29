@@ -1,25 +1,25 @@
-<?xml version="1.0"?>
-<xsl:stylesheet 
-    version="2.0" 
-    xmlns:sch="http://www.ascc.net/xml/schematron"
-    xmlns:m="http://www.w3.org/1998/Math/MathML"
-    xmlns:atom="http://www.w3.org/2005/Atom"  
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    xmlns:xhtml="http://www.w3.org/1999/xhtml"
-    xmlns:dbk="http://docbook.org/ns/docbook"
-    xmlns:rng="http://relaxng.org/ns/structure/1.0"
-    xmlns:tei="http://www.tei-c.org/ns/1.0" 
-    xmlns:teix="http://www.tei-c.org/ns/Examples"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-    xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-    exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom" >
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet xmlns:sch="http://www.ascc.net/xml/schematron"
+                xmlns:m="http://www.w3.org/1998/Math/MathML"
+                xmlns:atom="http://www.w3.org/2005/Atom"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlns:xhtml="http://www.w3.org/1999/xhtml"
+                xmlns:dbk="http://docbook.org/ns/docbook"
+                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:teix="http://www.tei-c.org/ns/Examples"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+                version="2.0"
+                exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom">
     
     <xsl:import href="verbatim.xsl"/>
     
-    <xd:doc type="stylesheet">
-        <xd:short> TEI Utility stylesheet to create verbatim XML for the TEI to Word conversion </xd:short>
-        <xd:detail> This library is free software; you can redistribute it and/or
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+      <desc>
+         <p> TEI Utility stylesheet to create verbatim XML for the TEI to Word conversion </p>
+         <p> This library is free software; you can redistribute it and/or
             modify it under the terms of the GNU Lesser General Public License as
             published by the Free Software Foundation; either version 2.1 of the
             License, or (at your option) any later version. This library is
@@ -28,11 +28,12 @@
             PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
             details. You should have received a copy of the GNU Lesser General Public
             License along with this library; if not, write to the Free Software
-            Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </xd:detail>
-        <xd:author>See AUTHORS</xd:author>
-        <xd:cvsId>$Id$</xd:cvsId>
-        <xd:copyright>2008, TEI Consortium</xd:copyright>
-    </xd:doc>
+            Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </p>
+         <p>Author: See AUTHORS</p>
+         <p>Id: $Id$</p>
+         <p>Copyright: 2008, TEI Consortium</p>
+      </desc>
+   </doc>
     
     <!--
         <xsl:param name="startComment">&lt;span class="comment"&gt;</xsl:param>
@@ -51,20 +52,20 @@
     <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
     <xsl:param name="showNamespaceDecls">true</xsl:param> -->
     
-    <xsl:param name="startComment"></xsl:param>
-    <xsl:param name="endComment"></xsl:param>
-    <xsl:param name="startElement"></xsl:param>
-    <xsl:param name="endElement"></xsl:param>
-    <xsl:param name="startElementName"></xsl:param>
-    <xsl:param name="endElementName"></xsl:param>
-    <xsl:param name="startAttribute"></xsl:param>
-    <xsl:param name="endAttribute"></xsl:param>
-    <xsl:param name="startAttributeValue"></xsl:param>
-    <xsl:param name="endAttributeValue"></xsl:param>
-    <xsl:param name="startNamespace"></xsl:param>
-    <xsl:param name="endNamespace"></xsl:param>
+    <xsl:param name="startComment"/>
+    <xsl:param name="endComment"/>
+    <xsl:param name="startElement"/>
+    <xsl:param name="endElement"/>
+    <xsl:param name="startElementName"/>
+    <xsl:param name="endElementName"/>
+    <xsl:param name="startAttribute"/>
+    <xsl:param name="endAttribute"/>
+    <xsl:param name="startAttributeValue"/>
+    <xsl:param name="endAttributeValue"/>
+    <xsl:param name="startNamespace"/>
+    <xsl:param name="endNamespace"/>
     
-    <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
+    <xsl:param name="spaceCharacter"> </xsl:param>
     <xsl:param name="showNamespaceDecls">true</xsl:param>
     
     <xsl:template name="verbatim-lineBreak">
@@ -94,4 +95,3 @@
     </xsl:template>
     
 </xsl:stylesheet>
-

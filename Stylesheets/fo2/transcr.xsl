@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-xmlns:xd="http://www.pnp-software.com/XSLTdoc" 
-xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" 
-xmlns="http://www.w3.org/1999/XSL/Format" 
-xmlns:local="http://www.pantor.com/ns/local" 
-xmlns:rng="http://relaxng.org/ns/structure/1.0" 
-xmlns:tei="http://www.tei-c.org/ns/1.0" 
-xmlns:teix="http://www.tei-c.org/ns/Examples" 
-xmlns:html="http://www.w3.org/1999/xhtml" 
-xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-exclude-result-prefixes="xd  a local rng tei teix" 
-version="2.0">
-  <xd:doc type="stylesheet">
-    <xd:short>
+<xsl:stylesheet xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+                xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                xmlns="http://www.w3.org/1999/XSL/Format"
+                xmlns:local="http://www.pantor.com/ns/local"
+                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:teix="http://www.tei-c.org/ns/Examples"
+                xmlns:html="http://www.w3.org/1999/xhtml"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="xd  a local rng tei teix"
+                version="2.0">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+      <desc>
+         <p>
     TEI stylesheet
     dealing  with elements from the
     transcr module, making XSL FO output.
-      </xd:short>
-    <xd:detail>
+      </p>
+         <p>
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
     License as published by the Free Software Foundation; either
@@ -34,11 +34,12 @@ version="2.0">
 
    
    
-      </xd:detail>
-    <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2008, TEI Consortium</xd:copyright>
-  </xd:doc>
+      </p>
+         <p>Author: See AUTHORS</p>
+         <p>Id: $Id$</p>
+         <p>Copyright: 2008, TEI Consortium</p>
+      </desc>
+   </doc>
 
   <xsl:template match="tei:facsimile"/>
 

@@ -1,41 +1,37 @@
-<xsl:stylesheet 
-    xmlns:xd="http://www.pnp-software.com/XSLTdoc" 
-     exclude-result-prefixes="XSL" 
-     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-     xmlns:XSL="http://www.w3.org/1999/XSL/Transform" 
-     version="2.0">
+<xsl:stylesheet    
+    xpath-default-namespace="http://www.tei-c.org/ns/1.0"
+    xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
+    exclude-result-prefixes="XSL xd" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:XSL="http://www.w3.org/1999/XSL/Transform" 
+    version="2.0">
 
 <xsl:import href="../xhtml2/tei.xsl"/>
 
-<xd:doc type="stylesheet">
-    <xd:short>
-      TEI stylesheet for making web application to set parameters
-      </xd:short>
-    <xd:detail>
-    This library is free software; you can redistribute it and/or
+<doc scope="stylesheet" xmlns="http://www.oxygenxml.com/ns/doc/xsl" >
+    <desc>
+      <p>This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
     License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later version.
+    version 2.1 of the License, or (at your option) any later version.</p>
 
-    This library is distributed in the hope that it will be useful,
+    <p>This library is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
+    Lesser General Public License for more details.</p>
 
-    You should have received a copy of the GNU Lesser General Public
+    <p>You should have received a copy of the GNU Lesser General Public
     License along with this library; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-   
-      </xd:detail>
-    <xd:author>See AUTHORS</xd:author>
-    <xd:cvsId>$Id$</xd:cvsId>
-    <xd:copyright>2005, TEI Consortium</xd:copyright>
-  </xd:doc>
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA</p>
 
+    <p>$Id$</p>
+    <p>Copyright 2005, TEI Consortium</p>
+    </desc>
+  </doc>
 
-<xsl:include href="verbatim.xsl"/>
+<xsl:include href="../common2/verbatim.xsl"/>
 
-<xsl:key name="XDS" match="xd:doc" use="@class"/>
+<xsl:key name="XDS" match="doc" use="@class"/>
 
 <xsl:param name="numberHeadings">false</xsl:param>
 <xsl:param name="numberBodyHeadings"></xsl:param>
@@ -46,14 +42,15 @@
 
 <xsl:template name="cgi">
 <xsl:result-document href="stylebear" method="text" encoding="utf-8">
+<xsl:message>Create file "stylebear" </xsl:message>
 <xsl:text>#!/usr/bin/perl&#10;</xsl:text>
 
-<xsl:for-each select="TEI.2/text/body/div[@id]">
+<xsl:for-each select="TEI/text/body/div[@id]">
   <xsl:call-template name="listcgi">
-    <xsl:with-param name="File">common/tei-param.xsl</xsl:with-param>
+    <xsl:with-param name="File">common2/tei-param.xsl</xsl:with-param>
   </xsl:call-template>
   <xsl:call-template name="listcgi">
-    <xsl:with-param name="File">html/tei-param.xsl</xsl:with-param>
+    <xsl:with-param name="File">xhtml2/tei-param.xsl</xsl:with-param>
   </xsl:call-template>
 </xsl:for-each>
 <xsl:text disable-output-escaping="yes">
@@ -69,14 +66,13 @@ $today = (localtime)[3] . " " . (Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec
 
 sub Response {
 my $HOME=$query->param('TEIXSL');
-my $VERSION=$query->param('Version');
 my $OUTFILE=$query->param('outputFile');
 print $query->header(-type=>'application/octet-stream',
 		     -attachment=>$OUTFILE);
 print "&lt;xsl:stylesheet \n";
 print "     xmlns:tei=\"http://www.tei-c.org/ns/1.0\"\n";
 print "     xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" \n";
-print "     version=\"1.0\">\n";
+print "     version=\"2.0\">\n";
 print "&lt;!-- XSLT stylesheet to generate HTML version of TEI document\n";
 print "Written by the TEI XSL generator (Sebastian Rahtz, sebastian.rahtz\@oucs.ox.ac.uk)\n";
 print "Created on $today-->\n";
@@ -85,7 +81,7 @@ print "Created on $today-->\n";
 #              @values = $query->param($key);
 #              print join(", ",@values),"]\n";
 #          }
-print "&lt;xsl:import href=\"",$HOME,"/",$VERSION,"/stylesheet/xhtml2/tei.xsl\"/>\n";
+print "&lt;xsl:import href=\"",$HOME,"/tei/stylesheet/xhtml2/tei.xsl\"/>\n";
 foreach $key (keys %Default) {
 my $Passed=$query->param($key);
 my $D=$Default{$key};
@@ -111,7 +107,7 @@ return "";
 
 <xsl:template match="/">
 <xsl:call-template name="cgi"/>
-<TEI.2 xmlns:html="http://www.w3.org/1999/xhtml">
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:html="http://www.w3.org/1999/xhtml">
     <teiHeader>
       <fileDesc>
 	<titleStmt>
@@ -125,30 +121,15 @@ return "";
 	  <p></p>
 	</sourceDesc>
     </fileDesc>
-    <revisionDesc>
-      <change>
-	<date>$Date$.</date>
-	<respStmt>
-	  <name>$Author$</name>
-	</respStmt>
-	<item>$Revision$</item>
-      </change>
-    </revisionDesc>
     </teiHeader>
     <text>
 <body>
 <html:form
  encoding="utf-8"
  enctype="multipart/form-data"
- action="/tei-bin/stylebear"
+ action="/cgi-bin/stylebear"
  method="post"
  id="stylebear">
-<p>Make stylesheet for: 
-    <html:select name="Version">
-      <html:option value="teip4">TEI P4</html:option>
-      <html:option value="tei" selected="selected">TEI P5</html:option>
-    </html:select>
-</p>
 <p>Location of XSL stylesheets:
  <html:input type="textbox" name="TEIXSL" size="48"
 	     value="http://www.tei-c.org/release/xml"/></p>
@@ -157,7 +138,7 @@ return "";
 <p>Name of output file:
  <html:input type="textbox" name="outputFile" value="myTei.xsl"/></p>
 
-   <xsl:for-each select="TEI.2/text/body/div[@id]">
+   <xsl:for-each select="TEI/text/body/div[@id]">
        <p><hi><xsl:number/>: <xsl:value-of select="head"/></hi></p>
        <p><xref url="customize.xml.ID={@id}">Details of this section</xref></p>
        <table>
@@ -180,7 +161,7 @@ return "";
 </html:form>
 </body>
 </text>
-</TEI.2>
+</TEI>
 </xsl:template>
 
 <xsl:template name="var">
@@ -291,22 +272,7 @@ return "";
 	    <xsl:value-of select="following-sibling::xsl:*[1]/@name"/>
 	  </xsl:with-param>
 	  <xsl:with-param name="description">
-	    <xsl:choose>
-	      <xsl:when test="starts-with(xd:short,'[')">
-		<xsl:value-of select="substring-after(xd:short,']')"/>
-	      </xsl:when>
-	      <xsl:when test="xd:short"><xsl:apply-templates
-	      select="xd:short"/></xsl:when>
-	      <xsl:when test="starts-with(.,'[')">
-		<xsl:value-of select="substring-after(.,']')"/>
-	      </xsl:when>
-	      <xsl:when test="contains(.,'.')">
-		<xsl:value-of select="substring-before(.,'.')"/>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:copy-of select="."/>
-	      </xsl:otherwise>
-	    </xsl:choose>
+	    <xsl:apply-templates select="xd:desc"/>
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:for-each>

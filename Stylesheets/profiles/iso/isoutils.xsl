@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-    xmlns:cals="http://www.oasis-open.org/specs/tm9901"
-    xmlns:iso="http://www.iso.org/ns/1.0"
-    xmlns:edate="http://exslt.org/dates-and-times"
-    xmlns:tei="http://www.tei-c.org/ns/1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="edate tei iso cals" 
-    version="2.0">
+<xsl:stylesheet xmlns:cals="http://www.oasis-open.org/specs/tm9901"
+                xmlns:iso="http://www.iso.org/ns/1.0"
+                xmlns:edate="http://exslt.org/dates-and-times"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="edate tei iso cals"
+                version="2.0">
   <!-- $Id$ -->
 
   <xsl:variable name="processor">
-    <xsl:value-of select="system-property('xsl:vendor')"/>
+      <xsl:value-of select="system-property('xsl:vendor')"/>
   </xsl:variable>
 
   <xsl:key name="ISOMETA" match="*[@iso:meta]" use="@iso:meta"/>
@@ -19,15 +18,14 @@
   <xsl:param name="doclang">en</xsl:param>
 
   <xsl:template name="whatsTheDate">
-    <xsl:value-of
-	select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[M02]:[s02]Z')"/>
+      <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[M02]:[s02]Z')"/>
   </xsl:template>
 
 
-<xsl:template name="getiso_meta">
-  <xsl:param name="meta"/>
-  <xsl:value-of select="key('ISOMETA',$meta)"/>
-</xsl:template>
+   <xsl:template name="getiso_meta">
+      <xsl:param name="meta"/>
+      <xsl:value-of select="key('ISOMETA',$meta)"/>
+   </xsl:template>
 
     <!--
     <xsl:choose>
@@ -51,10 +49,9 @@
   
 
   <xsl:template name="getiso_year">
-    <xsl:value-of
-	select="substring(key('ISOMETA','docdate'),1,4)"/>
+      <xsl:value-of select="substring(key('ISOMETA','docdate'),1,4)"/>
   </xsl:template>
-<!--  
+   <!--  
  
   <xsl:template name="getiso_title_introductory_fr">
     <xsl:value-of
@@ -109,93 +106,91 @@
   
   -->
   <xsl:template name="generateTitle">
-    <xsl:value-of select="key('ISOMETA','introductoryTitle')"/>
-    <xsl:text> &#x2014; </xsl:text>
-    <xsl:value-of select="key('ISOMETA','mainTitle')"/>
-    <xsl:if test="key('ISOMETA','complementaryTitle')">
-      <xsl:text> &#x2014; </xsl:text>
-      <xsl:value-of select="key('ISOMETA','complementaryTitle')"/>
-    </xsl:if>
+      <xsl:value-of select="key('ISOMETA','introductoryTitle')"/>
+      <xsl:text> — </xsl:text>
+      <xsl:value-of select="key('ISOMETA','mainTitle')"/>
+      <xsl:if test="key('ISOMETA','complementaryTitle')">
+         <xsl:text> — </xsl:text>
+         <xsl:value-of select="key('ISOMETA','complementaryTitle')"/>
+      </xsl:if>
   </xsl:template>
 
   <xsl:template name="makeHTMLHeading">
-    <xsl:param name="text"/>
-    <xsl:param name="class">title</xsl:param>
-    <xsl:param name="level">1</xsl:param>
-    <xsl:if test="not($text='')">
-      <xsl:element name="h{$level}">
-	<xsl:attribute name="class">
-	  <xsl:value-of select="$class"/>
-	</xsl:attribute>
-	<xsl:value-of select="$text"/>
-      </xsl:element>
-    </xsl:if>
+      <xsl:param name="text"/>
+      <xsl:param name="class">title</xsl:param>
+      <xsl:param name="level">1</xsl:param>
+      <xsl:if test="not($text='')">
+         <xsl:element name="h{$level}">
+	           <xsl:attribute name="class">
+	              <xsl:value-of select="$class"/>
+	           </xsl:attribute>
+	           <xsl:value-of select="$text"/>
+         </xsl:element>
+      </xsl:if>
   </xsl:template>
    
   
   <xsl:template name="getiso_copyright">
-    <xsl:apply-templates
-	select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability[1]"
-	mode="titlepage">
-      <xsl:with-param name="style">zzCopyright</xsl:with-param>
-    </xsl:apply-templates>
+      <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability[1]"
+                           mode="titlepage">
+         <xsl:with-param name="style">zzCopyright</xsl:with-param>
+      </xsl:apply-templates>
   </xsl:template>
   
   <xsl:template name="getiso_coverWarning">
-    <xsl:apply-templates
-	select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability[2]"
-	mode="titlepage">
-      <xsl:with-param name="style">coverwarning</xsl:with-param>
-    </xsl:apply-templates>
+      <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability[2]"
+                           mode="titlepage">
+         <xsl:with-param name="style">coverwarning</xsl:with-param>
+      </xsl:apply-templates>
   </xsl:template>
   
-<xsl:template name="getiso_header">
-  <xsl:value-of select="key('ISOMETA','secretariat')"/>
-  <xsl:variable name="stage">
-    <xsl:value-of select="key('ISOMETA','docStage')"/>
-  </xsl:variable>
-  <xsl:choose>
-    <xsl:when test="$stage='40'">/DIS </xsl:when>
-    <xsl:when test="$stage='50'">/FDIS </xsl:when>
-  </xsl:choose>
-</xsl:template>
-
-<xsl:template name="docID">
-  <xsl:variable name="doclang">
-    <xsl:value-of select="ancestor-or-self::tei:TEI/@xml:lang"/>
-  </xsl:variable>
-  <xsl:variable name="stage">
-    <xsl:value-of select="key('ISOMETA','docStage')"/>
-  </xsl:variable>
-  
-  <xsl:value-of select="key('ISOMETA','docNumber')"/>
-  <xsl:text>-</xsl:text>
-  <xsl:value-of select="key('ISOMETA','docPartNumber')"/>
-  
-  <xsl:choose>
-    <xsl:when test="$stage='20'"></xsl:when>
-    <xsl:when test="$stage='30'"></xsl:when>
-    <xsl:when test="$stage='40'"></xsl:when>
-    <xsl:otherwise>
-      <xsl:text>:</xsl:text>
-      <xsl:call-template name="getiso_year"/>
+   <xsl:template name="getiso_header">
+      <xsl:value-of select="key('ISOMETA','secretariat')"/>
+      <xsl:variable name="stage">
+         <xsl:value-of select="key('ISOMETA','docStage')"/>
+      </xsl:variable>
       <xsl:choose>
-	<xsl:when test="starts-with($doclang,'en')">(E)</xsl:when>
-	<xsl:when test="starts-with($doclang,'fr')">(F)</xsl:when>
+         <xsl:when test="$stage='40'">/DIS </xsl:when>
+         <xsl:when test="$stage='50'">/FDIS </xsl:when>
       </xsl:choose>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
-<xsl:template name="getiso_authority">
-    <xsl:value-of select="key('ISOMETA','secretariat')"/>
-</xsl:template>
+   </xsl:template>
 
-<xsl:template name="getiso_documentNumber">
-    <xsl:value-of select="key('ISOMETA','referenceNumber')"/>
-</xsl:template>
+   <xsl:template name="docID">
+      <xsl:variable name="doclang">
+         <xsl:value-of select="ancestor-or-self::tei:TEI/@xml:lang"/>
+      </xsl:variable>
+      <xsl:variable name="stage">
+         <xsl:value-of select="key('ISOMETA','docStage')"/>
+      </xsl:variable>
+  
+      <xsl:value-of select="key('ISOMETA','docNumber')"/>
+      <xsl:text>-</xsl:text>
+      <xsl:value-of select="key('ISOMETA','docPartNumber')"/>
+  
+      <xsl:choose>
+         <xsl:when test="$stage='20'"/>
+         <xsl:when test="$stage='30'"/>
+         <xsl:when test="$stage='40'"/>
+         <xsl:otherwise>
+            <xsl:text>:</xsl:text>
+            <xsl:call-template name="getiso_year"/>
+            <xsl:choose>
+	              <xsl:when test="starts-with($doclang,'en')">(E)</xsl:when>
+	              <xsl:when test="starts-with($doclang,'fr')">(F)</xsl:when>
+            </xsl:choose>
+         </xsl:otherwise>
+      </xsl:choose>
+   </xsl:template>
+   <xsl:template name="getiso_authority">
+      <xsl:value-of select="key('ISOMETA','secretariat')"/>
+   </xsl:template>
 
-<xsl:template name="getiso_partNumber">
-    <xsl:value-of select="key('ISOMETA','partNumber')"/>
-</xsl:template>
+   <xsl:template name="getiso_documentNumber">
+      <xsl:value-of select="key('ISOMETA','referenceNumber')"/>
+   </xsl:template>
+
+   <xsl:template name="getiso_partNumber">
+      <xsl:value-of select="key('ISOMETA','partNumber')"/>
+   </xsl:template>
 
 </xsl:stylesheet>
