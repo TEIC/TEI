@@ -1158,7 +1158,7 @@
          </xsl:if>
       </xsl:if>
   </xsl:template>
-  <keywords>
+  <keywords xmlns="http://www.example.com">
       <kw>attribute</kw>
       <kw>default</kw>
       <kw>datatypes</kw>
@@ -1179,7 +1179,7 @@
       <kw>text</kw>
       <kw>token</kw>
   </keywords>
-  <xsl:variable name="keywords"  select="document ('')/*/keywords/*"/>
+  <xsl:variable xmlns:foo="http://www.example.com" name="keywords"  select="document ('')/*/foo:keywords/*"/>
   <xsl:template name="quote-keyword">
       <xsl:param name="name"/>
       <xsl:if test="$name = $keywords">\</xsl:if>
