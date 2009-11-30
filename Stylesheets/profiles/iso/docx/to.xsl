@@ -923,7 +923,10 @@
             </w:rPr>
             <w:alias w:val="{@iso:meta}"/>
             <w:tag w:val="{@iso:meta}"/>
-            <w:id w:val="1586665067"/>
+	    <xsl:variable name="stdId">
+	      <xsl:number level="any"/>
+	    </xsl:variable>
+	    <w:id w:val="158666506{$stdId}"/>
             <w:lock w:val="sdtLocked"/>
             <w:placeholder>
                <w:docPart w:val="72E04D43EE084EC9AAF92D2A303216E5"/>
