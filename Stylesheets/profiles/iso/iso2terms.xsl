@@ -116,6 +116,58 @@
    </xsl:template>
 
    <xsl:template match="tbx:termEntry">
-</xsl:template>
+     <xsl:if test="not(preceding-sibling::tbx:termEntry)">
+       <table>
+	 <xsl:apply-templates select="." mode="go"/>
+	 <xsl:apply-templates select="following-sibling::tbx:termEntry" mode="go"/>
+       </table>
+     </xsl:if>
+   </xsl:template>
+
+   <xsl:template match="tbx:termEntry" mode="go">
+      <xsl:for-each select="tbx:langSet">
+	<tr>
+	  <td>
+         <xsl:choose>
+            <xsl:when test="starts-with(../@id,'autoTermNum')">
+            </xsl:when>
+            <xsl:otherwise>
+                   <xsl:value-of select="substring-after(../@id,'CDB_')"/>:
+            </xsl:otherwise>
+         </xsl:choose>
+	  </td>
+	  <td>
+         <xsl:for-each select="tbx:ntig">
+	   <xsl:apply-templates/>
+	   <xsl:if test="following-sibling::tbx:ntig"><br/></xsl:if>
+         </xsl:for-each>
+	  </td>
+	  <td>
+	    <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
+	    <xsl:apply-templates select="tbx:note"/>
+	  </td>
+	</tr>
+      </xsl:for-each>
+      <xsl:if test="tbx:descripGrp/tbx:descrip[@type='definition']">
+      <tr>
+	<td>&#10;</td>
+	  <td colspan="2">
+	  <xsl:apply-templates
+	      select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
+	  </td>
+      </tr>
+      </xsl:if>
+      <xsl:if test="tbx:note">
+	<tr>
+	  <td>&#10;</td>
+	    <td colspan="2">
+	      <xsl:apply-templates select="tbx:note"/>
+	  </td>
+	</tr>
+      </xsl:if>
+
+   </xsl:template>
+   
+   <xsl:template match="tbx:termNote"/>
 
 </xsl:stylesheet>
