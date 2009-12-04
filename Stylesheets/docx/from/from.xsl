@@ -144,8 +144,11 @@
 
 		    <!-- Do the final parse and create valid TEI -->
 		<xsl:apply-templates select="$part1" mode="part2"/>
-
+		
+		<xsl:call-template name="fromDocxFinalHook"/>
 	  </xsl:template>
+
+	  <xsl:template name="fromDocxFinalHook"/>
 
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>

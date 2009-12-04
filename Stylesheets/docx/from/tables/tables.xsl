@@ -62,6 +62,7 @@
 	        <xsl:when test="$tableMethod='cals'">
 	      <!-- preprocess the table to expand colspans, add row numbers, and
 		   simplify vertical merge info -->
+
 	      <xsl:variable name="TABLE">
 		             <table xmlns="http://www.oasis-open.org/specs/tm9901">
 		                <xsl:attribute name="frame">

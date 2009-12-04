@@ -31,6 +31,8 @@
     <!-- import special iso functions -->
     <xsl:include href="iso-functions.xsl"/>
 
+    <xsl:key name="WordTables" match="w:tbl" use="1"/>
+
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p>TEI stylesheet to convert Word DOCX XML to TEI XML.</p>
@@ -617,6 +619,34 @@
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$Tabletitle]" mode="paragraph"/>
 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='TableTitle']" mode="paragraph"/>
+
+    <!-- link to Word tables -->
+
+	  <xsl:template match="cals:table" mode="innerTable">
+	     <xsl:copy>
+	        <xsl:copy-of select="@*"/>
+		<xsl:attribute name="tei:corresp">
+		  <xsl:text>media/table</xsl:text>
+		  <xsl:number level="any"/>
+		  <xsl:text>.xml</xsl:text>
+		</xsl:attribute>
+	        <xsl:apply-templates mode="innerTable"/>	    
+	     </xsl:copy>
+	  </xsl:template>
+
+	  <xsl:template name="fromDocxFinalHook">
+	    <xsl:for-each select="key('WordTables',1)">
+		<xsl:variable name="n">
+		  <xsl:text>word/media/table</xsl:text>
+		  <xsl:number level="any"/>
+		  <xsl:text>.xml</xsl:text>
+		</xsl:variable>
+<xsl:message>Create <xsl:value-of select="$n"/></xsl:message>
+	    <xsl:result-document href="{$n}">
+	      <xsl:copy-of select="."/>
+	    </xsl:result-document>
+	    </xsl:for-each>
+	  </xsl:template>
 
     <!--
         Working with figures
