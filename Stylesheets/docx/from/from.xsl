@@ -80,41 +80,7 @@
 	  <xsl:variable name="characters">~!@#$%^&amp;*()&lt;&gt;{}[]|:;,.?`'"=+-_</xsl:variable>
 
 
-	  <!-- 
-		IMPORTING STYLESHEETS AND OVERRIDING MATCHED TEMPLATES:
-		
-		When importing a stylesheet (xsl:import) all the templates in the imported stylesheet
-		get a lower import-precedence than the ones in the importing stylesheet. If the importing
-		stylesheet now wants to override, let's say a general template to match all <w:p> elements
-		where no more specialized rule applies it can't since it will automatically override
-		all w:p[someprediceat] template in the imported stylesheet as well. 
-		In this case we have outsourced the processing of the general template into a named template
-		and all the imported stylesheet does is to call the named template. Now, the importing
-		stylesheet can simply override the named template, and everything works out fine.
-		
-		See templates:
-			- w:p (mode: paragraph)
-	
-		Modes:
-			- part0:	
-						a normalization process.
-						
-			- part2: 	
-						templates that are relevant in the second stage of the conversion are 
-						defined in mode "part2"
-					
-			- inSectionGroup:
-						Defines a template that is working o a group of consecutive elements (w:ps or w:tbls)
-						that form a section (a normal section not to be confused with w:sectPr).
-						
-			- paragraph:
-						Defines that the template works on an individual element (usually starting with a
-						w:p element).  
 
-			- iden:
-			
-			
-	-->
 
 
 	<xsl:strip-space elements="*"/>
@@ -124,36 +90,68 @@
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>The main template that starts the conversion from docx to TEI</p>
-         <p> The conversion process is split in two parts. Part1 does the main conversion
-			but does not necessarily create correct TEI. Part2 cleans up the mess produced by Part1
-			and ensures the creation of valid TEI. </p>
+	 <p><b>IMPORTING STYLESHEETS AND OVERRIDING MATCHED TEMPLATES:</b></p>
+		
+	<p>	When importing a stylesheet (xsl:import) all the templates in the imported stylesheet
+		get a lower import-precedence than the ones in the importing stylesheet. If the importing
+		stylesheet now wants to override, let's say a general template to match all &lt;w:p&gt; elements
+		where no more specialized rule applies it can't since it will automatically override
+		all w:p[someprediceat] template in the imported stylesheet as well. 
+		In this case we have outsourced the processing of the general template into a named template
+		and all the imported stylesheet does is to call the named template. Now, the importing
+		stylesheet can simply override the named template, and everything works out fine.</p>
+		
+		<p>See templates:
+			- w:p (mode: paragraph)</p>
+	
+			<p>Modes:</p>
+			<ul>
+			<li> part0:	
+						a normalization
+			process for styles. Can also detect illegal styles.</li>
+						
+			<li> part2: 	
+						templates that are relevant in the second stage of the conversion are 
+						defined in mode "part2"</li>
+					
+						<li> inSectionGroup:
+						Defines a template that is working o a group of consecutive elements (w:ps or w:tbls)
+						that form a section (a normal section not to be confused with w:sectPr).</li>
+						
+			<li> paragraph:
+						Defines that the template works on an individual element (usually starting with a
+						w:p element).  </li>
+
+			<li> iden: simply copies the content</li>
+			</ul>
+			
       </desc>
    </doc>
-	  <xsl:template match="/">
-		<!-- Do an initial normalization and store everything in $part0 -->
-		<xsl:variable name="part0">
-		       <xsl:apply-templates mode="part0"/>
-		    </xsl:variable>
-
-		    <!-- Do the main transformation and store everything in the variable part1 -->
-		<xsl:variable name="part1">
-		       <xsl:for-each select="$part0">
-		          <xsl:apply-templates/>
-		       </xsl:for-each>
-		    </xsl:variable>		  
-
-		    <!-- Do the final parse and create valid TEI -->
-		<xsl:apply-templates select="$part1" mode="part2"/>
-		
-		<xsl:call-template name="fromDocxFinalHook"/>
-	  </xsl:template>
-
-	  <xsl:template name="fromDocxFinalHook"/>
-
-	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-		main document template
-	</desc>
+   <xsl:template match="/">
+     <!-- Do an initial normalization and store everything in $part0 -->
+     <xsl:variable name="part0">
+       <xsl:apply-templates mode="part0"/>
+     </xsl:variable>
+     
+     <!-- Do the main transformation and store everything in the variable part1 -->
+     <xsl:variable name="part1">
+       <xsl:for-each select="$part0">
+	 <xsl:apply-templates/>
+       </xsl:for-each>
+     </xsl:variable>		  
+     
+     <!-- Do the final parse and create valid TEI -->
+     <xsl:apply-templates select="$part1" mode="part2"/>
+     
+     <xsl:call-template name="fromDocxFinalHook"/>
+   </xsl:template>
+   
+   <xsl:template name="fromDocxFinalHook"/>
+   
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+     <desc>
+		Main document template
+     </desc>
    </doc>
 	  <xsl:template match="w:document">
 		    <TEI>

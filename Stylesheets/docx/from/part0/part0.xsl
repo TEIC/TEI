@@ -53,28 +53,28 @@
   <xsl:template match="w:pStyle/@w:val|w:rStyle/@w:val" mode="part0">
       <xsl:variable name="old" select="."/>
       <xsl:variable name="new">
-	        <xsl:for-each select="document(concat($word-directory,'/word/styles.xml'),/)">
-	           <xsl:value-of select="key('STYLES',$old)/w:name/@w:val"/>
-	        </xsl:for-each>
+	<xsl:for-each select="document(concat($word-directory,'/word/styles.xml'),/)">
+	  <xsl:value-of select="key('STYLES',$old)/w:name/@w:val"/>
+	</xsl:for-each>
       </xsl:variable>
       <xsl:attribute name="w:val">
          <xsl:choose>
-	           <xsl:when test="$new=''">
-	              <xsl:value-of select="$old"/>
-	              <xsl:if test="$debug='true'">
-	                 <xsl:message>! <xsl:value-of select="$old"/> ... NOT FOUND    </xsl:message>
-	              </xsl:if>
-	           </xsl:when>
-	           <xsl:when test="not($new=$old)">
-	              <xsl:if test="$debug='true'">
-	                 <xsl:message>! <xsl:value-of select="$old"/> ... CHANGED ...  <xsl:value-of select="$new"/>
-                  </xsl:message>
-	              </xsl:if>
-	              <xsl:value-of select="$new"/>
-	           </xsl:when>
-	           <xsl:otherwise>
-	              <xsl:value-of select="$old"/>
-	           </xsl:otherwise>
+	   <xsl:when test="$new=''">
+	     <xsl:value-of select="$old"/>
+	     <xsl:if test="$debug='true'">
+	       <xsl:message>! style <xsl:value-of select="$old"/> ... NOT FOUND    </xsl:message>
+	     </xsl:if>
+	   </xsl:when>
+	   <xsl:when test="not($new=$old)">
+	     <xsl:if test="$debug='true'">
+	       <xsl:message>! style <xsl:value-of select="$old"/> ... CHANGED ...  <xsl:value-of select="$new"/>
+	       </xsl:message>
+	     </xsl:if>
+	     <xsl:value-of select="$new"/>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:value-of select="$old"/>
+	   </xsl:otherwise>
          </xsl:choose>
       </xsl:attribute>
   </xsl:template>

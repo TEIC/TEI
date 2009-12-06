@@ -30,6 +30,7 @@
     <!-- import functions -->
     <xsl:include href="iso-functions.xsl"/>
 
+    <xsl:param name="tableMethod">word</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -736,7 +737,12 @@
   </xsl:call-template>
    </xsl:template>
 
-   <!-- for ISO, don't write out most of the auxiliary files -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        Create all the files of the docx archive;    for ISO, don't write out most of the auxiliary files.
+
+    </desc>
+   </doc>
     <xsl:template name="write-docxfiles">
       <xsl:if test="$isofreestanding='true'">
         <!-- header and footers -->
@@ -778,7 +784,7 @@
         Writes the main document.xml file, that contains all "real" content.
     </desc>
    </doc>
-    <xsl:template name="write-document-dot-xml">
+    <xsl:template name="create-document-dot-xml">
         <w:document>
 
             <w:body>
@@ -810,7 +816,7 @@
 
     <xsl:template name="write-docxfile-docprops-custom">
 	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'docProps/newcustom.xml')"/>
+	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/docProps/newcustom.xml')"/>
          </xsl:message>
 	     </xsl:if>
 
@@ -934,5 +940,56 @@
       </w:sdt>
     </xsl:template>
     
+<!-- cals tables -->
+    <xsl:template match="cals:table">
+      <xsl:choose>
+	<xsl:when test="@tei:corresp and $tableMethod='word'">
+	  <xsl:call-template name="cals-table-header"/>
+	  <xsl:for-each select="document(@tei:corresp)">
+	    <xsl:apply-templates 	mode="copytable"/>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-imports/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
+
+    <xsl:template
+	match="
+	       w:bottom | 
+	       w:gridCol | 
+	       w:gridSpan | 
+	       w:insideH | 
+	       w:insideV | 
+	       w:jc | 
+	       w:left | 
+	       w:pPr |
+	       w:p |
+	       w:right |
+	       w:spacing |  
+	       w:tbl | 
+	       w:tblBorders | 
+	       w:tblCellMar | 
+	       w:tblGrid | 
+	       w:tblLayout | 
+	       w:tblLook | 
+	       w:tblPr | 
+	       w:tblStyle | 
+	       w:tblW | 
+	       w:tc | 
+	       w:tcBorders | 
+	       w:tcPr | 
+	       w:tcW | 
+	       w:top | 
+	       w:tr | 
+	       w:trPr | 
+	       w:vAlign "
+	mode="copytable">      
+      <xsl:copy>
+	<xsl:copy-of select="@*"/>
+	<xsl:apply-templates/>
+      </xsl:copy>
+    </xsl:template>
 
 </xsl:stylesheet>

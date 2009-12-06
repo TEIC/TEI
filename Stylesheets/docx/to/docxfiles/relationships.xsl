@@ -34,6 +34,10 @@
     
     <xsl:import href="../parameters.xsl"/>
     
+    <xsl:key name="GRAPHICS" use="1" match="tei:graphic[@url]"/>
+    <xsl:key name="OLEOBJECTS" use="1" match="o:OLEObject"/>
+    <xsl:key name="IMAGEDATA" use="1" match="v:imagedata"/>
+
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making Word docx files from TEI XML </p>
@@ -60,10 +64,10 @@
     </desc>
    </doc>
     <xsl:template name="write-docxfile-main-relationships">
-	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/_rels/.rels')"/>
-         </xsl:message>
-	     </xsl:if>
+      <xsl:if test="$debug='true'">
+	<xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/_rels/.rels')"/>
+	</xsl:message>
+      </xsl:if>
 
         <xsl:result-document href="{concat($word-directory,'/_rels/.rels')}" standalone="yes">
             <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
@@ -90,10 +94,10 @@
     </desc>
    </doc>
     <xsl:template name="write-docxfile-relationships">
-	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/word/_rels/document.xml/rels')"/>
-         </xsl:message>
-	     </xsl:if>
+      <xsl:if test="$debug='true'">
+	<xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/word/_rels/document.xml.rels')"/>
+	</xsl:message>
+      </xsl:if>
 
         <xsl:result-document href="{concat($word-directory,'/word/_rels/document.xml.rels')}"
                            standalone="yes">
@@ -156,20 +160,21 @@
                     </Relationship>
                     </xsl:for-each>
                 -->
-                <xsl:for-each select="//tei:graphic[@url]">
+
+                <xsl:for-each select="key('GRAPHICS',1)">
                     <Relationship Id="rId{position() + 300}"
                              Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
                              Target="{@url}"/>
                 </xsl:for-each>
                 
                 <!-- Formulas -->
-                <xsl:for-each select="//v:imagedata">
+                <xsl:for-each select="key('IMAGEDATA',1)">
                     <Relationship Id="rId{position() + 1000}"
                              Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
                              Target="{@r:id}"/>
                 </xsl:for-each>
                 
-                <xsl:for-each select="//o:OLEObject">
+                <xsl:for-each select="key('OLEOBJECTS',1)">
                     <Relationship Id="rId{position() + 2000}"
                              Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/oleObject"
                              Target="{@r:id}"/>

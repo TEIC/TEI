@@ -129,9 +129,13 @@
     </desc>
    </doc>
     <xsl:template match="/tei:TEI">
-        <xsl:call-template name="write-docxfiles"/>
-
-        <xsl:call-template name="write-document-dot-xml"/>
+	<xsl:variable name="docxml">
+	  <xsl:call-template name="create-document-dot-xml"/>
+	</xsl:variable>
+	<xsl:for-each select="$docxml">
+	  <xsl:call-template name="write-docxfiles"/>
+	  <xsl:copy-of select="."/>
+	</xsl:for-each>
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -177,10 +181,10 @@
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        Writes the main document.xml file, that contains all "real" content.
+        Create the contents of the main document.xml file, that contains all "real" content.
     </desc>
    </doc>
-    <xsl:template name="write-document-dot-xml">
+    <xsl:template name="create-document-dot-xml">
         <w:document>
 
             <w:body>
@@ -509,10 +513,10 @@
                             <xsl:attribute name="w:val" select="$character-style"/>
                         </w:rStyle>
                     </xsl:if>
+                    <xsl:copy-of select="$renderingProperties"/>
 		             <xsl:if test="ancestor::*[@xml:lang]">
 		                <w:lang w:val="{ancestor::*[@xml:lang][1]/@xml:lang}"/>
 		             </xsl:if>
-                    <xsl:copy-of select="$renderingProperties"/>
                 </w:rPr>
             </xsl:if>
 

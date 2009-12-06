@@ -70,41 +70,41 @@
 
     <xsl:template match="tei:text" mode="part2">
       <text>
-	        <body>
-	           <xsl:for-each select="tei:body">
-	              <xsl:variable name="MS">
-	                 <xsl:apply-templates mode="part2"/>
-	              </xsl:variable>
-	              <xsl:for-each select="$MS">
-	                 <msDesc>
-		                   <xsl:attribute name="xml:lang">
-		                      <xsl:text>en</xsl:text>
-		                   </xsl:attribute>
-		                   <xsl:attribute name="xml:id">
-		                      <xsl:text>m1</xsl:text>
-		                   </xsl:attribute>
-		                   <msIdentifier>
+	<body>
+	  <xsl:for-each select="tei:body">
+	    <xsl:variable name="MS">
+	      <xsl:apply-templates mode="part2"/>
+	    </xsl:variable>
+	    <xsl:for-each select="$MS">
+	      <msDesc>
+		<xsl:attribute name="xml:lang">
+		  <xsl:text>en</xsl:text>
+		</xsl:attribute>
+		<xsl:attribute name="xml:id">
+		  <xsl:text>m1</xsl:text>
+		</xsl:attribute>
+		<msIdentifier>
 		</msIdentifier>
-		                   <xsl:copy-of select="tei:msContents"/>
-		                   <physDesc>
-		                      <xsl:copy-of select="tei:physDesc/tei:p"/>
-		                      <xsl:if test="tei:supportDesc or tei:layoutDesc">
-		                         <objectDesc>
-		                            <xsl:copy-of select="tei:supportDesc"/>
-		                            <xsl:copy-of select="tei:layoutDesc"/>
-		                         </objectDesc>
-		                      </xsl:if>
-		                      <xsl:copy-of select="tei:handDesc"/>
-		                      <xsl:copy-of select="tei:decoDesc"/>
-		                      <xsl:copy-of select="tei:bindingDesc"/>
-		                   </physDesc>
-		                   <history>
+		<xsl:copy-of select="tei:msContents"/>
+		<physDesc>
+		  <xsl:copy-of select="tei:physDesc/tei:p"/>
+		  <xsl:if test="tei:supportDesc or tei:layoutDesc">
+		    <objectDesc>
+		      <xsl:copy-of select="tei:supportDesc"/>
+		      <xsl:copy-of select="tei:layoutDesc"/>
+		    </objectDesc>
+		  </xsl:if>
+		  <xsl:copy-of select="tei:handDesc"/>
+		  <xsl:copy-of select="tei:decoDesc"/>
+		  <xsl:copy-of select="tei:bindingDesc"/>
+		</physDesc>
+		<history>
 		</history>
-	                 </msDesc>
-	                 <xsl:copy-of select="tei:title|tei:p|tei:div|tei:head"/>
-	              </xsl:for-each>
-	           </xsl:for-each>
-	        </body>
+	      </msDesc>
+	      <xsl:copy-of select="tei:title|tei:p|tei:div|tei:head"/>
+	    </xsl:for-each>
+	  </xsl:for-each>
+	</body>
       </text>
     </xsl:template>
 

@@ -211,11 +211,16 @@
 		    <xsl:comment>END</xsl:comment>
 		-->
 	      </xsl:variable>
-	           <xsl:for-each select="$TABLE">
-		             <xsl:apply-templates mode="innerTable"/>
-	           </xsl:for-each>
-	        </xsl:when>
-	        <xsl:otherwise>
+	      <xsl:variable name="n">
+		<xsl:number level="any"/>
+	      </xsl:variable>
+	      <xsl:for-each select="$TABLE">
+		<xsl:apply-templates mode="innerTable">
+		  <xsl:with-param name="n" select="$n"/>
+		</xsl:apply-templates>
+	      </xsl:for-each>
+	    </xsl:when>
+	    <xsl:otherwise>
 	           <table rend="rules">
 		             <xsl:call-template name="table-header"/>
 		             <xsl:for-each select="w:tr">

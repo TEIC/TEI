@@ -51,22 +51,23 @@
 
       <xsl:message>Check whether rIds are listed in document rels: </xsl:message>
       <xsl:for-each select="key('RIDS',1)">
-         <xsl:variable name="i" select="@r:id|@r:embed"/>
-         <xsl:message>Examine <xsl:value-of select="$i"/>
-         </xsl:message>
-         <xsl:for-each select="document('_rels/document.xml.rels',/)">
-	           <xsl:choose>
-	              <xsl:when test="count(key('R',$i))=0">
-	                 <xsl:message>ERROR: no entry for <xsl:value-of select="$i"/>
-                  </xsl:message>
-	              </xsl:when>
-	              <xsl:otherwise>
-	                 <xsl:for-each select="key('R',$i)">
-	                    <xsl:message> .... <xsl:value-of select="$i"/>: <xsl:value-of select="@Target"/>
-	                    </xsl:message>
-	                 </xsl:for-each>
-	              </xsl:otherwise>
-	           </xsl:choose>
+         <xsl:variable name="i">
+	   <xsl:value-of select="@r:id|@r:embed"/>:   <xsl:value-of
+	   select="name()"/>
+	 </xsl:variable>
+	 <xsl:for-each select="document('_rels/document.xml.rels',/)">
+	   <xsl:choose>
+	     <xsl:when test="count(key('R',$i))=0">
+	       <xsl:message>ERROR: no entry for <xsl:value-of select="$i"/>
+	       </xsl:message>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <xsl:for-each select="key('R',$i)">
+		 <xsl:message> .... <xsl:value-of select="$i"/>: <xsl:value-of select="@Target"/>
+		 </xsl:message>
+	       </xsl:for-each>
+	     </xsl:otherwise>
+	   </xsl:choose>
          </xsl:for-each>
       </xsl:for-each>
   </xsl:template>

@@ -56,12 +56,12 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        
+        Create the endnotes file
     </desc>
    </doc>
     <xsl:template name="write-docxfile-endnotes-file">
 	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/word/endnotesxml')"/>
+	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/word/endnotes.xml')"/>
          </xsl:message>
 	     </xsl:if>
 

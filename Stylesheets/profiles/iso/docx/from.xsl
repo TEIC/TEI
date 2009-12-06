@@ -78,7 +78,12 @@
         <!--<xsl:message>fail 6: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
     </xsl:template>
 
-    <!-- Overwriting the creation of the teiHeader -->
+         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+ Overwriting the creation of the teiHeader.
+Construct the TEI Header either by copying the passed metadata or extracting
+            the metadata from the document </desc></doc>
+
     <xsl:template name="create-tei-header">
         <xsl:attribute name="xml:lang">
             <xsl:variable name="l">
@@ -95,9 +100,7 @@
             </xsl:choose>
         </xsl:attribute>
 
-        <!-- construct the TEI Header either by copying the passed metadata or extracting
-            the metadata from the document -->
-        <xsl:choose>
+       <xsl:choose>
             <xsl:when test="$metadata-file=''">
                 <xsl:call-template name="teiHeader-extract-from-doc"/>
             </xsl:when>
@@ -272,8 +275,13 @@
         </teiHeader>
     </xsl:template>
 
-
-    <!-- simple templates for the info that goes into the teiHeader -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+	Construct the TEI Header either by copying the passed metadata or extracting
+	the metadata from the document simple templates for the info
+	that goes into the teiHeader
+      </desc>
+    </doc>
     <xsl:template match="w:p" mode="teiHeader">
         <xsl:choose>
             <xsl:when test="w:pPr/w:pStyle[@w:val='document_title']">
@@ -304,7 +312,11 @@
         </xsl:choose>
     </xsl:template>
 
-    <!-- some specific section headers -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+	Some specific section headers 
+      </desc>
+    </doc>
     <xsl:template name="generate-section-heading">
         <xsl:param name="Style"/>
         <xsl:variable name="divname">
@@ -398,19 +410,22 @@
         </xsl:choose>
     </xsl:template>
 
-    <!-- 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+ 
         We are now working on a group of all elements inside some group bounded by
         headings. These need to be further split up into smaller groups for figures,
-        list etc. and into individual groups for simple paragraphs...
-        
+        list etc. and into individual groups for simple paragraphs.
         Be careful about the position(), since it might be 1,2,3
-    -->
+      </desc>
+    </doc>
     <xsl:template match="w:p" mode="inSectionGroup" priority="-100">
         <xsl:for-each-group select="current-group()"
                           group-adjacent="if (contains(w:pPr/w:pStyle/@w:val,'Figure')) then 0 else                           if (contains(w:pPr/w:pStyle/@w:val,'List')) then 1 else             if ((w:pPr/w:pStyle/@w:val='Note') and              (contains(preceding-sibling::w:p[1]/w:pPr/w:pStyle/@w:val,'List'))) then 1 else                          if (w:pPr/w:pStyle/@w:val='RefNorm') then 2 else                          if (w:pPr/w:pStyle/@w:val='Definition') then 3 else             if (w:pPr/w:pStyle/@w:val='Example') then 3 else             if (w:pPr/w:pStyle/@w:val='TermNum') then 3 else             if (w:pPr/w:pStyle/@w:val='nonVerbalRepresentation') then 3 else             if (w:pPr/w:pStyle/@w:val='noteDefinition') then 3 else             if (w:pPr/w:pStyle/@w:val='noteNonVerbalRepresentation') then 3 else             if (w:pPr/w:pStyle/@w:val='noteTerm') then 3 else             if (w:pPr/w:pStyle/@w:val='entrySource') then 3 else             if (w:pPr/w:pStyle/@w:val='noteTermEntry') then 3 else             if (w:pPr/w:pStyle/@w:val='symbol') then 3 else             if (w:pPr/w:pStyle/@w:val='termAdmitted') then 3 else             if (w:pPr/w:pStyle/@w:val='termDeprecated') then 3 else             if (w:pPr/w:pStyle/@w:val='termPreferred') then 3 else             if (w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]) then 3 else                          if (w:pPr/w:pStyle/@w:val=$BibliographyItem) then 4 else                          if (w:pPr/w:pStyle/@w:val=$DefinitionList) then 5 else                          if (starts-with(w:pPr/w:pStyle/@w:val,'toc')) then 6 else                          position() + 100">
 
-            <!-- For each defined grouping call a specific template. If there is no
-                grouping defined, apply templates with mode paragraph -->
+            <!-- For each defined grouping call a specific
+                 template. If there is no grouping defined, apply
+                 templates with mode paragraph -->
             <xsl:choose>
                 <xsl:when test="current-grouping-key()=0">
                     <xsl:call-template name="figureSection"/>
@@ -442,7 +457,13 @@
         </xsl:for-each-group>
     </xsl:template>
 
-    <!-- override handling of runs -->
+            
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+	override handling of runs 
+      </desc>
+    </doc>
+
     <xsl:template match="w:r/w:tab">
       <c rend="tab">
             <xsl:text>	</xsl:text>
@@ -613,27 +634,40 @@
 
     </xsl:template>
 
-
-    <!-- table titles.. we deal with them inside the table -->
-
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+    Table titles.. we deal with them inside the table
+      </desc>
+    </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$Tabletitle]" mode="paragraph"/>
 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='TableTitle']" mode="paragraph"/>
 
-    <!-- link to Word tables -->
+     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        When creating a CALS table, put in an attribute linking it to
+	the original Word markup in an external file
+    </desc>
+   </doc>
 
 	  <xsl:template match="cals:table" mode="innerTable">
+	    <xsl:param name="n"/>
 	     <xsl:copy>
 	        <xsl:copy-of select="@*"/>
 		<xsl:attribute name="tei:corresp">
 		  <xsl:text>media/table</xsl:text>
-		  <xsl:number level="any"/>
+		  <xsl:value-of select="$n"/>
 		  <xsl:text>.xml</xsl:text>
 		</xsl:attribute>
 	        <xsl:apply-templates mode="innerTable"/>	    
 	     </xsl:copy>
 	  </xsl:template>
 
+     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        For every table in Word, copy the contents to an external file.
+      </desc>
+     </doc>
 	  <xsl:template name="fromDocxFinalHook">
 	    <xsl:for-each select="key('WordTables',1)">
 		<xsl:variable name="n">
@@ -641,16 +675,62 @@
 		  <xsl:number level="any"/>
 		  <xsl:text>.xml</xsl:text>
 		</xsl:variable>
-<xsl:message>Create <xsl:value-of select="$n"/></xsl:message>
-	    <xsl:result-document href="{$n}">
-	      <xsl:copy-of select="."/>
-	    </xsl:result-document>
+		<xsl:result-document href="{$n}">
+		  <xsl:copy>
+		    <xsl:copy-of select="@*"/>
+		    <xsl:apply-templates mode="copytable"/>
+		  </xsl:copy>
+		</xsl:result-document>
 	    </xsl:for-each>
 	  </xsl:template>
 
-    <!--
+	  <xsl:template match="*" mode="copytable">
+	    <xsl:apply-templates select="."/>
+	  </xsl:template>
+
+	  <xsl:template
+	      match="
+	       w:bottom | 
+	       w:gridCol | 
+	       w:gridSpan | 
+	       w:insideH | 
+	       w:insideV | 
+	       w:jc | 
+	       w:left | 
+	       w:pPr |
+	       w:p |
+	       w:pStyle |
+	       w:right | 
+	       w:spacing | 
+	       w:tbl | 
+	       w:tblBorders | 
+	       w:tblCellMar | 
+	       w:tblGrid | 
+	       w:tblLayout | 
+	       w:tblLook | 
+	       w:tblPr | 
+	       w:tblStyle | 
+	       w:tblW | 
+	       w:tc | 
+	       w:tcBorders | 
+	       w:tcPr | 
+	       w:tcW | 
+	       w:top | 
+	       w:tr | 
+	       w:trPr | 
+	       w:vAlign "
+	      mode="copytable">
+	    <xsl:copy>
+	      <xsl:copy-of select="@*"/>
+	      <xsl:apply-templates mode="copytable"/>
+	    </xsl:copy>
+	  </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
         Working with figures
-    -->
+      </desc>
+    </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$Figuretitle]" mode="paragraph">
         <head>
             <xsl:apply-templates/>
@@ -664,9 +744,11 @@
         </figure>
     </xsl:template>
 
-    <!-- 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
         Dealing with Normative References
-    -->
+      </desc>
+	</doc>
     <xsl:template name="normativeReferencesSection">
         <listBibl type="normativeReferences">
             <xsl:for-each select="current-group()">
@@ -687,28 +769,31 @@
     </xsl:template>
 
 
-    <!-- 
-        Terms and definitions
-    -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+	<p>Terms and definitions. The following styles are block-level
+	objects in a term entry</p>
+	<ul>
+	  <li>		TermNum</li>
+	  <li>		AutoTermNum</li>
+	  <li>		Example</li>
+	  <li>		symbol</li>
+	  <li>		termAdmitted</li>
+	  <li>		termDeprecated</li>
+	  <li>		termPreferred</li>
+	  <li>		abbreviatedForm</li>
+	</ul>
+      </desc>
+    </doc>
     <xsl:template name="termsAndDefinitionsSection">
-            <!--
-		TermNum
-		AutoTermNum
-
-		Example
-		symbol
-		termAdmitted
-		termDeprecated
-		termPreferred
-		abbreviatedForm
-	    -->
         <xsl:for-each-group select="current-group()"
                           group-starting-with="w:p[w:pPr/w:pStyle/@w:val='TermNum'      or      w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]]">
 	        <xsl:choose>
 	           <xsl:when test="not(self::w:p[w:pPr/w:pStyle/@w:val='TermNum'      or      w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]])">
-	              <xsl:processing-instruction name="isoError">terminology
-	    entry here does not have a number style, 
-	    but starts with with  <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
+	              <xsl:processing-instruction
+	              name="isoError">terminology entry here does not
+	              have a number style, but starts with with
+	              <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
                </xsl:processing-instruction>
 	           </xsl:when>
 	           <xsl:otherwise>
