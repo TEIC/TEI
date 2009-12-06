@@ -819,18 +819,18 @@ Construct the TEI Header either by copying the passed metadata or extracting
 		                      <xsl:apply-templates/>
 		                   </note>
 	                 </xsl:for-each>
-	                 <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='entrySource'] except .">
-		                   <note type="entrySource">
-		                      <xsl:apply-templates/>
-		                   </note>
-	                 </xsl:for-each>
 	                 <descripGrp>
-		                   <descrip type="definition">
-		                      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='Definition'] except .">
-		                         <xsl:apply-templates/>
-		                      </xsl:for-each>
-		                   </descrip>
+			   <descrip type="definition">
+			     <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='Definition'] except .">
+			       <xsl:apply-templates/>
+			     </xsl:for-each>
+			   </descrip>
 	                 </descripGrp>
+			 <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='entrySource'] except .">
+			   <admin type="entrySource">
+			     <xsl:apply-templates/>
+			   </admin>
+			 </xsl:for-each>
 	                 <langSet>
 		                   <xsl:attribute name="xml:lang">
 		                      <xsl:choose>
@@ -1258,45 +1258,54 @@ Construct the TEI Header either by copying the passed metadata or extracting
   </xsl:template>
 
     <!-- overrides for part 2 -->
-
-      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
-      <desc> div with head only </desc></doc>
-
+    
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <desc>Zap &lt;div&gt; with head only </desc></doc>
+    
     <xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2"/>
 
-      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
-      <desc> spurious page break </desc></doc>
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <desc>Zap empty &lt;availability&gt; </desc></doc>
+   
+    <xsl:template match="tei:availability[not(*) or not(text())]"
+		  mode="part2"/>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <desc>Zap empty &lt;note&gt; </desc></doc>
+   
+    <xsl:template match="tei:note[not(*) or not(text())]"
+		  mode="part2"/>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <desc>Zap spurious page break </desc></doc>
     <xsl:template match="tei:body/tei:p[count(*)=1 and tei:pb]" mode="part2"/>
 
-    <xsl:template match="tei:list[string-length(.)=0]" mode="part2"/>
+    <xsl:template match="w:bookmarkEnd" mode="part0"/>
 
-  <xsl:template match="w:bookmarkEnd" mode="part0"/>
-
-
-  <xsl:template match="tei:div[@type='termsAndDefinitions']" mode="part2">
+    <xsl:template match="tei:div[@type='termsAndDefinitions']" mode="part2">
       <xsl:copy>
-         <xsl:copy-of select="@*"/>
-         <xsl:variable name="name">
-	           <xsl:text>termHeading2</xsl:text>
-         </xsl:variable>
-         <xsl:for-each-group select="*" group-starting-with="tei:p[@rend=$name]">
-	           <xsl:choose>
-	              <xsl:when test="self::tei:p[@rend=$name]">
-	                 <xsl:apply-templates select="." mode="group"/>
-	              </xsl:when>
-	              <xsl:otherwise>
-	                 <xsl:apply-templates select="current-group()" mode="part2"/>
-	              </xsl:otherwise>
-	           </xsl:choose>
-         </xsl:for-each-group>
+	<xsl:copy-of select="@*"/>
+	<xsl:variable name="name">
+	  <xsl:text>termHeading2</xsl:text>
+	</xsl:variable>
+	<xsl:for-each-group select="*" group-starting-with="tei:p[@rend=$name]">
+	  <xsl:choose>
+	    <xsl:when test="self::tei:p[@rend=$name]">
+	      <xsl:apply-templates select="." mode="group"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:apply-templates select="current-group()" mode="part2"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each-group>
       </xsl:copy>
-  </xsl:template>
+    </xsl:template>
 
    <xsl:template match="tei:p[starts-with(@rend,'termHeading')]" mode="group">
       <xsl:variable name="next" select="translate(@rend, '23456', '34567')"/>
       <div type="termHeading">
          <head>
-	           <xsl:apply-templates/>
+	   <xsl:apply-templates/>
          </head>
          <xsl:for-each-group select="current-group() except ." group-starting-with="tei:p[@rend = $next]">
 	           <xsl:choose>
@@ -1316,21 +1325,24 @@ Construct the TEI Header either by copying the passed metadata or extracting
       <xsl:apply-templates select="." mode="part2"/>
   </xsl:template>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <desc>Merge adjacent &lt;hi&gt; </desc></doc>
+
   <xsl:template match="tei:hi[@rend]" mode="part2">
-      <xsl:variable name="r" select="@rend"/>
-      <xsl:choose>
-         <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@rend=$r]]">
-  </xsl:when>
-         <xsl:otherwise>
-            <xsl:copy>
-               <xsl:copy-of select="@*"/>
-               <xsl:apply-templates mode="part2"/>
-               <xsl:call-template name="nextHi">
-	                 <xsl:with-param name="r" select="$r"/>
-               </xsl:call-template>
-            </xsl:copy>
-         </xsl:otherwise>
-      </xsl:choose>
+    <xsl:variable name="r" select="@rend"/>
+    <xsl:choose>
+      <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@rend=$r]]">
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates mode="part2"/>
+	  <xsl:call-template name="nextHi">
+	    <xsl:with-param name="r" select="$r"/>
+	  </xsl:call-template>
+	</xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
    </xsl:template>
 
    <xsl:template name="nextHi">
@@ -1345,6 +1357,8 @@ Construct the TEI Header either by copying the passed metadata or extracting
       </xsl:for-each>
    </xsl:template>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <desc>Merge adjacent &lt;termEntry&gt; with same ID</desc></doc>
    <xsl:template match="tbx:termEntry" mode="part2">
       <xsl:variable name="ID" select="@id"/>
       <xsl:choose>
@@ -1393,17 +1407,22 @@ Construct the TEI Header either by copying the passed metadata or extracting
       </xsl:copy>
    </xsl:template>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <desc>Zap empty &lt;list&gt; and one after termEntry </desc></doc>
+
    <xsl:template match="tei:list" mode="part2">
-      <xsl:choose>
-         <xsl:when test="preceding-sibling::*[1][self::tbx:termEntry]">
-    </xsl:when>
-         <xsl:otherwise>
-            <xsl:copy>
-	              <xsl:copy-of select="@*"/>
-	              <xsl:apply-templates mode="part2"/>
-            </xsl:copy>
-         </xsl:otherwise>
-      </xsl:choose>
+     <xsl:choose>
+       <xsl:when test="preceding-sibling::*[1][self::tbx:termEntry]">
+       </xsl:when>
+       <xsl:when test="count(*)=0">
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:copy>
+	   <xsl:copy-of select="@*"/>
+	   <xsl:apply-templates mode="part2"/>
+	 </xsl:copy>
+       </xsl:otherwise>
+     </xsl:choose>
    </xsl:template>
 
    <xsl:template match="tbx:term" mode="part2">

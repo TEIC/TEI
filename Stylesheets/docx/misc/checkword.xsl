@@ -52,8 +52,7 @@
       <xsl:message>Check whether rIds are listed in document rels: </xsl:message>
       <xsl:for-each select="key('RIDS',1)">
          <xsl:variable name="i">
-	   <xsl:value-of select="@r:id|@r:embed"/>:   <xsl:value-of
-	   select="name()"/>
+	   <xsl:value-of select="@r:id|@r:embed"/>
 	 </xsl:variable>
 	 <xsl:for-each select="document('_rels/document.xml.rels',/)">
 	   <xsl:choose>

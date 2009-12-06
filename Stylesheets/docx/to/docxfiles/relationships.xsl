@@ -124,7 +124,7 @@
                           Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable"
                           Target="fontTable.xml"/>
                 
-                <!-- Images -->
+                <!-- Any raw blips left in? -->
                 
                 <xsl:for-each select="key('BLIP',1)">
                     <xsl:choose>
@@ -140,6 +140,14 @@
                                    TargetMode="External"/>
                         </xsl:otherwise>
                     </xsl:choose>
+                </xsl:for-each>
+
+		<!-- TEI images -->
+                
+                <xsl:for-each select="key('GRAPHICS',1)">
+                    <Relationship Id="rId{position() + 300}"
+                             Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+                             Target="{@url}"/>
                 </xsl:for-each>
                 
                 <!-- hyperlinks -->
@@ -161,12 +169,6 @@
                     </xsl:for-each>
                 -->
 
-                <xsl:for-each select="key('GRAPHICS',1)">
-                    <Relationship Id="rId{position() + 300}"
-                             Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
-                             Target="{@url}"/>
-                </xsl:for-each>
-                
                 <!-- Formulas -->
                 <xsl:for-each select="key('IMAGEDATA',1)">
                     <Relationship Id="rId{position() + 1000}"

@@ -129,13 +129,8 @@
     </desc>
    </doc>
     <xsl:template match="/tei:TEI">
-	<xsl:variable name="docxml">
-	  <xsl:call-template name="create-document-dot-xml"/>
-	</xsl:variable>
-	<xsl:for-each select="$docxml">
-	  <xsl:call-template name="write-docxfiles"/>
-	  <xsl:copy-of select="."/>
-	</xsl:for-each>
+      <xsl:call-template name="write-docxfiles"/>
+      <xsl:call-template name="create-document-dot-xml"/>
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

@@ -713,10 +713,11 @@
          </xsl:for-each>
 
          <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
+         <xsl:apply-templates select="tbx:admin"/>
          <xsl:apply-templates select="tbx:note"/>
-
       </xsl:for-each>
       <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
+      <xsl:apply-templates select="tbx:admin"/>
       <xsl:apply-templates select="tbx:note"/>
    </xsl:template>
 
@@ -736,20 +737,15 @@
    <xsl:template match="tbx:note">
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">
-            <xsl:choose>
-	              <xsl:when test="@type='entrySource'">entrySource</xsl:when>
-	              <xsl:otherwise>noteTermEntry</xsl:otherwise>
-            </xsl:choose>
+	   <xsl:text>noteTermEntry</xsl:text>
          </xsl:with-param>
+      </xsl:call-template>
+   </xsl:template>
 
-         <!--    <xsl:with-param name="pPr">
-    <w:pPr>
-      <w:pStyle w:val="noteTermEntry"/>
-    </w:pPr>
-    </xsl:with-param>
--->
-
-  </xsl:call-template>
+   <xsl:template match="tbx:admin">
+      <xsl:call-template name="block-element">
+         <xsl:with-param name="style">entrySource</xsl:with-param>
+      </xsl:call-template>
    </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -961,6 +957,9 @@
       <xsl:choose>
 	<xsl:when test="@tei:corresp and $tableMethod='word'">
 	  <xsl:call-template name="cals-table-header"/>
+	  <xsl:if test="$debug='true'">
+	    <xsl:message>read table from <xsl:value-of select="@tei:corresp"/></xsl:message>
+	  </xsl:if>
 	  <xsl:for-each select="document(@tei:corresp)">
 	    <xsl:apply-templates 	mode="copytable"/>
 	  </xsl:for-each>

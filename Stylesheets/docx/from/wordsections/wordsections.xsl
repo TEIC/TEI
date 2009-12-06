@@ -68,7 +68,7 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        template for w:p[w:pPr/w:sectPr]|w:sectPr
+        Template for w:p[w:pPr/w:sectPr]|w:sectPr
     </desc>
    </doc>
     <xsl:template name="paragraph-sectpr">
