@@ -30,7 +30,7 @@ mkdir -p $TEMPDIR/word/media
 echo read $THERE/$F
 case $THERE/$F in 
        *.zip)  (cd $TEMPDIR; unzip -q $THERE/$F ); F=`basename $F .zip`.xml;; 
-       *) cp $THERE/$F $TEMPDIR/$F . ;; 
+       *) cp $THERE/$F $TEMPDIR/$F  ;; 
 esac
 (cd $TEMPDIR; saxon $F $XSL/docx/utils/graphics/listgraphics.xsl DIR=$TEMPDIR/word/media > fetch; sh $TEMPDIR/fetch; rm $TEMPDIR/fetch)
 (cd $TEMPDIR/word/media

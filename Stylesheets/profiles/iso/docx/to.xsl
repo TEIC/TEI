@@ -30,7 +30,7 @@
     <!-- import functions -->
     <xsl:include href="iso-functions.xsl"/>
 
-    <xsl:param name="tableMethod">word</xsl:param>
+    <xsl:param name="tableMethod">cals</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
