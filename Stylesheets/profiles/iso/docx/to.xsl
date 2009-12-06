@@ -127,10 +127,12 @@
       <xsl:text>termRef</xsl:text>
     </xsl:template>
     
-    <!-- 
+       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc>
         Inline Templates:
         Here we can overwrite how inline elements are rendered
-    -->
+      </desc>
+       </doc>
 
     <xsl:template match="tei:c[@iso:font and @n]">
         <w:r>
@@ -154,9 +156,11 @@
         </w:r>
     </xsl:template>
 
-    <!-- 
+       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc> 
         Handle Numbers 
-    -->
+      </desc>
+       </doc>
     <xsl:template match="tei:num">
         <w:r>
             <w:rPr>
@@ -198,13 +202,14 @@
     </xsl:template>
 
     
-    <!-- 
+<!--
         Block Templates:
         Here we can overwrite how block elements are rendered
     -->
   
     
-    <!-- Dates -->
+<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc> Dates </desc></doc>
     <xsl:template match="tei:date">
         <w:r>
             <w:rPr>
@@ -395,7 +400,11 @@
     </xsl:template>
     
     
-    <!-- Paragraphs in the front matter -->
+       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc>
+	Paragraphs in the front matter 
+      </desc>
+       </doc>
     <xsl:template match="tei:front/tei:div/tei:p[@type='foreword']">
         <xsl:call-template name="block-element">
             <xsl:with-param name="pPr">
@@ -586,7 +595,8 @@
         </xsl:for-each>
     </xsl:template>
 
-    <!-- document title -->
+           <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc> Document title </desc></doc>
     <xsl:template name="document-title">
         <w:p>
             <w:pPr>
@@ -601,9 +611,10 @@
     </xsl:template>
     
     
-    <!-- 
-        Table of Contents:
-    -->
+           <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc>
+        Table of Contents
+      </desc></doc>
     <xsl:template name="generate-toc">
         <w:p>
             <w:pPr>
@@ -630,7 +641,9 @@
         </w:p>
     </xsl:template>
     
-    <!-- who created this document -->
+           <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc>
+ who created this document </desc></doc>
     <xsl:template name="created-by">
         <xsl:value-of select="key('ISOMETA','secretariat')"/>
     </xsl:template>
@@ -647,7 +660,9 @@
 
 
 
-   <!-- TBX -->
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc>TBX processing</desc>
+</doc>
 
 <xsl:template match="tbx:termEntry">
       <xsl:for-each select="tbx:langSet">
@@ -940,7 +955,8 @@
       </w:sdt>
     </xsl:template>
     
-<!-- cals tables -->
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc> Process CALS tables </desc></doc>
     <xsl:template match="cals:table">
       <xsl:choose>
 	<xsl:when test="@tei:corresp and $tableMethod='word'">

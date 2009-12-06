@@ -921,9 +921,11 @@ Construct the TEI Header either by copying the passed metadata or extracting
 	        </xsl:otherwise>
       </xsl:choose>
     </xsl:template>
-    <!-- 
+          <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc>  
         Definition Lists
-    -->
+      </desc>
+	  </doc>
     <xsl:template name="definitionListSection">
         <list type="gloss">
             <xsl:for-each-group select="current-group()" group-starting-with="w:p">
@@ -951,9 +953,11 @@ Construct the TEI Header either by copying the passed metadata or extracting
     </xsl:template>
 
 
-    <!-- 
+          <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc>  
         Dealing with Normative References
-    -->
+      </desc>
+	  </doc>
     <xsl:template name="bibliographySection">
         <listBibl>
             <xsl:for-each select="current-group()">
@@ -965,7 +969,9 @@ Construct the TEI Header either by copying the passed metadata or extracting
     </xsl:template>
 
 
-    <!-- If it is the main title of the document -->
+          <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc>  See if paragraph is the main title of the document </desc>
+	  </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='zzSTDTitle']" mode="paragraph">
         <!-- throw it away ; alternative is
             
@@ -976,9 +982,11 @@ Construct the TEI Header either by copying the passed metadata or extracting
     </xsl:template>
 
 
-    <!-- 
+          <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc>  
         Table of contents
-    -->
+      </desc>
+	  </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='zzContents']" mode="paragraph" priority="100"/>
     <!-- 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='toc 9']"
@@ -988,18 +996,22 @@ Construct the TEI Header either by copying the passed metadata or extracting
     -->
 
 
-    <!-- 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc>  
         Dealing with examples
-    -->
+      </desc>
+    </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Example']" mode="paragraph">
         <note type="Example">
             <xsl:apply-templates/>
         </note>
     </xsl:template>
 
-    <!-- 
-        Dealing with notes
-    -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc>  
+	Dealing with notes
+      </desc>
+    </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Note']" mode="paragraph">
         <note>
             <xsl:apply-templates/>
@@ -1047,7 +1059,9 @@ Construct the TEI Header either by copying the passed metadata or extracting
     <!-- ******************************************************************************************* -->
     <!-- second stage processing -->
 
-    <!-- take care of numbers -->
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc> Analyze numbers, marking them up to allow for decimal
+      character changing </desc></doc>
     <xsl:template match="text()" mode="part2">
         <xsl:choose>
             <xsl:when test="parent::tei:num">
@@ -1080,8 +1094,9 @@ Construct the TEI Header either by copying the passed metadata or extracting
     </xsl:template>
 
 
-    <!-- look at the sections we have generated, and put
-        them in <front> or <body> as appropriate-->
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc> look at the sections we have generated, and put
+        them in &lt;front&gt; or &lt;body&gt; as appropriate</desc></doc>
     <xsl:template match="tei:text" mode="part2">
         <text>
             <xsl:for-each select="tei:fw">
@@ -1116,7 +1131,8 @@ Construct the TEI Header either by copying the passed metadata or extracting
         </text>
     </xsl:template>
 
-    <!-- inner lists and notes in lists must be moved to inside items -->
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc> inner lists and notes in lists must be moved to inside items </desc></doc>
     <xsl:template match="tei:list/tei:list" mode="part2"/>
     <xsl:template match="tei:list/tei:note" mode="part2"/>
 
@@ -1203,7 +1219,8 @@ Construct the TEI Header either by copying the passed metadata or extracting
 
     <xsl:template name="extract-forme-work"/>
 
-    <!-- deal with special case of text paragraphs in an SDT -->
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc> Deal with special case of text paragraphs in an SDT </desc></doc>
     <xsl:template match="w:sdt" mode="paragraph">
       <q type="sdt" iso:meta="{w:sdtPr/w:tag/@w:val}">
 	        <xsl:for-each-group select="w:sdtContent/w:p"
@@ -1221,7 +1238,8 @@ Construct the TEI Header either by copying the passed metadata or extracting
       </q>
     </xsl:template>
 
-    <!-- para-level ins/del -->
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc> Para-level ins/del </desc></doc>
   <xsl:template match="w:p[w:pPr/w:rPr/w:ins]" mode="paragraph" priority="42">
       <addSpan spanTo="{generate-id()}" when="{w:pPr/w:rPr/w:ins/@w:date}"
                resp="#{translate(w:pPr/w:rPr/w:ins/@w:author,' ','_')}"/>
@@ -1241,11 +1259,13 @@ Construct the TEI Header either by copying the passed metadata or extracting
 
     <!-- overrides for part 2 -->
 
-    <!-- div with head only -->
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc> div with head only </desc></doc>
 
     <xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2"/>
 
-    <!-- spurious page break -->
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <desc> spurious page break </desc></doc>
     <xsl:template match="tei:body/tei:p[count(*)=1 and tei:pb]" mode="part2"/>
 
     <xsl:template match="tei:list[string-length(.)=0]" mode="part2"/>
