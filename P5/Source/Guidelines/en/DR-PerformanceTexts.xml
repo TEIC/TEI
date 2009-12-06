@@ -733,19 +733,22 @@ to the formal units of prose and verse. For more detailed discussion and
 examples of various treatments of this fundamental issue, refer to
 chapter <ptr target="#NH"/>.</p>
 <p>The <att>who</att> attribute and the <gi>speaker</gi> element are
-both used to indicate the speaker or speakers of a speech, but in rather
-different ways.  The <gi>speaker</gi> element is used to encode the word
-or phrase actually used within the source text to indicate the speaker:
-it may contain any string or prefix, and may be thought of as a highly
-specialized form of stage direction.  The value of the <att>who</att>
-attribute however is a unique code, probably made up by the transcriber,
-which will unambiguously identify the character to whom the speech is
-assigned.  To enforce this uniqueness, the base tag set for drama
-defines the value of this attribute as <val>IDREFS</val>.  This means that the
-codes included in it must correspond with codes which are specified
-elsewhere in the document as identifiers for particular elements,
-typically the <gi>role</gi> element in the cast list where the character
-is named or described, as discussed in <ptr target="#DRFAB"/> above.
+both used to indicate the speaker or speakers of a speech, but in
+rather different ways.  The <gi>speaker</gi> element is used to encode
+the word or phrase actually used within the source text to indicate
+the speaker: it may contain any string or prefix, and may be thought
+of as a highly specialized form of stage direction.  The
+<att>who</att> attribute however contains one or more pointer values,
+each of which indicates one or more other XML elements documenting the
+character to whom the speech is assigned.  Typically, this attribute
+might point to a <gi>person</gi> element in the TEI header <ptr
+target="#CCAHPA"/>, to a <gi>role</gi> element in the cast list <ptr
+target="#DRCAST"/>, or even to some external source such as an online
+handbook of dramatic roles. The most usual case is that the pointer
+value supplied (prefixed by a sharp sign) corresponds with the value
+of an <att>xml:id</att> attribute,
+used elsewhere in the document to identify a particular element, as in the following examples:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRSP-eg-34" xml:lang="la"><castList>
    <castItem> <role xml:id="menae">Menaechmus</role> </castItem>
    <castItem> <role xml:id="penic">Peniculus</role> </castItem>
