@@ -34,23 +34,23 @@
 	           </xsl:choose>
          </xsl:for-each>
          <xsl:for-each select="key('SCHEMATRON',1)">
-	           <xsl:choose>
-	              <xsl:when test="ancestor::teix:egXML"/>
-	              <xsl:when test="self::s:pattern">
-	                 <xsl:apply-templates select="."/>
-	              </xsl:when>
-	              <xsl:when test="(self::s:report or self::s:assert) and ancestor::tei:elementSpec">
-	                 <pattern name="{ancestor::tei:elementSpec/@ident}-constraint-{parent::tei:constraintSpec/@ident}">
-	                    <rule>
-		                      <xsl:attribute name="context">
-		                         <xsl:text>tei:</xsl:text>
-		                         <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
-		                      </xsl:attribute>
-		                      <xsl:apply-templates select="."/>
-	                    </rule>
-	                 </pattern>
-	              </xsl:when>
-	           </xsl:choose>
+	   <xsl:choose>
+	     <xsl:when test="ancestor::teix:egXML"/>
+	     <xsl:when test="self::s:pattern">
+	       <xsl:apply-templates select="."/>
+	     </xsl:when>
+	     <xsl:when test="(self::s:report or self::s:assert) and ancestor::tei:elementSpec">
+	       <pattern name="{ancestor::tei:elementSpec/@ident}-constraint-{parent::tei:constraintSpec/@ident}">
+		 <rule>
+		   <xsl:attribute name="context">
+		     <xsl:text>tei:</xsl:text>
+		     <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+		   </xsl:attribute>
+		   <xsl:apply-templates select="."/>
+		 </rule>
+	       </pattern>
+	     </xsl:when>
+	   </xsl:choose>
          </xsl:for-each>
       </schema>
    </xsl:template>
