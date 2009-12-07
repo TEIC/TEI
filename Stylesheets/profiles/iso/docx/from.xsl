@@ -198,6 +198,12 @@ Construct the TEI Header either by copying the passed metadata or extracting
                             <xsl:when test="$thisSdt='introductoryTitle_fr'"/>
                             <xsl:when test="$thisSdt='mainTitle'"/>
                             <xsl:when test="$thisSdt='mainTitle_fr'"/>
+                            <xsl:when test="$thisSdt='complementary_title'"/>
+                            <xsl:when test="$thisSdt='complementary_title_fr'"/>
+                            <xsl:when test="$thisSdt='introductory_title'"/>
+                            <xsl:when test="$thisSdt='introductory_title_fr'"/>
+                            <xsl:when test="$thisSdt='main_title'"/>
+                            <xsl:when test="$thisSdt='main_title_fr'"/>
                             <xsl:when test="$thisSdt='docDate'"/>
                             <xsl:when test="$thisSdt='docdate'"/>
                             <xsl:when test="$thisSdt='organization'"/>
