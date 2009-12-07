@@ -780,14 +780,14 @@ Construct the TEI Header either by copying the passed metadata or extracting
 	<p>Terms and definitions. The following styles are block-level
 	objects in a term entry</p>
 	<ul>
-	  <li>		TermNum</li>
-	  <li>		AutoTermNum</li>
-	  <li>		Example</li>
-	  <li>		symbol</li>
-	  <li>		termAdmitted</li>
-	  <li>		termDeprecated</li>
-	  <li>		termPreferred</li>
-	  <li>		abbreviatedForm</li>
+	  <li>TermNum</li>
+	  <li>AutoTermNum</li>
+	  <li>Example</li>
+	  <li>symbol</li>
+	  <li>termAdmitted</li>
+	  <li>termDeprecated</li>
+	  <li>termPreferred</li>
+	  <li>abbreviatedForm</li>
 	</ul>
       </desc>
     </doc>
@@ -796,11 +796,11 @@ Construct the TEI Header either by copying the passed metadata or extracting
                           group-starting-with="w:p[w:pPr/w:pStyle/@w:val='TermNum'      or      w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]]">
 	        <xsl:choose>
 	           <xsl:when test="not(self::w:p[w:pPr/w:pStyle/@w:val='TermNum'      or      w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]])">
-	              <xsl:processing-instruction
-	              name="isoError">terminology entry here does not
-	              have a number style, but starts with with
-	              <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
-               </xsl:processing-instruction>
+	              <xsl:processing-instruction name="ISOerror">
+			<xsl:text>Terminology entry here does not have
+			a number style, but starts with with </xsl:text>
+			<xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
+		      </xsl:processing-instruction>
 	           </xsl:when>
 	           <xsl:otherwise>
 	              <xsl:variable name="Style">
@@ -909,7 +909,6 @@ Construct the TEI Header either by copying the passed metadata or extracting
 	        </xsl:choose>
 	     </xsl:for-each-group>
     </xsl:template>
-
     <xsl:template name="cellContents">
       <xsl:choose>
 	        <xsl:when test="w:p/w:pPr/w:pStyle[@w:val='TermNum']">
@@ -927,11 +926,12 @@ Construct the TEI Header either by copying the passed metadata or extracting
 	        </xsl:otherwise>
       </xsl:choose>
     </xsl:template>
-          <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>  
-        Definition Lists
+	Definition Lists
       </desc>
-	  </doc>
+    </doc>
     <xsl:template name="definitionListSection">
         <list type="gloss">
             <xsl:for-each-group select="current-group()" group-starting-with="w:p">
@@ -959,7 +959,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
     </xsl:template>
 
 
-          <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+          <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>  
         Dealing with Normative References
       </desc>
@@ -975,7 +975,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
     </xsl:template>
 
 
-          <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+          <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>  See if paragraph is the main title of the document </desc>
 	  </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='zzSTDTitle']" mode="paragraph">
@@ -988,7 +988,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
     </xsl:template>
 
 
-          <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+          <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>  
         Table of contents
       </desc>
@@ -1002,7 +1002,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
     -->
 
 
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>  
         Dealing with examples
       </desc>
@@ -1013,7 +1013,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
         </note>
     </xsl:template>
 
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>  
 	Dealing with notes
       </desc>
@@ -1065,7 +1065,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
     <!-- ******************************************************************************************* -->
     <!-- second stage processing -->
 
-      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> Analyze numbers, marking them up to allow for decimal
       character changing </desc></doc>
     <xsl:template match="text()" mode="part2">
@@ -1100,7 +1100,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
     </xsl:template>
 
 
-      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> look at the sections we have generated, and put
         them in &lt;front&gt; or &lt;body&gt; as appropriate</desc></doc>
     <xsl:template match="tei:text" mode="part2">
@@ -1137,7 +1137,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
         </text>
     </xsl:template>
 
-      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> inner lists and notes in lists must be moved to inside items </desc></doc>
     <xsl:template match="tei:list/tei:list" mode="part2"/>
     <xsl:template match="tei:list/tei:note" mode="part2"/>
@@ -1225,7 +1225,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
 
     <xsl:template name="extract-forme-work"/>
 
-      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> Deal with special case of text paragraphs in an SDT </desc></doc>
     <xsl:template match="w:sdt" mode="paragraph">
       <q type="sdt" iso:meta="{w:sdtPr/w:tag/@w:val}">
@@ -1244,7 +1244,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
       </q>
     </xsl:template>
 
-      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> Para-level ins/del </desc></doc>
   <xsl:template match="w:p[w:pPr/w:rPr/w:ins]" mode="paragraph" priority="42">
       <addSpan spanTo="{generate-id()}" when="{w:pPr/w:rPr/w:ins/@w:date}"
@@ -1265,24 +1265,24 @@ Construct the TEI Header either by copying the passed metadata or extracting
 
     <!-- overrides for part 2 -->
     
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap &lt;div&gt; with head only </desc></doc>
     
     <xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2"/>
 
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap empty &lt;availability&gt; </desc></doc>
    
     <xsl:template match="tei:availability[not(*) or not(text())]"
 		  mode="part2"/>
 
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap empty &lt;note&gt; </desc></doc>
    
     <xsl:template match="tei:note[not(*) or not(text())]"
 		  mode="part2"/>
 
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap spurious page break </desc></doc>
     <xsl:template match="tei:body/tei:p[count(*)=1 and tei:pb]" mode="part2"/>
 
@@ -1331,7 +1331,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
       <xsl:apply-templates select="." mode="part2"/>
   </xsl:template>
 
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Merge adjacent &lt;hi&gt; </desc></doc>
 
   <xsl:template match="tei:hi[@rend]" mode="part2">
@@ -1363,7 +1363,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
       </xsl:for-each>
    </xsl:template>
 
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Merge adjacent &lt;termEntry&gt; with same ID</desc></doc>
    <xsl:template match="tbx:termEntry" mode="part2">
       <xsl:variable name="ID" select="@id"/>
@@ -1413,7 +1413,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
       </xsl:copy>
    </xsl:template>
 
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap empty &lt;list&gt; and one after termEntry </desc></doc>
 
    <xsl:template match="tei:list" mode="part2">
@@ -1455,5 +1455,45 @@ Construct the TEI Header either by copying the passed metadata or extracting
   </xsl:template>
 
   <xsl:template match="tbx:descrip[@type='definition']/tei:source" mode="part2"/>
--->
+   -->
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Check whether paragraph styles and block styles are supported</desc>
+    </doc>
+
+    <xsl:template match="processing-instruction()[name()='ISOerror']">
+      <xsl:copy-of select="."/>
+    </xsl:template>
+
+    <xsl:template match="processing-instruction()[name()='ISOerror']" mode="part2">
+      <xsl:copy-of select="."/>
+    </xsl:template>
+
+  <xsl:template match="w:p|w:r" mode="part0">
+    <xsl:if test="w:pPr/w:pStyle/@w:val or w:rPr/w:rStyle/@w:val">
+      <xsl:variable name="old">
+	<xsl:value-of select="w:pPr/w:pStyle/@w:val|w:rPr/w:rStyle/@w:val"/>
+      </xsl:variable>
+      <xsl:variable name="new">
+	<xsl:for-each select="document(concat($word-directory,'/word/styles.xml'),/)">
+	  <xsl:value-of select="key('STYLES',$old)/w:name/@w:val"/>
+	</xsl:for-each>
+      </xsl:variable>
+	<xsl:choose>
+	  <xsl:when test="teidocx:is-supported-style($old)"/>
+	  <xsl:when test="teidocx:is-supported-style($new)"/>
+	  <xsl:otherwise>
+	    <xsl:processing-instruction name="ISOerror">
+	      <xsl:text>Word Style </xsl:text>
+	      <xsl:value-of select="$old"/>
+	      <xsl:text> not supported</xsl:text>
+	    </xsl:processing-instruction>
+	  </xsl:otherwise>
+	</xsl:choose>
+    </xsl:if>
+    <xsl:copy>
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part0"/>
+    </xsl:copy>
+  </xsl:template>
+
 </xsl:stylesheet>

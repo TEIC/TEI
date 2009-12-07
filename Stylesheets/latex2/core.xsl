@@ -44,8 +44,8 @@
    </doc>
   <xsl:template match="tei:code">\texttt{<xsl:apply-templates/>}</xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
+      <desc>Process &lt;corr&gt;</desc></doc>
+
   <xsl:template match="tei:corr">
       <xsl:apply-templates/>
       <xsl:choose>
@@ -61,8 +61,7 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
+      <desc>Process &lt;supplied&gt;</desc></doc>
   <xsl:template match="tei:supplied">
       <xsl:text>[</xsl:text>
       <xsl:apply-templates/>
@@ -76,8 +75,8 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
+            <desc>Process &lt;sic&gt;</desc></doc>
+
   <xsl:template match="tei:sic">
       <xsl:apply-templates/>
       <xsl:text> (sic)</xsl:text>
@@ -240,8 +239,8 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
+            <desc>Process &lt;gloss&gt;</desc></doc>
+
   <xsl:template match="tei:gloss">
       <xsl:text> \textit{</xsl:text>
       <xsl:apply-templates/>
