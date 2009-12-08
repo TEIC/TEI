@@ -832,12 +832,12 @@ Construct the TEI Header either by copying the passed metadata or extracting
 			       <xsl:apply-templates/>
 			     </xsl:for-each>
 			   </descrip>
+			   <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='entrySource'] except .">
+			     <admin type="entrySource">
+			       <xsl:apply-templates/>
+			     </admin>
+			   </xsl:for-each>
 	                 </descripGrp>
-			 <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='entrySource'] except .">
-			   <admin type="entrySource">
-			     <xsl:apply-templates/>
-			   </admin>
-			 </xsl:for-each>
 	                 <langSet>
 		                   <xsl:attribute name="xml:lang">
 		                      <xsl:choose>

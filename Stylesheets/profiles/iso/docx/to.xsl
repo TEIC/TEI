@@ -713,11 +713,11 @@
          </xsl:for-each>
 
          <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
-         <xsl:apply-templates select="tbx:admin"/>
+         <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
          <xsl:apply-templates select="tbx:note"/>
       </xsl:for-each>
       <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
-      <xsl:apply-templates select="tbx:admin"/>
+      <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
       <xsl:apply-templates select="tbx:note"/>
    </xsl:template>
 
