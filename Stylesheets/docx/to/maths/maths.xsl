@@ -63,12 +63,6 @@
       </oMath>
     </xsl:template>
     
-    <xsl:template match="w:object">
-        <w:r>
-            <xsl:apply-templates select="." mode="iden"/>
-        </w:r>
-    </xsl:template>
-    
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
         Guides the identity transformation of math objects

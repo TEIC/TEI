@@ -210,13 +210,10 @@
 	  <xsl:when
 	      test="self::teidocx:dynamicContent">true</xsl:when>
 	  <xsl:when test="self::w:drawing">true</xsl:when>
-	  <xsl:when test="self::w:object">true</xsl:when>
 	  <xsl:when
 	      test="self::tei:formula[parent::cals:entry]">true</xsl:when>
 	  <xsl:when
 	      test="self::tei:formula[parent::tei:title]">true</xsl:when>
-	  <xsl:when
-	      test="self::iso:wordObject[w:object]">true</xsl:when>
 	  <xsl:when test="self::tei:abbr">true</xsl:when>
 	  <xsl:when test="self::tei:affiliation">true</xsl:when>
 	  <xsl:when test="self::tei:att">true</xsl:when>
@@ -233,18 +230,14 @@
 	  <xsl:when test="self::tei:gi">true</xsl:when>
 	  <xsl:when
 	      test="self::tei:gloss[not(ancestor-or-self::*/@type='termsAndDefinitions')]">true</xsl:when>
-	  <xsl:when
-	      test="self::tei:hi[not(w:*)]">true</xsl:when>
+	  <xsl:when test="self::tei:hi[not(w:*)]">true</xsl:when>
 	  <xsl:when test="self::tei:idno">true</xsl:when>
 	  <xsl:when test="self::tei:ident">true</xsl:when>
 	  <xsl:when test="self::tei:lb">true</xsl:when>
 	  <xsl:when test="self::tei:name">true</xsl:when>
-	  <xsl:when
-	      test="self::tei:note[@place='foot']">true</xsl:when>
-	  <xsl:when test="self::tei:note[@place='bottom'
-			  ]">true</xsl:when>
-	  <xsl:when
-	      test="self::tei:note[@place='end']">true</xsl:when>
+	  <xsl:when test="self::tei:note[@place='foot']">true</xsl:when>
+	  <xsl:when test="self::tei:note[@place='bottom']">true</xsl:when>
+	  <xsl:when test="self::tei:note[@place='end']">true</xsl:when>
 	  <xsl:when test="self::tei:num">true</xsl:when>
 	  <xsl:when test="self::tei:mentioned">true</xsl:when>
 	  <xsl:when test="self::tei:orgName">true</xsl:when>

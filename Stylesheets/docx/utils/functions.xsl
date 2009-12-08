@@ -195,9 +195,89 @@
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
             <xsl:choose>
-                <xsl:when test="self::m:oMath or                            self::mml:math or                      self::teidocx:dynamicContent or                                          self::w:drawing or                     self::w:object or                                          self::iso:wordObject[w:object] or                             self::tei:altIdentifier or        self::tei:am or        self::tei:att or        self::tei:bibl or        self::tei:biblScope or        self::tei:choice or       self::tei:damage or       self::tei:depth or       self::tei:dim or       self::tei:dimensions or       self::tei:ex or       self::tei:expan or       self::tei:gap or       self::tei:genName or       self::tei:geogName or       self::tei:height or       self::tei:msName or       self::tei:orig or       self::tei:origPlace or       self::tei:region or       self::tei:repository or       self::tei:roleName or       self::tei:rubric or       self::tei:settlement or       self::tei:supplied or       self::tei:width or                     self::tei:abbr or                     self::tei:affiliation or                     self::tei:author or                     self::tei:br or                     self::tei:c or                     self::tei:code or                     self::tei:country or                     self::tei:collection or                     self::tei:date or                     self::tei:editionStmt or                     self::tei:emph or                     self::tei:foreign or                     self::tei:forename or                     self::tei:gi or                     self::tei:gloss or                     self::tei:graphic or                     self::tei:hi[not(w:*)] or                     self::tei:ident or                     self::tei:idno or                     self::tei:institution or                     self::tei:lb or                     self::tei:locus or                     self::tei:mentioned or                     self::tei:name or                     self::tei:note[@place='end' or @place='bottom' ] or                     self::tei:note[@place='foot' or @place='bottom' ] or                     self::tei:num or                     self::tei:orgName or                     self::tei:origDate or                     self::tei:origPlace or                     self::tei:pb or                     self::tei:persName or                     self::tei:placeName or                     self::tei:ptr or                     self::tei:publisher or                     self::tei:q or                     self::tei:ref or                     self::tei:seg or                     self::tei:soCalled or                     self::tei:summary or                      self::tei:surname or                      self::tei:term[not(ancestor-or-self::*/@type='termsAndDefinitions')] or                     self::tei:textLang or                      self::tei:title or                     self::tei:val      ">
-                    true
-                </xsl:when>
+                <xsl:when test="self::m:oMath">true</xsl:when>
+		<xsl:when test="self::mml:math">true</xsl:when>
+		<xsl:when
+		    test="self::teidocx:dynamicContent">true</xsl:when>
+		<xsl:when test="self::w:drawing">true</xsl:when>
+		<xsl:when
+		    test="self::tei:altIdentifier">true</xsl:when>
+		<xsl:when test="self::tei:am">true</xsl:when>
+		<xsl:when test="self::tei:att">true</xsl:when>
+		<xsl:when test="self::tei:bibl">true</xsl:when>
+		<xsl:when test="self::tei:biblScope">true</xsl:when>
+		<xsl:when test="self::tei:choice">true</xsl:when>
+		<xsl:when test="self::tei:damage">true</xsl:when>
+		<xsl:when test="self::tei:depth">true</xsl:when>
+		<xsl:when test="self::tei:dim">true</xsl:when>
+		<xsl:when test="self::tei:dimensions">true</xsl:when>
+		<xsl:when test="self::tei:ex">true</xsl:when>
+		<xsl:when test="self::tei:expan">true</xsl:when>
+		<xsl:when test="self::tei:gap">true</xsl:when>
+		<xsl:when test="self::tei:genName">true</xsl:when>
+		<xsl:when test="self::tei:geogName">true</xsl:when>
+		<xsl:when test="self::tei:height">true</xsl:when>
+		<xsl:when test="self::tei:msName">true</xsl:when>
+		<xsl:when test="self::tei:orig">true</xsl:when>
+		<xsl:when test="self::tei:origPlace">true</xsl:when>
+		<xsl:when test="self::tei:region">true</xsl:when>
+		<xsl:when test="self::tei:repository">true</xsl:when>
+		<xsl:when test="self::tei:roleName">true</xsl:when>
+		<xsl:when test="self::tei:rubric">true</xsl:when>
+		<xsl:when test="self::tei:settlement">true</xsl:when>
+		<xsl:when test="self::tei:supplied">true</xsl:when>
+		<xsl:when test="self::tei:width">true</xsl:when>
+		<xsl:when test="self::tei:abbr">true</xsl:when>
+		<xsl:when test="self::tei:affiliation">true</xsl:when>
+		<xsl:when test="self::tei:author">true</xsl:when>
+		<xsl:when test="self::tei:br">true</xsl:when>
+		<xsl:when test="self::tei:c">true</xsl:when>
+		<xsl:when test="self::tei:code">true</xsl:when>
+		<xsl:when test="self::tei:country">true</xsl:when>
+		<xsl:when test="self::tei:collection">true</xsl:when>
+		<xsl:when test="self::tei:date">true</xsl:when>
+		<xsl:when test="self::tei:editionStmt">true</xsl:when>
+		<xsl:when test="self::tei:emph">true</xsl:when>
+		<xsl:when test="self::tei:foreign">true</xsl:when>
+		<xsl:when test="self::tei:forename">true</xsl:when>
+		<xsl:when test="self::tei:gi">true</xsl:when>
+		<xsl:when test="self::tei:gloss">true</xsl:when>
+		<xsl:when test="self::tei:graphic">true</xsl:when>
+		<xsl:when
+		    test="self::tei:hi[not(w:*)]">true</xsl:when>
+		<xsl:when test="self::tei:ident">true</xsl:when>
+		<xsl:when test="self::tei:idno">true</xsl:when>
+		<xsl:when test="self::tei:institution">true</xsl:when>
+		<xsl:when test="self::tei:lb">true</xsl:when>
+		<xsl:when test="self::tei:locus">true</xsl:when>
+		<xsl:when test="self::tei:mentioned">true</xsl:when>
+		<xsl:when test="self::tei:name">true</xsl:when>
+		<xsl:when
+		    test="self::tei:note[@place='end'">true</xsl:when>
+		<xsl:when test="@place='bottom' ]">true</xsl:when>
+		<xsl:when
+		    test="self::tei:note[@place='foot'">true</xsl:when>
+		<xsl:when test="@place='bottom' ]">true</xsl:when>
+		<xsl:when test="self::tei:num">true</xsl:when>
+		<xsl:when test="self::tei:orgName">true</xsl:when>
+		<xsl:when test="self::tei:origDate">true</xsl:when>
+		<xsl:when test="self::tei:origPlace">true</xsl:when>
+		<xsl:when test="self::tei:pb">true</xsl:when>
+		<xsl:when test="self::tei:persName">true</xsl:when>
+		<xsl:when test="self::tei:placeName">true</xsl:when>
+		<xsl:when test="self::tei:ptr">true</xsl:when>
+		<xsl:when test="self::tei:publisher">true</xsl:when>
+		<xsl:when test="self::tei:q">true</xsl:when>
+		<xsl:when test="self::tei:ref">true</xsl:when>
+		<xsl:when test="self::tei:seg">true</xsl:when>
+		<xsl:when test="self::tei:soCalled">true</xsl:when>
+		<xsl:when test="self::tei:summary">true</xsl:when>
+		<xsl:when test="self::tei:surname">true</xsl:when>
+		<xsl:when
+		    test="self::tei:term[not(ancestor-or-self::*/@type='termsAndDefinitions')]">true</xsl:when>
+		<xsl:when test="self::tei:textLang">true</xsl:when>
+		<xsl:when test="self::tei:title">true</xsl:when>
+		<xsl:when test="self::tei:val">true</xsl:when>
                 <xsl:otherwise>
                     <xsl:choose>
                         <xsl:when test="empty($element/..)">false</xsl:when>

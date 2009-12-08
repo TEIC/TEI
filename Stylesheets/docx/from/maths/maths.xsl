@@ -137,7 +137,7 @@
       </desc>
    </doc>
     <xsl:template match="w:object">
-      <xsl:processing-instruction name="isoError">
+      <xsl:processing-instruction name="ISOerror">
 	Invalid Word object found here
       </xsl:processing-instruction>
       <!--
