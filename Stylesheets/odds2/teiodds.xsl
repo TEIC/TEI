@@ -2057,18 +2057,20 @@ Edition: </xsl:text>
       <xsl:choose>
          <xsl:when test="ancestor::teix:egXML"/>
          <xsl:when test="self::s:ns">
-	           <s:ns prefix="{@prefix}" uri="{@uri}"/>
+	           <ns prefix="{@prefix}" uri="{@uri}"  xmlns="http://www.ascc.net/xml/schematron"/>
          </xsl:when>
          <xsl:when test="self::s:pattern">
 	           <xsl:copy-of select="."/>
          </xsl:when>
          <xsl:when test="self::s:rule">
-	           <s:pattern name="{ancestor::tei:elementSpec/@ident}-constraint-{ancestor::tei:constraintSpec/@ident}">
+	           <pattern
+		       name="{ancestor::tei:elementSpec/@ident}-constraint-{ancestor::tei:constraintSpec/@ident}"
+		       xmlns="http://www.ascc.net/xml/schematron">
 	              <xsl:copy-of select="."/>
-	           </s:pattern>
+	           </pattern>
          </xsl:when>
          <xsl:when test="(self::s:report or self::s:assert) and ancestor::tei:elementSpec">
-	           <s:pattern>
+	           <pattern xmlns="http://www.ascc.net/xml/schematron">
 	              <xsl:attribute name="name">
 	                 <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
 	                 <xsl:text>-constraint-</xsl:text>
@@ -2077,14 +2079,14 @@ Edition: </xsl:text>
 		                   <xsl:number/>
 	                 </xsl:if>
 	              </xsl:attribute>
-	              <rule xmlns="http://www.ascc.net/xml/schematron">
+	              <rule>
 	                 <xsl:attribute name="context">
 	                    <xsl:text>tei:</xsl:text>
-	                    <xsl:value-of select="../../@ident"/>
+	                    <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
 	                 </xsl:attribute>
 	                 <xsl:copy-of select="."/>
 	              </rule>
-	           </s:pattern>
+	           </pattern>
          </xsl:when>
          <xsl:when test="self::sch:ns">
 	           <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="{@prefix}" uri="{@uri}"/>
