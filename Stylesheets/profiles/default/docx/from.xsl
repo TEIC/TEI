@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:edate="http://exslt.org/dates-and-times"
                 xmlns="http://www.tei-c.org/ns/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:iso="http://www.iso.org/ns/1.0"
@@ -19,7 +18,7 @@
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 version="2.0"
-                exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso edate">
+                exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso">
     
     <!-- import base conversion style -->
 
