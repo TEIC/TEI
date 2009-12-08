@@ -76,40 +76,6 @@
       </p>
    </xsl:template>
 
-   <xsl:template match="tei:list[@type='termlist']/tei:item">
-      <xsl:apply-templates/>
-   </xsl:template>
-
-   <xsl:template match="tei:list[@type='termlist']/tei:item/tei:term">
-      <dt>
-         <xsl:if test="@xml:id">
-            <xsl:attribute name="id">
-	              <xsl:value-of select="@xml:id"/>
-            </xsl:attribute>
-         </xsl:if>
-    (<xsl:value-of select="parent::tei:item/@n"/>)
-    <xsl:apply-templates/>
-      </dt>
-   </xsl:template>
-
-   <xsl:template match="tei:list[@type='termlist']">
-      <dl>
-         <xsl:apply-templates/>
-      </dl>
-   </xsl:template>
-
-
-   <xsl:template match="tei:list[@type='termlist']/tei:item/tei:gloss">
-      <dd>
-         <xsl:apply-templates/>
-      </dd>
-   </xsl:template>
-
-   <xsl:template match="tei:p[count(*)=1 and tei:term]">
-      <p style="font-weight: bold">
-         <xsl:apply-templates/>
-      </p>
-   </xsl:template>
 
    <xsl:template match="tei:p[count(*)=1 and tei:gloss]">
       <p style="margin-left: 1em">
@@ -173,5 +139,11 @@
       <br/>
    </xsl:template>
  
+   <xsl:template match="processing-instruction()[name(.)='ISOerror']">
+     <xsl:message>Error:        <xsl:value-of select="."/> </xsl:message>
+     <span style="font-weight:bold; color:red; border: solid red 1pt">
+
+     </span>
+   </xsl:template>
 
 </xsl:stylesheet>

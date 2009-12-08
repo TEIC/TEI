@@ -129,22 +129,13 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Handles a w:object</p>
-         <p>
-            Puts a w:object into the special element and starts an identity transformation
-            that is guided by further templates.
-        </p>
+         <p>Handles a w:object by generating an error</p>
       </desc>
    </doc>
     <xsl:template match="w:object">
       <xsl:processing-instruction name="ISOerror">
 	Invalid Word object found here
       </xsl:processing-instruction>
-      <!--
-	  <iso:wordObject>
-            <xsl:apply-templates select="." mode="iden"/>
-	    </iso:wordObject>
-	-->
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
