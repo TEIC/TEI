@@ -677,7 +677,8 @@ Construct the TEI Header either by copying the passed metadata or extracting
 	  <xsl:template name="fromDocxFinalHook">
 	    <xsl:for-each select="key('WordTables',1)">
 		<xsl:variable name="n">
-		  <xsl:text>word/media/table</xsl:text>
+		  <xsl:value-of select="$word-directory"/>
+		  <xsl:text>/word/media/table</xsl:text>
 		  <xsl:number level="any"/>
 		  <xsl:text>.xml</xsl:text>
 		</xsl:variable>
