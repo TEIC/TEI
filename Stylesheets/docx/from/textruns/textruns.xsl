@@ -144,6 +144,11 @@
                 </hi>
             </xsl:when>
             
+            <xsl:when test="not($style='')">
+	      <hi rend="{$style}">
+                <xsl:apply-templates/>
+	      </hi>
+	    </xsl:when>
             <xsl:otherwise>
                 <xsl:apply-templates/>
             </xsl:otherwise>
