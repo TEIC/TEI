@@ -78,50 +78,50 @@
                 </xsl:for-each>
                 
                 <xsl:for-each select="teidocx:header">
-                    <xsl:variable name="ref" select="@ref"/>
-		             <xsl:if test="count(key('HEADERS',$ref))&gt;0">
-                    <xsl:variable name="headernum">
-                        <xsl:for-each select="key('HEADERS',$ref)">
-                            <xsl:number level="any"/>
-                        </xsl:for-each>
-                    </xsl:variable>
-                    <w:headerReference w:type="{@type}" r:id="{concat('rId',100+$headernum)}"/>
-		             </xsl:if>
-                </xsl:for-each>
+		  <xsl:variable name="ref" select="@ref"/>
+		  <xsl:if test="count(key('HEADERS',$ref))&gt;0">
+		    <xsl:variable name="headernum">
+		      <xsl:for-each select="key('HEADERS',$ref)">
+			<xsl:number level="any"/>
+		      </xsl:for-each>
+		    </xsl:variable>
+		    <w:headerReference w:type="{@type}" r:id="{concat('rId',100+$headernum)}"/>
+		  </xsl:if>
+		</xsl:for-each>
                 
                 <w:pgSz>
-                    <xsl:choose>
-                        <!-- landscape -->
-                        <xsl:when test="teidocx:orientation/@type='landscape'">
-                            <xsl:attribute name="w:orient">landscape</xsl:attribute>
-                            <xsl:attribute name="w:w">15840</xsl:attribute>
-                            <xsl:attribute name="w:h">12240</xsl:attribute>
-                        </xsl:when>
-                        <!-- portrait -->
-                        <xsl:otherwise>
-                            <xsl:attribute name="w:w">12240</xsl:attribute>
-                            <xsl:attribute name="w:h">15840</xsl:attribute>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </w:pgSz>
-                <w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:gutter="0"
-                     w:footer="720"
-                     w:header="720"/>
-                <xsl:if test="teidocx:pageNumbering">
-                    <w:pgNumType>
-                        <xsl:if test="teidocx:pageNumbering/@start">
-                            <xsl:attribute name="w:start" select="teidocx:pageNumbering/@start"/>
-                        </xsl:if>
-                        <xsl:if test="teidocx:pageNumbering/@type">
-                            <xsl:attribute name="w:fmt" select="teidocx:pageNumbering/@type"/>
-                        </xsl:if>
-                    </w:pgNumType>
-                </xsl:if>
-                <xsl:if test="teidocx:header/@type='first' or teidocx:footer/@type='first'">
-                    <w:titlePg/>
-                </xsl:if>
-                <w:docGrid w:linePitch="360"/>
-            </w:sectPr>
+		  <xsl:choose>
+		    <!-- landscape -->
+		    <xsl:when test="teidocx:orientation/@type='landscape'">
+		      <xsl:attribute name="w:orient">landscape</xsl:attribute>
+		      <xsl:attribute name="w:w">15840</xsl:attribute>
+		      <xsl:attribute name="w:h">12240</xsl:attribute>
+		    </xsl:when>
+		    <!-- portrait -->
+		    <xsl:otherwise>
+		      <xsl:attribute name="w:w">12240</xsl:attribute>
+		      <xsl:attribute name="w:h">15840</xsl:attribute>
+		    </xsl:otherwise>
+		  </xsl:choose>
+		</w:pgSz>
+		<w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:gutter="0"
+			 w:footer="720"
+			 w:header="720"/>
+		<xsl:if test="teidocx:pageNumbering">
+		  <w:pgNumType>
+		    <xsl:if test="teidocx:pageNumbering/@start">
+		      <xsl:attribute name="w:start" select="teidocx:pageNumbering/@start"/>
+		    </xsl:if>
+		    <xsl:if test="teidocx:pageNumbering/@type">
+		      <xsl:attribute name="w:fmt" select="teidocx:pageNumbering/@type"/>
+		    </xsl:if>
+		  </w:pgNumType>
+		</xsl:if>
+		<xsl:if test="teidocx:header/@type='first' or teidocx:footer/@type='first'">
+		  <w:titlePg/>
+		</xsl:if>
+		<w:docGrid w:linePitch="360"/>
+	    </w:sectPr>
         </xsl:variable>
         
         <!-- write out sectPr -->

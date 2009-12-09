@@ -1007,4 +1007,7 @@
       </xsl:copy>
     </xsl:template>
 
+
+    <xsl:template match="tei:milestone[@unit='section']" mode="part2"/>
+
 </xsl:stylesheet>

@@ -85,9 +85,9 @@
 	        <xsl:choose>
 	           <xsl:when test="w:pPr/w:rPr/w:ins">
 	              <add when="{w:pPr/w:rPr/w:ins/@w:date}" resp="#{w:pPr/w:rPr/w:ins/@w:author}"
-                    type="para">
-  	               <xsl:apply-templates select="."/>
-              </add>
+			   type="para">
+			<xsl:apply-templates select="."/>
+		      </add>
 	           </xsl:when>
 	           <xsl:otherwise>
 	              <xsl:apply-templates select="."/>

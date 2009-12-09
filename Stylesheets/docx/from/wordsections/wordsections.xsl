@@ -55,9 +55,7 @@
          <p>match strange word sections</p>
          <p>
             See comment at begin of document to understand why this template is calling
-            a named template.
-            
-            match strange word sections
+            a named template. It matches strange Word "sections".
         </p>
       </desc>
    </doc>
@@ -68,7 +66,7 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        Template for w:p[w:pPr/w:sectPr]|w:sectPr
+        Template called by a match on w:p[w:pPr/w:sectPr]|w:sectPr
     </desc>
    </doc>
     <xsl:template name="paragraph-sectpr">
@@ -95,7 +93,6 @@
                 </xsl:if>
             </milestone>
         </xsl:for-each>
-        
         <xsl:next-match/>
     </xsl:template>
     
