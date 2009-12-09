@@ -18,7 +18,6 @@
                 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
                 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
-                
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
@@ -68,6 +67,7 @@
     </xsl:variable>
     
     <xsl:param name="word-directory">..</xsl:param>
+    <xsl:param name="tei-directory">..</xsl:param>
     <xsl:param name="debug">false</xsl:param>   
     <xsl:param name="numberFormat">fr</xsl:param>
     
@@ -875,7 +875,7 @@
                     </vt:lpwstr>
                 </property>
                 <xsl:for-each select="key('ALLMETA',1)">
-                    <xsl:if test="@iso:meta != 'projectId'">
+                    <xsl:if test="@iso:meta != 'projectId' and not(starts-with(@iso:meta, 'fw_'))">
                         <property name="{@iso:meta}">
                             <xsl:attribute name="pid">
                                 <xsl:value-of select="position()+6"/>
@@ -960,7 +960,7 @@
 	  <xsl:if test="$debug='true'">
 	    <xsl:message>read table from <xsl:value-of select="@tei:corresp"/></xsl:message>
 	  </xsl:if>
-	  <xsl:for-each select="document(@tei:corresp)">
+	  <xsl:for-each select="document(concat($tei-directory,@tei:corresp))">
 	    <xsl:apply-templates 	mode="copytable"/>
 	  </xsl:for-each>
 	</xsl:when>

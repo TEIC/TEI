@@ -19,10 +19,10 @@
                 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
                 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
-                
+                xmlns:custprops="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
                 xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"
                 version="2.0"
-                exclude-result-prefixes="a pic rel ve o teidocx r m v wp w10 w wne mml vt cals tbx iso">
+                exclude-result-prefixes="a pic rel ve o teidocx r m v wp w10 w wne mml vt cals tbx iso custprops">
 
     <!-- import conversion style -->
     <xsl:import href="../../../docx/utils/functions.xsl"/>
@@ -136,6 +136,16 @@ Construct the TEI Header either by copying the passed metadata or extracting
                             <xsl:with-param name="tag">complementaryTitle</xsl:with-param>
                         </xsl:call-template>
                     </title>
+                    <title iso:meta="supplementTitle" xml:lang="en">
+                        <xsl:call-template name="getSdt">
+                            <xsl:with-param name="tag">supplementTitle</xsl:with-param>
+                        </xsl:call-template>
+                    </title>
+                    <title iso:meta="fullTitle" xml:lang="en">
+                        <xsl:call-template name="getSdt">
+                            <xsl:with-param name="tag">fullTitle</xsl:with-param>
+                        </xsl:call-template>
+                    </title>
 
                     <title iso:meta="introductoryTitle_fr" xml:lang="fr">
                         <xsl:call-template name="getSdt">
@@ -152,17 +162,22 @@ Construct the TEI Header either by copying the passed metadata or extracting
                             <xsl:with-param name="tag">complementaryTitle_fr</xsl:with-param>
                         </xsl:call-template>
                     </title>
+                    <title iso:meta="supplementTitle_fr" xml:lang="fr">
+                        <xsl:call-template name="getSdt">
+                            <xsl:with-param name="tag">supplementTitle_fr</xsl:with-param>
+                        </xsl:call-template>
+                    </title>
+                    <title iso:meta="fullTitle_fr" xml:lang="fr">
+                        <xsl:call-template name="getSdt">
+                            <xsl:with-param name="tag">fullTitle_fr</xsl:with-param>
+                        </xsl:call-template>
+                    </title>
 
                     <respStmt>
                         <resp>Committee</resp>
                         <name>
-                            <xsl:text>TC </xsl:text>
                             <xsl:call-template name="getSdt">
-                                <xsl:with-param name="tag">tcNumber</xsl:with-param>
-                            </xsl:call-template>
-                            <xsl:text> /SC </xsl:text>
-                            <xsl:call-template name="getSdt">
-                                <xsl:with-param name="tag">scNumber</xsl:with-param>
+                                <xsl:with-param name="tag">committeeReference</xsl:with-param>
                             </xsl:call-template>
                         </name>
                     </respStmt>
@@ -198,6 +213,10 @@ Construct the TEI Header either by copying the passed metadata or extracting
                             <xsl:when test="$thisSdt='introductoryTitle_fr'"/>
                             <xsl:when test="$thisSdt='mainTitle'"/>
                             <xsl:when test="$thisSdt='mainTitle_fr'"/>
+                            <xsl:when test="$thisSdt='fullTitle'"/>
+                            <xsl:when test="$thisSdt='fullTitle_fr'"/>
+                            <xsl:when test="$thisSdt='supplementTitle'"/>
+                            <xsl:when test="$thisSdt='supplementTitle_fr'"/>
                             <xsl:when test="$thisSdt='complementary_title'"/>
                             <xsl:when test="$thisSdt='complementary_title_fr'"/>
                             <xsl:when test="$thisSdt='introductory_title'"/>
@@ -208,6 +227,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
                             <xsl:when test="$thisSdt='docdate'"/>
                             <xsl:when test="$thisSdt='organization'"/>
                             <xsl:when test="$thisSdt='secretariat'"/>
+                            <xsl:when test="$thisSdt='docStage'"/>
                             <xsl:when test="starts-with($thisSdt, 'fw_')"/>
                             <xsl:otherwise>
                                 <idno iso:meta="{$thisSdt}">
@@ -224,6 +244,27 @@ Construct the TEI Header either by copying the passed metadata or extracting
                     <idno iso:meta="stage">
                         <xsl:value-of select="$customProps//*[@name='DocIdentStage']/vt:lpwstr"/>
                     </idno>
+                    
+                    <xsl:variable name="excludedPropNames">
+                      committee committeeReference docDate docdate organization secretariat docNumber docPartNumber             
+                    </xsl:variable>
+                    <xsl:for-each select="$customProps//custprops:property">
+                      <xsl:variable name="propName" select="@name"/>
+                      <xsl:choose>
+                        <xsl:when test="starts-with($propName, 'DocIdent')"/>
+                        <xsl:when test="starts-with($propName, 'ISO_')"/>
+                        <xsl:when test="starts-with($propName, 'TEI_')"/>
+                        <xsl:when test="starts-with($propName, 'Word')"/>
+                        <xsl:when test="contains($propName,'Title')"/>
+                        <xsl:when test="contains($excludedPropNames, concat(' ',$propName,' '))"/>
+                        <xsl:otherwise>
+                          <xsl:message select="concat('create idno from property ',$propName,'=',vt:lpwstr)"/>
+                          <idno iso:meta="{$propName}">
+                            <xsl:value-of select="vt:lpwstr"/>
+                          </idno>
+                        </xsl:otherwise>
+                      </xsl:choose>
+                    </xsl:for-each>
 
                     <xsl:if test="w:body/w:p[w:pPr/w:pStyle/@w:val='zzCopyright']">
                         <availability>
