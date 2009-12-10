@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
 		xmlns:iso="http://www.iso.org/ns/1.0"
 		xmlns:cals="http://www.oasis-open.org/specs/tm9901"
                 xmlns:html="http://www.w3.org/1999/xhtml"
@@ -10,7 +11,7 @@
                 xmlns:t="http://www.thaiopensource.com/ns/annotations"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                exclude-result-prefixes="tei html t a rng s iso cals teix"
+                exclude-result-prefixes="tei html t a rng s iso tbx cals teix"
                 version="2.0">
   
    <xsl:import href="../../../xhtml2/tei.xsl"/>
@@ -585,5 +586,78 @@
   <xsl:value-of select="$ecol - $scol + 1"/>
 </xsl:template>
 
+<xsl:template match="tbx:termEntry">
+  <div class="termEntry">
+      <xsl:for-each select="tbx:langSet">
+         <xsl:choose>
+            <xsl:when test="starts-with(../@id,'autoTermNum')">
+	      <p class="TermNum"><xsl:number/></p>
+            </xsl:when>
+            <xsl:otherwise>
+	      <p class="TermNum">
+		<xsl:value-of select="substring-after(../@id,'CDB_')"/>
+	      </p>
+            </xsl:otherwise>
+         </xsl:choose>
+         <xsl:for-each select="tbx:ntig">
+	           <xsl:variable name="Thing">
+	              <xsl:value-of select="substring-before(tbx:termGrp/tbx:termNote[@type='administrativeStatus'],'-admn-sts')"/>
+	           </xsl:variable>
+	           <xsl:variable name="style">
+	              <xsl:choose>
+	                 <xsl:when test="$Thing='preferredTerm'">termPreferred</xsl:when>
+	                 <xsl:when test="$Thing='deprecatedTerm'">termDeprecated</xsl:when>
+	                 <xsl:when test="$Thing='admittedTerm'">termAdmitted</xsl:when>
+	                 <xsl:when test="$Thing='symbol'">symbol</xsl:when>
+	              </xsl:choose>
+	           </xsl:variable>
+		   <xsl:call-template name="block-element">
+		     <xsl:with-param name="style" select="$style"/>
+		   </xsl:call-template>
+         </xsl:for-each>
+
+         <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
+         <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
+         <xsl:apply-templates select="tbx:note"/>
+      </xsl:for-each>
+      <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
+      <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
+      <xsl:apply-templates select="tbx:note"/>
+  </div>
+   </xsl:template>
+
+   <xsl:template match="tbx:termGrp/tbx:termNote"/>
+
+   <xsl:template match="tbx:descrip">
+      <xsl:call-template name="block-element">
+         <xsl:with-param name="style">Definition</xsl:with-param>
+      </xsl:call-template>
+   </xsl:template>
+
+   <xsl:template match="tbx:note">
+      <xsl:call-template name="block-element">
+         <xsl:with-param name="style">
+	   <xsl:text>noteTermEntry</xsl:text>
+         </xsl:with-param>
+      </xsl:call-template>
+   </xsl:template>
+
+   <xsl:template match="tbx:admin">
+      <xsl:call-template name="block-element">
+         <xsl:with-param name="style">entrySource</xsl:with-param>
+      </xsl:call-template>
+   </xsl:template>
+
+   <xsl:template name="block-element">
+     <xsl:param name="style"/>
+     <p>
+       <xsl:if test="not($style='')">
+	 <xsl:attribute name="class">
+	   <xsl:value-of select="$style"/>
+	 </xsl:attribute>
+       </xsl:if>
+       <xsl:apply-templates/>
+     </p>
+   </xsl:template>
 
 </xsl:stylesheet>
