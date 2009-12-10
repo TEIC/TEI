@@ -58,8 +58,8 @@
         1mm = 35998 units. so page size is 6659630 x 9791456
         Divide by 100 to avoid overflow.
     -->
-    <xsl:param name="pageWidth">57596.80</xsl:param>
-    <xsl:param name="pageHeight">88915.06</xsl:param>
+    <xsl:param name="pageWidth">575.9680</xsl:param>
+    <xsl:param name="pageHeight">889.1506</xsl:param>
     <xsl:param name="defaultHeaderFooterFile">templates/default.xml</xsl:param>
     <xsl:param name="postQuote">’</xsl:param>
     <xsl:param name="preQuote">‘</xsl:param>
