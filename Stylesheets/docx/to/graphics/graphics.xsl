@@ -120,13 +120,6 @@
             <xsl:variable name="imageWidth">
                 <xsl:choose>
                     <xsl:when test="contains(@width,'%')">
-		      <xsl:message>% fired: <xsl:value-of
-		      select="$pageWidth"/> * <xsl:value-of
-		      select="substring-before(@width,'%')"/> =
-                        <xsl:value-of select="number($pageWidth *
-					      number(substring-before(@width,'%')))
-					      cast as xs:integer"/>
-		      </xsl:message>
                         <xsl:value-of select="number($pageWidth * number(substring-before(@width,'%'))) cast as xs:integer"/>
                     </xsl:when>
                     <xsl:when test="@width">
