@@ -757,7 +757,7 @@
             </w:pPr>
             <w:r>
                 <w:t>
-                    <xsl:value-of select=".//tbx:term"/>
+                    <xsl:apply-templates select=".//tbx:term"/>
                 </w:t>
             </w:r>
         </w:p>

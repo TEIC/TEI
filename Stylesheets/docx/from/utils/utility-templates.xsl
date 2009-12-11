@@ -97,5 +97,33 @@
         </xsl:for-each>
     </xsl:template>
 
+    <xsl:template name="identifyChange">
+      <xsl:param name="who"/>
+      <xsl:variable name="W">
+	<xsl:choose>
+	  <xsl:when test="$who='Wanner Claude'">AMD.1</xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="$who"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:variable>
+      <xsl:choose>
+	<xsl:when test="starts-with($W,'AMD.') or starts-with($W,'COR.')">
+	    <xsl:attribute name="type">
+	      <xsl:value-of select="substring-before($W,'.')"/>
+	    </xsl:attribute>
+	    <xsl:attribute name="n">
+	      <xsl:value-of select="substring-after($W,'.')"/>
+	    </xsl:attribute>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:attribute name="resp">
+	    <xsl:text>#</xsl:text>
+	    <xsl:value-of select="translate($who,' ','_')"/>
+	  </xsl:attribute>
+	  </xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
+
 
 </xsl:stylesheet>

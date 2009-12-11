@@ -258,7 +258,13 @@ Construct the TEI Header either by copying the passed metadata or extracting
                         <xsl:when test="contains($propName,'Title')"/>
                         <xsl:when test="contains($excludedPropNames, concat(' ',$propName,' '))"/>
                         <xsl:otherwise>
-                          <xsl:message select="concat('create idno from property ',$propName,'=',vt:lpwstr)"/>
+			  <xsl:if test="$debug='true'">
+			    <xsl:message>
+			      <xsl:text>create idno from property </xsl:text>
+			      <xsl:value-of
+				  select="$propName,'=',vt:lpwstr"/>
+			    </xsl:message>
+			  </xsl:if>
                           <idno iso:meta="{$propName}">
                             <xsl:value-of select="vt:lpwstr"/>
                           </idno>
@@ -1288,22 +1294,30 @@ Construct the TEI Header either by copying the passed metadata or extracting
 
       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> Para-level ins/del </desc></doc>
-  <xsl:template match="w:p[w:pPr/w:rPr/w:ins]" mode="paragraph" priority="42">
-      <addSpan spanTo="{generate-id()}" when="{w:pPr/w:rPr/w:ins/@w:date}"
-               resp="#{translate(w:pPr/w:rPr/w:ins/@w:author,' ','_')}"/>
-      <xsl:apply-imports/>
-      <anchor xml:id="{generate-id()}"/>
-  </xsl:template>
-
-  <xsl:template match="w:instrText" mode="paragraph" priority="42"/>
-  <xsl:template match="w:instrText" priority="42"/>
-
-  <xsl:template match="w:p[w:pPr/w:rPr/w:del]" mode="paragraph" priority="42">
-      <delSpan spanTo="{generate-id()}" when="{w:pPr/w:rPr/w:del/@w:date}"
-               resp="#{translate(w:pPr/w:rPr/w:ins/@w:author,' ','_')}"/>
-      <xsl:apply-imports/>
-      <anchor xml:id="{generate-id()}"/>
-  </xsl:template>
+      <xsl:template match="w:p[w:pPr/w:rPr/w:ins]" mode="paragraph"
+		    priority="42">
+	  <addSpan spanTo="{generate-id()}"
+		   when="{w:pPr/w:rPr/w:ins/@w:date}">
+	    <xsl:call-template name="identifyChange">
+	      <xsl:with-param name="who" select="w:pPr/w:rPr/w:ins/@w:author"/>
+	    </xsl:call-template>
+	  </addSpan>
+	<xsl:apply-imports/>
+	<anchor xml:id="{generate-id()}"/>
+      </xsl:template>
+      
+      <xsl:template match="w:instrText" mode="paragraph" priority="42"/>
+      <xsl:template match="w:instrText" priority="42"/>
+      
+      <xsl:template match="w:p[w:pPr/w:rPr/w:del]" mode="paragraph" priority="42">
+	<delSpan spanTo="{generate-id()}" when="{w:pPr/w:rPr/w:del/@w:date}">
+	  <xsl:call-template name="identifyChange">
+	    <xsl:with-param name="who" select="w:pPr/w:rPr/w:del/@w:author"/>
+	  </xsl:call-template>
+	</delSpan>
+	<xsl:apply-imports/>
+	<anchor xml:id="{generate-id()}"/>
+      </xsl:template>
 
     <!-- overrides for part 2 -->
     

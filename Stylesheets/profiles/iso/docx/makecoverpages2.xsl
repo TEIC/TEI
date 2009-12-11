@@ -114,25 +114,31 @@
 		       <xsl:apply-templates select="@*"/>
 		       <xsl:for-each select="child::*">
 		          <xsl:choose>
-		             <xsl:when test="name(.) = 'w:p' and .//w:t/text() = '#front'">
+		             <xsl:when test="name(.) = 'w:p' and . = '#front'">
 		                <xsl:if test="$debug = 'true'">
 		                   <xsl:message>insert front section</xsl:message>
 		                </xsl:if>
-		                <xsl:copy-of select="$document-doc/w:document/w:body/front/*"/>
+		                <xsl:for-each select="$document-doc/w:document/w:body/front/*">
+		                  <!-- do not copy any section breaks -->
+		                  <xsl:if test="not(.//w:sectPr)">
+		                    <xsl:copy-of select="."/>
+		                  </xsl:if>
+		                </xsl:for-each>
+<!--                    <xsl:copy-of select="$document-doc/w:document/w:body/front/*"/>-->
 		             </xsl:when>
-		             <xsl:when test="name(.) = 'w:p' and .//w:t/text() = '#main'">
+		             <xsl:when test="name(.) = 'w:p' and . = '#main'">
 		                <xsl:if test="$debug = 'true'">
 		                   <xsl:message>insert main section</xsl:message>
 		                </xsl:if>
 		                <xsl:copy-of select="$document-doc/w:document/w:body/main/*"/>
 		             </xsl:when>
-		             <xsl:when test="name(.) = 'w:p' and .//w:t/text() = '#back'">
+		             <xsl:when test="name(.) = 'w:p' and . = '#back'">
 		                <xsl:if test="$debug = 'true'">
 		                   <xsl:message>insert back section</xsl:message>
 		                </xsl:if>
 		                <xsl:copy-of select="$document-doc/w:document/w:body/back/*"/>
 		             </xsl:when>
-               <xsl:when test="name(.) = 'w:p' and .//w:t/text() = '#remove'">
+               <xsl:when test="name(.) = 'w:p' and . = '#remove'">
                   <xsl:if test="$debug = 'true'">
                      <xsl:message>remove empty placeholder paragraph</xsl:message>
                   </xsl:if>
