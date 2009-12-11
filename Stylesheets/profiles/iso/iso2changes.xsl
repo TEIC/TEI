@@ -94,7 +94,7 @@
 	                    <xsl:text> </xsl:text>
                   </xsl:when>
                   <xsl:when test="preceding-sibling::tei:*[1][self::tei:delSpan]">
-	                    <span class="add">DELETE</span>
+	                    <span class="del">DELETE</span>
 	                    <xsl:text> </xsl:text>
                   </xsl:when>
                </xsl:choose>
@@ -139,7 +139,7 @@
        <xsl:when test="self::cals:entry">
 	 <xsl:for-each select="ancestor::cals:table">
 	   <xsl:text>Table </xsl:text>
-	   <xsl:number/>
+	   <xsl:number level="any"/>
 	   <xsl:text>, </xsl:text>
 	 </xsl:for-each>
 	 <xsl:call-template name="LabelChange">
@@ -247,7 +247,7 @@
             <xsl:number count="tei:div" from="tei:body" format="1" level="multiple"/>
          </xsl:when>
          <xsl:when test="ancestor::tei:back">
-            <xsl:number count="tei:div" from="tei:back" format="A.1.1" level="multiple"/>
+	   Annex <xsl:number count="tei:div" from="tei:back" format="A.1.1" level="multiple"/>
          </xsl:when>
       </xsl:choose>
       <xsl:text> </xsl:text>
