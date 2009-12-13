@@ -20,26 +20,41 @@
     version="2.0"
 >
 
-<XSL:output method="xml" indent="yes" encoding="utf-8"/>
+   <XSL:template match="processing-instruction()"
+		 mode="checkSchematron">
+     <XSL:message>!<XSL:value-of select="."/></XSL:message>
+   </XSL:template>
+
+   <XSL:template match="@*|text()|comment()"  mode="checkSchematron">
+      <XSL:copy-of select="."/>
+   </XSL:template>
+
+   <XSL:template match="*"  mode="checkSchematron">
+      <XSL:copy>
+         <XSL:apply-templates
+	     select="*|@*|processing-instruction()|comment()|text()"  mode="checkSchematron"/>
+      </XSL:copy>
+   </XSL:template>
 
   <xsl:for-each select="s:schema/s:pattern/s:rule">
-    <XSL:template match="{@context}">
+    <XSL:template match="{@context}" mode="checkSchematron">
       <XSL:copy>
-	<XSL:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part0"/>
+	<XSL:apply-templates select="@*" mode="checkSchematron"/>
+	<XSL:apply-templates select="*|processing-instruction()|comment()|text()" mode="checkSchematron"/>
       </XSL:copy>
       <xsl:for-each select="s:assert|s:report">
       <xsl:choose>
 	<xsl:when test="self::s:assert">
 	  <XSL:if test="not({@test})">
 	    <XSL:processing-instruction name="ISOerror">
-	      <XSL:copy-of select="text()"/>
+	      <xsl:value-of select="text()"/>
 	    </XSL:processing-instruction>
 	  </XSL:if>
 	</xsl:when>
 	<xsl:when test="self::s:report">
 	  <XSL:if test="{@test}">
 	    <XSL:processing-instruction name="ISOerror">
-	      <XSL:copy-of select="text()"/>
+	      <xsl:value-of select="text()"/>
 	    </XSL:processing-instruction>
 	  </XSL:if>
 	</xsl:when>

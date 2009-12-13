@@ -111,17 +111,21 @@
 			process for styles. Can also detect illegal styles.</li>
 						
 			<li> part2: 	
-						templates that are relevant in the second stage of the conversion are 
-						defined in mode "part2"</li>
-					
-						<li> inSectionGroup:
-						Defines a template that is working o a group of consecutive elements (w:ps or w:tbls)
-						that form a section (a normal section not to be confused with w:sectPr).</li>
-						
+			templates that are relevant in the second stage of the conversion are 
+			defined in mode "part2"</li>
+			
+			<li> inSectionGroup:
+			Defines a template
+			that is working o a
+			group of consecutive
+			elements (w:p or w:tbl
+			elenents)
+			that form a section (a normal section not to be confused with w:sectPr).</li>
+			
 			<li> paragraph:
-						Defines that the template works on an individual element (usually starting with a
-						w:p element).  </li>
-
+			Defines that the template works on an individual element (usually starting with a
+			w:p element).  </li>
+			
 			<li> iden: simply copies the content</li>
 			</ul>
 			
@@ -165,10 +169,10 @@
 
 
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-		create the basic text; worry later about dividing it up
-	</desc>
-   </doc>
+	    <desc>
+	      Create the basic text; worry later about dividing it up
+	    </desc>
+	  </doc>
 	  <xsl:template match="w:body">
 		    <text>
 			<!-- Create forme work -->
@@ -180,7 +184,7 @@
 					group all paragraphs that form a first level section.
 				-->
 				<xsl:for-each-group select="w:sdt|w:p|w:tbl"
-                                group-starting-with="w:p[teidocx:is-firstlevel-heading(.)]">
+						    group-starting-with="w:p[teidocx:is-firstlevel-heading(.)]">
 
 					          <xsl:choose>
 						
@@ -188,16 +192,16 @@
 						to further divide the section into subsections that we can then
 						finally work on -->
 						<xsl:when test="teidocx:is-heading(.)">
-							              <xsl:call-template name="group-by-section"/>
-						            </xsl:when>
+						  <xsl:call-template name="group-by-section"/>
+						</xsl:when>
 						
-						            <!-- We have found some loose paragraphs. These are most probably
+						<!-- We have found some loose paragraphs. These are most probably
 						front matter paragraps. We can simply convert them without further
 						trying to split them up into sub sections. -->
 						<xsl:otherwise>
-							              <xsl:apply-templates select="." mode="inSectionGroup"/>
-						            </xsl:otherwise>
-					          </xsl:choose>
+						  <xsl:apply-templates select="." mode="inSectionGroup"/>
+						</xsl:otherwise>
+						  </xsl:choose>
 				        </xsl:for-each-group>
 				
 				        <!-- I have no idea why I need this, but I apparently do. 

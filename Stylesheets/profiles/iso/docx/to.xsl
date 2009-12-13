@@ -127,7 +127,7 @@
       <xsl:text>termRef</xsl:text>
     </xsl:template>
     
-       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
         Inline Templates:
         Here we can overwrite how inline elements are rendered
@@ -148,7 +148,7 @@
 	        <w:sym w:font="{@iso:font}" w:char="{@n}"/>
         </w:r>
     </xsl:template>
-    
+
     <xsl:template match="tei:editionStmt">
         <w:r>
             <w:t>
@@ -156,7 +156,7 @@
         </w:r>
     </xsl:template>
 
-       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> 
         Handle Numbers 
       </desc>
@@ -202,14 +202,15 @@
     </xsl:template>
 
     
-<!--
-        Block Templates:
-        Here we can overwrite how block elements are rendered
+    <!--
+	Block Templates:
+	Here we can overwrite how block elements are rendered
     -->
-  
     
-<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
-      <desc> Dates </desc></doc>
+    
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc> Dates </desc>
+    </doc>
     <xsl:template match="tei:date">
         <w:r>
             <w:rPr>
@@ -221,7 +222,9 @@
         </w:r>
     </xsl:template>
 
-    <!-- formulas -->
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc> Process formulae </desc></doc>
+
     <xsl:template match="tei:formula">
       <xsl:choose>
 	        <xsl:when test="parent::cals:entry or parent::tei:title">
@@ -251,7 +254,9 @@
       </xsl:choose>
     </xsl:template>
     
-    <!-- List Bibl -->
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc> Process bibliography</desc></doc>
+
     <xsl:template match="tei:listBibl">
         <xsl:choose>
             <xsl:when test="ancestor-or-self::*[@type='normativeReferences']">
@@ -284,7 +289,9 @@
     </xsl:template>
     
     
-    <!-- Notes -->
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc> Process notes </desc></doc>
+    
     <xsl:template match="tei:note[@place]">
       <xsl:choose>
 	        <xsl:when test="@place='foot'  or @place='bottom' ">
@@ -400,7 +407,7 @@
     </xsl:template>
     
     
-       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
 	Paragraphs in the front matter 
       </desc>
@@ -419,7 +426,8 @@
         </xsl:call-template>
     </xsl:template>
     
-    <!-- Definition lists -->
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc> Definition lists </desc></doc>
     <xsl:template match="tei:list[@type='gloss']">
       <xsl:for-each select="tei:head">
         <xsl:call-template name="block-element">
@@ -595,8 +603,9 @@
         </xsl:for-each>
     </xsl:template>
 
-           <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
-      <desc> Document title </desc></doc>
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc> Document title </desc>
+    </doc>
     <xsl:template name="document-title">
         <w:p>
             <w:pPr>
@@ -611,7 +620,7 @@
     </xsl:template>
     
     
-           <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+           <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
         Table of Contents
       </desc></doc>
@@ -641,7 +650,7 @@
         </w:p>
     </xsl:template>
     
-           <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+           <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
  who created this document </desc></doc>
     <xsl:template name="created-by">
@@ -660,7 +669,7 @@
 
 
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>TBX processing</desc>
 </doc>
 
@@ -951,8 +960,9 @@
       </w:sdt>
     </xsl:template>
     
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  type="stylesheet">
-      <desc> Process CALS tables </desc></doc>
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc> Process CALS tables </desc>
+    </doc>
     <xsl:template match="cals:table">
       <xsl:choose>
 	<xsl:when test="@tei:corresp and $tableMethod='word'">
@@ -1010,4 +1020,9 @@
 
     <xsl:template match="tei:milestone[@unit='section']" mode="part2"/>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Deleted parts removed </desc></doc>
+
+    <xsl:template match="tei:del"/>
+    
 </xsl:stylesheet>

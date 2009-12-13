@@ -18,6 +18,7 @@
    <xsl:import href="../../../xhtml2/tagdocs.xsl"/>
    <xsl:import href="../../../odds2/teiodds.xsl"/>
    <xsl:import href="../isoutils.xsl"/>
+   <xsl:import href="isotei.xsl"/>
    <xsl:param name="numberFormat">uk</xsl:param>
    <xsl:output encoding="utf-8" omit-xml-declaration="yes" method="xhtml"
                doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -44,6 +45,23 @@
             <!-- was Annex -->
     </xsl:when>
       </xsl:choose>
+   </xsl:template>
+
+   <xsl:template match="/">
+<!--     <xsl:variable name="All">
+       <xsl:apply-templates mode="checkSchematron"/>
+     </xsl:variable>
+     <xsl:for-each select="$All">
+       <xsl:apply-templates/>
+     </xsl:for-each>
+-->
+       <xsl:apply-templates/>
+   </xsl:template>
+
+   <xsl:template match="processing-instruction()[name()='ISOerror']">
+     <span style="border: solid red 1pt; color:red">
+       <xsl:value-of select="."/>
+     </span>
    </xsl:template>
 
   <xsl:template name="divClassAttribute">

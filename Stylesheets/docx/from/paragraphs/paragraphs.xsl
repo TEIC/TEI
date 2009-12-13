@@ -71,12 +71,13 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        named Template for w:p
+        Named template for handling w:p; we 
+       use the Word style (if provided) to make a TEI rend attribute,
+       and check for change records.
     </desc>
    </doc>
    <xsl:template name="paragraph-wp">
      <p>
-       <!-- put style in rend, if there is a style -->
        <xsl:if test="w:pPr/w:pStyle/@w:val">
 	 <xsl:attribute name="rend">
 	   <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
@@ -99,6 +100,5 @@
        </xsl:choose>
      </p>
    </xsl:template>
-    
 
 </xsl:stylesheet>

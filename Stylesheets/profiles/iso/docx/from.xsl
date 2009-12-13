@@ -844,11 +844,11 @@ Construct the TEI Header either by copying the passed metadata or extracting
                           group-starting-with="w:p[w:pPr/w:pStyle/@w:val='TermNum'      or      w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]]">
 	        <xsl:choose>
 	           <xsl:when test="not(self::w:p[w:pPr/w:pStyle/@w:val='TermNum'      or      w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]])">
-	              <xsl:processing-instruction name="ISOerror">
+	              <iso:error>
 			<xsl:text>Terminology entry here does not have
 			a number style, but starts with with </xsl:text>
 			<xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
-		      </xsl:processing-instruction>
+		      </iso:error>
 	           </xsl:when>
 	           <xsl:otherwise>
 	              <xsl:variable name="Style">
@@ -1114,8 +1114,9 @@ Construct the TEI Header either by copying the passed metadata or extracting
     <!-- second stage processing -->
 
       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc> Analyze numbers, marking them up to allow for decimal
-      character changing </desc></doc>
+	<desc> Analyze numbers, marking them up to allow for decimal
+	character changing </desc>
+      </doc>
     <xsl:template match="text()" mode="part2">
         <xsl:choose>
             <xsl:when test="parent::tei:num">
@@ -1209,11 +1210,14 @@ Construct the TEI Header either by copying the passed metadata or extracting
         </item>
     </xsl:template>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc> Override handling of standard Word paragraphs </desc>
+    </doc>
 
     <xsl:template name="paragraph-wp">
         <p>
             <!-- put style in rend, if there is a style -->
-            <xsl:if test="w:pPr/w:pStyle/@w:val">
+            <xsl:if test="w:pPr/w:pStyle/@w:val and teidocx:is-supported-style(w:pPr/w:pStyle/@w:val)">
                 <xsl:attribute name="rend">
                     <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
                 </xsl:attribute>
@@ -1387,8 +1391,9 @@ Construct the TEI Header either by copying the passed metadata or extracting
       <xsl:apply-templates select="." mode="part2"/>
   </xsl:template>
 
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-    <desc>Merge adjacent &lt;hi&gt; </desc></doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Merge adjacent &lt;hi&gt; </desc>
+  </doc>
 
   <xsl:template match="tei:hi[@rend]" mode="part2">
     <xsl:variable name="r" select="@rend"/>
@@ -1513,19 +1518,11 @@ Construct the TEI Header either by copying the passed metadata or extracting
   <xsl:template match="tbx:descrip[@type='definition']/tei:source" mode="part2"/>
    -->
 
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Check whether paragraph styles and block styles are supported</desc>
     </doc>
 
-    <xsl:template match="processing-instruction()[name()='ISOerror']">
-      <xsl:copy-of select="."/>
-    </xsl:template>
-
-    <xsl:template match="processing-instruction()[name()='ISOerror']" mode="part2">
-      <xsl:copy-of select="."/>
-    </xsl:template>
-
-  <xsl:template match="w:p|w:r" mode="part0">
+    <xsl:template match="w:p|w:r" mode="part0">
     <xsl:if test="w:pPr/w:pStyle/@w:val or w:rPr/w:rStyle/@w:val">
       <xsl:variable name="old">
 	<xsl:value-of select="w:pPr/w:pStyle/@w:val|w:rPr/w:rStyle/@w:val"/>
@@ -1539,11 +1536,13 @@ Construct the TEI Header either by copying the passed metadata or extracting
 	  <xsl:when test="teidocx:is-supported-style($old)"/>
 	  <xsl:when test="teidocx:is-supported-style($new)"/>
 	  <xsl:otherwise>
-	    <xsl:processing-instruction name="ISOerror">
-	      <xsl:text>Word Style </xsl:text>
-	      <xsl:value-of select="$old"/>
-	      <xsl:text> not supported</xsl:text>
-	    </xsl:processing-instruction>
+	    <w:p>
+	      <iso:error>
+		<xsl:text>Word Style </xsl:text>
+		<xsl:value-of select="$old"/>
+		<xsl:text> not supported</xsl:text>
+	      </iso:error>
+	    </w:p>
 	  </xsl:otherwise>
 	</xsl:choose>
     </xsl:if>
@@ -1551,5 +1550,26 @@ Construct the TEI Header either by copying the passed metadata or extracting
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part0"/>
     </xsl:copy>
   </xsl:template>
+
+    <xsl:template match="iso:error">
+      <xsl:copy-of select="."/>
+    </xsl:template>
+
+    <xsl:template match="iso:error" mode="part2">
+      <xsl:processing-instruction name="ISOerror">
+	<xsl:value-of select="."/>
+      </xsl:processing-instruction>
+    </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>Handles a w:object by generating an error</p>
+      </desc>
+   </doc>
+    <xsl:template match="w:object">
+      <iso:error>
+	Invalid Word object found here
+      </iso:error>
+    </xsl:template>
 
 </xsl:stylesheet>

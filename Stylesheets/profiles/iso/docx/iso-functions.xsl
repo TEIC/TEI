@@ -215,12 +215,14 @@
 	  <xsl:when
 	      test="self::tei:formula[parent::tei:title]">true</xsl:when>
 	  <xsl:when test="self::tei:abbr">true</xsl:when>
+	  <xsl:when test="self::tei:add">true</xsl:when>
 	  <xsl:when test="self::tei:affiliation">true</xsl:when>
 	  <xsl:when test="self::tei:att">true</xsl:when>
 	  <xsl:when test="self::tei:author">true</xsl:when>
 	  <xsl:when test="self::tei:br">true</xsl:when>
 	  <xsl:when test="self::tei:c">true</xsl:when>
 	  <xsl:when test="self::tei:code">true</xsl:when>
+	  <xsl:when test="self::tei:del">true</xsl:when>
 	  <xsl:when test="self::tei:editionStmt">true</xsl:when>
 	  <xsl:when test="self::tei:date">true</xsl:when>
 	  <xsl:when test="self::tei:emph">true</xsl:when>

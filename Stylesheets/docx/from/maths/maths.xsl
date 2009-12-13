@@ -129,13 +129,11 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Handles a w:object by generating an error</p>
+         <p>Handles a w:object by copying it</p>
       </desc>
    </doc>
     <xsl:template match="w:object">
-      <xsl:processing-instruction name="ISOerror">
-	Invalid Word object found here
-      </xsl:processing-instruction>
+      <xsl:copy-of select="."/>
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
