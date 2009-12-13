@@ -80,10 +80,10 @@ p5: p4
 	 done)
 	perl -p -i -e 's/name="xhtml">false</name="xhtml">true</' release/p5/xml/tei/stylesheet/xhtml/tei-param.xsl
 
-common: doc
-	mkdir -p release/p4/xml/teip4/stylesheet
-	mkdir -p release/p5-2/xml/tei/stylesheet
+common: 
+	mkdir -p          release/p4/xml/teip4/stylesheet
 	cp *.css i18n.xml release/p4/xml/teip4/stylesheet
+	mkdir -p          release/p5-2/xml/tei/stylesheet
 	cp *.css i18n.xml release/p5-2/xml/tei/stylesheet
 
 doc:
@@ -100,14 +100,10 @@ doc:
 	for i in ${TARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 
 test: p4 p5 p5-2 common
-	(cd release/p4/xml/teip4/stylesheet; rm i18n.xml; ln -s ../common/i18n.xml .)
-	(cd release/p5/xml/tei/stylesheet; rm i18n.xml; ln -s ../common/i18n.xml .)
-	(cd release/p5-2/xml/tei/stylesheet; rm i18n.xml; ln -s ../common/i18n.xml .)
+	(cd release/p5/xml/tei/stylesheet; cp ../../../../../i18n.xml .)
 	(cd Test; make)
 	(cd Test2; make)
-	rm release/xml/teip4/stylesheet/p4/i18n.xml
-	rm release/xml/tei/stylesheet/p5/i18n.xml
-	rm release/xml/tei/stylesheet/p5-2/i18n.xml
+	rm release/p5/xml/tei/stylesheet/i18n.xml
 
 
 dist: clean release
@@ -117,7 +113,7 @@ dist: clean release
 	(cd release/p5; zip -r ../tei-xsl-`cat ../../VERSION`.zip .)
 	(cd release/p5-2; zip -r ../tei-xsl-`cat ../../VERSION`.zip .)
 
-release: common p4 p5 p5-2
+release: common doc p4 p5 p5-2
 
 installp5-2: p5-2
 	mkdir -p ${PREFIX}/share
@@ -132,7 +128,7 @@ installp4: p4
 	(cd release/p4; tar cf - .) |  (cd ${PREFIX}/share; tar xvf  -)
 
 
-installcommon: common 
+installcommon: common  doc
 	mkdir -p ${PREFIX}/lib/cgi-bin
 	cp stylebear ${PREFIX}/lib/cgi-bin/stylebear
 	chmod 755 ${PREFIX}/lib/cgi-bin/stylebear

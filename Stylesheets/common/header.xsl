@@ -291,7 +291,7 @@
       <xsl:when test="function-available('edate:date-time')">
         <xsl:value-of select="edate:date-time()"/>
       </xsl:when>
-      <xsl:when test="contains($processor,'SAXON')">
+      <xsl:when test="contains($processor,'SAXON 6')">
         <xsl:value-of select="Date:toString(Date:new())" xmlns:Date="/java.util.Date"/>
       </xsl:when>
       <xsl:otherwise> (unknown date) </xsl:otherwise>

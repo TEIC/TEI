@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet
   exclude-result-prefixes="exsl estr edate a fo local dbk xlink xhtml rng tei teix xd"
-  extension-element-prefixes="exsl estr edate saxon7 saxon6" version="1.0"
+  extension-element-prefixes="exsl estr edate saxon6" version="1.0"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:dbk="http://docbook.org/ns/docbook"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -14,7 +14,7 @@
   xmlns:fo="http://www.w3.org/1999/XSL/Format"
   xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:local="http://www.pantor.com/ns/local"
-  xmlns:saxon6="http://icl.com/saxon" xmlns:saxon7="http://saxon.sf.net/"
+  xmlns:saxon6="http://icl.com/saxon" 
   xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xd:doc type="stylesheet">
@@ -1844,24 +1844,6 @@ $requestedID: requests a particular page
             <xsl:copy-of select="$content"/>
           </exsl:document>
         </xsl:if>
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Closing file <xsl:value-of select="$outName"
-          /></xsl:message>
-        </xsl:if>
-      </xsl:when>
-      <xsl:when test="contains($processor,'SAXON 7')">
-        <xsl:if test="$verbose='true'">
-          <xsl:message>Opening <xsl:value-of select="$outName"/> with Saxon
-          8</xsl:message>
-        </xsl:if>
-        <saxon7:output doctype-public="{$doctypePublic}"
-          doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
-          href="{$outName}" method="{$outputMethod}">
-          <xsl:copy-of select="$content"/>
-          <xsl:fallback>
-            <xsl:copy-of select="$content"/>
-          </xsl:fallback>
-        </saxon7:output>
         <xsl:if test="$verbose='true'">
           <xsl:message>Closing file <xsl:value-of select="$outName"
           /></xsl:message>
