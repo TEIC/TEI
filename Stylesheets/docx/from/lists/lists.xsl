@@ -65,7 +65,9 @@
             
             <!-- Notes should be handled by a specific ISO handler -->
             <xsl:for-each-group select="current-group()"
-                             group-adjacent="if(w:pPr/w:pStyle/@w:val=$level) then 0 else                 if(w:pPr/w:pStyle/@w:val='Note') then 0                 else 1">
+                             group-adjacent="if(w:pPr/w:pStyle/@w:val=$level)    then 0 else
+                 if(w:pPr/w:pStyle/@w:val='Note') then 0                 
+		 else 1">
                 <xsl:choose>
                     <!-- we are still on the same level -->
                     <xsl:when test="current-grouping-key()=0">

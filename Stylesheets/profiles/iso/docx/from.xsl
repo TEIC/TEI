@@ -474,7 +474,29 @@ Construct the TEI Header either by copying the passed metadata or extracting
     </doc>
     <xsl:template match="w:p" mode="inSectionGroup" priority="-100">
         <xsl:for-each-group select="current-group()"
-                          group-adjacent="if (contains(w:pPr/w:pStyle/@w:val,'Figure')) then 0 else                           if (contains(w:pPr/w:pStyle/@w:val,'List')) then 1 else             if ((w:pPr/w:pStyle/@w:val='Note') and              (contains(preceding-sibling::w:p[1]/w:pPr/w:pStyle/@w:val,'List'))) then 1 else                          if (w:pPr/w:pStyle/@w:val='RefNorm') then 2 else                          if (w:pPr/w:pStyle/@w:val='Definition') then 3 else             if (w:pPr/w:pStyle/@w:val='Example') then 3 else             if (w:pPr/w:pStyle/@w:val='TermNum') then 3 else             if (w:pPr/w:pStyle/@w:val='nonVerbalRepresentation') then 3 else             if (w:pPr/w:pStyle/@w:val='noteDefinition') then 3 else             if (w:pPr/w:pStyle/@w:val='noteNonVerbalRepresentation') then 3 else             if (w:pPr/w:pStyle/@w:val='noteTerm') then 3 else             if (w:pPr/w:pStyle/@w:val='entrySource') then 3 else             if (w:pPr/w:pStyle/@w:val='noteTermEntry') then 3 else             if (w:pPr/w:pStyle/@w:val='symbol') then 3 else             if (w:pPr/w:pStyle/@w:val='termAdmitted') then 3 else             if (w:pPr/w:pStyle/@w:val='termDeprecated') then 3 else             if (w:pPr/w:pStyle/@w:val='termPreferred') then 3 else             if (w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]) then 3 else                          if (w:pPr/w:pStyle/@w:val=$BibliographyItem) then 4 else                          if (w:pPr/w:pStyle/@w:val=$DefinitionList) then 5 else                          if (starts-with(w:pPr/w:pStyle/@w:val,'toc')) then 6 else                          position() + 100">
+                          group-adjacent="if (contains(w:pPr/w:pStyle/@w:val,'Figure')) then 0 else
+                           if (contains(w:pPr/w:pStyle/@w:val,'List')) then 1 else
+             if ((w:pPr/w:pStyle/@w:val='Note') and
+	     (contains(preceding-sibling::w:p[1]/w:pPr/w:pStyle/@w:val,'List'))) then 1 else
+                          if (w:pPr/w:pStyle/@w:val='RefNorm') then 2 else
+                          if (w:pPr/w:pStyle/@w:val='Definition') then 3 else
+             if (w:pPr/w:pStyle/@w:val='Example') then 3 else
+             if (w:pPr/w:pStyle/@w:val='TermNum') then 3 else
+             if (w:pPr/w:pStyle/@w:val='nonVerbalRepresentation') then 3 else
+             if (w:pPr/w:pStyle/@w:val='noteDefinition') then 3 else
+             if (w:pPr/w:pStyle/@w:val='noteNonVerbalRepresentation') then 3 else
+             if (w:pPr/w:pStyle/@w:val='noteTerm') then 3 else
+             if (w:pPr/w:pStyle/@w:val='entrySource') then 3 else
+             if (w:pPr/w:pStyle/@w:val='noteTermEntry') then 3 else
+             if (w:pPr/w:pStyle/@w:val='symbol') then 3 else
+             if (w:pPr/w:pStyle/@w:val='termAdmitted') then 3 else
+             if (w:pPr/w:pStyle/@w:val='termDeprecated') then 3 else
+             if (w:pPr/w:pStyle/@w:val='termPreferred') then 3 else
+             if (w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]) then 3 else
+                          if (w:pPr/w:pStyle/@w:val=$BibliographyItem) then 4 else
+                          if (w:pPr/w:pStyle/@w:val=$DefinitionList) then 5 else
+                          if (starts-with(w:pPr/w:pStyle/@w:val,'toc')) then 6 else
+                          position() + 100">
 
             <!-- For each defined grouping call a specific
                  template. If there is no grouping defined, apply
@@ -1067,7 +1089,26 @@ Construct the TEI Header either by copying the passed metadata or extracting
       </desc>
     </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Note']" mode="paragraph">
-        <note>
+        <note >
+            <xsl:apply-templates/>
+        </note>
+    </xsl:template>
+
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Note paragraph']" mode="paragraph">
+        <note rend="Noteparagraph" >
+            <xsl:apply-templates/>
+        </note>
+    </xsl:template>
+
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Note numbered']"
+		  mode="paragraph">
+        <note rend="Notenumbered">
+            <xsl:apply-templates/>
+        </note>
+    </xsl:template>
+
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Note list']" mode="paragraph">
+        <note rend="Notelist" >
             <xsl:apply-templates/>
         </note>
     </xsl:template>
@@ -1282,7 +1323,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
     <xsl:template match="w:sdt" mode="paragraph">
       <q type="sdt" iso:meta="{w:sdtPr/w:tag/@w:val}">
 	        <xsl:for-each-group select="w:sdtContent/w:p"
-                             group-adjacent="if (contains(w:pPr/w:pStyle/@w:val,'List')) then 1 else        position() + 100">
+                             group-adjacent="if (contains(w:pPr/w:pStyle/@w:val,'List')) then 1 else   position() + 100">
 	           <xsl:choose>
 	              <xsl:when test="current-grouping-key()=1">
 	                 <xsl:call-template name="listSection"/>
@@ -1339,8 +1380,9 @@ Construct the TEI Header either by copying the passed metadata or extracting
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap empty &lt;note&gt; </desc></doc>
    
-    <xsl:template match="tei:note[not(*) or not(text())]"
-		  mode="part2"/>
+    <xsl:template match="tei:note[not(*) and string-length(.)=0]"
+		  mode="part2">
+    </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap spurious page break </desc></doc>

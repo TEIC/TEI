@@ -352,6 +352,8 @@
 	  <name>nonVerbalRepresentation</name>
 	  <name>Normal</name>
 	  <name>Note list</name>
+	  <name>Note numbered</name>
+	  <name>Note paragraph</name>
 	  <name>Note</name>
 	  <name>noteDefinition</name>
 	  <name>noteExample</name>

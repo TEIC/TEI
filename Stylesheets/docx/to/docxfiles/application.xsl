@@ -124,7 +124,7 @@
         <xsl:result-document href="{concat($word-directory,'/docProps/app.xml')}" standalone="yes">
             <Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"
                      xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
-                <Template>Iso_Template.dotx</Template>
+                <Template>STD_3_0_0.dotx</Template>
                 <Application>TEIISO tei-docx.xsl</Application>
                 <DocSecurity>0</DocSecurity>
                 <SharedDoc>true</SharedDoc>

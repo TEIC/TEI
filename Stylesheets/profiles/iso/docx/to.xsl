@@ -310,7 +310,9 @@
 	           <xsl:call-template name="block-element">
 	              <xsl:with-param name="pPr">
 	                 <w:pPr>
-		                   <w:pStyle w:val="Note"/>
+			   <w:pStyle>
+			     <xsl:attribute name="w:val">Note</xsl:attribute>
+			   </w:pStyle>
 	                 </w:pPr>
 	              </xsl:with-param>
 	              <xsl:with-param name="nop">false</xsl:with-param>
@@ -319,6 +321,28 @@
       </xsl:choose>
     </xsl:template>
     
+    <xsl:template match="tei:note[@rend]">
+	<xsl:call-template name="block-element">
+	  <xsl:with-param name="pPr">
+	    <w:pPr>
+	      <w:pStyle>
+		<xsl:attribute name="w:val">
+		  <xsl:choose>
+		    <xsl:when
+			test="@rend='Notenumbered'">Notenumbered</xsl:when>
+		    <xsl:when
+			test="@rend='Noteparagraph'">Noteparagraph</xsl:when>
+		    <xsl:when
+			test="@rend='Notelist'">Notelist</xsl:when>
+		    <xsl:otherwise>Note</xsl:otherwise>
+		  </xsl:choose>
+		</xsl:attribute>
+	      </w:pStyle>
+	    </w:pPr>
+	  </xsl:with-param>
+	  <xsl:with-param name="nop">false</xsl:with-param>
+	</xsl:call-template>
+    </xsl:template>
 
     <xsl:template name="create-footnote">           
       <xsl:variable name="pPr">
