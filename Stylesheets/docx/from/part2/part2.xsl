@@ -66,12 +66,21 @@
         <xsl:value-of select="."/>
     </xsl:template>
     
-    <!-- zap empty hi, p and item -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>     Zap empty hi, p and item </p>
+      </desc>
+    </doc>
     <xsl:template match="tei:hi[not(*) and string-length(.)=0]" mode="part2"/>
     <xsl:template match="tei:item[not(*) and string-length(.)=0]" mode="part2"/>
     <xsl:template match="tei:p[not(*) and string-length(.)=0]" mode="part2"/>
     
-    <!-- inner lists in lists must be moved to inside items -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>     Inner lists in lists must be moved to inside items
+	 </p>
+      </desc>
+    </doc>
     <xsl:template match="tei:list/tei:list" mode="part2"/>
     <xsl:template match="tei:item" mode="part2">
         <item>
@@ -87,10 +96,18 @@
         </item>
     </xsl:template>
     
-    <!-- bold emdash in title, forget it -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>     Bold emdash in title, forget it </p>
+      </desc>
+    </doc>
     <xsl:template match="tei:head/tei:hi[.=' ']" mode="part2"/>
     
-    <!-- zap emdashes at start of head -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>     Zap emdashes at start of head </p>
+      </desc>
+    </doc>
     <xsl:template match="tei:head/text()" mode="part2">
         <xsl:choose>
             <xsl:when test="starts-with(.,'— ')">
@@ -108,13 +125,11 @@
         </xsl:choose>
     </xsl:template>
     
-    <!-- forget boldness in figure drawing -->
-    <!--<xsl:template match="tei:p[@rend='FigureSpecial']/tei:hi" mode="part2">
-        <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="part2"/>
-        </xsl:template>-->
-    
-    
-    <!-- a <seg> which does nothing isnt worth having -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>     A &lt;seg&gt; which does nothing is not worth having </p>
+      </desc>
+    </doc>
     <xsl:template match="tei:seg[not(@*)]" mode="part2">
         <xsl:choose>
             <xsl:when test="parent::tei:formula and normalize-space(.)=''"/>
@@ -127,8 +142,13 @@
         </xsl:choose>
     </xsl:template>
     
-    <!-- look at the sections we have generated, and put
-        them in <front> or <body> as appropriate-->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>     Look at the sections we have generated, and put
+        them in &lt;front&gt; or &lt;body&gt; as appropriate</p>
+      </desc>
+    </doc>
+
     <xsl:template match="tei:text" mode="part2">
         <text>
             <xsl:for-each select="tei:fw">
@@ -142,7 +162,11 @@
         </text>
     </xsl:template>
     
-    <!-- a <p> inside a listBibl is moved out-->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>     A &lt;p&gt; inside a listBibl is moved out</p>
+      </desc>
+    </doc>
     <xsl:template match="tei:listBibl/tei:p" mode="part2"/>
     
     <xsl:template match="tei:listBibl" mode="part2">
@@ -156,36 +180,64 @@
         </listBibl>
     </xsl:template>
     
-    <!-- a <tab> (in a hi)? in a gloss list -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>     A tab (in a hi)? in a gloss list </p>
+      </desc>
+    </doc>
     <xsl:template match="tei:list[@type='gloss']/tei:item/tei:hi[tei:c[@rend='tab']]"
                  mode="part2"/>
     <xsl:template match="tei:list[@type='gloss']/tei:item/tei:c[@rend='tab']" mode="part2"/>
     
-    <!-- top of a weird gloss list -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>     Top of a weird gloss list </p>
+      </desc>
+    </doc>
     <xsl:template match="tei:list[@type='gloss']/tei:label[.='where']" mode="part2">
         <head>
             <xsl:apply-templates/>
         </head>
     </xsl:template>
     
-    <!-- a <tab> in a <bibl>? no. -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>     A tab in a &lt;bibl&gt;? no. </p>
+      </desc>
+    </doc>
     <xsl:template match="tei:bibl/tei:c[@rend='tab']" mode="part2"/>
     
-    <!-- a <tab> in a <gloss>? no. -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>     A tab in a &lt;gloss&gt;? no. </p>
+      </desc>
+    </doc>
     <xsl:template match="tei:gloss//tei:c[@rend='tab']" mode="part2"/>
     
     
-    <!-- a <tab> in a <formula>? no. -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>     A tab in a &lt;formula&gt;? no. </p>
+      </desc>
+    </doc>
     <xsl:template match="tei:formula//tei:c[@rend='tab']" mode="part2"/>
     
     
-    <!-- a bold line break??? -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>     A bold line break??? </p>
+      </desc>
+    </doc>
     <xsl:template match="tei:hi[count(*)=1 and not(text()) and tei:lb]" mode="part2">
         <tei:lb/>
     </xsl:template>
     
     
-    <!-- a <tab> in a <head>? no. -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>     A tab in a &lt;head&gt;? no. </p>
+      </desc>
+    </doc>
     <xsl:template match="tei:head/tei:c[@rend='tab']" mode="part2"/>
     
 
