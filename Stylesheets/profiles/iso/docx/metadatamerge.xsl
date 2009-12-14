@@ -112,6 +112,7 @@
 		    <xsl:variable name="currFront" select="."/>
 		    <xsl:choose>
 			      <xsl:when test="$header-doc//tei:front">
+			         <tei:div type="foreword">
 			         <xsl:for-each select="$header-doc//tei:front/tei:div[@type='foreword']/*">
 			            <xsl:choose>
 			               <xsl:when test="name()='q'">
@@ -130,6 +131,7 @@
 			               </xsl:otherwise>
 			            </xsl:choose>
 			         </xsl:for-each>
+			         </tei:div>
 			      </xsl:when>
 			      <xsl:otherwise>
 				        <xsl:copy-of select="."/>
