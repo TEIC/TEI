@@ -189,18 +189,18 @@
     <xsl:template match="tei:head/tei:c[@rend='tab']" mode="part2"/>
     
 
-    <!-- the word "Table" starting a table title-->
-    <xsl:template match="cals:table/cals:title[starts-with(.,'Table  — ')]" mode="part2">
-      <title xmlns="http://www.oasis-open.org/specs/tm9901">
-	        <xsl:value-of select="substring-after(.,'Table  — ')"/>
-      </title>
-    </xsl:template>
-
-    <!-- same for figure -->
-    <xsl:template match="tei:figure/tei:head[starts-with(.,'Figure  — ')]" mode="part2">
-      <head>
-	        <xsl:value-of select="substring-after(.,'Figure  — ')"/>
-      </head>
-    </xsl:template>
-
+    <!-- 
+     remove Table and Figure from start 
+     <xsl:template match="cals:table/cals:title[starts-with(.,'Table  — ')]" mode="part2">
+     <title xmlns="http://www.oasis-open.org/specs/tm9901">
+     <xsl:value-of select="substring-after(.,'Table  — ')"/>
+     </title>
+     </xsl:template>
+     
+     <xsl:template match="tei:figure/tei:head[starts-with(.,'Figure  — ')]" mode="part2">
+     <head>
+     <xsl:value-of select="substring-after(.,'Figure  — ')"/>
+     </head>
+     </xsl:template>
+    -->
 </xsl:stylesheet>

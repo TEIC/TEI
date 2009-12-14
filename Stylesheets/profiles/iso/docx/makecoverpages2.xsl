@@ -80,23 +80,19 @@
 			      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
 		    </xsl:copy>
 	  </xsl:template>
-
-  <xsl:template match="w:placeholder|w:showingPlcHdr">
-    <!-- remove placeholder references -->
-  </xsl:template>
   
-	  <xsl:template match="w:sdtContent//w:t">
+	  <xsl:template match="w:sdtContent">
 		    <xsl:variable name="alias" select="ancestor::w:sdt/w:sdtPr/w:tag/@w:val"/>
 	     <xsl:copy>
 	        <xsl:apply-templates select="@*"/>
-	        <xsl:variable name="content">
-	           <xsl:for-each select="$header-doc/*">
-	              <xsl:value-of select="key('ISOMETA',$alias)"/>
-	           </xsl:for-each>
-	        </xsl:variable>
+	        <xsl:variable name="content" select="$header-doc//*[@iso:meta=$alias]/text()"/>
 	        <xsl:if test="$debug='true'">
-	           <xsl:message select="concat('set sdtContent ',$alias,'=', $content)"/>
-	        </xsl:if> 
+	           <xsl:message select="concat('set sdtContent ',$alias,'=',$content)"/>
+	        </xsl:if>
+	        <w:r>
+	        <!-- copy any existing rPr, it may contain character formatting  -->
+	        <xsl:copy-of select="w:r/w:rPr"/>
+	        <w:t>
 	        <xsl:choose>
 	           <xsl:when test="ancestor::w:sdt/w:sdtPr/w:dropDownList">
 	              <xsl:value-of select="ancestor::w:sdt/w:sdtPr/w:dropDownList//w:listItem[@w:value=$content]/@w:displayText"/>
@@ -104,7 +100,9 @@
 	           <xsl:otherwise>
 	              <xsl:value-of select="$content"/>
 	           </xsl:otherwise>
-			      </xsl:choose>
+			    </xsl:choose>
+			    </w:t>
+			    </w:r>
 		    </xsl:copy>
 	  </xsl:template>
 
@@ -124,7 +122,6 @@
 		                    <xsl:copy-of select="."/>
 		                  </xsl:if>
 		                </xsl:for-each>
-<!--                    <xsl:copy-of select="$document-doc/w:document/w:body/front/*"/>-->
 		             </xsl:when>
 		             <xsl:when test="name(.) = 'w:p' and . = '#main'">
 		                <xsl:if test="$debug = 'true'">
