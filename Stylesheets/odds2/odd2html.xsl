@@ -101,16 +101,6 @@
   <xsl:template name="processSchemaFragment">
       <xsl:param name="filename"/>
       <div class="schemaFragment">
-         <xsl:if test="tei:classSpec">
-            <h2>
-               <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Classes defined</xsl:with-param>
-               </xsl:call-template>
-            </h2>
-            <xsl:apply-templates mode="weave" select="tei:classSpec">
-               <xsl:sort select="tei:altIdent|@ident"/>
-            </xsl:apply-templates>
-         </xsl:if>
          <xsl:if test="tei:elementSpec">
             <h2>
                <xsl:call-template name="i18n">
@@ -118,6 +108,16 @@
                </xsl:call-template>
             </h2>
             <xsl:apply-templates mode="weave" select="tei:elementSpec">
+               <xsl:sort select="tei:altIdent|@ident"/>
+            </xsl:apply-templates>
+         </xsl:if>
+         <xsl:if test="tei:classSpec">
+            <h2>
+               <xsl:call-template name="i18n">
+                  <xsl:with-param name="word">Classes defined</xsl:with-param>
+               </xsl:call-template>
+            </h2>
+            <xsl:apply-templates mode="weave" select="tei:classSpec">
                <xsl:sort select="tei:altIdent|@ident"/>
             </xsl:apply-templates>
          </xsl:if>
