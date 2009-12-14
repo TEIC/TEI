@@ -299,7 +299,22 @@
       <xsl:param name="style"/>
       <xsl:param name="contents"/>
       <span class="{$style}">
-         <xsl:value-of select="$contents"/>
+	<xsl:choose>
+	  <xsl:when test="string-length($contents)&lt;50">
+	    <xsl:value-of select="$contents"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:call-template name="verbatim-reformatText">
+	      <xsl:with-param name="sofar">0</xsl:with-param>
+	      <xsl:with-param name="indent">
+		<xsl:text> </xsl:text>
+	      </xsl:with-param>
+	      <xsl:with-param name="text">
+		<xsl:value-of select="$contents"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:otherwise>
+	</xsl:choose>
       </span>
   </xsl:template>
 
@@ -451,27 +466,30 @@
 
       <xsl:choose>
          <xsl:when test="$summaryDoc='true'">
-	           <h2>Schema <xsl:value-of select="@ident"/>: changed components</h2>
-	           <xsl:for-each select="tei:classSpec[@type='model' and @mode]  | tei:classSpec[@type='atts' and @mode]  | tei:macroSpec[@mode]  | tei:elementSpec[@mode]">
-	              <xsl:sort select="@ident"/>
-	              <xsl:apply-templates mode="weave" select="."/>
-	           </xsl:for-each>
-	           <h2>Schema <xsl:value-of select="@ident"/>: unchanged
-	  components</h2>
-	           <table>
-	              <xsl:for-each select="tei:classSpec[@type='model' and not(@mode)]  | tei:classSpec[@type='atts' and not(@mode)]  | tei:macroSpec[not(@mode)]  | tei:elementSpec[not(@mode)]">
-	                 <xsl:sort select="@ident"/>
-	                 <tr>
-	                    <td id="{@ident}">
-	                       <a href="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html">
-		                         <xsl:value-of select="@ident"/>
-                        </a>:
-		<xsl:call-template name="makeDescription"/>
-	                    </td>
-	                 </tr>
-	              </xsl:for-each>
-	           </table>
-         </xsl:when>
+	   <h2>Schema <xsl:value-of select="@ident"/>: changed components</h2>
+	   <xsl:for-each select="tei:classSpec[@mode or @rend='change']  
+				 | tei:macroSpec[(@mode or @rend='change')]  
+				 | tei:elementSpec[(@mode or @rend='change')]">
+	     <xsl:sort select="@ident"/>
+	     <xsl:apply-templates mode="weave" select="."/>
+	   </xsl:for-each>
+	   <h2>Schema <xsl:value-of select="@ident"/>:  unchanged  components</h2>
+	   <table>
+	     <xsl:for-each select="tei:classSpec[not(@mode or @rend)]  
+				   | tei:macroSpec[not(@mode or  @rend)]  
+				   | tei:elementSpec[not(@mode or @rend)]">
+	       <xsl:sort select="@ident"/>
+	       <tr>
+		 <td id="{@ident}">
+		   <a href="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html">
+		     <xsl:value-of select="@ident"/>
+		     </a>:
+		     <xsl:call-template name="makeDescription"/>
+		 </td>
+	       </tr>
+	     </xsl:for-each>
+	   </table>
+	 </xsl:when>
          <xsl:otherwise>
 	           <xsl:if test="tei:classSpec[@type='model']">
 	              <h2>Schema <xsl:value-of select="@ident"/>: Model classes</h2>

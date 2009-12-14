@@ -144,8 +144,7 @@
                </xsl:for-each>
             </xsl:variable>
             <xsl:if test="string-length(.)&gt;$wrapLength or parent::sch:assert">
-               <xsl:text>
-</xsl:text>
+               <xsl:text>&#10;</xsl:text>
                <xsl:value-of select="$indent"/>
             </xsl:if>
             <xsl:call-template name="verbatim-reformatText">
@@ -158,8 +157,7 @@
                </xsl:with-param>
             </xsl:call-template>
             <xsl:if test="string-length(.)&gt;$wrapLength or parent::sch:assert">
-               <xsl:text>
-</xsl:text>
+               <xsl:text>&#10;</xsl:text>
                <xsl:value-of select="$indent"/>
             </xsl:if>
          </xsl:when>
@@ -217,9 +215,8 @@
       <xsl:param name="text"/>
       <xsl:param name="sofar"/>
       <xsl:choose>
-         <xsl:when test="$sofar&gt;$wrapLength">
-            <xsl:text>
-</xsl:text>
+         <xsl:when test="number($sofar) &gt; $wrapLength">
+            <xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$indent"/>
             <xsl:call-template name="verbatim-reformatText">
                <xsl:with-param name="text">

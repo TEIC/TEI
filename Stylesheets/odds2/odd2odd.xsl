@@ -98,7 +98,50 @@
          </xsl:copy>
       </xsl:for-each>
   </xsl:variable>
-  <xsl:template match="tei:specGrp" mode="flattenSchemaSpec"/>
+
+  <xsl:template match="tei:specGrp" mode="flattenSchemaSpec">
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Phase 1: process specGrp <xsl:value-of select="@xml:id"/>
+      </xsl:message>
+    </xsl:if>
+    <table xmlns="http://www.tei-c.org/ns/1.0">
+      <xsl:for-each select="*">
+	<row>
+	  <xsl:choose>
+	    <xsl:when test="self::tei:specGrpRef">
+	      <cell>
+		<ref target="#{@target}">reference <xsl:value-of
+		select="@target"/></ref>
+	      </cell>
+	      <cell></cell>
+	    </xsl:when>
+	    <xsl:when test="self::tei:elementSpec">
+	      <cell>
+		Element <gi><xsl:value-of select="@ident"/></gi>
+	      </cell>
+	      <cell>
+	      <xsl:value-of select="@mode"/></cell>
+	    </xsl:when>
+	    <xsl:when test="self::tei:classSpec">
+	      <cell>
+		Class <ident type="class"><xsl:value-of select="@ident"/></ident>
+	      </cell>
+	      <cell><xsl:value-of select="@mode"/></cell>
+	    </xsl:when>
+	    <xsl:when test="self::tei:macroSpec">
+	      <cell>
+		Macro <ident type="macro"><xsl:value-of
+		select="@ident"/></ident>
+	      </cell>
+	      <cell><xsl:value-of select="@mode"/></cell>
+	    </xsl:when>
+	  </xsl:choose>
+	</row>
+      </xsl:for-each>
+    </table>
+
+  </xsl:template>
+
   <xsl:template match="tei:schemaSpec" mode="flattenSchemaSpec">
       <xsl:choose>
          <xsl:when test="@ident=$selectedSchema">
@@ -547,6 +590,7 @@ How can a class be ok?
       </xsl:variable>
       <xsl:variable name="ORIGINAL" select="."/>
       <xsl:copy>
+	<xsl:attribute name="rend">change</xsl:attribute>
          <xsl:apply-templates mode="change" select="@*"/>
          <!-- 
 For each element, go through most of the sections one by one
@@ -733,6 +777,7 @@ for change individually.
       </xsl:variable>
       <xsl:variable name="ORIGINAL" select="."/>
       <xsl:copy>
+	<xsl:attribute name="rend">change</xsl:attribute>
          <xsl:apply-templates mode="change" select="@*"/>
          <!-- 
 	   For each macro, go through most of the sections one by one
@@ -840,6 +885,7 @@ for change individually.
       </xsl:variable>
       <xsl:variable name="ORIGINAL" select="."/>
       <xsl:copy>
+	<xsl:attribute name="rend">change</xsl:attribute>
          <xsl:apply-templates mode="change" select="@*"/>
          <!-- for each section of the class spec, 
      go through the sections one by one
