@@ -56,33 +56,49 @@
 
     <xsl:output indent="no"/>
 
-    <!-- param defining whether to use a custom metadata file or to extract
-    the metadata from the document -->
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+	<p> Param defining whether to use a custom metadata file or to extract
+	the metadata from the document </p>
+      </desc>
+    </doc>
     <xsl:param name="metadata-file"/>
+
     <xsl:param name="tableMethod">cals</xsl:param>
-    <!-- ignore existing title pages -->
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+	<p>  Ignore existing title pages </p>
+      </desc>
+    </doc>
     <xsl:template match="w:p[.//w:sdt and not (w:pPr/w:pStyle/@w:val='zzSTDTitle')]"
                  priority="1001">
+
         <!--<xsl:message>fail 1: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
     </xsl:template>
+
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='cover_warning']" priority="1002">
         <!--<xsl:message>fail 3: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
     </xsl:template>
+
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='zzCopyright']" priority="1002">
         <!--<xsl:message>fail 4: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
     </xsl:template>
+
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='idno']" priority="1002">
         <!--<xsl:message>fail 5: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
     </xsl:template>
+
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='copyrightdetails']" priority="1002">
         <!--<xsl:message>fail 6: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
     </xsl:template>
 
          <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
- Overwriting the creation of the teiHeader.
-Construct the TEI Header either by copying the passed metadata or extracting
-            the metadata from the document </desc></doc>
+	Overwriting the creation of the teiHeader.
+	Construct the TEI Header either by copying the passed metadata or extracting
+      the metadata from the document </desc>
+	 </doc>
 
     <xsl:template name="create-tei-header">
         <xsl:attribute name="xml:lang">
@@ -465,11 +481,15 @@ Construct the TEI Header either by copying the passed metadata or extracting
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
- 
+	<p>
         We are now working on a group of all elements inside some group bounded by
         headings. These need to be further split up into smaller groups for figures,
         list etc. and into individual groups for simple paragraphs.
-        Be careful about the position(), since it might be 1,2,3
+        Be careful about the position(), since it might be 1,2,3.           
+	For each defined grouping call a specific
+	template. If there is no grouping defined, apply
+	templates with mode paragraph.
+	</p>
       </desc>
     </doc>
     <xsl:template match="w:p" mode="inSectionGroup" priority="-100">
@@ -480,8 +500,8 @@ Construct the TEI Header either by copying the passed metadata or extracting
                            if (contains(w:pPr/w:pStyle/@w:val,'List')) then 1 else
              if ((w:pPr/w:pStyle/@w:val='Note') and
 	     (contains(preceding-sibling::w:p[1]/w:pPr/w:pStyle/@w:val,'List'))) then 1 else
-                          if (w:pPr/w:pStyle/@w:val='RefNorm') then 2 else
-                          if (w:pPr/w:pStyle/@w:val='Definition') then 3 else
+	     if (w:pPr/w:pStyle/@w:val='RefNorm') then 2 else
+	     if (w:pPr/w:pStyle/@w:val='Definition') then 3 else
              if (w:pPr/w:pStyle/@w:val='Example') then 3 else
              if (w:pPr/w:pStyle/@w:val='TermNum') then 3 else
              if (w:pPr/w:pStyle/@w:val='nonVerbalRepresentation') then 3 else
@@ -495,14 +515,11 @@ Construct the TEI Header either by copying the passed metadata or extracting
              if (w:pPr/w:pStyle/@w:val='termDeprecated') then 3 else
              if (w:pPr/w:pStyle/@w:val='termPreferred') then 3 else
              if (w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]) then 3 else
-                          if (w:pPr/w:pStyle/@w:val=$BibliographyItem) then 4 else
-                          if (w:pPr/w:pStyle/@w:val=$DefinitionList) then 5 else
-                          if (starts-with(w:pPr/w:pStyle/@w:val,'toc')) then 6 else
-                          position() + 100">
+	     if (w:pPr/w:pStyle/@w:val=$BibliographyItem) then 4 else
+	     if (w:pPr/w:pStyle/@w:val=$DefinitionList) then 5 else
+	     if (starts-with(w:pPr/w:pStyle/@w:val,'toc')) then 6 else
+	     position() + 100">
 
-            <!-- For each defined grouping call a specific
-                 template. If there is no grouping defined, apply
-                 templates with mode paragraph -->
             <xsl:choose>
                 <xsl:when test="current-grouping-key()=0">
                     <xsl:call-template name="figureSection"/>
