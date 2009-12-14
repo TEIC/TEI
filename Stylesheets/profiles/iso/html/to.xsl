@@ -48,14 +48,12 @@
    </xsl:template>
 
    <xsl:template match="/">
-<!--     <xsl:variable name="All">
+     <xsl:variable name="All">
        <xsl:apply-templates mode="checkSchematron"/>
      </xsl:variable>
      <xsl:for-each select="$All">
        <xsl:apply-templates/>
      </xsl:for-each>
--->
-       <xsl:apply-templates/>
    </xsl:template>
 
    <xsl:template match="processing-instruction()[name()='ISOerror']">

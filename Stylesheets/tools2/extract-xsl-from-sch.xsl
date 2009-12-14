@@ -12,6 +12,9 @@
 
 <xsl:namespace-alias stylesheet-prefix="XSL" result-prefix="xsl"/>
 
+<xsl:key name="CONTEXTS" use="." match="@context"/>
+<xsl:key name="ALLCONTEXTS" use="1" match="@context"/>
+
 <xsl:template match="/">
 <XSL:stylesheet
     xmlns:i="http://www.iso.org/ns/1.0"
@@ -22,7 +25,7 @@
 
    <XSL:template match="processing-instruction()"
 		 mode="checkSchematron">
-     <XSL:message>!<XSL:value-of select="."/></XSL:message>
+      <XSL:copy-of select="."/>
    </XSL:template>
 
    <XSL:template match="@*|text()|comment()"  mode="checkSchematron">
@@ -36,31 +39,37 @@
       </XSL:copy>
    </XSL:template>
 
-  <xsl:for-each select="s:schema/s:pattern/s:rule">
-    <XSL:template match="{@context}" mode="checkSchematron">
+   <xsl:for-each select="key('ALLCONTEXTS',1)">
+     <xsl:if test="generate-id(.)=generate-id(key('CONTEXTS',.)[1])">
+    <XSL:template match="{.}" mode="checkSchematron">
       <XSL:copy>
 	<XSL:apply-templates select="@*" mode="checkSchematron"/>
 	<XSL:apply-templates select="*|processing-instruction()|comment()|text()" mode="checkSchematron"/>
       </XSL:copy>
-      <xsl:for-each select="s:assert|s:report">
-      <xsl:choose>
-	<xsl:when test="self::s:assert">
-	  <XSL:if test="not({@test})">
-	    <XSL:processing-instruction name="ISOerror">
-	      <xsl:value-of select="text()"/>
-	    </XSL:processing-instruction>
-	  </XSL:if>
-	</xsl:when>
-	<xsl:when test="self::s:report">
-	  <XSL:if test="{@test}">
-	    <XSL:processing-instruction name="ISOerror">
-	      <xsl:value-of select="text()"/>
-	    </XSL:processing-instruction>
-	  </XSL:if>
-	</xsl:when>
-      </xsl:choose>
+      <xsl:for-each select="key('CONTEXTS',.)">
+      <xsl:for-each select="parent::s:rule">
+	<xsl:for-each select="s:assert|s:report">
+	  <xsl:choose>
+	    <xsl:when test="self::s:assert">
+	      <XSL:if test="not({@test})">
+		<XSL:processing-instruction name="ISOerror">
+		  <xsl:value-of select="text()"/>
+		</XSL:processing-instruction>
+	      </XSL:if>
+	    </xsl:when>
+	    <xsl:when test="self::s:report">
+	      <XSL:if test="{@test}">
+		<XSL:processing-instruction name="ISOerror">
+		  <xsl:value-of select="text()"/>
+		</XSL:processing-instruction>
+	      </XSL:if>
+	    </xsl:when>
+	  </xsl:choose>
+	</xsl:for-each>
+      </xsl:for-each>
       </xsl:for-each>
     </XSL:template>
+     </xsl:if>
   </xsl:for-each>
 </XSL:stylesheet>
 </xsl:template>

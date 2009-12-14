@@ -4,8 +4,7 @@
                 xmlns:i="http://www.iso.org/ns/1.0"
                 version="2.0">
    <xsl:template match="processing-instruction()" mode="checkSchematron">
-      <xsl:message>!<xsl:value-of select="."/>
-      </xsl:message>
+      <xsl:copy-of select="."/>
    </xsl:template>
    <xsl:template match="@*|text()|comment()" mode="checkSchematron">
       <xsl:copy-of select="."/>
@@ -83,12 +82,6 @@
          <xsl:processing-instruction name="ISOerror">
 		A Foreword clause in the front matter is mandatory</xsl:processing-instruction>
       </xsl:if>
-   </xsl:template>
-   <xsl:template match="tei:TEI" mode="checkSchematron">
-      <xsl:copy>
-         <xsl:apply-templates select="@*" mode="checkSchematron"/>
-         <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="checkSchematron"/>
-      </xsl:copy>
       <xsl:if test="not(tei:text)">
          <xsl:processing-instruction name="ISOerror">A text element is essential</xsl:processing-instruction>
       </xsl:if>
