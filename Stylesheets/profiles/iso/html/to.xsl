@@ -42,7 +42,6 @@
       <xsl:choose>
          <xsl:when test="$word='appendixWords'">
             <xsl:text>Annex</xsl:text>
-            <!-- was Annex -->
     </xsl:when>
       </xsl:choose>
    </xsl:template>

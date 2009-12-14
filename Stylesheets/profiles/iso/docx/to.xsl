@@ -334,6 +334,14 @@
 			test="@rend='Noteparagraph'">Noteparagraph</xsl:when>
 		    <xsl:when
 			test="@rend='Notelist'">Notelist</xsl:when>
+		    <xsl:when
+			test="@rend='Tablenote'">Tablenote</xsl:when>
+		    <xsl:when
+			test="@rend='Figurenote'">Figurenote</xsl:when>
+		    <xsl:when
+			test="@rend='Exampleparagraph'">Exampleparagraph</xsl:when>
+		    <xsl:when
+			test="@rend='Examplenumbered'">Examplenumbered</xsl:when>
 		    <xsl:otherwise>Note</xsl:otherwise>
 		  </xsl:choose>
 		</xsl:attribute>

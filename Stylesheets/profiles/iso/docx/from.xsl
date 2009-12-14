@@ -474,7 +474,9 @@ Construct the TEI Header either by copying the passed metadata or extracting
     </doc>
     <xsl:template match="w:p" mode="inSectionGroup" priority="-100">
         <xsl:for-each-group select="current-group()"
-                          group-adjacent="if (contains(w:pPr/w:pStyle/@w:val,'Figure')) then 0 else
+                          group-adjacent="if
+					  (contains(w:pPr/w:pStyle/@w:val,'Figure'))
+					  then 0 else
                            if (contains(w:pPr/w:pStyle/@w:val,'List')) then 1 else
              if ((w:pPr/w:pStyle/@w:val='Note') and
 	     (contains(preceding-sibling::w:p[1]/w:pPr/w:pStyle/@w:val,'List'))) then 1 else
@@ -1078,7 +1080,17 @@ Construct the TEI Header either by copying the passed metadata or extracting
       </desc>
     </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Example']" mode="paragraph">
-        <note type="Example">
+        <note rend="Example">
+            <xsl:apply-templates/>
+        </note>
+    </xsl:template>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Exampleparagraph']" mode="paragraph">
+        <note rend="Exampleparagraph">
+            <xsl:apply-templates/>
+        </note>
+    </xsl:template>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Examplenumbered']" mode="paragraph">
+        <note rend="Examplenumbered">
             <xsl:apply-templates/>
         </note>
     </xsl:template>
@@ -1089,7 +1101,7 @@ Construct the TEI Header either by copying the passed metadata or extracting
       </desc>
     </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Note']" mode="paragraph">
-        <note >
+        <note rend="Note">
             <xsl:apply-templates/>
         </note>
     </xsl:template>
@@ -1103,6 +1115,20 @@ Construct the TEI Header either by copying the passed metadata or extracting
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Note numbered']"
 		  mode="paragraph">
         <note rend="Notenumbered">
+            <xsl:apply-templates/>
+        </note>
+    </xsl:template>
+
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Table note']"
+		  mode="paragraph">
+        <note rend="Tablenote">
+            <xsl:apply-templates/>
+        </note>
+    </xsl:template>
+
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Figure note']"
+		  mode="paragraph">
+        <note rend="Figurenote">
             <xsl:apply-templates/>
         </note>
     </xsl:template>

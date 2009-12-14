@@ -274,13 +274,81 @@
       <xsl:param name="style"/>
       <xsl:variable name="styles">
 	<names>
+	  <name>ANNEX</name>
+	  <name>Bibliography Heading</name>
+	  <name>Bibliography</name>
+	  <name>Definition</name>
+	  <name>Example list</name>
+	  <name>Example</name>
+	  <name>Example numbered</name>
+	  <name>Example paragraph</name>
+	  <name>ExtXref</name>
+	  <name>Figure footnote</name>
+	  <name>Figure key</name>
+	  <name>Figure note</name>
+	  <name>Figure subtitle</name>
+	  <name>Figure text</name>
+	  <name>Figure title</name>
+	  <name>Figure units</name>
+	  <name>FigureFootnoteXref</name>
+	  <name>Figurenote</name>
+	  <name>Figuretitle</name>
+	  <name>Footer</name>
+	  <name>Footnote Reference</name>
+	  <name>Footnote Text</name>
+	  <name>Foreword</name>
+	  <name>Formula</name>
+	  <name>Header</name>
+	  <name>Heading1</name>
+	  <name>Heading2</name>
+	  <name>Heading3</name>
+	  <name>Heading4</name>
+	  <name>Heading5</name>
+	  <name>Heading6</name>
+	  <name>Hyperlink</name>
+	  <name>Index 1</name>
+	  <name>Index Heading</name>
+	  <name>Introduction</name>
+	  <name>List Continue 2</name>
+	  <name>List Continue 3</name>
+	  <name>List Continue 4</name>
+	  <name>List Continue</name>
+	  <name>List Number 2</name>
+	  <name>List Number 3</name>
+	  <name>List Number 4</name>
+	  <name>List Number</name>
+	  <name>Normal</name>
+	  <name>Note list</name>
+	  <name>Note numbered</name>
+	  <name>Note paragraph</name>
+	  <name>Note</name>
+	  <name>RefNorm</name>
+	  <name>Special</name>
+	  <name>TOC1</name>
+	  <name>TOC2</name>
+	  <name>TOC3</name>
+	  <name>TOC4</name>
+	  <name>TOC5</name>
+	  <name>TOC6</name>
+	  <name>TOC9</name>
+	  <name>Table footnote</name>
+	  <name>Table note</name>
+	  <name>Table text (10)</name>
+	  <name>Table text (7)</name>
+	  <name>Table text (8)</name>
+	  <name>Table text (9)</name>
+	  <name>Table title</name>
+	  <name>Table units</name>
+	  <name>TableFootnoteXref</name>
+	  <name>Tablenote</name>
+	  <name>Tabletitle</name>
+	  <name>TermNum</name>
 	  <name>a2</name>
 	  <name>a3</name>
 	  <name>a4</name>
 	  <name>a5</name>
 	  <name>a6</name>
 	  <name>abbreviatedForm</name>
-	  <name>ANNEX</name>
 	  <name>autoTermNum1</name>
 	  <name>autoTermNum2</name>
 	  <name>autoTermNum3</name>
@@ -292,13 +360,11 @@
 	  <name>autoTermNumA4</name>
 	  <name>autoTermNumA5</name>
 	  <name>autoTermNumA6</name>
-	  <name>Bibliography Heading</name>
-	  <name>Bibliography</name>
 	  <name>committee_id</name>
 	  <name>copyright_details</name>
 	  <name>cover_warning</name>
+	  <name>coverwarning</name>
 	  <name>date</name>
-	  <name>Definition</name>
 	  <name>dl</name>
 	  <name>document_details</name>
 	  <name>document_edition</name>
@@ -310,51 +376,12 @@
 	  <name>domain</name>
 	  <name>draft_number</name>
 	  <name>entrySource</name>
-	  <name>Example list</name>
-	  <name>Example</name>
-	  <name>ExtXref</name>
-	  <name>Figure footnote</name>
-	  <name>Figure key</name>
-	  <name>Figure note</name>
-	  <name>Figure subtitle</name>
-	  <name>Figure text</name>
-	  <name>Figure title</name>
-	  <name>Figure units</name>
-	  <name>FigureFootnoteXref</name>
-	  <name>Footer</name>
-	  <name>Footnote Reference</name>
-	  <name>Footnote Text</name>
-	  <name>Foreword</name>
-	  <name>Formula</name>
 	  <name>gender</name>
 	  <name>geographicalUse</name>
-	  <name>Header</name>
-	  <name>Heading1</name>
-	  <name>Heading2</name>
-	  <name>Heading3</name>
-	  <name>Heading4</name>
-	  <name>Heading5</name>
-	  <name>Heading6</name>
-	  <name>Hyperlink</name>
 	  <name>id_no</name>
-	  <name>Index 1</name>
-	  <name>Index Heading</name>
-	  <name>Introduction</name>
+	  <name>idno</name>
 	  <name>language</name>
-	  <name>List Continue 2</name>
-	  <name>List Continue 3</name>
-	  <name>List Continue 4</name>
-	  <name>List Continue</name>
-	  <name>List Number 2</name>
-	  <name>List Number 3</name>
-	  <name>List Number 4</name>
-	  <name>List Number</name>
 	  <name>nonVerbalRepresentation</name>
-	  <name>Normal</name>
-	  <name>Note list</name>
-	  <name>Note numbered</name>
-	  <name>Note paragraph</name>
-	  <name>Note</name>
 	  <name>noteDefinition</name>
 	  <name>noteExample</name>
 	  <name>noteNonVerbalRepresentation</name>
@@ -369,20 +396,9 @@
 	  <name>p6</name>
 	  <name>partOfSpeech</name>
 	  <name>pronunciation</name>
-	  <name>RefNorm</name>
 	  <name>script</name>
 	  <name>source</name>
-	  <name>Special</name>
 	  <name>symbol</name>
-	  <name>Table footnote</name>
-	  <name>Table note</name>
-	  <name>Table text (10)</name>
-	  <name>Table text (7)</name>
-	  <name>Table text (8)</name>
-	  <name>Table text (9)</name>
-	  <name>Table title</name>
-	  <name>Table units</name>
-	  <name>TableFootnoteXref</name>
 	  <name>termAdmitted</name>
 	  <name>termDeprecated</name>
 	  <name>termHeading2</name>
@@ -390,16 +406,8 @@
 	  <name>termHeading4</name>
 	  <name>termHeading5</name>
 	  <name>termHeading6</name>
-	  <name>TermNum</name>
 	  <name>termPreferred</name>
 	  <name>termRef</name>
-	  <name>TOC1</name>
-	  <name>TOC2</name>
-	  <name>TOC3</name>
-	  <name>TOC4</name>
-	  <name>TOC5</name>
-	  <name>TOC6</name>
-	  <name>TOC9</name>
 	  <name>zzBiblio</name>
 	  <name>zzContents</name>
 	  <name>zzCopyright</name>
