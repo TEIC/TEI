@@ -31,10 +31,11 @@
 	        <xsl:attribute name="url">
 	           <xsl:value-of select="$newName"/>
 	        </xsl:attribute>
+	        <xsl:copy-of select="@n"/>
 	        <xsl:copy-of select="@height"/>
 	        <xsl:copy-of select="@width"/>
 	        <xsl:copy-of select="@scale"/>
-
+		
 	        <xsl:if test="doc-available(concat($DIR,'/',$newName,'.xmp'))">
 	           <xsl:attribute name="teidocx:width">
 	              <xsl:for-each select="document(concat($DIR,'/',$newName,'.xmp'),/)">

@@ -1299,6 +1299,7 @@
 	        </xsl:with-param>
 	        <xsl:with-param name="nop">
 	           <xsl:choose>
+	              <xsl:when test="not(text()) and tei:note[(not(@place))]">true</xsl:when>
 	              <xsl:when test="not(text()) and tei:note[@place='foot']">true</xsl:when>
 	              <xsl:otherwise>false</xsl:otherwise>
 	           </xsl:choose>

@@ -216,7 +216,7 @@
 	      </xsl:variable>
 	      <xsl:for-each select="$TABLE">
 		<xsl:apply-templates mode="innerTable">
-		  <xsl:with-param name="n" select="$n"/>
+		  <xsl:with-param name="n" select="$n" tunnel="yes"/>
 		</xsl:apply-templates>
 	      </xsl:for-each>
 	    </xsl:when>

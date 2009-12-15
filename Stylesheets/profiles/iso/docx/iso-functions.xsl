@@ -294,6 +294,7 @@
 	  <name>Figurenote</name>
 	  <name>Figuretitle</name>
 	  <name>Footer</name>
+	  <name>FootnoteReference</name>
 	  <name>Footnote Reference</name>
 	  <name>Footnote Text</name>
 	  <name>Foreword</name>

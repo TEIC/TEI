@@ -745,7 +745,7 @@
    </doc>
 
 	  <xsl:template match="cals:table" mode="innerTable">
-	    <xsl:param name="n"/>
+	    <xsl:param name="n"  tunnel="yes"/>
 	     <xsl:copy>
 	        <xsl:copy-of select="@*"/>
 		<xsl:attribute name="tei:corresp">

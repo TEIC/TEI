@@ -29,11 +29,9 @@
     <!-- import functions -->
     <xsl:include href="iso-functions.xsl"/>
 
-    <xsl:param name="tableMethod">cals</xsl:param>
-
-   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
-         <p>TEI stylesheet to convert TEI XML to Word DOCX XML.</p>
+         <p>ISO-specific overrides for TEI stylesheet to convert TEI XML to Word DOCX XML.</p>
          <p>
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -56,6 +54,7 @@
       </desc>
    </doc>
 
+    <xsl:param name="tableMethod">cals</xsl:param>
     <xsl:param name="template">ISO</xsl:param>
     <xsl:param name="isofreestanding">false</xsl:param>
 
@@ -67,7 +66,7 @@
     </xsl:variable>
     
     <xsl:param name="word-directory">..</xsl:param>
-    <xsl:param name="tei-directory">..</xsl:param>
+    <xsl:param name="tei-directory">./</xsl:param>
     <xsl:param name="debug">false</xsl:param>   
     <xsl:param name="numberFormat">fr</xsl:param>
     
@@ -290,7 +289,8 @@
     
     
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc> Process notes </desc></doc>
+      <desc> Process notes which have a place attribute</desc>
+  </doc>
     
     <xsl:template match="tei:note[@place]">
       <xsl:choose>
@@ -320,6 +320,10 @@
 	        </xsl:otherwise>
       </xsl:choose>
     </xsl:template>
+    
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc> Process notes which have a rend attribute</desc>
+  </doc>
     
     <xsl:template match="tei:note[@rend]">
 	<xsl:call-template name="block-element">

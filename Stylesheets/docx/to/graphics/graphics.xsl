@@ -104,7 +104,6 @@
     </xsl:template>
     
     <xsl:template match="tei:graphic">
-        
         <!-- perform some tests on the graphic -->
         <xsl:if test="@url and              (             (@teidocx:width and @teidocx:height)             or             (@width and @height))">
             
@@ -237,7 +236,14 @@
                                 <wp:wrapTopAndBottom/>
                                 <wp:docPr name="Some Image">
                                     <xsl:attribute name="id">
-                                        <xsl:number level="any"/>
+				      <xsl:choose>
+					<xsl:when test="@n">
+					  <xsl:value-of select="@n"/>
+					</xsl:when>
+					<xsl:otherwise>
+					  <xsl:number level="any"/>
+					</xsl:otherwise>
+				      </xsl:choose>
                                     </xsl:attribute>
                                 </wp:docPr>
                                 
@@ -249,7 +255,14 @@
                                 <wp:extent cx="{$imageWidth}00" cy="{$imageHeight}00"/>
                                 <wp:docPr name="{tokenize(@url, '/')[last()]}">
                                     <xsl:attribute name="id">
-                                        <xsl:number level="any"/>
+				      <xsl:choose>
+					<xsl:when test="@n">
+					  <xsl:value-of select="@n"/>
+					</xsl:when>
+					<xsl:otherwise>
+					  <xsl:number level="any"/>
+					</xsl:otherwise>
+				      </xsl:choose>
                                     </xsl:attribute>
                                 </wp:docPr>
                                 <xsl:copy-of select="$graphic-element"/>

@@ -52,26 +52,41 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        
+        Convert Word drawing objects
     </desc>
    </doc>
     <xsl:template match="w:drawing">
+      <xsl:param name="n" tunnel="yes"/>
         <xsl:choose>
             <xsl:when test="$convert-graphics='true'">
                 <xsl:choose>
                     <xsl:when test="descendant::a:blip[1]/@r:embed">
                         <graphic>
-                            <xsl:attribute name="width"
-                                    select="concat(number(descendant::wp:extent[1]/@cx) div 360000,'cm')"/>
-                            <xsl:attribute name="height"
-                                    select="concat(number(descendant::wp:extent[1]/@cy) div 360000,'cm')"/>
-                            <xsl:attribute name="url">
-                                <xsl:variable name="rid" select="descendant::a:blip[1]/@r:embed"/>
-                                <xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
-                            </xsl:attribute>
-                            
-                            <!-- inline or block -->
-                            <xsl:attribute name="rend">
+			  <xsl:attribute name="n">
+			    <xsl:choose>
+			      <xsl:when test="number($n)">
+				<xsl:variable name="c">
+				  <xsl:number level="any"/>
+				</xsl:variable>
+				<xsl:value-of select="($n * 10) + $c"/>
+			      </xsl:when>
+			      <xsl:otherwise>
+				<xsl:text>100</xsl:text>
+				  <xsl:number level="any"/>
+			      </xsl:otherwise>
+			    </xsl:choose>
+			  </xsl:attribute>
+			  <xsl:attribute name="width"
+					 select="concat(number(descendant::wp:extent[1]/@cx) div 360000,'cm')"/>
+			  <xsl:attribute name="height"
+					 select="concat(number(descendant::wp:extent[1]/@cy) div 360000,'cm')"/>
+			  <xsl:attribute name="url">
+			    <xsl:variable name="rid" select="descendant::a:blip[1]/@r:embed"/>
+			    <xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+			  </xsl:attribute>
+			  
+			  <!-- inline or block -->
+			  <xsl:attribute name="rend">
                                 <xsl:choose>
                                     <xsl:when test="wp:anchor">block</xsl:when>
                                     <xsl:otherwise>inline</xsl:otherwise>

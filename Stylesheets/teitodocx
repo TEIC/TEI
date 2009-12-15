@@ -2,11 +2,13 @@
 profile=default
 odd=false
 debug=false
+tables=ccals
 while test $# -gt 0; do
   case $1 in
     --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
     --odd)       odd=true;;
     --debug)     debug=true;;
+    --tables=*) tables=`echo $1 | sed 's/.*=//'`;;
      *) if test "$1" = "${1#--}" ; then 
 	   break
 	else
@@ -47,11 +49,12 @@ else
     saxon -o $TEMPDIR/tmp3.xml  $F $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
 fi
 saxon -o tmp4.xml tmp3.xml $APPHOME/profiles/$profile/docx/to.xsl  \
-    debug=$debug isofreestanding=true styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR
+    debug=$debug isofreestanding=true styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR tei-directory=$TEMPDIR/ tableMethod=$tables
 if test -f $APPHOME/profiles/$profile/docx/makecoverpages2.xsl 
 then
    echo rewrite cover page
-   saxon -o doctemp.xml word/document.xml $APPHOME/profiles/$profile/docx/makecoverpages.xsl header-file=$TEMPDIR/tmp3.xml document-file=$TEMPDIR/tmp4.xml
+   saxon -o doctemp.xml word/document.xml $APPHOME/profiles/$profile/docx/makecoverpages.xsl \
+       header-file=$TEMPDIR/tmp3.xml document-file=$TEMPDIR/tmp4.xml 
    mv doctemp.xml word/document.xml
 else
    mv tmp4.xml word/document.xml
