@@ -33,12 +33,6 @@
 		  </xsl:with-param>
          </xsl:call-template>
       </xsl:if>
-      <xsl:if test="not(tei:fileDesc/tei:publicationStmt/tei:idno[@i:meta='wgNumber'])">
-         <xsl:call-template name="generateError">
-            <xsl:with-param name="message">
-		  an idno of type wgNumber is expected</xsl:with-param>
-         </xsl:call-template>
-      </xsl:if>
       <xsl:if test="not(tei:fileDesc/tei:publicationStmt/tei:idno[@i:meta='serialNumber'])">
          <xsl:call-template name="generateError">
             <xsl:with-param name="message">
@@ -70,8 +64,7 @@
    <xsl:template match="tei:div" mode="checkSchematron">
       <xsl:if test="not(not(tei:div) or count(tei:div)&gt;1)">
          <xsl:call-template name="generateError">
-            <xsl:with-param name="message">a clause must contain
-		  at least two subclauses</xsl:with-param>
+            <xsl:with-param name="message">a clause must contain at least two subclauses</xsl:with-param>
          </xsl:call-template>
       </xsl:if>
       <xsl:call-template name="copyIt"/>

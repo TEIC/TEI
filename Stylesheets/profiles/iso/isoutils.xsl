@@ -2,8 +2,9 @@
 <xsl:stylesheet xmlns:cals="http://www.oasis-open.org/specs/tm9901"
                 xmlns:iso="http://www.iso.org/ns/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="tei iso cals"
+                exclude-result-prefixes="tei iso cals tbx"
                 version="2.0">
   <!-- $Id$ -->
 
@@ -192,5 +193,116 @@
       <xsl:value-of select="key('ISOMETA','partNumber')"/>
    </xsl:template>
    
+   <xsl:template name="Identify">
+     <xsl:for-each select="ancestor::cals:entry">
+       <xsl:text> </xsl:text>
+       <xsl:call-template name="Identify"/>
+       <xsl:text> </xsl:text>
+     </xsl:for-each>
+     <xsl:choose>
+       <xsl:when test="self::tei:p">
+	 <xsl:call-template name="LabelChange">
+	   <xsl:with-param name="What">Paragraph</xsl:with-param>
+	   <xsl:with-param
+	       name="N"><xsl:number/></xsl:with-param>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:when test="self::tei:item">
+	 <xsl:call-template name="LabelChange">
+	   <xsl:with-param name="What">List item</xsl:with-param>
+	   <xsl:with-param name="N"><xsl:number/></xsl:with-param>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:when test="self::tei:head">
+	 <xsl:choose>
+	   <xsl:when
+	       test="count(ancestor::tei:div)=1">Clause title</xsl:when>
+	   <xsl:otherwise>Clause subtitle</xsl:otherwise>
+	 </xsl:choose>
+       </xsl:when>
+       <xsl:when test="self::cals:entry">
+	 <xsl:for-each select="ancestor::cals:table">
+	   <xsl:text>Table </xsl:text>
+	   <xsl:number level="any"/>
+	   <xsl:text>, </xsl:text>
+	 </xsl:for-each>
+	 <xsl:call-template name="LabelChange">
+	   <xsl:with-param name="What">row</xsl:with-param>
+	   <xsl:with-param name="N">
+	     <xsl:for-each select="parent::cals:row">
+	       <xsl:number/>
+	   </xsl:for-each></xsl:with-param>
+	 </xsl:call-template>
+	 <xsl:text>, </xsl:text>
+	 <xsl:call-template name="LabelChange">
+	   <xsl:with-param name="What">cell</xsl:with-param>
+	   <xsl:with-param name="N"><xsl:number/></xsl:with-param>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:when test="self::tei:term">
+	 <xsl:call-template name="LabelChange">
+	   <xsl:with-param name="What">Terminology entry</xsl:with-param>
+	   <xsl:with-param
+	       name="N"><xsl:number/></xsl:with-param>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:when test="self::tbx:term">
+	 <xsl:call-template name="LabelChange">
+	   <xsl:with-param name="What">Term</xsl:with-param>
+	   <xsl:with-param name="N">
+	     <xsl:value-of select="substring-after(@id,'CDB_')"/>
+	   </xsl:with-param>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:when test="self::tei:bibl">
+	 <xsl:call-template name="LabelChange">
+	   <xsl:with-param name="What">Bibliographical entry</xsl:with-param>
+	   <xsl:with-param name="N"><xsl:number/></xsl:with-param>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:when test="self::tei:math">
+	 <xsl:call-template name="LabelChange">
+	   <xsl:with-param name="What">math</xsl:with-param>
+	   <xsl:with-param name="N"><xsl:number/></xsl:with-param>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:call-template name="LabelChange">
+	   <xsl:with-param name="What">
+	     <xsl:value-of select="local-name()"/>
+	   </xsl:with-param>
+	   <xsl:with-param name="N"><xsl:number/></xsl:with-param>
+	 </xsl:call-template>
+       </xsl:otherwise>
+     </xsl:choose>
+   </xsl:template>
+   <xsl:template name="LabelChange">
+     <xsl:param name="What"/>
+     <xsl:param name="N"/>
+     <xsl:choose>
+       <xsl:when test="not(number($N))">
+	 <xsl:value-of select="$What"/>
+	 <xsl:text> </xsl:text>
+	 <xsl:value-of select="$N"/>
+       </xsl:when>
+       <xsl:when test="$N=1">     
+	 <xsl:text>1st </xsl:text>
+	 <xsl:value-of select="$What"/>
+       </xsl:when>
+       <xsl:when test="$N=2">     
+	 <xsl:text>2nd </xsl:text>
+	 <xsl:value-of select="$What"/>
+       </xsl:when>
+       <xsl:when test="$N=3">     
+	 <xsl:text>3rd </xsl:text>
+	 <xsl:value-of select="$What"/>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:value-of select="$N"/>
+	 <xsl:text>th </xsl:text>
+	 <xsl:value-of select="$What"/>
+       </xsl:otherwise>
+     </xsl:choose>
+   </xsl:template>
 
 </xsl:stylesheet>
