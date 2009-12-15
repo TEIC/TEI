@@ -1653,7 +1653,7 @@
    </doc>
     <xsl:template match="w:object">
       <iso:error>
-	Invalid Word object found here
+	Invalid Word object found
       </iso:error>
     </xsl:template>
 

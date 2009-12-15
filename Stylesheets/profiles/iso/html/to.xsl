@@ -18,7 +18,7 @@
    <xsl:import href="../../../xhtml2/tagdocs.xsl"/>
    <xsl:import href="../../../odds2/teiodds.xsl"/>
    <xsl:import href="../isoutils.xsl"/>
-   <xsl:import href="isotei.xsl"/>
+   <xsl:import href="../isotei-schema.xsl"/>
    <xsl:param name="numberFormat">uk</xsl:param>
    <xsl:output encoding="utf-8" omit-xml-declaration="yes" method="xhtml"
                doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -673,6 +673,24 @@
        </xsl:if>
        <xsl:apply-templates/>
      </p>
+   </xsl:template>
+
+   <xsl:template name="generateError">
+     <xsl:param name="message"/>
+     <xsl:processing-instruction name="ISOerror">
+       <xsl:value-of select="$message"/>
+     </xsl:processing-instruction>
+   </xsl:template>
+
+   <xsl:template name="copyIt">
+      <xsl:copy>
+	<xsl:apply-templates select="@*" mode="checkSchematron"/>
+	<xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="checkSchematron"/>
+      </xsl:copy>
+   </xsl:template>
+
+   <xsl:template name="copyMe">
+      <xsl:copy-of select="."/>
    </xsl:template>
 
 </xsl:stylesheet>
