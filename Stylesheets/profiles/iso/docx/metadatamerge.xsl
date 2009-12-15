@@ -94,49 +94,63 @@
       </xsl:copy>
   </xsl:template>
 
-	  <xsl:template match="tei:appInfo">
-		    <xsl:variable name="ident" select="tei:application/@ident"/>		
-		    <xsl:choose>
-			      <xsl:when test="$header-doc//tei:appInfo[tei:application/@ident=$ident]">
-			         <xsl:if test="$debug = 'true'">
-		             <xsl:message select="concat('replace appInfo with ident: ',$ident[1])"/>
-		          </xsl:if>
-			      </xsl:when>
-			      <xsl:otherwise>
-				        <xsl:copy-of select="."/>
-			      </xsl:otherwise>
-		    </xsl:choose>
-	  </xsl:template>
+  <xsl:template match="tei:appInfo">
+	    <xsl:variable name="ident" select="tei:application/@ident"/>		
+	    <xsl:choose>
+		      <xsl:when test="$header-doc//tei:appInfo[tei:application/@ident=$ident]">
+		         <xsl:if test="$debug = 'true'">
+	             <xsl:message select="concat('replace appInfo with ident: ',$ident[1])"/>
+	          </xsl:if>
+		      </xsl:when>
+		      <xsl:otherwise>
+			        <xsl:copy-of select="."/>
+		      </xsl:otherwise>
+	    </xsl:choose>
+  </xsl:template>
 	
-	  <xsl:template match="tei:front/tei:div[@type='foreword']">
-		    <xsl:variable name="currFront" select="."/>
-		    <xsl:choose>
-			      <xsl:when test="$header-doc//tei:front">
-			         <tei:div type="foreword">
-			         <xsl:for-each select="$header-doc//tei:front/tei:div[@type='foreword']/*">
-			            <xsl:choose>
-			               <xsl:when test="name()='q'">
-			                  <xsl:variable name="sdtName" select="@iso:meta"/>
-			                  <xsl:message select="concat('found sdt element ', $sdtName)"/>
-			                  <xsl:if test="$currFront//*[@iso:meta=$sdtName]">
-			                     <xsl:variable name="existingSdt" select="$currFront//*[@iso:meta=$sdtName]"/>
+  <!-- currently we only allow one foreword -->
+  <xsl:template match="tei:front/tei:div[@type='foreword' and position() > 1]">
+  </xsl:template>
+  <xsl:template match="tei:front/tei:div[@type='foreword' and position() = 1]">
+	    <xsl:variable name="currFront" select="."/>
+	    <xsl:variable name="templateFrontText">The boilerplate text and project metadata</xsl:variable>
+	    <xsl:choose>
+		      <xsl:when test="$header-doc//tei:front and not(contains($currFront,$templateFrontText))">
+		         <tei:div type="foreword">
+		         <xsl:for-each select="$header-doc//tei:front/tei:div[@type='foreword']/*">
+		            <xsl:choose>
+		               <xsl:when test="name()='q'">
+		                  <xsl:variable name="sdtName" select="@iso:meta"/>
+		                  <xsl:message select="concat('found sdt element ', $sdtName)"/>
+		                  <xsl:if test="$currFront//*[@iso:meta=$sdtName]">
+		                     <xsl:variable name="existingSdt" select="$currFront//*[@iso:meta=$sdtName]"/>
+		                     <xsl:if test="$debug = 'true'">
 			                     <xsl:message select="concat('reuse existing sdt section ', $sdtName)"/>
-			                     <xsl:copy-of select="$existingSdt"/>
 			                     <xsl:message select="$existingSdt"/>
-			                  </xsl:if>
-			               </xsl:when>
-			               <xsl:otherwise>
-                     <xsl:message select="concat('use from new front ', .)"/>
-			                  <xsl:copy-of select="."/>
-			               </xsl:otherwise>
-			            </xsl:choose>
-			         </xsl:for-each>
-			         </tei:div>
-			      </xsl:when>
-			      <xsl:otherwise>
-				        <xsl:copy-of select="."/>
-			      </xsl:otherwise>
-		    </xsl:choose>
+		                     </xsl:if>
+		                     <xsl:copy-of select="$existingSdt"/>
+		                  </xsl:if>
+		               </xsl:when>
+		               <xsl:otherwise>
+		                 <xsl:if test="$debug = 'true'">
+                       <xsl:message select="concat('use from new front ', .)"/>
+                      </xsl:if>
+		                 <xsl:copy-of select="."/>
+		               </xsl:otherwise>
+		            </xsl:choose>
+		         </xsl:for-each>
+		         </tei:div>
+		      </xsl:when>
+		      <xsl:when test="$header-doc//tei:front and contains($currFront,$templateFrontText)">
+		        <xsl:if test="$debug = 'true'">
+               <xsl:message>found default foreword will replace all from new header</xsl:message>
+             </xsl:if>
+		        <xsl:copy-of select="$header-doc//tei:front"/>
+		      </xsl:when>
+		      <xsl:otherwise>
+			      <xsl:copy-of select="."/>
+		      </xsl:otherwise>
+	    </xsl:choose>
   </xsl:template>
 	
 
