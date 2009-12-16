@@ -527,26 +527,47 @@
                 <xsl:message terminate="yes">CDATA found in body! [<xsl:value-of select="."/>]</xsl:message>
             </xsl:when>
             <xsl:otherwise>
-                <w:t>
-                    <xsl:attribute name="xml:space">preserve</xsl:attribute>
-                    <xsl:choose>
-                        <xsl:when test=".=' ' or ../@xml:space='preserve'">
-                            <xsl:value-of select="."/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:if test="starts-with(.,' ') or starts-with(.,'&#xA;')">
-                                <xsl:text> </xsl:text>
-                            </xsl:if>
-                            <xsl:value-of select="normalize-space(.)"/>
-                            <xsl:if test="substring(.,string-length(.),1)=' '">
-                                <xsl:text> </xsl:text>
-                            </xsl:if>
-                            <xsl:if test="substring(.,string-length(.),1)='&#xA;'">
-                                <xsl:text> </xsl:text>
-                            </xsl:if>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </w:t>
+	      <xsl:variable name="out">
+		<xsl:choose>
+		  <xsl:when test=".=' ' or ../@xml:space='preserve'">
+		    <xsl:value-of select="."/>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:if test="starts-with(.,' ') or starts-with(.,'&#xA;')">
+		      <xsl:text> </xsl:text>
+		    </xsl:if>
+		    <xsl:value-of select="normalize-space(.)"/>
+		    <xsl:if test="substring(.,string-length(.),1)=' '">
+		      <xsl:text> </xsl:text>
+		    </xsl:if>
+		    <xsl:if test="substring(.,string-length(.),1)='&#xA;'">
+		      <xsl:text> </xsl:text>
+		    </xsl:if>
+		  </xsl:otherwise>
+		</xsl:choose>
+	      </xsl:variable>
+	      <xsl:choose>
+		<xsl:when test="contains($out,'&#2011;')">
+		  <w:t>
+		    <xsl:attribute
+			name="xml:space">preserve</xsl:attribute>
+		    <xsl:value-of select="substring-before($out,'&#2011;')"/>
+		  </w:t>
+		  <w:noBreakHyphen/>
+		  <w:t>
+		    <xsl:attribute
+			name="xml:space">preserve</xsl:attribute>
+		    <xsl:value-of select="substring-after($out,'&#2011;')"/>
+		  </w:t>
+		</xsl:when>
+		<xsl:otherwise>
+		  <w:t>
+		    <xsl:attribute
+			name="xml:space">preserve</xsl:attribute>
+		    <xsl:value-of select="$out"/>
+		  </w:t>
+		</xsl:otherwise>
+	      </xsl:choose>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

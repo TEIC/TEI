@@ -207,4 +207,8 @@
      </span>
    </xsl:template>
 
+   <xsl:template match="text()">
+       <xsl:value-of select="translate(.,'&#2011;','-')"/>
+   </xsl:template>
+
 </xsl:stylesheet>
