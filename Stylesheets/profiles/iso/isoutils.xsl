@@ -106,13 +106,20 @@
   
   -->
   <xsl:template name="generateTitle">
-      <xsl:value-of select="key('ISOMETA','introductoryTitle')"/>
-      <xsl:text> — </xsl:text>
-      <xsl:value-of select="key('ISOMETA','mainTitle')"/>
-      <xsl:if test="key('ISOMETA','complementaryTitle')">
-         <xsl:text> — </xsl:text>
-         <xsl:value-of select="key('ISOMETA','complementaryTitle')"/>
-      </xsl:if>
+      <xsl:choose>
+        <xsl:when test="key('ISOMETA','fullTitle')">
+          <xsl:value-of select="key('ISOMETA','fullTitle')"/>
+        </xsl:when>
+        <xsl:otherwise>
+		      <xsl:value-of select="key('ISOMETA','introductoryTitle')"/>
+		      <xsl:text> — </xsl:text>
+		      <xsl:value-of select="key('ISOMETA','mainTitle')"/>
+		      <xsl:if test="key('ISOMETA','complementaryTitle')">
+		         <xsl:text> — </xsl:text>
+		         <xsl:value-of select="key('ISOMETA','complementaryTitle')"/>
+		      </xsl:if>
+        </xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
 
   <xsl:template name="makeHTMLHeading">
