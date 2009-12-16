@@ -1636,7 +1636,11 @@
     </xsl:copy>
   </xsl:template>
 
-    <xsl:template match="iso:error">
+  <xsl:template match="w:noBreakHyphen">
+    <xsl:text>&#2011;</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="iso:error">
       <xsl:copy-of select="."/>
     </xsl:template>
 
