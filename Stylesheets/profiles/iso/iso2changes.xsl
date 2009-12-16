@@ -146,7 +146,14 @@
          <xsl:apply-templates mode="show"/>
 	 <span class="changeAttribution-{local-name()}">
 	   <xsl:text> [</xsl:text>
-	   <xsl:value-of select="@type"/>
+	   <xsl:choose>
+	     <xsl:when test="@type">
+	       <xsl:value-of select="@type"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <xsl:value-of select="@resp"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
 	   <xsl:text> </xsl:text>
 	   <xsl:value-of select="@n"/>
 	   <xsl:text>]</xsl:text>
