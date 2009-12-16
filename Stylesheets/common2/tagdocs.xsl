@@ -2116,7 +2116,7 @@
             <xsl:text>rnc_nc</xsl:text>
          </xsl:with-param>
          <xsl:with-param name="contents">
-	           <xsl:value-of select="."/>
+	   <xsl:value-of select="."/>
          </xsl:with-param>
       </xsl:call-template>
   </xsl:template>
@@ -2127,7 +2127,7 @@
             <xsl:text>rnc_decl</xsl:text>
          </xsl:with-param>
          <xsl:with-param name="contents">
-	           <xsl:value-of select="."/>
+	   <xsl:value-of select="."/>
          </xsl:with-param>
       </xsl:call-template>
   </xsl:template>
@@ -2138,7 +2138,7 @@
             <xsl:text>rnc_prefix</xsl:text>
          </xsl:with-param>
          <xsl:with-param name="contents">
-	           <xsl:value-of select="."/>
+	   <xsl:value-of select="."/>
          </xsl:with-param>
       </xsl:call-template>
   </xsl:template>
