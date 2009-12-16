@@ -409,7 +409,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
       <xsl:param name="class">title</xsl:param>
       <xsl:param name="level">1</xsl:param>
       <xsl:if test="not($text='')">
-         <xsl:element name="h{$level}">
+         <xsl:element name="h{$level}" xmlns="http://www.w3.org/1999/xhtml">
 	           <xsl:attribute name="class">
 	              <xsl:value-of select="$class"/>
 	           </xsl:attribute>
