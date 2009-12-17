@@ -118,7 +118,6 @@
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:attribute name="resp">
-	    <xsl:text>#</xsl:text>
 	    <xsl:value-of select="translate($who,' ','_')"/>
 	  </xsl:attribute>
 	  </xsl:otherwise>
