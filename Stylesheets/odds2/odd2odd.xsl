@@ -569,7 +569,7 @@ How can a class be ok?
       </xsl:copy>
   </xsl:template>
   <xsl:template name="addClassAttsToCopy">
-      <xsl:if test="not(@ns) or @ns='http://www.tei-c.org/ns/1.0'">
+      <xsl:if test="not(@ns) or @ns='http://www.tei-c.org/ns/1.0' or @ns='http://www.tei-c.org/ns/Examples'">
          <xsl:call-template name="classAttributes">
             <xsl:with-param name="whence">1</xsl:with-param>
             <xsl:with-param name="elementName" select="@ident"/>
