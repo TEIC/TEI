@@ -8,24 +8,11 @@
 # $Id: roma.sh 5777 2009-03-15 21:19:34Z rahtz $
 #
 
-# watch what happens, as it happens
-# set -o xtrace
-
 makeODD() 
 {
     echo "1. expand and simplify ODD "
     if test "x$lang" = "x"
     then
-	echo "xmllint --xinclude $ODD | saxon  -o $RESULTS/$ODD.compiled - \
-	    $TEIXSLDIR/odds2/odd2odd.xsl \
-	    $SELECTEDSCHEMA  \
-	    $LANGUAGE\
-	    $DOCLANG \
-	    useVersionFromTEI=$useVersionFromTEI \
-	    TEIC=$TEIC \
-	    TEISERVER=$TEISERVER  \
-	    localsource=\"$LOCAL\"  \
-	    $DEBUG  "
 	xmllint --xinclude $ODD | saxon  -o $RESULTS/$ODD.compiled - \
 	    $TEIXSLDIR/odds2/odd2odd.xsl \
 	    $SELECTEDSCHEMA  \
