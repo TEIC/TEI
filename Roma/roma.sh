@@ -77,7 +77,7 @@ makeSCH()
 makeHTMLDOC() 
 {
     echo "9. make HTML documentation $schema.doc.html "
-    xsltproc 	-o $RESULTS/$schema.doc.html \
+    saxon 	-o:$RESULTS/$schema.doc.html \
 	$DEBUG  $LANGUAGE $DOCLANG --stringparam TEIC $TEIC \
 	--stringparam STDOUT true \
 	--stringparam splitLevel -1 \
@@ -227,36 +227,46 @@ echo "========= $D Roma starts, execution:"
 if test "x$PATTERNPREFIX" = "x"
 then
    PATTERN=" "
+   SAXPATTERN=" "
 else
    PATTERN=" --stringparam patternPrefix $PATTERNPREFIX"
+   SAXPATTERN=" patternPrefix=${PATTERNPREFIX}"
 fi
 
 if $debug
 then
     DEBUG=" --stringparam verbose true"
+    SAXDEBUG=" verbose=true"
 else
     if $compile
 	then
 	DEBUG=" --stringparam stripped true"
+	SAXDEBUG=" stripped=true"
     else
 	DEBUG=" "
+	SAXDEBUG=" "
     fi
 fi
 
 SELECTEDSCHEMA=" --stringparam selectedSchema $schema "
+SAXSELECTEDSCHEMA=" selectedSchema=${schema}"
 
 if test "x$doclang" = "x"
 then
   DOCLANG=" "
+  SAXDOCLANG=" "
 else 
   DOCLANG=" --stringparam doclang $doclang --stringparam documentationLanguage $doclang"
+  SAXDOCLANG=" doclang=${doclang} documentationLanguage=${doclang}"
 fi
 
 if test "x$lang" = "x"
 then
   LANGUAGE=" "
+  SAXLANGUAGE=" "
 else 
   LANGUAGE=" --stringparam lang $lang "
+  SAXLANGUAGE=" lang=${lang}"
 fi
 if test "x$LOCALSOURCE" = "x"
 then

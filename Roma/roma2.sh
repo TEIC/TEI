@@ -8,11 +8,24 @@
 # $Id: roma.sh 5777 2009-03-15 21:19:34Z rahtz $
 #
 
+# watch what happens, as it happens
+# set -o xtrace
+
 makeODD() 
 {
     echo "1. expand and simplify ODD "
     if test "x$lang" = "x"
     then
+	echo "xmllint --xinclude $ODD | saxon  -o $RESULTS/$ODD.compiled - \
+	    $TEIXSLDIR/odds2/odd2odd.xsl \
+	    $SELECTEDSCHEMA  \
+	    $LANGUAGE\
+	    $DOCLANG \
+	    useVersionFromTEI=$useVersionFromTEI \
+	    TEIC=$TEIC \
+	    TEISERVER=$TEISERVER  \
+	    localsource=\"$LOCAL\"  \
+	    $DEBUG  "
 	xmllint --xinclude $ODD | saxon  -o $RESULTS/$ODD.compiled - \
 	    $TEIXSLDIR/odds2/odd2odd.xsl \
 	    $SELECTEDSCHEMA  \
@@ -253,7 +266,8 @@ RESULTS=${2:-RomaResults}
 H=`pwd`
 D=`date "+%Y-%m-%d %H:%M:%S"`
 echo "========= $D Roma starts, info:"
-echo "Test for software: saxon, trang, and perl"
+echo "Test for software: xmllint, saxon, trang, and perl"
+which xmllint || die "you do not have xmllint"
 which saxon || die "you do not have saxon installed"
 which trang || die "you do not have trang installed
 which perl || die "you do not have perl installed"
