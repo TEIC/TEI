@@ -254,9 +254,9 @@ H=`pwd`
 D=`date "+%Y-%m-%d %H:%M:%S"`
 echo "========= $D Roma starts, info:"
 echo "Test for software: saxon, trang, and perl"
-which saxon || die "you do not have xmllint"
-which trang || die "you do not have trang"
-which perl || die "you do not have perl"
+which saxon || die "you do not have saxon installed"
+which trang || die "you do not have trang installed
+which perl || die "you do not have perl installed"
 test -f $ODD || die "file $ODD does not exist"
 echo "TEI stylesheet tree: $TEIXSLDIR"
 test -d $TEIXSLDIR/odds2 || \
