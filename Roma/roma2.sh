@@ -256,7 +256,7 @@ echo "========= $D Roma starts, info:"
 echo "Test for software: xmllint, saxon, trang, and perl"
 which xmllint || die "you do not have xmllint"
 which saxon || die "you do not have saxon installed"
-which trang || die "you do not have trang installed
+which trang || die "you do not have trang installed"
 which perl || die "you do not have perl installed"
 test -f $ODD || die "file $ODD does not exist"
 echo "TEI stylesheet tree: $TEIXSLDIR"
