@@ -68,6 +68,22 @@
                     <xsl:apply-templates/>
                 </mentioned>
             </xsl:when>
+
+            <xsl:when test="$style='Table text (9)'">
+	      <xsl:apply-templates/>
+	    </xsl:when>
+
+            <xsl:when test="$style='Hyperlink'">
+                <ref>
+		  <xsl:attribute name="target">
+		    <xsl:for-each
+			select="preceding-sibling::w:r[w:instrText][1]/w:instrText">
+		      <xsl:value-of select="substring-before(substring-after(.,'&#x0022;'),'&#x0022;')"/>
+		    </xsl:for-each>
+		  </xsl:attribute>
+                    <xsl:apply-templates/>
+                </ref>
+            </xsl:when>
             
             <xsl:when test="$style='ref'">
                 <ref>

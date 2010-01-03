@@ -348,8 +348,8 @@
 
    <xsl:template match="w:instrText">
       <xsl:choose>
-         <xsl:when test="contains(.,'REF _Ref')">
-  </xsl:when>
+         <xsl:when test="contains(.,'REF _Ref')"></xsl:when>
+         <xsl:when test="starts-with(.,'HYPERLINK')"></xsl:when>
          <xsl:otherwise>
             <xsl:value-of select="."/>
          </xsl:otherwise>
