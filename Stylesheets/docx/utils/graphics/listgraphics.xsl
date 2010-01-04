@@ -4,6 +4,7 @@
                 version="2.0">
   <xsl:output method="text"/>
   <xsl:param name="DIR"/>
+  <xsl:param name="ORIG">.</xsl:param>
 
   <xsl:key match="tei:graphic" use="1" name="G"/>
   <xsl:template match="/">
@@ -12,12 +13,17 @@
             <xsl:value-of select="@url"/>
          </xsl:variable>
          <xsl:choose>
-	           <xsl:when test="starts-with($F,'http')">
-	              <xsl:text>wget </xsl:text>
-	           </xsl:when>
-	           <xsl:otherwise> 
-	              <xsl:text>cp </xsl:text>
-	           </xsl:otherwise>
+	   <xsl:when test="starts-with($F,'http')">
+	     <xsl:text>wget </xsl:text>
+	   </xsl:when>
+	   <xsl:when test="starts-with($F,'/')">
+	     <xsl:text>cp </xsl:text>
+	   </xsl:when>
+	   <xsl:otherwise> 
+	     <xsl:text>cp </xsl:text>
+	     <xsl:value-of select="$ORIG"/>
+	     <xsl:text>/</xsl:text>
+	   </xsl:otherwise>
          </xsl:choose>
          <xsl:value-of select="$F"/>
          <xsl:text> </xsl:text>

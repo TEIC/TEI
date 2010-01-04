@@ -148,9 +148,9 @@
                 <xsl:when test="parent::tei:hi[@rend='bold']">true</xsl:when>
                 <xsl:when test="contains(@rend,'bold')">true</xsl:when>
                 <xsl:when test="@rend='label'">true</xsl:when>
-		          <xsl:when test="ancestor-or-self::tei:cell[@role='label']">true</xsl:when>
-		          <xsl:when test="ancestor-or-self::tei:cell[@rend='wovenodd-col1']">true</xsl:when>
-		          <xsl:when test="self::tei:cell and parent::tei:row[@role='label']">true</xsl:when>
+		<xsl:when test="ancestor-or-self::tei:cell[@role='label']">true</xsl:when>
+		<xsl:when test="ancestor-or-self::tei:cell[@rend='wovenodd-col1']">true</xsl:when>
+		<xsl:when test="self::tei:cell and parent::tei:row[@role='label']">true</xsl:when>
                 <xsl:when test="self::tei:hi">true</xsl:when>
                 <xsl:when test="self::tei:label[following-sibling::tei:item]">true</xsl:when>
                 <xsl:when test="self::tei:term">true</xsl:when>

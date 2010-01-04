@@ -263,11 +263,15 @@
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>Template used to process block elements:</p>
-         <p> Template used to process block elements: @param style A style for all the w:ps
-            @param pPr An entire pPr element to use @param nop a w:p has already been created and no
-            new w:p is to be created @param bookmark-id if present in conjunction with
-            bookmark-name, a bookmark is created around the current element @param bookmark-name
-            @see bookmark-id </p>
+         <p> Template used to process block elements: 
+	 <ul>
+ 	    <li><b>style</b>: A style for all the w:ps</li>
+            <li><b>pPr</b>: An entire pPr element to use </li>
+	    <li><b>nop</b>: a w:p has already been created and no new w:p is to be created </li>
+	    <li><b>bookmark-id</b>: if present in conjunction with bookmark-name, a bookmark is created around the current element </li>
+	    <li><b>bookmark-name</b>: see bookmark-id </li>
+	 </ul>
+	 </p>
       </desc>
    </doc>
     <xsl:template name="block-element">
