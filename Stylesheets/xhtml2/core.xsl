@@ -1980,7 +1980,9 @@
                      <xsl:with-param name="word">noteHeading</xsl:with-param>
                   </xsl:call-template>
                </div>
-               <xsl:apply-templates mode="printnotes" select="descendant::tei:note[@place]"/>
+               <xsl:apply-templates mode="printnotes"
+				    select="descendant::tei:note[@place
+					    or $autoEndNotes]"/>
             </div>
             <xsl:call-template name="stdfooter"/>
             <xsl:call-template name="bodyEndHook"/>
