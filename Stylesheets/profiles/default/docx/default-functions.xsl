@@ -68,14 +68,21 @@
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
             <xsl:choose>
-                <xsl:when test="starts-with(@rend,'specList-')">true</xsl:when>
-                <xsl:when test="starts-with(parent::tei:hi/@rend,'specList-')">true</xsl:when>
+		<xsl:when test="ancestor-or-self::tei:cell[@rend='wovenodd-col1']">true</xsl:when>
+		<xsl:when test="ancestor-or-self::tei:cell[@role='label']">true</xsl:when>
+		<xsl:when test="self::tei:cell and parent::tei:row[@role='label']">true</xsl:when>
+                <xsl:when test="@rend='bold'">true</xsl:when>
+                <xsl:when test="@rend='label'">true</xsl:when>
                 <xsl:when test="@rend='odd_label'">true</xsl:when>
-                <xsl:when test="self::tei:hi[@rend='label']">true</xsl:when>
+                <xsl:when test="contains(@rend,'bold')">true</xsl:when>
+                <xsl:when test="parent::tei:hi[@rend='bold']">true</xsl:when>
+                <xsl:when test="parent::tei:hi[starts-with(@rend,'specList-')]">true</xsl:when>
                 <xsl:when test="self::tei:docAuthor">true</xsl:when>
+                <xsl:when test="self::tei:hi[@rend='label']">true</xsl:when>
                 <xsl:when test="self::tei:label[following-sibling::tei:item]">true</xsl:when>
                 <xsl:when test="self::tei:term">true</xsl:when>
-                <xsl:when test="@rend='bold'">true</xsl:when>
+                <xsl:when test="starts-with(@rend,'specList-')">true</xsl:when>
+                <xsl:when test="starts-with(parent::tei:hi/@rend,'specList-')">true</xsl:when>
                 <xsl:otherwise>false</xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>

@@ -95,7 +95,7 @@ doc:
 	saxon -o  release/common/doc/tei-xsl-common/customize.html customize.xml xhtml2/tei.xsl cssFile=tei.css 
 	cp teixsl.xml style.xml customize.xml release/common/doc/tei-xsl-common
 	cp tei.css ChangeLog LICENSE release/common/doc/tei-xsl-common
-	-${OXY} || exit 1
+	-locate stylesheetDocumentation.sh || exit 1
 	echo using oXygen stylesheet documentation generator
 	for i in ${TARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 

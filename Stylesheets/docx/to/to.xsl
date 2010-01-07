@@ -497,7 +497,6 @@
                 </w:t>
             </w:r>
         </xsl:if>
-
         <w:r>
             <!-- if no specific style is assigned we might check for any other indication to assign 
                 some style ... -->
@@ -512,10 +511,10 @@
                             <xsl:attribute name="w:val" select="$character-style"/>
                         </w:rStyle>
                     </xsl:if>
-                    <xsl:copy-of select="$renderingProperties"/>
-		             <xsl:if test="ancestor::*[@xml:lang]">
-		                <w:lang w:val="{ancestor::*[@xml:lang][1]/@xml:lang}"/>
-		             </xsl:if>
+		    <xsl:copy-of select="$renderingProperties"/>
+		    <xsl:if test="ancestor::*[@xml:lang]">
+		      <w:lang w:val="{ancestor::*[@xml:lang][1]/@xml:lang}"/>
+		    </xsl:if>
                 </w:rPr>
             </xsl:if>
 
@@ -612,7 +611,6 @@
    </doc>
     <xsl:template name="applyRend">
         <xsl:for-each select="..">
-
             <!-- use a custom font -->
             <xsl:if test="@iso:font">
                 <w:rFonts w:ascii="{@iso:font}" w:hAnsi="{@iso:font}"/>
