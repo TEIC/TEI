@@ -182,7 +182,7 @@ Schema generated from ODD source </xsl:text>
     which do not have a <ref>, any <ref> which has no <define>
     to point to -->
     <xsl:for-each select="$schema/root">
-         <xsl:apply-templates mode="cleanup"/>
+      <xsl:apply-templates mode="cleanup"/>
       </xsl:for-each>
   </xsl:template>
 
@@ -199,16 +199,15 @@ Schema generated from ODD source </xsl:text>
   <xsl:template match="rng:define" mode="cleanup">
       <xsl:choose>
          <xsl:when test="key('REFED',@name)">
-	           <xsl:copy>
-	              <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="cleanup"/>
-	           </xsl:copy>
-         </xsl:when>
-         <xsl:otherwise>
-	           <xsl:if test="$verbose='true'">
-	              <xsl:message>ZAP reference to unused pattern <xsl:value-of select="@name"/>
-               </xsl:message>
-	           </xsl:if>
-         </xsl:otherwise>
+	   <xsl:copy>
+	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="cleanup"/>
+	   </xsl:copy>
+	 </xsl:when>
+	 <xsl:otherwise>
+	   <xsl:if test="$verbose='true'">
+	     <xsl:message>ZAP definition of unused pattern <xsl:value-of select="@name"/></xsl:message>
+	   </xsl:if>
+	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
   

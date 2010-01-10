@@ -439,11 +439,13 @@
                            <xsl:value-of select="@generate"/>
                         </xsl:when>
                         <xsl:otherwise>
-                           <xsl:text>alternation
-		  sequence
-		  sequenceOptional
-		  sequenceOptionalRepeatable
-		  sequenceRepeatable</xsl:text>
+                           <xsl:text>
+			     NULL
+			     alternation
+			     sequence
+			     sequenceOptional
+			     sequenceOptionalRepeatable
+			   sequenceRepeatable</xsl:text>
                         </xsl:otherwise>
                      </xsl:choose>
                   </xsl:with-param>
@@ -464,7 +466,7 @@
       <xsl:choose>
          <xsl:when test="string-length($Type)=0">
             <xsl:call-template name="makeClassDefinition">
-               <xsl:with-param name="type">alternation</xsl:with-param>
+               <xsl:with-param name="type">NULL</xsl:with-param>
                <xsl:with-param name="declare" select="$declare"/>
             </xsl:call-template>
          </xsl:when>
@@ -506,7 +508,8 @@
       </xsl:variable>
       <xsl:variable name="suffix">
          <xsl:choose>
-            <xsl:when test="$type='alternation'"/>
+            <xsl:when test="$type='NULL'">
+	    </xsl:when>
             <xsl:otherwise>
                <xsl:text>_</xsl:text>
                <xsl:value-of select="$type"/>
@@ -527,66 +530,82 @@
          <xsl:otherwise>
             <xsl:variable name="makeDecls">
                <xsl:call-template name="findUses">
-                  <xsl:with-param name="pattern" select="$suffix"/>
+                  <xsl:with-param name="pattern" select="$type"/>
                   <xsl:with-param name="class" select="$thisClass"/>
                </xsl:call-template>
             </xsl:variable>
-            <!--
-<xsl:message><xsl:value-of select="$thisClass"/><xsl:value-of
+
+<!--<xsl:message>
+
+DEBUG <xsl:value-of select="$thisClass"/><xsl:value-of
 select="$suffix"/> generated <xsl:value-of
 select="$makeDecls"/></xsl:message>
 -->
         <xsl:choose>
+<!--
                <xsl:when test="$makeDecls=''">
                   <xsl:if test="$verbose='true'">
-                     <xsl:message>ZAP <xsl:value-of select="$thisClass"/>
-                        <xsl:value-of select="$suffix"/>
-                     </xsl:message>
+                     <xsl:message>Do NOT generate <xsl:value-of select="$thisClass"/>
+                        <xsl:value-of select="$suffix"/> (<xsl:value-of select="$type"/>)                     </xsl:message>
                   </xsl:if>
                </xsl:when>
+-->
                <xsl:when test="count(key('CLASSMEMBERS',$thisClass))&gt;0">
                   <xsl:if test="$verbose='true'">
                      <xsl:message> .... ... generate model <xsl:value-of select="$thisClass"/>
-                        <xsl:value-of select="$suffix"/>
-                     </xsl:message>
+                        <xsl:value-of select="$suffix"/>  (<xsl:value-of select="$type"/>)                     </xsl:message>
                   </xsl:if>
                   <define xmlns="http://relaxng.org/ns/structure/1.0"
                           name="{$patternPrefixText}{$thisClass}{$suffix}">
                      <xsl:choose>
                         <xsl:when test="$type='sequence'">
                            <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
-		                            <xsl:apply-templates select="." mode="classmember"/>
-		                         </xsl:for-each>
-                        </xsl:when>
-                        <xsl:when test="$type='sequenceOptional'">
-                           <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
-                              <optional>
-		                               <xsl:apply-templates select="." mode="classmember"/>
-		                            </optional>
-                           </xsl:for-each>
-                        </xsl:when>
-
-                        <xsl:when test="$type='sequenceRepeatable'">
-                           <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
-                              <oneOrMore>
-		                               <xsl:apply-templates select="." mode="classmember"/>
-		                            </oneOrMore>
-                           </xsl:for-each>
+			     <xsl:apply-templates select="."
+						  mode="classmember">
+			       <xsl:with-param name="suffix" select="$type"/>
+			     </xsl:apply-templates>
+			   </xsl:for-each>
+			</xsl:when>
+			<xsl:when test="$type='sequenceOptional'">
+			  <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
+			    <optional>
+			      <xsl:apply-templates select="." mode="classmember">
+				<xsl:with-param name="suffix" select="$type"/>
+			      </xsl:apply-templates>
+			    </optional>
+			  </xsl:for-each>
+			</xsl:when>
+			
+			<xsl:when test="$type='sequenceRepeatable'">
+			  <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
+			    <oneOrMore>
+			      <xsl:apply-templates select="."
+						   mode="classmember">
+				<xsl:with-param name="suffix" select="$type"/>
+			      </xsl:apply-templates>
+			    </oneOrMore>
+			  </xsl:for-each>
                         </xsl:when>
 
                         <xsl:when test="$type='sequenceOptionalRepeatable'">
                            <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
                               <zeroOrMore>
-		                               <xsl:apply-templates select="." mode="classmember"/>
-		                            </zeroOrMore>
-                           </xsl:for-each>
+				<xsl:apply-templates select="."
+						     mode="classmember">
+				  <xsl:with-param name="suffix" select="$type"/>
+				</xsl:apply-templates>				
+			      </zeroOrMore>
+			   </xsl:for-each>
                         </xsl:when>
 
                         <xsl:otherwise>
                            <choice>
                               <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
-		                               <xsl:apply-templates select="." mode="classmember"/>
-		                            </xsl:for-each>
+				<xsl:apply-templates select="." mode="classmember">
+				  <xsl:with-param name="suffix"
+						  select="$type"/>
+				</xsl:apply-templates>
+			      </xsl:for-each>
                            </choice>
                         </xsl:otherwise>
                      </xsl:choose>
@@ -615,10 +634,21 @@ select="$makeDecls"/></xsl:message>
   <xsl:template name="findUses">
       <xsl:param name="pattern"/>
       <xsl:param name="class"/>
+      <xsl:variable name="suffix">
+         <xsl:choose>
+            <xsl:when test="$pattern='NULL'"/>
+            <xsl:otherwise>
+	      <xsl:text>_</xsl:text>
+               <xsl:value-of select="$pattern"/>
+            </xsl:otherwise>
+         </xsl:choose>
+      </xsl:variable>
+
       <xsl:choose>
          <xsl:when test="not(ancestor::tei:schemaSpec)">x</xsl:when>
-         <xsl:when test="key('CLASSREFS',concat($class,$pattern))">x</xsl:when>
-         <xsl:when test="not($pattern='')"/>
+         <xsl:when test="key('CLASSREFS',concat($class,$suffix))">x</xsl:when>
+         <xsl:when test="key('CLASSREFS',$class)">x</xsl:when>
+         <xsl:when test="not($suffix='')"/>
          <xsl:when test="tei:classes/tei:memberOf">
             <xsl:for-each select="tei:classes/tei:memberOf">
                <xsl:for-each select="key('CLASSES',@key)">
@@ -629,7 +659,6 @@ select="$makeDecls"/></xsl:message>
                </xsl:for-each>
             </xsl:for-each>
          </xsl:when>
-         <xsl:otherwise/>
       </xsl:choose>
   </xsl:template>
 
@@ -650,30 +679,38 @@ select="$makeDecls"/></xsl:message>
       </xsl:call-template>
   </xsl:template>
 
-
   <xsl:template match="text()" mode="doc">
       <xsl:value-of select="."/>
   </xsl:template>
 
-
   <xsl:template match="tei:desc" mode="tangle"/>
 
   <xsl:template match="tei:classSpec" mode="classmember">
-      <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$patternPrefixText}{@ident}"/>
+    <xsl:param name="suffix" />
+    <xsl:choose>
+      <xsl:when test="$suffix='' or $suffix='NULL'">
+	<ref xmlns="http://relaxng.org/ns/structure/1.0"
+	     name="{$patternPrefixText}{@ident}"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<ref xmlns="http://relaxng.org/ns/structure/1.0"
+	     name="{$patternPrefixText}{@ident}_{$suffix}"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tei:elementSpec" mode="classmember">
-      <xsl:variable name="elementPrefix">
-         <xsl:choose>
-	           <xsl:when test="@prefix">
-	              <xsl:value-of select="@prefix"/>
-	           </xsl:when>
-	           <xsl:otherwise>
-	              <xsl:value-of select="$patternPrefixText"/>
-	           </xsl:otherwise>
-         </xsl:choose>
-      </xsl:variable>
-      <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$elementPrefix}{@ident}"/>
+    <xsl:variable name="elementPrefix">
+      <xsl:choose>
+	<xsl:when test="@prefix">
+	  <xsl:value-of select="@prefix"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$patternPrefixText"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$elementPrefix}{@ident}"/>
   </xsl:template>
 
   <xsl:template match="tei:elementSpec" mode="tangle">
