@@ -4214,7 +4214,7 @@ both the following are legal examples:
 	<!-- example, as per WWP suggestion (otherwise lead-in makes  -->
 	<!-- no sense) (msm)                                          -->
  </p>
-<specGrp xml:id="DCOPUB" n="Bibliographic sub-elements">
+<specGrp xml:id="DCOPUB" >
 &imprint;
 &publisher;
 &biblScope;
@@ -4236,9 +4236,10 @@ as in the example in section <ptr target="#COBICOL"/>) may be tagged
 <p>In bibliographic parlance, a <term>related item</term> is any
 bibliographic item which, though related to that being defined, is
 distinct from it. The distinction between analytic and monographic
-items made above may be thought of as a special case  of this kind of <q>related</q>
-item. More usually however, the term is applied to such items as
-translations, continuations, original sources, parts, etc. </p>
+items made above may be thought of as a special case of this kind of
+<q>related</q> item. More usually however, the term is applied to such
+items as translations, continuations, different versions, parts,
+etc. </p>
 <p>The element <gi>relatedItem</gi> is provided as a means of documenting such
 associated items:
 <specList>
@@ -4263,7 +4264,7 @@ points to the description of the source.
         <date>1930</date>
     </imprint>
 </monogr>
-<relatedItem type="original">
+<relatedItem type="otherEdition">
     <ref target="#bibl04"/>
 </relatedItem>
 </biblStruct>
@@ -4303,7 +4304,7 @@ encoded as follows:
    <series>    
       <title>Three centuries of drama: English, 1642–1700</title>
    </series>
-  <relatedItem type="original">   
+  <relatedItem type="otherEdition">   
     <biblStruct><monogr>
       <author>Shirley, James</author>
       <title type="main">The gentlemen of Venice</title>
@@ -4318,14 +4319,41 @@ encoded as follows:
    </monogr></biblStruct></relatedItem>
 </biblStruct></egXML>
 </p>
-<!-- other examples needed -->
-<!-- enumerate type attribute values? -->
+<p>The <att>type</att> attribute should be used to indicate the
+relationship between the bibliographic item and any
+<gi>relatedItem</gi> it contains or points to. The relationships may
+be transitive (for example <val>translatedAs</val> or
+<val>reprintedFrom</val>) or non-transitive (for example
+<val>otherEdition</val>).  The <att>subtype</att> attribute may be
+used to provide a more detailed classification, where this is
+appropriate. Some further examples follow:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+   <monogr>
+      <author>Tolkien, J.R.R.</author>
+      <title>Den hobbit</title>
+      <title type="sub">aus dem Engleschen iwwersat</title>
+      <editor type="translator">Henry Wickens</editor>
+      <imprint>
+         <pubPlace>Esch-sur-Sûre</pubPlace>
+         <publisher>Op der Lay S. àr. L</publisher>
+         <date>1922</date>
+      </imprint>
+   </monogr>
+<relatedItem type="translatedFrom" target="http://www.example.com/bibliography.xml#TOLK97">
+Originally published in English by Harper Collins Publishers Ltd under
+the title <title>The Hobbit</title>. 
+</relatedItem>
+</biblStruct></egXML>
+In this example, it is assumed that a full bibliographic description
+of the edition used as source for the translation is available at the
+URL specified. The optional content of the <gi>relatedItem</gi> provides an
+informal description of the related item only. </p>
+
+
 
 <specGrp xml:id="DCOBI" n="Tags for Bibliographic References">
 &bibl;
-<!--&biblItem;-->
 &biblStruct;
-<!-- &biblFull; -->
 &listBibl;
 <specGrpRef target="#DCOBILV"/>
 <specGrpRef target="#DCOBICOR"/>
