@@ -294,30 +294,33 @@
     
     <xsl:template match="tei:note[@place]">
       <xsl:choose>
-	        <xsl:when test="@place='foot'  or @place='bottom' ">
-	           <xsl:call-template name="create-footnote"/>
-	        </xsl:when>
-	        <xsl:when test="@place='end'">
-	           <xsl:call-template name="create-endnote"/>
-	        </xsl:when>
-	        <xsl:when test="ancestor::tei:cell or ancestor::cals:entry">
-	           <xsl:call-template name="create-inlinenote"/>
-	        </xsl:when>
-	        <xsl:when test="@place='inline'">
-	           <xsl:apply-templates/>
-	        </xsl:when>
-	        <xsl:otherwise>
-	           <xsl:call-template name="block-element">
-	              <xsl:with-param name="pPr">
-	                 <w:pPr>
-			   <w:pStyle>
-			     <xsl:attribute name="w:val">Note</xsl:attribute>
-			   </w:pStyle>
-	                 </w:pPr>
-	              </xsl:with-param>
-	              <xsl:with-param name="nop">false</xsl:with-param>
-	           </xsl:call-template>
-	        </xsl:otherwise>
+	<xsl:when test="@place='comment'">
+	  <xsl:call-template name="create-comment"/>
+	</xsl:when>
+	<xsl:when test="@place='foot'  or @place='bottom' ">
+	  <xsl:call-template name="create-footnote"/>
+	</xsl:when>
+	<xsl:when test="@place='end'">
+	  <xsl:call-template name="create-endnote"/>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:cell or ancestor::cals:entry">
+	  <xsl:call-template name="create-inlinenote"/>
+	</xsl:when>
+	<xsl:when test="@place='inline'">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="block-element">
+	    <xsl:with-param name="pPr">
+	      <w:pPr>
+		<w:pStyle>
+		  <xsl:attribute name="w:val">Note</xsl:attribute>
+		</w:pStyle>
+	      </w:pPr>
+	    </xsl:with-param>
+	    <xsl:with-param name="nop">false</xsl:with-param>
+	  </xsl:call-template>
+	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
     
@@ -830,6 +833,10 @@
 
         <!-- app files -->
         <xsl:call-template name="write-docxfile-docprops-app"/>
+
+        <!-- comments file -->
+        <xsl:call-template name="write-docxfile-comments-file"/>
+
       </xsl:if>
       <xsl:call-template name="write-docxfile-docprops-core"/>
       <xsl:call-template name="write-docxfile-docprops-custom"/>

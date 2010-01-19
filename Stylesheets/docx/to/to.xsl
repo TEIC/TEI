@@ -42,6 +42,7 @@
 
     
     <xsl:import href="parameters.xsl"/>
+
     <xsl:import href="placeholders.xsl"/>
 
     <!-- Deals with dynamic text creation such as toc -->
@@ -63,6 +64,7 @@
     <xsl:include href="docxfiles/content-types.xsl"/>
     <xsl:include href="docxfiles/endnotes.xsl"/>
     <xsl:include href="docxfiles/footers.xsl"/>
+    <xsl:include href="docxfiles/comments.xsl"/>
     <xsl:include href="docxfiles/footnotes.xsl"/>
     <xsl:include href="docxfiles/headers.xsl"/>
     <xsl:include href="docxfiles/numbering-definition.xsl"/>
@@ -154,6 +156,9 @@
 
         <!-- endnotes file -->
         <xsl:call-template name="write-docxfile-endnotes-file"/>
+
+        <!-- comments file -->
+        <xsl:call-template name="write-docxfile-comments-file"/>
 
         <!-- main relationships -->
         <xsl:call-template name="write-docxfile-main-relationships"/>
@@ -604,19 +609,28 @@
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        Tests whether to add rendering attributes to a run.
-        Styles may not be added in applyRend. If you want to add
-        a style go for a get-style template.
+        Tests whether to add rendering elements to a run.
+        Word styles cannot not be added in applyRend. If you want to add
+        a style go for a get-style template. The order of these
+	elements in Word does matter, by the way.
+
      </desc>
    </doc>
     <xsl:template name="applyRend">
         <xsl:for-each select="..">
             <!-- use a custom font -->
-            <xsl:if test="@iso:font">
-                <w:rFonts w:ascii="{@iso:font}" w:hAnsi="{@iso:font}"/>
-            </xsl:if>
+	    <xsl:choose>
+	      <xsl:when test="@iso:font">
+		<w:rFonts w:ascii="{@iso:font}"
+			  w:hAnsi="{@iso:font}"/>
+	      </xsl:when>
+	      <!-- typewriter font -->
+	      <xsl:when test="contains(@rend,'typewriter') or teidocx:render-typewriter(.)">
+		<w:rFonts w:ascii="Courier" w:hAnsi="Courier"/>
+	      </xsl:when>
+	    </xsl:choose>
 
-            <!-- bold? -->
+            <!-- bold -->
             <xsl:choose>
                 <xsl:when test="teidocx:render-bold(.)">
                     <w:b/>
@@ -624,11 +638,14 @@
                 <xsl:when test="self::tei:hi[not(@rend)]">
                     <w:b/>
                 </xsl:when>
+                <xsl:when test="contains(@rend,'bold')">
+                    <w:b/>
+		</xsl:when>
             </xsl:choose>
 
             <!-- italic -->
             <xsl:choose>
-                <xsl:when test="contains(@rend,'italic') or     teidocx:render-italic(.)">
+                <xsl:when test="contains(@rend,'italic') or teidocx:render-italic(.)">
                     <w:i/>
                 </xsl:when>
                 <xsl:when test="self::tei:emph">
@@ -636,20 +653,50 @@
                 </xsl:when>
             </xsl:choose>
 
-            <!-- typewriter -->
-            <xsl:choose>
-                <xsl:when test="@rend='typewriter' or teidocx:render-typewriter(.)">
-                    <w:rFonts w:ascii="Courier" w:hAnsi="Courier"/>
-                </xsl:when>
-            </xsl:choose>
+	    <!-- small caps -->
+            <xsl:if test="contains(@rend,'smallcaps')">
+                <w:smallCaps/>
+            </xsl:if>
 
+	    <!-- all caps -->
+            <xsl:if test="contains(@rend,'allcaps')">
+                <w:caps/>
+            </xsl:if>
+
+	    <!-- strikethrough -->
+            <xsl:if test="contains(@rend,'strikethrough')">
+	      <w:strike/>
+	    </xsl:if>
+            <xsl:if test="contains(@rend,'strikedoublethrough')">
+	      <w:dstrike/>
+	    </xsl:if>
+	    
+	    <!-- colour -->
+	    <xsl:if test="contains(@rend,'color(')">
+		<w:color w:val="{substring-before(substring-after(@rend,'color('),')')}"/>
+	    </xsl:if>
+
+	    <!-- background color -->
+	    <xsl:if test="contains(@rend,'background(')">
+		<w:highlight w:val="{substring-before(substring-after(@rend,'background('),')')}"/>
+	    </xsl:if>
+
+	    <!-- underline -->
+            <xsl:if test="contains(@rend,'underline')">
+	      <w:u w:val="single"/>
+	    </xsl:if>
+            <xsl:if test="contains(@rend,'underdoubleline')">
+	      <w:u w:val="double"/>
+	    </xsl:if>
+
+	    <!-- sub- and superscript -->
             <xsl:if test="contains(@rend,'subscript')">
                 <w:vertAlign w:val="subscript"/>
             </xsl:if>
-
             <xsl:if test="contains(@rend,'superscript')">
                 <w:vertAlign w:val="superscript"/>
             </xsl:if>
+
         </xsl:for-each>
     </xsl:template>
 
@@ -670,6 +717,19 @@
         <w:r>
             <w:t xml:space="preserve"> </w:t>
         </w:r>
+    </xsl:template>
+
+    <xsl:template name="create-comment">
+      <w:r>
+	<w:rPr>
+	  <w:rStyle w:val="CommentReference"/>
+	  <w:vanish/>
+	</w:rPr>
+	<xsl:variable name="n">
+	  <xsl:number level="any"  count="tei:note[@place='comment']" />
+	</xsl:variable>
+	<w:commentReference w:id="{$n - 1}"/>
+      </w:r>
     </xsl:template>
 
     <!-- 

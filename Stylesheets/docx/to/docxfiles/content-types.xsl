@@ -32,7 +32,6 @@
                 version="2.0"
                 exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso its     tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
     
-    <xsl:import href="../parameters.xsl"/>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -102,7 +101,9 @@
                       ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml"/>
                 <Override PartName="/word/settings.xml"
                       ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml"/>
-                
+		<Override PartName="/word/comments.xml"
+                      ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml"/>
+
                 <!-- others -->
                 <Override PartName="/word/theme/theme1.xml"
                       ContentType="application/vnd.openxmlformats-officedocument.theme+xml"/>

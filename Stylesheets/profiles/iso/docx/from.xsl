@@ -564,7 +564,7 @@
         </c>
     </xsl:template>
 
-    <xsl:template name="ins-or-del">
+    <xsl:template name="processTextrun">
         <xsl:variable name="style">
             <xsl:value-of select="w:rPr/w:rStyle/@w:val"/>
         </xsl:variable>
@@ -578,6 +578,9 @@
 	    <xsl:when
 	    test="$style=$TableNoteHeadingChar"/>
 	-->
+	    <xsl:when test="$style='CommentReference'">
+	      <xsl:apply-templates/>
+	    </xsl:when>
             <xsl:when test="$style=$HeadingChar"/>
             <xsl:when test="$style=$HeadingCharFr"/>
             <xsl:when test="$style=$BibliographyReference"/>
@@ -624,11 +627,6 @@
                 </date>
             </xsl:when>
 
-            <xsl:when test="$style='orgName'">
-                <orgName>
-                    <xsl:apply-templates/>
-                </orgName>
-            </xsl:when>
             <xsl:when test="$style='isonumber'">
                 <num>
                     <xsl:apply-templates/>
@@ -653,69 +651,6 @@
                 </ref>
             </xsl:when>
 
-            <xsl:when test="w:rPr/w:position[number(@w:val)&lt;-2]">
-                <hi>
-		             <xsl:attribute name="rend">
-		                <xsl:text>subscript</xsl:text>
-		                <xsl:if test="w:rPr/w:i">
-		                   <xsl:text> italic</xsl:text>
-		                </xsl:if>
-		                <xsl:if test="w:rPr/w:b[not(@w:val='0')]">
-		                   <xsl:text> bold</xsl:text>
-		                </xsl:if>
-		             </xsl:attribute>
-                    <xsl:apply-templates/>
-                </hi>
-            </xsl:when>
-
-            <xsl:when test="w:rPr/w:position[number(@w:val)&gt;2]">
-                <hi>
-		             <xsl:attribute name="rend">
-		                <xsl:text>superscript</xsl:text>
-		                <xsl:if test="w:rPr/w:i">
-		                   <xsl:text> italic</xsl:text>
-		                </xsl:if>
-		                <xsl:if test="w:rPr/w:b[not(@w:val='0')]">
-		                   <xsl:text> bold</xsl:text>
-		                </xsl:if>
-		             </xsl:attribute>
-
-                    <xsl:apply-templates/>
-                </hi>
-            </xsl:when>
-
-            <xsl:when test="w:rPr/w:vertAlign">
-                <hi>
-                    <xsl:attribute name="rend">
-                        <xsl:value-of select="w:rPr/w:vertAlign/@w:val"/>
-                    </xsl:attribute>
-                    <xsl:apply-templates/>
-                </hi>
-            </xsl:when>
-
-            <xsl:when test="w:rPr/w:i">
-                <hi rend="italic">
-                    <xsl:apply-templates/>
-                </hi>
-            </xsl:when>
-
-            <xsl:when test="w:rPr/w:b[not(@w:val='0')]">
-                <hi rend="bold">
-                    <xsl:apply-templates/>
-                </hi>
-            </xsl:when>
-            <xsl:when test="$style='requirement'">
-                <seg iso:provision="requirement">
-                    <xsl:apply-templates/>
-                </seg>
-            </xsl:when>
-
-            <xsl:when test="$style='possibility_and_capability'">
-                <seg iso:provision="possibilityandcapability">
-                    <xsl:apply-templates/>
-                </seg>
-            </xsl:when>
-
             <xsl:when test="$style='statement'">
                 <seg iso:provision="statement">
                     <xsl:apply-templates/>
@@ -733,8 +668,20 @@
 	           </hi>
 	        </xsl:when>
 
+            <xsl:when test="$style='requirement'">
+                <seg iso:provision="requirement">
+                    <xsl:apply-templates/>
+                </seg>
+            </xsl:when>
+
+            <xsl:when test="$style='possibility_and_capability'">
+                <seg iso:provision="possibilityandcapability">
+                    <xsl:apply-templates/>
+                </seg>
+            </xsl:when>
+
             <xsl:otherwise>
-                <xsl:apply-templates/>
+	      <xsl:call-template name="basicStyles"/>
             </xsl:otherwise>
         </xsl:choose>
 

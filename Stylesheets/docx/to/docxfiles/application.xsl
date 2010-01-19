@@ -32,10 +32,6 @@
                 version="2.0"
                 exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso its     tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
 
-    <xsl:import href="../parameters.xsl"/>
-    <xsl:import href="../placeholders.xsl"/>
-    <xsl:import href="../../utils/functions.xsl"/>
-
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making Word docx files from TEI XML </p>
@@ -114,6 +110,7 @@
             </cp:coreProperties>
         </xsl:result-document>
     </xsl:template>
+
 
     <xsl:template name="write-docxfile-docprops-app">
 	     <xsl:if test="$debug='true'">

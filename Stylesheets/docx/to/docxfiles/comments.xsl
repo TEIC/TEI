@@ -32,7 +32,6 @@
                 version="2.0"
                 exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso its     tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
     
-    
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making Word docx files from TEI XML </p>
@@ -52,65 +51,44 @@
       </desc>
    </doc>
     
+    <xsl:key name="COMMENTS" match="tei:note[@place='comment']"    use="1"/>
+
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        Create the endnotes file
+        Create the comments file
     </desc>
    </doc>
-    <xsl:template name="write-docxfile-endnotes-file">
-	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/word/endnotes.xml')"/>
-         </xsl:message>
-	     </xsl:if>
+    <!-- write out comments -->
+    <xsl:template name="write-docxfile-comments-file">
 
-        <xsl:result-document href="{concat($word-directory,'/word/endnotes.xml')}">
-            <w:endnotes>
-                <w:endnote w:type="separator" w:id="0">
-                    <w:p>
-                        <w:pPr>
-                            <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
-                        </w:pPr>
-                        <w:r>
-                            <w:separator/>
-                        </w:r>
-                    </w:p>
-                    <w:p/>
-                    <w:p/>
-                </w:endnote>
-                <w:endnote w:type="continuationSeparator" w:id="1">
-                    <w:p>
-                        <w:pPr>
-                            <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
-                        </w:pPr>
-                        <w:r>
-                            <w:continuationSeparator/>
-                        </w:r>
-                    </w:p>
-                    <w:p/>
-                    <w:p/>
-                </w:endnote>
-                
-                <xsl:for-each select="key('ENDNOTES',1)">
-                    <xsl:variable name="id" select="position()+1"/>
-                    <w:endnote w:id="{$id}">
-                        <xsl:call-template name="block-element">
-                            <xsl:with-param name="pPr">
-                                <w:pPr>
-                                    <w:pStyle w:val="EndnoteText"/>
-                                </w:pPr>
-                                <w:r>
-                                    <w:rPr>
-                                        <w:rStyle w:val="EndnoteReference"/>
-                                    </w:rPr>
-                                    <w:endnoteRef/>
-                                </w:r>
-                            </xsl:with-param>
-                        </xsl:call-template>
-                    </w:endnote>
-                </xsl:for-each>
-                
-            </w:endnotes>
-        </xsl:result-document>
+      <xsl:if test="count(key('COMMENTS',1))&gt;0">
+	<xsl:if test="$debug='true'">
+	  <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'word/comments.xml')"/>
+	  </xsl:message>
+	</xsl:if>
+	<xsl:result-document href="{concat($word-directory,'/word/comments.xml')}" standalone="yes">
+	  <w:comments>
+	    <xsl:for-each select="key('COMMENTS',1)">
+	      <w:comment w:id="{position()-1}" w:author="{@resp}" w:date="{@when}">
+		<w:p>
+		  <w:pPr>
+		  <w:pStyle w:val="CommentText"/></w:pPr>
+		  <w:r>
+		    <w:rPr>
+		      <w:rStyle w:val="CommentReference"/>
+		    </w:rPr>
+		    <w:annotationRef/>
+		  </w:r>
+		  <w:r>
+		    <w:t>
+		      <xsl:apply-templates/>
+		    </w:t>
+		  </w:r>
+		</w:p>
+	      </w:comment>
+	    </xsl:for-each>
+	  </w:comments>
+	</xsl:result-document>
+      </xsl:if>
     </xsl:template>
-    
 </xsl:stylesheet>

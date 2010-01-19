@@ -240,6 +240,7 @@
 	  <xsl:when test="self::tei:note[@place='foot']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='bottom']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='end']">true</xsl:when>
+	  <xsl:when test="self::tei:note[@place='comment']">true</xsl:when>
 	  <xsl:when test="self::tei:num">true</xsl:when>
 	  <xsl:when test="self::tei:mentioned">true</xsl:when>
 	  <xsl:when test="self::tei:orgName">true</xsl:when>
@@ -277,6 +278,7 @@
 	  <name>ANNEX</name>
 	  <name>Bibliography Heading</name>
 	  <name>Bibliography</name>
+	  <name>CommentReference</name>
 	  <name>Definition</name>
 	  <name>Example list</name>
 	  <name>Example</name>

@@ -227,7 +227,10 @@
             <xsl:when test="@place='end'">
                 <xsl:call-template name="create-endnote"/>
             </xsl:when>
-        </xsl:choose>
+	    <xsl:when test="@place='comment'">
+	      <xsl:call-template name="create-comment"/>
+	    </xsl:when>
+	</xsl:choose>
     </xsl:template>
     
     

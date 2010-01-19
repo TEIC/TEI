@@ -32,7 +32,6 @@
                 version="2.0"
                 exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso its     tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
     
-    <xsl:import href="../parameters.xsl"/>
     
     <xsl:key name="GRAPHICS" use="1" match="tei:graphic[@url]"/>
     <xsl:key name="OLEOBJECTS" use="1" match="o:OLEObject"/>
@@ -119,6 +118,9 @@
                 <Relationship Id="rId8"
                           Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/endnotes"
                           Target="endnotes.xml"/>
+                <Relationship Id="rId9"
+                          Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments"
+                          Target="comments.xml"/>
                 <!-- odd stuff -->
                 <Relationship Id="rId18"
                           Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable"

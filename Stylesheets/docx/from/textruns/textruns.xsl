@@ -50,126 +50,172 @@
    </doc>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        
-    </desc>
+      <desc>Processing an inline run of text with its styling</desc>
    </doc>
-    <xsl:template match="w:r">
-      <xsl:call-template name="ins-or-del"/>
+
+    <xsl:template match="w:commentReference">
+      <xsl:variable name="commentN" select="@w:id"/>
+      <xsl:for-each
+	  select="document(concat($word-directory,'/word/comments.xml'))/w:comments/w:comment[@w:id=$commentN]">
+	<note place="comment" resp="{@w:author}" when="{@w:date}">
+	  <xsl:apply-templates/>
+	</note>
+      </xsl:for-each>
     </xsl:template>
 
-    <xsl:template name="ins-or-del">
-        <xsl:variable name="style">
-            <xsl:value-of select="w:rPr/w:rStyle/@w:val"/>
-        </xsl:variable>
-        <xsl:choose>
-            <xsl:when test="$style='mentioned'">
-                <mentioned>
-                    <xsl:apply-templates/>
-                </mentioned>
-            </xsl:when>
+    <xsl:template match="w:r">
+      <xsl:call-template name="processTextrun"/>
+    </xsl:template>
 
-            <xsl:when test="$style='Table text (9)'">
-	      <xsl:apply-templates/>
-	    </xsl:when>
 
-            <xsl:when test="$style='Hyperlink'">
-                <ref>
-		  <xsl:attribute name="target">
-		    <xsl:for-each
-			select="preceding-sibling::w:r[w:instrText][1]/w:instrText">
-		      <xsl:value-of select="substring-before(substring-after(.,'&#x0022;'),'&#x0022;')"/>
-		    </xsl:for-each>
-		  </xsl:attribute>
-                    <xsl:apply-templates/>
-                </ref>
-            </xsl:when>
-            
-            <xsl:when test="$style='ref'">
-                <ref>
-                    <xsl:apply-templates/>
-                </ref>
-            </xsl:when>
-            
-            <xsl:when test="$style='date'">
-                <date>
-                    <xsl:apply-templates/>
-                </date>
-            </xsl:when>
-            
-            <xsl:when test="$style='orgName'">
-                <orgName>
-                    <xsl:apply-templates/>
-                </orgName>
-            </xsl:when>
-            
-            <xsl:when test="w:rPr/w:position[number(@w:val)&lt;-2]">
-                <hi>
-		             <xsl:attribute name="rend">
-		                <xsl:text>subscript</xsl:text>
-		                <xsl:if test="w:rPr/w:i">
-		                   <xsl:text> italic</xsl:text>
-		                </xsl:if>
-		                <xsl:if test="w:rPr/w:b[not(@w:val='0')]">
-		                   <xsl:text> bold</xsl:text>
-		                </xsl:if>
-		             </xsl:attribute>
-		             <xsl:apply-templates/>
-                </hi>
-            </xsl:when>
-            
-            <xsl:when test="w:rPr/w:position[number(@w:val)&gt;2]">
-                <hi>
-		             <xsl:attribute name="rend">
-		                <xsl:text>superscript</xsl:text>
-		                <xsl:if test="w:rPr/w:i">
-		                   <xsl:text> italic</xsl:text>
-		                </xsl:if>
-		                <xsl:if test="w:rPr/w:b[not(@w:val='0')]">
-		                   <xsl:text> bold</xsl:text>
-		                </xsl:if>
-		             </xsl:attribute>
-		             <xsl:apply-templates/>
-                </hi>
-            </xsl:when>
-            
-            <xsl:when test="w:rPr/w:vertAlign">
-                <hi>
-		             <xsl:attribute name="rend">
-		                <xsl:value-of select="w:rPr/w:vertAlign/@w:val"/>
-		                <xsl:if test="w:rPr/w:i">
-		                   <xsl:text> italic</xsl:text>
-		                </xsl:if>
-		                <xsl:if test="w:rPr/w:b[not(@w:val='0')]">
-		                   <xsl:text> bold</xsl:text>
-		                </xsl:if>
-		             </xsl:attribute>
-		             <xsl:apply-templates/>
-		          </hi>
-            </xsl:when>
-            
-            <xsl:when test="w:rPr/w:i">
-                <hi rend="italic">
-                    <xsl:apply-templates/>
-                </hi>
-            </xsl:when>
-            
-            <xsl:when test="w:rPr/w:b[not(@w:val='0')]">
-                <hi rend="bold">
-                    <xsl:apply-templates/>
-                </hi>
-            </xsl:when>
-            
-            <xsl:when test="not($style='')">
-	      <hi rend="{$style}">
-                <xsl:apply-templates/>
-	      </hi>
-	    </xsl:when>
-            <xsl:otherwise>
-                <xsl:apply-templates/>
-            </xsl:otherwise>
-        </xsl:choose>
+   <xsl:template name="processTextrun">
+     <xsl:variable name="style">
+       <xsl:value-of select="w:rPr/w:rStyle/@w:val"/>
+     </xsl:variable>
+     <xsl:choose>
+       <xsl:when test="$style='CommentReference'">
+	   <xsl:apply-templates/>
+       </xsl:when>
+
+       <xsl:when test="$style='mentioned'">
+	 <mentioned>
+	   <xsl:apply-templates/>
+	 </mentioned>
+       </xsl:when>
+       
+       <xsl:when test="$style='Hyperlink'">
+	 <ref>
+	   <xsl:attribute name="target">
+	     <xsl:for-each
+		 select="preceding-sibling::w:r[w:instrText][1]/w:instrText">
+	       <xsl:value-of select="substring-before(substring-after(.,'&#x0022;'),'&#x0022;')"/>
+	     </xsl:for-each>
+	   </xsl:attribute>
+	   <xsl:apply-templates/>
+	 </ref>
+       </xsl:when>
+       
+       <xsl:when test="$style='ref'">
+	 <ref>
+	   <xsl:apply-templates/>
+	 </ref>
+       </xsl:when>
+       
+       <xsl:when test="$style='date'">
+	 <date>
+	   <xsl:apply-templates/>
+	 </date>
+       </xsl:when>
+       
+       <xsl:when test="$style='orgName'">
+	 <orgName>
+	   <xsl:apply-templates/>
+	 </orgName>
+       </xsl:when>
+       
+       <xsl:when test="not($style='')">
+	 <hi rend="{$style}">
+	   <xsl:apply-templates/>
+	 </hi>
+       </xsl:when>
+       
+       <xsl:otherwise>
+	 <xsl:call-template name="basicStyles"/>
+       </xsl:otherwise>
+       
+     </xsl:choose>
         
+   </xsl:template>
+    
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>If there is no special style defined, look at the Word
+      underlying basic formatting</desc>
+   </doc>
+    <xsl:template name="basicStyles">
+      <xsl:variable name="effects">
+	<xsl:if test="w:rPr/w:position[number(@w:val)&lt;-2]">
+	  <n>subscript</n>
+	</xsl:if>
+	
+	<xsl:if test="w:rPr/w:i">
+	  <n>italic</n>
+	</xsl:if>
+	
+	<xsl:if test="w:rPr/w:b[not(@w:val='0')]">
+	  <n>bold</n>
+	</xsl:if>
+
+	<xsl:if test="w:rPr/w:position[number(@w:val)&gt;2]">
+	  <n>superscript</n>
+	</xsl:if>
+
+	<xsl:if test="w:rPr/w:vertAlign">
+	  <n>
+	    <xsl:value-of select="w:rPr/w:vertAlign/@w:val"/>
+	  </n>
+	</xsl:if>
+
+	<xsl:if test="w:rPr/w:strike">
+	  <n>strikethrough</n>
+	</xsl:if>
+
+	<xsl:if test="w:rPr/w:dstrike">
+	  <n>strikedoublethrough</n>
+	</xsl:if>
+
+	<xsl:if test="w:rPr/w:u[@w:val='single']">
+	  <n>underline</n>
+	</xsl:if>
+
+	<xsl:if test="w:rPr/w:u[@w:val='double']">
+	  <n>underdoubleline</n>
+	</xsl:if>
+
+	<xsl:if test="w:rPr/w:smallCaps">
+	  <n>smallcaps</n>
+	</xsl:if>
+
+	<xsl:if test="w:rPr/w:caps">
+	  <n>allcaps</n>
+	</xsl:if>
+
+	<xsl:if test="w:rPr/w:color">
+	  <n>
+	    <xsl:text>color(</xsl:text>
+	    <xsl:value-of select="w:rPr/w:color/@w:val"/>
+	    <xsl:text>)</xsl:text>
+	  </n>
+	</xsl:if>
+
+	<xsl:if test="w:rPr/w:highlight">
+	  <n>
+	    <xsl:text>background(</xsl:text>
+	    <xsl:value-of select="w:rPr/w:highlight/@w:val"/>
+	    <xsl:text>)</xsl:text>
+	  </n>
+	</xsl:if>
+		
+      </xsl:variable>
+
+      <xsl:choose>
+	<xsl:when test="not($effects/*)">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <hi>
+	    <xsl:attribute name="rend">
+	      <xsl:for-each select="$effects/*">
+		<xsl:value-of select="."/>
+		<xsl:if test="following-sibling::*">
+		  <xsl:text> </xsl:text>
+		</xsl:if>
+	      </xsl:for-each>
+	    </xsl:attribute>
+	    <xsl:apply-templates/>
+	  </hi>
+	</xsl:otherwise>
+      </xsl:choose>
+      
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -468,7 +514,9 @@
 	<xsl:apply-templates/>
       </del>
     </xsl:template>
+
     <xsl:template match="w:rPr/w:del"/>
+
     <xsl:template match="w:delText">
       <xsl:apply-templates/>
     </xsl:template>
@@ -478,9 +526,10 @@
 	<xsl:call-template name="identifyChange">
 	   <xsl:with-param name="who" select="@w:author"/>
 	</xsl:call-template>
-	<xsl:call-template name="ins-or-del"/>
+	<xsl:call-template name="processTextrun"/>
       </add>
     </xsl:template>
+
     <xsl:template match="w:rPr/w:ins"/>
  
     
