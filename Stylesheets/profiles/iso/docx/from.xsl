@@ -813,7 +813,7 @@
                         </bibl>
                     </xsl:when>
                     <xsl:otherwise>
-                        <p>
+                        <p rend="RefNorm">
                             <xsl:apply-templates/>
                         </p>
                     </xsl:otherwise>
