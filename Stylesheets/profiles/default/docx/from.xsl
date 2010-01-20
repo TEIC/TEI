@@ -24,4 +24,34 @@
 
     <xsl:import href="../../../docx/from/from.xsl"/>
     
+    <xsl:output indent="no"/>
+  <xsl:template match="tei:hi[@rend]" mode="part2">
+    <xsl:variable name="r" select="@rend"/>
+    <xsl:choose>
+      <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@rend=$r]]">
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates mode="part2"/>
+	  <xsl:call-template name="nextHi">
+	    <xsl:with-param name="r" select="$r"/>
+	  </xsl:call-template>
+	</xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
+   </xsl:template>
+
+   <xsl:template name="nextHi">
+      <xsl:param name="r"/>
+      <xsl:for-each select="following-sibling::node()[1]">
+         <xsl:if test="self::tei:hi[@rend=$r]">
+            <xsl:apply-templates mode="part2"/>
+            <xsl:call-template name="nextHi">
+	              <xsl:with-param name="r" select="$r"/>
+            </xsl:call-template>
+         </xsl:if>
+      </xsl:for-each>
+   </xsl:template>
+
 </xsl:stylesheet>
