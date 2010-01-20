@@ -132,6 +132,11 @@
 	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$a4]">true</xsl:when>
 	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$a5]">true</xsl:when>
 	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$a6]">true</xsl:when>
+	<xsl:when test="$p[w:pPr/w:pStyle/@w:val='p2']">true</xsl:when>
+	<xsl:when test="$p[w:pPr/w:pStyle/@w:val='p3']">true</xsl:when>
+	<xsl:when test="$p[w:pPr/w:pStyle/@w:val='p4']">true</xsl:when>
+	<xsl:when test="$p[w:pPr/w:pStyle/@w:val='p5']">true</xsl:when>
+	<xsl:when test="$p[w:pPr/w:pStyle/@w:val='p6']">true</xsl:when>
 	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$BibliographyHeading]">true</xsl:when>
 	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$ForewordHeading]">true</xsl:when>
 	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$IntroductionHeading]">true</xsl:when>
