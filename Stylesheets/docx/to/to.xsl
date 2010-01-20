@@ -756,14 +756,21 @@
     <!--
         Headers and Sections  
     -->
-    <xsl:template match="tei:head[parent::tei:div or                                              parent::tei:div1 or                                             parent::tei:div2 or                                             parent::tei:div3 or                                             parent::tei:div4 or                                             parent::tei:div5 or                                             parent::tei:div6 or                                             parent::tei:div7]">
+    <xsl:template match="tei:div[@type='nohead']">
+      <!-- find out what level we are at -->
+      <xsl:variable name="level">
+	<xsl:value-of select="count(ancestor-or-self::tei:div)"/>
+      </xsl:variable>
+      <xsl:message>Met a headless div <xsl:value-of select="$level"/></xsl:message>
+    </xsl:template>
 
-        <!-- find out what level we are at -->
-        <xsl:variable name="level">
-            <xsl:value-of select="count(ancestor-or-self::tei:div|                                         ancestor-or-self::tei:div1|                                         ancestor-or-self::tei:div2|                                         ancestor-or-self::tei:div3|                                         ancestor-or-self::tei:div4|                                         ancestor-or-self::tei:div5|                                         ancestor-or-self::tei:div6|                                         ancestor-or-self::tei:div7)"/>
-        </xsl:variable>
+    <xsl:template match="tei:head[parent::tei:div or parent::tei:div1 or parent::tei:div2 or parent::tei:div3 or parent::tei:div4 or parent::tei:div5 or parent::tei:div6 or parent::tei:div7]">
 
-        <!-- grep all previous headings to get some id -->
+      <!-- find out what level we are at -->
+      <xsl:variable name="level">
+	<xsl:value-of select="count(ancestor-or-self::tei:div| ancestor-or-self::tei:div1| ancestor-or-self::tei:div2| ancestor-or-self::tei:div3| ancestor-or-self::tei:div4| ancestor-or-self::tei:div5| ancestor-or-self::tei:div6| ancestor-or-self::tei:div7)"/>
+      </xsl:variable>
+      
         <xsl:variable name="number">
             <xsl:number level="any"/>
         </xsl:variable>
@@ -787,7 +794,6 @@
                             <xsl:with-param name="in" select="$style"/>
                         </xsl:call-template>
                     </xsl:when>
-
                     <xsl:otherwise>
                         <xsl:call-template name="getStyleName">
                             <xsl:with-param name="in">
