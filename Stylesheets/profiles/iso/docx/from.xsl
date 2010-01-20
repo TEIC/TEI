@@ -460,13 +460,13 @@
                 </head>
             </xsl:when>
 
-            <xsl:when test="$Style='a2' or                  $Style='a3' or                  $Style='a4' or                  $Style='a5' or                  $Style='a6'">
-                <xsl:attribute name="type">annexSection</xsl:attribute>
+            <xsl:when test="$Style='a2' or $Style='a3' or $Style='a4' or $Style='a5' or $Style='a6'">
+                <xsl:attribute
+                name="type">annexSection</xsl:attribute>
                 <head>
                     <xsl:apply-templates/>
                 </head>
             </xsl:when>
-
 
             <xsl:otherwise>
                 <xsl:attribute name="type">nohead</xsl:attribute>
@@ -1647,4 +1647,26 @@
       </xsl:choose>
     </xsl:template>
 
+<!-- test data for refnorm:
+
+ISO 6887-1, Microbiology of food and animal feeding stuffs — Preparation of test samples, initial suspension and decimal dilutions for microbiological examination — Part 1: General rules for the preparation of the initial suspension and decimal dilutions
+ISO 7218:1996, Microbiology of food and animal feeding stuffs — General rules for microbiological examinations
+ISO 8261, Milk and milk products — General guidance for the preparation of test samples, initial suspensions and decimal dilutions for microbiological examination
+ISO/TS 11133-1, Microbiology of food and animal feeding stuffs — Guidelines on preparation and production of culture media — Part 1: General guidelines on quality assurance for the preparation of culture media in the laboratory
+ISO/TS 11133-2:1999, Microbiology of food and animal feeding stuffs — Guidelines on preparation and production of culture media — Part 2: Practical guidelines on performance testing of culture media
+-->
+
+<!-- refnorm: 
+     <xsl:analyze-string 
+      regex="^([A-Z/]+)\s([0-9]+)-?([0-9]*):?([0-9]*),(.*)"
+      select=".">
+      <xsl:matching-substring>
+        <xsl:value-of select="regex-group(0)"/>
+      </xsl:matching-substring>
+      <xsl:non-matching-substring>
+        <td><b style="color:red">Invalid date format</b></td>
+        [<xsl:value-of select="substring(.,1,10)"/>]
+      </xsl:non-matching-substring>
+    </xsl:analyze-string>
+-->
 </xsl:stylesheet>
