@@ -1,4 +1,7 @@
 #!/bin/sh 
+
+# convert TEI file $1 into epub
+
 profile=default
 odd=false
 debug=false
@@ -23,51 +26,33 @@ F=`basename $1`
 THERE=`(cd $D; pwd)`
 X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
-TEMPDIR=/tmp/docx$$
+TEMPDIR=/tmp/epub$$
 TEMPLATES=$APPHOME/profiles/$profile/epub
 XSL=$APPHOME
-mkdir -p $TEMPDIR/word/media
+mkdir -p $TEMPDIR
 echo read $THERE/$F
 case $THERE/$F in 
        *.zip)  (cd $TEMPDIR; unzip -q $THERE/$F ); F=`basename $F .zip`.xml;; 
        *) cp $THERE/$F $TEMPDIR/$F  ;; 
 esac
-(cd $TEMPDIR; saxon $F $XSL/docx/utils/graphics/listgraphics.xsl ORIG=$THERE DIR=$TEMPDIR/word/media > fetch; sh $TEMPDIR/fetch; rm $TEMPDIR/fetch)
-(cd $TEMPDIR/word/media
-ls * >& /dev/null && for i in *; do  exiftool -q -o $i.xmp $i; done
-)
 cd $TEMPDIR
-unzip -o -q $TEMPLATES/template.docx
 if $odd
 then
     saxon -o $TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl localsource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
     saxon -o $TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
-    saxon -o $TEMPDIR/tmp3.xml  $TEMPDIR/tmp2.xml $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
 else
-    saxon -o $TEMPDIR/tmp3.xml  $F $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
+   mv  $F tmp2.xml
 fi
-saxon -o tmp4.xml tmp3.xml $APPHOME/profiles/$profile/docx/to.xsl  \
-    debug=$debug isofreestanding=true styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR tei-directory=$TEMPDIR/ tableMethod=$tables
-if test -f $APPHOME/profiles/$profile/docx/makecoverpages2.xsl 
-then
-   echo rewrite cover page
-   saxon -o doctemp.xml word/document.xml $APPHOME/profiles/$profile/docx/makecoverpages.xsl \
-       header-file=$TEMPDIR/tmp3.xml document-file=$TEMPDIR/tmp4.xml 
-   mv doctemp.xml word/document.xml
-else
-   mv tmp4.xml word/document.xml
-fi
+saxon  tmp2.xml $APPHOME/profiles/$profile/epub/to.xsl  
 if $debug 
 then
     echo leaving tmp[123].xml alone
 else
-    rm -f tmp3.xml tmp1.xml tmp2.xml
+    rm -f tmp1.xml tmp2.xml
 fi
-rm -f word/media/*.xmp
-mv docProps/newcore.xml docProps/core.xml 
-mv docProps/newcustom.xml docProps/custom.xml 
-rm -f $THERE/$F.docx
-zip -q -r $THERE/$F.docx word _rels docProps customXML \[Content_Types\].xml
+rm -f $THERE/$F.epub
+zip -q0X  $THERE/$F.epub mimetype
+zip -qXr9D  $THERE/$F.epub   META-INF OEBPS
 cd $HERE
 if $debug 
 then
@@ -75,5 +60,5 @@ then
 else
     rm -rf $TEMPDIR
 fi
-echo wrote $F.docx in $THERE
+echo wrote $F.epub in $THERE
 
