@@ -358,7 +358,7 @@ $requestedID: requests a particular page
                         </xsl:attribute>
                         <xsl:call-template name="bodyHook"/>
                         <xsl:call-template name="bodyJavascriptHook"/>
-		                      <div class="stdheader">
+			<div class="stdheader">
                            <xsl:call-template name="stdheader">
                               <xsl:with-param name="title">
                                  <xsl:call-template name="generateTitle"/>
@@ -367,12 +367,12 @@ $requestedID: requests a particular page
 		                      </div>
                         <h2>
                            <xsl:apply-templates mode="xref" select="."/>
-		                         <xsl:call-template name="sectionHeadHook"/>
+			   <xsl:call-template name="sectionHeadHook"/>
                         </h2>
                         <xsl:apply-templates/>
                         <xsl:call-template name="printNotes"/>
                         <xsl:call-template name="htmlFileBottom"/>
-		                      <xsl:call-template name="bodyEndHook"/>
+			<xsl:call-template name="bodyEndHook"/>
                      </body>
                   </html>
                </xsl:otherwise>
