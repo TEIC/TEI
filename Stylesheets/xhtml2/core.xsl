@@ -1958,9 +1958,6 @@
             <xsl:call-template name="cssHook"/>
          </head>
          <body>
-            <xsl:attribute name="onload">
-               <xsl:text>startUp()</xsl:text>
-            </xsl:attribute>
             <xsl:call-template name="bodyHook"/>
             <xsl:call-template name="bodyJavascriptHook"/>
 	           <div class="stdheader">

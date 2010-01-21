@@ -353,9 +353,6 @@ $requestedID: requests a particular page
                      <xsl:call-template name="addLangAtt"/>
                      <xsl:call-template name="htmlFileTop"/>
                      <body id="TOP">
-                        <xsl:attribute name="onload">
-                           <xsl:text>startUp()</xsl:text>
-                        </xsl:attribute>
                         <xsl:call-template name="bodyHook"/>
                         <xsl:call-template name="bodyJavascriptHook"/>
 			<div class="stdheader">
@@ -413,9 +410,6 @@ $requestedID: requests a particular page
             <xsl:call-template name="javascriptHook"/>
          </head>
          <body class="simple" id="TOP">
-            <xsl:attribute name="onload">
-               <xsl:text>startUp()</xsl:text>
-            </xsl:attribute>
             <xsl:call-template name="bodyHook"/>
             <xsl:call-template name="bodyJavascriptHook"/>
             <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
@@ -1374,89 +1368,7 @@ $requestedID: requests a particular page
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] Javascript functions to be declared in HTML header</desc>
    </doc>
-  <xsl:template name="includeJavascript">
-      <xsl:text>
-</xsl:text>
-      <xsl:call-template name="writeJavascript">
-         <xsl:with-param name="content">
-	           <xsl:if test="$virtualPages='true'"> 
-	              <xsl:text>var thisDiv; var curID = '</xsl:text>
-	              <xsl:choose>
-                  <xsl:when test="not($requestedID='')">
-                     <xsl:value-of select="$requestedID"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-                     <xsl:apply-templates mode="ident" select=".//tei:body/tei:div[1]"/>
-                  </xsl:otherwise>
-               </xsl:choose>
-	              <xsl:text>'; 
-
-	  function switchDiv(id) { thisDiv =
-          document.getElementById(curID); thisDiv.style.display = "none";
-          curID=id; thisDiv = document.getElementById(curID);
-          thisDiv.style.display = "block"; } 
-	  </xsl:text>
-	           </xsl:if> 
-	           <xsl:text>
-	    function startUp() {
-	  </xsl:text>
-            <xsl:if test="$virtualPages='true'"> thisDiv =
-          document.getElementById(curID); thisDiv.style.display = "block";
-        </xsl:if> 
-	           <xsl:text>} 
-
-	</xsl:text>
-	           <!--	function clearsearch(){
-	document.searchform.q.value = "";
-	}
-	
-	function clearsearch2(){
-	document.searchform2.q.value = "";
-	}
-	
-	function expandcollapse (postid) { 
-	whichpost = document.getElementById(postid); 	
-	if (whichpost.className=="posthidden") { 
-	  whichpost.className="postshown"; 
-	 } 
-	else { 
-	  whichpost.className="posthidden"; 
-	 } 
-	} 
-	
-	function popUpPage(url, parameters, name)
-	{
-	var day = new Date();
-	var pageName = name ? name : day.getTime()
-	
-	eval("ox"+pageName+" = window.open('"+url+"','"+pageName+"','"+parameters+"')");
-	
-	if (eval("ox"+pageName) &amp;&amp; window.focus) eval("ox"+pageName).focus();
-	}
-	-->
-	<xsl:if test="$rawXML='true'"> 
-	              <xsl:text>function makeitsoyoubastard(hash){
-          alert("Fragment "+hash); 
-	  var as = document.all.tags("A"); for (var
-          i=0; i &lt; as.length; i++){ if (as[i].name == hash)
-          as[i].scrollIntoView(true); } } 
-	  
-	  function gotoSection(frag,section){
-          var s = new ActiveXObject("MSXML2.FreeThreadedDOMDocument"); 
-	  var x = document.XMLDocument; 
-	  if (x == null){ x = navigator.XMLDocument; s =
-          navigator.XSLDocument; }else{ s.async = false;
-          s.load(document.XSLDocument.url); x.load(document.XMLDocument.url); }
-          var tem = new ActiveXObject("MSXML2.XSLTemplate"); tem.stylesheet = s;
-          var proc = tem.createProcessor(); proc.addParameter("ID", section);
-          proc.input = x; proc.transform(); var str = proc.output; var newDoc =
-          document.open("text/html", "replace"); newDoc.write(str);
-          newDoc.close(); navigator.XMLDocument = x; navigator.XSLDocument = s;
-          if (frag == '') {} else { makeitsoyoubastard(frag); } }
-	    </xsl:text>
-            </xsl:if>
-         </xsl:with-param>
-      </xsl:call-template>
+   <xsl:template name="includeJavascript">
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
@@ -1909,17 +1821,8 @@ $requestedID: requests a particular page
             <xsl:call-template name="javascriptHook"/>
          </head>
          <body>
-            <xsl:attribute name="onload">
-	              <xsl:choose>
-	                 <xsl:when test="tei:text/tei:body/@onload">
-	                    <xsl:value-of select="tei:text/tei:body/@onload"/>
-	                 </xsl:when>
-	                 <xsl:otherwise>
-	                    <xsl:text>startUp()</xsl:text>
-	                 </xsl:otherwise>
-	              </xsl:choose>
-            </xsl:attribute>
-	           <xsl:copy-of select="tei:text/tei:body/@onunload"/>
+	    <xsl:copy-of select="tei:text/tei:body/@unload"/>
+	    <xsl:copy-of select="tei:text/tei:body/@onunload"/>
             <xsl:call-template name="bodyHook"/>
             <xsl:call-template name="bodyJavascriptHook"/>
 	           <xsl:call-template name="mainPage">
@@ -2069,9 +1972,6 @@ $requestedID: requests a particular page
          <xsl:call-template name="addLangAtt"/>
          <xsl:call-template name="htmlFileTop"/>
          <body class="simple" id="TOP">
-            <xsl:attribute name="onload">
-               <xsl:text>startUp()</xsl:text>
-            </xsl:attribute>
             <xsl:call-template name="bodyHook"/>
             <xsl:call-template name="bodyJavascriptHook"/>
             <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
@@ -2140,9 +2040,6 @@ $requestedID: requests a particular page
             <xsl:call-template name="javascriptHook"/>
          </head>
          <body class="pagetable">
-            <xsl:attribute name="onload">
-               <xsl:text>startUp()</xsl:text>
-            </xsl:attribute>
             <xsl:call-template name="bodyHook"/>
             <xsl:call-template name="bodyJavascriptHook"/>
             <xsl:call-template name="pageHeader">
@@ -2852,9 +2749,6 @@ $requestedID: requests a particular page
             <xsl:call-template name="javascriptHook"/>
          </head>
          <body id="TOP">
-            <xsl:attribute name="onload">
-               <xsl:text>startUp()</xsl:text>
-            </xsl:attribute>
             <xsl:call-template name="bodyHook"/>
             <xsl:call-template name="bodyJavascriptHook"/>
             <div class="teidiv">

@@ -189,9 +189,6 @@
 	                    <xsl:call-template name="javascriptHook"/>
 	                 </head>
 	                 <body id="TOP">
-	                    <xsl:attribute name="onload">
-		                      <xsl:text>startUp()</xsl:text>
-	                    </xsl:attribute>
 	                    <xsl:call-template name="bodyHook"/>
 	                    <xsl:call-template name="teiTOP">
 		                      <xsl:with-param name="name">

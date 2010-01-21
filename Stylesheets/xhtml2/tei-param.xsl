@@ -219,7 +219,7 @@ right-hand column</li>
 headings.</p>
          <p>TEI &lt;div&gt;s are implicitly or explicitly numbered from 0
 upwards; this offset is added to that number to produce an HTML
-&lt;Hn&gt; element. So a value of 2 here means that a &lt;div0&gt;
+&lt;Hn&gt; element. So a value of 2 here means that a &lt;div1&gt;
 will generate an &lt;h2&gt;</p>
       </desc>
    </doc>
@@ -573,13 +573,14 @@ Suffix of output file(s).
 Public Doctype of output file(s).
 </desc>
    </doc>
-  <xsl:param name="doctypePublic">-//W3C//DTD HTML 4.0 Transitional//EN</xsl:param>
+
+  <xsl:param name="doctypePublic">-//W3C//DTD XHTML 1.0 Transitional//EN</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
       <desc>
 System Doctype of output file(s).
 </desc>
    </doc>
-  <xsl:param name="doctypeSystem">http://www.w3.org/TR/html4/loose.dtd</xsl:param>
+  <xsl:param name="doctypeSystem">http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
       <desc>
          <p>The style of HTML (Simple, CSS or Table) which creates the layout for generated pages.</p>
@@ -621,7 +622,7 @@ Break front matter into separate HTML pages (if splitting enabled).
          <p>Level at which to split sections.</p>
          <p>When processing a &lt;div&gt; or &lt;div[0-5]&gt;, compare
 the nesting depth and see whether to start a new HTML page. Since the
-TEI starts with &lt;div0&gt;, setting this parameter to 0 will cause
+TEI starts with &lt;div1&gt;, setting this parameter to 0 will cause
 top-level sections to be split apart. The default is not to split at
 all.
 </p>
