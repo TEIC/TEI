@@ -10,6 +10,7 @@
 
   <xsl:output method="xml" encoding="utf-8" indent="yes"/>
 
+  <xsl:key name="GRAPHICS" use="1" match="tei:graphic"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -52,7 +53,11 @@
   <xsl:param name="autoToc">false</xsl:param>
   <xsl:param name="tocDepth">1</xsl:param>
   <xsl:param name="linkPanel">false</xsl:param>
+  <xsl:param name="institution"></xsl:param>
+  <xsl:param name="uid"></xsl:param>
 
+  <xsl:template name="stdfooter"/>  
+  
   <xsl:template name="generateLicence">
     <xsl:text>Creative Commons Attribution</xsl:text>
   </xsl:template>
@@ -66,7 +71,15 @@
   </xsl:template>
 
   <xsl:template name="generateID">
-    <xsl:text>1</xsl:text>
+    <xsl:choose>
+      <xsl:when test="$uid=''">
+	<xsl:text>http://www.example.com/TEIEPUB/</xsl:text>
+	<xsl:value-of select="format-dateTime(current-dateTime(),'[Y][M02][D02][H02][M02][s02]')"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$uid"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="generateLocalCSS">
@@ -176,6 +189,19 @@
 		</xsl:attribute>
 	      </item>
 	    </xsl:for-each>
+	    <!-- images -->
+	    <xsl:for-each select="key('GRAPHICS',1)">
+	      <xsl:variable name="mimetype">
+		<xsl:choose>
+		  <xsl:when
+		      test="contains(@url,'.gif')">image/gif</xsl:when>
+		  <xsl:when test="contains(@url,'.png')">image/png</xsl:when>
+		  <xsl:otherwise>image/jpeg</xsl:otherwise>
+		</xsl:choose>
+	      </xsl:variable>
+	      <item href="{@url}"
+		    media-type="{$mimetype}"/>
+	    </xsl:for-each>
             <item id="ncx" href="toc.ncx"                 
                   media-type="application/x-dtbncx+xml" />
           </manifest>
@@ -201,8 +227,11 @@
             
 	    <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
               <reference type="text"       
-                         title="{normalize-space(.)}"              
-                         href="{html:a/@href}" />
+                         href="{html:a/@href}" >
+		<xsl:attribute name="title">
+		  <xsl:value-of select="normalize-space(html:a)"/>
+		</xsl:attribute>
+	      </reference>
             </xsl:for-each>
           </guide>
         </package>
@@ -241,7 +270,7 @@
 	      <navPoint id="navPoint-{position()}" playOrder="{position()+1}">
                 <navLabel>
                   <text>
-		    <xsl:value-of select="normalize-space(.)"/>
+		    <xsl:value-of select="normalize-space(html:a)"/>
                   </text>
                 </navLabel>
                 <content src="{html:a/@href}"/>

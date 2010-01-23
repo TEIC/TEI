@@ -4,10 +4,12 @@
 
 profile=default
 odd=false
+uid=
 debug=false
 while test $# -gt 0; do
   case $1 in
     --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
+    --uid=*)  uid=`echo $1 | sed 's/.*=//'`;;
     --odd)       odd=true;;
     --debug)     debug=true;;
     *) if test "$1" = "${1#--}" ; then 
@@ -29,21 +31,23 @@ APPHOME=`(cd $X; pwd)`
 TEMPDIR=/tmp/epub$$
 TEMPLATES=$APPHOME/profiles/$profile/epub
 XSL=$APPHOME
-mkdir -p $TEMPDIR
+mkdir -p $TEMPDIR/OEBPS/media
 echo read $THERE/$F
 case $THERE/$F in 
        *.zip)  (cd $TEMPDIR; unzip -q $THERE/$F ); F=`basename $F .zip`.xml;; 
        *) cp $THERE/$F $TEMPDIR/$F  ;; 
 esac
+(cd $TEMPDIR; saxon $F $XSL/docx/utils/graphics/listgraphics.xsl ORIG=$THERE DIR=$TEMPDIR/OEBPS/media > fetch; sh $TEMPDIR/fetch; rm $TEMPDIR/fetch)
 cd $TEMPDIR
 if $odd
 then
     saxon -o $TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl localsource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
     saxon -o $TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
+    saxon -o $TEMPDIR/tmp3.xml  $TEMPDIR/tmp2.xml $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
 else
-   mv  $F tmp2.xml
+    saxon -o $TEMPDIR/tmp3.xml  $F $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
 fi
-saxon  tmp2.xml $APPHOME/profiles/$profile/epub/to.xsl  
+saxon  tmp3.xml $APPHOME/profiles/$profile/epub/to.xsl  uid=$uid
 if $debug 
 then
     echo leaving tmp[123].xml alone

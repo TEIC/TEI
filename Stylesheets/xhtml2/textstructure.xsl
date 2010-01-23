@@ -2313,67 +2313,72 @@ $requestedID: requests a particular page
       <xsl:param name="title" select="'(no title)'"/>
       <xsl:choose>
          <xsl:when test="$pageLayout='Simple'">
+	   <xsl:if test="not($institution='')">
             <h2 class="institution">
                <xsl:value-of select="$institution"/>
             </h2>
+	   </xsl:if>
+	   <xsl:if test="not($department='')">
             <h2 class="department">
                <xsl:value-of select="$department"/>
             </h2>
+	   </xsl:if>
+	   
+	   <xsl:call-template name="makeHTMLHeading">
+	     <xsl:with-param name="class">maintitle</xsl:with-param>
+	     <xsl:with-param name="text">
+	       <xsl:copy-of select="$title"/>
+	     </xsl:with-param>
+	     <xsl:with-param name="level">1</xsl:with-param>
+	   </xsl:call-template>
+	   
+	   <xsl:call-template name="makeHTMLHeading">
+	     <xsl:with-param name="class">subtitle</xsl:with-param>
+	     <xsl:with-param name="text">
+	       <xsl:call-template name="generateSubTitle"/>
+	     </xsl:with-param>
+	     <xsl:with-param name="level">2</xsl:with-param>
+	   </xsl:call-template>
+	   
 
-	           <xsl:call-template name="makeHTMLHeading">
-	              <xsl:with-param name="class">maintitle</xsl:with-param>
-	              <xsl:with-param name="text">
-	                 <xsl:copy-of select="$title"/>
-	              </xsl:with-param>
-	              <xsl:with-param name="level">1</xsl:with-param>
-	           </xsl:call-template>
-	
-	           <xsl:call-template name="makeHTMLHeading">
-	              <xsl:with-param name="class">subtitle</xsl:with-param>
-	              <xsl:with-param name="text">
-	                 <xsl:call-template name="generateSubTitle"/>
-	              </xsl:with-param>
-	              <xsl:with-param name="level">2</xsl:with-param>
-	           </xsl:call-template>
-	
-
-            <xsl:if test="$showTitleAuthor='true'">
-               <xsl:if test="$verbose='true'">
-                  <xsl:message>displaying author and date</xsl:message>
-               </xsl:if>
-               <xsl:call-template name="generateAuthorList"/>
-               <xsl:text> </xsl:text>
-               <xsl:call-template name="generateDate"/>
-            </xsl:if>
-         </xsl:when>
-         <xsl:otherwise>
-	           <xsl:call-template name="makeHTMLHeading">
-	              <xsl:with-param name="class">maintitle</xsl:with-param>
-	              <xsl:with-param name="text">
-	                 <xsl:value-of select="$title"/>
-	              </xsl:with-param>
-	              <xsl:with-param name="level">1</xsl:with-param>
-	           </xsl:call-template>
-
-	           <xsl:call-template name="makeHTMLHeading">
-	              <xsl:with-param name="class">subtitle</xsl:with-param>
-	              <xsl:with-param name="text">
-                  <xsl:call-template name="generateTitle"/>
-	              </xsl:with-param>
-	              <xsl:with-param name="level">2</xsl:with-param>
-	           </xsl:call-template>
-	
-            <xsl:if test="$showTitleAuthor='true'">
-               <xsl:if test="$verbose='true'">
-                  <xsl:message>displaying author and date</xsl:message>
-               </xsl:if>
-               <xsl:call-template name="generateAuthorList"/>
-               <xsl:text> </xsl:text>
-               <xsl:call-template name="generateDate"/>
-            </xsl:if>
-         </xsl:otherwise>
+	   <xsl:if test="$showTitleAuthor='true'">
+	     <xsl:if test="$verbose='true'">
+	       <xsl:message>displaying author and date</xsl:message>
+	     </xsl:if>
+	     <xsl:call-template name="generateAuthorList"/>
+	     <xsl:text> </xsl:text>
+	     <xsl:call-template name="generateDate"/>
+	   </xsl:if>
+	 </xsl:when>
+	 <xsl:otherwise>
+	   <xsl:call-template name="makeHTMLHeading">
+	     <xsl:with-param name="class">maintitle</xsl:with-param>
+	     <xsl:with-param name="text">
+	       <xsl:value-of select="$title"/>
+	     </xsl:with-param>
+	     <xsl:with-param name="level">1</xsl:with-param>
+	   </xsl:call-template>
+	   
+	   <xsl:call-template name="makeHTMLHeading">
+	     <xsl:with-param name="class">subtitle</xsl:with-param>
+	     <xsl:with-param name="text">
+	       <xsl:call-template name="generateTitle"/>
+	     </xsl:with-param>
+	     <xsl:with-param name="level">2</xsl:with-param>
+	   </xsl:call-template>
+	   
+	   <xsl:if test="$showTitleAuthor='true'">
+	     <xsl:if test="$verbose='true'">
+	       <xsl:message>displaying author and date</xsl:message>
+	     </xsl:if>
+	     <xsl:call-template name="generateAuthorList"/>
+	     <xsl:text> </xsl:text>
+	     <xsl:call-template name="generateDate"/>
+	   </xsl:if>
+	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] </desc>
    </doc>
