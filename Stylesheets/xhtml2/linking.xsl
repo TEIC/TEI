@@ -151,7 +151,7 @@
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process element TEI in generateLink mode</p>
+         <p>Process elementTEI in generateLink mode</p>
          <p>
             <p xmlns="http://www.w3.org/1999/xhtml"> when a &lt;div&gt; is referenced, see whether its plain
         anchor, or needs a parent HTML name prepended </p>

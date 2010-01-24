@@ -655,6 +655,16 @@ $requestedID: requests a particular page
                </xsl:call-template>
             </div>
          </xsl:when>
+         <xsl:when test="ancestor::tei:text/parent::tei:group">
+            <div>
+               <xsl:call-template name="divClassAttribute">
+                  <xsl:with-param name="depth" select="$depth"/>
+               </xsl:call-template>
+               <xsl:call-template name="doDivBody">
+                  <xsl:with-param name="Type" select="$depth"/>
+               </xsl:call-template>
+            </div>
+         </xsl:when>
          <!-- 0. We have gone far enough -->
       <xsl:when test="$depth = $splitLevel and $STDOUT='true'">
             <xsl:if test="$virtualPages='true'">
@@ -731,54 +741,55 @@ $requestedID: requests a particular page
             </div>
          </xsl:when>
          <xsl:otherwise>
-
-	
-	           <xsl:variable name="outName">
-	              <xsl:call-template name="outputChunkName">
-	                 <xsl:with-param name="ident">
-	                    <xsl:apply-templates mode="ident" select="."/>
-	                 </xsl:with-param>
-	              </xsl:call-template>
-	           </xsl:variable>
-	
-	           <xsl:if test="$verbose='true'">
-	              <xsl:message>Opening file <xsl:value-of select="$outName"/>
-               </xsl:message>
-	           </xsl:if>
-	           <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
-                                 encoding="{$outputEncoding}"
-                                 href="{$outName}"
-                                 method="{$outputMethod}">
-	  
-	              <xsl:choose>
-	                 <xsl:when test="$pageLayout='CSS'">
-	                    <xsl:call-template name="pageLayoutCSS">
-		                      <xsl:with-param name="currentID">
-		                         <xsl:apply-templates mode="ident" select="."/>
-		                      </xsl:with-param>
-	                    </xsl:call-template>
-	                 </xsl:when>
-	                 <xsl:when test="$pageLayout='Table'">
-	                    <xsl:call-template name="pageLayoutTable">
-		                      <xsl:with-param name="currentID">
-		                         <xsl:apply-templates mode="ident" select="."/>
-		                      </xsl:with-param>
-	                    </xsl:call-template>
-	                 </xsl:when>
-	                 <xsl:otherwise>
-	                    <xsl:call-template name="writeDiv"/>
-	                 </xsl:otherwise>
-               </xsl:choose>
-	    
-	           </xsl:result-document>
-	
-	           <xsl:if test="$verbose='true'">
-	              <xsl:message>Closing file <xsl:value-of select="$outName"/>
-               </xsl:message>
-	           </xsl:if>
-         </xsl:otherwise>
+	   
+	   
+	   <xsl:variable name="outName">
+	     <xsl:call-template name="outputChunkName">
+	       <xsl:with-param name="ident">
+		 <xsl:apply-templates mode="ident" select="."/>
+	       </xsl:with-param>
+	     </xsl:call-template>
+	   </xsl:variable>
+	   
+	   <xsl:if test="$verbose='true'">
+	     <xsl:message>Opening file <xsl:value-of select="$outName"/>
+	     </xsl:message>
+	   </xsl:if>
+	   <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
+				encoding="{$outputEncoding}"
+				href="{$outName}"
+				method="{$outputMethod}">
+	     
+	     <xsl:choose>
+	       <xsl:when test="$pageLayout='CSS'">
+		 <xsl:call-template name="pageLayoutCSS">
+		   <xsl:with-param name="currentID">
+		     <xsl:apply-templates mode="ident" select="."/>
+		   </xsl:with-param>
+		 </xsl:call-template>
+	       </xsl:when>
+	       <xsl:when test="$pageLayout='Table'">
+		 <xsl:call-template name="pageLayoutTable">
+		   <xsl:with-param name="currentID">
+		     <xsl:apply-templates mode="ident" select="."/>
+		   </xsl:with-param>
+		 </xsl:call-template>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:call-template name="writeDiv"/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	     
+	   </xsl:result-document>
+	   
+	   <xsl:if test="$verbose='true'">
+	     <xsl:message>Closing file <xsl:value-of select="$outName"/>
+	     </xsl:message>
+	   </xsl:if>
+	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process elements tei:docAuthor in "author" mode"</desc>
    </doc>
@@ -840,13 +851,15 @@ $requestedID: requests a particular page
             <xsl:apply-templates/>
          </xsl:when>
          <xsl:when test="parent::tei:group">
-            <xsl:apply-templates/>
+	   <xsl:call-template name="makeDivPage">
+	     <xsl:with-param name="depth">0</xsl:with-param>
+	   </xsl:call-template>
          </xsl:when>
-         <xsl:otherwise>
-            <div class="innertext">
-               <xsl:apply-templates mode="innertext"/>
-            </div>
-         </xsl:otherwise>
+	 <xsl:otherwise>
+	   <div class="innertext">
+	     <xsl:apply-templates mode="innertext"/>
+	   </div>
+	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -1634,67 +1647,79 @@ $requestedID: requests a particular page
       <xsl:comment>back matter </xsl:comment>
       <xsl:apply-templates select="tei:text/tei:back"/>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] <param name="force">force</param>
+      <desc>[html] Table of contents 
+      <param name="force">force</param>
       </desc>
    </doc>
   <xsl:template name="mainTOC">
       <xsl:param name="force"/>
       <xsl:choose>
          <xsl:when test="ancestor-or-self::tei:TEI/tei:text/tei:group">
-	           <ol>
-	              <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:group/tei:text">
-	                 <li>Text <xsl:number/>:
-	    <xsl:for-each select="tei:front">
-	                       <xsl:call-template name="partTOC">
-		                         <xsl:with-param name="force" select="$force"/>
-		                         <xsl:with-param name="part">front</xsl:with-param>
-	                       </xsl:call-template>
-	                    </xsl:for-each>
+	   <ul class="toc toc_body">
+	     <xsl:for-each
+		 select="ancestor-or-self::tei:TEI/tei:text/tei:group/tei:text">
+	       <xsl:variable name="pointer">
+		 <xsl:apply-templates mode="generateLink" select="."/>
+	       </xsl:variable>
+	       <li class="toc">
+		 <xsl:call-template name="header">
+		   <xsl:with-param name="toc" select="$pointer"/>
+		   <xsl:with-param name="minimal">false</xsl:with-param>
+		   <xsl:with-param name="display">plain</xsl:with-param>
+		 </xsl:call-template>
 
-	                    <xsl:for-each select="tei:body">
-	                       <xsl:call-template name="partTOC">
-		                         <xsl:with-param name="force" select="$force"/>
-		                         <xsl:with-param name="part">body</xsl:with-param>
-	                       </xsl:call-template>
-	                    </xsl:for-each>
-
-	                    <xsl:for-each select="tei:back">
-	                       <xsl:call-template name="partTOC">
-		                         <xsl:with-param name="force" select="$force"/>
-		                         <xsl:with-param name="part">back</xsl:with-param>
-	                       </xsl:call-template>
-	                    </xsl:for-each>
-	                 </li>
-	              </xsl:for-each>
-	           </ol>
-         </xsl:when>
-         <xsl:otherwise>
-	           <xsl:if test="$tocFront">
-	              <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:front">
-	                 <xsl:call-template name="partTOC">
-	                    <xsl:with-param name="force" select="$force"/>
-	                    <xsl:with-param name="part">front</xsl:with-param>
-	                 </xsl:call-template>
-	              </xsl:for-each>
-	           </xsl:if>
-	
-	           <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
-	              <xsl:call-template name="partTOC">
-	                 <xsl:with-param name="force" select="$force"/>
-	                 <xsl:with-param name="part">body</xsl:with-param>
-	              </xsl:call-template>
-	           </xsl:for-each>
-
-	           <xsl:if test="$tocBack">
-	              <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
-	                 <xsl:call-template name="partTOC">
-	                    <xsl:with-param name="force" select="$force"/>
-	                    <xsl:with-param name="part">back</xsl:with-param>
-	                 </xsl:call-template>
-	              </xsl:for-each>
-	           </xsl:if>
-         </xsl:otherwise>
+		 <xsl:for-each select="tei:front">
+		   <xsl:call-template name="partTOC">
+		     <xsl:with-param name="force" select="$force"/>
+		     <xsl:with-param name="part">front</xsl:with-param>
+		   </xsl:call-template>
+		 </xsl:for-each>
+		 
+		 <xsl:for-each select="tei:body">
+		   <xsl:call-template name="partTOC">
+		     <xsl:with-param name="force" select="$force"/>
+		     <xsl:with-param name="part">body</xsl:with-param>
+		   </xsl:call-template>
+		 </xsl:for-each>
+		 
+		 <xsl:for-each select="tei:back">
+		   <xsl:call-template name="partTOC">
+		     <xsl:with-param name="force" select="$force"/>
+		     <xsl:with-param name="part">back</xsl:with-param>
+		   </xsl:call-template>
+		 </xsl:for-each>
+	       </li>
+	     </xsl:for-each>
+	   </ul>
+	 </xsl:when>
+	 <xsl:otherwise>
+	   <xsl:if test="$tocFront">
+	     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:front">
+	       <xsl:call-template name="partTOC">
+		 <xsl:with-param name="force" select="$force"/>
+		 <xsl:with-param name="part">front</xsl:with-param>
+	       </xsl:call-template>
+	     </xsl:for-each>
+	   </xsl:if>
+	   
+	   <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
+	     <xsl:call-template name="partTOC">
+	       <xsl:with-param name="force" select="$force"/>
+	       <xsl:with-param name="part">body</xsl:with-param>
+	     </xsl:call-template>
+	   </xsl:for-each>
+	   
+	   <xsl:if test="$tocBack">
+	     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
+	       <xsl:call-template name="partTOC">
+		 <xsl:with-param name="force" select="$force"/>
+		 <xsl:with-param name="part">back</xsl:with-param>
+	       </xsl:call-template>
+	     </xsl:for-each>
+	   </xsl:if>
+	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
 

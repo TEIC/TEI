@@ -61,7 +61,7 @@
                   <xsl:value-of select="count(ancestor::tei:div)"/>
                </xsl:when>
                <xsl:when test="starts-with($myName,'div')">
-	                 <xsl:value-of select="number(substring-after($myName,'div')) - 1"/>
+		 <xsl:value-of select="number(substring-after($myName,'div')) - 1"/>
                </xsl:when>
                <xsl:otherwise>99</xsl:otherwise>
             </xsl:choose>
@@ -134,7 +134,7 @@
       </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element tei:change</desc>
+      <desc>Process elementtei:change</desc>
    </doc>
   <xsl:template match="tei:change">
       <tr>
@@ -147,7 +147,7 @@
       </tr>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element tei:choice</desc>
+      <desc>Process elementtei:choice</desc>
    </doc>
   <xsl:template match="tei:choice">
       <xsl:choose>
@@ -164,7 +164,7 @@
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process element tei:cit</p>
+         <p>Process elementtei:cit</p>
          <p>
             <p xmlns="http://www.w3.org/1999/xhtml"> quoting </p>
          </p>
@@ -375,7 +375,7 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element tei:head in plain mode</desc>
+      <desc>Process elementtei:head in plain mode</desc>
    </doc>
   <xsl:template match="tei:head" mode="plain">
       <xsl:if test="preceding-sibling::tei:head">
@@ -385,7 +385,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element tei:head in heading mode</desc>
+      <desc>Process elementtei:head in heading mode</desc>
    </doc>
   <xsl:template match="tei:head" mode="makeheading">
       <xsl:choose>
@@ -1012,7 +1012,7 @@
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process element tei:pb</p>
+         <p>Process elementtei:pb</p>
          <p>Indication of a page break. For the purposes of HTML, we simply
       make it an anchor if it has an ID.</p>
       </desc>
@@ -1043,7 +1043,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element tei:p</desc>
+      <desc>Process elementtei:p</desc>
    </doc>
   <xsl:template match="tei:p">
       <xsl:variable name="wrapperElement">
