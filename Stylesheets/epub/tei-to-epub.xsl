@@ -129,28 +129,19 @@
           </TOC>
         </xsl:variable>
         <xsl:result-document method="text" href="OEBPS/stylesheet.css">
-          <xsl:for-each select="tokenize(unparsed-text($cssFile),       '\r?\n')">
-            <xsl:if test="not(contains(.,'clear:'))">
-              <xsl:value-of select="."/>
-              <xsl:text>
-</xsl:text>
-            </xsl:if>
+          <xsl:for-each select="tokenize(unparsed-text($cssFile),
+				'\r?\n')">
+	    <xsl:call-template name="purgeCSS"/>
           </xsl:for-each>
           <xsl:if test="$odd='true'">
             <xsl:for-each select="tokenize(unparsed-text($cssODDFile),         '\r?\n')">
-              <xsl:if test="not(contains(.,'clear:'))">
-                <xsl:value-of select="."/>
-                <xsl:text>
-</xsl:text>
-              </xsl:if>
+	      <xsl:call-template name="purgeCSS"/>
             </xsl:for-each>
           </xsl:if>
         </xsl:result-document>
         <xsl:result-document method="text" href="OEBPS/print.css">
           <xsl:for-each select="tokenize(unparsed-text($cssPrintFile),       '\r?\n')">
-            <xsl:if test="not(contains(.,'clear:'))">
-              <xsl:value-of select="."/>
-            </xsl:if>
+	    <xsl:call-template name="purgeCSS"/>
           </xsl:for-each>
         </xsl:result-document>
         <xsl:result-document method="text" href="mimetype">
@@ -237,7 +228,7 @@
             </manifest>
             <spine toc="ncx">
               <itemref idref="head"/>
-              <xsl:for-each select="$TOC/html:TOC/(html:ul | html:ol)/html:li">
+              <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                 <xsl:choose>
                   <xsl:when test="html:a">
                     <itemref>
@@ -247,8 +238,8 @@
                       </xsl:attribute>
                     </itemref>
                   </xsl:when>
-                  <xsl:when test="html:ul|html:ol">
-                    <xsl:for-each select="(html:ul | html:ol)/html:li">
+                  <xsl:when test="html:ul">
+                    <xsl:for-each select="html:ul/html:li">
                       <itemref>
                         <xsl:attribute name="idref">
                           <xsl:text>section</xsl:text>
@@ -262,7 +253,7 @@
             </spine>
             <guide>
               <reference type="text" title="Text" href="index.html"/>
-              <xsl:for-each select="$TOC/html:TOC/(html:ul |       html:ol)/html:li">
+              <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                 <xsl:choose>
                   <xsl:when test="html:a">
                     <reference type="text" href="{html:a/@href}">
@@ -271,8 +262,8 @@
                       </xsl:attribute>
                     </reference>
                   </xsl:when>
-                  <xsl:when test="html:ul|html:ol">
-                    <xsl:for-each select="(html:ul | html:ol)/html:li">
+                  <xsl:when test="html:ul">
+                    <xsl:for-each select="html:ul/html:li">
                       <reference type="text" href="{html:a/@href}">
                         <xsl:attribute name="title">
                           <xsl:value-of select="normalize-space(html:a)"/>
@@ -308,7 +299,7 @@
                 </navLabel>
                 <content src="index.html"/>
               </navPoint>
-              <xsl:for-each select="$TOC/html:TOC/(html:ul |       html:ol)/html:li">
+              <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                 <xsl:choose>
                   <xsl:when test="html:a">
                     <navPoint id="navPoint-{position()}" playOrder="{position()+1}">
@@ -320,8 +311,8 @@
                       <content src="{html:a/@href}"/>
                     </navPoint>
                   </xsl:when>
-                  <xsl:when test="html:ul|html:ol">
-                    <xsl:for-each select="(html:ul | html:ol)/html:li">
+                  <xsl:when test="html:ul">
+                    <xsl:for-each select="html:ul/html:li">
                       <navPoint id="navPoint-{position()}" playOrder="{position()+1}">
                         <navLabel>
                           <text>
@@ -433,4 +424,29 @@
       <xsl:copy-of select="@scale"/>
     </xsl:copy>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[epub] Remove unwanted things from CSS
+      </desc>
+   </doc>
+  <xsl:template name="purgeCSS">
+    <xsl:choose>
+      <xsl:when test="contains(.,'clear:')"/>
+      <xsl:when test="contains(.,'float:')"/>
+      <xsl:when test="contains(.,'font-size:')"/>
+      <xsl:when test="contains(.,'line-height:')"/>
+      <xsl:when test="contains(.,'max-width:')"/>
+      <xsl:when test="contains(.,'width:')"/>
+      <xsl:when test="contains(.,'height:')"/>
+      <xsl:when test="contains(.,'text-indent:')"/>
+      <xsl:when test="contains(.,'margin')"/>
+      <xsl:when test="contains(.,'border')"/>
+      <xsl:when test="contains(.,'padding')"/>
+      <xsl:otherwise>
+	<xsl:value-of select="."/>
+	<xsl:text>&#10;</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>
