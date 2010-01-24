@@ -34,6 +34,7 @@
   <xsl:param name="stripped">false</xsl:param>
   <xsl:param name="TEISERVER">http://localhost/Query/</xsl:param>
   <xsl:param name="localsource"/>
+
   <xsl:key name="ALLSCHEMASPECS" match="tei:schemaSpec" use="1"/>
   <xsl:key name="ATTCLASSES"
             match="tei:classSpec[(tei:attList or @type='atts') and not(@ident='tei.TEIform')]"
