@@ -55,6 +55,7 @@
   <xsl:param name="linkPanel">false</xsl:param>
   <xsl:param name="institution"></xsl:param>
   <xsl:param name="uid"></xsl:param>
+  <xsl:param name="odd">true</xsl:param>
 
   <xsl:template name="stdfooter"/>  
   
@@ -83,6 +84,10 @@
   </xsl:template>
 
   <xsl:template name="generateLocalCSS">
+    <xsl:if test="$odd='true'">
+      <link xmlns="http://www.w3.org/1999/xhtml" 
+	    href="odd.css" rel="stylesheet" type="text/css"/>
+    </xsl:if>
     <link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" type="application/vnd.adobe-page-template+xml" 
 	href="page-template.xpgt"/>
   </xsl:template>
@@ -118,6 +123,18 @@
 	</xsl:if>
       </xsl:for-each>
     </xsl:result-document>
+
+    <xsl:if test="$odd='true'">
+      <xsl:result-document method="text" href="OEBPS/odd.css">
+	<xsl:for-each
+	    select="tokenize(unparsed-text('../tei-print.css'),
+		    '\r?\n')">
+	  <xsl:if test="not(contains(.,'clear:'))">
+	    <xsl:value-of select="."/>
+	  </xsl:if>
+	</xsl:for-each>
+      </xsl:result-document>
+    </xsl:if>
 
     <xsl:result-document method="text" href="mimetype">
       <xsl:text>application/epub+zip</xsl:text>
@@ -175,6 +192,11 @@
             <item id="print.css"      
                   href="print.css"           
                   media-type="text/css" />
+	    <xsl:if test="$odd='true'">
+	      <item id="odd.css"      
+		    href="odd.css"           
+		    media-type="text/css" />
+	    </xsl:if>
             <item id="head"      
                   href="index.html"           
                   media-type="application/xhtml+xml" />
@@ -191,6 +213,9 @@
 	    </xsl:for-each>
 	    <!-- images -->
 	    <xsl:for-each select="key('GRAPHICS',1)">
+	      <xsl:variable name="ID">
+		<xsl:number level="any"/>
+	      </xsl:variable>
 	      <xsl:variable name="mimetype">
 		<xsl:choose>
 		  <xsl:when
@@ -199,7 +224,7 @@
 		  <xsl:otherwise>image/jpeg</xsl:otherwise>
 		</xsl:choose>
 	      </xsl:variable>
-	      <item href="{@url}"
+	      <item href="{@url}"  id="image-{$ID}"
 		    media-type="{$mimetype}"/>
 	    </xsl:for-each>
             <item id="ncx" href="toc.ncx"                 
