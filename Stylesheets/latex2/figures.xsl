@@ -27,7 +27,7 @@
       </desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:cell</desc>
+      <desc>Process elementcell</desc>
    </doc>
   <xsl:template match="tei:cell">
       <xsl:if test="preceding-sibling::tei:cell">\tabcellsep </xsl:if>
@@ -71,11 +71,11 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:figDesc</desc>
+      <desc>Process elementfigDesc</desc>
    </doc>
   <xsl:template match="tei:figDesc"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:figure</desc>
+      <desc>Process elementfigure</desc>
    </doc>
   <xsl:template match="tei:figure">
       <xsl:call-template name="makeFigureStart"/>
@@ -90,13 +90,13 @@
       <xsl:call-template name="makeFigureEnd"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:graphic</desc>
+      <desc>Process elementgraphic</desc>
    </doc>
   <xsl:template match="tei:graphic">
       <xsl:call-template name="makePic"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:row</desc>
+      <desc>Process elementrow</desc>
    </doc>
   <xsl:template match="tei:row">
       <xsl:if test="@role='label'">\rowcolor{label}</xsl:if>
@@ -109,7 +109,7 @@
       </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:table</desc>
+      <desc>Process elementtable</desc>
    </doc>
   <xsl:template match="tei:table" mode="xref">
       <xsl:text>the table on p. \pageref{</xsl:text>
@@ -117,7 +117,7 @@
       <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:table</desc>
+      <desc>Process elementtable</desc>
    </doc>
   <xsl:template match="tei:table">
       <xsl:if test="@xml:id">
@@ -140,14 +140,14 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:table[@rend='display']</desc>
+      <desc>Process elementtable[@rend='display']</desc>
    </doc>
   <xsl:template match="tei:table[@rend='display']" mode="xref">
       <xsl:text>Table </xsl:text>
       <xsl:number count="tei:table[@rend='display']" level="any"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:table[@rend='display']</desc>
+      <desc>Process elementtable[@rend='display']</desc>
    </doc>
   <xsl:template match="tei:table[@rend='display']">
       <xsl:text>\begin{table}</xsl:text>

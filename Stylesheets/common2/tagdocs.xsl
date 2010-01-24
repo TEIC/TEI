@@ -69,7 +69,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:attDef</desc>
+      <desc>Process elementattDef</desc>
    </doc>
   <xsl:template match="tei:attDef">
       <xsl:variable name="name">
@@ -172,7 +172,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:attDef/tei:datatype</desc>
+      <desc>Process elementattDef/tei:datatype</desc>
    </doc>
   <xsl:template match="tei:attDef/tei:datatype" mode="weave">
       <xsl:element namespace="{$outputNS}" name="{$rowName}">
@@ -256,7 +256,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:attList</desc>
+      <desc>Process elementattList</desc>
    </doc>
   <xsl:template match="tei:attList" mode="show">
       <xsl:call-template name="displayAttList">
@@ -265,7 +265,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:classSpec</desc>
+      <desc>Process elementclassSpec</desc>
    </doc>
   <xsl:template match="tei:classSpec">
       <xsl:if test="parent::tei:specGrp">
@@ -301,7 +301,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:classSpec</desc>
+      <desc>Process elementclassSpec</desc>
    </doc>
   <xsl:template match="tei:classSpec" mode="weavebody">
       <xsl:variable name="name">
@@ -475,12 +475,12 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:classes</desc>
+      <desc>Process elementclasses</desc>
    </doc>
   <xsl:template match="tei:classes" mode="weave"> </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:elementSpec</desc>
+      <desc>Process elementelementSpec</desc>
    </doc>
   <xsl:template match="tei:elementSpec">
       <xsl:if test="parent::tei:specGrp">
@@ -503,7 +503,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:elementSpec</desc>
+      <desc>Process elementelementSpec</desc>
    </doc>
 
   <xsl:template match="tei:elementSpec" mode="weavebody">
@@ -705,7 +705,7 @@
   </xsl:template>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:elementSpec/tei:content</desc>
+      <desc>Process elementelementSpec/tei:content</desc>
    </doc>
 
   <xsl:template match="tei:elementSpec/tei:content" mode="weave">
@@ -994,7 +994,7 @@
   </xsl:template>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:exemplum</desc>
+      <desc>Process elementexemplum</desc>
    </doc>
   <xsl:template match="tei:exemplum" mode="doc">
       <xsl:variable name="documentationLanguage">
@@ -1066,7 +1066,7 @@
    </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:item</desc>
+      <desc>Process elementitem</desc>
    </doc>
   <xsl:template match="tei:item">
       <xsl:choose>
@@ -1087,7 +1087,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:macroSpec</desc>
+      <desc>Process elementmacroSpec</desc>
    </doc>
   <xsl:template match="tei:macroSpec">
       <xsl:if test="parent::tei:specGrp">
@@ -1101,7 +1101,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:macroSpec in weavebody mode</desc>
+      <desc>Process elementmacroSpec in weavebody mode</desc>
    </doc>
   <xsl:template match="tei:macroSpec" mode="weavebody">
       <xsl:variable name="name">
@@ -1188,7 +1188,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:macroSpec/tei:content</desc>
+      <desc>Process elementmacroSpec/tei:content</desc>
    </doc>
   <xsl:template match="tei:macroSpec/tei:content" mode="weave">
       <xsl:element namespace="{$outputNS}" name="{$rowName}">
@@ -1245,7 +1245,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:moduleSpec</desc>
+      <desc>Process elementmoduleSpec</desc>
    </doc>
   <xsl:template match="tei:moduleSpec">
       <xsl:element namespace="{$outputNS}" name="{$dlName}">
@@ -1475,7 +1475,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:val</desc>
+      <desc>Process elementval</desc>
    </doc>
   <xsl:template match="tei:val">
       <xsl:element namespace="{$outputNS}" name="{$hiName}">
@@ -1487,7 +1487,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:att</desc>
+      <desc>Process elementatt</desc>
    </doc>
   <xsl:template match="tei:att">
       <xsl:element namespace="{$outputNS}" name="{$hiName}">
@@ -1499,7 +1499,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:tag</desc>
+      <desc>Process elementtag</desc>
    </doc>
   <xsl:template match="tei:tag">
       <xsl:element namespace="{$outputNS}" name="{$hiName}">
@@ -1513,7 +1513,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:valList</desc>
+      <desc>Process elementvalList</desc>
    </doc>
   <xsl:template match="tei:valList" mode="contents">
       <xsl:element namespace="{$outputNS}" name="{$rowName}">
@@ -2087,7 +2087,7 @@
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:valList</desc>
+      <desc>Process elementvalList</desc>
    </doc>
   <xsl:template match="tei:valList" mode="weave">
       <xsl:apply-templates mode="contents" select="."/>
@@ -2095,17 +2095,17 @@
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:attList</desc>
+      <desc>Process elementattList</desc>
    </doc>
   <xsl:template match="tei:attList" mode="weave"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:defaultVal</desc>
+      <desc>Process elementdefaultVal</desc>
    </doc>
   <xsl:template match="tei:defaultVal" mode="weave"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:desc</desc>
+      <desc>Process elementdesc</desc>
    </doc>
   <xsl:template match="tei:desc">
       <xsl:apply-templates/>
@@ -2486,7 +2486,7 @@
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:attList</desc>
+      <desc>Process elementattList</desc>
    </doc>
   <xsl:template match="tei:attList" mode="show">
       <xsl:call-template name="displayAttList">

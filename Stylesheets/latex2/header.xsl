@@ -27,7 +27,7 @@
       </desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:docAuthor</desc>
+      <desc>Process elementdocAuthor</desc>
    </doc>
   <xsl:template match="tei:docAuthor"> 
       <xsl:if test="not(preceding-sibling::tei:docAuthor)">
@@ -52,13 +52,13 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:docDate</desc>
+      <desc>Process elementdocDate</desc>
    </doc>
   <xsl:template match="tei:docDate">
   \date{<xsl:apply-templates/>}</xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:docImprint</desc>
+      <desc>Process elementdocImprint</desc>
    </doc>
   <xsl:template match="tei:docImprint">
   </xsl:template>

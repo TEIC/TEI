@@ -711,7 +711,7 @@
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element  tei:p</desc>
+      <desc>Process element tei:p</desc>
    </doc>
 
   <xsl:template match="tei:p">
@@ -1268,7 +1268,7 @@ simple, bullets, ordered, gloss, unordered, or bibliography
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:soCalled</desc>
+      <desc>Process elementsoCalled</desc>
    </doc>
   <xsl:template match="tei:soCalled">
       <xsl:value-of select="$preQuote"/>

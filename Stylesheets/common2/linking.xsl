@@ -23,19 +23,27 @@
       </desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:TEI</desc>
+      <desc>Process elementTEI in xref mode</desc>
    </doc>
   <xsl:template match="tei:TEI" mode="xref">
       <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]"/>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:anchor|tei:p in xref mode</desc>
+      <desc>Process elements text in xref mode</desc>
+   </doc>
+  <xsl:template match="tei:text" mode="xref">
+      <xsl:apply-templates select="tei:head|tei:body/tei:head" mode="plain"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process elementanchor|tei:p in xref mode</desc>
    </doc>
   <xsl:template match="tei:anchor|tei:p" mode="xref">
       <xsl:text>here</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:bibl</desc>
+      <desc>Process elementbibl</desc>
    </doc>
   <xsl:template match="tei:bibl" mode="xref">
       <xsl:text>[</xsl:text>
@@ -59,13 +67,13 @@
       </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:note</desc>
+      <desc>Process elementnote</desc>
    </doc>
   <xsl:template match="tei:note" mode="xref">
       <xsl:number level="any"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:ptr|tei:xptr in xref mode</desc>
+      <desc>Process elementptr|tei:xptr in xref mode</desc>
    </doc>
   <xsl:template match="tei:ptr|tei:xptr">
       <xsl:call-template name="makeTEILink">
@@ -73,7 +81,7 @@
       </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:ref|tei:xref</desc>
+      <desc>Process elementref|tei:xref</desc>
    </doc>
   <xsl:template match="tei:ref|tei:xref">
       <xsl:call-template name="makeTEILink">
@@ -101,6 +109,10 @@
          <xsl:with-param name="text">
             <xsl:choose>
                <xsl:when test="local-name(.) = 'TEI'"/>
+               <xsl:when test="self::tei:text">
+		 <xsl:number/>
+		 <xsl:call-template name="headingNumberSuffix"/>
+	       </xsl:when>
                <xsl:when test="$depth &gt; $numberHeadingsDepth"> </xsl:when>
                <xsl:when test="ancestor::tei:back">
                   <xsl:if test="not($numberBackHeadings='')">
@@ -148,41 +160,46 @@
                <xsl:value-of select="@n"/>
             </xsl:when>
             <xsl:when test="not($toc='')">
-               <xsl:call-template name="makeInternalLink">
-                  <xsl:with-param name="dest">
-                     <xsl:value-of select="$toc"/>
-                  </xsl:with-param>
-                  <xsl:with-param name="class">
-                     <xsl:value-of select="$class_toc"/>
-	                    <xsl:text> </xsl:text>
-                     <xsl:value-of select="concat($class_toc,'_',$depth)"/>
-	                 </xsl:with-param>
-                  <xsl:with-param name="body">
-                     <xsl:choose>
-                        <xsl:when test="$autoHead='true'">
-                           <xsl:call-template name="autoMakeHead"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-		                         <xsl:for-each select="tei:head">
-		                            <xsl:apply-templates mode="plain"/>
-		                         </xsl:for-each>
-                        </xsl:otherwise>
-                     </xsl:choose>
-                  </xsl:with-param>
-               </xsl:call-template>
+	      <xsl:call-template name="makeInternalLink">
+		<xsl:with-param name="dest">
+		  <xsl:value-of select="$toc"/>
+		</xsl:with-param>
+		<xsl:with-param name="class">
+		  <xsl:value-of select="$class_toc"/>
+		  <xsl:text> </xsl:text>
+		  <xsl:value-of select="concat($class_toc,'_',$depth)"/>
+		</xsl:with-param>
+		<xsl:with-param name="body">
+		  <xsl:choose>
+		    <xsl:when test="$autoHead='true'">
+		      <xsl:call-template name="autoMakeHead"/>
+		    </xsl:when>
+		    <xsl:when test="not(tei:head) and tei:body/tei:head">
+		      <xsl:for-each select="tei:body/tei:head">
+			<xsl:apply-templates mode="plain"/>
+		      </xsl:for-each>
+		    </xsl:when>	
+		    <xsl:otherwise>
+		      <xsl:for-each select="tei:head">
+			<xsl:apply-templates mode="plain"/>
+		      </xsl:for-each>
+		    </xsl:otherwise>
+		  </xsl:choose>
+		</xsl:with-param>
+	      </xsl:call-template>
             </xsl:when>
             <xsl:when test="$autoHead='true'">
                <xsl:call-template name="autoMakeHead"/>
             </xsl:when>
             <xsl:when test="$display='plain'">
                <xsl:for-each select="tei:head">
-	                 <xsl:apply-templates mode="plain"/>
-	              </xsl:for-each>
+		 <xsl:apply-templates mode="plain"/>
+	       </xsl:for-each>
             </xsl:when>
             <xsl:when test="$display='simple'">
                <xsl:for-each select="tei:head">
-	                 <xsl:apply-templates mode="plain"/>
-	              </xsl:for-each>
+		 <xsl:apply-templates mode="plain"/>
+	       </xsl:for-each>
             </xsl:when>
             <xsl:otherwise>
                <xsl:apply-templates select="tei:head" mode="makeheading"/>

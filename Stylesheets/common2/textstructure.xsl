@@ -26,6 +26,9 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Establish nesting depth of sections</desc>
    </doc>
+  <xsl:template match="tei:text" mode="depth">
+    <xsl:value-of select="count(ancestor::tei:text)-1"/>
+  </xsl:template>
   <xsl:template match="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
                  mode="depth">
       <xsl:choose>

@@ -23,7 +23,7 @@
       </desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:figure</desc>
+      <desc>Process elementfigure</desc>
    </doc>
   <xsl:template match="tei:figure" mode="xref">
       <xsl:choose>
@@ -54,7 +54,7 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:table</desc>
+      <desc>Process elementtable</desc>
    </doc>
   <xsl:template match="tei:table" mode="xref">
       <xsl:choose>

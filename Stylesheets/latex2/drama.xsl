@@ -27,7 +27,7 @@
       </desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:actor</desc>
+      <desc>Process elementactor</desc>
    </doc>
   <xsl:template match="tei:actor">
       <xsl:text>\textit{</xsl:text>
@@ -35,7 +35,7 @@
       <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:camera</desc>
+      <desc>Process elementcamera</desc>
    </doc>
   <xsl:template match="tei:camera">
       <xsl:text>\textit{</xsl:text>
@@ -43,7 +43,7 @@
       <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:caption</desc>
+      <desc>Process elementcaption</desc>
    </doc>
   <xsl:template match="tei:caption">
       <xsl:text>\textit{</xsl:text>
@@ -51,7 +51,7 @@
       <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:castGroup</desc>
+      <desc>Process elementcastGroup</desc>
    </doc>
   <xsl:template match="tei:castGroup"> 
       <xsl:text>\begin{itemize} </xsl:text>
@@ -60,14 +60,14 @@
  \end{itemize}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:castItem</desc>
+      <desc>Process elementcastItem</desc>
    </doc>
   <xsl:template match="tei:castItem">
 \item 
   <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:castList</desc>
+      <desc>Process elementcastList</desc>
    </doc>
   <xsl:template match="tei:castList">
       <xsl:if test="tei:head">
@@ -79,7 +79,7 @@
 </xsl:text>
       </xsl:if> \begin{itemize} <xsl:apply-templates/> \end{itemize} </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:p/tei:stage</desc>
+      <desc>Process elementp/tei:stage</desc>
    </doc>
   <xsl:template match="tei:p/tei:stage">
       <xsl:text>\textit{</xsl:text>
@@ -87,7 +87,7 @@
       <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:role</desc>
+      <desc>Process elementrole</desc>
    </doc>
   <xsl:template match="tei:role">
       <xsl:text>\textbf{</xsl:text>
@@ -95,7 +95,7 @@
       <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:roleDesc</desc>
+      <desc>Process elementroleDesc</desc>
    </doc>
   <xsl:template match="tei:roleDesc">
       <xsl:text>\begin{quote}</xsl:text>
@@ -103,7 +103,7 @@
       <xsl:text>\end{quote}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:set</desc>
+      <desc>Process elementset</desc>
    </doc>
   <xsl:template match="tei:set">
       <xsl:text>\textit{</xsl:text>
@@ -111,7 +111,7 @@
       <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:sound</desc>
+      <desc>Process elementsound</desc>
    </doc>
   <xsl:template match="tei:sound">
       <xsl:text>\textit{</xsl:text>
@@ -119,20 +119,20 @@
       <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:sp</desc>
+      <desc>Process elementsp</desc>
    </doc>
   <xsl:template match="tei:sp"> \begin{description} \item[<xsl:apply-templates select="tei:speaker"/>] <xsl:apply-templates select="tei:p | tei:l | tei:lg | tei:seg |      tei:ab | tei:stage"/>
       <xsl:text>\end{description}
 </xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:sp/tei:p</desc>
+      <desc>Process elementsp/tei:p</desc>
    </doc>
   <xsl:template match="tei:sp/tei:p">
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:stage</desc>
+      <desc>Process elementstage</desc>
    </doc>
   <xsl:template match="tei:stage">
       <xsl:text>
@@ -143,7 +143,7 @@
       <xsl:text>}\par </xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:sp/tei:stage</desc>
+      <desc>Process elementsp/tei:stage</desc>
    </doc>
   <xsl:template match="tei:sp/tei:stage">
       <xsl:text/>
@@ -152,7 +152,7 @@
       <xsl:text>} </xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:tech</desc>
+      <desc>Process elementtech</desc>
    </doc>
   <xsl:template match="tei:tech">
       <xsl:text>\textit{</xsl:text>
@@ -160,7 +160,7 @@
       <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:view</desc>
+      <desc>Process elementview</desc>
    </doc>
   <xsl:template match="tei:view">
       <xsl:text>\textit{</xsl:text>

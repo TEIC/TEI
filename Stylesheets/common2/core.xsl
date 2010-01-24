@@ -33,7 +33,7 @@
   
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process all elements in depth</desc>
+      <desc>Process all elements to find out their nesting depth</desc>
    </doc>
   <xsl:template match="tei:*" mode="depth">99</xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -68,7 +68,7 @@
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:edition</desc>
+      <desc>Process elementedition</desc>
    </doc>
   <xsl:template match="tei:edition">
       <xsl:apply-templates/>
@@ -80,7 +80,7 @@
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:imprint</desc>
+      <desc>Process elementimprint</desc>
    </doc>
   <xsl:template match="tei:imprint">
       <xsl:choose>
