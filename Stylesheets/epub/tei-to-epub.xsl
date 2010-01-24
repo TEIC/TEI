@@ -86,14 +86,10 @@
   </xsl:template>
   
   <xsl:template name="includeCSS">
-    <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+    <link xmlns="http://www.w3.org/1999/xhtml" href="stylesheet.css" rel="stylesheet" type="text/css"/>
     <xsl:if test="not($cssPrintFile='')">
-      <link rel="stylesheet" media="print" type="text/css" href="print.css"/>
+      <link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" media="print" type="text/css" href="print.css"/>
     </xsl:if>	 
-    <xsl:if test="$odd='true'">
-      <link xmlns="http://www.w3.org/1999/xhtml" 
-	    href="odd.css" rel="stylesheet" type="text/css"/>
-    </xsl:if>
     <link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" type="application/vnd.adobe-page-template+xml" 
 	  href="page-template.xpgt"/>
   </xsl:template>
@@ -118,6 +114,15 @@
 	    <xsl:value-of select="."/>
 	  </xsl:if>
 	</xsl:for-each>
+	<xsl:if test="$odd='true'">
+	  <xsl:for-each
+	      select="tokenize(unparsed-text($cssODDFile),
+		      '\r?\n')">
+	    <xsl:if test="not(contains(.,'clear:'))">
+	      <xsl:value-of select="."/>
+	    </xsl:if>
+	  </xsl:for-each>
+	</xsl:if>
       </xsl:result-document>
       
       <xsl:result-document method="text" href="OEBPS/print.css">
@@ -129,18 +134,6 @@
 	  </xsl:if>
 	</xsl:for-each>
       </xsl:result-document>
-      
-      <xsl:if test="$odd='true'">
-	<xsl:result-document method="text" href="OEBPS/odd.css">
-	  <xsl:for-each
-	      select="tokenize(unparsed-text($cssODDFile),
-		      '\r?\n')">
-	    <xsl:if test="not(contains(.,'clear:'))">
-	      <xsl:value-of select="."/>
-	    </xsl:if>
-	  </xsl:for-each>
-	</xsl:result-document>
-      </xsl:if>
       
       <xsl:result-document method="text" href="mimetype">
 	<xsl:text>application/epub+zip</xsl:text>

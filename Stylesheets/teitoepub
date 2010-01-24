@@ -70,7 +70,7 @@ case $THERE/$F in
        *.zip)  (cd $TEMPDIR; unzip -q $THERE/$F ); F=`basename $F .zip`.xml;; 
        *) cp $THERE/$F $TEMPDIR/$F  ;; 
 esac
-(cd $TEMPDIR; saxon $F $XSL/docx/utils/graphics/listgraphics.xsl ORIG=$THERE DIR=$TEMPDIR/OEBPS/media > fetch; sh $TEMPDIR/fetch; rm $TEMPDIR/fetch)
+(cd $TEMPDIR; saxon $F $XSL/docx/utils/graphics/listgraphics.xsl ORIG=$THERE DIR=$TEMPDIR/OEBPS/media > fetch; sh $TEMPDIR/fetch; cat $TEMPDIR/fetch)
 cd $TEMPDIR
 if $odd
 then
