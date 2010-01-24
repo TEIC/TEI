@@ -34,6 +34,7 @@
    </doc>
 
    <xsl:key name="CHILDMOD" match="Element" use="@module"/>
+
    <xsl:template match="tei:attDef" mode="summary">
       <xsl:variable name="name">
          <xsl:choose>
@@ -843,6 +844,7 @@
 	              <xsl:choose>
 	                 <xsl:when test="number($splitLevel)=-1">
 	                    <xsl:text>#</xsl:text>
+			    <xsl:value-of select="$idPrefix"/>
 	                    <xsl:value-of select="$name"/>
 	                 </xsl:when>
 	                 <xsl:when test="$STDOUT='true'">
@@ -1402,7 +1404,7 @@
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:specDesc</desc>
+      <desc>Process a specDesc</desc>
    </doc>
   <xsl:template match="tei:specDesc">
       <xsl:element namespace="{$outputNS}" name="{$itemName}">
@@ -1411,17 +1413,17 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:specGrp</desc>
+      <desc>Process a specGrp</desc>
    </doc>
   <xsl:template match="tei:specGrp"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:specGrpRef</desc>
+      <desc>Process  a specGrpRef</desc>
    </doc>
   <xsl:template match="tei:specGrpRef"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:specList</desc>
+      <desc>Process a specList</desc>
    </doc>
   <xsl:template match="tei:specList">
       <xsl:element namespace="{$outputNS}" name="{$ulName}">
@@ -1431,7 +1433,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:valDesc</desc>
+      <desc>Process a valDesc</desc>
    </doc>
   <xsl:template match="tei:valDesc" mode="weave">
       <xsl:variable name="documentationLanguage">

@@ -32,6 +32,7 @@
       </desc>
    </doc>
   <xsl:include href="RngToRnc.xsl"/>
+   <xsl:param name="idPrefix"></xsl:param>
   <xsl:param name="oddmode">tei</xsl:param>
   <xsl:param name="STDOUT">true</xsl:param>
   <xsl:param name="outputSuffix">.html</xsl:param>

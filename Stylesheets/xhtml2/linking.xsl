@@ -367,12 +367,14 @@
                   <xsl:value-of select="@n"/>
                </xsl:when>
                <xsl:otherwise>
-	                 <xsl:value-of select="normalize-space(.)"/>
+		 <xsl:text>YYY</xsl:text>
+		 <xsl:value-of select="normalize-space(.)"/>
                </xsl:otherwise>
             </xsl:choose>
          </xsl:attribute>
          <xsl:call-template name="xrefHook"/>
          <xsl:choose>
+	   <xsl:when test="$dest=''">??</xsl:when>
             <xsl:when test="$ptr='true'">
                <xsl:element name="{$urlMarkup}">
                   <xsl:choose>
@@ -382,9 +384,6 @@
                      <xsl:when test="starts-with($dest,'file:')">
                         <xsl:value-of select="substring-after($dest,'file:')"/>
                      </xsl:when>
-	                    <xsl:when test="$dest=''">
-		                      <xsl:text>??</xsl:text>
-	                    </xsl:when>
                      <xsl:otherwise>
                         <xsl:value-of select="$dest"/>
                      </xsl:otherwise>
@@ -444,62 +443,74 @@
             </xsl:choose>
          </xsl:when>
          <xsl:otherwise>
-            <a>
-	              <xsl:call-template name="htmlAttributes"/>
-               <xsl:choose>
-	                 <xsl:when test="@rend">
-		                   <xsl:attribute name="class">
-		                      <xsl:value-of select="@rend"/>
-		                   </xsl:attribute>
-                  </xsl:when>
-	                 <xsl:when test="@rendition">
-		                   <xsl:call-template name="applyRendition"/>
-	                 </xsl:when>
-                  <xsl:otherwise>
-		                   <xsl:attribute name="class">
-		                      <xsl:value-of select="$class"/>
-		                   </xsl:attribute>
-                  </xsl:otherwise>
-               </xsl:choose>
-               <xsl:attribute name="href">
-                  <xsl:choose>
-                     <xsl:when test="starts-with($dest,'#') or  contains($dest,'.html') or contains($dest,'ID=')">
-                        <xsl:value-of select="$dest"/>
-                     </xsl:when>
-                     <xsl:otherwise>
-                        <xsl:apply-templates mode="generateLink" select="key('IDS',$W)"/>
-                     </xsl:otherwise>
-                  </xsl:choose>
-               </xsl:attribute>
-               <xsl:for-each select="key('IDS',$W)">
-                  <xsl:attribute name="title">
-                     <xsl:choose>
-                        <xsl:when test="starts-with(local-name(.),'div')">
-                           <xsl:value-of select="normalize-space(tei:head)"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-		                         <xsl:value-of select="normalize-space((.//text()[normalize-space(.)])[1])"/>
-                        </xsl:otherwise>
-                     </xsl:choose>
-                  </xsl:attribute>
-               </xsl:for-each>
-               <xsl:choose>
-                  <xsl:when test="not($body='')">
-                     <xsl:value-of select="$body"/>
-                  </xsl:when>
-                  <xsl:when test="$ptr='true' and count(key('IDS',$W))&gt;0">
-                     <xsl:apply-templates mode="xref" select="key('IDS',$W)">
-                        <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-                     </xsl:apply-templates>
-                  </xsl:when>
-                  <xsl:when test="$ptr='true'">
-	                    <xsl:text>??</xsl:text>
-	                 </xsl:when>
-                  <xsl:otherwise>
-                     <xsl:apply-templates/>
-                  </xsl:otherwise>
-               </xsl:choose>
-            </a>
+	   <xsl:variable name="target">
+	     <xsl:choose>
+	       <xsl:when test="starts-with($dest,'#') or  contains($dest,'.html') or contains($dest,'ID=')">
+		 <xsl:value-of select="$dest"/>
+	       </xsl:when>
+	       <xsl:when test="key('IDS',$W)"/>
+	       <xsl:otherwise>
+		 <xsl:apply-templates mode="generateLink" select="key('IDS',$W)"/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </xsl:variable>
+	   <xsl:variable name="linktext">
+	     <xsl:choose>
+	       <xsl:when test="not($body='')">
+		 <xsl:value-of select="$body"/>
+	       </xsl:when>
+	       <xsl:when test="$ptr='true' and count(key('IDS',$W))&gt;0">
+		 <xsl:apply-templates mode="xref" select="key('IDS',$W)">
+		   <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+		 </xsl:apply-templates>
+	       </xsl:when>
+	       <xsl:when test="$ptr='true'">
+		 <xsl:text>??</xsl:text>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:apply-templates/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </xsl:variable>
+	   <xsl:choose>
+	     <xsl:when test="$target=''">
+	       <xsl:copy-of select="$linktext"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <a href="{$target}">
+		 <xsl:call-template name="htmlAttributes"/>
+		 <xsl:choose>
+		   <xsl:when test="@rend">
+		     <xsl:attribute name="class">
+		       <xsl:value-of select="@rend"/>
+		     </xsl:attribute>
+		   </xsl:when>
+		   <xsl:when test="@rendition">
+		     <xsl:call-template name="applyRendition"/>
+		   </xsl:when>
+		   <xsl:otherwise>
+		     <xsl:attribute name="class">
+		       <xsl:value-of select="$class"/>
+		     </xsl:attribute>
+		   </xsl:otherwise>
+		 </xsl:choose>
+		 
+		 <xsl:for-each select="key('IDS',$W)">
+		   <xsl:attribute name="title">
+		     <xsl:choose>
+		       <xsl:when test="starts-with(local-name(.),'div')">
+			 <xsl:value-of select="translate(normalize-space(tei:head),'&gt;&lt;','')"/>
+		       </xsl:when>
+		       <xsl:otherwise>
+			 <xsl:value-of select="normalize-space((.//text()[normalize-space(.)])[1])"/>
+		       </xsl:otherwise>
+		     </xsl:choose>
+		   </xsl:attribute>
+		 </xsl:for-each>
+	       <xsl:copy-of select="$linktext"/>
+	       </a>
+	     </xsl:otherwise>
+	   </xsl:choose>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
