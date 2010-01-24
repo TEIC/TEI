@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet                 
     xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns="http://www.w3.org/1999/xhtml"
     xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -112,6 +113,7 @@
 		    '\r?\n')">
 	  <xsl:if test="not(contains(.,'clear:'))">
 	    <xsl:value-of select="."/>
+	    <xsl:text>&#10;</xsl:text>
 	  </xsl:if>
 	</xsl:for-each>
 	<xsl:if test="$odd='true'">
@@ -120,6 +122,7 @@
 		      '\r?\n')">
 	    <xsl:if test="not(contains(.,'clear:'))">
 	      <xsl:value-of select="."/>
+	    <xsl:text>&#10;</xsl:text>
 	    </xsl:if>
 	  </xsl:for-each>
 	</xsl:if>
@@ -359,5 +362,10 @@
   </xsl:for-each>
   
 </xsl:template>
+
+  <xsl:template name="verbatim-lineBreak">
+      <xsl:param name="id"/>
+      <br/>
+  </xsl:template>
 
 </xsl:stylesheet>

@@ -70,13 +70,13 @@ case $THERE/$F in
        *.zip)  (cd $TEMPDIR; unzip -q $THERE/$F ); F=`basename $F .zip`.xml;; 
        *) cp $THERE/$F $TEMPDIR/$F  ;; 
 esac
-(cd $TEMPDIR; saxon $F $XSL/docx/utils/graphics/listgraphics.xsl ORIG=$THERE DIR=$TEMPDIR/OEBPS/media > fetch; sh $TEMPDIR/fetch; cat $TEMPDIR/fetch)
+(cd $TEMPDIR; saxon $F $XSL/docx/utils/graphics/listgraphics.xsl ORIG=$THERE DIR=$TEMPDIR/OEBPS/media > fetch; sh $TEMPDIR/fetch; rm $TEMPDIR/fetch)
 cd $TEMPDIR
 if $odd
 then
     saxon -o $TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl localsource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true summaryDoc=true
     saxon -o $TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
-    saxon -o $TEMPDIR/tmp3.xml  $TEMPDIR/tmp2.xml $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
+    saxon -o $TEMPDIR/tmp3.xml $TEMPDIR/tmp2.xml $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/media
 else
     saxon -o $TEMPDIR/tmp3.xml  $F $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
 fi
