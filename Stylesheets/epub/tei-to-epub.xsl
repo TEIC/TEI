@@ -1,53 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet                 xmlns:dc="http://purl.org/dc/elements/1.1/"
-                xmlns:html="http://www.w3.org/1999/xhtml"
-                xmlns:tei="http://www.tei-c.org/ns/1.0"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                version="2.0"
-                exclude-result-prefixes="tei dc html">
-
+<xsl:stylesheet                 
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    version="2.0"
+    exclude-result-prefixes="tei dc html">
+  
   <xsl:import href="../xhtml2/tei.xsl"/>
-
+  
   <xsl:output method="xml" encoding="utf-8" indent="yes"/>
-
+  
   <xsl:key name="GRAPHICS" use="1" match="tei:graphic"/>
-
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
-      <desc>
-	<p>
-    TEI stylesheet for making ePub output. A lot learnt from
-    http://www.hxa.name/articles/content/epub-guide_hxa7241_2007.html and
-    the stylesheets of the NZETC.
-      </p>
-
+    <desc>
       <p>
-    This library is free software; you can redistribute it and/or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-   
+	TEI stylesheet for making ePub output. A lot learnt from
+	http://www.hxa.name/articles/content/epub-guide_hxa7241_2007.html and
+	the stylesheets of the NZETC.
       </p>
-         <p>Author: See AUTHORS</p>
-         <p>Id: $Id: tei.xsl 7025 2009-11-29 19:47:02Z rahtz $</p>
-         <p>Copyright: 2008, TEI Consortium</p>
-      </desc>
-   </doc>
-
-
+      
+      <p>
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later version.
+	
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Lesser General Public License for more details.
+	
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	
+      </p>
+      <p>Author: See AUTHORS</p>
+      <p>Id: $Id: tei.xsl 7025 2009-11-29 19:47:02Z rahtz $</p>
+      <p>Copyright: 2008, TEI Consortium</p>
+    </desc>
+  </doc>
+  
+  
   <xsl:param name="splitLevel">0</xsl:param>
   <xsl:param name="STDOUT">false</xsl:param>
   <xsl:param name="outputDir">OEBPS</xsl:param>
-  <xsl:param name="cssFile">stylesheet.css</xsl:param>
-  <xsl:param name="cssPrintFile">print.css</xsl:param>
+  <xsl:param name="cssFile">../tei.css</xsl:param>
+  <xsl:param name="cssPrintFile">../tei-print.css</xsl:param>
+  <xsl:param name="cssODDFile">../odd.css</xsl:param>
   <xsl:param name="topNavigationPanel">false</xsl:param>
   <xsl:param name="bottomNavigationPanel">false</xsl:param>
   <xsl:param name="autoToc">false</xsl:param>
@@ -56,21 +58,21 @@
   <xsl:param name="institution"></xsl:param>
   <xsl:param name="uid"></xsl:param>
   <xsl:param name="odd">true</xsl:param>
-
+  
   <xsl:template name="stdfooter"/>  
   
   <xsl:template name="generateLicence">
     <xsl:text>Creative Commons Attribution</xsl:text>
   </xsl:template>
-
+  
   <xsl:template name="generateLanguage">
     <xsl:text>en</xsl:text>
   </xsl:template>
-
+  
   <xsl:template name="generatePublisher">
-    <xsl:text>TEI</xsl:text>
+    <xsl:text>TEI Stylesheets</xsl:text>
   </xsl:template>
-
+  
   <xsl:template name="generateID">
     <xsl:choose>
       <xsl:when test="$uid=''">
@@ -82,80 +84,84 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
-  <xsl:template name="generateLocalCSS">
+  
+  <xsl:template name="includeCSS">
+    <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+    <xsl:if test="not($cssPrintFile='')">
+      <link rel="stylesheet" media="print" type="text/css" href="print.css"/>
+    </xsl:if>	 
     <xsl:if test="$odd='true'">
       <link xmlns="http://www.w3.org/1999/xhtml" 
 	    href="odd.css" rel="stylesheet" type="text/css"/>
     </xsl:if>
     <link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" type="application/vnd.adobe-page-template+xml" 
-	href="page-template.xpgt"/>
+	  href="page-template.xpgt"/>
   </xsl:template>
-
+  
   <xsl:template match="/">
-
+    
     <xsl:apply-templates mode="split"/>
-
+    
     <xsl:for-each select="*">
-
-    <xsl:variable name="TOC">
-      <TOC xmlns="http://www.w3.org/1999/xhtml">
-	<xsl:call-template name="mainTOC"/>
-      </TOC>
-    </xsl:variable>
-
-    <xsl:result-document method="text" href="OEBPS/stylesheet.css">
-      <xsl:for-each
-	  select="tokenize(unparsed-text('../tei.css'),
-		  '\r?\n')">
-	<xsl:if test="not(contains(.,'clear:'))">
-	  <xsl:value-of select="."/>
-	</xsl:if>
-      </xsl:for-each>
-    </xsl:result-document>
-
-    <xsl:result-document method="text" href="OEBPS/print.css">
-      <xsl:for-each
-	  select="tokenize(unparsed-text('../tei-print.css'),
-		  '\r?\n')">
-	<xsl:if test="not(contains(.,'clear:'))">
-	  <xsl:value-of select="."/>
-	</xsl:if>
-      </xsl:for-each>
-    </xsl:result-document>
-
-    <xsl:if test="$odd='true'">
-      <xsl:result-document method="text" href="OEBPS/odd.css">
+      
+      <xsl:variable name="TOC">
+	<TOC xmlns="http://www.w3.org/1999/xhtml">
+	  <xsl:call-template name="mainTOC"/>
+	</TOC>
+      </xsl:variable>
+      
+      <xsl:result-document method="text" href="OEBPS/stylesheet.css">
 	<xsl:for-each
-	    select="tokenize(unparsed-text('../tei-print.css'),
+	    select="tokenize(unparsed-text($cssFile),
 		    '\r?\n')">
 	  <xsl:if test="not(contains(.,'clear:'))">
 	    <xsl:value-of select="."/>
 	  </xsl:if>
 	</xsl:for-each>
       </xsl:result-document>
-    </xsl:if>
-
-    <xsl:result-document method="text" href="mimetype">
-      <xsl:text>application/epub+zip</xsl:text>
-    </xsl:result-document>
-
-    <xsl:result-document method="xml" href="META-INF/container.xml">
-      <container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
-	<rootfiles>
-	  <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
-	</rootfiles>
-      </container>
-    </xsl:result-document>
-
-    <xsl:result-document href="OEBPS/content.opf" method="xml">
-        <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" 
-                 version="2.0">
-          
-          <metadata xmlns:dc="http://purl.org/dc/elements/1.1/"
-                    xmlns:dcterms="http://purl.org/dc/terms/"
-                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                    xmlns:opf="http://www.idpf.org/2007/opf">
+      
+      <xsl:result-document method="text" href="OEBPS/print.css">
+	<xsl:for-each
+	    select="tokenize(unparsed-text($cssPrintFile),
+		    '\r?\n')">
+	  <xsl:if test="not(contains(.,'clear:'))">
+	    <xsl:value-of select="."/>
+	  </xsl:if>
+	</xsl:for-each>
+      </xsl:result-document>
+      
+      <xsl:if test="$odd='true'">
+	<xsl:result-document method="text" href="OEBPS/odd.css">
+	  <xsl:for-each
+	      select="tokenize(unparsed-text($cssODDFile),
+		      '\r?\n')">
+	    <xsl:if test="not(contains(.,'clear:'))">
+	      <xsl:value-of select="."/>
+	    </xsl:if>
+	  </xsl:for-each>
+	</xsl:result-document>
+      </xsl:if>
+      
+      <xsl:result-document method="text" href="mimetype">
+	<xsl:text>application/epub+zip</xsl:text>
+      </xsl:result-document>
+      
+      <xsl:result-document method="xml" href="META-INF/container.xml">
+	<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+	  <rootfiles>
+	    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+	  </rootfiles>
+	</container>
+      </xsl:result-document>
+      
+      <xsl:result-document href="OEBPS/content.opf" method="xml">
+	<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" 
+		 version="2.0">
+	  
+	  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/"
+		    xmlns:dcterms="http://purl.org/dc/terms/"
+		    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		    xmlns:opf="http://www.idpf.org/2007/opf">
             <dc:title>
 	      <xsl:call-template name="generateTitle"/>
 	    </dc:title>
@@ -262,9 +268,6 @@
         </package>
       </xsl:result-document>
       
-      
-      <!-- daisybook ncx table of contents -->
-
       <xsl:result-document href="OEBPS/toc.ncx"  method="xml">
         <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
 
@@ -359,9 +362,9 @@
 	
       </ade:template>      
     </xsl:result-document>
-
-    </xsl:for-each>
-
-    </xsl:template>
+    
+  </xsl:for-each>
+  
+</xsl:template>
 
 </xsl:stylesheet>
