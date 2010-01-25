@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date:  $
+$Id: att.scoping.xml $
+-->
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" 
+ xmlns:rng="http://relaxng.org/ns/structure/1.0"
+module="tei" type="atts" ident="att.scoping">
+  <desc>provides attributes for selecting particular elements within a
+  document by means of  XPath.</desc>
+  <attList>
+    <attDef ident="target" usage="mwa">
+      <equiv/>
+      <desc>points at one or several  elements or  sets of elements by
+      means of one or more
+      data pointers, using the URI syntax.</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref name="data.pointer"/>
+      </datatype>
+      <valDesc>a series of one or more identifiers (URIs), separated by whitespace</valDesc>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went
+        to <persName xml:id="ESSEX">Essex</persName>
+	<certainty target="#ESSEX" locus="name" degree="0.6"/></egXML>
+      </exemplum>
+      <remarks>
+        <p>If more than one identifier is given, the implication is
+        that all elements (or nodesets) are intended. The
+        <att>match</att> attribute may also be used as a means of
+        identifying groups of elements.</p>
+      </remarks>
+    </attDef>
+
+    <attDef ident="match" usage="mwa">
+      <equiv/>
+      <desc>supplies an arbitrary XPath expression identifying a  set of
+nodes, selected within the
+      context identified by the <att>target</att> attribute if this
+      is supplied, or by the parent element if it is not.
+</desc>
+      <datatype>
+        <rng:text  />
+      </datatype>
+
+<valDesc>Any XPath expression using the syntax
+defined in <ptr target="#XSLT2"/>. </valDesc>
+
+
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to <persName xml:id="ESX">Essex</persName>
+<certainty match="//*[xml:id='#ESX']" locus="name" degree="0.6"/>
+				</egXML>
+      </exemplum>
+      <remarks>
+        <p>The evaluation context for the expression is the node or
+        nodes identified by <att>target</att>, or, if no value is
+        given for <att>target</att>, the parent element.</p>
+<p>Note that the value of the <att>target</att> attribute may include
+an XPointer expression which may also include an XPath expression (see
+<ptr target="#SATS"/>). Either method may be used.</p>
+      </remarks>
+    </attDef>
+
+
+  </attList>
+</classSpec>

@@ -20,6 +20,7 @@ $Id$
   <desc version="2007-01-21" xml:lang="it">indica il grado di certezza o incertezza associato a un determinato aspetto del la codifica del testo</desc>
   <classes>
     <memberOf key="model.global.meta"/>
+    <memberOf key="att.scoping"/>
   </classes>
   <content>
     <rng:zeroOrMore>
@@ -27,76 +28,6 @@ $Id$
     </rng:zeroOrMore>
   </content>
   <attList>
-    <attDef ident="target" usage="mwa">
-      <equiv/>
-      <desc>points at the element or elements whose markup is
-      uncertain.</desc>
-      <desc version="2007-12-20" xml:lang="kr">불확실한 마크업의 요소를 지시한다.</desc>
-      <desc version="2007-05-02" xml:lang="zh-tw">指出不確定標記的元素。</desc>
-      <desc version="2008-04-05" xml:lang="ja">
-      確信度の対象となる要素を示す．
-      </desc>
-      <desc version="2009-01-06" xml:lang="fr">Pointe vers les éléments dont le balisage est
-          incertain.</desc>
-      <desc version="2007-05-04" xml:lang="es">señala los elementos cuyo marcaje es incierto.</desc>
-      <desc version="2007-01-21" xml:lang="it">indica elementi la cui codifica è incerta</desc>
-      <datatype maxOccurs="unbounded">
-        <rng:ref name="data.pointer"/>
-      </datatype>
-      <valDesc>a series of one or more identifiers (URIs), separated by whitespace</valDesc>
-      <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to <persName xml:id="ESSEX">Essex</persName>
-					<certainty target="#ESSEX" locus="name" degree="0.6"/>
-				</egXML>
-      </exemplum>
-      <remarks>
-        <p>If more than one identifier is given, the
-        <gi>certainty</gi> element is interpreted as applying to all.</p>
-      </remarks>
-      <remarks xml:lang="fr">
-        <p>Si plusieurs identifiants sont fournis, l'élément <gi>certainty</gi> est
-                        considéré comme s'appliquant à tous. </p>
-      </remarks>
-      <remarks xml:lang="ja">
-        <p>
-	複数の識別子がある場合，要素<gi>certainty</gi>は，その全ての要
-	素を対象にすると解釈される．注釈対象となる要素に識別子が付与さ
-	れていない場合，当該要素の値は要素<gi>ptr</gi>の識別子であるべ
-	きである．この間接参照機能についての詳細は<ptr target="#SA"/>
-	を参照のこと．
-	</p>
-      </remarks>
-    </attDef>
-
-    <attDef ident="match" usage="mwa">
-      <equiv/>
-      <desc>supplies an XSLT 2.0 pattern which may be used to select
-      those portions of the
-      document the certainty of which is to be specified.</desc>
-      <datatype>
-        <rng:text/>
-      </datatype>
-<valDesc>The pattern should be expressed using the pattern syntax
-defined in <ptr target="#XSLT2"/>. </valDesc>
-
-
-      <exemplum xml:lang="en">
-<p>The following example has the same effect as the preceding one:</p>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to <persName xml:id="ESX">Essex</persName>
-<certainty match="//*[xml:id='#ESX']" locus="name" degree="0.6"/>
-				</egXML>
-      </exemplum>
-      <remarks>
-        <p>The context for the pattern is the nodeset identified by
-        the value of the <att>target</att> attribute. If no value is
-        given for <att>target</att>, the context is the document
-        root element.</p>
-<p>Note that the value of the <att>target</att> attribute may include
-an XPointer expression which may include an XPath expression (see <ptr
-target="#SATS"/>). Either method may be used to identify the parts of
-a document whose precision is to be documented by this element.</p>
-      </remarks>
-    </attDef>
 
     <attDef ident="locus" usage="req">
       <equiv/>
