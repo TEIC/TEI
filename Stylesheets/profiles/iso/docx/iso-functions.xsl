@@ -211,6 +211,7 @@
       <xsl:for-each select="$element">
 	<xsl:choose>
 	  <xsl:when test="self::m:oMath">true</xsl:when>
+	  <xsl:when test="self::m:oMath">true</xsl:when>
 	  <xsl:when test="self::mml:math">true</xsl:when>
 	  <xsl:when
 	      test="self::teidocx:dynamicContent">true</xsl:when>
@@ -225,6 +226,7 @@
 	  <xsl:when test="self::tei:att">true</xsl:when>
 	  <xsl:when test="self::tei:author">true</xsl:when>
 	  <xsl:when test="self::tei:br">true</xsl:when>
+	  <xsl:when test="self::tei:cit">true</xsl:when>
 	  <xsl:when test="self::tei:c">true</xsl:when>
 	  <xsl:when test="self::tei:code">true</xsl:when>
 	  <xsl:when test="self::tei:del">true</xsl:when>

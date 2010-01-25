@@ -1297,7 +1297,7 @@
 	                    <xsl:for-each select="$list/List/Item">
 		                      <xsl:copy-of select="*|text()"/>
 		                      <xsl:if test="following-sibling::Item">
-		                         <xsl:call-template name="showSpace"/>
+		                         <xsl:call-template name="showSpaceBetweenItems"/>
 		                      </xsl:if>
 	                    </xsl:for-each>
                   </xsl:element>
@@ -1328,7 +1328,7 @@
 	                    <xsl:for-each select="$list/List/Item">
 		                      <xsl:copy-of select="*|text()"/>
 		                      <xsl:if test="following-sibling::Item">
-		                         <xsl:call-template name="showSpace"/>
+		                         <xsl:call-template name="showSpaceBetweenItems"/>
 		                      </xsl:if>
 	                    </xsl:for-each>
                   </xsl:element>
@@ -1359,7 +1359,7 @@
 	                    <xsl:for-each select="$list/List/Item">
 		                      <xsl:copy-of select="*|text()"/>
 		                      <xsl:if test="following-sibling::Item">
-		                         <xsl:call-template name="showSpace"/>
+		                         <xsl:call-template name="showSpaceBetweenItems"/>
 		                      </xsl:if>
 	                    </xsl:for-each>
 	                 </xsl:element>
@@ -1681,7 +1681,7 @@
          <xsl:for-each select="$list/List/Item">
 	           <xsl:copy-of select="*|text()"/>
 	           <xsl:if test="following-sibling::Item">
-	              <xsl:call-template name="showSpace"/>
+	              <xsl:call-template name="showSpaceBetweenItems"/>
 	           </xsl:if>
          </xsl:for-each>
          <xsl:call-template name="generateParentsByAttribute"/>
@@ -1735,7 +1735,7 @@
 	              <xsl:for-each select="$list/List/Item">
 	                 <xsl:copy-of select="*|text()"/>
 	                 <xsl:if test="following-sibling::Item">
-	                    <xsl:call-template name="showSpace"/>
+	                    <xsl:call-template name="showSpaceBetweenItems"/>
 	                 </xsl:if>
 	              </xsl:for-each>
                <xsl:if test="$depth &gt; 1">] </xsl:if>
@@ -1760,7 +1760,7 @@
 	                    <xsl:for-each select="$list/List/Item">
 		                      <xsl:copy-of select="*|text()"/>
 		                      <xsl:if test="following-sibling::Item">
-		                         <xsl:call-template name="showSpace"/>
+		                         <xsl:call-template name="showSpaceBetweenItems"/>
 		                      </xsl:if>
 	                    </xsl:for-each>
                   </xsl:for-each>
@@ -1848,7 +1848,7 @@
 	           <xsl:for-each select="$list/List/Item">
 	              <xsl:copy-of select="*|text()"/>
 	              <xsl:if test="following-sibling::Item">
-	                 <xsl:call-template name="showSpace"/>
+	                 <xsl:call-template name="showSpaceBetweenItems"/>
 	              </xsl:if>
 	           </xsl:for-each>
          </xsl:element>
@@ -1894,7 +1894,7 @@
 	           <xsl:for-each select="$list/List/Item">
 	              <xsl:copy-of select="*|text()"/>
 	              <xsl:if test="following-sibling::Item">
-	                 <xsl:call-template name="showSpace"/>
+	                 <xsl:call-template name="showSpaceBetweenItems"/>
 	              </xsl:if>
 	           </xsl:for-each>
          </xsl:element>

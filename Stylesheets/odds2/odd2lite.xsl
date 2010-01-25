@@ -108,6 +108,8 @@
   <xsl:template name="showSpace">
       <c xml:space="preserve"> </c>
   </xsl:template>
+  <xsl:template name="showSpaceBetweenItems">
+  </xsl:template>
   <xsl:template name="makeInternalLink">
       <xsl:param name="ptr"/>
       <xsl:param name="target"/>

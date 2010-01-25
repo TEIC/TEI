@@ -431,6 +431,9 @@
   <xsl:template name="showSpace">
       <xsl:text> </xsl:text>
   </xsl:template>
+  <xsl:template name="showSpaceBetweenItems">
+      <xsl:text> </xsl:text>
+  </xsl:template>
 
 
   <xsl:template match="tei:schemaSpec">
