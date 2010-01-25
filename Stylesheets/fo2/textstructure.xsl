@@ -451,7 +451,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementtei:head in heading mode</desc>
+      <desc>Process element head in heading mode</desc>
    </doc>
   <xsl:template match="tei:head" mode="makeheading">
       <xsl:apply-templates/>

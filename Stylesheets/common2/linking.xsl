@@ -23,7 +23,7 @@
       </desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementTEI in xref mode</desc>
+      <desc>Process element  in xref mode</desc>
    </doc>
   <xsl:template match="tei:TEI" mode="xref">
       <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]"/>

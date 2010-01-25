@@ -232,7 +232,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementtei:head in heading mode</desc>
+      <desc>Process element head in heading mode</desc>
    </doc>
   <xsl:template match="tei:head" mode="makeheading">
       <xsl:apply-templates/>
@@ -516,7 +516,7 @@
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elementtei:pb</p>
+         <p>Process element pb</p>
          <p>Indication of a page break. We make it an anchor if it has an
     ID.</p>
       </desc>

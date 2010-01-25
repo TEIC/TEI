@@ -151,7 +151,7 @@
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elementTEI in generateLink mode</p>
+         <p>Process element TEI in generateLink mode</p>
          <p>
             <p xmlns="http://www.w3.org/1999/xhtml"> when a &lt;div&gt; is referenced, see whether its plain
         anchor, or needs a parent HTML name prepended </p>
@@ -166,7 +166,7 @@
       <xsl:value-of select="concat($BaseFile,$standardSuffix)"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:anchor</desc>
+      <desc>Process element anchor</desc>
    </doc>
   <xsl:template match="tei:anchor">
       <xsl:call-template name="makeAnchor"/>
@@ -201,7 +201,7 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:note</desc>
+      <desc>Process element note</desc>
    </doc>
   <xsl:template match="tei:note" mode="generateLink">
       <xsl:text>#</xsl:text>

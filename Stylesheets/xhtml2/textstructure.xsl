@@ -220,7 +220,7 @@ $requestedID: requests a particular page
       <xsl:value-of select="."/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:*</desc>
+      <desc>Process element *</desc>
    </doc>
   <xsl:template match="tei:*" mode="generateNextLink">
       <span class="nextLink">
@@ -379,7 +379,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elements tei:TEI</p>
+         <p>Process element TEI</p>
          <p>
             <p xmlns="http://www.w3.org/1999/xhtml"> *****************************************</p>
          </p>
@@ -434,7 +434,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elements tei:TEI</p>
+         <p>Process element TEI</p>
          <p>
             <p xmlns="http://www.w3.org/1999/xhtml"> *****************************************</p>
          </p>
@@ -492,7 +492,7 @@ $requestedID: requests a particular page
       <xsl:call-template name="teiEndHook"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:body|tei:back</desc>
+      <desc>Process element body|tei:back</desc>
    </doc>
   <xsl:template match="tei:body|tei:back" mode="split">
       <xsl:for-each select="*">
@@ -507,13 +507,13 @@ $requestedID: requests a particular page
       </xsl:for-each>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:body in inner mode</desc>
+      <desc>Process element body in inner mode</desc>
    </doc>
   <xsl:template match="tei:body" mode="inner">
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:closer</desc>
+      <desc>Process element closer</desc>
    </doc>
   <xsl:template match="tei:closer">
       <blockquote class="closer">
@@ -530,7 +530,7 @@ $requestedID: requests a particular page
       </blockquote>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:dateline</desc>
+      <desc>Process element dateline</desc>
    </doc>
   <xsl:template match="tei:dateline">
       <span class="dateline">
@@ -538,7 +538,7 @@ $requestedID: requests a particular page
       </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:divGen[@type='actions']</desc>
+      <desc>Process element divGen[@type='actions']</desc>
    </doc>
   <xsl:template match="tei:divGen[@type='actions']">
       <h3>Actions arising</h3>
@@ -557,7 +557,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elements tei:divGen[@type='toc']</p>
+         <p>Process element divGen[@type='toc']</p>
          <p>
             <p xmlns="http://www.w3.org/1999/xhtml"> table of contents </p>
          </p>
@@ -572,7 +572,7 @@ $requestedID: requests a particular page
       <xsl:call-template name="mainTOC"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:div[@type='canto']</desc>
+      <desc>Process element div[@type='canto']</desc>
    </doc>
   <xsl:template match="tei:div[@type='canto']">
       <xsl:variable name="divlevel" select="count(ancestor::tei:div)"/>
@@ -586,7 +586,7 @@ $requestedID: requests a particular page
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:div*, @type='letter'</desc>
+      <desc>Process element div*, @type='letter'</desc>
    </doc>
   <xsl:template match="tei:div1[@type='letter']|tei:div[@type='letter']">
       <div class="letter">
@@ -594,7 +594,7 @@ $requestedID: requests a particular page
       </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:div[@type='epistle']</desc>
+      <desc>Process element div[@type='epistle']</desc>
    </doc>
   <xsl:template match="tei:div[@type='epistle']">
       <div class="epistle">
@@ -602,13 +602,13 @@ $requestedID: requests a particular page
       </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:div[@type='frontispiece']</desc>
+      <desc>Process element div[@type='frontispiece']</desc>
    </doc>
   <xsl:template match="tei:div[@type='frontispiece']">
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:div[@type='illustration']</desc>
+      <desc>Process element div[@type='illustration']</desc>
    </doc>
   <xsl:template match="tei:div[@type='illustration']">
       <xsl:apply-templates/>
@@ -791,7 +791,7 @@ $requestedID: requests a particular page
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:docAuthor in "author" mode"</desc>
+      <desc>Process element docAuthor in "author" mode"</desc>
    </doc>
   <xsl:template match="tei:docAuthor" mode="author">
       <xsl:if test="preceding-sibling::tei:docAuthor">
@@ -801,7 +801,7 @@ $requestedID: requests a particular page
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elements tei:docTitle, docAuthor, docImprint and
+         <p>Process element docTitle, docAuthor, docImprint and
       tei:docDate</p>
          <p>
             <p xmlns="http://www.w3.org/1999/xhtml"> Translate these to a corresponding HTML div </p>
@@ -826,7 +826,7 @@ $requestedID: requests a particular page
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:opener</desc>
+      <desc>Process element opener</desc>
    </doc>
   <xsl:template match="tei:opener">
       <blockquote class="opener">
@@ -843,7 +843,7 @@ $requestedID: requests a particular page
       </blockquote>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:text</desc>
+      <desc>Process element text</desc>
    </doc>
   <xsl:template match="tei:text">
       <xsl:choose>
@@ -863,7 +863,7 @@ $requestedID: requests a particular page
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:titlePage</desc>
+      <desc>Process element titlePage</desc>
    </doc>
   <xsl:template match="tei:titlePage">
       <div class="titlePage">

@@ -82,7 +82,7 @@
       </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:ab</desc>
+      <desc>Process element ab</desc>
    </doc>
   <xsl:template match="tei:ab">
       <div>
@@ -91,14 +91,14 @@
       </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:addrLine</desc>
+      <desc>Process element addrLine</desc>
    </doc>
   <xsl:template match="tei:addrLine">
       <xsl:apply-templates/>
       <br/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:address</desc>
+      <desc>Process element address</desc>
    </doc>
   <xsl:template match="tei:address">
       <div class="address">
@@ -106,7 +106,7 @@
       </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:bibl</desc>
+      <desc>Process element bibl</desc>
    </doc>
   <xsl:template match="tei:bibl">
       <xsl:choose>
@@ -125,7 +125,7 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:byline</desc>
+      <desc>Process element byline</desc>
    </doc>
   <xsl:template match="tei:byline">
       <div>
@@ -134,7 +134,7 @@
       </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementtei:change</desc>
+      <desc>Process element change</desc>
    </doc>
   <xsl:template match="tei:change">
       <tr>
@@ -147,7 +147,7 @@
       </tr>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementtei:choice</desc>
+      <desc>Process element choice</desc>
    </doc>
   <xsl:template match="tei:choice">
       <xsl:choose>
@@ -164,7 +164,7 @@
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elementtei:cit</p>
+         <p>Process element cit</p>
          <p>
             <p xmlns="http://www.w3.org/1999/xhtml"> quoting </p>
          </p>
@@ -201,7 +201,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:code</desc>
+      <desc>Process element code</desc>
    </doc>
   <xsl:template match="tei:code">
       <tt>
@@ -230,7 +230,7 @@
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:eg</desc>
+      <desc>Process element eg</desc>
    </doc>
   <xsl:template match="tei:eg">
       <div>
@@ -247,7 +247,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:emph</desc>
+      <desc>Process element emph</desc>
    </doc>
   <xsl:template match="tei:emph">
       <xsl:choose>
@@ -267,7 +267,7 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:epigraph</desc>
+      <desc>Process element epigraph</desc>
    </doc>
   <xsl:template match="tei:epigraph">
       <div>
@@ -276,7 +276,7 @@
       </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:epigraph/lg</desc>
+      <desc>Process element epigraph/lg</desc>
    </doc>
   <xsl:template match="tei:epigraph/tei:lg">
       <table>
@@ -284,7 +284,7 @@
       </table>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:foreign</desc>
+      <desc>Process element foreign</desc>
    </doc>
   <xsl:template match="tei:foreign">
       <span>
@@ -293,7 +293,7 @@
       </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:gap</desc>
+      <desc>Process element gap</desc>
    </doc>
   <xsl:template match="tei:gap">
       <span class="gap">
@@ -307,7 +307,7 @@
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elements tei:gi</p>
+         <p>Process element gi</p>
          <p>
             <p xmlns="http://www.w3.org/1999/xhtml"> special purpose </p>
          </p>
@@ -321,7 +321,7 @@
       </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:gi</desc>
+      <desc>Process element gi</desc>
    </doc>
   <xsl:template match="tei:gi" mode="plain">
       <span class="gi">
@@ -332,7 +332,7 @@
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elements tei:att</p>
+         <p>Process element att</p>
          <p>
             <p xmlns="http://www.w3.org/1999/xhtml"> special purpose </p>
          </p>
@@ -354,7 +354,7 @@
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elements tei:head</p>
+         <p>Process element head</p>
          <p>
             <p xmlns="http://www.w3.org/1999/xhtml"> headings etc </p>
          </p>
@@ -375,7 +375,7 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementtei:head in plain mode</desc>
+      <desc>Process element head in plain mode</desc>
    </doc>
   <xsl:template match="tei:head" mode="plain">
       <xsl:if test="preceding-sibling::tei:head">
@@ -385,7 +385,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementtei:head in heading mode</desc>
+      <desc>Process element head in heading mode</desc>
    </doc>
   <xsl:template match="tei:head" mode="makeheading">
       <xsl:choose>
@@ -405,7 +405,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:hi</desc>
+      <desc>Process element hi</desc>
    </doc>
   <xsl:template match="tei:hi">
       <xsl:choose>
@@ -426,7 +426,7 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:ident</desc>
+      <desc>Process element ident</desc>
    </doc>
   <xsl:template match="tei:ident">
       <xsl:choose>
@@ -443,7 +443,7 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:item</desc>
+      <desc>Process element item</desc>
    </doc>
   <xsl:template match="tei:item" mode="bibl">
       <p>
@@ -452,7 +452,7 @@
       </p>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:item</desc>
+      <desc>Process element item</desc>
    </doc>
   <xsl:template match="tei:item" mode="glosstable">
       <tr>
@@ -468,7 +468,7 @@
       </tr>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:item</desc>
+      <desc>Process element item</desc>
    </doc>
   <xsl:template match="tei:item" mode="gloss">
       <dt>
@@ -480,7 +480,7 @@
       </dd>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:item</desc>
+      <desc>Process element item</desc>
    </doc>
   <xsl:template match="tei:item">
       <li>
@@ -510,7 +510,7 @@
       </li>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:item</desc>
+      <desc>Process element item</desc>
    </doc>
   <xsl:template match="tei:item" mode="inline">
       <xsl:if test="preceding-sibling::tei:item">, </xsl:if>
@@ -520,7 +520,7 @@
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:item/tei:label</desc>
+      <desc>Process element item/tei:label</desc>
    </doc>
   <xsl:template match="tei:item/tei:label">
       <xsl:choose>
@@ -541,7 +541,7 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:kw</desc>
+      <desc>Process element kw</desc>
    </doc>
   <xsl:template match="tei:kw">
       <span class="kw">
@@ -549,14 +549,14 @@
       </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:l</desc>
+      <desc>Process element l</desc>
    </doc>
   <xsl:template match="tei:l" mode="Copying">
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elements tei:l[@copyOf]|lg[@copyOf]</p>
+         <p>Process element l[@copyOf]|lg[@copyOf]</p>
          <p>
             <p xmlns="http://www.w3.org/1999/xhtml"> copyOf handling </p>
          </p>
@@ -576,14 +576,14 @@
       <xsl:apply-templates mode="Copying" select="key('IDS',$W)"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:label</desc>
+      <desc>Process element label</desc>
    </doc>
   <xsl:template match="tei:label">
       <xsl:call-template name="makeAnchor"/>
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:label</desc>
+      <desc>Process element label</desc>
    </doc>
   <xsl:template match="tei:label" mode="print">
       <xsl:call-template name="makeAnchor"/>
@@ -603,7 +603,7 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:lb</desc>
+      <desc>Process element lb</desc>
    </doc>
   <xsl:template match="tei:lb">
       <br>
@@ -611,7 +611,7 @@
       </br>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:l</desc>
+      <desc>Process element l</desc>
    </doc>
   <xsl:template match="tei:l">
       <div>
@@ -620,7 +620,7 @@
       </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:lg</desc>
+      <desc>Process element lg</desc>
    </doc>
   <xsl:template match="tei:lg">
       <div>
@@ -629,7 +629,7 @@
       </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:lg/tei:l</desc>
+      <desc>Process element lg/tei:l</desc>
    </doc>
   <xsl:template match="tei:lg/tei:l">
       <div>
@@ -667,14 +667,14 @@
       </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:lg</desc>
+      <desc>Process element lg</desc>
    </doc>
   <xsl:template match="tei:lg" mode="Copying">
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elements tei:list</p>
+         <p>Process element list</p>
          <p>
             <p xmlns="http://www.w3.org/1999/xhtml">Lists. Depending on the value of the 'type' attribute, various HTML
         lists are generated: <dl>
@@ -806,12 +806,12 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:list/tei:label</desc>
+      <desc>Process element list/tei:label</desc>
    </doc>
   <xsl:template match="tei:list/tei:label"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:listBibl</desc>
+      <desc>Process element listBibl</desc>
    </doc>
 
   <xsl:template match="tei:listBibl">
@@ -849,7 +849,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:mentioned</desc>
+      <desc>Process element mentioned</desc>
    </doc>
   <xsl:template match="tei:mentioned">
       <span>
@@ -858,7 +858,7 @@
       </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:name in mode "plain"</desc>
+      <desc>Process element name in mode "plain"</desc>
    </doc>
   <xsl:template match="tei:name" mode="plain">
       <xsl:variable name="ident">
@@ -873,7 +873,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:name and tei:persName</desc>
+      <desc>Process element name and tei:persName</desc>
    </doc>
   <xsl:template match="tei:name|tei:persName">
       <xsl:apply-templates/>
@@ -889,7 +889,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:note</desc>
+      <desc>Process element note</desc>
    </doc>
   <xsl:template match="tei:note">
       <xsl:variable name="identifier">
@@ -963,7 +963,7 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:note</desc>
+      <desc>Process element note</desc>
    </doc>
   <xsl:template match="tei:note" mode="printnotes">
       <xsl:if test="not(ancestor::tei:bibl)">
@@ -1000,7 +1000,7 @@
       </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:note[@type='action']</desc>
+      <desc>Process element note[@type='action']</desc>
    </doc>
   <xsl:template match="tei:note[@type='action']">
       <div class="right">
@@ -1012,7 +1012,7 @@
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elementtei:pb</p>
+         <p>Process element pb</p>
          <p>Indication of a page break. For the purposes of HTML, we simply
       make it an anchor if it has an ID.</p>
       </desc>
@@ -1043,7 +1043,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementtei:p</desc>
+      <desc>Process element p</desc>
    </doc>
   <xsl:template match="tei:p">
       <xsl:variable name="wrapperElement">
@@ -1094,7 +1094,7 @@
       </xsl:element>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:p[@rend='box']</desc>
+      <desc>Process element p[@rend='box']</desc>
    </doc>
   <xsl:template match="tei:p[@rend='box']">
       <p class="box">
@@ -1102,7 +1102,7 @@
       </p>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:q and tei:said</desc>
+      <desc>Process element q and tei:said</desc>
    </doc>
   <xsl:template match="tei:q|tei:said">
       <xsl:choose>
@@ -1129,7 +1129,7 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:q[@rend='display']</desc>
+      <desc>Process element q[@rend='display']</desc>
    </doc>
   <xsl:template match="tei:q[@rend='display']">
       <blockquote>
@@ -1147,7 +1147,7 @@
       </blockquote>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:q[@rend='eg']</desc>
+      <desc>Process element q[@rend='eg']</desc>
    </doc>
   <xsl:template match="tei:q[@rend='eg']">
       <div>
@@ -1158,7 +1158,7 @@
       </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:quote</desc>
+      <desc>Process element quote</desc>
    </doc>
   <xsl:template match="tei:quote">
       <xsl:choose>
@@ -1206,7 +1206,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:resp</desc>
+      <desc>Process element resp</desc>
    </doc>
   <xsl:template match="tei:resp">
       <xsl:apply-templates/>
@@ -1214,13 +1214,13 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:respStmt</desc>
+      <desc>Process element respStmt</desc>
    </doc>
   <xsl:template match="tei:respStmt">
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:salute</desc>
+      <desc>Process element salute</desc>
    </doc>
   <xsl:template match="tei:salute">
       <p class="left">
@@ -1228,7 +1228,7 @@
       </p>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:seg</desc>
+      <desc>Process element seg</desc>
    </doc>
   <xsl:template match="tei:seg">
       <span>
@@ -1259,7 +1259,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:signed</desc>
+      <desc>Process element signed</desc>
    </doc>
   <xsl:template match="tei:signed">
       <p class="left">
@@ -1267,7 +1267,7 @@
       </p>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:space</desc>
+      <desc>Process element space</desc>
    </doc>
   <xsl:template match="tei:space">
       <xsl:choose>
@@ -1283,7 +1283,7 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:term</desc>
+      <desc>Process element term</desc>
    </doc>
   <xsl:template match="tei:term">
       <xsl:choose>
@@ -1304,20 +1304,20 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:title</desc>
+      <desc>Process element title</desc>
    </doc>
   <xsl:template match="tei:title" mode="withbr">
       <xsl:value-of select="."/>
       <br/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:witList</desc>
+      <desc>Process element witList</desc>
    </doc>
   <xsl:template match="tei:witList">
       <xsl:apply-templates select="./witness"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:witness</desc>
+      <desc>Process element witness</desc>
    </doc>
   <xsl:template match="tei:witness">
       <p>
@@ -2036,7 +2036,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:soCalled</desc>
+      <desc>Process element soCalled</desc>
    </doc>
   <xsl:template match="tei:soCalled">
       <xsl:choose>

@@ -50,7 +50,7 @@
       </m:math>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:cell</desc>
+      <desc>Process element cell</desc>
    </doc>
   <xsl:template match="tei:cell">
       <td valign="top">
@@ -111,11 +111,11 @@
       </td>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:figDesc</desc>
+      <desc>Process element figDesc</desc>
    </doc>
   <xsl:template match="tei:figDesc"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:figure</desc>
+      <desc>Process element figure</desc>
    </doc>
   <xsl:template match="tei:figure">
       <xsl:choose>
@@ -198,17 +198,17 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:figure/tei:head</desc>
+      <desc>Process element figure/tei:head</desc>
    </doc>
   <xsl:template match="tei:figure/tei:head"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:formula</desc>
+      <desc>Process element formula</desc>
    </doc>
   <xsl:template match="tei:formula" mode="xref">
       <xsl:number/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:graphic</desc>
+      <desc>Process element graphic</desc>
    </doc>
   <xsl:template match="tei:graphic">
       <xsl:if test="@xml:id and $xhtml='false'">
@@ -219,7 +219,7 @@
       <xsl:call-template name="showGraphic"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:row</desc>
+      <desc>Process element row</desc>
    </doc>
   <xsl:template match="tei:row">
       <tr>
@@ -235,7 +235,7 @@
       </tr>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:table</desc>
+      <desc>Process element table</desc>
    </doc>
   <xsl:template match="tei:table">
       <div>
@@ -270,7 +270,7 @@
       </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:table[@rend='simple']</desc>
+      <desc>Process element table[@rend='simple']</desc>
    </doc>
   <xsl:template match="tei:table[@rend='simple']">
       <table>

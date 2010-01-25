@@ -201,7 +201,7 @@
 	  </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates select="tei:head" mode="header"/>
+          <xsl:apply-templates select="tei:head" mode="makeheading"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>

@@ -36,7 +36,7 @@
   <xsl:key name="RENDITION" match="@rendition[not(starts-with(.,'#'))]" use="."/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:teiHeader</desc>
+      <desc>Process element teiHeader</desc>
    </doc>
   <xsl:template match="tei:teiHeader"/>
 

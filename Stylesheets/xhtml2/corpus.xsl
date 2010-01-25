@@ -31,7 +31,7 @@
       </desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:catRef</desc>
+      <desc>Process element catRef</desc>
    </doc>
   <xsl:template match="tei:catRef">
       <xsl:variable name="W">
@@ -53,7 +53,7 @@
       </em>: <xsl:apply-templates select="key('IDS',$W)/catDesc"/>
    </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements tei:teiCorpus</desc>
+      <desc>Process element teiCorpus</desc>
    </doc>
   <xsl:template match="tei:teiCorpus">
       <html>
