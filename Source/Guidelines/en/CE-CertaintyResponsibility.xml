@@ -46,6 +46,22 @@ chapter <ptr target="#SA"/>. To use the <gi>certainty</gi>, <gi>precision</gi> o
 <gi>respons</gi> elements, the module for certainty and
 responsibility must be selected. 
 </p>
+
+<p>These three elements are all members of an attribute class called
+<ident type="class">att.scoping</ident> from which they inherit the
+following attributes:
+
+<specList>
+<specDesc key="att.scoping" atts="target match"/>
+</specList>
+</p>
+<p>These attributes enable statements about certainty, precision, or
+responsibility to be made with respect to the whole of a document, or
+any part or parts of it which can be identified using standard XML
+location methods. Several examples are given in the discussion of the
+<gi>certainty</gi> element below; the same mechanisms are available
+for all three element discussed in this chapter.
+</p>
 <div type="div2" xml:id="CECERT"><head>Levels of Certainty</head>
 <p>Many types of uncertainty may be distinguished.  The
 <gi>certainty</gi> element is designed to encode the following sorts:
@@ -98,7 +114,7 @@ of automatic processing.</p></div>
 <p>To record uncertainty in a more structured way, susceptible of at
 least simple automatic processing, the <gi>certainty</gi> element may be
 used:
-<specList><specDesc key="certainty" atts="locus degree match target"/></specList></p>
+<specList><specDesc key="certainty" atts="locus degree "/></specList></p>
 <p>Returning to the example, the <gi>certainty</gi> element may be used to record doubts about
 the proper encoding of <q>Essex</q> in several ways of varying
 precision.  To record merely that we are not certain that <q>Essex</q>
@@ -113,7 +129,9 @@ element used to mark it):
 <certainty target="#CE-pl1" locus="name"><desc>possibly not a placename</desc></certainty></egXML>
 There are no particular constraints as to where the 
 <gi>certainty</gi> element is placed in a document; it may be placed adjacent to the target
-element, or elsewhere in the same or another document. 
+element, or elsewhere in the same or another document.  Its position
+is however significant when the <att>target</att> attribute is not specified
+as further discussed below.
 </p>
 <p>We may wish to record the probability, assessed in some subjective
 way, that <q>Essex</q> really is  a place name here. The
@@ -123,7 +141,7 @@ number between 0 and 1:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <!-- ... -->
 <certainty target="#CE-pl1" locus="name" degree="0.6"/></egXML>
-According to one expert, there is a 60 percent chance of <q>Essex</q>
+This expresses the point of view that there is a 60 percent chance of <q>Essex</q>
 being a place name here, and hence a 40 percent chance of its being a
 personal name. We can use two <gi>certainty</gi> elements to indicate the
 two probabilities independently. Both elements indicate the same location in the
@@ -136,6 +154,20 @@ value of the <att>assertedValue</att> attribute:
    <desc>probably a placename, but possibly not</desc></certainty>
 <certainty target="#CE-pl1" locus="name" degree="0.4" assertedValue="persName">
    <desc>may refer to the Earl of Essex</desc></certainty></egXML></p>
+
+<p>In the simplest case, it is also possible to place the
+<gi>certainty</gi> element within the element concerned:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to 
+<placeName>Essex
+<certainty locus="name" degree="0.6"/></placeName>.</egXML>
+When  no  <att>target</att>  is specified, by default the proposed
+certainty applies to its parent element, in this case the
+<gi>placeName</gi> element. The <att>match</att> attribute discussed
+below may be used to further vary this behaviour.</p>
+
+<div><head>Contingent conditions</head>
+
 <p>Finally, we may wish to make our probability estimates contingent
 on some condition.  In the passage <q>Elizabeth went to Essex; she had
 always liked Essex,</q> for example, we may feel there is a 60 percent chance
@@ -204,12 +236,14 @@ that if <q>Saybrook</q> is (part of) a personal name, there is a
 place indicated, without however giving an alternative location; there
 is thus a 6 percent chance (0.1 × 0.6) that none of the alternatives given is
 correct.</p>
-
+</div>
+<div><head>Pervasive conditions</head>
 <p>We may also wish to indicate confidence in some aspect
 of the tagging throughout a document, rather than (as discussed so far) in one
 particular instance. The <att>match</att> attribute may be used to
 supply a pattern identifying the portion of a document
-concerning which certainty is being expressed. The value of the <att>match</att> attribute is an XSLT2 pattern,
+concerning which certainty is being expressed. The value of the
+<att>match</att> attribute is an XPath expression <!--XSLT2 pattern,-->
 using the syntax defined in <ptr target="#XSLT2"/>. In the following
 example, we wish to indicate a low degree of confidence
 that the <gi>persName</gi> elements used throughout the whole document
@@ -219,7 +253,21 @@ have been correctly applied:
 <certainty locus="name" degree="0.3" match="//persName"/>
 </egXML>
 
-In the following variation, we might indicate that we have more
+No <att>target</att> has been supplied here, and so by default the
+<gi>certainty</gi> expressed would therefore apply to the parent
+element. However, in this case since the XPath supplied as the value for
+<att>match</att> returns a set of all the <gi>persName</gi> elements
+in the document, independent of the current context. By contrast, in
+the following example
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<div><p>.....</p></div>
+<div>
+<certainty locus="name" degree="0.3" match=".//persName"/>
+</div>
+</egXML>
+only the <gi>persName</gi> elements within the second <gi>div</gi>
+element are in question.
+Similarly, we may indicate that we have more
 confidence in the <gi>persName</gi> tagging within those <gi>div</gi>
 attributes which have a <att>type</att> value of <code>checked</code>:
 
@@ -241,35 +289,24 @@ first one (in document order) is applied. Only those statements of certainty
 which have matched in this sense are available for conditional
 application using the <att>given</att> attribute mentioned above.
 </p>
+<p>When the <att>match</att> attribute is processed, the namespace bindings in
+force are those in effect at that point in the document. 
+For example, 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<div xmlns:my="http://www.example.org/ns/nonTEI">
+<!-- ... -->
+<certainty match=".//my:*" locus="value" degree="0.9"/>
+</div>
+</egXML>
+might be used to indicate a high degree of certainty about the content
+of any elements taken the namespace associated with the prefix
+<code>my</code>. This namespace prefix must be associated with an
+appropriate namespace definition, either on the <gi>certainty</gi>
+element itself, or on one of its ancestor elements.</p>
+</div>
 
-<p>As noted in <ptr target="#SA"/>, the <att>target</att> attribute may
-also provide an xpath expression. This is not however supported by all
-processors, and it is not recommended TEI practice. There are however
-some simple cases in which the more general <val>data.pointer</val>
-values supplied by the <att>target</att> attribute are to be
-preferred, notably those in which the <att>xml:id</att> attribute is
-used to identify a single element occurrence. The usage <val>#A</val>
-(to indicate the element whose <att>xml:id</att> attribute has the
-value <val>A</val>) is syntactically much simpler than the equivalent
-xpath2 expression <val>//*[@xml:id='A']</val> and is hence preferred
-throughout these guidelines. 
-</p>
-<p>For similar reasons, the <gi>certainty</gi> element may specify
-both a <att>target</att> value (expressed as an URI) and a
-<att>match</att> value  (expressed as an xpath). The former defines
-the context within which the latter is to be found. If no
-<att>target</att> is specified, the <att>match</att> pattern is
-evaluated in the context of the document root. If the pattern does not
-match, the <gi>certainty</gi> assertion is considered to be null. </p>
+<div><head>Content uncertainty</head>
 
-<p>A typical case where it may be convenient to specify both
-<att>target</att> and <att>match</att> is that where we wish to
-indicate that the value of  an attribute on some specific element  is
-uncertain. In this case, the <att>locus</att> attribute
-takes the value <val>value</val>. For example, supposing there is only a 50 percent chance that the question was spoken by
-participant A:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="CE-u1" who="#A">Have you heard the election results?</u>
-<certainty target="#CE-u1" match="@who" locus="value" degree="0.5"/></egXML></p>
 <p>Doubts about whether the content of an element is correct may also be expressed
 by assigning to <att>locus</att> the value
 <mentioned>value</mentioned>.  For example, if the source is
@@ -303,27 +340,84 @@ alternative element content, as in this example:
   <gi>certainty</gi> element allows for indications of uncertainty to
   be structured with at least as much detail and clarity as appears to
   be currently required in most ongoing text projects.</p>
+</div>
 
 
-<p>The <att>match</att> and <att>target</att> attributes used in these and other examples
+<div><head>Target or Match?</head>
+
+<p>As noted in <ptr target="#SA"/>, the <att>target</att> attribute
+may take any general <val>data.pointer</val> as values and may thus
+also contain an XPath expression of arbitrary complexity. Because full
+support for XPath is not provided by current processors, it is not
+generally recommended TEI practice. There are however some simple
+cases in which XPath syntax is to be preferred, notably those in which
+the <att>xml:id</att> attribute is used to identify a single element
+occurrence. The usage <val>#A</val> (to indicate the element whose
+<att>xml:id</att> attribute has the value <val>A</val>) is
+syntactically much simpler than the equivalent xpath2 expression
+<val>//*[@xml:id='A']</val> and is hence preferred throughout these
+guidelines.
+</p>
+<p>For similar reasons, the <gi>certainty</gi> element may specify
+both a <att>target</att> value (expressed as an URI) and a
+<att>match</att> value  (expressed as an XPath). The former defines
+the context within which the latter is to be evaluated. As previously
+noted, if no value is supplied for <att>target</att>, the context
+within which the value of <att>match</att> should be evaluated is the
+parent element of the <gi>certainty</gi> element itself. </p>
+
+<p>A typical case where it may be convenient to specify both
+<att>target</att> and <att>match</att> is that where we wish to
+indicate that the value of  an attribute on some specific element  is
+uncertain. In this case, the <att>locus</att> attribute
+takes the value <val>value</val>. For example, supposing there is only a 50 percent chance that the question was spoken by
+participant A:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="CE-u1" who="#A">Have you heard the election results?</u>
+<certainty target="#CE-u1" match="@who" locus="value"
+	   degree="0.5"/></egXML> or, equivalently and without the
+need to define a target,
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#A">Have you heard the election results?<certainty match="@who" locus="value"
+	   degree="0.5"/></u>
+</egXML> 
+
+</p>
+
+<p>The <att>match</att> and <att>target</att> attributes together
 provide a powerful mechanism which can be used to indicate precision for a
 large number of assertions throughout an encoded document in an
 economical way. Some further
 examples follow:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<certainty match="//p" locus="location" degree="0.2"/>
+</egXML>
+This encoding indicates that there is only a 0.2 certainty that the
+boundaries of all <gi>p</gi> elements in the document have been correctly
+identified.</p>
+<p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<certainty target="#a101" match="p" locus="location" degree="0.2"/>
+</egXML>
+This encoding indicates that there is only a 0.2 certainty that the
+boundaries of the <gi>p</gi> elements contained by the element with
+<att>xml:id</att> value <val>a101</val> have been correctly
+identified.</p>
+<p>
 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<persName resp="#LB">Essex
+<certainty match="@resp" locus="value" degree="0.2"/>
+</persName></egXML>
+This encoding indicates that there is only a 0.2 certainty that the
+value for the <att>resp</att> attribute on the given <gi>persName</gi>
+element
+is correct.</p>
+<p>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <certainty match="//*/@resp" locus="value" degree="0.2"/>
 </egXML>
 This encoding indicates that there is only a 0.2 certainty that any
 value for the <att>resp</att> attribute is correct, wherever it
 appears in the document.</p>
-<p>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<certainty match="*/@resp" locus="value" degree="0.2"/>
-</egXML>
-This encoding indicates that there is only a 0.2 certainty that any
-value for the <att>resp</att> attribute on the document root element
-is correct.</p>
 
 <p><egXML xmlns="http://www.tei-c.org/ns/Examples">
 <certainty target="#dd001" match="@resp" locus="value" degree="0.2"/>
@@ -333,35 +427,12 @@ value for the <att>resp</att> attribute of the element indicated by
 the pointer <val>#dd001</val> is correct</p>
 
 <p><egXML xmlns="http://www.tei-c.org/ns/Examples">
-<certainty match="//*/@resp[.='#LB']" locus="value" degree="0.2"/>
-</egXML>
-This encoding indicates that there is only a 0.2 certainty that the
-value <val>#LB</val> for the <att>resp</att> attribute is correct, wherever it
-appears in the document.</p>
-
-<p><egXML xmlns="http://www.tei-c.org/ns/Examples">
 <certainty match="//*[@resp='#LB']" locus="value" degree="0.2"/>
 </egXML>
 This encoding indicates that there is only a 0.2 certainty that the
 content of any element the <att>resp</att> attribute of which has the
 value <val>#LB</val> is correct, wherever it
 appears in the document.</p>
-
-<p>When a pattern expression is evaluated, the namespace bindings in
-force are those in effect at that point in the document. 
-For example, 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<div xmlns:my="http://www.example.org/ns/nonTEI">
-<!-- ... -->
-<certainty match=".//my:*" locus="value" degree="0.9"/>
-</div>
-</egXML>
-might be used to indicate a high degree of certainty about the content
-of any elements taken the namespace associated with the prefix
-<code>my</code>. This namespace prefix must be associated with an
-appropriate namespace definition, either on the <gi>certainty</gi>
-element itself, or on one of its ancestor elements.</p>
-
 
 <p>The <gi>certainty</gi> element and the other TEI mechanisms for
 indicating uncertainty provide a range of methods of graduated
@@ -373,8 +444,8 @@ expression of uncertainty.  In general, however, unless special steps
 are taken, the <gi>note</gi> element does not provide as much
 expressive power as the <gi>certainty</gi> element, and in cases where
 highly structured certainty information must be given, it is
-recommended that the <gi>certainty</gi> element be used.</p>
-<p>The <gi>certainty</gi> element may be used for simple unqualified
+recommended that the <gi>certainty</gi> element be preferred.</p>
+<!--<p>The <gi>certainty</gi> element may be used for simple unqualified
 indications of uncertainty, in which case only the <att>locus</att>,
 <att>match</att> and
 <att>target</att> attributes might be specified.  
@@ -384,7 +455,7 @@ these attributes may take any string of characters as value, the recommended
 values should be used wherever possible; if they are not appropriate
 in a given situation, encoders should provide their own controlled
 vocabulary and document it in the <gi>encodingDesc</gi> or
-<gi>tagUsage</gi> elements of the TEI header.</p>
+<gi>tagUsage</gi> elements of the TEI header.</p>-->
 <specGrp>
 &precision;
 &certainty;
@@ -400,6 +471,16 @@ about whether or not the value given is correct. The latter
 possibility would be represented by the <gi>certainty</gi> element
 discussed in the previous section; the former by the
 <gi>precision</gi> element discussed in this section.</p>
+<p>The elements concerning which statements of precision are to be
+made are identified using the same <att>target</att> and
+<att>match</att> attributes inherited from the
+<ident type="class">att.scoping</ident> class discussed in the
+previous section and in the same way. Other aspects are provided by
+other attributes as further discussed below.
+<specList>
+<specDesc key="precision" atts="degree stdDeviation"/>
+</specList>
+</p>
 <p>In <ptr target="#CONANU"/> several ways of indicating ranges of
 values were introduced. For example, if we know that a date falls between
 1930 and 1935, without being certain exactly where, this fact may be
@@ -440,9 +521,9 @@ precision about the dating of either end of a historical period. For example,
  <ptr target="#NDATTSda"/>); the precision of these attribute values
  may be indicated in exactly the same way. For example, 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<residence xml:id="res01" from="1857-03-01" notAfter="1857-04-30">From the 1st of March to
-some time in April of 1857.</residence>
-<precision target="#res01" match="@notAfter" degree="0.5"/>
+<residence from="1857-03-01" notAfter="1857-04-30">From the 1st of March to
+some time in April of 1857.
+<precision match="@notAfter" degree="0.5"/></residence>
 </egXML>
 </p>
 <p>It may also be useful to indicate that the precisions given for 
@@ -453,8 +534,8 @@ pages measure at least 10 cm wide, and at most <emph>about</emph> 30:
 <precision target="#w00t" match="@atMost" degree="0.3"/>
 </egXML>
 </p>
-<p>The <gi>precision</gi> element also carries a
-<att>stdDeviation</att> attribute, which may be used to indicate the
+<p>The 
+<att>stdDeviation</att> attribute may be used to indicate the
 standard deviation for a range of values. The generic <gi>dim</gi>
 element introduced in <ptr target="#msdim"/> might be used to record the average
 number of characters per line in a typescript. If in addition we wish
@@ -462,7 +543,8 @@ to record the standard deviation for the values summarised by that
 average, this would require an additional <gi>precision</gi> element,
 as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<dim xml:id="dim1" type="avgLineLength" unit="chars" quantity="62.4"/>
+<dim xml:id="dim1"
+type="avgLineLength" unit="chars" quantity="62.4"/>
 <precision target="#dim1" stdDeviation="4"/>
 </egXML>
 </p>
@@ -478,21 +560,23 @@ may be desired. For example, an encoder may wish to distinguish between the
 individuals responsible for transcribing the content and those
 responsible for determining that a given word or phrase constitutes a
 proper noun.  Where such fine-grained attribution of responsibility is
-required, the <gi>respons</gi> element can be used:
-<specList><specDesc key="respons" atts="resp"/></specList></p>
+required, the <gi>respons</gi> element can be used. 
+<specList><specDesc key="respons" atts="locus resp"/></specList></p>
 <p>This element allows one or more aspects of the markup to be
-attributed to a given individual.  The <att>target</att>, <att>match</att>, and
-<att>locus</att> attributes function as they do on the
-<gi>certainty</gi> element described in section <ptr target="#CECERT"/>:
-the <att>target</att> attribute points at a particular element (or
-set of elements), the <att>match</att> attribute specifies a subset,
-and the <att>locus</att> attribute indicates the particular aspect
-of the encoding of those elements for which responsibility is to be
-assigned.  The suggested values may be combined as appropriate. For example,  to
-indicate that RC is responsible for transcribing an
+attributed to a given individual.  This element inherits the
+<att>target</att> and <att>match</att> attributes from the
+<ident>att.scoping</ident> class, in the same way as the
+<gi>certainty</gi> and <gi>precision</gi> elements. Its 
+<att>locus</att> attribute functions in the same way as that on the
+<gi>certainty</gi> element (see <ptr target="#CECERT"/>).
+</p>
+<p>For example,  the following encoding
+indicates that RC is responsible for transcribing an
 illegible word, and that PMWR is responsible for identifying that word
-as a proper noun, the text might be encoded thus:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Ernest went to old <persName xml:id="CE-p5">Saybrook</persName>.
+as a proper noun, i.e. deciding to mark it with the <gi>persName</gi>
+element at the location indicated:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">Ernest went to old
+<persName xml:id="CE-p5" rend="it">Saybrook</persName>.
 <!-- ... -->
 <respons target="#CE-p5" locus="value" resp="#RC"/>
 <respons target="#CE-p5" locus="name location" resp="#PMWR"/>
@@ -500,6 +584,12 @@ as a proper noun, the text might be encoded thus:
 <item xml:id="PMWR"/>
 <item xml:id="RC"/>
 </list></egXML></p>
+<p>Similarly, in the following example, we indicate that RC is
+responsible for proposing the value of the <att>rend</att> attribute:  
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <respons target="#CE-p5" pattern="@rend" locus="value" resp="#RC"/>
+    </egXML>
+</p>
 <p>Some elements bear specialized <att>resp</att> or <att>agent</att>
 attributes, which have specific meanings that vary from element to
 element; the <gi>respons</gi> element should be reserved for the general
@@ -525,3 +615,4 @@ The selection and combination of modules to form a TEI schema is described in
 
 </p>
 </div></div>
+</div>
