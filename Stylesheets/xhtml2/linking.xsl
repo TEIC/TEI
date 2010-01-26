@@ -361,17 +361,13 @@
                </xsl:when>
             </xsl:choose>
          </xsl:if>
-         <xsl:attribute name="title">
-            <xsl:choose>
-               <xsl:when test="@n">
-                  <xsl:value-of select="@n"/>
-               </xsl:when>
-               <xsl:otherwise>
-		 <xsl:text>YYY</xsl:text>
-		 <xsl:value-of select="normalize-space(.)"/>
-               </xsl:otherwise>
-            </xsl:choose>
-         </xsl:attribute>
+	 <xsl:choose>
+	   <xsl:when test="@n">
+	     <xsl:attribute name="title">
+	       <xsl:value-of select="@n"/>
+	     </xsl:attribute>
+	   </xsl:when>
+	 </xsl:choose>
          <xsl:call-template name="xrefHook"/>
          <xsl:choose>
 	   <xsl:when test="$dest=''">??</xsl:when>
@@ -496,16 +492,14 @@
 		 </xsl:choose>
 		 
 		 <xsl:for-each select="key('IDS',$W)">
-		   <xsl:attribute name="title">
 		     <xsl:choose>
 		       <xsl:when test="starts-with(local-name(.),'div')">
-			 <xsl:value-of select="translate(normalize-space(tei:head),'&gt;&lt;','')"/>
+			 <xsl:attribute name="title">
+			   <xsl:value-of
+			       select="translate(normalize-space(tei:head),'&gt;&lt;','')"/>
+			 </xsl:attribute>
 		       </xsl:when>
-		       <xsl:otherwise>
-			 <xsl:value-of select="normalize-space((.//text()[normalize-space(.)])[1])"/>
-		       </xsl:otherwise>
 		     </xsl:choose>
-		   </xsl:attribute>
 		 </xsl:for-each>
 	       <xsl:copy-of select="$linktext"/>
 	       </a>

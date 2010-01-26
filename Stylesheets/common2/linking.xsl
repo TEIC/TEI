@@ -33,7 +33,18 @@
       <desc>Process elements text in xref mode</desc>
    </doc>
   <xsl:template match="tei:text" mode="xref">
-      <xsl:apply-templates select="tei:head|tei:body/tei:head" mode="plain"/>
+   <xsl:choose>
+     <xsl:when test="tei:head">
+       <xsl:apply-templates select="tei:head" mode="plain"/>
+     </xsl:when>
+     <xsl:when test="tei:body/tei:head">
+       <xsl:apply-templates select="tei:body/tei:head" mode="plain"/>
+     </xsl:when>
+     <xsl:otherwise>
+       <xsl:text>Text </xsl:text>
+       <xsl:number/>
+     </xsl:otherwise>
+   </xsl:choose>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -175,14 +186,13 @@
 		      <xsl:call-template name="autoMakeHead"/>
 		    </xsl:when>
 		    <xsl:when test="not(tei:head) and tei:body/tei:head">
-		      <xsl:for-each select="tei:body/tei:head">
-			<xsl:apply-templates mode="plain"/>
-		      </xsl:for-each>
+			<xsl:apply-templates mode="plain" select="tei:body/tei:head"/>
 		    </xsl:when>	
+		    <xsl:when test="tei:head">
+			<xsl:apply-templates mode="plain" select="tei:head"/>
+		    </xsl:when>
 		    <xsl:otherwise>
-		      <xsl:for-each select="tei:head">
-			<xsl:apply-templates mode="plain"/>
-		      </xsl:for-each>
+		      <xsl:number/>
 		    </xsl:otherwise>
 		  </xsl:choose>
 		</xsl:with-param>

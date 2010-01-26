@@ -189,7 +189,7 @@
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                 <xsl:choose>
                   <xsl:when test="html:a">
-                    <item href="{html:a/@href}" media-type="application/xhtml+xml">
+                    <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
                       <xsl:attribute name="id">
                         <xsl:text>section</xsl:text>
                         <xsl:number count="html:li" level="any"/>
@@ -198,7 +198,7 @@
                   </xsl:when>
                   <xsl:when test="html:ul">
                     <xsl:for-each select="html:ul/html:li">
-                      <item href="{html:a/@href}" media-type="application/xhtml+xml">
+                      <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
                         <xsl:attribute name="id">
                           <xsl:text>section</xsl:text>
                           <xsl:number count="html:li" level="any"/>
@@ -256,9 +256,9 @@
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                 <xsl:choose>
                   <xsl:when test="html:a">
-                    <reference type="text" href="{html:a/@href}">
+                    <reference type="text" href="{html:a[1]/@href}">
                       <xsl:attribute name="title">
-                        <xsl:value-of select="normalize-space(html:a)"/>
+                        <xsl:value-of select="normalize-space(html:a[1])"/>
                       </xsl:attribute>
                     </reference>
                   </xsl:when>
@@ -266,7 +266,7 @@
                     <xsl:for-each select="html:ul/html:li">
                       <reference type="text" href="{html:a/@href}">
                         <xsl:attribute name="title">
-                          <xsl:value-of select="normalize-space(html:a)"/>
+                          <xsl:value-of select="normalize-space(html:a[1])"/>
                         </xsl:attribute>
                       </reference>
                     </xsl:for-each>
@@ -305,7 +305,7 @@
                     <navPoint id="navPoint-{position()}" playOrder="{position()+1}">
                       <navLabel>
                         <text>
-                          <xsl:value-of select="normalize-space(html:a)"/>
+                          <xsl:value-of select="normalize-space(html:a[1])"/>
                         </text>
                       </navLabel>
                       <content src="{html:a/@href}"/>
@@ -316,7 +316,7 @@
                       <navPoint id="navPoint-{position()}" playOrder="{position()+1}">
                         <navLabel>
                           <text>
-                            <xsl:value-of select="normalize-space(html:a)"/>
+                            <xsl:value-of select="normalize-space(html:a[1])"/>
                           </text>
                         </navLabel>
                         <content src="{html:a/@href}"/>
