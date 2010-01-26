@@ -850,11 +850,14 @@ $requestedID: requests a particular page
          <xsl:when test="parent::tei:TEI">
             <xsl:apply-templates/>
          </xsl:when>
-         <xsl:when test="parent::tei:group">
+         <xsl:when test="parent::tei:group and $splitLevel &gt;-1">
 	   <xsl:call-template name="makeDivPage">
-	     <xsl:with-param name="depth">0</xsl:with-param>
+	     <xsl:with-param name="depth">-1</xsl:with-param>
 	   </xsl:call-template>
          </xsl:when>
+         <xsl:when test="parent::tei:group">
+		 <xsl:call-template name="doDivBody"/>
+	 </xsl:when>
 	 <xsl:otherwise>
 	   <div class="innertext">
 	     <xsl:apply-templates mode="innertext"/>
@@ -1650,11 +1653,9 @@ $requestedID: requests a particular page
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] Table of contents 
-      <param name="force">force</param>
       </desc>
    </doc>
   <xsl:template name="mainTOC">
-      <xsl:param name="force"/>
       <xsl:choose>
          <xsl:when test="ancestor-or-self::tei:TEI/tei:text/tei:group">
 	   <ul class="toc toc_body">
@@ -1672,21 +1673,18 @@ $requestedID: requests a particular page
 
 		 <xsl:for-each select="tei:front">
 		   <xsl:call-template name="partTOC">
-		     <xsl:with-param name="force" select="$force"/>
 		     <xsl:with-param name="part">front</xsl:with-param>
 		   </xsl:call-template>
 		 </xsl:for-each>
 		 
 		 <xsl:for-each select="tei:body">
 		   <xsl:call-template name="partTOC">
-		     <xsl:with-param name="force" select="$force"/>
 		     <xsl:with-param name="part">body</xsl:with-param>
 		   </xsl:call-template>
 		 </xsl:for-each>
 		 
 		 <xsl:for-each select="tei:back">
 		   <xsl:call-template name="partTOC">
-		     <xsl:with-param name="force" select="$force"/>
 		     <xsl:with-param name="part">back</xsl:with-param>
 		   </xsl:call-template>
 		 </xsl:for-each>
@@ -1698,7 +1696,6 @@ $requestedID: requests a particular page
 	   <xsl:if test="$tocFront">
 	     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:front">
 	       <xsl:call-template name="partTOC">
-		 <xsl:with-param name="force" select="$force"/>
 		 <xsl:with-param name="part">front</xsl:with-param>
 	       </xsl:call-template>
 	     </xsl:for-each>
@@ -1706,7 +1703,6 @@ $requestedID: requests a particular page
 	   
 	   <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
 	     <xsl:call-template name="partTOC">
-	       <xsl:with-param name="force" select="$force"/>
 	       <xsl:with-param name="part">body</xsl:with-param>
 	     </xsl:call-template>
 	   </xsl:for-each>
@@ -1714,7 +1710,6 @@ $requestedID: requests a particular page
 	   <xsl:if test="$tocBack">
 	     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
 	       <xsl:call-template name="partTOC">
-		 <xsl:with-param name="force" select="$force"/>
 		 <xsl:with-param name="part">back</xsl:with-param>
 	       </xsl:call-template>
 	     </xsl:for-each>
@@ -1728,10 +1723,10 @@ $requestedID: requests a particular page
       <xsl:param name="force"/>
       <xsl:if test="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
          <ul class="toc{$force} toc_{$part}">
-	           <xsl:apply-templates mode="maketoc"
-                                 select="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+	   <xsl:apply-templates mode="maketoc"
+				select="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
 	              <xsl:with-param name="forcedepth" select="$force"/>
-	           </xsl:apply-templates>
+	   </xsl:apply-templates>
          </ul>
       </xsl:if>
   </xsl:template>

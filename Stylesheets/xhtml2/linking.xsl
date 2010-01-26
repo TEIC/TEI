@@ -42,7 +42,7 @@
          <xsl:when test="@xml:id and $useIDs='true'">
             <xsl:value-of select="@xml:id"/>
          </xsl:when>
-         <xsl:when test="starts-with(local-name(.),'div')">
+         <xsl:when test="starts-with(local-name(.),'div') or self::tei:text">
             <xsl:variable name="xpath">
                <xsl:for-each select="ancestor-or-self::tei:*">
 	                 <xsl:value-of select="local-name()"/>
@@ -267,6 +267,9 @@
       <xsl:choose>
          <xsl:when test="ancestor-or-self::tei:div and number($splitLevel) &lt; 0">
             <xsl:apply-templates mode="ident" select="ancestor::tei:div[last()]"/>
+         </xsl:when>
+         <xsl:when test="ancestor-or-self::tei:text/parent::tei:group">
+            <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
          </xsl:when>
          <xsl:when test="ancestor-or-self::tei:div">
             <xsl:apply-templates mode="ident" select="ancestor::tei:div[last() - number($splitLevel)]"/>
