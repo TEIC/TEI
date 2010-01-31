@@ -809,7 +809,7 @@
                 <xsl:choose>
                     <xsl:when test="starts-with(.,'ISO')">
                         <bibl>
-                            <xsl:apply-templates/>
+                            <xsl:call-template name="parseReference"/>
                         </bibl>
                     </xsl:when>
                     <xsl:otherwise>
@@ -1647,6 +1647,7 @@
       </xsl:choose>
     </xsl:template>
 
+    <xsl:template name="parseReference">
 <!-- test data for refnorm:
 
 ISO 6887-1, Microbiology of food and animal feeding stuffs — Preparation of test samples, initial suspension and decimal dilutions for microbiological examination — Part 1: General rules for the preparation of the initial suspension and decimal dilutions
@@ -1654,19 +1655,69 @@ ISO 7218:1996, Microbiology of food and animal feeding stuffs — General rules 
 ISO 8261, Milk and milk products — General guidance for the preparation of test samples, initial suspensions and decimal dilutions for microbiological examination
 ISO/TS 11133-1, Microbiology of food and animal feeding stuffs — Guidelines on preparation and production of culture media — Part 1: General guidelines on quality assurance for the preparation of culture media in the laboratory
 ISO/TS 11133-2:1999, Microbiology of food and animal feeding stuffs — Guidelines on preparation and production of culture media — Part 2: Practical guidelines on performance testing of culture media
+ISO 1087 (all parts), Terminology work - Vocabulary
 -->
 
-<!-- refnorm: 
+
      <xsl:analyze-string 
-      regex="^([A-Z/]+)\s([0-9]+)-?([0-9]*):?([0-9]*),(.*)"
-      select=".">
-      <xsl:matching-substring>
-        <xsl:value-of select="regex-group(0)"/>
-      </xsl:matching-substring>
-      <xsl:non-matching-substring>
-        <td><b style="color:red">Invalid date format</b></td>
-        [<xsl:value-of select="substring(.,1,10)"/>]
-      </xsl:non-matching-substring>
-    </xsl:analyze-string>
--->
+	 regex="^([A-z/]+)[ \s]?([0-9]*)-?([0-9]*):?([0-9]*)(\s\(all parts\))?,\s(.*)"
+	 select=".">
+       <xsl:matching-substring>
+	 <xsl:variable name="org" select="regex-group(1)"/>
+	 <xsl:variable name="num" select="regex-group(2)"/>
+	 <xsl:variable name="part" select="regex-group(3)"/>
+	 <xsl:variable name="year" select="regex-group(4)"/>
+	 <xsl:variable name="part2" select="regex-group(5)"/>
+	 <xsl:variable name="rest" select="regex-group(6)"/>
+	 <xsl:choose>
+	   <xsl:when test="$year=''">
+	     <xsl:attribute name="type">undated</xsl:attribute>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:attribute name="type">dated</xsl:attribute>
+	   </xsl:otherwise>
+	 </xsl:choose>
+	 <distributor><xsl:value-of select="$org"/></distributor>
+	 <idno><xsl:value-of select="$num"/></idno>
+	 <xsl:if test="not($part='')">
+	   <seg type="part">
+	     <xsl:value-of select="$part"/>
+	   </seg>
+	 </xsl:if>
+	 <xsl:if test="not($year='')">
+	   <edition>
+	     <xsl:value-of select="$year"/>
+	   </edition>
+	 </xsl:if>
+	 <xsl:if test="not($part2='')">
+	     <xsl:value-of select="$part2"/>
+	 </xsl:if>
+	 <title>
+	   <xsl:value-of select="$rest"/>
+	 </title>
+	 <xsl:if test="$debug='true'">
+	 <xsl:message>
+	   Normative Reference: <xsl:value-of select="."/>
+	   1. org = <xsl:value-of select="$org"/>
+	   2. num = <xsl:value-of select="$num"/>
+	   3. part =  <xsl:value-of select="$part"/>
+	   4. year = <xsl:value-of select="$year"/>
+	   5. rest = <xsl:value-of select="$rest"/>
+	 </xsl:message>
+	 </xsl:if>
+       </xsl:matching-substring>
+       <xsl:non-matching-substring>
+	 <xsl:message>
+	   <xsl:text>Invalid format of reference </xsl:text>
+	   <xsl:value-of select="."/>
+	 </xsl:message>
+	 <iso:error>
+	   <xsl:text>Invalid format of reference </xsl:text>
+	   <xsl:value-of select="."/>
+	 </iso:error>
+	 <xsl:value-of select="."/>
+       </xsl:non-matching-substring>
+     </xsl:analyze-string>
+
+    </xsl:template>
 </xsl:stylesheet>
