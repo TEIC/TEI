@@ -71,15 +71,15 @@ be a personal name, or perhaps not)</item>
 <item>the precise point at which an element begins or ends is
 uncertain</item>
 <item>the value given for an attribute is uncertain</item>
-<item>the content of an element is uncertain, perhaps
-because it is hard to read or hard to hear, or for some other reason.</item></list></p>
+<item>the content given for an element is unreliable for any reason.</item></list></p>
 <p>The following types of uncertainty are <emph>not</emph> indicated
 with the <gi>certainty</gi> element:
 <list type="simple">
 <item>the numerical precision associated with a number or date (for
 this use the <gi>precision</gi> element discussed in <ptr target="#CEPREC"/>)
 </item>
-<item>the document being transcribed may be read in different ways
+<item>the content of the document being transcribed is identifiable,
+but may be read or understood in different ways
 (for this use the transcriptional elements such as <gi>unclear</gi>,
 discussed in chapter <ptr target="#PH"/>)</item>
 <item>a transcriber, editor, or author wishes to indicate a level of
@@ -96,13 +96,13 @@ uncertain whether to mark <q>Essex</q> as a place name or a personal
 name, since both might be plausible in the given context:
 <q rend="display">Elizabeth went to Essex. She had always liked Essex.</q>
 Using <gi>note</gi>, the uncertainty here may be recorded quite simply:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>Elizabeth</persName> went to <placeName>Essex</placeName>. She had always liked <placeName>Essex</placeName>.<note type="uncertainty" resp="#MSM">It is not
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>Elizabeth</persName> went to <placeName>Essex</placeName>. She had always liked <placeName>Essex</placeName>.<note type="certainty" resp="#MSM">It is not
 clear here whether <mentioned>Essex</mentioned>
 refers to the place or to the nobleman. -MSM</note></egXML></p>
 <p>Using the normal mechanisms, the note may be associated
 unambiguously with specific elements of the text, thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName>Elizabeth</persName> went to <placeName xml:id="CE-p1a">Essex</placeName>.
-She had always liked <placeName xml:id="CE-p1b">Essex</placeName>.<note type="uncertainty" resp="#MSM" target="#CE-p1a #CE-p1b">It
+She had always liked <placeName xml:id="CE-p1b">Essex</placeName>.<note type="certainty" resp="#MSM" target="#CE-p1a #CE-p1b">It
 is not clear here whether <mentioned>Essex</mentioned>
 refers to the place or to the nobleman. If the latter,
 it should be tagged as a personal name. -<name xml:id="MSM">Michael</name></note></egXML></p>
@@ -255,7 +255,7 @@ have been correctly applied:
 
 No <att>target</att> has been supplied here, and so by default the
 <gi>certainty</gi> expressed would therefore apply to the parent
-element. However, in this case since the XPath supplied as the value for
+element. However, in this case the XPath supplied as the value for
 <att>match</att> returns a set of all the <gi>persName</gi> elements
 in the document, independent of the current context. By contrast, in
 the following example
@@ -276,9 +276,9 @@ attributes which have a <att>type</att> value of <code>checked</code>:
 </egXML>
 
 If an element in a document is matched by more than one match
-expression, then the most specific pattern applies. Specificity of
+expression, then the most specific pattern applies. <note place="foot">Specificity of
 pattern matching is defined further in the XSLT2 reference cited above
-(see <ptr target="http://www.w3.org/TR/xslt20/#conflict"/>). As a
+(see <ptr target="http://www.w3.org/TR/xslt20/#conflict"/>)</note> As a
 simple case, if both the preceding <gi>certainty</gi> elements were
 present in the same document, a <gi>persName</gi> occurring within a
 <gi>div type="checked"</gi> element would potentially match both
