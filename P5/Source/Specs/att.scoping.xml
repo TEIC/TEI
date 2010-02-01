@@ -36,10 +36,10 @@ module="tei" type="atts" ident="att.scoping">
 
     <attDef ident="match" usage="mwa">
       <equiv/>
-      <desc>supplies an arbitrary XPath expression identifying a  set of
-nodes, selected within the
-      context identified by the <att>target</att> attribute if this
-      is supplied, or by the parent element if it is not.
+      <desc>supplies an arbitrary XPath expression identifying a set
+      of nodes, selected within the context identified by the
+      <att>target</att> attribute if this is supplied, or within the
+      context of the element bearing this attribute if it is not.
 </desc>
       <datatype>
         <rng:text  />
@@ -50,17 +50,21 @@ defined in <ptr target="#XSLT2"/>. </valDesc>
 
 
       <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to <persName xml:id="ESX">Essex</persName>
-<certainty match="//*[xml:id='#ESX']" locus="name" degree="0.6"/>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to <persName><certainty locus="name" degree="0.6"/>Essex</persName>
+
 				</egXML>
       </exemplum>
       <remarks>
-        <p>The evaluation context for the expression is the node or
-        nodes identified by <att>target</att>, or, if no value is
-        given for <att>target</att>, the parent element.</p>
+        <p>The expression of certainty applies to the nodeset
+	identified by the value of the <att>target</att> attribute,
+	possibly modified additionally by the value of the
+	<att>match</att> attribute. If neither attribute is present,
+	the expression of certainty applies to the context of the
+	<gi>certainty</gi> element itself, i.e. its parent element.
+</p>
 <p>Note that the value of the <att>target</att> attribute may include
-an XPointer expression which may also include an XPath expression (see
-<ptr target="#SATS"/>). Either method may be used.</p>
+an XPointer expression including an XPath expression (see
+<ptr target="#SATS"/>). </p>
       </remarks>
     </attDef>
 
