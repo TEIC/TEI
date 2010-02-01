@@ -445,7 +445,7 @@
 	     </xsl:for-each>
 	   </div>
 	   <div>
-	   <head>Schema <xsl:value-of select="@ident"/>:  unchanged  components</head>
+	   <head>Schema <xsl:value-of select="@ident"/>:  unchanged components</head>
 	   <table>
 	     <xsl:for-each select="tei:classSpec[not(@mode or @rend)]  
 				   | tei:macroSpec[not(@mode or  @rend)]  
@@ -456,9 +456,11 @@
 		   <xsl:attribute name="xml:id">
 		     <xsl:value-of select="@ident"/>
 		   </xsl:attribute>
-		   <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html">
-		     <xsl:value-of select="@ident"/>
-		     </ref>:
+		   <hi>
+		     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html">
+		       <xsl:value-of select="@ident"/>
+		     </ref>
+		     </hi>:
 		   <xsl:call-template name="makeDescription"/>
 		 </cell>
 	       </row>
