@@ -284,9 +284,7 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:epigraph/tei:lg">
-    <table>
       <xsl:apply-templates/>
-    </table>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:foreign</xd:short>
