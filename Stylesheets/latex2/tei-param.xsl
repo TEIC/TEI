@@ -214,6 +214,7 @@ capable of dealing with UTF-8 directly.
 \def\textChinese{}
 </xsl:when>
          <xsl:otherwise>
+\usepackage{bidi}
 \usepackage{fontspec}
 \usepackage{xunicode}
 \catcode`⃥=\active \def⃥{\textbackslash}
