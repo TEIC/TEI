@@ -98,7 +98,7 @@ makePDFDOC()
 {
     echo "7. make PDF documentation $schema.doc.pdf and $schema.doc.tex "
     saxon  -o $RESULTS/$schema.doc.tex $RESULTS/$schema.doc.xml $TEIXSLDIR/latex2/tei.xsl \
-	$DEBUG $LANGUAGE $DOCLANG TEIC=$TEIC useHeaderFrontMatter=true reencode=false \
+	$DEBUG $DOCFLAGS $LANGUAGE $DOCLANG TEIC=$TEIC useHeaderFrontMatter=true reencode=false \
 	preQuote=“ postQuote=”
     cat > $RESULTS/perl$$.pl<<EOF
 #!/usr/bin/perl
@@ -143,7 +143,7 @@ makeXMLDOC()
     echo "6. make expanded documented ODD $schema.doc.xml "
     saxon -o $RESULTS/$schema.doc.xml  \
     $RESULTS/$ODD.compiled $TEIXSLDIR/odds2/odd2lite.xsl \
-    $DEBUG $LANGUAGE $DOCLANG TEISERVER=$TEISERVER  \
+    $DEBUG $DOCFLAGS  $LANGUAGE $DOCLANG TEISERVER=$TEISERVER  \
 	localsource="$LOCAL"  \
 	TEIC=$TEIC 
 	
@@ -261,7 +261,7 @@ which perl || die "you do not have perl installed"
 test -f $ODD || die "file $ODD does not exist"
 echo "TEI stylesheet tree: $TEIXSLDIR"
 test -d $TEIXSLDIR/odds2 || \
-     GET -e -d $TEIXSLDIR/odds2/odd2odd.xsl > /dev/null || \
+     curl $TEIXSLDIR/odds2/odd2odd.xsl > /dev/null || \
      die "stylesheet location $TEIXSLDIR is not accessible"
 if test "x$schema" = "x"
 then
