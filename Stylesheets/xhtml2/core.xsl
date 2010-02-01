@@ -279,9 +279,7 @@
       <desc>Process element epigraph/lg</desc>
    </doc>
   <xsl:template match="tei:epigraph/tei:lg">
-      <table>
          <xsl:apply-templates/>
-      </table>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element foreign</desc>

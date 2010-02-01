@@ -1680,11 +1680,13 @@ ISO 1087 (all parts), Terminology work - Vocabulary
 	 <publisher>
 	   <xsl:value-of select="$org"/>
 	 </publisher>
-	 <idno><xsl:value-of select="$num"/></idno>
+	 <idno type="documentNumber">
+	   <xsl:value-of select="$num"/>
+	 </idno>
 	 <xsl:if test="not($part='')">
-	   <seg type="part">
+	   <idno type="partNumber">
 	     <xsl:value-of select="$part"/>
-	   </seg>
+	   </idno>
 	 </xsl:if>
 	 <xsl:if test="not($year='')">
 	   <edition>
@@ -1692,7 +1694,7 @@ ISO 1087 (all parts), Terminology work - Vocabulary
 	   </edition>
 	 </xsl:if>
 	 <xsl:if test="not($part2='')">
-	     <xsl:value-of select="$part2"/>
+	   <xsl:value-of select="$part2"/>
 	 </xsl:if>
 	 <title>
 	   <xsl:value-of select="$rest"/>
