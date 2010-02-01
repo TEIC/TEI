@@ -1677,7 +1677,9 @@ ISO 1087 (all parts), Terminology work - Vocabulary
 	     <xsl:attribute name="type">dated</xsl:attribute>
 	   </xsl:otherwise>
 	 </xsl:choose>
-	 <distributor><xsl:value-of select="$org"/></distributor>
+	 <publisher>
+	   <xsl:value-of select="$org"/>
+	 </publisher>
 	 <idno><xsl:value-of select="$num"/></idno>
 	 <xsl:if test="not($part='')">
 	   <seg type="part">
