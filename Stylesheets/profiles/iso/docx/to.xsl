@@ -1068,5 +1068,14 @@
 
     <xsl:template match="tei:del"/>
     
+    <xsl:template name="simpleRun">
+      <xsl:param name="text"/>
+      <w:r>
+	<w:t>
+	  <xsl:attribute name="xml:space">preserve</xsl:attribute>
+	  <xsl:value-of select="$text"/>
+	</w:t>
+      </w:r>
+    </xsl:template>
 
 </xsl:stylesheet>

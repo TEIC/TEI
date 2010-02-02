@@ -231,6 +231,7 @@
 	  <xsl:when test="self::tei:code">true</xsl:when>
 	  <xsl:when test="self::tei:del">true</xsl:when>
 	  <xsl:when test="self::tei:editionStmt">true</xsl:when>
+	  <xsl:when test="self::tei:edition">true</xsl:when>
 	  <xsl:when test="self::tei:date">true</xsl:when>
 	  <xsl:when test="self::tei:emph">true</xsl:when>
 	  <xsl:when test="self::tei:foreign">true</xsl:when>

@@ -312,28 +312,58 @@
      </xsl:choose>
    </xsl:template>
 
-    <xsl:template match="tei:listBibl[@type='normativeReferences']/tei:bibl/tei:publisher">
+    <xsl:template name="simpleRun">
+      <xsl:param name="text"/>
+      <xsl:value-of select="$text"/>
+    </xsl:template>
+
+    <xsl:template
+	match="tei:listBibl[@type='normativeReferences']/tei:bibl/tei:publisher">
+      <xsl:call-template name="simpleRun">
+	<xsl:with-param name="text">
       <xsl:value-of select="."/>
       <xsl:text> </xsl:text>
+	</xsl:with-param>
+      </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:listBibl[@type='normativeReferences']/tei:bibl/tei:idno[@type='partNumber']">
+    <xsl:template
+	match="tei:listBibl[@type='normativeReferences']/tei:bibl/tei:idno[@type='partNumber']">
+      <xsl:call-template name="simpleRun">
+	<xsl:with-param name="text">
       <xsl:text>-</xsl:text>
       <xsl:value-of select="normalize-space(.)"/>
+	</xsl:with-param>
+      </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:listBibl[@type='normativeReferences']/tei:bibl/tei:idno[@type='documentNumber']">
+    <xsl:template
+	match="tei:listBibl[@type='normativeReferences']/tei:bibl/tei:idno[@type='documentNumber']">
+      <xsl:call-template name="simpleRun">
+	<xsl:with-param name="text">
       <xsl:value-of select="normalize-space(.)"/>
+	</xsl:with-param>
+      </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:listBibl[@type='normativeReferences']/tei:bibl/tei:edition">
+    <xsl:template
+	match="tei:listBibl[@type='normativeReferences']/tei:bibl/tei:edition">
+      <xsl:call-template name="simpleRun">
+	<xsl:with-param name="text">
       <xsl:text>:</xsl:text>
       <xsl:value-of select="normalize-space(.)"/>
+	</xsl:with-param>
+      </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:listBibl[@type='normativeReferences']/tei:bibl/tei:title">
-      <xsl:text>, </xsl:text>
-      <xsl:apply-templates/>
+    <xsl:template
+	match="tei:listBibl[@type='normativeReferences']/tei:bibl/tei:title">
+      <xsl:call-template name="simpleRun">
+	<xsl:with-param name="text">
+	  <xsl:text>, </xsl:text>
+	  <xsl:apply-templates/>
+	</xsl:with-param>
+      </xsl:call-template>
     </xsl:template>
 
 
