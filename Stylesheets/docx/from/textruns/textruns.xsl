@@ -179,7 +179,8 @@
 	  <n>allcaps</n>
 	</xsl:if>
 
-	<xsl:if test="w:rPr/w:color">
+	<xsl:if test="w:rPr/w:color and
+		      not(w:rPr/w:color/@w:val='000000' or w:rPr/w:color/@w:val='auto')">
 	  <n>
 	    <xsl:text>color(</xsl:text>
 	    <xsl:value-of select="w:rPr/w:color/@w:val"/>
