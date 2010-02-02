@@ -312,5 +312,29 @@
      </xsl:choose>
    </xsl:template>
 
+    <xsl:template match="tei:listBibl[@type='normativeReferences']/tei:bibl/tei:publisher">
+      <xsl:value-of select="."/>
+      <xsl:text> </xsl:text>
+    </xsl:template>
+
+    <xsl:template match="tei:listBibl[@type='normativeReferences']/tei:bibl/tei:idno[@type='partNumber']">
+      <xsl:text>-</xsl:text>
+      <xsl:value-of select="normalize-space(.)"/>
+    </xsl:template>
+
+    <xsl:template match="tei:listBibl[@type='normativeReferences']/tei:bibl/tei:idno[@type='documentNumber']">
+      <xsl:value-of select="normalize-space(.)"/>
+    </xsl:template>
+
+    <xsl:template match="tei:listBibl[@type='normativeReferences']/tei:bibl/tei:edition">
+      <xsl:text>:</xsl:text>
+      <xsl:value-of select="normalize-space(.)"/>
+    </xsl:template>
+
+    <xsl:template match="tei:listBibl[@type='normativeReferences']/tei:bibl/tei:title">
+      <xsl:text>, </xsl:text>
+      <xsl:apply-templates/>
+    </xsl:template>
+
 
 </xsl:stylesheet>

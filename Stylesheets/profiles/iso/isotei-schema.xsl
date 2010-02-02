@@ -54,6 +54,12 @@
 		A Foreword clause in the front matter is mandatory</xsl:with-param>
          </xsl:call-template>
       </xsl:if>
+      <xsl:if test="not(tei:text/tei:body/tei:div[@type='scope'])">
+         <xsl:call-template name="generateError">
+            <xsl:with-param name="message">
+		A Scope clause in the body is mandatory</xsl:with-param>
+         </xsl:call-template>
+      </xsl:if>
       <xsl:if test="not(tei:text)">
          <xsl:call-template name="generateError">
             <xsl:with-param name="message">A text element is essential</xsl:with-param>

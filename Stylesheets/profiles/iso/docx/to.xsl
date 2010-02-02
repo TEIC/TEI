@@ -1068,4 +1068,5 @@
 
     <xsl:template match="tei:del"/>
     
+
 </xsl:stylesheet>
