@@ -107,7 +107,6 @@ Use real name of graphics files rather than pointers
 \usepackage{framed}
 \definecolor{shadecolor}{gray}{0.95}
 \usepackage{longtable}
-\usepackage{colortbl}
 \usepackage[normalem]{ulem}
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
@@ -115,12 +114,14 @@ Use real name of graphics files rather than pointers
 \usepackage{endnotes}
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 </xsl:text>
-      <xsl:if test="$reencode='true'">
+<xsl:choose>
+      <xsl:when test="$reencode='true'">
          <xsl:text>
 \IfFileExists{tipa.sty}{\usepackage{tipa}}{}
 \usepackage{times}
 </xsl:text>
-      </xsl:if>
+      </xsl:when>
+</xsl:choose>
       <xsl:if test="not($userpackage='')">
   \usepackage{<xsl:value-of select="$userpackage"/>}
 </xsl:if>
@@ -195,6 +196,10 @@ capable of dealing with UTF-8 directly.
       </desc>
    </doc>
    <xsl:template name="latexSetup">
+\IfFileExists{xcolor.sty}%
+  {\RequirePackage{xcolor}}%
+  {\RequirePackage{color}}
+\usepackage{colortbl}
       <xsl:choose>
          <xsl:when test="$reencode='true'">
 \IfFileExists{utf8x.def}%
@@ -214,9 +219,8 @@ capable of dealing with UTF-8 directly.
 \def\textChinese{}
 </xsl:when>
          <xsl:otherwise>
-\usepackage{bidi}
-\usepackage{fontspec}
 \usepackage{xunicode}
+\usepackage{fontspec}
 \catcode`⃥=\active \def⃥{\textbackslash}
 \catcode`❴=\active \def❴{\{}
 \catcode`❵=\active \def❵{\}}
@@ -276,9 +280,6 @@ capable of dealing with UTF-8 directly.
 \newcolumntype{P}[1]{){\arraybackslash}p{#1}}
 \newcolumntype{B}[1]{){\arraybackslash}b{#1}}
 \newcolumntype{M}[1]{){\arraybackslash}m{#1}}
-\IfFileExists{xcolor.sty}%
-  {\RequirePackage{xcolor}}%
-  {\RequirePackage{color}}
 \definecolor{label}{gray}{0.75}
 \newenvironment{reflist}{%
   \begin{raggedright}\begin{list}{}
