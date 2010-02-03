@@ -119,7 +119,7 @@
   <xsl:template match="figure[@url]">
     <figure>
       <graphic>
-	<xsl:copy-of select="@*"/>
+	<xsl:apply-templates select="@*"/>
       </graphic>
       <xsl:apply-templates/>
     </figure>
