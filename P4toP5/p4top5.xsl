@@ -126,8 +126,6 @@
   </xsl:template>
   
   
-  <xsl:template match="figure/@url"/>
-  
   <xsl:template match="figure/@entity"/>
   
   <xsl:template match="figure[@entity]">
@@ -200,6 +198,12 @@
   
   <xsl:template match="@url">
     <xsl:attribute name="target">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
+  
+  <xsl:template match="figure/@url">
+    <xsl:attribute name="url">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
