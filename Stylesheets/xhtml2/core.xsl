@@ -1339,57 +1339,20 @@
    </doc>
   <xsl:template name="applyRendition">
       <xsl:attribute name="class">
-  
-         <xsl:choose>
-	           <xsl:when test="@rendition=''"/>
-	           <xsl:when test="contains(normalize-space(@rendition),' ')">
-	              <xsl:call-template name="splitRendition">
-	                 <xsl:with-param name="value">
-	                    <xsl:value-of select="normalize-space(@rendition)"/>
-	                 </xsl:with-param>
-	              </xsl:call-template>
-	           </xsl:when>
-	           <xsl:otherwise>
-	              <xsl:call-template name="findRendition">
-	                 <xsl:with-param name="value">
-	                    <xsl:value-of select="@rendition"/>
-	                 </xsl:with-param>
-	              </xsl:call-template>
-	           </xsl:otherwise>
-         </xsl:choose>
+	<xsl:for-each select="tokenize(normalize-space(@rendition),' ')">
+	  <xsl:call-template name="findRendition">
+	    <xsl:with-param name="value">
+	      <xsl:value-of select="."/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:for-each>
       </xsl:attribute>
    </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] Get another value from a space-separated list<param name="value">value</param>
+      <desc>[html] Look up rendition value <param name="value">value</param>
       </desc>
    </doc>
-  <xsl:template name="splitRendition">
-      <xsl:param name="value"/>
-      <xsl:choose>
-         <xsl:when test="$value=''"/>
-         <xsl:when test="contains($value,' ')">
-	           <xsl:call-template name="findRendition">
-	              <xsl:with-param name="value">
-	                 <xsl:value-of select="substring-before($value,' ')"/>
-	              </xsl:with-param>
-	           </xsl:call-template>
-	           <xsl:call-template name="splitRendition">
-	              <xsl:with-param name="value">
-	                 <xsl:value-of select="substring-after($value,' ')"/>
-	              </xsl:with-param>
-	           </xsl:call-template>
-         </xsl:when>
-         <xsl:otherwise>
-	           <xsl:call-template name="findRendition">
-	              <xsl:with-param name="value">
-	                 <xsl:value-of select="$value"/>
-	              </xsl:with-param>
-	           </xsl:call-template>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
-
   <xsl:template name="findRendition">
       <xsl:param name="value"/>
       <xsl:choose>

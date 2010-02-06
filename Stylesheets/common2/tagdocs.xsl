@@ -890,10 +890,12 @@
 	                 <xsl:text>specDesc</xsl:text>
 	              </xsl:attribute>
 	              <xsl:variable name="HERE" select="."/>
-	              <xsl:call-template name="splitAttTokens">
-	                 <xsl:with-param name="HERE" select="$HERE"/>
-	                 <xsl:with-param name="atts" select="$atts"/>
-	              </xsl:call-template>
+		      <xsl:for-each select="tokenize($atts,' ')">
+			<xsl:call-template name="doAnAttToken">
+			  <xsl:with-param name="HERE" select="$HERE"/>
+			  <xsl:with-param name="TOKEN" select="."/>
+			</xsl:call-template>
+		      </xsl:for-each> 
 	           </xsl:element>
          </xsl:when>
          <xsl:otherwise>
@@ -932,34 +934,6 @@
 	                 <xsl:call-template name="showAnAttribute"/>
 	              </xsl:for-each>
 	           </xsl:for-each>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
-  
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Split up and process a space-separated list of attribute names<param name="HERE">the starting node </param>
-         <param name="TOKEN">attributes we have been asked to display</param>
-      </desc>
-   </doc>
-  <xsl:template name="splitAttTokens">
-      <xsl:param name="HERE"/>
-      <xsl:param name="atts"/>
-      <xsl:choose>
-         <xsl:when test="contains($atts,' ')">
-	           <xsl:call-template name="doAnAttToken">
-	              <xsl:with-param name="HERE" select="$HERE"/>
-	              <xsl:with-param name="TOKEN" select="substring-before($atts,' ')"/>
-	           </xsl:call-template>
-	           <xsl:call-template name="splitAttTokens">
-	              <xsl:with-param name="HERE" select="$HERE"/>
-	              <xsl:with-param name="atts" select="substring-after($atts,' ')"/>
-	           </xsl:call-template>
-         </xsl:when>
-         <xsl:otherwise>
-	           <xsl:call-template name="doAnAttToken">
-	              <xsl:with-param name="HERE" select="$HERE"/>
-	              <xsl:with-param name="TOKEN" select="$atts"/>
-	           </xsl:call-template>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -2476,12 +2450,9 @@
 
   <xsl:template name="processatts">
       <xsl:param name="values"/>
-      <xsl:if test="not($values = '')">
-         <xsl:apply-templates select="key('IDENTS',substring-before($values,' '))"/>
-         <xsl:call-template name="processatts">
-            <xsl:with-param name="values" select="substring-after($values,' ')"/>
-         </xsl:call-template>
-      </xsl:if>
+      <xsl:for-each select="tokenize($values), ' ')">
+         <xsl:apply-templates select="key('IDENTS',.)"/>
+      </xsl:for-each>
   </xsl:template>
 
 
