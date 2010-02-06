@@ -340,20 +340,14 @@ XSL LaTeX stylesheet to make slides
 
   <xsl:template name="Text">
       <xsl:param name="words"/>
-      <xsl:choose>
-         <xsl:when test="contains($words,'&amp;')">
-	           <xsl:value-of select="substring-before($words,'&amp;')"/>
-	           <xsl:text>&amp;amp;</xsl:text>
-	           <xsl:call-template name="Text">
-	              <xsl:with-param name="words">
-	                 <xsl:value-of select="translate(substring-after($words,'&amp;'),'\{}','⃥❴❵')"/>
-	              </xsl:with-param>
-	           </xsl:call-template>
-         </xsl:when>
-         <xsl:otherwise>
-	           <xsl:value-of select="translate($words,'\{}','⃥❴❵')"/>
-         </xsl:otherwise>
-      </xsl:choose>
+      <xsl:analyze-string select="$words" regex="(&amp;)">
+	<xsl:matching-substring>
+            <xsl:text>&amp;amp;</xsl:text>
+	</xsl:matching-substring>
+	<xsl:non-matching-substring>
+	  <xsl:value-of select="translate('\{}','⃥❴❵')"/>
+	</xsl:non-matching-substring>
+      </xsl:analyze-string>
   </xsl:template>
 
 

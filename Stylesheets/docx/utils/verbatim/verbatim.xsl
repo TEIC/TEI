@@ -329,20 +329,14 @@
 
   <xsl:template name="verbatim-Text">
       <xsl:param name="words"/>
-      <xsl:choose>
-         <xsl:when test="contains($words,'&amp;')">
-            <xsl:value-of select="substring-before($words,'&amp;')"/>
+      <xsl:analyze-string select="." regex="(&amp;)">
+	<xsl:matching-substring>
             <xsl:text>&amp;amp;</xsl:text>
-            <xsl:call-template name="verbatim-Text">
-               <xsl:with-param name="words">
-                  <xsl:value-of select="substring-after($words,'&amp;')"/>
-               </xsl:with-param>
-            </xsl:call-template>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:value-of select="$words"/>
-         </xsl:otherwise>
-      </xsl:choose>
+	</xsl:matching-substring>
+	<xsl:non-matching-substring>
+	  <xsl:value-of select="."/>
+	</xsl:non-matching-substring>
+      </xsl:analyze-string>
   </xsl:template>
 
   <xsl:template match="*" mode="verbatim">

@@ -343,30 +343,22 @@
    </doc>
   <xsl:template name="verbatim-Text">
       <xsl:param name="words"/>
-      <xsl:choose>
-         <xsl:when test="contains($words,'&amp;')">
-	   <xsl:variable name="after">
-	     <xsl:value-of select="substring-after($words,'&amp;')"/>
-	   </xsl:variable>
-	   <xsl:value-of select="substring-before($words,'&amp;')"/>
+      <xsl:analyze-string select="$words" regex="(&amp;)(.)">
+	<xsl:matching-substring>
 	   <xsl:choose>
-	      <xsl:when test="starts-with($after,'#')">
+	      <xsl:when test="starts-with(regex-group(2),'#')">
 		<xsl:text>&amp;</xsl:text>
 	      </xsl:when>
 	      <xsl:otherwise>
 		<xsl:text>&amp;amp;</xsl:text>
 	      </xsl:otherwise>
 	   </xsl:choose>
-            <xsl:call-template name="verbatim-Text">
-               <xsl:with-param name="words">
-                  <xsl:value-of select="$after"/>
-               </xsl:with-param>
-            </xsl:call-template>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:value-of select="$words"/>
-         </xsl:otherwise>
-      </xsl:choose>
+	   <xsl:value-of select="regex-group(2)"/>
+	</xsl:matching-substring>
+	<xsl:non-matching-substring>
+	  <xsl:value-of select="."/>
+	</xsl:non-matching-substring>
+      </xsl:analyze-string>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
