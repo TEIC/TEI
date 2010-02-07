@@ -18,10 +18,10 @@ while test $# -gt 0; do
   esac
   shift
 done
-test -f $1 || exit 1
+test -f "$1" || exit 1
 HERE=`pwd`
-D=`dirname $1`
-F=`basename $1`
+D=`dirname "$1"`
+F=`basename "$1"`
 THERE=`(cd $D; pwd)`
 X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
@@ -31,7 +31,7 @@ XSL=$APPHOME
 mkdir -p $TEMPDIR/word/media
 echo read $THERE/$F
 case $THERE/$F in 
-       *.zip)  (cd $TEMPDIR; unzip -q $THERE/$F ); F=`basename $F .zip`.xml;; 
+       *.zip)  (cd $TEMPDIR; unzip -q $THERE/"$F" ); F=`basename $F .zip`.xml;; 
        *) cp $THERE/$F $TEMPDIR/$F  ;; 
 esac
 (cd $TEMPDIR; saxon $F $XSL/docx/utils/graphics/listgraphics.xsl ORIG=$THERE DIR=$TEMPDIR/word/media > fetch; sh $TEMPDIR/fetch; rm $TEMPDIR/fetch)
@@ -69,7 +69,7 @@ rm -f word/media/*.xmp
 mv docProps/newcore.xml docProps/core.xml 
 mv docProps/newcustom.xml docProps/custom.xml 
 rm -f $THERE/$F.docx
-zip -q -r $THERE/$F.docx word _rels docProps customXML \[Content_Types\].xml
+zip -q -r $THERE/"$F.docx" word _rels docProps customXML \[Content_Types\].xml
 cd $HERE
 if $debug 
 then
