@@ -1268,7 +1268,7 @@ simple, bullets, ordered, gloss, unordered, or bibliography
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementsoCalled</desc>
+      <desc>Process element soCalled</desc>
    </doc>
   <xsl:template match="tei:soCalled">
       <xsl:value-of select="$preQuote"/>

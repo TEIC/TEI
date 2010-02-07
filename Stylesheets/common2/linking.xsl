@@ -48,13 +48,13 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementanchor|tei:p in xref mode</desc>
+      <desc>Process element anchor|tei:p in xref mode</desc>
    </doc>
   <xsl:template match="tei:anchor|tei:p" mode="xref">
       <xsl:text>here</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementbibl</desc>
+      <desc>Process element bibl</desc>
    </doc>
   <xsl:template match="tei:bibl" mode="xref">
       <xsl:text>[</xsl:text>
@@ -63,7 +63,7 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements
+      <desc>Process element s
       tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6 in
       xref mode<param name="minimal">whether to make a link with just numbers or with
       text too</param>
@@ -78,13 +78,13 @@
       </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementnote</desc>
+      <desc>Process element note</desc>
    </doc>
   <xsl:template match="tei:note" mode="xref">
       <xsl:number level="any"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementptr|tei:xptr in xref mode</desc>
+      <desc>Process element ptr|tei:xptr in xref mode</desc>
    </doc>
   <xsl:template match="tei:ptr|tei:xptr">
       <xsl:call-template name="makeTEILink">
@@ -92,7 +92,7 @@
       </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementref|tei:xref</desc>
+      <desc>Process element ref|tei:xref</desc>
    </doc>
   <xsl:template match="tei:ref|tei:xref">
       <xsl:call-template name="makeTEILink">

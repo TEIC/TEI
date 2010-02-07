@@ -1790,7 +1790,7 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementschemaSpec</desc>
+      <desc>Process element schemaSpec</desc>
    </doc>
 
   <xsl:template match="tei:schemaSpec">

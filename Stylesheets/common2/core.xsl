@@ -68,7 +68,7 @@
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementedition</desc>
+      <desc>Process element edition</desc>
    </doc>
   <xsl:template match="tei:edition">
       <xsl:apply-templates/>
@@ -80,7 +80,7 @@
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementimprint</desc>
+      <desc>Process element imprint</desc>
    </doc>
   <xsl:template match="tei:imprint">
       <xsl:choose>

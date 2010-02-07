@@ -40,7 +40,7 @@
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elementcaesura</p>
+         <p>Process element caesura</p>
          <p>Caesurae are rendered as a LaTeX \quad{}.</p>
       </desc>
    </doc>

@@ -27,7 +27,7 @@
       </desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementanchor</desc>
+      <desc>Process element anchor</desc>
    </doc>
   <xsl:template match="tei:anchor">
       <xsl:text>\hypertarget{</xsl:text>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:s="http://www.ascc.net/xml/schematron" xmlns="http://www.w3.org/1999/xhtml"
+<xsl:stylesheet xmlns:s="http://www.ascc.net/xml/schematron" 
+		xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:dbk="http://docbook.org/ns/docbook"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -8,11 +9,11 @@
                 xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-                
+		xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
-                exclude-result-prefixes="xlink dbk rng tei teix s xhtml a html xs xsl">
+                exclude-result-prefixes="xlink dbk rng tei teix s xhtml sch a html xs xsl">
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="../xhtml2/tei.xsl"/>
   <xsl:import href="../xhtml2/tagdocs.xsl"/>

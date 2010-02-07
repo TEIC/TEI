@@ -259,7 +259,7 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements
+      <desc>Process element s
       tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5 (toc mode)</desc>
    </doc>
   <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5" mode="toc">

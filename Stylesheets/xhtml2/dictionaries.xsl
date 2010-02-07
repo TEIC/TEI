@@ -32,7 +32,7 @@
       </desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementdicteg</desc>
+      <desc>Process element dicteg</desc>
    </doc>
   <xsl:template match="tei:dicteg">
       <xsl:apply-templates/>

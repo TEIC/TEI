@@ -39,7 +39,7 @@
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elementapp</p>
+         <p>Process element app</p>
          <p>Process tei:lem and tei:rdg within tei:app; first, first, rudimentary attempt. Sends lots of information
     to a footnote. If a tei:lem is not found, the first tei:rdg is used as the base text. Witness sigils in attribute
     wit are assumed all to start with # (this should be parametrized).</p>
