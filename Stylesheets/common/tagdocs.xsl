@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns="http://www.tei-c.org/ns/1.0"
-		xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-  xmlns:s="http://www.ascc.net/xml/schematron"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings"
-  xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format"
-  xmlns:html="http://www.w3.org/1999/xhtml" xmlns:local="http://www.pantor.com/ns/local"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xd="http://www.pnp-software.com/XSLTdoc"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  exclude-result-prefixes="exsl estr edate fo s a xd tei html rng
+<xsl:stylesheet 
+    xmlns="http://www.tei-c.org/ns/1.0"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+    xmlns:s="http://www.ascc.net/xml/schematron"
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings"
+    xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format"
+    xmlns:html="http://www.w3.org/1999/xhtml" xmlns:local="http://www.pantor.com/ns/local"
+    xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xd="http://www.pnp-software.com/XSLTdoc"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    exclude-result-prefixes="exsl estr edate fo s a xd tei html rng
 			   local teix xs sch"
   extension-element-prefixes="edate exsl estr" version="1.0">
 
@@ -1311,9 +1312,9 @@
 		</xsl:for-each>
 		</List>
 	      </xsl:variable>
-	      <xsl:for-each select="exsl:node-set($list)/List/Item">
+	      <xsl:for-each select="exsl:node-set($list)/tei:List/tei:Item">
 		<xsl:copy-of select="*|text()"/>
-		<xsl:if test="following-sibling::Item">
+		<xsl:if test="following-sibling::tei:Item">
 		  <xsl:call-template name="showSpace"/>
 		</xsl:if>
 	      </xsl:for-each>
@@ -1342,9 +1343,9 @@
 		  </xsl:for-each>
 		</List>
 	      </xsl:variable>
-	      <xsl:for-each select="exsl:node-set($list)/List/Item">
+	      <xsl:for-each select="exsl:node-set($list)/tei:List/tei:Item">
 		<xsl:copy-of select="*|text()"/>
-		<xsl:if test="following-sibling::Item">
+		<xsl:if test="following-sibling::tei:Item">
 		  <xsl:call-template name="showSpace"/>
 		</xsl:if>
 	      </xsl:for-each>
@@ -1373,9 +1374,9 @@
 		  </xsl:for-each>
 		</List>
 	      </xsl:variable>
-	      <xsl:for-each select="exsl:node-set($list)/List/Item">
+	      <xsl:for-each select="exsl:node-set($list)/tei:List/tei:Item">
 		<xsl:copy-of select="*|text()"/>
-		<xsl:if test="following-sibling::Item">
+		<xsl:if test="following-sibling::tei:Item">
 		  <xsl:call-template name="showSpace"/>
 		</xsl:if>
 	      </xsl:for-each>
@@ -1738,9 +1739,9 @@
 	      </xsl:for-each>
 	    </List>
 	  </xsl:variable>
-	  <xsl:for-each select="exsl:node-set($list)/List/Item">
+	  <xsl:for-each select="exsl:node-set($list)/tei:List/tei:Item">
 	    <xsl:copy-of select="*|text()"/>
-	    <xsl:if test="following-sibling::Item">
+	    <xsl:if test="following-sibling::tei:Item">
 	      <xsl:call-template name="showSpace"/>
 	    </xsl:if>
 	  </xsl:for-each>
@@ -1764,9 +1765,9 @@
 		  </xsl:for-each>
 		</List>
 	      </xsl:variable>
-	      <xsl:for-each select="exsl:node-set($list)/List/Item">
+	      <xsl:for-each select="exsl:node-set($list)/tei:List/tei:Item">
 		<xsl:copy-of select="*|text()"/>
-		<xsl:if test="following-sibling::Item">
+		<xsl:if test="following-sibling::tei:Item">
 		  <xsl:call-template name="showSpace"/>
 		</xsl:if>
 	      </xsl:for-each>
@@ -1811,9 +1812,9 @@
 	</xsl:for-each>
       </List>
     </xsl:variable>
-    <xsl:for-each select="exsl:node-set($list)/List/Item">
+    <xsl:for-each select="exsl:node-set($list)/tei:List/tei:Item">
       <xsl:copy-of select="*|text()"/>
-      <xsl:if test="following-sibling::Item">
+      <xsl:if test="following-sibling::tei:Item">
 	<xsl:call-template name="showSpace"/>
       </xsl:if>
     </xsl:for-each>
@@ -1858,7 +1859,7 @@
 	    </xsl:for-each>
 	  </List>
 	</xsl:variable>
-	<xsl:for-each select="exsl:node-set($list)/List/Item">
+	<xsl:for-each select="exsl:node-set($list)/tei:List/tei:Item">
 	  <xsl:copy-of select="*|text()"/>
 	  <xsl:if test="following-sibling::Item">
 	    <xsl:call-template name="showSpace"/>
@@ -1904,9 +1905,9 @@
 	    </xsl:for-each>
 	  </List>
 	</xsl:variable>
-	<xsl:for-each select="exsl:node-set($list)/List/Item">
+	<xsl:for-each select="exsl:node-set($list)/tei:List/tei:Item">
 	  <xsl:copy-of select="*|text()"/>
-	  <xsl:if test="following-sibling::Item">
+	  <xsl:if test="following-sibling::tei:Item">
 	    <xsl:call-template name="showSpace"/>
 	  </xsl:if>
 	</xsl:for-each>
@@ -1930,9 +1931,9 @@
 	  </xsl:for-each>
 	</List>
       </xsl:variable>
-      <xsl:for-each select="exsl:node-set($list)/List/Item">
+      <xsl:for-each select="exsl:node-set($list)/tei:List/tei:Item">
 	<xsl:copy-of select="*|text()"/>
-	<xsl:if test="following-sibling::Item">
+	<xsl:if test="following-sibling::tei:Item">
 	  <xsl:call-template name="showSpace"/>
 	</xsl:if>
       </xsl:for-each>
@@ -1975,9 +1976,9 @@
 	</xsl:for-each>
       </List>
       </xsl:variable>
-      <xsl:for-each select="exsl:node-set($list)/List/Item">
+      <xsl:for-each select="exsl:node-set($list)/tei:List/tei:Item">
 	<xsl:copy-of select="*|text()"/>
-	<xsl:if test="following-sibling::Item">
+	<xsl:if test="following-sibling::tei:Item">
 	  <xsl:call-template name="showSpace"/>
 	</xsl:if>
       </xsl:for-each>
