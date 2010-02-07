@@ -6,7 +6,9 @@
     $Date$
     $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
   ident="relatedItem" module="core">
   <desc>contains or references some other bibliographic item which is related to the present one in
     some specified manner, for example as a constituent or alternative version of it.</desc>
@@ -33,6 +35,12 @@
       <rng:ref name="model.ptrLike"/>
     </rng:choice>
   </content>
+  <constraintSpec ident="targetorcontent" scheme="isoschematron">
+    <constraint>
+      <sch:report test="@target and string-length(text())&gt;0">If the
+      target attribute is used, the element must be empty</sch:report>
+    </constraint>
+  </constraintSpec> 
   <attList>
     <attDef ident="target" usage="opt">
       <equiv/>
