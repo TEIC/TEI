@@ -1502,14 +1502,21 @@ class romaDom extends domDocument
 		  $oAttDef->setAttribute( 'usage', 'req' );
 		}
 	    }
-	    //desc, has it changed?
+	    //desc, has it changed? we should NOT be checking all the way down, however.
 	    if ($aszConfig[ 'changedDesc'] == 'true' ) {
- 	     $oDesc = $oAttDef->getElementsByTagname( 'desc' )->item(0);
-	     if ( is_object( $oDesc ) )
-	      {
+	      $gotDesc=false;
+	      foreach( $oAttDef->childNodes as $oChild )
+		{
+		  switch( $oChild->nodeName )
+		    {
+		    case 'desc':
+		      $oDesc->nodeValue= stripslashes($aszConfig[ 'description' ]);
+		      $gotDesc=true;
+		      break;
+		    }
+		}
+	      if (!$gotDesc)
 		$oDesc->nodeValue= stripslashes($aszConfig[ 'description' ]);
-	      }
-	     else 
 	       {
 		 $theDesc = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'desc' );
 		 $oDesc = $oAttDef->appendChild( $theDesc );
