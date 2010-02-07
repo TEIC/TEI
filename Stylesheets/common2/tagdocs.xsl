@@ -6,10 +6,10 @@
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
-                
+		xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="fo s a tei html rng teix xs"
+                exclude-result-prefixes="fo s a tei html rng teix xs sch"
                 version="2.0">
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -978,19 +978,22 @@
          <xsl:when test="parent::tei:exemplum">
 	           <xsl:call-template name="showExample"/>
          </xsl:when>
+         <xsl:when test="not(@xml:lang)">
+	           <xsl:call-template name="showExample"/>
+         </xsl:when>
          <xsl:when test="@xml:lang='und'">
 	           <xsl:call-template name="showExample"/>
          </xsl:when>
          <xsl:when test="@xml:lang='mul' and not($documentationLanguage='zh-tw')">
-	<!-- will need to generalize this if other langs come along like
-	     chinese -->
-	<xsl:call-template name="showExample"/>
-         </xsl:when>
+	   <!-- will need to generalize this if other langs come along like
+		chinese -->
+	   <xsl:call-template name="showExample"/>
+	 </xsl:when>
          <xsl:when test="@xml:lang=$documentationLanguage">
-	           <xsl:call-template name="showExample"/>
+	   <xsl:call-template name="showExample"/>
          </xsl:when>
          <xsl:when test="not(../tei:exemplum[@xml:lang=$documentationLanguage])                    and (@xml:lang='en'      or @xml:lang='und'      or @xml:lang='mul')">
-	           <xsl:call-template name="showExample"/>
+	   <xsl:call-template name="showExample"/>
          </xsl:when>
       </xsl:choose>
   </xsl:template>

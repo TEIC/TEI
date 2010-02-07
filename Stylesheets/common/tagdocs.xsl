@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.tei-c.org/ns/1.0"
+		xmlns:sch="http://purl.oclc.org/dsdl/schematron"
   xmlns:s="http://www.ascc.net/xml/schematron"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
   xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/strings"
@@ -8,7 +9,8 @@
   xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  exclude-result-prefixes="exsl estr edate fo s a xd tei html rng local teix xs"
+  exclude-result-prefixes="exsl estr edate fo s a xd tei html rng
+			   local teix xs sch"
   extension-element-prefixes="edate exsl estr" version="1.0">
 
   <xd:doc type="stylesheet">
@@ -1006,6 +1008,9 @@
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="parent::tei:exemplum">
+	<xsl:call-template name="showExample"/>
+      </xsl:when>
+      <xsl:when test="not(@xml:lang)">
 	<xsl:call-template name="showExample"/>
       </xsl:when>
       <xsl:when test="@xml:lang='und'">
