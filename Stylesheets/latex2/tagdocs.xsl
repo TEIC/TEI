@@ -48,7 +48,7 @@
 	           </xsl:apply-templates>
 	           <xsl:text>\end{shaded}</xsl:text>
 	           <xsl:call-template name="egXMLEndHook"/>
-	           <xsl:text>\egroup </xsl:text>
+	           <xsl:text>\egroup &#10;&#10;</xsl:text>
          </xsl:when>
          <xsl:otherwise>
 	           <xsl:text>\par\bgroup</xsl:text>

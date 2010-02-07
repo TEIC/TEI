@@ -129,7 +129,9 @@
 \noindent\obeylines\obeyspaces </xsl:text>
 	           <xsl:apply-templates mode="eg"/>
 	           <xsl:text>\end{shaded}
-\egroup </xsl:text>
+\egroup 
+
+</xsl:text>
          </xsl:when>
          <xsl:otherwise>
 	           <xsl:text>\par\bgroup</xsl:text>
@@ -138,7 +140,9 @@
 \obeylines\obeyspaces </xsl:text>
 	           <xsl:apply-templates mode="eg"/>
 	           <xsl:text>\end{shaded}
-\par\egroup </xsl:text>
+\par\egroup 
+
+</xsl:text>
          </xsl:otherwise>
       </xsl:choose>
       <!--

@@ -1781,8 +1781,9 @@
   <xsl:template name="generateParentsByAttribute">
       <xsl:variable name="this" select="@ident"/>
       <xsl:if test="count(key('ATTREFS-CLASS',$this))&gt;0">
-         <xsl:message>example in <xsl:value-of select="$this"/>
-         </xsl:message>
+	<!--
+	<xsl:message>example in <xsl:value-of select="$this"/></xsl:message>
+	-->
          <xsl:element namespace="{$outputNS}" name="{$segName}">
 	           <xsl:attribute name="xml:lang">
 	              <xsl:value-of select="$documentationLanguage"/>
@@ -2450,8 +2451,12 @@
 
   <xsl:template name="processatts">
       <xsl:param name="values"/>
-      <xsl:for-each select="tokenize($values), ' ')">
-         <xsl:apply-templates select="key('IDENTS',.)"/>
+      <xsl:variable name="here" select="."/>
+      <xsl:for-each select="tokenize($values, ' ')">
+	<xsl:variable name="v" select="."/>
+	<xsl:for-each select="$here">
+	  <xsl:apply-templates select="key('IDENTS',.)"/>
+	</xsl:for-each>
       </xsl:for-each>
   </xsl:template>
 
