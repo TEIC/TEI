@@ -81,7 +81,7 @@ semantic recommendations about what interpretation should be attached
 to a given syntactic construct. In this sense, they provide both a
 <term>document type definition</term> and a <term>document type
 declaration</term>. More exactly, we may distinguish between the
-<term>TEI abstract model</term>, which defines a set of related
+<term>TEI Abstract Model</term>, which defines a set of related
 concepts, and the <term>TEI schema</term> which defines a set of
 syntactic rules and constraints. Many (though not all) of the semantic
 recommendations are provided solely as informal descriptive prose,
@@ -126,7 +126,7 @@ of patterns. In either case, the names of elements and, wherever
 possible, their attributes and content models are defined
 indirectly. The syntax used to implement this indirection also varies
 with the schema language used, but the underlying constructs in the
-TEI abstract model are given the same names. </p>
+TEI Abstract Model are given the same names. </p>
 
 <p>As further discussed in section <ptr target="#ST"/>, the TEI
 encoding scheme comprises a set of class and macro declarations, and a
@@ -269,7 +269,7 @@ be a clean modification. </p>
 <p>In general, whenever the element deleted by a modification is
 mandatory within the content model of some other (undeleted) element,
 the result is an unclean modification, and may also break the TEI
-abstract model (<ptr target="#CFAM"/>).  However, the parent of a
+Abstract Model (<ptr target="#CFAM"/>).  However, the parent of a
 mandatory child can be safely removed if it is itself
 optional.</p>
 
@@ -412,7 +412,7 @@ example, the element <gi>l</gi> is defined as containing a line of
 verse. It would not therefore make sense to redefine its content model
 so that it could also include members of the class <ident type="class">model.pLike</ident>: such a modification although
 syntactically feasible would not be regarded as TEI conformant because
-it breaks the TEI abstract model. </p>
+it breaks the TEI Abstract Model. </p>
 
 </div>
 
@@ -811,8 +811,7 @@ conformance</term> in the next section, <ptr target="#CF"/>. </p></div>
 <div type="div2" xml:id="MDlite"><head>Examples of Modification </head>
 
 <p>Several  examples of customizations of the TEI
-are available as part of the standard release, within the directory
-<ident type="file">Exemplars</ident>. They include the following:
+are provided  as part of the standard release.  They include the following:
 <list type="gloss">
           <label>tei_bare</label>
           <item>The schema generated from this customization is the
@@ -841,10 +840,10 @@ meet 90% of the needs of 90% of the TEI user community, the TEI
 editors produced a brief tutorial defining one specific
 <soCalled>clean</soCalled> modification of the TEI scheme, which they
 called TEI Lite. This tutorial and its associated DTD became very
-popular and are still available from the TEI web site at
-<ptr target="http://www.tei-c.org/Guidelines/Customization/Lite/"/>. The tutorial and
-associated schema specification is also included as one of the 
-Exemplars provided with TEI P5.
+popular and are still available from the TEI web site at <ptr
+target="http://www.tei-c.org/Guidelines/Customization/Lite/"/>. The
+tutorial and associated schema specification is also included as one
+of the Exemplars provided with TEI P5.
 </p>
 <p>The Exemplars provided with TEI P5 also include a customization
 file from which a schema for the validation of other customization
@@ -917,7 +916,7 @@ these kinds of conformance from others.</p>
 <p>A document is said to use a <term>TEI Extension</term> if it is a
 well-formed XML document which is valid against a TEI Schema which
 contains additional distinctions, representing concepts not present in
-the TEI abstract model, and therefore not documented in these
+the TEI Abstract Model, and therefore not documented in these
 Guidelines. Such a document cannot, in general, be algorithmically
 conformant since it cannot be automatically transformed without loss
 of information. However, since one of the goals of the TEI is to
@@ -940,7 +939,7 @@ used.</p>
 representation format. Documents must conform to the World Wide Web
 Consortium recommendation of the <title>Extensible Markup Language
 (XML) 1.0 (Fourth Edition)</title> or successor editions found at <ref target="http://www.w3.org/TR/xml/">http://www.w3.org/TR/xml/</ref>. Other ways of representing the
-concepts of the TEI abstract model are possible, and other
+concepts of the TEI Abstract Model are possible, and other
 representations may be considered appropriate for use in particular
 situations (for example, for data capture, or project-internal
 processing). But such alternative representations are at best
@@ -995,7 +994,7 @@ section <ptr target="#MD"/>. We call the formal output of this process a
  by all schema languages; and there are some features of some schema
  languages which have no counterpart in ODD. No single schema language fully
  captures all the constraints implied by conformance to the TEI
- abstract model. A document which is valid according to a TEI schema
+ Abstract Model. A document which is valid according to a TEI schema
  represented using one schema language may not be valid against the
  same schema expressed in other languages; in particular the DTD
  language does not fully support namespaces.  Features which cannot be
@@ -1022,7 +1021,7 @@ relationships, for example stating that
 <soCalled>heading</soCalled>s. These Guidelines also define classes of
 elements, which have both semantic and structural properties in
 common. Those semantic and structural properties are also a part of
-the TEI abstract model; the class membership of an existing TEI
+the TEI Abstract Model; the class membership of an existing TEI
 element cannot therefore be changed without changing the
 model. Elements can however be removed from a class by deletion, and
 new non-TEI elements within their own namespaces can be added to existing TEI classes.</p>
@@ -1046,25 +1045,25 @@ provided by the <gi>equiv</gi> element where this is available. </p>
 
 <p>A schema which shares equivalent concepts to those of the TEI
 conceptual model may be mappable to the TEI Schema by means of such a
-mechanism. For example, the concept of paragraph, expressed in the TEI
+mechanism. For example, the concept of paragraph expressed in the TEI
 scheme by the <gi>p</gi> element is probably the same concept as that
-expressed in the Docbook scheme by the <gi scheme="DBK">para</gi> element. In this
-respect (though not in others) a Docbook-conformant document might
-therefore be considered to be TEI Conformable. Such areas of overlap
-facilitate interoperability, because elements from one namespace may
-be readily integrated with those from another, but do not affect the
-definition of conformance.</p>
+expressed in the DocBook scheme by the <gi scheme="DBK">para</gi>
+element. In this respect (though not in others) a DocBook-conformant
+document might therefore be considered to be TEI Conformable. Such
+areas of overlap facilitate interoperability, because elements from
+one namespace may be readily integrated with those from another, but
+do not affect the definition of conformance.</p>
 
 <p>A document is said to conform to the <term>TEI Abstract
 Model</term> if features for which an encoding is proposed by the TEI
 Guidelines are encoded within it using the markup and other syntactic
-properties specified by means of a valid <term>TEI
-Conformant</term> schema. That is, the abstract definition and
-markup structurally correspond to that in the TEI Guidelines even if
-the names of elements and attributes might not. Although it may be
-possible to transform a document following the <term>TEI Abstract
-Model</term> into a <term>TEI Conformant</term> document, it is not
-itself conformant.</p>
+properties defined by means of a valid <term>TEI Conformant</term>
+schema. Hence, even though the names of elements or attributes may
+vary, a TEI Conformant document must respect the TEI Semantic Model,
+and be valid with respect to a TEI Conformant Schema. Although it may
+be possible to transform a document which follows the <term>TEI Abstract
+Model</term> into a <term>TEI Conformant</term> document, such a
+document is not itself necessarily conformant.</p>
 
 </div>
 
@@ -1120,7 +1119,7 @@ a TEI Conformant document is required to make appropriate use of the
 TEI namespace.</p>
 
 <p>Essentially all elements in a TEI Schema which represents concepts
-from the TEI abstract model belong to the TEI namespace, <ident
+from the TEI Abstract Model belong to the TEI namespace, <ident
 type="ns">http://www.tei-c.org/ns/1.0</ident>, maintained by the
 TEI. A TEI Conformant document is required to declare the namespace
 for all the elements it contains whether these come from the TEI
@@ -1161,7 +1160,7 @@ must be specified by means of a valid <term>TEI ODD</term> file. </p>
 the interchange and interoperability of TEI documents, it cannot be
 assumed that every customization will necessarily result in a schema
 that validates only TEI Conformant documents. The ODD language permits
-modifications which conflict with the TEI abstract model, even though
+modifications which conflict with the TEI Abstract Model, even though
 observing this model  is a requirement for TEI Conformance. The ODD
 language can in fact be used to describe many kinds of markup scheme,
 including schemes  which have nothing to do with the TEI at all. </p>
@@ -1238,7 +1237,7 @@ though imaginary, cases:
 <cell>H</cell>
 </row>
 <row>
-<cell>Conforms to TEI abstract model</cell>
+<cell>Conforms to TEI Abstract Model</cell>
 <cell>Y</cell>
 <cell>N</cell>
 <cell>Y</cell>
@@ -1360,7 +1359,7 @@ elements in the TEI namespace, and hence to determine whether the
 document is valid with respect to the TEI Abstract Model but this is
 not an automatable process. In particular, cases of apparent conflict
 (for example use of an element <gi>p</gi> to represent a concept not
-in the TEI Abstract Model but in the Abstract Model of some other
+in the TEI Abstract Model but in the abstract model of some other
 system, whose namespace has been removed as well) cannot be reliably
 resolved. By our current definition therefore, this is not a TEI
 document.</p>
@@ -1684,7 +1683,7 @@ stage during processing of ODD sources.</p>
 and <gi>figDesc</gi> has been deleted,<note place="foot">Note that
 deletion of required elements will cause the schema specification to
 acccept as valid documents which cannot be TEI Conformant, since they
-no longer conform to the TEI abstract model; conformance topics are
+no longer conform to the TEI Abstract Model; conformance topics are
 addressed in more detail in <ptr target="#CF"/>.</note> it will be
 necessary to remove that reference, or the resulting schema will be
 invalid.  Surrounding constructs, such as a <gi>rng:zeroOrMore</gi>
@@ -1723,9 +1722,9 @@ producing schema output in the three main schema languages, as
 follows:
 
 <list type="simple">
-<item>A RELAX NG (XML) schema is generated by creating 
-wrappers around the content models taken directly from the ODD specification;
-a  version re-expressed in the RELAX NG compact syntax is generated using
+<item>A RELAX NG (XML) schema is generated by creating wrappers around
+the content models taken directly from the ODD specification; a
+version re-expressed in the RELAX NG compact syntax is generated using
 James Clark's <name>trang</name> application.</item>
 
 <item>A DTD schema is generated by converting the RELAX NG
