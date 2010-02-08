@@ -128,12 +128,12 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:if test="not($prev='')">
-      <a class="xreflink" accesskey="p" href="{concat($prev,'.xhtml')}">
+      <a class="xreflink" accesskey="p" href="{concat($prev,$outputSuffix)}">
         <span class="button">&#xAB;</span>
       </a>
     </xsl:if>
     <xsl:text>  </xsl:text>
-    <a class="xreflink" accesskey="f" href="{concat($first,'.xhtml')}">
+    <a class="xreflink" accesskey="f" href="{concat($first,$outputSuffix)}">
       <span class="button">^</span>
     </a>
     <xsl:variable name="next">
@@ -153,7 +153,7 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:if test="not($next='')">
-      <a class="xreflink" accesskey="n" href="{concat($next,'.xhtml')}">
+      <a class="xreflink" accesskey="n" href="{concat($next,$outputSuffix)}">
         <span class="button">&#xBB;</span>
       </a>
     </xsl:if>
@@ -203,7 +203,7 @@
 	      <xsl:value-of select="$masterFile"/>
 	      <xsl:text>1</xsl:text>
 	    </xsl:variable>
-	    <a accesskey="n" href="{concat($next,'.xhtml')}">Start</a>
+	    <a accesskey="n" href="{concat($next,$outputSuffix)}">Start</a>
 	  </div>
         </div>
       </body>
