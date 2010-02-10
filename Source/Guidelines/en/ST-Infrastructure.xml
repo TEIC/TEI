@@ -435,11 +435,12 @@ the next section. A full list of all attribute classes is given in
 
 <p>The following attributes are defined for every TEI element.
 
-<specList><specDesc key="att.global" atts="xml:id n xml:lang rend rendition xml:base"/></specList>
+<specList><specDesc key="att.global" atts="xml:id n xml:lang rend
+rendition xml:base xml:space"/></specList>
  </p>
 
 <p>These attributes are optionally available for any TEI element; none
-of them is required.<!--may be given values for <att>xml:id</att>, <att>n</att>,
+of them is required. Their usage is discussed in the following subsections.<!--may be given values for <att>xml:id</att>, <att>n</att>,
 <att>xml:lang</att>, <att>rend</att>, or <att>rendition</att>, simply by
 specifying values for these attributes.
 The following two examples convey the same information about the text:
@@ -689,6 +690,93 @@ point of use within a document. Note that, in either case, the TEI
 attributes describe the rendition or appearance of the source
 document, <emph>not</emph> intended output renditions, although often
 the two may be closely related.  </p>
+
+</div>
+
+<div><head>Other global attributes</head>
+<p>The global attributes <att>xml:base</att> and <att>xml:space</att>
+are also provided by default in any TEI schema. Like <att>xml:id</att>
+these attributes are
+defined as part of the XML specification and belong to the XML
+namespace rather than the TEI namespace. We do not describe them in
+detail here: reference information for <att>xml:base</att> is provided
+by <ptr target="#XMLBASE"/>; for <att>xml:space</att> by the 
+<ref target="http://www.w3.org/TR/REC-xml/#sec-white-space">section
+2.10 of the XML Specification</ref>. </p>
+
+<p>As noted above, <att>xml:base</att> is used to set the context
+for all relative URLs within the scope of the element on which it is
+specified. For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"> <text>
+<div xml:base="http://www.example.org/somewhere.xml">
+<!--... -->
+<ptr target="#p1"/>
+<!--... -->
+</div>
+<div>
+<!--... -->
+<ptr target="#p1"/>
+<!--... -->
+</div>
+</text></egXML>The first <gi>ptr</gi> element here is within the scope of a
+<gi>div</gi> which supplies a value for <att>xml:base</att>; its
+target is therefore to be found at
+<code>http://www.example.org/somewhere.xml#p1</code>. The second
+<gi>ptr</gi>, however, is within the scope of a <gi>div</gi> which
+does not change the default context, and its target is therefore some
+element within the current document with the value <code>p1</code> for its
+<att>xml:id</att> attribute. Further discussion of this element and
+its effect on TEI linking methods is provided in chapter <ptr
+target="#SA"/>.
+</p>
+
+<p>The XML Recommendation defines <term>whitespace</term> as a single
+term for the space, tab, and linebreak characters which may appear in
+a document. When such characters appear in a document as content of a
+text node, XML generally considers them significant and requires that
+a processor preserve all of them. However, when an element contains
+only white space and other elements, the expectation is that those
+white space characters which appear between (rather than within)
+elements are <emph>not</emph> significant and may be ignored by an XML
+processor. This does not, of course, apply to whitespace characters
+within an element which contains (non white space) text in its mixed
+content; these must be preserved. Hence, in a document like the
+following
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<list>
+<item>apple pie</item>
+<item>banana custard</item><item>carrot cake</item>
+</list></egXML>
+the white space between the first and second items, and that between the
+second and third, is not significant, while that within the
+<gi>item</gi> elements is.
+</p>
+<p>Some XML processors, notably XML
+editors, may introduce white space in a document to enhance its
+readability when it is displayed. Such white space should normally be
+added only at locations where it is not significant, but not all
+processors can detect this reliably.</p>
+<p>Most TEI elements permit mixed content, and consequently the
+presence or absence of whitespace is generally significant in a TEI
+document. There are many TEI structural elements (such as <gi>div</gi>
+or <gi>p</gi> for which the availability of non-significant whitespace
+may also be convenient.  Consequently it is rarely necessary to modify
+the default white space behaviour, which is the function of the
+<att>xml:space</att> attribute. There are however a few situations in
+which it may be essential, typically where complex markup is being
+worked on by a tool which introduces whitespace in order to enhance
+display of the text.</p>
+<p>For example, when transcribing an inscription with the elements
+described in chapter <ptr target="PH"/>, a single word may well gain
+several additional tags to mark parts of the word which are supplied
+or conjectural. Such tags do not interrupt the word however, and hence
+introducing space where they occur would be misleading. The value of
+<val>preserve</val> for the <att>xml:space</att> attribute on the
+parent <gi>div</gi> element may be used to indicate that all and only
+the spaces actually present in the XML source should be regarded as
+significant; an XML editor or other processor is not then permitted to
+introduce additional spaces.</p>
+
 
 <specGrp xml:id="DSTECAT" n="Attribute classes">
 
