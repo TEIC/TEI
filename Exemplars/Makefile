@@ -45,8 +45,8 @@ dist: schemas
 	cp *.rnc *.rng *.mod ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
 	for i in ${DOCODDS}; do  \
 	cp $$i.doc.html ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html ; \
-	cp $$i.doc.xml  ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/xml ; \
-	cp $$i.doc.pdf  ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf ; \
+	-cp $$i.doc.xml  ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/xml ; \
+	-cp $$i.doc.pdf  ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf ; \
 	done
 	cp ../catalog.p5.custom ../release/tei-p5-exemplars/share/xml/tei/custom/schema/catalog.xml
 	(cd ../release; 	\
