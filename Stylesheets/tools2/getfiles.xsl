@@ -5,6 +5,7 @@
                 version="2.0"
                 exclude-result-prefixes="n tei xs">
 
+  <xsl:param name="debug">false</xsl:param>
   <xsl:param name="corpus"/>
   <xsl:param name="corpusList"/>
   <xsl:param name="processP4">false</xsl:param>
@@ -29,6 +30,9 @@
 	           </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
+      <xsl:if test="$debug='true'">
+	<xsl:message>Process 	              <xsl:value-of select="$pathlist"/></xsl:message>
+      </xsl:if>
       <xsl:variable name="docs" select="collection($pathlist)"/> 
       <xsl:variable name="all">
          <n:ROOT>

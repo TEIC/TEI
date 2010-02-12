@@ -38,6 +38,7 @@ of the TEI you need to validate that corpus
 <xsl:param name="tei">/usr/share/xml/tei/odd/p5subset.xml</xsl:param>
    <!-- should we make valList for @rend -->
 <xsl:param name="enumerateRend">false</xsl:param>
+<xsl:param name="enumerateType">false</xsl:param>
    <!-- should we deal with non-TEI namespaces -->
 <xsl:param name="processNonTEI">false</xsl:param>
    <!-- which attributes should be make valLists for, regardless -->
@@ -299,12 +300,19 @@ in an XSLT file which will transform this to pure TEI</xsl:comment>
 		                               <xsl:variable name="enumerated" select="@enumerated"/>
 		                               <xsl:for-each select="$stage1">
 		                                  <xsl:choose>
-		                                     <xsl:when test="not($class='') and $stage2/stage2/classSpec[@ident=$class]/attList/attDef[@ident=$ident]">
+		                                     <xsl:when
+							 test="not($class='')
+							       and
+							       $stage2/stage2/classSpec[@ident=$class]/attList/attDef[@ident=$ident]">
+
 		       </xsl:when>
 		                                     <xsl:when test="not(key('UsedAtt',concat($e,$ident)))">
-			                                       <attDef ident="{$ident}" mode="delete"/>
+			                                       <attDef
+								   ident="{$ident}"
+								   mode="delete"/>
 		                                     </xsl:when>
-		                                     <xsl:when test="$enumerated='true'">
+		                                     <xsl:when
+							 test="$enumerated='true'">
 			                                       <attDef ident="{$ident}" mode="change">
 			                                          <xsl:apply-templates select="key('UsedAtt',concat($e,$ident))/valList"/>
 			                                       </attDef>
@@ -372,6 +380,7 @@ in an XSLT file which will transform this to pure TEI</xsl:comment>
             <xsl:for-each select=".//tei:attDef">
 	              <attDef class="{ancestor::classSpec/@ident}">
 	                 <xsl:copy-of select="@ident"/>
+			 <xsl:call-template name="checktype"/>
 	              </attDef>
             </xsl:for-each>
             <xsl:call-template name="classatts"/>
@@ -385,6 +394,7 @@ in an XSLT file which will transform this to pure TEI</xsl:comment>
             <xsl:when test="contains($checkAtts,concat(',',@ident,','))">true</xsl:when>
             <xsl:when test="@ident='n'">false</xsl:when>
             <xsl:when test="@ident='rend' and $enumerateRend='true'">true</xsl:when>
+            <xsl:when test="@ident='type' and $enumerateType='true'">true</xsl:when>
             <xsl:when test="valList[@type='closed']">true</xsl:when>
             <xsl:when test="datatype/rng:ref[@name='data.enumerated']">true</xsl:when>
             <!--
