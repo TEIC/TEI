@@ -232,8 +232,6 @@ subset:
 	${SAXON} -o p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
 
 dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exemplars
-
-foo:
 	rm -f release/tei-`cat VERSION`.zip
 	export V=`cat VERSION`;\
 	for i in source schema doc test database exemplars; \
