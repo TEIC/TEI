@@ -128,7 +128,7 @@ installp4: p4
 	(cd release/p4; tar cf - .) |  (cd ${PREFIX}/share; tar xvf  -)
 
 
-installcommon: common  doc
+installcommon: 
 	mkdir -p ${PREFIX}/lib/cgi-bin
 	cp stylebear ${PREFIX}/lib/cgi-bin/stylebear
 	chmod 755 ${PREFIX}/lib/cgi-bin/stylebear
