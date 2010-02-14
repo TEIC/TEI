@@ -396,7 +396,14 @@
    </xsl:template>
 
    <xsl:template match="tei:date">
-      <xsl:apply-templates/>
+     <xsl:choose>
+       <xsl:when test="starts-with(','$Date:')">
+	 <xsl:value-of select="substring-before(substring-after(.,'$Date:'),'$')"/>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:apply-templates/>
+       </xsl:otherwise>
+     </xsl:choose>
       <xsl:if test="ancestor::tei:biblStruct">
          <xsl:text>. </xsl:text>
       </xsl:if>
