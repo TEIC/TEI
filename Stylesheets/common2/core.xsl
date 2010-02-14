@@ -397,7 +397,7 @@
 
    <xsl:template match="tei:date">
      <xsl:choose>
-       <xsl:when test="starts-with(','$Date:')">
+       <xsl:when test="starts-with(.,'$Date:')">
 	 <xsl:value-of select="substring-before(substring-after(.,'$Date:'),'$')"/>
        </xsl:when>
        <xsl:otherwise>
