@@ -147,7 +147,18 @@
 		<!-- TEI images -->
                 
                 <xsl:for-each select="key('GRAPHICS',1)">
-                    <Relationship Id="rId{position() + 300}"
+
+		  <xsl:variable name="n">
+		    <xsl:choose>
+		      <xsl:when test="@n">
+			<xsl:value-of select="@n"/>
+		      </xsl:when>
+		      <xsl:otherwise>
+			<xsl:number level="any"/>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:variable>
+                    <Relationship Id="rId{$n + 300}"
                              Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
                              Target="{@url}"/>
                 </xsl:for-each>

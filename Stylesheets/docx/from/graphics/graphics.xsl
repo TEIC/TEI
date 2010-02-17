@@ -62,20 +62,27 @@
                 <xsl:choose>
                     <xsl:when test="descendant::a:blip[1]/@r:embed">
                         <graphic>
-			  <xsl:attribute name="n">
-			    <xsl:choose>
-			      <xsl:when test="number($n)">
-				<xsl:variable name="c">
-				  <xsl:number level="any"/>
-				</xsl:variable>
-				<xsl:value-of select="($n * 10) + $c"/>
+			    <xsl:variable name="c">
+			      <xsl:choose>
+			      <xsl:when test="ancestor::w:tbl">
+				<xsl:number level="any" from="w:tbl"/>
 			      </xsl:when>
 			      <xsl:otherwise>
-				<xsl:text>100</xsl:text>
-				  <xsl:number level="any"/>
+				<xsl:number level="any"/>
 			      </xsl:otherwise>
-			    </xsl:choose>
-			  </xsl:attribute>
+			      </xsl:choose>
+			    </xsl:variable>
+			    <xsl:attribute name="n">
+			      <xsl:choose>
+				<xsl:when test="number($n)">
+				  <xsl:value-of select="($n * 100) + $c"/>
+				</xsl:when>
+				<xsl:otherwise>
+				  <xsl:text>100</xsl:text>
+				  <xsl:number level="any"/>
+				</xsl:otherwise>
+			      </xsl:choose>
+			    </xsl:attribute>
 			  <xsl:attribute name="width"
 					 select="concat(number(descendant::wp:extent[1]/@cx) div 360000,'cm')"/>
 			  <xsl:attribute name="height"

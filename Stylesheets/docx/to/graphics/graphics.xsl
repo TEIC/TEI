@@ -172,6 +172,16 @@
                 </xsl:message>
             -->
             <!-- prepare actual graphic -->
+	    <xsl:variable name="generatedID">
+	      <xsl:choose>
+		<xsl:when test="@n">
+		  <xsl:value-of select="@n"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:number level="any"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:variable>
             <xsl:variable name="graphic-element">
                 <a:graphic>
                     <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
@@ -187,11 +197,10 @@
                             <pic:blipFill>
                                 <a:blip>
                                     <xsl:attribute name="r:embed">
-				                          <xsl:variable name="newID">
-					                            <xsl:number level="any"/>
-				                          </xsl:variable>
-				                          <xsl:text>rId</xsl:text>
-				                          <xsl:value-of select="300 + number($newID)"/>
+				      <xsl:text>rId</xsl:text>
+				      <xsl:value-of
+					  select="number($generatedID)
+						  + 300"/>
                                     </xsl:attribute>
                                 </a:blip>
                                 <a:stretch>
@@ -230,16 +239,9 @@
                                 </wp:positionV>
                                 <wp:extent cx="{$imageWidth}00" cy="{$imageHeight}00"/>
                                 <wp:wrapTopAndBottom/>
-                                <wp:docPr name="Some Image">
+                                <wp:docPr  name="{tokenize(@url, '/')[last()]}">
                                     <xsl:attribute name="id">
-				      <xsl:choose>
-					<xsl:when test="@n">
-					  <xsl:value-of select="@n"/>
-					</xsl:when>
-					<xsl:otherwise>
-					  <xsl:number level="any"/>
-					</xsl:otherwise>
-				      </xsl:choose>
+				      <xsl:value-of select="$generatedID"/>
                                     </xsl:attribute>
                                 </wp:docPr>
                                 
@@ -251,14 +253,7 @@
                                 <wp:extent cx="{$imageWidth}00" cy="{$imageHeight}00"/>
                                 <wp:docPr name="{tokenize(@url, '/')[last()]}">
                                     <xsl:attribute name="id">
-				      <xsl:choose>
-					<xsl:when test="@n">
-					  <xsl:value-of select="@n"/>
-					</xsl:when>
-					<xsl:otherwise>
-					  <xsl:number level="any"/>
-					</xsl:otherwise>
-				      </xsl:choose>
+				      <xsl:value-of select="$generatedID"/>
                                     </xsl:attribute>
                                 </wp:docPr>
                                 <xsl:copy-of select="$graphic-element"/>

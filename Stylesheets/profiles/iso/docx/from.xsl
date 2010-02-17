@@ -723,16 +723,20 @@
      </doc>
 	  <xsl:template name="fromDocxFinalHook">
 	    <xsl:for-each select="key('WordTables',1)">
-		<xsl:variable name="n">
+		<xsl:variable name="filename">
 		  <xsl:value-of select="$word-directory"/>
 		  <xsl:text>/word/media/table</xsl:text>
 		  <xsl:number level="any"/>
 		  <xsl:text>.xml</xsl:text>
 		</xsl:variable>
-		<xsl:result-document href="{$n}">
+		<xsl:result-document href="{$filename}">
 		  <xsl:copy>
 		    <xsl:copy-of select="@*"/>
-		    <xsl:apply-templates mode="copytable"/>
+		    <xsl:apply-templates mode="copytable">
+		      <xsl:with-param name="n" tunnel="yes">
+			<xsl:number level="any"/>
+		      </xsl:with-param>
+		    </xsl:apply-templates>
 		  </xsl:copy>
 		</xsl:result-document>
 	    </xsl:for-each>
