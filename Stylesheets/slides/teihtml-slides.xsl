@@ -186,7 +186,7 @@
                   <xsl:apply-templates select="." mode="genid"/>
                 </xsl:variable>
                 <li class="slidetoc">
-                  <a href="{$n}.xhtml">
+                  <a href="{$n}{$outputSuffix}">
                     <xsl:value-of select="tei:head"/>
                   </a>
                 </li>
