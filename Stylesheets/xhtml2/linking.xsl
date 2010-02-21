@@ -444,7 +444,7 @@
          <xsl:otherwise>
 	   <xsl:variable name="target">
 	     <xsl:choose>
-	       <xsl:when test="starts-with($dest,'#') or  contains($dest,'.html') or contains($dest,'ID=')">
+	       <xsl:when test="starts-with($dest,'#') or  contains($dest,$outputSuffix) or contains($dest,'ID=')">
 		 <xsl:value-of select="$dest"/>
 	       </xsl:when>
 	       <xsl:when test="key('IDS',$W)"/>

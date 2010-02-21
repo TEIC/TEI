@@ -495,7 +495,7 @@
           <xsl:attribute name="href">
             <xsl:choose>
               <xsl:when
-                test="starts-with($dest,'#') or  contains($dest,'.html') or contains($dest,'ID=')">
+                test="starts-with($dest,'#') or  contains($dest,$outputSuffix) or contains($dest,'ID=')">
                 <xsl:value-of select="$dest"/>
               </xsl:when>
               <xsl:otherwise>

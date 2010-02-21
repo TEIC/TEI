@@ -80,9 +80,9 @@
     <xsl:number/>
   </xsl:template>
 
-  <xsl:template match="tei:div1|tei:div" mode="genid">
+  <xsl:template match="tei:*" mode="genid">
     <xsl:value-of select="$masterFile"/>
-    <xsl:apply-templates select="." mode="number"/>
+    <xsl:apply-templates select="ancestor-or-self::tei:div1|ancestor-or-self::tei:div[1]" mode="number"/>
   </xsl:template>
 
   <xsl:template match="tei:docAuthor">
