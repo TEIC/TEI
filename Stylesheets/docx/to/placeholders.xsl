@@ -90,7 +90,8 @@
         A callback for any titlepages that belong to the front matter.
     </desc>
    </doc>
-    <xsl:template name="titlepages"/>
+    <xsl:template name="titlepages">
+    </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
@@ -110,7 +111,13 @@
     <xsl:template name="document-title">
         <xsl:choose>
             <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage"> </xsl:when>
-            <xsl:otherwise>
+            <xsl:when
+		test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
+                <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
+                    <xsl:call-template name="block-element">
+                        <xsl:with-param name="style">Title</xsl:with-param>
+                    </xsl:call-template>
+                </xsl:for-each>
                 <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
                     <xsl:call-template name="block-element">
                         <xsl:with-param name="style">Title</xsl:with-param>
@@ -121,7 +128,14 @@
                         <xsl:with-param name="style">Subtitle</xsl:with-param>
                     </xsl:call-template>
                 </xsl:for-each>
-            </xsl:otherwise>
+	    </xsl:when>
+	    <xsl:otherwise>
+                <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title">
+                    <xsl:call-template name="block-element">
+                        <xsl:with-param name="style">Title</xsl:with-param>
+                    </xsl:call-template>
+                </xsl:for-each>
+	    </xsl:otherwise>  
         </xsl:choose>
     </xsl:template>
     
