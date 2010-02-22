@@ -61,5 +61,8 @@
     
     <xsl:param name="word-directory">.</xsl:param>
     
-    
+    <xsl:param name="preserveWordSections">false</xsl:param>
+
+    <xsl:param name="preserveWordHeadersFooters">false</xsl:param>    
+
 </xsl:stylesheet>

@@ -54,6 +54,9 @@
     <xsl:key name="Sdt" match="w:sdt" use="w:sdtPr/w:tag/@w:val"/>
     <xsl:key name="AllSdt" match="w:sdtPr/w:tag/@w:val" use="1"/>
 
+    <xsl:param name="preserveWordSections">true</xsl:param>
+    <xsl:param name="preserveWordHeadersFooters">true</xsl:param>
+
     <xsl:output indent="no"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -1320,9 +1323,6 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
-
-    <xsl:template name="extract-forme-work"/>
 
       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> Deal with special case of text paragraphs in an SDT </desc></doc>
