@@ -68,6 +68,17 @@
   <xsl:template name="copyrightStatement"/>
   <xsl:param name="makingSlides">true</xsl:param>
 
+  <xsl:template name="locateParentdiv">
+    <xsl:choose>
+      <xsl:when test="ancestor-or-self::tei:div">
+	<xsl:apply-templates mode="genid" select="ancestor::tei:div[last()]"/>
+      </xsl:when>
+      <xsl:when test="ancestor-or-self::tei:div1">
+	<xsl:apply-templates mode="genid" select="ancestor::tei:div1"/>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="tei:div" mode="number">
     <xsl:number level="any"/>
   </xsl:template>

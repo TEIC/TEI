@@ -122,6 +122,8 @@
             <xsl:value-of select="concat($ident,$standardSuffix)"/>
          </xsl:when>
          <xsl:otherwise>
+
+
             <xsl:variable name="parent">
                <xsl:call-template name="locateParentdiv"/>
             </xsl:variable>
@@ -213,9 +215,7 @@
    </doc>
   <xsl:template name="generateEndLink">
       <xsl:param name="where"/>
-      <!--
-<xsl:message>find link end for <xsl:value-of select="$where"/>,<xsl:value-of select="name(key('IDS',$where))"/></xsl:message>
--->
+
     <xsl:choose>
          <xsl:when test="key('IDS',$where)">
 	           <xsl:apply-templates mode="generateLink" select="key('IDS',$where)"/>
@@ -412,6 +412,7 @@
          <xsl:text>link_</xsl:text>
          <xsl:value-of select="local-name(.)"/>
       </xsl:param>
+
       <xsl:variable name="W">
          <xsl:choose>
             <xsl:when test="$target">
@@ -425,6 +426,7 @@
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
+
       <xsl:choose>
          <xsl:when test="$dest=''">
             <xsl:choose>

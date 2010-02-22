@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:atom="http://www.w3.org/2005/Atom"
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:atom="http://www.w3.org/2005/Atom"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                xmlns:teix="http://www.tei-c.org/ns/Examples"
-                
+                xmlns:teix="http://www.tei-c.org/ns/Examples"                
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                xmlns:dbk="http://docbook.org/ns/docbook"
                 xmlns:m="http://www.w3.org/1998/Math/MathML"
                 xmlns:xhtml="http://www.w3.org/1999/xhtml"
-                exclude-result-prefixes="tei xlink dbk xhtml m"
+                exclude-result-prefixes="tei xlink xhtml m"
                 version="2.0">
   <xsl:import href="../xhtml2/tei.xsl"/>
   <xsl:import href="../common2/verbatim.xsl"/>
@@ -62,6 +61,7 @@
 -->
   <xsl:param name="numberHeadings"/>
   <xsl:param name="splitLevel">0</xsl:param>
+  <xsl:param name="STDOUT">false</xsl:param>
   <xsl:param name="subTocDepth">-1</xsl:param>
   <xsl:param name="topNavigationPanel"/>
   <xsl:param name="bottomNavigationPanel">true</xsl:param>
@@ -79,6 +79,18 @@
       </xsl:for-each>
       <xsl:text>_</xsl:text>
       <xsl:number/>
+  </xsl:template>
+
+
+  <xsl:template name="locateParentdiv">
+    <xsl:choose>
+      <xsl:when test="ancestor-or-self::tei:div">
+	<xsl:apply-templates mode="genid" select="ancestor::tei:div[last()]"/>
+      </xsl:when>
+      <xsl:when test="ancestor-or-self::tei:div1">
+	<xsl:apply-templates mode="genid" select="ancestor::tei:div1"/>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tei:*" mode="genid">
