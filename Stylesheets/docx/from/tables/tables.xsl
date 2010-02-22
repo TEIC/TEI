@@ -221,42 +221,47 @@
 	      </xsl:for-each>
 	    </xsl:when>
 	    <xsl:otherwise>
-	           <table rend="rules">
-		             <xsl:call-template name="table-header"/>
-		             <xsl:for-each select="w:tr">
-		                <row>
-		                   <xsl:for-each select="w:tc">
-		                      <cell>
-			                        <xsl:if test="w:p/w:pPr/w:jc">
-			                           <xsl:attribute name="teidocx:align">
-			                              <xsl:value-of select="w:p[1]/w:pPr/w:jc/@w:val"/>
-			                           </xsl:attribute>
-			                        </xsl:if>
-			                        <xsl:if test="w:p[1]/w:pPr/w:pStyle[not(@w:val='[No Paragraph Style]')]">
-			                           <xsl:attribute name="rend">
-			                              <xsl:value-of select="w:p[1]/w:pPr/w:pStyle/@w:val"/>
-			                              <xsl:if test="w:tcPr/w:shd/@w:fill">
-			                                 <xsl:text> background-color(</xsl:text>
-			                                 <xsl:value-of select="w:tcPr/w:shd/@w:fill"/>
-			                                 <xsl:text>)</xsl:text>
-			                              </xsl:if>
-			                           </xsl:attribute>
-			                        </xsl:if>
-			                        <xsl:if test="w:tcPr/w:gridSpan">
-			                           <xsl:attribute name="cols">
-			                              <xsl:value-of select="w:tcPr/w:gridSpan/@w:val"/>
-			                           </xsl:attribute>
-			                        </xsl:if>
-			                        <xsl:apply-templates/>
-		                      </cell>
-		                   </xsl:for-each>
-		                </row>
-		             </xsl:for-each>
-	           </table>
-	        </xsl:otherwise>
-	     </xsl:choose>
-	  </xsl:template>
-
+	      <table rend="rules">
+		<xsl:call-template name="table-header"/>
+		<xsl:for-each select="w:tr">
+		  <row>
+		    <xsl:for-each select="w:tc">
+		      <cell>
+			<xsl:if test="w:p/w:pPr/w:jc">
+			  <xsl:attribute name="teidocx:align">
+			    <xsl:value-of select="w:p[1]/w:pPr/w:jc/@w:val"/>
+			  </xsl:attribute>
+			</xsl:if>
+			<xsl:variable name="val" select="w:p[1]/w:pPr/w:pStyle/@w:val"/>
+			<xsl:choose>
+			  <xsl:when test="$val='[No Paragraph Style]'"/>
+			  <xsl:when test="$val='Table text (9)'"/>
+			  <xsl:otherwise>
+			    <xsl:attribute name="rend">
+			      <xsl:value-of select="$val"/>
+			      <xsl:if test="w:tcPr/w:shd/@w:fill">
+				<xsl:text> background-color(</xsl:text>
+				<xsl:value-of select="w:tcPr/w:shd/@w:fill"/>
+				<xsl:text>)</xsl:text>
+			      </xsl:if>
+			    </xsl:attribute>
+			  </xsl:otherwise>
+			  </xsl:choose>
+			  <xsl:if test="w:tcPr/w:gridSpan">
+			    <xsl:attribute name="cols">
+			      <xsl:value-of select="w:tcPr/w:gridSpan/@w:val"/>
+			    </xsl:attribute>
+			  </xsl:if>
+			  <xsl:apply-templates/>
+		      </cell>
+		    </xsl:for-each>
+		  </row>
+		</xsl:for-each>
+	      </table>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:template>
+	
 	  <xsl:template match="*" mode="innerTable">
 	     <xsl:copy>
 	        <xsl:copy-of select="@*"/>
