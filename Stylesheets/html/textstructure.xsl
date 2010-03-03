@@ -2589,6 +2589,7 @@ $requestedID: requests a particular page
             <th/>
           </tr>
         </thead>
+	<tbody>
         <xsl:for-each select="//tei:body/tei:div">
           <xsl:text>&#10;</xsl:text>
           <tr class="summaryline">
@@ -2621,6 +2622,7 @@ $requestedID: requests a particular page
             </td>
           </tr>
         </xsl:for-each>
+	</tbody>
       </table>
     </div>
   </xsl:template>
