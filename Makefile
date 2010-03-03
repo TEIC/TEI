@@ -3,6 +3,7 @@ GOOGLEANALYTICS=""
 INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
 LATEX=pdflatex
+XELATEXFLAGS='--output-driver="xdvipdfmx -V 5"'
 XELATEX=xelatex 
 VERBOSE=
 PREFIX=/usr
@@ -140,11 +141,11 @@ pdf: tex
 	echo make sure you have Junicode, arphic and mincho fonts installed
 	mkdir -p Images
 	cp -r Source/Images/*.* Images
-	-echo '*' | ${XELATEX} --output-driver="xdvipdfmx -V 5" Guidelines
-	-echo '*' | ${XELATEX} --output-driver="xdvipdfmx -V 5" Guidelines
+	-echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
+	-echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
 	makeindex -s p5.ist Guidelines
-	-echo '*' | ${XELATEX} --output-driver="xdvipdfmx -V 5" Guidelines
-	-echo '*' | ${XELATEX} --output-driver="xdvipdfmx -V 5" Guidelines
+	-echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
+	-echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
 	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
 	rm -rf Images
 
