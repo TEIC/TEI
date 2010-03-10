@@ -1156,11 +1156,26 @@
                 <w:tblLayout w:type="fixed"/>
             </w:tblPr>
             <xsl:choose>
-                <xsl:when test="cals:tgroup">
+                <xsl:when test="cals:tgroup/cals:colspec">
                     <w:tblGrid>
                         <xsl:for-each select="cals:tgroup/cals:colspec">
                             <w:gridCol>
-                                <xsl:attribute name="w:w" select="teidocx:convert-dim-pt20(@colwidth)"/>
+                                <xsl:attribute name="w:w">
+				  <xsl:choose>
+				    <xsl:when test="contains(@colwidth,'*')">
+				      <xsl:value-of
+					  select="number($pageWidth *
+						  number(substring-before(@colwidth,'*'))
+						  div 10)
+						  cast as
+						  xs:integer"/>
+				    </xsl:when>
+				    <xsl:otherwise>
+				      <xsl:value-of
+					  select="teidocx:convert-dim-pt20(@colwidth)"/>
+				    </xsl:otherwise>
+				  </xsl:choose>
+				</xsl:attribute>
                             </w:gridCol>
                         </xsl:for-each>
                     </w:tblGrid>
@@ -1221,14 +1236,15 @@
                 </cals:tbody>
             </xsl:copy>
         </xsl:variable>
-        <!--<xsl:variable name="count">
+	<!--
+	<xsl:variable name="count">
 	  <xsl:number level="any"/>
-	  </xsl:variable>
+	</xsl:variable>
 	  <xsl:result-document indent="yes" href="/tmp/T{$count}.xml">
-	  <xsl:copy-of select="$TABLE"/>
+	    <xsl:copy-of select="$TABLE"/>
 	  </xsl:result-document>
-      -->
-        <xsl:for-each select="$TABLE/cals:tgroup">
+	  -->
+	  <xsl:for-each select="$TABLE/cals:tgroup">
             <xsl:apply-templates/>
         </xsl:for-each>
     </xsl:template>
