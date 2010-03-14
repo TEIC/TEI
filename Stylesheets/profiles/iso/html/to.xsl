@@ -726,4 +726,55 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="tei:hi[@rend]">
+    <span>
+      <xsl:attribute name="style">
+	<xsl:for-each select="tokenize(@rend,' ')">
+	  <xsl:choose>
+	    <xsl:when test=".='bold'">
+	      <xsl:text>font-weight:bold;</xsl:text>
+	    </xsl:when>
+	    <xsl:when test=".='italic'">
+	      <xsl:text>font-style:italic;</xsl:text>
+	    </xsl:when>
+	    <xsl:when test=".='smallcaps'">
+	      <xsl:text>font-variant:small-caps;</xsl:text>
+	    </xsl:when>
+	    <xsl:when test=".='allcaps'">
+	      <xsl:text>text-transform:capitalize;</xsl:text>
+	    </xsl:when>
+	    <xsl:when test=".='strikethrough'">
+	      <xsl:text>text-decoration:line-through;</xsl:text>
+	    </xsl:when>
+	    <xsl:when test=".='doublestrikethrough'">
+	      <xsl:text>text-decoration:line-through;</xsl:text>
+	    </xsl:when>
+	    <xsl:when test=".='underline'">
+	      <xsl:text>text-decoration:underline;</xsl:text>
+	    </xsl:when>
+	    <xsl:when test=".='doubleunderline'">
+	      <xsl:text>text-decoration:underline;</xsl:text>
+	    </xsl:when>
+	    <xsl:when test="starts-with(.,'color(')">
+	      <xsl:value-of select="translate(.,'()',':;')"/>
+	    </xsl:when>
+	    <xsl:when test=".='superscript'">
+	      <xsl:text>vertical-align: top;font-size: 70%;</xsl:text>
+	    </xsl:when>
+	    <xsl:when test=".='subscript'">
+	      <xsl:text>vertical-align: bottom;font-size: 70%;</xsl:text>
+	    </xsl:when>
+	    <xsl:when test="starts-with(.,'background(')">
+	      <xsl:text>background-color: </xsl:text>
+	      <xsl:value-of
+		  select="substring-before(substring-after(.,'('),')')"/>
+	      <xsl:text>;</xsl:text>
+	    </xsl:when>
+	  </xsl:choose>
+	</xsl:for-each>
+      </xsl:attribute>
+      <xsl:apply-templates/>
+    </span>
+  </xsl:template>
+
 </xsl:stylesheet>
