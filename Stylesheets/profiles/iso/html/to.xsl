@@ -13,12 +13,14 @@
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 exclude-result-prefixes="tei html t a rng s iso tbx cals teix"
                 version="2.0">
-  
+    
    <xsl:import href="../../../xhtml2/tei.xsl"/>
    <xsl:import href="../../../xhtml2/tagdocs.xsl"/>
    <xsl:import href="../../../odds2/teiodds.xsl"/>
    <xsl:import href="../isoutils.xsl"/>
    <xsl:import href="../isotei-schema.xsl"/>
+  
+   <xsl:strip-space elements="tei:bibl"/>
    <xsl:param name="numberFormat">uk</xsl:param>
    <xsl:output encoding="utf-8" omit-xml-declaration="yes" method="xhtml"
                doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -87,6 +89,17 @@
       </xsl:attribute>
   </xsl:template>
 
+
+   <xsl:template match="tei:note[@place='foot']">
+     <span class="footnote">
+       <xsl:number level="any"/>
+       <xsl:apply-templates/>
+     </span>
+   </xsl:template>
+
+   <xsl:template match="tei:note[@place='foot']/tei:p">
+     <xsl:apply-templates/>
+   </xsl:template>
 
    <xsl:template match="tei:note[@rend='example']">
       <p>EXAMPLE <xsl:apply-templates/>

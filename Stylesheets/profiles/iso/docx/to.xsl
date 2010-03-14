@@ -361,74 +361,79 @@
 
     <xsl:template name="create-footnote">           
       <xsl:variable name="pPr">
-	        <xsl:choose>
-	           <xsl:when test="(@place='foot'  or @place='bottom') and      (parent::tei:cell or parent::cals:entry)">
-	              <w:pPr>
-	                 <w:pStyle w:val="Tablefootnote"/>
-	              </w:pPr>
-	              <w:r>
-	                 <w:rPr>
-		                   <w:rStyle w:val="TableFootnoteXref"/>
-		                   <w:position w:val="6"/>
-		                   <w:sz w:val="16"/>
-	                 </w:rPr>
-	                 <w:t>
-		                   <xsl:value-of select="@n"/>
-	                 </w:t>
-	              </w:r>
-	              <w:r>
-	                 <w:t>
-		                   <xsl:text> </xsl:text>
-	                 </w:t>
-	              </w:r>
-	           </xsl:when>
-	           <xsl:when test="@type='Example'">
-	              <w:pPr>
-	                 <w:pStyle w:val="Example"/>
-	              </w:pPr>
-	           </xsl:when>
-	           <xsl:when test="parent::tei:cell or parent::cals:entry">	    
-	              <w:pPr>
-	                 <xsl:variable name="Tablenote">
-		                   <xsl:call-template name="getStyleName">
-		                      <xsl:with-param name="in">
-		                         <xsl:value-of select="$Note"/>
-		                      </xsl:with-param>
-		                   </xsl:call-template>
-	                 </xsl:variable>
-	                 <w:pStyle w:val="Tablenote"/>
-	              </w:pPr>
-	           </xsl:when>
-	           <xsl:otherwise>
-	              <w:pPr>
-	                 <w:pStyle w:val="Footnote"/>
-	              </w:pPr>	    
-	           </xsl:otherwise>
-	        </xsl:choose>
+	<xsl:choose>
+	  <xsl:when test="(@place='foot'  or @place='bottom') and      (parent::tei:cell or parent::cals:entry)">
+	    <w:pPr>
+	      <w:pStyle w:val="Tablefootnote"/>
+	    </w:pPr>
+	    <w:r>
+	      <w:rPr>
+		<w:rStyle w:val="TableFootnoteXref"/>
+		<w:position w:val="6"/>
+		<w:sz w:val="16"/>
+	      </w:rPr>
+	      <w:t>
+		<xsl:value-of select="@n"/>
+	      </w:t>
+	    </w:r>
+	    <w:r>
+	      <w:t>
+		<xsl:text> </xsl:text>
+	      </w:t>
+	    </w:r>
+	  </xsl:when>
+	  <xsl:when test="@type='Example'">
+	    <w:pPr>
+	      <w:pStyle w:val="Example"/>
+	    </w:pPr>
+	  </xsl:when>
+	  <xsl:when test="parent::tei:cell or parent::cals:entry">	    
+	    <w:pPr>
+	      <xsl:variable name="Tablenote">
+		<xsl:call-template name="getStyleName">
+		  <xsl:with-param name="in">
+		    <xsl:value-of select="$Note"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:variable>
+	      <w:pStyle w:val="Tablenote"/>
+	    </w:pPr>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <w:pPr>
+	      <w:pStyle w:val="Footnote"/>
+	    </w:pPr>	    
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:variable>
       
       <xsl:choose>
-	        <xsl:when test="$pPr=''">
-	           <xsl:variable name="num">
-	              <xsl:number count="tei:note[@place='foot' or @place='bottom'][not(ancestor::cals:entry)]"
-                           level="any"/>
-	           </xsl:variable>
-	           <xsl:variable name="id" select="$num+1"/>
-	           <w:r>
-	              <w:rPr>
-	                 <w:rStyle w:val="FootnoteReference"/>
-	              </w:rPr>
-	              <w:footnoteReference w:id="{$id}"/>
-	           </w:r>
-	           <w:r>
-	              <w:t xml:space="preserve"> </w:t>
-	           </w:r>
-	        </xsl:when>
-	        <xsl:otherwise>
-	           <xsl:call-template name="block-element">
-	              <xsl:with-param name="pPr" select="$pPr"/>
-	           </xsl:call-template>
-	        </xsl:otherwise>
+	<xsl:when test="$pPr=''">
+	  <xsl:variable name="num">
+	    <xsl:number count="tei:note[@place='foot' or @place='bottom'][not(ancestor::cals:entry)]"
+			level="any"/>
+	  </xsl:variable>
+	  <xsl:variable name="id" select="$num+1"/>
+	  <w:r>
+	    <w:rPr>
+	      <w:rStyle w:val="FootnoteReference"/>
+	    </w:rPr>
+	    <w:footnoteReference w:id="{$id}"/>
+	  </w:r>
+	  <xsl:if test="ancestor::tei:bibl">
+	    <w:r>
+	      <w:rPr>
+		<w:rStyle w:val="FootnoteReference"/>
+	      </w:rPr>
+	      <w:t>)</w:t>
+	    </w:r>
+	  </xsl:if>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="block-element">
+	    <xsl:with-param name="pPr" select="$pPr"/>
+	  </xsl:call-template>
+	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
       

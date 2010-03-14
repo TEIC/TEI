@@ -353,7 +353,9 @@
       match="tei:listBibl/tei:bibl/tei:title">
     <xsl:call-template name="simpleRun">
       <xsl:with-param name="text">
-	<xsl:text>, </xsl:text>
+	<xsl:if test="../tei:publisher"><!-- its structured -->
+	  <xsl:text>, </xsl:text>
+	</xsl:if>
 	<xsl:apply-templates/>
       </xsl:with-param>
       <xsl:with-param name="italic">true</xsl:with-param>
