@@ -746,14 +746,14 @@
 	    <xsl:when test=".='strikethrough'">
 	      <xsl:text>text-decoration:line-through;</xsl:text>
 	    </xsl:when>
-	    <xsl:when test=".='doublestrikethrough'">
+	    <xsl:when test=".='strikedoublethrough'">
 	      <xsl:text>text-decoration:line-through;</xsl:text>
 	    </xsl:when>
 	    <xsl:when test=".='underline'">
 	      <xsl:text>text-decoration:underline;</xsl:text>
 	    </xsl:when>
-	    <xsl:when test=".='doubleunderline'">
-	      <xsl:text>text-decoration:underline;</xsl:text>
+	    <xsl:when test=".='underdoubleline'">
+	      <xsl:text>border-bottom: 3px double;</xsl:text>
 	    </xsl:when>
 	    <xsl:when test="starts-with(.,'color(')">
 	      <xsl:value-of select="translate(.,'()',':;')"/>
