@@ -32,7 +32,8 @@
    <xsl:param name="institution">ISO</xsl:param>
    <xsl:param name="department"/>
    <xsl:param name="cssFile">http://tei.oucs.ox.ac.uk/TEIISO/iso.css</xsl:param>
-   <xsl:param name="cssSecondaryFile">http://www.tei-c.org/release/xml/tei/stylesheet/odd.css</xsl:param>
+   <xsl:param name="cssSecondaryFile">http://tei.oucs.ox.ac.uk/TEIISO/iso-odd.css</xsl:param>
+   <xsl:param name="cssPrintFile">http://tei.oucs.ox.ac.uk/TEIISO/iso-print.css</xsl:param>
    <xsl:param name="TEIC">false</xsl:param>
    <xsl:param name="wrapLength">65</xsl:param>
    <xsl:param name="attLength">60</xsl:param>
@@ -696,5 +697,20 @@
    <xsl:template match="text()">
        <xsl:value-of select="translate(.,'&#2011;','-')"/>
    </xsl:template>
+
+  <xsl:template name="simpleRun">
+    <xsl:param name="text"/>
+    <xsl:param name="italic"/>
+    <xsl:choose>
+      <xsl:when test="$italic='true'">
+	<i>
+	  <xsl:value-of select="$text"/>
+	</i>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$text"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
 </xsl:stylesheet>

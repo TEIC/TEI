@@ -461,4 +461,19 @@ STANDARD &amp;\bfseries <xsl:call-template name="getiso_documentNumber"/>-<xsl:c
 <xsl:call-template name="latexPreambleHook"/>
    </xsl:template>
 
+  <xsl:template name="simpleRun">
+    <xsl:param name="text"/>
+    <xsl:param name="italic"/>
+    <xsl:choose>
+      <xsl:when test="$italic='true'">
+	<xsl:text>\textit{</xsl:text>
+	  <xsl:value-of select="$text"/>
+	  <xsl:text>}</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$text"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>

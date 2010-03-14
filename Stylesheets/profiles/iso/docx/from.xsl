@@ -1720,12 +1720,12 @@
 		</idno>
 	      </xsl:if>
 
-	      <idno type="documentNumber">
+	      <idno type="docNumber">
 		<xsl:value-of select="regex-group(3)"/>
 	      </idno>
 	      
 	      <xsl:if test="not($Part='')">
-		<idno type="partNumber">
+		<idno type="docPartNumber">
 		  <xsl:value-of select="$Part"/>
 		</idno>
 	      </xsl:if>
@@ -1789,12 +1789,12 @@
 		</idno>
 	      </xsl:if>
 
-	      <idno type="documentNumber">
+	      <idno type="docNumber">
 		<xsl:value-of select="regex-group(3)"/>
 	      </idno>
 	      
 	      <xsl:if test="not($Part='')">
-		<idno type="partNumber">
+		<idno type="docPartNumber">
 		  <xsl:value-of select="$Part"/>
 		</idno>
 	      </xsl:if>

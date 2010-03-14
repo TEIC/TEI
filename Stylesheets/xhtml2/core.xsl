@@ -118,9 +118,16 @@
             </div>
          </xsl:when>
          <xsl:otherwise>
-	           <span class="bibl">
-	              <xsl:apply-templates/>
-	           </span>
+	   <span>
+	     <xsl:attribute name="class">
+	       <xsl:text>bibl</xsl:text>
+	       <xsl:if test="@type">
+		 <xsl:text> bibl-</xsl:text>
+		 <xsl:value-of select="@type"/>
+	       </xsl:if>
+	     </xsl:attribute>
+	     <xsl:apply-templates/>
+	   </span>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>

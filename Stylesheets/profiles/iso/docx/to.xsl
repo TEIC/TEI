@@ -1070,7 +1070,13 @@
     
     <xsl:template name="simpleRun">
       <xsl:param name="text"/>
+      <xsl:param name="italic">false</xsl:param>
       <w:r>
+	<xsl:if test="$italic='true'">
+          <w:rPr>
+	    <w:i/>
+	  </w:rPr>
+	</xsl:if>
 	<w:t>
 	  <xsl:attribute name="xml:space">preserve</xsl:attribute>
 	  <xsl:value-of select="$text"/>
