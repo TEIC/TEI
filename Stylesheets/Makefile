@@ -14,6 +14,7 @@ TARGETS= \
 	profiles/default/docx/to.xsl \
 	profiles/default/fo/to.xsl \
 	profiles/default/html/to.xsl \
+	profiles/default/epub/to.xsl \
 	profiles/default/latex/to.xsl \
 	profiles/enrich/docx/to.xsl \
 	profiles/enrich/fo/to.xsl \
