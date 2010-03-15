@@ -697,7 +697,7 @@
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-    Table titles.. we deal with them inside the table
+    Table titles. we deal with them inside the table
       </desc>
     </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$Tabletitle]" mode="paragraph"/>
@@ -1675,6 +1675,10 @@
 
     <xsl:template match="*" mode="parseRef">
       <xsl:copy-of select="."/>
+    </xsl:template>
+
+    <xsl:template match="tei:seg[.=' ']" mode="parseRef">
+      <xsl:text> </xsl:text>
     </xsl:template>
 
     <xsl:template match="text()" mode="parseRef">

@@ -48,7 +48,7 @@
 	              </xsl:for-each>
 	           </xsl:if>
 	           <xsl:if test="$processP5='true'">
-	              <xsl:for-each select="$docs/tei:TEI">
+	              <xsl:for-each select="$docs/tei:*">
 	                 <xsl:if test="$verbose='true'">
 	                    <xsl:message>processing <xsl:value-of select="base-uri(.)"/>
                      </xsl:message>

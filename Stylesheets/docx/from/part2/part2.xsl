@@ -215,13 +215,15 @@
     <xsl:template match="tei:gloss//tei:c[@rend='tab']" mode="part2"/>
     
     
+    <!-- removed 2010-03-15, seems to screw up formulae
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>     A tab in a &lt;formula&gt;? no. </p>
       </desc>
     </doc>
+
     <xsl:template match="tei:formula//tei:c[@rend='tab']" mode="part2"/>
-    
+    -->
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
