@@ -86,9 +86,31 @@
        
 <p>The schema should be built using version 1.4 of TEI P5</p>
 
-       <schemaSpec ident="test_meta2010" start="TEI" p5Version="1.4">
+       <schemaSpec ident="test_meta2010_1" start="TEI" p5Version="1.4">
+	 <moduleRef key="tei"/>
 	 <specGrpRef target="#Include"/>
 	 <specGrpRef target="#TBX"/>
+       </schemaSpec>
+
+
+       <schemaSpec ident="test_meta2010_2" start="TEI" p5Version="1.4">
+	 <moduleRef key="tei"/>
+	 <moduleRef key="figures" exclude="table row cell"/>
+	 <moduleRef key="namesdates" include="persName"/>
+       </schemaSpec>
+
+       <schemaSpec ident="test_meta2010_3"
+		   teiBase="http://www.tei-c.org/P5/1.4/p5.odd" start="TEI">
+	 <moduleRef key="tei"/>
+
+	 <moduleSpec target="http://www.example.com/dict.odd" ident="mydict"/>
+
+	 <elementSpec ident="headword" module="mydict" mode="change">
+	   <desc>Not the same</desc>
+	 </elementSpec>
+
+	 <moduleRef key="figures" exclude="table row cell"/>
+	 <moduleRef key="namesdates" include="persName"/>
        </schemaSpec>
 
      </body>
