@@ -68,12 +68,11 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     Zap empty hi, p and item </p>
+         <p>     Zap empty p and item </p>
       </desc>
     </doc>
-    <xsl:template match="tei:hi[not(*) and string-length(.)=0]" mode="part2"/>
-
-    <xsl:template match="tei:p[not(*) and string-length(.)=0]" mode="part2"/>
+ 
+   <xsl:template match="tei:p[not(*) and string-length(.)=0]" mode="part2"/>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
@@ -272,9 +271,12 @@
     <desc>Clean up <gi>hi</gi>; merge adjacent &lt;hi&gt; </desc>
   </doc>
 
+  <xsl:template match="tei:hi[not(@rend) and not(*) and string-length(.)=0]" mode="part2"/>
+
   <xsl:template match="tei:hi[@rend]" mode="part2">
     <xsl:variable name="r" select="@rend"/>
     <xsl:choose>
+      <xsl:when test ="not(*) and string-length(.)=0"/>
       <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']
 		      and tei:c[@rend='tab']"/>
       <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@rend=$r]]">
