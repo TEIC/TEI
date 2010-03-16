@@ -1374,24 +1374,6 @@
     <xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-    <desc>Zap empty &lt;bibl&gt; </desc></doc>
-    
-    <xsl:template match="tei:bibl[not(*) and not(text())]" mode="part2"/>
-
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-    <desc>Zap empty &lt;availability&gt; </desc></doc>
-   
-    <xsl:template match="tei:availability[not(*) and not(text())]"
-		  mode="part2"/>
-
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-    <desc>Zap empty &lt;note&gt; </desc></doc>
-   
-    <xsl:template match="tei:note[not(*) and not(text())]"
-		  mode="part2">
-    </xsl:template>
-
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap spurious page break </desc></doc>
     <xsl:template match="tei:body/tei:p[count(*)=1 and tei:pb]" mode="part2"/>
 
@@ -1443,46 +1425,6 @@
   <xsl:template match="tei:note/tei:p/tei:hi[@rend='FootnoteReference']"
 		mode="part2" priority="1001">
   </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Merge adjacent &lt;hi&gt; </desc>
-  </doc>
-
-  <xsl:template match="tei:hi[@rend]" mode="part2">
-    <xsl:variable name="r" select="@rend"/>
-    <xsl:choose>
-      <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@rend=$r]]">
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:variable name="ename">
-	  <xsl:choose>
-	    <xsl:when test="@rend='italic' and
-			    ancestor::tei:bibl">title</xsl:when>
-	    <xsl:otherwise>hi</xsl:otherwise>
-	  </xsl:choose>
-	</xsl:variable>
-	<xsl:element name="{$ename}">
-	  <xsl:copy-of select="@*"/>
-	  <xsl:apply-templates mode="part2"/>
-	  <xsl:call-template name="nextHi">
-	    <xsl:with-param name="r" select="$r"/>
-	  </xsl:call-template>
-	</xsl:element>
-      </xsl:otherwise>
-    </xsl:choose>
-   </xsl:template>
-
-   <xsl:template name="nextHi">
-      <xsl:param name="r"/>
-      <xsl:for-each select="following-sibling::node()[1]">
-         <xsl:if test="self::tei:hi[@rend=$r]">
-            <xsl:apply-templates mode="part2"/>
-            <xsl:call-template name="nextHi">
-	              <xsl:with-param name="r" select="$r"/>
-            </xsl:call-template>
-         </xsl:if>
-      </xsl:for-each>
-   </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Merge adjacent &lt;termEntry&gt; with same ID</desc></doc>

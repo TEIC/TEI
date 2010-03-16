@@ -253,6 +253,46 @@
       </xsl:choose>
     </xsl:template>
     
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc> Process plain paragraph </desc></doc>
+
+    <xsl:template match="tei:p">
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="pPr">
+	  <w:pPr>
+	    <xsl:if test="@iso:spaceBefore
+			  or @iso:spaceAfter">
+	      <w:spacing>
+		<xsl:if test="@iso:spaceBefore">
+		  <xsl:attribute
+		      name="w:before">
+		    <xsl:value-of
+			select="@iso:spaceBefore"/>
+		  </xsl:attribute>
+		</xsl:if>
+		<xsl:if test="@iso:spaceAfter">
+		<xsl:attribute
+		    name="w:after">
+		  <xsl:value-of
+		      select="@iso:spaceAfter"/>
+		</xsl:attribute>
+		</xsl:if>
+	    </w:spacing>
+	    </xsl:if>
+	    <xsl:if test="@rend">
+	      <w:pStyle>
+		<xsl:attribute name="w:val">
+		  <xsl:call-template name="getStyleName">
+		    <xsl:with-param name="in" select="@rend"/>
+		  </xsl:call-template>
+		</xsl:attribute>
+	      </w:pStyle>
+	    </xsl:if>
+	  </w:pPr>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> Process bibliography</desc></doc>
 
@@ -1075,7 +1115,15 @@
     
     <xsl:template name="simpleRun">
       <xsl:param name="text"/>
+      <xsl:param name="prefix"/>
       <xsl:param name="italic">false</xsl:param>
+      <xsl:if test="not($prefix='')">
+	<w:r>
+	  <w:t>
+	    <xsl:value-of select="$prefix"/>
+	  </w:t>	
+	</w:r>
+      </xsl:if>
       <w:r>
 	<xsl:if test="$italic='true'">
           <w:rPr>

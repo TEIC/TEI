@@ -313,8 +313,10 @@
   </xsl:template>
   
   <xsl:template name="simpleRun">
+    <xsl:param name="prefix"/>
     <xsl:param name="text"/>
     <xsl:param name="italic"/>
+    <xsl:value-of select="$prefix"/>
     <xsl:value-of select="$text"/>
   </xsl:template>
   
@@ -342,8 +344,10 @@
   <xsl:template
       match="tei:listBibl/tei:bibl/tei:edition">
     <xsl:call-template name="simpleRun">
-      <xsl:with-param name="text">
+      <xsl:with-param name="prefix">
 	<xsl:text>:</xsl:text>
+      </xsl:with-param>
+      <xsl:with-param name="text">
 	<xsl:value-of select="normalize-space(.)"/>
       </xsl:with-param>
     </xsl:call-template>
@@ -352,10 +356,12 @@
   <xsl:template
       match="tei:listBibl/tei:bibl/tei:title">
     <xsl:call-template name="simpleRun">
-      <xsl:with-param name="text">
+      <xsl:with-param name="prefix">
 	<xsl:if test="../tei:publisher"><!-- its structured -->
 	  <xsl:text>, </xsl:text>
 	</xsl:if>
+      </xsl:with-param>
+      <xsl:with-param name="text">
 	<xsl:apply-templates/>
       </xsl:with-param>
       <xsl:with-param name="italic">true</xsl:with-param>
@@ -365,8 +371,10 @@
   <xsl:template
       match="tei:listBibl/tei:bibl/tei:idno[@type='docPartNumber']">
     <xsl:call-template name="simpleRun">
-      <xsl:with-param name="text">
+      <xsl:with-param name="prefix">
 	<xsl:text>-</xsl:text>
+      </xsl:with-param>
+      <xsl:with-param name="text">
 	<xsl:value-of select="normalize-space(.)"/>
       </xsl:with-param>
     </xsl:call-template>
@@ -384,8 +392,10 @@
   <xsl:template
       match="tei:listBibl/tei:bibl/tei:idno[@type='corrNumber']">
     <xsl:call-template name="simpleRun">
-      <xsl:with-param name="text">
+      <xsl:with-param name="prefix">
 	<xsl:text>.</xsl:text>
+      </xsl:with-param>
+      <xsl:with-param name="text">
 	<xsl:value-of select="normalize-space(.)"/>
       </xsl:with-param>
     </xsl:call-template>
@@ -394,8 +404,10 @@
   <xsl:template
       match="tei:listBibl/tei:bibl/tei:idno[@type='corrType']">
     <xsl:call-template name="simpleRun">
-      <xsl:with-param name="text">
+      <xsl:with-param name="prefix">
 	<xsl:text>/</xsl:text>
+      </xsl:with-param>
+      <xsl:with-param name="text">
 	<xsl:value-of select="normalize-space(.)"/>
       </xsl:with-param>
     </xsl:call-template>
@@ -404,8 +416,10 @@
   <xsl:template
       match="tei:listBibl/tei:bibl/tei:idno[@type='corrYear']">
     <xsl:call-template name="simpleRun">
-      <xsl:with-param name="text">
+      <xsl:with-param name="prefix">
 	<xsl:text>:</xsl:text>
+      </xsl:with-param>
+      <xsl:with-param name="text">
 	<xsl:value-of select="normalize-space(.)"/>
       </xsl:with-param>
     </xsl:call-template>
@@ -433,8 +447,10 @@
   <xsl:template
       match="tei:listBibl/tei:bibl/tei:idno[@type='supplNumber']">
     <xsl:call-template name="simpleRun">
-      <xsl:with-param name="text">
+      <xsl:with-param name="prefix">
 	<xsl:text>.</xsl:text>
+      </xsl:with-param>
+      <xsl:with-param name="text">
 	<xsl:value-of select="normalize-space(.)"/>
       </xsl:with-param>
     </xsl:call-template>
@@ -443,8 +459,10 @@
   <xsl:template
       match="tei:listBibl/tei:bibl/tei:idno[@type='supplType']">
     <xsl:call-template name="simpleRun">
-      <xsl:with-param name="text">
+      <xsl:with-param name="prefix">
 	<xsl:text>/</xsl:text>
+      </xsl:with-param>
+      <xsl:with-param name="text">
 	<xsl:value-of select="normalize-space(.)"/>
       </xsl:with-param>
     </xsl:call-template>
@@ -453,8 +471,10 @@
   <xsl:template
       match="tei:listBibl/tei:bibl/tei:idno[@type='supplYear']">
     <xsl:call-template name="simpleRun">
-      <xsl:with-param name="text">
+      <xsl:with-param name="prefix">
 	<xsl:text>:</xsl:text>
+      </xsl:with-param>
+      <xsl:with-param name="text">
 	<xsl:value-of select="normalize-space(.)"/>
       </xsl:with-param>
     </xsl:call-template>

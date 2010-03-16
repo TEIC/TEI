@@ -287,6 +287,7 @@
         <xsl:param name="bookmark-id"/>
         <xsl:param name="bookmark-name"/>
 
+
         <xsl:for-each select="$select">
             <xsl:for-each-group select="*|processing-instruction()|text()" group-adjacent="1">
                 <xsl:call-template name="_process-blockelement">
@@ -304,7 +305,6 @@
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p/>
          <p>
             This template processes block elements (or better to say the children of a block element)
             and should never be called directly 
@@ -324,6 +324,7 @@
         <xsl:param name="nop"/>
         <xsl:param name="bookmark-id"/>
         <xsl:param name="bookmark-name"/>
+
         <!-- bookmark -->
         <xsl:if test="string-length($bookmark-name) &gt; 0 and string-length($bookmark-id) &gt; 0">
             <w:bookmarkStart w:id="{$bookmark-id}" w:name="{$bookmark-name}"/>
@@ -364,7 +365,7 @@
                             <xsl:choose>
                                 <xsl:when test="string-length($style) &gt; 0">
                                     <w:pPr>
-                                        <w:pStyle>
+				      <w:pStyle>
                                             <xsl:attribute name="w:val" select="$style"/>
                                         </w:pStyle>
                                     </w:pPr>

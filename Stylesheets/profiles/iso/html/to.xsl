@@ -713,7 +713,9 @@
 
   <xsl:template name="simpleRun">
     <xsl:param name="text"/>
+    <xsl:param name="prefix"/>
     <xsl:param name="italic"/>
+    <xsl:value-of select="$prefix"/>
     <xsl:choose>
       <xsl:when test="$italic='true'">
 	<i>

@@ -72,7 +72,7 @@
       </desc>
     </doc>
     <xsl:template match="tei:hi[not(*) and string-length(.)=0]" mode="part2"/>
-    <xsl:template match="tei:item[not(*) and string-length(.)=0]" mode="part2"/>
+
     <xsl:template match="tei:p[not(*) and string-length(.)=0]" mode="part2"/>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -83,17 +83,22 @@
     </doc>
     <xsl:template match="tei:list/tei:list" mode="part2"/>
     <xsl:template match="tei:item" mode="part2">
-        <item>
-            <xsl:copy-of select="@*"/>
-            <xsl:variable name="me" select="generate-id()"/>
-            <xsl:apply-templates mode="part2"/>
-            <!-- find following sibling lists and notes -->
-            <xsl:for-each select="following-sibling::tei:list[preceding-sibling::tei:item[1][generate-id()=$me]]">
-                <list>
-                    <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part2"/>
-                </list>
-            </xsl:for-each>
-        </item>
+      <xsl:choose>
+	<xsl:when test="not(*) and string-length(.)=0"/>
+	<xsl:otherwise>
+	  <item>
+	    <xsl:copy-of select="@*"/>
+	    <xsl:variable name="me" select="generate-id()"/>
+	    <xsl:apply-templates mode="part2"/>
+	    <!-- find following sibling lists and notes -->
+	    <xsl:for-each select="following-sibling::tei:list[preceding-sibling::tei:item[1][generate-id()=$me]]">
+	      <list>
+		<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part2"/>
+	      </list>
+	    </xsl:for-each>
+	  </item>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -182,15 +187,6 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     A tab (in a hi)? in a gloss list </p>
-      </desc>
-    </doc>
-    <xsl:template match="tei:list[@type='gloss']/tei:item/tei:hi[tei:c[@rend='tab']]"
-                 mode="part2"/>
-    <xsl:template match="tei:list[@type='gloss']/tei:item/tei:c[@rend='tab']" mode="part2"/>
-    
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
          <p>     Top of a weird gloss list </p>
       </desc>
     </doc>
@@ -242,6 +238,77 @@
     </doc>
     <xsl:template match="tei:head/tei:c[@rend='tab']" mode="part2"/>
     
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>     An empty item</p>
+      </desc>
+    </doc>
+    <xsl:template match="tei:item[not(*) and not(text())]" mode="part2"/>
+    
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Zap empty &lt;bibl&gt; </desc></doc>
+    
+    <xsl:template match="tei:bibl[not(*) and not(text())]" mode="part2"/>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Zap empty &lt;availability&gt; </desc></doc>
+   
+    <xsl:template match="tei:availability[not(*) and not(text())]"
+		  mode="part2"/>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Zap empty &lt;note&gt; </desc></doc>
+   
+    <xsl:template match="tei:note[not(*) and not(text())]"
+		  mode="part2">
+    </xsl:template>
+
+    <xsl:template match="tei:list[@type='gloss']/tei:item/tei:c[@rend='tab']" mode="part2"/>
+    
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Clean up <gi>hi</gi>; merge adjacent &lt;hi&gt; </desc>
+  </doc>
+
+  <xsl:template match="tei:hi[@rend]" mode="part2">
+    <xsl:variable name="r" select="@rend"/>
+    <xsl:choose>
+      <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']
+		      and tei:c[@rend='tab']"/>
+      <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@rend=$r]]">
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:variable name="ename">
+	  <xsl:choose>
+	    <xsl:when test="@rend='italic' and
+			    ancestor::tei:bibl">title</xsl:when>
+	    <xsl:otherwise>hi</xsl:otherwise>
+	  </xsl:choose>
+	</xsl:variable>
+	<xsl:element name="{$ename}">
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates mode="part2"/>
+	  <xsl:call-template name="nextHi">
+	    <xsl:with-param name="r" select="$r"/>
+	  </xsl:call-template>
+	</xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
+   </xsl:template>
+
+   <xsl:template name="nextHi">
+      <xsl:param name="r"/>
+      <xsl:for-each select="following-sibling::node()[1]">
+         <xsl:if test="self::tei:hi[@rend=$r]">
+            <xsl:apply-templates mode="part2"/>
+            <xsl:call-template name="nextHi">
+	              <xsl:with-param name="r" select="$r"/>
+            </xsl:call-template>
+         </xsl:if>
+      </xsl:for-each>
+   </xsl:template>
 
     <!-- 
      remove Table and Figure from start 

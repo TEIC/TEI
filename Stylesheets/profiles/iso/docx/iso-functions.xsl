@@ -391,6 +391,8 @@
 	  <name>geographicalUse</name>
 	  <name>id_no</name>
 	  <name>idno</name>
+	  <name>isonumber</name>
+	  <name>isononumber</name>
 	  <name>language</name>
 	  <name>nonVerbalRepresentation</name>
 	  <name>noteDefinition</name>
