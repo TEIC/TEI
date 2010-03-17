@@ -800,6 +800,19 @@
             <xsl:apply-templates/>
         </head>
     </xsl:template>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Figure text']" mode="paragraph">
+        <p>
+	  <xsl:if test="w:pPr/w:jc/@w:val">
+	    <xsl:attribute name="iso:align">
+	      <xsl:value-of select="w:pPr/w:jc/@w:val"/>
+	    </xsl:attribute>
+	  </xsl:if>
+	  <xsl:attribute name="rend">
+	    <xsl:text>Figure text</xsl:text>
+	  </xsl:attribute>
+	  <xsl:apply-templates/>
+	</p>
+    </xsl:template>
     <xsl:template name="figureSection">
         <figure>
             <xsl:for-each select="current-group()">

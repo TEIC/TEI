@@ -288,6 +288,9 @@
 		</xsl:attribute>
 	      </w:pStyle>
 	    </xsl:if>
+	    <xsl:if test="@iso:align">
+	      <w:jc w:val="{@iso:align}"/>
+	    </xsl:if>
 	  </w:pPr>
 	</xsl:with-param>
       </xsl:call-template>
