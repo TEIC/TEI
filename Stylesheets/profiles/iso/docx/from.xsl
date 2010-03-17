@@ -1505,6 +1505,30 @@
       </xsl:copy>
    </xsl:template>
 
+<!--          <p><hi rend="bold">4.1</hi><c rend="tab">	</c>A level 1
+subclause without a title.</p> -->
+
+    <xsl:template match="tei:div[@type='nohead']/tei:p" mode="part2">
+     <p>
+       <xsl:for-each select="*|text()|processing-instruction">
+	 <xsl:choose>
+	   <xsl:when test="self::tei:c[@rend='tab']"/>
+	   <xsl:when test="self::tei:hi and
+			   number(translate(.,'.',''))">
+	     <xsl:attribute name="n" select="."/>
+	     <xsl:if test="$debug='true'">
+	       <xsl:message>ZAP <xsl:value-of select="."/> from headless div</xsl:message>
+	     </xsl:if>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:apply-templates mode="part2" select="."/>
+	   </xsl:otherwise>
+	 </xsl:choose>
+       </xsl:for-each>
+     </p>
+   </xsl:template>
+
+
    <!--
   <xsl:template match="tbx:descripGrp" mode="part2">
     <xsl:copy>

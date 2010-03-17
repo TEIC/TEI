@@ -757,14 +757,6 @@
     <!--
         Headers and Sections  
     -->
-    <xsl:template match="tei:div[@type='nohead']">
-      <!-- find out what level we are at -->
-      <xsl:variable name="level">
-	<xsl:value-of select="count(ancestor-or-self::tei:div)"/>
-      </xsl:variable>
-      <xsl:message>Met a headless div <xsl:value-of select="$level"/></xsl:message>
-    </xsl:template>
-
     <xsl:template match="tei:head[parent::tei:div or parent::tei:div1 or parent::tei:div2 or parent::tei:div3 or parent::tei:div4 or parent::tei:div5 or parent::tei:div6 or parent::tei:div7]">
 
       <!-- find out what level we are at -->
