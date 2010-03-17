@@ -1112,27 +1112,22 @@
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Handling headless sections</desc></doc>
-    <xsl:template match="tei:div[@type='nohead']">
+    <xsl:template match="tei:div[@type='headless']">
       <xsl:apply-templates/>
     </xsl:template>
 
-    <xsl:template match="tei:div[@type='nohead']/tei:p">
+    <xsl:template match="tei:div[@type='headless']/tei:p">
       <xsl:variable name="level">
 	<xsl:value-of select="count(ancestor-or-self::tei:div)"/>
       </xsl:variable>
-      <xsl:message>Fire <xsl:value-of select="$level"/> on <xsl:value-of select="@n"/>: <xsl:value-of select="."/></xsl:message>
+      <xsl:variable name="s">
+	<xsl:text>p</xsl:text>
+	<xsl:value-of select="$level"/>
+      </xsl:variable>
+      <xsl:message>Fire <xsl:value-of select="$level"/> [<xsl:value-of select="$s"/>] for <xsl:value-of select="@n"/>: <xsl:value-of select="."/></xsl:message>
       <xsl:call-template name="block-element">
-	<xsl:with-param name="style">
-	  <xsl:choose>
-	    <xsl:when test="ancestor::tei:back">
-	      <xsl:text>p</xsl:text>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:text>a</xsl:text>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	  <xsl:value-of select="$level"/>
-	</xsl:with-param>
+	<xsl:with-param name="style" select="$s"/>
+	<!--
 	<xsl:with-param name="select">
 	  <tei:p>
 	    <xsl:if test="@n">
@@ -1142,6 +1137,7 @@
 	    <xsl:value-of select="."/>
 	  </tei:p>
 	</xsl:with-param>
+	-->
       </xsl:call-template>
     </xsl:template>
 

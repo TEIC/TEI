@@ -472,7 +472,7 @@
             </xsl:when>
 
             <xsl:otherwise>
-                <xsl:attribute name="type">nohead</xsl:attribute>
+                <xsl:attribute name="type">headless</xsl:attribute>
                 <xsl:if test="string(normalize-space($divname))">
                     <p>
                         <xsl:apply-templates/>
@@ -1221,7 +1221,7 @@
                 </xsl:for-each>
             </body>
             <back>
-                <xsl:apply-templates select="tei:body/tei:div[@type='bibliography'                     or @type='annex']"
+                <xsl:apply-templates select="tei:body/tei:div[@type='bibliography' or @type='annex']"
                                  mode="part2"/>
             </back>
 
@@ -1506,7 +1506,7 @@
 <!--          <p><hi rend="bold">4.1</hi><g ref="x:tab">	</c>A level 1
 subclause without a title.</p> -->
 
-    <xsl:template match="tei:div[@type='nohead']/tei:p" mode="part2">
+    <xsl:template match="tei:div[@type='headless']/tei:p" mode="part2">
      <p>
        <xsl:for-each select="*|text()|processing-instruction">
 	 <xsl:choose>
