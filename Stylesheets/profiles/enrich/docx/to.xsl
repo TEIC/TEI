@@ -22,7 +22,7 @@
                 version="2.0"
                 exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn tei teidocx">
     <!-- import conversion style -->
-    <xsl:import href="../../../profiles/default/docx/to.xsl"/>
+    <xsl:import href="../../../profiles/default/docx/teitodocx.xsl"/>
     
     <xsl:import href="../../../common2/msdescription.xsl"/>
 

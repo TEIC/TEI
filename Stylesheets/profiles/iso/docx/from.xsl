@@ -26,7 +26,7 @@
 
     <!-- import conversion style -->
     <xsl:import href="../../../docx/utils/functions.xsl"/>
-    <xsl:import href="../../../docx/from/from.xsl"/>
+    <xsl:import href="../../../docx/from/docxtotei.xsl"/>
 
     <!-- import special iso functions -->
     <xsl:include href="iso-functions.xsl"/>

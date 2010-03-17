@@ -22,7 +22,7 @@
     
     <!-- import base conversion style -->
 
-    <xsl:import href="../../../docx/from/from.xsl"/>
+    <xsl:import href="../../../docx/from/docxtotei.xsl"/>
     
     <xsl:output indent="no"/>
   <xsl:template match="tei:hi[@rend]" mode="part2">

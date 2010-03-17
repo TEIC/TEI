@@ -23,7 +23,7 @@
                 version="2.0"
                 exclude-result-prefixes="teidocx cals ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn its">
     <!-- import conversion style -->
-    <xsl:import href="../../../docx/to/to.xsl"/>
+    <xsl:import href="../../../docx/to/teitodocx.xsl"/>
     <xsl:import href="../isoutils.xsl"/>
     
     <!-- import functions -->
