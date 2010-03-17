@@ -345,7 +345,7 @@ XSL LaTeX stylesheet to make slides
             <xsl:text>&amp;amp;</xsl:text>
 	</xsl:matching-substring>
 	<xsl:non-matching-substring>
-	  <xsl:value-of select="translate('\{}','⃥❴❵')"/>
+	  <xsl:value-of select="translate(.,'\{}','⃥❴❵')"/>
 	</xsl:non-matching-substring>
       </xsl:analyze-string>
   </xsl:template>
