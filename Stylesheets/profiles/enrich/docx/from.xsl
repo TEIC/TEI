@@ -24,8 +24,9 @@
     
     <!-- import base conversion style -->
 
-    <xsl:import href="../../../docx/from/docxtotei.xsl"/>
-    
+
+    <xsl:import href="../../default/docx/from.xsl"/>
+
     <xsl:template name="create-tei-header">
         <teiHeader>
             <fileDesc>
