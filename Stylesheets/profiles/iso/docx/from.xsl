@@ -562,9 +562,7 @@
     </doc>
 
     <xsl:template match="w:r/w:tab">
-      <c rend="tab">
-            <xsl:text>	</xsl:text>
-        </c>
+      <g ref="x:tab"/>
     </xsl:template>
 
     <xsl:template name="processTextrun">
@@ -1505,14 +1503,14 @@
       </xsl:copy>
    </xsl:template>
 
-<!--          <p><hi rend="bold">4.1</hi><c rend="tab">	</c>A level 1
+<!--          <p><hi rend="bold">4.1</hi><g ref="x:tab">	</c>A level 1
 subclause without a title.</p> -->
 
     <xsl:template match="tei:div[@type='nohead']/tei:p" mode="part2">
      <p>
        <xsl:for-each select="*|text()|processing-instruction">
 	 <xsl:choose>
-	   <xsl:when test="self::tei:c[@rend='tab']"/>
+	   <xsl:when test="self::tei:g[@ref='x:tab']"/>
 	   <xsl:when test="self::tei:hi and
 			   number(translate(.,'.',''))">
 	     <xsl:attribute name="n" select="."/>

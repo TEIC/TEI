@@ -284,7 +284,7 @@
       <xsl:variable name="styles" select="document('styles.xml')"/>
       
       <xsl:choose>
-	<xsl:when test="$styles/names[name=$style]">
+	<xsl:when test="$styles/styles[style=$style]">
 	  true
 	</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>

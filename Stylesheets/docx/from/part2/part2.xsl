@@ -200,14 +200,14 @@
          <p>     A tab in a &lt;bibl&gt;? no. </p>
       </desc>
     </doc>
-    <xsl:template match="tei:bibl/tei:c[@rend='tab']" mode="part2"/>
+    <xsl:template match="tei:bibl/tei:g[@ref='x:tab']" mode="part2"/>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>     A tab in a &lt;gloss&gt;? no. </p>
       </desc>
     </doc>
-    <xsl:template match="tei:gloss//tei:c[@rend='tab']" mode="part2"/>
+    <xsl:template match="tei:gloss//tei:g[@ref='x:tab']" mode="part2"/>
     
     
     <!-- removed 2010-03-15, seems to screw up formulae
@@ -217,7 +217,7 @@
       </desc>
     </doc>
 
-    <xsl:template match="tei:formula//tei:c[@rend='tab']" mode="part2"/>
+    <xsl:template match="tei:formula//tei:g[@ref='x:tab']" mode="part2"/>
     -->
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -235,7 +235,7 @@
          <p>     A tab in a &lt;head&gt;? no. </p>
       </desc>
     </doc>
-    <xsl:template match="tei:head/tei:c[@rend='tab']" mode="part2"/>
+    <xsl:template match="tei:head/tei:g[@ref='x:tab']" mode="part2"/>
     
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -264,7 +264,7 @@
 		  mode="part2">
     </xsl:template>
 
-    <xsl:template match="tei:list[@type='gloss']/tei:item/tei:c[@rend='tab']" mode="part2"/>
+    <xsl:template match="tei:list[@type='gloss']/tei:item/tei:g[@ref='x:tab']" mode="part2"/>
     
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -278,7 +278,7 @@
     <xsl:choose>
       <xsl:when test ="not(*) and string-length(.)=0"/>
       <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']
-		      and tei:c[@rend='tab']"/>
+		      and tei:g[@ref='x:tab']"/>
       <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@rend=$r]]">
       </xsl:when>
       <xsl:otherwise>

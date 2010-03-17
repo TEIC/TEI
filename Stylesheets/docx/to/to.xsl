@@ -1424,7 +1424,7 @@
     <!-- 
 	 Inline Templates:
     -->
-    <xsl:template match="tei:c[@rend='tab']">
+    <xsl:template match="tei:g[@ref='x:tab']">
         <w:r>
             <w:tab/>
         </w:r>

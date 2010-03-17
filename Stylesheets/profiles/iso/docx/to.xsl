@@ -1137,7 +1137,7 @@
 	  <tei:p>
 	    <xsl:if test="@n">
 	      <tei:hi><xsl:value-of select="@n"/></tei:hi>
-	      <c rend="tab">	</c>
+	      <g ref="x:tab"/>
 	    </xsl:if>
 	    <xsl:value-of select="."/>
 	  </tei:p>

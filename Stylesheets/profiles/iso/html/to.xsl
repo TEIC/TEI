@@ -126,7 +126,7 @@
       </span>
    </xsl:template>
 
-   <xsl:template match="tei:c[@rend='tab']">
+   <xsl:template match="tei:g[@ref='x:tab']">
       <xsl:text>	</xsl:text>
    </xsl:template>
 
