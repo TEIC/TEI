@@ -225,6 +225,7 @@
 	  <xsl:when test="self::tei:br">true</xsl:when>
 	  <xsl:when test="self::tei:cit">true</xsl:when>
 	  <xsl:when test="self::tei:c">true</xsl:when>
+	  <xsl:when test="self::tei:g">true</xsl:when>
 	  <xsl:when test="self::tei:code">true</xsl:when>
 	  <xsl:when test="self::tei:del">true</xsl:when>
 	  <xsl:when test="self::tei:editionStmt">true</xsl:when>

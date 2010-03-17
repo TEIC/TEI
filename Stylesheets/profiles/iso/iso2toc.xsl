@@ -54,7 +54,7 @@
             </xsl:for-each>
             <xsl:for-each select="tei:text/tei:body">
                <ul>
-                  <xsl:for-each select="tei:div">
+                  <xsl:for-each select="tei:div[tei:head]">
       	              <li>
       	                 <xsl:call-template name="head"/>
       	              </li>
@@ -64,7 +64,7 @@
             </xsl:for-each>
             <xsl:for-each select="tei:text/tei:back">
                <ul>
-                  <xsl:for-each select="tei:div">
+                  <xsl:for-each select="tei:div[tei:head]">
                      <li>
                         <xsl:call-template name="head"/>
                      </li>

@@ -1127,17 +1127,6 @@
       <xsl:message>Fire <xsl:value-of select="$level"/> [<xsl:value-of select="$s"/>] for <xsl:value-of select="@n"/>: <xsl:value-of select="."/></xsl:message>
       <xsl:call-template name="block-element">
 	<xsl:with-param name="style" select="$s"/>
-	<!--
-	<xsl:with-param name="select">
-	  <tei:p>
-	    <xsl:if test="@n">
-	      <tei:hi><xsl:value-of select="@n"/></tei:hi>
-	      <g ref="x:tab"/>
-	    </xsl:if>
-	    <xsl:value-of select="."/>
-	  </tei:p>
-	</xsl:with-param>
-	-->
       </xsl:call-template>
     </xsl:template>
 

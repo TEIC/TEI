@@ -1505,7 +1505,7 @@
 
 <!--          <p><hi rend="bold">4.1</hi><g ref="x:tab">	</c>A level 1
 subclause without a title.</p> -->
-
+<!--
     <xsl:template match="tei:div[@type='headless']/tei:p" mode="part2">
      <p>
        <xsl:for-each select="*|text()|processing-instruction">
@@ -1525,7 +1525,7 @@ subclause without a title.</p> -->
        </xsl:for-each>
      </p>
    </xsl:template>
-
+-->
 
    <!--
   <xsl:template match="tbx:descripGrp" mode="part2">
