@@ -70,10 +70,12 @@
 		                   </xsl:when>
 	                 </xsl:choose>
 	              </xsl:for-each>
-	              <application ident="WordTemplate" version="{prop:property[@name='WordTemplate']}">
-	                 <label>Word template file</label>
-	                 <ptr target="{prop:property[@name='WordTemplateURI']}"/>
-	              </application>
+		      <xsl:if test="prop:property[@name='WordTemplateURI']">
+			<application ident="WordTemplate" version="{prop:property[@name='WordTemplate']}">
+			  <label>Word template file</label>
+			  <ptr target="{prop:property[@name='WordTemplateURI']}"/>
+			</application>
+		      </xsl:if>
 	           </xsl:for-each>
 	        </xsl:if>
       </appInfo>
