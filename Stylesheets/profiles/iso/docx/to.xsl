@@ -1124,7 +1124,9 @@
 	<xsl:text>p</xsl:text>
 	<xsl:value-of select="$level"/>
       </xsl:variable>
-      <xsl:message>Fire <xsl:value-of select="$level"/> [<xsl:value-of select="$s"/>] for <xsl:value-of select="@n"/>: <xsl:value-of select="."/></xsl:message>
+      <xsl:if test="$debug='true'">
+	<xsl:message>Fire <xsl:value-of select="$level"/> [<xsl:value-of select="$s"/>] for <xsl:value-of select="@n"/>: <xsl:value-of select="."/></xsl:message>
+      </xsl:if>
       <xsl:call-template name="block-element">
 	<xsl:with-param name="style" select="$s"/>
       </xsl:call-template>
