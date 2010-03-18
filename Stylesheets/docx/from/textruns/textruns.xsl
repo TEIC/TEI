@@ -176,7 +176,7 @@
 	</xsl:if>
 
 	<xsl:if test="w:rPr/w:caps">
-	  <n>allcaps</n>
+	  <n>capsall</n>
 	</xsl:if>
 
 	<xsl:if test="w:rPr/w:color and

@@ -660,7 +660,7 @@
             </xsl:if>
 
 	    <!-- all caps -->
-            <xsl:if test="contains(@rend,'allcaps')">
+            <xsl:if test="contains(@rend,'capsall')">
                 <w:caps/>
             </xsl:if>
 

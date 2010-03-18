@@ -742,7 +742,7 @@
 	    <xsl:when test=".='smallcaps'">
 	      <xsl:text>font-variant:small-caps;</xsl:text>
 	    </xsl:when>
-	    <xsl:when test=".='allcaps'">
+	    <xsl:when test=".='capsall'">
 	      <xsl:text>text-transform:capitalize;</xsl:text>
 	    </xsl:when>
 	    <xsl:when test=".='strikethrough'">
