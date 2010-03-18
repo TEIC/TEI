@@ -762,77 +762,79 @@
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>TBX processing</desc>
-</doc>
-
-<xsl:template match="tbx:termEntry">
-      <xsl:for-each select="tbx:langSet">
-         <xsl:choose>
-            <xsl:when test="starts-with(../@id,'autoTermNum')">
-	              <w:p>
-	                 <w:pPr>
-	                    <w:pStyle w:val="{substring-before(../@id,'_')}"/>
-	                 </w:pPr>
-	                 <w:bookmarkStart w:id="{substring-after(../@id,'_')}" w:name="_Ref244494009"/>
-	              </w:p>
-	              <w:bookmarkEnd w:id="{substring-after(../@id,'_')}"/>
-            </xsl:when>
-            <xsl:otherwise>
-	              <w:p>
-	                 <w:pPr>
-	                    <w:pStyle w:val="TermNum"/>
-	                 </w:pPr>
-	                 <w:r>
-	                    <w:t>
-	                       <xsl:value-of select="substring-after(../@id,'CDB_')"/>
-	                    </w:t>
-	                 </w:r>
-	              </w:p>
-            </xsl:otherwise>
-         </xsl:choose>
-         <xsl:for-each select="tbx:ntig">
-	           <xsl:variable name="Thing">
-	              <xsl:value-of select="substring-before(tbx:termGrp/tbx:termNote[@type='administrativeStatus'],'-admn-sts')"/>
-	           </xsl:variable>
-	           <xsl:variable name="style">
-	              <xsl:choose>
-	                 <xsl:when test="$Thing='preferredTerm'">termPreferred</xsl:when>
-	                 <xsl:when test="$Thing='deprecatedTerm'">termDeprecated</xsl:when>
-	                 <xsl:when test="$Thing='admittedTerm'">termAdmitted</xsl:when>
-	                 <xsl:when test="$Thing='symbol'">symbol</xsl:when>
-	              </xsl:choose>
-	           </xsl:variable>
-            <xsl:call-template name="block-element">
-	              <xsl:with-param name="pPr">
-	                 <xsl:if test="not($style='')">
-	                    <w:pPr>
-	                       <w:pStyle w:val="{$style}"/>
-	                    </w:pPr>
-	                 </xsl:if>
-	              </xsl:with-param>
-            </xsl:call-template>
-         </xsl:for-each>
-
-         <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
-         <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
-         <xsl:apply-templates select="tbx:note"/>
+    <desc>TBX processing</desc>
+  </doc>
+  
+  <xsl:template match="tbx:termEntry">
+    <xsl:for-each select="tbx:langSet">
+      <xsl:choose>
+	<xsl:when test="starts-with(../@id,'autoTermNum')">
+	  <w:p>
+	    <w:pPr>
+	      <w:pStyle w:val="{substring-before(../@id,'_')}"/>
+	    </w:pPr>
+	    <w:bookmarkStart w:id="{substring-after(../@id,'_')}" w:name="_Ref244494009"/>
+	  </w:p>
+	  <w:bookmarkEnd w:id="{substring-after(../@id,'_')}"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <w:p>
+	    <w:pPr>
+	      <w:pStyle w:val="TermNum"/>
+	    </w:pPr>
+	    <w:r>
+	      <w:t>
+		<xsl:value-of select="substring-after(../@id,'CDB_')"/>
+	      </w:t>
+	    </w:r>
+	  </w:p>
+	</xsl:otherwise>
+      </xsl:choose>
+      <xsl:for-each select="tbx:ntig">
+	<xsl:variable name="Thing">
+	  <xsl:value-of select="substring-before(tbx:termGrp/tbx:termNote[@type='administrativeStatus'],'-admn-sts')"/>
+	</xsl:variable>
+	<xsl:variable name="style">
+	  <xsl:choose>
+	    <xsl:when test="$Thing='preferredTerm'">termPreferred</xsl:when>
+	    <xsl:when test="$Thing='deprecatedTerm'">termDeprecated</xsl:when>
+	    <xsl:when test="$Thing='admittedTerm'">termAdmitted</xsl:when>
+	    <xsl:when test="$Thing='symbol'">symbol</xsl:when>
+	  </xsl:choose>
+	</xsl:variable>
+	<xsl:call-template name="block-element">
+	  <xsl:with-param name="pPr">
+	    <xsl:if test="not($style='')">
+	      <w:pPr>
+		<w:pStyle w:val="{$style}"/>
+	      </w:pPr>
+	    </xsl:if>
+	  </xsl:with-param>
+	</xsl:call-template>
       </xsl:for-each>
+      
       <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
-      <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
+      <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='example']"/>
       <xsl:apply-templates select="tbx:note"/>
-   </xsl:template>
-
-   <xsl:template match="tbx:termGrp/tbx:termNote"/>
+      <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
+    </xsl:for-each>
+    <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
+    <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='example']"/>
+    <xsl:apply-templates select="tbx:note"/>
+    <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
+  </xsl:template>
+  
+  <xsl:template match="tbx:termGrp/tbx:termNote"/>
 
    <xsl:template match="tbx:descrip">
       <xsl:call-template name="block-element">
-         <xsl:with-param name="style">Definition</xsl:with-param>
-         <!--    <xsl:with-param name="pPr">
-      <w:pPr>
-	<w:pStyle w:val="Definition"/>
-      </w:pPr>
-    </xsl:with-param>-->
-  </xsl:call-template>
+         <xsl:with-param name="style">
+	 <xsl:choose>
+	   <xsl:when test="@type='definition'">Definition</xsl:when>
+	   <xsl:when test="@type='example'">Examplenumbered</xsl:when>
+	 </xsl:choose>
+	 </xsl:with-param>
+      </xsl:call-template>
    </xsl:template>
 
    <xsl:template match="tbx:note">
