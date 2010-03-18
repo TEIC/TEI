@@ -463,4 +463,18 @@
          </xsl:call-template>
       </external-graphic>
   </xsl:template>
+
+  <xsl:template match="tei:binaryObject">
+    <external-graphic>
+      <xsl:attribute name="src">
+	<xsl:text>url('data:image/auto;base64,</xsl:text>
+	<xsl:value-of select="."/>
+	<xsl:text>')</xsl:text>
+      </xsl:attribute>
+      <xsl:call-template name="graphicsAttributes">
+	<xsl:with-param name="mode">fo</xsl:with-param>
+      </xsl:call-template>
+    </external-graphic>  
+  </xsl:template>
+
 </xsl:stylesheet>
