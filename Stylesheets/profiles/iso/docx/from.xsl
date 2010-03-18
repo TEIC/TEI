@@ -853,15 +853,31 @@
 	  <li>termPreferred</li>
 	  <li>abbreviatedForm</li>
 	</ul>
+	Though it should be noted that <gi>Example</gi> can also occur
+	on its own
       </desc>
     </doc>
     <xsl:template name="termsAndDefinitionsSection">
         <xsl:for-each-group select="current-group()"
-                          group-starting-with="w:p[w:pPr/w:pStyle/@w:val='TermNum'      or      w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]]">
+                          group-starting-with="w:p[w:pPr/w:pStyle/@w:val='TermNum' or w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]]">
 	        <xsl:choose>
-	           <xsl:when test="not(self::w:p[w:pPr/w:pStyle/@w:val='TermNum'      or      w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]])">
+		   <xsl:when
+		       test="self::w:p[w:pPr/w:pStyle/@w:val='Example']">
+		     <p rend="Example">
+		       <xsl:apply-templates/>
+		     </p>
+		   </xsl:when>
+		   <xsl:when
+		       test="self::w:p[w:pPr/w:pStyle/@w:val='Example numbered']">
+		     <p rend="Example numbered">
+		       <xsl:apply-templates/>
+		     </p>
+		   </xsl:when>
+	           <xsl:when test="not(self::w:p[w:pPr/w:pStyle/@w:val='TermNum'  or  w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]])">
 	              <iso:error>
-			<xsl:text>Terminology entry here does not have
+			<xsl:text>Terminology entry "</xsl:text>
+			<xsl:value-of select="."/>
+			<xsl:text>" here does not have
 			a number style, but starts with with </xsl:text>
 			<xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
 		      </iso:error>
