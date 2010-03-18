@@ -222,16 +222,6 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     A bold line break??? </p>
-      </desc>
-    </doc>
-    <xsl:template match="tei:hi[count(*)=1 and not(text()) and tei:lb]" mode="part2">
-        <tei:lb/>
-    </xsl:template>
-    
-    
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
          <p>     A tab in a &lt;head&gt;? no. </p>
       </desc>
     </doc>
@@ -276,6 +266,9 @@
   <xsl:template match="tei:hi[@rend]" mode="part2">
     <xsl:variable name="r" select="@rend"/>
     <xsl:choose>
+      <xsl:when test="count(*)=1 and not(text()) and tei:lb">
+        <lb/>
+      </xsl:when>
       <xsl:when test ="not(*) and string-length(.)=0"/>
       <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']
 		      and tei:g[@ref='x:tab']"/>
