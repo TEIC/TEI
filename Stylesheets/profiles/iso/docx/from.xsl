@@ -846,6 +846,7 @@
 	  <li>TermNum</li>
 	  <li>AutoTermNum</li>
 	  <li>Example</li>
+	  <li>Example numbered</li>
 	  <li>symbol</li>
 	  <li>termAdmitted</li>
 	  <li>termDeprecated</li>
@@ -1801,7 +1802,7 @@ subclause without a title.</p> -->
 	<xsl:when test=".='),'"/>
 	<xsl:when test=".='), '"/>
 	<xsl:when test=".=') '"/>
-	<xsl:when test=".=')'"/>
+	<!--<xsl:when test=".=')'"/>-->
 	<xsl:when test=".=','"/>
 	<xsl:otherwise>
 	  <xsl:value-of select="."/>
