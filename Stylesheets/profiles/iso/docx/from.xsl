@@ -506,6 +506,7 @@
 	     if (w:pPr/w:pStyle/@w:val='RefNorm') then 2 else
 	     if (w:pPr/w:pStyle/@w:val='Definition') then 3 else
              if (w:pPr/w:pStyle/@w:val='Example') then 3 else
+             if (w:pPr/w:pStyle/@w:val='Example numbered') then 3 else
              if (w:pPr/w:pStyle/@w:val='TermNum') then 3 else
              if (w:pPr/w:pStyle/@w:val='nonVerbalRepresentation') then 3 else
              if (w:pPr/w:pStyle/@w:val='noteDefinition') then 3 else
