@@ -386,6 +386,34 @@
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
+	Override mechanism for deciding on what subsections are
+      </desc>
+    </doc>
+    <xsl:template name="group-by-section">
+      <xsl:variable name="Style" select="w:pPr/w:pStyle/@w:val"/>
+      <xsl:variable name="NextLevel" select="number(@LEVEL) + 1"/>
+      <div>
+	<!-- generate the head -->
+	<xsl:call-template name="generate-section-heading">
+	  <xsl:with-param name="Style" select="$Style"/>
+	</xsl:call-template>
+	<!-- Process sub-sections -->
+	<xsl:for-each-group select="current-group() except ."
+			    group-starting-with="w:p[@LEVEL=$NextLevel]">
+	  <xsl:choose>
+	    <xsl:when test="teidocx:is-heading(.)">
+	      <xsl:call-template name="group-by-section"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:apply-templates select="." mode="inSectionGroup"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each-group>
+		    </div>
+    </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
 	Some specific section headers 
       </desc>
     </doc>
@@ -398,7 +426,6 @@
                 </xsl:if>
             </xsl:for-each>
         </xsl:variable>
-
         <xsl:choose>
             <!-- if we are dealing with a normal header (Style='heading [123456..]')-->
             <xsl:when test="starts-with($Style,'heading')">
@@ -1584,19 +1611,20 @@ subclause without a title.</p> -->
    -->
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Check whether paragraph styles and block styles are supported</desc>
+    <desc>Check whether paragraph styles and block styles are
+    supported; identify headings</desc>
     </doc>
 
     <xsl:template match="w:p|w:r" mode="part0">
-    <xsl:if test="w:pPr/w:pStyle/@w:val or w:rPr/w:rStyle/@w:val">
-      <xsl:variable name="old">
-	<xsl:value-of select="w:pPr/w:pStyle/@w:val|w:rPr/w:rStyle/@w:val"/>
-      </xsl:variable>
-      <xsl:variable name="new">
-	<xsl:for-each select="document(concat($word-directory,'/word/styles.xml'),/)">
-	  <xsl:value-of select="key('STYLES',$old)/w:name/@w:val"/>
-	</xsl:for-each>
-      </xsl:variable>
+      <xsl:if test="w:pPr/w:pStyle/@w:val or w:rPr/w:rStyle/@w:val">
+	<xsl:variable name="old">
+	  <xsl:value-of select="w:pPr/w:pStyle/@w:val|w:rPr/w:rStyle/@w:val"/>
+	</xsl:variable>
+	<xsl:variable name="new">
+	  <xsl:for-each select="document(concat($word-directory,'/word/styles.xml'),/)">
+	    <xsl:value-of select="key('STYLES',$old)/w:name/@w:val"/>
+	  </xsl:for-each>
+	</xsl:variable>
 	<xsl:choose>
 	  <xsl:when test="teidocx:is-supported-style($old)"/>
 	  <xsl:when test="teidocx:is-supported-style($new)"/>
@@ -1612,6 +1640,12 @@ subclause without a title.</p> -->
 	</xsl:choose>
     </xsl:if>
     <xsl:copy>
+      <xsl:if test="self::w:p">
+	<xsl:if test="teidocx:is-heading(.)">
+	  <xsl:attribute name="LEVEL"
+			 select="teidocx:heading-level(.)"/>
+	</xsl:if>
+      </xsl:if>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part0"/>
     </xsl:copy>
   </xsl:template>

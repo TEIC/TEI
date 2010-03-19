@@ -123,6 +123,7 @@
       <xsl:param name="p"/>
       <xsl:choose>
 	<xsl:when test="$p[starts-with(w:pPr/w:pStyle/@w:val,'heading')]">true</xsl:when>
+	<xsl:when test="$p[starts-with(w:pPr/w:pStyle/@w:val,'Heading')]">true</xsl:when>
 	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$ANNEX]">true</xsl:when>
 	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$a2]">true</xsl:when>
 	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$a3]">true</xsl:when>
@@ -140,6 +141,18 @@
 	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$zzIntroductionHeading]">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
+    </xsl:function>
+
+    <xsl:function name="teidocx:heading-level" as="xs:string">
+      <xsl:param name="p"/>
+      <xsl:analyze-string select="$p/w:pPr/w:pStyle/@w:val" regex="[^0-9]*([0-9])">
+	<xsl:matching-substring>
+	  <xsl:value-of select="number(regex-group(1))"/>
+	</xsl:matching-substring>
+	<xsl:non-matching-substring>
+	  <xsl:text>1</xsl:text>
+	</xsl:non-matching-substring>
+      </xsl:analyze-string>
     </xsl:function>
     
     <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >

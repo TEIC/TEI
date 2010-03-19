@@ -106,8 +106,7 @@
 	
 			<p>Modes:</p>
 			<ul>
-			<li> part0:	
-						a normalization
+			<li> part0: a normalization
 			process for styles. Can also detect illegal styles.</li>
 						
 			<li> part2: 	
@@ -191,6 +190,7 @@
 						<!-- We are dealing with a first level section, we now have
 						to further divide the section into subsections that we can then
 						finally work on -->
+
 						<xsl:when test="teidocx:is-heading(.)">
 						  <xsl:call-template name="group-by-section"/>
 						</xsl:when>
@@ -279,23 +279,22 @@
 		    <xsl:variable name="Style" select="w:pPr/w:pStyle/@w:val"/>
 		    <xsl:variable name="NextHeader" select="teidocx:get-nextlevel-header($Style)"/>
 		    <div>
-			<!-- generate the head -->
-			<xsl:call-template name="generate-section-heading">
-				        <xsl:with-param name="Style" select="$Style"/>
-			      </xsl:call-template>
-			
-			      <!-- Process subheadings -->
-			<xsl:for-each-group select="current-group() except ."
-                             group-starting-with="w:p[w:pPr/w:pStyle/@w:val=$NextHeader]">
-				        <xsl:choose>
-					          <xsl:when test="teidocx:is-heading(.)">
-						            <xsl:call-template name="group-by-section"/>
-					          </xsl:when>
-					          <xsl:otherwise>
-						            <xsl:apply-templates select="." mode="inSectionGroup"/>
-					          </xsl:otherwise>
-				        </xsl:choose>
-			      </xsl:for-each-group>
+		      <!-- generate the head -->
+		      <xsl:call-template name="generate-section-heading">
+			<xsl:with-param name="Style" select="$Style"/>
+		      </xsl:call-template>
+		      <!-- Process sub-sections -->
+		      <xsl:for-each-group select="current-group() except ."
+					  group-starting-with="w:p[w:pPr/w:pStyle/@w:val=$NextHeader]">
+			<xsl:choose>
+			  <xsl:when test="teidocx:is-heading(.)">
+			    <xsl:call-template name="group-by-section"/>
+			  </xsl:when>
+			  <xsl:otherwise>
+			    <xsl:apply-templates select="." mode="inSectionGroup"/>
+			  </xsl:otherwise>
+			</xsl:choose>
+		      </xsl:for-each-group>
 		    </div>
 	  </xsl:template>
 	
