@@ -87,7 +87,8 @@
 	        <xsl:apply-templates select="@*"/>
 	        <xsl:variable name="content" select="$header-doc//*[@iso:meta=$alias]/text()"/>
 	        <xsl:if test="$debug='true'">
-	           <xsl:message select="concat('set sdtContent ',$alias,'=',$content)"/>
+	           <xsl:message>set sdtContent to <xsl:value-of
+		   select="$alias"/> = <xsl:value-of select="$content"/></xsl:message>
 	        </xsl:if>
 	        <w:r>
 	        <!-- copy any existing rPr, it may contain character formatting  -->

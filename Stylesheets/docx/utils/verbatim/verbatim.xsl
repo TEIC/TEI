@@ -498,7 +498,7 @@
 
          <xsl:when test="string-length($ns-prefix) &gt; 0">
             <xsl:call-template name="verbatim-createElement">
-               <xsl:with-param name="name" select="concat($ns-prefix,':',local-name(.))"/>
+               <xsl:with-param name="name" select="concat($ns-prefix,concat(':',local-name(.)))"/>
                <xsl:with-param name="special"/>
             </xsl:call-template>
          </xsl:when>
