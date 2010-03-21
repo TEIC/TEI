@@ -36,8 +36,8 @@
 	  <xsl:import href="../utils/identity/identity.xsl"/>
 	  <xsl:import href="parameters.xsl"/>
 
-	  <xsl:include href="part2/part2.xsl"/>
-	  <xsl:include href="part0/part0.xsl"/>
+	  <xsl:include href="pass2/pass2.xsl"/>
+	  <xsl:include href="pass0/pass0.xsl"/>
 	
 	  <xsl:include href="dynamic/fields.xsl"/>
 	  <xsl:include href="dynamic/toc.xsl"/>
@@ -106,12 +106,12 @@
 	
 			<p>Modes:</p>
 			<ul>
-			<li> part0: a normalization
+			<li> pass0: a normalization
 			process for styles. Can also detect illegal styles.</li>
 						
-			<li> part2: 	
+			<li> pass2: 	
 			templates that are relevant in the second stage of the conversion are 
-			defined in mode "part2"</li>
+			defined in mode "pass2"</li>
 			
 			<li> inSectionGroup:
 			Defines a template
@@ -131,20 +131,20 @@
       </desc>
    </doc>
    <xsl:template match="/">
-     <!-- Do an initial normalization and store everything in $part0 -->
-     <xsl:variable name="part0">
-       <xsl:apply-templates mode="part0"/>
+     <!-- Do an initial normalization and store everything in $pass0 -->
+     <xsl:variable name="pass0">
+       <xsl:apply-templates mode="pass0"/>
      </xsl:variable>
      
      <!-- Do the main transformation and store everything in the variable part1 -->
      <xsl:variable name="part1">
-       <xsl:for-each select="$part0">
+       <xsl:for-each select="$pass0">
 	 <xsl:apply-templates/>
        </xsl:for-each>
      </xsl:variable>		  
      
      <!-- Do the final parse and create valid TEI -->
-     <xsl:apply-templates select="$part1" mode="part2"/>
+     <xsl:apply-templates select="$part1" mode="pass2"/>
      
      <xsl:call-template name="fromDocxFinalHook"/>
    </xsl:template>

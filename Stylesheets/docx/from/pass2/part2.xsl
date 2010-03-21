@@ -51,18 +51,18 @@
    </doc>
     
     
-    <xsl:template match="@*|comment()|processing-instruction()" mode="part2">
+    <xsl:template match="@*|comment()|processing-instruction()" mode="pass2">
         <xsl:copy-of select="."/>
     </xsl:template>
     
-    <xsl:template match="*" mode="part2">
+    <xsl:template match="*" mode="pass2">
         <xsl:copy>
-            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part2"/>
+            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
         </xsl:copy>
     </xsl:template>
     
     
-    <xsl:template match="text()" mode="part2">
+    <xsl:template match="text()" mode="pass2">
         <xsl:value-of select="."/>
     </xsl:template>
     
@@ -72,7 +72,7 @@
       </desc>
     </doc>
  
-   <xsl:template match="tei:p[not(*) and string-length(.)=0]" mode="part2"/>
+   <xsl:template match="tei:p[not(*) and string-length(.)=0]" mode="pass2"/>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
@@ -80,19 +80,19 @@
 	 </p>
       </desc>
     </doc>
-    <xsl:template match="tei:list/tei:list" mode="part2"/>
-    <xsl:template match="tei:item" mode="part2">
+    <xsl:template match="tei:list/tei:list" mode="pass2"/>
+    <xsl:template match="tei:item" mode="pass2">
       <xsl:choose>
 	<xsl:when test="not(*) and string-length(.)=0"/>
 	<xsl:otherwise>
 	  <item>
 	    <xsl:copy-of select="@*"/>
 	    <xsl:variable name="me" select="generate-id()"/>
-	    <xsl:apply-templates mode="part2"/>
+	    <xsl:apply-templates mode="pass2"/>
 	    <!-- find following sibling lists and notes -->
 	    <xsl:for-each select="following-sibling::tei:list[preceding-sibling::tei:item[1][generate-id()=$me]]">
 	      <list>
-		<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part2"/>
+		<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
 	      </list>
 	    </xsl:for-each>
 	  </item>
@@ -105,14 +105,14 @@
          <p>     Bold emdash in title, forget it </p>
       </desc>
     </doc>
-    <xsl:template match="tei:head/tei:hi[.=' ']" mode="part2"/>
+    <xsl:template match="tei:head/tei:hi[.=' ']" mode="pass2"/>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>     Zap emdashes at start of head </p>
       </desc>
     </doc>
-    <xsl:template match="tei:head/text()" mode="part2">
+    <xsl:template match="tei:head/text()" mode="pass2">
         <xsl:choose>
             <xsl:when test="starts-with(.,'— ')">
                 <xsl:value-of select="substring(.,3)"/>
@@ -134,7 +134,7 @@
          <p>     A &lt;seg&gt; which does nothing is not worth having </p>
       </desc>
     </doc>
-    <xsl:template match="tei:seg[not(@*)]" mode="part2">
+    <xsl:template match="tei:seg[not(@*)]" mode="pass2">
         <xsl:choose>
             <xsl:when test="parent::tei:formula and normalize-space(.)=''"/>
             <xsl:when test="parent::*/text()">
@@ -153,14 +153,14 @@
       </desc>
     </doc>
 
-    <xsl:template match="tei:text" mode="part2">
+    <xsl:template match="tei:text" mode="pass2">
         <text>
             <xsl:for-each select="tei:fw">
                 <xsl:copy-of select="."/>
             </xsl:for-each>
             <body>
                 <xsl:for-each select="tei:body/tei:*">
-                    <xsl:apply-templates select="." mode="part2"/>
+                    <xsl:apply-templates select="." mode="pass2"/>
                 </xsl:for-each>
             </body>
         </text>
@@ -171,16 +171,16 @@
          <p>     A &lt;p&gt; inside a listBibl is moved out</p>
       </desc>
     </doc>
-    <xsl:template match="tei:listBibl/tei:p" mode="part2"/>
+    <xsl:template match="tei:listBibl/tei:p" mode="pass2"/>
     
-    <xsl:template match="tei:listBibl" mode="part2">
+    <xsl:template match="tei:listBibl" mode="pass2">
         <xsl:for-each select="tei:p">
             <p>
-                <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part2"/>
+                <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
             </p>
         </xsl:for-each>
         <listBibl>
-            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part2"/>
+            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
         </listBibl>
     </xsl:template>
     
@@ -189,7 +189,7 @@
          <p>     Top of a weird gloss list </p>
       </desc>
     </doc>
-    <xsl:template match="tei:list[@type='gloss']/tei:label[.='where']" mode="part2">
+    <xsl:template match="tei:list[@type='gloss']/tei:label[.='where']" mode="pass2">
         <head>
             <xsl:apply-templates/>
         </head>
@@ -200,14 +200,14 @@
          <p>     A tab in a &lt;bibl&gt;? no. </p>
       </desc>
     </doc>
-    <xsl:template match="tei:bibl/tei:g[@ref='x:tab']" mode="part2"/>
+    <xsl:template match="tei:bibl/tei:g[@ref='x:tab']" mode="pass2"/>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>     A tab in a &lt;gloss&gt;? no. </p>
       </desc>
     </doc>
-    <xsl:template match="tei:gloss//tei:g[@ref='x:tab']" mode="part2"/>
+    <xsl:template match="tei:gloss//tei:g[@ref='x:tab']" mode="pass2"/>
     
     
     <!-- removed 2010-03-15, seems to screw up formulae
@@ -217,7 +217,7 @@
       </desc>
     </doc>
 
-    <xsl:template match="tei:formula//tei:g[@ref='x:tab']" mode="part2"/>
+    <xsl:template match="tei:formula//tei:g[@ref='x:tab']" mode="pass2"/>
     -->
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -225,7 +225,7 @@
          <p>     A tab in a &lt;head&gt;? no. </p>
       </desc>
     </doc>
-    <xsl:template match="tei:head/tei:g[@ref='x:tab']" mode="part2"/>
+    <xsl:template match="tei:head/tei:g[@ref='x:tab']" mode="pass2"/>
     
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -233,37 +233,37 @@
          <p>     An empty item</p>
       </desc>
     </doc>
-    <xsl:template match="tei:item[not(*) and not(text())]" mode="part2"/>
+    <xsl:template match="tei:item[not(*) and not(text())]" mode="pass2"/>
     
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap empty &lt;bibl&gt; </desc></doc>
     
-    <xsl:template match="tei:bibl[not(*) and not(text())]" mode="part2"/>
+    <xsl:template match="tei:bibl[not(*) and not(text())]" mode="pass2"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap empty &lt;availability&gt; </desc></doc>
    
     <xsl:template match="tei:availability[not(*) and not(text())]"
-		  mode="part2"/>
+		  mode="pass2"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap empty &lt;note&gt; </desc></doc>
    
     <xsl:template match="tei:note[not(*) and not(text())]"
-		  mode="part2">
+		  mode="pass2">
     </xsl:template>
 
-    <xsl:template match="tei:list[@type='gloss']/tei:item/tei:g[@ref='x:tab']" mode="part2"/>
+    <xsl:template match="tei:list[@type='gloss']/tei:item/tei:g[@ref='x:tab']" mode="pass2"/>
     
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Clean up <gi>hi</gi>; merge adjacent &lt;hi&gt; </desc>
   </doc>
 
-  <xsl:template match="tei:hi[not(@rend) and not(*) and string-length(.)=0]" mode="part2"/>
+  <xsl:template match="tei:hi[not(@rend) and not(*) and string-length(.)=0]" mode="pass2"/>
 
-  <xsl:template match="tei:hi[@rend]" mode="part2">
+  <xsl:template match="tei:hi[@rend]" mode="pass2">
     <xsl:variable name="r" select="@rend"/>
     <xsl:choose>
       <xsl:when test="count(*)=1 and not(text()) and tei:lb">
@@ -284,7 +284,7 @@
 	</xsl:variable>
 	<xsl:element name="{$ename}">
 	  <xsl:copy-of select="@*"/>
-	  <xsl:apply-templates mode="part2"/>
+	  <xsl:apply-templates mode="pass2"/>
 	  <xsl:call-template name="nextHi">
 	    <xsl:with-param name="r" select="$r"/>
 	  </xsl:call-template>
@@ -297,7 +297,7 @@
       <xsl:param name="r"/>
       <xsl:for-each select="following-sibling::node()[1]">
          <xsl:if test="self::tei:hi[@rend=$r]">
-            <xsl:apply-templates mode="part2"/>
+            <xsl:apply-templates mode="pass2"/>
             <xsl:call-template name="nextHi">
 	              <xsl:with-param name="r" select="$r"/>
             </xsl:call-template>
@@ -307,13 +307,13 @@
 
     <!-- 
      remove Table and Figure from start 
-     <xsl:template match="cals:table/cals:title[starts-with(.,'Table  — ')]" mode="part2">
+     <xsl:template match="cals:table/cals:title[starts-with(.,'Table  — ')]" mode="pass2">
      <title xmlns="http://www.oasis-open.org/specs/tm9901">
      <xsl:value-of select="substring-after(.,'Table  — ')"/>
      </title>
      </xsl:template>
      
-     <xsl:template match="tei:figure/tei:head[starts-with(.,'Figure  — ')]" mode="part2">
+     <xsl:template match="tei:figure/tei:head[starts-with(.,'Figure  — ')]" mode="pass2">
      <head>
      <xsl:value-of select="substring-after(.,'Figure  — ')"/>
      </head>

@@ -39,18 +39,18 @@
   <xsl:param name="word-directory">..</xsl:param>
   <xsl:param name="debug">false</xsl:param>  
   
-  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="part0">
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass0">
       <xsl:copy-of select="."/>
   </xsl:template>
   
   
-  <xsl:template match="*" mode="part0">
+  <xsl:template match="*" mode="pass0">
       <xsl:copy>
-         <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part0"/>
+         <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass0"/>
       </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="w:pStyle/@w:val|w:rStyle/@w:val" mode="part0">
+  <xsl:template match="w:pStyle/@w:val|w:rStyle/@w:val" mode="pass0">
       <xsl:variable name="old" select="."/>
       <xsl:variable name="new">
 	<xsl:for-each select="document(concat($word-directory,'/word/styles.xml'),/)">
