@@ -1138,7 +1138,7 @@
     </xsl:template>
 
 
-    <xsl:template match="tei:milestone[@unit='section']" mode="part2"/>
+    <xsl:template match="tei:milestone[@unit='section']" mode="pass2"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Deleted parts removed </desc></doc>

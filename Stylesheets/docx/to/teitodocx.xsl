@@ -902,32 +902,49 @@
     </xsl:template>
 
     <xsl:template match="tei:eg">
-        <xsl:call-template name="block-element">
-            <xsl:with-param name="style">
-                <xsl:choose>
-                    <xsl:when test="ancestor::tei:cell">egXMLTable</xsl:when>
-                    <xsl:otherwise>egXML</xsl:otherwise>
-                </xsl:choose>
-            </xsl:with-param>
-            <xsl:with-param name="select">
-                <tei:p>
-                    <xsl:attribute name="xml:space">preserve</xsl:attribute>
-                    <xsl:for-each select="tokenize(.,'\n')">
-                        <xsl:choose>
-                            <xsl:when test="position()=last()">
-                                <xsl:value-of select="."/>
-                            </xsl:when>
-                            <xsl:when test=".='' and position()=1"/>
-                            <xsl:otherwise>
-                                <xsl:value-of select="."/>
-                                <tei:lb/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:for-each>
-                </tei:p>
-            </xsl:with-param>
+      <xsl:variable name="s">
+	<xsl:choose>
+	  <xsl:when test="ancestor::tei:cell">egXMLTable</xsl:when>
+	  <xsl:otherwise>egXML</xsl:otherwise>
+	</xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="content">
+	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="egcopy"/>
+      </xsl:variable>
+      <xsl:for-each select="$content">
+	<xsl:call-template name="block-element">
+	  <xsl:with-param name="style" select="$s"/>
         </xsl:call-template>
+      </xsl:for-each>
     </xsl:template>
+
+    <xsl:template match="text()" mode="egcopy">
+      <xsl:for-each select="tokenize(.,'\n')">
+	<xsl:choose>
+	  <xsl:when test="position()=last()">
+	    <xsl:value-of select="."/>
+	  </xsl:when>
+	  <xsl:when test=".='' and position()=1">
+	    <xsl:value-of select="."/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="."/>
+	    <tei:lb/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template match="@*|comment()|processing-instruction()" mode="egcopy">
+      <xsl:copy-of select="."/>
+    </xsl:template>
+    
+    <xsl:template match="*" mode="egcopy">
+      <xsl:copy>
+	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="egcopy"/>
+      </xsl:copy>
+    </xsl:template>
+
 
 
     <!-- 

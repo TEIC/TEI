@@ -861,7 +861,7 @@
     <!-- second stage processing -->
     
     <!-- take care of numbers -->
-    <xsl:template match="text()" mode="part2">
+    <xsl:template match="text()" mode="pass2">
         <xsl:choose>
             <xsl:when test="parent::tei:num">
                 <xsl:value-of select="."/>
@@ -895,16 +895,16 @@
     
     <!-- look at the sections we have generated, and put
         them in <front> or <body> as appropriate-->
-    <xsl:template match="tei:text" mode="part2">
+    <xsl:template match="tei:text" mode="pass2">
         <text>
             <xsl:for-each select="tei:fw">
                 <xsl:copy-of select="."/>
             </xsl:for-each>
             <front>
                 <xsl:apply-templates
-                    select="tei:body/tei:div[@type='foreword']" mode="part2"/>
+                    select="tei:body/tei:div[@type='foreword']" mode="pass2"/>
                 <xsl:apply-templates
-                    select="tei:body/tei:div[@type='introduction']" mode="part2"/>
+                    select="tei:body/tei:div[@type='introduction']" mode="pass2"/>
             </front>
             <body>
                 <xsl:for-each select="tei:body">
@@ -915,7 +915,7 @@
                         <xsl:when test="self::tei:div[@type='bibliography']"/>
                         <xsl:when test="self::tei:div[@type='annex']"/>
                         <xsl:otherwise>
-                            <xsl:apply-templates select="." mode="part2"/>
+                            <xsl:apply-templates select="." mode="pass2"/>
                         </xsl:otherwise>
                     </xsl:choose>
 		  </xsl:for-each>
@@ -924,36 +924,36 @@
             <back>
                 <xsl:apply-templates
                     select="tei:body/tei:div[@type='bibliography'
-                    or @type='annex']" mode="part2"/>
+                    or @type='annex']" mode="pass2"/>
             </back>
             
             <!-- copy last milestone -->
-            <xsl:apply-templates select="tei:body/tei:milestone[count(//tei:body/tei:milestone)]" mode="part2"/>
+            <xsl:apply-templates select="tei:body/tei:milestone[count(//tei:body/tei:milestone)]" mode="pass2"/>
         </text>
     </xsl:template>
     
     <!-- inner lists and notes in lists must be moved to inside items -->
-    <xsl:template match="tei:list/tei:list" mode="part2"/>
-    <xsl:template match="tei:list/tei:note" mode="part2"/>
+    <xsl:template match="tei:list/tei:list" mode="pass2"/>
+    <xsl:template match="tei:list/tei:note" mode="pass2"/>
     
-    <xsl:template match="tei:item" mode="part2">
+    <xsl:template match="tei:item" mode="pass2">
         <item>
             <xsl:copy-of select="@*"/>
             <xsl:variable name="me" select="generate-id()"/>
-            <xsl:apply-templates mode="part2"/>
+            <xsl:apply-templates mode="pass2"/>
             <!-- find following sibling lists and notes -->
             <xsl:for-each
                 select="following-sibling::tei:list[preceding-sibling::tei:item[1][generate-id()=$me]]">
                 <list>
                     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"
-                        mode="part2"/>
+                        mode="pass2"/>
                 </list>
             </xsl:for-each>
             <xsl:for-each
                 select="following-sibling::tei:note[preceding-sibling::tei:item[1][generate-id()=$me]]">
                 <note>
                     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"
-                        mode="part2"/>
+                        mode="pass2"/>
                 </note>
             </xsl:for-each>
         </item>
@@ -1024,10 +1024,10 @@
 
     <!-- div with head only -->
     
-    <xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2"/>
+    <xsl:template match="tei:div[count(*)=1 and tei:head]" mode="pass2"/>
 
     <!-- spurious page break -->
-    <xsl:template match="tei:body/tei:p[count(*)=1 and tei:pb]" mode="part2"/>
+    <xsl:template match="tei:body/tei:p[count(*)=1 and tei:pb]" mode="pass2"/>
 
 </xsl:stylesheet>
 <!-- 

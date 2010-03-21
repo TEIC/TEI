@@ -1229,7 +1229,7 @@
 	<desc> Analyze numbers, marking them up to allow for decimal
 	character changing </desc>
       </doc>
-    <xsl:template match="text()" mode="part2">
+    <xsl:template match="text()" mode="pass2">
         <xsl:choose>
             <xsl:when test="parent::tei:num">
                 <xsl:value-of select="."/>
@@ -1264,14 +1264,14 @@
       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> look at the sections we have generated, and put
         them in &lt;front&gt; or &lt;body&gt; as appropriate</desc></doc>
-    <xsl:template match="tei:text" mode="part2">
+    <xsl:template match="tei:text" mode="pass2">
         <text>
             <xsl:for-each select="tei:fw">
                 <xsl:copy-of select="."/>
             </xsl:for-each>
             <front>
-                <xsl:apply-templates select="tei:body/tei:div[@type='foreword']" mode="part2"/>
-                <xsl:apply-templates select="tei:body/tei:div[@type='introduction']" mode="part2"/>
+                <xsl:apply-templates select="tei:body/tei:div[@type='foreword']" mode="pass2"/>
+                <xsl:apply-templates select="tei:body/tei:div[@type='introduction']" mode="pass2"/>
             </front>
             <body>
                 <xsl:for-each select="tei:body">
@@ -1282,7 +1282,7 @@
                             <xsl:when test="self::tei:div[@type='bibliography']"/>
                             <xsl:when test="self::tei:div[@type='annex']"/>
                             <xsl:otherwise>
-                                <xsl:apply-templates select="." mode="part2"/>
+                                <xsl:apply-templates select="." mode="pass2"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:for-each>
@@ -1290,33 +1290,33 @@
             </body>
             <back>
                 <xsl:apply-templates select="tei:body/tei:div[@type='bibliography' or @type='annex']"
-                                 mode="part2"/>
+                                 mode="pass2"/>
             </back>
 
             <!-- copy last milestone -->
-            <xsl:apply-templates select="tei:body/tei:milestone[count(//tei:body/tei:milestone)]" mode="part2"/>
+            <xsl:apply-templates select="tei:body/tei:milestone[count(//tei:body/tei:milestone)]" mode="pass2"/>
         </text>
     </xsl:template>
 
       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> inner lists and notes in lists must be moved to inside items </desc></doc>
-    <xsl:template match="tei:list/tei:list" mode="part2"/>
-    <xsl:template match="tei:list/tei:note" mode="part2"/>
+    <xsl:template match="tei:list/tei:list" mode="pass2"/>
+    <xsl:template match="tei:list/tei:note" mode="pass2"/>
 
-    <xsl:template match="tei:item" mode="part2">
+    <xsl:template match="tei:item" mode="pass2">
         <item>
             <xsl:copy-of select="@*"/>
             <xsl:variable name="me" select="generate-id()"/>
-            <xsl:apply-templates mode="part2"/>
+            <xsl:apply-templates mode="pass2"/>
             <!-- find following sibling lists and notes -->
             <xsl:for-each select="following-sibling::tei:list[preceding-sibling::tei:item[1][generate-id()=$me]]">
                 <list>
-                    <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part2"/>
+                    <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
                 </list>
             </xsl:for-each>
             <xsl:for-each select="following-sibling::tei:note[preceding-sibling::tei:item[1][generate-id()=$me]]">
                 <note>
-                    <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part2"/>
+                    <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
                 </note>
             </xsl:for-each>
         </item>
@@ -1437,15 +1437,15 @@
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap &lt;div&gt; with head only </desc></doc>
     
-    <xsl:template match="tei:div[count(*)=1 and tei:head]" mode="part2"/>
+    <xsl:template match="tei:div[count(*)=1 and tei:head]" mode="pass2"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap spurious page break </desc></doc>
-    <xsl:template match="tei:body/tei:p[count(*)=1 and tei:pb]" mode="part2"/>
+    <xsl:template match="tei:body/tei:p[count(*)=1 and tei:pb]" mode="pass2"/>
 
-    <xsl:template match="w:bookmarkEnd" mode="part0"/>
+    <xsl:template match="w:bookmarkEnd" mode="pass0"/>
 
-    <xsl:template match="tei:div[@type='termsAndDefinitions']" mode="part2">
+    <xsl:template match="tei:div[@type='termsAndDefinitions']" mode="pass2">
       <xsl:copy>
 	<xsl:copy-of select="@*"/>
 	<xsl:variable name="name">
@@ -1457,7 +1457,7 @@
 	      <xsl:apply-templates select="." mode="group"/>
 	    </xsl:when>
 	    <xsl:otherwise>
-	      <xsl:apply-templates select="current-group()" mode="part2"/>
+	      <xsl:apply-templates select="current-group()" mode="pass2"/>
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:for-each-group>
@@ -1476,7 +1476,7 @@
 	                 <xsl:apply-templates select="." mode="group"/>
 	              </xsl:when>
 	              <xsl:otherwise>
-	                 <xsl:apply-templates select="current-group()" mode="part2"/>
+	                 <xsl:apply-templates select="current-group()" mode="pass2"/>
 	              </xsl:otherwise>
 	           </xsl:choose>
          </xsl:for-each-group>
@@ -1485,23 +1485,23 @@
 
 
   <xsl:template match="*" mode="group">
-      <xsl:apply-templates select="." mode="part2"/>
+      <xsl:apply-templates select="." mode="pass2"/>
   </xsl:template>
 
   <xsl:template match="tei:note/tei:p/tei:hi[@rend='FootnoteReference']"
-		mode="part2" priority="1001">
+		mode="pass2" priority="1001">
   </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Merge adjacent &lt;termEntry&gt; with same ID</desc></doc>
-   <xsl:template match="tbx:termEntry" mode="part2">
+   <xsl:template match="tbx:termEntry" mode="pass2">
       <xsl:variable name="ID" select="@id"/>
       <xsl:choose>
          <xsl:when test="$ID=preceding-sibling::tbx:termEntry/@id"/>
          <xsl:when test="not(following-sibling::tbx:termEntry[@id=$ID])">
             <xsl:copy>
 	              <xsl:copy-of select="@*"/>
-	              <xsl:apply-templates mode="part2"/>
+	              <xsl:apply-templates mode="pass2"/>
             </xsl:copy>
          </xsl:when>
          <xsl:otherwise>
@@ -1510,18 +1510,18 @@
 	              <xsl:for-each select="tbx:langSet">
 	                 <xsl:copy>
 	                    <xsl:copy-of select="@*"/>
-	                    <xsl:apply-templates mode="part2" select="../tbx:note"/>
-	                    <xsl:apply-templates mode="part2" select="../tbx:descripGrp"/>
-	                    <xsl:apply-templates mode="part2"/>
+	                    <xsl:apply-templates mode="pass2" select="../tbx:note"/>
+	                    <xsl:apply-templates mode="pass2" select="../tbx:descripGrp"/>
+	                    <xsl:apply-templates mode="pass2"/>
 	                 </xsl:copy>
 	              </xsl:for-each>
 	
 	              <xsl:for-each select="following-sibling::tbx:termEntry[@id=$ID]/tbx:langSet">
 	                 <xsl:copy>
 	                    <xsl:copy-of select="@*"/>
-	                    <xsl:apply-templates mode="part2" select="tbx:note"/>
-	                    <xsl:apply-templates mode="part2" select="../tbx:descripGrp"/>
-	                    <xsl:apply-templates mode="part2"/>
+	                    <xsl:apply-templates mode="pass2" select="tbx:note"/>
+	                    <xsl:apply-templates mode="pass2" select="../tbx:descripGrp"/>
+	                    <xsl:apply-templates mode="pass2"/>
 	                 </xsl:copy>
 	              </xsl:for-each>
             </xsl:copy>
@@ -1529,14 +1529,14 @@
       </xsl:choose>
    </xsl:template>
 
-   <xsl:template match="tbx:descrip" mode="part2">
+   <xsl:template match="tbx:descrip" mode="pass2">
       <xsl:copy>
          <xsl:copy-of select="@*"/>
-         <xsl:apply-templates mode="part2"/>
+         <xsl:apply-templates mode="pass2"/>
          <xsl:for-each select="ancestor::tbx:termEntry/following-sibling::*[1][self::tei:list]">
             <xsl:copy>
 	              <xsl:copy-of select="@*"/>
-	              <xsl:apply-templates mode="part2"/>
+	              <xsl:apply-templates mode="pass2"/>
             </xsl:copy>
          </xsl:for-each>
       </xsl:copy>
@@ -1545,7 +1545,7 @@
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap empty &lt;list&gt; and one after termEntry </desc></doc>
 
-   <xsl:template match="tei:list" mode="part2">
+   <xsl:template match="tei:list" mode="pass2">
      <xsl:choose>
        <xsl:when test="preceding-sibling::*[1][self::tbx:termEntry]">
        </xsl:when>
@@ -1554,27 +1554,27 @@
        <xsl:otherwise>
 	 <xsl:copy>
 	   <xsl:copy-of select="@*"/>
-	   <xsl:apply-templates mode="part2"/>
+	   <xsl:apply-templates mode="pass2"/>
 	 </xsl:copy>
        </xsl:otherwise>
      </xsl:choose>
    </xsl:template>
 
-   <xsl:template match="tbx:term" mode="part2">
+   <xsl:template match="tbx:term" mode="pass2">
       <xsl:copy>
          <xsl:attribute name="id">
             <xsl:value-of select="ancestor::tbx:termEntry/@id"/>
             <xsl:text>-</xsl:text>
             <xsl:number level="any" from="tbx:termEntry"/>
          </xsl:attribute>
-         <xsl:apply-templates mode="part2"/>
+         <xsl:apply-templates mode="pass2"/>
       </xsl:copy>
    </xsl:template>
 
 <!--          <p><hi rend="bold">4.1</hi><g ref="x:tab">	</c>A level 1
 subclause without a title.</p> -->
 <!--
-    <xsl:template match="tei:div[@type='headless']/tei:p" mode="part2">
+    <xsl:template match="tei:div[@type='headless']/tei:p" mode="pass2">
      <p>
        <xsl:for-each select="*|text()|processing-instruction">
 	 <xsl:choose>
@@ -1587,7 +1587,7 @@ subclause without a title.</p> -->
 	     </xsl:if>
 	   </xsl:when>
 	   <xsl:otherwise>
-	     <xsl:apply-templates mode="part2" select="."/>
+	     <xsl:apply-templates mode="pass2" select="."/>
 	   </xsl:otherwise>
 	 </xsl:choose>
        </xsl:for-each>
@@ -1596,7 +1596,7 @@ subclause without a title.</p> -->
 -->
 
    <!--
-  <xsl:template match="tbx:descripGrp" mode="part2">
+  <xsl:template match="tbx:descripGrp" mode="pass2">
     <xsl:copy>
       <xsl:apply-templates select="tbx:descrip"/>
       <xsl:if test="tbx:descrip/tei:hi[@rend='source']">
@@ -1607,7 +1607,7 @@ subclause without a title.</p> -->
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="tbx:descrip[@type='definition']/tei:source" mode="part2"/>
+  <xsl:template match="tbx:descrip[@type='definition']/tei:source" mode="pass2"/>
    -->
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -1615,7 +1615,7 @@ subclause without a title.</p> -->
     supported; identify headings</desc>
     </doc>
 
-    <xsl:template match="w:p|w:r" mode="part0">
+    <xsl:template match="w:p|w:r" mode="pass0">
       <xsl:if test="w:pPr/w:pStyle/@w:val or w:rPr/w:rStyle/@w:val">
 	<xsl:variable name="old">
 	  <xsl:value-of select="w:pPr/w:pStyle/@w:val|w:rPr/w:rStyle/@w:val"/>
@@ -1646,7 +1646,7 @@ subclause without a title.</p> -->
 			 select="teidocx:heading-level(.)"/>
 	</xsl:if>
       </xsl:if>
-      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="part0"/>
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass0"/>
     </xsl:copy>
   </xsl:template>
 
@@ -1658,7 +1658,7 @@ subclause without a title.</p> -->
       <xsl:copy-of select="."/>
     </xsl:template>
 
-    <xsl:template match="iso:error" mode="part2">
+    <xsl:template match="iso:error" mode="pass2">
       <xsl:processing-instruction name="ISOerror">
 	<xsl:value-of select="."/>
       </xsl:processing-instruction>
