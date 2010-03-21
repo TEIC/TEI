@@ -607,6 +607,10 @@
 	    <xsl:when
 	    test="$style=$TableNoteHeadingChar"/>
 	-->
+
+	    <!-- stored elsewhere in TBX -->
+            <xsl:when test="$style='gender'"/>
+
 	    <xsl:when test="$style='CommentReference'">
 	      <xsl:apply-templates/>
 	    </xsl:when>
@@ -696,7 +700,7 @@
                     <xsl:apply-templates/>
                 </seg>
             </xsl:when>
-	        <xsl:when test="$style= 'domain'        or $style = 'gender'        or $style = 'geographicalUse'        or $style = 'language'        or $style = 'partOfSpeech'        or $style = 'pronunciation'        or $style = 'source'        or $style = 'termRef'">
+	        <xsl:when test="$style= 'domain'        or $style = 'geographicalUse'        or $style = 'language'        or $style = 'partOfSpeech'        or $style = 'pronunciation'        or $style = 'source'        or $style = 'termRef'">
 	           <hi rend="{$style}">
 		             <xsl:apply-templates/>
 	           </hi>

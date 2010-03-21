@@ -454,12 +454,12 @@
 <xsl:when test="@w:char='F0FD'">&#xF8FD;</xsl:when><!--	# RIGHT CURLY BRACKET MID	# bracerightmid (CUS) -->
 <xsl:when test="@w:char='F0FE'">&#xF8FE;</xsl:when><!--	# RIGHT CURLY BRACKET BOTTOM	# bracerightbt (CUS) -->
 	<xsl:otherwise> 	  
-	  <c iso:font="{@w:font}" n="{@w:char}"/>
+	  <g iso:font="{@w:font}" n="{@w:char}"/>
 	</xsl:otherwise>       
-</xsl:choose> 	
-</xsl:when>
+      </xsl:choose> 	
+    </xsl:when>
 	<xsl:otherwise> 	  
-	  <c iso:font="{@w:font}" n="{@w:char}"/>
+	  <g iso:font="{@w:font}" n="{@w:char}"/>
 	</xsl:otherwise>       
       </xsl:choose>
     </xsl:template>     

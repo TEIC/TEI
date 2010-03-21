@@ -1,4 +1,4 @@
-DIRS=odds2 xhtml2 common2 slides2 latex2 fo2 docx profiles tools2
+DIRS=odds2 xhtml2 common2 slides2 latex2 fo2 epub docx profiles tools2
 OLDDIRS=slides fo html common latex odds
 PREFIX=/usr
 OXY=`locate stylesheetDocumentation.sh | head -1`
