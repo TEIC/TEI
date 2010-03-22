@@ -45,7 +45,7 @@
   <xsl:param name="institution"/>
   <xsl:param name="uid"/>
   <xsl:param name="odd">true</xsl:param>
-
+  <xsl:param name="debug">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[epub] Suppress normal page footer      </desc>
    </doc>
@@ -128,32 +128,57 @@
             <xsl:call-template name="mainTOC"/>
           </TOC>
         </xsl:variable>
+	<xsl:if test="$debug='true'">
+	  <xsl:message>write file OEBPS/stylesheet.css</xsl:message>
+	</xsl:if>
         <xsl:result-document method="text" href="OEBPS/stylesheet.css">
           <xsl:for-each select="tokenize(unparsed-text($cssFile),
 				'\r?\n')">
+	<xsl:if test="$debug='true'">
+	  <xsl:message>reading file <xsl:value-of select="$cssFile"/></xsl:message>
+	</xsl:if>
 	    <xsl:call-template name="purgeCSS"/>
           </xsl:for-each>
           <xsl:if test="$odd='true'">
             <xsl:for-each select="tokenize(unparsed-text($cssODDFile),         '\r?\n')">
+	      <xsl:if test="$debug='true'">
+		<xsl:message>reading file <xsl:value-of select="$cssODDFile"/></xsl:message>
+	      </xsl:if>
 	      <xsl:call-template name="purgeCSS"/>
             </xsl:for-each>
           </xsl:if>
         </xsl:result-document>
+	<xsl:if test="$debug='true'">
+	  <xsl:message>write file OEBPS/print.css</xsl:message>
+	</xsl:if>
         <xsl:result-document method="text" href="OEBPS/print.css">
-          <xsl:for-each select="tokenize(unparsed-text($cssPrintFile),       '\r?\n')">
+          <xsl:for-each select="tokenize(unparsed-text($cssPrintFile),
+				'\r?\n')">
+	    <xsl:if test="$debug='true'">
+	      <xsl:message>reading file <xsl:value-of select="$cssPrintFile"/></xsl:message>
+	    </xsl:if>
 	    <xsl:call-template name="purgeCSS"/>
           </xsl:for-each>
         </xsl:result-document>
+	<xsl:if test="$debug='true'">
+	  <xsl:message>write file mimetype</xsl:message>
+	</xsl:if>
         <xsl:result-document method="text" href="mimetype">
           <xsl:text>application/epub+zip</xsl:text>
         </xsl:result-document>
+	<xsl:if test="$debug='true'">
+	  <xsl:message>write file META-INF/container.xml</xsl:message>
+	</xsl:if>
         <xsl:result-document method="xml" href="META-INF/container.xml">
           <container xmlns="urn:oasis:names:tc:opendocument:xmlns:container" version="1.0">
             <rootfiles>
               <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
             </rootfiles>
           </container>
-        </xsl:result-document>
+	</xsl:result-document>
+	  <xsl:if test="$debug='true'">
+	    <xsl:message>write file OEBPS/content.opf</xsl:message>
+	</xsl:if>
         <xsl:result-document href="OEBPS/content.opf" method="xml">
           <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" version="2.0">
             <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opf="http://www.idpf.org/2007/opf">
@@ -179,8 +204,9 @@
                 <xsl:call-template name="generateLicence"/>
               </dc:rights>
             </metadata>
-            <manifest>
-              <item id="stylesheet.css" href="stylesheet.css" media-type="text/css"/>
+
+	    <manifest>
+	      <item id="stylesheet.css" href="stylesheet.css" media-type="text/css"/>
               <item id="print.css" href="print.css" media-type="text/css"/>
               <xsl:if test="$odd='true'">
                 <item id="odd.css" href="odd.css" media-type="text/css"/>
@@ -198,13 +224,13 @@
                   </xsl:when>
                   <xsl:when test="html:ul">
                     <xsl:for-each select="html:ul/html:li">
-                      <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
-                        <xsl:attribute name="id">
-                          <xsl:text>section</xsl:text>
-                          <xsl:number count="html:li" level="any"/>
-                        </xsl:attribute>
-                      </item>
-                    </xsl:for-each>
+		      <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
+			<xsl:attribute name="id">
+			  <xsl:text>section</xsl:text>
+			  <xsl:number count="html:li" level="any"/>
+			</xsl:attribute>
+		      </item>
+		    </xsl:for-each>
                   </xsl:when>
                   <xsl:otherwise>
 		</xsl:otherwise>
@@ -221,7 +247,7 @@
                     <xsl:when test="contains(@url,'.png')">image/png</xsl:when>
                     <xsl:otherwise>image/jpeg</xsl:otherwise>
                   </xsl:choose>
-                </xsl:variable>
+		</xsl:variable>
                 <item href="{@url}" id="image-{$ID}" media-type="{$mimetype}"/>
               </xsl:for-each>
               <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
@@ -251,7 +277,8 @@
                 </xsl:choose>
               </xsl:for-each>
             </spine>
-            <guide>
+
+	    <guide>
               <reference type="text" title="Text" href="index.html"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                 <xsl:choose>
@@ -275,7 +302,10 @@
               </xsl:for-each>
             </guide>
           </package>
-        </xsl:result-document>
+	</xsl:result-document>
+	  <xsl:if test="$debug='true'">
+	    <xsl:message>write file OEBPS/toc.ncx</xsl:message>
+	  </xsl:if>
         <xsl:result-document href="OEBPS/toc.ncx" method="xml">
           <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
             <head>
@@ -327,7 +357,10 @@
               </xsl:for-each>
             </navMap>
           </ncx>
-        </xsl:result-document>
+	</xsl:result-document>
+	  <xsl:if test="$debug='true'">
+	    <xsl:message>write file OEBPS/page-template.xpgt</xsl:message>
+	  </xsl:if>
         <xsl:result-document method="xml" href="OEBPS/page-template.xpgt">
           <ade:template xmlns="http://www.w3.org/1999/xhtml" xmlns:ade="http://ns.adobe.com/2006/ade" xmlns:fo="http://www.w3.org/1999/XSL/Format">
             <fo:layout-master-set>
