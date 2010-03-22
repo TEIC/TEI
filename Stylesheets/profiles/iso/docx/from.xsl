@@ -610,6 +610,9 @@
 
 	    <!-- stored elsewhere in TBX -->
             <xsl:when test="$style='gender'"/>
+            <xsl:when test="$style='pronunciation'"/>
+            <xsl:when test="$style='nonVerbalRepresentation'"/>
+            <xsl:when test="$style='partOfSpeech'"/>
 
 	    <xsl:when test="$style='CommentReference'">
 	      <xsl:apply-templates/>
@@ -700,7 +703,7 @@
                     <xsl:apply-templates/>
                 </seg>
             </xsl:when>
-	        <xsl:when test="$style= 'domain'        or $style = 'geographicalUse'        or $style = 'language'        or $style = 'partOfSpeech'        or $style = 'pronunciation'        or $style = 'source'        or $style = 'termRef'">
+	        <xsl:when test="$style= 'domain' or $style = 'geographicalUse'  or $style = 'language' or $style = 'source'  or $style = 'termRef'">
 	           <hi rend="{$style}">
 		             <xsl:apply-templates/>
 	           </hi>
@@ -995,7 +998,16 @@
 				    <term>
 				      <xsl:apply-templates/>
 				    </term>
-				    <termNote type="partOfSpeech">noun</termNote>
+				    <termNote type="partOfSpeech">
+				      <xsl:choose>
+					<xsl:when test="w:r/w:rPr/w:rStyle/@w:val='partOfSpeech'">
+					    <xsl:value-of select="w:r[w:rPr/w:rStyle/@w:val='partOfSpeech']"/>
+					</xsl:when>
+					<xsl:otherwise>
+					  <xsl:text>noun</xsl:text>
+					</xsl:otherwise>
+				      </xsl:choose>
+				    </termNote>
 				    <termNote type="administrativeStatus">
 				      <xsl:choose>
 					<xsl:when test="$Thing='termPreferred'">preferredTerm-admn-sts</xsl:when>
@@ -1019,6 +1031,16 @@
 					</xsl:for-each>
 				      </termNote>
 				    </xsl:if>
+
+				    <xsl:if test="w:r/w:rPr/w:rStyle/@w:val='pronunciation'">
+				      <termNote type="pronunciation">
+					<xsl:for-each
+					    select="w:r[w:rPr/w:rStyle/@w:val='pronunciation']">
+					  <xsl:apply-templates/>
+					</xsl:for-each>
+				      </termNote>
+				    </xsl:if>
+
 				  </termGrp>
 				</ntig>
 			      </xsl:otherwise>
@@ -1571,7 +1593,21 @@
             <xsl:text>-</xsl:text>
             <xsl:number level="any" from="tbx:termEntry"/>
          </xsl:attribute>
-         <xsl:apply-templates mode="pass2"/>
+	 <xsl:choose>
+	   <xsl:when test="tei:seg or not(*)">
+	     <xsl:analyze-string select="." regex="(.*),\s$">
+	       <xsl:matching-substring>
+		   <xsl:value-of select="regex-group(1)"/>
+	       </xsl:matching-substring>
+	       <xsl:non-matching-substring>
+		 <xsl:value-of select="."/>
+	       </xsl:non-matching-substring>
+	     </xsl:analyze-string>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:apply-templates mode="pass2"/>
+	   </xsl:otherwise>
+	 </xsl:choose>
       </xsl:copy>
    </xsl:template>
 
@@ -1674,9 +1710,7 @@ subclause without a title.</p> -->
       </desc>
    </doc>
     <xsl:template match="w:object">
-      <iso:error>
-	Invalid Word object found
-      </iso:error>
+      <hi rend="color(red)">Invalid Word object found<iso:error>Invalid Word object found</iso:error></hi>
     </xsl:template>
 
     <xsl:template name="identifyChange">

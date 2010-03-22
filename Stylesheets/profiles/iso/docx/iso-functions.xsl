@@ -220,6 +220,8 @@
       <xsl:param name="element"/>
       <xsl:for-each select="$element">
 	<xsl:choose>
+	  <xsl:when test="self::tbx:term">true</xsl:when>
+	  <xsl:when test="self::tbx:termGrp">true</xsl:when>
 	  <xsl:when test="self::m:oMath">true</xsl:when>
 	  <xsl:when test="self::m:oMath">true</xsl:when>
 	  <xsl:when test="self::mml:math">true</xsl:when>

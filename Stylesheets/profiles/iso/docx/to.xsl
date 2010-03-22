@@ -104,20 +104,11 @@
     </xsl:template>
     <xsl:template match="tbx:descrip" mode="get-style">Definition</xsl:template>
     <xsl:template match="tbx:note" mode="get-style">noteTermEntry</xsl:template>
-    <xsl:template match="tei:hi[@rend='gender']" mode="get-style">
-      <xsl:text>gender</xsl:text>
-    </xsl:template>
     <xsl:template match="tei:hi[@rend='geographicalUse']" mode="get-style">
       <xsl:text>geographicalUse</xsl:text>
     </xsl:template>
     <xsl:template match="tei:hi[@rend='language']" mode="get-style">
       <xsl:text>language</xsl:text>
-    </xsl:template>
-    <xsl:template match="tei:hi[@rend='partOfSpeech']" mode="get-style">
-      <xsl:text>partOfSpeech</xsl:text>
-    </xsl:template>
-    <xsl:template match="tei:hi[@rend='pronunciation']" mode="get-style">
-      <xsl:text>pronunciation</xsl:text>
     </xsl:template>
     <xsl:template match="tei:hi[@rend='source']" mode="get-style">
       <xsl:text>source</xsl:text>
@@ -125,13 +116,13 @@
     <xsl:template match="tei:hi[@rend='termRef']" mode="get-style">
       <xsl:text>termRef</xsl:text>
     </xsl:template>
-    
-       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
-        Inline Templates:
-        Here we can overwrite how inline elements are rendered
+	Inline Templates:
+	Here we can overwrite how inline elements are rendered
       </desc>
-       </doc>
+    </doc>
 
     <xsl:template match="tei:c[@iso:font and @n]">
         <w:r>
@@ -804,11 +795,9 @@
 	</xsl:variable>
 	<xsl:call-template name="block-element">
 	  <xsl:with-param name="pPr">
-	    <xsl:if test="not($style='')">
 	      <w:pPr>
 		<w:pStyle w:val="{$style}"/>
 	      </w:pPr>
-	    </xsl:if>
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:for-each>
@@ -824,8 +813,6 @@
     <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
   </xsl:template>
   
-  <xsl:template match="tbx:termGrp/tbx:termNote"/>
-
    <xsl:template match="tbx:descrip">
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">
@@ -850,6 +837,41 @@
          <xsl:with-param name="style">entrySource</xsl:with-param>
       </xsl:call-template>
    </xsl:template>
+
+  <xsl:template match="tbx:termGrp/tbx:termNote">
+    <xsl:choose>
+      <xsl:when test="@type='grammaticalGender'">
+	<w:r><w:t xml:space='preserve'>, </w:t></w:r>
+	<w:r>
+	  <w:rPr>
+	    <w:rStyle w:val="gender"/>
+	  </w:rPr>
+	  <w:t>
+	    <xsl:choose>
+	      <xsl:when test=".='masculine'">m.</xsl:when>
+	      <xsl:when test=".='feminine'">f.</xsl:when>
+	    </xsl:choose>
+	  </w:t>
+	</w:r>
+      </xsl:when>
+      <xsl:when test="@type='partOfSpeech'">
+	<xsl:if test="not(.='noun')">
+	  <w:r><w:t xml:space='preserve'>, </w:t></w:r>
+	  <xsl:apply-templates>
+	    <xsl:with-param
+		name="character-style">partOfSpeech</xsl:with-param>
+	  </xsl:apply-templates>
+	</xsl:if>
+      </xsl:when>  
+      <xsl:when test="@type='pronunciation'">
+	<w:r><w:t xml:space='preserve'>, </w:t></w:r>
+	<xsl:apply-templates>
+	  <xsl:with-param
+	      name="character-style">pronunciation</xsl:with-param>
+	</xsl:apply-templates>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
