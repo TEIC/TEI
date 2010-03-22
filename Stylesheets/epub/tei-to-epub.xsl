@@ -135,14 +135,15 @@
           <xsl:for-each select="tokenize(unparsed-text($cssFile),
 				'\r?\n')">
 	<xsl:if test="$debug='true'">
-	  <xsl:message>reading file <xsl:value-of select="$cssFile"/></xsl:message>
+	  <xsl:message>reading file <xsl:value-of select="$cssFile"/>: <xsl:value-of select="."/></xsl:message>
 	</xsl:if>
 	    <xsl:call-template name="purgeCSS"/>
           </xsl:for-each>
           <xsl:if test="$odd='true'">
             <xsl:for-each select="tokenize(unparsed-text($cssODDFile),         '\r?\n')">
 	      <xsl:if test="$debug='true'">
-		<xsl:message>reading file <xsl:value-of select="$cssODDFile"/></xsl:message>
+		<xsl:message>reading file <xsl:value-of
+		select="$cssODDFile"/>:  <xsl:value-of select="."/></xsl:message>
 	      </xsl:if>
 	      <xsl:call-template name="purgeCSS"/>
             </xsl:for-each>
@@ -155,7 +156,8 @@
           <xsl:for-each select="tokenize(unparsed-text($cssPrintFile),
 				'\r?\n')">
 	    <xsl:if test="$debug='true'">
-	      <xsl:message>reading file <xsl:value-of select="$cssPrintFile"/></xsl:message>
+	      <xsl:message>reading file <xsl:value-of
+	      select="$cssPrintFile"/>:  <xsl:value-of select="."/></xsl:message>
 	    </xsl:if>
 	    <xsl:call-template name="purgeCSS"/>
           </xsl:for-each>
