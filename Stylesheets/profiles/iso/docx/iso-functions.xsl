@@ -73,6 +73,9 @@
 	<xsl:when test="$element/../@type='annex'">
 	  <xsl:value-of select="$ANNEX"/>
 	</xsl:when>
+	<xsl:when test="$element/../@type='termHeading'">
+	  <xsl:value-of select="concat('termHeading',$level)"/>
+	</xsl:when>
 	<xsl:when test="$element/parent::tei:div/@type='annexSection'">
 	  <xsl:value-of select="concat('a',$level)"/>
 	</xsl:when>
