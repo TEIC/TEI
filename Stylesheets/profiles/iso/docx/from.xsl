@@ -1586,16 +1586,29 @@
      </xsl:choose>
    </xsl:template>
 
+   <xsl:template match="tbx:note/text()" mode="pass2">
+     <xsl:analyze-string select="." regex="(NOTE|ANMERKUNG)[^:]+:\s(.*)">
+       <xsl:matching-substring>
+	 <xsl:value-of select="regex-group(2)"/>
+       </xsl:matching-substring>
+       <xsl:non-matching-substring>
+	 <xsl:value-of select="."/>
+       </xsl:non-matching-substring>
+     </xsl:analyze-string>
+   </xsl:template>
+
    <xsl:template match="tbx:term" mode="pass2">
+<xsl:message>TERM: <xsl:copy-of select="."/></xsl:message>
       <xsl:copy>
          <xsl:attribute name="id">
             <xsl:value-of select="ancestor::tbx:termEntry/@id"/>
             <xsl:text>-</xsl:text>
             <xsl:number level="any" from="tbx:termEntry"/>
          </xsl:attribute>
+	 <xsl:variable name="s" select="replace(.,'DEPRECATED: ','')"/>
 	 <xsl:choose>
 	   <xsl:when test="tei:seg or not(*)">
-	     <xsl:analyze-string select="." regex="(.*),\s$">
+	     <xsl:analyze-string select="$s" regex="(.+),\s$">
 	       <xsl:matching-substring>
 		   <xsl:value-of select="regex-group(1)"/>
 	       </xsl:matching-substring>
