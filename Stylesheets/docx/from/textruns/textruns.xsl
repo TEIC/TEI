@@ -228,7 +228,7 @@
         <xsl:variable name="t">
             <xsl:choose>
                 <xsl:when test="@xml:space='preserve' and string-length(normalize-space(.))=0">
-                    <xsl:text>&#160;</xsl:text> 
+                    <seg> </seg>
                 </xsl:when>
                 <xsl:when test="@xml:space='preserve'">
                     <xsl:value-of select="."/>

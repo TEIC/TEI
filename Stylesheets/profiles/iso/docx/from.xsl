@@ -1020,27 +1020,9 @@
 				    <xsl:if test="w:r/w:rPr/w:rStyle/@w:val='abbreviatedForm'">
 				      <termNote type="termType">abbreviation</termNote>
 				    </xsl:if>
-				    <xsl:if test="w:r/w:rPr/w:rStyle/@w:val='gender'">
-				      <termNote type="grammaticalGender">
-					<xsl:for-each select="w:r[w:rPr/w:rStyle/@w:val='gender']">
-					  <xsl:choose>
-					    <xsl:when test=".='m'">masculine</xsl:when>
-					    <xsl:when test=".='f'">feminine</xsl:when>
-					    <xsl:otherwise>otherGender</xsl:otherwise>
-					  </xsl:choose>
-					</xsl:for-each>
-				      </termNote>
-				    </xsl:if>
-
-				    <xsl:if test="w:r/w:rPr/w:rStyle/@w:val='pronunciation'">
-				      <termNote type="pronunciation">
-					<xsl:for-each
-					    select="w:r[w:rPr/w:rStyle/@w:val='pronunciation']">
-					  <xsl:apply-templates/>
-					</xsl:for-each>
-				      </termNote>
-				    </xsl:if>
-
+				    <xsl:apply-templates select="w:r[w:rPr/w:rStyle/@w:val='geographicalUse']"/>
+				    <xsl:apply-templates select="w:r[w:rPr/w:rStyle/@w:val='gender']"/>
+				    <xsl:apply-templates select="w:r[w:rPr/w:rStyle/@w:val='pronunciation']"/>
 				  </termGrp>
 				</ntig>
 			      </xsl:otherwise>
@@ -1052,6 +1034,29 @@
 	        </xsl:choose>
 	     </xsl:for-each-group>
     </xsl:template>
+
+    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='pronunciation']">
+      <termNote type="pronunciation">
+	<xsl:apply-templates/>
+      </termNote>
+    </xsl:template>
+
+    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='geographicalUse']">
+      <termNote type="geographicalUsage">
+	<xsl:apply-templates/>
+      </termNote>
+    </xsl:template>
+
+    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='gender']">
+      <termNote type="grammaticalGender">
+	<xsl:choose>
+	  <xsl:when test=".='m'">masculine</xsl:when>
+	  <xsl:when test=".='f'">feminine</xsl:when>
+	  <xsl:otherwise>otherGender</xsl:otherwise>
+	</xsl:choose>
+      </termNote>
+    </xsl:template>
+
     <xsl:template name="cellContents">
       <xsl:choose>
 	        <xsl:when test="w:p/w:pPr/w:pStyle[@w:val='TermNum']">
@@ -1598,7 +1603,6 @@
    </xsl:template>
 
    <xsl:template match="tbx:term" mode="pass2">
-<xsl:message>TERM: <xsl:copy-of select="."/></xsl:message>
       <xsl:copy>
          <xsl:attribute name="id">
             <xsl:value-of select="ancestor::tbx:termEntry/@id"/>
