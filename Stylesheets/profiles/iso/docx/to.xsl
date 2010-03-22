@@ -838,7 +838,7 @@
       </xsl:call-template>
    </xsl:template>
 
-  <xsl:template match="tbx:termGrp/tbx:termNote">
+  <xsl:template match="tbx:termNote">
     <xsl:choose>
       <xsl:when test="@type='grammaticalGender'">
 	<w:r><w:t xml:space='preserve'>, </w:t></w:r>
@@ -848,8 +848,9 @@
 	  </w:rPr>
 	  <w:t>
 	    <xsl:choose>
-	      <xsl:when test=".='masculine'">m.</xsl:when>
-	      <xsl:when test=".='feminine'">f.</xsl:when>
+	      <xsl:when test=".='masculine'">m</xsl:when>
+	      <xsl:when test=".='feminine'">f</xsl:when>
+	      <xsl:when test=".='neuter'">n</xsl:when>
 	    </xsl:choose>
 	  </w:t>
 	</w:r>
@@ -869,6 +870,43 @@
 	  <xsl:with-param
 	      name="character-style">pronunciation</xsl:with-param>
 	</xsl:apply-templates>
+      </xsl:when>
+      <xsl:when test="@type='geographicalUsage'">
+	<xsl:analyze-string select="." regex="^([^\-]+)-(.+)\s*([A-z]*)">
+	  <xsl:matching-substring>
+	    <w:r><w:t xml:space='preserve'><xsl:text> </xsl:text></w:t></w:r>
+	    <w:r>
+	      <w:rPr>
+		<w:rStyle w:val="language"/>
+	      </w:rPr>
+	      <w:t xml:space='preserve'><xsl:value-of select="regex-group(1)"/></w:t>
+	    </w:r>
+	    <w:r><w:t xml:space='preserve'><xsl:text> </xsl:text></w:t></w:r>
+	    <w:r>
+	      <w:rPr>
+		<w:rStyle w:val="geographicalUse"/>
+	      </w:rPr>
+	      <w:t xml:space='preserve'><xsl:value-of select="regex-group(2)"/></w:t>
+	    </w:r>
+	    <xsl:if test="not(regex-group(3)='')">
+	    <w:r><w:t xml:space='preserve'><xsl:text> </xsl:text></w:t></w:r>
+	    <w:r>
+	      <w:rPr>
+		<w:rStyle w:val="script"/>
+	      </w:rPr>
+	      <w:t xml:space='preserve'><xsl:value-of select="regex-group(3)"/></w:t>
+	    </w:r>
+	    </xsl:if>
+	  </xsl:matching-substring>
+	  <xsl:non-matching-substring>
+	    <w:r>
+	      <w:rPr>
+		<w:rStyle w:val="geographicalUse"/>
+	      </w:rPr>
+	      <w:t xml:space='preserve'><xsl:value-of select="."/></w:t>
+	    </w:r>
+	  </xsl:non-matching-substring>
+	</xsl:analyze-string>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -1022,7 +1060,7 @@
                     <xsl:attribute name="fmtid">
                         <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
                     </xsl:attribute>
-		             <vt:lpwstr>2.8.0</vt:lpwstr>
+		             <vt:lpwstr>2.13.0</vt:lpwstr>
                 </property>
                 <property pid="1001" name="WordTemplateURI">
                     <xsl:attribute name="fmtid">
