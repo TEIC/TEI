@@ -1450,7 +1450,7 @@ $requestedID: requests a particular page
    </doc>
   <xsl:template name="makeSidebar">
       <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body/tei:list[@type='sidebar']">
-         <xsl:for-each select=".//tei:xref|.//tei:ref">
+         <xsl:for-each select=".///tei:ref">
             <p class="sidebar">
                <a class="toclist" href="{@url}">
                   <xsl:apply-templates/>

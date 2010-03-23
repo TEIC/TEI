@@ -612,12 +612,14 @@
    </doc>
   <xsl:template match="tei:q[@rend='display']"> \begin{quote}
     <xsl:apply-templates/> \end{quote}</xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element xref[@type='cite']</desc>
+      <desc>Process element ref[@type='cite']</desc>
    </doc>
-  <xsl:template match="tei:xref[@type='cite']">
+  <xsl:template match="tei:ref[@type='cite']">
       <xsl:apply-templates/>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>Process text(), escaping the LaTeX command characters.</p>
@@ -664,7 +666,7 @@
    </doc>
   <xsl:template name="bibliography">
       <xsl:apply-templates mode="biblio"
-                           select="//tei:xref[@type='cite'] | //tei:xptr[@type='cite'] | //tei:ref[@type='cite'] | //tei:ptr[@type='cite']"/>
+                           select="//tei:ref[@type='cite'] | //tei:ptr[@type='cite']"/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

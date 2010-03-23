@@ -84,17 +84,17 @@
       <xsl:number level="any"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element ptr|tei:xptr in xref mode</desc>
+      <desc>Process element ptr in xref mode</desc>
    </doc>
-  <xsl:template match="tei:ptr|tei:xptr">
+  <xsl:template match="tei:ptr">
       <xsl:call-template name="makeTEILink">
          <xsl:with-param name="ptr">true</xsl:with-param>
       </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element ref|tei:xref</desc>
+      <desc>Process element ref</desc>
    </doc>
-  <xsl:template match="tei:ref|tei:xref">
+  <xsl:template match="tei:ref">
       <xsl:call-template name="makeTEILink">
          <xsl:with-param name="ptr">false</xsl:with-param>
       </xsl:call-template>
