@@ -582,9 +582,9 @@
     </xsl:template>
 
     <xsl:template
-	match="w:p[w:pPr/w:pStyle/@w:val='nonVerbalRepresentation']" mode="copytable">
+	match="w:p[w:pPr/w:pStyle/@w:val='nonVerbalRepresentation']">
       <p rend="nonVerbalRepresentation">
-	  <xsl:apply-templates/>
+	<xsl:apply-templates/>
       </p>
     </xsl:template>
             
