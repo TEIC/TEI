@@ -92,9 +92,9 @@ doc:
 	mkdir -p release/common/doc/tei-xsl-common
 	saxon -o customize.xml param.xml doc/param.xsl 
 	saxon -o style.xml param.xml  doc/paramform.xsl 
-	saxon -o  release/common/doc/tei-xsl-common/index.html teixsl.xml xhtml2/tei.xsl 
-	saxon -o  release/common/doc/tei-xsl-common/style.html style.xml xhtml2/tei.xsl 
-	saxon -o  release/common/doc/tei-xsl-common/customize.html customize.xml xhtml2/tei.xsl cssFile=tei.css 
+	saxon -o  release/common/doc/tei-xsl-common/index.html teixsl.xml profiles/default/html/to.xsl 
+	saxon -o  release/common/doc/tei-xsl-common/style.html style.xml  profiles/default/html/to.xsl 
+	saxon -o  release/common/doc/tei-xsl-common/customize.html customize.xml  profiles/default/html/to.xsl cssFile=tei.css 
 	cp teixsl.xml style.xml customize.xml release/common/doc/tei-xsl-common
 	cp tei.css ChangeLog LICENSE release/common/doc/tei-xsl-common
 	-locate stylesheetDocumentation.sh || exit 1

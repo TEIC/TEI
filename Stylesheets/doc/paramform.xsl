@@ -1,4 +1,5 @@
 <xsl:stylesheet    
+    xmlns="http://www.tei-c.org/ns/1.0"
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
     xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
     exclude-result-prefixes="XSL xd" 
@@ -31,7 +32,7 @@
 
 <xsl:include href="../common2/verbatim.xsl"/>
 
-<xsl:key name="XDS" match="doc" use="@class"/>
+<xsl:key name="XDS" match="xd:doc" use="@class"/>
 
 <xsl:param name="numberHeadings">false</xsl:param>
 <xsl:param name="numberBodyHeadings"></xsl:param>
@@ -45,7 +46,7 @@
 <xsl:message>Create file "stylebear" </xsl:message>
 <xsl:text>#!/usr/bin/perl&#10;</xsl:text>
 
-<xsl:for-each select="TEI/text/body/div[@id]">
+<xsl:for-each select="TEI/text/body/div[@xml:id]">
   <xsl:call-template name="listcgi">
     <xsl:with-param name="File">common2/tei-param.xsl</xsl:with-param>
   </xsl:call-template>
@@ -138,17 +139,17 @@ return "";
 <p>Name of output file:
  <html:input type="textbox" name="outputFile" value="myTei.xsl"/></p>
 
-   <xsl:for-each select="TEI/text/body/div[@id]">
+   <xsl:for-each select="TEI/text/body/div[@xml:id]">
        <p><hi><xsl:number/>: <xsl:value-of select="head"/></hi></p>
-       <p><xref url="customize.xml.ID={@id}">Details of this section</xref></p>
+       <p><ref target="customize.html#{@xml:id}">Details of this section</ref></p>
        <table>
 	 <xsl:call-template name="list">
 	   <xsl:with-param
-	       name="File">common/tei-param.xsl</xsl:with-param>
+	       name="File">common2/tei-param.xsl</xsl:with-param>
 	 </xsl:call-template>
 	 <xsl:call-template name="list">
 	   <xsl:with-param
-	       name="File">html/tei-param.xsl</xsl:with-param>
+	       name="File">xhtml2/tei-param.xsl</xsl:with-param>
 	 </xsl:call-template>
        </table>
    </xsl:for-each>
@@ -248,8 +249,8 @@ return "";
 
 <xsl:template name="list">
   <xsl:param name="File"/>
-  <xsl:variable name="I" select="@id"/>
-    <xsl:for-each select="document($File)">
+  <xsl:variable name="I" select="@xml:id"/>
+    <xsl:for-each select="document(concat('../',$File))">
       <xsl:for-each select="key('XDS',$I)">
 	<xsl:call-template name="var">
 	  <xsl:with-param name="default">
@@ -281,8 +282,8 @@ return "";
 
 <xsl:template name="listcgi">
   <xsl:param name="File"/>
-  <xsl:variable name="I" select="@id"/>
-    <xsl:for-each select="document($File)">
+  <xsl:variable name="I" select="@xml:id"/>
+    <xsl:for-each select="document(concat('../',$File))">
       <xsl:for-each select="key('XDS',$I)">
 	<xsl:call-template name="cgivar">
 	  <xsl:with-param name="default">
