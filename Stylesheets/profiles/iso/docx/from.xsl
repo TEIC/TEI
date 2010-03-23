@@ -530,24 +530,23 @@
                            if (contains(w:pPr/w:pStyle/@w:val,'List')) then 1 else
              if ((w:pPr/w:pStyle/@w:val='Note') and
 	     (contains(preceding-sibling::w:p[1]/w:pPr/w:pStyle/@w:val,'List'))) then 1 else
-	     if (w:pPr/w:pStyle/@w:val='RefNorm') then 2 else
+	     if (w:pPr/w:pStyle/@w:val=$BibliographyItem) then 4 else
+	     if (w:pPr/w:pStyle/@w:val=$DefinitionList) then 5 else
 	     if (w:pPr/w:pStyle/@w:val='Definition') then 3 else
-             if (w:pPr/w:pStyle/@w:val='Example') then 3 else
+	     if (w:pPr/w:pStyle/@w:val='RefNorm') then 2 else
              if (w:pPr/w:pStyle/@w:val='Example numbered') then 3 else
+             if (w:pPr/w:pStyle/@w:val='Example') then 3 else
              if (w:pPr/w:pStyle/@w:val='TermNum') then 3 else
+             if (w:pPr/w:pStyle/@w:val='entrySource') then 3 else
              if (w:pPr/w:pStyle/@w:val='nonVerbalRepresentation') then 3 else
              if (w:pPr/w:pStyle/@w:val='noteDefinition') then 3 else
-             if (w:pPr/w:pStyle/@w:val='noteNonVerbalRepresentation') then 3 else
              if (w:pPr/w:pStyle/@w:val='noteTerm') then 3 else
              if (w:pPr/w:pStyle/@w:val='noteTermEntry') then 3 else
-             if (w:pPr/w:pStyle/@w:val='entrySource') then 3 else
              if (w:pPr/w:pStyle/@w:val='symbol') then 3 else
              if (w:pPr/w:pStyle/@w:val='termAdmitted') then 3 else
              if (w:pPr/w:pStyle/@w:val='termDeprecated') then 3 else
              if (w:pPr/w:pStyle/@w:val='termPreferred') then 3 else
              if (w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]) then 3 else
-	     if (w:pPr/w:pStyle/@w:val=$BibliographyItem) then 4 else
-	     if (w:pPr/w:pStyle/@w:val=$DefinitionList) then 5 else
 	     if (starts-with(w:pPr/w:pStyle/@w:val,'toc')) then 6 else
 	     position() + 100">
 
@@ -582,6 +581,12 @@
         </xsl:for-each-group>
     </xsl:template>
 
+    <xsl:template
+	match="w:p[w:pPr/w:pStyle/@w:val='nonVerbalRepresentation']" mode="copytable">
+      <p rend="nonVerbalRepresentation">
+	  <xsl:apply-templates/>
+      </p>
+    </xsl:template>
             
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
@@ -611,7 +616,6 @@
 	    <!-- stored elsewhere in TBX -->
             <xsl:when test="$style='gender'"/>
             <xsl:when test="$style='pronunciation'"/>
-            <xsl:when test="$style='nonVerbalRepresentation'"/>
             <xsl:when test="$style='partOfSpeech'"/>
             <xsl:when test="$style='geographicalUse'"/>
             <xsl:when test="$style='script'"/>
@@ -799,8 +803,6 @@
 	       w:insideV | 
 	       w:jc | 
 	       w:left | 
-	       w:pPr |
-	       w:p |
 	       w:pStyle |
 	       w:right | 
 	       w:spacing | 
@@ -1761,7 +1763,10 @@
       </desc>
    </doc>
     <xsl:template match="w:object">
-      <hi rend="color(red)">Invalid Word object found<iso:error>Invalid Word object found</iso:error></hi>
+      <hi rend="color(red)">Invalid Word &lt;object&gt; found<iso:error>Invalid Word object found</iso:error></hi>
+    </xsl:template>
+    <xsl:template match="w:pict">
+      <hi rend="color(red)">Invalid Word &lt;pict&gt; found<iso:error>Invalid Word object found</iso:error></hi>
     </xsl:template>
 
     <xsl:template name="identifyChange">
