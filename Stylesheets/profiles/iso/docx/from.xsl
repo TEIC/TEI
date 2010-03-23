@@ -619,7 +619,12 @@
             <xsl:when test="$style='partOfSpeech'"/>
             <xsl:when test="$style='geographicalUse'"/>
             <xsl:when test="$style='script'"/>
-            <xsl:when test="$style='language' and not(ancestor::w:tbl)"/>
+            <xsl:when test="$style='language' and ancestor::w:p/w:pPr/@w:val='termPreferred'"/>
+            <xsl:when test="$style='language'">
+                <hi rend="language">
+                    <xsl:apply-templates/>
+		</hi>
+            </xsl:when>
 
 	    <xsl:when test="$style='CommentReference'">
 	      <xsl:apply-templates/>
@@ -802,6 +807,8 @@
 	       w:insideH | 
 	       w:insideV | 
 	       w:jc | 
+	       w:pPr |
+	       w:p |
 	       w:left | 
 	       w:pStyle |
 	       w:right | 
@@ -1032,7 +1039,8 @@
 			    <termNote type="termType">abbreviation</termNote>
 			  </xsl:if>
 
-			  <xsl:if
+			  <xsl:choose>
+			  <xsl:when
 			      test="w:r/w:rPr/w:rStyle/@w:val='geographicalUse'">
 			    <termNote type="geographicalUsage">
 			      <xsl:if test="w:r[w:rPr/w:rStyle/@w:val='language']">
@@ -1050,7 +1058,16 @@
 				    select="w:r[w:rPr/w:rStyle/@w:val='script']"/>
 			      </xsl:if>
 			    </termNote>
-			  </xsl:if>
+			  </xsl:when>
+			  <xsl:otherwise>
+			    <xsl:if test="w:r[w:rPr/w:rStyle/@w:val='language']">
+			      <tei:hi rend="language">
+				<xsl:value-of
+				  select="w:r[w:rPr/w:rStyle/@w:val='language']"/>
+			      </tei:hi>
+			    </xsl:if>
+			  </xsl:otherwise>
+			  </xsl:choose>
 
 			  <xsl:apply-templates select="w:r[w:rPr/w:rStyle/@w:val='gender']" mode="inTerm"/>
 
