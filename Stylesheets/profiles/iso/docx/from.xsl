@@ -1346,6 +1346,10 @@
                 <xsl:value-of select="."/>
             </xsl:when>
 
+            <xsl:when test="ancestor::tbx:termEntry">
+                <xsl:value-of select="."/>
+            </xsl:when>
+
             <xsl:otherwise>
                 <xsl:analyze-string select="." regex="((\d+ \d+)+,?\d*|\d+,\d+)">
                     <xsl:matching-substring>
