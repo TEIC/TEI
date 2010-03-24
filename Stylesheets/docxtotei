@@ -1,0 +1,52 @@
+#!/bin/sh
+profile=default
+odd=false
+debug=false
+header=
+while test $# -gt 0; do
+  case $1 in
+    --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
+    --header=*)  header=`echo $1 | sed 's/.*=//'`;;
+    --debug)     debug=true;;
+     *) if test "$1" = "${1#--}" ; then 
+	   break
+	else
+	   echo "WARNING: Unrecognized option '$1' ignored"
+	   echo "For usage syntax issue $0 --help"
+	fi ;;
+  esac
+  shift
+done
+test -f "$1" || exit 1
+HERE=`pwd`
+D=`dirname "$1"`
+THERE=`(cd $D; pwd)`
+H=`dirname $0`
+APPHOME=`(cd $H; pwd)`
+N=`basename "$1" .docx`
+echo read input file $N from $THERE
+echo metadata header file is $header
+echo app is in $HERE
+TEMPLATES=$APPHOME/profiles/$profile
+TEMPDIR=/tmp/docx$$
+mkdir $TEMPDIR
+cd $TEMPDIR
+unzip -q $THERE/"$N.docx"
+saxon word/document.xml $TEMPLATES/docx/from.xsl word-directory=`pwd` metadata-file=$header debug=$debug > "$N.xml"
+if [ "$(ls -q -A word/media)" ]; then
+ echo found graphics files in document, so writing $N.zip
+ mv word/media .
+ zip -q -r $THERE/"$N.zip" "$N.xml" media
+else
+ echo writing $N.xml
+ mv "$N.xml" $THERE
+fi
+cd $HERE
+if $debug 
+then
+    echo Working files in $TEMPDIR
+else
+    rm -rf $TEMPDIR
+fi
+echo wrote $N.xml or $N.zip in $THERE
+
