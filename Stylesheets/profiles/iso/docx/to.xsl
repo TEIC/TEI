@@ -74,6 +74,11 @@
 
     <!-- Styles -->
     
+    <xsl:template match="tbx:term" mode="get-style">
+      <xsl:if test="following-sibling::tbx:termNote[@type='termType'
+	      and .='abbreviation']">abbreviatedForm</xsl:if>
+    </xsl:template>
+
     <xsl:template match="tei:abbr" mode="get-style">abbr</xsl:template>
     <xsl:template match="tei:cit" mode="get-style">Quote</xsl:template>
     <xsl:template match="tei:date" mode="get-style">date</xsl:template>
@@ -103,7 +108,7 @@
       <xsl:text>domain</xsl:text>
     </xsl:template>
     <xsl:template match="tbx:descrip" mode="get-style">Definition</xsl:template>
-    <xsl:template match="tbx:note" mode="get-style">noteTermEntry</xsl:template>
+    <xsl:template match="tbx:note" mode="get-style"><xsl:value-of select="@type"/></xsl:template>
     <xsl:template match="tei:hi[@rend='geographicalUse']" mode="get-style">
       <xsl:text>geographicalUse</xsl:text>
     </xsl:template>
@@ -845,6 +850,7 @@
 	<w:r>
 	  <w:rPr>
 	    <w:rStyle w:val="gender"/>
+	    <w:b w:val="0"/>
 	  </w:rPr>
 	  <w:t>
 	    <xsl:choose>
@@ -857,19 +863,35 @@
       </xsl:when>
       <xsl:when test="@type='partOfSpeech'">
 	<xsl:if test="not(.='noun')">
-	  <w:r><w:t xml:space='preserve'>, </w:t></w:r>
-	  <xsl:apply-templates>
-	    <xsl:with-param
-		name="character-style">partOfSpeech</xsl:with-param>
-	  </xsl:apply-templates>
+	  <w:r>
+	  <w:t xml:space='preserve'>, </w:t></w:r>
+	  <w:r>
+	    <w:rPr>
+	      <w:rStyle w:val="partOfSpeech"/>
+	      <w:b w:val="0"/>
+	    </w:rPr>
+	    <w:t>
+	      <xsl:value-of select="."/>
+	    </w:t>
+	  </w:r>
 	</xsl:if>
       </xsl:when>  
       <xsl:when test="@type='pronunciation'">
-	<w:r><w:t xml:space='preserve'>, </w:t></w:r>
-	<xsl:apply-templates>
-	  <xsl:with-param
-	      name="character-style">pronunciation</xsl:with-param>
-	</xsl:apply-templates>
+	<w:r>
+	  <w:rPr>
+	    <w:b w:val="0"/>
+	  </w:rPr>
+	  <w:t xml:space='preserve'>, </w:t>
+	</w:r>
+	<w:r>
+	  <w:rPr>
+          <w:rStyle w:val="pronunciation"/>
+	  <w:b w:val="0"/>
+	  </w:rPr>
+	  <w:t>
+	    <xsl:value-of select="."/>
+	  </w:t>
+	</w:r>
       </xsl:when>
       <xsl:when test="@type='geographicalUsage'">
 	<xsl:analyze-string select="." regex="^([^\-]+)-(.+)\s*([A-z]*)">
@@ -878,6 +900,7 @@
 	    <w:r>
 	      <w:rPr>
 		<w:rStyle w:val="language"/>
+		<w:b w:val="0"/>
 	      </w:rPr>
 	      <w:t xml:space='preserve'><xsl:value-of select="regex-group(1)"/></w:t>
 	    </w:r>
@@ -885,6 +908,7 @@
 	    <w:r>
 	      <w:rPr>
 		<w:rStyle w:val="geographicalUse"/>
+		<w:b w:val="0"/>
 	      </w:rPr>
 	      <w:t xml:space='preserve'><xsl:value-of select="regex-group(2)"/></w:t>
 	    </w:r>
@@ -893,6 +917,7 @@
 	    <w:r>
 	      <w:rPr>
 		<w:rStyle w:val="script"/>
+		<w:b w:val="0"/>
 	      </w:rPr>
 	      <w:t xml:space='preserve'><xsl:value-of select="regex-group(3)"/></w:t>
 	    </w:r>
@@ -902,6 +927,7 @@
 	    <w:r>
 	      <w:rPr>
 		<w:rStyle w:val="geographicalUse"/>
+		<w:b w:val="0"/>
 	      </w:rPr>
 	      <w:t xml:space='preserve'><xsl:value-of select="."/></w:t>
 	    </w:r>

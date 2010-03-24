@@ -540,6 +540,7 @@
              if (w:pPr/w:pStyle/@w:val='entrySource') then 3 else
              if (w:pPr/w:pStyle/@w:val='nonVerbalRepresentation') then 3 else
              if (w:pPr/w:pStyle/@w:val='noteDefinition') then 3 else
+             if (w:pPr/w:pStyle/@w:val='noteSymbol') then 3 else
              if (w:pPr/w:pStyle/@w:val='noteTerm') then 3 else
              if (w:pPr/w:pStyle/@w:val='noteTermEntry') then 3 else
              if (w:pPr/w:pStyle/@w:val='symbol') then 3 else
@@ -619,7 +620,7 @@
             <xsl:when test="$style='partOfSpeech'"/>
             <xsl:when test="$style='geographicalUse'"/>
             <xsl:when test="$style='script'"/>
-            <xsl:when test="$style='language' and ancestor::w:p/w:pPr/@w:val='termPreferred'"/>
+            <xsl:when test="$style='language' and ancestor::w:p/w:pPr/w:pStyle/@w:val='termPreferred'"/>
             <xsl:when test="$style='language'">
                 <hi rend="language">
                     <xsl:apply-templates/>
@@ -947,12 +948,22 @@
 	    </xsl:variable>
 	    <termEntry xmlns="http://www.lisa.org/TBX-Specification.33.0.html" id="{$ID}">
 	      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteTermEntry'] except .">
-		<note>
+		<note type="noteTermEntry">
 		  <xsl:apply-templates/>
 		</note>
 	      </xsl:for-each>
 	      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteTerm'] except .">
-		<note>
+		<note type="noteTerm">
+		  <xsl:apply-templates/>
+		</note>
+	      </xsl:for-each>
+	      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteDefinition'] except .">
+		<note type="noteDefinition">
+		  <xsl:apply-templates/>
+		</note>
+	      </xsl:for-each>
+	      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteSymbol'] except .">
+		<note type="noteSymbol">
 		  <xsl:apply-templates/>
 		</note>
 	      </xsl:for-each>
@@ -1008,8 +1019,11 @@
 		    <xsl:when test="$Thing='TermNum'"/>
 		    <xsl:when test="$Thing='Definition'"/>
 		    <xsl:when test="$Thing='Example numbered'"/>
+		    <xsl:when test="$Thing='Example'"/>
 		    <xsl:when test="$Thing='noteTermEntry'"/>
 		    <xsl:when test="$Thing='noteTerm'"/>
+		    <xsl:when test="$Thing='noteSymbol'"/>
+		    <xsl:when test="$Thing='noteDefinition'"/>
 		    <xsl:otherwise>
 		      <ntig>
 			<termGrp>
@@ -1086,6 +1100,16 @@
 		</xsl:for-each>
 	      </langSet>
 	    </termEntry>
+	    <xsl:for-each
+		select="current-group()[w:pPr/w:pStyle/@w:val='Example']
+			except .">
+	      <p rend="Example"><xsl:apply-templates/></p>
+	    </xsl:for-each>
+	    <xsl:for-each
+		select="current-group()[w:pPr/w:pStyle/@w:val='Example numbered']
+			except .">
+	      <p rend="Example numbered"><xsl:apply-templates/></p>
+	    </xsl:for-each>
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:for-each-group>
@@ -1659,7 +1683,7 @@
     <desc>Strip prefix from note</desc></doc>
 
    <xsl:template match="tbx:note/text()" mode="pass2">
-     <xsl:analyze-string select="." regex="^(NOTE|ANMERKUNG)[^:]+:\s(.*)">
+     <xsl:analyze-string select="." regex="^(NOTE|Note|ANMERKUNG)[^:]+:\s(.*)">
        <xsl:matching-substring>
 	 <xsl:value-of select="regex-group(2)"/>
        </xsl:matching-substring>

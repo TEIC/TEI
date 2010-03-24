@@ -254,7 +254,7 @@
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
         Convert special characters (w:syms) into Unicode characters or
-	c tags. Symbol to Unicode mapping from http://unicode.org/Public/MAPPINGS/VENDORS/ADOBE/symbol.txt
+	<gi>g</gi> elements. Symbol to Unicode mapping from http://unicode.org/Public/MAPPINGS/VENDORS/ADOBE/symbol.txt
     </desc>
    </doc>
     <xsl:template match="w:sym">
