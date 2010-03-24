@@ -894,7 +894,7 @@
 	</w:r>
       </xsl:when>
       <xsl:when test="@type='geographicalUsage'">
-	<xsl:analyze-string select="." regex="^([^\-]+)-(.+)\s*([A-z]*)">
+	<xsl:analyze-string select="." regex="^([^\-]+)-(.+)(-x-)?([A-z]*)">
 	  <xsl:matching-substring>
 	    <w:r><w:t xml:space='preserve'><xsl:text> </xsl:text></w:t></w:r>
 	    <w:r>
@@ -912,14 +912,14 @@
 	      </w:rPr>
 	      <w:t xml:space='preserve'><xsl:value-of select="regex-group(2)"/></w:t>
 	    </w:r>
-	    <xsl:if test="not(regex-group(3)='')">
+	    <xsl:if test="not(regex-group(4)='')">
 	    <w:r><w:t xml:space='preserve'><xsl:text> </xsl:text></w:t></w:r>
 	    <w:r>
 	      <w:rPr>
 		<w:rStyle w:val="script"/>
 		<w:b w:val="0"/>
 	      </w:rPr>
-	      <w:t xml:space='preserve'><xsl:value-of select="regex-group(3)"/></w:t>
+	      <w:t xml:space='preserve'><xsl:value-of select="regex-group(4)"/></w:t>
 	    </w:r>
 	    </xsl:if>
 	  </xsl:matching-substring>

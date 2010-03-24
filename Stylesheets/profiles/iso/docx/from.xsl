@@ -1064,12 +1064,12 @@
 			      </xsl:if>
 			      <xsl:for-each
 				  select="w:r[w:rPr/w:rStyle/@w:val='geographicalUse']">
-				<xsl:value-of select="."/>
+				<xsl:value-of select="normalize-space(.)"/>
 			      </xsl:for-each>
 			      <xsl:if test="w:r[w:rPr/w:rStyle/@w:val='script']">
-				<xsl:text> </xsl:text>
+				<xsl:text>-x-</xsl:text>
 				<xsl:value-of
-				    select="w:r[w:rPr/w:rStyle/@w:val='script']"/>
+				    select="normalize-space(w:r[w:rPr/w:rStyle/@w:val='script'])"/>
 			      </xsl:if>
 			    </termNote>
 			  </xsl:when>

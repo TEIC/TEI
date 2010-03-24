@@ -259,7 +259,7 @@
    </doc>
     <xsl:template match="w:sym">
       <xsl:choose>
-	<xsl:when test="@w:font='Symbol'">
+	<xsl:when test="@w:font='Symbol' or @w:font='MT Symbol'">
 	  <xsl:choose>
 <xsl:when test="@w:char='F022'">&#x2200;</xsl:when><!--	# FOR ALL # universal -->
 <xsl:when test="@w:char='F024'">&#x2203;</xsl:when><!--	# THERE EXISTS # existential -->
