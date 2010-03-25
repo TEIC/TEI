@@ -894,7 +894,7 @@
 	</w:r>
       </xsl:when>
       <xsl:when test="@type='geographicalUsage'">
-	<xsl:analyze-string select="." regex="^([^\-]+)-(.+)(-x-)?([A-z]*)">
+	<xsl:analyze-string select="." regex="^([^\-]+)-([^\-]+)(-x-)?([A-z]*)">
 	  <xsl:matching-substring>
 	    <w:r><w:t xml:space='preserve'><xsl:text> </xsl:text></w:t></w:r>
 	    <w:r>
@@ -913,14 +913,14 @@
 	      <w:t xml:space='preserve'><xsl:value-of select="regex-group(2)"/></w:t>
 	    </w:r>
 	    <xsl:if test="not(regex-group(4)='')">
-	    <w:r><w:t xml:space='preserve'><xsl:text> </xsl:text></w:t></w:r>
-	    <w:r>
-	      <w:rPr>
-		<w:rStyle w:val="script"/>
-		<w:b w:val="0"/>
-	      </w:rPr>
-	      <w:t xml:space='preserve'><xsl:value-of select="regex-group(4)"/></w:t>
-	    </w:r>
+	      <w:r><w:t xml:space='preserve'><xsl:text> </xsl:text></w:t></w:r>
+	      <w:r>
+		<w:rPr>
+		  <w:rStyle w:val="script"/>
+		  <w:b w:val="0"/>
+		</w:rPr>
+		<w:t xml:space='preserve'><xsl:value-of select="regex-group(4)"/></w:t>
+	      </w:r>
 	    </xsl:if>
 	  </xsl:matching-substring>
 	  <xsl:non-matching-substring>
@@ -1207,7 +1207,7 @@
       <xsl:apply-templates/>
     </xsl:template>
 
-    <xsl:template match="tei:div[@type='headless']/tei:p">
+    <xsl:template match="tei:div[@type='headless']/tei:p[1]">
       <xsl:variable name="level">
 	<xsl:value-of select="count(ancestor-or-self::tei:div)"/>
       </xsl:variable>
