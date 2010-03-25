@@ -908,17 +908,15 @@
       <xsl:for-each-group select="current-group()"
 			  group-starting-with="w:p[w:pPr/w:pStyle/@w:val='TermNum' or w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]]">
 	<xsl:choose>
-	  <xsl:when
-	      test="self::w:p[w:pPr/w:pStyle/@w:val='Example']">
-	    <p rend="Example">
-	      <xsl:apply-templates/>
-	    </p>
-	  </xsl:when>
-	  <xsl:when
-	      test="self::w:p[w:pPr/w:pStyle/@w:val='Example numbered']">
-	    <p rend="Example numbered">
-	      <xsl:apply-templates/>
-	    </p>
+	  <xsl:when test="self::w:p[w:pPr/w:pStyle[@w:val='Example numbered' or @w:val='Example']]">
+	    <xsl:for-each select="current-group()">
+	      <xsl:variable name="Style">
+		<xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
+	      </xsl:variable>
+	      <p rend="{$Style}"> 
+		<xsl:apply-templates/>
+	      </p>
+	    </xsl:for-each>
 	  </xsl:when>
 	  <xsl:when test="not(self::w:p[w:pPr/w:pStyle/@w:val='TermNum'  or  w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]])">
 	    <iso:error>

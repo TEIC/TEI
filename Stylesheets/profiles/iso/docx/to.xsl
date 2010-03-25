@@ -1212,8 +1212,15 @@
 	<xsl:value-of select="count(ancestor-or-self::tei:div)"/>
       </xsl:variable>
       <xsl:variable name="s">
-	<xsl:text>p</xsl:text>
-	<xsl:value-of select="$level"/>
+	<xsl:choose>
+	  <xsl:when test="@rend">
+	    <xsl:value-of select="@rend"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text>p</xsl:text>
+	    <xsl:value-of select="$level"/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:variable>
       <xsl:if test="$debug='true'">
 	<xsl:message>Fire <xsl:value-of select="$level"/> [<xsl:value-of select="$s"/>] for <xsl:value-of select="@n"/>: <xsl:value-of select="."/></xsl:message>
