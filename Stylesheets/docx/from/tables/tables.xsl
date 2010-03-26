@@ -236,6 +236,7 @@
 			<xsl:choose>
 			  <xsl:when test="$val='[No Paragraph Style]'"/>
 			  <xsl:when test="$val='Table text (9)'"/>
+			  <xsl:when test="$val=''"/>
 			  <xsl:otherwise>
 			    <xsl:attribute name="rend">
 			      <xsl:value-of select="$val"/>

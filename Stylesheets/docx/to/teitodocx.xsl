@@ -1069,7 +1069,7 @@
                                 </xsl:choose>
                                 <xsl:choose>
                                     <xsl:when test="@teidocx:align">
-                                        <w:jc w:val="{@align}"/>
+                                        <w:jc w:val="{@teidocx:align}"/>
                                     </xsl:when>
                                     <xsl:when test="parent::tei:row[@role='label']          or @role='label'">
                                         <w:jc w:val="left"/>

@@ -75,8 +75,7 @@
                     </edition>
                 </editionStmt>
                 <publicationStmt>
-                    <p>
-</p>
+                    <p></p>
                 </publicationStmt>
                 <sourceDesc>
                     <p>Converted from a Word document </p>
@@ -92,11 +91,9 @@
 		                <xsl:value-of select="teidocx:whatsTheDate()"/>
 		                <xsl:text>$</xsl:text>
 		             </date>
-		             <respStmt>
-		                <name>
-		                   <xsl:call-template name="getDocAuthor"/>
-		                </name>
-		             </respStmt>
+			     <name>
+			       <xsl:call-template name="getDocAuthor"/>
+			     </name>
 	           </change>
             </revisionDesc>
         </teiHeader>

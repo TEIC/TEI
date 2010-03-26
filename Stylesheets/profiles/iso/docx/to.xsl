@@ -816,6 +816,17 @@
     <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='example']"/>
     <xsl:apply-templates select="tbx:note"/>
     <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
+
+    <xsl:if test="$debug='true'">
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="style">egXML</xsl:with-param>
+	<xsl:with-param name="select">
+	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <xsl:copy-of select="."/>
+	  </egXML>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
   </xsl:template>
   
    <xsl:template match="tbx:descrip">
