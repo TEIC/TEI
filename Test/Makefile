@@ -99,8 +99,7 @@ test-schema: test-jing test-rnv
 test-jing:
 	echo JING RelaxNG...
 	echo =======================================
-	echo = Expect to see "no start" error from justfs, and errors
-	echo = about schemaLocation on testminimal
+	echo = Expect to see errors about schemaLocation on testminimal
 	echo = 
 	echo = testallplus has error about ref and MathML
 	echo =======================================
@@ -110,8 +109,7 @@ test-jing:
 test-rnv:
 	echo RNV....
 	echo =======================================
-	echo = Expect to see "no start" error from justfs, and errors
-	echo = about schemaLocation on testminimal
+	echo = Expect errors about schemaLocation on testminimal
 	echo =======================================
 	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); \
 	  do echo $$i: ; \
