@@ -985,11 +985,10 @@
 
         <!-- app files -->
         <xsl:call-template name="write-docxfile-docprops-app"/>
-
-        <!-- comments file -->
-        <xsl:call-template name="write-docxfile-comments-file"/>
-
       </xsl:if>
+
+      <!-- comments file -->
+      <xsl:call-template name="write-docxfile-comments-file"/>
       <xsl:call-template name="write-docxfile-docprops-core"/>
       <xsl:call-template name="write-docxfile-docprops-custom"/>
     </xsl:template>
