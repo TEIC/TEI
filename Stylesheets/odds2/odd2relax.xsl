@@ -237,7 +237,7 @@ Schema generated from ODD source </xsl:text>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
-
+<!--
   <xsl:template match="rng:attribute/rng:data[@type='ID' or          @type='IDREF']"
                  mode="cleanup">
       <xsl:choose>
@@ -249,7 +249,7 @@ Schema generated from ODD source </xsl:text>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
-
+-->
   <xsl:template name="startNames">
       <xsl:param name="toks"/>
       <xsl:if test="not($toks='')">
