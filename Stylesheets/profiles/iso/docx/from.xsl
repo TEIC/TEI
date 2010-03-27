@@ -1365,6 +1365,20 @@
 
 
       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc> Assign a unique ID to each <gi>bibl</gi></desc></doc>
+    <xsl:template match="tei:bibl" mode="pass2">
+      <xsl:copy>
+	<xsl:if test="not(@xml:id)">
+	  <xsl:attribute name="xml:id">
+	    <xsl:text>BIB_</xsl:text>
+	    <xsl:number level="any" count="tei:bibl"/>
+	  </xsl:attribute>
+	</xsl:if>
+	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+      </xsl:copy>
+    </xsl:template>
+
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> look at the sections we have generated, and put
         them in &lt;front&gt; or &lt;body&gt; as appropriate</desc></doc>
     <xsl:template match="tei:text" mode="pass2">
@@ -1795,9 +1809,9 @@
     </xsl:template>
 
     <xsl:template match="iso:error" mode="pass2">
-      <xsl:processing-instruction name="ISOerror">
+      <note place="comment" resp="ISO validator">
 	<xsl:value-of select="."/>
-      </xsl:processing-instruction>
+      </note>
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
