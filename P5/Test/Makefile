@@ -27,6 +27,7 @@ TESTFILES= \
 	testfand5 \
 	testfs \
 	testglobals \
+	testgos \
 	testi18n \
 	testjustfs \
 	testlangs \
@@ -101,7 +102,7 @@ test-jing:
 	echo = Expect to see "no start" error from justfs, and errors
 	echo = about schemaLocation on testminimal
 	echo = 
-	echo = testallplus has error abour ref and MathML
+	echo = testallplus has error about ref and MathML
 	echo =======================================
 	for i in $(TESTFILES) $(TESTFILESDTD) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do echo $$i: ; jing -t $$i.rng $$i.xml; done
 	jing -t -c testfrag.rnc testlite.xml
