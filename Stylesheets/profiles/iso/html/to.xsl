@@ -64,6 +64,12 @@
      </span>
    </xsl:template>
 
+   <xsl:template match="tei:note[@place='comment']">
+     <span style="border: solid red 1pt; color:red">
+       <xsl:value-of select="."/>
+     </span>
+   </xsl:template>
+
   <xsl:template name="divClassAttribute">
       <xsl:param name="depth"/>
       <xsl:choose>
