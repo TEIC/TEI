@@ -33,6 +33,7 @@
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
   <xsl:key name="REFED" match="rng:ref" use="@name"/>
   <xsl:key name="DEFED" match="rng:define" use="@name"/>
+  <xsl:key name="EDEF" match="rng:define[rng:element]" use="1"/>
   <xsl:key name="ANYDEF"
             match="rng:define[rng:element/rng:zeroOrMore/rng:attribute/rng:anyName]"
             use="1"/>
@@ -408,9 +409,18 @@ Schema generated from ODD source </xsl:text>
       <xsl:param name="text"/>
   </xsl:template>
 
-  <xsl:template match="processing-instruction()"/>
+  <xsl:template match="processing-instruction()">
+    <xsl:copy/>
+  </xsl:template>
 
-  <xsl:template match="processing-instruction()" mode="tangle"/>
+  <xsl:template match="processing-instruction()" mode="tangle">
+    <xsl:copy/>
+  </xsl:template>
+
+
+  <xsl:template match="processing-instruction()" mode="cleanup">
+  </xsl:template>
+
 
   <xsl:template match="tei:constraintSpec[@scheme='schematron']">
       <xsl:apply-templates/>
@@ -428,4 +438,15 @@ Schema generated from ODD source </xsl:text>
       <xsl:call-template name="processSchematron"/>
   </xsl:template>
 
+  <xsl:template
+      match="rng:anyName[parent::rng:define]"
+      mode='cleanup'>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+	<xsl:for-each select="key('EDEF',1)">	  
+	  <ref name="{@name}"/>
+	</xsl:for-each>
+      </choice>
+    </zeroOrMore>
+  </xsl:template>
 </xsl:stylesheet>

@@ -398,12 +398,12 @@ How can a class be ok?
                   <xsl:for-each select="document($localsource)/tei:TEI">
                      <xsl:for-each select="tei:*[@module=$moduleName]">
                         <xsl:element xmlns="http://www.tei-c.org/ns/1.0" name="{local-name()}">
-                           <xsl:copy-of select="@*|*"/>
+                           <xsl:copy-of select="@*|*|processing-instruction()|comment()|text()"/>
                         </xsl:element>
                      </xsl:for-each>
                      <xsl:for-each select="tei:*[@module=$KD]">
                         <xsl:element xmlns="http://www.tei-c.org/ns/1.0" name="{local-name()}">
-                           <xsl:copy-of select="@*|*"/>
+                           <xsl:copy-of select="@*|*|processing-instruction()|comment()|text()"/>
                         </xsl:element>
                      </xsl:for-each>
                   </xsl:for-each>
@@ -480,7 +480,7 @@ How can a class be ok?
       </xsl:for-each>
   </xsl:template>
   <xsl:template match="@*|processing-instruction()|comment()|text()" mode="change">
-      <xsl:copy/>
+      <xsl:copy-of select="."/>
   </xsl:template>
   <xsl:template match="*" mode="change">
       <xsl:copy>
@@ -488,7 +488,7 @@ How can a class be ok?
       </xsl:copy>
   </xsl:template>
   <xsl:template match="@*|processing-instruction()|comment()|text()" mode="copy">
-      <xsl:copy/>
+      <xsl:copy-of select="."/>      
   </xsl:template>
   <xsl:template match="tei:memberOf" mode="copy">
       <xsl:variable name="k" select="@key"/>
@@ -1966,7 +1966,7 @@ select="$M"/></xsl:message>
       <p>Internal module <xsl:value-of select="@key"/> was located and expanded.</p>
   </xsl:template>
   <xsl:template match="@*|processing-instruction()|comment()|text()">
-      <xsl:copy/>
+            <xsl:copy-of select="."/>
   </xsl:template>
   <xsl:template match="*">
       <xsl:copy>
@@ -2012,7 +2012,7 @@ select="$M"/></xsl:message>
          <xsl:if test="local-name()='classSpec' and @type='model' and not(@predeclare)">
             <xsl:attribute name="predeclare">true</xsl:attribute>
          </xsl:if>
-         <xsl:apply-templates mode="copy" select="@*|*"/>
+         <xsl:apply-templates mode="copy" select="@*|*|processing-instruction()|comment()|text()"/>
       </xsl:element>
   </xsl:template>
   <xsl:template match="@*|processing-instruction()|comment()|text()" mode="iden">
