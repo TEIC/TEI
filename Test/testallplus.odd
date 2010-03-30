@@ -76,28 +76,40 @@
         <xi:include href="../Exemplars/tei_math.odd" xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:moduleRef[@url]|//t:elementSpec[@ident='formula'])">
           <xi:fallback> ERROR: cannot locate ODD changes for MathML </xi:fallback>
         </xi:include>
-        <macroSpec type="pe" ident="AnyThing" mode="add">
+
+	<macroSpec type="pe" ident="macro.anyXML" mode="change">
+	  <content>
+	    <element xmlns="http://relaxng.org/ns/structure/1.0">
+	      <anyName>
+		<except>
+		  <nsName ns="http://www.w3.org/1998/Math/MathML"/>
+		  <nsName ns="http://www.w3.org/2000/svg"/>
+		  <nsName ns="http://www.tei-c.org/ns/1.0"/>
+		  <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+		</except>
+	      </anyName>
+	      <zeroOrMore>
+		<attribute>
+		  <anyName/>
+		</attribute>
+	      </zeroOrMore>
+	      <zeroOrMore>
+		<choice>
+		  <text/>
+		  <ref name="macro.anyXML"/>
+		</choice>
+	      </zeroOrMore>
+	    </element>
+	  </content>	  
+	</macroSpec>
+
+	<macroSpec type="pe" ident="AnyThing" mode="add">
           <desc>Matches any element</desc>
           <content>
-            <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-              <choice>
-                <element>
-                  <xi:include href="../Exemplars/names.xml">
-                    <xi:fallback> ERROR: cannot locate list of names</xi:fallback>
-                  </xi:include>
-                  <zeroOrMore>
-                    <attribute>
-                      <anyName>
-                      </anyName>
-                    </attribute>
-                  </zeroOrMore>
-                  <ref name="AnyThing"/>
-                </element>
-                <text/>
-              </choice>
-            </zeroOrMore>
+	    <rng:anyName/>
           </content>
         </macroSpec>
+
       </schemaSpec>
     </body>
   </text>
