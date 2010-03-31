@@ -96,7 +96,7 @@
 		get a lower import-precedence than the ones in the importing stylesheet. If the importing
 		stylesheet now wants to override, let's say a general template to match all &lt;w:p&gt; elements
 		where no more specialized rule applies it can't since it will automatically override
-		all w:p[someprediceat] template in the imported stylesheet as well. 
+		all w:p[somepredicate] template in the imported stylesheet as well. 
 		In this case we have outsourced the processing of the general template into a named template
 		and all the imported stylesheet does is to call the named template. Now, the importing
 		stylesheet can simply override the named template, and everything works out fine.</p>
@@ -173,12 +173,24 @@
 	    </desc>
 	  </doc>
 	  <xsl:template match="w:body">
-		    <text>
-			<!-- Create forme work -->
-			<xsl:call-template name="extract-forme-work"/>
+	    <text>
+	      <!-- Create forme work -->
+	      <xsl:call-template name="extract-forme-work"/>
+	      
+	      <!-- create TEI body -->
+	      <body>
+		<xsl:call-template name="mainProcess"/>
+	      </body>
+		    </text>
+	  </xsl:template>
 
-			      <!-- create TEI body -->
-			<body>
+	  
+	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+	    <desc>
+	      Process the text by high-level divisions
+	    </desc>
+	  </doc>
+	  <xsl:template name="mainProcess">
 				<!-- 
 					group all paragraphs that form a first level section.
 				-->
@@ -207,8 +219,6 @@
 				        <!-- I have no idea why I need this, but I apparently do. 
 				//TODO: find out what is going on-->
 				<xsl:apply-templates select="w:sectPr" mode="paragraph"/>
-			      </body>
-		    </text>
 	  </xsl:template>
 
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -248,24 +258,29 @@
 			sufficient even if we find lots more things to group.
 		-->
 		<xsl:for-each-group select="current-group()"
-                          group-adjacent="if (contains(w:pPr/w:pStyle/@w:val,'List')) then 1 else                if (starts-with(w:pPr/w:pStyle/@w:val,'toc')) then 2 else                position() + 100">
+				    group-adjacent="if (contains(w:pPr/w:pStyle/@w:val,'List'))
+						    then 1
+					  else
+					  if (starts-with(w:pPr/w:pStyle/@w:val,'toc'))
+					  then 2
+					  else position() + 100">
 
 			<!-- For each defined grouping call a specific template. If there is no
 				grouping defined, apply templates with mode paragraph -->
 			<xsl:choose>
-				        <xsl:when test="current-grouping-key()=1">
-					          <xsl:call-template name="listSection"/>
-				        </xsl:when>
-				        <xsl:when test="current-grouping-key()=2">
-					          <xsl:call-template name="tocSection"/>
-				        </xsl:when>
-
-
-				        <!-- it is not a defined grouping .. apply templates -->
-				<xsl:otherwise>
-					          <xsl:apply-templates select="." mode="paragraph"/>
-				        </xsl:otherwise>
-			      </xsl:choose>
+			  <xsl:when test="current-grouping-key()=1">
+			    <xsl:call-template name="listSection"/>
+			  </xsl:when>
+			  <xsl:when test="current-grouping-key()=2">
+			    <xsl:call-template name="tocSection"/>
+			  </xsl:when>
+			  
+			  
+			  <!-- it is not a defined grouping .. apply templates -->
+			  <xsl:otherwise>
+			    <xsl:apply-templates select="." mode="paragraph"/>
+			  </xsl:otherwise>
+			</xsl:choose>
 		    </xsl:for-each-group>
 	  </xsl:template>
 

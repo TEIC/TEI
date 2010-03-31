@@ -63,7 +63,7 @@
         <list>
             <xsl:call-template name="listType"/>
             
-            <!-- Notes should be handled by a specific ISO handler -->
+            <!-- ISO Notes are be handled by a specific handler -->
             <xsl:for-each-group select="current-group()"
                              group-adjacent="if(w:pPr/w:pStyle/@w:val=$level)    then 0 else
                  if(w:pPr/w:pStyle/@w:val='Note') then 0                 

@@ -236,7 +236,8 @@
 			<xsl:choose>
 			  <xsl:when test="$val='[No Paragraph Style]'"/>
 			  <xsl:when test="$val='Table text (9)'"/>
-			  <xsl:when test="$val=''"/>
+			  <xsl:when test="$val='Table Contents'"/>
+			  <xsl:when test="string-length($val)=0"/>
 			  <xsl:otherwise>
 			    <xsl:attribute name="rend">
 			      <xsl:value-of select="$val"/>
@@ -253,7 +254,7 @@
 			      <xsl:value-of select="w:tcPr/w:gridSpan/@w:val"/>
 			    </xsl:attribute>
 			  </xsl:if>
-			  <xsl:apply-templates/>
+			  <xsl:call-template name="mainProcess"/>
 		      </cell>
 		    </xsl:for-each>
 		  </row>
