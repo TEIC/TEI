@@ -240,7 +240,7 @@
 			  <xsl:otherwise>
 			    <xsl:attribute name="rend">
 			      <xsl:value-of select="$val"/>
-			      <xsl:if test="w:tcPr/w:shd/@w:fill">
+			      <xsl:if test="w:tcPr/w:shd/@w:fill and not(w:tcPr/w:shd/@w:fill='auto')">
 				<xsl:text> background-color(</xsl:text>
 				<xsl:value-of select="w:tcPr/w:shd/@w:fill"/>
 				<xsl:text>)</xsl:text>
