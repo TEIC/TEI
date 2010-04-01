@@ -530,7 +530,8 @@ actually he wants to kill it... -->
                      <specDesc key="model.global"/>
                   </specList> The element also include a generic in-line element such as
                      <gi>seg</gi>, but which content is limited to the same content allowed by
-                     <gi>ge:line</gi>.<note place="foot">Can we limit the content of seg within this
+                     <gi>ge:line</gi>.<!-- TODO: refer to model.zonePart/linePart as an extension point for the content model -->
+                  <note place="foot">Can we limit the content of seg within this
                      specific context? Or do we need another element with such a content? This is
                      point is left open for the Council to evaluate.</note> This element can
                   therefore be used to encode any semantic aspect of the transcribed document (e.g.
@@ -612,7 +613,7 @@ actually he wants to kill it... -->
                   well as the genesis of the text. In these cases the same mechanism that can be
                   used to describe the genetic history of the text can be used to describe the
                   genesis of the document (see below <ptr target="#stages"/>), which consist in the
-                  usage of a <att>stage</att> attribute connected to the <gi>ge:stageHist</gi>
+                  usage of a <att>stage</att> attribute connected to the <gi>ge:stageNote</gi>
                   section. <!-- damageSpan_3.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                      <ge:document>
                         <surface ulx="0" uly="0" lrx="200" lry="300" xml:id="p1">
@@ -634,7 +635,7 @@ actually he wants to kill it... -->
                   within the same document, providing a content to the empty <gi>surface</gi>s);
                      <gi>damageSpan</gi> and <gi>gap</gi> belong to a second stage in the life of
                   the document; the descriptions of <val>#stage1</val> and <val>#stage2</val> can be
-                  found in the header, within the <gi>ge:stageHist</gi> section.</p>
+                  found in the header, within the <gi>ge:stageNote</gi> section.</p>
                <note><hi rend="bold">EP:</hi> I cannot include Lebrave example because, even if I
                   asked a couple of times, he did not answer to my requests of using his material,
                   so I don't know if the images are protected by copyright or not.</note>
@@ -691,23 +692,25 @@ problem (see .</p> <p>The following discussion-->
                   </specList> The present proposals extend this list by adding the following
                   elements to the same class: <specList>
                      <specDesc key="metaMark" atts="function  targets"/>
-                     <specDesc key="rewrite" atts="cause"/>
                      <specDesc key="used" atts="spanTo"/>
                      <specDesc key="undo" atts="spanTo"/>
-                     <specDesc key="subst"/>
+                     <specDesc key="redo" atts="spanTo"/>
+                     <specDesc key="rewrite" atts="cause"/>
                      <specDesc key="transposeGrp"/>
                      <specDesc key="transpose"/>
+                     <specDesc key="subst"/>
                   </specList> Each of these new elements is discussed in the remainder of this
-                  section. </p>
+                  section.</p>
                <p>All these elements (the TEI's and ne new ones) imply a certain level of semantic
                   interpretation; for instance the usage of the <gi>add</gi> element to encode, say,
                   interlinear insertions, already imply a certain level of interpretation, but when
                   transcribing from a documentary perspective, it may be desirable to keep separate
                   recording is on the page from what is the editor interpretation (see <ptr
-                     target="#deutung"/>). Therefore the present proposal also introduces a generic
-                  element <gi>ge:mod</gi> to encode any kind of modification, which can be typed or
-                  described via the <att>rend</att> attribute. <specList>
+                     target="#deutung"/>). Therefore the present proposal also introduces two generic
+                  elements, <gi>ge:mod</gi> and <gi>ge:modSpan</gi>, to encode any kind of modification,
+                  which can be typed or described via the <att>rend</att> attribute. <specList>
                      <specDesc key="mod" atts="rend type"/>
+                     <specDesc key="modSpan" atts="spanTo"/>
                   </specList>
                </p>
                <div>
@@ -762,7 +765,7 @@ problem (see .</p> <p>The following discussion-->
                   <!-- note that the  hand specified for the rewrite is the second one -->
                   <p>A single rewrite may not be sufficient, and it may be that the document becomes
                      almost unreadable as a result of repeated clarification. In the following
-                     example, for example, we can distinguish at least two attempts to write the
+                     example, we can distinguish at least two attempts to write the
                      letters <mentioned>er</mentioned> in the word
                      <mentioned>bægerklang</mentioned>: <figure>
                         <graphic url="examples/munch01.jpg" width="400px"/>
@@ -774,6 +777,7 @@ problem (see .</p> <p>The following discussion-->
                            </ge:rewrite> ...</ge:line>
                      </egXML> The <att>stage</att> attribute used here is discussed further below
                         (<ptr target="#stages"/>). </p>
+                  <!-- TODO: explain ge:redo with a Faust example -->
                </div>
                <div>
                   <head>Deletions and marked as used</head>
@@ -1126,8 +1130,7 @@ problem (see .</p> <p>The following discussion-->
                   <p>In some cases an author indicates that an alteration is itself to be altered:
                      for example, a struck through passage may be restored via a dotted underlining,
                      or the underlining of a passage may be deleted by a wavy line. </p>
-                  <!-- need a simpler example first, need to discuss relation with
-restore -->
+                  <!-- need a simpler example first, need to discuss relation with restore -->
                   <p>The TEI provides an element <gi>restore</gi> for one specific kind of
                      alteration to an alteration, namely the undoing of a deletion. We propose a
                      more general element, <gi>ge:undo</gi>. The element <gi>ge:undo</gi> usually
@@ -1611,6 +1614,7 @@ notBefore to deal with uncertainties? -->
                   given stage, and it is clear that one precedes the other, this could be indicated
                   by giving the earlier one a <att>seq</att> attribute with the value <code>1</code>
                   and the later one a <att>seq</att> attribute with the value <code>2</code>.</p>-->
+               <!-- TODO: explain @type="unordered/ordered" -->
                <p>The use of tags such as <gi>del</gi> and <gi>add</gi> necessarily implies that the
                   modification concerned was made at some time after the original writing. An
                   exception to this is where a false start or <soCalled>instant</soCalled>
