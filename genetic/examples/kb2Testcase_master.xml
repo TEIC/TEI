@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="../geneticTEI.rng" type="xml"?>
+<?xml-stylesheet type="text/css" href="../../../Resources/TEI%20SVN/TEICSS/tei.css"?>
+<teiCorpus xmlns="http://www.tei-c.org/ns/1.0" xmlns:ge="http://www.tei-c.org/ns/geneticEditions"
+    xmlns:xi="http://www.w3.org/2001/XInclude">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>Kundige Bok example.</title>
+                <respStmt>
+                    <resp>Created and provided by</resp>
+                    <name>Malte Rehbein</name>
+                </respStmt>
+            </titleStmt>
+
+            <editionStmt>
+                <p>Demonstration</p>
+            </editionStmt>
+            <publicationStmt>
+                <p>Presentation at the TEI Members Meeting, Ann Arbor 2009.</p>
+            </publicationStmt>
+            <notesStmt>
+                <note>
+                    <list>
+                        <head>Issues</head>
+                    
+                        <item>The concept of lines is not appropriate in the kundige bok case. A
+                            line break is just accidently and generally has no relation to neither
+                            genetic development nor structural/semantic information.</item>
+
+                    </list>
+                    <list>
+                        <head>For presentation in Ann Arbor</head>
+                        <item>Show metaMark in <ptr target="#ka04_4r.B_encoding"/>. And explain the
+                            reference (@targets) to the <hi>zone</hi> A.</item>
+                        <item>Explain the function of <ref target="#ka04_4r.F1_encoding">Iam non
+                                lege</ref> in regards of the genetic relations: this metaMark
+                            functions as a deletion but there is no strike-through etc.</item>
+                    </list>
+                    <list>
+                        <head>Presentation in Ann Arbor -- Agenda</head>
+                        <item>Briefly introduce the problematics of the "burspraken" and the
+                            documents / texts used for this "beta-test"</item>
+                        <item>show the general structure of the encoding using slides (not the
+                            markup); the slides should illustrate the hierarchy of the
+                            document.</item>
+                        <item>Show the "dossier" without relations: all texts are not coupled, so
+                            you read them just one by the other (author mode on this Master
+                            file).</item>
+                        <item>Explain the zone based document encoding along <ref target="#kb2-1468"
+                                >ka04_4r</ref></item>
+                    </list>
+                </note>
+            </notesStmt>
+            <sourceDesc>
+                <p>Examples taken from the digital Kundige bok 2 edition.</p>
+            </sourceDesc>
+        </fileDesc>
+        <encodingDesc>
+            <projectDesc>
+                <p>Material chosen from the Göttingen municipal statutes ("Burspraken"). Using the
+                    brewery statutes. Building up a dossier out of three (of more than a dozen) of
+                    the "witnesses" of these statutes: 1393 (plus revisions), 1484 (plus revisions),
+                    1496 (plus revisions).</p>
+                <p>1393 is taken from "olde kundige bok", folio 45r; 1484 is taken from "kundige bok
+                    2", folio ka04_4r; 1496 is also taken from kundige bok, but from a different
+                    part: folio ka44r.</p>
+                <p>Goal/scope of this test: create a dossier of these three documents, each of which
+                    contains more than one stage (campaign). Encode each document on the document
+                    level, according chapter 3 of the draft model (as of Nov 7, 2009). Encode the
+                    genetic relations according chapter 4 of the draft. Using chronology and
+                    documenting editorial decisions according chapter 6 of the draft on both levels:
+                    document and dossier.</p>
+                <p/>
+            </projectDesc>
+        </encodingDesc>
+        <!-- 
+            
+        -->
+        <profileDesc>
+            <ge:geneticGrp>
+                <ge:geneticNote type="thematic">
+                    <linkGrp>
+                        <link targets="#doc_okb #doc_kb2_ka4_4r #doc_kb2_ka44r"/>
+                    </linkGrp>
+                    <p>Documents containing brewery statutes.</p>
+                </ge:geneticNote>
+            </ge:geneticGrp>
+        </profileDesc>
+        <!--
+            
+            -->
+
+    </teiHeader>
+    <xi:include href="kb2Testcase_okb.xml"/>
+    <xi:include href="kb2Testcase_1484.xml"/>
+    <xi:include href="kb2Testcase_1496.xml"/>
+    <TEI>
+        <teiHeader>
+            <fileDesc>
+                <titleStmt>
+                    <title type="main">Medieval Brewery Statutes of Göttingen</title>
+                    <title type="sub">Genetic Edition</title>
+                </titleStmt>
+                <publicationStmt>
+                    <p>Presentation at the TEI Members' Meeting and Conference</p>
+                </publicationStmt>
+                <sourceDesc>
+                    <p>Material taken from: <list>
+                            <item>Malte Rehbein, Das olde kundige bok in spätmittelalterlichem
+                                Gebrauch, Göttingen 1999.</item>
+                            <item>Malte Rehbein, Göttinger Statuten im 15. Jahrhundert, Diss. Univ.
+                                Göttingen 2008.</item>
+                        </list></p>
+                </sourceDesc>
+            </fileDesc>
+        </teiHeader>
+        <text>
+            <body>
+                <!-- This is the genetic graph of the various text stages between 1393 and 1495.
+                    Currently, its granularity is the level of statutes as a whole, i.e. brewery in this case.
+                    Should be broken down to paragraph level at least. -->
+                <graph type="genetic">
+                    <node xml:id="a" value="#stage_1393"/>
+                    <node xml:id="b" value="#stage_1484_draft"/>
+                    <node xml:id="c" value="#stage_1484_Oct"/>
+                    <node xml:id="d" value="#stage_1484_Nov"/>
+                    <node xml:id="e" value="#stage_1485"/>
+                    <node xml:id="f" value="#stage_1487"/>
+                    <node xml:id="g" value="#stage_1495"/>
+                    <node xml:id="h" value="#stage_1496"/>
+                    <arc from="#a" to="#c">
+                        <label>Shift from "olde kundige bok" to "kundige bok 2".</label>
+                    </arc>
+                    <arc from="#b" to="#c">
+                        <label>Correction and approval of draft version.</label>
+                    </arc>
+                    <arc from="#c" to="#d"/>
+                    <arc from="#d" to="#e"/>
+                    <arc from="#e" to="#f"/>
+                    <arc from="#f" to="#g"/>
+                    <arc from="#g" to="#h">
+                        <label>Using a new document.</label>
+                    </arc>
+                </graph>
+
+            </body>
+        </text>
+    </TEI>
+</teiCorpus>
