@@ -428,6 +428,7 @@ actually he wants to kill it... -->
                   five lines of annotation in blue ink form another zone, to record which the diary
                   page has been rotated 90° clockwise by the author. Using the elements discussed so
                   far, the page might be transcribed as follows:</p>
+               <!-- D1_1.xml -->
                <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <ge:document>
                      <surface ulx="0" uly="0" lrx="200" lry="300">
@@ -450,7 +451,7 @@ actually he wants to kill it... -->
                   </ge:document>
                </egXML>
                <p>On the other hand, if the encoders considers not convenient to mark the text
-                  within <gi>ge:line</gi>, one could encode the same text as follows: <egXML
+                  within <gi>ge:line</gi>, one could encode the same text as follows: <!-- D1_2.xml --><egXML
                      xmlns="http://www.tei-c.org/ns/Examples">
                      <ge:document>
                         <surface ulx="0" uly="0" lrx="200" lry="300">
@@ -466,7 +467,7 @@ actually he wants to kill it... -->
                   </egXML>
                </p>
                <p>For comparison, here is a typical TEI transcription of the same page, focussing on
-                  its textual structure <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  its textual structure <!-- D1_3.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                      <div type="diary-entry">
                         <dateline>
                            <date value="2009-04-01"> 1 April 2009 </date>
@@ -495,7 +496,7 @@ actually he wants to kill it... -->
                   has been applied to the <gi>ge:line</gi> elements in the preceding example.
                   Instead of marking the textual paragraphs as full elements, we mark only their
                   frontiers, using the standard TEI <gi>milestone</gi> element, with the addition of
-                  a spanning attribute, as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  a spanning attribute, as follows: <!-- D1_4.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                      <surface ulx="0" uly="0" lrx="200" lry="300">
                         <zone stage="#stage1" seq="0" ulx="10" uly="43" lrx="185" lry="84">
                            <zone>
@@ -551,7 +552,7 @@ actually he wants to kill it... -->
                   specialized attributes to provide additional information. <specList>
                      <specDesc key="patch" atts="binder type height width"/>
                   </specList> Using this element, the Whitman draft above might be encoded as
-                  follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  follows: <!-- whitman01.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                      <surface>
                         <zone>
                            <ge:line>Poem</ge:line>
@@ -579,7 +580,7 @@ actually he wants to kill it... -->
                      <specDesc key="gap"/>
                   </specList> Let's suppose that a piece of paper has been cut off from the page
                   (encoded within a <gi>surface</gi>), and that we can infer the dimensions of the
-                  missing piece; this could be encoded as follows: <egXML
+                  missing piece; this could be encoded as follows: <!-- damageSpan_1.xml --><egXML
                      xmlns="http://www.tei-c.org/ns/Examples">
                      <surface ulx="0" uly="0" lrx="200" lry="300">
                         <zone>...</zone>
@@ -592,7 +593,7 @@ actually he wants to kill it... -->
                   to give the coordinates of the missing piece of <gi>surface</gi>, assuming that
                   those are reconstructible. In case a full page is missing, <gi>damageSpan</gi> can
                   be used within <gi>ge:document</gi>, perhaps in conjunction with a <gi>gap</gi>
-                  element. <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  element. <!-- damageSpan_2.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                      <ge:document>
                         <surface ulx="0" uly="0" lrx="200" lry="300" xml:id="p1">
                            <zone>...</zone>
@@ -612,7 +613,7 @@ actually he wants to kill it... -->
                   used to describe the genetic history of the text can be used to describe the
                   genesis of the document (see below <ptr target="#stages"/>), which consist in the
                   usage of a <att>stage</att> attribute connected to the <gi>ge:stageHist</gi>
-                  section. <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  section. <!-- damageSpan_3.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                      <ge:document>
                         <surface ulx="0" uly="0" lrx="200" lry="300" xml:id="p1">
                            <zone>...</zone>
@@ -726,7 +727,7 @@ problem (see .</p> <p>The following discussion-->
                         <graphic url="examples/skuldren.jpg" width="400px"/>
                         <head rend="it">Image from a ms of Peer Gynt, Collin 2869, 4°, I.1.1, the
                            Royal Library of Copenhagen</head>
-                     </figure> We might transcribe this word as follows: <egXML
+                     </figure> We might transcribe this word as follows: <!-- skuldren.xml --><egXML
                         xmlns="http://www.tei-c.org/ns/Examples">
                         <ge:line>... Sku<ge:rewrite cause="unclear">l</ge:rewrite>dren </ge:line>
                      </egXML>
@@ -742,7 +743,7 @@ problem (see .</p> <p>The following discussion-->
                         get a young</mentioned>, writing the inky <mentioned>get</mentioned> on top
                      of pencilled <mentioned>but</mentioned> and striking over with black ink the
                      pencilled <mentioned>but</mentioned>. A simple way of encoding this might be as
-                     follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                     follows: <!-- AusSand70.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                         <ge:rewrite cause="fix" hand="#ja2" stage="#s1">Now, if we could <subst
                               stage="#s1">
                               <add>get</add>
@@ -752,7 +753,7 @@ problem (see .</p> <p>The following discussion-->
                      </egXML> where the <att>stage</att> attribute groups the operations that belong
                      to the rewriting stage, assuming an implied previous stage (the first layer of
                      writing). In case the first layer need to be addressed independently, another
-                     URI can be added to the <att>stage</att> attribute: <egXML
+                     URI can be added to the <att>stage</att> attribute:  <!-- AusSand70.xml --><egXML
                         xmlns="http://www.tei-c.org/ns/Examples">
                         <ge:rewrite cause="fix" hand="#ja2" stage="#s0 #s1">Now...</ge:rewrite>
                      </egXML> where <val>#s0</val> and <val>#s1</val> both point to the declaration
@@ -767,7 +768,7 @@ problem (see .</p> <p>The following discussion-->
                         <graphic url="examples/munch01.jpg" width="400px"/>
                         <head rend="it">Image from http://www.emunch.no/tei-mm-2008/ms.html </head>
                      </figure> We might encode this by nesting the <gi>rewrite</gi> element as
-                     follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                     follows: <!-- munch01.jpg --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                         <ge:line>ved Bæg<ge:rewrite cause="unclear" stage="#stage2">
                               <ge:rewrite cause="unclear" stage="#stage1">er</ge:rewrite>
                            </ge:rewrite> ...</ge:line>
@@ -797,7 +798,7 @@ problem (see .</p> <p>The following discussion-->
                   <p>Material marked as re-used in this way often spans more than one zone or line.
                      For that reason, the <gi>ge:used</gi> element is a spanning element, indicating
                      the end of the used area by means of a <att>spanTo</att> attribute. We might
-                     encode the above page as follows: <egXML
+                     encode the above page as follows: <!-- whitman02.xml --><egXML
                         xmlns="http://www.tei-c.org/ns/Examples">
                         <surface>
                            <ge:used rend="cross" spanTo="#X2"/>
@@ -848,7 +849,7 @@ problem (see .</p> <p>The following discussion-->
                      functioning as a metamark to indicate that this sentence forms part of the
                      regulations. A further sentence was then added, while at some later stage or
                      stages the text and also the metamark were deleted. We might encode this as
-                     follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                     follows: <!-- ka04_1v-dtl.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                         <del>
                            <ge:metaMark function="flag" targets="#s1">lege</ge:metaMark>
                            <s xml:id="s1">Ock en schullen de bruwere des hilgen dages nicht over
@@ -876,7 +877,7 @@ problem (see .</p> <p>The following discussion-->
                      point, and are not part of the text, but represent a stage at which Moore is
                      taking stock of the progress of his composition. </p>
                   <p>
-                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                     <!-- moore02.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                         <surface>
                            <zone>
                               <!-- main zone -->
@@ -935,7 +936,7 @@ problem (see .</p> <p>The following discussion-->
                      deleted verse lines should be let stand, as evidenced by their appearance in
                      the first printed edition of <title>Lalla Rookh</title>. The word, "stet" does
                      not form part of the text, but rather declares that a certain function be
-                     performed upon the text. <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                     performed upon the text. <!-- moore03.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                         <surface>
                            <zone>
                               <ge:line><gap extent="1" unit="word" reason="illegible"/>
@@ -984,7 +985,7 @@ problem (see .</p> <p>The following discussion-->
                      shows that the word "beside" was chosen, but for the purposes of encoding this
                      manuscript, the facility to encode two equally-possible alternative readings
                      needs to be available. </p>
-                  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <!-- moore04.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                      <zone>
                         <ge:line>Alone <seg type="alternative" xml:id="alt1">before</seg>
                            <add place="above" type="alternative" xml:id="alt2">beside</add> his
@@ -1056,7 +1057,7 @@ problem (see .</p> <p>The following discussion-->
                      </figure>, the underlined numbers 1 and 2 indicate that, although the word
                         <mentioned>bör</mentioned> precedes the word <mentioned>hör</mentioned> in
                      the text, the order of the two words should be reversed. We may encode this as
-                     follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                     follows: <!-- ibsen01.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                         <ge:line><seg xml:id="ib01">bör</seg><ge:metaMark rend="underline"
                               function="transposition" targets="#ib1" place="above">2.</ge:metaMark>
                            og <seg xml:id="ib02">hör</seg><ge:metaMark rend="underline"
@@ -1077,7 +1078,7 @@ problem (see .</p> <p>The following discussion-->
                         <head>Extracted from
                            <ref>http://www.emunch.no/tei-mm-2008/ms3.html</ref></head>
                      </figure>
-                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                     <!-- ibsen04.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                         <ge:line xml:id="ib3"><ge:metaMark function="transposition"
                               place="margin-left">2.)</ge:metaMark> thi da er du med Himmelen i
                            Pagt; — </ge:line>
@@ -1117,7 +1118,7 @@ problem (see .</p> <p>The following discussion-->
                      all of this as a single substitution. This would require a modification to the
                      content model of <gi>subst</gi> so as to permit text along with other members
                      of <ident type="class">model.pPart.transcriptional</ident>, so that this
-                     example could be encoded as follows:<egXML
+                     example could be encoded as follows: <!-- moore01.xml --><egXML
                         xmlns="http://www.tei-c.org/ns/Examples">
                         <ge:line>While <subst><del>pondering</del> thus <add>she
                            mus'd</add></subst>, her pinions fann'd</ge:line>
@@ -1140,7 +1141,7 @@ restore -->
                         rechi á</mentioned> was underlined word by word, and then the underlining of
                      the word <mentioned>si</mentioned> was cancelled. <figure>
                         <graphic url="examples/leop01.png" width="400px"/>
-                     </figure>This could be encoded as follows:<egXML
+                     </figure>This could be encoded as follows: <!-- leop01.xml --><egXML
                         xmlns="http://www.tei-c.org/ns/Examples">
                         <ge:line> che e’ <hi rend="underline"><ge:undo spanTo="#x2"/>si <anchor
                                  xml:id="x2"/> rechi a’</hi>
@@ -1196,7 +1197,7 @@ restore -->
             <p>The XInclude mechanism provides a convenient means of managing the many separate
                files which are likely to be needed to constitute a complete dossier. For example,
                supposing we have a dossier comprising three documents each of which has been encoded
-               in its own file: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+               in its own file: <!-- dossier_1.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <teiCorpus xmlns="http://www.tei-c.org/ns/1.0"
                      xmlns:xi="http://www.w3.org/2001/XInclude"
                      xmlns:ge="http://www.tei-c.org/ns/geneticEditions">
@@ -1261,7 +1262,7 @@ terminology needs revision -->
                   </list></p>
                <p>To indicate that one document (with <att>xml:id</att> value <code>poem</code>) and
                   another (with <att>xml:id</att> value <code>sweet_flag</code>) are thematically
-                  related, we might simply add a <gi>geneticNote</gi> like the following: <egXML
+                  related, we might simply add a <gi>geneticNote</gi> like the following: <!--geneticRel.xml --><egXML
                      xmlns="http://www.tei-c.org/ns/Examples">
                      <profileDesc>
                         <ge:geneticGrp>
@@ -1333,7 +1334,7 @@ terminology needs revision -->
                <p>The simplest way of representing a directed graph requires use of only the
                      <gi>node</gi> and <gi>graph</gi> elements. For example, to represent a graph in
                   which we say that text A derives directly from two drafts B and C, and that C
-                  derives from another document D, we might draw a graph like the following: <egXML
+                  derives from another document D, we might draw a graph like the following: <!--geneticRel.xml --><egXML
                      xmlns="http://www.tei-c.org/ns/Examples">
                      <graph>
                         <node xml:id="N1" value="#A-text" adjTo="#N2 #N3"/>
@@ -1348,7 +1349,7 @@ terminology needs revision -->
                   represent the arcs joining nodes together. </p>
                <p>If we wish to attach additional information to the arcs, for example to add labels
                   specifying the nature of the link between individual pairs of nodes, we might
-                  represent the same structure rather differently as follows: <egXML
+                  represent the same structure rather differently as follows: <!--geneticRel.xml --><egXML
                      xmlns="http://www.tei-c.org/ns/Examples">
                      <graph>
                         <node xml:id="NN1" value="#A-text"/>
@@ -1374,7 +1375,7 @@ terminology needs revision -->
           build and documented.<note place="foot">All editorial statements are taken
              from the aforementioned website.</note></p>
 -->
-                  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <!--geneticRel.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                      <graph type="genetic">
                         <node xml:id="A" value="#poem"/>
                         <node xml:id="B" value="#sweet_flag"/>
@@ -1442,7 +1443,7 @@ terminology needs revision -->
                there is no way of explicitly marking an absent (or additional) reading. For
                instance, the 1856 edition of <title>Leaves of Grass</title>of the 1856 omits the
                words <soCalled>all, all</soCalled> which are included in the 1881-82 version. We may
-               record this as an apparatus: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+               record this as an apparatus: <!-- app.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <l n="22">And the enraged and treacherous dispositions <app>
                         <rdg wit="#Leaves81-82">, all, all</rdg>
                         <rdg wit="#Leaves56"/>
@@ -1450,7 +1451,7 @@ terminology needs revision -->
                </egXML> but this does not indicate whether the words were deleted consciously from
                the 1856 dedition, or added in the 1881 version. Furthermore, if we decided to use
                the existing <gi>add</gi> or <gi>del</gi> elements within the <gi>rdg</gi>, for
-               example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+               example: <!-- app.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <l n="22">And the enraged and treacherous dispositions <app>
                         <rdg wit="#Leaves81-82">
                            <add>, all, all</add>
@@ -1508,7 +1509,7 @@ transposition can also be included in apparatus
                possibility which the workgroup has not yet fully explored. If all the alterations
                occurring at document level are already encoded within each transcription, the
                dossier-level collation will only need to point to passages within the separate files
-               and classify the types of readings resulting from the collation: <egXML
+               and classify the types of readings resulting from the collation: <!-- app.xml --><egXML
                   xmlns="http://www.tei-c.org/ns/Examples">
                   <app xmlns="http://www.tei-c.org/ns/1.0">
                      <rdg wit="#Leaves81-82">
@@ -1560,7 +1561,7 @@ notBefore to deal with uncertainties? -->
                <p>Typically, each <gi>change</gi> element will contain references to other
                   annotations contained within the <gi>teiHeader</gi> or in the document, but its
                   contents are purely documentary. </p>
-               <egXML xmlns="http://www.tei-c.org/ns/Examples">
+               <!-- stages.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <profileDesc>
                      <creation>
                         <date notAfter="1816-07-18"/>
@@ -1602,7 +1603,7 @@ notBefore to deal with uncertainties? -->
                   to be assigned to a given <gi>change</gi>. This is a milestone-like (empty)
                   element, placed at the start of the text affected, and indicating the end of that
                   range by means of an <att>spanTo</att> attribute. </p>
-               <p><egXML xmlns="http://www.tei-c.org/ns/Examples">
+               <p><!-- stages.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                      <ge:line>her face) – <ge:mod spanTo="#ch10-06-23" stage="#mod1"/>But <subst>
                            <del rend="overstruck">I do not</del>
                            <add place="above">you have not</add>
@@ -1647,7 +1648,7 @@ notBefore to deal with uncertainties? -->
                      <item>The initial letter i of the words iron necklace is overwritten with a
                         capital I</item>
                   </list> To indicate that the first of these acts must have taken place before the
-                  others, we might encode this revision campaign as follows: <egXML
+                  others, we might encode this revision campaign as follows: <!-- whitman03a.xml --><egXML
                      xmlns="http://www.tei-c.org/ns/Examples">
                      <ge:line><del instant="yes">T</del>
                         <subst>
@@ -1838,7 +1839,10 @@ notBefore to deal with uncertainties? -->
             <head>ODD</head>
             <p>TEI Extension for Genetic Editions -- preliminary version</p>
             <schemaSpec ident="geneticTEI" docLang="en" prefix="tei_" start="teiCorpus TEI"
-               xml:lang="en" targetLang="en">
+               xml:lang="en" targetLang="en" ns="http://www.tei-c.org/ns/1.0">
+               
+               <!-- =============== Modules =============== -->
+               
                <moduleRef key="core"/>
                <moduleRef key="tei"/>
                <moduleRef key="header"/>
@@ -1933,51 +1937,26 @@ notBefore to deal with uncertainties? -->
                <elementSpec module="namesdates" ident="surname" mode="delete"/>
                <elementSpec module="namesdates" ident="terrain" mode="delete"/>
                <elementSpec module="namesdates" ident="trait" mode="delete"/>
-               <!-- classes -->
-               <!-- add new staged class for anything which can take @stage -->
-               <classSpec ident="att.staged" type="atts" mode="add" module="tei">
-                  <desc>groups elements which can be assigned to a specific text stage by means of
-                     the attributes it provides.</desc>
-                  <attList>
-                     <attDef ident="stage" mode="add">
-                        <desc>points to a <gi>stageNote</gi> which contains a description of a
-                           text-stage to which the editors think the alteration marked by the
-                           element bearing this attribute (and its children) belongs.</desc>
-                        <datatype minOccurs="1">
-                           <rng:choice>
-                              <rng:data type="anyURI"/>
-                              <!--rng:ref name="data.pointer"/-->
-                              <rng:value>0</rng:value>
-                           </rng:choice>
-                        </datatype>
-                        <remarks>
-                           <p>The value 0 indicates that the element concerned is considered to
-                              belong to the same stage as its sibling elements.</p>
-                        </remarks>
-                     </attDef>
-                  </attList>
-               </classSpec>
-               <classSpec type="atts" ident="att.global" mode="change" module="tei">
-                  <classes>
-                     <memberOf key="att.global.facs"/>
-                     <memberOf key="att.global.linking"/>
-                     <memberOf key="att.global.analytic"/>
-                     <memberOf key="att.staged" mode="add"/>
-                  </classes>
-               </classSpec>
-               <!-- add existing transcriptional elements to the staged class -->
+               
+               <!-- add transcriptional attributes to those related to textual alteration -->
                <classSpec ident="att.transcriptional" type="atts" mode="change" module="tei">
                   <classes>
                      <memberOf key="att.editLike"/>
                   </classes>
                </classSpec>
+               
+               <!-- =============== Content models for the documentary view =============== -->
+               
                <classSpec ident="model.zonePart" type="model" mode="add">
                   <desc>elements which can form part of a zone</desc>
                </classSpec>
+               
                <classSpec ident="model.linePart" type="model" mode="add">
                   <desc>elements which can form part of a line</desc>
                </classSpec>
-               <!-- topographical document structure -->
+               
+               <!-- =============== Topographical document structure =============== -->
+               
                <elementSpec ident="document" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
                   <desc>contains a document-centric transcription of a primary source, providing
                      topographical information as well as transcription</desc>
@@ -1994,6 +1973,7 @@ notBefore to deal with uncertainties? -->
                      </rng:oneOrMore>
                   </content>
                </elementSpec>
+               
                <elementSpec ident="surface" module="physdesc" mode="change">
                   <classes mode="change">
                      <memberOf key="att.typed" mode="add"/>
@@ -2104,7 +2084,6 @@ model.milestoneLike elements actually -->
                      <memberOf key="att.coordinated"/>
                      <memberOf key="att.global"/>
                      <memberOf key="att.typed"/>
-                     <!-- should this be staged? -->
                   </classes>
                   <content>
                      <rng:zeroOrMore>
@@ -2179,6 +2158,8 @@ model.milestoneLike elements actually -->
                            <rng:ref name="model.global"/>
                            <rng:ref name="model.pPart.transcriptional"/>
                            <rng:ref name="model.pPart.editorial"/>
+                           <rng:ref name="model.linePart"/>
+                           
                            <!-- not sure if thats
        wise -->
                            <!--<rng:ref name="model.segLike"/>-->
@@ -2198,33 +2179,32 @@ model.milestoneLike elements actually -->
                      <memberOf key="model.zonePart" mode="add"/>
                   </classes>
                </elementSpec>
-               <!-- editorial justification -->
-               <!-- in wburg, we agreed to replace this with note -->
-               <!-- <elementSpec ident="edJust" ns="http://www.tei-c.org/ns/geneticEditions"
-    mode="add">
-    <desc>(editorial justification) An editorial justification of any part of
-       the edited text.</desc>
-    <classes>
-<memberOf key="model.global"/>
-<memberOf key="model.global.meta"/>
-<memberOf key="model.headerPart"/>
-<memberOf key="att.global"/>
-<memberOf key="att.editLike"/>
-    </classes>
-    <content>
-<rng:ref name="model.pLike"/>
-    </content>
-    <attList>
-<attDef ident="target" mode="add">
-   <desc>Points to the element to be justified.</desc>
-   <datatype minOccurs="1" maxOccurs="1">
- <rng:ref
-  name="data.pointer"/>
-   </datatype>
-</attDef>
-    </attList>
- </elementSpec>
--->
+               
+               <!-- =============== Text stages =============== -->
+               
+               <classSpec ident="att.staged" type="atts" mode="add" module="tei">
+                  <desc>groups elements which can be assigned to a specific text stage by means of
+                     the attributes it provides.</desc>
+                  <attList>
+                     <attDef ident="stage" mode="add">
+                        <desc>points to one or more <gi>stageNote</gi> elements which contain a description of a
+                           text-stage to which the editors think the alteration/ text passage marked by the
+                           element bearing this attribute (and its children) belongs.</desc>
+                        <datatype minOccurs="1" maxOccurs="unbounded">
+                           <rng:ref name="data.pointer"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </classSpec>
+               <classSpec type="atts" ident="att.global" mode="change" module="tei">
+                  <classes>
+                     <memberOf key="att.global.linking"/>
+                     <memberOf key="att.global.analytic"/>
+                     <memberOf key="att.global.facs"/>
+                     <memberOf key="att.staged" mode="add"/>
+                  </classes>
+               </classSpec>
+
                <elementSpec ident="creation" mode="change">
                   <content>
                      <rng:zeroOrMore>
@@ -2235,6 +2215,7 @@ model.milestoneLike elements actually -->
                      </rng:zeroOrMore>
                   </content>
                </elementSpec>
+               
                <elementSpec ident="stageHist" ns="http://www.tei-c.org/ns/geneticEditions"
                   mode="add">
                   <desc>contains one or more descriptions of the stages which have been identified
@@ -2243,7 +2224,7 @@ model.milestoneLike elements actually -->
                      <memberOf key="att.global"/>
                   </classes>
                   <content>
-                     <rng:choice xmlns="http://relaxng.org/ns/structure/1.0">
+                     <rng:choice>
                         <rng:oneOrMore>
                            <rng:ref name="model.pLike"/>
                         </rng:oneOrMore>
@@ -2252,23 +2233,42 @@ model.milestoneLike elements actually -->
                               <rng:ref name="summary"/>
                            </rng:optional>
                            <rng:oneOrMore>
-                              <rng:ref name="change"/>
+                              <rng:ref name="stageNote"/>
                            </rng:oneOrMore>
                         </rng:group>
                      </rng:choice>
                   </content>
                </elementSpec>
-               <elementSpec ident="change" module="header" mode="change">
+               
+               <elementSpec ident="stageNote" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
                   <desc>documents a particular stage in the genesis of a text.</desc>
-                  <!--
-    <classes>
-<memberOf key="att.datable"/>
-    </classes>
--->
+                  <classes>
+                     <memberOf key="att.datable"/>
+                     <memberOf key="att.global"/>
+                     <memberOf key="att.typed"/>
+                  </classes>
+                  <attList>
+                     <attDef ident="target" mode="add">
+                        <desc>points to one or more elements that belong to this stage.</desc>
+                        <datatype minOccurs="1" maxOccurs="unbounded">
+                           <rng:ref name="data.pointer"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
                   <content>
-                     <rng:ref name="macro.specialPara"/>
+                     <rng:zeroOrMore>
+                        <rng:choice>
+                           <rng:text/>
+                           <rng:ref name="model.limitedPhrase"/>
+                           <rng:ref name="model.global"/>
+                           <rng:ref name="stageNote"/>
+                        </rng:choice>
+                     </rng:zeroOrMore>
                   </content>
                </elementSpec>
+               
+               <!-- =============== Textual alterations =============== -->
+               
                <elementSpec ident="mod" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
                   <desc>encodes any modification to the text at a documentary level</desc>
                   <classes>
@@ -2279,29 +2279,86 @@ model.milestoneLike elements actually -->
                   </classes>
                   <content>
                      <rng:empty/>
-                     <!--<rng:zeroOrMore>
-   <rng:choice>
- <rng:ref name="macro.paraContent"/>
- <rng:ref name="line"/>
-   </rng:choice>
-</rng:zeroOrMore>-->
                   </content>
                </elementSpec>
-               <!-- authorial changes -->
-               <elementSpec ident="metaMark" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
-                  <desc>(meta mark) A textual or graphical element in a manuscript that is
-                     functional but not part of the text. Could transform the text, like a
-                     strikethrough, or provide meta-information, like a date.</desc>
+               
+               <elementSpec ident="subst" module="transcr" mode="change">
+                  <!-- should be in different namespace -->
+                  <content>
+                     <rng:group>
+                        <rng:group>
+                           <rng:ref name="model.pPart.transcriptional"/>
+                        </rng:group>
+                        <rng:oneOrMore>
+                           <rng:choice>
+                              <rng:text/>
+                              <rng:ref name="model.pPart.transcriptional"/>
+                           </rng:choice>
+                        </rng:oneOrMore>
+                     </rng:group>
+                  </content>
+                  <attList>
+                     <attDef ident="type" mode="add">
+                        <desc>The type of substitution.</desc>
+                        <datatype minOccurs="1" maxOccurs="1">
+                           <rng:ref name="data.name"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               
+               <elementSpec ident="transposeGrp" ns="http://www.tei-c.org/ns/geneticEditions"
+                  mode="add">
+                  <desc>supplies a list of transpositions indicated at some point in the text,
+                     typically by means of metamarks.</desc>
                   <classes>
-                     <memberOf key="model.pPart.transcriptional"/>
-                     <memberOf key="att.spanning"/>
-                     <memberOf key="att.placement"/>
+                     <memberOf key="model.profileDescPart"/>
+                     <memberOf key="model.global.meta"/>
                      <memberOf key="att.global"/>
                   </classes>
                   <content>
-                     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.specialPara"/>
+                     <rng:oneOrMore>
+                        <rng:ref name="transpose"/>
+                     </rng:oneOrMore>
+                  </content>
+               </elementSpec>
+               <elementSpec ident="transpose" ns="http://www.tei-c.org/ns/geneticEditions"
+                  mode="add">
+                  <desc> describes a single textual transposition as an ordered list of at least two
+                     pointers specifying the order in which the elements indicated should be
+                     re-combined. </desc>
+                  <classes>
+                     <memberOf key="att.global"/>
+                  </classes>
+                  <content>
+                     <rng:group>
+                        <rng:ref name="ptr"/>
+                        <rng:oneOrMore>
+                           <rng:ref name="ptr"/>
+                        </rng:oneOrMore>
+                     </rng:group>
+                  </content>
+               </elementSpec>
+               
+               <!-- =============== Undo/Redo =============== -->
+               
+               <elementSpec ident="undo" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
+                  <desc>Marks up an action represented by an element to be undone.</desc>
+                  <classes>
+                     <memberOf key="model.pPart.transcriptional"/>
+                     <memberOf key="att.spanning"/>
+                     <memberOf key="att.global"/>
+                  </classes>
+                  <content>
+                     <rng:empty/>
                   </content>
                   <attList>
+<<<<<<< .mine
+                     <attDef ident="target" mode="add">
+                        <desc>The element representing the action to be undone.</desc>
+                        <datatype minOccurs="1" maxOccurs="1">
+                           <rng:ref name="data.pointer"/>
+=======
                      <attDef ident="function" mode="add">
                         <desc>describes the function (e.g. add, delete, alternate) of the
                            mark.</desc>
@@ -2314,11 +2371,13 @@ model.milestoneLike elements actually -->
                            refers. Pointers are separated by a white space</desc>
                         <datatype minOccurs="1" maxOccurs="unbounded">
                            <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+>>>>>>> .r7351
                         </datatype>
                      </attDef>
                   </attList>
                </elementSpec>
-               <elementSpec ident="rewrite" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
+               
+               <elementSpec ident="redo" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
                   <desc>contains a sequence of text which has been rewritten by the author, for
                      example by over-inking, to clarify or fix it.</desc>
                   <classes>
@@ -2357,6 +2416,39 @@ model.milestoneLike elements actually -->
                         appropriate value for the <att>stage</att> attribute.</p>
                   </remarks>
                </elementSpec>
+
+               <!-- =============== Authorial changes =============== -->
+
+               <elementSpec ident="metaMark" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
+                  <desc>(meta mark) A textual or graphical element in a manuscript that is
+                     functional but not part of the text. Could transform the text, like a
+                     strikethrough, or provide meta-information, like a date.</desc>
+                  <classes>
+                     <memberOf key="model.pPart.transcriptional"/>
+                     <memberOf key="att.spanning"/>
+                     <memberOf key="att.placement"/>
+                     <memberOf key="att.global"/>
+                  </classes>
+                  <content>
+                     <rng:ref name="macro.specialPara"/>
+                  </content>
+                  <attList>
+                     <attDef ident="function" mode="add">
+                        <desc>describes the function (e.g. add, delete, alternate) of the mark.</desc>
+                        <datatype minOccurs="1">
+                           <rng:ref name="data.word"/>
+                        </datatype>
+                     </attDef>
+                     <attDef ident="target">
+                        <desc>indicates the element(s) to which the function of the meta-mark
+                           refers. Pointers are separated by a white space</desc>
+                        <datatype minOccurs="1" maxOccurs="unbounded">
+                           <rng:ref name="data.pointer"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+               
                <elementSpec ident="used" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
                   <desc>In many cases, authors mark portions of text as having been used, usually
                      meaning the text has been transcribed to a fair copy. The mark is often a
@@ -2369,62 +2461,9 @@ model.milestoneLike elements actually -->
                   </classes>
                   <content>
                      <rng:empty/>
-                     <!--<rng:zeroOrMore>
-   <rng:choice>
- <rng:ref name="macro.paraContent"/>
- <rng:ref name="line"/>
- <rng:ref name="model.divLike"/>
-   </rng:choice>
-</rng:zeroOrMore>
-    -->
                   </content>
                </elementSpec>
-               <elementSpec ident="undo" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
-                  <desc>Marks up an action represented by an element to be undone.</desc>
-                  <classes>
-                     <memberOf key="model.pPart.transcriptional"/>
-                     <memberOf key="att.spanning"/>
-                     <memberOf key="att.global"/>
-                  </classes>
-                  <content>
-                     <rng:empty/>
-                     <!--   <rng:ref
-          name="macro.specialPara"/>
--->
-                  </content>
-                  <attList>
-                     <attDef ident="target" mode="add">
-                        <desc>The element representing the action to be undone.</desc>
-                        <datatype minOccurs="1" maxOccurs="1">
-                           <rng:ref name="data.pointer"/>
-                        </datatype>
-                     </attDef>
-                  </attList>
-               </elementSpec>
-               <elementSpec ident="subst" module="transcr" mode="change">
-                  <!-- shd be in diff namespace -->
-                  <content>
-                     <rng:group>
-                        <rng:group>
-                           <rng:ref name="model.pPart.transcriptional"/>
-                        </rng:group>
-                        <rng:oneOrMore>
-                           <rng:choice>
-                              <rng:text/>
-                              <rng:ref name="model.pPart.transcriptional"/>
-                           </rng:choice>
-                        </rng:oneOrMore>
-                     </rng:group>
-                  </content>
-                  <attList>
-                     <attDef ident="type" mode="add">
-                        <desc>The type of substitution.</desc>
-                        <datatype minOccurs="1" maxOccurs="1">
-                           <rng:ref name="data.name"/>
-                        </datatype>
-                     </attDef>
-                  </attList>
-               </elementSpec>
+               
                <elementSpec ident="unclear" module="core" mode="change">
                   <classes mode="replace">
                      <memberOf key="model.choicePart" mode="add"/>
@@ -2433,38 +2472,7 @@ model.milestoneLike elements actually -->
                      <memberOf key="att.typed" mode="add"/>
                   </classes>
                </elementSpec>
-               <elementSpec ident="transposeGrp" ns="http://www.tei-c.org/ns/geneticEditions"
-                  mode="add">
-                  <desc>supplies a list of transpositions indicated at some point in the text,
-                     typically by means of metamarks.</desc>
-                  <classes>
-                     <memberOf key="model.profileDescPart"/>
-                     <memberOf key="model.global.meta"/>
-                     <memberOf key="att.global"/>
-                  </classes>
-                  <content>
-                     <rng:oneOrMore>
-                        <rng:ref name="transpose"/>
-                     </rng:oneOrMore>
-                  </content>
-               </elementSpec>
-               <elementSpec ident="transpose" ns="http://www.tei-c.org/ns/geneticEditions"
-                  mode="add">
-                  <desc> describes a single textual transposition as an ordered list of at least two
-                     pointers specifying the order in which the elements indicated should be
-                     re-combined. </desc>
-                  <classes>
-                     <memberOf key="att.global"/>
-                  </classes>
-                  <content>
-                     <rng:group>
-                        <rng:ref name="ptr"/>
-                        <rng:oneOrMore>
-                           <rng:ref name="ptr"/>
-                        </rng:oneOrMore>
-                     </rng:group>
-                  </content>
-               </elementSpec>
+
                <!-- genetic groups -->
                <elementSpec ident="geneticGrp" mode="add"
                   ns="http://www.tei-c.org/ns/geneticEditions">
@@ -2553,7 +2561,9 @@ model.milestoneLike elements actually -->
                   </classes>
                </elementSpec>-->
                <elementSpec ident="damageSpan" mode="change"/>
+                              
                <!-- XInclude -->
+               
                <elementSpec ident="include" ns="http://www.w3.org/2001/XInclude" mode="add">
                   <desc>The W3C XInclude element</desc>
                   <classes>
@@ -2606,12 +2616,14 @@ model.milestoneLike elements actually -->
                      </attDef>
                   </attList>
                </elementSpec>
+               
                <elementSpec ident="fallback" ns="http://www.w3.org/2001/XInclude" mode="add">
                   <desc>Wrapper for fallback elements if an XInclude fails</desc>
                   <content>
                      <rng:ref name="AnyThing"/>
                   </content>
                </elementSpec>
+               
                <macroSpec type="pe" ident="AnyThing" mode="add">
                   <desc>Matches any element</desc>
                   <content>

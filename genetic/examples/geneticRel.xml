@@ -1,0 +1,88 @@
+<?oxygen RNGSchema="../geneticTEI.rng" type="xml"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:ge="http://www.tei-c.org/ns/geneticEditions">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>Title</title>
+            </titleStmt>
+            <publicationStmt>
+                <p>Publication information</p>
+            </publicationStmt>
+            <sourceDesc>
+                <p>Information about the source</p>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+            <ge:geneticGrp>
+                <ge:geneticNote type="thematic">
+                    <linkGrp>
+                        <link targets="#curse1 #sweet_flag"/>
+                        <link targets="#poem #curse1"/>
+                    </linkGrp>
+                    <p>documents that contain ideas and suggestions which also appear in the poem</p>
+                </ge:geneticNote>
+            </ge:geneticGrp>
+        </profileDesc>
+    </teiHeader>
+    <text>
+        <body>
+            <div>
+                <graph>
+                    <node xml:id="N1" value="#A-text" adjTo="#N2 #N3"/>
+                    <node xml:id="N2" value="#B-draft" adjFrom="#N1"/>
+                    <node xml:id="N3" value="#C-draft" adjFrom="#N1" adjTo="N4"/>
+                    <node xml:id="N4" value="#D-draft" adjFrom="#N3"/>
+                </graph>
+            </div>
+            <div>
+                <graph>
+                    <node xml:id="NN1" value="#A-text"/>
+                    <node xml:id="NN2" value="#B-draft"/>
+                    <node xml:id="NN3" value="#C-draft"/>
+                    <node xml:id="NN4" value="#D-draft"/>
+                    <arc from="#NN1" to="#NN2 #NN3">
+                        <label>Final-merge</label>
+                    </arc>
+                    <arc from="#NN3" to="#NN4">
+                        <label>First-draft</label>
+                    </arc>
+                </graph>
+            </div>
+            <div>
+                <graph type="genetic">
+                    <node xml:id="A" value="#poem"/>
+                    <node xml:id="B" value="#sweet_flag"/>
+                    <node xml:id="C" value="#curse1">
+                        <note><title>I am a curse</title>: an early manuscript draft of the "Lucifer" section of the poem that
+                            likely lead to the 1855 printed version</note>
+                    </node>
+                    <node xml:id="D" value="#efflux"/>
+                    <node xml:id="E" value="#shroud">
+                        <note>A manuscript containing approximately seven lines, lightly revised, of the poem eventually titled "The
+                            Sleepers."</note>
+                    </node>
+                    <node xml:id="F" value="#curse2">
+                        <note>The second notebook, <title>No doubt the efflux of the soul</title>, is a longer one (24 leaves) that
+                            lays out the philosophical ideas that generate the poem and produces some of the key images in the first
+                            section of the poem.</note>
+                    </node>
+                    <node xml:id="G" value="#topple_down"/>
+                    <node xml:id="H" value="#black_lucifer"/>
+                    <node xml:id="Z" value="#Leaves81-82"/>
+                    <arc from="#C" to="#F" type="evolution"/>
+                    <arc from="#F" to="#G" type="#evolution"/>
+                    <arc from="#G" to="#H" type="#evolution"/>
+                    <arc from="#D" to="#Z" type="#evolution">
+                        <label>First section</label>
+                    </arc>
+                    <arc from="#E" to="#Z" type="#evolution">
+                        <label>Central section</label>
+                    </arc>
+                    <arc from="#H" to="#Z" type="#evolution">
+                        <label>Lucifer</label>
+                    </arc>
+                </graph>
+            </div>
+        </body>
+    </text>
+</TEI>
