@@ -1161,24 +1161,19 @@ restore -->
                               /></figure></item>
                         <item>s2: This is not a real example.</item>
                         <item>s3: This is just some text, not a real example.</item></list></p> This
-                  can be encoded using empty <gi>ge:undo</gi> elements as follows: <egXML
+                  can be encoded using empty <gi>ge:undo</gi> elements as follows: <!-- undoing1.xml --><egXML
                      xmlns="http://www.tei-c.org/ns/Examples">
-                     <ge:line>This is <del stage="#s2" xml:id="del_1" rend="overstrike"><anchor
-                              xml:id="x1"/>just some <anchor xml:id="x2"/>sample <anchor xml:id="x3"
-                              />text,<anchor xml:id="x4"/> we need </del><add stage="#s2">not
-                        </add>a real example.<ge:undo target="#del_1" from="#x1" to="#x2"
-                           rend="dotted" stage="#s3"/><ge:undo target="#del_1" from="#x3" to="#x4"
-                           rend="dotted" stage="#s3"/></ge:line>
+                     <ge:line>This is <del stage="#s2" xml:id="del_1" rend="overstrike"><ge:undo target="#del_1" spanTo="#x2"
+                        rend="dotted" stage="#s3"/>just some <anchor xml:id="x2"/>sample <ge:undo target="#del_1" spanTo="#x4"
+                           rend="dotted" stage="#s3"/>text,<anchor xml:id="x4"/> we need </del><add stage="#s2">not </add>a real
+                        example.</ge:line>
                   </egXML> Note the attributes for <gi>ge:undo</gi>: <gi>@target</gi> points to the
                   initial act that is undone (the deletion), <gi>@rend</gi> the way it is done, and
-                     <gi>@from</gi> resp. <gi>@to</gi> mark the borders of the section that is
+                     the element resp. the <gi>anchor</gi> it is spanning to mark the borders of the section that is
                   undone. Since there are two not coherent parts of the deletion undone,
                      <gi>ge:undo</gi> needs to be repeated with the paramters in question. <p>One
-                     must implicitly assume that if both <gi>@from</gi> and <gi>@to</gi> are
-                     missing, <gi>ge:undo</gi> refers to the initial act as a whole. Furthermore if
-                     only <gi>@to</gi> is missing, this would implicitly mean that the span of
-                     undone action is to the end of the initial act (analogue if only <gi>@from</gi>
-                     is missing).</p>
+                     must implicitly assume that if both <gi>@spanTo</gi> is
+                     missing, <gi>ge:undo</gi> refers to the initial act as a whole.</p>
                </div>
                <!-- my version in talk is different -->
             </div>
@@ -2353,31 +2348,16 @@ model.milestoneLike elements actually -->
                      <rng:empty/>
                   </content>
                   <attList>
-<<<<<<< .mine
                      <attDef ident="target" mode="add">
                         <desc>The element representing the action to be undone.</desc>
                         <datatype minOccurs="1" maxOccurs="1">
                            <rng:ref name="data.pointer"/>
-=======
-                     <attDef ident="function" mode="add">
-                        <desc>describes the function (e.g. add, delete, alternate) of the
-                           mark.</desc>
-                        <datatype minOccurs="1">
-                           <rng:ref name="data.word"/>
-                        </datatype>
-                     </attDef>
-                     <attDef ident="target">
-                        <desc>indicates the element(s) to which the function of the meta-mark
-                           refers. Pointers are separated by a white space</desc>
-                        <datatype minOccurs="1" maxOccurs="unbounded">
-                           <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
->>>>>>> .r7351
                         </datatype>
                      </attDef>
                   </attList>
                </elementSpec>
                
-               <elementSpec ident="redo" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
+               <elementSpec ident="rewrite" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
                   <desc>contains a sequence of text which has been rewritten by the author, for
                      example by over-inking, to clarify or fix it.</desc>
                   <classes>
