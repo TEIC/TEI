@@ -568,7 +568,7 @@ actually he wants to kill it... -->
                         </ge:patch>
                         <ge:patch type="newsprint" binder="glue" height="35" width="90"> "The shores
                            on either side of the Sound are... The In- <zone>
-                              <metaMark function="sequence">3</metaMark>
+                              <ge:metaMark function="sequence">3</ge:metaMark>
                            </zone>
                         </ge:patch>
                      </surface>
@@ -851,7 +851,7 @@ problem (see .</p> <p>The following discussion-->
                      stages the text and also the metamark were deleted. We might encode this as
                      follows: <!-- ka04_1v-dtl.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                         <del>
-                           <ge:metaMark function="flag" targets="#s1">lege</ge:metaMark>
+                           <ge:metaMark function="flag" target="#s1">lege</ge:metaMark>
                            <s xml:id="s1">Ock en schullen de bruwere des hilgen dages nicht over
                               <lb/>setten noch uppe den stillen fridach bruwen.</s>
                            <add>
@@ -951,8 +951,7 @@ problem (see .</p> <p>The following discussion-->
                                  <del xml:id="del1">“Nymph of a bright, fair but erring line!</del>
                               </ge:line>
                               <ge:line>
-                                 <ge:metaMark function="undo" targets="#del1 #del2 #del3"
-                                    >stet</ge:metaMark>
+                                 <ge:metaMark function="undo" target="#del1 #del2 #del3">stet</ge:metaMark>
                                  <del xml:id="del2">(He gently <add>gently</add> he said) one hope
                                     is thine</del>
                               </ge:line>
@@ -1058,11 +1057,9 @@ problem (see .</p> <p>The following discussion-->
                         <mentioned>bör</mentioned> precedes the word <mentioned>hör</mentioned> in
                      the text, the order of the two words should be reversed. We may encode this as
                      follows: <!-- ibsen01.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
-                        <ge:line><seg xml:id="ib01">bör</seg><ge:metaMark rend="underline"
-                              function="transposition" targets="#ib1" place="above">2.</ge:metaMark>
-                           og <seg xml:id="ib02">hör</seg><ge:metaMark rend="underline"
-                              function="transposition" targets="#ib02" place="above"
-                              >1.</ge:metaMark></ge:line>
+                        <ge:line><seg xml:id="ib01">bör</seg><ge:metaMark rend="underline" function="transposition" target="#ib1"
+                           place="above">2.</ge:metaMark> og <seg xml:id="ib02">hör</seg><ge:metaMark rend="underline"
+                              function="transposition" target="#ib02" place="above">1.</ge:metaMark></ge:line>
                         <ge:transposeGrp>
                            <ge:transpose>
                               <ptr target="#ib02"/>
@@ -1532,53 +1529,46 @@ transposition can also be included in apparatus
                         document level to a particular revision campaign or text-stage</item>
                      <item>a way to characterize or describe a revision campaign </item>
                   </list></p>
-               <p>This has obvious similarities to the existing <gi>revisionDesc</gi> element, but
+               <p><!-- This has obvious similarities to the existing <gi>revisionDesc</gi> element, but
                   concerns the source document or set of documents rather than the TEI document
                   representing them. We therefore propose using the existing <gi>change</gi> element
-                  for the purpose of documenting individual text stages. The existing element
-                     <gi>creation</gi> (within the TEI Header profile description) is defined as the
+                  for the purpose of documenting individual text stages. -->The existing element
+                     <gi>creation</gi> (within the TEI Header profile description) is already defined as an
                   appropriate location for all information relating to the genesis or production of
-                  a text; we might therefore modify it slightly to permit a new <gi>stageHist</gi>
-                  element which contains a number of <gi>change</gi> elements, one for each
-                  identified stage. This would also be closely analogous to the existing
+                  a text; we might therefore modify it slightly to permit a new <gi>stageNotes</gi>
+                  element which contains a number of <gi>stageNote</gi> elements, one for each
+                  identified stage. <!-- This would also be closely analogous to the existing
                      <gi>recordHist</gi> element, which documents changes in the catalogue record
                   related to an artefact, as well as the <gi>revisionDesc</gi> which documents
-                  changes in the digital artefact itself. </p>
-               <p>The order of <gi>change</gi> elements within the <gi>stageHist</gi> will normally
-                  be given from the earliest to latest, where this is known. The existing
-                     <gi>change</gi> element carries a number of attributes from the
+                  changes in the digital artefact itself.--></p>
+               <p>The order of <gi>stageNote</gi> elements within the <gi>stageNotes</gi> will normally
+                  be given from the earliest to latest, where this is known. If that is the case, the
+                     <gi>stageNote</gi> element may carry a number of attributes from the
                      <ident>att.datable</ident> class (<att>period</att>, <att>when</att>,
                      <att>notBefore</att>, <att>notAfter</att>, <att>from</att>, and <att>to</att>)
                   which allow each stage to be dated as exactly or inexactly as necessary, in the
                   same way as is currently possible for the TEI <gi>date</gi> element. </p>
                <!-- timeline abstracts from real time; we need to use notAfter
 notBefore to deal with uncertainties? -->
-               <p>Typically, each <gi>change</gi> element will contain references to other
+               <p>Typically, each <gi>stageNote</gi> element will contain references to other
                   annotations contained within the <gi>teiHeader</gi> or in the document, but its
-                  contents are purely documentary. </p>
+                  contents are purely documentary.</p>
                <!-- stages.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <profileDesc>
                      <creation>
                         <date notAfter="1816-07-18"/>
-                        <ge:stageHist>
-                           <change xml:id="mod1" when="1816-07-16">The first draft of
-                                 <title>Persuasion</title> is completed by the <date>July 16
-                                 1816</date> written after the word <q>Finis</q> at <ref
-                                 target="#pers-30">page 30</ref>.</change>
-                           <change xml:id="mod2" notBefore="1816-07-16"> After the <date>16th of
-                                 July</date> Austen starts revision of the two final chapters, by
-                              rewriting the end and adding a new block (<ref target="#transp-1"
-                                 >pages 32-35</ref>) to be inserted at <ref target="#insertion-p1"
-                                 >page 19</ref>. This stage is documented by the deletion of the
-                              date (<date>July 16 1816</date>) at <ref target="#pers-30">page
-                                 30</ref>, and the addition of more text and of a new date
-                                 (<date>July 18. 1816</date>) at <ref target="#pers-31">page
-                                 31</ref>
-                           </change>
-                           <change notBefore="1816-07-18">Before publication, after <date>July 18th,
-                                 1816</date> chapters 10-11 were broken into three chapters, 10, 11,
-                              12, as witnessed by the print.</change>
-                        </ge:stageHist>
+                        <ge:stageNotes>
+                           <ge:stageNote xml:id="mod1" when="1816-07-16">The first draft of <title>Persuasion</title> is completed by the
+                              <date>July 16 1816</date> written after the word <q>Finis</q> at <ref target="#pers-30">page
+                                 30</ref>.</ge:stageNote>
+                           <ge:stageNote xml:id="mod2" notBefore="1816-07-16">After the <date>16th of July</date> Austen starts revision of the
+                              two final chapters, by rewriting the end and adding a new block (<ref target="#transp-1">pages 32-35</ref>)
+                              to be inserted at <ref target="#insertion-p1">page 19</ref>. This stage is documented by the deletion of the
+                              date (<date>July 16 1816</date>) at <ref target="#pers-30">page 30</ref>, and the addition of more text and
+                              of a new date (<date>July 18. 1816</date>) at <ref target="#pers-31">page 31</ref></ge:stageNote>
+                           <ge:stageNote notBefore="1816-07-18">Before publication, after <date>July 18th, 1816</date> chapters 10-11 were broken
+                              into three chapters, 10, 11, 12, as witnessed by the print.</ge:stageNote>
+                        </ge:stageNotes>
                      </creation>
                   </profileDesc>
                </egXML>
@@ -1590,8 +1580,9 @@ notBefore to deal with uncertainties? -->
                   may be marked using the generic TEI <gi>anchor</gi> element.</p>
                <p>Alternatively, or in addition, we propose a generic <att>stage</att> attribute
                   which can point in the opposite direction, and associate any sequence of mark-up
-                  in a document with a <gi>change</gi> element, thus allocating that particular
-                  writing event to a particular revision campaign. </p>
+                  in a document with a <gi>stageNote</gi> element, thus allocating that particular
+                  writing event to a particular revision campaign.</p>
+               <!-- TODO: remove scoping via ge:mod (it is used for a different purpose now) and explain nesting of <stageNote/> -->
                <p>Because a typical revision campaign will comprise very many individual
                   modifications (possibly hundreds) an element called <gi>mod</gi> (for
                   modification) is proposed as a means of delimiting the scope of all modifications
@@ -1833,8 +1824,7 @@ notBefore to deal with uncertainties? -->
          <div>
             <head>ODD</head>
             <p>TEI Extension for Genetic Editions -- preliminary version</p>
-            <schemaSpec ident="geneticTEI" docLang="en" prefix="tei_" start="teiCorpus TEI"
-               xml:lang="en" targetLang="en" ns="http://www.tei-c.org/ns/1.0">
+            <schemaSpec ident="geneticTEI" docLang="en" xml:lang="en" targetLang="en">
                
                <!-- =============== Modules =============== -->
                
@@ -1932,14 +1922,7 @@ notBefore to deal with uncertainties? -->
                <elementSpec module="namesdates" ident="surname" mode="delete"/>
                <elementSpec module="namesdates" ident="terrain" mode="delete"/>
                <elementSpec module="namesdates" ident="trait" mode="delete"/>
-               
-               <!-- add transcriptional attributes to those related to textual alteration -->
-               <classSpec ident="att.transcriptional" type="atts" mode="change" module="tei">
-                  <classes>
-                     <memberOf key="att.editLike"/>
-                  </classes>
-               </classSpec>
-               
+                              
                <!-- =============== Content models for the documentary view =============== -->
                
                <classSpec ident="model.zonePart" type="model" mode="add">
@@ -1980,97 +1963,12 @@ notBefore to deal with uncertainties? -->
                            <rng:ref name="model.glossLike"/>
                            <rng:ref name="model.graphicLike"/>
                            <rng:ref name="zone"/>
-                           <rng:ref name="line"/>
-                           <rng:ref name="table"/>
                            <rng:ref name="patch"/>
                         </rng:choice>
                      </rng:zeroOrMore>
                   </content>
                </elementSpec>
-               <elementSpec ident="zone" module="physdesc" mode="change">
-                  <classes mode="change">
-                     <!--memberOf key="att.spanning" mode="add"/-->
-                     <memberOf key="att.coordinated" mode="add"/>
-                     <memberOf key="model.zonePart" mode="add"/>
-                     <!--memberOf key="att.transcriptional" mode="add"/-->
-                  </classes>
-                  <content>
-                     <rng:zeroOrMore>
-                        <rng:choice>
-                           <rng:text/>
-                           <rng:ref name="model.zonePart"/>
-                           <rng:ref name="model.global"/>
-                           <rng:ref name="model.pPart.transcriptional"/>
-                           <rng:ref name="model.pPart.editorial"/>
-                           <!-- not sure if thats
-                              wise -->
-                           <rng:ref name="seg"/>
-                           <!-- not sure if thats
-                              wise -->
-                           <rng:ref name="model.gLike"/>
-                           <rng:ref name="model.hiLike"/>
-                        </rng:choice>
-                     </rng:zeroOrMore>
-                  </content>
-                  <attList>
-                     <!--<attDef ident="ref" mode="add">
-   <desc> A reference to an arbitrary object that describes the placement and
-             extent of the zone (such as an SVG element in an external file). The
-             use of this attribute is exclusive of giving x/y-coordinates directly. </desc>
-   <datatype minOccurs="1" maxOccurs="1">
- <rng:ref
-  name="data.pointer"/>
-   </datatype>
-</attDef>-->
-                     <attDef ident="rotate" mode="add">
-                        <desc>indicates the amount by which this zone has been rotated clockwise,
-                           with respect to the normal orientation of the parent <gi>surface</gi>
-                           element as implied by the dimensions given in the <gi>msDesc</gi> section
-                           or by the coordinates of the <gi>surface</gi> itself. The orientation is
-                           expressed in arc degrees.</desc>
-                        <datatype minOccurs="1" maxOccurs="1">
-                           <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
-                        </datatype>
-                        <defaultVal>0</defaultVal>
-                     </attDef>
-                     <!--
-<attDef ident="patch" mode="add">
-   <desc>Describe the type of patch</desc>
-   <datatype>
- <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
-   </datatype>
-</attDef>
-<attDef ident="binder" mode="add">
-   <desc>Describe the method by which a patch is connected to the main
-             surface</desc>
-   <datatype>
- <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
-   </datatype>
-</attDef>
-<attDef ident="heigth">
-   <desc>The height of the patch</desc>
-   <datatype>
- <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numerical"/>
-   </datatype>
-</attDef>
-<attDef ident="width">
-   <desc>The width of the patch</desc>
-   <datatype>
- <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numerical"/>
-   </datatype>
-</attDef>-->
-                  </attList>
-               </elementSpec>
-               <!-- add milestone to att.spanning (this should be done for all
-model.milestoneLike elements actually -->
-               <elementSpec ident="milestone" module="core" mode="change">
-                  <classes>
-                     <memberOf key="att.spanning"/>
-                     <memberOf key="model.milestoneLike"/>
-                     <memberOf key="att.typed"/>
-                     <memberOf key="att.sourced"/>
-                  </classes>
-               </elementSpec>
+               
                <elementSpec ident="patch" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
                   <desc>contains a part of a written surface which was originally physically
                      distinct but became attached to it at the time that one or more written zones
@@ -2084,20 +1982,20 @@ model.milestoneLike elements actually -->
                      <rng:zeroOrMore>
                         <rng:choice>
                            <rng:text/>
-                           <rng:ref name="zone"/>
                            <rng:ref name="model.global"/>
+                           <rng:ref name="zone"/>
                         </rng:choice>
                      </rng:zeroOrMore>
                   </content>
                   <!--additional In case of glued/pinned patches, the <gi>zone</gi> can make use of the attribute
-   <att>patch</att> which value will be a description of the kind of patch
-       (e.g.: <val>flipping</val>, <val>attached</val>, <val>detached</val>, etc.) and
-       by the attribute <att>binder</att> describe the method by which it is connected
-       to the main surface (e.g.: <val>glue</val>, <val>pins</val>,
-<val>staples</val>, etc.); dimensions can also be provided using
-   <att>height</att> and <att>width</att> (please notice that they have to be
-       expressed in the same unit given by <att>unit</att> attribute).</p>
--->
+                     <att>patch</att> which value will be a description of the kind of patch
+                     (e.g.: <val>flipping</val>, <val>attached</val>, <val>detached</val>, etc.) and
+                     by the attribute <att>binder</att> describe the method by which it is connected
+                     to the main surface (e.g.: <val>glue</val>, <val>pins</val>,
+                     <val>staples</val>, etc.); dimensions can also be provided using
+                     <att>height</att> and <att>width</att> (please notice that they have to be
+                     expressed in the same unit given by <att>unit</att> attribute).</p>
+                  -->
                   <attList>
                      <attDef ident="binder" mode="add">
                         <desc>Describe the method by which a patch is or was connected to the main
@@ -2138,6 +2036,71 @@ model.milestoneLike elements actually -->
                      </attDef>
                   </attList>
                </elementSpec>
+               
+               <elementSpec ident="zone" module="physdesc" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.coordinated" mode="add"/>
+                     <memberOf key="model.zonePart" mode="add"/>
+                  </classes>
+                  <content>
+                     <rng:zeroOrMore>
+                        <rng:choice>
+                           <rng:text/>
+                           <rng:ref name="model.zonePart"/>
+                           <rng:ref name="model.global"/>
+                        </rng:choice>
+                     </rng:zeroOrMore>
+                  </content>
+                  <attList>
+                     <!--<attDef ident="ref" mode="add">
+   <desc> A reference to an arbitrary object that describes the placement and
+             extent of the zone (such as an SVG element in an external file). The
+             use of this attribute is exclusive of giving x/y-coordinates directly. </desc>
+   <datatype minOccurs="1" maxOccurs="1">
+ <rng:ref
+  name="data.pointer"/>
+   </datatype>
+</attDef>-->
+                     <attDef ident="rotate" mode="add">
+                        <desc>indicates the amount by which this zone has been rotated clockwise,
+                           with respect to the normal orientation of the parent <gi>surface</gi>
+                           element as implied by the dimensions given in the <gi>msDesc</gi> section
+                           or by the coordinates of the <gi>surface</gi> itself. The orientation is
+                           expressed in arc degrees.</desc>
+                        <datatype minOccurs="1" maxOccurs="1">
+                           <rng:ref name="data.count"/>
+                        </datatype>
+                        <defaultVal>0</defaultVal>
+                     </attDef>
+                     <!--
+<attDef ident="patch" mode="add">
+   <desc>Describe the type of patch</desc>
+   <datatype>
+ <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+   </datatype>
+</attDef>
+<attDef ident="binder" mode="add">
+   <desc>Describe the method by which a patch is connected to the main
+             surface</desc>
+   <datatype>
+ <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+   </datatype>
+</attDef>
+<attDef ident="heigth">
+   <desc>The height of the patch</desc>
+   <datatype>
+ <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numerical"/>
+   </datatype>
+</attDef>
+<attDef ident="width">
+   <desc>The width of the patch</desc>
+   <datatype>
+ <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numerical"/>
+   </datatype>
+</attDef>-->
+                  </attList>
+               </elementSpec>
+               
                <elementSpec ident="line" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
                   <desc>contains the transcription of a topographic line in the source
                      document</desc>
@@ -2151,30 +2114,12 @@ model.milestoneLike elements actually -->
                         <rng:choice>
                            <rng:text/>
                            <rng:ref name="model.global"/>
-                           <rng:ref name="model.pPart.transcriptional"/>
-                           <rng:ref name="model.pPart.editorial"/>
                            <rng:ref name="model.linePart"/>
-                           
-                           <!-- not sure if thats
-       wise -->
-                           <!--<rng:ref name="model.segLike"/>-->
-                           <!-- not sure if thats
-                           wise -->
-                           <rng:ref name="seg"/>
-                           <!-- not sure if thats
-                              wise -->
-                           <rng:ref name="model.gLike"/>
-                           <rng:ref name="model.hiLike"/>
                         </rng:choice>
                      </rng:zeroOrMore>
                   </content>
                </elementSpec>
-               <elementSpec ident="table" mode="change">
-                  <classes>
-                     <memberOf key="model.zonePart" mode="add"/>
-                  </classes>
-               </elementSpec>
-               
+                              
                <!-- =============== Text stages =============== -->
                
                <classSpec ident="att.staged" type="atts" mode="add" module="tei">
@@ -2202,36 +2147,24 @@ model.milestoneLike elements actually -->
 
                <elementSpec ident="creation" mode="change">
                   <content>
-                     <rng:zeroOrMore>
-                        <rng:ref name="macro.phraseSeq.limited"/>
-                     </rng:zeroOrMore>
-                     <rng:zeroOrMore>
-                        <rng:ref name="stageHist"/>
-                     </rng:zeroOrMore>
+                     <rng:ref name="macro.phraseSeq.limited"/>
+                     <rng:optional>
+                        <rng:ref name="stageNotes"/>
+                     </rng:optional>
                   </content>
                </elementSpec>
                
-               <elementSpec ident="stageHist" ns="http://www.tei-c.org/ns/geneticEditions"
-                  mode="add">
+               <elementSpec ident="stageNotes" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
                   <desc>contains one or more descriptions of the stages which have been identified
                      in the genesis of a text.</desc>
                   <classes>
                      <memberOf key="att.global"/>
+                     <memberOf key="att.typed"/>
                   </classes>
                   <content>
-                     <rng:choice>
                         <rng:oneOrMore>
-                           <rng:ref name="model.pLike"/>
+                           <rng:ref name="stageNote"/>
                         </rng:oneOrMore>
-                        <rng:group>
-                           <rng:optional>
-                              <rng:ref name="summary"/>
-                           </rng:optional>
-                           <rng:oneOrMore>
-                              <rng:ref name="stageNote"/>
-                           </rng:oneOrMore>
-                        </rng:group>
-                     </rng:choice>
                   </content>
                </elementSpec>
                
@@ -2253,9 +2186,7 @@ model.milestoneLike elements actually -->
                   <content>
                      <rng:zeroOrMore>
                         <rng:choice>
-                           <rng:text/>
-                           <rng:ref name="model.limitedPhrase"/>
-                           <rng:ref name="model.global"/>
+                           <rng:ref name="macro.specialPara"/>
                            <rng:ref name="stageNote"/>
                         </rng:choice>
                      </rng:zeroOrMore>
@@ -2267,9 +2198,23 @@ model.milestoneLike elements actually -->
                <elementSpec ident="mod" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
                   <desc>encodes any modification to the text at a documentary level</desc>
                   <classes>
+                     <memberOf key="model.pPart.transcriptional"/>
+                     <memberOf key="att.global"/>
+                     <memberOf key="att.transcriptional"/>
+                     <memberOf key="att.typed"/>
+                  </classes>
+                  <content>
+                     <rng:ref name="macro.paraContent"/>
+                  </content>
+               </elementSpec>
+
+               <elementSpec ident="modSpan" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
+                  <desc>encodes any modification to a onger sequence of text at a documentary level</desc>
+                  <classes>
                      <memberOf key="model.global.edit"/>
                      <memberOf key="att.spanning"/>
                      <memberOf key="att.global"/>
+                     <memberOf key="att.transcriptional"/>
                      <memberOf key="att.typed"/>
                   </classes>
                   <content>
@@ -2317,6 +2262,7 @@ model.milestoneLike elements actually -->
                      </rng:oneOrMore>
                   </content>
                </elementSpec>
+               
                <elementSpec ident="transpose" ns="http://www.tei-c.org/ns/geneticEditions"
                   mode="add">
                   <desc> describes a single textual transposition as an ordered list of at least two
@@ -2335,14 +2281,15 @@ model.milestoneLike elements actually -->
                   </content>
                </elementSpec>
                
-               <!-- =============== Undo/Redo =============== -->
+               <!-- =============== Undo/Redo/Rewrite =============== -->
                
                <elementSpec ident="undo" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
                   <desc>Marks up an action represented by an element to be undone.</desc>
                   <classes>
                      <memberOf key="model.pPart.transcriptional"/>
-                     <memberOf key="att.spanning"/>
                      <memberOf key="att.global"/>
+                     <memberOf key="att.spanning"/>
+                     <memberOf key="att.transcriptional"/>
                   </classes>
                   <content>
                      <rng:empty/>
@@ -2350,6 +2297,27 @@ model.milestoneLike elements actually -->
                   <attList>
                      <attDef ident="target" mode="add">
                         <desc>The element representing the action to be undone.</desc>
+                        <datatype minOccurs="1" maxOccurs="1">
+                           <rng:ref name="data.pointer"/>
+                        </datatype>
+                     </attDef>
+                  </attList>
+               </elementSpec>
+
+               <elementSpec ident="redo" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
+                  <desc>Marks up an action represented by an element, that is repeated/ redone.</desc>
+                  <classes>
+                     <memberOf key="model.pPart.transcriptional"/>
+                     <memberOf key="att.global"/>
+                     <memberOf key="att.spanning"/>
+                     <memberOf key="att.transcriptional"/>
+                  </classes>
+                  <content>
+                     <rng:empty/>
+                  </content>
+                  <attList>
+                     <attDef ident="target" mode="add">
+                        <desc>The element representing the action to be redone.</desc>
                         <datatype minOccurs="1" maxOccurs="1">
                            <rng:ref name="data.pointer"/>
                         </datatype>
@@ -2444,18 +2412,9 @@ model.milestoneLike elements actually -->
                   </content>
                </elementSpec>
                
-               <elementSpec ident="unclear" module="core" mode="change">
-                  <classes mode="replace">
-                     <memberOf key="model.choicePart" mode="add"/>
-                     <memberOf key="model.pPart.transcriptional" mode="add"/>
-                     <memberOf key="att.editLike" mode="add"/>
-                     <memberOf key="att.typed" mode="add"/>
-                  </classes>
-               </elementSpec>
+               <!-- =============== Genetic Groups =============== -->
 
-               <!-- genetic groups -->
-               <elementSpec ident="geneticGrp" mode="add"
-                  ns="http://www.tei-c.org/ns/geneticEditions">
+               <elementSpec ident="geneticGrp" mode="add" ns="http://www.tei-c.org/ns/geneticEditions">
                   <desc>Group texts and document which are somehow related in a genetic
                      process</desc>
                   <classes>
@@ -2468,8 +2427,8 @@ model.milestoneLike elements actually -->
                      </rng:oneOrMore>
                   </content>
                </elementSpec>
-               <elementSpec ident="geneticNote" mode="add"
-                  ns="http://www.tei-c.org/ns/geneticEditions">
+               
+               <elementSpec ident="geneticNote" mode="add" ns="http://www.tei-c.org/ns/geneticEditions">
                   <desc>describes a particular set of documents or document fragments which are
                      considered to be mutually associated in some way.</desc>
                   <classes>
@@ -2486,63 +2445,78 @@ model.milestoneLike elements actually -->
                      </rng:oneOrMore>
                   </content>
                </elementSpec>
-               <!-- timeline -->
-               <!--
- <elementSpec ident="timeline" mode="change">
-    <classes mode="change">
-<memberOf key="model.choicePart" mode="add"/>
-    </classes>
-    <content>
-<rng:oneOrMore>
-   <rng:ref name="when"/>
-   <rng:zeroOrMore>
- <rng:ref name="choice"/>
-   </rng:zeroOrMore>
-</rng:oneOrMore>
-    </content>
-    <attList>
-<attDef ident="weights">
-   <datatype>
- <rng:ref name="data.probability"
- />
-   </datatype>
-</attDef>
-    </attList>
- </elementSpec>
- <elementSpec ident="when" mode="change">
-    <classes>
-<memberOf key="att.editLike"/>
-    </classes>
-    <attList>
-<attDef ident="target" mode="add">
-   <datatype>
- <rng:ref name="data.pointer"
- />
-   </datatype>
-</attDef>
-<attDef ident="unit" mode="delete"/>
-<attDef ident="interval" mode="replace">
-   <datatype>
- <rng:choice>
-  <rng:ref name="data.numeric"/>
-  <rng:value>unknown</rng:value>
- </rng:choice>
-   </datatype>
-</attDef>
-    </attList>
- </elementSpec>
-
--->
-               <!-- spanning text structure -->
-               <!-- <elementSpec ident="p" mode="change">
+               
+               <!-- =============== Adjust existing classes to new schema =============== -->
+               
+               <classSpec type="model" ident="model.gLike" mode="change">
                   <classes mode="change">
-                     <memberOf mode="add" key="att.spanning"/>
-                     <memberOf mode="add" key="model.global"/>
+                     <memberOf key="model.zonePart" mode="add"/>
+                     <memberOf key="model.linePart" mode="add"/>
                   </classes>
-               </elementSpec>-->
-               <elementSpec ident="damageSpan" mode="change"/>
+               </classSpec>
+
+               <!-- TODO: We are note sure, whether it is wise to add so much to the documentary markup -->
+               
+               <classSpec type="model" ident="model.segLike" mode="change">
+                  <classes mode="change">
+                     <memberOf key="model.zonePart" mode="add"/>
+                     <memberOf key="model.linePart" mode="add"/>
+                  </classes>
+               </classSpec>
+               
+               <classSpec type="model" ident="model.hiLike" mode="change">
+                  <classes mode="change">
+                     <memberOf key="model.zonePart" mode="add"/>
+                     <memberOf key="model.linePart" mode="add"/>
+                  </classes>
+               </classSpec>
                               
-               <!-- XInclude -->
+               <classSpec type="model" ident="model.pPart.editorial" mode="change">
+                  <classes mode="change">
+                     <memberOf key="model.zonePart" mode="add"/>
+                     <memberOf key="model.linePart" mode="add"/>
+                  </classes>
+               </classSpec>
+               
+               <classSpec type="model" ident="model.pPart.transcriptional" mode="change">
+                  <classes mode="change">
+                     <memberOf key="model.zonePart" mode="add"/>
+                     <memberOf key="model.linePart" mode="add"/>
+                  </classes>
+               </classSpec>
+               
+               <classSpec type="model" ident="model.pPart.msdesc" mode="change">
+                  <classes mode="change">
+                     <memberOf key="model.zonePart" mode="add"/>
+                     <memberOf key="model.linePart" mode="add"/>
+                  </classes>
+               </classSpec>
+                                 
+               <elementSpec ident="unclear" module="core" mode="change">
+                  <classes mode="change">
+                     <memberOf key="att.editLike" mode="add"/>
+                     <memberOf key="att.typed" mode="add"/>
+                  </classes>
+               </elementSpec>
+               
+               <elementSpec ident="table" mode="change">
+                  <classes mode="change">
+                     <memberOf key="model.zonePart" mode="add"/>
+                  </classes>
+               </elementSpec>
+               
+               <!-- add milestone to att.spanning (this should be done for all
+                  model.milestoneLike elements actually -->
+               <elementSpec ident="milestone" module="core" mode="change">
+                  <classes>
+                     <memberOf key="att.spanning"/>
+                     <memberOf key="model.milestoneLike"/>
+                     <memberOf key="att.typed"/>
+                     <memberOf key="att.sourced"/>
+                  </classes>
+               </elementSpec>               
+               
+               <!-- =============== XInclude support =============== -->
                
                <elementSpec ident="include" ns="http://www.w3.org/2001/XInclude" mode="add">
                   <desc>The W3C XInclude element</desc>
