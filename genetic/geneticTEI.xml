@@ -1176,6 +1176,57 @@ problem (see .</p> <p>The following discussion-->
                      missing, <gi>ge:undo</gi> refers to the initial act as a whole.</p>
                </div>
                <!-- my version in talk is different -->
+               <div>
+                  <head>Instant corrections</head>
+                  <p>The use of tags such as <gi>del</gi> and <gi>add</gi> necessarily implies that the modification concerned was
+                     made at some time after the original writing. An exception to this is where a false start or
+                        <soCalled>instant</soCalled> correction has been identified: the author starts to write, and then
+                     immediately corrects what has been written. A special mechanism is provided for this case: an
+                        <att>instant</att> attribute has been introduced to <ident>att.editLike</ident>, whose datatype is
+                        <ident>data.xTruthValue</ident> and <code>false</code> is the default value. When the value of <att>instant</att>
+                     is <code>true</code> this indicates that the addition or deletion is considered to belong to the same writing
+                     stage as the rest of the unmodified document, while <code>false</code> means some stage later than the current
+                     stage.</p>
+                  <p> An example of false start can be seen in the following line: <figure>
+                     <graphic url="examples/whitman03a.jpg" width="400px"/>
+                     <head>http://www.whitmanarchive.org/resources/sleepers/uva.00256.001.jpg</head></figure> in which we can detect
+                     the following sequence of events: <list type="ordered"><item>The letter T is written and then immediately
+                        deleted</item><item>The word The is written, deleted, and replaced by the word His</item><item>The added
+                           word His is then deleted</item><item>The initial letter i of the words iron necklace is overwritten with a
+                              capital I</item></list> To indicate that the first of these acts must have taken place before the others, we
+                     might encode this revision campaign as follows: <!-- whitman03a.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <ge:line><del instant="true">T</del>
+                           <subst>
+                              <del>The</del>
+                              <add place="above">
+                                 <del rend="overstrike">His</del>
+                              </add>
+                           </subst>
+                           <subst>
+                              <del rend="overwritten">i</del>
+                              <add place="superimposed">I</add>
+                           </subst>ron necklace</ge:line>
+                     </egXML>
+                  </p>
+                  <!-- <p>In a set of revisions like the Austen example cited above, there is an implicit
+                     assumption that acts of deletion and addition are all assigned to the same writing
+                     stage, which is specified by the most recently stated <gi>mod</gi> element. If
+                     this is not the case, the <att>stage</att> attribute may also be used on any
+                     element to associate it with some other writing stage than that implied by the
+                     <gi>ge:mod</gi> which <q>surrounds</q> it. For example, if it were determined
+                     that in the previous example the substitution of "I do not' by "you have not'
+                     should actually be assigned to some different state (say <code>mod3</code>) the
+                     above example might be encoded: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                     <ge:line>her face) – <ge:mod spanTo="#ch10-06-23" stage="#mod1"/>But <subst
+                     stage="#mod3">
+                     <del rend="overstruck">I do not</del>
+                     <add place="above">you have not</add>
+                     </subst> see much</ge:line>
+                     </egXML> Similarly, there is no reason (other than increased complexity) why
+                     <gi>mod</gi> spans should not be nested within each other, where for example
+                     several revision campaigns have been identified which are applicable to
+                     overlapping sequences of elements. </p>-->
+               </div>
             </div>
          </div>
          <div>
@@ -1197,12 +1248,12 @@ problem (see .</p> <p>The following discussion-->
                      xmlns:xi="http://www.w3.org/2001/XInclude"
                      xmlns:ge="http://www.tei-c.org/ns/geneticEditions">
                      <![CDATA[<teiHeader>
-<!-- information about the dossier -->  
-</teiHeader>
-<xi:include href="document1.xml"/>
-<xi:include href="document2.xml"/>
-<xi:include href="document3.xml"/>
-]]>
+                        <!-- information about the dossier -->  
+                     </teiHeader>
+                     <xi:include href="document1.xml"/>
+                     <xi:include href="document2.xml"/>
+                     <xi:include href="document3.xml"/>
+                     ]]>
                   </teiCorpus>
                </egXML> Note that each of the files referenced (<ident>document1.xml</ident> etc)
                should contain a complete <gi>TEI</gi> element</p>
@@ -1563,8 +1614,8 @@ transposition can also be included in apparatus
                   <profileDesc>
                      <creation>
                         <ge:stageNotes>
-                           <ge:stageNote xml:id="m"> We might assume, that the following two pages were revised together: <certainty
-                                 target="#m" locus="value" degree="0.6"/>
+                           <ge:stageNote xml:id="m" cert="low">
+                              We might assume with low certainty, that the following two pages were revised together:
                               <ge:stageNote xml:id="m1">Alterations on one manuscript page, certainly related</ge:stageNote>
                               <ge:stageNote xml:id="m2">Alterations on another manuscript page, certainly related</ge:stageNote>
                            </ge:stageNote>
@@ -1694,57 +1745,6 @@ transposition can also be included in apparatus
                <p>Here the transcription is done first and then the (possibly repetetive) writing of text (structured in zones, lines
                   and segments) is assigned to stages via the <att>@target</att> attribute of the respective <gi>stageNote</gi>
                   element.</p>
-            </div>
-            <div>
-               <head>Instant revisions</head>
-               <p>The use of tags such as <gi>del</gi> and <gi>add</gi> necessarily implies that the modification concerned was made
-                  at some time after the original writing. An exception to this is where a false start or
-                  <soCalled>instant</soCalled> correction has been identified: the author starts to write, and then immediately
-                  corrects what has been written. A special mechanism is provided for this case: an <att>instant</att> attribute has
-                  been introduced which predefined values are <val>yes</val>
-                  <val>no</val>
-                  <val>uncertain</val>, where <code>no</code> is the default value. When the value of instant is <code>yes</code>
-                  this indicates that the addition or deletion is considered to belong to the same writing stage as the rest of the
-                  unmodified document, while <code>no</code> means some stage later than the current stage.</p>
-               <p> An example of false start can be seen in the following line: <figure>
-                  <graphic url="examples/whitman03a.jpg" width="400px"/>
-                  <head>http://www.whitmanarchive.org/resources/sleepers/uva.00256.001.jpg</head></figure> in which we can detect
-                  the following sequence of events: <list type="ordered"><item>The letter T is written and then immediately
-                     deleted</item><item>The word The is written, deleted, and replaced by the word His</item><item>The added
-                        word His is then deleted</item><item>The initial letter i of the words iron necklace is overwritten with a
-                           capital I</item></list> To indicate that the first of these acts must have taken place before the others, we
-                  might encode this revision campaign as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                     <ge:line><del instant="yes">T</del>
-                        <subst>
-                           <del>The</del>
-                           <add place="above">
-                              <del rend="overstrike">His</del>
-                           </add>
-                        </subst>
-                        <subst>
-                           <del rend="overwritten">i</del>
-                           <add place="superimposed">I</add>
-                        </subst>ron necklace</ge:line>
-                  </egXML>
-               </p>
-               <!-- <p>In a set of revisions like the Austen example cited above, there is an implicit
-                  assumption that acts of deletion and addition are all assigned to the same writing
-                  stage, which is specified by the most recently stated <gi>mod</gi> element. If
-                  this is not the case, the <att>stage</att> attribute may also be used on any
-                  element to associate it with some other writing stage than that implied by the
-                  <gi>ge:mod</gi> which <q>surrounds</q> it. For example, if it were determined
-                  that in the previous example the substitution of "I do not' by "you have not'
-                  should actually be assigned to some different state (say <code>mod3</code>) the
-                  above example might be encoded: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                  <ge:line>her face) – <ge:mod spanTo="#ch10-06-23" stage="#mod1"/>But <subst
-                  stage="#mod3">
-                  <del rend="overstruck">I do not</del>
-                  <add place="above">you have not</add>
-                  </subst> see much</ge:line>
-                  </egXML> Similarly, there is no reason (other than increased complexity) why
-                  <gi>mod</gi> spans should not be nested within each other, where for example
-                  several revision campaigns have been identified which are applicable to
-                  overlapping sequences of elements. </p>-->
             </div>
             <div>
                <head>Chronology, Date and Time</head>
@@ -1885,8 +1885,8 @@ transposition can also be included in apparatus
                   editorial decisions is conseqently of major importance. </p>
                <p>Different forms of documentation have been discussed before in several previous
                   sections: <list>
-                     <item><gi>ge:stageNote</gi>: documents the constitution of a text-stage </item>
-                     <item><gi>ge:geneticNote</gi>: documents the constitution of a genetic
+                     <item><gi>stageNote</gi>: documents the constitution of a text-stage </item>
+                     <item><gi>geneticNote</gi>: documents the constitution of a genetic
                         group</item>
                   </list> All these elements carry a <att>cert</att> attribute to declare the level
                   of certainty, and a <att>resp</att> attribute to declare the editorial
@@ -2250,6 +2250,7 @@ transposition can also be included in apparatus
                   <desc>documents a particular stage in the genesis of a text.</desc>
                   <classes>
                      <memberOf key="att.datable"/>
+                     <memberOf key="att.editLike"/>
                      <memberOf key="att.global"/>
                      <memberOf key="att.typed"/>
                   </classes>
@@ -2526,15 +2527,27 @@ transposition can also be included in apparatus
                
                <!-- =============== Adjust existing classes to new schema =============== -->
                
+               <classSpec type="atts" ident="att.editLike" mode="change">
+                  <attList>
+                     <attDef ident="instant" mode="add">
+                        <desc>Is this an instant revision?</desc>
+                        <datatype>
+                           <rng:ref name="data.xTruthValue"/>
+                        </datatype>
+                        <defaultVal>false</defaultVal>
+                     </attDef>
+                  </attList>
+               </classSpec>
+               
+               <!-- TODO: We are note sure, whether it is wise to add so much to the documentary markup -->
+
                <classSpec type="model" ident="model.gLike" mode="change">
                   <classes mode="change">
                      <memberOf key="model.zonePart" mode="add"/>
                      <memberOf key="model.linePart" mode="add"/>
                   </classes>
                </classSpec>
-
-               <!-- TODO: We are note sure, whether it is wise to add so much to the documentary markup -->
-               
+                              
                <classSpec type="model" ident="model.segLike" mode="change">
                   <classes mode="change">
                      <memberOf key="model.zonePart" mode="add"/>
