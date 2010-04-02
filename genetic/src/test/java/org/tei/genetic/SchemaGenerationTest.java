@@ -25,7 +25,6 @@ public class SchemaGenerationTest {
 	private static final String LANGUAGE = "en";
 	private static final Boolean VERBOSE = false;
 	private static final File RNG_SCHEMA_TARGET = new File("geneticTEI.rng");
-	private static final File DOCUMENTATION_TARGET = new File("target/schema-doc.html");
 
 	@Test
 	public void generateSchema() throws Exception {
@@ -55,25 +54,24 @@ public class SchemaGenerationTest {
 	@Test
 	public void generateDocumentation() throws Exception {
 		Serializer serializer = new Serializer();
-		serializer.setOutputFile(DOCUMENTATION_TARGET);
-		serializer.setOutputProperty(Serializer.Property.INDENT, "no");
-
+		serializer.setOutputFile(new File("geneticTEI.html"));
+		
 		try {
 			Processor processor = new Processor(false);
 			processor.setConfigurationProperty(FeatureKeys.XINCLUDE, true);
 			XsltCompiler xsltCompiler = processor.newXsltCompiler();
 
-			XsltTransformer doc2xhtml = xsltCompiler.compile(new StreamSource(new File(STYLESHEETS, "profiles/default/html/to.xsl"))).load();
-			doc2xhtml.setDestination(serializer);
-
-			XsltTransformer odd2doc = xsltCompiler.compile(new StreamSource(new File(STYLESHEETS, "odds2/odd2lite.xsl"))).load();
-			odd2doc.setSource(new StreamSource(ODD));
-			odd2doc.setDestination(doc2xhtml);
+			XsltTransformer odd2doc = xsltCompiler.compile(new StreamSource(new File(STYLESHEETS, "odds2/odd2html.xsl"))).load();
+			odd2doc.setDestination(serializer);
 			odd2doc.setParameter(new QName("TEIC"), new XdmAtomicValue("true"));
 			odd2doc.setParameter(new QName("localsource"), new XdmAtomicValue(P5_SUBSET.toURI()));
 			odd2doc.setParameter(new QName("lang"), new XdmAtomicValue(LANGUAGE));
 			odd2doc.setParameter(new QName("doclang"), new XdmAtomicValue(LANGUAGE));
-			odd2doc.transform();
+			odd2doc.setParameter(new QName("splitLevel"), new XdmAtomicValue("-1"));
+			odd2doc.setParameter(new QName("STDOUT"), new XdmAtomicValue("true"));
+
+			XsltTransformer odd2odd = buildCompiler(xsltCompiler, new StreamSource(ODD), odd2doc);
+			odd2odd.transform();
 		} finally {
 			serializer.close();
 		}
