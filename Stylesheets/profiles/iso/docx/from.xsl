@@ -716,11 +716,18 @@
                     <xsl:apply-templates/>
                 </seg>
             </xsl:when>
-	        <xsl:when test="$style= 'domain' or $style ='source'  or $style = 'termRef'">
-	           <hi rend="{$style}">
-		             <xsl:apply-templates/>
-	           </hi>
-	        </xsl:when>
+
+	    <xsl:when test="$style= 'domain' or $style ='source'">
+	      <hi rend="{$style}">
+		<xsl:apply-templates/>
+	      </hi>
+	    </xsl:when>
+
+	    <xsl:when test="$style= 'termRef'">
+	      <ref xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
+		<xsl:apply-templates/>
+	      </ref>
+	    </xsl:when>
 
             <xsl:when test="$style='requirement'">
                 <seg iso:provision="requirement">
@@ -955,17 +962,17 @@
 		  <xsl:apply-templates/>
 		</note>
 	      </xsl:for-each>
-	      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteDefinition'] except .">
-		<note type="noteDefinition">
-		  <xsl:apply-templates/>
-		</note>
-	      </xsl:for-each>
 	      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteSymbol'] except .">
 		<note type="noteSymbol">
 		  <xsl:apply-templates/>
 		</note>
 	      </xsl:for-each>
 	      <descripGrp>
+		<xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteDefinition'] except .">
+		  <descripNote>
+		    <xsl:apply-templates/>
+		  </descripNote>
+		</xsl:for-each>
 		<descrip type="definition">
 		  <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='Definition'] except .">
 		    <xsl:apply-templates/>
@@ -1661,22 +1668,41 @@
 	  </xsl:non-matching-substring>
 	</xsl:analyze-string>
     </xsl:copy>
+  </xsl:template>
 
+  <xsl:template match="tbx:descrip/tei:hi[@rend='domain']" mode="pass2"/>
+
+  <xsl:template match="tbx:descrip/text()" mode="pass2">
+    <xsl:choose>
+      <xsl:when test="preceding-sibling::node()[1][self::tei:hi/@rend='domain']">
+	<xsl:value-of select="normalize-space(.)"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tbx:descrip" mode="pass2">
-      <xsl:copy>
-         <xsl:copy-of select="@*"/>
-         <xsl:apply-templates mode="pass2"/>
-         <xsl:for-each select="ancestor::tbx:termEntry/following-sibling::*[1][self::tei:list]">
-            <xsl:copy>
-	              <xsl:copy-of select="@*"/>
-	              <xsl:apply-templates mode="pass2"/>
-            </xsl:copy>
-         </xsl:for-each>
-      </xsl:copy>
+    <xsl:if test="tei:hi[@rend='domain']">
+      <descrip type="subjectField" xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
+	<xsl:for-each select="tei:hi[@rend='domain']">
+	  <xsl:value-of select="translate(.,'&lt;&gt;〈〉','')"/>
+	</xsl:for-each>
+      </descrip>
+    </xsl:if>
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates mode="pass2"/>
+      <xsl:for-each select="ancestor::tbx:termEntry/following-sibling::*[1][self::tei:list]">
+	<xsl:copy>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:apply-templates mode="pass2"/>
+	</xsl:copy>
+      </xsl:for-each>
+    </xsl:copy>
    </xsl:template>
-
+   
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap empty &lt;list&gt; and one after termEntry </desc></doc>
 
@@ -1756,8 +1782,6 @@
       </xsl:if>
     </xsl:copy>
   </xsl:template>
-
-  <xsl:template match="tbx:descrip[@type='definition']/tei:source" mode="pass2"/>
    -->
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -2015,6 +2039,11 @@
 	<xsl:when test=".=') '"/>
 	<!--<xsl:when test=".=')'"/>-->
 	<xsl:when test=".=','"/>
+	<xsl:when test="starts-with(.,'), ')">
+	  <title>
+	    <xsl:value-of select="substring(.,4)"/>
+	  </title>
+	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:value-of select="."/>
 	</xsl:otherwise>

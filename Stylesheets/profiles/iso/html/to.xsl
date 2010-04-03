@@ -685,14 +685,17 @@
 
    <xsl:template name="block-element">
      <xsl:param name="style"/>
-     <p>
-       <xsl:if test="not($style='')">
-	 <xsl:attribute name="class">
-	   <xsl:value-of select="$style"/>
-	 </xsl:attribute>
-       </xsl:if>
-       <xsl:apply-templates/>
-     </p>
+     <xsl:param name="select" select="."/>
+     <xsl:for-each select="$select">
+       <p>
+	 <xsl:if test="not($style='')">
+	   <xsl:attribute name="class">
+	     <xsl:value-of select="$style"/>
+	   </xsl:attribute>
+	 </xsl:if>
+	 <xsl:apply-templates/>
+       </p>
+     </xsl:for-each>
    </xsl:template>
 
    <xsl:template name="generateError">

@@ -806,16 +806,9 @@
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:for-each>
-      
-      <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
-      <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='example']"/>
-      <xsl:apply-templates select="tbx:note"/>
-      <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
+      <xsl:apply-templates select="tbx:descripGrp"/>
     </xsl:for-each>
-    <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
-    <xsl:apply-templates select="tbx:descripGrp/tbx:descrip[@type='example']"/>
-    <xsl:apply-templates select="tbx:note"/>
-    <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
+    <xsl:apply-templates select="tbx:descripGrp"/>
 
     <xsl:if test="$debug='true'">
       <xsl:call-template name="block-element">
@@ -829,14 +822,46 @@
     </xsl:if>
   </xsl:template>
   
-   <xsl:template match="tbx:descrip">
+  <xsl:template match="tbx:descrip[@type='subjectField']">
+    <w:r>
+      <w:rPr>
+	<w:rStyle w:val="domain"/>
+      </w:rPr>
+      <w:t>
+	<xsl:text>〈</xsl:text>
+	<xsl:value-of select="."/>
+	<xsl:text>〉</xsl:text>
+      </w:t>
+    </w:r>
+    <w:r>
+      <w:t xml:space='preserve'> </w:t>
+    </w:r>
+   </xsl:template>
+
+   <xsl:template match="tbx:descripGrp">
+     <w:p>    
+       <w:pPr>
+	 <w:pStyle w:val="Definition"/>
+       </w:pPr>
+       <xsl:apply-templates
+	   select="tbx:descrip[@type='definition' or @type='subjectField']">
+       </xsl:apply-templates>
+     </w:p>
+     <xsl:apply-templates select="tbx:descripNote"/>
+     <xsl:apply-templates select="tbx:descrip[@type='example']"/>
+     <xsl:apply-templates select="tbx:note"/>
+     <xsl:apply-templates select="tbx:admin"/>
+   </xsl:template>
+
+   <xsl:template match="tbx:descripNote">
       <xsl:call-template name="block-element">
-         <xsl:with-param name="style">
-	 <xsl:choose>
-	   <xsl:when test="@type='definition'">Definition</xsl:when>
-	   <xsl:when test="@type='example'">Examplenumbered</xsl:when>
-	 </xsl:choose>
-	 </xsl:with-param>
+         <xsl:with-param name="style">noteDefinition</xsl:with-param>
+      </xsl:call-template>
+   </xsl:template>
+
+   <xsl:template match="tbx:descrip[@type='example']">
+      <xsl:call-template name="block-element">
+         <xsl:with-param name="style">Examplenumbered</xsl:with-param>
       </xsl:call-template>
    </xsl:template>
 
@@ -1255,6 +1280,7 @@
       <xsl:if test="not($prefix='')">
 	<w:r>
 	  <w:t>
+	    <xsl:attribute name="xml:space">preserve</xsl:attribute>
 	    <xsl:value-of select="$prefix"/>
 	  </w:t>	
 	</w:r>
