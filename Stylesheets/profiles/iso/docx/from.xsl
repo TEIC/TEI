@@ -1117,11 +1117,6 @@
 			except .">
 	      <p rend="Example"><xsl:apply-templates/></p>
 	    </xsl:for-each>
-	    <xsl:for-each
-		select="current-group()[w:pPr/w:pStyle/@w:val='Example numbered']
-			except .">
-	      <p rend="Example numbered"><xsl:apply-templates/></p>
-	    </xsl:for-each>
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:for-each-group>
@@ -1711,10 +1706,10 @@
    <desc>Move domain to separate descrip</desc></doc>
 
   <xsl:template match="tbx:descripGrp" mode="pass2">
-    <xsl:if test="tei:descrip/tei:hi[@rend='domain']">
+    <xsl:if test="tbx:descrip/tei:hi[@rend='domain']">
       <descripGrp xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
 	<descrip type="subjectField">
-	  <xsl:for-each select="tei:descrip/tei:hi[@rend='domain']">
+	  <xsl:for-each select="tbx:descrip/tei:hi[@rend='domain']">
 	    <xsl:value-of select="translate(.,'&lt;&gt;〈〉','')"/>
 	  </xsl:for-each>
 	</descrip>
@@ -1806,6 +1801,10 @@
        </xsl:non-matching-substring>
      </xsl:analyze-string>
    </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Discard left-over example</desc></doc>
+   <xsl:template match="tei:p[@rend='Example numbered']"/>
 
    <!--
   <xsl:template match="tbx:descripGrp" mode="pass2">

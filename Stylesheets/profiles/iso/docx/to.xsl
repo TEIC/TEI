@@ -802,8 +802,10 @@
 	</xsl:call-template>
       </xsl:for-each>
       <xsl:apply-templates select="tbx:descripGrp"/>
+      <xsl:apply-templates select="tbx:note"/>
     </xsl:for-each>
     <xsl:apply-templates select="tbx:descripGrp"/>
+    <xsl:apply-templates select="tbx:note"/>
 
     <xsl:if test="$magic='true'">
       <xsl:call-template name="block-element">
@@ -816,45 +818,41 @@
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
-  
-  <xsl:template match="tbx:descrip[@type='subjectField']">
-    <w:r>
-      <w:rPr>
-	<w:rStyle w:val="domain"/>
-      </w:rPr>
-      <w:t>
-	<xsl:text>〈</xsl:text>
-	<xsl:value-of select="."/>
-	<xsl:text>〉</xsl:text>
-      </w:t>
-    </w:r>
-    <w:r>
-      <w:t xml:space='preserve'> </w:t>
-    </w:r>
-   </xsl:template>
 
-   <xsl:template match="tbx:descripGrp">
+   <xsl:template
+       match="tbx:descripGrp[tbx:descrip/@type='subjectField']"/>
+
+   <xsl:template match="tbx:descripGrp[tbx:descrip/@type='definition']">
      <w:p>    
        <w:pPr>
 	 <w:pStyle w:val="Definition"/>
        </w:pPr>
-       <xsl:apply-templates
-	   select="tbx:descrip[@type='definition' or @type='subjectField']">
-       </xsl:apply-templates>
+       <xsl:for-each
+	   select="../tbx:descripGrp/tbx:descrip[@type='subjectField']">
+	 <w:r>
+	   <w:rPr>
+	     <w:rStyle w:val="domain"/>
+	   </w:rPr>
+	   <w:t>
+	     <xsl:text>〈</xsl:text>
+	     <xsl:value-of select="."/>
+	     <xsl:text>〉</xsl:text>
+	   </w:t>
+	 </w:r>
+	 <w:r>
+	   <w:t xml:space='preserve'> </w:t>
+	 </w:r>
+       </xsl:for-each>
+       <xsl:for-each select="tbx:descrip[@type='definition']">
+	 <xsl:apply-templates/>
+       </xsl:for-each>
      </w:p>
-     <xsl:apply-templates select="tbx:descripNote"/>
-     <xsl:apply-templates select="tbx:descrip[@type='example']"/>
      <xsl:apply-templates select="tbx:note"/>
      <xsl:apply-templates select="tbx:admin"/>
    </xsl:template>
 
-   <xsl:template match="tbx:descripNote">
-      <xsl:call-template name="block-element">
-         <xsl:with-param name="style">noteDefinition</xsl:with-param>
-      </xsl:call-template>
-   </xsl:template>
 
-   <xsl:template match="tbx:descrip[@type='example']">
+   <xsl:template match="tbx:descripGrp[tbx:descrip/@type='example']">
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">Examplenumbered</xsl:with-param>
       </xsl:call-template>
