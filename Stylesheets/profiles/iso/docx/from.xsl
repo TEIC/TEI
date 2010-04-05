@@ -616,7 +616,8 @@
 
 	    <!-- stored elsewhere in TBX -->
             <xsl:when test="$style='gender'"/>
-            <xsl:when test="$style='pronunciation'"/>
+	    <xsl:when test="$style='number'"/> 
+	    <xsl:when test="$style='pronunciation'"/>
             <xsl:when test="$style='partOfSpeech'"/>
             <xsl:when test="$style='geographicalUse'"/>
             <xsl:when test="$style='script'"/>
@@ -724,7 +725,7 @@
 	    </xsl:when>
 
 	    <xsl:when test="$style= 'termRef'">
-	      <ref xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
+	      <ref>
 		<xsl:apply-templates/>
 	      </ref>
 	    </xsl:when>
@@ -793,11 +794,16 @@
 		<xsl:result-document href="{$filename}">
 		  <xsl:copy>
 		    <xsl:copy-of select="@*"/>
-		    <xsl:apply-templates mode="copytable">
-		      <xsl:with-param name="n" tunnel="yes">
-			<xsl:number level="any"/>
-		      </xsl:with-param>
-		    </xsl:apply-templates>
+		    <xsl:variable name="tablePass1">
+		      <xsl:apply-templates mode="copytable">
+			<xsl:with-param name="n" tunnel="yes">
+			  <xsl:number level="any"/>
+			</xsl:with-param>
+		      </xsl:apply-templates>
+		    </xsl:variable>
+		    <xsl:for-each select="$tablePass1">
+		      <xsl:apply-templates mode="pass2"/>
+		    </xsl:for-each>
 		  </xsl:copy>
 		</xsl:result-document>
 	    </xsl:for-each>
@@ -953,31 +959,31 @@
 	    </xsl:variable>
 	    <termEntry xmlns="http://www.lisa.org/TBX-Specification.33.0.html" id="{$ID}">
 	      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteTermEntry'] except .">
-		<note type="noteTermEntry">
+		<note>
 		  <xsl:apply-templates/>
 		</note>
 	      </xsl:for-each>
 	      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteTerm'] except .">
-		<note type="noteTerm">
-		  <xsl:apply-templates/>
-		</note>
-	      </xsl:for-each>
-	      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteSymbol'] except .">
-		<note type="noteSymbol">
+		<note>
 		  <xsl:apply-templates/>
 		</note>
 	      </xsl:for-each>
 	      <descripGrp>
-		<xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteDefinition'] except .">
-		  <descripNote>
-		    <xsl:apply-templates/>
-		  </descripNote>
-		</xsl:for-each>
 		<descrip type="definition">
 		  <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='Definition'] except .">
 		    <xsl:apply-templates/>
 		  </xsl:for-each>
 		</descrip>
+		<xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteDefinition'] except .">
+		  <note>
+		    <xsl:apply-templates/>
+		  </note>
+		</xsl:for-each>
+		<xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteSymbol'] except .">
+		  <note>
+		    <xsl:apply-templates/>
+		  </note>
+		</xsl:for-each>
 		<xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='entrySource'] except .">
 		  <admin type="entrySource">
 		    <xsl:apply-templates/>
@@ -1089,6 +1095,7 @@
 			  </xsl:choose>
 
 			  <xsl:apply-templates select="w:r[w:rPr/w:rStyle/@w:val='gender']" mode="inTerm"/>
+			  <xsl:apply-templates select="w:r[w:rPr/w:rStyle/@w:val='number']" mode="inTerm"/>
 
 			  <xsl:if test="w:r[w:rPr/w:rStyle/@w:val='pronunciation']">
 			    <termNote type="pronunciation"
@@ -1129,6 +1136,13 @@
 	  <xsl:when test=".='n'">neuter</xsl:when>
 	  <xsl:otherwise>otherGender</xsl:otherwise>
 	</xsl:choose>
+      </termNote>
+    </xsl:template>
+
+
+    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='number']"  mode="inTerm">
+      <termNote type="grammaticalNumber" xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
+	<xsl:value-of select="."/>
       </termNote>
     </xsl:template>
 
@@ -1653,8 +1667,8 @@
       </xsl:choose>
    </xsl:template>
 
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-    <desc>Remove [] from source</desc></doc>
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+   <desc>Remove [] from source</desc></doc>
 
   <xsl:template match="tbx:admin[@type='entrySource']" mode="pass2">
     <xsl:copy>
@@ -1670,8 +1684,18 @@
     </xsl:copy>
   </xsl:template>
 
+  <!--
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>Strip label from note on definition</desc></doc>
+      <xsl:template match="tbx:descrip/tbx:note/text()" mode="pass2">
+      <xsl:value-of select="replace(.,'Note to definition: ','')"/>
+      </xsl:template>
+  -->
+
   <xsl:template match="tbx:descrip/tei:hi[@rend='domain']" mode="pass2"/>
 
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+   <desc>Remove space before a moved domain</desc></doc>
   <xsl:template match="tbx:descrip/text()" mode="pass2">
     <xsl:choose>
       <xsl:when test="preceding-sibling::node()[1][self::tei:hi/@rend='domain']">
@@ -1683,14 +1707,26 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="tbx:descrip" mode="pass2">
-    <xsl:if test="tei:hi[@rend='domain']">
-      <descrip type="subjectField" xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
-	<xsl:for-each select="tei:hi[@rend='domain']">
-	  <xsl:value-of select="translate(.,'&lt;&gt;〈〉','')"/>
-	</xsl:for-each>
-      </descrip>
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+   <desc>Move domain to separate descrip</desc></doc>
+
+  <xsl:template match="tbx:descripGrp" mode="pass2">
+    <xsl:if test="tei:descrip/tei:hi[@rend='domain']">
+      <descripGrp xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
+	<descrip type="subjectField">
+	  <xsl:for-each select="tei:descrip/tei:hi[@rend='domain']">
+	    <xsl:value-of select="translate(.,'&lt;&gt;〈〉','')"/>
+	  </xsl:for-each>
+	</descrip>
+      </descripGrp>
     </xsl:if>
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates mode="pass2"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="tbx:descrip" mode="pass2">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates mode="pass2"/>
@@ -1703,8 +1739,8 @@
     </xsl:copy>
    </xsl:template>
    
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-    <desc>Zap empty &lt;list&gt; and one after termEntry </desc></doc>
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+   <desc>Zap empty &lt;list&gt; and one after termEntry </desc></doc>
 
    <xsl:template match="tei:list" mode="pass2">
      <xsl:choose>

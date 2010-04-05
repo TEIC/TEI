@@ -104,21 +104,15 @@
     <xsl:template match="tei:seg[@rend]" mode="get-style">
       <xsl:value-of select="@rend"/>
    </xsl:template>
-    <xsl:template match="tei:hi[@rend='domain']" mode="get-style">
-      <xsl:text>domain</xsl:text>
-    </xsl:template>
     <xsl:template match="tbx:descrip" mode="get-style">Definition</xsl:template>
-    <xsl:template match="tbx:note" mode="get-style"><xsl:value-of select="@type"/></xsl:template>
-    <xsl:template match="tei:hi[@rend='geographicalUse']" mode="get-style">
-      <xsl:text>geographicalUse</xsl:text>
-    </xsl:template>
+    <xsl:template match="tbx:note" mode="get-style">termNote</xsl:template>
     <xsl:template match="tei:hi[@rend='language']" mode="get-style">
       <xsl:text>language</xsl:text>
     </xsl:template>
     <xsl:template match="tei:hi[@rend='source']" mode="get-style">
       <xsl:text>source</xsl:text>
     </xsl:template>
-    <xsl:template match="tei:hi[@rend='termRef']" mode="get-style">
+    <xsl:template match="tbx:descrip/tei:ref" mode="get-style">
       <xsl:text>termRef</xsl:text>
     </xsl:template>
 
@@ -865,7 +859,7 @@
       </xsl:call-template>
    </xsl:template>
 
-   <xsl:template match="tbx:note">
+   <xsl:template match="tbx:termEntry/tbx:note">
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">
 	   <xsl:text>noteTermEntry</xsl:text>
@@ -894,6 +888,18 @@
 	      <xsl:when test=".='feminine'">f</xsl:when>
 	      <xsl:when test=".='neuter'">n</xsl:when>
 	    </xsl:choose>
+	  </w:t>
+	</w:r>
+      </xsl:when>
+      <xsl:when test="@type='grammaticalNumber'">
+	<w:r><w:t xml:space='preserve'>, </w:t></w:r>
+	<w:r>
+	  <w:rPr>
+	    <w:rStyle w:val="number"/>
+	    <w:b w:val="0"/>
+	  </w:rPr>
+	  <w:t>
+	    <xsl:value-of select="."/>
 	  </w:t>
 	</w:r>
       </xsl:when>
