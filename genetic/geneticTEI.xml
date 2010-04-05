@@ -1414,6 +1414,7 @@ problem (see .</p> <p>The following discussion-->
                   course limited in any way: the encoder may derive as many as they wish. They may
                   also wish to represent other forms of syntagmatic structure, for narratalogical or
                   other purposes, using essentially the same mechanism. </p> -->
+               <!-- TODO: show transformation of a path to a timeline -->
             </div>
             <div>
                <head>Genetic analysis</head>
@@ -1601,21 +1602,25 @@ transposition can also be included in apparatus
                   which can take the values <code>unordered</code> or <code>ordered</code>. If the attribute is not present,
                      <code>unordered</code> is assumed by default. The attribute specifies whether the order of child elements
                   signifies a temporal order of the respective revision campaigns. So in the Faust example, not only did the editor
-                  identify four stages, but she also states, that these four stages are ordered chronologically according to
-                  the order of the <gi>stageNote</gi> elements.</p>
-               <!-- TODO: explain, why "ordered" sometimes helpful; <del/>; <add/> problem -->
-               <p>Optionally <gi>stageNote</gi> elements can be nested, thereby forming a hierarchy. This may be helpful in two
-                  cases. Firstly one can build up hypotheses about related revisions step-by-step, starting with stages of smaller
-                  coverage, whose members are certainly related, and then in a subsequent pass grouping these stages in turn,
-                  thereby extending their reach.</p>
+                  identify four stages, but she also states, that these four stages are ordered chronologically according to the
+                  order of the <gi>stageNote</gi> elements. Note that asserting a specific order early on, though probably one of
+                  the hardest tasks in a genetic analysis, can reduce the encoding effort in assigning textual alterations to stages
+                  during the transcription considerably, as we will see below. For instance deletions can only be assigned to a
+                  stage that follows the one in which the passage being deleted was written down. So having a certain order of
+                  stages put in place before the transcription, will allow the encoder to spare out verbose tagging, where default
+                  assumptions based on the natural order of actions can be made.</p>
+               <p><gi>stageNote</gi> elements can be nested, thereby forming a hierarchy. This may be helpful in two cases. Firstly
+                  one can build up hypotheses about related revisions step-by-step, starting with stages of smaller coverage, whose
+                  members are certainly related, and then in a subsequent pass grouping these stages in turn, thereby extending
+                  their reach.</p>
                <!-- stages.xml -->
                <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <profileDesc>
                      <creation>
                         <ge:stageNotes>
-                           <ge:stageNote xml:id="m" cert="low">
-                              We might assume with low certainty, that the following two pages were revised together:
-                              <ge:stageNote xml:id="m1">Alterations on one manuscript page, certainly related</ge:stageNote>
+                           <ge:stageNote xml:id="m" cert="low"> We might assume with low certainty, that the following two pages
+                              were revised together: <ge:stageNote xml:id="m1">Alterations on one manuscript page, certainly
+                                 related</ge:stageNote>
                               <ge:stageNote xml:id="m2">Alterations on another manuscript page, certainly related</ge:stageNote>
                            </ge:stageNote>
                         </ge:stageNotes>
@@ -1661,9 +1666,6 @@ transposition can also be included in apparatus
                      </creation>
                   </profileDesc>
                </egXML>
-               <!-- timeline abstracts from real time; we need to use notAfter notBefore to deal with uncertainties? -->
-               <!-- TODO: simple, fictional example with two stages: this is a <p stage="firstStage">This is a <subst><del>house</del><add stage="secondStage">mouse</add></subst></p>-->
-               
                <p>Each <gi>stageNote</gi> element, apart from declaring a text stage and apart from containing subsumed stage
                   declarations, may also contain references to other annotations contained within the <gi>teiHeader</gi> or in the
                   document (as shown in the previous example), but these references as well as the textual content are deemed to be
@@ -1671,7 +1673,19 @@ transposition can also be included in apparatus
                   membership is made explicit in one of two ways: by either pointing from the <gi>stageNote</gi>’s attribute
                      <attribute>@target</attribute> to one or more elements, or from each related element to the <gi>stageNote</gi>
                   element via their respective <attribute>stage</attribute> attribute:</p>
-               <!-- faust_1.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
+               <!-- stages.xml -->
+               <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <p stage="#firstStage">This is a <subst><del>house</del><add stage="#secondStage">mouse</add></subst>.</p>
+               </egXML>
+               <p>This simple example shows the latter of the two options: The relevant stages are declared in the header; then textual
+                  alterations and acts of writing are assigned to them. So the whole sentence was realized in the first stage, while
+                  the substitution of “house” with “mouse” happened at the second stage. Here the assumed ordering of the stages and
+                  default assumptions about the natural ordering of the textual alterations allows to reduce the tagging
+                  considerably, as only the addition has to be annotated, whereas the substitution and consequently the
+                  deletion are assumed to happen at the same stage.</p>
+               <p>A more complex and complete example:</p>
+               <!-- faust_1.xml -->
+               <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <profileDesc>
                      <creation>
                         <ge:stageNotes type="ordered">
@@ -1682,18 +1696,16 @@ transposition can also be included in apparatus
                            <ge:stageNote xml:id="fourthStage">Addition of another stanza, probably at a later stage</ge:stageNote>
                         </ge:stageNotes>
                      </creation>
-                  </profileDesc>
-                  [...]
-                  <div stage="#firstStage">
+                  </profileDesc> [...] <div stage="#firstStage">
                      <l n="11656">
                         <subst>
                            <del>Ihr</del>
                            <add><ge:rewrite stage="#thirdStage"><seg stage="#secondStage">Nun</seg></ge:rewrite></add>
                         </subst> wanſtige Schuften mit den Feuerbacken</l>
                      <l n="11657">Ihr glüht ſo recht vom Höllen Schwefel <subst stage="#secondStage #thirdStage">
-                        <del>ſatt</del>
-                        <add>feiſt</add>
-                     </subst>.</l>
+                           <del>ſatt</del>
+                           <add>feiſt</add>
+                        </subst>.</l>
                      <l n="11658">
                         <delSpan spanTo="#anchor_delSpan_1" stage="#thirdStage"/>Ihr hagren, triſten, krummgezog<subst>
                            <del>nen</del>
@@ -1702,30 +1714,28 @@ transposition can also be included in apparatus
                      <l>Wenn ihr nur piepſet iſt die Welt ſchon matt.<anchor xml:id="anchor_delSpan_1"/></l>
                   </div>
                </egXML>
-               <p>This example shows the latter of the two options: At first the relevant stages are declared in the header; then
-                  textual alterations and acts of writing are assigned to them. Note also, that a stage, once assigned to an
-                  element, is inherited by all descendents of that element, unless overridden by a subsequent assignment. So in the
-                  given example the three verses are assigned to the first stage initially. The writing of “Nun” (as part of the
-                  substitution in the first verse) takes place in the second stage and is repeated (aka. rewritten/fixated) in the
-                  third. Also the substitution in the second verse is done repeatedly: initially it takes place in the second
-                  stage, but is fixated as a whole in the third.</p>
-               <!-- TODO: Difference between acts of writing and textual alteration; e. g. <del/> takes place in the another 
-               stage then the writing of its contents-->
-               <p>The other mode of assignment is illustrated by the following example:</p>
-               <!-- faust_2.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
+               <p>Note first, that a stage, once assigned to an element, is inherited by all descendents of that element, unless
+                  overridden by a subsequent assignment. So in the given example the three verses are assigned to the first stage
+                  initially. The writing of “Nun” (as part of the substitution in the first verse) takes place in the second stage
+                  and is repeated (aka. rewritten/fixated) in the third. Also the substitution in the second verse is done
+                  repeatedly: initially it takes place in the second stage, but is fixated as a whole in the third.</p>
+               <p>As one can see, the interpretation of what the stage assignments mean for a particular text passage and the
+                  actions upon it can be based on a number of implicit assumptions and constraints, that allow to minimize necessary
+                  tagging. If these presuppositions shall be made more explicit, one can differentiate between acts of writing and
+                  textual alterations and accordingly between their assignment to stages as follows:</p>
+               <!-- faust_2.xml -->
+               <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <profileDesc>
                      <creation>
                         <ge:stageNotes type="ordered">
                            <ge:stageNote target="#zone_1 #subst_3">First stage, written in ink by a writer</ge:stageNote>
-                           <ge:stageNote target="#zone_2 #mod_1 #line_1 #line_2 #subst_1 #subst_2 #subst_4 #delSpan_1">Revised by Goethe
-                              using pencil</ge:stageNote>
-                           <ge:stageNote target="#redo_1 #redo_2 #redo_3 #subst_1 #subst_2 #delSpan_1 #add_1">Fixation of the revised
-                              passages and further revisions by Goethe using ink</ge:stageNote>
+                           <ge:stageNote target="#zone_2 #mod_1 #line_1 #line_2 #subst_1 #subst_2 #subst_4 #delSpan_1">Revised by
+                              Goethe using pencil</ge:stageNote>
+                           <ge:stageNote target="#redo_1 #redo_2 #redo_3 #subst_1 #subst_2 #delSpan_1 #add_1">Fixation of the
+                              revised passages and further revisions by Goethe using ink</ge:stageNote>
                         </ge:stageNotes>
                      </creation>
-                  </profileDesc>
-                  [...]
-                  <ge:document>
+                  </profileDesc> [...] <ge:document>
                      <surface>
                         <zone xml:id="zone_1">
                            <ge:line xml:id="line_1">
@@ -1737,165 +1747,30 @@ transposition can also be included in apparatus
                               <handShift new="#g_bl"/>
                               <ge:rewrite hand="#g_t" xml:id="redo_2">feiſt</ge:rewrite>
                            </ge:line>
-                           <ge:line>Ihr glüht ſo recht vom Höllen Schwefel ſatt.</ge:line>
-                           [...]
-                        </zone>
+                           <ge:line>Ihr glüht ſo recht vom Höllen Schwefel ſatt.</ge:line> [...] </zone>
                      </surface>
                   </ge:document>
+                  <text>
+                     <body>
+                        <l n="11656">
+                           <subst xml:id="subst_1">
+                              <del>Ihr</del>
+                              <add>Nun</add>
+                           </subst> wanſtige Schuften mit den Feuerbacken</l>
+                        <l n="11657">Ihr glüht ſo recht vom Höllen Schwefel <subst xml:id="subst_2">
+                           <del>ſatt</del>
+                           <add>feiſt</add>
+                        </subst>.</l>
+                     </body>
+                  </text>
                </egXML>
-               <p>Here the transcription is done first and then the (possibly repetetive) writing of text (structured in zones, lines
-                  and segments) is assigned to stages via the <att>@target</att> attribute of the respective <gi>stageNote</gi>
-                  element.</p>
-            </div>
-            <div>
-               <head>Chronology, Date and Time</head>
-               <!-- should merge with relations -->
-               <p>The chronology (timing) of parts of a document or documents may be expressed in
-                  absolute terms (at such a time on such a date), or relatively (before or after
-                  some other event). Relative time can also be expressed by the relation to the
-                  (known or unknown) creation of another document or text. Dating can be justified
-                  by prose and/or by reference to a characteristic of a manuscript (e.g. hand, ink,
-                  etc.). The outlining of a chronology for a document or dossier can then be used as
-                  an argument to determine the dating of a text-stage.</p>
-               <div>
-                  <head>Absolute Time</head>
-                  <p>For absolute timing we envisage two cases that can occur separately or in
-                     combination: <list>
-                        <item>The dating of a witness (a manuscript part of a dossier) or of a
-                           division is not directly documented within its content, but can be
-                           deduced from external facts and documents. The editorial date attribution
-                           should be included in the <gi>teiHeader</gi>, within the
-                              <gi>creation</gi> element. </item>
-                        <item>Dates can be found in the document added by the author as a kind of
-                           metadata (for instance the date of the beginning/ending of writing on a
-                           specific document, or the date of a revision campaign); those should be
-                           encoded without necessarily adding them in the <gi>teiHeader</gi> (they
-                           can be considered a type of <term>meta-mark</term>, as previously
-                           discussed (<ptr target="#mm"/>)</item>
-                     </list>
-                  </p>
-                  <p>The TEI provides a <gi>timeline</gi> element which can be used to define a
-                     scale, a co-ordinate system for measuring time. This enables us to align other
-                     components of a document with particular points in time, each such point being
-                     represented by a <gi>when</gi> element. The temporal inter-relation of
-                        <gi>when</gi> elements is expressed by attributes stating, for example, that
-                     this point in time is so many hours or years after another, or absolutely using
-                     a standardized notation for date and time (see further discussion in the
-                     Guidelines). The alignment is done using an attribute such as <att>sync</att>,
-                     to state that a given part of the text is aligned with a given point in time. </p>
-                  <p>This mechanism was developed originally for the representation of transcribed
-                     speech, in particular to support overlap and discontinuity at a fairly
-                     fine-grained level. It is not clear to what extent it can be generalised to
-                     support the comparatively coarse grained and imprecise notions which typify
-                     analysis of textual genesis. In particular, the need to express alternative and
-                     uncertain temporal sequences remains problematic. </p>
-                  <p>One option might be to define a specific element such as <gi>ge:evolution</gi>
-                     comprising a series of pointers to <gi>change</gi> elements, organized in such
-                     a way as to express alternative or varyingly certain views about their
-                     sequence, possibly using the existing TEI <gi>alt</gi> element, and existing
-                     featurs for indicating degrees of uncertainty. Such pointers could also be
-                     synchronized with an external timeline using the existing TEI mechanisms if
-                     this was thought useful. The Workgroup has not completed work on elaborating
-                     these proposals however. </p>
-                  <!--
-, the content model of <gi>timeline</gi> has been enlarged to
-          accept a <gi>choice</gi> element; <gi>timelene</gi> can then also be used
-          within <gi>choice</gi>. The <gi>when</gi> element has been modified to
-          include editorial attributes like <att>cert</att>, <att>resp</att>,
- <att>evidence</att> and <att>source</att>, therefore in case of a date
-          written in the manuscript by the author, like for Austen's
- <title>Persuasion</title>, we will have: <egXML
-             xmlns="http://www.tei-c.org/ns/Examples">
- <when target="#pers-1" absolute="1816-07-08" evidence="internal"
-  cert="high" source="#date-1"/>
-   </egXML> Otherwise, in case of a conjectural date discussed in several parts
-          of the <gi>teiHeader</gi>, we will have: <egXML
-             xmlns="http://www.tei-c.org/ns/Examples">
- <when target="#t2" absolute="1922" precision="low" evidence="conjecture"
-  cert="medium" source="#inkanalysis"/>
-   </egXML>
-</p>
-<p>As an example, let's consider again the analysis provided by Kenneth Price
-          and Brett Barney on Whitman's <title>The Sleepers</title> (<ptr
-             target="http://www.whitmanarchive.org/resources/sleepers/sleepers.html"
-          />), and let's assume that the order in which the witnesses are presented in
-          the website is a chronological order; let's also assume that the chronology
-          of two witnesses (the one titled <title>[become a shroud]</title> and the
-          one titled <title>[I am a curse]</title>) is uncertain, the encoding could
-          be as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
- <timeline origin="#poem" desc="dossier timeline">
-  <when target="#poem"/>
-  <when target="#sweet_flag"/>
-  <when target="#curse1"/>
-  <when target="#efflux"/>
-  <choice>
-     <timeline origin="#shroud" weights="0.8">
- <when target="#shroud"/>
- <when target="#curse2"/>
-     </timeline>
-     <timeline origin="#curse2" weights="0.8">
- <when target="#shroud"/>
- <when target="#curse2"/>
-     </timeline>
-  </choice>
-  <when target="#topple_down"/>
-  <when target="#black_lucifer"/>
-
-  <when target="#Leaves81-82" absolute="1881" evidence="internal"/>
- </timeline>
-   </egXML>
-</p>
-<p>The example show how to order witnesses within a dossier, but the same model
-          can be used to order text stages or variants within a section.</p>
-    -->
-               </div>
-               <!--    <div>
-<head>Relative Time</head>
-<p>Relative time can be expressed in various ways: </p>
-<list >
-   <item>In the easiest case it might be a direct relationship: <att>next</att>,
-  <att>previous</att>, <att>sync</att>, or as a “sorting” relationship:
-  <att>before</att>, <att>after</att>.</item>
-   <item>In some cases one may be able to express the relative timing of a
-             section or a passage marked by the <gi>ge:mod</gi> element. This can be
-             expressed via a numbering scheme (<val>0</val>, <val>1</val>,
-  <val>2</val>, …) within a <att>seq</att> attribute. In this case we
-             assume a <hi rend="bold">default</hi> time-line (the time of writing and
-             of the <ref target="#instCor">instant corrections</ref>) which is
-             represented by <val>0</val>, and successive revision-times (<val>1</val>,
-  <val>2</val>, etc.)</item>
-   <item>More complex situation could be expressed via the <gi>timeline</gi>
-             element, as seen before. In this case, when the attribute
-  <att>absolute</att> is present, an absolute time is assumed, when
-             absent, a relative time is assumed; in this way absolute and relative
-             time can be used together. In case it is necessary to express
-             simultaneity, the attributes <att>interval</att> and <gi>since</gi> could
-             be used as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-  <when xml:id="t1" target="#poem"/>
-  <when xml:id="t2" interval="0" since="#t1" target="#sweet_flag"/>
- </egXML>
-   </item>
-</list>
-<p>Information about absolute or relative time can be given on all levels of a
-          text or document. </p>
-    </div>-->
-            </div>
-            <div>
-               <head>Documenting Editorial Decisions</head>
-               <p>Genetic editing is an essentially interpretative process; documentation of all
-                  editorial decisions is conseqently of major importance. </p>
-               <p>Different forms of documentation have been discussed before in several previous
-                  sections: <list>
-                     <item><gi>stageNote</gi>: documents the constitution of a text-stage </item>
-                     <item><gi>geneticNote</gi>: documents the constitution of a genetic
-                        group</item>
-                  </list> All these elements carry a <att>cert</att> attribute to declare the level
-                  of certainty, and a <att>resp</att> attribute to declare the editorial
-                  responsibility of an annotation; all of them should use <att>xml:id</att> to be
-                  pointed at from many places in the text.</p>
-               <p>Annotations can also occur in-line (i.e. close to a textual fragment they relate
-                  to) and in many other places; the existing <gi>note</gi> element should be used to
-                  record these. </p>
+               <p>Here two transcriptions of the same passage are given, one from a documentary perspective, stressing the writing
+                  process, and one from the textual perspective, emphasizing textual alterations. The respective assignment to
+                  stages is also done differently here, pointing from the stage notes to the text passages and alterations in
+                  question. In the documentary perspective on the one hand, the stage assignments describe the writing process, in
+                  that they specify, which segment has been written when and how often. The textual perspective one the other hand
+                  can concentrate on the order of textual alterations and does not imply assumptions on the order of writing
+                  anymore.</p>
             </div>
          </div>
       </body>
