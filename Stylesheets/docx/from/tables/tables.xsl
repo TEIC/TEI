@@ -340,11 +340,11 @@
 			  </xsl:message>
 		      -->
 		      <xsl:attribute name="morerows">
-			                        <xsl:value-of select="number($MOREROWS) -            number($ROWPOS) -1"/>
-		                      </xsl:attribute>
-		                   </xsl:if>
-		                   <xsl:choose>
-		                      <xsl:when test="count(w:p)&gt;1">
+			<xsl:value-of select="number($MOREROWS) -            number($ROWPOS) -1"/>
+		      </xsl:attribute>
+				   </xsl:if>
+				   <xsl:choose>
+				     <xsl:when test="count(w:p)&gt;1">
 			                        <xsl:call-template name="cellContents"/>
 		                      </xsl:when>
 		                      <xsl:otherwise>
