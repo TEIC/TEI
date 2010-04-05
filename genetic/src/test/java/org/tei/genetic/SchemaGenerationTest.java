@@ -70,8 +70,7 @@ public class SchemaGenerationTest {
 			odd2doc.setParameter(new QName("splitLevel"), new XdmAtomicValue("-1"));
 			odd2doc.setParameter(new QName("STDOUT"), new XdmAtomicValue("true"));
 
-			XsltTransformer odd2odd = buildCompiler(xsltCompiler, new StreamSource(ODD), odd2doc);
-			odd2odd.transform();
+			buildCompiler(xsltCompiler, new StreamSource(ODD), odd2doc).transform();
 		} finally {
 			serializer.close();
 		}

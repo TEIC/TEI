@@ -18,10 +18,30 @@
          </sourceDesc>
       </fileDesc>
       <revisionDesc>
+         <change when="2010-04-03">
+            <name>Gregor Middell</name>
+            <date>3 April 2010</date>
+            <desc>Reworked chapter "The dossier level"; added graph-based encoding of genetic aspects</desc>
+         </change>
+         <change when="2010-04-03">
+            <name>Gregor Middell</name>
+            <date>3 April 2010</date>
+            <desc>Chapter "Revision campaigns" revamped; added examples/ updated schema</desc>
+         </change>
+         <change when="2010-04-02">
+            <name>Moritz Wissenbach</name>
+            <date>2 April 2010</date>
+            <desc>Chapter "Revision campaigns" extended</desc>
+         </change>
          <change when="2010-04-01">
             <name>Gregor Middell</name>
-            <date>2 April 2010</date>
-            <desc>... <!-- TODO --></desc>
+            <date>1 April 2010</date>
+            <desc>updated schema</desc>
+         </change>
+         <change when="2010-04-01">
+            <name>Gregor Middell</name>
+            <date>1 April 2010</date>
+            <desc>Extracted examples into separate files, added test suite</desc>
          </change>
          <change when="2010-04-01">
             <name>Malte Rehbein</name>
@@ -89,11 +109,12 @@
                <item>Workshop "Genetic Editions in a Digital Framework", held in Paris, 14/15 May
                   2009, and following discussion; programme of the workshop can be found here: <ptr
                      target="http://wiki.tei-c.org/index.php/GeneticEditionsWorkshopParis"/></item>
-               <item>Genetic Edition workgroup held in Wuerzburg (September 2009)</item>
+               <item>Genetic Edition workgroup held in Würzburg (September 2009)</item>
                <item>The document was extensively revised by Elena Pierazzo and Lou Burnard, for
                   presentation at a panel to be held at the Annual TEI Members Meeting in November
                   2009.</item>
-               <!-- TODO: add others: Oxford, Wuerzburg meeting -->
+               <item>Genetic Edition workgroup held in Oxford (February 2010)</item>
+               <item>Genetic Edition workgroup held in Würzburg (March 2010)</item>
             </list>
             <p>The work group was initially inspired by the <title>HNML. HyperNietzsche Markup
                   Language</title> and following versions (<title>GML Genetic Markup
@@ -251,7 +272,41 @@
                   <item><label>Text level</label> transcription of the content of a document
                      according to its logical, semantic meaning </item>
                </list>
-               <!-- TODO: writing process vs. text states. writing process documented on the document level; text states seen on the text level -->
+            </div>
+            <div xml:id="act_vs_state">
+               <head>Writing Acts vs. Text Stages</head>
+               <p>As it has been said in the previous section, the specific perspective on the document in genetic editions often
+                  serves the purpose to reconstruct the writing process, which in turn shall allow the editor to justify her genetic
+                  analysis, e.g. which text passage has been altered first or which textual variant predates another one. For the
+                  encoding of the writing process it has to be noted though, that in doing so not only a different perspective on
+                  the same text at hand is accentuated, but that in fact the set of relevant information to be marked up might
+                  differ fundamentally from a mere textual encoding.</p>
+               <p>In the case one talks about alterations on a textual level, what is of major interest are the <emph>text
+                     stages</emph>, which result from the alterations applied. An addition, deletion, substitution etc. is viewed
+                  from the perspective of possible new text states it yields. For example the following substitution is well-defined
+                  from this perspective:</p>
+               <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <subst><del>landscape</del><add>scenery</add></subst>
+               </egXML>
+               <p>With regard to the writing process though, a number of possible writing acts can be imagined, which actually led to the new state, one being:</p>
+               <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <del rend="strikethrough">landsca</del>pe <handShift new="#new_material"/>scenery
+               </egXML>
+               <p>In this example, stressing the writing process, two additional information are encoded, the fact, that the author
+                  did not strike through the whole word and that a change in writing material happened just before the word
+                  “scenery” was put down. In the current encoding practice, leaning towards a textual view, the two perspectives are often
+                  integrated, subordinating aspects of the writing process to their textual outcome and/or regularizing them, so
+                  they do to not interfere with the text-driven evaluation of the encoding.</p>
+               <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <subst><del><hi rend="strikethrough">landsca</hi>pe</del><add hand="#new_material">scenery</add></subst>
+               </egXML>
+               <p>As the example shows, this integrative approach can be a viable one in many cases, but taking this pragmatic
+                  shortcut on the one hand blurs a specific editorial distinction, maybe exactly the distinction one wants to
+                  emphasize (e. g. to separate <soCalled>Befund</soCalled> from <soCalled>Deutung</soCalled>). On the other hand it
+                  makes it particularly hard to be as precise on the <emph>documentation</emph> of “what’s there” as one is on the
+                     <emph>interpretation</emph> of ”what’s the possible outcome”. Ideally in a genetic edition the editor would
+                  rather want to encode the two perspectives separately and align them later on instead of trying to integrate them
+                  right away, thereby potentially neglecting important information for the genetic analysis.</p>
             </div>
          </div>
          <div>
@@ -650,7 +705,6 @@ actually he wants to kill it... -->
             </div>
             <div xml:id="alterations">
                <head>Textual Alterations</head>
-               <!-- TODO: discuss text states and writing process again; textual alterations normally refer to text states, not to the writing process -->
                <p>Traces of authorial alteration (correction, addition, deletion, etc.) are
                   frequently found within a single document, and may also be inferred when different
                   documents are compared. It is however an open question as to whether
@@ -709,20 +763,19 @@ problem (see .</p> <p>The following discussion-->
                      <specDesc key="subst"/>
                   </specList> Each of these new elements is discussed in the remainder of this
                   section.</p>
-               <p>All these elements (the TEI's and ne new ones) imply a certain level of semantic
-                  interpretation; for instance the usage of the <gi>add</gi> element to encode, say,
-                  interlinear insertions, already imply a certain level of interpretation, but when
-                  transcribing from a documentary perspective, it may be desirable to keep separate
-                  recording is on the page from what is the editor interpretation (see <ptr
-                     target="#deutung"/>). Therefore the present proposal also introduces two generic
-                  elements, <gi>ge:mod</gi> and <gi>ge:modSpan</gi>, to encode any kind of modification,
-                  which can be typed or described via the <att>rend</att> attribute. <specList>
+               <p>All these elements (the TEI's and the new ones) imply a certain level of semantic interpretation; for instance the
+                  usage of the <gi>add</gi> element to encode, say, interlinear insertions, already imply a certain level of
+                  interpretation. As it has been explained above (see <ptr target="#act_vs_state"/>), using these elements when
+                  transcribing from a documentary perspective is a pragmatic shortcut. However it may be desirable to keep the
+                  recording of “what is on the page” separate from “what is the editor’s interpretation” (see <ptr target="#deutung"
+                  />). Therefore the present proposal also introduces two generic elements, <gi>ge:mod</gi> and <gi>ge:modSpan</gi>,
+                  to encode any kind of modification, which can be typed or described via the <att>rend</att> attribute.<specList>
                      <specDesc key="mod" atts="rend type"/>
                      <specDesc key="modSpan" atts="spanTo"/>
-                  </specList>
-               </p>
+                  </specList> Whether such a modification, for instance a passage striked though, is to be interpreted as a deletion
+                  or as some other kind of markup (e. g. “marked as used”), can then be expressed on a different level.</p>
                <div>
-                  <head>Additions and rewritings</head>
+                  <head>Additions, fixations and clarifications</head>
                   <p>A writer may sometimes rewrite material a second time without significant
                      change and in the same place. We consider this a distinct activity from
                      addition as usually defined because no new textual material results but the
@@ -785,7 +838,22 @@ problem (see .</p> <p>The following discussion-->
                            </ge:rewrite> ...</ge:line>
                      </egXML> The <att>stage</att> attribute used here is discussed further below
                         (<ptr target="#stages"/>). </p>
-                  <!-- TODO: explain ge:redo with a Faust example -->
+                  <p>Additionally to the fixation or clarification of text passages through rewriting, also markup like strokes can
+                     be ink over with the same purpose. For instance, in a draft version of Goethe’s Faust, a passage gets striked
+                     through with pencil during one revision and then during a later revision another time with ink, supposedly to
+                     fixate the deletion.</p> 
+                  <figure>
+                     <graphic url="examples/faust_redo.jpg" />
+                     <head rend="it">Fixation of a deletion in Goethe’s Faust</head>
+                  </figure>   
+                  <p>We propose an element <gi>redo</gi> (the “antagonist” to <gi>undo</gi>, see <ptr target="#undo"/>), that
+                     allows to encode this process as follows:</p>
+                  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                     <ge:line><ge:redo xml:id="redo_3" hand="#g_t" target="#mod_1" cause="fix"/><ge:modSpan xml:id="mod_1"
+                           rend="strikethrough" spanTo="#anchor_1" hand="#g_bl"/>Ihr hagren, triſten, krummgezog<ge:mod
+                           rend="strikethrough">nen</ge:mod>ener Nacken</ge:line>
+                     <ge:line>Wenn ihr nur piepſet iſt die Welt ſchon matt.<anchor xml:id="anchor_1"/></ge:line>
+                  </egXML>
                </div>
                <div>
                   <head>Deletions and marked as used</head>
@@ -1133,7 +1201,7 @@ problem (see .</p> <p>The following discussion-->
                            mus'd</add></subst>, her pinions fann'd</ge:line>
                      </egXML></p>
                </div>
-               <div>
+               <div xml:id="undo">
                   <head>Undoing alterations</head>
                   <p>In some cases an author indicates that an alteration is itself to be altered:
                      for example, a struck through passage may be restored via a dotted underlining,
@@ -2316,11 +2384,31 @@ transposition can also be included in apparatus
                   </attList>
                </elementSpec>
 
+               <classSpec type="atts" ident="att.repeatable">
+                  <attList>
+                     <attDef ident="cause">
+                        <desc>documents the presumed cause of the repeated act of writing.</desc>
+                        <datatype>
+                           <rng:ref name="data.enumerated"/>
+                        </datatype>
+                        <valList type="closed">
+                           <valItem ident="fix">
+                              <desc>repeated for the purpose of fixation</desc>
+                           </valItem>
+                           <valItem ident="unclear">
+                              <desc>repeated to clarify a previously illegible or badly written text or mark</desc>
+                           </valItem>
+                        </valList>
+                     </attDef>
+                  </attList>
+               </classSpec>
+               
                <elementSpec ident="redo" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
                   <desc>Marks up an action represented by an element, that is repeated/ redone.</desc>
                   <classes>
                      <memberOf key="model.pPart.transcriptional"/>
                      <memberOf key="att.global"/>
+                     <memberOf key="att.repeatable"/>
                      <memberOf key="att.spanning"/>
                      <memberOf key="att.transcriptional"/>
                   </classes>
@@ -2343,30 +2431,14 @@ transposition can also be included in apparatus
                   <classes>
                      <memberOf key="model.pPart.transcriptional"/>
                      <memberOf key="model.global"/>
-                     <memberOf key="att.spanning"/>
                      <memberOf key="att.global"/>
+                     <memberOf key="att.repeatable"/>
+                     <memberOf key="att.spanning"/>
                      <memberOf key="att.transcriptional"/>
                   </classes>
                   <content>
                      <rng:ref name="macro.paraContent"/>
                   </content>
-                  <attList>
-                     <attDef ident="cause">
-                        <desc>documents the presumed cause of the rewriting.</desc>
-                        <datatype>
-                           <rng:ref name="data.enumerated"/>
-                        </datatype>
-                        <valList type="closed">
-                           <valItem ident="fix">
-                              <desc>rewriting for the purpose of fixation</desc>
-                           </valItem>
-                           <valItem ident="unclear">
-                              <desc>rewriting to clarify a previously illegible or badly written
-                                 sequence</desc>
-                           </valItem>
-                        </valList>
-                     </attDef>
-                  </attList>
                   <remarks>
                      <p>Multiple rewritings are indicated by nesting one <gi>rewrite</gi> within
                         another. In principle, a rewriting differs from a substitution in that
