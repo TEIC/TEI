@@ -801,10 +801,11 @@
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:for-each>
-      <xsl:apply-templates select="tbx:descripGrp"/>
+      <xsl:apply-templates select="tbx:descripGrp/tbx:descrip"/>
       <xsl:apply-templates select="tbx:note"/>
+      <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
     </xsl:for-each>
-    <xsl:apply-templates select="tbx:descripGrp"/>
+    <xsl:apply-templates select="tbx:descripGrp/tbx:descrip"/>
     <xsl:apply-templates select="tbx:note"/>
 
     <xsl:if test="$magic='true'">
@@ -820,15 +821,15 @@
   </xsl:template>
 
    <xsl:template
-       match="tbx:descripGrp[tbx:descrip/@type='subjectField']"/>
+       match="tbx:descrip[@type='subjectField']"/>
 
-   <xsl:template match="tbx:descripGrp[tbx:descrip/@type='definition']">
+   <xsl:template match="tbx:descrip[@type='definition']">
      <w:p>    
        <w:pPr>
 	 <w:pStyle w:val="Definition"/>
        </w:pPr>
        <xsl:for-each
-	   select="../tbx:descripGrp/tbx:descrip[@type='subjectField']">
+	   select="ancestor::tbx:termEntry/tbx:descripGrp/tbx:descrip[@type='subjectField']">
 	 <w:r>
 	   <w:rPr>
 	     <w:rStyle w:val="domain"/>
@@ -843,16 +844,12 @@
 	   <w:t xml:space='preserve'> </w:t>
 	 </w:r>
        </xsl:for-each>
-       <xsl:for-each select="tbx:descrip[@type='definition']">
-	 <xsl:apply-templates/>
-       </xsl:for-each>
+       <xsl:apply-templates/>
      </w:p>
-     <xsl:apply-templates select="tbx:note"/>
-     <xsl:apply-templates select="tbx:admin"/>
+     <xsl:apply-templates select="../tbx:note"/>
    </xsl:template>
 
-
-   <xsl:template match="tbx:descripGrp[tbx:descrip/@type='example']">
+   <xsl:template match="tbx:descrip[@type='example']">
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">Examplenumbered</xsl:with-param>
       </xsl:call-template>
