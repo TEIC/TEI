@@ -257,7 +257,7 @@
 	<xsl:call-template name="LabelChange">
 	  <xsl:with-param name="What">Term</xsl:with-param>
 	  <xsl:with-param name="N">
-	    <xsl:value-of select="substring-after(@id,'CDB_')"/>
+	    <xsl:value-of select="substring-after(@id,'user_')"/>
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:when>

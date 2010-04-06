@@ -132,7 +132,7 @@
             <xsl:when test="starts-with(../@id,'autoTermNum')">
             </xsl:when>
             <xsl:otherwise>
-                   <xsl:value-of select="substring-after(../@id,'CDB_')"/>:
+                   <xsl:value-of select="substring-after(../@id,'user_')"/>:
             </xsl:otherwise>
          </xsl:choose>
 	  </td>

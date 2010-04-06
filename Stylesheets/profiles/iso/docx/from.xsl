@@ -947,11 +947,11 @@
 	    <xsl:variable name="ID">
 	      <xsl:choose>
 		<xsl:when test="$Style='TermNum'">
-		  <xsl:text>CDB_</xsl:text>
+		  <xsl:text>user_</xsl:text>
 		  <xsl:value-of select="."/>
 		</xsl:when>
 		<xsl:when test="starts-with($Style,'autoTermNum')">
-		  <xsl:value-of select="$Style"/>
+		  <xsl:value-of select="replace($Style)"/>
 		  <xsl:text>_</xsl:text>
 		  <xsl:number level="any" count="w:p[w:pPr/w:pStyle/@w:val=$Style]"/>
 		</xsl:when>

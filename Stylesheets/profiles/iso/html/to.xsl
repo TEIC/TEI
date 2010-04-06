@@ -630,7 +630,7 @@
             </xsl:when>
             <xsl:otherwise>
 	      <p class="TermNum">
-		<xsl:value-of select="substring-after(../@id,'CDB_')"/>
+		<xsl:value-of select="substring-after(../@id,'user_')"/>
 	      </p>
             </xsl:otherwise>
          </xsl:choose>

@@ -775,7 +775,7 @@
 	    </w:pPr>
 	    <w:r>
 	      <w:t>
-		<xsl:value-of select="substring-after(../@id,'CDB_')"/>
+		<xsl:value-of select="substring-after(../@id,'user_')"/>
 	      </w:t>
 	    </w:r>
 	  </w:p>
