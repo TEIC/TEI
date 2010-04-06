@@ -6,7 +6,9 @@
     $Date$
     $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="GRAPHIC" ident="graphic">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+module="core" xml:id="GRAPHIC" ident="graphic">
   <equiv/>
   <desc>indicates the location of an inline graphic, illustration, or figure.</desc>
   <desc version="2007-12-20" xml:lang="kr">인라인 그래픽, 삽화, 또는 도형의 위치를 표시한다.</desc>
@@ -25,7 +27,10 @@
     <memberOf key="att.declaring"/>
   </classes>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+<rng:zeroOrMore>
+<rng:ref name="model.glossLike"/>
+</rng:zeroOrMore>
+<!--    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>-->
   </content>
   <attList>
     <attDef ident="width" usage="opt">
@@ -38,7 +43,7 @@
       <desc version="2007-05-04" xml:lang="es">la anchura de la imagen.</desc>
       <desc version="2007-01-21" xml:lang="it">ampiezza dell'immagine da visualizzare</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+        <rng:ref  name="data.outputMeasurement"/>
       </datatype>
     </attDef>
     <attDef ident="height" usage="opt">
