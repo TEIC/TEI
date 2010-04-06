@@ -807,6 +807,7 @@
     </xsl:for-each>
     <xsl:apply-templates select="tbx:descripGrp/tbx:descrip"/>
     <xsl:apply-templates select="tbx:note"/>
+    <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
 
     <xsl:if test="$magic='true'">
       <xsl:call-template name="block-element">
