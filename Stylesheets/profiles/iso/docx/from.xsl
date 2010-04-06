@@ -1101,15 +1101,8 @@
 			    <termNote type="pronunciation"
 				      xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
 			      <xsl:for-each select="w:r[w:rPr/w:rStyle/@w:val='pronunciation']">
-				<xsl:analyze-string select="." regex="/([^/]+)/">
-				  <xsl:matching-substring>
-<!--<xsl:message>WIN <xsl:value-of select="."/></xsl:message>-->
-				    <xsl:value-of select="regex-group(1)"/>
-				  </xsl:matching-substring>
-				  <xsl:non-matching-substring>
-				    <xsl:value-of select="."/>
-				  </xsl:non-matching-substring>
-				</xsl:analyze-string>
+				    <xsl:value-of 
+					select="replace(replace(.,'/ ',''),' /','')"/>
 			      </xsl:for-each>
 			    </termNote>
 			  </xsl:if>
@@ -1671,7 +1664,7 @@
    </xsl:template>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-   <desc>Remove [] from source</desc></doc>
+   <desc>Remove [SOURCE: ] from source</desc></doc>
 
   <xsl:template match="tbx:admin[@type='entrySource']" mode="pass2">
     <xsl:copy>

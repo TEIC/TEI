@@ -864,9 +864,14 @@
       </xsl:call-template>
    </xsl:template>
 
-   <xsl:template match="tbx:admin">
+   <xsl:template match="tbx:admin[@type='entrySource']">
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">entrySource</xsl:with-param>
+	 <xsl:with-param name="select">
+	   <xsl:text>[SOURCE: </xsl:text>
+	   <xsl:value-of select="."/>
+	   <xsl:text>]</xsl:text>
+	 </xsl:with-param>
       </xsl:call-template>
    </xsl:template>
 
@@ -928,7 +933,9 @@
 	  <w:b w:val="0"/>
 	  </w:rPr>
 	  <w:t>
+	    <xsl:text>/ </xsl:text>
 	    <xsl:value-of select="."/>
+	    <xsl:text> /</xsl:text>
 	  </w:t>
 	</w:r>
       </xsl:when>
