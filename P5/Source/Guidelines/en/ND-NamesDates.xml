@@ -144,6 +144,14 @@ Examples are given below.</p>
 share the following attributes:
 <specList><specDesc key="att.datable.w3c" atts="period when notBefore notAfter from to"/></specList>
 </p>
+<p>The <att>when</att> attribute is used to specify a normalised form
+for any temporal expression, independently of how it is rfepresented
+in the text, as in the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NDORG-eg-34"><date when="1807-06-09">June 9th</date> The
+period is approaching which will terminate my present
+copartnership. On the <date when="1808-01-01">1st Jany.</date> next,
+it expires by its own limitation.</egXML>
+</p>
 <p>The <att>period</att> attribute provides a convenient way of
 associating an event or date with a named period. Its value is a
 pointer which should indicate some other element where the period
@@ -2536,18 +2544,17 @@ The alternative reading of this phrase could be encoded as follows:
    on <date>9th December</date>
  </date></egXML>
  </p>
-<p>Where more complex or ambiguous expressions are involved, and
-where it is desirable to make more explicit  the interpretive
-processes required, the feature
-structure notation described in chapter <ptr target="#FS"/> is
-recommended.  Consider, for example, the following
+<p>Where more complex or ambiguous expressions are involved, and where
+it is desirable to make more explicit the interpretive processes
+required, the feature structure notation described in chapter <ptr
+target="#FS"/> may be used.  Consider, for example, the following
 temporal expression which occurs in the <title>Scottish Temperance
 Review</title> of August 1850, referring to the summer holiday known
-in Glasgow simply as <q>the Fair</q>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Not only is the city,
-<date ana="#gf50">during the Fair</date>, a horrible nucleus of
-immorality and wickedness; it sends our multitudes to pollute and
-demoralize the country.</egXML>
+in Glasgow simply as <q>the Fair</q>: <egXML
+xmlns="http://www.tei-c.org/ns/Examples">Not only is the city, <date
+ana="#gf50">during the Fair</date>, a horrible nucleus of immorality
+and wickedness; it sends our multitudes to pollute and demoralize the
+country.</egXML>
 
 </p>
 <p>For the definition of the <att>ana</att> attribute, see chapter
@@ -2570,7 +2577,9 @@ structure of type <val>date-analysis</val>:
    <f name="to-value"><string>1850-09-19</string></f>
 </fs></egXML>
 For further discussion of  feature structure representation see chapter <ptr target="#FS"/>.  </p></div>
+
 <div type="div3" xml:id="NDDATEA"><head>Absolute Dates and Times</head>
+
 <p>The following are examples of absolute temporal expressions.</p>
 <p>
  <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NDDATEA-eg-169">The university's view
@@ -2580,12 +2589,13 @@ Commons debate of <date when="1775-10-26">26 October 1775</date></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NDDATEA-eg-170"><date when="1993-05-14">Friday, 14 May 1993</date></egXML>
 <!-- the headline on the Independent Newspaper on that day -->
 </p>
-<p>It may be useful to categorize a temporal expression which is given in terms of a named event, such as a public holiday for dates, or a named time such as <q>tea time</q> or
-<q>matins</q>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">In New York,
-<date type="occasion" when="--01-01">New Years Day</date> is the 
-quietest of holidays, <date when="--07-04" type="occasion">Independence 
-Day</date> the most turbulent.</egXML>
+<p>It may be useful to categorize a temporal expression which is given
+in terms of a named event, such as a public holiday for dates, or a
+named time such as <q>tea time</q> or <q>matins</q>: <egXML
+xmlns="http://www.tei-c.org/ns/Examples">In New York, <date
+type="occasion" when="--01-01">New Years Day</date> is the quietest of
+holidays, <date when="--07-04" type="occasion">Independence Day</date>
+the most turbulent.</egXML>
 </p>
 <!-- Example needs to be re-worked 
 <p>These components may be applied to dates using any calendar system
@@ -2625,16 +2635,37 @@ described use a standard format defined by <title>XML Schema Part 2:
 Datatypes Second Edition</title>. This format is widely accepted and
 has significant software support. It is essentially a profile of ISO
 8601 <title>Data elements and interchange formats — Information
-interchange — Representation of dates and times</title>. The ISO
-standard provides formats not available in the W3C recommendation. For
+interchange — Representation of dates and times</title>. The full ISO
+standard provides formats not available in the W3C recommendation, for
 example, the capability to refer to a date by its ordinal date or week
-date, or to a calendar week. In cases where it is desirable to use
-these more specialized formats, this module provides a corresponding
-additional class of attributes for them:
+date, or to refer to a century. It also provides ways of indicating
+duration and range. </p>
+
+<p>When this module is included in a schema, the following additional
+attributes are provided:
 <specList>
   <specDesc key="att.datable.iso" atts="when-iso notBefore-iso notAfter-iso from-iso to-iso"/>
   <specDesc key="att.duration.iso" atts="dur-iso"/>
 </specList>
+These attributes may be used in preference to their W3C equivalent
+when it is necessary to provide a normalised value in some form not
+supported by the W3C attributes. For example,
+a century date in the W3C format must be expressed as a range, using
+the <att>from</att> together with either the<att>to</att> attributes, or the
+<att>dur</att> (duration) attribute:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date from="1301" to="1400">fourteenth century</date>
+<date from="1301" dur="1Y">fourteenth century</date>
+</egXML>
+
+With the attribute <att>when-iso</att>, however, it is possible to
+express the same normalised value in any of the following ways:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><date when-iso="13">fourteenth century</date>
+<date when-iso="1301/1400">fourteenth century</date>
+<date when-iso="1301/P1Y">fourteenth century</date>
+</egXML>
+<!--
+
 These attributes rely on the following datatype macros:
 <specList>
   <specDesc key="data.temporal.iso"/>
@@ -2649,11 +2680,8 @@ conforming to a subset of the possible formats defined by the relevant
 international standard (ISO 8601) as profiled by <title>XML Schema
 Part 2: Datatypes Second Edition</title>.</p>
 
-<p>For example: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NDORG-eg-34"><date when="1807-06-09">June 9th</date> The
-period is approaching which will terminate my present
-copartnership. On the <date when="1808-01-01">1st Jany.</date> next,
-it expires by its own limitation.</egXML>
-<!-- Philadelphia Merchant: The Diary of TP Cope, 210 -->
+-->
+
  </p>
 
 <specGrp>
