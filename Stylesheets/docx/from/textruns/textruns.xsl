@@ -57,7 +57,8 @@
       <xsl:variable name="commentN" select="@w:id"/>
       <xsl:for-each
 	  select="document(concat($word-directory,'/word/comments.xml'))/w:comments/w:comment[@w:id=$commentN]">
-	<note place="comment" resp="{translate(@w:author,' ','_')}" when="{@w:date}">
+	<note place="comment" resp="{translate(@w:author,' ','_')}">
+	  <date when="{@w:date}"/>
 	  <xsl:apply-templates/>
 	</note>
       </xsl:for-each>

@@ -583,25 +583,15 @@
                 <xsl:when test="current-grouping-key()=6">
                     <xsl:call-template name="tocSection"/>
                 </xsl:when>
-
                 <!-- it is not a defined grouping .. apply templates -->
                 <xsl:otherwise>
-<!--
-<xsl:message>Style <xsl:value-of select="w:pPr/w:pStyle/@w:val"/> for <xsl:value-of select="."/></xsl:message>
--->
                     <xsl:apply-templates select="." mode="paragraph"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each-group>
     </xsl:template>
 
-    <xsl:template
-	match="w:p[w:pPr/w:pStyle/@w:val='nonVerbalRepresentation']">
-      <p rend="nonVerbalRepresentation">
-	<xsl:apply-templates/>
-      </p>
-    </xsl:template>
-            
+         
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
 	override handling of runs 
@@ -917,7 +907,7 @@
 	objects in a term entry</p>
 	<ul>
 	  <li>TermNum</li>
-	  <li>AutoTermNum</li>
+	  <li>autoTermNum</li>
 	  <li>Example</li>
 	  <li>Example numbered</li>
 	  <li>symbol</li>
@@ -1011,6 +1001,16 @@
 		  </descrip>
 		</descripGrp>
 	      </xsl:for-each>
+	      <xsl:if
+		  test="current-group()[w:pPr/w:pStyle/@w:val='nonVerbalRepresentation']">
+		  <descripGrp>
+		  <descrip type="figure">
+		    <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='nonVerbalRepresentation'] except .">
+		      <xsl:apply-templates/>
+		    </xsl:for-each>
+		  </descrip>
+		</descripGrp>
+	      </xsl:if>
 	      <langSet>
 		<xsl:attribute name="xml:lang">
 		  <xsl:choose>
@@ -1044,6 +1044,7 @@
 		    <xsl:when test="$Thing='Definition'"/>
 		    <xsl:when test="$Thing='Example numbered'"/>
 		    <xsl:when test="$Thing='Example'"/>
+		    <xsl:when test="$Thing='nonVerbalRepresentation'"/>
 		    <xsl:when test="$Thing='noteTermEntry'"/>
 		    <xsl:when test="$Thing='noteTerm'"/>
 		    <xsl:when test="$Thing='noteSymbol'"/>
@@ -1148,6 +1149,11 @@
       </termNote>
     </xsl:template>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>  
+	inline style 'number' turns into a <gi>termNote</gi>
+      </desc>
+    </doc>
 
     <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='number']"  mode="inTerm">
       <termNote type="grammaticalNumber" xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
@@ -1155,21 +1161,27 @@
       </termNote>
     </xsl:template>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>  
+	Special check to see if a cell starts with a terminology entry
+      </desc>
+    </doc>
     <xsl:template name="cellContents">
       <xsl:choose>
-	        <xsl:when test="w:p/w:pPr/w:pStyle[@w:val='TermNum']">
-	           <xsl:for-each-group select="w:p" group-by="1">
-	              <xsl:call-template name="termsAndDefinitionsSection"/>
-	           </xsl:for-each-group>
-	        </xsl:when>
-	        <xsl:when test="w:p/w:pPr/w:pStyle[starts-with(@w:val,'AutoTermNum')]">
-	           <xsl:for-each-group select="w:p" group-by="1">
-	              <xsl:call-template name="termsAndDefinitionsSection"/>
-	           </xsl:for-each-group>
-	        </xsl:when>
-	        <xsl:otherwise>
-	           <xsl:apply-templates select="w:p" mode="inTable"/>
-	        </xsl:otherwise>
+	<xsl:when test="w:p/w:pPr/w:pStyle[@w:val='TermNum']">
+	  <xsl:for-each-group select="w:p" group-by="1">
+	    <xsl:call-template name="termsAndDefinitionsSection"/>
+	  </xsl:for-each-group>
+	</xsl:when>
+	<xsl:when
+	    test="w:p/w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]">
+	  <xsl:for-each-group select="w:p" group-by="1">
+	    <xsl:call-template name="termsAndDefinitionsSection"/>
+	  </xsl:for-each-group>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates select="w:p" mode="inTable"/>
+	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
 
@@ -1590,7 +1602,13 @@
     <desc>Zap spurious page break </desc></doc>
     <xsl:template match="tei:body/tei:p[count(*)=1 and tei:pb]" mode="pass2"/>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>End of bookmark not needed </desc></doc>
     <xsl:template match="w:bookmarkEnd" mode="pass0"/>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Grammatical errors discarded</desc></doc>
+    <xsl:template match="w:proofErr" mode="pass0"/>
 
     <xsl:template match="tei:div[@type='termsAndDefinitions']" mode="pass2">
       <xsl:copy>
@@ -1854,8 +1872,10 @@
 	  <xsl:otherwise>
 	    <w:p>
 	      <iso:error>
-		<xsl:text>Word Style </xsl:text>
+		<xsl:text>Word Style [</xsl:text>
 		<xsl:value-of select="$old"/>
+		<xsl:text>] on </xsl:text>
+		<xsl:value-of select="name()"/>
 		<xsl:text> not supported</xsl:text>
 	      </iso:error>
 	    </w:p>
@@ -1882,21 +1902,25 @@
     </xsl:template>
 
     <xsl:template match="iso:error" mode="pass2">
-      <note place="comment" resp="ISO validator">
+      <note place="comment" resp="ISO_validator">
+	<date>
+	  <xsl:attribute name="when">
+	    <xsl:value-of select="teidocx:whatsTheDate()"/>
+	  </xsl:attribute>
+	</date>
 	<xsl:value-of select="."/>
       </note>
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Handles a w:object by generating an error</p>
+         <p>Handles a w:object or w:pict by generating an error</p>
       </desc>
    </doc>
-    <xsl:template match="w:object">
-      <hi rend="color(red)">Invalid Word &lt;object&gt; found<iso:error>Invalid Word object found</iso:error></hi>
-    </xsl:template>
-    <xsl:template match="w:pict">
-      <hi rend="color(red)">Invalid Word &lt;pict&gt; found<iso:error>Invalid Word object found</iso:error></hi>
+
+    <xsl:template match="w:object|w:pict" mode="pass0">
+      <hi rend="color(red)">Invalid Word <xsl:value-of select="name()"/> found
+      <iso:error>Invalid Word <xsl:value-of select="name()"/> found</iso:error></hi>
     </xsl:template>
 
     <xsl:template name="identifyChange">

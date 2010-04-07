@@ -69,7 +69,17 @@
 	<xsl:result-document href="{concat($word-directory,'/word/comments.xml')}" standalone="yes">
 	  <w:comments>
 	    <xsl:for-each select="key('COMMENTS',1)">
-	      <w:comment w:id="{position()-1}" w:author="{@resp}" w:date="{@when}">
+	      <w:comment w:id="{position()-1}" w:author="{@resp}">
+		<xsl:attribute name="w:date">
+		  <xsl:choose>
+		  <xsl:when test="tei:date/@when">
+		    <xsl:value-of select="tei:date/@when"/>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:value-of select="teidocx:whatsTheDate()"/>
+		  </xsl:otherwise>
+		  </xsl:choose>
+		</xsl:attribute>
 		<w:p>
 		  <w:pPr>
 		  <w:pStyle w:val="CommentText"/></w:pPr>
@@ -81,7 +91,7 @@
 		  </w:r>
 		  <w:r>
 		    <w:t>
-		      <xsl:apply-templates/>
+		      <xsl:value-of select="."/>
 		    </w:t>
 		  </w:r>
 		</w:p>

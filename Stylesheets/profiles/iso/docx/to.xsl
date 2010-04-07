@@ -856,6 +856,12 @@
       </xsl:call-template>
    </xsl:template>
 
+   <xsl:template match="tbx:descrip[@type='figure']">
+      <xsl:call-template name="block-element">
+         <xsl:with-param name="style">nonVerbalRepresentation</xsl:with-param>
+      </xsl:call-template>
+   </xsl:template>
+
    <xsl:template match="tbx:termEntry/tbx:note">
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">
