@@ -124,24 +124,47 @@
     
     <xsl:function name="teidocx:is-heading" as="xs:boolean">
       <xsl:param name="p"/>
+      <xsl:variable name="s" select="$p/w:pPr/w:pStyle/@w:val"/>
       <xsl:choose>
-	<xsl:when test="$p[starts-with(w:pPr/w:pStyle/@w:val,'heading')]">true</xsl:when>
-	<xsl:when test="$p[starts-with(w:pPr/w:pStyle/@w:val,'Heading')]">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$ANNEX]">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$a2]">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$a3]">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$a4]">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$a5]">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$a6]">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val='p2']">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val='p3']">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val='p4']">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val='p5']">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val='p6']">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$BibliographyHeading]">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$ForewordHeading]">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$IntroductionHeading]">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val=$zzIntroductionHeading]">true</xsl:when>
+	<xsl:when test="$s=''">false</xsl:when>
+	<xsl:when test="$s=$ANNEX">true</xsl:when>
+	<xsl:when test="$s=$a2">true</xsl:when>
+	<xsl:when test="$s=$a3">true</xsl:when>
+	<xsl:when test="$s=$a4">true</xsl:when>
+	<xsl:when test="$s=$a5">true</xsl:when>
+	<xsl:when test="$s=$a6">true</xsl:when>
+	<xsl:when test="$s='p2'">true</xsl:when>
+	<xsl:when test="$s='p3'">true</xsl:when>
+	<xsl:when test="$s='p4'">true</xsl:when>
+	<xsl:when test="$s='p5'">true</xsl:when>
+	<xsl:when test="$s='p6'">true</xsl:when>
+	<xsl:when test="$s='Heading1'">true</xsl:when>
+	<xsl:when test="$s='Heading2'">true</xsl:when>
+	<xsl:when test="$s='Heading3'">true</xsl:when>
+	<xsl:when test="$s='Heading4'">true</xsl:when>
+	<xsl:when test="$s='Heading5'">true</xsl:when>
+	<xsl:when test="$s='Heading6'">true</xsl:when>
+	<xsl:when test="$s='Heading7'">true</xsl:when>
+	<xsl:when test="$s='Heading8'">true</xsl:when>
+	<xsl:when test="$s='Heading9'">true</xsl:when>
+	<xsl:when test="$s='termHeading2'">true</xsl:when>
+	<xsl:when test="$s='termHeading3'">true</xsl:when>
+	<xsl:when test="$s='termHeading4'">true</xsl:when>
+	<xsl:when test="$s='termHeading5'">true</xsl:when>
+	<xsl:when test="$s='termHeading6'">true</xsl:when>
+	<xsl:when test="$s='heading 1'">true</xsl:when>
+	<xsl:when test="$s='heading 2'">true</xsl:when>
+	<xsl:when test="$s='heading 3'">true</xsl:when>
+	<xsl:when test="$s='heading 4'">true</xsl:when>
+	<xsl:when test="$s='heading 5'">true</xsl:when>
+	<xsl:when test="$s='heading 6'">true</xsl:when>
+	<xsl:when test="$s='heading 7'">true</xsl:when>
+	<xsl:when test="$s='heading 8'">true</xsl:when>
+	<xsl:when test="$s='heading 9'">true</xsl:when>
+	<xsl:when test="$s=$BibliographyHeading">true</xsl:when>
+	<xsl:when test="$s=$ForewordHeading">true</xsl:when>
+	<xsl:when test="$s=$IntroductionHeading">true</xsl:when>
+	<xsl:when test="$s=$zzIntroductionHeading">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:function>

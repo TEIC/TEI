@@ -464,6 +464,12 @@
                     <xsl:apply-templates/>
                 </head>
             </xsl:when>
+            <xsl:when test="contains($Style,'termHeading')">
+                <xsl:attribute name="type">termHeading</xsl:attribute>
+                <head>
+                    <xsl:apply-templates/>
+                </head>
+            </xsl:when>
             <xsl:when test="$Style=$BibliographyHeading">
                 <xsl:attribute name="type">bibliography</xsl:attribute>
                 <head>

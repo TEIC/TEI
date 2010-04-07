@@ -106,7 +106,7 @@
       <xsl:value-of select="@rend"/>
    </xsl:template>
     <xsl:template match="tbx:descrip" mode="get-style">Definition</xsl:template>
-    <xsl:template match="tbx:note" mode="get-style">termNote</xsl:template>
+    <xsl:template match="tbx:note" mode="get-style">noteTermEntry</xsl:template>
     <xsl:template match="tei:hi[@rend='language']" mode="get-style">
       <xsl:text>language</xsl:text>
     </xsl:template>
@@ -862,7 +862,7 @@
       </xsl:call-template>
    </xsl:template>
 
-   <xsl:template match="tbx:termEntry/tbx:note">
+   <xsl:template match="tbx:termEntry/tbx:note|tbx:langset/tbx:note">
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">
 	   <xsl:text>noteTermEntry</xsl:text>
