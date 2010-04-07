@@ -547,7 +547,17 @@
              if (w:pPr/w:pStyle/@w:val='termAdmitted') then 3 else
              if (w:pPr/w:pStyle/@w:val='termDeprecated') then 3 else
              if (w:pPr/w:pStyle/@w:val='termPreferred') then 3 else
-             if (w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]) then 3 else
+	     if (w:pPr/w:pStyle/@w:val='autoTermNum1') then 3 else
+	     if (w:pPr/w:pStyle/@w:val='autoTermNum2') then 3 else
+	     if (w:pPr/w:pStyle/@w:val='autoTermNum3') then 3 else
+	     if (w:pPr/w:pStyle/@w:val='autoTermNum4') then 3 else
+	     if (w:pPr/w:pStyle/@w:val='autoTermNum5') then 3 else
+	     if (w:pPr/w:pStyle/@w:val='autoTermNum6') then 3 else
+	     if (w:pPr/w:pStyle/@w:val='autoTermNumA2') then 3 else
+	     if (w:pPr/w:pStyle/@w:val='autoTermNumA3') then 3 else
+	     if (w:pPr/w:pStyle/@w:val='autoTermNumA4') then 3 else
+	     if (w:pPr/w:pStyle/@w:val='autoTermNumA5') then 3 else
+	     if (w:pPr/w:pStyle/@w:val='autoTermNumA6') then 3 else
 	     if (starts-with(w:pPr/w:pStyle/@w:val,'toc')) then 6 else
 	     position() + 100">
 
@@ -576,6 +586,9 @@
 
                 <!-- it is not a defined grouping .. apply templates -->
                 <xsl:otherwise>
+<!--
+<xsl:message>Style <xsl:value-of select="w:pPr/w:pStyle/@w:val"/> for <xsl:value-of select="."/></xsl:message>
+-->
                     <xsl:apply-templates select="." mode="paragraph"/>
                 </xsl:otherwise>
             </xsl:choose>
@@ -951,7 +964,7 @@
 		  <xsl:value-of select="."/>
 		</xsl:when>
 		<xsl:when test="starts-with($Style,'autoTermNum')">
-		  <xsl:value-of select="replace($Style)"/>
+		  <xsl:value-of select="$Style"/>
 		  <xsl:text>_</xsl:text>
 		  <xsl:number level="any" count="w:p[w:pPr/w:pStyle/@w:val=$Style]"/>
 		</xsl:when>
