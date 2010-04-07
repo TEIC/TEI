@@ -1506,7 +1506,7 @@ functions. For well-recognized and documented public classification
 schemes, such as Dewey or other published descriptive thesauri, it
 contains simply a bibliographic citation indicating where a full
 description of a particular taxonomy may be found.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><taxonomy xml:id="ddc12">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><taxonomy xml:id="DDC12">
   <bibl>
     <title>Dewey Decimal Classification</title>
     <edition>Abridged Edition 12</edition>
@@ -1828,20 +1828,19 @@ such keywords should be taken from a recognized source, such as the
 British Library/Library of Congress Cataloguing in Publication data in
 the case of printed books, or a published thesaurus appropriate to the
 field.</p>
-<p>The <att>scheme</att> attribute should be used to indicate the source
-of the keywords used.  This is done by supplying the value used for the
-<att>xml:id</att> attribute of a <gi>taxonomy</gi> element within which
-further details of the source concerned may be found.  The
-<gi>taxonomy</gi> element occurs in the <gi>classDecl</gi> part of the
-encoding description within the TEI Header and is described in
-section <ptr target="#HD55"/>. For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><keywords scheme="#lcsh">
-   <list>
-      <item>Data base management</item>
-      <item>SQL (Computer program language)</item>
-   </list>
-</keywords></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><keywords scheme="#lcsh">
+<p>The <att>scheme</att> attribute should be used to indicate the
+source of the keywords used.  If the keywords are taken from some
+externally defined authority which is available online, this attribute
+should point directly to it, as in the following examples:
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <keywords scheme="http://classificationweb.net">
+        <list>
+          <item>Babbage, Charles</item>
+          <item>Mathematicians - Great Britain - Biography</item>
+        </list>
+      </keywords>
+    </egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><keywords scheme="http://id.loc.gov/authorities/about.html#lcsh">
   <list>
     <item>English literature -- History and criticism -- Data processing.</item>
     <item>English literature -- History and criticism -- Theory, etc.</item>
@@ -1849,26 +1848,51 @@ section <ptr target="#HD55"/>. For example:
     <item>Style, Literary -- Data processing.</item>
   </list>
 </keywords></egXML>
+</p>
+<p>If the authority file is not available online, but is generally
+recognized and commonly cited, a bibliographic description for it should
+be supplied within the <gi>taxonomy</gi> element described in section
+<ptr target="#HD55"/>; the <att>source</att> attribute may then
+reference that <gi>taxonomy</gi> element by means of its identifier in
+the usual way:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><keywords scheme="#welch">
+<term>ceremonials</term>
+<term>fairs</term>
+<term>street life</term>
+</keywords>
+<!-- elsewhere in the document -->
+<taxonomy xml:id="welch">
+  <bibl>
+    <title>Notes on London Municipal Literature, and a Suggested
+    Scheme for Its Classification</title>
+<author>Charles Welch</author>
+<edition>1895</edition>
+  </bibl>
+</taxonomy>
+</egXML>
+</p><p>Alternatively, if the keyword vocabulary itself is locally defined,
+the source attribute will point to the local definition, which will
+typically be held in a <gi>taxonomy</gi> element within the
+<gi>classDecl</gi> part of the encoding description (see section <ptr
+target="#HD55"/>).
 <!-- LC subject tracings on R Potter, ed., Literary           -->
 	<!-- Computing and Literary Criticism:  Theoretical and       -->
 	<!-- Practical Essays on Theme and Rhetoric (Philadelphia,    -->
 	<!-- U Penn, 1989), from CIP data on title overleaf.
 corresp="#HD43-eg-123" but I think we dont need to cite source          --></p>
-<p>The <gi>classCode</gi> element
-also categorizes an individual text, by supplying a numerical or other
-code used in a recognized classification scheme, such as the Dewey
-Decimal Classification. The <att>scheme</att> attribute is used to
-indicate the source of the classification scheme: this may be a
-pointer of any kind, either to a TEI element, likely in the current document, as
-in the <gi>keywords</gi> examples above, or to some canonical source
-for the scheme, as in the following example:
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><classCode scheme="http://www.example.com/udc">005.756</classCode> <classCode scheme="#lc">QA76.9</classCode></egXML>
-<!-- subject classifications from Date, Guide to SQL Std  corresp="#HD43-eg-124"     -->
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><classCode scheme="http://www.example.com/udc">820.285</classCode>
+<p>The <gi>classCode</gi> element also categorizes an individual text,
+by supplying a numerical or other code rather than descriptive
+terms. Such codes constitute a recognized classification scheme, such
+as the Dewey Decimal Classification. The <att>scheme</att> attribute
+is used to indicate the source of the classification scheme in the
+same way as for keywords: this may
+be a pointer of any kind, either to a TEI element, possibly in the
+current document, as in the <gi>keywords</gi> examples above, or to
+some canonical source for the scheme, as in the following example:
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><classCode
+scheme="http://www.udcc.org/udcsummary/php/index.php">005.756</classCode> 
 </egXML>
-<!-- subject classifications from Potter, Lit Comp & Lit Crit corresp="#HD43-eg-125"--></p>
-<!-- do we actually know where the canonical source to UDC is?-->
-<!-- If so, shouldn't we use it instead of example.com? -->
+</p>
 <p>The <gi>catRef</gi> element categorizes an individual text by
 pointing to one or more <gi>category</gi> elements.  The
 <gi>category</gi> element (which is fully described in section <ptr target="#HD55"/>) holds information about a particular classification or
