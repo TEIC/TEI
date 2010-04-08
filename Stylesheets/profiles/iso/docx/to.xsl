@@ -1014,12 +1014,6 @@
         <!-- numbering file -->
 	<xsl:call-template name="write-docxfile-numbering-definition"/>
 
-        <!-- footnotes file -->
-	<xsl:call-template name="write-docxfile-footnotes-file"/>
-
-        <!-- endnotes file -->
-	<xsl:call-template name="write-docxfile-endnotes-file"/>
-
         <!-- main relationships -->
 	<xsl:call-template name="write-docxfile-main-relationships"/>
 
@@ -1035,6 +1029,12 @@
         <!-- app files -->
         <xsl:call-template name="write-docxfile-docprops-app"/>
       </xsl:if>
+
+        <!-- footnotes file -->
+	<xsl:call-template name="write-docxfile-footnotes-file"/>
+
+        <!-- endnotes file -->
+	<xsl:call-template name="write-docxfile-endnotes-file"/>
 
       <!-- comments file -->
       <xsl:call-template name="write-docxfile-comments-file"/>
