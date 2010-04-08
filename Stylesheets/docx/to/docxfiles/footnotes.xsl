@@ -58,6 +58,9 @@
     </desc>
    </doc>
     <xsl:template name="write-docxfile-footnotes-file">
+      <xsl:if test="$debug='true'">
+	<xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/word/footnotes.xml')"/>    </xsl:message>
+      </xsl:if>
         <xsl:result-document href="{concat($word-directory,'/word/footnotes.xml')}">
             <w:footnotes>
                 <w:footnote w:type="separator" w:id="0">

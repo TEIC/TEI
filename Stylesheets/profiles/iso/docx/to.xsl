@@ -1079,8 +1079,7 @@
 
     <xsl:template name="write-docxfile-docprops-custom">
 	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/docProps/newcustom.xml')"/>
-         </xsl:message>
+	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/docProps/newcustom.xml')"/>    </xsl:message>
 	     </xsl:if>
 
         <xsl:result-document href="{concat($word-directory,'/docProps/newcustom.xml')}" standalone="yes">
