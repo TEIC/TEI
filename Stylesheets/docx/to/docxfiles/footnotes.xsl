@@ -63,7 +63,7 @@
       </xsl:if>
         <xsl:result-document href="{concat($word-directory,'/word/footnotes.xml')}">
             <w:footnotes>
-                <w:footnote w:type="separator" w:id="0">
+                <w:footnote w:type="separator" w:id="-1">
                     <w:p>
                         <w:pPr>
                             <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
@@ -73,7 +73,7 @@
                         </w:r>
                     </w:p>
                 </w:footnote>
-                <w:footnote w:type="continuationSeparator" w:id="1">
+                <w:footnote w:type="continuationSeparator" w:id="0">
                     <w:p>
                         <w:pPr>
                             <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>

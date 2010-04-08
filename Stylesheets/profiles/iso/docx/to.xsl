@@ -69,7 +69,7 @@
     <xsl:param name="word-directory">..</xsl:param>
     <xsl:param name="tei-directory">./</xsl:param>
     <xsl:param name="debug">false</xsl:param>   
-    <xsl:param name="magic">false</xsl:param>   
+    <xsl:param name="magic">true</xsl:param>   
     <xsl:param name="numberFormat">fr</xsl:param>
     
     <xsl:variable name="orig" select="/"/>
@@ -871,7 +871,6 @@
 
     <xsl:if test="$magic='true'">
       <xsl:call-template name="block-element">
-	<xsl:with-param name="style">egXML</xsl:with-param>
 	<xsl:with-param name="select">
 	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
 	    <xsl:copy-of select="."/>

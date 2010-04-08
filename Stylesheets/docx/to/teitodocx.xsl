@@ -892,14 +892,9 @@
         <xsl:param name="simple">false</xsl:param>
         <xsl:param name="highlight"/>
         <xsl:call-template name="block-element">
-            <xsl:with-param name="style">
-                <xsl:choose>
-                    <xsl:when test="ancestor::tei:cell">egXMLTable</xsl:when>
-                    <xsl:otherwise>egXML</xsl:otherwise>
-                </xsl:choose>
-            </xsl:with-param>
             <xsl:with-param name="select">
-                <tei:p>
+                <tei:p rend="Special" 
+		       html:style="font-family:Courier New; text-align:left;" >
                     <xsl:call-template name="create-egXML-section"/>
                 </tei:p>
             </xsl:with-param>
