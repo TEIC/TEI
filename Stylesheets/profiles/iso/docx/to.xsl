@@ -248,8 +248,9 @@
     <desc> Process plain paragraph </desc></doc>
 
     <xsl:template match="tei:p">
-      <xsl:call-template name="block-element">
-	<xsl:with-param name="pPr">
+      <xsl:param name="style"/>
+      <xsl:param name="pPr"/>
+      <xsl:variable name="pstyle">
 	  <w:pPr>
 	    <xsl:if test="@iso:spaceBefore
 			  or @iso:spaceAfter">
@@ -270,20 +271,27 @@
 		</xsl:if>
 	    </w:spacing>
 	    </xsl:if>
-	    <xsl:if test="@rend">
-	      <w:pStyle>
-		<xsl:attribute name="w:val">
-		  <xsl:call-template name="getStyleName">
-		    <xsl:with-param name="in" select="@rend"/>
-		  </xsl:call-template>
-		</xsl:attribute>
-	      </w:pStyle>
-	    </xsl:if>
+	    <xsl:choose>
+	      <xsl:when test="@rend">
+		<w:pStyle>
+		  <xsl:attribute name="w:val">
+		    <xsl:call-template name="getStyleName">
+		      <xsl:with-param name="in" select="@rend"/>
+		    </xsl:call-template>
+		  </xsl:attribute>
+		</w:pStyle>
+	      </xsl:when>
+	      <xsl:when test="string-length($style) &gt; 0">
+		<w:pStyle w:val="{$style}"/>
+	      </xsl:when>
+	    </xsl:choose>
 	    <xsl:if test="@iso:align">
 	      <w:jc w:val="{@iso:align}"/>
 	    </xsl:if>
 	  </w:pPr>
-	</xsl:with-param>
+      </xsl:variable>
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="pPr" select="$pstyle"/>
       </xsl:call-template>
     </xsl:template>
 
@@ -811,7 +819,7 @@
 
     <xsl:if test="$magic='true'">
       <xsl:call-template name="block-element">
-	<xsl:with-param name="style">Special</xsl:with-param>
+	<xsl:with-param name="style">egXML</xsl:with-param>
 	<xsl:with-param name="select">
 	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
 	    <xsl:copy-of select="."/>

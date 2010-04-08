@@ -270,8 +270,8 @@
          <p>Template used to process block elements:</p>
          <p> Template used to process block elements: 
 	 <ul>
- 	    <li><b>style</b>: A style for all the w:ps</li>
-            <li><b>pPr</b>: An entire pPr element to use </li>
+ 	    <li><b>style</b>: A style for all the <gi>w:p</gi>s</li>
+            <li><b>pPr</b>: An entire <gi>pPr</gi> element to use </li>
 	    <li><b>nop</b>: a w:p has already been created and no new w:p is to be created </li>
 	    <li><b>bookmark-id</b>: if present in conjunction with bookmark-name, a bookmark is created around the current element </li>
 	    <li><b>bookmark-name</b>: see bookmark-id </li>
@@ -283,7 +283,7 @@
         <xsl:param name="style"/>
         <xsl:param name="select" select="."/>
         <xsl:param name="pPr"/>
-        <xsl:param name="nop"/>
+        <xsl:param name="nop">false</xsl:param>
         <xsl:param name="bookmark-id"/>
         <xsl:param name="bookmark-name"/>
 
