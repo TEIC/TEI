@@ -69,7 +69,7 @@
     <xsl:param name="word-directory">..</xsl:param>
     <xsl:param name="tei-directory">./</xsl:param>
     <xsl:param name="debug">false</xsl:param>   
-    <xsl:param name="magic">true</xsl:param>   
+    <xsl:param name="magic">false</xsl:param>   
     <xsl:param name="numberFormat">fr</xsl:param>
     
     <xsl:variable name="orig" select="/"/>
@@ -879,6 +879,13 @@
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
+
+   <xsl:template  match="tbx:term">
+     <xsl:if test="../tbx:termNote[@type='administrativeStatus']='deprecatedTerm-admn-sts'">
+       <w:r><w:t xml:space='preserve'>DEPRECATED: </w:t></w:r>
+     </xsl:if>
+     <xsl:apply-templates/>
+   </xsl:template>
 
    <xsl:template
        match="tbx:descrip[@type='subjectField']"/>
