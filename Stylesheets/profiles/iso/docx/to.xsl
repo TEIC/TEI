@@ -5,7 +5,7 @@
                 xmlns:its="http://www.w3.org/2005/11/its"
                 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
-                xmlns:o="urn:schemas-microsoft-com:office:office"
+                xmlns:o="urn:schemas-pmicrosoft-com:office:office"
                 xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
                 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
@@ -20,6 +20,7 @@
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:html="http://www.w3.org/1999/xhtml"                
                 version="2.0"
                 exclude-result-prefixes="teidocx cals ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn its">
     <!-- import conversion style -->
@@ -280,6 +281,11 @@
 		    </xsl:call-template>
 		  </xsl:attribute>
 		</w:pStyle>
+	           <xsl:if test="@rend='Special'">
+	               <xsl:call-template name="undoSpecialStyle">
+	                   <xsl:with-param name="css"><xsl:value-of select="@html:style"/></xsl:with-param>
+	               </xsl:call-template>
+	           </xsl:if>
 	      </xsl:when>
 	      <xsl:when test="string-length($style) &gt; 0">
 		<w:pStyle w:val="{$style}"/>
@@ -293,6 +299,52 @@
       <xsl:call-template name="block-element">
 	<xsl:with-param name="pPr" select="$pstyle"/>
       </xsl:call-template>
+    </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+        <desc>Turn html:style attribute back into Word styles</desc></doc>
+    
+    <xsl:template name="undoSpecialStyle">
+        <xsl:param name="css"/>
+        <xsl:variable name="tokenizedCss" select="tokenize($css,';')"/>        
+        <xsl:for-each select="$tokenizedCss">
+            <xsl:variable name="val"><xsl:value-of select="substring-after(.,': ')"/></xsl:variable>            
+            <xsl:choose>
+                <xsl:when test="contains(., 'margin-left')">
+                    <w:ind w:left="{$val}"/>
+                </xsl:when>
+                <xsl:when test="contains(., 'margin-right')">
+                    <w:ind w:right="{$val}"/>
+                </xsl:when>
+                <xsl:when test="contains(., 'text-align')">
+                    <w:jc w:val="{$val}"/>
+                </xsl:when> 
+            </xsl:choose>
+        </xsl:for-each>
+        <w:rPr>
+            <xsl:call-template name="getStyleFonts">
+                <xsl:with-param name="css" select="$css"/>
+            </xsl:call-template>
+        </w:rPr>           
+    </xsl:template>
+    
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+        <desc>Extract font information from html:style</desc></doc>
+    
+    <xsl:template name="getStyleFonts">
+        <xsl:param name="css"/>
+        <xsl:variable name="tokenizedCss" select="tokenize($css,';')"/>        
+        <xsl:for-each select="$tokenizedCss">
+            <xsl:variable name="val"><xsl:value-of select="substring-after(.,': ')"/></xsl:variable>            
+            <xsl:choose>
+                <xsl:when test="contains(., 'font-family')">
+                    <w:rFonts w:ascii="{$val}" w:hAnsi="{$val}"/> 
+                </xsl:when>
+                <xsl:when test="contains(., 'font-size')">
+                    <w:sz w:val="{$val}"/>                            
+                </xsl:when>
+            </xsl:choose>
+        </xsl:for-each>
     </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >

@@ -21,6 +21,7 @@
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
                 xmlns:custprops="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
                 xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"
+                xmlns:html="http://www.w3.org/1999/xhtml"
                 version="2.0"
                 exclude-result-prefixes="a pic rel ve o teidocx r m v wp w10 w wne mml vt cals tbx iso custprops">
 
@@ -565,6 +566,7 @@
 	     if (w:pPr/w:pStyle/@w:val='autoTermNumA5') then 3 else
 	     if (w:pPr/w:pStyle/@w:val='autoTermNumA6') then 3 else
 	     if (starts-with(w:pPr/w:pStyle/@w:val,'toc')) then 6 else
+	     if (w:pPr/w:pStyle/@w:val='Special') then 7 else
 	     position() + 100">
 
             <xsl:choose>
@@ -589,6 +591,10 @@
                 <xsl:when test="current-grouping-key()=6">
                     <xsl:call-template name="tocSection"/>
                 </xsl:when>
+                <xsl:when test="current-grouping-key()=7">
+                    <xsl:call-template name="doSpecialStyle"/>		  
+                </xsl:when>
+
                 <!-- it is not a defined grouping .. apply templates -->
                 <xsl:otherwise>
                     <xsl:apply-templates select="." mode="paragraph"/>
@@ -597,6 +603,56 @@
         </xsl:for-each-group>
     </xsl:template>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+        <desc>
+            <p>Handle 'Special' style-override paragraphs, converting Word's styles to CSS</p>
+        </desc>
+    </doc>
+    <xsl:template name="doSpecialStyle">
+        <xsl:variable name="css">
+            <xsl:if test="w:pPr/w:ind">
+                <!-- this is a block indent, ie (in CSS terms) a margin -->
+                <xsl:if test="w:pPr/w:ind/@w:left">
+                    <!-- margin-left: w:pPr/w:ind/@w:left -->
+                    <!-- units: px? -->
+                    <xsl:text>margin-left: </xsl:text>
+                    <xsl:value-of select="w:pPr/w:ind/@w:left"/>
+                    <xsl:text>; </xsl:text>
+                </xsl:if>
+                <xsl:if test="w:pPr/w:ind/@w:right">
+                    <!-- margin-right: w:pPr/w:ind/@w:right -->
+                    <!-- units: px? -->
+                    <xsl:text>margin-right: </xsl:text>
+                    <xsl:value-of select="w:pPr/w:ind/@w:right"/>
+                    <xsl:text>; </xsl:text>
+                </xsl:if>
+            </xsl:if>
+            <xsl:if test="w:pPr/w:jc">
+                <!-- text-align: w:pPr/w:jc/@w:val -->
+                <xsl:text>text-align: </xsl:text>
+                <xsl:value-of select="w:pPr/w:jc/@w:val"/>
+                <xsl:text>; </xsl:text>
+            </xsl:if>
+            <xsl:if test="w:pPr/w:rPr/w:rFonts">
+                <!-- font-family: w:pPr/w:rPr/w:rFonts/@w:ascii -->
+                <xsl:text>font-family: </xsl:text>
+                <xsl:value-of select="w:pPr/w:rPr/w:rFonts/@w:ascii"/>
+                <xsl:text>; </xsl:text>
+            </xsl:if>
+            <xsl:if test="w:pPr/w:rPr/w:sz">
+                <!-- font-size: w:pPr/w:rPr/w:sz/@w:val -->
+                <!-- units: pt? -->
+                <xsl:text>font-size: </xsl:text>
+                <xsl:value-of select="w:pPr/w:rPr/w:sz/@w:val"/>
+                <xsl:text>; </xsl:text>
+            </xsl:if>
+        </xsl:variable>
+        <p rend="Special">
+            <xsl:attribute name="html:style"><xsl:value-of select="$css"/></xsl:attribute>
+            <xsl:apply-templates/>
+        </p>
+    </xsl:template>
+    
          
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>

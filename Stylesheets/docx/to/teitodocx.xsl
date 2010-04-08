@@ -629,6 +629,11 @@
 	      <xsl:when test="contains(@rend,'typewriter') or teidocx:render-typewriter(.)">
 		<w:rFonts w:ascii="Courier" w:hAnsi="Courier"/>
 	      </xsl:when>
+                 <xsl:when test="contains(@rend, 'Special')">
+                      <xsl:call-template name="getStyleFonts">
+                          <xsl:with-param name="css" select="@html:style"/>
+                      </xsl:call-template>
+                 </xsl:when>
 	    </xsl:choose>
 
             <!-- bold -->
@@ -1588,6 +1593,10 @@
 
     <!-- place holders, used by ISO profile -->
 
+    <xsl:template name="getStyleFonts">
+        <xsl:param name="css"/>
+    </xsl:template>
+    
 
     <!-- no handling of index terms -->
 
