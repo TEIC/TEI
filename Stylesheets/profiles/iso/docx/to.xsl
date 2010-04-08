@@ -308,7 +308,7 @@
         <xsl:param name="css"/>
         <xsl:variable name="tokenizedCss" select="tokenize($css,';')"/>        
         <xsl:for-each select="$tokenizedCss">
-            <xsl:variable name="val"><xsl:value-of select="substring-after(.,': ')"/></xsl:variable>            
+            <xsl:variable name="val"><xsl:value-of select="normalize-space(substring-after(.,':'))"/></xsl:variable>            
             <xsl:choose>
                 <xsl:when test="contains(., 'margin-left')">
                     <w:ind w:left="{$val}"/>
@@ -335,7 +335,7 @@
         <xsl:param name="css"/>
         <xsl:variable name="tokenizedCss" select="tokenize($css,';')"/>        
         <xsl:for-each select="$tokenizedCss">
-            <xsl:variable name="val"><xsl:value-of select="substring-after(.,': ')"/></xsl:variable>            
+            <xsl:variable name="val"><xsl:value-of select="normalize-space(substring-after(.,':'))"/></xsl:variable>            
             <xsl:choose>
                 <xsl:when test="contains(., 'font-family')">
                     <w:rFonts w:ascii="{$val}" w:hAnsi="{$val}"/> 

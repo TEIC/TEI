@@ -65,7 +65,7 @@
 
         <xsl:result-document href="{concat($word-directory,'/word/endnotes.xml')}">
             <w:endnotes>
-                <w:endnote w:type="separator" w:id="0">
+                <w:endnote w:type="separator" w:id="-1">
                     <w:p>
                         <w:pPr>
                             <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
@@ -77,7 +77,7 @@
                     <w:p/>
                     <w:p/>
                 </w:endnote>
-                <w:endnote w:type="continuationSeparator" w:id="1">
+                <w:endnote w:type="continuationSeparator" w:id="0">
                     <w:p>
                         <w:pPr>
                             <w:spacing w:after="0" w:line="240" w:lineRule="auto"/>
