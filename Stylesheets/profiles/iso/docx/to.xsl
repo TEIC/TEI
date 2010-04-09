@@ -880,13 +880,14 @@
     </xsl:if>
   </xsl:template>
 
+<!--
    <xsl:template  match="tbx:term">
      <xsl:if test="../tbx:termNote[@type='administrativeStatus']='deprecatedTerm-admn-sts'">
        <w:r><w:t xml:space='preserve'>DEPRECATED: </w:t></w:r>
      </xsl:if>
      <xsl:apply-templates/>
    </xsl:template>
-
+-->
    <xsl:template
        match="tbx:descrip[@type='subjectField']"/>
 
