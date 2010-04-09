@@ -22,7 +22,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:html="http://www.w3.org/1999/xhtml"                
                 version="2.0"
-                exclude-result-prefixes="teidocx cals ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn its">
+                exclude-result-prefixes="teidocx cals ve o r m v wp w10 w html wne mml tbx iso tei a xs pic fn its">
     <!-- import conversion style -->
     <xsl:import href="../../../docx/to/teitodocx.xsl"/>
     <xsl:import href="../isoutils.xsl"/>
@@ -564,11 +564,16 @@
 	<xsl:otherwise>
 	  <xsl:call-template name="block-element">
 	    <xsl:with-param name="pPr" select="$pPr"/>
+	    <xsl:with-param name="nop">false</xsl:with-param>
 	  </xsl:call-template>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
       
+    <xsl:template match="tei:note/tei:p">
+      <xsl:apply-templates/>
+    </xsl:template>
+
     <xsl:template name="create-inlinenote">           
       <xsl:variable name="pPr">
 	        <w:pPr>
