@@ -609,7 +609,8 @@
         </desc>
     </doc>
     <xsl:template name="doSpecialStyle">
-        <xsl:variable name="css">
+        <xsl:for-each-group select="current-group()" group-starting-with="w:p">
+          <xsl:variable name="css">
             <xsl:if test="w:pPr/w:ind">
                 <!-- this is a block indent, ie (in CSS terms) a margin -->
                 <xsl:if test="w:pPr/w:ind/@w:left">
@@ -626,6 +627,22 @@
                     <xsl:value-of select="w:pPr/w:ind/@w:right"/>
                     <xsl:text>; </xsl:text>
                 </xsl:if>
+            </xsl:if>
+            <xsl:if test="w:pPr/w:spacing">
+                <xsl:if test="w:pPr/w:spacing/@w:before">
+                    <!-- margin-top: w:pPr/w:spacing/@w:before -->
+                    <!-- units: px? -->
+                    <xsl:text>margin-top: </xsl:text>
+                    <xsl:value-of select="w:pPr/w:spacing/@w:before"/>
+                    <xsl:text>; </xsl:text>                    
+                </xsl:if>
+                <xsl:if test="w:pPr/w:spacing/@w:after">
+                    <!-- margin-bottom: w:pPr/w:spacing/@w:after -->
+                    <!-- units: px? -->
+                    <xsl:text>margin-bottom: </xsl:text>
+                    <xsl:value-of select="w:pPr/w:spacing/@w:after"/>
+                    <xsl:text>; </xsl:text>
+                </xsl:if>                
             </xsl:if>
             <xsl:if test="w:pPr/w:jc">
                 <!-- text-align: w:pPr/w:jc/@w:val -->
@@ -651,6 +668,7 @@
             <xsl:attribute name="html:style"><xsl:value-of select="$css"/></xsl:attribute>
             <xsl:apply-templates/>
         </p>
+     </xsl:for-each-group>
     </xsl:template>
     
          

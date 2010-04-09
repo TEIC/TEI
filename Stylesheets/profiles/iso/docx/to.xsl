@@ -306,26 +306,59 @@
     
     <xsl:template name="undoSpecialStyle">
         <xsl:param name="css"/>
-        <xsl:variable name="tokenizedCss" select="tokenize($css,';')"/>        
-        <xsl:for-each select="$tokenizedCss">
-            <xsl:variable name="val"><xsl:value-of select="normalize-space(substring-after(.,':'))"/></xsl:variable>            
+        <xsl:for-each-group select="tokenize($css,';')" group-adjacent="if (matches(., 'margin-(left|right)')) then 1 else
+                   if (matches(., 'margin-(top|bottom)')) then 2 else 0">
             <xsl:choose>
-                <xsl:when test="contains(., 'margin-left')">
-                    <w:ind w:left="{$val}"/>
+                <xsl:when test="current-grouping-key()=1">
+                    <xsl:call-template name="getStyleMarginsH"/>
                 </xsl:when>
-                <xsl:when test="contains(., 'margin-right')">
-                    <w:ind w:right="{$val}"/>
+                <xsl:when test="current-grouping-key()=2">
+                     <xsl:call-template name="getStyleMarginsV"/>
                 </xsl:when>
-                <xsl:when test="contains(., 'text-align')">
-                    <w:jc w:val="{$val}"/>
-                </xsl:when> 
-            </xsl:choose>
-        </xsl:for-each>
+                <xsl:otherwise>
+                    <xsl:if test="contains(., 'text-align')">
+                        <xsl:variable name="val"><xsl:value-of select="normalize-space(substring-after(.,':'))"/></xsl:variable>            
+                        <w:jc w:val="{$val}"/>
+                    </xsl:if> 
+                </xsl:otherwise>
+            </xsl:choose>            
+        </xsl:for-each-group>
         <w:rPr>
             <xsl:call-template name="getStyleFonts">
                 <xsl:with-param name="css" select="$css"/>
             </xsl:call-template>
         </w:rPr>           
+    </xsl:template>
+
+     <xsl:template name="getStyleMarginsH">
+         <w:ind>
+             <xsl:for-each select="current-group()">
+                 <xsl:variable name="style"><xsl:value-of select="normalize-space(substring-before(.,':'))"/></xsl:variable>            
+                 <xsl:variable name="val"><xsl:value-of select="normalize-space(substring-after(.,':'))"/></xsl:variable>            
+                    <xsl:if  test="contains($style, 'margin-left')">
+                        <xsl:attribute name="w:left"><xsl:value-of select="$val"/></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="contains($style, 'margin-right')">
+                        <xsl:attribute name="w:right"><xsl:value-of select="$val"/></xsl:attribute>
+                    </xsl:if>
+              </xsl:for-each>
+         </w:ind>
+     </xsl:template>
+    
+    <xsl:template name="getStyleMarginsV">
+        <w:spacing>
+            <xsl:for-each select="current-group()">
+                <xsl:variable name="val"><xsl:value-of select="normalize-space(substring-after(.,':'))"/></xsl:variable>            
+                <xsl:choose>
+                    <xsl:when test="contains(., 'margin-top')">
+                        <xsl:attribute name="w:before"><xsl:value-of select="$val"/></xsl:attribute>
+                    </xsl:when>
+                    <xsl:when test="contains(., 'margin-bottom')">
+                        <xsl:attribute name="w:after"><xsl:value-of select="$val"/></xsl:attribute>
+                    </xsl:when>
+                </xsl:choose>
+        </xsl:for-each>
+        </w:spacing>
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
@@ -346,7 +379,7 @@
             </xsl:choose>
         </xsl:for-each>
     </xsl:template>
-
+    
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> Process bibliography</desc></doc>
 
