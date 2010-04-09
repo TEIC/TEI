@@ -76,12 +76,12 @@
                 <w:evenAndOddHeaders/>
                 <w:characterSpacingControl w:val="doNotCompress"/>
                 <w:footnotePr>
+                    <w:footnote w:id="-1"/>
                     <w:footnote w:id="0"/>
-                    <w:footnote w:id="1"/>
                 </w:footnotePr>
                 <w:endnotePr>
+                    <w:endnote w:id="-1"/>
                     <w:endnote w:id="0"/>
-                    <w:endnote w:id="1"/>
                 </w:endnotePr>
                 <w:compat/>
                 <m:mathPr>
