@@ -691,7 +691,7 @@ actually he wants to kill it... -->
                      </surface>
                   </egXML> The <gi>ge:metaMark</gi> element used in this example is further
                   discussed below (<ptr target="#mm"/>)</p>
-               <p>Surfaces can also be damaged, thorned and cut. In such cases a combination of
+               <p>Surfaces can also be damaged, perforated, and cut. In such cases a combination of
                      <gi>damageSpan</gi> and <gi>gap</gi> elements may be used. <specList>
                      <specDesc key="damageSpan" atts="group"/>
                      <specDesc key="gap"/>
@@ -899,9 +899,8 @@ which function at a  different level of description.</p>
                      writing). If the first layer need to be addressed independently, another
                      pointer can be added to the <att>stage</att> attribute:
                         <!-- AusSand70.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
-                        <ge:rewrite cause="fix" hand="#ja2" stage="#s0 #s1">Now...</ge:rewrite>
+                        <ge:line stage="#s0"> <ge:rewrite cause="fix" hand="#ja2" stage="#s1">Now...</ge:rewrite></ge:line>
                      </egXML> 
-<!-- I dont think this is a good idea! LB -->
 where <val>#s0</val> and <val>#s1</val> both point to the declaration
                      of such stages in the header, the first one conventionally representing the
                      first layer of writing and the second the rewriting stage. </p>
@@ -1749,7 +1748,7 @@ transposition can also be included in apparatus
                      <gi>stageNotes</gi> element which contains a number of <gi>stageNote</gi>
                   elements, one for each identified stage:
 <listSpec>
-<specDesc key="stageNotes" atts="type"/>
+<specDesc key="stageNotes" atts="ordered"/>
 <specDesc key="stageNote"/>
 </listSpec>
 	       </p>
@@ -1759,11 +1758,10 @@ transposition can also be included in apparatus
                <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <profileDesc>
                      <creation>
-                        <ge:stageNotes type="ordered">
+                        <ge:stageNotes ordered="true">
                            <ge:stageNote xml:id="ST-1">First stage, written in ink by a
                               writer</ge:stageNote>
-                           <ge:stageNote xml:id="ST-2"> Second stage
-			   in Goethe's hand using
+                           <ge:stageNote xml:id="ST-2">Second stage, written in Goethe's hand using
                               pencil</ge:stageNote>
                            <ge:stageNote xml:id="ST-3">Fixation of the revised passages and
                               further revisions by Goethe using ink</ge:stageNote>
@@ -1774,12 +1772,11 @@ transposition can also be included in apparatus
                      </creation>
                   </profileDesc>
                </egXML>
-               <p>Both the <gi>stageNote</gi> element  and <gi>stageNotes</gi> elements
-                  carry an attribute <att>type</att>, which can take the values
-                     <code>unordered</code> or <code>ordered</code>. If the attribute is not
-                  present, <code>unordered</code> is assumed by default. The attribute specifies
-                  whether the order of child elements signifies a temporal order of the respective
-                  revision campaigns. In the Faust example above, the
+               <p>The  <gi>stageNotes</gi> elements
+                  carries an attribute <att>ordered</att>, which can take the values
+                     <code>true</code>  or <code>false</code> (the default). The attribute specifies
+                  whether the order of child elements signifies a temporal order for the 
+                  revision campaigns which they document. In the Faust example above, the
 		   editor has asserted that the four stages distinguished are ordered chronologically
                   according to the order of the <gi>stageNote</gi> elements. Note that asserting a
                   specific order early on, though probably one of the hardest tasks in a genetic
@@ -1790,7 +1787,7 @@ transposition can also be included in apparatus
                   place before transcription begins, will allow the encoder to reduce verbose
                   tagging, where default assumptions based on the natural order of actions can be
                   made.</p>
-               <p><gi>stageNote</gi> elements can be nested hierarchically. This may
+               <p>If necessary, <gi>stageNotes</gi> elements can be nested hierarchically. This may
                   be helpful in two cases. Firstly one can build up hypotheses about related
                   revisions step-by-step, starting with stages of smaller coverage, whose members
                   are certainly related, and then in a subsequent pass grouping these stages in
@@ -1800,14 +1797,15 @@ transposition can also be included in apparatus
                   <profileDesc>
                      <creation>
                         <ge:stageNotes>
-                           <ge:stageNote xml:id="m" cert="low"> We might assume with low certainty,
-                              that the following two pages were revised together: <ge:stageNote
-                                 xml:id="m1">Alterations on one manuscript page, certainly
+			  <ge:stageNote xml:id="o">An unrelated stage note</ge:stageNote>
+			  <ge:stageNotes xml:id="m" cert="low"> 
+			    <ge:stageNote xml:id="m1">Alterations on one manuscript page, certainly
                                  related</ge:stageNote>
-                              <ge:stageNote xml:id="m2">Alterations on another manuscript page,
+                             <ge:stageNote xml:id="m2">Alterations on another manuscript page,
                                  certainly related</ge:stageNote>
-                           </ge:stageNote>
+			  <ge:stageNote xml:id="p">Another unrelated stage note</ge:stageNote>
                         </ge:stageNotes>
+			</ge:stageNotes>			
                      </creation>
                   </profileDesc>
                </egXML>
@@ -1815,15 +1813,16 @@ transposition can also be included in apparatus
                   express a <emph>partial</emph> ordering of revision campaigns.</p>
                <!-- stages.xml -->
                <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                  <ge:stageNote type="ordered">
+                  <ge:stageNotes ordered="true">
                      <ge:stageNote xml:id="ST1">The first stage</ge:stageNote>
-                     <ge:stageNote type="unordered" xml:id="STlast"> We have no indication, which
-                        of the following revisions campaigns took place first. <ge:stageNote
-                           xml:id="ST-rev1">A revision of the first stage</ge:stageNote>
+                     <ge:stageNotes xml:id="STlast"> 
+<!-- We have no indication, which  of the following revision
+campaigns took place first, but we know they followed ST1 -->.
+                        <ge:stageNote xml:id="ST-rev1">A revision of the first stage</ge:stageNote>
                         <ge:stageNote xml:id="ST-rev2">Another revision of the first
                            stage</ge:stageNote>
-                     </ge:stageNote>
-                  </ge:stageNote>
+		     </ge:stageNotes>
+		  </ge:stageNotes>
                </egXML>
                <p>In addition to the possibility of ordering text stages in relation to each other,
                      <gi>stageNote</gi> elements may carry a number of attributes from the
@@ -1831,13 +1830,13 @@ transposition can also be included in apparatus
                      <att>notBefore</att>, <att>notAfter</att>, <att>from</att>, and <att>to</att>)
                   which allow each stage to be dated as exactly or inexactly as necessary, in the
                   same way as is currently possible for the TEI <gi>date</gi> element.</p>
-               <!-- Maybe note, that absolute dates and relative order can conflict -->
+               <!-- Maybe note that absolute dates and relative order can conflict -->
                <!-- stages.xml -->
                <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <profileDesc>
                      <creation>
                         <date notAfter="1816-07-18"/>
-                        <ge:stageNotes type="ordered">
+                        <ge:stageNotes ordered="true">
                            <ge:stageNote xml:id="mod1" when="1816-07-16">The first draft of
                                  <title>Persuasion</title> is completed by the <date>July 16
                                  1816</date> written after the word <q>Finis</q> at <ref
@@ -1858,8 +1857,8 @@ transposition can also be included in apparatus
                      </creation>
                   </profileDesc>
                </egXML>
-               <p>Each <gi>stageNote</gi> element, apart from declaring a text stage and apart from
-                  containing subsumed stage declarations, may also contain references to other
+               <p>Each <gi>stageNote</gi> element, apart from
+	       declaring a text stage, may also contain references to other
                   annotations contained within the <gi>teiHeader</gi> or in the document (as shown
                   in the previous example). Such references, along with the textual content are
                    purely documentary and do not affect the textual
@@ -1873,10 +1872,10 @@ transposition can also be included in apparatus
                      <gi>stageNote</gi> element by means of its <att>stage</att> attribute:</p>
                <!-- stages.xml -->
                <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                  <p stage="#firstStage">This is a <subst stage="#secondStage">
+                  <ge:line stage="#firstStage">This is a <subst stage="#secondStage">
                         <del>house</del>
                         <add>mouse</add>
-                     </subst>.</p>
+                     </subst>.</ge:line>
                </egXML>
                <p>This simple example shows the latter of the two options: The relevant stages are
                   declared in the header; then textual alterations and acts of writing are assigned
@@ -2163,15 +2162,6 @@ transposition can also be included in apparatus
                         </rng:choice>
                      </rng:zeroOrMore>
                   </content>
-                  <!--additional In case of glued/pinned patches, the <gi>zone</gi> can make use of the attribute
-                     <att>patch</att> which value will be a description of the kind of patch
-                     (e.g.: <val>flipping</val>, <val>attached</val>, <val>detached</val>, etc.) and
-                     by the attribute <att>binder</att> describe the method by which it is connected
-                     to the main surface (e.g.: <val>glue</val>, <val>pins</val>,
-                     <val>staples</val>, etc.); dimensions can also be provided using
-                     <att>height</att> and <att>width</att> (please notice that they have to be
-                     expressed in the same unit given by <att>unit</att> attribute).</p>
-                  -->
                   <attList>
                      <attDef ident="binder" mode="add">
                         <desc>Describe the method by which a patch is or was connected to the main
@@ -2300,9 +2290,22 @@ transposition can also be included in apparatus
                   </classes>
                   <content>
                      <rng:oneOrMore>
+		       <rng:choice>
+			 <rng:ref name="stageNotes"/>
                         <rng:ref name="stageNote"/>
+		       </rng:choice>
                      </rng:oneOrMore>
                   </content>
+<attList>
+<attDef ident="ordered" mode="add">
+                        <desc>indicates whether or not the order in which
+			the children of this element are presented is significant</desc>
+                        <datatype>
+                           <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
+                        </datatype>
+			<defaultVal>true</defaultVal>
+                     </attDef>
+</attList>
                </elementSpec>
                <elementSpec ident="stageNote" ns="http://www.tei-c.org/ns/geneticEditions"
                   mode="add">
