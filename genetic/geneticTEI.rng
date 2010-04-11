@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0">
   <!--
-Schema generated from ODD source 2010-04-10T19:04:58Z. 
+Schema generated from ODD source 2010-04-11T17:04:32Z. 
 Edition: 1.6.0. Last updated on February 12th 2010.
 
 -->
@@ -12119,7 +12119,7 @@ Suggested values include: 1] social; 2] personal; 3] other</a:documentation>
     <element name="patch" ns="http://www.tei-c.org/ns/geneticEditions">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains a part of a written surface which was originally physically
                      distinct but became attached to it at the time that one or more written zones
-                     were created on it.</a:documentation>
+                     were created.</a:documentation>
       <zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:ge="http://www.tei-c.org/ns/geneticEditions">
         <choice>
           <text/>
@@ -12231,7 +12231,7 @@ Sample values include: 1] glue; 2] pin; 3] sewn</a:documentation>
   </define>
   <define name="mod">
     <element name="mod" ns="http://www.tei-c.org/ns/geneticEditions">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">encodes any modification to the text at a documentary level</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">represents any kind of modification identified within a text at a documentary level.</a:documentation>
       <ref name="macro.paraContent"/>
       <ref name="att.global.attributes"/>
       <ref name="att.transcriptional.attributes"/>
@@ -12241,8 +12241,9 @@ Sample values include: 1] glue; 2] pin; 3] sewn</a:documentation>
   </define>
   <define name="modSpan">
     <element name="modSpan" ns="http://www.tei-c.org/ns/geneticEditions">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">encodes any modification to a onger sequence of text at a documentary
-                     level</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">represents any kind of modification identified
+		  within a text at a documentary level, where this
+		  extends over other XML markup constructs in the document.</a:documentation>
       <rng:empty xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:ge="http://www.tei-c.org/ns/geneticEditions"/>
       <ref name="att.spanning.attributes"/>
       <ref name="att.global.attributes"/>
@@ -12279,14 +12280,16 @@ Sample values include: 1] glue; 2] pin; 3] sewn</a:documentation>
   </define>
   <define name="undo">
     <element name="undo" ns="http://www.tei-c.org/ns/geneticEditions">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Marks up an action represented by an element to be undone.</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to any marked-up intervention in a
+		  text which has subsequently been
+		  marked as to be cancelled or undone.</a:documentation>
       <rng:empty xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:ge="http://www.tei-c.org/ns/geneticEditions"/>
       <ref name="att.global.attributes"/>
       <ref name="att.spanning.attributes"/>
       <ref name="att.transcriptional.attributes"/>
       <optional>
         <attribute name="target">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The element representing the action to be undone.</a:documentation>
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to the element representing the intervention to be undone.</a:documentation>
           <data type="anyURI"/>
         </attribute>
       </optional>
@@ -12295,8 +12298,9 @@ Sample values include: 1] glue; 2] pin; 3] sewn</a:documentation>
   </define>
   <define name="redo">
     <element name="redo" ns="http://www.tei-c.org/ns/geneticEditions">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Marks up an action represented by an element, that is repeated/
-                     redone.</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to a marked-up intervention in a
+		  text which  has subsequently been
+		  marked for a second time in a different way. </a:documentation>
       <rng:empty xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:ge="http://www.tei-c.org/ns/geneticEditions"/>
       <ref name="att.global.attributes"/>
       <ref name="att.repeatable.attributes"/>
@@ -12304,7 +12308,8 @@ Sample values include: 1] glue; 2] pin; 3] sewn</a:documentation>
       <ref name="att.transcriptional.attributes"/>
       <optional>
         <attribute name="target">
-          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">The element representing the action to be redone.</a:documentation>
+          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to the element representing
+			the intervention which is to be repeated.</a:documentation>
           <data type="anyURI"/>
         </attribute>
       </optional>
@@ -12325,9 +12330,9 @@ Sample values include: 1] glue; 2] pin; 3] sewn</a:documentation>
   </define>
   <define name="metaMark">
     <element name="metaMark" ns="http://www.tei-c.org/ns/geneticEditions">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(meta mark) A textual or graphical element in a manuscript that is
-                     functional but not part of the text. Could transform the text, like a
-                     strikethrough, or provide meta-information, like a date.</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">contains any textual or graphical mark in 
+		  a written text intended to signal how the text
+		  should be read and not forming part of the text itself.</a:documentation>
       <ref name="macro.specialPara"/>
       <ref name="att.spanning.attributes"/>
       <ref name="att.placement.attributes"/>
@@ -12358,9 +12363,8 @@ Sample values include: 1] glue; 2] pin; 3] sewn</a:documentation>
   </define>
   <define name="used">
     <element name="used" ns="http://www.tei-c.org/ns/geneticEditions">
-      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">In many cases, authors mark portions of text as having been used, usually
-                     meaning the text has been transcribed to a fair copy. The mark is often a
-                     strikethrough, but can be any author-specific mark.</a:documentation>
+      <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">a  passage  of text which has been marked as used, usually
+                     meaning that it  has been transcribed to a fair copy.</a:documentation>
       <rng:empty xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:ge="http://www.tei-c.org/ns/geneticEditions"/>
       <ref name="att.spanning.attributes"/>
       <ref name="att.global.attributes"/>

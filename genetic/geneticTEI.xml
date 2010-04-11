@@ -811,10 +811,13 @@ problem (see .</p> <p>The following discussion-->
                      <specDesc key="reg"/>
                      <specDesc key="restore"/>
                      <specDesc key="sic"/>
+                     <specDesc key="subst"/>
                      <specDesc key="supplied"/>
                      <specDesc key="unclear"/>
                   </specList> The present proposals extend this list by adding the following
                   elements to the same class: <specList>
+                     <specDesc key="mod" atts="rend type"/>
+                     <specDesc key="modSpan" atts="spanTo"/>
                      <specDesc key="metaMark" atts="function  targets"/>
                      <specDesc key="used" atts="spanTo"/>
                      <specDesc key="undo" atts="spanTo"/>
@@ -822,24 +825,35 @@ problem (see .</p> <p>The following discussion-->
                      <specDesc key="rewrite" atts="cause"/>
                      <specDesc key="transposeGrp"/>
                      <specDesc key="transpose"/>
-                     <specDesc key="subst"/>
-                  </specList> Each of these new elements is discussed in the remainder of this
-                  section.</p>
-               <p>All these elements (the TEI's and the new ones) imply a certain level of semantic
+
+                  </specList> .</p>
+               <p>Most of these elements imply a certain level of semantic
                   interpretation; for instance the usage of the <gi>add</gi> element to encode, say,
-                  interlinear insertions, already imply a certain level of interpretation. As it has
-                  been explained above (see <ptr target="#act_vs_state"/>), using these elements
-                  when transcribing from a documentary perspective is a pragmatic shortcut. However
-                  it may be desirable to keep the recording of “what is on the page” separate from
-                  “what is the editor’s interpretation” (see <ptr target="#deutung"/>). Therefore
-                  the present proposal also introduces two generic elements, <gi>ge:mod</gi> and
-                     <gi>ge:modSpan</gi>, to encode any kind of modification, which can be typed or
-                  described via the <att>rend</att> attribute.<specList>
-                     <specDesc key="mod" atts="rend type"/>
-                     <specDesc key="modSpan" atts="spanTo"/>
-                  </specList> Whether such a modification, for instance a passage striked though, is
-                  to be interpreted as a deletion or as some other kind of markup (e. g. “marked as
-                  used”), can then be expressed on a different level.</p>
+                  interlinear insertions involves a decision that the
+		  interlinear text has been deliberately inserted rather
+		  than simply misplaced. As discussed
+above (see <ptr target="#act_vs_state"/>), the use of these elements
+                  when transcribing from a documentary perspective is
+		  a pragmatic shortcut. In cases where it is felt
+                   desirable to keep the recording of
+		  <soCalled>what is on the page</soCalled> entirely separate from
+                  <soCalled>what is the editor’s
+		  interpretation</soCalled> (see <ptr
+		  target="#deutung"/>), we provide  two generic elements, <gi>ge:mod</gi> and
+                     <gi>ge:modSpan</gi>, which can  be used to
+		     record any kind of modification identified in
+		     the document. These elements can be
+		     categorised by means of their <att>type</att>
+		     attribute, and visual aspects of their appearance
+		     can be described by means of  the <att>rend</att>
+		     attribute, but they provide no further
+		     interpretation of the function or intention of
+		     the passage so marked up.</p>
+<p> Whether such a modification, for instance a struck-out passage, is
+                  to be interpreted as a deletion or as some other
+		  phenomenon (e.g. as being already used) should be
+be expressed using the other, more semantically motivated, elements,
+which function at a  different level of description.</p>
                <div>
                   <head>Additions, fixations and clarifications</head>
                   <p>A writer may sometimes rewrite material a second time without significant
@@ -882,11 +896,13 @@ problem (see .</p> <p>The following discussion-->
                            <del stage="#s1" rend="overstrike">get</del> a young Heiress</ge:rewrite>
                      </egXML> where the <att>stage</att> attribute groups the operations that belong
                      to the rewriting stage, assuming an implied previous stage (the first layer of
-                     writing). In case the first layer need to be addressed independently, another
-                     URI can be added to the <att>stage</att> attribute:
+                     writing). If the first layer need to be addressed independently, another
+                     pointer can be added to the <att>stage</att> attribute:
                         <!-- AusSand70.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                         <ge:rewrite cause="fix" hand="#ja2" stage="#s0 #s1">Now...</ge:rewrite>
-                     </egXML> where <val>#s0</val> and <val>#s1</val> both point to the declaration
+                     </egXML> 
+<!-- I dont think this is a good idea! LB -->
+where <val>#s0</val> and <val>#s1</val> both point to the declaration
                      of such stages in the header, the first one conventionally representing the
                      first layer of writing and the second the rewriting stage. </p>
                   <!-- note that the  hand specified for the rewrite is the second one -->
@@ -903,17 +919,19 @@ problem (see .</p> <p>The following discussion-->
                            </ge:rewrite> ...</ge:line>
                      </egXML> The <att>stage</att> attribute used here is discussed further below
                         (<ptr target="#stages"/>). </p>
-                  <p>Additionally to the fixation or clarification of text passages through
-                     rewriting, also markup like strokes can be ink over with the same purpose. For
-                     instance, in a draft version of Goethe’s Faust, a passage gets striked through
-                     with pencil during one revision and then during a later revision another time
-                     with ink, supposedly to fixate the deletion.</p>
+                  <p>Metamarks and other markup-like strokes can also
+		  be inked over with the same purpose as the fixation
+		  or clarification of text passages. For
+                     instance, in a draft version of Goethe’s Faust, a passage was struck through
+                     once in pencil during one revision and then again
+		     with ink during a later revision, supposedly to fixate the deletion.</p>
                   <figure>
                      <graphic url="examples/faust_redo.jpg"/>
                      <head rend="it">Fixation of a deletion in Goethe’s Faust</head>
                   </figure>
-                  <p>We propose an element <gi>redo</gi> (the “antagonist” to <gi>undo</gi>, see
-                        <ptr target="#undo"/>), that allows to encode this process as follows:</p>
+                  <p>We propose an element <gi>redo</gi> (the opposite
+		  of  <gi>undo</gi>, see
+                        <ptr target="#undo"/>), which can be used to encode this process as follows:</p>
                   <egXML xmlns="http://www.tei-c.org/ns/Examples">
                      <ge:line><ge:redo xml:id="redo_3" hand="#g_t" target="#mod_1" cause="fix"
                            /><ge:modSpan xml:id="mod_1" rend="strikethrough" spanTo="#anchor_1"
@@ -925,7 +943,7 @@ problem (see .</p> <p>The following discussion-->
                </div>
                <div>
                   <head>Deletions and marked as used</head>
-                  <p>In general deletion in a source is marked using the <gi>del</gi> or
+                  <p>In general, deletion in a source is marked using the <gi>del</gi> or
                         <gi>delSpan</gi> element. However, it is useful to distinguish cases where a
                      passage has been <q>indicated as superfluous or spurious in the copy text by an
                         author, scribe, annotator, or corrector</q> (TEI P5, s.v. <gi>del</gi>) from
@@ -1303,9 +1321,12 @@ problem (see .</p> <p>The following discussion-->
                   point from the undo to the element to be undone-->
                   <p>To make explicit the relation between the undoing act and the initial act, we
                      propose an alternative way of encoding these scribal acts, namely an empty
-                        <gi>ge:undo</gi> element, targeting at the initial question in action. In
-                     case that more than one (not coherent) part of the deletion is undone, the undo
-                     statement needs to be repeated with the concerned parameters.</p>
+                        <gi>ge:undo</gi> element, which points to the
+			element the effect of which is being  cancelled. If
+                     more than one (not coherent) part of the deletion
+		     is undone, more than one <gi>undo</gi> element
+		     will be needed, and each part undone must be
+		     given an identifier.</p>
                   <p>In the following example, three text stages can be identified: <list>
                         <item>s1 (initial): This is just some sample text, we need a real example. <figure>
                               <graphic url="examples/undoing1.jpg" width="400px"/>
@@ -1316,18 +1337,25 @@ problem (see .</p> <p>The following discussion-->
                   <p>This can be encoded using empty <gi>ge:undo</gi> elements as follows:
                         <!-- undoing1.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                         <ge:line>This is <del stage="#s2" xml:id="del_1" rend="overstrike"><ge:undo
-                                 target="#del_1" spanTo="#X2" rend="dotted" stage="#s3"/>just some
-                                 <anchor xml:id="X2"/>sample <ge:undo target="#del_1" spanTo="#x4"
+                                 target="#del_1" spanTo="#X02" rend="dotted" stage="#s3"/>just some
+                                 <anchor xml:id="X02"/>sample <ge:undo target="#del_1" spanTo="#x4"
                                  rend="dotted" stage="#s3"/>text,<anchor xml:id="x4"/> we need
                               </del><add stage="#s2">not </add>a real example.</ge:line>
-                     </egXML> Note the attributes for <gi>ge:undo</gi>: <gi>@target</gi> points to
-                     the initial act that is undone (the deletion), <gi>@rend</gi> the way it is
-                     done, and the element resp. the <gi>anchor</gi> it is spanning to mark the
-                     borders of the section that is undone. Since there are two not coherent parts
-                     of the deletion undone, <gi>ge:undo</gi> needs to be repeated with the
-                     paramters in question. </p>
-                  <p>One must implicitly assume that if both <gi>@spanTo</gi> is missing,
-                        <gi>ge:undo</gi> refers to the initial act as a whole.</p>
+                     </egXML> The <att>target</att> attributes on <gi>undo</gi> point to
+                     the elements representing the initial acts  (the
+		     deletions) which are undone. The <att>rend</att>
+		     attribute indicates the way this reversion is
+		     indicated. The <att>spanTo</att> attributes
+		     points to the <gi>anchor</gi> which marks the
+		     point in the text where this reversion
+		     finishes.  Since two non-contiguous parts
+                     of the deletion are undone, there are two
+		     <gi>ge:undo</gi> elements, each with the
+		     appropriate attribute values.  If
+		     <att>spanTo</att> is not supplied, the
+		  <gi>ge:undo</gi> is understood to refer to the
+		  whole of the text contained by the element indicated
+		  by its <att>target</att> attribute. </p>
                </div>
                <!-- my version in talk is different -->
                <div>
@@ -1370,24 +1398,6 @@ problem (see .</p> <p>The following discussion-->
                            </subst>ron necklace</ge:line>
                      </egXML>
                   </p>
-                  <!-- <p>In a set of revisions like the Austen example cited above, there is an implicit
-                     assumption that acts of deletion and addition are all assigned to the same writing
-                     stage, which is specified by the most recently stated <gi>mod</gi> element. If
-                     this is not the case, the <att>stage</att> attribute may also be used on any
-                     element to associate it with some other writing stage than that implied by the
-                     <gi>ge:mod</gi> which <q>surrounds</q> it. For example, if it were determined
-                     that in the previous example the substitution of "I do not' by "you have not'
-                     should actually be assigned to some different state (say <code>mod3</code>) the
-                     above example might be encoded: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                     <ge:line>her face) – <ge:mod spanTo="#ch10-06-23" stage="#mod1"/>But <subst
-                     stage="#mod3">
-                     <del rend="overstruck">I do not</del>
-                     <add place="above">you have not</add>
-                     </subst> see much</ge:line>
-                     </egXML> Similarly, there is no reason (other than increased complexity) why
-                     <gi>mod</gi> spans should not be nested within each other, where for example
-                     several revision campaigns have been identified which are applicable to
-                     overlapping sequences of elements. </p>-->
                </div>
             </div>
          </div>
@@ -1400,14 +1410,16 @@ problem (see .</p> <p>The following discussion-->
                <head>Assembling a dossier</head>
                <p>Since a dossier needs to be assembled from many documents, which will most
                   probably be encoded in distinct TEI documents, one way to assemble a dossier’s
-                  contents for further processing would be to (re-)use the existing
+                  contents for further processing would be to use the existing
                      <gi>teiCorpus</gi> element in combination with <ref
-                     target="http://www.w3.org/TR/xinclude/">XML Inclusions (XInclude)</ref>. The
-                  corpus construct on the one hand provides for a common place, in which metadata
-                  regarding the organization of the dossier itself can be recorded, independently of
+                     target="http://www.w3.org/TR/xinclude/">XML
+		     Inclusions (XInclude)</ref>. The
+		     <gi>teiCorpus</gi> construct  provides for a
+		     common place to record metadata
+                  regarding the organization of the dossier itself, independently of
                   the metadata regarding each particular document contained within it, which would
                   be held in a discrete TEI Header attached to that particular encoded document. The
-                  XInclude mechanism on the other hand provides a convenient means of managing the
+                  XInclude mechanism provides a convenient means of managing the
                   many separate resources which are likely to be needed to constitute a complete
                   dossier. For example, supposing we have a dossier comprising three documents, each
                   of which has been encoded in its own document:</p>
@@ -1462,17 +1474,18 @@ problem (see .</p> <p>The following discussion-->
                   and <term>arcs</term>. Nodes represent objects, which are related: Typical objects
                   in our case are documents, document components, text stages (as defined in <ptr
                      target="#stages"/> below) or even single phenomena (acts of writing or a
-                  textual alterations). Each arc between two nodes then represents a relation, again
-                  in our case a genetic relation between the two respective objects, that the arc
-                  connects. Arcs may be typed and directed, both to further specify the kind of
-                  relationship they represent. For our purposes one can also assume, that a typical
+                  textual alterations). Each arc between two nodes then represents a relation, 
+                  in our case a genetic relation, between the two
+		  objects it links. Arcs may be typed and directed to further specify the kind of
+                  relationship they represent. For our purposes one can assume that a typical
                   genetic graph is directed and acyclic, because we generally expect the
                      <term>paths</term> through a genetic graph (formally defined as an ordered set
                   of nodes traversed by following its arcs) to represent genetic processes with an
-                  implied chronological order. This way a genetic graph may resemble a family tree,
-                  in that there is a single terminal node, representing the final/ published version
-                  of a text, with many preceding nodes linking to it, either directly or via other
-                  nodes, each of those representing draft versions of various parts. Alternatively,
+                  implied chronological order. In this respect a genetic graph resembles a family tree,
+                  in that there is a single terminal node,
+		  representing the final or published version
+                  of a text with many preceding nodes linking to it, either directly or via other
+                  nodes, each of which represents draft versions of various parts. Alternatively,
                   there may be more than one final state, e. g. in the case of multiple published
                   texts or unpublished fragments.</p>
                <p>A visual representation of an exemplary genetic graph might look as follows:<figure>
@@ -1484,8 +1497,8 @@ problem (see .</p> <p>The following discussion-->
                   evolutionary type). Thus the graph can be read as A and B being precursors of C, C
                   in turn leading to F, F to G, G to H, and H leading to the final state Z, which
                   additionally draws influences from E and D.</p>
-               <p>All these abstract information can be encoded with the following elements (see
-                  also the Guidelines’ chapter 19. “Graphs, Networks, and Trees”): <specList>
+               <p>All this abstract information can be encoded using the following elements (see
+                  also the Guidelines chapter 19. Graphs, Networks, and Trees): <specList>
                      <specDesc key="graph" atts="type"/>
                      <specDesc key="node" atts="value"/>
                      <specDesc key="arc" atts="from to value"/>
@@ -1596,14 +1609,16 @@ problem (see .</p> <p>The following discussion-->
                      <l n="359">Und bin so klug als wie zuvor;</l>
                   </lg>
                </egXML>
-               <p>This allows to express genetic relations by annotating the same verse or the even
-                  the same interval of verses in different witnesses/stages/variants with the one as
-                  given in the final text (e.g. 354-359). Although a genetic graph generated from
-                  the coindexed verses will not be of a very fine granularity, it can very well
-                  serve as base for refinement. Incorporating metadata of the witnesses (especially
-                  dating information) and collation results among other relevant information, the
-                  graph can be enriched in an iterative way and periodically checked for
-                  consistency. In the end, together with the transcriptions, collation results and a
+               <p>This makes it possible to express genetic relations
+	       by using these same verse numbers to index
+	       corresponding verses or ranges of verse-numbers throughout their various
+	       witnesses, stages or variants. Although a genetic graph generated from
+                  the coindexed verses will not be of a very fine
+		  granularity, it can be a useful preliminary  base
+		  for subsequent refinement. By incorporating metadata for the witnesses (especially
+                  dating information) and results of collation eith other relevant information, the
+                  graph can be  enriched in an iterative manner and periodically checked for
+                  consistency. Finally, together with the transcriptions, collation results, and a
                   critical apparatus it can be archived as an integral part of the genetic
                   edition.</p>
             </div>
@@ -1730,45 +1745,52 @@ transposition can also be included in apparatus
                   </list></p>
                <p>The existing element <gi>creation</gi> (within the TEI Header profile description)
                   is defined as the appropriate location for all information relating to the genesis
-                  or production of a text. We might therefore modify it slightly to permit a new
+                  or production of a text. We modify it slightly to permit a new
                      <gi>stageNotes</gi> element which contains a number of <gi>stageNote</gi>
-                  elements, one for each identified stage.</p>
-               <p>For example in the following snippet taken from the genetic edition of Goethe’s
-                  Faust, the editor identified four distinct stages:</p>
+                  elements, one for each identified stage:
+<listSpec>
+<specDesc key="stageNotes" atts="type"/>
+<specDesc key="stageNote"/>
+</listSpec>
+	       </p>
+               <p>In the following example taken from the genetic edition of Goethe’s
+                  Faust, the editor has identified four distinct stages:</p>
                <!-- faust_1.xml -->
                <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <profileDesc>
                      <creation>
                         <ge:stageNotes type="ordered">
-                           <ge:stageNote xml:id="firstStage">First stage, written in ink by a
+                           <ge:stageNote xml:id="ST-1">First stage, written in ink by a
                               writer</ge:stageNote>
-                           <ge:stageNote xml:id="secondStage">Revised by Goethe using
+                           <ge:stageNote xml:id="ST-2"> Second stage
+			   in Goethe's hand using
                               pencil</ge:stageNote>
-                           <ge:stageNote xml:id="thirdStage">Fixation of the revised passages and
+                           <ge:stageNote xml:id="ST-3">Fixation of the revised passages and
                               further revisions by Goethe using ink</ge:stageNote>
-                           <ge:stageNote xml:id="fourthStage">Addition of another stanza, probably
+                           <ge:stageNote xml:id="ST-4">Addition of
+			   another stanza in a different hand, probably
                               at a later stage</ge:stageNote>
                         </ge:stageNotes>
                      </creation>
                   </profileDesc>
                </egXML>
-               <p>Any <gi>stageNote</gi> element as well as the <gi>stageNotes</gi> container
-                  posesses an attribute <att>type</att>, which can take the values
+               <p>Both the <gi>stageNote</gi> element  and <gi>stageNotes</gi> elements
+                  carry an attribute <att>type</att>, which can take the values
                      <code>unordered</code> or <code>ordered</code>. If the attribute is not
                   present, <code>unordered</code> is assumed by default. The attribute specifies
                   whether the order of child elements signifies a temporal order of the respective
-                  revision campaigns. So in the Faust example, not only did the editor identify four
-                  stages, but she also states, that these four stages are ordered chronologically
+                  revision campaigns. In the Faust example above, the
+		   editor has asserted that the four stages distinguished are ordered chronologically
                   according to the order of the <gi>stageNote</gi> elements. Note that asserting a
                   specific order early on, though probably one of the hardest tasks in a genetic
-                  analysis, can reduce the encoding effort in assigning textual alterations to
-                  stages during the transcription considerably, as we will see below. For instance
+                  analysis, can considerably reduce the encoding effort in assigning textual alterations to
+                  stages during the transcription, as we will see below. For instance
                   deletions can only be assigned to a stage that follows the one in which the
-                  passage being deleted was written down. So having a certain order of stages put in
-                  place before the transcription, will allow the encoder to spare out verbose
+                  passage being deleted was written down. Hence, having a certain order of stages put in
+                  place before transcription begins, will allow the encoder to reduce verbose
                   tagging, where default assumptions based on the natural order of actions can be
                   made.</p>
-               <p><gi>stageNote</gi> elements can be nested, thereby forming a hierarchy. This may
+               <p><gi>stageNote</gi> elements can be nested hierarchically. This may
                   be helpful in two cases. Firstly one can build up hypotheses about related
                   revisions step-by-step, starting with stages of smaller coverage, whose members
                   are certainly related, and then in a subsequent pass grouping these stages in
@@ -1794,11 +1816,11 @@ transposition can also be included in apparatus
                <!-- stages.xml -->
                <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <ge:stageNote type="ordered">
-                     <ge:stageNote xml:id="firstStage">The first stage</ge:stageNote>
-                     <ge:stageNote type="unordered" xml:id="lastStage"> We have no indication, which
+                     <ge:stageNote xml:id="ST1">The first stage</ge:stageNote>
+                     <ge:stageNote type="unordered" xml:id="STlast"> We have no indication, which
                         of the following revisions campaigns took place first. <ge:stageNote
-                           xml:id="oneRevision">A revision of the first stage</ge:stageNote>
-                        <ge:stageNote xml:id="anotherRevision">Another revision of the first
+                           xml:id="ST-rev1">A revision of the first stage</ge:stageNote>
+                        <ge:stageNote xml:id="ST-rev2">Another revision of the first
                            stage</ge:stageNote>
                      </ge:stageNote>
                   </ge:stageNote>
@@ -1839,27 +1861,31 @@ transposition can also be included in apparatus
                <p>Each <gi>stageNote</gi> element, apart from declaring a text stage and apart from
                   containing subsumed stage declarations, may also contain references to other
                   annotations contained within the <gi>teiHeader</gi> or in the document (as shown
-                  in the previous example), but these references as well as the textual content are
-                  deemed to be purely documentary and do not declare a membership of the referred
-                  entity to the declared stage. Rather this membership is made explicit in one of
-                  two ways: by either pointing from the <gi>stageNote</gi>’s attribute
-                     <att>@target</att> to one or more elements, or from each related element to the
-                     <gi>stageNote</gi> element via their respective <att>stage</att> attribute:</p>
+                  in the previous example). Such references, along with the textual content are
+                   purely documentary and do not affect the textual
+		   stage associated with any element thus referred
+		   to. The association of a textual component with a
+		   writing stage is always made  explicitly, either by
+		   pointing from the <gi>stageNote</gi>  attribute
+                     <att>@target</att> to one or more elements, or
+		     (for preference) by pointing from the element
+		     concerned to the
+                     <gi>stageNote</gi> element by means of its <att>stage</att> attribute:</p>
                <!-- stages.xml -->
                <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                  <p stage="#firstStage">This is a <subst>
+                  <p stage="#firstStage">This is a <subst stage="#secondStage">
                         <del>house</del>
-                        <add stage="#secondStage">mouse</add>
+                        <add>mouse</add>
                      </subst>.</p>
                </egXML>
                <p>This simple example shows the latter of the two options: The relevant stages are
                   declared in the header; then textual alterations and acts of writing are assigned
                   to them. So the whole sentence was realized in the first stage, while the
-                  substitution of “house” with “mouse” happened at the second stage. Here the
+                  substitution of “house” with “mouse” happened at the second stage. <!--Here the
                   assumed ordering of the stages and default assumptions about the natural ordering
                   of the textual alterations allows to reduce the tagging considerably, as only the
                   addition has to be annotated, whereas the substitution and consequently the
-                  deletion are assumed to happen at the same stage.</p>
+                  deletion are assumed to happen at the same stage.--></p>
                <p>A more complex and complete example:</p>
                <!-- faust_1.xml -->
                <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -1904,15 +1930,16 @@ transposition can also be included in apparatus
                </egXML>
                <p>Note first, that a stage, once assigned to an element, is inherited by all
                   descendents of that element, unless overridden by a subsequent assignment. So in
-                  the given example the three verses are assigned to the first stage initially. The
-                  writing of “Nun” (as part of the substitution in the first verse) takes place in
-                  the second stage and is repeated (aka. rewritten/fixated) in the third. Also the
+                  the example above the three verses are assigned to the first stage initially. The
+                  writing of <mentioned>Nun</mentioned> (as part of the substitution in the first verse) takes place in
+                  the second stage and is repeated or fixated in the third. Also the
                   substitution in the second verse is done repeatedly: initially it takes place in
                   the second stage, but is fixated as a whole in the third.</p>
                <p>As one can see, the interpretation of what the stage assignments mean for a
                   particular text passage and the actions upon it can be based on a number of
-                  implicit assumptions and constraints, that allow to minimize necessary tagging. If
-                  these presuppositions shall be made more explicit, one can differentiate between
+                  implicit assumptions and constraints which have the
+		  effect of  minimizing the amount of tagging necessary. If
+                  it is desired to make these presuppositions more explicit, one can differentiate between
                   acts of writing and textual alterations and accordingly between their assignment
                   to stages as follows:</p>
                <!-- faust_2.xml -->
@@ -1965,14 +1992,16 @@ transposition can also be included in apparatus
                   </text>
                </egXML>
                <p>Here two transcriptions of the same passage are given, one from a documentary
-                  perspective, stressing the writing process, and one from the textual perspective,
-                  emphasizing textual alterations. The respective assignment to stages is also done
+                  perspective stressing the writing process, and one from the textual perspective
+                  emphasizing textual alterations. The assignment to stages is also done
                   differently here, pointing from the stage notes to the text passages and
-                  alterations in question. In the documentary perspective on the one hand, the stage
+                  alterations in question. From  the documentary perspective, the stage
                   assignments describe the writing process, in that they specify, which segment has
-                  been written when and how often. The textual perspective one the other hand can
-                  concentrate on the order of textual alterations and does not imply assumptions on
-                  the order of writing anymore.</p>
+                  been written when and how often. From the textual
+		  perspective, the markup
+                  concentrates on the order of textual alterations and
+		  makes no assumptions about
+                  the order of writing.</p>
             </div>
          </div>
       </body>
@@ -2303,7 +2332,7 @@ transposition can also be included in apparatus
                </elementSpec>
                <!-- =============== Textual alterations =============== -->
                <elementSpec ident="mod" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
-                  <desc>encodes any modification to the text at a documentary level</desc>
+                  <desc>represents any kind of modification identified within a text at a documentary level.</desc>
                   <classes>
                      <memberOf key="model.pPart.transcriptional"/>
                      <memberOf key="att.global"/>
@@ -2315,8 +2344,9 @@ transposition can also be included in apparatus
                   </content>
                </elementSpec>
                <elementSpec ident="modSpan" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
-                  <desc>encodes any modification to a onger sequence of text at a documentary
-                     level</desc>
+                  <desc>represents any kind of modification identified
+		  within a text at a documentary level, where this
+		  extends over other XML markup constructs in the document.</desc>
                   <classes>
                      <memberOf key="model.global.edit"/>
                      <memberOf key="att.spanning"/>
@@ -2386,7 +2416,9 @@ transposition can also be included in apparatus
                </elementSpec>
                <!-- =============== Undo/Redo/Rewrite =============== -->
                <elementSpec ident="undo" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
-                  <desc>Marks up an action represented by an element to be undone.</desc>
+                  <desc>points to any marked-up intervention in a
+		  text which has subsequently been
+		  marked as to be cancelled or undone.</desc>
                   <classes>
                      <memberOf key="model.pPart.transcriptional"/>
                      <memberOf key="att.global"/>
@@ -2398,13 +2430,15 @@ transposition can also be included in apparatus
                   </content>
                   <attList>
                      <attDef ident="target" mode="add">
-                        <desc>The element representing the action to be undone.</desc>
+                        <desc>points to the element representing the intervention to be undone.</desc>
                         <datatype minOccurs="1" maxOccurs="1">
                            <rng:ref name="data.pointer"/>
                         </datatype>
                      </attDef>
                   </attList>
                </elementSpec>
+
+
                <classSpec type="atts" ident="att.repeatable">
                   <attList>
                      <attDef ident="cause">
@@ -2424,9 +2458,11 @@ transposition can also be included in apparatus
                      </attDef>
                   </attList>
                </classSpec>
+
                <elementSpec ident="redo" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
-                  <desc>Marks up an action represented by an element, that is repeated/
-                     redone.</desc>
+<desc>points to a marked-up intervention in a
+		  text which  has subsequently been
+		  marked for a second time in a different way. </desc>
                   <classes>
                      <memberOf key="model.pPart.transcriptional"/>
                      <memberOf key="att.global"/>
@@ -2439,13 +2475,15 @@ transposition can also be included in apparatus
                   </content>
                   <attList>
                      <attDef ident="target" mode="add">
-                        <desc>The element representing the action to be redone.</desc>
+                        <desc>points to the element representing
+			the intervention which is to be repeated.</desc>
                         <datatype minOccurs="1" maxOccurs="1">
                            <rng:ref name="data.pointer"/>
                         </datatype>
                      </attDef>
                   </attList>
                </elementSpec>
+
                <elementSpec ident="rewrite" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
                   <desc>contains a sequence of text which has been rewritten by the author, for
                      example by over-inking, to clarify or fix it.</desc>
@@ -2471,15 +2509,18 @@ transposition can also be included in apparatus
                </elementSpec>
                <!-- =============== Authorial changes =============== -->
                <elementSpec ident="metaMark" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
-                  <desc>(meta mark) A textual or graphical element in a manuscript that is
-                     functional but not part of the text. Could transform the text, like a
-                     strikethrough, or provide meta-information, like a date.</desc>
+                  <desc>contains any textual or graphical mark in 
+		  a written text intended to signal how the text
+		  should be read and not forming part of the text itself.</desc>
                   <classes>
                      <memberOf key="model.pPart.transcriptional"/>
                      <memberOf key="att.spanning"/>
                      <memberOf key="att.placement"/>
                      <memberOf key="att.global"/>
                   </classes>
+<!--, for example some which 
+                     functional but not part of the text. Could transform the text, like a
+                     strikethrough, or provide meta-information, like a date-->
                   <content>
                      <rng:ref name="macro.specialPara"/>
                   </content>
@@ -2501,9 +2542,8 @@ transposition can also be included in apparatus
                   </attList>
                </elementSpec>
                <elementSpec ident="used" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
-                  <desc>In many cases, authors mark portions of text as having been used, usually
-                     meaning the text has been transcribed to a fair copy. The mark is often a
-                     strikethrough, but can be any author-specific mark.</desc>
+                  <desc>a  passage  of text which has been marked as used, usually
+                     meaning that it  has been transcribed to a fair copy.</desc>
                   <classes>
                      <memberOf key="model.pPart.transcriptional"/>
                      <memberOf key="model.global"/>
@@ -2513,6 +2553,8 @@ transposition can also be included in apparatus
                   <content>
                      <rng:empty/>
                   </content>
+<remarks><p>The mark is often a
+                     strikethrough, but can be any author-specific mark.</p></remarks>
                </elementSpec>
                <!-- =============== Genetic Groups =============== -->
                <elementSpec ident="geneticGrp" mode="add"
