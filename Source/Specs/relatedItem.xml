@@ -30,15 +30,19 @@
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <rng:choice>
-      <rng:ref name="model.biblLike"/>
-      <rng:ref name="model.ptrLike"/>
-    </rng:choice>
+    <rng:optional>
+      <rng:choice>
+	<rng:ref name="model.biblLike"/>
+	<rng:ref name="model.ptrLike"/>
+      </rng:choice>
+    </rng:optional>
   </content>
   <constraintSpec ident="targetorcontent" scheme="isoschematron">
     <constraint>
-      <sch:report test="@target and string-length(text())&gt;0">If the
-      target attribute is used, the element must be empty</sch:report>
+      <sch:report test="@target and count( child::* ) > 0">If the 'target' attribute is used, the
+        relatedItem element must be empty</sch:report>
+      <sch:assert test="@target or child::*">A relatedItem element should have either a 'target' attribute
+        or a child element to indicate the related bibliographic item</sch:assert>
     </constraint>
   </constraintSpec> 
   <attList>
@@ -85,8 +89,10 @@
       </biblStruct>
     </egXML>
   </exemplum>
-<remarks><p>If the <att>target</att> attribute is used to reference
-the related bibliographic item, this element will generally be
-empty.</p></remarks>
-
+  <remarks><p>If the <att>target</att> attribute is used to reference
+  the related bibliographic item, the element should be
+  empty.</p></remarks>
+  <listRef>
+    <ptr target="#COBIRI"/>
+  </listRef>
 </elementSpec>
