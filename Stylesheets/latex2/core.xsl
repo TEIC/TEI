@@ -262,36 +262,35 @@
   <xsl:template name="rendering">
       <xsl:variable name="cmd">
          <xsl:choose>
-            <xsl:when test="starts-with(@rend,'color')">textcolor</xsl:when>
-            <xsl:when test="@rend='bold'">textbf</xsl:when>
-            <xsl:when test="@rend='center'">centerline</xsl:when>
-            <xsl:when test="@rend='code'">texttt</xsl:when>
-            <xsl:when test="@rend='ital'">textit</xsl:when>
-            <xsl:when test="@rend='italic'">textit</xsl:when>
-            <xsl:when test="@rend='it'">textit</xsl:when>
-            <xsl:when test="@rend='italics'">textit</xsl:when>
-            <xsl:when test="@rend='i'">textit</xsl:when>
-            <xsl:when test="@rend='sc'">textsc</xsl:when>
-            <xsl:when test="@rend='plain'">textrm</xsl:when>
-            <xsl:when test="@rend='quoted'">textquoted</xsl:when>
-            <xsl:when test="@rend='sup'">textsuperscript</xsl:when>
-            <xsl:when test="@rend='sub'">textsubscript</xsl:when>
-            <xsl:when test="@rend='important'">textbf</xsl:when>
-            <xsl:when test="@rend='ul'">uline</xsl:when>
-            <xsl:when test="@rend='overbar'">textoverbar</xsl:when>
-            <xsl:when test="@rend='expanded'">textsc</xsl:when>
-            <xsl:when test="@rend='strike'">sout</xsl:when>
-            <xsl:when test="@rend='small'">textsmall</xsl:when>
-            <xsl:when test="@rend='large'">textlarge</xsl:when>
-            <xsl:when test="@rend='smaller'">textsmaller</xsl:when>
-            <xsl:when test="@rend='larger'">textlarger</xsl:when>
-            <xsl:when test="@rend='calligraphic'">textcal</xsl:when>
-            <xsl:when test="@rend='gothic'">textgothic</xsl:when>
-            <xsl:when test="@rend='noindex'">textrm</xsl:when>
-            <xsl:otherwise>textbf</xsl:otherwise>
+            <xsl:when test="not(@rend)">\textbf</xsl:when>
+            <xsl:when test="starts-with(@rend,'color')">\textcolor</xsl:when>
+            <xsl:when test="@rend='bold'">\textbf</xsl:when>
+            <xsl:when test="@rend='center'">\centerline</xsl:when>
+            <xsl:when test="@rend='code'">\texttt</xsl:when>
+            <xsl:when test="@rend='ital'">\textit</xsl:when>
+            <xsl:when test="@rend='italic'">\textit</xsl:when>
+            <xsl:when test="@rend='it'">\textit</xsl:when>
+            <xsl:when test="@rend='italics'">\textit</xsl:when>
+            <xsl:when test="@rend='i'">\textit</xsl:when>
+            <xsl:when test="@rend='sc'">\textsc</xsl:when>
+            <xsl:when test="@rend='plain'">\textrm</xsl:when>
+            <xsl:when test="@rend='quoted'">\textquoted</xsl:when>
+            <xsl:when test="@rend='sup'">\textsuperscript</xsl:when>
+            <xsl:when test="@rend='sub'">\textsubscript</xsl:when>
+            <xsl:when test="@rend='important'">\textbf</xsl:when>
+            <xsl:when test="@rend='ul'">\uline</xsl:when>
+            <xsl:when test="@rend='overbar'">\textoverbar</xsl:when>
+            <xsl:when test="@rend='expanded'">\textsc</xsl:when>
+            <xsl:when test="@rend='strike'">\sout</xsl:when>
+            <xsl:when test="@rend='small'">\textsmall</xsl:when>
+            <xsl:when test="@rend='large'">\textlarge</xsl:when>
+            <xsl:when test="@rend='smaller'">\textsmaller</xsl:when>
+            <xsl:when test="@rend='larger'">\textlarger</xsl:when>
+            <xsl:when test="@rend='calligraphic'">\textcal</xsl:when>
+            <xsl:when test="@rend='gothic'">\textgothic</xsl:when>
+            <xsl:when test="@rend='noindex'">\textrm</xsl:when>
          </xsl:choose>
       </xsl:variable>
-      <xsl:text>\</xsl:text>
       <xsl:value-of select="$cmd"/>
       <xsl:if test="starts-with(@rend,'color')">
 	        <xsl:text>{</xsl:text>
