@@ -15,7 +15,7 @@ define( 'roma_fop', 'fop' );
 define( 'roma_latex', 'latex' );
 
 // Defines how to call pdflatex
-define( 'roma_pdflatex', 'pdflatex' );
+define( 'roma_pdflatex', 'xelatex' );
 
 // Defines if we are in debugging mode
 define('DEBUG', false);

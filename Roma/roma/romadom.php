@@ -2288,6 +2288,7 @@ class romaDom extends domDocument
 	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/latex/tei.xsl'  );
 	$oProc = new XsltProcessor();
 	$oProc->importStylesheet( $oXSL );
+	$oProc->setParameter( null, 'reencode', 'false' );
 	
 	if ( $this->bBar )
 	  $this->m_oRomaDom->updateProgressBar( '85' );
