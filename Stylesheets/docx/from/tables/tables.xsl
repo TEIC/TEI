@@ -25,6 +25,7 @@
                 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
                 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+                xmlns:html="http://www.w3.org/1999/xhtml"                
                 
                 xmlns="http://www.tei-c.org/ns/1.0"
                 version="2.0"
@@ -50,6 +51,24 @@
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
+
+   <!-- oucs0037 new -->
+   <xsl:template name="getTableBorderStyles">
+     <xsl:param name="tblBorders"/>
+     <xsl:if test="$tblBorders//w:left[@w:sz!='']">
+       <xsl:text>border-left: </xsl:text><xsl:value-of select="$tblBorders//w:left/@w:sz"/><xsl:text>; </xsl:text>
+     </xsl:if>
+     <xsl:if test="$tblBorders//w:bottom[@w:sz!='']">
+       <xsl:text>border-bottom: </xsl:text><xsl:value-of select="$tblBorders//w:bottom/@w:sz"/><xsl:text>; </xsl:text>
+     </xsl:if>
+     <xsl:if test="$tblBorders//w:right[@w:sz!='']">
+       <xsl:text>border-right: </xsl:text><xsl:value-of select="$tblBorders//w:right/@w:sz"/><xsl:text>; </xsl:text>
+     </xsl:if>
+     <xsl:if test="$tblBorders//w:top[@w:sz!='']">
+       <xsl:text>border-top: </xsl:text><xsl:value-of select="$tblBorders//w:top/@w:sz"/><xsl:text>; </xsl:text>
+     </xsl:if>
+   </xsl:template>
+   <!-- oucs0037 new end -->
     
     	<xsl:template match="w:tbl" mode="paragraph">
 	     <xsl:choose>
@@ -63,8 +82,17 @@
 	      <!-- preprocess the table to expand colspans, add row numbers, and
 		   simplify vertical merge info -->
 
+	      <xsl:variable name="tableBorderStyles">
+		<xsl:call-template name="getTableBorderStyles">
+		  <xsl:with-param name="tblBorders" select="w:tblPr/w:tblBorders"/>
+		</xsl:call-template>
+	      </xsl:variable>
+
 	      <xsl:variable name="TABLE">
 		             <table xmlns="http://www.oasis-open.org/specs/tm9901">
+			       <!-- oucs0037 add -->
+			       <xsl:attribute name="html:style"><xsl:value-of select="normalize-space($tableBorderStyles)"/></xsl:attribute>
+			       <!-- oucs0037 add end -->
 		                <xsl:attribute name="frame">
 		                   <xsl:choose>
 		      <!-- lets face it, most tables do have
@@ -274,6 +302,13 @@
 	  <xsl:template match="w:tr" mode="innerTable">
 	     <row xmlns="http://www.oasis-open.org/specs/tm9901">
 	        <xsl:for-each select="w:tc[not(@DUMMY='yes')]">
+		  <!-- oucs0037 new -->
+		  <xsl:variable name="cellBorderStyles">
+		    <xsl:call-template name="getTableBorderStyles">
+		      <xsl:with-param name="tblBorders" select="w:tcPr/w:tcBorders"/>
+		    </xsl:call-template>
+		  </xsl:variable>					
+		  <!-- oucs0037 new end -->
 	           <xsl:choose>
 		             <xsl:when test="w:tcPr/w:vMerge[not(@w:val='restart')]"/>
 		             <xsl:otherwise>
@@ -288,6 +323,10 @@
 		                      <xsl:text>c</xsl:text>
 		                      <xsl:value-of select="$COLPOS"/>
 		                   </xsl:attribute>
+				   <!-- oucs0037 new -->
+				   <xsl:attribute
+				       name="html:style"><xsl:value-of select="normalize-space($cellBorderStyles)"/></xsl:attribute>
+				   <!-- oucs0037 new end -->
 		                   <xsl:if test="w:p/w:pPr/w:jc">
 		                      <xsl:attribute name="align">
 			                        <xsl:value-of select="w:p[w:pPr/w:jc/@w:val][1]/w:pPr/w:jc/@w:val"/>
