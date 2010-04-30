@@ -83,16 +83,18 @@ rectangular space.</desc>
         <rng:ref name="data.numeric"/>
       </datatype>
     </attDef>
-<!--
-<attDef ident="box">
-<desc>identifies a rectangular area or bounding box by specifying
-four numbers, which give the x,y coordinates of the box's upper left
-corner, followed by the x,y coordinates of its lower right
-corner.</desc>
-<datatype minOccurs="4" maxOccurs="4">
-<rng:ref name="data.numeric" />
+<attDef ident="points">
+<desc>identifies a non-rectangular area within the bounding box
+specified by the other attributes  by specifying
+a series of pairs of numbers, each of which gives the x,y coordinates
+of a point on a line defining the non-rectangular area.</desc>
+<datatype minOccurs="1" maxOccurs="unbounded">
+<rng:data type="token">
+<rng:param
+name="pattern">[d]+,[\d]+([\s]+[\d]+,[\d]+){2,}</rng:param>
+</rng:data>
 </datatype>
 </attDef>
--->
+
   </attList>
 </classSpec>

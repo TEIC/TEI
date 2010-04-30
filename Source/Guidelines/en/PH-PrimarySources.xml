@@ -218,17 +218,27 @@ represented implied.
 </p>
 
 <p>Each <gi>surface</gi> can contain one or more <gi>zone</gi>
-elements, each of which represents a rectangular region or
+elements, each of which represents a  region or
 <term>bounding box</term> defined in terms of the same coordinate
-space as that of its parent <gi>surface</gi> element. This provides a
-unit of analysis which may be used to define any rectangular region of
+space as that of its parent <gi>surface</gi> element. A zone may be
+rectangular or non-rectangular: a rectangular zone is defined by a
+sequence of four co-ordinates in the same way as a surface; a
+non-rectangular zone is defined using the attribute
+<att>points</att>, which  provides a sequence of co-ordinates, each
+of which specifies a point on the line surrounding the zone. 
+<specList>
+<specDesc key="att.coordinated" atts="points"/>
+</specList>
+<note place="foot">The  <att>points</att> attribute supplies a <soCalled>points
+specification</soCalled> in the same form as that required by the
+<gi>polyline</gi> or <gi>polygon</gi> elements in  the SVG standard. See
+<ptr target="http://www.w3.org/TR/SVG/shapes.html#PointsBNF"/></note>
+</p><p>A zone  may be used to define any region of
 interest, such as a detail or illustration, or some part of the
-surface which is to be aligned with a particular text element.  The
-<ident type="class">att.coordinated</ident> attributes listed above
-are also used to supply the coordinates of a zone. </p>
-<p>As we have seen, a surface will usually correspond with the whole
+surface which is to be aligned with a particular text element.  
+As we have seen, a surface will usually correspond with the whole
 of a written surface. A zone, by contrast, defines any arbitrary
-rectangular area of interest using the same coordinate system. It
+area of interest using the same coordinate system. It
 might be bigger or smaller than its parent surface, or might overlap
 its boundaries. The only constraint is that it must be defined using
 the same coordinate system. </p>
