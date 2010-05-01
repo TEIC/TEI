@@ -665,7 +665,7 @@
             </xsl:if>
         </xsl:variable>
         <p rend="Special">
-            <xsl:attribute name="html:style"><xsl:value-of select="$css"/></xsl:attribute>
+            <xsl:attribute name="iso:style"><xsl:value-of select="$css"/></xsl:attribute>
             <xsl:apply-templates/>
         </p>
      </xsl:for-each-group>

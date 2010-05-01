@@ -283,7 +283,7 @@
 		</w:pStyle>
 	           <xsl:if test="@rend='Special'">
 	               <xsl:call-template name="undoSpecialStyle">
-	                   <xsl:with-param name="css"><xsl:value-of select="@html:style"/></xsl:with-param>
+	                   <xsl:with-param name="css"><xsl:value-of select="@iso:style"/></xsl:with-param>
 	               </xsl:call-template>
 	           </xsl:if>
 	      </xsl:when>
@@ -302,7 +302,7 @@
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-        <desc>Turn html:style attribute back into Word styles</desc></doc>
+        <desc>Turn iso:style attribute back into Word styles</desc></doc>
     
     <xsl:template name="undoSpecialStyle">
         <xsl:param name="css"/>
@@ -362,7 +362,7 @@
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-        <desc>Extract font information from html:style</desc></doc>
+        <desc>Extract font information from iso:style</desc></doc>
     
     <xsl:template name="getStyleFonts">
         <xsl:param name="css"/>

@@ -90,9 +90,10 @@
 
 	      <xsl:variable name="TABLE">
 		             <table xmlns="http://www.oasis-open.org/specs/tm9901">
-			       <!-- oucs0037 add -->
-			       <xsl:attribute name="html:style"><xsl:value-of select="normalize-space($tableBorderStyles)"/></xsl:attribute>
-			       <!-- oucs0037 add end -->
+
+			       <xsl:attribute name="iso:style">
+				 <xsl:value-of select="normalize-space($tableBorderStyles)"/>
+			       </xsl:attribute>
 		                <xsl:attribute name="frame">
 		                   <xsl:choose>
 		      <!-- lets face it, most tables do have
@@ -323,10 +324,10 @@
 		                      <xsl:text>c</xsl:text>
 		                      <xsl:value-of select="$COLPOS"/>
 		                   </xsl:attribute>
-				   <!-- oucs0037 new -->
 				   <xsl:attribute
-				       name="html:style"><xsl:value-of select="normalize-space($cellBorderStyles)"/></xsl:attribute>
-				   <!-- oucs0037 new end -->
+				       name="iso:style"><xsl:value-of
+				       select="normalize-space($cellBorderStyles)"/>
+				   </xsl:attribute>
 		                   <xsl:if test="w:p/w:pPr/w:jc">
 		                      <xsl:attribute name="align">
 			                        <xsl:value-of select="w:p[w:pPr/w:jc/@w:val][1]/w:pPr/w:jc/@w:val"/>

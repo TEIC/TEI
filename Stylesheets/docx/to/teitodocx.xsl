@@ -631,7 +631,7 @@
 	      </xsl:when>
                  <xsl:when test="contains(@rend, 'Special')">
                       <xsl:call-template name="getStyleFonts">
-                          <xsl:with-param name="css" select="@html:style"/>
+                          <xsl:with-param name="css" select="@iso:style"/>
                       </xsl:call-template>
                  </xsl:when>
 	    </xsl:choose>
@@ -894,7 +894,7 @@
         <xsl:call-template name="block-element">
             <xsl:with-param name="select">
                 <tei:p rend="Special" 
-		       html:style="font-family:Courier New; text-align:left;" >
+		       iso:style="font-family:Courier New; text-align:left;" >
                     <xsl:call-template name="create-egXML-section"/>
                 </tei:p>
             </xsl:with-param>
@@ -958,7 +958,6 @@
                     <xsl:copy-of select="w:tblPr"/>
                 </xsl:when>
                 <xsl:otherwise>
-		  <xsl:message>Got here: <xsl:value-of select="."/></xsl:message>
                     <w:tblPr>
                         <w:tblW w:w="0" w:type="auto"/>
                         <w:jc w:val="center"/>
@@ -1103,7 +1102,7 @@
 
     <!-- oucs0037 new -->
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-        <desc>Turn html:style attribute back into Word styles for table</desc></doc>
+        <desc>Turn iso:style attribute back into Word styles for table</desc></doc>
 
     <xsl:template name="undoTableBorderStyles">
       <xsl:param name="htmlStyles"/>
@@ -1133,15 +1132,14 @@
                 <w:jc w:val="center"/>
                 <w:tblBorders>
                     <xsl:choose>
-			<!-- oucs0037 new -->
-		        <xsl:when test="@html:style">
+		        <xsl:when test="@iso:style">
 			  <xsl:call-template name="undoTableBorderStyles">
 			    <xsl:with-param name="htmlStyles">
-			      <xsl:value-of select="@html:style"/>
+			      <xsl:value-of select="@iso:style"/>
 			    </xsl:with-param>
 			  </xsl:call-template>
 			</xsl:when>
-			<!-- oucs0037 new end -->
+
                         <xsl:when test="@frame='none'">
                             <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
                             <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
@@ -1355,15 +1353,13 @@
                         </xsl:when>
                     </xsl:choose>
                     <xsl:choose>
-		      <!-- oucs0037 new -->
-		      <xsl:when test="@html:style">
+		      <xsl:when test="@iso:style">
 			<xsl:call-template name="undoTableBorderStyles">
 			  <xsl:with-param name="htmlStyles">
 			    <xsl:value-of select="@html:style"/>
 			  </xsl:with-param>
 			</xsl:call-template>
 		      </xsl:when>
-		      <!-- oucs0037 new end -->
                         <xsl:when test="@colsep='0'">
                             <w:left w:val="nil"/>
                         </xsl:when>
