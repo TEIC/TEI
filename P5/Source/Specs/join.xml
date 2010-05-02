@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright TEI Consortium. Licensed under the GNU General Public License. See the file COPYING.txt for details $Date$ $Id$ -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="linking" ident="join">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+  module="linking" ident="join">
   <equiv/>
   <gloss version="2009-10-06" xml:lang="fr">jointure</gloss>
   <desc>identifies a possibly fragmented segment of text, by pointing at the possibly discontiguous elements which compose it.</desc>
@@ -12,14 +15,31 @@
   <desc version="2007-01-21" xml:lang="it">identifica un segmento o frammento di testo puntando ad eventuali elementi non contigui che lo compongono</desc>
   <classes>
     <memberOf key="att.pointing"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
     <rng:zeroOrMore>
       <rng:ref name="model.glossLike"/>
     </rng:zeroOrMore>
-    <!-- <rng:ref name="macro.glossSeq"/>-->
   </content>
+      <constraintSpec ident="joinTargets1" scheme="isoschematron">
+	<constraint>
+	<sch:report test="@target and @targets">You may not supply both 
+	@target and @targets</sch:report>
+	</constraint>
+      </constraintSpec>
+      <constraintSpec ident="joinTargets2" scheme="isoschematron">	<constraint>
+	<sch:report test="not(@target) and not(@targets)">You must
+	supply either @target or @targets</sch:report>
+	</constraint>
+      </constraintSpec> 
+      <constraintSpec ident="joinTargets3" scheme="isoschematron">	<constraint>
+<sch:assert test="contains(@target,' ')">You must supply at least two
+values for @target</sch:assert>
+	</constraint>
+      </constraintSpec>
+
   <attList>
     <attDef ident="targets" usage="req">
       <equiv/>
@@ -35,6 +55,13 @@
       </datatype>
       <valDesc>two or more pointers (URIs), separated by whitespace</valDesc>
       <valDesc xml:lang="fr" version="2009-10-05">deux pointeurs ou plus (URI), séparés par des espaces.</valDesc>
+
+<remarks><p>This attribute is deprecated. It is retained for backward compatibility
+only; the attribute <att>target</att> should be used for
+preference. It is an error to supply both attributes, but one or the
+other must be present.</p></remarks>
+
+
     </attDef>
     <attDef ident="result" usage="opt">
       <equiv/>

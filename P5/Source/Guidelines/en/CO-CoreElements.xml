@@ -2120,7 +2120,12 @@ other locations, either in the same or different XML documents, may be encoded
 using the elements <gi>ptr</gi> and <gi>ref</gi>, as discussed in this
 section. These elements both <soCalled>point</soCalled> from one
 location in a document, the place that the element itself appears, to
-another (or to several), specified by the <att>target</att> attribute.
+another (or to several), specified by means of a <att>target</att>
+attribute, supplied by the <ident
+type="class">att.pointing</ident> class:
+<specList>
+<specDesc key="att.pointing" atts="target"/>
+</specList>
 Linkages of several other kinds are also provided for in these
 guidelines; see further chapter <ptr target="#SA"/>.
  </p>
@@ -2148,14 +2153,15 @@ cross-reference, the <gi>ref</gi> element may be used without a
 for the complete XPointer specification, see <ptr target="http://www.w3.org/TR/xptr-framework/"/>, <ptr target="http://www.w3.org/TR/xptr-element/"/>, <ptr target="http://www.w3.org/TR/xptr-xmlns/"/>, and <ptr target="http://www.w3.org/TR/xptr-xpointer/#xpointer(id('chum')/quote)"/>; for a discussion of
 TEI schemes for XPointer, see <ptr target="#SATS"/>.</p>
 <p>
-<specList><specDesc key="ptr" atts="target cRef"/><specDesc key="ref" atts="target cRef"/></specList>
+<specList><specDesc key="ptr" atts="cRef"/><specDesc key="ref" atts="cRef"/></specList>
  </p>
 <p>The elements <gi>ptr</gi> and <gi>ref</gi> are the default members
 of the phrase-level model class <ident type="class">model.ptrLike</ident>. As
-members of the class <ident type="class">att.pointing</ident>, they
+members of the class <ident type="class">att.pointing</ident> and <ident type="class">att.typed</ident>, they
 also carry the following
 attributes:
-<specList><specDesc key="att.pointing" atts="type evaluate"/></specList>
+<specList><specDesc key="att.pointing" atts="target evaluate"/>
+<specDesc key="att.typed" atts="type subtype"/></specList>
  </p>
 <p>The two elements may be used in the same
 way; the difference between them is simply that while the <gi>ptr</gi>
