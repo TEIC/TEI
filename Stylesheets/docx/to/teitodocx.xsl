@@ -1587,6 +1587,27 @@
 
     </xsl:template>
 
+    <!-- cross-ref -->
+    <xsl:template match="tei:ref">
+        <w:r>
+            <w:fldChar w:fldCharType="begin"/>
+        </w:r>
+        <w:r>
+            <w:instrText>REF _<xsl:value-of select="substring-after(@target,'#')"/> \n\h</w:instrText>
+        </w:r>
+        <w:r>
+            <w:fldChar w:fldCharType="separate"/>
+        </w:r>
+        <w:r>
+            <w:t>
+	      <xsl:value-of select="."/>
+            </w:t>
+        </w:r>
+        <w:r>
+            <w:fldChar w:fldCharType="end"/>
+        </w:r>
+    </xsl:template>
+
     <xsl:template match="tei:note|tei:figure|tei:table|tei:item" mode="xref">
         <xsl:number/>
     </xsl:template>

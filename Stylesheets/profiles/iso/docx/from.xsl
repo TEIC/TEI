@@ -1626,6 +1626,7 @@
 
     <xsl:template name="paragraph-wp">
         <p>
+
             <!-- put style in rend, if there is a style -->
             <xsl:if test="w:pPr/w:pStyle/@w:val and teidocx:is-supported-style(w:pPr/w:pStyle/@w:val)">
                 <xsl:attribute name="rend">
@@ -1644,8 +1645,52 @@
                     <xsl:value-of select="w:pPr/w:spacing/@w:after"/>
                 </xsl:attribute>
             </xsl:if>
-
-            <xsl:apply-templates select="."/>
+	    <xsl:choose>
+	      <xsl:when
+		  test="w:r[w:fldChar/@w:fldCharType[matches(.,'begin')]]">
+		<xsl:for-each-group select="w:r"
+				    group-starting-with="w:r[w:fldChar/@w:fldCharType[matches(.,'begin|end')]]">
+		  <xsl:choose>
+		    <xsl:when
+			test="self::w:r[w:fldChar/@w:fldCharType[matches(.,'begin')]]">
+		      <ref>
+		      <xsl:for-each select="current-group()">
+			<xsl:choose>
+			  <xsl:when
+			      test="self::w:r[w:instrText]">			    
+			    <xsl:variable name="ref">
+			      <xsl:value-of
+				    select="substring-before(substring-after(w:instrText,'_'),' ')"/>
+			    </xsl:variable>
+			    <xsl:attribute name="target" select="concat('#',$ref)"/>
+			  </xsl:when>
+			  <xsl:otherwise>
+			    <xsl:apply-templates/>
+			  </xsl:otherwise>
+			</xsl:choose>
+		      </xsl:for-each>
+		      </ref>
+		    </xsl:when>
+		    <xsl:when
+			test="self::w:r[w:fldChar/@w:fldCharType[matches(.,'end')]]">
+		      <xsl:for-each select="current-group()">
+			<xsl:choose>
+			  <xsl:when  test="w:t">			    
+			    <xsl:apply-templates/>
+			  </xsl:when>
+			</xsl:choose>
+		      </xsl:for-each>
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:apply-templates/>
+		    </xsl:otherwise>
+		  </xsl:choose>
+		</xsl:for-each-group>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:apply-templates select="."/>
+	      </xsl:otherwise>
+	    </xsl:choose>
         </p>
     </xsl:template>
 
