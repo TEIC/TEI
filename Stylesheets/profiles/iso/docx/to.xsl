@@ -125,7 +125,7 @@
       </desc>
     </doc>
 
-    <xsl:template match="tei:c[@iso:font and @n]">
+    <xsl:template match="tei:c[@iso:style and @n]">
         <w:r>
             <xsl:variable name="renderingProperties">
                 <xsl:call-template name="applyRend"/>

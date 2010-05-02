@@ -502,7 +502,7 @@
                         <w:numFmt w:val="decimal"/>
                         <w:pStyle w:val="Figuretitle"/>
                         <w:suff w:val="space"/>
-                        <w:lvlText w:val="Figure %1 —"/>
+                        <w:lvlText w:val="Figure %1"/>
                         <w:lvlJc w:val="left"/>
                         <w:pPr>
                             <w:ind w:left="0" w:firstLine="0"/>

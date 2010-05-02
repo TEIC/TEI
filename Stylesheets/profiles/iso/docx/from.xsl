@@ -941,6 +941,8 @@
     </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$Figuretitle]" mode="paragraph">
         <head>
+
+<xsl:message>See <xsl:value-of select="."/></xsl:message>
             <xsl:apply-templates/>
         </head>
     </xsl:template>
