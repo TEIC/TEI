@@ -1430,13 +1430,22 @@
     <xsl:template match="tei:figure/tei:head">
       <w:p>
        <w:pPr>
-	 <w:pStyle w:val="Figuretitle"/>
+	 <w:pStyle>
+	     <xsl:choose>
+	       <xsl:when test="@type='subtitle'">
+		 <xsl:attribute name="w:val">Figuresubtitle</xsl:attribute>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:attribute name="w:val">Figuretitle</xsl:attribute>
+		 <xsl:if test="not(normalize-space(.)='')">
+		   <w:r>
+		     <w:t xml:space="preserve">— </w:t>
+		   </w:r>
+		 </xsl:if>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	 </w:pStyle>
        </w:pPr>
-       <xsl:if test="not(normalize-space(.)='')">
-	 <w:r>
-	   <w:t xml:space="preserve">— </w:t>
-	 </w:r>
-       </xsl:if>
        <xsl:apply-templates/>
       </w:p>
     </xsl:template>

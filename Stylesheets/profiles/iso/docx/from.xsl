@@ -944,6 +944,11 @@
             <xsl:apply-templates/>
         </head>
     </xsl:template>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Figure subtitle']" mode="paragraph">
+        <head type="subtitle">
+            <xsl:apply-templates/>
+        </head>
+    </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
@@ -952,6 +957,29 @@
     </doc>
     <xsl:template
 	match="w:p[w:pPr/w:pStyle/@w:val=$Figuretitle]/w:r/w:t">
+      <xsl:choose>
+	<xsl:when test="starts-with(.,'— ')">
+	  <xsl:value-of select="substring(.,3)"/>
+	</xsl:when>
+	<xsl:when test="starts-with(.,' — ')">
+	  <xsl:value-of select="substring(.,4)"/>
+	</xsl:when>
+	<xsl:when test="starts-with(.,'—')">
+	  <xsl:value-of select="substring(.,2)"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="."/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        Text in table heading
+      </desc>
+    </doc>
+    <xsl:template
+	match="w:p[w:pPr/w:pStyle/@w:val=$Tabletitle]/w:r/w:t">
       <xsl:choose>
 	<xsl:when test="starts-with(.,'— ')">
 	  <xsl:value-of select="substring(.,3)"/>
@@ -1419,6 +1447,13 @@
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Figure note']"
 		  mode="paragraph">
         <note rend="Figurenote">
+            <xsl:apply-templates/>
+        </note>
+    </xsl:template>
+
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Figure footnote']"
+		  mode="paragraph">
+        <note rend="Figurefootnote">
             <xsl:apply-templates/>
         </note>
     </xsl:template>

@@ -101,7 +101,7 @@
     
     <xsl:template match="tei:graphic">
         <!-- perform some tests on the graphic -->
-        <xsl:if test="@url and              (             (@teidocx:width and @teidocx:height)             or             (@width and @height))">
+        <xsl:if test="@url and  ( (@teidocx:width and @teidocx:height) or (@width and @height))">
             
             <!--
                 

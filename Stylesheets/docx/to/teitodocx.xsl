@@ -1238,12 +1238,22 @@
 
     <xsl:template name="cals-table-header">
         <xsl:if test="cals:title">
-            <xsl:for-each select="cals:title[1]">
-                <xsl:call-template name="block-element">
-                    <xsl:with-param name="style">Tabletitle</xsl:with-param>
-                </xsl:call-template>
-            </xsl:for-each>
-        </xsl:if>
+	  <xsl:for-each select="cals:title[1]">
+	    <w:p>
+	      <w:pPr>
+		<w:pStyle>
+		  <xsl:attribute name="w:val">Tabletitle</xsl:attribute>
+		</w:pStyle>
+	      </w:pPr>
+	      <xsl:if test="not(normalize-space(.)='')">
+		<w:r>
+		  <w:t xml:space="preserve">— </w:t>
+		</w:r>
+	      </xsl:if>
+	      <xsl:apply-templates/>
+	    </w:p>
+	  </xsl:for-each>
+	</xsl:if>
     </xsl:template>
 
     <xsl:template match="cals:tgroup">

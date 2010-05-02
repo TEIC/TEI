@@ -305,18 +305,4 @@
       </xsl:for-each>
    </xsl:template>
 
-    <!-- 
-     remove Table and Figure from start 
-     <xsl:template match="cals:table/cals:title[starts-with(.,'Table  — ')]" mode="pass2">
-     <title xmlns="http://www.oasis-open.org/specs/tm9901">
-     <xsl:value-of select="substring-after(.,'Table  — ')"/>
-     </title>
-     </xsl:template>
-     
-     <xsl:template match="tei:figure/tei:head[starts-with(.,'Figure  — ')]" mode="pass2">
-     <head>
-     <xsl:value-of select="substring-after(.,'Figure  — ')"/>
-     </head>
-     </xsl:template>
-    -->
 </xsl:stylesheet>
