@@ -87,11 +87,13 @@ pointer elements, <gi>ptr</gi> and <gi>ref</gi>. Here we
 introduce additionally the <gi>link</gi> element, which
 represents an association between two (or more) locations by
 specifying each location explicitly. Its own location is
-irrelevant to the intended linkage.
+irrelevant to the intended linkage. All three elements use the
+attribute <att>target</att>, provided by the <ident
+type="class">att.pointing</ident> class as a means of indicating the
+location or locations referenced or pointed to. 
 <specList>
-  <specDesc key="ptr" atts="target"/>
-  <specDesc key="ref" atts="target"/>
-  <specDesc key="link" atts="targets"/>
+  <specDesc key="att.pointing" atts="target"/>
+  <specDesc key="link"/>
 </specList>
 The <gi>ptr</gi> element may be called a <soCalled>pure
 pointer</soCalled>, because its primary function is simply to point. A
@@ -99,17 +101,18 @@ pointer sets up a <term rend="noindex">connection</term> between an
 element (which, in the case of a pure pointer, is
 simply a location in a document), and one or more others, known
 collectively as its <term>target</term>. The <gi>ptr</gi> and
-<gi>ref</gi> elements bear a <att>target</att> attribute (in the
-singular), because they point, conceptually, at a single target, even
+<gi>ref</gi> elements <!-- bear a <att>target</att> attribute (in the
+singular), because they --> point, conceptually, at a single target, even
 if that target may be discontinuous in the document. The <gi>link</gi>
-element bears a <att>targets</att> attribute (in the plural), because
-it specifies at least two targets, each of which is a unitary
-object. It may be thought of as a representing a <term>double
-link</term> between the objects specified.</p>
-<p>As members of the class <ident type="class">att.pointing</ident>,
-these elements share a common set of attributes:
+element <!-- bears a <att>targets</att> attribute (in the plural), because
+it --> specifies at least two targets and represents an association
+between them, independent of its own location. </p>
+<p>These three elements also share a common set of attributes, derived
+from the <ident type="class">att.pointing</ident> and <ident
+type="class">att.typed</ident> classes:
 <specList>
-  <specDesc key="att.pointing" atts="type evaluate"/>
+  <specDesc key="att.pointing" atts="evaluate"/>
+  <specDesc key="att.typed" atts="type subtype"/>
 </specList></p>
 <p>Double connection among elements could also be expressed by a
 combination of pointer elements, for example, two <gi>ptr</gi>
@@ -124,19 +127,21 @@ encoding:
 <val>sa-p1</val> points to <val>sa-p2</val>, and <val>sa-p2</val>
 points to <val>sa-p1</val>. This is logically
 equivalent to the more compact encoding:
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><link targets="#sa-p1 #sa-p2"/></egXML></p>
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><link target="#sa-p1 #sa-p2"/></egXML></p>
 <p>As noted elsewhere, both <att>target</att> and <att>targets</att>
 attributes take as value one or more URI reference. In the simplest
 case, a URI reference might indicate an element in the current
 document (or in some other document) by supplying the value used for
-its global <att>xml:id</att> attribute. Pointing or linking to
+its global <att>xml:id</att> attribute. It may however carry as value
+any form of URI, such as a URL pointing to some other document or
+location on the Internet. Pointing or linking to
 external documents and pointing and linking where identifiers are not
-available are implemented by more complex forms of URI references, as
+available is
 described below in section <ptr target="#SAXP"/>.</p>
     </div>
     <div type="div3" xml:id="SAPTEG">
 <head>Using Pointers and Links</head>
-<p>As an example of the use of these mechanisms which establish
+<p>As an example of the use of mechanisms which establish
 connections among elements, consider the practice (common in
 18th century English verse and elsewhere) of providing footnotes
 citing parallel passages from classical authors. <figure xml:id="POPE" rend="float fullpage">
@@ -259,9 +264,9 @@ with:
 <l>—— Rex Jupiter omnibus idem. </l>
    </quote>
 </note>
-<link targets="#n3.284 #L3.284"/></egXML>
+<link target="#n3.284 #L3.284"/></egXML>
 <!-- Pope, Dunciad (1729) III.284 --></p>
-<p>The <att>targets</att> attribute of the <gi>link</gi> element
+<p>The <att>target</att> attribute of the <gi>link</gi> element
 here bears the identifier of the note followed by that of the
 verse line.  We could also allocate an
 identifier to the reference within the note and encode the
@@ -275,11 +280,11 @@ association between it and the verse line in the same way:
    <!-- ... -->
 </note>
 <!-- ... -->
-<link targets="#r3.284 #L3.284"/></egXML>
+<link target="#r3.284 #L3.284"/></egXML>
 <!-- Pope, Dunciad (1729) III.284 -->
 Indeed, the two <gi>link</gi>s could be combined into one, as
 follows:
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><link targets="#n3.284 #r3.284 #L3.284"/></egXML></p>
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><link target="#n3.284 #r3.284 #L3.284"/></egXML></p>
     </div>
     <div type="div3" xml:id="SAPTLG">
 <head>Groups of Links</head>
@@ -293,16 +298,16 @@ element <gi>linkGrp</gi> may be used to group links of a
 particular type together in a single part of the document; such
 a collection may be used to represent what is sometimes referred
 to in the literature of Hypertext as a <term>web</term>, a term
-introduced by the Brown University FRESS project in 1969.
+introduced by the Brown University FRESS project in 1969, and not to
+be confused with the World Wide Web.
 <specList><specDesc key="linkGrp"/></specList>
 As a member of the class <ident type="class">att.pointing.group</ident>, this element shares the
 following attributes with other members of that class:
 <specList><specDesc key="att.pointing.group" atts="domains targFunc "/></specList>
 It is also a member of the <ident type="class">att.pointing</ident>
-class, and therefore also carries the attributes specified in
+and <ident type="class">att.typed</ident> classes, and therefore also carries the attributes specified in
 section <ptr target="#SAPTL"/> above, in particular the
-<att>type</att> attribute:
-<specList><specDesc key="att.pointing" atts="type"/></specList></p>
+<att>type</att> attribute. </p>
 <p>The <gi>linkGrp</gi> element provides a convenient way of
 establishing a default for the <att>type</att> attribute on a
 group of links of the same type: by default, the <att>type</att>
@@ -339,9 +344,9 @@ we may specify it once for all on a <gi>linkGrp</gi> element
 containing all links of this type.
   <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
 <linkGrp type="imitation">
-   <link targets="#n2.79 #L2.79"/>
-   <link targets="#n2.88 #L2.88"/>
-   <link targets="#n3.284 #L3.284"/>
+   <link target="#n2.79 #L2.79"/>
+   <link target="#n2.88 #L2.88"/>
+   <link target="#n3.284 #L3.284"/>
 </linkGrp></egXML></p>
 <p>Additional information for applications that use
 <gi>linkGrp</gi> elements can be provided by means of special
@@ -358,10 +363,10 @@ limit its search space:
   <egXML  xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
   <!-- ... -->
   <linkGrp type="imitation" domains="dunciad dunnotes">
-    <link targets="#n2.79 #L2.79"/>
-    <link targets="#n2.88 #L2.88"/>
+    <link target="#n2.79 #L2.79"/>
+    <link target="#n2.88 #L2.88"/>
     <!-- ... -->
-    <link targets="#n3.284 #L3.284"/>
+    <link target="#n3.284 #L3.284"/>
     <!-- ... -->
   </linkGrp>
 </egXML></p>
@@ -389,10 +394,10 @@ as containing the <term rend="noindex">goal</term> of the
 imitation. Accordingly, we can specify the <gi>linkGrp</gi> in
 the preceding example thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="imitation" domains="dunciad dunnotes" targFunc="source goal">
-   <link targets="#n2.79 #L2.79"/>
-   <link targets="#n2.88 #L2.88"/>
+   <link target="#n2.79 #L2.79"/>
+   <link target="#n2.88 #L2.88"/>
    <!-- ... -->
-   <link targets="#n3.284 #L3.284"/>
+   <link target="#n3.284 #L3.284"/>
    <!-- ... -->
 </linkGrp></egXML></p>
 <specGrp xml:id="DSAPT" n="Links">
@@ -466,7 +471,7 @@ is however the task of a processing application, and cannot be
 defined simply by the markup). The <att>xml:id</att> attribute
 of the <gi>ptr</gi> then provides an identifier which can be linked to the
 <gi>note</gi> and <gi>ref</gi> elements:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><link evaluate="all" targets="#n3.284 #r3.284 #L3.283-284"/></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><link evaluate="all" target="#n3.284 #r3.284 #L3.283-284"/></egXML>
 <!-- Pope, Dunciad (1729) III.284 --></p>
 <p>The <val>all</val> value of <att>evaluate</att> is used on the
 <gi>link</gi> element to specify that any pointer encountered as
@@ -1683,19 +1688,16 @@ still is being considered.</egXML>
   specify their intent in the associated encoding description
   in the TEI Header.</p>
   <p>Essentially, what the <att>corresp</att> attribute does is
-  to specify that the element that has the attribute and the
-  element(s) the attribute points to are doubly linked.<note place="foot">The <att>corresp</att> attribute is thus distinct
-  from the <att>target</att> attribute in that it is understood
-  to create a double, rather than a single, link. It is also
-  distinct from the <att>targets</att> attribute in that the
-  latter lists all the identifiers of the elements that are
-  doubly linked, whereas the <att>corresp</att> doubly links the
-  element that bears the attribute with the element(s) that make
-  up the value of the attribute.</note> Therefore, we can also
-  use the <gi>link</gi> and <gi>linkGrp</gi> elements defined in
-  section <ptr target="#SAPT"/> to indicate correspondence among
-  elements. Moreover, the use of these elements provides a
-  convenient place to indicate what kind of correspondence is
+  to specify that elements  bearing this attribute and those
+to which the attribute points are doubly linked. In the example above,
+the use of the <att>corresp</att> attribute indicates that the <gi>seg</gi> element containing <q>the show</q> and the 
+<gi>title</gi> element containing <q>Shirley</q> correspond to each
+other: the correspondence relationship is not <soCalled>from</soCalled>
+one to the other, but <soCalled>between</soCalled> the two
+objects. It is thus different from the <att>target</att>  attribute,
+and provides functionality more similar to that of the  <gi>link</gi> and <gi>linkGrp</gi> elements defined in
+  section <ptr target="#SAPT"/>, although it lacks the ability to
+  indeicate more precisely what kind of correspondence is
   intended as in the following retagging of the preceding
   example.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><title xml:id="shirley">Shirley</title>, which made
@@ -1707,7 +1709,7 @@ although <seg xml:id="network">the network</seg> says
    <link targets="#shirley #show"/>
    <link targets="#nbc #network"/>
 </linkGrp></egXML></p>
-<p>In the following example, we may use exactly the same mechanism to
+<p>In the following example, we use the same mechanism to
 express a correspondence amongst the anchors introduced following the
 fifth word after <mentioned>English</mentioned> in a text:
 <eg><![CDATA[English language. Except for not very<anchor xml:id="eng1"/>
@@ -1719,7 +1721,7 @@ English was still full of flaws<anchor xml:id="eng3"/>
 English. This was revised by young<anchor xml:id="eng4"/>
 <!-- ... -->
 <linkGrp type="five-word collocates">
-  <link type="collocates of ENGLISH" targets="#eng1 #eng2 #eng3 #eng4"/>
+  <link type="collocates of ENGLISH" target="#eng1 #eng2 #eng3 #eng4"/>
   <!-- ... -->
 </linkGrp>]]></eg></p></div>
   <div type="div3" xml:id="SACSAL">
@@ -1840,10 +1842,10 @@ ans, exige surtout une plus grande constance dans la
 qualité et une garantie de la pureté.</seg></p>
 </div>
 <linkGrp type="alignment" domains="div-e div-f">
-  <link targets="#e_1 #f_1"/>
-  <link targets="#e_2 #f_2"/>
-  <link targets="#e_3 #f_3"/>
-  <link targets="#e_4 #f_4"/>
+  <link target="#e_1 #f_1"/>
+  <link target="#e_2 #f_2"/>
+  <link target="#e_3 #f_3"/>
+  <link target="#e_4 #f_4"/>
 </linkGrp></egXML></p>
 <p>Note that use of the <gi>ab</gi> element allows us to mark up the
 orthographic sentences in both languages independently of the alignment:
@@ -1993,14 +1995,14 @@ the <gi>link</gi> element, since this provides a more efficient way of
 representing the three-way alignment between English, Latin, and picture
 without redundancy.
   <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="alignment">
-   <link targets="#e9801 #l9801 #p981"/>
-   <link targets="#e9802 #l9802"/>
-   <link targets="#e9803 #l9803 #p982"/>
-   <link targets="#e9804 #l9804"/>
-   <link targets="#e9805 #l9805"/>
-   <link targets="#e9806 #l9806"/>
-   <link targets="#e9807 #l9807"/>
-   <link targets="#e9808 #l9808 #p983"/>
+   <link target="#e9801 #l9801 #p981"/>
+   <link target="#e9802 #l9802"/>
+   <link target="#e9803 #l9803 #p982"/>
+   <link target="#e9804 #l9804"/>
+   <link target="#e9805 #l9805"/>
+   <link target="#e9806 #l9806"/>
+   <link target="#e9807 #l9807"/>
+   <link target="#e9808 #l9808 #p983"/>
 </linkGrp></egXML></p>
 <p>This map, of course, only aligns whole segments and image portions,
 since these are the only parts of our encoding which bear identifiers
@@ -2042,15 +2044,15 @@ more lightly tagged, as follows:<egXML xml:lang="mul" xmlns="http://www.tei-c.or
 XPath expression to identify the required <gi>seg</gi> elements:
 
   <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="alignment">
-   <link targets="#element(L98/2) #element(E98/2) #p981"/>
-   <link targets="#element(L98/3) #element(E98/3)"/>
+   <link target="#element(L98/2) #element(E98/2) #p981"/>
+   <link target="#element(L98/3) #element(E98/3)"/>
 </linkGrp></egXML>
 In the absence of any markup around individual substrings of
 the element content, the string-range pointer scheme discussed in <ptr target="#SATSSR"/> may also be helpful: for example, to indicate that the words
 <mentioned>Studies</mentioned> and <mentioned>Studiis</mentioned>
 correspond, we might express the link between them as follows:
   <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
-<link targets="#string-range(xpath1(id('e9806')),16,7)    #string-range(xpath1(id('l9806')),0,7)"/></egXML></p>
+<link target="#string-range(xpath1(id('e9806')),16,7)    #string-range(xpath1(id('l9806')),0,7)"/></egXML></p>
 
 </div></div>
 <div type="div2" xml:id="SASY">
@@ -2126,12 +2128,12 @@ element has been used to enclose the <gi>linkGrp</gi> element, but the links
 may be located anywhere the encoder finds convenient:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><back>
     <linkGrp xml:id="lg1" domains="BNC-d1 BNC-d1" targFunc="speaker.a speaker.b" type="synchronous_alignment">
-<link xml:id="L1" targets="#t1a #t1b"/>
-<link xml:id="L2" targets="#t2a #t2b"/>
-<link xml:id="L3" targets="#t3a #t3b"/>
-<link xml:id="l4" targets="#t4a #t4b"/>
-<link xml:id="l5" targets="#t5a #t5b"/>
-<link xml:id="l6" targets="#t6a #t6b"/>
+<link xml:id="L1" target="#t1a #t1b"/>
+<link xml:id="L2" target="#t2a #t2b"/>
+<link xml:id="L3" target="#t3a #t3b"/>
+<link xml:id="l4" target="#t4a #t4b"/>
+<link xml:id="l5" target="#t5a #t5b"/>
+<link xml:id="l6" target="#t6a #t6b"/>
     </linkGrp>
   </back></egXML>
 The
@@ -2207,24 +2209,24 @@ The information in this <gi>timeline</gi> could now be linked to the
 information in the <gi>linkGrp</gi> which provides the temporal
 alignment (synchronization) for the text, as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="temporal_specification" domains="lg1 tL1" targFunc="synch.points when">
-   <link targets="#L1 #w1"/>
-   <link targets="#L2 #w2"/>
-   <link targets="#L3 #w3"/>
-   <link targets="#l4 #w4"/>
-   <link targets="#l5 #w5"/>
-   <link targets="#l6 #w6"/>
+   <link target="#L1 #w1"/>
+   <link target="#L2 #w2"/>
+   <link target="#L3 #w3"/>
+   <link target="#l4 #w4"/>
+   <link target="#l5 #w5"/>
+   <link target="#l6 #w6"/>
 </linkGrp></egXML></p>
 <p>To avoid the need for two distinct link groups (one marking the
 synchronization of anchors with each other, and the other marking their
 alignment with points on the time line) it would be better to link the
 <gi>when</gi> elements with the synchronous points directly:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="temporal_specification" domains="BNC-d1 BNC-d1 tL1" targFunc="speaker.a speaker.b when">
-   <link targets="#t1a #t1b #w1"/>
-   <link targets="#t2a #t2b #w2"/>
-   <link targets="#t3a #t3b #w3"/>
-   <link targets="#t4a #t4b #w4"/>
-   <link targets="#t5a #t5b #w5"/>
-   <link targets="#t6a #t6b #w6"/>
+   <link target="#t1a #t1b #w1"/>
+   <link target="#t2a #t2b #w2"/>
+   <link target="#t3a #t3b #w3"/>
+   <link target="#t4a #t4b #w4"/>
+   <link target="#t5a #t5b #w5"/>
+   <link target="#t6a #t6b #w6"/>
 </linkGrp></egXML></p>
 <?tei winita ?>
 <!-- We need to completely rewrite this para; I've started, but will
@@ -2436,7 +2438,7 @@ link the s-units with identifiers <val>qs3</val> and <val>qs4</val>, either sing
   <s xml:id="qs4" prev="#qs3">he never stops stirring it!</s>]]></eg>
 Double linking of the two s-units, as illustrated by the last of these
 encodings, is equivalent to specifying a <gi>link</gi> element:
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><link type="join" targets="#qs3 #qs4"/></egXML></p>
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><link type="join" target="#qs3 #qs4"/></egXML></p>
 <p>Such a <gi>link</gi> element must carry a <att>type</att>
 attribute with a value of <val>join</val> to specify that the link is
 to be understood as joining its targets into a single aggregate.</p>
@@ -2464,10 +2466,10 @@ contextually legal.
   <!-- <term>result</term> of the joining operation.-->
   <!-- Moreover, we specify the default value for the     -->
   <!-- <att>targOrder</att> attribute to be <term>Y</term>.     -->
-<specList><specDesc key="join" atts="result targets"/><specDesc key="joinGrp" atts="result"/></specList>
+<specList><specDesc key="join" atts="result "/><specDesc key="joinGrp" atts="result"/></specList>
 To conclude the above example, we now use a <gi>join</gi> element to
 represent the virtual sentence formed by the aggregation of <val>s1</val> and <val>s2</val>:
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><join targets="#qs3 #qs4" result="s"/></egXML>
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><join target="#qs3 #qs4" result="s"/></egXML>
 As a further example, consider the following list of authors' names.
 The object of the <gi>join</gi> element here is to provide another
 list, composed of those authors from the larger list who happen to
@@ -2481,7 +2483,7 @@ come from Heidelberg:
    <item xml:id="a_ms">Samiec, Monika </item>
    <item xml:id="a_ss">Schierholz, Stefan </item>
 </list>
-<join targets="#a_ch #a_bp #a_ss" result="list">
+<join target="#a_ch #a_bp #a_ss" result="list">
 <desc>Authors from Heidelberg</desc></join></egXML></p>
 <p>The following example shows how <gi>join</gi> can be used to
 reconstruct a text cited in fragments presented out of order. The poem
@@ -2511,7 +2513,7 @@ runs <q>When the old pond / gets a new frog, / it's a new pond.</q></p>
     <l xml:id="frog-L3">It's a new pond.</l>
     </q>
   </p>
-  <join targets="#frog-L1 #frog-L2 #frog-L3" result="lg" scope="root"/>
+  <join target="#frog-L1 #frog-L2 #frog-L3" result="lg" scope="root"/>
 </sp>
 </egXML>
 <p>As with other forms of link, a grouping element <gi>joinGrp</gi>
@@ -2528,8 +2530,8 @@ together, and require that their components are all contained by an
 element with the identifier <val>MFKFhungry</val> as
 follows:
   <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><joinGrp domains="mfkfhungry mfkfhungry" result="s">
-   <join targets="#qs3 #qs4"/>
-   <join targets="#qs5 #qs6"/>
+   <join target="#qs3 #qs4"/>
+   <join target="#qs5 #qs6"/>
 </joinGrp>
 </egXML>
 </p>
@@ -2577,9 +2579,9 @@ spoken by each voice:
 <p>However, by using the <gi>join</gi> element, we can directly
 represent the complete speech attributed to each voice:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><joinGrp result="q">
-   <join targets="#zuiq1 #zuiq2 #zuiq4 #zuiq7">
+   <join target="#zuiq1 #zuiq2 #zuiq4 #zuiq7">
     <desc>what Zui-Gan said</desc></join>
-   <join targets="#zuiq3 #zuiq5 #zuiq6"> 
+   <join target="#zuiq3 #zuiq5 #zuiq6"> 
      <desc>what Master said</desc></join>
 </joinGrp></egXML></p>
 <p>Note the use of the <gi>desc</gi> child element within the two
@@ -2595,7 +2597,7 @@ reasons, are not available. Then <gi>ptr</gi> elements may be created
 using any of the methods described in sections <ptr target="#SAES"/>
 or <ptr target="#SATS"/>. The <att>xml:id</att> attributes of
 <emph>these</emph> elements may now be specified by the
-<att>targets</att> attribute on the <gi>join</gi> elements.
+<att>target</att> attribute on the <gi>join</gi> elements.
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SA-eg-04"><text>
  <body>
 <!-- five div1 elements -->
@@ -2615,9 +2617,9 @@ or <ptr target="#SATS"/>. The <att>xml:id</att> attributes of
 <ptr xml:id="rzuiq6" target="./#xpath1(//div1[6]/p[5]/q[2])"/>
 <ptr xml:id="rzuiq7" target="./#xpath1(//div1[6]/p[6]/q[1])"/>
 <joinGrp evaluate="one" result="q">
-  <join targets="#rzuiq1 #rzuiq2 #rzuiq4 #rzuiq7">
+  <join target="#rzuiq1 #rzuiq2 #rzuiq4 #rzuiq7">
    <desc>what Zui-Gan said</desc></join>
-  <join targets="#rzuiq3 #rzuiq5 #rzuiq6">
+  <join target="#rzuiq3 #rzuiq5 #rzuiq6">
     <desc>what Master said</desc></join>
 </joinGrp>
     </ab>
@@ -2668,7 +2670,7 @@ The description and attributes of this tag and of the associated
 grouping tag <gi>altGrp</gi> are as follows. These elements are also
 members of the <ident type="class">att.pointing</ident> class and therefore
 have all the attributes associated with that class.
-<specList><specDesc key="alt" atts="targets weights"/><specDesc key="altGrp"/></specList></p>
+<specList><specDesc key="alt" atts="weights"/><specDesc key="altGrp"/></specList></p>
 <p>To take a simple hypothetical example, suppose in transcribing a
 spoken text, we encounter an utterance that we can understand either as
 <mentioned>We had fun at the beach today.</mentioned> or as <mentioned>We had sun at
@@ -2797,7 +2799,7 @@ perhaps within a <gi>linkGrp</gi>. </note>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="interview">
   <u xml:id="we.had.fun">We had fun at the beach today.</u>
   <u xml:id="we.had.sun">We had sun at the beach today.</u>
-  <link type="exclusiveAlternation" targets="#we.had.fun #we.had.sun"/>
+  <link type="exclusiveAlternation" target="#we.had.fun #we.had.sun"/>
 </div></egXML></p>
 <p>Now we define the specialized linking element <gi>alt</gi>, making
 it a member of the class <ident type="class">att.pointing</ident>, and
@@ -2806,7 +2808,7 @@ values <val>excl</val> (for exclusive) or <val>incl</val> (for
 inclusive). Then the following equivalence holds:
 <eg><![CDATA[<alt mode="excl"/> = <link type="exclusive alternation"/>]]></eg></p>
 <p>The preceding <gi>link</gi> element may therefore be recoded as the
-  following <gi>alt</gi> element. <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><alt targets="#we.had.fun #we.had.sun" mode="excl"/></egXML></p>
+  following <gi>alt</gi> element. <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><alt target="#we.had.fun #we.had.sun" mode="excl"/></egXML></p>
 <p>Another attribute that is defined specifically for the <gi>alt</gi>
 element is <att>weights</att>, which is to be used if one wishes to assign
 <term>probabilistic weights</term> to the targets (alternants). Its
@@ -2819,14 +2821,14 @@ the weights must sum to 1.0.</p>
 <p>Suppose in the preceding example that it is equiprobable whether
 <mentioned>fun</mentioned> or <mentioned>sun</mentioned> appears. Then
 the <gi>alt</gi> element that represents the alternation may be stated
-as follows: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><alt targets="#we.fun #we.had.sun" mode="excl" weights="0.5 0.5"/></egXML></p>
+as follows: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><alt target="#we.fun #we.had.sun" mode="excl" weights="0.5 0.5"/></egXML></p>
 <p>The assignment of a weight of 1.0 to one target (and weights of 0
 to all the others) is equivalent to selecting that target. Thus the
 following encoding is equivalent to the second example at the beginning
 of this section.
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><u xml:id="we.fun">We had fun at the beach today.</u>
 <u xml:id="we.sun">We had sun at the beach today.</u>
-<alt targets="#we.fun #we.sun" mode="excl" weights="1 0"/>
+<alt target="#we.fun #we.sun" mode="excl" weights="1 0"/>
 </egXML>
 <!-- 
 <p>Inclusive alternation can only be expressed by the    -->
@@ -2913,10 +2915,10 @@ encoded as follows.
   <seg exclude="#fun2" xml:id="sun2" type="word">sun</seg>
   at the beach today.</u>
 <altGrp>
-   <alt targets="#we2 #lee2"/>
-   <alt targets="#fun2 #sun2"/>
-   <alt targets="#we2 #fun2" mode="incl" weights="0.5 0.5"/>
-   <alt targets="#lee2 #fun2" mode="incl" weights="1.0 0.6"/>
+   <alt target="#we2 #lee2"/>
+   <alt target="#fun2 #sun2"/>
+   <alt target="#we2 #fun2" mode="incl" weights="0.5 0.5"/>
+   <alt target="#lee2 #fun2" mode="incl" weights="1.0 0.6"/>
 </altGrp></egXML>
 As noted above, when the <att>mode</att> attribute on an
 <gi>alt</gi> has the value <val>incl</val>, then each weight states
@@ -2960,16 +2962,16 @@ combination of exclusive and inclusive <gi>alt</gi> elements, as follows.
   <l xml:id="db">now ain't that too damn bad.</l>
 </div>
   <altGrp>
-    <alt targets="#dm #lt #bb" mode="excl" weights="0.5 0.25 0.25"/>
-    <alt targets="#rl #db" mode="excl" weights="0.50 0.50"/>
+    <alt target="#dm #lt #bb" mode="excl" weights="0.5 0.25 0.25"/>
+    <alt target="#rl #db" mode="excl" weights="0.50 0.50"/>
   </altGrp>
   <altGrp mode="incl">
-    <alt targets="#dm #rl" weights="0.90 0.90"/>
-    <alt targets="#lt #rl" weights="0.5 0.5"/>
-    <alt targets="#bb #rl" weights="0.5 0.5"/>
-    <alt targets="#dm #db" weights="0.10 0.10"/>
-    <alt targets="#lt #db" weights="0.45 0.90"/>
-    <alt targets="#bb #db" weights="0.45 0.90"/>
+    <alt target="#dm #rl" weights="0.90 0.90"/>
+    <alt target="#lt #rl" weights="0.5 0.5"/>
+    <alt target="#bb #rl" weights="0.5 0.5"/>
+    <alt target="#dm #db" weights="0.10 0.10"/>
+    <alt target="#lt #db" weights="0.45 0.90"/>
+    <alt target="#bb #db" weights="0.45 0.90"/>
   </altGrp></egXML></p>
 <specGrp xml:id="DSAAT" n="Alternation">
 &alt;

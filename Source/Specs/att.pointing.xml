@@ -18,6 +18,33 @@ $Id$
   <desc version="2007-05-04" xml:lang="es">define un conjunto de atributos usados por todos los elementos que señalan a otros elementos a través de uno o más URI.</desc>
   <desc version="2007-01-21" xml:lang="it">definisce un insieme di attributi usati da tutti gli elementi che puntano ad altri elementi tramite uno o più URI</desc>
   <attList>
+
+    <attDef ident="target" usage="opt">
+      <equiv/>
+      <desc>specifies the destination of the reference by supplying one or more URI References</desc>
+      <desc version="2007-12-20" xml:lang="kr">하나 혹은 다수의 URI 참조를 제시하여 참조의 목적지를 명시한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">用一個或多個統一資源識別符參照 (URI References) 來說明參照所指位置。</desc>
+      <desc version="2008-04-05" xml:lang="ja"> ひとつ以上のURIで，参照先を特定する． </desc>
+      <desc version="2009-01-06" xml:lang="fr">précise la cible de la référence en donnant une ou
+        plusieurs références URI</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica la destinación de una referencia
+        proporcionando una o más referencias URI.</desc>
+      <desc version="2007-01-21" xml:lang="it">specifica la destinazione di un riferimento, fornendo
+        uno o più riferimenti URI</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>One or more syntactically valid URI references, separated by whitespace. Because
+        whitespace is used to separate URIs, no whitespace is permitted inside a single URI. If a
+        whitespace character is required in a URI, it should be escaped with the normal mechanism,
+        e.g. <code>TEI%20Consortium</code>.</valDesc>
+      <valDesc xml:lang="fr">Une ou plusieurs références URI syntactiquement valables, séparée par
+        un espace. Puisqu' un espace blanc est employé pour séparer des URIs, aucun espace blanc
+        n’est autorisé à l'intérieur d' un URI. Si un espace blanc est requis dans un URI, il
+        devrait être traité normalement , par exemple avec le mécanisme
+        <code>TEI%20Consortium</code>.</valDesc>
+    </attDef>
+<!--
     <attDef ident="type" usage="opt">
       <equiv/>
       <desc>categorizes the pointer in some respect, using any
@@ -38,7 +65,7 @@ $Id$
       target.</valDesc>
       <valDesc xml:lang="fr">Le type doit indiquer la fonction attendue du pointeur ou la relation rhétorique entre source et cible.</valDesc>
     </attDef>
-    <attDef ident="evaluate" usage="opt">
+-->    <attDef ident="evaluate" usage="opt">
       <equiv/>
       <gloss version="2009-05-28" xml:lang="fr">évalué</gloss>
       <desc>specifies the intended meaning when the target of a
