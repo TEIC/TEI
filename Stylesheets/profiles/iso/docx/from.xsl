@@ -936,16 +936,38 @@
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        Working with figures
+        Working with figure headings
       </desc>
     </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$Figuretitle]" mode="paragraph">
         <head>
-
-<xsl:message>See <xsl:value-of select="."/></xsl:message>
             <xsl:apply-templates/>
         </head>
     </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        Text in figure heading
+      </desc>
+    </doc>
+    <xsl:template
+	match="w:p[w:pPr/w:pStyle/@w:val=$Figuretitle]/w:r/w:t">
+      <xsl:choose>
+	<xsl:when test="starts-with(.,'— ')">
+	  <xsl:value-of select="substring(.,3)"/>
+	</xsl:when>
+	<xsl:when test="starts-with(.,' — ')">
+	  <xsl:value-of select="substring(.,4)"/>
+	</xsl:when>
+	<xsl:when test="starts-with(.,'—')">
+	  <xsl:value-of select="substring(.,2)"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="."/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
+
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Figure text']" mode="paragraph">
         <p>
 	  <xsl:if test="w:pPr/w:jc/@w:val">

@@ -241,7 +241,7 @@
         </xsl:variable>
         <xsl:choose>
             <xsl:when test="parent::w:r/w:rPr/w:rFonts[starts-with(@w:ascii,'ISO')]">
-                <seg iso:font="{parent::w:r/w:rPr/w:rFonts/@w:ascii}">
+                <seg iso:style="font-family:{parent::w:r/w:rPr/w:rFonts/@w:ascii};">
                     <xsl:value-of select="$t"/>
                 </seg>
             </xsl:when>
@@ -453,12 +453,12 @@
 <xsl:when test="@w:char='F0FD'">&#xF8FD;</xsl:when><!--	# RIGHT CURLY BRACKET MID	# bracerightmid (CUS) -->
 <xsl:when test="@w:char='F0FE'">&#xF8FE;</xsl:when><!--	# RIGHT CURLY BRACKET BOTTOM	# bracerightbt (CUS) -->
 	<xsl:otherwise> 	  
-	  <g iso:font="{@w:font}" n="{@w:char}"/>
+	  <g iso:style="font-family:{@w:font};" n="{@w:char}"/>
 	</xsl:otherwise>       
       </xsl:choose> 	
     </xsl:when>
 	<xsl:otherwise> 	  
-	  <g iso:font="{@w:font}" n="{@w:char}"/>
+	  <g iso:style="font-family:{@w:font};" n="{@w:char}"/>
 	</xsl:otherwise>       
       </xsl:choose>
     </xsl:template>     

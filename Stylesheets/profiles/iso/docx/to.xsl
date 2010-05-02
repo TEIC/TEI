@@ -136,7 +136,16 @@
                     <xsl:copy-of select="$renderingProperties"/>
                 </w:rPr>
             </xsl:if>
-	        <w:sym w:font="{@iso:font}" w:char="{@n}"/>
+	    <w:sym w:char="{@n}">
+	      <xsl:for-each select="tokenize(@iso:style,';')">
+		<xsl:if test="starts-with(.,'font-family')">
+		  <xsl:attribute name="w:font">
+		    <xsl:value-of
+			select="normalize-space(substring-after(.,':'))"/>
+		  </xsl:attribute>
+		</xsl:if>
+	      </xsl:for-each>
+	    </w:sym>
         </w:r>
     </xsl:template>
 
@@ -1416,6 +1425,20 @@
 	  <xsl:value-of select="$text"/>
 	</w:t>
       </w:r>
+    </xsl:template>
+
+    <xsl:template match="tei:figure/tei:head">
+      <w:p>
+       <w:pPr>
+	 <w:pStyle w:val="Figuretitle"/>
+       </w:pPr>
+       <xsl:if test="not(normalize-space(.)='')">
+	 <w:r>
+	   <w:t xml:space="preserve">— </w:t>
+	 </w:r>
+       </xsl:if>
+       <xsl:apply-templates/>
+      </w:p>
     </xsl:template>
 
 </xsl:stylesheet>
