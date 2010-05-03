@@ -1858,7 +1858,7 @@
 	              <xsl:copy-of select="@*"/>
 	              <xsl:for-each select="tbx:langSet">
 	                 <xsl:copy>
-	                    <xsl:copy-of select="@*"/>
+	                    <xsl:apply-templates select="@*" mode="pass2"/>
 	                    <xsl:apply-templates mode="pass2" select="../tbx:note"/>
 	                    <xsl:apply-templates mode="pass2" select="../tbx:descripGrp"/>
 	                    <xsl:apply-templates mode="pass2"/>
@@ -1867,7 +1867,7 @@
 	
 	              <xsl:for-each select="following-sibling::tbx:termEntry[@id=$ID]/tbx:langSet">
 	                 <xsl:copy>
-	                    <xsl:copy-of select="@*"/>
+	                    <xsl:apply-templates select="@*" mode="pass2"/>
 	                    <xsl:apply-templates mode="pass2" select="tbx:note"/>
 	                    <xsl:apply-templates mode="pass2" select="../tbx:descripGrp"/>
 	                    <xsl:apply-templates mode="pass2"/>
@@ -1877,6 +1877,24 @@
          </xsl:otherwise>
       </xsl:choose>
    </xsl:template>
+
+  <xsl:template match="tbx:langSet/@xml:lang" mode="pass2">
+    <xsl:choose>
+      <xsl:when
+	  test="../tbx:termNote[@type='geographicalUsage']">
+	<xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="contains(.,'-')">
+	<xsl:attribute name="xml:lang">
+	  <xsl:value-of
+	      select="substring-before(.,'-')"/>
+	</xsl:attribute>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:copy-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
    <desc>Remove [SOURCE: ] from source</desc></doc>
