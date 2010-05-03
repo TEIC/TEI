@@ -289,14 +289,21 @@
          <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element foreign</desc>
+      <desc>Process element foreign and unclear</desc>
    </doc>
-  <xsl:template match="tei:foreign">
+  <xsl:template match="tei:foreign|tei:unclear">
       <span>
          <xsl:call-template name="rendToClass"/>
          <xsl:apply-templates/>
       </span>
   </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process element caesure</desc>
+   </doc>
+  <xsl:template match="tei:caesura">
+      <span class="caesura">&#160;&#160;&#160;&#160;</span>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element gap</desc>
    </doc>
