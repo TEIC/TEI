@@ -1549,7 +1549,7 @@
       <desc> Assign a unique ID to each <gi>bibl</gi></desc></doc>
     <xsl:template match="tei:bibl" mode="pass2">
       <xsl:copy>
-	<xsl:if test="not(@xml:id)">
+	<xsl:if test="not(@xml:id and not(w:bookmarkStart))">
 	  <xsl:attribute name="xml:id">
 	    <xsl:text>BIB_</xsl:text>
 	    <xsl:number level="any" count="tei:bibl"/>

@@ -305,4 +305,15 @@
       </xsl:for-each>
    </xsl:template>
 
+   <xsl:template match="w:bookmarkStart" mode="pass2">
+     <xsl:choose>
+       <xsl:when test="preceding-sibling::node()">
+	 <anchor xml:id="{substring(@w:name,2)}"/>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:attribute name="xml:id" select="substring(@w:name,2)"/>
+       </xsl:otherwise>
+     </xsl:choose>
+   </xsl:template>
+
 </xsl:stylesheet>

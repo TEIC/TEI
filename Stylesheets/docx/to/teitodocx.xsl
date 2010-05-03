@@ -493,6 +493,10 @@
    </doc>
     <xsl:template match="text()">
         <xsl:param name="character-style"/>
+	<xsl:if test="../@xml:id">
+	  <w:bookmarkStart w:name="_{../@xml:id}"/>
+	</xsl:if>
+
         <xsl:if test="parent::tei:head/parent::tei:div[@iso:status]">
             <w:r>
                 <w:t>
@@ -504,28 +508,30 @@
             </w:r>
         </xsl:if>
         <w:r>
-            <!-- if no specific style is assigned we might check for any other indication to assign 
-                some style ... -->
-            <xsl:variable name="renderingProperties">
-                <xsl:call-template name="applyRend"/>
-            </xsl:variable>
-
-            <xsl:if test="string-length($character-style) &gt; 0 or not(empty($renderingProperties))">
-                <w:rPr>
-                    <xsl:if test="string-length($character-style) &gt; 0">
-                        <w:rStyle>
-                            <xsl:attribute name="w:val" select="$character-style"/>
-                        </w:rStyle>
-                    </xsl:if>
-		    <xsl:copy-of select="$renderingProperties"/>
-		    <xsl:if test="ancestor::*[@xml:lang]">
-		      <w:lang w:val="{ancestor::*[@xml:lang][1]/@xml:lang}"/>
-		    </xsl:if>
-                </w:rPr>
-            </xsl:if>
-
-            <xsl:call-template name="Text"/>
-        </w:r>
+	  <!-- if no specific style is assigned we might check for any other indication to assign 
+	       some style ... -->
+	  <xsl:variable name="renderingProperties">
+	    <xsl:call-template name="applyRend"/>
+	  </xsl:variable>
+	  
+	  <xsl:if test="string-length($character-style) &gt; 0 or not(empty($renderingProperties))">
+	    <w:rPr>
+	      <xsl:if test="string-length($character-style) &gt; 0">
+		<w:rStyle>
+		  <xsl:attribute name="w:val" select="$character-style"/>
+		</w:rStyle>
+	      </xsl:if>
+	      <xsl:copy-of select="$renderingProperties"/>
+	      <xsl:if test="ancestor::*[@xml:lang]">
+		<w:lang w:val="{ancestor::*[@xml:lang][1]/@xml:lang}"/>
+	      </xsl:if>
+	    </w:rPr>
+	  </xsl:if>
+	  <xsl:call-template name="Text"/>
+	</w:r>
+	<xsl:if test="../@xml:id">
+	  <w:bookmarkEnd w:name="_{../@xml:id}"/>
+	</xsl:if>
     </xsl:template>
 
 
@@ -1593,7 +1599,8 @@
             <w:fldChar w:fldCharType="begin"/>
         </w:r>
         <w:r>
-            <w:instrText>REF _<xsl:value-of select="substring-after(@target,'#')"/> \n\h</w:instrText>
+            <w:instrText xml:space="preserve"> REF _<xsl:value-of
+	    select="substring-after(@target,'#')"/> \n \h </w:instrText>
         </w:r>
         <w:r>
             <w:fldChar w:fldCharType="separate"/>
@@ -1665,4 +1672,5 @@
     <!-- no handling of index terms -->
 
     <xsl:template match="tei:index"/>
+
 </xsl:stylesheet>

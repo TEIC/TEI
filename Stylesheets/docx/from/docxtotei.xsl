@@ -223,7 +223,7 @@
 
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Ignore bookmarks</p>
+         <p>Ignore bookmarks in section mode</p>
          <p>
 		There are certain elements, that we don't really care about, but that
 		force us to regroup everything from the next sibling on.
@@ -238,6 +238,18 @@
 		    </xsl:for-each-group>
 	  </xsl:template>
 
+	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+	    <desc>
+	      <p>Bookmarks in normal mode</p>
+	      <p>Copy bookmarks for processing in pass 2</p>
+	    </desc>
+	  </doc>
+	  <xsl:template match="w:bookmarkStart|w:bookmarkEnd">
+	    <xsl:if test="starts-with(@w:name,'_Ref')">
+	      <xsl:copy-of select="."/>
+	    </xsl:if>
+	  </xsl:template>
+	  
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>Grouping consecutive elements that belong together</p>
