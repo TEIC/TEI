@@ -491,4 +491,27 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="tei:div/tei:bibl">
+    <blockquote style="font-size: smaller; font-style:italic">
+      <xsl:apply-templates/>
+    </blockquote>
+  </xsl:template>
+
+  <xsl:template match="tei:l">
+    <div class="l">
+      <xsl:variable name="n">
+	<xsl:number/>
+      </xsl:variable>
+      <div style="float:left; font-size:smaller; width: 3em;">
+	<xsl:choose>
+	  <xsl:when test="$n mod 5 = 0">
+	    <xsl:value-of select="$n"/>
+	  </xsl:when>
+	  <xsl:otherwise>&#160;</xsl:otherwise>
+	</xsl:choose>
+      </div>
+      <xsl:apply-templates/>
+    </div>
+  </xsl:template>
+
 </xsl:stylesheet>
