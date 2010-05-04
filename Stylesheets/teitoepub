@@ -26,10 +26,12 @@ echo " --profile=default      profile family"
 echo " --odd                        perform ODD pre-processing"
 echo " --uid=XXX                supply unique URN for ebook"
 echo " --debug                    emit some diagnostics" 
+echo " --verbose                 be verbose"
 }
 
 profile=default
 odd=false
+verbose=false
 uid=
 debug=false
 while test $# -gt 0; do
@@ -38,6 +40,7 @@ while test $# -gt 0; do
     --uid=*)  uid=`echo $1 | sed 's/.*=//'`;;
     --odd)       odd=true;;
     --debug)     debug=true;;
+    --verbose)     verbose=true;;
     --help)          usageMsg;;
     *) if test "$1" = "${1#--}" ; then 
 	   break
@@ -81,7 +84,7 @@ then
 else
     ln -s $F tmp2.xml
 fi
-saxon  tmp2.xml $APPHOME/profiles/$profile/epub/to.xsl  uid=$uid odd=$odd debug=$debug
+saxon  tmp2.xml $APPHOME/profiles/$profile/epub/to.xsl  uid=$uid odd=$odd debug=$debug verbose=$verbose
 if $debug 
 then
     echo leaving tmp[123].xml alone
