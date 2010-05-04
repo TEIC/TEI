@@ -107,7 +107,7 @@
   -->
   <xsl:template name="generateTitle">
     <xsl:choose>
-      <xsl:when test="key('ISOMETA','fullTitle')">
+      <xsl:when test="string-length(key('ISOMETA','fullTitle'))&gt;0">
 	<xsl:value-of select="key('ISOMETA','fullTitle')"/>
       </xsl:when>
       <xsl:otherwise>

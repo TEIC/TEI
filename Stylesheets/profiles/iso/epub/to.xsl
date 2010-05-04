@@ -14,24 +14,19 @@
                 exclude-result-prefixes="tei html t a rng s iso tbx cals teix"
                 version="2.0">
     
-   <xsl:import href="../../../xhtml2/tei.xsl"/>
-   <xsl:import href="../../../xhtml2/tagdocs.xsl"/>
-   <xsl:import href="../../../odds2/teiodds.xsl"/>
-   <xsl:import href="../isoutils.xsl"/>
-   <xsl:import href="../isotei-schema.xsl"/>
-   <xsl:import href="web"/>
-  
+
+    <xsl:import href="../../../xhtml2/tagdocs.xsl"/>
+    <xsl:import href="../../../odds2/teiodds.xsl"/>
+
+    <xsl:import href="../isotei-schema.xsl"/>
+
+    <xsl:import href="../html/web.xsl"/>
+
+    <xsl:import href="../../../epub/tei-to-epub.xsl"/>
+    <xsl:import href="../isoutils.xsl"/>
+
    <xsl:strip-space elements="tei:bibl"/>
    <xsl:param name="numberFormat">uk</xsl:param>
-   <xsl:output encoding="utf-8" omit-xml-declaration="yes" method="xhtml"
-               doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
-               doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
-               indent="yes"/>
-
-   <xsl:param name="STDOUT">true</xsl:param>
-   <xsl:param name="xhtml">true</xsl:param>
-   <xsl:param name="splitLevel">-1</xsl:param>
-   <xsl:param name="autoToc">true</xsl:param>
    <xsl:param name="institution">ISO</xsl:param>
    <xsl:param name="department"/>
    <xsl:param name="cssFile">http://tei.oucs.ox.ac.uk/TEIISO/iso.css</xsl:param>
@@ -41,6 +36,10 @@
    <xsl:param name="wrapLength">65</xsl:param>
    <xsl:param name="attLength">60</xsl:param>
    <xsl:param name="forceWrap">true</xsl:param>
+  
+   <xsl:param name="outputDir">OEBPS</xsl:param>
+   <xsl:param name="splitLevel">0</xsl:param>
+   <xsl:param name="STDOUT">false</xsl:param>
 
    <xsl:template match="/">
      <xsl:variable name="All">
