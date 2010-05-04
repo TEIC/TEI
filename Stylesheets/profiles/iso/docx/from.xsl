@@ -1146,10 +1146,10 @@
 	      <langSet>
 		<xsl:attribute name="xml:lang">
 		  <xsl:choose>
-		    <xsl:when test="current-group()[w:r/w:rPr/w:lang]">
+		    <xsl:when test="current-group()[w:r/w:rPr/w:lang/@w:val]">
 		      <xsl:value-of select="subsequence(current-group()/w:r[w:rPr/w:lang][1]/w:rPr/w:lang/@w:val,1,1)"/>
 		    </xsl:when>
-		    <xsl:when test="w:pPr/w:rPr/w:lang">
+		    <xsl:when test="w:pPr/w:rPr/w:lang/w:val">
 		      <xsl:value-of select="w:pPr/w:rPr/w:lang/@w:val"/>
 		    </xsl:when>
 		    <xsl:otherwise>en</xsl:otherwise>
@@ -1881,7 +1881,7 @@
   <xsl:template match="tbx:langSet/@xml:lang" mode="pass2">
     <xsl:choose>
       <xsl:when
-	  test="../tbx:termNote[@type='geographicalUsage']">
+	  test="parent::tbx:langSet/tbx:ntig/tbx:termGrp/tbx:termNote[@type='geographicalUsage']">
 	<xsl:copy-of select="."/>
       </xsl:when>
       <xsl:when test="contains(.,'-')">
