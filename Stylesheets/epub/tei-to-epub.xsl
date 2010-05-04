@@ -49,8 +49,10 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[epub] Suppress normal page footer      </desc>
    </doc>
-  <xsl:template name="stdfooter"/>
-
+  <xsl:template name="stdfooter">
+    <xsl:param name="file"/>
+  </xsl:template>
+					
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[epub] Set licence</desc>
    </doc>
@@ -112,11 +114,16 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[epub] Override of top-level template. This does most of
-      the work: performing the normal transformation, fixing the links to graphics files so that they are
-      all relative, creating the extra output files, etc</desc>
+    <desc>(extensible) wrapper for root element</desc>
    </doc>
   <xsl:template match="/">
+    <xsl:call-template name="processTEI"/>
+  </xsl:template>
+
+  <desc>[epub] Override of top-level template. This does most of
+  the work: performing the normal transformation, fixing the links to graphics files so that they are
+  all relative, creating the extra output files, etc</desc>
+  <xsl:template name="processTEI">
     <xsl:variable name="stage1">
       <xsl:apply-templates mode="fixgraphics"/>
     </xsl:variable>

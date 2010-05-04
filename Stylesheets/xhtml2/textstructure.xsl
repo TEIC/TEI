@@ -81,10 +81,8 @@
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process elements /</p>
-         <p>
-            <p xmlns="http://www.w3.org/1999/xhtml"> processors must support `key' </p>
-         </p>
+         <p>Process root /</p>
+	 <p xmlns="http://www.w3.org/1999/xhtml"> processors must support `key' </p>
       </desc>
    </doc>
   <xsl:template match="/">
@@ -92,6 +90,15 @@
          <xsl:message terminate="yes"> XT is not supported by the TEI stylesheets,
         as it does not implement the "key" function </xsl:message>
       </xsl:if>
+      <xsl:call-template name="processTEI"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>Process top-level elements /</p>
+      </desc>
+   </doc>
+  <xsl:template name="processTEI">
       <xsl:choose>
       <!-- there are various choices of how to proceed, driven by
 
