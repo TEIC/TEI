@@ -19,7 +19,7 @@
    <xsl:import href="../../../odds2/teiodds.xsl"/>
    <xsl:import href="../isoutils.xsl"/>
    <xsl:import href="../isotei-schema.xsl"/>
-   <xsl:import href="web"/>
+   <xsl:import href="web.xsl"/>
   
    <xsl:strip-space elements="tei:bibl"/>
    <xsl:param name="numberFormat">uk</xsl:param>
