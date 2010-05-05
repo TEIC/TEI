@@ -51,60 +51,6 @@
   <xsl:template name="getiso_year">
     <xsl:value-of select="substring(key('ISOMETA','docdate'),1,4)"/>
   </xsl:template>
-  <!--  
-       
-       <xsl:template name="getiso_title_introductory_fr">
-       <xsl:value-of
-       select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@xml:lang='fr'
-       and @type='introductory']"/>
-       </xsl:template>
-       <xsl:template name="getiso_title_main_fr">
-       <xsl:value-of
-       select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@xml:lang='fr'
-       and @type='main']"/>
-       </xsl:template>
-       
-       <xsl:template name="getiso_title_complementary_fr">
-       <xsl:param name="withpart">true</xsl:param>
-       <xsl:for-each
-       select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@xml:lang='fr'
-       and @type='complementary']">
-       <xsl:variable name="isopart">
-       <xsl:call-template name="getiso_partNumber"/>
-       </xsl:variable>
-       <xsl:if test="not($isopart='') and $withpart='true'">
-       <xsl:choose>
-       <xsl:when test="ancestor-or-self::tei:TEI/@xml:lang='ru'"
-       >Part </xsl:when>
-       <xsl:when test="ancestor-or-self::tei:TEI/@xml:lang='fr'"
-       >Partie </xsl:when>
-       <xsl:otherwise>Part </xsl:otherwise>
-       </xsl:choose>
-       <xsl:value-of select="$isopart"/>
-       <xsl:text>: </xsl:text>
-       </xsl:if>
-       <xsl:value-of select="."/>
-       </xsl:for-each>
-       </xsl:template>
-       
-       <xsl:template name="getiso_title_complementary_en">
-       <xsl:param name="withpart">true</xsl:param>
-       <xsl:for-each
-       select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@xml:lang='en'
-       and @type='complementary']">
-       <xsl:variable name="isopart">
-       <xsl:call-template name="getiso_partNumber"/>
-       </xsl:variable>
-       <xsl:if test="not($isopart='') and $withpart='true'">
-       <xsl:text>Part </xsl:text>
-       <xsl:value-of select="$isopart"/>
-       <xsl:text>: </xsl:text>
-       </xsl:if>
-       <xsl:value-of select="."/>
-       </xsl:for-each>
-       </xsl:template>
-       
-  -->
   <xsl:template name="generateTitle">
     <xsl:choose>
       <xsl:when test="string-length(key('ISOMETA','fullTitle'))&gt;0">
@@ -323,36 +269,107 @@
   <!-- all the special bibl components -->
   <xsl:template
       match="tei:listBibl/tei:bibl/tei:publisher">
+    <xsl:variable name="ref">
+      <xsl:call-template name="ISOCITE"/>
+    </xsl:variable>
+
     <xsl:call-template name="simpleRun">
       <xsl:with-param name="text">
-	<xsl:value-of select="."/>
-	<xsl:choose>
-	  <xsl:when test="contains(.,'/')">
-	    <xsl:text> </xsl:text>
-	  </xsl:when>
-	  <xsl:when test="../tei:idno[@type='documentType']">
-	    <xsl:text>/</xsl:text>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:text> </xsl:text>
-	  </xsl:otherwise>
-	</xsl:choose>
+	<xsl:value-of select="translate($ref,' ','&#160;')"/>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   
-  <xsl:template
-      match="tei:listBibl/tei:bibl/tei:edition">
-    <xsl:call-template name="simpleRun">
-      <xsl:with-param name="prefix">
-	<xsl:text>:</xsl:text>
-      </xsl:with-param>
-      <xsl:with-param name="text">
+  <xsl:template name="ISOCITE">
+    <xsl:value-of select="."/>
+    <xsl:for-each select="..">
+      <xsl:choose>
+	<xsl:when test="contains(tei:publisher,'/')">
+	<xsl:text> </xsl:text>
+      </xsl:when>
+      <xsl:when test="tei:idno[@type='documentType']">
+	<xsl:text>/</xsl:text>
+	<xsl:value-of select="normalize-space(tei:idno[@type='documentType'])"/>
+	<xsl:text> </xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text> </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+ 
+    <xsl:for-each select="tei:idno[@type='docNumber']">
+      <xsl:value-of select="normalize-space(.)"/>
+    </xsl:for-each>
+
+    <xsl:for-each select="tei:idno[@type='parts']">
+      <xsl:text> </xsl:text>
+      <xsl:value-of select="normalize-space(.)"/>
+    </xsl:for-each>
+  
+    <xsl:for-each select="tei:idno[@type='docPartNumber']">
+      <xsl:text>-</xsl:text>
+      <xsl:value-of select="normalize-space(.)"/>
+    </xsl:for-each>
+  
+    <xsl:for-each select="tei:edition">
+      <xsl:text>:</xsl:text>
+      <xsl:value-of select="normalize-space(.)"/>
+    </xsl:for-each>
+ 
+    <xsl:for-each select="tei:idno[@type='supplType']">
+      <xsl:text>/</xsl:text>
+      <xsl:value-of select="normalize-space(.)"/>
+    </xsl:for-each>
+    
+    <xsl:for-each select="tei:idno[@type='supplNumber']">
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="normalize-space(.)"/>
+    </xsl:for-each>
+  
+    <xsl:for-each select="tei:idno[@type='supplYear']">
+      <xsl:text>:</xsl:text>
+      <xsl:value-of select="normalize-space(.)"/>
+    </xsl:for-each>
+
+    <xsl:for-each select="tei:idno[@type='corrType']">
+	<xsl:text>/</xsl:text>
 	<xsl:value-of select="normalize-space(.)"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
+    </xsl:for-each>
   
+    <xsl:for-each select="tei:idno[@type='corrNumber']">
+      <xsl:text>.</xsl:text>
+      <xsl:value-of select="normalize-space(.)"/>
+    </xsl:for-each>
+  
+    <xsl:for-each select="tei:idno[@type='corrYear']">
+	<xsl:text>:</xsl:text>
+	<xsl:value-of select="normalize-space(.)"/>
+    </xsl:for-each>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template
+      match="tei:listBibl/tei:bibl/tei:idno[@type='docPartNumber']"/>
+  <xsl:template
+      match="tei:listBibl/tei:bibl/tei:idno[@type='docNumber']"/>
+  <xsl:template
+      match="tei:listBibl/tei:bibl/tei:idno[@type='corrNumber']"/>
+  <xsl:template
+      match="tei:listBibl/tei:bibl/tei:idno[@type='corrType']"/>
+  <xsl:template
+      match="tei:listBibl/tei:bibl/tei:idno[@type='corrYear']"/>
+  <xsl:template
+      match="tei:listBibl/tei:bibl/tei:idno[@type='documentType']"/>
+  <xsl:template match="tei:listBibl/tei:bibl/tei:idno[@type='parts']"/>
+  <xsl:template
+      match="tei:listBibl/tei:bibl/tei:idno[@type='supplNumber']"/>
+  <xsl:template
+      match="tei:listBibl/tei:bibl/tei:idno[@type='supplType']"/>
+  <xsl:template
+      match="tei:listBibl/tei:bibl/tei:idno[@type='supplYear']"/>
+  <xsl:template
+      match="tei:listBibl/tei:bibl/tei:edition"/>
+
   <xsl:template
       match="tei:listBibl/tei:bibl/tei:title">
     <xsl:call-template name="simpleRun">
@@ -368,117 +385,6 @@
     </xsl:call-template>
   </xsl:template>
   
-  <xsl:template
-      match="tei:listBibl/tei:bibl/tei:idno[@type='docPartNumber']">
-    <xsl:call-template name="simpleRun">
-      <xsl:with-param name="prefix">
-	<xsl:text>-</xsl:text>
-      </xsl:with-param>
-      <xsl:with-param name="text">
-	<xsl:value-of select="normalize-space(.)"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template
-      match="tei:listBibl/tei:bibl/tei:idno[@type='docNumber']">
-    <xsl:call-template name="simpleRun">
-      <xsl:with-param name="text">
-	<xsl:value-of select="normalize-space(.)"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template
-      match="tei:listBibl/tei:bibl/tei:idno[@type='corrNumber']">
-    <xsl:call-template name="simpleRun">
-      <xsl:with-param name="prefix">
-	<xsl:text>.</xsl:text>
-      </xsl:with-param>
-      <xsl:with-param name="text">
-	<xsl:value-of select="normalize-space(.)"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template
-      match="tei:listBibl/tei:bibl/tei:idno[@type='corrType']">
-    <xsl:call-template name="simpleRun">
-      <xsl:with-param name="prefix">
-	<xsl:text>/</xsl:text>
-      </xsl:with-param>
-      <xsl:with-param name="text">
-	<xsl:value-of select="normalize-space(.)"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template
-      match="tei:listBibl/tei:bibl/tei:idno[@type='corrYear']">
-    <xsl:call-template name="simpleRun">
-      <xsl:with-param name="prefix">
-	<xsl:text>:</xsl:text>
-      </xsl:with-param>
-      <xsl:with-param name="text">
-	<xsl:value-of select="normalize-space(.)"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template
-      match="tei:listBibl/tei:bibl/tei:idno[@type='documentType']">
-    <xsl:call-template name="simpleRun">
-      <xsl:with-param name="text">
-	<xsl:value-of select="normalize-space(.)"/>
-	<xsl:text> </xsl:text>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template match="tei:listBibl/tei:bibl/tei:idno[@type='parts']">
-    <xsl:call-template name="simpleRun">
-      <xsl:with-param name="text">
-	<xsl:text> </xsl:text>
-	<xsl:value-of select="normalize-space(.)"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template
-      match="tei:listBibl/tei:bibl/tei:idno[@type='supplNumber']">
-    <xsl:call-template name="simpleRun">
-      <xsl:with-param name="prefix">
-	<xsl:text>.</xsl:text>
-      </xsl:with-param>
-      <xsl:with-param name="text">
-	<xsl:value-of select="normalize-space(.)"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template
-      match="tei:listBibl/tei:bibl/tei:idno[@type='supplType']">
-    <xsl:call-template name="simpleRun">
-      <xsl:with-param name="prefix">
-	<xsl:text>/</xsl:text>
-      </xsl:with-param>
-      <xsl:with-param name="text">
-	<xsl:value-of select="normalize-space(.)"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template
-      match="tei:listBibl/tei:bibl/tei:idno[@type='supplYear']">
-    <xsl:call-template name="simpleRun">
-      <xsl:with-param name="prefix">
-	<xsl:text>:</xsl:text>
-      </xsl:with-param>
-      <xsl:with-param name="text">
-	<xsl:value-of select="normalize-space(.)"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
   
   
 </xsl:stylesheet>

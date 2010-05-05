@@ -31,6 +31,7 @@
 
     <!-- import special iso functions -->
     <xsl:include href="iso-functions.xsl"/>
+    <xsl:include href="../isoutils.xsl"/>
 
     <xsl:key name="WordTables" match="w:tbl" use="1"/>
 
@@ -1548,15 +1549,29 @@
       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> Assign a unique ID to each <gi>bibl</gi></desc></doc>
     <xsl:template match="tei:bibl" mode="pass2">
-      <xsl:copy>
-	<xsl:if test="not(@xml:id and not(w:bookmarkStart))">
-	  <xsl:attribute name="xml:id">
-	    <xsl:text>BIB_</xsl:text>
-	    <xsl:number level="any" count="tei:bibl"/>
-	  </xsl:attribute>
-	</xsl:if>
-	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
-      </xsl:copy>
+      <xsl:variable name="b">
+	<xsl:copy>
+	  <xsl:if test="not(@xml:id and not(w:bookmarkStart))">
+	    <xsl:attribute name="xml:id">
+	      <xsl:text>BIB_</xsl:text>
+	      <xsl:number level="any" count="tei:bibl"/>
+	    </xsl:attribute>
+	  </xsl:if>
+	  <xsl:apply-templates
+	      select="@*|*|processing-instruction()|comment()|text()"
+	      mode="pass2"/>
+	</xsl:copy>
+      </xsl:variable>
+      <xsl:for-each select="$b/tei:bibl">
+	<xsl:copy>
+	  <xsl:for-each select="tei:publisher">
+	    <xsl:attribute name="n">
+	      <xsl:call-template name="ISOCITE"/>
+	    </xsl:attribute>
+	  </xsl:for-each>
+	  <xsl:copy-of select="@*|*|processing-instruction()|comment()|text()"/>
+	</xsl:copy>
+      </xsl:for-each>
     </xsl:template>
 
       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
