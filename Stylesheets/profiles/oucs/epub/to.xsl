@@ -17,4 +17,9 @@
 
     <xsl:import href="../../../epub/tei-to-epub.xsl"/>
 
+    <xsl:template match="tei:w[@type and @lemma]">
+      <span class="wordtype{@type}">
+	<xsl:apply-templates/>
+      </span>
+    </xsl:template>
 </xsl:stylesheet>
