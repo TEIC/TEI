@@ -2200,7 +2200,7 @@
 		<xsl:attribute name="type">dated</xsl:attribute>
 	      </xsl:if>
 	      <xsl:analyze-string
-		  regex="^(ISO/ASTM|ISO/CEI|ISO/CIE|ISO/HL7|ISO/IEC/IEEE|ISO/IEC|ISO/IEEE|ISO/OCDE|ISO/OECD|CEI|IEC|ISO).?(Data|Guide|ISP|IWA|PAS|R|TR|TS|TTA)?\s?([0-9]*)-?([0-9\-]*)[:\s]+([0-9—]+)/?(Cor|Amd|Add|Suppl)?.?([^:]*)?:?([0-9]*)?/?(Cor)?.?([^:]*)?[:\s]*([0-9]*)?[,\s]*"
+		  regex="^(ISO/ASTM|ISO/CEI|ISO/CIE|ISO/HL7|ISO/IEC/IEEE|ISO/IEC|ISO/IEEE|ISO/OCDE|ISO/OECD|CEI|IEC|ISO).?(Data|Guide|ISP|IWA|PAS|R|TR|TS|TTA)?\s?([0-9]*)-?([0-9\-]*)[:\s]+([0-9—]+)/?(Cor|Amd|Add|Suppl)?.?([^:]*)?:?([0-9]*)?/?(Cor)?.?([^:,]*)?[:,\s]*([0-9]*)?[,\s]*"
 		  select="translate(.,' ',' ')">
 		<xsl:matching-substring>
 		  <xsl:variable name="Part" select="regex-group(4)"/>
@@ -2247,9 +2247,11 @@
 		    <idno type="corrNumber">
 		      <xsl:value-of select="regex-group(10)"/>
 		    </idno>
-		    <idno type="corrYear">
-		      <xsl:value-of select="regex-group(11)"/>
-		    </idno>
+		    <xsl:if test="not(regex-group(11)='')">
+		      <idno type="corrYear">
+			<xsl:value-of select="regex-group(11)"/>
+		      </idno>
+		    </xsl:if>
 		  </xsl:if>
 		</xsl:matching-substring>
 		<xsl:non-matching-substring>
