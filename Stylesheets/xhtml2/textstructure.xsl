@@ -399,7 +399,6 @@ $requestedID: requests a particular page
       </xsl:if>
       <html>
          <xsl:call-template name="addLangAtt"/>
-         <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (5)</xsl:comment>
          <head>
             <xsl:variable name="pagetitle">
                <xsl:call-template name="generateTitle"/>

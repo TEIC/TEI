@@ -687,6 +687,9 @@
         <xsl:variable name="style">
             <xsl:value-of select="w:rPr/w:rStyle/@w:val"/>
         </xsl:variable>
+        <xsl:variable name="pstyle">
+            <xsl:value-of select="parent::w:p/w:pPr/w:pStyle/@w:val"/>
+        </xsl:variable>
         <xsl:choose>
             <!-- 
 	     ignore some headingnotechars
@@ -737,10 +740,8 @@
                 </ref>
             </xsl:when>
 
-            <xsl:when test="$style='RefNorm' and starts-with(.,'ISO')">
-                <idno type="ISO">
-                    <xsl:apply-templates/>
-                </idno>
+            <xsl:when test="$pstyle='RefNorm'">
+	      <xsl:apply-templates/>
             </xsl:when>
 
             <xsl:when test="$style='TableFootnoteXref'">
@@ -2173,7 +2174,7 @@
 	<xsl:apply-templates/>
       </xsl:variable>
 	<xsl:for-each select="$cheese">
-	<xsl:apply-templates mode="parseRef"/>
+	  <xsl:apply-templates mode="parseRef"/>
       </xsl:for-each>
     </xsl:template>
 
@@ -2186,7 +2187,6 @@
     </xsl:template>
 
     <xsl:template match="text()" mode="parseRef">
-      
       <xsl:choose>
 	<xsl:when test="starts-with(.,'ISO') or starts-with(.,'IEC')
 			or starts-with(.,'CIE')">
