@@ -809,9 +809,9 @@
 	    </xsl:when>
 
 	    <xsl:when test="$style= 'termRef'">
-	      <ref>
+	      <tbx:hi type="entailedTerm">
 		<xsl:apply-templates/>
-	      </ref>
+	      </tbx:hi>
 	    </xsl:when>
 
             <xsl:when test="$style='requirement'">
@@ -2248,7 +2248,7 @@
 		      <xsl:value-of select="regex-group(10)"/>
 		    </idno>
 		    <idno type="corrYear">
-		      <xsl:value-of select="regex-group(10)"/>
+		      <xsl:value-of select="regex-group(11)"/>
 		    </idno>
 		  </xsl:if>
 		</xsl:matching-substring>

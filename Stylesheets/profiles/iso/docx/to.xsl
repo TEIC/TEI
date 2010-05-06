@@ -114,7 +114,7 @@
     <xsl:template match="tei:hi[@rend='source']" mode="get-style">
       <xsl:text>source</xsl:text>
     </xsl:template>
-    <xsl:template match="tbx:descrip/tei:ref" mode="get-style">
+    <xsl:template match="tbx:descrip/tbx:hi[@type='entailedTerm']" mode="get-style">
       <xsl:text>termRef</xsl:text>
     </xsl:template>
 
