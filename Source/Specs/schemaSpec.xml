@@ -25,6 +25,7 @@ $Id$
   <classes>
     <memberOf key="model.divPart"/>
     <memberOf key="att.identified"/>
+    <memberOf key="att.readFrom"/>
   </classes>
   <content>
     <rng:group>
@@ -43,7 +44,7 @@ $Id$
       </rng:zeroOrMore>
     </rng:group>
   </content>
-  <attList>
+<attList>
     <attDef ident="start" usage="opt">
       <equiv/>
       <desc>specifies entry points to the schema, i.e. which elements
@@ -70,7 +71,7 @@ $Id$
       <gloss version="2007-12-20" xml:lang="kr">이름 공간</gloss>
       <gloss version="2008-03-30" xml:lang="fr">espace de nommage</gloss>
       <gloss version="2007-11-06" xml:lang="it">nome dello spazio</gloss>
-      <desc>specifies the default namespace (if any) applicable to
+      <desc>specifies the default namespace (if any) applicable to 
       components of the schema.</desc>
       <desc version="2007-12-20" xml:lang="kr">스키마의 성분으로 적용가능한 기본 이름 공간을 명시한다.</desc>
       <desc version="2007-05-02" xml:lang="zh-tw">指出適用於該模型元件的預設名稱空間 (若有名稱空間) 。</desc>
@@ -88,8 +89,8 @@ $Id$
     </attDef>
     <attDef ident="prefix" usage="opt">
       <equiv/>
-      <desc>specifies a prefix which will be appended to all patterns
-      relating to TEI elements. This allows for external schemas to be mixed in
+      <desc>specifies a default prefix which will be appended to all patterns
+      relating to TEI elements, unless otherwise stated. This allows for external schemas to be mixed in
       which have elements of the same names as the TEI.
       </desc>
       <desc version="2007-12-20" xml:lang="kr">TEI 요소와 관련된 모든 유형에 첨가될 접두사를 명시한다. 이는 TEI로서 동일 이름의 요소를 갖는 외부 스키마가 혼용되는 것을 허용한다.</desc>
@@ -114,7 +115,7 @@ $Id$
 	invalid schema to be generated.</p>
       </remarks>
       <remarks xml:lang="fr">
-        <p>Les deux-points, bien qu'ols soient permis à l'intérieur de la valeur, provoqueront la
+        <p>Les deux-points, bien qu'ils soient permis à l'intérieur de la valeur, provoqueront la
                         génération d'un schéma invalide. </p>
       </remarks>
       <remarks xml:lang="ja">
@@ -184,9 +185,9 @@ $Id$
     </egXML>
   </exemplum>
   <remarks>
-    <p>A schema combines references to modules or specification
-    groups with other atomic declarations. The processing of a
-    schema element must resolve any conflicts amongst the declarations
+    <p>A <gi>schemaSpec</gi> combines references to modules or specification
+    groups with other atomic declarations. The processing of the
+    <gi>schemaSpec</gi> element must resolve any conflicts amongst the declarations
     it contains or references. Different ODD processors may generate
     schemas and documentation using different concrete syntaxes. </p>
   </remarks>
