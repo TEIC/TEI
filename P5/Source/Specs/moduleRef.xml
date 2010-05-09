@@ -27,7 +27,7 @@ $Id$
   <desc version="2007-01-21" xml:lang="it">indica un modulo da includere all'interno di uno schema</desc>
   <classes>
     <memberOf key="model.oddRef"/>
-    <memberOf key="att.readFrom"/>
+    <memberOf key="att.readFrom "/>
   </classes>
   <content>
     <rng:optional>
@@ -46,6 +46,25 @@ $Id$
     </constraintSpec> 
 
   <attList>
+
+<attList  org="choice">
+<attDef ident="include">
+<desc>supplies a list of the elements which are to be copied from the
+specified module into the schema being defined.</desc> 
+<datatype minOccurs="0" maxOccurs="unbounded">
+<rng:data type="NCName"/>
+</datatype>
+</attDef>
+<attDef ident="exclude">
+<desc>supplies a list of the elements which are not to be copied from the
+specified module into the schema being defined.</desc> 
+<datatype minOccurs="0" maxOccurs="unbounded">
+<rng:data type="NCName"/>
+</datatype>
+</attDef>
+</attList>
+
+
     <attList org="choice">
       <attDef ident="key" usage="opt">
         <desc>the name of a TEI module</desc>
@@ -76,7 +95,28 @@ RELAX NG par une localisation externe.</desc>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <moduleRef key="linking"/>
     </egXML>
-    <p>This embeds the linking module.</p>
+    <p>This includes all objects available  from  the linking module.</p>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <moduleRef key="linking" exclude="linkGrp link"/>
+    </egXML>
+    <p>This includes all objects available  from  the linking module
+    except for the <gi>link</gi> and <gi>linkGrp</gi> elements.</p>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <moduleRef key="linking" exclude="linkGrp link"/>
+    </egXML>
+    <p>This includes all objects available  from  the linking module
+    except for the <gi>link</gi> and <gi>linkGrp</gi> elements.</p>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <moduleRef key="linking" include="linkGrp link"/>
+    </egXML>
+    <p>This includes only the <gi>link</gi> and <gi>linkGrp</gi>
+    elements from the linking module.</p>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -84,15 +124,18 @@ RELAX NG par une localisation externe.</desc>
     </egXML>
   </exemplum>
   <remarks>
-    <p>Modules are identified by the name supplied as value for the
-    <att>ident</att> attribute on the <gi>moduleSpec</gi> element in
-    which they are declared. A URI may also be supplied in the case of
-    a non-TEI module, and this is expected to be written as a RELAX NG
-    schema.
-    </p>
-    <p>The effect of this element is to make all the declarations
+    <p>If neither <att>include</att> nor <att>exclude</att> is
+    supplied, the effect of this element is to make all the declarations
     contained by the referenced module available to the schema being
-    compiled.</p>
+    compiled. If both attributes are supplied, an ODD
+processor should signal an error. </p>
+    <p>A TEI module is identified by the name supplied as value for
+    the <att>ident</att> attribute on a <gi>moduleSpec</gi>
+    element. The <att>source</att> attribute may be used to specify an
+    online source from which the specification of that module may be
+    read. A URI may alternatively be supplied in the case of a non-TEI
+    module, and this is expected to be written as a RELAX NG schema.
+    </p>
   </remarks>
   <remarks xml:lang="fr">
     <p>Les modules sont identifiés par le nom fourni comme valeur de l'attribut
