@@ -44,6 +44,8 @@
   <xsl:param name="linkPanel">false</xsl:param>
   <xsl:param name="institution"/>
   <xsl:param name="uid"/>
+  <xsl:param name="publisher"/>
+  <xsl:param name="coverimage"/>
   <xsl:param name="odd">true</xsl:param>
   <xsl:param name="debug">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -81,7 +83,15 @@
       <desc>[epub] Set name of publisher</desc>
    </doc>
   <xsl:template name="generatePublisher">
-    <xsl:value-of select="normalize-space(tei:teiHeader/tei:fileDesc/tei:publicationStmt)"/>
+    <xsl:choose>
+      <xsl:when test="not($publisher='')">
+	<xsl:value-of select="$publisher"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of
+	    select="normalize-space(tei:teiHeader/tei:fileDesc/tei:publicationStmt)"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -212,15 +222,23 @@
               <dc:rights>
                 <xsl:call-template name="generateLicence"/>
               </dc:rights>
+	      <xsl:if test="not($coverimage='')">
+		<meta name="cover"  content="cover-image" />
+	      </xsl:if>
             </metadata>
 
 	    <manifest>
+	      <xsl:if test="not($coverimage='')">
+		<item href="{$coverimage}" id="cover-image" media-type="image/jpeg"/>
+	      </xsl:if>
+	      <item href="stylesheet.css" id="css" media-type="text/css"/>
+	      <item href="titlepage.html" id="titlepage" media-type="application/xhtml+xml"/>	      
 	      <item id="stylesheet.css" href="stylesheet.css" media-type="text/css"/>
               <item id="print.css" href="print.css" media-type="text/css"/>
               <xsl:if test="$odd='true'">
                 <item id="odd.css" href="odd.css" media-type="text/css"/>
               </xsl:if>
-              <item id="head" href="index.html" media-type="application/xhtml+xml"/>
+              <item id="start" href="index.html" media-type="application/xhtml+xml"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                 <xsl:choose>
                   <xsl:when test="html:a">
@@ -262,7 +280,8 @@
               <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
             </manifest>
             <spine toc="ncx">
-              <itemref idref="head"/>
+              <itemref idref="titlepage"/>
+              <itemref idref="start"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                 <xsl:choose>
                   <xsl:when test="html:a">
@@ -288,7 +307,8 @@
             </spine>
 
 	    <guide>
-              <reference type="text" title="Text" href="index.html"/>
+	      <reference href="titlepage.html" type="cover" title="Cover"/>
+              <reference type="text" title="Start" href="index.html"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                 <xsl:choose>
                   <xsl:when test="html:a">
@@ -312,9 +332,35 @@
             </guide>
           </package>
 	</xsl:result-document>
-	  <xsl:if test="$debug='true'">
-	    <xsl:message>write file OEBPS/toc.ncx</xsl:message>
-	  </xsl:if>
+	<xsl:if test="$debug='true'">
+	  <xsl:message>write file OEBPS/titlepage.html</xsl:message>
+	</xsl:if>
+        <xsl:result-document href="OEBPS/titlepage.html" method="xml">
+	  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	    <head>
+	      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	      <meta name="calibre:cover" content="true"/>
+	      <title>Cover</title>
+	      <style type="text/css" title="override_css">
+		@page {padding: 0pt; margin:0pt}
+		body { text-align: center; padding:0pt; margin: 0pt; }
+	      </style>
+	    </head>
+	    <body>
+	      <xsl:choose>
+		<xsl:when test="$coverimage=''">
+		</xsl:when>
+		<xsl:otherwise>
+		  <img width="600" height="800" src="{$coverimage}"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </body>
+	  </html>
+	</xsl:result-document>
+
+	<xsl:if test="$debug='true'">
+	  <xsl:message>write file OEBPS/toc.ncx</xsl:message>
+	</xsl:if>
         <xsl:result-document href="OEBPS/toc.ncx" method="xml">
           <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
             <head>
@@ -334,7 +380,7 @@
             <navMap>
               <navPoint id="navPoint-1" playOrder="1">
                 <navLabel>
-                  <text>Titlepage</text>
+                  <text>Title Page</text>
                 </navLabel>
                 <content src="index.html"/>
               </navPoint>

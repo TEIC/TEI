@@ -17,6 +17,8 @@
 
     <xsl:import href="../../../epub/tei-to-epub.xsl"/>
 
+    <xsl:param name="publisher">Oxford Text Archive, Oxford University</xsl:param>
+
     <xsl:template match="tei:title[@type='main']/text()">
       <xsl:value-of select="replace(.,' \[Electronic resource\]','')"/>
     </xsl:template>
