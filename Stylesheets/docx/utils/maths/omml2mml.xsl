@@ -423,7 +423,7 @@
 				        <mo>
 					          <xsl:choose>
 						            <xsl:when test="not(m:naryPr[last()]/m:chr/@m:val) or                                m:naryPr[last()]/m:chr/@m:val=''">
-							              <xsl:text disable-output-escaping="yes">&amp;#x222b;</xsl:text>
+							              <xsl:text>&#x222b;</xsl:text>
 						            </xsl:when>
 						            <xsl:otherwise>
 							              <xsl:value-of select="m:naryPr[last()]/m:chr/@m:val"/>
@@ -438,7 +438,7 @@
 							              <mo>
 								                <xsl:choose>
 									                  <xsl:when test="not(m:naryPr[last()]/m:chr/@m:val) or                                            m:naryPr[last()]/m:chr/@m:val=''">
-										                    <xsl:text disable-output-escaping="yes">&amp;#x222b;</xsl:text>
+										                    <xsl:text>&#x222b;</xsl:text>
 									                  </xsl:when>
 									                  <xsl:otherwise>
 										                    <xsl:value-of select="m:naryPr[last()]/m:chr/@m:val"/>
@@ -455,7 +455,7 @@
 							              <mo>
 								                <xsl:choose>
 									                  <xsl:when test="not(m:naryPr[last()]/m:chr/@m:val) or                                            m:naryPr[last()]/m:chr/@m:val=''">
-										                    <xsl:text disable-output-escaping="yes">&amp;#x222b;</xsl:text>
+										                    <xsl:text>&#x222b;</xsl:text>
 									                  </xsl:when>
 									                  <xsl:otherwise>
 										                    <xsl:value-of select="m:naryPr[last()]/m:chr/@m:val"/>
@@ -476,7 +476,7 @@
 							              <mo>
 								                <xsl:choose>
 									                  <xsl:when test="not(m:naryPr[last()]/m:chr/@m:val) or                                            m:naryPr[last()]/m:chr/@m:val=''">
-										                    <xsl:text disable-output-escaping="yes">&amp;#x222b;</xsl:text>
+										                    <xsl:text>&#x222b;</xsl:text>
 									                  </xsl:when>
 									                  <xsl:otherwise>
 										                    <xsl:value-of select="m:naryPr[last()]/m:chr/@m:val"/>
@@ -493,7 +493,7 @@
 							              <mo>
 								                <xsl:choose>
 									                  <xsl:when test="not(m:naryPr[last()]/m:chr/@m:val) or                            m:naryPr[last()]/m:chr/@m:val=''">
-										                    <xsl:text disable-output-escaping="yes">&amp;#x222b;</xsl:text>
+										                    <xsl:text>&#x222b;</xsl:text>
 									                  </xsl:when>
 									                  <xsl:otherwise>
 										                    <xsl:value-of select="m:naryPr[last()]/m:chr/@m:val"/>
@@ -514,7 +514,7 @@
 							              <mo>
 								                <xsl:choose>
 									                  <xsl:when test="not(m:naryPr[last()]/m:chr/@m:val) or                                            m:naryPr[last()]/m:chr/@m:val=''">
-										                    <xsl:text disable-output-escaping="yes">&amp;#x222b;</xsl:text>
+										                    <xsl:text>&#x222b;</xsl:text>
 									                  </xsl:when>
 									                  <xsl:otherwise>
 										                    <xsl:value-of select="m:naryPr[last()]/m:chr/@m:val"/>
@@ -534,7 +534,7 @@
 							              <mo>
 								                <xsl:choose>
 									                  <xsl:when test="not(m:naryPr[last()]/m:chr/@m:val) or                                            m:naryPr[last()]/m:chr/@m:val=''">
-										                    <xsl:text disable-output-escaping="yes">&amp;#x222b;</xsl:text>
+										                    <xsl:text>&#x222b;</xsl:text>
 									                  </xsl:when>
 									                  <xsl:otherwise>
 										                    <xsl:value-of select="m:naryPr[last()]/m:chr/@m:val"/>
@@ -818,7 +818,7 @@
 						            <xsl:apply-templates select="m:e[1]"/>
 					          </mrow>
 					          <mo>
-						            <xsl:text disable-output-escaping="yes">&amp;#x000AF;</xsl:text>
+						            <xsl:text>&#x000AF;</xsl:text>
 					          </mo>
 				        </mover>
 			      </xsl:when>
@@ -828,7 +828,7 @@
 						            <xsl:apply-templates select="m:e[1]"/>
 					          </mrow>
 					          <mo>
-						            <xsl:text disable-output-escaping="yes">&amp;#x00332;</xsl:text>
+						            <xsl:text>&#x00332;</xsl:text>
 					          </mo>
 				        </munder>
 			      </xsl:otherwise>
