@@ -2173,8 +2173,8 @@
       <xsl:variable name="cheese">
 	<xsl:apply-templates/>
       </xsl:variable>
-	<xsl:for-each select="$cheese">
-	  <xsl:apply-templates mode="parseRef"/>
+      <xsl:for-each select="$cheese">
+	<xsl:apply-templates mode="parseRef"/>
       </xsl:for-each>
     </xsl:template>
 
@@ -2200,7 +2200,7 @@
 		<xsl:attribute name="type">dated</xsl:attribute>
 	      </xsl:if>
 	      <xsl:analyze-string
-		  regex="^(ISO/ASTM|ISO/CEI|ISO/CIE|ISO/HL7|ISO/IEC/IEEE|ISO/IEC|ISO/IEEE|ISO/OCDE|ISO/OECD|CEI|IEC|ISO).?(Data|Guide|ISP|IWA|PAS|R|TR|TS|TTA)?\s?([0-9]*)-?([0-9\-]*)[:\s]+([0-9—]+)/?(Cor|Amd|Add|Suppl)?.?([^:]*)?:?([0-9]*)?/?(Cor)?.?([^:,]*)?[:,\s]*([0-9]*)?[,\s]*"
+		  regex="^(ISO/ASTM|ISO/CEI|ISO/CIE|ISO/HL7|ISO/IEC/IEEE|ISO/IEC|ISO/IEEE|ISO/OCDE|ISO/OECD|CEI|IEC|ISO).?(Data|Guide|ISP|IWA|PAS|R|TR|TS|TTA)?\s?([0-9]*)-?([0-9\-]*)[:\s]+([0-9—]+)/?(Cor|Amd|Add|Suppl)?.?([0-9]+)?:?([0-9]+)?/?(Cor)?.?([0-9]+)?[:,\s]*([0-9]+)?[,\s](.*)$"
 		  select="translate(.,' ',' ')">
 		<xsl:matching-substring>
 		  <xsl:variable name="Part" select="regex-group(4)"/>
@@ -2253,6 +2253,11 @@
 		      </idno>
 		    </xsl:if>
 		  </xsl:if>
+		  <xsl:if test="not(regex-group(12)='')">
+		    <title>
+			<xsl:value-of select="regex-group(12)"/>
+		    </title>
+		  </xsl:if>
 		</xsl:matching-substring>
 		<xsl:non-matching-substring>
 		  <xsl:if test="$debug='true'">
@@ -2276,7 +2281,7 @@
 		<xsl:attribute name="type">undated</xsl:attribute>
 	      </xsl:if>
 	      <xsl:analyze-string
-		  regex="^(ISO/ASTM|ISO/CEI|ISO/CIE|ISO/HL7|ISO/IEC/IEEE|ISO/IEC|ISO/IEEE|ISO/OCDE|ISO/OECD|CEI|IEC|ISO).?(Data|Guide|ISP|IWA|PAS|R|TR|TS|TTA)?\s?([0-9]*)-?([0-9\-]*)\s?(\(all parts\))?[,\s]+"
+		  regex="^(ISO/ASTM|ISO/CEI|ISO/CIE|ISO/HL7|ISO/IEC/IEEE|ISO/IEC|ISO/IEEE|ISO/OCDE|ISO/OECD|CEI|IEC|ISO).?(Data|Guide|ISP|IWA|PAS|R|TR|TS|TTA)?\s?([0-9]*)-?([0-9\-]*)\s?(\(all parts\))?[,\s]+(.*)"
 		  select="translate(.,' ',' ')">
 		<xsl:matching-substring>
 		  <xsl:variable name="Part" select="regex-group(4)"/>
@@ -2308,6 +2313,11 @@
 		    </idno>
 		  </xsl:if>
 		  
+		  <xsl:if test="not(regex-group(6)='')">
+		    <title>
+			<xsl:value-of select="regex-group(6)"/>
+		    </title>
+		  </xsl:if>
 		</xsl:matching-substring>
 		<xsl:non-matching-substring>
 		  <xsl:if test="$debug='true'">
@@ -2334,6 +2344,11 @@
 	<xsl:when test="starts-with(.,'), ')">
 	  <title>
 	    <xsl:value-of select="substring(.,4)"/>
+	  </title>
+	</xsl:when>
+	<xsl:when test="preceding-sibling::node()">
+	  <title n="4">
+	    <xsl:value-of select="."/>
 	  </title>
 	</xsl:when>
 	<xsl:otherwise>
