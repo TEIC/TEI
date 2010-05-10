@@ -89,11 +89,7 @@
 		    </w:rPr>
 		    <w:annotationRef/>
 		  </w:r>
-		  <w:r>
-		    <w:t>
-		      <xsl:value-of select="."/>
-		    </w:t>
-		  </w:r>
+		  <xsl:apply-templates/>
 		</w:p>
 	      </w:comment>
 	    </xsl:for-each>
