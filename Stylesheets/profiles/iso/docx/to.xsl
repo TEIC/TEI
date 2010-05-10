@@ -706,8 +706,8 @@
     
     <!-- titleStmt -->
     <xsl:template match="tei:titleStmt">
-        <xsl:param name="language" as="xs:string"/>
-        <xsl:param name="id_start" as="xs:integer"/>
+        <xsl:param name="language" as="xs:string">en</xsl:param>
+        <xsl:param name="id_start" as="xs:integer">0</xsl:param>
         <xsl:for-each select="tei:title">
             <xsl:if test="@xml:lang=$language">
                 <xsl:variable name="title_type">
