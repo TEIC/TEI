@@ -234,7 +234,9 @@
 	      <item href="stylesheet.css" id="css" media-type="text/css"/>
 	      <item href="titlepage.html" id="titlepage" media-type="application/xhtml+xml"/>	      
 	      <item id="stylesheet.css" href="stylesheet.css" media-type="text/css"/>
-              <item id="print.css" href="print.css" media-type="text/css"/>
+              <item id="print.css" href="print.css"
+		    media-type="text/css"/>
+	      <item id="apt" href="page-template.xpgt" media-type="application/adobe-page-template+xml"/>
               <xsl:if test="$odd='true'">
                 <item id="odd.css" href="odd.css" media-type="text/css"/>
               </xsl:if>
