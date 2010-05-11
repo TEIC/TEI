@@ -817,9 +817,9 @@
 	    </xsl:when>
 
 	    <xsl:when test="$style= 'termRef'">
-	      <tbx:hi type="entailedTerm">
+	      <hi type="entailedTerm" xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
 		<xsl:apply-templates/>
-	      </tbx:hi>
+	      </hi>
 	    </xsl:when>
 
             <xsl:when test="$style='requirement'">
