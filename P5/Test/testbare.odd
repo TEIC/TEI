@@ -3,9 +3,8 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title>TEI Absolutely Bare</title>
-        <author>Laurent Romary</author>
-        <editor xml:id="sbauman.emt">Syd Bauman</editor>
+        <title>Just the words</title>
+        <author>Lou Burnard</author>
       </titleStmt>
       <publicationStmt>
         <availability status="free">
@@ -18,61 +17,37 @@
         </availability>
       </publicationStmt>
       <sourceDesc>
-        <p>Initially created on <date when="2006-10-12T05:24:41">Thursday 12th
-            October 2006</date> by the form at
-        http://www.tei-c.org.uk/Roma/.</p>
+        <p>Hand edited from TEI Bare</p>
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
-<change when="2007-04-09" who="#LB">Added prose and reorganized
-structure to make it more document-like; changed deletion of attribute
-decls into deletion of att.declaring class; add deletes for elements
-email and floatingText added to P5 since this ODD was first created;
-considered but did not implement removal of all irrelevant datatype specs...</change>
-      <change when="2006-10-14" who="#sbauman.emt"> Made valid: <list>
-          <item>removed empty <att>prefix</att> attribute</item>
-          <item>added required <att>type</att> attribute to
-          <gi>classSpec</gi>s</item>
-        </list><!--. <note>Sebastian had also made the above changes.</note> -->Also
-        removed extraneous <gi>altIdent</gi> elements, improved
-        <gi>sourceDesc</gi>, changed the <att>ident</att> of <gi>schemaSpec</gi>
-        to match the filename, and added this revision description. </change>
+<change when="2010-02-02" who="#LB">first version</change>
     </revisionDesc>
   </teiHeader>
-  <text>
-<!--    <front>
-      <divGen type="toc"/>
-    </front>-->
-    <body>
+  <text>    <body>
       <p>This customization creates a TEI schema with the bare minimum of tags
-        to make a recognizable document. It combines the four basic modules, but
-removes most of the available elements and changes several attribute classes.</p>
-
+        to make a recognizable document, which can then be made
+	unrecognisable by addition of word-level linguistic
+	analysis. 
+      </p>
 <div><head>Basic text structure</head>
 
-<p>In this very simple schema, a document may contain <gi>front</gi>,
-<gi>body</gi> and <gi>back</gi> elements as in standard TEI. However,
-within these, only the following elements are  permitted:
+<p>In this very simple schema, a document contains just a
+<gi>body</gi>, though this may be subdivided using nested <gi>div</gi>
+elements. Within the <gi>div</gi> elements only <gi>head</gi> and
+<gi>p</gi> elements are permitted. 
 <specList>
 <specDesc key="div"/>
 <specDesc key="head"/>
-<specDesc key="list"/>
 <specDesc key="p"/>
 </specList>
 </p>
-<p>The <gi>list</gi> element may contain a <gi>head</gi> followed by a
-sequence either of <gi>label</gi>-<gi>item</gi> pairs, or of
-<gi>item</gi> elements alone. </p>
-<p>The <gi>item</gi> and <gi>p</gi> elements have the same structure:
-either may  contain just text, or a mixture of text with
-<gi>list</gi>, or <gi>title</gi> elements.</p>
-<p>Similarly, the <gi>div</gi> element may contain a <gi>head</gi>,
-followed by a nested <gi>div</gi>, or one or more <gi>p</gi> elements.
-</p>
-<p>The <att>version</att> attribute on the <gi>TEI</gi> element is
-removed, as is the <att>level</att> attribute on the <gi>title</gi>
-element. Other attributes are also removed as a consequence of the
-class modifications described below.</p>
+<p>The <gi>head</gi> and <gi>p</gi> elements have the same structure:
+they must contain at least one <gi>s</gi> element, representing a
+sentence-like unit. The <gi>s</gi> element can contain any number of
+<gi>w</gi> or <gi>pc</gi> elements, representing lexical and
+punctuation tokens respectively. To make formatting easier, white
+space is also permitted within <gi>s</gi> elements.</p>
 
 <p>The following specification group deletes all the unwanted
 elements:
@@ -113,10 +88,12 @@ elements:
         <elementSpec ident="hi" mode="delete" module="core"/>
         <elementSpec ident="imprint" mode="delete" module="core"/>
         <elementSpec ident="index" mode="delete" module="core"/>
+        <elementSpec ident="item" mode="delete" module="core"/>
         <elementSpec ident="l" mode="delete" module="core"/>
         <elementSpec ident="lb" mode="delete" module="core"/>
         <elementSpec ident="lg" mode="delete" module="core"/>
         <elementSpec ident="listBibl" mode="delete" module="core"/>
+        <elementSpec ident="list" mode="delete" module="core"/>
         <elementSpec ident="measure" mode="delete" module="core"/>
         <elementSpec ident="meeting" mode="delete" module="core"/>
         <elementSpec ident="mentioned" mode="delete" module="core"/>
