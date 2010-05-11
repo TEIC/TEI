@@ -1,0 +1,46 @@
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+    xmlns:s="http://www.ascc.net/xml/schematron" 
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+    xmlns:rng="http://relaxng.org/ns/structure/1.0" 
+    module="tagdocs"
+    ident="elementRef">
+<desc>points to the specification for some element which is to be included in a schema</desc> 
+  <classes>
+    <memberOf key="model.oddRef"/>
+    <memberOf key="att.readFrom"/>
+  </classes>
+  <content>
+    <rng:empty/>
+  </content>
+  <attList>
+      <attDef ident="key" usage="req">
+        <desc>the identifier used for the required element within the
+	source indicated.</desc>
+        <datatype>
+          <rng:data type="NCName"/>
+        </datatype>
+      </attDef>
+    </attList>
+
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <elementRef key="p"/>
+    </egXML>
+    <p>Include in the schema an element named <gi>p</gi>  available from the
+    current default source.</p>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <elementRef key="p" context="http://www.tei-c.org/release/P5/1.2"/>
+    </egXML>
+    <p>Include  in the schema an element named <gi>p</gi> 
+    available from the TEI P5 1.2 release.</p>
+  </exemplum>
+  <remarks>
+    <p>Elements are identified by the name supplied as value for the
+    <att>ident</att> attribute on the <gi>elementSpec</gi> element in
+    which they are declared. 
+    </p>
+  </remarks>
+</elementSpec>
+
