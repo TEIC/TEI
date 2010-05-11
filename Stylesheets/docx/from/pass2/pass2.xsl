@@ -307,6 +307,7 @@
 
    <xsl:template match="w:bookmarkStart" mode="pass2">
      <xsl:choose>
+       <xsl:when test="parent::*[@xml:id]"/>
        <xsl:when test="preceding-sibling::node()">
 	 <anchor xml:id="{substring(@w:name,2)}"/>
        </xsl:when>
