@@ -33,6 +33,13 @@
     <xsl:include href="iso-functions.xsl"/>
     <xsl:include href="../isoutils.xsl"/>
 
+    <xsl:variable name="standardsBodies">
+      <xsl:text>ISO/ASTM|ISO/CEI|ISO/CIE|ISO/HL7|ISO/IEC/IEEE|ISO/IEC|ISO/IEEE|ISO/OCDE|ISO/OECD|CEI|IEC|ISO</xsl:text>
+    </xsl:variable>
+    <xsl:variable name="standardsTypes">
+      <xsl:text>Data|Guide|ISP|IWA|PAS|R|TR|TS|TTA</xsl:text>
+    </xsl:variable>
+
     <xsl:key name="WordTables" match="w:tbl" use="1"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -1565,6 +1572,13 @@
       </xsl:variable>
       <xsl:for-each select="$b/tei:bibl">
 	<xsl:copy>
+	  <xsl:attribute name="type">
+	    <xsl:choose>
+	      <xsl:when test="tei:edition='—'">undated</xsl:when>
+	      <xsl:when test="tei:edition">dated</xsl:when>
+	      <xsl:otherwise>undated</xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:attribute>
 	  <xsl:for-each select="tei:publisher">
 	    <xsl:attribute name="n">
 	      <xsl:call-template name="ISOCITE"/>
@@ -2187,26 +2201,68 @@
     </xsl:template>
 
     <xsl:template match="text()" mode="parseRef">
+      <xsl:variable name="ISOPATT">
+	<xsl:text>^</xsl:text>
+	<xsl:text>(</xsl:text><!-- body -->
+	<xsl:value-of select="$standardsBodies"/>
+	<xsl:text>)</xsl:text>
+	<xsl:text>.?</xsl:text>
+	<xsl:text>(</xsl:text><!-- type -->
+	<xsl:value-of select="$standardsTypes"/>
+	<xsl:text>)?</xsl:text>
+	<xsl:text>\s?</xsl:text>
+	<xsl:text>([0-9]+)</xsl:text><!-- document number -->
+	<xsl:text>-?([0-9]+| \(all parts\))?</xsl:text><!-- part(s) -->
+	<xsl:text>[:\s]*</xsl:text>
+	<xsl:text>([0-9—]+)?</xsl:text><!-- year -->
+	<xsl:text>/?</xsl:text>
+	<xsl:text>(Cor|Amd|Add|Suppl)?</xsl:text> <!-- suppl type -->
+	<xsl:text>.?</xsl:text>
+	<xsl:text>([0-9]+)?</xsl:text>
+	<xsl:text>:?</xsl:text>
+	<xsl:text>([0-9]+)?</xsl:text>
+	<xsl:text>/?</xsl:text>
+	<xsl:text>(Cor)?</xsl:text>
+	<xsl:text>[.\s]*</xsl:text>
+	<xsl:text>([0-9]+)?</xsl:text>
+	<xsl:text>:?</xsl:text>
+	<xsl:text>([0-9]+)?</xsl:text>
+	<xsl:text>[,\s]*</xsl:text>
+	<xsl:text>(.*)</xsl:text>
+	<xsl:text>$</xsl:text>
+      </xsl:variable>
       <xsl:choose>
 	<xsl:when test="starts-with(.,'ISO') or starts-with(.,'IEC')
 			or starts-with(.,'CIE')">
-	  <xsl:choose>
-	    <xsl:when test="contains(.,':')">
 	      <!--docoriginator [[punctuation] doctype] "#" docnumber ["-"
 		  partnumber] ":" pubyear ["/"suppltype "." supplnumber ":" pubyear]
 		  ["/"suppltype "." supplnumber ":" pubyear] "," title ["/" suppltitle]
 		  ["/" suppltitle] -->
-	      <xsl:if test="not(preceding-sibling::node())">
-		<xsl:attribute name="type">dated</xsl:attribute>
-	      </xsl:if>
+	      <!--<xsl:message>
+		  PARSE <xsl:value-of select="."/></xsl:message>-->
 	      <xsl:analyze-string
-		  regex="^(ISO/ASTM|ISO/CEI|ISO/CIE|ISO/HL7|ISO/IEC/IEEE|ISO/IEC|ISO/IEEE|ISO/OCDE|ISO/OECD|CEI|IEC|ISO).?(Data|Guide|ISP|IWA|PAS|R|TR|TS|TTA)?\s?([0-9]*)-?([0-9\-]*)[:\s]+([0-9—]+)/?(Cor|Amd|Add|Suppl)?.?([0-9]+)?:?([0-9]+)?/?(Cor)?.?([0-9]+)?[:,\s]*([0-9]+)?[,\s](.*)$"
+		  regex="{$ISOPATT}"
 		  select="translate(.,' ',' ')">
 		<xsl:matching-substring>
 		  <xsl:variable name="Part" select="regex-group(4)"/>
 		  <xsl:variable name="Suppltype" select="regex-group(6)"/>
 		  <xsl:variable name="Corrtype" select="regex-group(9)"/>
-		  
+		  <!--
+		      <xsl:message>
+		      1 publisher :<xsl:value-of select="regex-group(1)"/>
+		      2 documenttype :<xsl:value-of select="regex-group(2)"/>
+		      3 docnumber  :<xsl:value-of select="regex-group(3)"/>
+		      4 part :<xsl:value-of select="regex-group(4)"/>
+		      5 edition :<xsl:value-of select="regex-group(5)"/>
+		      6 suppltype :<xsl:value-of select="regex-group(6)"/>
+		      7 supplnum :<xsl:value-of select="regex-group(7)"/>
+		      8 suppllyear  :<xsl:value-of select="regex-group(8)"/>
+		      9 corrtype :<xsl:value-of select="regex-group(9)"/>
+		      10 corrnum :<xsl:value-of select="regex-group(10)"/>
+		      11 corryear :<xsl:value-of select="regex-group(11)"/>
+		      12 title :<xsl:value-of select="regex-group(12)"/>
+		      </xsl:message>
+		  -->
 		  <publisher>
 		    <xsl:value-of select="regex-group(1)"/>
 		  </publisher>
@@ -2223,12 +2279,17 @@
 		  
 		  <xsl:if test="not($Part='')">
 		    <idno type="docPartNumber">
-		      <xsl:value-of select="$Part"/>
+		      <xsl:value-of select="normalize-space($Part)"/>
 		    </idno>
 		  </xsl:if>
-		  <edition>
-		    <xsl:value-of select="regex-group(5)"/>
-		  </edition>
+		  <xsl:choose>
+		    <xsl:when test="regex-group(5)=''"/>
+		    <xsl:otherwise>
+		      <edition>
+			<xsl:value-of select="regex-group(5)"/>
+		      </edition>
+		    </xsl:otherwise>
+		  </xsl:choose>
 		  <xsl:if test="not($Suppltype='')">
 		    <idno type="supplType">
 		      <xsl:value-of select="regex-group(6)"/>
@@ -2260,81 +2321,20 @@
 		  </xsl:if>
 		</xsl:matching-substring>
 		<xsl:non-matching-substring>
+		  <xsl:message>   ___ FAIL ___ </xsl:message>
 		  <xsl:if test="$debug='true'">
 		    <xsl:message>
-		      <xsl:text>Invalid format of dated reference </xsl:text>
+		      <xsl:text>Invalid format of reference </xsl:text>
 		      <xsl:value-of select="."/>
 		    </xsl:message>
 		  </xsl:if>
 		  <iso:error>
-		    <xsl:text>Invalid format of dated reference </xsl:text>
+		    <xsl:text>Invalid format of reference </xsl:text>
 		    <xsl:value-of select="."/>
 		  </iso:error>
 		  <xsl:value-of select="."/>
 		</xsl:non-matching-substring>
 	      </xsl:analyze-string>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <!-- docoriginator [[punctuation] doctype] "#" docnumber ["-"
-		   partnumber] "," title -->
-	      <xsl:if test="not(preceding-sibling::node())">
-		<xsl:attribute name="type">undated</xsl:attribute>
-	      </xsl:if>
-	      <xsl:analyze-string
-		  regex="^(ISO/ASTM|ISO/CEI|ISO/CIE|ISO/HL7|ISO/IEC/IEEE|ISO/IEC|ISO/IEEE|ISO/OCDE|ISO/OECD|CEI|IEC|ISO).?(Data|Guide|ISP|IWA|PAS|R|TR|TS|TTA)?\s?([0-9]*)-?([0-9\-]*)\s?(\(all parts\))?[,\s]+(.*)"
-		  select="translate(.,' ',' ')">
-		<xsl:matching-substring>
-		  <xsl:variable name="Part" select="regex-group(4)"/>
-		  <xsl:variable name="Allp" select="regex-group(5)"/>
-		  
-		  <publisher>
-		    <xsl:value-of select="regex-group(1)"/>
-		  </publisher>
-		  
-		  <xsl:if test="not(regex-group(2)='')">
-		    <idno type="documentType">
-		      <xsl:value-of select="regex-group(2)"/>
-		    </idno>
-		  </xsl:if>
-		  
-		  <idno type="docNumber">
-		    <xsl:value-of select="regex-group(3)"/>
-		  </idno>
-		  
-		  <xsl:if test="not($Part='')">
-		    <idno type="docPartNumber">
-		      <xsl:value-of select="$Part"/>
-		    </idno>
-		  </xsl:if>
-		  
-		  <xsl:if test="not($Allp='')">
-		    <idno type="parts">
-		      <xsl:value-of select="$Allp"/>
-		    </idno>
-		  </xsl:if>
-		  
-		  <xsl:if test="not(regex-group(6)='')">
-		    <title>
-			<xsl:value-of select="regex-group(6)"/>
-		    </title>
-		  </xsl:if>
-		</xsl:matching-substring>
-		<xsl:non-matching-substring>
-		  <xsl:if test="$debug='true'">
-		    <xsl:message>
-		      <xsl:text>Invalid format of undated reference </xsl:text>
-		      <xsl:value-of select="."/>
-		    </xsl:message>
-		  </xsl:if>
-		  <iso:error>
-		    <xsl:text>Invalid format of undated reference </xsl:text>
-		    <xsl:value-of select="."/>
-		  </iso:error>
-		  <xsl:value-of select="."/>
-		</xsl:non-matching-substring>
-	      </xsl:analyze-string>
-	    </xsl:otherwise>
-	  </xsl:choose>
 	</xsl:when>
 	<xsl:when test=".='),'"/>
 	<xsl:when test=".='), '"/>

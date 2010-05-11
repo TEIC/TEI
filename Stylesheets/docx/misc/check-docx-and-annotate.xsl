@@ -123,10 +123,8 @@
                 </w:pPr>
                 <w:r>
                     <w:annotationRef/>
-                    <w:t>
-                  <xsl:value-of select="$text"/>
-               </w:t>
-                </w:r>
+		</w:r>
+		<xsl:apply-templates select="$text"/>
             </w:p>
         </w:comment>
     </xsl:template>

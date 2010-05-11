@@ -307,7 +307,14 @@
     </xsl:for-each>
   
     <xsl:for-each select="tei:idno[@type='docPartNumber']">
-      <xsl:text>-</xsl:text>
+      <xsl:choose>
+	<xsl:when test=".='(all parts)'">
+	  <xsl:text> </xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>-</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
       <xsl:value-of select="normalize-space(.)"/>
     </xsl:for-each>
   
