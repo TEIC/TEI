@@ -1931,18 +1931,14 @@
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
    <desc>Remove [SOURCE: ] from source</desc></doc>
 
-  <xsl:template match="tbx:admin[@type='entrySource']" mode="pass2">
-    <xsl:copy>
-      <xsl:copy-of select="@*"/>
-	<xsl:analyze-string select="." regex="\[(SOURCE:\s)?([^\]]+)\]">
-	  <xsl:matching-substring>
-	    <xsl:value-of select="regex-group(2)"/>
-	  </xsl:matching-substring>
-	  <xsl:non-matching-substring>
-	    <xsl:value-of select="."/>
-	  </xsl:non-matching-substring>
-	</xsl:analyze-string>
-    </xsl:copy>
+  <xsl:template match="tbx:admin[@type='entrySource']/text()" mode="pass2">
+    <xsl:analyze-string select="replace(.,'\[SOURCE: ','')" regex="\]$">
+      <xsl:matching-substring>
+      </xsl:matching-substring>
+      <xsl:non-matching-substring>
+	<xsl:value-of select="."/>
+      </xsl:non-matching-substring>
+    </xsl:analyze-string>
   </xsl:template>
 
   <!--

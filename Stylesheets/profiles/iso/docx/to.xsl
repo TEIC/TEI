@@ -989,7 +989,7 @@
          <xsl:with-param name="style">entrySource</xsl:with-param>
 	 <xsl:with-param name="select">
 	   <xsl:text>[SOURCE: </xsl:text>
-	   <xsl:value-of select="."/>
+	   <xsl:apply-templates/>
 	   <xsl:text>]</xsl:text>
 	 </xsl:with-param>
       </xsl:call-template>
