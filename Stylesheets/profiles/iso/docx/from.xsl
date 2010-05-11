@@ -2279,11 +2279,20 @@
 		    <xsl:value-of select="regex-group(3)"/>
 		  </idno>
 		  
-		  <xsl:if test="not($Part='')">
+		  <xsl:choose>
+		    <xsl:when test="$Part=''"/>
+		    <xsl:when test="$Part=' (all parts)'">
+		      <idno type="parts">
+			<xsl:value-of select="normalize-space($Part)"/>
+		      </idno>
+		    </xsl:when>
+		    <xsl:otherwise>
 		    <idno type="docPartNumber">
-		      <xsl:value-of select="normalize-space($Part)"/>
+		      <xsl:value-of select="$Part"/>
 		    </idno>
-		  </xsl:if>
+		    </xsl:otherwise>
+		  </xsl:choose>
+
 		  <xsl:choose>
 		    <xsl:when test="regex-group(5)=''"/>
 		    <xsl:otherwise>
