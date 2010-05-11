@@ -653,6 +653,9 @@
                 <xsl:when test="contains(@rend,'bold')">
                     <w:b/>
 		</xsl:when>
+                <xsl:when test="contains(@rend,'normalweight')">
+                    <w:b w:val="0"/>
+		</xsl:when>
             </xsl:choose>
 
             <!-- italic -->

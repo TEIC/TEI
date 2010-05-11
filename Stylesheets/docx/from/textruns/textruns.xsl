@@ -141,10 +141,15 @@
 	<xsl:if test="w:rPr/w:i">
 	  <n>italic</n>
 	</xsl:if>
-	
-	<xsl:if test="w:rPr/w:b[not(@w:val='0')]">
-	  <n>bold</n>
-	</xsl:if>
+
+	<xsl:choose>
+	  <xsl:when test="w:rPr/w:b/@w:val='0'">
+	    <n>normalweight</n>
+	  </xsl:when>
+	  <xsl:when test="w:rPr/w:b">
+	    <n>bold</n>
+	  </xsl:when>
+	</xsl:choose>
 
 	<xsl:if test="w:rPr/w:position[number(@w:val)&gt;2]">
 	  <n>superscript</n>
