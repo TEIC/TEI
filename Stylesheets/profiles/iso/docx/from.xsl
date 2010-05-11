@@ -2347,7 +2347,7 @@
 	  </title>
 	</xsl:when>
 	<xsl:when test="preceding-sibling::node()">
-	  <title n="4">
+	  <title>
 	    <xsl:value-of select="."/>
 	  </title>
 	</xsl:when>
