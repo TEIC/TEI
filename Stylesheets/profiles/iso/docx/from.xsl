@@ -1572,13 +1572,15 @@
       </xsl:variable>
       <xsl:for-each select="$b/tei:bibl">
 	<xsl:copy>
-	  <xsl:attribute name="type">
-	    <xsl:choose>
-	      <xsl:when test="tei:edition='—'">undated</xsl:when>
-	      <xsl:when test="tei:edition">dated</xsl:when>
-	      <xsl:otherwise>undated</xsl:otherwise>
-	    </xsl:choose>
-	  </xsl:attribute>
+	  <xsl:if test="tei:publisher">
+	    <xsl:attribute name="type">
+	      <xsl:choose>
+		<xsl:when test="tei:edition='—'">undated</xsl:when>
+		<xsl:when test="tei:edition">dated</xsl:when>
+		<xsl:otherwise>undated</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:attribute>
+	  </xsl:if>
 	  <xsl:for-each select="tei:publisher">
 	    <xsl:attribute name="n">
 	      <xsl:call-template name="ISOCITE"/>
