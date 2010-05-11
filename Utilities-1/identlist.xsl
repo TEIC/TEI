@@ -4,7 +4,7 @@
   version="1.0"
 >
 <xsl:output method="xml" indent="yes"/>
-<xsl:key name="MEMBERS" match="tei:classSpec" use="tei:classes/tei:memberOf/@key"/>
+<xsl:key name="POSTAGS" match="tei:classSpec" use="tei:s/tei:w/@type"/>
 
 <xsl:template match="/">
   <xsl:for-each select="//tei:elementSpec">
