@@ -1731,14 +1731,14 @@
         <xsl:param name="oldtag"/>
         <xsl:variable name="result1">
             <xsl:for-each select="key('Sdt',$tag)[1]">
-                <xsl:value-of select="w:sdtContent/w:r/w:t"/>
+                <xsl:value-of select="w:sdtContent/w:r/w:t/text()"/>
             </xsl:for-each>
         </xsl:variable>
         <xsl:variable name="result">
             <xsl:choose>
                 <xsl:when test="string-length($result1)=0 and not($oldtag='')">
                     <xsl:for-each select="key('Sdt',$oldtag)[1]">
-                        <xsl:value-of select="w:sdtContent/w:r/w:t"/>
+                        <xsl:value-of select="w:sdtContent/w:r/w:t/text()"/>
                     </xsl:for-each>
                 </xsl:when>
                 <xsl:otherwise>
