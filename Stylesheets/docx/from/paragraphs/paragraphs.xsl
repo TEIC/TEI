@@ -108,11 +108,10 @@
     </desc>
     </doc>
     <xsl:template name="process-word-XRef">
-
       <xsl:choose>
 	<xsl:when
 	    test="w:r[w:fldChar/@w:fldCharType[matches(.,'begin')]]">
-	  <xsl:for-each-group select="w:r|w:bookmarkStart"
+	  <xsl:for-each-group select="w:*"
 			      group-starting-with="w:r[w:fldChar/@w:fldCharType[matches(.,'begin|end')]]">
 	    <xsl:choose>
 	      <xsl:when
@@ -142,7 +141,7 @@
 		  test="self::w:r[w:fldChar/@w:fldCharType[matches(.,'end')]]">
 		<xsl:for-each select="current-group()">
 		  <xsl:choose>
-		    <xsl:when  test="w:t">			    
+		  <xsl:when  test="w:t">			    
 		      <xsl:apply-templates/>
 		    </xsl:when>
 		    <xsl:when  test="w:tab">			    
@@ -154,17 +153,14 @@
 		  </xsl:choose>
 		</xsl:for-each>
 	      </xsl:when>
-	      <xsl:when  test="self::w:bookmarkStart">
-		<xsl:apply-templates select="."/>
-	      </xsl:when>
 	      <xsl:otherwise>
-		<xsl:apply-templates select="."/>
+		<xsl:apply-templates select="current-group()"/>
 	      </xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:for-each-group>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:apply-templates/>
+	  <xsl:apply-templates select="."/>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
