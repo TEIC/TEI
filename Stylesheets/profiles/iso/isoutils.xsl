@@ -283,75 +283,73 @@
   <xsl:template name="ISOCITE">
     <xsl:value-of select="."/>
     <xsl:for-each select="..">
-      <xsl:choose>
-	<xsl:when test="contains(tei:publisher,'/')">
-	<xsl:text> </xsl:text>
-      </xsl:when>
-      <xsl:when test="tei:idno[@type='documentType']">
-	<xsl:text>/</xsl:text>
-	<xsl:value-of select="normalize-space(tei:idno[@type='documentType'])"/>
-	<xsl:text> </xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:text> </xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
- 
-    <xsl:for-each select="tei:idno[@type='docNumber']">
-      <xsl:value-of select="normalize-space(.)"/>
-    </xsl:for-each>
-
-    <xsl:for-each select="tei:idno[@type='parts']">
-      <xsl:text> </xsl:text>
-      <xsl:value-of select="normalize-space(.)"/>
-    </xsl:for-each>
-  
-    <xsl:for-each select="tei:idno[@type='docPartNumber']">
-      <xsl:choose>
-	<xsl:when test=".='(all parts)'">
-	  <xsl:text> </xsl:text>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:text>-</xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-      <xsl:value-of select="normalize-space(.)"/>
-    </xsl:for-each>
-  
-    <xsl:for-each select="tei:edition">
-      <xsl:text>:</xsl:text>
-      <xsl:value-of select="normalize-space(.)"/>
-    </xsl:for-each>
- 
-    <xsl:for-each select="tei:idno[@type='supplType']">
-      <xsl:text>/</xsl:text>
-      <xsl:value-of select="normalize-space(.)"/>
-    </xsl:for-each>
-    
-    <xsl:for-each select="tei:idno[@type='supplNumber']">
-      <xsl:text>.</xsl:text>
-      <xsl:value-of select="normalize-space(.)"/>
-    </xsl:for-each>
-  
-    <xsl:for-each select="tei:idno[@type='supplYear']">
-      <xsl:text>:</xsl:text>
-      <xsl:value-of select="normalize-space(.)"/>
-    </xsl:for-each>
-
-    <xsl:for-each select="tei:idno[@type='corrType']">
-	<xsl:text>/</xsl:text>
+      <xsl:for-each select="tei:idno[@type='documentType']">
+	<xsl:choose>
+	  <xsl:when test="contains(../tei:publisher,'/')">
+	    <xsl:text> </xsl:text>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text>/</xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
 	<xsl:value-of select="normalize-space(.)"/>
-    </xsl:for-each>
-  
-    <xsl:for-each select="tei:idno[@type='corrNumber']">
-      <xsl:text>.</xsl:text>
-      <xsl:value-of select="normalize-space(.)"/>
-    </xsl:for-each>
-  
-    <xsl:for-each select="tei:idno[@type='corrYear']">
+      </xsl:for-each>
+      <xsl:text> </xsl:text>
+      <xsl:for-each select="tei:idno[@type='docNumber']">
+	<xsl:value-of select="normalize-space(.)"/>
+      </xsl:for-each>
+      
+      <xsl:for-each select="tei:idno[@type='parts']">
+	<xsl:text> </xsl:text>
+	<xsl:value-of select="normalize-space(.)"/>
+      </xsl:for-each>
+      
+      <xsl:for-each select="tei:idno[@type='docPartNumber']">
+	<xsl:choose>
+	  <xsl:when test=".='(all parts)'">
+	    <xsl:text> </xsl:text>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text>-</xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
+	<xsl:value-of select="normalize-space(.)"/>
+      </xsl:for-each>
+      
+      <xsl:for-each select="tei:edition">
 	<xsl:text>:</xsl:text>
 	<xsl:value-of select="normalize-space(.)"/>
-    </xsl:for-each>
+      </xsl:for-each>
+      
+      <xsl:for-each select="tei:idno[@type='supplType']">
+	<xsl:text>/</xsl:text>
+	<xsl:value-of select="normalize-space(.)"/>
+      </xsl:for-each>
+      
+      <xsl:for-each select="tei:idno[@type='supplNumber']">
+	<xsl:text>.</xsl:text>
+	<xsl:value-of select="normalize-space(.)"/>
+      </xsl:for-each>
+      
+      <xsl:for-each select="tei:idno[@type='supplYear']">
+	<xsl:text>:</xsl:text>
+	<xsl:value-of select="normalize-space(.)"/>
+      </xsl:for-each>
+      
+      <xsl:for-each select="tei:idno[@type='corrType']">
+	<xsl:text>/</xsl:text>
+	<xsl:value-of select="normalize-space(.)"/>
+      </xsl:for-each>
+      
+      <xsl:for-each select="tei:idno[@type='corrNumber']">
+	<xsl:text>.</xsl:text>
+	<xsl:value-of select="normalize-space(.)"/>
+      </xsl:for-each>
+      
+      <xsl:for-each select="tei:idno[@type='corrYear']">
+	<xsl:text>:</xsl:text>
+	<xsl:value-of select="normalize-space(.)"/>
+      </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
 
