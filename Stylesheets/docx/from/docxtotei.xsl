@@ -223,7 +223,7 @@
 
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Ignore bookmarks in section mode</p>
+         <p>Bookmarks in section mode</p>
          <p>
 		There are certain elements, that we don't really care about, but that
 		force us to regroup everything from the next sibling on.

@@ -55,10 +55,21 @@
    </doc>
     <xsl:template match="w:fldSimple">
         <xsl:choose>
-            <!-- Page number -->
-            <xsl:when test="contains(@w:instr,'PAGE')">
-                <teidocx:dynamicContent type="pagenumber"/>
-            </xsl:when>
+	  <!-- cross ref -->
+	  <!-- <w:fldSimple w:instr=" REF _Ref260736521 \r \h  \* MERGEFORMAT ">            -->
+	  <xsl:when test="contains(@w:instr,' REF _Ref')">
+	    <xsl:variable name="ref">
+	      <xsl:value-of
+		  select="substring-before(substring-after(@w:instr,'_'),' ')"/>
+	    </xsl:variable>
+	    <ref>
+	      <xsl:attribute name="target" select="concat('#',$ref)"/>
+	      <xsl:apply-templates/>
+	    </ref>	    
+	  </xsl:when>
+	  <xsl:when test="contains(@w:instr,'PAGE')"><!-- Page number -->
+	    <teidocx:dynamicContent type="pagenumber"/>
+	  </xsl:when>
         </xsl:choose>
     </xsl:template>
     

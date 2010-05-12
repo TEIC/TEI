@@ -517,7 +517,7 @@
                 <xsl:attribute name="type">headless</xsl:attribute>
                 <xsl:if test="string(normalize-space($divname))">
                     <p>
-                        <xsl:apply-templates/>
+		      <xsl:call-template name="process-word-XRef"/>
                     </p>
                 </xsl:if>
             </xsl:otherwise>
@@ -989,20 +989,18 @@
     </doc>
     <xsl:template
 	match="w:p[w:pPr/w:pStyle/@w:val=$Tabletitle]/w:r/w:t">
-      <xsl:choose>
-	<xsl:when test="starts-with(.,'— ')">
-	  <xsl:value-of select="substring(.,3)"/>
-	</xsl:when>
-	<xsl:when test="starts-with(.,' — ')">
-	  <xsl:value-of select="substring(.,4)"/>
-	</xsl:when>
-	<xsl:when test="starts-with(.,'—')">
-	  <xsl:value-of select="substring(.,2)"/>
-	</xsl:when>
-	<xsl:otherwise>
+      <xsl:apply-templates/>
+    </xsl:template>
+
+    <xsl:template
+	match="w:p[w:pPr/w:pStyle/@w:val=$Tabletitle]/w:r/w:t/text()">
+      <xsl:analyze-string select="." regex="^\s?[\-—]+\s?">
+	<xsl:matching-substring>
+	</xsl:matching-substring>
+	<xsl:non-matching-substring>
 	  <xsl:value-of select="."/>
-	</xsl:otherwise>
-      </xsl:choose>
+	</xsl:non-matching-substring>
+      </xsl:analyze-string>
     </xsl:template>
 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Figure text']" mode="paragraph">
@@ -1676,52 +1674,7 @@
                     <xsl:value-of select="w:pPr/w:spacing/@w:after"/>
                 </xsl:attribute>
             </xsl:if>
-	    <xsl:choose>
-	      <xsl:when
-		  test="w:r[w:fldChar/@w:fldCharType[matches(.,'begin')]]">
-		<xsl:for-each-group select="w:r"
-				    group-starting-with="w:r[w:fldChar/@w:fldCharType[matches(.,'begin|end')]]">
-		  <xsl:choose>
-		    <xsl:when
-			test="self::w:r[w:fldChar/@w:fldCharType[matches(.,'begin')]]">
-		      <ref>
-		      <xsl:for-each select="current-group()">
-			<xsl:choose>
-			  <xsl:when
-			      test="self::w:r[w:instrText]">			    
-			    <xsl:variable name="ref">
-			      <xsl:value-of
-				    select="substring-before(substring-after(w:instrText,'_'),' ')"/>
-			    </xsl:variable>
-			    <xsl:attribute name="target" select="concat('#',$ref)"/>
-			  </xsl:when>
-			  <xsl:otherwise>
-			    <xsl:apply-templates/>
-			  </xsl:otherwise>
-			</xsl:choose>
-		      </xsl:for-each>
-		      </ref>
-		    </xsl:when>
-		    <xsl:when
-			test="self::w:r[w:fldChar/@w:fldCharType[matches(.,'end')]]">
-		      <xsl:for-each select="current-group()">
-			<xsl:choose>
-			  <xsl:when  test="w:t">			    
-			    <xsl:apply-templates/>
-			  </xsl:when>
-			</xsl:choose>
-		      </xsl:for-each>
-		    </xsl:when>
-		    <xsl:otherwise>
-		      <xsl:apply-templates/>
-		    </xsl:otherwise>
-		  </xsl:choose>
-		</xsl:for-each-group>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:apply-templates select="."/>
-	      </xsl:otherwise>
-	    </xsl:choose>
+	    <xsl:call-template name="process-word-XRef"/>
         </p>
     </xsl:template>
 

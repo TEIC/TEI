@@ -98,7 +98,72 @@
 	   <xsl:apply-templates select="."/>
 	 </xsl:otherwise>
        </xsl:choose>
+       <xsl:call-template name="process-word-XRef"/>
      </p>
    </xsl:template>
+   
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+	Named template for handling processing any cross-references found.
+    </desc>
+    </doc>
+    <xsl:template name="process-word-XRef">
+
+      <xsl:choose>
+	<xsl:when
+	    test="w:r[w:fldChar/@w:fldCharType[matches(.,'begin')]]">
+	  <xsl:for-each-group select="w:r|w:bookmarkStart"
+			      group-starting-with="w:r[w:fldChar/@w:fldCharType[matches(.,'begin|end')]]">
+	    <xsl:choose>
+	      <xsl:when
+		  test="self::w:r[w:fldChar/@w:fldCharType[matches(.,'begin')]]">
+		<ref>
+		  <xsl:for-each select="current-group()">
+		    <xsl:choose>
+		    <xsl:when  test="self::w:bookmarkStart">
+		      <xsl:apply-templates select="."/>
+		    </xsl:when>
+		      <xsl:when
+			  test="self::w:r[w:instrText]">			    
+			<xsl:variable name="ref">
+			  <xsl:value-of
+			      select="substring-before(substring-after(w:instrText,'_'),' ')"/>
+			</xsl:variable>
+			<xsl:attribute name="target" select="concat('#',$ref)"/>
+		      </xsl:when>
+		      <xsl:otherwise>
+			<xsl:apply-templates/>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:for-each>
+		</ref>
+	      </xsl:when>
+	      <xsl:when
+		  test="self::w:r[w:fldChar/@w:fldCharType[matches(.,'end')]]">
+		<xsl:for-each select="current-group()">
+		  <xsl:choose>
+		    <xsl:when  test="w:t">			    
+		      <xsl:apply-templates/>
+		    </xsl:when>
+		    <xsl:when  test="self::w:bookmarkStart">
+		      <xsl:apply-templates select="."/>
+		    </xsl:when>
+		  </xsl:choose>
+		</xsl:for-each>
+	      </xsl:when>
+	      <xsl:when  test="self::w:bookmarkStart">
+		<xsl:apply-templates select="."/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:apply-templates/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:for-each-group>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
 
 </xsl:stylesheet>
