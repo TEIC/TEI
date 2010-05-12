@@ -488,9 +488,23 @@
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
+        Anchors
+    </desc>
+   </doc>
+    <xsl:template match="tei:anchor">
+      <xsl:variable name="N">
+	<xsl:number level="any"/>
+      </xsl:variable>
+      <w:bookmarkStart id="{number($N) + 10000}" w:name="_{@xml:id}"/>
+      <w:bookmarkEnd  id="{number($N) + 10000}" w:name="_{@xml:id}"/>
+    </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
         Handles text sections
     </desc>
    </doc>
+
     <xsl:template match="text()">
         <xsl:param name="character-style"/>
 	<xsl:if test="../@xml:id">
