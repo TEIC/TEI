@@ -132,7 +132,7 @@
 			<xsl:attribute name="target" select="concat('#',$ref)"/>
 		      </xsl:when>
 		      <xsl:otherwise>
-			<xsl:apply-templates/>
+			<xsl:apply-templates select="."/>
 		      </xsl:otherwise>
 		    </xsl:choose>
 		  </xsl:for-each>
@@ -145,6 +145,9 @@
 		    <xsl:when  test="w:t">			    
 		      <xsl:apply-templates/>
 		    </xsl:when>
+		    <xsl:when  test="w:tab">			    
+		      <xsl:apply-templates/>
+		    </xsl:when>
 		    <xsl:when  test="self::w:bookmarkStart">
 		      <xsl:apply-templates select="."/>
 		    </xsl:when>
@@ -155,7 +158,7 @@
 		<xsl:apply-templates select="."/>
 	      </xsl:when>
 	      <xsl:otherwise>
-		<xsl:apply-templates/>
+		<xsl:apply-templates select="."/>
 	      </xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:for-each-group>
