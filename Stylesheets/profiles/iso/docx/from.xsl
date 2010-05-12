@@ -1575,7 +1575,6 @@
 	  <xsl:if test="tei:publisher">
 	    <xsl:attribute name="type">
 	      <xsl:choose>
-		<xsl:when test="tei:edition='—'">undated</xsl:when>
 		<xsl:when test="tei:edition">dated</xsl:when>
 		<xsl:otherwise>undated</xsl:otherwise>
 	      </xsl:choose>
@@ -2212,7 +2211,7 @@
 	<xsl:text>([0-9]+)</xsl:text><!-- document number -->
 	<xsl:text>-?([0-9]+| \(all parts\))?</xsl:text><!-- part(s) -->
 	<xsl:text>[:\s]*</xsl:text>
-	<xsl:text>([0-9—]+)?</xsl:text><!-- year -->
+	<xsl:text>([0-9\-—–]+)?</xsl:text><!-- year -->
 	<xsl:text>/?</xsl:text>
 	<xsl:text>(Cor|Amd|Add|Suppl)?</xsl:text> <!-- suppl type -->
 	<xsl:text>.?</xsl:text>
