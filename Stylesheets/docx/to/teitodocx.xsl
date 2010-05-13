@@ -1632,7 +1632,7 @@
       <w:r>
 	<xsl:choose>
 	  <xsl:when test="starts-with(@target,'#')">
-	    <w:instrText> REF _<xsl:value-of select="@target"/> \n \h</w:instrText>
+	    <w:instrText> REF _<xsl:value-of select="substring(@target,2)"/> \n \h</w:instrText>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <w:instrText> HYPERLINK "<xsl:value-of select="@target"/>" \h</w:instrText>
