@@ -67,6 +67,16 @@
 	      <xsl:apply-templates/>
 	    </ref>	    
 	  </xsl:when>
+	  <xsl:when test="contains(@w:instr,' NOTEREF _Ref')">
+	    <xsl:variable name="ref">
+	      <xsl:value-of
+		  select="substring-before(substring-after(@w:instr,'_'),' ')"/>
+	    </xsl:variable>
+	    <ref>
+	      <xsl:attribute name="target" select="concat('#',$ref)"/>
+	      <xsl:apply-templates/>
+	    </ref>	    
+	  </xsl:when>
 	  <xsl:when test="contains(@w:instr,'PAGE')"><!-- Page number -->
 	    <teidocx:dynamicContent type="pagenumber"/>
 	  </xsl:when>
