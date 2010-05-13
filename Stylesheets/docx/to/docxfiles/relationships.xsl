@@ -33,6 +33,7 @@
                 exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso its     tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
     
     
+  <!-- <xsl:key name="TARGETS" use="1" match="tei:ref[@target]|tei:ptr[@target]"/>-->
     <xsl:key name="GRAPHICS" use="1" match="tei:graphic[@url]"/>
     <xsl:key name="OLEOBJECTS" use="1" match="o:OLEObject"/>
     <xsl:key name="IMAGEDATA" use="1" match="v:imagedata"/>
@@ -164,23 +165,25 @@
                 </xsl:for-each>
                 
                 <!-- hyperlinks -->
-                <!--
-                    <xsl:for-each select="//tei:ptr">
+
+		<!-- 
+		<xsl:for-each select="key('TARGETS',1)">
+		  <xsl:if test="not(starts-with(@target,'#'))">
                     <Relationship 
-                    Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
-                    Target="{@target}" 
-                    TargetMode="External">
-                    <xsl:message>H <xsl:value-of select="@target"/></xsl:message>
-                    <xsl:attribute name="Id">
-                    <xsl:text>rId</xsl:text>
-                    <xsl:variable name="n">
-                    <xsl:number level="any"/>
-                    </xsl:variable>
-                    <xsl:value-of select="$n + 3000"/>
-                    </xsl:attribute>
-                    </Relationship>
-                    </xsl:for-each>
-                -->
+			Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
+			Target="{@target}" 
+			TargetMode="External">
+		      <xsl:attribute name="Id">
+			<xsl:text>rId</xsl:text>
+			<xsl:variable name="n">
+			  <xsl:number level="any"/>
+			</xsl:variable>
+			<xsl:value-of select="$n + 3000"/>
+		      </xsl:attribute>
+		    </Relationship>
+		  </xsl:if>
+		</xsl:for-each>
+		-->
 
                 <!-- Formulas -->
                 <xsl:for-each select="key('IMAGEDATA',1)">
