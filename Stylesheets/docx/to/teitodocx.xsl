@@ -1551,85 +1551,109 @@
 
     <!-- hyperlink -->
     <xsl:template match="tei:ptr">
-        <w:r>
-            <w:fldChar w:fldCharType="begin"/>
-        </w:r>
-        <w:r>
-            <w:instrText>HYPERLINK "<xsl:value-of select="@target"/>" \h</w:instrText>
-        </w:r>
-        <w:r>
-            <w:fldChar w:fldCharType="separate"/>
-        </w:r>
-        <w:r w:rsidR="00765EBE">
-            <w:rPr>
-                <w:rStyle w:val="Hyperlink"/>
-                <w:u w:val="none"/>
-            </w:rPr>
-            <w:t>
-                <xsl:choose>
-                    <xsl:when test="starts-with(@target,'#')">
-                        <xsl:apply-templates select="key('IDS',substring-after(@target,'#'))" mode="xref"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="@target"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </w:t>
-        </w:r>
-        <w:r>
-            <w:fldChar w:fldCharType="end"/>
-        </w:r>
-        <!--
-      <w:r>
-          <w:rPr>
-            <w:rStyle w:val="Hyperlink"/>
-          </w:rPr>
-
-	<w:instrText>HYPERLINK "<xsl:value-of select="@target"/>"\h</w:instrText>
-      </w:r>
--->
-        <!--
-	<xsl:variable name="rid">
-	  <xsl:text>rId</xsl:text>
-	  <xsl:variable name="n">
-	    <xsl:number level="any"/>
-	  </xsl:variable>
-	  <xsl:value-of select="$n + 3000"/>
-	</xsl:variable>
-      <w:hyperlink r:id="{$rid}">
-        <w:r>
-          <w:rPr>
-            <w:rStyle w:val="Hyperlink"/>
-          </w:rPr>
-          <w:t>
-	    <xsl:value-of select="@target"/>
-	  </w:t>
-	</w:r>
-      </w:hyperlink>
--->
-
+      <xsl:call-template name="linkMe">
+	<xsl:with-param name="anchor">
+	  <xsl:choose>
+	    <xsl:when test="starts-with(@target,'#')">
+	      <xsl:apply-templates
+		  select="key('IDS',substring-after(@target,'#'))"
+		  mode="xref"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="@target"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:with-param>
+      </xsl:call-template>
     </xsl:template>
 
-    <!-- cross-ref -->
     <xsl:template match="tei:ref">
-        <w:r>
-            <w:fldChar w:fldCharType="begin"/>
-        </w:r>
-        <w:r>
-            <w:instrText xml:space="preserve"> REF _<xsl:value-of
-	    select="substring-after(@target,'#')"/> \n \h </w:instrText>
-        </w:r>
-        <w:r>
-            <w:fldChar w:fldCharType="separate"/>
-        </w:r>
-        <w:r>
-            <w:t>
-	      <xsl:value-of select="."/>
-            </w:t>
-        </w:r>
-        <w:r>
-            <w:fldChar w:fldCharType="end"/>
-        </w:r>
+      <xsl:call-template name="linkMe">
+	<xsl:with-param name="anchor">
+	  <xsl:apply-templates/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template name="linkMeUsingHyperlink">
+      <xsl:param name="anchor"/>
+      <xsl:choose>
+	<xsl:when test="starts-with(@target,'#')">
+	  <w:r>
+	    <w:fldChar w:fldCharType="begin"/>
+	  </w:r>
+	  <w:r>
+	    <w:instrText>HYPERLINK "<xsl:value-of select="@target"/>" \h</w:instrText>
+	  </w:r>
+	  <w:r>
+	    <w:fldChar w:fldCharType="separate"/>
+	  </w:r>
+	  <w:r w:rsidR="00765EBE">
+	    <w:rPr>
+	      <w:rStyle w:val="Hyperlink"/>
+	      <w:u w:val="none"/>
+	    </w:rPr>
+	    <w:t>
+	      <xsl:copy-of select="$anchor"/>
+	    </w:t>
+	  </w:r>
+	  <w:r>
+	    <w:fldChar w:fldCharType="end"/>
+	  </w:r>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:variable name="rid">
+	    <xsl:text>rId</xsl:text>
+	    <xsl:variable name="n">
+	      <xsl:number level="any"/>
+	    </xsl:variable>
+	    <xsl:value-of select="$n + 3000"/>
+	  </xsl:variable>
+	  <w:hyperlink r:id="{$rid}">
+	    <w:r>
+	      <w:rPr>
+		<w:rStyle w:val="Hyperlink"/>
+	      </w:rPr>
+	      <w:t>
+		<xsl:copy-of select="$anchor"/>
+	      </w:t>
+	    </w:r>
+	  </w:hyperlink>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
+
+
+    <xsl:template name="linkMe">
+      <xsl:param name="anchor"/>
+      <w:r>
+	<w:fldChar w:fldCharType="begin"/>
+      </w:r>
+      <w:r>
+	<xsl:choose>
+	  <xsl:when test="starts-with(@target,'#')">
+	    <w:instrText> REF _<xsl:value-of select="@target"/> \n \h</w:instrText>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <w:instrText> HYPERLINK "<xsl:value-of select="@target"/>" \h</w:instrText>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </w:r>
+      <w:r>
+	<w:fldChar w:fldCharType="separate"/>
+      </w:r>
+      <w:r>
+	<w:rPr>
+	      <w:rStyle w:val="Hyperlink"/>
+	      <w:u w:val="none"/>
+	</w:rPr>
+	<w:t>
+	  <xsl:copy-of select="$anchor"/>
+	</w:t>
+      </w:r>
+      <w:r>
+	<w:fldChar w:fldCharType="end"/>
+      </w:r>
     </xsl:template>
 
     <xsl:template match="tei:note|tei:figure|tei:table|tei:item" mode="xref">
