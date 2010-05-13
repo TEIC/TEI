@@ -141,15 +141,12 @@
 		  test="self::w:r[w:fldChar/@w:fldCharType[matches(.,'end')]]">
 		<xsl:for-each select="current-group()">
 		  <xsl:choose>
-		  <xsl:when  test="w:t">			    
-		      <xsl:apply-templates/>
+		    <xsl:when
+			test="self::w:r[w:fldChar/@w:fldCharType[matches(.,'end')]]">
 		    </xsl:when>
-		    <xsl:when  test="w:tab">			    
-		      <xsl:apply-templates/>
-		    </xsl:when>
-		    <xsl:when  test="self::w:bookmarkStart">
+		    <xsl:otherwise>
 		      <xsl:apply-templates select="."/>
-		    </xsl:when>
+		    </xsl:otherwise>
 		  </xsl:choose>
 		</xsl:for-each>
 	      </xsl:when>
