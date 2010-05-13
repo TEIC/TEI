@@ -3522,6 +3522,73 @@ fuller account of that practice as applied to electronic texts see
 section <ptr target="#HD3"/>; for a brief mention of related library
 standards see section <ptr target="#HD8"/>.
  </p>
+
+<p>The most commonly used elements in the model.biblLike class are
+<gi>biblStruct</gi> and <gi>bibl</gi>. <gi>biblStruct</gi> will
+usually be easier to process mechanically than <gi>bibl</gi> because
+its structure is more constrained and predictable. It is suited to
+situations in which the objective is to represent bibliographic
+information for machine processing directly by other
+systems or after conversion to some other bibliographic markup formats
+such as BibTeXML or MODS. Punctuation delimiting the components of a
+print citation is not permitted directly within a <gi>biblStruct</gi>
+element; instead,  the presence and order of child elements must be used to
+reconstruct the punctuation required by a particular style.  <!--While <gi>biblStruct</gi> offers enough
+flexibility for encoding bibliographic references to simple print
+works, for many documents, especially electronic ones, it proves
+problematic.--> <!-- no problems presented -->
+</p>
+
+<p>By contrast, <gi>bibl</gi> allows for considerable flexibility in
+that it can include both delimiting punctuation and unmarked-up text;
+and its constituents can also be ordered in any
+way. This makes it suitable for marking up bibliographies in existing
+documents, where it is considered important to preserve the form of references
+in the original document, while also  distinguishing 
+important pieces of information such as authors, dates, publishers, and so
+on. <gi>bibl</gi> may also be useful when encoding <soCalled>born digital</soCalled>
+documents which require use of a specific style
+guide when rendering the content <!-- why is this true of born digital
+dox in particular? -->; its flexibility makes it easier to provide all the information for a reference in the
+exact sequence required by the target rendering, including any
+necessary punctuation and linking words, rather than using an XSLT
+stylesheet or similar to reorder and punctuate the data. <!-- tough if
+you later want it in a different form for another rendering engine of
+course -->
+</p>
+<p>
+The third element in the model.biblLike class, <gi>biblFull</gi>, has
+a content model based on the  <gi>fileDesc</gi> element of the
+TEI header. Both are based on the International Standard for Bibliographic
+Description (ISBD), which forms the basis of several national standards for bibliographic
+citations. The order of child elements in both
+<gi>biblFull</gi> and <gi>fileDesc</gi>  corresponds to the order
+of bibliographic desription <soCalled>areas</soCalled> in ISBD with two
+minor exceptions. First, the <gi>extent</gi> element, corresponding to the physical
+description area in ISBD, appears just after the publication,
+production, distribution, etc. area in ISBD, not before it as in
+TEI. Second, <gi>biblFull</gi> and <gi>fileDesc</gi> use the child
+element <gi>publicationStmt</gi> to cover not only the publication,
+production, distribution, etc. area but also the resource identifier
+and terms of availability area associated with that publication.
+<!-- how else would you show that something was published by X with
+     one identifier and by Y with a different one? --> 
+Despite these inconsistencies, users
+encoding citations and attempting to format them according to a
+standard that closely adheres to ISBD may find that <gi>biblFull</gi>,
+used with its child elements and without delimiting punctuation,
+provides an appropriate granularity of encoding with elements that can
+easily rendered for the reader. However, it is important to note that some
+ISBD-derived citation formats (such as ANSI/NISO Z39.29 and 
+ГОСТ 7.1) are not entirely conformant to ISBD either, since they may begin with a statement of authorship that does not map to
+the ISBD statement of responsibility.  
+<!-- and which, therefore, cannot be encoded anywhere inside of a
+     <gi>biblFull</gi> (or <gi>fileDesc</gi>). -->
+<!-- not so: you can use respStmt with an appropriate @type surely? -->
+</p>
+
+
+
 <div type="div3" xml:id="COBITY"><head>Elements of Bibliographic References</head>
 <p>
 The members of the <ident type="class">model.biblLike</ident> class
@@ -3573,12 +3640,16 @@ element should be used.  Note that several of the features in this and
 later examples are explained later in the current section.
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBITY-eg-240"><biblStruct>
    <monogr>
-      <author>Edward R. Tufte</author>
-      <title>Envisioning Information</title>
+      <author>
+      <persName>
+<forename>Edward R.</forename>
+<surname> Tufte</surname>
+      </persName></author>
+      <title level="m">Envisioning Information</title>
       <imprint>
          <pubPlace>Cheshire, Conn.</pubPlace>
          <publisher>Graphics Press</publisher>
-         <date>1990</date>
+         <date when="1990"/>
       </imprint>
    </monogr>
 </biblStruct></egXML>
@@ -3614,32 +3685,36 @@ The difference between the two is that a <gi>list</gi> contains
 <gi>biblStruct</gi>, or <gi>biblFull</gi>) may appear, as well as other
 phrase- and paragraph-level elements, whereas the <gi>listBibl</gi> may
 contain only bibliographic elements, optionally preceded by a heading and a
-series of introductory paragraphs.  The former would be appropriate
-for a list of bibliographic elements in which descriptive prose
-predominated, and the latter for a more formal bibliography.  The
-following are thus both legal encodings of a list of bibliographic
-entries:  a <gi>listBibl</gi>:
+series of introductory paragraphs.  For most purposes, good practice would usually
+require that a <gi>listBibl</gi> contain only one kind of bibliographic
+element, though the following example combines both fully structured
+<gi>biblStruct</gi> and informal <gi>bibl</gi> elements:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><listBibl>
    <head>Bibliography</head>
    <biblStruct xml:id="NELSON80">
       <analytic>
-         <author>Nelson, T. H.</author>
+         <author><persName>
+	   <surname>Nelson</surname>
+	   <forename>Theodore Holm</forename>
+	   </persName></author>
          <title>Replacing the printed word:
-             a complete literary system.</title>
+             a complete literary system</title>
       </analytic>
       <monogr>
-         <title>Information Processing '80:  Proceedings of the IFIPS
+         <title level="m">Information Processing '80:  Proceedings of the IFIPS
              Congress, October 1980</title>
-         <editor>Simon H. Lavington</editor>
+         <editor><persName><forename>Simon H.</forename>
+<surname>Lavington</surname></persName></editor>
          <imprint>
             <publisher>North-Holland</publisher>
             <pubPlace>Amsterdam</pubPlace>
-            <date>1980</date>
+            <date when="1980"/>
          </imprint>
-         <biblScope>pp 1013–23 </biblScope>
+         <biblScope type="pp">1013–23</biblScope>
       </monogr>
       <note>Apparently a draft of section 4 of 
-          <title>Literary Machines</title>.</note>
+          <title level="m">Literary Machines</title>.</note>
    </biblStruct>   <bibl xml:id="NELSON88">Ted Nelson:  <title>Literary Machines</title>
        (privately published, 1987)</bibl>   <bibl xml:id="BAXTER88">    
       <author>Baxter, Glen</author>
@@ -3647,7 +3722,14 @@ entries:  a <gi>listBibl</gi>:
        London: Thames and Hudson, 1988.
    </bibl>
 </listBibl></egXML>
-or a simple <gi>list</gi>:
+
+
+The <gi>listBibl</gi> element is most appropriate 
+for  a more formal bibliography. The same <gi>bibl</gi> or
+<gi>biblStruct</gi> elements may however be embedded within an
+ordinary list, thus allowing them to be mixed with running prose or
+presented informally, as in the following version of the same example:
+
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><list>
    <head>Bibliography</head>
@@ -3683,38 +3765,29 @@ or a simple <gi>list</gi>:
  </p>
 </div>
 <div type="div3" xml:id="COBICO"><head>Components of Bibliographic References</head>
-<p>This section discusses a number of very commonly occurring
-component elements of bibliographic references.  They fall into four
-groups:
+
+<p>This section discusses commonly occurring components of
+bibliographic references and elements for encoding them.  They fall
+into four groups:
 <list type="simple">
-<item>elements for grouping components of the
-<term>analytic</term>,
-<term>monographic</term>,
-and <term>series</term>
-<!--
-<index><term>analytic level</term><index><term>bibliographic</term></index></index>
-<index><term>monographic level</term><index><term>bibliographic</term></index></index>
-<index><term>series level</term><index><term>bibliographic</term></index></index>
-<index><term>bibliographic references</term><index><term>analytic level</term></index></index>
-<index><term>bibliographic
-references</term><index><term>monographic
-level</term></index></index>
-<index><term>bibliographic references</term><index><term>series
-level</term></index></index> -->
-levels in a structured bibliographic reference</item>
+<item>elements for grouping components of the <term>analytic</term>,
+<term>monographic</term>, and <term>series</term> levels in a
+structured bibliographic reference</item>
 <item>titles of various kinds, and statements of intellectual
 responsibility (authorship, etc.)</item>
 <item>information relating to the publication, pagination, etc. of an
 item (most of these
 constitute the default members of the <ident type="class">model.biblPart</ident> class) </item>
-<item>annotation, commentary, and further detail</item></list>
-The following sections describe the elements which may be used to
+<item>annotation, commentary, and further detail</item></list> The
+following sections describe the elements which may be used to
 represent such information within a <gi>bibl</gi> or
 <gi>biblStruct</gi> element.  Within the former, elements from the
-<ident type="class">model.biblPart</ident> class, other phrase-level elements, and plain text may
-be combined without other constraint; within the latter, such of these elements
-as exist for a given reference must be distinguished, and must also be
-presented in a specific order, discussed further below (section <ptr target="#COBICOO"/>).
+<ident type="class">model.biblPart</ident> class, other phrase-level
+elements, and plain text may be combined without other constraint;
+within the latter, such of these elements as exist for a given
+reference must be distinguished, and must also be presented in a
+specific order, discussed further below (section <ptr
+target="#COBICOO"/>).
  </p>
 <div type="div4" xml:id="COBICOL"><head>Analytic, Monographic, and Series Levels</head>
 <p>In common library practice a clear distinction is made between an
@@ -3725,13 +3798,12 @@ part of a collection which itself appears in a series thus has a
 bibliographic description with three quite distinct levels of
 information:
 <list type="ordered">
-<item>the <term rend="noindex">analytic</term><!--<index><term>analytic level</term><index><term>bibliographic</term></index></index>-->
-level, giving the title, author, etc., of the article;
+<item>the <term rend="noindex">analytic</term> level, giving the title, author, etc., of the article;
  </item>
-<item>the <term rend="noindex">monographic</term><!--<index><term>monographic level</term><index><term>bibliographic</term></index></index>-->
+<item>the <term rend="noindex">monographic</term>
 level, giving the title, editor, etc., of the collection;
  </item>
-<item>the <term rend="noindex">series</term><!--<index><term>series level</term><index><term>bibliographic</term></index></index>-->
+<item>the <term rend="noindex">series</term>
 level, giving the title of the series, possibly the names of its
 editors, etc., and the number of the volume within that series.
  </item></list>
@@ -3741,14 +3813,14 @@ monographic level describing the journal.
  </p>
 <p>These three levels may be distinguished within a <gi>bibl</gi>
 element, and must be distinguished within a <gi>biblStruct</gi> element
-if present, by means of the following elements:
+by means of the following elements:
 
 <specList><specDesc key="analytic"/><specDesc key="monogr"/><specDesc key="series"/></specList>
  </p>
 
 <p>For purposes of TEI encoding, journals and anthologies are both
 treated as monographs; a journal title will thus be tagged as a
-<tag>title level="j"</tag> element, or simply as a <gi>title</gi> within
+<tag>title level="j"</tag> element <!--, or simply as a <gi>title</gi> -->within
 a <gi>monogr</gi> element.  Individual articles in the journal or
 collected texts should be treated at the <soCalled>analytic</soCalled>
 level.  When an article has been printed in more than one journal or
@@ -3775,7 +3847,7 @@ German language series:
       <title level="j">Historical Social Research</title>
       <imprint>
          <biblScope type="vol">40</biblScope>
-         <date>October 1986</date>
+         <date when="1986-10">October 1986</date>
          <biblScope type="pp">3-46</biblScope>
       </imprint>
    </monogr>
@@ -3784,12 +3856,12 @@ German language series:
                        Towards a Standard for Encoding and 
                        Exchanging Machine-Readable Texts</title>
       <editor>Daniel I. Greenstein</editor>
-      <imprint>
+      <imprint xml:lang="de">
          <pubPlace>St. Katharinen</pubPlace>
          <publisher>Max-Planck-Institut für Geschichte
                     In Kommission bei
                     Scripta Mercaturae Verlag</publisher>
-         <date>1991</date>
+         <date when="1991"/>
       </imprint>
    </monogr>
    <series xml:lang="de">              
@@ -3801,7 +3873,7 @@ German language series:
          <name type="org">Max-Planck-Institut für Geschichte</name>
       </respStmt>
       <title level="s">Serie A: Historische Quellenkunden</title>
-      <biblScope>Band 11</biblScope>
+      <biblScope type="vol">11</biblScope>
    </series>
 </biblStruct></egXML>
  </p>
@@ -3811,12 +3883,12 @@ should be distinguished from the practice of including within one
 citation a reference to another work, which the encoder considers
 to be related to in some way: see further <ptr target="#COBIRI"/> below.</p>
 
-<p>Punctuation should not appear between the elements within a structured
-bibliographic entry, unless it is contained within the elements it delimits.  As the
-example shows, it is possible to encode the entry without any
-inter-element punctuation:  this facilitates use of the
-<gi>biblStruct</gi> element in systems which can render bibliographic
-references in any of several styles.
+<p>Punctuation should not appear between the elements within a
+structured bibliographic entry, unless it is contained within the
+elements it delimits.  As the example shows, it is possible to encode
+the entry without any inter-element punctuation: this facilitates use
+of the <gi>biblStruct</gi> element in systems which can render
+bibliographic references in any of several styles.
  </p>
 <specGrp xml:id="DCOBILV" n="Levels of bibliographic information">&analytic;
 &monogr;
