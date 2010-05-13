@@ -2004,6 +2004,8 @@
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Strip words and punctuation from term</desc></doc>
 
+   <xsl:template match="tbx:term/tei:hi[.=', ']" mode="pass2"/>
+
    <xsl:template match="tbx:term/text()" mode="pass2">
      <xsl:variable name="s" select="replace(.,'DEPRECATED: ','')"/>
      <xsl:analyze-string select="$s" regex="(.+),\s*$">

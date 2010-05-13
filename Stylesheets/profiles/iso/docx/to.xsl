@@ -69,7 +69,7 @@
     <xsl:param name="word-directory">..</xsl:param>
     <xsl:param name="tei-directory">./</xsl:param>
     <xsl:param name="debug">false</xsl:param>   
-    <xsl:param name="magic">false</xsl:param>   
+    <xsl:param name="showTBXMarkup">false</xsl:param>   
     <xsl:param name="numberFormat">fr</xsl:param>
     
     <xsl:variable name="orig" select="/"/>
@@ -314,8 +314,8 @@
         <desc>Turn iso:style attribute back into Word styles</desc></doc>
     
     <xsl:template name="undoSpecialStyle">
-        <xsl:param name="css"/>
-        <xsl:for-each-group select="tokenize($css,';')" group-adjacent="if (matches(., 'margin-(left|right)')) then 1 else
+        <xsl:param name="css"/> 
+       <xsl:for-each-group select="tokenize($css,';')" group-adjacent="if (matches(., 'margin-(left|right)')) then 1 else
                    if (matches(., 'margin-(top|bottom)')) then 2 else 0">
             <xsl:choose>
                 <xsl:when test="current-grouping-key()=1">
@@ -325,10 +325,12 @@
                      <xsl:call-template name="getStyleMarginsV"/>
                 </xsl:when>
                 <xsl:otherwise>
+		  <xsl:for-each select="current-group()">
                     <xsl:if test="contains(., 'text-align')">
                         <xsl:variable name="val"><xsl:value-of select="normalize-space(substring-after(.,':'))"/></xsl:variable>            
                         <w:jc w:val="{$val}"/>
                     </xsl:if> 
+		  </xsl:for-each>
                 </xsl:otherwise>
             </xsl:choose>            
         </xsl:for-each-group>
@@ -916,7 +918,7 @@
     <xsl:apply-templates select="tbx:note"/>
     <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
 
-    <xsl:if test="$magic='true'">
+    <xsl:if test="$showTBXMarkup='true'">
       <xsl:call-template name="block-element">
 	<xsl:with-param name="select">
 	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -985,14 +987,16 @@
    </xsl:template>
 
    <xsl:template match="tbx:admin[@type='entrySource']">
-      <xsl:call-template name="block-element">
-         <xsl:with-param name="style">entrySource</xsl:with-param>
-	 <xsl:with-param name="select">
+	 <xsl:variable name="a">>
 	   <xsl:text>[SOURCE: </xsl:text>
-	   <xsl:apply-templates/>
+	   <xsl:value-of select="."/>
 	   <xsl:text>]</xsl:text>
-	 </xsl:with-param>
-      </xsl:call-template>
+	 </xsl:variable>
+	 <xsl:for-each select="$a">
+	   <xsl:call-template name="block-element">
+	     <xsl:with-param name="style">entrySource</xsl:with-param>
+	   </xsl:call-template>
+	 </xsl:for-each>
    </xsl:template>
 
   <xsl:template match="tbx:termNote">
