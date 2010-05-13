@@ -32,6 +32,32 @@ documented.</desc>
       </rng:group>
     </rng:zeroOrMore>
   </content>
+
+<attList>
+<attDef ident="autoPrefix">
+<desc>controls whether or not pattern names generated in the
+corresponding RELAXNG schema source are automatically prefixed to
+avoid potential nameclashes. </desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
+      </datatype>
+      <defaultVal>false</defaultVal>
+      <valList type="closed">
+        <valItem ident="true">
+          <desc>Each name referenced in e.g. a <gi>rng:ref</gi>
+	  element within a content model is automatically prefixed by
+	  the value of the <att>prefix</att> attribute on the current
+	  <gi>schemaSpec</gi></desc>
+	</valItem>
+        <valItem ident="false">
+          <desc>No prefixes are added: 
+ any prefix required by the value of the <att>prefix</att> attribute on the current
+	  <gi>schemaSpec</gi> must therefore be supplied explicitly, as appropriate. </desc>
+	</valItem>
+      </valList>
+</attDef>
+</attList>
+
   <exemplum xml:lang="en">
     <p>This content model allows either a sequence of paragraphs or a
     series of msItem elements optionally preceded by a summary: </p>
