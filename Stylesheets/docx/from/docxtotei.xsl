@@ -370,7 +370,14 @@
 	  </xsl:template>
 
    <xsl:template match="w:hyperlink">
-      <ptr target="{w:r/w:t}"/>
+      <ref>
+	<xsl:variable name="rid" select="@r:id"/>
+	<xsl:attribute name="target">
+	  <xsl:value-of
+	      select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+	</xsl:attribute>
+	<xsl:apply-templates/>
+      </ref>
    </xsl:template>
 
    <xsl:template match="w:instrText">

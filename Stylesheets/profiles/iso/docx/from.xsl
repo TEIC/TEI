@@ -735,7 +735,7 @@
                 </mentioned>
             </xsl:when>
 
-            <xsl:when test="$style='Hyperlink'">
+            <xsl:when test="$style='Hyperlink' and not(ancestor::w:hyperlink)">
                 <ref>
 		  <xsl:attribute name="target">
 		    <xsl:for-each
