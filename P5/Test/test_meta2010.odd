@@ -38,19 +38,19 @@
 	 <elementRef key="title"/>
 	 <elementRef key="titleStmt"/>
 	 <classRef key="att.typed"/>
+	 <p>Make some changes to the elements we have included.</p>
+	 <elementSpec ident="list" mode="change">
+	   <attList>
+	     <attDef ident="type" mode="change">
+	       <valList type="closed">
+		 <valItem ident="enumerated"/>
+		 <valItem ident="itemized"/>
+	       </valList>
+	     </attDef>
+	   </attList>
+	 </elementSpec>
        </specGrp>
 
-       <p>Make some changes to the elements we have included.</p>
-       <elementSpec ident="list" mode="change">
-	 <attList>
-	   <attDef ident="type" mode="change">
-	     <valList type="closed">
-	       <valItem ident="enumerated"/>
-	       <valItem ident="itemized"/>
-	     </valList>
-	   </attDef>
-	 </attList>
-       </elementSpec>
 
        <p>Now add an element in another namespace, implementing parts
        of TBX. The <gi>admin</gi> element has <gi>hi</gi> as its
@@ -67,8 +67,8 @@
 	   <classes>
 	     <memberOf key="model.hiLike"/>
 	   </classes>
-	   <content preserveNames="true">
-	     <rng:ref name="tbx_hi"/>
+	   <content autoPrefix="false">
+	     <rng:ref name="tei_hi"/>
 	   </content>
 	 </elementSpec>
 	 
@@ -86,33 +86,41 @@
        
 <p>The schema should be built using version 1.4 of TEI P5</p>
 
-       <schemaSpec ident="test_meta2010_1" start="TEI" p5Version="1.4">
+       <schemaSpec ident="test_meta2010_1" start="TEI" source="../p5subset.xml">
 	 <moduleRef key="tei"/>
 	 <specGrpRef target="#Include"/>
 	 <specGrpRef target="#TBX"/>
        </schemaSpec>
 
 
-       <schemaSpec ident="test_meta2010_2" start="TEI" p5Version="1.4">
+       <schemaSpec ident="test_meta2010_2" start="TEI" source="../p5subset.xml">
 	 <moduleRef key="tei"/>
-	 <moduleRef key="figures" exclude="table row cell"/>
+	 <moduleRef key="header"/>
+	 <moduleRef key="core" except="p"/>
+	 <moduleRef key="textstructure"/>
+	 <moduleRef key="figures" except="table row cell"/>
 	 <moduleRef key="namesdates" include="persName"/>
+	 <elementSpec module="textstructure" ident="argument" mode="delete"/>
+	 <elementSpec module="textstructure" ident="byline" mode="delete"/>
+	 <elementSpec module="textstructure" ident="closer" mode="delete"/>
+	 <elementSpec module="textstructure" ident="div1" mode="delete"/>
+	 <elementSpec module="textstructure" ident="div2" mode="delete"/>
+	 <elementSpec module="textstructure" ident="div3" mode="delete"/>
+	 <elementSpec module="textstructure" ident="div4" mode="delete"/>
+	 <elementSpec module="textstructure" ident="div5" mode="delete"/>
+	 <elementSpec module="textstructure" ident="div6" mode="delete"/>
+	 <elementSpec module="textstructure" ident="div7" mode="delete"/>
+	 <elementSpec module="textstructure" ident="imprimatur" mode="delete"/>
+	 <elementSpec module="textstructure" ident="opener" mode="delete"/>
+	 <elementSpec module="textstructure" ident="postscript" mode="delete"/>
+	 <elementSpec module="textstructure" ident="salute" mode="delete"/>
+	 <elementSpec module="textstructure" ident="signed" mode="delete"/>
+	 <elementSpec module="textstructure" ident="titlePage" mode="delete"/>
+	 <elementSpec module="textstructure" ident="titlePart" mode="delete"/>
+	 <elementSpec module="textstructure" ident="trailer" mode="delete"/>
        </schemaSpec>
 
-       <schemaSpec ident="test_meta2010_3"
-		   teiBase="http://www.tei-c.org/P5/1.4/p5.odd" start="TEI">
-	 <moduleRef key="tei"/>
-
-	 <moduleSpec target="http://www.example.com/dict.odd" ident="mydict"/>
-
-	 <elementSpec ident="headword" module="mydict" mode="change">
-	   <desc>Not the same</desc>
-	 </elementSpec>
-
-	 <moduleRef key="figures" exclude="table row cell"/>
-	 <moduleRef key="namesdates" include="persName"/>
-       </schemaSpec>
-
+       <!--
        <schemaSpec ident="test_meta2010_4"
 		   source="http://www.tei-c.org/P5/1.4/p5.odd" start="TEI">
 	 <moduleRef key="tei"/>
@@ -122,8 +130,8 @@
 	 <elementSpec ident="term" module="tbx" mode="change">
 	    <desc>not the same</desc>
 	 </elementSpec>
-
        </schemaSpec>
+       -->
      </body>
    </text>
 </TEI>
