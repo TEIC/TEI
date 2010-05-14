@@ -48,7 +48,7 @@ $Id$
     <attDef ident="start" usage="opt">
       <equiv/>
       <desc>specifies entry points to the schema, i.e. which elements
-      are allowed to be used as the root of documents conforming to
+      may be used as the root of documents conforming to
       it. </desc>
       <desc version="2007-12-20" xml:lang="kr">스키마에서 표제 항목 지점을 명시한다. 즉, 어떤 요소가 해당 문서의 뿌리로 사용되는 것이 허용되었는지를 명시한다.</desc>
       <desc version="2007-05-02" xml:lang="zh-tw">指出該模型的初步條件，例如在符合該模型標準的文件中，那些元素可做為文件的根元素。</desc>
@@ -176,20 +176,24 @@ $Id$
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <schemaSpec prefix="TEI_" ident="testsvg" start="TEI svg">
-        <moduleRef key="header"/>
+        <moduleRef source="tei:5.1" key="header"/>
         <moduleRef key="core"/>
-        <moduleRef key="tei"/>
-        <moduleRef key="textstructure"/>
+        <moduleRef key="drama"/>
         <moduleRef url="svg11.rng"/>
       </schemaSpec>
     </egXML>
+<p>This schema combines elements from the current versions of the drama and core
+modules,  the TEI 5.1 release version of the header module, and elements
+from an existing RELAXNG schema available from the URL indicated.</p>
   </exemplum>
   <remarks>
-    <p>A <gi>schemaSpec</gi> combines references to modules or specification
-    groups with other atomic declarations. The processing of the
-    <gi>schemaSpec</gi> element must resolve any conflicts amongst the declarations
-    it contains or references. Different ODD processors may generate
-    schemas and documentation using different concrete syntaxes. </p>
+    <p>A <gi>schemaSpec</gi> combines references to modules,
+    individual element or macro declarations, and specification groups
+    together to form a unified schema. The processing of the
+    <gi>schemaSpec</gi> element must resolve any conflicts amongst the
+    declarations it contains or references. Different ODD processors
+    may generate schemas and documentation using different concrete
+    syntaxes. </p>
   </remarks>
   <remarks xml:lang="fr">
     <p>Un schéma combine des références aux modules ou aux groupes de spécifications avec

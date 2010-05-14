@@ -239,13 +239,14 @@ associated attribute list, .</p>
 </div>
 </div>
 <div type="div2" xml:id="TDmodules"><head>Modules and Schemas</head>
-<p>As mentioned above, the primary purpose of this module is to facilitate
-the documentation of an XML schema derived from the TEI Guidelines. The following elements are
-provided for this purpose:
+<p>As mentioned above, the primary purpose of this module is to
+facilitate the documentation and creation of an XML schema derived
+from the TEI Guidelines. The following elements are provided for this
+purpose:
 <specList>
 <specDesc key="schemaSpec"/>
 <specDesc key="moduleSpec"/>
-<specDesc key="moduleRef"/>
+<specDesc key="moduleRef" atts="include except"/>
 <specDesc key="specGrp"/>
 <specDesc key="specGrpRef"/>
 <specDesc key="attRef"/>
@@ -255,21 +256,24 @@ provided for this purpose:
 <!-- HIC DESUNT MULTA -->
 
 A <term>module</term> is a convenient way of grouping together element
-and other declarations and associating an externally-visible name with
-the group. A <term>specification group</term> performs essentially the
-same function, but the resulting group is not accessible outside the
-scope of the ODD document in which it is defined, whereas a module can
-be accessed by name from any TEI schema.Modules, elements, and their
-attributes, element classes, and patterns are all individually
-documented using further elements described in section <ptr target="#TDcrystals"/> below; part of that specification includes the
-name of a module to which the component belongs. An ODD processor
-generating XML DTD or schema fragments from a document marked up
-according to the recommendations of this chapter will generate such
-fragments for each <gi>moduleSpec</gi> element found. For example, the
-chapter documenting the TEI module for names and dates contains a
-module specification like the following:
+and other declarations, and associating an externally-visible name
+with the resulting group. A <term>specification group</term> performs
+essentially the same function, but the resulting group is not
+accessible outside the scope of the ODD document in which it is
+defined, whereas a module can be accessed by name from any TEI
+schema. Elements, and their attributes, element classes, and
+patterns are all individually documented using further elements
+described in section <ptr target="#TDcrystals"/> below; part of that
+specification includes the name of a module to which the component
+belongs. </p>
+
+<p>An ODD processor generating XML DTD or schema fragments from
+a document marked up according to the recommendations of this chapter
+will generate such fragments for each <gi>moduleSpec</gi> element
+found. For example, the chapter documenting the TEI module for names
+and dates contains a module specification like the following:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"> 
-  <moduleSpec xml:id="XDND" ident="namesdates">
+  <moduleSpec ident="namesdates">
   <altIdent type="FPI">Names and Dates</altIdent>
   <desc>Additional elements for names and dates</desc>
 </moduleSpec>
@@ -284,14 +288,17 @@ target="#TDcrystals"/> below.) Each of those specifications carries a
 <gi>moduleSpec</gi> element above can thus generate a schema fragment
 for the TEI <ident type="module">namesdates</ident> module that
 includes declarations for all the elements (etc.) which reference it.</p>
+
 <p>In most realistic applications, it will be desirable to combine
 more than one module together to form a complete <term>schema</term>.
 A schema consists of references to one or more modules or
 specification groups, and may also contain explicit declarations or
 redeclarations of elements (see further <ptr target="#TDbuild"/>). Any
-combination of modules can be used to create a schema: the distinction
-between base and additional tagsets in earlier versions of the TEI
-scheme has not been carried forward into P5. </p>
+combination of modules can be used to create a schema <note
+place="foot">The distinction between base and additional tagsets in
+earlier versions of the TEI scheme has not been carried forward into
+P5.</note> </p>
+
 <p>A schema can combine references to TEI modules with references to
 other (non-TEI) modules using different namespaces, for example to
 include mathematical markup expressed using MathML in a TEI
@@ -310,7 +317,7 @@ be referenced from any point in an ODD document using the
 <gi>specGrpRef</gi> element. This is useful if, for example, it is
 desired to describe particular groups of elements in a specific
 sequence. Note however that the order in which element declarations
-appear within the schema code generated from a <gi>moduleSpec</gi>
+appear within the schema code generated from an ODD file
 element is not in general affected by the order of declarations within
 a <gi>specGrp</gi>. </p>
 <p>An ODD processor will generate a piece of schema code
@@ -367,8 +374,8 @@ modules). </p>
 </div>
 
 <div type="div2" xml:id="TDcrystals"><head>Specification Elements</head>
-<p>The following elements are used to specify elements, classes, and
-patterns for inclusion in a given module:
+<p>The following elements are used to declare elements,
+classes, and patterns:
 <specList>
 <specDesc key="elementSpec"/>
 <specDesc key="classSpec" atts="generate"/>
@@ -403,54 +410,9 @@ concerned in a catalogue of markup objects. These latter two actions
 always occur irrespective of whether or not the declaration is
 included in a <gi>specGrp</gi>. </p>
 <specGrp xml:id="TDSG3" n="Specification elements">
-
-
-
-
-
-
-
-
-
-
 &elementSpec;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &classSpec;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 &macroSpec;
-
-
-
-
-
 </specGrp>
 </div>
 <div type="div3" xml:id="TDcrystalsCE"><head>Common Elements</head>
@@ -465,10 +427,10 @@ exemplification, and classification of the specification elements.</p>
 </p>
 
 <p>One or more <gi>desc</gi> elements defined by the core module may
-be used
-to provide a brief characterization of the intended function of the
-element, class, value etc. being documented, as in the following
-example:
+be used to provide a brief characterization of the intended function
+of the element, class, value etc. being documented, as in the
+following example:
+
 <egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples"><elementSpec module="drama" ident="actor">
   <desc>Name of an actor appearing within a cast list.</desc>
   <desc xml:lang="ja"> 登場人物リスト中にある役者名を示す．</desc>
@@ -599,7 +561,7 @@ element contains the following <gi>classes</gi> element:
 together with its associated attributes.  In addition to the elements
 listed above, it may contain the following subcomponents:
 <specList>
-<specDesc key="content"/>
+<specDesc key="content" atts="autoPrefix"/>
 <specDesc key="attList" atts="org"/>
 </specList>
  </p>
@@ -655,7 +617,34 @@ are always class
 names. In DTD language, classes are represented by parameter entities
 (<code>%model.teiHeaderPart;</code> in the above example); see further
 <ptr target="#ST"/>.</p>
-<!-- more examples needed -->
+
+<p>The RELAXNG pattern names generated by an ODD processor by default
+include a special prefix, the default value of which is set using the
+<att>prefix</att> attribute on <gi>schemaSpec</gi>. <!--or
+<gi>moduleSpec</gi> as appropriate. --> The purpose of this is to
+ensure that the pattern name generated is uniquely identified as
+belonging to a particular schema, and thus avoid name clashes. For
+example, in a RELAXNG schema combining the TEI element <gi>ident</gi>
+with another element called <gi>ident</gi> from some other vocabulary,
+the former will be defined by a pattern called <code>TEI_ident</code>
+rather than simply <code>ident</code>. Most of the time, this
+behaviour is entirely transparent to the user; the one occasion when
+it is not will be where a content model (expressed using RELAXNG
+syntax) needs explicitly to reference either the TEI <gi>ident</gi> or
+the other one. In such a situation, the <att>autoPrefix</att>
+attribute on <gi>content</gi> may be used. For example, suppose that
+we wish to define a content model for <gi>term</gi> which permits
+either a TEI <gi>ident</gi> or the <gi>ident</gi> defined by some
+other vocabulary.  A suitable content model would be generated from
+the following <gi>content</gi> element:
+<egXML xml:lang="und" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+       xmlns="http://www.tei-c.org/ns/Examples"><content autoPrefix="false">
+<rng:choice>
+<rng:ref name="TEI_ident"/>
+<rng:ref name="ident"/>
+</rng:choice></content>
+</egXML></p>
+
 
 <p>In addition to the <gi>content</gi> element, a set of identified general
 <gi>constraint</gi> elements can be provided where rules about the validity of
@@ -1072,16 +1061,17 @@ A reference to  <ident type="class">model.hiLike_sequenceRepeatable</ident>  wou
 appear in a content model when one of the sequence options is used is
 that in which the elements are declared. </p>
 
-<p>In principal, all these possibilities are available to any
-element making reference  to any class. The <gi>classSpec</gi> element
-defining the class may however limit the possibilities by means of its
-<att>generate</att> attribute, which can be used to say
-that this particular model may only be referenced in a
-content model with the suffixes it specifies. For example, if the
-<gi>classSpec</gi> for <ident type="class">model.hiLike</ident> took
-the form <tag>classSpec ident="model.hiLike" generateOnly="sequence
-sequenceOptional"</tag> then a content model referring to (say) <ident type="class">model.hiLike_sequenceRepeatable</ident> would be
-regarded as invalid by an ODD processor. </p>
+<p>In principal, all these possibilities are available to any element
+making reference to any class. The <gi>classSpec</gi> element defining
+the class may however limit the possibilities by means of its
+<att>generate</att> attribute, which can be used to say that this
+particular model may only be referenced in a content model with the
+suffixes it specifies. For example, if the <gi>classSpec</gi> for
+<ident type="class">model.hiLike</ident> took the form <tag>classSpec
+ident="model.hiLike" generateOnly="sequence sequenceOptional"</tag>
+then a content model referring to (say) <ident
+type="class">model.hiLike_sequenceRepeatable</ident> would be regarded
+as invalid by an ODD processor. </p>
 
 
 <p>When a <gi>classSpec</gi> contains an <gi>attList</gi> element, all
@@ -1094,14 +1084,9 @@ elements for elements which are members of that class, an ODD
 processor is required to extend the <gi>attList</gi> (or equivalent)
 for such elements to include any attributes defined by the
 <gi>classSpec</gi> elements concerned.  There is a single global
-attribute class, <ident type="class">att.global</ident>, the
-membership of which may be expanded by some modules.
-<!-- eh what ? -->
-<!-- Membership of an attribute class can be inherited by any class, but
-model-only classes may not include attribute-only classes amongst their
-members.  For further discussion of the TEI class system,
-see section <ptr target="STEC"/>.-->
- </p>
+attribute class, <ident type="class">att.global</ident>, to which some
+modules contribute additional attributes when they are included in a
+schema. </p>
 
 
 <specGrp xml:id="TDSG5" n="Element specification elements">
@@ -1121,15 +1106,17 @@ see section <ptr target="STEC"/>.-->
 </specGrp>
 </div>
 <div type="div3" xml:id="TDENT"><head>Pattern Documentation</head>
-<p>The <gi>macroSpec</gi> element is used to document predefined
-strings or patterns not
-otherwise documented by the elements described in this chapter.  Its
-chief uses are to provide systematic documentation of the parameter
-entities used within TEI DTD fragments and to describe common
-content models, but it may be used for any purpose.  It has the
-following components additional to those already introduced:
+
+<p>The <gi>macroSpec</gi> element is used to declare and document
+predefined strings or patterns not otherwise documented by the
+elements described in this chapter.  A corresponding <gi>macroRef</gi>
+element may be used to select a specific named pattern from those
+available.  Patterns are used as a shorthand chiefly to describe
+common content models and datatypes, but may be used for any
+purpose.  The following elements are used to represent patterns:
  <specList>
 <specDesc key="macroSpec" atts="type"/>
+<specDesc key="macroRef" atts="key"/>
 <specDesc key="remarks"/>
 <specDesc key="stringVal"/>
 </specList>
@@ -1165,14 +1152,73 @@ existing declarations.</p>
 <p>In the simplest case, a user-defined schema might simply combine
 all the declarations from two nominated modules:
 <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
-<moduleRef key="teistructure"/>
+<moduleRef key="core"/>
+<moduleRef key="linking"/>
+</schemaSpec></egXML> An ODD processor, given such a document, should
+combine the declarations which belong to the named modules, and
+deliver the result as a schema of the requested type. It may also
+generate documentation for the elements declared by those
+modules. No source is specified for the modules, and the schema will
+therefore combine the declarations found in the most recent release
+version of the TEI Guidelines known to the ODD processor in use. 
+<egXML xml:lang="und"
+       xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec
+						    ident="example" source="http://www.tei-c.org/release/xml/tei/odd/Source/Guidelines/fr/guidelines-en.xml">
+<moduleRef key="core"/>
 <moduleRef key="linking"/>
 </schemaSpec></egXML>
-An ODD processor, given such a document, would combine the
-declarations which belong to the named modules, and deliver the result
-as a schema of the requested type. It might also generate documentation for
-all and only the elements declared by those modules.</p>
-<p>A schema might also include declarations for new elements, as in
+would have a similar effect, except that the French language source for the
+most recent version of the Guidelines would be used instead.</p>
+
+<p>The value for the <att>source</att> attribute may be a specific URL
+as in the preceding example, or any other form of URI. A set of
+TEI-conformant specifications in a form directly usable by an ODD
+processor must be available at the location indicated. When no
+<att>source</att> value is supplied, an ODD processor may either raise
+an error or assume that the location of the current release of the TEI
+Guidelines is intended.</p>
+<p>If the source is specified in the form of a private URI,
+the form recommended is <code>tei:x.y.z</code>, where
+<code>x.y.z</code> indicates the version number,
+e.g. <code>tei:5.1</code> for the most recent version of P5 release 1,
+or <code>tei:5.2.11</code> for release 2.1.1 of P5. When such a
+URI is used, it may be necessary to  remove or translate it before
+such a file can be used in blind interchange. 
+</p>
+<p>The effect of a <gi>moduleRef</gi> element is to include in the
+schema all declarations provided by that module. This may be modified
+by means of the attributes <att>include</att> and <att>except</att>
+which allow the encoder to supply an explicit lists of elements from
+the stated module which are to be included or excluded
+respectively. For example:
+<egXML xml:lang="und"
+       xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec
+						    ident="example" >
+<moduleRef key="core" except="add del orig reg"/>
+<moduleRef key="linking" include="ptrGroup link"/>
+</schemaSpec></egXML>
+The schema specified here will include all the elements supplied by
+the core module except for <gi>add</gi>, <gi>del</gi>, <gi>orig</gi>,
+and <gi>reg</gi>. It will also include only the <gi>ptrGroup</gi> and
+<gi>link</gi>  elements from the linking module. </p>
+<p>Alternatively, the element <gi>elementRef</gi> may  be used
+to indicate explicitly which elements are to be included in a
+schema. The same effect as the preceding example might thus be
+achieved by the following:
+<egXML xml:lang="und"
+       xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec
+						    ident="example" >
+<moduleRef key="core" except="add del orig reg"/>
+<elementRef key="ptrGroup" />
+<elementref key="link"/>
+</schemaSpec></egXML>
+Note that in this last case, there is no need to specify the name of
+the module from which the two element declarations are to be found; in
+the TEI scheme, element names are unique across all modules. The
+module is simply a convenient way of grouping together a number of
+related declarations.
+</p>
+<p>A schema may also include declarations for new elements, as in
 the following example:
 <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
 <moduleRef key="teiheader"/>
