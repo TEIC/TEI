@@ -118,17 +118,18 @@
 		  test="self::w:r[w:fldChar/@w:fldCharType[matches(.,'begin')]]">
 		<ref>
 		  <xsl:for-each select="current-group()">
-		    <xsl:choose>
-		    <xsl:when  test="self::w:bookmarkStart">
-		      <xsl:apply-templates select="."/>
-		    </xsl:when>
-		      <xsl:when
-			  test="self::w:r[w:instrText]">			    
+		    <xsl:if test="self::w:r[w:instrText]">			    
 			<xsl:variable name="ref">
 			  <xsl:value-of
 			      select="substring-before(substring-after(w:instrText,'_'),' ')"/>
 			</xsl:variable>
 			<xsl:attribute name="target" select="concat('#',$ref)"/>
+		    </xsl:if>
+		  </xsl:for-each>
+		  <xsl:for-each select="current-group()">
+		    <xsl:choose>
+		      <xsl:when  test="self::w:bookmarkStart">
+			<xsl:apply-templates select="."/>
 		      </xsl:when>
 		      <xsl:otherwise>
 			<xsl:apply-templates select="."/>
@@ -157,7 +158,7 @@
 	  </xsl:for-each-group>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:apply-templates select="."/>
+	  <xsl:apply-templates/>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>

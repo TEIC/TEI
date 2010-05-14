@@ -32,7 +32,7 @@
   <xsl:param name="verbose"/>
   <xsl:param name="useVersionFromTEI">true</xsl:param>
   <xsl:param name="stripped">false</xsl:param>
-  <xsl:param name="defaultSource"/>
+  <xsl:param name="defaultSource">http://www.tei-c.org/release/xml/tei/odd/p5subset.xml</xsl:param>
   <xsl:key name="ALLSCHEMASPECS" match="tei:schemaSpec" use="1"/>
   <xsl:key name="ATTCLASSES" match="tei:classSpec[(tei:attList or @type='atts') and not(@ident='tei.TEIform')]" use="@ident"/>
   <xsl:key name="ATTREFS" match="tei:attRef" use="concat(@name,'_',../../@ident)"/>
@@ -73,6 +73,7 @@
   <xsl:key name="MODULE_MEMBERS" match="tei:elementSpec" use="@module"/>
 
   <xsl:key name="SCHEMASPECS" match="tei:schemaSpec" use="@ident"/>
+
   <xsl:variable name="AnonymousModule">
     <xsl:text>derived-module-</xsl:text>
     <xsl:value-of select="$selectedSchema"/>
@@ -92,6 +93,7 @@
     </xsl:for-each>
   </xsl:variable>
 
+  <xsl:variable name="top" select="/"/>
 
   <xsl:template match="/">
     <xsl:for-each select="$ODD">
@@ -102,7 +104,7 @@
   <!-- ******************* Pass 0, follow and expand specGrp ********************************* -->
   <xsl:template match="tei:specGrp" mode="pass0">
     <xsl:if test="$verbose='true'">
-      <xsl:message>Phase 0: process specGrp <xsl:value-of select="@xml:id"/>
+      <xsl:message>Phase 0: summarize specGrp <xsl:value-of select="@xml:id"/>
       </xsl:message>
     </xsl:if>
     <table xmlns="http://www.tei-c.org/ns/1.0">
@@ -139,6 +141,11 @@
                 <xsl:value-of select="@mode"/>
               </cell>
             </xsl:when>
+            <xsl:when test="self::tei:moduleRef">
+              <cell>
+		Module <xsl:value-of select="@key"/>
+	      </cell>
+	    </xsl:when>
           </xsl:choose>
         </row>
       </xsl:for-each>
@@ -205,76 +212,48 @@
   </xsl:template>
 
   <xsl:template match="tei:schemaSpec" mode="pass1">
-    <xsl:variable name="compiled">
+    <xsl:variable name="oddsource">
       <xsl:copy>
         <xsl:copy-of select="@*"/>
         <xsl:if test="$verbose='true'">
-          <xsl:message>Schema <xsl:value-of select="@ident"/>
-	  </xsl:message>
+          <xsl:message>Schema <xsl:value-of select="@ident"/></xsl:message>
         </xsl:if>
         <!-- 
-	     it is important to process "tei" and "core" first 
+	     it is important to process "tei" first 
 	     because of the order of declarations
 	-->
-	<xsl:variable name="Refs">
-	  <xsl:for-each select="tei:moduleRef[@key='tei']">
-	    <xsl:call-template name="expandModule"/>
-	  </xsl:for-each>
-	  
-	  <xsl:for-each select="tei:moduleRef[@key and @include]">
-	    <xsl:if test="not(@key='tei')">
-	      <xsl:for-each select="tokenize(@include,' ')">
-		<xsl:choose>
-		  <xsl:when test="starts-with(.,'model.')">
-		    <tei:classRef key="{.}"/>
-		  </xsl:when>
-		  <xsl:when test="starts-with(.,'att.')">
-		    <tei:macroRef key="{.}"/>
-		  </xsl:when>
-		  <xsl:when test="starts-with(.,'data.')">
-		    <tei:macroRef key="{.}"/>
-		  </xsl:when>
-		  <xsl:when test="starts-with(.,'macro.')">
-		    <tei:macroRef key="{.}"/>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <tei:elementRef key="{.}"/>
-		  </xsl:otherwise>
-		</xsl:choose>
-	      </xsl:for-each>
-	    </xsl:if>
-	  </xsl:for-each>
-
-	  <xsl:for-each select="tei:moduleRef[@key and @exclude]">
-	    <xsl:if test="not(@key='tei')">
-	      <xsl:call-template name="expandModule"/>
-	    </xsl:if>
-	  </xsl:for-each>
-
-	  <xsl:copy-of select="tei:macroRef"/>
-	  <xsl:copy-of select="tei:classRef"/>
-	  <xsl:copy-of select="tei:elementRef"/>
-
-	</xsl:variable>
-	<xsl:result-document href="pass1.xml">
-	  <xsl:copy-of seect="$Refs/*"/>
-	</xsl:result-document>
-
-	<xsl:for-each select="$Specs">
-	  <xsl:call-template name="phase1"/>	  
+	<xsl:for-each select="tei:moduleRef[@key='tei']">
+	  <xsl:call-template name="expandModule"/>
 	</xsl:for-each>
-        <xsl:copy-of select="tei:moduleRef[@url]"/>
-        <xsl:call-template name="phase2"/>
+	
+	<xsl:for-each select="tei:moduleRef[@key]">
+	  <xsl:if test="not(@key='tei')">
+	    <xsl:call-template name="expandModule"/>
+	  </xsl:if>
+	</xsl:for-each>
+	
+	<xsl:for-each select="tei:macroRef|tei:classRef|tei:elementRef">
+	    <xsl:call-template name="followRef"/>
+	</xsl:for-each>
+
+	<xsl:for-each select="tei:classSpec[@mode='add' or not(@mode)]">
+	  <xsl:call-template name="createCopy"/>
+	</xsl:for-each>
+
+	<xsl:for-each select="tei:macroSpec[@mode='add' or not(@mode)]">
+	  <xsl:call-template name="createCopy"/>
+	</xsl:for-each>
+
+	<xsl:for-each select="tei:elementSpec[@mode='add' or not(@mode)]">
+	  <xsl:call-template name="createCopy"/>
+	</xsl:for-each>
+
       </xsl:copy>
+
+      <xsl:copy-of select="tei:moduleRef[@url]"/>
+
     </xsl:variable>
-    <xsl:variable name="pass1">
-      <root>
-        <xsl:for-each select="$compiled">
-          <xsl:apply-templates mode="pass3"/>
-        </xsl:for-each>
-      </root>
-    </xsl:variable>
-    <xsl:for-each select="$pass1/root">
+    <xsl:for-each select="$oddsource">
       <xsl:apply-templates mode="pass3"/>
     </xsl:for-each>
     <!-- constraints -->
@@ -283,65 +262,97 @@
 
 
   <xsl:template name="expandModule">
-    <xsl:variable name="what" select="@key"/>
-    <xsl:variable name="exc" select="@exclude"/>
+    <xsl:variable name="name" select="@key"/>
+    <xsl:variable name="exc"
+		  select="concat(' ',normalize-space(@except),' ')"/>
+    <xsl:variable name="inc"  select="tokenize(normalize-space(@include),' ')"/>
     <xsl:variable name="source">
-    <xsl:choose>
-      <xsl:when test="@source">
-	<xsl:value-of select="@source"/>
-      </xsl:when>
-      <xsl:when test="parent::tei:schemaSpec/@source">
-	<xsl:value-of select="parent::tei:schemaSpec/@source"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:value-of select="$defaultSource"/>
-      </xsl:otherwise>
-    </xsl:choose>
+      <xsl:choose>
+	<xsl:when test="@source">
+	  <xsl:value-of select="@source"/>
+	</xsl:when>
+	<xsl:when test="parent::tei:schemaSpec/@source">
+	  <xsl:value-of select="parent::tei:schemaSpec/@source"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$defaultSource"/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:variable>
-    <xsl:for-each select="document($source)">
-      <xsl:for-each select="key('MODULE_MEMBERS',$what)">
-	<xsl:choose>
-	  <xsl:when test="starts-with(@ident,'model@ident')">
-	    <tei:classRef key="{@ident}"/>
-	  </xsl:when>
-	  <xsl:when test="starts-with(@ident,'att@ident')">
-	    <tei:macroRef key="{@ident}"/>
-	  </xsl:when>
-	  <xsl:when test="starts-with(@ident,'data@ident')">
-	    <tei:macroRef key="{@ident}"/>
-	  </xsl:when>
-	  <xsl:when test="starts-with(@ident,'macro@ident')">
-	    <tei:macroRef key="{@ident}"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <tei:elementRef key="{@ident}"/>
-	  </xsl:otherwise>
-	</xsl:choose>
+    <xsl:if test="not(doc-available($source))">
+      <xsl:message terminate="yes">Error: Source <xsl:value-of
+      select='$source'/> not readable</xsl:message>
+    </xsl:if>
+      <xsl:choose>
+	<xsl:when test="not(@except) and not(@include)">
+	  <xsl:for-each select="document($source,$top)">
+	    <xsl:for-each select="key('MODULE_MEMBERS',$name)">
+	      <xsl:call-template name="checkObject">
+		  <xsl:with-param name="why"> module <xsl:value-of select="$name"/></xsl:with-param>
+		  <xsl:with-param name="source" select="$source"/>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:when test="exists($inc)">
+	  <xsl:for-each select="$inc">
+	    <xsl:variable name="i" select="."/>
+	    <xsl:for-each select="document($source,$top)">
+	      <xsl:for-each select="key('IDENTS',$i)">
+		<xsl:call-template name="checkObject">
+		  <xsl:with-param name="why">(inclusion) module <xsl:value-of select="$name"/></xsl:with-param>
+		  <xsl:with-param name="source" select="$source"/>
+		</xsl:call-template>
+	      </xsl:for-each>
+	    </xsl:for-each>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:for-each select="document($source,$top)">
+	    <xsl:for-each select="key('MODULE_MEMBERS',$name)">
+	      <xsl:if test="not(contains($exc,concat(' ',@ident,' ')))">
+		<xsl:call-template name="checkObject">
+		  <xsl:with-param name="why">(exclusion) module <xsl:value-of select="$name"/></xsl:with-param>
+		  <xsl:with-param name="source" select="$source"/>
+		</xsl:call-template>
+	      </xsl:if>
+	    </xsl:for-each>
+	    </xsl:for-each>
+	</xsl:otherwise>
+      </xsl:choose>
+
+  </xsl:template>
+
+  <xsl:template name="followRef">
+    <xsl:variable name="name" select="@key"/>
+    <xsl:variable name="source">
+      <xsl:choose>
+	<xsl:when test="@source">
+	  <xsl:value-of select="@source"/>
+	</xsl:when>
+	<xsl:when test="parent::tei:schemaSpec/@source">
+	  <xsl:value-of select="parent::tei:schemaSpec/@source"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$defaultSource"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:if test="not(doc-available($source))">
+      <xsl:message terminate="yes">Error: Source <xsl:value-of
+      select='$source'/> not readable</xsl:message>
+    </xsl:if>
+    <xsl:for-each select="document($source,$top)">
+      <xsl:for-each select="key('IDENTS',$name)">
+	<xsl:call-template name="checkObject">
+	  <xsl:with-param name="why">direct reference</xsl:with-param>
+	  <xsl:with-param name="source"  select="$source"/>
+	</xsl:call-template>
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template name="followRef">
-    <xsl:variable name="what" select="@key"/>
-    <xsl:variable name="source">
-    <xsl:choose>
-      <xsl:when test="@source">
-	<xsl:value-of select="@source"/>
-      </xsl:when>
-      <xsl:when test="parent::tei:schemaSpec/@source">
-	<xsl:value-of select="parent::tei:schemaSpec/@source"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:value-of select="$defaultSource"/>
-      </xsl:otherwise>
-    </xsl:choose>
-    </xsl:variable>
-    <xsl:for-each select="document($source)">
-      <xsl:for-each select="key('IDENTS',$what)">
-      </xsl:for-each>
-    </xsl:for-each>
-  </xsl:template>
-      
+<!-- pass3 -->      
   <xsl:template match="rng:ref" mode="pass3">
     <xsl:variable name="N">
       <xsl:value-of select="@name"/>
@@ -479,8 +490,10 @@ How can a class be ok?
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="phase1">
-    <!--for every module:
+  <xsl:template name="checkObject">
+    <xsl:param name="why"/>
+    <xsl:param name="source"/>
+    <!--
         for every object
          - if its in DELETE list, ignore
          - if its in REPLACE list, use that
@@ -489,38 +502,6 @@ How can a class be ok?
          - otherwise copy 
         done
   -->
-    <xsl:if test="$verbose='true'">
-      <xsl:message>Phase 1: expand moduleRef <xsl:value-of select="@key"/>
-         </xsl:message>
-    </xsl:if>
-    <xsl:variable name="moduleName" select="@key"/>
-    <xsl:variable name="KD" select="concat(@key,'-decl')"/>
-    <xsl:choose>
-      <xsl:when test="not($defaultSource='')">
-        <xsl:variable name="Local">
-          <List>
-            <xsl:for-each select="document($defaultSource)/tei:TEI">
-              <xsl:for-each select="tei:*[@module=$moduleName]">
-                <xsl:element xmlns="http://www.tei-c.org/ns/1.0" name="{local-name()}">
-                  <xsl:copy-of select="@*|*|processing-instruction()|comment()|text()"/>
-                </xsl:element>
-              </xsl:for-each>
-              <xsl:for-each select="tei:*[@module=$KD]">
-                <xsl:element xmlns="http://www.tei-c.org/ns/1.0" name="{local-name()}">
-                  <xsl:copy-of select="@*|*|processing-instruction()|comment()|text()"/>
-                </xsl:element>
-              </xsl:for-each>
-            </xsl:for-each>
-          </List>
-        </xsl:variable>
-        <xsl:for-each select="$Local/List">
-          <xsl:call-template name="phase1a"/>
-        </xsl:for-each>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
-  <xsl:template name="phase1a">
-    <xsl:for-each select="*">
       <xsl:variable name="Current" select="."/>
       <xsl:variable name="specName" select="@ident"/>
       <xsl:variable name="N" select="local-name(.)"/>
@@ -528,62 +509,47 @@ How can a class be ok?
         <xsl:choose>
           <xsl:when test="key('DELETE',$specName)">
             <xsl:if test="$verbose='true'">
-              <xsl:message> Phase 3: remove <xsl:value-of select="$specName"/>
-                     </xsl:message>
+              <xsl:message> Phase 1: remove <xsl:value-of select="$specName"/></xsl:message>
             </xsl:if>
-            <!--
-	      <xsl:element name="{$N}" xmlns="http://www.tei-c.org/ns/1.0">
-	      <xsl:attribute name="ident"><xsl:value-of select="$specName"/></xsl:attribute>
-	      <xsl:attribute name="mode">delete</xsl:attribute>
-	      </xsl:element>
-	  -->
           </xsl:when>
-          <xsl:when test="key('REPLACE',$specName)">
+	  <xsl:when test="key('REPLACE',$specName)">
             <xsl:if test="$verbose='true'">
-              <xsl:message> Phase 3: replace <xsl:value-of select="$specName"/>
-                     </xsl:message>
+              <xsl:message> Phase 1: replace <xsl:value-of select="$specName"/></xsl:message>
             </xsl:if>
             <xsl:apply-templates mode="copy" select="key('REPLACE',$specName)"/>
           </xsl:when>
           <xsl:when test="key('CHANGE',$specName)">
             <xsl:if test="$verbose='true'">
-              <xsl:message> Phase 3: change <xsl:value-of select="$specName"/>
-                     </xsl:message>
+              <xsl:message> Phase 1: change <xsl:value-of select="$specName"/></xsl:message>
             </xsl:if>
             <xsl:apply-templates mode="change" select="$Current"/>
           </xsl:when>
           <xsl:otherwise>
+            <xsl:if test="$verbose='true'">
+	      <xsl:message> Phase 1: include <xsl:value-of
+	      select="$specName"/> from <xsl:value-of
+	      select="$source"/> (<xsl:value-of select="$why"/>)</xsl:message>
+            </xsl:if>
             <xsl:apply-templates mode="copy" select="$Current"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
-    </xsl:for-each>
   </xsl:template>
-  <xsl:template name="phase2">
-    <xsl:if test="$verbose='true'">
-      <xsl:message>Phase 2: add elementSpec, classSpec, macroSpec</xsl:message>
-    </xsl:if>
-    <xsl:for-each select="tei:classSpec[@mode='add' or not(@mode)]">
-      <xsl:call-template name="createCopy"/>
-    </xsl:for-each>
-    <xsl:for-each select="tei:macroSpec[@mode='add' or not(@mode)]">
-      <xsl:call-template name="createCopy"/>
-    </xsl:for-each>
-    <xsl:for-each select="tei:elementSpec[@mode='add' or not(@mode)]">
-      <xsl:apply-templates mode="copy" select="."/>
-    </xsl:for-each>
-  </xsl:template>
+
   <xsl:template match="@*|processing-instruction()|comment()|text()" mode="change">
     <xsl:copy-of select="."/>
   </xsl:template>
+
   <xsl:template match="*" mode="change">
     <xsl:copy>
       <xsl:apply-templates mode="change" select="*|@*|processing-instruction()|comment()|text()"/>
     </xsl:copy>
   </xsl:template>
+
   <xsl:template match="@*|processing-instruction()|comment()|text()" mode="copy">
     <xsl:copy-of select="."/>
   </xsl:template>
+
   <xsl:template match="tei:memberOf" mode="copy">
     <xsl:variable name="k" select="@key"/>
     <xsl:for-each select="$ODD">
@@ -2014,6 +1980,9 @@ select="$M"/></xsl:message>
   </xsl:template>
 
   <xsl:template name="createCopy">
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Create <xsl:value-of select="@ident"/>            </xsl:message>
+    </xsl:if>
     <xsl:element xmlns="http://www.tei-c.org/ns/1.0" name="{local-name()}">
       <xsl:if test="not(@module)">
         <xsl:attribute name="module">
