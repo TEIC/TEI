@@ -14,244 +14,244 @@
 	<p>Made up by Lou </p>
       </sourceDesc>
     </fileDesc>
-<revisionDesc>
-<change when="2010-05-11">First draft</change>
-</revisionDesc>
+    <revisionDesc>
+      <change when="2010-05-11">First draft</change>
+    </revisionDesc>
   </teiHeader>
   <text>
     <body>
-
-<p>Our first schema is a very simple one. It contains three elements
-<gi>stuff</gi>, <gi>bit</gi>, and <gi>bob</gi>.  As the names
-suggest, this is not a TEI schema, and it does not use either the TEI
-name space or the TEI class system. </p>
-
-
-<schemaSpec  ns="" start="stuff" ident="testschema-1">
-
-<elementSpec ident="stuff">
-<desc>Root element for a very simple schema</desc>
-<content>
-<rng:oneOrMore>
-<rng:choose>
-<rng:ref name="bit"/>
-<rng:ref name="bob"/>
-</rng:choose>
-</rng:oneOrMore>
-</content>
-</elementSpec>
-
-<elementSpec ident="bob">
-<desc>Empty pointing element in  a very simple schema</desc>
-<content>
-<rng:empty/>
-</content>
-<attList>
-<attDef ident="href">
-<desc>supplies the URI of the thing pointed at</desc>
-<datatype ref="xsd:URI"/>
-</attDef>
-</attList>
-</elementSpec>
-
-
-<elementSpec ident="bit">
-<desc>Textual element in a very simple schema</desc>
-<content>
-<rng:zeroOrMore>
-<rng:choose>
-<rng:text/>
-<rng:ref name="bob"/>
-</rng:choose></rng:zeroOrMore>
-</content>
-</elementSpec>
+      
+      <p>Our first schema is a very simple one. It contains three elements
+      <gi>stuff</gi>, <gi>bit</gi>, and <gi>bob</gi>.  As the names
+      suggest, this is not a TEI schema, and it does not use either the TEI
+      name space or the TEI class system. </p>
+      
+      
+      <schemaSpec  ns="" start="stuff" ident="testschema-1">
+	
+	<elementSpec ident="stuff">
+	  <desc>Root element for a very simple schema</desc>
+	  <content>
+	    <rng:oneOrMore>
+	      <rng:choice>
+		<rng:ref name="bit"/>
+		<rng:ref name="bob"/>
+	      </rng:choice>
+	    </rng:oneOrMore>
+	  </content>
+	</elementSpec>
+	
+	<elementSpec ident="bob">
+	  <desc>Empty pointing element in  a very simple schema</desc>
+	  <content>
+	    <rng:empty/>
+	  </content>
+	  <attList>
+	    <attDef ident="href">
+	      <desc>supplies the URI of the thing pointed at</desc>
+	      <datatype>
+		<rng:data type="anyURI"/>
+	      </datatype>
+	    </attDef>
+	  </attList>
+	</elementSpec>
+	
+	
+	<elementSpec ident="bit">
+	  <desc>Textual element in a very simple schema</desc>
+	  <content>
+	    <rng:zeroOrMore>
+	      <rng:choice>
+		<rng:text/>
+		<rng:ref name="bob"/>
+	    </rng:choice></rng:zeroOrMore>
+	  </content>
+	</elementSpec>
+      </schemaSpec>
+      
+      
+      <p>The schema is defined by a <gi>schemaSpec</gi> containing three
+      explicit <gi>elementSpec</gi> elements, conforming to the definition
+      provided for these elements in the TEI Guidelines. Note that the
+      content models all make reference to the RELAXNG namespace, but are
+      otherwise free standing. In particular, they make no use of TEI
+      element or attribute classes. </p>
+      
+      <p>Now suppose that we realise that our <gi>bit</gi> is much the same
+      as the existing TEI <gi>p</gi>, our <gi>bob</gi> is much the same as
+      the existing TEI <gi>ptr</gi>, and our <gi>stuff</gi> is much the same
+      as the TEI <gi>div</gi>. Can we rewrite the  above  ODD to use just a 
+      few TEI elements? 
+      </p>
+      
+      <schemaSpec
+	  source="file:///home/lou/Public/TEI-SF/P5/Source/Guidelines/en/guidelines-en.xml"
+	  start="div" ident="testSchema-2" >
+	<elementRef key="div"/>
+	<elementRef key="p"/>
+	<elementRef key="ptr"/>
+      </schemaSpec>
+      
+      
+      <p>Note the use of the <att>source</att> attribute to indicate the
+      default source for any elements referenced by our schema
+      specification. The <gi>elementRef</gi> element saves us the trouble of
+      having to define our TEI elements; its effect is to copy into the
+      schema the whole of the TEI standard element, including its namespace
+      and class memberships. </p>
+      
+      <p>Suppose, however, that having got accustomed to our <gi>stuff</gi>
+      element, we wish to keep it, but to define its contents to use TEI
+      elements. We can make a simple schema combining our new element within
+      the TEI existing framework.</p>
+      
+      
+      <schemaSpec
+	  source="file:///home/lou/Public/TEI-SF/P5/Source/Guidelines/en/guidelines-en.xml"
+	  start="stuff" ident="testSchema-3" >
+	<elementSpec ns="" ident="stuff">
+	  <desc>Root element for a very simple schema</desc>
+	  <content>
+	    <rng:oneOrMore>
+	      <rng:choice>
+		<rng:ref name="p"/>
+		<rng:ref name="ptr"/>
+	      </rng:choice>
+	    </rng:oneOrMore>
+	  </content>
+	</elementSpec>
+	
+	<elementRef key="p"/>
+	<elementRef key="ptr"/>
+      </schemaSpec>
+      
+      
+      <p>Here we did not explicitly state that the elements we want are to be taken from the current TEI P5 version, since that is the default behaviour. Note however that our non-TEI element must specify that it is in the null
+      name space (or specify a name space of its own). </p>
+      
+      <p>In the real world it is fairly unusual for schemas to have only a
+      handful of elements. Partly for this reason, the TEI scheme is defined
+      as a set of <soCalled>modules</soCalled>, each of which defines a
+      number of elements. These modules are a convenient way of including
+      several elements at once:
+      
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	<schemaSpec
+	    start="TEI" ident="testSchema-4" >
+	  <moduleRef key="core"/>
+	  <moduleRef key="header"/>
+	  <moduleRef key="textstructure"/>
 	</schemaSpec>
-
-
-<p>The schema is defined by a <gi>schemaSpec</gi> containing three
-explicit <gi>elementSpec</gi> elements, conforming to the definition
-provided for these elements in the TEI Guidelines. Note that the
-content models all make reference to the RELAXNG namespace, but are
-otherwise free standing. In particular, they make no use of TEI
-element or attribute classes. </p>
-
-<p>Now suppose that we realise that our <gi>bit</gi> is much the same
-as the existing TEI <gi>p</gi>, our <gi>bob</gi> is much the same as
-the existing TEI <gi>ptr</gi>, and our <gi>stuff</gi> is much the same
-as the TEI <gi>div</gi>. Can we rewrite the  above  ODD to use just a 
-few TEI elements? 
-</p>
-
-<schemaSpec
-source="file:///home/lou/Public/TEI-SF/P5/Source/Guidelines/en/guidelines-en.xml"
-start="div" ident="testSchema-2" >
-<elementRef key="div"/>
-<elementRef key="p"/>
-<elementRef key="ptr"/>
-</schemaSpec>
-
-
-<p>Note the use of the <att>source</att> attribute to indicate the
-default source for any elements referenced by our schema
-specification. The <gi>elementRef</gi> element saves us the trouble of
-having to define our TEI elements; its effect is to copy into the
-schema the whole of the TEI standard element, including its namespace
-and class memberships. </p>
-
-<p>Suppose, however, that having got accustomed to our <gi>stuff</gi>
-element, we wish to keep it, but to define its contents to use TEI
-elements. We can make a simple schema combining our new element within
-the TEI existing framework:
-
-
-<schemaSpec
-source="file:///home/lou/Public/TEI-SF/P5/Source/Guidelines/en/guidelines-en.xml"
-start="stuff" ident="testSchema-3" >
-<elementSpec ns="" ident="stuff">
-<desc>Root element for a very simple schema</desc>
-<content>
-<rng:oneOrMore>
-<rng:choose>
-<rng:ref name="p"/>
-<rng:ref name="ptr"/>
-</rng:choose>
-</rng:oneOrMore>
-</content>
-</elementSpec>
-
-<elementRef key="p"/>
-<elementRef key="ptr"/>
-</schemaSpec>
-
-
-Here we did not explicitly state that the elements we want are to be taken from the current TEI P5 version, since that is the default behaviour. Note however that our non-TEI element must specify that it is in the null
-name space (or specify a name space of its own). </p>
-
-<p>In the real world it is fairly unusual for schemas to have only a
-handful of elements. Partly for this reason, the TEI scheme is defined
-as a set of <soCalled>modules</soCalled>, each of which defines a
-number of elements. These modules are a convenient way of including
-several elements at once:
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<schemaSpec
-start="TEI" ident="testSchema-4" >
-<moduleRef key="core"/>
-<moduleRef key="header"/>
-<moduleRef key="textstructure"/>
-</schemaSpec>
-</egXML>
-
-Each <gi>moduleRef</gi> here could be replaced by an
-<gi>elementRef</gi> for all the elements stored in that
-particular module. The name of the module in which it is to be stored
-forms part of the declaration of an element in the TEI source. Element
-names are unique across all modules; module names are unique across a
-given source scheme. 
-</p>
-
-<p>It is sometimes convenient to say that one wishes to use all the
-elements from a given module, <emph>except</emph> for a small
-number. The attribute <att>exclude</att> may be used for this purpose:
-</p>
-<schemaSpec
-start="TEI" ident="testSchema-4a" >
-<moduleRef key="core" except="mentioned quote said" />
-<moduleRef key="header" />
-<moduleRef key="textstructure"/>
-</schemaSpec>
-
-<p>Another way of achieving the same goal would be to add a new
-declaration for each element to be deleted from the schema, as
-follows:
-
-<schemaSpec
-start="TEI" ident="testSchema-4b" >
-<moduleRef key="core"/>
-<moduleRef key="header" />
-<moduleRef key="textstructure"/>
-
-<elementSpec ident="mentioned" mode="delete"/>
-<elementSpec ident="quote" mode="delete"/>
-<elementSpec ident="said" mode="delete"/>
-
-</schemaSpec>
-
-</p>
-
-<p>This is a special case of the general mechanism for modifying
-elements discussed below. An ODD processor first gathers all the
-declarations for elements found within a schema specification, whether
-by explicit reference or by reference to a module. In the above
-example, it will therefore find two declarations for each of
-<gi>mentioned</gi>, <gi>quote</gi>, and <gi>said</gi> -- one from the
-module <ident>core</ident>, and one from the schema specification
-itself. In a second phase of processing, the ODD processor combines
-such multiple declarations according to specified rules, for example
-that if any declaration specifies <code>mode="delete"</code> the
-effect is to remove all declarations for that element.</p>
-
-<p>An attribute <att>include</att> is also available on
-<gi>moduleRef</gi> for the convenience of those wishing to specify
-explicitly the elements required from a given
-module. The same effect could be achieved by means of an
-<gi>elementRef</gi> for each required element, of course: this
-redundancy is provided for convenience. 
-</p>
-
-<p>Note that when a schema is defined by inclusion rather than
-exclusion of elements it is important to ensure that any elements
-<emph>required</emph> by the content model of another element are actually
-present. In the current TEI Guidelines, content models are as far as
-possible defined in terms of element classes rather than explicit
-elements, which mitigates this problem. Nevertheless, there remain
-some obligatory elements, for example in the TEI Header, all of which
-must therefore be explicitly requested. </p>
-
-<p>In summary, supposing element x to be provided by module Y, the
-following combinations are meaningful:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-
-<!-- include all elements from Y -->
-<moduleRef key="Y"/>
-<!-- include only x from Y -->
-<moduleRef key="Y" include="x"/>
-<!-- include every element except x from Y-->
-<moduleRef key="Y" exclude="x"/>
-<!-- the following combination is equivalent to the foregoing -->
-<moduleRef key="Y"/>
-<elementSpec ident="x" mode="delete"/>
-<!-- the following combination is permitted; its effect is to include
-all elements from Y, including x; an ODD processor may issue a warning
-that the elementRef is redundant -->
-<moduleRef key="Y"/>
-<elementRef key="x"/>
-<!-- the following will have the effect of selecting x only, provided
-that it is available in the current context; if it is not, an error is
-generated -->
-<elementRef key="x"/>
-
-</egXML></p>
-
-
-
-<div><head>Adding and changing elements</head>
-
-<p>The <gi>elementSpec</gi> element is used to add a new non-TEI
-element to a schema. If that schema uses the TEI architecture as its
-base, then the schema will include all the declarations necessary to
-make use of the TEI class system. In the following example, we
-declare a new element <gi>diachrony</gi> in our own namespace and add
-it to the existing TEI dictionary schema:
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-
+      </egXML>
+      
+      Each <gi>moduleRef</gi> here could be replaced by an
+      <gi>elementRef</gi> for all the elements stored in that
+      particular module. The name of the module in which it is to be stored
+      forms part of the declaration of an element in the TEI source. Element
+      names are unique across all modules; module names are unique across a
+      given source scheme. 
+      </p>
+      
+      <p>It is sometimes convenient to say that one wishes to use all the
+      elements from a given module, <emph>except</emph> for a small
+      number. The attribute <att>exclude</att> may be used for this purpose:
+      </p>
+      <schemaSpec
+	  start="TEI" ident="testSchema-4a" >
+	<moduleRef key="core" except="mentioned quote said" />
+	<moduleRef key="header" />
+	<moduleRef key="textstructure"/>
+      </schemaSpec>
+      
+      <p>Another way of achieving the same goal would be to add a new
+      declaration for each element to be deleted from the schema, as
+      follows.</p>
+      
+      <schemaSpec
+	  start="TEI" ident="testSchema-4b" >
+	<moduleRef key="core"/>
+	<moduleRef key="header" />
+	<moduleRef key="textstructure"/>
+	
+	<elementSpec ident="mentioned" mode="delete"/>
+	<elementSpec ident="quote" mode="delete"/>
+	<elementSpec ident="said" mode="delete"/>
+	
+      </schemaSpec>
+      
+      <p>This is a special case of the general mechanism for modifying
+      elements discussed below. An ODD processor first gathers all the
+      declarations for elements found within a schema specification, whether
+      by explicit reference or by reference to a module. In the above
+      example, it will therefore find two declarations for each of
+      <gi>mentioned</gi>, <gi>quote</gi>, and <gi>said</gi> -- one from the
+      module <ident>core</ident>, and one from the schema specification
+      itself. In a second phase of processing, the ODD processor combines
+      such multiple declarations according to specified rules, for example
+      that if any declaration specifies <code>mode="delete"</code> the
+      effect is to remove all declarations for that element.</p>
+      
+      <p>An attribute <att>include</att> is also available on
+      <gi>moduleRef</gi> for the convenience of those wishing to specify
+      explicitly the elements required from a given
+      module. The same effect could be achieved by means of an
+      <gi>elementRef</gi> for each required element, of course: this
+      redundancy is provided for convenience. 
+      </p>
+      
+      <p>Note that when a schema is defined by inclusion rather than
+      exclusion of elements it is important to ensure that any elements
+      <emph>required</emph> by the content model of another element are actually
+      present. In the current TEI Guidelines, content models are as far as
+      possible defined in terms of element classes rather than explicit
+      elements, which mitigates this problem. Nevertheless, there remain
+      some obligatory elements, for example in the TEI Header, all of which
+      must therefore be explicitly requested. </p>
+      
+      <p>In summary, supposing element x to be provided by module Y, the
+      following combinations are meaningful:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	
+	<!-- include all elements from Y -->
+	<moduleRef key="Y"/>
+	<!-- include only x from Y -->
+	<moduleRef key="Y" include="x"/>
+	<!-- include every element except x from Y-->
+	<moduleRef key="Y" exclude="x"/>
+	<!-- the following combination is equivalent to the foregoing -->
+	<moduleRef key="Y"/>
+	<elementSpec ident="x" mode="delete"/>
+	<!-- the following combination is permitted; its effect is to include
+	     all elements from Y, including x; an ODD processor may issue a warning
+	     that the elementRef is redundant -->
+	<moduleRef key="Y"/>
+	<elementRef key="x"/>
+	<!-- the following will have the effect of selecting x only, provided
+	     that it is available in the current context; if it is not, an error is
+	     generated -->
+	<elementRef key="x"/>
+	
+      </egXML></p>
+      
+      
+      
+      <div><head>Adding and changing elements</head>
+      
+      <p>The <gi>elementSpec</gi> element is used to add a new non-TEI
+      element to a schema. If that schema uses the TEI architecture as its
+      base, then the schema will include all the declarations necessary to
+      make use of the TEI class system. In the following example, we
+      declare a new element <gi>diachrony</gi> in our own namespace and add
+      it to the existing TEI dictionary schema:
+      
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	
 	<schemaSpec ident="testdictionaries" start="TEI">
 	  <moduleRef key="header"/>
 	  <moduleRef key="core"/>
 	  <moduleRef key="dictionaries"/>
 	  <elementSpec ns="http://www.examples.com/ns"
-		        ident="diachrony" mode="add">
+		       ident="diachrony" mode="add">
 	    <desc>contains the description of the historical
 	    information attached to a dictionary entry, and organized
 	    as a hierarchy of possibly dated and referenced
@@ -273,61 +273,61 @@ it to the existing TEI dictionary schema:
 		</rng:choice>
 	      </rng:zeroOrMore>
 	    </content>
-	  </elementSpec></schemaSpec>
-
-</egXML>
-</p>
-<p>For purposes of TEI conformance, it is required
-that any new non-TEI element explicitly indicate that it is not part
-of the TEI name space, using the <att>ns</att> attribute. To avoid
-possible name collisions during schema generation, it is strongly
-recommended that such elements also specify a unique prefix, using
-the <att>prefix</att> attribute.</p>
-
-<p>In the following example, we add two non-TEI elements,
-<gi>admin</gi> and <gi>hi</gi>, both taken from the TBX name
-space. The <gi>admin</gi> element is added to the TEI
-<ident>model.hiLike</ident> class. Note that it is the non-TEI
-<gi>hi</gi> element which is referenced in its content model, and
-therefore a prefix must be used to distinguish the two. 
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<schemaSpec
-    source="http://www.tei-c.org/release/xml/tei/odd/Source/Guidelines/en/guidelines-en.xml"
-    start="TEI" ident="example-6" >
-<moduleRef key="core"/>
-<moduleRef key="dictionaries"/>
-
-	 <elementSpec 
-	     prefix="tbx"
-	     mode="add"
-	     ns="http://www.lisa.org/TBX-Specification.33.0.html"
-	     ident="admin">
-	   <desc>Contains information of an administrative nature for the node (parent element)
-	   in question, such as the source of information, or the project or client for
-	   which it applies.</desc>
-	   <classes>
-	     <memberOf key="model.hiLike"/>
-	   </classes>
-	   <content preserveNames="true">
-	     <rng:ref name="tbx_hi"/>
-	   </content>
-	 </elementSpec>
-<!-- where does this preserveNames attribute come from? -->	 
-	 <elementSpec 
-	     prefix="tbx_"
-	     mode="add"
-	     ns="http://www.lisa.org/TBX-Specification.33.0.html"
-	     ident="hi">
-	   <desc> Highlights a segment of text and optionally points to another element.</desc>
-	   <content>
-	     <rng:text/>
-	   </content>
-	 </elementSpec>
-</schemaSpec></egXML>
-</p></div>
-
-</body>
+	</elementSpec></schemaSpec>
+	
+      </egXML>
+      </p>
+      <p>For purposes of TEI conformance, it is required
+      that any new non-TEI element explicitly indicate that it is not part
+      of the TEI name space, using the <att>ns</att> attribute. To avoid
+      possible name collisions during schema generation, it is strongly
+      recommended that such elements also specify a unique prefix, using
+      the <att>prefix</att> attribute.</p>
+      
+      <p>In the following example, we add two non-TEI elements,
+      <gi>admin</gi> and <gi>hi</gi>, both taken from the TBX name
+      space. The <gi>admin</gi> element is added to the TEI
+      <ident>model.hiLike</ident> class. Note that it is the non-TEI
+      <gi>hi</gi> element which is referenced in its content model, and
+      therefore a prefix must be used to distinguish the two. 
+      
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	<schemaSpec
+	    source="http://www.tei-c.org/release/xml/tei/odd/Source/Guidelines/en/guidelines-en.xml"
+	    start="TEI" ident="example-6" >
+	  <moduleRef key="core"/>
+	  <moduleRef key="dictionaries"/>
+	  
+	  <elementSpec 
+	      prefix="tbx"
+	      mode="add"
+	      ns="http://www.lisa.org/TBX-Specification.33.0.html"
+	      ident="admin">
+	    <desc>Contains information of an administrative nature for the node (parent element)
+	    in question, such as the source of information, or the project or client for
+	    which it applies.</desc>
+	    <classes>
+	      <memberOf key="model.hiLike"/>
+	    </classes>
+	    <content preserveNames="true">
+	      <rng:ref name="tbx_hi"/>
+	    </content>
+	  </elementSpec>
+	  <!-- where does this preserveNames attribute come from? -->	 
+	  <elementSpec 
+	      prefix="tbx_"
+	      mode="add"
+	      ns="http://www.lisa.org/TBX-Specification.33.0.html"
+	      ident="hi">
+	    <desc> Highlights a segment of text and optionally points to another element.</desc>
+	    <content>
+	      <rng:text/>
+	    </content>
+	  </elementSpec>
+      </schemaSpec></egXML>
+      </p></div>
+      
+    </body>
   </text>
 </TEI>
 
