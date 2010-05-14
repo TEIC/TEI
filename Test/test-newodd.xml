@@ -217,7 +217,7 @@
 	<!-- include only x from Y -->
 	<moduleRef key="Y" include="x"/>
 	<!-- include every element except x from Y-->
-	<moduleRef key="Y" exclude="x"/>
+	<moduleRef key="Y" except="x"/>
 	<!-- the following combination is equivalent to the foregoing -->
 	<moduleRef key="Y"/>
 	<elementSpec ident="x" mode="delete"/>
@@ -235,8 +235,6 @@
       
       
       
-      <div><head>Adding and changing elements</head>
-      
       <p>The <gi>elementSpec</gi> element is used to add a new non-TEI
       element to a schema. If that schema uses the TEI architecture as its
       base, then the schema will include all the declarations necessary to
@@ -244,8 +242,8 @@
       declare a new element <gi>diachrony</gi> in our own namespace and add
       it to the existing TEI dictionary schema:
       
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-	
+      </p>	
+
 	<schemaSpec ident="testdictionaries" start="TEI">
 	  <moduleRef key="header"/>
 	  <moduleRef key="core"/>
@@ -275,8 +273,7 @@
 	    </content>
 	</elementSpec></schemaSpec>
 	
-      </egXML>
-      </p>
+
       <p>For purposes of TEI conformance, it is required
       that any new non-TEI element explicitly indicate that it is not part
       of the TEI name space, using the <att>ns</att> attribute. To avoid
@@ -291,7 +288,7 @@
       <gi>hi</gi> element which is referenced in its content model, and
       therefore a prefix must be used to distinguish the two. 
       
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      </p>
 	<schemaSpec
 	    source="http://www.tei-c.org/release/xml/tei/odd/Source/Guidelines/en/guidelines-en.xml"
 	    start="TEI" ident="example-6" >
@@ -299,7 +296,6 @@
 	  <moduleRef key="dictionaries"/>
 	  
 	  <elementSpec 
-	      prefix="tbx"
 	      mode="add"
 	      ns="http://www.lisa.org/TBX-Specification.33.0.html"
 	      ident="admin">
@@ -309,13 +305,12 @@
 	    <classes>
 	      <memberOf key="model.hiLike"/>
 	    </classes>
-	    <content preserveNames="true">
-	      <rng:ref name="tbx_hi"/>
+	    <content autoPrefix="false">
+	      <rng:ref name="hi"/>
 	    </content>
 	  </elementSpec>
-	  <!-- where does this preserveNames attribute come from? -->	 
+
 	  <elementSpec 
-	      prefix="tbx_"
 	      mode="add"
 	      ns="http://www.lisa.org/TBX-Specification.33.0.html"
 	      ident="hi">
@@ -324,8 +319,8 @@
 	      <rng:text/>
 	    </content>
 	  </elementSpec>
-      </schemaSpec></egXML>
-      </p></div>
+      </schemaSpec>
+
       
     </body>
   </text>
