@@ -279,10 +279,12 @@
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    <!--
     <xsl:if test="not(doc-available($source))">
       <xsl:message terminate="yes">Error: Source <xsl:value-of
       select='$source'/> not readable</xsl:message>
     </xsl:if>
+    -->
       <xsl:choose>
 	<xsl:when test="not(@except) and not(@include)">
 	  <xsl:for-each select="document($source,$top)">
@@ -338,10 +340,12 @@
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    <!--
     <xsl:if test="not(doc-available($source))">
       <xsl:message terminate="yes">Error: Source <xsl:value-of
       select='$source'/> not readable</xsl:message>
     </xsl:if>
+    -->
     <xsl:for-each select="document($source,$top)">
       <xsl:for-each select="key('IDENTS',$name)">
 	<xsl:call-template name="checkObject">
