@@ -20,19 +20,17 @@ makeODD()
 	    $DOCLANG \
 	    useVersionFromTEI=$useVersionFromTEI \
 	    TEIC=$TEIC \
-	    TEISERVER=$TEISERVER  \
-	    localsource="$LOCAL"  \
+	    defaultSource="$LOCAL"  \
 	    $DEBUG  
     else
 	echo  [names translated to language $lang]
 	xmllint --xinclude $ODD | saxon - $TEIXSLDIR/odds2/odd2odd.xsl \
 	    TEIC=$TEIC \
 	    useVersionFromTEI=$useVersionFromTEI \
-	    TEISERVER=$TEISERVER  \
-	    localsource="$LOCAL"  \
+	    defaultSource="$LOCAL"  \
 	    $DEBUG  \
 	    | saxon -o $RESULTS/$ODD.compiled - $TEIXSLDIR/odds2/translate-odd.xsl \
-	    $DEBUG $LANGUAGE $DOCLANG TEISERVER=$TEISERVER  
+	    $DEBUG $LANGUAGE $DOCLANG 
    fi
 }
 
@@ -143,10 +141,7 @@ makeXMLDOC()
     echo "6. make expanded documented ODD $schema.doc.xml "
     saxon -o $RESULTS/$schema.doc.xml  \
     $RESULTS/$ODD.compiled $TEIXSLDIR/odds2/odd2lite.xsl \
-    $DEBUG $DOCFLAGS  $LANGUAGE $DOCLANG TEISERVER=$TEISERVER  \
-	localsource="$LOCAL"  \
-	TEIC=$TEIC 
-	
+    $DEBUG $DOCFLAGS  $LANGUAGE $DOCLANG defaultSource="$LOCAL" TEIC=$TEIC 
 }
 
 
@@ -168,7 +163,6 @@ echo "  Usage: roma [options] schemaspec [output_directory]"
 echo "  options, shown with defaults:"
 
 echo "  --xsl=$TEIXSLDIR"
-echo "  --teiserver=$TEISERVER"
 echo "  --localsource=$LOCALSOURCE  # local copy of P5 sources"
 echo "  options, binary switches:"
 echo "  --compile          # create compiled file odd"
@@ -192,7 +186,6 @@ exit 1
 }
 
 # --------- main routine starts here --------- #
-TEISERVER=http://tei.oucs.ox.ac.uk/Query/
 TEIXSLDIR=/usr/share/xml/tei/stylesheet
 useVersionFromTEI=true
 LOCALSOURCE=
@@ -236,7 +229,6 @@ while test $# -gt 0; do
     --parameterize)       parameterize=true;;
     --schema=*)    schema=`echo $1 | sed 's/.*=//'`;;
     --patternprefix=*) PATTERNPREFIX=`echo $1 | sed 's/.*=//'`;;
-    --teiserver=*) TEISERVER=`echo $1 | sed 's/.*=//'`;;
     --xsl=*)       TEIXSLDIR=`echo $1 | sed 's/.*=//'`;;
     --help)        usageMsg;;
      *) if test "$1" = "${1#--}" ; then 
@@ -307,11 +299,7 @@ then
 else 
   LANGUAGE=" lang=$lang "
 fi
-if test "x$LOCALSOURCE" = "x"
-then
-    echo using $TEISERVER to access TEI database
-else
-    echo using $LOCALSOURCE to gather information about the source
+echo using $LOCALSOURCE to as default source
 cat > subset.xsl <<EOF
 <xsl:stylesheet version="2.0"
   xmlns:tei="http://www.tei-c.org/ns/1.0"
@@ -328,7 +316,7 @@ cat > subset.xsl <<EOF
 EOF
 saxon -o tei$$.xml  $LOCALSOURCE subset.xsl $DEBUG  || die "failed to extract subset from $LOCALSOURCE "
 LOCAL=$H/tei$$.xml
-fi
+
 
 makeODD
 ( $relax || $xsd ) && makeRelax
