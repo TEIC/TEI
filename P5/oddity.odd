@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0" 
-     xmlns:xi="http://www.w3.org/2001/XInclude"
-     xmlns:rng="http://relaxng.org/ns/structure/1.0" 
      xml:lang="en">
   <teiHeader>
     <fileDesc>
@@ -18,9 +16,9 @@
     <body>
       <moduleRef url="Exemplars/svg11.rng">
 	<content>
-	  <rng:define combine="choice" name="tei_model.graphicLike">
-	    <rng:ref name="svg"/>
-	  </rng:define>
+	  <define combine="choice" name="tei_model.graphicLike" xmlns="http://relaxng.org/ns/structure/1.0">
+	    <ref name="svg"/>
+	  </define>
 	</content>
       </moduleRef>
       <moduleRef url="Exemplars/mathml2-main.rng"/>
@@ -84,9 +82,9 @@
 	<content>
 	  <element xmlns="http://relaxng.org/ns/structure/1.0"
 		   ns="http://www.tei-c.org/ns/Examples">
-	    <xi:include href="Exemplars/names.xml">
-	      <xi:fallback> ERROR: cannot locate list of names</xi:fallback>
-	    </xi:include>
+	    <include href="Exemplars/names.xml"  xmlns="http://www.w3.org/2001/XInclude">
+	      <fallback> ERROR: cannot locate list of names</fallback>
+	    </include>
 	    <ref name="att.global.attribute.xmlid"/>
 	    <ref name="att.global.attribute.xmllang"/>
 	    <zeroOrMore>
@@ -183,16 +181,16 @@
 	     http://www.w3.org/TR/2006/REC-xinclude-20061115/, also having looked at
 	     Norm Walsh's implimentation for DocBook. -sb -->
 	<content>
-	  <rng:optional>
-	    <rng:ref name="fallback"/>
-	  </rng:optional>
+	  <optional xmlns="http://relaxng.org/ns/structure/1.0">
+	    <ref name="fallback"/>
+	  </optional>
 	</content>
 	<attList>
 	  <attDef ident="href">
 	    <datatype>
-	      <rng:data type="anyURI">
-		<rng:param name="pattern">[^#]+</rng:param>
-	      </rng:data>
+	      <data type="anyURI" xmlns="http://relaxng.org/ns/structure/1.0">
+		<param name="pattern">[^#]+</param>
+	      </data>
 	    </datatype>
 	  </attDef>
 	  <attDef ident="parse">
@@ -204,22 +202,22 @@
 	  </attDef>
 	  <attDef ident="xpointer">
 	    <datatype>
-	      <rng:data type="string"/>
+	      <data type="string" xmlns="http://relaxng.org/ns/structure/1.0" />
 	    </datatype>
 	  </attDef>
 	  <attDef ident="encoding">
 	    <datatype>
-	      <rng:data type="string"/>
+	      <data type="string" xmlns="http://relaxng.org/ns/structure/1.0" />
 	    </datatype>
 	  </attDef>
 	  <attDef ident="accept">
 	    <datatype>
-	      <rng:data type="string"/>
+	      <data type="string" xmlns="http://relaxng.org/ns/structure/1.0" />
 	    </datatype>
 	  </attDef>
 	  <attDef ident="accept-language">
 	    <datatype>
-	      <rng:data type="string"/>
+	      <data type="string" xmlns="http://relaxng.org/ns/structure/1.0" />
 	    </datatype>
 	  </attDef>
 	</attList>
@@ -227,14 +225,14 @@
       <!-- of course <xi:include> refers to <xi:fallback>, so we need to declare-->
       <!-- that, too, just in case. -->
       <elementSpec ident="fallback" ns="http://www.example.org/cannot/really/use/XInclude" mode="add">
-	<content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	  <rng:optional>
-	    <rng:ref name="anyTEI"/>
-	  </rng:optional>
+	<content>
+	  <optional xmlns="http://relaxng.org/ns/structure/1.0" >
+	    <ref name="anyTEI"/>
+	  </optional>
       </content>
     </elementSpec>
-
-
-</body>
-  </text>
+    
+    
+  </body>
+</text>
 </TEI>
