@@ -4,6 +4,7 @@ ODDS=tei_all tei_allPlus tei_bare tei_corpus tei_dictionaries	\
 	tei_drama tei_its tei_math tei_minimal tei_ms tei_odds	\
 	tei_speech tei_svg tei_xinclude teilite tei_tite isofs tei_enrich
 DOCODDS=tei_tite teilite
+ROMA=roma2
 LANGUAGE=en
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
@@ -12,8 +13,8 @@ ROMAOPTS= --localsource=../Source/Guidelines/${LANGUAGE}/${DRIVER} --xsl=${XSL}
 schemas: names
 	xmllint --xinclude tei_odds.odd.pre > tei_odds.odd
 	xmllint --xinclude tei_allPlus.odd.pre > tei_allPlus.odd
-	for i in $(ODDS); do echo Process $$i; ${BIN}/roma2 ${ROMAOPTS} $$i.odd .; done
-	for i in $(DOCODDS); do echo Process $$i; ${BIN}/roma2 ${ROMAOPTS} --noxsd --nodtd --norelax --docflags="summaryDoc=true" --docpdf --dochtml $$i.odd .; done
+	for i in $(ODDS); do echo Process $$i; ${ROMA} ${ROMAOPTS} $$i.odd .; done
+	for i in $(DOCODDS); do echo Process $$i; ${ROMA} ${ROMAOPTS} --noxsd --nodtd --norelax --docflags="summaryDoc=true" --docpdf --dochtml $$i.odd .; done
 	-rm tei_odds.dtd tei_odds.xsd
 	-rm tei_allPlus.dtd tei_allPlus.xsd
 	-rm tei_svg.dtd tei_svg.xsd
