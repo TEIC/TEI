@@ -11,6 +11,7 @@ SOURCETREE=Source
 LANGTREE=${SOURCETREE}/Guidelines/${INPUTLANGUAGE}
 DRIVER=${LANGTREE}/guidelines-${INPUTLANGUAGE}.xml
 FASCFILE=${LANGTREE}/FASC-${CHAP}.xml
+ROMA=roma2
 ROMAOPTS="--localsource=${DRIVER}"
 XSL=/usr/share/xml/tei/stylesheet
 XSLP4=/usr/share/xml/teip4/stylesheet
@@ -215,16 +216,16 @@ exemplars:
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
 
 oddschema: 
-	@echo Checking you have a running roma2 before trying to make oddschema ...
-	which roma2 || exit 1
+	@echo Checking you have a running ${ROMA} before trying to make oddschema ...
+	which ${ROMA} || exit 1
 	(cd Exemplars;make names)
-	roma2 ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds.odd .
+	${ROMA} ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds.odd .
 
 exampleschema:
-	@echo Checking you have a running roma2 before trying to make exampleschema ...
-	which roma2 || exit 1
+	@echo Checking you have a running ${ROMA} before trying to make exampleschema ...
+	which ${ROMA} || exit 1
 	(cd Exemplars;make names)
-	roma2  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-ex.odd . 
+	${ROMA}  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-ex.odd . 
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rnc && \
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rng
 
