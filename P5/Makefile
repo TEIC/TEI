@@ -7,7 +7,6 @@ XELATEXFLAGS='--output-driver="xdvipdfmx -V 5"'
 XELATEX=xelatex 
 VERBOSE=
 PREFIX=/usr
-TEISERVER=http://tei.oucs.ox.ac.uk/Query/
 SOURCETREE=Source
 LANGTREE=${SOURCETREE}/Guidelines/${INPUTLANGUAGE}
 DRIVER=${LANGTREE}/guidelines-${INPUTLANGUAGE}.xml
@@ -219,13 +218,13 @@ oddschema:
 	@echo Checking you have a running roma2 before trying to make oddschema ...
 	which roma2 || exit 1
 	(cd Exemplars;make names)
-	roma2 ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds.odd .
+	roma2 ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds.odd .
 
 exampleschema:
 	@echo Checking you have a running roma2 before trying to make exampleschema ...
 	which roma2 || exit 1
 	(cd Exemplars;make names)
-	roma2  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ --teiserver=${TEISERVER} p5odds-ex.odd . 
+	roma2  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-ex.odd . 
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rnc && \
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rng
 
