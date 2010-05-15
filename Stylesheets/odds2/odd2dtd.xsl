@@ -1627,28 +1627,10 @@
             </xsl:for-each>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:choose>
-               <xsl:when test="not($localsource='')">
-                  <xsl:for-each select="document($localsource)/tei:TEI">
-                     <xsl:apply-templates mode="tagatts" select="key('LOCALIDENTS',$K)"/>
-                  </xsl:for-each>
-               </xsl:when>
-               <xsl:otherwise>
-                  <xsl:variable name="Remote">
-                     <xsl:value-of select="$TEISERVER"/>
-                     <xsl:text>copytag.xql?name=</xsl:text>
-                     <xsl:value-of select="$K"/>
-                  </xsl:variable>
-                  <xsl:if test="$verbose='true'">
-                     <xsl:if test="$verbose='true'">
-                        <xsl:message>Accessing TEISERVER: <xsl:value-of select="$Remote"/>
-                        </xsl:message>
-                     </xsl:if>
-                  </xsl:if>
-                  <xsl:apply-templates mode="tagatts" select="document($Remote)/tei:TEI/*"/>
-               </xsl:otherwise>
-            </xsl:choose>
-         </xsl:otherwise>
+	   <xsl:for-each select="document($localsource)/tei:TEI">
+	     <xsl:apply-templates mode="tagatts" select="key('LOCALIDENTS',$K)"/>
+	   </xsl:for-each>
+	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:attRef" mode="tangle">
