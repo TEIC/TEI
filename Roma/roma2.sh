@@ -299,7 +299,7 @@ then
 else 
   LANGUAGE=" lang=$lang "
 fi
-echo using $LOCALSOURCE to as default source
+echo using $LOCALSOURCE as default source
 cat > subset.xsl <<EOF
 <xsl:stylesheet version="2.0"
   xmlns:tei="http://www.tei-c.org/ns/1.0"
