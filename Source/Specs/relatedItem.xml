@@ -37,10 +37,14 @@
       </rng:choice>
     </rng:optional>
   </content>
-  <constraintSpec ident="targetorcontent" scheme="isoschematron">
+  <constraintSpec ident="targetorcontent1" scheme="isoschematron">
     <constraint>
       <sch:report test="@target and count( child::* ) > 0">If the 'target' attribute is used, the
         relatedItem element must be empty</sch:report>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="targetorcontent2" scheme="isoschematron">
+    <constraint>
       <sch:assert test="@target or child::*">A relatedItem element should have either a 'target' attribute
         or a child element to indicate the related bibliographic item</sch:assert>
     </constraint>
