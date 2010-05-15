@@ -1,4 +1,5 @@
 LANGUAGE=en
+ROMA=roma2
 INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
 DRIVER=guidelines-${INPUTLANGUAGE}.xml
@@ -75,11 +76,11 @@ schemas:
 		echo Try  to validate $$i.odd; \
 		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK stage; \
 		saxon -o $$i-ex.odd $$i.odd ../Utilities/odd2exodd.xsl TEIC=true ;\
-		roma2 $(ROMAOPTS) --nodtd --noxsd  --xsl=$(XSL)	$$i-ex.odd . ; \
+		$(ROMA) $(ROMAOPTS) --nodtd --noxsd  --xsl=$(XSL)	$$i-ex.odd . ; \
 		echo check egXML in $$i.odd; \
 		perl -p -e "s/testlite-examples/$$i-examples/" ex.nvdl > $$i.nvdl; \
 		onvdl $$i.nvdl $$i.odd | grep -v ": error: unfinished element$$" | grep -v "unknown element .egXML" ; \
-		roma2 $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
+		$(ROMA) $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
 		cp xml.xsd.w3c xml.xsd ; \
 		test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
 		test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd; \
@@ -87,7 +88,7 @@ schemas:
 		test -f $$i.teix.xsd && perl -p -i -e "s/teix.xsd/$$i.teix.xsd/" $$i.xsd; \
 	done
 	-for i in $(TESTSPECIALFILES) ; do \
-		roma2 --patternprefix=tei_ $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
+		$(ROMA) --patternprefix=tei_ $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
 		cp xml.xsd.w3c xml.xsd ; \
 		test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
 		test -f teix.xsd && mv teix.xsd $$i.teix.xsd ; \
