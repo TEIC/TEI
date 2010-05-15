@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:i="http://www.iso.org/ns/1.0"
-                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                xmlns:xi="http://www.w3.org/2001/XInclude"
-                xmlns:teix="http://www.tei-c.org/ns/Examples"
-                xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-                xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                xmlns:s="http://www.ascc.net/xml/schematron"
-                xmlns:t="http://www.thaiopensource.com/ns/annotations"
-                xmlns:tei="http://www.tei-c.org/ns/1.0"
-                
-                xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="t tei a rng s xlink sch xs i xi teix"
+<xsl:stylesheet 
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    xmlns:fo="http://www.w3.org/1999/XSL/Format" 
+    xmlns:html="http://www.w3.org/1999/xhtml" 
+    xmlns:i="http://www.iso.org/ns/1.0"
+    xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xmlns:s="http://www.ascc.net/xml/schematron" 
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:teix="http://www.tei-c.org/ns/Examples" 
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
                 version="2.0">
   <xsl:import href="teiodds.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -87,6 +88,8 @@
          <xsl:with-param name="suffix">.rng</xsl:with-param>
          <xsl:with-param name="body">
             <grammar xmlns="http://relaxng.org/ns/structure/1.0"
+		     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+		     xmlns:xlink="http://www.w3.org/1999/xlink"
                      datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
                <xsl:attribute name="ns">
                   <xsl:choose>
@@ -96,7 +99,6 @@
                      <xsl:when test="$TEIC='true'">
                         <xsl:text>http://www.tei-c.org/ns/1.0</xsl:text>
                      </xsl:when>
-                     <xsl:otherwise/>
                   </xsl:choose>
                </xsl:attribute>
                <xsl:comment>
@@ -216,7 +218,7 @@ Schema generated from ODD source </xsl:text>
       <xsl:choose>
          <xsl:when test="(ancestor::rng:element[@name='egXML' or @name='constraint']         or ancestor::rng:define[contains(@name,'macro.schemaPattern')]) and         starts-with(@name, 'macro.any')">
 	           <xsl:for-each select="key('DEFED', @name)">
-	              <xsl:copy-of select="*"/>
+	              <xsl:apply-templates mode="justcopy" select="*"/>
 	           </xsl:for-each>
          </xsl:when>
          <xsl:when test="key('DEFED',@name)">
@@ -401,7 +403,7 @@ Schema generated from ODD source </xsl:text>
       <xsl:param name="element"/>
       <xsl:param name="content"/>
       <xsl:for-each select="$content/Wrapper">
-         <xsl:copy-of select="*"/>
+         <xsl:apply-templates mode="justcopy" select="*"/>
       </xsl:for-each>
   </xsl:template>
   <xsl:template name="refdoc"/>
@@ -417,10 +419,8 @@ Schema generated from ODD source </xsl:text>
     <xsl:copy/>
   </xsl:template>
 
-
   <xsl:template match="processing-instruction()" mode="cleanup">
   </xsl:template>
-
 
   <xsl:template match="tei:constraintSpec[@scheme='schematron']">
       <xsl:apply-templates/>
@@ -449,4 +449,6 @@ Schema generated from ODD source </xsl:text>
       </choice>
     </zeroOrMore>
   </xsl:template>
+
+
 </xsl:stylesheet>

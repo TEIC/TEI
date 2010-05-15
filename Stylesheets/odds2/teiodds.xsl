@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:html="http://www.w3.org/1999/xhtml" xmlns:i="http://www.iso.org/ns/1.0"
-  xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-  xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:s="http://www.ascc.net/xml/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  exclude-result-prefixes="rng teix fo xi i a tei s sch xs html" version="2.0">
+<xsl:stylesheet 
+    xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+    xmlns:fo="http://www.w3.org/1999/XSL/Format" 
+    xmlns:html="http://www.w3.org/1999/xhtml" 
+    xmlns:i="http://www.iso.org/ns/1.0"
+    xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xmlns:s="http://www.ascc.net/xml/schematron" 
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:teix="http://www.tei-c.org/ns/Examples" 
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
+  version="2.0">
   <xsl:import href="../common2/verbatim.xsl"/>
   <xsl:import href="../common2/i18n.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -1012,7 +1019,7 @@ select="$makeDecls"/></xsl:message>
                 </xsl:if>
                 <xsl:choose>
                   <xsl:when test="starts-with(@ident,'type')">
-                    <xsl:copy-of select="$entCont/TEMPTREE/rng:*"/>
+                    <xsl:apply-templates mode="justcopy" select="$entCont/TEMPTREE/rng:*"/>
                   </xsl:when>
                   <xsl:when test="$entCount=0">
                     <choice>
@@ -1020,15 +1027,15 @@ select="$makeDecls"/></xsl:message>
                     </choice>
                   </xsl:when>
                   <xsl:when test="$entCount=1">
-                    <xsl:copy-of select="$entCont/TEMPTREE/rng:*"/>
+                    <xsl:apply-templates mode="justcopy" select="$entCont/TEMPTREE/rng:*"/>
                   </xsl:when>
                   <xsl:when test="tei:content/rng:text|tei:content/rng:ref">
                     <choice>
-                      <xsl:copy-of select="$entCont/TEMPTREE/rng:*"/>
+                      <xsl:apply-templates mode="justcopy" select="$entCont/TEMPTREE/rng:*"/>
                     </choice>
                   </xsl:when>
                   <xsl:otherwise>
-                    <xsl:copy-of select="$entCont/TEMPTREE/rng:*"/>
+                    <xsl:apply-templates mode="justcopy"  select="$entCont/TEMPTREE/rng:*"/>
                   </xsl:otherwise>
                 </xsl:choose>
               </define>
@@ -1077,7 +1084,7 @@ select="$makeDecls"/></xsl:message>
           <xsl:choose>
             <xsl:when test="@url and $parameterize='true'">
               <include xmlns="http://relaxng.org/ns/structure/1.0" href="{@url}">
-                <xsl:copy-of select="tei:content/*"/>
+                <xsl:apply-templates mode="justcopy"  select="tei:content/*"/>
               </include>
             </xsl:when>
             <xsl:when test="@url and $parameterize='false'">
@@ -1088,7 +1095,7 @@ select="$makeDecls"/></xsl:message>
                   <xsl:apply-templates mode="expandRNG"
                     select="*|@*|text()|comment()|processing-instruction()"/>
                 </xsl:for-each>
-                <xsl:copy-of select="tei:content/*"/>
+                <xsl:apply-templates mode="justcopy"  select="tei:content/*"/>
               </div>
               <xsl:comment>End of import of <xsl:value-of select="@url"/>
               </xsl:comment>
@@ -1606,7 +1613,7 @@ select="$makeDecls"/></xsl:message>
   <xsl:template match="tei:altIdent"/>
 
   <xsl:template match="a:*">
-    <xsl:copy-of select="."/>
+    <xsl:apply-templates mode="justcopy" select="."/>
   </xsl:template>
 
   <xsl:template match="tei:classSpec" mode="processDefaultAtts">
@@ -1908,7 +1915,7 @@ select="$makeDecls"/></xsl:message>
 
 
   <xsl:template match="*" mode="expandSpecs">
-    <xsl:copy-of select="."/>
+    <xsl:apply-templates mode="justcopy" select="."/>
   </xsl:template>
 
   <xsl:template match="tei:specGrpRef" mode="expandSpecs">
@@ -1968,13 +1975,13 @@ Edition: </xsl:text>
         <ns prefix="{@prefix}" uri="{@uri}" xmlns="http://www.ascc.net/xml/schematron"/>
       </xsl:when>
       <xsl:when test="self::s:pattern">
-        <xsl:copy-of select="."/>
+        <xsl:apply-templates mode="justcopy" select="."/>
       </xsl:when>
       <xsl:when test="self::s:rule">
         <pattern
           name="{ancestor::tei:elementSpec/@ident}-constraint-{ancestor::tei:constraintSpec/@ident}"
           xmlns="http://www.ascc.net/xml/schematron">
-          <xsl:copy-of select="."/>
+          <xsl:apply-templates mode="justcopy" select="."/>
         </pattern>
       </xsl:when>
       <xsl:when test="(self::s:report or self::s:assert) and ancestor::tei:elementSpec">
@@ -1992,7 +1999,7 @@ Edition: </xsl:text>
               <xsl:text>tei:</xsl:text>
               <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
             </xsl:attribute>
-            <xsl:copy-of select="."/>
+            <xsl:apply-templates mode="justcopy" select="."/>
           </rule>
         </pattern>
       </xsl:when>
@@ -2000,12 +2007,12 @@ Edition: </xsl:text>
         <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="{@prefix}" uri="{@uri}"/>
       </xsl:when>
       <xsl:when test="self::sch:pattern">
-        <xsl:copy-of select="."/>
+        <xsl:apply-templates mode="justcopy" select="."/>
       </xsl:when>
       <xsl:when test="self::sch:rule">
         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
           id="{ancestor::tei:elementSpec/@ident}-constraint-{../../@ident}">
-          <xsl:copy-of select="."/>
+          <xsl:apply-templates mode="justcopy" select="."/>
         </pattern>
       </xsl:when>
       <xsl:when test="(self::sch:report or self::sch:assert) and         ancestor::tei:elementSpec">
@@ -2023,7 +2030,7 @@ Edition: </xsl:text>
               <xsl:text>tei:</xsl:text>
               <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
             </xsl:attribute>
-            <xsl:copy-of select="."/>
+            <xsl:apply-templates mode="justcopy" select="."/>
           </rule>
         </pattern>
       </xsl:when>
@@ -2045,4 +2052,16 @@ Edition: </xsl:text>
     <xsl:param name="name"/>
     <xsl:param name="text"/>
   </xsl:template>
+
+   <xsl:template match="@*|text()|processing-instruction()" mode="justcopy">
+      <xsl:copy-of select="."/>
+   </xsl:template>
+
+   <xsl:template match="*" mode="justcopy">
+      <xsl:copy>
+         <xsl:apply-templates
+	     select="*|@*|processing-instruction()|text()" mode="justcopy"/>
+      </xsl:copy>
+   </xsl:template>
+
 </xsl:stylesheet>
