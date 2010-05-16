@@ -1553,16 +1553,16 @@
     <xsl:template match="tei:ptr">
       <xsl:call-template name="linkMe">
 	<xsl:with-param name="anchor">
-	  <xsl:choose>
-	    <xsl:when test="starts-with(@target,'#')">
-	      <xsl:apply-templates
-		  select="key('IDS',substring-after(@target,'#'))"
-		  mode="xref"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:value-of select="@target"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
+	      <xsl:choose>
+		<xsl:when test="starts-with(@target,'#')">
+		  <xsl:apply-templates
+		      select="key('IDS',substring-after(@target,'#'))"
+		      mode="xref"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="@target"/>
+		</xsl:otherwise>
+	      </xsl:choose>
 	</xsl:with-param>
       </xsl:call-template>
     </xsl:template>
@@ -1647,9 +1647,16 @@
 	      <w:rStyle w:val="Hyperlink"/>
 	      <w:u w:val="none"/>
 	</w:rPr>
-	<w:t>
-	  <xsl:copy-of select="$anchor"/>
-	</w:t>
+	<xsl:choose>
+	  <xsl:when test="$anchor/w:r">
+	    <xsl:copy-of select="$anchor/w:r/w:t"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <w:t>
+	      <xsl:copy-of select="$anchor"/>
+	    </w:t>
+	  </xsl:otherwise>
+	</xsl:choose>
       </w:r>
       <w:r>
 	<w:fldChar w:fldCharType="end"/>
