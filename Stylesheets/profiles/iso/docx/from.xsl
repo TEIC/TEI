@@ -555,6 +555,8 @@
              if (w:pPr/w:pStyle/@w:val='entrySource') then 3 else
              if (w:pPr/w:pStyle/@w:val='nonVerbalRepresentation') then 3 else
              if (w:pPr/w:pStyle/@w:val='noteDefinition') then 3 else
+             if (w:pPr/w:pStyle/@w:val='noteExample') then 3 else
+             if (w:pPr/w:pStyle/@w:val='noteNonVerbalRepresentation') then 3 else
              if (w:pPr/w:pStyle/@w:val='noteSymbol') then 3 else
              if (w:pPr/w:pStyle/@w:val='noteTerm') then 3 else
              if (w:pPr/w:pStyle/@w:val='noteTermEntry') then 3 else
@@ -1104,11 +1106,12 @@
 		<note>
 		  <xsl:apply-templates/>
 		</note>
-	      </xsl:for-each>
 	      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteTerm'] except .">
-		<note>
+		<note type="noteTerm">
 		  <xsl:apply-templates/>
 		</note>
+	      </xsl:for-each>
+
 	      </xsl:for-each>
 	      <descripGrp>
 		<descrip type="definition">
@@ -1122,12 +1125,12 @@
 		  </note>
 		</xsl:for-each>
 		<xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteSymbol'] except .">
-		  <note>
+		  <note type="noteSymbol">
 		    <xsl:apply-templates/>
 		  </note>
 		</xsl:for-each>
 		<xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='entrySource'] except .">
-		  <admin type="entrySource">
+		  <admin type="source">
 		    <xsl:apply-templates/>
 		  </admin>
 		</xsl:for-each>
@@ -1883,7 +1886,7 @@
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
    <desc>Remove [SOURCE: ] from source</desc></doc>
 
-  <xsl:template match="tbx:admin[@type='entrySource']/text()" mode="pass2">
+  <xsl:template match="tbx:admin[@type='source']/text()" mode="pass2">
     <xsl:analyze-string select="replace(.,'\[SOURCE: ','')" regex="\]$">
       <xsl:matching-substring>
       </xsl:matching-substring>

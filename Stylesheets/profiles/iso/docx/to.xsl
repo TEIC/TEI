@@ -107,7 +107,6 @@
       <xsl:value-of select="@rend"/>
    </xsl:template>
     <xsl:template match="tbx:descrip" mode="get-style">Definition</xsl:template>
-    <xsl:template match="tbx:note" mode="get-style">noteTermEntry</xsl:template>
     <xsl:template match="tei:hi[@rend='language']" mode="get-style">
       <xsl:text>language</xsl:text>
     </xsl:template>
@@ -452,7 +451,12 @@
 	    <xsl:with-param name="pPr">
 	      <w:pPr>
 		<w:pStyle>
-		  <xsl:attribute name="w:val">Note</xsl:attribute>
+		  <xsl:attribute name="w:val">
+		    <xsl:choose>
+		      <xsl:when test="@type"><xsl:value-of select="@type"/></xsl:when>
+		      <xsl:otherwise>Note</xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:attribute>
 		</w:pStyle>
 	      </w:pPr>
 	    </xsl:with-param>
@@ -978,15 +982,24 @@
       </xsl:call-template>
    </xsl:template>
 
-   <xsl:template match="tbx:termEntry/tbx:note|tbx:langset/tbx:note">
+   <xsl:template match="tbx:note">
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">
-	   <xsl:text>noteTermEntry</xsl:text>
+	   <xsl:choose>
+	     <xsl:when test="parent::tbx:termEntry">noteTermEntry</xsl:when>
+	     <xsl:when test="parent::tbx:langset">noteTermEntry</xsl:when>
+	     <xsl:when
+		 test="parent::tbx:descrip">noteDefinition</xsl:when>
+	     <xsl:when test="@type">
+	       <xsl:value-of select="@type"/>
+	     </xsl:when>
+	     <xsl:otherwise>noteTerm</xsl:otherwise>
+	   </xsl:choose>
          </xsl:with-param>
       </xsl:call-template>
    </xsl:template>
 
-   <xsl:template match="tbx:admin[@type='entrySource']">
+   <xsl:template match="tbx:admin[@type='source']">
 	 <xsl:variable name="a">>
 	   <xsl:text>[SOURCE: </xsl:text>
 	   <xsl:value-of select="."/>
