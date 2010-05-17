@@ -1125,7 +1125,7 @@
 		  </note>
 		</xsl:for-each>
 		<xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteSymbol'] except .">
-		  <note type="noteSymbol">
+		  <note type="symbol">
 		    <xsl:apply-templates/>
 		  </note>
 		</xsl:for-each>
@@ -1135,14 +1135,22 @@
 		  </admin>
 		</xsl:for-each>
 	      </descripGrp>
-	      <xsl:for-each
-		  select="current-group()[w:pPr/w:pStyle/@w:val='Example numbered'] except .">
+	      <xsl:if
+		  test="current-group()[w:pPr/w:pStyle/@w:val='Example numbered']">
 		<descripGrp>
 		  <descrip type="example">
-		    <xsl:apply-templates/>
+		    <xsl:for-each
+			select="current-group()[w:pPr/w:pStyle/@w:val='Example numbered'] except .">
+		      <xsl:apply-templates/>
+		    </xsl:for-each>
+		    <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteExample'] except .">
+		      <note>
+			<xsl:apply-templates/>
+		      </note>
+		    </xsl:for-each>
 		  </descrip>
 		</descripGrp>
-	      </xsl:for-each>
+	      </xsl:if>
 	      <xsl:if
 		  test="current-group()[w:pPr/w:pStyle/@w:val='nonVerbalRepresentation']">
 		  <descripGrp>
@@ -1151,6 +1159,11 @@
 		      <xsl:apply-templates/>
 		    </xsl:for-each>
 		  </descrip>
+		  <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteNonVerbalRepresentation'] except .">
+		    <note>
+		      <xsl:apply-templates/>
+		    </note>
+		  </xsl:for-each>
 		</descripGrp>
 	      </xsl:if>
 	      <langSet>
@@ -1187,10 +1200,12 @@
 		    <xsl:when test="$Thing='Example numbered'"/>
 		    <xsl:when test="$Thing='Example'"/>
 		    <xsl:when test="$Thing='nonVerbalRepresentation'"/>
-		    <xsl:when test="$Thing='noteTermEntry'"/>
-		    <xsl:when test="$Thing='noteTerm'"/>
-		    <xsl:when test="$Thing='noteSymbol'"/>
 		    <xsl:when test="$Thing='noteDefinition'"/>
+		    <xsl:when test="$Thing='noteExample'"/>
+		    <xsl:when test="$Thing='noteNonVerbalRepresentation'"/>
+		    <xsl:when test="$Thing='noteSymbol'"/>
+		    <xsl:when test="$Thing='noteTerm'"/>
+		    <xsl:when test="$Thing='noteTermEntry'"/>
 		    <xsl:otherwise>
 		      <ntig>
 			<termGrp>
@@ -1209,10 +1224,11 @@
 			  </termNote>
 			  <termNote type="administrativeStatus">
 			    <xsl:choose>
+			      <xsl:when test="$Thing='termAdmitted'
+					      and w:r/w:rPr/w:rStyle/@w:val='symbol'">symbol-admn-sts</xsl:when>
 			      <xsl:when test="$Thing='termPreferred'">preferredTerm-admn-sts</xsl:when>
 			      <xsl:when test="$Thing='termDeprecated'">deprecatedTerm-admn-sts</xsl:when>
 			      <xsl:when test="$Thing='termAdmitted'">admittedTerm-admn-sts</xsl:when>
-			      <xsl:when test="$Thing='symbol'">symbol-admn-sts</xsl:when>
 			      <xsl:otherwise>UNKNOWN</xsl:otherwise>
 			    </xsl:choose>
 			  </termNote>
