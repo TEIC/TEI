@@ -1380,19 +1380,21 @@
 	    select="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[@colname=$colname]/@rowsep"/></xsl:message>
 	    -->
                 <xsl:variable name="borders">
+		  <xsl:choose>
+		      <xsl:when test="@iso:style">
+			<xsl:call-template name="undoTableBorderStyles">
+			  <xsl:with-param name="htmlStyles">
+			    <xsl:value-of select="@iso:style"/>
+			  </xsl:with-param>
+			</xsl:call-template>
+		      </xsl:when>
+		      <xsl:otherwise>
                     <xsl:choose>
                         <xsl:when test="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[@colname=$colname]/@rowsep=0">
                             <w:top w:val="nil"/>
                         </xsl:when>
                     </xsl:choose>
                     <xsl:choose>
-		      <xsl:when test="@iso:style">
-			<xsl:call-template name="undoTableBorderStyles">
-			  <xsl:with-param name="htmlStyles">
-			    <xsl:value-of select="@html:style"/>
-			  </xsl:with-param>
-			</xsl:call-template>
-		      </xsl:when>
                         <xsl:when test="@colsep='0'">
                             <w:left w:val="nil"/>
                         </xsl:when>
@@ -1411,6 +1413,8 @@
                             <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
                         </xsl:when>
                     </xsl:choose>
+		   </xsl:otherwise>
+		  </xsl:choose>
                 </xsl:variable>
                 <xsl:if test="$borders/*">
                     <w:tcBorders>

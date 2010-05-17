@@ -52,7 +52,6 @@
       </desc>
    </doc>
 
-   <!-- oucs0037 new -->
    <xsl:template name="getTableBorderStyles">
      <xsl:param name="tblBorders"/>
      <xsl:if test="$tblBorders//w:left[@w:sz!='']">
@@ -68,7 +67,6 @@
        <xsl:text>border-top: </xsl:text><xsl:value-of select="$tblBorders//w:top/@w:sz"/><xsl:text>; </xsl:text>
      </xsl:if>
    </xsl:template>
-   <!-- oucs0037 new end -->
     
     	<xsl:template match="w:tbl" mode="paragraph">
 	     <xsl:choose>
@@ -148,6 +146,11 @@
 			                              <xsl:number/>
 			                           </xsl:variable>
 			                           <xsl:for-each select="w:tc">
+						     <xsl:variable name="cellBorderStyles">
+						       <xsl:call-template name="getTableBorderStyles">
+							 <xsl:with-param name="tblBorders" select="w:tcBorders"/>
+						       </xsl:call-template>
+						     </xsl:variable>
 			                              <xsl:variable name="VMERGE">
 			                                 <xsl:choose>
 				                                   <xsl:when test="w:tcPr/w:vMerge/@w:val='restart'">
@@ -166,6 +169,9 @@
 			                              </xsl:variable>
 			                              <xsl:copy>
 			                                 <xsl:variable name="N" select="position()"/>
+							 <xsl:attribute name="iso:style">
+							   <xsl:value-of select="normalize-space($cellBorderStyles)"/>
+							 </xsl:attribute>
 			                                 <xsl:attribute name="rowsep">
 				                                   <xsl:choose>
 				                                      <xsl:when test="w:tcPr/w:tcBorders/w:bottom[@w:sz=0 or @w:val='nil']">
@@ -303,13 +309,11 @@
 	  <xsl:template match="w:tr" mode="innerTable">
 	     <row xmlns="http://www.oasis-open.org/specs/tm9901">
 	        <xsl:for-each select="w:tc[not(@DUMMY='yes')]">
-		  <!-- oucs0037 new -->
 		  <xsl:variable name="cellBorderStyles">
 		    <xsl:call-template name="getTableBorderStyles">
 		      <xsl:with-param name="tblBorders" select="w:tcPr/w:tcBorders"/>
 		    </xsl:call-template>
 		  </xsl:variable>					
-		  <!-- oucs0037 new end -->
 	           <xsl:choose>
 		             <xsl:when test="w:tcPr/w:vMerge[not(@w:val='restart')]"/>
 		             <xsl:otherwise>
