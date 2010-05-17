@@ -1117,7 +1117,7 @@
 		  </note>
 		</xsl:for-each>
 		<xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='entrySource'] except .">
-		  <admin type="source">
+		  <admin type="entrySource">
 		    <xsl:apply-templates/>
 		  </admin>
 		</xsl:for-each>
@@ -2071,6 +2071,13 @@
     <desc>Zap empty <gi>seg</gi> in term</desc></doc>
 
    <xsl:template match="tbx:term/tei:seg[.=' ']" mode="pass2"/>
+
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Zap empty <gi>seg</gi> in <gi>hi</gi> in term</desc></doc>
+
+   <xsl:template match="tbx:term/tei:hi[.=' ']" mode="pass2">
+   </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Add ID to <gi>term</gi></desc></doc>

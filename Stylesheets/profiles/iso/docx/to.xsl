@@ -69,7 +69,7 @@
     <xsl:param name="word-directory">..</xsl:param>
     <xsl:param name="tei-directory">./</xsl:param>
     <xsl:param name="debug">false</xsl:param>   
-    <xsl:param name="showTBXMarkup">false</xsl:param>   
+    <xsl:param name="showTBXMarkup">true</xsl:param>   
     <xsl:param name="numberFormat">fr</xsl:param>
     
     <xsl:variable name="orig" select="/"/>
@@ -113,7 +113,7 @@
     <xsl:template match="tei:hi[@rend='source']" mode="get-style">
       <xsl:text>source</xsl:text>
     </xsl:template>
-    <xsl:template match="tbx:descrip/tbx:hi[@type='entailedTerm']" mode="get-style">
+    <xsl:template match="tbx:hi[@type='entailedTerm']" mode="get-style">
       <xsl:text>termRef</xsl:text>
     </xsl:template>
 
@@ -1059,7 +1059,7 @@
       </xsl:call-template>
    </xsl:template>
 
-   <xsl:template match="tbx:admin[@type='source']">
+   <xsl:template match="tbx:admin[@type='entrySource']">
 	 <xsl:variable name="a">
 	   <xsl:text>[SOURCE: </xsl:text>
 	   <xsl:value-of select="."/>

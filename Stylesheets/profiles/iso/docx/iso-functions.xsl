@@ -247,6 +247,7 @@
       <xsl:for-each select="$element">
 	<xsl:choose>
 	  <xsl:when test="self::tbx:term">true</xsl:when>
+	  <xsl:when test="self::tbx:hi">true</xsl:when>
 	  <xsl:when test="self::tbx:descrip">true</xsl:when>
 	  <xsl:when test="self::tbx:termGrp">true</xsl:when>
 	  <xsl:when test="self::m:oMath">true</xsl:when>
@@ -301,6 +302,7 @@
 	  <xsl:when
 	      test="self::tei:q[not(@type='sdt')]">true</xsl:when>
 	  <xsl:when test="self::tei:ref">true</xsl:when>
+	  <xsl:when test="self::tei:termRef">true</xsl:when>
 	  <xsl:when test="self::tei:seg">true</xsl:when>
 	  <xsl:when test="self::tei:surname">true</xsl:when>
 	  <xsl:when test="self::tei:soCalled">true</xsl:when>
