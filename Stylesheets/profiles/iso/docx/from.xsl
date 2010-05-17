@@ -1294,13 +1294,11 @@
 			    </termNote>
 			  </xsl:if>
 			</termGrp>
-			<xsl:if test="position()=1">
-			  <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteTerm'] except .">
-			    <note>
-			      <xsl:apply-templates/>
-			    </note>
-			  </xsl:for-each>
-			</xsl:if>
+			<xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteTerm'] except .">
+			  <note type="noteTerm">
+			    <xsl:apply-templates/>
+			  </note>
+			</xsl:for-each>
 		      </ntig>
 		    </xsl:otherwise>
 		  </xsl:choose>
@@ -1936,6 +1934,15 @@
     </xsl:analyze-string>
   </xsl:template>
 
+
+  <xsl:template match="tbx:note[@type='noteTerm']" mode="pass2">
+    <xsl:if
+	test="not(ancestor::tbx:ntig/preceding-sibling::tbx:ntig)">
+      <xsl:copy>
+	<xsl:apply-templates mode="pass2"/>
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
   <!--
       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>Strip label from note on definition</desc></doc>
