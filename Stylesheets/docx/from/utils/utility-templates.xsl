@@ -53,7 +53,7 @@
 
     <xsl:template name="generateAppInfo">
       <appInfo>
-	        <application ident="TEI_fromDOCX" version="2.13.0">
+	        <application ident="TEI_fromDOCX" version="2.14.0">
 	           <label>DOCX to TEI</label>
 	        </application>
 	        <xsl:if test="xpath:doc-available(concat($word-directory,'/docProps/custom.xml'))">
