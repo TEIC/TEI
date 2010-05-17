@@ -81,6 +81,8 @@
 	      and .='abbreviation']">abbreviatedForm</xsl:if>
     </xsl:template>
 
+    <xsl:template match="tbx:admin[@type='source']" mode="get-style">source</xsl:template>
+
     <xsl:template match="tei:abbr" mode="get-style">abbr</xsl:template>
     <xsl:template match="tei:cit" mode="get-style">Quote</xsl:template>
     <xsl:template match="tei:date" mode="get-style">date</xsl:template>
@@ -937,7 +939,7 @@
       <xsl:apply-templates
 	  select="tbx:descripGrp[tbx:descrip/@type='example']/tbx:note" mode="tbxnote"/>
 
-      <xsl:apply-templates select="tbx:descripGrp/tbx:admin[@type='source']"/>
+      <xsl:apply-templates select="tbx:descripGrp/tbx:admin[@type='entrySource']"/>
     </xsl:for-each>
 
       <xsl:apply-templates
@@ -965,7 +967,7 @@
       <xsl:apply-templates
 	  select="tbx:descripGrp[tbx:descrip/@type='example']/tbx:note" mode="tbxnote"/>
 
-      <xsl:apply-templates select="tbx:descripGrp/tbx:admin[@type='source']"/>
+      <xsl:apply-templates select="tbx:descripGrp/tbx:admin[@type='entrySource']"/>
 
     <xsl:if test="$showTBXMarkup='true'">
       <xsl:call-template name="block-element">
@@ -1021,8 +1023,22 @@
 	 </w:r>
        </xsl:for-each>
        <xsl:apply-templates/>
+       <xsl:for-each select="../../tbx:admin[@type='source']">
+	 <w:r>
+	   <w:rPr>
+	     <w:rStyle w:val="source"/>
+	   </w:rPr>
+	   <w:t xml:space='preserve'>[SOURCE: </w:t>	   
+	 </w:r>
+	 <xsl:apply-templates select="."/>
+	 <w:r>
+	   <w:rPr>
+	     <w:rStyle w:val="source"/>
+	   </w:rPr>
+	   <w:t xml:space='preserve'>]</w:t>	   
+	 </w:r>
+       </xsl:for-each>
      </w:p>
-
    </xsl:template>
 
    <xsl:template match="tbx:descrip[@type='example']">
@@ -1328,7 +1344,7 @@
                     <xsl:attribute name="fmtid">
                         <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
                     </xsl:attribute>
-		             <vt:lpwstr>2.13.0</vt:lpwstr>
+		             <vt:lpwstr>2.14.0</vt:lpwstr>
                 </property>
                 <property pid="1001" name="WordTemplateURI">
                     <xsl:attribute name="fmtid">
