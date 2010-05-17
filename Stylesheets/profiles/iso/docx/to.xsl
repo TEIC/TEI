@@ -69,7 +69,7 @@
     <xsl:param name="word-directory">..</xsl:param>
     <xsl:param name="tei-directory">./</xsl:param>
     <xsl:param name="debug">false</xsl:param>   
-    <xsl:param name="showTBXMarkup">true</xsl:param>   
+    <xsl:param name="showTBXMarkup">false</xsl:param>   
     <xsl:param name="numberFormat">fr</xsl:param>
     
     <xsl:variable name="orig" select="/"/>
