@@ -872,14 +872,12 @@
   <xsl:template match="tbx:termEntry">
     <xsl:for-each select="tbx:langSet">
       <xsl:choose>
-	<xsl:when test="starts-with(../@id,'autoTermNum')">
+	<xsl:when test="starts-with(@id,'autoTermNum')">
 	  <w:p>
 	    <w:pPr>
 	      <w:pStyle w:val="{substring-before(../@id,'_')}"/>
 	    </w:pPr>
-	    <w:bookmarkStart w:id="{substring-after(../@id,'_')}" w:name="_Ref244494009"/>
 	  </w:p>
-	  <w:bookmarkEnd w:id="{substring-after(../@id,'_')}"/>
 	</xsl:when>
 	<xsl:otherwise>
 	  <w:p>
@@ -914,6 +912,32 @@
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:for-each>
+      <xsl:apply-templates
+	  select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp/tbx:descrip[@type='figure']"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp/tbx:descrip[@type='example']"/>
+
+      <xsl:apply-templates select="tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates select="tbx:langSet/tbx:ntig[1]/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp[tbx:descrip/@type='symbol']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp[tbx:descrip/@type='definition']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp[tbx:descrip/@type='figure']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp[tbx:descrip/@type='example']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates select="tbx:descripGrp/tbx:admin[@type='source']"/>
     </xsl:for-each>
 
       <xsl:apply-templates
