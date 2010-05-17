@@ -926,7 +926,7 @@
       <xsl:apply-templates select="tbx:langSet/tbx:ntig[1]/tbx:note" mode="tbxnote"/>
 
       <xsl:apply-templates
-	  select="tbx:descripGrp[tbx:descrip/@type='symbol']/tbx:note" mode="tbxnote"/>
+	  select="tbx:langSet/tbx:ntig[tbx:termGrp/tbx:termNote='symbol-admn-sts']/tbx:note" mode="tbxnote"/>
 
       <xsl:apply-templates
 	  select="tbx:descripGrp[tbx:descrip/@type='definition']/tbx:note" mode="tbxnote"/>
@@ -954,7 +954,7 @@
       <xsl:apply-templates select="tbx:langSet/tbx:ntig[1]/tbx:note" mode="tbxnote"/>
 
       <xsl:apply-templates
-	  select="tbx:descripGrp[tbx:descrip/@type='symbol']/tbx:note" mode="tbxnote"/>
+	  select="tbx:langSet/tbx:ntig[tbx:termGrp/tbx:termNote='symbol-admn-sts']/tbx:note" mode="tbxnote"/>
 
       <xsl:apply-templates
 	  select="tbx:descripGrp[tbx:descrip/@type='definition']/tbx:note" mode="tbxnote"/>
@@ -1045,6 +1045,7 @@
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">
 	   <xsl:choose>
+	     <xsl:when test="parent::tbx:ntig[tbx:termGrp/tbx:termNote='symbol-admn-sts']">noteSymbol</xsl:when>
 	     <xsl:when test="parent::tbx:ntig">noteTerm</xsl:when>
 	     <xsl:when test="parent::tbx:termEntry">noteTermEntry</xsl:when>
 	     <xsl:when

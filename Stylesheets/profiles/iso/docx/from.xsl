@@ -2104,6 +2104,26 @@
 			      select="text()|comment()|processing-instruction()|*|@*"/>
       </xsl:copy>
    </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>zap placeholder for noteSymbol </desc></doc>
+   <xsl:template match="tbx:descripGrp[tbx:descrip/@type='symbol']"
+		 mode="pass3"/>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Move noteSymbol into the right place</desc></doc>
+   <xsl:template
+       match="tbx:termGrp[tbx:termNote='symbol-admn-sts']"
+       mode="pass3">
+     <xsl:copy>
+       <xsl:apply-templates mode="pass3"
+			    select="text()|comment()|processing-instruction()|*|@*"/>
+     </xsl:copy>
+     <xsl:for-each
+	 select="ancestor::tbx:termEntry/tbx:descripGrp[tbx:descrip/@type='symbol']/tbx:note">
+       <xsl:apply-templates select="." mode="pass3"/>
+     </xsl:for-each>
+   </xsl:template>
    
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Strip words and punctuation from term</desc></doc>
