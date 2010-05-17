@@ -1123,7 +1123,6 @@
         </w:tc>
     </xsl:template>
 
-    <!-- oucs0037 new -->
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
         <desc>Turn iso:style attribute back into Word styles for table</desc></doc>
 
@@ -1132,16 +1131,44 @@
       <xsl:for-each select="tokenize($htmlStyles,';')">
 	<xsl:variable name="val"><xsl:value-of select="normalize-space(substring-after(.,':'))"/></xsl:variable>
 	<xsl:if test="matches(.,'border-top')">
-	  <w:top w:val="single" w:sz="{$val}" w:space="0" w:color="auto"/>
+	  <xsl:choose>
+	    <xsl:when test="$val=0">
+	      <w:top w:val="nil"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <w:top w:val="single" w:sz="{$val}" w:space="0" w:color="auto"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	</xsl:if>
 	<xsl:if test="matches(.,'border-left')">
-	  <w:left w:val="single" w:sz="{$val}" w:space="0" w:color="auto"/>
+	  <xsl:choose>
+	    <xsl:when test="$val=0">
+	      <w:left w:val="nil"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <w:left w:val="single" w:sz="{$val}" w:space="0" w:color="auto"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	</xsl:if>
 	<xsl:if test="matches(.,'border-bottom')">
-	  <w:bottom w:val="single" w:sz="{$val}" w:space="0" w:color="auto"/>
+	  <xsl:choose>
+	    <xsl:when test="$val=0">
+	      <w:bottom w:val="nil"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <w:bottom w:val="single" w:sz="{$val}" w:space="0" w:color="auto"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	</xsl:if>
 	<xsl:if test="matches(.,'border-right')">
-	  <w:right w:val="single" w:sz="{$val}" w:space="0" w:color="auto"/>
+	  <xsl:choose>
+	    <xsl:when test="$val=0">
+	      <w:right w:val="nil"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <w:right w:val="single" w:sz="{$val}" w:space="0" w:color="auto"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	</xsl:if>
       </xsl:for-each>
     </xsl:template>

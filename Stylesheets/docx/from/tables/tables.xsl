@@ -57,14 +57,26 @@
      <xsl:if test="$tblBorders//w:left[@w:sz!='']">
        <xsl:text>border-left: </xsl:text><xsl:value-of select="$tblBorders//w:left/@w:sz"/><xsl:text>; </xsl:text>
      </xsl:if>
+     <xsl:if test="$tblBorders//w:left[@w:val='nil']">
+       <xsl:text>border-left: 0; </xsl:text>
+     </xsl:if>
      <xsl:if test="$tblBorders//w:bottom[@w:sz!='']">
        <xsl:text>border-bottom: </xsl:text><xsl:value-of select="$tblBorders//w:bottom/@w:sz"/><xsl:text>; </xsl:text>
+     </xsl:if>
+     <xsl:if test="$tblBorders//w:bottom[@w:val='nil']">
+       <xsl:text>border-bottom: 0; </xsl:text>
      </xsl:if>
      <xsl:if test="$tblBorders//w:right[@w:sz!='']">
        <xsl:text>border-right: </xsl:text><xsl:value-of select="$tblBorders//w:right/@w:sz"/><xsl:text>; </xsl:text>
      </xsl:if>
+     <xsl:if test="$tblBorders//w:right[@w:val='nil']">
+       <xsl:text>border-right: 0; </xsl:text>
+     </xsl:if>
      <xsl:if test="$tblBorders//w:top[@w:sz!='']">
        <xsl:text>border-top: </xsl:text><xsl:value-of select="$tblBorders//w:top/@w:sz"/><xsl:text>; </xsl:text>
+     </xsl:if>
+     <xsl:if test="$tblBorders//w:top[@w:val='nil']">
+       <xsl:text>border-top: 0; </xsl:text>
      </xsl:if>
    </xsl:template>
     
