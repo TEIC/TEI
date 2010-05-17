@@ -83,27 +83,24 @@
 	<p>  Ignore existing title pages </p>
       </desc>
     </doc>
-    <xsl:template match="w:p[.//w:sdt and not (w:pPr/w:pStyle/@w:val='zzSTDTitle')]"
-                 priority="1001">
+    <xsl:template match="w:p[.//w:sdt and not (w:pPr/w:pStyle/@w:val='zzSTDTitle')]" priority="1001"/>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='cover_warning']" priority="1002"/>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='zzCopyright']" priority="1002"/>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='idno']" priority="1002"/>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='copyrightdetails']" priority="1002"/>
+    <xsl:template match="w:p[.//w:sdt and not
+			 (w:pPr/w:pStyle/@w:val='zzSTDTitle')]"
+		  priority="1001" mode="paragraph"/>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='cover_warning']"
+		  priority="1002" mode="paragraph"/>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='zzCopyright']"
+		  priority="1002" mode="paragraph"/>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='idno']"
+		  priority="1002" mode="paragraph"/>
+    <xsl:template
+	match="w:p[w:pPr/w:pStyle/@w:val='copyrightdetails']"
+	priority="1002" mode="paragraph"/>
 
-        <!--<xsl:message>fail 1: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
-    </xsl:template>
-
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='cover_warning']" priority="1002">
-        <!--<xsl:message>fail 3: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
-    </xsl:template>
-
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='zzCopyright']" priority="1002">
-        <!--<xsl:message>fail 4: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
-    </xsl:template>
-
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='idno']" priority="1002">
-        <!--<xsl:message>fail 5: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
-    </xsl:template>
-
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='copyrightdetails']" priority="1002">
-        <!--<xsl:message>fail 6: <xsl:value-of select="normalize-space(.)"/></xsl:message>-->
-    </xsl:template>
 
          <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
@@ -1810,6 +1807,11 @@
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap spurious page break </desc></doc>
     <xsl:template match="tei:body/tei:p[count(*)=1 and tei:pb]" mode="pass2"/>
+
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Zap empty paragraph </desc></doc>
+    <xsl:template match="tei:p[not(*) and not(text())]" mode="pass2"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>End of bookmark not needed </desc></doc>
