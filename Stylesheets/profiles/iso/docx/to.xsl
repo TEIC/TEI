@@ -903,7 +903,7 @@
 	    <xsl:when test="$Thing='preferredTerm'">termPreferred</xsl:when>
 	    <xsl:when test="$Thing='deprecatedTerm'">termDeprecated</xsl:when>
 	    <xsl:when test="$Thing='admittedTerm'">termAdmitted</xsl:when>
-	    <xsl:when test="$Thing='symbol'">symbol</xsl:when>
+	    <xsl:when test="$Thing='symbol'">termAdmitted</xsl:when>
 	  </xsl:choose>
 	</xsl:variable>
 	<xsl:call-template name="block-element">
@@ -914,15 +914,34 @@
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:for-each>
-      <xsl:apply-templates select="tbx:descripGrp/tbx:descrip"/>
-
-      <xsl:apply-templates select="ancestor::tbx:termEntry/tbx:note"/>
-      <xsl:apply-templates select="tbx:note"/>
-
-      <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
     </xsl:for-each>
-    <xsl:apply-templates select="tbx:descripGrp/tbx:descrip"/>
-    <xsl:apply-templates select="tbx:descripGrp/tbx:admin"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp/tbx:descrip[@type='figure']"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp/tbx:descrip[@type='example']"/>
+
+      <xsl:apply-templates select="tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates select="tbx:langSet/tbx:ntig[1]/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp[tbx:descrip/@type='symbol']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp[tbx:descrip/@type='definition']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp[tbx:descrip/@type='figure']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp[tbx:descrip/@type='example']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates select="tbx:descripGrp/tbx:admin[@type='source']"/>
 
     <xsl:if test="$showTBXMarkup='true'">
       <xsl:call-template name="block-element">
@@ -943,6 +962,16 @@
      <xsl:apply-templates/>
    </xsl:template>
 -->
+   <xsl:template
+       match="tbx:descripGrp">
+     <xsl:apply-templates select="tbx:descrip"/>
+   </xsl:template>
+
+   <xsl:template
+       match="tbx:ntig">
+     <xsl:apply-templates select="tbx:termGrp"/>
+   </xsl:template>
+
    <xsl:template
        match="tbx:descrip[@type='subjectField']"/>
 
@@ -969,34 +998,38 @@
        </xsl:for-each>
        <xsl:apply-templates/>
      </w:p>
-     <xsl:apply-templates select="../tbx:note"/>
+
    </xsl:template>
 
    <xsl:template match="tbx:descrip[@type='example']">
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">Examplenumbered</xsl:with-param>
       </xsl:call-template>
+
    </xsl:template>
 
    <xsl:template match="tbx:descrip[@type='figure']">
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">nonVerbalRepresentation</xsl:with-param>
       </xsl:call-template>
+
    </xsl:template>
 
-   <xsl:template match="tbx:note">
+   <xsl:template match="tbx:note"/>
+
+   <xsl:template match="tbx:note" mode="tbxnote">
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">
 	   <xsl:choose>
-	     <xsl:when test="@type">
-	       <xsl:value-of select="@type"/>
-	     </xsl:when>
+	     <xsl:when test="parent::tbx:ntig">noteTerm</xsl:when>
 	     <xsl:when test="parent::tbx:termEntry">noteTermEntry</xsl:when>
 	     <xsl:when
 		 test="parent::tbx:descrip[@type='figure']">noteNonVerbalRepresentation</xsl:when>
 	     <xsl:when
-		 test="parent::tbx:descrip">noteDefinition</xsl:when>
-	     <xsl:otherwise>noteTerm</xsl:otherwise>
+		 test="parent::tbx:descrip[@type='example']">noteExample</xsl:when>
+	     <xsl:when
+		 test="parent::tbx:descrip[@type='definition']">noteDefinition</xsl:when>
+	     <xsl:otherwise>noteTermEntry</xsl:otherwise>
 	   </xsl:choose>
          </xsl:with-param>
       </xsl:call-template>

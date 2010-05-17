@@ -1058,7 +1058,7 @@
 	  <li>abbreviatedForm</li>
 	</ul>
 	Though it should be noted that <gi>Example</gi> can also occur
-	on its own
+	on its own.
       </desc>
     </doc>
     <xsl:template name="termsAndDefinitionsSection">
@@ -1106,12 +1106,6 @@
 		<note>
 		  <xsl:apply-templates/>
 		</note>
-	      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteTerm'] except .">
-		<note type="noteTerm">
-		  <xsl:apply-templates/>
-		</note>
-	      </xsl:for-each>
-
 	      </xsl:for-each>
 	      <descripGrp>
 		<descrip type="definition">
@@ -1124,17 +1118,22 @@
 		    <xsl:apply-templates/>
 		  </note>
 		</xsl:for-each>
-		<xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteSymbol'] except .">
-		  <note type="symbol">
-		    <xsl:apply-templates/>
-		  </note>
-		</xsl:for-each>
 		<xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='entrySource'] except .">
 		  <admin type="source">
 		    <xsl:apply-templates/>
 		  </admin>
 		</xsl:for-each>
 	      </descripGrp>
+		<xsl:for-each
+		    select="current-group()[w:pPr/w:pStyle/@w:val='noteSymbol']
+			    except .">
+		  <descripGrp>
+		    <descrip type="symbol"></descrip>
+		      <note>
+			<xsl:apply-templates/>
+		      </note>
+		  </descripGrp>
+		</xsl:for-each>
 	      <xsl:if
 		  test="current-group()[w:pPr/w:pStyle/@w:val='Example numbered']">
 		<descripGrp>
@@ -1143,12 +1142,28 @@
 			select="current-group()[w:pPr/w:pStyle/@w:val='Example numbered'] except .">
 		      <xsl:apply-templates/>
 		    </xsl:for-each>
-		    <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteExample'] except .">
-		      <note>
-			<xsl:apply-templates/>
-		      </note>
+		  </descrip>
+		  <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteExample'] except .">
+		    <note>
+		      <xsl:apply-templates/>
+		    </note>
+		  </xsl:for-each>
+		</descripGrp>
+	      </xsl:if>
+	      <xsl:if
+		  test="current-group()[w:pPr/w:pStyle/@w:val='Example']">
+		<descripGrp>
+		  <descrip type="example">
+		    <xsl:for-each
+			select="current-group()[w:pPr/w:pStyle/@w:val='Example'] except .">
+		      <xsl:apply-templates/>
 		    </xsl:for-each>
 		  </descrip>
+		  <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteExample'] except .">
+		    <note>
+		      <xsl:apply-templates/>
+		    </note>
+		  </xsl:for-each>
 		</descripGrp>
 	      </xsl:if>
 	      <xsl:if
@@ -1279,17 +1294,26 @@
 			    </termNote>
 			  </xsl:if>
 			</termGrp>
+			<xsl:if test="position()=1">
+			  <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteTerm'] except .">
+			    <note>
+			      <xsl:apply-templates/>
+			    </note>
+			  </xsl:for-each>
+			</xsl:if>
 		      </ntig>
 		    </xsl:otherwise>
 		  </xsl:choose>
 		</xsl:for-each>
 	      </langSet>
 	    </termEntry>
+<!--
 	    <xsl:for-each
 		select="current-group()[w:pPr/w:pStyle/@w:val='Example']
 			except .">
 	      <p rend="Example"><xsl:apply-templates/></p>
 	    </xsl:for-each>
+-->
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:for-each-group>
