@@ -139,120 +139,63 @@ Schema generated from ODD source </xsl:text>
   </xsl:template>
 
   <xsl:template name="schemaSpecBody">
-      <xsl:variable name="schema">
+      <xsl:variable name="pass1">
          <root>
-	           <xsl:if test="$verbose='true'">
-	              <xsl:message>start importing moduleRef components</xsl:message>
-	           </xsl:if>
-	           <xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
-	           <xsl:for-each select="tei:macroSpec">
-	              <xsl:apply-templates mode="tangle" select="."/>
-	           </xsl:for-each>
-	           <xsl:apply-templates mode="tangle" select="tei:elementSpec|tei:classSpec"/>
-	           <xsl:choose>
-	              <xsl:when test="@start and @start=''"/>
-	              <xsl:when test="@start and contains(@start,' ')">
-	                 <start xmlns="http://relaxng.org/ns/structure/1.0">
-	                    <choice>
-		                      <xsl:call-template name="startNames">
-		                         <xsl:with-param name="toks" select="@start"/>
-		                      </xsl:call-template>
-	                    </choice>
-	                 </start>
-	              </xsl:when>
-	              <xsl:when test="@start">
-	                 <start xmlns="http://relaxng.org/ns/structure/1.0">
-	                    <ref name="{$patternPrefixText}{@start}"/>
-	                 </start>
-	              </xsl:when>
-	              <xsl:when test="key('IDENTS','teiCorpus')">
-	                 <start xmlns="http://relaxng.org/ns/structure/1.0">
-	                    <choice>
-		                      <ref name="{$patternPrefixText}TEI"/>
-		                      <ref name="{$patternPrefixText}teiCorpus"/>
-	                    </choice>
-	                 </start>
-	              </xsl:when>
-	              <xsl:otherwise>
-	                 <start xmlns="http://relaxng.org/ns/structure/1.0">
-	                    <ref name="{$patternPrefixText}TEI"/>
-	                 </start>
-	              </xsl:otherwise>
-	           </xsl:choose>
+	   <xsl:if test="$verbose='true'">
+	     <xsl:message>start importing moduleRef components</xsl:message>
+	   </xsl:if>
+	   <xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
+	   <xsl:for-each select="tei:macroSpec">
+	     <xsl:apply-templates mode="tangle" select="."/>
+	   </xsl:for-each>
+	   <xsl:apply-templates mode="tangle" select="tei:elementSpec|tei:classSpec"/>
+	   <xsl:choose>
+	     <xsl:when test="@start and @start=''"/>
+	     <xsl:when test="@start and contains(@start,' ')">
+	       <start xmlns="http://relaxng.org/ns/structure/1.0">
+		 <choice>
+		   <xsl:call-template name="startNames">
+		     <xsl:with-param name="toks" select="@start"/>
+		   </xsl:call-template>
+		 </choice>
+	       </start>
+	     </xsl:when>
+	     <xsl:when test="@start">
+	       <start xmlns="http://relaxng.org/ns/structure/1.0">
+		 <ref name="{$patternPrefixText}{@start}"/>
+	       </start>
+	     </xsl:when>
+	     <xsl:when test="key('IDENTS','teiCorpus')">
+	       <start xmlns="http://relaxng.org/ns/structure/1.0">
+		 <choice>
+		   <ref name="{$patternPrefixText}TEI"/>
+		   <ref name="{$patternPrefixText}teiCorpus"/>
+		 </choice>
+	       </start>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <start xmlns="http://relaxng.org/ns/structure/1.0">
+		 <ref name="{$patternPrefixText}TEI"/>
+	       </start>
+	     </xsl:otherwise>
+	   </xsl:choose>
          </root>
       </xsl:variable>
-      <!-- in a final pass, throw away any RNG <define> elements
+      <!-- in 2nd and 3rd  passes, throw away any RNG <define> elements
     which do not have a <ref>, any <ref> which has no <define>
-    to point to -->
-    <xsl:for-each select="$schema/root">
-      <xsl:apply-templates mode="cleanup"/>
+    to point to, and any empty <choice> -->
+      <xsl:variable name="pass2">
+	<xsl:for-each select="$pass1/root">
+	  <root>
+	    <xsl:apply-templates mode="pass2"/>
+	  </root>
+	</xsl:for-each>
+      </xsl:variable>
+      <xsl:for-each select="$pass2/root">
+	<xsl:apply-templates mode="pass3"/>
       </xsl:for-each>
   </xsl:template>
 
-  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="cleanup">
-      <xsl:copy-of select="."/>
-  </xsl:template>
-    
-  <xsl:template match="*" mode="cleanup">
-      <xsl:copy>
-         <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="cleanup"/>
-      </xsl:copy>
-  </xsl:template>
-
-  <xsl:template match="rng:define" mode="cleanup">
-      <xsl:choose>
-         <xsl:when test="key('REFED',@name)">
-	   <xsl:copy>
-	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="cleanup"/>
-	   </xsl:copy>
-	 </xsl:when>
-	 <xsl:otherwise>
-	   <xsl:if test="$verbose='true'">
-	     <xsl:message>ZAP definition of unused pattern <xsl:value-of select="@name"/></xsl:message>
-	   </xsl:if>
-	 </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
-  
-  <xsl:template match="rng:ref" mode="cleanup">
-      <xsl:choose>
-         <xsl:when test="(ancestor::rng:element[@name='egXML' or @name='constraint']         or ancestor::rng:define[contains(@name,'macro.schemaPattern')]) and         starts-with(@name, 'macro.any')">
-	           <xsl:for-each select="key('DEFED', @name)">
-	              <xsl:apply-templates mode="justcopy" select="*"/>
-	           </xsl:for-each>
-         </xsl:when>
-         <xsl:when test="key('DEFED',@name)">
-	           <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
-         </xsl:when>
-         <xsl:when test="ancestor::tei:content[@preserveNames='true']">
-	           <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
-         </xsl:when>
-         <xsl:when test="count(parent::*/*)=1">
-	           <xsl:if test="$verbose='true'">
-	              <xsl:message>ZAP reference to undefined [<xsl:value-of select="@name"/>] and leave empty behind</xsl:message>
-	           </xsl:if>
-	           <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
-         </xsl:when>
-         <xsl:otherwise>
-	           <xsl:if test="$verbose='true'">
-	              <xsl:message>ZAP reference to undefined [<xsl:value-of select="@name"/>]</xsl:message>
-	           </xsl:if>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
-<!--
-  <xsl:template match="rng:attribute/rng:data[@type='ID' or          @type='IDREF']"
-                 mode="cleanup">
-      <xsl:choose>
-         <xsl:when test="key('ANYDEF',1)">
-	           <text xmlns="http://relaxng.org/ns/structure/1.0"/>
-         </xsl:when>
-         <xsl:otherwise>
-            <data xmlns="http://relaxng.org/ns/structure/1.0" type="{@type}"/>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
--->
   <xsl:template name="startNames">
       <xsl:param name="toks"/>
       <xsl:if test="not($toks='')">
@@ -419,9 +362,6 @@ Schema generated from ODD source </xsl:text>
     <xsl:copy/>
   </xsl:template>
 
-  <xsl:template match="processing-instruction()" mode="cleanup">
-  </xsl:template>
-
   <xsl:template match="tei:constraintSpec[@scheme='schematron']">
       <xsl:apply-templates/>
   </xsl:template>
@@ -438,9 +378,11 @@ Schema generated from ODD source </xsl:text>
       <xsl:call-template name="processSchematron"/>
   </xsl:template>
 
+
+<!-- pass 2, clean up unused elements -->
   <xsl:template
       match="rng:anyName[parent::rng:define]"
-      mode='cleanup'>
+      mode='pass2'>
     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
       <choice>
 	<xsl:for-each select="key('EDEF',1)">	  
@@ -449,6 +391,98 @@ Schema generated from ODD source </xsl:text>
       </choice>
     </zeroOrMore>
   </xsl:template>
+  <xsl:template match="processing-instruction()" mode="pass2">
+  </xsl:template>
 
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass2">
+      <xsl:copy-of select="."/>
+  </xsl:template>
+    
+  <xsl:template match="*" mode="pass2">
+      <xsl:copy>
+         <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+      </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="rng:define" mode="pass2">
+      <xsl:choose>
+         <xsl:when test="key('REFED',@name)">
+	   <xsl:copy>
+	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+	   </xsl:copy>
+	 </xsl:when>
+	 <xsl:otherwise>
+	   <xsl:if test="$verbose='true'">
+	     <xsl:message>ZAP definition of unused pattern <xsl:value-of select="@name"/></xsl:message>
+	   </xsl:if>
+	 </xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template match="rng:ref" mode="pass2">
+      <xsl:choose>
+         <xsl:when test="(ancestor::rng:element[@name='egXML' or @name='constraint']         or ancestor::rng:define[contains(@name,'macro.schemaPattern')]) and         starts-with(@name, 'macro.any')">
+	           <xsl:for-each select="key('DEFED', @name)">
+	              <xsl:apply-templates mode="justcopy"
+					   select="*"/>
+	           </xsl:for-each>
+         </xsl:when>
+         <xsl:when test="key('DEFED',@name)">
+	           <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
+         </xsl:when>
+         <xsl:when test="ancestor::tei:content[@preserveNames='true']">
+	           <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
+         </xsl:when>
+         <xsl:when test="count(parent::*/*)=1">
+	           <xsl:if test="$verbose='true'">
+	              <xsl:message>ZAP reference to undefined [<xsl:value-of select="@name"/>] and leave empty behind</xsl:message>
+	           </xsl:if>
+	           <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+         </xsl:when>
+         <xsl:otherwise>
+	           <xsl:if test="$verbose='true'">
+	              <xsl:message>ZAP reference to undefined [<xsl:value-of select="@name"/>]</xsl:message>
+	           </xsl:if>
+         </xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+<!--
+  <xsl:template match="rng:attribute/rng:data[@type='ID' or          @type='IDREF']"
+                 mode="pass2">
+      <xsl:choose>
+         <xsl:when test="key('ANYDEF',1)">
+	           <text xmlns="http://relaxng.org/ns/structure/1.0"/>
+         </xsl:when>
+         <xsl:otherwise>
+            <data xmlns="http://relaxng.org/ns/structure/1.0" type="{@type}"/>
+         </xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+-->
+
+<!-- and again -->
+  <xsl:template match="rng:choice" mode="pass3">
+      <xsl:choose>
+	<xsl:when test=".//rng:ref|.//rng:text|.//rng:data">
+	   <xsl:copy>
+	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+	   </xsl:copy>
+	</xsl:when>
+	<xsl:otherwise>
+	  <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+	</xsl:otherwise>
+      </xsl:choose>			   
+  </xsl:template>
+
+
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass3">
+      <xsl:copy-of select="."/>
+  </xsl:template>
+    
+  <xsl:template match="*" mode="pass3">
+      <xsl:copy>
+         <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+      </xsl:copy>
+  </xsl:template>
 
 </xsl:stylesheet>
