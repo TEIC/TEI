@@ -528,10 +528,20 @@ the letter we wish to distinguish: <egXML xmlns="http://www.tei-c.org/ns/Example
      As can be seen in this example, the <gi>glyph</gi> element pointed
      to from the <gi>g</gi> element will be interpreted as an
      annotation on the content of the element <gi>g</gi>.  This mechanism
-     can also be used to indicate ligatures, as in the
-     following example:
+     can be used to represent common manuscript abbreviations or ligatures, as in the
+     following examples:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p> ... <g ref="#Filig">Fi</g>lthy riches...</p>
 <!-- in the charDecl -->
+  <glyph xml:id="per">
+   <glyphName>LATIN ABBREVIATION PER</glyphName>  
+   <figure><graphic url="per.png"/></figure>
+ </glyph>
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><p> ... <abbr><g
+ref="#per">per</g></abbr> ardua</p>
+<!-- in the charDecl -->
+</egXML></p>
+<p><egXML xmlns="http://www.tei-c.org/ns/Examples">
   <glyph xml:id="Filig">
    <glyphName>LATIN UPPER F AND LATIN LOWER I LIGATURE</glyphName>  
    <figure><graphic url="Filig.png"/></figure>
@@ -565,6 +575,8 @@ glyphs. For example, if we believe that the r-with-one-funny-stroke is
 being used as an abbreviation for <code>receipt</code>, this might be
 represented as follows:<eg><![CDATA[<abbr>&r1;</abbr>]]></eg></p>
 <!-- should become a choice element some time -->
+
+
     <p>Note however that this technique employs markup objects to
     provide a link between a character in the document and some
     annotation on that character. Therefore, it cannot be used in
