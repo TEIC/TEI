@@ -469,7 +469,9 @@ Schema generated from ODD source </xsl:text>
 	   </xsl:copy>
 	</xsl:when>
 	<xsl:otherwise>
-<xsl:message>KILLED <xsl:copy-of select="."/></xsl:message>
+      <xsl:if test="$verbose='true'">
+        <xsl:message>KILLED <xsl:copy-of select="."/></xsl:message>
+      </xsl:if>
 	  <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
 	</xsl:otherwise>
       </xsl:choose>			   
