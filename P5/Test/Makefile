@@ -167,7 +167,7 @@ test-dtd-xmllint:
 	echo =======================================
 	echo Should be no errors from xmllint/dtd tests
 	echo =======================================
-	-for i in  $(TESTFILES) $(TESTFILESDTD); do grep DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml; \
+	-for i in  $(TESTFILES) $(TESTFILESDTD); do grep -H DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml; \
 	done
 
 test-extns:

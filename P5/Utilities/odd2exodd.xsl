@@ -44,11 +44,13 @@
 	<content>
 	  <group xmlns="http://relaxng.org/ns/structure/1.0">
 	    <zeroOrMore >
-	      <xi:include href="../Exemplars/exnames.xml">
-		<xi:fallback> ERROR: cannot locate list of names</xi:fallback>
-	      </xi:include>
+	      <choice>
+		<text/>
+		<xsl:copy-of
+		    select="document('../Exemplars/exnames.xml')/rng:choice/rng:ref"/>
+	      </choice>
 	    </zeroOrMore>
-	</group>
+	  </group>
 	</content>
       </elementSpec>
     </xsl:if>
