@@ -463,12 +463,13 @@ Schema generated from ODD source </xsl:text>
 <!-- and again -->
   <xsl:template match="rng:choice" mode="pass3">
       <xsl:choose>
-	<xsl:when test=".//rng:ref|.//rng:text|.//rng:data">
+	<xsl:when test="rng:value|rng:name|.//rng:ref|.//rng:text|.//rng:data">
 	   <xsl:copy>
 	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
 	   </xsl:copy>
 	</xsl:when>
 	<xsl:otherwise>
+<xsl:message>KILLED <xsl:copy-of select="."/></xsl:message>
 	  <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
 	</xsl:otherwise>
       </xsl:choose>			   
