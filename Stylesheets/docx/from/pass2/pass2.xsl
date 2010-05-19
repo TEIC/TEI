@@ -102,13 +102,6 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     Bold emdash in title, forget it </p>
-      </desc>
-    </doc>
-    <xsl:template match="tei:head/tei:hi[.=' ']" mode="pass2"/>
-    
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
          <p>     Zap emdashes at start of head </p>
       </desc>
     </doc>
@@ -266,6 +259,7 @@
   <xsl:template match="tei:hi[@rend]" mode="pass2">
     <xsl:variable name="r" select="@rend"/>
     <xsl:choose>
+      <xsl:when test="parent::tei:head and .=' '"/>
       <xsl:when test="count(*)=1 and not(text()) and tei:lb">
         <lb/>
       </xsl:when>
