@@ -33,6 +33,11 @@
       </desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
+      <desc>CSS class for TOC entries</desc>
+   </doc>
+  <xsl:param name="class_toc">toc</xsl:param>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
       <desc>
 CSS class for links derived from &lt;ptr&gt;
 </desc>
@@ -715,6 +720,7 @@ Include the back matter in the table of contents.
 </desc>
    </doc>
   <xsl:param name="tocBack">true</xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="string">
       <desc>
 Depth to which table of contents is constructed.

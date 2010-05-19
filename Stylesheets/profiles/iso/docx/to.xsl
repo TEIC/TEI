@@ -25,6 +25,7 @@
                 exclude-result-prefixes="teidocx cals ve o r m v wp w10 w html wne mml tbx iso tei a xs pic fn its">
     <!-- import conversion style -->
     <xsl:import href="../../../docx/to/teitodocx.xsl"/>
+    <xsl:import href="tbx.xsl"/>
     <xsl:import href="../isoutils.xsl"/>
     
     <!-- import functions -->
@@ -69,19 +70,12 @@
     <xsl:param name="word-directory">..</xsl:param>
     <xsl:param name="tei-directory">./</xsl:param>
     <xsl:param name="debug">false</xsl:param>   
-    <xsl:param name="showTBXMarkup">false</xsl:param>   
     <xsl:param name="numberFormat">fr</xsl:param>
     
     <xsl:variable name="orig" select="/"/>
 
     <!-- Styles -->
     
-    <xsl:template match="tbx:term" mode="get-style">
-      <xsl:if test="following-sibling::tbx:termNote[@type='termType'
-	      and .='abbreviation']">abbreviatedForm</xsl:if>
-    </xsl:template>
-
-    <xsl:template match="tbx:admin[@type='source']" mode="get-style">source</xsl:template>
 
     <xsl:template match="tei:abbr" mode="get-style">abbr</xsl:template>
     <xsl:template match="tei:cit" mode="get-style">Quote</xsl:template>
@@ -108,17 +102,12 @@
     <xsl:template match="tei:seg[@rend]" mode="get-style">
       <xsl:value-of select="@rend"/>
    </xsl:template>
-    <xsl:template match="tbx:descrip" mode="get-style">Definition</xsl:template>
     <xsl:template match="tei:hi[@rend='language']" mode="get-style">
       <xsl:text>language</xsl:text>
     </xsl:template>
     <xsl:template match="tei:hi[@rend='source']" mode="get-style">
       <xsl:text>source</xsl:text>
     </xsl:template>
-    <xsl:template match="tbx:hi[@type='entailedTerm']" mode="get-style">
-      <xsl:text>termRef</xsl:text>
-    </xsl:template>
-
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
 	Inline Templates:
@@ -867,335 +856,6 @@
 
 
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-    <desc>TBX processing</desc>
-  </doc>
-  
-  <xsl:template match="tbx:termEntry">
-    <xsl:for-each select="tbx:langSet">
-      <xsl:choose>
-	<xsl:when test="starts-with(../@id,'autoTermNum')">
-	  <w:p>
-	    <w:pPr>
-	      <w:pStyle w:val="{substring-before(../@id,'_')}"/>
-	    </w:pPr>
-	  </w:p>
-	</xsl:when>
-	<xsl:otherwise>
-	  <w:p>
-	    <w:pPr>
-	      <w:pStyle w:val="TermNum"/>
-	    </w:pPr>
-	    <w:r>
-	      <w:t>
-		<xsl:value-of select="substring-after(../@id,'user_')"/>
-	      </w:t>
-	    </w:r>
-	  </w:p>
-	</xsl:otherwise>
-      </xsl:choose>
-      <xsl:for-each select="tbx:ntig">
-	<xsl:variable name="Thing">
-	  <xsl:value-of select="substring-before(tbx:termGrp/tbx:termNote[@type='administrativeStatus'],'-admn-sts')"/>
-	</xsl:variable>
-	<xsl:variable name="style">
-	  <xsl:choose>
-	    <xsl:when test="$Thing='preferredTerm'">termPreferred</xsl:when>
-	    <xsl:when test="$Thing='deprecatedTerm'">termDeprecated</xsl:when>
-	    <xsl:when test="$Thing='admittedTerm'">termAdmitted</xsl:when>
-	    <xsl:when test="$Thing='symbol'">termAdmitted</xsl:when>
-	  </xsl:choose>
-	</xsl:variable>
-	<xsl:call-template name="block-element">
-	  <xsl:with-param name="pPr">
-	      <w:pPr>
-		<w:pStyle w:val="{$style}"/>
-	      </w:pPr>
-	  </xsl:with-param>
-	</xsl:call-template>
-      </xsl:for-each>
-      <xsl:apply-templates
-	  select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
-
-      <xsl:apply-templates
-	  select="tbx:descripGrp/tbx:descrip[@type='figure']"/>
-
-      <xsl:apply-templates
-	  select="tbx:descripGrp/tbx:descrip[@type='example']"/>
-
-      <xsl:apply-templates select="tbx:note" mode="tbxnote"/>
-
-      <xsl:apply-templates select="tbx:langSet/tbx:ntig[1]/tbx:note" mode="tbxnote"/>
-
-      <xsl:apply-templates
-	  select="tbx:langSet/tbx:ntig[tbx:termGrp/tbx:termNote='symbol-admn-sts']/tbx:note" mode="tbxnote"/>
-
-      <xsl:apply-templates
-	  select="tbx:descripGrp[tbx:descrip/@type='definition']/tbx:note" mode="tbxnote"/>
-
-      <xsl:apply-templates
-	  select="tbx:descripGrp[tbx:descrip/@type='figure']/tbx:note" mode="tbxnote"/>
-
-      <xsl:apply-templates
-	  select="tbx:descripGrp[tbx:descrip/@type='example']/tbx:note" mode="tbxnote"/>
-
-      <xsl:apply-templates select="tbx:descripGrp/tbx:admin[@type='entrySource']"/>
-    </xsl:for-each>
-
-      <xsl:apply-templates
-	  select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
-
-      <xsl:apply-templates
-	  select="tbx:descripGrp/tbx:descrip[@type='figure']"/>
-
-      <xsl:apply-templates
-	  select="tbx:descripGrp/tbx:descrip[@type='example']"/>
-
-      <xsl:apply-templates select="tbx:note" mode="tbxnote"/>
-
-      <xsl:apply-templates select="tbx:langSet/tbx:ntig[1]/tbx:note" mode="tbxnote"/>
-
-      <xsl:apply-templates
-	  select="tbx:langSet/tbx:ntig[tbx:termGrp/tbx:termNote='symbol-admn-sts']/tbx:note" mode="tbxnote"/>
-
-      <xsl:apply-templates
-	  select="tbx:descripGrp[tbx:descrip/@type='definition']/tbx:note" mode="tbxnote"/>
-
-      <xsl:apply-templates
-	  select="tbx:descripGrp[tbx:descrip/@type='figure']/tbx:note" mode="tbxnote"/>
-
-      <xsl:apply-templates
-	  select="tbx:descripGrp[tbx:descrip/@type='example']/tbx:note" mode="tbxnote"/>
-
-      <xsl:apply-templates select="tbx:descripGrp/tbx:admin[@type='entrySource']"/>
-
-    <xsl:if test="$showTBXMarkup='true'">
-      <xsl:call-template name="block-element">
-	<xsl:with-param name="select">
-	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
-	    <xsl:copy-of select="."/>
-	  </egXML>
-	</xsl:with-param>
-      </xsl:call-template>
-    </xsl:if>
-  </xsl:template>
-
-<!--
-   <xsl:template  match="tbx:term">
-     <xsl:if test="../tbx:termNote[@type='administrativeStatus']='deprecatedTerm-admn-sts'">
-       <w:r><w:t xml:space='preserve'>DEPRECATED: </w:t></w:r>
-     </xsl:if>
-     <xsl:apply-templates/>
-   </xsl:template>
--->
-   <xsl:template
-       match="tbx:descripGrp">
-     <xsl:apply-templates select="tbx:descrip"/>
-   </xsl:template>
-
-   <xsl:template
-       match="tbx:ntig">
-     <xsl:apply-templates select="tbx:termGrp"/>
-   </xsl:template>
-
-   <xsl:template
-       match="tbx:descrip[@type='subjectField']"/>
-
-   <xsl:template match="tbx:descrip[@type='definition']">
-     <w:p>    
-       <w:pPr>
-	 <w:pStyle w:val="Definition"/>
-       </w:pPr>
-       <xsl:for-each
-	   select="ancestor::tbx:termEntry/tbx:descripGrp/tbx:descrip[@type='subjectField']">
-	 <w:r>
-	   <w:rPr>
-	     <w:rStyle w:val="domain"/>
-	   </w:rPr>
-	   <w:t>
-	     <xsl:text>〈</xsl:text>
-	     <xsl:value-of select="."/>
-	     <xsl:text>〉</xsl:text>
-	   </w:t>
-	 </w:r>
-	 <w:r>
-	   <w:t xml:space='preserve'> </w:t>
-	 </w:r>
-       </xsl:for-each>
-       <xsl:apply-templates/>
-       <xsl:for-each select="../../tbx:admin[@type='source']">
-	 <w:r>
-	   <w:rPr>
-	     <w:rStyle w:val="source"/>
-	   </w:rPr>
-	   <w:t xml:space='preserve'>[SOURCE: </w:t>	   
-	 </w:r>
-	 <xsl:apply-templates select="."/>
-	 <w:r>
-	   <w:rPr>
-	     <w:rStyle w:val="source"/>
-	   </w:rPr>
-	   <w:t xml:space='preserve'>]</w:t>	   
-	 </w:r>
-       </xsl:for-each>
-     </w:p>
-   </xsl:template>
-
-   <xsl:template match="tbx:descrip[@type='example']">
-      <xsl:call-template name="block-element">
-         <xsl:with-param name="style">Examplenumbered</xsl:with-param>
-      </xsl:call-template>
-
-   </xsl:template>
-
-   <xsl:template match="tbx:descrip[@type='figure']">
-      <xsl:call-template name="block-element">
-         <xsl:with-param name="style">nonVerbalRepresentation</xsl:with-param>
-      </xsl:call-template>
-
-   </xsl:template>
-
-   <xsl:template match="tbx:note"/>
-
-   <xsl:template match="tbx:note" mode="tbxnote">
-      <xsl:call-template name="block-element">
-         <xsl:with-param name="style">
-	   <xsl:choose>
-	     <xsl:when test="parent::tbx:ntig[tbx:termGrp/tbx:termNote='symbol-admn-sts']">noteSymbol</xsl:when>
-	     <xsl:when test="parent::tbx:ntig">noteTerm</xsl:when>
-	     <xsl:when test="parent::tbx:termEntry">noteTermEntry</xsl:when>
-	     <xsl:when
-		 test="parent::tbx:descrip[@type='figure']">noteNonVerbalRepresentation</xsl:when>
-	     <xsl:when
-		 test="parent::tbx:descrip[@type='example']">noteExample</xsl:when>
-	     <xsl:when
-		 test="parent::tbx:descrip[@type='definition']">noteDefinition</xsl:when>
-	     <xsl:otherwise>noteTermEntry</xsl:otherwise>
-	   </xsl:choose>
-         </xsl:with-param>
-      </xsl:call-template>
-   </xsl:template>
-
-   <xsl:template match="tbx:admin[@type='entrySource']">
-	 <xsl:variable name="a">
-	   <xsl:text>[SOURCE: </xsl:text>
-	   <xsl:value-of select="."/>
-	   <xsl:text>]</xsl:text>
-	 </xsl:variable>
-	 <xsl:for-each select="$a">
-	   <xsl:call-template name="block-element">
-	     <xsl:with-param name="style">entrySource</xsl:with-param>
-	   </xsl:call-template>
-	 </xsl:for-each>
-   </xsl:template>
-
-  <xsl:template match="tbx:termNote">
-    <xsl:choose>
-      <xsl:when test="@type='grammaticalGender'">
-	<w:r><w:t xml:space='preserve'>, </w:t></w:r>
-	<w:r>
-	  <w:rPr>
-	    <w:rStyle w:val="gender"/>
-	    <w:b w:val="0"/>
-	  </w:rPr>
-	  <w:t>
-	    <xsl:choose>
-	      <xsl:when test=".='masculine'">m</xsl:when>
-	      <xsl:when test=".='feminine'">f</xsl:when>
-	      <xsl:when test=".='neuter'">n</xsl:when>
-	    </xsl:choose>
-	  </w:t>
-	</w:r>
-      </xsl:when>
-      <xsl:when test="@type='grammaticalNumber'">
-	<w:r><w:t xml:space='preserve'>, </w:t></w:r>
-	<w:r>
-	  <w:rPr>
-	    <w:rStyle w:val="number"/>
-	    <w:b w:val="0"/>
-	  </w:rPr>
-	  <w:t>
-	    <xsl:value-of select="."/>
-	  </w:t>
-	</w:r>
-      </xsl:when>
-      <xsl:when test="@type='partOfSpeech'">
-	<xsl:if test="not(.='noun')">
-	  <w:r>
-	  <w:t xml:space='preserve'>, </w:t></w:r>
-	  <w:r>
-	    <w:rPr>
-	      <w:rStyle w:val="partOfSpeech"/>
-	      <w:b w:val="0"/>
-	    </w:rPr>
-	    <w:t>
-	      <xsl:value-of select="."/>
-	    </w:t>
-	  </w:r>
-	</xsl:if>
-      </xsl:when>  
-      <xsl:when test="@type='pronunciation'">
-	<w:r>
-	  <w:rPr>
-	    <w:b w:val="0"/>
-	  </w:rPr>
-	  <w:t xml:space='preserve'>, </w:t>
-	</w:r>
-	<w:r>
-	  <w:rPr>
-          <w:rStyle w:val="pronunciation"/>
-	  <w:b w:val="0"/>
-	  </w:rPr>
-	  <w:t>
-	    <xsl:text>/ </xsl:text>
-	    <xsl:value-of select="."/>
-	    <xsl:text> /</xsl:text>
-	  </w:t>
-	</w:r>
-      </xsl:when>
-      <xsl:when test="@type='geographicalUsage'">
-	<xsl:analyze-string select="." regex="^([^\-]+)-([^\-]+)(-x-)?([A-z]*)">
-	  <xsl:matching-substring>
-	    <w:r><w:t xml:space='preserve'><xsl:text> </xsl:text></w:t></w:r>
-	    <w:r>
-	      <w:rPr>
-		<w:rStyle w:val="language"/>
-		<w:b w:val="0"/>
-	      </w:rPr>
-	      <w:t xml:space='preserve'><xsl:value-of select="regex-group(1)"/></w:t>
-	    </w:r>
-	    <w:r><w:t xml:space='preserve'><xsl:text> </xsl:text></w:t></w:r>
-	    <w:r>
-	      <w:rPr>
-		<w:rStyle w:val="geographicalUse"/>
-		<w:b w:val="0"/>
-	      </w:rPr>
-	      <w:t xml:space='preserve'><xsl:value-of select="regex-group(2)"/></w:t>
-	    </w:r>
-	    <xsl:if test="not(regex-group(4)='')">
-	      <w:r><w:t xml:space='preserve'><xsl:text> </xsl:text></w:t></w:r>
-	      <w:r>
-		<w:rPr>
-		  <w:rStyle w:val="script"/>
-		  <w:b w:val="0"/>
-		</w:rPr>
-		<w:t xml:space='preserve'><xsl:value-of select="regex-group(4)"/></w:t>
-	      </w:r>
-	    </xsl:if>
-	  </xsl:matching-substring>
-	  <xsl:non-matching-substring>
-	    <w:r>
-	      <w:rPr>
-		<w:rStyle w:val="geographicalUse"/>
-		<w:b w:val="0"/>
-	      </w:rPr>
-	      <w:t xml:space='preserve'><xsl:value-of select="."/></w:t>
-	    </w:r>
-	  </xsl:non-matching-substring>
-	</xsl:analyze-string>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>

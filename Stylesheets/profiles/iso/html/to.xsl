@@ -20,6 +20,8 @@
    <xsl:import href="../isoutils.xsl"/>
    <xsl:import href="../isotei-schema.xsl"/>
    <xsl:import href="web.xsl"/>
+   <xsl:import href="tbx.xsl"/>
+   <xsl:import href="cals.xsl"/>
   
    <xsl:strip-space elements="tei:bibl"/>
    <xsl:param name="numberFormat">uk</xsl:param>
@@ -32,6 +34,7 @@
    <xsl:param name="xhtml">true</xsl:param>
    <xsl:param name="splitLevel">-1</xsl:param>
    <xsl:param name="autoToc">true</xsl:param>
+   <xsl:param name="tocDepth">3</xsl:param>
    <xsl:param name="institution">ISO</xsl:param>
    <xsl:param name="department"/>
    <xsl:param name="cssFile">http://tei.oucs.ox.ac.uk/TEIISO/iso.css</xsl:param>

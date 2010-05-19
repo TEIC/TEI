@@ -27,10 +27,6 @@
       </desc>
    </doc>
   <xsl:key match="tei:*[@xml:id]" name="IDS" use="@xml:id"/>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
-      <desc>CSS class for TOC entries</desc>
-   </doc>
-  <xsl:param name="class_toc">toc</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="figures" type="string">
       <desc>Directory specification to put before names of graphics files,

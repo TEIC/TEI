@@ -16,7 +16,8 @@
   <xsl:key name="ALLMETA" match="*[@iso:meta]" use="1"/>
   
   <xsl:param name="doclang">en</xsl:param>
-  
+  <xsl:param name="showTBXMarkup">false</xsl:param>   
+
   <xsl:template name="whatsTheDate">
     <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[M02]:[s02]Z')"/>
   </xsl:template>
@@ -390,6 +391,156 @@
     </xsl:call-template>
   </xsl:template>
   
+  <!-- generic TBX -->
+  <xsl:template match="tbx:termEntry">
+    <xsl:call-template name="showTermEntry"/>
+  </xsl:template>
+
+  <xsl:template name="showTermEntry">
+    <xsl:for-each select="tbx:langSet">
+      <xsl:call-template name="termNum"/>
+      <xsl:for-each select="tbx:ntig">
+	<xsl:variable name="Thing">
+	  <xsl:value-of select="substring-before(tbx:termGrp/tbx:termNote[@type='administrativeStatus'],'-admn-sts')"/>
+	</xsl:variable>
+	<xsl:variable name="style">
+	  <xsl:choose>
+	    <xsl:when test="$Thing='preferredTerm'">termPreferred</xsl:when>
+	    <xsl:when test="$Thing='deprecatedTerm'">termDeprecated</xsl:when>
+	    <xsl:when test="$Thing='admittedTerm'">termAdmitted</xsl:when>
+	    <xsl:when test="$Thing='symbol'">termAdmitted</xsl:when>
+	  </xsl:choose>
+	</xsl:variable>
+	<xsl:call-template name="block-element">
+	  <xsl:with-param name="style" select="$style"/>
+	</xsl:call-template>
+      </xsl:for-each>
+      <xsl:apply-templates
+	  select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp/tbx:descrip[@type='figure']"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp/tbx:descrip[@type='example']"/>
+
+      <xsl:apply-templates select="tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates select="tbx:langSet/tbx:ntig[1]/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:langSet/tbx:ntig[tbx:termGrp/tbx:termNote='symbol-admn-sts']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp[tbx:descrip/@type='definition']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp[tbx:descrip/@type='figure']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp[tbx:descrip/@type='example']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates select="tbx:descripGrp/tbx:admin[@type='entrySource']"/>
+    </xsl:for-each>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp/tbx:descrip[@type='figure']"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp/tbx:descrip[@type='example']"/>
+
+      <xsl:apply-templates select="tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates select="tbx:langSet/tbx:ntig[1]/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:langSet/tbx:ntig[tbx:termGrp/tbx:termNote='symbol-admn-sts']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp[tbx:descrip/@type='definition']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp[tbx:descrip/@type='figure']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates
+	  select="tbx:descripGrp[tbx:descrip/@type='example']/tbx:note" mode="tbxnote"/>
+
+      <xsl:apply-templates select="tbx:descripGrp/tbx:admin[@type='entrySource']"/>
+
+    <xsl:if test="$showTBXMarkup='true'">
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="select">
+	  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+	    <xsl:copy-of select="."/>
+	  </egXML>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+   <xsl:template
+       match="tbx:descripGrp">
+     <xsl:apply-templates select="tbx:descrip"/>
+   </xsl:template>
+
+   <xsl:template
+       match="tbx:ntig">
+     <xsl:apply-templates select="tbx:termGrp"/>
+   </xsl:template>
+
+   <xsl:template
+       match="tbx:descrip[@type='subjectField']"/>
+
+   <xsl:template match="tbx:descrip[@type='example']">
+      <xsl:call-template name="block-element">
+         <xsl:with-param name="style">Examplenumbered</xsl:with-param>
+      </xsl:call-template>
+
+   </xsl:template>
+
+   <xsl:template match="tbx:descrip[@type='figure']">
+      <xsl:call-template name="block-element">
+         <xsl:with-param name="style">nonVerbalRepresentation</xsl:with-param>
+      </xsl:call-template>
+
+   </xsl:template>
+
+   <xsl:template match="tbx:note"/>
+
+   <xsl:template match="tbx:note" mode="tbxnote">
+      <xsl:call-template name="block-element">
+         <xsl:with-param name="style">
+	   <xsl:choose>
+	     <xsl:when test="parent::tbx:ntig[tbx:termGrp/tbx:termNote='symbol-admn-sts']">noteSymbol</xsl:when>
+	     <xsl:when test="parent::tbx:ntig">noteTerm</xsl:when>
+	     <xsl:when test="parent::tbx:termEntry">noteTermEntry</xsl:when>
+	     <xsl:when
+		 test="parent::tbx:descrip[@type='figure']">noteNonVerbalRepresentation</xsl:when>
+	     <xsl:when
+		 test="parent::tbx:descrip[@type='example']">noteExample</xsl:when>
+	     <xsl:when
+		 test="parent::tbx:descrip[@type='definition']">noteDefinition</xsl:when>
+	     <xsl:otherwise>noteTermEntry</xsl:otherwise>
+	   </xsl:choose>
+         </xsl:with-param>
+      </xsl:call-template>
+   </xsl:template>
+
+   <xsl:template match="tbx:admin[@type='entrySource']">
+	 <xsl:variable name="a">
+	   <xsl:text>[SOURCE: </xsl:text>
+	   <xsl:value-of select="."/>
+	   <xsl:text>]</xsl:text>
+	 </xsl:variable>
+	 <xsl:for-each select="$a">
+	   <xsl:call-template name="block-element">
+	     <xsl:with-param name="style">entrySource</xsl:with-param>
+	   </xsl:call-template>
+	 </xsl:for-each>
+   </xsl:template>
   
   
 </xsl:stylesheet>

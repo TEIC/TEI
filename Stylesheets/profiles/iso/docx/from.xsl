@@ -1963,4 +1963,14 @@
       </xsl:choose>
     </xsl:template>    
 
-  </xsl:stylesheet>
+ <xsl:template name="block-element">
+     <xsl:param name="select"/>
+     <xsl:param name="style"/>
+     <xsl:param name="pPr"/>
+     <xsl:param name="nop"/>
+     <xsl:param name="bookmark-name"/>
+     <xsl:param name="bookmark-id"/>
+   </xsl:template>
+
+   <xsl:template name="termNum"/>
+    </xsl:stylesheet>

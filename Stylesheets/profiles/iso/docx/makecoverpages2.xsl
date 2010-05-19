@@ -148,4 +148,16 @@
 			      </xsl:for-each>
 		    </xsl:copy>
 	  </xsl:template>
+
+ <xsl:template name="block-element">
+     <xsl:param name="select"/>
+     <xsl:param name="style"/>
+     <xsl:param name="pPr"/>
+     <xsl:param name="nop"/>
+     <xsl:param name="bookmark-name"/>
+     <xsl:param name="bookmark-id"/>
+   </xsl:template>
+
+   <xsl:template name="termNum"/>
+  
 </xsl:stylesheet>
