@@ -91,14 +91,14 @@
 	       <xsl:with-param name="who"
 			       select="w:pPr/w:rPr/w:ins/@w:author"/>
 	     </xsl:call-template>
-	     <xsl:apply-templates select="."/>
+	     <xsl:call-template name="process-word-XRef"/>
 	   </add>
 	 </xsl:when>
 	 <xsl:otherwise>
-	   <xsl:apply-templates select="."/>
+	   <xsl:call-template name="process-word-XRef"/>
 	 </xsl:otherwise>
        </xsl:choose>
-       <xsl:call-template name="process-word-XRef"/>
+   
      </p>
    </xsl:template>
    
