@@ -93,9 +93,20 @@
 		   simplify vertical merge info -->
 
 	      <xsl:variable name="tableBorderStyles">
-		<xsl:call-template name="getTableBorderStyles">
-		  <xsl:with-param name="tblBorders" select="w:tblPr/w:tblBorders"/>
-		</xsl:call-template>
+		<xsl:choose>
+		  <xsl:when test="w:tblPr/w:tblBorders">
+		    <xsl:call-template name="getTableBorderStyles">
+		      <xsl:with-param name="tblBorders" select="w:tblPr/w:tblBorders"/>
+		      </xsl:call-template>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <!-- at this point look at
+			 first/last cell & get left/top
+			 and right/bot border size
+			 values 
+		    -->
+		  </xsl:otherwise>
+		</xsl:choose>
 	      </xsl:variable>
 
 	      <xsl:variable name="TABLE">
@@ -104,11 +115,13 @@
 			       <xsl:attribute name="iso:style">
 				 <xsl:value-of select="normalize-space($tableBorderStyles)"/>
 			       </xsl:attribute>
-		                <xsl:attribute name="frame">
+
+			       <xsl:attribute name="frame">
 		                   <xsl:choose>
 		      <!-- lets face it, most tables do have
 			   borders, especially in ISO; but not in footers! -->
-		      <xsl:when test="not(w:tblPr/w:tblBorders) and parent::w:ftr">
+		      <xsl:when test="not(w:tblPr/w:tblBorders) and
+				      parent::w:ftr">
 			                        <xsl:text>none</xsl:text>
 		                      </xsl:when>
 		                      <xsl:when test="not(w:tblPr/w:tblBorders)">

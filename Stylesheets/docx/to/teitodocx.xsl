@@ -1189,7 +1189,8 @@
 			    </xsl:with-param>
 			  </xsl:call-template>
 			</xsl:when>
-
+			<!-- ***JM*** if there is an iso:style, its size has to
+			override the size in frame values -->
                         <xsl:when test="@frame='none'">
                             <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
                             <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
