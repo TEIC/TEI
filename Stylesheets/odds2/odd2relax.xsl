@@ -477,6 +477,21 @@ Schema generated from ODD source </xsl:text>
       </xsl:choose>			   
   </xsl:template>
 
+  <xsl:template match="rng:optional" mode="pass3">
+      <xsl:choose>
+	<xsl:when test="rng:zeroOrMore">
+	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+	</xsl:when>
+	<xsl:otherwise>
+	   <xsl:copy>
+	     <xsl:apply-templates
+		 select="*|@*|processing-instruction()|comment()|text()"
+		 mode="pass3"/>
+	   </xsl:copy>
+	</xsl:otherwise>
+      </xsl:choose>			   
+  </xsl:template>
+
 
   <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass3">
       <xsl:copy-of select="."/>
