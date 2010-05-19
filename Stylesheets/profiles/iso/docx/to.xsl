@@ -874,7 +874,7 @@
   <xsl:template match="tbx:termEntry">
     <xsl:for-each select="tbx:langSet">
       <xsl:choose>
-	<xsl:when test="starts-with(@id,'autoTermNum')">
+	<xsl:when test="starts-with(../@id,'autoTermNum')">
 	  <w:p>
 	    <w:pPr>
 	      <w:pStyle w:val="{substring-before(../@id,'_')}"/>
