@@ -1927,7 +1927,6 @@
 		  </xsl:if>
 		</xsl:matching-substring>
 		<xsl:non-matching-substring>
-		  <xsl:message>   ___ FAIL ___ </xsl:message>
 		  <xsl:if test="$debug='true'">
 		    <xsl:message>
 		      <xsl:text>Invalid format of reference </xsl:text>
