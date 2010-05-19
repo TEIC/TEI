@@ -147,14 +147,13 @@
 				      parent::w:ftr">
 			                        <xsl:text>none</xsl:text>
 		                      </xsl:when>
-<!--		                      <xsl:when test="not(w:tblPr/w:tblBorders)">
-			                        <xsl:text>all</xsl:text>
-		                      </xsl:when> -->
-		                      <xsl:when test="not($tableBorderStyles)">
-			                        <xsl:text>all</xsl:text>
+		                      <xsl:when test="not($tableBorders)">
+					<!-- if really no info on borders, default 
+					     to all (? is this really what we want?) -->
+					<xsl:text>all</xsl:text>
 		                      </xsl:when>
 		                      <xsl:otherwise>
-					<xsl:for-each select="w:tblPr/w:tblBorders">
+					<xsl:for-each select="$tableBorders">
 					  <xsl:choose>
 					    <xsl:when test="    w:top/@w:val='single'
 							    and w:bottom/@w:val='single'
@@ -176,22 +175,6 @@
 							    and not(w:bottom/@w:val='single') 
 							    and w:right/@w:val='single' 
 							    and w:left/@w:val='single'">sides</xsl:when>
-					    <xsl:when test="../../w:tr[1]/w:tc[1]/w:tcPr/w:tcBorders/w:top/@w:val='single'
-							    and ../../w:tr[1]/w:tc[1]/w:tcPr/w:tcBorders/w:left/@w:val='single'
-							    and ../../w:tr[last()]/w:tc[last()]/w:tcPr/w:tcBorders/w:bottom/@w:val='single'
-							    and ../../w:tr[last()]/w:tc[last()]/w:tcPr/w:tcBorders/w:right/@w:val='single'">all</xsl:when>
-					    <xsl:when test="../../w:tr[1]/w:tc[1]/w:tcPr/w:tcBorders/w:top/@w:val='single'
-							    and ../../w:tr[last()]/w:tc[last()]/w:tcPr/w:tcBorders/w:bottom/@w:val='single'
-							    and not(../../w:tr[1]/w:tc[1]/w:tcPr/w:tcBorders/w:left/@w:val='single')
-							    and not(../../w:tr[last()]/w:tc[last()]/w:tcPr/w:tcBorders/w:right/@w:val='single')">topbot</xsl:when>
-					    <xsl:when test="../../w:tr[1]/w:tc[1]/w:tcPr/w:tcBorders/w:top/@w:val='single'
-							    and not(../../w:tr[last()]/w:tc[last()]/w:tcPr/w:tcBorders/w:bottom/@w:val='single')
-							    and not(../../w:tr[1]/w:tc[1]/w:tcPr/w:tcBorders/w:left/@w:val='single')
-							    and not(../../w:tr[last()]/w:tc[last()]/w:tcPr/w:tcBorders/w:right/@w:val='single')">top</xsl:when>
-					    <xsl:when test="not(../../w:tr[1]/w:tc[1]/w:tcPr/w:tcBorders/w:top/@w:val='single')
-							    and ../../w:tr[last()]/w:tc[last()]/w:tcPr/w:tcBorders/w:bottom/@w:val='single'
-							    and not(../../w:tr[1]/w:tc[1]/w:tcPr/w:tcBorders/w:left/@w:val='single')
-							    and not(../../w:tr[last()]/w:tc[last()]/w:tcPr/w:tcBorders/w:right/@w:val='single')">bottom</xsl:when>
 					    <xsl:otherwise>
 					      <!-- start guessing -->
 					      <xsl:variable name="sideBorders">
