@@ -419,10 +419,6 @@
      </xsl:analyze-string>
    </xsl:template>
 
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-    <desc>Discard left-over example</desc></doc>
-   <xsl:template match="tei:p[@rend='Example numbered']" mode="pass2"/>
-
    <!--
   <xsl:template match="tbx:descripGrp" mode="pass2">
     <xsl:copy>
