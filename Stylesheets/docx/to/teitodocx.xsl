@@ -1181,51 +1181,126 @@
                 <w:tblW w:w="0" w:type="auto"/>
                 <w:jc w:val="center"/>
                 <w:tblBorders>
-                    <xsl:choose>
-		        <xsl:when test="@iso:style">
-			  <xsl:call-template name="undoTableBorderStyles">
-			    <xsl:with-param name="htmlStyles">
-			      <xsl:value-of select="@iso:style"/>
-			    </xsl:with-param>
-			  </xsl:call-template>
-			</xsl:when>
-			<!-- ***JM*** if there is an iso:style, its size has to
-			override the size in frame values -->
+		  <xsl:variable name="tblBorders">
+		    <xsl:if test="@iso:style!=''">
+		      <xsl:call-template name="undoTableBorderStyles">
+			<xsl:with-param name="htmlStyles">
+			  <xsl:value-of select="@iso:style"/>
+			</xsl:with-param>
+		      </xsl:call-template>
+		    </xsl:if>
+		  </xsl:variable>
+		  <xsl:choose>
+			<!-- only @frame turns borders on/off. If a
+			     border is 'on' *and* there is a corresponding 
+			     border in $tblBorders (ie created from
+			     info in iso:style) then the size from $tblBorders
+			     overrides the default size -->
                         <xsl:when test="@frame='none'">
-                            <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-                            <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-                            <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-                            <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+			  <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+			  <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+			  <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+			  <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
                         </xsl:when>
                         <xsl:when test="@frame='top'">
-                            <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-                            <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-                            <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-                            <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+			  <xsl:choose>
+			    <xsl:when test="$tblBorders/w:top">
+			      <xsl:copy-of select="$tblBorders/w:top"/>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <w:top w:val="none" w:sz="6" w:space="0" w:color="auto"/>
+			    </xsl:otherwise>
+			  </xsl:choose>
+			  <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+			  <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+			  <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
                         </xsl:when>
                         <xsl:when test="@frame='bottom'">
                             <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
                             <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-                            <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			    <xsl:choose>
+			      <xsl:when test="$tblBorders/w:bottom">
+				<xsl:copy-of select="$tblBorders/w:bottom"/>
+			      </xsl:when>
+			      <xsl:otherwise>
+				<w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			      </xsl:otherwise>
+			    </xsl:choose>
                             <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
                         </xsl:when>
                         <xsl:when test="@frame='topbot'">
-                            <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-                            <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-                            <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-                            <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+			  <xsl:choose>
+			    <xsl:when test="$tblBorders/w:top">
+			      <xsl:copy-of select="$tblBorders/w:top"/>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <w:top w:val="none" w:sz="6" w:space="0" w:color="auto"/>
+			    </xsl:otherwise>
+			  </xsl:choose>
+			  <w:left w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+			  <xsl:choose>
+			    <xsl:when test="$tblBorders/w:bottom">
+			      <xsl:copy-of select="$tblBorders/w:bottom"/>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			    </xsl:otherwise>
+			  </xsl:choose>
+			  <w:right w:val="none" w:sz="0" w:space="0" w:color="auto"/>
                         </xsl:when>
                         <xsl:when test="@frame='sides'">
-                            <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-                            <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-                            <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
-                            <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			  <w:top w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+			  <xsl:choose>
+			    <xsl:when test="$tblBorders/w:left">
+			      <xsl:copy-of select="$tblBorders/w:left"/>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			    </xsl:otherwise>
+			  </xsl:choose>
+			  <w:bottom w:val="none" w:sz="0" w:space="0" w:color="auto"/>
+			  <xsl:choose>
+			    <xsl:when test="$tblBorders/w:right">
+			      <xsl:copy-of select="$tblBorders/w:right"/>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			    </xsl:otherwise>
+			  </xsl:choose>
                         </xsl:when>
                         <xsl:when test="@frame='all'">
-                            <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-                            <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-                            <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-                            <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			  <xsl:choose>
+			    <xsl:when test="$tblBorders/w:top">
+			      <xsl:copy-of select="$tblBorders/w:top"/>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			    </xsl:otherwise>
+			  </xsl:choose>
+			  <xsl:choose>
+			    <xsl:when test="$tblBorders/w:left">
+			      <xsl:copy-of select="$tblBorders/w:left"/>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			    </xsl:otherwise>
+			  </xsl:choose>
+			  <xsl:choose>
+			    <xsl:when test="$tblBorders/w:bottom">
+			      <xsl:copy-of select="$tblBorders/w:bottom"/>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			    </xsl:otherwise>
+			  </xsl:choose>
+			  <xsl:choose>
+			    <xsl:when test="$tblBorders/w:right">
+			      <xsl:copy-of select="$tblBorders/w:right"/>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			    </xsl:otherwise>
+			  </xsl:choose>
                         </xsl:when>
                     </xsl:choose>
                     <xsl:choose>
@@ -1368,7 +1443,7 @@
             <xsl:for-each select="$TEMPLATE/CELL">
                 <xsl:variable name="N" select="@name"/>
                 <xsl:choose>
-                    <xsl:when test="$ME/cals:entry[@colname=$N and @DUMMY='true']"/>
+                    <xsl:when test="$ME/cals:entry[@colname=$N and @DUMMY='true']"/> 
                     <xsl:when test="$ME/cals:entry[@colname=$N]">
                         <xsl:apply-templates select="$ME/cals:entry[@colname=$N]"/>
                     </xsl:when>
