@@ -47,22 +47,17 @@
       </xsl:if>
       <xsl:call-template name="copyIt"/>
    </xsl:template>
-   <xsl:template match="tei:TEI" mode="checkSchematron">
-      <xsl:if test="not(tei:text/tei:front/tei:div[@type='foreword'])">
+   <xsl:template match="tei:text" mode="checkSchematron">
+      <xsl:if test="not(tei:front/tei:div[@type='foreword'])">
          <xsl:call-template name="generateError">
             <xsl:with-param name="message">
 		A Foreword clause in the front matter is mandatory</xsl:with-param>
          </xsl:call-template>
       </xsl:if>
-      <xsl:if test="not(tei:text/tei:body/tei:div[@type='scope'])">
+      <xsl:if test="not(tei:body/tei:div[@type='scope'])">
          <xsl:call-template name="generateError">
             <xsl:with-param name="message">
 		A Scope clause in the body is mandatory</xsl:with-param>
-         </xsl:call-template>
-      </xsl:if>
-      <xsl:if test="not(tei:text)">
-         <xsl:call-template name="generateError">
-            <xsl:with-param name="message">A text element is essential</xsl:with-param>
          </xsl:call-template>
       </xsl:if>
       <xsl:call-template name="copyIt"/>
