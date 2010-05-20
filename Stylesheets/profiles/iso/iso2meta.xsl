@@ -10,7 +10,7 @@
 
   <xsl:key name="DIV" match="tei:div" use="@type"/>
 
-  <xsl:template match="/tei:TEI">
+  <xsl:template match="tei:TEI">
       <html>
          <head>
             <title>Report on ISO document</title>
@@ -42,5 +42,16 @@
          </body>
       </html>
   </xsl:template>
+
+ <xsl:template name="block-element">
+     <xsl:param name="select"/>
+     <xsl:param name="style"/>
+     <xsl:param name="pPr"/>
+     <xsl:param name="nop"/>
+     <xsl:param name="bookmark-name"/>
+     <xsl:param name="bookmark-id"/>
+   </xsl:template>
+
+   <xsl:template name="termNum"/>
 
 </xsl:stylesheet>
