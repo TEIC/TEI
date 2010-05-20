@@ -6,7 +6,7 @@
                 version="2.0">
    <xsl:import href="isoutils.xsl"/>
    <xsl:output method="xhtml" encoding="utf-8"/>
-   <xsl:template match="/tei:TEI">
+   <xsl:template match="tei:TEI">
       <xsl:variable name="today">
          <xsl:call-template name="whatsTheDate"/>
       </xsl:variable>
@@ -88,4 +88,16 @@
 	        </xsl:otherwise>
 	     </xsl:choose>
    </xsl:template>
+
+ <xsl:template name="block-element">
+     <xsl:param name="select"/>
+     <xsl:param name="style"/>
+     <xsl:param name="pPr"/>
+     <xsl:param name="nop"/>
+     <xsl:param name="bookmark-name"/>
+     <xsl:param name="bookmark-id"/>
+   </xsl:template>
+
+   <xsl:template name="termNum"/>
+
 </xsl:stylesheet>
