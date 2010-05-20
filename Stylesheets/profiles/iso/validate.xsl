@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"   version="2.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   
    <xsl:import href="isotei-schema.xsl"/>
