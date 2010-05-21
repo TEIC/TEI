@@ -38,7 +38,7 @@ TEMPDIR=/tmp/docx$$
 mkdir $TEMPDIR
 cd $TEMPDIR
 unzip -q $THERE/"$N.docx"
-saxon word/document.xml $FROMXSL word-directory=`pwd` metadata-file=$header debug=$debug > "$N.xml"
+saxon word/document.xml $FROMXSL word-directory=`pwd` metadata-file=$header origfile="$1" debug=$debug > "$N.xml"
 if [ "$(ls -q -A word/media)" ]; then
  echo found graphics files in document, so writing $N.zip
  mv word/media .
