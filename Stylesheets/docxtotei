@@ -30,15 +30,17 @@ echo read input file $N from $THERE
 echo metadata header file is $header
 echo app is in $HERE
 if test "x$$conversion" = "x"
-  FROMXSL=$conversion
 then
   FROMXSL=$APPHOME/profiles/$profile/docx/from.xsl
+else
+  FROMXSL=$conversion
 fi
+echo Using $FROMXSL as conversion XSL
 TEMPDIR=/tmp/docx$$
 mkdir $TEMPDIR
 cd $TEMPDIR
 unzip -q $THERE/"$N.docx"
-saxon word/document.xml $FROMXSL word-directory=`pwd` metadata-file=$header origfile="$1" debug=$debug > "$N.xml"
+saxon word/document.xml $FROMXSL word-directory=`pwd` metadata-file=$header origfile="$N" debug=$debug > "$N.xml"
 if [ "$(ls -q -A word/media)" ]; then
  echo found graphics files in document, so writing $N.zip
  mv word/media .
