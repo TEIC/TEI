@@ -35,9 +35,6 @@
   <xsl:key name="REFED" match="rng:ref" use="@name"/>
   <xsl:key name="DEFED" match="rng:define" use="@name"/>
   <xsl:key name="EDEF" match="rng:define[rng:element]" use="1"/>
-  <xsl:key name="ANYDEF"
-            match="rng:define[rng:element/rng:zeroOrMore/rng:attribute/rng:anyName]"
-            use="1"/>
   <xsl:param name="verbose"/>
   <xsl:param name="outputDir"/>
   <xsl:param name="appendixWords"/>
@@ -446,19 +443,6 @@ Schema generated from ODD source </xsl:text>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
-<!--
-  <xsl:template match="rng:attribute/rng:data[@type='ID' or          @type='IDREF']"
-                 mode="pass2">
-      <xsl:choose>
-         <xsl:when test="key('ANYDEF',1)">
-	           <text xmlns="http://relaxng.org/ns/structure/1.0"/>
-         </xsl:when>
-         <xsl:otherwise>
-            <data xmlns="http://relaxng.org/ns/structure/1.0" type="{@type}"/>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
--->
 
 <!-- and again -->
   <xsl:template match="rng:choice" mode="pass3">
@@ -479,7 +463,7 @@ Schema generated from ODD source </xsl:text>
 
   <xsl:template match="rng:optional" mode="pass3">
       <xsl:choose>
-	<xsl:when test="rng:zeroOrMore">
+	<xsl:when test="rng:zeroOrMore and count(*)=1">
 	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
 	</xsl:when>
 	<xsl:otherwise>
