@@ -25,6 +25,11 @@
     <xsl:import href="../../../docx/from/docxtotei.xsl"/>
     
     <xsl:output indent="no"/>
+
+    <xsl:template match="@rend[.='Body Text']" mode="pass2"/>
+    <xsl:template match="@rend[.='Body Text Indent']" mode="pass2"/>
+
+
   <xsl:template match="tei:hi[@rend]" mode="part2">
     <xsl:variable name="r" select="@rend"/>
     <xsl:choose>

@@ -68,12 +68,12 @@
         </teiHeader>
     </xsl:template>
 
-    <xsl:template match="tei:text" mode="part2">
+    <xsl:template match="tei:text" mode="pass2">
       <text>
 	<body>
 	  <xsl:for-each select="tei:body">
 	    <xsl:variable name="MS">
-	      <xsl:apply-templates mode="part2"/>
+	      <xsl:apply-templates mode="pass2"/>
 	    </xsl:variable>
 	    <xsl:for-each select="$MS">
 	      <msDesc>
@@ -108,65 +108,65 @@
       </text>
     </xsl:template>
 
-    <xsl:template match="tei:div[tei:head='Decoration']" mode="part2">
+    <xsl:template match="tei:div[tei:head='Decoration']" mode="pass2">
       <decoDesc>
-	        <xsl:apply-templates mode="part2"/>
+	        <xsl:apply-templates mode="pass2"/>
       </decoDesc>
     </xsl:template>
 
-    <xsl:template match="tei:div[tei:head='Text']" mode="part2">
-	     <xsl:apply-templates mode="part2"/>
+    <xsl:template match="tei:div[tei:head='Text']" mode="pass2">
+	     <xsl:apply-templates mode="pass2"/>
     </xsl:template>
 
-    <xsl:template match="tei:div[tei:head='Binding']" mode="part2">
+    <xsl:template match="tei:div[tei:head='Binding']" mode="pass2">
       <bindingDesc>
-	        <xsl:apply-templates mode="part2"/>
+	        <xsl:apply-templates mode="pass2"/>
       </bindingDesc>
     </xsl:template>
 
-    <xsl:template match="tei:div[tei:head='Physical Description']" mode="part2">
+    <xsl:template match="tei:div[tei:head='Physical Description']" mode="pass2">
       <physDesc>
-	        <xsl:apply-templates mode="part2"/>
+	        <xsl:apply-templates mode="pass2"/>
       </physDesc>
     </xsl:template>
 
-    <xsl:template match="tei:body/tei:div" mode="part2">
+    <xsl:template match="tei:body/tei:div" mode="pass2">
       <xsl:if test="not(tei:head[string-length(.)=0] and count(*)=1)">
-	        <xsl:apply-templates mode="part2"/>
+	        <xsl:apply-templates mode="pass2"/>
       </xsl:if>
     </xsl:template>
 
-    <xsl:template match="tei:body/tei:div/tei:head" mode="part2">
+    <xsl:template match="tei:body/tei:div/tei:head" mode="pass2">
       <title>
-	        <xsl:apply-templates mode="part2"/>
+	        <xsl:apply-templates mode="pass2"/>
       </title>
     </xsl:template>
 
-    <xsl:template match="tei:head[.='Decoration']" mode="part2"/>
-    <xsl:template match="tei:head[.='Text']" mode="part2"/>
-    <xsl:template match="tei:head[.='Binding']" mode="part2"/>
-    <xsl:template match="tei:head[.='Physical Description']" mode="part2"/>
+    <xsl:template match="tei:head[.='Decoration']" mode="pass2"/>
+    <xsl:template match="tei:head[.='Text']" mode="pass2"/>
+    <xsl:template match="tei:head[.='Binding']" mode="pass2"/>
+    <xsl:template match="tei:head[.='Physical Description']" mode="pass2"/>
 
-    <xsl:template match="@rend[.='Body Text']" mode="part2"/>
-    <xsl:template match="@rend[.='Body Text Indent']" mode="part2"/>
+    <xsl:template match="@rend[.='Body Text']" mode="pass2"/>
+    <xsl:template match="@rend[.='Body Text Indent']" mode="pass2"/>
 
-    <xsl:template match="tei:hi/@rend[.='superscript']" mode="part2">
+    <xsl:template match="tei:hi/@rend[.='superscript']" mode="pass2">
       <xsl:attribute name="rend">
 	        <xsl:text>sup</xsl:text>
       </xsl:attribute>
     </xsl:template>
 
-    <xsl:template match="tei:publicationStmt[.='']" mode="part2">
+    <xsl:template match="tei:publicationStmt[.='']" mode="pass2">
       <publicationStmt>
 	        <p>Unpublished </p>
       </publicationStmt>
     </xsl:template>
 
-    <xsl:template match="tei:c[@rend='tab']" mode="part2">
+    <xsl:template match="tei:c[@rend='tab']" mode="pass2">
       <xsl:text> </xsl:text>
     </xsl:template>
 
-    <xsl:template match="tei:c[@iso:font='Symbol']" mode="part2">
+    <xsl:template match="tei:c[@iso:font='Symbol']" mode="pass2">
       <xsl:choose>
 	        <xsl:when test="@n='F0B4'">×</xsl:when>
 	        <xsl:when test="@n='F05B'">[</xsl:when>
@@ -178,9 +178,9 @@
     </xsl:template>
 
 
-    <xsl:template match="tei:fw" mode="part2"/>
+    <xsl:template match="tei:fw" mode="pass2"/>
 
-    <xsl:template match="tei:milestone[@unit='section']" mode="part2"/>
+    <xsl:template match="tei:milestone[@unit='section']" mode="pass2"/>
 
 
 </xsl:stylesheet>
