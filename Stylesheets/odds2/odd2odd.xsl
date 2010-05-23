@@ -188,8 +188,12 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="text()|@*|processing-instruction()" mode="pass0">
-    <xsl:copy-of select="."/>
+  <xsl:template match="text()|@*" mode="pass0">
+      <xsl:copy-of select="."/>
+  </xsl:template>
+  
+  <xsl:template match="processing-instruction()" mode="pass0">
+      <xsl:copy-of select="."/>
   </xsl:template>
 
   <xsl:template match="*" mode="pass0">
@@ -394,7 +398,7 @@
   </xsl:template>
 
 
-  <xsl:template match="@*|text()|processing-instruction()|comment()" mode="pass2">
+  <xsl:template match="@*|text()|comment()" mode="pass2">
     <xsl:copy-of select="."/>
   </xsl:template>
 
@@ -415,41 +419,7 @@
     <xsl:apply-templates select="$content" mode="pass3"/>
   </xsl:template>
 
-  <xsl:template match="@*|text()|processing-instruction()" mode="pass3">
-    <xsl:copy-of select="."/>
-  </xsl:template>
 
-  <xsl:template match="*" mode="pass3">
-    <xsl:choose>
-      <xsl:when test="self::rng:optional     and count(rng:zeroOrMore)=2    and count(*)=2">
-        <xsl:apply-templates select="*|@*|text()|processing-instruction()" mode="pass3"/>
-      </xsl:when>
-      <xsl:when test="count(*)=1">
-        <xsl:variable name="element" select="local-name()"/>
-        <xsl:choose>
-          <xsl:when test="*[local-name()=$element]">
-            <xsl:apply-templates select="*|@*|text()|processing-instruction()" mode="pass3"/>
-          </xsl:when>
-          <xsl:when test="$element='optional'         and rng:zeroOrMore">
-            <xsl:apply-templates select="*|@*|text()|processing-instruction()" mode="pass3"/>
-          </xsl:when>
-          <xsl:when test="$element='optional'         and rng:oneOrMore">
-            <xsl:apply-templates select="*|@*|text()|processing-instruction()" mode="pass3"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:copy>
-              <xsl:apply-templates select="*|@*|text()|processing-instruction()" mode="pass3"/>
-            </xsl:copy>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:copy>
-          <xsl:apply-templates select="*|@*|text()|processing-instruction()" mode="pass3"/>
-        </xsl:copy>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
   <xsl:template match="tei:classSpec" mode="pass2">
     <xsl:variable name="used">
       <xsl:call-template name="amINeeded"/>
@@ -2067,5 +2037,51 @@ select="$M"/></xsl:message>
 	     select="*|@*|processing-instruction()|text()" mode="justcopy"/>
       </xsl:copy>
    </xsl:template>
+
+
+  <xsl:template match="processing-instruction()" mode="pass2">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+
+  <xsl:template match="processing-instruction()" mode="pass3">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="@*|text()" mode="pass3">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="*" mode="pass3">
+    <xsl:choose>
+      <xsl:when test="self::rng:optional     and count(rng:zeroOrMore)=2    and count(*)=2">
+        <xsl:apply-templates select="*|@*|text()|processing-instruction()" mode="pass3"/>
+      </xsl:when>
+      <xsl:when test="count(*)=1">
+        <xsl:variable name="element" select="local-name()"/>
+        <xsl:choose>
+          <xsl:when test="*[local-name()=$element]">
+            <xsl:apply-templates select="*|@*|text()|processing-instruction()" mode="pass3"/>
+          </xsl:when>
+          <xsl:when test="$element='optional'         and rng:zeroOrMore">
+            <xsl:apply-templates select="*|@*|text()|processing-instruction()" mode="pass3"/>
+          </xsl:when>
+          <xsl:when test="$element='optional'         and rng:oneOrMore">
+            <xsl:apply-templates select="*|@*|text()|processing-instruction()" mode="pass3"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy>
+              <xsl:apply-templates select="*|@*|text()|processing-instruction()" mode="pass3"/>
+            </xsl:copy>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy>
+          <xsl:apply-templates select="*|@*|text()|processing-instruction()" mode="pass3"/>
+        </xsl:copy>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
 </xsl:stylesheet>

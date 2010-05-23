@@ -153,18 +153,21 @@
 
 
   <xsl:template match="processing-instruction()">
-    <xsl:if test="name(.) = 'odds'">
-      <xsl:choose>
-        <xsl:when test=".='date'"> This formatted version of the Guidelines was created on
-            <xsl:call-template name="showDate"/>. </xsl:when>
-      </xsl:choose>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="name(.) = 'odds'">
+	<xsl:choose>
+	  <xsl:when test=".='date'"> This formatted version of the Guidelines was created on
+	  <xsl:call-template name="showDate"/>. </xsl:when>
+	</xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:copy-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
-
   <xsl:template match="*" mode="literal">
-    <xsl:text>
-</xsl:text>
+    <xsl:text>&#10;</xsl:text>
     <xsl:for-each select="ancestor::rng:*">
       <xsl:text> </xsl:text>
     </xsl:for-each>
@@ -178,8 +181,7 @@
         <xsl:text>&gt;</xsl:text>
         <xsl:apply-templates mode="literal"/>
         <xsl:if test="node()[last()]/self::rng:*">
-          <xsl:text>
-</xsl:text>
+          <xsl:text>&#10;</xsl:text>
         </xsl:if>
         <xsl:for-each select="ancestor::rng:*">
           <xsl:text> </xsl:text>
@@ -191,8 +193,7 @@
       <xsl:otherwise>
         <xsl:text>/&gt;</xsl:text>
         <xsl:if test="node()[last()]/self::rng:*">
-          <xsl:text>
-	  </xsl:text>
+          <xsl:text>&#10;	  </xsl:text>
         </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
@@ -441,8 +442,7 @@
                   <xsl:value-of select="@generate"/>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:text>
-			     NULL
+                  <xsl:text>&#10;			     NULL
 			     alternation
 			     sequence
 			     sequenceOptional
@@ -881,7 +881,7 @@ select="$makeDecls"/></xsl:message>
             <xsl:call-template name="valListChildren"/>
           </xsl:when>
           <xsl:when test="tei:content">
-            <xsl:apply-templates select="tei:content/*"/>
+            <xsl:apply-templates select="tei:content/*|tei:content/processing-instruction()"/>
           </xsl:when>
           <xsl:otherwise>
             <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
@@ -969,7 +969,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:choose>
     </xsl:variable>
 
-    <xsl:variable name="entCont">
+    <xsl:variable name="entityContent">
       <TEMPTREE>
         <xsl:choose>
           <xsl:when test="tei:content/rng:group">
@@ -978,27 +978,27 @@ select="$makeDecls"/></xsl:message>
             </choice>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:apply-templates select="tei:content/rng:*"/>
+            <xsl:apply-templates select="tei:content/rng:*|tei:content/processing-instruction()"/>
           </xsl:otherwise>
         </xsl:choose>
       </TEMPTREE>
     </xsl:variable>
-    <xsl:variable name="entCount">
-      <xsl:for-each select="$entCont/TEMPTREE">
-        <xsl:value-of select="count(rng:*)"/>
+    <xsl:variable name="entityCount">
+      <xsl:for-each select="$entityContent/TEMPTREE">
+        <xsl:value-of select="count(rng:*|processing-instruction())"/>
       </xsl:for-each>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="@ident=&#34;TEI.singleBase&#34;"/>
-      <xsl:when test="starts-with($entCont,&#34;'&#34;)">
+      <xsl:when test="starts-with($entityContent,&#34;'&#34;)">
         <xsl:if test="$verbose='true'">
-          <xsl:message>Omit <xsl:value-of select="$entCont"/> for <xsl:value-of select="@ident"/>
+          <xsl:message>Omit <xsl:value-of select="$entityContent"/> for <xsl:value-of select="@ident"/>
           </xsl:message>
         </xsl:if>
       </xsl:when>
-      <xsl:when test="starts-with($entCont,&#34;-&#34;)">
+      <xsl:when test="starts-with($entityContent,&#34;-&#34;)">
         <xsl:if test="$verbose='true'">
-          <xsl:message>Omit <xsl:value-of select="$entCont"/> for <xsl:value-of select="@ident"/>
+          <xsl:message>Omit <xsl:value-of select="$entityContent"/> for <xsl:value-of select="@ident"/>
           </xsl:message>
         </xsl:if>
       </xsl:when>
@@ -1019,23 +1019,23 @@ select="$makeDecls"/></xsl:message>
                 </xsl:if>
                 <xsl:choose>
                   <xsl:when test="starts-with(@ident,'type')">
-                    <xsl:apply-templates mode="justcopy" select="$entCont/TEMPTREE/rng:*"/>
+                    <xsl:apply-templates mode="justcopy" select="$entityContent/TEMPTREE/node()"/>
                   </xsl:when>
-                  <xsl:when test="$entCount=0">
+                  <xsl:when test="$entityCount=0">
                     <choice>
                       <empty/>
                     </choice>
                   </xsl:when>
-                  <xsl:when test="$entCount=1">
-                    <xsl:apply-templates mode="justcopy" select="$entCont/TEMPTREE/rng:*"/>
+                  <xsl:when test="$entityCount=1">
+                    <xsl:apply-templates mode="justcopy" select="$entityContent/TEMPTREE/node()"/>
                   </xsl:when>
                   <xsl:when test="tei:content/rng:text|tei:content/rng:ref">
                     <choice>
-                      <xsl:apply-templates mode="justcopy" select="$entCont/TEMPTREE/rng:*"/>
+                      <xsl:apply-templates mode="justcopy" select="$entityContent/TEMPTREE/node()"/>
                     </choice>
                   </xsl:when>
                   <xsl:otherwise>
-                    <xsl:apply-templates mode="justcopy"  select="$entCont/TEMPTREE/rng:*"/>
+                    <xsl:apply-templates mode="justcopy"  select="$entityContent/TEMPTREE/node()"/>
                   </xsl:otherwise>
                 </xsl:choose>
               </define>
@@ -1124,7 +1124,7 @@ select="$makeDecls"/></xsl:message>
 
 
   <xsl:template match="@*|text()|comment()|processing-instruction" mode="expandRNG">
-    <xsl:copy/>
+    <xsl:copy-of select="."/>
   </xsl:template>
 
 
@@ -1206,20 +1206,17 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
   <xsl:template match="tei:p" mode="copyrighttext">
-    <xsl:text>
-</xsl:text>
+    <xsl:text>&#10;</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
 
   <xsl:template match="tei:list" mode="copyrighttext">
-    <xsl:text>
-</xsl:text>
+    <xsl:text>&#10;</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
 
   <xsl:template match="tei:item" mode="copyrighttext">
-    <xsl:text>
- *</xsl:text>
+    <xsl:text>&#10; *</xsl:text>
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -1759,8 +1756,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:choose>
       <xsl:when test="$includeValList='false'"/>
       <xsl:when test="tei:valList[@type='open']">
-        <xsl:text>
-</xsl:text>
+        <xsl:text>&#10;</xsl:text>
         <xsl:call-template name="i18n">
           <xsl:with-param name="word">
             <xsl:text>Sample values include</xsl:text>
@@ -1799,8 +1795,7 @@ select="$makeDecls"/></xsl:message>
         </xsl:for-each>
       </xsl:when>
       <xsl:when test="tei:valList[@type='semi']">
-        <xsl:text>
-</xsl:text>
+        <xsl:text>&#10;</xsl:text>
         <xsl:call-template name="i18n">
           <xsl:with-param name="word">
             <xsl:text>Suggested values include</xsl:text>
@@ -1942,21 +1937,17 @@ select="$makeDecls"/></xsl:message>
   <xsl:template name="makeTEIVersion">
     <xsl:choose>
       <xsl:when test="ancestor-or-self::tei:TEI/processing-instruction()[name()='TEIVERSION']">
-        <xsl:text>
-Edition: </xsl:text>
+        <xsl:text>&#10;Edition: </xsl:text>
         <xsl:value-of
           select="ancestor-or-self::tei:TEI/processing-instruction()[name()='TEIVERSION']"/>
-        <xsl:text>
-</xsl:text>
+        <xsl:text>&#10;</xsl:text>
       </xsl:when>
       <xsl:when
         test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
-        <xsl:text>
-Edition: </xsl:text>
+        <xsl:text>&#10;Edition: </xsl:text>
         <xsl:value-of
           select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
-        <xsl:text>
-</xsl:text>
+        <xsl:text>&#10;</xsl:text>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -2053,7 +2044,11 @@ Edition: </xsl:text>
     <xsl:param name="text"/>
   </xsl:template>
 
-   <xsl:template match="@*|text()|processing-instruction()" mode="justcopy">
+   <xsl:template match="@*|text()" mode="justcopy">
+      <xsl:copy-of select="."/>
+   </xsl:template>
+
+   <xsl:template match="processing-instruction()" mode="justcopy">
       <xsl:copy-of select="."/>
    </xsl:template>
 

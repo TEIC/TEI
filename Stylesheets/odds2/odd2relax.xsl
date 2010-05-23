@@ -13,7 +13,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
-                version="2.0">
+    version="2.0">
   <xsl:import href="teiodds.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -32,6 +32,7 @@
       </desc>
    </doc>
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
+  <xsl:key name="PATTERNS" match="rng:define[rng:element/@name]" use="'true'"/>
   <xsl:key name="REFED" match="rng:ref" use="@name"/>
   <xsl:key name="DEFED" match="rng:define" use="@name"/>
   <xsl:key name="EDEF" match="rng:define[rng:element]" use="1"/>
@@ -99,14 +100,12 @@
                   </xsl:choose>
                </xsl:attribute>
                <xsl:comment>
-                  <xsl:text>
-Schema generated from ODD source </xsl:text>
+                  <xsl:text>&#10;Schema generated from ODD source </xsl:text>
                   <xsl:call-template name="showDate"/>
                   <xsl:text>. </xsl:text>
                   <xsl:call-template name="makeTEIVersion"/>
                   <xsl:call-template name="makeDescription"/>
-                  <xsl:text>
-</xsl:text>
+                  <xsl:text>&#10;</xsl:text>
                </xsl:comment>
                <xsl:if test="$TEIC='true'">
                   <xsl:comment>
@@ -351,12 +350,8 @@ Schema generated from ODD source </xsl:text>
       <xsl:param name="text"/>
   </xsl:template>
 
-  <xsl:template match="processing-instruction()">
-    <xsl:copy/>
-  </xsl:template>
-
   <xsl:template match="processing-instruction()" mode="tangle">
-    <xsl:copy/>
+    <xsl:copy-of select="."/>
   </xsl:template>
 
   <xsl:template match="tei:constraintSpec[@scheme='schematron']">
@@ -388,10 +383,12 @@ Schema generated from ODD source </xsl:text>
       </choice>
     </zeroOrMore>
   </xsl:template>
+
   <xsl:template match="processing-instruction()" mode="pass2">
+    <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass2">
+  <xsl:template match="@*|text()|comment()" mode="pass2">
       <xsl:copy-of select="."/>
   </xsl:template>
     
@@ -445,6 +442,22 @@ Schema generated from ODD source </xsl:text>
   </xsl:template>
 
 <!-- and again -->
+
+  <xsl:template match="processing-instruction()" mode="pass3">
+    <xsl:choose>
+      <xsl:when test="name()='NameList'">
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Expand 'NameList' processing-instruction</xsl:message>
+	</xsl:if>
+	<choice xmlns="http://relaxng.org/ns/structure/1.0">
+	  <xsl:for-each select="key('PATTERNS','true')">
+	    <ref name="{@name}" />
+	  </xsl:for-each>
+	</choice>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="rng:choice" mode="pass3">
       <xsl:choose>
 	<xsl:when test="rng:value|rng:name|.//rng:ref|.//rng:text|.//rng:data">
@@ -476,8 +489,7 @@ Schema generated from ODD source </xsl:text>
       </xsl:choose>			   
   </xsl:template>
 
-
-  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass3">
+  <xsl:template match="@*|text()|comment()" mode="pass3">
       <xsl:copy-of select="."/>
   </xsl:template>
     
