@@ -12,7 +12,7 @@ LANGTREE=${SOURCETREE}/Guidelines/${INPUTLANGUAGE}
 DRIVER=${LANGTREE}/guidelines-${INPUTLANGUAGE}.xml
 FASCFILE=${LANGTREE}/FASC-${CHAP}.xml
 ROMA=roma2
-ROMAOPTS="--localsource=${DRIVER}"
+ROMAOPTS="--localsource=`pwd`/p5subset.xml"
 XSL=/usr/share/xml/tei/stylesheet
 XSLP4=/usr/share/xml/teip4/stylesheet
 CHAPTER=$(shell find ${LANGTREE} -iname ${CHAP}*.xml)
@@ -208,23 +208,20 @@ valid: check
 #	@xmllint --version
 #	-xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
 
-test:
-	(cd Exemplars; make names) 
+test: subset
 	(cd Test; make XSL=${XSL})
 
-exemplars:
+exemplars: subset
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
 
-oddschema: 
+oddschema: subset
 	@echo Checking you have a running ${ROMA} before trying to make oddschema ...
 	which ${ROMA} || exit 1
-	(cd Exemplars;make names)
 	${ROMA} ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds.odd .
 
-exampleschema:
+exampleschema: subset
 	@echo Checking you have a running ${ROMA} before trying to make exampleschema ...
 	which ${ROMA} || exit 1
-	(cd Exemplars;make names)
 	${ROMA}  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-ex.odd . 
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rnc && \
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rng

@@ -67,9 +67,6 @@
 <!-- required -->
         <moduleRef key="transcr"/>
         <moduleRef key="verse"/>
-        <xi:include href="../Exemplars/tei_xinclude.odd" xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:elementSpec)">
-          <xi:fallback> ERROR: cannot locate XInclude ODD elements </xi:fallback>
-        </xi:include>
         <xi:include href="../Exemplars/tei_svg.odd" xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:moduleRef[@url])">
           <xi:fallback> ERROR: cannot locate ODD changes for SVG </xi:fallback>
         </xi:include>
@@ -77,38 +74,51 @@
           <xi:fallback> ERROR: cannot locate ODD changes for MathML </xi:fallback>
         </xi:include>
 
-	<macroSpec type="pe" ident="macro.anyXML" mode="change">
-	  <content>
-	    <element xmlns="http://relaxng.org/ns/structure/1.0">
-	      <anyName>
-		<except>
-		  <nsName ns="http://www.w3.org/1998/Math/MathML"/>
-		  <nsName ns="http://www.w3.org/2000/svg"/>
-		  <nsName ns="http://www.tei-c.org/ns/1.0"/>
-		  <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
-		</except>
-	      </anyName>
-	      <zeroOrMore>
-		<attribute>
-		  <anyName/>
-		</attribute>
-	      </zeroOrMore>
-	      <zeroOrMore>
-		<choice>
-		  <text/>
-		  <ref name="macro.anyXML"/>
-		</choice>
-	      </zeroOrMore>
-	    </element>
-	  </content>	  
-	</macroSpec>
+    <elementSpec ident="egXML" mode="change" module="tagdocs"
+     ns="http://www.tei-c.org/ns/Examples">
+      <content>
+	<oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	  <choice>
+	    <text/>
+	    <ref name="anyThing"/>
+	    <ref name="svg"/>
+	    <ref name="mathml.math"/>
+	  </choice>
+	</oneOrMore>
+      </content>
+    </elementSpec>
+    
+    <macroSpec ident="anyThing" mode="add">
+      <content>
+	<?NameList?>
+      </content>
+    </macroSpec>
 
-	<macroSpec type="pe" ident="AnyThing" mode="add">
-          <desc>Matches any element</desc>
-          <content>
-	    <rng:anyName/>
-          </content>
-        </macroSpec>
+    <macroSpec mode="change" ident="macro.anyXML">
+      <content>
+	<element xmlns="http://relaxng.org/ns/structure/1.0">
+	  <anyName>
+	    <except>
+	      <nsName ns="http://www.tei-c.org/ns/1.0"/>
+	      <nsName ns="http://www.w3.org/1998/Math/MathML"/>
+	      <nsName ns="http://www.w3.org/2000/svg"/>
+	      <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+	    </except>
+	  </anyName>
+	  <zeroOrMore>
+	    <attribute>
+	      <anyName/>
+	    </attribute>
+	  </zeroOrMore>
+	  <zeroOrMore>
+	    <choice>
+	      <text/>
+	      <ref name="macro.anyXML"/>
+	    </choice>
+	  </zeroOrMore>
+	</element>
+      </content>
+      </macroSpec>
 
       </schemaSpec>
     </body>
