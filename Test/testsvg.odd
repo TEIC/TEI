@@ -111,32 +111,14 @@
       
       
     <macroSpec ident="anyThing" type ="pe" mode="add">
-     <content>
-      <element xmlns="http://relaxng.org/ns/structure/1.0"
-	       ns="http://www.tei-c.org/ns/Examples">
-        <xi:include href="names.xml">
-          <xi:fallback> ERROR: cannot locate list of names</xi:fallback>
-	</xi:include>
-       <ref name="att.global.attribute.xmlid"/>
-       <ref name="att.global.attribute.xmllang"/>
-       <zeroOrMore>
-        <attribute>
-         <anyName>
-          <except>
-           <name>xml:id</name>
-           <name>xml:lang</name>
-          </except>
-         </anyName>
-        </attribute>
-       </zeroOrMore>
-       <zeroOrMore>
-        <choice>
-         <text/>
-         <ref name="anyThing"/>
-        </choice>
-       </zeroOrMore>
-      </element>
-     </content>
+      <content>
+	<oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	  <choice>
+	    <text/>
+	    <?NameList?>
+	  </choice>
+	</oneOrMore>
+      </content>
     </macroSpec>
 
     </schemaSpec>

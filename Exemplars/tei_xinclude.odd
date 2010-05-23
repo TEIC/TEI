@@ -113,39 +113,20 @@ any inclusions have been resolved. <gi>include</gi> is set up here to
 	  mode="add">
 	<desc>Wrapper for fallback elements if an XInclude fails</desc>
 	<content>
-	  <rng:ref name="AnyThing"/>
+	  <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	    <choice>
+	      <text/>
+	      <ref name="macro.anyThing"/>
+	    </choice>
+	  </oneOrMore>
 	</content>
       </elementSpec>
+ <macroSpec ident="macro.anyThing" mode="add">
+      <content>
+	<?NameList?>
+      </content>
+    </macroSpec>
       
-      
-      
-      <macroSpec     
-	  type="pe"
-	  ident="AnyThing"
-	  mode="add">
-	<desc>Matches any element</desc>
-	<content>
-	  <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-	    <choice>
-	      <element>
-		<anyName/>
-		<zeroOrMore>
-		  <attribute>
-		    <anyName>
-		      <except>
-			<name>xml:id</name>
-			<name>xml:lang</name>
-		      </except>
-		    </anyName>
-		  </attribute>
-		</zeroOrMore>
-		<ref name="AnyThing"/>
-	      </element>
-	      <text/>
-	    </choice>
-	  </zeroOrMore>
-	</content>
-      </macroSpec>
     </schemaSpec>
 </body>
 </text>

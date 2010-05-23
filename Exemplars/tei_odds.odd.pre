@@ -62,16 +62,7 @@ schemata necessary for writing TEI ODD documents.</p>
             </group>
           </content>
         </macroSpec>
-        <elementSpec module="tagdocs" ns="http://www.tei-c.org/ns/Examples" ident="egXML" mode="change">
-          <content>
-            <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-              <choice>
-                <text/>
-                <ref name="anyTEI"/>
-              </choice>
-            </oneOrMore>
-          </content>
-        </elementSpec>
+
         <macroSpec ident="anySchematron" mode="add">
           <content>
             <element xmlns="http://relaxng.org/ns/structure/1.0">
@@ -83,28 +74,6 @@ schemata necessary for writing TEI ODD documents.</p>
                   </attribute>
                   <ref name="anySchematron"/>
                   <text/>
-                </choice>
-              </zeroOrMore>
-            </element>
-          </content>
-        </macroSpec>
-        <macroSpec ident="anyTEI" mode="add">
-          <content>
-            <element xmlns="http://relaxng.org/ns/structure/1.0"
-		   ns="http://www.tei-c.org/ns/Examples">
-	      <xi:include href="names.xml">
-		<xi:fallback> ERROR: cannot locate list of names</xi:fallback>
-	      </xi:include>
-              <zeroOrMore>
-                <attribute>
-                  <anyName/>
-                </attribute>
-              </zeroOrMore>
-              <zeroOrMore>
-                <choice>
-                  <text/>
-                  <ref name="anyTEI"/>
-                  <ref name="macro.schemaPattern"/>
                 </choice>
               </zeroOrMore>
             </element>
