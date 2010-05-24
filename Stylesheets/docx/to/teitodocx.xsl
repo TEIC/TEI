@@ -1674,7 +1674,7 @@
       </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:ref">
+    <xsl:template match="tei:ref[@target]">
       <xsl:call-template name="linkMe">
 	<xsl:with-param name="anchor">
 	  <xsl:apply-templates/>

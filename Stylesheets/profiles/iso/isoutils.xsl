@@ -514,7 +514,9 @@
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">
 	   <xsl:choose>
-	     <xsl:when test="parent::tbx:ntig[tbx:termGrp/tbx:termNote='symbol-admn-sts']">noteSymbol</xsl:when>
+	     <xsl:when
+		 test="parent::tbx:ntig[tbx:termGrp/tbx:termNote[@type='administrativeStatus'
+		       and .='symbol-admn-sts']]">noteSymbol</xsl:when>
 	     <xsl:when test="parent::tbx:ntig">noteTerm</xsl:when>
 	     <xsl:when test="parent::tbx:termEntry">noteTermEntry</xsl:when>
 	     <xsl:when
