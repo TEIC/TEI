@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div xml:id="in" xmlns="http://www.tei-c.org/ns/1.0">
     <argument>
-        <p>This article is the first article in a series that should 
-            help its readers getting strated in the TEI. It explains the 
+        <p>[Abstract:] This article is the first article in a series that should 
+            help its readers getting started in the TEI. It explains the 
             principles of text encoding and explains what to expect 
             from the promised series of articles. It examines the 
             reasons for using or not using TEI, and gives a full, 
@@ -463,7 +463,7 @@
         <head>Overall structure of a TEI text</head>
         <p>To introduce the structure of a TEI document, we will begin at the level of 
             a smaller text fragment, and then gradually add the larger document structure around it. 
-            Our example is based on the <ref target="#liprograves">Diary of Robert Graves</ref>. 
+            Our example is based on the <ref target="#grav2002">Diary of Robert Graves</ref>. 
             For educational purposes, the encoding that we will show here is slightly different 
             from the encoding applied in that project.</p>
         <div xml:id="osfra">
@@ -523,14 +523,18 @@
                         Karl.</p>
                 </div>
             </egXML>
-            <p>An fuller explanation of <gloss target="getstartgloss.xml#xml">XML</gloss> will be given in the <ref target="#tb">Technical Background</ref> 
-                article in this series. For now, XML <gloss target="getstartgloss.xml#elem">element</gloss>s suchs as 'p' (paragraph) are 
+            <p>An fuller explanation of <gloss target="getstartgloss.xml#xml">XML</gloss> will 
+                be given in the <ref target="#tb">Technical Background</ref> 
+                article in this series. For now, we will limit the explanation 
+                to saying that that XML <gloss target="getstartgloss.xml#elem">element</gloss>s 
+                suchs as 'p' (paragraph) are 
                 delimited by what is called <gloss target="getstartgloss.xml#tag">tag</gloss>s. 
                 An opening tag looks like '&lt;p>', 
                 a closing tag looks like '&lt;/p>'. In running prose, we use the 
                 opening tag in discussing the element. Elements can have properties 
                 attached to them by specifying <gloss target="getstartgloss.xml#attr">attribute</gloss>s, as in the <gi>div</gi> 
-                element in the example.</p>
+                element in the example. When discussing an attribute, we will 
+                prefix its name with '@', as in '<att>type</att>'. </p>
             <p>The <gi>div</gi> element is what is used to describe textual divisions. 
                 We use here the <att>n</att> attribute to indicate the date, and the 
                 <att>type</att> attribute to state this piece of text is a diary entry. 
@@ -560,7 +564,8 @@
                 transcription, no-one would know that these are not Graves' 
                 own words. We will use a <gi>figure</gi> element and an embedded 
                 <gi>figDesc</gi> (figure description) to place the description. 
-                We will also indicate that <q>ch</q> is an abbreviation. And finally, we will want 
+                We will also indicate that <q>ch</q> is an abbreviation 
+                (for 'chapter'). And finally, we will want 
                 to indicate a number of changes that Graves made in his text. 
                 We will use <gi>del</gi> and <gi>add</gi> elements to indicate deletions 
                 and additions to the text. The result is as follows:</p>
@@ -625,7 +630,7 @@
                 appendices, TEI texts are also provided with metadata, information 
                 <emph>about</emph> the text. All TEI texts come with a header that 
                 contains these metadata. The element is called <gi>teiHeader</gi>. The 
-                <gi>teiHeader</gi> and the <gi>text</gi> are children op the top 
+                <gi>teiHeader</gi> and the <gi>text</gi> are children of the top 
                 level <gi>TEI</gi> element. So the overall structure looks like this:</p> 
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <![CDATA[
@@ -644,7 +649,7 @@
                 <ptr target="http://www.tei-c.org/ns/1.0"/>. </p>
             <p>We will not go into details here about the content of the TEI header, but 
                 show a very minimal example. Again, this is borrowed, with simplifications, from 
-                the <ref target="#liprograves">Diary of Robert Graves</ref>.</p>
+                the <ref target="#grav2002">Diary of Robert Graves</ref>.</p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <teiHeader>
                     <fileDesc>
@@ -720,7 +725,7 @@
                     applications that want to render the transcription will no longer need 
                     to know about the names of the image files. They can just fetch the files 
                     that are needed from the location as it is specified in the Guidelines. It is an 
-                    important  step towards making general-purpose TEI applications. 
+                    important step towards making general-purpose TEI applications. 
                 </p>
             </div>
             <div xml:id="osrefper">
@@ -737,7 +742,7 @@
                     <gi>particDesc</gi> element can contain a list of persons (a 
                     <gi>listPerson</gi> element containing <gi>person</gi>s). For each 
                     <gi>person</gi> we could, if we wanted to do so, give a structured 
-                    description of a number of characteristics (sex, age, etc). But we can 
+                    description in terms of a number of characteristics (sex, age, etc). But we can 
                     also limit ourselves to an informal description using a <gi>p</gi> 
                     element. Whenever a specific person occurs in the diary, we can then 
                     refer to the description of that person in the header. The element 
@@ -792,6 +797,15 @@
                     <gi>person</gi> element. We have surrounded the names in the diary 
                     with <gi>rs</gi> tags and let the <gi>rs</gi> elements point to 
                     the <gi>person</gi>s using the <att>ref</att> attribute. </p>
+                <p>This concludes the discussion of our first TEI example. 
+                    The choices made in the encoding of this diary fragment 
+                    are not meant to suggest what is mandatory and what not: 
+                    the editorial policies of individual projects must decide, 
+                    e.g., whether to retain or to expand abbreviations or to 
+                    do both. Similarly, a transcription that ignores deleted 
+                    text can be perfectly valid TEI. Decisions about what to 
+                    encode should be driven by research interest (and, 
+                    inevitably, practical feasibility).</p>
             </div>
         </div>
     </div>
@@ -822,7 +836,7 @@
             available. For those, however, that 
             want to encode them, the TEI provides the necessary mechanisms. </p>
         <p>But what exactly is XML, and why are we using it? Why do we provide 
-            our texts with this type  of encoding at all? Why don't we use 
+            our texts with this type of encoding at all? Why don't we use 
             a <gloss target="getstartgloss.xml#wys">wysiwyg</gloss> editing environment, 
             the way modern word processors do? How can we process 
             files such as the one we saw? The next installments in 
@@ -831,8 +845,8 @@
     </div>
     <div xml:id="inlit">
         <head>Literature</head>
-        <p>Overviews of the TEI are given in <ref target="cumm2007">Cummings (2007)</ref>, 
-            <ref target="#roma2009">Romary (2009)</ref> and <ref target="vanh2010">Vanhoutte and 
+        <p>Overviews of the TEI are given in <ref target="#cumm2007">Cummings (2007)</ref>, 
+            <ref target="#roma2009">Romary (2009)</ref> and <ref target="#vanh2010">Vanhoutte and 
             Van den Branden (2010)</ref>. A cogent case for using the TEI is made by 
             <ref target="#sper2009">Sperberg-McQueen (2009)</ref>. An argument against the use of embedded
             markup is made by <ref target="#schm2010">Schmidt (2010)</ref>.            
