@@ -68,9 +68,6 @@ test: test-schema test-dtd test-dtd-xmllint test-extns test-xsd test-xsd-valid t
 
 schemas:
 	echo SETUP IS $(ROMAOPTS)
-	saxon -o  names.xml \
-	../Source/Guidelines/en/guidelines-en.xml \
-	../Utilities/makenames.xsl \
 	Modules="tei core textstructure figures header linking" 
 	-for i in $(TESTFILES) $(TESTFILESDTD) $(TESTDOCBOOKFILES) $(TESTBADFILES); do \
 		echo Try  to validate $$i.odd; \
@@ -202,7 +199,7 @@ test-bad:
 
 clean:
 	-for i in $(TESTFILES) $(TESTFILESDTD) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.teix.xsd $$i.xsd $$i.rnc $$i.rng $$i.xsl; done
-	-rm -rf LOG *~ *.xsd Schema RomaResults DTD names.xml
+	-rm -rf LOG *~ *.xsd Schema RomaResults DTD 
 	-rm -rf *.doc.*
 	-rm *-examples.rng *-examples.rnc *test*.nvdl *-ex.odd
 

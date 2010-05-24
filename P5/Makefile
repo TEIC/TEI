@@ -222,7 +222,7 @@ oddschema: subset
 exampleschema: subset
 	@echo Checking you have a running ${ROMA} before trying to make exampleschema ...
 	which ${ROMA} || exit 1
-	${ROMA}  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-ex.odd . 
+	${ROMA}  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-examples.odd . 
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rnc && \
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rng
 
@@ -254,9 +254,8 @@ dist-source: subset
 	fasc-head.xml \
 	fasc-tail.xml \
 	p5.nvdl \
-	p5odds-ex.odd \
 	p5odds.odd \
-	oddity.odd \
+	p5odds-examples.odd \
 	relax.rng \
 	schematron.rng \
 	iso-schematron.rng \
