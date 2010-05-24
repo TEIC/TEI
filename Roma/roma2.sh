@@ -19,16 +19,13 @@ makeODD()
 	    $LANGUAGE\
 	    $DOCLANG \
 	    useVersionFromTEI=$useVersionFromTEI \
-	    TEIC=$TEIC \
-	    defaultSource="$LOCAL"  \
-	    $DEBUG  
+	    TEIC=$TEIC $SOURCE $DEBUG  
     else
 	echo  [names translated to language $lang]
 	xmllint --xinclude $ODD | saxon - $TEIXSLDIR/odds2/odd2odd.xsl \
 	    TEIC=$TEIC \
 	    useVersionFromTEI=$useVersionFromTEI \
-	    defaultSource="$LOCAL"  \
-	    $DEBUG  \
+	    $SOURCE $DEBUG  \
 	    | saxon -o $RESULTS/$ODD.compiled - $TEIXSLDIR/odds2/translate-odd.xsl \
 	    $DEBUG $LANGUAGE $DOCLANG 
    fi
@@ -141,7 +138,7 @@ makeXMLDOC()
     echo "6. make expanded documented ODD $schema.doc.xml "
     saxon -o $RESULTS/$schema.doc.xml  \
     $RESULTS/$ODD.compiled $TEIXSLDIR/odds2/odd2lite.xsl \
-    $DEBUG $DOCFLAGS  $LANGUAGE $DOCLANG defaultSource="$LOCAL" TEIC=$TEIC 
+    $DEBUG $DOCFLAGS  $LANGUAGE $DOCLANG $SOURCE TEIC=$TEIC 
 }
 
 
@@ -189,7 +186,6 @@ exit 1
 TEIXSLDIR=/usr/share/xml/tei/stylesheet
 useVersionFromTEI=true
 LOCALSOURCE=
-LOCAL=
 TEIC=true
 DOCFLAGS=
 doclang=
@@ -299,24 +295,14 @@ then
 else 
   LANGUAGE=" lang=$lang "
 fi
-echo using $LOCALSOURCE as default source
-cat > subset.xsl <<EOF
-<xsl:stylesheet version="2.0"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xsl:key name="ALL" use="1" 
-    match="tei:elementSpec|tei:macroSpec|tei:classSpec|tei:moduleSpec"/>
-  <xsl:template match="/">
-    <tei:TEI>
-      <xsl:copy-of select="tei:TEI/tei:teiHeader"/>
-      <xsl:copy-of select="key('ALL',1)"/>
-    </tei:TEI>
-</xsl:template>
-</xsl:stylesheet>
-EOF
-saxon -o tei$$.xml  $LOCALSOURCE subset.xsl $DEBUG  || die "failed to extract subset from $LOCALSOURCE "
-LOCAL=$H/tei$$.xml
 
+if test "x$LOCALSOURCE" = "x"
+then
+  SOURCE=""
+else 
+  echo using $LOCALSOURCE as default source
+  SOURCE="defaultSource=$LOCALSOURCE"
+fi
 
 makeODD
 ( $relax || $xsd ) && makeRelax
