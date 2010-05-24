@@ -391,7 +391,7 @@ catalogue-print:
 clean:
 	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~ 
 	-rm Guidelines.??? Guidelines-* \
-	p5examples.rng  p5examples.rnc \
+	p5odds-examples.rng  p5odds-examples.rnc \
 	p5odds.rng p5odds.rnc \
 	*.xsd \
 	p5.sch p5.isosch \
