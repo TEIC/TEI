@@ -55,6 +55,7 @@
     </xsl:attribute>
     <xsl:apply-templates
 	select="*|processing-instruction()|comment()|text()"/>  
+    <elementRef key="egXML"/>
     <elementSpec ident="egXML" mode="change">
       <content>
 	<oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
