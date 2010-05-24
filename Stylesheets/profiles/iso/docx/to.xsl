@@ -1134,6 +1134,10 @@
 	  <xsl:when test="@rend">
 	    <xsl:value-of select="@rend"/>
 	  </xsl:when>
+	  <xsl:when test="ancestor::tei:back">
+	    <xsl:text>pA</xsl:text>
+	    <xsl:value-of select="$level"/>
+	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:text>p</xsl:text>
 	    <xsl:value-of select="$level"/>

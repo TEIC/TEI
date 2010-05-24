@@ -95,7 +95,12 @@
     
     <xsl:template match="tei:figure/tei:head">
         <xsl:call-template name="block-element">
-            <xsl:with-param name="style">Figuretitle</xsl:with-param>
+            <xsl:with-param name="style">
+	      <xsl:choose>
+		<xsl:when test="ancestor::tei:back">Figuretitleannex</xsl:when>
+		<xsl:otherwise>Figuretitle</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
     

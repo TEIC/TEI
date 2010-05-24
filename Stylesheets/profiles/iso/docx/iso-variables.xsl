@@ -70,6 +70,11 @@
 	  <xsl:variable name="a4">a4</xsl:variable>
 	  <xsl:variable name="a5">a5</xsl:variable>
 	  <xsl:variable name="a6">a6</xsl:variable>
+	  <xsl:variable name="pA2">pA2</xsl:variable>
+	  <xsl:variable name="pA3">pA3</xsl:variable>
+	  <xsl:variable name="pA4">pA4</xsl:variable>
+	  <xsl:variable name="pA5">pA5</xsl:variable>
+	  <xsl:variable name="pA6">pA6</xsl:variable>
 	  <xsl:variable name="frScope">Domaine d'application</xsl:variable>
 	  <xsl:variable name="zzIntroductionHeading">zzIntroduction</xsl:variable>
 

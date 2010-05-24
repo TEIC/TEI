@@ -514,6 +514,16 @@
                 </head>
             </xsl:when>
 
+            <xsl:when test="$Style='pA2' or $Style='pA3' or $Style='pA4' or $Style='pA5' or $Style='pA6'">
+                <xsl:attribute
+                name="type">headless</xsl:attribute>
+                <xsl:if test="string(normalize-space($divname))">
+                    <p>
+		      <xsl:call-template name="process-word-XRef"/>
+                    </p>
+                </xsl:if>
+            </xsl:when>
+
             <xsl:otherwise>
                 <xsl:attribute name="type">headless</xsl:attribute>
                 <xsl:if test="string(normalize-space($divname))">

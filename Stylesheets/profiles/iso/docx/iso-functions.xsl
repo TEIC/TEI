@@ -133,6 +133,11 @@
 	<xsl:when test="$s=$a4">true</xsl:when>
 	<xsl:when test="$s=$a5">true</xsl:when>
 	<xsl:when test="$s=$a6">true</xsl:when>
+	<xsl:when test="$s=$pA2">true</xsl:when>
+	<xsl:when test="$s=$pA3">true</xsl:when>
+	<xsl:when test="$s=$pA4">true</xsl:when>
+	<xsl:when test="$s=$pA5">true</xsl:when>
+	<xsl:when test="$s=$pA6">true</xsl:when>
 	<xsl:when test="$s='p2'">true</xsl:when>
 	<xsl:when test="$s='p3'">true</xsl:when>
 	<xsl:when test="$s='p4'">true</xsl:when>
