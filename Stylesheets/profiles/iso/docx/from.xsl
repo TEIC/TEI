@@ -748,16 +748,10 @@
                 </mentioned>
             </xsl:when>
 
-            <xsl:when test="$style='Hyperlink' and not(ancestor::w:hyperlink)">
-                <ref>
-		  <xsl:attribute name="target">
-		    <xsl:for-each
-			select="preceding-sibling::w:r[w:instrText][1]/w:instrText">
-		      <xsl:value-of select="substring-before(substring-after(.,'&#x0022;'),'&#x0022;')"/>
-		    </xsl:for-each>
-		  </xsl:attribute>
-                    <xsl:apply-templates/>
-                </ref>
+            <xsl:when test="$style='Hyperlink'">
+	      <hi rend='Hyperlink'>
+		<xsl:apply-templates/>
+	      </hi>
             </xsl:when>
 
             <xsl:when test="$pstyle='RefNorm'">

@@ -532,7 +532,7 @@
    <xsl:template match="tbx:admin[@type='entrySource']">
 	 <xsl:variable name="a">
 	   <xsl:text>[SOURCE: </xsl:text>
-	   <xsl:value-of select="."/>
+	   <xsl:copy-of select="*|text()"/>
 	   <xsl:text>]</xsl:text>
 	 </xsl:variable>
 	 <xsl:for-each select="$a">
