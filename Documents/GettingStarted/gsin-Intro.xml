@@ -16,18 +16,18 @@
         </p>
     </argument>
     <head>Getting started using TEI: What is TEI?</head>
-    <p>The article you are reading is the first installment in a series of articles that should help you getting started using TEI. 
-        The following installments will appear in upcoming issues of TEI-EJ.   
+    <p>The article you are reading is the first instalment in a series of articles that should help you getting started using TEI. 
+        The following instalments will appear in upcoming issues of TEI-EJ.   
         The series cannot provide a full tutorial, and it cannot explain all of the detail 
     of the underlying technologies, but it should make life a little easier for someone who is 
     confronted with the TEI (Text Encoding Initiative) for the first time.  
     This article begins by giving a brief explanation of the TEI (<ptr target="#inovr"/>), and goes on 
-        to describe what you can expect from this document (<ptr target="#indoc"/>). We then 
+        to describe what you can expect from this article series (<ptr target="#indoc"/>). We then 
         discuss the question of when to use and when not to use TEI (<ptr target="#inuse"/>). 
         We give a first example of a complete TEI text in <ptr target="#inost"/>.</p>
     <div xml:id="inovr">
         <head>TEI: a very high-level overview</head>
-        <p>If you are reading this article you have probably decided, or are considering, to use the 
+        <p>If you are reading this article you have probably decided, or are considering, using the 
             TEI to create a digital version of one or more texts. 
             Someone may have told you you should do so, or you may have read 
             about other projects that used the TEI. So what is TEI, and why is 
@@ -36,7 +36,7 @@
             guidelines for the encoding of text. Text encoding is the addition 
             of codes to text in order to make it possible for a computer to 
             process that text. Text encoding assumes, usually, that 
-            you already have a text, either by manually copying it, or by using 
+            you already have a text, either by manually transcribing it, or by using 
             an <gloss target="getstartgloss.xml#ocr">OCR</gloss> program. 
             The codes that you add to the text will describe some aspect of the text: either by adding 
             information such as author or place of publication (metadata), or by characterizing 
@@ -49,14 +49,21 @@
             us having to type codes in pointing brackets. The long answer is given in another article in this series 
             (<ref target="#dm">The rationale of declarative markup</ref>), but a shorter answer is that 
             explicit coding gives you (the editor of the text) control over your text and its application, 
-            something you don't have when you use a commercial word processor. For an office document that may be fine,   
-            but for a text that you edit you probably don't want to depend on the standard facilities 
+            something you don't have when you use a commercial 
+            word processor. For an office document that may not represent a problem,   
+            but for a text that you edit you probably do 
+            not want to depend on the standard facilities 
             that were created to handle business document. 
-            And while it is true that there are programs that can compute wordlists and 
-            complex concordances, without any need for explicit codes, that is only true for a single text where all text 
-            should be treated the same way. Once you have multiple texts you need a way to associate texts with titles, 
-            and if your text consists of poetry with a prose commentary, you may want to have word counts by type 
-            of text. That is to say: you need a structured representation of text properties, and that is what text encoding 
+            And while it is true that there are programs 
+            that can compute wordlists and complex 
+            concordances, without any need for explicit 
+            codes, that is only true for a single text 
+            without structure. Once you have multiple 
+            texts you need a way to associate texts with titles, 
+            and if your text consists of poetry with a prose 
+            commentary, you may want to have word counts by type 
+            of text. That is to say: you need a structured 
+            representation of text properties, and that is what text encoding 
             provides.</p>
         <p>If you know something about web pages, you may think by now that text encoding is like using 
             <gloss target="getstartgloss.xml#html">HTML</gloss>, the language of the web. 
@@ -65,8 +72,8 @@
             encode headers at various levels? And indeed, the encodings 
             that the TEI uses (so-called <term>tag</term>s between angle brackets), 
             is very similar to HTML's formalism, and some of the 
-            tags it shares with HTML, such as <gi>p</gi> for paragraph 
-            and <gi>div</gi> for textual division. The formalism 
+            tags it shares with HTML (such as <gi>p</gi> for paragraph 
+            and <gi>div</gi> for textual division). The formalism 
             is called <gloss target="getstartgloss.xml#xml">XML</gloss> (more about it in the 
             <ref target="#tbxml">Technical Background</ref> article in this series). What makes TEI 
             different from HTML is that the TEI provides tags for 
@@ -80,13 +87,20 @@
             program that reads a TEI representation of a play 
             can use that knowledge, e.g. to create 
             an index of speeches by character. It couldn’t do so from an HTML representation.</p>
-        <p>Your next question might be: so, once I have a TEI-encoded version of my text (i.e. an XML file 
-            that uses TEI tags), can I put that text on the web? The answer is: yes you can, but not without 
-            one further step. You need some sort of program that can turn your encoded text into a (collection of) web page(s). 
-            Remember, during the encoding process you explicitly describe the structure of your text, such as verse lines, 
-            headings, notes, etc. But you say nothing about how you want these to be represented on the web, or how 
-            you want them to be printed. There is a very good reason for this. For most texts, there is not a single best way to 
-            represent their content. One of the reasons why we do text encoding is that we want to do multiple things with 
+        <p>Your next question might be: so, once I have 
+            a TEI-encoded version of my text (i.e. an XML file 
+            that uses TEI tags), can I put that text on the 
+            web? The answer is: yes you can, but not without 
+            one further step. You need some sort of program that 
+            can turn your encoded text into a (collection of) web page(s). 
+            Remember, during the encoding process you explicitly 
+            describe the structure of your text, such as verse lines, 
+            headings, notes, etc. But you say nothing about how you 
+            want these to be represented on the web, or how 
+            you want them to be printed. There is a very good 
+            reason for this. For most texts, there is not a single best way to 
+            represent their content. One of the reasons why we do 
+            text encoding is that we want to do multiple things with 
             the texts (e.g. show them on the web, present a search facility 
             that can search by chapter, index personal names, etc.); 
             for that very reason, presentation functionality is kept 
@@ -97,8 +111,8 @@
             used to create a web page out of an XML file, but by far the 
             most common is <gloss target="getstartgloss.xml#xslt">XSLT</gloss>. 
             We apply what is called an XSLT stylesheet to an XML file to 
-            transform it into one or more web pages. XSLT stylesheets can 
-            can do much more apply what one would ordinarily call 'style' to a 
+            transform it into one or more web pages. XSLT stylesheets  
+            can do much more than apply what one would ordinarily call 'style' to a 
             document. They can define complex transformations including sorting, 
             grouping, filtering, aggregation, and selection. The TEI provides a 
             set of sample stylesheets that can handle many types of 
@@ -116,13 +130,13 @@
             I create this encoding by hand? And (2) can I modify the TEI encodings 
             and add my own tags? As to the first question, the answer is: to some extent. 
             Usually, people create XML files with a program called an XML editor 
-            (more in the <ref target="#ed">Choosing and installing an editor</ref>) 
-            article in this series. Most modern XML editors can help you create the 
+            (more in the <ref target="#ed">Choosing and installing an editor</ref> 
+            article in this series). Most modern XML editors can help you create the 
             encoding, based on a <gloss target="getstartgloss.xml#sch">schema</gloss>. 
             The schema defines what tags are allowed and where they are allowed, and 
             the XML editor can prompt the user with a list of the allowed tags. 
             The program can also check whether the tags that are used are actually 
-            allowed, in a process called validation. Some XML editors can show the 
+            allowed, in a process called <gloss target="getstartgloss.xml#val">validation</gloss>. Some XML editors can show the 
             definitions of these tags during editing, or adjust the layout and formatting 
             of the text based on the tags that are used. Some offer a tagless interface 
             for editing. All of these help very much in making XML editing a fairly 
@@ -153,19 +167,20 @@
     <div xml:id="indoc">
         <head>What this article series does, and what it does not</head>
         <p>If you have toyed around with downloading computer programs, you will have read 
-            'Getting started with xyz' documents. Usually they are one or two pages long. The Getting Started-series 
-            that you are reading now may be about 50 pages long. That means that, depending on your 
-            purposes, it will probably take you longer to get started using TEI than it takes to get to use 
+            'Getting started with xyz' documents. Usually 
+            they are one or two pages long. The Getting Started-series 
+            that you are reading now may be about 50 
+            pages long. That means that, depending on your 
+            purposes, it will probably take you longer 
+            to get started using TEI than it takes to get to use 
             your average computer program. The reason for this is that you are 
             not just learning to use a computer program; you are learning a new view of 
             text, a vocabulary for expressing that view, a formalism for writing that vocabulary, 
             <emph>and</emph> a set of programs for manipulating that formalism. The effort 
             will depend on your existing skills, on your environment (do you 
-            have people around that can help you in the tougher decisions) 
-            and on your ambitions. Learning TEI may be in some respects similar - in 
-            effort and in reward - to learning a new natural language. 
-            But not everyone needs to acquire a native speaker's fluency.  
-            If you have had no previous experience of some of the more 
+            have people around that can help you when you're stuck) 
+            and on your ambitions. </p>
+        <p>If you have had no previous experience of some of the more 
             technical aspects of computing, 
             getting to use TEI is going to present 
             you with a sometimes steep learning curve. But then, 
@@ -205,7 +220,9 @@
             training or study a beginner's tutorial.</p>
         <p>After this initial article, the following article will 
             describe a number of technologies that the TEI uses 
-            in text encoding (<ptr target="#tb"/>). The series then 
+            in text encoding (<ptr target="#tb"/>). The reasons for 
+            encoding properties of the text rather than the desired 
+            output are examined in <ptr target="#dm"/>. The series then 
             goes on to discuss (in <ptr target="#ed"/>) XML editing 
             software, the principal tool for creating and modifying 
             TEI texts. Once we have an editor we can load, 
@@ -214,7 +231,8 @@
             documents into other documents, e.g. to read them on the web. 
             Once you have seen this, you will want to begin using this 
             on your own texts (<ptr target="#ot"/>). </p>
-        <p>A final piece of technology we explain in the series are XML schemas <ptr target="#sc"/>.  
+        <p>A final piece of technology that is explained in the 
+            series are XML schemas <ptr target="#sc"/>.  
             By using schemas we describe exactly which elements can occur 
             in a given XML document, and what elements they may contain. 
             Using the description, we can check the validity of the XML document. 
@@ -224,7 +242,7 @@
             to do once you have studied the series (<ptr target="#wg"/>). The 
             article series comes with a Glossary (<ptr target="getstartgloss.xml"/>) 
             of technical terms. </p>
-        <p>This article series should be useful, irrespective of the computer platform you are using 
+        <p>This article series should be useful irrespective of the computer platform you are using 
             (Windows, Unix, Apple). In fact, an important reason why the TEI was created was that computer 
             files tended to be specific to a single platform. Work that scholars did to encode 
             historic texts was lost when platforms changed. Platform independence is therefore very important 
@@ -248,7 +266,7 @@
                 linguistics, social sciences, library sciences, or humanities
                 then it is likely that the TEI is a good fit for your needs.
                 Nonetheless there are situations where the use of TEI may be 
-                overkill otherwise less appropriate.</p>
+                overkill or otherwise less appropriate.</p>
         <div>
             <head>Why not just HTML?</head>
             <p>Quite frequently people know that their main publication output
@@ -259,11 +277,10 @@
                 what something is, rather than what it looks like. Therefore,
                 while in HTML encoding you might want to display in italics
                 something that is a title, emphasized, a foreign phrase, or a
-                specialized term. In HTML one might mark this as in italics,
-                but in TEI one would mark this with elements for titles,
+                specialized term, in TEI one would mark this with specific elements for titles,
                 emphasis, foreign phrases, or terms. The benefit of this is the
-                easy ability to repurpose the material for different uses and
-                also by separating out the presentation from the encoding it
+                easy ability to repurpose the material for different uses.
+                Also, by separating out the presentation from the encoding it
                 allows one to easily change the form of presentation for all
                 similar elements at a later date. Another example would be 
                 line numbers. If you edit in HTML, you either use line numbers 
@@ -274,7 +291,7 @@
         <div>
             <head>What is your material like?</head>
             <p>For many genres (prose, poetry, plays, dictionaries, charters, 
-                and more) examples exist of succesful TEI encoding. The TEI 
+                and more) examples exist of successful TEI encoding. The TEI 
                 website contains a <ref target="http://www.tei-c.org/Activities/Projects/">list 
                 of projects</ref> using TEI that can inspire prospective encoders. 
                 But one reason not to use TEI could be that for your genre or discipline 
@@ -284,17 +301,17 @@
                 recommendation from the W3C is
                 mostly likely a better choice. That said, if you are editing 
                 documents which contain mathematical formulas but also 
-                exhibit textual variation, then TEI would be
-                a better choice as you can encode the textual variation using TEI 
+                exhibit textual variation, TEI would be
+                a better choice, as you can encode the textual variation using TEI 
                 features and embed MathML in your document to describe the formulas.
                 This ability to be able to incorporate
-                other standards as part of a TEI is one of its many strengths.
+                other standards as part of a TEI document is one of its strengths.
                 Many other standards exist and the TEI has tried not to
                 reinvent the wheel where a perfectly good one exists, instead
                 allowing you to embed markup from other vocabularies in your
                 TEI document where necessary. Additionally if the TEI does not
                 cater for some textual phenomena important to your work, then
-                it is possible and even recommended to extend it (in an approved and documented
+                it is possible and even recommended to extend the TEI (in an approved and documented
                 manner) to add new elements to deal with these.</p>
             <p>Another technology that people use frequently instead of the
                 TEI, or other forms of XML, is relational databases. It makes
@@ -316,19 +333,21 @@
                 such as names, abbreviations, or foreign phrases. 
                 See <ref target="#brad2005">Bradley &amp; Short (2005)</ref> for 
                 a discussion of some of these issues.</p>
-            <p>There are cases where material contains structures which
-                are cannot be represented in TEI markup. In that case TEI 
-                is clearly not an option. However, it may be the case that your 
+            <p>In some cases, source material may contain structures which
+                cannot be represented in TEI markup (say you are representing 
+                a ballet performance). In these cases TEI 
+                is clearly not the answer (though it might be an 
+                ingredient in a solution). However, it may also be the case that your 
                 material could be represented in TEI but the discipline
                 you are working in has a significant number of tools and
-                expertise available for another format. This may also be a 
+                expertise available for another format. This will necessarily be a 
                 factor in the format you choose.</p>
         </div>
         <div>
             <head>What is your desired output?</head>
             <p>It is one of the basic ideas of descriptive markup that the
                 presentation and output should be left as a separate step from
-                the encoding of the information. Part of the reason for this is
+                the encoding of the information. Part of the reason for this is that 
                 one is able to leverage the markup available in a TEI document
                 to produce all sorts of outputs. (e.g. not only a rendering of
                 a text, but indices of certain aspects, rearrangements or
@@ -337,11 +356,10 @@
                 to HTML and PDF, and additionally there are ways to import and
                 export TEI to/from word processors. One of the benefits of
                 using XML as a format is that it is fairly easy to transform
-                XML into other formats required for later software as tools
-                exist to do this and transformation languages are fairly easy
-                to learn. The need to create output in multiple forms or formats is 
+                XML into other formats required for later software. The need 
+                to create output in multiple forms or formats is 
                 a clear reason for choosing TEI. Conversely, if your output is to 
-                be accessed ony in a single format, other than TEI, then choosing
+                be accessed only in a single format, other than TEI, then choosing
                 that other format may be more suitable. Still, we would argue for 
                 carefully considering the potential advantages of multiple 
                 output forms.</p>
@@ -356,10 +374,10 @@
                 similar scholarly activities. Spending a few days learning TEI
                 XML is an investment of time that is well worthwhile. That
                 said, such an undertaking does presuppose a certain amount of
-                basic computer literacy. It is worth remembering, that in some
+                basic computer literacy. It is worth remembering that in some
                 cases it may also be possible to outsource the required TEI
-                encoding of your documents. One good reason for using the TEI,
-                of course, is that there is a large international community who
+                encoding of your documents. One good reason for using the TEI 
+                is that there is a large international community who
                 are willing to help you as you encounter new problems.
                 Nonetheless, if the context in which you are undertaking the
                 encoding (workplace, institution, etc.) provides no support for
@@ -373,10 +391,9 @@
         </div>
         <div>
             <head>Do long-term benefits outweigh initial costs?</head>
-            <p>One of the many benefits of using the TEI is that you can
-                intellectually specify textual distinctions that matter to you
-                and are useful to your purposes. This is a lot more
-                intellectually satisfying than only encoding for one platform,
+            <p>One of the benefits of using the TEI is that what you do is 
+                specifying the textual distinctions that are useful to your purposes. 
+                This is intellectually more satisfying than only encoding for one platform,
                 such as web distribution. And yet, if you have no experience
                 with the TEI, and simply need to do a single web page very
                 quickly, then deciding to learn the TEI, and investigating the
@@ -388,9 +405,9 @@
             <head>But can markup do justice to my text?</head>
             <p>There is a school of thought that holds that XML markup cannot do 
                 justice to the phenomena that literary scholars study. 
-                The main reason for these doubts are that (i) XML encodes 
+                The main reasons for these doubts are that (i) XML encodes 
                 hierarchical structures, while most of the phenomena that 
-                literary scholars are interested cross hierachical boundaries. 
+                literary scholars are interested in cross hierarchical boundaries: 
                 Quotations run across paragraph boundaries, speeches in plays 
                 overlap with metrical units in poetry, and textual variation 
                 is also insensitive to structural boundaries; (ii) XML encoding is often 
@@ -399,14 +416,14 @@
                 (iii) the need to learn and consider the technicalities of XML 
                 encoding is sometimes thought to be at odds with the scholarly 
                 work which the encoding should after all facilitate. 
-                See for a forceful statement of these criticisms e.g. 
+                See for a forceful statement of these views e.g. 
                 <ref target="#smit2006">Smith et al. (2006)</ref>. 
                 Should they keep you from using TEI XML?</p>
-            <p>It should not come a s surprise that we do not think so. 
+            <p>It should not come as surprise that we do not think so. 
                 This tutorial is not the right place for an in-depth discussion of these 
                 fundamental criticisms. It is true that overlap between textual 
                 phenomena is a frequent cause of problems in text encoding, 
-                but there are a number of ways of dealing with these problems and 
+                but there are a number of ways of dealing with them and 
                 it is not usually a major problem. As to the perception of 
                 inflexibility: it is clearly unwise to begin TEI encoding of 
                 a text without previous thought about the phenomena worth 
@@ -418,21 +435,21 @@
                 it is undoubtedly true that heavily marked up text can become 
                 difficult to read, this is more of an interface problem than 
                 an XML limitation. The problem may be alleviated by a tagless 
-                editing interface in XML editors or by applications that 
+                editing interface in XML editors or by editing applications that 
                 hide the existence of XML altogether. Another solution may be the 
-                use of socalled <gloss target="getstartgloss.xml#som">stand-off markup</gloss>, 
+                use of so-called <gloss target="getstartgloss.xml#som">stand-off markup</gloss>, 
                 i.e. markup that is not embedded 
                 within the text that it comments on but that points to segments of
-                that text. </p>
+                that text.</p>
         </div>
         <div>
             <head>TEI and the history of digital text</head>
-            <p>Summing up, there is no single answer to the question of when 
-                to use TEI or not. The decision will depend on characteristics of 
+            <p>Summing up, there is no single answer to the question when 
+                to use TEI. The decision will depend on characteristics of 
                 the texts, the discipline, the persons and the project involved. A final 
                 consideration may be the unique place of the TEI in the history of the development of
                 digital textual studies, digital humanities and the way we
-                conceive of electronic text in a modern age. As the TEI was
+                conceive of electronic text in the modern age. As the TEI was
                 originally a pre-web endeavour, its decisions have helped to
                 influence many of the people who have designed the systems,
                 formats and processes which make up the web, including XML
@@ -444,10 +461,10 @@
                 last couple of decades with input from countless scholars and
                 experts from many fields. They have been revised again and
                 again to introduce new concepts, expand older ones, and correct
-                mistakes. This does not mean that there no room for improvement, 
+                mistakes. This does not mean that there is no room for improvement, 
                 but simply that they
-                have benefited from a long history of many eyes and experiences
-                with all sorts of texts. The Guidelines then provide a good resource of a
+                have benefited from a long history of many eyes and experience
+                with all sorts of texts. The Guidelines then provide a good  
                 codification of knowledge about the markup of various textual
                 phenomena. It is quite likely that your problems and concerns
                 are not unique and that others have encountered similar textual
@@ -523,11 +540,11 @@
                         Karl.</p>
                 </div>
             </egXML>
-            <p>An fuller explanation of <gloss target="getstartgloss.xml#xml">XML</gloss> will 
+            <p>A fuller explanation of <gloss target="getstartgloss.xml#xml">XML</gloss> will 
                 be given in the <ref target="#tb">Technical Background</ref> 
                 article in this series. For now, we will limit the explanation 
                 to saying that that XML <gloss target="getstartgloss.xml#elem">element</gloss>s 
-                suchs as 'p' (paragraph) are 
+                such as 'p' (paragraph) are 
                 delimited by what is called <gloss target="getstartgloss.xml#tag">tag</gloss>s. 
                 An opening tag looks like '&lt;p>', 
                 a closing tag looks like '&lt;/p>'. In running prose, we use the 
@@ -558,7 +575,7 @@
                 necessary, but they give an indication of the kind of phenomena TEI can 
                 handle. To begin with, the word <q>fugon</q> is a word taken 
                 from Spanish, and should probably be italicised in an edition. 
-                We use the <gi>foreign</gi> element to indicate this. To expain what it means, 
+                We use the <gi>foreign</gi> element to indicate this. To explain what it means, 
                 we add a <gi>note</gi>. Then, there is a small drawing of a cup, 
                 which our transcription renders as <q>[sketch of cup]</q>. From the 
                 transcription, no-one would know that these are not Graves' 
@@ -686,7 +703,7 @@
                     The <gi>facsimile</gi> element describes the transcribed object in terms of <gi>surface</gi>s and (optionally) 
                     <gi>zone</gi>s within these surfaces. In our case, each surface will correspond 
                     with a diary page, and we have no need for zones. For each 
-                    surface, we can define one or more <gi>graphic</gi> elements,  which wil hold 
+                    surface, we can define one or more <gi>graphic</gi> elements,  which will hold 
                     information about the images of that page. The surface element is provided 
                     with an  <att>xml:id</att> attribute. From the transcription we can point 
                     at the <gi>surface</gi> using the <att>facs</att> attribute. Let us see what 
@@ -814,7 +831,7 @@
         <p>In this article, we have given an overview of the TEI for those that 
             want to get started applying it. We gave a high-level overview of what 
             TEI encoding is, and explained the thinking behind the series of 
-            articles of which this one is the first installment. We discussed 
+            articles of which this one is the first instalment. We discussed 
             the circumstances under which applying the TEI makes sense, and 
             when it does not. Finally, we gave an extended example of the 
             overall structure of a TEI text. We saw that a 
@@ -823,7 +840,7 @@
             to the text <gi>body</gi>, contain <gi>front</gi> and <gi>back</gi> matter. 
             Additionally, a TEI encoded text may contain a <gi>facsimile</gi> 
             element that relates the transcription to the pages that have been 
-            transcribed and to images of that pages. The transcription itself 
+            transcribed and to images of these pages. The transcription itself 
             is usually structured using <gi>div</gi> element for the textual divisions, 
             which in their turn will contain <gi>p</gi> elements (if we are dealing 
             with prose). </p>
@@ -839,7 +856,7 @@
             our texts with this type of encoding at all? Why don't we use 
             a <gloss target="getstartgloss.xml#wys">wysiwyg</gloss> editing environment, 
             the way modern word processors do? How can we process 
-            files such as the one we saw? The next installments in 
+            files such as the one we saw? The next instalments in 
             this series will deal in depth with some of the questions 
             that we could only touch upon in this article.</p>
     </div>
