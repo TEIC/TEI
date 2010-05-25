@@ -177,9 +177,17 @@
          </xsl:when>
 
          <xsl:otherwise>
-            <xsl:for-each select="ancestor-or-self::tei:TEI">
-               <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type='subordinate')]"/>
-            </xsl:for-each>
+            <xsl:for-each
+		select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt">
+	      <xsl:choose>
+		<xsl:when test="tei:title[@type='main']">
+		  <xsl:apply-templates select="tei:title[@type='main']"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:apply-templates select="tei:title[1]"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
