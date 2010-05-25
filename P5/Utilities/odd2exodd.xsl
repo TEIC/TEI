@@ -57,9 +57,11 @@
 	select="*|processing-instruction()|comment()|text()"/>  
     <xsl:choose>
       <xsl:when
-	  test="not(//tei:moduleRef[@key='tagdocs'])"/>
+	  test="//tei:moduleRef[@key='tagdocs']"/>
       <xsl:when
-	  test="not(//tei:elementRef[@key='egXML'])"/>
+	  test="//tei:elementRef[@key='egXML']"/>
+      <xsl:when
+	  test="//tei:elemenSpec[@ident='egXML']"/>
       <xsl:otherwise>
 	<elementRef key="egXML"/>
       </xsl:otherwise>
