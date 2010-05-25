@@ -129,6 +129,7 @@
       <desc>Process element sp/tei:p</desc>
    </doc>
   <xsl:template match="tei:sp/tei:p">
+    <xsl:text>&#10;&#10;</xsl:text>
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
