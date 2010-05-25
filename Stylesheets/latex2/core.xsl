@@ -677,6 +677,16 @@
       <xsl:value-of select="$postQuote"/>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process element unclear</desc>
+   </doc>
+  <xsl:template match="tei:unclear">
+    <xsl:text>\texttt{[[</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>]]}</xsl:text>
+    </xsl:template>
+
+
    <xsl:template name="emphasize">
       <xsl:param name="class"/>
       <xsl:param name="content"/>
