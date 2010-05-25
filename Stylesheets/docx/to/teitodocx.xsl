@@ -1385,6 +1385,9 @@
     <xsl:template match="cals:tgroup">
         <xsl:variable name="TABLE">
             <xsl:copy>
+	      <xsl:attribute name="iso:style">
+		<xsl:copy-of select="ancestor::cals:table/@iso:style"/>
+	      </xsl:attribute>
                 <xsl:copy-of select="cals:colspec"/>
                 <cals:tbody>
                     <xsl:for-each select="cals:tbody/cals:row">
@@ -1432,20 +1435,46 @@
         </xsl:variable>
         <xsl:variable name="TEMPLATE">
             <xsl:for-each select="ancestor::cals:tgroup/cals:colspec">
-                <CELL name="{@colname}" rowpos="{$ROWPOS}"/>
+                <CELL name="{@colname}" num="{@colnum}" rowpos="{$ROWPOS}" />
             </xsl:for-each>
         </xsl:variable>
+        <xsl:variable name="lastColnum">
+	  <xsl:value-of select="ancestor::cals:tgroup/cals:colspec[last()]/@colnum"/>
+	</xsl:variable>
+	<xsl:variable name="lastColname">
+	  <xsl:value-of select="ancestor::cals:tgroup/cals:colspec[last()]/@colname"/>
+	</xsl:variable>
         <xsl:variable name="ME" select="."/>
+	<xsl:variable name="topEdge">
+	  <xsl:if test="not(preceding-sibling::cals:row)">true</xsl:if>
+	</xsl:variable>
+	<xsl:variable name="bottomEdge">
+	  <xsl:if test="not(following-sibling::cals:row)">true</xsl:if>
+	</xsl:variable>
         <w:tr>
             <w:tblPrEx>
                 <w:tblLayout w:type="autofit"/>
             </w:tblPrEx>
             <xsl:for-each select="$TEMPLATE/CELL">
                 <xsl:variable name="N" select="@name"/>
+		<xsl:variable name="leftEdge">
+		  <xsl:if test="$N='c1'">true</xsl:if>
+		</xsl:variable>
+		<xsl:variable name="rightEdge">
+		  <xsl:choose>
+		    <xsl:when test="$ME/cals:entry/@colname=$lastColname">true</xsl:when>
+		    <xsl:when test="$ME/cals:entry[@colname=$N]/@nameend=$lastColname">true</xsl:when>
+		  </xsl:choose>
+		</xsl:variable>
                 <xsl:choose>
                     <xsl:when test="$ME/cals:entry[@colname=$N and @DUMMY='true']"/> 
                     <xsl:when test="$ME/cals:entry[@colname=$N]">
-                        <xsl:apply-templates select="$ME/cals:entry[@colname=$N]"/>
+                        <xsl:apply-templates select="$ME/cals:entry[@colname=$N]">
+			  <xsl:with-param name="topEdge" select="$topEdge"/>
+			  <xsl:with-param name="bottomEdge" select="$bottomEdge"/>
+			  <xsl:with-param name="leftEdge" select="$leftEdge"/>
+			  <xsl:with-param name="rightEdge" select="$rightEdge"/>
+			</xsl:apply-templates>
                     </xsl:when>
                     <xsl:otherwise>
                         <w:tc>
@@ -1461,7 +1490,30 @@
     </xsl:template>
 
     <xsl:template match="cals:entry">
-        <xsl:variable name="colname" select="@colname"/>
+      <xsl:param name="topEdge"/>
+      <xsl:param name="bottomEdge"/>
+      <xsl:param name="leftEdge"/>
+      <xsl:param name="rightEdge"/>
+      <xsl:variable name="cellBorders">
+	<xsl:if test="@iso:style">
+	  <xsl:call-template name="undoTableBorderStyles">
+	    <xsl:with-param name="htmlStyles">
+	      <xsl:value-of select="@iso:style"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:if>
+      </xsl:variable>
+      <xsl:variable name="tableBorders">
+	<xsl:if test="ancestor::cals:tgroup/@iso:style">
+	  <xsl:call-template name="undoTableBorderStyles">
+	    <xsl:with-param name="htmlStyles">
+	      <xsl:value-of select="@iso:style"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:if>
+      </xsl:variable>
+      <xsl:variable name="colname" select="@colname"/>
+
         <w:tc>
             <w:tcPr>
                 <xsl:if test="@namest">
@@ -1483,40 +1535,78 @@
 	    select="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[@colname=$colname]/@rowsep"/></xsl:message>
 	    -->
                 <xsl:variable name="borders">
+		  <!-- top border -->
 		  <xsl:choose>
-		      <xsl:when test="@iso:style">
-			<xsl:call-template name="undoTableBorderStyles">
-			  <xsl:with-param name="htmlStyles">
-			    <xsl:value-of select="@iso:style"/>
-			  </xsl:with-param>
-			</xsl:call-template>
-		      </xsl:when>
-		      <xsl:otherwise>
-                    <xsl:choose>
-                        <xsl:when test="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[@colname=$colname]/@rowsep=0">
-                            <w:top w:val="nil"/>
-                        </xsl:when>
-                    </xsl:choose>
-                    <xsl:choose>
-                        <xsl:when test="@colsep='0'">
-                            <w:left w:val="nil"/>
-                        </xsl:when>
-                        <xsl:when test="@colsep='1'">
-                            <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-                        </xsl:when>
-                        <xsl:when test="following-sibling::cals:entry[1]/@colsep=0">
-                            <w:right w:val="nil"/>
-                        </xsl:when>
-                    </xsl:choose>
-                    <xsl:choose>
-                        <xsl:when test="@rowsep='0'">
-                            <w:bottom w:val="nil"/>
-                        </xsl:when>
-                        <xsl:when test="@rowsep='1'">
-                            <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-                        </xsl:when>
-                    </xsl:choose>
-		   </xsl:otherwise>
+		    <xsl:when test="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[@colname=$colname]/@rowsep=0">
+		      <w:top w:val="nil"/>
+		    </xsl:when>
+		    <xsl:when test="$topEdge='true'">
+		      <xsl:if test="$tableBorders/w:top[@w:sz]">
+			<w:top w:val="single" w:sz="{$tableBorders/w:top/@w:sz}" w:space="0" w:color="auto"/>
+		      </xsl:if>
+		    </xsl:when>
+		    <xsl:when test="@rowsep=0">
+		      <w:top w:val="nil"/>
+		    </xsl:when>
+		    <xsl:when test="$cellBorders/w:top">		      
+		      <xsl:copy-of select="$cellBorders/w:top"/>
+		    </xsl:when>
+		  </xsl:choose>
+		  <!-- left border -->
+		  <xsl:choose>
+		    <xsl:when test="$leftEdge='true'">
+		      <xsl:if test="$tableBorders/w:left[@w:sz]">
+			<w:left w:val="single" w:sz="{$tableBorders/w:left/@w:sz}" w:space="0" w:color="auto"/>
+		      </xsl:if>
+		    </xsl:when>
+		    <xsl:when test="$cellBorders/w:left">		      
+		      <xsl:copy-of select="$cellBorders/w:left"/>
+		    </xsl:when>
+		  </xsl:choose>
+		  <!-- bottom border -->
+		  <xsl:choose>
+		    <xsl:when test="$bottomEdge='true'">
+		      <xsl:if test="$tableBorders/w:bottom[@w:sz]">
+			<w:bottom w:val="single" w:sz="{$tableBorders/w:bottom/@w:sz}" w:space="0" w:color="auto"/>
+		      </xsl:if>
+		    </xsl:when>
+		    <xsl:when test="@rowsep=0">
+		      <w:bottom w:val="nil"/>
+		    </xsl:when>
+		    <xsl:when test="@rowsep=1">
+		      <xsl:choose>
+			<xsl:when test="$cellBorders/w:bottom">		      
+			  <xsl:copy-of select="$cellBorders/w:bottom"/>
+			</xsl:when>
+			<xsl:otherwise>
+			  <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:when>
+		  </xsl:choose>
+		  <!-- right border -->
+		  <xsl:choose>
+		    <xsl:when test="following-sibling::cals:entry[1]/@colsep=0">
+		      <w:right w:val="nil"/>
+		    </xsl:when>
+		    <xsl:when test="$rightEdge='true'">
+		      <xsl:if test="$tableBorders/w:right[@w:sz]">
+			<w:right w:val="single" w:sz="{$tableBorders/w:right/@w:sz}" w:space="0" w:color="auto"/>
+		      </xsl:if>
+		    </xsl:when>
+		    <xsl:when test="@colsep=0">
+		      <w:right w:val="nil"/>
+		    </xsl:when>
+		    <xsl:when test="@colsep=1">
+		      <xsl:choose>
+			<xsl:when test="$cellBorders/w:right">		      
+			  <xsl:copy-of select="$cellBorders/w:right"/>
+			</xsl:when>
+			<xsl:otherwise>
+			  <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:when>
 		  </xsl:choose>
                 </xsl:variable>
                 <xsl:if test="$borders/*">
