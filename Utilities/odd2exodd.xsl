@@ -69,13 +69,13 @@
 	<oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
 	  <choice>
 	    <text/>
-	    <ref name="macro.anyThingDefined"/>
+	    <ref name="macro.anyElementDefined"/>
 	  </choice>
 	</oneOrMore>
       </content>
     </elementSpec>
     
-    <macroSpec ident="macro.anyThingDefined" mode="add">
+    <macroSpec ident="macro.anyElementDefined" mode="add">
       <content>
 	<xsl:processing-instruction name="NameList"/>
       </content>
