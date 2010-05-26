@@ -752,7 +752,15 @@
                 </mentioned>
             </xsl:when>
 
-            <xsl:when test="$style='Hyperlink' and not(ancestor::w:hyperlink)">
+	    <xsl:when test="$style='Hyperlink' and ancestor::w:hyperlink">
+	      <xsl:call-template name="basicStyles"/>
+	    </xsl:when>
+	    
+	    <xsl:when test="$style='Hyperlink' and ancestor::w:fldSimple">
+	      <xsl:call-template name="basicStyles"/>
+	    </xsl:when>
+	    
+            <xsl:when test="$style='Hyperlink'">
                   <xsl:variable name="ref">
                     <xsl:value-of
                         select="preceding-sibling::w:r[w:instrText][1]/w:instrText">
@@ -760,7 +768,10 @@
 		  </xsl:variable>
 		    <xsl:choose>
 		      <xsl:when test="starts-with($ref,' REF')">
-			<xsl:apply-templates/>
+	      <xsl:call-template name="basicStyles"/>
+		      </xsl:when>
+		      <xsl:when test="starts-with($ref,'REF')">
+	      <xsl:call-template name="basicStyles"/>
 		      </xsl:when>
 		      <xsl:otherwise>
 			<ref>
@@ -768,7 +779,7 @@
 			    <xsl:value-of
 				select="substring-before(substring-after($ref,'&#x0022;'),'&#x0022;')"/>
 			  </xsl:attribute>
-			  <xsl:apply-templates/>
+	      <xsl:call-template name="basicStyles"/>
 			</ref>
 		      </xsl:otherwise>
 		    </xsl:choose>

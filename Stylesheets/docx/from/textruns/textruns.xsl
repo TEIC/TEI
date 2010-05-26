@@ -83,8 +83,16 @@
 	   <xsl:apply-templates/>
 	 </mentioned>
        </xsl:when>
+
+       <xsl:when test="$style='Hyperlink' and ancestor::w:hyperlink">
+	 <xsl:call-template name="basicStyles"/>
+       </xsl:when>
+
+       <xsl:when test="$style='Hyperlink' and ancestor::w:fldSimple">
+	 <xsl:call-template name="basicStyles"/>
+       </xsl:when>
        
-       <xsl:when test="$style='Hyperlink' and not(ancestor::w:hyperlink)">
+       <xsl:when test="$style='Hyperlink'">
 	 <ref>
 	   <xsl:attribute name="target">
 	     <xsl:for-each

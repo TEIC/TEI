@@ -495,8 +495,8 @@
       <xsl:variable name="N">
 	<xsl:number level="any"/>
       </xsl:variable>
-      <w:bookmarkStart id="{number($N) + 10000}" w:name="_{@xml:id}"/>
-      <w:bookmarkEnd  id="{number($N) + 10000}" w:name="_{@xml:id}"/>
+      <w:bookmarkStart w:id="{number($N) + 10000}" w:name="_{@xml:id}"/>
+      <w:bookmarkEnd  w:id="{number($N) + 10000}"/>
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -508,7 +508,7 @@
     <xsl:template match="text()">
         <xsl:param name="character-style"/>
 	<xsl:if test="../@xml:id">
-	  <w:bookmarkStart w:name="_{../@xml:id}"/>
+	  <w:bookmarkStart w:id="_{../@xml:id}"/>
 	</xsl:if>
 
         <xsl:if test="parent::tei:head/parent::tei:div[@iso:status]">
@@ -525,7 +525,9 @@
 	  <!-- if no specific style is assigned we might check for any other indication to assign 
 	       some style ... -->
 	  <xsl:variable name="renderingProperties">
-	    <xsl:call-template name="applyRend"/>
+	    <xsl:for-each select="..">	      
+	      <xsl:call-template name="applyRend"/>
+	    </xsl:for-each>
 	  </xsl:variable>
 	  
 	  <xsl:if test="string-length($character-style) &gt; 0 or not(empty($renderingProperties))">
@@ -544,7 +546,7 @@
 	  <xsl:call-template name="Text"/>
 	</w:r>
 	<xsl:if test="../@xml:id">
-	  <w:bookmarkEnd w:name="_{../@xml:id}"/>
+	  <w:bookmarkEnd w:id="_{../@xml:id}"/>
 	</xsl:if>
     </xsl:template>
 
@@ -638,7 +640,6 @@
      </desc>
    </doc>
     <xsl:template name="applyRend">
-        <xsl:for-each select="..">
             <!-- use a custom font -->
 	    <xsl:choose>
 	      <xsl:when test="@iso:font">
@@ -726,7 +727,7 @@
                 <w:vertAlign w:val="superscript"/>
             </xsl:if>
 
-        </xsl:for-each>
+
     </xsl:template>
 
     <!-- 
@@ -1829,10 +1830,10 @@
       <w:r>
 	<xsl:choose>
 	  <xsl:when test="starts-with(@target,'#')">
-	    <w:instrText> REF _<xsl:value-of select="substring(@target,2)"/> \n \h</w:instrText>
+	    <w:instrText>REF _<xsl:value-of select="substring(@target,2)"/> \n \h</w:instrText>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <w:instrText> HYPERLINK "<xsl:value-of select="@target"/>" \h</w:instrText>
+	    <w:instrText>HYPERLINK "<xsl:value-of select="@target"/>" \h</w:instrText>
 	  </xsl:otherwise>
 	</xsl:choose>
       </w:r>
@@ -1842,6 +1843,7 @@
       <w:r>
 	<w:rPr>
 	      <w:rStyle w:val="Hyperlink"/>
+	      <xsl:copy-of select="$anchor/w:r/w:rPr/*[not(self::w:rStyle)]"/>
 	      <w:u w:val="none"/>
 	</w:rPr>
 	<xsl:choose>
