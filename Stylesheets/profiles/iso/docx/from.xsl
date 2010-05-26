@@ -114,7 +114,11 @@
 	 </doc>
 
     <xsl:template name="create-tei-header">
-        <xsl:attribute name="xml:lang">
+      <xsl:attribute name="xml:lang">
+	<xsl:value-of select="document(concat($word-directory,'/docProps/custom.xml'))//*[@name='DocIdentLanguage']/vt:lpwstr"/>
+      </xsl:attribute>
+      <!--
+      <xsl:attribute name="xml:lang">
             <xsl:variable name="l">
                 <xsl:call-template name="getSdt">
                     <xsl:with-param name="tag">doclanguage</xsl:with-param>
@@ -128,7 +132,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:attribute>
-
+	-->
        <xsl:choose>
             <xsl:when test="$metadata-file=''">
                 <xsl:call-template name="teiHeader-extract-from-doc"/>
