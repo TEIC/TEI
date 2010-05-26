@@ -1468,7 +1468,13 @@
         Table of contents
       </desc>
 	  </doc>
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='zzContents']" mode="paragraph" priority="100"/>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='zzContents']"
+		  mode="paragraph" priority="100">
+      <div type="toc">
+	<head>Contents</head>
+	<divGen type="toc"/>
+      </div>
+    </xsl:template>
     <!-- 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='toc 9']"
         mode="paragraph"/>

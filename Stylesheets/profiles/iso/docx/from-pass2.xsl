@@ -114,6 +114,7 @@
                 <xsl:copy-of select="."/>
 	      </xsl:for-each>
 	      <front>
+                <xsl:apply-templates select="tei:body/tei:div[@type='toc']" mode="pass2"/>
                 <xsl:apply-templates select="tei:body/tei:div[@type='foreword']" mode="pass2"/>
                 <xsl:apply-templates select="tei:body/tei:div[@type='introduction']" mode="pass2"/>
 	      </front>
@@ -121,6 +122,7 @@
                 <xsl:for-each select="tei:body">
 		  <xsl:for-each select="tei:div|tei:p|tei:table|cals:table">
 		    <xsl:choose>
+		      <xsl:when test="self::tei:div[@type='toc']"/>
 		      <xsl:when test="self::tei:div[@type='foreword']"/>
 		      <xsl:when test="self::tei:div[@type='introduction']"/>
 		      <xsl:when test="self::tei:div[@type='bibliography']"/>
