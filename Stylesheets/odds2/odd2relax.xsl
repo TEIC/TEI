@@ -415,12 +415,17 @@
   
   <xsl:template match="rng:ref" mode="pass2">
       <xsl:choose>
-         <xsl:when test="(ancestor::rng:element[@name='egXML' or @name='constraint']         or ancestor::rng:define[contains(@name,'macro.schemaPattern')]) and         starts-with(@name, 'macro.any')">
+	<!--
+	<xsl:when test="(ancestor::rng:element[@name='egXML' or
+			 @name='constraint']         or
+			 ancestor::rng:define[contains(@name,'macro.schemaPattern')])
+			 and         starts-with(@name, 'macro.any')">
 	           <xsl:for-each select="key('DEFED', @name)">
 	              <xsl:apply-templates mode="justcopy"
 					   select="*"/>
 	           </xsl:for-each>
          </xsl:when>
+	 -->
          <xsl:when test="key('DEFED',@name)">
 	           <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
          </xsl:when>
