@@ -114,25 +114,28 @@
 	 </doc>
 
     <xsl:template name="create-tei-header">
-      <xsl:attribute name="xml:lang">
+      <xsl:variable name="getCustomLang">
 	<xsl:value-of select="document(concat($word-directory,'/docProps/custom.xml'))//*[@name='DocIdentLanguage']/vt:lpwstr"/>
-      </xsl:attribute>
-      <!--
+      </xsl:variable>
+      <xsl:variable name="getSdtLang">
+	<xsl:call-template name="getSdt">
+	  <xsl:with-param name="tag">doclanguage</xsl:with-param>
+	</xsl:call-template>
+      </xsl:variable>
       <xsl:attribute name="xml:lang">
-            <xsl:variable name="l">
-                <xsl:call-template name="getSdt">
-                    <xsl:with-param name="tag">doclanguage</xsl:with-param>
-                </xsl:call-template>
-            </xsl:variable>
-            <xsl:choose>
-                <xsl:when test="$l='Russian'">ru</xsl:when>
-                <xsl:when test="$l='French'">fr</xsl:when>
-                <xsl:otherwise>
-                    <xsl:text>en</xsl:text>
-                </xsl:otherwise>
-            </xsl:choose>
+	<xsl:choose>
+	  <xsl:when test="$getCustomLang='' and
+			  $getStdLang=''">en</xsl:when>
+	  <xsl:when test="not($getCustomLang='')">
+	    <xsl:value-of select="$getCustomLang"/>
+	  </xsl:when>
+	  <xsl:when test="$getStdLang='Russian'">ru</xsl:when>
+	  <xsl:when test="$getStdLang='French'">fr</xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text>en</xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
         </xsl:attribute>
-	-->
        <xsl:choose>
             <xsl:when test="$metadata-file=''">
                 <xsl:call-template name="teiHeader-extract-from-doc"/>
