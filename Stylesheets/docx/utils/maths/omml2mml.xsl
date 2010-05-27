@@ -1142,10 +1142,10 @@
 			      <xsl:choose>
 				        <xsl:when test="substring($sToParse,1,1) = '&amp;'">
 					          <xsl:choose>
-						            <xsl:when test="$align='0'">
+						            <xsl:when test="$align=0">
 							              <maligngroup/>
 						            </xsl:when>
-						            <xsl:when test="$align='1'">
+						            <xsl:when test="$align=1">
 							              <malignmark/>
 						            </xsl:when>
 					          </xsl:choose>
@@ -1156,7 +1156,7 @@
 						            <xsl:with-param name="nor" select="$nor"/>
 						            <xsl:with-param name="align">
 							              <xsl:choose>
-								                <xsl:when test="$align='1'">0</xsl:when>
+								                <xsl:when test="$align=1">0</xsl:when>
 								                <xsl:otherwise>1</xsl:otherwise>
 							              </xsl:choose>
 						            </xsl:with-param>
