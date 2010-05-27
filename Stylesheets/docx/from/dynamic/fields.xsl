@@ -80,6 +80,7 @@
 	  <xsl:when test="contains(@w:instr,'PAGE')"><!-- Page number -->
 	    <teidocx:dynamicContent type="pagenumber"/>
 	  </xsl:when>
+	  <xsl:when test="contains(@w:instr,'SEQ')"/><!-- not sure -->
 	  <xsl:otherwise>
 	    <xsl:message terminate="yes">fldSimple: unrecognized type <xsl:value-of select="@w:instr"/></xsl:message>
 	  </xsl:otherwise>
