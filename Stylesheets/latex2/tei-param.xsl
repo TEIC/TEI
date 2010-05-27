@@ -486,10 +486,8 @@ capable of dealing with UTF-8 directly.
       <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
          <xsl:call-template name="printTitleAndLogo"/>
       </xsl:if>
-      <xsl:text>\markright{\@title}%
-\markboth{\@title}{\@author}%
-\renewcommand\small{\@setfontsize\small{9pt}{11pt}%
-   \abovedisplayskip 8.5\p@ plus3\p@ minus4\p@
+      <xsl:text>\markright{\@title}\markboth{\@title}{\@author}
+\renewcommand\small{\@setfontsize\small{9pt}{11pt}\abovedisplayskip 8.5\p@ plus3\p@ minus4\p@
    \belowdisplayskip \abovedisplayskip
    \abovedisplayshortskip \z@ plus2\p@
    \belowdisplayshortskip 4\p@ plus2\p@ minus2\p@

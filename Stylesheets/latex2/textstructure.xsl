@@ -167,7 +167,6 @@
       <xsl:text>}
 \begin{document}
 </xsl:text>
-      <xsl:call-template name="latexBegin"/>
       <!-- certainly don't touch the next few lines -->
 <xsl:text disable-output-escaping="yes">
 \catcode`\$=12\relax
@@ -178,6 +177,7 @@
 </xsl:text>
       <xsl:text disable-output-escaping="yes">\let\tabcellsep&amp;
 \catcode`\&amp;=12\relax </xsl:text>
+      <xsl:call-template name="latexBegin"/>
       <xsl:apply-templates/>
       <xsl:call-template name="latexEnd"/>
       <xsl:text>
