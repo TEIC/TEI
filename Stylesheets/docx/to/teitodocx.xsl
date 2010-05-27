@@ -506,12 +506,16 @@
    </doc>
 
     <xsl:template match="text()">
-        <xsl:param name="character-style"/>
-	<xsl:if test="../@xml:id">
-	  <w:bookmarkStart w:id="_{../@xml:id}"/>
-	</xsl:if>
-
-        <xsl:if test="parent::tei:head/parent::tei:div[@iso:status]">
+      <xsl:param name="character-style"/>
+      <xsl:if test="../@xml:id">
+	<xsl:for-each select="..">
+	  <xsl:variable name="N">
+	    <xsl:number level="any"/>
+	  </xsl:variable>
+	  <w:bookmarkStart w:id="{number($N) + 10000}" w:name="{@xml:id}"/>
+	</xsl:for-each>
+      </xsl:if>
+      <xsl:if test="parent::tei:head/parent::tei:div[@iso:status]">
             <w:r>
                 <w:t>
                     <xsl:attribute name="xml:space">preserve</xsl:attribute>
@@ -545,9 +549,14 @@
 	  </xsl:if>
 	  <xsl:call-template name="Text"/>
 	</w:r>
-	<xsl:if test="../@xml:id">
-	  <w:bookmarkEnd w:id="_{../@xml:id}"/>
-	</xsl:if>
+      <xsl:if test="../@xml:id">
+	<xsl:for-each select="..">
+	  <xsl:variable name="N">
+	    <xsl:number level="any"/>
+	  </xsl:variable>
+	  <w:bookmarkStart w:id="{number($N) + 10000}"/>
+	</xsl:for-each>
+      </xsl:if>
     </xsl:template>
 
 

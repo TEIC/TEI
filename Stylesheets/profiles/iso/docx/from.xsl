@@ -125,17 +125,17 @@
       <xsl:attribute name="xml:lang">
 	<xsl:choose>
 	  <xsl:when test="$getCustomLang='' and
-			  $getStdLang=''">en</xsl:when>
+			  $getSdtLang=''">en</xsl:when>
 	  <xsl:when test="not($getCustomLang='')">
 	    <xsl:value-of select="$getCustomLang"/>
 	  </xsl:when>
-	  <xsl:when test="$getStdLang='Russian'">ru</xsl:when>
-	  <xsl:when test="$getStdLang='French'">fr</xsl:when>
+	  <xsl:when test="$getSdtLang='Russian'">ru</xsl:when>
+	  <xsl:when test="$getSdtLang='French'">fr</xsl:when>
 	  <xsl:otherwise>
 	    <xsl:text>en</xsl:text>
 	  </xsl:otherwise>
 	</xsl:choose>
-        </xsl:attribute>
+      </xsl:attribute>
        <xsl:choose>
             <xsl:when test="$metadata-file=''">
                 <xsl:call-template name="teiHeader-extract-from-doc"/>
