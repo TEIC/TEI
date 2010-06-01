@@ -23,6 +23,10 @@ $Id$
 2008, TEI Consortium
 -->
 
+<!-- typical usage:
+   saxon -it:main -o myodd /usr/share/xml/tei/stylesheet/tools2/odd2example.xsl   corpus=`pwd`/
+
+-->
 <xsl:import href="getfiles.xsl"/>
    <!-- 
 read a corpus of TEI P5 documents and construct
