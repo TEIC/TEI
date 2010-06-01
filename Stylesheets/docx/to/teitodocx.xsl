@@ -331,7 +331,8 @@
         </xsl:if>
 
         <!-- Process Child elements -->
-        <xsl:for-each-group select="current-group()" group-starting-with="*[not(teidocx:is-inline(.))]">
+        <xsl:for-each-group select="current-group()"
+			    group-starting-with="*[not(teidocx:is-inline(.))]">
             <xsl:choose>
                 <!-- if the current item is a block element, we process that one,
                      and then take call this function recursively was all the other
@@ -357,13 +358,18 @@
                 <!-- we encountered an inline element. This means that the current group only
                      contains inline elements -->
                 <xsl:otherwise>
+<!--	  <xsl:message>+@@ <xsl:value-of select="name()"/>: pPr:	  <xsl:if test="not(empty($pPr))"><xsl:copy-of
+	  select="$pPr"/></xsl:if>; style: <xsl:if
+	  test="not(empty($style))"><xsl:copy-of
+	  select="$style"/></xsl:if></xsl:message>
+-->
                     <!-- create all text runs for each item in the current group. we will later
                          on decide whether we are grouping them together in a w:p or not. -->
                     <xsl:variable name="innerRuns">
                         <!-- add paragraph properties (if nobody else created a w:p ($nop)) -->
                         <xsl:if test="$nop!='true'">
                             <xsl:choose>
-                                <xsl:when test="string-length($style) &gt; 0">
+                                <xsl:when test="not($style='')">
                                     <w:pPr>
 				      <w:pStyle>
                                             <xsl:attribute name="w:val" select="$style"/>
@@ -373,7 +379,6 @@
                                 <xsl:when test="not(empty($pPr))">
                                     <xsl:copy-of select="$pPr"/>
                                 </xsl:when>
-                                <xsl:otherwise/>
                             </xsl:choose>
                         </xsl:if>
 
@@ -394,7 +399,7 @@
                         </xsl:when>
                         <xsl:otherwise>
                             <w:p>
-                                <xsl:copy-of select="$innerRuns"/>
+			      <xsl:copy-of select="$innerRuns"/>
                             </w:p>
                         </xsl:otherwise>
                     </xsl:choose>
@@ -796,6 +801,7 @@
         Headers and Sections  
     -->
     <xsl:template match="tei:head[parent::tei:div or parent::tei:div1 or parent::tei:div2 or parent::tei:div3 or parent::tei:div4 or parent::tei:div5 or parent::tei:div6 or parent::tei:div7]">
+      <xsl:param name="pPr"/>
 
       <!-- find out what level we are at -->
       <xsl:variable name="level">
@@ -818,23 +824,25 @@
 
             <!-- find the correct header style -->
             <xsl:with-param name="style">
-                <xsl:variable name="style" select="teidocx:get-headingstyle(.,$level)"/>
+                <xsl:variable name="getstyle" select="teidocx:get-headingstyle(.,$level)"/>
                 <xsl:choose>
-                    <xsl:when test="string-length($style) &gt; 0">
-                        <xsl:call-template name="getStyleName">
-                            <xsl:with-param name="in" select="$style"/>
-                        </xsl:call-template>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:call-template name="getStyleName">
-                            <xsl:with-param name="in">
-                                <xsl:text>heading </xsl:text>
-                                <xsl:value-of select="$level"/>
-                            </xsl:with-param>
-                        </xsl:call-template>
-                    </xsl:otherwise>
+		  <xsl:when test="not($pPr  instance of xs:string)">
+		    <xsl:value-of select="$pPr/w:pPr/w:pStyle/@w:val"/>
+		  </xsl:when>
+		  <xsl:when test="string-length($getstyle) &gt; 0">
+		    <xsl:call-template name="getStyleName">
+		      <xsl:with-param name="in" select="$getstyle"/>
+		    </xsl:call-template>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:call-template name="getStyleName">
+		      <xsl:with-param name="in">
+			<xsl:text>heading </xsl:text>
+			<xsl:value-of select="$level"/>
+		      </xsl:with-param>
+		    </xsl:call-template>
+		  </xsl:otherwise>
                 </xsl:choose>
-
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>

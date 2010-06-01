@@ -547,7 +547,7 @@
       </xsl:variable>
       
       <xsl:choose>
-	<xsl:when test="$pPr=''">
+	<xsl:when test="empty($pPr)">
 	  <xsl:variable name="num">
 	    <xsl:number count="tei:note[@place='foot' or @place='bottom'][not(ancestor::cals:entry)]"
 			level="any"/>
@@ -583,9 +583,9 @@
 
     <xsl:template name="create-inlinenote">           
       <xsl:variable name="pPr">
-	        <w:pPr>
-	           <w:pStyle w:val="Tablenote"/>
-	        </w:pPr>
+	<w:pPr>
+	  <w:pStyle w:val="Tablenote"/>
+	</w:pPr>
       </xsl:variable>
       
       <xsl:call-template name="block-element">
@@ -613,20 +613,35 @@
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>
+	Table of contents section
+      </desc>
+    </doc>
+    <xsl:template match="tei:front/tei:div[@type='toc']">
+        <xsl:call-template name="block-element">
+	  <xsl:with-param name="pPr">
+	    <w:pPr>
+	      <w:pStyle w:val="zzContents"/>
+	    </w:pPr>
+	  </xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
     
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> Definition lists </desc></doc>
     <xsl:template match="tei:list[@type='gloss']">
       <xsl:for-each select="tei:head">
         <xsl:call-template name="block-element">
-            <xsl:with-param name="pPr">
-                <w:pPr>
-                        <w:pStyle w:val="dl"/>
-                        <w:tabs>
-                            <w:tab w:val="left" w:pos="403"/>
-                        </w:tabs>
-                </w:pPr>
-            </xsl:with-param>
+	  <xsl:with-param name="pPr">
+	    <w:pPr>
+	      <w:pStyle w:val="dl"/>
+	      <w:tabs>
+		<w:tab w:val="left" w:pos="403"/>
+	      </w:tabs>
+	    </w:pPr>
+	  </xsl:with-param>
         </xsl:call-template>
       </xsl:for-each>
         
