@@ -929,7 +929,7 @@
     <!-- 
         Handle examples
     -->
-    <xsl:template match="teix:egXML">
+    <xsl:template match="teix:egXML|tei:p[@rend='eg']">
         <xsl:param name="simple">false</xsl:param>
         <xsl:param name="highlight"/>
         <xsl:call-template name="block-element">
