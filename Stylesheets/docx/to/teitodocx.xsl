@@ -1865,7 +1865,7 @@
 	</w:rPr>
 	<xsl:choose>
 	  <xsl:when test="$anchor/w:r">
-	    <xsl:copy-of select="$anchor/w:r/w:t"/>
+	    <xsl:copy-of select="$anchor/w:r/w:*"/>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <w:t>

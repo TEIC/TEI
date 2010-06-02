@@ -1478,7 +1478,9 @@
 	<divGen type="toc">
 	  <xsl:for-each select="following-sibling::*[starts-with(w:pPr/w:pStyle/@w:val, 'toc')]//w:instrText">
 	    <xsl:if test="starts-with(text(), ' TOC ')">
-	      <xsl:value-of select="text()"/>
+	      <xsl:processing-instruction name="isotoc">
+		<xsl:value-of select="text()"/>
+	      </xsl:processing-instruction>
 	    </xsl:if>
 	  </xsl:for-each>
 	</divGen>

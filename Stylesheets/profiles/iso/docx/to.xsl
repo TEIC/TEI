@@ -843,7 +843,7 @@
                     <w:noProof/>
                 </w:rPr>
 		<xsl:choose>
-		  <xsl:when test="starts-with(text(), ' TOC ')">
+		  <xsl:when test="starts-with(text()[1], ' TOC ')">
 		    <w:instrText xml:space="preserve"><xsl:value-of select="text()"/></w:instrText>
 		  </xsl:when>
 		  <xsl:otherwise>
