@@ -1863,6 +1863,7 @@
 	      <xsl:copy-of select="$anchor/w:r/w:rPr/*[not(self::w:rStyle)]"/>
 	      <w:u w:val="none"/>
 	</w:rPr>
+<xsl:message>@@ <xsl:copy-of select="$anchor"/></xsl:message>
 	<xsl:choose>
 	  <xsl:when test="$anchor/w:r">
 	    <xsl:copy-of select="$anchor/w:r/w:*"/>
