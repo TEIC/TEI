@@ -1475,7 +1475,13 @@
 		  mode="paragraph" priority="100">
       <div type="toc">
 	<head>Contents</head>
-	<divGen type="toc"/>
+	<divGen type="toc">
+	  <xsl:for-each select="following-sibling::*[starts-with(w:pPr/w:pStyle/@w:val, 'toc')]//w:instrText">
+	    <xsl:if test="starts-with(text(), ' TOC ')">
+	      <xsl:value-of select="text()"/>
+	    </xsl:if>
+	  </xsl:for-each>
+	</divGen>
       </div>
     </xsl:template>
     <!-- 

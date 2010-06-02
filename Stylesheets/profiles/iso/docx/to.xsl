@@ -842,12 +842,21 @@
                 <w:rPr>
                     <w:noProof/>
                 </w:rPr>
-                <w:instrText xml:space="preserve"> TOC \o "1-6" \h \z \t "ANNEX;1;a2;2;a3;3;a4;4;a5;5;a6;6;zzForeword;1;Introduction;1;zzBiblio;1;zzIndex;1" </w:instrText>
+		<xsl:choose>
+		  <xsl:when test="starts-with(text(), ' TOC ')">
+		    <w:instrText xml:space="preserve"><xsl:value-of select="text()"/></w:instrText>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <w:instrText xml:space="preserve"> TOC \o "1-6" \h \z \t "ANNEX;1;a2;2;a3;3;a4;4;a5;5;a6;6;zzForeword;1;Introduction;1;zzBiblio;1;zzIndex;1" </w:instrText>
+		  </xsl:otherwise>
+                </xsl:choose>   
             </w:r>
             <w:r>
                 <w:fldChar w:fldCharType="separate"/>
             </w:r>
-            <w:r>
+	    <w:r>
+	      <w:t>To refresh the TOC press F9!</w:t>
+	    </w:r>            <w:r>
                 <w:fldChar w:fldCharType="end"/>
             </w:r>
         </w:p>
