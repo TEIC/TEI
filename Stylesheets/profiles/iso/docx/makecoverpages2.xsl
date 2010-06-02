@@ -23,12 +23,8 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
                 exclude-result-prefixes="teidocx cals ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn its">
-	<!-- import conversion style -->
-	<xsl:import href="../../../docx/to/teitodocx.xsl"/>
-	  <xsl:import href="../isoutils.xsl"/>
 
-	  <!-- import functions -->
-	<xsl:include href="iso-functions.xsl"/>
+	  <xsl:import href="to.xsl"/>
 
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -85,39 +81,77 @@
 		    <xsl:variable name="alias" select="ancestor::w:sdt/w:sdtPr/w:tag/@w:val"/>
 	     <xsl:copy>
 	        <xsl:apply-templates select="@*"/>
-	        <xsl:variable name="content" select="$header-doc//*[@iso:meta=$alias]/text()"/>
+	        <xsl:variable name="content">
+	         <xsl:apply-templates select="$header-doc//*[@iso:meta=$alias]" mode="tei">
+	           <xsl:with-param name="rPr" select="w:r/w:rPr"/>
+	         </xsl:apply-templates>
+	        </xsl:variable>
 	        <xsl:if test="$debug='true'">
-	           <xsl:message>set sdtContent to <xsl:value-of
-		   select="$alias"/> = <xsl:value-of select="$content"/></xsl:message>
+	           <xsl:message>set sdtContent to <xsl:value-of select="$alias"/> = <xsl:value-of select="$content"/></xsl:message>
 	        </xsl:if>
-	        <w:r>
-	        <!-- copy any existing rPr, it may contain character formatting  -->
-	        <xsl:copy-of select="w:r/w:rPr"/>
-	        <w:t>
 	        <xsl:choose>
 	           <xsl:when test="ancestor::w:sdt/w:sdtPr/w:dropDownList">
+		          <w:r>
+		          <!-- copy any existing rPr, it may contain character formatting  -->
+		            <xsl:copy-of select="w:r/w:rPr"/>
+	              <w:t>
 	              <xsl:value-of select="ancestor::w:sdt/w:sdtPr/w:dropDownList//w:listItem[@w:value=$content]/@w:displayText"/>
+			          </w:t>
+			         </w:r>
 	           </xsl:when>
 	           <xsl:otherwise>
-	              <xsl:value-of select="$content"/>
+	             <xsl:copy-of select="$content"/>
 	           </xsl:otherwise>
 			    </xsl:choose>
-			    </w:t>
-			    </w:r>
 		    </xsl:copy>
 	  </xsl:template>
 
-
+    <xsl:template match="*[@iso:meta]/text()" mode="tei">
+      <xsl:param name="rPr"></xsl:param>
+      <w:r>
+        <xsl:copy-of select="$rPr"/>
+        <w:t><xsl:value-of select="."/></w:t>
+      </w:r>
+    </xsl:template>
+    <xsl:template match="tei:lb" mode="tei">
+      <w:r>
+        <w:br/>
+      </w:r>
+    </xsl:template>
+   
 	  <xsl:template match="w:body">
 		    <xsl:copy>
 		       <xsl:apply-templates select="@*"/>
+		       <xsl:variable name="tocStyles">(TOC.?|zzContents)</xsl:variable>
+		       <xsl:variable name="tocStylesToCopy">TOC.?</xsl:variable>
+		       <xsl:variable name="tocElems" select="$document-doc/w:document/w:body/front/w:p[matches(w:pPr/w:pStyle/@w:val,$tocStylesToCopy)]"/>
+		       <xsl:variable name="hasToc" select="not(empty($tocElems))"/>
+		       <xsl:message select="concat('has TOC: ', $hasToc)"></xsl:message>
 		       <xsl:for-each select="child::*">
 		          <xsl:choose>
-		             <xsl:when test="name(.) = 'w:p' and . = '#front'">
+		             <xsl:when test="not($hasToc) and name(.) = 'w:p' and matches(w:pPr/w:pStyle/@w:val, $tocStyles)">
+                    <xsl:message select="concat('skip TOC element from model doc because of style: ', w:pPr/w:pStyle/@w:val)"/>
+		             </xsl:when>
+                 <xsl:when test="$hasToc and name(.) = 'w:p' and . = '#toc'">
+                    <xsl:if test="$debug = 'true'">
+                       <xsl:message>insert toc section</xsl:message>
+                    </xsl:if>
+                    <xsl:for-each select="$tocElems">
+                      <xsl:message>insert toc section para</xsl:message>
+                      <!-- do not copy any section breaks -->
+                      <xsl:if test="not(.//w:sectPr)">
+                        <xsl:copy-of select="."/>
+                      </xsl:if>
+                    </xsl:for-each>
+                 </xsl:when>
+		             <xsl:when test="name(.) = 'w:p' and . = '#foreword'">
 		                <xsl:if test="$debug = 'true'">
-		                   <xsl:message>insert front section</xsl:message>
+		                   <xsl:message>insert foreword section</xsl:message>
 		                </xsl:if>
-		                <xsl:for-each select="$document-doc/w:document/w:body/front/*">
+		                <!-- copy all front/w:p from zzForeword onwards -->
+		                <xsl:variable name="fwHeader" select="$document-doc/w:document/w:body/front/w:p[w:pPr/w:pStyle/@w:val = 'zzForeword'][1]"/>
+		                <xsl:copy-of select="$fwHeader"/>
+		                <xsl:for-each select="$fwHeader/following-sibling::w:p">
 		                  <!-- do not copy any section breaks -->
 		                  <xsl:if test="not(.//w:sectPr)">
 		                    <xsl:copy-of select="."/>
@@ -149,15 +183,4 @@
 		    </xsl:copy>
 	  </xsl:template>
 
- <xsl:template name="block-element">
-     <xsl:param name="select"/>
-     <xsl:param name="style"/>
-     <xsl:param name="pPr"/>
-     <xsl:param name="nop"/>
-     <xsl:param name="bookmark-name"/>
-     <xsl:param name="bookmark-id"/>
-   </xsl:template>
-
-   <xsl:template name="termNum"/>
-  
 </xsl:stylesheet>
