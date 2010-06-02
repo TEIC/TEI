@@ -950,7 +950,7 @@
 	</xsl:choose>
       </xsl:variable>
       <xsl:variable name="content">
-	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="egcopy"/>
+	<xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="egcopy"/>
       </xsl:variable>
       <xsl:for-each select="$content">
 	<xsl:call-template name="block-element">
@@ -1863,7 +1863,7 @@
 	      <xsl:copy-of select="$anchor/w:r/w:rPr/*[not(self::w:rStyle)]"/>
 	      <w:u w:val="none"/>
 	</w:rPr>
-<xsl:message>@@ <xsl:copy-of select="$anchor"/></xsl:message>
+<!--<xsl:message>@@ <xsl:copy-of select="$anchor"/></xsl:message>-->
 	<xsl:choose>
 	  <xsl:when test="$anchor/w:r">
 	    <xsl:copy-of select="$anchor/w:r/w:*"/>

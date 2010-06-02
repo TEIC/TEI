@@ -1234,4 +1234,8 @@
     </xsl:template>
 
 
+    <xsl:template match="processing-instruction()[name()='isotoc']">
+      <xsl:value-of select="."/>
+    </xsl:template>
+
 </xsl:stylesheet>
