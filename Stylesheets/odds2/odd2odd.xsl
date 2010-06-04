@@ -572,13 +572,18 @@ How can a class be ok?
     <xsl:copy/>
   </xsl:template>
   <xsl:template match="tei:elementSpec" mode="copy">
-    <xsl:variable name="orig" select="."/>
     <xsl:copy>
       <xsl:if test="not(@module)">
         <xsl:attribute name="module">
           <xsl:value-of select="$AnonymousModule"/>
         </xsl:attribute>
       </xsl:if>
+      <xsl:call-template name="copyElementSpec"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template name="copyElementSpec">
+      <xsl:variable name="orig" select="."/>
       <xsl:apply-templates mode="copy" select="@*"/>
       <xsl:apply-templates mode="justcopy" select="tei:altIdent"/>
       <xsl:if test="$stripped='false'">
@@ -614,8 +619,8 @@ How can a class be ok?
         <xsl:apply-templates mode="justcopy" select="tei:remarks"/>
         <xsl:apply-templates mode="justcopy" select="tei:listRef"/>
       </xsl:if>
-    </xsl:copy>
   </xsl:template>
+
   <xsl:template name="addClassAttsToCopy">
     <xsl:if test="not(@ns) or @ns='http://www.tei-c.org/ns/1.0' or @ns='http://www.tei-c.org/ns/Examples'">
       <xsl:call-template name="classAttributes">
@@ -1981,10 +1986,20 @@ select="$M"/></xsl:message>
           <xsl:value-of select="$AnonymousModule"/>
         </xsl:attribute>
       </xsl:if>
-      <xsl:if test="local-name()='classSpec' and @type='model' and not(@predeclare)">
-        <xsl:attribute name="predeclare">true</xsl:attribute>
-      </xsl:if>
-      <xsl:apply-templates mode="copy" select="@*|*|processing-instruction()|text()"/>
+      <xsl:choose>
+	<xsl:when test="local-name()='classSpec'">
+	  <xsl:if test="@type='model' and not(@predeclare)">
+	    <xsl:attribute name="predeclare">true</xsl:attribute>
+	  </xsl:if>
+	  <xsl:apply-templates mode="copy" select="@*|*|processing-instruction()|text()"/>
+	</xsl:when>
+	<xsl:when test="local-name()='macroSpec'">
+	  <xsl:apply-templates mode="copy" select="@*|*|processing-instruction()|text()"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="copyElementSpec"/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:element>
   </xsl:template>
 
