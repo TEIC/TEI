@@ -91,11 +91,11 @@
 	       <xsl:with-param name="who"
 			       select="w:pPr/w:rPr/w:ins/@w:author"/>
 	     </xsl:call-template>
-	     <xsl:call-template name="process-word-XRef"/>
+	     <xsl:call-template name="process-checking-for-crossrefs"/>
 	   </add>
 	 </xsl:when>
 	 <xsl:otherwise>
-	   <xsl:call-template name="process-word-XRef"/>
+	   <xsl:call-template name="process-checking-for-crossrefs"/>
 	 </xsl:otherwise>
        </xsl:choose>
    
@@ -107,23 +107,32 @@
 	Named template for handling processing any cross-references found.
     </desc>
     </doc>
-    <xsl:template name="process-word-XRef">
+    <xsl:template name="process-checking-for-crossrefs">
       <xsl:choose>
 	<xsl:when
-	    test="w:r[w:fldChar/@w:fldCharType[matches(.,'begin')]]">
-	  <xsl:for-each-group select="w:*"
+	    test="w:r/w:fldChar[@w:fldCharType='begin']">
+	  <xsl:for-each-group select="w:*|m:*"
 			      group-starting-with="w:r[w:fldChar/@w:fldCharType[matches(.,'begin|end')]]">
 	    <xsl:choose>
 	      <xsl:when
-		  test="self::w:r[w:fldChar/@w:fldCharType[matches(.,'begin')]]">
+		  test="self::w:r/w:fldChar[@w:fldCharType='begin']">
 		<ref>
 		  <xsl:for-each select="current-group()">
 		    <xsl:if test="self::w:r[w:instrText]">			    
 			<xsl:variable name="ref">
-			  <xsl:value-of
-			      select="substring-before(substring-after(w:instrText,'_'),' ')"/>
+			  <xsl:choose>
+			    <xsl:when test="contains(w:instrText,'REF _')">
+			      <xsl:text>#</xsl:text>
+			      <xsl:value-of
+				  select="substring-before(substring-after(w:instrText,'_'),'&#32;')"/>
+			    </xsl:when>
+			    <xsl:when
+				test="contains(w:instrText,'HYPERLINK')">
+			      <xsl:value-of select="substring-before(substring-after(w:instrText,'&#x0022;'),'&#x0022;')"/>
+			    </xsl:when>
+			  </xsl:choose>
 			</xsl:variable>
-			<xsl:attribute name="target" select="concat('#',$ref)"/>
+			<xsl:attribute name="target" select="$ref"/>
 		    </xsl:if>
 		  </xsl:for-each>
 		  <xsl:for-each select="current-group()">

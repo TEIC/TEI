@@ -100,7 +100,7 @@
 	       <xsl:value-of select="substring-before(substring-after(.,'&#x0022;'),'&#x0022;')"/>
 	     </xsl:for-each>
 	   </xsl:attribute>
-	   <xsl:apply-templates/>
+	   <xsl:call-template name="basicStyles"/>
 	 </ref>
        </xsl:when>
        

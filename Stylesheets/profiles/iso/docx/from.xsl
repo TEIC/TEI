@@ -526,7 +526,7 @@
                 name="type">headless</xsl:attribute>
                 <xsl:if test="string(normalize-space($divname))">
                     <p>
-		      <xsl:call-template name="process-word-XRef"/>
+		      <xsl:call-template name="process-checking-for-crossrefs"/>
                     </p>
                 </xsl:if>
             </xsl:when>
@@ -535,7 +535,7 @@
                 <xsl:attribute name="type">headless</xsl:attribute>
                 <xsl:if test="string(normalize-space($divname))">
                     <p>
-		      <xsl:call-template name="process-word-XRef"/>
+		      <xsl:call-template name="process-checking-for-crossrefs"/>
                     </p>
                 </xsl:if>
             </xsl:otherwise>
@@ -764,30 +764,30 @@
 	    </xsl:when>
 	    
             <xsl:when test="$style='Hyperlink'">
-                  <xsl:variable name="ref">
-                    <xsl:value-of
-                        select="preceding-sibling::w:r[w:instrText][1]/w:instrText">
-		    </xsl:value-of>
-		  </xsl:variable>
-		    <xsl:choose>
-		      <xsl:when test="starts-with($ref,' REF')">
-	      <xsl:call-template name="basicStyles"/>
-		      </xsl:when>
-		      <xsl:when test="starts-with($ref,'REF')">
-	      <xsl:call-template name="basicStyles"/>
-		      </xsl:when>
-		      <xsl:otherwise>
-			<ref>
-			  <xsl:attribute name="target">
-			    <xsl:value-of
-				select="substring-before(substring-after($ref,'&#x0022;'),'&#x0022;')"/>
-			  </xsl:attribute>
-	      <xsl:call-template name="basicStyles"/>
-			</ref>
-		      </xsl:otherwise>
-		    </xsl:choose>
-            </xsl:when>
-
+	      <xsl:variable name="ref">
+		<xsl:value-of
+		    select="preceding-sibling::w:r[w:instrText][1]/w:instrText">
+		</xsl:value-of>
+	      </xsl:variable>
+	      <xsl:choose>
+		<xsl:when test="starts-with($ref,' REF')">
+		  <xsl:call-template name="basicStyles"/>
+		</xsl:when>
+		<xsl:when test="starts-with($ref,'REF')">
+		  <xsl:call-template name="basicStyles"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <ref>
+		    <xsl:attribute name="target">
+		      <xsl:value-of
+			  select="substring-before(substring-after($ref,'&#x0022;'),'&#x0022;')"/>
+		    </xsl:attribute>
+		    <xsl:call-template name="basicStyles"/>
+		  </ref>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:when>
+	    
             <xsl:when test="$pstyle='RefNorm'">
 	      <xsl:apply-templates/>
             </xsl:when>
@@ -1503,17 +1503,17 @@
     </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Example']" mode="paragraph">
         <note rend="Example">
-            <xsl:apply-templates/>
+	    <xsl:call-template name="process-checking-for-crossrefs"/>
         </note>
     </xsl:template>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Exampleparagraph']" mode="paragraph">
         <note rend="Exampleparagraph">
-            <xsl:apply-templates/>
+	    <xsl:call-template name="process-checking-for-crossrefs"/>
         </note>
     </xsl:template>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Examplenumbered']" mode="paragraph">
         <note rend="Examplenumbered">
-            <xsl:apply-templates/>
+	    <xsl:call-template name="process-checking-for-crossrefs"/>
         </note>
     </xsl:template>
 
@@ -1524,47 +1524,47 @@
     </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Note']" mode="paragraph">
         <note rend="Note">
-            <xsl:apply-templates/>
+	    <xsl:call-template name="process-checking-for-crossrefs"/>
         </note>
     </xsl:template>
 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Note paragraph']" mode="paragraph">
-        <note rend="Noteparagraph" >
-            <xsl:apply-templates/>
+      <note rend="Noteparagraph" >
+	<xsl:call-template name="process-checking-for-crossrefs"/>
         </note>
     </xsl:template>
 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Note numbered']"
 		  mode="paragraph">
         <note rend="Notenumbered">
-            <xsl:apply-templates/>
+	  <xsl:call-template name="process-checking-for-crossrefs"/>
         </note>
     </xsl:template>
 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Table note']"
 		  mode="paragraph">
         <note rend="Tablenote">
-            <xsl:apply-templates/>
+	  <xsl:call-template name="process-checking-for-crossrefs"/>
         </note>
     </xsl:template>
 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Figure note']"
 		  mode="paragraph">
         <note rend="Figurenote">
-            <xsl:apply-templates/>
+	  <xsl:call-template name="process-checking-for-crossrefs"/>
         </note>
     </xsl:template>
 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Figure footnote']"
 		  mode="paragraph">
-        <note rend="Figurefootnote">
-            <xsl:apply-templates/>
+      <note rend="Figurefootnote">
+	<xsl:call-template name="process-checking-for-crossrefs"/>
         </note>
     </xsl:template>
 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Note list']" mode="paragraph">
         <note rend="Notelist" >
-            <xsl:apply-templates/>
+	  <xsl:call-template name="process-checking-for-crossrefs"/>
         </note>
     </xsl:template>
 
@@ -1578,8 +1578,8 @@
     </xsl:template>
 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$TableNote]">
-        <note place="inline">
-            <xsl:apply-templates/>
+      <note place="inline">
+	<xsl:call-template name="process-checking-for-crossrefs"/>		    
         </note>
     </xsl:template>
 
@@ -1595,12 +1595,12 @@
 	        </xsl:when>
 	        <xsl:when test="w:pPr/w:pStyle/@w:val=$TableNote">
 	           <note place="inline">
-	              <xsl:apply-templates/>
+		     <xsl:call-template name="process-checking-for-crossrefs"/>
 	           </note>
 	        </xsl:when>
 	        <xsl:otherwise>
 	           <p>
-	              <xsl:apply-templates/>
+		     <xsl:call-template name="process-checking-for-crossrefs"/>
 	           </p>
 	        </xsl:otherwise>
       </xsl:choose>
@@ -1631,7 +1631,7 @@
                     <xsl:value-of select="w:pPr/w:spacing/@w:after"/>
                 </xsl:attribute>
             </xsl:if>
-	    <xsl:call-template name="process-word-XRef"/>
+	    <xsl:call-template name="process-checking-for-crossrefs"/>
         </p>
     </xsl:template>
 

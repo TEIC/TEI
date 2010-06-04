@@ -1857,16 +1857,16 @@
       <w:r>
 	<w:fldChar w:fldCharType="separate"/>
       </w:r>
+
       <w:r>
 	<w:rPr>
-	      <w:rStyle w:val="Hyperlink"/>
-	      <xsl:copy-of select="$anchor/w:r/w:rPr/*[not(self::w:rStyle)]"/>
-	      <w:u w:val="none"/>
+	  <w:rStyle w:val="Hyperlink"/>
+	  <xsl:copy-of select="$anchor/w:r/w:rPr/*[not(self::w:rStyle)]"/>
+	  <w:u w:val="none"/>
 	</w:rPr>
-<!--<xsl:message>@@ <xsl:copy-of select="$anchor"/></xsl:message>-->
 	<xsl:choose>
 	  <xsl:when test="$anchor/w:r">
-	    <xsl:copy-of select="$anchor/w:r/w:*"/>
+	    <xsl:copy-of select="$anchor/w:r/w:t"/>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <w:t>
@@ -1875,9 +1875,11 @@
 	  </xsl:otherwise>
 	</xsl:choose>
       </w:r>
+
       <w:r>
 	<w:fldChar w:fldCharType="end"/>
       </w:r>
+
     </xsl:template>
 
     <xsl:template match="tei:note|tei:figure|tei:table|tei:item" mode="xref">
