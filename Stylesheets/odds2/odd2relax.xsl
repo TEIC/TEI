@@ -427,21 +427,21 @@
          </xsl:when>
 	 -->
          <xsl:when test="key('DEFED',@name)">
-	           <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
+	   <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
          </xsl:when>
-         <xsl:when test="ancestor::tei:content[@preserveNames='true']">
-	           <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
+	 <xsl:when test="ancestor::tei:content[@autoPrefix='false']">
+	   <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
          </xsl:when>
          <xsl:when test="count(parent::*/*)=1">
-	           <xsl:if test="$verbose='true'">
-	              <xsl:message>ZAP reference to undefined [<xsl:value-of select="@name"/>] and leave empty behind</xsl:message>
-	           </xsl:if>
-	           <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+	   <xsl:if test="$verbose='true'">
+	     <xsl:message>ZAP reference to undefined [<xsl:value-of select="@name"/>] and leave empty behind</xsl:message>
+	   </xsl:if>
+	   <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
          </xsl:when>
          <xsl:otherwise>
-	           <xsl:if test="$verbose='true'">
-	              <xsl:message>ZAP reference to undefined [<xsl:value-of select="@name"/>]</xsl:message>
-	           </xsl:if>
+	   <xsl:if test="$verbose='true'">
+	     <xsl:message>ZAP reference to undefined [<xsl:value-of select="@name"/>]</xsl:message>
+	   </xsl:if>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>

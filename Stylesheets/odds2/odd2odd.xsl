@@ -427,7 +427,7 @@
     <xsl:choose>
       <xsl:when test="$used=''">
         <xsl:if test="$verbose='true'">
-          <xsl:message>reject <xsl:value-of select="@ident"/>
+          <xsl:message>Reject unused class <xsl:value-of select="@ident"/>
                </xsl:message>
         </xsl:if>
       </xsl:when>
@@ -475,7 +475,7 @@ How can a class be ok?
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="$verbose='true'">
-          <xsl:message>reject <xsl:value-of select="$k"/>
+          <xsl:message>Reject unused macro <xsl:value-of select="$k"/>
 	              </xsl:message>
         </xsl:if>
       </xsl:otherwise>
@@ -1290,7 +1290,7 @@ select="$M"/></xsl:message>
 	but the element makes no override -->
         <xsl:when test="@mode='change' and tei:attList and not (contains($anyChanged,':element-'))">
           <xsl:if test="$verbose='true'">
-            <xsl:message>d) Class <xsl:value-of select="$className"/> for <xsl:value-of select="$elementName"/> has no changes in element, refer by name</xsl:message>
+            <xsl:message>Phase 1 check d) Class <xsl:value-of select="$className"/> for <xsl:value-of select="$elementName"/> has no changes in element, refer by name</xsl:message>
           </xsl:if>
           <attRef xmlns="http://www.tei-c.org/ns/1.0" n="5" name="{$className}.attributes"/>
         </xsl:when>
@@ -1323,13 +1323,13 @@ select="$M"/></xsl:message>
         <!-- there are no changes to the attributes in the odd-->
         <xsl:when test="$anyChanged=''">
           <xsl:if test="$verbose='true'">
-            <xsl:message>f) Class <xsl:value-of select="$className"/> for <xsl:value-of select="$elementName"/> has no changes, refer by name</xsl:message>
+            <xsl:message>Phase 1 check f) Class <xsl:value-of select="$className"/> for <xsl:value-of select="$elementName"/> has no changes, refer by name</xsl:message>
           </xsl:if>
           <attRef xmlns="http://www.tei-c.org/ns/1.0" n="4" name="{$className}.attributes"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:if test="$verbose='true'">
-            <xsl:message>g) Class <xsl:value-of select="$className"/> for <xsl:value-of select="$elementName"/> has changes in odd, refer by values</xsl:message>
+            <xsl:message>Phase 1 check g) Class <xsl:value-of select="$className"/> for <xsl:value-of select="$elementName"/> has changes in odd, refer by values</xsl:message>
           </xsl:if>
           <!-- attributes here -->
           <xsl:for-each select="tei:attList/tei:attDef">
@@ -1973,7 +1973,7 @@ select="$M"/></xsl:message>
 
   <xsl:template name="createCopy">
     <xsl:if test="$verbose='true'">
-      <xsl:message>Create <xsl:value-of select="@ident"/>            </xsl:message>
+      <xsl:message>Create <xsl:value-of select="local-name()"/> named <xsl:value-of select="@ident"/>            </xsl:message>
     </xsl:if>
     <xsl:element xmlns="http://www.tei-c.org/ns/1.0" name="{local-name()}">
       <xsl:if test="not(@module)">

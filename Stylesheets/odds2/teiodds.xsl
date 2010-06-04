@@ -201,7 +201,7 @@
 
   <xsl:template match="rng:ref">
     <xsl:choose>
-      <xsl:when test="ancestor::tei:content[@preserveNames='true']">
+      <xsl:when test="ancestor::tei:content[@autoPrefix='false']">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
       </xsl:when>
       <xsl:when test="key('IDENTS',@name)">
