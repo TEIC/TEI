@@ -273,7 +273,7 @@
 	  <xsl:when test="self::tei:att">true</xsl:when>
 	  <xsl:when test="self::tei:author">true</xsl:when>
 	  <xsl:when test="self::tei:br">true</xsl:when>
-	  <xsl:when test="self::tei:cit">true</xsl:when>
+	  <xsl:when test="self::tei:cit[ancestor::tei:p]">true</xsl:when>
 	  <xsl:when test="self::tei:c">true</xsl:when>
 	  <xsl:when test="self::tei:g">true</xsl:when>
 	  <xsl:when test="self::tei:code">true</xsl:when>
@@ -297,6 +297,7 @@
 	  <xsl:when test="self::tei:note[@place='bottom']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='end']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='comment']">true</xsl:when>
+	  <xsl:when test="self::tei:note[@place='inline' and not(parent::tei:div)]">true</xsl:when>
 	  <xsl:when test="self::tei:num">true</xsl:when>
 	  <xsl:when test="self::tei:mentioned">true</xsl:when>
 	  <xsl:when test="self::tei:orgName">true</xsl:when>
@@ -305,8 +306,11 @@
 	  <xsl:when test="self::tei:publisher">true</xsl:when>
 	  <xsl:when test="self::tei:pb">true</xsl:when>
 	  <xsl:when test="self::tei:ptr">true</xsl:when>
-	  <xsl:when
-	      test="self::tei:q[not(@type='sdt')]">true</xsl:when>
+	  <xsl:when test="self::tei:q[parent::tei:div]">false</xsl:when>
+	  <xsl:when test="self::tei:q[parent::tei:p]">true</xsl:when>
+	  <xsl:when test="self::tei:q[parent::tei:item]">true</xsl:when>
+	  <xsl:when test="self::tei:q[parent::tei:cit]">false</xsl:when>
+	  <xsl:when test="self::tei:q[@type='sdt']">false</xsl:when>
 	  <xsl:when test="self::tei:ref">true</xsl:when>
 	  <xsl:when test="self::tei:termRef">true</xsl:when>
 	  <xsl:when test="self::tei:seg">true</xsl:when>

@@ -254,7 +254,7 @@
 		<xsl:when test="self::tei:placeName">true</xsl:when>
 		<xsl:when test="self::tei:ptr">true</xsl:when>
 		<xsl:when test="self::tei:publisher">true</xsl:when>
-		<xsl:when test="self::tei:q">true</xsl:when>
+		<xsl:when test="self::tei:q[not(parent::tei:div)]">true</xsl:when>
 		<xsl:when test="self::tei:ref">true</xsl:when>
 		<xsl:when test="self::tei:region">true</xsl:when>
 		<xsl:when test="self::tei:repository">true</xsl:when>
