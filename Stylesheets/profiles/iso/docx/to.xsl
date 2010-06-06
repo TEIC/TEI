@@ -1032,7 +1032,7 @@
                     <xsl:attribute name="fmtid">
                         <xsl:text>{D5CDD505-2E9C-101B-9397-08002B2CF9AE}</xsl:text>
                     </xsl:attribute>
-		             <vt:lpwstr>2.14.0</vt:lpwstr>
+		             <vt:lpwstr>2.15.0</vt:lpwstr>
                 </property>
                 <property pid="1001" name="WordTemplateURI">
                     <xsl:attribute name="fmtid">
