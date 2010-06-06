@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
+                xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:cals="http://www.oasis-open.org/specs/tm9901"
                 xmlns:iso="http://www.iso.org/ns/1.0"
                 xmlns:its="http://www.w3.org/2005/11/its"
@@ -22,7 +23,9 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:html="http://www.w3.org/1999/xhtml"                
                 version="2.0"
-                exclude-result-prefixes="teidocx cals ve o r m v wp w10 w html wne mml tbx iso tei a xs pic fn its">
+                exclude-result-prefixes="teidocx cals ve o r m v wp
+					 w10 w html wne mml tbx iso
+					 tei teix a xs pic fn its">
     <!-- import conversion style -->
     <xsl:import href="../../../docx/to/teitodocx.xsl"/>
     <xsl:import href="tbx.xsl"/>
@@ -1236,6 +1239,91 @@
 
     <xsl:template match="processing-instruction()[name()='isotoc']">
       <xsl:value-of select="."/>
+    </xsl:template>
+
+<!--
+    <xsl:template match="tei:p/tei:cit">
+      <xsl:if test="@n">
+	<w:r>
+	  <w:t>
+	    <xsl:text>(</xsl:text>
+	    <xsl:value-of select="@n"/>
+	    <xsl:text>) </xsl:text>
+	  </w:t>
+	</w:r>
+      </xsl:if>
+      <w:r>
+	<w:rPr>
+	  <w:rStyle w:val="Quote"/>
+	</w:rPr>
+	<xsl:apply-templates/>
+      </w:r>
+    </xsl:template>
+
+    <xsl:template match="tei:div/tei:cit">
+      <xsl:variable name="content">
+	<xsl:copy>
+	  <xsl:if test="@n">
+	    <xsl:text>(</xsl:text>
+	    <xsl:value-of select="@n"/>
+	    <xsl:text>) </xsl:text>
+	  </xsl:if>
+	  <xsl:copy-of
+	      select="*|processing-instruction()|comment()|text()"/>
+	</xsl:copy>
+      </xsl:variable>
+      <xsl:for-each select="$content">
+	<xsl:call-template name="block-element">
+	  <xsl:with-param name="style">Quote</xsl:with-param>
+        </xsl:call-template>
+      </xsl:for-each>
+
+
+    </xsl:template>
+-->
+
+    <xsl:template match="/tei:TEI">
+      <xsl:variable name="phase1">
+	<xsl:copy>
+	  <xsl:apply-templates
+	      select="*|@*|text()|processing-instruction()|comment()" mode="phase1"/>
+	</xsl:copy>
+      </xsl:variable>
+<xsl:result-document href="/tmp/foo.xml">
+  <xsl:copy-of select="$phase1"/>
+</xsl:result-document>
+      <xsl:for-each select="$phase1/tei:TEI">
+	<xsl:call-template name="write-docxfiles"/>
+	<xsl:call-template name="create-document-dot-xml"/>
+      </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template match="@*|text()|comment()|processing-instruction()" mode="phase1">
+      <xsl:copy-of select="."/>
+    </xsl:template>
+    
+    
+    <xsl:template match="*" mode="phase1">
+      <xsl:copy>
+	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="phase1"/>
+      </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="tei:p[not(text()) and tei:cit]" mode="phase1">
+      <xsl:apply-templates/>
+    </xsl:template>
+
+    <xsl:template match="tei:cit" mode="phase1">
+      <xsl:if test="@n">
+	<p rend="Example" xmlns="http://www.tei-c.org/ns/1.0">
+	  <xsl:value-of select="@n"/>
+	</p>
+      </xsl:if>
+      <xsl:copy>
+	<xsl:apply-templates
+	    select="*|processing-instruction()|comment()|text()"
+	    mode="phase1"/>
+      </xsl:copy>
     </xsl:template>
 
 </xsl:stylesheet>

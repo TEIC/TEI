@@ -849,23 +849,33 @@
 
     <!-- quoted text; if it surrounds egXML, just pass on -->
     
-    <xsl:template match="tei:q[not(parent::tei:div)]">
+    <xsl:template match="tei:q">
       <xsl:choose>
-	<xsl:when test="teix:egXML">
-	  <xsl:apply-templates/>
+
+	<xsl:when test="parent::tei:div">
+	  <xsl:call-template name="block-element"/>
 	</xsl:when>
+
+	<xsl:when test="teix:egXML|tei:list|parent::tei:cit">
+	  <xsl:call-template name="block-element"/>
+	</xsl:when>
+
 	<xsl:otherwise>
-	  <xsl:variable name="content">
-	    <xsl:value-of select="$preQuote"/>
-	    <xsl:copy-of select="*|text()|comment()|processing-instruction()"/>
-	    <xsl:value-of select="$postQuote"/>
-	  </xsl:variable>
-	  <xsl:for-each select="$content">
-	    <xsl:apply-templates/>
-	  </xsl:for-each>
+	  <w:r>
+	    <w:t>
+	      <xsl:value-of select="$preQuote"/>
+	    </w:t>
+	  </w:r>
+	  <xsl:apply-templates/>
+	  <w:r>
+	    <w:t>
+	      <xsl:value-of select="$postQuote"/>
+	    </w:t>
+	  </w:r>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
+
 
     <xsl:template match="tbx:termEntry">
         <w:p>
@@ -1743,42 +1753,6 @@
         <w:r>
             <w:br/>
         </w:r>
-    </xsl:template>
-
-    <xsl:template match="tei:p/tei:cit">
-      <xsl:if test="@n">
-	<w:r>
-	  <w:t>
-	    <xsl:text>(</xsl:text>
-	    <xsl:value-of select="@n"/>
-	    <xsl:text>) </xsl:text>
-	  </w:t>
-	</w:r>
-      </xsl:if>
-      <w:r>
-	<w:rPr>
-	  <w:rStyle w:val="Quote"/>
-	</w:rPr>
-	<xsl:apply-templates/>
-      </w:r>
-    </xsl:template>
-
-    <xsl:template match="tei:div/tei:cit">
-      <xsl:variable name="content">
-	  <xsl:if test="@n">
-	    <xsl:text>(</xsl:text>
-	    <xsl:value-of select="@n"/>
-	    <xsl:text>) </xsl:text>
-	  </xsl:if>
-	  <xsl:copy-of select="*|processing-instruction()|comment()|text()"/>
-      </xsl:variable>
-      <xsl:for-each select="$content">
-	<xsl:call-template name="block-element">
-	  <xsl:with-param name="style">Quote</xsl:with-param>
-        </xsl:call-template>
-      </xsl:for-each>
-
-
     </xsl:template>
 
     <!-- hyperlink -->
