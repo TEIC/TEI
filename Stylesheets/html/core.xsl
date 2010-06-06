@@ -205,9 +205,9 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:code">
-    <tt>
+    <code>
       <xsl:apply-templates/>
-    </tt>
+    </code>
   </xsl:template>
 
   <xd:doc>
@@ -224,9 +224,9 @@
     <xd:detail></xd:detail>
   </xd:doc>
   <xsl:template match="tei:del">
-    <span style="text-decoration: line-through;">
+    <del>
       <xsl:apply-templates/>
-    </span>
+    </del>
   </xsl:template>
 
 

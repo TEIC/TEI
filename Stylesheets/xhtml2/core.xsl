@@ -211,9 +211,9 @@
       <desc>Process element code</desc>
    </doc>
   <xsl:template match="tei:code">
-      <tt>
+      <code>
          <xsl:apply-templates/>
-      </tt>
+      </code>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -230,9 +230,9 @@
       <desc/>
    </doc>
   <xsl:template match="tei:del">
-      <span style="text-decoration: line-through;">
+      <del>
          <xsl:apply-templates/>
-      </span>
+      </del>
   </xsl:template>
 
 
@@ -298,7 +298,7 @@
       </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element caesure</desc>
+      <desc>Process element caesura</desc>
    </doc>
   <xsl:template match="tei:caesura">
       <span class="caesura">&#160;&#160;&#160;&#160;</span>
