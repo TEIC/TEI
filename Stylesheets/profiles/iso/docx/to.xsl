@@ -1289,9 +1289,6 @@
 	      select="*|@*|text()|processing-instruction()|comment()" mode="phase1"/>
 	</xsl:copy>
       </xsl:variable>
-<xsl:result-document href="/tmp/foo.xml">
-  <xsl:copy-of select="$phase1"/>
-</xsl:result-document>
       <xsl:for-each select="$phase1/tei:TEI">
 	<xsl:call-template name="write-docxfiles"/>
 	<xsl:call-template name="create-document-dot-xml"/>
@@ -1315,7 +1312,7 @@
 
     <xsl:template match="tei:cit" mode="phase1">
       <xsl:if test="@n">
-	<p rend="Example" xmlns="http://www.tei-c.org/ns/1.0">
+	<p rend="Example paragraph" xmlns="http://www.tei-c.org/ns/1.0">
 	  <xsl:value-of select="@n"/>
 	</p>
       </xsl:if>

@@ -512,14 +512,24 @@
 
     <xsl:template match="text()">
       <xsl:param name="character-style"/>
-      <xsl:if test="../@xml:id">
-	<xsl:for-each select="..">
-	  <xsl:variable name="N">
-	    <xsl:number level="any"/>
-	  </xsl:variable>
-	  <w:bookmarkStart w:id="{number($N) + 10000}" w:name="{@xml:id}"/>
-	</xsl:for-each>
-      </xsl:if>
+      <xsl:choose>
+	<xsl:when test="../@xml:id">
+	  <xsl:for-each select="..">
+	    <xsl:variable name="N">
+	      <xsl:number level="any"/>
+	    </xsl:variable>
+	    <w:bookmarkStart w:id="{number($N) + 10000}" w:name="_{@xml:id}"/>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:when test="parent::tei:head/parent::tei:div/@xml:id">
+	  <xsl:for-each select="parent::tei:head/parent::tei:div">
+	    <xsl:variable name="N">
+	      <xsl:number level="any"/>
+	    </xsl:variable>
+	    <w:bookmarkStart w:id="{number($N) + 10000}" w:name="_{@xml:id}"/>
+	  </xsl:for-each>
+	</xsl:when>
+      </xsl:choose>
       <xsl:if test="parent::tei:head/parent::tei:div[@iso:status]">
             <w:r>
                 <w:t>
@@ -554,14 +564,24 @@
 	  </xsl:if>
 	  <xsl:call-template name="Text"/>
 	</w:r>
-      <xsl:if test="../@xml:id">
-	<xsl:for-each select="..">
-	  <xsl:variable name="N">
-	    <xsl:number level="any"/>
-	  </xsl:variable>
-	  <w:bookmarkStart w:id="{number($N) + 10000}"/>
-	</xsl:for-each>
-      </xsl:if>
+      <xsl:choose>
+	<xsl:when test="../@xml:id">
+	  <xsl:for-each select="..">
+	    <xsl:variable name="N">
+	      <xsl:number level="any"/>
+	    </xsl:variable>
+	    <w:bookmarkEnd w:id="{number($N) + 10000}"/>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:when test="parent::tei:head/parent::tei:div/@xml:id">
+	  <xsl:for-each select="parent::tei:head/parent::tei:div">
+	    <xsl:variable name="N">
+	      <xsl:number level="any"/>
+	    </xsl:variable>
+	    <w:bookmarkEnd w:id="{number($N) + 10000}"/>
+	  </xsl:for-each>
+	</xsl:when>
+      </xsl:choose>
     </xsl:template>
 
 
@@ -852,11 +872,7 @@
     <xsl:template match="tei:q">
       <xsl:choose>
 
-	<xsl:when test="parent::tei:div">
-	  <xsl:call-template name="block-element"/>
-	</xsl:when>
-
-	<xsl:when test="teix:egXML|tei:list|parent::tei:cit">
+	<xsl:when test="teix:egXML|tei:list|parent::tei:cit|parent::tei:div">
 	  <xsl:call-template name="block-element"/>
 	</xsl:when>
 
@@ -944,7 +960,7 @@
         <xsl:call-template name="block-element">
             <xsl:with-param name="select">
                 <tei:p rend="Special" 
-		       iso:style="font-family:Courier New; text-align:left;" >
+		       iso:style="font-family:Courier New; font-size:18; text-align:left;" >
                     <xsl:call-template name="create-egXML-section"/>
                 </tei:p>
             </xsl:with-param>
@@ -952,19 +968,19 @@
     </xsl:template>
 
     <xsl:template match="tei:eg">
-      <xsl:variable name="s">
-	<xsl:choose>
-	  <xsl:when test="ancestor::tei:cell">egXMLTable</xsl:when>
-	  <xsl:otherwise>egXML</xsl:otherwise>
-	</xsl:choose>
-      </xsl:variable>
       <xsl:variable name="content">
 	<xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="egcopy"/>
       </xsl:variable>
       <xsl:for-each select="$content">
 	<xsl:call-template name="block-element">
-	  <xsl:with-param name="style" select="$s"/>
-        </xsl:call-template>
+	  <xsl:with-param name="style">egXML</xsl:with-param>
+	  <xsl:with-param name="select">
+	    <tei:p rend="Special" 
+		   iso:style="font-family:Courier New; font-size:18;text-align:left;" >
+	      <xsl:copy-of select="*|processing-instruction()|comment()|text()"/>
+	    </tei:p>
+	  </xsl:with-param>
+	</xsl:call-template>
       </xsl:for-each>
     </xsl:template>
 
@@ -1007,6 +1023,48 @@
                 <xsl:when test="w:tblPr">
                     <xsl:copy-of select="w:tblPr"/>
                 </xsl:when>
+		<xsl:when test="@rend='attDef'">
+                    <w:tblPr>
+                        <w:tblW w:w="0" w:type="auto"/>
+                        <w:jc w:val="left"/>
+                        <w:tblBorders>
+                            <w:top w:val="nil" w:space="0" w:color="auto"/>
+                            <w:left w:val="nil" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="nil" w:space="0" w:color="auto"/>
+                            <w:right w:val="nil" w:space="0" w:color="auto"/>
+                            <w:insideV w:val="nil" w:space="0" w:color="auto"/>
+                            <w:insideH w:val="nil" w:space="0" w:color="auto"/>
+                        </w:tblBorders>
+                    </w:tblPr>
+		</xsl:when>
+		<xsl:when test="@rend='attList'">
+                    <w:tblPr>
+                        <w:tblW w:w="0" w:type="auto"/>
+                        <w:jc w:val="left"/>
+                        <w:tblBorders>
+                            <w:top w:val="nil" w:space="0" w:color="auto"/>
+                            <w:left w:val="nil" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="nil" w:space="0" w:color="auto"/>
+                            <w:right w:val="nil" w:space="0" w:color="auto"/>
+                            <w:insideV w:val="nil" w:space="0" w:color="auto"/>
+                            <w:insideH w:val="nil" w:space="0" w:color="auto"/>
+                        </w:tblBorders>
+                    </w:tblPr>
+		</xsl:when>
+                <xsl:when test="@rend='wovenodd'">
+                    <w:tblPr>
+                        <w:tblW w:w="0" w:type="auto"/>
+                        <w:jc w:val="left"/>
+                        <w:tblBorders>
+                            <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:insideV w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:insideH w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                        </w:tblBorders>
+                    </w:tblPr>
+		</xsl:when>
                 <xsl:otherwise>
                     <w:tblPr>
                         <w:tblW w:w="0" w:type="auto"/>
@@ -1798,6 +1856,9 @@
 	    <w:rPr>
 	      <w:rStyle w:val="Hyperlink"/>
 	      <w:u w:val="none"/>
+	      <xsl:if test="ancestor::tei:cell">
+		<w:sz w:val="18"/>
+	      </xsl:if>
 	    </w:rPr>
 	    <w:t>
 	      <xsl:copy-of select="$anchor"/>
@@ -1853,6 +1914,9 @@
 	<w:rPr>
 	  <w:rStyle w:val="Hyperlink"/>
 	  <xsl:copy-of select="$anchor/w:r/w:rPr/*[not(self::w:rStyle)]"/>
+	  <xsl:if test="ancestor::tei:p[@rend='Special']">
+	    <w:rFonts w:ascii="Courier New" w:hAnsi="Courier New"/>
+	  </xsl:if>
 	  <w:u w:val="none"/>
 	</w:rPr>
 	<xsl:choose>

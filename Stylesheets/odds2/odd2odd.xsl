@@ -575,7 +575,8 @@ How can a class be ok?
     <xsl:copy>
       <xsl:if test="not(@module)">
         <xsl:attribute name="module">
-          <xsl:value-of select="$AnonymousModule"/>
+	  <xsl:text>derived-module-</xsl:text>
+          <xsl:value-of select="ancestor::tei:schemaSpec/@ident"/>
         </xsl:attribute>
       </xsl:if>
       <xsl:call-template name="copyElementSpec"/>
@@ -1983,7 +1984,8 @@ select="$M"/></xsl:message>
     <xsl:element xmlns="http://www.tei-c.org/ns/1.0" name="{local-name()}">
       <xsl:if test="not(@module)">
         <xsl:attribute name="module">
-          <xsl:value-of select="$AnonymousModule"/>
+	  <xsl:text>derived-module-</xsl:text>
+          <xsl:value-of select="ancestor::tei:schemaSpec/@ident"/>
         </xsl:attribute>
       </xsl:if>
       <xsl:choose>
