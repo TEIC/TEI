@@ -306,10 +306,10 @@
 	  <xsl:when test="self::tei:publisher">true</xsl:when>
 	  <xsl:when test="self::tei:pb">true</xsl:when>
 	  <xsl:when test="self::tei:ptr">true</xsl:when>
-	  <xsl:when test="self::tei:q[parent::tei:div]">false</xsl:when>
 	  <xsl:when test="self::tei:q[parent::tei:p]">true</xsl:when>
 	  <xsl:when test="self::tei:q[parent::tei:item]">true</xsl:when>
-	  <xsl:when test="self::tei:q[parent::tei:cit]">true</xsl:when>
+	  <xsl:when test="self::tei:q[parent::tei:cit]">false</xsl:when>
+	  <xsl:when test="self::tei:q[parent::tei:div]">false</xsl:when>
 	  <xsl:when test="self::tei:q[@type='sdt']">false</xsl:when>
 	  <xsl:when test="self::tei:ref">true</xsl:when>
 	  <xsl:when test="self::tei:termRef">true</xsl:when>

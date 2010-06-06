@@ -117,15 +117,6 @@
     </span>
   </xsl:template>
   <xd:doc>
-    <xd:short>Process elements tei:role</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:role">
-    <strong>
-      <xsl:apply-templates/>
-    </strong>
-  </xsl:template>
-  <xd:doc>
     <xd:short>Process elements tei:roleDesc</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>

@@ -31,11 +31,4 @@
     <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2008, TEI Consortium</xd:copyright>
   </xd:doc>
-  <xd:doc>
-    <xd:short>Process element dicteg</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:dicteg">
-    <xsl:apply-templates/>
-  </xsl:template>
 </xsl:stylesheet>

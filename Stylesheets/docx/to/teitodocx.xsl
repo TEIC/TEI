@@ -847,23 +847,24 @@
         </xsl:call-template>
     </xsl:template>
 
-  
-   
-
-
-    <!-- quoted text -->
+    <!-- quoted text; if it surrounds egXML, just pass on -->
+    
     <xsl:template match="tei:q[not(parent::tei:div)]">
-      <w:r>
-	<w:t>
-	  <xsl:value-of select="$preQuote"/>
-	</w:t>
-      </w:r>
-      <xsl:apply-templates/>
-      <w:r>
-	<w:t>
-	  <xsl:value-of select="$postQuote"/>
-	</w:t>
-      </w:r>
+      <xsl:choose>
+	<xsl:when test="teix:egXML">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:variable name="content">
+	    <xsl:value-of select="$preQuote"/>
+	    <xsl:copy-of select="*|text()|comment()|processing-instruction()"/>
+	    <xsl:value-of select="$postQuote"/>
+	  </xsl:variable>
+	  <xsl:for-each select="$content">
+	    <xsl:apply-templates/>
+	  </xsl:for-each>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
 
     <xsl:template match="tbx:termEntry">

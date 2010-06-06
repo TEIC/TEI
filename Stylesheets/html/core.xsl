@@ -109,10 +109,10 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:address">
-    <div>
+    <address>
       <xsl:call-template name="rendToClass"/>
       <xsl:apply-templates/>
-    </div>
+    </address>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:bibl</xd:short>
@@ -564,15 +564,6 @@
         </strong>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements tei:kw</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:kw">
-    <span class="kw">
-      <xsl:apply-templates/>
-    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:l</xd:short>

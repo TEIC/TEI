@@ -101,9 +101,10 @@
       <desc>Process element address</desc>
    </doc>
   <xsl:template match="tei:address">
-      <div class="address">
-         <xsl:apply-templates/>
-      </div>
+    <address>
+      <xsl:call-template name="rendToClass"/>
+      <xsl:apply-templates/>
+    </address>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element bibl</desc>
@@ -551,14 +552,6 @@
             </strong>
          </xsl:otherwise>
       </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element kw</desc>
-   </doc>
-  <xsl:template match="tei:kw">
-      <span class="kw">
-         <xsl:apply-templates/>
-      </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element l</desc>

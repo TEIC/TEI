@@ -31,10 +31,4 @@
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element dicteg</desc>
-   </doc>
-  <xsl:template match="tei:dicteg">
-      <xsl:apply-templates/>
-  </xsl:template>
 </xsl:stylesheet>

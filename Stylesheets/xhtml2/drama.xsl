@@ -108,14 +108,6 @@
       </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element role</desc>
-   </doc>
-  <xsl:template match="tei:role">
-      <strong>
-         <xsl:apply-templates/>
-      </strong>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element roleDesc</desc>
    </doc>
   <xsl:template match="tei:roleDesc">
