@@ -297,7 +297,7 @@
 	  <xsl:when test="self::tei:note[@place='bottom']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='end']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='comment']">true</xsl:when>
-	  <xsl:when test="self::tei:note[@place='inline' and not(parent::tei:div)]">true</xsl:when>
+<!--	  <xsl:when test="self::tei:note[@place='inline' and not(parent::tei:div)]">true</xsl:when>-->
 	  <xsl:when test="self::tei:num">true</xsl:when>
 	  <xsl:when test="self::tei:mentioned">true</xsl:when>
 	  <xsl:when test="self::tei:orgName">true</xsl:when>

@@ -497,6 +497,7 @@
     </xsl:template>
 
     <xsl:template name="create-footnote">           
+
       <xsl:variable name="pPr">
 	<xsl:choose>
 	  <xsl:when test="(@place='foot'  or @place='bottom') and      (parent::tei:cell or parent::cals:entry)">
@@ -519,6 +520,7 @@
 	      </w:t>
 	    </w:r>
 	  </xsl:when>
+	  <xsl:when test="@place='foot'  or @place='bottom'"/>
 	  <xsl:when test="@type='Example'">
 	    <w:pPr>
 	      <w:pStyle w:val="Example"/>
@@ -550,7 +552,13 @@
       </xsl:variable>
       
       <xsl:choose>
-	<xsl:when test="empty($pPr)">
+	<xsl:when test="$pPr/*">
+	  <xsl:call-template name="block-element">
+	    <xsl:with-param name="pPr" select="$pPr"/>
+	    <xsl:with-param name="nop">false</xsl:with-param>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:otherwise>
 	  <xsl:variable name="num">
 	    <xsl:number count="tei:note[@place='foot' or @place='bottom'][not(ancestor::cals:entry)]"
 			level="any"/>
@@ -570,12 +578,6 @@
 	      <w:t>)</w:t>
 	    </w:r>
 	  </xsl:if>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:call-template name="block-element">
-	    <xsl:with-param name="pPr" select="$pPr"/>
-	    <xsl:with-param name="nop">false</xsl:with-param>
-	  </xsl:call-template>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
@@ -826,10 +828,10 @@
     </xsl:template>
     
     
-           <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
         Table of Contents
-      </desc></doc>
+    </desc></doc>
     <xsl:template name="generate-toc">
         <w:p>
             <w:pPr>
@@ -865,9 +867,8 @@
         </w:p>
     </xsl:template>
     
-           <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>
- who created this document </desc></doc>
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>Who created this document </desc></doc>
     <xsl:template name="created-by">
         <xsl:value-of select="key('ISOMETA','secretariat')"/>
     </xsl:template>
@@ -888,7 +889,6 @@
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
         Create all the files of the docx archive;    for ISO, don't write out most of the auxiliary files.
-
     </desc>
    </doc>
     <xsl:template name="write-docxfiles">
