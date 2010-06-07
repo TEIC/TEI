@@ -308,6 +308,7 @@
 	  <xsl:when test="self::tei:ptr">true</xsl:when>
 	  <xsl:when test="self::tei:q[parent::tei:p]">true</xsl:when>
 	  <xsl:when test="self::tei:q[parent::tei:note]">true</xsl:when>
+	  <xsl:when test="self::tei:q[parent::tei:cell]">true</xsl:when>
 	  <xsl:when test="self::tei:q[parent::tei:item]">true</xsl:when>
 	  <xsl:when test="self::tei:q[@type='sdt']">false</xsl:when>
 	  <xsl:when test="self::tei:ref">true</xsl:when>
