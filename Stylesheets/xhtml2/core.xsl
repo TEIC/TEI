@@ -182,16 +182,16 @@
       <xsl:choose>
          <xsl:when test="@rend='display'">
             <blockquote>
-	              <xsl:call-template name="rendToClass"/>
-               <p>
-	                 <xsl:if test="@n">
-	                    <xsl:text>(</xsl:text>
-	                    <xsl:value-of select="@n"/>
-	                    <xsl:text>) </xsl:text>
-	                 </xsl:if>
-                  <xsl:apply-templates select="tei:q|tei:quote"/>
-                  <xsl:apply-templates select="tei:bibl"/>
-               </p>
+	      <xsl:call-template name="rendToClass"/>
+	      <p>
+		<xsl:if test="@n">
+		  <xsl:text>(</xsl:text>
+		  <xsl:value-of select="@n"/>
+		  <xsl:text>) </xsl:text>
+		</xsl:if>
+		<xsl:apply-templates select="tei:q|tei:quote"/>
+		<xsl:apply-templates select="tei:bibl"/>
+	      </p>
             </blockquote>
          </xsl:when>
          <xsl:otherwise>
@@ -925,8 +925,8 @@
 	              <xsl:with-param name="name" select="$identifier"/>
 	           </xsl:call-template>
             <blockquote>
-	              <xsl:call-template name="rendToClass"/>
-	              <p>
+	      <xsl:call-template name="rendToClass"/>
+	      <p>
                   <xsl:apply-templates/>
                </p>
             </blockquote>
@@ -1112,10 +1112,10 @@
   <xsl:template match="tei:q|tei:said">
       <xsl:choose>
          <xsl:when test="tei:p|tei:l">
-            <blockquote>
-	              <xsl:call-template name="rendToClass"/>
-               <xsl:apply-templates/>
-            </blockquote>
+	   <blockquote>
+	     <xsl:call-template name="rendToClass"/>
+	       <xsl:apply-templates/>
+	   </blockquote>
          </xsl:when>
          <xsl:when test="@rend='display'">
             <p class="blockquote">
@@ -1129,7 +1129,7 @@
             <xsl:apply-templates/>
          </xsl:when>
          <xsl:otherwise>
-	           <xsl:call-template name="makeQuote"/>
+	   <xsl:call-template name="makeQuote"/>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -1185,13 +1185,22 @@
             </xsl:if>
          </xsl:when>
          <xsl:when test="parent::tei:p or parent::tei:note">
-	           <div class="blockquote">
-	              <xsl:apply-templates/>
-	           </div>
+	   <div class="blockquote">
+	     <xsl:choose>
+	       <xsl:when test="tei:p">
+		 <xsl:apply-templates/>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <p>
+		   <xsl:apply-templates/>
+		 </p>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </div>
          </xsl:when>
          <xsl:otherwise>
             <blockquote>
-	              <xsl:call-template name="rendToClass"/>
+	      <xsl:call-template name="rendToClass"/>
                <xsl:choose>
                   <xsl:when test="tei:p">
                      <xsl:apply-templates/>
@@ -1418,7 +1427,7 @@
             <xsl:value-of select="@n"/>
          </xsl:when>
          <xsl:otherwise>
-	           <xsl:number count="tei:note" level="any"/>
+	   <xsl:number count="tei:note" level="any"/>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -2059,7 +2068,7 @@
       </xsl:if>
 
 
-      <xsl:variable name="class">
+      <xsl:variable name="class1">
          <xsl:choose>
 	           <xsl:when test="$default=''"/>
 	           <xsl:when test="not($default='.')">
@@ -2069,21 +2078,28 @@
 	              <xsl:value-of select="local-name()"/>
 	           </xsl:otherwise>
          </xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="class2">
          <xsl:choose>
 	           <xsl:when test="@rend">
-	              <xsl:text> </xsl:text>
-	              <xsl:value-of select="@rend"/>
+	              <xsl:value-of select="translate(@rend,' /','_-')"/>
 	           </xsl:when>
 	           <xsl:when test="@rendition">
-	              <xsl:text> </xsl:text>
 	              <xsl:call-template name="applyRendition"/>
 	           </xsl:when>
          </xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="class">
+	  <xsl:value-of select="$class1"/>
+	  <xsl:if test="not($class1='')">
+	    <xsl:text> </xsl:text>
+	  </xsl:if>
+	  <xsl:value-of select="$class2"/>	
          <xsl:call-template name="rendToClassHook"/>
       </xsl:variable>
       <xsl:if test="not($class='')">
          <xsl:attribute name="class">
-	           <xsl:value-of select="$class"/>
+	   <xsl:value-of select="$class"/>
          </xsl:attribute>
       </xsl:if>
   </xsl:template>

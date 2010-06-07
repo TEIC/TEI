@@ -46,7 +46,7 @@
   <xsl:param name="uid"/>
   <xsl:param name="publisher"/>
   <xsl:param name="coverimage"/>
-  <xsl:param name="odd">true</xsl:param>
+  <xsl:param name="odd">false</xsl:param>
   <xsl:param name="debug">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[epub] Suppress normal page footer      </desc>
@@ -233,13 +233,9 @@
 	      </xsl:if>
 	      <item href="stylesheet.css" id="css" media-type="text/css"/>
 	      <item href="titlepage.html" id="titlepage" media-type="application/xhtml+xml"/>	      
-	      <item id="stylesheet.css" href="stylesheet.css" media-type="text/css"/>
               <item id="print.css" href="print.css"
 		    media-type="text/css"/>
 	      <item id="apt" href="page-template.xpgt" media-type="application/adobe-page-template+xml"/>
-              <xsl:if test="$odd='true'">
-                <item id="odd.css" href="odd.css" media-type="text/css"/>
-              </xsl:if>
               <item id="start" href="index.html" media-type="application/xhtml+xml"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                 <xsl:choose>
@@ -351,6 +347,9 @@
 	    <body>
 	      <xsl:choose>
 		<xsl:when test="$coverimage=''">
+		  <div style="font-family: serif; font-size:24pt; text-align:center">
+		    <xsl:call-template name="generateTitle"/>
+		  </div>
 		</xsl:when>
 		<xsl:otherwise>
 		  <img width="600" height="800" src="{$coverimage}"/>

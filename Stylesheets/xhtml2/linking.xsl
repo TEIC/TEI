@@ -207,7 +207,8 @@
    </doc>
   <xsl:template match="tei:note" mode="generateLink">
       <xsl:text>#</xsl:text>
-      <xsl:call-template name="noteN"/>
+      <xsl:text>Note</xsl:text>
+      <xsl:call-template name="noteID"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] <param name="where">where</param>
