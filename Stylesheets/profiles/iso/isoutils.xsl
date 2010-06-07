@@ -410,6 +410,7 @@
 	    <xsl:when test="$Thing='deprecatedTerm'">termDeprecated</xsl:when>
 	    <xsl:when test="$Thing='admittedTerm'">termAdmitted</xsl:when>
 	    <xsl:when test="$Thing='symbol'">termAdmitted</xsl:when>
+	    <xsl:otherwise>termPreferred</xsl:otherwise>
 	  </xsl:choose>
 	</xsl:variable>
 	<xsl:call-template name="block-element">

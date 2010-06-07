@@ -196,7 +196,7 @@
 	  </w:pPr>
 	</w:p>
       </xsl:when>
-      <xsl:otherwise>
+      <xsl:when test="starts-with(../@id,'user_')">
 	<w:p>
 	  <w:pPr>
 	    <w:pStyle w:val="TermNum"/>
@@ -204,6 +204,18 @@
 	  <w:r>
 	    <w:t>
 	      <xsl:value-of select="substring-after(../@id,'user_')"/>
+	    </w:t>
+	  </w:r>
+	</w:p>
+      </xsl:when>
+      <xsl:otherwise>
+	<w:p>
+	  <w:pPr>
+	    <w:pStyle w:val="TermNum"/>
+	  </w:pPr>
+	  <w:r>
+	    <w:t>
+	      <xsl:value-of select="../@id"/>
 	    </w:t>
 	  </w:r>
 	</w:p>
