@@ -521,12 +521,12 @@
 	     <xsl:when test="parent::tbx:ntig">noteTerm</xsl:when>
 	     <xsl:when test="parent::tbx:termEntry">noteTermEntry</xsl:when>
 	     <xsl:when
-		 test="parent::tbx:descrip[@type='figure']">noteNonVerbalRepresentation</xsl:when>
+		 test="parent::tbx:descripGrp[tbx:descrip/@type='definition']">noteDefinition</xsl:when>
 	     <xsl:when
-		 test="parent::tbx:descrip[@type='example']">noteExample</xsl:when>
+		 test="parent::tbx:descripGrp[tbx:descrip/@type='figure']">noteNonVerbalRepresentation</xsl:when>
 	     <xsl:when
-		 test="parent::tbx:descrip[@type='definition']">noteDefinition</xsl:when>
-	     <xsl:otherwise>noteTermEntry</xsl:otherwise>
+		 test="parent::tbx:descripGrp[tbx:descrip/@type='example']">noteExample</xsl:when>
+	     <xsl:otherwise>noteTermEntryDefault</xsl:otherwise>
 	   </xsl:choose>
          </xsl:with-param>
       </xsl:call-template>
