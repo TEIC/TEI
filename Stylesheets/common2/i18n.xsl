@@ -57,20 +57,23 @@
          </xsl:when>
          <xsl:otherwise>
             <xsl:for-each select="document('../i18n.xml',document(''))">
-	              <xsl:choose>
-	                 <xsl:when test="key('KEYS',$Word)/text[@xml:lang=$documentationLanguage]">
-	                    <xsl:value-of select="key('KEYS',$Word)/text[@xml:lang=$documentationLanguage]"/>
-	                 </xsl:when>
-	                 <xsl:otherwise>
-<!--
-<xsl:if test="$verbose='true'">
-<xsl:message>NO TRANSLATION for <xsl:value-of 
-select="$word"/> in <xsl:value-of select="$documentationLanguage"/></xsl:message>
-</xsl:if>
--->
-	     <xsl:value-of select="key('KEYS',$Word)/text[@xml:lang='en']"/>
-	                 </xsl:otherwise>
-	              </xsl:choose>
+	      <xsl:choose>
+		<xsl:when test="key('KEYS',$Word)/text[@xml:lang=$documentationLanguage]">
+		  <xsl:value-of select="key('KEYS',$Word)/text[@xml:lang=$documentationLanguage]"/>
+		</xsl:when>
+		<xsl:when test="key('KEYS',$Word)/text[@lang3=$documentationLanguage]">
+		  <xsl:value-of select="key('KEYS',$Word)/text[lang3=$documentationLanguage]"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <!--
+		      <xsl:if test="$verbose='true'">
+		      <xsl:message>NO TRANSLATION for <xsl:value-of 
+		      select="$word"/> in <xsl:value-of select="$documentationLanguage"/></xsl:message>
+		      </xsl:if>
+		  -->
+		  <xsl:value-of select="key('KEYS',$Word)/text[@xml:lang='en']"/>
+		</xsl:otherwise>
+	      </xsl:choose>
             </xsl:for-each>
          </xsl:otherwise>
       </xsl:choose>
