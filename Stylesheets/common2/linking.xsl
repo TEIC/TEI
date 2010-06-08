@@ -167,9 +167,6 @@
             <xsl:when test="local-name(.) = 'TEI'">
                <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]"/>
             </xsl:when>
-            <xsl:when test="not(tei:head) and @n">
-               <xsl:value-of select="@n"/>
-            </xsl:when>
             <xsl:when test="not($toc='')">
 	      <xsl:call-template name="makeInternalLink">
 		<xsl:with-param name="dest">
@@ -182,14 +179,21 @@
 		</xsl:with-param>
 		<xsl:with-param name="body">
 		  <xsl:choose>
-		    <xsl:when test="$autoHead='true'">
-		      <xsl:call-template name="autoMakeHead"/>
+		    <xsl:when test="not(tei:head) and @n">
+		      <xsl:if test="@type">
+			<xsl:value-of select="@type"/>
+			<xsl:text> </xsl:text>
+		      </xsl:if>
+		      <xsl:value-of select="@n"/>
 		    </xsl:when>
 		    <xsl:when test="not(tei:head) and tei:body/tei:head">
 			<xsl:apply-templates mode="plain" select="tei:body/tei:head"/>
 		    </xsl:when>	
 		    <xsl:when test="tei:head">
 			<xsl:apply-templates mode="plain" select="tei:head"/>
+		    </xsl:when>
+		    <xsl:when test="$autoHead='true'">
+		      <xsl:call-template name="autoMakeHead"/>
 		    </xsl:when>
 		    <xsl:otherwise>
 		      <xsl:number/>

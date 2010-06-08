@@ -44,6 +44,7 @@
   <xsl:param name="tocDepth">1</xsl:param>
   <xsl:param name="linkPanel">false</xsl:param>
   <xsl:param name="institution"/>
+  <xsl:param name="subject"/>
   <xsl:param name="uid"/>
   <xsl:param name="publisher"/>
   <xsl:param name="coverimage"/>
@@ -76,6 +77,19 @@
       </xsl:when>
       <xsl:otherwise>
 	<xsl:text>en</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[epub] Set subject</desc>
+   </doc>
+  <xsl:template name="generateSubject">
+    <xsl:choose>
+      <xsl:when test="$subject=''">
+	<xsl:text>TEI Text</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$subject"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -203,11 +217,14 @@
           <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" version="2.0">
             <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opf="http://www.idpf.org/2007/opf">
               <dc:title>
-                <xsl:call-template name="generateTitle"/>
+                <xsl:call-template name="generateSimpleTitle"/>
               </dc:title>
               <dc:language xsi:type="dcterms:RFC3066">
                 <xsl:call-template name="generateLanguage"/>
               </dc:language>
+	      <dc:subject>
+                <xsl:call-template name="generateSubject"/>
+	      </dc:subject>
               <dc:identifier id="dcidid" opf:scheme="URI">
                 <xsl:call-template name="generateID"/>
               </dc:identifier>
@@ -376,7 +393,7 @@
             </head>
             <docTitle>
               <text>
-                <xsl:call-template name="generateTitle"/>
+                <xsl:call-template name="generateSimpleTitle"/>
               </text>
             </docTitle>
             <navMap>

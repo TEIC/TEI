@@ -184,10 +184,10 @@
 		select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt">
 	      <xsl:choose>
 		<xsl:when test="tei:title[@type='main']">
-		  <xsl:apply-templates select="tei:title[@type='main']"/>
+		  <xsl:apply-templates select="tei:title"/>
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:apply-templates select="tei:title[1]"/>
+		  <xsl:apply-templates select="tei:title"/>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:for-each>

@@ -26,6 +26,7 @@ echo " --profile=default      profile family"
 echo " --odd                        perform ODD pre-processing"
 echo " --uid=XXX                supply unique URN for ebook"
 echo " --publisher=XXX                supply name of publisher for ebook"
+echo " --subject=XXX                supply subject/category for ebook"
 echo " --coverimage=XXX                supply name of JPEG file for ebook cover"
 echo " --debug                    emit some diagnostics" 
 echo " --verbose                 be verbose"
@@ -34,6 +35,7 @@ echo " --verbose                 be verbose"
 publisher=
 coverimage=
 cover=
+subject=
 profile=default
 odd=false
 verbose=false
@@ -44,6 +46,7 @@ while test $# -gt 0; do
     --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
     --uid=*)  uid=`echo $1 | sed 's/.*=//'`;;
     --publisher=*)  publisher=publisher=`echo $1 | sed 's/.*=//'`;;
+    --subject=*)  subject="`echo $1 | sed 's/.*=//'`";;
     --coverimage=*)  cover=`echo $1 | sed 's/.*=//'`;;
     --odd)       odd=true;;
     --debug)     debug=true;;
@@ -100,7 +103,7 @@ then
 else
     ln -s $F tmp2.xml
 fi
-saxon  tmp2.xml $APPHOME/profiles/$profile/epub/to.xsl  $coverimage $publisher uid=$uid odd=$odd debug=$debug verbose=$verbose
+saxon  tmp2.xml $APPHOME/profiles/$profile/epub/to.xsl  $coverimage $publisher subject="$subject" uid=$uid odd=$odd debug=$debug verbose=$verbose
 if $debug 
 then
     echo leaving tmp[123].xml alone
