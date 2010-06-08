@@ -40,6 +40,7 @@
   <xsl:param name="topNavigationPanel">false</xsl:param>
   <xsl:param name="bottomNavigationPanel">false</xsl:param>
   <xsl:param name="autoToc">false</xsl:param>
+  <xsl:param name="autoHead">true</xsl:param>
   <xsl:param name="tocDepth">1</xsl:param>
   <xsl:param name="linkPanel">false</xsl:param>
   <xsl:param name="institution"/>

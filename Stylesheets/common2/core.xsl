@@ -262,16 +262,14 @@
    </xsl:template>
 
    <!-- title  -->
-<xsl:template match="tei:titlePart" mode="simple">
+   <xsl:template match="tei:titlePart" mode="simple">
       <xsl:if test="preceding-sibling::tei:titlePart">
          <xsl:text> — </xsl:text>
       </xsl:if>
       <xsl:value-of select="."/>
    </xsl:template>
+
    <xsl:template match="tei:title" mode="simple">
-      <xsl:if test="preceding-sibling::tei:title">
-         <xsl:text> — </xsl:text>
-      </xsl:if>
       <xsl:value-of select="."/>
    </xsl:template>
 

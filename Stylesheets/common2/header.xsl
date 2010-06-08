@@ -207,8 +207,18 @@
                                  mode="simple"/>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"
-                                 mode="simple"/>
+            <xsl:for-each
+		select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt">
+	      <xsl:choose>
+		<xsl:when test="tei:title[@type='main']">
+		  <xsl:apply-templates
+		      select="tei:title[@type='main']" mode="simple"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:apply-templates select="tei:title[1]" mode="simple"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
