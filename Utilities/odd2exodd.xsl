@@ -36,6 +36,8 @@
  </text>
 </xsl:template>
 
+<xsl:template match="tei:elementSpec[@ident='egXML' and @mode='delete']"/>
+
 <xsl:template match="tei:schemaSpec/@ident">
   <xsl:attribute name="ident">
     <xsl:value-of select="."/>
@@ -61,7 +63,7 @@
       <xsl:when
 	  test="//tei:elementRef[@key='egXML']"/>
       <xsl:when
-	  test="//tei:elemenSpec[@ident='egXML']"/>
+	  test="//tei:elementSpec[@ident='egXML']"/>
       <xsl:otherwise>
 	<elementRef key="egXML"/>
       </xsl:otherwise>
