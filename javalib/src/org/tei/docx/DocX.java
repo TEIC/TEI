@@ -298,13 +298,17 @@ public class DocX {
 			toDocX.setDestination(result);
 			toDocX.transform();
 			
-			// remove original core.xml file
-			File orgCoreFile = new File(directoryName + File.separator + "docProps" + File.separator + "core.xml");
-			orgCoreFile.delete();
-			
-			// move new core.xml
-			File newCoreFile = new File(directoryName + File.separator + "docProps" + File.separator + "newcore.xml");
-			newCoreFile.renameTo(orgCoreFile);
+			// delete custom.xml and copy new file
+			File oldCustom = new File(directoryName + File.separator + "docProps" + File.separator + "custom.xml");
+			oldCustom.delete();
+			File newCustom = new File(directoryName + File.separator + "docProps" + File.separator + "newcustom.xml");
+			newCustom.renameTo(oldCustom);	
+
+			// delete core.xml and copy new file
+			File oldCore = new File(directoryName + File.separator + "docProps" + File.separator + "core.xml");
+			oldCore.delete();
+			File newCore = new File(directoryName + File.separator + "docProps" + File.separator + "newcore.xml");
+			newCore.renameTo(oldCore);
 
 	       
 		} catch (SaxonApiException e) {
@@ -333,43 +337,45 @@ public class DocX {
 			Processor proc = SaxonProcFactory.getProcessor();
 			XsltCompiler comp = proc.newXsltCompiler();
 			XsltExecutable toDocXExec = comp.compile(new StreamSource(new File(propertiesProvider.docx_pp_getStylesheetCheckDocx())));
-			XsltExecutable normalizerExec = comp.compile(new StreamSource(new File(propertiesProvider.docx_pp_getStylesheetNormalizeWordStyles())));
 			XsltTransformer toDocX = toDocXExec.load();
-			XsltTransformer normalizer = normalizerExec.load();
 			
 			toDocX.setParameter(new QName("word-directory"), new XdmAtomicValue(directoryNameURI));
-			normalizer.setParameter(new QName("word-directory"), new XdmAtomicValue(directoryNameURI));
 			
 			// load doc
-			File orgFile = new File(directoryName + File.separator + "word" + File.separator + "document.xml");
-			XdmNode wordDotXML = XMLUtils.readFileIntoSaxonDoc( orgFile );
+			File oldDocumentFile = new File(directoryName + File.separator + "word" + File.separator + "document.xml");
+			File newDocumentFile = new File(directoryName + File.separator + "word" + File.separator + "document_new.xml");
+			XdmNode wordDotXML = XMLUtils.readFileIntoSaxonDoc( oldDocumentFile );
 			
-			// normalize
-			normalizer.setInitialContextNode(wordDotXML);
-			XdmDestination tmpDest = new XdmDestination();
-			normalizer.setDestination(tmpDest);
-			normalizer.transform();
-			
-			
-			File newWordDotXMLFile = new File(directoryName + File.separator + "word" + File.separator + "document_new.xml");
+					
 			Serializer result = new Serializer();
-			result.setOutputFile(newWordDotXMLFile);
-			toDocX.setInitialContextNode(tmpDest.getXdmNode());
+			result.setOutputFile(newDocumentFile);
+			toDocX.setInitialContextNode(wordDotXML);
 			toDocX.setDestination(result);
 			toDocX.transform();
 			
-			// move new core.xml
-			orgFile.delete();
-			newWordDotXMLFile.renameTo(orgFile);
+			// overwrite old document.xml 
+			oldDocumentFile.delete();
+			newDocumentFile.renameTo(oldDocumentFile);
 			
-			// delete relationships and copy new file
-			File oldRels = new File(directoryName + File.separator + "word" + File.separator + "_rels" + File.separator + "document.xml.rels");
-			oldRels.delete();
+			// overwrite old relationships file
+			//			File oldRels = new File(directoryName + File.separator + "word" + File.separator + "_rels" + File.separator + "document.xml.rels");
+			//File newRels = new File(directoryName + File.separator + "word" + File.separator + "_rels" + File.separator + "document_new.xml.rels");
+			//oldRels.delete();
+			//newRels.renameTo(oldRels);
 			
-			// move File
-			File newRels = new File(directoryName + File.separator + "word" + File.separator + "_rels" + File.separator + "document_new.xml.rels");
-			newRels.renameTo(oldRels);
-			
+
+			// delete custom.xml and copy new file
+			File oldCustom = new File(directoryName + File.separator + "docProps" + File.separator + "custom.xml");
+			oldCustom.delete();
+			File newCustom = new File(directoryName + File.separator + "docProps" + File.separator + "newcustom.xml");
+			newCustom.renameTo(oldCustom);	
+
+			// delete core.xml and copy new file
+			File oldCore = new File(directoryName + File.separator + "docProps" + File.separator + "core.xml");
+			oldCore.delete();
+			File newCore = new File(directoryName + File.separator + "docProps" + File.separator + "newcore.xml");
+			newCore.renameTo(oldCore);
+		
 			// move tmp Contentsfile back
 			tmpContentTypesFile.delete();
 			new File(directoryName + File.separator + "Content_Types_new.xml").renameTo(contentTypesFile);
