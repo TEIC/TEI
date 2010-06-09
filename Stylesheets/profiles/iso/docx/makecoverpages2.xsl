@@ -151,7 +151,7 @@
 		                <!-- copy all front/w:p from zzForeword onwards -->
 		                <xsl:variable name="fwHeader" select="$document-doc/w:document/w:body/front/w:p[w:pPr/w:pStyle/@w:val = 'zzForeword'][1]"/>
 		                <xsl:copy-of select="$fwHeader"/>
-		                <xsl:for-each select="$fwHeader/following-sibling::w:p">
+		                <xsl:for-each select="$fwHeader/following-sibling::*">
 		                  <!-- do not copy any section breaks -->
 		                  <xsl:if test="not(.//w:sectPr)">
 		                    <xsl:copy-of select="."/>
