@@ -133,6 +133,9 @@
     <!-- after opening custom.xml, we cannot write back to it; so save
 	 under new name -->
     <xsl:template name="write-docxfile-docprops-custom">
+	     <xsl:if test="$debug='true'">
+	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/docProps/newcustom.xml')"/>    </xsl:message>
+	     </xsl:if>
         <xsl:result-document href="{concat($word-directory,'/docProps/newcustom.xml')}" standalone="yes">
             <Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
                      xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
