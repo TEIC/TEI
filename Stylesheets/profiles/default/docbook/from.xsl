@@ -1,8 +1,7 @@
 <xsl:stylesheet 
-    exclude-result-prefixes="tei" 
-    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-     version="2.0">
+    version="2.0">
 
 <xsl:output method="xml" indent="yes" encoding="utf-8"/>
   <xsl:variable name="processor">
@@ -10,7 +9,9 @@
   </xsl:variable>
 
 <xsl:template match="abbrev">
-  <abbr><xsl:apply-templates/></abbr>
+  <abbr>
+    <xsl:apply-templates/>
+  </abbr>
 </xsl:template>
 
 <xsl:template match="abstract">
@@ -85,7 +86,7 @@
           </edition>
         </editionStmt>
       <publicationStmt>
-        <authority>webmaster@oucs.ox.ac.uk</authority>
+        <p></p>
       </publicationStmt>
     <sourceDesc>
       <p>Converted from a Docbook original</p>
@@ -98,20 +99,11 @@
         </textClass>
       </profileDesc>
     </xsl:if>
-    <revisionDesc>
-      <change>
-        <date>$LastChangedDate: 2008-12-15 12:09:26 +0000 (Mon, 15 Dec 2008) $.</date>
-        <respStmt>
-          <name>$LastChangedBy: rahtz $</name>
-        </respStmt>
-        <item>$LastChangedRevision: 82122 $</item>
-      </change>
-    </revisionDesc>
   </teiHeader>
 </xsl:template>
 
 <xsl:template match="article">
-  <TEI.2>
+  <TEI>
     <xsl:call-template name="ID"/>
     <xsl:apply-templates select="artheader|articleinfo" mode="header"/>
     <text>
@@ -133,7 +125,7 @@
 	<xsl:apply-templates />
       </body>
     </text>
-  </TEI.2>
+  </TEI>
 </xsl:template>
 
 <xsl:template match="attribution">
@@ -278,9 +270,9 @@
 </xsl:template>
 
 <xsl:template match="link">
-  <xref url="#{@linkend}">
+  <ref target="#{@linkend}">
     <xsl:apply-templates/>
-  </xref>
+  </ref>
 </xsl:template>
 
 <xsl:template match="listitem">
@@ -436,9 +428,9 @@
 </xsl:template>
 
 <xsl:template match="ulink">
- <xref url="{@url}" >
+ <ref target="{@url}" >
    <xsl:apply-templates/>
- </xref>
+ </ref>
 </xsl:template>
 
 <xsl:template match="userinput">
@@ -460,7 +452,7 @@
 </xsl:template>
 
 <xsl:template match="xref">
-  <xptr url="#{@linkend}" type="{@role}" />
+  <ptr target="#{@linkend}" type="{@role}" />
 </xsl:template>
 
 <!-- use general-purpose templates to add standard attributes -->
@@ -482,7 +474,7 @@
 
 <xsl:template name="ID">
     <xsl:if test="@id">
-      <xsl:attribute name="id">
+      <xsl:attribute name="xml:id">
 	<xsl:value-of select="@id"/>
       </xsl:attribute>
     </xsl:if>
