@@ -1,10 +1,8 @@
 <xsl:stylesheet 
-    exclude-result-prefixes="tei edate" 
-    extension-element-prefixes="edate"
-    xmlns:edate="http://exslt.org/dates-and-times" 
+    exclude-result-prefixes="tei" 
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-     version="1.0">
+     version="2.0">
 
 <xsl:output method="xml" indent="yes" encoding="utf-8"/>
   <xsl:variable name="processor">
@@ -491,15 +489,7 @@
 </xsl:template>
 
   <xsl:template name="whatsTheDate">
-    <xsl:choose>
-      <xsl:when test="function-available('edate:date-time')">
-        <xsl:value-of select="substring-before(edate:date-time(),'T')"/>
-      </xsl:when>
-      <xsl:when test="contains($processor,'SAXON')">
-        <xsl:value-of select="substring-before(Date:toString(Date:new()),'T')" xmlns:Date="/java.util.Date"/>
-      </xsl:when>
-      <xsl:otherwise> (unknown date) </xsl:otherwise>
-    </xsl:choose>
+      <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[M02]:[s02]Z')"/>
   </xsl:template>
 
 </xsl:stylesheet>
