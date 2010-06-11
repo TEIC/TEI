@@ -32,7 +32,8 @@
   <xsl:param name="verbose"/>
   <xsl:param name="useVersionFromTEI">true</xsl:param>
   <xsl:param name="stripped">false</xsl:param>
-  <xsl:param name="defaultSource">http://www.tei-c.org/release/xml/tei/odd/p5subset.xml</xsl:param>
+  <xsl:param
+      name="defaultSource">/usr/share/xml/tei/odd/p5subset.xml</xsl:param><!--http://www.tei-c.org/release -->
   <xsl:key name="odd2odd-ALLSCHEMASPECS" match="tei:schemaSpec" use="1"/>
   <xsl:key name="odd2odd-ATTCLASSES" match="tei:classSpec[(tei:attList or @type='atts') and not(@ident='tei.TEIform')]" use="@ident"/>
   <xsl:key name="odd2odd-ATTREFS" match="tei:attRef" use="concat(@name,'_',../../@ident)"/>
