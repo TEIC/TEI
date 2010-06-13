@@ -502,7 +502,7 @@
 		       <xsl:when test="starts-with(local-name(.),'div')">
 			 <xsl:attribute name="title">
 			   <xsl:value-of
-			       select="translate(normalize-space(tei:head),'&gt;&lt;','')"/>
+			       select="translate(normalize-space(tei:head[1]),'&gt;&lt;','')"/>
 			 </xsl:attribute>
 		       </xsl:when>
 		     </xsl:choose>
