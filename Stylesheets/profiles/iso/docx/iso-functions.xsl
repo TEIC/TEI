@@ -68,7 +68,6 @@
     <xsl:function name="teidocx:get-headingstyle" as="xs:string">
       <xsl:param name="element"/>
       <xsl:param name="level"/>
-      
       <xsl:choose>
 	<xsl:when test="$element/../@type='annex'">
 	  <xsl:value-of select="$ANNEX"/>

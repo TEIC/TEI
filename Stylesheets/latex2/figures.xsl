@@ -210,10 +210,16 @@
       <desc>[latex] Make picture</desc>
    </doc>
   <xsl:template name="makePic">
-      <xsl:if test="@xml:id">\hypertarget{<xsl:value-of select="@xml:id"/>}{}</xsl:if>
-      <xsl:if test="@rend='centre'">
-         <xsl:text>\centerline{</xsl:text>
-      </xsl:if>
+      <xsl:if test="@xml:id">\hypertarget{<xsl:value-of
+      select="@xml:id"/>}{}</xsl:if>
+      <xsl:choose>
+	<xsl:when test="@rend='centre'">
+	  <xsl:text>\centerline{</xsl:text>
+	</xsl:when>
+	<xsl:when test="not(preceding-sibling::*)">
+	  <xsl:text>\noindent</xsl:text>
+	</xsl:when>
+      </xsl:choose>
       <xsl:text>\includegraphics[</xsl:text>
       <xsl:call-template name="graphicsAttributes">
          <xsl:with-param name="mode">latex</xsl:with-param>

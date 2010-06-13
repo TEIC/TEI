@@ -699,6 +699,9 @@
                 <xsl:when test="self::tei:hi[not(@rend)]">
                     <w:b/>
                 </xsl:when>
+                <xsl:when test="self::tbx:hi[@style='bold']">
+                    <w:i/>
+                </xsl:when>
                 <xsl:when test="contains(@rend,'bold')">
                     <w:b/>
 		</xsl:when>
@@ -713,6 +716,9 @@
                     <w:i/>
                 </xsl:when>
                 <xsl:when test="self::tei:emph">
+                    <w:i/>
+                </xsl:when>
+                <xsl:when test="self::tbx:hi[@style='italics']">
                     <w:i/>
                 </xsl:when>
             </xsl:choose>
@@ -754,13 +760,22 @@
 	    </xsl:if>
 
 	    <!-- sub- and superscript -->
-            <xsl:if test="contains(@rend,'subscript')">
+	    <xsl:choose>
+	      <xsl:when test="self::tbx:hi[@style='subscript']">
                 <w:vertAlign w:val="subscript"/>
-            </xsl:if>
-            <xsl:if test="contains(@rend,'superscript')">
+	      </xsl:when>
+	      <xsl:when test="contains(@rend,'subscript')">
+                <w:vertAlign w:val="subscript"/>
+	      </xsl:when>
+	    </xsl:choose>
+	    <xsl:choose>
+	      <xsl:when test="self::tbx:hi[@style='superscript']">
                 <w:vertAlign w:val="superscript"/>
-            </xsl:if>
-
+	      </xsl:when>
+	      <xsl:when test="contains(@rend,'superscript')">
+                <w:vertAlign w:val="superscript"/>
+	      </xsl:when>
+	    </xsl:choose>
 
     </xsl:template>
 
@@ -832,6 +847,8 @@
             <xsl:number level="any"/>
         </xsl:variable>
 
+       <xsl:variable name="getstyle" select="teidocx:get-headingstyle(.,$level)"/>
+
         <xsl:call-template name="block-element">
             <!-- we want a bookmark for referencing this section -->
             <xsl:with-param name="bookmark-id">
@@ -844,7 +861,6 @@
 
             <!-- find the correct header style -->
             <xsl:with-param name="style">
-                <xsl:variable name="getstyle" select="teidocx:get-headingstyle(.,$level)"/>
                 <xsl:choose>
 		  <xsl:when test="not($pPr  instance of xs:string)">
 		    <xsl:value-of select="$pPr/w:pPr/w:pStyle/@w:val"/>
@@ -853,6 +869,12 @@
 		    <xsl:call-template name="getStyleName">
 		      <xsl:with-param name="in" select="$getstyle"/>
 		    </xsl:call-template>
+		  </xsl:when>
+		  <xsl:when test="parent::tei:div/parent::tei:back">
+		    <xsl:text>ANNEX</xsl:text>
+		  </xsl:when>
+		  <xsl:when test="ancestor::tei:back">
+		    <xsl:value-of select="concat('a',$level)"/>
 		  </xsl:when>
 		  <xsl:otherwise>
 		    <xsl:call-template name="getStyleName">
@@ -1942,7 +1964,17 @@
     </xsl:template>
 
     <xsl:template match="tei:div" mode="xref">
-        <xsl:number count="tei:div" from="tei:body|tei:front|tei:back" level="multiple"/>
+      <xsl:choose>
+         <xsl:when test="ancestor::tei:front">
+            <xsl:number count="tei:div" from="tei:front" format="i" level="multiple"/>
+         </xsl:when>
+         <xsl:when test="ancestor::tei:body">
+            <xsl:number count="tei:div" from="tei:body" format="1" level="multiple"/>
+         </xsl:when>
+         <xsl:when test="ancestor::tei:back">
+	   Annex <xsl:number count="tei:div" from="tei:back" format="A.1.1" level="multiple"/>
+         </xsl:when>
+      </xsl:choose>
     </xsl:template>
 
     <!-- 
