@@ -141,6 +141,17 @@
       underlying basic formatting</desc>
    </doc>
     <xsl:template name="basicStyles">
+      <xsl:variable name="fontFamily">
+	<xsl:if test="w:rPr/w:rFonts">
+	  <xsl:if test="not(matches(w:rPr/w:rFonts/@w:ascii,'Calibri'))">
+	    <xsl:text>font-family: </xsl:text>
+	    <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
+	    <!-- w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
+	    <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
+	  </xsl:if>
+	</xsl:if>
+      </xsl:variable>
+
       <xsl:variable name="effects">
 	<xsl:if test="w:rPr/w:position[number(@w:val)&lt;-2]">
 	  <n>subscript</n>
@@ -213,19 +224,24 @@
       </xsl:variable>
 
       <xsl:choose>
-	<xsl:when test="not($effects/*)">
+	<xsl:when test="not($effects/*) and $fontFamily=''">
 	  <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:otherwise>
 	  <hi>
-	    <xsl:attribute name="rend">
-	      <xsl:for-each select="$effects/*">
-		<xsl:value-of select="."/>
-		<xsl:if test="following-sibling::*">
-		  <xsl:text> </xsl:text>
-		</xsl:if>
-	      </xsl:for-each>
-	    </xsl:attribute>
+	    <xsl:if test="$fontFamily!=''">
+	      <xsl:attribute name="iso:style"><xsl:value-of select="$fontFamily"/></xsl:attribute>
+	    </xsl:if>
+	    <xsl:if test="$effects/*">
+	      <xsl:attribute name="rend">
+		<xsl:for-each select="$effects/*">
+		  <xsl:value-of select="."/>
+		  <xsl:if test="following-sibling::*">
+		    <xsl:text> </xsl:text>
+		  </xsl:if>
+		</xsl:for-each>
+	      </xsl:attribute>
+	    </xsl:if>
 	    <xsl:apply-templates/>
 	  </hi>
 	</xsl:otherwise>

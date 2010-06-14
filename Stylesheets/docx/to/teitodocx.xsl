@@ -669,7 +669,7 @@
         Tests whether to add rendering elements to a run.
         Word styles cannot not be added in applyRend. If you want to add
         a style go for a get-style template. The order of these
-	elements in Word does matter, by the way.
+	elements in Word does matter, by the way. 
 
      </desc>
    </doc>
@@ -684,11 +684,11 @@
 	      <xsl:when test="contains(@rend,'typewriter') or teidocx:render-typewriter(.)">
 		<w:rFonts w:ascii="Courier" w:hAnsi="Courier"/>
 	      </xsl:when>
-                 <xsl:when test="contains(@rend, 'Special')">
-                      <xsl:call-template name="getStyleFonts">
-                          <xsl:with-param name="css" select="@iso:style"/>
-                      </xsl:call-template>
-                 </xsl:when>
+	      <xsl:when test="contains(@rend, 'Special') or matches(@iso:style,'font-family')">
+		<xsl:call-template name="getStyleFonts">
+		  <xsl:with-param name="css" select="@iso:style"/>
+		</xsl:call-template>
+	      </xsl:when>
 	    </xsl:choose>
 
             <!-- bold -->
