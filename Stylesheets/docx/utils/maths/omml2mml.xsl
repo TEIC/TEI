@@ -1803,10 +1803,16 @@
 	      <xsl:when test="w:rPr/w:b[not(@w:val='0')]">
 		<xsl:attribute name="fontweight">bold</xsl:attribute>
 	      </xsl:when>
+	      <xsl:when test="w:rPr/w:b[@w:val='0']">
+		<xsl:attribute name="fontweight">normal</xsl:attribute>
+	      </xsl:when>
 	    </xsl:choose>
 	    <xsl:choose>
 	      <xsl:when test="w:rPr/w:i[not(@w:val='0')]">
 		<xsl:attribute name="fontstyle">italic</xsl:attribute>
+	      </xsl:when>
+	      <xsl:when test="w:rPr/w:i[@w:val='0']">
+		<xsl:attribute name="fontstyle">upright</xsl:attribute>
 	      </xsl:when>
 	    </xsl:choose>
 	  </xsl:template>

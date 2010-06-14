@@ -832,7 +832,7 @@
       <xsl:param name="mathcolor"/>
       <xsl:param name="mathvariant"/>
       <xsl:param name="color"/>
-      <xsl:param name="font-family"/>
+      <xsl:param name="font-family">Cambria Math</xsl:param>
       <xsl:param name="fontsize"/>
       <xsl:param name="fontstyle"/>
       <xsl:param name="fontweight"/>
@@ -842,8 +842,8 @@
       <xsl:param name="fNor"/>
       <xsl:param name="fLit"/>
       <w:rPr>
-         <w:rFonts w:ascii="Cambria Math" w:eastAsia="Cambria Math" w:hAnsi="Cambria Math"
-                   w:cs="Cambria Math"/>
+         <w:rFonts w:ascii="{$fontfamily}" w:eastAsia="{$fontfamily}" w:hAnsi="{$fontfamily}"
+                   w:cs="{$fontfamily}"/>
       </w:rPr>
       <xsl:variable name="mstyleColor">
          <xsl:if test="not(not($ndCur))">
@@ -916,39 +916,45 @@
          </xsl:when>
          <xsl:when test="$ndCur/self::mml:mi and (string-length(normalize-space($ndCur)) &lt;= 1)               or $ndCur/self::mml:mn and string(number($ndCur/text()))!='NaN'               or $ndCur/self::mml:mo">
 
-        <!-- The default for the above three cases is fontstyle=italic fontweight=normal.-->
+	   <!-- The default for the above three cases is fontstyle=italic fontweight=normal.-->
+	   <xsl:choose>
+	     <xsl:when test="$fontstyle='normal' and $fontweight='bold'">
+	       <!-- In omml, a sty of 'b' (which is what bold is translated into)
+		    implies a normal fontstyle -->
+	       <xsl:value-of select="'bold'"/>
+	     </xsl:when>
+	     <xsl:when test="$fontstyle='normal'">
+	       <xsl:value-of select="'normal'"/>
+	     </xsl:when>
+	     <xsl:when test="$fontweight='bold'">
+	       <xsl:value-of select="'bi'"/>
+	     </xsl:when>
+	     <xsl:when test="$fontweight='normal'">
+	       <xsl:value-of select="'i'"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <xsl:value-of select="'italic'"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
+	 </xsl:when>
+	 <xsl:otherwise>
+	   <!--Default is fontweight = 'normal' and fontstyle='normal'-->
         <xsl:choose>
-               <xsl:when test="$fontstyle='normal' and $fontweight='bold'">
-            <!-- In omml, a sty of 'b' (which is what bold is translated into)
-						     implies a normal fontstyle -->
-            <xsl:value-of select="'bold'"/>
-               </xsl:when>
-               <xsl:when test="$fontstyle='normal'">
-                  <xsl:value-of select="'normal'"/>
-               </xsl:when>
-               <xsl:when test="$fontweight='bold'">
-                  <xsl:value-of select="'bi'"/>
-               </xsl:when>
-               <xsl:otherwise>
-                  <xsl:value-of select="'italic'"/>
-               </xsl:otherwise>
-            </xsl:choose>
-         </xsl:when>
-         <xsl:otherwise>
-        <!--Default is fontweight = 'normal' and fontstyle='normal'-->
-        <xsl:choose>
-               <xsl:when test="$fontstyle='italic' and $fontweight='bold'">
-                  <xsl:value-of select="'bi'"/>
-               </xsl:when>
-               <xsl:when test="$fontstyle='italic'">
-                  <xsl:value-of select="'italic'"/>
-               </xsl:when>
-               <xsl:when test="$fontweight='bold'">
-                  <xsl:value-of select="'bold'"/>
-               </xsl:when>
-               <xsl:otherwise>
-                  <xsl:value-of select="'normal'"/>
-               </xsl:otherwise>
+	  <xsl:when test="$fontstyle='italic' and $fontweight='bold'">
+	    <xsl:value-of select="'bi'"/>
+	  </xsl:when>
+	  <xsl:when test="$fontstyle='italic'">
+	    <xsl:value-of select="'italic'"/>
+	  </xsl:when>
+	     <xsl:when test="$fontweight='normal'">
+	       <xsl:value-of select="'italic'"/>
+	     </xsl:when>
+	  <xsl:when test="$fontweight='bold'">
+	    <xsl:value-of select="'bold'"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="'normal'"/>
+	  </xsl:otherwise>
             </xsl:choose>
          </xsl:otherwise>
       </xsl:choose>
