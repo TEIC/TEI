@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Beta Version 070708 --><xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns="http://www.w3.org/1998/Math/MathML"
-                xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-                version="2.0"
-                exclude-result-prefixes="m">
+<!-- Beta Version 070708 -->
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+		xmlns="http://www.w3.org/1998/Math/MathML"
+		xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
+		version="2.0"
+                exclude-result-prefixes="m w">
 	<!-- %% Global Definitions -->
 
 	<!-- Every single unicode character that is recognized by OMML as an operator -->
@@ -909,12 +911,14 @@
 					          <xsl:when test="$fLit=1">
 						            <maction actiontype="lit">
 							              <mtext>
+									<xsl:call-template name="checkDirectFormatting"/>
 								                <xsl:value-of select=".//m:t"/>
 							              </mtext>
 						            </maction>
 					          </xsl:when>
 					          <xsl:otherwise>
 						            <mtext>
+									<xsl:call-template name="checkDirectFormatting"/>
 							              <xsl:value-of select=".//m:t"/>
 						            </mtext>
 					          </xsl:otherwise>
@@ -1788,5 +1792,22 @@
 				        </xsl:choose>
 			      </xsl:otherwise>
 		    </xsl:choose>
+	  </xsl:template>
+
+
+	  <xsl:template name="checkDirectFormatting">
+	    <xsl:if test="w:rPr/w:rFonts/@w:ascii and not(w:rPr/w:rFonts/@w:ascii='Cambria Math')">
+	      <xsl:attribute name="fontfamily" select="w:rPr/w:rFonts/@w:ascii"/>
+	    </xsl:if>
+	    <xsl:choose>
+	      <xsl:when test="w:rPr/w:b[not(@w:val='0')]">
+		<xsl:attribute name="fontweight">bold</xsl:attribute>
+	      </xsl:when>
+	    </xsl:choose>
+	    <xsl:choose>
+	      <xsl:when test="w:rPr/w:i[not(@w:val='0')]">
+		<xsl:attribute name="fontstyle">italic</xsl:attribute>
+	      </xsl:when>
+	    </xsl:choose>
 	  </xsl:template>
 </xsl:stylesheet>
