@@ -227,26 +227,31 @@
 	<xsl:when test="not($effects/*) and $fontFamily=''">
 	  <xsl:apply-templates/>
 	</xsl:when>
-	<xsl:otherwise>
+	<xsl:when test="$effects/* and $fontFamily=''">
 	  <hi>
-	    <xsl:if test="$fontFamily!=''">
-	      <xsl:attribute name="iso:style"><xsl:value-of select="$fontFamily"/></xsl:attribute>
-	    </xsl:if>
-	    <xsl:if test="$effects/*">
-	      <xsl:attribute name="rend">
-		<xsl:for-each select="$effects/*">
-		  <xsl:value-of select="."/>
-		  <xsl:if test="following-sibling::*">
-		    <xsl:text> </xsl:text>
-		  </xsl:if>
-		</xsl:for-each>
-	      </xsl:attribute>
-	    </xsl:if>
+	    <xsl:attribute name="rend">
+	      <xsl:for-each select="$effects/*">
+		<xsl:value-of select="."/>
+		<xsl:if test="following-sibling::*">
+		  <xsl:text> </xsl:text>
+		</xsl:if>
+	      </xsl:for-each>
+	    </xsl:attribute>
 	    <xsl:apply-templates/>
 	  </hi>
+	</xsl:when>
+	<xsl:when test="$fontFamily!=''">
+	  <seg>
+	    <xsl:attribute name="iso:style">
+	      <xsl:value-of  select="$fontFamily"/>
+	    </xsl:attribute>
+	    <xsl:apply-templates/>
+	  </seg>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates/>
 	</xsl:otherwise>
       </xsl:choose>
-      
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
