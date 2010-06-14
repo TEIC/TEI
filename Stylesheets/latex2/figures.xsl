@@ -213,6 +213,9 @@
       <xsl:if test="@xml:id">\hypertarget{<xsl:value-of
       select="@xml:id"/>}{}</xsl:if>
       <xsl:choose>
+	<xsl:when test="@rend='noindent'">
+	  <xsl:text>\noindent</xsl:text>
+	</xsl:when>
 	<xsl:when test="@rend='centre'">
 	  <xsl:text>\centerline{</xsl:text>
 	</xsl:when>
