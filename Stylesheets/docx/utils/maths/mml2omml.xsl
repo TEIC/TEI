@@ -13,7 +13,7 @@
   <xsl:variable name="StrLCAlphabet">abcdefghijklmnopqrstuvwxyz</xsl:variable>
 
 
-   <!--
+<!--
   <xsl:template match="/">
     <oMath>
       <xsl:apply-templates mode="mml"  />
@@ -838,12 +838,29 @@
       <xsl:param name="fontweight"/>
       <xsl:param name="mathsize"/>
       <xsl:param name="ndCur"/>
-      <xsl:param name="fontfamily"/>
       <xsl:param name="fNor"/>
       <xsl:param name="fLit"/>
       <w:rPr>
-         <w:rFonts w:ascii="{$fontfamily}" w:eastAsia="{$fontfamily}" w:hAnsi="{$fontfamily}"
-                   w:cs="{$fontfamily}"/>
+         <w:rFonts w:ascii="{$font-family}" w:eastAsia="{$font-family}" w:hAnsi="{$font-family}"
+                   w:cs="{$font-family}"/>
+	 <xsl:choose>
+	   <xsl:when test="$fontweight=''"/>
+	   <xsl:when test="$fontweight='bold'">
+	     <w:b/>
+	   </xsl:when>
+	   <xsl:when test="$fontweight='normal'">
+	     <w:b w:val="0"/>
+	   </xsl:when>
+	 </xsl:choose>
+	 <xsl:choose>
+	   <xsl:when test="$fontstyle=''"/>
+	   <xsl:when test="$fontstyle='italic'">
+	     <w:i/>
+	   </xsl:when>
+	   <xsl:when test="$fontstyle='normal'">
+	     <w:i w:val="0"/>
+	   </xsl:when>
+	 </xsl:choose>
       </w:rPr>
       <xsl:variable name="mstyleColor">
          <xsl:if test="not(not($ndCur))">
@@ -3182,7 +3199,7 @@
                </xsl:choose>
             </xsl:with-param>
             <xsl:with-param name="ndCur" select="."/>
-            <xsl:with-param name="fontfamily">
+            <xsl:with-param name="font-family">
                <xsl:choose>
                   <xsl:when test="@fontfamily">
                      <xsl:value-of select="@fontfamily"/>
