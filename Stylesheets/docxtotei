@@ -44,6 +44,7 @@ saxon word/document.xml $FROMXSL word-directory=`pwd` metadata-file=$header orig
 if [ "$(ls -q -A word/media)" ]; then
  echo found graphics files in document, so writing $N.zip
  mv word/media .
+ test -d word/embeddings && cp word/embeddings/* media
  zip -q -r $THERE/"$N.zip" "$N.xml" media
 else
  echo writing $N.xml
