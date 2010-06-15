@@ -1795,15 +1795,15 @@
       <xsl:copy-of select="."/>
     </xsl:template>
 
+
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Handles a w:object or w:pict by generating an error</p>
+         <p>Handles w:pict by generating a copy, but also a comment</p>
       </desc>
    </doc>
-
-    <xsl:template match="w:object|w:pict" mode="pass0">
-      <hi rend="color(red)">Invalid Word <xsl:value-of select="name()"/> found
-      <iso:error>Invalid Word <xsl:value-of select="name()"/> found</iso:error></hi>
+    <xsl:template match="w:pict|w:object" mode="pass0">
+      <iso:error>Deprecated  &lt;<xsl:value-of select="name()"/>&gt; found here</iso:error>
+     <xsl:copy-of select="."/>
     </xsl:template>
 
     <xsl:template name="identifyChange">
