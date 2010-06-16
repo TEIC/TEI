@@ -41,7 +41,6 @@ dist: schemas
 	cp *.dtd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
 	cp *.dtd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
 	cp *.odd *.xsl ../release/tei-p5-exemplars/share/xml/tei/custom/odd
-	cp *names.xml ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	cp *.rnc *.rng *.mod ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
 	-for i in ${DOCODDS}; do  \
 	cp $$i.doc.html ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html ; \
