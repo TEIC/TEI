@@ -670,7 +670,6 @@
         Word styles cannot not be added in applyRend. If you want to add
         a style go for a get-style template. The order of these
 	elements in Word does matter, by the way. 
-
      </desc>
    </doc>
     <xsl:template name="applyRend">
@@ -687,6 +686,11 @@
 	      <xsl:when test="contains(@rend, 'Special') or matches(@iso:style,'font-family')">
 		<xsl:call-template name="getStyleFonts">
 		  <xsl:with-param name="css" select="@iso:style"/>
+		</xsl:call-template>
+	      </xsl:when>
+	      <xsl:when test="matches(parent::*/@iso:style,'font-family')">
+		<xsl:call-template name="getStyleFonts">
+		  <xsl:with-param name="css" select="parent::*/@iso:style"/>
 		</xsl:call-template>
 	      </xsl:when>
 	    </xsl:choose>
@@ -982,7 +986,7 @@
         <xsl:call-template name="block-element">
             <xsl:with-param name="select">
                 <tei:p rend="Special" 
-		       iso:style="font-family:Courier New; font-size:18; text-align:left;" >
+		       iso:style="font-family:DejaVu Sans Mono; font-size:18; text-align:left;" >
                     <xsl:call-template name="create-egXML-section"/>
                 </tei:p>
             </xsl:with-param>
@@ -998,7 +1002,7 @@
 	  <xsl:with-param name="style">egXML</xsl:with-param>
 	  <xsl:with-param name="select">
 	    <tei:p rend="Special" 
-		   iso:style="font-family:Courier New; font-size:18;text-align:left;" >
+		   iso:style="font-family:DejaVu Sans Mono; font-size:18;text-align:left;" >
 	      <xsl:copy-of select="*|processing-instruction()|comment()|text()"/>
 	    </tei:p>
 	  </xsl:with-param>

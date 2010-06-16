@@ -9,12 +9,13 @@
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                
-                xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+		xmlns:iso="http://www.iso.org/ns/1.0"
+		xmlns:its="http://www.w3.org/2005/11/its"
+		xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
                 version="2.0"
-                exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom">
+                exclude-result-prefixes="xlink xhtml dbk iso its rng sch m tei teix atom">
     
-    <xsl:import href="verbatim.xsl"/>
+    <xsl:import href="../../../common2/verbatim.xsl"/>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
