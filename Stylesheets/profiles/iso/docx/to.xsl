@@ -157,9 +157,9 @@
         <w:r>
             <w:rPr>
                 <w:rStyle w:val="isonumber"/>
-		          <xsl:if test="teidocx:render-bold(.)">
-                    <w:b/>
-		          </xsl:if>
+		<xsl:if test="teidocx:render-bold(.)">
+		  <w:b/>
+		</xsl:if>
             </w:rPr>
             <w:t>
                 <xsl:choose>
