@@ -1500,8 +1500,9 @@
 		<xsl:copy-of select="ancestor::cals:table/@iso:style"/>
 	      </xsl:attribute>
                 <xsl:copy-of select="cals:colspec"/>
-                <cals:tbody>
-                    <xsl:for-each select="cals:tbody/cals:row">
+                <xsl:for-each select="cals:tbody|cals:thead">
+		  <xsl:copy>
+                    <xsl:for-each select="cals:row">
                         <xsl:copy>
                             <xsl:copy-of select="@*"/>
                             <xsl:for-each select="cals:entry">
@@ -1524,7 +1525,8 @@
                             </xsl:for-each>
                         </xsl:copy>
                     </xsl:for-each>
-                </cals:tbody>
+		  </xsl:copy>
+		</xsl:for-each>
             </xsl:copy>
         </xsl:variable>
 	<!--
@@ -1681,10 +1683,10 @@
 			<w:bottom w:val="single" w:sz="{$tableBorders/w:bottom/@w:sz}" w:space="0" w:color="auto"/>
 		      </xsl:if>
 		    </xsl:when>
-		    <xsl:when test="@rowsep=0">
+		    <xsl:when test="@rowsep=0 or parent::cals:row/@rowsep=1">
 		      <w:bottom w:val="nil"/>
 		    </xsl:when>
-		    <xsl:when test="@rowsep=1">
+		    <xsl:when test="@rowsep=1 or parent::cals:row/@rowsep=1">
 		      <xsl:choose>
 			<xsl:when test="$cellBorders/w:bottom">		      
 			  <xsl:copy-of select="$cellBorders/w:bottom"/>
