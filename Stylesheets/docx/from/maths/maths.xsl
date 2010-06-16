@@ -133,34 +133,40 @@
       </desc>
    </doc>
     <xsl:template match="w:object">
-      <xsl:copy-of select="."/>
+      <xsl:copy>
+	<xsl:apply-templates mode="iden"/>
+      </xsl:copy>
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        Guides the identity transformation of math objects
+        Guides the identity transformation of imagedata in math
     </desc>
    </doc>
     <xsl:template match="v:imagedata" mode="iden">
-        <v:imagedata>
             <xsl:variable name="rid" select="@r:id"/>
-            <xsl:attribute name="r:id">
-                <xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
-            </xsl:attribute>
-        </v:imagedata>
+            <xsl:variable name="file">
+                <xsl:value-of
+		    select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+	    </xsl:variable>
+	    <v:imagedata r:id="{$file}"/>
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        Guides the identity transformation of math objects
+        Guides the identity transformation of ole in maths
     </desc>
    </doc>
     <xsl:template match="o:OLEObject" mode="iden">
         <o:OLEObject>
             <xsl:copy-of select="@*"/>
             <xsl:variable name="rid" select="@r:id"/>
+            <xsl:variable name="file">
+                <xsl:value-of
+		    select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+	    </xsl:variable>
             <xsl:attribute name="r:id">
-                <xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+                <xsl:value-of select="replace($file,'embeddings/','media/')"/>
             </xsl:attribute>
         </o:OLEObject>
     </xsl:template>

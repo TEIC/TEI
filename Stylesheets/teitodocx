@@ -35,16 +35,26 @@ case $THERE/$F in
        *) cp $THERE/$F $TEMPDIR/$F  ;; 
 esac
 (cd $TEMPDIR; saxon $F $XSL/docx/utils/graphics/listgraphics.xsl ORIG=$THERE DIR=$TEMPDIR/word/media > fetch; sh $TEMPDIR/fetch; rm $TEMPDIR/fetch)
-(cd $TEMPDIR/word/media
-ls * >& /dev/null && for i in *; do  exiftool -q -o $i.xmp $i; done
-)
+(cd $TEMPDIR/word
+if [ "$(ls -A media)" ]; then
+    for i in *
+    do 
+	case $i in
+	    *jpeg) exiftool -q -o $i.xmp $i;;
+	    *jpg) exiftool -q -o $i.xmp $i;;
+	    *tiff) exiftool -q -o $i.xmp $i;;
+	    *tif) exiftool -q -o $i.xmp $i;;
+	    *png) exiftool -q -o $i.xmp $i;;
+	esac
+    done
+fi)
 cd $TEMPDIR
 unzip -o -q $TEMPLATES/template.docx
 if $odd
 then
     saxon -o $TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl defaultSource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
     saxon -o $TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
-    saxon -o $TEMPDIR/tmp3.xml  $TEMPDIR/tmp2.xml $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
+    saxon -o $TEMPDIR/tmp3.xml $TEMPDIR/tmp2.xml $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
 else
     saxon -o $TEMPDIR/tmp3.xml  $F $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
 fi

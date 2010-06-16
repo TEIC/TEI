@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+                xmlns:o="urn:schemas-microsoft-com:office:office"
+                xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+                xmlns:v="urn:schemas-microsoft-com:vml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0">
   <xsl:output method="text"/>
@@ -7,7 +11,17 @@
   <xsl:param name="ORIG">.</xsl:param>
 
   <xsl:key match="tei:graphic" use="1" name="G"/>
+  <xsl:key match="o:OLEObject" use="1" name="BINARY"/>
+  <xsl:key match="v:imagedata" use="1" name="BINARY"/>
+
   <xsl:template match="/">
+      <xsl:for-each select="key('BINARY',1)">
+	     <xsl:text>cp </xsl:text>
+	     <xsl:value-of select="@r:id"/>
+	     <xsl:text> </xsl:text>
+	     <xsl:value-of select="$DIR"/>
+	     <xsl:text>&#10;</xsl:text>
+      </xsl:for-each>
       <xsl:for-each select="key('G',1)">
          <xsl:variable name="F">
             <xsl:value-of select="@url"/>

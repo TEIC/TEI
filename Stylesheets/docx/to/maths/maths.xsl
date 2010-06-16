@@ -65,14 +65,25 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        Guides the identity transformation of math objects
+        Process Word objjects
+    </desc>
+   </doc>
+   <xsl:template match="w:object">
+     <xsl:copy>
+       <xsl:apply-templates mode="iden"/>
+     </xsl:copy>
+   </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        Image data
     </desc>
    </doc>
     <xsl:template match="v:imagedata" mode="iden">
         <xsl:variable name="me" select="generate-id()"/>
         <v:imagedata>
             <xsl:attribute name="r:id">
-                <xsl:for-each select="//v:imagedata">
+                <xsl:for-each select="key('IMAGEDATA',1)">
                     <xsl:if test="generate-id()=$me">
                         <xsl:value-of select="concat('rId', string(1000 + position()))"/>
                     </xsl:if>
@@ -83,24 +94,24 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        Guides the identity transformation of math objects
+        OLE objects
     </desc>
    </doc>
     <xsl:template match="o:OLEObject" mode="iden">
         <xsl:variable name="me" select="generate-id()"/>
-        <o:OLEObject>
+        <xsl:copy>
             <!-- copy all attributes -->
             <xsl:copy-of select="@*"/>
             
             <!-- set rId -->
             <xsl:attribute name="r:id">
-                <xsl:for-each select="//o:OLEObject">
+                <xsl:for-each select="key('OLEOBJECTS',1)">
                     <xsl:if test="generate-id()=$me">
                         <xsl:value-of select="concat('rId', string(2000 + position()))"/>
                     </xsl:if>
                 </xsl:for-each>
             </xsl:attribute>
-        </o:OLEObject>
+	</xsl:copy>
     </xsl:template>
     
 </xsl:stylesheet>
