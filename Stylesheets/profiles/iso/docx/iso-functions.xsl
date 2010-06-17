@@ -235,6 +235,9 @@
       <xsl:param name="element"/>
       <xsl:for-each select="$element">
 	<xsl:choose>
+	  <xsl:when test="contains(@rend,'italic')">true</xsl:when>
+	  <xsl:when test="self::tei:emph">true</xsl:when>
+	  <xsl:when test="self::tbx:hi[@style='italics']">true</xsl:when>
 	  <xsl:when test="parent::tei:item and self::tei:gloss">false</xsl:when>
 	  <xsl:when test="parent::tei:item and self::tei:term">false</xsl:when>
 	  <xsl:when test="self::tei:gloss">true</xsl:when>

@@ -716,7 +716,7 @@
 
             <!-- italic -->
             <xsl:choose>
-                <xsl:when test="contains(@rend,'italic') or teidocx:render-italic(.)">
+                <xsl:when test="teidocx:render-italic(.)">
                     <w:i/>
                 </xsl:when>
                 <xsl:when test="self::tei:emph">

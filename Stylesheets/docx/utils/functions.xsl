@@ -167,6 +167,8 @@
             <xsl:choose>
                 <xsl:when test="contains(@rend,'italics')">true</xsl:when>
                 <xsl:when test="contains(@rend,'italic')">true</xsl:when>
+                <xsl:when test="self::tei:emph">true</xsl:when>
+		<xsl:when test="self::tbx:hi[@style='italics']">true</xsl:when>
                 <xsl:when test="@rend='ital'">true</xsl:when>
                 <xsl:when test="@rend='att'">true</xsl:when>
                 <xsl:when test="self::tei:att">true</xsl:when>
