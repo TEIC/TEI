@@ -54,8 +54,7 @@ XSL LaTeX stylesheet to make slides
 
   <xsl:template name="verbatim-lineBreak">
       <xsl:param name="id"/>
-      <xsl:text>\mbox{}\newline 
-</xsl:text>
+      <xsl:text>\mbox{}\newline &#10;</xsl:text>
   </xsl:template>
 
   <xsl:template name="latexPackages">
@@ -169,8 +168,7 @@ XSL LaTeX stylesheet to make slides
 	        </xsl:otherwise>
       </xsl:choose>
       <xsl:text>
-\end{frame}
-</xsl:text>
+\end{frame}&#10;</xsl:text>
       <xsl:apply-templates select="tei:div1|tei:div2|tei:div"/>
   </xsl:template>
 
@@ -202,8 +200,7 @@ XSL LaTeX stylesheet to make slides
       <xsl:text>}</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>
-\end{frame}
-</xsl:text>
+\end{frame}&#10;</xsl:text>
    </xsl:template>
 
    <xsl:template name="makePic">
@@ -244,19 +241,17 @@ XSL LaTeX stylesheet to make slides
    </xsl:template>
 
    <xsl:template match="tei:item[@rend='pause' or parent::tei:list/@rend='pause']">
-      <xsl:text>\item </xsl:text>
-      <xsl:apply-templates/>
-      <xsl:if test="following-sibling::tei:item and $pause='true'">
+      <xsl:if test="$pause='true'">
          <xsl:text>\pause </xsl:text>
       </xsl:if>
+      <xsl:text>\item </xsl:text>
+      <xsl:apply-templates/>
    </xsl:template>
 
    <xsl:template match="tei:eg">
-      <xsl:text>\begin{Verbatim}[fontsize=\scriptsize,frame=single,fillcolor=\color{yellow}]
-</xsl:text>
+      <xsl:text>\begin{Verbatim}[fontsize=\scriptsize,frame=single,fillcolor=\color{yellow}]&#10;</xsl:text>
       <xsl:apply-templates mode="eg"/>
-      <xsl:text>\end{Verbatim}
-</xsl:text>
+      <xsl:text>\end{Verbatim}&#10;</xsl:text>
    </xsl:template>
 
   <xsl:template match="text()" mode="eg">
@@ -302,11 +297,9 @@ XSL LaTeX stylesheet to make slides
   </xsl:template>
 
   <xsl:template match="tei:p[@rend='box']">
-      <xsl:text>\par\begin{exampleblock}{}
-</xsl:text>
+      <xsl:text>\par\begin{exampleblock}{}&#10;</xsl:text>
       <xsl:apply-templates/>
-      <xsl:text>\end{exampleblock}\par
-</xsl:text>
+      <xsl:text>\end{exampleblock}\par&#10;</xsl:text>
   </xsl:template>
 
 
