@@ -1551,9 +1551,6 @@
                 <CELL name="{@colname}" num="{@colnum}" rowpos="{$ROWPOS}" />
             </xsl:for-each>
         </xsl:variable>
-	<xsl:message>TEMPLATE:
-	<xsl:copy-of select="$TEMPLATE"/>
-	</xsl:message>
         <xsl:variable name="lastColnum">
 	  <xsl:value-of select="ancestor::cals:tgroup/cals:colspec[last()]/@colnum"/>
 	</xsl:variable>
@@ -1626,13 +1623,6 @@
       <xsl:param name="bottomEdge"/>
       <xsl:param name="leftEdge"/>
       <xsl:param name="rightEdge"/>
-      <xsl:message>CELL:</xsl:message>
-      <xsl:message>topEdge=<xsl:value-of select="$topEdge"/></xsl:message>
-      <xsl:message>bottomEdge=<xsl:value-of select="$bottomEdge"/></xsl:message>
-      <xsl:message>leftEdge=<xsl:value-of select="$leftEdge"/></xsl:message>
-      <xsl:message>rightEdge=<xsl:value-of select="$rightEdge"/><xsl:text>
-
-      </xsl:text></xsl:message>
       <xsl:variable name="cellBorders">
 	<xsl:if test="@iso:style">
 	  <xsl:call-template name="undoTableBorderStyles">
@@ -1706,23 +1696,19 @@
 		  <!-- bottom border -->
 		  <xsl:choose>
 		    <xsl:when test="$bottomEdge='true'">
-		      <xsl:message>J1</xsl:message>
 		      <xsl:if test="$tableBorders/w:bottom[@w:sz]">
 			<w:bottom w:val="single" w:sz="{$tableBorders/w:bottom/@w:sz}" w:space="0" w:color="auto"/>
 		      </xsl:if>
 		    </xsl:when>
 		    <xsl:when test="@rowsep=0 or parent::cals:row/@rowsep=0">
-		      <xsl:message>J2</xsl:message>
 		      <w:bottom w:val="nil"/>
 		    </xsl:when>
 		    <xsl:when test="@rowsep=1 or parent::cals:row/@rowsep=1">
 		      <xsl:choose>
 			<xsl:when test="$cellBorders/w:bottom">		      
-			  <xsl:message>J3</xsl:message>
 			  <xsl:copy-of select="$cellBorders/w:bottom"/>
 			</xsl:when>
 			<xsl:otherwise>
-			  <xsl:message>J4</xsl:message>
 			  <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
 			</xsl:otherwise>
 		      </xsl:choose>
