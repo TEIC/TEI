@@ -65,13 +65,25 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        Process Word objjects
+        Process Word objects
     </desc>
    </doc>
    <xsl:template match="w:object">
-     <xsl:copy>
-       <xsl:apply-templates mode="iden"/>
-     </xsl:copy>
+     <xsl:variable name="renderingProperties">
+       <xsl:for-each select="..">
+	 <xsl:call-template name="applyRend"/>
+       </xsl:for-each>
+     </xsl:variable>
+     <w:r>
+       <xsl:if test="$renderingProperties/*">
+	 <w:rPr>
+	   <xsl:copy-of select="$renderingProperties"/>
+	 </w:rPr>
+       </xsl:if>
+       <xsl:copy>
+	 <xsl:apply-templates mode="iden"/>
+       </xsl:copy>
+     </w:r>
    </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

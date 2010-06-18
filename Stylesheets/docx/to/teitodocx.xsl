@@ -765,13 +765,21 @@
 
 	    <!-- sub- and superscript -->
 	    <xsl:choose>
+	      <xsl:when test="contains(@iso:style,'position')">
+		<w:position>
+		  <xsl:attribute name="w:val">
+		    <xsl:value-of select="normalize-space(substring-before((substring-after(@iso:style,'position:')),';'))"/>
+		  </xsl:attribute>
+		</w:position>
+	      </xsl:when>
 	      <xsl:when test="self::tbx:hi[@style='subscript']">
                 <w:vertAlign w:val="subscript"/>
 	      </xsl:when>
 	      <xsl:when test="contains(@rend,'subscript')">
-                <w:vertAlign w:val="subscript"/>
+		<w:vertAlign w:val="subscript"/>
 	      </xsl:when>
 	    </xsl:choose>
+
 	    <xsl:choose>
 	      <xsl:when test="self::tbx:hi[@style='superscript']">
                 <w:vertAlign w:val="superscript"/>

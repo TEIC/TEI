@@ -2539,12 +2539,13 @@
 				
 			 ndCur is an equation array if:
 			 
+			 0.  The table has a columnalign other than the default (center) 
 			 1.  There are are no frame lines
 			 2.  There are no column lines
 			 3.  There are no row lines
 			 4.  There is no row with more than 1 column  
 			 5.  There is no row with fewer than 1 column
-			 6.  There are no labeled rows.
+			 6.  There are no labeled rows.			 
 			 
 	-->
   <xsl:template name="FIsEqArray">
@@ -2552,7 +2553,16 @@
 
       <!-- There should be no frame, columnlines, or rowlines -->
     <xsl:choose>
-         <xsl:when test="(not($ndCur/@frame) or $ndCur/@frame='' or $ndCur/@frame='none')                       and (not($ndCur/@mml:frame) or $ndCur/@mml:frame='' or $ndCur/@mml:frame='none')               and (not($ndCur/@columnlines) or $ndCur/@columnlines='' or $ndCur/@columnlines='none')                       and (not($ndCur/@mml:columnlines) or $ndCur/@mml:columnlines='' or $ndCur/@mml:columnlines='none')               and (not($ndCur/@rowlines) or $ndCur/@rowlines='' or $ndCur/@rowlines='none')                       and (not($ndCur/@mml:rowlines) or $ndCur/@mml:rowlines='' or $ndCur/@mml:rowlines='none')               and not($ndCur/mml:mtr[count(mml:mtd) &gt; 1])            and not($ndCur/mml:mtr[count(mml:mtd) &lt; 1])               and not($ndCur/mml:mlabeledtr)">1</xsl:when>
+         <xsl:when test="@columnalign!='center'">0</xsl:when>
+         <xsl:when test="(not($ndCur/@frame) or $ndCur/@frame='' or $ndCur/@frame='none')                       
+			 and (not($ndCur/@mml:frame) or $ndCur/@mml:frame='' or $ndCur/@mml:frame='none')
+			 and (not($ndCur/@columnlines) or $ndCur/@columnlines='' or $ndCur/@columnlines='none')                       
+			 and (not($ndCur/@mml:columnlines) or $ndCur/@mml:columnlines='' or $ndCur/@mml:columnlines='none')               
+			 and (not($ndCur/@rowlines) or $ndCur/@rowlines='' or $ndCur/@rowlines='none')                       
+			 and (not($ndCur/@mml:rowlines) or $ndCur/@mml:rowlines='' or $ndCur/@mml:rowlines='none')               
+			 and not($ndCur/mml:mtr[count(mml:mtd) &gt; 1])            
+			 and not($ndCur/mml:mtr[count(mml:mtd) &lt; 1])
+			 and not($ndCur/mml:mlabeledtr)">1</xsl:when>
          <xsl:otherwise>0</xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -2761,9 +2771,17 @@
             <xsl:with-param name="ndCur" select="."/>
          </xsl:call-template>
       </xsl:variable>
+      <xsl:variable name="alignment">
+	<xsl:value-of select="@columnalign"/>
+      </xsl:variable>
       <xsl:choose>
          <xsl:when test="$fEqArray=1">
             <eqArr>
+	      <xsl:if test="$alignment!=''">
+		<eqArrPr>
+		  <baseJc m:val="{$alignment}"/>
+		</eqArrPr>
+	      </xsl:if>
                <xsl:for-each select="mml:mtr">
                   <e>
                      <xsl:call-template name="ProcessEqArrayRow">
@@ -2792,7 +2810,7 @@
                                  <xsl:value-of select="$cMaxElmtsInRow"/>
                               </xsl:attribute>
                            </count>
-                           <mcJc m:val="center"/>
+                           <mcJc m:val="{$alignment}"/>
                         </mcPr>
                      </mc>
                   </mcs>

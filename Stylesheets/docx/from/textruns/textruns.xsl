@@ -148,10 +148,16 @@
 	    <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
 	    <!-- w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
 	    <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
-	  </xsl:if>
+	  </xsl:if><xsl:text>; </xsl:text>
 	</xsl:if>
       </xsl:variable>
 
+      <xsl:variable name="exactPosition">
+	<xsl:if test="w:rPr/w:position/@w:val">
+	  <xsl:text>position:</xsl:text> <xsl:value-of select="w:rPr/w:position/@w:val"/><xsl:text>; </xsl:text>
+	</xsl:if>
+      </xsl:variable>
+      
       <xsl:variable name="effects">
 	<xsl:if test="w:rPr/w:position[number(@w:val)&lt;-2]">
 	  <n>subscript</n>
@@ -224,7 +230,7 @@
       </xsl:variable>
 
       <xsl:choose>
-	<xsl:when test="not($effects/*) and $fontFamily=''">
+	<xsl:when test="not($effects/*) and $fontFamily='' and $exactPosition=''">
 	  <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:when test="$effects/* and $fontFamily=''">
@@ -237,16 +243,36 @@
 		</xsl:if>
 	      </xsl:for-each>
 	    </xsl:attribute>
+	    <xsl:if test="$exactPosition!=''">
+	      <xsl:attribute name="iso:style">
+		<xsl:value-of select="$exactPosition"/>
+	      </xsl:attribute>
+	    </xsl:if>
 	    <xsl:apply-templates/>
 	  </hi>
 	</xsl:when>
 	<xsl:when test="$fontFamily!=''">
 	  <seg>
 	    <xsl:attribute name="iso:style">
-	      <xsl:value-of  select="$fontFamily"/>
+	      <xsl:choose>
+		<xsl:when test="$exactPosition!=''">
+		  <xsl:value-of select="string-join($fontFamily,$exactPosition)"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="$fontFamily"/>
+		</xsl:otherwise>
+	      </xsl:choose>
 	    </xsl:attribute>
 	    <xsl:apply-templates/>
 	  </seg>
+	</xsl:when>
+	<xsl:when test="$exactPosition!=''">
+	  <hi>
+	    <xsl:attribute name="iso:style">
+	      <xsl:value-of select="$exactPosition"/>
+	    </xsl:attribute>
+	    <xsl:apply-templates/>
+	  </hi>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:apply-templates/>
