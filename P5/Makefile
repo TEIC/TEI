@@ -3,7 +3,7 @@ GOOGLEANALYTICS=""
 INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
 LATEX=pdflatex
-XELATEXFLAGS='--output-driver="xdvipdfmx -V 5"'
+XELATEXFLAGS='--output-driver=xdvipdfmx -V 5'
 XELATEX=xelatex 
 VERBOSE=
 PREFIX=/usr
@@ -93,7 +93,10 @@ validate-html:
 html:check subset
 	-rm -rf Guidelines
 	-mkdir Guidelines
-	perl -p -e "s+/usr/share/xml/tei/stylesheet+${XSL}+" Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
+	perl -p -e \
+		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
+		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
+		Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
 	${SAXON} ${DRIVER}  Utilities/guidelines-print.xsl \
 	    outputDir=Guidelines \
 	    localsource=`pwd`/p5subset.xml \
