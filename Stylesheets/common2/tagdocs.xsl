@@ -1524,7 +1524,7 @@
 	                    </xsl:call-template>
 	                    <xsl:text>:</xsl:text>
 	                 </xsl:when>
-	                 <xsl:otherwise>Values are:</xsl:otherwise>
+	                 <xsl:otherwise>Sample values include</xsl:otherwise>
 	              </xsl:choose>
 	           </xsl:element>
 	        </xsl:element>
