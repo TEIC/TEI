@@ -9,23 +9,24 @@
                 version="2.0"
                 exclude-result-prefixes="tei rng teix sch xi #default">
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
-  <xsl:key name="SCHEMATRONS" match="sch:ns[parent::tei:constraint or parent::rng:*]"
-            use="1"/>
-  <xsl:key name="SCHEMATRON"
-            match="sch:pattern[parent::tei:constraint or         parent::rng:*]"
-            use="1"/>
-  <xsl:key name="SCHEMATRON"
-            match="sch:rule[parent::tei:constraint or         parent::rng:*]"
-            use="1"/>
-  <xsl:key name="SCHEMATRON"
-            match="sch:assert[parent::tei:constraint or         parent::rng:*]"
-            use="1"/>
-  <xsl:key name="SCHEMATRON" match="sch:report[parent::tei:constraint or parent::rng:*]"
-            use="1"/>
+
+  <xsl:key name="NS" 
+	   match="sch:ns"
+	   use="1"/>
+
+  <xsl:key name="PATTERNS"
+	   match="sch:pattern"
+	   use="1"/>
+
+  <xsl:key name="CONSTRAINTS"
+	   match="tei:constraint"
+	   use="1"/>
+
+
   <xsl:template match="/">
       <schema queryBinding="xslt2">
          <title>ISO Schematron rules</title>
-         <xsl:for-each select="key('SCHEMATRONS',1)">
+         <xsl:for-each select="key('NS',1)">
             <xsl:choose>
                <xsl:when test="ancestor::teix:egXML"/>
                <xsl:otherwise>
@@ -33,55 +34,69 @@
                </xsl:otherwise>
             </xsl:choose>
          </xsl:for-each>
-         <xsl:for-each select="key('SCHEMATRON',1)">
+
+         <xsl:for-each select="key('PATTERNS',1)">
             <xsl:choose>
                <xsl:when test="ancestor::teix:egXML"/>
-               <xsl:when test="self::sch:pattern">
+               <xsl:otherwise>
                   <xsl:apply-templates select="."/>
-               </xsl:when>
-               <xsl:when test="self::sch:rule[@context]">
-                  <xsl:variable name="patID">
-                     <xsl:choose>
-                        <xsl:when test="ancestor::tei:elementSpec">
-                           <xsl:value-of select="concat(ancestor::tei:elementSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
-                        </xsl:when>
-                        <xsl:when test="ancestor::tei:classSpec">
-                           <xsl:value-of select="concat(ancestor::tei:classSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
-                        </xsl:when>
-                        <xsl:when test="ancestor::tei:macroSpec">
-                           <xsl:value-of select="concat(ancestor::tei:macroSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
-                        </xsl:when>
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:for-each>
+
+         <xsl:for-each select="key('CONSTRAINTS',1)">
+            <xsl:choose>
+               <xsl:when test="ancestor::teix:egXML"/>
+               <xsl:otherwise>
+		 <xsl:variable name="patID">
+		   <xsl:choose>
+		     <xsl:when test="ancestor::tei:elementSpec">
+		       <xsl:value-of select="concat(ancestor::tei:elementSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
+		     </xsl:when>
+		     <xsl:when test="ancestor::tei:classSpec">
+		       <xsl:value-of select="concat(ancestor::tei:classSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
+		     </xsl:when>
+		     <xsl:when test="ancestor::tei:macroSpec">
+		       <xsl:value-of select="concat(ancestor::tei:macroSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
+		     </xsl:when>
                      </xsl:choose>
                   </xsl:variable>
-                  <pattern id="{$patID}">
-                     <xsl:apply-templates select="."/>
-                  </pattern>
-               </xsl:when>
-               <xsl:when test="(self::sch:report and not(preceding-sibling::sch:report)) and ancestor::tei:elementSpec">
-                  <pattern id="{ancestor::tei:elementSpec/@ident}-constraint-{ancestor::tei:constraintSpec/@ident}">
-                     <rule>
-                        <xsl:attribute name="context">
-                           <xsl:text>tei:</xsl:text>
-                           <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
-                        </xsl:attribute>
-                        <xsl:apply-templates select="../sch:report"/>
-                     </rule>
-                  </pattern>
-               </xsl:when>
-               <xsl:when test="(self::sch:assert and not(preceding-sibling::sch:assert)) and ancestor::tei:elementSpec">
-                  <pattern id="{ancestor::tei:elementSpec/@ident}-constraint-{ancestor::tei:constraintSpec/@ident}">
-                     <rule>
-                        <xsl:attribute name="context">
-                           <xsl:text>tei:</xsl:text>
-                           <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
-                        </xsl:attribute>
-                        <xsl:apply-templates select="../sch:assert"/>
-                     </rule>
-                  </pattern>
-               </xsl:when>
+		 <xsl:if test="sch:rule">
+		   <pattern id="{$patID}">
+		     <xsl:apply-templates select="sch:rule"/>
+		   </pattern>
+		 </xsl:if>
+		 <xsl:if test="sch:assert|sch:report">
+		   <pattern id="{$patID}">
+		     <rule>
+		       <xsl:attribute name="context">
+			 <xsl:text>tei:</xsl:text>
+			 <xsl:choose>
+			   <xsl:when test="ancestor::tei:elementSpec">
+			     <xsl:value-of
+				 select="ancestor::tei:elementSpec/@ident"/>
+			   </xsl:when>
+			   <xsl:otherwise>*</xsl:otherwise>
+			 </xsl:choose>
+		       </xsl:attribute>
+		       <xsl:apply-templates select="sch:assert|sch:report"/>
+		     </rule>
+		   </pattern>
+		 </xsl:if>
+               </xsl:otherwise>
             </xsl:choose>
          </xsl:for-each>
       </schema>
+  </xsl:template>
+  
+  <xsl:template match="sch:rule[not(@context)]">
+    <rule>
+      <xsl:attribute name="context">
+	<xsl:text>tei:</xsl:text>
+	<xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+      </xsl:attribute>
+      <xsl:apply-templates/>
+    </rule>
   </xsl:template>
   
   
@@ -91,9 +106,9 @@
   
   
   <xsl:template match="sch:*">
-      <xsl:element name="{local-name()}">
-         <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
-      </xsl:element>
+    <xsl:element name="{local-name()}">
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
+    </xsl:element>
   </xsl:template>
   
 </xsl:stylesheet>
