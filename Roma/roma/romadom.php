@@ -959,7 +959,7 @@ class romaDom extends domDocument
     public function getCustomizationDescription( &$szDesc )
       {
 	$this->getXPath( $oXPath );
-	$szDesc = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p[1]" )->item(0)->nodeValue;
+	$szDesc = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:p[1]" )->item(0)->nodeValue;
       }
     
 
@@ -2029,7 +2029,7 @@ class romaDom extends domDocument
     public function setCustomizationDescription( $szDescription )
       {
 	$this->getXPath( $oXPath );
-	$oP = $oXPath->query( "/tei:TEI/tei:text/tei:body/tei:p" )->item(0);
+	$oP = $oXPath->query( "/tei:TEI/tei:text/tei:body//tei:p[1]" )->item(0);
 	if ( is_object( $oP ) ) {
   	 if ( $oP->hasChildNodes() ) {
 	  $oP->removeChild( $oP->firstChild );
