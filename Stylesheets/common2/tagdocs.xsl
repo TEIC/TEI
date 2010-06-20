@@ -1649,17 +1649,37 @@
       <xsl:element namespace="{$outputNS}" name="{$divName}">
          <xsl:attribute name="{$rendName}">parent</xsl:attribute>
          <xsl:variable name="list">
-	           <List>
-	              <xsl:call-template name="generateParentsByElement"/>
-	              <xsl:call-template name="generateParentsByMacro"/>
-	              <xsl:call-template name="generateParentsByClass"/>
-	           </List>
+	   <List>
+	     <xsl:call-template name="generateParentsByElement">
+	       <xsl:with-param name="I" select="concat(@ident,'')"/>
+	     </xsl:call-template>
+	     <xsl:call-template name="generateParentsByElement">
+	       <xsl:with-param name="I" select="concat(@ident,'_alternation')"/>
+	     </xsl:call-template>
+	     <xsl:call-template name="generateParentsByElement">
+	       <xsl:with-param name="I" select="concat(@ident,'_sequence')"/>
+	     </xsl:call-template>
+	     <xsl:call-template name="generateParentsByElement">
+	       <xsl:with-param name="I"
+			       select="concat(@ident,'_sequenceOptional')"/>
+	     </xsl:call-template>
+	     <xsl:call-template name="generateParentsByElement">
+	       <xsl:with-param name="I"
+			       select="concat(@ident,'_sequenceOptionalRepeatable')"/>
+	     </xsl:call-template>
+	     <xsl:call-template name="generateParentsByElement">
+	       <xsl:with-param name="I"
+			       select="concat(@ident,'_sequenceRepeatable')"/>
+	     </xsl:call-template>
+	     <xsl:call-template name="generateParentsByMacro"/>
+	     <xsl:call-template name="generateParentsByClass"/>
+	   </List>
          </xsl:variable>
          <xsl:for-each select="$list/List/Item">
-	           <xsl:copy-of select="*|text()"/>
-	           <xsl:if test="following-sibling::Item">
-	              <xsl:call-template name="showSpaceBetweenItems"/>
-	           </xsl:if>
+	   <xsl:copy-of select="*|text()"/>
+	   <xsl:if test="following-sibling::Item">
+	     <xsl:call-template name="showSpaceBetweenItems"/>
+	   </xsl:if>
          </xsl:for-each>
          <xsl:call-template name="generateParentsByAttribute"/>
       </xsl:element>
@@ -1769,16 +1789,16 @@
 
 
   <xsl:template name="generateParentsByElement">
-      <xsl:variable name="this" select="@ident"/>
-      <xsl:for-each select="key('REFS',$this)/ancestor::tei:elementSpec">
-         <xsl:sort select="@ident"/>
-         <Item>
-	           <xsl:call-template name="linkTogether">
-	              <xsl:with-param name="name" select="@ident"/>
-	              <xsl:with-param name="class">link_odd_element</xsl:with-param>
-	           </xsl:call-template>
-         </Item>
-      </xsl:for-each>
+    <xsl:param name="I"/>
+    <xsl:for-each select="key('REFS',$I)/ancestor::tei:elementSpec">
+      <xsl:sort select="@ident"/>
+      <Item>
+	<xsl:call-template name="linkTogether">
+	  <xsl:with-param name="name" select="@ident"/>
+	  <xsl:with-param name="class">link_odd_element</xsl:with-param>
+	</xsl:call-template>
+      </Item>
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template name="generateParentsByAttribute">
