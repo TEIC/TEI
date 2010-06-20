@@ -789,6 +789,7 @@
 	              <xsl:attribute name="xml:lang">
 	                 <xsl:value-of select="$documentationLanguage"/>
 	              </xsl:attribute>
+		      <xsl:text>Schematron</xsl:text>
 	           </xsl:element>
          </xsl:element>
          <xsl:element namespace="{$outputNS}" name="{$cellName}">
