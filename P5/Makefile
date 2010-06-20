@@ -121,7 +121,10 @@ xml: check
 tex: xml
 	@echo Checking you have a running ${XELATEX} before trying to make TeX...
 	which ${XELATEX} || exit 1
-	cp Utilities/guidelines-latex.xsl Utilities/Guidelines.xsl
+	perl -p -e \
+		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
+		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
+		Utilities/guidelines-latex.xsl > Utilities/guidelines.xsl
 	xelatex --interaction=batchmode Utilities/fonttest 
 	if [ -f "missfont.log" ]  ; then  \
 	  perl -p -i -e 's/(.*Minion)/%\1/;s/(.*Myriad)/%\1/' Utilities/Guidelines.xsl ;\
