@@ -514,4 +514,12 @@
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process cross-ref to note</desc>
+   </doc>
+  <xsl:template match="tei:note" mode="xref">
+      <xsl:number level="any"/>
+  </xsl:template>
+
 </xsl:stylesheet>

@@ -101,7 +101,19 @@ Use real name of graphics files rather than pointers
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
-\usepackage{endnotes}
+</xsl:text>
+<xsl:if test="key('ENDNOTES',1)">
+  \usepackage{endnotes}
+  <xsl:choose>
+    <xsl:when test="key('FOOTNOTES',1)">
+      \def\theendnote{\@alph\c@endnote}
+    </xsl:when>
+    <xsl:otherwise>
+      \def\theendnote{\@arabic\c@endnote}
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:if>
+<xsl:text>
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}&#10;</xsl:text>
 <xsl:if test="$reencode='true'">
 <xsl:text>&#10;\IfFileExists{tipa.sty}{\usepackage{tipa}}{}

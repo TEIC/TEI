@@ -20,8 +20,6 @@
       </desc>
    </doc>
 
-  <xsl:key name="FOOTNOTES" match="tei:note[not(@place)]" use="1"/>
-
   <xsl:template name="msSection">
       <xsl:param name="heading"/>
       <xsl:param name="level"/>

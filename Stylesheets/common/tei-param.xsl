@@ -24,6 +24,10 @@
     <xd:copyright>2008, TEI Consortium</xd:copyright>
   </xd:doc>
   <xsl:key match="tei:*[@xml:id]" name="IDS" use="@xml:id"/>
+  <xsl:key name="FOOTNOTES" match="tei:note[not(@place)]" use="1"/>
+  <xsl:key name="FOOTNOTES" match="tei:note[@place='foot']" use="1"/>
+  <xsl:key name="ENDNOTES" match="tei:note[@place='end']" use="1"/>
+
   <xd:doc class="CSS" type="string">CSS class for TOC entries</xd:doc>
   <xsl:param name="class_toc">toc</xsl:param>
 

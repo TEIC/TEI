@@ -480,36 +480,47 @@
       <desc>Process element note</desc>
    </doc>
   <xsl:template match="tei:note">
-      <xsl:if test="@xml:id">
-         <xsl:text>\hypertarget{</xsl:text>
-         <xsl:value-of select="@xml:id"/>
-         <xsl:text>}{}</xsl:text>
-      </xsl:if>
-      <xsl:choose>
-         <xsl:when test="@place='inline' or ancestor::tei:bibl or ancestor::tei:biblStruct"> 
-	           <xsl:text>(</xsl:text>
-	           <xsl:apply-templates/>
-	           <xsl:text>) </xsl:text>
-         </xsl:when>
-         <xsl:when test="@place='end'">
-            <xsl:text>\endnote{</xsl:text>
-            <xsl:apply-templates/>
-            <xsl:text>}</xsl:text>
-         </xsl:when>
-         <xsl:when test="@target">
-            <xsl:text>\footnotetext{</xsl:text>
-            <xsl:apply-templates/>
-            <xsl:text>}</xsl:text>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:text>\footnote{</xsl:text>
-            <xsl:apply-templates/>
-            <xsl:text>}</xsl:text>
-         </xsl:otherwise>
+    <xsl:if test="@xml:id">
+      <xsl:text>\hypertarget{</xsl:text>
+      <xsl:value-of select="@xml:id"/>
+      <xsl:text>}{}</xsl:text>
+    </xsl:if>
+    <xsl:choose>
+	<xsl:when test="@place='inline' or ancestor::tei:bibl or ancestor::tei:biblStruct"> 
+	  <xsl:text>(</xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>) </xsl:text>
+	</xsl:when>
+	<xsl:when test="@place='end'">
+	  <xsl:text>\endnote{</xsl:text>
+	  <xsl:if test="@xml:id">
+	    <xsl:text>\label{</xsl:text>
+	    <xsl:value-of select="@xml:id"/>
+	    <xsl:text>}</xsl:text>
+	  </xsl:if>
+	  <xsl:apply-templates/>
+	  <xsl:text>}</xsl:text>
+	</xsl:when>
+	<xsl:when test="@target">
+	  <xsl:text>\footnotetext{</xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>}</xsl:text>
+	</xsl:when>
+      <xsl:otherwise>
+	  <xsl:text>\footnote{</xsl:text>
+	  <xsl:if test="@xml:id">
+	    <xsl:text>\label{</xsl:text>
+	    <xsl:value-of select="@xml:id"/>
+	    <xsl:text>}</xsl:text>
+	  </xsl:if>
+	  <xsl:apply-templates/>
+	  <xsl:text>}</xsl:text>
+	</xsl:otherwise>
       </xsl:choose>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elementp</desc>
+    <desc>Process element &lt;p&gt;</desc>
    </doc>
   <xsl:template match="tei:p">
       <xsl:choose>

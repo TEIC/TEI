@@ -63,8 +63,9 @@
     name="ATTREFS-ELEMENT" use="@name"/>
   <xsl:key match="tei:classSpec/tei:attList/tei:attList/tei:attDef/tei:datatype/rng:ref"
     name="ATTREFS-CLASS" use="@name"/>
+  <xsl:key match="tei:macroSpec/tei:content//rng:ref" name="MACROREFS"
+	   use="@name"/>
 
-  <xsl:key match="tei:macroSpec/tei:content//rng:ref" name="MACROREFS" use="@name"/>
   <xsl:key match="tei:elementSpec|tei:classSpec" name="CLASSMEMBERS"
     use="tei:classes/tei:memberOf/@key"/>
   <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec" name="IDENTS" use="@ident"/>

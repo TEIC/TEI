@@ -27,6 +27,9 @@
       </desc>
    </doc>
   <xsl:key match="tei:*[@xml:id]" name="IDS" use="@xml:id"/>
+  <xsl:key name="FOOTNOTES" match="tei:note[not(@place)]" use="1"/>
+  <xsl:key name="FOOTNOTES" match="tei:note[@place='foot']" use="1"/>
+  <xsl:key name="ENDNOTES" match="tei:note[@place='end']" use="1"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
       <desc>CSS class for TOC entries</desc>

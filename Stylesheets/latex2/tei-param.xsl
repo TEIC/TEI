@@ -111,7 +111,19 @@ Use real name of graphics files rather than pointers
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
-\usepackage{endnotes}
+</xsl:text>
+<xsl:if test="key('ENDNOTES',1)">
+  \usepackage{endnotes}
+  <xsl:choose>
+    <xsl:when test="key('FOOTNOTES',1)">
+      \def\theendnote{\@alph\c@endnote}
+    </xsl:when>
+    <xsl:otherwise>
+      \def\theendnote{\@arabic\c@endnote}
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:if>
+<xsl:text>
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 </xsl:text>
 <xsl:choose>
@@ -483,9 +495,6 @@ capable of dealing with UTF-8 directly.
       <xsl:text>
 \makeatletter
 \thispagestyle{plain}</xsl:text>
-      <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
-         <xsl:call-template name="printTitleAndLogo"/>
-      </xsl:if>
       <xsl:text>\markright{\@title}\markboth{\@title}{\@author}
 \renewcommand\small{\@setfontsize\small{9pt}{11pt}\abovedisplayskip 8.5\p@ plus3\p@ minus4\p@
    \belowdisplayskip \abovedisplayskip
@@ -510,7 +519,6 @@ capable of dealing with UTF-8 directly.
 \fancyfoot[RE]{\TheID}
 \hypersetup{linkbordercolor=0.75 0.75 0.75,urlbordercolor=0.75 0.75 0.75,bookmarksnumbered=true}
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}</xsl:text>
-      <xsl:call-template name="beginDocumentHook"/>
    </xsl:template>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
@@ -527,10 +535,12 @@ capable of dealing with UTF-8 directly.
       <desc>[latex] Title banner </desc>
    </doc>
    <xsl:template name="printTitleAndLogo">
+\makeatletter
 \noindent\parbox[b]{.75\textwidth}{\fontsize{14pt}{16pt}\bfseries\raggedright\sffamily\selectfont \@title}
 \vskip20pt
 \par\noindent{\fontsize{11pt}{13pt}\sffamily\itshape\raggedright\selectfont\@author\hfill\TheDate}
 \vspace{18pt}
+\makeatother
 </xsl:template>
 
   

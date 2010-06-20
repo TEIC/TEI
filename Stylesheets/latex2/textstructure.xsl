@@ -123,7 +123,6 @@
     \def\DivIVStar[#1]#2{\subsubsection*{#2}}
     \def\DivVStar[#1]#2{\paragraph*{#2}}
 }
-\makeatother
 \def\TheFullDate{</xsl:text>
       <xsl:call-template name="generateDate"/>
       <xsl:variable name="revdate">
@@ -145,28 +144,36 @@
          <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:idno">
             <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:idno[1]"/>
          </xsl:when>
-
       </xsl:choose>
+      <xsl:text>\makeatother </xsl:text>
       <xsl:text>}&#10;\def\TheDate{</xsl:text>
       <xsl:call-template name="generateDate"/>
       <xsl:text>}&#10;\title{</xsl:text>
       <xsl:call-template name="generateTitle"/>
       <xsl:text>}&#10;\author{</xsl:text>
       <xsl:call-template name="generateAuthor"/>
-      <xsl:text>}&#10;\begin{document}&#10;</xsl:text>
-      <!-- certainly don't touch the next few lines -->
-      <xsl:text disable-output-escaping="yes">
-\catcode`\$=12\relax
-\catcode`\^=12\relax
-\catcode`\~=12\relax
-\catcode`\#=12\relax
-\catcode`\%=12\relax
-</xsl:text>
+      <xsl:text>}</xsl:text>
       <xsl:text disable-output-escaping="yes">\let\tabcellsep&amp;
-\catcode`\&amp;=12\relax </xsl:text>
+      \catcode`\&amp;=12\relax </xsl:text>
+      <xsl:text>\makeatletter </xsl:text>
       <xsl:call-template name="latexBegin"/>
+      <xsl:text>\makeatother </xsl:text>
+      <xsl:text>&#10;\begin{document}&#10;</xsl:text>
+      <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
+         <xsl:call-template name="printTitleAndLogo"/>
+      </xsl:if>
+      <xsl:call-template name="beginDocumentHook"/>
+      <!-- certainly don't touch the next few lines -->
+      <xsl:text>&#10;\catcode`\$=12\relax&#10;</xsl:text>
+      <xsl:text>\catcode`\^=12\relax&#10;</xsl:text>
+      <xsl:text>\catcode`\~=12\relax&#10;</xsl:text>
+      <xsl:text>\catcode`\#=12\relax&#10;</xsl:text>
+      <xsl:text>\catcode`\%=12\relax&#10;</xsl:text>
       <xsl:apply-templates/>
       <xsl:call-template name="latexEnd"/>
+      <xsl:if test="key('ENDNOTES',1)">
+	<xsl:text>&#10;\theendnotes</xsl:text>
+      </xsl:if>
       <xsl:text>&#10;\end{document}&#10;</xsl:text>
    </xsl:template>
 

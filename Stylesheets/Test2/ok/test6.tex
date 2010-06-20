@@ -1,5 +1,10 @@
 \documentclass[]{beamer}\makeatletter
 
+\IfFileExists{xcolor.sty}%
+  {\RequirePackage{xcolor}}%
+  {\RequirePackage{color}}
+\usepackage{colortbl}
+      
 \IfFileExists{utf8x.def}%
  {\usepackage[utf8x]{inputenc}}%
  {\usepackage[utf8]{inputenc}}
@@ -67,9 +72,6 @@
 \newcolumntype{P}[1]{){\arraybackslash}p{#1}}
 \newcolumntype{B}[1]{){\arraybackslash}b{#1}}
 \newcolumntype{M}[1]{){\arraybackslash}m{#1}}
-\IfFileExists{xcolor.sty}%
-  {\RequirePackage{xcolor}}%
-  {\RequirePackage{color}}
 \definecolor{label}{gray}{0.75}
 \newenvironment{reflist}{%
   \begin{raggedright}\begin{list}{}
@@ -99,7 +101,7 @@
  {\vspace{20pt}\hrule\vspace{10pt}%
   \hypertarget{#1}{}%
   \markright{#2}%
-  \pdfbookmark[3]{#2}{#1}%
+  \pdfbookmark[2]{#2}{#1}%
   \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
   }{}
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
@@ -149,14 +151,12 @@
     \def\DivVStar[#1]#2{\paragraph*{#2}}
 }
 \makeatother
-\def\TheFullDate{}
+\def\TheFullDate{2010-06-20}
 \def\TheID{}
-\def\TheDate{}
+\def\TheDate{2010-06-20}
 \title{Test 6}
 \author{}
 \begin{document}
-
-\frame{\maketitle}
 
 \catcode`\$=12\relax
 \catcode`\^=12\relax
@@ -165,6 +165,8 @@
 \catcode`\%=12\relax
 \let\tabcellsep&
 \catcode`\&=12\relax 
+\frame{\maketitle}
+
   \begin{frame} 
   \frametitle{Outline} 
   \tableofcontents

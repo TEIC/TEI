@@ -140,4 +140,21 @@
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process cross-ref to note</desc>
+   </doc>
+  <xsl:template match="tei:note" mode="xref">
+    <xsl:choose>
+      <xsl:when test="@xml:id">
+	<xsl:text>\ref{</xsl:text>
+	<xsl:value-of select="@xml:id"/>
+	<xsl:text>}</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:number level="any"/>
+      </xsl:otherwise>
+    </xsl:choose>      
+  </xsl:template>
+
 </xsl:stylesheet>

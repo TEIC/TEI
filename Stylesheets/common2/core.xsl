@@ -24,6 +24,7 @@
    </doc>
   <xsl:output indent="no"/>
     <xsl:strip-space elements="tei:author tei:forename tei:surname tei:editor"/>
+
   <xsl:key name="MNAMES"
             match="tei:monogr/tei:author[tei:surname]|tei:monogr/tei:editor[tei:surname]"
             use="ancestor::tei:biblStruct/@xml:id"/>

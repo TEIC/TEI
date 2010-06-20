@@ -154,4 +154,18 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template match="tei:note" mode="xref">
+    <xsl:choose>
+      <xsl:when test="@xml:id">
+	<xsl:text>\ref{</xsl:text>
+	<xsl:value-of select="@xml:id"/>
+	<xsl:text>}</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:number level="any"/>
+      </xsl:otherwise>
+    </xsl:choose>      
+  </xsl:template>
+
 </xsl:stylesheet>

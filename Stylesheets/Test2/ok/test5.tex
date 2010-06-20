@@ -1,5 +1,10 @@
 \documentclass[11pt,twoside]{article}\makeatletter
 
+\IfFileExists{xcolor.sty}%
+  {\RequirePackage{xcolor}}%
+  {\RequirePackage{color}}
+\usepackage{colortbl}
+      
 \IfFileExists{utf8x.def}%
  {\usepackage[utf8x]{inputenc}}%
  {\usepackage[utf8]{inputenc}}
@@ -31,6 +36,32 @@
 \def\textoverbar#1{\ensuremath{\overline{#1}}}
 \def\textgothic#1{\ensuremath{\mathscr{#1}}}
 \RequirePackage{array}
+\def\@testpach{\@chclass
+ \ifnum \@lastchclass=6 \@ne \@chnum \@ne \else
+  \ifnum \@lastchclass=7 5 \else
+   \ifnum \@lastchclass=8 \tw@ \else
+    \ifnum \@lastchclass=9 \thr@@
+   \else \z@
+   \ifnum \@lastchclass = 10 \else
+   \edef\@nextchar{\expandafter\string\@nextchar}%
+   \@chnum
+   \if \@nextchar c\z@ \else
+    \if \@nextchar l\@ne \else
+     \if \@nextchar r\tw@ \else
+   \z@ \@chclass
+   \if\@nextchar |\@ne \else
+    \if \@nextchar !6 \else
+     \if \@nextchar @7 \else
+      \if \@nextchar (8 \else
+       \if \@nextchar )9 \else
+  10
+  \@chnum
+  \if \@nextchar m\thr@@\else
+   \if \@nextchar p4 \else
+    \if \@nextchar b5 \else
+   \z@ \@chclass \z@ \@preamerr \z@ \fi \fi \fi \fi
+   \fi \fi  \fi  \fi  \fi  \fi  \fi \fi \fi \fi \fi \fi}
+
 \gdef\arraybackslash{\let\\=\@arraycr}
 \def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
 \gdef\arraybackslash{\let\\=\@arraycr}
@@ -41,9 +72,6 @@
 \newcolumntype{P}[1]{){\arraybackslash}p{#1}}
 \newcolumntype{B}[1]{){\arraybackslash}b{#1}}
 \newcolumntype{M}[1]{){\arraybackslash}m{#1}}
-\IfFileExists{xcolor.sty}%
-  {\RequirePackage{xcolor}}%
-  {\RequirePackage{color}}
 \definecolor{label}{gray}{0.75}
 \newenvironment{reflist}{%
   \begin{raggedright}\begin{list}{}
@@ -73,7 +101,7 @@
  {\vspace{20pt}\hrule\vspace{10pt}%
   \hypertarget{#1}{}%
   \markright{#2}%
-  \pdfbookmark[3]{#2}{#1}%
+  \pdfbookmark[2]{#2}{#1}%
   \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
   }{}
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
@@ -85,12 +113,11 @@
 \usepackage{framed}
 \definecolor{shadecolor}{gray}{0.95}
 \usepackage{longtable}
-\usepackage{colortbl}
 \usepackage[normalem]{ulem}
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
-\usepackage{endnotes}
+
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 
 \IfFileExists{tipa.sty}{\usepackage{tipa}}{}
@@ -234,16 +261,21 @@
 \author{Sebastian Rahtz}
 \begin{document}
 
+\catcode`\$=12\relax
+\catcode`\^=12\relax
+\catcode`\~=12\relax
+\catcode`\#=12\relax
+\catcode`\%=12\relax
+\let\tabcellsep&
+\catcode`\&=12\relax 
 \makeatletter
 \thispagestyle{plain}
 \noindent\parbox[b]{.75\textwidth}{\fontsize{14pt}{16pt}\bfseries\raggedright\sffamily\selectfont \@title}
 \vskip20pt
 \par\noindent{\fontsize{11pt}{13pt}\sffamily\itshape\raggedright\selectfont\@author\hfill\TheDate}
 \vspace{18pt}
-\markright{\@title}%
-\markboth{\@title}{\@author}%
-\renewcommand\small{\@setfontsize\small{9pt}{11pt}%
-   \abovedisplayskip 8.5\p@ plus3\p@ minus4\p@
+\markright{\@title}\markboth{\@title}{\@author}
+\renewcommand\small{\@setfontsize\small{9pt}{11pt}\abovedisplayskip 8.5\p@ plus3\p@ minus4\p@
    \belowdisplayskip \abovedisplayskip
    \abovedisplayshortskip \z@ plus2\p@
    \belowdisplayshortskip 4\p@ plus2\p@ minus2\p@
@@ -265,14 +297,7 @@
 \fancyfoot[CE]{\thepage}
 \fancyfoot[RE]{\TheID}
 \hypersetup{linkbordercolor=0.75 0.75 0.75,urlbordercolor=0.75 0.75 0.75,bookmarksnumbered=true}
-\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}
-\catcode`\$=12\relax
-\catcode`\^=12\relax
-\catcode`\~=12\relax
-\catcode`\#=12\relax
-\catcode`\%=12\relax
-\let\tabcellsep&
-\catcode`\&=12\relax \frontmatter 
+\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}\frontmatter 
 \DivI[The front part]{The front part}\label{part0}\par Lorem ipsum dolor sit amet\par Consectetuer adipiscing elit, sed diam nonummy nibh euismod
       tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim
       ad minim veniam, quis nostrud exerci tation ullamcorper suscipit

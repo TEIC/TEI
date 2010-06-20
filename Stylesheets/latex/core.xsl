@@ -531,27 +531,37 @@
       <xsl:text>}{}</xsl:text>
     </xsl:if>
     <xsl:choose>
-      <xsl:when test="@place='inline' or ancestor::tei:bibl or ancestor::tei:biblStruct"> 
-	<xsl:text>(</xsl:text>
-	<xsl:apply-templates/>
-	<xsl:text>) </xsl:text>
-      </xsl:when>
-      <xsl:when test="@place='end'">
-        <xsl:text>\endnote{</xsl:text>
-        <xsl:apply-templates/>
-        <xsl:text>}</xsl:text>
-      </xsl:when>
-      <xsl:when test="@target">
-        <xsl:text>\footnotetext{</xsl:text>
-        <xsl:apply-templates/>
-        <xsl:text>}</xsl:text>
-      </xsl:when>
+	<xsl:when test="@place='inline' or ancestor::tei:bibl or ancestor::tei:biblStruct"> 
+	  <xsl:text>(</xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>) </xsl:text>
+	</xsl:when>
+	<xsl:when test="@place='end'">
+	  <xsl:text>\endnote{</xsl:text>
+	  <xsl:if test="@xml:id">
+	    <xsl:text>\label{</xsl:text>
+	    <xsl:value-of select="@xml:id"/>
+	    <xsl:text>}</xsl:text>
+	  </xsl:if>
+	  <xsl:apply-templates/>
+	  <xsl:text>}</xsl:text>
+	</xsl:when>
+	<xsl:when test="@target">
+	  <xsl:text>\footnotetext{</xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>}</xsl:text>
+	</xsl:when>
       <xsl:otherwise>
-        <xsl:text>\footnote{</xsl:text>
-        <xsl:apply-templates/>
-        <xsl:text>}</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
+	  <xsl:text>\footnote{</xsl:text>
+	  <xsl:if test="@xml:id">
+	    <xsl:text>\label{</xsl:text>
+	    <xsl:value-of select="@xml:id"/>
+	    <xsl:text>}</xsl:text>
+	  </xsl:if>
+	  <xsl:apply-templates/>
+	  <xsl:text>}</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:p</xd:short>
