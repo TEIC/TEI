@@ -95,7 +95,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element eg|tei:q[@rend='eg']</desc>
    </doc>
-  <xsl:template match="tei:eg|tei:q[@rend='eg']">
+  <xsl:template match="tei:seg[@rend='pre']|tei:eg|tei:q[@rend='eg']">
       <xsl:choose>
          <xsl:when test="ancestor::tei:cell and count(*)=1 and string-length(.)&lt;60">
 	           <xsl:variable name="stuff">
