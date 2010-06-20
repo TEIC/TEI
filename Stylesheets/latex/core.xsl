@@ -410,35 +410,52 @@
     <xd:short>Process elements tei:list</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
+
   <xsl:template match="tei:list">
-    <xsl:if test="tei:head"> \leftline{\textbf{<xsl:for-each select="tei:head">
-        <xsl:apply-templates/>
-      </xsl:for-each>}} </xsl:if>
+      <xsl:if test="tei:head"> 
+	<xsl:text>\leftline{\textbf{</xsl:text>
+	<xsl:for-each select="tei:head">
+            <xsl:apply-templates/>
+         </xsl:for-each>
+	 <xsl:text>}} </xsl:text>
+      </xsl:if>
       <xsl:if test="@xml:id">
 	<xsl:text>\label{</xsl:text>
-	<xsl:value-of  select="@xml:id"/>
+	<xsl:value-of select="@xml:id"/>
 	<xsl:text>}</xsl:text>
       </xsl:if>
-    <xsl:choose>
-      <xsl:when test="not(tei:item)"/>
-      <xsl:when test="@type='gloss' or tei:label"> \begin{description}<xsl:apply-templates
-          mode="gloss" select="tei:item"/> \end{description} </xsl:when>
-      <xsl:when test="@type='unordered'"> \begin{itemize}<xsl:apply-templates/>
-        \end{itemize} </xsl:when>
-      <xsl:when test="@type='ordered'"> \begin{enumerate}<xsl:apply-templates/>
-        \end{enumerate} </xsl:when>
-      <xsl:when test="@type='runin'">
-        <xsl:apply-templates mode="runin" select="tei:item"/>
-      </xsl:when>
-      <xsl:otherwise> \begin{itemize}<xsl:apply-templates/> \end{itemize}
+      <xsl:choose>
+         <xsl:when test="not(tei:item)"/>
+         <xsl:when test="@type='gloss' or tei:label"> 
+	   <xsl:text>\begin{description}&#10;</xsl:text>
+	   <xsl:apply-templates mode="gloss" select="tei:item"/>
+	   <xsl:text>&#10;\end{description} </xsl:text>
+	 </xsl:when>
+         <xsl:when test="@type='unordered'">
+	   <xsl:text>\begin{itemize}&#10;</xsl:text>
+	   <xsl:apply-templates/>
+	   <xsl:text>&#10;\end{itemize} </xsl:text>
+	 </xsl:when>
+         <xsl:when test="@type='ordered'">
+	   <xsl:text>\begin{enumerate}&#10;</xsl:text>
+	   <xsl:apply-templates/>
+	   <xsl:text>&#10;\end{enumerate}</xsl:text>
+	 </xsl:when>
+         <xsl:when test="@type='runin'">
+            <xsl:apply-templates mode="runin" select="tei:item"/>
+         </xsl:when>
+         <xsl:otherwise> 
+	   <xsl:text>\begin{itemize}&#10;</xsl:text>
+	   <xsl:apply-templates/> 
+	   <xsl:text>&#10;\end{itemize} </xsl:text>
       </xsl:otherwise>
-    </xsl:choose>
+      </xsl:choose>
   </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements tei:listBibl</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
-
   <xsl:template match="tei:listBibl">
     <xsl:choose>
       <xsl:when test="tei:biblStruct">

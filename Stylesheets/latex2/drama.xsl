@@ -56,15 +56,14 @@
   <xsl:template match="tei:castGroup"> 
       <xsl:text>\begin{itemize} </xsl:text>
       <xsl:apply-templates/>
-      <xsl:text>
- \end{itemize}</xsl:text>
+      <xsl:text>&#10;\end{itemize}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element castItem</desc>
    </doc>
   <xsl:template match="tei:castItem">
-\item 
-  <xsl:apply-templates/>
+    <xsl:text>&#10;\item </xsl:text>
+    <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element castList</desc>
@@ -75,9 +74,12 @@
          <xsl:for-each select="tei:head">
             <xsl:apply-templates/>
          </xsl:for-each>
-         <xsl:text>}
-</xsl:text>
-      </xsl:if> \begin{itemize} <xsl:apply-templates/> \end{itemize} </xsl:template>
+         <xsl:text>}&#10;</xsl:text>
+      </xsl:if> 
+      <xsl:text>\begin{itemize} </xsl:text>
+      <xsl:apply-templates/> 
+      <xsl:text>\end{itemize} </xsl:text>
+  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process elementp/tei:stage</desc>
    </doc>
@@ -136,9 +138,7 @@
       <desc>Process element stage</desc>
    </doc>
   <xsl:template match="tei:stage">
-      <xsl:text>
-\par
-</xsl:text>
+      <xsl:text>&#10;\par&#10;</xsl:text>
       <xsl:text>\textit{</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>}\par </xsl:text>
