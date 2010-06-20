@@ -165,7 +165,6 @@
      {0.5ex \@plus .2ex}%
      {\reset@font\Large\sffamily}}
 \makeatother </xsl:text>
-<xsl:call-template name="beginDocumentHook"/>
 </xsl:template>
 
 <xsl:param name="latexGeometryOptions">twoside,letterpaper,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in</xsl:param>
