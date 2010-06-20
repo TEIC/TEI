@@ -55,59 +55,52 @@
       <xsl:if test="not($realFigures='true')">
          <xsl:text>%BEGINFIGMAP</xsl:text>
          <xsl:if test="not($latexLogo='')">
-	           <xsl:text>
-%FIGMAP </xsl:text>
-	           <xsl:value-of select="$latexLogo"/>
-	           <xsl:text> FIG0 </xsl:text>
+	   <xsl:text>&#10;%FIGMAP </xsl:text>
+	   <xsl:value-of select="$latexLogo"/>
+	   <xsl:text> FIG0 </xsl:text>
          </xsl:if>
          <xsl:for-each select="//tei:figure">
-	           <xsl:variable name="c">
-	              <xsl:number level="any"/>
-	           </xsl:variable>
-	           <xsl:text>
-%FIGMAP </xsl:text>
-	           <xsl:variable name="f">
-	              <xsl:choose>
-	                 <xsl:when test="@url">
-	                    <xsl:value-of select="@url"/>
-	                 </xsl:when>
-	                 <xsl:when test="@entity">
-	                    <xsl:value-of select="unparsed-entity-uri(@entity)"/>
-	                 </xsl:when>
-	                 <xsl:when test="tei:graphic">
-	                    <xsl:value-of select="tei:graphic/@url"/>
-	                 </xsl:when>
-	              </xsl:choose>
-	           </xsl:variable>
-	           <xsl:choose>
-	              <xsl:when test="contains($f,'.')">
-	                 <xsl:value-of select="$f"/>
-	              </xsl:when>
-	              <xsl:otherwise>
-	                 <xsl:value-of select="concat($f,'.png')"/>
-	              </xsl:otherwise>
-	           </xsl:choose>
-	           <xsl:text> FIG</xsl:text>
-	           <xsl:value-of select="$c + 1000"/>
-	           <xsl:text>
-</xsl:text>
+	   <xsl:variable name="c">
+	     <xsl:number level="any"/>
+	   </xsl:variable>
+	   <xsl:text>&#10;%FIGMAP </xsl:text>
+	   <xsl:variable name="f">
+	     <xsl:choose>
+	       <xsl:when test="@url">
+		 <xsl:value-of select="@url"/>
+	       </xsl:when>
+	       <xsl:when test="@entity">
+		 <xsl:value-of select="unparsed-entity-uri(@entity)"/>
+	       </xsl:when>
+	       <xsl:when test="tei:graphic">
+		 <xsl:value-of select="tei:graphic/@url"/>
+	       </xsl:when>
+	     </xsl:choose>
+	   </xsl:variable>
+	   <xsl:choose>
+	     <xsl:when test="contains($f,'.')">
+	       <xsl:value-of select="$f"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <xsl:value-of select="concat($f,'.png')"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
+	   <xsl:text> FIG</xsl:text>
+	   <xsl:value-of select="$c + 1000"/>
+	   <xsl:text>&#10;</xsl:text>
          </xsl:for-each>
-         <xsl:text>
-%ENDFIGMAP
-</xsl:text>
+         <xsl:text>&#10;%ENDFIGMAP&#10;</xsl:text>
       </xsl:if>
       <xsl:text>\documentclass[</xsl:text>
       <xsl:value-of select="$classParameters"/>
       <xsl:text>]{</xsl:text>
       <xsl:value-of select="$docClass"/>
       <xsl:text>}</xsl:text>
-      <xsl:text>\makeatletter
-</xsl:text>
+      <xsl:text>\makeatletter&#10;</xsl:text>
       <xsl:call-template name="latexSetup"/>
       <xsl:call-template name="latexPackages"/>
       <xsl:call-template name="latexLayout"/>
-      <xsl:text>
-\@ifundefined{chapter}{%
+      <xsl:text>&#10;\@ifundefined{chapter}{%
     \def\DivI{\section}
     \def\DivII{\subsection}
     \def\DivIII{\subsubsection}
@@ -144,8 +137,7 @@
     <xsl:value-of select="$revdate"/>
          <xsl:text>)</xsl:text>
       </xsl:if>
-      <xsl:text>}
-\def\TheID{</xsl:text>
+      <xsl:text>}&#10;\def\TheID{</xsl:text>
       <xsl:choose>
          <xsl:when test="not($REQUEST='')">
             <xsl:value-of select="not($REQUEST='')"/>
@@ -155,20 +147,15 @@
          </xsl:when>
 
       </xsl:choose>
-      <xsl:text>}
-\def\TheDate{</xsl:text>
+      <xsl:text>}&#10;\def\TheDate{</xsl:text>
       <xsl:call-template name="generateDate"/>
-      <xsl:text>}
-\title{</xsl:text>
+      <xsl:text>}&#10;\title{</xsl:text>
       <xsl:call-template name="generateTitle"/>
-      <xsl:text>}
-\author{</xsl:text>
+      <xsl:text>}&#10;\author{</xsl:text>
       <xsl:call-template name="generateAuthor"/>
-      <xsl:text>}
-\begin{document}
-</xsl:text>
+      <xsl:text>}&#10;\begin{document}&#10;</xsl:text>
       <!-- certainly don't touch the next few lines -->
-<xsl:text disable-output-escaping="yes">
+      <xsl:text disable-output-escaping="yes">
 \catcode`\$=12\relax
 \catcode`\^=12\relax
 \catcode`\~=12\relax
@@ -180,13 +167,11 @@
       <xsl:call-template name="latexBegin"/>
       <xsl:apply-templates/>
       <xsl:call-template name="latexEnd"/>
-      <xsl:text>
-\end{document}
-</xsl:text>
+      <xsl:text>&#10;\end{document}&#10;</xsl:text>
    </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>Processing teiHeader elements</desc>
    </doc>
    <xsl:template match="tei:teiHeader"/>
 
@@ -203,7 +188,7 @@
       <desc/>
    </doc>
   <xsl:template match="tei:body">
-      <xsl:if test="not(preceding::tei:body) and preceding::tei:front">
+      <xsl:if test="not(ancestor::tei:floatingText) and not(preceding::tei:body) and preceding::tei:front">
          <xsl:text>\mainmatter </xsl:text>
       </xsl:if>
       <xsl:apply-templates/>
@@ -218,18 +203,22 @@
       <desc/>
    </doc>
   <xsl:template match="tei:closer">
- \begin{quote}<xsl:apply-templates/>\end{quote}
-</xsl:template>
+    <xsl:text>&#10;\begin{quote}</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>\end{quote}&#10;</xsl:text>
+  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
   <xsl:template match="tei:dateline">
- \rightline{<xsl:apply-templates/>}
-</xsl:template>
+    <xsl:text>\rightline{</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>}&#10;</xsl:text>
+  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process the tei:div elements</desc>
    </doc>
-  <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
+  <xsl:template match="tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
       <xsl:choose>
          <xsl:when test="@type='letter'">
             <xsl:text>\subsection*{</xsl:text>
@@ -240,10 +229,10 @@
             <xsl:apply-templates/>
          </xsl:when>
          <xsl:when test="@type='bibliography'">
-      \begin{thebibliography}{1}
-      <xsl:call-template name="bibliography"/>
-      \end{thebibliography}  
-    </xsl:when>
+	   <xsl:text>&#10;\begin{thebibliography}{1}&#10;</xsl:text>
+	   <xsl:call-template name="bibliography"/>
+	   <xsl:text>&#10;\end{thebibliography}&#10;</xsl:text>
+	 </xsl:when>
          <xsl:otherwise>
             <xsl:apply-templates/>
          </xsl:otherwise>
