@@ -107,10 +107,6 @@
     <xsl:template match="tei:graphic">
         <!-- perform some tests on the graphic -->
 
-<xsl:message>Doing graphic <xsl:value-of select="@url"/>:
-<xsl:for-each select="@*"><xsl:value-of
-select="name()"/>=<xsl:value-of select="."/> | </xsl:for-each></xsl:message>
-
 	<xsl:choose>
 	  <xsl:when test="@url and  ( (@teidocx:width and @teidocx:height) or (@width and @height))">
             
