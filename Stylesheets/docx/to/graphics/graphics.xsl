@@ -106,7 +106,13 @@
     
     <xsl:template match="tei:graphic">
         <!-- perform some tests on the graphic -->
-        <xsl:if test="@url and  ( (@teidocx:width and @teidocx:height) or (@width and @height))">
+
+<xsl:message>Doing graphic <xsl:value-of select="@url"/>:
+<xsl:for-each select="@*"><xsl:value-of
+select="name()"/>=<xsl:value-of select="."/> | </xsl:for-each></xsl:message>
+
+	<xsl:choose>
+	  <xsl:when test="@url and  ( (@teidocx:width and @teidocx:height) or (@width and @height))">
             
             <!--
                 
@@ -170,12 +176,12 @@
                 </xsl:choose>
             </xsl:variable>
             
-            <!--
+<!--
                 <xsl:message> arrived at <xsl:value-of
                 select="$imageWidth"/> x <xsl:value-of
                 select="$imageHeight"/> from <xsl:value-of select="@teidocx:width"/>x<xsl:value-of select="@teidocx:height"/>
                 </xsl:message>
-            -->
+-->
             <!-- prepare actual graphic -->
 	    <xsl:variable name="generatedID">
 	      <xsl:choose>
@@ -270,7 +276,12 @@
                     
                 </w:drawing>
             </w:r>
-        </xsl:if>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:message terminate="yes">ERROR. no image size info for  <xsl:value-of select="@url"/>, cannot proceed</xsl:message>
+
+	  </xsl:otherwise>
+	</xsl:choose>
     </xsl:template>
     
 </xsl:stylesheet>

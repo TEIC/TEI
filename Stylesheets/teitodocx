@@ -37,6 +37,7 @@ esac
 (cd $TEMPDIR; saxon $F $XSL/docx/utils/graphics/listgraphics.xsl ORIG=$THERE DIR=$TEMPDIR/word/media > fetch; sh $TEMPDIR/fetch; rm $TEMPDIR/fetch)
 (cd $TEMPDIR/word
 if [ "$(ls -A media)" ]; then
+    cd media
     for i in *
     do 
 	case $i in
@@ -47,7 +48,8 @@ if [ "$(ls -A media)" ]; then
 	    *png) exiftool -q -o $i.xmp $i;;
 	esac
     done
-fi)
+fi
+)
 cd $TEMPDIR
 unzip -o -q $TEMPLATES/template.docx
 if $odd
