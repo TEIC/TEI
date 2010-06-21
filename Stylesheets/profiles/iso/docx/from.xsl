@@ -1835,6 +1835,7 @@
 
     <xsl:template name="parseReference">
       <!-- see Test2010-13 for examples of references -->
+      <!--<xsl:comment>PARSE <xsl:value-of select="."/></xsl:comment>-->
       <xsl:variable name="cheese">
 	<xsl:apply-templates/>
       </xsl:variable>
@@ -1857,13 +1858,13 @@
 	<xsl:text>(</xsl:text><!-- body -->
 	<xsl:value-of select="$standardsBodies"/>
 	<xsl:text>)</xsl:text>
-	<xsl:text>.?</xsl:text>
+	<xsl:text>[\s]?</xsl:text>
 	<xsl:text>(</xsl:text><!-- type -->
 	<xsl:value-of select="$standardsTypes"/>
 	<xsl:text>)?</xsl:text>
 	<xsl:text>\s?</xsl:text>
 	<xsl:text>([0-9]+)</xsl:text><!-- document number -->
-	<xsl:text>-?([0-9]+| \(all parts\))?</xsl:text><!-- part(s) -->
+	<xsl:text>[-/]?([0-9A-Z]+| [\[\(]all parts[\)\]])?</xsl:text><!-- part(s) -->
 	<xsl:text>[:\s]*</xsl:text>
 	<xsl:text>([0-9\-—–]+)?</xsl:text><!-- year -->
 	<xsl:text>/?</xsl:text>
@@ -1889,8 +1890,6 @@
 		  partnumber] ":" pubyear ["/"suppltype "." supplnumber ":" pubyear]
 		  ["/"suppltype "." supplnumber ":" pubyear] "," title ["/" suppltitle]
 		  ["/" suppltitle] -->
-	      <!--<xsl:message>
-		  PARSE <xsl:value-of select="."/></xsl:message>-->
 	      <xsl:analyze-string
 		  regex="{$ISOPATT}"
 		  select="translate(.,' ',' ')">
@@ -1898,7 +1897,7 @@
 		  <xsl:variable name="Part" select="regex-group(4)"/>
 		  <xsl:variable name="Suppltype" select="regex-group(6)"/>
 		  <xsl:variable name="Corrtype" select="regex-group(9)"/>
-		  <!--
+<!--
 		      <xsl:message>
 		      1 publisher :<xsl:value-of select="regex-group(1)"/>
 		      2 documenttype :<xsl:value-of select="regex-group(2)"/>
@@ -1913,7 +1912,7 @@
 		      11 corryear :<xsl:value-of select="regex-group(11)"/>
 		      12 title :<xsl:value-of select="regex-group(12)"/>
 		      </xsl:message>
-		  -->
+-->
 		  <publisher>
 		    <xsl:value-of select="regex-group(1)"/>
 		  </publisher>
@@ -1931,14 +1930,15 @@
 		  <xsl:choose>
 		    <xsl:when test="$Part=''"/>
 		    <xsl:when test="$Part=' (all parts)'">
-		      <idno type="parts">
-			<xsl:value-of select="normalize-space($Part)"/>
-		      </idno>
+		      <idno type="parts">(all parts)</idno>
+		    </xsl:when>
+		    <xsl:when test="$Part=' [all parts]'">
+		      <idno type="parts">(all parts)</idno>
 		    </xsl:when>
 		    <xsl:otherwise>
-		    <idno type="docPartNumber">
-		      <xsl:value-of select="$Part"/>
-		    </idno>
+		      <idno type="docPartNumber">
+			<xsl:value-of select="$Part"/>
+		      </idno>
 		    </xsl:otherwise>
 		  </xsl:choose>
 
