@@ -82,61 +82,76 @@
          <xsl:when test="key('IDS',$dest)">
             <xsl:choose>
                <xsl:when test="not($body='')">
-	                 <xsl:text>\hyperlink{</xsl:text>
-	                 <xsl:value-of select="$dest"/>
-	                 <xsl:text>}{</xsl:text>
-	                 <xsl:value-of select="$body"/>
-	                 <xsl:text>}</xsl:text>
+		 <xsl:text>\hyperlink{</xsl:text>
+		 <xsl:value-of select="$dest"/>
+		 <xsl:text>}{</xsl:text>
+		 <xsl:value-of select="$body"/>
+		 <xsl:text>}</xsl:text>
                </xsl:when>
                <xsl:when test="$ptr='true'">
-	                 <xsl:for-each select="key('IDS',$dest)">
-	                    <xsl:choose>
-		                      <xsl:when test="starts-with(local-name(.),'div')">
-		                         <xsl:text>\textit{\hyperref[</xsl:text>
-		                         <xsl:value-of select="$dest"/>
-		                         <xsl:text>]{</xsl:text>
-		                         <xsl:apply-templates mode="xref" select=".">
-		                            <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-		                         </xsl:apply-templates>
-		                         <xsl:text>}}</xsl:text>
-		                      </xsl:when>
-		                      <xsl:otherwise>
-		                         <xsl:text>\hyperlink{</xsl:text>
-		                         <xsl:value-of select="$dest"/>
-		                         <xsl:text>}{</xsl:text>
-		                         <xsl:value-of select="$body"/>
-		                         <xsl:apply-templates mode="xref" select=".">
-		                            <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-		                         </xsl:apply-templates>
-		                         <xsl:text>}</xsl:text>
-		                      </xsl:otherwise>
-	                    </xsl:choose>
-	                 </xsl:for-each>
+		 <xsl:for-each select="key('IDS',$dest)">
+		   <xsl:choose>
+		     <xsl:when test="self::tei:note[@xml:id]">
+		       <xsl:text>\ref{</xsl:text>
+		       <xsl:value-of select="@xml:id"/>
+		       <xsl:text>}</xsl:text>
+		     </xsl:when>
+		     <xsl:when test="self::tei:figure[tei:head and @xml:id]">
+		       <xsl:text>\ref{</xsl:text>
+		       <xsl:value-of select="@xml:id"/>
+		       <xsl:text>}</xsl:text>
+		     </xsl:when>
+		     <xsl:when test="self::tei:table[tei:head and @xml:id]">
+		       <xsl:text>\ref{</xsl:text>
+		       <xsl:value-of select="@xml:id"/>
+		       <xsl:text>}</xsl:text>
+		     </xsl:when>
+		     <xsl:when test="starts-with(local-name(.),'div')">
+		       <xsl:text>\textit{\hyperref[</xsl:text>
+		       <xsl:value-of select="$dest"/>
+		       <xsl:text>]{</xsl:text>
+		       <xsl:apply-templates mode="xref" select=".">
+			 <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+		       </xsl:apply-templates>
+		       <xsl:text>}}</xsl:text>
+		     </xsl:when>
+		     <xsl:otherwise>
+		       <xsl:text>\hyperlink{</xsl:text>
+		       <xsl:value-of select="$dest"/>
+		       <xsl:text>}{</xsl:text>
+		       <xsl:value-of select="$body"/>
+		       <xsl:apply-templates mode="xref" select=".">
+			 <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+		       </xsl:apply-templates>
+		       <xsl:text>}</xsl:text>
+		     </xsl:otherwise>
+		   </xsl:choose>
+		 </xsl:for-each>
                </xsl:when>
                <xsl:otherwise>
-	                 <xsl:text>\hyperlink{</xsl:text>
-	                 <xsl:value-of select="$dest"/>
-	                 <xsl:text>}{</xsl:text>
-	                 <xsl:value-of select="$body"/>
-	                 <xsl:apply-templates/>
-	                 <xsl:text>}</xsl:text>
-	              </xsl:otherwise>
+		 <xsl:text>\hyperlink{</xsl:text>
+		 <xsl:value-of select="$dest"/>
+		 <xsl:text>}{</xsl:text>
+		 <xsl:value-of select="$body"/>
+		 <xsl:apply-templates/>
+		 <xsl:text>}</xsl:text>
+	       </xsl:otherwise>
             </xsl:choose>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:text>«</xsl:text>
-            <xsl:choose>
-               <xsl:when test="not($body='')">
-                  <xsl:value-of select="$body"/>
-               </xsl:when>
-               <xsl:when test="$ptr='true'">
-                  <xsl:value-of select="$dest"/>
-               </xsl:when>
-               <xsl:otherwise>
-                  <xsl:apply-templates/>
-               </xsl:otherwise>
-            </xsl:choose>
-            <xsl:text>»</xsl:text>
+	   <xsl:text>«</xsl:text>
+	   <xsl:choose>
+	     <xsl:when test="not($body='')">
+	       <xsl:value-of select="$body"/>
+	     </xsl:when>
+	     <xsl:when test="$ptr='true'">
+	       <xsl:value-of select="$dest"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <xsl:apply-templates/>
+	     </xsl:otherwise>
+	   </xsl:choose>
+	   <xsl:text>»</xsl:text>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -145,16 +160,7 @@
       <desc>Process cross-ref to note</desc>
    </doc>
   <xsl:template match="tei:note" mode="xref">
-    <xsl:choose>
-      <xsl:when test="@xml:id">
-	<xsl:text>\ref{</xsl:text>
-	<xsl:value-of select="@xml:id"/>
-	<xsl:text>}</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:number level="any"/>
-      </xsl:otherwise>
-    </xsl:choose>      
+    <xsl:number level="any"/>
   </xsl:template>
 
 </xsl:stylesheet>

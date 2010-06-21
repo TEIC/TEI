@@ -151,15 +151,11 @@
    </doc>
   <xsl:template match="tei:table[@rend='display']">
       <xsl:text>\begin{table}</xsl:text>
-      <xsl:if test="@xml:id">
-	        <xsl:text>\hypertarget{</xsl:text>
-	        <xsl:value-of select="@xml:id"/>
-	        <xsl:text>}{}</xsl:text>
-      </xsl:if>
       <xsl:text>\begin{center} \begin{small} \begin{tabular}</xsl:text>
       <xsl:call-template name="makeTable"/> 
      <xsl:text>\end{tabular} 
       \caption{</xsl:text>
+      <xsl:if test="@xml:id">\label{<xsl:value-of select="@xml:id"/>}</xsl:if>
       <xsl:apply-templates mode="ok" select="tei:head"/>
       <xsl:text>}
      \end{small} 
@@ -187,13 +183,12 @@
   <xsl:template name="makeFigureEnd">
       <xsl:choose>
          <xsl:when test="tei:head or tei:p">
-            <xsl:text>
-	\caption{</xsl:text>
+            <xsl:text>&#10;\caption{</xsl:text>
+            <xsl:if test="@xml:id">\label{<xsl:value-of select="@xml:id"/>}</xsl:if>
             <xsl:for-each select="tei:head">
-	              <xsl:apply-templates/>
-	           </xsl:for-each>
+	      <xsl:apply-templates/>
+	    </xsl:for-each>
             <xsl:text>}</xsl:text>
-            <xsl:if test="@xml:id">\hypertarget{<xsl:value-of select="@xml:id"/>}{}</xsl:if>
          </xsl:when>
          <xsl:when test="@rend='centre'">
             <xsl:text>}\par </xsl:text>
@@ -201,8 +196,7 @@
       </xsl:choose>
       <xsl:choose>
          <xsl:when test="@rend='display' or not(@place='inline')">
-	           <xsl:text>\end{figure}
-	</xsl:text>
+	   <xsl:text>\end{figure}&#10;</xsl:text>
          </xsl:when>
       </xsl:choose>
   </xsl:template>
