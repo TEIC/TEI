@@ -107,6 +107,10 @@
     <xsl:template match="tei:hi[@rend='language']" mode="get-style">
       <xsl:text>language</xsl:text>
     </xsl:template>
+
+    <xsl:template match="tei:hi[@rend='FigureFootnoteXref']" mode="get-style">
+      <xsl:text>FigureFootnoteXref</xsl:text>
+    </xsl:template>
     <xsl:template match="tei:hi[@rend='source']" mode="get-style">
       <xsl:text>source</xsl:text>
     </xsl:template>

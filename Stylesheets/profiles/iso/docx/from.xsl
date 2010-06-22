@@ -875,6 +875,12 @@
                 </seg>
             </xsl:when>
 
+            <xsl:when test="$style='FigureFootnoteXref'">
+                <hi rend="FigureFootnoteXref">
+                    <xsl:apply-templates/>
+                </hi>
+            </xsl:when>
+
             <xsl:otherwise>
 	      <xsl:call-template name="basicStyles"/>
             </xsl:otherwise>
