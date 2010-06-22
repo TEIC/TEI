@@ -2012,12 +2012,12 @@ select="$M"/></xsl:message>
 	  <xsl:choose>
 	    <xsl:when test="@source">
 	      <xsl:for-each select="document(@source)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
-<xsl:message>X <xsl:value-of select="."/></xsl:message>		<xsl:value-of select="."/>
+		<xsl:value-of select="."/>
 	      </xsl:for-each>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:for-each select="document($defaultSource)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
-<xsl:message>Y <xsl:value-of select="."/></xsl:message>		<xsl:value-of select="."/>
+		<xsl:value-of select="."/>
 	      </xsl:for-each>
 	    </xsl:otherwise>
 	  </xsl:choose>
@@ -2025,7 +2025,7 @@ select="$M"/></xsl:message>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:for-each select="document($defaultSource)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
-<xsl:message>Z <xsl:value-of select="."/></xsl:message>	  <xsl:value-of select="."/>
+	  <xsl:value-of select="."/>
 	</xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
