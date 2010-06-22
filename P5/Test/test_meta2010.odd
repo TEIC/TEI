@@ -84,7 +84,17 @@
 	 </elementSpec>
        </specGrp>
        
-<p>The schema should be built using version 1.4 of TEI P5</p>
+<p>The schema should be built using version 1.5 of TEI P5</p>
+
+       <schemaSpec ident="test_meta2010" start="TEI" source="http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml">
+	 <moduleRef key="tei"/>
+	 <moduleRef key="header"/>
+	 <moduleRef key="core" except="p"/>
+	 <moduleRef key="textstructure"/>
+	 <moduleRef key="figures" except="table row cell"/>
+	 <moduleRef key="namesdates" include="persName"/>
+	 <specGrpRef target="#TBX"/>
+       </schemaSpec>
 
        <schemaSpec ident="test_meta2010_1" start="TEI" source="../p5subset.xml">
 	 <moduleRef key="tei"/>
@@ -93,45 +103,6 @@
        </schemaSpec>
 
 
-       <schemaSpec ident="test_meta2010_2" start="TEI" source="../p5subset.xml">
-	 <moduleRef key="tei"/>
-	 <moduleRef key="header"/>
-	 <moduleRef key="core" except="p"/>
-	 <moduleRef key="textstructure"/>
-	 <moduleRef key="figures" except="table row cell"/>
-	 <moduleRef key="namesdates" include="persName"/>
-	 <elementSpec module="textstructure" ident="argument" mode="delete"/>
-	 <elementSpec module="textstructure" ident="byline" mode="delete"/>
-	 <elementSpec module="textstructure" ident="closer" mode="delete"/>
-	 <elementSpec module="textstructure" ident="div1" mode="delete"/>
-	 <elementSpec module="textstructure" ident="div2" mode="delete"/>
-	 <elementSpec module="textstructure" ident="div3" mode="delete"/>
-	 <elementSpec module="textstructure" ident="div4" mode="delete"/>
-	 <elementSpec module="textstructure" ident="div5" mode="delete"/>
-	 <elementSpec module="textstructure" ident="div6" mode="delete"/>
-	 <elementSpec module="textstructure" ident="div7" mode="delete"/>
-	 <elementSpec module="textstructure" ident="imprimatur" mode="delete"/>
-	 <elementSpec module="textstructure" ident="opener" mode="delete"/>
-	 <elementSpec module="textstructure" ident="postscript" mode="delete"/>
-	 <elementSpec module="textstructure" ident="salute" mode="delete"/>
-	 <elementSpec module="textstructure" ident="signed" mode="delete"/>
-	 <elementSpec module="textstructure" ident="titlePage" mode="delete"/>
-	 <elementSpec module="textstructure" ident="titlePart" mode="delete"/>
-	 <elementSpec module="textstructure" ident="trailer" mode="delete"/>
-       </schemaSpec>
-
-       <!--
-       <schemaSpec ident="test_meta2010_4"
-		   source="http://www.tei-c.org/P5/1.4/p5.odd" start="TEI">
-	 <moduleRef key="tei"/>
-	 <moduleRef source="http://www.example.com/dict.odd" name="md"/>
-	 <moduleRef source="http://www.example.com/tbx.odd" name="tbx"/>
-	 <elementSpec ident="term" module="md" mode="delete"/>
-	 <elementSpec ident="term" module="tbx" mode="change">
-	    <desc>not the same</desc>
-	 </elementSpec>
-       </schemaSpec>
-       -->
      </body>
    </text>
 </TEI>

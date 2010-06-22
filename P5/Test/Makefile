@@ -43,7 +43,8 @@ TESTFILES= \
 	testrendition \
 	testspoken \
 	testtagdocs \
-	testtranscr 
+	testtranscr \
+	test_meta2010
 
 TESTBADFILES= \
 	detest \
