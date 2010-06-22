@@ -24,7 +24,7 @@ JING=jing
 TRANG=trang
 ONVDL=onvdl
 SAXON=saxon
-SAXON_ARGS=
+SAXON_ARGS=-ext:on
 .PHONY: convert dtds schemas html validate valid test oddschema exampleschema fascicule clean dist exemplars
 
 default: dtds schemas validate exemplars test pdf html-web validate-html
