@@ -21,8 +21,10 @@ CHAPTER=$(shell find ${LANGTREE} -iname ${CHAP}*.xml)
 #XSL=../Stylesheets/release/tei-xsl/p5
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 JING=jing
+TRANG=trang
 ONVDL=onvdl
 SAXON=saxon
+SAXON_ARGS=
 .PHONY: convert dtds schemas html validate valid test oddschema exampleschema fascicule clean dist exemplars
 
 default: dtds schemas validate exemplars test pdf html-web validate-html
@@ -33,7 +35,7 @@ dtds: check
 	-mkdir DTD
 	-rm DTD/*
 	# generate the DTDs
-	${SAXON} ${DRIVER} ${XSL}/odds2/odd2dtd.xsl outputDir=DTD 	\
+	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds2/odd2dtd.xsl outputDir=DTD 	\
 	lang=${LANGUAGE} \
 	documentationLanguage=${DOCUMENTATIONLANGUAGE} \
 	TEIC=true  ${VERBOSE}
@@ -45,15 +47,15 @@ schema-relaxng:
 	-mkdir Schema
 	-rm Schema/*
 	# generate the relaxNG schemas
-	${SAXON} ${DRIVER}  ${XSL}/odds2/odd2relax.xsl outputDir=Schema \
+	${SAXON} ${SAXON_ARGS}  ${DRIVER}  ${XSL}/odds2/odd2relax.xsl outputDir=Schema \
 	lang=${LANGUAGE}  \
 	TEIC=true  ${VERBOSE}
-	# convert RelaxNG XML syntax to compact syntax with trang
-	(cd Schema; for i in *rng; do trang $$i `basename $$i .rng`.rnc;done)
+	# convert RelaxNG XML syntax to compact syntax with ${TRANG}
+	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
 
 schema-sch:
 	# extract Schematron rules
-	${SAXON} ${DRIVER} ${XSL}/odds2/extract-isosch.xsl > p5.isosch
+	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds2/extract-isosch.xsl > p5.isosch
 
 html-web: check
 	perl -p -e \
@@ -66,7 +68,7 @@ html-web: check
 	echo making HTML Guidelines for language ${LANGUAGE}
 	mkdir -p Guidelines-web-tmp/${LANGUAGE}/html
 	cp -r webnav/* odd.css guidelines.css COPYING.txt guidelines-print.css Guidelines-web-tmp/${LANGUAGE}/html/ 
-	${SAXON} ${DRIVER}  Utilities/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
+	${SAXON} ${SAXON_ARGS}  ${DRIVER}  Utilities/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
 		displayMode=both \
 		pageLayout=CSS \
 	        lang=${LANGUAGE} \
@@ -97,7 +99,7 @@ html:check subset
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
 		Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
-	${SAXON} ${DRIVER}  Utilities/guidelines-print.xsl \
+	${SAXON} ${SAXON_ARGS}  ${DRIVER}  Utilities/guidelines-print.xsl \
 	    outputDir=Guidelines \
 	    localsource=`pwd`/p5subset.xml \
 	    STDOUT=false \
@@ -112,7 +114,7 @@ html:check subset
 	-xmllint --noout --valid Guidelines/index.html
 
 xml: check  
-	${SAXON} -o Guidelines.xml ${DRIVER}  ${XSL}/odds2/odd2lite.xsl displayMode=rnc lang=${LANGUAGE} \
+	${SAXON} ${SAXON_ARGS}  -o Guidelines.xml ${DRIVER}  ${XSL}/odds2/odd2lite.xsl displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \
 	        documentationLanguage=${DOCUMENTATIONLANGUAGE}	${VERBOSE}
 	#@echo Success. Created Guidelines.xml. now attempt to validate
@@ -133,7 +135,7 @@ tex: xml
 	  echo "========================="; \
 	fi
 	-rm missfont.log fonttest.*
-	${SAXON} Guidelines.xml Utilities/Guidelines.xsl > Guidelines.tex
+	${SAXON} ${SAXON_ARGS}  Guidelines.xml Utilities/Guidelines.xsl > Guidelines.tex
 	rm Utilities/Guidelines.xsl
 	for i in Guidelines-REF*tex; \
 	  do \
@@ -203,11 +205,11 @@ valid: check
 	 | grep -v ': error: unfinished element$$' \
 	 | grep -v ': error: unfinished element .* required to finish the element$$'
 	@echo --------- Schematron
-	${SAXON} p5.isosch Utilities/iso_schematron_message_xslt2.xsl > p5.isosch.xsl
-	${SAXON} ${DRIVER} p5.isosch.xsl
+	${SAXON} ${SAXON_ARGS}  p5.isosch Utilities/iso_schematron_message_xslt2.xsl > p5.isosch.xsl
+	${SAXON} ${SAXON_ARGS}  ${DRIVER} p5.isosch.xsl
 	@echo --------- XSLT validator
-	${SAXON} ${DRIVER} Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
-	${SAXON} ${DRIVER} Utilities/validator.xsl
+	${SAXON} ${SAXON_ARGS}  ${DRIVER} Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
+	${SAXON} ${SAXON_ARGS}  ${DRIVER} Utilities/validator.xsl
 	rm Utilities/pointerattributes.xsl
 	@echo --------- xmllint RelaxNG test REMOVED
 	rm Source.xml
@@ -233,7 +235,7 @@ exampleschema: subset
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rng
 
 subset:
-	${SAXON} -o p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
+	${SAXON} ${SAXON_ARGS}  -o p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
 
 dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exemplars
 	rm -f release/tei-`cat VERSION`.zip
@@ -372,11 +374,11 @@ check:
 	@echo -n xmllint: 
 	@which xmllint || exit 1
 	@echo -n trang: 
-	@which trang || exit 1
+	@which ${TRANG} || exit 1
 	@echo -n jing: 
-	@which jing || exit 1
+	@which ${JING} || exit 1
 	@echo -n saxon: 
-	@which saxon || exit 1
+	@which ${SAXON} || exit 1
 
 changelog:
 	(LastDate=`head -1 ReleaseNotes/ChangeLog | awk '{print $$1}'`; \
@@ -387,12 +389,12 @@ changelog:
 
 
 catalogue:
-	${SAXON} -o catalogue.xml ${DRIVER}  Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} 
-	${SAXON} catalogue.xml ${XSL}/xhtml2/tei.xsl > catalogue.html
+	${SAXON} ${SAXON_ARGS}  -o catalogue.xml ${DRIVER}  Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} 
+	${SAXON} ${SAXON_ARGS}  catalogue.xml ${XSL}/xhtml2/tei.xsl > catalogue.html
 	echo Made catalogue.html
 
 catalogue-print:
-	${SAXON} -o catalogue.xml ${DRIVER}  Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} 
+	${SAXON} ${SAXON_ARGS}  -o catalogue.xml ${DRIVER}  Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} 
 
 clean:
 	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~ 
