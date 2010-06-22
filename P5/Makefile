@@ -318,10 +318,10 @@ dist-doc:
 
 dist-test:
 	rm -rf release/tei-p5-test*
-	mkdir -p release/tei-p5-test/share/tei
+	mkdir -p release/tei-p5-test/share/xml/tei
 	(cd Test; make clean)
 	tar --exclude "*~" --exclude .svn -c -f - Test \
-	| (cd release/tei-p5-test/share/tei; tar xf - )
+	| (cd release/tei-p5-test/share/xml/tei; tar xf - )
 	(cd release; 	\
 	ln -s tei-p5-test tei-p5-test-`cat ../VERSION` ; \
 	zip -q -r tei-p5-test-`cat ../VERSION`.zip tei-p5-test-`cat ../VERSION` )
