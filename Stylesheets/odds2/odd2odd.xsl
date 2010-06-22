@@ -34,7 +34,6 @@
   <xsl:param name="stripped">false</xsl:param>
   <xsl:param
       name="defaultSource">/usr/share/xml/tei/odd/p5subset.xml</xsl:param><!--http://www.tei-c.org/release -->
-  <xsl:key name="odd2odd-ALLSCHEMASPECS" match="tei:schemaSpec" use="1"/>
   <xsl:key name="odd2odd-ATTCLASSES" match="tei:classSpec[(tei:attList or @type='atts') and not(@ident='tei.TEIform')]" use="@ident"/>
   <xsl:key name="odd2odd-ATTREFS" match="tei:attRef" use="concat(@name,'_',../../@ident)"/>
   <xsl:key name="odd2odd-CHANGE" match="tei:classSpec[@mode='change']" use="@ident"/>
@@ -2008,11 +2007,27 @@ select="$M"/></xsl:message>
 
   <xsl:template name="odd2odd-getversion">
     <xsl:choose>
-      <xsl:when test="not($defaultSource='')">
-        <xsl:for-each select="document($defaultSource)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
-          <xsl:value-of select="."/>
-        </xsl:for-each>
+      <xsl:when test="key('odd2odd-SCHEMASPECS',$selectedSchema)">
+	<xsl:for-each select="key('odd2odd-SCHEMASPECS',$selectedSchema)">
+	  <xsl:choose>
+	    <xsl:when test="@source">
+	      <xsl:for-each select="document(@source)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
+<xsl:message>X <xsl:value-of select="."/></xsl:message>		<xsl:value-of select="."/>
+	      </xsl:for-each>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:for-each select="document($defaultSource)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
+<xsl:message>Y <xsl:value-of select="."/></xsl:message>		<xsl:value-of select="."/>
+	      </xsl:for-each>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
       </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each select="document($defaultSource)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
+<xsl:message>Z <xsl:value-of select="."/></xsl:message>	  <xsl:value-of select="."/>
+	</xsl:for-each>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
