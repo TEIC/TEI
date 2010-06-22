@@ -166,7 +166,7 @@
 		    select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
 	    </xsl:variable>
             <xsl:attribute name="r:id">
-                <xsl:value-of select="replace($file,'embeddings/','media/')"/>
+                <xsl:value-of select="$file"/>
             </xsl:attribute>
         </o:OLEObject>
     </xsl:template>

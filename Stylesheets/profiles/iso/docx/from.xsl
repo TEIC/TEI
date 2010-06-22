@@ -903,7 +903,7 @@
 	     <xsl:copy>
 	        <xsl:copy-of select="@*"/>
 		<xsl:attribute name="tei:corresp">
-		  <xsl:text>media/table</xsl:text>
+		  <xsl:text>embeddings/table</xsl:text>
 		  <xsl:value-of select="$n"/>
 		  <xsl:text>.xml</xsl:text>
 		</xsl:attribute>
@@ -920,7 +920,7 @@
 	    <xsl:for-each select="key('WordTables',1)">
 		<xsl:variable name="filename">
 		  <xsl:value-of select="$word-directory"/>
-		  <xsl:text>/word/media/table</xsl:text>
+		  <xsl:text>/word/embeddings/table</xsl:text>
 		  <xsl:number level="any"/>
 		  <xsl:text>.xml</xsl:text>
 		</xsl:variable>
