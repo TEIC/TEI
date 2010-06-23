@@ -13,7 +13,6 @@ TESTDTDFILES= \
 TESTFILES= \
 	testClasses \
 	testTripReport \
-	testall \
 	testbare \
 	testchinese \
 	testconstraint \
@@ -44,7 +43,8 @@ TESTFILES= \
 	testspoken \
 	testtagdocs \
 	testtranscr \
-	test_meta2010
+	test_meta2010 \
+	testall 
 
 TESTBADFILES= \
 	detest \
@@ -62,12 +62,13 @@ TESTSPECIALFILES= \
 
 default: schemas test
 
-test: test-schema test-dtd test-dtd-xmllint test-extns test-xsd test-xsd-valid test-schematron test-bad test-frag
+test: test-extns test-schematron test-bad test-frag
 
 schemas:
 	echo SETUP IS $(ROMAOPTS)
 	Modules="tei core textstructure figures header linking" 
 	-for i in $(TESTFILES) $(TESTDTDFILES)  $(TESTBADFILES); do \
+		echo ; echo PROCESS $$i ; \
 		echo Try  to validate $$i.odd; \
 		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK stage; \
 		saxon -o $$i-ex.odd $$i.odd ../Utilities/odd2exodd.xsl TEIC=true ;\
@@ -81,56 +82,45 @@ schemas:
 		test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd; \
 		test -f teix.xsd && mv teix.xsd $$i.teix.xsd ; \
 		test -f $$i.teix.xsd && perl -p -i -e "s/teix.xsd/$$i.teix.xsd/" $$i.xsd; \
-	done
+		echo Now validating instances documents against $$i schema; \
+		echo JING RelaxNG... ; \
+		jing -t $$i.rng $$i.xml; \
+		echo RNV.... ; \
+		xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc ;   \
+		echo XMLLINT .. for RELAXNG ; \
+		xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; \
+		echo JING .. for XSD.... ; \
+		jing $$i.xsd $$i.xml; \
+		echo xmllint DTD  ; \
+		xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd - ; \
+		echo xmllint DTD using DTD fragments.... ; \
+		grep -H DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml ; \
+		done
 	-for i in $(TESTSPECIALFILES) ; do \
+		echo ; echo PROCESS $$i ; \
+		echo Try  to validate $$i.odd; \
+		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK stage; \
 		$(ROMA) --patternprefix=tei_ $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
 		cp xml.xsd.w3c xml.xsd ; \
 		test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
 		test -f teix.xsd && mv teix.xsd $$i.teix.xsd ; \
 		test -f $$i.teix.xsd && perl -p -i -e "s/teix.xsd/$$i.teix.xsd/" $$i.xsd; \
-	done
+		echo JING RelaxNG... ; \
+		jing -t $$i.rng $$i.xml; \
+		echo RNV.... ; \
+		xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc  ; \
+		echo XMLLINT .. for RELAXNG ; \
+		xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; \
+		echo JING .. for XSD.... ; \
+		jing $$i.xsd $$i.xml;  \
+		done
 
-test-schema: test-jing test-rnv 
 
-test-jing:
-	echo JING RelaxNG...
-	echo =======================================
-	echo = Expect to see errors about schemaLocation on testminimal
-	echo = 
-	echo = testallplus has error about ref and MathML
-	echo =======================================
-	for i in $(TESTFILES) $(TESTDTDFILES)  $(TESTSPECIALFILES); do echo $$i: ; jing -t $$i.rng $$i.xml; done
 
 test-frag:
 	test -f testlite.dtd &&	jing -t -c testfrag.rnc testlite.xml
-
-test-rnv:
-	echo RNV....
-	echo =======================================
-	echo = Expect errors about schemaLocation on testminimal
-	echo =======================================
-	for i in $(TESTFILES)  $(TESTSPECIALFILES); \
-	  do echo $$i: ; \
-	    xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc ; \
-	done
 	xmllint --dropdtd testlite.xml | 	rnv testfrag.rnc 
 
-test-xmllint:
-	echo XMLLINT .. for RELAXNG
-	echo =======================================
-	echo = 
-	echo = 
-	echo = 
-	echo =======================================
-	for i  in $(TESTFILES) $(TESTDTDFILES); do xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; done
-
-test-xsd:
-	echo JING .. for XSD....
-	echo =======================================
-	echo = JING .xsd tests will show errors
-	echo = testtagdocs and testns
-	echo =======================================
-	-for i in $(TESTFILES) $(TESTDTDFILES);do echo $$i: ; jing $$i.xsd $$i.xml; done
 
 test-xsd-valid:
 	echo XSDVALID
@@ -146,26 +136,6 @@ test-xerces:
 	echo =======================================
 	-for i  in $(TESTFILES) $(TESTDTDFILES) ;do echo $$i: ; java -cp ~/jar/xercesSamples.jar jaxp.SourceValidator -HS -VA -GA -a $$i.xsd -i $$i.xml; done
 
-
-test-dtd:
-	echo xmllint DTD 
-	echo =======================================
-	echo = 
-	echo = expect error in tagdocs about ref, testtite about xmlns:t
-	echo = and in tagdocs about non-text nodes
-	echo =
-	echo =======================================
-	-for i in `echo $(TESTFILES) $(TESTDTDFILES)`; do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
-
-
-# testall, testp4compat, testodds have no DOCTYPE
-test-dtd-xmllint:
-	echo xmllint DTD using DTD fragments....
-	echo =======================================
-	echo Should be no errors from xmllint/dtd tests
-	echo =======================================
-	-for i in  $(TESTFILES) $(TESTDTDFILES); do grep -H DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml; \
-	done
 
 test-extns:
 	echo check whether user extensions work ....
