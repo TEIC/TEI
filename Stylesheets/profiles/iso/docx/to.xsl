@@ -61,7 +61,7 @@
 
     <xsl:param name="tableMethod">cals</xsl:param>
     <xsl:param name="template">ISO</xsl:param>
-    <xsl:param name="isofreestanding">false</xsl:param>
+
 
     <xsl:variable name="align">
       <xsl:choose>

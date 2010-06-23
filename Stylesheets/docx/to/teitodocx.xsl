@@ -105,6 +105,7 @@
     <xsl:preserve-space elements="tei:text"/>
     <xsl:output method="xml" version="1.0" encoding="UTF-8"/>
 
+    <xsl:param name="isofreestanding">false</xsl:param>
 
     <xsl:key name="FOOTERS" match="tei:fw[@type='footer']" use="@xml:id"/>
     <xsl:key name="HEADERS" match="tei:fw[@type='header']" use="@xml:id"/>

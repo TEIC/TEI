@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
+		xmlns:rel="http://schemas.openxmlformats.org/package/2006/relationships"
                 xmlns:cals="http://www.oasis-open.org/specs/tm9901"
                 xmlns:contypes="http://schemas.openxmlformats.org/package/2006/content-types"
                 xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"
@@ -30,7 +31,7 @@
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
-                exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso its     tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
+                exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso its  rel  tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -51,6 +52,8 @@
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
+
+    <xsl:import href="../parameters.xsl"/>
     
     <xsl:template match="m:oMath">
         <xsl:apply-templates select="." mode="iden"/>
@@ -88,20 +91,29 @@
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        Image data
+        Image data 
     </desc>
    </doc>
     <xsl:template match="v:imagedata" mode="iden">
-        <xsl:variable name="me" select="generate-id()"/>
-        <v:imagedata>
+        <xsl:variable name="current" select="@r:id"/>
+	<xsl:copy>
+	    <!-- override r:id -->
             <xsl:attribute name="r:id">
-                <xsl:for-each select="key('IMAGEDATA',1)">
-                    <xsl:if test="generate-id()=$me">
-                        <xsl:value-of select="concat('rId', string(1000 + position()))"/>
-                    </xsl:if>
-                </xsl:for-each>
+	      <xsl:choose>
+		<xsl:when test="$isofreestanding='true'">
+		  <xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Target=$current]/@Id"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:variable name="me" select="generate-id()"/>
+		  <xsl:for-each select="key('IMAGEDATA',1)">
+		    <xsl:if test="generate-id()=$me">
+		      <xsl:value-of select="concat('rId', string(1000 + position()))"/>
+		    </xsl:if>
+		  </xsl:for-each>
+		</xsl:otherwise>
+	      </xsl:choose>
             </xsl:attribute>
-        </v:imagedata>
+	</xsl:copy>
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -110,18 +122,26 @@
     </desc>
    </doc>
     <xsl:template match="o:OLEObject" mode="iden">
-        <xsl:variable name="me" select="generate-id()"/>
+        <xsl:variable name="current" select="@r:id"/>
         <xsl:copy>
             <!-- copy all attributes -->
             <xsl:copy-of select="@*"/>
             
             <!-- set rId -->
             <xsl:attribute name="r:id">
-                <xsl:for-each select="key('OLEOBJECTS',1)">
+	      <xsl:choose>
+		<xsl:when test="$isofreestanding='true'">
+		  <xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Target=$current]/@Id"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:variable name="me" select="generate-id()"/>
+		  <xsl:for-each select="key('OLEOBJECTS',1)">
                     <xsl:if test="generate-id()=$me">
                         <xsl:value-of select="concat('rId', string(2000 + position()))"/>
                     </xsl:if>
                 </xsl:for-each>
+		</xsl:otherwise>
+	      </xsl:choose>
             </xsl:attribute>
 	</xsl:copy>
     </xsl:template>
