@@ -431,7 +431,7 @@
 	<xsl:when test="@place='comment'">
 	  <xsl:call-template name="create-comment"/>
 	</xsl:when>
-	<xsl:when test="@place='foot'  or @place='bottom' ">
+	<xsl:when test="@place='foot'  or @place='bottom' or @place='tablefoot'">
 	  <xsl:call-template name="create-footnote"/>
 	</xsl:when>
 	<xsl:when test="@place='end'">
@@ -501,10 +501,10 @@
     </xsl:template>
 
     <xsl:template name="create-footnote">           
-
       <xsl:variable name="pPr">
 	<xsl:choose>
-	  <xsl:when test="(@place='foot'  or @place='bottom') and      (parent::tei:cell or parent::cals:entry)">
+	  <xsl:when test="(@place='tablefoot') and  (ancestor::tei:cell
+			  or ancestor::cals:entry)">
 	    <w:pPr>
 	      <w:pStyle w:val="Tablefootnote"/>
 	    </w:pPr>

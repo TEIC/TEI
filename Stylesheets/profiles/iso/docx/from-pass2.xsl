@@ -224,7 +224,7 @@
 	<xsl:when test="$ID=preceding-sibling::tbx:termEntry/@id"/>
 	<xsl:when test="not(following-sibling::tbx:termEntry[@id=$ID])">
 	  <xsl:copy>
-	    <xsl:copy-of select="@id"/>
+	    <xsl:apply-templates select="@*" mode="pass2"/>
 	    <xsl:apply-templates mode="pass2"/>
 	  </xsl:copy>
 	</xsl:when>
@@ -345,7 +345,13 @@
   </xsl:template>
 
   <xsl:template match="tbx:descrip/tei:hi[@rend='source']" mode="pass2"/>
-  <xsl:template match="tbx:descrip/tei:ref" mode="pass2"/>
+
+  <xsl:template match="tbx:descrip/tei:ref" mode="pass2">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates mode="pass2"/>
+    </xsl:copy>
+  </xsl:template>
 
   <xsl:template match="tbx:descrip" mode="pass2">
     <xsl:copy>

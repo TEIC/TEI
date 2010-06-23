@@ -33,6 +33,7 @@
 
   <xsl:template match="tbx:termEntry[starts-with(@id,'autoTermNum')]" mode="pass3">
     <xsl:copy>
+      <xsl:copy-of select="@xml:id"/>
       <xsl:attribute name="id">
 	<xsl:value-of select="substring-before(@id,'_')"/>
 	<xsl:text>_</xsl:text>

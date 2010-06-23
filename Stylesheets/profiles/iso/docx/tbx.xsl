@@ -194,6 +194,15 @@
 	  <w:pPr>
 	    <w:pStyle w:val="{substring-before(../@id,'_')}"/>
 	  </w:pPr>
+	  <xsl:if test="../@xml:id">
+	    <xsl:for-each select="..">
+	      <xsl:variable name="N">
+		<xsl:number level="any"/>
+	      </xsl:variable>
+	      <w:bookmarkStart w:id="{number($N) + 30000}" w:name="_{@xml:id}"/>
+	      <w:bookmarkEnd  w:id="{number($N) + 30000}"/>
+	    </xsl:for-each>
+	  </xsl:if>
 	</w:p>
       </xsl:when>
       <xsl:when test="starts-with(../@id,'user_')">

@@ -221,7 +221,7 @@
     -->
     <xsl:template match="tei:note[@place]">
         <xsl:choose>
-            <xsl:when test="@place='foot'  or @place='bottom' ">
+            <xsl:when test="@place='foot'  or @place='bottom' or @place='tablefoot' ">
                 <xsl:call-template name="create-footnote"/>
             </xsl:when>
             <xsl:when test="@place='end'">

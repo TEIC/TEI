@@ -1148,6 +1148,9 @@
 	      </xsl:choose>
 	    </xsl:variable>
 	    <termEntry xmlns="http://www.lisa.org/TBX-Specification.33.0.html" id="{$ID}">
+	      <xsl:if test="w:bookmarkStart">
+		<xsl:attribute name="xml:id" select="substring-after(w:bookmarkStart/@w:name,'_')"/>
+	      </xsl:if>
 	      <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteTermEntry'] except .">
 		<note>
 		  <xsl:apply-templates/>
@@ -1155,8 +1158,10 @@
 	      </xsl:for-each>
 	      <descripGrp>
 		<descrip type="definition">
-		  <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='Definition'] except .">
-		    <xsl:apply-templates/>
+		  <xsl:for-each
+		      select="current-group()[w:pPr/w:pStyle/@w:val='Definition']
+			      except .">
+		      <xsl:call-template name="process-checking-for-crossrefs"/>
 		  </xsl:for-each>
 		</descrip>
 		<xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteDefinition'] except .">
@@ -1575,10 +1580,10 @@
     </xsl:template>
 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$TableFootnote]">
-        <note place="foot">
+        <note place="tablefoot">
             <xsl:attribute name="n">
                 <xsl:value-of select="w:r[w:rPr/w:rStyle[@w:val='TableFootnoteXref']]/w:t"/>
-	        </xsl:attribute>
+	    </xsl:attribute>
             <xsl:apply-templates select="w:r[not(w:rPr/w:rStyle[@w:val='TableFootnoteXref'])]"/>
         </note>
     </xsl:template>
@@ -1591,24 +1596,24 @@
 
     <xsl:template match="w:p" mode="inTable">
       <xsl:choose>
-	        <xsl:when test="w:pPr/w:pStyle/@w:val=$TableFootnote">
-	           <note place="foot">
-	              <xsl:attribute name="n">
-	                 <xsl:value-of select="w:r[w:rPr/w:rStyle[@w:val='TableFootnoteXref']]/w:t"/>
-	              </xsl:attribute>
-	              <xsl:apply-templates select="w:r[not(w:rPr/w:rStyle[@w:val='TableFootnoteXref'])]"/>
-	           </note>
-	        </xsl:when>
-	        <xsl:when test="w:pPr/w:pStyle/@w:val=$TableNote">
-	           <note place="inline">
-		     <xsl:call-template name="process-checking-for-crossrefs"/>
-	           </note>
-	        </xsl:when>
-	        <xsl:otherwise>
-	           <p>
-		     <xsl:call-template name="process-checking-for-crossrefs"/>
-	           </p>
-	        </xsl:otherwise>
+	<xsl:when test="w:pPr/w:pStyle/@w:val=$TableFootnote">
+	  <note place="tablefoot">
+	    <xsl:attribute name="n">
+	      <xsl:value-of select="w:r[w:rPr/w:rStyle[@w:val='TableFootnoteXref']]/w:t"/>
+	    </xsl:attribute>
+	    <xsl:apply-templates select="w:r[not(w:rPr/w:rStyle[@w:val='TableFootnoteXref'])]"/>
+	  </note>
+	</xsl:when>
+	<xsl:when test="w:pPr/w:pStyle/@w:val=$TableNote">
+	  <note place="inline">
+	    <xsl:call-template name="process-checking-for-crossrefs"/>
+	  </note>
+	</xsl:when>
+	<xsl:otherwise>
+	  <p>
+	    <xsl:call-template name="process-checking-for-crossrefs"/>
+	  </p>
+	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
 

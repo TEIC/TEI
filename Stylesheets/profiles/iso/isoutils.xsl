@@ -498,7 +498,7 @@
 
    <xsl:template match="tbx:descrip[@type='example']">
       <xsl:call-template name="block-element">
-         <xsl:with-param name="style">Examplenumbered</xsl:with-param>
+         <xsl:with-param name="style">Example</xsl:with-param>
       </xsl:call-template>
 
    </xsl:template>

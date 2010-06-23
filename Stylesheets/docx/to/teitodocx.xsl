@@ -501,8 +501,8 @@
       <xsl:variable name="N">
 	<xsl:number level="any"/>
       </xsl:variable>
-      <w:bookmarkStart w:id="{number($N) + 10000}" w:name="_{@xml:id}"/>
-      <w:bookmarkEnd  w:id="{number($N) + 10000}"/>
+      <w:bookmarkStart w:id="{number($N) + 20000}" w:name="_{@xml:id}"/>
+      <w:bookmarkEnd  w:id="{number($N) + 20000}"/>
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -927,39 +927,6 @@
       </xsl:choose>
     </xsl:template>
 
-
-    <xsl:template match="tbx:termEntry">
-        <w:p>
-            <w:pPr>
-                <w:pStyle w:val="TermNum"/>
-            </w:pPr>
-            <w:r>
-                <w:t>
-                    <xsl:value-of select="translate(@id,'eid-','')"/>
-                </w:t>
-            </w:r>
-        </w:p>
-        <w:p>
-            <w:pPr>
-                <w:pStyle w:val="Terms"/>
-            </w:pPr>
-            <w:r>
-                <w:t>
-                    <xsl:apply-templates select=".//tbx:term"/>
-                </w:t>
-            </w:r>
-        </w:p>
-        <w:p>
-            <w:pPr>
-                <w:pStyle w:val="Definition"/>
-            </w:pPr>
-            <w:r>
-                <w:t>
-                    <xsl:value-of select="tbx:descrip[@type='definition']"/>
-                </w:t>
-            </w:r>
-        </w:p>
-    </xsl:template>
 
     <!-- 
         GI
