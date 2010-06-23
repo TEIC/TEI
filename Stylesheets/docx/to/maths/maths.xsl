@@ -101,15 +101,15 @@
             <xsl:attribute name="r:id">
 	      <xsl:choose>
 		<xsl:when test="$isofreestanding='true'">
-		  <xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Target=$current]/@Id"/>
-		</xsl:when>
-		<xsl:otherwise>
 		  <xsl:variable name="me" select="generate-id()"/>
 		  <xsl:for-each select="key('IMAGEDATA',1)">
 		    <xsl:if test="generate-id()=$me">
 		      <xsl:value-of select="concat('rId', string(1000 + position()))"/>
 		    </xsl:if>
 		  </xsl:for-each>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Target=$current]/@Id"/>
 		</xsl:otherwise>
 	      </xsl:choose>
             </xsl:attribute>
@@ -126,20 +126,19 @@
         <xsl:copy>
             <!-- copy all attributes -->
             <xsl:copy-of select="@*"/>
-            
             <!-- set rId -->
             <xsl:attribute name="r:id">
 	      <xsl:choose>
 		<xsl:when test="$isofreestanding='true'">
-		  <xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Target=$current]/@Id"/>
-		</xsl:when>
-		<xsl:otherwise>
 		  <xsl:variable name="me" select="generate-id()"/>
 		  <xsl:for-each select="key('OLEOBJECTS',1)">
-                    <xsl:if test="generate-id()=$me">
-                        <xsl:value-of select="concat('rId', string(2000 + position()))"/>
-                    </xsl:if>
-                </xsl:for-each>
+		    <xsl:if test="generate-id()=$me">
+		      <xsl:value-of select="concat('rId', string(2000 + position()))"/>
+		    </xsl:if>
+		  </xsl:for-each>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Target=$current]/@Id"/>
 		</xsl:otherwise>
 	      </xsl:choose>
             </xsl:attribute>

@@ -36,6 +36,8 @@
 					 pic fn xsi dc dcterms
 					 dcmitype rel contypes teidocx teix html cals">
     
+    <xsl:import href="../parameters.xsl"/>
+
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making Word docx files from TEI XML
