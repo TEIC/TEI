@@ -6,7 +6,7 @@ DRIVER=guidelines-${INPUTLANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--isoschematron --doclang=${DOCUMENTATIONLANGUAGE} --localsource=`pwd`/../p5subset.xml
 
-TESTFILESDTD= \
+TESTDTDFILES= \
 	testns \
 	testtite 
 
@@ -50,9 +50,6 @@ TESTBADFILES= \
 	detest \
 	testerrmav
 
-TESTDOCBOOKFILES= 
-# testdocbook1 testdocbook2 testdocbook3 testdocbook4 testdocbook5 
-
 TESTSPECIALFILES= \
 	testallplus \
 	testits  \
@@ -65,12 +62,12 @@ TESTSPECIALFILES= \
 
 default: schemas test
 
-test: test-schema test-dtd test-dtd-xmllint test-extns test-xsd test-xsd-valid test-schematron test-bad
+test: test-schema test-dtd test-dtd-xmllint test-extns test-xsd test-xsd-valid test-schematron test-bad test-frag
 
 schemas:
 	echo SETUP IS $(ROMAOPTS)
 	Modules="tei core textstructure figures header linking" 
-	-for i in $(TESTFILES) $(TESTFILESDTD) $(TESTDOCBOOKFILES) $(TESTBADFILES); do \
+	-for i in $(TESTFILES) $(TESTDTDFILES)  $(TESTBADFILES); do \
 		echo Try  to validate $$i.odd; \
 		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK stage; \
 		saxon -o $$i-ex.odd $$i.odd ../Utilities/odd2exodd.xsl TEIC=true ;\
@@ -102,15 +99,17 @@ test-jing:
 	echo = 
 	echo = testallplus has error about ref and MathML
 	echo =======================================
-	for i in $(TESTFILES) $(TESTFILESDTD) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); do echo $$i: ; jing -t $$i.rng $$i.xml; done
-	jing -t -c testfrag.rnc testlite.xml
+	for i in $(TESTFILES) $(TESTDTDFILES)  $(TESTSPECIALFILES); do echo $$i: ; jing -t $$i.rng $$i.xml; done
+
+test-frag:
+	test -f testlite.dtd &&	jing -t -c testfrag.rnc testlite.xml
 
 test-rnv:
 	echo RNV....
 	echo =======================================
 	echo = Expect errors about schemaLocation on testminimal
 	echo =======================================
-	for i in $(TESTFILES) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES); \
+	for i in $(TESTFILES)  $(TESTSPECIALFILES); \
 	  do echo $$i: ; \
 	    xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc ; \
 	done
@@ -123,7 +122,7 @@ test-xmllint:
 	echo = 
 	echo = 
 	echo =======================================
-	for i  in $(TESTFILES) $(TESTFILESDTD); do xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; done
+	for i  in $(TESTFILES) $(TESTDTDFILES); do xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; done
 
 test-xsd:
 	echo JING .. for XSD....
@@ -131,21 +130,21 @@ test-xsd:
 	echo = JING .xsd tests will show errors
 	echo = testtagdocs and testns
 	echo =======================================
-	-for i in $(TESTFILES) $(TESTFILESDTD);do echo $$i: ; jing $$i.xsd $$i.xml; done
+	-for i in $(TESTFILES) $(TESTDTDFILES);do echo $$i: ; jing $$i.xsd $$i.xml; done
 
 test-xsd-valid:
 	echo XSDVALID
 	echo =======================================
 	echo = 
 	echo =======================================
-	- which xsdvalid && for i in $(TESTFILES) $(TESTFILESDTD);do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
+	- which xsdvalid && for i in $(TESTFILES) $(TESTDTDFILES);do echo $$i: ; xsdvalid -s $$i.xsd $$i.xml; done
 
 test-xerces:
 	echo xerces XSD
 	echo =======================================
 	echo = Should be no errors from Jing/xerces XSD tests
 	echo =======================================
-	-for i  in $(TESTFILES) $(TESTFILESDTD) ;do echo $$i: ; java -cp ~/jar/xercesSamples.jar jaxp.SourceValidator -HS -VA -GA -a $$i.xsd -i $$i.xml; done
+	-for i  in $(TESTFILES) $(TESTDTDFILES) ;do echo $$i: ; java -cp ~/jar/xercesSamples.jar jaxp.SourceValidator -HS -VA -GA -a $$i.xsd -i $$i.xml; done
 
 
 test-dtd:
@@ -156,7 +155,7 @@ test-dtd:
 	echo = and in tagdocs about non-text nodes
 	echo =
 	echo =======================================
-	-for i in `echo $(TESTFILES) $(TESTFILESDTD)`; do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
+	-for i in `echo $(TESTFILES) $(TESTDTDFILES)`; do echo $$i: ; xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd -; done
 
 
 # testall, testp4compat, testodds have no DOCTYPE
@@ -165,7 +164,7 @@ test-dtd-xmllint:
 	echo =======================================
 	echo Should be no errors from xmllint/dtd tests
 	echo =======================================
-	-for i in  $(TESTFILES) $(TESTFILESDTD); do grep -H DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml; \
+	-for i in  $(TESTFILES) $(TESTDTDFILES); do grep -H DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml; \
 	done
 
 test-extns:
@@ -178,7 +177,7 @@ test-sgml:
 
 test-schematron:
 	echo Run Schematron tests - these may produce warnings
-	for i in $(TESTFILES) $(TESTFILESDTD) $(TESTSPECIALFILES); do \
+	for i in $(TESTFILES) $(TESTDTDFILES) $(TESTSPECIALFILES); do \
 	 echo Schematron on $$i: ; \
 	 saxon $$i.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $$i.xsl; \
 	 saxon $$i.xml $$i.xsl ; \
@@ -199,7 +198,7 @@ test-bad:
 
 
 clean:
-	-for i in $(TESTFILES) $(TESTFILESDTD) $(TESTDOCBOOKFILES) $(TESTSPECIALFILES) $(TESTBADFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.teix.xsd $$i.xsd $$i.rnc $$i.rng $$i.xsl; done
+	-for i in $(TESTFILES) $(TESTDTDFILES)  $(TESTSPECIALFILES) $(TESTBADFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.teix.xsd $$i.xsd $$i.rnc $$i.rng $$i.xsl; done
 	-rm -rf LOG *~ *.xsd Schema RomaResults DTD 
 	-rm -rf *.doc.*
 	-rm *-examples.rng *-examples.rnc *test*.nvdl *-ex.odd
