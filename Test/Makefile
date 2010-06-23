@@ -87,12 +87,10 @@ schemas:
 		jing -t $$i.rng $$i.xml; \
 		echo RNV.... ; \
 		xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc ;   \
-		echo XMLLINT .. for RELAXNG ; \
-		xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; \
-		echo JING .. for XSD.... ; \
-		jing $$i.xsd $$i.xml; \
 		echo xmllint DTD  ; \
 		xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd - ; \
+		echo JING .. for XSD.... ; \
+		jing $$i.xsd $$i.xml; \
 		echo xmllint DTD using DTD fragments.... ; \
 		grep -H DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml ; \
 		done
@@ -108,14 +106,15 @@ schemas:
 		echo JING RelaxNG... ; \
 		jing -t $$i.rng $$i.xml; \
 		echo RNV.... ; \
+		echo xmllint DTD  ; \
+		xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd - ; \
 		xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc  ; \
-		echo XMLLINT .. for RELAXNG ; \
-		xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; \
 		echo JING .. for XSD.... ; \
 		jing $$i.xsd $$i.xml;  \
 		done
 
-
+#echo XMLLINT .. for RELAXNG ; \
+#xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; \
 
 test-frag:
 	test -f testlite.dtd &&	jing -t -c testfrag.rnc testlite.xml
