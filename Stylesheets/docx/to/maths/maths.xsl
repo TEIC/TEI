@@ -33,6 +33,8 @@
                 version="2.0"
                 exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso its  rel  tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
     
+    <xsl:import href="../parameters.xsl"/>
+    
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -53,8 +55,6 @@
       </desc>
    </doc>
 
-    <xsl:import href="../parameters.xsl"/>
-    
     <xsl:template match="m:oMath">
         <xsl:apply-templates select="." mode="iden"/>
     </xsl:template>
