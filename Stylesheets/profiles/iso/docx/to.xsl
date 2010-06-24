@@ -323,17 +323,23 @@
                 <xsl:otherwise>
 		  <xsl:for-each select="current-group()">
                     <xsl:if test="contains(., 'text-align')">
-                        <xsl:variable name="val"><xsl:value-of select="normalize-space(substring-after(.,':'))"/></xsl:variable>            
-                        <w:jc w:val="{$val}"/>
+		      <xsl:variable name="val"><xsl:value-of select="normalize-space(substring-after(.,':'))"/></xsl:variable>            
+		      <w:jc w:val="{$val}"/>
                     </xsl:if> 
+		    <xsl:if test="contains(., 'direction')">
+		      <xsl:variable name="val"><xsl:value-of select="normalize-space(substring-after(.,':'))"/></xsl:variable>		      
+		      <xsl:if test="matches($val,'rtl')">
+			<w:rtl/>
+		      </xsl:if>
+		    </xsl:if>
 		  </xsl:for-each>
                 </xsl:otherwise>
             </xsl:choose>            
         </xsl:for-each-group>
         <w:rPr>
-            <xsl:call-template name="getStyleFonts">
-                <xsl:with-param name="css" select="$css"/>
-            </xsl:call-template>
+	  <xsl:call-template name="getStyleFonts">
+	    <xsl:with-param name="css" select="$css"/>
+	  </xsl:call-template>
         </w:rPr>           
     </xsl:template>
 

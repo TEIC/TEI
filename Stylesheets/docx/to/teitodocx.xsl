@@ -545,7 +545,7 @@
 	  <!-- if no specific style is assigned we might check for any other indication to assign 
 	       some style ... -->
 	  <xsl:variable name="renderingProperties">
-	    <xsl:for-each select="..">	      
+	    <xsl:for-each select="..">
 	      <xsl:call-template name="applyRend"/>
 	    </xsl:for-each>
 	  </xsl:variable>
@@ -789,6 +789,15 @@
                 <w:vertAlign w:val="superscript"/>
 	      </xsl:when>
 	    </xsl:choose>
+
+	    <!-- text direction -->
+	    <xsl:if test="contains(@iso:style,'direction')">
+	      <!-- only handling RTL at the moment -->
+	      <xsl:if test="matches(normalize-space(substring-before((substring-after(@iso:style,'direction:')),';')),'rtl')">
+		<w:rtl/>
+	      </xsl:if>
+	    </xsl:if>
+
 
     </xsl:template>
 
