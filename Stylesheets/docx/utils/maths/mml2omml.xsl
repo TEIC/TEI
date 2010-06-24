@@ -841,6 +841,7 @@
       <xsl:param name="fNor"/>
       <xsl:param name="fLit"/>
       <w:rPr>
+	<xsl:call-template name="mathrRpHook"/>
          <w:rFonts w:ascii="{$font-family}" w:eastAsia="{$font-family}" w:hAnsi="{$font-family}"
                    w:cs="{$font-family}"/>
 	 <xsl:choose>
@@ -3716,4 +3717,6 @@
          </supHide>
       </naryPr>
   </xsl:template>
+
+  <xsl:template name="mathrRpHook"/>
 </xsl:stylesheet>

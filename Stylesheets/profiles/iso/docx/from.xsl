@@ -1289,7 +1289,9 @@
 			    </xsl:choose>
 			  </termNote>
 			  <termNote type="administrativeStatus">
-			      <xsl:if  test="w:r/w:rPr/w:rStyle/@w:val='symbol'">
+			      <xsl:if
+				  test="w:r/w:rPr/w:rStyle/@w:val='symbol'
+					or m:oMath/m:r/w:rPr/w:rStyle/@w:val='symbol'">
 				<xsl:attribute
 				    name="iso:style">symbol</xsl:attribute>
 			      </xsl:if>

@@ -1332,5 +1332,11 @@
 	    mode="phase1"/>
       </xsl:copy>
     </xsl:template>
-
+  
+    <xsl:template name="mathrRpHook">
+      <xsl:if test="ancestor::tbx:term/following-sibling::tbx:termNote/@iso:style">
+	<rStyle
+	    w:val="{ancestor::tbx:term/following-sibling::tbx:termNote/@iso:style}" xmlns="http://schemas.openxmlformats.org/wordprocessingml/2006/main"/>
+      </xsl:if>
+    </xsl:template>
 </xsl:stylesheet>
