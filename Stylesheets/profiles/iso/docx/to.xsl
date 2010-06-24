@@ -258,25 +258,27 @@
       <xsl:param name="pPr"/>
       <xsl:variable name="pstyle">
 	  <w:pPr>
-	    <xsl:if test="@iso:spaceBefore
-			  or @iso:spaceAfter">
-	      <w:spacing>
+	    <!--
+		<xsl:if test="@iso:spaceBefore
+		or @iso:spaceAfter">
+		<w:spacing>
 		<xsl:if test="@iso:spaceBefore">
-		  <xsl:attribute
-		      name="w:before">
-		    <xsl:value-of
-			select="@iso:spaceBefore"/>
-		  </xsl:attribute>
+		<xsl:attribute
+		name="w:before">
+		<xsl:value-of
+		select="@iso:spaceBefore"/>
+		</xsl:attribute>
 		</xsl:if>
 		<xsl:if test="@iso:spaceAfter">
 		<xsl:attribute
-		    name="w:after">
-		  <xsl:value-of
-		      select="@iso:spaceAfter"/>
+		name="w:after">
+		<xsl:value-of
+		select="@iso:spaceAfter"/>
 		</xsl:attribute>
 		</xsl:if>
-	    </w:spacing>
-	    </xsl:if>
+		</w:spacing>
+		</xsl:if>
+	    -->
 	    <xsl:choose>
 	      <xsl:when test="@rend">
 		<w:pStyle>
@@ -286,19 +288,18 @@
 		    </xsl:call-template>
 		  </xsl:attribute>
 		</w:pStyle>
-	           <xsl:if test="@rend='Special'">
-	               <xsl:call-template name="undoSpecialStyle">
-	                   <xsl:with-param name="css"><xsl:value-of select="@iso:style"/></xsl:with-param>
-	               </xsl:call-template>
-	           </xsl:if>
+		<xsl:if test="@iso:style">
+		  <xsl:call-template name="undoSpecialStyle">
+		    <xsl:with-param name="css">
+		      <xsl:value-of select="@iso:style"/>
+		    </xsl:with-param>
+		  </xsl:call-template>
+		</xsl:if>
 	      </xsl:when>
 	      <xsl:when test="string-length($style) &gt; 0">
 		<w:pStyle w:val="{$style}"/>
 	      </xsl:when>
 	    </xsl:choose>
-	    <xsl:if test="@iso:align">
-	      <w:jc w:val="{@iso:align}"/>
-	    </xsl:if>
 	  </w:pPr>
       </xsl:variable>
       <xsl:call-template name="block-element">
@@ -360,17 +361,24 @@
     
     <xsl:template name="getStyleMarginsV">
         <w:spacing>
-            <xsl:for-each select="current-group()">
-                <xsl:variable name="val"><xsl:value-of select="normalize-space(substring-after(.,':'))"/></xsl:variable>            
-                <xsl:choose>
-                    <xsl:when test="contains(., 'margin-top')">
-                        <xsl:attribute name="w:before"><xsl:value-of select="$val"/></xsl:attribute>
-                    </xsl:when>
-                    <xsl:when test="contains(., 'margin-bottom')">
-                        <xsl:attribute name="w:after"><xsl:value-of select="$val"/></xsl:attribute>
-                    </xsl:when>
-                </xsl:choose>
-        </xsl:for-each>
+	  <xsl:for-each select="current-group()">
+	    <xsl:variable name="val">
+	      <xsl:value-of
+		  select="normalize-space(substring-after(.,':'))"/>
+	    </xsl:variable>            
+	    <xsl:choose>
+	      <xsl:when test="contains(., 'margin-top')">
+		<xsl:attribute name="w:before">
+		  <xsl:value-of select="$val"/>
+		</xsl:attribute>
+	      </xsl:when>
+	      <xsl:when test="contains(., 'margin-bottom')">
+		<xsl:attribute name="w:after">
+		  <xsl:value-of select="$val"/>
+		</xsl:attribute>
+	      </xsl:when>
+	    </xsl:choose>
+	  </xsl:for-each>
         </w:spacing>
     </xsl:template>
     

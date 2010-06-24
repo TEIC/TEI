@@ -1053,7 +1053,8 @@
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Figure text']" mode="paragraph">
         <p>
 	  <xsl:if test="w:pPr/w:jc/@w:val">
-	    <xsl:attribute name="iso:align">
+	    <xsl:attribute name="iso:style">
+	      <xsl:text>text-align:</xsl:text>
 	      <xsl:value-of select="w:pPr/w:jc/@w:val"/>
 	    </xsl:attribute>
 	  </xsl:if>
@@ -1627,7 +1628,6 @@
 
     <xsl:template name="paragraph-wp">
         <p>
-
             <!-- put style in rend, if there is a style -->
             <xsl:if test="w:pPr/w:pStyle/@w:val and teidocx:is-supported-style(w:pPr/w:pStyle/@w:val)">
                 <xsl:attribute name="rend">
@@ -1637,12 +1637,14 @@
 
             <!-- Store information about spacing  -->
             <xsl:if test="w:pPr/w:spacing/@w:before">
-                <xsl:attribute name="iso:spaceBefore">
+                <xsl:attribute name="iso:style">
+		     <xsl:text>margin-top:</xsl:text>
                     <xsl:value-of select="w:pPr/w:spacing/@w:before"/>
                 </xsl:attribute>
             </xsl:if>
             <xsl:if test="w:pPr/w:spacing/@w:after">
-                <xsl:attribute name="iso:spaceAfter">
+                <xsl:attribute name="iso:style">
+		     <xsl:text>margin-bottom:</xsl:text>
                     <xsl:value-of select="w:pPr/w:spacing/@w:after"/>
                 </xsl:attribute>
             </xsl:if>
