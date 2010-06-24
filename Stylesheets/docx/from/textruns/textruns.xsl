@@ -143,12 +143,18 @@
     <xsl:template name="basicStyles">
       <xsl:variable name="fontFamily">
 	<xsl:if test="w:rPr/w:rFonts">
-	  <xsl:if test="not(matches(w:rPr/w:rFonts/@w:ascii,'Calibri'))">
+	  <!-- ignore the run's font change if 
+	       a) it's not a special para AND the font is the ISO default, OR 
+	       b) the font for the run is the same as its parent paragraph 
+	  -->
+	  <xsl:if test="(not(matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')) and not(matches(w:rPr/w:rFonts/@w:ascii,'Calibri'))) or
+			not(w:rPr/w:rFonts/@w:ascii = parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii)">
 	    <xsl:text>font-family: </xsl:text>
 	    <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
 	    <!-- w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
 	    <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
-	  </xsl:if><xsl:text>; </xsl:text>
+	    <xsl:text>; </xsl:text>
+	  </xsl:if>
 	</xsl:if>
       </xsl:variable>
 
@@ -233,44 +239,38 @@
 	<xsl:when test="not($effects/*) and $fontFamily='' and $exactPosition=''">
 	  <xsl:apply-templates/>
 	</xsl:when>
-	<xsl:when test="$effects/* and $fontFamily=''">
+	<xsl:when test="$effects/* or $fontFamily!='' or $exactPosition!=''">
+	  <xsl:variable name="isoStyle">
+	    <xsl:if test="$fontFamily!='' or $exactPosition!=''">
+	      <xsl:value-of select="string-join($fontFamily,$exactPosition)"/>
+	    </xsl:if>
+	  </xsl:variable>
+	  <xsl:variable name="rend">
+	    <xsl:choose>
+	      <xsl:when test="$effects/*">
+		<xsl:for-each select="$effects/*">
+		  <xsl:value-of select="."/>
+		  <xsl:if test="following-sibling::*">
+		    <xsl:text> </xsl:text>
+		  </xsl:if>
+		</xsl:for-each>
+	      </xsl:when>
+	      <xsl:when test="normalize-space(string($isoStyle))!=''">
+		<xsl:text>iso:style</xsl:text>
+	      </xsl:when> 
+	    </xsl:choose>
+	  </xsl:variable>
 	  <hi>
-	    <xsl:attribute name="rend">
-	      <xsl:for-each select="$effects/*">
-		<xsl:value-of select="."/>
-		<xsl:if test="following-sibling::*">
-		  <xsl:text> </xsl:text>
-		</xsl:if>
-	      </xsl:for-each>
-	    </xsl:attribute>
-	    <xsl:if test="$exactPosition!=''">
-	      <xsl:attribute name="iso:style">
-		<xsl:value-of select="$exactPosition"/>
+	    <xsl:if test="$rend!=''">
+	      <xsl:attribute name="rend">
+		<xsl:value-of select="$rend"/>
 	      </xsl:attribute>
 	    </xsl:if>
-	    <xsl:apply-templates/>
-	  </hi>
-	</xsl:when>
-	<xsl:when test="$fontFamily!=''">
-	  <seg>
-	    <xsl:attribute name="iso:style">
-	      <xsl:choose>
-		<xsl:when test="$exactPosition!=''">
-		  <xsl:value-of select="string-join($fontFamily,$exactPosition)"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:value-of select="$fontFamily"/>
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:attribute>
-	    <xsl:apply-templates/>
-	  </seg>
-	</xsl:when>
-	<xsl:when test="$exactPosition!=''">
-	  <hi>
-	    <xsl:attribute name="iso:style">
-	      <xsl:value-of select="$exactPosition"/>
-	    </xsl:attribute>
+	    <xsl:if test="normalize-space(string($isoStyle))!=''">
+	      <xsl:attribute name="iso:style">
+		<xsl:value-of select="$isoStyle"/>
+	      </xsl:attribute>
+	    </xsl:if>
 	    <xsl:apply-templates/>
 	  </hi>
 	</xsl:when>
