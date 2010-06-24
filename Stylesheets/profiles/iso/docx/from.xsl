@@ -1610,7 +1610,7 @@
 	  </note>
 	</xsl:when>
 	<xsl:otherwise>
-	  <p>
+	  <p rend="{w:pPr/w:pStyle/@w:val}">
 	    <xsl:call-template name="process-checking-for-crossrefs"/>
 	  </p>
 	</xsl:otherwise>

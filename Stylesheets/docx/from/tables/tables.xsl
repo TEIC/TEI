@@ -476,8 +476,9 @@
 		      </xsl:attribute>
 				   </xsl:if>
 				   <xsl:choose>
-				     <xsl:when test="count(w:p)&gt;1">
-			                        <xsl:call-template name="cellContents"/>
+				     <xsl:when test="count(w:p)&gt;1
+						     or w:p/w:pPr/w:pStyle">
+					<xsl:call-template name="cellContents"/>
 		                      </xsl:when>
 		                      <xsl:otherwise>
 			                        <xsl:apply-templates/>
@@ -492,7 +493,7 @@
 	  </xsl:template>
 
 	  <xsl:template name="cellContents">
-	     <xsl:apply-templates select="w:p" mode="inTable"/>
+-	     <xsl:apply-templates select="w:p" mode="inTable"/> 
 	  </xsl:template>
 
 	  <xsl:template match="w:p" mode="inTable">
