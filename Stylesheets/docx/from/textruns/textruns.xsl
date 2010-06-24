@@ -277,7 +277,7 @@
       </xsl:variable>
 
       <xsl:choose>
-	<xsl:when test="$effects/* or string($isoStyle)!=''">
+	<xsl:when test="$effects/* or normalize-space(string($isoStyle))!=''">
 	  <xsl:variable name="rend">
 	    <xsl:choose>
 	      <xsl:when test="$effects/*">
@@ -288,10 +288,10 @@
 		  </xsl:if>
 		</xsl:for-each>
 	      </xsl:when>
-	      <xsl:otherwise>
+	      <xsl:when test="normalize-space(string($isoStyle))!=''">
 		<!-- if there are no 'effects', there must be an iso:style -->
-		<xsl:text>iso:style</xsl:text>
-	      </xsl:otherwise> 
+		<xsl:text>isoStyle</xsl:text>
+	      </xsl:when> 
 	    </xsl:choose>
 	  </xsl:variable>
 	  <hi>
