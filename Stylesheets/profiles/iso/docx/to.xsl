@@ -531,14 +531,14 @@
 	    </w:r>
 	  </xsl:when>
 	  <xsl:when test="@place='foot'  or @place='bottom'"/>
+	  <xsl:when test="@type='Example' and @iso:class='numbered'">
+	    <w:pPr>
+	      <w:pStyle w:val="Examplenumbered"/>
+	    </w:pPr>
+	  </xsl:when>
 	  <xsl:when test="@type='Example'">
 	    <w:pPr>
 	      <w:pStyle w:val="Example"/>
-	    </w:pPr>
-	  </xsl:when>
-	  <xsl:when test="@type='Examplenumbered'">
-	    <w:pPr>
-	      <w:pStyle w:val="Examplenumbered"/>
 	    </w:pPr>
 	  </xsl:when>
 	  <xsl:when test="parent::tei:cell or parent::cals:entry">	    

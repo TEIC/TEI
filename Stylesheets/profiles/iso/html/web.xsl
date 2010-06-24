@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
 		xmlns:iso="http://www.iso.org/ns/1.0"
 		xmlns:cals="http://www.oasis-open.org/specs/tm9901"
@@ -11,7 +12,8 @@
                 xmlns:t="http://www.thaiopensource.com/ns/annotations"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                exclude-result-prefixes="tei html t a rng s iso tbx cals teix"
+                exclude-result-prefixes="tei html t a rng s iso tbx
+					 cals teix w"
                 version="2.0">
    <xsl:template name="myi18n">
       <xsl:param name="word"/>
@@ -112,15 +114,23 @@
 
 
    <xsl:template name="block-element">
+     <xsl:param name="pPr"/>
      <xsl:param name="style"/>
      <xsl:param name="select" select="."/>
      <xsl:for-each select="$select">
        <p>
-	 <xsl:if test="not($style='')">
+	 <xsl:choose>
+	 <xsl:when test="not($style='')">
 	   <xsl:attribute name="class">
 	     <xsl:value-of select="$style"/>
 	   </xsl:attribute>
-	 </xsl:if>
+	 </xsl:when>
+	 <xsl:when test="w:pPr/w:pStyle">
+	   <xsl:attribute name="class">
+	     <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
+	   </xsl:attribute>
+	 </xsl:when>
+	 </xsl:choose>
 	 <xsl:apply-templates/>
        </p>
      </xsl:for-each>

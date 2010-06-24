@@ -1188,7 +1188,7 @@
 	      <xsl:if
 		  test="current-group()[w:pPr/w:pStyle/@w:val='Example numbered']">
 		<descripGrp>
-		  <descrip type="example">
+		  <descrip type="example" iso:class="numbered">
 		    <xsl:for-each
 			select="current-group()[w:pPr/w:pStyle/@w:val='Example numbered'] except .">
 		      <xsl:apply-templates/>
@@ -1289,14 +1289,16 @@
 			    </xsl:choose>
 			  </termNote>
 			  <termNote type="administrativeStatus">
-			    <xsl:choose>
-			      <xsl:when test="$Thing='termAdmitted'
-					      and w:r/w:rPr/w:rStyle/@w:val='symbol'">symbol-admn-sts</xsl:when>
-			      <xsl:when test="$Thing='termPreferred'">preferredTerm-admn-sts</xsl:when>
-			      <xsl:when test="$Thing='termDeprecated'">deprecatedTerm-admn-sts</xsl:when>
-			      <xsl:when test="$Thing='termAdmitted'">admittedTerm-admn-sts</xsl:when>
-			      <xsl:otherwise>UNKNOWN</xsl:otherwise>
-			    </xsl:choose>
+			      <xsl:if  test="w:r/w:rPr/w:rStyle/@w:val='symbol'">
+				<xsl:attribute
+				    name="iso:style">symbol</xsl:attribute>
+			      </xsl:if>
+			      <xsl:choose>
+				<xsl:when test="$Thing='termPreferred'">preferredTerm-admn-sts</xsl:when>
+				<xsl:when test="$Thing='termDeprecated'">deprecatedTerm-admn-sts</xsl:when>
+				<xsl:when test="$Thing='termAdmitted'">admittedTerm-admn-sts</xsl:when>
+				<xsl:otherwise>UNKNOWN</xsl:otherwise>
+			      </xsl:choose>
 			  </termNote>
 			  <xsl:if test="w:r/w:rPr/w:rStyle/@w:val='abbreviatedForm'">
 			    <termNote type="termType">abbreviation</termNote>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:cals="http://www.oasis-open.org/specs/tm9901"
+		xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" 
 		xmlns:iso="http://www.iso.org/ns/1.0"
 		xmlns:tei="http://www.tei-c.org/ns/1.0"
 		xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-		exclude-result-prefixes="tei iso cals tbx"
+		exclude-result-prefixes="tei iso cals tbx w"
 		version="2.0">
   <!-- $Id$ -->
   
@@ -413,9 +414,25 @@
 	    <xsl:otherwise>termPreferred</xsl:otherwise>
 	  </xsl:choose>
 	</xsl:variable>
-	<xsl:call-template name="block-element">
-	  <xsl:with-param name="style" select="$style"/>
-	</xsl:call-template>
+	<xsl:choose>
+	  <xsl:when test="tbx:termGrp/tbx:termNote[@type='administrativeStatus']/@iso:style='symbol'">
+	    <xsl:call-template name="block-element">
+	      <xsl:with-param name="pPr">
+		<w:pPr>
+		  <w:pStyle w:val="{$style}"/>
+		  <w:rPr>
+		    <w:rStyle w:val="symbol"/>
+		  </w:rPr>
+		</w:pPr>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:call-template name="block-element">
+	      <xsl:with-param name="style" select="$style"/>
+	    </xsl:call-template>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:for-each>
       <xsl:apply-templates
 	  select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
@@ -500,7 +517,12 @@
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">Example</xsl:with-param>
       </xsl:call-template>
+   </xsl:template>
 
+   <xsl:template match="tbx:descrip[@type='example' and @iso:class='numbered']">
+      <xsl:call-template name="block-element">
+         <xsl:with-param name="style">Examplenumbered</xsl:with-param>
+      </xsl:call-template>
    </xsl:template>
 
    <xsl:template match="tbx:descrip[@type='figure']">
