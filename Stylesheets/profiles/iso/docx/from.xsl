@@ -693,8 +693,10 @@
             </xsl:if>
         </xsl:variable>
         <p rend="Special">
-            <xsl:attribute name="iso:style"><xsl:value-of select="$css"/></xsl:attribute>
-            <xsl:apply-templates/>
+            <xsl:attribute name="iso:style">
+	      <xsl:value-of select="$css"/>
+	    </xsl:attribute>
+	    <xsl:apply-templates/>
         </p>
      </xsl:for-each-group>
     </xsl:template>
@@ -1636,18 +1638,20 @@
             </xsl:if>
 
             <!-- Store information about spacing  -->
-            <xsl:if test="w:pPr/w:spacing/@w:before">
-                <xsl:attribute name="iso:style">
-		     <xsl:text>margin-top:</xsl:text>
-                    <xsl:value-of select="w:pPr/w:spacing/@w:before"/>
-                </xsl:attribute>
-            </xsl:if>
-            <xsl:if test="w:pPr/w:spacing/@w:after">
-                <xsl:attribute name="iso:style">
-		     <xsl:text>margin-bottom:</xsl:text>
-                    <xsl:value-of select="w:pPr/w:spacing/@w:after"/>
-                </xsl:attribute>
-            </xsl:if>
+            <xsl:for-each select="w:pPr/w:spacing">
+	      <xsl:attribute name="iso:style">
+		<xsl:if test="@w:before">
+		  <xsl:text>margin-top:</xsl:text>
+		  <xsl:value-of select="@w:before"/>
+		  <xsl:text>;</xsl:text>
+		</xsl:if>
+		<xsl:if test="@w:after">
+		  <xsl:text>margin-bottom:</xsl:text>
+		  <xsl:value-of select="@w:after"/>
+		  <xsl:text>;</xsl:text>
+		</xsl:if>
+	      </xsl:attribute>
+	    </xsl:for-each>
 	    <xsl:call-template name="process-checking-for-crossrefs"/>
         </p>
     </xsl:template>

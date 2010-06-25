@@ -134,11 +134,11 @@
 		</xsl:call-template>
 	      </xsl:variable>
 		             <table xmlns="http://www.oasis-open.org/specs/tm9901">
-
-			       <xsl:attribute name="iso:style">
-				 <xsl:value-of select="normalize-space($tableBorderStyles)"/>
-			       </xsl:attribute>
-
+			       <xsl:if test="normalize-space($tableBorderStyles)!=''">
+				 <xsl:attribute name="iso:style">
+				   <xsl:value-of select="normalize-space($tableBorderStyles)"/>
+				 </xsl:attribute>
+			       </xsl:if>
 			       <xsl:attribute name="frame">
 		                   <xsl:choose>
 		      <!-- lets face it, most tables do have
@@ -256,10 +256,14 @@
 			                                 <xsl:copy-of select="w:tcPr"/>
 			                              </xsl:variable>
 			                              <xsl:copy>
-			                                 <xsl:variable name="N" select="position()"/>
-							 <xsl:attribute name="iso:style">
-							   <xsl:value-of select="normalize-space($cellBorderStyles)"/>
-							 </xsl:attribute>
+			                                 <xsl:variable
+							     name="N"
+							     select="position()"/>
+							 <xsl:if test="normalize-space($cellBorderStyles)!=''">
+							   <xsl:attribute name="iso:style">
+							     <xsl:value-of select="normalize-space($cellBorderStyles)"/>
+							   </xsl:attribute>
+							 </xsl:if>
 			                                 <xsl:attribute name="rowsep">
 				                                   <xsl:choose>
 				                                      <xsl:when test="w:tcPr/w:tcBorders/w:bottom[@w:sz=0 or @w:val='nil']">
@@ -416,10 +420,12 @@
 		                      <xsl:text>c</xsl:text>
 		                      <xsl:value-of select="$COLPOS"/>
 		                   </xsl:attribute>
-				   <xsl:attribute
-				       name="iso:style"><xsl:value-of
-				       select="normalize-space($cellBorderStyles)"/>
-				   </xsl:attribute>
+				   <xsl:if test="normalize-space($cellBorderStyles)!=''">
+				     <xsl:attribute
+					 name="iso:style">
+				       <xsl:value-of select="normalize-space($cellBorderStyles)"/>
+				     </xsl:attribute>
+				   </xsl:if>
 		                   <xsl:if test="w:p/w:pPr/w:jc">
 		                      <xsl:attribute name="align">
 			                        <xsl:value-of select="w:p[w:pPr/w:jc/@w:val][1]/w:pPr/w:jc/@w:val"/>

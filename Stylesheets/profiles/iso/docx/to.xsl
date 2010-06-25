@@ -288,18 +288,18 @@
 		    </xsl:call-template>
 		  </xsl:attribute>
 		</w:pStyle>
-		<xsl:if test="@iso:style">
-		  <xsl:call-template name="undoSpecialStyle">
-		    <xsl:with-param name="css">
-		      <xsl:value-of select="@iso:style"/>
-		    </xsl:with-param>
-		  </xsl:call-template>
-		</xsl:if>
 	      </xsl:when>
 	      <xsl:when test="string-length($style) &gt; 0">
 		<w:pStyle w:val="{$style}"/>
 	      </xsl:when>
 	    </xsl:choose>
+	    <xsl:if test="@iso:style">
+	      <xsl:call-template name="undoSpecialStyle">
+		<xsl:with-param name="css">
+		  <xsl:value-of select="@iso:style"/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:if>
 	  </w:pPr>
       </xsl:variable>
       <xsl:call-template name="block-element">
@@ -1114,7 +1114,7 @@
     <xsl:template match="cals:table">
       <xsl:choose>
 	<xsl:when test="@tei:corresp and $tableMethod='word'">
-	  <xsl:call-template name="cals-table-header"/>
+        <xsl:call-template name="tableheading-from-cals"/>
 	  <xsl:if test="$debug='true'">
 	    <xsl:message>read table from <xsl:value-of select="@tei:corresp"/></xsl:message>
 	  </xsl:if>
@@ -1342,9 +1342,14 @@
     </xsl:template>
   
     <xsl:template name="mathrRpHook">
-      <xsl:if test="ancestor::tbx:term/following-sibling::tbx:termNote/@iso:style">
+      <xsl:if
+	  test="ancestor::tbx:term/following-sibling::tbx:termNote/@iso:style">
+      <xsl:message>What is this I see </xsl:message>
 	<rStyle
 	    w:val="{ancestor::tbx:term/following-sibling::tbx:termNote/@iso:style}" xmlns="http://schemas.openxmlformats.org/wordprocessingml/2006/main"/>
       </xsl:if>
     </xsl:template>
+
+    <xsl:template match="tei:p[@rend='Table units']"/>
+
 </xsl:stylesheet>

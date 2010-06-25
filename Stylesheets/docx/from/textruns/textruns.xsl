@@ -141,66 +141,34 @@
       underlying basic formatting</desc>
    </doc>
     <xsl:template name="basicStyles">
-      <!-- trying to refactor -->
-      <xsl:variable name="allIsoStyles">
-	<xsl:if test="w:rPr/w:rFonts">
+
+      <xsl:variable name="styles">
+	<xsl:if test="w:rPr/w:rFonts//@w:ascii">
 	  <!-- ignore the run's font change if 
 	       a) it's not a special para AND the font is the ISO default, OR 
 	       b) the font for the run is the same as its parent paragraph 
 	  -->
 	  <xsl:if test="(not(matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')) and not(matches(w:rPr/w:rFonts/@w:ascii,'Calibri'))) or
 			not(w:rPr/w:rFonts/@w:ascii = parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii)">
-	    <s>
-	      <xsl:attribute name="n">font-family</xsl:attribute>
+	    <s n="font-family">
 	      <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
 	    </s>
 	    <!-- w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
 	    <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
 	  </xsl:if>
 	  <xsl:if test="w:rPr/w:position/@w:val">
-	    <s>
-	      <xsl:attribute name="n">position</xsl:attribute>
+	    <s n="position">
 	      <xsl:value-of select="w:rPr/w:position/@w:val"/>
 	    </s>
 	  </xsl:if>
 	  <xsl:if test="w:rPr/w:rtl">
-	    <s>
-	      <xsl:attribute name="n">direction</xsl:attribute>
+	    <s n="direction">
 	      <xsl:text>rtl</xsl:text>
 	    </s>
 	  </xsl:if>
 	</xsl:if>
       </xsl:variable>
-
-      <xsl:variable name="fontFamily">
-	<xsl:if test="w:rPr/w:rFonts">
-	  <!-- ignore the run's font change if 
-	       a) it's not a special para AND the font is the ISO default, OR 
-	       b) the font for the run is the same as its parent paragraph 
-	  -->
-	  <xsl:if test="(not(matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')) and not(matches(w:rPr/w:rFonts/@w:ascii,'Calibri'))) or
-			not(w:rPr/w:rFonts/@w:ascii = parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii)">
-	    <xsl:text>font-family: </xsl:text>
-	    <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
-	    <!-- w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
-	    <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
-	    <xsl:text>; </xsl:text>
-	  </xsl:if>
-	</xsl:if>
-      </xsl:variable>
-
-      <xsl:variable name="exactPosition">
-	<xsl:if test="w:rPr/w:position/@w:val">
-	  <xsl:text>position:</xsl:text> <xsl:value-of select="w:rPr/w:position/@w:val"/><xsl:text>; </xsl:text>
-	</xsl:if>
-      </xsl:variable>
-
-      <xsl:variable name="textDirection">
-	<xsl:if test="w:rPr/w:rtl">
-	  <xsl:text>direction: rtl; </xsl:text>
-	</xsl:if>
-      </xsl:variable>
-      
+     
       <xsl:variable name="effects">
 	<xsl:if test="w:rPr/w:position[number(@w:val)&lt;-2]">
 	  <n>subscript</n>
@@ -272,37 +240,32 @@
 		
       </xsl:variable>
 
-      <xsl:variable name="isoStyle">
-	<xsl:value-of select="string-join(($textDirection,$exactPosition,$fontFamily),' ')"/>
-      </xsl:variable>
-
-      <xsl:choose>
-	<xsl:when test="$effects/* or normalize-space(string($isoStyle))!=''">
-	  <xsl:variable name="rend">
-	    <xsl:choose>
-	      <xsl:when test="$effects/*">
-		<xsl:for-each select="$effects/*">
-		  <xsl:value-of select="."/>
-		  <xsl:if test="following-sibling::*">
-		    <xsl:text> </xsl:text>
-		  </xsl:if>
-		</xsl:for-each>
-	      </xsl:when>
-	      <xsl:when test="normalize-space(string($isoStyle))!=''">
-		<!-- if there are no 'effects', there must be an iso:style -->
-		<xsl:text>isoStyle</xsl:text>
-	      </xsl:when> 
-	    </xsl:choose>
-	  </xsl:variable>
+	<xsl:choose>
+	<xsl:when test="$effects/* or $styles/*">
 	  <hi>
-	    <xsl:if test="$rend!=''">
-	      <xsl:attribute name="rend">
-		<xsl:value-of select="$rend"/>
-	      </xsl:attribute>
-	    </xsl:if>
-	    <xsl:if test="normalize-space(string($isoStyle))!=''">
+	    <xsl:attribute name="rend">
+	      <xsl:choose>
+		<xsl:when test="$effects/*">
+		  <xsl:for-each select="$effects/*">
+		    <xsl:value-of select="."/>
+		    <xsl:if test="following-sibling::*">
+		      <xsl:text> </xsl:text>
+		    </xsl:if>
+		  </xsl:for-each>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:text>isoStyle</xsl:text>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:attribute>
+	    <xsl:if test="$styles/*">
 	      <xsl:attribute name="iso:style">
-		<xsl:value-of select="$isoStyle"/>
+		<xsl:for-each select="$styles/*">
+		  <xsl:value-of select="@n"/>
+		  <xsl:text>:</xsl:text>
+		  <xsl:value-of select="."/>
+		  <xsl:text>;</xsl:text>
+		</xsl:for-each>
 	      </xsl:attribute>
 	    </xsl:if>
 	    <xsl:apply-templates/>

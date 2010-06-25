@@ -1271,7 +1271,7 @@
 
     <!-- Handle CALS tables -->
     <xsl:template match="cals:table">
-        <xsl:call-template name="cals-table-header"/>
+        <xsl:call-template name="tableheading-from-cals"/>
         <w:tbl>
             <w:tblPr>
                 <w:tblW w:w="0" w:type="auto"/>
@@ -1458,7 +1458,7 @@
     </xsl:template>
 
 
-    <xsl:template name="cals-table-header">
+    <xsl:template name="tableheading-from-cals">
         <xsl:if test="cals:title">
 	  <xsl:for-each select="cals:title[1]">
 	    <w:p>
@@ -1472,6 +1472,17 @@
 		  <w:t xml:space="preserve">— </w:t>
 		</w:r>
 	      </xsl:if>
+	      <xsl:apply-templates/>
+	    </w:p>
+	  </xsl:for-each>
+	  <xsl:for-each
+	      select="preceding-sibling::tei:p[@rend='Table units']">
+	    <w:p>
+	      <w:pPr>
+		<w:pStyle>
+		  <xsl:attribute name="w:val">Tableunits</xsl:attribute>
+		</w:pStyle>
+	      </w:pPr>
 	      <xsl:apply-templates/>
 	    </w:p>
 	  </xsl:for-each>
