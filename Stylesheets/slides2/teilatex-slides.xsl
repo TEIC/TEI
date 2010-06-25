@@ -65,6 +65,7 @@ XSL LaTeX stylesheet to make slides
 \usetheme{<xsl:value-of select="$beamerClass"/>}
 \usepackage{times}
 \usepackage{fancyvrb}
+\usepackage{fancyhdr}
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 \setbeamercovered{transparent}
 \let\mainmatter\relax
@@ -73,6 +74,8 @@ XSL LaTeX stylesheet to make slides
 \let\endfoot\relax
 \let\endlastfoot\relax
 </xsl:template>
+
+   <xsl:template name="latexBegin"/>
 
   <xsl:template name="latexLayout">
 \date{<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition/tei:date"/>}
@@ -96,9 +99,9 @@ XSL LaTeX stylesheet to make slides
  \newline <xsl:apply-templates/>
    </xsl:template> 
 
-   <xsl:template name="latexBegin">
-\frame{\maketitle}
-</xsl:template>
+   <xsl:template name="printTitleAndLogo">
+     \frame{\maketitle}
+   </xsl:template>
 
    <xsl:template match="tei:divGen[@type='toc']">
   \begin{frame} 
@@ -108,19 +111,11 @@ XSL LaTeX stylesheet to make slides
 </xsl:template>
 
    <xsl:template match="tei:div/tei:head"/>
-   <xsl:template match="tei:div0/tei:head"/>
    <xsl:template match="tei:div1/tei:head"/>
    <xsl:template match="tei:div2/tei:head"/>
 
-   <xsl:template match="tei:div0">
-      <xsl:call-template name="makeOuterFrame"/>
-   </xsl:template>
-
    <xsl:template match="tei:div1">
       <xsl:choose>
-         <xsl:when test="parent::tei:div0">
-            <xsl:call-template name="makeFrame"/>
-         </xsl:when>
          <xsl:when test="tei:div2">
             <xsl:call-template name="makeOuterFrame"/>
          </xsl:when>

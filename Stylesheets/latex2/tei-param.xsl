@@ -486,8 +486,8 @@ capable of dealing with UTF-8 directly.
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>
-         <p>LaTeX setup at start of document</p>
-         <p>All the LaTeX setup which are executed at the start of
+         <p>LaTeX setup before start of document</p>
+         <p>All the LaTeX setup which are executed before the start of
     the document</p>
       </desc>
    </doc>
