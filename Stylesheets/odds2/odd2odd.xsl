@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
     xmlns:s="http://www.ascc.net/xml/schematron" 
@@ -9,7 +10,7 @@
     xmlns:teix="http://www.tei-c.org/ns/Examples" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     version="2.0" 
-    exclude-result-prefixes="teix a s tei rng sch xsi">
+    exclude-result-prefixes="teix a s tei xs rng sch xsi">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for simplifying TEI ODD markup </p>
@@ -33,7 +34,9 @@
   <xsl:param name="useVersionFromTEI">true</xsl:param>
   <xsl:param name="stripped">false</xsl:param>
   <xsl:param
-      name="defaultSource">/usr/share/xml/tei/odd/p5subset.xml</xsl:param><!--http://www.tei-c.org/release -->
+      name="defaultSource">/usr/share/xml/tei/odd/p5subset.xml</xsl:param>
+  <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
+  <!--http://www.tei-c.org/release -->
   <xsl:key name="odd2odd-ATTCLASSES" match="tei:classSpec[(tei:attList or @type='atts') and not(@ident='tei.TEIform')]" use="@ident"/>
   <xsl:key name="odd2odd-ATTREFS" match="tei:attRef" use="concat(@name,'_',../../@ident)"/>
   <xsl:key name="odd2odd-CHANGE" match="tei:classSpec[@mode='change']" use="@ident"/>
@@ -274,25 +277,7 @@
     <xsl:variable name="exc"
 		  select="concat(' ',normalize-space(@except),' ')"/>
     <xsl:variable name="inc"  select="tokenize(normalize-space(@include),' ')"/>
-    <xsl:variable name="source">
-      <xsl:choose>
-	<xsl:when test="@source">
-	  <xsl:value-of select="@source"/>
-	</xsl:when>
-	<xsl:when test="parent::tei:schemaSpec/@source">
-	  <xsl:value-of select="parent::tei:schemaSpec/@source"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of select="$defaultSource"/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <!--
-    <xsl:if test="not(doc-available($source))">
-      <xsl:message terminate="yes">Error: Source <xsl:value-of
-      select='$source'/> not readable</xsl:message>
-    </xsl:if>
-    -->
+    <xsl:variable name="source" select="tei:workOutSource(.)"/>
       <xsl:choose>
 	<xsl:when test="not(@except) and not(@include)">
 	  <xsl:for-each select="document($source,$top)">
@@ -335,25 +320,7 @@
 
   <xsl:template name="odd2odd-followRef">
     <xsl:variable name="name" select="@key"/>
-    <xsl:variable name="source">
-      <xsl:choose>
-	<xsl:when test="@source">
-	  <xsl:value-of select="@source"/>
-	</xsl:when>
-	<xsl:when test="parent::tei:schemaSpec/@source">
-	  <xsl:value-of select="parent::tei:schemaSpec/@source"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of select="$defaultSource"/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <!--
-    <xsl:if test="not(doc-available($source))">
-      <xsl:message terminate="yes">Error: Source <xsl:value-of
-      select='$source'/> not readable</xsl:message>
-    </xsl:if>
-    -->
+    <xsl:variable name="source" select="tei:workOutSource(.)"/>
     <xsl:for-each select="document($source,$top)">
       <xsl:for-each select="key('odd2odd-IDENTS',$name)">
 	<xsl:call-template name="odd2odd-checkObject">
@@ -2008,19 +1975,12 @@ select="$M"/></xsl:message>
   <xsl:template name="odd2odd-getversion">
     <xsl:choose>
       <xsl:when test="key('odd2odd-SCHEMASPECS',$selectedSchema)">
-	<xsl:for-each select="key('odd2odd-SCHEMASPECS',$selectedSchema)">
-	  <xsl:choose>
-	    <xsl:when test="@source">
-	      <xsl:for-each select="document(@source)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
-		<xsl:value-of select="."/>
-	      </xsl:for-each>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:for-each select="document($defaultSource)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
-		<xsl:value-of select="."/>
-	      </xsl:for-each>
-	    </xsl:otherwise>
-	  </xsl:choose>
+	<xsl:for-each
+	    select="key('odd2odd-SCHEMASPECS',$selectedSchema)">
+	  <xsl:variable name="source" select="tei:workOutSource(.)"/>
+	  <xsl:for-each select="document($source)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
+	    <xsl:value-of select="."/>
+	  </xsl:for-each>
 	</xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
@@ -2116,5 +2076,43 @@ select="$M"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:function name="tei:workOutSource" as="xs:string">
+    <xsl:param name="e"/>
+    <xsl:variable name="loc">
+      <xsl:choose>
+	<xsl:when test="$e/@source">
+	  <xsl:value-of select="$e/@source"/>
+	</xsl:when>
+	<xsl:when test="$e/parent::tei:schemaSpec/@source">
+	  <xsl:value-of select="$e/parent::tei:schemaSpec/@source"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$defaultSource"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="source">
+      <xsl:choose>
+	<xsl:when test="starts-with($loc,'tei:')">
+	  <xsl:value-of
+	      select="replace($loc,'tei:',$defaultTEIServer)"/>
+	  <xsl:text>/p5subset.xml</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$loc"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="not(doc-available($source))">
+      <xsl:message terminate="yes">Error: Source <xsl:value-of
+      select='$source'/> not readable</xsl:message>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$source"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
 
 </xsl:stylesheet>

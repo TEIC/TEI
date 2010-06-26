@@ -146,7 +146,7 @@ die()
 {
     echo; echo
     echo "ERROR: $@."
-    D=`date "+%Y-%m-%d %H:%M:%S.%N"`
+    D=`date "+%Y-%m-%d %H:%M:%S"`
     echo "This was a fatal error. $D"
     exit 1
 }
@@ -304,7 +304,7 @@ else
   SOURCE="defaultSource=$LOCALSOURCE"
 fi
 
-makeODD
+makeODD || die "odd2odd process failed"
 ( $relax || $xsd ) && makeRelax
 if $xsd 
 then
