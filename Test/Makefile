@@ -43,7 +43,7 @@ TESTFILES= \
 	testspoken \
 	testtagdocs \
 	testtranscr \
-	test_meta2010 \
+	testmeta2010 \
 	testall 
 
 TESTBADFILES= \
@@ -70,29 +70,32 @@ schemas:
 	-for i in $(TESTFILES) $(TESTDTDFILES)  $(TESTBADFILES); do \
 		echo ; echo PROCESS $$i ; \
 		echo Try  to validate $$i.odd; \
-		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK stage; \
+		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK; \
 		saxon -o $$i-ex.odd $$i.odd ../Utilities/odd2exodd.xsl TEIC=true ;\
 		$(ROMA) $(ROMAOPTS) --nodtd --noxsd  --xsl=$(XSL)	$$i-ex.odd . ; \
 		echo check egXML in $$i.odd; \
 		perl -p -e "s/testlite-examples/$$i-examples/" ex.nvdl > $$i.nvdl; \
 		onvdl $$i.nvdl $$i.odd | grep -v ": error: unfinished element$$" | grep -v "unknown element .egXML" ; \
-		$(ROMA) $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
-		cp xml.xsd.w3c xml.xsd ; \
-		test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
-		test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd; \
-		test -f teix.xsd && mv teix.xsd $$i.teix.xsd ; \
-		test -f $$i.teix.xsd && perl -p -i -e "s/teix.xsd/$$i.teix.xsd/" $$i.xsd; \
-		echo Now validating instances documents against $$i schema; \
-		echo JING RelaxNG... ; \
-		jing -t $$i.rng $$i.xml; \
-		echo RNV.... ; \
-		xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc ;   \
-		echo xmllint DTD  ; \
-		xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd - ; \
-		echo JING .. for XSD.... ; \
-		jing $$i.xsd $$i.xml; \
-		echo xmllint DTD using DTD fragments.... ; \
-		grep -H DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml ; \
+		for j in `grep "<schemaSpec" $$i.odd | sed 's/.*ident=.//' | sed 's/\".*//'`; do \
+			echo found schemaSpec $$j in $$i; \
+			$(ROMA) $(ROMAOPTS) --xsl=$(XSL) --schema=$$j  $$i.odd .; \
+			cp xml.xsd.w3c xml.xsd ; \
+			test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
+			test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd; \
+			test -f teix.xsd && mv teix.xsd $$j.teix.xsd ; \
+			test -f $$j.teix.xsd && perl -p -i -e "s/teix.xsd/$$j.teix.xsd/" $$j.xsd; \
+			echo Now validating instances documents against $$j schema; \
+			echo JING RelaxNG... ; \
+			jing -t $$j.rng $$i.xml; \
+			echo RNV.... ; \
+			xmllint --noent --dropdtd  $$i.xml | rnv $$j.rnc ;   \
+			echo xmllint DTD  ; \
+			xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$j.dtd - ; \
+			echo JING .. for XSD.... ; \
+			jing $$j.xsd $$i.xml; \
+			echo xmllint DTD using DTD fragments.... ; \
+			grep -H DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml ; \
+			done; \
 		done
 	-for i in $(TESTSPECIALFILES) ; do \
 		echo ; echo PROCESS $$i ; \
