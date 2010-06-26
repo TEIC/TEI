@@ -60,9 +60,7 @@ TESTSPECIALFILES= \
 	testrend \
 	testsvg  
 
-default: schemas test
-
-test: test-extns test-schematron test-bad test-frag
+default: schemas test-extns test-frag
 
 schemas:
 	echo SETUP IS $(ROMAOPTS)
@@ -120,8 +118,8 @@ schemas:
 #xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; \
 
 test-frag:
-	test -f testlite.dtd &&	jing -t -c testfrag.rnc testlite.xml
-	xmllint --dropdtd testlite.xml | 	rnv testfrag.rnc 
+	test -f testlite.dtd &&	jing -t -c frag.rnc testlite.xml
+	xmllint --dropdtd testlite.xml | 	rnv frag.rnc 
 
 
 test-xsd-valid:
@@ -141,11 +139,11 @@ test-xerces:
 
 test-extns:
 	echo check whether user extensions work ....
-	xmllint --noout --valid testextns.xml
+	xmllint --noout --valid extns.xml
 
 test-sgml:
 	echo Check SGML extension mechanism
-	onsgmls -e -g -s  sgmldecl.tei testextns.sgm 
+	onsgmls -e -g -s  sgmldecl.tei extns.sgm 
 
 test-schematron:
 	echo Run Schematron tests - these may produce warnings
@@ -170,7 +168,7 @@ test-bad:
 
 
 clean:
-	-for i in $(TESTFILES) $(TESTDTDFILES)  $(TESTSPECIALFILES) $(TESTBADFILES); do rm -f $$i.doc.xml $$i.rnc $$i.dtd $$i.compiled.* $$i.teix.xsd $$i.xsd $$i.rnc $$i.rng $$i.xsl; done
+	-rm -f test*.doc.xml test*.rnc test*.dtd test*.compiled.* test*.teix.xsd test*.xsd test*.rnc test*.rng test*.xsl test*.isosch
 	-rm -rf LOG *~ *.xsd Schema RomaResults DTD 
 	-rm -rf *.doc.*
 	-rm *-examples.rng *-examples.rnc *test*.nvdl *-ex.odd
