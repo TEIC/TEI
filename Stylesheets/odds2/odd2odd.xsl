@@ -2097,7 +2097,7 @@ select="$M"/></xsl:message>
 	<xsl:when test="starts-with($loc,'tei:')">
 	  <xsl:value-of
 	      select="replace($loc,'tei:',$defaultTEIServer)"/>
-	  <xsl:text>/p5subset.xml</xsl:text>
+	  <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:value-of select="$loc"/>
