@@ -84,7 +84,7 @@
 	 </elementSpec>
        </specGrp>
        
-<p>The schema should be built using version 1.5 of TEI P5</p>
+<p>The schema built using version 1.5 of TEI P5</p>
 
        <schemaSpec ident="test_meta2010" prefix="tei_" start="TEI" source="http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml">
 	 <moduleRef key="tei"/>
@@ -93,13 +93,37 @@
 	 <specGrpRef target="#Include"/>
 	 <specGrpRef target="#TBX"/>
        </schemaSpec>
-
-       <schemaSpec ident="test_meta2010_1" start="TEI" source="../p5subset.xml">
+<p>The schema build using a local file </p>
+       <schemaSpec ident="test_meta2010_2" start="TEI" source="../p5subset.xml">
 	 <moduleRef key="tei"/>
 	 <specGrpRef target="#Include"/>
 	 <specGrpRef target="#TBX"/>
        </schemaSpec>
 
+<p>The schema build using a tei: URI </p>
+       <schemaSpec ident="test_meta2010_3" prefix="tei_" start="TEI" source="tei:1.5.0">
+	 <moduleRef key="tei"/>
+	 <moduleRef key="figures" except="table row cell"/>
+	 <moduleRef key="namesdates" include="persName"/>
+	 <specGrpRef target="#Include"/>
+	 <specGrpRef target="#TBX"/>
+       </schemaSpec>
+<p>The schema build using the current release </p>
+       <schemaSpec ident="test_meta2010_4" prefix="tei_" start="TEI" source="http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml">
+	 <moduleRef key="tei"/>
+	 <moduleRef key="figures" except="table row cell"/>
+	 <moduleRef key="namesdates" include="persName"/>
+	 <specGrpRef target="#Include"/>
+	 <specGrpRef target="#TBX"/>
+       </schemaSpec>
+<p>The schema build using the current release (TEI uri)</p>
+       <schemaSpec ident="test_meta2010_5" prefix="tei_" start="TEI" source="tei:current">
+	 <moduleRef key="tei"/>
+	 <moduleRef key="figures" except="table row cell"/>
+	 <moduleRef key="namesdates" include="persName"/>
+	 <specGrpRef target="#Include"/>
+	 <specGrpRef target="#TBX"/>
+       </schemaSpec>
 
      </body>
    </text>
