@@ -24,14 +24,16 @@ which are specific to the TEI and may not be generally applicable.</p>
 <p>An overview of the kind of processing environment envisaged for the
 module described by this chapter may be helpful. In the remainder of
 this chapter we refer to software which provides such a processing
-environment as an <term>ODD processor</term>.<note place="foot">ODD
-is short for <q>One Document Does it all</q>, and was the name
-invented by the original TEI Editors for the predecessor of the system
-currently used for this purpose. See further <ptr target="#Burnard1995b"/> and <ptr target="#TD-BIBL-01"/>.</note> Like any other piece of XML software,
-an ODD processor may be instantiated in many ways: the current system
-uses a number of XSLT stylesheets which are freely available from the
-TEI, but this specification makes no particular assumptions about the
-tools which will be used to provide an ODD processing environment.</p>
+environment as an <term>ODD processor</term>.<note place="foot">ODD is
+short for <q>One Document Does it all</q>, and was the name invented
+by the original TEI Editors for the predecessor of the system
+currently used for this purpose. See further <ptr
+target="#Burnard1995b"/> and <ptr target="#TD-BIBL-01"/>.</note> Like
+any other piece of XML software, an ODD processor may be instantiated
+in many ways: the current system uses a number of XSLT stylesheets
+which are freely available from the TEI, but this specification makes
+no particular assumptions about the tools which will be used to
+provide an ODD processing environment.</p>
 <p>As the name suggests, an ODD processor uses a single XML document
 to generate multiple outputs. These outputs will include:
 <list type="simple">
@@ -48,13 +50,13 @@ an XML Document Type Declaration.</item>
 </p>
 <p>The input required to generate these outputs consists of running
 prose, and special purpose elements documenting the components
-(elements, classes, etc.) which are to be declared in the chosen
-schema language. All of this input is encoded in XML using the module
-defined by this chapter. In order to support more than one schema
-language, this module uses a comparatively high-level model which can
-then be mapped by an ODD processor to the specific constructs
-appropriate to the schema language in use. Although some modern schema
-languages such as RELAX NG or W3C Schema natively support
+(elements, classes, etc.) which are to be declared
+in the chosen schema language. All of this input is encoded in XML
+using elements defined in this chapter. In order to support more
+than one schema language, these elements constitute a comparatively high-level
+model which can then be mapped by an ODD processor to the specific
+constructs appropriate for the schema language in use. Although some
+modern schema languages such as RELAX NG or W3C Schema natively support
 self-documentary features of this kind, we have chosen to retain the
 ODD model, if only for reasons of compatibility with earlier versions
 of these Guidelines. We do however use the ISO standard XML schema
@@ -65,10 +67,14 @@ language to define additional constraints beyond those expressed in
 the content model, as further discussed in <ptr target="#TDTAGCONS"/>
 below. </p>
 
-<p> In the TEI abstract model, a markup scheme (a <term>schema</term>)
-consists of a number of discrete <term>modules</term>, which can be
-combined more or less as required. Each major chapter of these
-Guidelines defines a distinct module. Each module declares a number of
+<p> In the TEI system, a <term>schema</term> is built by combining
+element and attribute declarations, more or less as required. Each
+element is documented by an appropriate <term>specification
+element</term> and has an identifier unique across the whole TEI
+scheme. For convenience, these specifications are grouped into a
+number of discrete <term>modules</term>, which can also be combined
+more or less as required. Each major chapter of these Guidelines
+defines a distinct module. Each module declares a number of
 <term>elements</term> specific to that module, and may also populate
 particular <term>classes</term>. All classes are declared globally;
 particular modules extend the meaning of a class by adding elements or
@@ -85,9 +91,10 @@ technical documentation, wherever there is need to talk about
 technical features of an XML encoding such as element names and
 attributes. Section <ptr target="#TDmodules"/> discusses the elements
 which are used to document XML <term>modules</term> and their
-high-level components. Section <ptr target="#TDcrystals"/> discusses the
-elements which document  XML elements and their attributes,
-element classes, and generic patterns or macros. Finally, section <ptr target="#TDformal"/> gives an overview of the whole module.</p>
+high-level components. Section <ptr target="#TDcrystals"/> discusses
+the elements which document XML elements and their attributes, element
+classes, and generic patterns or macros. Finally, section <ptr
+target="#TDformal"/> provides a summary overview of the elements provided by the module.</p>
 
 <div type="div2" xml:id="TDphrase"><head>Phrase Level Documentary
 Elements</head>
