@@ -366,7 +366,7 @@ install-database: dist-database
 install: clean install-schema install-doc install-test install-exemplars install-source install-database
 
 check:
-	@echo Checking you have a running XML tools and Perl before trying to run transform...
+	@echo Checking you have running XML tools and Perl before trying to run transform...
 	@echo -n saxon: 
 	@which saxon || exit 1
 	@echo -n Perl: 
