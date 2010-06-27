@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TEI xmlns="http://www.tei-c.org/ns/1.0" >
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:rng="http://relaxng.org/ns/structure/1.0">
  <teiHeader>
   <fileDesc>
    <titleStmt>
@@ -48,20 +49,22 @@
       <moduleRef url="Exemplars/mathml2-main.rng"/>
       <moduleRef url="Exemplars/relaxng.rng"/>
       
-<!--
+
       <elementSpec ident="egXML" mode="change" module="tagdocs"
 		   ns="http://www.tei-c.org/ns/Examples">
 	<content>
-	  <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-	    <choice>
-	      <text/>
-	      <ref name="macro.anyThing"/>
-	    </choice>
-	  </oneOrMore>
+	  <rng:zeroOrMore>
+	    <rng:group>
+	      <rng:choice>
+		<rng:text/>
+		<rng:ref name="egXML"/>
+		<rng:ref name="macro.anyXML"/>
+	      </rng:choice>
+	    </rng:group>
+	  </rng:zeroOrMore>
 	</content>
-      </elementSpec>
--->
-      
+      </elementSpec>    
+  
       <macroSpec ident="macro.anyThing" mode="add">
 	<content>
 	  <?NameList?>

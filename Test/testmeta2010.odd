@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
- xmlns:rng="http://relaxng.org/ns/structure/1.0" n="testfs">
+<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0" n="testmeta2010"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0">
    <teiHeader>
       <fileDesc>
          <titleStmt>
-            <title>Minimal TEI for testing new ODD features</title>
+            <title>Testing new ODD features added spring 2010</title>
          </titleStmt>
          <publicationStmt>
 	   <p> </p>
@@ -34,23 +34,70 @@
 	 <elementRef key="p"/>
 	 <elementRef key="hi"/>
 	 <elementRef key="sourceDesc"/>
+	 <elementRef key="revisionDesc"/>
+	 <elementRef key="change"  source="/usr/share/xml/tei/odd/p5subset.xml"/>
 	 <elementRef key="teiHeader"/>
 	 <elementRef key="text"/>
 	 <elementRef key="title"/>
 	 <elementRef key="titleStmt"/>
-	 <p>Make some changes to the elements we have included.</p>
+
+       </specGrp>
+
+       <p>Now make some changes and deletions</p>
+       <specGrp xml:id="Changes">
 	 <elementSpec ident="list" mode="change">
 	   <attList>
 	     <attDef ident="type" mode="change">
-	       <valList type="closed">
+	       <valList type="closed" mode="replace">
 		 <valItem ident="enumerated"/>
 		 <valItem ident="itemized"/>
 	       </valList>
 	     </attDef>
 	   </attList>
 	 </elementSpec>
-       </specGrp>
+	 <classSpec ident="att.canonical" type="atts" mode="delete"/>
+	 <classSpec ident="att.global" type="atts" mode="change">
+	   <attList>
+	     <attDef ident="n" mode="delete"/>
+	   </attList>
+	 </classSpec>
+	 <macroSpec ident="macro.specialPara" mode="change">
+	   <content>
+	     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	       <choice>
+		 <text/>
+		 <ref name="model.phrase"/>
+	       </choice>
+	     </zeroOrMore>
+	   </content>
+	 </macroSpec>
+	 <elementSpec ident="div" mode="change">
+	   <attList>
+	     <attDef ident="type" mode="delete"/>
+	     <attDef ident="rend" mode="change">
+	       <valList type="closed" mode="add">
+		 <valItem ident="i">
+		   <gloss>italic</gloss>
+		 </valItem>
+		 <valItem ident="b">
+		   <gloss>bold</gloss>
+		 </valItem>
+	       </valList>
+	     </attDef>
+	   </attList>
+	 </elementSpec>
+	 <classSpec mode="change" type="atts" ident="att.docStatus">
+	   <attList>
+	     <attDef ident="status" mode="change">
+	       <valList  type="closed" mode="replace">
+		 <valItem ident="good"/>
+		 <valItem ident="bad"/>
+	       </valList>
+	     </attDef>
+	   </attList>
+	 </classSpec>
 
+       </specGrp>
 
        <p>Now add an element in another namespace, implementing parts
        of TBX. The <gi>admin</gi> element has <gi>hi</gi> as its
@@ -84,44 +131,58 @@
 	 </elementSpec>
        </specGrp>
        
-<p>The schema built using version 1.5 of TEI P5</p>
+       <p>The schema built using version 1.5 of TEI P5</p>
 
        <schemaSpec ident="testmeta2010" prefix="tei_" start="TEI" source="http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml">
 	 <moduleRef key="tei"/>
 	 <moduleRef key="figures" except="table row cell"/>
 	 <moduleRef key="namesdates" include="persName"/>
 	 <specGrpRef target="#Include"/>
+	 <specGrpRef target="#Changes"/>
 	 <specGrpRef target="#TBX"/>
        </schemaSpec>
 
-<p>The schema build using a tei: URI </p>
+       <p>The schema build using a tei: URI </p>
        <schemaSpec ident="testmeta2010_3" prefix="tei_" start="TEI" source="tei:1.5.0">
 	 <moduleRef key="tei"/>
 	 <moduleRef key="figures" except="table row cell"/>
 	 <moduleRef key="namesdates" include="persName"/>
 	 <specGrpRef target="#Include"/>
+	 <specGrpRef target="#Changes"/>
 	 <specGrpRef target="#TBX"/>
        </schemaSpec>
-<p>The schema build using the current release </p>
+       <p>The schema build using the current release </p>
        <schemaSpec ident="testmeta2010_4" prefix="tei_" start="TEI" source="http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml">
 	 <moduleRef key="tei"/>
 	 <moduleRef key="figures" except="table row cell"/>
 	 <moduleRef key="namesdates" include="persName"/>
 	 <specGrpRef target="#Include"/>
+	 <specGrpRef target="#Changes"/>
 	 <specGrpRef target="#TBX"/>
        </schemaSpec>
-<p>The schema build using the current release (TEI uri)</p>
+       <p>The schema build using the current release (TEI uri)</p>
        <schemaSpec ident="testmeta2010_5" prefix="tei_" start="TEI" source="tei:current">
 	 <moduleRef key="tei"/>
-	 <moduleRef key="figures" except="table row cell"/>
+	 <moduleRef key="figures" except="table row cell"  source="/usr/share/xml/tei/odd/p5subset.xml"/>
 	 <moduleRef key="namesdates" include="persName"/>
 	 <specGrpRef target="#Include"/>
+	 <specGrpRef target="#Changes"/>
 	 <specGrpRef target="#TBX"/>
        </schemaSpec>
-<p>The schema build using defaults </p>
+       <p>The schema build using defaults </p>
        <schemaSpec ident="testmeta2010_6" start="TEI">
 	 <moduleRef key="tei"/>
+	 <moduleRef key="figures" except="table row cell"  source="/usr/share/xml/tei/odd/p5subset.xml"/>
 	 <specGrpRef target="#Include"/>
+	 <specGrpRef target="#Changes"/>
+	 <specGrpRef target="#TBX"/>
+       </schemaSpec>
+
+       <p>The schema build using local fixed reference</p>
+       <schemaSpec ident="testmeta2010_7" start="TEI" source="/usr/share/xml/tei/odd/p5subset.xml">
+	 <moduleRef key="tei"/>
+	 <specGrpRef target="#Include"/>
+	 <specGrpRef target="#Changes"/>
 	 <specGrpRef target="#TBX"/>
        </schemaSpec>
 
