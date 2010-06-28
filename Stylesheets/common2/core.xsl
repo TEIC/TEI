@@ -198,54 +198,52 @@
 
    <!-- authors and editors -->
 <xsl:template match="tei:author|tei:editor">
-      <xsl:choose>
-    <!-- last name in a list -->
+  <xsl:choose>
     <xsl:when test="ancestor::tei:bibl">
-            <xsl:apply-templates/>
-         </xsl:when>
-         <xsl:when test="self::tei:author and not(following-sibling::tei:author)">
-            <xsl:apply-templates/>
-            <xsl:call-template name="tei:makeText">
-	      <xsl:with-param name="letters">. </xsl:with-param>
-	    </xsl:call-template>
-         </xsl:when>
-         <xsl:when test="self::tei:editor and not(following-sibling::tei:editor)">
-            <xsl:apply-templates/>
-            <xsl:call-template name="tei:makeText">
-	      <xsl:with-param name="letters"> (</xsl:with-param>
-	    </xsl:call-template>
-            <xsl:call-template name="tei:makeText">
-	      <xsl:with-param name="letters">ed</xsl:with-param>
-	    </xsl:call-template>
-            <xsl:if test="preceding-sibling::tei:editor">s</xsl:if>
-            <xsl:call-template name="tei:makeText">
-	      <xsl:with-param name="letters">.</xsl:with-param>
-	    </xsl:call-template>
-            <xsl:call-template name="tei:makeText">
-	      <xsl:with-param name="letters">) </xsl:with-param>
-	    </xsl:call-template>
-         </xsl:when>
-         <xsl:otherwise>
-      <!-- first or middle name in a list -->
       <xsl:apply-templates/>
-            <xsl:call-template name="tei:makeText">
-	      <xsl:with-param name="letters">, </xsl:with-param>
-	    </xsl:call-template>
-         </xsl:otherwise>
-      </xsl:choose>
-   </xsl:template>
+    </xsl:when>
+    <xsl:when test="self::tei:author and not(following-sibling::tei:author)">
+      <xsl:apply-templates/>
+      <xsl:call-template name="tei:makeText">
+	<xsl:with-param name="letters">. </xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:when test="self::tei:editor and not(following-sibling::tei:editor)">
+      <xsl:apply-templates/>
+      <xsl:call-template name="tei:makeText">
+	<xsl:with-param name="letters"> (</xsl:with-param>
+      </xsl:call-template>
+      <xsl:call-template name="tei:makeText">
+	<xsl:with-param name="letters">ed</xsl:with-param>
+      </xsl:call-template>
+      <xsl:if test="preceding-sibling::tei:editor">s</xsl:if>
+      <xsl:call-template name="tei:makeText">
+	<xsl:with-param name="letters">.</xsl:with-param>
+      </xsl:call-template>
+      <xsl:call-template name="tei:makeText">
+	<xsl:with-param name="letters">) </xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates/>
+      <xsl:call-template name="tei:makeText">
+	<xsl:with-param name="letters">, </xsl:with-param>
+      </xsl:call-template>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
 
    <xsl:template match="tei:surname">
       <xsl:if test="../tei:forename">
          <xsl:apply-templates select="../tei:forename" mode="use"/>
          <xsl:call-template name="tei:makeText">
-	   <xsl:with-param name="letters"> </xsl:with-param>
+	   <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
 	 </xsl:call-template>
       </xsl:if>
       <xsl:if test="../tei:nameLink">
          <xsl:apply-templates select="../tei:nameLink" mode="use"/>
          <xsl:call-template name="tei:makeText">
-	   <xsl:with-param name="letters"> </xsl:with-param>
+	   <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
 	 </xsl:call-template>
       </xsl:if>
       <xsl:apply-templates/>
@@ -583,16 +581,16 @@
       <xsl:choose>
          <xsl:when test="not(ancestor::tei:person|ancestor::tei:biblStruct)"/>
          <xsl:when test="following-sibling::tei:name|following-sibling::tei:persName">
-	           <xsl:call-template name="tei:makeText">
-		     <xsl:with-param name="letters">,
-		     </xsl:with-param>
-		   </xsl:call-template>
+	   <xsl:call-template name="tei:makeText">
+	     <xsl:with-param name="letters">,
+	     </xsl:with-param>
+	   </xsl:call-template>
          </xsl:when>
          <xsl:otherwise>
-	           <xsl:call-template name="tei:makeText">
-		     <xsl:with-param
-			 name="letters">. </xsl:with-param>
-		   </xsl:call-template>
+	   <xsl:call-template name="tei:makeText">
+	     <xsl:with-param
+		 name="letters">. </xsl:with-param>
+	   </xsl:call-template>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>

@@ -208,14 +208,21 @@
       <desc> Dates </desc>
     </doc>
     <xsl:template match="tei:date">
-        <w:r>
+      <xsl:choose>
+	<xsl:when test="ancestor::tei:biblStruct">
+	  <xsl:apply-imports/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <w:r>
             <w:rPr>
                 <w:rStyle w:val="date"/>
             </w:rPr>
             <w:t>
                 <xsl:value-of select="."/>
             </w:t>
-        </w:r>
+	  </w:r>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
 
       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
