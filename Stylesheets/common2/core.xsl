@@ -109,16 +109,14 @@
          <xsl:when test="count(key('ANAMES',@xml:id))=2">
 	           <xsl:value-of select="key('ANAMES',@xml:id)[1]/tei:surname"/>
 	           <xsl:call-template name="tei:makeText">
-		     <xsl:with-param name="letters"> and
-		     </xsl:with-param>
+		     <xsl:with-param name="letters"> and </xsl:with-param>
 		   </xsl:call-template>
 	           <xsl:value-of select="key('ANAMES',@xml:id)[2]/tei:surname"/>
          </xsl:when>
          <xsl:when test="count(key('ANAMES',@xml:id))&gt;2">
 	           <xsl:value-of select="key('ANAMES',@xml:id)[1]/tei:surname"/>
 	           <xsl:call-template name="tei:makeText">
-		     <xsl:with-param name="letters"> et
-		     al.</xsl:with-param>
+		     <xsl:with-param name="letters"> et al.</xsl:with-param>
 		   </xsl:call-template>
          </xsl:when>
          <xsl:when test="count(key('MNAMES',@xml:id))=1">
@@ -127,16 +125,14 @@
          <xsl:when test="count(key('MNAMES',@xml:id))=2">
 	           <xsl:value-of select="key('MNAMES',@xml:id)[1]/tei:surname"/>
 	           <xsl:call-template name="tei:makeText">
-		     <xsl:with-param name="letters"> and
-		     </xsl:with-param>
+		     <xsl:with-param name="letters"> and </xsl:with-param>
 		   </xsl:call-template>
 	           <xsl:value-of select="key('MNAMES',@xml:id)[2]/tei:surname"/>
          </xsl:when>
          <xsl:when test="count(key('MNAMES',@xml:id))&gt;2">
 	           <xsl:value-of select="key('MNAMES',@xml:id)[1]/tei:surname"/>
 	           <xsl:call-template name="tei:makeText">
-		     <xsl:with-param name="letters"> et
-		     al.</xsl:with-param>
+		     <xsl:with-param name="letters"> et al.</xsl:with-param>
 		   </xsl:call-template>
          </xsl:when>
          <xsl:when test=".//tei:author[tei:surname]">
@@ -161,22 +157,19 @@
       <xsl:choose>
          <xsl:when test="count(tei:*[1]/tei:editor)=1">
 	           <xsl:call-template name="tei:makeText">
-		     <xsl:with-param name="letters">
-		     (ed.)</xsl:with-param>
+		     <xsl:with-param name="letters"> (ed.)</xsl:with-param>
 		   </xsl:call-template>
          </xsl:when>
          <xsl:when test="count(tei:*[1]/tei:editor)&gt;1">
 	           <xsl:call-template name="tei:makeText">
-		     <xsl:with-param name="letters">
-		     (eds.)</xsl:with-param>
+		     <xsl:with-param name="letters"> (eds.)</xsl:with-param>
 		   </xsl:call-template>
          </xsl:when>
       </xsl:choose>
       <xsl:choose>
          <xsl:when test="tei:monogr/tei:imprint/tei:date/@when">
 	           <xsl:call-template name="tei:makeText">
-		     <xsl:with-param name="letters">
-		     (</xsl:with-param>
+		     <xsl:with-param name="letters"> (</xsl:with-param>
 		   </xsl:call-template>
 	           <xsl:value-of select="substring-before(tei:monogr/tei:imprint/tei:date/@when,'-')"/>
 	           <xsl:call-template name="tei:makeText">
@@ -185,8 +178,7 @@
          </xsl:when>
          <xsl:when test="tei:monogr/tei:imprint/tei:date">
 	           <xsl:call-template name="tei:makeText">
-		     <xsl:with-param name="letters">
-		     (</xsl:with-param>
+		     <xsl:with-param name="letters"> (</xsl:with-param>
 		   </xsl:call-template>
 	           <xsl:value-of select="tei:monogr/tei:imprint/tei:date"/>
 	           <xsl:call-template name="tei:makeText">
@@ -258,7 +250,7 @@
    <xsl:template match="tei:forename" mode="use">
       <xsl:if test="preceding-sibling::tei:forename">
          <xsl:call-template name="tei:makeText">
-	   <xsl:with-param name="letters"> </xsl:with-param>
+	   <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
 	 </xsl:call-template>
       </xsl:if>
       <xsl:apply-templates/>
@@ -297,8 +289,7 @@
          <xsl:when test="parent::tei:titleStmt">
             <xsl:if test="preceding-sibling::tei:title">
 	              <xsl:call-template name="tei:makeText">
-			<xsl:with-param name="letters"> —
-			</xsl:with-param>
+			<xsl:with-param name="letters"> — </xsl:with-param>
 		      </xsl:call-template>
             </xsl:if>
             <xsl:apply-templates/>
@@ -314,8 +305,7 @@
             </xsl:call-template>
             <xsl:if test="ancestor::tei:biblStruct">
 	              <xsl:call-template name="tei:makeText">
-			<xsl:with-param name="letters">,
-			</xsl:with-param>
+			<xsl:with-param name="letters">, </xsl:with-param>
 		      </xsl:call-template>
             </xsl:if>
          </xsl:when>
@@ -345,7 +335,7 @@
 	              </xsl:with-param>
             </xsl:call-template>
             <xsl:call-template name="tei:makeText">
-	      <xsl:with-param name="letters"> </xsl:with-param>
+	      <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
 	    </xsl:call-template>
          </xsl:when>
          <xsl:when test="@level='a'">
@@ -407,7 +397,7 @@
       </xsl:call-template>
       <xsl:if test="following-sibling::* and ancestor::tei:biblStruct">
          <xsl:call-template name="tei:makeText">
-	   <xsl:with-param name="letters"> </xsl:with-param>
+	   <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
 	 </xsl:call-template>
       </xsl:if>
    </xsl:template>
@@ -484,7 +474,7 @@
    </xsl:template>
 
    <!-- details and notes -->
-<xsl:template match="tei:biblScope">
+   <xsl:template match="tei:biblScope">
       <xsl:choose>
          <xsl:when test="ancestor::tei:bibl">
             <xsl:apply-templates/>
@@ -551,17 +541,17 @@
       <xsl:choose>
          <xsl:when test="@type='vol' and      following-sibling::tei:biblScope[@type='issue']">
             <xsl:call-template name="tei:makeText">
-	      <xsl:with-param name="letters"> </xsl:with-param>
+	      <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
 	    </xsl:call-template>
          </xsl:when>
          <xsl:when test="@type='vol' and following-sibling::tei:biblScope">
             <xsl:call-template name="tei:makeText">
-	      <xsl:with-param name="letters"> </xsl:with-param>
+	      <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
 	    </xsl:call-template>
          </xsl:when>
          <xsl:when test="following-sibling::tei:biblScope">
             <xsl:call-template name="tei:makeText">
-	      <xsl:with-param name="letters"> </xsl:with-param>
+	      <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
 	    </xsl:call-template>
          </xsl:when>
          <xsl:when test="ancestor::tei:biblStruct">
@@ -582,16 +572,9 @@
          <xsl:when test="not(ancestor::tei:person|ancestor::tei:biblStruct)"/>
          <xsl:when test="following-sibling::tei:name|following-sibling::tei:persName">
 	   <xsl:call-template name="tei:makeText">
-	     <xsl:with-param name="letters">,
-	     </xsl:with-param>
+	     <xsl:with-param name="letters">, </xsl:with-param>
 	   </xsl:call-template>
          </xsl:when>
-         <xsl:otherwise>
-	   <xsl:call-template name="tei:makeText">
-	     <xsl:with-param
-		 name="letters">. </xsl:with-param>
-	   </xsl:call-template>
-         </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
 

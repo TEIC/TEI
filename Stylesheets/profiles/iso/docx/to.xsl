@@ -1347,7 +1347,6 @@
     <xsl:template name="mathrRpHook">
       <xsl:if
 	  test="ancestor::tbx:term/following-sibling::tbx:termNote/@iso:style">
-      <xsl:message>What is this I see </xsl:message>
 	<rStyle
 	    w:val="{ancestor::tbx:term/following-sibling::tbx:termNote/@iso:style}" xmlns="http://schemas.openxmlformats.org/wordprocessingml/2006/main"/>
       </xsl:if>

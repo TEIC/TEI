@@ -2053,11 +2053,40 @@
       <xsl:param name="class"/>
       <xsl:param name="content"/>
       <w:r>
-	<w:rPr>
-	  <w:i/>
-	</w:rPr>
+	<xsl:choose>
+	  <xsl:when test="$class='titlem'">
+	    <w:rPr>
+	      <w:i/>
+	    </w:rPr>
+	  </xsl:when>
+	  <xsl:when test="$class='titlej'">
+	    <w:rPr>
+	      <w:i/>
+	    </w:rPr>
+	  </xsl:when>
+	</xsl:choose>
 	<w:t>
+	  <xsl:attribute name="xml:space">preserve</xsl:attribute>
+	  <xsl:choose>
+	    <xsl:when test="$class='titles'">
+	      <xsl:text>, </xsl:text>
+	    </xsl:when>
+	    <xsl:when test="$class='titleu'">
+	      <xsl:text>‘</xsl:text>
+	    </xsl:when>
+	    <xsl:when test="$class='titlea'">
+	      <xsl:text>‘</xsl:text>
+	    </xsl:when>
+	  </xsl:choose>
 	  <xsl:value-of select="$content"/>
+	  <xsl:choose>
+	    <xsl:when test="$class='titleu'">
+	      <xsl:text>’</xsl:text>
+	    </xsl:when>
+	    <xsl:when test="$class='titlea'">
+	      <xsl:text>’</xsl:text>
+	    </xsl:when>
+	  </xsl:choose>
 	</w:t>
       </w:r>
     </xsl:template>
