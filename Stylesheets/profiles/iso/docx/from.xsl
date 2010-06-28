@@ -1874,34 +1874,44 @@
     </xsl:template>
 
     <xsl:template match="text()" mode="parseRef">
+      <idno type="orgref">
+        <xsl:choose>
+	        <xsl:when test="contains(.,',')">
+	          <xsl:value-of select="substring-before(.,',')"/>
+	        </xsl:when>
+	        <xsl:otherwise>
+	          <xsl:value-of select="."/>
+	        </xsl:otherwise>
+        </xsl:choose>
+      </idno>
       <xsl:variable name="ISOPATT">
 	<xsl:text>^</xsl:text>
 	<xsl:text>(</xsl:text><!-- body -->
 	<xsl:value-of select="$standardsBodies"/>
 	<xsl:text>)</xsl:text>
-	<xsl:text>[\s]?</xsl:text>
+	<xsl:text>[\s/]?</xsl:text>
 	<xsl:text>(</xsl:text><!-- type -->
 	<xsl:value-of select="$standardsTypes"/>
 	<xsl:text>)?</xsl:text>
-	<xsl:text>\s?</xsl:text>
+	<xsl:text>\s</xsl:text>
 	<xsl:text>([0-9]+)</xsl:text><!-- document number -->
-	<xsl:text>[-/]?([0-9A-Z]+| [\[\(]all parts[\)\]])?</xsl:text><!-- part(s) -->
-	<xsl:text>[:\s]*</xsl:text>
-	<xsl:text>([0-9\-—–]+)?</xsl:text><!-- year -->
-	<xsl:text>/?</xsl:text>
-	<xsl:text>(Cor|Amd|Add|Suppl)?</xsl:text> <!-- suppl type -->
-	<xsl:text>.?</xsl:text>
-	<xsl:text>([0-9]+)?</xsl:text>
-	<xsl:text>:?</xsl:text>
-	<xsl:text>([0-9]+)?</xsl:text>
-	<xsl:text>/?</xsl:text>
-	<xsl:text>(Cor)?</xsl:text>
-	<xsl:text>[.\s]*</xsl:text>
-	<xsl:text>([0-9]+)?</xsl:text>
-	<xsl:text>:?</xsl:text>
-	<xsl:text>([0-9]+)?</xsl:text>
-	<xsl:text>[,\s]*</xsl:text>
-	<xsl:text>(.*)</xsl:text>
+	<xsl:text>[-]?([0-9A-Z]+|[0-9]-[0-9]+| \(all parts\))?</xsl:text><!-- part(s) -->
+	<xsl:text>((:)([0-9]{4}|[\-—]+))?</xsl:text><!-- year -->
+	<xsl:text>(</xsl:text> <!-- start suppl -->
+	<xsl:text>/</xsl:text>
+	<xsl:text>(Cor|Amd|Add|Suppl)</xsl:text> <!-- suppl type -->
+	<xsl:text>\.</xsl:text>
+	<xsl:text>([0-9]+)?</xsl:text> <!-- suppl number -->
+	<xsl:text>((:)([0-9]{4}))?</xsl:text>
+	<xsl:text>)?</xsl:text> <!-- end suppl -->
+	<xsl:text>(</xsl:text> <!-- start corr -->
+	<xsl:text>/</xsl:text>
+	<xsl:text>(Cor)</xsl:text>
+	<xsl:text>\.</xsl:text>
+	<xsl:text>([0-9]+)</xsl:text>
+	<xsl:text>((:)([0-9]{4}))?</xsl:text>
+	<xsl:text>)?</xsl:text> <!-- end corr -->
+	<xsl:text>(,(\s)*(.*))?</xsl:text>
 	<xsl:text>$</xsl:text>
       </xsl:variable>
       <xsl:choose>
@@ -1916,22 +1926,22 @@
 		  select="translate(.,' ',' ')">
 		<xsl:matching-substring>
 		  <xsl:variable name="Part" select="regex-group(4)"/>
-		  <xsl:variable name="Suppltype" select="regex-group(6)"/>
-		  <xsl:variable name="Corrtype" select="regex-group(9)"/>
-<!--
+		  <xsl:variable name="Suppltype" select="regex-group(9)"/>
+		  <xsl:variable name="Corrtype" select="regex-group(15)"/>
+<!-- 
 		      <xsl:message>
 		      1 publisher :<xsl:value-of select="regex-group(1)"/>
 		      2 documenttype :<xsl:value-of select="regex-group(2)"/>
 		      3 docnumber  :<xsl:value-of select="regex-group(3)"/>
 		      4 part :<xsl:value-of select="regex-group(4)"/>
-		      5 edition :<xsl:value-of select="regex-group(5)"/>
-		      6 suppltype :<xsl:value-of select="regex-group(6)"/>
-		      7 supplnum :<xsl:value-of select="regex-group(7)"/>
-		      8 suppllyear  :<xsl:value-of select="regex-group(8)"/>
-		      9 corrtype :<xsl:value-of select="regex-group(9)"/>
-		      10 corrnum :<xsl:value-of select="regex-group(10)"/>
-		      11 corryear :<xsl:value-of select="regex-group(11)"/>
-		      12 title :<xsl:value-of select="regex-group(12)"/>
+		      5 edition :<xsl:value-of select="regex-group(7)"/>
+		      6 suppltype :<xsl:value-of select="regex-group(9)"/>
+		      7 supplnum :<xsl:value-of select="regex-group(10)"/>
+		      8 suppllyear  :<xsl:value-of select="regex-group(13)"/>
+		      9 corrtype :<xsl:value-of select="regex-group(15)"/>
+		      10 corrnum :<xsl:value-of select="regex-group(16)"/>
+		      11 corryear :<xsl:value-of select="regex-group(19)"/>
+		      12 title :<xsl:value-of select="regex-group(22)"/>
 		      </xsl:message>
 -->
 		  <publisher>
@@ -1953,9 +1963,6 @@
 		    <xsl:when test="$Part=' (all parts)'">
 		      <idno type="parts">(all parts)</idno>
 		    </xsl:when>
-		    <xsl:when test="$Part=' [all parts]'">
-		      <idno type="parts">(all parts)</idno>
-		    </xsl:when>
 		    <xsl:otherwise>
 		      <idno type="docPartNumber">
 			<xsl:value-of select="$Part"/>
@@ -1964,40 +1971,40 @@
 		  </xsl:choose>
 
 		  <xsl:choose>
-		    <xsl:when test="regex-group(5)=''"/>
+		    <xsl:when test="regex-group(7)=''"/>
 		    <xsl:otherwise>
 		      <edition>
-			<xsl:value-of select="regex-group(5)"/>
+			<xsl:value-of select="regex-group(7)"/>
 		      </edition>
 		    </xsl:otherwise>
 		  </xsl:choose>
 		  <xsl:if test="not($Suppltype='')">
 		    <idno type="supplType">
-		      <xsl:value-of select="regex-group(6)"/>
+		      <xsl:value-of select="$Suppltype"/>
 		    </idno>
 		    <idno type="supplNumber">
-		      <xsl:value-of select="regex-group(7)"/>
+		      <xsl:value-of select="regex-group(10)"/>
 		    </idno>
 		    <idno type="supplYear">
-		      <xsl:value-of select="regex-group(8)"/>
+		      <xsl:value-of select="regex-group(13)"/>
 		    </idno>
 		  </xsl:if>
 		  <xsl:if test="not($Corrtype='')">
 		    <idno type="corrType">
-		      <xsl:value-of select="regex-group(9)"/>
+		      <xsl:value-of select="$Corrtype"/>
 		    </idno>
 		    <idno type="corrNumber">
-		      <xsl:value-of select="regex-group(10)"/>
+		      <xsl:value-of select="regex-group(16)"/>
 		    </idno>
-		    <xsl:if test="not(regex-group(11)='')">
+		    <xsl:if test="not(regex-group(19)='')">
 		      <idno type="corrYear">
-			<xsl:value-of select="regex-group(11)"/>
+			<xsl:value-of select="regex-group(19)"/>
 		      </idno>
 		    </xsl:if>
 		  </xsl:if>
-		  <xsl:if test="not(regex-group(12)='')">
+		  <xsl:if test="not(regex-group(22)='')">
 		    <title>
-			<xsl:value-of select="regex-group(12)"/>
+			<xsl:value-of select="regex-group(22)"/>
 		    </title>
 		  </xsl:if>
 		</xsl:matching-substring>
@@ -2008,13 +2015,9 @@
 		      <xsl:value-of select="."/>
 		    </xsl:message>
 		  </xsl:if>
-		  <iso:error>
-		    <xsl:text>Invalid format of reference </xsl:text>
-		    <xsl:value-of select="."/>
-		  </iso:error>
 		  <xsl:value-of select="."/>
 		</xsl:non-matching-substring>
-	      </xsl:analyze-string>
+	      </xsl:analyze-string>	      
 	</xsl:when>
 	<xsl:when test=".='),'"/>
 	<xsl:when test=".='), '"/>
@@ -2026,11 +2029,11 @@
 	    <xsl:value-of select="substring(.,4)"/>
 	  </title>
 	</xsl:when>
-	<xsl:when test="preceding-sibling::node()">
-	  <title>
-	    <xsl:value-of select="."/>
-	  </title>
-	</xsl:when>
+<!--	<xsl:when test="preceding-sibling::node()">-->
+<!--	  <title>-->
+<!--	    <xsl:value-of select="."/>-->
+<!--	  </title>-->
+<!--	</xsl:when>-->
 	<xsl:otherwise>
 	  <xsl:value-of select="."/>
 	</xsl:otherwise>
