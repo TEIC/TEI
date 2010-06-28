@@ -235,10 +235,12 @@
 		<xsl:when test="self::tei:hi[not(w:*)]">true</xsl:when>
 		<xsl:when test="self::tei:ident">true</xsl:when>
 		<xsl:when test="self::tei:idno">true</xsl:when>
+		<xsl:when test="self::tei:imprint">true</xsl:when>
 		<xsl:when test="self::tei:institution">true</xsl:when>
 		<xsl:when test="self::tei:lb">true</xsl:when>
 		<xsl:when test="self::tei:locus">true</xsl:when>
 		<xsl:when test="self::tei:mentioned">true</xsl:when>
+		<xsl:when test="self::tei:monogr">true</xsl:when>
 		<xsl:when test="self::tei:msName">true</xsl:when>
 		<xsl:when test="self::tei:name">true</xsl:when>
 		<xsl:when test="self::tei:note[@place='bottom']">true</xsl:when>

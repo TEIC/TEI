@@ -426,11 +426,7 @@
                 </xsl:for-each>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:for-each select="tei:bibl">
-                    <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">Bibliography</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:for-each>
+	      <xsl:apply-templates/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

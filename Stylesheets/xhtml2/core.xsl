@@ -877,21 +877,6 @@
       <xsl:apply-templates/>
   </xsl:template>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element name and tei:persName</desc>
-   </doc>
-  <xsl:template match="tei:name|tei:persName">
-      <xsl:apply-templates/>
-      <xsl:choose>
-         <xsl:when test="not(ancestor::tei:person|ancestor::tei:biblStruct)"/>
-         <xsl:when test="following-sibling::tei:name|following-sibling::tei:persName">
-	           <xsl:text>, </xsl:text>
-         </xsl:when>
-         <xsl:otherwise>
-	           <xsl:text>. </xsl:text>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element note</desc>

@@ -279,4 +279,23 @@
    </doc>
   <xsl:template match="tei:docImprint"/>
 
+   <xsl:template match="tei:idno[@type='url']">
+      <xsl:text> &lt;</xsl:text>
+      <xsl:call-template name="makeExternalLink">
+         <xsl:with-param name="ptr">true</xsl:with-param>
+         <xsl:with-param name="dest">
+            <xsl:value-of select="normalize-space(.)"/>
+         </xsl:with-param>
+      </xsl:call-template>
+      <xsl:text>&gt;.</xsl:text>
+   </xsl:template>
+
+
+   <xsl:template match="tei:idno">
+      <xsl:text> </xsl:text>
+      <xsl:apply-templates/>
+   </xsl:template>
+
+   <xsl:template match="tei:idno[@type='doi']"/>
+
 </xsl:stylesheet>

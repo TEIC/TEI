@@ -40,10 +40,12 @@
     <xsl:import href="../utils/verbatim/tei-docx-verbatim.xsl"/>
     <xsl:import href="../utils/maths/mml2omml.xsl"/>
 
-    
+   
     <xsl:import href="parameters.xsl"/>
 
     <xsl:import href="placeholders.xsl"/>
+
+    <xsl:include href="../../common2/core.xsl"/>
 
     <!-- Deals with dynamic text creation such as toc -->
     <xsl:include href="dynamic/dynamic.xsl"/>
@@ -2045,5 +2047,41 @@
     <!-- no handling of index terms -->
 
     <xsl:template match="tei:index"/>
+
+    <xsl:template name="applyRendition"/>
+    <xsl:template name="emphasize">
+      <xsl:param name="class"/>
+      <xsl:param name="content"/>
+      <w:r>
+	<w:rPr>
+	  <w:i/>
+	</w:rPr>
+	<w:t>
+	  <xsl:value-of select="$content"/>
+	</w:t>
+      </w:r>
+    </xsl:template>
+
+    <xsl:template match="tei:bibl">
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="style">Bibliography</xsl:with-param>
+      </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template match="tei:biblStruct">
+       <xsl:call-template name="block-element">
+	<xsl:with-param name="style">Bibliography</xsl:with-param>
+      </xsl:call-template>
+    </xsl:template>
+
+  <xsl:template name="tei:makeText">
+    <xsl:param name="letters"/>
+    <w:r>
+      <w:t>
+	<xsl:attribute name="xml:space">preserve</xsl:attribute>
+	<xsl:value-of select="$letters"/>
+      </w:t>
+    </w:r>
+  </xsl:template>
 
 </xsl:stylesheet>
