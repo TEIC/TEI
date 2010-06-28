@@ -252,29 +252,15 @@
     \def\DivIVStar[#1]#2{\subsubsection*{#2}}
     \def\DivVStar[#1]#2{\paragraph*{#2}}
 }
-\makeatother
 \def\TheFullDate{2007-07-07T17:44:28 (revised: 
     2007-07-07T17:45:29)}
-\def\TheID{}
+\def\TheID{\makeatother }
 \def\TheDate{2007-07-07T17:44:28}
 \title{Test3}
-\author{Sebastian Rahtz}
-\begin{document}
-
-\catcode`\$=12\relax
-\catcode`\^=12\relax
-\catcode`\~=12\relax
-\catcode`\#=12\relax
-\catcode`\%=12\relax
-\let\tabcellsep&
-\catcode`\&=12\relax 
+\author{Sebastian Rahtz}\let\tabcellsep&
+      \catcode`\&=12\relax \makeatletter 
 \makeatletter
-\thispagestyle{plain}
-\noindent\parbox[b]{.75\textwidth}{\fontsize{14pt}{16pt}\bfseries\raggedright\sffamily\selectfont \@title}
-\vskip20pt
-\par\noindent{\fontsize{11pt}{13pt}\sffamily\itshape\raggedright\selectfont\@author\hfill\TheDate}
-\vspace{18pt}
-\markright{\@title}\markboth{\@title}{\@author}
+\thispagestyle{plain}\markright{\@title}\markboth{\@title}{\@author}
 \renewcommand\small{\@setfontsize\small{9pt}{11pt}\abovedisplayskip 8.5\p@ plus3\p@ minus4\p@
    \belowdisplayskip \abovedisplayskip
    \abovedisplayshortskip \z@ plus2\p@
@@ -297,7 +283,22 @@
 \fancyfoot[CE]{\thepage}
 \fancyfoot[RE]{\TheID}
 \hypersetup{linkbordercolor=0.75 0.75 0.75,urlbordercolor=0.75 0.75 0.75,bookmarksnumbered=true}
-\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}\frontmatter 
+\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}\makeatother 
+\begin{document}
+
+\makeatletter
+\noindent\parbox[b]{.75\textwidth}{\fontsize{14pt}{16pt}\bfseries\raggedright\sffamily\selectfont \@title}
+\vskip20pt
+\par\noindent{\fontsize{11pt}{13pt}\sffamily\itshape\raggedright\selectfont\@author\hfill\TheDate}
+\vspace{18pt}
+\makeatother
+
+\catcode`\$=12\relax
+\catcode`\^=12\relax
+\catcode`\~=12\relax
+\catcode`\#=12\relax
+\catcode`\%=12\relax
+\frontmatter 
 \DivI[The front part]{The front part}\label{part0}\par Lorem ipsum dolor sit amet\par Consectetuer adipiscing elit, sed diam nonummy nibh euismod
       tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim
       ad minim veniam, quis nostrud exerci tation ullamcorper suscipit
