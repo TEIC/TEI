@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:s="http://www.ascc.net/xml/schematron"
-                
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"                
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="s tei"
+                exclude-result-prefixes="s xs tei"
                 version="2.0">
   <xsl:import href="../common2/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
@@ -109,8 +109,27 @@
 
   <xsl:template name="verbatim-Text">
       <xsl:param name="words"/>
-      <xsl:value-of select="translate($words,'\{}','⃥❴❵')"/>
+      <xsl:value-of select="tei:escapeChars($words)"/>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc><p>We need the backslash and two curly braces to insert LaTeX
+      commands into the output, so these characters need to replaced when they
+      are found in running text. They are translated to Unicode COMBINING
+      REVERSE SOLIDUS OVERLAY, MEDIUM LEFT CURLY BRACKET ORNAMENT and MEDIUM
+      RIGHT CURLY BRACKET ORNAMENT; if these are used in real text, the escape
+      will have to be changed. They are translated back to the correct
+      characters by appropriate definitions in the preamble (see the template
+      called latexSetup in tei-param.xsl).</p></desc>
+  </doc>
+  <xsl:function name="tei:escapeChars" as="xs:string">
+    <xsl:param name="letters"/>
+
+      <!--<xsl:value-of select="translate($letters, '\{}','⃥❴❵')"/>-->
+      
+      <xsl:value-of
+	  select="replace(replace(replace($letters,'\\','\\textbackslash '),'\{','\\{'),'\}','\\}')"/>
+  </xsl:function>
 
 
 </xsl:stylesheet>

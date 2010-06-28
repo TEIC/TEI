@@ -102,7 +102,7 @@
 	              <xsl:apply-templates mode="eg"/>
 	           </xsl:variable>
 	           <xsl:text>\fbox{\ttfamily </xsl:text>
-	           <xsl:value-of select="translate($stuff,    '\{}','⃥❴❵')"/>
+	           <xsl:value-of select="tei:escapeChars($stuff)"/>
 	           <xsl:text>} </xsl:text>
          </xsl:when>
          <xsl:when test="ancestor::tei:cell and not(*)  and string-length(.)&lt;60">
@@ -110,7 +110,7 @@
 	              <xsl:apply-templates mode="eg"/>
 	           </xsl:variable>
 	           <xsl:text>\fbox{\ttfamily </xsl:text>
-	           <xsl:value-of select="translate($stuff,          '\{}','⃥❴❵')"/>
+	           <xsl:value-of select="tei:escapeChars($stuff)"/>
 	           <xsl:text>} </xsl:text>
          </xsl:when>
          <xsl:when test="ancestor::tei:cell or @rend='pre'">
@@ -650,18 +650,10 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>Process text(), escaping the LaTeX command characters.</p>
-         <p>We need the backslash and two curly braces to insert LaTeX
-      commands into the output, so these characters need to replaced when they
-      are found in running text. They are translated to Unicode COMBINING
-      REVERSE SOLIDUS OVERLAY, MEDIUM LEFT CURLY BRACKET ORNAMENT and MEDIUM
-      RIGHT CURLY BRACKET ORNAMENT; if these are used in real text, the escape
-      will have to be changed. They are translated back to the correct
-      characters by appropriate definitions in the preamble (see the template
-      called latexSetup in tei-param.xsl).</p>
       </desc>
    </doc>
   <xsl:template match="text()"> 
-      <xsl:value-of select="translate(.,'\{}','⃥❴❵')"/>
+      <xsl:value-of select="tei:escapeChars(.)"/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -672,7 +664,7 @@
       </desc>
    </doc>
   <xsl:template match="@*" mode="attributetext">
-      <xsl:value-of select="translate(.,'\{}','⃥❴❵')"/>
+      <xsl:value-of select="tei:escapeChars(.)"/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -681,10 +673,10 @@
   <xsl:template match="text()" mode="eg">
       <xsl:choose>
          <xsl:when test="starts-with(.,'&#xA;')">
-            <xsl:value-of select="substring-after(translate(.,'\{}','⃥❴❵'),'&#xA;')"/>
+            <xsl:value-of select="substring-after(tei:escapeChars(.),'&#xA;')"/>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:value-of select="translate(.,'\{}','⃥❴❵')"/>
+	   <xsl:value-of select="tei:escapeChars(.)"/>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -743,7 +735,7 @@
 
   <xsl:template name="Text">
       <xsl:param name="words"/>
-      <xsl:value-of select="translate($words,'\{}','⃥❴❵')"/>
+      <xsl:value-of select="tei:escapeChars($words)"/>
   </xsl:template>
 
   <xsl:template name="applyRendition"/>
