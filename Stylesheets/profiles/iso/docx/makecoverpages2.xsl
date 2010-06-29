@@ -67,13 +67,25 @@
 
 	  <!-- identity transform -->
 
-	<xsl:template match="@*|text()|comment()|processing-instruction()">
-		    <xsl:copy-of select="."/>
-	  </xsl:template>
+		<xsl:template match="@*|text()|comment()|processing-instruction()">
+				<xsl:param name="tocDefinition"></xsl:param>
+				<xsl:choose>
+						<xsl:when test="ancestor-or-self::w:instrText and $tocDefinition != '' and starts-with(.,' TOC ')">
+						    <xsl:message>set TOC definition to <xsl:value-of select="$tocDefinition" /></xsl:message>
+								<xsl:value-of select="$tocDefinition"></xsl:value-of>
+						</xsl:when>
+						<xsl:otherwise>
+								<xsl:copy-of select="." />
+						</xsl:otherwise>
+				</xsl:choose>
+		</xsl:template>
 
 	  <xsl:template match="*">
+	   <xsl:param name="tocDefinition"></xsl:param>
 		    <xsl:copy>
-			      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
+			      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()">
+			       <xsl:with-param name="tocDefinition" select="$tocDefinition"/>
+			      </xsl:apply-templates>
 		    </xsl:copy>
 	  </xsl:template>
   
@@ -132,15 +144,18 @@
 		             <xsl:when test="not($hasToc) and name(.) = 'w:p' and matches(w:pPr/w:pStyle/@w:val, $tocStyles)">
                     <xsl:message select="concat('skip TOC element from model doc because of style: ', w:pPr/w:pStyle/@w:val)"/>
 		             </xsl:when>
-                 <xsl:when test="$hasToc and name(.) = 'w:p' and . = '#toc'">
+                 <xsl:when test="$hasToc and name(.) = 'w:p' and starts-with(.,'#toc')">
+                    <xsl:variable name="tocDefinition" select="substring-after(.,'#toc ')"/>
                     <xsl:if test="$debug = 'true'">
-                       <xsl:message>insert toc section</xsl:message>
+                       <xsl:message>insert toc section with TOC definition: <xsl:value-of select="$tocDefinition"/></xsl:message>
                     </xsl:if>
                     <xsl:for-each select="$tocElems">
                       <xsl:message>insert toc section para</xsl:message>
                       <!-- do not copy any section breaks -->
                       <xsl:if test="not(.//w:sectPr)">
-                        <xsl:copy-of select="."/>
+                        <xsl:apply-templates select=".">
+                          <xsl:with-param name="tocDefinition" select="$tocDefinition"/>
+                        </xsl:apply-templates>
                       </xsl:if>
                     </xsl:for-each>
                  </xsl:when>
@@ -182,5 +197,5 @@
 			      </xsl:for-each>
 		    </xsl:copy>
 	  </xsl:template>
-
+	  
 </xsl:stylesheet>
