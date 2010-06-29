@@ -856,7 +856,7 @@
     <xsl:template name="generate-toc">
         <w:p>
             <w:pPr>
-                <w:pStyle w:val="TOC1"/>
+                <w:pStyle w:val="TOC9"/>
                 <w:tabs>
                     <w:tab w:val="right" w:leader="dot" w:pos="9350"/>
                 </w:tabs>
@@ -869,11 +869,11 @@
                     <w:noProof/>
                 </w:rPr>
 		<xsl:choose>
-		  <xsl:when test="starts-with(text()[1], ' TOC ')">
-		    <w:instrText xml:space="preserve"><xsl:value-of select="text()"/></w:instrText>
+		  <xsl:when test="starts-with(.//processing-instruction('isotoc')[1], ' TOC ')">
+		    <w:instrText xml:space="preserve"><xsl:value-of select=".//processing-instruction('isotoc')[1]"/></w:instrText>
 		  </xsl:when>
 		  <xsl:otherwise>
-		    <w:instrText xml:space="preserve"> TOC \o "1-6" \h \z \t "ANNEX;1;a2;2;a3;3;a4;4;a5;5;a6;6;zzForeword;1;Introduction;1;zzBiblio;1;zzIndex;1" </w:instrText>
+		    <w:instrText xml:space="preserve"> TOC \h \z \t "Heading 1,1,Heading 2,2,Heading 3,3,zzForeword,9,Introduction,9,ANNEX,1,zzBiblio,9,zzIndex,9" </w:instrText>
 		  </xsl:otherwise>
                 </xsl:choose>   
             </w:r>
