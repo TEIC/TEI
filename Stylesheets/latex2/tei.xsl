@@ -109,7 +109,7 @@
 
   <xsl:template name="verbatim-Text">
       <xsl:param name="words"/>
-      <xsl:value-of select="tei:escapeChars($words)"/>
+      <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -122,6 +122,11 @@
       characters by appropriate definitions in the preamble (see the template
       called latexSetup in tei-param.xsl).</p></desc>
   </doc>
+  <xsl:function name="tei:escapeCharsVerbatim" as="xs:string">
+    <xsl:param name="letters"/>
+    <xsl:value-of select="translate($letters, '\{}','⃥❴❵')"/>
+  </xsl:function>
+
   <xsl:function name="tei:escapeChars" as="xs:string">
     <xsl:param name="letters"/>
 

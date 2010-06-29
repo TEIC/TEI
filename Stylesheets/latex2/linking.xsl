@@ -139,7 +139,6 @@
             </xsl:choose>
          </xsl:when>
          <xsl:otherwise>
-	   <xsl:text>«</xsl:text>
 	   <xsl:choose>
 	     <xsl:when test="not($body='')">
 	       <xsl:value-of select="$body"/>
@@ -151,7 +150,6 @@
 	       <xsl:apply-templates/>
 	     </xsl:otherwise>
 	   </xsl:choose>
-	   <xsl:text>»</xsl:text>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>

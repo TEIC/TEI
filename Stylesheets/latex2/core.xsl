@@ -102,7 +102,7 @@
 	              <xsl:apply-templates mode="eg"/>
 	           </xsl:variable>
 	           <xsl:text>\fbox{\ttfamily </xsl:text>
-	           <xsl:value-of select="tei:escapeChars($stuff)"/>
+	           <xsl:value-of select="tei:escapeCharsVerbatim($stuff)"/>
 	           <xsl:text>} </xsl:text>
          </xsl:when>
          <xsl:when test="ancestor::tei:cell and not(*)  and string-length(.)&lt;60">
@@ -110,7 +110,7 @@
 	              <xsl:apply-templates mode="eg"/>
 	           </xsl:variable>
 	           <xsl:text>\fbox{\ttfamily </xsl:text>
-	           <xsl:value-of select="tei:escapeChars($stuff)"/>
+	           <xsl:value-of select="tei:escapeCharsVerbatim($stuff)"/>
 	           <xsl:text>} </xsl:text>
          </xsl:when>
          <xsl:when test="ancestor::tei:cell or @rend='pre'">
@@ -673,10 +673,10 @@
   <xsl:template match="text()" mode="eg">
       <xsl:choose>
          <xsl:when test="starts-with(.,'&#xA;')">
-            <xsl:value-of select="substring-after(tei:escapeChars(.),'&#xA;')"/>
+            <xsl:value-of select="substring-after(tei:escapeCharsVerbatim(.),'&#xA;')"/>
          </xsl:when>
          <xsl:otherwise>
-	   <xsl:value-of select="tei:escapeChars(.)"/>
+	   <xsl:value-of select="tei:escapeCharsVerbatim(.)"/>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>

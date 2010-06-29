@@ -233,9 +233,9 @@ capable of dealing with UTF-8 directly.
          <xsl:otherwise>
 \usepackage{xunicode}
 \usepackage{fontspec}
-%\catcode`⃥=\active \def⃥{\textbackslash}
-%\catcode`❴=\active \def❴{\{}
-%\catcode`❵=\active \def❵{\}}
+\catcode`⃥=\active \def⃥{\textbackslash}
+\catcode`❴=\active \def❴{\{}
+\catcode`❵=\active \def❵{\}}
 \def\textJapanese{\fontspec{Kochi Mincho}}
 \def\textChinese{\fontspec{HAN NOM A}\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip = 0pt plus 1pt }
 \setmonofont{DejaVu Sans Mono}
