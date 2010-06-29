@@ -144,22 +144,24 @@
                                     <xsl:value-of select="count(ancestor::tei:list) - 1"/>
                                 </xsl:attribute>
                             </w:ilvl>
-			    <xsl:choose>
-			      <xsl:when
-				  test="$isofreestanding='true'">
-				<w:numId w:val="2"/>
-				  <xsl:message>list style <xsl:value-of select="$listStyle"/> refers to numbering 2</xsl:message>
-			      </xsl:when>
-			      <xsl:otherwise>
-				<xsl:for-each select="document(concat($word-directory,'/word/numbering.xml'))">
-				  <xsl:variable name="abstractNumId"
-						select="key('AN',$listStyle)/@w:abstractNumId"/>
-				  <w:numId
-				      w:val="{key('NUMS',$abstractNumId)/@w:numId}"/>
-				</xsl:for-each>
-			      </xsl:otherwise>
-			    </xsl:choose>
-                        </w:numPr>
+			    <w:numId>
+			      <xsl:attribute name="w:val">
+				<xsl:choose>
+				  <xsl:when
+				      test="$isofreestanding='true'">
+				    <xsl:text>2</xsl:text>
+				  </xsl:when>
+				  <xsl:otherwise>
+				    <xsl:for-each select="document(concat($word-directory,'/word/numbering.xml'))">
+				      <xsl:variable name="abstractNumId"
+						    select="key('AN',$listStyle)/@w:abstractNumId"/>
+				      <w:value-of select="key('NUMS',$abstractNumId)/@w:numId"/>
+				    </xsl:for-each>
+				  </xsl:otherwise>
+				</xsl:choose>
+			      </xsl:attribute>
+			    </w:numId>
+			</w:numPr>
                     </xsl:when>
                     <xsl:when test="../@type='ordered'">
                         <w:numPr>
@@ -169,17 +171,17 @@
                                 </xsl:attribute>
                             </w:ilvl>
                             <w:numId>
-                                <!-- @see template: numbering-definition ordered lists -->
-                                <xsl:variable name="CurrentList">
-                                    <xsl:value-of select="generate-id(..)"/>
-                                </xsl:variable>
-                                <xsl:attribute name="w:val">
-                                    <xsl:for-each select="key('OL',1)">
-                                        <xsl:if test="$CurrentList=generate-id(.)">
-                                            <xsl:value-of select="position()+100"/>
-                                        </xsl:if>
-                                    </xsl:for-each>
-                                </xsl:attribute>
+			      <xsl:attribute name="w:val">
+				<!-- @see template: numbering-definition ordered lists -->
+				<xsl:variable name="CurrentList">
+				  <xsl:value-of select="generate-id(..)"/>
+				</xsl:variable>
+				<xsl:for-each select="key('OL',1)">
+				  <xsl:if test="$CurrentList=generate-id(.)">
+				    <xsl:value-of select="position()+100"/>
+				  </xsl:if>
+				</xsl:for-each>
+			      </xsl:attribute>
                             </w:numId>
                         </w:numPr>
                     </xsl:when>
