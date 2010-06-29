@@ -33,7 +33,13 @@
                 exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso its     tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
 
     <xsl:import href="../placeholders.xsl"/>
-    
+
+    <xsl:key name="AN"
+	 match="w:abstractNum"
+	 use="w:lvl/w:pStyle/@w:val"/>
+    <xsl:key name="NUMS"
+	     match="w:num[not(w:lvlOverride)]"
+	     use="w:abstractNumId/@w:val"/>
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making Word docx files from TEI XML </p>
@@ -138,7 +144,21 @@
                                     <xsl:value-of select="count(ancestor::tei:list) - 1"/>
                                 </xsl:attribute>
                             </w:ilvl>
-                            <w:numId w:val="2"/>
+			    <xsl:choose>
+			      <xsl:when
+				  test="$isofreestanding='true'">
+				<w:numId w:val="2"/>
+				  <xsl:message>list style <xsl:value-of select="$listStyle"/> refers to numbering 2</xsl:message>
+			      </xsl:when>
+			      <xsl:otherwise>
+				<xsl:for-each select="document(concat($word-directory,'/word/numbering.xml'))">
+				  <xsl:variable name="abstractNumId"
+						select="key('AN',$listStyle)/@w:abstractNumId"/>
+				  <w:numId
+				      w:val="{key('NUMS',$abstractNumId)/@w:numId}"/>
+				</xsl:for-each>
+			      </xsl:otherwise>
+			    </xsl:choose>
                         </w:numPr>
                     </xsl:when>
                     <xsl:when test="../@type='ordered'">
