@@ -155,7 +155,7 @@
 				    <xsl:for-each select="document(concat($word-directory,'/word/numbering.xml'))">
 				      <xsl:variable name="abstractNumId"
 						    select="key('AN',$listStyle)/@w:abstractNumId"/>
-				      <w:value-of select="key('NUMS',$abstractNumId)/@w:numId"/>
+				      <xsl:value-of select="key('NUMS',$abstractNumId)/@w:numId"/>
 				    </xsl:for-each>
 				  </xsl:otherwise>
 				</xsl:choose>
