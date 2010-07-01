@@ -97,6 +97,8 @@ doc:
 	saxon -o  release/common/doc/tei-xsl-common/customize.html customize.xml  profiles/default/html/to.xsl cssFile=tei.css 
 	cp teixsl.xml style.xml customize.xml release/common/doc/tei-xsl-common
 	cp tei.css ChangeLog LICENSE release/common/doc/tei-xsl-common
+
+oxygendoc:
 	-locate stylesheetDocumentation.sh || exit 1
 	echo using oXygen stylesheet documentation generator
 	for i in ${TARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
@@ -115,7 +117,7 @@ dist: clean release
 	(cd release/p5; zip -r ../tei-xsl-`cat ../../VERSION`.zip .)
 	(cd release/p5-2; zip -r ../tei-xsl-`cat ../../VERSION`.zip .)
 
-release: common doc p4 p5 p5-2
+release: common doc oxygendoc p4 p5 p5-2
 
 installp5-2: p5-2
 	mkdir -p ${PREFIX}/share
@@ -130,7 +132,7 @@ installp4: p4
 	(cd release/p4; tar cf - .) |  (cd ${PREFIX}/share; tar xvf  -)
 
 
-installcommon: 
+installcommon: doc
 	mkdir -p ${PREFIX}/lib/cgi-bin
 	cp stylebear ${PREFIX}/lib/cgi-bin/stylebear
 	chmod 755 ${PREFIX}/lib/cgi-bin/stylebear
