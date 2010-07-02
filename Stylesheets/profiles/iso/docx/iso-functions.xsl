@@ -297,6 +297,7 @@
 	  <xsl:when test="self::tei:lb">true</xsl:when>
 	  <xsl:when test="self::tei:imprint">true</xsl:when>
 	  <xsl:when test="self::tei:monogr">true</xsl:when>
+	  <xsl:when test="self::tei:series">true</xsl:when>
 	  <xsl:when test="self::tei:name">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='foot']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='bottom']">true</xsl:when>

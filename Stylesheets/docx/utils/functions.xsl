@@ -241,6 +241,7 @@
 		<xsl:when test="self::tei:locus">true</xsl:when>
 		<xsl:when test="self::tei:mentioned">true</xsl:when>
 		<xsl:when test="self::tei:monogr">true</xsl:when>
+		<xsl:when test="self::tei:series">true</xsl:when>
 		<xsl:when test="self::tei:msName">true</xsl:when>
 		<xsl:when test="self::tei:name">true</xsl:when>
 		<xsl:when test="self::tei:note[@place='bottom']">true</xsl:when>
