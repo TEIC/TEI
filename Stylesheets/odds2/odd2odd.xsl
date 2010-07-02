@@ -1775,6 +1775,14 @@ select="$M"/></xsl:message>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
+          <xsl:when test="tei:constraintSpec">
+            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:constraintSpec"/>
+          </xsl:when>
+          <xsl:when test="$Old/tei:constraintSpec">
+            <xsl:copy-of select="$Old/tei:constraintSpec"/>
+          </xsl:when>
+        </xsl:choose>
+        <xsl:choose>
           <xsl:when test="tei:datatype">
             <xsl:apply-templates mode="odd2odd-justcopy" select="tei:datatype"/>
           </xsl:when>
