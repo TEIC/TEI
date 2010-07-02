@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0" n="testmeta2010"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
  xmlns:rng="http://relaxng.org/ns/structure/1.0">
    <teiHeader>
       <fileDesc>
@@ -48,6 +49,12 @@
 	 <elementSpec ident="list" mode="change">
 	   <attList>
 	     <attDef ident="type" mode="change">
+	       <constraintSpec mode="add" ident="a1" scheme="isoschematron">
+		 <constraint>
+		   <sch:assert
+		       test="count(ancestor-or-self::tei:list[1]/tei:item)&lt;2">list
+		 too short </sch:assert></constraint>
+	       </constraintSpec>
 	       <valList type="closed" mode="replace">
 		 <valItem ident="enumerated"/>
 		 <valItem ident="itemized"/>
