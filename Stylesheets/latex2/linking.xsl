@@ -91,6 +91,11 @@
                <xsl:when test="$ptr='true'">
 		 <xsl:for-each select="key('IDS',$dest)">
 		   <xsl:choose>
+		     <xsl:when test="$class='pageref'">
+		       <xsl:text>\pageref{</xsl:text>
+		       <xsl:value-of select="@xml:id"/>
+		       <xsl:text>}</xsl:text>
+		     </xsl:when>
 		     <xsl:when test="self::tei:note[@xml:id]">
 		       <xsl:text>\ref{</xsl:text>
 		       <xsl:value-of select="@xml:id"/>
