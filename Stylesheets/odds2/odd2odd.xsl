@@ -148,6 +148,7 @@
               <cell>
 		Module <xsl:value-of select="@key"/>
 	      </cell>
+              <cell/>
 	    </xsl:when>
           </xsl:choose>
         </row>

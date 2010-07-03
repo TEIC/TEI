@@ -59,6 +59,16 @@
 		     <xsl:when test="ancestor::tei:macroSpec">
 		       <xsl:value-of select="concat(ancestor::tei:macroSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
 		     </xsl:when>
+                        <xsl:otherwise>
+                          <!-- Added 2010-07-03 by Syd Bauman to handle the case in which <constraintSpec> -->
+                          <!-- is a direct child of <schemaSpec>. -->
+                          <xsl:text>constraint-</xsl:text>
+                          <xsl:value-of select="ancestor::tei:constraintSpec/@ident"/>
+                          <xsl:if test="count( ../sch:rule ) > 1">
+                            <xsl:text>-</xsl:text>
+                            <xsl:number/>
+                          </xsl:if>
+                        </xsl:otherwise>
                      </xsl:choose>
                   </xsl:variable>
 		 <xsl:if test="sch:rule">
