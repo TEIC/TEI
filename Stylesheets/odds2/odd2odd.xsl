@@ -27,7 +27,7 @@
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
-  <xsl:output encoding="utf-8" indent="yes"/>
+  <xsl:output encoding="utf-8" indent="no"/>
   <xsl:param name="TEIC">false</xsl:param>
   <xsl:param name="selectedSchema"/>
   <xsl:param name="verbose"/>
@@ -245,6 +245,8 @@
 	<xsl:for-each select="tei:moduleRef[@key]">
 	  <xsl:if test="not(@key='tei' or @key='core')">
 	    <xsl:call-template name="odd2odd-expandModule">
+	    <xsl:with-param name="Source" select="$SourceDoc"
+			tunnel="yes"/>
 	  </xsl:call-template>
 	  </xsl:if>
 	</xsl:for-each>
