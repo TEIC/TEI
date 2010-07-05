@@ -76,7 +76,8 @@ number of discrete <term>modules</term>, which can also be combined
 more or less as required. Each major chapter of these Guidelines
 defines a distinct module. Each module declares a number of
 <term>elements</term> specific to that module, and may also populate
-particular <term>classes</term>. All classes are declared globally;
+particular <term>classes</term>. All classes are available globally,
+irrespective of the module in which they are declared;
 particular modules extend the meaning of a class by adding elements or
 attributes to it. Wherever possible, element content models are
 defined in terms of classes rather than in terms of specific
@@ -372,7 +373,7 @@ which they are defined, and cannot be referenced externally (unlike
 modules). </p>
 
 <specGrp xml:id="TDSG2" n="Modules and Specification Groups">
-
+&classRef;
 &elementRef;
 &macroRef;
 &moduleRef;
@@ -965,16 +966,19 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
 </div>
 <div type="div3" xml:id="TDCLA"><head>Element Classes</head>
 
-<p>The element <gi>classSpec</gi> is used to document an <term>element
-class</term> or <soCalled>class</soCalled>, as defined in section <ptr target="#STEC"/>.  It has the following components, additional to
-those already mentioned:
+<p>The element <gi>classSpec</gi> is used to document either an <term>attribute
+class</term> or a  <soCalled>model class</soCalled>, as defined in
+section <ptr target="#STEC"/>.  A corresponding <gi>classRef</gi>
+element may be used to select a specific named class from those
+available.  
 <specList>
-<specDesc key="classSpec" atts="type"/>
+<specDesc key="classSpec" atts="type "/>
+<specDesc key="classRef" atts="type"/>
 <specDesc key="attList"/>
 </specList>
 </p>
 
-<p>A class specification does not list all of its members. Instead,
+<p>A model class specification does not list all of its members. Instead,
 its members declare that they belong to it by means of a
 <gi>classes</gi> element contained within the relevant
 <gi>elementSpec</gi>. This will contain a <gi>memberOf</gi> element
@@ -999,13 +1003,16 @@ no specific semantics </desc>
 which indicate that the class <ident type="class">model.hiLike</ident>
 is actually a member (or subclass) of the class <ident type="class">model.highlighted</ident>.
  </p>
-
+<p>The function of a model class declaration is to provide
+another way of referring to a group of elements. It does not confer
+any other properties on the elements which constitute its membership. 
+</p>
 <p>The attribute <att>type</att> is used to distinguish between
 <soCalled>model</soCalled> and <soCalled>attribute</soCalled>
 classes. In the case of attribute classes, the attributes provided by 
 membership in the class are documented by an <gi>attList</gi> element
 contained within the <gi>classSpec</gi>. In the case of model classes,
-no further information is neeeded to define the class beyond its
+no further information is needed to define the class beyond its
 description, its identifier, and optionally any classes of which it is
 a member. </p>
 
@@ -1088,18 +1095,20 @@ the class may however limit the possibilities by means of its
 particular model may only be referenced in a content model with the
 suffixes it specifies. For example, if the <gi>classSpec</gi> for
 <ident type="class">model.hiLike</ident> took the form <tag>classSpec
-ident="model.hiLike" generateOnly="sequence sequenceOptional"</tag>
+ident="model.hiLike" generate="sequence sequenceOptional"</tag>
 then a content model referring to (say) <ident
 type="class">model.hiLike_sequenceRepeatable</ident> would be regarded
 as invalid by an ODD processor. </p>
 
 
-<p>When a <gi>classSpec</gi> contains an <gi>attList</gi> element, all
-the members of that class inherit the attributes specified by it. For
+<p>An attribute class (a <gi>classSpec</gi> of <att>type</att>
+<val>atts</val>) contains an <gi>attList</gi> element which lists the
+attributes that all the members of that class inherit from it. For
 example, the class <ident type="class">att.interpLike</ident> defines
 a small set of attributes common to all elements which are members of
 that class: those attributes are listed by the <gi>attList</gi>
-element contained by the <gi>classSpec</gi> for <ident type="class">att.interpLike</ident>. When processing the documentation
+element contained by the <gi>classSpec</gi> for <ident
+type="class">att.interpLike</ident>. When processing the documentation
 elements for elements which are members of that class, an ODD
 processor is required to extend the <gi>attList</gi> (or equivalent)
 for such elements to include any attributes defined by the
