@@ -172,7 +172,7 @@ chapterpdfs:
 	done
 	rm -rf Images
 
-validate: schemas oddschema exampleschema valid 
+validate: dtds schemas oddschema exampleschema valid 
 
 valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check
@@ -394,7 +394,7 @@ catalogue:
 	echo Made catalogue.html
 
 catalogue-print:
-	${SAXON} ${SAXON_ARGS}  -o catalogue.xml ${DRIVER}  Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} 
+	${SAXON} ${SAXON_ARGS} ${DRIVER}  Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} | xmllint --format - > catalogue.xml
 
 clean:
 	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~ 

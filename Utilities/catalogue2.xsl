@@ -25,10 +25,10 @@
   
   <xsl:variable name="top" select="/"/>
   
-  <xsl:key name="ELEMENTINMOD" match="tei:elementSpec" use="@module"/>
-  <xsl:key name="ACLASSINMOD" match="tei:classSpec[@type='atts']" use="@module"/>
-  <xsl:key name="MCLASSINMOD" match="tei:classSpec[@type='model']" use="@module"/>
-  <xsl:key name="MACROINMOD" match="tei:macroSpec" use="@module"/>
+  <xsl:key name="ELEMENTS" match="tei:elementSpec" use="1"/>
+  <xsl:key name="ACLASSS" match="tei:classSpec[@type='atts']" use="1"/>
+  <xsl:key name="MCLASSS" match="tei:classSpec[@type='model']" use="1"/>
+  <xsl:key name="MACROS" match="tei:macroSpec" use="1"/>
   
   <xsl:key name="REFS" 
 	   match="tei:elementSpec|tei:macroSpec"
@@ -61,166 +61,8 @@
       </teiHeader>
       <text>
 	<body>
-	  <p>The sections in this document summarize all the TEI
-	  modules, showing the elements, classes
-	  and macros defined. </p>
-	  <xsl:for-each select="//tei:moduleSpec">
-	    <xsl:sort select="@ident"/>
-	    <div>
-	      <xsl:attribute name="xml:id">
-		<xsl:text>Module_</xsl:text>
-		<xsl:value-of select="@ident"/>
-	      </xsl:attribute>
-	      <head>		 
-		<xsl:value-of select="@ident"/>
-		<xsl:text> module</xsl:text>
-	      </head>
-	      <xsl:if test="count(key('MCLASSINMOD',@ident))&gt;0">
-		<xsl:call-template name="section">
-		  <xsl:with-param name="name">
-		    <xsl:value-of select="@ident"/>
-		    <xsl:text>_modelClasses</xsl:text>
-		  </xsl:with-param>
-		  <xsl:with-param name="content">
-		    <head><xsl:value-of select="@ident"/> Model Classes</head>
-		    <table rules="all" border="1">
-		      <xsl:attribute name="preamble">
-			<xsl:text>P{0.25\textwidth}|P{0.36\textwidth}|P{0.36\textwidth}|</xsl:text>
-		      </xsl:attribute>
-		      <row role="label">
-			<cell>Name</cell>
-<!--			<cell></cell>-->
-			<cell>Used in content model of</cell>
-			<cell>Members</cell>
-		      </row>
-		      <xsl:for-each select="key('MCLASSINMOD',@ident)">
-			<xsl:sort select="@ident"/>
-			<row>
-			  <cell>
-			    <xsl:attribute name="xml:id">
-			      <xsl:text>summary_</xsl:text>
-			      <xsl:value-of select="@ident">
-			      </xsl:value-of>
-			    </xsl:attribute>
-			      <xsl:value-of select="@ident"/>
-			  </cell>
-<!--
-			  <cell>
-			    <ref target="http://localhost/TV/draw.php?nt={@ident}">draw</ref>
-			  </cell>
--->
-			  <cell>
-			    <xsl:for-each select="key('REFS',@ident)">
-			      <xsl:if 
-				  test="not(generate-id(.)=generate-id(key('REFS',@ident)[1]))"> 
-				<xsl:choose>
-				  <xsl:when
-				      test="string-length(@ident)=0">
-				  </xsl:when>
-				  <xsl:otherwise>
-				    <xsl:value-of select="@ident"/> 
-				    <xsl:text>: </xsl:text>
-				  </xsl:otherwise>
-				</xsl:choose>
-			      </xsl:if>
-			    </xsl:for-each>
-			    <xsl:call-template name="refsbyclass"/>
-			  </cell>
-			  <cell >
-			    <xsl:for-each select="key('LOCALCLASSREFS',@ident)">
-			      <xsl:sort select="@ident"/>
-
-			      <xsl:choose>
-				<xsl:when
-				    test="string-length(@ident)=0">
-				</xsl:when>
-				<xsl:otherwise>
-				  <xsl:value-of select="@ident"/> 
-				  <xsl:text>: </xsl:text>
-				</xsl:otherwise>
-			      </xsl:choose>
-			    </xsl:for-each>
-			  </cell>
-			</row>
-		      </xsl:for-each>
-		    </table>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </xsl:if>
-	      <xsl:if test="count(key('ACLASSINMOD',@ident))&gt;0">
-		<xsl:call-template name="section">
-		  <xsl:with-param name="name">
-		    <xsl:value-of select="@ident"/>
-		    <xsl:text>_attributeClasses</xsl:text>
-		  </xsl:with-param>
-		  <xsl:with-param name="content">
-		    <head><xsl:value-of select="@ident"/> Attribute Classes</head>
-		    <table rules="all" border="1">
-		      <xsl:attribute name="preamble">
-			<xsl:text>P{0.25\textwidth}|P{0.5\textwidth}|P{0.25\textwidth}|</xsl:text>
-		      </xsl:attribute>
-		      <row role="label">
-			<cell>Name</cell>
-<!--			<cell></cell>-->
-			<cell>Members</cell>
-			<cell>Attributes</cell>
-		      </row>
-		      <xsl:for-each select="key('ACLASSINMOD',@ident)">
-			<xsl:sort select="@ident"/>
-			<row>
-			  <cell>
-			    <xsl:attribute name="xml:id">
-			      <xsl:text>summary_</xsl:text>
-			      <xsl:value-of select="@ident">
-			      </xsl:value-of>
-			    </xsl:attribute>
-			    
-			      <xsl:value-of select="@ident"/>
-			  </cell>
-<!--
-			  <cell>
-			    <ref target="http://localhost/TV/draw.php?nt={@ident}">pic</ref>
-			  </cell>
--->
-			  <cell >
-			    <xsl:variable name="ID" select="@ident"/>
-			    <xsl:for-each select="key('LOCALCLASSREFS',@ident)">
-			      <xsl:sort select="@ident"/>
-				<xsl:choose>
-				  <xsl:when
-				      test="string-length(@ident)=0">
-3<xsl:value-of select="name(.)"/>
-				  </xsl:when>
-				  <xsl:otherwise>
-				<xsl:value-of select="@ident"/> 
-				  </xsl:otherwise>
-				</xsl:choose>
-			      <xsl:text>: </xsl:text>
-			    </xsl:for-each>
-			  </cell>
-			  <cell>
-			    <xsl:for-each select=".//tei:attDef">
-			      <xsl:if
-				  test="preceding-sibling::tei:attDef">
-				<xsl:text>: </xsl:text>
-			      </xsl:if>
-			      <xsl:value-of select="@ident"/>
-			    </xsl:for-each>
-			  </cell>
-			</row>
-		      </xsl:for-each>
-		    </table>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </xsl:if>
-	      <xsl:if test="count(key('ELEMENTINMOD',@ident))&gt;0">
-		<xsl:call-template name="section">
-		  <xsl:with-param name="name">
-		    <xsl:value-of select="@ident"/>
-		    <xsl:text>_Elements</xsl:text>
-		  </xsl:with-param>
-		  <xsl:with-param name="content">
-		    <head><xsl:value-of select="@ident"/> Elements</head>
+	  <div>
+	    <head>Elements</head>
 		    <table rend="rules">
 		      <xsl:attribute name="preamble">
 			<xsl:text>P{0.1\textwidth}|P{0.25\textwidth}|P{0.25\textwidth}|P{0.15\textwidth}|P{0.15\textwidth}|</xsl:text>
@@ -233,7 +75,7 @@
 			<cell>Used in</cell>
 			<cell>Attributes</cell>
 		      </row>
-		      <xsl:for-each select="key('ELEMENTINMOD',@ident)">
+		      <xsl:for-each select="key('ELEMENTS',1)">
 			<xsl:sort select="@ident"/>
 			<row>
 			  <cell>
@@ -311,20 +153,123 @@
 			</row>
 		      </xsl:for-each>
 		    </table>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </xsl:if>
-	      <xsl:if test="count(key('MACROINMOD',@ident))&gt;0">
-		<xsl:call-template name="section">
-		  <xsl:with-param name="name">
+
+	  </div>
+	  <div>
+	    <head>Model Classes</head>
+	    <table rules="all" border="1">
+	      <xsl:attribute name="preamble">
+		<xsl:text>P{0.25\textwidth}|P{0.36\textwidth}|P{0.36\textwidth}|</xsl:text>
+	      </xsl:attribute>
+	      <row role="label">
+		<cell>Name</cell>
+		<!--			<cell></cell>-->
+			<cell>Used in content model of</cell>
+			<cell>Members</cell>
+	      </row>
+	      <xsl:for-each select="key('MCLASSS',1)">
+		<xsl:sort select="@ident"/>
+		<row>
+		  <cell>
+		    <xsl:attribute name="xml:id">
+		      <xsl:text>summary_</xsl:text>
+		      <xsl:value-of select="@ident">
+		      </xsl:value-of>
+		    </xsl:attribute>
 		    <xsl:value-of select="@ident"/>
-		    <xsl:text>_Macros</xsl:text>
-		  </xsl:with-param>
-		  <xsl:with-param name="content">
-		    <head><xsl:value-of select="@ident"/>
-		    Macros</head>
+		  </cell>
+		  <cell>
+		    <xsl:for-each select="key('REFS',@ident)">
+		      <xsl:if 
+			  test="not(generate-id(.)=generate-id(key('REFS',@ident)[1]))"> 
+			<xsl:choose>
+			  <xsl:when
+			      test="string-length(@ident)=0">
+			  </xsl:when>
+			  <xsl:otherwise>
+			    <xsl:value-of select="@ident"/> 
+			    <xsl:text>: </xsl:text>
+			  </xsl:otherwise>
+			</xsl:choose>
+		      </xsl:if>
+		    </xsl:for-each>
+		    <xsl:call-template name="refsbyclass"/>
+		  </cell>
+		  <cell >
+		    <xsl:for-each select="key('LOCALCLASSREFS',@ident)">
+		      <xsl:sort select="@ident"/>
+		      
+		      <xsl:choose>
+			<xsl:when
+			    test="string-length(@ident)=0">
+			</xsl:when>
+			<xsl:otherwise>
+			  <xsl:value-of select="@ident"/> 
+			  <xsl:text>: </xsl:text>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:for-each>
+		  </cell>
+		</row>
+	      </xsl:for-each>
+	    </table>
+	  </div>
+	  <div>
+	    <head>Attribute Classes</head>
+	    <table rules="all" border="1">
+	      <xsl:attribute name="preamble">
+		<xsl:text>P{0.25\textwidth}|P{0.5\textwidth}|P{0.25\textwidth}|</xsl:text>
+	      </xsl:attribute>
+	      <row role="label">
+		<cell>Name</cell>
+		<!--			<cell></cell>-->
+		<cell>Members</cell>
+		<cell>Attributes</cell>
+	      </row>
+	      <xsl:for-each select="key('ACLASSS',1)">
+		<xsl:sort select="@ident"/>
+		<row>
+		  <cell>
+		    <xsl:attribute name="xml:id">
+		      <xsl:text>summary_</xsl:text>
+		      <xsl:value-of select="@ident">
+		      </xsl:value-of>
+		    </xsl:attribute>
+		    
+		    <xsl:value-of select="@ident"/>
+		  </cell>
+		  <!--
+		      <cell>
+		      <ref target="http://localhost/TV/draw.php?nt={@ident}">pic</ref>
+		      </cell>
+-->
+			  <cell >
+			    <xsl:variable name="ID" select="@ident"/>
+			    <xsl:for-each select="key('LOCALCLASSREFS',@ident)">
+			      <xsl:sort select="@ident"/>
+				<xsl:if test="@ident !=''">
+				<xsl:value-of select="@ident"/> 
+				<xsl:text>: </xsl:text>
+				</xsl:if>
+			    </xsl:for-each>
+			  </cell>
+			  <cell>
+			    <xsl:for-each select=".//tei:attDef">
+			      <xsl:if
+				  test="preceding-sibling::tei:attDef">
+				<xsl:text>: </xsl:text>
+			      </xsl:if>
+			      <xsl:value-of select="@ident"/>
+			    </xsl:for-each>
+			  </cell>
+			</row>
+		      </xsl:for-each>
+		    </table>
+	  </div>
+	  <div>
+	    <head> Macros</head>
 		    <list type="gloss">
-		      <xsl:for-each select="key('MACROINMOD',@ident)">
+		      <xsl:for-each select="key('MACROS',1)">
 			<xsl:sort select="@ident"/>
 			  <label>
 			    <xsl:attribute name="xml:id">
@@ -356,18 +301,7 @@
 			  </item>
 		      </xsl:for-each>
 		    </list>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </xsl:if>
-	    </div>
-	  </xsl:for-each>
-<!--
-	    <xsl:for-each select="key('EVERYTHING','1')">
-		  <xsl:sort select="@ident"/>
-		  <xsl:call-template name="refdoc"/>
-		</xsl:for-each>
 	  </div>
--->
 	</body>
       </text>
     </TEI>
