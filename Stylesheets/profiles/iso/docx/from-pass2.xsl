@@ -66,29 +66,29 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
-
-		<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-				<desc>Assign a unique ID to each<gi>bibl</gi></desc>
-		</doc>
-		<xsl:template match="tei:bibl" mode="pass2">
-				<xsl:copy>
-						<xsl:if test="not(@xml:id and not(w:bookmarkStart))">
-								<xsl:attribute name="xml:id">
-				          <xsl:text>BIB_</xsl:text>
-						      <xsl:number level="any" count="tei:bibl" />
-								</xsl:attribute>
-						</xsl:if>
-						<xsl:attribute name="n" select="tei:idno[@type='orgref']" />
-						<xsl:attribute name="type">
-		           <xsl:choose>
-		             <xsl:when test="tei:edition">dated</xsl:when>
-		             <xsl:otherwise>undated</xsl:otherwise>
-		           </xsl:choose>
-		         </xsl:attribute>
-						<xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="pass2" />
-				</xsl:copy>
-		</xsl:template>
+    
+    
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Assign a unique ID to each<gi>bibl</gi></desc>
+    </doc>
+    <xsl:template match="tei:bibl" mode="pass2">
+      <xsl:copy>
+	<xsl:if test="not(@xml:id and not(w:bookmarkStart))">
+	  <xsl:attribute name="xml:id">
+	    <xsl:text>BIB_</xsl:text>
+	    <xsl:number level="any" count="tei:bibl" />
+	  </xsl:attribute>
+	</xsl:if>
+	<xsl:attribute name="n" select="tei:idno[@type='orgref']" />
+	<xsl:attribute name="type">
+	  <xsl:choose>
+	    <xsl:when test="tei:edition">dated</xsl:when>
+	    <xsl:otherwise>undated</xsl:otherwise>
+	  </xsl:choose>
+	</xsl:attribute>
+	<xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="pass2" />
+      </xsl:copy>
+    </xsl:template>
     
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
    <desc>Remove unwanted elements from bibl</desc></doc>
@@ -164,9 +164,9 @@
     <!-- overrides for part 2 -->
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-    <desc>Zap &lt;div&gt; with head only </desc></doc>
+    <desc>Zap &lt;div&gt; with empty head only </desc></doc>
     
-    <xsl:template match="tei:div[count(*)=1 and tei:head]" mode="pass2"/>
+    <xsl:template match="tei:div[count(*)=1 and tei:head[.='']]" mode="pass2"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Zap spurious page break </desc></doc>
