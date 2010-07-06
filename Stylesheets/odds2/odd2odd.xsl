@@ -75,6 +75,9 @@
   <xsl:key name="odd2odd-MODULE_MEMBERS" match="tei:classSpec"  use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS" match="tei:elementSpec" use="@module"/>
 
+  <xsl:key name="odd2odd-MODULE_MEMBERS_MODEL" match="tei:classSpec[@type='model']"
+	   use="@module"/>
+
   <xsl:key name="odd2odd-SCHEMASPECS" match="tei:schemaSpec" use="@ident"/>
 
   <xsl:variable name="AnonymousModule">
@@ -309,6 +312,15 @@
 	  </xsl:for-each>
 	</xsl:when>
 	<xsl:when test="exists($inc)">
+	  <!-- get model classes regardless -->
+	  <xsl:for-each select="document($SourceDoc,$top)">
+	    <xsl:for-each select="key('odd2odd-MODULE_MEMBERS_MODEL',$name)">
+	      <xsl:call-template name="odd2odd-checkObject">
+		<xsl:with-param name="Source" select="$SourceDoc" tunnel="yes"/>
+		<xsl:with-param name="why"> module (auto from include) <xsl:value-of select="$name"/></xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	  </xsl:for-each>
 	  <xsl:for-each select="$inc">
 	    <xsl:variable name="i" select="."/>
 	    <xsl:for-each select="document($SourceDoc,$top)">
