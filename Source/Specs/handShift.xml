@@ -40,11 +40,15 @@ hand, or the beginning of a scribal stint.</desc>
       <desc version="2007-05-04" xml:lang="es">identifica una nueva mano.</desc>
       <desc version="2007-01-21" xml:lang="it">indica la nuova mano</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>must be one of the hand identifiers declared in the document
-header (see section <ptr target="#PHDH"/>).</valDesc>
-        <valDesc xml:lang="fr" version="2009-11-16">la valeur de l'attribut doit être l'un des identifiants de main déclarés dans l'en-tête du document TEI (voir la section <ptr target="#PHDH"/>).</valDesc>
+      <valDesc>must refer to a <gi>handNote</gi> element, typically
+      declared in the document header (see section <ptr target="#PHDH"/>).</valDesc>
+      <valDesc version="2009-05-28" xml:lang="fr">doit faire référence à un élément <gi>handNote</gi>, en général déclaré dans l'en-tête TEI (voir la section <ptr target="#PHDH"/>).</valDesc>
+<remarks><p>This attribute serves the same function as the
+<att>hand</att> attribute provided for those elements which are members of the
+<ident type="class">att.transcriptional</ident> class. It may be
+renamed at a subsequent major release. </p></remarks>
           </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -58,7 +62,9 @@ header (see section <ptr target="#PHDH"/>).</valDesc>
     <p>The <gi>handShift</gi> element may be used either to
 denote a shift in the document hand (as from one scribe to another,
 on one writing style to another).  Or, it may indicate a shift within
-a document hand, as a change of writing style, character or ink</p>
+a document hand, as a change of writing style, character or ink. Like
+    other milestone elements, it should appear at the point of
+    transition from some other state to the state which it describes.</p>
   </remarks>
   <remarks xml:lang="fr">
     <p>L'élément <gi>handShift</gi>peut être utilisé soit pour noter un changement de main
