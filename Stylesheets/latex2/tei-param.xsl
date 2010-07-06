@@ -102,6 +102,8 @@ Use real name of graphics files rather than pointers
    <xsl:template name="latexPackages">
       <xsl:text>
 \usepackage[</xsl:text>
+      <xsl:value-of select="$latexPaperSize"/>
+      <xsl:text>,</xsl:text>
       <xsl:value-of select="$latexGeometryOptions"/>
       <xsl:text>]{geometry}
 \usepackage{framed}
@@ -184,7 +186,7 @@ this must be the name of a TEI element
 Options to pass to the geometry package to set margins etc
 </desc>
    </doc>
-   <xsl:param name="latexGeometryOptions">twoside,a4paper,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in</xsl:param>
+   <xsl:param name="latexGeometryOptions">twoside,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="userpackage" type="string">
       <desc>
@@ -361,17 +363,15 @@ capable of dealing with UTF-8 directly.
 \usepackage[english]{babel}
 </xsl:template>
 
-   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
-      <desc>
-         <p>LaTeX paper size</p>
-         <p>All the LaTeX setup which affects paper size</p>
-      </desc>
-   </doc>
-   <xsl:template name="latexPaperSize">
-\paperwidth211mm
-\paperheight297mm
-</xsl:template>
 
+
+<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
+  <desc>
+    <p>LaTeX paper size</p>
+  </desc>
+</doc>
+<xsl:param name="latexPaperSize">a4paper</xsl:param>
+     
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>
          <p>LaTeX layout preamble</p>
@@ -379,7 +379,26 @@ capable of dealing with UTF-8 directly.
       </desc>
    </doc>
    <xsl:template name="latexLayout">
-      <xsl:call-template name="latexPaperSize"/>
+     <xsl:choose>
+       <xsl:when test="$latexPaperSize='a3paper'">
+	 \paperwidth297
+	 \paperheight420
+       </xsl:when>
+       <xsl:when test="$latexPaperSize='a5paper'">	
+	 \paperwidth148
+	 \paperheight210
+       </xsl:when>
+       <xsl:when test="$latexPaperSize='a4paper'">
+	 \paperwidth210mm
+	 \paperheight297mm
+       </xsl:when>
+       <xsl:when test="$latexPaperSize='letterpaper'">
+	 \paperwidth216
+	 \paperheight279
+       </xsl:when>
+	 <xsl:otherwise>
+	 </xsl:otherwise>
+       </xsl:choose>       
 \def\@pnumwidth{1.55em}
 \def\@tocrmarg {2.55em}
 \def\@dotsep{4.5}
