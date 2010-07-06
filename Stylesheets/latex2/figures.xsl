@@ -3,7 +3,7 @@
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
-                
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="a rng tei teix"
                 version="2.0">
@@ -58,7 +58,12 @@
          <xsl:when test="@cols &gt; 1">
             <xsl:text>\multicolumn{</xsl:text>
             <xsl:value-of select="@cols"/>
-            <xsl:text>}{P{.99\textwidth}}{</xsl:text>
+            <xsl:text>}{</xsl:text>
+	    <xsl:if test="@role='label' or
+			  parent::tei:row/@role='label'">
+	      <xsl:text>){\columncolor{label}}</xsl:text>
+	    </xsl:if>
+	    <xsl:text>c}{</xsl:text>
             <xsl:apply-templates/>
             <xsl:text>}</xsl:text>
          </xsl:when>
@@ -307,9 +312,9 @@
       <xsl:param name="r"/>
       <xsl:variable name="valign">
          <xsl:choose>
-	           <xsl:when test="contains($r,'bottomAlign')">B</xsl:when>
-	           <xsl:when test="contains($r,'midAlign')">M</xsl:when>
-	           <xsl:otherwise>P</xsl:otherwise>
+	   <xsl:when test="contains($r,'bottomAlign')">B</xsl:when>
+	   <xsl:when test="contains($r,'midAlign')">M</xsl:when>
+	   <xsl:otherwise>P</xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
       <xsl:variable name="tds">
@@ -317,25 +322,30 @@
             <xsl:variable name="stuff">
                <xsl:apply-templates/>
             </xsl:variable>
-            <cell>
-               <xsl:attribute name="col">
-                  <xsl:number/>
-               </xsl:attribute>
-               <xsl:value-of select="string-length($stuff)"/>
-            </cell>
+	    <xsl:variable name="n">
+	      <xsl:number/>
+	    </xsl:variable>
+	    <cell col="{$n}">
+	      <xsl:value-of select="string-length($stuff)"/>
+	    </cell>
+	    <xsl:if test="@cols">
+	      <xsl:variable name="c" select="xs:integer(@cols) - 1 "/>
+	      <xsl:for-each select="1 to $c">
+		<cell col="{$n + .}">0</cell>
+	      </xsl:for-each>
+	    </xsl:if>
          </xsl:for-each>
       </xsl:variable>
       <xsl:variable name="total">
          <xsl:value-of select="sum($tds/cell)"/>
       </xsl:variable>
       <xsl:for-each select="$tds/cell">
-         <xsl:sort data-type="number" select="@col"/>
          <xsl:variable name="c" select="@col"/>
          <xsl:if test="not(preceding-sibling::cell[$c=@col])">
             <xsl:variable name="len">
-               <xsl:value-of select="sum(following-sibling::cell[$c=@col]) + current()"/>
+	      <xsl:value-of select="sum(following-sibling::cell[$c=@col]) + current()"/>
             </xsl:variable>
-	           <xsl:value-of select="$valign"/>
+	    <xsl:value-of select="$valign"/>
             <xsl:text>{</xsl:text>
             <xsl:value-of select="($len div $total) * $tableMaxWidth"/>
             <xsl:text>\textwidth}</xsl:text>
