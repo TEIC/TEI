@@ -83,10 +83,10 @@ p5: p4
 	perl -p -i -e 's/name="xhtml">false</name="xhtml">true</' release/p5/xml/tei/stylesheet/xhtml/tei-param.xsl
 
 common: 
-	mkdir -p          release/p4/xml/teip4/stylesheet
-	cp *.css i18n.xml release/p4/xml/teip4/stylesheet
-	mkdir -p          release/p5-2/xml/tei/stylesheet
-	cp *.css i18n.xml release/p5-2/xml/tei/stylesheet
+	mkdir -p          release/common/xml/teip4/stylesheet
+	cp *.css i18n.xml release/common/xml/teip4/stylesheet
+	mkdir -p          release/common/xml/tei/stylesheet
+	cp *.css i18n.xml release/common/xml/tei/stylesheet
 
 doc:
 	mkdir -p release/common/doc/tei-xsl-common
