@@ -6,7 +6,10 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" ident="s">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis"
+	     ident="s"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+>
   <equiv/>
   <gloss>s-unit</gloss>
   <gloss version="2007-12-20" xml:lang="kr">s-단위</gloss>
@@ -26,9 +29,17 @@ $Id$
     <memberOf key="att.segLike"/>
     <memberOf key="att.typed"/>
   </classes>
+
   <content>
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
   </content>
+
+  <constraintSpec ident="noNestedS" scheme="isoschematron">
+    <constraint>
+      <sch:report test="tei:s">You may not nest s within s</sch:report>
+    </constraint>
+  </constraintSpec>
+
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <head>
