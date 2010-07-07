@@ -137,6 +137,7 @@ installcommon: doc common
 	cp stylebear ${PREFIX}/lib/cgi-bin/stylebear
 	chmod 755 ${PREFIX}/lib/cgi-bin/stylebear
 	mkdir -p ${PREFIX}/share/doc/
+	mkdir -p ${PREFIX}/share/xml/
 	(cd release/common/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
 	(cd release/common/xml; tar cf - .) | (cd ${PREFIX}/share/xml; tar xf -)
 
