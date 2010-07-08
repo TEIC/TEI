@@ -20,7 +20,6 @@ xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/stri
   <xsl:key name="SCHEMATRON" match="s:ns|s:pattern" use="1"/>
   <xsl:key name="REFED" match="rng:ref" use="@name"/>
   <xsl:key name="DEFED" match="rng:define" use="@name"/>
-  <xsl:key name="ANYDEF" match="rng:define[rng:element/rng:zeroOrMore/rng:attribute/rng:anyName]" use="1"/>
   <xsl:param name="verbose"/>
   <xsl:param name="outputDir">Schema</xsl:param>
   <xsl:param name="appendixWords"/>
@@ -209,19 +208,6 @@ xmlns:edate="http://exslt.org/dates-and-times" xmlns:estr="http://exslt.org/stri
 	<xsl:if test="$verbose='true'">
 	  <xsl:message>ZAP reference to undefined [<xsl:value-of select="@name"/>]</xsl:message>
 	</xsl:if>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template match="rng:attribute/rng:data[@type='ID' or
-		       @type='IDREF']" mode="cleanup">
-    <xsl:choose>
-      <xsl:when
-	  test="key('ANYDEF',1)">
-	<text xmlns="http://relaxng.org/ns/structure/1.0"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <data xmlns="http://relaxng.org/ns/structure/1.0" type="{@type}"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
