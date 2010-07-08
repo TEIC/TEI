@@ -260,9 +260,11 @@
     <xsl:variable name="r" select="@rend"/>
     <xsl:choose>
       <xsl:when test="parent::tei:head and .=' '"/>
+<!--
       <xsl:when test="count(*)=1 and not(text()) and tei:lb">
-        <lb/>
+        <lb n="1"/> 
       </xsl:when>
+-->
       <xsl:when test ="not(*) and string-length(.)=0"/>
       <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']
 		      and tei:g[@ref='x:tab']"/>
