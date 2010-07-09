@@ -260,11 +260,11 @@
     <xsl:variable name="r" select="@rend"/>
     <xsl:choose>
       <xsl:when test="parent::tei:head and .=' '"/>
-<!--
+      <!--
       <xsl:when test="count(*)=1 and not(text()) and tei:lb">
-        <lb n="1"/> 
+        <lb/>
       </xsl:when>
--->
+      -->
       <xsl:when test ="not(*) and string-length(.)=0"/>
       <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']
 		      and tei:g[@ref='x:tab']"/>
@@ -302,7 +302,11 @@
    </xsl:template>
 
    <xsl:template match="w:bookmarkStart" mode="pass2">
-     <anchor xml:id="{substring(@w:name,2)}"/>
+       <anchor>
+        <xsl:attribute name="xml:id">
+            <xsl:value-of select="substring(@w:name,2)"/>
+        </xsl:attribute>
+	</anchor>
    </xsl:template>
 
 </xsl:stylesheet>

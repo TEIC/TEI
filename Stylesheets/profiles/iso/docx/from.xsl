@@ -1721,7 +1721,11 @@
 	    </xsl:call-template>
 	  </addSpan>
 	<xsl:apply-imports/>
-	<anchor xml:id="{generate-id()}"/>
+	<anchor>
+	  <xsl:attribute name="xml:id">
+	    <xsl:value-of select="generate-id()"/>
+	  </xsl:attribute>
+	</anchor>
       </xsl:template>
       
       <xsl:template match="w:instrText" mode="paragraph" priority="42"/>
@@ -1734,7 +1738,11 @@
 	  </xsl:call-template>
 	</delSpan>
 	<xsl:apply-imports/>
-	<anchor xml:id="{generate-id()}"/>
+	<anchor>
+	  <xsl:attribute name="xml:id">
+	    <xsl:value-of select="generate-id()"/>
+	  </xsl:attribute>
+	</anchor>
       </xsl:template>
 
 
