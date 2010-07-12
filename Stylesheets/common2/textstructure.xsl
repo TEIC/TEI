@@ -41,8 +41,11 @@
 	<xsl:when test="ancestor::tei:text/parent::tei:group">
 	   <xsl:value-of select="number(substring-after(local-name(.),'div')) "/>
 	</xsl:when>
+	<xsl:when test="ancestor::tei:text/parent::tei:group">
+	  <xsl:value-of select="number(substring-after(local-name(.),'div'))"/>
+	</xsl:when>
 	<xsl:otherwise>
-	   <xsl:value-of select="number(substring-after(local-name(.),'div')) - 1"/>
+	  <xsl:value-of select="number(substring-after(local-name(.),'div')) - 1"/>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>

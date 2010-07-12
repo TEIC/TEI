@@ -256,28 +256,24 @@
 	      <item id="apt" href="page-template.xpgt" media-type="application/adobe-page-template+xml"/>
               <item id="start" href="index.html" media-type="application/xhtml+xml"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-                <xsl:choose>
-                  <xsl:when test="html:a">
-                    <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
-                      <xsl:attribute name="id">
-                        <xsl:text>section</xsl:text>
-                        <xsl:number count="html:li" level="any"/>
+		<xsl:if test="html:a">
+		  <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
+		    <xsl:attribute name="id">
+		      <xsl:text>section</xsl:text>
+		      <xsl:number count="html:li" level="any"/>
                       </xsl:attribute>
-                    </item>
-                  </xsl:when>
-                  <xsl:when test="html:ul">
-                    <xsl:for-each select="html:ul/html:li">
-		      <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
-			<xsl:attribute name="id">
-			  <xsl:text>section</xsl:text>
-			  <xsl:number count="html:li" level="any"/>
-			</xsl:attribute>
-		      </item>
-		    </xsl:for-each>
-                  </xsl:when>
-                  <xsl:otherwise>
-		</xsl:otherwise>
-                </xsl:choose>
+		  </item>
+		</xsl:if>
+		<xsl:if test="html:ul">
+		  <xsl:for-each select="html:ul/html:li">
+		    <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
+		      <xsl:attribute name="id">
+			<xsl:text>section</xsl:text>
+			<xsl:number count="html:li" level="any"/>
+			  </xsl:attribute>
+		    </item>
+		  </xsl:for-each>
+		</xsl:if>
               </xsl:for-each>
               <!-- images -->
               <xsl:for-each select="key('GRAPHICS',1)">
@@ -299,16 +295,16 @@
               <itemref idref="titlepage"/>
               <itemref idref="start"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-                <xsl:choose>
-                  <xsl:when test="html:a">
+
+                  <xsl:if test="html:a">
                     <itemref>
                       <xsl:attribute name="idref">
                         <xsl:text>section</xsl:text>
                         <xsl:number count="html:li" level="any"/>
                       </xsl:attribute>
                     </itemref>
-                  </xsl:when>
-                  <xsl:when test="html:ul">
+		  </xsl:if>
+                  <xsl:if test="html:ul">
                     <xsl:for-each select="html:ul/html:li">
                       <itemref>
                         <xsl:attribute name="idref">
@@ -317,8 +313,7 @@
                         </xsl:attribute>
                       </itemref>
                     </xsl:for-each>
-                  </xsl:when>
-                </xsl:choose>
+		  </xsl:if>
               </xsl:for-each>
             </spine>
 
@@ -403,10 +398,12 @@
                 </navLabel>
                 <content src="index.html"/>
               </navPoint>
-              <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-                <xsl:choose>
-                  <xsl:when test="html:a">
-                    <navPoint id="navPoint-{position()}" playOrder="{position()+1}">
+              <xsl:for-each select="$TOC/html:TOC/html:ul//html:li">
+		<xsl:if test="html:a">
+		  <xsl:variable name="pos">
+		    <xsl:number level="any"/>
+		  </xsl:variable>
+                    <navPoint id="navPoint-{$pos+1}" playOrder="{$pos+1}">
                       <navLabel>
                         <text>
                           <xsl:value-of select="normalize-space(html:a[1])"/>
@@ -414,10 +411,13 @@
                       </navLabel>
                       <content src="{html:a/@href}"/>
                     </navPoint>
-                  </xsl:when>
-                  <xsl:when test="html:ul">
+		</xsl:if>
+<!--		<xsl:if test="html:ul">
                     <xsl:for-each select="html:ul/html:li">
-                      <navPoint id="navPoint-{position()}" playOrder="{position()+1}">
+		      <xsl:variable name="pos">
+			<xsl:number level="any"/>
+		      </xsl:variable>
+                      <navPoint id="navPoint-{$pos+1}" playOrder="{$pos+1}">
                         <navLabel>
                           <text>
                             <xsl:value-of select="normalize-space(html:a[1])"/>
@@ -426,8 +426,8 @@
                         <content src="{html:a/@href}"/>
                       </navPoint>
                     </xsl:for-each>
-                  </xsl:when>
-                </xsl:choose>
+		</xsl:if>
+-->
               </xsl:for-each>
             </navMap>
           </ncx>

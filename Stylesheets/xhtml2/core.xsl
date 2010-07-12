@@ -824,7 +824,9 @@
          <xsl:when test="tei:biblStruct">
 	           <dl class="listBibl">
 	              <xsl:for-each select="tei:biblStruct">
-	                 <xsl:sort select="translate((tei:*/tei:author/tei:surname|  tei:*[1]/tei:author/tei:orgName|  tei:*[1]/tei:author/tei:name|  tei:*[1]/tei:editor/tei:surname|  tei:*[1]/tei:editor/tei:name|  tei:*[1]/tei:title[1])[1],  $uc,$lc)"/>
+	                 <xsl:sort
+			     select="translate((tei:*/tei:author/tei:surname|
+				     tei:*[1]/tei:author/tei:orgName|  tei:*[1]/tei:author/tei:name|  tei:*[1]/tei:editor/tei:surname|  tei:*[1]/tei:editor/tei:name|  tei:*[1]/tei:title[1])[1],  $uc,$lc)"/>
 	                 <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
 	                 <dt>
 	                    <xsl:call-template name="makeAnchor"/>
@@ -889,13 +891,21 @@
       <xsl:choose>
          <xsl:when test="ancestor::tei:bibl"> (<xsl:apply-templates/>)
       </xsl:when>
+         <xsl:when test="@place='marg' and tei:p">
+	   <div class="margnote">
+	     <xsl:call-template name="makeAnchor">
+	       <xsl:with-param name="name" select="$identifier"/>
+	     </xsl:call-template>
+	     <xsl:apply-templates/>
+	   </div>
+         </xsl:when>
          <xsl:when test="@place='marg'">
-	           <span class="margnote">
-	              <xsl:call-template name="makeAnchor">
-	                 <xsl:with-param name="name" select="$identifier"/>
-	              </xsl:call-template>
-	              <xsl:apply-templates/>
-	           </span>
+	   <span class="margnote">
+	     <xsl:call-template name="makeAnchor">
+	       <xsl:with-param name="name" select="$identifier"/>
+	     </xsl:call-template>
+	     <xsl:apply-templates/>
+	   </span>
          </xsl:when>
          <xsl:when test="@place='inline'">
 	           <xsl:call-template name="makeAnchor">
@@ -917,38 +927,38 @@
             </blockquote>
          </xsl:when>
          <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
-	           <xsl:call-template name="makeAnchor">
-	              <xsl:with-param name="name" select="concat($identifier,'_return')"/>
-	           </xsl:call-template>
-            <xsl:choose>
-               <xsl:when test="$footnoteFile='true'">
-                  <a class="notelink" title="Go to note"
-                     href="{$masterFile}-notes.html#{$identifier}">
-                     <sup>
-                        <xsl:call-template name="noteN"/>
-                     </sup>
-                  </a>
-               </xsl:when>
-               <xsl:otherwise>
-                  <a class="notelink" title="Go to note" href="#{$identifier}">
-                     <sup>
-                        <xsl:call-template name="noteN"/>
-                     </sup>
-                  </a>
-               </xsl:otherwise>
-            </xsl:choose>
+	   <xsl:call-template name="makeAnchor">
+	     <xsl:with-param name="name" select="concat($identifier,'_return')"/>
+	   </xsl:call-template>
+	   <xsl:choose>
+	     <xsl:when test="$footnoteFile='true'">
+	       <a class="notelink" title="Go to note"
+		  href="{$masterFile}-notes.html#{$identifier}">
+		 <sup>
+		   <xsl:call-template name="noteN"/>
+		 </sup>
+	       </a>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <a class="notelink" title="Go to note" href="#{$identifier}">
+		 <sup>
+		   <xsl:call-template name="noteN"/>
+		 </sup>
+	       </a>
+	     </xsl:otherwise>
+	   </xsl:choose>
          </xsl:when>
          <xsl:otherwise>
-	           <xsl:call-template name="makeAnchor">
-	              <xsl:with-param name="name" select="$identifier"/>
-	           </xsl:call-template>
-            <xsl:text> [</xsl:text>
-            <xsl:call-template name="i18n">
-               <xsl:with-param name="word">Note</xsl:with-param>
-            </xsl:call-template>
-            <xsl:text>: </xsl:text>
-            <xsl:apply-templates/>
-            <xsl:text>]</xsl:text>
+	   <xsl:call-template name="makeAnchor">
+	     <xsl:with-param name="name" select="$identifier"/>
+	   </xsl:call-template>
+	   <xsl:text> [</xsl:text>
+	   <xsl:call-template name="i18n">
+	     <xsl:with-param name="word">Note</xsl:with-param>
+	   </xsl:call-template>
+	   <xsl:text>: </xsl:text>
+	   <xsl:apply-templates/>
+	   <xsl:text>]</xsl:text>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -957,36 +967,36 @@
    </doc>
   <xsl:template match="tei:note" mode="printnotes">
       <xsl:if test="not(ancestor::tei:bibl)">
-         <xsl:variable name="identifier">
-	           <xsl:text>Note</xsl:text>
-            <xsl:call-template name="noteID"/>
-         </xsl:variable>
-         <xsl:variable name="parent">
-            <xsl:call-template name="locateParentdiv"/>
-         </xsl:variable>
-         <xsl:if test="$verbose='true'">
-            <xsl:message>Note <xsl:value-of select="$identifier"/>
-	              <xsl:text> with parent </xsl:text>
-	              <xsl:value-of select="$parent"/>
-            </xsl:message>
-         </xsl:if>
-         <div class="note">
-	           <xsl:call-template name="makeAnchor">
-	              <xsl:with-param name="name" select="$identifier"/>
-	           </xsl:call-template>
-	           <span class="noteLabel">
-	              <xsl:call-template name="noteN"/>
-	              <xsl:text>. </xsl:text>
-	           </span>
-	           <div class="noteBody">
-	              <xsl:apply-templates/>
-	           </div>
-	           <xsl:if test="$footnoteBackLink= 'true'">
-	              <xsl:text> </xsl:text>
-	              <a class="link_return" title="Go back to text"
-                  href="#{concat($identifier,'_return')}">↵</a>
-	           </xsl:if>
-         </div>
+	<xsl:variable name="identifier">
+	  <xsl:text>Note</xsl:text>
+	  <xsl:call-template name="noteID"/>
+	</xsl:variable>
+	<xsl:variable name="parent">
+	  <xsl:call-template name="locateParentdiv"/>
+	</xsl:variable>
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Note <xsl:value-of select="$identifier"/>
+	  <xsl:text> with parent </xsl:text>
+	  <xsl:value-of select="$parent"/>
+	  </xsl:message>
+	</xsl:if>
+	<div class="note">
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name" select="$identifier"/>
+	  </xsl:call-template>
+	  <span class="noteLabel">
+	    <xsl:call-template name="noteN"/>
+	    <xsl:text>. </xsl:text>
+	  </span>
+	  <div class="noteBody">
+	    <xsl:apply-templates/>
+	  </div>
+	  <xsl:if test="$footnoteBackLink= 'true'">
+	     <xsl:text> </xsl:text>
+	     <a class="link_return" title="Go back to text"
+		href="#{concat($identifier,'_return')}">↵</a>
+	  </xsl:if>
+	</div>
       </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -1222,9 +1232,9 @@
       <desc>Process element salute</desc>
    </doc>
   <xsl:template match="tei:salute">
-      <p class="left">
+      <div class="left">
          <xsl:apply-templates/>
-      </p>
+      </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element seg</desc>
@@ -1261,9 +1271,9 @@
       <desc>Process element signed</desc>
    </doc>
   <xsl:template match="tei:signed">
-      <p class="left">
+      <div class="left">
          <xsl:apply-templates/>
-      </p>
+      </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element space</desc>
@@ -1408,7 +1418,7 @@
          <xsl:when test="@xml:id">
             <xsl:value-of select="@xml:id"/>
          </xsl:when>
-         <xsl:when test="@n">
+         <xsl:when test="@n and not(@n='*')">
             <xsl:value-of select="@n"/>
          </xsl:when>
          <xsl:otherwise>

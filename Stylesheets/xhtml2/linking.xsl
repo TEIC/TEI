@@ -122,8 +122,6 @@
             <xsl:value-of select="concat($ident,$standardSuffix)"/>
          </xsl:when>
          <xsl:otherwise>
-
-
             <xsl:variable name="parent">
                <xsl:call-template name="locateParentdiv"/>
             </xsl:variable>
@@ -269,9 +267,11 @@
          <xsl:when test="ancestor-or-self::tei:div and number($splitLevel) &lt; 0">
             <xsl:apply-templates mode="ident" select="ancestor::tei:div[last()]"/>
          </xsl:when>
-         <xsl:when test="ancestor-or-self::tei:text/parent::tei:group">
+         <!--
+	 <xsl:when test="ancestor-or-self::tei:text/parent::tei:group">
             <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
          </xsl:when>
+	 -->
          <xsl:when test="ancestor-or-self::tei:div">
             <xsl:apply-templates mode="ident" select="ancestor::tei:div[last() - number($splitLevel)]"/>
          </xsl:when>

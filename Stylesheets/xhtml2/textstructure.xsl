@@ -98,128 +98,129 @@
          <p>Process top-level elements /</p>
       </desc>
    </doc>
-  <xsl:template name="processTEI">
-      <xsl:choose>
-      <!-- there are various choices of how to proceed, driven by
-
-$pageLayout: Simple, CSS, Table, Frames
-
-$STDOUT: true or false
-
-$splitLevel: -1 to 3
-
-$requestedID: requests a particular page
--->
-      <!-- we are making a composite layout and there is a TEI or teiCorpus element -->
-      <xsl:when test="($pageLayout = 'CSS' or $pageLayout = 'Table') and (tei:TEI or tei:teiCorpus)">
-            <xsl:if test="$verbose='true'">
-               <xsl:message>case 1: pageLayout <xsl:value-of select="$pageLayout"/>
-               </xsl:message>
-            </xsl:if>
-            <xsl:for-each select="tei:TEI|tei:teiCorpus">
-               <xsl:call-template name="doPageTable">
-                  <xsl:with-param name="currentID" select="$requestedID"/>
-               </xsl:call-template>
-            </xsl:for-each>
-            <xsl:if test="$STDOUT='false'">
-               <xsl:call-template name="doDivs"/>
-            </xsl:if>
-         </xsl:when>
-         <!-- we are making a frame-based system -->
-      <xsl:when test="$pageLayout='Frames'">
-            <xsl:if test="$verbose='true'">
-               <xsl:message>case 2: pageLayout <xsl:value-of select="$pageLayout"/>
-               </xsl:message>
-            </xsl:if>
-            <xsl:call-template name="doFrames"/>
-         </xsl:when>
-         <!-- we have been asked for a particular section of the document -->
-      <xsl:when test="not($requestedID='')">
-            <xsl:if test="$verbose='true'">
-               <xsl:message>case 3: ID <xsl:value-of select="$requestedID"/>, pageLayout
-              <xsl:value-of select="$pageLayout"/>
-               </xsl:message>
-            </xsl:if>
-            <xsl:choose>
-               <xsl:when test="$requestedID='frametoc___'">
-                  <xsl:call-template name="writeFrameToc"/>
-               </xsl:when>
-               <xsl:when test="$requestedID='prelim___'">
-                  <xsl:apply-templates/>
-               </xsl:when>
-               <xsl:when test="count(key('IDS',$requestedID))&gt;0">
-                  <xsl:for-each select="key('IDS',$requestedID)">
-                     <xsl:call-template name="writeDiv"/>
-                  </xsl:for-each>
-               </xsl:when>
-               <xsl:otherwise>
-            <!-- the passed ID is a pseudo-XPath expression
-		 which starts below TEI/text.
-		 The real XPath syntax is changed to avoid problems
-	    -->
-            <xsl:apply-templates mode="xpath" select="tei:TEI/tei:text">
-                     <xsl:with-param name="xpath" select="$requestedID"/>
-                  </xsl:apply-templates>
-               </xsl:otherwise>
-            </xsl:choose>
-         </xsl:when>
-         <!-- we want HTML to just splurge out-->
-      <xsl:when test="$STDOUT='true'">
-            <xsl:if test="$verbose='true'">
-               <xsl:message>case 4: write to stdout, pageLayout <xsl:value-of select="$pageLayout"/>
-               </xsl:message>
-            </xsl:if>
-            <xsl:apply-templates/>
-         </xsl:when>
-         <!-- we want the document split up into separate files -->
-      <xsl:when test="tei:TEI or tei:teiCorpus and number($splitLevel)&gt;-1">
-            <xsl:if test="$verbose='true'">
-               <xsl:message>case 5: split output, <xsl:value-of select="$splitLevel"/> pageLayout <xsl:value-of select="$pageLayout"/>
-               </xsl:message>
-            </xsl:if>
-            <xsl:apply-templates mode="split"/>
-         </xsl:when>
-         <!-- we want the whole document, in an output file -->
-      <xsl:otherwise>
-            <xsl:if test="$verbose='true'">
-               <xsl:message>case 6: one document, pageLayout <xsl:value-of select="$pageLayout"/>
-               </xsl:message>
-            </xsl:if>
-            <xsl:choose>
-               <xsl:when test="$masterFile='' or $STDOUT='true'">
-                  <xsl:apply-templates/>
-               </xsl:when>
-               <xsl:otherwise>
-
-	                 <xsl:variable name="outName">
-	                    <xsl:call-template name="outputChunkName">
-		                      <xsl:with-param name="ident">
-		                         <xsl:value-of select="$masterFile"/>
-		                      </xsl:with-param>
-	                    </xsl:call-template>
-	                 </xsl:variable>
+   <xsl:template name="processTEI">
+     <xsl:choose>
+       <!-- there are various choices of how to proceed, driven by
 	    
-	                 <xsl:if test="$verbose='true'">
-	                    <xsl:message>Opening file <xsl:value-of select="$outName"/>
-                     </xsl:message>
-	                 </xsl:if>
-	                 <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
-                                       encoding="{$outputEncoding}"
-                                       href="{$outName}"
-                                       method="{$outputMethod}">
-                     <xsl:apply-templates/>
-	                 </xsl:result-document>
+	    $pageLayout: Simple, CSS, Table, Frames
+	    
+	    $STDOUT: true or false
+	    
+	    $splitLevel: -1 to 3
+	    
+	    $requestedID: requests a particular page
+       -->
+       <!-- we are making a composite layout and there is a TEI or teiCorpus element -->
+       <xsl:when test="($pageLayout = 'CSS' or $pageLayout = 'Table') and (tei:TEI or tei:teiCorpus)">
+	 <xsl:if test="$verbose='true'">
+	   <xsl:message>case 1: pageLayout <xsl:value-of select="$pageLayout"/>
+	   </xsl:message>
+	 </xsl:if>
+	 <xsl:for-each select="tei:TEI|tei:teiCorpus">
+	   <xsl:call-template name="doPageTable">
+	     <xsl:with-param name="currentID" select="$requestedID"/>
+	   </xsl:call-template>
+	 </xsl:for-each>
+	 <xsl:if test="$STDOUT='false'">
+	   <xsl:call-template name="doDivs"/>
+	 </xsl:if>
+       </xsl:when>
+       <!-- we are making a frame-based system -->
+       <xsl:when test="$pageLayout='Frames'">
+	 <xsl:if test="$verbose='true'">
+	   <xsl:message>case 2: pageLayout <xsl:value-of select="$pageLayout"/>
+	   </xsl:message>
+	 </xsl:if>
+	 <xsl:call-template name="doFrames"/>
+       </xsl:when>
+       <!-- we have been asked for a particular section of the document -->
+       <xsl:when test="not($requestedID='')">
+	 <xsl:if test="$verbose='true'">
+	   <xsl:message>case 3: ID <xsl:value-of select="$requestedID"/>, pageLayout
+	   <xsl:value-of select="$pageLayout"/>
+	   </xsl:message>
+	 </xsl:if>
+	 <xsl:choose>
+	   <xsl:when test="$requestedID='frametoc___'">
+	     <xsl:call-template name="writeFrameToc"/>
+	   </xsl:when>
+	   <xsl:when test="$requestedID='prelim___'">
+	     <xsl:apply-templates/>
+	   </xsl:when>
+	   <xsl:when test="count(key('IDS',$requestedID))&gt;0">
+	     <xsl:for-each select="key('IDS',$requestedID)">
+	       <xsl:call-template name="writeDiv"/>
+	     </xsl:for-each>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <!-- the passed ID is a pseudo-XPath expression
+		  which starts below TEI/text.
+		  The real XPath syntax is changed to avoid problems
+	     -->
+	     <xsl:apply-templates mode="xpath" select="tei:TEI/tei:text">
+	       <xsl:with-param name="xpath" select="$requestedID"/>
+	     </xsl:apply-templates>
+	   </xsl:otherwise>
+	 </xsl:choose>
+       </xsl:when>
+       <!-- we want HTML to just splurge out-->
+       <xsl:when test="$STDOUT='true'">
+	 <xsl:if test="$verbose='true'">
+	   <xsl:message>case 4: write to stdout, pageLayout <xsl:value-of select="$pageLayout"/>
+	   </xsl:message>
+	 </xsl:if>
+	 <xsl:apply-templates/>
+       </xsl:when>
+       <!-- we want the document split up into separate files -->
+       <xsl:when test="tei:TEI or tei:teiCorpus and number($splitLevel)&gt;-1">
+	 <xsl:if test="$verbose='true'">
+	   <xsl:message>case 5: split output, <xsl:value-of select="$splitLevel"/> pageLayout <xsl:value-of select="$pageLayout"/>
+	   </xsl:message>
+	 </xsl:if>
+	 <xsl:apply-templates mode="split"/>
+       </xsl:when>
+       <!-- we want the whole document, in an output file -->
+       <xsl:otherwise>
+	 <xsl:if test="$verbose='true'">
+	   <xsl:message>case 6: one document, pageLayout <xsl:value-of select="$pageLayout"/>
+	   </xsl:message>
+	 </xsl:if>
+	 <xsl:choose>
+	   <xsl:when test="$masterFile='' or $STDOUT='true'">
+	     <xsl:apply-templates/>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     
+	     <xsl:variable name="outName">
+	       <xsl:call-template name="outputChunkName">
+		 <xsl:with-param name="ident">
+		   <xsl:value-of select="$masterFile"/>
+		 </xsl:with-param>
+	       </xsl:call-template>
+	     </xsl:variable>
+	     
+	     <xsl:if test="$verbose='true'">
+	       <xsl:message>Opening file <xsl:value-of select="$outName"/>
+	       </xsl:message>
+	     </xsl:if>
+	     <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
+				  encoding="{$outputEncoding}"
+				  href="{$outName}"
+				  method="{$outputMethod}">
+	       <xsl:apply-templates/>
+	     </xsl:result-document>
+	     
+	     <xsl:if test="$verbose='true'">
+	       <xsl:message>Closing file <xsl:value-of select="$outName"/>
+	       </xsl:message>
+	     </xsl:if>
+	     
+	   </xsl:otherwise>
+	 </xsl:choose>
+       </xsl:otherwise>
+     </xsl:choose>
+   </xsl:template>
 
-	                 <xsl:if test="$verbose='true'">
-	                    <xsl:message>Closing file <xsl:value-of select="$outName"/>
-                     </xsl:message>
-	                 </xsl:if>
-
-               </xsl:otherwise>
-            </xsl:choose>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process elements processing-instruction()[name()='xmltex']</desc>
    </doc>
@@ -498,9 +499,10 @@ $requestedID: requests a particular page
       <xsl:call-template name="teiEndHook"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element body|tei:back</desc>
+      <desc>Process elements front, body or back in splitting mode</desc>
    </doc>
-  <xsl:template match="tei:body|tei:back" mode="split">
+  <xsl:template match="tei:front|tei:body|tei:back" mode="split">
+<xsl:message>Split <xsl:value-of select="name(.)"/></xsl:message>
       <xsl:for-each select="*">
          <xsl:choose>
             <xsl:when test="starts-with(local-name(.),'div')">
@@ -522,18 +524,25 @@ $requestedID: requests a particular page
       <desc>Process element closer</desc>
    </doc>
   <xsl:template match="tei:closer">
-      <blockquote class="closer">
-         <xsl:choose>
-            <xsl:when test="tei:p">
-               <xsl:apply-templates/>
-            </xsl:when>
-            <xsl:otherwise>
-               <p>
-                  <xsl:apply-templates/>
-               </p>
-            </xsl:otherwise>
-         </xsl:choose>
-      </blockquote>
+	<xsl:choose>
+	  <xsl:when test="tei:signed">
+	    <div class="closer">
+	      <xsl:apply-templates/>
+	    </div>
+	  </xsl:when>
+	  <xsl:when test="tei:p">
+	    <blockquote class="closer">
+	      <xsl:apply-templates/>
+	    </blockquote>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <blockquote class="closer">
+	      <p>
+		<xsl:apply-templates/>
+	      </p>
+	    </blockquote>
+	  </xsl:otherwise>
+	</xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element dateline</desc>
@@ -620,7 +629,7 @@ $requestedID: requests a particular page
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements
+    <desc>Process elements
       tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6</desc>
    </doc>
   <xsl:template match="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
@@ -661,6 +670,7 @@ $requestedID: requests a particular page
                </xsl:call-template>
             </div>
          </xsl:when>
+	 <!--
          <xsl:when test="ancestor::tei:text/parent::tei:group">
             <div>
                <xsl:call-template name="divClassAttribute">
@@ -671,6 +681,7 @@ $requestedID: requests a particular page
                </xsl:call-template>
             </div>
          </xsl:when>
+	 -->
          <!-- 0. We have gone far enough -->
       <xsl:when test="$depth = $splitLevel and $STDOUT='true'">
             <xsl:if test="$virtualPages='true'">
@@ -747,8 +758,6 @@ $requestedID: requests a particular page
             </div>
          </xsl:when>
          <xsl:otherwise>
-	   
-	   
 	   <xsl:variable name="outName">
 	     <xsl:call-template name="outputChunkName">
 	       <xsl:with-param name="ident">
@@ -764,8 +773,7 @@ $requestedID: requests a particular page
 	   <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
 				encoding="{$outputEncoding}"
 				href="{$outName}"
-				method="{$outputMethod}">
-	     
+				method="{$outputMethod}">	     
 	     <xsl:choose>
 	       <xsl:when test="$pageLayout='CSS'">
 		 <xsl:call-template name="pageLayoutCSS">
@@ -835,19 +843,27 @@ $requestedID: requests a particular page
       <desc>Process element opener</desc>
    </doc>
   <xsl:template match="tei:opener">
-      <blockquote class="opener">
-         <xsl:choose>
-            <xsl:when test="tei:p">
-               <xsl:apply-templates/>
-            </xsl:when>
-            <xsl:otherwise>
-               <p>
-                  <xsl:apply-templates/>
-               </p>
-            </xsl:otherwise>
-         </xsl:choose>
-      </blockquote>
+    <xsl:choose>
+      <xsl:when test="tei:signed|tei:salute">
+	<div class="opener">
+	  <xsl:apply-templates/>
+	</div>
+      </xsl:when>
+      <xsl:when test="tei:p">
+	<blockquote class="opener">
+	  <xsl:apply-templates/>
+	</blockquote>
+      </xsl:when>
+      <xsl:otherwise>
+	<blockquote class="opener">
+	  <p>
+	    <xsl:apply-templates/>
+	  </p>
+	</blockquote>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element text</desc>
    </doc>
@@ -857,12 +873,15 @@ $requestedID: requests a particular page
             <xsl:apply-templates/>
          </xsl:when>
          <xsl:when test="parent::tei:group and $splitLevel &gt;-1">
-	   <xsl:call-template name="makeDivPage">
-	     <xsl:with-param name="depth">-1</xsl:with-param>
-	   </xsl:call-template>
+	     <xsl:apply-templates/>
+	     <!--
+	     <xsl:call-template name="makeDivPage">
+	       <xsl:with-param name="depth">-1</xsl:with-param>
+	     </xsl:call-template>
+	     -->
          </xsl:when>
          <xsl:when test="parent::tei:group">
-		 <xsl:call-template name="doDivBody"/>
+	   <xsl:call-template name="doDivBody"/>
 	 </xsl:when>
 	 <xsl:otherwise>
 	   <div class="innertext">

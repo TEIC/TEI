@@ -66,12 +66,12 @@
    </doc>
   <xsl:template match="tei:add">
       <xsl:choose>
-         <xsl:when test="@place='sup'">
+         <xsl:when test="@place='sup' or @place='above'">
             <inline vertical-align="super">
                <xsl:apply-templates/>
             </inline>
          </xsl:when>
-         <xsl:when test="@place='sub'">
+         <xsl:when test="@place='sub' or @place='below'">
             <inline vertical-align="sub">
                <xsl:apply-templates/>
             </inline>
