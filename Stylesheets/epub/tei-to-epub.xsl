@@ -160,7 +160,11 @@
             <xsl:call-template name="mainTOC"/>
           </TOC>
         </xsl:variable>
-
+	<!--
+	    <xsl:result-document href="/tmp/TOC">
+	    <xsl:copy-of select="$TOC"/>
+	    </xsl:result-document>
+	-->
 	<xsl:if test="$debug='true'">
 	  <xsl:message>write file OEBPS/stylesheet.css</xsl:message>
 	</xsl:if>
@@ -257,26 +261,24 @@
 	      <item id="apt" href="page-template.xpgt" media-type="application/adobe-page-template+xml"/>
               <item id="start" href="index.html" media-type="application/xhtml+xml"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-		<xsl:choose>
-		<xsl:when test="html:a">
+		<xsl:if test="html:a">
 		  <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
 		    <xsl:attribute name="id">
 		      <xsl:text>section</xsl:text>
 		      <xsl:number count="html:li" level="any"/>
-                      </xsl:attribute>
+		    </xsl:attribute>
 		  </item>
-		</xsl:when>
-		<xsl:when test="html:ul">
-		  <xsl:for-each select="html:ul/html:li">
+		</xsl:if>
+		<xsl:if test="html:ul">
+		  <xsl:for-each select="html:ul//html:li[not(contains(html:a/@href,'#'))]">
 		    <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
 		      <xsl:attribute name="id">
 			<xsl:text>section</xsl:text>
 			<xsl:number count="html:li" level="any"/>
-			  </xsl:attribute>
+		      </xsl:attribute>
 		    </item>
 		  </xsl:for-each>
-		</xsl:when>
-		</xsl:choose>
+		</xsl:if>
               </xsl:for-each>
               <!-- images -->
               <xsl:for-each select="key('GRAPHICS',1)">
@@ -298,17 +300,16 @@
               <itemref idref="titlepage"/>
               <itemref idref="start"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-		<xsl:choose>
-                  <xsl:when test="html:a">
+                  <xsl:if test="html:a">
                     <itemref>
                       <xsl:attribute name="idref">
                         <xsl:text>section</xsl:text>
                         <xsl:number count="html:li" level="any"/>
                       </xsl:attribute>
                     </itemref>
-		  </xsl:when>
-                  <xsl:when test="html:ul">
-                    <xsl:for-each select="html:ul/html:li">
+		  </xsl:if>
+                  <xsl:if test="html:ul">
+                    <xsl:for-each select="html:ul//html:li[not(contains(html:a/@href,'#'))]">
                       <itemref>
                         <xsl:attribute name="idref">
                           <xsl:text>section</xsl:text>
@@ -316,8 +317,7 @@
                         </xsl:attribute>
                       </itemref>
                     </xsl:for-each>
-		  </xsl:when>
-		</xsl:choose>
+		  </xsl:if>
               </xsl:for-each>
             </spine>
 
@@ -325,24 +325,23 @@
 	      <reference href="titlepage.html" type="cover" title="Cover"/>
               <reference type="text" title="Start" href="index.html"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-		<xsl:choose>
-                  <xsl:when test="html:a">
+
+                  <xsl:if test="html:a">
                     <reference type="text" href="{html:a[1]/@href}">
                       <xsl:attribute name="title">
                         <xsl:value-of select="normalize-space(html:a[1])"/>
                       </xsl:attribute>
                     </reference>
-		  </xsl:when>
-                  <xsl:when test="html:ul">
-                    <xsl:for-each select="html:ul/html:li">
+		  </xsl:if>
+                  <xsl:if test="html:ul">
+                    <xsl:for-each select="html:ul//html:li[not(contains(html:a/@href,'#'))]">
                       <reference type="text" href="{html:a/@href}">
                         <xsl:attribute name="title">
                           <xsl:value-of select="normalize-space(html:a[1])"/>
                         </xsl:attribute>
                       </reference>
                     </xsl:for-each>
-		  </xsl:when>
-		</xsl:choose>
+		  </xsl:if>
               </xsl:for-each>
             </guide>
           </package>
