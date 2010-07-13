@@ -1683,19 +1683,21 @@
   <xsl:template name="mainTOC">
       <xsl:choose>
          <xsl:when test="ancestor-or-self::tei:TEI/tei:text/tei:group">
-	   <ul class="toc toc_body">
 	     <xsl:for-each
 		 select="ancestor-or-self::tei:TEI/tei:text/tei:group/tei:text">
-	       <xsl:variable name="pointer">
-		 <xsl:apply-templates mode="generateLink" select="."/>
-	       </xsl:variable>
-	       <li class="toc">
-		 <xsl:call-template name="header">
-		   <xsl:with-param name="toc" select="$pointer"/>
-		   <xsl:with-param name="minimal">false</xsl:with-param>
-		   <xsl:with-param name="display">plain</xsl:with-param>
-		 </xsl:call-template>
-
+	       <!--
+		   <xsl:variable name="pointer">
+		   <xsl:apply-templates mode="generateLink" select="."/>
+		   </xsl:variable>
+	       -->
+	       <h3>Part <xsl:number/></h3>
+		 <!--
+		     <xsl:call-template name="header">
+		     <xsl:with-param name="toc" select="$pointer"/>
+		     <xsl:with-param name="minimal">false</xsl:with-param>
+		     <xsl:with-param name="display">plain</xsl:with-param>
+		     </xsl:call-template>
+		 -->
 		 <xsl:for-each select="tei:front">
 		   <xsl:call-template name="partTOC">
 		     <xsl:with-param name="part">front</xsl:with-param>
@@ -1713,9 +1715,9 @@
 		     <xsl:with-param name="part">back</xsl:with-param>
 		   </xsl:call-template>
 		 </xsl:for-each>
-	       </li>
+
 	     </xsl:for-each>
-	   </ul>
+
 	 </xsl:when>
 	 <xsl:otherwise>
 	   <xsl:if test="$tocFront">
