@@ -561,9 +561,9 @@
   </xsl:template>
 
   <xsl:template match="tei:div/tei:bibl">
-    <blockquote style="font-size: smaller; font-style:italic">
+    <div class="biblfree">
       <xsl:apply-templates/>
-    </blockquote>
+    </div>
   </xsl:template>
 
   <xsl:template match="tei:l">

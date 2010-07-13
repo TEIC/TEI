@@ -413,7 +413,6 @@
          <xsl:text>link_</xsl:text>
          <xsl:value-of select="local-name(.)"/>
       </xsl:param>
-
       <xsl:variable name="W">
          <xsl:choose>
             <xsl:when test="$target">
@@ -479,10 +478,11 @@
 	       <xsl:copy-of select="$linktext"/>
 	     </xsl:when>
 	     <xsl:otherwise>
+
 	       <a href="{$target}">
 		 <xsl:call-template name="htmlAttributes"/>
 		 <xsl:choose>
-		   <xsl:when test="@rend">
+		   <xsl:when test="@rend!=''">
 		     <xsl:attribute name="class">
 		       <xsl:value-of select="@rend"/>
 		     </xsl:attribute>
@@ -490,6 +490,7 @@
 		   <xsl:when test="@rendition">
 		     <xsl:call-template name="applyRendition"/>
 		   </xsl:when>
+		   <xsl:when test="string-length($class)=0"/>
 		   <xsl:otherwise>
 		     <xsl:attribute name="class">
 		       <xsl:value-of select="$class"/>

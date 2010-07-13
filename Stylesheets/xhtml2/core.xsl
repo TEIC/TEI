@@ -194,16 +194,27 @@
 	      </p>
             </blockquote>
          </xsl:when>
+         <xsl:when test="tei:bibl">
+	   <div>
+	     <xsl:call-template name="rendToClass"/>
+	     <xsl:if test="@n">
+	       <xsl:text>(</xsl:text>
+	       <xsl:value-of select="@n"/>
+	       <xsl:text>) </xsl:text>
+	     </xsl:if>
+	     <xsl:apply-templates/>
+	   </div>
+	 </xsl:when>
          <xsl:otherwise>
-	           <span>
-	              <xsl:call-template name="rendToClass"/>
-	              <xsl:if test="@n">
-	                 <xsl:text>(</xsl:text>
-	                 <xsl:value-of select="@n"/>
-	                 <xsl:text>) </xsl:text>
-	              </xsl:if>
-	              <xsl:apply-templates/>
-	           </span>
+	   <span>
+	     <xsl:call-template name="rendToClass"/>
+	     <xsl:if test="@n">
+	       <xsl:text>(</xsl:text>
+	       <xsl:value-of select="@n"/>
+	       <xsl:text>) </xsl:text>
+	     </xsl:if>
+	     <xsl:apply-templates/>
+	   </span>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -1048,7 +1059,7 @@
   <xsl:template match="tei:p">
       <xsl:variable name="wrapperElement">
          <xsl:choose>
-            <xsl:when test="tei:specList|tei:quote|tei:moduleSpec|tei:list|tei:eg|teix:egXML|tei:table|tei:specGrp|tei:specGrpRef|tei:q[@rend='display']|tei:figure">
+            <xsl:when test="tei:q[tei:p]|tei:specList|tei:quote|tei:moduleSpec|tei:list|tei:eg|teix:egXML|tei:table|tei:specGrp|tei:specGrpRef|tei:q[@rend='display']|tei:figure">
                <xsl:text>div</xsl:text>
             </xsl:when>
             <xsl:when test="parent::tei:p">
@@ -1106,26 +1117,25 @@
    </doc>
   <xsl:template match="tei:q|tei:said">
       <xsl:choose>
-         <xsl:when test="tei:p|tei:l">
-	   <blockquote>
-	     <xsl:call-template name="rendToClass"/>
-	       <xsl:apply-templates/>
-	   </blockquote>
-         </xsl:when>
-         <xsl:when test="@rend='display'">
-            <p class="blockquote">
-               <xsl:apply-templates/>
-            </p>
-         </xsl:when>
-         <xsl:when test="tei:text">
-            <xsl:apply-templates/>
-         </xsl:when>
-         <xsl:when test="tei:lg">
-            <xsl:apply-templates/>
-         </xsl:when>
-         <xsl:otherwise>
-	   <xsl:call-template name="makeQuote"/>
-         </xsl:otherwise>
+       <xsl:when test="tei:p|tei:floatingText|tei:lg|tei:l">
+	 <div class="blockquote">
+	     <xsl:apply-templates/>
+	 </div>
+       </xsl:when>
+       <xsl:when test="@rend='display'">
+	 <p class="blockquote">
+	   <xsl:apply-templates/>
+	 </p>
+       </xsl:when>
+       <xsl:when test="tei:text">
+	 <xsl:apply-templates/>
+       </xsl:when>
+       <xsl:when test="tei:lg">
+	 <xsl:apply-templates/>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:call-template name="makeQuote"/>
+       </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
