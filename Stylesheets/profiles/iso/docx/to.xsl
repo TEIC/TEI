@@ -265,27 +265,6 @@
       <xsl:param name="pPr"/>
       <xsl:variable name="pstyle">
 	  <w:pPr>
-	    <!--
-		<xsl:if test="@iso:spaceBefore
-		or @iso:spaceAfter">
-		<w:spacing>
-		<xsl:if test="@iso:spaceBefore">
-		<xsl:attribute
-		name="w:before">
-		<xsl:value-of
-		select="@iso:spaceBefore"/>
-		</xsl:attribute>
-		</xsl:if>
-		<xsl:if test="@iso:spaceAfter">
-		<xsl:attribute
-		name="w:after">
-		<xsl:value-of
-		select="@iso:spaceAfter"/>
-		</xsl:attribute>
-		</xsl:if>
-		</w:spacing>
-		</xsl:if>
-	    -->
 	    <xsl:choose>
 	      <xsl:when test="@rend">
 		<w:pStyle>
