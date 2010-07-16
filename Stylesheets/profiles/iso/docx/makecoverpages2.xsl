@@ -24,8 +24,6 @@
                 version="2.0"
                 exclude-result-prefixes="teidocx cals ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn its">
 
-	  <xsl:import href="to.xsl"/>
-
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p>TEI stylesheet to convert TEI XML to Word DOCX XML.</p>
@@ -66,7 +64,6 @@
 	  <xsl:param name="debug">true</xsl:param>
 
 	  <!-- identity transform -->
-
 		<xsl:template match="@*|text()|comment()|processing-instruction()">
 				<xsl:param name="tocDefinition"></xsl:param>
 				<xsl:choose>
@@ -81,7 +78,7 @@
 		</xsl:template>
 
 	  <xsl:template match="*">
-	   <xsl:param name="tocDefinition"></xsl:param>
+	   <xsl:param name="tocDefinition"/>
 		    <xsl:copy>
 			      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()">
 			       <xsl:with-param name="tocDefinition" select="$tocDefinition"/>
@@ -89,30 +86,93 @@
 		    </xsl:copy>
 	  </xsl:template>
   
+    <xsl:template match="w:sdt">
+      <xsl:variable name="tagName" select="w:sdtPr/w:tag/@w:val"/>
+      <xsl:variable name="alias">
+        <xsl:choose>
+          <xsl:when test="contains($tagName, '_')">
+             <xsl:value-of select="substring-before($tagName, '_')"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$tagName"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="option">
+        <xsl:choose>
+          <xsl:when test="contains($tagName, '_')">
+             <xsl:value-of select="substring-after($tagName, '_')"/>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:choose>
+        <xsl:when test="contains($option, 'ifdefined') and (not($header-doc//*[@iso:meta=$alias]) or $header-doc//*[@iso:meta=$alias] = '')">
+           <xsl:message>remove optional sdt <xsl:value-of select="$alias"/></xsl:message>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy>
+             <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()">
+               <xsl:with-param name="alias" select="$alias"/>
+             </xsl:apply-templates>
+          </xsl:copy>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="w:placeholder|w:showingPlcHdr">
+    </xsl:template>
+    
 	  <xsl:template match="w:sdtContent">
-		    <xsl:variable name="alias" select="ancestor::w:sdt/w:sdtPr/w:tag/@w:val"/>
+	     <xsl:param name="alias"/>
 	     <xsl:copy>
 	        <xsl:apply-templates select="@*"/>
-	        <xsl:variable name="content">
-	         <xsl:apply-templates select="$header-doc//*[@iso:meta=$alias]" mode="tei">
-	           <xsl:with-param name="rPr" select="w:r/w:rPr"/>
-	         </xsl:apply-templates>
-	        </xsl:variable>
-	        <xsl:if test="$debug='true'">
-	           <xsl:message>set sdtContent to <xsl:value-of select="$alias"/> = <xsl:value-of select="$content"/></xsl:message>
-	        </xsl:if>
 	        <xsl:choose>
+
+	           <!-- if we find w:sdt section we don't replace the content -->
+	           <xsl:when test="child::w:sdt">
+	             <xsl:message>copy stdContent <xsl:value-of select="$alias"/> as is</xsl:message>
+               <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
+	           </xsl:when>
+	           
 	           <xsl:when test="ancestor::w:sdt/w:sdtPr/w:dropDownList">
+		          <xsl:variable name="content">
+		            <xsl:apply-templates select="$header-doc//*[@iso:meta=$alias]" mode="tei"/>
+		          </xsl:variable>
+		          <xsl:if test="$debug='true'">
+                <xsl:message>set sdtContent for dropdown <xsl:value-of select="$alias"/> = <xsl:value-of select="$content"/></xsl:message>
+              </xsl:if>		          
 		          <w:r>
-		          <!-- copy any existing rPr, it may contain character formatting  -->
+		            <!-- copy any existing rPr, it may contain character formatting  -->
 		            <xsl:copy-of select="w:r/w:rPr"/>
 	              <w:t>
 	              <xsl:value-of select="ancestor::w:sdt/w:sdtPr/w:dropDownList//w:listItem[@w:value=$content]/@w:displayText"/>
 			          </w:t>
 			         </w:r>
 	           </xsl:when>
+	           
 	           <xsl:otherwise>
-	             <xsl:copy-of select="$content"/>
+		          <xsl:variable name="content">
+		            <xsl:apply-templates select="$header-doc//*[@iso:meta=$alias]" mode="tei">
+		              <!-- pass an existing pPr and rPr to new elements since it may contain important character formatting  -->
+		              <xsl:with-param name="rPr" select="./w:r[1]/w:rPr"/>
+		            </xsl:apply-templates>
+		          </xsl:variable>	           
+              <xsl:if test="$debug='true'">
+                <xsl:message>set sdtContent for textfield <xsl:value-of select="$alias"/> = <xsl:value-of select="$content"/></xsl:message>
+              </xsl:if>
+              <xsl:choose>
+                <!-- content can contain w:p elements which must be caried over to produce a valid document -->
+	              <xsl:when test="w:p">
+	                <xsl:element name="w:p">
+	                  <xsl:apply-templates select="w:p/@*"/>
+	                  <xsl:apply-templates select="w:p[1]/w:pPr"/>
+	                  <xsl:copy-of select="$content"/>
+	                </xsl:element>
+	              </xsl:when>
+	              <xsl:otherwise>
+	                <xsl:copy-of select="$content"/>
+	              </xsl:otherwise>             
+	              </xsl:choose>
 	           </xsl:otherwise>
 			    </xsl:choose>
 		    </xsl:copy>
@@ -190,9 +250,10 @@
                      <xsl:message>remove empty placeholder paragraph</xsl:message>
                   </xsl:if>
                </xsl:when>
-		             <xsl:otherwise>
-		                <xsl:apply-templates select="."/>
-		             </xsl:otherwise>
+	             <xsl:otherwise>
+	               <xsl:message>copy <xsl:value-of select="name(.)"/></xsl:message>
+	                <xsl:apply-templates select="."/>
+	             </xsl:otherwise>
 		          </xsl:choose>
 			      </xsl:for-each>
 		    </xsl:copy>
