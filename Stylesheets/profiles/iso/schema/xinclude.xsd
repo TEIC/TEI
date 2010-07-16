@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/2001/XInclude" xmlns:mathml="http://www.w3.org/1998/Math/MathML" xmlns:t="http://www.lisa.org/TBX-Specification.33.0.html" xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" xmlns:xinclude="http://www.w3.org/2001/XInclude" xmlns:tm9901="http://www.oasis-open.org/specs/tm9901" xmlns:ns2="http://www.tei-c.org/ns/1.0" xmlns:ns1="http://www.iso.org/ns/1.0" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <xs:import namespace="http://www.iso.org/ns/1.0" schemaLocation="ns1.xsd"/>
+  <xs:import namespace="http://www.lisa.org/TBX-Specification.33.0.html" schemaLocation="t.xsd"/>
+  <xs:import namespace="http://www.oasis-open.org/specs/tm9901" schemaLocation="tm9901.xsd"/>
+  <xs:import namespace="http://www.tei-c.org/ns/1.0" schemaLocation="isotei.xsd"/>
+  <xs:import namespace="http://www.tei-c.org/ns/teidocx/1.0" schemaLocation="teidocx.xsd"/>
+  <xs:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="mathml.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:element name="include">
+    <xs:annotation>
+      <xs:documentation>The W3C XInclude element</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="xinclude:fallback"/>
+      </xs:sequence>
+      <xs:attribute name="href" type="xs:anyURI">
+        <xs:annotation>
+          <xs:documentation>pointer to the resource being included</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="parse" default="xml">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="xml"/>
+            <xs:enumeration value="text"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="xpointer"/>
+      <xs:attribute name="encoding"/>
+      <xs:attribute name="accept"/>
+      <xs:attribute name="accept-charset"/>
+      <xs:attribute name="accept-language"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="fallback" type="ns2:AnyThing">
+    <xs:annotation>
+      <xs:documentation>Wrapper for fallback elements if an XInclude fails</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:math="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:tm9901="http://http://www.oasis-open.org/specs/tm9901" xmlns:ns2="http://www.tei-c.org/ns/1.0" xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" xmlns:main="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:ns1="http://www.iso.org/ns/1.0">
+  <xs:import namespace="http://http://www.oasis-open.org/specs/tm9901" schemaLocation="tm9901.xsd"/>
+  <xs:import namespace="http://schemas.openxmlformats.org/officeDocument/2006/math" schemaLocation="math.xsd"/>
+  <xs:import namespace="http://www.iso.org/ns/1.0" schemaLocation="ns1.xsd"/>
+  <xs:import namespace="http://www.tei-c.org/ns/1.0" schemaLocation="isotei.xsd"/>
+  <xs:import namespace="http://www.tei-c.org/ns/teidocx/1.0" schemaLocation="teidocx.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:element name="tbl">
+    <xs:annotation>
+      <xs:documentation>OO XML table</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:group maxOccurs="unbounded" ref="ns2:anyOOXML"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="drawing">
+    <xs:annotation>
+      <xs:documentation>OO XML inline drawing</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:group ref="ns2:anyOOXMLDrawingMain"/>
+        <xs:group ref="ns2:anyOOXMLDrawing"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

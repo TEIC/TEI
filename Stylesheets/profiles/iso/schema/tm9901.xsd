@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.oasis-open.org/specs/tm9901" xmlns:mathml="http://www.w3.org/1998/Math/MathML" xmlns:t="http://www.lisa.org/TBX-Specification.33.0.html" xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" xmlns:tm9901="http://www.oasis-open.org/specs/tm9901" xmlns:ns1="http://www.tei-c.org/ns/1.0" xmlns:ns2="http://www.iso.org/ns/1.0" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <xs:import namespace="http://www.iso.org/ns/1.0" schemaLocation="ns2.xsd"/>
+  <xs:import namespace="http://www.lisa.org/TBX-Specification.33.0.html" schemaLocation="t.xsd"/>
+  <xs:import namespace="http://www.tei-c.org/ns/1.0" schemaLocation="ns1.xsd"/>
+  <xs:import namespace="http://www.tei-c.org/ns/teidocx/1.0" schemaLocation="teidocx.xsd"/>
+  <xs:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="isotei.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:element name="table">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="tm9901:title"/>
+        <xs:element maxOccurs="unbounded" ref="tm9901:tgroup"/>
+      </xs:sequence>
+      <xs:attribute ref="ns1:corresp"/>
+      <xs:attribute ref="ns2:style"/>
+      <xs:attributeGroup ref="xml:id1"/>
+      <xs:attribute name="frame">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="bottom"/>
+            <xs:enumeration value="topbot"/>
+            <xs:enumeration value="all"/>
+            <xs:enumeration value="sides"/>
+            <xs:enumeration value="none"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="colsep" type="mathml:yesorno"/>
+      <xs:attribute name="rowsep" type="mathml:yesorno"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tgroup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="tm9901:colspec"/>
+        <xs:element minOccurs="0" ref="tm9901:thead"/>
+        <xs:element ref="tm9901:tbody"/>
+      </xs:sequence>
+      <xs:attribute name="cols" type="xs:NMTOKEN"/>
+      <xs:attribute name="colsep" type="mathml:yesorno"/>
+      <xs:attribute name="rowsep" type="mathml:yesorno"/>
+      <xs:attribute name="align">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="right"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="justify"/>
+            <xs:enumeration value="char"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="colspec">
+    <xs:complexType>
+      <xs:attribute name="colnum" type="xs:NMTOKEN"/>
+      <xs:attribute name="colname" type="xs:NMTOKEN"/>
+      <xs:attribute name="colwidth"/>
+      <xs:attribute name="colsep" type="mathml:yesorno"/>
+      <xs:attribute name="rowsep" type="mathml:yesorno"/>
+      <xs:attribute name="align">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="right"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="justify"/>
+            <xs:enumeration value="char"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="char"/>
+      <xs:attribute name="charoff" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="title">
+    <xs:complexType mixed="true">
+      <xs:group ref="mathml:macro.paraContent"/>
+      <xs:attributeGroup ref="xml:id1"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="thead">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="tm9901:row"/>
+      </xs:sequence>
+      <xs:attribute name="valign">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="middle"/>
+            <xs:enumeration value="bottom"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tbody">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="tm9901:row"/>
+      </xs:sequence>
+      <xs:attribute name="valign">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="middle"/>
+            <xs:enumeration value="bottom"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="row">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="tm9901:entry"/>
+      </xs:sequence>
+      <xs:attribute ref="ns2:style"/>
+      <xs:attribute name="rowsep" type="mathml:yesorno"/>
+      <xs:attribute name="valign">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="middle"/>
+            <xs:enumeration value="bottom"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="entry">
+    <xs:complexType mixed="true">
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="ns1:p"/>
+        <xs:group ref="mathml:macro.paraContent"/>
+      </xs:choice>
+      <xs:attribute ref="ns2:style"/>
+      <xs:attribute name="colname" type="xs:NMTOKEN"/>
+      <xs:attribute name="namest" type="xs:NMTOKEN"/>
+      <xs:attribute name="nameend" type="xs:NMTOKEN"/>
+      <xs:attribute name="morerows" type="xs:NMTOKEN"/>
+      <xs:attribute name="colsep" type="mathml:yesorno"/>
+      <xs:attribute name="rowsep" type="mathml:yesorno"/>
+      <xs:attribute name="rotate" type="mathml:yesorno"/>
+      <xs:attribute name="align">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="right"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="justify"/>
+            <xs:enumeration value="char"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="char"/>
+      <xs:attribute name="charoff" type="xs:NMTOKEN"/>
+      <xs:attribute name="valign">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="middle"/>
+            <xs:enumeration value="bottom"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- +//IDN sinica.edu.tw//DTD Schematron 1.5//EN -->
+<!-- http://www.ascc.net/xml/schematron/schematron1-5.dtd -->
+<!-- version of 2002/08/16 -->
+<!--
+  This version has the 1.6 feature that s:key element with @match 
+  is allowed under s:schema. This is not part of 1.5 proper.
+-->
+<!--
+  All names are given indirectly, to allow explicit use of a namespace prefix
+  if desired.  In that case, in the internal subset of the doctype declaration,
+  define <!ENTITY % sp "s:" >
+-->
+<!-- Data types -->
+<grammar xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" ns="http://www.ascc.net/xml/schematron" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="URI">
+    <data type="string" datatypeLibrary=""/>
+  </define>
+  <define name="PATH">
+    <data type="string" datatypeLibrary=""/>
+  </define>
+  <define name="EXPR">
+    <data type="string" datatypeLibrary=""/>
+  </define>
+  <define name="FPI">
+    <data type="string" datatypeLibrary=""/>
+  </define>
+  <!-- Element declarations -->
+  <define name="schema">
+    <element name="schema">
+      <ref name="attlist.schema"/>
+      <optional>
+        <ref name="title"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="ns"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="p"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <choice>
+          <ref name="phase"/>
+          <ref name="key"/>
+        </choice>
+      </zeroOrMore>
+      <oneOrMore>
+        <ref name="pattern"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="p"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="diagnostics"/>
+      </optional>
+    </element>
+  </define>
+  <define name="active">
+    <element name="active">
+      <ref name="attlist.active"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="dir"/>
+          <ref name="emph"/>
+          <ref name="span"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="assert">
+    <element name="assert">
+      <ref name="attlist.assert"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="name"/>
+          <ref name="emph"/>
+          <ref name="dir"/>
+          <ref name="span"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="dir">
+    <element name="dir">
+      <ref name="attlist.dir"/>
+      <text/>
+    </element>
+  </define>
+  <define name="emph">
+    <element name="emph">
+      <ref name="attlist.emph"/>
+      <text/>
+    </element>
+  </define>
+  <define name="attlist.emph" combine="interleave">
+    <empty/>
+  </define>
+  <define name="extends">
+    <element name="extends">
+      <ref name="attlist.extends"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="diagnostic">
+    <element name="diagnostic">
+      <ref name="attlist.diagnostic"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="value-of"/>
+          <ref name="emph"/>
+          <ref name="dir"/>
+          <ref name="span"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="diagnostics">
+    <element name="diagnostics">
+      <ref name="attlist.diagnostics"/>
+      <zeroOrMore>
+        <ref name="diagnostic"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="attlist.diagnostics" combine="interleave">
+    <empty/>
+  </define>
+  <define name="key">
+    <element name="key">
+      <ref name="attlist.key"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="name">
+    <element name="name">
+      <ref name="attlist.name"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="ns">
+    <element name="ns">
+      <ref name="attlist.ns"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="p">
+    <element name="p">
+      <ref name="attlist.p"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="dir"/>
+          <ref name="emph"/>
+          <ref name="span"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="pattern">
+    <element name="pattern">
+      <ref name="attlist.pattern"/>
+      <zeroOrMore>
+        <ref name="p"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="rule"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="phase">
+    <element name="phase">
+      <ref name="attlist.phase"/>
+      <zeroOrMore>
+        <ref name="p"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="active"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="report">
+    <element name="report">
+      <ref name="attlist.report"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="name"/>
+          <ref name="emph"/>
+          <ref name="dir"/>
+          <ref name="span"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="rule">
+    <element name="rule">
+      <ref name="attlist.rule"/>
+      <oneOrMore>
+        <choice>
+          <ref name="assert"/>
+          <ref name="report"/>
+          <ref name="key"/>
+          <ref name="extends"/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="span">
+    <element name="span">
+      <ref name="attlist.span"/>
+      <text/>
+    </element>
+  </define>
+  <define name="title">
+    <element name="title">
+      <ref name="attlist.title"/>
+      <zeroOrMore>
+        <choice>
+          <text/>
+          <ref name="dir"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="attlist.title" combine="interleave">
+    <empty/>
+  </define>
+  <define name="value-of">
+    <element name="value-of">
+      <ref name="attlist.value-of"/>
+      <empty/>
+    </element>
+  </define>
+  <!-- Attribute declarations -->
+  <define name="attlist.schema" combine="interleave">
+    <optional>
+      <attribute name="xsi:schemaLocation" a:defaultValue="http://www.ascc.net/xml/schematron   http://www.ascc.net/xml/schematron/schematron.xsd">
+        <ref name="URI"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="fpi">
+        <ref name="FPI"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="ns">
+        <ref name="FPI"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="schemaVersion"/>
+    </optional>
+    <optional>
+      <attribute name="defaultPhase">
+        <data type="IDREF"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="icon">
+        <ref name="URI"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="version" a:defaultValue="1.5"/>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="attlist.active" combine="interleave">
+    <attribute name="pattern">
+      <data type="IDREF"/>
+    </attribute>
+  </define>
+  <define name="attlist.assert" combine="interleave">
+    <attribute name="test">
+      <ref name="EXPR"/>
+    </attribute>
+    <optional>
+      <attribute name="role">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="diagnostics">
+        <data type="IDREFS"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="icon">
+        <ref name="URI"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="subject">
+        <ref name="PATH"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="attlist.dir" combine="interleave">
+    <optional>
+      <attribute name="value">
+        <choice>
+          <value>ltr</value>
+          <value>rtl</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="attlist.extends" combine="interleave">
+    <attribute name="rule">
+      <data type="IDREF"/>
+    </attribute>
+  </define>
+  <define name="attlist.diagnostic" combine="interleave">
+    <attribute name="id">
+      <data type="ID"/>
+    </attribute>
+    <optional>
+      <attribute name="icon">
+        <ref name="URI"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xml:lang">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="attlist.key" combine="interleave">
+    <optional>
+      <attribute name="match"/>
+    </optional>
+    <attribute name="name">
+      <data type="NMTOKEN"/>
+    </attribute>
+    <attribute name="path">
+      <ref name="PATH"/>
+    </attribute>
+    <optional>
+      <attribute name="icon">
+        <ref name="URI"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="attlist.name" combine="interleave">
+    <optional>
+      <attribute name="path" a:defaultValue=".">
+        <ref name="PATH"/>
+      </attribute>
+    </optional>
+  </define>
+  <!--
+    Schematrons should implement '.' 
+    as the default value for path in s:name
+  -->
+  <define name="attlist.p" combine="interleave">
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="class"/>
+    </optional>
+    <optional>
+      <attribute name="icon">
+        <ref name="URI"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="attlist.pattern" combine="interleave">
+    <attribute name="name"/>
+    <optional>
+      <attribute name="see">
+        <ref name="URI"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="icon">
+        <ref name="URI"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="attlist.ns" combine="interleave">
+    <attribute name="uri">
+      <ref name="URI"/>
+    </attribute>
+    <optional>
+      <attribute name="prefix">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="attlist.phase" combine="interleave">
+    <attribute name="id">
+      <data type="ID"/>
+    </attribute>
+    <optional>
+      <attribute name="fpi">
+        <ref name="FPI"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="icon">
+        <ref name="URI"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="attlist.span" combine="interleave">
+    <optional>
+      <attribute name="class"/>
+    </optional>
+  </define>
+  <define name="attlist.report" combine="interleave">
+    <attribute name="test">
+      <ref name="EXPR"/>
+    </attribute>
+    <optional>
+      <attribute name="role">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="diagnostics">
+        <data type="IDREFS"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="icon">
+        <ref name="URI"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="subject">
+        <ref name="PATH"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xml:lang"/>
+    </optional>
+  </define>
+  <define name="attlist.rule" combine="interleave">
+    <optional>
+      <attribute name="context">
+        <ref name="PATH"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="abstract" a:defaultValue="false">
+        <choice>
+          <value>true</value>
+          <value>false</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="role">
+        <data type="NMTOKEN"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+  </define>
+  <!--
+    Schematrons should implement 'false' as the default
+    value of abstract
+  -->
+  <define name="attlist.value-of" combine="interleave">
+    <attribute name="select">
+      <ref name="PATH"/>
+    </attribute>
+  </define>
+  <start>
+    <choice>
+      <ref name="pattern"/>
+      <ref name="schema"/>
+      <ref name="ns"/>
+    </choice>
+  </start>
+</grammar>
