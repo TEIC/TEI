@@ -54,37 +54,54 @@
     </desc>
    </doc>
     <xsl:template match="w:fldSimple">
-        <xsl:choose>
-	  <!-- cross ref -->
-	  <!-- <w:fldSimple w:instr=" REF _Ref260736521 \r \h  \* MERGEFORMAT ">            -->
-	  <xsl:when test="contains(@w:instr,'REF _Ref')">
-	    <xsl:variable name="ref">
-	      <xsl:value-of
-		  select="substring-before(substring-after(@w:instr,'_'),' ')"/>
-	    </xsl:variable>
-	    <ref>
-	      <xsl:attribute name="target" select="concat('#',$ref)"/>
-	      <xsl:apply-templates/>
-	    </ref>	    
-	  </xsl:when>
-	  <xsl:when test="contains(@w:instr,'NOTEREF _Ref')">
-	    <xsl:variable name="ref">
-	      <xsl:value-of
-		  select="substring-before(substring-after(@w:instr,'_'),' ')"/>
-	    </xsl:variable>
-	    <ref>
-	      <xsl:attribute name="target" select="concat('#',$ref)"/>
-	      <xsl:apply-templates/>
-	    </ref>	    
-	  </xsl:when>
-	  <xsl:when test="contains(@w:instr,'PAGE')"><!-- Page number -->
-	    <teidocx:dynamicContent type="pagenumber"/>
-	  </xsl:when>
-	  <xsl:when test="contains(@w:instr,'SEQ')"/><!-- not sure -->
-	  <xsl:otherwise>
-	    <xsl:message terminate="yes">fldSimple: unrecognized type <xsl:value-of select="@w:instr"/></xsl:message>
-	  </xsl:otherwise>
-        </xsl:choose>
+      <xsl:variable name="rstyle">
+	<xsl:value-of select="w:r/w:rPr/w:rStyle/@w:val"/>
+      </xsl:variable>
+      <xsl:choose>
+	<!-- cross ref -->
+	<!-- <w:fldSimple w:instr=" REF _Ref260736521 \r \h  \* MERGEFORMAT ">            -->
+	<xsl:when test="contains(@w:instr,'NOTEREF _Ref')">
+	  <xsl:variable name="ref">
+	    <xsl:value-of
+		select="substring-before(substring-after(@w:instr,'_'),' ')"/>
+	  </xsl:variable>
+	  <xsl:variable name="rend">
+	    <xsl:text>fldSimple noteref</xsl:text>
+	    <xsl:if test="contains(@w:instr,'\f')"> formatted</xsl:if>
+	  </xsl:variable>
+	  <ref rend="{$rend}">
+	    <xsl:attribute name="target" select="concat('#',$ref)"/>
+	    <xsl:if test="$rstyle!=''">
+	      <xsl:attribute name="iso:class"><xsl:value-of select="$rstyle"/></xsl:attribute>
+	    </xsl:if>
+	    <xsl:apply-templates/>
+	  </ref>	    
+	</xsl:when>
+	<xsl:when test="contains(@w:instr,'REF _Ref')">
+	  <xsl:variable name="ref">
+	    <xsl:value-of
+		select="substring-before(substring-after(@w:instr,'_'),' ')"/>
+	  </xsl:variable>
+	  <xsl:variable name="rend">
+	    <xsl:text>fldSimple ref</xsl:text>
+	    <xsl:if test="contains(@w:instr,'\f')"><xsl:text> formatted</xsl:text></xsl:if>
+	  </xsl:variable>
+	  <ref rend="{$rend}">
+	    <xsl:attribute name="target" select="concat('#',$ref)"/>
+	    <xsl:if test="$rstyle!=''">
+	      <xsl:attribute name="iso:class"><xsl:value-of select="$rstyle"/></xsl:attribute>
+	    </xsl:if>
+	    <xsl:apply-templates/>
+	  </ref>	    
+	</xsl:when>
+	<xsl:when test="contains(@w:instr,'PAGE')"><!-- Page number -->
+	  <teidocx:dynamicContent type="pagenumber"/>
+	</xsl:when>
+	<xsl:when test="contains(@w:instr,'SEQ')"/><!-- not sure -->
+	<xsl:otherwise>
+	  <xsl:message terminate="yes">fldSimple: unrecognized type <xsl:value-of select="@w:instr"/></xsl:message>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
     
 </xsl:stylesheet>

@@ -290,7 +290,6 @@
         <xsl:param name="bookmark-id"/>
         <xsl:param name="bookmark-name"/>
 
-
         <xsl:for-each select="$select">
             <xsl:for-each-group select="*|processing-instruction()|text()" group-adjacent="1">
                 <xsl:call-template name="_process-blockelement">
@@ -327,6 +326,7 @@
         <xsl:param name="nop"/>
         <xsl:param name="bookmark-id"/>
         <xsl:param name="bookmark-name"/>
+
 
         <!-- bookmark -->
         <xsl:if test="string-length($bookmark-name) &gt; 0 and string-length($bookmark-id) &gt; 0">
@@ -388,8 +388,8 @@
                         <!-- Create text runs -->
                         <xsl:for-each select="current-group()">
                             <xsl:apply-templates select=".">
-                                <xsl:with-param name="style" select="$style"/>
-                                <xsl:with-param name="pPr" select="$pPr"/>
+			      <xsl:with-param name="style" select="$style"/>
+			      <xsl:with-param name="pPr" select="$pPr"/>
                             </xsl:apply-templates>
                         </xsl:for-each>
                     </xsl:variable>
@@ -479,11 +479,20 @@
             <xsl:apply-templates select="." mode="get-style"/>
         </xsl:variable>
 
+	<xsl:variable name="iso-style">
+	  <xsl:if test=".//tbx:termNote/@iso:style">
+	    <xsl:value-of select=".//tbx:termNote/@iso:style"/>
+	  </xsl:if>
+	</xsl:variable>
+
         <xsl:variable name="use-style">
             <xsl:choose>
                 <xsl:when test="(string-length($style) &gt; 0)">
                     <xsl:value-of select="$style"/>
                 </xsl:when>
+		<xsl:when test="(string-length($iso-style) &gt; 0)">
+		  <xsl:value-of select="$iso-style"/>
+		</xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$character-style"/>
                 </xsl:otherwise>
@@ -556,7 +565,15 @@
 	    <w:rPr>
 	      <xsl:if test="string-length($character-style) &gt; 0">
 		<w:rStyle>
-		  <xsl:attribute name="w:val" select="$character-style"/>
+		  <xsl:choose>
+		    <!-- this is a rogue - trap it and kill it -->
+		    <xsl:when test="$character-style='footnote reference'">
+		      <xsl:attribute name="w:val" select="'FootnoteReference'"/>
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:attribute name="w:val" select="$character-style"/>
+		    </xsl:otherwise>
+		  </xsl:choose>		    
 		</w:rStyle>
 	      </xsl:if>
 	      <xsl:copy-of select="$renderingProperties"/>
@@ -676,6 +693,11 @@
      </desc>
    </doc>
     <xsl:template name="applyRend">
+<!--        <xsl:choose>
+	      <xsl:when test="@iso:class">
+		
+	      </xsl:when> 
+	    </xsl:choose>-->
             <!-- use a custom font -->
 	    <xsl:choose>
 	      <xsl:when test="@iso:font">
@@ -1875,11 +1897,22 @@
     </xsl:template>
 
     <xsl:template match="tei:ref[@target]">
-      <xsl:call-template name="linkMe">
-	<xsl:with-param name="anchor">
-	  <xsl:apply-templates/>
-	</xsl:with-param>
-      </xsl:call-template>
+      <xsl:choose>
+	<xsl:when test="contains(@rend,'fldSimple')">
+	  <xsl:call-template name="linkMeSimply">
+	    <xsl:with-param name="anchor">
+	      <xsl:apply-templates/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="linkMe">
+	    <xsl:with-param name="anchor">
+	      <xsl:apply-templates/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
 
     <xsl:template name="linkMeUsingHyperlink">
@@ -1933,6 +1966,32 @@
       </xsl:choose>
     </xsl:template>
 
+    <!-- fldSimple is a different sort of hyperlink -->
+    <xsl:template name="linkMeSimply">
+      <xsl:param name="anchor"/>
+      <w:fldSimple>
+	<xsl:attribute name="w:instr">
+	  <xsl:choose>
+	    <xsl:when test="contains(@rend,'noteref')">
+	      <xsl:text>NOTEREF _</xsl:text>
+	    </xsl:when>
+	    <xsl:when test="contains(@rend,'ref')">
+	      <xsl:text>REF _</xsl:text>
+	    </xsl:when>
+	  </xsl:choose>
+	  <xsl:value-of select="substring(@target,2)"/>
+	  <xsl:if test="contains(@rend,'formatted')">
+	    <xsl:text> \f</xsl:text>
+	  </xsl:if>
+	  <xsl:text> \h  \* MERGEFORMAT</xsl:text>
+	</xsl:attribute>
+        <w:r>
+	  <xsl:apply-templates>
+            <xsl:with-param name="character-style" select="@iso:class"/>
+	  </xsl:apply-templates>
+        </w:r>
+      </w:fldSimple>
+    </xsl:template>
 
     <xsl:template name="linkMe">
       <xsl:param name="anchor"/>
