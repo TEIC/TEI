@@ -526,6 +526,11 @@
 	      <w:pStyle w:val="Examplenumbered"/>
 	    </w:pPr>
 	  </xsl:when>
+	  <xsl:when test="@type='Example' and @iso:class='list'">
+	    <w:pPr>
+	      <w:pStyle w:val="Examplelist"/>
+	    </w:pPr>
+	  </xsl:when>
 	  <xsl:when test="@type='Example'">
 	    <w:pPr>
 	      <w:pStyle w:val="Example"/>

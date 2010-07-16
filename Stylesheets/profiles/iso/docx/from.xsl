@@ -568,6 +568,7 @@
 	     if (w:pPr/w:pStyle/@w:val='Definition') then 3 else
 	     if (w:pPr/w:pStyle/@w:val='RefNorm') then 2 else
              if (w:pPr/w:pStyle/@w:val='Example numbered') then 3 else
+             if (w:pPr/w:pStyle/@w:val='Example list') then 3 else
              if (w:pPr/w:pStyle/@w:val='Example') then 3 else
              if (w:pPr/w:pStyle/@w:val='TermNum') then 3 else
              if (w:pPr/w:pStyle/@w:val='entrySource') then 3 else
@@ -1098,6 +1099,7 @@
 	  <li>TermNum</li>
 	  <li>autoTermNum</li>
 	  <li>Example</li>
+	  <li>Example List</li>
 	  <li>Example numbered</li>
 	  <li>symbol</li>
 	  <li>termAdmitted</li>
@@ -1188,38 +1190,32 @@
 		      </note>
 		  </descripGrp>
 		</xsl:for-each>
-	      <xsl:if
-		  test="current-group()[w:pPr/w:pStyle/@w:val='Example numbered']">
-		<descripGrp>
-		  <descrip type="example" iso:class="numbered">
-		    <xsl:for-each
-			select="current-group()[w:pPr/w:pStyle/@w:val='Example numbered'] except .">
-		      <xsl:apply-templates/>
-		    </xsl:for-each>
-		  </descrip>
+
+		<xsl:variable name="nn">
 		  <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteExample'] except .">
 		    <note>
 		      <xsl:apply-templates/>
 		    </note>
 		  </xsl:for-each>
-		</descripGrp>
-	      </xsl:if>
-	      <xsl:if
-		  test="current-group()[w:pPr/w:pStyle/@w:val='Example']">
+		</xsl:variable>
+
+	      <xsl:for-each select="current-group()[w:pPr/w:pStyle[starts-with(@w:val,'Example')]]">
 		<descripGrp>
 		  <descrip type="example">
-		    <xsl:for-each
-			select="current-group()[w:pPr/w:pStyle/@w:val='Example'] except .">
+		    <xsl:choose>
+		      <xsl:when test="w:pPr/w:pStyle/@w:val='Example numbered'">
+			<xsl:attribute name="iso:class">numbered</xsl:attribute>
+		      </xsl:when>
+		      <xsl:when test="w:pPr/w:pStyle/@w:val='Example list'">
+			<xsl:attribute name="iso:class">list</xsl:attribute>
+		      </xsl:when>
+		    </xsl:choose>
 		      <xsl:apply-templates/>
-		    </xsl:for-each>
 		  </descrip>
-		  <xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='noteExample'] except .">
-		    <note>
-		      <xsl:apply-templates/>
-		    </note>
-		  </xsl:for-each>
+		  <xsl:copy-of select="$nn"/>
 		</descripGrp>
-	      </xsl:if>
+	      </xsl:for-each>
+
 	      <xsl:if
 		  test="current-group()[w:pPr/w:pStyle/@w:val='nonVerbalRepresentation']">
 		  <descripGrp>
@@ -1267,6 +1263,7 @@
 		    <xsl:when test="$Thing='TermNum'"/>
 		    <xsl:when test="$Thing='Definition'"/>
 		    <xsl:when test="$Thing='Example numbered'"/>
+		    <xsl:when test="$Thing='Example list'"/>
 		    <xsl:when test="$Thing='Example'"/>
 		    <xsl:when test="$Thing='nonVerbalRepresentation'"/>
 		    <xsl:when test="$Thing='noteDefinition'"/>
@@ -1743,7 +1740,7 @@
 	    <xsl:value-of select="generate-id()"/>
 	  </xsl:attribute>
 	</anchor>
-      </xsl:template>
+    \  </xsl:template>
 
 
    <xsl:template match="tei:p[starts-with(@rend,'termHeading')]" mode="group">

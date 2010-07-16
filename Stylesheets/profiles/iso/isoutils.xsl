@@ -513,7 +513,7 @@
    <xsl:template
        match="tbx:descrip[@type='subjectField']"/>
 
-   <xsl:template match="tbx:descrip[@type='example']">
+   <xsl:template match="tbx:descrip[@type='example' and not(@iso:class)]">
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">Example</xsl:with-param>
       </xsl:call-template>
@@ -522,6 +522,12 @@
    <xsl:template match="tbx:descrip[@type='example' and @iso:class='numbered']">
       <xsl:call-template name="block-element">
          <xsl:with-param name="style">Examplenumbered</xsl:with-param>
+      </xsl:call-template>
+   </xsl:template>
+
+   <xsl:template match="tbx:descrip[@type='example' and @iso:class='list']">
+      <xsl:call-template name="block-element">
+         <xsl:with-param name="style">Examplelist</xsl:with-param>
       </xsl:call-template>
    </xsl:template>
 
