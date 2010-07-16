@@ -1115,7 +1115,10 @@
       <xsl:for-each-group select="current-group()"
 			  group-starting-with="w:p[w:pPr/w:pStyle/@w:val='TermNum' or w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]]">
 	<xsl:choose>
-	  <xsl:when test="self::w:p[w:pPr/w:pStyle[@w:val='Example numbered' or @w:val='Example']]">
+	  <xsl:when test="self::w:p[w:pPr/w:pStyle[
+			  @w:val='Example numbered' 
+			  or @w:val='Example list' 
+			  or @w:val='Example']]">
 	    <xsl:for-each select="current-group()">
 	      <xsl:variable name="Style">
 		<xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
@@ -1126,13 +1129,26 @@
 	    </xsl:for-each>
 	  </xsl:when>
 	  <xsl:when test="not(self::w:p[w:pPr/w:pStyle/@w:val='TermNum'  or  w:pPr/w:pStyle[starts-with(@w:val,'autoTermNum')]])">
-	    <iso:error>
-	      <xsl:text>Terminology entry "</xsl:text>
-	      <xsl:value-of select="."/>
-	      <xsl:text>" here does not have
-	      a number style, but starts with with </xsl:text>
+
+	    <xsl:if test="string-length(.)&gt;0">
+	      <iso:error>
+	      <xsl:text>A badly-structured terminology entry group
+	      here, starting with a "</xsl:text>
 	      <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
-	    </iso:error>
+	      <xsl:text>" (</xsl:text>
+	      <xsl:value-of select="."/>
+	      <xsl:text>). </xsl:text>
+	      <xsl:text>Term entries must start with     a number</xsl:text>
+	      </iso:error>
+	    </xsl:if>
+	    <xsl:for-each select="current-group()">
+	      <xsl:variable name="Style">
+		<xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
+	      </xsl:variable>
+	      <p rend="{$Style}"> 
+		<xsl:apply-templates/>
+	      </p>
+	    </xsl:for-each>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:variable name="Style">
