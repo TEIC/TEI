@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/XML/1998/namespace" xmlns:mathml="http://www.w3.org/1998/Math/MathML" xmlns:t="http://www.lisa.org/TBX-Specification.33.0.html" xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" xmlns:tm9901="http://www.oasis-open.org/specs/tm9901" xmlns:ns1="http://www.tei-c.org/ns/1.0" xmlns:ns2="http://www.iso.org/ns/1.0" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <xs:import namespace="http://www.iso.org/ns/1.0" schemaLocation="ns2.xsd"/>
+  <xs:import namespace="http://www.lisa.org/TBX-Specification.33.0.html" schemaLocation="t.xsd"/>
+  <xs:import namespace="http://www.oasis-open.org/specs/tm9901" schemaLocation="tm9901.xsd"/>
+  <xs:import namespace="http://www.tei-c.org/ns/1.0" schemaLocation="ns1.xsd"/>
+  <xs:import namespace="http://www.tei-c.org/ns/teidocx/1.0" schemaLocation="teidocx.xsd"/>
+  <xs:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="isotei.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
+  <xs:attributeGroup name="id">
+    <xs:attribute name="id" form="qualified" type="xs:ID">
+      <xs:annotation>
+        <xs:documentation>(identifier) provides a unique identifier for the element bearing the attribute.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="lang">
+    <xs:attribute name="lang" form="qualified" type="xs:language">
+      <xs:annotation>
+        <xs:documentation>(language) indicates the language of the element content using a tag generated
+        according to BCP 47
+                           </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attribute name="base" type="xs:anyURI">
+    <xs:annotation>
+      <xs:documentation>provides a base URI reference with which applications can resolve relative URI
+        references into absolute URI references.</xs:documentation>
+    </xs:annotation>
+  </xs:attribute>
+  <xs:attribute name="space">
+    <xs:annotation>
+      <xs:documentation>signals an intention about how white space should be 
+      managed by  applications. </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="default">
+          <xs:annotation>
+            <xs:documentation>the processor should treat white space according to the
+	default XML white space handling rules</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+        <xs:enumeration value="preserve">
+          <xs:annotation>
+            <xs:documentation>the processor should preserve unchanged any and all
+	white space in the source</xs:documentation>
+          </xs:annotation>
+        </xs:enumeration>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  <xs:attributeGroup name="lang1">
+    <xs:attribute name="lang" form="qualified">
+      <xs:annotation>
+        <xs:documentation>Indicates the language of the element content. The allowed values are
+							found in IETF RFC 4646 or its successor. This attribute is optional for
+							elements that use this attribute class. For a description, see the
+							information at the martif element.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="id1">
+    <xs:attribute name="id" form="qualified" type="xs:ID"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="lang2">
+    <xs:attribute name="lang" form="qualified">
+      <xs:annotation>
+        <xs:documentation>Indicates the language of the language section. This attribute is
+							required for the langSet element. See also the description on
+							the martif element.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:attributeGroup>
+</xs:schema>

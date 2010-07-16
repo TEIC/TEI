@@ -1,0 +1,131 @@
+#!/bin/sh 
+
+# convert TEI file $1 into epub
+# Sebastian Rahtz, January 2010
+# copyright: TEI Consortium
+# license: GPL
+# $Id$
+
+
+die()
+{
+    echo; echo
+    echo "ERROR: $@."
+    D=`date "+%Y-%m-%d %H:%M:%S.%N"`
+    echo "This was a fatal error. $D"
+    exit 1
+}
+
+usageMsg()
+{
+echo "teitoepub -- reads in a TEI XML file and creates an ePub book"
+echo "  Usage: teitoepub[options] file"
+echo "  options, shown with defaults:"
+
+echo " --profile=default      profile family"
+echo " --odd                        perform ODD pre-processing"
+echo " --uid=XXX                supply unique URN for ebook"
+echo " --publisher=XXX                supply name of publisher for ebook"
+echo " --subject=XXX                supply subject/category for ebook"
+echo " --coverimage=XXX                supply name of JPEG file for ebook cover"
+echo " --debug                    emit some diagnostics" 
+echo " --verbose                 be verbose"
+}
+
+publisher=
+coverimage=
+cover=
+conversion=
+subject=
+profile=default
+odd=false
+verbose=false
+uid=
+debug=false
+while test $# -gt 0; do
+  case $1 in
+    --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
+    --uid=*)  uid=`echo $1 | sed 's/.*=//'`;;
+    --publisher=*)  publisher=publisher=`echo $1 | sed 's/.*=//'`;;
+    --subject=*)  subject="`echo $1 | sed 's/.*=//'`";;
+    --coverimage=*)  cover=`echo $1 | sed 's/.*=//'`;;
+    --conversion=*)  conversion=`echo $1 | sed 's/.*=//'`;;
+    --odd)       odd=true;;
+    --debug)     debug=true;;
+    --verbose)     verbose=true;;
+    --help)          usageMsg;;
+    *) if test "$1" = "${1#--}" ; then 
+	   break
+	else
+	   echo "WARNING: Unrecognized option '$1' ignored"
+	   echo "For usage syntax issue $0 --help"
+	fi ;;
+  esac
+  shift
+done
+HERE=`pwd`
+if test -f $1 
+then 
+     echo Read file $1
+else
+  echo File $1 does not exist
+  die
+fi
+D=`dirname $1`
+F=`basename $1`
+B=`basename $1 .xml`
+DOCHOME=`(cd $D; pwd)`
+X=`dirname $0`
+APPHOME=`(cd $X; pwd)`
+TEMPDIR=/tmp/epub$$
+TEMPLATES=$APPHOME/profiles/$profile/epub
+XSL=$APPHOME
+if test "x$conversion" = "x"
+then
+  TOXSL=$APPHOME/profiles/$profile/epub/to.xsl
+else
+  TOXSL=$conversion
+fi
+mkdir -p $TEMPDIR/OEBPS/media
+case $DOCHOME/$F in 
+       *.zip)  (cd $TEMPDIR; unzip -q $DOCHOME/$F ); F=`basename $F .zip`.xml;; 
+       *) cp $DOCHOME/$F $TEMPDIR/$F  ;; 
+esac
+cd $TEMPDIR
+
+# images
+saxon $F $XSL/docx/utils/graphics/listgraphics.xsl ORIG=$DOCHOME DIR=$TEMPDIR/OEBPS/media > fetch
+sh $TEMPDIR/fetch
+rm $TEMPDIR/fetch
+
+#cover image
+case $cover in 
+   "")  ;;
+   http://*) curl -s -o OEBPS/cover.jpg $cover; coverimage=coverimage=cover.jpg ;;
+    *) cp $DOCHOME/$cover OEBPS/`basename $cover`; coverimage=coverimage=`basename $cover`;;
+esac
+if $odd
+then
+    saxon -o $TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl localsource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
+    saxon -o $TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc  summaryDoc=true
+else
+    ln -s $F tmp2.xml
+fi
+saxon  tmp2.xml $TOXSL  $coverimage $publisher subject="$subject" uid=$uid odd=$odd debug=$debug verbose=$verbose
+if $debug 
+then
+    echo leaving tmp[123].xml alone
+else
+    rm -f tmp1.xml tmp2.xml
+fi
+rm -f $DOCHOME/$B.epub
+zip -q0X  $DOCHOME/$B.epub mimetype
+zip -qXr9D  $DOCHOME/$B.epub   META-INF OEBPS
+cd $HERE
+if $debug 
+then
+    echo Working files left in $TEMPDIR
+else
+    rm -rf $TEMPDIR
+fi
+echo Wrote $B.epub in $DOCHOME
