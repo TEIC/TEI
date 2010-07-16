@@ -1637,6 +1637,18 @@
       </xsl:choose>
     </xsl:template>
 
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Index1']">
+      <p rend='Index1'>
+	<xsl:call-template name="process-checking-for-crossrefs"/>		    
+      </p>
+    </xsl:template>
+
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='IndexHeading']">
+      <p rend='IndexHeading'>
+	<xsl:call-template name="process-checking-for-crossrefs"/>		    
+      </p>
+    </xsl:template>
+
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc> Override handling of standard Word paragraphs </desc>
     </doc>
@@ -1756,7 +1768,7 @@
 	    <xsl:value-of select="generate-id()"/>
 	  </xsl:attribute>
 	</anchor>
-    \  </xsl:template>
+      </xsl:template>
 
 
    <xsl:template match="tei:p[starts-with(@rend,'termHeading')]" mode="group">
