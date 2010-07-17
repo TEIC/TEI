@@ -73,7 +73,7 @@
             <xsl:call-template name="header">
                <xsl:with-param name="toc" select="$pointer"/>
                <xsl:with-param name="minimal">false</xsl:with-param>
-	              <xsl:with-param name="display">plain</xsl:with-param>
+	       <xsl:with-param name="display">plain</xsl:with-param>
             </xsl:call-template>
             <xsl:if test="$thislevel &lt; $Depth">
                <xsl:call-template name="continuedToc"/>
@@ -412,20 +412,13 @@
       <desc>Process element head in heading mode</desc>
    </doc>
   <xsl:template match="tei:head" mode="makeheading">
-      <xsl:choose>
-         <xsl:when test="preceding-sibling::tei:head">
-	           <br/>
-	           <span>
-	              <xsl:call-template name="rendToClass">
-	                 <xsl:with-param name="default">secondaryHead</xsl:with-param>
-	              </xsl:call-template>
-	              <xsl:apply-templates/>
-	           </span>
-         </xsl:when>
-         <xsl:otherwise>
-	           <xsl:apply-templates/>
-         </xsl:otherwise>
-      </xsl:choose>
+    <xsl:if test="preceding-sibling::tei:head">
+      <br/>
+    </xsl:if>
+    <span>
+      <xsl:call-template name="rendToClass"/>
+      <xsl:apply-templates/>
+    </span>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -1976,7 +1969,7 @@
   <xsl:template name="makeAnchor">
       <xsl:param name="name"/>
       <xsl:choose>
-         <xsl:when test="$name and $xhtml='true'">
+         <xsl:when test="$name">
 	           <span id="{$name}">
                <xsl:comment>anchor1</xsl:comment>
             </span>
@@ -1986,34 +1979,19 @@
 	              <xsl:comment>anchor</xsl:comment>
 	           </a>
          </xsl:when>
-         <xsl:when test="@xml:id and $xhtml='true'">
-	           <span id="{@xml:id}">
-               <xsl:comment>anchor2</xsl:comment>
-            </span>	
-         </xsl:when>
          <xsl:when test="@xml:id">
             <a name="{@xml:id}">
                <xsl:comment>anchor</xsl:comment>
             </a>
          </xsl:when>
          <xsl:otherwise>
-	           <xsl:variable name="me">
-	              <xsl:value-of select="$masterFile"/>-<xsl:value-of select="local-name(.)"/>-<xsl:value-of select="generate-id()"/>
-	           </xsl:variable>
-	           <xsl:choose>
-	              <xsl:when test="$xhtml='true'">
-	                 <span id="{$me}">
-                     <xsl:comment>anchor3</xsl:comment>
-                  </span>	
-	              </xsl:when>
-	              <xsl:otherwise>
-	                 <a name="{$me}">
-	                    <xsl:comment>anchor</xsl:comment>
-	                 </a>
-	              </xsl:otherwise>
-	           </xsl:choose>
-         </xsl:otherwise>
-
+	   <xsl:variable name="me">
+	     <xsl:value-of select="$masterFile"/>-<xsl:value-of select="local-name(.)"/>-<xsl:value-of select="generate-id()"/>
+	   </xsl:variable>
+	   <span id="{$me}">
+	     <xsl:comment>anchor3</xsl:comment>
+	   </span>	
+	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
 
@@ -2059,56 +2037,53 @@
   <xsl:template name="rendToClass">
       <xsl:param name="id">true</xsl:param>
       <xsl:param name="default">.</xsl:param>
-      <xsl:if test="$id='true'">
-         <xsl:choose>
-	           <xsl:when test="@id">
-	              <xsl:copy-of select="@id"/>
-	           </xsl:when>
-	           <xsl:when test="@xml:id">
-	              <xsl:attribute name="id">
-	                 <xsl:value-of select="@xml:id"/>
-	              </xsl:attribute>
-	           </xsl:when>
-         </xsl:choose>
+      <xsl:if test="$id='true' and @xml:id">
+	<xsl:attribute name="id">
+	  <xsl:value-of select="@xml:id"/>
+	</xsl:attribute>
       </xsl:if>
-
-
       <xsl:variable name="class1">
-         <xsl:choose>
-	           <xsl:when test="$default=''"/>
-	           <xsl:when test="not($default='.')">
-	              <xsl:value-of select="$default"/>
-	           </xsl:when>
-	           <xsl:otherwise>
-	              <xsl:value-of select="local-name()"/>
-	           </xsl:otherwise>
-         </xsl:choose>
+	<xsl:choose>
+	  <xsl:when test="$default=''"/>
+	  <xsl:when test="not($default='.')">
+	    <xsl:value-of select="$default"/>
+	  </xsl:when>
+	  <xsl:when test="@type">
+	    <xsl:value-of select="@type"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="local-name()"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+	<xsl:call-template name="rendToClassHook"/>
       </xsl:variable>
       <xsl:variable name="class2">
-         <xsl:choose>
-	           <xsl:when test="@rend">
-	              <xsl:value-of select="translate(@rend,' /','_-')"/>
-	           </xsl:when>
-	           <xsl:when test="@rendition">
-	              <xsl:call-template name="applyRendition"/>
-	           </xsl:when>
-         </xsl:choose>
+	<xsl:choose>
+	  <xsl:when test="@rend">
+	    <xsl:value-of select="translate(@rend,' /','_-')"/>
+	  </xsl:when>
+	  <xsl:when test="@rendition">
+	    <xsl:call-template name="applyRendition"/>
+	  </xsl:when>
+	</xsl:choose>
       </xsl:variable>
-      <xsl:variable name="class">
-	  <xsl:value-of select="$class1"/>
-	  <xsl:if test="not($class1='')">
+      <xsl:choose>
+	<xsl:when test="$class1='' and $class2=''"/>
+	<xsl:when test="$class2=''">
+	  <xsl:attribute name="class">
+	    <xsl:value-of select="normalize-space($class1)"/>
+	  </xsl:attribute>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:attribute name="class">
+	    <xsl:value-of select="$class1"/>
 	    <xsl:text> </xsl:text>
-	  </xsl:if>
-	  <xsl:value-of select="$class2"/>	
-         <xsl:call-template name="rendToClassHook"/>
-      </xsl:variable>
-      <xsl:if test="not($class='')">
-         <xsl:attribute name="class">
-	   <xsl:value-of select="$class"/>
-         </xsl:attribute>
-      </xsl:if>
+	    <xsl:value-of select="$class2"/>
+	  </xsl:attribute>
+	</xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
-
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] allow for local extensions to rendToClass</desc>
    </doc>

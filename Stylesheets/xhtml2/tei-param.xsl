@@ -410,10 +410,10 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
       <xsl:param name="level">1</xsl:param>
       <xsl:if test="not($text='')">
          <xsl:element name="h{$level}" xmlns="http://www.w3.org/1999/xhtml">
-	           <xsl:attribute name="class">
-	              <xsl:value-of select="$class"/>
-	           </xsl:attribute>
-	           <xsl:copy-of select="$text"/>
+	   <xsl:attribute name="class">
+	     <xsl:value-of select="$class"/>
+	   </xsl:attribute>
+	   <xsl:copy-of select="$text"/>
          </xsl:element>
       </xsl:if>
   </xsl:template>
@@ -681,12 +681,6 @@ pages or server requests.
 </desc>
    </doc>
   <xsl:param name="virtualPages">false</xsl:param>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="boolean">
-      <desc>
-Make XHTML-compatible markup
-</desc>
-   </doc>
-  <xsl:param name="xhtml">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="boolean">
       <desc>
 Make an automatic table of contents

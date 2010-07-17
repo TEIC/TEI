@@ -94,7 +94,8 @@
       </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[common] Making a heading for something<param name="minimal">whether to display headings</param>
+      <desc>[common] Making a heading for something
+         <param name="minimal">whether to display headings</param>
          <param name="toc">whether this is making a TOC entry</param>
          <param name="display">detail of display (full, simple, plain), ie
     whether markup is followed</param>
@@ -109,7 +110,7 @@
       </xsl:variable>
       <xsl:call-template name="formatHeadingNumber">
          <xsl:with-param name="toc">
-	           <xsl:value-of select="$toc"/>
+	   <xsl:value-of select="$toc"/>
          </xsl:with-param>
          <xsl:with-param name="text">
             <xsl:choose>
@@ -134,10 +135,10 @@
                <xsl:when test="ancestor::tei:front">
                   <xsl:if test="not($numberFrontHeadings='')">
                      <xsl:call-template name="numberFrontDiv">
-	                       <xsl:with-param name="minimal">
-	                          <xsl:value-of select="$minimal"/>
-	                       </xsl:with-param>
-	                    </xsl:call-template>
+		       <xsl:with-param name="minimal">
+			 <xsl:value-of select="$minimal"/>
+		       </xsl:with-param>
+		     </xsl:call-template>
                   </xsl:if>
                </xsl:when>
                <xsl:when test="$numberHeadings ='true'">
@@ -157,6 +158,7 @@
          </xsl:with-param>
       </xsl:call-template>
       <xsl:if test="$minimal='false'">
+
          <xsl:choose>
             <xsl:when test="local-name(.) = 'TEI'">
                <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]"/>

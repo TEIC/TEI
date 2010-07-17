@@ -346,25 +346,6 @@
                <xsl:value-of select="substring(@from,5,string-length(normalize-space(@from))-1)"/>
             </xsl:if>
          </xsl:attribute>
-         <xsl:if test="$xhtml='false'">
-            <xsl:choose>
-               <xsl:when test="@rend='new'">
-                  <xsl:attribute name="target">_blank</xsl:attribute>
-               </xsl:when>
-               <xsl:when test="@rend='noframe' or number($splitLevel)=-1 or substring(@url,string-length(@url),1)='/'">
-                  <xsl:attribute name="target">_top</xsl:attribute>
-               </xsl:when>
-               <xsl:when test="contains($dest,'://') or starts-with($dest,'.') or starts-with($dest,'/')">
-                  <xsl:attribute name="target">_top</xsl:attribute>
-               </xsl:when>
-               <xsl:when test="substring($dest,string-length($dest),1)='/'">
-                  <xsl:attribute name="target">_top</xsl:attribute>
-               </xsl:when>
-               <xsl:when test="number($splitLevel)=-1">
-                  <xsl:attribute name="target">_top</xsl:attribute>
-               </xsl:when>
-            </xsl:choose>
-         </xsl:if>
 	 <xsl:choose>
 	   <xsl:when test="@n">
 	     <xsl:attribute name="title">
@@ -521,6 +502,17 @@
    </doc>
   <xsl:template match="tei:note" mode="xref">
       <xsl:number level="any"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>formatting of the number part of a header</desc>
+   </doc>
+  <xsl:template name="formatHeadingNumber">
+      <xsl:param name="text"/>
+      <xsl:param name="toc"/>
+      <span class="headingNumber">
+	<xsl:copy-of select="$text"/>
+      </span>
   </xsl:template>
 
 </xsl:stylesheet>

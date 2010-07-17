@@ -18,7 +18,6 @@
   <xsl:import href="../xhtml2/tei.xsl"/>
   <xsl:import href="../xhtml2/tagdocs.xsl"/>
   <xsl:import href="RngToRnc.xsl"/>
-  <xsl:param name="xhtml">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making HTML from ODD </p>
@@ -447,10 +446,10 @@
             </xsl:when>
             <xsl:otherwise>
                <xsl:element name="h{$level}">
-                  <xsl:attribute name="class">
-                     <xsl:value-of select="$class"/>
-                  </xsl:attribute>
-                  <xsl:value-of select="$text"/>
+		 <xsl:attribute name="class">
+		   <xsl:value-of select="$class"/>
+		 </xsl:attribute>
+		 <xsl:value-of select="$text"/>
                </xsl:element>
             </xsl:otherwise>
          </xsl:choose>
@@ -840,18 +839,18 @@
       <xsl:param name="text"/>
       <xsl:param name="toc"/>
       <span class="headingNumber">
-         <xsl:choose>
-            <xsl:when test="$toc =''">
-               <xsl:copy-of select="$text"/>
-            </xsl:when>
-            <xsl:when test="number(normalize-space($text))&lt;10">
-               <xsl:text> </xsl:text>
-               <xsl:copy-of select="$text"/>
-            </xsl:when>
-            <xsl:otherwise>
-               <xsl:copy-of select="$text"/>
-            </xsl:otherwise>
-         </xsl:choose>
+	<xsl:choose>
+	  <xsl:when test="$toc =''">
+	    <xsl:copy-of select="$text"/>
+	  </xsl:when>
+	  <xsl:when test="number(normalize-space($text))&lt;10">
+	    <xsl:text> </xsl:text>
+	    <xsl:copy-of select="$text"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:copy-of select="$text"/>
+	  </xsl:otherwise>
+	    </xsl:choose>
       </span>
   </xsl:template>
   <xsl:template name="navInterSep"> </xsl:template>

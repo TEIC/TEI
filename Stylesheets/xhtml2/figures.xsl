@@ -144,18 +144,9 @@
 	              </xsl:choose>
 	  
 	              <xsl:if test="@xml:id">
-	                 <xsl:choose>
-	                    <xsl:when test="$xhtml='true'">
-		                      <xsl:attribute name="id">
-		                         <xsl:value-of select="@xml:id"/>
-		                      </xsl:attribute>
-	                    </xsl:when>
-	                    <xsl:otherwise>
-		                      <a class="f" name="{@xml:id}">
-		                         <xsl:comment> </xsl:comment>
-		                      </a>
-	                    </xsl:otherwise>
-	                 </xsl:choose>
+			<xsl:attribute name="id">
+			  <xsl:value-of select="@xml:id"/>
+			</xsl:attribute>
 	              </xsl:if>
 	              <xsl:if test="@file|@url|@entity">
 	                 <xsl:call-template name="showGraphic"/>
@@ -211,11 +202,6 @@
       <desc>Process element graphic</desc>
    </doc>
   <xsl:template match="tei:graphic">
-      <xsl:if test="@xml:id and $xhtml='false'">
-	        <a class="g" name="{@xml:id}">
-	           <xsl:comment> </xsl:comment>
-	        </a>
-      </xsl:if>
       <xsl:call-template name="showGraphic"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -389,7 +375,7 @@
                   <xsl:value-of select="$Alt"/>
                </xsl:attribute>
                <xsl:call-template name="imgHook"/>
-               <xsl:if test="@xml:id and $xhtml='true'">
+               <xsl:if test="@xml:id">
                   <xsl:attribute name="id">
                      <xsl:value-of select="@xml:id"/>
                   </xsl:attribute>

@@ -51,7 +51,7 @@
             <xsl:if test="not(preceding-sibling::tei:*) or preceding-sibling::tei:titlePage">
                <h2>
                   <xsl:apply-templates mode="xref" select="."/>
-	                 <xsl:call-template name="sectionHeadHook"/>
+		  <xsl:call-template name="sectionHeadHook"/>
                </h2>
                <xsl:if test="$topNavigationPanel='true'">
                   <xsl:call-template name="xrefpanel">
@@ -239,13 +239,6 @@
          <xsl:call-template name="navInterSep"/>
       </span>
       <a class="navigation">
-         <xsl:if test="$virtualPages='true'">
-	           <xsl:attribute name="onclick">
-	              <xsl:text>switchDiv('</xsl:text>
-	              <xsl:apply-templates mode="ident" select="."/>
-	              <xsl:text>');return false</xsl:text>
-	           </xsl:attribute>
-         </xsl:if>
          <xsl:attribute name="href">
 	           <xsl:apply-templates mode="generateLink" select="."/>
          </xsl:attribute>
@@ -267,13 +260,6 @@
          <xsl:call-template name="navInterSep"/>
       </span>
       <a class="navigation">
-         <xsl:if test="$virtualPages='true'">
-            <xsl:attribute name="onclick">
-               <xsl:text>switchDiv('</xsl:text>
-               <xsl:apply-templates mode="ident" select="."/>
-               <xsl:text>');return false</xsl:text>
-            </xsl:attribute>
-         </xsl:if>
          <xsl:attribute name="href">
             <xsl:apply-templates mode="generateLink" select="."/>
          </xsl:attribute>
@@ -337,14 +323,14 @@
                <xsl:when test="starts-with(local-name(),'div') and      $pageLayout='Table'      or      $pageLayout='CSS'">
                   <h2>
                      <xsl:apply-templates mode="xref" select="."/>
-	                    <xsl:call-template name="sectionHeadHook"/>
+		     <xsl:call-template name="sectionHeadHook"/>
                   </h2>
-	                 <xsl:if test="$topNavigationPanel='true'">
-	                    <xsl:call-template name="xrefpanel">
-		                      <xsl:with-param name="homepage" select="concat($masterFile,$standardSuffix)"/>
-		                      <xsl:with-param name="mode" select="local-name(.)"/>
-	                    </xsl:call-template>
-	                 </xsl:if>
+		  <xsl:if test="$topNavigationPanel='true'">
+		    <xsl:call-template name="xrefpanel">
+		      <xsl:with-param name="homepage" select="concat($masterFile,$standardSuffix)"/>
+		      <xsl:with-param name="mode" select="local-name(.)"/>
+		    </xsl:call-template>
+		  </xsl:if>
                   <xsl:call-template name="doDivBody"/>
                   <xsl:if test="$bottomNavigationPanel='true'">
                      <xsl:call-template name="xrefpanel">
@@ -387,10 +373,7 @@
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process element TEI</p>
-         <p>
-            <p xmlns="http://www.w3.org/1999/xhtml"> *****************************************</p>
-         </p>
+         <p>Process root element TEI</p>
       </desc>
    </doc>
   <xsl:template match="tei:TEI">
@@ -441,10 +424,7 @@
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process element TEI</p>
-         <p>
-            <p xmlns="http://www.w3.org/1999/xhtml"> *****************************************</p>
-         </p>
+         <p>Process root element TEI in splitting mode</p>
       </desc>
    </doc>
   <xsl:template match="tei:TEI" mode="split">
@@ -586,20 +566,7 @@
       </h2>
       <xsl:call-template name="mainTOC"/>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element div[@type='canto']</desc>
-   </doc>
-  <xsl:template match="tei:div[@type='canto']">
-      <xsl:variable name="divlevel" select="count(ancestor::tei:div)"/>
-      <xsl:element name="h{$divlevel + $divOffset}">
-         <xsl:call-template name="makeAnchor"/>
-         <xsl:call-template name="header">
-	           <xsl:with-param name="display">full</xsl:with-param>
-         </xsl:call-template>
-         <xsl:call-template name="sectionHeadHook"/>
-      </xsl:element>
-      <xsl:apply-templates/>
-  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element div*, @type='letter'</desc>
    </doc>
@@ -641,97 +608,99 @@
     <xsl:choose>
       <!-- -1. Override at top level -->
       <xsl:when test="ancestor::tei:floatingText">
-            <div>
-               <xsl:call-template name="divClassAttribute">
-                  <xsl:with-param name="depth" select="$depth"/>
-               </xsl:call-template>
-               <xsl:call-template name="doDivBody">
-                  <xsl:with-param name="Type" select="$depth"/>
-               </xsl:call-template>
-            </div>
-         </xsl:when>
-         <xsl:when test="ancestor::tei:TEI/@rend='all'">
-            <div>
-               <xsl:call-template name="divClassAttribute">
-                  <xsl:with-param name="depth" select="$depth"/>
-               </xsl:call-template>
-               <xsl:call-template name="doDivBody">
-                  <xsl:with-param name="Type" select="$depth"/>
-               </xsl:call-template>
-            </div>
-         </xsl:when>
-         <xsl:when test="ancestor::tei:TEI/@rend='frontpage'">
-            <div>
-               <xsl:call-template name="divClassAttribute">
-                  <xsl:with-param name="depth" select="$depth"/>
-               </xsl:call-template>
-               <xsl:call-template name="doDivBody">
-                  <xsl:with-param name="Type" select="$depth"/>
-               </xsl:call-template>
-            </div>
-         </xsl:when>
-	 <!--
-         <xsl:when test="ancestor::tei:text/parent::tei:group">
-            <div>
-               <xsl:call-template name="divClassAttribute">
-                  <xsl:with-param name="depth" select="$depth"/>
-               </xsl:call-template>
-               <xsl:call-template name="doDivBody">
-                  <xsl:with-param name="Type" select="$depth"/>
-               </xsl:call-template>
-            </div>
-         </xsl:when>
-	 -->
-         <!-- 0. We have gone far enough -->
+	<div>
+	  <xsl:call-template name="divClassAttribute">
+	    <xsl:with-param name="depth" select="$depth"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="doDivBody">
+	    <xsl:with-param name="Depth" select="$depth"/>
+	  </xsl:call-template>
+	</div>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:TEI/@rend='all'">
+	<div>
+	  <xsl:call-template name="divClassAttribute">
+	    <xsl:with-param name="depth" select="$depth"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="doDivBody">
+	    <xsl:with-param name="Depth" select="$depth"/>
+	  </xsl:call-template>
+	</div>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:TEI/@rend='frontpage'">
+	<div>
+	  <xsl:call-template name="divClassAttribute">
+	    <xsl:with-param name="depth" select="$depth"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="doDivBody">
+	    <xsl:with-param name="Depth" select="$depth"/>
+	  </xsl:call-template>
+	</div>
+      </xsl:when>
+      <!--
+	  <xsl:when test="ancestor::tei:text/parent::tei:group">
+	  <div>
+	  <xsl:call-template name="divClassAttribute">
+	  <xsl:with-param name="depth" select="$depth"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="doDivBody">
+	  <xsl:with-param name="Depth" select="$depth"/>
+	  </xsl:call-template>
+	  </div>
+	  </xsl:when>
+      -->
+      <!-- 0. We have gone far enough -->
       <xsl:when test="$depth = $splitLevel and $STDOUT='true'">
-            <xsl:if test="$virtualPages='true'">
-               <xsl:call-template name="makeDivPage">
-                  <xsl:with-param name="depth" select="$depth"/>
-               </xsl:call-template>
-            </xsl:if>
-         </xsl:when>
-         <!-- 1. our section depth is below the splitting level -->
+	<xsl:if test="$virtualPages='true'">
+	  <xsl:call-template name="makeDivPage">
+	    <xsl:with-param name="depth" select="$depth"/>
+	  </xsl:call-template>
+	</xsl:if>
+      </xsl:when>
+      <!-- 1. our section depth is below the splitting level -->
       <xsl:when test="number($depth) &gt; number($splitLevel) or         @rend='nosplit' or ancestor::tei:TEI/@rend='all' or         ancestor::tei:TEI/@rend='frontpage' or         ancestor::tei:TEI/@rend='nosplit'">
-            <div>
-               <xsl:call-template name="divClassAttribute">
-                  <xsl:with-param name="depth" select="$depth"/>
-               </xsl:call-template>
-               <xsl:call-template name="doDivBody">
-                  <xsl:with-param name="Type" select="$depth"/>
-               </xsl:call-template>
-            </div>
-         </xsl:when>
-         <!-- 2. we are at or above splitting level, 
+	<div>
+	  <xsl:call-template name="divClassAttribute">
+	    <xsl:with-param name="depth" select="$depth"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="doDivBody">
+	    <xsl:with-param name="Depth" select="$depth"/>
+	  </xsl:call-template>
+	</div>
+      </xsl:when>
+      <!-- 2. we are at or above splitting level, 
 	   so start a new page  -->
       <xsl:when test="number($depth) &lt;= number($splitLevel) and ancestor::tei:front         and $splitFrontmatter='true'">
-            <xsl:call-template name="makeDivPage">
-               <xsl:with-param name="depth" select="$depth"/>
-            </xsl:call-template>
-         </xsl:when>
-         <xsl:when test="number($depth) &lt;= number($splitLevel) and ancestor::tei:back and $splitBackmatter='true'">
-            <xsl:call-template name="makeDivPage">
-               <xsl:with-param name="depth" select="$depth"/>
-            </xsl:call-template>
-         </xsl:when>
-         <xsl:when test="number($depth) &lt;= number($splitLevel) and ancestor::tei:body">
-            <xsl:call-template name="makeDivPage">
-               <xsl:with-param name="depth" select="$depth"/>
-            </xsl:call-template>
-         </xsl:when>
-         <xsl:otherwise>
-            <div>
-               <xsl:call-template name="divClassAttribute">
-                  <xsl:with-param name="depth" select="$depth"/>
-               </xsl:call-template>
-               <xsl:call-template name="doDivBody">
-                  <xsl:with-param name="Type" select="$depth"/>
-               </xsl:call-template>
-            </div>
-         </xsl:otherwise>
-      </xsl:choose>
+	<xsl:call-template name="makeDivPage">
+	  <xsl:with-param name="depth" select="$depth"/>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:when test="number($depth) &lt;= number($splitLevel) and ancestor::tei:back and $splitBackmatter='true'">
+	<xsl:call-template name="makeDivPage">
+	  <xsl:with-param name="depth" select="$depth"/>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:when test="number($depth) &lt;= number($splitLevel) and ancestor::tei:body">
+	<xsl:call-template name="makeDivPage">
+	  <xsl:with-param name="depth" select="$depth"/>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<div>
+	  <xsl:call-template name="divClassAttribute">
+	    <xsl:with-param name="depth" select="$depth"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="doDivBody">
+	    <xsl:with-param name="Depth" select="$depth"/>
+	  </xsl:call-template>
+	</div>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Create a new output page for a section<param name="depth">depth of section (1, 2 3, 4 etc)</param>
+      <desc>Create a new output page for a section
+      <param name="depth">depth of section (1, 2 3, 4 etc)</param>
       </desc>
    </doc>
   <xsl:template name="makeDivPage">
@@ -748,7 +717,7 @@
                   </xsl:call-template>
                </xsl:if>
                <xsl:call-template name="doDivBody">
-                  <xsl:with-param name="Type" select="$depth"/>
+                  <xsl:with-param name="Depth" select="$depth"/>
                </xsl:call-template>
                <xsl:if test="$bottomNavigationPanel='true'">
                   <xsl:call-template name="xrefpanel">
@@ -957,18 +926,9 @@
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
-      <xsl:choose>
-         <xsl:when test="$xhtml='true'">
-            <xsl:attribute name="xml:lang">
-               <xsl:value-of select="$supplied"/>
-            </xsl:attribute>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:attribute name="lang">
-               <xsl:value-of select="$supplied"/>
-            </xsl:attribute>
-         </xsl:otherwise>
-      </xsl:choose>
+      <xsl:attribute name="lang">
+	<xsl:value-of select="$supplied"/>
+      </xsl:attribute>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
@@ -984,11 +944,6 @@
          <ul class="breadcrumb">
             <li class="breadcrumb-first">
                <a class="breadcrumb" href="{$homeURL}">
-	                 <xsl:if test="$xhtml='false'">
-	                    <xsl:attribute name="target">
-		                      <xsl:text>_top</xsl:text>
-	                    </xsl:attribute>
-	                 </xsl:if>
                   <xsl:value-of select="$homeLabel"/>
                </a>
             </li>
@@ -1004,96 +959,36 @@
          </ul>
       </div>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] <param name="Head">Head</param>
-      </desc>
-   </doc>
-  <xsl:template name="doBody">
-      <xsl:param name="Head"/>
-      <xsl:variable name="ident">
-         <xsl:apply-templates mode="ident" select="."/>
-      </xsl:variable>
-      <xsl:choose>
-         <xsl:when test="parent::tei:div/@rend='multicol'">
-            <td valign="top">
-               <xsl:if test="not($Head = '')">
-	                 <xsl:element name="h{$Head + $divOffset}">
-	                    <xsl:for-each select="tei:head[1]">
-		                      <xsl:call-template name="rendToClass">
-		                         <xsl:with-param name="default"/>
-		                      </xsl:call-template>
-	                    </xsl:for-each>
-	                    <xsl:if test="$xhtml='false'">
-                        <a name="{$ident}"/>
-                     </xsl:if>
-                     <xsl:call-template name="header">
-		                      <xsl:with-param name="display">full</xsl:with-param>
-	                    </xsl:call-template>
-	                    <xsl:call-template name="sectionHeadHook"/>
-	                 </xsl:element>
-               </xsl:if>
-               <xsl:apply-templates select="tei:text/tei:body"/>
-            </td>
-         </xsl:when>
-         <xsl:when test="@rend='multicol'">
-            <table>
-               <tr>
-                  <xsl:apply-templates select="tei:text/tei:body"/>
-               </tr>
-            </table>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:if test="not($Head = '')">
-               <xsl:element name="h{$Head + $divOffset}">
-	                 <xsl:for-each select="tei:head[1]">
-	                    <xsl:call-template name="rendToClass">
-		                      <xsl:with-param name="default"/>
-	                    </xsl:call-template>
-	                 </xsl:for-each>
-                  <xsl:if test="$xhtml='false'">
-                     <a name="{$ident}"/>
-                  </xsl:if>
-                  <xsl:call-template name="header">
-	                    <xsl:with-param name="display">full</xsl:with-param>
-	                 </xsl:call-template>
-	                 <xsl:call-template name="sectionHeadHook"/>
-	              </xsl:element>
-            </xsl:if>
-            <xsl:apply-templates select="tei:text/tei:body"/>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] Make a section<param name="Type">Type</param>
+      <desc>[html] Make a section heading
+      <param name="Depth">which head level to make</param>
       </desc>
    </doc>
   <xsl:template name="doDivBody">
-      <xsl:param name="Type"/>
+      <xsl:param name="Depth"/>
       <xsl:call-template name="startDivHook"/>
       <xsl:variable name="ident">
          <xsl:apply-templates mode="ident" select="."/>
       </xsl:variable>
       <xsl:choose>
-         <xsl:when test="parent::tei:div/@rend='multicol'">
-            <td valign="top">
-               <xsl:if test="not($Type = '')">
-                  <xsl:element name="h{$Type + $divOffset}">
-	                    <xsl:for-each select="tei:head[1]">		
-		                      <xsl:call-template name="rendToClass">
-		                         <xsl:with-param name="default"/>
-		                      </xsl:call-template>
-	                    </xsl:for-each>
-                     <xsl:if test="$xhtml='false'">
-                        <a name="{$ident}"/>
-                     </xsl:if>
-                     <xsl:call-template name="header">
-		                      <xsl:with-param name="display">full</xsl:with-param>
-	                    </xsl:call-template>
-	                    <xsl:call-template name="sectionHeadHook"/>
-                  </xsl:element>
-               </xsl:if>
-               <xsl:apply-templates/>
-            </td>
+         <xsl:when test="parent::tei:*/@rend='multicol'">
+	   <td valign="top">
+	     <xsl:if test="not($Depth = '')">
+	       <xsl:element name="h{$Depth + $divOffset}">
+		 <xsl:for-each select="tei:head[1]">		
+		   <xsl:call-template name="rendToClass">
+		     <xsl:with-param name="default"/>
+		   </xsl:call-template>
+		 </xsl:for-each>
+		 <xsl:call-template name="header">
+		   <xsl:with-param name="display">full</xsl:with-param>
+		 </xsl:call-template>
+		 <xsl:call-template name="sectionHeadHook"/>
+	       </xsl:element>
+	     </xsl:if>
+	     <xsl:apply-templates/>
+	   </td>
          </xsl:when>
          <xsl:when test="@rend='multicol'">
             <xsl:apply-templates select="*[not(local-name(.)='div')]"/>
@@ -1103,27 +998,35 @@
                </tr>
             </table>
          </xsl:when>
+	 <xsl:when test="@rend='nohead'">
+	   <xsl:apply-templates/>
+	 </xsl:when>
          <xsl:otherwise>
-            <xsl:if test="not($Type = '')">
-               <xsl:element name="h{$Type + $divOffset}">
-	                 <xsl:for-each select="tei:head[1]">
-	                    <xsl:call-template name="rendToClass">
-		                      <xsl:with-param name="default"/>
-	                    </xsl:call-template>
-	                 </xsl:for-each>
-                  <xsl:if test="$xhtml='false'">
-                     <a name="{$ident}"/>
-                  </xsl:if>
-                  <xsl:call-template name="header">
-	                    <xsl:with-param name="display">full</xsl:with-param>
-	                 </xsl:call-template>
-	                 <xsl:call-template name="sectionHeadHook"/>
+            <xsl:if test="not($Depth = '')">
+               <xsl:element name="h{$Depth + $divOffset}">
+		 <xsl:choose>
+		   <xsl:when test="@rend">
+		     <xsl:call-template name="rendToClass"/>
+		   </xsl:when>
+		   <xsl:otherwise>
+		     <xsl:for-each select="tei:head[1]">
+		       <xsl:call-template name="rendToClass">
+			 <xsl:with-param name="default"/>
+		       </xsl:call-template>
+		     </xsl:for-each>
+		   </xsl:otherwise>
+		 </xsl:choose>
+		 <xsl:call-template name="header">
+		   <xsl:with-param name="display">full</xsl:with-param>
+		 </xsl:call-template>
+		 <xsl:call-template name="sectionHeadHook"/>
                </xsl:element>
             </xsl:if>
             <xsl:apply-templates/>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] </desc>
    </doc>
@@ -1356,10 +1259,7 @@
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>[html] </p>
-         <p>
-            <p xmlns="http://www.w3.org/1999/xhtml"> *****************************************</p>
-         </p>
+         <p>What happens at the end of an HTML file [html] </p>
       </desc>
    </doc>
   <xsl:template name="htmlFileBottom">
@@ -1422,16 +1322,7 @@
   <xsl:template name="writeJavascript">
       <xsl:param name="content"/>
       <script type="text/javascript">
-         <xsl:choose>
-            <xsl:when test="$xhtml='true'">
-               <xsl:value-of select="$content"/>
-            </xsl:when>
-            <xsl:otherwise>
-               <xsl:comment>
-                  <xsl:value-of select="$content"/>
-               </xsl:comment>
-            </xsl:otherwise>
-         </xsl:choose>
+	<xsl:value-of select="$content"/>
       </script>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -1643,42 +1534,9 @@
          <xsl:call-template name="stdfooter"/>
       </xsl:if>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-         <p>[html] </p>
-         <p>
-            <p xmlns="http://www.w3.org/1999/xhtml"> *****************************************</p>
-         </p>
-      </desc>
-   </doc>
-  <xsl:template name="mainbody">
-      <xsl:comment> process front matter </xsl:comment>
-      <xsl:apply-templates select="tei:text/tei:front"/>
-      <xsl:if test="$autoToc='true' and (descendant::tei:div or descendant::tei:div1) and not(descendant::tei:divGen[@type='toc'])">
-         <h2>
-            <xsl:call-template name="i18n">
-               <xsl:with-param name="word">tocWords</xsl:with-param>
-            </xsl:call-template>
-         </h2>
-         <xsl:call-template name="mainTOC"/>
-      </xsl:if>
-      <xsl:choose>
-         <xsl:when test="tei:text/tei:group">
-            <xsl:apply-templates select="tei:text/tei:group"/>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:comment>process body matter </xsl:comment>
-            <xsl:call-template name="startHook"/>
-            <xsl:call-template name="doBody"/>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:comment>back matter </xsl:comment>
-      <xsl:apply-templates select="tei:text/tei:back"/>
-  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] Table of contents 
-      </desc>
+      <desc>[html] Table of contents       </desc>
    </doc>
   <xsl:template name="mainTOC">
       <xsl:choose>
@@ -1821,67 +1679,66 @@
       <html>
          <xsl:call-template name="addLangAtt"/>
          <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (4)</xsl:comment>
-         <xsl:text>
-</xsl:text>
+         <xsl:text>&#10;</xsl:text>
          <head>
-            <xsl:variable name="pagetitle">
-               <xsl:choose>
-                  <xsl:when test="$currentID=''">
-                     <xsl:call-template name="generateTitle"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-	                    <xsl:choose>
-		                      <xsl:when test="$currentID='current'">
-		                         <xsl:apply-templates mode="xref" select="."/>
-		                      </xsl:when>
-                        <xsl:when test="count(key('IDS',$currentID))&gt;0">
-                           <xsl:for-each select="key('IDS',$currentID)">
-                              <xsl:apply-templates mode="xref" select="."/>
-                           </xsl:for-each>
-                        </xsl:when>
-                        <xsl:otherwise>
-                           <xsl:apply-templates mode="xpath" select="descendant::text">
-                              <xsl:with-param name="xpath" select="$currentID"/>
-                              <xsl:with-param name="action" select="'header'"/>
-                           </xsl:apply-templates>
-                        </xsl:otherwise>
-                     </xsl:choose>
-	                    <xsl:text> - </xsl:text>
-	                    <xsl:call-template name="generateTitle"/>
-	                 </xsl:otherwise>
-               </xsl:choose>
-            </xsl:variable>
-            <title>
-               <xsl:value-of select="$htmlTitlePrefix"/>
-               <xsl:text> </xsl:text>
-               <xsl:value-of select="$pagetitle"/>
-            </title>
-            <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
-            <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-            <xsl:call-template name="headHook"/>
-            <xsl:call-template name="metaHTML">
-               <xsl:with-param name="title" select="$pagetitle"/>
-            </xsl:call-template>
-            <xsl:call-template name="includeCSS"/>
-            <xsl:call-template name="cssHook"/>
-            <xsl:call-template name="includeJavascript"/>
-            <xsl:call-template name="javascriptHook"/>
+	   <xsl:variable name="pagetitle">
+	     <xsl:choose>
+	       <xsl:when test="$currentID=''">
+		 <xsl:call-template name="generateTitle"/>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:choose>
+		   <xsl:when test="$currentID='current'">
+		     <xsl:apply-templates mode="xref" select="."/>
+		   </xsl:when>
+		   <xsl:when test="count(key('IDS',$currentID))&gt;0">
+		     <xsl:for-each select="key('IDS',$currentID)">
+		       <xsl:apply-templates mode="xref" select="."/>
+		     </xsl:for-each>
+		   </xsl:when>
+		   <xsl:otherwise>
+		     <xsl:apply-templates mode="xpath" select="descendant::text">
+		       <xsl:with-param name="xpath" select="$currentID"/>
+		       <xsl:with-param name="action" select="'header'"/>
+		     </xsl:apply-templates>
+		   </xsl:otherwise>
+		 </xsl:choose>
+		 <xsl:text> - </xsl:text>
+		 <xsl:call-template name="generateTitle"/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </xsl:variable>
+	   <title>
+	     <xsl:value-of select="$htmlTitlePrefix"/>
+	     <xsl:text> </xsl:text>
+	     <xsl:value-of select="$pagetitle"/>
+	   </title>
+	   <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+	   <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+	   <xsl:call-template name="headHook"/>
+	   <xsl:call-template name="metaHTML">
+	     <xsl:with-param name="title" select="$pagetitle"/>
+	   </xsl:call-template>
+	   <xsl:call-template name="includeCSS"/>
+	   <xsl:call-template name="cssHook"/>
+	   <xsl:call-template name="includeJavascript"/>
+	   <xsl:call-template name="javascriptHook"/>
          </head>
          <body>
-	    <xsl:copy-of select="tei:text/tei:body/@unload"/>
-	    <xsl:copy-of select="tei:text/tei:body/@onunload"/>
-            <xsl:call-template name="bodyHook"/>
-            <xsl:call-template name="bodyJavascriptHook"/>
-	           <xsl:call-template name="mainPage">
-	              <xsl:with-param name="currentID">
-	                 <xsl:value-of select="$currentID"/>
-	              </xsl:with-param>
-	           </xsl:call-template>
-            <xsl:call-template name="bodyEndHook"/>
+	   <xsl:copy-of select="tei:text/tei:body/@unload"/>
+	   <xsl:copy-of select="tei:text/tei:body/@onunload"/>
+	   <xsl:call-template name="bodyHook"/>
+	   <xsl:call-template name="bodyJavascriptHook"/>
+	   <xsl:call-template name="mainPage">
+	     <xsl:with-param name="currentID">
+	       <xsl:value-of select="$currentID"/>
+	     </xsl:with-param>
+	   </xsl:call-template>
+	   <xsl:call-template name="bodyEndHook"/>
          </body>
       </html>
   </xsl:template>
-
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] the main page structure</desc>
    </doc>
@@ -1985,22 +1842,10 @@
             </div>
          </div>
          <div id="rh-col">
-	           <xsl:choose>
-	              <xsl:when test="$xhtml='false'">
-	                 <a name="rh-column">
-	                    <xsl:comment>real top </xsl:comment>
-	                 </a>
-	              </xsl:when>
-	              <xsl:otherwise>
-	                 <a id="rh-column">
-                     <xsl:comment>real top </xsl:comment>
-                  </a>
-
-	              </xsl:otherwise>
-	           </xsl:choose>
-	           <div id="rh-col-top">
-	              <xsl:comment>top of right-hand column</xsl:comment>
-	              <xsl:call-template name="rh-col-top"/>
+	   <a id="rh-column"/>
+	   <div id="rh-col-top">
+	     <xsl:comment>top of right-hand column</xsl:comment>
+	     <xsl:call-template name="rh-col-top"/>
             </div>
             <div id="rh-col-bottom">
                <xsl:comment>bottom of right-hand column</xsl:comment>
@@ -2019,18 +1864,51 @@
          <xsl:call-template name="addLangAtt"/>
          <xsl:call-template name="htmlFileTop"/>
          <body class="simple" id="TOP">
-            <xsl:call-template name="bodyHook"/>
-            <xsl:call-template name="bodyJavascriptHook"/>
-            <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
-	              <div class="stdheader">
-	                 <xsl:call-template name="stdheader">
-	                    <xsl:with-param name="title">
-		                      <xsl:call-template name="generateTitle"/>
-	                    </xsl:with-param>
-	                 </xsl:call-template>
-	              </div>
-            </xsl:if>
-            <xsl:call-template name="mainbody"/>
+	   <xsl:copy-of select="tei:text/tei:body/@unload"/>
+	   <xsl:copy-of select="tei:text/tei:body/@onunload"/>
+	   <xsl:call-template name="bodyHook"/>
+	   <xsl:call-template name="bodyJavascriptHook"/>
+	   <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
+	     <div class="stdheader">
+	       <xsl:call-template name="stdheader">
+		 <xsl:with-param name="title">
+		   <xsl:call-template name="generateTitle"/>
+		 </xsl:with-param>
+	       </xsl:call-template>
+	     </div>
+	   </xsl:if>
+	    <xsl:comment> front matter </xsl:comment>
+	    <xsl:apply-templates select="tei:text/tei:front"/>
+	    <xsl:if test="$autoToc='true' and (descendant::tei:div or descendant::tei:div1) and not(descendant::tei:divGen[@type='toc'])">
+	      <h2>
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">tocWords</xsl:with-param>
+		</xsl:call-template>
+	      </h2>
+	      <xsl:call-template name="mainTOC"/>
+	    </xsl:if>
+	    <xsl:choose>
+	      <xsl:when test="tei:text/tei:group">
+		<xsl:apply-templates select="tei:text/tei:group"/>
+	      </xsl:when>
+	      <xsl:when test="@rend='multicol'">
+		<table>
+		  <tr>
+		    <xsl:apply-templates select="tei:text/tei:body"/>
+		  </tr>
+		</table>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:comment>body matter </xsl:comment>
+		<xsl:call-template name="startHook"/>
+		<xsl:variable name="ident">
+		  <xsl:apply-templates mode="ident" select="."/>
+		</xsl:variable>
+		<xsl:apply-templates select="tei:text/tei:body"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	    <xsl:comment>back matter </xsl:comment>
+	    <xsl:apply-templates select="tei:text/tei:back"/>
             <xsl:call-template name="printNotes"/>
             <xsl:call-template name="htmlFileBottom"/>
             <xsl:call-template name="bodyEndHook"/>
@@ -2046,8 +1924,7 @@
       <html>
          <xsl:call-template name="addLangAtt"/>
          <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (1)</xsl:comment>
-         <xsl:text>
-</xsl:text>
+         <xsl:text>&#10;</xsl:text>
          <head>
             <xsl:variable name="pagetitle">
                <xsl:choose>
@@ -2214,42 +2091,24 @@
             <div class="footer">
                <xsl:if test="not($parentURL='')">
                   <a class="{$style}" href="{$parentURL}">
-	                    <xsl:if test="$xhtml='false'">
-	                       <xsl:attribute name="target">
-		                         <xsl:text>_top</xsl:text>
-	                       </xsl:attribute>
-	                    </xsl:if>
                      <xsl:value-of select="$parentWords"/>
                   </a> | </xsl:if>
                <a class="{$style}" href="{$homeURL}">
-	                 <xsl:if test="$xhtml='false'">
-	                    <xsl:attribute name="target">
-		                      <xsl:text>_top</xsl:text>
-	                    </xsl:attribute>
-	                 </xsl:if>
                   <xsl:value-of select="$homeWords"/>
                </a>
-               <xsl:if test="$searchURL"> | <a class="{$style}" href="{$searchURL}">
-	                    <xsl:if test="$xhtml='false'">
-	                       <xsl:attribute name="target">
-		                         <xsl:text>_top</xsl:text>
-	                       </xsl:attribute>
-	                    </xsl:if>
-	                    <xsl:call-template name="i18n">
-	                       <xsl:with-param name="word">searchWords</xsl:with-param>
-	                    </xsl:call-template>            
-                  </a>
+               <xsl:if test="$searchURL">
+		 <xsl:text>| </xsl:text>
+		 <a class="{$style}" href="{$searchURL}">
+		   <xsl:call-template name="i18n">
+		     <xsl:with-param name="word">searchWords</xsl:with-param>
+		   </xsl:call-template>            
+		 </a>
                </xsl:if>
                <xsl:if test="$feedbackURL"> | <a class="{$style}" href="{$feedbackURL}">
-	                    <xsl:if test="$xhtml='false'">
-	                       <xsl:attribute name="target">
-		                         <xsl:text>_top</xsl:text>
-	                       </xsl:attribute>
-	                    </xsl:if>
-	                    <xsl:call-template name="i18n">
-	                       <xsl:with-param name="word">feedbackWords</xsl:with-param>
-	                    </xsl:call-template>
-                  </a>
+	       <xsl:call-template name="i18n">
+		 <xsl:with-param name="word">feedbackWords</xsl:with-param>
+	       </xsl:call-template>
+	     </a>
                </xsl:if>
             </div>
             <hr/>
@@ -2297,46 +2156,29 @@
       <xsl:if test="$linkPanel='true'">
          <div class="footer">
             <a class="{$style}">
-	              <xsl:if test="$xhtml='false'">
-	                 <xsl:attribute name="target">
-		                   <xsl:text>_top</xsl:text>
-	                 </xsl:attribute>
-	              </xsl:if>
-               <xsl:attribute name="href">
-                  <xsl:value-of select="concat($BaseFile,$standardSuffix)"/>
-                  <xsl:text>?style=printable</xsl:text>
-               </xsl:attribute>
-               <xsl:call-template name="singleFileLabel"/>
+	      <xsl:attribute name="href">
+		<xsl:value-of select="concat($BaseFile,$standardSuffix)"/>
+		<xsl:text>?style=printable</xsl:text>
+	      </xsl:attribute>
+	      <xsl:call-template name="singleFileLabel"/>
             </a>
          </div>
          <hr/>
          <div class="footer">
             <xsl:if test="$searchURL">
                <a class="{$style}" href="{$searchURL}">
-	                 <xsl:if test="$xhtml='false'">
-	                    <xsl:attribute name="target">
-		                      <xsl:text>_top</xsl:text>
-	                    </xsl:attribute>
-	                 </xsl:if>
-	                 <xsl:call-template name="i18n">
-	                    <xsl:with-param name="word">searchWords</xsl:with-param>
-	                 </xsl:call-template>
+		 <xsl:call-template name="i18n">
+		   <xsl:with-param name="word">searchWords</xsl:with-param>
+		 </xsl:call-template>
                </a>
             </xsl:if>
             <xsl:if test="$feedbackURL">
                <br/>
-               <xsl:text>
-</xsl:text>
+               <xsl:text>&#10;</xsl:text>
                <br/>
-               <xsl:text>
-</xsl:text>
+               <xsl:text>&#10;</xsl:text>
                <a class="{$style}" href="{$feedbackURL}">
-	                 <xsl:if test="$xhtml='false'">
-	                    <xsl:attribute name="target">
-		                      <xsl:text>_top</xsl:text>
-	                    </xsl:attribute>
-	                 </xsl:if>
-                  <xsl:call-template name="feedbackWords"/>
+		 <xsl:call-template name="feedbackWords"/>
                </a>
             </xsl:if>
          </div>
@@ -2498,11 +2340,6 @@
                   <td align="right" class="summarycell" valign="top">
                      <b>
                         <a class="nolink">
-		                         <xsl:if test="$xhtml='false'">
-		                            <xsl:attribute name="target">
-		                               <xsl:text>_top</xsl:text>
-		                            </xsl:attribute>
-		                         </xsl:if>
                            <xsl:attribute name="href">
                               <xsl:apply-templates mode="generateLink" select="."/>
                            </xsl:attribute>
@@ -2613,24 +2450,16 @@
                   <xsl:attribute name="class">
                      <xsl:value-of select="$style"/>
                   </xsl:attribute>
-                  <xsl:if test="$virtualPages='true'">
-                     <xsl:attribute name="onclick">
-                        <xsl:text>switchDiv('</xsl:text>
-                        <xsl:apply-templates mode="ident" select="."/>
-                        <xsl:text>');return false</xsl:text>
-                     </xsl:attribute>
-                  </xsl:if>
                   <xsl:attribute name="href">
                      <xsl:apply-templates mode="generateLink" select="."/>
                   </xsl:attribute>
                   <xsl:call-template name="header">
-	                    <xsl:with-param name="display">simple</xsl:with-param>
-	                 </xsl:call-template>
+		    <xsl:with-param name="display">simple</xsl:with-param>
+		  </xsl:call-template>
                </a>
             </xsl:otherwise>
          </xsl:choose>
-         <xsl:text>
-</xsl:text>
+         <xsl:text>&#10;</xsl:text>
          <xsl:call-template name="tocSection">
             <xsl:with-param name="style" select="$style"/>
             <xsl:with-param name="id" select="$id"/>
@@ -2724,17 +2553,12 @@
                      </xsl:when>
                      <xsl:otherwise>
                         <a class="{$class}">
-		                         <xsl:if test="$xhtml='false'">
-		                            <xsl:attribute name="target">
-		                               <xsl:text>_top</xsl:text>
-		                            </xsl:attribute>
-		                         </xsl:if>
-                           <xsl:attribute name="href">
-		                            <xsl:value-of select="$whole"/>
-		                            <xsl:value-of select="$current"/>
-		                            <xsl:text>/</xsl:text>
-		                         </xsl:attribute>
-		                         <xsl:value-of select="$current"/>
+			  <xsl:attribute name="href">
+			    <xsl:value-of select="$whole"/>
+			    <xsl:value-of select="$current"/>
+			    <xsl:text>/</xsl:text>
+			  </xsl:attribute>
+			  <xsl:value-of select="$current"/>
                         </a>
                      </xsl:otherwise>
                   </xsl:choose>
@@ -2757,16 +2581,11 @@
                <xsl:call-template name="aCrumb">
                   <xsl:with-param name="crumbBody">
                      <a class="{$class}">
-		                      <xsl:if test="$xhtml='false'">
-		                         <xsl:attribute name="target">
-		                            <xsl:text>_top</xsl:text>
-		                         </xsl:attribute>
-		                      </xsl:if>
-		                      <xsl:attribute name="href">
-		                         <xsl:value-of select="$whole"/>
-		                         <xsl:value-of select="$path"/>
-		                      </xsl:attribute>
-                        <xsl:value-of select="$path"/>
+		       <xsl:attribute name="href">
+			 <xsl:value-of select="$whole"/>
+			 <xsl:value-of select="$path"/>
+		       </xsl:attribute>
+		       <xsl:value-of select="$path"/>
                      </a>
                   </xsl:with-param>
                </xsl:call-template>
@@ -2883,8 +2702,7 @@
          <body class="framemenu">
             <xsl:call-template name="logoPicture"/>
             <br/>
-            <xsl:text>
-</xsl:text>
+            <xsl:text>&#10;</xsl:text>
             <xsl:call-template name="linkListContents">
                <xsl:with-param name="style" select="'toclist'"/>
             </xsl:call-template>
