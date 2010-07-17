@@ -541,17 +541,19 @@
    </doc>
   <xsl:template name="purgeCSS">
     <xsl:choose>
-      <xsl:when test="contains(.,'clear:')"/>
-      <xsl:when test="contains(.,'float:')"/>
-      <xsl:when test="contains(.,'font-size:')"/>
       <xsl:when test="contains(.,'line-height:')"/>
       <xsl:when test="contains(.,'max-width:')"/>
-      <xsl:when test="contains(.,'width:')"/>
       <xsl:when test="contains(.,'height:')"/>
       <xsl:when test="contains(.,'text-indent:')"/>
+<!--
+      <xsl:when test="contains(.,'clear:')"/>
+      <xsl:when test="contains(.,'padding')"/>
+      <xsl:when test="contains(.,'float:')"/>
+      <xsl:when test="contains(.,'font-size:')"/>
+      <xsl:when test="contains(.,'width:')"/>
       <xsl:when test="contains(.,'margin')"/>
       <xsl:when test="contains(.,'border')"/>
-      <xsl:when test="contains(.,'padding')"/>
+-->
       <xsl:otherwise>
 	<xsl:value-of select="."/>
 	<xsl:text>&#10;</xsl:text>

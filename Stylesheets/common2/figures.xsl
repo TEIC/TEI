@@ -70,7 +70,14 @@
             </xsl:if>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:text>this table</xsl:text>
+	   <xsl:choose>
+            <xsl:when test="tei:head">
+               <xsl:apply-templates mode="plain" select="tei:head"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>table</xsl:text>
+	    </xsl:otherwise>
+	   </xsl:choose>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
