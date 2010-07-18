@@ -80,11 +80,6 @@
          <xsl:text>#</xsl:text>
       </xsl:variable>
       <xsl:choose>
-         <xsl:when test="$rawXML='true' and number($depth) &lt;= number($splitLevel)">
-            <xsl:text>JavaScript:void(gotoSection('','</xsl:text>
-            <xsl:value-of select="$ident"/>
-            <xsl:text>'));</xsl:text>
-         </xsl:when>
          <xsl:when test="$STDOUT='true' and number($depth) &lt;= number($splitLevel)">
             <xsl:value-of select="$masterFile"/>
             <xsl:value-of select="$standardSuffix"/>
@@ -126,13 +121,6 @@
                <xsl:call-template name="locateParentdiv"/>
             </xsl:variable>
             <xsl:choose>
-               <xsl:when test="$rawXML='true'">
-                  <xsl:text>JavaScript:void(gotoSection("</xsl:text>
-                  <xsl:value-of select="$ident"/>
-                  <xsl:text>","</xsl:text>
-                  <xsl:value-of select="$parent"/>
-                  <xsl:text>"));</xsl:text>
-               </xsl:when>
                <xsl:when test="$STDOUT='true'">
                   <xsl:value-of select="$masterFile"/>
                   <xsl:value-of select="$urlChunkPrefix"/>

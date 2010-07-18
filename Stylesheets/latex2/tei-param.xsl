@@ -36,6 +36,12 @@
       </desc>
    </doc>
 
+
+  <xsl:key name="FOOTNOTES" match="tei:note[not(@place)]" use="1"/>
+  <xsl:key name="FOOTNOTES" match="tei:note[@place='foot']" use="1"/>
+  <xsl:key name="FOOTNOTES" match="tei:note[@place='bottom']" use="1"/>
+  <xsl:key name="ENDNOTES" match="tei:note[@place='end']" use="1"/>
+
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
       <desc>[latex] Hook where LaTeX commands can be inserted after 
 the beginning of the document</desc>

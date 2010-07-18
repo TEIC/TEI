@@ -32,6 +32,8 @@
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
+  <xsl:key name="NOTES" match="tei:note[not(parent::tei:bibl)]" use="1"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
       <desc>
 CSS class for links derived from &lt;ptr&gt;
@@ -599,12 +601,7 @@ layout</li>
       </desc>
    </doc>
   <xsl:param name="pageLayout">Simple</xsl:param>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="boolean">
-      <desc>
-Pass through input essentially unchanged
-</desc>
-   </doc>
-  <xsl:param name="rawXML">false</xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="boolean">
       <desc>
 Break back matter into separate HTML pages (if splitting enabled).
@@ -636,7 +633,6 @@ Suffix for generated output files.
    </doc>
   <xsl:param name="standardSuffix">
       <xsl:choose>
-         <xsl:when test="$rawXML='true'">.xml</xsl:when>
          <xsl:when test="tei:teiCorpus">.html</xsl:when>
          <xsl:when test="$STDOUT='true'"/>
          <xsl:otherwise>
