@@ -117,6 +117,17 @@
 	      <xsl:when
 		  test="self::w:r/w:fldChar[@w:fldCharType='begin']">
 		<ref>
+		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'NOTEREF')">
+		    <xsl:attribute name="rend">
+		      <xsl:text>noteref</xsl:text>
+		    </xsl:attribute>
+		  </xsl:if>
+		  <!-- not sure iso:class is used now... -->
+		  <xsl:if test="following-sibling::w:r[w:rPr/w:rStyle]">
+		    <xsl:attribute name="iso:class">
+		      <xsl:value-of select="following-sibling::w:r[w:rPr/w:rStyle][1]/w:rPr/w:rStyle/@w:val"/>
+		    </xsl:attribute>
+		  </xsl:if>
 		  <xsl:for-each select="current-group()">
 		    <xsl:if test="self::w:r[w:instrText]">			    
 			<xsl:variable name="ref">

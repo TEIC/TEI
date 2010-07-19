@@ -2001,7 +2001,26 @@
       <w:r>
 	<xsl:choose>
 	  <xsl:when test="starts-with(@target,'#')">
-	    <w:instrText>REF _<xsl:value-of select="substring(@target,2)"/> \n \h</w:instrText>
+	    <w:instrText>
+	      <xsl:choose>
+		<xsl:when test="contains(@rend,'noteref')">
+		  <xsl:text>NOTEREF _</xsl:text>
+		</xsl:when>
+		<xsl:when test="contains(@rend,'ref')">
+		  <xsl:text>REF _</xsl:text>
+		</xsl:when>
+	      </xsl:choose>
+	      <xsl:value-of select="substring(@target,2)"/>
+	      <xsl:if test="contains(@rend,'formatted')">
+		<xsl:text> \f</xsl:text>
+		<!-- "For a footnote, \f inserts the reference mark with
+		     the same character formatting as the Footnote
+		     Reference style. For an endnote, inserts it with
+		     the same char formatting as the Endnote Reference
+		     style. -->
+	      </xsl:if>
+	      <xsl:text> \h  \* MERGEFORMAT</xsl:text>
+	    </w:instrText>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <w:instrText>HYPERLINK "<xsl:value-of select="@target"/>" \h</w:instrText>
@@ -2012,9 +2031,23 @@
 	<w:fldChar w:fldCharType="separate"/>
       </w:r>
 
+
       <w:r>
+	<xsl:variable name="rPr">
+	  <xsl:apply-templates>
+	    <xsl:with-param name="character-style" select="@iso:class"/>
+	  </xsl:apply-templates>
+	</xsl:variable>
 	<w:rPr>
-	  <w:rStyle w:val="Hyperlink"/>
+	  <!-- style is Hyperlink unless otherwise specified in generated rPr -->	
+	  <xsl:choose>
+	    <xsl:when test="$rPr/w:r/w:rPr/w:rStyle/@w:val">
+	      <w:rStyle w:val="{$rPr/w:r/w:rPr/w:rStyle/@w:val}"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <w:rStyle w:val="Hyperlink"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	  <xsl:copy-of select="$anchor/w:r/w:rPr/*[not(self::w:rStyle)]"/>
 	  <xsl:if test="ancestor::tei:p[@rend='Special']">
 	    <w:rFonts w:ascii="Courier New" w:hAnsi="Courier New"/>

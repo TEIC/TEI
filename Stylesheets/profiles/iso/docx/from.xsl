@@ -773,10 +773,7 @@
 		</xsl:value-of>
 	      </xsl:variable>
 	      <xsl:choose>
-		<xsl:when test="starts-with($ref,' REF')">
-		  <xsl:call-template name="basicStyles"/>
-		</xsl:when>
-		<xsl:when test="starts-with($ref,'REF')">
+		<xsl:when test="starts-with($ref,' REF') or starts-with($ref,'REF')">
 		  <xsl:call-template name="basicStyles"/>
 		</xsl:when>
 		<xsl:otherwise>
@@ -842,6 +839,7 @@
                     <xsl:apply-templates/>
                 </seg>
             </xsl:when>
+
             <xsl:when test="$style='FootnoteReference'">
 	      <hi rend="FootnoteReference">
 		<xsl:apply-templates/>
