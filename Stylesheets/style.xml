@@ -647,9 +647,13 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="autoMakeHead" type="textarea"
                                cols="40"
                                rows="5">
+ &lt;span class="element"&gt;&lt;xsl:param name="&lt;span class="attributevalue"&gt;display&lt;/span&gt;"/&gt;&lt;/span&gt;
  &lt;span class="element"&gt;&lt;xsl:choose&gt;&lt;/span&gt;
+  &lt;span class="element"&gt;&lt;xsl:when test="&lt;span class="attributevalue"&gt;tei:head and $display='full'&lt;/span&gt;"&gt;&lt;/span&gt;
+   &lt;span class="element"&gt;&lt;xsl:apply-templates select="&lt;span class="attributevalue"&gt;tei:head&lt;/span&gt;" mode="&lt;span class="attributevalue"&gt;makeheading&lt;/span&gt;"/&gt;&lt;/span&gt;
+  &lt;span class="element"&gt;&lt;/xsl:when&gt;&lt;/span&gt;
   &lt;span class="element"&gt;&lt;xsl:when test="&lt;span class="attributevalue"&gt;tei:head&lt;/span&gt;"&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;xsl:apply-templates mode="&lt;span class="attributevalue"&gt;plain&lt;/span&gt;" select="&lt;span class="attributevalue"&gt;tei:head&lt;/span&gt;"/&gt;&lt;/span&gt;
+   &lt;span class="element"&gt;&lt;xsl:apply-templates select="&lt;span class="attributevalue"&gt;tei:head&lt;/span&gt;" mode="&lt;span class="attributevalue"&gt;plain&lt;/span&gt;"/&gt;&lt;/span&gt;
   &lt;span class="element"&gt;&lt;/xsl:when&gt;&lt;/span&gt;
   &lt;span class="element"&gt;&lt;xsl:when test="&lt;span class="attributevalue"&gt;@type&lt;/span&gt;"&gt;&lt;/span&gt;
    &lt;span class="element"&gt;&lt;xsl:value-of select="&lt;span class="attributevalue"&gt;@type&lt;/span&gt;"/&gt;&lt;/span&gt;
@@ -1074,17 +1078,6 @@ layoutTable: The page is created as an HTML table
                </row>
                <row>
                   <cell>
-                     <hi>rawXML</hi>
-                  </cell>
-                  <cell>
-                     <input xmlns="http://www.w3.org/1999/xhtml" name="rawXML" type="checkbox" value="true"/>
-                  </cell>
-                  <cell>
-Pass through input essentially unchanged
-</cell>
-               </row>
-               <row>
-                  <cell>
                      <hi>splitBackmatter</hi>
                   </cell>
                   <cell>
@@ -1136,7 +1129,6 @@ all.
                                cols="40"
                                rows="5">
  &lt;span class="element"&gt;&lt;xsl:choose&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:when test="&lt;span class="attributevalue"&gt;$rawXML='true'&lt;/span&gt;"&gt;&lt;/span&gt;.xml&lt;span class="element"&gt;&lt;/xsl:when&gt;&lt;/span&gt;
   &lt;span class="element"&gt;&lt;xsl:when test="&lt;span class="attributevalue"&gt;tei:teiCorpus&lt;/span&gt;"&gt;&lt;/span&gt;.html&lt;span class="element"&gt;&lt;/xsl:when&gt;&lt;/span&gt;
   &lt;span class="element"&gt;&lt;xsl:when test="&lt;span class="attributevalue"&gt;$STDOUT='true'&lt;/span&gt;"/&gt;&lt;/span&gt;
   &lt;span class="element"&gt;&lt;xsl:otherwise&gt;&lt;/span&gt;

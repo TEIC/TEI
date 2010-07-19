@@ -28,6 +28,7 @@ echo " --uid=XXX                supply unique URN for ebook"
 echo " --publisher=XXX                supply name of publisher for ebook"
 echo " --subject=XXX                supply subject/category for ebook"
 echo " --coverimage=XXX                supply name of JPEG file for ebook cover"
+echo " --css=XXX                supply name of CSS file"
 echo " --debug                    emit some diagnostics" 
 echo " --verbose                 be verbose"
 }
@@ -35,6 +36,7 @@ echo " --verbose                 be verbose"
 publisher=
 coverimage=
 cover=
+cssfile=
 conversion=
 subject=
 profile=default
@@ -48,6 +50,7 @@ while test $# -gt 0; do
     --uid=*)  uid=`echo $1 | sed 's/.*=//'`;;
     --publisher=*)  publisher=publisher=`echo $1 | sed 's/.*=//'`;;
     --subject=*)  subject="`echo $1 | sed 's/.*=//'`";;
+    --css=*)  cssfile=`echo $1 | sed 's/.*=//'`;;
     --coverimage=*)  cover=`echo $1 | sed 's/.*=//'`;;
     --conversion=*)  conversion=`echo $1 | sed 's/.*=//'`;;
     --odd)       odd=true;;
@@ -86,6 +89,12 @@ then
 else
   TOXSL=$conversion
 fi
+if test "x$cssfile" = "x"
+then
+  CSS=
+else
+  CSS=cssFile=$cssfile
+fi
 mkdir -p $TEMPDIR/OEBPS/media
 case $DOCHOME/$F in 
        *.zip)  (cd $TEMPDIR; unzip -q $DOCHOME/$F ); F=`basename $F .zip`.xml;; 
@@ -111,7 +120,7 @@ then
 else
     ln -s $F tmp2.xml
 fi
-saxon  tmp2.xml $TOXSL  $coverimage $publisher subject="$subject" uid=$uid odd=$odd debug=$debug verbose=$verbose
+saxon  tmp2.xml $TOXSL  $coverimage $publisher subject="$subject" uid=$uid odd=$odd debug=$debug verbose=$verbose $CSS
 if $debug 
 then
     echo leaving tmp[123].xml alone

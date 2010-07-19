@@ -584,4 +584,6 @@
     </div>
   </xsl:template>
 
+  <xsl:template name="addLangAtt"/>
+
 </xsl:stylesheet>
