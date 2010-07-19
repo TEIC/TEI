@@ -368,7 +368,11 @@
 		  </div>
 		</xsl:when>
 		<xsl:otherwise>
-		  <img width="600" height="800" src="{$coverimage}"/>
+		  <div>
+		    <img width="600" height="800"
+			 alt="cover picture"
+			 src="{$coverimage}"/>
+		  </div>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </body>

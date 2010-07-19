@@ -74,10 +74,20 @@
     <desc>Process element ab</desc>
   </doc>
   <xsl:template match="tei:ab">
-    <div>
-      <xsl:call-template name="rendToClass"/>
-      <xsl:apply-templates/>
-    </div>
+    <xsl:choose>
+      <xsl:when test="parent::tei:title or parent::tei:stage">
+	<xsl:apply-templates/>
+	<xsl:if test="following-sibling::tei:ab">
+	  <br/>
+	</xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+	<div>
+	  <xsl:call-template name="rendToClass"/>
+	  <xsl:apply-templates/>
+	</div>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element addrLine</desc>
@@ -567,13 +577,16 @@
     <desc>Process element label</desc>
   </doc>
   <xsl:template match="tei:label">
-    <xsl:call-template name="makeAnchor"/>
-    <xsl:apply-templates/>
+    <span>
+      <xsl:call-template name="makeAnchor"/>
+      <xsl:apply-templates/>
+    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element label</desc>
   </doc>
   <xsl:template match="tei:label" mode="print">
+    <span>
     <xsl:call-template name="makeAnchor"/>
     <xsl:choose>
       <xsl:when test="@rend">
@@ -589,13 +602,16 @@
         <xsl:apply-templates/>
       </xsl:otherwise>
     </xsl:choose>
+    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element lb</desc>
   </doc>
   <xsl:template match="tei:lb">
     <br>
-      <xsl:call-template name="rendering"/>
+      <xsl:if test="@rend and not(@rend='-')">
+	<xsl:attribute name="class" select="@rend"/>
+      </xsl:if>
     </br>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -830,12 +846,14 @@
     <xsl:variable name="ident">
       <xsl:apply-templates mode="ident" select="."/>
     </xsl:variable>
-    <xsl:call-template name="makeAnchor">
-      <xsl:with-param name="name">
-        <xsl:value-of select="$ident"/>
-      </xsl:with-param>
-    </xsl:call-template>
-    <xsl:apply-templates/>
+    <span>
+      <xsl:call-template name="makeAnchor">
+	<xsl:with-param name="name">
+	  <xsl:value-of select="$ident"/>
+	</xsl:with-param>
+      </xsl:call-template>
+      <xsl:apply-templates/>
+    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element note</desc>
@@ -846,7 +864,11 @@
       <xsl:call-template name="noteID"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="ancestor::tei:bibl"> (<xsl:apply-templates/>)
+      <xsl:when test="@place='none'"/>
+      <xsl:when test="ancestor::tei:bibl">
+	<xsl:text>(</xsl:text>
+	<xsl:apply-templates/>
+	<xsl:text>)</xsl:text>
       </xsl:when>
       <xsl:when test="@place='marg' and tei:p">
         <div class="margnote">
@@ -865,18 +887,20 @@
         </span>
       </xsl:when>
       <xsl:when test="@place='inline'">
-        <xsl:call-template name="makeAnchor">
-          <xsl:with-param name="name" select="$identifier"/>
-        </xsl:call-template>
-        <xsl:text> (</xsl:text>
-        <xsl:apply-templates/>
-        <xsl:text>)</xsl:text>
+	<span>
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name" select="$identifier"/>
+	  </xsl:call-template>
+	  <xsl:text> (</xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>)</xsl:text>
+	</span>
       </xsl:when>
       <xsl:when test="@place='display'">
-        <xsl:call-template name="makeAnchor">
-          <xsl:with-param name="name" select="$identifier"/>
-        </xsl:call-template>
         <blockquote>
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name" select="$identifier"/>
+	  </xsl:call-template>
           <xsl:call-template name="rendToClass"/>
           <p>
             <xsl:apply-templates/>
@@ -884,10 +908,11 @@
         </blockquote>
       </xsl:when>
       <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
-        <xsl:call-template name="makeAnchor">
+        <span>
+	  <xsl:call-template name="makeAnchor">
           <xsl:with-param name="name" select="concat($identifier,'_return')"/>
-        </xsl:call-template>
-        <xsl:choose>
+	  </xsl:call-template>
+	  <xsl:choose>
           <xsl:when test="$footnoteFile='true'">
             <a class="notelink" title="Go to note" href="{$masterFile}-notes.html#{$identifier}">
               <sup>
@@ -903,18 +928,21 @@
             </a>
           </xsl:otherwise>
         </xsl:choose>
+	</span>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="makeAnchor">
-          <xsl:with-param name="name" select="$identifier"/>
-        </xsl:call-template>
-        <xsl:text> [</xsl:text>
-        <xsl:call-template name="i18n">
-          <xsl:with-param name="word">Note</xsl:with-param>
-        </xsl:call-template>
-        <xsl:text>: </xsl:text>
-        <xsl:apply-templates/>
-        <xsl:text>]</xsl:text>
+	<span>
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name" select="$identifier"/>
+	  </xsl:call-template>
+	  <xsl:text> [</xsl:text>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Note</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text>: </xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>]</xsl:text>
+	</span>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -989,11 +1017,12 @@
     <xsl:choose>
       <xsl:when test="$pagebreakStyle='active'">
         <div class="pagebreak">
-          <xsl:call-template name="makeAnchor"/>
+          <xsl:call-template name="rendToClass"/>
         </div>
       </xsl:when>
-      <xsl:when test="$pagebreakStyle='visible'">
-        <span class="pagebreak">
+      <xsl:when test="$pagebreakStyle='visible' and parent::tei:body">
+        <div class="pagebreak">
+          <xsl:call-template name="makeAnchor"/>
           <xsl:text> [</xsl:text>
           <xsl:call-template name="i18n">
             <xsl:with-param name="word">page</xsl:with-param>
@@ -1002,11 +1031,24 @@
             <xsl:text> </xsl:text>
             <xsl:value-of select="@n"/>
           </xsl:if>
+          <xsl:text>] </xsl:text>
+        </div>
+      </xsl:when>
+      <xsl:when test="$pagebreakStyle='visible'">
+        <span class="pagebreak">
           <xsl:call-template name="makeAnchor"/>
+          <xsl:text> [</xsl:text>
+          <xsl:call-template name="i18n">
+            <xsl:with-param name="word">page</xsl:with-param>
+          </xsl:call-template>
+          <xsl:if test="@n">
+            <xsl:text> </xsl:text>
+            <xsl:value-of select="@n"/>
+          </xsl:if>
           <xsl:text>] </xsl:text>
         </span>
       </xsl:when>
-      <xsl:otherwise> </xsl:otherwise>
+      <xsl:otherwise/>
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -1030,27 +1072,22 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:element name="{$wrapperElement}">
+      <xsl:variable name="ident">
+	<xsl:choose>
+	  <xsl:when test="@xml:id">
+	    <xsl:value-of select="@xml:id"/>
+	  </xsl:when>
+	  <xsl:when test="$generateParagraphIDs='true'">
+	    <xsl:value-of select="generate-id()"/>
+	  </xsl:when>
+	</xsl:choose>
+      </xsl:variable>
       <xsl:call-template name="rendToClass">
+        <xsl:with-param name="id" select="$ident"/>
         <xsl:with-param name="default">
           <xsl:if test="$wrapperElement='div'">p</xsl:if>
         </xsl:with-param>
       </xsl:call-template>
-      <xsl:choose>
-        <xsl:when test="@xml:id">
-          <xsl:call-template name="makeAnchor">
-            <xsl:with-param name="name">
-              <xsl:value-of select="@xml:id"/>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:when>
-        <xsl:when test="$generateParagraphIDs='true'">
-          <xsl:call-template name="makeAnchor">
-            <xsl:with-param name="name">
-              <xsl:value-of select="generate-id()"/>
-            </xsl:with-param>
-          </xsl:call-template>
-        </xsl:when>
-      </xsl:choose>
       <xsl:if test="$numberParagraphs='true'">
         <xsl:text>[</xsl:text>
         <xsl:number/>
@@ -1147,7 +1184,7 @@
       <xsl:when test="parent::tei:p or parent::tei:note">
         <div class="blockquote">
           <xsl:choose>
-            <xsl:when test="tei:p">
+            <xsl:when test="tei:p|tei:l">
               <xsl:apply-templates/>
             </xsl:when>
             <xsl:otherwise>
@@ -1274,12 +1311,22 @@
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element title</desc>
+    <desc>Process element title in "withbr" mode</desc>
   </doc>
   <xsl:template match="tei:title" mode="withbr">
     <xsl:value-of select="."/>
     <br/>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element title when it is a child of body</desc>
+  </doc>
+  <xsl:template match="tei:body/tei:title">
+    <div class="title">
+      <xsl:apply-templates/>
+    </div>
+</xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element witList</desc>
   </doc>
@@ -1290,8 +1337,7 @@
     <desc>Process element witness</desc>
   </doc>
   <xsl:template match="tei:witness">
-    <p>
-      <a name="{@sigil}"/>
+    <p id="{@sigil}">
       <b>Sigle: <xsl:value-of select="@sigil"/>
          </b>
       <br/>
@@ -1535,7 +1581,7 @@
                       <xsl:with-param name="word">noteHeading</xsl:with-param>
                     </xsl:call-template>
                   </div>
-                  <xsl:apply-templates mode="printnotes" select="key('FOOTNOTES',1)"/>
+                  <xsl:apply-templates mode="printnotes" select="key('NOTES',1)"/>
                 </div>
                 <xsl:call-template name="stdfooter"/>
                 <xsl:call-template name="bodyEndHook"/>
@@ -1875,25 +1921,17 @@
     <xsl:param name="name"/>
     <xsl:choose>
       <xsl:when test="$name">
-        <span id="{$name}">
-          <xsl:comment>anchor1</xsl:comment>
-        </span>
-      </xsl:when>
-      <xsl:when test="$name">
-        <a name="{$name}">
-          <xsl:comment>anchor</xsl:comment>
-        </a>
+        <xsl:attribute name="id" select="$name"/>
       </xsl:when>
       <xsl:when test="@xml:id">
-        <a name="{@xml:id}">
-          <xsl:comment>anchor</xsl:comment>
-        </a>
+        <xsl:attribute name="id" select="@xml:id"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="me"><xsl:value-of select="$masterFile"/>-<xsl:value-of select="local-name(.)"/>-<xsl:value-of select="generate-id()"/></xsl:variable>
-        <span id="{$me}">
-          <xsl:comment>anchor3</xsl:comment>
-        </span>
+        <xsl:variable name="me"><xsl:value-of
+	select="$masterFile"/>-<xsl:value-of
+	select="local-name(.)"/>-<xsl:value-of
+	select="generate-id()"/></xsl:variable>
+        <xsl:attribute name="id" select="$me"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

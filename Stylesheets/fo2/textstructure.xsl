@@ -292,13 +292,7 @@
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:div[@type='epistle']">
-      <xsl:apply-templates/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>Frontispiece</desc>
    </doc>
   <xsl:template match="tei:div[@type='frontispiece']">
       <xsl:apply-templates/>

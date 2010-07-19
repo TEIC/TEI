@@ -32,7 +32,7 @@
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
-  <xsl:key name="NOTES" match="tei:note[not(parent::tei:bibl)]" use="1"/>
+  <xsl:key name="NOTES" match="tei:note[not(parent::tei:bibl) and not(ancestor::tei:teiHeader)]" use="1"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
       <desc>
