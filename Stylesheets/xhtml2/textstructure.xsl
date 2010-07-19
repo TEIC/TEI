@@ -350,12 +350,12 @@
                         <xsl:call-template name="bodyHook"/>
                         <xsl:call-template name="bodyJavascriptHook"/>
 			<div class="stdheader">
-                           <xsl:call-template name="stdheader">
-                              <xsl:with-param name="title">
-                                 <xsl:call-template name="generateTitle"/>
+			  <xsl:call-template name="stdheader">
+			    <xsl:with-param name="title">
+			      <xsl:call-template name="generateTitle"/>
                               </xsl:with-param>
-                           </xsl:call-template>
-		                      </div>
+			  </xsl:call-template>
+			</div>
                         <h2>
                            <xsl:apply-templates mode="xref" select="."/>
 			   <xsl:call-template name="sectionHeadHook"/>
@@ -403,13 +403,13 @@
             <xsl:call-template name="bodyHook"/>
             <xsl:call-template name="bodyJavascriptHook"/>
             <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
-	              <div class="stdheader">
-	                 <xsl:call-template name="stdheader">
-	                    <xsl:with-param name="title">
-		                      <xsl:call-template name="generateTitle"/>
-	                    </xsl:with-param>
-	                 </xsl:call-template>
-	              </div>
+	      <div class="stdheader">
+		<xsl:call-template name="stdheader">
+		  <xsl:with-param name="title">
+		    <xsl:call-template name="generateTitle"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </div>
             </xsl:if>
             <xsl:call-template name="startHook"/>
             <xsl:call-template name="simpleBody"/>
@@ -1189,19 +1189,14 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] </desc>
-   </doc>
-  <xsl:template name="generateDivheading">
-      <xsl:apply-templates mode="xref" select="."/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] </desc>
+      <desc>plain text version of title for div [html] </desc>
    </doc>
   <xsl:template name="generateDivtitle">
       <xsl:apply-templates select="tei:head/text()"/>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] </desc>
+      <desc>link to level above[html] </desc>
    </doc>
   <xsl:template name="generateUpLink">
       <xsl:variable name="myName">
@@ -2199,7 +2194,7 @@
       </desc>
    </doc>
   <xsl:template name="stdheader">
-      <xsl:param name="title" select="'(no title)'"/>
+      <xsl:param name="title">(no title)</xsl:param>
       <xsl:choose>
          <xsl:when test="$pageLayout='Simple'">
 	   <xsl:if test="not($institution='')">
@@ -2629,7 +2624,7 @@
                </xsl:call-template>
                <xsl:call-template name="stdheader">
                   <xsl:with-param name="title">
-                     <xsl:call-template name="generateDivheading"/>
+		    <xsl:call-template name="header"/>
                   </xsl:with-param>
                </xsl:call-template>
                <xsl:if test="$topNavigationPanel='true'">

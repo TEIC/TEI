@@ -68,14 +68,14 @@
          <body class="simple">
             <xsl:call-template name="bodyHook"/>
             <xsl:call-template name="bodyJavascriptHook"/>
-	           <div class="stdheader">
-               <xsl:call-template name="stdheader">
-                  <xsl:with-param name="title">
-                     <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
-                  </xsl:with-param>
-               </xsl:call-template>
-	           </div>
-            <xsl:call-template name="corpusBody"/>
+	    <div class="stdheader">
+	      <xsl:call-template name="stdheader">
+		<xsl:with-param name="title">
+		  <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </div>
+	    <xsl:call-template name="corpusBody"/>
             <xsl:call-template name="stdfooter"/>
             <xsl:call-template name="bodyEndHook"/>
          </body>
@@ -124,12 +124,12 @@
 	           <body class="simple">
 	              <xsl:call-template name="bodyHook"/>
 	              <xsl:call-template name="bodyJavascriptHook"/>
-	              <div class="stdheader">
-	                 <xsl:call-template name="stdheader">
-	                    <xsl:with-param name="title">
-		                      <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]"/>
-	                    </xsl:with-param>
-	                 </xsl:call-template>
+		      <div class="stdheader">
+			<xsl:call-template name="stdheader">
+			  <xsl:with-param name="title">
+			    <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]"/>
+			  </xsl:with-param>
+			</xsl:call-template>
 	              </div>
 	              <xsl:call-template name="corpusBody"/>
 	              <xsl:call-template name="stdfooter"/>

@@ -58,9 +58,13 @@
       &lt;head&gt;</desc>
    </doc>
   <xsl:template name="autoMakeHead">
+    <xsl:param name="display"/>
       <xsl:choose>
+         <xsl:when test="tei:head and $display='full'">
+            <xsl:apply-templates select="tei:head" mode="makeheading"/>
+         </xsl:when>
          <xsl:when test="tei:head">
-            <xsl:apply-templates mode="plain" select="tei:head"/>
+            <xsl:apply-templates select="tei:head" mode="plain"/>
          </xsl:when>
          <xsl:when test="@type">
             <xsl:value-of select="@type"/>

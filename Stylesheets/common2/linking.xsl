@@ -189,7 +189,9 @@
 			<xsl:apply-templates mode="plain" select="tei:head"/>
 		    </xsl:when>
 		    <xsl:when test="$autoHead='true'">
-		      <xsl:call-template name="autoMakeHead"/>
+		      <xsl:call-template name="autoMakeHead">
+			<xsl:with-param name="display" select="$display"/>
+		      </xsl:call-template>
 		    </xsl:when>
 		    <xsl:otherwise>
 		      <xsl:number/>
@@ -199,7 +201,9 @@
 	      </xsl:call-template>
             </xsl:when>
             <xsl:when test="$autoHead='true'">
-               <xsl:call-template name="autoMakeHead"/>
+               <xsl:call-template name="autoMakeHead">
+		 <xsl:with-param name="display" select="$display"/>
+	       </xsl:call-template>
             </xsl:when>
             <xsl:when test="$display='plain'">
                <xsl:for-each select="tei:head">

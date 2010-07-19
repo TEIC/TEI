@@ -258,11 +258,11 @@
    <xsl:template name="teiTOP">
       <xsl:param name="name"/>
       <div id="hdr">
-         <xsl:call-template name="stdheader">
-            <xsl:with-param name="title">
-	              <xsl:value-of select="$name"/>
-            </xsl:with-param>
-         </xsl:call-template>
+	<xsl:call-template name="stdheader">
+	  <xsl:with-param name="title">
+	    <xsl:value-of select="$name"/>
+	  </xsl:with-param>
+	</xsl:call-template>
       </div>
    </xsl:template>
 
