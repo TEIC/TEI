@@ -1897,22 +1897,11 @@
     </xsl:template>
 
     <xsl:template match="tei:ref[@target]">
-      <xsl:choose>
-	<xsl:when test="contains(@rend,'fldSimple')">
-	  <xsl:call-template name="linkMeSimply">
-	    <xsl:with-param name="anchor">
-	      <xsl:apply-templates/>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:call-template name="linkMe">
-	    <xsl:with-param name="anchor">
-	      <xsl:apply-templates/>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:otherwise>
-      </xsl:choose>
+      <xsl:call-template name="linkMe">
+	<xsl:with-param name="anchor">
+	  <xsl:apply-templates/>
+	</xsl:with-param>
+      </xsl:call-template>
     </xsl:template>
 
     <xsl:template name="linkMeUsingHyperlink">
@@ -1924,7 +1913,7 @@
 	  </w:r>
 	  <w:r>
 	    <w:instrText>HYPERLINK "<xsl:value-of select="@target"/>" \h</w:instrText>
-	  </w:r>
+	  </w:r> 
 	  <w:r>
 	    <w:fldChar w:fldCharType="separate"/>
 	  </w:r>
@@ -1966,71 +1955,46 @@
       </xsl:choose>
     </xsl:template>
 
-    <!-- fldSimple is a different sort of hyperlink -->
-    <xsl:template name="linkMeSimply">
-      <xsl:param name="anchor"/>
-      <w:fldSimple>
-	<xsl:attribute name="w:instr">
-	  <xsl:choose>
-	    <xsl:when test="contains(@rend,'noteref')">
-	      <xsl:text>NOTEREF _</xsl:text>
-	    </xsl:when>
-	    <xsl:when test="contains(@rend,'ref')">
-	      <xsl:text>REF _</xsl:text>
-	    </xsl:when>
-	  </xsl:choose>
-	  <xsl:value-of select="substring(@target,2)"/>
-	  <xsl:if test="contains(@rend,'formatted')">
-	    <xsl:text> \f</xsl:text>
-	  </xsl:if>
-	  <xsl:text> \h  \* MERGEFORMAT</xsl:text>
-	</xsl:attribute>
-        <w:r>
-	  <xsl:apply-templates>
-            <xsl:with-param name="character-style" select="@iso:class"/>
-	  </xsl:apply-templates>
-        </w:r>
-      </w:fldSimple>
-    </xsl:template>
-
     <xsl:template name="linkMe">
       <xsl:param name="anchor"/>
+
+      <!-- create the field codes for the complex field -->
+      <!-- based on information in tei:ref/@tei:rend -->
+      <xsl:variable name="instrText">
+	<xsl:choose>
+	  <xsl:when test="starts-with(@target,'#')">
+	    <xsl:choose>
+	      <xsl:when test="contains(@rend,'noteref')">
+		<xsl:text>NOTEREF _</xsl:text>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:text>REF _</xsl:text>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	    <xsl:value-of select="substring(@target,2)"/>
+	    <xsl:if test="contains(@rend,'formatted')">
+	      <xsl:text> \f</xsl:text>
+	    </xsl:if>
+	    <xsl:text> \h </xsl:text>
+	    <xsl:if test="contains(@rend,'mergeformat')">
+	      <xsl:text> \* MERGEFORMAT</xsl:text>
+	    </xsl:if>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text>HYPERLINK "</xsl:text><xsl:value-of select="@target"/><xsl:text>" \h</xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:variable>
+	
       <w:r>
 	<w:fldChar w:fldCharType="begin"/>
       </w:r>
       <w:r>
-	<xsl:choose>
-	  <xsl:when test="starts-with(@target,'#')">
-	    <w:instrText>
-	      <xsl:choose>
-		<xsl:when test="contains(@rend,'noteref')">
-		  <xsl:text>NOTEREF _</xsl:text>
-		</xsl:when>
-		<xsl:when test="contains(@rend,'ref')">
-		  <xsl:text>REF _</xsl:text>
-		</xsl:when>
-	      </xsl:choose>
-	      <xsl:value-of select="substring(@target,2)"/>
-	      <xsl:if test="contains(@rend,'formatted')">
-		<xsl:text> \f</xsl:text>
-		<!-- "For a footnote, \f inserts the reference mark with
-		     the same character formatting as the Footnote
-		     Reference style. For an endnote, inserts it with
-		     the same char formatting as the Endnote Reference
-		     style. -->
-	      </xsl:if>
-	      <xsl:text> \h  \* MERGEFORMAT</xsl:text>
-	    </w:instrText>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <w:instrText>HYPERLINK "<xsl:value-of select="@target"/>" \h</w:instrText>
-	  </xsl:otherwise>
-	</xsl:choose>
+	<w:instrText><xsl:value-of select="$instrText"/></w:instrText>
       </w:r>
       <w:r>
 	<w:fldChar w:fldCharType="separate"/>
       </w:r>
-
 
       <w:r>
 	<xsl:variable name="rPr">
@@ -2038,21 +2002,20 @@
 	    <xsl:with-param name="character-style" select="@iso:class"/>
 	  </xsl:apply-templates>
 	</xsl:variable>
+
 	<w:rPr>
-	  <!-- style is Hyperlink unless otherwise specified in generated rPr -->	
-	  <xsl:choose>
-	    <xsl:when test="$rPr/w:r/w:rPr/w:rStyle/@w:val">
-	      <w:rStyle w:val="{$rPr/w:r/w:rPr/w:rStyle/@w:val}"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <w:rStyle w:val="Hyperlink"/>
-	    </xsl:otherwise>
-	  </xsl:choose>
+	  <xsl:if test="$rPr/w:r/w:rPr/w:rStyle/@w:val">
+	    <w:rStyle w:val="{$rPr/w:r/w:rPr/w:rStyle/@w:val}"/>
+	  </xsl:if> 
 	  <xsl:copy-of select="$anchor/w:r/w:rPr/*[not(self::w:rStyle)]"/>
-	  <xsl:if test="ancestor::tei:p[@rend='Special']">
+	  <!-- oucs0037: why are we overriding special font styles??
+	       Comment this out for now! -->
+<!--	  <xsl:if test="ancestor::tei:p[@rend='Special']">
 	    <w:rFonts w:ascii="Courier New" w:hAnsi="Courier New"/>
+	  </xsl:if> -->
+	  <xsl:if test="$rPr/w:r/w:rPr/w:rStyle/@w:val='Hyperlink'">
+	    <w:u w:val="none"/> 
 	  </xsl:if>
-	  <w:u w:val="none"/>
 	</w:rPr>
 	<xsl:choose>
 	  <xsl:when test="$anchor/w:r">

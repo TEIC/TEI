@@ -772,12 +772,25 @@
 		    select="preceding-sibling::w:r[w:instrText][1]/w:instrText">
 		</xsl:value-of>
 	      </xsl:variable>
+	      <xsl:variable name="rends">
+		<xsl:choose>
+		  <xsl:when test="starts-with($ref,' REF') or starts-with($ref,'REF')"><r>ref</r></xsl:when>
+		  <xsl:when test="starts-with($ref,' NOTEREF') or starts-with($ref,'NOTEREF')"><r>noteref</r></xsl:when>
+		</xsl:choose>
+		<xsl:if test="contains(following-sibling::w:r[w:instrText][1],'\f')"><r>formatted</r></xsl:if>
+		<xsl:if test="contains(following-sibling::w:r[w:instrText][1],'MERGEFORMAT')"><r>mergeformat</r></xsl:if>
+	      </xsl:variable>
 	      <xsl:choose>
 		<xsl:when test="starts-with($ref,' REF') or starts-with($ref,'REF')">
+		  <xsl:message>REF: <xsl:value-of select="$ref"/></xsl:message>
 		  <xsl:call-template name="basicStyles"/>
 		</xsl:when>
 		<xsl:otherwise>
 		  <ref>
+		  <xsl:message>OTHERWISE REF: <xsl:value-of select="$ref"/></xsl:message>
+		    <xsl:attribute name="rend">
+		      <xsl:value-of select="string-join(($rends/r),' ')"/>
+		    </xsl:attribute>
 		    <xsl:attribute name="target">
 		      <xsl:value-of
 			  select="substring-before(substring-after($ref,'&#x0022;'),'&#x0022;')"/>
@@ -858,7 +871,7 @@
 	      </hi>
 	    </xsl:when>
 
-	    <xsl:when test="$style= 'termRef'">
+	    <xsl:when test="$style='termRef'">
 	      <hi type="entailedTerm" xmlns="http://www.lisa.org/TBX-Specification.33.0.html">
 		<xsl:apply-templates/>
 	      </hi>
@@ -1122,7 +1135,8 @@
 		<xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
 	      </xsl:variable>
 	      <p rend="{$Style}"> 
-		<xsl:apply-templates/>
+		<xsl:call-template name="process-checking-for-crossrefs"/>
+<!--		<xsl:apply-templates/> -->
 	      </p>
 	    </xsl:for-each>
 	  </xsl:when>
@@ -1144,7 +1158,8 @@
 		<xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
 	      </xsl:variable>
 	      <p rend="{$Style}"> 
-		<xsl:apply-templates/>
+		<xsl:call-template name="process-checking-for-crossrefs"/>
+<!--		<xsl:apply-templates/>-->
 	      </p>
 	    </xsl:for-each>
 	  </xsl:when>
@@ -1166,6 +1181,8 @@
 		</xsl:when>
 	      </xsl:choose>
 	    </xsl:variable>
+<!-- oucs0037: are there some types of tbx that we don't allow refs
+     in? or should all of these actually be calling process-checking-for-crossrefs? -->
 	    <termEntry xmlns="http://www.lisa.org/TBX-Specification.33.0.html" id="{$ID}">
 	      <xsl:if test="w:bookmarkStart">
 		<xsl:attribute name="xml:id" select="substring-after(w:bookmarkStart/@w:name,'_')"/>
@@ -1190,7 +1207,8 @@
 		</xsl:for-each>
 		<xsl:for-each select="current-group()[w:pPr/w:pStyle/@w:val='entrySource'] except .">
 		  <admin type="entrySource">
-		    <xsl:apply-templates/>
+<!--		    <xsl:apply-templates/> -->
+		      <xsl:call-template name="process-checking-for-crossrefs"/>
 		  </admin>
 		</xsl:for-each>
 	      </descripGrp>
@@ -1200,7 +1218,7 @@
 		  <descripGrp>
 		    <descrip type="symbol"></descrip>
 		      <note>
-			<xsl:apply-templates/>
+			<xsl:apply-templates/> 
 		      </note>
 		  </descripGrp>
 		</xsl:for-each>

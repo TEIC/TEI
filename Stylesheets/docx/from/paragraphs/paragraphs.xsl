@@ -114,31 +114,36 @@
 	  <xsl:for-each-group select="w:*|m:*"
 			      group-starting-with="w:r[w:fldChar/@w:fldCharType[matches(.,'begin|end')]]">
 	    <xsl:choose>
-	      <xsl:when
-		  test="self::w:r/w:fldChar[@w:fldCharType='begin']">
+	      <xsl:when test="self::w:r/w:fldChar[@w:fldCharType='begin']">
+		<xsl:variable name="rends">
+		  <!-- collect all the rends for concatenation later -->
+		  <xsl:choose>
+		    <xsl:when test="contains(following-sibling::w:r[w:instrText][1],'NOTEREF')"><r>noteref</r></xsl:when>
+		    <xsl:when test="contains(following-sibling::w:r[w:instrText][1],'REF')"><r>ref</r></xsl:when>
+		  </xsl:choose>
+		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'\f')"><r>formatted</r></xsl:if>
+		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'MERGEFORMAT')"><r>mergeformat</r></xsl:if>
+		</xsl:variable>
 		<ref>
-		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'NOTEREF')">
+		  <xsl:if test="$rends/r">
 		    <xsl:attribute name="rend">
-		      <xsl:text>noteref</xsl:text>
+		      <xsl:value-of select="string-join(($rends/r),' ')"/>
 		    </xsl:attribute>
 		  </xsl:if>
-		  <!-- not sure iso:class is used now... -->
 		  <xsl:if test="following-sibling::w:r[w:rPr/w:rStyle]">
 		    <xsl:attribute name="iso:class">
 		      <xsl:value-of select="following-sibling::w:r[w:rPr/w:rStyle][1]/w:rPr/w:rStyle/@w:val"/>
 		    </xsl:attribute>
-		  </xsl:if>
+		  </xsl:if> 
 		  <xsl:for-each select="current-group()">
 		    <xsl:if test="self::w:r[w:instrText]">			    
 			<xsl:variable name="ref">
 			  <xsl:choose>
-			    <xsl:when test="contains(w:instrText,'REF _')">
+			    <xsl:when test="contains(w:instrText,'REF _')"> <!-- this will also catch NOTEREF _ -->
 			      <xsl:text>#</xsl:text>
-			      <xsl:value-of
-				  select="substring-before(substring-after(w:instrText,'_'),'&#32;')"/>
+			      <xsl:value-of select="substring-before(substring-after(w:instrText,'_'),'&#32;')"/>
 			    </xsl:when>
-			    <xsl:when
-				test="contains(w:instrText,'HYPERLINK')">
+			    <xsl:when test="contains(w:instrText,'HYPERLINK')">
 			      <xsl:value-of select="substring-before(substring-after(w:instrText,'&#x0022;'),'&#x0022;')"/>
 			    </xsl:when>
 			  </xsl:choose>
