@@ -25,6 +25,7 @@ echo "  options, shown with defaults:"
 echo " --profile=default      profile family"
 echo " --odd                        perform ODD pre-processing"
 echo " --uid=XXX                supply unique URN for ebook"
+echo " --splitLevel=XXX                set splitting level"
 echo " --publisher=XXX                supply name of publisher for ebook"
 echo " --subject=XXX                supply subject/category for ebook"
 echo " --coverimage=XXX                supply name of JPEG file for ebook cover"
@@ -44,10 +45,12 @@ odd=false
 verbose=false
 uid=
 debug=false
+splitLevel=0
 while test $# -gt 0; do
   case $1 in
     --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
     --uid=*)  uid=`echo $1 | sed 's/.*=//'`;;
+    --splitLevel=*)  splitLevel=`echo $1 | sed 's/.*=//'`;;
     --publisher=*)  publisher=publisher=`echo $1 | sed 's/.*=//'`;;
     --subject=*)  subject="`echo $1 | sed 's/.*=//'`";;
     --css=*)  cssfile=`echo $1 | sed 's/.*=//'`;;
@@ -120,7 +123,11 @@ then
 else
     ln -s $F tmp2.xml
 fi
-saxon  tmp2.xml $TOXSL  $coverimage $publisher subject="$subject" uid=$uid odd=$odd debug=$debug verbose=$verbose $CSS
+if $debug 
+then
+ echo $TOXSL  $coverimage $publisher subject="$subject" uid=$uid odd=$odd debug=$debug verbose=$verbose splitLevel=$splitLevel $CSS
+fi
+saxon  tmp2.xml $TOXSL  $coverimage $publisher subject="$subject" uid=$uid odd=$odd debug=$debug verbose=$verbose splitLevel=$splitLevel $CSS
 if $debug 
 then
     echo leaving tmp[123].xml alone
@@ -129,7 +136,7 @@ else
 fi
 rm -f $DOCHOME/$B.epub
 zip -q0X  $DOCHOME/$B.epub mimetype
-zip -qXr9D  $DOCHOME/$B.epub   META-INF OEBPS
+zip -qXr9D  $DOCHOME/$B.epub META-INF OEBPS
 cd $HERE
 if $debug 
 then

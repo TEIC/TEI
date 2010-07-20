@@ -10,7 +10,7 @@
   <xsl:param name="DIR"/>
   <xsl:param name="ORIG">.</xsl:param>
 
-  <xsl:key match="tei:graphic" use="1" name="G"/>
+  <xsl:key match="tei:graphic|tei:pb[@facs]" use="1" name="G"/>
   <xsl:key match="o:OLEObject" use="1" name="BINARY"/>
   <xsl:key match="v:imagedata" use="1" name="BINARY"/>
 
@@ -24,14 +24,15 @@
       </xsl:for-each>
       <xsl:for-each select="key('G',1)">
          <xsl:variable name="F">
-            <xsl:value-of select="@url"/>
+            <xsl:value-of select="@url|@facs"/>
          </xsl:variable>
 	 <xsl:variable name="target">
 	   <xsl:value-of select="$DIR"/>
 	   <xsl:text>/image</xsl:text>
+	   <xsl:if test="self::tei:pb">pb</xsl:if>
 	   <xsl:number level="any"/>
 	   <xsl:text>.</xsl:text>
-	   <xsl:value-of select="tokenize(@url,'\.')[last()]"/>
+	   <xsl:value-of select="tokenize($F,'\.')[last()]"/>
 	 </xsl:variable>
          <xsl:choose>
 	   <xsl:when test="starts-with($F,'http')">

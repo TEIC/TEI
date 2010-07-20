@@ -2,7 +2,10 @@
 <xsl:stylesheet xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" exclude-result-prefixes="tei dc html">
   <xsl:import href="../xhtml2/tei.xsl"/>
   <xsl:output method="xml" encoding="utf-8" indent="yes"/>
-  <xsl:key name="GRAPHICS" use="1" match="tei:graphic"/>
+  <xsl:key name="GRAPHICS" use="1"
+	   match="tei:graphic"/>
+  <xsl:key name="PAGEIMAGES" use="1" 
+	   match="tei:pub[@facs]"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p>
@@ -294,6 +297,21 @@
 		</xsl:variable>
                 <item href="{@url}" id="image-{$ID}" media-type="{$mimetype}"/>
               </xsl:for-each>
+              <!-- page images -->
+              <xsl:for-each select="key('PAGEIMAGES',1)">
+                <xsl:variable name="ID">
+		  <xsl:text>pb</xsl:text>
+                  <xsl:number level="any"/>
+                </xsl:variable>
+                <xsl:variable name="mimetype">
+                  <xsl:choose>
+                    <xsl:when test="contains(@url,'.gif')">image/gif</xsl:when>
+                    <xsl:when test="contains(@url,'.png')">image/png</xsl:when>
+                    <xsl:otherwise>image/jpeg</xsl:otherwise>
+                  </xsl:choose>
+		</xsl:variable>
+                <item href="{@facs}" id="image-{$ID}" media-type="{$mimetype}"/>
+              </xsl:for-each>
               <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
             </manifest>
             <spine toc="ncx">
@@ -521,21 +539,32 @@
       <desc>[epub] Local mode to rewrite names of graphics inclusions
       </desc>
    </doc>
-  <xsl:template match="tei:graphic" mode="fixgraphics">
+  <xsl:template match="tei:pb[@facs]|tei:graphic" mode="fixgraphics">
     <xsl:copy>
       <xsl:variable name="newName">
         <xsl:text>media/image</xsl:text>
+	<xsl:if test="self::tei:pb">pb</xsl:if>
         <xsl:number level="any"/>
         <xsl:text>.</xsl:text>
-        <xsl:value-of select="tokenize(@url,'\.')[last()]"/>
+        <xsl:value-of select="tokenize(@url|@facs,'\.')[last()]"/>
       </xsl:variable>
-      <xsl:attribute name="url">
-        <xsl:value-of select="$newName"/>
-      </xsl:attribute>
-      <xsl:copy-of select="@n"/>
-      <xsl:copy-of select="@height"/>
-      <xsl:copy-of select="@width"/>
-      <xsl:copy-of select="@scale"/>
+      <xsl:choose>
+	<xsl:when test="self::tei:pb">
+	  <xsl:attribute name="facs">
+	    <xsl:value-of select="$newName"/>
+	  </xsl:attribute>
+	  <xsl:copy-of select="@n"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:attribute name="url">
+	    <xsl:value-of select="$newName"/>
+	  </xsl:attribute>
+	  <xsl:copy-of select="@n"/>
+	  <xsl:copy-of select="@height"/>
+	  <xsl:copy-of select="@width"/>
+	  <xsl:copy-of select="@scale"/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:copy>
   </xsl:template>
 
@@ -590,4 +619,7 @@
 
   <xsl:template name="addLangAtt"/>
 
+  <xsl:template match="tei:pb[@facs]">
+    <div><img src="{@facs}" alt="page image"/></div>
+  </xsl:template>
 </xsl:stylesheet>

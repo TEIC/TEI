@@ -73,14 +73,6 @@
       <xsl:number level="any"/>
   </xsl:template>
 
-  <xsl:template match="tei:div0/tei:div1" mode="number">
-      <xsl:for-each select="parent::tei:div0">
-         <xsl:number/>
-      </xsl:for-each>
-      <xsl:text>_</xsl:text>
-      <xsl:number/>
-  </xsl:template>
-
 
   <xsl:template name="locateParentdiv">
     <xsl:choose>
@@ -138,7 +130,7 @@
       </xsl:if>
 
       <xsl:for-each select="tei:text/tei:body">
-         <xsl:apply-templates select="tei:div|tei:div0|tei:div1"/>
+         <xsl:apply-templates select="tei:div|tei:div1"/>
       </xsl:for-each>
   </xsl:template>
 
@@ -214,7 +206,7 @@
                <xsl:apply-templates select="tei:text/tei:front//tei:docDate"/>
                <ul class="slidetoc">
                   <xsl:for-each select="tei:text/tei:body">
-                     <xsl:for-each select="tei:div|tei:div0/tei:div1">
+                     <xsl:for-each select="tei:div|tei:div1">
                         <xsl:variable name="n">
                            <xsl:apply-templates select="." mode="genid"/>
                         </xsl:variable>

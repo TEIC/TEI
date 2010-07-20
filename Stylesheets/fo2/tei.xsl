@@ -61,7 +61,7 @@
   <xsl:output indent="no" encoding="utf-8"/>
   <xsl:strip-space elements="tei:cell"/>
   <xsl:key name="DIVS"
-            match="tei:div|tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5"
+            match="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5"
             use="'1'"/>
   <xsl:include href="tei-makecolspec.xsl"/>
   <xsl:include href="core.xsl"/>

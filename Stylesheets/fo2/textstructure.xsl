@@ -243,7 +243,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
-  <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
+  <xsl:template match="tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
       <xsl:choose>
          <xsl:when test="@type='letter'">
             <xsl:apply-templates/>
@@ -259,10 +259,10 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element s
-      tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5 (toc mode)</desc>
+      <desc>Process elements
+      tei:div1|tei:div2|tei:div3|tei:div4|tei:div5 (toc mode)</desc>
    </doc>
-  <xsl:template match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5" mode="toc">
+  <xsl:template match="tei:div1|tei:div2|tei:div3|tei:div4|tei:div5" mode="toc">
       <xsl:call-template name="tocheading">
          <xsl:with-param name="level">
             <xsl:value-of select="substring-after(local-name(),'div')"/>
@@ -272,7 +272,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
-  <xsl:template mode="xref" match="tei:div0|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
+  <xsl:template mode="xref" match="tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
       <xsl:call-template name="xheading">
          <xsl:with-param name="level">
             <xsl:value-of select="local-name()"/>
@@ -1195,16 +1195,6 @@
             </xsl:for-each>
             <xsl:for-each select="/tei:TEI/tei:text/tei:back/tei:div">
                <xsl:call-template name="makeBookMark"/>
-            </xsl:for-each>
-            <!-- now try numbered divs -->
-        <xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:div0">
-               <xsl:call-template name="makeBookMarkN"/>
-            </xsl:for-each>
-            <xsl:for-each select="/tei:TEI/tei:text/tei:body/tei:div0">
-               <xsl:call-template name="makeBookMarkN"/>
-            </xsl:for-each>
-            <xsl:for-each select="/tei:TEI/tei:text/tei:back/tei:div0">
-               <xsl:call-template name="makeBookMarkN"/>
             </xsl:for-each>
             <!-- now try numbered divs -->
         <xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:div1">
