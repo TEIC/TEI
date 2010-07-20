@@ -22,6 +22,7 @@
 
     <xsl:import href="../html/web.xsl"/>
     <xsl:import href="../html/tbx.xsl"/>
+    <xsl:import href="../html/cals.xsl"/>
 
     <xsl:import href="../../../epub/tei-to-epub.xsl"/>
     <xsl:import href="../isoutils.xsl"/>

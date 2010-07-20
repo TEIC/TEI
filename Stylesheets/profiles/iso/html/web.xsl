@@ -225,4 +225,20 @@
       <xsl:apply-templates/>
     </span>
   </xsl:template>
+
+  <xsl:template name="makeHTMLHeading">
+    <xsl:param name="text"/>
+    <xsl:param name="class">title</xsl:param>
+    <xsl:param name="level">1</xsl:param>
+    <xsl:if test="$class = 'maintitle'">
+      <div class="healthwarning">This extract from an ISO document has been created for test purposes only. The design and layout are subject to change by ISO.</div>
+     <xsl:element name="h{$level}">
+       <xsl:attribute name="class">
+         <xsl:value-of select="$class"/>
+       </xsl:attribute>
+       <xsl:value-of select="substring-before(key('ISOMETA','docReference'),'(')"/><br></br><xsl:value-of select="key('ISOMETA','fullTitle')"/>
+     </xsl:element>
+    </xsl:if>
+  </xsl:template>
+
 </xsl:stylesheet>
