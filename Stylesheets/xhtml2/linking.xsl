@@ -192,6 +192,19 @@
       <desc>Process element note</desc>
    </doc>
   <xsl:template match="tei:note" mode="generateLink">
+    <xsl:variable name="file">
+      <xsl:apply-templates mode="generateLink"
+			   select="ancestor::tei:*[starts-with(local-name(),'div')][1]"/>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="starts-with($file,'#')"/>
+      <xsl:when test="contains($file,'#')">
+            <xsl:value-of select="substring-before($file,'#')"/>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:value-of select="$file"/>
+         </xsl:otherwise>
+      </xsl:choose>
       <xsl:text>#</xsl:text>
       <xsl:text>Note</xsl:text>
       <xsl:call-template name="noteID"/>
@@ -204,16 +217,17 @@
       <xsl:param name="where"/>
 
     <xsl:choose>
-         <xsl:when test="key('IDS',$where)">
-	           <xsl:apply-templates mode="generateLink" select="key('IDS',$where)"/>
-         </xsl:when>
-         <xsl:otherwise>
-	           <xsl:text>[[undefined </xsl:text>
-	           <xsl:value-of select="$where"/>
-	           <xsl:text>]]</xsl:text>
-         </xsl:otherwise>
-      </xsl:choose>
+      <xsl:when test="key('IDS',$where)">
+	<xsl:apply-templates mode="generateLink" select="key('IDS',$where)"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>[[undefined </xsl:text>
+	<xsl:value-of select="$where"/>
+	<xsl:text>]]</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] </desc>
    </doc>

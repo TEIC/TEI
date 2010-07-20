@@ -930,6 +930,18 @@
         </xsl:choose>
 	</span>
       </xsl:when>
+      <xsl:when test="parent::tei:div">
+	<div>
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name" select="$identifier"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Note</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text>: </xsl:text>
+	  <xsl:apply-templates/>
+	</div>
+      </xsl:when>
       <xsl:otherwise>
 	<span>
 	  <xsl:call-template name="makeAnchor">
