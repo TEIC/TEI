@@ -5,7 +5,7 @@
   <xsl:key name="GRAPHICS" use="1"
 	   match="tei:graphic"/>
   <xsl:key name="PAGEIMAGES" use="1" 
-	   match="tei:pub[@facs]"/>
+	   match="tei:pb[@facs]"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p>
@@ -265,7 +265,7 @@
 	      <item id="apt" href="page-template.xpgt" media-type="application/adobe-page-template+xml"/>
               <item id="start" href="index.html" media-type="application/xhtml+xml"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-		<xsl:if test="html:a">
+		<xsl:if test="html:a and not(starts-with(html:a/@href,'#'))">
 		  <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
 		    <xsl:attribute name="id">
 		      <xsl:text>section</xsl:text>
@@ -319,7 +319,7 @@
               <itemref idref="titlepage"/>
               <itemref idref="start"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-                  <xsl:if test="html:a">
+                  <xsl:if test="html:a and not(starts-with(html:a/@href,'#'))">
                     <itemref>
                       <xsl:attribute name="idref">
                         <xsl:text>section</xsl:text>
@@ -425,7 +425,7 @@
                 <content src="index.html"/>
               </navPoint>
               <xsl:for-each select="$TOC/html:TOC/html:ul//html:li">
-		<xsl:if test="html:a">
+		<xsl:if test="html:a and not(starts-with(html:a/@href,'#'))">
 		  <xsl:variable name="pos">
 		    <xsl:number level="any"/>
 		  </xsl:variable>
@@ -621,6 +621,13 @@
   <xsl:template name="addLangAtt"/>
 
   <xsl:template match="tei:pb[@facs]">
-    <div><img src="{@facs}" alt="page image"/></div>
+    <xsl:choose>
+      <xsl:when test="parent::tei:div | parent::tei:body">
+	<div><img src="{@facs}" alt="page image"/></div>
+      </xsl:when>
+      <xsl:otherwise>
+	<img width="600" height="860" src="{@facs}" alt="page image"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 </xsl:stylesheet>

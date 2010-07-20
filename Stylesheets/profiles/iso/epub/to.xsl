@@ -21,6 +21,7 @@
     <xsl:import href="../isotei-schema.xsl"/>
 
     <xsl:import href="../html/web.xsl"/>
+    <xsl:import href="../html/tbx.xsl"/>
 
     <xsl:import href="../../../epub/tei-to-epub.xsl"/>
     <xsl:import href="../isoutils.xsl"/>
@@ -37,6 +38,7 @@
    <xsl:param name="attLength">60</xsl:param>
    <xsl:param name="forceWrap">true</xsl:param>
   
+   <xsl:param name="autoHead">false</xsl:param>
    <xsl:param name="outputDir">OEBPS</xsl:param>
    <xsl:param name="splitLevel">0</xsl:param>
    <xsl:param name="STDOUT">false</xsl:param>
