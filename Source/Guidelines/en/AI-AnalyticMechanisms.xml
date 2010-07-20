@@ -56,7 +56,8 @@ constitutes a <soCalled>word</soCalled> or a
 <soCalled>sentence</soCalled>, these remain generally useful concepts.
 In this section we discuss elements provided for marking up linguistic
 units down to the word level, however defined. 
-<specList><specDesc key="s"/><specDesc key="cl"/><specDesc key="phr"/><specDesc key="w" atts="lemma"/>
+<specList><specDesc key="s"/><specDesc key="cl"/><specDesc
+key="phr"/><specDesc key="w" atts="lemma lemmaRef"/>
 </specList>
  </p>
 <p>As members of the <ident type="class">att.segLike</ident> class, these
@@ -236,16 +237,17 @@ explicitly encoded, using such facilities as the <gi>lb</gi> element,
 the global <att>rend</att> or <att>rendition</att> attributes, etc.
 </p>
 
-<p>The <gi>w</gi>, <gi>m</gi>, and <gi>c</gi> elements are also
-identical in meaning to the <gi>seg</gi> element with a
-<att>type</att> attribute of <q>w</q>, <q>m</q>, or <q>c</q>, and may
-occur wherever <gi>seg</gi> is permitted to occur. However, they have
-more restricted content models than does <gi>seg</gi>: for example,
+<p>The <gi>w</gi>, <gi>m</gi>, and <gi>c</gi> elements are identical
+in meaning to the <gi>seg</gi> element with a <att>type</att>
+attribute of <q>w</q>, <q>m</q>, or <q>c</q> respectively, and may
+occur wherever <gi>seg</gi> is permitted to occur. However, their
+content is more constrained than <gi>seg</gi>: for example,
 the <gi>w</gi> element should only contain <gi>w</gi>, <gi>m</gi>, and
-<gi>c</gi> elements, or plain text; the <gi>m</gi> element should contain
-only <gi>c</gi> elements or plain text; the <gi>c</gi> element should
-contain only plain text, most often only a single
-character or a sequence of graphemes to be treated as a single character. Consequently, while these more specific elements can be
+<gi>c</gi> elements, or plain text; the <gi>m</gi> element should
+contain only <gi>c</gi> elements or plain text; the <gi>c</gi> element
+should contain only plain text, most often only a single character or
+a sequence of graphemes to be treated as a single
+character. Consequently, while these more specific elements can be
 translated directly into typed <gi>seg</gi> elements, the reverse is
 not necessarily the case.
  </p>
@@ -273,10 +275,10 @@ The first encoding describes the citing of a phrase. The second
 describes a phrase which consists of something mentioned.
 <!-- added following brief plug for otherwise  unsung attributes -->
 </p>
-<p>The <gi>w</gi> <!-- and <gi>m</gi> elements carry --> carries an additional attribute
+<p>The <gi>w</gi> <!-- and <gi>m</gi> elements carry --> carries additional attributes
 which may be of use in many indexing or analytic applications. The 
 <att>lemma</att> attribute may be used to specify  the
-<term>lemma</term>, that is the head- or base- form of an
+<term>lemma</term>, that is the head- or uninflected form of an
 inflected verb or noun, for example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="la"><s xml:lang="la">  
    <w lemma="timeo">timeo</w>
@@ -285,7 +287,22 @@ inflected verb or noun, for example:
    <w lemma="donum">dona</w>
    <w lemma="fero">ferentes</w>
 </s></egXML>
-</p></div>
+</p>
+<p>In some situations it may be more convenient to use the
+<att>lemmaRef</att> pointer attribute than to supply an explicit
+uninflected form. This attribute assumes the existence of a list of
+uninflected forms, for example in an online lexicon, with which
+individual <g>w</g> entries can be associated using the usual TEI
+pointer mechanisms. Assuming that a
+standardised lexicon for Latin is available at the location
+<code>http://lexicon.org/latin.xml</code>, we might for example revise the above
+example as :
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="la"><s xml:lang="la">  
+   <w lemmaRef="http://lexicon.org/latin.xml#timeo">timeo</w>
+   <w lemma="http://lexicon.org/latin.xml#danaii">Danaos</w>
+<!-- ... -->
+</s></egXML></p>
+</div>
 
 <div xml:id="AIPC"><head>Below the word level</head>
 <p>It is sometimes helpful to markup explicitly sub-word components
