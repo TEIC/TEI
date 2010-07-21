@@ -149,9 +149,11 @@
     <xsl:call-template name="processTEI"/>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
   <desc>[epub] Override of top-level template. This does most of
   the work: performing the normal transformation, fixing the links to graphics files so that they are
   all relative, creating the extra output files, etc</desc>
+  </doc>
   <xsl:template name="processTEI">
     <xsl:variable name="stage1">
       <xsl:apply-templates mode="fixgraphics"/>
