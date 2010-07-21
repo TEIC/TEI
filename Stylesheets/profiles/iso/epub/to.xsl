@@ -15,17 +15,15 @@
                 version="2.0">
     
 
-    <xsl:import href="../../../xhtml2/tagdocs.xsl"/>
-    <xsl:import href="../../../odds2/teiodds.xsl"/>
-
-    <xsl:import href="../isotei-schema.xsl"/>
-
-    <xsl:import href="../html/web.xsl"/>
-    <xsl:import href="../html/tbx.xsl"/>
-    <xsl:import href="../html/cals.xsl"/>
-
-    <xsl:import href="../../../epub/tei-to-epub.xsl"/>
-    <xsl:import href="../isoutils.xsl"/>
+   <xsl:import href="../../../xhtml2/tei.xsl"/>
+   <xsl:import href="../../../xhtml2/tagdocs.xsl"/>
+   <xsl:import href="../../../odds2/teiodds.xsl"/>
+   <xsl:import href="../../../epub/tei-to-epub.xsl"/>
+   <xsl:import href="../isoutils.xsl"/>
+   <xsl:import href="../isotei-schema.xsl"/>
+   <xsl:import href="../html/web.xsl"/>
+   <xsl:import href="../html/tbx.xsl"/>
+   <xsl:import href="../html/cals.xsl"/>
 
    <xsl:strip-space elements="tei:bibl"/>
    <xsl:param name="numberFormat">uk</xsl:param>

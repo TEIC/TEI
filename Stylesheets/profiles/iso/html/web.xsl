@@ -175,53 +175,82 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="tei:hi[@rend]">
+  <xsl:template match="tei:hi[@rend]" priority="101">
     <span>
-      <xsl:attribute name="style">
+      <xsl:if test="../@xml:lang">
+	<xsl:attribute name="lang" select="../@xml:lang"/>
+      </xsl:if>
+      <xsl:variable name="style">
+	<xsl:for-each select="tokenize(@iso:style,';')">
+	  <xsl:choose>
+	    <xsl:when test=".=''"/>
+	    <xsl:when test="starts-with(.,'direction')">
+	      <d>
+		<xsl:value-of select="substring-after(.,':')"/>
+	      </d>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <s>
+		<xsl:value-of select="."/><xsl:text>;</xsl:text>
+	      </s>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
 	<xsl:for-each select="tokenize(@rend,' ')">
 	  <xsl:choose>
 	    <xsl:when test=".='bold'">
-	      <xsl:text>font-weight:bold;</xsl:text>
+	      <s>font-weight:bold;</s>
 	    </xsl:when>
 	    <xsl:when test=".='italic'">
-	      <xsl:text>font-style:italic;</xsl:text>
+	      <s>font-style:italic;</s>
 	    </xsl:when>
 	    <xsl:when test=".='smallcaps'">
-	      <xsl:text>font-variant:small-caps;</xsl:text>
+	      <s>font-variant:small-caps;</s>
 	    </xsl:when>
 	    <xsl:when test=".='capsall'">
-	      <xsl:text>text-transform:capitalize;</xsl:text>
+	      <s>text-transform:capitalize;</s>
 	    </xsl:when>
 	    <xsl:when test=".='strikethrough'">
-	      <xsl:text>text-decoration:line-through;</xsl:text>
+	      <s>text-decoration:line-through;</s>
 	    </xsl:when>
 	    <xsl:when test=".='strikedoublethrough'">
-	      <xsl:text>text-decoration:line-through;</xsl:text>
+	      <s>text-decoration:line-through;</s>
 	    </xsl:when>
 	    <xsl:when test=".='underline'">
-	      <xsl:text>text-decoration:underline;</xsl:text>
+	      <s>text-decoration:underline;</s>
 	    </xsl:when>
 	    <xsl:when test=".='underdoubleline'">
-	      <xsl:text>border-bottom: 3px double;</xsl:text>
+	      <s>border-bottom: 3px double;</s>
 	    </xsl:when>
 	    <xsl:when test="starts-with(.,'color(')">
 	      <xsl:value-of select="translate(.,'()',':;')"/>
 	    </xsl:when>
 	    <xsl:when test=".='superscript'">
-	      <xsl:text>vertical-align: top;font-size: 70%;</xsl:text>
+	      <s>vertical-align: top;font-size: 70%;</s>
 	    </xsl:when>
 	    <xsl:when test=".='subscript'">
-	      <xsl:text>vertical-align: bottom;font-size: 70%;</xsl:text>
+	      <s>vertical-align: bottom;font-size: 70%;</s>
 	    </xsl:when>
 	    <xsl:when test="starts-with(.,'background(')">
-	      <xsl:text>background-color: </xsl:text>
-	      <xsl:value-of
+	      <s>background-color:<xsl:value-of
 		  select="substring-before(substring-after(.,'('),')')"/>
-	      <xsl:text>;</xsl:text>
+	      </s>
 	    </xsl:when>
 	  </xsl:choose>
 	</xsl:for-each>
-      </xsl:attribute>
+      </xsl:variable>
+      <xsl:for-each select="$style">
+	<xsl:if test="html:s">
+	  <xsl:attribute name="style">
+	    <xsl:value-of select="html:s"/>
+	  </xsl:attribute>
+	</xsl:if>
+	<xsl:if test="html:d">
+	  <xsl:attribute name="dir">
+	    <xsl:value-of select="html:d"/>
+	  </xsl:attribute>
+	</xsl:if>
+      </xsl:for-each>
       <xsl:apply-templates/>
     </span>
   </xsl:template>
@@ -239,6 +268,68 @@
        <xsl:value-of select="substring-before(key('ISOMETA','docReference'),'(')"/><br></br><xsl:value-of select="key('ISOMETA','fullTitle')"/>
      </xsl:element>
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="rendToClass">
+    <xsl:param name="id">true</xsl:param>
+    <xsl:param name="default">.</xsl:param>
+<xsl:message>Look at <xsl:value-of select="local-name()"/>: [<xsl:value-of select="@rend"/>]</xsl:message>
+
+    <xsl:if test="$id='true' and @xml:id">
+      <xsl:attribute name="id">
+        <xsl:value-of select="@xml:id"/>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:if test="../@xml:lang">
+      <xsl:attribute name="lang" select="../@xml:lang"/>
+    </xsl:if>
+    <xsl:variable name="style">
+      <xsl:for-each select="tokenize(@iso:style,';')">
+	<xsl:choose>
+	  <xsl:when test=".=''"/>
+	  <xsl:when test="starts-with(.,'direction')">
+	    <d>
+	      <xsl:value-of select="substring-after(.,':')"/>
+	    </d>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <s>
+	      <xsl:value-of select="."/><xsl:text>;</xsl:text>
+	    </s>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
+      <xsl:for-each select="tokenize(@rend,' ')">
+	<c>
+	  <xsl:value-of select="."/>
+	</c>
+      </xsl:for-each>
+      <xsl:for-each select="@type">
+	<c>
+	  <xsl:value-of select="."/>
+	</c>
+      </xsl:for-each>
+      <c>
+	<xsl:value-of select="local-name()"/>
+      </c>
+    </xsl:variable>
+    <xsl:for-each select="$style">
+      <xsl:if test="html:s">
+	<xsl:attribute name="style">
+	  <xsl:value-of select="html:s"/>
+	</xsl:attribute>
+      </xsl:if>
+      <xsl:if test="html:d">
+	<xsl:attribute name="dir">
+	  <xsl:value-of select="html:d"/>
+	</xsl:attribute>
+      </xsl:if>
+      <xsl:if test="html:c">
+	<xsl:attribute name="class">
+	  <xsl:value-of select="html:c[1]"/>
+	</xsl:attribute>
+      </xsl:if>
+    </xsl:for-each>    
   </xsl:template>
 
 </xsl:stylesheet>
