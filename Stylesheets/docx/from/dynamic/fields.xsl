@@ -63,16 +63,18 @@
 	<xsl:if test="contains(@w:instr,'\f')"><r>formatted</r></xsl:if>
 	<xsl:if test="contains(@w:instr,'MERGEFORMAT')"><r>mergeformat</r></xsl:if>
       </xsl:variable>
+<!--      <xsl:message>rends=<xsl:copy-of select="$rends"/></xsl:message> -->
       <xsl:choose>
 	<!-- cross ref -->
 	<!-- <w:fldSimple w:instr=" REF _Ref260736521 \r \h  \* MERGEFORMAT ">            -->
 	<xsl:when test="contains(@w:instr,'NOTEREF _Ref')">
 	  <xsl:variable name="ref">
-	    <xsl:value-of
-		select="substring-before(substring-after(@w:instr,'_'),' ')"/>
+	    <xsl:value-of select="substring-before(substring-after(@w:instr,'_'),' ')"/>
 	  </xsl:variable>
 	  <ref>
-	    <xsl:attribute name="rend" select="string-join(($rends/r),' ')"/>
+	    <xsl:attribute name="rend">
+	      <xsl:value-of select="string-join(($rends/tei:r),' ')"/>
+	    </xsl:attribute>
 	    <xsl:attribute name="target" select="concat('#',$ref)"/>
 	    <xsl:if test="$rstyle!=''">
 	      <xsl:attribute name="iso:class"><xsl:value-of select="$rstyle"/></xsl:attribute>
@@ -82,11 +84,12 @@
 	</xsl:when>
 	<xsl:when test="contains(@w:instr,'REF _Ref')">
 	  <xsl:variable name="ref">
-	    <xsl:value-of
-		select="substring-before(substring-after(@w:instr,'_'),' ')"/>
+	    <xsl:value-of select="substring-before(substring-after(@w:instr,'_'),' ')"/>
 	  </xsl:variable>
 	  <ref>
-	    <xsl:attribute name="rend" select="string-join(($rends/r),' ')"/>
+	    <xsl:attribute name="rend">
+	      <xsl:value-of select="string-join(($rends/tei:r),' ')"/>
+	    </xsl:attribute>
 	    <xsl:attribute name="target" select="concat('#',$ref)"/>
 	    <xsl:if test="$rstyle!=''">
 	      <xsl:attribute name="iso:class"><xsl:value-of select="$rstyle"/></xsl:attribute>

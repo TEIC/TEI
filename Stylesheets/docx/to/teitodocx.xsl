@@ -693,11 +693,6 @@
      </desc>
    </doc>
     <xsl:template name="applyRend">
-<!--        <xsl:choose>
-	      <xsl:when test="@iso:class">
-		
-	      </xsl:when> 
-	    </xsl:choose>-->
             <!-- use a custom font -->
 	    <xsl:choose>
 	      <xsl:when test="@iso:font">
@@ -2005,8 +2000,8 @@
 
 	<w:rPr>
 	  <xsl:if test="$rPr/w:r/w:rPr/w:rStyle/@w:val">
-	    <w:rStyle w:val="{$rPr/w:r/w:rPr/w:rStyle/@w:val}"/>
-	  </xsl:if> 
+	      <w:rStyle w:val="{$rPr/w:r/w:rPr/w:rStyle/@w:val}"/>
+	  </xsl:if>
 	  <xsl:copy-of select="$anchor/w:r/w:rPr/*[not(self::w:rStyle)]"/>
 	  <!-- oucs0037: why are we overriding special font styles??
 	       Comment this out for now! -->

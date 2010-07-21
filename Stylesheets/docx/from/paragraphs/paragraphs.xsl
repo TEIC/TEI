@@ -130,9 +130,9 @@
 		      <xsl:value-of select="string-join(($rends/r),' ')"/>
 		    </xsl:attribute>
 		  </xsl:if>
-		  <xsl:if test="following-sibling::w:r[w:rPr/w:rStyle]">
+		  <xsl:if test="following-sibling::w:r[w:rPr][1]/w:rStyle">
 		    <xsl:attribute name="iso:class">
-		      <xsl:value-of select="following-sibling::w:r[w:rPr/w:rStyle][1]/w:rPr/w:rStyle/@w:val"/>
+		      <xsl:value-of select="following-sibling::w:r[w:rPr][1]/w:rStyle/w:rPr/w:rStyle/@w:val"/>
 		    </xsl:attribute>
 		  </xsl:if> 
 		  <xsl:for-each select="current-group()">

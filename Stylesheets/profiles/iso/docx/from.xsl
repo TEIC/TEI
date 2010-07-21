@@ -782,12 +782,10 @@
 	      </xsl:variable>
 	      <xsl:choose>
 		<xsl:when test="starts-with($ref,' REF') or starts-with($ref,'REF')">
-		  <xsl:message>REF: <xsl:value-of select="$ref"/></xsl:message>
 		  <xsl:call-template name="basicStyles"/>
 		</xsl:when>
 		<xsl:otherwise>
 		  <ref>
-		  <xsl:message>OTHERWISE REF: <xsl:value-of select="$ref"/></xsl:message>
 		    <xsl:attribute name="rend">
 		      <xsl:value-of select="string-join(($rends/r),' ')"/>
 		    </xsl:attribute>
