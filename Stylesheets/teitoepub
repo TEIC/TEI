@@ -92,6 +92,12 @@ then
 else
   TOXSL=$conversion
 fi
+if test "x$splitLevel" = "x"
+then
+  SPLITLEVEL=
+else
+  SPLITLEVEL=splitLevel=$splitLevel
+fi
 if test "x$cssfile" = "x"
 then
   CSS=
@@ -125,7 +131,7 @@ else
 fi
 if $debug 
 then
- echo $TOXSL  $coverimage $publisher subject="$subject" uid=$uid odd=$odd debug=$debug verbose=$verbose splitLevel=$splitLevel $CSS
+ echo $TOXSL  $coverimage $publisher subject="$subject" uid=$uid odd=$odd debug=$debug verbose=$verbose $SPLITLEVEL $CSS
 fi
 saxon  tmp2.xml $TOXSL  $coverimage $publisher subject="$subject" uid=$uid odd=$odd debug=$debug verbose=$verbose splitLevel=$splitLevel $CSS
 if $debug 

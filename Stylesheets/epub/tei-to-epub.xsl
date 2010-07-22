@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" exclude-result-prefixes="tei dc html">
+<xsl:stylesheet xmlns:dc="http://purl.org/dc/elements/1.1/"
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:html="http://www.w3.org/1999/xhtml"
+		xmlns:tei="http://www.tei-c.org/ns/1.0"
+		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/"
+		version="2.0" exclude-result-prefixes="tei dc html ncx">
   <xsl:import href="../xhtml2/tei.xsl"/>
   <xsl:output method="xml" encoding="utf-8" indent="yes"/>
   <xsl:key name="GRAPHICS" use="1"
@@ -43,7 +49,7 @@
   <xsl:param name="cssODDFile">../odd.css</xsl:param>
   <xsl:param name="topNavigationPanel">false</xsl:param>
   <xsl:param name="bottomNavigationPanel">false</xsl:param>
-  <xsl:param name="autoToc">false</xsl:param>
+  <xsl:param name="autoToc">true</xsl:param>
   <xsl:param name="autoHead">true</xsl:param>
   <xsl:param name="tocDepth">1</xsl:param>
   <xsl:param name="linkPanel">false</xsl:param>
@@ -346,7 +352,7 @@
 	      <reference href="titlepage.html" type="cover" title="Cover"/>
               <reference type="text" title="Start" href="index.html"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-
+		 
                   <xsl:if test="html:a">
                     <reference type="text" href="{html:a[1]/@href}">
                       <xsl:attribute name="title">
@@ -354,15 +360,17 @@
                       </xsl:attribute>
                     </reference>
 		  </xsl:if>
-                  <xsl:if test="html:ul">
-                    <xsl:for-each select="html:ul//html:li[not(contains(html:a/@href,'#'))]">
+		  <!--
+		      <xsl:if test="html:ul">
+		      <xsl:for-each select="html:ul//html:li[not(contains(html:a/@href,'#'))]">
                       <reference type="text" href="{html:a/@href}">
-                        <xsl:attribute name="title">
-                          <xsl:value-of select="normalize-space(html:a[1])"/>
-                        </xsl:attribute>
+		      <xsl:attribute name="title">
+		      <xsl:value-of select="normalize-space(html:a[1])"/>
+		      </xsl:attribute>
                       </reference>
-                    </xsl:for-each>
-		  </xsl:if>
+		      </xsl:for-each>
+		      </xsl:if>
+		  -->
               </xsl:for-each>
             </guide>
           </package>
@@ -420,43 +428,49 @@
               </text>
             </docTitle>
             <navMap>
-              <navPoint id="navPoint-1" playOrder="1">
+	      <xsl:variable name="navPoints">
+		<navPoint>
                 <navLabel>
-                  <text>Title Page</text>
+                  <text>Title Page and Contents</text>
                 </navLabel>
                 <content src="index.html"/>
               </navPoint>
-              <xsl:for-each select="$TOC/html:TOC/html:ul//html:li">
+	      <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
 		<xsl:if test="html:a and not(starts-with(html:a/@href,'#'))">
-		  <xsl:variable name="pos">
-		    <xsl:number level="any"/>
-		  </xsl:variable>
-                    <navPoint id="navPoint-{$pos+1}" playOrder="{$pos+1}">
-                      <navLabel>
-                        <text>
-                          <xsl:value-of select="normalize-space(html:a[1])"/>
-                        </text>
-                      </navLabel>
-                      <content src="{html:a/@href}"/>
-                    </navPoint>
+		  <navPoint>
+		    <navLabel>
+		      <text>
+			<xsl:value-of select="html:span[@class='headingNumber']"/>
+			<xsl:value-of select="normalize-space(html:a[1])"/>
+		      </text>
+		    </navLabel>
+		    <content src="{html:a/@href}"/>
+		  </navPoint>
 		</xsl:if>
-<!--		<xsl:if test="html:ul">
+		<!--		<xsl:if test="html:ul">
                     <xsl:for-each select="html:ul/html:li">
-		      <xsl:variable name="pos">
-			<xsl:number level="any"/>
-		      </xsl:variable>
-                      <navPoint id="navPoint-{$pos+1}" playOrder="{$pos+1}">
-                        <navLabel>
-                          <text>
-                            <xsl:value-of select="normalize-space(html:a[1])"/>
-                          </text>
-                        </navLabel>
-                        <content src="{html:a/@href}"/>
-                      </navPoint>
+		    <xsl:variable name="pos">
+		    <xsl:number level="any"/>
+		    </xsl:variable>
+		    <navPoint id="navPoint-{$pos+1}" playOrder="{$pos+1}">
+		    <navLabel>
+		    <text>
+		    <xsl:value-of select="normalize-space(html:a[1])"/>
+		    </text>
+		    </navLabel>
+		    <content src="{html:a/@href}"/>
+		    </navPoint>
                     </xsl:for-each>
-		</xsl:if>
--->
+		    </xsl:if>
+		-->
               </xsl:for-each>
+	      </xsl:variable>
+	      <xsl:for-each select="$navPoints/ncx:navPoint">
+		<xsl:variable name="pos" select="position()"/>
+		  <navPoint id="navPoint-{$pos}" playOrder="{$pos}">
+		    <xsl:copy-of select="*"/>
+		  </navPoint>
+	      </xsl:for-each>
             </navMap>
           </ncx>
 	</xsl:result-document>
