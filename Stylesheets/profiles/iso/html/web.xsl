@@ -273,8 +273,6 @@
   <xsl:template name="rendToClass">
     <xsl:param name="id">true</xsl:param>
     <xsl:param name="default">.</xsl:param>
-<xsl:message>Look at <xsl:value-of select="local-name()"/>: [<xsl:value-of select="@rend"/>]</xsl:message>
-
     <xsl:if test="$id='true' and @xml:id">
       <xsl:attribute name="id">
         <xsl:value-of select="@xml:id"/>
