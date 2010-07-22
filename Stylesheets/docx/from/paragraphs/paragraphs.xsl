@@ -83,6 +83,9 @@
 	   <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
 	 </xsl:attribute>
        </xsl:if>
+       <xsl:if test="w:pPr/w:pStyle/w:rPr/w:rtl">
+	 <xsl:attribute name="iso:style"><xsl:text>direction: rtl</xsl:text></xsl:attribute>
+       </xsl:if>
        <xsl:choose>
 	 <xsl:when test="w:pPr/w:rPr/w:ins">
 	   <add when="{w:pPr/w:rPr/w:ins/@w:date}" 

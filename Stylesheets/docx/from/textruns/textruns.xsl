@@ -156,16 +156,17 @@
 	    <!-- w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
 	    <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
 	  </xsl:if>
-	  <xsl:if test="w:rPr/w:position/@w:val">
-	    <s n="position">
-	      <xsl:value-of select="w:rPr/w:position/@w:val"/>
-	    </s>
-	  </xsl:if>
-	  <xsl:if test="w:rPr/w:rtl">
-	    <s n="direction">
-	      <xsl:text>rtl</xsl:text>
-	    </s>
-	  </xsl:if>
+	</xsl:if>
+	<xsl:if test="w:rPr/w:position/@w:val">
+	  <s n="position">
+	    <xsl:value-of select="w:rPr/w:position/@w:val"/>
+	  </s>
+	</xsl:if>
+	<xsl:if test="w:rPr/w:rtl or parent::w:p/w:pPr/w:rPr/w:rtl">
+	  <xsl:message>RTL: <xsl:value-of select="."/></xsl:message>
+	  <s n="direction">
+	    <xsl:text>rtl</xsl:text>
+	  </s>
 	</xsl:if>
       </xsl:variable>
      
