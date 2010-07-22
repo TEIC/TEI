@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink"
+		xmlns:its="http://www.w3.org/2005/11/its"
                 xmlns:dbk="http://docbook.org/ns/docbook"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
@@ -9,7 +10,8 @@
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="#default a fo dbk xlink xhtml rng tei teix"
+                exclude-result-prefixes="#default a fo dbk xlink xhtml
+		rng tei teix its"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -2649,19 +2651,22 @@
    </doc>
   <xsl:template name="divClassAttribute">
       <xsl:param name="depth"/>
+      <xsl:if test="@its:dir">
+	<xsl:attribute name="dir" select="@its:dir"/>
+      </xsl:if>
       <xsl:attribute name="class">
          <xsl:choose>
-	           <xsl:when test="@type">
-	              <xsl:value-of select="@type"/>
-	           </xsl:when>
-	           <xsl:otherwise>
-	              <xsl:text>teidiv</xsl:text>
-	              <xsl:value-of select="$depth"/>
-	           </xsl:otherwise>
+	   <xsl:when test="@type">
+	     <xsl:value-of select="@type"/>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:text>teidiv</xsl:text>
+	     <xsl:value-of select="$depth"/>
+	   </xsl:otherwise>
          </xsl:choose>
          <xsl:if test="@rend">
-	           <xsl:text> </xsl:text>
-	           <xsl:value-of select="@rend"/>
+	   <xsl:text> </xsl:text>
+	   <xsl:value-of select="@rend"/>
          </xsl:if>
       </xsl:attribute>
       <xsl:variable name="ident">
