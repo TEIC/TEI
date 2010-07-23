@@ -163,7 +163,6 @@
 	  </s>
 	</xsl:if>
 	<xsl:if test="w:rPr/w:rtl or parent::w:p/w:pPr/w:rPr/w:rtl">
-	  <xsl:message>RTL: <xsl:value-of select="."/></xsl:message>
 	  <s n="direction">
 	    <xsl:text>rtl</xsl:text>
 	  </s>
