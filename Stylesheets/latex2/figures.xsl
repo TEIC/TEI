@@ -63,10 +63,34 @@
 			  parent::tei:row/@role='label'">
 	      <xsl:text>){\columncolor{label}}</xsl:text>
 	    </xsl:if>
-	    <xsl:text>c}{</xsl:text>
+            <xsl:choose>
+               <xsl:when test="@align='right'">r</xsl:when>
+               <xsl:when test="@align='centre'">c</xsl:when>
+               <xsl:when test="@align='center'">c</xsl:when>
+               <xsl:when test="@align='left'">l</xsl:when>
+               <xsl:otherwise>l</xsl:otherwise>
+            </xsl:choose>
+	    <xsl:text>}{</xsl:text>
             <xsl:apply-templates/>
             <xsl:text>}</xsl:text>
          </xsl:when>
+	 <xsl:when test="@align">
+            <xsl:text>\multicolumn{1}{</xsl:text>
+	    <xsl:if test="@role='label' or
+			  parent::tei:row/@role='label'">
+	      <xsl:text>){\columncolor{label}}</xsl:text>
+	    </xsl:if>
+            <xsl:choose>
+               <xsl:when test="@align='right'">r</xsl:when>
+               <xsl:when test="@align='centre'">c</xsl:when>
+               <xsl:when test="@align='center'">c</xsl:when>
+               <xsl:when test="@align='left'">l</xsl:when>
+               <xsl:otherwise>l</xsl:otherwise>
+            </xsl:choose>
+	    <xsl:text>}{</xsl:text>
+            <xsl:apply-templates/>
+            <xsl:text>}</xsl:text>
+	 </xsl:when>
          <xsl:otherwise>
             <xsl:if test="starts-with(normalize-space(.),'[')">
                <xsl:text>{}</xsl:text>
@@ -138,9 +162,9 @@
 	           <xsl:text>\end{tabular}</xsl:text>
          </xsl:when>
          <xsl:otherwise> 
-	           <xsl:text>\begin{longtable}</xsl:text>
+	           <xsl:text>&#10;\begin{longtable}</xsl:text>
 	           <xsl:call-template name="makeTable"/>
-	           <xsl:text>\end{longtable} \par </xsl:text>
+	           <xsl:text>\end{longtable} \par&#10; </xsl:text>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
