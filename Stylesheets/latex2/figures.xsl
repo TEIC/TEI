@@ -318,46 +318,45 @@
          </xsl:choose>
       </xsl:variable>
       <xsl:variable name="tds">
-         <xsl:for-each select="tei:row">
-	   <xsl:variable name="row">
-	     <xsl:for-each select="tei:cell">
-	       <xsl:variable name="stuff">
-		 <xsl:apply-templates/>
-	       </xsl:variable>
-	       <cell>
-		 <xsl:value-of select="string-length($stuff)"/>
-	       </cell>
-	       <xsl:if test="@cols">
-		 <xsl:variable name="c" select="xs:integer(@cols) - 1 "/>
-		 <xsl:for-each select="1 to $c">
-		   <cell>0</cell>
-		 </xsl:for-each>
-	       </xsl:if>
-	     </xsl:for-each>
-	   </xsl:variable>
-	   <xsl:for-each select="$row/cell">
-	     <cell col="{position()}">
-	       <xsl:value-of select="."/>
-	     </cell>
-	   </xsl:for-each>
-	   </xsl:for-each>
-	 </xsl:variable>
-      <xsl:variable name="total">
-         <xsl:value-of select="sum($tds/cell)"/>
+	<xsl:for-each select="tei:row">
+	  <xsl:variable name="row">
+	    <xsl:for-each select="tei:cell">
+	      <xsl:variable name="stuff">
+		<xsl:apply-templates/>
+	      </xsl:variable>
+	      <cell>
+		<xsl:value-of select="string-length($stuff)"/>
+	      </cell>
+	      <xsl:if test="@cols">
+		<xsl:variable name="c" select="xs:integer(@cols) - 1 "/>
+		<xsl:for-each select="1 to $c">
+		  <cell>0</cell>
+		</xsl:for-each>
+	      </xsl:if>
+	    </xsl:for-each>
+	  </xsl:variable>
+	  <xsl:for-each select="$row/cell">
+	    <cell col="{position()}">
+	      <xsl:value-of select="."/>
+	    </cell>
+	  </xsl:for-each>
+	</xsl:for-each>
       </xsl:variable>
-<xsl:message><xsl:copy-of select="$tds"/></xsl:message>
+      <xsl:variable name="total">
+	<xsl:value-of select="sum($tds/cell)"/>
+      </xsl:variable>
       <xsl:for-each select="$tds/cell">
-         <xsl:variable name="c" select="@col"/>
-         <xsl:if test="not(preceding-sibling::cell[$c=@col])">
-            <xsl:variable name="len">
-	      <xsl:value-of select="sum(following-sibling::cell[$c=@col]) + current()"/>
-            </xsl:variable>
-	    <xsl:value-of select="$valign"/>
-            <xsl:text>{</xsl:text>
-            <xsl:value-of select="($len div $total) * $tableMaxWidth"/>
-            <xsl:text>\textwidth}</xsl:text>
-            <xsl:if test="contains($r,'rules')">|</xsl:if>
-         </xsl:if>
+	<xsl:variable name="c" select="@col"/>
+	<xsl:if test="not(preceding-sibling::cell[$c=@col])">
+	  <xsl:variable name="len">
+	    <xsl:value-of select="sum(following-sibling::cell[$c=@col]) + current()"/>
+	  </xsl:variable>
+	  <xsl:value-of select="$valign"/>
+	  <xsl:text>{</xsl:text>
+	  <xsl:value-of select="($len div $total) * $tableMaxWidth"/>
+	  <xsl:text>\textwidth}</xsl:text>
+	  <xsl:if test="contains($r,'rules')">|</xsl:if>
+	</xsl:if>
       </xsl:for-each>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
