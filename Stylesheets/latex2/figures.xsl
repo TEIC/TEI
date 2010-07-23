@@ -318,27 +318,34 @@
          </xsl:choose>
       </xsl:variable>
       <xsl:variable name="tds">
-         <xsl:for-each select=".//tei:cell">
-            <xsl:variable name="stuff">
-               <xsl:apply-templates/>
-            </xsl:variable>
-	    <xsl:variable name="n">
-	      <xsl:number/>
-	    </xsl:variable>
-	    <cell col="{$n}">
-	      <xsl:value-of select="string-length($stuff)"/>
-	    </cell>
-	    <xsl:if test="@cols">
-	      <xsl:variable name="c" select="xs:integer(@cols) - 1 "/>
-	      <xsl:for-each select="1 to $c">
-		<cell col="{$n + .}">0</cell>
-	      </xsl:for-each>
-	    </xsl:if>
-         </xsl:for-each>
-      </xsl:variable>
+         <xsl:for-each select="tei:row">
+	   <xsl:variable name="row">
+	     <xsl:for-each select="tei:cell">
+	       <xsl:variable name="stuff">
+		 <xsl:apply-templates/>
+	       </xsl:variable>
+	       <cell>
+		 <xsl:value-of select="string-length($stuff)"/>
+	       </cell>
+	       <xsl:if test="@cols">
+		 <xsl:variable name="c" select="xs:integer(@cols) - 1 "/>
+		 <xsl:for-each select="1 to $c">
+		   <cell>0</cell>
+		 </xsl:for-each>
+	       </xsl:if>
+	     </xsl:for-each>
+	   </xsl:variable>
+	   <xsl:for-each select="$row/cell">
+	     <cell col="{position()}">
+	       <xsl:value-of select="."/>
+	     </cell>
+	   </xsl:for-each>
+	   </xsl:for-each>
+	 </xsl:variable>
       <xsl:variable name="total">
          <xsl:value-of select="sum($tds/cell)"/>
       </xsl:variable>
+<xsl:message><xsl:copy-of select="$tds"/></xsl:message>
       <xsl:for-each select="$tds/cell">
          <xsl:variable name="c" select="@col"/>
          <xsl:if test="not(preceding-sibling::cell[$c=@col])">
