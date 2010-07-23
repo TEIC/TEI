@@ -124,13 +124,15 @@
 		    <xsl:when test="contains(following-sibling::w:r[w:instrText][1],'NOTEREF')"><r>noteref</r></xsl:when>
 		    <xsl:when test="contains(following-sibling::w:r[w:instrText][1],'REF')"><r>ref</r></xsl:when>
 		  </xsl:choose>
-		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'\f')"><r>formatted</r></xsl:if>
+		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'\r')"><r>instr_r</r></xsl:if>
+		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'\f')"><r>instr_f</r></xsl:if>
+		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'\n')"><r>instr_n</r></xsl:if>
 		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'MERGEFORMAT')"><r>mergeformat</r></xsl:if>
 		</xsl:variable>
 		<ref>
-		  <xsl:if test="$rends/r">
+		  <xsl:if test="$rends/tei:r">
 		    <xsl:attribute name="rend">
-		      <xsl:value-of select="string-join(($rends/r),' ')"/>
+		      <xsl:value-of select="string-join(($rends/tei:r),' ')"/>
 		    </xsl:attribute>
 		  </xsl:if>
 		  <xsl:if test="following-sibling::w:r[w:rPr][1]/w:rStyle">

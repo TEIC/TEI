@@ -25,7 +25,8 @@
                 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
                 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
-                
+                xmlns:its="http://www.w3.org/2005/11/its"
+
                 xmlns="http://www.tei-c.org/ns/1.0"
                 version="2.0"
                 exclude-result-prefixes="a cp dc dcterms dcmitype prop     iso m mml mo mv o pic r rel     tbx tei teidocx v xs ve w10 w wne wp">
@@ -162,10 +163,12 @@
 	    <xsl:value-of select="w:rPr/w:position/@w:val"/>
 	  </s>
 	</xsl:if>
+      </xsl:variable>
+
+      <xsl:variable name="dir">
+	<!-- right-to-left text -->
 	<xsl:if test="w:rPr/w:rtl or parent::w:p/w:pPr/w:rPr/w:rtl">
-	  <s n="direction">
-	    <xsl:text>rtl</xsl:text>
-	  </s>
+	  <xsl:text>rtl</xsl:text>
 	</xsl:if>
       </xsl:variable>
      
@@ -243,6 +246,9 @@
 	<xsl:choose>
 	<xsl:when test="$effects/* or $styles/*">
 	  <hi>
+	    <xsl:if test="$dir!=''">
+	      <xsl:attribute name="its:dir" select="$dir"/>
+	    </xsl:if>
 	    <xsl:attribute name="rend">
 	      <xsl:choose>
 		<xsl:when test="$effects/*">

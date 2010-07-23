@@ -810,9 +810,9 @@
 	    </xsl:choose>
 
 	    <!-- text direction -->
-	    <xsl:if test="contains(@iso:style,'direction')">
+	    <xsl:if test="@its:dir!=''">
 	      <!-- only handling RTL at the moment -->
-	      <xsl:if test="matches(normalize-space(substring-before((substring-after(@iso:style,'direction:')),';')),'rtl')">
+	      <xsl:if test="matches(@its:dir,'rtl')">
 		<w:rtl/>
 	      </xsl:if>
 	    </xsl:if>
@@ -1967,8 +1967,14 @@
 	      </xsl:otherwise>
 	    </xsl:choose>
 	    <xsl:value-of select="substring(@target,2)"/>
-	    <xsl:if test="contains(@rend,'formatted')">
+	    <xsl:if test="contains(@rend,'instr_f')">
 	      <xsl:text> \f</xsl:text>
+	    </xsl:if>
+	    <xsl:if test="contains(@rend,'instr_r')">
+	      <xsl:text> \r</xsl:text>
+	    </xsl:if>
+	    <xsl:if test="contains(@rend,'instr_n')">
+	      <xsl:text> \n</xsl:text>
 	    </xsl:if>
 	    <xsl:text> \h </xsl:text>
 	    <xsl:if test="contains(@rend,'mergeformat')">

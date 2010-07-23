@@ -60,8 +60,10 @@
       <xsl:variable name="rends">
 	<r>fldSimple</r>
 	<xsl:if test="contains(@w:instr,'NOTEREF')"><r>noteref</r></xsl:if>
-	<xsl:if test="contains(@w:instr,'\f')"><r>formatted</r></xsl:if>
 	<xsl:if test="contains(@w:instr,'MERGEFORMAT')"><r>mergeformat</r></xsl:if>
+	<xsl:if test="contains(@w:instr,' \r')"><r>instr_r</r></xsl:if>
+	<xsl:if test="contains(@w:instr,' \f')"><r>instr_f</r></xsl:if>
+	<xsl:if test="contains(@w:instr,' \n')"><r>instr_n</r></xsl:if>
       </xsl:variable>
 <!--      <xsl:message>rends=<xsl:copy-of select="$rends"/></xsl:message> -->
       <xsl:choose>

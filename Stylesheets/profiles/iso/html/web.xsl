@@ -12,6 +12,8 @@
                 xmlns:t="http://www.thaiopensource.com/ns/annotations"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                xmlns:its="http://www.w3.org/2005/11/its"
+
                 exclude-result-prefixes="tei html t a rng s iso tbx
 					 cals teix w"
                 version="2.0">
@@ -184,11 +186,6 @@
 	<xsl:for-each select="tokenize(@iso:style,';')">
 	  <xsl:choose>
 	    <xsl:when test=".=''"/>
-	    <xsl:when test="starts-with(.,'direction')">
-	      <d>
-		<xsl:value-of select="substring-after(.,':')"/>
-	      </d>
-	    </xsl:when>
 	    <xsl:otherwise>
 	      <s>
 		<xsl:value-of select="."/><xsl:text>;</xsl:text>
@@ -238,6 +235,9 @@
 	    </xsl:when>
 	  </xsl:choose>
 	</xsl:for-each>
+	<xsl:if test="@its:dir">
+	  <d><xsl:value-of select="@its:dir"/></d>
+	</xsl:if>
       </xsl:variable>
       <xsl:for-each select="$style">
 	<xsl:if test="html:s">
