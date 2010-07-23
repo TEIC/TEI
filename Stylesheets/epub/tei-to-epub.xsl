@@ -40,6 +40,8 @@
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
+  <xsl:param name="doctypePublic">-//W3C//DTD XHTML 1.1//EN</xsl:param>
+  <xsl:param name="doctypeSystem">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</xsl:param>
   <xsl:param name="directory"></xsl:param>
   <xsl:param name="splitLevel">0</xsl:param>
   <xsl:param name="STDOUT">false</xsl:param>
@@ -85,6 +87,7 @@
       <xsl:when test="tei:text/@xml:lang">
 	<xsl:value-of select="tei:text/@xml:lang"/>
       </xsl:when>
+
       <xsl:otherwise>
 	<xsl:text>en</xsl:text>
       </xsl:otherwise>
