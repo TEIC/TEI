@@ -387,20 +387,20 @@ capable of dealing with UTF-8 directly.
    <xsl:template name="latexLayout">
      <xsl:choose>
        <xsl:when test="$latexPaperSize='a3paper'">
-	 \paperwidth297
-	 \paperheight420
+	 \paperwidth297mm
+	 \paperheight420mm
        </xsl:when>
        <xsl:when test="$latexPaperSize='a5paper'">	
-	 \paperwidth148
-	 \paperheight210
+	 \paperwidth148mm
+	 \paperheight210mm
        </xsl:when>
        <xsl:when test="$latexPaperSize='a4paper'">
 	 \paperwidth210mm
 	 \paperheight297mm
        </xsl:when>
        <xsl:when test="$latexPaperSize='letterpaper'">
-	 \paperwidth216
-	 \paperheight279
+	 \paperwidth216mm
+	 \paperheight279mm
        </xsl:when>
 	 <xsl:otherwise>
 	 </xsl:otherwise>
