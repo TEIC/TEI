@@ -507,10 +507,35 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>cit element</desc>
    </doc>
-  <xsl:template match="tei:listBibl/tei:bibl">
-      <xsl:call-template name="makeItem"/>
+  <xsl:template match="tei:cit">
+    <xsl:choose>
+      <xsl:when test="@rend='display'">
+	<block font-size="8pt">
+	  <xsl:apply-templates/>
+	</block>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Bibl elements</desc>
+   </doc>
+  <xsl:template match="tei:bibl">
+    <xsl:choose>
+      <xsl:when test="parent::tei:listBibl">
+	<xsl:call-template name="makeItem"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<block>
+	  <xsl:apply-templates/>
+	</block>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
