@@ -608,11 +608,18 @@
     <desc>Process element lb</desc>
   </doc>
   <xsl:template match="tei:lb">
-    <br>
-      <xsl:if test="@rend and not(@rend='-')">
-	<xsl:attribute name="class" select="@rend"/>
-      </xsl:if>
-    </br>
+    <xsl:choose>
+      <xsl:when test="parent::tei:body"/>
+      <xsl:when test="parent::tei:back"/>
+      <xsl:when test="parent::tei:front"/>
+      <xsl:otherwise>
+	<br>
+	  <xsl:if test="@rend and not(@rend='-')">
+	    <xsl:attribute name="class" select="@rend"/>
+	  </xsl:if>
+	</br>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element l</desc>
