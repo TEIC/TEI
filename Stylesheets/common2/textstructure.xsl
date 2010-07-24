@@ -32,8 +32,9 @@
   <xsl:template match="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
                  mode="depth">
       <xsl:choose>
-	<xsl:when test="ancestor::tei:text/parent::tei:group and local-name(.) = 'div'">
-	   <xsl:value-of select="count(ancestor::tei:div) "/>
+	<xsl:when test="ancestor::tei:text/parent::tei:group and
+			self::tei:div">
+	   <xsl:value-of select="count(ancestor::tei:div) + 1"/>
 	</xsl:when>
          <xsl:when test="local-name(.) = 'div'">
             <xsl:value-of select="count(ancestor::tei:div)"/>

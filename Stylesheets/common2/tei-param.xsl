@@ -70,7 +70,7 @@
             <xsl:value-of select="@type"/>
          </xsl:when>
          <xsl:otherwise>
-	   <xsl:text>Section </xsl:text>
+	   <xsl:text>&#x27A4;</xsl:text>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
