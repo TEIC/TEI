@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:dc="http://purl.org/dc/elements/1.1/"
+		xmlns:iso="http://www.iso.org/ns/1.0"
 		xmlns="http://www.w3.org/1999/xhtml"
 		xmlns:html="http://www.w3.org/1999/xhtml"
 		xmlns:tei="http://www.tei-c.org/ns/1.0"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/"
-		version="2.0" exclude-result-prefixes="tei dc html ncx">
+		version="2.0" exclude-result-prefixes="iso tei dc html ncx">
   <xsl:import href="../xhtml2/tei.xsl"/>
   <xsl:output method="xml" encoding="utf-8" indent="yes"/>
   <xsl:key name="GRAPHICS" use="1"
@@ -748,6 +749,13 @@
     </dd>
   </xsl:template>
 
+  <xsl:template match="tei:publicationStmt/tei:publisher" mode="metadata">
+    <dt>Publisher</dt>
+    <dd>
+    <xsl:apply-templates/>
+    </dd>
+  </xsl:template>
+
   <xsl:template match="tei:distributor" mode="metadata">
     <dt>Distributor</dt>
     <dd>
@@ -756,7 +764,7 @@
   </xsl:template>
 
   <xsl:template match="tei:idno" mode="metadata">
-    <dt>ID [<xsl:value-of select="@type"/>]</dt>
+    <dt>ID [<xsl:value-of select="@type|@iso:meta"/>]</dt>
     <dd>
     <xsl:apply-templates/>
     </dd>
