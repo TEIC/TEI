@@ -650,7 +650,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:temlate match="tei:lb[@rend='space']">
+  <xsl:template match="tei:lb[@rend='space']">
     <xsl:text> </xsl:text>
-  </xsl:temlate>
+  </xsl:template>
 </xsl:stylesheet>
