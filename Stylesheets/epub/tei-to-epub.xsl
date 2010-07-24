@@ -271,6 +271,7 @@
 	      </xsl:if>
 	      <item href="stylesheet.css" id="css" media-type="text/css"/>
 	      <item href="titlepage.html" id="titlepage" media-type="application/xhtml+xml"/>	      
+	      <item href="titlepageback.html" id="titlepageback" media-type="application/xhtml+xml"/>	      
               <item id="print.css" href="print.css"
 		    media-type="text/css"/>
 	      <item id="apt" href="page-template.xpgt" media-type="application/adobe-page-template+xml"/>
@@ -328,6 +329,7 @@
             </manifest>
             <spine toc="ncx">
               <itemref idref="titlepage"/>
+              <itemref idref="titlepageback"/>
               <itemref idref="start"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                   <xsl:if test="html:a and not(starts-with(html:a/@href,'#'))">
@@ -352,7 +354,10 @@
             </spine>
 
 	    <guide>
-	      <reference href="titlepage.html" type="cover" title="Cover"/>
+	      <reference href="titlepage.html" type="cover"
+			 title="Cover"/>
+	      <reference href="titlepageback.html" type="text"
+			 title="About this book"/>
               <reference type="text" title="Start" href="index.html"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
 		 
@@ -408,6 +413,21 @@
 		  </div>
 		</xsl:otherwise>
 	      </xsl:choose>
+	    </body>
+	  </html>
+	</xsl:result-document>
+
+	<xsl:if test="$debug='true'">
+	  <xsl:message>write file OEBPS/titlepageback.html</xsl:message>
+	</xsl:if>
+        <xsl:result-document href="{concat($directory,'OEBPS/titlepageback.html')}" method="xml">
+	  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	    <head>
+	      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	      <meta name="calibre:cover" content="true"/>
+	      <title>About this book</title>
+	    </head>
+	    <body>
 	      <div style="text-align: left; font-size: smaller">
 		<h2>Information about this book</h2>
 		<xsl:for-each select="/*/tei:teiHeader/tei:fileDesc">
