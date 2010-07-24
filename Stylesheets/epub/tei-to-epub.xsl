@@ -386,7 +386,7 @@
 	    <head>
 	      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	      <meta name="calibre:cover" content="true"/>
-	      <title>Cover</title>
+	      <title>Title page</title>
 	      <style type="text/css" title="override_css">
 		@page {padding: 0pt; margin:0pt}
 		body { text-align: center; padding:0pt; margin: 0pt; }
@@ -395,18 +395,25 @@
 	    <body>
 	      <xsl:choose>
 		<xsl:when test="$coverimage=''">
-		  <div style="font-family: serif; font-size:24pt; text-align:center">
+		  <div style="font-family: serif; height:860;
+			      font-size:36pt; border: bold red 1pt; text-align:center">
 		    <xsl:call-template name="generateTitle"/>
 		  </div>
 		</xsl:when>
 		<xsl:otherwise>
 		  <div>
-		    <img width="600" height="800"
+		    <img width="600" height="860"
 			 alt="cover picture"
 			 src="{$coverimage}"/>
 		  </div>
 		</xsl:otherwise>
 	      </xsl:choose>
+	      <div style="text-align: left; font-size: smaller">
+		<h2>Information about this book</h2>
+		<xsl:for-each select="/*/tei:teiHeader/tei:fileDesc">
+		  <xsl:apply-templates mode="metadata"/>
+		</xsl:for-each>
+	      </div>
 	    </body>
 	  </html>
 	</xsl:result-document>
@@ -652,5 +659,120 @@
 
   <xsl:template match="tei:lb[@rend='space']">
     <xsl:text> </xsl:text>
+  </xsl:template>
+
+  <xsl:template match="tei:titleStmt" mode="metadata">
+    <h3>Title</h3>
+    <xsl:apply-templates mode="metadata"/>
+</xsl:template>
+
+  <xsl:template match="tei:editionStmt" mode="metadata">
+    <h3>Edition</h3>
+    <xsl:apply-templates mode="metadata"/>
+</xsl:template>
+
+  <xsl:template match="tei:publicationStmt" mode="metadata">
+    <h3>Publication</h3>
+    <dl>
+      <xsl:apply-templates mode="metadata"/>
+    </dl>
+  </xsl:template>
+  
+  <xsl:template match="tei:seriesStmt" mode="metadata">
+    <h3>Series</h3>
+    <xsl:apply-templates mode="metadata"/>
+  </xsl:template>
+  
+  <xsl:template match="tei:notesStmt" mode="metadata">
+    <h3>Notes</h3>
+    <xsl:apply-templates mode="metadata"/>
+  </xsl:template>
+
+  <xsl:template match="tei:sourceDesc" mode="metadata">
+    <h3>Source</h3>
+    <xsl:apply-templates mode="metadata"/>
+  </xsl:template>
+
+  <xsl:template match="tei:respStmt" mode="metadata">
+    <p><i><xsl:value-of select="tei:resp"/></i>:
+      <xsl:value-of select="tei:name"/>
+    </p>
+  </xsl:template>
+
+  <xsl:template match="tei:extent" mode="metadata"/>
+
+  <xsl:template match="tei:authority" mode="metadata">
+    <dt>Authority</dt>
+    <dd>
+    <xsl:apply-templates/>
+    </dd>
+  </xsl:template>
+
+  <xsl:template match="tei:distributor" mode="metadata">
+    <dt>Distributor</dt>
+    <dd>
+    <xsl:apply-templates/>
+    </dd>
+  </xsl:template>
+
+  <xsl:template match="tei:idno" mode="metadata">
+    <dt>ID [<xsl:value-of select="@type"/>]</dt>
+    <dd>
+    <xsl:apply-templates/>
+    </dd>
+  </xsl:template>
+
+  <xsl:template match="tei:availability[not(@n) and preceding-sibling::tei:availability/@n]" mode="metadata"/>
+
+  <xsl:template match="tei:availability" mode="metadata">
+    <dt>Availablity</dt>
+    <dd>
+    <xsl:for-each select="tei:p">
+      <xsl:apply-templates/>
+    </xsl:for-each>
+    </dd>
+  </xsl:template>
+
+  <xsl:template match="tei:date" mode="metadata">
+    <dt>Date</dt>
+    <dd>
+    <xsl:apply-templates/>
+    </dd>
+  </xsl:template>
+
+  <xsl:template match="*" mode="metadata">
+    <p>
+      <xsl:apply-templates/>
+    </p>
+  </xsl:template>
+
+  <xsl:template match="tei:seriesStmt/tei:p">
+      <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="tei:distributor/tei:address">
+      <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="tei:authority/tei:address">
+      <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="tei:title[@type='uniform']"/>
+
+  <xsl:template match="tei:editor">
+    <xsl:apply-templates/>
+    <xsl:text> (editor)</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="tei:title[@type='main']">
+    <i>
+      <xsl:apply-templates/>
+    </i>
+  </xsl:template>
+
+  <xsl:template match="tei:title[@type='alternative']">
+    <xsl:apply-templates/>
+    <xsl:text> (alternative title)</xsl:text>
   </xsl:template>
 </xsl:stylesheet>
