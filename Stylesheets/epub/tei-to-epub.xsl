@@ -329,7 +329,6 @@
             </manifest>
             <spine toc="ncx">
               <itemref idref="titlepage"/>
-              <itemref idref="titlepageback"/>
               <itemref idref="start"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                   <xsl:if test="html:a and not(starts-with(html:a/@href,'#'))">
@@ -351,13 +350,12 @@
                     </xsl:for-each>
 		  </xsl:if>
               </xsl:for-each>
+              <itemref idref="titlepageback"/>
             </spine>
 
 	    <guide>
 	      <reference href="titlepage.html" type="cover"
 			 title="Cover"/>
-	      <reference href="titlepageback.html" type="text"
-			 title="About this book"/>
               <reference type="text" title="Start" href="index.html"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
 		 
@@ -380,6 +378,8 @@
 		      </xsl:if>
 		  -->
               </xsl:for-each>
+	      <reference href="titlepageback.html" type="text"
+			 title="About this book"/>
             </guide>
           </package>
 	</xsl:result-document>
@@ -424,7 +424,6 @@
 	  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	    <head>
 	      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	      <meta name="calibre:cover" content="true"/>
 	      <title>About this book</title>
 	    </head>
 	    <body>
@@ -460,24 +459,24 @@
             <navMap>
 	      <xsl:variable name="navPoints">
 		<navPoint>
-                <navLabel>
-                  <text>Title Page and Contents</text>
-                </navLabel>
-                <content src="index.html"/>
-              </navPoint>
-	      <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-		<xsl:if test="html:a and not(starts-with(html:a/@href,'#'))">
-		  <navPoint>
-		    <navLabel>
-		      <text>
-			<xsl:value-of select="html:span[@class='headingNumber']"/>
-			<xsl:value-of select="normalize-space(html:a[1])"/>
-		      </text>
-		    </navLabel>
-		    <content src="{html:a/@href}"/>
-		  </navPoint>
-		</xsl:if>
-		<!--		<xsl:if test="html:ul">
+		  <navLabel>
+		    <text>Title Page and Contents</text>
+		  </navLabel>
+		  <content src="index.html"/>
+		</navPoint>
+		<xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
+		  <xsl:if test="html:a and not(starts-with(html:a/@href,'#'))">
+		    <navPoint>
+		      <navLabel>
+			<text>
+			  <xsl:value-of select="html:span[@class='headingNumber']"/>
+			  <xsl:value-of select="normalize-space(html:a[1])"/>
+			</text>
+		      </navLabel>
+		      <content src="{html:a/@href}"/>
+		    </navPoint>
+		  </xsl:if>
+		  <!--		<xsl:if test="html:ul">
                     <xsl:for-each select="html:ul/html:li">
 		    <xsl:variable name="pos">
 		    <xsl:number level="any"/>
@@ -493,7 +492,14 @@
                     </xsl:for-each>
 		    </xsl:if>
 		-->
-              </xsl:for-each>
+		</xsl:for-each>
+		<navPoint>
+		  <navLabel>
+		    <text>About this book</text>
+		  </navLabel>
+		  <content src="titlepageback.html"/>
+		</navPoint>
+
 	      </xsl:variable>
 	      <xsl:for-each select="$navPoints/ncx:navPoint">
 		<xsl:variable name="pos" select="position()"/>
