@@ -673,9 +673,16 @@
 
   <xsl:template match="tei:publicationStmt" mode="metadata">
     <h3>Publication</h3>
-    <dl>
-      <xsl:apply-templates mode="metadata"/>
-    </dl>
+    <xsl:choose>
+      <xsl:when test="tei:p">
+	<xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+	<dl>
+	  <xsl:apply-templates mode="metadata"/>
+	</dl>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="tei:seriesStmt" mode="metadata">
@@ -703,6 +710,13 @@
 
   <xsl:template match="tei:authority" mode="metadata">
     <dt>Authority</dt>
+    <dd>
+    <xsl:apply-templates/>
+    </dd>
+  </xsl:template>
+
+  <xsl:template match="tei:publicationStmt/tei:address" mode="metadata">
+    <dt>Address</dt>
     <dd>
     <xsl:apply-templates/>
     </dd>
@@ -758,7 +772,15 @@
       <xsl:apply-templates/>
   </xsl:template>
 
+  <xsl:template match="tei:authority/tei:addLine">
+      <xsl:apply-templates/><br/>
+  </xsl:template>
+
   <xsl:template match="tei:title[@type='uniform']"/>
+
+  <xsl:template match="tei:editionStmt/tei:p">
+    <xsl:apply-templates/>
+  </xsl:template>
 
   <xsl:template match="tei:editor">
     <xsl:apply-templates/>
