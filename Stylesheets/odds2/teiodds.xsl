@@ -958,10 +958,10 @@ select="$makeDecls"/></xsl:message>
 
 
   <xsl:template match="tei:index">
-    <xsl:call-template name="makeAnchor">
-      <xsl:with-param name="name">IDX-<xsl:number level="any"/>
-      </xsl:with-param>
-    </xsl:call-template>
+      <xsl:call-template name="makeAnchor">
+	<xsl:with-param name="name">IDX-<xsl:number level="any"/>
+	</xsl:with-param>
+      </xsl:call-template>
   </xsl:template>
 
 

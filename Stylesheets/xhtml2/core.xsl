@@ -1941,10 +1941,24 @@
   <xsl:template name="makeAnchor">
     <xsl:param name="name"/>
     <xsl:choose>
-      <xsl:when test="self::tei:anchor">
-	<span>
-	    <xsl:attribute name="id" select="@xml:id"/>
+      <xsl:when test="self::tei:anchor and $name">
+	<span id="{$name}">
 	  <xsl:comment>anchor</xsl:comment>
+	</span>
+      </xsl:when>
+      <xsl:when test="self::tei:anchor">
+	<span id="{@xml:id}">
+	  <xsl:comment>anchor</xsl:comment>
+	</span>
+      </xsl:when>
+      <xsl:when test="self::tei:index and $name">
+	<span id="{$name}">
+	  <xsl:comment>index</xsl:comment>
+	</span>
+      </xsl:when>
+      <xsl:when test="self::tei:index">
+	<span id="{@xml:id}">
+	  <xsl:comment>index</xsl:comment>
 	</span>
       </xsl:when>
       <xsl:when test="$name">
