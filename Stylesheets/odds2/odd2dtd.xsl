@@ -1497,17 +1497,18 @@
          <xsl:when test="(number(tei:datatype/@maxOccurs) &gt; 1 or  tei:datatype/@maxOccurs='unbounded') and tei:datatype/rng:data[@type='Name']">
             <xsl:text> NMTOKENS </xsl:text>
          </xsl:when>
-         <xsl:when test="tei:datatype/rng:data[@type='Name']">
-            <xsl:text> NMTOKEN </xsl:text>
-         </xsl:when>
          <xsl:when test="tei:valList[@type='closed']">
             <xsl:text> (</xsl:text>
             <xsl:for-each select="tei:valList/tei:valItem">
                <xsl:value-of select="@ident"/>
-               <xsl:if test="following-sibling::tei:valItem">|
-</xsl:if>
+               <xsl:if test="following-sibling::tei:valItem">
+		 <xsl:text>|</xsl:text>
+	       </xsl:if>
             </xsl:for-each>
             <xsl:text>)</xsl:text>
+         </xsl:when>
+         <xsl:when test="tei:datatype/rng:data[@type='Name']">
+            <xsl:text> NMTOKEN </xsl:text>
          </xsl:when>
          <xsl:when test="tei:datatype/@minOccurs or tei:datatype/@maxOccurs">
             <xsl:text> CDATA </xsl:text>
