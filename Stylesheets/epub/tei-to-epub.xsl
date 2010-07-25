@@ -400,6 +400,10 @@
 	    </head>
 	    <body>
 	      <xsl:choose>
+		<xsl:when
+		    test="tei:text/tei:front/tei:titlePage">
+		  <xsl:apply-templates select="tei:text/tei:front/tei:titlePage"/>
+		</xsl:when>
 		<xsl:when test="$coverimage=''">
 		  <div style="font-family: serif; height:860;
 			      font-size:36pt; border: bold red 1pt; text-align:center">
