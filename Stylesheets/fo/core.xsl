@@ -67,12 +67,12 @@
   </xd:doc>
   <xsl:template match="tei:add">
     <xsl:choose>
-      <xsl:when test="@place='sup'">
+      <xsl:when test="@place='sup' or @place='above'">
         <inline vertical-align="super">
           <xsl:apply-templates/>
         </inline>
       </xsl:when>
-      <xsl:when test="@place='sub'">
+      <xsl:when test="@place='sub' or @place='below'">
         <inline vertical-align="sub">
           <xsl:apply-templates/>
         </inline>
@@ -330,6 +330,39 @@
   <xsl:template match="tei:interpGrp">
     <xsl:apply-templates/>
   </xsl:template>
+
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>cit element</desc>
+   </doc>
+  <xsl:template match="tei:cit">
+    <xsl:choose>
+      <xsl:when test="@rend='display'">
+	<block font-size="8pt">
+	  <xsl:apply-templates/>
+	</block>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
+   </xsl:template>
+  
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Bibl elements</desc>
+   </doc>
+  <xsl:template match="tei:bibl">
+    <xsl:choose>
+      <xsl:when test="parent::tei:listBibl">
+	<xsl:call-template name="makeItem"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<block>
+	  <xsl:apply-templates/>
+	</block>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xd:doc>
     <xd:short>Process elements  tei:item</xd:short>
     <xd:detail> </xd:detail>
@@ -501,13 +534,6 @@
         </list-block>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-  <xd:doc>
-    <xd:short>Process elements  tei:listBibl/tei:bibl</xd:short>
-    <xd:detail> </xd:detail>
-  </xd:doc>
-  <xsl:template match="tei:listBibl/tei:bibl">
-    <xsl:call-template name="makeItem"/>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements  tei:list[@type='catalogue']</xd:short>
@@ -1021,7 +1047,7 @@
       <xsl:when test="$value='UL' or $value='ul'">
         <xsl:attribute name="text-decoration">underline</xsl:attribute>
       </xsl:when>
-      <xsl:when test="$value='sub'">
+      <xsl:when test="$value='sub' or $value='below'">
         <xsl:attribute name="vertical-align">sub</xsl:attribute>
       </xsl:when>
       <xsl:when test="$value='small'">
@@ -1030,7 +1056,7 @@
       <xsl:when test="$value='strike'">
         <xsl:attribute name="text-decoration">line-through</xsl:attribute>
       </xsl:when>
-      <xsl:when test="$value='sup'">
+      <xsl:when test="$value='sup' or $value='above'">
         <xsl:attribute name="vertical-align">super</xsl:attribute>
       </xsl:when>
     </xsl:choose>

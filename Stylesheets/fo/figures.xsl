@@ -360,9 +360,9 @@
       </xsl:attribute>
     </xsl:if>
     <xsl:choose>
-      <xsl:when test="@halign">
+      <xsl:when test="@align">
         <xsl:attribute name="text-align">
-          <xsl:value-of select="@halign"/>
+          <xsl:value-of select="@align"/>
         </xsl:attribute>
       </xsl:when>
       <xsl:otherwise>
