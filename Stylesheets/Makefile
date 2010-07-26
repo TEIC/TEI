@@ -43,7 +43,7 @@ p5-2:
 	for i in  ${DIRS} ; do \
 	tar cf - --exclude .svn $$i | (cd release/p5-2/xml/tei/stylesheet; tar xf - ); \
 	done
-	cp docxtotei teitodocx teitoepub release/p5-2/xml/tei/stylesheet
+	cp odttoteo teitoodt docxtotei teitodocx teitoepub release/p5-2/xml/tei/stylesheet
 
 p4:
 	-mkdir -p release/p4/xml/teip4/stylesheet/

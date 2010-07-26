@@ -39,7 +39,7 @@ TEMPDIR=/tmp/oo$$
 mkdir $TEMPDIR
 cd $TEMPDIR
 unzip -q $THERE/"$N.odt"
-saxon content.xml $FROMXSL word-directory=`pwd` origfile="$N" origdir="$D" debug=$debug > "$N.xml"
+saxon content.xml $FROMXSL origfile="$N" origdir="$D" debug=$debug > "$N.xml"
 if [ "$(ls -q -A Pictures)" ]; then
  echo found graphics files in document, so writing $N.zip
  test -f $THERE/"$N.zip" && rm $THERE/"$N.zip"

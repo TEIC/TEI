@@ -9,13 +9,6 @@
   <xsl:key match="tei:graphic|tei:pb[@facs]" use="1" name="G"/>
 
   <xsl:template match="/">
-      <xsl:for-each select="key('BINARY',1)">
-	     <xsl:text>cp </xsl:text>
-	     <xsl:value-of select="@r:id"/>
-	     <xsl:text> </xsl:text>
-	     <xsl:value-of select="$DIR"/>
-	     <xsl:text>&#10;</xsl:text>
-      </xsl:for-each>
       <xsl:for-each select="key('G',1)">
          <xsl:variable name="F">
             <xsl:value-of select="@url|@facs"/>

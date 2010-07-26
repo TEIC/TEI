@@ -70,13 +70,25 @@
 
   <xsl:key match="text:h" name="Headings" use="text:outline-level"/>
 
-  <xsl:param name="META" select="/"/>
-
   <xsl:param name="verbose">false</xsl:param>
+
+  <xsl:param name="origdir">./</xsl:param>
 
   <xsl:output encoding="utf-8" indent="yes"/>
 
-<!--  <xsl:strip-space elements="text:span"/>-->
+  <!--  <xsl:strip-space elements="text:span"/>-->
+  
+  <xsl:variable name="META">
+<xsl:message>Look for <xsl:value-of select="concat($origdir,'meta.xml')"/></xsl:message>
+    <xsl:choose>
+      <xsl:when test="doc-available(concat($origdir,'meta.xml'))">
+        <xsl:copy-of select="document(concat($origdir,'meta.xml'))/office:document-meta/office:meta"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="/office:document-meta/office:meta"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
 
   <xsl:variable name="document-title">
     <xsl:choose>
@@ -86,11 +98,8 @@
 	    select="/office:document-content/office:body/office:text/text:p[@text:style-name='Title'][1]"
 	    />
       </xsl:when>
-      <xsl:when test="doc-available('meta.xml')">
-        <xsl:value-of select="document('meta.xml')/office:document-meta/office:meta/dc:title"/>
-      </xsl:when>
-      <xsl:when test="/office:document-content/office:meta/dc:title">
-        <xsl:value-of select="/office:document-content/office:meta/dc:title"/>
+      <xsl:when test="$META/office:meta/dc:title">
+        <xsl:value-of select="$META/office:meta/dc:title"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>Untitled Document</xsl:text>
@@ -118,23 +127,12 @@
     </xsl:for-each>
 
     <TEI>
-      <xsl:choose>
-	<xsl:when test="doc-available('meta.xml')">
-	  <xsl:for-each
-	      select="document('meta.xml')/office:document-meta/office:meta/dc:language">
-	    <xsl:attribute name="xml:lang">
-	      <xsl:value-of select="normalize-space(.)"/>
-	    </xsl:attribute>
-	  </xsl:for-each>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:for-each select="/office:document-content/office:meta/dc:language">
-	    <xsl:attribute name="xml:lang">
-	      <xsl:value-of select="normalize-space(.)"/>
-	    </xsl:attribute>
-	  </xsl:for-each>  
-	</xsl:otherwise>
-      </xsl:choose>
+    
+	<xsl:for-each select="$META/office:meta/dc:language">
+	  <xsl:attribute name="xml:lang">
+	    <xsl:value-of select="normalize-space(.)"/>
+	  </xsl:attribute>
+	</xsl:for-each>  
       <xsl:call-template name="teiHeader"/>
       <xsl:apply-templates/>
     </TEI>
@@ -160,14 +158,14 @@
           </title>
           <author>
             <xsl:value-of
-              select="/office:document-content/office:meta/meta:initial-creator"/>
+              select="$META/office:meta/meta:initial-creator"/>
           </author>
         </titleStmt>
         <editionStmt>
           <edition>
             <date>
               <xsl:value-of
-                select="/office:document-content/office:meta/meta:creation-date"/>
+                select="$META/office:meta/meta:creation-date"/>
             </date>
           </edition>
         </editionStmt>
@@ -177,28 +175,28 @@
         <sourceDesc>
           <p>
 	    <xsl:apply-templates
-              select="/office:document-content/office:meta/meta:generator"/>
+              select="$META/office:meta/meta:generator"/>
 	    <xsl:text>Written by OpenOffice</xsl:text>
 	  </p>
         </sourceDesc>
       </fileDesc>
-      <xsl:if test="/office:document-content/office:meta/dc:language|/office:document-content/office:meta/meta:keyword">
+      <xsl:if test="$META/office:meta/dc:language|$META/office:meta/meta:keyword">
 	<profileDesc>
-	  <xsl:if test="/office:document-content/office:meta/dc:language">
+	  <xsl:if test="$META/office:meta/dc:language">
 	    <langUsage>
 	      <language>
 		<xsl:attribute name="ident">
-		  <xsl:value-of select="/office:document-content/office:meta/dc:language"/>
+		  <xsl:value-of select="$META/office:meta/dc:language"/>
 		</xsl:attribute>
-		<xsl:value-of select="/office:document-content/office:meta/dc:language"/>
+		<xsl:value-of select="$META/office:meta/dc:language"/>
 	      </language>
 	    </langUsage>
 	  </xsl:if>
-	  <xsl:if test="/office:document-content/office:meta/meta:keyword">
+	  <xsl:if test="$META/office:meta/meta:keyword">
 	    <textClass>
 	      <keywords>
 		<list>
-		  <xsl:for-each select="/office:document-content/office:meta/meta:keyword">
+		  <xsl:for-each select="$META/office:meta/meta:keyword">
 		    <item>
 		      <xsl:value-of select="."/>
 		    </item>
@@ -213,10 +211,10 @@
 	<change>
 	  <name>
 	    <xsl:apply-templates
-		select="/office:document-content/office:meta/dc:creator"/>
+		select="$META/office:meta/dc:creator"/>
 	  </name>
 	  <date>
-	    <xsl:apply-templates select="/office:document-content/office:meta/dc:date"/>
+	    <xsl:apply-templates select="$META/office:meta/dc:date"/>
 	  </date>
 	</change>
       </revisionDesc>
