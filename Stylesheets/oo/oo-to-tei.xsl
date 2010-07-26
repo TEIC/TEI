@@ -4,7 +4,7 @@
  # the GNU Lesser General Public License Version 2.1
 
  # Sebastian Rahtz / University of Oxford
- # copyright 2005
+ # copyright 2010
 
  # This stylesheet is derived from the OpenOffice to Docbook conversion
  #  Sun Microsystems Inc., October, 2000
@@ -81,13 +81,16 @@
   <xsl:variable name="document-title">
     <xsl:choose>
       <xsl:when
-        test="/office:document-content/office:body/office:text/text:p[@text:style-name='Title']">
+	  test="/office:document-content/office:body/office:text/text:p[@text:style-name='Title']">
         <xsl:value-of
-          select="/office:document-content/office:body/office:text/text:p[@text:style-name='Title'][1]"
-        />
+	    select="/office:document-content/office:body/office:text/text:p[@text:style-name='Title'][1]"
+	    />
       </xsl:when>
-      <xsl:when test="/office:document/office:meta/dc:title">
-        <xsl:value-of select="/office:document/office:meta/dc:title"/>
+      <xsl:when test="doc-available('meta.xml')">
+        <xsl:value-of select="document('meta.xml')/office:document-meta/office:meta/dc:title"/>
+      </xsl:when>
+      <xsl:when test="/office:document-content/office:meta/dc:title">
+        <xsl:value-of select="/office:document-content/office:meta/dc:title"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>Untitled Document</xsl:text>
@@ -96,7 +99,7 @@
   </xsl:variable>
 
 
-  <xsl:template match="/office:document">
+  <xsl:template match="/office:document-content">
     <xsl:for-each select="descendant::text:variable-decl">
       <xsl:variable name="name">
         <xsl:value-of select="@text:name"/>
@@ -115,11 +118,23 @@
     </xsl:for-each>
 
     <TEI>
-      <xsl:for-each select="/office:document/office:meta/dc:language">
-	<xsl:attribute name="xml:lang">
-	  <xsl:value-of select="normalize-space(.)"/>
-	</xsl:attribute>
-      </xsl:for-each>
+      <xsl:choose>
+	<xsl:when test="doc-available('meta.xml')">
+	  <xsl:for-each
+	      select="document('meta.xml')/office:document-meta/office:meta/dc:language">
+	    <xsl:attribute name="xml:lang">
+	      <xsl:value-of select="normalize-space(.)"/>
+	    </xsl:attribute>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:for-each select="/office:document-content/office:meta/dc:language">
+	    <xsl:attribute name="xml:lang">
+	      <xsl:value-of select="normalize-space(.)"/>
+	    </xsl:attribute>
+	  </xsl:for-each>  
+	</xsl:otherwise>
+      </xsl:choose>
       <xsl:call-template name="teiHeader"/>
       <xsl:apply-templates/>
     </TEI>
@@ -145,14 +160,14 @@
           </title>
           <author>
             <xsl:value-of
-              select="/office:document/office:meta/meta:initial-creator"/>
+              select="/office:document-content/office:meta/meta:initial-creator"/>
           </author>
         </titleStmt>
         <editionStmt>
           <edition>
             <date>
               <xsl:value-of
-                select="/office:document/office:meta/meta:creation-date"/>
+                select="/office:document-content/office:meta/meta:creation-date"/>
             </date>
           </edition>
         </editionStmt>
@@ -162,28 +177,28 @@
         <sourceDesc>
           <p>
 	    <xsl:apply-templates
-              select="/office:document/office:meta/meta:generator"/>
+              select="/office:document-content/office:meta/meta:generator"/>
 	    <xsl:text>Written by OpenOffice</xsl:text>
 	  </p>
         </sourceDesc>
       </fileDesc>
-      <xsl:if test="/office:document/office:meta/dc:language|/office:document/office:meta/meta:keyword">
+      <xsl:if test="/office:document-content/office:meta/dc:language|/office:document-content/office:meta/meta:keyword">
 	<profileDesc>
-	  <xsl:if test="/office:document/office:meta/dc:language">
+	  <xsl:if test="/office:document-content/office:meta/dc:language">
 	    <langUsage>
 	      <language>
 		<xsl:attribute name="ident">
-		  <xsl:value-of select="/office:document/office:meta/dc:language"/>
+		  <xsl:value-of select="/office:document-content/office:meta/dc:language"/>
 		</xsl:attribute>
-		<xsl:value-of select="/office:document/office:meta/dc:language"/>
+		<xsl:value-of select="/office:document-content/office:meta/dc:language"/>
 	      </language>
 	    </langUsage>
 	  </xsl:if>
-	  <xsl:if test="/office:document/office:meta/meta:keyword">
+	  <xsl:if test="/office:document-content/office:meta/meta:keyword">
 	    <textClass>
 	      <keywords>
 		<list>
-		  <xsl:for-each select="/office:document/office:meta/meta:keyword">
+		  <xsl:for-each select="/office:document-content/office:meta/meta:keyword">
 		    <item>
 		      <xsl:value-of select="."/>
 		    </item>
@@ -198,10 +213,10 @@
 	<change>
 	  <name>
 	    <xsl:apply-templates
-		select="/office:document/office:meta/dc:creator"/>
+		select="/office:document-content/office:meta/dc:creator"/>
 	  </name>
 	  <date>
-	    <xsl:apply-templates select="/office:document/office:meta/dc:date"/>
+	    <xsl:apply-templates select="/office:document-content/office:meta/dc:date"/>
 	  </date>
 	</change>
       </revisionDesc>
@@ -210,7 +225,7 @@
 
 
 
-  <xsl:template match="/office:document/office:body">
+  <xsl:template match="/office:document-content/office:body">
     <text>
       <xsl:apply-templates/>
     </text>

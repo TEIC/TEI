@@ -1,0 +1,81 @@
+#!/bin/sh 
+profile=default
+odd=false
+debug=false
+while test $# -gt 0; do
+  case $1 in
+    --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
+    --odd)       odd=true;;
+    --debug)     debug=true;;
+     *) if test "$1" = "${1#--}" ; then 
+	   break
+	else
+	   echo "WARNING: Unrecognized option '$1' ignored"
+	   echo "For usage syntax issue $0 --help"
+	fi ;;
+  esac
+  shift
+done
+test -f "$1" || exit 1
+HERE=`pwd`
+D=`dirname "$1"`
+F=`basename "$1"`
+THERE=`(cd $D; pwd)`
+X=`dirname $0`
+APPHOME=`(cd $X; pwd)`
+TEMPDIR=/tmp/odt$$
+TEMPLATES=$APPHOME/profiles/$profile/oo
+XSL=$APPHOME
+mkdir -p $TEMPDIR/Pictures
+echo read $THERE/$F
+case $THERE/$F in 
+       *.zip)  (cd $TEMPDIR; unzip -q $THERE/"$F" ); F=`basename $F .zip`.xml;; 
+       *) cp $THERE/$F $TEMPDIR/$F  ;; 
+esac
+(cd $TEMPDIR; saxon $F $XSL/oo/listgraphics.xsl ORIG=$THERE DIR=$TEMPDIR/pictures > fetch; sh $TEMPDIR/fetch; rm $TEMPDIR/fetch)
+(cd $TEMPDIR
+if [ "$(ls -A Pictures)" ]; then
+    cd Pictures
+    for i in *
+    do 
+	case $i in
+	    *jpeg) exiftool -q -o $i.xmp $i;;
+	    *jpg) exiftool -q -o $i.xmp $i;;
+	    *tiff) exiftool -q -o $i.xmp $i;;
+	    *tif) exiftool -q -o $i.xmp $i;;
+	    *png) exiftool -q -o $i.xmp $i;;
+	esac
+    done
+fi
+)
+cd $TEMPDIR
+unzip -o -q $TEMPLATES/template.ott
+if $odd
+then
+    saxon -o $TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl defaultSource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
+    saxon -o $TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
+    saxon -o $TEMPDIR/tmp3.xml $TEMPDIR/tmp2.xml $XSL/fixgraphics.xsl DIR=`pwd`
+else
+    saxon -o $TEMPDIR/tmp3.xml  $F $XSL/fixgraphics.xsl DIR=`pwd`
+fi
+saxon -o tmp4.xml tmp3.xml $APPHOME/profiles/$profile/oo/to.xsl  \
+    debug=$debug word-directory=$TEMPDIR tei-directory=$TEMPDIR/ 
+
+if $debug 
+then
+    echo leaving tmp[123].xml alone
+else
+    rm -f tmp3.xml tmp1.xml tmp2.xml
+fi
+rm -f Pictures/*.xmp
+rm -f $THERE/$F.odt
+zip -q -r $THERE/"$F.odt" .
+cd $HERE
+if $debug 
+then
+    echo Working files in $TEMPDIR
+else
+    rm -rf $TEMPDIR
+fi
+echo wrote $F.odt in $THERE
+
