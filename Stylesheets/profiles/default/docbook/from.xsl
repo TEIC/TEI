@@ -54,9 +54,9 @@
  </ident>
 </xsl:template>
 
-<xsl:template match="artheader|articleinfo"/>
+<xsl:template match="info|artheader|articleinfo"/>
 
-<xsl:template match="artheader|articleinfo" mode="header">
+<xsl:template match="info|artheader|articleinfo" mode="header">
   <teiHeader >
     <fileDesc>
       <titleStmt>
@@ -106,7 +106,7 @@
 <xsl:template match="article|book">
   <TEI>
     <xsl:call-template name="ID"/>
-    <xsl:apply-templates select="artheader|articleinfo" mode="header"/>
+    <xsl:apply-templates select="info|artheader|articleinfo" mode="header"/>
     <text>
       <xsl:choose>
 	<xsl:when test="artheader/abstract">
