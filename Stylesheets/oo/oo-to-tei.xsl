@@ -70,19 +70,21 @@
 
   <xsl:key match="text:h" name="Headings" use="text:outline-level"/>
 
-  <xsl:param name="verbose">false</xsl:param>
+  <xsl:param name="debug">false</xsl:param>
 
-  <xsl:param name="origdir">./</xsl:param>
+  <xsl:param name="dir">.</xsl:param>
 
   <xsl:output encoding="utf-8" indent="yes"/>
 
   <!--  <xsl:strip-space elements="text:span"/>-->
   
   <xsl:variable name="META">
-<xsl:message>Look for <xsl:value-of select="concat($origdir,'meta.xml')"/></xsl:message>
+    <xsl:if test="$debug='true'">
+      <xsl:message>Look for metadata in <xsl:value-of select="concat($dir,'/meta.xml')"/></xsl:message>
+    </xsl:if>
     <xsl:choose>
-      <xsl:when test="doc-available(concat($origdir,'meta.xml'))">
-        <xsl:copy-of select="document(concat($origdir,'meta.xml'))/office:document-meta/office:meta"/>
+      <xsl:when test="doc-available(concat($dir,'/meta.xml'))">
+        <xsl:copy-of select="document(concat($dir,'/meta.xml'))/office:document-meta/office:meta"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:copy-of select="/office:document-meta/office:meta"/>
@@ -297,7 +299,7 @@
       </xsl:choose>
     </xsl:variable>
 
-    <xsl:if test="$verbose='true'">
+    <xsl:if test="$debug='true'">
       <xsl:message>------------------------</xsl:message>
       <xsl:message>|level <xsl:value-of select="$level"/>, following <xsl:value-of
       select="$precedingLevel"/>, <xsl:value-of select="."/></xsl:message>
@@ -313,7 +315,7 @@
 
 
     <xsl:if test="$level &gt; $precedingLevel +1">
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$debug='true'">
 	<xsl:message>|found a gap in hierarchy: <xsl:value-of 
 	select="$level"/> follows <xsl:value-of select="$precedingLevel"/>: <xsl:value-of select="($level - $precedingLevel)-1"/></xsl:message>
       </xsl:if>
@@ -331,7 +333,7 @@
     <xsl:call-template name="id.attribute.literal"/>
     <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
     
-    <xsl:if test="$verbose='true'">
+    <xsl:if test="$debug='true'">
       <xsl:message>| <xsl:call-template name="stars">
       <xsl:with-param name="n">
 	<xsl:value-of select="$level"/>
@@ -903,6 +905,7 @@
   </xsl:template>
 
   <xsl:template match="draw:frame">
+<xsl:message>HERE</xsl:message>
     <xsl:choose>
       <xsl:when test="ancestor::draw:frame">
 	<xsl:apply-templates/>
@@ -918,7 +921,7 @@
   <xsl:template match="draw:image">
     <xsl:choose>
       <xsl:when test="ancestor::draw:text-box">
-          <xsl:call-template name="findGraphic"/>
+	<xsl:call-template name="findGraphic"/>
       </xsl:when>
       <xsl:when test="parent::text:p[@text:style-name='Mediaobject']">
         <figure>
