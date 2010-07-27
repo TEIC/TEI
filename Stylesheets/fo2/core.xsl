@@ -940,9 +940,18 @@
       <desc/>
    </doc>
   <xsl:template match="tei:reg">
-      <inline font-family="{$sansFont}">
-         <xsl:apply-templates/>
-      </inline>
+    <xsl:choose>
+      <xsl:when test="parent::tei:p">
+	<inline font-family="{$sansFont}">
+	  <xsl:apply-templates/>
+	</inline>
+      </xsl:when>
+      <xsl:otherwise>
+	<block font-family="{$sansFont}">
+	  <xsl:apply-templates/>
+	</block>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>

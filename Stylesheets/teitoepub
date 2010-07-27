@@ -29,6 +29,7 @@ echo " --splitLevel=XXX                set splitting level"
 echo " --publisher=XXX                supply name of publisher for ebook"
 echo " --subject=XXX                supply subject/category for ebook"
 echo " --coverimage=XXX                supply name of JPEG file for ebook cover"
+echo " --conversion=XXX                supply name of XSL conversion script"
 echo " --css=XXX                supply name of CSS file"
 echo " --debug                    emit some diagnostics" 
 echo " --verbose                 be verbose"
@@ -45,7 +46,7 @@ odd=false
 verbose=false
 uid=
 debug=false
-splitLevel=0
+splitLevel=
 while test $# -gt 0; do
   case $1 in
     --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
@@ -133,7 +134,7 @@ if $debug
 then
  echo $TOXSL  $coverimage $publisher subject="$subject" uid=$uid odd=$odd debug=$debug verbose=$verbose $SPLITLEVEL $CSS
 fi
-saxon  tmp2.xml $TOXSL  $coverimage $publisher subject="$subject" uid=$uid odd=$odd debug=$debug verbose=$verbose splitLevel=$splitLevel $CSS
+saxon  tmp2.xml $TOXSL  $coverimage $publisher subject="$subject" uid=$uid odd=$odd debug=$debug verbose=$verbose $SPLITLEVEL $CSS
 if $debug 
 then
     echo leaving tmp[123].xml alone

@@ -26,8 +26,7 @@ X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
 N=`basename "$1" .odt`
 echo read input file $N from $THERE
-echo metadata header file is $header
-echo app is in $HERE
+echo app home directory is $APPHOME
 if test "x$conversion" = "x"
 then
   FROMXSL=$APPHOME/profiles/$profile/oo/from.xsl
@@ -39,13 +38,14 @@ TEMPDIR=/tmp/oo$$
 mkdir $TEMPDIR
 cd $TEMPDIR
 unzip -q $THERE/"$N.odt"
-saxon content.xml $FROMXSL origfile="$N" origdir="$D" debug=$debug > "$N.xml"
+saxon -o "$N.xml" content.xml $FROMXSL dir="$TEMPDIR" debug=$debug 
+mkdir -p Pictures
 if [ "$(ls -q -A Pictures)" ]; then
- echo found graphics files in document, so writing $N.zip
+ echo found graphics files in document, so writing $N.zip in $THERE
  test -f $THERE/"$N.zip" && rm $THERE/"$N.zip"
  zip -q -r $THERE/"$N.zip" "$N.xml" Pictures
 else
- echo writing $N.xml
+ echo writing $N.xml in $THERE
  mv "$N.xml" $THERE
 fi
 cd $HERE
@@ -55,5 +55,5 @@ then
 else
     rm -rf $TEMPDIR
 fi
-echo wrote $N.xml or $N.zip in $THERE
+
 
