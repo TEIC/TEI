@@ -43,7 +43,6 @@ p5-2:
 	for i in  ${DIRS} ; do \
 	tar cf - --exclude .svn $$i | (cd release/p5-2/xml/tei/stylesheet; tar xf - ); \
 	done
-	cp odttotei teitoodt docxtotei teitodocx teitoepub release/p5-2/xml/tei/stylesheet
 
 p4:
 	-mkdir -p release/p4/xml/teip4/stylesheet/
@@ -122,6 +121,8 @@ release: common doc oxygendoc p4 p5 p5-2
 installp5-2: p5-2
 	mkdir -p ${PREFIX}/share
 	(cd release/p5-2; tar cf - .) | (cd ${PREFIX}/share; tar xvf  -)
+	mkdir -p ${PREFIX}/bin
+	for i in teitodocx docxtotei odttotei teitodocx teitoepub; do cp $$i ${PREFIX}/bin/$$i; chmod 755 ${PREFIX}/bin/$$i; perl -p -i -e 's+APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/$$i;done
 
 installp5: p5
 	mkdir -p ${PREFIX}/share
