@@ -31,8 +31,11 @@
  #
 -->
 <xsl:stylesheet
-  exclude-result-prefixes="office style text table draw fo xlink dc meta number svg chart dr3d math form script ooo ooow oooc dom xforms xsd xsi"
-  office:version="1.0" version="2.0" xmlns="http://www.tei-c.org/ns/1.0"
+  exclude-result-prefixes="office style text table draw fo xlink dc
+			   meta number tei svg chart dr3d math form script ooo ooow oooc dom xforms xsd xsi"
+  office:version="1.0" version="2.0" 
+  xmlns="http://www.tei-c.org/ns/1.0"
+  xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0"
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:dom="http://www.w3.org/2001/xml-events"
@@ -57,14 +60,6 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-
-  <xsl:key name="Headings" 
-	   match="text:h[@text:outline-level]"
-	   use="1"/>
-  <xsl:key 	   
-      name="secondary_children"
-      match="text:p[@text:style-name='Index 2']" 
-      use="generate-id(preceding-sibling::text:p[@text:style-name='Index 1'][1])"/>
 
   <xsl:key match="style:style" name="STYLES" use="@style:name"/>
 
@@ -231,20 +226,6 @@
     </text>
   </xsl:template>
 
-  <xsl:template match="office:text">
-    <body>
-      <xsl:apply-templates/>
-      <xsl:variable name="lastsection">
-	<xsl:value-of select="key('Headings',1)[last()]/@text:outline-level"/>
-      </xsl:variable>
-      <xsl:call-template name="closeDivLoop">
-	<xsl:with-param name="repeat">
-	  <xsl:value-of select="$lastsection"/>
-	</xsl:with-param>
-      </xsl:call-template>
-    </body>
-  </xsl:template>
-
   <!-- sections -->
   <xsl:template match="text:h">
     <xsl:choose>
@@ -260,127 +241,29 @@
         </div>
       </xsl:when>
       <xsl:otherwise>
-
-        <xsl:variable name="sectvar">
-          <xsl:text>div</xsl:text>
-        </xsl:variable>
-        <xsl:variable name="idvar">
-          <xsl:text> id=&quot;</xsl:text>
-          <xsl:value-of select="@text:style-name"/>
-          <xsl:text>&quot;</xsl:text>
-        </xsl:variable>
-        <xsl:text disable-output-escaping="yes">&lt;</xsl:text>
-        <xsl:value-of select="$sectvar"/>
-        <xsl:value-of select="$idvar"/>
-        <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
-        <xsl:apply-templates/>
-        <xsl:text disable-output-escaping="yes">&lt;/</xsl:text>
-        <xsl:value-of select="$sectvar"/>
-        <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
+	<HEAD level="1" style="{@text:style-name}">
+	  <xsl:apply-templates/>
+	</HEAD>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
 
   <xsl:template match="text:h[@text:outline-level]">
-    <xsl:variable name="level">
-      <xsl:value-of select="@text:outline-level"/>
-    </xsl:variable>
-    
-    <xsl:variable name="precedingLevel">
-      <xsl:choose>
-	<xsl:when test="preceding::text:h[@text:outline-level]">
-      <xsl:value-of 
-	select="preceding::text:h[@text:outline-level][1]/@text:outline-level"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:text>0</xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-
-    <xsl:if test="$debug='true'">
-      <xsl:message>------------------------</xsl:message>
-      <xsl:message>|level <xsl:value-of select="$level"/>, following <xsl:value-of
-      select="$precedingLevel"/>, <xsl:value-of select="."/></xsl:message>
-    </xsl:if>
-    
-    <xsl:if test="$level &lt;= $precedingLevel">
-      <xsl:call-template name="closeDivLoop">
-	<xsl:with-param name="repeat">
-	  <xsl:value-of select="($precedingLevel - $level) + 1"/>
-	</xsl:with-param>
-      </xsl:call-template>
-    </xsl:if>
-
-
-    <xsl:if test="$level &gt; $precedingLevel +1">
-      <xsl:if test="$debug='true'">
-	<xsl:message>|found a gap in hierarchy: <xsl:value-of 
-	select="$level"/> follows <xsl:value-of select="$precedingLevel"/>: <xsl:value-of select="($level - $precedingLevel)-1"/></xsl:message>
-      </xsl:if>
-      <xsl:call-template name="generateDivs">
-	<xsl:with-param name="n">
-	  <xsl:value-of select="($level - $precedingLevel)-1"/>
-	</xsl:with-param>
-      </xsl:call-template>
-    </xsl:if>
-    
-    <xsl:text disable-output-escaping="yes">&lt;div</xsl:text>
-    <xsl:text> type=&quot;div</xsl:text>
-    <xsl:value-of select="$level"/>
-    <xsl:text>&quot;</xsl:text>
-    <xsl:call-template name="id.attribute.literal"/>
-    <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
-    
-    <xsl:if test="$debug='true'">
-      <xsl:message>| <xsl:call-template name="stars">
-      <xsl:with-param name="n">
-	<xsl:value-of select="$level"/>
-      </xsl:with-param>
-      </xsl:call-template>: <xsl:value-of select="."/></xsl:message>
-    </xsl:if>
-    <xsl:if test="not(normalize-space(.)='')">
-      <head>
-	<xsl:apply-templates/>
-      </head>
-    </xsl:if>
+    <HEAD level="{@text:outline-level}" style="{@text:style-name}">
+      <xsl:apply-templates/>
+    </HEAD>
   </xsl:template>
 
 
-  <xsl:template name="generateDivs">
-    <xsl:param name="n"/>
-    <xsl:if test="$n&gt;0">
-      <xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>
-      <xsl:call-template name="generateDivs">
-	<xsl:with-param name="n">
-      <xsl:value-of select="$n - 1"/></xsl:with-param>
-      </xsl:call-template>
-    </xsl:if>
-  </xsl:template>
   
-  <xsl:template name="closeDivLoop">
-    <xsl:param name="repeat"/>
-    <xsl:if test="$repeat >= 1">
-      <xsl:text disable-output-escaping="yes">&lt;/div</xsl:text>
-      <xsl:text disable-output-escaping="yes">&gt;</xsl:text>
-      <xsl:call-template name="closeDivLoop">
-        <xsl:with-param name="repeat">
-	  <xsl:value-of select="$repeat - 1"/>
-	</xsl:with-param>
-      </xsl:call-template>
-    </xsl:if>
-  </xsl:template>
-
-
-
   <!-- special case paragraphs -->
   <xsl:template match="text:p[@text:style-name='XMLComment']">
     <xsl:comment>
       <xsl:value-of select="."/>
     </xsl:comment>
   </xsl:template>
-
+  
 
   <xsl:template match="text:p[@text:style-name]">
     <xsl:choose>
@@ -1259,4 +1142,80 @@ These seem to have no obvious translation
 <xsl:template match="text:index-title-template"/>
 <xsl:template match="text:table-of-content-entry-template"/>
 <xsl:template match="text:table-of-content-source"/>
+
+  <xsl:template match="office:text">
+    <body>
+      <xsl:variable name="Body">
+	<HEAD level="1" magic="true">Start</HEAD>
+        <xsl:apply-templates/>
+      </xsl:variable>
+      <xsl:for-each select="$Body">
+        <xsl:for-each-group select="tei:*" group-starting-with="tei:HEAD[@level='1']">
+          <xsl:choose>
+            <xsl:when test="self::tei:HEAD[@level='1']">
+	      <xsl:call-template name="group-by-section"/>
+            </xsl:when>
+            <xsl:otherwise>
+	      <xsl:for-each select="current-group()">
+		<xsl:apply-templates select="." mode="copy"/>
+	      </xsl:for-each>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:for-each-group>
+      </xsl:for-each>
+    </body>
+  </xsl:template>
+
+  <xsl:template name="group-by-section">
+    <xsl:variable name="ThisHeader" select="number(@level)"/>
+    <xsl:variable name="NextHeader" select="number(@level)+1"/>
+    <xsl:choose>
+      <xsl:when test="@magic">
+	  <xsl:for-each-group select="current-group() except ."
+			      group-starting-with="tei:HEAD[number(@level)=$NextHeader]">
+	    <xsl:choose>
+	      <xsl:when test="self::tei:HEAD">
+		<xsl:call-template name="group-by-section"/>
+	      </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:for-each select="current-group()">
+		<xsl:apply-templates select="." mode="copy"/>
+	      </xsl:for-each>
+	    </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:for-each-group>
+      </xsl:when>
+      <xsl:otherwise>
+	<div type="{@style}">
+	  <head>
+	    <xsl:apply-templates mode="copy"/>
+	  </head>
+	  <xsl:for-each-group select="current-group() except ."
+			      group-starting-with="tei:HEAD[number(@level)=$NextHeader]">
+	    <xsl:choose>
+	      <xsl:when test="self::tei:HEAD">
+		<xsl:call-template name="group-by-section"/>
+	      </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:for-each select="current-group()">
+		<xsl:apply-templates select="." mode="copy"/>
+	      </xsl:for-each>
+	    </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:for-each-group>
+	</div>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="copy">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="*" mode="copy">
+    <xsl:copy>
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="copy"/>
+    </xsl:copy>
+  </xsl:template>
+
 </xsl:stylesheet>
