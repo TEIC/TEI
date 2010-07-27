@@ -1,5 +1,6 @@
 <xsl:stylesheet 
     xmlns="http://www.tei-c.org/ns/1.0"
+    xpath-default-namespace="http://docbook.org/ns/docbook"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     version="2.0">
 
@@ -102,7 +103,7 @@
   </teiHeader>
 </xsl:template>
 
-<xsl:template match="article">
+<xsl:template match="article|book">
   <TEI>
     <xsl:call-template name="ID"/>
     <xsl:apply-templates select="artheader|articleinfo" mode="header"/>
