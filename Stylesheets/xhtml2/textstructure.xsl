@@ -1672,6 +1672,15 @@
          <xsl:when test="$myName='div3' and following-sibling::tei:div3[tei:head or $autoHead='true']">
             <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:div3[1]"/>
          </xsl:when>
+         <xsl:when test="$myName='div4' and following-sibling::tei:div4[tei:head or $autoHead='true']">
+            <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:div4[1]"/>
+         </xsl:when>
+         <xsl:when test="$myName='div5' and following-sibling::tei:div5[tei:head or $autoHead='true']">
+            <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:div5[1]"/>
+         </xsl:when>
+         <xsl:when test="$myName='div6' and following-sibling::tei:div6[tei:head or $autoHead='true']">
+            <xsl:apply-templates mode="generateNextLink" select="following-sibling::tei:div6[1]"/>
+         </xsl:when>
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -2067,6 +2076,15 @@
          </xsl:when>
          <xsl:when test="$myName='div3' and preceding-sibling::tei:div3[tei:head or $autoHead='true']">
             <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div3[1]"/>
+         </xsl:when>
+         <xsl:when test="$myName='div4' and preceding-sibling::tei:div4[tei:head or $autoHead='true']">
+            <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div4[1]"/>
+         </xsl:when>
+         <xsl:when test="$myName='div5' and preceding-sibling::tei:div5[tei:head or $autoHead='true']">
+            <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div5[1]"/>
+         </xsl:when>
+         <xsl:when test="$myName='div6' and preceding-sibling::tei:div6[tei:head or $autoHead='true']">
+            <xsl:apply-templates mode="generatePreviousLink" select="preceding-sibling::tei:div6[1]"/>
          </xsl:when>
       </xsl:choose>
   </xsl:template>

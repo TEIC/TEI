@@ -179,6 +179,18 @@
   </doc>
   <xsl:template match="tei:cit">
     <xsl:choose>
+      <xsl:when test="@rend='display' and tei:quote">
+	<div>
+          <xsl:call-template name="rendToClass"/>
+            <xsl:if test="@n">
+              <xsl:text>(</xsl:text>
+              <xsl:value-of select="@n"/>
+              <xsl:text>) </xsl:text>
+            </xsl:if>
+            <xsl:apply-templates select="tei:q|tei:quote"/>
+            <xsl:apply-templates select="tei:bibl"/>
+	</div>
+      </xsl:when>
       <xsl:when test="@rend='display'">
         <blockquote>
           <xsl:call-template name="rendToClass"/>
@@ -1078,7 +1090,7 @@
   <xsl:template match="tei:p">
     <xsl:variable name="wrapperElement">
       <xsl:choose>
-        <xsl:when test="tei:q[tei:p]|tei:specList|tei:quote|tei:moduleSpec|tei:list|tei:eg|teix:egXML|tei:table|tei:specGrp|tei:specGrpRef|tei:q[@rend='display']|tei:figure">
+        <xsl:when test="tei:q[tei:p]|tei:l|tei:specList|tei:quote|tei:moduleSpec|tei:list|tei:eg|teix:egXML|tei:table|tei:specGrp|tei:specGrpRef|tei:q[@rend='display']|tei:figure">
           <xsl:text>div</xsl:text>
         </xsl:when>
         <xsl:when test="parent::tei:p">
