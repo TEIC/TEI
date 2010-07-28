@@ -32,8 +32,10 @@
 -->
 <xsl:stylesheet
   exclude-result-prefixes="office style text table draw fo xlink dc
-			   meta number tei svg chart dr3d math form script ooo ooow oooc dom xforms xsd xsi"
+			   meta number tei svg chart dr3d math form
+			   script ooo ooow oooc dom xforms xs xsd xsi"
   office:version="1.0" version="2.0" 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns="http://www.tei-c.org/ns/1.0"
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0"
@@ -1155,7 +1157,12 @@ These seem to have no obvious translation
 	<HEAD level="1" magic="true">Start</HEAD>
         <xsl:apply-templates/>
       </xsl:variable>
-      <xsl:for-each select="$Body">
+      <xsl:variable name="Body2">
+	<xsl:for-each select="$Body">
+		<xsl:apply-templates select="." mode="pass1"/>
+	</xsl:for-each>
+      </xsl:variable>
+      <xsl:for-each select="$Body2">
         <xsl:for-each-group select="tei:*" group-starting-with="tei:HEAD[@level='1']">
           <xsl:choose>
             <xsl:when test="self::tei:HEAD[@level='1']">
@@ -1163,7 +1170,7 @@ These seem to have no obvious translation
             </xsl:when>
             <xsl:otherwise>
 	      <xsl:for-each select="current-group()">
-		<xsl:apply-templates select="." mode="copy"/>
+		<xsl:apply-templates select="." mode="pass1"/>
 	      </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
@@ -1185,17 +1192,20 @@ These seem to have no obvious translation
 	      </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:for-each select="current-group()">
-		<xsl:apply-templates select="." mode="copy"/>
+		<xsl:apply-templates select="." mode="pass1"/>
 	      </xsl:for-each>
 	    </xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:for-each-group>
       </xsl:when>
       <xsl:otherwise>
-	<div type="{@style}">
-	  <head>
-	    <xsl:apply-templates mode="copy"/>
-	  </head>
+	<div level="{@level}">
+	  <xsl:if test="@style"><xsl:attribute name="rend" select="@style"/></xsl:if>
+	  <xsl:if test="not(@interpolated='true')">
+	    <head>
+	      <xsl:apply-templates mode="pass1"/>
+	    </head>
+	  </xsl:if>
 	  <xsl:for-each-group select="current-group() except ."
 			      group-starting-with="tei:HEAD[number(@level)=$NextHeader]">
 	    <xsl:choose>
@@ -1204,7 +1214,7 @@ These seem to have no obvious translation
 	      </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:for-each select="current-group()">
-		<xsl:apply-templates select="." mode="copy"/>
+		<xsl:apply-templates select="." mode="pass1"/>
 	      </xsl:for-each>
 	    </xsl:otherwise>
 	    </xsl:choose>
@@ -1214,16 +1224,49 @@ These seem to have no obvious translation
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="copy">
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass1">
     <xsl:copy-of select="."/>
   </xsl:template>
 
   <xsl:template match="tei:p[not(*) and normalize-space(.)='']"
-		mode="copy"/>
+		mode="pass1"/>
 
-  <xsl:template match="*" mode="copy">
+  <xsl:template match="tei:HEAD" mode="pass1">
+    <xsl:if test="preceding-sibling::tei:HEAD">
+      <xsl:variable name="prev"
+		    select="xs:integer(number(preceding-sibling::tei:HEAD[1]/@level))"/>
+      <xsl:variable name="current"
+		    select="xs:integer(number(@level))"/>
+	<xsl:if test="($current - $prev) &gt;1 ">
+	  <xsl:for-each
+	      select="$prev + 2   to $current ">
+	    <HEAD interpolated='true' level="{.}"/>
+	  </xsl:for-each>
+	</xsl:if>
+    </xsl:if>
     <xsl:copy>
-      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="copy"/>
+    <xsl:apply-templates
+	select="*|@*|processing-instruction()|comment()|text()"
+	mode="pass1"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="*" mode="pass1">
+    <xsl:copy>
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass1"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass2">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="tei:p[not(*) and normalize-space(.)='']"
+		mode="pass2"/>
+
+  <xsl:template match="*" mode="pass2">
+    <xsl:copy>
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
     </xsl:copy>
   </xsl:template>
 
