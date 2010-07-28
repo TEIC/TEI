@@ -1026,7 +1026,18 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
 	  value="http://www.tei-c.org/">Entire site</option>
       <option
 	  value="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/"
-	  selected="selected">P5 Guidelines</option>
+	  selected="selected">P5 Guidelines
+      <xsl:choose>
+	<xsl:when test="$documentationLanguage='en'"> — English</xsl:when>
+	<xsl:when test="$documentationLanguage='de'"> — Deutsch</xsl:when>
+	<xsl:when test="$documentationLanguage='es'"> — Español</xsl:when>
+	<xsl:when test="$documentationLanguage='it'"> — Italiano</xsl:when>
+	<xsl:when test="$documentationLanguage='fr'"> — Français</xsl:when>
+	<xsl:when test="$documentationLanguage='ja'"> — 日本語</xsl:when>
+	<xsl:when test="$documentationLanguage='kr'"> — 한국어</xsl:when>
+	<xsl:when test="$documentationLanguage='zh-tw'"> — 中文</xsl:when>
+      </xsl:choose>
+      </option>
       <option value="http://www.tei-c.org/Guidelines/P4/html/">P4 Guidelines</option>
     </select>&#160;<input style="font-size:100%; font-weight:bold;
     color:#FFFFFF; background-color:#225588; height: 2em;"
