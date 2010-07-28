@@ -266,6 +266,7 @@
   
 
   <xsl:template match="text:p[@text:style-name]">
+
     <xsl:choose>
       <xsl:when test="draw:frame and parent::draw:text-box">
 	<xsl:apply-templates select="draw:frame"/>
@@ -276,23 +277,27 @@
       <xsl:when test="parent::table:table-cell">
 	<xsl:call-template name="applyStyle"/>
       </xsl:when>
-      <xsl:when test="not(node())"/>
+
       <xsl:when test="count(parent::text:note-body/text:p)=1">
           <xsl:apply-templates/>
       </xsl:when>
+
       <xsl:when test="count(parent::text:list-item/text:p)=1">
           <xsl:apply-templates/>
       </xsl:when>
+
       <xsl:when test="@text:style-name='Document Title'">
         <title>
           <xsl:apply-templates/>
         </title>
       </xsl:when>
+
       <xsl:when test="@text:style-name='Author'">
         <author>
           <xsl:apply-templates/>
         </author>
       </xsl:when>
+
       <xsl:when test="@text:style-name='lg'">
         <lg>
           <xsl:apply-templates/>
@@ -328,7 +333,7 @@
           <xsl:apply-templates/>
         </Output>
       </xsl:when>
-      <xsl:when test="normalize-space(.)=''"/>
+
       <xsl:otherwise>
         <p>
           <xsl:apply-templates/>
@@ -354,7 +359,6 @@
         <xsl:call-template name="applyStyle"/>
       </xsl:when>
       <xsl:when test="@text:style-name='Table'"/>
-      <xsl:when test="normalize-space(.)=''"/>
       <xsl:when test="text:span[@text:style-name = 'XrefLabel']"/>
       <xsl:when test="@text:style-name='Speech'">
         <sp>
@@ -788,7 +792,6 @@
   </xsl:template>
 
   <xsl:template match="draw:frame">
-<xsl:message>HERE</xsl:message>
     <xsl:choose>
       <xsl:when test="ancestor::draw:frame">
 	<xsl:apply-templates/>
@@ -804,6 +807,9 @@
   <xsl:template match="draw:image">
     <xsl:choose>
       <xsl:when test="ancestor::draw:text-box">
+	<xsl:call-template name="findGraphic"/>
+      </xsl:when>
+      <xsl:when test="ancestor::draw:frame">
 	<xsl:call-template name="findGraphic"/>
       </xsl:when>
       <xsl:when test="parent::text:p[@text:style-name='Mediaobject']">
@@ -1211,6 +1217,9 @@ These seem to have no obvious translation
   <xsl:template match="@*|text()|comment()|processing-instruction()" mode="copy">
     <xsl:copy-of select="."/>
   </xsl:template>
+
+  <xsl:template match="tei:p[not(*) and normalize-space(.)='']"
+		mode="copy"/>
 
   <xsl:template match="*" mode="copy">
     <xsl:copy>
