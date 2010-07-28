@@ -1199,8 +1199,10 @@ These seem to have no obvious translation
 	  </xsl:for-each-group>
       </xsl:when>
       <xsl:otherwise>
-	<div level="{@level}">
-	  <xsl:if test="@style"><xsl:attribute name="rend" select="@style"/></xsl:if>
+	<div>
+	  <xsl:if test="@style">
+	    <xsl:attribute name="rend" select="@style"/>
+	  </xsl:if>
 	  <xsl:if test="not(@interpolated='true')">
 	    <head>
 	      <xsl:apply-templates mode="pass1"/>
@@ -1228,7 +1230,7 @@ These seem to have no obvious translation
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="tei:p[not(*) and normalize-space(.)='']"
+  <xsl:template match="tei:p[not(node())]"
 		mode="pass1"/>
 
   <xsl:template match="tei:HEAD" mode="pass1">
@@ -1238,8 +1240,9 @@ These seem to have no obvious translation
       <xsl:variable name="current"
 		    select="xs:integer(number(@level))"/>
 	<xsl:if test="($current - $prev) &gt;1 ">
+	  <!--<xsl:message>Walk from <xsl:value-of select="$prev"/> to <xsl:value-of select="$current"/></xsl:message>-->
 	  <xsl:for-each
-	      select="$prev + 2   to $current ">
+	      select="$prev + 1   to $current - 1 ">
 	    <HEAD interpolated='true' level="{.}"/>
 	  </xsl:for-each>
 	</xsl:if>
