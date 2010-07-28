@@ -76,47 +76,73 @@
 
   <xsl:param name="postQuote">’</xsl:param>
   <xsl:param name="preQuote">‘</xsl:param>
+  <xsl:param name="dir">.</xsl:param>
+  <xsl:param name="freestanding">true</xsl:param>
 
   <xsl:key name='IDS' match="tei:*[@xml:id]" use="@xml:id"/>
 
   <xsl:template match="/">
-    <office:document>
-      <office:meta>
-	<meta:generator>Open Office TEI to OO XSLT</meta:generator>
-	<dc:title>
-	  <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
-	</dc:title>
-	<dc:description/>
-	<dc:subject/>
-	<meta:creation-date>
-	  <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition/tei:date"/>
-	</meta:creation-date>
-	<dc:date>
-	  <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:date"/>
-	</dc:date>
-	<dc:language>
-	  <xsl:value-of select="/tei:TEI/@xml:lang"/>
-	</dc:language>
-	<meta:editing-cycles>1</meta:editing-cycles>
-	<meta:editing-duration>P1DT0H11M54S</meta:editing-duration>
-	<meta:user-defined meta:name="Info 1"/>
-	<meta:user-defined meta:name="Info 2"/>
-	<meta:user-defined meta:name="Info 3"/>
-	<meta:user-defined meta:name="Info 4"/>
-	<meta:document-statistic meta:table-count="1" meta:image-count="0" meta:object-count="0" meta:page-count="1" meta:paragraph-count="42" meta:word-count="144" meta:character-count="820"/>
-      </office:meta>
-      <!--
-	  <xsl:copy-of select="document('styles.xml')/office:document-styles"/>
-      -->
-      <office:body>
-	<office:text>
-	  <xsl:apply-templates select="(.//tei:TEI|tei:text|tei:div)[1]"/>
-	</office:text>
-      </office:body>
-    </office:document>
+    <xsl:choose>
+      <xsl:when test="$freestanding='true'">
+	<xsl:result-document href="meta.xml">
+	  <xsl:call-template name="META"/>
+	</xsl:result-document>
+	<office:document-content>
+	  <xsl:if test="$freestanding='true'">
+	  <xsl:for-each select="document(concat($dir,'/content.xml'))/office:document-content">
+	    <xsl:copy-of select="office:scripts"/>
+	    <xsl:copy-of select="office:font-face-decls"/>
+	    <xsl:copy-of select="office:automatic-styles"/>
+	  </xsl:for-each>
+	  </xsl:if>
+	  <office:body>
+	    <office:text>
+	      <xsl:apply-templates/>
+	    </office:text>
+	  </office:body>
+	</office:document-content>
+      </xsl:when>
+      <xsl:otherwise>
+	<office:document>
+	  <xsl:call-template name="META"/>
+	  <office:body>
+	    <office:text>
+	      <xsl:apply-templates/>
+	    </office:text>
+	  </office:body>
+	</office:document>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
-<!-- base structure -->
+  <xsl:template name="META">
+    <office:meta>
+      <meta:generator>Open Office TEI to OO XSLT</meta:generator>
+      <dc:title>
+	<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+      </dc:title>
+      <dc:description/>
+      <dc:subject/>
+      <meta:creation-date>
+	<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition/tei:date"/>
+      </meta:creation-date>
+      <dc:date>
+	<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:date"/>
+      </dc:date>
+      <dc:language>
+	<xsl:value-of select="/tei:TEI/@xml:lang"/>
+      </dc:language>
+      <meta:editing-cycles>1</meta:editing-cycles>
+      <meta:editing-duration>P1DT0H11M54S</meta:editing-duration>
+      <meta:user-defined meta:name="Info 1"/>
+      <meta:user-defined meta:name="Info 2"/>
+      <meta:user-defined meta:name="Info 3"/>
+      <meta:user-defined meta:name="Info 4"/>
+      <meta:document-statistic meta:table-count="1" meta:image-count="0" meta:object-count="0" meta:page-count="1" meta:paragraph-count="42" meta:word-count="144" meta:character-count="820"/>
+    </office:meta>
+  </xsl:template>
+
+  <!-- base structure -->
   <xsl:template match="tei:TEI">
     <xsl:apply-templates select="tei:text"/>
   </xsl:template>
@@ -181,7 +207,7 @@
     <xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
+  <xsl:template match="tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
     <xsl:variable name="depth">
       <xsl:value-of select="substring-after(name(.),'div')"/>
     </xsl:variable>

@@ -46,6 +46,8 @@ if [ "$(ls -A Pictures)" ]; then
 	    *png) exiftool -q -o $i.xmp $i;;
 	esac
     done
+else
+    rmdir Pictures
 fi
 )
 cd $TEMPDIR
@@ -56,19 +58,19 @@ then
     saxon -o $TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
     saxon -o $TEMPDIR/tmp3.xml $TEMPDIR/tmp2.xml $XSL/oo/fixgraphics.xsl DIR=`pwd`
 else
-    saxon -o $TEMPDIR/tmp3.xml  $F $XSL/oo/fixgraphics.xsl DIR=`pwd`
+    saxon -o $TEMPDIR/tmp3.xml $F $XSL/oo/fixgraphics.xsl DIR=`pwd`
 fi
-saxon -o tmp4.xml tmp3.xml $APPHOME/profiles/$profile/oo/to.xsl  \
-    debug=$debug word-directory=$TEMPDIR tei-directory=$TEMPDIR/ 
-
+saxon -o newcontent.xml tmp3.xml $APPHOME/profiles/$profile/oo/to.xsl  debug=$debug dir=$TEMPDIR 
+mv newcontent.xml content.xml
 if $debug 
 then
     echo leaving tmp[123].xml alone
 else
-    rm -f tmp3.xml tmp1.xml tmp2.xml
+    rm -f tmp3.xml tmp1.xml tmp2.xml tmp4.xml
 fi
 rm -f Pictures/*.xmp
-rm -f $THERE/$F.odt
+rm -f $THERE/"$F.odt"
+rm -f $F
 zip -q -r $THERE/"$F.odt" .
 cd $HERE
 if $debug 

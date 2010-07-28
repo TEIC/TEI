@@ -65,13 +65,18 @@
 
   <xsl:key match="style:style" name="STYLES" use="@style:name"/>
 
+
+  <xsl:key name="LISTS" 
+	 match="text:list-level-style-number" 
+	 use="parent::text:list-style/@style:name"/>
+
   <xsl:key match="text:h" name="Headings" use="text:outline-level"/>
 
   <xsl:param name="debug">false</xsl:param>
 
   <xsl:param name="dir">.</xsl:param>
 
-  <xsl:output encoding="utf-8" indent="yes"/>
+  <xsl:output encoding="utf-8" indent="no"/>
 
   <!--  <xsl:strip-space elements="text:span"/>-->
   
@@ -126,7 +131,6 @@
     </xsl:for-each>
 
     <TEI>
-    
 	<xsl:for-each select="$META/office:meta/dc:language">
 	  <xsl:attribute name="xml:lang">
 	    <xsl:value-of select="normalize-space(.)"/>
@@ -169,7 +173,7 @@
           </edition>
         </editionStmt>
         <publicationStmt>
-          <authority/>
+          <p></p>
         </publicationStmt>
         <sourceDesc>
           <p>
@@ -250,14 +254,19 @@
     </xsl:choose>
   </xsl:template>
 
-
   <xsl:template match="text:h[@text:outline-level]">
-    <HEAD level="{@text:outline-level}" style="{@text:style-name}">
+    <HEAD level="{@text:outline-level}" >
+      <xsl:attribute name="style">
+	<xsl:choose>
+	  <xsl:when test="@text:style-name">
+	    <xsl:value-of select="@text:style-name"/>
+	  </xsl:when>
+	  <xsl:otherwise>nostyle</xsl:otherwise>
+	</xsl:choose>
+	</xsl:attribute>
       <xsl:apply-templates/>
     </HEAD>
   </xsl:template>
-
-
   
   <!-- special case paragraphs -->
   <xsl:template match="text:p[@text:style-name='XMLComment']">
@@ -265,10 +274,9 @@
       <xsl:value-of select="."/>
     </xsl:comment>
   </xsl:template>
-  
+ 
 
   <xsl:template match="text:p[@text:style-name]">
-
     <xsl:choose>
       <xsl:when test="draw:frame and parent::draw:text-box">
 	<xsl:apply-templates select="draw:frame"/>
@@ -355,7 +363,7 @@
   <xsl:template match="text:p">
     <xsl:choose>
       <xsl:when test="parent::text:list-item">
-        <xsl:call-template name="applyStyle"/>
+	<xsl:call-template name="applyStyle"/>
       </xsl:when>
       <xsl:when test="parent::table:table-cell">
         <xsl:call-template name="applyStyle"/>
@@ -382,6 +390,11 @@
 
   <!-- lists -->
   <xsl:template match="text:list">
+    <xsl:variable name="style">
+      <xsl:for-each select="key('LISTS',@text:style-name)[1]">
+	<xsl:value-of select="@text:style-name"/>
+      </xsl:for-each>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="text:list-item/text:h">
 	<xsl:for-each select="text:list-item">
@@ -393,7 +406,7 @@
           <xsl:apply-templates/>
         </list>
       </xsl:when>
-      <xsl:when test="starts-with(@text:style-name,'P') or starts-with(text:list-item[1]/@text:style-name,'P')">
+      <xsl:when test="contains($style,'Number')">
         <list type="ordered">
           <xsl:apply-templates/>
         </list>
@@ -423,60 +436,26 @@
       </xsl:when>
       <xsl:otherwise>
         <item>
-          <xsl:apply-templates/>
-        </item>
+	  <xsl:apply-templates/>
+	</item>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
 
   <xsl:template
-    match="text:p[@text:style-name='VarList Item' or @text:style-name='List Contents']">
-    <xsl:if
-      test="not(preceding-sibling::text:p[@text:style-name='VarList Item'])">
-      <xsl:text disable-output-escaping="yes">&lt;item&gt;</xsl:text>
-    </xsl:if>
-    <xsl:apply-templates/>
-    <xsl:if
-      test="not(following-sibling::text:p[@text:style-name='VarList Item'])">
-      <xsl:text disable-output-escaping="yes">&lt;/item&gt;</xsl:text>
-    </xsl:if>
-    <xsl:variable name="next">
-      <xsl:for-each select="following-sibling::text:p[1]">
-        <xsl:value-of select="@text:style-name"/>
-      </xsl:for-each>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="$next='VarList Term'"/>
-      <xsl:when test="$next='List Heading'"/>
-      <xsl:when test="$next='VarList Item'"/>
-      <xsl:when test="$next='List Contents'"/>
-      <xsl:otherwise>
-        <xsl:text disable-output-escaping="yes">&lt;/list&gt;</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-
+    match="text:p[@text:style-name='VarList Item' or
+	   @text:style-name='List Contents']">
+    <GLOSS n="item">
+      <xsl:apply-templates/>
+    </GLOSS>
   </xsl:template>
 
   <xsl:template
     match="text:p[@text:style-name='VarList Term' or @text:style-name='List Heading']">
-    <xsl:variable name="prev">
-      <xsl:for-each select="preceding-sibling::text:p[1]">
-        <xsl:value-of select="@text:style-name"/>
-      </xsl:for-each>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="$prev='VarList Term'"/>
-      <xsl:when test="$prev='List Heading'"/>
-      <xsl:when test="$prev='VarList Item'"/>
-      <xsl:when test="$prev='List Contents'"/>
-      <xsl:otherwise>
-        <xsl:text disable-output-escaping="yes">&lt;list type="gloss"&gt;</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-    <label>
+    <GLOSS n="label"> 
       <xsl:apply-templates/>
-    </label>
+    </GLOSS>
   </xsl:template>
 
   <!-- inline -->
@@ -502,7 +481,7 @@
         </hi>
       </xsl:when>
       <xsl:when test="$Style='Emphasis Bold'">
-        <hi>
+        <hi rend="bold">
           <xsl:apply-templates/>
         </hi>
       </xsl:when>
@@ -1159,7 +1138,7 @@ These seem to have no obvious translation
       </xsl:variable>
       <xsl:variable name="Body2">
 	<xsl:for-each select="$Body">
-		<xsl:apply-templates select="." mode="pass1"/>
+	  <xsl:apply-templates mode="pass1"/>
 	</xsl:for-each>
       </xsl:variable>
       <xsl:for-each select="$Body2">
@@ -1169,9 +1148,7 @@ These seem to have no obvious translation
 	      <xsl:call-template name="group-by-section"/>
             </xsl:when>
             <xsl:otherwise>
-	      <xsl:for-each select="current-group()">
-		<xsl:apply-templates select="." mode="pass1"/>
-	      </xsl:for-each>
+	      <xsl:call-template name="inSection"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:for-each-group>
@@ -1191,9 +1168,7 @@ These seem to have no obvious translation
 		<xsl:call-template name="group-by-section"/>
 	      </xsl:when>
 	    <xsl:otherwise>
-	      <xsl:for-each select="current-group()">
-		<xsl:apply-templates select="." mode="pass1"/>
-	      </xsl:for-each>
+	      <xsl:call-template name="inSection"/>
 	    </xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:for-each-group>
@@ -1215,9 +1190,7 @@ These seem to have no obvious translation
 		<xsl:call-template name="group-by-section"/>
 	      </xsl:when>
 	    <xsl:otherwise>
-	      <xsl:for-each select="current-group()">
-		<xsl:apply-templates select="." mode="pass1"/>
-	      </xsl:for-each>
+		<xsl:call-template name="inSection"/>
 	    </xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:for-each-group>
@@ -1226,7 +1199,32 @@ These seem to have no obvious translation
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass1">
+
+  <xsl:template name="inSection">
+    <xsl:for-each-group select="current-group()"
+			group-adjacent="if (self::tei:GLOSS)
+					then 1
+					else 2">      
+      <xsl:choose>
+	<xsl:when test="current-grouping-key()=1">
+	  <list type="gloss">
+	    <xsl:for-each select="current-group()">
+	      <xsl:element name="{@n}">
+		<xsl:apply-templates mode="pass2"/>
+	      </xsl:element>
+	    </xsl:for-each>
+	  </list>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:for-each select="current-group()">
+	    <xsl:apply-templates select="." mode="pass2"/>
+	  </xsl:for-each>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each-group>
+  </xsl:template>
+		
+<xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass1">
     <xsl:copy-of select="."/>
   </xsl:template>
 
@@ -1264,8 +1262,7 @@ These seem to have no obvious translation
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="tei:p[not(*) and normalize-space(.)='']"
-		mode="pass2"/>
+  <xsl:template match="tei:p[not(*) and normalize-space(.)='']" mode="pass2"/>
 
   <xsl:template match="*" mode="pass2">
     <xsl:copy>
