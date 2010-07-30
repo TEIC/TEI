@@ -151,9 +151,11 @@
 	  -->
 	  <xsl:if test="(not(matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')) and not(matches(w:rPr/w:rFonts/@w:ascii,'Calibri'))) or
 			not(w:rPr/w:rFonts/@w:ascii = parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii)">
-	    <s n="font-family">
-	      <xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
-	    </s>
+	    <xsl:if test="$preserveFontFamily">
+	      <s n="font-family">
+		<xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
+	      </s>
+	    </xsl:if>
 	    <!-- w:ascii="Courier New" w:hAnsi="Courier New" w:cs="Courier New" -->
 	    <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
 	  </xsl:if>
