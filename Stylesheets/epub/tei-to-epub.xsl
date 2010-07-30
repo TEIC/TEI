@@ -41,6 +41,7 @@
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
+  <xsl:param name="fixgraphicsurl">false</xsl:param>
   <xsl:param name="doctypePublic">-//W3C//DTD XHTML 1.1//EN</xsl:param>
   <xsl:param name="doctypeSystem">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</xsl:param>
   <xsl:param name="directory"></xsl:param>
@@ -597,7 +598,7 @@
       <desc>[epub] Local mode to rewrite names of graphics inclusions
       </desc>
    </doc>
-  <xsl:template match="tei:pb[@facs]|tei:graphic" mode="fixgraphics">
+  <xsl:template match="tei:pb[@facs]" mode="fixgraphics">
     <xsl:copy>
       <xsl:variable name="newName">
         <xsl:text>media/image</xsl:text>
@@ -606,14 +607,17 @@
         <xsl:text>.</xsl:text>
         <xsl:value-of select="tokenize(@url|@facs,'\.')[last()]"/>
       </xsl:variable>
+      <xsl:attribute name="facs">
+	<xsl:value-of select="$newName"/>
+      </xsl:attribute>
+      <xsl:copy-of select="@n"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="tei:graphic" mode="fixgraphics">
+    <xsl:copy>
       <xsl:choose>
-	<xsl:when test="self::tei:pb">
-	  <xsl:attribute name="facs">
-	    <xsl:value-of select="$newName"/>
-	  </xsl:attribute>
-	  <xsl:copy-of select="@n"/>
-	</xsl:when>
-	<xsl:otherwise>
+	<xsl:when test="$fixgraphicsurl='true'">
 	  <xsl:attribute name="url">
 	    <xsl:value-of select="$newName"/>
 	  </xsl:attribute>
@@ -621,6 +625,9 @@
 	  <xsl:copy-of select="@height"/>
 	  <xsl:copy-of select="@width"/>
 	  <xsl:copy-of select="@scale"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:copy-of select="@*"/>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:copy>
@@ -835,4 +842,4 @@
     <xsl:apply-templates/>
     <xsl:text> (alternative title)</xsl:text>
   </xsl:template>
-</xsl:stylesheet>
+ </xsl:stylesheet>
