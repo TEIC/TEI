@@ -177,6 +177,7 @@
 	   </xsl:choose>
          </root>
       </xsl:variable>
+
       <!-- in 2nd and 3rd  passes, throw away any RNG <define> elements
     which do not have a <ref>, any <ref> which has no <define>
     to point to, and any empty <choice> -->

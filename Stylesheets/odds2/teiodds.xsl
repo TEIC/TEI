@@ -785,9 +785,6 @@ select="$makeDecls"/></xsl:message>
 		    <xsl:otherwise>
                       <xsl:call-template name="defineContent"/>
                       <xsl:if test="not($Attributes='') or $TEIC='true'">
-			<xsl:if test="$verbose='true'">
-			  <xsl:message>   define attributes: </xsl:message>
-			</xsl:if>
 			<xsl:call-template name="defineAttributes"/>
                       </xsl:if>
                     </xsl:otherwise>
@@ -835,6 +832,10 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template name="defineAttributes">
     <xsl:variable name="name" select="@ident"/>
+    <xsl:if test="$verbose='true'">
+      <xsl:message>   now define attributes for <xsl:value-of
+      select="@ident"/> (parameterize=<xsl:value-of select="$parameterize"/>)</xsl:message>
+    </xsl:if>
     <xsl:if test="$parameterize='true'">
       <xsl:if test="$TEIC='true'">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="att.global.attributes"/>
@@ -842,16 +843,17 @@ select="$makeDecls"/></xsl:message>
       <xsl:for-each select="tei:classes/tei:memberOf">
         <xsl:for-each select="key('CLASSES',@key)">
           <xsl:if test="@type='atts'">
-            <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@ident}.attributes"/>
+            <ref xmlns="http://relaxng.org/ns/structure/1.0"
+		 name="{@ident}.attributes"/>
           </xsl:if>
         </xsl:for-each>
       </xsl:for-each>
     </xsl:if>
-		      <xsl:apply-templates mode="tangle" select="tei:attList">
-			<xsl:with-param name="element">
-			  <xsl:value-of select="$name"/>
-			</xsl:with-param>
-		      </xsl:apply-templates>
+    <xsl:apply-templates mode="tangle" select="tei:attList">
+      <xsl:with-param name="element">
+	<xsl:value-of select="$name"/>
+      </xsl:with-param>
+    </xsl:apply-templates>
     <!-- place holder to make sure something gets into the
 	     pattern -->
     <xsl:if test="$TEIC='true'">

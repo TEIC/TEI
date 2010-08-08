@@ -37,6 +37,7 @@
       name="defaultSource">/usr/share/xml/tei/odd/p5subset.xml</xsl:param>
   <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
   <!--http://www.tei-c.org/release -->
+  <xsl:key name="odd2odd-CLASSREFS" match="tei:classRef" use="@key"/>
   <xsl:key name="odd2odd-ATTCLASSES" match="tei:classSpec[(tei:attList or @type='atts') and not(@ident='tei.TEIform')]" use="@ident"/>
   <xsl:key name="odd2odd-ATTREFS" match="tei:attRef" use="concat(@name,'_',../../@ident)"/>
   <xsl:key name="odd2odd-CHANGE" match="tei:classSpec[@mode='change']" use="@ident"/>
@@ -1162,6 +1163,7 @@ so that is only put back in if there is some content
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
+
   <xsl:template name="odd2odd-classAttributes">
     <xsl:param name="elementName"/>
     <xsl:param name="className"/>
@@ -1217,18 +1219,21 @@ so that is only put back in if there is some content
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
+
   <xsl:template name="odd2odd-processClassAttributes">
     <xsl:param name="elementName"/>
     <xsl:param name="className"/>
-    <xsl:param name="fromODD"/>
+    <xsl:param name="fromODD">false</xsl:param>
     <xsl:param name="whence"/>
     <xsl:param name="Source" tunnel="yes"/>
 
-    <!-- we are sitting on a classSpec, could be in the ODD
+    <!-- we are sitting on a attribute classSpec, could be in the ODD
 	 or could be in the source -->
     <xsl:variable name="M" select="@module"/>
-    <!-- decide whether to proceed with this this class. if we don't
-    have this module, or we have deleted the class, we can bypass it now.-->
+    <!-- decide whether to proceed with this class at all. if we don't
+    include this class specifically, don't have this module, or we
+    have deleted the class, 
+    we can bypass it now.-->
     <xsl:variable name="use">
       <xsl:choose>
         <xsl:when test="$fromODD='true' and @mode='add'">
@@ -1240,25 +1245,28 @@ so that is only put back in if there is some content
         <xsl:otherwise>
           <xsl:for-each select="$ODD">
             <xsl:choose>
-              <xsl:when test="key('odd2odd-DELETE',$className)"/>
-              <xsl:when test="key('odd2odd-MODULES',$M) or         key('odd2odd-MODULES',substring-before($M,'-decl'))">
+              <xsl:when test="key('odd2odd-DELETE',$className)">false</xsl:when>
+              <xsl:when test="key('odd2odd-CLASSREFS',$className)">true</xsl:when>
+              <xsl:when test="key('odd2odd-MODULES',$M)">
                 <xsl:text>true</xsl:text>
               </xsl:when>
+	      <xsl:otherwise>false</xsl:otherwise>
             </xsl:choose>
           </xsl:for-each>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <!-- DEBUG
-<xsl:message>START <xsl:value-of select="$whence"/>: <xsl:value-of select="$elementName"/> + <xsl:value-of
-select="$className"/> + <xsl:value-of
-select="$fromODD"/>+<xsl:value-of select="$use"/>+<xsl:value-of
-select="$M"/></xsl:message>
- -->
+    <!-- DEBUG-->
+    <!--
+    <xsl:message>START <xsl:value-of select="$whence"/>: <xsl:value-of select="$elementName"/> + <xsl:value-of
+    select="$className"/> [<xsl:value-of select="$M"/>] + <xsl:value-of
+    select="$fromODD"/>, so use=<xsl:value-of select="$use"/></xsl:message>
+    -->
     <xsl:if test="$use='true'">
       <!-- 
 	   We need to put in the class attributes. We'll 
-	   use the value of $fromODD to see whether this is in the ODD.
+	   use the value of $fromODD to see whether this is in the
+	   current ODD or the source.
 	   
 	   a) the class is new in this customization, add all attributes regardless
 	   b) the class is marked for deletion. do nothing
@@ -1292,10 +1300,10 @@ select="$M"/></xsl:message>
         </xsl:choose>
       </xsl:variable>
       <!--
-    <xsl:message>Class <xsl:value-of select="$className"/>, element
-    <xsl:value-of select="$elementName"/>: has changes: <xsl:value-of
-    select="$anyChanged"/></xsl:message>
--->
+	  <xsl:message>Class <xsl:value-of select="$className"/>, element
+	  <xsl:value-of select="$elementName"/>: has changes: <xsl:value-of
+	  select="$anyChanged"/></xsl:message>
+      -->
       <xsl:choose>
         <!-- a) new class in ODD -->
         <xsl:when test="$fromODD='true' and @mode='add'">
@@ -1429,7 +1437,7 @@ select="$M"/></xsl:message>
           <xsl:if test="$fromODD='true' and tei:classes[@mode='change']">
             <xsl:for-each select="tei:classes/tei:memberOf[@mode='add']">
               <xsl:call-template name="odd2odd-classAttributes">
-                <xsl:with-param name="whence">11</xsl:with-param>
+                <xsl:with-param name="whence">4</xsl:with-param>
                 <xsl:with-param name="elementName" select="$elementName"/>
                 <xsl:with-param name="className" select="@key"/>
               </xsl:call-template>
