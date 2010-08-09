@@ -179,12 +179,15 @@
                 </xsl:choose>
             </xsl:variable>
             
-<!--
-                <xsl:message> arrived at <xsl:value-of
-                select="$imageWidth"/> x <xsl:value-of
-                select="$imageHeight"/> from <xsl:value-of select="@teidocx:width"/>x<xsl:value-of select="@teidocx:height"/>
-                </xsl:message>
--->
+	    <!-- DEBUG
+		 <xsl:message> arrived at <xsl:value-of
+		 select="$imageWidth"/> x <xsl:value-of
+		 select="$imageHeight"/> from <xsl:value-of
+		 select="@teidocx:width"/>x<xsl:value-of
+		 select="@teidocx:height"/>
+		 (<xsl:value-of select="@width"/>x<xsl:value-of select="@height"/>)
+		 </xsl:message>
+	    -->
             <!-- prepare actual graphic -->
 	    <xsl:variable name="generatedID">
 	      <xsl:choose>
