@@ -745,6 +745,9 @@
                 <xsl:when test="self::tbx:hi[@style='italics']">
                     <w:i/>
                 </xsl:when>
+                <xsl:when test="self::tbx:hi[@style='it']">
+                    <w:i/>
+                </xsl:when>
             </xsl:choose>
 
 	    <!-- small caps -->

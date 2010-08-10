@@ -113,7 +113,8 @@
     
     <xsl:template match="tei:graphic">
         <!-- perform some tests on the graphic -->
-
+	<xsl:variable name="maxWidth" select="number(number($pageWidth)*100) cast as xs:integer"/>
+	<xsl:variable name="maxHeight" select="number(number($pageHeight)*100) cast as xs:integer"/>
 	<xsl:choose>
 	  <xsl:when test="@url and  ( (@teidocx:width and @teidocx:height) or (@width and @height))">
             
@@ -126,7 +127,7 @@
                 
             -->
             
-            <xsl:variable name="imageWidth">
+            <xsl:variable name="Width">
                 <xsl:choose>
                     <xsl:when test="contains(@width,'%')">
                         <xsl:value-of select="number($pageWidth * number(substring-before(@width,'%'))) cast as xs:integer"/>
@@ -141,7 +142,7 @@
                         <xsl:variable name="h">
                             <xsl:value-of select="teidocx:convert-dim-emu(@height)"/>
                         </xsl:variable>
-                        <xsl:value-of select="(@teidocx:width *                             ($h div number(@teidocx:height)))                             cast as xs:integer"/>
+                        <xsl:value-of select="(@teidocx:width *  ($h div number(@teidocx:height)))                             cast as xs:integer"/>
                     </xsl:when>
                     <xsl:when test="@teidocx:width">
                         <xsl:value-of select="@teidocx:width"/>
@@ -154,7 +155,7 @@
                 </xsl:choose>
             </xsl:variable>
             
-            <xsl:variable name="imageHeight">
+            <xsl:variable name="Height">
                 <xsl:choose>
                     <xsl:when test="contains(@height,'%')">
                         <xsl:value-of select="number($pageHeight * (number(substring-before(@height,'%')))) cast as xs:integer"/>
@@ -163,10 +164,10 @@
                         <xsl:value-of select="teidocx:convert-dim-emu(@height)"/>
                     </xsl:when>
                     <xsl:when test="@scale and @teidocx:height">
-                        <xsl:value-of select="(@teidocx:height *  number(@scale)) cast as xs:integer"/>
+                        <xsl:value-of select="(@teidocx:height * number(@scale)) cast as xs:integer"/>
                     </xsl:when>
-                    <xsl:when test="@width and @teidocx:height and                         @teidocx:width">
-                        <xsl:value-of select="(($imageWidth *                             @teidocx:height) div @teidocx:width) cast as xs:integer"/>
+                    <xsl:when test="@width and @teidocx:height and @teidocx:width">
+                        <xsl:value-of select="(($Width * @teidocx:height) div @teidocx:width) cast as xs:integer"/>
                     </xsl:when>
                     <xsl:when test="@teidocx:height">
                         <xsl:value-of select="@teidocx:height"/>
@@ -179,14 +180,47 @@
                 </xsl:choose>
             </xsl:variable>
             
-	    <!-- DEBUG
-		 <xsl:message> arrived at <xsl:value-of
-		 select="$imageWidth"/> x <xsl:value-of
-		 select="$imageHeight"/> from <xsl:value-of
-		 select="@teidocx:width"/>x<xsl:value-of
-		 select="@teidocx:height"/>
-		 (<xsl:value-of select="@width"/>x<xsl:value-of select="@height"/>)
-		 </xsl:message>
+	    <!-- check for sense -->
+            <xsl:variable name="imageHeight">
+	      <xsl:choose>
+		<xsl:when test="$Height = -1">
+		  <xsl:value-of select="$maxHeight"/>
+		</xsl:when>
+		<xsl:when test="$Height &gt; $maxHeight">
+		  <xsl:value-of select="$maxHeight"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="$Height"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:variable>
+            <xsl:variable name="imageWidth">
+	      <xsl:choose>
+		<xsl:when test="$Width = -1">
+		  <xsl:value-of select="$maxWidth"/>
+		</xsl:when>
+		<xsl:when test="$Width &gt; $maxWidth">
+		  <xsl:value-of select="$maxWidth"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="$Width"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:variable>
+
+    <!-- DEBUG
+		 <xsl:message> 
+maxWidth: <xsl:value-of select="$maxWidth"/>
+maxHeight: <xsl:value-of select="$maxHeight"/>
+Width: <xsl:value-of select="$Width"/>
+Height: <xsl:value-of select="$Height"/>
+imageWidth: <xsl:value-of select="$imageWidth"/>
+imageHeight: <xsl:value-of select="$imageHeight"/>
+@width: <xsl:value-of select="@width"/>
+@height: <xsl:value-of select="@height"/>
+@teidocx:width: <xsl:value-of select="@teidocx:width"/>
+@teidocx:height: <xsl:value-of select="@teidocx:height"/>
+</xsl:message>
 	    -->
             <!-- prepare actual graphic -->
 	    <xsl:variable name="generatedID">
