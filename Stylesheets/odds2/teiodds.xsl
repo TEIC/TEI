@@ -1705,9 +1705,9 @@ select="$makeDecls"/></xsl:message>
 
 
   <xsl:template name="showDate">
-    <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[M02]:[s02]Z')"/>
-
-  </xsl:template>
+    <xsl:value-of
+      select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
+</xsl:template>
 
   <xsl:template name="makeDescription">
     <xsl:param name="includeValList">false</xsl:param>
