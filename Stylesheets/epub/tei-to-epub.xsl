@@ -132,7 +132,7 @@
     <xsl:choose>
       <xsl:when test="$uid=''">
         <xsl:text>http://www.example.com/TEIEPUB/</xsl:text>
-        <xsl:value-of select="format-dateTime(current-dateTime(),'[Y][M02][D02][H02][M02][s02]')"/>
+        <xsl:value-of select="format-dateTime(current-dateTime(),'[Y][M02][D02][H02][m02][s02]')"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="$uid"/>
