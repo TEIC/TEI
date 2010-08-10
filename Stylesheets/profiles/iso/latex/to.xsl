@@ -463,7 +463,9 @@ STANDARD &amp;\bfseries <xsl:call-template name="getiso_documentNumber"/>-<xsl:c
 
   <xsl:template name="simpleRun">
     <xsl:param name="text"/>
+    <xsl:param name="prefix"/>
     <xsl:param name="italic"/>
+    <xsl:value-of select="$prefix"/>
     <xsl:choose>
       <xsl:when test="$italic='true'">
 	<xsl:text>\textit{</xsl:text>
@@ -475,5 +477,20 @@ STANDARD &amp;\bfseries <xsl:call-template name="getiso_documentNumber"/>-<xsl:c
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <xsl:template name="termNum">
+    <xsl:value-of select="substring-after(../@id,'_')"/>
+    <xsl:text> </xsl:text>
+  </xsl:template>
+
+   <xsl:template name="block-element">
+     <xsl:param name="pPr"/>
+     <xsl:param name="style"/>
+     <xsl:param name="select" select="."/>
+     <xsl:for-each select="$select">
+       <xsl:text>\par &#10;</xsl:text>
+       <xsl:apply-templates/>
+     </xsl:for-each>
+   </xsl:template>
 
 </xsl:stylesheet>
