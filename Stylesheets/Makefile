@@ -122,7 +122,7 @@ installp5-2: p5-2
 	mkdir -p ${PREFIX}/share
 	(cd release/p5-2; tar cf - .) | (cd ${PREFIX}/share; tar xvf  -)
 	mkdir -p ${PREFIX}/bin
-	for i in teitodocx docxtotei teitoodt odttotei teitoepub; do cp $$i ${PREFIX}/bin/$$i; chmod 755 ${PREFIX}/bin/$$i; perl -p -i -e 's+APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/$$i;done
+	for i in teitodocx docxtotei teitoodt odttotei teitolatex teitoepub; do cp $$i ${PREFIX}/bin/$$i; chmod 755 ${PREFIX}/bin/$$i; perl -p -i -e 's+APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/$$i;done
 
 installp5: p5
 	mkdir -p ${PREFIX}/share
