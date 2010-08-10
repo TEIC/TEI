@@ -1948,11 +1948,36 @@ select="$makeDecls"/></xsl:message>
   <xsl:template name="makeTEIVersion">
     <xsl:choose>
       <xsl:when test="ancestor-or-self::tei:TEI/processing-instruction()[name()='TEIVERSION']">
-        <xsl:text>&#10;Edition: </xsl:text>
-        <xsl:value-of
+        <!-- JC Additions to form proper URL from version number -->
+        <xsl:variable name="TEIVersion"
           select="ancestor-or-self::tei:TEI/processing-instruction()[name()='TEIVERSION']"/>
+        <xsl:variable name="TEIVersion-edition"
+          select="substring-before($TEIVersion, ' Last')"/>
+        <xsl:variable name="TEIVersion-datestring"
+          select="concat(' Last',substring-after($TEIVersion, ' Last'))"/>
+        <xsl:variable name="TEIVersionWithoutFullStop">
+          <xsl:choose>
+            <xsl:when
+              test="substring($TEIVersion-edition,
+              string-length($TEIVersion-edition)) =
+              '.' and matches($TEIVersion-edition, '\d\d*\.\d\d*\.\d\d*\.')">
+              <xsl:value-of
+                select="substring($TEIVersion-edition,0,string-length($TEIVersion-edition))"
+              />
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="$TEIVersion-edition"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="versionURL"
+          select="concat('http://www.tei-c.org/Vault/P5/', $TEIVersionWithoutFullStop, '/')"/>
+        <xsl:text>&#10;Edition: </xsl:text>
+        <xsl:value-of select="$TEIVersion"/>
+        <xsl:text>&#10;Edition Location: </xsl:text>
+        <xsl:value-of select="$versionURL"/>
         <xsl:text>&#10;</xsl:text>
-      </xsl:when>
+        </xsl:when>
       <xsl:when
         test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
         <xsl:text>&#10;Edition: </xsl:text>
