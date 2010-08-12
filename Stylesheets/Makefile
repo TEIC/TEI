@@ -104,8 +104,8 @@ oxygendoc:
 
 test: p4 p5 p5-2 common
 	(cd release/p5/xml/tei/stylesheet; cp ../../../../../i18n.xml .)
-	(cd Test; make)
 	(cd Test2; make)
+	(cd Test; make)
 	rm release/p5/xml/tei/stylesheet/i18n.xml
 
 

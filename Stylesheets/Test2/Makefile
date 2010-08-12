@@ -1,5 +1,5 @@
 VERSION=`cat ../VERSION`
-default: test test3 test4 test5 test6 oddbyexample
+default: general test test3 test4 test5 test6 oddbyexample
 
 test:
 	saxon -o dummy  test.xml ../xhtml2/tei.xsl verbose=true 
@@ -47,6 +47,13 @@ oddbyexample:
 	-jing oddbyexample.xsd bare/test.xml
 	-xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
 
+general:
+	../teitolatex test.xml
+	../teitoepub  test.xml 
+	../teitoodt test.xml 
+	../teitodocx test.xml 
+
 clean:
 	-rm test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy*
 	-rm oddbyexample.* xml.xsd index*div*html
+	-rm test.tex test.xml.odt test.xml.docx test.epub
