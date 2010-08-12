@@ -10,6 +10,8 @@
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 exclude-result-prefixes="xsl tei html t a rng s iso teix"
                 version="1.0">
+   <xsl:import href="to.xsl"/>
+
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for simplifying TEI ODD markup </p>
@@ -27,7 +29,6 @@
     </desc>
   </doc>
 
-   <xsl:import href="to.xsl"/>
    <xsl:param name="numberFormat">fr</xsl:param>
 
 </xsl:stylesheet>

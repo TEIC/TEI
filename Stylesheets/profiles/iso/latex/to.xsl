@@ -13,9 +13,13 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="xlink dbk rng tei teix xhtml a html  xs xsl"
                 version="2.0">
+   <xsl:import href="../../../latex2/tei.xsl"/>
+   <xsl:import href="../isoutils.xsl"/>
+
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
-         <p> TEI stylesheet dealing with elements from the core module. </p>
+
          <p> This library is free software; you can redistribute it and/or
       modify it under the terms of the GNU Lesser General Public License as
       published by the Free Software Foundation; either version 2.1 of the
@@ -33,8 +37,6 @@
    </doc>
 
   
-   <xsl:import href="../../../latex2/tei.xsl"/>
-   <xsl:import href="../isoutils.xsl"/>
 
    <xsl:param name="reencode">false</xsl:param>
    <xsl:param name="numberBackHeadings">true</xsl:param>

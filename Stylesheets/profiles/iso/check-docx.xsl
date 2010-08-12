@@ -20,6 +20,9 @@
                 xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
                 version="2.0"
                 exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
+    <xsl:import href="docx/iso-functions.xsl"/>
+    <xsl:import href="../../docx/check-docx-and-annotate.xsl"/>
+    
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for simplifying TEI ODD markup </p>
@@ -36,9 +39,6 @@
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
-    
-    <xsl:import href="docx/iso-functions.xsl"/>
-    <xsl:import href="../../docx/check-docx-and-annotate.xsl"/>
     
     <xsl:param name="word-directory">..</xsl:param>
     <xsl:param name="styleDoc">

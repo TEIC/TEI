@@ -3,6 +3,7 @@
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 version="2.0"
                 exclude-result-prefixes="tei">
+    <xsl:import href="../../../epub/tei-to-epub.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for simplifying TEI ODD markup </p>
@@ -20,5 +21,4 @@
     </desc>
   </doc>
 
-    <xsl:import href="../../../epub/tei-to-epub.xsl"/>
 </xsl:stylesheet>

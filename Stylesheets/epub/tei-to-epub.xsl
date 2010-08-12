@@ -618,13 +618,13 @@
     <xsl:copy>
       <xsl:choose>
 	<xsl:when test="$fixgraphicsurl='true'">
-      <xsl:variable name="newName">
-        <xsl:text>media/image</xsl:text>
-	<xsl:if test="self::tei:pb">pb</xsl:if>
-        <xsl:number level="any"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="tokenize(@url|@facs,'\.')[last()]"/>
-      </xsl:variable>
+	  <xsl:variable name="newName">
+	    <xsl:text>media/image</xsl:text>
+	    <xsl:if test="self::tei:pb">pb</xsl:if>
+	    <xsl:number level="any"/>
+	    <xsl:text>.</xsl:text>
+	    <xsl:value-of select="tokenize(@url|@facs,'\.')[last()]"/>
+	  </xsl:variable>
 	  <xsl:attribute name="url">
 	    <xsl:value-of select="$newName"/>
 	  </xsl:attribute>
@@ -639,7 +639,7 @@
       </xsl:choose>
     </xsl:copy>
   </xsl:template>
-
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[epub] Remove unwanted things from CSS
       </desc>

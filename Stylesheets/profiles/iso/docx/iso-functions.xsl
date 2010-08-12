@@ -21,6 +21,9 @@
                 xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
                 version="2.0"
                 exclude-result-prefixes="cals ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
+    <xsl:import href="iso-variables.xsl"/>
+    
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for simplifying TEI ODD markup </p>
@@ -38,8 +41,6 @@
     </desc>
   </doc>
 
-    <xsl:import href="iso-variables.xsl"/>
-    
     <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
 	Returns a listtype for a given stylename (return empty string to

@@ -6,9 +6,13 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="tei m"
                 version="2.0">
+    <!-- import base conversion style -->
+
+    <xsl:import href="../../../xhtml2/tei.xsl"/>
+    <xsl:import href="../../../common2/msdescription.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
-         <p> TEI stylesheet dealing with elements from the core module. </p>
+
          <p> This library is free software; you can redistribute it and/or
       modify it under the terms of the GNU Lesser General Public License as
       published by the Free Software Foundation; either version 2.1 of the
@@ -26,10 +30,6 @@
    </doc>
 
   
-    <!-- import base conversion style -->
-
-    <xsl:import href="../../../xhtml2/tei.xsl"/>
-    <xsl:import href="../../../common2/msdescription.xsl"/>
 
     <xsl:output indent="no"/>
     <!--  -->

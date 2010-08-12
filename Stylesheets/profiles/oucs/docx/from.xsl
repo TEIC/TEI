@@ -21,9 +21,12 @@
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 version="2.0"
                 exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx pic rel a         tei teidocx xs iso">
+    <!-- import base conversion style -->
+
+
+    <xsl:import href="../../default/docx/from.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
-      <p> TEI stylesheet for simplifying TEI ODD markup </p>
       <p> This library is free software; you can redistribute it and/or modify it under the
       terms of the GNU Lesser General Public License as published by the Free Software Foundation;
       either version 2.1 of the License, or (at your option) any later version. This library is
@@ -38,10 +41,6 @@
     </desc>
   </doc>
     
-    <!-- import base conversion style -->
-
-
-    <xsl:import href="../../default/docx/from.xsl"/>
 
 
 </xsl:stylesheet>

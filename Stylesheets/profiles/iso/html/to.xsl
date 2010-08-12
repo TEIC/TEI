@@ -13,9 +13,18 @@
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 exclude-result-prefixes="tei html t a rng s iso tbx cals teix"
                 version="2.0">
+   <xsl:import href="../../../xhtml2/tei.xsl"/>
+   <xsl:import href="../../../xhtml2/tagdocs.xsl"/>
+   <xsl:import href="../../../odds2/teiodds.xsl"/>
+   <xsl:import href="../isoutils.xsl"/>
+   <xsl:import href="../isotei-schema.xsl"/>
+   <xsl:import href="web.xsl"/>
+   <xsl:import href="tbx.xsl"/>
+   <xsl:import href="cals.xsl"/>
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
-         <p> TEI stylesheet dealing with elements from the core module. </p>
+
          <p> This library is free software; you can redistribute it and/or
       modify it under the terms of the GNU Lesser General Public License as
       published by the Free Software Foundation; either version 2.1 of the
@@ -33,15 +42,6 @@
    </doc>
 
     
-   <xsl:import href="../../../xhtml2/tei.xsl"/>
-   <xsl:import href="../../../xhtml2/tagdocs.xsl"/>
-   <xsl:import href="../../../odds2/teiodds.xsl"/>
-   <xsl:import href="../isoutils.xsl"/>
-   <xsl:import href="../isotei-schema.xsl"/>
-   <xsl:import href="web.xsl"/>
-   <xsl:import href="tbx.xsl"/>
-   <xsl:import href="cals.xsl"/>
-  
    <xsl:strip-space elements="tei:bibl"/>
    <xsl:param name="numberFormat">uk</xsl:param>
    <xsl:output encoding="utf-8" omit-xml-declaration="yes" method="xhtml"

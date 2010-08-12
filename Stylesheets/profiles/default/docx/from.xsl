@@ -19,6 +19,10 @@
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 version="2.0"
                 exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso">
+    <!-- import base conversion style -->
+
+    <xsl:import href="../../../docx/from/docxtotei.xsl"/>
+    
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for simplifying TEI ODD markup </p>
@@ -35,10 +39,6 @@
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
-    
-    <!-- import base conversion style -->
-
-    <xsl:import href="../../../docx/from/docxtotei.xsl"/>
     
     <xsl:output indent="no"/>
 
