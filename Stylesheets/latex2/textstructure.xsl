@@ -303,9 +303,16 @@
          </xsl:when>
          <xsl:when test="ancestor::tei:quote and following-sibling::tei:l">
             <xsl:apply-templates/>\\
-      </xsl:when>
-         <xsl:otherwise>\leftline{<xsl:apply-templates/>}
-      </xsl:otherwise>
+	 </xsl:when>
+	 <xsl:when test="parent::tei:sp">
+	   <xsl:apply-templates/>
+	   <xsl:text>\hfill\\</xsl:text>
+	 </xsl:when>
+	 <xsl:otherwise>
+	   <xsl:text>\leftline{</xsl:text>
+	   <xsl:apply-templates/>
+	   <xsl:text>}</xsl:text>
+	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
