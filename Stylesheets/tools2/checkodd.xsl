@@ -16,7 +16,7 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
       02111-1307 USA 
 
-$Id: checkxsl.xsl 6301 2009-05-10 21:09:26Z rahtz $
+$Id$
 
 2008, TEI Consortium
 -->

@@ -32,7 +32,7 @@
     <xd:short>Core XSLTdoc Stylesheet</xd:short>
     <xd:detail> This stylesheet </xd:detail>
     <xd:author>ibirrer</xd:author>
-    <xd:cvsId>$Id: core.xsl,v 1.3 2005/01/04 10:13:05 ibirrer Exp $</xd:cvsId>
+    <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2004, P&amp;P Software GmbH</xd:copyright>
   </xd:doc>
 

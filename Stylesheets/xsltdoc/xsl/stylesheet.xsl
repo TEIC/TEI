@@ -13,7 +13,7 @@
       this stylesheet is set to http://www.w3.org/1999/xhtml. That means that
       any literal element is of this namespace if not specified specificely! </xd:detail>
     <xd:author>ibirrer</xd:author>
-    <xd:cvsId>$Id: stylesheet.xsl,v 1.3 2005/01/04 10:13:06 ibirrer Exp $</xd:cvsId>
+    <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2004, P&amp;P Software GmbH</xd:copyright>
   </xd:doc>
 

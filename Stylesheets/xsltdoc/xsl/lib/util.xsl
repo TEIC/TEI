@@ -5,7 +5,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xd:doc type="stylesheet"> Utility functions used by other stylesheets.
       <xd:author>ibirrer</xd:author>
-    <xd:cvsId>$Id: util.xsl,v 1.6 2005/01/04 10:13:06 ibirrer Exp $</xd:cvsId>
+    <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2004, P&amp;P Software GmbH</xd:copyright>
   </xd:doc>
   <!-- ********************************************************************** -->

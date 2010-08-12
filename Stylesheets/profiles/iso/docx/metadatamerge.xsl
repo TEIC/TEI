@@ -54,7 +54,7 @@
   
       </p>
          <p>Author: See AUTHORS</p>
-         <p>Id: $Id: to.xsl 6832 2009-10-12 22:42:59Z rahtz $</p>
+         <p>Id: $Id$</p>
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>

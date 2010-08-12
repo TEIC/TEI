@@ -4,26 +4,32 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
     xmlns="http://www.tei-c.org/ns/1.0"
     version="2.0">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+      <desc>
+         <p> TEI stylesheet dealing with elements from the core module. </p>
+         <p> This library is free software; you can redistribute it and/or
+      modify it under the terms of the GNU Lesser General Public License as
+      published by the Free Software Foundation; either version 2.1 of the
+      License, or (at your option) any later version. This library is
+      distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+      without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+      PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+      details. You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </p>
+         <p>Author: See AUTHORS</p>
+         <p>Id: $Id$</p>
+         <p>Copyright: 2008, TEI Consortium</p>
+      </desc>
+   </doc>
+
   <!-- 
        
        P4 to P5 converter 
        
        Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
        
-       $Date: 2010-02-03 22:42:51 +0000 (Wed, 03 Feb 2010) $  $Id: p4top5.xsl 7164 2010-02-03 22:42:51Z rahtz $
-       
-       Copyright 2007 TEI Consortium
-       
-       Permission is hereby granted, free of charge, to any person obtaining
-       a copy of this software and any associated documentation gfiles (the
-       ``Software''), to deal in the Software without restriction, including
-       without limitation the rights to use, copy, modify, merge, publish,
-       distribute, sublicense, and/or sell copies of the Software, and to
-       permit persons to whom the Software is furnished to do so, subject to
-       the following conditions:
-       
-       The above copyright notice and this permission notice shall be included
-       in all copies or substantial portions of the Software.
+       $Date$  $Id$
        
   -->
   <xsl:output method="xml" encoding="utf-8"

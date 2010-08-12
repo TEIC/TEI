@@ -10,7 +10,7 @@
   <xd:doc type="stylesheet">
     Frontedn for core.xsl
     <xd:author>ibirrer</xd:author>
-    <xd:cvsId>$Id: xsltdoc.xsl,v 1.7 2005/01/04 10:13:06 ibirrer Exp $</xd:cvsId>
+    <xd:cvsId>$Id$</xd:cvsId>
     <xd:copyright>2004, P&amp;P Software GmbH</xd:copyright>
   </xd:doc>
   
