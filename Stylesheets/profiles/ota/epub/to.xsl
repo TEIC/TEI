@@ -14,7 +14,8 @@
                 exclude-result-prefixes="tei html t a rng s iso tbx cals teix"
                 version="2.0">
     <xsl:import href="../../../epub/tei-to-epub.xsl"/>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> This library is free software; you can redistribute it and/or
       modify it under the terms of the GNU Lesser General Public License as
@@ -32,10 +33,9 @@
       </desc>
    </doc>
 
-    
-
-
     <xsl:param name="publisher">Oxford Text Archive, Oxford University</xsl:param>
+
+    <xsl:param name="cssFile">ota.css</xsl:param>
 
     <xsl:template match="tei:title[@type='main']/text()">
       <xsl:value-of select="replace(.,' \[Electronic resource\]','')"/>

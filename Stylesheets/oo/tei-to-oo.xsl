@@ -648,10 +648,9 @@
   </xsl:template>
 
   <xsl:template match="tei:l">
-    <text:span text:style-name="l">
+    <text:p text:style-name="l">
       <xsl:apply-templates/>
-      <text:line-break/>
-    </text:span>
+    </text:p>
   </xsl:template>
 
   <xsl:template name="Literal">
@@ -683,9 +682,18 @@
   </xsl:template>
 
   <xsl:template match="tei:stage">
-    <text:span text:style-name="Stage">
-      <xsl:apply-templates/>
-    </text:span>
+    <xsl:choose>
+      <xsl:when test="parent::tei:sp">
+	<text:p text:style-name="Stage">
+	  <xsl:apply-templates/>
+	</text:p>
+      </xsl:when>
+      <xsl:otherwise>
+	<text:span text:style-name="Stage">
+	  <xsl:apply-templates/>
+	</text:span>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tei:speaker">
