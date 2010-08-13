@@ -64,6 +64,23 @@
   <xsl:param name="coverimage"/>
   <xsl:param name="odd">false</xsl:param>
   <xsl:param name="debug">false</xsl:param>
+
+  <xsl:variable name="coverimageFile">
+    <xsl:choose>
+      <xsl:when test="not($coverimage='')">
+	<xsl:value-of select="$coverimage"/>
+      </xsl:when>
+      <xsl:when
+	  test="/tei:TEI/tei:text/tei:front/tei:titlePage/@facs">
+        <xsl:text>media/imagetitlePage</xsl:text>
+	<xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:titlePage">
+	  <xsl:number level="any"/>
+	  <xsl:text>.</xsl:text>
+	  <xsl:value-of select="tokenize(@url|@facs,'\.')[last()]"/>
+	</xsl:for-each>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:variable>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[epub] Suppress normal page footer      </desc>
    </doc>
@@ -262,14 +279,14 @@
               <dc:rights>
                 <xsl:call-template name="generateLicence"/>
               </dc:rights>
-	      <xsl:if test="not($coverimage='')">
+	      <xsl:if test="not($coverimageFile='')">
 		<meta name="cover"  content="cover-image" />
 	      </xsl:if>
             </metadata>
 
 	    <manifest>
-	      <xsl:if test="not($coverimage='')">
-		<item href="{$coverimage}" id="cover-image" media-type="image/jpeg"/>
+	      <xsl:if test="not($coverimageFile='')">
+		<item href="{$coverimageFile}" id="cover-image" media-type="image/jpeg"/>
 	      </xsl:if>
 	      <item href="stylesheet.css" id="css" media-type="text/css"/>
 	      <item href="titlepage.html" id="titlepage" media-type="application/xhtml+xml"/>	      
@@ -405,7 +422,7 @@
 		    test="tei:text/tei:front/tei:titlePage">
 		  <xsl:apply-templates select="tei:text/tei:front/tei:titlePage"/>
 		</xsl:when>
-		<xsl:when test="$coverimage=''">
+		<xsl:when test="$coverimageFile=''">
 		  <div style="font-family: serif; height:860;
 			      font-size:36pt; border: bold red 1pt; text-align:center">
 		    <xsl:call-template name="generateTitle"/>
@@ -415,7 +432,7 @@
 		  <div>
 		    <img width="600" height="860"
 			 alt="cover picture"
-			 src="{$coverimage}"/>
+			 src="{$coverimageFile}"/>
 		  </div>
 		</xsl:otherwise>
 	      </xsl:choose>
@@ -598,11 +615,14 @@
       <desc>[epub] Local mode to rewrite names of graphics inclusions
       </desc>
    </doc>
-  <xsl:template match="tei:pb[@facs]" mode="fixgraphics">
+  <xsl:template match="tei:titlePage[@facs]|tei:pb[@facs]"
+		mode="fixgraphics">
     <xsl:copy>
       <xsl:variable name="newName">
         <xsl:text>media/image</xsl:text>
-	<xsl:if test="self::tei:pb">pb</xsl:if>
+	<xsl:if test="@facs">
+	  <xsl:value-of select="local-name()"/>
+	</xsl:if>
         <xsl:number level="any"/>
         <xsl:text>.</xsl:text>
         <xsl:value-of select="tokenize(@url|@facs,'\.')[last()]"/>
