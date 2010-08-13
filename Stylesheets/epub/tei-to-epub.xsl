@@ -697,7 +697,7 @@
       <xsl:variable name="n">
 	<xsl:number/>
       </xsl:variable>
-      <div style="float:left; font-size:smaller; width: 3em;">
+      <div class="linenumber">
 	<xsl:choose>
 	  <xsl:when test="$n mod 5 = 0">
 	    <xsl:value-of select="$n"/>
