@@ -55,4 +55,24 @@
 	<xsl:apply-templates/>
       </span>
     </xsl:template>
+
+  <xsl:template match="tei:sp">
+    <div class="sp">
+	 <xsl:apply-templates/>
+    </div>
+  </xsl:template>
+
+  <xsl:template match="tei:speaker">
+    <div class="speaker">
+      <xsl:call-template name="makeAnchor"/>
+      <xsl:apply-templates/>
+    </div>
+  </xsl:template>
+
+  <xsl:template match="tei:stage">
+    <div class="stage">
+      <xsl:apply-templates/>
+    </div>
+  </xsl:template>
+
 </xsl:stylesheet>
