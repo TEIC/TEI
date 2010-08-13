@@ -166,12 +166,12 @@
    </doc>
   <xsl:template match="tei:sp">
       <dl>
-         <dt>
-	           <xsl:call-template name="makeAnchor"/>
+         <dt class="speaker">
+	   <xsl:call-template name="makeAnchor"/>
             <xsl:apply-templates select="tei:speaker"/>
          </dt>
          <dd>
-            <xsl:apply-templates select="tei:p | tei:l | tei:lg | tei:seg | tei:ab | tei:stage"/>
+            <xsl:apply-templates select="tei:*[not(self::tei:speaker)]"/>
          </dd>
       </dl>
   </xsl:template>
