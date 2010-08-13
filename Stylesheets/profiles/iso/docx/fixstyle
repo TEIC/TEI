@@ -1,5 +1,7 @@
 #!/bin/sh
-cp template.docx template_orig.docx
+X=`dirname $0`
+APP=`(cd $X; pwd)`
+cp template_orig.docx template.docx
 
 mkdir temp$$
 cd temp$$
@@ -67,11 +69,11 @@ then
 fi
 
 # fix .rels
-saxon _rels/.rels ../fixdotrels.xsl > x
+saxon _rels/.rels $APP/fixdotrels.xsl > x
 mv x _rels/.rels
 
 #fix styles
-saxon word/styles.xml ../fixstyle.xsl > x
+saxon word/styles.xml $APP/fixstyle.xsl > x
 mv x word/styles.xml
 
 # zip back together

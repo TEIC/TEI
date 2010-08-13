@@ -53,6 +53,11 @@
     <!-- Templates transforming graphic elements -->
     <xsl:include href="graphics/graphics.xsl"/>
 
+
+    <!-- Templates transforming elements from drama -->
+    <xsl:include href="drama/drama.xsl"/>
+
+    <!-- Templates transforming lists -->
     <xsl:include href="lists/lists.xsl"/>
 
     <!-- Templates transforming math elements -->
@@ -2085,6 +2090,18 @@
 
 
     <xsl:template match="tei:titlePage/tei:docTitle/tei:titlePart[@type='main']">
+        <xsl:call-template name="block-element">
+            <xsl:with-param name="style">Title</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template match="tei:titlePage/tei:docTitle/tei:titlePart[not(@type)]">
+        <xsl:call-template name="block-element">
+            <xsl:with-param name="style">Title</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template match="tei:titlePage/tei:titlePart">
         <xsl:call-template name="block-element">
             <xsl:with-param name="style">Title</xsl:with-param>
         </xsl:call-template>

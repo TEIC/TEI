@@ -171,8 +171,10 @@
                 <xsl:when test="self::tei:emph">true</xsl:when>
 		<xsl:when test="self::tbx:hi[@style='italics']">true</xsl:when>
                 <xsl:when test="@rend='ital'">true</xsl:when>
+                <xsl:when test="@rend='it'">true</xsl:when>
                 <xsl:when test="@rend='att'">true</xsl:when>
                 <xsl:when test="self::tei:att">true</xsl:when>
+                <xsl:when test="self::tei:speaker">true</xsl:when>
                 <xsl:when test="self::tei:gloss">true</xsl:when>
                 <xsl:when test="self::tei:title">true</xsl:when>
                 <xsl:when test="self::tei:name">true</xsl:when>
