@@ -154,8 +154,25 @@
             <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
          </xsl:when>
 	 <xsl:when
-	     test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:date">
-            <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change[1]/tei:date"/>
+	     test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change[@when
+		   or tei:date]">
+            <xsl:for-each
+		select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change[1]">
+	      <xsl:choose>
+		<xsl:when test="@when">
+		  <xsl:value-of select="@when"/>
+		</xsl:when>
+		<xsl:when test="tei:date/@when">
+		  <xsl:value-of select="tei:date/@when"/>
+		</xsl:when>
+		<xsl:when test="tei:date">
+		  <xsl:value-of select="tei:date"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]')"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each>
 	 </xsl:when>
 	 <xsl:otherwise>
 	   <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]')"/>
