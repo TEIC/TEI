@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--*- XML -*--><!-- adapted by Sebastian Rahtz from: --><!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ --><!-- $Id$ --><!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ --><!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!--*- XML -*-->
+<!-- adapted by Sebastian Rahtz from: -->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- $Id$ -->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- 
+  modified 2010-08-14 by Syd Bauman:
+     bug-fix: modified expressions defining 'pfx' variables
+     so that only 1 namespace is handed to name().
+-->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
      Copyright (c) 2002, Pantor Engineering AB
      All rights reserved.
@@ -34,9 +44,11 @@
      OUT OF  THE  USE OF   THIS  SOFTWARE,  EVEN IF ADVISED   OF   THE
      POSSIBILITY OF SUCH DAMAGE.
 
-     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ --><!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
      Created by David.Rosenborg@pantor.com
-     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ --><!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
      RngToRncText.xsl converts a RELAX NG schema in XML syntax to the
      compact syntax.
@@ -55,14 +67,15 @@
      For a description of the underlying XML to compact syntax
      transformation, see RngToRncXml.xsl.
 
-     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ --><xsl:transform xmlns:rng="http://relaxng.org/ns/structure/1.0"
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<xsl:transform xmlns:rng="http://relaxng.org/ns/structure/1.0"
                xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                version="2.0"
                exclude-result-prefixes="rng sch a">
   <xsl:param name="top"/>
-   <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+<!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- Parameters -->
 <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
 <!-- collapse-lines:
@@ -1135,8 +1148,8 @@
             <xsl:value-of select="generate-id ($nd)"/>
          </xsl:when>
          <xsl:when test="key ('ns', $ns)">
-            <xsl:variable name="pfx" select="name (key ('ns', $ns)[1]/namespace::*[. = $ns])"/>
-            <xsl:choose>
+           <xsl:variable name="pfx" select="name ( (key ('ns', $ns)/namespace::*[. = $ns])[1] )"/>
+           <xsl:choose>
                <xsl:when test="$pfx">
                   <xsl:value-of select="$pfx"/>
                </xsl:when>
@@ -1333,8 +1346,8 @@
                         <xsl:value-of select="$mapped"/>
                      </xsl:when>
                      <xsl:when test="$retain-prefixes">
-                        <xsl:variable name="pfx" select="name (key ('ns', $ns)[1]     /namespace::*[. = $ns])"/>
-                        <xsl:choose>
+                       <xsl:variable name="pfx" select="name ( (key ('ns', $ns)/namespace::*[. = $ns])[1] )"/>
+                       <xsl:choose>
                            <xsl:when test="$pfx">
                               <xsl:value-of select="$pfx"/>
                            </xsl:when>
