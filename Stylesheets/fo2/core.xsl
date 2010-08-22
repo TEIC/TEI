@@ -441,45 +441,50 @@
    </doc>
   <xsl:template match="tei:lb">
       <xsl:choose>
-         <xsl:when test="$activeLinebreaks='true'">
-            <xsl:choose>
-<!-- this is a *visible* linebreak character 
-	       PassiveTeX implements it as a real line break
-	  -->
-          <xsl:when test="$foEngine='passivetex'">&#8232;</xsl:when>
-	              <xsl:when test="parent::tei:list">
-	                 <list-item>
-	                    <list-item-label>
-		                      <block/>
-	                    </list-item-label>
-	                    <list-item-body>
-		                      <block/>
-	                    </list-item-body>
-	                 </list-item>
-	              </xsl:when>
-               <xsl:otherwise>
-	                 <block/>
-	                 <!--
-	    <inline  linefeed-treatment="preserve"
-			white-space-treatment="preserve" 
-			white-space-collapse="false">
-	      <xsl:text>&#xA;</xsl:text>
-	    </inline>
+	<xsl:when test="$activeLinebreaks='true'">
+	  <xsl:choose>
+	    <!-- this is a *visible* linebreak character 
+		 PassiveTeX implements it as a real line break
 	    -->
-          </xsl:otherwise>
-            </xsl:choose>
-         </xsl:when>
-         <xsl:otherwise>
-            <inline font-size="8pt">
-               <xsl:text>❡</xsl:text>
-            </inline>
-         </xsl:otherwise>
+	    <xsl:when test="$foEngine='passivetex'">&#8232;</xsl:when>
+	    <xsl:when test="parent::tei:list">
+	      <list-item>
+		<list-item-label>
+		  <block/>
+		</list-item-label>
+		<list-item-body>
+		  <block/>
+		</list-item-body>
+	      </list-item>
+	    </xsl:when>
+	    <xsl:when test="parent::tei:hi">
+	      <inline
+		  xml:space="preserve"
+		  white-space-collapse="false">&#xA;</inline>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <block/>
+	      <!--
+		  <inline  linefeed-treatment="preserve"
+		  white-space-treatment="preserve" 
+		  white-space-collapse="false">
+		  <xsl:text>&#xA;</xsl:text>
+		  </inline>
+	      -->
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:when>
+	<xsl:otherwise>
+	  <inline font-size="8pt">
+	    <xsl:text>❡</xsl:text>
+	  </inline>
+	</xsl:otherwise>
       </xsl:choose>
       <!-- JT's suggestion:
-<inline
- xml:space="preserve"
- white-space-collapse="false">&#xA;</inline>
--->
+	   <inline
+	   xml:space="preserve"
+	   white-space-collapse="false">&#xA;</inline>
+      -->
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
