@@ -73,7 +73,7 @@
       <xsl:when
 	  test="/tei:TEI/tei:text/tei:front/tei:titlePage/@facs">
         <xsl:text>media/imagetitlePage</xsl:text>
-	<xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:titlePage">
+	<xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:titlePage[@facs]">
 	  <xsl:number level="any"/>
 	  <xsl:text>.</xsl:text>
 	  <xsl:value-of select="tokenize(@url|@facs,'\.')[last()]"/>
@@ -765,11 +765,19 @@
     <xsl:apply-templates mode="metadata"/>
   </xsl:template>
 
+  <xsl:template match="tei:sourceDesc/tei:bibl" mode="metadata">
+    <p> — <xsl:apply-templates mode="metadata"/>
+  </xsl:template>
+
   <xsl:template match="tei:respStmt" mode="metadata">
     <p><i><xsl:value-of select="tei:resp"/></i>:
       <xsl:value-of select="tei:name"/>
     </p>
   </xsl:template>
+
+  <xsl:template match="tei:relatedItem[@target]" mode="metadata">
+    <a href="{@target}"><xsl:value-of select="@target"/></a>
+</xsl:template>
 
   <xsl:template match="tei:extent" mode="metadata"/>
 
@@ -811,7 +819,7 @@
   <xsl:template match="tei:availability[not(@n) and preceding-sibling::tei:availability/@n]" mode="metadata"/>
 
   <xsl:template match="tei:availability" mode="metadata">
-    <dt>Availablity</dt>
+    <dt>Availability</dt>
     <dd>
     <xsl:for-each select="tei:p">
       <xsl:apply-templates/>
