@@ -8,6 +8,7 @@
     <!-- import base conversion style -->
 
     <xsl:import href="../../../xhtml2/tei.xsl"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
 
@@ -27,7 +28,7 @@
       </desc>
    </doc>
 
-  
+   <xsl:output method="xhtml" omit-xml-declaration="yes"/>
     
     <xsl:template match="html:*">
       <xsl:element name="{local-name()}">

@@ -5,6 +5,11 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="tei m"
                 version="2.0">
+
+    <!-- import base conversion style -->
+
+    <xsl:import href="../../../odds2/odd2relax.xsl"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
 
@@ -25,8 +30,5 @@
    </doc>
 
   
-    <!-- import base conversion style -->
-
-    <xsl:import href="../../../odds2/odd2relax.xsl"/>
     
 </xsl:stylesheet>
