@@ -35,12 +35,15 @@
       </desc>
    </doc>
    <xsl:output omit-xml-declaration="yes"/>
+
+  <xsl:param name="directory"></xsl:param>
+
    <xsl:template match="/">
      <xsl:for-each select="//tei:table">
        <xsl:variable name="tableNum">
 	 <xsl:number level="any"/>
        </xsl:variable>
-       <xsl:result-document href="{concat('table',$tableNum, '.csv')}"
+       <xsl:result-document href="{concat($directory,'table',$tableNum, '.csv')}"
 			    encoding="UTF-8" method="text">
 	 <xsl:for-each select="tei:row">
 	   <xsl:for-each select="tei:cell">
