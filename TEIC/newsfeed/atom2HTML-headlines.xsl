@@ -8,9 +8,13 @@ xmlns="http://www.w3.org/1999/xhtml"
   exclude-result-prefixes="#all">
 
   <xsl:import href="htmlparse.xsl"/>
-
-
 <xsl:output indent="yes"/>
+
+<!--
+
+This xslt stylesheet produces the iframe content for the TEI-C main page.
+-James Cummings 2010-08-23
+-->
 
   <xsl:param name="newsNum">5</xsl:param>
   <xsl:param name="otherNum">5</xsl:param>
