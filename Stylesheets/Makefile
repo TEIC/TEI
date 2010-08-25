@@ -12,11 +12,16 @@ TARGETS= \
 	odds2/odd2dtd.xsl \
 	slides2/teihtml-slides.xsl \
 	slides2/teilatex-slides.xsl \
+	profiles/default/csv/to.xsl	\
 	profiles/default/docx/to.xsl \
-	profiles/default/fo/to.xsl \
+	profiles/default/dtd/to.xsl	\
+	profiles/default/epub/to.xsl	\
+	profiles/default/fo/to.xsl	\
 	profiles/default/html/to.xsl \
-	profiles/default/epub/to.xsl \
 	profiles/default/latex/to.xsl \
+	profiles/default/lite/to.xsl \
+	profiles/default/oo/to.xsl \
+	profiles/default/relaxng/to.xsl	\
 	profiles/enrich/docx/to.xsl \
 	profiles/enrich/fo/to.xsl \
 	profiles/enrich/html/to.xsl \
@@ -27,7 +32,12 @@ TARGETS= \
 	profiles/iso/latex/to.xsl \
 	profiles/default/docx/from.xsl \
 	profiles/enrich/docx/from.xsl \
-	profiles/iso/docx/from.xsl 
+	profiles/default/csv/from.xsl		\
+	profiles/default/oo/from.xsl \
+	profiles/default/docbook/from.xsl	\
+	profiles/default/p4/from.xsl\
+	profiles/default/docx/from.xsl
+
 
 .PHONY: doc release common
 

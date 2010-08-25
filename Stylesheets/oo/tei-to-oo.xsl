@@ -33,6 +33,7 @@
 <xsl:stylesheet
     version="2.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
     xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0"
     xmlns:dc="http://purl.org/dc/elements/1.1/"
     xmlns:dom="http://www.w3.org/2001/xml-events"
@@ -309,16 +310,23 @@
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:attribute>
+      <!--
+	  <xsl:message>Graphic <xsl:for-each select="@*">
+	  <xsl:value-of select="name(.)"/>: <xsl:value-of select="."/> /
+	  </xsl:for-each>
+	  </xsl:message>
+      -->
       <xsl:attribute name="svg:width">
 	<xsl:choose>
 	  <xsl:when test="@width">
 	    <xsl:value-of select="@width"/>
-	    <xsl:call-template name="checkunit">
-	      <xsl:with-param name="dim" select="@width"/>
-	    </xsl:call-template>
+	  </xsl:when>
+	  <xsl:when test="@teidocx:width">
+	    <xsl:value-of select="(number(@teidocx:width) div 91.44) *  .72"/>
+	    <xsl:text>pt</xsl:text>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:text>4inch</xsl:text>
+	    <xsl:text>4in</xsl:text>
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:attribute>
@@ -326,12 +334,13 @@
 	<xsl:choose>
 	  <xsl:when test="@height">
 	    <xsl:value-of select="@height"/>
-	    <xsl:call-template name="checkunit">
-	      <xsl:with-param name="dim" select="@height"/>
-	    </xsl:call-template>
+	  </xsl:when>
+	  <xsl:when test="@teidocx:height">
+	    <xsl:value-of select="(number(@teidocx:height) div 91.44) *  .72"/>
+	    <xsl:text>pt</xsl:text>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:text>4inch</xsl:text>
+	    <xsl:text>4in</xsl:text>
 	    </xsl:otherwise>
 	</xsl:choose>
       </xsl:attribute>
@@ -627,13 +636,6 @@
 
   <xsl:template match="tei:lb">
     <text:line-break/>
-  </xsl:template>
-
-  <xsl:template name="checkunit">
-    <xsl:param name="dim"/>
-    <xsl:if test="contains($dim,'in')">
-      <xsl:text>ch</xsl:text>
-    </xsl:if>
   </xsl:template>
 
   <!-- curiously, no apparent direct markup for a page break -->

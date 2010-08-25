@@ -681,11 +681,10 @@
    </doc>
     <xsl:template name="getStyleName">
         <xsl:param name="in"/>
-
         <xsl:for-each select="document($styleDoc,/)">
-            <xsl:for-each select="key('Styles',$in)">
-                <xsl:value-of select="parent::w:style/@w:styleId"/>
-            </xsl:for-each>
+	  <xsl:for-each select="key('Styles',$in)">
+	    <xsl:value-of select="parent::w:style/@w:styleId"/>
+	  </xsl:for-each>
         </xsl:for-each>
     </xsl:template>
 
@@ -911,7 +910,7 @@
             <!-- find the correct header style -->
             <xsl:with-param name="style">
                 <xsl:choose>
-		  <xsl:when test="not($pPr  instance of xs:string)">
+		  <xsl:when test="not($pPr  instance of xs:string)">		    
 		    <xsl:value-of select="$pPr/w:pPr/w:pStyle/@w:val"/>
 		  </xsl:when>
 		  <xsl:when test="string-length($getstyle) &gt; 0">

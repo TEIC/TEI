@@ -33,8 +33,8 @@
   <xsl:param name="verbose"/>
   <xsl:param name="useVersionFromTEI">true</xsl:param>
   <xsl:param name="stripped">false</xsl:param>
-  <xsl:param
-      name="defaultSource">/usr/share/xml/tei/odd/p5subset.xml</xsl:param>
+  <xsl:param name="configDirectory">/usr/share/xml/tei/</xsl:param>
+  <xsl:param name="defaultSource">odd/p5subset.xml</xsl:param>
   <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
   <!--http://www.tei-c.org/release -->
   <xsl:key name="odd2odd-CLASSREFS" match="tei:classRef" use="@key"/>
@@ -167,6 +167,7 @@
 	<xsl:copy-of select="@*"/>
 	<xsl:if test="not(@source)">
 	  <xsl:attribute name="source">
+	    <xsl:value-of select="$configDirectory"/>
 	    <xsl:value-of select="$defaultSource"/>
 	  </xsl:attribute>
 	</xsl:if>
@@ -2068,7 +2069,7 @@ so that is only put back in if there is some content
 	</xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:for-each select="document($defaultSource)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
+	<xsl:for-each select="document(concat($configDirectory,$defaultSource))/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
 	  <xsl:value-of select="."/>
 	</xsl:for-each>
       </xsl:otherwise>
@@ -2172,6 +2173,7 @@ so that is only put back in if there is some content
 	  <xsl:value-of select="$e/parent::tei:schemaSpec/@source"/>
 	</xsl:when>
 	<xsl:otherwise>
+	  <xsl:value-of select="$configDirectory"/>
 	  <xsl:value-of select="$defaultSource"/>
 	</xsl:otherwise>
       </xsl:choose>
@@ -2213,7 +2215,7 @@ so that is only put back in if there is some content
   <xsl:template name="die">
     <xsl:param name="message"/>
     <xsl:message terminate="yes">
-      <xsl:text>Error: odd2odd.xsl: </xsl:text>
+      <xsl:text>Error: odd2odd.xsl: </xsl:text> 
       <xsl:value-of select="$message"/>
     </xsl:message>
   </xsl:template>
