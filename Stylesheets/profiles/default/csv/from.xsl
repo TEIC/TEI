@@ -101,8 +101,10 @@ All output is converted to UTF-8.</li>
 	 </TEI>
        </xsl:when>
        <xsl:otherwise>
-	 <xsl:message terminate="yes">Cannot find the input csv file: </xsl:text>
-	 <xsl:value-of select="$input-uri"/>
+	 <xsl:message terminate="yes">
+	   <xsl:text>Cannot find the input csv file: </xsl:text>
+	   <xsl:value-of select="$input-uri"/>
+	 </xsl:message>
        </xsl:otherwise>
      </xsl:choose>
    </xsl:template>
