@@ -766,7 +766,7 @@
   </xsl:template>
 
   <xsl:template match="tei:sourceDesc/tei:bibl" mode="metadata">
-    <p> — <xsl:apply-templates mode="metadata"/>
+    <p> — <xsl:apply-templates mode="metadata"/></p>
   </xsl:template>
 
   <xsl:template match="tei:respStmt" mode="metadata">
