@@ -33,7 +33,7 @@
 <body>
 <div><head>Introduction</head>
 <p>This is a set of XSLT 2.0 specifications to transform TEI XML documents
-to XHTML, to LaTeX, to XSL Formatting Objects, to OOXML (docx), and to ePub
+to XHTML, to LaTeX, to XSL Formatting Objects, to/from OOXML (docx), to/from OpenOfice (odt) and to ePub
 format.  The files can be downloaded from the Releases area of <ptr
 target="http://tei.sf.net"/>.  They concentrate on the simpler TEI
 modules, but adding support for other modules is fairly easy. In the
@@ -75,23 +75,31 @@ any necessary declaration of constants and XSL keys.</p>
 conversions:
 <list type="gloss">
 <label>epub</label><item>conversion to ePub</item>
+<label>oo</label><item>conversion to and from OpenOffice Writer format</item>
 <label>docx</label><item>conversion to and from Word OOXML format</item>
 <label>odds2</label><item>processing of TEI ODD files</item>
 </list>
 </p>
 
-<p>The final important directory is <ident>profiles</ident>, which
-has a set of predefined project starting points (currently <q>default</q>,
-<q>iso</q> and <q>enrich</q>), each of which has a file
-<ident>to.xsl</ident> for each of the supported output formats. To
-convert TEI to HTML in the default mannner, run
-<ident>profiles/default/html/to.xsl</ident>. Other starting points are
+<p>The final important directory is <ident>profiles</ident>, which has
+a set of predefined project starting points (currently <q>default</q>,
+<q>iso</q> and <q>enrich</q>), each of which may have a file
+<ident>to.xsl</ident> for each of the supported output formats
+(<ident>csv</ident>, <ident>dtd</ident>, <ident>html</ident>,
+<ident>oo</ident>, <ident>docbook</ident>, <ident>epub</ident>,
+<ident>latex</ident>, <ident>p4</ident>, <ident>docx</ident>,
+<ident>fo</ident>, <ident>lite</ident>, and
+<ident>relaxng</ident>). There may also be a <ident>from.xsl</ident>
+to go from the selected format to TEI XML.</p>
+<p>For example, to convert TEI to HTML in the default mannner, the user may run
+<ident>profiles/default/html/to.xsl</ident> on the selected input file. Other starting points are
 listed below.</p>
 
-<p>For the brave, there are Linux command-line  shell scripts
-<ident>teitoepub</ident>, <ident>teitodocx</ident> and
-<ident>docxtotei</ident>
-for converting to ePub and Word.</p>
+<p>For the brave, there are Linux command-line shell scripts
+<ident>docxtotei</ident>, <ident>teitodocx</ident>,
+<ident>teitoepub</ident>, <ident>teitolatex</ident>,
+<ident>teitoodt</ident>, and <ident>odttotei</ident>, for converting
+to OpenOffice, LaTeX, ePub, and Word; and from Word and OpenOffice.</p>
 
 <p>Any other use of the stylesheets, eg by referencing individual
 modules, is not supported and requires good understanding of XSL.</p>
@@ -100,12 +108,18 @@ modules, is not supported and requires good understanding of XSL.</p>
 <div xml:id="start">
   <head>Documentation of generic start points</head>
 <list>
-<item><ref target="profiles/default/latex/to.html">Default conversion to LaTeX</ref></item>
-<item><ref target="profiles/default/html/to.html">Default conversion to XHTML</ref></item>
-<item><ref target="profiles/default/fo/to.html">Default conversion to XSL FO</ref></item>
-<item><ref target="profiles/default/epub/to.html">Default conversion to ePub</ref></item>
-<item><ref target="profiles/default/docx/to.html">Default conversion to docx (OOXML)</ref></item>
+<item><ref target="profiles/default/csv/from.html">Default conversion from CSV</ref></item>
+<item><ref target="profiles/default/csv/to.html">Default conversion to CSV</ref></item>
+<item><ref target="profiles/default/docbook/from.html">Default conversion to Docbook</ref></item>
 <item><ref target="profiles/default/docx/from.html">Default conversion from docx (OOXML)</ref></item>
+<item><ref target="profiles/default/docx/to.html">Default conversion to docx (OOXML)</ref></item>
+<item><ref target="profiles/default/epub/to.html">Default conversion to ePub</ref></item>
+<item><ref target="profiles/default/fo/to.html">Default conversion to XSL FO</ref></item>
+<item><ref target="profiles/default/html/to.html">Default conversion to XHTML</ref></item>
+<item><ref target="profiles/default/latex/to.html">Default conversion to LaTeX</ref></item>
+<item><ref target="profiles/default/oo/from.html">Default conversion from OpenOffice (odt) </ref></item>
+<item><ref target="profiles/default/oo/to.html">Default conversion to OpenOffice (odt) </ref></item>
+<item><ref target="profiles/default/p4/from.html">Default conversion to TEI P4</ref></item>
 <item><ref target="odds2/odd2odd.html">Conversion of ODD file to expanded ODD</ref></item>
 <item><ref target="odds2/odd2relax.html">Conversion of ODD to RELAX NG schema</ref></item>
 <item><ref target="odds2/odd2dtd.html">Conversion of ODD to DTD</ref></item>
@@ -149,10 +163,10 @@ modules, is not supported and requires good understanding of XSL.</p>
   a  bit more, you can override any of the templates in the style files, 
   but then you are on your own.</p>
 
-<p>The <ref target="style.html">Stylebear</ref> web form
-will construct a XSL file for you, with all the variables configured.
-</p>
-
+  <p>The <ref target="style.html">Stylebear</ref> web form
+  will construct a XSL file for you, with all the variables configured. 
+  </p>
+  
 </div>
 
 
