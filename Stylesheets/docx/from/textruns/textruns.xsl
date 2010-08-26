@@ -151,7 +151,7 @@
 	  -->
 	  <xsl:if test="(not(matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')) and not(matches(w:rPr/w:rFonts/@w:ascii,'Calibri'))) or
 			not(w:rPr/w:rFonts/@w:ascii = parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii)">
-	    <xsl:if test="$preserveFontFamily">
+	    <xsl:if test="$preserveFontFamily='true'">
 	      <s n="font-family">
 		<xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
 	      </s>
@@ -262,7 +262,9 @@
 		  </xsl:for-each>
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:text>isoStyle</xsl:text>
+		  <xsl:if test="$preserveFontFamily='true'">
+		    <xsl:text>isoStyle</xsl:text>
+		  </xsl:if>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:attribute>
