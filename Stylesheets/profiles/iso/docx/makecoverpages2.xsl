@@ -129,7 +129,7 @@
 	        <xsl:choose>
 
 	           <!-- if we find w:sdt section we don't replace the content -->
-	           <xsl:when test="child::w:sdt">
+	           <xsl:when test=".//w:sdt">
 	             <xsl:message>copy stdContent <xsl:value-of select="$alias"/> as is</xsl:message>
                <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
 	           </xsl:when>
