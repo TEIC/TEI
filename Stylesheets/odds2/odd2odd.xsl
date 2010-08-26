@@ -1247,7 +1247,7 @@ so that is only put back in if there is some content
     we can bypass it now.-->
     <xsl:variable name="use">
       <xsl:choose>
-        <xsl:when test="$fromODD='true' and @mode='add'">
+        <xsl:when test="$fromODD='true' and (not(@mode) or @mode='add')">
           <xsl:text>true</xsl:text>
         </xsl:when>
         <xsl:when test="not(@module)">
@@ -1317,7 +1317,7 @@ so that is only put back in if there is some content
       -->
       <xsl:choose>
         <!-- a) new class in ODD -->
-        <xsl:when test="$fromODD='true' and @mode='add'">
+        <xsl:when test="$fromODD='true' and (not(@mode) or @mode='add')">
           <attRef xmlns="http://www.tei-c.org/ns/1.0" n="1" name="{$className}.attributes"/>
         </xsl:when>
         <!-- b) its deleted -->
