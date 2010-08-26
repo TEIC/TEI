@@ -1,8 +1,9 @@
 PREFIX=/usr
 BIN=${PREFIX}/bin
-ODDS=tei_all tei_allPlus tei_bare tei_corpus tei_dictionaries	\
+ODDS= tei_allPlus tei_bare tei_corpus tei_dictionaries	\
 	tei_drama tei_its tei_math tei_minimal tei_ms tei_odds	\
-	tei_speech tei_svg tei_xinclude teilite tei_tite isofs tei_enrich
+	tei_speech tei_svg tei_xinclude teilite tei_tite isofs tei_enrich \
+	tei_all
 DOCODDS=tei_tite teilite
 ROMA=roma2
 LANGUAGE=en
@@ -13,8 +14,9 @@ ROMAOPTS= --localsource=`pwd`/../p5subset.xml --xsl=${XSL}
 schemas: 
 	xmllint --xinclude tei_odds.odd.pre > tei_odds.odd
 	xmllint --xinclude tei_allPlus.odd.pre > tei_allPlus.odd
-	-for i in $(ODDS) ; do echo Process $$i; ${ROMA} ${ROMAOPTS} $$i.odd .; echo TEST schema; jing $$i.rng $$i.xml && echo $$i validates OK ;done
+	${ROMA} ${ROMAOPTS} teilite.odd	.
 	for i in $(DOCODDS); do echo Process $$i; ${ROMA} ${ROMAOPTS} --noxsd --nodtd --norelax --docflags="summaryDoc=true" --docpdf --dochtml $$i.odd .; echo TEST schema; jing $$i.rng $$i.xml && echo $$i validates OK;done
+	-for i in $(ODDS) ; do echo Process $$i; ${ROMA} ${ROMAOPTS} $$i.odd .; echo TEST schema; jing $$i.rng $$i.xml && echo $$i validates OK ;done
 	-rm tei_odds.dtd tei_odds.xsd
 	-rm tei_allPlus.dtd tei_allPlus.xsd
 	-rm tei_svg.dtd tei_svg.xsd
@@ -38,7 +40,6 @@ dist: schemas
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf
 	cp `ls *.xml | grep -v '\.doc\.'` ../release/tei-p5-exemplars/share/xml/tei/custom/templates
 	cp *.xsd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/xsd
-	cp *.dtd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
 	cp *.dtd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
 	cp *.odd *.xsl ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	cp *.rnc *.rng *.mod ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
