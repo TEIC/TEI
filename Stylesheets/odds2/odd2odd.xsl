@@ -34,9 +34,8 @@
   <xsl:param name="useVersionFromTEI">true</xsl:param>
   <xsl:param name="stripped">false</xsl:param>
   <xsl:param name="configDirectory">/usr/share/xml/tei/</xsl:param>
-  <xsl:param name="defaultSource">odd/p5subset.xml</xsl:param>
+  <xsl:param name="defaultSource"></xsl:param>
   <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
-  <!--http://www.tei-c.org/release -->
   <xsl:key name="odd2odd-CLASSREFS" match="tei:classRef" use="@key"/>
   <xsl:key name="odd2odd-ATTCLASSES" match="tei:classSpec[(tei:attList or @type='atts') and not(@ident='tei.TEIform')]" use="@ident"/>
   <xsl:key name="odd2odd-ATTREFS" match="tei:attRef" use="concat(@name,'_',../../@ident)"/>
@@ -82,6 +81,17 @@
 
   <xsl:key name="odd2odd-SCHEMASPECS" match="tei:schemaSpec" use="@ident"/>
 
+  <xsl:variable name="DEFAULTSOURCE">
+    <xsl:choose>
+      <xsl:when test="$defaultSource != ''">
+	<xsl:value-of select="$defaultSource"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$configDirectory"/>
+	<xsl:text>odd/p5subset.xml</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
   <xsl:variable name="AnonymousModule">
     <xsl:text>derived-module-</xsl:text>
     <xsl:value-of select="$selectedSchema"/>
@@ -167,8 +177,7 @@
 	<xsl:copy-of select="@*"/>
 	<xsl:if test="not(@source)">
 	  <xsl:attribute name="source">
-	    <xsl:value-of select="$configDirectory"/>
-	    <xsl:value-of select="$defaultSource"/>
+	    <xsl:value-of select="$DEFAULTSOURCE"/>
 	  </xsl:attribute>
 	</xsl:if>
 	<xsl:apply-templates select="*|text()|processing-instruction()" mode="odd2odd-pass0"/>
@@ -2069,7 +2078,7 @@ so that is only put back in if there is some content
 	</xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:for-each select="document(concat($configDirectory,$defaultSource))/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
+	<xsl:for-each select="document($DEFAULTSOURCE)/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
 	  <xsl:value-of select="."/>
 	</xsl:for-each>
       </xsl:otherwise>
@@ -2173,8 +2182,7 @@ so that is only put back in if there is some content
 	  <xsl:value-of select="$e/parent::tei:schemaSpec/@source"/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:value-of select="$configDirectory"/>
-	  <xsl:value-of select="$defaultSource"/>
+	  <xsl:value-of select="$DEFAULTSOURCE"/>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
