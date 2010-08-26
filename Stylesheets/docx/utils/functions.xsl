@@ -65,6 +65,9 @@
             <xsl:when test="ends-with($dim,'pt')">
                 <xsl:value-of select="number(substring($dim,0,string-length($dim)-1)) cast as xs:integer"/>
             </xsl:when>
+            <xsl:when test="ends-with($dim,'px')">
+                <xsl:value-of select="number(number(substring($dim,0,string-length($dim)-1))*0.75) cast as xs:integer"/>
+            </xsl:when>
             
             <xsl:otherwise>
                 -1
