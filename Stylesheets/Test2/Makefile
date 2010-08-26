@@ -57,3 +57,13 @@ clean:
 	-rm test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy*
 	-rm oddbyexample.* xml.xsd index*div*html
 	-rm test.tex test.xml.odt test.xml.docx test.epub
+	-rm test8.pdf
+	-rm test8.log
+	-rm test5.xml.odt
+	-rm test8.aux
+	-rm test7.xml
+	-rm test8.tex
+	-rm test7.zip
+	-rm test8.doc
+	-rm test8.out
+
