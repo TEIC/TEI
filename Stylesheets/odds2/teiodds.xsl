@@ -413,7 +413,7 @@
                 </ROOT>
               </xsl:variable>
               <define xmlns="http://relaxng.org/ns/structure/1.0" name="{@ident}.attributes">
-                <xsl:copy-of select="$contents/ROOT/*"/>
+                <xsl:apply-templates select="$contents/ROOT" mode="justcopy"/>
                 <xsl:if test="not($contents/ROOT/*)">
                   <empty/>
                 </xsl:if>
@@ -906,7 +906,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:when>
       <xsl:otherwise>
         <xsl:for-each select="$Contents/TEMPTREE">
-          <xsl:copy-of select="*"/>
+          <xsl:apply-templates mode="justcopy"/>
         </xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
