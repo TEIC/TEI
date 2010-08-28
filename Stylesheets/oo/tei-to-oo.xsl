@@ -76,11 +76,12 @@
 
   <xsl:key name='IDS' match="tei:*[@xml:id]" use="@xml:id"/>
   <xsl:key name='GRAPHICS' match="tei:graphic" use="1"/>
+  <xsl:key name="Page" match="style:page-layout-properties" use="1"/>
 
   <xsl:template match="/">
     <xsl:choose>
       <xsl:when test="$freestanding='true'">
-	<xsl:result-document href="meta.xml">
+	<xsl:result-document href="{concat($dir,'/meta.xml')}">
 	  <xsl:call-template name="META"/>
 	</xsl:result-document>
 	<office:document-content>
@@ -109,7 +110,7 @@
 	</office:document>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:result-document href="META-INF/manifest.xml">
+    <xsl:result-document href="{concat($dir,'/META-INF/manifest.xml')}">
       <manifest:manifest xmlns:manifest="urn:oasis:names:tc:opendocument:xmlns:manifest:1.0">
 	<manifest:file-entry manifest:media-type="application/vnd.oasis.opendocument.text" manifest:version="1.2" manifest:full-path="/"/>
 	<manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/statusbar/"/>
@@ -138,7 +139,7 @@
 			select="tokenize(@url,'.')[last()]"/>
 	  <manifest:file-entry manifest:full-path="{@url}">
 	    <xsl:attribute name="manifest:media-type">
-	      <xsl:text>image</xsl:text>
+	      <xsl:text>image/</xsl:text>
 	      <xsl:choose>
 		<xsl:when test="$imagetype='png'">png</xsl:when>
 		<xsl:when test="$imagetype='gif'">gif</xsl:when>
@@ -347,23 +348,26 @@
     <xsl:choose>
       <xsl:when test="@url and  ( (@teidocx:width and @teidocx:height) or (@width and @height))">
 	
-	<!--
-	    
-	    is there a number present?
-	    
-	    not(number(substring(@width,0,string-length(@width)-1))=NAN) and 
-	    not(number(substring(@height,0,string-length(@height)-1))=NAN)">
-	    
-	-->
-	<xsl:variable name="pageWidth">5.20</xsl:variable>
-	<xsl:variable name="pageHeight">7.69</xsl:variable>
-	<xsl:variable name="maxWidth" select="number(number($pageWidth)*100) cast as xs:integer"/>
-	<xsl:variable name="maxHeight" select="number(number($pageHeight)*100) cast as xs:integer"/>
+	<!-- work out page width / height and subtract 1inch on all sides -->
+	<xsl:variable name="pageWidth">
+	  <xsl:for-each
+	      select="document(concat($dir,'/styles.xml'))/office:document-styles/office:automatic-styles/style:page-layout/style:page-layout-properties">
+	    <xsl:value-of
+		select="number(teidocx:convert-dim-pt(@fo:page-width) - 144)"/>
+	  </xsl:for-each>
+	</xsl:variable>
+	<xsl:variable name="pageHeight">
+	  <xsl:for-each
+	      select="document(concat($dir,'/styles.xml'))/office:document-styles/office:automatic-styles/style:page-layout/style:page-layout-properties">
+	    <xsl:value-of 
+		select="number(teidocx:convert-dim-pt(@fo:page-height) - 144)"/>
+	  </xsl:for-each>
+	</xsl:variable>
 	
 	<xsl:variable name="Width">
 	  <xsl:choose>
 	    <xsl:when test="contains(@width,'%')">
-	      <xsl:value-of select="number($pageWidth * number(substring-before(@width,'%'))) cast as xs:integer"/>
+	      <xsl:value-of select="(($pageWidth div 100) * number(substring-before(@width,'%'))) cast as xs:integer"/>
 	    </xsl:when>
 	    <xsl:when test="@width">
 	      <xsl:value-of select="teidocx:convert-dim-pt(@width)"/>
@@ -371,16 +375,14 @@
 	    <xsl:when test="@scale and @teidocx:width">
 	      <xsl:value-of select="number(@teidocx:width * number(@scale)) div 127 cast as xs:integer"/>
 	    </xsl:when>
-	    <xsl:when test="@height and @teidocx:height">
+	    <xsl:when test="@height[not(contains(.,'%'))] and @teidocx:height">
 	      <xsl:variable name="h">
-		<xsl:value-of select="teidocx:convert-dim-pt(@height)"/>
+		<xsl:value-of select="number(teidocx:convert-dim-pt(@height))"/>
 	      </xsl:variable>
-	      <xsl:value-of select="number(@teidocx:width *
-				    ($h div number(@teidocx:height)))
-				    div 127 cast as xs:integer"/>
+	      <xsl:value-of select="($h * number(@teidocx:width)) div number(@teidocx:height)"/>
 	    </xsl:when>
 	    <xsl:when test="@teidocx:width">
-	      <xsl:value-of select="number(@teidocx:width) div 127 cast as xs:integer"/>
+	      <xsl:value-of select="number(@teidocx:width) div 127"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:message terminate="yes">no way to work out image width for
@@ -393,7 +395,7 @@
 	<xsl:variable name="Height">
 	  <xsl:choose>
 	    <xsl:when test="contains(@height,'%')">
-	      <xsl:value-of select="number($pageHeight * (number(substring-before(@height,'%')))) cast as xs:integer"/>
+	      <xsl:value-of select="(($pageHeight div 100) * (number(substring-before(@height,'%')))) cast as xs:integer"/>
 	    </xsl:when>
 	    <xsl:when test="@height">
 	      <xsl:value-of select="teidocx:convert-dim-pt(@height)"/>
@@ -402,8 +404,11 @@
 	      <xsl:value-of select="(@teidocx:height *
 				    number(@scale)) div 127 cast as xs:integer"/>
 	    </xsl:when>
-	    <xsl:when test="@width and @teidocx:height and @teidocx:width">
-	      <xsl:value-of select="(($Width * @teidocx:height) div @teidocx:width) cast as xs:integer"/>
+	    <xsl:when test="@width[not(contains(.,'%'))] and @teidocx:height and @teidocx:width">
+	      <xsl:variable name="w">
+		<xsl:value-of select="number(teidocx:convert-dim-pt(@width))"/>
+	      </xsl:variable>
+	      <xsl:value-of select="($w * number(@teidocx:height)) div number(@teidocx:width)"/>
 	    </xsl:when>
 	    <xsl:when test="@teidocx:height">
 	      <xsl:value-of select="number(@teidocx:height) div 127"/>
@@ -419,11 +424,11 @@
 	<!-- check for sense -->
 	<xsl:variable name="imageHeight">
 	  <xsl:choose>
-	    <xsl:when test="$Height = -1">
-	      <xsl:value-of select="$maxHeight"/>
+	    <xsl:when test="$Height &lt; 0">
+	      <xsl:value-of select="$pageHeight"/>
 	    </xsl:when>
-	    <xsl:when test="$Height &gt; $maxHeight">
-	      <xsl:value-of select="$maxHeight"/>
+	    <xsl:when test="number($Height) &gt; $pageHeight">
+	      <xsl:value-of select="$pageHeight"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:value-of select="$Height"/>
@@ -432,33 +437,29 @@
 	</xsl:variable>
 	<xsl:variable name="imageWidth">
 	  <xsl:choose>
-	    <xsl:when test="$Width = -1">
-	      <xsl:value-of select="$maxWidth"/>
+	    <xsl:when test="$Width &lt; 0">
+	      <xsl:value-of select="$pageWidth"/>
 	    </xsl:when>
-	    <xsl:when test="$Width &gt; $maxWidth">
-	      <xsl:value-of select="$maxWidth"/>
+	    <xsl:when test="number($Width) &gt; $pageWidth">
+	      <xsl:value-of select="$pageWidth"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:value-of select="$Width"/>
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:variable>
-	
-<!--	
-	<xsl:message> 
-	  @url: <xsl:value-of select="@url"/>
-	  maxWidth: <xsl:value-of select="$maxWidth"/>
-	  maxHeight: <xsl:value-of select="$maxHeight"/>
-	  Width: <xsl:value-of select="$Width"/>
-	  Height: <xsl:value-of select="$Height"/>
-	  imageWidth: <xsl:value-of select="$imageWidth"/>
-	  imageHeight: <xsl:value-of select="$imageHeight"/>
-	  @scale: <xsl:value-of select="@scale"/>
-	  @width: <xsl:value-of select="@width"/>
-	  @height: <xsl:value-of select="@height"/>
-	  @teidocx:width: <xsl:value-of select="@teidocx:width"/>
-	  @teidocx:height: <xsl:value-of select="@teidocx:height"/>
-	</xsl:message>
+<!--
+<xsl:message>
+  <xsl:for-each select="@*">
+    - @<xsl:value-of select="name(.)"/>: <xsl:value-of select="."/>
+</xsl:for-each>
+    - pageWidth: <xsl:value-of select="$pageWidth"/>
+    - pageHeight: <xsl:value-of select="$pageHeight"/>
+    - Width: <xsl:value-of select="$Width"/>
+    - Height: <xsl:value-of select="$Height"/>
+    - imageWidth: <xsl:value-of select="$imageWidth"/>
+    - imageHeight: <xsl:value-of select="$imageHeight"/>
+</xsl:message>
 -->
 	<draw:frame draw:style-name="fr1" 
 		    draw:name="{$id}"

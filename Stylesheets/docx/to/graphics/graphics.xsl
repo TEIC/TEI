@@ -138,7 +138,7 @@
                     <xsl:when test="@scale and @teidocx:width">
                         <xsl:value-of select="(@teidocx:width *  number(@scale)) cast as xs:integer"/>
                     </xsl:when>
-                    <xsl:when test="@height and @teidocx:height">
+                    <xsl:when test="@height[not(contains(.,'%'))] and @teidocx:height">
                         <xsl:variable name="h">
                             <xsl:value-of select="teidocx:convert-dim-emu(@height)"/>
                         </xsl:variable>
@@ -166,7 +166,7 @@
                     <xsl:when test="@scale and @teidocx:height">
                         <xsl:value-of select="(@teidocx:height * number(@scale)) cast as xs:integer"/>
                     </xsl:when>
-                    <xsl:when test="@width and @teidocx:height and @teidocx:width">
+                    <xsl:when test="@width[not(contains(.,'%'))] and @teidocx:height and @teidocx:width">
                         <xsl:value-of select="(($Width * @teidocx:height) div @teidocx:width) cast as xs:integer"/>
                     </xsl:when>
                     <xsl:when test="@teidocx:height">
@@ -208,20 +208,18 @@
 	      </xsl:choose>
 	    </xsl:variable>
 
-    <!-- DEBUG
-		 <xsl:message> 
-maxWidth: <xsl:value-of select="$maxWidth"/>
-maxHeight: <xsl:value-of select="$maxHeight"/>
-Width: <xsl:value-of select="$Width"/>
-Height: <xsl:value-of select="$Height"/>
-imageWidth: <xsl:value-of select="$imageWidth"/>
-imageHeight: <xsl:value-of select="$imageHeight"/>
-@width: <xsl:value-of select="@width"/>
-@height: <xsl:value-of select="@height"/>
-@teidocx:width: <xsl:value-of select="@teidocx:width"/>
-@teidocx:height: <xsl:value-of select="@teidocx:height"/>
-</xsl:message>
-	    -->
+<!--
+  <xsl:for-each select="@*">
+    - @<xsl:value-of select="name(.)"/>: <xsl:value-of select="."/>
+</xsl:for-each>
+	
+    - maxWidth: <xsl:value-of select="$maxWidth"/>
+    - maxHeight: <xsl:value-of select="$maxHeight"/>
+    - Width: <xsl:value-of select="$Width"/>
+    - Height: <xsl:value-of select="$Height"/>
+    - imageWidth: <xsl:value-of select="$imageWidth"/>
+    - imageHeight: <xsl:value-of select="$imageHeight"/>
+-->
             <!-- prepare actual graphic -->
 	    <xsl:variable name="generatedID">
 	      <xsl:choose>
