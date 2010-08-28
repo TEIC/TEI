@@ -1,35 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-#  The Contents of this file are made available subject to the terms of
-# the GNU Lesser General Public License Version 2.1
-
-# Sebastian Rahtz / University of Oxford
-# copyright 2007
-
-# This stylesheet is derived from the OpenOffice to Docbook conversion
-#  Sun Microsystems Inc., October, 2000
-
-#  GNU Lesser General Public License Version 2.1
-#  =============================================
-#  Copyright 2000 by Sun Microsystems, Inc.
-#  901 San Antonio Road, Palo Alto, CA 94303, USA
-#
-#  This library is free software; you can redistribute it and/or
-#  modify it under the terms of the GNU Lesser General Public
-#  License version 2.1, as published by the Free Software Foundation.
-#
-#  This library is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-#  Lesser General Public License for more details.
-#
-#  You should have received a copy of the GNU Lesser General Public
-#  License along with this library; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-#  MA  02111-1307  USA
-#
-#
--->
 <xsl:stylesheet
     version="2.0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -69,19 +38,44 @@
     office:version="1.0"
     >
 
+  <xsl:import href="../common2/header.xsl"/>
+  <xsl:import href="../common2/i18n.xsl"/>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+      <desc>
+         <p> TEI stylesheet for making OpenOffice files from TEI XML.
+	 Originally derived from the OpenOffice /Docbook
+	 conversion, but largely rewritten </p>
+         <p> 
+            This library is free software; you can redistribute it and/or modify it under
+            the terms of the GNU Lesser General Public License as published by the Free Software
+            Foundation; either version 2.1 of the License, or (at your option) any later version.
+            This library is distributed in the hope that it will be useful, but WITHOUT ANY
+            WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+            PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details. You
+            should have received a copy of the GNU Lesser General Public License along with this
+            library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite
+            330, Boston, MA 02111-1307 USA </p>
+         <p>Author: See AUTHORS</p>
+         <p>Id: $Id$</p>
+         <p>Copyright: 2008, TEI Consortium</p>
+      </desc>
+   </doc>
+  
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
 
   <xsl:output method="xml" omit-xml-declaration="no"/>
 
   <xsl:decimal-format name="staff" digit="D"/>
   <xsl:variable name="doc_type">TEI</xsl:variable>
-
+  <xsl:param name="useHeaderFrontMatter">false</xsl:param>
   <xsl:param name="postQuote">’</xsl:param>
   <xsl:param name="preQuote">‘</xsl:param>
   <xsl:param name="dir">.</xsl:param>
   <xsl:param name="freestanding">true</xsl:param>
 
   <xsl:key name='IDS' match="tei:*[@xml:id]" use="@xml:id"/>
+  <xsl:key name='GRAPHICS' match="tei:graphic" use="1"/>
 
   <xsl:template match="/">
     <xsl:choose>
@@ -115,33 +109,86 @@
 	</office:document>
       </xsl:otherwise>
     </xsl:choose>
+    <xsl:result-document href="META-INF/manifest.xml">
+      <manifest:manifest xmlns:manifest="urn:oasis:names:tc:opendocument:xmlns:manifest:1.0">
+	<manifest:file-entry manifest:media-type="application/vnd.oasis.opendocument.text" manifest:version="1.2" manifest:full-path="/"/>
+	<manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/statusbar/"/>
+	<manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/accelerator/current.xml"/>
+	<manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/accelerator/"/>
+	<manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/floater/"/>
+	<manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/popupmenu/"/>
+	<manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/progressbar/"/>
+	<manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/menubar/"/>
+	<manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/toolbar/"/>
+	<manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/images/Bitmaps/"/>
+	<manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/images/"/>
+	<manifest:file-entry manifest:media-type="application/vnd.sun.xml.ui.configuration" manifest:full-path="Configurations2/"/>
+	<manifest:file-entry manifest:media-type="text/xml" manifest:full-path="content.xml"/>
+	<manifest:file-entry manifest:media-type="application/rdf+xml" manifest:full-path="manifest.rdf"/>
+	<manifest:file-entry manifest:media-type="text/xml" manifest:full-path="styles.xml"/>
+	<manifest:file-entry manifest:media-type="text/xml" manifest:full-path="meta.xml"/>
+	<manifest:file-entry manifest:media-type="" manifest:full-path="Thumbnails/thumbnail.png"/>
+	<manifest:file-entry manifest:media-type="" manifest:full-path="Thumbnails/"/>
+	<manifest:file-entry manifest:media-type="text/xml"
+			     manifest:full-path="settings.xml"/>
+	<xsl:if test="count(key('GRAPHICS',1))&gt;0">
+	<manifest:file-entry manifest:media-type="" manifest:full-path="Pictures/"/>
+	<xsl:for-each select="key('GRAPHICS',1)">
+	  <xsl:variable name="imagetype"
+			select="tokenize(@url,'.')[last()]"/>
+	  <manifest:file-entry manifest:full-path="{@url}">
+	    <xsl:attribute name="manifest:media-type">
+	      <xsl:text>image</xsl:text>
+	      <xsl:choose>
+		<xsl:when test="$imagetype='png'">png</xsl:when>
+		<xsl:when test="$imagetype='gif'">gif</xsl:when>
+		<xsl:when test="$imagetype='jpg'">jpeg</xsl:when>
+		<xsl:when test="$imagetype='jpeg'">jpg</xsl:when>
+		<xsl:when test="$imagetype='tiff'">tiff</xsl:when>
+		<xsl:when test="$imagetype='tif'">tiff</xsl:when>
+		<xsl:otherwise>jpeg</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:attribute>
+	  </manifest:file-entry>
+	</xsl:for-each>
+	</xsl:if>
+      </manifest:manifest>
+    </xsl:result-document>
+
   </xsl:template>
 
   <xsl:template name="META">
+    <xsl:for-each select="*">
     <office:meta>
-      <meta:generator>Open Office TEI to OO XSLT</meta:generator>
+      <meta:generator>TEI to OpenOffice XSLT</meta:generator>
       <dc:title>
-	<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+	<xsl:call-template name="generateTitle"/>
       </dc:title>
       <dc:description/>
       <dc:subject/>
       <meta:creation-date>
-	<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition/tei:date"/>
+	<xsl:call-template name="generateDate"/>
       </meta:creation-date>
       <dc:date>
-	<xsl:value-of select="/tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:date"/>
+	<xsl:call-template name="generateRevDate"/>
       </dc:date>
       <dc:language>
-	<xsl:value-of select="/tei:TEI/@xml:lang"/>
+	<xsl:choose>
+	  <xsl:when test="/tei:TEI/@xml:lang">
+	    <xsl:value-of select="/tei:TEI/@xml:lang"/>
+	  </xsl:when>
+	  <xsl:otherwise>en</xsl:otherwise>
+	</xsl:choose>
       </dc:language>
       <meta:editing-cycles>1</meta:editing-cycles>
-      <meta:editing-duration>P1DT0H11M54S</meta:editing-duration>
+      <meta:editing-duration>PT00H00M00S</meta:editing-duration>
       <meta:user-defined meta:name="Info 1"/>
       <meta:user-defined meta:name="Info 2"/>
       <meta:user-defined meta:name="Info 3"/>
       <meta:user-defined meta:name="Info 4"/>
       <meta:document-statistic meta:table-count="1" meta:image-count="0" meta:object-count="0" meta:page-count="1" meta:paragraph-count="42" meta:word-count="144" meta:character-count="820"/>
     </office:meta>
+    </xsl:for-each>
   </xsl:template>
 
   <!-- base structure -->
@@ -1581,5 +1628,21 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-  
+
+  <xsl:template name="makeExternalLink">
+    <xsl:param name="ptr"/>
+    <xsl:param name="dest"/>
+    <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/></xsl:param>
+    <text:a xlink:type="simple" xlink:href="{$dest}">
+      <xsl:choose>
+	<xsl:when test="$ptr='true'">
+	  <xsl:value-of select="$dest"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </text:a>
+  </xsl:template>
+
 </xsl:stylesheet>

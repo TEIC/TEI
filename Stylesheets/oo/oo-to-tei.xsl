@@ -1,35 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- #  The Contents of this file are made available subject to the terms of
- # the GNU Lesser General Public License Version 2.1
-
- # Sebastian Rahtz / University of Oxford
- # copyright 2010
-
- # This stylesheet is derived from the OpenOffice to Docbook conversion
- #  Sun Microsystems Inc., October, 2000
-
- #  GNU Lesser General Public License Version 2.1
- #  =============================================
- #  Copyright 2000 by Sun Microsystems, Inc.
- #  901 San Antonio Road, Palo Alto, CA 94303, USA
- #
- #  This library is free software; you can redistribute it and/or
- #  modify it under the terms of the GNU Lesser General Public
- #  License version 2.1, as published by the Free Software Foundation.
- #
- #  This library is distributed in the hope that it will be useful,
- #  but WITHOUT ANY WARRANTY; without even the implied warranty of
- #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- #  Lesser General Public License for more details.
- #
- #  You should have received a copy of the GNU Lesser General Public
- #  License along with this library; if not, write to the Free Software
- #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
- #  MA  02111-1307  USA
- #
- #
--->
 <xsl:stylesheet
   exclude-result-prefixes="office style text table draw fo xlink dc
 			   meta number tei svg chart dr3d math form
@@ -62,6 +31,28 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+      <desc>
+         <p> TEI stylesheet for making TEI files from
+	 OpenOffice. Originally derived from the OpenOffice /Docbook
+	 conversion, but largely rewritten</p>
+         <p> 
+            <h1 xmlns="">License</h1>
+            This library is free software; you can redistribute it and/or modify it under
+            the terms of the GNU Lesser General Public License as published by the Free Software
+            Foundation; either version 2.1 of the License, or (at your option) any later version.
+            This library is distributed in the hope that it will be useful, but WITHOUT ANY
+            WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+            PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details. You
+            should have received a copy of the GNU Lesser General Public License along with this
+            library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite
+            330, Boston, MA 02111-1307 USA </p>
+         <p>Author: See AUTHORS</p>
+         <p>Id: $Id$</p>
+         <p>Copyright: 2008, TEI Consortium</p>
+      </desc>
+   </doc>
 
   <xsl:key match="style:style" name="STYLES" use="@style:name"/>
 
