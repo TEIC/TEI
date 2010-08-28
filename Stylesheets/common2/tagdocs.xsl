@@ -776,7 +776,7 @@
       </xsl:element>
   </xsl:template>
 
-  <xsl:template match="tei:elementSpec/tei:constraintSpec" mode="weave">
+  <xsl:template match="tei:constraintSpec[parent::tei:elementSpec or parent::tei:attDef]" mode="weave">
       <xsl:element namespace="{$outputNS}" name="{$rowName}">
          <xsl:element namespace="{$outputNS}" name="{$cellName}">
 	           <xsl:attribute name="{$rendName}">
