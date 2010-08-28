@@ -37,7 +37,7 @@
   <xsl:key match="tei:*" name="NameToID" use="@ident"/>
   <xsl:output method="xml" encoding="utf-8"/>
   <xsl:param name="BITS">Bits</xsl:param>
-  <xsl:param name="STDOUT">false</xsl:param>
+  <xsl:param name="STDOUT">true</xsl:param>
   <xsl:param name="TAG"/>
   <xsl:param name="alignNavigationPanel">left</xsl:param>
   <xsl:param name="authorWord"/>
@@ -64,7 +64,7 @@
   <xsl:param name="showTitleAuthor">1</xsl:param>
   <xsl:param name="splitBackmatter">yes</xsl:param>
   <xsl:param name="splitFrontmatter">yes</xsl:param>
-  <xsl:param name="splitLevel">0</xsl:param>
+  <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:param name="subTocDepth">-1</xsl:param>
   <xsl:param name="tocDepth">3</xsl:param>
   <xsl:param name="tocElement">div</xsl:param>
