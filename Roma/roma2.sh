@@ -18,12 +18,14 @@ makeODD()
 	    $SELECTEDSCHEMA  \
 	    $LANGUAGE\
 	    $DOCLANG \
+	    configDirectory=$H \
 	    useVersionFromTEI=$useVersionFromTEI \
 	    TEIC=$TEIC $SOURCE $DEBUG  
     else
 	echo  [names translated to language $lang]
 	xmllint --xinclude $ODD | saxon - $TEIXSLDIR/odds2/odd2odd.xsl \
 	    TEIC=$TEIC \
+	    configDirectory=$H \
 	    useVersionFromTEI=$useVersionFromTEI \
 	    $SOURCE $DEBUG  \
 	    | saxon -o $RESULTS/$ODD.compiled - $TEIXSLDIR/odds2/translate-odd.xsl \
@@ -238,7 +240,7 @@ while test $# -gt 0; do
 done
 ODD=${1:?"no schemaspec (i.e., ODD file) supplied; for usage syntax issue $0 --help"}
 RESULTS=${2:-RomaResults}
-H=`pwd`
+H=`pwd`/
 D=`date "+%Y-%m-%d %H:%M:%S"`
 echo "========= $D Roma starts, info:"
 echo "Test for software: xmllint, saxon, trang, and perl"
