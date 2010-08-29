@@ -2188,12 +2188,25 @@ so that is only put back in if there is some content
     </xsl:variable>
     <xsl:variable name="source">
       <xsl:choose>
+	<xsl:when test="starts-with($loc,'/')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
+	<xsl:when test="starts-with($loc,'file:')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
+	<xsl:when test="starts-with($loc,'http:')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
+	<xsl:when test="starts-with($loc,'https:')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
 	<xsl:when test="starts-with($loc,'tei:')">
 	  <xsl:value-of
 	      select="replace($loc,'tei:',$defaultTEIServer)"/>
 	  <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>
+	  <xsl:value-of select="$configDirectory"/>
 	  <xsl:value-of select="$loc"/>
 	</xsl:otherwise>
       </xsl:choose>
