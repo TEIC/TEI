@@ -25,6 +25,12 @@ X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
 TEMPDIR=/tmp/odt$$
 TEMPLATES=$APPHOME/profiles/$profile/oo
+if ! test -d $TEMPLATES 
+then
+  echo No support for profile $profile: $APPHOME/profiles/$profile/oo does not exist
+  exit 1
+fi
+
 XSL=$APPHOME
 mkdir -p $TEMPDIR/Pictures
 echo read $THERE/$F

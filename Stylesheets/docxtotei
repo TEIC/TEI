@@ -26,6 +26,13 @@ THERE=`(cd $D; pwd)`
 X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
 N=`basename "$1" .docx`
+TEMPLATES=$APPHOME/profiles/$profile/docx
+if ! test -d $TEMPLATES 
+then
+  echo No support for profile $profile: $APPHOME/profiles/$profile/docx does not exist
+  exit 1
+fi
+
 echo read input file $N from $THERE
 echo app home directory is $APPHOME
 if test "x$conversion" = "x"

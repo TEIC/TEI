@@ -27,6 +27,11 @@ X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
 TEMPDIR=/tmp/docx$$
 TEMPLATES=$APPHOME/profiles/$profile/docx
+if ! test -d $TEMPLATES 
+then
+  echo No support for profile $profile: $APPHOME/profiles/$profile/docx does not exist
+  exit 1
+fi
 XSL=$APPHOME
 mkdir -p $TEMPDIR/word/media
 echo read $THERE/$F
