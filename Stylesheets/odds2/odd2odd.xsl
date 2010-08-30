@@ -33,7 +33,9 @@
   <xsl:param name="verbose"/>
   <xsl:param name="useVersionFromTEI">true</xsl:param>
   <xsl:param name="stripped">false</xsl:param>
-  <xsl:param name="configDirectory">/usr/share/xml/tei/</xsl:param>
+  <xsl:param name="defaultDirectory">/usr/share/xml/tei/</xsl:param>
+  <xsl:param name="configDirectory"/>
+  <xsl:param name="currentDirectory"/>
   <xsl:param name="defaultSource"></xsl:param>
   <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
   <xsl:key name="odd2odd-CLASSREFS" match="tei:classRef" use="@key"/>
@@ -86,8 +88,12 @@
       <xsl:when test="$defaultSource != ''">
 	<xsl:value-of select="$defaultSource"/>
       </xsl:when>
-      <xsl:otherwise>
+      <xsl:when test="$configDirectory != ''">
 	<xsl:value-of select="$configDirectory"/>
+	<xsl:text>odd/p5subset.xml</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$defaultDirectory"/>
 	<xsl:text>odd/p5subset.xml</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
@@ -499,6 +505,7 @@ How can a class be ok?
   </xsl:template>
   <xsl:template match="tei:macroSpec" mode="odd2odd-pass2">
     <xsl:variable name="k">
+      <xsl:value-of select="@prefix"/>
       <xsl:value-of select="@ident"/>
     </xsl:variable>
     <xsl:choose>
@@ -2205,7 +2212,7 @@ so that is only put back in if there is some content
 	  <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:value-of select="$configDirectory"/>
+	  <xsl:value-of select="$currentDirectory"/>
 	  <xsl:value-of select="$loc"/>
 	</xsl:otherwise>
       </xsl:choose>

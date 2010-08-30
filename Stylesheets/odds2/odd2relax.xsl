@@ -70,7 +70,7 @@
       <xsl:if test="$verbose='true'">
          <xsl:message> 
 	           <xsl:text>I18N setup: Pattern prefix: </xsl:text>
-	           <xsl:value-of select="$patternPrefixText"/> 
+	           <xsl:value-of select="$generalPrefix"/> 
 	           <xsl:text>. Target  language: </xsl:text>
 	           <xsl:value-of select="$targetLanguage"/>
 	           <xsl:text>. Documentation language: </xsl:text>
@@ -158,20 +158,20 @@
 	     </xsl:when>
 	     <xsl:when test="@start">
 	       <start xmlns="http://relaxng.org/ns/structure/1.0">
-		 <ref name="{$patternPrefixText}{@start}"/>
+		 <ref name="{$generalPrefix}{@start}"/>
 	       </start>
 	     </xsl:when>
 	     <xsl:when test="key('IDENTS','teiCorpus')">
 	       <start xmlns="http://relaxng.org/ns/structure/1.0">
 		 <choice>
-		   <ref name="{$patternPrefixText}TEI"/>
-		   <ref name="{$patternPrefixText}teiCorpus"/>
+		   <ref name="{$generalPrefix}TEI"/>
+		   <ref name="{$generalPrefix}teiCorpus"/>
 		 </choice>
 	       </start>
 	     </xsl:when>
 	     <xsl:otherwise>
 	       <start xmlns="http://relaxng.org/ns/structure/1.0">
-		 <ref name="{$patternPrefixText}TEI"/>
+		 <ref name="{$generalPrefix}TEI"/>
 	       </start>
 	     </xsl:otherwise>
 	   </xsl:choose>
@@ -199,13 +199,13 @@
          <xsl:choose>
             <xsl:when test="contains($toks,' ')">
                <ref xmlns="http://relaxng.org/ns/structure/1.0"
-                    name="{$patternPrefixText}{substring-before($toks, ' ')}"/>
+                    name="{$generalPrefix}{substring-before($toks, ' ')}"/>
                <xsl:call-template name="startNames">
                   <xsl:with-param name="toks" select="substring-after($toks, ' ')"/>
                </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
-               <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$patternPrefixText}{$toks}"/>
+               <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$generalPrefix}{$toks}"/>
             </xsl:otherwise>
          </xsl:choose>
       </xsl:if>
