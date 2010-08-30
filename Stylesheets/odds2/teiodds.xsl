@@ -202,7 +202,7 @@
 
   <xsl:template match="rng:ref">
     <xsl:call-template name="makeRef">
-      <xsl:with-param name="lookup" select="replace(@name,'_(alternation|sequence|sequenceOptional|sequenceOptionalRepeatable|sequenceRepeatable)','')"/>
+      <xsl:with-param name="lookup" select="replace(@name,'_(alternation|sequenceOptionalRepeatable|sequenceOptional|sequenceRepeatable|sequence)','')"/>
     </xsl:call-template>
   </xsl:template>
 
