@@ -499,7 +499,6 @@ How can a class be ok?
   </xsl:template>
   <xsl:template match="tei:macroSpec" mode="odd2odd-pass2">
     <xsl:variable name="k">
-      <xsl:value-of select="@prefix"/>
       <xsl:value-of select="@ident"/>
     </xsl:variable>
     <xsl:choose>

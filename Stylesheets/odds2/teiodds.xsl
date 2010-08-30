@@ -201,19 +201,35 @@
   </xsl:template>
 
   <xsl:template match="rng:ref">
+    <xsl:variable name="myprefix">
+      <xsl:choose>
+      <xsl:when test="ancestor::tei:elementSpec[@prefix]">
+	<xsl:value-of select="ancestor::tei:elementSpec/@prefix"/>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:macroSpec[@prefix]">
+	<xsl:value-of select="ancestor::tei:macroSpec/@prefix"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$patternPrefixText"/>
+      </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="ancestor::tei:content[@autoPrefix='false']">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
       </xsl:when>
-      <xsl:when test="key('IDENTS',@name)">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$patternPrefixText}{@name}"/>
+      <xsl:when test="key('ELEMENTS',@name)">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$myprefix}{@name}"/>
+      </xsl:when>
+      <xsl:when test="key('MACROS',@name)">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$myprefix}{@name}"/>
       </xsl:when>
       <xsl:when
         test="starts-with(@name,'att.') and   key('IDENTS',substring-before(@name,'.attribute.'))">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
       </xsl:when>
       <xsl:when test="key('IDENTS',substring-before(@name,'_'))">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$patternPrefixText}{@name}"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$myprefix}{@name}"/>
       </xsl:when>
       <xsl:otherwise>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
@@ -1662,7 +1678,10 @@ select="$makeDecls"/></xsl:message>
     <xsl:element xmlns="http://relaxng.org/ns/structure/1.0" name="ref">
       <xsl:attribute name="name">
         <xsl:choose>
-          <xsl:when test="key('IDENTS',@name)">
+          <xsl:when test="key('ELEMENTS',@name)">
+            <xsl:value-of select="$patternPrefixText"/>
+          </xsl:when>
+          <xsl:when test="key('MACROS',@name)">
             <xsl:value-of select="$patternPrefixText"/>
           </xsl:when>
           <xsl:when test="key('IDENTS',substring-before(@name,'.attribute.'))"> </xsl:when>
