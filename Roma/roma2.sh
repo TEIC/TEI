@@ -18,14 +18,14 @@ makeODD()
 	    $SELECTEDSCHEMA  \
 	    $LANGUAGE\
 	    $DOCLANG \
-	    configDirectory=$H \
+	    currentDirectory=$H \
 	    useVersionFromTEI=$useVersionFromTEI \
 	    TEIC=$TEIC $SOURCE $DEBUG  
     else
 	echo  [names translated to language $lang]
 	xmllint --xinclude $ODD | saxon - $TEIXSLDIR/odds2/odd2odd.xsl \
 	    TEIC=$TEIC \
-	    configDirectory=$H \
+	    currentDirectory=$H \
 	    useVersionFromTEI=$useVersionFromTEI \
 	    $SOURCE $DEBUG  \
 	    | saxon -o $RESULTS/$ODD.compiled - $TEIXSLDIR/odds2/translate-odd.xsl \
