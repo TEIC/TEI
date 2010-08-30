@@ -106,9 +106,6 @@ schemas:
 		test -f $$i.teix.xsd && perl -p -i -e "s/teix.xsd/$$i.teix.xsd/" $$i.xsd; \
 		echo JING RelaxNG... ; \
 		jing -t $$i.rng $$i.xml; \
-		echo RNV.... ; \
-		echo xmllint DTD  ; \
-		xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$i.dtd - ; \
 		xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc  ; \
 		echo JING .. for XSD.... ; \
 		jing $$i.xsd $$i.xml;  \
