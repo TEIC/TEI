@@ -459,18 +459,11 @@
 	    </xsl:when>
 	    <xsl:when test="parent::tei:hi">
 	      <inline
-		  xml:space="preserve"
+		  white-space-treatment="preserve"
 		  white-space-collapse="false">&#xA;</inline>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <block/>
-	      <!--
-		  <inline  linefeed-treatment="preserve"
-		  white-space-treatment="preserve" 
-		  white-space-collapse="false">
-		  <xsl:text>&#xA;</xsl:text>
-		  </inline>
-	      -->
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:when>
@@ -480,11 +473,6 @@
 	  </inline>
 	</xsl:otherwise>
       </xsl:choose>
-      <!-- JT's suggestion:
-	   <inline
-	   xml:space="preserve"
-	   white-space-collapse="false">&#xA;</inline>
-      -->
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>

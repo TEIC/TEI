@@ -624,12 +624,15 @@
       <xsl:when test="parent::tei:body"/>
       <xsl:when test="parent::tei:back"/>
       <xsl:when test="parent::tei:front"/>
+      <xsl:when test="@rend='-'">
+	<xsl:text>-</xsl:text>
+	<br/>
+      </xsl:when>
+      <xsl:when test="@rend">
+	<br class="{@rend}"/>
+      </xsl:when>
       <xsl:otherwise>
-	<br>
-	  <xsl:if test="@rend and not(@rend='-')">
-	    <xsl:attribute name="class" select="@rend"/>
-	  </xsl:if>
-	</br>
+	<br/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
