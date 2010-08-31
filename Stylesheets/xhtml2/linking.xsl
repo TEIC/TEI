@@ -246,8 +246,7 @@
                </xsl:when>
                <xsl:when test="number($splitLevel) = 1">
                   <xsl:apply-templates mode="ident" select="ancestor::tei:div2|ancestor::tei:div1"/>
-            /&gt;
-          </xsl:when>
+	       </xsl:when>
                <xsl:when test="number($splitLevel) = 2">
                   <xsl:apply-templates mode="ident" select="ancestor::tei:div3|ancestor::tei:div2"/>
                </xsl:when>
@@ -267,6 +266,10 @@
   <xsl:template name="locateParentdiv">
       <xsl:choose>
 	 <xsl:when test="ancestor-or-self::tei:body[tei:head]/parent::tei:text/parent::tei:group">
+            <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
+         </xsl:when>
+
+	 <xsl:when test="ancestor-or-self::tei:back/parent::tei:text/parent::tei:group">
             <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
          </xsl:when>
 

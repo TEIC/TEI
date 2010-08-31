@@ -33,6 +33,7 @@
       </desc>
    </doc>
 
+	<xsl:param name="numberBackHeadings">false</xsl:param>
     <xsl:param name="publisher">Oxford Text Archive, Oxford University</xsl:param>
 
     <xsl:param name="cssFile">../profiles/ota/epub/ota.css</xsl:param>
