@@ -33,7 +33,6 @@
       </desc>
    </doc>
 
-	<xsl:param name="numberBackHeadings">false</xsl:param>
     <xsl:param name="publisher">Oxford Text Archive, Oxford University</xsl:param>
 
     <xsl:param name="cssFile">../profiles/ota/epub/ota.css</xsl:param>
@@ -42,14 +41,16 @@
       <xsl:value-of select="replace(.,' \[Electronic resource\]','')"/>
     </xsl:template>
 
-    <xsl:template match="tei:pb">
+    <xsl:template match="tei:pb"/>
+
+    <!--
       <div class="pagebreak">
 	<xsl:text>✁[</xsl:text>
 	<xsl:text> Page </xsl:text>
 	<xsl:value-of select="@n"/>
 	<xsl:text>]✁</xsl:text>
       </div>
-    </xsl:template>
+      -->
 	
     <xsl:template match="tei:w[@type and @lemma]">
       <span class="wordtype{@type}">
@@ -59,7 +60,7 @@
 
   <xsl:template match="tei:sp">
     <div class="sp">
-	 <xsl:apply-templates/>
+      <xsl:apply-templates/>
     </div>
   </xsl:template>
 
