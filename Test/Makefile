@@ -43,7 +43,6 @@ TESTFILES= \
 	testspoken \
 	testtagdocs \
 	testtranscr \
-	testmeta2010 \
 	testall 
 
 TESTBADFILES= \
@@ -58,6 +57,7 @@ TESTSPECIALFILES= \
 	testplace-gml \
 	testplace-kml \
 	testrend \
+	testmeta2010 \
 	testsvg  
 
 default: schemas test-extns test-frag
