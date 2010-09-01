@@ -34,7 +34,7 @@
    </doc>
 
     <xsl:param name="publisher">Oxford Text Archive, Oxford University</xsl:param>
-
+    <xsl:param name="numberHeadings">-1</xsl:param>
     <xsl:param name="cssFile">../profiles/ota/epub/ota.css</xsl:param>
 
     <xsl:template match="tei:title[@type='main']/text()">
@@ -65,10 +65,9 @@
   </xsl:template>
 
   <xsl:template match="tei:speaker">
-    <div class="speaker">
-      <xsl:call-template name="makeAnchor"/>
+    <span class="speaker">
       <xsl:apply-templates/>
-    </div>
+    </span>
   </xsl:template>
 
   <xsl:template match="tei:stage">
@@ -77,4 +76,5 @@
     </div>
   </xsl:template>
 
+  <xsl:template match="tei:body/tei:lb"/>
 </xsl:stylesheet>
