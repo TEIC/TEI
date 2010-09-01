@@ -288,104 +288,104 @@
       <xsl:choose>
          <xsl:when test="parent::tei:titleStmt">
             <xsl:if test="preceding-sibling::tei:title">
-	              <xsl:call-template name="tei:makeText">
-			<xsl:with-param name="letters"> — </xsl:with-param>
-		      </xsl:call-template>
+	      <xsl:call-template name="tei:makeText">
+		<xsl:with-param name="letters"> — </xsl:with-param>
+	      </xsl:call-template>
             </xsl:if>
             <xsl:apply-templates/>
          </xsl:when>
          <xsl:when test="@level='m' or not(@level)">
-            <xsl:call-template name="emphasize">
-	              <xsl:with-param name="class">
-	                 <xsl:text>titlem</xsl:text>
-	              </xsl:with-param>
-	              <xsl:with-param name="content">
-	                 <xsl:apply-templates/>
-	              </xsl:with-param>
-            </xsl:call-template>
-            <xsl:if test="ancestor::tei:biblStruct">
-	              <xsl:call-template name="tei:makeText">
-			<xsl:with-param name="letters">, </xsl:with-param>
-		      </xsl:call-template>
-            </xsl:if>
+	   <xsl:call-template name="emphasize">
+	     <xsl:with-param name="class">
+	       <xsl:text>titlem</xsl:text>
+	     </xsl:with-param>
+	     <xsl:with-param name="content">
+	       <xsl:apply-templates/>
+	     </xsl:with-param>
+	   </xsl:call-template>
+	   <xsl:if test="ancestor::tei:biblStruct">
+	     <xsl:call-template name="tei:makeText">
+	       <xsl:with-param name="letters">, </xsl:with-param>
+	     </xsl:call-template>
+	   </xsl:if>
          </xsl:when>
          <xsl:when test="@level='s'">
-            <xsl:call-template name="emphasize">
-	              <xsl:with-param name="class">
-	                 <xsl:text>titles</xsl:text>
-	              </xsl:with-param>
-	              <xsl:with-param name="content">
-	                 <xsl:apply-templates/>
-	              </xsl:with-param>
-            </xsl:call-template>
-            <xsl:if test="following-sibling::* and ancestor::tei:biblStruct">
-	              <xsl:call-template name="tei:makeText">
-			<xsl:with-param name="letters">
-			</xsl:with-param>
-		      </xsl:call-template>
-            </xsl:if>
+	   <xsl:call-template name="emphasize">
+	     <xsl:with-param name="class">
+	       <xsl:text>titles</xsl:text>
+	     </xsl:with-param>
+	     <xsl:with-param name="content">
+	       <xsl:apply-templates/>
+	     </xsl:with-param>
+	   </xsl:call-template>
+	   <xsl:if test="following-sibling::* and ancestor::tei:biblStruct">
+	     <xsl:call-template name="tei:makeText">
+	       <xsl:with-param name="letters">
+	       </xsl:with-param>
+	     </xsl:call-template>
+	   </xsl:if>
          </xsl:when>
          <xsl:when test="@level='j'">
-            <xsl:call-template name="emphasize">
-	              <xsl:with-param name="class">
-	                 <xsl:text>titlej</xsl:text>
-	              </xsl:with-param>
-	              <xsl:with-param name="content">
-	                 <xsl:apply-templates/>
-	              </xsl:with-param>
-            </xsl:call-template>
-            <xsl:call-template name="tei:makeText">
-	      <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
-	    </xsl:call-template>
+	   <xsl:call-template name="emphasize">
+	     <xsl:with-param name="class">
+	       <xsl:text>titlej</xsl:text>
+	     </xsl:with-param>
+	     <xsl:with-param name="content">
+	       <xsl:apply-templates/>
+	     </xsl:with-param>
+	   </xsl:call-template>
+	   <xsl:call-template name="tei:makeText">
+	     <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
+	   </xsl:call-template>
          </xsl:when>
          <xsl:when test="@level='a'">
-            <xsl:call-template name="emphasize">
-	              <xsl:with-param name="class">
-	                 <xsl:text>titlea</xsl:text>
-	              </xsl:with-param>
-	              <xsl:with-param name="content">
-	                 <xsl:apply-templates/>
-	              </xsl:with-param>
-            </xsl:call-template>
-            <xsl:if test="ancestor::tei:biblStruct">
-	              <xsl:call-template name="tei:makeText">
-			<xsl:with-param
-			    name="letters">. </xsl:with-param>
-		      </xsl:call-template>
-            </xsl:if>
+	   <xsl:call-template name="emphasize">
+	     <xsl:with-param name="class">
+	       <xsl:text>titlea</xsl:text>
+	     </xsl:with-param>
+	     <xsl:with-param name="content">
+	       <xsl:apply-templates/>
+	     </xsl:with-param>
+	   </xsl:call-template>
+	   <xsl:if test="ancestor::tei:biblStruct">
+	     <xsl:call-template name="tei:makeText">
+	       <xsl:with-param
+		   name="letters">. </xsl:with-param>
+	     </xsl:call-template>
+	   </xsl:if>
          </xsl:when>
          <xsl:when test="@level='u'">
-            <xsl:call-template name="emphasize">
-	              <xsl:with-param name="class">
-	                 <xsl:text>titleu</xsl:text>
-	              </xsl:with-param>
-	              <xsl:with-param name="content">
-	                 <xsl:apply-templates/>
-	              </xsl:with-param>
-            </xsl:call-template>
-            <xsl:if test="ancestor::tei:biblStruct">
-	              <xsl:call-template name="tei:makeText">
-			<xsl:with-param
-			    name="letters">. </xsl:with-param>
-		      </xsl:call-template>
-            </xsl:if>
+	   <xsl:call-template name="emphasize">
+	     <xsl:with-param name="class">
+	       <xsl:text>titleu</xsl:text>
+	     </xsl:with-param>
+	     <xsl:with-param name="content">
+	       <xsl:apply-templates/>
+	     </xsl:with-param>
+	   </xsl:call-template>
+	   <xsl:if test="ancestor::tei:biblStruct">
+	     <xsl:call-template name="tei:makeText">
+	       <xsl:with-param
+		   name="letters">. </xsl:with-param>
+	     </xsl:call-template>
+	   </xsl:if>
          </xsl:when>
          <xsl:when test="ancestor::tei:bibl">
-            <xsl:apply-templates/>
+	   <xsl:apply-templates/>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:call-template name="emphasize">
-	              <xsl:with-param name="class">
-	                 <xsl:text>titlem</xsl:text>
-	              </xsl:with-param>
-	              <xsl:with-param name="content">
-	                 <xsl:apply-templates/>
-	              </xsl:with-param>
-            </xsl:call-template>
+	   <xsl:call-template name="emphasize">
+	     <xsl:with-param name="class">
+	       <xsl:text>titlem</xsl:text>
+	     </xsl:with-param>
+	     <xsl:with-param name="content">
+	       <xsl:apply-templates/>
+	     </xsl:with-param>
+	   </xsl:call-template>
          </xsl:otherwise>
       </xsl:choose>
    </xsl:template>
-
+   
 
    <xsl:template match="tei:meeting">
       <xsl:call-template name="tei:makeText">
