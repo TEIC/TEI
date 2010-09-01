@@ -827,6 +827,12 @@
     </dd>
   </xsl:template>
 
+  <xsl:template match="tei:bibl/tei:title" mode="metadata">
+    <i>
+    <xsl:apply-templates/>
+    </i>
+  </xsl:template>
+
   <xsl:template match="tei:date" mode="metadata">
     <dt>Date</dt>
     <dd>
