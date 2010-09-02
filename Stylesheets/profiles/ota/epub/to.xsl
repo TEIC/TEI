@@ -35,6 +35,8 @@
 
     <xsl:param name="publisher">Oxford Text Archive, Oxford University</xsl:param>
     <xsl:param name="numberHeadings">-1</xsl:param>
+    <xsl:param name="numberBackHeadings">-1</xsl:param>
+    <xsl:param name="numberFrontHeadings">-1</xsl:param>
     <xsl:param name="cssFile">../profiles/ota/epub/ota.css</xsl:param>
 
     <xsl:template match="tei:title[@type='main']/text()">
