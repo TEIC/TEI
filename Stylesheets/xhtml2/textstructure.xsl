@@ -484,7 +484,6 @@
       <desc>Process elements front, body or back in splitting mode</desc>
    </doc>
   <xsl:template match="tei:front|tei:body|tei:back" mode="split">
-<xsl:message>Split <xsl:value-of select="name(.)"/></xsl:message>
       <xsl:for-each select="*">
          <xsl:choose>
             <xsl:when test="starts-with(local-name(.),'div')">
@@ -2102,7 +2101,7 @@
       <!-- main text -->
     <xsl:choose>
          <xsl:when test="tei:text/tei:group">
-            <xsl:apply-templates select="tei:text/tei:group"/>
+	   <xsl:apply-templates select="tei:text/tei:group"/>
          </xsl:when>
          <xsl:otherwise>
             <xsl:apply-templates select="tei:text/tei:body"/>

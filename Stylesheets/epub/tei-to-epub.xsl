@@ -264,6 +264,10 @@
 	      <dc:subject>
                 <xsl:call-template name="generateSubject"/>
 	      </dc:subject>
+	      <xsl:for-each
+		  select="tei:teiHeader/tei:textClass/tei:keywords[@scheme='#lcsh]/tei:term">
+		<dc:subject><xsl:value-of select="."/></dc:subject>
+	      </xsl:for-each>
               <dc:identifier id="dcidid" opf:scheme="URI">
                 <xsl:call-template name="generateID"/>
               </dc:identifier>
@@ -694,18 +698,25 @@
 
   <xsl:template match="tei:l">
     <div class="l">
-      <xsl:variable name="n">
-	<xsl:number/>
-      </xsl:variable>
-      <div class="linenumber">
-	<xsl:choose>
-	  <xsl:when test="$n mod 5 = 0">
-	    <xsl:value-of select="$n"/>
-	  </xsl:when>
-	  <xsl:otherwise>&#160;</xsl:otherwise>
-	</xsl:choose>
-      </div>
-      <xsl:apply-templates/>
+      <xsl:choose>
+	<xsl:when test="ancestor::tei:div[contains(@rend,'linenumber')]">
+	  <xsl:variable name="n">
+	    <xsl:number/>
+	  </xsl:variable>
+	  <div class="linenumber">
+	    <xsl:choose>
+	      <xsl:when test="$n mod 5 = 0">
+		<xsl:value-of select="$n"/>
+	      </xsl:when>
+	      <xsl:otherwise>&#160;</xsl:otherwise>
+	    </xsl:choose>
+	  </div>
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates/>
+	</xsl:otherwise>
+      </xsl:choose>
     </div>
   </xsl:template>
 
