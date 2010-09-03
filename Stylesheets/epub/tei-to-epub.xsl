@@ -265,7 +265,7 @@
                 <xsl:call-template name="generateSubject"/>
 	      </dc:subject>
 	      <xsl:for-each
-		  select="tei:teiHeader/tei:textClass/tei:keywords[@scheme='#lcsh]/tei:term">
+		  select="tei:teiHeader/tei:textClass/tei:keywords[@scheme='#lcsh']/tei:term">
 		<dc:subject><xsl:value-of select="."/></dc:subject>
 	      </xsl:for-each>
               <dc:identifier id="dcidid" opf:scheme="URI">
