@@ -703,7 +703,7 @@
 	  <xsl:variable name="n">
 	    <xsl:number/>
 	  </xsl:variable>
-	  <div class="linenumber">
+	  <div class="numbering">
 	    <xsl:choose>
 	      <xsl:when test="$n mod 5 = 0">
 		<xsl:value-of select="$n"/>
@@ -866,7 +866,7 @@
   </xsl:template>
 
   <xsl:template match="tei:authority/tei:address">
-      <xsl:apply-templates/>
+      <br/><xsl:apply-templates/>
   </xsl:template>
 
   <xsl:template match="tei:authority/tei:addLine">
