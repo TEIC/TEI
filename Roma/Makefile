@@ -1,4 +1,6 @@
-PREFIX=
+PREFIX=/usr
+
+P5SRCPFX=${PREFIX}
 
 FILES=ChangeLog \
 	g \
@@ -24,19 +26,19 @@ FILES=ChangeLog \
 default:
 	@echo
 	@echo TEI Roma
-	@echo - install target puts files directly into ${PREFIX} 
+	@echo - install target puts files directly into ${PREFIX}/
 	@echo - dist target  makes a release subdirectory of runtime files
 	@echo There is no default action
 	@echo
 
 install: release
-	mkdir -p ${PREFIX}/usr/share/tei-roma
-	(cd release; tar cf - . ) | (cd ${PREFIX}/usr/share; tar xf - )
-	mkdir -p ${PREFIX}/usr/bin
-	cp -p roma.sh ${PREFIX}/usr/bin/roma
-	chmod 755 ${PREFIX}/usr/bin/roma
-	cp -p roma2.sh ${PREFIX}/usr/bin/roma2
-	chmod 755 ${PREFIX}/usr/bin/roma2
+	mkdir -p ${PREFIX}/share/tei-roma
+	(cd release; tar cf - . ) | (cd ${PREFIX}/share; tar xf - )
+	mkdir -p ${PREFIX}/bin
+	cp -p roma.sh ${PREFIX}/bin/roma
+	chmod 755 ${PREFIX}/bin/roma
+	cp -p roma2.sh ${PREFIX}/bin/roma2
+	chmod 755 ${PREFIX}/bin/roma2
 
 dist:  release
 	(cd release; 	\
@@ -54,7 +56,7 @@ release: clean
 	perl -p -i -e "s+.*define.*roma_version.*+define (\'roma_version\',\'$$V\');+" roma/config-dist.php; \
 	tar --exclude=.svn -c  -f - $(FILES) | (cd release/tei-roma; tar xf -); \
 	perl -p -i -e "s/{roma_version}/$$V/;s/{roma_date}/$$D/" release/tei-roma/roma/templates/main.tem
-	(cd roma; ../roma2.sh --localsource=/usr/share/xml/tei/odd/Source/Guidelines/en/guidelines-en.xml --nodtd --noxsd oddschema.odd .)
+	(cd roma; ../roma2.sh --xsl=${PREFIX}/share/xml/tei/stylesheet --localsource=${P5SRCPFX}/share/xml/tei/odd/Source/Guidelines/en/guidelines-en.xml --nodtd --noxsd oddschema.odd .)
 
 clean:
 	-rm -rf release
@@ -67,5 +69,3 @@ log:
 	mv ChangeLog oldchanges
 	cat newchanges oldchanges > ChangeLog
 	rm newchanges oldchanges
-
-
