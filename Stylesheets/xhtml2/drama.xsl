@@ -179,8 +179,11 @@
       <desc>Process element sp/tei:p</desc>
    </doc>
   <xsl:template match="tei:sp/tei:p">
+    <div class="p-in-sp">
       <xsl:apply-templates/>
+    </div>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element stage</desc>
    </doc>
