@@ -293,7 +293,14 @@
 		<item href="{$coverimageFile}" id="cover-image" media-type="image/jpeg"/>
 	      </xsl:if>
 	      <item href="stylesheet.css" id="css" media-type="text/css"/>
-	      <item href="titlepage.html" id="titlepage" media-type="application/xhtml+xml"/>	      
+	      <item href="titlepage.html" id="titlepage"
+		    media-type="application/xhtml+xml"/>	      
+	      <xsl:for-each select="tei:text/tei:front/tei:titlePage">
+		<xsl:variable name="N" select="position()"/>
+		<item href="titlepage{$N}.html" id="titlepage{$N}"
+		      media-type="application/xhtml+xml"/>	      
+	      </xsl:for-each>
+
 	      <item href="titlepageback.html" id="titlepageback" media-type="application/xhtml+xml"/>	      
               <item id="print.css" href="print.css"
 		    media-type="text/css"/>
@@ -352,6 +359,10 @@
             </manifest>
             <spine toc="ncx">
               <itemref idref="titlepage"/>
+	      <xsl:for-each select="tei:text/tei:front/tei:titlePage">
+		<xsl:variable name="N" select="position()"/>
+		<itemref idref="titlepage{$N}"/>
+	      </xsl:for-each>
               <itemref idref="start"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                   <xsl:if test="html:a and not(starts-with(html:a/@href,'#'))">
@@ -422,10 +433,6 @@
 	    </head>
 	    <body>
 	      <xsl:choose>
-		<xsl:when
-		    test="tei:text/tei:front/tei:titlePage">
-		  <xsl:apply-templates select="tei:text/tei:front/tei:titlePage"/>
-		</xsl:when>
 		<xsl:when test="$coverimageFile=''">
 		  <div style="font-family: serif; height:860;
 			      font-size:36pt; border: bold red 1pt; text-align:center">
@@ -443,6 +450,28 @@
 	    </body>
 	  </html>
 	</xsl:result-document>
+	<xsl:for-each select="tei:text/tei:front/tei:titlePage">
+	  <xsl:variable name="N" select="position()"/>
+	  <xsl:if test="$debug='true'">
+	    <xsl:message>write file OEBPS/titlepage<xsl:value-of select="$N"/>.html</xsl:message>
+	  </xsl:if>
+	  <xsl:result-document href="{concat($directory,'OEBPS/titlepage',$N,'.html')}" method="xml">
+	    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	      <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>Title page</title>
+		<style type="text/css" title="override_css">
+		  @page {padding: 0pt; margin:0pt}
+		  body { text-align: center; padding:0pt; margin: 0pt; }
+		</style>
+		
+	      </head>
+	      <body>
+		<xsl:apply-templates/>
+	      </body>
+	    </html>
+	  </xsl:result-document>
+	</xsl:for-each>
 
 	<xsl:if test="$debug='true'">
 	  <xsl:message>write file OEBPS/titlepageback.html</xsl:message>

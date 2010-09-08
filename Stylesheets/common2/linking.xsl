@@ -121,7 +121,7 @@
 	       </xsl:when>
                <xsl:when test="$depth &gt; $numberHeadingsDepth"> </xsl:when>
                <xsl:when test="ancestor::tei:back">
-                  <xsl:if test="not($numberBackHeadings='')">
+                  <xsl:if test="$numberBackHeadings='true'">
                      <xsl:call-template name="i18n">
                         <xsl:with-param name="word">appendixWords</xsl:with-param>
                      </xsl:call-template>
@@ -133,7 +133,7 @@
                   </xsl:if>
                </xsl:when>
                <xsl:when test="ancestor::tei:front">
-                  <xsl:if test="not($numberFrontHeadings='')">
+                  <xsl:if test="$numberFrontHeadings='true'">
                      <xsl:call-template name="numberFrontDiv">
 		       <xsl:with-param name="minimal">
 			 <xsl:value-of select="$minimal"/>
