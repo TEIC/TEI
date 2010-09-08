@@ -1305,7 +1305,7 @@
     <desc>Process element signed</desc>
   </doc>
   <xsl:template match="tei:signed">
-    <div class="left">
+    <div class="signed">
       <xsl:apply-templates/>
     </div>
   </xsl:template>
