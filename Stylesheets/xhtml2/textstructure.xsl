@@ -784,18 +784,19 @@
          </p>
       </desc>
    </doc>
-  <xsl:template match="tei:docTitle|tei:docAuthor|tei:docImprint|tei:docDate">
+  <xsl:template match="tei:docTitle|tei:docAuthor|tei:docImprint|tei:docDate|tei:titlePage/tei:titlePart">
       <div>
          <xsl:choose>
-	           <xsl:when test="@rendition">
-	              <xsl:call-template name="applyRendition"/>
-	           </xsl:when>
-	           <xsl:otherwise>
-	              <xsl:attribute name="class">
-	                 <xsl:value-of select="local-name()">
-	    </xsl:value-of>
-	              </xsl:attribute>
-	           </xsl:otherwise>
+	   <xsl:when test="@rendition">
+	     <xsl:call-template name="applyRendition"/>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:call-template name="rendToClass">
+	       <xsl:with-param name="default">
+		 <xsl:value-of select="local-name()"/>
+	       </xsl:with-param>
+	     </xsl:call-template>
+	   </xsl:otherwise>
          </xsl:choose>
          <xsl:apply-templates/>
       </div>
