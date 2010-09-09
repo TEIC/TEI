@@ -81,6 +81,14 @@
 	  <br/>
 	</xsl:if>
       </xsl:when>
+      <xsl:when test="parent::tei:sp">
+	<div>
+	  <xsl:call-template name="rendToClass">
+	    <xsl:with-param name="default">spProse</xsl:with-param>b
+	  </xsl:call-template>
+	  <xsl:apply-templates/>
+	</div>
+      </xsl:when>
       <xsl:otherwise>
 	<div>
 	  <xsl:call-template name="rendToClass"/>
@@ -616,6 +624,13 @@
     </xsl:choose>
     </span>
   </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element lb in plain mode</desc>
+  </doc>
+  <xsl:template match="tei:lb" mode="plain">
+    <xsl:text> </xsl:text>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element lb</desc>
   </doc>

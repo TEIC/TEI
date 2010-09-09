@@ -61,27 +61,26 @@
     </xsl:template>
 
   <xsl:template match="tei:sp">
-    <div class="sp">
       <xsl:choose>
 	<xsl:when test="tei:ab and tei:speaker">
-	  <xsl:for-each select="tei:speaker">
-	    <span class="speaker">
-	      <xsl:text> </xsl:text>
+	  <div class="spProse">
+	    <xsl:for-each select="tei:speaker">
+	      <span class="speaker">
+		<xsl:apply-templates/>
+	      </span>
+	    </xsl:for-each>
+	    <xsl:text> </xsl:text>
+	    <xsl:for-each select="tei:ab">
 	      <xsl:apply-templates/>
-	    </span>
-	  </xsl:for-each>
-	  <xsl:text> </xsl:text>
-	  <xsl:for-each select="tei:ab">	    
-	    <xsl:apply-templates/>
-	  </xsl:for-each>
+	    </xsl:for-each>
+	  </div>
 	</xsl:when>
 	<xsl:otherwise>
-	  <div class="spN">
+	  <div class="sp">
 	    <xsl:apply-templates/>
 	  </div>
 	</xsl:otherwise>
       </xsl:choose>
-    </div>
   </xsl:template>
 
   <xsl:template match="tei:speaker">
