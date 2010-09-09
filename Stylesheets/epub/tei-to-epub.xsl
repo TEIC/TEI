@@ -460,11 +460,6 @@
 	      <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<title>Title page</title>
-		<style type="text/css" title="override_css">
-		  @page {padding: 0pt; margin:0pt}
-		  body { text-align: center; padding:0pt; margin: 0pt; }
-		</style>
-		
 	      </head>
 	      <body>
 		<xsl:apply-templates/>
@@ -664,6 +659,8 @@
 	<xsl:value-of select="$newName"/>
       </xsl:attribute>
       <xsl:copy-of select="@n"/>
+      <xsl:apply-templates
+	  select="*|@*|processing-instruction()|comment()|text()" mode="fixgraphics"/>
     </xsl:copy>
   </xsl:template>
 
@@ -702,7 +699,6 @@
       <xsl:when test="contains(.,'line-height:')"/>
       <xsl:when test="contains(.,'max-width:')"/>
       <xsl:when test="contains(.,'height:')"/>
-      <xsl:when test="contains(.,'text-indent:')"/>
 <!--
       <xsl:when test="contains(.,'clear:')"/>
       <xsl:when test="contains(.,'padding')"/>

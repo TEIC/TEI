@@ -62,6 +62,22 @@
 
   <xsl:template match="tei:sp">
       <xsl:choose>
+	<xsl:when test="tei:ab and tei:speaker and ancestor::tei:text/@rend='firstfolio'">
+	  <div class="spProseFirstFolio">
+	    <xsl:for-each select="tei:speaker">
+	      <span>
+		<xsl:call-template name="rendToClass">
+		  <xsl:with-param name="default">speaker</xsl:with-param>
+		</xsl:call-template>
+		<xsl:apply-templates/>
+	      </span>
+	    </xsl:for-each>
+	    <xsl:text> </xsl:text>
+	    <xsl:for-each select="tei:ab">
+	      <xsl:apply-templates/>
+	    </xsl:for-each>
+	  </div>
+	</xsl:when>
 	<xsl:when test="tei:ab and tei:speaker">
 	  <div class="spProse">
 	    <xsl:for-each select="tei:speaker">
@@ -90,7 +106,10 @@
   </xsl:template>
 
   <xsl:template match="tei:stage">
-    <div class="stage">
+    <div>
+      <xsl:call-template name="rendToClass">
+	<xsl:with-param name="default">stage</xsl:with-param>
+      </xsl:call-template>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
