@@ -121,7 +121,7 @@
     </div>
   </xsl:template>
 
-  <xsl:template match="tei:ab/tei:stage">
+  <xsl:template match="tei:ab/tei:stage|tei:l/tei:stage">
     <span>
       <xsl:call-template name="rendToClass">
 	<xsl:with-param name="default">
