@@ -84,7 +84,7 @@
       <xsl:when test="parent::tei:sp">
 	<div>
 	  <xsl:call-template name="rendToClass">
-	    <xsl:with-param name="default">spProse</xsl:with-param>b
+	    <xsl:with-param name="default">spProse</xsl:with-param>
 	  </xsl:call-template>
 	  <xsl:apply-templates/>
 	</div>
