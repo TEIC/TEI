@@ -458,7 +458,10 @@
 	  <xsl:result-document href="{concat($directory,'OEBPS/titlepage',$N,'.html')}" method="xml">
 	    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	      <head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta http-equiv="Content-Type" content="text/html;
+							 charset=UTF-8"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+		<link href="stylesheet.css" rel="stylesheet" type="text/css"></link>
 		<title>Title page</title>
 	      </head>
 	      <body>
@@ -511,9 +514,18 @@
             </docTitle>
             <navMap>
 	      <xsl:variable name="navPoints">
+		<xsl:for-each select="tei:text/tei:front/tei:titlePage[1]">
+		  <xsl:variable name="N" select="position()"/>
+		  <navPoint>
+		    <navLabel>
+		      <text>Title page</text>
+		    </navLabel>
+		      <content src="titlepage{$N}.html"/>
+		  </navPoint>
+		</xsl:for-each>
 		<navPoint>
 		  <navLabel>
-		    <text>Title Page and Contents</text>
+		    <text>Contents</text>
 		  </navLabel>
 		  <content src="index.html"/>
 		</navPoint>

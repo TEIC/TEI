@@ -35,7 +35,7 @@
 
     <xsl:param name="publisher">Oxford Text Archive, Oxford University</xsl:param>
     <xsl:param name="numberHeadings">-1</xsl:param>
-    <xsl:param name="autoToc">false</xsl:param>
+    <xsl:param name="autoToc">true</xsl:param>
     <xsl:param name="numberBackHeadings">-1</xsl:param>
     <xsl:param name="numberFrontHeadings">-1</xsl:param>
     <xsl:param name="cssFile">../profiles/ota/epub/ota.css</xsl:param>
@@ -109,10 +109,31 @@
   <xsl:template match="tei:stage">
     <div>
       <xsl:call-template name="rendToClass">
-	<xsl:with-param name="default">stage</xsl:with-param>
+	<xsl:with-param name="default">
+	<xsl:choose>
+	  <xsl:when
+	      test="ancestor::tei:text/@rend='firstfolio'">stage</xsl:when>
+	  <xsl:otherwise>stage it</xsl:otherwise>
+	</xsl:choose>
+	</xsl:with-param>
       </xsl:call-template>
       <xsl:apply-templates/>
     </div>
+  </xsl:template>
+
+  <xsl:template match="tei:ab/tei:stage">
+    <span>
+      <xsl:call-template name="rendToClass">
+	<xsl:with-param name="default">
+	<xsl:choose>
+	  <xsl:when
+	      test="ancestor::tei:text/@rend='firstfolio'">stage</xsl:when>
+	  <xsl:otherwise>stage it</xsl:otherwise>
+	</xsl:choose>
+	</xsl:with-param>
+      </xsl:call-template>
+      <xsl:apply-templates/>
+    </span>
   </xsl:template>
 
   <xsl:template match="tei:body/tei:lb"/>
