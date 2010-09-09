@@ -462,7 +462,9 @@
 		<title>Title page</title>
 	      </head>
 	      <body>
-		<xsl:apply-templates/>
+		<div class="titlePage">
+		  <xsl:apply-templates/>
+		</div>
 	      </body>
 	    </html>
 	  </xsl:result-document>
@@ -919,4 +921,7 @@
     <xsl:apply-templates/>
     <xsl:text> (alternative title)</xsl:text>
   </xsl:template>
+
+  <xsl:template match="tei:front/tei:titlePage"/>
+
  </xsl:stylesheet>
