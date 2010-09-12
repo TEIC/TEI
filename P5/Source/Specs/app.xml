@@ -77,6 +77,15 @@ lemma and at least one reading.</desc>
       </rng:zeroOrMore>
     </rng:group>
   </content>
+  <constraintSpec scheme="isoschematron" ident="only1lem">
+    <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+      <sch:assert test="count( descendant::tei:lem[ generate-id(
+      current() ) = generate-id( ancestor::tei:app[1] ) ]) &lt;
+      2">Only one <gi>lem</gi> element may appear within a single
+      apparatus entry, whether it appears outside a <gi>rdgGrp</gi>
+      element or within it.</sch:assert>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="type" usage="opt">
       <equiv/>
