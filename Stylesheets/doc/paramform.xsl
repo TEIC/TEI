@@ -70,13 +70,17 @@ my $HOME=$query->param('TEIXSL');
 my $OUTFILE=$query->param('outputFile');
 print $query->header(-type=>'application/octet-stream',
 		     -attachment=>$OUTFILE);
-print "&lt;xsl:stylesheet \n";
-print "     xmlns:tei=\"http://www.tei-c.org/ns/1.0\"\n";
-print "     xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" \n";
-print "     version=\"2.0\">\n";
-print "&lt;!-- XSLT stylesheet to generate HTML version of TEI document\n";
-print "Written by the TEI XSL generator (Sebastian Rahtz, sebastian.rahtz\@oucs.ox.ac.uk)\n";
-print "Created on $today-->\n";
+print &lt;&lt;END
+&lt;xsl:stylesheet 
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    exclude-result-prefixes="tei xsl"
+    version="2.0">
+&lt;!-- XSLT stylesheet to generate HTML version of TEI document.
+Written by the TEI XSL generator (Sebastian Rahtz, sebastian.rahtz\@oucs.ox.ac.uk)
+Created on $today-->
+END
 #foreach $key ($query->param) {
 #              print "Key [$key] --- Value[";
 #              @values = $query->param($key);
