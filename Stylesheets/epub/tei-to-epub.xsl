@@ -307,14 +307,18 @@
 	      <item id="apt" href="page-template.xpgt" media-type="application/adobe-page-template+xml"/>
               <item id="start" href="index.html" media-type="application/xhtml+xml"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-		<xsl:if test="html:a and not(starts-with(html:a/@href,'#'))">
+		<xsl:choose>
+		  <xsl:when test="not(html:a)"/>
+		  <xsl:when test="starts-with(html:a/@href,'#')"/>
+		  <xsl:otherwise>
 		  <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
 		    <xsl:attribute name="id">
 		      <xsl:text>section</xsl:text>
 		      <xsl:number count="html:li" level="any"/>
 		    </xsl:attribute>
 		  </item>
-		</xsl:if>
+		  </xsl:otherwise>
+		</xsl:choose>
 		<xsl:if test="html:ul">
 		  <xsl:for-each select="html:ul//html:li[not(contains(html:a/@href,'#'))]">
 		    <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
@@ -365,14 +369,22 @@
 	      </xsl:for-each>
               <itemref idref="start"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-                  <xsl:if test="html:a and not(starts-with(html:a/@href,'#'))">
+		<xsl:choose>
+		  <xsl:when test="not(html:a)"/>
+		  <xsl:when test="starts-with(html:a/@href,'#')"/>
+		  <!--
+		      <xsl:when
+		      test="contains(@class,'headless')"/>
+		  -->
+		  <xsl:otherwise>
                     <itemref>
                       <xsl:attribute name="idref">
                         <xsl:text>section</xsl:text>
                         <xsl:number count="html:li" level="any"/>
                       </xsl:attribute>
                     </itemref>
-		  </xsl:if>
+		  </xsl:otherwise>
+		  </xsl:choose>
                   <xsl:if test="html:ul">
                     <xsl:for-each select="html:ul//html:li[not(contains(html:a/@href,'#'))]">
                       <itemref>
@@ -530,7 +542,12 @@
 		  <content src="index.html"/>
 		</navPoint>
 		<xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-		  <xsl:if test="html:a and not(starts-with(html:a/@href,'#'))">
+		<xsl:choose>
+		  <xsl:when test="not(html:a)"/>
+		  <xsl:when test="starts-with(html:a/@href,'#')"/>
+                  <xsl:when
+		      test="contains(@class,'headless')"/>
+		  <xsl:otherwise>
 		    <navPoint>
 		      <navLabel>
 			<text>
@@ -540,7 +557,8 @@
 		      </navLabel>
 		      <content src="{html:a/@href}"/>
 		    </navPoint>
-		  </xsl:if>
+		  </xsl:otherwise>
+		</xsl:choose>
 		  <!--		<xsl:if test="html:ul">
                     <xsl:for-each select="html:ul/html:li">
 		    <xsl:variable name="pos">
@@ -936,4 +954,16 @@
 
   <xsl:template match="tei:front/tei:titlePage"/>
 
+  <xsl:template name="autoMakeHead">
+    <xsl:param name="display"/>
+    <xsl:choose>
+      <xsl:when test="tei:head and $display='full'">
+        <xsl:apply-templates select="tei:head" mode="makeheading"/>
+      </xsl:when>
+      <xsl:when test="tei:head">
+        <xsl:apply-templates select="tei:head" mode="plain"/>
+      </xsl:when>
+      <xsl:otherwise>&#160;</xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
  </xsl:stylesheet>

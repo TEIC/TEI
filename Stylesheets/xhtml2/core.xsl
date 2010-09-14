@@ -58,7 +58,11 @@
       <xsl:variable name="pointer">
         <xsl:apply-templates mode="generateLink" select="."/>
       </xsl:variable>
-      <li class="toc">
+      <li>
+	<xsl:attribute name="class">
+	  <xsl:text>toc</xsl:text>
+	  <xsl:if test="not(tei:head)"> headless</xsl:if>
+	</xsl:attribute>
         <xsl:call-template name="header">
           <xsl:with-param name="toc" select="$pointer"/>
           <xsl:with-param name="minimal">false</xsl:with-param>

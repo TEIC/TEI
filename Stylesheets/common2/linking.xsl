@@ -158,7 +158,6 @@
          </xsl:with-param>
       </xsl:call-template>
       <xsl:if test="$minimal='false'">
-
          <xsl:choose>
             <xsl:when test="local-name(.) = 'TEI'">
                <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]"/>
@@ -175,13 +174,6 @@
 		</xsl:with-param>
 		<xsl:with-param name="body">
 		  <xsl:choose>
-		    <xsl:when test="not(tei:head) and @n">
-		      <xsl:if test="@type">
-			<xsl:value-of select="@type"/>
-			<xsl:text> </xsl:text>
-		      </xsl:if>
-		      <xsl:value-of select="@n"/>
-		    </xsl:when>
 		    <xsl:when test="not(tei:head) and tei:body/tei:head">
 			<xsl:apply-templates mode="plain" select="tei:body/tei:head"/>
 		    </xsl:when>	

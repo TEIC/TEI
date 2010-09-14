@@ -1538,6 +1538,10 @@
 		 <xsl:apply-templates mode="generateLink" select="."/>
 	       </xsl:variable>
 	       <li>
+		 <xsl:if test="not(tei:head)">
+		   <xsl:attribute
+		       name="class">headless</xsl:attribute>
+		 </xsl:if>
 		 <xsl:call-template name="header">
 		   <xsl:with-param name="toc" select="$pointer"/>
 		   <xsl:with-param name="minimal">false</xsl:with-param>
