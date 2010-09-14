@@ -40,5 +40,13 @@
     <xsl:param name="autoToc">false</xsl:param>
     <xsl:param name="cssFile">../profiles/bodley/epub/bodley.css</xsl:param>
 
+  <xsl:template name="myi18n">
+     <xsl:param name="word"/>
+     <xsl:choose>
+       <xsl:when test="$word='noteHeading'">
+	 <xsl:text> </xsl:text>
+       </xsl:when>
+     </xsl:choose>
+  </xsl:template>
 
 </xsl:stylesheet>

@@ -137,4 +137,5 @@
   </xsl:template>
 
   <xsl:template match="tei:body/tei:lb"/>
+
 </xsl:stylesheet>

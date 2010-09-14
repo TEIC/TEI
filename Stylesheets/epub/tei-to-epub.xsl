@@ -41,29 +41,30 @@
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
-  <xsl:param name="fixgraphicsurl">false</xsl:param>
+  <xsl:param name="STDOUT">false</xsl:param>
+  <xsl:param name="autoHead">true</xsl:param>
+  <xsl:param name="autoToc">true</xsl:param>
+  <xsl:param name="bottomNavigationPanel">false</xsl:param>
+  <xsl:param name="coverimage"/>
+  <xsl:param name="cssFile">../tei.css</xsl:param>
+  <xsl:param name="cssODDFile">../odd.css</xsl:param>
+  <xsl:param name="cssPrintFile">../tei-print.css</xsl:param>
+  <xsl:param name="debug">false</xsl:param>
+  <xsl:param name="directory"></xsl:param>
   <xsl:param name="doctypePublic">-//W3C//DTD XHTML 1.1//EN</xsl:param>
   <xsl:param name="doctypeSystem">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</xsl:param>
-  <xsl:param name="directory"></xsl:param>
-  <xsl:param name="splitLevel">0</xsl:param>
-  <xsl:param name="STDOUT">false</xsl:param>
-  <xsl:param name="outputDir">OEBPS</xsl:param>
-  <xsl:param name="cssFile">../tei.css</xsl:param>
-  <xsl:param name="cssPrintFile">../tei-print.css</xsl:param>
-  <xsl:param name="cssODDFile">../odd.css</xsl:param>
-  <xsl:param name="topNavigationPanel">false</xsl:param>
-  <xsl:param name="bottomNavigationPanel">false</xsl:param>
-  <xsl:param name="autoToc">true</xsl:param>
-  <xsl:param name="autoHead">true</xsl:param>
-  <xsl:param name="tocDepth">3</xsl:param>
-  <xsl:param name="linkPanel">false</xsl:param>
+  <xsl:param name="fixgraphicsurl">false</xsl:param>
   <xsl:param name="institution"/>
-  <xsl:param name="subject"/>
-  <xsl:param name="uid"/>
-  <xsl:param name="publisher"/>
-  <xsl:param name="coverimage"/>
+  <xsl:param name="linkPanel">false</xsl:param>
   <xsl:param name="odd">false</xsl:param>
-  <xsl:param name="debug">false</xsl:param>
+  <xsl:param name="outputDir">OEBPS</xsl:param>
+  <xsl:param name="publisher"/>
+  <xsl:param name="splitLevel">0</xsl:param>
+  <xsl:param name="subject"/>
+  <xsl:param name="tocDepth">3</xsl:param>
+  <xsl:param name="tocFront">true</xsl:param>
+  <xsl:param name="topNavigationPanel">false</xsl:param>
+  <xsl:param name="uid"/>
 
   <xsl:variable name="coverimageFile">
     <xsl:choose>

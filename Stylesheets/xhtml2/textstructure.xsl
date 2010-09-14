@@ -1531,14 +1531,23 @@
          <xsl:when
 	     test="ancestor-or-self::tei:TEI/tei:text/tei:group and
 		   $splitLevel=0">
-	   <ul class="toc toc_group">
+	     <xsl:for-each
+		 select="ancestor-or-self::tei:TEI/tei:text/tei:front">
+	       <xsl:call-template name="partTOC">
+		 <xsl:with-param name="part">front</xsl:with-param>
+	       </xsl:call-template>
+	     </xsl:for-each>
+
+	     <ul class="toc toc_group">
+
+	     
 	     <xsl:for-each
 		 select="ancestor-or-self::tei:TEI/tei:text/tei:group/tei:text">
 	       <xsl:variable name="pointer">
 		 <xsl:apply-templates mode="generateLink" select="."/>
 	       </xsl:variable>
 	       <li>
-		 <xsl:if test="not(tei:head)">
+		 <xsl:if test="not(tei:head or tei:body/tei:head or @n)">
 		   <xsl:attribute
 		       name="class">headless</xsl:attribute>
 		 </xsl:if>
@@ -1567,7 +1576,14 @@
 	       </li>
 
 	     </xsl:for-each>
-	   </ul>
+	     </ul>
+	     <xsl:for-each
+		 select="ancestor-or-self::tei:TEI/tei:text/tei:back">
+	       <xsl:call-template name="partTOC">
+		 <xsl:with-param name="part">back</xsl:with-param>
+	       </xsl:call-template>
+	     </xsl:for-each>
+
 	 </xsl:when>
 
          <xsl:when
