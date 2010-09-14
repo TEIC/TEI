@@ -61,7 +61,7 @@
       <li>
 	<xsl:attribute name="class">
 	  <xsl:text>toc</xsl:text>
-	  <xsl:if test="not(tei:head)"> headless</xsl:if>
+	  <xsl:if test="not(tei:head or @n)"> headless</xsl:if>
 	</xsl:attribute>
         <xsl:call-template name="header">
           <xsl:with-param name="toc" select="$pointer"/>

@@ -971,6 +971,9 @@
       <xsl:when test="tei:head">
         <xsl:apply-templates select="tei:head" mode="plain"/>
       </xsl:when>
+      <xsl:when test="@n">
+        <xsl:value-of select="@n"/>
+      </xsl:when>
       <xsl:otherwise>&#160;</xsl:otherwise>
     </xsl:choose>
   </xsl:template>
