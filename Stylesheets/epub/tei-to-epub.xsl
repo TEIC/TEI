@@ -901,6 +901,14 @@
     </i>
   </xsl:template>
 
+  <xsl:template match="tei:bibl/tei:author" mode="metadata">
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="tei:bibl/tei:publisher" mode="metadata">
+    <xsl:apply-templates/>
+  </xsl:template>
+
   <xsl:template match="tei:date" mode="metadata">
     <dt>Date</dt>
     <dd>
