@@ -468,25 +468,30 @@
 	   </div>
 	 </xsl:when>
          <xsl:otherwise>
-	   
-	   <div>
-	     <head>Macros</head>
-	     <xsl:apply-templates mode="weave" select="tei:macroSpec">
-	       <xsl:sort select="@ident"/>
-	     </xsl:apply-templates>
-	   </div>
-	   <div>
-	     <head>Model classes</head>
-	     <xsl:apply-templates mode="weave" select="tei:classSpec[@type='model']">
-	       <xsl:sort select="@ident"/>
-	     </xsl:apply-templates>
-	   </div>
-	   <div>
-	     <head>Attribute classes</head>
-	     <xsl:apply-templates mode="weave" select="tei:classSpec[@type='atts']">
-	       <xsl:sort select="@ident"/>
-	     </xsl:apply-templates>
-	   </div>
+	   <xsl:if test="tei:macroSpec">
+	     <div>
+	       <head>Macros</head>
+	       <xsl:apply-templates mode="weave" select="tei:macroSpec">
+		 <xsl:sort select="@ident"/>
+	       </xsl:apply-templates>
+	     </div>
+	   </xsl:if>
+	   <xsl:if test="tei:classSpec[@type='model']">
+	     <div>
+	       <head>Model classes</head>
+	       <xsl:apply-templates mode="weave" select="tei:classSpec[@type='model']">
+		 <xsl:sort select="@ident"/>
+	       </xsl:apply-templates>
+	     </div>
+	   </xsl:if>
+	   <xsl:if test="tei:classSpec[@type='atts']">
+	     <div>
+	       <head>Attribute classes</head>
+	       <xsl:apply-templates mode="weave" select="tei:classSpec[@type='atts']">
+		 <xsl:sort select="@ident"/>
+	       </xsl:apply-templates>
+	     </div>
+	   </xsl:if>
 	   <div>
 	     <head>Elements</head>
 	     <xsl:apply-templates mode="weave" select="tei:elementSpec">
