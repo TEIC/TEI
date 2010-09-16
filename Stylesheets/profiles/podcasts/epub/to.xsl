@@ -19,23 +19,23 @@
 
     <hr/>
 
-    <table>
-      <tr><td><strong>Title</strong></td><td> <i><xsl:call-template name="generateTitle"/></i></td></tr>
-      <tr><td><strong>Description</strong></td><td> <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:notesStmt/tei:note"/></td></tr>
-      <tr><td><strong>Presenter(s)</strong></td><td> <xsl:call-template name="generateAuthor"/></td></tr>
-      <tr><td><strong>Recording</strong></td><td> 
+    <table class="transcriptSummary">
+      <tr><td class="label"><strong>Title</strong></td><td> <i><xsl:call-template name="generateTitle"/></i></td></tr>
+<!--      <tr><td class="label"><strong>Description</strong></td><td> <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:notesStmt/tei:note"/></td></tr> -->
+      <tr><td class="label"><strong>Presenter(s)</strong></td><td> <xsl:call-template name="generateAuthor"/></td></tr>
+      <tr><td class="label"><strong>Recording</strong></td><td> 
       <a>
 	<xsl:attribute name="href">
 	  <xsl:value-of select="substring-before($link,'?')"/>
 	  <xsl:text>?CAMEFROM=transcript</xsl:text>
 	</xsl:attribute>
       <xsl:value-of select="substring-before($link,'?')"/></a></td></tr>
-      <tr><td><strong>Keywords</strong></td><td> <xsl:for-each 
-      select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:profileDesc/tei:textClass/tei:keywords/tei:list/tei:item">
+<!--      <tr><td class="label"><strong>Keywords</strong></td><td> <xsl:for-each  
+      select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:profileDesc/tei:textClass/tei:keywords/tei:list/tei:item"> 
       <xsl:value-of select="."/>
       <xsl:if test="following-sibling::tei:item">, </xsl:if>
-      </xsl:for-each></td></tr>
-      <tr><td><strong>Part of series</strong></td><td><i><xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:p"/></i></td></tr>
+      </xsl:for-each></td></tr> -->
+      <tr><td class="label"><strong>Part of series</strong></td><td><i><xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:p"/></i></td></tr>
     </table>
     
     <hr/>
