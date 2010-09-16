@@ -251,18 +251,17 @@
   <foreign><xsl:apply-templates/></foreign>
 </xsl:template>
 
-<xsl:template match="imagedata">
-  <xsl:attribute name="url">
-    <xsl:value-of select="@fileref"/>
-  </xsl:attribute>
-</xsl:template>
-
 <xsl:template match="imageobject">
-  <xsl:apply-templates/>
+  <graphic url="{imagedata/@fileref}"/>
 </xsl:template>
 
-<xsl:template match="inlinemediaobject">
+<xsl:template match="imagedata">
+</xsl:template>
+
+<xsl:template match="inlinemediaobject|mediaobject">
+
  <xsl:apply-templates/>
+
 </xsl:template>
 
 <xsl:template match="issuenum">
@@ -307,10 +306,6 @@
 </xsl:template>
 
 <xsl:template match="literallayout">
-  <xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="mediaobject">
   <xsl:apply-templates/>
 </xsl:template>
 
