@@ -963,6 +963,15 @@
 
   <xsl:template match="tei:front/tei:titlePage"/>
 
+  <xsl:template name="myi18n">
+    <xsl:param name="word"/>
+    <xsl:choose>
+      <xsl:when test="$word='noteHeading'">
+      <xsl:text> </xsl:text>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template name="autoMakeHead">
     <xsl:param name="display"/>
     <xsl:choose>
@@ -978,4 +987,5 @@
       <xsl:otherwise>&#160;</xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
  </xsl:stylesheet>
