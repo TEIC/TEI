@@ -115,11 +115,11 @@
          <xsl:with-param name="text">
             <xsl:choose>
                <xsl:when test="local-name(.) = 'TEI'"/>
+               <xsl:when test="$depth &gt; $numberHeadingsDepth"> </xsl:when>
                <xsl:when test="self::tei:text">
 		 <xsl:number/>
 		 <xsl:call-template name="headingNumberSuffix"/>
 	       </xsl:when>
-               <xsl:when test="$depth &gt; $numberHeadingsDepth"> </xsl:when>
                <xsl:when test="ancestor::tei:back">
                   <xsl:if test="$numberBackHeadings='true'">
                      <xsl:call-template name="i18n">

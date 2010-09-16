@@ -34,10 +34,11 @@
    </doc>
 
     <xsl:param name="publisher">Oxford Text Archive, Oxford University</xsl:param>
-    <xsl:param name="numberHeadings">-1</xsl:param>
+    <xsl:param name="numberHeadings">false</xsl:param>
+    <xsl:param name="numberHeadingsDepth">-1</xsl:param>
+    <xsl:param name="numberBackHeadings"></xsl:param>
+    <xsl:param name="numberFrontHeadings"></xsl:param>
     <xsl:param name="autoToc">true</xsl:param>
-    <xsl:param name="numberBackHeadings">-1</xsl:param>
-    <xsl:param name="numberFrontHeadings">-1</xsl:param>
     <xsl:param name="cssFile">../profiles/ota/epub/ota.css</xsl:param>
 
     <xsl:template match="tei:title[@type='main']/text()">
@@ -137,5 +138,14 @@
   </xsl:template>
 
   <xsl:template match="tei:body/tei:lb"/>
+
+  <xsl:template match="tei:div/tei:lb"/>
+
+   <xsl:template match="tei:titlePart" mode="simple">
+      <xsl:if test="preceding-sibling::tei:titlePart">
+         <br/>
+      </xsl:if>
+      <xsl:value-of select="."/>
+   </xsl:template>
 
 </xsl:stylesheet>

@@ -531,14 +531,14 @@
 		  <xsl:variable name="N" select="position()"/>
 		  <navPoint>
 		    <navLabel>
-		      <text>Title page</text>
+		      <text>[Title page]</text>
 		    </navLabel>
 		      <content src="titlepage{$N}.html"/>
 		  </navPoint>
 		</xsl:for-each>
 		<navPoint>
 		  <navLabel>
-		    <text>Contents</text>
+		    <text>[The book]</text>
 		  </navLabel>
 		  <content src="index.html"/>
 		</navPoint>
@@ -579,7 +579,7 @@
 		</xsl:for-each>
 		<navPoint>
 		  <navLabel>
-		    <text>About this book</text>
+		    <text>[About this book]</text>
 		  </navLabel>
 		  <content src="titlepageback.html"/>
 		</navPoint>
@@ -963,14 +963,6 @@
 
   <xsl:template match="tei:front/tei:titlePage"/>
 
-  <xsl:template name="myi18n">
-    <xsl:param name="word"/>
-    <xsl:choose>
-      <xsl:when test="$word='noteHeading'">
-      <xsl:text> </xsl:text>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
 
   <xsl:template name="autoMakeHead">
     <xsl:param name="display"/>

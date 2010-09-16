@@ -515,9 +515,11 @@
   <xsl:template name="formatHeadingNumber">
       <xsl:param name="text"/>
       <xsl:param name="toc"/>
-      <span class="headingNumber">
-	<xsl:copy-of select="$text"/>
-      </span>
+      <xsl:if test="not($text='')">
+	<span class="headingNumber">
+	  <xsl:copy-of select="$text"/>
+	</span>
+      </xsl:if>
   </xsl:template>
 
 </xsl:stylesheet>
