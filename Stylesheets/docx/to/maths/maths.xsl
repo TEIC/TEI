@@ -9,7 +9,6 @@
                 xmlns:dcterms="http://purl.org/dc/terms/"
                 xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:iso="http://www.iso.org/ns/1.0"
-                xmlns:its="http://www.w3.org/2005/11/its"
                 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
                 xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -31,7 +30,7 @@
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
-                exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso its  rel  tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
+                exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso   rel  tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
     
     <xsl:import href="../parameters.xsl"/>
     

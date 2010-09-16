@@ -25,8 +25,6 @@
                 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
                 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
-		xmlns:its="http://www.w3.org/2005/11/its" 
-
                 xmlns="http://www.tei-c.org/ns/1.0"
                 version="2.0"
                 exclude-result-prefixes="a cp dc dcterms dcmitype prop     iso m mml mo mv o pic r rel     tbx tei teidocx v xs ve w10 w wne wp">
@@ -85,7 +83,10 @@
 	 </xsl:attribute>
        </xsl:if>
        <xsl:if test="w:pPr/w:pStyle/w:rPr/w:rtl">
-	 <xsl:attribute name="its:dir"><xsl:text>rtl</xsl:text></xsl:attribute>
+	 <xsl:attribute name="dir"
+			xmlns="http://www.w3.org/2005/11/its">
+	   <xsl:text>rtl</xsl:text>
+	 </xsl:attribute>
        </xsl:if>
        <xsl:choose>
 	 <xsl:when test="w:pPr/w:rPr/w:ins">

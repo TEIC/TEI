@@ -8,7 +8,6 @@
                 xmlns:dcterms="http://purl.org/dc/terms/"
                 xmlns:dcmitype="http://purl.org/dc/dcmitype/"
                 xmlns:iso="http://www.iso.org/ns/1.0"
-		xmlns:its="http://www.w3.org/2005/11/its"
                 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
                 xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
@@ -30,7 +29,7 @@
                 xmlns="http://www.tei-c.org/ns/1.0"
                 version="2.0"
                 exclude-result-prefixes="a cp dc dcterms dcmitype prop
-					 its iso m mml mo mv o pic r rel       tbx tei teidocx v xs ve w10 w wne wp">
+					  iso m mml mo mv o pic r rel       tbx tei teidocx v xs ve w10 w wne wp">
 
 	  <xsl:import href="../utils/maths/omml2mml.xsl"/>
 	  <xsl:import href="../utils/functions.xsl"/>
