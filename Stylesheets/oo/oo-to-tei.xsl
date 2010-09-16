@@ -343,7 +343,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="office:annotation/text:p">
+  <xsl:template match="office:annotation/text:p" priority="100">
     <note>
         <xsl:apply-templates/>
     </note>
