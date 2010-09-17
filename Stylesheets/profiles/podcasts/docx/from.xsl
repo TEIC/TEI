@@ -75,11 +75,21 @@
 			  <xsl:value-of
 			      select="title"/>
 			</title>
-			<xsl:for-each select="media:credit">
 			  <author>
-			    <xsl:value-of select="."/>
+			    <xsl:for-each select="media:credit">
+			      <xsl:value-of select="."/>
+			      <xsl:choose>
+				<xsl:when
+				    test="count(following-sibling::media:credit)=1">
+				  <xsl:text> and </xsl:text>
+				</xsl:when>
+				<xsl:when
+				    test="following-sibling::media:credit">
+				  <xsl:text>, </xsl:text>
+				</xsl:when>
+			      </xsl:choose>
+			    </xsl:for-each>
 			  </author>
-			</xsl:for-each>
 		      </titleStmt>
 		      <editionStmt>
 			<edition>
