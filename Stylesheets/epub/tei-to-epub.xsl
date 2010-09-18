@@ -172,10 +172,7 @@
     <xsl:for-each select="$stage1">
       <xsl:variable name="coverImageOutside">
 	<xsl:choose>
-	  <xsl:when test="not($coverimage='')">
-	    <xsl:value-of select="$coverimage"/>
-	  </xsl:when>
-	  <xsl:otherwise>
+	  <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage[@facs]">
 	    <xsl:for-each
 		select="/tei:TEI/tei:text/tei:front/tei:titlePage[@facs][1]">
 	      <xsl:for-each
@@ -190,7 +187,10 @@
 		</xsl:choose>
 	      </xsl:for-each>
 	    </xsl:for-each>
-	  </xsl:otherwise>
+	  </xsl:when>
+	  <xsl:when test="not($coverimage='')">
+	    <xsl:value-of select="$coverimage"/>
+	  </xsl:when>
 	</xsl:choose>
       </xsl:variable>
       <xsl:variable name="coverImageInside">
@@ -305,12 +305,12 @@
                 <xsl:call-template name="generateLicence"/>
               </dc:rights>
 	      <xsl:if test="not($coverImageOutside='')">
-		<meta name="cover"  content="cover-image" />
+		<meta name="cover" content="cover-image"/>
 	      </xsl:if>
             </metadata>
 
 	    <manifest>
-	      <xsl:if test="not($coverimage='')">
+	      <xsl:if test="not($coverImageOutside='')">
 		<item href="{$coverImageOutside}" id="cover-image" media-type="image/jpeg"/>
 	      </xsl:if>
 	      <item href="stylesheet.css" id="css" media-type="text/css"/>
@@ -353,6 +353,7 @@
               </xsl:for-each>
               <!-- images -->
               <xsl:for-each select="key('GRAPHICS',1)">
+		<xsl:if test="not(@url=$coverImageOutside)">
                 <xsl:variable name="ID">
                   <xsl:number level="any"/>
                 </xsl:variable>
@@ -363,25 +364,23 @@
                     <xsl:otherwise>image/jpeg</xsl:otherwise>
                   </xsl:choose>
 		</xsl:variable>
-                <item href="{@url}" id="image-{$ID}" media-type="{$mimetype}"/>
+                <item href="{@url}" id="image-{$ID}"
+		      media-type="{$mimetype}"/>
+		</xsl:if>
               </xsl:for-each>
               <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
             </manifest>
             <spine toc="ncx">
-              <itemref idref="titlepage" linear="no"/>
+              <itemref idref="titlepage" linear="yes"/>
 	      <xsl:for-each select="tei:text/tei:front/tei:titlePage">
 		<xsl:variable name="N" select="position()"/>
-		<itemref idref="titlepage{$N}"  linear="no"/>
+		<itemref idref="titlepage{$N}"  linear="yes"/>
 	      </xsl:for-each>
               <itemref idref="start"  linear="yes"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
 		<xsl:choose>
 		  <xsl:when test="not(html:a)"/>
 		  <xsl:when test="starts-with(html:a/@href,'#')"/>
-		  <!--
-		      <xsl:when
-		      test="contains(@class,'headless')"/>
-		  -->
 		  <xsl:otherwise>
                     <itemref  linear="yes">
                       <xsl:attribute name="idref">
@@ -393,7 +392,7 @@
 		  </xsl:choose>
                   <xsl:if test="html:ul">
                     <xsl:for-each select="html:ul//html:li[not(contains(html:a/@href,'#'))]">
-                      <itemref>
+                      <itemref linear="yes">
                         <xsl:attribute name="idref">
                           <xsl:text>section</xsl:text>
                           <xsl:number count="html:li" level="any"/>
@@ -406,8 +405,7 @@
             </spine>
 
 	    <guide>
-	      <reference href="titlepage.html" type="cover"
-			 title="Cover"/>
+	      <reference type="text" href="titlepage.html" title="Cover"/>
               <reference type="text" title="Start" href="index.html"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
 		 

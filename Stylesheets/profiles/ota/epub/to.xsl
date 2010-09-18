@@ -41,6 +41,7 @@
     <xsl:param name="numberTables">false</xsl:param>
     <xsl:param name="autoToc">true</xsl:param>
     <xsl:param name="cssFile">../profiles/ota/epub/ota.css</xsl:param>
+    <xsl:param name="subject">OTA text</xsl:param>
 
     <xsl:template match="tei:title[@type='main']/text()">
       <xsl:value-of select="replace(.,' \[Electronic resource\]','')"/>
