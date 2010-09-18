@@ -11,8 +11,6 @@
   <xsl:output method="xml" encoding="utf-8" indent="yes"/>
   <xsl:key name="GRAPHICS" use="1"
 	   match="tei:graphic"/>
-  <xsl:key name="PAGEIMAGES" use="1" 
-	   match="tei:pb[@facs]"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p>
@@ -66,22 +64,6 @@
   <xsl:param name="topNavigationPanel">false</xsl:param>
   <xsl:param name="uid"/>
 
-  <xsl:variable name="coverimageFile">
-    <xsl:choose>
-      <xsl:when test="not($coverimage='')">
-	<xsl:value-of select="$coverimage"/>
-      </xsl:when>
-      <xsl:when
-	  test="/tei:TEI/tei:text/tei:front/tei:titlePage/@facs">
-        <xsl:text>media/imagetitlePage</xsl:text>
-	<xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:titlePage[@facs]">
-	  <xsl:number level="any"/>
-	  <xsl:text>.</xsl:text>
-	  <xsl:value-of select="tokenize(@url|@facs,'\.')[last()]"/>
-	</xsl:for-each>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:variable>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[epub] Suppress normal page footer      </desc>
    </doc>
@@ -188,6 +170,44 @@
       <xsl:apply-templates mode="fixgraphics"/>
     </xsl:variable>
     <xsl:for-each select="$stage1">
+      <xsl:variable name="coverImageOutside">
+	<xsl:choose>
+	  <xsl:when test="not($coverimage='')">
+	    <xsl:value-of select="$coverimage"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:for-each
+		select="/tei:TEI/tei:text/tei:front/tei:titlePage[@facs][1]">
+	      <xsl:for-each
+		  select="key('IDS',substring(@facs,2))">
+		<xsl:choose>
+		  <xsl:when test="count(tei:graphic)=1">
+		    <xsl:value-of select="tei:graphic/@url"/>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:value-of select="tei:graphic[2]/@url"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+	      </xsl:for-each>
+	    </xsl:for-each>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="coverImageInside">
+	<xsl:choose>
+	  <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage[@facs]">
+	    <xsl:for-each
+		select="/tei:TEI/tei:text/tei:front/tei:titlePage[@facs][1]">
+	      <xsl:for-each select="key('IDS',substring(@facs,2))">
+		<xsl:value-of select="tei:graphic[1]/@url"/>
+	      </xsl:for-each>
+	    </xsl:for-each>
+	  </xsl:when>
+	  <xsl:when test="not($coverimage='')">
+	    <xsl:value-of select="$coverimage"/>
+	  </xsl:when>
+	</xsl:choose>
+      </xsl:variable>
       <xsl:apply-templates mode="split"/>
       <xsl:for-each select="*">
         <xsl:variable name="TOC">
@@ -284,14 +304,14 @@
               <dc:rights>
                 <xsl:call-template name="generateLicence"/>
               </dc:rights>
-	      <xsl:if test="not($coverimageFile='')">
+	      <xsl:if test="not($coverImageOutside='')">
 		<meta name="cover"  content="cover-image" />
 	      </xsl:if>
             </metadata>
 
 	    <manifest>
-	      <xsl:if test="not($coverimageFile='')">
-		<item href="{$coverimageFile}" id="cover-image" media-type="image/jpeg"/>
+	      <xsl:if test="not($coverimage='')">
+		<item href="{$coverImageOutside}" id="cover-image" media-type="image/jpeg"/>
 	      </xsl:if>
 	      <item href="stylesheet.css" id="css" media-type="text/css"/>
 	      <item href="titlepage.html" id="titlepage"
@@ -345,30 +365,15 @@
 		</xsl:variable>
                 <item href="{@url}" id="image-{$ID}" media-type="{$mimetype}"/>
               </xsl:for-each>
-              <!-- page images -->
-              <xsl:for-each select="key('PAGEIMAGES',1)">
-                <xsl:variable name="ID">
-		  <xsl:text>pb</xsl:text>
-                  <xsl:number level="any"/>
-                </xsl:variable>
-                <xsl:variable name="mimetype">
-                  <xsl:choose>
-                    <xsl:when test="contains(@url,'.gif')">image/gif</xsl:when>
-                    <xsl:when test="contains(@url,'.png')">image/png</xsl:when>
-                    <xsl:otherwise>image/jpeg</xsl:otherwise>
-                  </xsl:choose>
-		</xsl:variable>
-                <item href="{@facs}" id="image-{$ID}" media-type="{$mimetype}"/>
-              </xsl:for-each>
               <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
             </manifest>
             <spine toc="ncx">
-              <itemref idref="titlepage"/>
+              <itemref idref="titlepage" linear="no"/>
 	      <xsl:for-each select="tei:text/tei:front/tei:titlePage">
 		<xsl:variable name="N" select="position()"/>
-		<itemref idref="titlepage{$N}"/>
+		<itemref idref="titlepage{$N}"  linear="no"/>
 	      </xsl:for-each>
-              <itemref idref="start"/>
+              <itemref idref="start"  linear="yes"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
 		<xsl:choose>
 		  <xsl:when test="not(html:a)"/>
@@ -378,7 +383,7 @@
 		      test="contains(@class,'headless')"/>
 		  -->
 		  <xsl:otherwise>
-                    <itemref>
+                    <itemref  linear="yes">
                       <xsl:attribute name="idref">
                         <xsl:text>section</xsl:text>
                         <xsl:number count="html:li" level="any"/>
@@ -397,7 +402,7 @@
                     </xsl:for-each>
 		  </xsl:if>
               </xsl:for-each>
-              <itemref idref="titlepageback"/>
+              <itemref idref="titlepageback"  linear="no"/>
             </spine>
 
 	    <guide>
@@ -446,7 +451,7 @@
 	    </head>
 	    <body>
 	      <xsl:choose>
-		<xsl:when test="$coverimageFile=''">
+		<xsl:when test="$coverImageInside=''">
 		  <div style="font-family: serif; height:860;
 			      font-size:36pt; border: bold red 1pt; text-align:center">
 		    <xsl:call-template name="generateTitle"/>
@@ -456,7 +461,7 @@
 		  <div>
 		    <img width="600" height="860"
 			 alt="cover picture"
-			 src="{$coverimageFile}"/>
+			 src="{$coverImageInside}"/>
 		  </div>
 		</xsl:otherwise>
 	      </xsl:choose>
@@ -527,6 +532,12 @@
             </docTitle>
             <navMap>
 	      <xsl:variable name="navPoints">
+		  <navPoint>
+		    <navLabel>
+		      <text>[Cover]</text>
+		    </navLabel>
+		      <content src="titlepage.html"/>
+		  </navPoint>
 		<xsl:for-each select="tei:text/tei:front/tei:titlePage[1]">
 		  <xsl:variable name="N" select="position()"/>
 		  <navPoint>
@@ -645,7 +656,7 @@
       <desc>[epub] Add specific linebreak in verbatim output, as
       readers do not seem to grok the CSS
       </desc>
-   </doc>
+  </doc>
   <xsl:template name="verbatim-lineBreak">
     <xsl:param name="id"/>
     <br/>
@@ -672,30 +683,6 @@
     </xsl:copy>
   </xsl:template>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[epub] Local mode to rewrite names of graphics inclusions
-      </desc>
-   </doc>
-  <xsl:template match="tei:titlePage[@facs]|tei:pb[@facs]"
-		mode="fixgraphics">
-    <xsl:copy>
-      <xsl:variable name="newName">
-        <xsl:text>media/image</xsl:text>
-	<xsl:if test="@facs">
-	  <xsl:value-of select="local-name()"/>
-	</xsl:if>
-        <xsl:number level="any"/>
-        <xsl:text>.</xsl:text>
-        <xsl:value-of select="tokenize(@url|@facs,'\.')[last()]"/>
-      </xsl:variable>
-      <xsl:attribute name="facs">
-	<xsl:value-of select="$newName"/>
-      </xsl:attribute>
-      <xsl:copy-of select="@n"/>
-      <xsl:apply-templates
-	  select="*|@*|processing-instruction()|comment()|text()" mode="fixgraphics"/>
-    </xsl:copy>
-  </xsl:template>
 
   <xsl:template match="tei:graphic" mode="fixgraphics">
     <xsl:copy>
@@ -703,10 +690,9 @@
 	<xsl:when test="$fixgraphicsurl='true'">
 	  <xsl:variable name="newName">
 	    <xsl:text>media/image</xsl:text>
-	    <xsl:if test="self::tei:pb">pb</xsl:if>
 	    <xsl:number level="any"/>
 	    <xsl:text>.</xsl:text>
-	    <xsl:value-of select="tokenize(@url|@facs,'\.')[last()]"/>
+	    <xsl:value-of select="tokenize(@url,'\.')[last()]"/>
 	  </xsl:variable>
 	  <xsl:attribute name="url">
 	    <xsl:value-of select="$newName"/>
@@ -781,12 +767,17 @@
   <xsl:template name="addLangAtt"/>
 
   <xsl:template match="tei:pb[@facs]">
+    <xsl:variable name="IMG">
+      <xsl:for-each select="key('IDS',substring(@facs,2))">
+	<xsl:value-of select="tei:graphic[1]/@url"/>	
+      </xsl:for-each>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="parent::tei:div | parent::tei:body">
-	<div><img src="{@facs}" alt="page image"/></div>
+	<div><img src="{$IMG}" alt="page image"/></div>
       </xsl:when>
       <xsl:otherwise>
-	<img width="600" height="860" src="{@facs}" alt="page image"/>
+	<img width="600" height="860" src="{$IMG}" alt="page image"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -927,6 +918,10 @@
       <xsl:apply-templates/>
   </xsl:template>
 
+  <xsl:template match="tei:distributor/tei:name">
+      <xsl:apply-templates/><br/>
+  </xsl:template>
+
   <xsl:template match="tei:distributor/tei:address">
       <xsl:apply-templates/>
   </xsl:template>
@@ -935,7 +930,7 @@
       <br/><xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="tei:authority/tei:addLine">
+  <xsl:template match="tei:authority/tei:addrLine">
       <xsl:apply-templates/><br/>
   </xsl:template>
 
