@@ -50,7 +50,7 @@
 	  <xsl:variable name="file">
 	    <xsl:text>/</xsl:text>
 	    <xsl:value-of select="regex-group(3)"/>
-	    <xsl:text>.</xsl:text>
+	    <xsl:text>.mp3</xsl:text>
 	  </xsl:variable>
 	  <xsl:variable name="feed">
 	    <xsl:value-of select="regex-group(1)"/>
