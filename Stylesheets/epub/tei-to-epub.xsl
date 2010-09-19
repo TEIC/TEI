@@ -130,12 +130,16 @@
    </doc>
   <xsl:template name="generateID">
     <xsl:choose>
-      <xsl:when test="$uid=''">
-        <xsl:text>http://www.example.com/TEIEPUB/</xsl:text>
-        <xsl:value-of select="format-dateTime(current-dateTime(),'[Y][M02][D02][H02][m02][s02]')"/>
+      <xsl:when test="not($uid='')">
+        <xsl:value-of select="$uid"/>
+      </xsl:when>
+      <xsl:when
+	  test="tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:idno">
+	<xsl:value-of select="tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:idno[1]"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="$uid"/>
+        <xsl:text>http://www.example.com/TEIEPUB/</xsl:text>
+        <xsl:value-of select="format-dateTime(current-dateTime(),'[Y][M02][D02][H02][m02][s02]')"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
