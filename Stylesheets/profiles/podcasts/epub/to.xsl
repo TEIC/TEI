@@ -8,6 +8,8 @@
     <!-- import base conversion style -->
 
     <xsl:import href="../../../epub/tei-to-epub.xsl"/>
+    <xsl:param name="cssFile">../profiles/podcasts/epub/podcast.css</xsl:param>
+    <xsl:param name="subject">Oxford Podcast</xsl:param>
     
   <xsl:template name="stdheader">
     <xsl:param name="title" select="'(no title)'"/>
@@ -17,28 +19,26 @@
 
     <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:publisher/tei:graphic"/>
 
-    <hr/>
-
-    <table class="transcriptSummary">
-      <tr><td class="label"><strong>Title</strong></td><td> <i><xsl:call-template name="generateTitle"/></i></td></tr>
-<!--      <tr><td class="label"><strong>Description</strong></td><td> <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:notesStmt/tei:note"/></td></tr> -->
-      <tr><td class="label"><strong>Presenter(s)</strong></td><td> <xsl:call-template name="generateAuthor"/></td></tr>
-      <tr><td class="label"><strong>Recording</strong></td><td> 
-      <a>
+    <div class="transcriptSummary">
+    <p><i><xsl:call-template name="generateTitle"/></i></p>
+    <p>Presenter(s): <xsl:call-template name="generateAuthor"/></p>
+    <p>A recording is available online here: <a>
 	<xsl:attribute name="href">
 	  <xsl:value-of select="substring-before($link,'?')"/>
 	  <xsl:text>?CAMEFROM=transcript</xsl:text>
 	</xsl:attribute>
-      <xsl:value-of select="substring-before($link,'?')"/></a></td></tr>
+      <xsl:value-of select="substring-before($link,'?')"/></a></p>
+      <p>Part of a series: 
+      <i><xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:p"/></i></p>
+    </div>
+<!--      <tr><td class="label"><strong>Description</strong></td><td> <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:notesStmt/tei:note"/></td></tr> -->
 <!--      <tr><td class="label"><strong>Keywords</strong></td><td> <xsl:for-each  
       select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:profileDesc/tei:textClass/tei:keywords/tei:list/tei:item"> 
       <xsl:value-of select="."/>
       <xsl:if test="following-sibling::tei:item">, </xsl:if>
-      </xsl:for-each></td></tr> -->
-      <tr><td class="label"><strong>Part of series</strong></td><td><i><xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:p"/></i></td></tr>
-    </table>
-    
-    <hr/>
+      </xsl:for-each></td></tr> 
+-->
+
 
   </xsl:template>
 
