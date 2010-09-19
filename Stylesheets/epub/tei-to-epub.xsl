@@ -46,7 +46,7 @@
   <xsl:param name="coverimage"/>
   <xsl:param name="cssFile">../tei.css</xsl:param>
   <xsl:param name="cssODDFile">../odd.css</xsl:param>
-  <xsl:param name="cssPrintFile">../tei-print.css</xsl:param>
+  <xsl:param name="cssPrintFile"></xsl:param>
   <xsl:param name="debug">false</xsl:param>
   <xsl:param name="directory"></xsl:param>
   <xsl:param name="doctypePublic">-//W3C//DTD XHTML 1.1//EN</xsl:param>
