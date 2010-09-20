@@ -27,15 +27,15 @@ ini_set("max_execution_time", 120);
 //#########################
 define ( 'roma_customization_validator','roma/oddschema.rng');
 define ( 'roma_temporaryFilesDir',   '/tmp' );
-//define ( 'roma_xquery_server',       'http://tei.oucs.ox.ac.uk/Query/' );
-define ( 'roma_xquery_server',       'http://localhost:8080/exist/Query/' );
+define ( 'roma_xquery_server',       'http://tei.oucs.ox.ac.uk/Query/' );
+//define ( 'roma_xquery_server',       'http://localhost:8080/exist/Query/' );
 //define('roma_xquery_server', 'http://www.tei-c.org/Query/');
-//define ( 'roma_teiweb_server',       'http://www.tei-c.org/release/doc/tei-p5-doc/' );
-define ( 'roma_teiweb_server',       'http://localhost/release/doc/tei-p5-doc/' );
+define ( 'roma_teiweb_server',       'http://www.tei-c.org/release/doc/tei-p5-doc/' );
+//define ( 'roma_teiweb_server',       'http://localhost/release/doc/tei-p5-doc/' );
 define ( 'roma_tei',                 '/usr/share/' );
 define ( 'roma_localStylesheetDir',  'roma/stylesheets' );
 define ( 'roma_templateDir',         'roma/templates' );
 define ( 'roma_resource_path',       'roma/res' );
 define ('roma_version','3.13');
-define ('roma_date','2010-06-19');
+define ('roma_date','2010-07-07');
 </script>

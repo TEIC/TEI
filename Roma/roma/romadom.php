@@ -60,6 +60,10 @@ class romaDom extends domDocument
 	$oSourceDesc = $oFileDesc->appendChild( new domElement( 'sourceDesc' ) );
 	$oP = $oSourceDesc->appendChild( new domElement( 'p' ) );
 //Tuesday 13th 2006f June 2006 10:57:23 PM
+	date_default_timezone_set('Europe/London');
+
+	$script_tz = date_default_timezone_get();
+
 	$oP->appendChild( new domText( 'created on ' . date( "l dS F Y h:i:s A" ) . '' ) );
 
 	$oText = $oTEI->appendChild( new domElement( 'text' ) );
@@ -2100,71 +2104,32 @@ class romaDom extends domDocument
     // --- Little Helpers
     // #####################################################################
 
-    public function getOddDom( &$oDOC )
-      {
-	$oXSL = new domDocument();
-	$oXSL->load( roma_tei . '/xml/tei/stylesheet/odds/odd2odd.xsl' );
-	$oProc = new XsltProcessor();
-	$oProc->importStylesheet( $oXSL );
-  $oProc->setParameter( null, 'stripped', 'false');
-	$oProc->setParameter( null, 'TEISERVER', roma_xquery_server);
-	$oProc->setParameter( null, 'TEIC', 'true');
-	$this->getOddLanguage( $szOddLanguage );
-        if ($szOddLanguage=='en') 
-     	  { 
-	  $oDOC = $oProc->transformToDoc( $this ); }
-	else
-	   {
-              $oXSL2 = new domDocument();
-              $oXSL2->load(  roma_tei . '/xml/tei/stylesheet/odds/translate-odd.xsl' );
-              $oProc2 = new XsltProcessor();
- 	      $oProc2->setParameter( null, 'TEIC', 'true');	
-              $oProc2->setParameter( null, 'TEISERVER', roma_xquery_server);
-              $oProc2->setParameter( null, 'lang', $szOddLanguage );
-              $oProc2->importStylesheet( $oXSL2 );
-              $oDOC = $oProc2->transformToDoc($oProc->transformToDoc($this )); 
-	 }
-      }
-
-    protected function getDocDom( &$oDOC )
-      {
-	$oXSL = new domDocument();
-	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/odds/odd2odd.xsl' );
-	$oProc = new XsltProcessor();
-	$oProc->importStylesheet( $oXSL );
-	$oProc->setParameter( null, 'TEISERVER', roma_xquery_server);
-	$oProc->setParameter( null, 'TEIC', 'true');
-	$this->getOddLanguage( $szOddLanguage );
-        if ($szOddLanguage=='en') 
-     	  { 
-	  $oDOC = $oProc->transformToDoc( $this ); }
-	else
-	   {
-              $oXSL2 = new domDocument();
-              $oXSL2->load(  roma_tei . '/xml/tei/stylesheet/odds/translate-odd.xsl' );
-              $oProc2 = new XsltProcessor();
- 	      $oProc2->setParameter( null, 'TEIC', 'true');	
-              $oProc2->setParameter( null, 'TEISERVER', roma_xquery_server);
-              $oProc2->setParameter( null, 'lang', $szOddLanguage );
-              $oProc2->importStylesheet( $oXSL2 );
-              $oDOC = $oProc2->transformToDoc($oProc->transformToDoc($this )); 
-	 }
-      }
-
-    protected function getSchemaRNGDom( &$oRNG )
-      {
-	$this->getDocDom( $oDOC );
-	$this->getDocLanguage( $szDocLanguage );
-        $oXSL = new domDocument();
- 	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/odds/odd2relax.xsl'  );
-	$oProc = new XsltProcessor();
-	$oProc->importStylesheet( $oXSL );
-	$oProc->setParameter( null, 'TEIC', 'true');
-        $oProc->setParameter( null, 'doclang', $szDocLanguage );
-	$oProc->setParameter( null, 'displayMode', 'rnc' );
-	$oProc->setParameter( null, 'outputDir', '-' );
-	$oRNG = $oProc->transformToDoc( $oDOC );
-      } 
+    protected function callGarage ( &$garageResult, $target) {
+	$OXG = 'http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/';
+	if ( $bBar )
+	  {
+	    $this->loadProgressBar();
+	    $this->updateProgressBar( '10' );
+	  }
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	curl_setopt($ch, CURLOPT_VERBOSE, 0);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_URL, $OXG . $target);
+	curl_setopt($ch, CURLOPT_POST, true);
+	$tmpfname = tempnam(roma_temporaryFilesDir, "oxg");
+	$handle = fopen($tmpfname, "w");
+	fwrite($handle, $this->SaveXML());
+	fclose($handle);
+	if ( $bBar )
+	    $this->updateProgressBar( '20' );
+	$file = array("upload"=>"@" . $tmpfname);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $file); 
+	$garageResult = curl_exec($ch);
+	unlink($tmpfname);
+	if ( $bBar )
+	    $this->updateProgressBar( '100' );
+    }
 
     protected function getSchemaSchematronDom( &$oSCH )
       {
@@ -2211,116 +2176,29 @@ class romaDom extends domDocument
     // #####################################################################
     // --- Creating some documentation versions
     // #####################################################################
-    public function getTeiLiteDom( &$oTeiLite )
-      {
-	if ( $this->bBar )
-        $this->m_oRomaDom->updateProgressBar( '55' );
-	$this->getDocDom( $oDOC );
-        $oXSL = new domDocument();
-	$this->getDocLanguage( $szDocLanguage );
- 	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/odds/odd2lite.xsl'  );
-	$oProc = new XsltProcessor();
-	$oProc->importStylesheet( $oXSL );
-	$oProc->setParameter( null, 'doclang', $szDocLanguage);
-	$oProc->setParameter( null, 'documentationLanguage', $szDocLanguage);
-	$oProc->setParameter( null, 'TEIC', 'true');
-	$oProc->setParameter( null, 'displayMode', 'rnc' );
-	
-	$oTeiLite = $oProc->transformToDoc( $oDOC );
-      }
 
     public function outputPlain( &$szDoc, $bBar = false )
       {
-	if ( $bBar )
-	  {
-	    $this->loadProgressBar();
-	    $this->updateProgressBar( '30' );
-	  }
-	$this->getDocDom( $oDOC );
-	if ( $bBar )
-	    $this->updateProgressBar( '80' );
-//	$oTidy = new tidy();
-//	$aszOptions = array( 'indent' => true,
-//			     'indent-spaces' => 1,
-//			     'wrap' => 72,
-//			     'input-xml' => true,
-//			     'output-xml' => true
-//			     );
-//	$oTidy->parseString( $oDOC->SaveXML(), $aszOptions );
-
-//	$oTidy->cleanRepair();
-	$szDoc = $oDOC->SaveXML();
-
-	if ( $bBar )
-	    $this->updateProgressBar( '100' );
+	$this->callGarage($szDoc, "");
       }
 
 
     public function outputTeiLite( &$szTeiLite )
       {
-	$this->getTeiLiteDom( $oTeiLiteDom );
-	if ( $this->bBar )
-	    $this->m_oRomaDom->updateProgressBar( '70' );
-	
-//	$oTidy = new tidy();
-//	$aszOptions = array( 'indent' => false,
-//			     'input-xml' => true,
-//			     'output-xml' => true
-//			     );
-//	$oTidy->parseString( $oTeiLiteDom->SaveXML(), $aszOptions );
-	if ( $this->bBar )
-	    $this->m_oRomaDom->updateProgressBar( '80' );
-
-//	$oTidy->cleanRepair();
-	$szTeiLite = $oTeiLiteDom->SaveXML();
-
-	if ( $this->bBar )
-	    $this->m_oRomaDom->updateProgressBar( '100' );
+	$target="TEI%3Atext%3Axml";
+	$this->callGarage($szTeiLite, $target);
       }
 
     public function outputLatex( &$szLatex )
       {
-	$this->getTeiLiteDom( $oTeiLiteDom );
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '70' );
-
-	$oXSL = new domDocument();
-	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/latex/tei.xsl'  );
-	$oProc = new XsltProcessor();
-	$oProc->importStylesheet( $oXSL );
-	$oProc->setParameter( null, 'reencode', 'false' );
-	
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '85' );
-	
-	$szLatex = $oProc->transformToXML( $oTeiLiteDom );
-	
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '100' );
+	$target="latex%3Aapplication%3Ax-latex";
+	$this->callGarage($szLatex, $target);
       }
 
     public function outputPdfLatex( &$szPdf )
       {
-	$this->getTeiLiteDom( $oTeiLiteDom );
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '70' );
-
-	
-	$oXSL = new domDocument();
-	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/latex/tei.xsl'  );
-	$oProc = new XsltProcessor();
-	$oProc->importStylesheet( $oXSL );
-	$oProc->setParameter( null, 'reencode', 'false' );
-
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '75' );
-
-	$szTmp = $oProc->transformToXML( $oTeiLiteDom );
-	
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '80' );
-
-	//Save File
+	$target="latex%3Aapplication%3Ax-latex";
+	$this->callGarage($szTmp, $target);
 	$szID = md5( uniqid(rand(), true ) );
 	
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tex';    
@@ -2394,80 +2272,10 @@ class romaDom extends domDocument
 	  $this->m_oRomaDom->updateProgressBar( '100' );
       }
 
-    public function outputDVI ( &$szDVI )
-      {
-	$this->getTeiLiteDom( $oTeiLiteDom );
-
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '60' );
-
-	$oXSL = new domDocument();
-	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/latex/tei.xsl');
-	
-	$oProc = new XsltProcessor();
-	$oProc->importStylesheet( $oXSL );
-	$szTmp = $oProc->transformToXML( $oTeiLiteDom );
-
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '70' );
-	
-	//Save File
-	$szID = md5( uniqid(rand(), true ) );
-	
-	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tex';    
-	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.dvi';    
-	
-	file_put_contents( $szInputFile , $szTmp );
-
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '80' );
-
-	$szCurrentDir = getcwd();
-	chdir( roma_temporaryFilesDir );
-	exec( roma_latex . ' -interaction=nonstopmode ' . $szInputFile );
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '90' );
-
-	exec( roma_latex . ' -interaction=nonstopmode ' . $szInputFile );
-	chdir( $szCurrentDir );
-
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '95' );
-	
-	$szDVI = join( '', file( $szOutputFile ) );
-	
-	unlink( $szInputFile );
-	unlink( $szOutputFile );
-
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '100' );
-      }
-
     public function outputHTML ( &$szHTML )
       {
-	$this->getDocDom( $oDOC );
-	$this->getDocLanguage( $szDocLanguage );
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '55' );
-        $oXSL = new domDocument();
- 	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/odds/odd2html.xsl'  );
-
-	$oProc = new XsltProcessor();
-	$oProc->importStylesheet( $oXSL );
-	$oProc->setParameter( null, 'doclang', $szDocLanguage);
-	$oProc->setParameter( null, 'documentationLanguage', $szDocLanguage);
-	$oProc->setParameter( null, 'TEIC', 'true');	
-	$oProc->setParameter( null, 'displayMode', 'rnc' );
-	$oProc->setParameter( null, 'STDOUT', 'true' );
-	$oProc->setParameter( null, 'splitLevel', '-1' );
-
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '80' );
-
-	$szHTML = $oProc->transformToDoc( $oDOC )->SaveXML();
-
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '100' );
+	$target="oddhtml%3Aapplication%3Axhtml%2Bxml";
+	$this->callGarage($szHTML, $target);
       }
 
     // #####################################################################
@@ -2476,28 +2284,8 @@ class romaDom extends domDocument
 
     public function createSchemaRNG( &$szRNG, $bBar = false )
       {
-	if ( $bBar )
-	  {
-	    $this->loadProgressBar();
-	    $this->updateProgressBar( '30' );
-	  }
-	$this->getSchemaRNGDom( $oRNG );
-	if ( $bBar )
-	    $this->updateProgressBar( '80' );
-//	$oTidy = new tidy();
-//	$aszOptions = array( 'indent' => true,
-//			     'indent-spaces' => 1,
-//			     'wrap' => 72,
-//			     'input-xml' => true,
-//			     'output-xml' => true
-//			     );
-//	$oTidy->parseString( $oRNG->SaveXML(), $aszOptions );
-
-//	$oTidy->cleanRepair();
-//	$szRNG = $oTidy->value;
-	$szRNG = $oRNG->SaveXML();
-	if ( $bBar )
-	    $this->updateProgressBar( '100' );
+	$target="relaxng%3Aapplication%3Axml-relaxng/";
+	$this->callGarage($szRNG, $target);
       }
 
     public function createSchemaSCH( &$szSCH, $bBar = false )
@@ -2517,32 +2305,15 @@ class romaDom extends domDocument
 
     public function createSchemaRNC( &$szRNC, $bBar = false )
       {
-	if ( $bBar )
-	  {
-	    $this->loadProgressBar();
-	    $this->updateProgressBar( '30' );
-	  }
-	$this->getSchemaRNGDom( $oRNG );
+	$target="relaxng%3Aapplication%3Axml-relaxng/";
+	$this->callGarage($szRNG, $target);
+	$szID = md5( uniqid(rand(), true ) );
 	if ( $bBar )
 	    $this->updateProgressBar( '50' );
-
-//	$oTidy = new tidy();
-//	$aszOptions = array( 'indent' => true,
-//			     'indent-spaces' => 1,
-//			     'wrap' => 72,
-//			     'input-xml' => true,
-//			     'output-xml' => true
-//			     );
-//	$oTidy->parseString( $oRNG->SaveXML(), $aszOptions );
-
-//	$oTidy->cleanRepair();
-
-	//Save File
-	$szID = md5( uniqid(rand(), true ) );
 	
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tmp';    
 	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.rnc';    
-	file_put_contents( $szInputFile , $oRNG->SaveXML());
+	file_put_contents( $szInputFile , $szRNG);
 
 	if ( $bBar )
 	    $this->updateProgressBar( '70' );
@@ -2576,7 +2347,8 @@ class romaDom extends domDocument
 	    $this->loadProgressBar();
 	    $this->updateProgressBar( '30' );
 	  }
-	$this->getSchemaRNGDom( $oRNG );
+	$target="relaxng%3Aapplication%3Axml-relaxng/";
+	$this->callGarage($szRNG, $target);
 	if ( $bBar )
 	    $this->updateProgressBar( '50' );
 
@@ -2587,7 +2359,7 @@ class romaDom extends domDocument
 	$szOutputFile = $szID . '.xsd';    
 	$szOutputFileZip = roma_temporaryFilesDir . '/' . $szID . '.zip';    
 
-	file_put_contents( $szInputFile ,$oRNG ->SaveXML());
+	file_put_contents( $szInputFile ,$szRNG);
 	chdir (roma_temporaryFilesDir );
 
 	if ( $bBar )
@@ -2622,26 +2394,8 @@ class romaDom extends domDocument
 
     public function createSchemaDTD( &$szDTD, $bBar = false )
       {
-	if ( $bBar )
-	  {
-	    $this->loadProgressBar();
-	    $this->updateProgressBar( '30' );
-	  }
-	$this->getDocDom( $oDOC );
-        $oXSL = new domDocument();
-	$this->getDocLanguage( $szDocLanguage );
- 	$oXSL->load( roma_tei . '/xml/tei/stylesheet/odds/odd2dtd.xsl'  );
-	$oProc = new XsltProcessor();
-	$oProc->importStylesheet( $oXSL );
-	$oProc->setParameter( null, 'TEIC', 'true');	
-	$oProc->setParameter( null, 'doclang', $szDocLanguage);
-	$oProc->setParameter( null, 'documentationLanguage', $szDocLanguage);
-	$oProc->setParameter( null, 'outputDir', '-' );
-	if ( $bBar )
-	    $this->updateProgressBar( '70' );
-	$szDTD = $oProc->transformToXML( $oDOC );
-	if ( $bBar )
-	    $this->updateProgressBar( '100' );
+	$target="dtd%3Aapplication%3Axml-dtd";
+	$this->callGarage($szDTD, $target);
 	return $szError;
       }
 
