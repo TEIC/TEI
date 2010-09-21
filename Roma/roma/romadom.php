@@ -2131,17 +2131,6 @@ class romaDom extends domDocument
 	    $this->updateProgressBar( '100' );
     }
 
-    protected function getSchemaSchematronDom( &$oSCH )
-      {
-	$this->getDocDom( $oDOC );
-	$this->getDocLanguage( $szDocLanguage );
-        $oXSL = new domDocument();
- 	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/odds/extract-isosch.xsl'  );
-	$oProc = new XsltProcessor();
-	$oProc->importStylesheet( $oXSL );
-	$oSCH = $oProc->transformToDoc( $oDOC );
-      } 
-
     public function loadProgressBar()
       {
 	echo '<script>';
@@ -2290,17 +2279,8 @@ class romaDom extends domDocument
 
     public function createSchemaSCH( &$szSCH, $bBar = false )
       {
-	if ( $bBar )
-	  {
-	    $this->loadProgressBar();
-	    $this->updateProgressBar( '30' );
-	  }
-	$this->getSchemaSchematronDom( $oSCH );
-	if ( $bBar )
-	    $this->updateProgressBar( '80' );
-	$szSCH = $oSCH->SaveXML();
-	if ( $bBar )
-	    $this->updateProgressBar( '100' );
+	$target="SCH%3Atext%3Axml";
+	$this->callGarage($szSCH, $target);
       }
 
     public function createSchemaRNC( &$szRNC, $bBar = false )
