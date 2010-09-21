@@ -1650,14 +1650,14 @@ class roma
     private function moduleChanged()
       {
         $errResult = false;
-
+	$module = $_REQUEST[ 'module' ];
+        $includeList="";
 	foreach( $_REQUEST as $key => $value )
 	  {
-
-	    if ( substr( $key, 0, 8 ) == 'element_' && $value == 'exclude' )
+	   if ( substr( $key, 0, 8 ) == 'element_' && $value == 'include' )
 	      {
-	        $this->m_oRomaDom->removeElementFromModule( substr( $key, 8 ), $_REQUEST[ 'module' ] );
-              }
+	       $includeList = $includeList . substr($key,8) . " ";
+	      }
 	   elseif( substr( $key,0, 12 ) == 'elementName_' && ! isset( $_REQUEST[ 'element_' . $value ] ) )
 	     {
 	       try {
@@ -1672,11 +1672,11 @@ class roma
 	   elseif ( substr( $key, 0, 11 ) == 'elementName')
 	      { }
 	   else
-	     {
-	        $this->m_oRomaDom->includeElementInModule( substr( $key, 8 ), $_REQUEST[ 'module' ] );
-	     }
+	     {    }
 	  }
-
+	error_log($module . " has " . $includeList);
+	$this->m_oRomaDom->setElementsInModule($module,trim($includeList));
+	
 	if (! $errResult )
 	  {
  	    //notam

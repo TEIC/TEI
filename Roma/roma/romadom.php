@@ -971,7 +971,7 @@ class romaDom extends domDocument
     // --- Change the Customization
     // #####################################################################
 
-    public function addModule( $szModule, $bInclude = true )
+    public function addModule( $szModule )
       {
 	$errResult = false;
 
@@ -1126,36 +1126,19 @@ class romaDom extends domDocument
           }
       }
 
-    public function removeElementFromModule( $szElement, $szModule )
+    public function setElementsInModule($szModule, $listOfNames )
       {
 	$this->getXPath( $oXPath );
         $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
-        $oModule = $oXPath->query( "//tei:schemaSpec//tei:moduleRef[@key='$szModule']" )->item(0);
-	$oElementSpec = $oXPath->query(
-      "/tei:TEI/tei:text//tei:elementSpec[@module='$szModule' and @ident='$szElement']" )->item(0);
+        $oModuleRef = $oXPath->query( "//tei:schemaSpec//tei:moduleRef[@key='$szModule']" )->item(0);
 	
-        if ( ! is_object( $oModule ) ) 
-	  {
-            $this->addModule( $szModule, false );
+        if (! is_object( $oModuleRef ) )
+          {
+	    $theModRef = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'moduleRef' );
+	    $oModuleRef = $oSchema->appendChild( $theModRef );
+	    $oModuleRef->setAttribute( 'key', $szModule );
           }
-
-	if (! is_object( $oElementSpec ) )
-	  {
-	    $theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
- 	    $oElementSpec = $oSchema->appendChild( $theElementSpec );
-	    $oElementSpec->setAttribute( 'module', $szModule );
-	    $oElementSpec->setAttribute( 'ident', $szElement );
-	    $oElementSpec->setAttribute( 'mode', 'delete' );
-	  }
-	else
-	  {
-	    $aoChildren = $oElementSpec->childNodes;
-	    foreach( $aoChildren as $oChild )
-	      {
-		$oElementSpec->removeChild( $oChild );
-	      }
-	    $oElementSpec->setAttribute( 'mode', 'delete' );
-	  }
+        $oModuleRef->setAttribute( 'include', $listOfNames );
 	
       }
 
@@ -1168,7 +1151,7 @@ class romaDom extends domDocument
 
         if ( ! is_object( $oModule ) ) 
 	  {
-            $this->addModule( $szModule, false );
+            $this->addModule( $szModule);
           }
 	
 	if ( is_object( $oElementSpec ) )
@@ -1191,7 +1174,7 @@ class romaDom extends domDocument
 	
             if ( ! is_object( $oModule ) ) 
 	      {
-                $this->addModule( $szModule, false );
+                $this->addModule( $szModule);
               }
 
   	    if (! is_object( $oElementSpec ) )
@@ -1240,7 +1223,7 @@ class romaDom extends domDocument
 	
 	if ( ! is_object( $oModule ) ) 
 	  {
-	    $this->addModule( $szModule, false );
+	    $this->addModule( $szModule);
 	  }
 	
 	if (! is_object( $oElementSpec ) )
@@ -1299,7 +1282,7 @@ class romaDom extends domDocument
 	$oContent = $oXPath->query("/tei:TEI/tei:text//tei:elementSpec[@ident='$szElement']/tei:content" )->item(0);
 	if ( ! is_object( $oModule ) ) 
 	  {
-	    $this->addModule( $szModule, false );
+	    $this->addModule( $szModule);
 	    }	    
 	if (! is_object( $oElementSpec ) )
 	  {
@@ -1344,7 +1327,7 @@ class romaDom extends domDocument
 	$oElementSpec = $oXPath->query("/tei:TEI/tei:text//tei:elementSpec[@module='{$szModule}' and @ident='{$szElement}']" )->item(0);
 	if ( ! is_object( $oModule ) ) 
 	  {
-	    $this->addModule( $szModule, false );
+	    $this->addModule( $szModule);
 	  }
 
 	if (! is_object( $oElementSpec ) )
@@ -1409,7 +1392,7 @@ class romaDom extends domDocument
 
 		if ( ! is_object( $oModule ) ) 
 		  {
-		    $this->addModule( $aszConfig[ 'module' ], false );
+		    $this->addModule( $aszConfig[ 'module' ]);
 		  }
 		
 		if (! is_object( $oElementSpec ) )
@@ -1453,7 +1436,7 @@ class romaDom extends domDocument
 		
 		if ( ! is_object( $oModule ) ) 
 		  {
-		    $this->addModule( $aszConfig[ 'module' ], false );
+		    $this->addModule( $aszConfig[ 'module' ]);
 		  }
 		
 		if (! is_object( $oClassSpec ) )
@@ -1656,7 +1639,7 @@ class romaDom extends domDocument
 	    
 	    if ( ! is_object( $oModule ) ) 
 	      {
-		$this->addModule( $szModule, false );
+		$this->addModule( $szModule);
 	      }
 	    
 	    if (! is_object( $oElementSpec ) )
@@ -1700,7 +1683,7 @@ class romaDom extends domDocument
 	    
 	    if ( ! is_object( $oModule ) ) 
 	      {
-		$this->addModule( $szModule, false );
+		$this->addModule( $szModule);
 	      }
 	    
 	    if (! is_object( $oClassSpec ) )
@@ -1754,7 +1737,7 @@ class romaDom extends domDocument
 	    
 	    if ( ! is_object( $oModule ) ) 
 	      {
-		$this->addModule( $szModule, false );
+		$this->addModule( $szModule);
 	      }
 	    
 	    if (! is_object( $oElementSpec ) )
@@ -1797,7 +1780,7 @@ class romaDom extends domDocument
 	    
 	    if ( ! is_object( $oModule ) ) 
 	      {
-		$this->addModule( $szModule, false );
+		$this->addModule( $szModule);
 	      }
 	    
 	    if (! is_object( $oClassSpec ) )
@@ -1850,7 +1833,7 @@ class romaDom extends domDocument
 	    
 		if ( ! is_object( $oModuleRef ) ) 
 		  {
-		    $this->addModule( $szModule, false );
+		    $this->addModule( $szModule);
 		  }
 		
 		if (! is_object( $oElementSpec ) )
@@ -1879,7 +1862,7 @@ class romaDom extends domDocument
 		
 		if ( ! is_object( $oModule ) ) 
 		  {
-		    $this->addModule( $szModule, false );
+		    $this->addModule( $szModule);
 		  }
 		
 		if (! is_object( $oClassSpec ) )
