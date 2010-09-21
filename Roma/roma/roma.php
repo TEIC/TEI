@@ -1651,12 +1651,12 @@ class roma
       {
         $errResult = false;
 	$module = $_REQUEST[ 'module' ];
-        $includeList="";
+        $excludeList="";
 	foreach( $_REQUEST as $key => $value )
 	  {
-	   if ( substr( $key, 0, 8 ) == 'element_' && $value == 'include' )
+	   if ( substr( $key, 0, 8 ) == 'element_' && $value == 'exclude' )
 	      {
-	       $includeList = $includeList . substr($key,8) . " ";
+	       $excludeList = $excludeList . substr($key,8) . " ";
 	      }
 	   elseif( substr( $key,0, 12 ) == 'elementName_' && ! isset( $_REQUEST[ 'element_' . $value ] ) )
 	     {
@@ -1669,13 +1669,11 @@ class roma
 		   $errResult = true;
 		 }
 	     }
-	   elseif ( substr( $key, 0, 11 ) == 'elementName')
-	      { }
 	   else
 	     {    }
 	  }
-	error_log($module . " has " . $includeList);
-	$this->m_oRomaDom->setElementsInModule($module,trim($includeList));
+
+	$this->m_oRomaDom->setElementsInModule($module,trim($excludeList));
 	
 	if (! $errResult )
 	  {

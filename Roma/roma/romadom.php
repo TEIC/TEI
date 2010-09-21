@@ -144,7 +144,7 @@ class romaDom extends domDocument
 
 
     /**
-     * returns a numberd array with all those modules the user changed
+     * returns a numbered array with all those modules the user changed
      */
     public function getChangedModules( &$aszModules )
       {
@@ -180,14 +180,7 @@ class romaDom extends domDocument
     public function getExcludedElementsInModule( $szModule, &$aszElements )
       {
 	$this->getXPath( $oXPath );
-        $aoElements = $oXPath->query(
-    "/tei:TEI/tei:text//tei:elementSpec[@mode='delete' and @module='$szModule']/@ident" );
-	
-	$aszElements = array();
-	foreach( $aoElements as $oElement )
-	  {
-	    $aszElements[] = $oElement->nodeValue;
-	  }
+        $aszElements = $oXPath->query("/tei:TEI/tei:text//tei:moduleRef[@key='$szModule']/@exclude" );
       }
 
     /**
@@ -1138,7 +1131,7 @@ class romaDom extends domDocument
 	    $oModuleRef = $oSchema->appendChild( $theModRef );
 	    $oModuleRef->setAttribute( 'key', $szModule );
           }
-        $oModuleRef->setAttribute( 'include', $listOfNames );
+        $oModuleRef->setAttribute( 'exclude', $listOfNames );
 	
       }
 
