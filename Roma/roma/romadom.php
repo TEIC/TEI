@@ -180,7 +180,7 @@ class romaDom extends domDocument
     public function getExcludedElementsInModule( $szModule, &$aszElements )
       {
 	$this->getXPath( $oXPath );
-        $aszElements = $oXPath->query("/tei:TEI/tei:text//tei:moduleRef[@key='$szModule']/@exclude" );
+        $aszElements = $oXPath->query("/tei:TEI/tei:text//tei:moduleRef[@key='$szModule']/@except" );
       }
 
     /**
@@ -1131,7 +1131,7 @@ class romaDom extends domDocument
 	    $oModuleRef = $oSchema->appendChild( $theModRef );
 	    $oModuleRef->setAttribute( 'key', $szModule );
           }
-        $oModuleRef->setAttribute( 'exclude', $listOfNames );
+        $oModuleRef->setAttribute( 'except', $listOfNames );
 	
       }
 
