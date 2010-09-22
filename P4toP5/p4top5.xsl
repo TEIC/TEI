@@ -130,8 +130,18 @@
   
   <xsl:template match="figure[@entity]">
     <figure>
-      <graphic 
-	       url="{unparsed-entity-uri(@entity)}">
+      <graphic>
+	<xsl:attribute name="url">
+	  <xsl:choose>
+	    <xsl:when test="unparsed-entity-uri(@entity)=''">
+	      <xsl:text>ENTITY_</xsl:text>
+	      <xsl:value-of select="@entity"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="unparsed-entity-uri(@entity)"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:attribute>
 	<xsl:apply-templates select="@*"/>
       </graphic>
       <xsl:apply-templates/>
