@@ -694,8 +694,10 @@
 <!-- from Conal Tuohy -->
 <xsl:template match="orig[@reg]">
   <choice>
-    <orig><xsl:apply-templates select="*|@*|processing-instruction()|
-    comment()|text()"/></orig>
+    <orig>
+      <xsl:apply-templates
+	  select="*|@*|processing-instruction()|comment()|text()"/>
+    </orig>
     <reg><xsl:value-of select="@reg"/></reg>
   </choice>
 </xsl:template>
@@ -709,5 +711,6 @@
 </xsl:template>
 
 <xsl:template match="@orig|@reg"/>
-	
+
+
 </xsl:stylesheet>
