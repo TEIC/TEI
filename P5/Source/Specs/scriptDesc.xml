@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date: 2009-06-06 18:19:51 +0100 (Sat, 06 Jun 2009) $
+$Id: typeDesc.xml 6523 2009-06-06 17:19:51Z rahtz $
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" ident="scriptDesc">
+  <desc>contains a description of the scripts used in a manuscript or similar source.</desc>
+  <classes>
+    <memberOf key="model.physDescPart"/>
+  </classes>
+  <content>
+    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+        <rng:ref name="model.pLike"/>
+      </rng:oneOrMore>
+      <rng:group>
+        <rng:optional>
+          <rng:ref name="summary"/>
+        </rng:optional>
+        <rng:oneOrMore>
+          <rng:ref name="scriptNote"/>
+        </rng:oneOrMore>
+      </rng:group>
+    </rng:choice>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <scriptDesc>
+        <p></p>
+      </scriptDesc>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <scriptDesc>
+        <summary>Contains two distinct styles of scripts </summary>
+        <scriptNote xml:id="style1">.</scriptNote>
+        <scriptNote xml:id="style2">.</scriptNote>
+      </scriptDesc>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#msphwr"/>
+  </listRef>
+</elementSpec>
