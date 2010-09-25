@@ -712,30 +712,37 @@ supplied.</q>, which can be written in Schematron as
   <constraintSpec ident="activemutual" scheme="isoschematron"> 
     <desc>Check mutually incompatible attributes</desc>
     <constraint>
-      <s:report test="@active and @mutual">Only one of the attributes
-      'active' and 'mutual' may be supplied</s:report>
-      <s:report test="@passive and not(@active)">the attribute 'passive'
+      <report test="@active and @mutual" xmlns="http://purl.oclc.org/dsdl/schematron">Only one of the attributes
+      'active' and 'mutual' may be supplied</report>
+      <report test="@passive and not(@active)" xmlns="http://purl.oclc.org/dsdl/schematron">the attribute 'passive'
       may be supplied only if the attribute 'active' is
-      supplied</s:report>
+      supplied</report>
     </constraint>
   </constraintSpec>
 
 </egXML>
 </p>
 <p>We may also look at rules to apply to 
-a TEI document which is going to be rendered into accessible HTML. We can check
+a TEI document which is going to be rendered into accessible
+HTML. Since the rules refer to TEI elements, we need to declare the
+TEI namespace in Schematron. We can check
 that some sort of content is available from which the <att>alt</att>
 attribute of an HTML <gi scheme="HTML">img</gi> can be created:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <constraintSpec ident="alt" scheme="isoschematron">
+  <constraint>
+    <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"
+	xmlns="http://purl.oclc.org/dsdl/schematron"
+	/>
+  </constraint>
   <constraint> 
-    <s:pattern name="Alt tags">
-      <s:rule context="tei:figure">
-	<s:report test="not(tei:figDesc or tei:head)"> You should
+    <pattern name="Alt tags" xmlns="http://purl.oclc.org/dsdl/schematron">
+      <rule context="tei:figure">
+	<report test="not(tei:figDesc or tei:head)"> You should
 	provide information in a figure from which
-	we can construct an alt attribute in HTML </s:report>
-      </s:rule>
-    </s:pattern>
+	we can construct an alt attribute in HTML </report>
+      </rule>
+    </pattern>
   </constraint>
 </constraintSpec>
 </egXML>
@@ -743,13 +750,19 @@ or we might enforce other HTML accessibility rules about tables; note
 here the use of a report and an assertion within one pattern:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <constraintSpec ident="tables" scheme="isoschematron">
+  <constraint>
+    <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"
+	xmlns="http://purl.oclc.org/dsdl/schematron"
+	/>
+  </constraint>
+
 <constraint>
-  <s:pattern name="Tables">		
-    <s:rule context="tei:table">
-       <s:assert test="tei:head">A &lt;table> should have a caption, using a &lt;head> element</s:assert>
-       <s:report test="parent::tei:body">Do not use tables to lay out the document body</s:report>
-     </s:rule>
-  </s:pattern>	
+  <pattern name="Tables"  xmlns="http://purl.oclc.org/dsdl/schematron">		
+    <rule context="tei:table">
+       <assert test="tei:head">A &lt;table> should have a caption, using a &lt;head> element</assert>
+       <report test="parent::tei:body">Do not use tables to lay out the document body</report>
+     </rule>
+  </pattern>	
 </constraint>
 </constraintSpec>
 </egXML>
@@ -757,11 +770,11 @@ We can also model contextual constraints in Schematron:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <constraintSpec ident="subclauses"  scheme="isoschematron">
   <constraint>
-  <s:rule context="tei:div">
-    <s:assert
+  <rule context="tei:div"  xmlns="http://purl.oclc.org/dsdl/schematron">
+    <assert
 	test="not(tei:div) or count(tei:div)&gt;1">a division must contain
-    at least two subdivisions</s:assert>
-  </s:rule>
+    at least two subdivisions</assert>
+  </rule>
   </constraint>
 </constraintSpec>
 </egXML>
@@ -769,18 +782,18 @@ and base requirements on attribute values:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <constraintSpec ident="introtitle"  scheme="isoschematron">
   <constraint>
-  <s:assert
+  <assert  xmlns="http://purl.oclc.org/dsdl/schematron"
       test="tei:fileDesc/tei:titleStmt/tei:title[@type='introductory']">
     an introductory component of the title is expected
-  </s:assert>
+  </assert>
   </constraint>
 </constraintSpec>
 <constraintSpec ident="maintitle" scheme="isoschematron">
   <constraint>
-    <s:assert
+    <assert  xmlns="http://purl.oclc.org/dsdl/schematron"
 	test="tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
       a main title must be supplied
-    </s:assert>
+    </assert>
   </constraint>
 </constraintSpec>
 </egXML>
