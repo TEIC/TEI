@@ -31,9 +31,9 @@
       </desc>
    </doc>
 
-  <xsl:key name="ALL-RENDITION" match="@rendition[not(starts-with(.,'#'))]" use="1"/>
-
-  <xsl:key name="RENDITION" match="@rendition[not(starts-with(.,'#'))]" use="."/>
+  <xsl:key name="ALL-EXTRENDITION" match="@rendition[not(starts-with(.,'#'))]" use="1"/>
+  <xsl:key name="EXTRENDITION"     match="@rendition[not(starts-with(.,'#'))]" use="."/>
+  <xsl:key name="ALL-LOCALRENDITION" match="tei:rendition" use='1'/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element teiHeader</desc>
@@ -45,41 +45,34 @@
    </doc>
   
   <xsl:template name="generateLocalCSS">
-      <xsl:if test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:encodingDesc/tei:tagsDecl/tei:rendition">
+      <xsl:if test="key('ALL-LOCALRENDITION',1)">
          <style type="text/css">
-	           <xsl:for-each select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:encodingDesc/tei:tagsDecl/tei:rendition">
-	              <xsl:text>
-.</xsl:text>
-	              <xsl:value-of select="@xml:id"/>
-	              <xsl:text> {
-	</xsl:text>
-	              <xsl:value-of select="."/>
-	              <xsl:text>
-}</xsl:text>
-	           </xsl:for-each>
-	           <xsl:text>
-</xsl:text>
+	   <xsl:for-each select="key('ALL-LOCALRENDITION',1)">
+	     <xsl:text>&#10;.</xsl:text>
+	     <xsl:value-of select="@xml:id"/>
+	     <xsl:text> {&#10;	</xsl:text>
+	     <xsl:value-of select="."/>
+	     <xsl:text>;&#10;}</xsl:text>
+	   </xsl:for-each>
+	   <xsl:text>&#10;</xsl:text>
          </style>
       </xsl:if>
-      <xsl:if test="count(key('ALL-RENDITION',1))&gt;0">
+      <xsl:if test="key('ALL-EXTRENDITION',1)">
          <style type="text/css">
-	           <xsl:for-each select="key('ALL-RENDITION',1)">
-	              <xsl:variable name="pointer">
-	                 <xsl:value-of select="."/>
-	              </xsl:variable>
-	              <xsl:for-each select="key('RENDITION',$pointer)[1]">
-	                 <xsl:for-each select="document($pointer)">
-	                    <xsl:text>
-.</xsl:text>
-	                    <xsl:value-of select="@xml:id"/>
-	                    <xsl:text> {
-	</xsl:text>
-	                    <xsl:value-of select="."/>
-	                    <xsl:text>
-}</xsl:text>
-	                 </xsl:for-each>
-	              </xsl:for-each>
-	           </xsl:for-each>
+	   <xsl:for-each select="key('ALL-EXTRENDITION',1)">
+	     <xsl:variable name="pointer">
+	       <xsl:value-of select="."/>
+	     </xsl:variable>
+	     <xsl:for-each select="key('RENDITION',$pointer)[1]">
+	       <xsl:for-each select="document($pointer)">
+		 <xsl:text>&#10;.</xsl:text>
+		 <xsl:value-of select="@xml:id"/>
+		 <xsl:text> {&#10;</xsl:text>
+		 <xsl:value-of select="."/>
+		 <xsl:text>;&#10;}</xsl:text>
+	       </xsl:for-each>
+	     </xsl:for-each>
+	   </xsl:for-each>
          </style>
       </xsl:if>
   </xsl:template>

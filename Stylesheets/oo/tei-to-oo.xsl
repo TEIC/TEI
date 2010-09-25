@@ -788,16 +788,30 @@
     <text:p text:style-name="P3"/>
   </xsl:template>
 
-  <xsl:template match="tei:bibl|tei:lg|tei:signed">
+  <xsl:template match="tei:bibl|tei:signed">
     <text:p text:style-name="{name(.)}">
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
 
-  <xsl:template match="tei:l">
-    <text:p text:style-name="l">
+  <xsl:template match="tei:lg">
+    <text:p text:style-name="lg">
       <xsl:apply-templates/>
     </text:p>
+  </xsl:template>
+
+  <xsl:template match="tei:l">
+    <xsl:choose>
+      <xsl:when test="parent::tei:lg">
+	<xsl:apply-templates/>
+	<text:line-break/>
+      </xsl:when>
+      <xsl:otherwise>
+	<text:p text:style-name="lg">
+	  <xsl:apply-templates/>
+	</text:p>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="Literal">
