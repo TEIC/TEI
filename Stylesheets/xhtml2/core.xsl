@@ -448,6 +448,20 @@
           <xsl:apply-templates/>
         </span>
       </xsl:when>
+      <xsl:when test="key('TAGREND','hi')">
+	<span>
+	  <xsl:attribute name="style">
+	    <xsl:for-each select="key('TAGREND',local-name())">
+	      <xsl:call-template name="findRendition">
+		<xsl:with-param name="value">
+		  <xsl:value-of select="@render"/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	  </xsl:attribute>
+          <xsl:apply-templates/>
+	</span>
+      </xsl:when>
       <xsl:otherwise>
         <strong>
           <xsl:apply-templates/>
@@ -1407,7 +1421,7 @@
       </desc>
   </doc>
   <xsl:template name="applyRendition">
-    <xsl:attribute name="class">
+    <xsl:attribute name="style">
       <xsl:for-each select="tokenize(normalize-space(@rendition),' ')">
         <xsl:call-template name="findRendition">
           <xsl:with-param name="value">
@@ -1425,16 +1439,17 @@
     <xsl:param name="value"/>
     <xsl:choose>
       <xsl:when test="starts-with($value,'#')">
-        <xsl:value-of select="substring-after($value,'#')"/>
-        <xsl:text> </xsl:text>
+	<xsl:for-each select="key('IDS',substring-after($value,'#'))">
+	  <xsl:value-of select="."/>
+	</xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
         <xsl:for-each select="document($value)">
-          <xsl:apply-templates select="@xml:id"/>
-          <xsl:text> </xsl:text>
+	  <xsl:value-of select="."/>
         </xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
+    <xsl:text>;</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] Active a value for @rend<param name="value">value</param>
@@ -2074,9 +2089,6 @@
         <xsl:when test="@rend">
           <xsl:value-of select="translate(@rend,' /','_-')"/>
         </xsl:when>
-        <xsl:when test="@rendition">
-          <xsl:call-template name="applyRendition"/>
-        </xsl:when>
       </xsl:choose>
     </xsl:variable>
     <xsl:choose>
@@ -2093,6 +2105,22 @@
           <xsl:value-of select="$class2"/>
         </xsl:attribute>
       </xsl:otherwise>
+    </xsl:choose>
+    <xsl:choose>
+    <xsl:when test="@rendition">
+      <xsl:call-template name="applyRendition"/>
+    </xsl:when>
+    <xsl:when test="key('TAGREND',local-name())">
+      <xsl:attribute name="style">
+	<xsl:for-each select="key('TAGREND',local-name())">
+	  <xsl:call-template name="findRendition">
+	    <xsl:with-param name="value">
+	      <xsl:value-of select="@render"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:for-each>
+      </xsl:attribute>
+    </xsl:when>
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

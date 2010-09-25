@@ -34,6 +34,8 @@
    </doc>
   <xsl:key name="NOTES" match="tei:note[not(parent::tei:bibl) and not(ancestor::tei:teiHeader)]" use="1"/>
 
+  <xsl:key name="TAGREND" match="tei:tagUsage[@render]" use="@gi"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
       <desc>
 CSS class for links derived from &lt;ptr&gt;

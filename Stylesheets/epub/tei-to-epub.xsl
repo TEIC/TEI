@@ -789,12 +789,12 @@
   </xsl:template>
 
   <xsl:template match="tei:titleStmt" mode="metadata">
-    <h3>Title</h3>
+    <h3>Title statement</h3>
     <xsl:apply-templates mode="metadata"/>
 </xsl:template>
 
   <xsl:template match="tei:editionStmt" mode="metadata">
-    <h3>Edition</h3>
+    <h3>Edition statement</h3>
     <xsl:apply-templates mode="metadata"/>
 </xsl:template>
 
@@ -869,6 +869,12 @@
     <dd>
     <xsl:apply-templates/>
     </dd>
+  </xsl:template>
+
+  <xsl:template match="tei:funder" mode="metadata">
+    <p><i>Funder</i>: 
+    <xsl:apply-templates/>
+    </p>
   </xsl:template>
 
   <xsl:template match="tei:idno" mode="metadata">
