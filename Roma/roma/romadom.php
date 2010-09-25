@@ -182,6 +182,11 @@ class romaDom extends domDocument
 	$this->getXPath( $oXPath );
         $aszElements = $oXPath->query("/tei:TEI/tei:text//tei:moduleRef[@key='$szModule']/@except" );
       }
+    public function getIncludedElementsInModule( $szModule, &$aszElements )
+      {
+	$this->getXPath( $oXPath );
+        $aszElements = $oXPath->query("/tei:TEI/tei:text//tei:moduleRef[@key='$szModule']/@include" );
+      }
 
     /**
      */
@@ -1119,7 +1124,7 @@ class romaDom extends domDocument
           }
       }
 
-    public function setElementsInModule($szModule, $listOfNames )
+    public function setElementsInModule($szModule, $includedNames, $excludedNames )
       {
 	$this->getXPath( $oXPath );
         $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
@@ -1130,8 +1135,16 @@ class romaDom extends domDocument
 	    $theModRef = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'moduleRef' );
 	    $oModuleRef = $oSchema->appendChild( $theModRef );
 	    $oModuleRef->setAttribute( 'key', $szModule );
+	    $oModuleRef->setAttribute( 'except', $excludedNames );
           }
-        $oModuleRef->setAttribute( 'except', $listOfNames );
+	elseif 	 ( $oModuleRef->hasAttribute('except'))
+	  {
+	    $oModuleRef->setAttribute( 'except', $excludedNames );
+	  }
+         else
+	   {
+	    $oModuleRef->setAttribute( 'include', $includedNames );
+	   }
 	
       }
 

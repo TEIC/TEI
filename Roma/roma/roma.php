@@ -707,10 +707,12 @@ class roma
 	$this->addErrorsDom( $oListDom, $aoErrors );
 
 	$this->m_oRomaDom->getExcludedElementsInModuleDom( $_REQUEST[ 'module' ], $oExcludedElements );
+	$this->m_oRomaDom->getIncludedElementsInModuleDom( $_REQUEST[ 'module' ], $oIncludedElements );
 	$this->m_oRomaDom->getElementsWithChangedNameInModuleDom( $_REQUEST[ 'module' ], $oChanged );
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
 
 	$this->createChangeInListDom( $oListDom, array ( $oChanged, $oExcludedElements ) );
+	$this->createChangeInListDom( $oInclude, array ( $oChanged, $oIncludedElements ) );
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
 
 	$aszParam =  array( 
@@ -1457,8 +1459,8 @@ class roma
     // #####################################################################
 
     /**
-     * this function gets a domDocument object a stylesheet name a parameter where to
-     * put the new domDocument object in and an associative array with paramters for
+     * this function gets a domDocument object, a stylesheet name, a parameter where to
+     * put the new domDocument object in, and an associative array with paramters for
      * the xslt processor.
      * It then loads the stylesheet which has to be inside the 'roma_localStylesheetDir' and
      * creates an XSLT-Processor. Then the XSLT-Processor is fed with the paramters specified
@@ -1652,11 +1654,16 @@ class roma
         $errResult = false;
 	$module = $_REQUEST[ 'module' ];
         $excludeList="";
+        $includeList="";
 	foreach( $_REQUEST as $key => $value )
 	  {
 	   if ( substr( $key, 0, 8 ) == 'element_' && $value == 'exclude' )
 	      {
 	       $excludeList = $excludeList . substr($key,8) . " ";
+	      }
+	   elseif ( substr( $key, 0, 8 ) == 'element_' && $value == 'include' )
+	      {
+	       $includeList = $includeList . substr($key,8) . " ";
 	      }
 	   elseif( substr( $key,0, 12 ) == 'elementName_' && ! isset( $_REQUEST[ 'element_' . $value ] ) )
 	     {
@@ -1673,7 +1680,7 @@ class roma
 	     {    }
 	  }
 
-	$this->m_oRomaDom->setElementsInModule($module,trim($excludeList));
+	$this->m_oRomaDom->setElementsInModule($module,trim($includeList),trim($excludeList));
 	
 	if (! $errResult )
 	  {

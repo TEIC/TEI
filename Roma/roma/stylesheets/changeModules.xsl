@@ -14,6 +14,7 @@ Description
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:param name="excludedElements"/>
+  <xsl:param name="includedElements"/>
   <xsl:param name="changedElementNames"/>
   <xsl:param name="module"/>
   <xsl:param name="lang">en</xsl:param>
