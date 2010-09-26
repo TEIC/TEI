@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0">
   <!--
-Schema generated from ODD source 2010-09-26T12:40:48Z. 
+Schema generated from ODD source 2010-09-26T16:13:07Z. 
 Edition: 1.7.0. Last updated on July 6th 2010.
 Edition Location: http://www.tei-c.org/Vault/P5/1.7.0/
 
@@ -393,54 +393,8 @@ Edition Location: http://www.tei-c.org/Vault/P5/1.7.0/
   </define>
   <define name="TEI_macro.schemaPattern">
     <choice>
-      <choice xmlns:s="http://www.ascc.net/xml/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples">
-        <text/>
-        <oneOrMore>
-          <choice>
-            <ref name="pattern"/>
-            <ref name="define"/>
-          </choice>
-        </oneOrMore>
-      </choice>
-      <zeroOrMore xmlns:s="http://www.ascc.net/xml/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples">
-        <ref name="TEI_anySchematron"/>
-      </zeroOrMore>
+      <ref name="TEI_macro.anyXML"/>
     </choice>
-  </define>
-  <define name="TEI_anySchematron">
-    <element>
-      <nsName ns="http://www.ascc.net/xml/schematron"/>
-      <zeroOrMore xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples">
-        <choice>
-          <attribute>
-            <anyName/>
-          </attribute>
-          <ref name="TEI_anySchematron"/>
-          <text/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-  <define name="TEI_anyThing">
-    <element ns="http://www.tei-c.org/ns/Examples">
-      <anyName/>
-      <zeroOrMore xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples">
-        <attribute>
-          <anyName>
-            <except>
-              <name>xml:id</name>
-              <name>xml:lang</name>
-            </except>
-          </anyName>
-        </attribute>
-      </zeroOrMore>
-      <zeroOrMore xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples">
-        <choice>
-          <text/>
-          <ref name="TEI_anyThing"/>
-        </choice>
-      </zeroOrMore>
-    </element>
   </define>
   <define name="TEI_att.ascribed.attributes">
     <ref name="TEI_att.ascribed.attribute.who"/>
@@ -956,7 +910,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
     <optional>
       <attribute name="xml:id">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(identifier) provides a unique identifier for the element bearing the attribute.</a:documentation>
-        <data type="string"/>
+        <data type="ID"/>
       </attribute>
     </optional>
   </define>
@@ -983,7 +937,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
       <attribute name="xml:lang">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(language) indicates the language of the element content using a tag generated
         according to BCP 47</a:documentation>
-        <data type="string"/>
+        <data type="language"/>
       </attribute>
     </optional>
   </define>
@@ -10379,12 +10333,14 @@ programming language.</a:documentation>
     <element name="egXML" ns="http://www.tei-c.org/ns/Examples">
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(example of XML) contains a single well-formed XML fragment demonstrating the use of some XML element or
     attribute, in which the egXML element itself functions as the root element. </a:documentation>
-      <oneOrMore>
-        <choice xmlns:s="http://www.ascc.net/xml/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples">
-          <text/>
-          <ref name="TEI_anyThing"/>
-        </choice>
-      </oneOrMore>
+      <zeroOrMore xmlns:s="http://www.ascc.net/xml/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples">
+        <group>
+          <choice>
+            <text/>
+            <ref name="TEI_macro.anyXML"/>
+          </choice>
+        </group>
+      </zeroOrMore>
       <ref name="TEI_att.global.attributes"/>
       <empty/>
     </element>
@@ -10635,15 +10591,17 @@ module, i.e. a named and externally visible group of declarations.</a:documentat
         </zeroOrMore>
         <zeroOrMore>
           <choice>
-            <ref name="TEI_moduleRef"/>
-            <ref name="TEI_specGrpRef"/>
+            <ref name="TEI_model.oddRef"/>
             <ref name="TEI_model.oddDecl"/>
           </choice>
         </zeroOrMore>
+        <zeroOrMore>
+          <ref name="TEI_constraintSpec"/>
+        </zeroOrMore>
       </group>
-      <zeroOrMore xmlns:s="http://www.ascc.net/xml/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples">
-        <ref name="TEI_anySchematron"/>
-      </zeroOrMore>
+      <ref name="TEI_att.global.attributes"/>
+      <ref name="TEI_att.identified.attributes"/>
+      <ref name="TEI_att.readFrom.attributes"/>
       <optional>
         <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="start" a:defaultValue="TEI">
           <a:documentation>specifies entry points to the schema, i.e. which elements
@@ -10697,9 +10655,6 @@ module, i.e. a named and externally visible group of declarations.</a:documentat
           </list>
         </attribute>
       </optional>
-      <ref name="TEI_att.global.attributes"/>
-      <ref name="TEI_att.identified.attributes"/>
-      <ref name="TEI_att.readFrom.attributes"/>
       <empty/>
     </element>
   </define>

@@ -25,6 +25,7 @@ define('DEBUG', false);
 ini_set("max_execution_time", 120);
 
 //#########################
+define ( 'oxgarage_server',          'http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice');
 define ( 'roma_customization_validator','roma/oddschema.rng');
 define ( 'roma_temporaryFilesDir',   '/tmp' );
 define ( 'roma_xquery_server',       'http://tei.oucs.ox.ac.uk/Query/' );
@@ -36,6 +37,6 @@ define ( 'roma_tei',                 '/usr/share/' );
 define ( 'roma_localStylesheetDir',  'roma/stylesheets' );
 define ( 'roma_templateDir',         'roma/templates' );
 define ( 'roma_resource_path',       'roma/res' );
-define ('roma_version','3.13');
+define ('roma_version','4.0');
 define ('roma_date','2010-07-07');
 </script>

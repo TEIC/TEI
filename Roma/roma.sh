@@ -69,7 +69,7 @@ makeDTD()
 
 makeSCH()
 {
-    echo "8. extract Schematron from compiled ODD"
+    echo "8. extract ISO Schematron from compiled ODD"
     xsltproc  $DEBUG $LANGUAGE $DOCLANG   $SELECTEDSCHEMA \
             $TEIXSLDIR/odds/extract-sch.xsl $RESULTS/$ODD.compiled > $RESULTS/$schema.sch
 }

@@ -1124,13 +1124,13 @@ class romaDom extends domDocument
 	    $oModuleRef->setAttribute( 'key', $szModule );
 	    $oModuleRef->setAttribute( 'except', $excludedNames );
           }
-	elseif 	 ( $oModuleRef->hasAttribute('except'))
+	elseif 	 ( $oModuleRef->hasAttribute('include'))
 	  {
-	    $oModuleRef->setAttribute( 'except', $excludedNames );
-	  }
-         else
-	   {
 	    $oModuleRef->setAttribute( 'include', $includedNames );
+	  }
+        else
+	   {
+	    $oModuleRef->setAttribute( 'except', $excludedNames );
 	   }
         $oldElementSpecDel = $oXPath->query( "//tei:schemaSpec//tei:elementSpec[@module='$szModule' and @mode='delete']" );
 	foreach($oldElementSpecDel as $oElementSpec) {
@@ -2085,7 +2085,7 @@ class romaDom extends domDocument
     // #####################################################################
 
     protected function callGarage ( &$garageResult, $target) {
-	$OXG = 'http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/';
+	$OXG = oxgarage_server . '/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/';
 	if ( $bBar )
 	  {
 	    $this->loadProgressBar();
@@ -2248,7 +2248,7 @@ class romaDom extends domDocument
       }
 
     // #####################################################################
-    // --- Creating some Schema
+    // --- Creating some Schema formats
     // #####################################################################
 
     public function createSchemaRNG( &$szRNG, $bBar = false )
@@ -2259,8 +2259,14 @@ class romaDom extends domDocument
 
     public function createSchemaSCH( &$szSCH, $bBar = false )
       {
-	$target="SCH%3Atext%3Axml";
+	$target="sch%3Atext%3Axml/";
 	$this->callGarage($szSCH, $target);
+      }
+
+    public function createSchemaISOSCH( &$szISOSCH, $bBar = false )
+      {
+	$target="isosch%3Atext%3Axml/";
+	$this->callGarage($szISOSCH, $target);
       }
 
     public function createSchemaRNC( &$szRNC, $bBar = false )

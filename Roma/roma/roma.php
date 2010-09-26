@@ -1343,6 +1343,9 @@ class roma
 	  case 'sch':
 	    $szError = $this->m_oRomaDom->createSchemaSCH( $szSchema, true );
 	    break;
+	  case 'isosch':
+	    $szError = $this->m_oRomaDom->createSchemaISOSCH( $szSchema, true );
+	    break;
 	  case 'rng':
 	    $szError = $this->m_oRomaDom->createSchemaRNG( $szSchema, true );
 	    break;
