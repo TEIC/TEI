@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# exit if this is not P5 source
+if [ -f Source/Specs/TEI.xml ]
+then
+ echo merge language script
+else
+ echo This is not a copy of the P5 source. Exitting.
+ exit 1
+fi
+overwrite=false
+verbose=false
+sourcedir=../I18N/results
+while test $# -gt 0; do
+  case $1 in
+    --overwrite)  overwrite=true;;
+    --verbose)  verbose=true;;
+    --lang=*)  language=`echo $1 | sed 's/.*=//'`;;
+    --sourcedir=*) sourcedir=`echo $1 | sed 's/.*=//'`;;
+     *) if test "$1" = "${1#--}" ; then 
+	   break
+	else
+	   echo "WARNING: Unrecognized option '$1' ignored"
+	   echo "For usage syntax issue $0 --help"
+	fi ;;
+  esac
+  shift
+done
+Source=$sourcedir
+
+X=`(cd $Source; pwd)`
+for i in $X/*.xml
+do
+ echo found $i source file for $language
+ for N in `saxon $i Utilities/getident.xsl | sort -u`
+ do
+ if [ -f Source/Specs/$N.xml ]
+ then
+     saxon Source/Specs/$N.xml \
+     Utilities/mergeLang.xsl \
+	 overwrite=$overwrite \
+	 verbose=$verbose \
+	 newLang=$language \
+	 newFile=$i \
+	 source=$N \
+	| xmllint --format --encode utf-8 - > tmp
+    mv tmp Source/Specs/$N.xml
+ else
+   echo WARNING: no file Source/Specs/$N.xml 
+ fi
+ done
+done
