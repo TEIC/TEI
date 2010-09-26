@@ -69,14 +69,14 @@ Overwrite: <xsl:value-of select="$overwrite"/>
 
   <xsl:choose>
     <xsl:when test="@xml:lang and not(@xml:lang=$newLang)">
-      <xsl:apply-templates select="." />
+      <xsl:copy-of select="."/>
     </xsl:when>
     <xsl:when test="@xml:lang=$newLang and $overwrite='false'">
-      <xsl:apply-templates select="." />
+      <xsl:copy-of select="."/>
     </xsl:when>
     <xsl:when test="@xml:lang=$newLang and $overwrite='true'"/>
     <xsl:otherwise>
-      <xsl:apply-templates select="." />
+      <xsl:copy-of select="."/>
       <xsl:variable name="this">
 	<xsl:value-of select="normalize-space(.)"/>
       </xsl:variable>
@@ -195,13 +195,13 @@ Overwrite: <xsl:value-of select="$overwrite"/>
 <xsl:template match="tei:remarks">
   <xsl:choose>
     <xsl:when test="not(@xml:lang)">
-      <xsl:apply-templates select="." />
+      <xsl:copy-of select="."/>
     </xsl:when>
     <xsl:when test="$overwrite='false'">
-      <xsl:apply-templates select="." />
+      <xsl:copy-of select="."/>
     </xsl:when>
     <xsl:when test="not(@xml:lang=$newLang)">
-      <xsl:apply-templates select="." />
+      <xsl:copy-of select="."/>
     </xsl:when>
   </xsl:choose>
   <xsl:if test="not(preceding-sibling::tei:remarks)">
@@ -249,10 +249,10 @@ Overwrite: <xsl:value-of select="$overwrite"/>
 <xsl:template match="tei:exemplum">
   <xsl:choose>
     <xsl:when test="not(@xml:lang)">
-      <xsl:apply-templates select="." />
+      <xsl:copy-of select="."/>
     </xsl:when>
     <xsl:when test="not(@xml:lang=$newLang)">
-      <xsl:apply-templates select="." />
+      <xsl:copy-of select="."/>
     </xsl:when>
   </xsl:choose>
     <xsl:variable name="What">
@@ -288,6 +288,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
   </xsl:if>
 </xsl:template>
 
+<!--
 <xsl:template 
     match="@xml:id" >
   <xsl:attribute name="xml:id">
@@ -295,7 +296,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
     <xsl:value-of select="."/>
   </xsl:attribute>
 </xsl:template>
-<!--
+
 <xsl:template 
     match="@active|@children|@from|@mergedIn|@mutual|@origin|@parent|@ref|@render|@replacementPattern|@resp|@scheme|@since|@spanTo|@target|@targets|@who|@wit"
     mode="iden">
