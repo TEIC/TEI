@@ -25,6 +25,7 @@
     </desc>
   </doc>
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
+  <xsl:param name="lang"></xsl:param>
 
   <xsl:key name="NS" 
 	   match="sch:ns"
@@ -45,6 +46,8 @@
          <xsl:for-each select="key('NS',1)">
             <xsl:choose>
                <xsl:when test="ancestor::teix:egXML"/>
+	       <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
+		 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
                <xsl:otherwise>
                   <xsl:apply-templates select="."/>
                </xsl:otherwise>
@@ -54,6 +57,8 @@
          <xsl:for-each select="key('PATTERNS',1)">
             <xsl:choose>
                <xsl:when test="ancestor::teix:egXML"/>
+	       <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
+		 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
                <xsl:otherwise>
                   <xsl:apply-templates select="."/>
                </xsl:otherwise>
@@ -63,6 +68,8 @@
          <xsl:for-each select="key('CONSTRAINTS',1)">
             <xsl:choose>
                <xsl:when test="ancestor::teix:egXML"/>
+	       <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
+		 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
                <xsl:otherwise>
 		 <xsl:variable name="patID">
 		   <xsl:choose>
