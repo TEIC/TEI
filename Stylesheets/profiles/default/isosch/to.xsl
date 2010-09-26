@@ -8,7 +8,7 @@
 
     <!-- import base conversion style -->
 
-    <xsl:import href="../../../odds2/extract-sch"/>
+    <xsl:import href="../../../odds2/extract-isosch"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
