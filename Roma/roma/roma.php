@@ -706,13 +706,11 @@ class roma
 	notamHandler::deleteError( 'moduleChanged' );
 	$this->addErrorsDom( $oListDom, $aoErrors );
 
-	$this->m_oRomaDom->getExcludedElementsInModuleDom( $_REQUEST[ 'module' ], $oExcludedElements );
-	$this->m_oRomaDom->getIncludedElementsInModuleDom( $_REQUEST[ 'module' ], $oIncludedElements );
+	$this->m_oRomaDom->getExcludedElementsInModule( $_REQUEST[ 'module' ], $oExcludedElements );
+	$this->m_oRomaDom->getIncludedElementsInModule( $_REQUEST[ 'module' ], $oIncludedElements );
 	$this->m_oRomaDom->getElementsWithChangedNameInModuleDom( $_REQUEST[ 'module' ], $oChanged );
 	$this->m_oRomaDom->getCustomizationTitle( $szTitle );
-
-	$this->createChangeInListDom( $oListDom, array ( $oChanged, $oExcludedElements ) );
-	$this->createChangeInListDom( $oInclude, array ( $oChanged, $oIncludedElements ) );
+	$this->createChangeInListDom( $oListDom, array ( $oChanged, $oExcludedElements, $oIncludedElements ) );
 	$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
 
 	$aszParam =  array( 

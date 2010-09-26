@@ -173,59 +173,45 @@ class romaDom extends domDocument
       }
 
 
-    /**
-     * returns a numbered array with all excluded Elements inside a module
-     * the module has to be specified with the first parameter.
+    /*
+     * returns a Dom object with all excluded elements for a module
      */
-    public function getExcludedElementsInModule( $szModule, &$aszElements )
-      {
-	$this->getXPath( $oXPath );
-        $aszElements = $oXPath->query("/tei:TEI/tei:text//tei:moduleRef[@key='$szModule']/@except" );
-      }
-    public function getIncludedElementsInModule( $szModule, &$aszElements )
-      {
-	$this->getXPath( $oXPath );
-        $aszElements = $oXPath->query("/tei:TEI/tei:text//tei:moduleRef[@key='$szModule']/@include" );
-      }
-
-    /**
-     */
-    public function getExcludedElementsInModuleDom( $szModule, &$oDom )
+    public function getExcludedElementsInModule( $szModule, &$oDom)
       {
 	$oDom = new domDocument();
 	$oDom->appendChild( new domElement( 'excludedElements' ) );
-
-	$this->getExcludedElementsInModule( $szModule, $aszElements );
-	foreach( $aszElements as $szElement )
+	$this->getXPath( $oXPath );
+        $aszElements = $oXPath->query("/tei:TEI/tei:text//tei:moduleRef[@key='$szModule']/@except" );
+	foreach ($aszElements as $domElement){
+	  foreach( explode(' ',$domElement->nodeValue) as $szElement )
+	    {
+	      $oDom->documentElement->appendChild( new domElement( 'element', $szElement ) );
+	    }
+	}
+        $aszElements = $oXPath->query(
+    "/tei:TEI/tei:text//tei:elementSpec[@mode='delete' and @module='$szModule']/@ident" );
+	foreach( $aszElements as $oElement )
 	  {
-	    $oDom->documentElement->appendChild( new domElement( 'element', $szElement ) );
+	    $oDom->documentElement->appendChild( new domElement( 'element', $oElement->nodeValue ) );
 	  }
+
       }
-
-
-
-    /**
-     * returns a numbered array with all included Elements inside a module
-     * the module has to be specified with the first parameter.
+    /*
+     * returns a Dom object with all included elements for a module
      */
-    public function getIncludedElementsInModule( $szModule, &$aszElements )
+    public function getIncludedElementsInModule( $szModule, &$oDom)
       {
-	$oListDom = new domDocument();
-	$this->getDocLanguage( $szDocLanguage );
-	$oListDom->loadXML( join( '', file( roma_xquery_server  . 'elemsbymod.xql?module=' . $szModule . '&lang=' . $szDocLanguage )));
-	$aoElements = $oListDom->getElementsByTagname( 'elementName' );
-	$this->getExcludedElementsInModule( $szModule, $aszExcluded );
-
-	$aszElements = array();
-	foreach( $aoElements as $oElement )
-	  {
-	    if( ! in_array( $oElement->nodeValue, $aszExcluded ) )
-	      {
-		$aszElements[] = $oElement->nodeValue;
-	      }
-	  }
+	$oDom = new domDocument();
+	$oDom->appendChild( new domElement( 'includedElements' ) );
+	$this->getXPath( $oXPath );
+        $aszElements = $oXPath->query("/tei:TEI/tei:text//tei:moduleRef[@key='$szModule']/@include" );
+	foreach ($aszElements as $domElement){
+	  foreach( explode(' ',$domElement->nodeValue) as $szElement )
+	    {
+	      $oDom->documentElement->appendChild( new domElement( 'element', $szElement ) );
+	    }
+	}
       }
-
 
     /**
      * returns a domDocument with all added Elements.
@@ -984,6 +970,7 @@ class romaDom extends domDocument
                 $theModRef = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'moduleRef' );
                 $oModuleRef = $oSchema->appendChild( $theModRef );
 		$oModuleRef->setAttribute( 'key', $szModule );
+		$oModuleRef->setAttribute( 'except', '' );
               }
           }
 
@@ -1145,6 +1132,10 @@ class romaDom extends domDocument
 	   {
 	    $oModuleRef->setAttribute( 'include', $includedNames );
 	   }
+        $oldElementSpecDel = $oXPath->query( "//tei:schemaSpec//tei:elementSpec[@module='$szModule' and @mode='delete']" );
+	foreach($oldElementSpecDel as $oElementSpec) {
+	  $oElementSpec->parentNode->removeChild( $oElementSpec );
+	}
 	
       }
 
