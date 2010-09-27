@@ -288,39 +288,11 @@ Overwrite: <xsl:value-of select="$overwrite"/>
   </xsl:if>
 </xsl:template>
 
-<!--
-<xsl:template 
-    match="@xml:id" >
-  <xsl:attribute name="xml:id">
-    <xsl:value-of select="concat($newLang,'_')"/>
-    <xsl:value-of select="."/>
-  </xsl:attribute>
-</xsl:template>
 
-<xsl:template 
-    match="@active|@children|@from|@mergedIn|@mutual|@origin|@parent|@ref|@render|@replacementPattern|@resp|@scheme|@since|@spanTo|@target|@targets|@who|@wit"
-    mode="iden">
-  <xsl:choose>
-    <xsl:when test="starts-with(.,'#')">
-      <xsl:attribute name="{local-name(.)}">
-	<xsl:call-template name="mangle">
-	  <xsl:with-param name="text">
-	    <xsl:value-of select="substring-after(.,'#')"/>
-	  </xsl:with-param>
-	</xsl:call-template>
-      </xsl:attribute>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:apply-templates select="." mode="iden"/>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
--->
 <xsl:template 
     match="@*|text()|comment()|processing-instruction()"  >
   <xsl:copy-of select="."/>
 </xsl:template>
-
 
 <xsl:template match="tei:*">
   <xsl:element name="{local-name()}">
@@ -331,8 +303,9 @@ Overwrite: <xsl:value-of select="$overwrite"/>
 
 <xsl:template match="teix:*">
   <xsl:element name="{local-name()}" namespace="http://www.tei-c.org/ns/Examples">
-    <xsl:apply-templates 
-	select="*|@*|processing-instruction()|comment()|text()"/>
+    <xsl:apply-templates  select="@*"/>
+    <xsl:apply-templates
+	    select="*|processing-instruction()|comment()|text()" mode="exemplum"/>
   </xsl:element>
 </xsl:template>
 
@@ -364,6 +337,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
   </xsl:copy>
 </xsl:template>
 
+<!-- example processing -->
 
 <xsl:template name="mangle">
   <xsl:param name="text"/>
@@ -380,6 +354,60 @@ Overwrite: <xsl:value-of select="$overwrite"/>
     </xsl:when>
     <xsl:otherwise>
       <xsl:value-of select="$text"/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+
+<xsl:template match="teix:*" mode="exemplum">
+  <xsl:element name="{local-name()}" namespace="http://www.tei-c.org/ns/Examples">
+    <xsl:apply-templates 
+	select="*|@*|processing-instruction()|comment()|text()"  mode="exemplum"/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="rng:*"  mode="exemplum">
+  <xsl:element name="{local-name()}" namespace="http://relaxng.org/ns/structure/1.0">
+    <xsl:apply-templates 
+	select="*|@*|processing-instruction()|comment()|text()"  mode="exemplum"/>
+  </xsl:element>
+</xsl:template>
+
+<xsl:template match="*"  mode="exemplum">
+  <xsl:copy>
+    <xsl:apply-templates 
+	select="*|@*|processing-instruction()|comment()|text()"  mode="exemplum"/>
+  </xsl:copy>
+</xsl:template>
+
+<xsl:template 
+    match="@*|text()|comment()|processing-instruction()"  mode="exemplum" >
+  <xsl:copy-of select="."/>
+</xsl:template>
+
+<xsl:template 
+    match="@xml:id"  mode="exemplum">
+  <xsl:attribute name="xml:id">
+    <xsl:value-of select="concat($newLang,'_')"/>
+    <xsl:value-of select="."/>
+  </xsl:attribute>
+</xsl:template>
+
+<xsl:template 
+    match="@active|@children|@from|@mergedIn|@mutual|@origin|@parent|@ref|@render|@replacementPattern|@resp|@scheme|@since|@spanTo|@target|@targets|@who|@wit"
+    mode="exemplum">
+  <xsl:choose>
+    <xsl:when test="starts-with(.,'#')">
+      <xsl:attribute name="{local-name(.)}">
+	<xsl:call-template name="mangle">
+	  <xsl:with-param name="text">
+	    <xsl:value-of select="substring-after(.,'#')"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:attribute>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates select="." mode="exemplum"/>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
