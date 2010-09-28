@@ -957,9 +957,16 @@
 	    <xsl:with-param name="name" select="$identifier"/>
 	  </xsl:call-template>
           <xsl:call-template name="rendToClass"/>
-          <p>
-            <xsl:apply-templates/>
-          </p>
+	  <xsl:choose>
+	    <xsl:when test="tei:q">
+	      <xsl:apply-templates/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <p>
+		<xsl:apply-templates/>
+	      </p>
+	    </xsl:otherwise>
+	  </xsl:choose>
         </blockquote>
       </xsl:when>
       <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
