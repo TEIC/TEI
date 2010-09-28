@@ -29,11 +29,28 @@ $Id$
   <desc version="2007-01-21" xml:lang="it">rappresenta una <term>feature value specification</term>, cioè l'associazione di un nome con il valore di uno qualsiasi di diversi tratti.</desc>
   <content>
     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+	<ref name="macro.xText"/>
       <ref name="model.featureVal"/>
+      </choice>
     </zeroOrMore>
   </content>
 <!-- need to express constraint that if there is no content then the
 fVal attribute must be non-null -->
+
+<constraintSpec ident="fValConstraints" scheme="isoschematron">
+ <constraint>
+   <s:rule context="tei:fVal">
+    <s:assert test="not(tei:* and text)"> A feature value cannot
+    contain both text and element content</s:assert>
+     </s:rule>
+   <s:rule context="tei:fVal">
+    <s:report test="count(tei:*)>1"> A feature value can contain
+    only one child element</s:report>
+     </s:rule>
+ </constraint>
+
+</constraintSpec>
   <attList>
     <attDef ident="name" usage="req">
       <equiv/>
