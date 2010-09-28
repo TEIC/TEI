@@ -20,7 +20,7 @@ de la main par laquelle un manuscrit est écrit.</desc>
   <attList>
     <attDef ident="scribe">
       <equiv/>
-      <desc>gives a standard name or other identifier for the scribe
+      <desc>gives a name or other identifier for the scribe
 believed to be responsible for this hand.</desc>
       <desc version="2007-12-20" xml:lang="kr">이 필적에 대한 책임이 있다고 간주되는 필기사에 대한 표준명 또는 다른 확인소를 제시한다.</desc>
       <desc version="2008-04-05" xml:lang="ja">
@@ -36,7 +36,19 @@ identifiant pour le scribe reconnu comme responsable de cette main.</desc>
       </datatype>
       <!-- valDesc xml:lang="fr">Un nom quelconque.</valDesc -->
     </attDef>
-    <attDef ident="script">
+ 
+    <attDef ident="scribeRef">
+      <equiv/>
+      <desc>points to a full description of the scribe concerned, typically supplied by a <gi>person</gi> element
+      elsewhere in the description.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <rng:ref name="data.pointer"/>
+      </datatype>
+    </attDef>
+
+
+
+   <attDef ident="script">
       <equiv/>
       <desc>characterizes the particular script or writing style used by
 this hand, for example <mentioned>secretary</mentioned>, <mentioned>copperplate</mentioned>, <mentioned>Chancery</mentioned>, <mentioned>Italian</mentioned>, etc.</desc>
@@ -59,6 +71,18 @@ this hand, for example <mentioned>secretary</mentioned>, <mentioned>copperplate<
         <rng:ref name="data.name"/>
       </datatype>
     </attDef>
+
+    <attDef ident="scriptRef">
+      <equiv/>
+      <desc>points to a full description of the script or writing style used by
+this hand, typically supplied by a <gi>scriptNote</gi> element
+      elsewhere in the description.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <rng:ref name="data.pointer"/>
+      </datatype>
+    </attDef>
+
+
     <attDef ident="medium">
       <equiv/>
       <desc>describes the tint or type of ink, e.g. <mentioned>brown</mentioned>, or other
@@ -127,6 +151,10 @@ occasionnellement dans le manuscrit.</desc>
       </valList>
     </attDef>
   </attList>
+
+<remarks><p>Usually either <att>script</att> or <att>scriptRef</att>,
+and similarly, either <att>scribe</att> or
+<att>scribeRef</att>, will be supplied. </p></remarks>
   <listRef>
     <ptr target="#PHDH"/>
   </listRef>
