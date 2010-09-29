@@ -911,10 +911,7 @@
   </xsl:template>
 
   <xsl:template match="tei:date" mode="metadata">
-    <dt>Date</dt>
-    <dd>
-    <xsl:apply-templates/>
-    </dd>
+    <p><i>Date</i>:     <xsl:apply-templates/></p>
   </xsl:template>
 
   <xsl:template match="tei:note" mode="metadata">
