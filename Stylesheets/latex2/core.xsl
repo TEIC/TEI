@@ -197,7 +197,6 @@
          <xsl:when test="parent::tei:lg"> \subsection*{<xsl:apply-templates/>} </xsl:when>
          <xsl:when test="parent::tei:table"/>
          <xsl:when test="parent::tei:div1[@type='letter']"/>
-         <xsl:when test="parent::tei:div[@type='letter']"/>
          <xsl:when test="parent::tei:div[@type='bibliography']"/>
          <xsl:otherwise>
             <xsl:variable name="depth">
