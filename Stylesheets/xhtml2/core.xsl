@@ -950,6 +950,34 @@
 	  <xsl:text>)</xsl:text>
 	</span>
       </xsl:when>
+      <xsl:when test="parent::tei:div">
+	<div class="note">
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name" select="$identifier"/>
+	  </xsl:call-template>
+	  <span class="noteLabel">
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Note</xsl:with-param>
+	    </xsl:call-template>
+	    <xsl:text>: </xsl:text>
+	  </span>
+	  <xsl:apply-templates/>
+	</div>
+      </xsl:when>
+      <xsl:when test="@place='display' and parent::tei:div|parent::tei:p">
+	<div class="note">
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name" select="$identifier"/>
+	  </xsl:call-template>
+	  <span class="noteLabel">
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Note</xsl:with-param>
+	    </xsl:call-template>
+	    <xsl:text>: </xsl:text>
+	  </span>
+	  <xsl:apply-templates/>
+	</div>
+      </xsl:when>
       <xsl:when test="@place='display'">
         <blockquote>
 	  <xsl:call-template name="makeAnchor">
@@ -990,20 +1018,6 @@
           </xsl:otherwise>
         </xsl:choose>
 	</span>
-      </xsl:when>
-      <xsl:when test="parent::tei:div">
-	<div class="note">
-	  <xsl:call-template name="makeAnchor">
-	    <xsl:with-param name="name" select="$identifier"/>
-	  </xsl:call-template>
-	  <span class="noteLabel">
-	    <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">Note</xsl:with-param>
-	    </xsl:call-template>
-	    <xsl:text>: </xsl:text>
-	  </span>
-	  <xsl:apply-templates/>
-	</div>
       </xsl:when>
       <xsl:otherwise>
 	<span>
@@ -1131,7 +1145,7 @@
   <xsl:template match="tei:p">
     <xsl:variable name="wrapperElement">
       <xsl:choose>
-        <xsl:when test="tei:q[tei:l]|tei:q[tei:p]|tei:l|tei:specList|tei:quote|tei:moduleSpec|tei:list|tei:eg|teix:egXML|tei:table|tei:specGrp|tei:specGrpRef|tei:q[@rend='display']|tei:figure">
+        <xsl:when test="tei:q[tei:l]|tei:q[tei:lg]|tei:q[tei:p]|tei:l|tei:specList|tei:quote|tei:moduleSpec|tei:list|tei:eg|teix:egXML|tei:table|tei:specGrp|tei:specGrpRef|tei:q[@rend='display']|tei:figure|tei:note[@place='display']">
           <xsl:text>div</xsl:text>
         </xsl:when>
         <xsl:when test="parent::tei:p">
@@ -1418,7 +1432,7 @@
       <xsl:value-of select="text()"/>
       <br/>
       <xsl:apply-templates select="tei:biblStruct"/>
-      <xsl:if test="child::tei:note"><br/>Zie noot: <xsl:apply-templates select="child::tei:note"/></xsl:if>
+      <xsl:if test="child::tei:note"><br/>See: <xsl:apply-templates select="child::tei:note"/></xsl:if>
     </p>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
