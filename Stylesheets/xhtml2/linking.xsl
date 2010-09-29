@@ -206,7 +206,6 @@
          </xsl:otherwise>
       </xsl:choose>
       <xsl:text>#</xsl:text>
-      <xsl:text>Note</xsl:text>
       <xsl:call-template name="noteID"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

@@ -915,7 +915,6 @@
   </doc>
   <xsl:template match="tei:note">
     <xsl:variable name="identifier">
-      <xsl:text>Note</xsl:text>
       <xsl:call-template name="noteID"/>
     </xsl:variable>
     <xsl:choose>
@@ -1052,7 +1051,6 @@
   </doc>
   <xsl:template name="makeaNote">
     <xsl:variable name="identifier">
-      <xsl:text>Note</xsl:text>
       <xsl:call-template name="noteID"/>
     </xsl:variable>
     <xsl:if test="$verbose='true'">
@@ -1497,6 +1495,7 @@
         <xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:otherwise>
+	<xsl:text>Note</xsl:text>
         <xsl:number count="tei:note" level="any"/>
       </xsl:otherwise>
     </xsl:choose>
