@@ -59,7 +59,7 @@
 	<xsl:otherwise>td</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-      <xsl:element name="${cellname}">
+      <xsl:element name="{$cellname}">
 	  <xsl:attribute name="valign">top</xsl:attribute>
          <xsl:for-each select="@*">
             <xsl:choose>
