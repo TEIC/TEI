@@ -53,7 +53,14 @@
       <desc>Process element cell</desc>
    </doc>
   <xsl:template match="tei:cell">
-      <td valign="top">
+    <xsl:variable name="cellname">
+      <xsl:choose>
+	<xsl:when test="parent::tei:row[@rend='thead']">th</xsl:when>
+	<xsl:otherwise>td</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+      <xsl:element name="${cellname}">
+	  <xsl:attribute name="valign">top</xsl:attribute>
          <xsl:for-each select="@*">
             <xsl:choose>
                <xsl:when test="name(.) = 'width'          or name(.) = 'border'          or name(.) = 'cellspacing'          or name(.) = 'cellpadding'">
@@ -108,7 +115,7 @@
          </xsl:if>
          <xsl:call-template name="makeAnchor"/>
          <xsl:apply-templates/>
-      </td>
+      </xsl:element>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element figDesc</desc>
