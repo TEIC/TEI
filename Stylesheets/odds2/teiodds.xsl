@@ -44,7 +44,7 @@
   <xsl:param name="lang"/>
   <xsl:param name="doclang"/>
   <xsl:param name="patternPrefix"/>
-  <xsl:param name="TEIC">false</xsl:param>
+  <xsl:param name="TEIC">true</xsl:param>
   <xsl:param name="lookupDatabase">false</xsl:param>
   <xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk/Query/</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
