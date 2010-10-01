@@ -39,19 +39,22 @@ Written 2010-05-29 by James Cummings
 	      <p style="font-size:90%; margin-top:0">To submit a news item, email <a href="mailto:news@tei-c.org">news@tei-c.org</a></p>
         <h2>Contents</h2>
         <ul class="toc  toc_body">
-          <xsl:apply-templates select="//atom:entry" mode="toc"/>
+          <xsl:apply-templates select="//atom:entry[position() &lt; 100]" mode="toc"/>
 
+        	
         </ul>
-        <!-- More toc links -->
+      
+      	
+      	<p class="bold">Full news archive at: <a href="https://sourceforge.net/apps/wordpress/tei/">TEI Sourceforge Blog</a></p>
       </div>
       <div class="separator">
         <hr/>
       </div>
       <xsl:comment>articles section</xsl:comment>
 
-      <xsl:apply-templates select="//atom:entry"/>
+      <xsl:apply-templates select="//atom:entry[position() &lt; 100]"/>
 
-
+    	<p class="bold">Full news archive at: <a href="https://sourceforge.net/apps/wordpress/tei/">TEI Sourceforge Blog</a></p>
     </div>
 
   </xsl:template>
