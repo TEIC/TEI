@@ -25,15 +25,15 @@
     intestazione del corpus e uno o più elementi TEI, ciascuno contenente un un singolo testo e la
     relatica intestazione.</desc>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:ref name="teiHeader"/>
-      <rng:oneOrMore>
-        <rng:choice>
-          <rng:ref name="TEI"/>
-          <rng:ref name="teiCorpus"/>
-        </rng:choice>
-      </rng:oneOrMore>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="teiHeader"/>
+      <oneOrMore>
+        <choice>
+          <ref name="TEI"/>
+          <ref name="teiCorpus"/>
+        </choice>
+      </oneOrMore>
+    </group>
   </content>
   <attList>
     <attDef ident="version" usage="opt">
@@ -46,7 +46,7 @@
       <desc version="2007-05-04" xml:lang="es">La versión del esquema TEI</desc>
       <desc version="2007-01-21" xml:lang="it">La versione dello schema TEI</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.version"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.version"/>
       </datatype>
       <defaultVal>5.0</defaultVal>
       <valDesc>a TEI version number</valDesc>
@@ -75,6 +75,21 @@
           </text>
         </TEI>
         <!-- more TEI elements here -->
+      </teiCorpus>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <teiCorpus>
+        <teiHeader> </teiHeader>
+        <TEI>
+          <teiHeader> </teiHeader>
+          <text> </text>
+        </TEI>
+        <TEI>
+          <teiHeader> </teiHeader>
+          <text> </text>
+        </TEI>
       </teiCorpus>
     </egXML>
   </exemplum>

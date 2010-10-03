@@ -6,72 +6,81 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="state">
-    <gloss version="2009-03-19" xml:lang="fr">statut</gloss>
-    <desc>contains a description of some status or quality attributed to a person, place, or organization at some specific time.</desc>
-    <desc version="2009-03-19" xml:lang="fr">contient la description d'un statut ou d'une qualité actuels attribués à une personne, un lieu ou une
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="state">
+  <gloss version="2009-03-19" xml:lang="fr">statut</gloss>
+  <desc>contains a description of some status or quality attributed to a person, place, or organization at some specific time.</desc>
+  <desc version="2009-03-19" xml:lang="fr">contient la description d'un statut ou d'une qualité actuels attribués à une personne, un lieu ou une
         organisation.</desc>
-    <desc version="2007-12-20" xml:lang="kr">개인, 장소, 또는 조직에 관련한 현재 지위 또는 특성 기술을 포함한다.</desc>
-    <desc version="2007-05-02" xml:lang="zh-tw">標明分界方法所定義的權威參照標準裡其中ㄧ個組件。</desc>
-    <desc version="2008-04-05" xml:lang="ja"> 人物，場所，組織などの，現在の社会的状態や地位を示す． </desc>
-    <desc version="2006-10-18" xml:lang="de">beschreibt einen Bestandteil einer Standardreferenz mittels der Milestone-Methode. </desc>
-    <desc version="2007-05-04" xml:lang="es">especifica un componente de una referencia canónica definida por el método milestone (hito).</desc>
-    <desc version="2007-01-21" xml:lang="it">specifica un componente di un riferimento canonico definito dal metodo milestone.</desc>
-    <classes>
-        <memberOf key="att.datable"/>
-        <memberOf key="att.editLike"/>
-        <memberOf key="att.typed"/>
-        <memberOf key="att.naming"/>
-        <memberOf key="model.persStateLike"/>
-        <memberOf key="model.orgStateLike"/>
-        <memberOf key="model.placeStateLike"/>
-    </classes>
-    <content>
-        <rng:choice>
-            <rng:oneOrMore>
-                <rng:ref name="state"/>
-            </rng:oneOrMore>
-            <rng:group>
-                <rng:zeroOrMore>
-                    <rng:ref name="model.headLike"/>
-                </rng:zeroOrMore>
-                <rng:oneOrMore>
-                    <rng:ref name="model.pLike"/>
-                </rng:oneOrMore>
-                <rng:zeroOrMore>
-                    <rng:choice>
-                        <rng:ref name="model.noteLike"/>
-                        <rng:ref name="model.biblLike"/>
-                    </rng:choice>
-                </rng:zeroOrMore>
-            </rng:group>
-            <rng:group>
-                <rng:zeroOrMore>
-                    <rng:choice>
-                        <rng:ref name="model.labelLike"/>
-                        <rng:ref name="model.noteLike"/>
-                        <rng:ref name="model.biblLike"/>
-                    </rng:choice>
-                </rng:zeroOrMore>
-            </rng:group>
-        </rng:choice>
-    </content>
-    <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <person>
-                <state ref="#SCHOL" type="status">
-                    <label>scholar</label>
-                </state>
-            </person>
-        </egXML>
-    </exemplum>
-    <exemplum xml:lang="zh-tw">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <person>
-                <state ref="#zh-tw_SCHOL" type="status">
-                    <label>學者</label>
-                </state>
-            </person>
-        </egXML>
-    </exemplum>
+  <desc version="2007-12-20" xml:lang="kr">개인, 장소, 또는 조직에 관련한 현재 지위 또는 특성 기술을 포함한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">標明分界方法所定義的權威參照標準裡其中ㄧ個組件。</desc>
+  <desc version="2008-04-05" xml:lang="ja"> 人物，場所，組織などの，現在の社会的状態や地位を示す． </desc>
+  <desc version="2006-10-18" xml:lang="de">beschreibt einen Bestandteil einer Standardreferenz mittels der Milestone-Methode. </desc>
+  <desc version="2007-05-04" xml:lang="es">especifica un componente de una referencia canónica definida por el método milestone (hito).</desc>
+  <desc version="2007-01-21" xml:lang="it">specifica un componente di un riferimento canonico definito dal metodo milestone.</desc>
+  <classes>
+    <memberOf key="att.datable"/>
+    <memberOf key="att.editLike"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.naming"/>
+    <memberOf key="model.persStateLike"/>
+    <memberOf key="model.orgStateLike"/>
+    <memberOf key="model.placeStateLike"/>
+  </classes>
+  <content>
+    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <ref name="state"/>
+      </oneOrMore>
+      <group>
+        <zeroOrMore>
+          <ref name="model.headLike"/>
+        </zeroOrMore>
+        <oneOrMore>
+          <ref name="model.pLike"/>
+        </oneOrMore>
+        <zeroOrMore>
+          <choice>
+            <ref name="model.noteLike"/>
+            <ref name="model.biblLike"/>
+          </choice>
+        </zeroOrMore>
+      </group>
+      <group>
+        <zeroOrMore>
+          <choice>
+            <ref name="model.labelLike"/>
+            <ref name="model.noteLike"/>
+            <ref name="model.biblLike"/>
+          </choice>
+        </zeroOrMore>
+      </group>
+    </choice>
+  </content>
+  <exemplum xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <person>
+        <state ref="#SCHOL" type="status">
+          <label>scholar</label>
+        </state>
+      </person>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <person>
+        <state ref="#fr_SCHOL" type="status">
+          <label>étudiant</label>
+        </state>
+      </person>
+    </egXML>
+  </exemplum>
+  <exemplum xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <person>
+        <state ref="#zh-tw_SCHOL" type="status">
+          <label>學者</label>
+        </state>
+      </person>
+    </egXML>
+  </exemplum>
 </elementSpec>

@@ -33,22 +33,22 @@ $Id$
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:oneOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:oneOrMore>
-      <rng:oneOrMore>
-        <rng:ref name="relation"/>
-      </rng:oneOrMore>
-    </rng:choice>
+    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="relation"/>
+      </oneOrMore>
+    </choice>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <listPerson>
         <person xml:id="p1">
-<!-- data about person p1 -->
+          <!-- data about person p1 -->
         </person>
-<!-- more person elements here -->
+        <!-- more person elements here -->
       </listPerson>
       <relationGrp type="personal">
         <relation name="parent" active="#p1 #p2" passive="#p3 #p4"/>
@@ -61,13 +61,36 @@ $Id$
     <p>The persons with identifiers p1 and p2 are the parents of p3 and p4; they are also married to
       each other; p1 is the employer of p3, p5, p6, and p7.</p>
   </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listPerson>
+        <person xml:id="fr_p1"> </person>
+      </listPerson>
+      <relationGrp type="personal">
+        <relation name="parent" active="#fr_p1 #fr_p2" passive="#p3 #p4"/>
+        <relation name="spouse" mutual="#fr_p1 #fr_p2"/>
+      </relationGrp>
+      <relationGrp type="social">
+        <relation name="employer" active="#fr_p1" passive="#p3 #p5 #p6 #p7"/>
+      </relationGrp>
+    </egXML>
+    <p>Les personnes avec des identifiants p1 et p2 sont les parents de p3 et p4 ; ils se
+        combinent aussi l'un et l'un avec l'autre; p1 est l'employeur de p3, p5, p6 et p7.</p>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <relationGrp>
+        <p>Tous les locuteurs sont membres de la famille Ceruli, et sont nés à Naples.</p>
+      </relationGrp>
+    </egXML>
+  </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <listPerson>
         <person xml:id="zh-tw_p1">
-<!-- 第一人的資料 -->
+          <!-- 第一人的資料 -->
         </person>
-<!-- 更多關於此人的元素 -->
+        <!-- 更多關於此人的元素 -->
       </listPerson>
       <relationGrp type="personal">
         <relation name="parent" active="#zh-tw_p1 #zh-tw_p2" passive="#p3 #p4"/>

@@ -9,7 +9,7 @@
   <desc version="2007-05-04" xml:lang="es">proporciona una indicación temporal en términos relativos respecto a otros elementos determinados sobre la misma escala temporal, o en términos absolutos.</desc>
   <desc version="2007-01-21" xml:lang="it">fornisce un'indicazione temporale in termini relativi, rispetto ad altri elementi determinati sulla stessa scala temporale, o in termini assoluti</desc>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
     <attDef ident="absolute" usage="rwa">
@@ -22,7 +22,7 @@
       <desc version="2007-05-04" xml:lang="es">proporciona un valor temporal absoluto</desc>
       <desc version="2007-01-21" xml:lang="it">indica un valore temporale assoluto</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
       </datatype>
       <remarks>
         <p>This attribute should always be specified on a <gi>when</gi> element which serves as the target for the <att>origin</att> attribute of a <gi>timeLine</gi>. </p>
@@ -42,9 +42,10 @@
       <desc version="2008-04-05" xml:lang="ja"> 親要素<gi>timeLine</gi>から継承されない場合，属性 <att>interval</att>で示される時間の単位を示す． </desc>
       <desc version="2007-06-12" xml:lang="fr">spécifie l'unité de temps dans laquelle la valeur de l'attribut <att>interval</att> est exprimée, si elle n'est pas héritée de l'élément parent <gi>timeLine</gi>.</desc>
       <desc version="2007-05-04" xml:lang="es">especifica la unidad temporal en la que se expresa el valor <att>interval</att>, si este valor no es heredado del padre <gi>timeline</gi>.</desc>
-      <desc version="2007-01-21" xml:lang="it">specifica l'unità temporale nel quale è espresso l'attributo <att>interval</att>, se questo non è ereditato dal genitore <gi>timeline</gi></desc>
+      <desc version="2007-01-21" xml:lang="it">specifica l'unità temporale nel quale è espresso l'attributo <att>interval</att>, se questo non è ereditato dal genitore <gi>timeline</gi>
+         </desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valList type="semi">
         <valItem ident="d">
@@ -88,13 +89,13 @@
       <desc version="2007-06-12" xml:lang="fr">spécifie la partie numérique d'un intervalle de temps.</desc>
       <desc version="2007-05-04" xml:lang="es">especifica los componentes numéricos de un intervalo temporal. </desc>
       <desc version="2007-01-21" xml:lang="it">indica la componente numerica di un intervallo temporale</desc>
-      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0">
-        <rng:choice>
-          <rng:data type="float">
-            <rng:param name="minExclusive">0</rng:param>
-          </rng:data>
-          <rng:value>unknown</rng:value>
-        </rng:choice>
+      <datatype>
+        <choice xmlns="http://relaxng.org/ns/structure/1.0">
+          <data type="float">
+            <param name="minExclusive">0</param>
+          </data>
+          <value>unknown</value>
+        </choice>
       </datatype>
       <valDesc>a positive number, or the special value <val>unknown</val>.</valDesc>
       <valDesc xml:lang="fr" version="2009-10-06">contient un nombre positif, ou la valeur <val>unknown</val>.</valDesc>
@@ -118,7 +119,7 @@
       <desc version="2007-05-04" xml:lang="es">identifica el punto de referencia para la determinación del valor temporal del elemento <gi>when</gi> (cuando) en cuestión, obtenido añadiendo el intervalo al punto de referencia temporal.</desc>
       <desc version="2007-01-21" xml:lang="it">identifica il punto di riferimento per la determinazione del valore temporale dell'elemento <gi>when</gi> corrente, ottenuto aggiungendo l'intervallo al punto di riferimento temporale</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>Should point to another <gi>when</gi> element in the same <gi>timeline</gi>.</valDesc>
       <valDesc xml:lang="fr" version="2009-10-06">Doit pointer vers un autre élément <gi>when</gi> dans la même frise chronologique <gi>timeline</gi>.</valDesc>
@@ -136,6 +137,11 @@
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <when xml:id="TW3" interval="20" since="#w2"/>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <when xml:id="fr_TW3" interval="20" since="#fr_w2"/>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">

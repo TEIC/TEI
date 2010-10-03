@@ -30,20 +30,20 @@ $Id$
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:choice>
-        <rng:text/>
-        <rng:ref name="model.gLike"/>
-        <rng:ref name="seg"/>
-        <rng:ref name="w"/>
-        <rng:ref name="m"/>
-        <rng:ref name="c"/>
-        <rng:ref name="model.global"/>
-        <rng:ref name="model.lPart"/>
-        <rng:ref name="model.hiLike"/>
-        <rng:ref name="model.pPart.edit"/>
-      </rng:choice>
-    </rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="seg"/>
+        <ref name="w"/>
+        <ref name="m"/>
+        <ref name="c"/>
+        <ref name="model.global"/>
+        <ref name="model.lPart"/>
+        <ref name="model.hiLike"/>
+        <ref name="model.pPart.edit"/>
+      </choice>
+    </zeroOrMore>
   </content>
   <attList>
     <attDef ident="lemma" usage="opt">
@@ -60,14 +60,14 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">identifica el lema de una palabra (forma en que se encuentra como entrada en un diccionario).</desc>
       <desc version="2007-01-21" xml:lang="it">identifica il lemma (la voce di un dizionario)</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.key"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.key"/>
       </datatype>
     </attDef>
     <attDef ident="lemmaRef">
       <desc>provides a pointer to a definition of the lemma for the
       word, for example in an online lexicon. </desc>
       <datatype maxOccurs="1">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>any valid URI</valDesc>
       <valDesc version="2009-02-13" xml:lang="fr">tout URI valide</valDesc>
@@ -75,12 +75,20 @@ $Id$
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <w type="verb" lemma="hit" lemmaRef="http://www.example.com/lexicon/hitvb.xml">hitt<m type="suffix">ing</m></w>
+      <w type="verb" lemma="hit" lemmaRef="http://www.example.com/lexicon/hitvb.xml">hitt<m type="suffix">ing</m>
+         </w>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <w type="verb" lemma="nage" lemmaRef="http://www.example.com/lexicon/hitvb.xml">nag<m type="suffix">er</m>
+         </w>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <w type="動詞" lemma="hit">hitt<m type="字尾">ing</m></w>
+      <w type="動詞" lemma="hit">hitt<m type="字尾">ing</m>
+         </w>
     </egXML>
   </exemplum>
   <listRef>

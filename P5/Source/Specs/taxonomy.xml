@@ -25,23 +25,23 @@ $Id$
     in modo implicito, usando una citazione bibliograficha, o in modo esplicito attraverso una
     tassonomia strutturata.</desc>
   <content>
-    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-        <rng:ref name="model.glossLike"/>
-      </rng:zeroOrMore>
-      <rng:oneOrMore>
-        <rng:ref name="category"/>
-      </rng:oneOrMore>
-      <rng:group>
-        <rng:group>
+    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <ref name="model.glossLike"/>
+      </zeroOrMore>
+      <oneOrMore>
+        <ref name="category"/>
+      </oneOrMore>
+      <group>
+        <group>
           <!-- this group a hack for odd2dtd processing -->
-          <rng:ref name="model.biblLike"/>
-        </rng:group>
-        <rng:zeroOrMore>
-          <rng:ref name="category"/>
-        </rng:zeroOrMore>
-      </rng:group>
-    </rng:choice>
+          <ref name="model.biblLike"/>
+        </group>
+        <zeroOrMore>
+          <ref name="category"/>
+        </zeroOrMore>
+      </group>
+    </choice>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -78,6 +78,41 @@ $Id$
           </category>
         </category>
       </taxonomy>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <taxonomy xml:id="fr_tax.a">
+        <category xml:id="fr_tax.a.a">
+          <catDesc>littérature</catDesc>
+        </category>
+        <category xml:id="fr_tax.a.a.1">
+          <catDesc>Drame bourgeois</catDesc>
+        </category>
+        <category xml:id="fr_tax.a.a.1.α">
+          <catDesc>Comédie larmoyante</catDesc>
+        </category>
+        <category xml:id="fr_tax.a.b">
+          <catDesc>Correspondance</catDesc>
+        </category>
+        <category xml:id="fr_tax.a.b.1.a">
+          <catDesc>Dernières lettres</catDesc>
+        </category>
+        <category xml:id="fr_tax.a.c.">
+          <catDesc>Littérature européenne -- 16e siècle</catDesc>
+        </category>
+        <category xml:id="fr_tax.a.c.1">
+          <catDesc>Satire de la Renaissance </catDesc>
+        </category>
+        <category xml:id="fr_tax.a.d">
+          <catDesc>Récits de voyage</catDesc>
+        </category>
+        <category xml:id="fr_tax.a.d.1">
+          <catDesc>Récits de la mer </catDesc>
+        </category>
+      </taxonomy>
+      <bibl>indexation selon le système d'indexation RAMEAU, géré par la Bibliothèque nationale de
+          France</bibl>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">

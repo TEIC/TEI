@@ -20,9 +20,9 @@
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:ref name="when"/>
-    </rng:oneOrMore>
+    <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="when"/>
+    </oneOrMore>
   </content>
   <attList>
     <attDef ident="origin" usage="rwa">
@@ -35,7 +35,7 @@
       <desc version="2007-05-04" xml:lang="es">indica el origen de la escala temporal, es decir, el momento en que inicia.</desc>
       <desc version="2007-01-21" xml:lang="it">indica l'origine della scala temporale, cioè il momento in cui ha inizio</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>if suppplied, must point either to one of the <gi>when</gi> elements in its content, or to another <gi>timeline</gi> element.</valDesc>
       <valDesc xml:lang="fr" version="2009-04-17">doit pointer, soit vers l'un des éléments <gi>when</gi> qu'il contient, soit vers un autre élément <gi>timeline</gi>.</valDesc>
@@ -56,7 +56,7 @@
       <desc version="2007-05-04" xml:lang="es">especifica la unidad temporal correspondiente al valor del atributo <att>interval</att> (intervalo) de la escala temporal o de sus puntos constitutivos.</desc>
       <desc version="2007-01-21" xml:lang="it">specifica l'unità temporale corrispondente al valore dell'attributo <att>interval</att> della scala temporale o dei suoi punti costitutivi</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valList type="semi">
         <valItem ident="d">
@@ -99,14 +99,14 @@
       <desc version="2007-06-12" xml:lang="fr">spécifie la partie numérique d'un intervalle de temps.</desc>
       <desc version="2007-05-04" xml:lang="es">indica los componentes numéricos de un intervalo de tiempo.</desc>
       <desc version="2007-01-21" xml:lang="it">indica la componente numerica di un intervallo temporale</desc>
-      <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0">
-        <rng:choice>
-          <rng:data type="float">
-            <rng:param name="minExclusive">0</rng:param>
-          </rng:data>
-          <rng:value>regular</rng:value>
-          <rng:value>irregular</rng:value>
-        </rng:choice>
+      <datatype>
+        <choice xmlns="http://relaxng.org/ns/structure/1.0">
+          <data type="float">
+            <param name="minExclusive">0</param>
+          </data>
+          <value>regular</value>
+          <value>irregular</value>
+        </choice>
       </datatype>
       <valDesc>a positive number, or one of the two special values <val>irregular</val> or <val>regular</val>.</valDesc>
       <valDesc xml:lang="fr" version="2009-10-06">un nombre positif, ou bien une ou plusieurs des valeurs <val>irregular</val> (irrégulier) ou <val>regular</val> (régulier).</valDesc>
@@ -131,6 +131,19 @@
         <when xml:id="TL-w4" interval="150" since="#TL-w3"/>
         <when xml:id="TL-w5" interval="250" since="#TL-w4"/>
         <when xml:id="TL-w6" interval="100" since="#TL-w5"/>
+      </timeline>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <timeline xml:id="fr_TL01" origin="#fr_TL-w0" unit="ms">
+        <when xml:id="fr_TL-w0" absolute="11:30:00"/>
+        <when xml:id="fr_TL-w1" interval="unknown" since="#fr_TL-w0"/>
+        <when xml:id="fr_TL-w2" interval="100" since="#fr_TL-w1"/>
+        <when xml:id="fr_TL-w3" interval="200" since="#fr_TL-w2"/>
+        <when xml:id="fr_TL-w4" interval="150" since="#fr_TL-w3"/>
+        <when xml:id="fr_TL-w5" interval="250" since="#fr_TL-w4"/>
+        <when xml:id="fr_TL-w6" interval="100" since="#fr_TL-w5"/>
       </timeline>
     </egXML>
   </exemplum>

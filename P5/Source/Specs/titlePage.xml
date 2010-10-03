@@ -32,20 +32,20 @@ $Id$
     <memberOf key="model.frontPart"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-        <rng:ref name="model.global"/>
-      </rng:zeroOrMore>
-      <rng:group>
-        <rng:ref name="model.titlepagePart"/>
-      </rng:group>
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.titlepagePart"/>
-          <rng:ref name="model.global"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+      <group>
+        <ref name="model.titlepagePart"/>
+      </group>
+      <zeroOrMore>
+        <choice>
+          <ref name="model.titlepagePart"/>
+          <ref name="model.global"/>
+        </choice>
+      </zeroOrMore>
+    </group>
   </content>
   <attList>
     <attDef ident="type" usage="opt">
@@ -63,7 +63,7 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">classifica il frontespizio in base a una tipologia
         funzionale</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valDesc>Any string, e.g. <mentioned>full</mentioned>, <mentioned>half</mentioned>,
           <mentioned>Series</mentioned>, etc.</valDesc>
@@ -96,8 +96,29 @@ $Id$
           <figDesc>Printers Ornament used by TP</figDesc>
         </figure>
         <docImprint>Printed at <name type="place">London</name> for <name>T.P.</name>
-          <date>1612.</date>
-        </docImprint>
+               <date>1612.</date>
+            </docImprint>
+      </titlePage>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-TEI-simpl">
+      <titlePage>
+        <docTitle>
+          <titlePart type="main"> Histoire du Roi de Bohême</titlePart>
+          <titlePart type="sub"> et de ses sept châteaux </titlePart>
+        </docTitle>
+        <titlePart>Pastiche.</titlePart>
+        <byline>Par <docAuthor>Charles Nodier</docAuthor>
+            </byline>
+        <epigraph>
+          <q>O imitatores, servum pecus! </q>
+          <bibl>Horat., Epist. I. XIX, 19.</bibl>
+        </epigraph>
+        <docImprint><name>PARIS</name>, <name>Delangle Frères</name> Éditeurs-libraires,
+              <name>Place de la Bourse</name>
+            </docImprint>
+        <docDate>MDCCCXXX</docDate>
       </titlePage>
     </egXML>
   </exemplum>
@@ -116,7 +137,7 @@ $Id$
           <figDesc>清光緒刊本的《紅樓夢》插圖，改琦畫。</figDesc>
         </figure>
         <docImprint>最早的抄本出現於清朝乾隆中期的 <date>甲戌年（1754年）。</date>
-        </docImprint>
+            </docImprint>
       </titlePage>
     </egXML>
   </exemplum>

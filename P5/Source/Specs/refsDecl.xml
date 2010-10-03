@@ -33,19 +33,19 @@ $Id$
     <memberOf key="att.declarable"/>
   </classes>
   <content>
-    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:oneOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:oneOrMore>
-      <rng:oneOrMore>
-        <rng:ref name="cRefPattern"/>
-      </rng:oneOrMore>
-      <rng:oneOrMore>
-        <rng:ref name="refState"/>
-      </rng:oneOrMore>
-    </rng:choice>
+    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="cRefPattern"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="refState"/>
+      </oneOrMore>
+    </choice>
   </content>
-<!--  <attList>
+  <!--  <attList>
     <attDef ident="doctype" usage="opt">
       <gloss>document type</gloss>
       <desc>identifies the document type within which
@@ -68,6 +68,20 @@ $Id$
     </egXML>
     <p>This example is a formal representation for the referencing
     scheme described informally in the following example.</p>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <refsDecl xml:id="fr_ASLREF">
+        <cRefPattern matchPattern="(\S+) ([^.]+)\.(.*)" replacementPattern="#fr_xpath(//div1[@n='$1']/div2/[@n='$2']//lb[@n='$3'])">
+          <p>Une référence a été créée en assemblant les éléments suivants dans l'ordre inverse de
+              la liste qui suit : <list><item>la valeur <att>n</att> du précédent <gi>lb</gi>
+                     </item><item>une période</item><item>la valeur <att>n</att> de l'ancêtre <gi>div2</gi>
+                     </item><item>un espace</item><item>la valeur<att>n</att> du parent <gi>div1</gi>
+                     </item></list>
+               </p>
+        </cRefPattern>
+      </refsDecl>
+    </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

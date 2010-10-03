@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="iso-fs" ident="vLabel">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="vLabel">
   <equiv/>
   <gloss>value label</gloss>
   <gloss version="2007-12-20" xml:lang="kr">값 표지</gloss>
@@ -30,9 +30,9 @@ $Id$
     <memberOf key="model.featureVal.single"/>
   </classes>
   <content>
-    <rng:optional>
-      <rng:ref name="model.featureVal"/>
-    </rng:optional>
+    <optional xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.featureVal"/>
+    </optional>
   </content>
   <attList>
     <attDef ident="name" usage="req">
@@ -47,13 +47,13 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">proporciona un nombre para un punto de división.</desc>
       <desc version="2007-01-21" xml:lang="it">fornisce un nome per il punto di condivisione.</desc>
       <datatype>
-        <rng:ref name="data.word"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
       <valDesc>An identifying name.</valDesc>
       <valDesc xml:lang="fr">Un nom identifiant.</valDesc>
     </attDef>
   </attList>
-  <exemplum xml:lang="en">
+  <exemplum xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <fs>
         <f name="nominal">
@@ -63,7 +63,7 @@ $Id$
                 <symbol value="singular"/>
               </vLabel>
             </f>
-<!-- other nominal features -->
+            <!-- other nominal features -->
           </fs>
         </f>
         <f name="verbal">
@@ -72,10 +72,31 @@ $Id$
               <vLabel name="L1"/>
             </f>
           </fs>
-<!-- other verbal features -->
+          <!-- other verbal features -->
         </f>
       </fs>
     </egXML>
   </exemplum>
-  
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <fs>
+        <f name="nominal">
+          <fs>
+            <f name="nm-num">
+              <vLabel name="L1">
+                <symbol value="singular"/>
+              </vLabel>
+            </f>
+          </fs>
+        </f>
+        <f name="verbal">
+          <fs>
+            <f name="vb-num">
+              <vLabel name="L1"/>
+            </f>
+          </fs>
+        </f>
+      </fs>
+    </egXML>
+  </exemplum>
 </elementSpec>

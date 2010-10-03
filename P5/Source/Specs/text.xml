@@ -33,30 +33,30 @@ $Id$
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-        <rng:ref name="model.global"/>
-      </rng:zeroOrMore>
-      <rng:optional>
-        <rng:ref name="front"/>
-        <rng:zeroOrMore>
-          <rng:ref name="model.global"/>
-        </rng:zeroOrMore>
-      </rng:optional>
-      <rng:choice>
-        <rng:ref name="body"/>
-        <rng:ref name="group"/>
-      </rng:choice>
-      <rng:zeroOrMore>
-        <rng:ref name="model.global"/>
-      </rng:zeroOrMore>
-      <rng:optional>
-        <rng:ref name="back"/>
-        <rng:zeroOrMore>
-          <rng:ref name="model.global"/>
-        </rng:zeroOrMore>
-      </rng:optional>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="front"/>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </optional>
+      <choice>
+        <ref name="body"/>
+        <ref name="group"/>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="back"/>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </optional>
+    </group>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -70,6 +70,37 @@ $Id$
           <l>Is it a dragonfly or a maple leaf</l>
           <l>That settles softly down upon the water?</l>
         </body>
+      </text>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Hugo-Nuit">
+      <text>
+        <front>
+          <docTitle>
+            <titlePart>Souvenir de la nuit du 4</titlePart>
+          </docTitle>
+        </front>
+        <body>
+          <l>Il avait dans sa poche une toupie en buis.</l>
+        </body>
+      </text>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <p>Le <gi>body</gi> d'un texte peut être remplacé par un groupe de textes enchâssés, comme
+        dans la structure suivante : </p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <text>
+        <front/>
+        <group>
+          <text>
+            <front/>
+            <body/>
+            <back/>
+          </text>
+          <text/>
+        </group>
       </text>
     </egXML>
   </exemplum>

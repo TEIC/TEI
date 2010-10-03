@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="SEAL" ident="seal">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="SEAL" ident="seal">
   <equiv/>
   <gloss version="2007-06-12" xml:lang="fr">sceau</gloss>
   <desc xml:id="seal.desc">contains a description of one seal or similar
@@ -25,12 +25,12 @@ $Id$
     <memberOf key="att.datable"/>
   </classes>
   <content>
-    <rng:oneOrMore>
-      <rng:choice>
-        <rng:ref name="model.pLike"/>
-        <rng:ref name="decoNote"/>
-      </rng:choice>
-    </rng:oneOrMore>
+    <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+        <ref name="model.pLike"/>
+        <ref name="decoNote"/>
+      </choice>
+    </oneOrMore>
   </content>
   <attList>
     <attDef ident="contemporary">
@@ -48,11 +48,11 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">especifica si el sello es o no contemporáneo al objeto al que se ha aplicado.</desc>
       <desc version="2007-01-21" xml:lang="it">specifica se il sigillo è coevo o meno rispetto all'oggetto al quale è applicato</desc>
       <datatype>
-        <rng:ref name="data.xTruthValue"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
       </datatype>
     </attDef>
   </attList>
-  <exemplum xml:lang="en">
+  <exemplum xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <seal n="2" type="pendant" subtype="cauda_duplex">
         <p>The seal of <name>Jens Olufsen</name> in black wax. 
@@ -61,7 +61,15 @@ Parchment tag on which is written: <q>Woldorp Iohanne G</q>.</p>
       </seal>
     </egXML>
   </exemplum>
-  <exemplum xml:lang="zh-tw">
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <seal n="2" type="pendant" subtype="cauda_duplex">
+        <p>The seal of <name>Jens Olufsen</name> in black wax. (<ref>DAS 1061</ref>). Legend: <q>S
+              IOHANNES OLAVI</q>. Parchment tag on which is written: <q>Woldorp Iohanne G</q>.</p>
+      </seal>
+    </egXML>
+  </exemplum>
+  <exemplum xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <seal>
         <p>清<name>乾隆</name>皇帝的「古稀天子之寶」玉璽，是選用整塊碧玉琢製而成，印面以正方形，雙龍鈕繫黃條，印面琢三行六字篆書，為乾隆年登70歲之印。</p>

@@ -6,8 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  module="analysis" ident="span">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" ident="span">
   <desc>associates an interpretative annotation directly with a span of text.</desc>
   <desc version="2007-12-20" xml:lang="kr">해석적 부호를 텍스트의 일정 부분과 직접적으로 연결시킨다.</desc>
   <desc version="2007-05-02" xml:lang="zh-tw">將詮釋性註釋直接和一段文字段連結。</desc>
@@ -23,7 +22,7 @@ $Id$
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    <rng:ref name="macro.phraseSeq.limited"/>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq.limited"/>
   </content>
   <attList>
     <!-- 
@@ -59,7 +58,7 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">indica l'inizio di un brano annotato; se non è
         accompagnato dall'attributo <att>to</att> indica l'inero brano</desc>
       <datatype>
-        <rng:ref name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>The identifier of the element which occurs at the beginning of the passage.</valDesc>
       <valDesc version="2009-02-13" xml:lang="fr">L'identificateur de l'élément qui figure au début du passage.</valDesc>
@@ -74,13 +73,13 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">especifica el final del pasaje que se anota.</desc>
       <desc version="2007-01-21" xml:lang="it">indica la fine del brano annotato</desc>
       <datatype>
-        <rng:ref name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>The identifier of the element which occurs at the end of the passage.</valDesc>
       <valDesc version="2009-02-13" xml:lang="fr">L'identificateur de l'élément qui figure à la fin du passage.</valDesc>
     </attDef>
   </attList>
-  <exemplum xml:lang="en">
+  <exemplum xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <p xml:id="para2">(The "aftermath" starts here)</p>
       <p xml:id="para3">(The "aftermath" continues here)</p>
@@ -89,16 +88,15 @@ $Id$
       <span type="structure" from="#para2" to="#para4">aftermath</span>
     </egXML>
   </exemplum>
-  <exemplum version="2009-02-13" xml:lang="fr">
+  <exemplum version="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <p xml:id="fr-para2">(Le "résultat" commence ici)</p>
-      <p xml:id="fr-para3">(Le "résultat" se poursuit ici)</p>
-      <p xml:id="fr-para4">(Le "résultat" se termine dans ce paragraphe)</p>
-      <!-- ... -->
-      <span type="structure" from="#para2" to="#para4">résultat</span>
+      <p xml:id="fr_para2">(la "conséquence" commence ici)</p>
+      <p xml:id="fr_para3">(la "conséquence" continue ici)</p>
+      <p xml:id="fr_para4">(la "conséquence" se termine dans ce paragraphe)</p>
+      <span type="structure" from="#fr_para2" to="#para4">conséquence</span>
     </egXML>
   </exemplum>
-  <exemplum xml:lang="zh-tw">
+  <exemplum xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <p xml:id="zh-tw_第二小節">("結局"從這裡開始)</p>
       <p xml:id="zh-tw_第三小節">("結局"持續)</p>
