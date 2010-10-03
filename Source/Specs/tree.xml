@@ -22,27 +22,27 @@ leaves, and arcs from root to leaves.</desc>
   <classes>
     <memberOf key="model.divPart"/>
   </classes>
-  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-    <rng:group>
-      <rng:optional>
-        <rng:ref name="label"/>
-      </rng:optional>
-      <rng:group>
-        <rng:zeroOrMore>
-          <rng:choice>
-            <rng:ref name="leaf"/>
-            <rng:ref name="iNode"/>
-          </rng:choice>
-        </rng:zeroOrMore>
-        <rng:ref name="root"/>
-        <rng:zeroOrMore>
-          <rng:choice>
-            <rng:ref name="leaf"/>
-            <rng:ref name="iNode"/>
-          </rng:choice>
-        </rng:zeroOrMore>
-      </rng:group>
-    </rng:group>
+  <content>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <optional>
+        <ref name="label"/>
+      </optional>
+      <group>
+        <zeroOrMore>
+          <choice>
+            <ref name="leaf"/>
+            <ref name="iNode"/>
+          </choice>
+        </zeroOrMore>
+        <ref name="root"/>
+        <zeroOrMore>
+          <choice>
+            <ref name="leaf"/>
+            <ref name="iNode"/>
+          </choice>
+        </zeroOrMore>
+      </group>
+    </group>
   </content>
   <attList>
     <attDef ident="arity" usage="opt">
@@ -59,10 +59,10 @@ nodes of the tree.</desc>
       <desc version="2007-05-04" xml:lang="es">establece el número máximo de hijos (descendientes) de la raíz y de los nodos internos del árbol.</desc>
       <desc version="2007-01-21" xml:lang="it">stabilisce il numero massimo di figli della radice e dei nodi interni dell'albero</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
       <valDesc>A nonnegative integer.</valDesc>
-<valDesc xml:lang="fr" version="2009-11-17">Un entier non négatif.</valDesc>
+      <valDesc xml:lang="fr" version="2009-11-17">Un entier non négatif.</valDesc>
     </attDef>
     <attDef ident="ord" usage="req">
       <gloss>ordered</gloss>
@@ -81,7 +81,7 @@ partially ordered.</desc>
       <desc version="2007-05-04" xml:lang="es">indica si el árbol es o no ordenado, o si es parcialmente ordenado. </desc>
       <desc version="2007-01-21" xml:lang="it">indica se l'albero è ordinato o parzialmente ordinato</desc>
       <defaultVal>true</defaultVal>
-<!-- cant be boolean because we have to allow for partial ordering -->
+      <!-- cant be boolean because we have to allow for partial ordering -->
       <valList type="closed">
         <valItem ident="true">
           <equiv/>
@@ -139,10 +139,10 @@ unordered.</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona el orden del árbol, es decir, el número de los nodos.</desc>
       <desc version="2007-01-21" xml:lang="it">indica l'ordine dell'albero, cioè il numero dei suoi nodi</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
       <valDesc>A nonnegative integer.</valDesc>
-        <valDesc xml:lang="fr" version="2009-11-17">Un entier non négatif.</valDesc>
+      <valDesc xml:lang="fr" version="2009-11-17">Un entier non négatif.</valDesc>
       <remarks>
         <p>The size of a tree is always one less than its order, hence
 there is no need for both a <att>size</att> and <att>order</att>
@@ -204,7 +204,51 @@ attribute.</p>
       </tree>
     </egXML>
   </exemplum>
-  
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <tree n="ex2" arity="2" ord="partial" order="13">
+        <root xml:id="fr_G-div1" children="#fr_G-plu1 #fr_G-exp1" ord="true">
+          <label>/</label>
+        </root>
+        <iNode xml:id="fr_G-plu1" children="#fr_G-exp2 #fr_G-exp3" parent="#fr_G-div1" ord="false">
+          <label>+</label>
+        </iNode>
+        <iNode xml:id="fr_G-exp1" children="#fr_G-plu2 #fr_G-num2.3" parent="#fr_G-div1" ord="true">
+          <label>**</label>
+        </iNode>
+        <iNode xml:id="fr_G-exp2" children="#fr_G-vara1 #fr_G-num2.1" parent="#fr_G-plu1" ord="true">
+          <label>**</label>
+        </iNode>
+        <iNode xml:id="fr_G-exp3" children="#fr_G-varb1 #fr_G-num2.2" parent="#fr_G-plu1" ord="true">
+          <label>**</label>
+        </iNode>
+        <iNode xml:id="fr_G-plu2" children="#fr_G-vara2 #fr_G-varb2" parent="#fr_G-exp1" ord="false">
+          <label>+</label>
+        </iNode>
+        <leaf xml:id="fr_G-vara1" parent="#fr_G-exp2">
+          <label>a</label>
+        </leaf>
+        <leaf xml:id="fr_G-num2.1" parent="#fr_G-exp2">
+          <label>2</label>
+        </leaf>
+        <leaf xml:id="fr_G-varb1" parent="#fr_G-exp3">
+          <label>b</label>
+        </leaf>
+        <leaf xml:id="fr_G-num2.2" parent="#fr_G-exp3">
+          <label>2</label>
+        </leaf>
+        <leaf xml:id="fr_G-vara2" parent="#fr_G-plu2">
+          <label>a</label>
+        </leaf>
+        <leaf xml:id="fr_G-varb2" parent="#fr_G-plu2">
+          <label>b</label>
+        </leaf>
+        <leaf xml:id="fr_G-num2.3" parent="#fr_G-exp1">
+          <label>2</label>
+        </leaf>
+      </tree>
+    </egXML>
+  </exemplum>
   <remarks>
     <p rend="dataDesc">A root, and zero or more internal nodes and leaves, but if
 there is an internal node, there must also be at least one leaf.</p>

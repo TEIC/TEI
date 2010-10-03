@@ -9,7 +9,6 @@ $Id$
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" ident="u">
   <equiv/>
   <gloss>utterance</gloss>
- 
   <gloss version="2007-12-20" xml:lang="kr">발화</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw">話語</gloss>
   <gloss version="2008-04-05" xml:lang="ja"/>
@@ -34,14 +33,14 @@ silence or by a change of speaker.</desc>
     <memberOf key="att.ascribed"/>
   </classes>
   <content>
-    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:choice>
-        <rng:text/>
-        <rng:ref name="model.gLike"/>
-        <rng:ref name="model.phrase"/>
-        <rng:ref name="model.global"/>
-      </rng:choice>
-    </rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.phrase"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
   </content>
   <attList>
     <attDef ident="trans" usage="opt">
@@ -114,7 +113,7 @@ pause considérable</desc>
         </valItem>
       </valList>
     </attDef>
-<!--    <attDef ident="who" usage="opt">
+    <!--    <attDef ident="who" usage="opt">
 	<equiv/>
 	<desc>supplies an identifier for the speaker or group of speakers.
          Its value is the identifier of a <tag>participant</tag>
@@ -131,6 +130,16 @@ pause considérable</desc>
       <list type="speakers">
         <item xml:id="spkr1"/>
         <item xml:id="spkr2"/>
+      </list>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <u who="#fr_spkr1">si tu te déplaçais</u>
+      <u trans="latching" who="#fr_spkr2">Joe et moi l'aurions mis entre nous</u>
+      <list type="speakers">
+        <item xml:id="fr_spkr1"/>
+        <item xml:id="fr_spkr2"/>
       </list>
     </egXML>
   </exemplum>

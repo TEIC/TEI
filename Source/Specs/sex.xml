@@ -6,61 +6,64 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="sex">
-    <gloss version="2009-03-19" xml:lang="fr">sexe</gloss>
-    <desc>specifies the sex of a person.</desc>
-    <desc version="2009-03-19" xml:lang="fr">précise le sexe d'une personne.</desc>
-    <desc version="2007-12-20" xml:lang="kr">개인의 성을 명시한다.</desc>
-    <desc version="2007-05-02" xml:lang="zh-tw">指明個人性別。</desc>
-    <desc version="2008-04-05" xml:lang="ja"> 人物の性別を示す． </desc>
-    <desc version="2007-05-04" xml:lang="es">especifica el sexo de una persona.</desc>
-    <desc version="2007-01-21" xml:lang="it">specifica il sesso di una persona</desc>
-    <classes>
-        <memberOf key="model.persTraitLike"/>
-        <memberOf key="att.editLike"/>
-        <memberOf key="att.datable"/>
-        <!-- sic -->
-    </classes>
-    <content>
-        <rng:ref name="macro.phraseSeq"/>
-    </content>
-    <attList>
-        <attDef ident="value" usage="opt">
-            <datatype>
-                <rng:ref name="data.sex"/>
-            </datatype>
-            <remarks>
-                <p>Values for this attribute are taken from ISO 5218:1977 <title>Representation of Human Sexes</title>; 0 indicates unknown; 1
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="sex">
+  <gloss version="2009-03-19" xml:lang="fr">sexe</gloss>
+  <desc>specifies the sex of a person.</desc>
+  <desc version="2009-03-19" xml:lang="fr">précise le sexe d'une personne.</desc>
+  <desc version="2007-12-20" xml:lang="kr">개인의 성을 명시한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">指明個人性別。</desc>
+  <desc version="2008-04-05" xml:lang="ja"> 人物の性別を示す． </desc>
+  <desc version="2007-05-04" xml:lang="es">especifica el sexo de una persona.</desc>
+  <desc version="2007-01-21" xml:lang="it">specifica il sesso di una persona</desc>
+  <classes>
+    <memberOf key="model.persTraitLike"/>
+    <memberOf key="att.editLike"/>
+    <memberOf key="att.datable"/>
+    <!-- sic -->
+  </classes>
+  <content>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="value" usage="opt">
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.sex"/>
+      </datatype>
+      <remarks xmlns:rng="http://relaxng.org/ns/structure/1.0">
+        <p>Values for this attribute are taken from ISO 5218:1977 <title>Representation of Human Sexes</title>; 0 indicates unknown; 1
                     indicates male; 2 indicates female; and 9 indicates not applicable.</p>
-            </remarks>
-            <remarks xml:lang="fr" version="2009-03-19">
-                <p>Les valeurs de cet attribut sont tirées de la norme ISO 5218:1977 <title>Échange d'information -- Représentation des sexes humains
+      </remarks>
+      <remarks xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="fr" version="2009-03-19">
+        <p>Les valeurs de cet attribut sont tirées de la norme ISO 5218:1977 <title>Échange d'information -- Représentation des sexes humains
                     </title> ; 0 indique "inconnu" ; 1 indique "masculin" ; 2 indique "féminin" ; et 9 indique "ne s'applique pas".</p>
-            </remarks>
-            <remarks xml:lang="ja">
-                <p> 当該属性の値は，ISO 5218:1977 <title>Representation of Human Sexes</title>で定義されている． 0は不明，1は男性，2は女性，9は不適切であることを示す． </p>
-            </remarks>
-        </attDef>
-    </attList>
-    <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <sex value="2">female</sex>
-        </egXML>
-    </exemplum>
-    <exemplum xml:lang="zh-tw">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <sex value="2">女性</sex>
-        </egXML>
-    </exemplum>
-
-    <remarks><p>As with other culturally-constructed traits such as
+      </remarks>
+      <remarks xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="ja">
+        <p> 当該属性の値は，ISO 5218:1977 <title>Representation of Human Sexes</title>で定義されている． 0は不明，1は男性，2は女性，9は不適切であることを示す． </p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <sex value="2">female</sex>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <sex value="2">féminin</sex>
+    </egXML>
+  </exemplum>
+  <exemplum xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <sex value="2">女性</sex>
+    </egXML>
+  </exemplum>
+  <remarks xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <p>As with other culturally-constructed traits such as
     age, the way in which this concept is described in different
     cultural contexts may vary. The normalising attributes are
     provided as a means of simplifying that variety to Western
     European norms and should not be used where that is
     inappropriate. The content of the element may be used to describe
     the intended concept in more detail, using plain text. </p>
-    </remarks>
-
-
+  </remarks>
 </elementSpec>

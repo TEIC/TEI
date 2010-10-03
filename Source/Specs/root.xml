@@ -25,9 +25,9 @@ $Id$
   <desc version="2007-05-04" xml:lang="es">representa el nodo raíz de un árbol.</desc>
   <desc version="2007-01-21" xml:lang="it">rappresenta il nodo radice di un albero</desc>
   <content>
-    <rng:optional xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:ref name="label"/>
-    </rng:optional>
+    <optional xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="label"/>
+    </optional>
   </content>
   <attList>
     <attDef ident="value" usage="rwa">
@@ -43,11 +43,11 @@ other analytic element.</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona el valor de la raíz, que puede ser una estructura de rasgos u otro elemento de análisis. </desc>
       <desc version="2007-01-21" xml:lang="it">assegna alla radice un valore, che può essere una struttura di tratti o altro elemento di analisi</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>A valid identifier of a feature structure or other analytic
 element.</valDesc>
-        <valDesc xml:lang="fr" version="2009-11-17">Un identifiant valide pour une paire nom-valeur ou un autre élément analytique.</valDesc>
+      <valDesc xml:lang="fr" version="2009-11-17">Un identifiant valide pour une paire nom-valeur ou un autre élément analytique.</valDesc>
     </attDef>
     <attDef ident="children" usage="req">
       <equiv/>
@@ -62,10 +62,10 @@ the root node.</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona una lista de identificadores de elementos que son hijos (descendientes) de la raíz.</desc>
       <desc version="2007-01-21" xml:lang="it">fornisce una lista di identificatori degli elementi figli del nodo radice</desc>
       <datatype maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>A list of valid identifiers.</valDesc>
-<valDesc xml:lang="fr" version="2009-11-17">Une liste d'identifiants valides.</valDesc>
+      <valDesc xml:lang="fr" version="2009-11-17">Une liste d'identifiants valides.</valDesc>
       <remarks>
         <p>If the root has no children (i.e., the tree is
 <soCalled>trivial</soCalled>), then the <att>children</att>
@@ -99,7 +99,7 @@ be specified as <tag>root children=''</tag>.</p>
       <desc version="2007-05-04" xml:lang="es">indica si la raíz es o no ordenada.</desc>
       <desc version="2007-01-21" xml:lang="it">indica se la radice è ordinata</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
       </datatype>
       <remarks>
         <p>The value <val>true</val> indicates that the children of
@@ -108,7 +108,7 @@ be specified as <tag>root children=''</tag>.</p>
         <p>Use if and only if <att>ord</att> is specified as
 	  <val>partial</val> on the <gi>tree</gi> element and the root
 	  has more than one child.</p>
-<?tei winita Schematron rule?>
+        <?tei winita Schematron rule?>
       </remarks>
       <remarks version="2009-11-17" xml:lang="fr">
         <p>La valeur <val>true</val> indique que les enfants d'un nœud racine sont ordonnés, alors que la valeur <val>false</val> indique qu'ils ne le sont pas.</p>
@@ -123,7 +123,7 @@ be specified as <tag>root children=''</tag>.</p>
         要素<gi>tree</gi>の属性<att>ord</att>の値が<val>partial</val>
         で，当該根要素が複数の子要素を持つ場合にのみ，使用される．
         </p>
-<?tei winita Schematron rule?>
+        <?tei winita Schematron rule?>
       </remarks>
     </attDef>
     <attDef ident="outDegree" usage="opt">
@@ -138,10 +138,10 @@ be specified as <tag>root children=''</tag>.</p>
       <desc version="2007-05-04" xml:lang="es">indica el grado en salida de la raíz, es decir, el número de hijos de esta.</desc>
       <desc version="2007-01-21" xml:lang="it">indica il grado in uscita della radice, cioè il numero dei suoi figli</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
       <valDesc>A nonnegative integer.</valDesc>
-<valDesc xml:lang="fr" version="2009-11-17">Un entier non négatif.</valDesc>
+      <valDesc xml:lang="fr" version="2009-11-17">Un entier non négatif.</valDesc>
       <remarks>
         <p>The in degree of the root is always 0.</p>
       </remarks>
@@ -162,6 +162,15 @@ be specified as <tag>root children=''</tag>.</p>
       </root>
       <leaf xml:id="vb1"/>
       <leaf xml:id="pn1"/>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <root xml:id="fr_vp1" children="#fr_vb1 #fr_pn1" outDegree="2">
+        <label>VP</label>
+      </root>
+      <leaf xml:id="fr_vb1"/>
+      <leaf xml:id="fr_pn1"/>
     </egXML>
   </exemplum>
   <listRef>

@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="valItem">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="valItem">
   <equiv/>
   <desc>documents a single attribute-value within a list of possible
   or mandatory items.</desc>
@@ -18,27 +18,26 @@ $Id$
   <desc version="2007-06-12" xml:lang="fr">documente une valeur d'attribut unique dans une liste d'items possibles ou obligatoires</desc>
   <desc version="2007-05-04" xml:lang="es">contiene un único valor y una glosa para un atributo.</desc>
   <desc version="2007-01-21" xml:lang="it">contiene un unico valore e un'unica coppia di glosse per un attributo</desc>
- <classes>
-<!--    <memberOf key="att.identified"/>-->
-  <memberOf key="att.combinable"/>
- </classes>
+  <classes>
+    <!--    <memberOf key="att.identified"/>-->
+    <memberOf key="att.combinable"/>
+  </classes>
   <content>
-    <rng:zeroOrMore>
-      <rng:ref name="model.glossLike"/>
-    </rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.glossLike"/>
+    </zeroOrMore>
   </content>
-
   <attList>
     <attDef ident="ident" usage="req">
       <equiv/>
       <desc>specifies the attribute value concerned.</desc>
       <datatype>
-        <rng:text/>
+        <text xmlns="http://relaxng.org/ns/structure/1.0"/>
       </datatype>
       <valDesc>any string value</valDesc>
     </attDef>
   </attList>
-  <exemplum xml:lang="en">
+  <exemplum xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <valItem ident="dub">
         <altIdent xml:lang="fr">dou</altIdent>
@@ -48,7 +47,17 @@ $Id$
       </valItem>
     </egXML>
   </exemplum>
-  <exemplum xml:lang="zh-tw">
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <valItem ident="dub">
+        <altIdent xml:lang="fr">dou</altIdent>
+        <equiv name="unknown"/>
+        <gloss>douteux</gloss>
+        <desc>utilisé quand l'emploi de cet élément est douteux ou incertain.</desc>
+      </valItem>
+    </egXML>
+  </exemplum>
+  <exemplum xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <valItem ident="dub">
         <altIdent xml:lang="fr">dou</altIdent>

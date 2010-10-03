@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="spoken" ident="vocal">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" ident="vocal">
   <equiv/>
   <gloss xml:lang="fr" version="2009-04-17">élément vocal</gloss>
   <desc>any vocalized but not necessarily lexical phenomenon, for
@@ -28,9 +28,9 @@ $Id$
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <rng:zeroOrMore>
-      <rng:ref name="model.glossLike"/>
-    </rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.glossLike"/>
+    </zeroOrMore>
   </content>
   <attList>
     <attDef ident="iterated" usage="opt">
@@ -46,25 +46,25 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">indica si el fenómeno es eventual o si se repite.</desc>
       <desc version="2007-01-21" xml:lang="it">indica l'eventuale ripetizione del fenomeno</desc>
       <datatype>
-        <rng:ref name="data.xTruthValue"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
       </datatype>
       <defaultVal>false</defaultVal>
-      <remarks>
+      <remarks xmlns:rng="http://relaxng.org/ns/structure/1.0">
         <p>The value <val>true</val> indicates that the vocal effect
 	is repeated several times rather than just occurring once.</p>
       </remarks>
-      <remarks xml:lang="fr">
+      <remarks xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="fr">
         <p>La valeur <val>true</val> signale que l'effet vocal est répété plutôt
                         qu'unique. </p>
       </remarks>
-      <remarks xml:lang="ja">
+      <remarks xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="ja">
         <p>
         値<val>true</val>は，音声が複数回繰り返されることを示す．
         </p>
       </remarks>
     </attDef>
   </attList>
-  <exemplum xml:lang="en">
+  <exemplum xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <vocal dur="PT12S">
         <desc>whistles</desc>
@@ -74,7 +74,17 @@ $Id$
       </vocal>
     </egXML>
   </exemplum>
-  <exemplum xml:lang="zh-tw">
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <vocal dur="PT12S">
+        <desc>sifflements</desc>
+      </vocal>
+      <vocal iterated="true">
+        <desc>sifflements intermittents</desc>
+      </vocal>
+    </egXML>
+  </exemplum>
+  <exemplum xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <vocal dur="PT12S">
         <desc>吹口哨</desc>

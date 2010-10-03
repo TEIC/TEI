@@ -28,10 +28,10 @@
     <memberOf key="att.canonical"/>
   </classes>
   <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
   </content>
   <attList>
-<!--
+    <!--
     <attList org="choice">
       <attDef ident="target" usage="opt">
         <equiv/>
@@ -48,42 +48,40 @@
         </datatype>
         <valDesc>should be a valid URI reference that resolves to a <gi>gloss</gi> element</valDesc>
       </attDef>
--->      <attDef ident="cRef" usage="opt">
-        <equiv/>
-        <desc>identifies the associated <gi>gloss</gi> element using a canonical reference from a
+-->
+    <attDef ident="cRef" usage="opt">
+      <equiv/>
+      <desc>identifies the associated <gi>gloss</gi> element using a canonical reference from a
           scheme defined in a <gi>refsDecl</gi> element in the TEI header</desc>
-        <desc version="2008-04-06" xml:lang="es">identifica el elemento <gi>gloss</gi> asociado
+      <desc version="2008-04-06" xml:lang="es">identifica el elemento <gi>gloss</gi> asociado
           mediante una referencia canónica de un esquema definido en un elemento <gi>refsDecl</gi>
           en el encabezado de TEI</desc>
-        <desc version="2008-03-30" xml:lang="fr">identifie l'élément associé <gi>gloss</gi>
+      <desc version="2008-03-30" xml:lang="fr">identifie l'élément associé <gi>gloss</gi>
           utilisant une référence canonique d'un schéma défini dans un élément <gi>refsDecl</gi>
           dans l'en-tête TEI.</desc>
-        <desc version="2007-11-06" xml:lang="it">identifica l'elemento gloss associato tramite un
+      <desc version="2007-11-06" xml:lang="it">identifica l'elemento gloss associato tramite un
           riferimento canonico proveniente da uno schema definito in un elemento refsDEcl
           nell'intestazione</desc>
-        <datatype>
-          <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-        </datatype>
-        <valDesc>the result of applying the algorithm for the resolution of canonical references
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>the result of applying the algorithm for the resolution of canonical references
           (described in section <ptr target="#SACR"/>) should be a valid URI reference that resolves
           to a <gi>gloss</gi> element</valDesc>
-
-        <valDesc>Le résultat de l'application de l'algorithme pour la résolution de références
+      <valDesc>Le résultat de l'application de l'algorithme pour la résolution de références
           canoniques (décrites dans la section <ptr target="#SACR"/>) devrait être une référence à
           un URI valide réductible à un élément élément<gi>gloss</gi>
         </valDesc>
-
-        <remarks>
-          <p>The <gi>refsDecl</gi> to use may be indicated with the <att>decls</att> attribute.</p>
-        </remarks>
-        <remarks xml:lang="fr">
-          <p>La <gi>refsDecl</gi> à utiliser peut être indiquée par l'attribut <att>decls</att>.</p>
-        </remarks>
-        <remarks xml:lang="es">
-          <p> Para utilizar <gi>refsDecl</gi> se puede indicar con el atributo <att>decls</att>.</p>
-        </remarks>
-      </attDef>
-   
+      <remarks>
+        <p>The <gi>refsDecl</gi> to use may be indicated with the <att>decls</att> attribute.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>La <gi>refsDecl</gi> à utiliser peut être indiquée par l'attribut <att>decls</att>.</p>
+      </remarks>
+      <remarks xml:lang="es">
+        <p> Para utilizar <gi>refsDecl</gi> se puede indicar con el atributo <att>decls</att>.</p>
+      </remarks>
+    </attDef>
     <attDef ident="sortKey" usage="opt">
       <equiv/>
       <desc>supplies the sort key for this term in an index.</desc>
@@ -95,7 +93,7 @@
       <desc version="2007-01-21" xml:lang="it">fornisce la chiave di ordinamento per il termine in
         un indice</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
       <valDesc>contains a single
     <soCalled>word</soCalled> consisting of letters, digits,
@@ -103,10 +101,13 @@
     whitespace.</valDesc>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">David's other principal backer, Josiah
-          ha-Kohen <index indexName="NAMES">
-            <term sortKey="Azarya_Josiah_Kohen">Josiah ha-Kohen b. Azarya</term>
-          </index> b. Azarya, son of one of the last gaons of Sura was David's own first
+          ha-Kohen <index indexName="NAMES"><term sortKey="Azarya_Josiah_Kohen">Josiah ha-Kohen b. Azarya</term></index> b. Azarya, son of one of the last gaons of Sura was David's own first
         cousin.</egXML>
+      </exemplum>
+      <exemplum version="2008-04-06" xml:lang="fr">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Verne_Vingt"> Je me suis
+            procuré une <term>clef anglaise</term> pour dévisser les écrous qui attachent le canot à
+            la coque du Nautilus. Ainsi tout est prêt.</egXML>
       </exemplum>
       <remarks>
         <p>The sort key is used to determine the sequence and grouping of entries in an index; if
@@ -133,28 +134,39 @@
       from grammatical strings of words is known as a <term>parser</term>, and much of the history
       of NLP over the last 20 years has been occupied with the design of parsers.</egXML>
   </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Moliere_Med">
+      <p>SGANARELLE.</p>
+      <p>Qui est causée par l'âcreté des <term>humeurs</term> engendrées dans la concavité du
+            <term>diaphragme</term>, il arrive que ces <term>vapeurs</term>... Ossabandus, nequeys,
+          nequer, potarinum, quipsa milus. Voilà justement ce qui fait que votre fille est
+        muette.</p>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Greimas_Courtes"> D'après la
+        théorie d'Austin, les<term> verbes performatifs</term> seraient ceux qui non seulement
+        décrivent l'action de celui qui les utilise, mais aussi, et en même temps, qui
+        impliqueraient cette action elle-même. Ainsi, les formules « Je te conseille de... », « Je
+        jure que... », « Je t'ordonne de... », réaliseraient l'action qu'elles expriment au moment
+        même de l'énonciation. </egXML>
+  </exemplum>
   <exemplum xml:lang="zh-tw">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"> 蜀漢後主<index indexName="NAMES">
-        <term sortKey="LIU_CHAN">劉禪</term>
-      </index> ，初名斗，字升之，後改名禪，字<index indexName="NAMES">
-        <term sortKey="LIU_CHAN">公嗣</term>
-      </index>，蜀漢昭烈帝劉備之子，蜀漢末代皇帝，也是漢朝末代皇帝。</egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"> 蜀漢後主<index indexName="NAMES"><term sortKey="LIU_CHAN">劉禪</term></index> ，初名斗，字升之，後改名禪，字<index indexName="NAMES"><term sortKey="LIU_CHAN">公嗣</term></index>，蜀漢昭烈帝劉備之子，蜀漢末代皇帝，也是漢朝末代皇帝。</egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples"> 在可攜式的裝置如數位相機、手持式電腦，及MP3播放機上，<term>快閃記憶體(Flash
         Memory)</term>可以說是最普遍的儲存類型。</egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">賣空的對稱，<term xml:id="zh-tw_TMK" rend="sc"
-        >買空</term>亦稱<gloss target="#zh-tw_TMK"
-      >多頭交易，是指交易者利用借入資金，在市場上買入期貨，以期將來價格上漲時，再高價拋出，從中獲利的投票活動。</gloss></egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">賣空的對稱，<term xml:id="zh-tw_TMK" rend="sc">買空</term>亦稱<gloss target="#zh-tw_TMK">多頭交易，是指交易者利用借入資金，在市場上買入期貨，以期將來價格上漲時，再高價拋出，從中獲利的投票活動。</gloss>
+      </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">We may define <term xml:id="TDPV" rend="sc"
-        >discoursal point of view</term> as <gloss target="#TDPV">the relationship, expressed
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">We may define <term xml:id="TDPV" rend="sc">discoursal point of view</term> as <gloss target="#TDPV">the relationship, expressed
         through discourse structure, between the implied author or some other addresser, and the
         fiction.</gloss>
-    </egXML>
+      </egXML>
   </exemplum>
   <remarks>
     <p>This element is used to supply the form under which an index entry is to be made for the

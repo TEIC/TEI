@@ -22,18 +22,18 @@ $Id$
     <memberOf key="att.ascribed"/>
   </classes>
   <content>
-    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:oneOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:oneOrMore>
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.nameLike.agent"/>
-          <rng:ref name="model.dateLike"/>
-          <rng:ref name="model.settingPart"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-    </rng:choice>
+    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <choice>
+          <ref name="model.nameLike.agent"/>
+          <ref name="model.dateLike"/>
+          <ref name="model.settingPart"/>
+        </choice>
+      </zeroOrMore>
+    </choice>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -42,6 +42,16 @@ $Id$
         <date>1989</date>
         <locale>on a park bench</locale>
         <activity>feeding birds</activity>
+      </setting>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Rohmer-Maud">
+      <setting>
+        <name> Clermont-Ferrand</name>
+        <date>Mi-décembre</date>
+        <locale>Ceyrat</locale>
+        <activity>mise en marche de la voiture</activity>
       </setting>
     </egXML>
   </exemplum>

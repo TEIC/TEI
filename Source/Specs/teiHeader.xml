@@ -31,15 +31,15 @@ $Id$
   <desc version="2007-01-21" xml:lang="it">fornisce informazioni descrittive e dichiarative che
     costituiscono un frontespizio elettronico che precede qualsiasi testo TEI-conforme.</desc>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:ref name="fileDesc"/>
-      <rng:zeroOrMore>
-        <rng:ref name="model.teiHeaderPart"/>
-      </rng:zeroOrMore>
-      <rng:optional>
-        <rng:ref name="revisionDesc"/>
-      </rng:optional>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="fileDesc"/>
+      <zeroOrMore>
+        <ref name="model.teiHeaderPart"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="revisionDesc"/>
+      </optional>
+    </group>
   </content>
   <attList>
     <attDef ident="type" usage="opt">
@@ -58,7 +58,7 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">specifica il tipo di documento al quale è legata
         l'intestazione.</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <defaultVal>text</defaultVal>
       <valList type="open">
@@ -169,16 +169,13 @@ $Id$
             </normalization>
           </editorialDecl>
           <refsDecl xml:id="ASLREF">
-            <cRefPattern matchPattern="(\S+) ([^.]+)\.(.*)"
-              replacementPattern="#xpath(//div1[@n='$1']/div2/[@n='$2']//lb[@n='$3'])">
+            <cRefPattern matchPattern="(\S+) ([^.]+)\.(.*)" replacementPattern="#xpath(//div1[@n='$1']/div2/[@n='$2']//lb[@n='$3'])">
               <p>A reference is created by assembling the following, in the reverse order as that
-                listed here: <list>
-                  <item>the <att>n</att> value of the preceding <gi>lb</gi></item>
-                  <item>a period</item>
-                  <item>the <att>n</att> value of the ancestor <gi>div2</gi></item>
-                  <item>a space</item>
-                  <item>the <att>n</att> value of the parent <gi>div1</gi></item>
-                </list></p>
+                listed here: <list><item>the <att>n</att> value of the preceding <gi>lb</gi>
+                           </item><item>a period</item><item>the <att>n</att> value of the ancestor <gi>div2</gi>
+                           </item><item>a space</item><item>the <att>n</att> value of the parent <gi>div1</gi>
+                           </item></list>
+                     </p>
             </cRefPattern>
           </refsDecl>
         </encodingDesc>
@@ -188,6 +185,45 @@ $Id$
             <item><date when="1989-03-01">1 Mar 89</date> LB made new file</item>
           </list>
         </revisionDesc>
+      </teiHeader>
+    </egXML>
+  </exemplum>
+  <exemplum version="2010-02-26" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Becque-ee">
+      <teiHeader>
+        <fileDesc>
+          <titleStmt>
+            <title>La Parisienne</title>
+            <author>Henry BECQUE</author>
+          </titleStmt>
+          <publicationStmt>
+            <idno type="FRANTEXT">L434</idno>
+            <distributor>ATILF (Analyse et Traitement Informatique de la Langue Française)</distributor>
+            <address>
+              <addrLine>44, avenue de la Libération</addrLine>
+              <addrLine>BP 30687</addrLine>
+              <addrLine>54063 Nancy Cedex</addrLine>
+              <addrLine>FRANCE</addrLine>
+            </address>
+            <availability status="free">
+              <p>Dans un cadre de recherche ou d'enseignement</p>
+            </availability>
+          </publicationStmt>
+          <sourceDesc>
+            <biblStruct>
+              <monogr>
+                <imprint>
+                  <publisher>Paris : Fasquelle, 1922.</publisher>
+                </imprint>
+              </monogr>
+            </biblStruct>
+          </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+          <creation>
+            <date>1885</date>
+          </creation>
+        </profileDesc>
       </teiHeader>
     </egXML>
   </exemplum>

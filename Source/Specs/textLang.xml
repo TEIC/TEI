@@ -6,8 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0"
-  module="msdescription" xml:id="TEXTLANG" ident="textLang">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="TEXTLANG" ident="textLang">
   <gloss>text language</gloss>
   <gloss version="2007-12-20" xml:lang="kr">텍스트 언어</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw"/>
@@ -28,12 +27,13 @@ $Id$
     en un manuscrito (no se ha de confundir con la descripción contenida en el elemento
       <gi>langUsage</gi>. ****</desc>
   <desc version="2007-01-21" xml:lang="it">descrive le lingue e i sistemi di scrittura usati da un
-    manoscritto (da non confondere con la descrizione contenuta nell'elemento <gi>langUsage</gi></desc>
+    manoscritto (da non confondere con la descrizione contenuta nell'elemento <gi>langUsage</gi>
+   </desc>
   <classes>
     <memberOf key="model.msItemPart"/>
   </classes>
   <content>
-    <rng:ref name="macro.phraseSeq"/>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
   </content>
   <attList>
     <attDef ident="mainLang">
@@ -54,10 +54,9 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">assegna un codice che identifica la lingua principale
         utilizzata nel manoscritto</desc>
       <datatype>
-        <rng:ref name="data.language"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.language"/>
       </datatype>
-      <valDesc>a recognised language <soCalled>tag</soCalled> generated according to <ref
-          target="http://tools.ietf.org/html/bcp47">BCP 47</ref> which may additionally be
+      <valDesc>a recognised language <soCalled>tag</soCalled> generated according to <ref target="http://tools.ietf.org/html/bcp47">BCP 47</ref> which may additionally be
         documented by a <gi>language</gi> element in the header</valDesc>
       <valDesc xml:lang="fr">Un <soCalled>code</soCalled> de langue identifiée, généré conformément au <ref target="http://tools.ietf.org/html/bcp47">BCP 47</ref> qui peut également être
         documenté par un élément <gi>language</gi> dans l'en-tête TEI. </valDesc>
@@ -80,7 +79,7 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">uno o più codici che identificano eventuali altre
         lingue utilizzate nel manoscritto</desc>
       <datatype minOccurs="0" maxOccurs="unbounded">
-        <rng:ref name="data.language"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.language"/>
       </datatype>
       <valDesc>a list of codes, each of which is a recognised language <soCalled>tag</soCalled>
         generated according to <ref target="http://tools.ietf.org/html/bcp47">BCP 47</ref> which may
@@ -89,25 +88,33 @@ $Id$
         documenté par un élément <gi>language</gi> dans l'en-tête TEI.</valDesc>
     </attDef>
   </attList>
-  <exemplum xml:lang="en">
+  <exemplum xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <textLang mainLang="en" otherLangs="la"> Predominantly in English with Latin
       glosses</textLang>
     </egXML>
   </exemplum>
-  <exemplum xml:lang="zh-tw">
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <textLang mainLang="en" otherLangs="la"> En français essentiellement, avec des gloses en
+          latin.</textLang>
+    </egXML>
+  </exemplum>
+  <exemplum xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <textLang mainLang="en" otherLangs="la"> 主要為英文，摻以拉丁字彙。</textLang>
     </egXML>
   </exemplum>
-<remarks><p>Note that this element should not be used to document the
+  <remarks xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <p>Note that this element should not be used to document the
 languages or writing systems used for the description itself: as for
 all other TEI elements, such information should be provided by means of the
 global <att>xml:lang</att> attribute attached to the element
 containing the description. The same values should be used to identify
 languages and writing systems in all cases, and the codes used may be
 documented further in the <gi>language</gi> element.
-</p></remarks>
+</p>
+  </remarks>
   <listRef>
     <ptr target="#mslangs"/>
   </listRef>

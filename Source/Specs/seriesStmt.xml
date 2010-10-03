@@ -29,22 +29,22 @@ $Id$
   <desc version="2007-01-21" xml:lang="it">raggruppa le informazioni circa la serie alla quale
     eventualmente la pubblicazione appartiene.</desc>
   <content>
-    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:oneOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:oneOrMore>
-      <rng:group>
-        <rng:oneOrMore>
-          <rng:ref name="title"/>
-        </rng:oneOrMore>
-        <rng:zeroOrMore>
-          <rng:choice>
-            <rng:ref name="idno"/>
-            <rng:ref name="respStmt"/>
-          </rng:choice>
-        </rng:zeroOrMore>
-      </rng:group>
-    </rng:choice>
+    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <oneOrMore>
+          <ref name="title"/>
+        </oneOrMore>
+        <zeroOrMore>
+          <choice>
+            <ref name="idno"/>
+            <ref name="respStmt"/>
+          </choice>
+        </zeroOrMore>
+      </group>
+    </choice>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -56,6 +56,20 @@ $Id$
         </respStmt>
         <idno type="vol">1.2</idno>
         <idno type="ISSN">0 345 6789</idno>
+      </seriesStmt>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Babel">
+      <seriesStmt>
+        <title>Babel</title>
+        <respStmt>
+          <resp>directeur de collection</resp>
+          <name>Jacques Dubois</name>
+          <resp>directeur de collection</resp>
+          <name>Hubert Nyssen</name>
+        </respStmt>
+        <idno type="ISSN">1140-3853</idno>
       </seriesStmt>
     </egXML>
   </exemplum>

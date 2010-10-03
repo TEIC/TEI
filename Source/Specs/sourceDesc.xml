@@ -32,19 +32,19 @@ $Id$
   <classes>
     <memberOf key="att.declarable"/>
   </classes>
-  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-    <rng:choice>
-      <rng:oneOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:oneOrMore>
-      <rng:oneOrMore>
-        <rng:choice>
-          <rng:ref name="model.biblLike"/>
-          <rng:ref name="model.sourceDescPart"/>
-          <rng:ref name="model.listLike"/>
-        </rng:choice>
-      </rng:oneOrMore>
-    </rng:choice>
+  <content>
+    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <oneOrMore>
+        <choice>
+          <ref name="model.biblLike"/>
+          <ref name="model.sourceDescPart"/>
+          <ref name="model.listLike"/>
+        </choice>
+      </oneOrMore>
+    </choice>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -52,6 +52,13 @@ $Id$
         <bibl><title level="a">The Interesting story of the Children in the Wood</title>. In
             <author>Victor E Neuberg</author>, <title>The Penny Histories</title>.
             <publisher>OUP</publisher><date>1968</date>. </bibl>
+      </sourceDesc>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <sourceDesc>
+        <p>Texte original : le texte a été créé sous sa forme électronique.</p>
       </sourceDesc>
     </egXML>
   </exemplum>
