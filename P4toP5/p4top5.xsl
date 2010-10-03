@@ -713,4 +713,19 @@
 <xsl:template match="@orig|@reg"/>
 
 
+<!-- from OTA DTD -->
+  <xsl:template match="spkr">
+    <speaker>
+    <xsl:apply-templates 
+        select="*|@*|processing-instruction()|comment()|text()"/>
+    </speaker>
+  </xsl:template>
+
+  <xsl:template match="letter">
+    <floatingText type="letter">
+    <xsl:apply-templates 
+        select="*|@*|processing-instruction()|comment()|text()"/>
+    </floatingText>
+  </xsl:template>
+
 </xsl:stylesheet>
