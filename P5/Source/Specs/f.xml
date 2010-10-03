@@ -7,7 +7,8 @@ $Date$
 $Id$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" 
-    xmlns:s="http://purl.oclc.org/dsdl/schematron"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+    xmlns:rng="http://relaxng.org/ns/structure/1.0"
 module="iso-fs" ident="f">
   <equiv/>
   <gloss>feature</gloss>
@@ -30,27 +31,26 @@ module="iso-fs" ident="f">
   <desc version="2007-05-04" xml:lang="es">representa una <term>feature value specification (especificación de valor de rasgo)</term>, es decir, la asociación de un nombre con un valor de cualquier de los diferentes tipos.</desc>
   <desc version="2007-01-21" xml:lang="it">rappresenta una <term>feature value specification</term>, cioè l'associazione di un nome con il valore di uno qualsiasi di diversi tratti.</desc>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-	<ref name="macro.xText"/>
-      <ref name="model.featureVal"/>
-      </choice>
-    </zeroOrMore>
+    <rng:zeroOrMore >
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+	<rng:ref name="model.featureVal"/>
+      </rng:choice>
+    </rng:zeroOrMore>
   </content>
-<!-- need to express constraint that if there is no content then the
-fVal attribute must be non-null -->
 
 <constraintSpec ident="fValConstraints" scheme="isoschematron"
 >
  <constraint>
-   <s:rule context="tei:fVal">
-    <s:assert test="not(tei:* and text)"> A feature value cannot
-    contain both text and element content</s:assert>
-     </s:rule>
-   <s:rule context="tei:fVal">
-    <s:report test="count(tei:*)>1"> A feature value can contain
-    only one child element</s:report>
-     </s:rule>
+   <sch:rule context="tei:fVal">
+    <sch:assert test="not(tei:* and text)"> A feature value cannot
+    contain both text and element content</sch:assert>
+     </sch:rule>
+   <sch:rule context="tei:fVal">
+    <sch:report test="count(tei:*)>1"> A feature value can contain
+    only one child element</sch:report>
+     </sch:rule>
  </constraint>
 
 </constraintSpec>
