@@ -655,26 +655,31 @@
   </xd:doc>
   <xsl:template match="tei:lg/tei:l">
     <div>
-      <xsl:attribute name="class">
         <xsl:choose>
-          <xsl:when test="@rend='Alignr'">
-            <xsl:text>right</xsl:text>
-          </xsl:when>
-          <xsl:when test="@rend='Alignc'">
-            <xsl:text>center</xsl:text>
-          </xsl:when>
-          <xsl:when test="starts-with(@rend,'indent(')">
-            <xsl:text>indent</xsl:text>
-            <xsl:value-of
-              select="concat(substring-before(substring-after(@rend,'('),')'),'em')"
-            />
-          </xsl:when>
-          <xsl:when test="@rend='indent'">
-            <xsl:text>indent1</xsl:text>
-          </xsl:when>
 	  <xsl:when test="@rend">
 	    <xsl:attribute name="class">
-	      <xsl:value-of select="@rend"/>
+	      <xsl:choose>
+		<xsl:when test="@rend='Alignr'">
+		  <xsl:text>right</xsl:text>
+		</xsl:when>
+		<xsl:when test="@rend='Alignc'">
+		  <xsl:text>center</xsl:text>
+		</xsl:when>
+		<xsl:when test="starts-with(@rend,'indent(')">
+		  <xsl:text>indent</xsl:text>
+		  <xsl:value-of
+		      select="concat(substring-before(substring-after(@rend,'('),')'),'em')"
+		      />
+		</xsl:when>
+		<xsl:when test="@rend='indent'">
+		  <xsl:text>indent1</xsl:text>
+		</xsl:when>
+		<xsl:when test="@rend">
+		  <xsl:attribute name="class">
+		    <xsl:value-of select="@rend"/>
+		  </xsl:attribute>
+		</xsl:when>
+	      </xsl:choose>
 	    </xsl:attribute>
 	  </xsl:when>
 	  <xsl:when test="@rendition">
@@ -686,7 +691,6 @@
 	    </xsl:attribute>
 	  </xsl:otherwise>
 	</xsl:choose>
-      </xsl:attribute>
       <xsl:apply-templates/>
     </div>
   </xsl:template>
