@@ -1506,6 +1506,7 @@
         <xsl:value-of select="@xml:id"/>
       </xsl:when>
       <xsl:when test="@n and not(@n='*')">
+	<xsl:text>Note</xsl:text>
         <xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:otherwise>

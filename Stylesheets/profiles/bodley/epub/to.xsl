@@ -37,7 +37,7 @@
     <xsl:param name="numberHeadings"></xsl:param>
     <xsl:param name="numberBackHeadings"></xsl:param>
     <xsl:param name="numberFrontHeadings"></xsl:param>
-    <xsl:param name="autoToc">false</xsl:param>
+    <xsl:param name="autoToc">true</xsl:param>
     <xsl:param name="cssFile">../profiles/bodley/epub/bodley.css</xsl:param>
 
   <xsl:template name="myi18n">
