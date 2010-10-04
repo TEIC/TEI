@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright TEI Consortium.
+    Licensed under the GNU General Public License.
+    See the file COPYING.txt for details
+    $Date$
+    $Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+	     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+	     module="core" ident="ref">
+  <gloss>reference</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">참조</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-tw"/>
+  <gloss version="2008-04-06" xml:lang="es">referencia</gloss>
+  <gloss version="2009-01-06" xml:lang="fr">référence</gloss>
+  <gloss version="2007-11-06" xml:lang="it">riferimento</gloss>
+  <desc>defines a reference to another location, possibly modified by additional text or comment.</desc>
+  <desc version="2007-12-20" xml:lang="kr">부가적인 텍스트 또는 해설로 수정될 수 있는, 다른 위치로 참조를 정의한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">標明與其他位置互相參照的符號，或許包含附加的文字或註解。</desc>
+  <desc version="2008-04-05" xml:lang="ja"> 他の場所への参照を定義する．多くは，追加テキストまたはコメントを含む． </desc>
+  <desc version="2009-01-06" xml:lang="fr">définit une référence vers un autre emplacement  que
+   l' ajout d'un texte ou d'un commentaire modifie éventuellement. </desc>
+  <desc version="2007-05-04" xml:lang="es">define una referencia a otra localización, posiblemente
+    modificada por un texto o comentario adicional.</desc>
+  <desc version="2007-01-21" xml:lang="it">definisce un riferimento ad un'altra posizione, può
+    essere modificata da un commento o testo ulteriore</desc>
+  <classes>
+    <memberOf key="model.ptrLike"/>
+    <memberOf key="att.pointing"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.declaring"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+  </content>
+
+ <constraintSpec scheme="isoschematron" ident="refAtts">
+    <constraint>
+      	<sch:report test="@target and @cRef">Only one of the
+	attributes 'target' and 'cRef' may be supplied.</sch:report>
+    </constraint>
+  </constraintSpec> 
+
+  <attList>
+    <attDef ident="cRef" usage="opt">
+      <gloss>canonical reference</gloss>
+      <gloss version="2007-12-20" xml:lang="kr">표준 참조</gloss>
+      <gloss version="2008-04-06" xml:lang="es">referencia canónica</gloss>
+      <gloss version="2008-03-30" xml:lang="fr">référence canonique</gloss>
+      <gloss version="2007-11-06" xml:lang="it">riferimento canonico</gloss>
+      <desc>specifies the destination of the reference by supplying a canonical reference from a
+        scheme defined in a <gi>refsDecl</gi> element in the TEI header</desc>
+      <desc version="2007-12-20" xml:lang="kr">TEI 헤더의 <gi>refsDecl</gi> 요소에서 정의된 스키마의 표준 참조를 이용하여
+        포인터의 목적지를 명시한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">用元素<gi>refsDecl</gi>在TEI標頭內所定義的標準參照來說明參照所指位置。</desc>
+      <desc version="2008-04-05" xml:lang="ja"> 当該参照先は，TEIヘダーにある要素<gi>refsDecl</gi>で定義されてい
+        るスキームの標準的な参照により示される． </desc>
+      <desc version="2009-01-06" xml:lang="fr">spécifie la destination de la référence en
+        fournissant une référence canonique issue d'un modèle défini par un élément <gi>refsDecl</gi>
+        de l'en-tête TEI.</desc>
+      <desc version="2007-05-04" xml:lang="es">especifica el destino de la referencia mediante una
+        referencia canónica de un esquema definido en un elemento <gi>refsDecl</gi> en el encabezado
+        TEI.</desc>
+      <desc version="2007-01-21" xml:lang="it">specifica la destinazione del riferimento fornendo un
+        riferimento canonico da uno schema definito in un elemento <gi>refsDecl</gi>
+        nell'intestazione TEI</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+      <valDesc>the value of <att>cRef</att> should be constructed so
+      that when the algorithm for the resolution of canonical
+      references (described in section <ptr target="#SACR"/>) is
+      applied to it the result is a valid URI reference to the
+      intended target</valDesc>
+      <valDesc xml:lang="fr">le résultat de l’application de l'algorithme pour la résolution des
+        références canoniques (décrit à la section <ptr target="#SACR"/>) sera une référence URI
+        valide pour la cible prévue. </valDesc>
+      <remarks>
+        <p>The <gi>refsDecl</gi> to use may be indicated with the <att>decls</att> attribute.</p>
+        <p>Currently these Guidelines only provide for a single canonical reference to be encoded on
+          any given <gi>ref</gi> element.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>La <gi>refsDecl</gi> à utiliser peut être indiquée à l'aide de l'attribut
+          <att>decls</att>.</p>
+        <p>Actuellement ces Principes directeurs permettent seulement l'encodage d'une unique
+          référence canonique pour tout élément <gi>ref</gi> donné.</p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p> 要素<gi>refsDecl</gi>は，属性<att>decls</att>で示されるかもし れない． </p>
+        <p> 現行ガイドラインでは，要素<gi>ref</gi>で符号化される標準的参照 をひとつ提示している． </p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref
+        target="http://www.natcorp.ox.ac.uk/Texts/A02.xml#s2"> See especially the second
+      sentence</ref> See also <ref>s.v. <term>locution</term>
+      </ref>.</egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref
+        target="http://www.natcorp.ox.ac.uk/Texts/A02.xml#s2"> 關於第二行，</ref> 請參考 <ref>下列
+        <term>慣用語</term></ref>.</egXML>
+  </exemplum>
+    <exemplum version="2008-04-06" xml:lang="fr">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref
+          target="http://www.natcorp.ox.ac.uk/Texts/A02.xml#s2"> v. en partic. la deuxième phrase.
+        </ref> v.aussi<ref>s.v. <term>locution</term></ref>
+      </egXML>
+    </exemplum>
+  <remarks>
+    <p>The <att>target</att> and <att>cRef</att> attributes are mutually exclusive.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>Les attributs <att>target</att> et <att>cRef</att> sont exclusifs l'un de l'autre.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p> 属性<att>target</att>と<att>cRef</att>は，排他的に使用される． </p>
+  </remarks>
+  <listRef>
+    <ptr target="#COXR"/>
+    <ptr target="#SAPT"/>
+  </listRef>
+</elementSpec>
