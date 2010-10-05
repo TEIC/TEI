@@ -463,9 +463,9 @@
 	</span>
       </xsl:when>
       <xsl:otherwise>
-        <strong>
+        <span class="hi">
           <xsl:apply-templates/>
-        </strong>
+	</span>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -1745,7 +1745,7 @@
     <xsl:param name="value"/>
     <xsl:param name="rest"/>
     <xsl:choose>
-      <xsl:when test="$value='bold'">
+      <xsl:when test="$value='bold' or $value='bo'">
         <b>
           <xsl:call-template name="applyRend">
             <xsl:with-param name="value" select="$rest"/>
@@ -1768,47 +1768,22 @@
           </tt>
         </b>
       </xsl:when>
-      <xsl:when test="$value='ital'">
+      <xsl:when test="$value='italics' or $value='italic' or or $value='cursive' or
+		      $value='it' or $value='ital'">
         <i>
           <xsl:call-template name="applyRend">
             <xsl:with-param name="value" select="$rest"/>
           </xsl:call-template>
         </i>
       </xsl:when>
-      <xsl:when test="$value='italic'">
-        <i>
+      <xsl:when test="$value='ro' or $value='roman'">
+        <span style="font-style: normal">
           <xsl:call-template name="applyRend">
             <xsl:with-param name="value" select="$rest"/>
           </xsl:call-template>
-        </i>
+        </span>
       </xsl:when>
-      <xsl:when test="$value='it'">
-        <i>
-          <xsl:call-template name="applyRend">
-            <xsl:with-param name="value" select="$rest"/>
-          </xsl:call-template>
-        </i>
-      </xsl:when>
-      <xsl:when test="$value='italics'">
-        <i>
-          <xsl:call-template name="applyRend">
-            <xsl:with-param name="value" select="$rest"/>
-          </xsl:call-template>
-        </i>
-      </xsl:when>
-      <xsl:when test="$value='i'">
-        <i>
-          <xsl:call-template name="applyRend">
-            <xsl:with-param name="value" select="$rest"/>
-          </xsl:call-template>
-        </i>
-      </xsl:when>
-      <xsl:when test="$value='sc'">
-        <!--   <small>
-	   <xsl:value-of
-	   select="translate(.,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
-	   </small>
-      -->
+      <xsl:when test="$value='sc' or $value='smcap'">
         <span style="font-variant: small-caps">
           <xsl:call-template name="applyRend">
             <xsl:with-param name="value" select="$rest"/>
@@ -1913,7 +1888,7 @@
           </xsl:call-template>
         </span>
       </xsl:when>
-      <xsl:when test="$value='calligraphic'">
+      <xsl:when test="$value='calligraphic' or $value='cursive'">
         <span style="font-family: cursive">
           <xsl:call-template name="applyRend">
             <xsl:with-param name="value" select="$rest"/>
