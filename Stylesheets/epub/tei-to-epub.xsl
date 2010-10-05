@@ -303,7 +303,19 @@
               <dc:publisher>
                 <xsl:call-template name="generatePublisher"/>
               </dc:publisher>
-              <dc:date xsi:type="dcterms:W3CDTF">
+	      <xsl:for-each
+		  select="tei:teiHeader/tei:profileDesc/tei:creation/tei:date[@notAfter]"> 
+		<dc:date opf:event="creation">
+		  <xsl:value-of select="@notAfter"/>
+		</dc:date>		
+	      </xsl:for-each>
+	      <xsl:for-each
+		  select="tei:teiHeader/tei:fileDesc/tei:sourceDesc//tei:date[@when][1]"> 
+		<dc:date opf:event="original-publication">
+		  <xsl:value-of select="@when"/>
+		</dc:date>
+	      </xsl:for-each>
+              <dc:date opf:event="epub-publication" xsi:type="dcterms:W3CDTF">
                 <xsl:call-template name="generateDate"/>
               </dc:date>
               <dc:rights>
