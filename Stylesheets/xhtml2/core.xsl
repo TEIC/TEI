@@ -1768,7 +1768,7 @@
           </tt>
         </b>
       </xsl:when>
-      <xsl:when test="$value='italics' or $value='italic' or or $value='cursive' or
+      <xsl:when test="$value='italics' or $value='italic' or $value='cursive' or
 		      $value='it' or $value='ital'">
         <i>
           <xsl:call-template name="applyRend">
