@@ -712,6 +712,20 @@
 
 <xsl:template match="@orig|@reg"/>
 
+<!-- remove default values for attributes -->
+
+<xsl:template match="cell/@role[.='data']"/>
+<xsl:template match="cell/@rows[.='1']"/>
+<xsl:template match="cell/@cols[.='1']"/>
+<xsl:template match="q/@broken[.='no']"/>
+
+<!-- from CES -->
+  <xsl:template match="cesdoc">
+    <cesDoc>
+    <xsl:apply-templates 
+        select="*|@*|processing-instruction()|comment()|text()"/>
+    </cesDoc>
+</xsl:template>
 
 <!-- from OTA DTD -->
   <xsl:template match="spkr">
@@ -727,5 +741,6 @@
         select="*|@*|processing-instruction()|comment()|text()"/>
     </floatingText>
   </xsl:template>
+
 
 </xsl:stylesheet>
