@@ -39,6 +39,7 @@
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
+  <xsl:param name="useHeaderFrontMatter">false</xsl:param>
   <xsl:param name="STDOUT">false</xsl:param>
   <xsl:param name="autoHead">true</xsl:param>
   <xsl:param name="autoToc">true</xsl:param>
@@ -298,7 +299,22 @@
                 <xsl:call-template name="generateID"/>
               </dc:identifier>
               <dc:creator>
-                <xsl:call-template name="generateAuthor"/>
+		<xsl:variable name="A">
+		  <xsl:call-template name="generateAuthor"/>
+		</xsl:variable>
+		<xsl:variable name="printA">
+		  <xsl:analyze-string select="$A" regex="([^,]+), ([^,]+), (.+)">
+		    <xsl:matching-substring>
+		      <xsl:value-of select="regex-group(2)"/>
+		      <xsl:text> </xsl:text>
+		      <xsl:value-of select="regex-group(1)"/>
+		      </xsl:matching-substring>
+		      <xsl:non-matching-substring>
+			<xsl:value-of select="."/>
+		      </xsl:non-matching-substring>
+		  </xsl:analyze-string>
+		</xsl:variable>
+		<xsl:value-of select="$printA"/>
               </dc:creator>
               <dc:publisher>
                 <xsl:call-template name="generatePublisher"/>
