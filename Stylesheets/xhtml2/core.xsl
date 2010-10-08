@@ -1215,6 +1215,19 @@
       <xsl:when test="tei:lg">
         <xsl:apply-templates/>
       </xsl:when>
+      <xsl:when test="@rendition">
+        <span>
+          <xsl:call-template name="applyRendition"/>
+        </span>
+      </xsl:when>
+      <xsl:when test="contains(@rend,'PRE')">
+        <xsl:call-template name="makeQuote"/>
+      </xsl:when>
+      <xsl:when test="@rend">
+	<span class="{@rend}">
+	  <xsl:apply-templates/>
+	</span>
+      </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="makeQuote"/>
       </xsl:otherwise>
