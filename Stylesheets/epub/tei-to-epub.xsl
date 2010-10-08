@@ -100,14 +100,15 @@
       <desc>[epub] Set subject</desc>
    </doc>
   <xsl:template name="generateSubject">
-    <xsl:choose>
-      <xsl:when test="$subject=''">
-	<xsl:text>TEI Text</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
+    <xsl:if test="not($subject='')">
+      <dc:subject>
 	<xsl:value-of select="$subject"/>
-      </xsl:otherwise>
-    </xsl:choose>
+      </dc:subject>
+    </xsl:if>
+    <xsl:for-each
+	select="tei:teiHeader/tei:profileDesc/tei:textClass/tei:keywords/tei:term">
+      <dc:subject><xsl:value-of select="."/></dc:subject>
+    </xsl:for-each>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -288,13 +289,7 @@
               <dc:language xsi:type="dcterms:RFC3066">
                 <xsl:call-template name="generateLanguage"/>
               </dc:language>
-	      <dc:subject>
-                <xsl:call-template name="generateSubject"/>
-	      </dc:subject>
-	      <xsl:for-each
-		  select="tei:teiHeader/tei:profileDesc/tei:textClass/tei:keywords/tei:term">
-		<dc:subject><xsl:value-of select="."/></dc:subject>
-	      </xsl:for-each>
+	      <xsl:call-template name="generateSubject"/>
               <dc:identifier id="dcidid" opf:scheme="URI">
                 <xsl:call-template name="generateID"/>
               </dc:identifier>
