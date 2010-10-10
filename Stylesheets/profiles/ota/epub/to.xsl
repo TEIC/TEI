@@ -38,6 +38,7 @@
     <xsl:param name="numberHeadingsDepth">-1</xsl:param>
     <xsl:param name="numberBackHeadings"></xsl:param>
     <xsl:param name="numberFrontHeadings"></xsl:param>
+    <xsl:param name="numberFigures">false</xsl:param>
     <xsl:param name="numberTables">false</xsl:param>
     <xsl:param name="autoToc">true</xsl:param>
     <xsl:param name="cssFile">../profiles/ota/epub/ota.css</xsl:param>
