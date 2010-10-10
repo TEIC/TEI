@@ -991,7 +991,10 @@
                <xsl:element name="h{$Depth + $divOffset}">
 		 <xsl:choose>
 		   <xsl:when test="@rend">
-		     <xsl:call-template name="rendToClass"/>
+		     <xsl:call-template name="rendToClass">
+		       <xsl:with-param
+			   name="id">false</xsl:with-param>
+		     </xsl:call-template>
 		   </xsl:when>
 		   <xsl:otherwise>
 		     <xsl:for-each select="tei:head[1]">
