@@ -1162,18 +1162,8 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:element name="{$wrapperElement}">
-      <xsl:variable name="ident">
-	<xsl:choose>
-	  <xsl:when test="@xml:id">
-	    <xsl:value-of select="@xml:id"/>
-	  </xsl:when>
-	  <xsl:when test="$generateParagraphIDs='true'">
-	    <xsl:value-of select="generate-id()"/>
-	  </xsl:when>
-	</xsl:choose>
-      </xsl:variable>
       <xsl:call-template name="rendToClass">
-        <xsl:with-param name="id" select="$ident"/>
+        <xsl:with-param name="id">true</xsl:with-param>
         <xsl:with-param name="default">
           <xsl:if test="$wrapperElement='div'">p</xsl:if>
         </xsl:with-param>
@@ -2073,10 +2063,19 @@
   <xsl:template name="rendToClass">
     <xsl:param name="id">true</xsl:param>
     <xsl:param name="default">.</xsl:param>
-    <xsl:if test="$id='true' and @xml:id">
-      <xsl:attribute name="id">
-        <xsl:value-of select="@xml:id"/>
-      </xsl:attribute>
+    <xsl:if test="$id='true'">
+      <xsl:choose>
+	<xsl:when test="@xml:id">
+	  <xsl:attribute name="id">
+	    <xsl:value-of select="@xml:id"/>
+	  </xsl:attribute>
+	</xsl:when>
+	<xsl:when test="self::tei:p and $generateParagraphIDs='true'">
+	  <xsl:attribute name="id">
+	    <xsl:value-of select="generate-id()"/>
+	  </xsl:attribute>
+	</xsl:when>
+      </xsl:choose>
     </xsl:if>
     <xsl:variable name="class1">
       <xsl:choose>
