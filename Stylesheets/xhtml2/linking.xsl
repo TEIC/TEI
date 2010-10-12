@@ -57,6 +57,10 @@
 	           <xsl:text>-</xsl:text>
             <xsl:value-of select="substring-after(substring-after($xpath,'_text.'),'_')"/>
          </xsl:when>
+         <xsl:when test="self::tei:TEI and parent::tei:teiCorpus">
+	   <xsl:value-of select="$masterFile"/>
+	   <xsl:call-template name="addCorpusID"/>
+	 </xsl:when>
          <xsl:otherwise>
 	           <xsl:value-of select="$BaseFile"/>
 	           <xsl:text>-</xsl:text>
@@ -86,13 +90,13 @@
             <xsl:value-of select="$urlChunkPrefix"/>
             <xsl:value-of select="$ident"/>
          </xsl:when>
-         <xsl:when test="ancestor::tei:elementSpec and         not($STDOUT='true')">
+         <xsl:when test="ancestor::tei:elementSpec and not($STDOUT='true')">
 	           <xsl:text>ref-</xsl:text>
 	           <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
             <xsl:value-of select="$standardSuffix"/>
 	           <xsl:value-of select="concat($Hash,$ident)"/>
          </xsl:when>
-         <xsl:when test="ancestor::tei:classSpec and         not($STDOUT='true')">
+         <xsl:when test="ancestor::tei:classSpec and not($STDOUT='true')">
 	           <xsl:text>ref-</xsl:text>
 	           <xsl:value-of select="ancestor::tei:classSpec/@ident"/>
             <xsl:value-of select="$standardSuffix"/>
@@ -104,7 +108,8 @@
          <xsl:when test="ancestor::tei:front and not($splitFrontmatter)">
             <xsl:value-of select="concat($Hash,$ident)"/>
          </xsl:when>
-         <xsl:when test="number($splitLevel)= -1 and ancestor::tei:teiCorpus">
+         <xsl:when test="number($splitLevel)= -1 and
+			 ancestor::tei:teiCorpus">
             <xsl:value-of select="$masterFile"/>
             <xsl:call-template name="addCorpusID"/>
             <xsl:value-of select="$standardSuffix"/>
@@ -148,8 +153,7 @@
    </doc>
   <xsl:template match="tei:TEI" mode="generateLink">
       <xsl:variable name="BaseFile">
-         <xsl:value-of select="$masterFile"/>
-         <xsl:call-template name="addCorpusID"/>
+	<xsl:apply-templates select="." mode="ident"/>
       </xsl:variable>
       <xsl:value-of select="concat($BaseFile,$standardSuffix)"/>
   </xsl:template>
@@ -265,6 +269,10 @@
   <xsl:template name="locateParentdiv">
       <xsl:choose>
 	 <xsl:when test="ancestor-or-self::tei:body[tei:head]/parent::tei:text/parent::tei:group">
+            <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
+         </xsl:when>
+
+	 <xsl:when test="ancestor-or-self::tei:body/parent::tei:text[tei:front]/parent::tei:group">
             <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
          </xsl:when>
 

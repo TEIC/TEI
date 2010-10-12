@@ -834,6 +834,13 @@
 	   </xsl:call-template>
 
          </xsl:when>
+         <xsl:when test="parent::tei:group and tei:front//tei:titlePart/tei:title
+			 and $splitLevel=0">
+	   <xsl:call-template name="makeDivPage">
+	     <xsl:with-param name="depth">-1</xsl:with-param>
+	   </xsl:call-template>
+
+         </xsl:when>
          <xsl:when test="parent::tei:group">
 	   <xsl:call-template name="doDivBody"/>
 	 </xsl:when>
@@ -1523,6 +1530,23 @@
    </doc>
   <xsl:template name="mainTOC">
       <xsl:choose>
+	<xsl:when test="self::tei:teiCorpus">
+	  <ul class="toc toc_corpus">
+	    <xsl:for-each select="tei:TEI">
+	      <li>
+		<a>
+                  <xsl:attribute name="href">
+		    <xsl:apply-templates mode="generateLink" select="."/>
+                  </xsl:attribute>
+                  <xsl:call-template name="header">
+		    <xsl:with-param name="minimal">false</xsl:with-param>
+		    <xsl:with-param name="display">plain</xsl:with-param>
+                  </xsl:call-template>
+		</a>
+	      </li>
+	    </xsl:for-each>
+	  </ul>
+	</xsl:when>
          <xsl:when
 	     test="ancestor-or-self::tei:TEI/tei:text/tei:group and
 		   $splitLevel=0">
@@ -1586,11 +1610,18 @@
 
 	     <xsl:for-each
 		 select="ancestor-or-self::tei:TEI/tei:text/tei:group/tei:text">
-	       <h3><xsl:number/>	       
-		 <xsl:if test="tei:body/tei:head">
-		   <xsl:text>. </xsl:text>
-		   <xsl:apply-templates select="tei:body/tei:head" mode="plain"/>
-		 </xsl:if>
+	       <h3>
+		 <xsl:number/>
+		 <xsl:choose>
+		   <xsl:when test="tei:body/tei:head">
+		     <xsl:text>. </xsl:text>
+		     <xsl:apply-templates select="tei:body/tei:head" mode="plain"/>
+		   </xsl:when>
+		   <xsl:when
+		       test="tei:front/tei:titlePage//tei:title">
+		     <xsl:apply-templates select="tei:front/tei:titlePage//tei:title[1]" mode="plain"/>
+		   </xsl:when>
+		 </xsl:choose>
 	       </h3>
 		 <xsl:for-each select="tei:front">
 		   <xsl:call-template name="partTOC">

@@ -64,8 +64,8 @@
          <xsl:if test="ancestor::tei:group/tei:text/tei:front">
             <xsl:attribute name="id">
                <xsl:choose>
-                  <xsl:when test="ancestor::tei:text/@xml:id">
-                     <xsl:value-of select="translate(ancestor::tei:text/@xml:id,'_','-')"/>
+                  <xsl:when test="ancestor::tei:text[1]/@xml:id">
+                     <xsl:value-of select="translate(ancestor::tei:text[1]/@xml:id,'_','-')"/>
                   </xsl:when>
                   <xsl:otherwise>
                      <xsl:value-of select="generate-id()"/>

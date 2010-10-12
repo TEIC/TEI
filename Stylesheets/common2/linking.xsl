@@ -40,6 +40,9 @@
      <xsl:when test="tei:body/tei:head">
        <xsl:apply-templates select="tei:body/tei:head" mode="plain"/>
      </xsl:when>
+     <xsl:when test="tei:front//tei:titlePart/tei:title">
+       <xsl:apply-templates select="tei:front//tei:titlePart/tei:titl" mode="plain"/>
+     </xsl:when>
      <xsl:otherwise>
        <xsl:text>Text </xsl:text>
        <xsl:number/>
@@ -176,6 +179,9 @@
 		  <xsl:choose>
 		    <xsl:when test="not(tei:head) and tei:body/tei:head">
 			<xsl:apply-templates mode="plain" select="tei:body/tei:head"/>
+		    </xsl:when>	
+		    <xsl:when test="not(tei:head) and tei:front//tei:titlePart/tei:title">
+			<xsl:apply-templates mode="plain" select="tei:front//tei:titlePart/tei:title"/>
 		    </xsl:when>	
 		    <xsl:when test="tei:head">
 			<xsl:apply-templates mode="plain" select="tei:head"/>

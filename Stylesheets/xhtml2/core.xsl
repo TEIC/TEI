@@ -952,7 +952,7 @@
 	  <xsl:text>)</xsl:text>
 	</span>
       </xsl:when>
-      <xsl:when test="parent::tei:div">
+      <xsl:when test="(@place='display' or tei:q) and parent::tei:div|parent::tei:p">
 	<div class="note">
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="$identifier"/>
@@ -966,21 +966,7 @@
 	  <xsl:apply-templates/>
 	</div>
       </xsl:when>
-      <xsl:when test="@place='display' and parent::tei:div|parent::tei:p">
-	<div class="note">
-	  <xsl:call-template name="makeAnchor">
-	    <xsl:with-param name="name" select="$identifier"/>
-	  </xsl:call-template>
-	  <span class="noteLabel">
-	    <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">Note</xsl:with-param>
-	    </xsl:call-template>
-	    <xsl:text>: </xsl:text>
-	  </span>
-	  <xsl:apply-templates/>
-	</div>
-      </xsl:when>
-      <xsl:when test="@place='display'">
+      <xsl:when test="@place='display' ">
         <blockquote>
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="$identifier"/>
@@ -1147,7 +1133,7 @@
   <xsl:template match="tei:p">
     <xsl:variable name="wrapperElement">
       <xsl:choose>
-        <xsl:when test="tei:note[tei:q]|tei:q[tei:l]|tei:q[tei:lg]|tei:q[tei:p]|tei:l|tei:specList|tei:quote|tei:moduleSpec|tei:list|tei:eg|teix:egXML|tei:table|tei:specGrp|tei:specGrpRef|tei:q[@rend='display']|tei:figure|tei:note[@place='display']">
+        <xsl:when test="tei:note[tei:q]|tei:q[tei:l]|tei:q[tei:lg]|tei:q[tei:p]|tei:l|tei:specList|tei:quote|tei:moduleSpec|tei:list|tei:eg|teix:egXML|tei:table|tei:specGrp|tei:specGrpRef|tei:q[@rend='display']|tei:q/tei:figure|tei:figure|tei:note[@place='display']">
           <xsl:text>div</xsl:text>
         </xsl:when>
         <xsl:when test="parent::tei:p">
@@ -1509,10 +1495,6 @@
     <xsl:choose>
       <xsl:when test="@xml:id">
         <xsl:value-of select="@xml:id"/>
-      </xsl:when>
-      <xsl:when test="@n and not(@n='*')">
-	<xsl:text>Note</xsl:text>
-        <xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:text>Note</xsl:text>
