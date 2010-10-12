@@ -293,16 +293,21 @@
               <dc:identifier id="dcidid" opf:scheme="URI">
                 <xsl:call-template name="generateID"/>
               </dc:identifier>
+	      <xsl:variable name="A">
+		<xsl:call-template name="generateAuthor"/>
+	      </xsl:variable>
+	      <dc:description>                
+		<xsl:call-template name="generateSimpleTitle"/>
+		<xsl:text> / </xsl:text>
+		<xsl:value-of select="$A"/>
+	      </dc:description>
               <dc:creator>
-		<xsl:variable name="A">
-		  <xsl:call-template name="generateAuthor"/>
-		</xsl:variable>
 		<xsl:variable name="printA">
 		  <xsl:analyze-string select="$A" regex="([^,]+), ([^,]+), (.+)">
 		    <xsl:matching-substring>
-		      <xsl:value-of select="regex-group(2)"/>
-		      <xsl:text> </xsl:text>
 		      <xsl:value-of select="regex-group(1)"/>
+		      <xsl:text>, </xsl:text>
+		      <xsl:value-of select="regex-group(2)"/>
 		      </xsl:matching-substring>
 		      <xsl:non-matching-substring>
 			<xsl:value-of select="."/>
