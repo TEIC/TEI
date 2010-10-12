@@ -109,6 +109,10 @@
 	select="tei:teiHeader/tei:profileDesc/tei:textClass/tei:keywords/tei:term">
       <dc:subject><xsl:value-of select="."/></dc:subject>
     </xsl:for-each>
+    <xsl:for-each
+	select="tei:teiHeader/tei:profileDesc/tei:textClass/tei:keywords/tei:list/tei:item">
+      <dc:subject><xsl:value-of select="."/></dc:subject>
+    </xsl:for-each>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
