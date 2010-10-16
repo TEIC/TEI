@@ -80,7 +80,6 @@ class romaDom extends domDocument
 	$oSchema->setAttribute( 'ident', 'myTEI' );
 	$oSchema->setAttribute('docLang', 'en' );
 	$oSchema->setAttribute('prefix', 'tei_' );
-	$oSchema->setAttribute('start', 'TEI' );
 	$oSchema->setAttributeNS('http://www.w3.org/XML/1998/namespace', 'xml:lang', 'en' );
 
 	$this->loadXML( $oTemp->SaveXML() );
@@ -2363,6 +2362,13 @@ class romaDom extends domDocument
 	$target="dtd%3Aapplication%3Axml-dtd";
 	$this->callGarage($szDTD, $target);
 	return $szError;
+      }
+
+    public function getOddDom( &$oDOC )
+      {
+	$this->callGarage($szDoc, "");
+	$oDOC = new DOMDocument();
+	$oDOC->loadXML($szDoc);
       }
 
     public function processSanityCheck() {

@@ -42,15 +42,19 @@ public function __construct($odd) {
 	$this->SCEH = new SanityCheckerErrorHandler($this);
 	$this->SCEH->updateStatus("Generating flat ODD");
 	$this->SCEH->updateProgressBar(3);
-  $this->DOM = new romaDom();	
+	$this->DOM = new romaDom();	
 	$odd->getOddDom($this->DOM);
 	$this->SCEH->updateProgressBar(4);
-  $this->xpath = new domxpath( $this->DOM );
+	$this->xpath = new domxpath( $this->DOM );
+	$this->SCEH->updateStatus("starting check");
 	$this->SCEH->updateProgressBar(5);
 	$this->xpath->registerNamespace( 'rng', 'http://relaxng.org/ns/structure/1.0' );
 	$this->xpath->registerNamespace( 'tei', 'http://www.tei-c.org/ns/1.0' );
+	$this->SCEH->updateStatus("look at elements");
 	$this->getAllElements();
+	$this->SCEH->updateStatus("look at classes");
 	$this->getAllClasses();
+	$this->SCEH->updateStatus("look at macros");
 	$this->getAllMacros();
 	if(DEBUG) error_reporting(E_ALL);
 	if(DEBUG) {
@@ -846,6 +850,7 @@ public function pass1() {
 	if(trim($roots[0]) == "") {
 		$roots = array();
 		$roots[0] = "TEI";
+		$roots[1] = "teiCorpus";
 	}
 	foreach($roots as $root) {
 		$start = $this->ALL_ELEMENTS[$root]['domNode'];
