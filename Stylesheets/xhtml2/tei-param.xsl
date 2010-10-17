@@ -327,7 +327,11 @@ Width of left-hand column when $pageLayout is "Table"
       </desc>
    </doc>
   <xsl:template name="navbar">
-      <xsl:if test="not($navbarFile='')">
+    <xsl:choose>
+      <xsl:when test="$navbarFile=''">
+	<xsl:comment>no nav bar</xsl:comment>
+      </xsl:when>
+      <xsl:otherwise>
          <xsl:for-each select="document($navbarFile,document(''))">
             <xsl:for-each select="tei:list/tei:item">
                <span class="navbar">
@@ -338,7 +342,8 @@ Width of left-hand column when $pageLayout is "Table"
                <xsl:if test="following-sibling::tei:item"> | </xsl:if>
             </xsl:for-each>
          </xsl:for-each>
-      </xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="anyURI">
       <desc>

@@ -1827,7 +1827,7 @@
       <div id="accessibility">
          <span class="tocontent">
             <a href="{$REQUEST}?style=text">Text only</a>
-      | <a class="skiplinks" href="#rh-column" title="Go to main page content">Skip links</a>
+      | <a class="skiplinks" href="#rh-col" title="Go to main page content">Skip links</a>
          </span>
       </div>
       <div id="hdr2">
@@ -1918,7 +1918,6 @@
             </div>
          </div>
          <div id="rh-col">
-	   <a id="rh-column"/>
 	   <div id="rh-col-top">
 	     <xsl:comment>top of right-hand column</xsl:comment>
 	     <xsl:call-template name="rh-col-top"/>
