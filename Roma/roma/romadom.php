@@ -2085,6 +2085,8 @@ class romaDom extends domDocument
 
     protected function callGarage ( &$garageResult, $target) {
 	$OXG = oxgarage_server . '/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/';
+	$this->getDocLanguage( $szDocLanguage );
+	$properties ="?properties=<conversions><conversion%20index='1'><property%20id='lang'>" . $szDocLanguage .  "</property></conversion></conversions>";
 	if ( $bBar )
 	  {
 	    $this->loadProgressBar();
@@ -2094,7 +2096,7 @@ class romaDom extends domDocument
 	curl_setopt($ch, CURLOPT_HEADER, 0);
 	curl_setopt($ch, CURLOPT_VERBOSE, 0);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_URL, $OXG . $target);
+	curl_setopt($ch, CURLOPT_URL, $OXG . $target . $properties);
 	curl_setopt($ch, CURLOPT_POST, true);
 	$tmpfname = tempnam(roma_temporaryFilesDir, "oxg");
 	$handle = fopen($tmpfname, "w");
@@ -2250,25 +2252,25 @@ class romaDom extends domDocument
     // --- Creating some Schema formats
     // #####################################################################
 
-    public function createSchemaRNG( &$szRNG, $bBar = false )
+    public function createSchemaRNG( &$szRNG )
       {
 	$target="relaxng%3Aapplication%3Axml-relaxng/";
 	$this->callGarage($szRNG, $target);
       }
 
-    public function createSchemaSCH( &$szSCH, $bBar = false )
+    public function createSchemaSCH( &$szSCH )
       {
 	$target="sch%3Atext%3Axml/";
 	$this->callGarage($szSCH, $target);
       }
 
-    public function createSchemaISOSCH( &$szISOSCH, $bBar = false )
+    public function createSchemaISOSCH( &$szISOSCH )
       {
 	$target="isosch%3Atext%3Axml/";
 	$this->callGarage($szISOSCH, $target);
       }
 
-    public function createSchemaRNC( &$szRNC, $bBar = false )
+    public function createSchemaRNC( &$szRNC )
       {
 	$target="relaxng%3Aapplication%3Axml-relaxng/";
 	$this->callGarage($szRNG, $target);
@@ -2305,7 +2307,7 @@ class romaDom extends domDocument
 	return $szError;
       }
 
-    public function createSchemaXSD( &$szXSD, $bBar = false, $fileName )
+    public function createSchemaXSD( &$szXSD, $fileName )
       {
 	if ( $bBar )
 	  {
@@ -2357,7 +2359,7 @@ class romaDom extends domDocument
 	return $szError;
       }
 
-    public function createSchemaDTD( &$szDTD, $bBar = false )
+    public function createSchemaDTD( &$szDTD )
       {
 	$target="dtd%3Aapplication%3Axml-dtd";
 	$this->callGarage($szDTD, $target);
