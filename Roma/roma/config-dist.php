@@ -35,5 +35,5 @@ define ( 'roma_localStylesheetDir',  'roma/stylesheets' );
 define ( 'roma_templateDir',         'roma/templates' );
 define ( 'roma_resource_path',       'roma/res' );
 define ('roma_version','4.0');
-define ('roma_date','2010-07-07');
+define ('roma_date','2010-10-17');
 </script>
