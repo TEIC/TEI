@@ -257,7 +257,7 @@ Make a separate file for footnotes
       <desc>[html] Breadcrumb trail </desc>
    </doc>
   <xsl:template name="hdr3">
-      <a href="#rh-column" title="Go to main page content" class="skiplinks">Skip links</a>
+      <a href="#rh-col" title="Go to main page content" class="skiplinks">Skip links</a>
       <a class="hide">|</a>
       <xsl:call-template name="crumbPath"/>
       <a class="hide">|</a>
