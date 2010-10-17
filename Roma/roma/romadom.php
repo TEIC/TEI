@@ -2087,11 +2087,9 @@ class romaDom extends domDocument
 	$OXG = oxgarage_server . '/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/';
 	$this->getDocLanguage( $szDocLanguage );
 	$properties ="?properties=<conversions><conversion%20index='1'><property%20id='oxgarage.lang'>" . $szDocLanguage .  "</property></conversion></conversions>";
-	if ( $this->bBar )
-	  {
-	    $this->loadProgressBar();
-	    $this->updateProgressBar( '10' );
-	  }
+	$this->loadProgressBar();
+	$this->updateProgressBar( '10' );
+
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_HEADER, 0);
 	curl_setopt($ch, CURLOPT_VERBOSE, 0);
@@ -2102,14 +2100,12 @@ class romaDom extends domDocument
 	$handle = fopen($tmpfname, "w");
 	fwrite($handle, $this->SaveXML());
 	fclose($handle);
-	if ( $this->bBar )
-	    $this->updateProgressBar( '20' );
+	$this->updateProgressBar( '20' );
 	$file = array("upload"=>"@" . $tmpfname);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $file); 
 	$garageResult = curl_exec($ch);
 	unlink($tmpfname);
-	if ( $this->bBar )
-	    $this->updateProgressBar( '100' );
+	$this->updateProgressBar( '100' );
     }
 
     public function loadProgressBar()
@@ -2147,7 +2143,7 @@ class romaDom extends domDocument
     // --- Creating some documentation versions
     // #####################################################################
 
-    public function outputPlain( &$szDoc, $bBar = false )
+    public function outputPlain( &$szDoc)
       {
 	$this->callGarage($szDoc, "");
       }
@@ -2176,36 +2172,31 @@ class romaDom extends domDocument
 	
 	file_put_contents( $szInputFile ,$szTmp );
 
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '85' );
+	$this->m_oRomaDom->updateProgressBar( '85' );
 	
 	$szCurrentDir = getcwd();
 	chdir( roma_temporaryFilesDir );
 	exec( roma_pdflatex . ' -interaction=nonstopmode ' . $szInputFile );
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '90' );
+	$this->m_oRomaDom->updateProgressBar( '90' );
 
 	exec( roma_pdflatex . ' -interaction=nonstopmode ' . $szInputFile );
 	chdir( $szCurrentDir );
 
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '95' );
+	$this->m_oRomaDom->updateProgressBar( '95' );
 	
 	$szPdf = join( '', file( $szOutputFile ) );
 	
 	unlink( $szInputFile );
 	unlink( $szOutputFile );
 
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '100' );
+	$this->m_oRomaDom->updateProgressBar( '100' );
       }
 
     public function outputPDF( &$szPdf )
       {
 	$this->getTeiLiteDom( $oTeiLiteDom );
 
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '60' );
+	$this->m_oRomaDom->updateProgressBar( '60' );
 
 	$oXSL = new domDocument();
 	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/fo/tei.xsl' );
@@ -2214,8 +2205,7 @@ class romaDom extends domDocument
 	$oProc->importStylesheet( $oXSL );
 	$oTmpDom = $oProc->transformToDoc( $oTeiLiteDom );
 
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '70' );
+	$this->m_oRomaDom->updateProgressBar( '70' );
 	
 	//Save File
 	$szID = md5( uniqid(rand(), true ) );
@@ -2225,21 +2215,18 @@ class romaDom extends domDocument
 	
 	file_put_contents( $szInputFile , $oTmpDom->SaveXML() );
 
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '80' );
+	$this->m_oRomaDom->updateProgressBar( '80' );
 
 	exec( roma_fop . ' ' . $szInputFile . ' ' . $szOutputFile );
 
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '90' );
+	$this->m_oRomaDom->updateProgressBar( '90' );
 
 	$szPdf = join( '', file( $szOutputFile ) );
 	
 	unlink( $szInputFile );
 	unlink( $szOutputFile );
 
-	if ( $this->bBar )
-	  $this->m_oRomaDom->updateProgressBar( '100' );
+	$this->m_oRomaDom->updateProgressBar( '100' );
       }
 
     public function outputHTML ( &$szHTML )
@@ -2275,23 +2262,20 @@ class romaDom extends domDocument
 	$target="relaxng%3Aapplication%3Axml-relaxng/";
 	$this->callGarage($szRNG, $target);
 	$szID = md5( uniqid(rand(), true ) );
-	if ( $this->bBar )
-	    $this->updateProgressBar( '50' );
+	$this->updateProgressBar( '50' );
 	
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tmp';    
 	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.rnc';    
 	file_put_contents( $szInputFile , $szRNG);
 
-	if ( $this->bBar )
-	    $this->updateProgressBar( '70' );
+	$this->updateProgressBar( '70' );
 
 	ob_start();
 	System( roma_trang . ' -I rng -O rnc ' . $szInputFile . ' ' . $szOutputFile  . ' 2>&1');
 	$szError = ob_get_clean();
 	ob_end_clean();
 
-	if ( $this->bBar )
-	    $this->updateProgressBar( '90' );
+	$this->updateProgressBar( '90' );
 
 
 	if ( file_exists( $szOutputFile ) )
@@ -2301,23 +2285,16 @@ class romaDom extends domDocument
 	  }
 	unlink( $szInputFile );
 
-	if ( $this->bBar )
-	    $this->updateProgressBar( '100' );
+	$this->updateProgressBar( '100' );
 
 	return $szError;
       }
 
     public function createSchemaXSD( &$szXSD, $fileName )
       {
-	if ( $this->bBar )
-	  {
-	    $this->loadProgressBar();
-	    $this->updateProgressBar( '30' );
-	  }
 	$target="relaxng%3Aapplication%3Axml-relaxng/";
 	$this->callGarage($szRNG, $target);
-	if ( $this->bBar )
-	    $this->updateProgressBar( '50' );
+	$this->updateProgressBar( '50' );
 
 	//Save File
 	$szID = md5( uniqid(rand(), true ) );
@@ -2329,8 +2306,7 @@ class romaDom extends domDocument
 	file_put_contents( $szInputFile ,$szRNG);
 	chdir (roma_temporaryFilesDir );
 
-	if ( $this->bBar )
-	    $this->updateProgressBar( '70' );
+	$this->updateProgressBar( '70' );
 	
 	ob_start();
 	System( 
@@ -2342,8 +2318,7 @@ class romaDom extends domDocument
 	$szError = ob_get_clean();
 	ob_end_clean();
 
-	if ( $this->bBar )
-	    $this->updateProgressBar( '90' );
+	$this->updateProgressBar( '90' );
 
 	if ( file_exists( $szOutputFileZip ) )
 	  { 
@@ -2353,8 +2328,7 @@ class romaDom extends domDocument
 
 	unlink( $szInputFile );
 
-	if ( $this->bBar )
-	    $this->updateProgressBar( '100' );
+	$this->updateProgressBar( '100' );
 
 	return $szError;
       }

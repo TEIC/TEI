@@ -1328,23 +1328,23 @@ class roma
 	switch( $_REQUEST[ 'output' ] )
 	  {
 	  case 'rnc':
-	    $szError = $this->m_oRomaDom->createSchemaRNC( $szSchema, true );
+	    $szError = $this->m_oRomaDom->createSchemaRNC( $szSchema);
 	    break;
 	  case 'xsd':
-	    $szError = $this->m_oRomaDom->createSchemaXSD( $szSchema, true, $szFilename );
+	    $szError = $this->m_oRomaDom->createSchemaXSD( $szSchema,  $szFilename );
 	    $postFix = "zip";
 	    break;
 	  case 'dtd':
-	    $szError = $this->m_oRomaDom->createSchemaDTD( $szSchema, true );
+	    $szError = $this->m_oRomaDom->createSchemaDTD( $szSchema );
 	    break;
 	  case 'sch':
-	    $szError = $this->m_oRomaDom->createSchemaSCH( $szSchema, true );
+	    $szError = $this->m_oRomaDom->createSchemaSCH( $szSchema );
 	    break;
 	  case 'isosch':
-	    $szError = $this->m_oRomaDom->createSchemaISOSCH( $szSchema, true );
+	    $szError = $this->m_oRomaDom->createSchemaISOSCH( $szSchema );
 	    break;
 	  case 'rng':
-	    $szError = $this->m_oRomaDom->createSchemaRNG( $szSchema, true );
+	    $szError = $this->m_oRomaDom->createSchemaRNG( $szSchema );
 	    break;
 	  }
 	
@@ -1414,7 +1414,7 @@ class roma
 //	    $szEnding = 'pdf';
 //	    break;
 	  case 'teiLite':
-	    $szError = $this->m_oRomaDom->outputTeiLite( $szDoc, true );
+	    $szError = $this->m_oRomaDom->outputTeiLite( $szDoc );
 	    $szEnding = 'xml';
 	    break;
 	  case 'plain':
