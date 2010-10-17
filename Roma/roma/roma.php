@@ -411,13 +411,10 @@ class roma
 		$this->m_oRomaDom->getDocLanguage( $this->m_szDocLanguage );
 		$this->m_oRomaDom->getCustomizationLanguage( $szLanguage );
 	      //notam
-	      $this->m_oRomaDom->setOddLanguage( $_REQUEST[ 'language' ] );
 	      $this->m_oRomaDom->setDocLanguage( $_REQUEST[ 'doclanguage' ] );
 	      $oNotam = new notam();
 	      $oNotam->setHeadline( 'Language customization' );
 	      $oNotam->setMessage( 'Translate to ' .
-              $_REQUEST['language' ] . 
-	      ' for element names and ' . 
 	      $_REQUEST[ 'doclanguage' ] . 
 	      ' for documentation: session lang is ' . 
 	      $_SESSION['docLang'] . 
