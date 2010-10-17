@@ -2087,7 +2087,7 @@ class romaDom extends domDocument
 	$OXG = oxgarage_server . '/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/';
 	$this->getDocLanguage( $szDocLanguage );
 	$properties ="?properties=<conversions><conversion%20index='1'><property%20id='oxgarage.lang'>" . $szDocLanguage .  "</property></conversion></conversions>";
-	if ( $bBar )
+	if ( $this->bBar )
 	  {
 	    $this->loadProgressBar();
 	    $this->updateProgressBar( '10' );
@@ -2102,13 +2102,13 @@ class romaDom extends domDocument
 	$handle = fopen($tmpfname, "w");
 	fwrite($handle, $this->SaveXML());
 	fclose($handle);
-	if ( $bBar )
+	if ( $this->bBar )
 	    $this->updateProgressBar( '20' );
 	$file = array("upload"=>"@" . $tmpfname);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $file); 
 	$garageResult = curl_exec($ch);
 	unlink($tmpfname);
-	if ( $bBar )
+	if ( $this->bBar )
 	    $this->updateProgressBar( '100' );
     }
 
@@ -2275,14 +2275,14 @@ class romaDom extends domDocument
 	$target="relaxng%3Aapplication%3Axml-relaxng/";
 	$this->callGarage($szRNG, $target);
 	$szID = md5( uniqid(rand(), true ) );
-	if ( $bBar )
+	if ( $this->bBar )
 	    $this->updateProgressBar( '50' );
 	
 	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tmp';    
 	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.rnc';    
 	file_put_contents( $szInputFile , $szRNG);
 
-	if ( $bBar )
+	if ( $this->bBar )
 	    $this->updateProgressBar( '70' );
 
 	ob_start();
@@ -2290,7 +2290,7 @@ class romaDom extends domDocument
 	$szError = ob_get_clean();
 	ob_end_clean();
 
-	if ( $bBar )
+	if ( $this->bBar )
 	    $this->updateProgressBar( '90' );
 
 
@@ -2301,7 +2301,7 @@ class romaDom extends domDocument
 	  }
 	unlink( $szInputFile );
 
-	if ( $bBar )
+	if ( $this->bBar )
 	    $this->updateProgressBar( '100' );
 
 	return $szError;
@@ -2309,14 +2309,14 @@ class romaDom extends domDocument
 
     public function createSchemaXSD( &$szXSD, $fileName )
       {
-	if ( $bBar )
+	if ( $this->bBar )
 	  {
 	    $this->loadProgressBar();
 	    $this->updateProgressBar( '30' );
 	  }
 	$target="relaxng%3Aapplication%3Axml-relaxng/";
 	$this->callGarage($szRNG, $target);
-	if ( $bBar )
+	if ( $this->bBar )
 	    $this->updateProgressBar( '50' );
 
 	//Save File
@@ -2329,7 +2329,7 @@ class romaDom extends domDocument
 	file_put_contents( $szInputFile ,$szRNG);
 	chdir (roma_temporaryFilesDir );
 
-	if ( $bBar )
+	if ( $this->bBar )
 	    $this->updateProgressBar( '70' );
 	
 	ob_start();
@@ -2342,7 +2342,7 @@ class romaDom extends domDocument
 	$szError = ob_get_clean();
 	ob_end_clean();
 
-	if ( $bBar )
+	if ( $this->bBar )
 	    $this->updateProgressBar( '90' );
 
 	if ( file_exists( $szOutputFileZip ) )
@@ -2353,7 +2353,7 @@ class romaDom extends domDocument
 
 	unlink( $szInputFile );
 
-	if ( $bBar )
+	if ( $this->bBar )
 	    $this->updateProgressBar( '100' );
 
 	return $szError;
