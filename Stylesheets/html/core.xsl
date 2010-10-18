@@ -1663,8 +1663,6 @@
             </xsl:with-param>
           </xsl:call-template>
         </xsl:when>
-	<xsl:when test="number($splitLevel) &gt;-1 and self::tei:text">
-	</xsl:when>
 	<xsl:when test="self::tei:div">
 	  <xsl:variable name="depth">
 	    <xsl:apply-templates mode="depth" select="."/>

@@ -357,10 +357,7 @@ Make a separate file for footnotes
                   <cell>
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="hdr3" type="textarea" cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xhtml:a
-   href="&lt;span class="attributevalue"&gt;#rh-column&lt;/span&gt;"
-   title="&lt;span class="attributevalue"&gt;Go to main page content&lt;/span&gt;"
-   class="&lt;span class="attributevalue"&gt;skiplinks&lt;/span&gt;"&gt;&lt;/span&gt;Skip links&lt;span class="element"&gt;&lt;/xhtml:a&gt;&lt;/span&gt;
+ &lt;span class="element"&gt;&lt;xhtml:a href="&lt;span class="attributevalue"&gt;#rh-col&lt;/span&gt;" title="&lt;span class="attributevalue"&gt;Go to main page content&lt;/span&gt;" class="&lt;span class="attributevalue"&gt;skiplinks&lt;/span&gt;"&gt;&lt;/span&gt;Skip links&lt;span class="element"&gt;&lt;/xhtml:a&gt;&lt;/span&gt;
  &lt;span class="element"&gt;&lt;xhtml:a class="&lt;span class="attributevalue"&gt;hide&lt;/span&gt;"&gt;&lt;/span&gt;|&lt;span class="element"&gt;&lt;/xhtml:a&gt;&lt;/span&gt;
  &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;crumbPath&lt;/span&gt;"/&gt;&lt;/span&gt;
  &lt;span class="element"&gt;&lt;xhtml:a class="&lt;span class="attributevalue"&gt;hide&lt;/span&gt;"&gt;&lt;/span&gt;|&lt;span class="element"&gt;&lt;/xhtml:a&gt;&lt;/span&gt;
@@ -467,18 +464,23 @@ Width of left-hand column when $pageLayout is "Table"
                   <cell>
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="navbar" type="textarea" cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:if test="&lt;span class="attributevalue"&gt;not($navbarFile='')&lt;/span&gt;"&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:for-each select="&lt;span class="attributevalue"&gt;document($navbarFile,document(''))&lt;/span&gt;"&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;xsl:for-each select="&lt;span class="attributevalue"&gt;tei:list/tei:item&lt;/span&gt;"&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;xhtml:span class="&lt;span class="attributevalue"&gt;navbar&lt;/span&gt;"&gt;&lt;/span&gt;
-     &lt;span class="element"&gt;&lt;xhtml:a href="&lt;span class="attributevalue"&gt;{$URLPREFIX}{tei:xref/@url}&lt;/span&gt;" class="&lt;span class="attributevalue"&gt;navbar&lt;/span&gt;"&gt;&lt;/span&gt;
-      &lt;span class="element"&gt;&lt;xsl:apply-templates select="&lt;span class="attributevalue"&gt;tei:xref/text()&lt;/span&gt;"/&gt;&lt;/span&gt;
-     &lt;span class="element"&gt;&lt;/xhtml:a&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;/xhtml:span&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;xsl:if test="&lt;span class="attributevalue"&gt;following-sibling::tei:item&lt;/span&gt;"&gt;&lt;/span&gt; | &lt;span class="element"&gt;&lt;/xsl:if&gt;&lt;/span&gt;
+ &lt;span class="element"&gt;&lt;xsl:choose&gt;&lt;/span&gt;
+  &lt;span class="element"&gt;&lt;xsl:when test="&lt;span class="attributevalue"&gt;$navbarFile=''&lt;/span&gt;"&gt;&lt;/span&gt;
+   &lt;span class="element"&gt;&lt;xsl:comment&gt;&lt;/span&gt;no nav bar&lt;span class="element"&gt;&lt;/xsl:comment&gt;&lt;/span&gt;
+  &lt;span class="element"&gt;&lt;/xsl:when&gt;&lt;/span&gt;
+  &lt;span class="element"&gt;&lt;xsl:otherwise&gt;&lt;/span&gt;
+   &lt;span class="element"&gt;&lt;xsl:for-each select="&lt;span class="attributevalue"&gt;document($navbarFile,document(''))&lt;/span&gt;"&gt;&lt;/span&gt;
+    &lt;span class="element"&gt;&lt;xsl:for-each select="&lt;span class="attributevalue"&gt;tei:list/tei:item&lt;/span&gt;"&gt;&lt;/span&gt;
+     &lt;span class="element"&gt;&lt;xhtml:span class="&lt;span class="attributevalue"&gt;navbar&lt;/span&gt;"&gt;&lt;/span&gt;
+      &lt;span class="element"&gt;&lt;xhtml:a href="&lt;span class="attributevalue"&gt;{$URLPREFIX}{tei:xref/@url}&lt;/span&gt;" class="&lt;span class="attributevalue"&gt;navbar&lt;/span&gt;"&gt;&lt;/span&gt;
+       &lt;span class="element"&gt;&lt;xsl:apply-templates select="&lt;span class="attributevalue"&gt;tei:xref/text()&lt;/span&gt;"/&gt;&lt;/span&gt;
+      &lt;span class="element"&gt;&lt;/xhtml:a&gt;&lt;/span&gt;
+     &lt;span class="element"&gt;&lt;/xhtml:span&gt;&lt;/span&gt;
+     &lt;span class="element"&gt;&lt;xsl:if test="&lt;span class="attributevalue"&gt;following-sibling::tei:item&lt;/span&gt;"&gt;&lt;/span&gt; | &lt;span class="element"&gt;&lt;/xsl:if&gt;&lt;/span&gt;
+    &lt;span class="element"&gt;&lt;/xsl:for-each&gt;&lt;/span&gt;
    &lt;span class="element"&gt;&lt;/xsl:for-each&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;/xsl:for-each&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;/xsl:if&gt;&lt;/span&gt;</textarea>
+  &lt;span class="element"&gt;&lt;/xsl:otherwise&gt;&lt;/span&gt;
+ &lt;span class="element"&gt;&lt;/xsl:choose&gt;&lt;/span&gt;</textarea>
                   </cell>
                   <cell>
          [html] Construction of navigation bar 

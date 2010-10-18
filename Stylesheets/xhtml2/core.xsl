@@ -1580,7 +1580,7 @@
         <xsl:call-template name="printNotes"/>
       </xsl:when>
       <xsl:when test="$currentID=''">
-        <xsl:for-each select=" descendant::tei:text">
+        <xsl:for-each select="descendant::tei:text">
           <xsl:call-template name="printNotes"/>
         </xsl:for-each>
       </xsl:when>
