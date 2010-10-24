@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:iso="http://www.iso.org/ns/1.0"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -20,7 +21,7 @@
                 
                 xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
                 version="2.0"
-                exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn tei teidocx">
+                exclude-result-prefixes="teix ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn tei teidocx">
     <!-- import conversion style -->
     <xsl:import href="../../default/docx/to.xsl"/>
     
@@ -47,5 +48,16 @@
 
     <xsl:param name="shadowGraphics">true</xsl:param>
     <xsl:param name="useNSPrefixes">false</xsl:param>    
-
+    <xsl:template match="teix:egXML|tei:p[@rend='eg']">
+        <xsl:param name="simple">false</xsl:param>
+        <xsl:param name="highlight"/>
+        <xsl:call-template name="block-element">
+            <xsl:with-param name="select">
+                <tei:p rend="Special" 
+		       iso:style="font-family:DejaVu Sans Mono; font-size:18; text-align:left;" >
+                    <xsl:call-template name="create-egXML-section"/>
+                </tei:p>
+            </xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
 </xsl:stylesheet>
