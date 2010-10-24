@@ -20,6 +20,7 @@
    </doc>
 
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
+  <xsl:param name="useNSPrefixes">true</xsl:param>
   <xsl:param name="startComment">&lt;span class="comment"&gt;</xsl:param>
   <xsl:param name="endComment">&lt;/span&gt;</xsl:param>
   <xsl:param name="startElement">&lt;span class="element"&gt;</xsl:param>
@@ -519,7 +520,7 @@
           </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="string-length($ns-prefix) &gt; 0">
+      <xsl:when test="$useNSPrefixes='true' and string-length($ns-prefix) &gt; 0">
         <xsl:call-template name="verbatim-createElement">
           <xsl:with-param name="name" select="concat($ns-prefix,':',local-name(.))"/>
           <xsl:with-param name="special">
@@ -534,15 +535,18 @@
             <xsl:value-of select="$highlightMe"/>
           </xsl:with-param>
         </xsl:call-template>
-        <xsl:if test="$start='true'">
+        <xsl:if test="$start='true' and not(namespace-uri()=namespace-uri(..))">
           <xsl:text> xmlns="</xsl:text>
           <xsl:value-of select="namespace-uri()"/>
           <xsl:text>"</xsl:text>
-          <xsl:call-template name="verbatim-lineBreak">
-            <xsl:with-param name="id">5</xsl:with-param>
-          </xsl:call-template>
-          <xsl:call-template name="verbatim-makeIndent"/>
+          <!-- 
+	       <xsl:call-template name="verbatim-lineBreak">
+	       <xsl:with-param name="id">5</xsl:with-param>
+	       </xsl:call-template>
+	       <xsl:call-template name="verbatim-makeIndent"/>
+	  -->
         </xsl:if>
+
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of disable-output-escaping="yes" select="$startElementName"/>

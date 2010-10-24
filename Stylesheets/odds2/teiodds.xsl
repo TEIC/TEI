@@ -1076,6 +1076,9 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="entityContent">
       <TEMPTREE>
         <xsl:choose>
+          <xsl:when test="tei:content/rng:group/rng:ref">
+	    <xsl:apply-templates select="tei:content/rng:*|tei:content/processing-instruction()"/>	    
+	  </xsl:when>
           <xsl:when test="tei:content/rng:group">
             <choice xmlns="http://relaxng.org/ns/structure/1.0">
               <xsl:apply-templates select="tei:content/rng:group/rng:*"/>

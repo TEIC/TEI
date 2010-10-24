@@ -271,6 +271,16 @@
                                 <a:prstGeom prst="rect">
                                     <a:avLst/>
                                 </a:prstGeom>
+				<xsl:if test="$shadowGraphics='true'
+					      and parent::tei:figure">
+				  <a:effectLst>
+				    <a:outerShdw blurRad="50800" dist="88900" dir="2700000" algn="tl" rotWithShape="0">
+				      <a:schemeClr val="tx1">
+					<a:alpha val="49000"/>
+				      </a:schemeClr>
+				    </a:outerShdw>
+				  </a:effectLst>
+				</xsl:if>
                             </pic:spPr>
                         </pic:pic>
                     </a:graphicData>
@@ -282,7 +292,7 @@
                 <w:drawing>
                     <!-- choose between inline and block -->
                     <xsl:choose>
-                        <xsl:when test="parent::tei:figure[@rend='display']">
+                        <xsl:when test="parent::tei:figure">
                             <!-- render  as block -->
                             <wp:anchor simplePos="0" relativeHeight="10" behindDoc="0" locked="0" layoutInCell="1"
                                 allowOverlap="1">
@@ -294,13 +304,18 @@
                                     <wp:align>center</wp:align>
                                 </wp:positionV>
                                 <wp:extent cx="{$imageWidth}00" cy="{$imageHeight}00"/>
+				<xsl:if test="$shadowGraphics='true'">
+				  <wp:effectExtent l="50800" t="25400" r="101600" b="63500"/>
+				</xsl:if>
                                 <wp:wrapTopAndBottom/>
                                 <wp:docPr  name="{tokenize(@url, '/')[last()]}">
                                     <xsl:attribute name="id">
 				      <xsl:value-of select="$generatedID"/>
                                     </xsl:attribute>
-                                </wp:docPr>
-                                
+                                </wp:docPr>                                
+				<xsl:if test="$shadowGraphics='true'">
+				  <wp:cNvGraphicFramePr/>
+				</xsl:if>
                                 <xsl:copy-of select="$graphic-element"/>
                             </wp:anchor>
                         </xsl:when>

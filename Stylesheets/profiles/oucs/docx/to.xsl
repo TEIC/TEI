@@ -44,6 +44,8 @@
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
-    
+
+    <xsl:param name="shadowGraphics">true</xsl:param>
+    <xsl:param name="useNSPrefixes">false</xsl:param>    
 
 </xsl:stylesheet>

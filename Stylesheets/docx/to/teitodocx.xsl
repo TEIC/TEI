@@ -1009,7 +1009,7 @@
       </xsl:variable>
       <xsl:for-each select="$content">
 	<xsl:call-template name="block-element">
-	  <xsl:with-param name="style">egXML</xsl:with-param>
+	  <xsl:with-param name="style">Special</xsl:with-param>
 	  <xsl:with-param name="select">
 	    <tei:p rend="Special" 
 		   iso:style="font-family:DejaVu Sans Mono; font-size:18;text-align:left;" >
