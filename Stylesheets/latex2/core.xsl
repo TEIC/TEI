@@ -442,7 +442,7 @@
       <desc>Process element tei:bibl</desc>
    </doc>
    <xsl:template match="tei:bibl">
-     \par <xsl:apply-templates/>\par
+     \par \bgroup\itshape <xsl:apply-templates/> \egroup\vskip6pt\par
    </xsl:template>
    
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -707,9 +707,9 @@
       <desc>Process element unclear</desc>
    </doc>
   <xsl:template match="tei:unclear">
-    <xsl:text>\texttt{[[</xsl:text>
+    <xsl:text>\textbf{</xsl:text>
     <xsl:apply-templates/>
-    <xsl:text>]]}</xsl:text>
+    <xsl:text>}</xsl:text>
     </xsl:template>
 
 

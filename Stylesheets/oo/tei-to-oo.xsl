@@ -620,6 +620,10 @@
     <xsl:text>&gt;</xsl:text>
   </xsl:template>
 
+  <xsl:template  match="tei:caesura">
+    <xsl:text>&#160;&#160;&#160;</xsl:text>
+  </xsl:template>
+
   <xsl:template match="tei:q">
     <text:span text:style-name="q">
       <xsl:text>&#x2018;</xsl:text>
@@ -701,6 +705,11 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:template match="tei:unclear">
+    <text:span text:style-name="Highlight">
+      <xsl:apply-templates/>
+    </text:span>
+  </xsl:template>
 
   <xsl:template match="tei:hi">
     <text:span>
@@ -739,7 +748,7 @@
   <xsl:template match="tei:term">
     <text:span>
       <xsl:attribute name="text:style-name">
-	<xsl:text>Emphasis</xsl:text>
+	<xsl:text>Highlight</xsl:text>
       </xsl:attribute>
       <xsl:apply-templates/>
     </text:span>

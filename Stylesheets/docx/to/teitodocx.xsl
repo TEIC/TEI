@@ -986,6 +986,12 @@
         </w:r>
     </xsl:template>
 
+    <xsl:template match="tei:caesura">
+      <w:r>
+	<w:t>&#160;&#160;&#160;</w:t>
+      </w:r>
+    </xsl:template>
+
 
     <!-- 
         Handle examples

@@ -160,6 +160,7 @@
                 <xsl:when test="self::tei:hi">true</xsl:when>
                 <xsl:when test="self::tei:label[following-sibling::tei:item]">true</xsl:when>
                 <xsl:when test="self::tei:term">true</xsl:when>
+                <xsl:when test="self::tei:unclear">true</xsl:when>
                 <xsl:otherwise>false</xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
@@ -212,10 +213,11 @@
 		<xsl:when test="self::tei:am">true</xsl:when>
 		<xsl:when test="self::tei:att">true</xsl:when>
 		<xsl:when test="self::tei:author">true</xsl:when>
-		<xsl:when test="self::tei:bibl">true</xsl:when>
+		<xsl:when test="self::tei:bibl and not(parent::tei:div)">true</xsl:when>
 		<xsl:when test="self::tei:biblScope">true</xsl:when>
 		<xsl:when test="self::tei:br">true</xsl:when>
 		<xsl:when test="self::tei:c">true</xsl:when>
+		<xsl:when test="self::tei:caesura">true</xsl:when>
 		<xsl:when test="self::tei:choice">true</xsl:when>
 		<xsl:when test="self::tei:code">true</xsl:when>
 		<xsl:when test="self::tei:collection">true</xsl:when>
@@ -280,6 +282,7 @@
 		<xsl:when test="self::tei:term">true</xsl:when>
 		<xsl:when test="self::tei:textLang">true</xsl:when>
 		<xsl:when test="self::tei:title">true</xsl:when>
+                <xsl:when test="self::tei:unclear">true</xsl:when>
 		<xsl:when test="self::tei:val">true</xsl:when>
 		<xsl:when test="self::tei:width">true</xsl:when>
 		<xsl:when test="self::teidocx:dynamicContent">true</xsl:when>
