@@ -439,6 +439,13 @@
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process element tei:bibl</desc>
+   </doc>
+   <xsl:template match="tei:bibl">
+     \par<xsl:apply-templates/>\par
+   </xsl:template>
+   
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element listBibl/tei:bibl</desc>
    </doc>
   <xsl:template match="tei:listBibl/tei:bibl"> \bibitem {<xsl:choose>

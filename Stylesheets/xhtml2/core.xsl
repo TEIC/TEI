@@ -657,7 +657,11 @@
       <xsl:when test="parent::tei:body"/>
       <xsl:when test="parent::tei:back"/>
       <xsl:when test="parent::tei:front"/>
-      <xsl:when test="@rend='-'">
+      <xsl:when test="@type='hyphenInWord' and rend='hide'"/>
+      <xsl:when test="@rend='hide'"> 
+	<xsl:text> </xsl:text>
+      </xsl:when>
+      <xsl:when test="@rend='-' or @type='hyphenInWord'">
 	<xsl:text>-</xsl:text>
 	<br/>
       </xsl:when>
