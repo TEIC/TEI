@@ -70,7 +70,7 @@ my $HOME=$query->param('TEIXSL');
 my $OUTFILE=$query->param('outputFile');
 print $query->header(-type=>'application/octet-stream',
 		     -attachment=>$OUTFILE);
-print &lt;&lt;END
+print &lt;&lt;END;
 &lt;xsl:stylesheet 
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns="http://www.w3.org/1999/xhtml"
@@ -86,7 +86,7 @@ END
 #              @values = $query->param($key);
 #              print join(", ",@values),"]\n";
 #          }
-print "&lt;xsl:import href=\"" . $HOME . "/tei/stylesheet/xhtml2/tei.xsl\"/>\n";
+print q(&lt;xsl:import href="$HOME/tei/stylesheet/xhtml2/tei.xsl"/>\n);
 foreach $key (keys %Default) {
 my $Passed=$query->param($key);
 my $D=$Default{$key};
