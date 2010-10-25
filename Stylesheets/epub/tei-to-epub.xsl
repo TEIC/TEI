@@ -964,9 +964,16 @@
   </xsl:template>
 
   <xsl:template match="tei:notesStmt/tei:note" mode="metadata" priority="99">
-    <p>
+	<xsl:choose>
+	<xsl:when test="tei:p">
       <xsl:apply-templates/>
-    </p>
+	</xsl:when>
+	<xsl:otherwise>
+	<p>
+      <xsl:apply-templates/>
+	</p>
+</xsl:otherwise>
+</xsl:choose>
   </xsl:template>
 
   <xsl:template match="*" mode="metadata">
