@@ -430,7 +430,9 @@
       <br/>
     </xsl:if>
     <span>
-      <xsl:call-template name="rendToClass"/>
+      <xsl:call-template name="rendToClass">
+        <xsl:with-param name="id">false</xsl:with-param>
+      </xsl:call-template>
       <xsl:apply-templates/>
     </span>
   </xsl:template>
