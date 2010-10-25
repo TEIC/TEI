@@ -769,36 +769,6 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="tei:div/tei:bibl">
-    <div class="biblfree">
-      <xsl:apply-templates/>
-    </div>
-  </xsl:template>
-
-  <xsl:template match="tei:l">
-    <div class="l">
-      <xsl:choose>
-	<xsl:when test="ancestor::tei:div[contains(@rend,'linenumber')]">
-	  <xsl:variable name="n">
-	    <xsl:number/>
-	  </xsl:variable>
-	  <div class="numbering">
-	    <xsl:choose>
-	      <xsl:when test="$n mod 5 = 0">
-		<xsl:value-of select="$n"/>
-	      </xsl:when>
-	      <xsl:otherwise>&#160;</xsl:otherwise>
-	    </xsl:choose>
-	  </div>
-	  <xsl:apply-templates/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:apply-templates/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </div>
-  </xsl:template>
-
   <xsl:template name="addLangAtt"/>
 
   <xsl:template match="tei:pb[@facs]">

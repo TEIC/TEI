@@ -129,6 +129,11 @@
           <xsl:text>)</xsl:text>
         </div>
       </xsl:when>
+      <xsl:when test="parent::tei:div">
+	<div class="biblfree">
+	  <xsl:apply-templates/>
+	</div>
+      </xsl:when>
       <xsl:otherwise>
         <span>
           <xsl:attribute name="class">
@@ -681,7 +686,27 @@
   <xsl:template match="tei:l">
     <div>
       <xsl:call-template name="rendToClass"/>
-      <xsl:apply-templates/>
+      
+      <xsl:choose>
+	<xsl:when
+	    test="ancestor::tei:div[contains(@rend,'linenumber')]">
+	  <xsl:variable name="n">
+	    <xsl:number/>
+	  </xsl:variable>
+	  <div class="numbering">
+	    <xsl:choose>
+	      <xsl:when test="$n mod 5 = 0">
+		<xsl:value-of select="$n"/>
+	      </xsl:when>
+	      <xsl:otherwise>&#160;</xsl:otherwise>
+	    </xsl:choose>
+	  </div>
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates/>
+	</xsl:otherwise>
+      </xsl:choose>
     </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
