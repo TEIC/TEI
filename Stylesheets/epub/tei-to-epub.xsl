@@ -963,6 +963,12 @@
     <xsl:text>] </xsl:text>
   </xsl:template>
 
+  <xsl:template match="tei:notesStmt/tei:note" mode="metadata" priority="99">
+    <p>
+      <xsl:apply-templates/>
+    </p>
+  </xsl:template>
+
   <xsl:template match="*" mode="metadata">
     <p>
       <xsl:apply-templates/>
