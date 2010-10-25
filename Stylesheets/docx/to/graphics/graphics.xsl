@@ -180,19 +180,6 @@
             </xsl:variable>
             
 	    <!-- check for sense -->
-            <xsl:variable name="imageHeight">
-	      <xsl:choose>
-		<xsl:when test="$Height = -1">
-		  <xsl:value-of select="$maxHeight"/>
-		</xsl:when>
-		<xsl:when test="$Height &gt; $maxHeight">
-		  <xsl:value-of select="$maxHeight"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:value-of select="$Height"/>
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:variable>
             <xsl:variable name="imageWidth">
 	      <xsl:choose>
 		<xsl:when test="$Width = -1">
@@ -206,18 +193,38 @@
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:variable>
-
+            <xsl:variable name="imageHeight">
+	      <xsl:choose>
+		<xsl:when test="$Height = -1">
+		  <xsl:value-of select="$maxHeight"/>
+		</xsl:when>
+		<xsl:when test="$Height &gt; $maxHeight">
+		  <xsl:value-of select="$maxHeight"/>
+		</xsl:when>
+		<xsl:when test="$Width &gt; $maxWidth">
+		  <xsl:value-of select="($Height * ($maxWidth div
+					$Width) ) cast as xs:integer"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of select="$Height"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:variable>
 <!--
-  <xsl:for-each select="@*">
+
+ <xsl:message>
+========================
+ <xsl:for-each select="@*">
     - @<xsl:value-of select="name(.)"/>: <xsl:value-of select="."/>
 </xsl:for-each>
-	
+
     - maxWidth: <xsl:value-of select="$maxWidth"/>
     - maxHeight: <xsl:value-of select="$maxHeight"/>
     - Width: <xsl:value-of select="$Width"/>
     - Height: <xsl:value-of select="$Height"/>
-    - imageWidth: <xsl:value-of select="$imageWidth"/>
-    - imageHeight: <xsl:value-of select="$imageHeight"/>
+    * imageWidth: <xsl:value-of select="$imageWidth"/>
+    * imageHeight: <xsl:value-of select="$imageHeight"/>
+</xsl:message>
 -->
             <!-- prepare actual graphic -->
 	    <xsl:variable name="generatedID">
