@@ -442,7 +442,7 @@
       <desc>Process element tei:bibl</desc>
    </doc>
    <xsl:template match="tei:bibl">
-     \par<xsl:apply-templates/>\par
+     \par <xsl:apply-templates/>\par
    </xsl:template>
    
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
