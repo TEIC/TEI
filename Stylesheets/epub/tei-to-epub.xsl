@@ -904,6 +904,12 @@
     </dd>
   </xsl:template>
 
+  <xsl:template match="tei:editor" mode="metadata">
+    <p><i>Editor</i>: 
+    <xsl:apply-templates/>
+    </p>
+  </xsl:template>
+
   <xsl:template match="tei:funder" mode="metadata">
     <p><i>Funder</i>: 
     <xsl:apply-templates/>
