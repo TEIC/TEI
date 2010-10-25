@@ -86,10 +86,9 @@ END
 #              @values = $query->param($key);
 #              print join(", ",@values),"]\n";
 #          }
-print q(&lt;xsl:import href=");
+print "&lt;xsl:import href=\"";
 print $HOME;
-print q(/tei/stylesheet/xhtml2/tei.xsl"/>);
-print "\n";
+print "/tei/stylesheet/xhtml2/tei.xsl\"/>\n";
 foreach $key (keys %Default) {
 my $Passed=$query->param($key);
 my $D=$Default{$key};
