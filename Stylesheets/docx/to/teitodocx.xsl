@@ -1093,6 +1093,20 @@
                         </w:tblBorders>
                     </w:tblPr>
 		</xsl:when>
+		<xsl:when test="@rend='norules'">
+                    <w:tblPr>
+                        <w:tblW w:w="0" w:type="auto"/>
+                        <w:jc w:val="left"/>
+                        <w:tblBorders>
+                            <w:top w:val="nil" w:space="0" w:color="auto"/>
+                            <w:left w:val="nil" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="nil" w:space="0" w:color="auto"/>
+                            <w:right w:val="nil" w:space="0" w:color="auto"/>
+                            <w:insideV w:val="nil" w:space="0" w:color="auto"/>
+                            <w:insideH w:val="nil" w:space="0" w:color="auto"/>
+                        </w:tblBorders>
+                    </w:tblPr>
+		</xsl:when>
                 <xsl:when test="@rend='wovenodd'">
                     <w:tblPr>
                         <w:tblW w:w="0" w:type="auto"/>
@@ -2048,7 +2062,7 @@
 
     </xsl:template>
 
-    <xsl:template match="tei:note|tei:figure|tei:table|tei:item" mode="xref">
+    <xsl:template match="tei:note|tei:figure|tei:table|tei:item|tei:bibl" mode="xref">
         <xsl:number/>
     </xsl:template>
 
