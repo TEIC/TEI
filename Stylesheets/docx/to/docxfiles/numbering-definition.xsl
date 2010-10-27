@@ -320,7 +320,7 @@
                         <w:numFmt w:val="decimal"/>
                         <w:pStyle w:val="Tabletitle"/>
                         <w:suff w:val="space"/>
-                        <w:lvlText w:val="Table %1 —"/>
+                        <w:lvlText w:val="Table %1"/>
                         <w:lvlJc w:val="left"/>
                         <w:pPr>
                             <w:ind w:left="720" w:hanging="360"/>
