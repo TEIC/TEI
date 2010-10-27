@@ -100,14 +100,39 @@
     <xsl:template match="tei:figure/tei:figDesc"/>
     
     <xsl:template match="tei:figure/tei:head">
-        <xsl:call-template name="block-element">
+      <xsl:variable name="number">
+	<xsl:number level="any"/>
+      </xsl:variable>
+      <xsl:choose>
+	<xsl:when test="../@xml:id">
+	    <!-- we want a bookmark for referencing this figure -->
+	  <xsl:call-template name="block-element">
             <xsl:with-param name="style">
 	      <xsl:choose>
 		<xsl:when test="ancestor::tei:back">Figuretitleannex</xsl:when>
 		<xsl:otherwise>Figuretitle</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:with-param>
-        </xsl:call-template>
+	    <xsl:with-param name="bookmark-id">
+	      <xsl:value-of select="1000+$number"/>
+	    </xsl:with-param>
+	    <xsl:with-param name="bookmark-name">
+	      <xsl:text>_</xsl:text>
+	      <xsl:value-of select="../@xml:id"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:otherwise>  
+	  <xsl:call-template name="block-element">
+            <xsl:with-param name="style">
+	      <xsl:choose>
+		<xsl:when test="ancestor::tei:back">Figuretitleannex</xsl:when>
+		<xsl:otherwise>Figuretitle</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
     
     <xsl:template match="tei:graphic">

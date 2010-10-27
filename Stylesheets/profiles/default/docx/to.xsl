@@ -181,39 +181,7 @@
         </w:p>
     </xsl:template>
     
-    <!-- List Bibl -->
-    <xsl:template match="tei:listBibl">
-        <xsl:choose>
-            <xsl:when test="ancestor-or-self::*[@type='normativeReferences']">
-                <xsl:for-each select="tei:bibl">
-                    <xsl:call-template name="block-element">
-                        <xsl:with-param name="pPr">
-                            <w:pPr>
-                                <w:pStyle>
-                                    <xsl:attribute name="w:val">
-                                        <xsl:call-template name="getStyleName">
-                                            <xsl:with-param name="in">
-                                                <xsl:text>RefNorm</xsl:text>
-                                            </xsl:with-param>
-                                        </xsl:call-template>
-                                    </xsl:attribute>
-                                </w:pStyle>
-                            </w:pPr>
-                        </xsl:with-param>
-                    </xsl:call-template>
-                </xsl:for-each>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:for-each select="tei:bibl">
-                    <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">Bibliography</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:for-each>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
-
-
+     
     <!-- 
         Special Notes (Footnotes) .. 
         @TODO: Ideally this should go into the general template, but for some

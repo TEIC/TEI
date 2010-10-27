@@ -522,13 +522,24 @@
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        Handles text sections
+        Handles text sections. Adds a bookmark if they are the
+	first text in this object
     </desc>
    </doc>
-
     <xsl:template match="text()">
       <xsl:param name="character-style"/>
       <xsl:choose>
+	<xsl:when test="ancestor::tei:head"/>
+	<xsl:when test="ancestor::tei:bibl"/>
+	<xsl:when test="preceding-sibling::text()"/>
+	<xsl:when test="parent::tei:head/parent::tei:*/@xml:id">
+	  <xsl:for-each select="parent::tei:head/parent::tei:*">
+	    <xsl:variable name="N">
+	      <xsl:number level="any"/>
+	    </xsl:variable>
+	    <w:bookmarkStart w:id="{number($N) + 10000}" w:name="_{@xml:id}"/>
+	  </xsl:for-each>
+	</xsl:when>
 	<xsl:when test="../@xml:id">
 	  <xsl:for-each select="..">
 	    <xsl:variable name="N">
@@ -537,26 +548,18 @@
 	    <w:bookmarkStart w:id="{number($N) + 10000}" w:name="_{@xml:id}"/>
 	  </xsl:for-each>
 	</xsl:when>
-	<xsl:when test="parent::tei:head/parent::tei:div/@xml:id">
-	  <xsl:for-each select="parent::tei:head/parent::tei:div">
-	    <xsl:variable name="N">
-	      <xsl:number level="any"/>
-	    </xsl:variable>
-	    <w:bookmarkStart w:id="{number($N) + 10000}" w:name="_{@xml:id}"/>
-	  </xsl:for-each>
-	</xsl:when>
       </xsl:choose>
       <xsl:if test="parent::tei:head/parent::tei:div[@iso:status]">
-            <w:r>
-                <w:t>
-                    <xsl:attribute name="xml:space">preserve</xsl:attribute>
-                    <xsl:text> (</xsl:text>
-                    <xsl:value-of select="../../@iso:status"/>
-                    <xsl:text>) </xsl:text>
-                </w:t>
-            </w:r>
-        </xsl:if>
-        <w:r>
+	<w:r>
+	  <w:t>
+	    <xsl:attribute name="xml:space">preserve</xsl:attribute>
+	    <xsl:text> (</xsl:text>
+	    <xsl:value-of select="../../@iso:status"/>
+	    <xsl:text>) </xsl:text>
+	  </w:t>
+	</w:r>
+      </xsl:if>
+      <w:r>
 	  <!-- if no specific style is assigned we might check for any other indication to assign 
 	       some style ... -->
 	  <xsl:variable name="renderingProperties">
@@ -589,6 +592,9 @@
 	  <xsl:call-template name="Text"/>
 	</w:r>
       <xsl:choose>
+	<xsl:when test="ancestor::tei:head"/>
+	<xsl:when test="ancestor::tei:bibl"/>
+	<xsl:when test="following-sibling::text()"/>
 	<xsl:when test="../@xml:id">
 	  <xsl:for-each select="..">
 	    <xsl:variable name="N">
@@ -597,8 +603,8 @@
 	    <w:bookmarkEnd w:id="{number($N) + 10000}"/>
 	  </xsl:for-each>
 	</xsl:when>
-	<xsl:when test="parent::tei:head/parent::tei:div/@xml:id">
-	  <xsl:for-each select="parent::tei:head/parent::tei:div">
+	<xsl:when test="parent::tei:head/parent::tei:*/@xml:id">
+	  <xsl:for-each select="parent::tei:head/parent::tei:*">
 	    <xsl:variable name="N">
 	      <xsl:number level="any"/>
 	    </xsl:variable>
@@ -1166,11 +1172,31 @@
 
     <xsl:template name="table-header">
         <xsl:if test="tei:head">
-            <xsl:for-each select="tei:head[1]">
-                <xsl:call-template name="block-element">
-                    <xsl:with-param name="style">Tabletitle</xsl:with-param>
-                </xsl:call-template>
-            </xsl:for-each>
+	  <xsl:variable name="number">
+            <xsl:number level="any"/>
+	  </xsl:variable>
+	  <xsl:for-each select="tei:head[1]">
+	    <xsl:choose>
+	      <xsl:when test="../@xml:id">
+		<xsl:call-template name="block-element">
+		  <xsl:with-param name="style">Tabletitle</xsl:with-param>
+		  <!-- we want a bookmark for referencing this table -->
+		  <xsl:with-param name="bookmark-id">
+		    <xsl:value-of select="1000+$number"/>
+		  </xsl:with-param>
+		  <xsl:with-param name="bookmark-name">
+		    <xsl:text>_</xsl:text>
+		    <xsl:value-of select="../@xml:id"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:call-template name="block-element">
+		  <xsl:with-param name="style">Tabletitle</xsl:with-param>
+		</xsl:call-template>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:for-each>
         </xsl:if>
     </xsl:template>
     <xsl:template match="tei:row">
@@ -1989,7 +2015,7 @@
 		<xsl:text>NOTEREF _</xsl:text>
 	      </xsl:when>
 	      <xsl:otherwise>
-		<xsl:text>REF _</xsl:text>
+		<xsl:text> REF _</xsl:text>
 	      </xsl:otherwise>
 	    </xsl:choose>
 	    <xsl:value-of select="substring(@target,2)"/>
@@ -2000,6 +2026,9 @@
 	      <xsl:text> \r</xsl:text>
 	    </xsl:if>
 	    <xsl:if test="contains(@rend,'instr_n')">
+	      <xsl:text> \n</xsl:text>
+	    </xsl:if>
+	    <xsl:if test="not(@rend)">
 	      <xsl:text> \n</xsl:text>
 	    </xsl:if>
 	    <xsl:text> \h </xsl:text>
@@ -2185,16 +2214,32 @@
       </w:r>
     </xsl:template>
 
-    <xsl:template match="tei:bibl">
-      <xsl:call-template name="block-element">
-	<xsl:with-param name="style">Bibliography</xsl:with-param>
-      </xsl:call-template>
-    </xsl:template>
-
-    <xsl:template match="tei:biblStruct">
-       <xsl:call-template name="block-element">
-	<xsl:with-param name="style">Bibliography</xsl:with-param>
-      </xsl:call-template>
+    <!-- List Bibl -->
+    <xsl:template match="tei:listBibl">
+      <xsl:for-each select="tei:bibl|tei:biblStruct">
+	<xsl:choose>
+	  <xsl:when test="@xml:id">
+	    <xsl:variable name="number">
+	      <xsl:number level="any"/>
+	    </xsl:variable>
+	    <xsl:call-template name="block-element">
+	      <xsl:with-param name="style">Bibliography</xsl:with-param>
+	      <xsl:with-param name="bookmark-id">
+		<xsl:value-of select="9000+$number"/>
+	      </xsl:with-param>
+	      <xsl:with-param name="bookmark-name">
+		<xsl:text>_</xsl:text>
+		<xsl:value-of select="@xml:id"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:when>
+	  <xsl:otherwise>	  
+	    <xsl:call-template name="block-element">
+	      <xsl:with-param name="style">Bibliography</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
     </xsl:template>
 
   <xsl:template name="tei:makeText">

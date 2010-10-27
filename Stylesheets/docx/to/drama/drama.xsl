@@ -64,7 +64,7 @@
    </doc>
     <xsl:template match="tei:sp/tei:speaker" >
       <xsl:call-template name="block-element">
-            <xsl:with-param name="style">teispeaker</xsl:with-param>
+            <xsl:with-param name="style">tei_speaker</xsl:with-param>
       </xsl:call-template>
     </xsl:template>
 
@@ -75,7 +75,7 @@
    </doc>
     <xsl:template match="tei:sp/tei:stage" >
       <xsl:call-template name="block-element">
-            <xsl:with-param name="style">teistage</xsl:with-param>
+            <xsl:with-param name="style">tei_stage</xsl:with-param>
       </xsl:call-template>
     </xsl:template>
     
@@ -86,7 +86,7 @@
    </doc>
     <xsl:template match="tei:l">
       <xsl:call-template name="block-element">
-	<xsl:with-param name="style">teil</xsl:with-param>
+	<xsl:with-param name="style">tei_l</xsl:with-param>
       </xsl:call-template>
     </xsl:template>
 
