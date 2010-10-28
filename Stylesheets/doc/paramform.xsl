@@ -8,6 +8,7 @@
     version="2.0">
 
 <xsl:import href="../xhtml2/tei.xsl"/>
+<xsl:import href="../common2/verbatim.xsl"/>
 
 <doc scope="stylesheet" xmlns="http://www.oxygenxml.com/ns/doc/xsl" >
     <desc>
@@ -30,12 +31,26 @@
     </desc>
   </doc>
 
-<xsl:include href="../common2/verbatim.xsl"/>
 
 <xsl:key name="XDS" match="xd:doc" use="@class"/>
+  <xsl:param name="startAttribute"/>
+  <xsl:param name="endAttribute"/>
+  <xsl:param name="startAttributeValue"/>
+  <xsl:param name="endAttributeValue"/>
+  <xsl:param name="startComment"/>
+  <xsl:param name="endComment"/>
+  <xsl:param name="startElement"/>
+  <xsl:param name="endElement"/>
+  <xsl:param name="startElementName"/>
+  <xsl:param name="endElementName"/>
+  <xsl:param name="startNamespace"/>
+  <xsl:param name="endNamespace"/>
+  <xsl:param name="spaceCharacter"><xsl:text>  </xsl:text></xsl:param>
 
 <xsl:param name="numberHeadings">false</xsl:param>
 <xsl:param name="numberBodyHeadings"></xsl:param>
+<xsl:param name="omitNSDecls">http://www.w3.org/1999/xhtml</xsl:param>
+
 <xsl:output 
     encoding="utf-8"
     indent="yes" 
@@ -296,8 +311,7 @@ return "";
 	    <xsl:for-each select="following-sibling::xsl:*[1]">
 	      <xsl:choose>
 		<xsl:when test="*">
-		  <xsl:apply-templates select="*|text()"
-				       mode="verbatim"/>
+		  <xsl:apply-templates select="*|text()"			       mode="verbatim"/>
 		</xsl:when>
 		<xsl:otherwise>
 		<xsl:value-of select="."/>

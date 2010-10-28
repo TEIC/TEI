@@ -321,9 +321,9 @@ Make a separate file for footnotes
                   <cell>
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="hdr" type="textarea" cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;pageHeader&lt;/span&gt;"&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:with-param name="&lt;span class="attributevalue"&gt;mode&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;/xsl:call-template&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:call-template  name="pageHeader"&gt;
+    &lt;xsl:with-param  name="mode"/&gt;
+  &lt;/xsl:call-template&gt;</textarea>
                   </cell>
                   <cell>[html] Header section across top of page </cell>
                </row>
@@ -334,7 +334,7 @@ Make a separate file for footnotes
                   <cell>
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="hdr2" type="textarea" cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;navbar&lt;/span&gt;"/&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:call-template  name="navbar"/&gt;</textarea>
                   </cell>
                   <cell>[html] Navigation bar </cell>
                </row>
@@ -357,13 +357,13 @@ Make a separate file for footnotes
                   <cell>
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="hdr3" type="textarea" cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xhtml:a href="&lt;span class="attributevalue"&gt;#rh-col&lt;/span&gt;" title="&lt;span class="attributevalue"&gt;Go to main page content&lt;/span&gt;" class="&lt;span class="attributevalue"&gt;skiplinks&lt;/span&gt;"&gt;&lt;/span&gt;Skip links&lt;span class="element"&gt;&lt;/xhtml:a&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xhtml:a class="&lt;span class="attributevalue"&gt;hide&lt;/span&gt;"&gt;&lt;/span&gt;|&lt;span class="element"&gt;&lt;/xhtml:a&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;crumbPath&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xhtml:a class="&lt;span class="attributevalue"&gt;hide&lt;/span&gt;"&gt;&lt;/span&gt;|&lt;span class="element"&gt;&lt;/xhtml:a&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xhtml:a class="&lt;span class="attributevalue"&gt;bannerright&lt;/span&gt;" href="&lt;span class="attributevalue"&gt;{$parentURL}&lt;/span&gt;" title="&lt;span class="attributevalue"&gt;Go to home page&lt;/span&gt;"&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:value-of select="&lt;span class="attributevalue"&gt;$parentWords&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;/xhtml:a&gt;&lt;/span&gt;</textarea>
+  &lt;a  href="#rh-col"  title="Go to main page content"  class="skiplinks"&gt;Skip links&lt;/a&gt;
+  &lt;a  class="hide"&gt;|&lt;/a&gt;
+  &lt;xsl:call-template  name="crumbPath"/&gt;
+  &lt;a  class="hide"&gt;|&lt;/a&gt;
+  &lt;a  class="bannerright"  href="{$parentURL}"  title="Go to home page"&gt;
+    &lt;xsl:value-of  select="$parentWords"/&gt;
+  &lt;/a&gt;</textarea>
                   </cell>
                   <cell>[html] Breadcrumb trail </cell>
                </row>
@@ -375,10 +375,10 @@ Make a separate file for footnotes
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="lh-col-bottom" type="textarea"
                                cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:param name="&lt;span class="attributevalue"&gt;currentID&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;leftHandFrame&lt;/span&gt;"&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:with-param name="&lt;span class="attributevalue"&gt;currentID&lt;/span&gt;" select="&lt;span class="attributevalue"&gt;$currentID&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;/xsl:call-template&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:param  name="currentID"/&gt;
+  &lt;xsl:call-template  name="leftHandFrame"&gt;
+    &lt;xsl:with-param  name="currentID"  select="$currentID"/&gt;
+  &lt;/xsl:call-template&gt;</textarea>
                   </cell>
                   <cell>[html]Bottom of left-hand columnID of selected section
       </cell>
@@ -390,8 +390,8 @@ Make a separate file for footnotes
                   <cell>
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="lh-col-top" type="textarea" cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;searchbox&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;printLink&lt;/span&gt;"/&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:call-template  name="searchbox"/&gt;
+  &lt;xsl:call-template  name="printLink"/&gt;</textarea>
                   </cell>
                   <cell>[html]Top of left-hand column </cell>
                </row>
@@ -416,17 +416,17 @@ Width of left-hand column when $pageLayout is "Table"
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="logoPicture" type="textarea"
                                cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xhtml:a
-   class="&lt;span class="attributevalue"&gt;framelogo&lt;/span&gt;"
-   href="&lt;span class="attributevalue"&gt;http://www.tei-c.org/Stylesheets/teic/&lt;/span&gt;"&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xhtml:img
-    src="&lt;span class="attributevalue"&gt;http://www.tei-c.org/Stylesheets/teic/teixsl.png&lt;/span&gt;"
-    vspace="&lt;span class="attributevalue"&gt;5&lt;/span&gt;"
-    width="&lt;span class="attributevalue"&gt;124&lt;/span&gt;"
-    height="&lt;span class="attributevalue"&gt;161&lt;/span&gt;"
-    border="&lt;span class="attributevalue"&gt;0&lt;/span&gt;"
-    alt="&lt;span class="attributevalue"&gt;created by TEI XSL Stylesheets&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;/xhtml:a&gt;&lt;/span&gt;</textarea>
+  &lt;a
+      class="framelogo"
+      href="http://www.tei-c.org/Stylesheets/teic/"&gt;
+    &lt;img
+        src="http://www.tei-c.org/Stylesheets/teic/teixsl.png"
+        vspace="5"
+        width="124"
+        height="161"
+        border="0"
+        alt="created by TEI XSL Stylesheets"/&gt;
+  &lt;/a&gt;</textarea>
                   </cell>
                   <cell>[html] Logo</cell>
                </row>
@@ -437,21 +437,21 @@ Width of left-hand column when $pageLayout is "Table"
                   <cell>
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="metaHTML" type="textarea" cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:param name="&lt;span class="attributevalue"&gt;title&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xhtml:meta name="&lt;span class="attributevalue"&gt;author&lt;/span&gt;"&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:attribute name="&lt;span class="attributevalue"&gt;content&lt;/span&gt;"&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;generateAuthor&lt;/span&gt;"/&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;/xsl:attribute&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;/xhtml:meta&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xhtml:meta
-   name="&lt;span class="attributevalue"&gt;generator&lt;/span&gt;"
-   content="&lt;span class="attributevalue"&gt;Text Encoding Initiative Consortium XSLT stylesheets&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xhtml:meta name="&lt;span class="attributevalue"&gt;DC.Title&lt;/span&gt;" content="&lt;span class="attributevalue"&gt;{$title}&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xhtml:meta name="&lt;span class="attributevalue"&gt;DC.Type&lt;/span&gt;" content="&lt;span class="attributevalue"&gt;Text&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xhtml:meta name="&lt;span class="attributevalue"&gt;DC.Format&lt;/span&gt;" content="&lt;span class="attributevalue"&gt;text/html&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xhtml:meta
-   http-equiv="&lt;span class="attributevalue"&gt;Content-Type&lt;/span&gt;"
-   content="&lt;span class="attributevalue"&gt;text/html; charset={$outputEncoding}&lt;/span&gt;"/&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:param  name="title"/&gt;
+  &lt;meta  name="author"&gt;
+    &lt;xsl:attribute  name="content"&gt;
+      &lt;xsl:call-template  name="generateAuthor"/&gt;
+    &lt;/xsl:attribute&gt;
+  &lt;/meta&gt;
+  &lt;meta
+      name="generator"
+      content="Text Encoding Initiative Consortium XSLT stylesheets"/&gt;
+  &lt;meta  name="DC.Title"  content="{$title}"/&gt;
+  &lt;meta  name="DC.Type"  content="Text"/&gt;
+  &lt;meta  name="DC.Format"  content="text/html"/&gt;
+  &lt;meta
+      http-equiv="Content-Type"
+      content="text/html; charset={$outputEncoding}"/&gt;</textarea>
                   </cell>
                   <cell>[html] Making elements in HTML &lt;head&gt;The text used to create the DC.Title field
     in the HTML header
@@ -464,23 +464,23 @@ Width of left-hand column when $pageLayout is "Table"
                   <cell>
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="navbar" type="textarea" cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:choose&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:when test="&lt;span class="attributevalue"&gt;$navbarFile=''&lt;/span&gt;"&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;xsl:comment&gt;&lt;/span&gt;no nav bar&lt;span class="element"&gt;&lt;/xsl:comment&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;/xsl:when&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:otherwise&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;xsl:for-each select="&lt;span class="attributevalue"&gt;document($navbarFile,document(''))&lt;/span&gt;"&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;xsl:for-each select="&lt;span class="attributevalue"&gt;tei:list/tei:item&lt;/span&gt;"&gt;&lt;/span&gt;
-     &lt;span class="element"&gt;&lt;xhtml:span class="&lt;span class="attributevalue"&gt;navbar&lt;/span&gt;"&gt;&lt;/span&gt;
-      &lt;span class="element"&gt;&lt;xhtml:a href="&lt;span class="attributevalue"&gt;{$URLPREFIX}{tei:xref/@url}&lt;/span&gt;" class="&lt;span class="attributevalue"&gt;navbar&lt;/span&gt;"&gt;&lt;/span&gt;
-       &lt;span class="element"&gt;&lt;xsl:apply-templates select="&lt;span class="attributevalue"&gt;tei:xref/text()&lt;/span&gt;"/&gt;&lt;/span&gt;
-      &lt;span class="element"&gt;&lt;/xhtml:a&gt;&lt;/span&gt;
-     &lt;span class="element"&gt;&lt;/xhtml:span&gt;&lt;/span&gt;
-     &lt;span class="element"&gt;&lt;xsl:if test="&lt;span class="attributevalue"&gt;following-sibling::tei:item&lt;/span&gt;"&gt;&lt;/span&gt; | &lt;span class="element"&gt;&lt;/xsl:if&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;/xsl:for-each&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;/xsl:for-each&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;/xsl:otherwise&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;/xsl:choose&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:choose&gt;
+    &lt;xsl:when  test="$navbarFile=''"&gt;
+      &lt;xsl:comment&gt;no nav bar&lt;/xsl:comment&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:otherwise&gt;
+      &lt;xsl:for-each  select="document($navbarFile,document(''))"&gt;
+        &lt;xsl:for-each  select="tei:list/tei:item"&gt;
+          &lt;span  class="navbar"&gt;
+            &lt;a  href="{$URLPREFIX}{tei:xref/@url}"  class="navbar"&gt;
+              &lt;xsl:apply-templates  select="tei:xref/text()"/&gt;
+            &lt;/a&gt;
+          &lt;/span&gt;
+          &lt;xsl:if  test="following-sibling::tei:item"&gt; | &lt;/xsl:if&gt;
+        &lt;/xsl:for-each&gt;
+      &lt;/xsl:for-each&gt;
+    &lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;</textarea>
                   </cell>
                   <cell>
          [html] Construction of navigation bar 
@@ -511,52 +511,52 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.
                   <cell>
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="pageHeader" type="textarea" cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:param name="&lt;span class="attributevalue"&gt;mode&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xsl:choose&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:when test="&lt;span class="attributevalue"&gt;$mode='table'&lt;/span&gt;"&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;xhtml:table width="&lt;span class="attributevalue"&gt;100%&lt;/span&gt;" border="&lt;span class="attributevalue"&gt;0&lt;/span&gt;"&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;xhtml:tr&gt;&lt;/span&gt;
-     &lt;span class="element"&gt;&lt;xhtml:td
-       height="&lt;span class="attributevalue"&gt;98&lt;/span&gt;"
-       class="&lt;span class="attributevalue"&gt;bgimage&lt;/span&gt;"
-       onclick="&lt;span class="attributevalue"&gt;window.location='{$homeURL}'&lt;/span&gt;"
-       cellpadding="&lt;span class="attributevalue"&gt;0&lt;/span&gt;"&gt;&lt;/span&gt;
-      &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;makeHTMLHeading&lt;/span&gt;"&gt;&lt;/span&gt;
-       &lt;span class="element"&gt;&lt;xsl:with-param name="&lt;span class="attributevalue"&gt;class&lt;/span&gt;"&gt;&lt;/span&gt;subtitle&lt;span class="element"&gt;&lt;/xsl:with-param&gt;&lt;/span&gt;
-       &lt;span class="element"&gt;&lt;xsl:with-param name="&lt;span class="attributevalue"&gt;text&lt;/span&gt;"&gt;&lt;/span&gt;
-        &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;generateSubTitle&lt;/span&gt;"/&gt;&lt;/span&gt;
-       &lt;span class="element"&gt;&lt;/xsl:with-param&gt;&lt;/span&gt;
-       &lt;span class="element"&gt;&lt;xsl:with-param name="&lt;span class="attributevalue"&gt;level&lt;/span&gt;"&gt;&lt;/span&gt;2&lt;span class="element"&gt;&lt;/xsl:with-param&gt;&lt;/span&gt;
-      &lt;span class="element"&gt;&lt;/xsl:call-template&gt;&lt;/span&gt;
-      &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;makeHTMLHeading&lt;/span&gt;"&gt;&lt;/span&gt;
-       &lt;span class="element"&gt;&lt;xsl:with-param name="&lt;span class="attributevalue"&gt;class&lt;/span&gt;"&gt;&lt;/span&gt;title&lt;span class="element"&gt;&lt;/xsl:with-param&gt;&lt;/span&gt;
-       &lt;span class="element"&gt;&lt;xsl:with-param name="&lt;span class="attributevalue"&gt;text&lt;/span&gt;"&gt;&lt;/span&gt;
-        &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;generateTitle&lt;/span&gt;"/&gt;&lt;/span&gt;
-       &lt;span class="element"&gt;&lt;/xsl:with-param&gt;&lt;/span&gt;
-       &lt;span class="element"&gt;&lt;xsl:with-param name="&lt;span class="attributevalue"&gt;level&lt;/span&gt;"&gt;&lt;/span&gt;1&lt;span class="element"&gt;&lt;/xsl:with-param&gt;&lt;/span&gt;
-      &lt;span class="element"&gt;&lt;/xsl:call-template&gt;&lt;/span&gt;
-     &lt;span class="element"&gt;&lt;/xhtml:td&gt;&lt;/span&gt;
-     &lt;span class="element"&gt;&lt;xhtml:td valign="&lt;span class="attributevalue"&gt;top&lt;/span&gt;"/&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;/xhtml:tr&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;/xhtml:table&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;/xsl:when&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:otherwise&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;makeHTMLHeading&lt;/span&gt;"&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;xsl:with-param name="&lt;span class="attributevalue"&gt;class&lt;/span&gt;"&gt;&lt;/span&gt;subtitle&lt;span class="element"&gt;&lt;/xsl:with-param&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;xsl:with-param name="&lt;span class="attributevalue"&gt;text&lt;/span&gt;"&gt;&lt;/span&gt;
-     &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;generateSubTitle&lt;/span&gt;"/&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;/xsl:with-param&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;xsl:with-param name="&lt;span class="attributevalue"&gt;level&lt;/span&gt;"&gt;&lt;/span&gt;2&lt;span class="element"&gt;&lt;/xsl:with-param&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;/xsl:call-template&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;makeHTMLHeading&lt;/span&gt;"&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;xsl:with-param name="&lt;span class="attributevalue"&gt;class&lt;/span&gt;"&gt;&lt;/span&gt;title&lt;span class="element"&gt;&lt;/xsl:with-param&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;xsl:with-param name="&lt;span class="attributevalue"&gt;text&lt;/span&gt;"&gt;&lt;/span&gt;
-     &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;generateTitle&lt;/span&gt;"/&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;/xsl:with-param&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;xsl:with-param name="&lt;span class="attributevalue"&gt;level&lt;/span&gt;"&gt;&lt;/span&gt;1&lt;span class="element"&gt;&lt;/xsl:with-param&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;/xsl:call-template&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;/xsl:otherwise&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;/xsl:choose&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:param  name="mode"/&gt;
+  &lt;xsl:choose&gt;
+    &lt;xsl:when  test="$mode='table'"&gt;
+      &lt;table  width="100%"  border="0"&gt;
+        &lt;tr&gt;
+          &lt;td
+              height="98"
+              class="bgimage"
+              onclick="window.location='{$homeURL}'"
+              cellpadding="0"&gt;
+            &lt;xsl:call-template  name="makeHTMLHeading"&gt;
+              &lt;xsl:with-param  name="class"&gt;subtitle&lt;/xsl:with-param&gt;
+              &lt;xsl:with-param  name="text"&gt;
+                &lt;xsl:call-template  name="generateSubTitle"/&gt;
+              &lt;/xsl:with-param&gt;
+              &lt;xsl:with-param  name="level"&gt;2&lt;/xsl:with-param&gt;
+            &lt;/xsl:call-template&gt;
+            &lt;xsl:call-template  name="makeHTMLHeading"&gt;
+              &lt;xsl:with-param  name="class"&gt;title&lt;/xsl:with-param&gt;
+              &lt;xsl:with-param  name="text"&gt;
+                &lt;xsl:call-template  name="generateTitle"/&gt;
+              &lt;/xsl:with-param&gt;
+              &lt;xsl:with-param  name="level"&gt;1&lt;/xsl:with-param&gt;
+            &lt;/xsl:call-template&gt;
+          &lt;/td&gt;
+          &lt;td  valign="top"/&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:otherwise&gt;
+      &lt;xsl:call-template  name="makeHTMLHeading"&gt;
+        &lt;xsl:with-param  name="class"&gt;subtitle&lt;/xsl:with-param&gt;
+        &lt;xsl:with-param  name="text"&gt;
+          &lt;xsl:call-template  name="generateSubTitle"/&gt;
+        &lt;/xsl:with-param&gt;
+        &lt;xsl:with-param  name="level"&gt;2&lt;/xsl:with-param&gt;
+      &lt;/xsl:call-template&gt;
+      &lt;xsl:call-template  name="makeHTMLHeading"&gt;
+        &lt;xsl:with-param  name="class"&gt;title&lt;/xsl:with-param&gt;
+        &lt;xsl:with-param  name="text"&gt;
+          &lt;xsl:call-template  name="generateTitle"/&gt;
+        &lt;/xsl:with-param&gt;
+        &lt;xsl:with-param  name="level"&gt;1&lt;/xsl:with-param&gt;
+      &lt;/xsl:call-template&gt;
+    &lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;</textarea>
                   </cell>
                   <cell>[html] Banner for top of pagelayout mode
       </cell>
@@ -569,10 +569,10 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="rh-col-bottom" type="textarea"
                                cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:param name="&lt;span class="attributevalue"&gt;currentID&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;mainFrame&lt;/span&gt;"&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:with-param name="&lt;span class="attributevalue"&gt;currentID&lt;/span&gt;" select="&lt;span class="attributevalue"&gt;$currentID&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;/xsl:call-template&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:param  name="currentID"/&gt;
+  &lt;xsl:call-template  name="mainFrame"&gt;
+    &lt;xsl:with-param  name="currentID"  select="$currentID"/&gt;
+  &lt;/xsl:call-template&gt;</textarea>
                   </cell>
                   <cell>[html] Bottom of right-hand columnID of selected section
       </cell>
@@ -584,7 +584,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.
                   <cell>
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="rh-col-top" type="textarea" cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:call-template name="&lt;span class="attributevalue"&gt;columnHeader&lt;/span&gt;"/&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:call-template  name="columnHeader"/&gt;</textarea>
                   </cell>
                   <cell>[html] Top of right-hand column</cell>
                </row>
@@ -649,28 +649,28 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="autoMakeHead" type="textarea"
                                cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:param name="&lt;span class="attributevalue"&gt;display&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xsl:choose&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:when test="&lt;span class="attributevalue"&gt;tei:head and $display='full'&lt;/span&gt;"&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;xsl:apply-templates select="&lt;span class="attributevalue"&gt;tei:head&lt;/span&gt;" mode="&lt;span class="attributevalue"&gt;makeheading&lt;/span&gt;"/&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;/xsl:when&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:when test="&lt;span class="attributevalue"&gt;tei:head&lt;/span&gt;"&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;xsl:apply-templates select="&lt;span class="attributevalue"&gt;tei:head&lt;/span&gt;" mode="&lt;span class="attributevalue"&gt;plain&lt;/span&gt;"/&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;/xsl:when&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:when test="&lt;span class="attributevalue"&gt;@n&lt;/span&gt;"&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;xsl:if test="&lt;span class="attributevalue"&gt;@type&lt;/span&gt;"&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;xsl:value-of select="&lt;span class="attributevalue"&gt;@type&lt;/span&gt;"/&gt;&lt;/span&gt;
-    &lt;span class="element"&gt;&lt;xsl:text/&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;/xsl:if&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;xsl:value-of select="&lt;span class="attributevalue"&gt;@n&lt;/span&gt;"/&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;/xsl:when&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:when test="&lt;span class="attributevalue"&gt;@type&lt;/span&gt;"&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;xsl:value-of select="&lt;span class="attributevalue"&gt;@type&lt;/span&gt;"/&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;/xsl:when&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:otherwise&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;xsl:text&gt;&lt;/span&gt;➤&lt;span class="element"&gt;&lt;/xsl:text&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;/xsl:otherwise&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;/xsl:choose&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:param  name="display"/&gt;
+  &lt;xsl:choose&gt;
+    &lt;xsl:when  test="tei:head and $display='full'"&gt;
+      &lt;xsl:apply-templates  select="tei:head"  mode="makeheading"/&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:when  test="tei:head"&gt;
+      &lt;xsl:apply-templates  select="tei:head"  mode="plain"/&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:when  test="@n"&gt;
+      &lt;xsl:if  test="@type"&gt;
+        &lt;xsl:value-of  select="@type"/&gt;
+        &lt;xsl:text/&gt;
+      &lt;/xsl:if&gt;
+      &lt;xsl:value-of  select="@n"/&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:when  test="@type"&gt;
+      &lt;xsl:value-of  select="@type"/&gt;
+    &lt;/xsl:when&gt;
+    &lt;xsl:otherwise&gt;
+      &lt;xsl:text&gt;➤&lt;/xsl:text&gt;
+    &lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;</textarea>
                   </cell>
                   <cell>[common] How to make a heading for section if there is no
       &lt;head&gt;</cell>
@@ -683,8 +683,8 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="headingNumberSuffix" type="textarea"
                                cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:text&gt;&lt;/span&gt;.&lt;span class="element"&gt;&lt;/xsl:text&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xsl:value-of select="&lt;span class="attributevalue"&gt;$numberSpacer&lt;/span&gt;"/&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:text&gt;.&lt;/xsl:text&gt;
+  &lt;xsl:value-of  select="$numberSpacer"/&gt;</textarea>
                   </cell>
                   <cell> Punctuation to insert after a section
     number</cell>
@@ -694,10 +694,9 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.
                      <hi>numberSpacer</hi>
                   </cell>
                   <cell>
-                     <textarea xmlns="http://www.w3.org/1999/xhtml" name="numberSpacer" type="textarea"
-                               cols="40"
-                               rows="5">
- &lt;span class="element"&gt;&lt;xsl:text/&gt;&lt;/span&gt;</textarea>
+                     <input xmlns="http://www.w3.org/1999/xhtml" name="numberSpacer" type="textbox"
+                            value="&#xA;  &lt;xsl:text/&gt;"
+                            size="18"/>
                   </cell>
                   <cell> Character to put after number of
     section header</cell>
@@ -718,12 +717,12 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="numberBackDiv" type="textarea"
                                cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:if test="&lt;span class="attributevalue"&gt;not($numberBackHeadings='')&lt;/span&gt;"&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:number
-    count="&lt;span class="attributevalue"&gt;tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6&lt;/span&gt;"
-    format="&lt;span class="attributevalue"&gt;A.1.1.1.1.1&lt;/span&gt;"
-    level="&lt;span class="attributevalue"&gt;multiple&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;/xsl:if&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:if  test="not($numberBackHeadings='')"&gt;
+    &lt;xsl:number
+        count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
+        format="A.1.1.1.1.1"
+        level="multiple"/&gt;
+  &lt;/xsl:if&gt;</textarea>
                   </cell>
                   <cell>[common] How to number sections in back matter</cell>
                </row>
@@ -770,11 +769,11 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="numberBodyDiv" type="textarea"
                                cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:if test="&lt;span class="attributevalue"&gt;$numberHeadings='true'&lt;/span&gt;"&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:number
-    count="&lt;span class="attributevalue"&gt;tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6&lt;/span&gt;"
-    level="&lt;span class="attributevalue"&gt;multiple&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;/xsl:if&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:if  test="$numberHeadings='true'"&gt;
+    &lt;xsl:number
+        count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
+        level="multiple"/&gt;
+  &lt;/xsl:if&gt;</textarea>
                   </cell>
                   <cell>[common] How to number sections in main matter</cell>
                </row>
@@ -809,13 +808,13 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="numberFrontDiv" type="textarea"
                                cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:param name="&lt;span class="attributevalue"&gt;minimal&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xsl:number
-   count="&lt;span class="attributevalue"&gt;tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6&lt;/span&gt;"
-   level="&lt;span class="attributevalue"&gt;multiple&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;xsl:if test="&lt;span class="attributevalue"&gt;$minimal='false'&lt;/span&gt;"&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:value-of select="&lt;span class="attributevalue"&gt;$numberSpacer&lt;/span&gt;"/&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;/xsl:if&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:param  name="minimal"/&gt;
+  &lt;xsl:number
+      count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
+      level="multiple"/&gt;
+  &lt;xsl:if  test="$minimal='false'"&gt;
+    &lt;xsl:value-of  select="$numberSpacer"/&gt;
+  &lt;/xsl:if&gt;</textarea>
                   </cell>
                   <cell>[common] How to number sections in front matter</cell>
                </row>
@@ -960,7 +959,7 @@ An ID passed to the stylesheet to indicate which section to display
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="requestedID" type="textarea"
                                cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:value-of select="&lt;span class="attributevalue"&gt;$ID&lt;/span&gt;"/&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:value-of  select="$ID"/&gt;</textarea>
                   </cell>
                   <cell>
 A wrapper around the ID, to allow for other ways of getting it
@@ -1137,13 +1136,13 @@ all.
                      <textarea xmlns="http://www.w3.org/1999/xhtml" name="standardSuffix" type="textarea"
                                cols="40"
                                rows="5">
- &lt;span class="element"&gt;&lt;xsl:choose&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:when test="&lt;span class="attributevalue"&gt;tei:teiCorpus&lt;/span&gt;"&gt;&lt;/span&gt;.html&lt;span class="element"&gt;&lt;/xsl:when&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:when test="&lt;span class="attributevalue"&gt;$STDOUT='true'&lt;/span&gt;"/&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;xsl:otherwise&gt;&lt;/span&gt;
-   &lt;span class="element"&gt;&lt;xsl:value-of select="&lt;span class="attributevalue"&gt;$outputSuffix&lt;/span&gt;"/&gt;&lt;/span&gt;
-  &lt;span class="element"&gt;&lt;/xsl:otherwise&gt;&lt;/span&gt;
- &lt;span class="element"&gt;&lt;/xsl:choose&gt;&lt;/span&gt;</textarea>
+  &lt;xsl:choose&gt;
+    &lt;xsl:when  test="tei:teiCorpus"&gt;.html&lt;/xsl:when&gt;
+    &lt;xsl:when  test="$STDOUT='true'"/&gt;
+    &lt;xsl:otherwise&gt;
+      &lt;xsl:value-of  select="$outputSuffix"/&gt;
+    &lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;</textarea>
                   </cell>
                   <cell>
 Suffix for generated output files.

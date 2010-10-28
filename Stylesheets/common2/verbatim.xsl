@@ -41,9 +41,7 @@
   <xsl:param name="wrapLength">65</xsl:param>
   <xsl:param name="attLength">40</xsl:param>
   <xsl:param name="attsOnSameLine">3</xsl:param>
-  <xsl:param name="omitNSDecls">
-    http://www.tei-c.org/ns/1.0
-  </xsl:param>
+  <xsl:param name="omitNSDecls">http://www.tei-c.org/ns/1.0</xsl:param>
   <xsl:key name="NSUsed" match="*" use="namespace-uri()"/>
   <xsl:key name="NSUsed" match="@*" use="namespace-uri()"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

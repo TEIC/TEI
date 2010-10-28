@@ -1517,11 +1517,11 @@
          </xsl:otherwise>
       </xsl:choose>
 
-      <xsl:call-template name="partialFootNotes">
-         <xsl:with-param name="currentID" select="$currentID"/>
-      </xsl:call-template>
       <xsl:if test="$minimal='false'">
-         <xsl:call-template name="stdfooter"/>
+	<xsl:call-template name="partialFootNotes">
+	  <xsl:with-param name="currentID" select="$currentID"/>
+	</xsl:call-template>
+	<xsl:call-template name="stdfooter"/>
       </xsl:if>
   </xsl:template>
 
