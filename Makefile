@@ -215,6 +215,8 @@ valid: check
 	rm Source.xml
 #	@xmllint --version
 #	-xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
+	echo check for places with no example
+	${SAXON} ${DRIVER} Utilities/listspecwithnoexample.xsl
 
 test: subset
 	(cd Test; make XSL=${XSL})
