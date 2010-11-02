@@ -21,7 +21,6 @@ This xslt stylesheet produces the iframe content for the TEI-C main page.
 
 <xsl:template match="/atom:feed">
 <html>
-  <!-- iframe content -->
   <head>
     <title>TEI News</title>
     <style type="text/css">
@@ -71,9 +70,6 @@ This xslt stylesheet produces the iframe content for the TEI-C main page.
       <p style="font-style:italic"><a href="http://www.tei-c.org/News/" target="_top">Older items...</a></p>
       </div>
       </xsl:if>
-<!-- loads in iframe on some clients -->
-	<!--(<a href="http://www.tei-c.org/News/">more news</a>) -->
-
     </div>
   </body>
 </html>

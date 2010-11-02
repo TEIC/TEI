@@ -9,8 +9,8 @@
 
   <!-- 
 
-This takes the TEI SF wordpress atom feed and makes an html content <div> which contains a table of
-contents and individual atom:entry fields from the table of contents .
+This takes the TEI SF wordpress atom feed and makes an html content <div> which contains 
+a table of contents and individual atom:entry fields from the table of contents .
 Written 2010-05-29 by James Cummings
 -->
 
