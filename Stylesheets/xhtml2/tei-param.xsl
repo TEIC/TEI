@@ -32,7 +32,12 @@
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
-  <xsl:key name="NOTES" match="tei:note[not(parent::tei:bibl) and not(ancestor::tei:teiHeader)]" use="1"/>
+  <xsl:key name="NOTES" use="1"
+	   match="tei:note[@place='foot' or @place='bottom' or @place='end'
+		  and not(parent::tei:bibl or ancestor::tei:teiHeader)]"/>
+  <xsl:key name="ALLNOTES" use="1"
+	   match="tei:note[not(@place='marg' or @place='inline' or @place='display')
+		  and not(parent::tei:bibl or  ancestor::tei:teiHeader)]"/>
 
   <xsl:key name="TAGREND" match="tei:tagUsage[@render]" use="@gi"/>
 

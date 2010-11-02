@@ -253,26 +253,27 @@
                   <xsl:copy-of select="."/>
                </xsl:if>
             </xsl:for-each>
-	           <xsl:if test="tei:head">
-	              <caption>
-	                 <xsl:apply-templates mode="xref" select="."/>
-	              </caption>
-	           </xsl:if>
-		   <xsl:choose>
-		     <xsl:when test="tei:row[@rend='thead']">
-		       <thead>
-		       <xsl:apply-templates
-			   select="tei:row[@rend='thead']"/>
-		       </thead>
-		       <tbody>
-		       <xsl:apply-templates select="tei:row[not(@rend='thead')]"/>
-		       </tbody>
-		     </xsl:when>
-		     <xsl:otherwise>
-		       <xsl:apply-templates select="tei:row"/>
-		     </xsl:otherwise>
-		   </xsl:choose>
+	    <xsl:if test="tei:head">
+	      <caption>
+		<xsl:apply-templates mode="xref" select="."/>
+	      </caption>
+	    </xsl:if>
+	    <xsl:choose>
+	      <xsl:when test="tei:row[@rend='thead']">
+		<thead>
+		  <xsl:apply-templates
+		      select="tei:row[@rend='thead']"/>
+		</thead>
+		<tbody>
+		  <xsl:apply-templates select="tei:row[not(@rend='thead')]"/>
+		</tbody>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:apply-templates select="tei:row"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
          </table>
+	 <xsl:apply-templates select="tei:note"/>
       </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

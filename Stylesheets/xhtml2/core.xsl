@@ -983,21 +983,29 @@
 	  <xsl:text>)</xsl:text>
 	</span>
       </xsl:when>
-      <xsl:when test="(@place='display' or tei:q) and parent::tei:div|parent::tei:p">
+      <xsl:when test="(@place='display' or tei:q) 
+		      and (parent::tei:div or parent::tei:p or parent::tei:body)">
 	<div class="note">
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="$identifier"/>
 	  </xsl:call-template>
 	  <span class="noteLabel">
-	    <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">Note</xsl:with-param>
-	    </xsl:call-template>
-	    <xsl:text>: </xsl:text>
+	    <xsl:choose>
+	      <xsl:when test="@n">
+		<xsl:value-of select="@n"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">Note</xsl:with-param>
+		</xsl:call-template>
+		<xsl:text>: </xsl:text>
+	      </xsl:otherwise>
+	    </xsl:choose>
 	  </span>
 	  <xsl:apply-templates/>
 	</div>
       </xsl:when>
-      <xsl:when test="@place='display' ">
+      <xsl:when test="@place='display'">
         <blockquote>
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="$identifier"/>
@@ -1018,8 +1026,9 @@
       <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
         <span>
 	  <xsl:call-template name="makeAnchor">
-          <xsl:with-param name="name" select="concat($identifier,'_return')"/>
+	    <xsl:with-param name="name" select="concat($identifier,'_return')"/>
 	  </xsl:call-template>
+	  !
 	  <xsl:choose>
           <xsl:when test="$footnoteFile='true'">
             <a class="notelink" title="Go to note" href="{$masterFile}-notes.html#{$identifier}">
@@ -1039,18 +1048,18 @@
 	</span>
       </xsl:when>
       <xsl:otherwise>
-	<span>
+	<div class="note">
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="$identifier"/>
 	  </xsl:call-template>
-	  <xsl:text> [</xsl:text>
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">Note</xsl:with-param>
-	  </xsl:call-template>
-	  <xsl:text>: </xsl:text>
+	  <span class="noteLabel">
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Note</xsl:with-param>
+	    </xsl:call-template>
+	    <xsl:text>: </xsl:text>
+	  </span>
 	  <xsl:apply-templates/>
-	  <xsl:text>]</xsl:text>
-	</span>
+	</div>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -1168,6 +1177,9 @@
           <xsl:text>div</xsl:text>
         </xsl:when>
         <xsl:when test="parent::tei:p">
+          <xsl:text>div</xsl:text>
+        </xsl:when>
+        <xsl:when test="parent::tei:note">
           <xsl:text>div</xsl:text>
         </xsl:when>
         <xsl:when test="parent::tei:remarks">
@@ -1636,7 +1648,7 @@
     <desc>[html] </desc>
   </doc>
   <xsl:template name="printNotes">
-    <xsl:if test="count(key('NOTES',1))">
+    <xsl:if test="count(key('NOTES',1)) or ($autoEndNotes='true' and count(key('ALLNOTES',1)))">
       <xsl:choose>
         <xsl:when test="$footnoteFile='true'">
           <xsl:variable name="BaseFile">
@@ -1688,7 +1700,16 @@
                       <xsl:with-param name="word">noteHeading</xsl:with-param>
                     </xsl:call-template>
                   </div>
-                  <xsl:apply-templates mode="printnotes" select="key('NOTES',1)"/>
+		  <xsl:choose>
+		    <xsl:when test="$autoEndNotes='true'">
+		      <xsl:apply-templates mode="printnotes"
+					     select="key('ALLNOTES',1)"/>
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:apply-templates mode="printnotes"
+					     select="key('NOTES',1)"/>
+		    </xsl:otherwise>
+		  </xsl:choose>
                 </div>
                 <xsl:call-template name="stdfooter"/>
                 <xsl:call-template name="bodyEndHook"/>
@@ -1704,7 +1725,16 @@
           <xsl:variable name="NOTES">
             <xsl:choose>
               <xsl:when test="self::tei:TEI">
-                <xsl:apply-templates mode="printallnotes" select="key('NOTES',1)"/>
+		  <xsl:choose>
+		    <xsl:when test="$autoEndNotes='true'">
+		      <xsl:apply-templates mode="printallnotes"
+					     select="key('ALLNOTES',1)"/>
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:apply-templates mode="printallnotes"
+					     select="key('NOTES',1)"/>
+		    </xsl:otherwise>
+		  </xsl:choose>
               </xsl:when>
               <xsl:otherwise>
                 <xsl:apply-templates mode="printnotes" select=".//tei:note"/>
