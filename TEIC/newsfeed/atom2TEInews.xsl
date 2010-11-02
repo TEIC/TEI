@@ -39,7 +39,7 @@ Written 2010-05-29 by James Cummings
 	      <p style="font-size:90%; margin-top:0">To submit a news item, email <a href="mailto:news@tei-c.org">news@tei-c.org</a></p>
         <h2>Contents</h2>
         <ul class="toc  toc_body">
-          <xsl:apply-templates select="//atom:entry[position() &lt; 100]" mode="toc"/>
+          <xsl:apply-templates select="//atom:entry[position() &lt; 25]" mode="toc"/>
 
         	
         </ul>
@@ -52,7 +52,7 @@ Written 2010-05-29 by James Cummings
       </div>
       <xsl:comment>articles section</xsl:comment>
 
-      <xsl:apply-templates select="//atom:entry[position() &lt; 100]"/>
+      <xsl:apply-templates select="//atom:entry[position() &lt; 25]"/>
 
     	<p class="bold">Full news archive at: <a href="https://sourceforge.net/apps/wordpress/tei/">TEI Sourceforge Blog</a></p>
     </div>
@@ -111,6 +111,8 @@ Written 2010-05-29 by James Cummings
     <hr style="color:gray; height:3px;"/>
   </xsl:template>
 
+
+<xsl:template match="html:script"/>
 
 
 <xsl:template match="html:img">
