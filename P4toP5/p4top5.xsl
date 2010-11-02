@@ -7,7 +7,8 @@
     exclude-result-prefixes="tei edate" version="1.0">
   <!-- 
        
-       P4 to P5 converter 
+       P4 to P5 converter. Deprecated in favour of the XSL 2.0 version
+       in Stylesheets/profiles/default/p4/from.xsl
        
        Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
        

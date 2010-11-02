@@ -126,8 +126,18 @@
   
   <xsl:template match="figure[@entity]">
     <figure>
-      <graphic 
-	       url="{unparsed-entity-uri(@entity)}">
+      <graphic>
+	<xsl:attribute name="url">
+	  <xsl:choose>
+	    <xsl:when test="unparsed-entity-uri(@entity)=''">
+	      <xsl:text>ENTITY_</xsl:text>
+	      <xsl:value-of select="@entity"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="unparsed-entity-uri(@entity)"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:attribute>
 	<xsl:apply-templates select="@*"/>
       </graphic>
       <xsl:apply-templates/>
@@ -680,9 +690,12 @@
 <!-- from Conal Tuohy -->
 <xsl:template match="orig[@reg]">
   <choice>
-    <orig><xsl:apply-templates select="*|@*|processing-instruction()|
-    comment()|text()"/></orig>
-    <reg><xsl:value-of select="@reg"/></reg>
+    <orig>
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
+    </orig>
+    <reg>
+      <xsl:value-of select="@reg"/>
+    </reg>
   </choice>
 </xsl:template>
 
@@ -695,5 +708,36 @@
 </xsl:template>
 
 <xsl:template match="@orig|@reg"/>
+
+<!-- remove default values for attributes -->
+
+<xsl:template match="cell/@role[.='data']"/>
+<xsl:template match="cell/@rows[.='1']"/>
+<xsl:template match="cell/@cols[.='1']"/>
+<xsl:template match="q/@broken[.='no']"/>
+
+<!-- from CES -->
+  <xsl:template match="cesdoc">
+    <cesDoc>
+    <xsl:apply-templates 
+        select="*|@*|processing-instruction()|comment()|text()"/>
+    </cesDoc>
+</xsl:template>
+
+<!-- from OTA DTD -->
+  <xsl:template match="spkr">
+    <speaker>
+    <xsl:apply-templates 
+        select="*|@*|processing-instruction()|comment()|text()"/>
+    </speaker>
+  </xsl:template>
+
+  <xsl:template match="letter">
+    <floatingText type="letter">
+    <xsl:apply-templates 
+        select="*|@*|processing-instruction()|comment()|text()"/>
+    </floatingText>
+  </xsl:template>
+
 	
 </xsl:stylesheet>
