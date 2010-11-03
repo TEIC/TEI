@@ -952,10 +952,20 @@
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="@place='none'"/>
-      <xsl:when test="ancestor::tei:bibl">
-	<xsl:text>(</xsl:text>
+      <xsl:when test="parent::tei:head">
+	<xsl:text> [</xsl:text>
 	<xsl:apply-templates/>
-	<xsl:text>)</xsl:text>
+	<xsl:text>]</xsl:text>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:bibl">
+	<xsl:text> [</xsl:text>
+	<xsl:apply-templates/>
+	<xsl:text>]</xsl:text>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:biblFull">
+	<xsl:text> [</xsl:text>
+	<xsl:apply-templates/>
+	<xsl:text>]</xsl:text>
       </xsl:when>
       <xsl:when test="@place='marg' and tei:p">
         <div class="margnote">
@@ -1028,7 +1038,6 @@
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="concat($identifier,'_return')"/>
 	  </xsl:call-template>
-	  !
 	  <xsl:choose>
           <xsl:when test="$footnoteFile='true'">
             <a class="notelink" title="Go to note" href="{$masterFile}-notes.html#{$identifier}">
@@ -1047,16 +1056,33 @@
         </xsl:choose>
 	</span>
       </xsl:when>
+      <xsl:when test="parent::tei:p">
+	<span class="note">
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name" select="$identifier"/>
+	  </xsl:call-template>
+	  <xsl:text> [</xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>]</xsl:text>
+	</span>
+      </xsl:when>
       <xsl:otherwise>
 	<div class="note">
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="$identifier"/>
 	  </xsl:call-template>
 	  <span class="noteLabel">
-	    <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">Note</xsl:with-param>
-	    </xsl:call-template>
-	    <xsl:text>: </xsl:text>
+	    <xsl:choose>
+	      <xsl:when test="@n">
+		<xsl:value-of select="@n"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:call-template name="i18n">
+		  <xsl:with-param name="word">Note</xsl:with-param>
+		</xsl:call-template>
+		<xsl:text>: </xsl:text>
+	      </xsl:otherwise>
+	    </xsl:choose>
 	  </span>
 	  <xsl:apply-templates/>
 	</div>
