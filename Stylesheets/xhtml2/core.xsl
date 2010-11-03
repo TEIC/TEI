@@ -1968,7 +1968,7 @@
         </span>
       </xsl:when>
       <xsl:when test="$value='gothic'">
-        <span style="font-family: fantasy">
+        <span style="font-family: Papyrus, fantasy">
           <xsl:call-template name="applyRend">
             <xsl:with-param name="value" select="$rest"/>
           </xsl:call-template>
