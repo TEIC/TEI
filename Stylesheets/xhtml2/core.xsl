@@ -1056,7 +1056,7 @@
         </xsl:choose>
 	</span>
       </xsl:when>
-      <xsl:when test="parent::tei:p">
+      <xsl:when test="parent::tei:p or parent::tei:hi">
 	<span class="note">
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="$identifier"/>
