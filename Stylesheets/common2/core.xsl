@@ -73,7 +73,7 @@
    </doc>
   <xsl:template match="tei:edition">
       <xsl:apply-templates/>
-      <xsl:if test="ancestor::tei:biblStruct">
+      <xsl:if test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
          <xsl:call-template name="tei:makeText">
 	   <xsl:with-param name="letters">. </xsl:with-param>
 	 </xsl:call-template>
@@ -86,7 +86,7 @@
    </doc>
   <xsl:template match="tei:imprint">
       <xsl:choose>
-         <xsl:when test="ancestor::tei:biblStruct">
+         <xsl:when test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
 	           <xsl:apply-templates select="tei:date"/>
 	           <xsl:apply-templates select="tei:pubPlace"/>
 	           <xsl:apply-templates select="tei:publisher"/>
@@ -286,7 +286,7 @@
    <xsl:template match="tei:title">
 
       <xsl:choose>
-         <xsl:when test="parent::tei:titleStmt">
+         <xsl:when test="parent::tei:titleStmt/parent::tei:fileDesc">
             <xsl:if test="preceding-sibling::tei:title">
 	      <xsl:call-template name="tei:makeText">
 		<xsl:with-param name="letters"> — </xsl:with-param>
@@ -303,7 +303,7 @@
 	       <xsl:apply-templates/>
 	     </xsl:with-param>
 	   </xsl:call-template>
-	   <xsl:if test="ancestor::tei:biblStruct">
+	   <xsl:if test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
 	     <xsl:call-template name="tei:makeText">
 	       <xsl:with-param name="letters">, </xsl:with-param>
 	     </xsl:call-template>
@@ -318,7 +318,8 @@
 	       <xsl:apply-templates/>
 	     </xsl:with-param>
 	   </xsl:call-template>
-	   <xsl:if test="following-sibling::* and ancestor::tei:biblStruct">
+	   <xsl:if test="following-sibling::* and
+			 (ancestor::tei:biblStruct  or ancestor::tei:biblFull)">
 	     <xsl:call-template name="tei:makeText">
 	       <xsl:with-param name="letters">
 	       </xsl:with-param>
@@ -347,7 +348,7 @@
 	       <xsl:apply-templates/>
 	     </xsl:with-param>
 	   </xsl:call-template>
-	   <xsl:if test="ancestor::tei:biblStruct">
+	   <xsl:if test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
 	     <xsl:call-template name="tei:makeText">
 	       <xsl:with-param
 		   name="letters">. </xsl:with-param>
@@ -363,7 +364,7 @@
 	       <xsl:apply-templates/>
 	     </xsl:with-param>
 	   </xsl:call-template>
-	   <xsl:if test="ancestor::tei:biblStruct">
+	   <xsl:if test="ancestor::tei:biblStruct  or ancestor::tei:biblFull">
 	     <xsl:call-template name="tei:makeText">
 	       <xsl:with-param
 		   name="letters">. </xsl:with-param>
@@ -395,7 +396,7 @@
       <xsl:call-template name="tei:makeText">
 	<xsl:with-param name="letters">)</xsl:with-param>
       </xsl:call-template>
-      <xsl:if test="following-sibling::* and ancestor::tei:biblStruct">
+      <xsl:if test="following-sibling::* and (ancestor::tei:biblStruct  or ancestor::tei:biblFull)">
          <xsl:call-template name="tei:makeText">
 	   <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
 	 </xsl:call-template>
@@ -415,7 +416,7 @@
 	 <xsl:apply-templates/>
        </xsl:otherwise>
      </xsl:choose>
-      <xsl:if test="ancestor::tei:biblStruct">
+      <xsl:if test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
          <xsl:call-template name="tei:makeText">
 	   <xsl:with-param name="letters">. </xsl:with-param>
 	 </xsl:call-template>
@@ -466,7 +467,7 @@
             <xsl:apply-templates/>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:if test="ancestor::tei:biblStruct">
+      <xsl:if test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
          <xsl:call-template name="tei:makeText">
 	   <xsl:with-param name="letters">. </xsl:with-param>
 	 </xsl:call-template>
@@ -554,7 +555,7 @@
 	      <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
 	    </xsl:call-template>
          </xsl:when>
-         <xsl:when test="ancestor::tei:biblStruct">
+         <xsl:when test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
             <xsl:call-template name="tei:makeText">
 	      <xsl:with-param name="letters">. </xsl:with-param>
 	    </xsl:call-template>

@@ -834,6 +834,10 @@
     <p> — <xsl:apply-templates mode="metadata"/></p>
   </xsl:template>
 
+  <xsl:template match="tei:sourceDesc/tei:biblFull" mode="metadata">
+    <div> — <xsl:apply-templates/></div>
+  </xsl:template>
+
   <xsl:template match="tei:respStmt" mode="metadata">
     <p><i><xsl:value-of select="tei:resp"/></i>:
       <xsl:value-of select="tei:name"/>
