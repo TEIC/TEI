@@ -68,14 +68,20 @@ Overwrite: <xsl:value-of select="$overwrite"/>
 
   <xsl:choose>
     <xsl:when test="@xml:lang and not(@xml:lang=$newLang)">
-      <xsl:copy-of select="."/>
+      <xsl:element name="{local-name()}">
+	<xsl:apply-templates select="@*|text()|*|comment()"/>
+      </xsl:element>
     </xsl:when>
     <xsl:when test="@xml:lang=$newLang and $overwrite='false'">
-      <xsl:copy-of select="."/>
+      <xsl:element name="{local-name()}">
+	<xsl:apply-templates select="@*|text()|*|comment()"/>
+      </xsl:element>
     </xsl:when>
     <xsl:when test="@xml:lang=$newLang and $overwrite='true'"/>
     <xsl:otherwise>
-      <xsl:copy-of select="."/>
+      <xsl:element name="{local-name()}">
+	<xsl:apply-templates select="@*|text()|*|comment()"/>
+      </xsl:element>
       <xsl:variable name="this">
 	<xsl:value-of select="normalize-space(.)"/>
       </xsl:variable>
@@ -176,7 +182,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:variable>
-      <xsl:element name="{$Name}"
+      <xsl:element name="{local-name()}"
 		   xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:attribute name="version">
 	  <xsl:value-of select="$date"/>
@@ -194,13 +200,19 @@ Overwrite: <xsl:value-of select="$overwrite"/>
 <xsl:template match="tei:remarks">
   <xsl:choose>
     <xsl:when test="not(@xml:lang)">
-      <xsl:copy-of select="."/>
+      <xsl:element name="{local-name()}">
+	<xsl:apply-templates select="@*|text()|*|comment()"/>
+      </xsl:element>
     </xsl:when>
     <xsl:when test="$overwrite='false'">
-      <xsl:copy-of select="."/>
+      <xsl:element name="{local-name()}">
+	<xsl:apply-templates select="@*|text()|*|comment()"/>
+      </xsl:element>
     </xsl:when>
     <xsl:when test="not(@xml:lang=$newLang)">
-      <xsl:copy-of select="."/>
+      <xsl:element name="{local-name()}">
+	<xsl:apply-templates select="@*|text()|*|comment()"/>
+      </xsl:element>
     </xsl:when>
   </xsl:choose>
   <xsl:if test="not(preceding-sibling::tei:remarks)">
@@ -248,39 +260,46 @@ Overwrite: <xsl:value-of select="$overwrite"/>
 <xsl:template match="tei:exemplum">
   <xsl:choose>
     <xsl:when test="not(@xml:lang)">
-      <xsl:copy-of select="."/>
+      <xsl:element name="{local-name()}">
+	<xsl:apply-templates select="@*|text()|*|comment()"/>
+      </xsl:element>
     </xsl:when>
     <xsl:when test="not(@xml:lang=$newLang)">
-      <xsl:copy-of select="."/>
+      <xsl:element name="{local-name()}">
+	<xsl:apply-templates select="@*|text()|*|comment()"/>
+      </xsl:element>
     </xsl:when>
   </xsl:choose>
-    <xsl:variable name="What">
-      <xsl:choose>
-	<xsl:when test="parent::tei:attDef">
-	  <xsl:value-of select="ancestor::tei:elementSpec/@ident|ancestor::tei:classSpec/@ident"/>
-	  <xsl:text>_</xsl:text>
-	  <xsl:value-of select="../@ident"/>
-	</xsl:when>
-	<xsl:when test="parent::tei:classSpec">
-	  <xsl:value-of select="../@ident"/>
-	</xsl:when>
-	<xsl:when test="parent::tei:elementSpec">
-	  <xsl:value-of select="../@ident"/>
-	</xsl:when>
-	<xsl:when test="parent::tei:macroSpec">
-	  <xsl:value-of select="../@ident"/>
-	</xsl:when>
-      </xsl:choose>
-    </xsl:variable>
+  <xsl:variable name="What">
+    <xsl:choose>
+      <xsl:when test="parent::tei:attDef">
+	<xsl:value-of select="ancestor::tei:elementSpec/@ident|ancestor::tei:classSpec/@ident"/>
+	<xsl:text>_</xsl:text>
+	<xsl:value-of select="../@ident"/>
+      </xsl:when>
+      <xsl:when test="parent::tei:classSpec">
+	<xsl:value-of select="../@ident"/>
+      </xsl:when>
+      <xsl:when test="parent::tei:elementSpec">
+	<xsl:value-of select="../@ident"/>
+      </xsl:when>
+      <xsl:when test="parent::tei:macroSpec">
+	<xsl:value-of select="../@ident"/>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:variable>
   <xsl:if test="not(preceding-sibling::tei:exemplum)">
     <xsl:message>Look for example in language <xsl:value-of select="$newLang"/> for <xsl:value-of select="$What"/></xsl:message>
     <xsl:for-each select="$New">
       <xsl:for-each select="key('IDENTS',$What)">
 	<xsl:for-each select="tei:exemplum[@xml:lang=$newLang]">
-	  <xsl:message>FOUND Example in language <xsl:value-of select="$newLang"/> for <xsl:value-of select="$What"/></xsl:message>
+	  <xsl:message>FOUND Example in language <xsl:value-of
+	  select="$newLang"/> for <xsl:value-of
+	  select="$What"/></xsl:message>
+	  
 	  <exemplum>
 	    <xsl:copy-of select="@*"/>
-	    <xsl:apply-templates/>
+	    <xsl:apply-templates mode="exemplum"/>
 	  </exemplum>
 	</xsl:for-each>
       </xsl:for-each>
@@ -305,7 +324,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
   <xsl:element name="{local-name()}" namespace="http://www.tei-c.org/ns/Examples">
     <xsl:apply-templates  select="@*"/>
     <xsl:apply-templates
-	    select="*|processing-instruction()|comment()|text()" mode="exemplum"/>
+	    select="*|processing-instruction()|comment()|text()"/>
   </xsl:element>
 </xsl:template>
 
@@ -385,8 +404,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
   <xsl:copy-of select="."/>
 </xsl:template>
 
-<xsl:template 
-    match="@xml:id"  mode="exemplum">
+<xsl:template match="@xml:id"  mode="exemplum">
   <xsl:attribute name="xml:id">
     <xsl:value-of select="concat($newLang,'_')"/>
     <xsl:value-of select="."/>
@@ -407,7 +425,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
       </xsl:attribute>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:apply-templates select="." mode="exemplum"/>
+      <xsl:copy-of select="."/>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
