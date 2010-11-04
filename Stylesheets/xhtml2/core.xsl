@@ -205,7 +205,7 @@
               <xsl:text>) </xsl:text>
             </xsl:if>
             <xsl:apply-templates select="tei:q|tei:quote"/>
-            <xsl:apply-templates select="tei:bibl"/>
+            <xsl:apply-templates select="tei:*[not(self::tei:q or self::tei:quote)]"/>
 	</div>
       </xsl:when>
       <xsl:when test="@rend='display'">
