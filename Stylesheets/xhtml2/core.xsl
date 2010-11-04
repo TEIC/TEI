@@ -1332,7 +1332,7 @@
       <xsl:when test="parent::tei:p or parent::tei:note">
         <div class="blockquote">
           <xsl:choose>
-            <xsl:when test="tei:p|tei:l">
+            <xsl:when test="tei:p|tei:l|tei:lg">
               <xsl:apply-templates/>
             </xsl:when>
             <xsl:otherwise>
