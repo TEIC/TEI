@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
-    xmlns:rng="http://relaxng.org/ns/structure/1.0"
     xmlns:s="http://www.ascc.net/xml/schematron" 
     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
     xmlns:teix="http://www.tei-c.org/ns/Examples"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns="http://www.tei-c.org/ns/1.0"
-    exclude-result-prefixes="tei teix rng s sch"
+    exclude-result-prefixes="tei teix s sch"
     version="2.0">
 
 <xsl:output 
@@ -274,13 +273,14 @@ Overwrite: <xsl:value-of select="$overwrite"/>
       </xsl:choose>
     </xsl:variable>
   <xsl:if test="not(preceding-sibling::tei:exemplum)">
+    <xsl:message>Look for example in language <xsl:value-of select="$newLang"/> for <xsl:value-of select="$What"/></xsl:message>
     <xsl:for-each select="$New">
       <xsl:for-each select="key('IDENTS',$What)">
 	<xsl:for-each select="tei:exemplum[@xml:lang=$newLang]">
-	  <xsl:message>Example in language <xsl:value-of select="$newLang"/> for <xsl:value-of select="$What"/></xsl:message>
+	  <xsl:message>FOUND Example in language <xsl:value-of select="$newLang"/> for <xsl:value-of select="$What"/></xsl:message>
 	  <exemplum>
 	    <xsl:copy-of select="@*"/>
-	      <xsl:apply-templates/>
+	    <xsl:apply-templates/>
 	  </exemplum>
 	</xsl:for-each>
       </xsl:for-each>
@@ -309,7 +309,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
   </xsl:element>
 </xsl:template>
 
-<xsl:template match="rng:*">
+<xsl:template match="rng:*"     xmlns:rng="http://relaxng.org/ns/structure/1.0">
   <xsl:element name="{local-name()}" namespace="http://relaxng.org/ns/structure/1.0">
     <xsl:apply-templates 
 	select="*|@*|processing-instruction()|comment()|text()"/>
@@ -366,7 +366,7 @@ Overwrite: <xsl:value-of select="$overwrite"/>
   </xsl:element>
 </xsl:template>
 
-<xsl:template match="rng:*"  mode="exemplum">
+<xsl:template match="rng:*"  mode="exemplum"     xmlns:rng="http://relaxng.org/ns/structure/1.0">
   <xsl:element name="{local-name()}" namespace="http://relaxng.org/ns/structure/1.0">
     <xsl:apply-templates 
 	select="*|@*|processing-instruction()|comment()|text()"  mode="exemplum"/>
