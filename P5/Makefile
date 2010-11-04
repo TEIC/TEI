@@ -25,7 +25,7 @@ TRANG=trang
 ONVDL=onvdl
 SAXON=saxon
 SAXON_ARGS=-ext:on
-.PHONY: convert dtds schemas html validate valid test oddschema exampleschema fascicule clean dist exemplars
+.PHONY: convert dtds schemas html validate valid test oddschema exampleschema clean dist exemplars
 
 default: dtds schemas validate exemplars test pdf html-web validate-html
 
@@ -165,8 +165,8 @@ chapterpdfs:
 	cp -r Source/Images/*.* Images
 	for i in `grep "\\include{" Guidelines.tex | sed 's/.*{\(.*\)}.*/\\1/'`; \
 	do echo PDF for chapter $$i; \
-	-echo  $$i | ${XELATEX} Guidelines
-	-echo  $$i | ${XELATEX} Guidelines
+	echo  $$i | ${XELATEX} Guidelines; \
+	echo  $$i | ${XELATEX} Guidelines ; \
 	mv Guidelines.pdf $$i.pdf; \
 	perl -p -i -e 's/.*zf@fam.*//' $$i.aux; \
 	done
