@@ -399,6 +399,13 @@ Overwrite: <xsl:value-of select="$overwrite"/>
   </xsl:copy>
 </xsl:template>
 
+<xsl:template match="tei:*"  mode="exemplum">
+  <xsl:copy>
+    <xsl:apply-templates 
+	select="*|@*|processing-instruction()|comment()|text()"/>
+  </xsl:copy>
+</xsl:template>
+
 <xsl:template 
     match="@*|text()|comment()|processing-instruction()"  mode="exemplum" >
   <xsl:copy-of select="."/>
